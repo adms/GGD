@@ -24,6 +24,7 @@ import { createHash } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { checkpointSourceRegeneration } from "./editorSourceRecovery";
 import {
   EDITOR_SOURCE_SCHEMA,
   NORMALIZER_OWNED_FIELDS,
@@ -43,6 +44,8 @@ export interface EditorSourceOptions {
   contentDir: string;
   /** ⭐ 注入的執行器，讓測試不必真的跑產生器。預設是真的跑。 */
   runRegenerate?: (command: string, repoRoot: string) => void;
+  /** Preserve the full content state before a generator can overwrite it. */
+  beforeRegenerate?: () => void;
 }
 
 const COLLECTION_DIR: Readonly<Record<string, string>> = Object.freeze({
@@ -157,6 +160,8 @@ function bad(
 export function writeTargetOf(
   urlPath: string,
 ): { collection: string; id: string } | null {
+  const modelVersion = /^\/content-api\/champions\/([^/?]+)\/model-versions$/.exec(urlPath);
+  if (modelVersion !== null) return { collection: "champions", id: decodeURIComponent(modelVersion[1]!) };
   // ⭐ 英雄卡的**內嵌技能槽**：它寫的是 `content/champions/<id>.json`
   //   （⛔ 不是 `content/abilities/…`）—— 擁有權要照**英雄卡**問。
   const slot = /^\/content-api\/champions\/([^/?]+)\/abilities\/([^/?]+)$/.exec(urlPath);
@@ -360,19 +365,36 @@ export function registerEditorSourceRoutes(
       });
     }
     const productBefore = fileFacts(join(repoRoot, path));
-    writeFileSync(srcAbs, source, "utf8");
+    opts.beforeRegenerate?.();
+    let recovery: ReturnType<typeof checkpointSourceRegeneration>;
+    try { recovery = checkpointSourceRegeneration(repoRoot, srcPath, a.step, facts.io); }
+    catch (error) { return bad(reply, 503, "REGENERATE_CHECKPOINT_FAILED", { message: "無法建立生成復原副本，未修改來源或產物。", detail: error instanceof Error ? error.message : String(error) }); }
     try {
+      if (!recovery.unchanged() || fileFacts(srcAbs)?.sha256 !== expectedSourceSha256) {
+        recovery.dispose();
+        return bad(reply, 409, "SOURCE_CHANGED", { message: "建立生成副本期間內容已更新，請重新讀取後再送出。" });
+      }
+    } catch (error) { recovery.dispose(); throw error; }
+    try {
+      writeFileSync(srcAbs, source, "utf8");
       run(a.regenerate, repoRoot);
     } catch (e) {
-      // ⭐ 重生成失敗 ⇒ **把來源還原**（⛔ 不留一個「來源新、產物舊」的半套狀態）。
-      writeFileSync(srcAbs, before.text, "utf8");
+      let result: { restored: number; removed: number };
+      try { result = recovery.restore(); }
+      catch (error) {
+        // Do not claim restoration or delete the backup when recovery fails.
+        return bad(reply, 503, "REGENERATE_RECOVERY_FAILED", { message: "生成失敗，且自動復原尚未完成。已保留副本，請先復原再繼續編輯。", recoveryDirectory: recovery.directory, detail: error instanceof Error ? error.message : String(error) });
+      }
+      recovery.dispose();
       return bad(reply, 422, "REGENERATE_FAILED", {
         command: a.regenerate,
         detail: e instanceof Error ? e.message.slice(0, 2000) : String(e),
+        recovery: result,
         message:
-          "⛔ 產生器拒絕了這份來源 ⇒ 來源已還原，⭐ 產物一個位元組都沒動。",
+          "產生器拒絕了這份來源。來源與生成範圍內的原檔案已還原，中途新增的產物已移除。",
       });
     }
+    recovery.dispose();
     const productAfter = fileFacts(join(repoRoot, path));
     return reply.send({
       schema: EDITOR_SOURCE_SCHEMA,

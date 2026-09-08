@@ -1,0 +1,39 @@
+{
+  "asset": "300heroes:1b46757671158e661a0105d1",
+  "meshes": [
+    2,
+    0,
+    1
+  ],
+  "fps": 32,
+  "textures": {
+    "0": "300heroes:2f3901e6a50db5decae7f14f",
+    "1": "300heroes:9c0e2e33bd508ad4e8a1f0f1",
+    "2": "300heroes:7378ab8c2a9600494952b839"
+  },
+  "clips": {
+    "idle": "bat_idle",
+    "run": "single_run",
+    "attack": "single_attack_attcom_1",
+    "cast": "single_skill_01",
+    "hurt": "bat_idle",
+    "death": "dead"
+  },
+  "characterId": "300heroes:30",
+  "sourceName": "哈桑",
+  "sourceOrigin": "Fate/stay night",
+  "target": {
+    "index": "31",
+    "name": "SUN樂",
+    "relationship": "style-proxy"
+  },
+  "textureSearches": [
+    "030",
+    "030_a",
+    "030_b"
+  ],
+  "limitations": [
+    "Candidate only until rendered appearance review; game name and source design remain unchanged",
+    "hurt reuses idle; native body animation is not kit-specific choreography"
+  ]
+}

@@ -1,3 +1,4 @@
+import { BUILTIN_VFX_TEXTURES } from "@ggd/shared/content/builtinVfxTextures";
 /**
  * statusPresets — PURE status-effect body visuals (task #39, item 3).
  *
@@ -74,7 +75,7 @@ export function statusAura(kind: StatusKind): StatusAura {
           gravityY: 0.4, // hangs; stars do not fall off a stunned head
           drag: 0.55,
           emitterRadius: 0.34, // a ring orbiting the head
-          texture: "assets/textures/particles/star_09.png",
+          texture: BUILTIN_VFX_TEXTURES.particles_star_09,
         },
       };
     case "rooted":
@@ -91,7 +92,7 @@ export function statusAura(kind: StatusKind): StatusAura {
           gravityY: -6, // clods lift then fall back — the ground holds you
           drag: 0.4,
           flatRing: { radius: 0.34, height: 0.06 },
-          texture: "assets/textures/particles/dirt_01.png",
+          texture: BUILTIN_VFX_TEXTURES.particles_dirt_01,
         },
       };
     case "slowed":
@@ -108,7 +109,7 @@ export function statusAura(kind: StatusKind): StatusAura {
           gravityY: -1.1, // motes sink slowly: everything about you is slower
           drag: 0.7,
           emitterRadius: 0.42,
-          texture: "assets/textures/particles/magic_05.png",
+          texture: BUILTIN_VFX_TEXTURES.particles_magic_05,
         },
       };
     case "dashing":
@@ -126,7 +127,7 @@ export function statusAura(kind: StatusKind): StatusAura {
           stretched: true,
           tailLength: 3.2,
           emitterRadius: 0.3,
-          texture: "assets/textures/particles/spark_05_rotated.png",
+          texture: BUILTIN_VFX_TEXTURES.particles_spark_05_rotated,
         },
       };
   }

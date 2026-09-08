@@ -6,6 +6,7 @@ import { create } from "zustand";
 import type { CollectionName, FieldIssue } from "@ggd/shared/content";
 
 export type ErrorMap = Record<string, string[]>;
+export type RawInputs = Record<string, { text: string; kind: "json" | "number" }>;
 
 export interface EditorState {
   collection: CollectionName | null;
@@ -15,11 +16,16 @@ export interface EditorState {
   /** working copy (immutable updates) */
   draft: unknown;
   dirty: boolean;
+  draftKey: string | null;
+  restoredDraft: boolean;
+  rawInputs: RawInputs;
   serverErrors: ErrorMap;
   past: unknown[];
   future: unknown[];
 
   select(collection: CollectionName, docId: string, doc: unknown): void;
+  restore(collection: CollectionName, docId: string, original: unknown, draft: unknown, draftKey: string, rawInputs?: RawInputs): void;
+  updateRaw(dataPath: string, text: string, kind: "json" | "number"): void;
   clearSelection(): void;
   /** immutable set at a dot/data path; marks dirty */
   update(dataPath: string, value: unknown): void;
@@ -79,14 +85,20 @@ export const useEditorStore = create<EditorState>((set) => ({
   original: null,
   draft: null,
   dirty: false,
+  draftKey: null,
+  restoredDraft: false,
+  rawInputs: {},
   serverErrors: {},
   past: [],
   future: [],
 
   select: (collection, docId, doc) =>
-    set({ collection, docId, original: doc, draft: doc, dirty: false, serverErrors: {}, past: [], future: [] }),
+    set({ collection, docId, original: doc, draft: doc, draftKey: `document/${collection}/${docId}`, restoredDraft: false, rawInputs: {}, dirty: false, serverErrors: {}, past: [], future: [] }),
+  restore: (collection, docId, original, draft, draftKey, rawInputs = {}) =>
+    set({ collection, docId, original, draft, draftKey, rawInputs, restoredDraft: true, dirty: !sameJson(original, draft) || Object.keys(rawInputs).length > 0, serverErrors: {}, past: [], future: [] }),
+  updateRaw: (dataPath, text, kind) => set((s) => ({ rawInputs: { ...s.rawInputs, [dataPath]: { text, kind } }, dirty: true })),
   clearSelection: () =>
-    set({ collection: null, docId: null, original: null, draft: null, dirty: false, serverErrors: {}, past: [], future: [] }),
+    set({ collection: null, docId: null, original: null, draft: null, draftKey: null, restoredDraft: false, rawInputs: {}, dirty: false, serverErrors: {}, past: [], future: [] }),
   update: (dataPath, value) =>
     set((s) => pushDraft(s, setIn(s.draft, dataPath, value))),
   replaceDraft: (doc) => set((s) => pushDraft(s, doc)),
@@ -95,6 +107,7 @@ export const useEditorStore = create<EditorState>((set) => ({
     const draft = s.past[s.past.length - 1];
     return {
       draft,
+      rawInputs: {},
       past: s.past.slice(0, -1),
       future: [s.draft, ...s.future].slice(0, HISTORY_LIMIT),
       dirty: !sameJson(draft, s.original),
@@ -106,6 +119,7 @@ export const useEditorStore = create<EditorState>((set) => ({
     const draft = s.future[0];
     return {
       draft,
+      rawInputs: {},
       past: [...s.past, s.draft].slice(-HISTORY_LIMIT),
       future: s.future.slice(1),
       dirty: !sameJson(draft, s.original),

@@ -1,0 +1,33 @@
+{
+  "status": "cross-build-passed-native-install-pending",
+  "artifacts": [
+    {
+      "path": "/private/tmp/ggd-community-desktop-overlay/GGD Ability & VFX Editor 0.1.0.exe",
+      "bytes": 102422965,
+      "sha256": "23c91ac548dc2a1621c26cf4587314cd9898c6cbf5cb80fec572d133b74c8f3b",
+      "authenticodeCertificateBytes": 0
+    },
+    {
+      "path": "/private/tmp/ggd-community-desktop-overlay/GGD Ability & VFX Editor Setup 0.1.0.exe",
+      "bytes": 102589988,
+      "sha256": "7cb5b44f4cf85534b5e04cf42a0a39b0b93aa0e99520315cf91cf2d3c17da857",
+      "authenticodeCertificateBytes": 0
+    },
+    {
+      "path": "/private/tmp/ggd-community-desktop-overlay/GGD Ability & VFX Editor-0.1.0-universal-mac.zip",
+      "bytes": 212414622,
+      "sha256": "3ee9fb7a5d6830da9bca6f996f0acf92cbfeb3ccee362fa0dda9a8bdb1a0013a"
+    },
+    {
+      "path": "/private/tmp/ggd-community-desktop-overlay/GGD Ability & VFX Editor-0.1.0-universal.dmg",
+      "bytes": 212458591,
+      "sha256": "8acf35bf9d2b753f46c384bd114f50f3a3043e468cc2e02b2363ecc0aa7ced10"
+    }
+  ],
+  "macSigningInspection": {
+    "exitCode": 0,
+    "output": "Executable=/private/tmp/ggd-community-desktop-overlay/mac-universal/GGD Ability & VFX Editor.app/Contents/MacOS/GGD Ability & VFX Editor\nIdentifier=Electron\nFormat=app bundle with Mach-O universal (x86_64 arm64)\nCodeDirectory v=20400 size=513 flags=0x20002(adhoc,linker-signed) hashes=13+0 location=embedded\nSignature=adhoc\nInfo.plist=not bound\nTeamIdentifier=not set\nSealed Resources=none\nInternal requirements=none"
+  },
+  "windowsNativeRun": false,
+  "signedUpdateDowngradeVerified": false
+}

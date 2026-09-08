@@ -147,7 +147,6 @@ export const SIM_WORLD_DIGEST_EXEMPT: Readonly<Record<string, string>> = {
   mobZones: CONFIG + "（同 flowerZones，SimWorld.ts 自己的註解就是這樣寫的）",
 
   // ── 推導 ────────────────────────────────────────────────────────────────
-  stats: DERIVED + "：statRecomputeSystem 從 champion/裝備/modifier 重算",
   grid: DERIVED + "：SpatialHash 每 tick 由 transform 重建",
 
   // ── 單 tick 暫存 ────────────────────────────────────────────────────────

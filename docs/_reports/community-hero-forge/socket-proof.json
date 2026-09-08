@@ -1,0 +1,109 @@
+{
+  "schema": "ggd-community-socket-proof@1",
+  "runId": "socket-proof-1788689682506",
+  "startedAt": "2026-09-06T10:16:37.602Z",
+  "status": "passed",
+  "limits": "HTTP and game socket proof only; no browser or visual acceptance.",
+  "target": {
+    "gameRevision": "4793eaaaf2775b2081f5eca5881db32e0aab0ea8",
+    "contentVersion": "cv_085f572d8932",
+    "migrationFingerprint": "c8ba205d0ecf",
+    "processorFingerprint": "1752c1bad9b5"
+  },
+  "publications": [
+    {
+      "workId": "socket-proof-1788689682506-1",
+      "submissionId": "hero-8e4c02a3951305b1b3c6822483b887aed80710b9dcae0a05ce2d9489b80",
+      "packageDigest": "sha256:1745ee4207c604dcfc9e603063212ba6fa449158b2127509a03fcecb78e6ff71",
+      "snapshotDigest": "sha256:24b178f2825302682e9959b03d3e536686ab74f3c7ef1121766892fa20c5e821"
+    },
+    {
+      "workId": "socket-proof-1788689682506-2",
+      "submissionId": "hero-f2c7b03b84bbd663e1de01db60f2abe871c4b88cad5bc6e76d275da85db",
+      "packageDigest": "sha256:7768b0a5537207ebb8f5d1da1f9192793e754a4c77dad06e3620de83d8ba5350",
+      "snapshotDigest": "sha256:b54ca349e0617f662edc647a66db9a48f30be1234bcdc95158229decd05eb9a7"
+    }
+  ],
+  "platformRoomId": "r_01M1V3GMWTXCMNTDXVCEENDSNB",
+  "matchId": "m_01M1V3GMX92PQRJAPS2TSB15K8",
+  "lastStep": "two community champions selected in one live room",
+  "roomContent": {
+    "digest": "sha256:e6f0fb4cc68966113decdffc44e4e27321acdfa26ea136552436d7a7519fbd09",
+    "heroes": [
+      {
+        "workId": "socket-proof-1788689682506-1",
+        "submissionId": "hero-8e4c02a3951305b1b3c6822483b887aed80710b9dcae0a05ce2d9489b80",
+        "authorId": "01M1TY947RZYT7JAFZ938AZYK3",
+        "authorName": "hero-author",
+        "name": "同局驗證英雄 1",
+        "packageDigest": "sha256:1745ee4207c604dcfc9e603063212ba6fa449158b2127509a03fcecb78e6ff71",
+        "snapshotDigest": "sha256:24b178f2825302682e9959b03d3e536686ab74f3c7ef1121766892fa20c5e821"
+      },
+      {
+        "workId": "socket-proof-1788689682506-2",
+        "submissionId": "hero-f2c7b03b84bbd663e1de01db60f2abe871c4b88cad5bc6e76d275da85db",
+        "authorId": "01M1TY947RZYT7JAFZ938AZYK3",
+        "authorName": "hero-author",
+        "name": "同局驗證英雄 2",
+        "packageDigest": "sha256:7768b0a5537207ebb8f5d1da1f9192793e754a4c77dad06e3620de83d8ba5350",
+        "snapshotDigest": "sha256:b54ca349e0617f662edc647a66db9a48f30be1234bcdc95158229decd05eb9a7"
+      }
+    ],
+    "assets": 92
+  },
+  "selectedSeats": [
+    {
+      "accountId": "01M1TY944MP4T5XR71HSG7FE0P",
+      "championId": "socket-proof-1788689682506-2"
+    },
+    {
+      "accountId": "01M1TY947RZYT7JAFZ938AZYK3",
+      "championId": "socket-proof-1788689682506-1"
+    },
+    {
+      "accountId": "bot-2",
+      "championId": "socket-proof-1788689682506-2"
+    },
+    {
+      "accountId": "bot-3",
+      "championId": "socket-proof-1788689682506-2"
+    },
+    {
+      "accountId": "bot-4",
+      "championId": "socket-proof-1788689682506-2"
+    },
+    {
+      "accountId": "bot-5",
+      "championId": "socket-proof-1788689682506-1"
+    },
+    {
+      "accountId": "bot-6",
+      "championId": "socket-proof-1788689682506-2"
+    },
+    {
+      "accountId": "bot-7",
+      "championId": "socket-proof-1788689682506-1"
+    },
+    {
+      "accountId": "bot-8",
+      "championId": "socket-proof-1788689682506-1"
+    },
+    {
+      "accountId": "bot-9",
+      "championId": "socket-proof-1788689682506-1"
+    },
+    {
+      "accountId": "bot-10",
+      "championId": "socket-proof-1788689682506-2"
+    },
+    {
+      "accountId": "bot-11",
+      "championId": "socket-proof-1788689682506-2"
+    }
+  ],
+  "admission": {
+    "beforeOtherPlayerReady": 0,
+    "afterBothJoined": 5
+  },
+  "finishedAt": "2026-09-06T10:16:42.054Z"
+}

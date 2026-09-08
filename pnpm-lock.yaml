@@ -41,12 +41,18 @@ importers:
       '@ggd/shared':
         specifier: workspace:*
         version: link:../../packages/shared
+      '@tanstack/react-query':
+        specifier: ^5.59.20
+        version: 5.101.2(react@18.3.1)
       react:
         specifier: ^18.3.1
         version: 18.3.1
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
+      zod:
+        specifier: ^3.23.8
+        version: 3.25.76
       zustand:
         specifier: ^5.0.1
         version: 5.0.14(@types/react@18.3.31)(react@18.3.1)
@@ -204,6 +210,9 @@ importers:
       '@ggd/shared':
         specifier: workspace:*
         version: link:../../packages/shared
+      fastify:
+        specifier: ^5.1.0
+        version: 5.10.0
     devDependencies:
       '@types/node':
         specifier: ^22.9.0
@@ -303,9 +312,15 @@ importers:
       '@colyseus/schema':
         specifier: ^3.0.0
         version: 3.0.76
+      gltf-validator:
+        specifier: 2.0.0-dev.3.10
+        version: 2.0.0-dev.3.10
       safe-stable-stringify:
         specifier: ^2.5.0
         version: 2.5.0
+      typescript:
+        specifier: ^5.6.3
+        version: 5.9.3
       zod:
         specifier: ^3.23.8
         version: 3.25.76
@@ -316,9 +331,6 @@ importers:
       tsx:
         specifier: ^4.19.2
         version: 4.23.1
-      typescript:
-        specifier: ^5.6.3
-        version: 5.9.3
       vitest:
         specifier: ^2.1.4
         version: 2.1.9(@types/node@22.20.1)(jsdom@30.0.1(@noble/hashes@2.4.0))
@@ -2505,6 +2517,9 @@ packages:
   globalthis@1.0.4:
     resolution: {integrity: sha512-DpLKbNU4WylpxJykQujfCcwYWiV/Jhm50Goo0wrVILAv5jOr9d+H+UR3PhSCD2rCCEIg0uc+G+muBTwD54JhDQ==}
     engines: {node: '>= 0.4'}
+
+  gltf-validator@2.0.0-dev.3.10:
+    resolution: {integrity: sha512-odJ4k0tRkGXiDGn78yDBg+fBbAIvBnXxh3RwAta0emSxGtyagFE8B4xELB1oYe3S5RD8Ci3uZAsZaascH2LAEQ==}
 
   gopd@1.2.0:
     resolution: {integrity: sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg==}
@@ -6016,6 +6031,8 @@ snapshots:
       define-properties: 1.2.1
       gopd: 1.2.0
     optional: true
+
+  gltf-validator@2.0.0-dev.3.10: {}
 
   gopd@1.2.0: {}
 

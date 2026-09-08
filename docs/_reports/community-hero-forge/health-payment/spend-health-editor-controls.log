@@ -1,0 +1,97 @@
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor
+
+ ❯ src/form/walk.test.ts (12 tests | 1 failed) 46678ms
+   ✓ number or literal controls > exposes the shipping consumeStatus count as an editable number/all choice 1372ms
+   ✓ numeric rank column controls > offers actual spendHealth percentages as numeric rank columns 1056ms
+   ✓ walkZod widget kinds (editor-01) > maps strings/numbers/bools/enums/arrays/refs/literals from the REAL shared schemas 22773ms
+   × discriminated EffectDef union (editor-02) > renders variant cards keyed by kind, recursion depth-capped 5786ms
+     → expected [ 'applyBuff', 'applyStatus', …(47) ] to deeply equal [ 'applyBuff', 'applyStatus', …(46) ]
+   ✓ discriminated EffectDef union (editor-02) > the leap variant is a REAL editable card, not just a tag 4495ms
+   ✓ discriminated EffectDef union (editor-02) > the damageArea variant is a REAL editable card whose seed SAVES 3781ms
+   ✓ discriminated EffectDef union (editor-02) > every seeded number lands INSIDE its own declared bounds 3765ms
+   ✓ discriminated EffectDef union (editor-02) > provides sane defaults for new items and variant switches 3640ms
+ ✓ src/form/fullCoverageMatchesContract.test.ts (2 tests) 4421ms
+   ✓ all editor-contract fields have a real authoring control > the ruler is live and reads the current full contract 4406ms
+ ✓ src/form/fieldHint.test.tsx (5 tests) 3202ms
+   ✓ 欄位說明（.describe()）真的畫得出來 > ★ 出貨 schema 上真的有人寫過說明 —— 這條路不是為了一個沒人用的功能 3186ms
+ ✓ src/preview/previewLandedKinds.test.ts (9 tests) 10ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/form/walk.test.ts > discriminated EffectDef union (editor-02) > renders variant cards keyed by kind, recursion depth-capped
+AssertionError: expected [ 'applyBuff', 'applyStatus', …(47) ] to deeply equal [ 'applyBuff', 'applyStatus', …(46) ]
+
+- Expected
++ Received
+
+  Array [
+    "applyBuff",
+    "applyStatus",
+    "blink",
+    "carry",
+    "chainLightning",
+    "championForm",
+    "comboStrikes",
+    "consumeStatus",
+    "convertTeam",
+    "cycleBuff",
+    "damage",
+    "damageArea",
+    "damageLine",
+    "dash",
+    "delayed",
+    "devour",
+    "dispel",
+    "dot",
+    "evasion",
+    "eventValueConversion",
+    "extendBuff",
+    "floatingText",
+    "grantAttribute",
+    "grantGold",
+    "grantXp",
+    "heal",
+    "invulnerable",
+    "knockback",
+    "leap",
+    "manaBarrier",
+    "modifyCooldown",
+    "proxyCast",
+    "pull",
+    "randomArea",
+    "restore",
+    "revive",
+    "screenFlash",
+    "screenShake",
+    "shield",
+    "shieldBreak",
+    "spawnModelFx",
+    "spawnProjectile",
+    "spawnVfx",
++   "spendHealth",
+    "spendMana",
+    "summon",
+    "swapResource",
+    "taunt",
+    "weightedBranch",
+  ]
+
+ ❯ src/form/walk.test.ts:149:18
+    147|     // own SetUnitFlyHeightBJ sites) — this list had not been updated …
+    148|     // so the suite was red on the #247 branch before this line change…
+    149|     expect(tags).toEqual(
+       |                  ^
+    150|       [
+    151|         "applyBuff",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  1 failed | 27 passed (28)
+   Start at  05:21:16
+   Duration  61.69s (transform 3.03s, setup 0ms, collect 5.56s, tests 54.31s, environment 0ms, prepare 301ms)
+
+undefined
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/form/walk.test.ts src/form/fieldHint.test.tsx src/form/fullCoverageMatchesContract.test.ts src/preview/previewLandedKinds.test.ts --pool=forks --maxWorkers=1 --minWorkers=1

@@ -1,0 +1,9 @@
+test_preserves_shape_rig_animation_and_texture_color_at_vertices (test_prepare_mba_body.PreparationTest) ... ok
+test_rejects_incomplete_glb (test_prepare_mba_body.PreparationTest) ... ok
+test_rejects_layouts_that_cannot_be_preserved (test_prepare_mba_body.PreparationTest) ... ok
+test_rejects_zero_weights_and_uvs_that_need_wrapping (test_prepare_mba_body.PreparationTest) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.017s
+
+OK

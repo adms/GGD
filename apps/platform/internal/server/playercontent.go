@@ -1,6 +1,7 @@
 package server
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"log/slog"
@@ -12,6 +13,14 @@ import (
 	"github.com/ggd/platform/internal/data/jsonstore"
 	"github.com/ggd/platform/internal/submissions"
 )
+
+func (s *Server) heroAuthorName(ctx context.Context, id string) (string, error) {
+	account, err := s.Accounts.GetByID(ctx, id)
+	if err != nil {
+		return "", err
+	}
+	return account.Username, nil
+}
 
 // overlayPlayerContentKey 是 console 的 `putOverlayDoc(CONFIG, "ui-cues")` 產生的鍵。
 const overlayPlayerContentKey = "config/ui-cues"

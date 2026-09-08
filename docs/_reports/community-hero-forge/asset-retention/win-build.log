@@ -1,0 +1,20 @@
+  • electron-builder  version=26.15.3 os=25.4.0
+  • loaded configuration  file=package.json ("build" field)
+  • packageManager not detected by file, falling back to environment detection  resolvedPackageManager=pnpm detected=/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor-desktop
+  • detected workspace root for project using packageManager field  pm=pnpm config=pnpm@9.15.9 resolved=/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge projectDir=/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor-desktop
+  • executing @electron/rebuild  electronVersion=37.10.3 arch=x64 buildFromSource=false workspaceRoot=/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge projectDir=./ appDir=./
+  • installing native dependencies  arch=x64
+  • completed installing native dependencies
+  • packaging       platform=win32 arch=x64 electron=37.10.3 appOutDir=/private/tmp/ggd-community-desktop-retention/win-unpacked
+  • downloaded      label=electron progress=100%
+  • downloaded electron zip extracted successfully  output=/private/tmp/ggd-community-desktop-retention/win-unpacked
+  • searching for node modules  pm=pnpm searchDir=/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor-desktop
+  • updating asar integrity executable resource  executablePath=/private/tmp/ggd-community-desktop-retention/win-unpacked/GGD Ability & VFX Editor.exe
+  • signing with signtool.exe  path=/private/tmp/ggd-community-desktop-retention/win-unpacked/GGD Ability & VFX Editor.exe
+  • building        target=nsis file=/private/tmp/ggd-community-desktop-retention/GGD Ability & VFX Editor Setup 0.1.0.exe archs=x64 oneClick=true perMachine=false
+  • signing with signtool.exe  path=/private/tmp/ggd-community-desktop-retention/win-unpacked/resources/elevate.exe
+  • signing with signtool.exe  path=/private/tmp/ggd-community-desktop-retention/GGD Ability & VFX Editor Setup 0.1.0.__uninstaller.exe
+  • signing with signtool.exe  path=/private/tmp/ggd-community-desktop-retention/GGD Ability & VFX Editor Setup 0.1.0.exe
+  • building block map  blockMapFile=/private/tmp/ggd-community-desktop-retention/GGD Ability & VFX Editor Setup 0.1.0.exe.blockmap
+  • building        target=portable file=/private/tmp/ggd-community-desktop-retention/GGD Ability & VFX Editor 0.1.0.exe archs=x64
+  • signing with signtool.exe  path=/private/tmp/ggd-community-desktop-retention/GGD Ability & VFX Editor 0.1.0.exe

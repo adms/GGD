@@ -1,0 +1,13 @@
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor
+
+ ✓ src/form/editorFormInteractions.test.tsx (1 test) 1001ms
+   ✓ all Main brick forms through shipped React handlers > measures every brick, edits controls, serializes and remounts without claiming browser acceptance 1000ms
+ ✓ src/hero/HeroSlotEditor.test.tsx (4 tests) 488ms
+ ✓ src/form/FormRenderer.readOnly.test.tsx (1 test) 12ms
+
+ Test Files  3 passed (3)
+      Tests  6 passed (6)
+   Start at  20:56:02
+   Duration  13.50s (transform 2.73s, setup 0ms, collect 10.60s, tests 1.50s, environment 0ms, prepare 218ms)
+

@@ -191,7 +191,26 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
      * ⛔ 與其他九個 kind 用同一格語意（`applyStatus` / `restore` / `blink` …）。
      */
     const subjects = e.applyTo === "self" ? [ctx.caster] : ctx.targets;
+    // Keep scoped identities outside the legacy buff:stack namespace: an
+    // author's ordinary stack key may itself contain ':caster:...'.
+    const scopePrefix = e.sourceScope === "caster" ? `buff:caster:${ctx.caster}:` : "buff:";
+    const compoundPrefix = `${scopePrefix}${ctx.origin}#`;
+    const selfId = e.stackKey !== undefined
+      ? `${scopePrefix}stack:${e.stackKey}`
+      : `${compoundPrefix}${world.tick}`;
     for (const target of subjects) {
+      // A scoped source's expired stacks must not survive a same-tick reapply
+      // before the expiry system gets its next turn.
+      if (e.sourceScope === "caster") {
+        const sc = world.stats.get(target);
+        if (sc) {
+          const before = sc.sources.length;
+          sc.sources = sc.sources.filter(s => !(s.applierId === ctx.caster &&
+            (s.id === selfId || s.id.startsWith(compoundPrefix)) &&
+            s.expiresAtTick !== undefined && s.expiresAtTick <= world.tick));
+          if (sc.sources.length !== before) sc.dirty = true;
+        }
+      }
       // ⭐ S4b —— 天花板在**任何一條掛載路徑之前**問，而且問的是**這個身體**
       // （`final` 逐英雄不同，`thisSource` 逐身體各自疊）。頂到了就整發不生效。
       if (e.maxStat !== undefined) {
@@ -199,15 +218,13 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
         if (!sc0) continue;
         const held =
           e.stackKey !== undefined
-            ? sc0.sources.find((s) => s.id === `buff:stack:${e.stackKey}`)
+            ? sc0.sources.find((s) => s.id === selfId)
             : undefined;
         if (maxStatReached(sc0, e.maxStat, held)) continue;
       }
       // ⭐ G5 —— 互斥組先結算，**在任何一條掛載路徑之前**。位置是刻意的：拔除
       // 必須發生在新的那一份掛上之前，否則「先掛再拔」會有一個 tick 的縫，而
       // `statRecomputeSystem` 在那個縫裡就會把兩份乘起來一次。
-      const selfId =
-        e.stackKey !== undefined ? `buff:stack:${e.stackKey}` : `buff:${ctx.origin}#${world.tick}`;
       if (
         e.exclusiveGroup !== undefined &&
         !enforceExclusiveGroup(world, target, e.exclusiveGroup, e.exclusiveOnExisting, selfId)
@@ -237,6 +254,7 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
           attachSource(world, target, {
             id,
             kind: "buff",
+            ...(e.sourceScope === "caster" ? { applierId: ctx.caster } : {}),
             modifiers,
             // ⭐ G4 —— 這一份 buff 是**第幾階的施放**授予的，`fireHooks` 讀它來
             // 決定 hook payload 的 rank。⚠️ 疊層路徑也要帶（理由與下面 `hooks`
@@ -300,7 +318,7 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
       if (e.maxStacks !== undefined) {
         const sc = world.stats.get(target);
         if (sc) {
-          const prefix = `buff:${ctx.origin}#`;
+          const prefix = compoundPrefix;
           let held = 0;
           for (const src of sc.sources) if (src.id.startsWith(prefix)) held++;
           // ⚠️ `>=` 不是 `>`：`maxStacks: 6` 是「最多六份」，第七份要被擋掉。
@@ -310,6 +328,7 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
       attachSource(world, target, {
         id: selfId,
         kind: "buff",
+        ...(e.sourceScope === "caster" ? { applierId: ctx.caster } : {}),
         modifiers,
         // ⭐ G4 —— 見上面疊層路徑那一格：`fireHooks` 以這一階求值這份 buff 帶的
         // hook payload，所以「rank 3 的大招給的增益，它的觸發也是 rank 3 的量」。

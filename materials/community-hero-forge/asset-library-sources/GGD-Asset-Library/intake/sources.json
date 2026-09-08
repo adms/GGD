@@ -1,0 +1,82 @@
+{
+  "source_roots": [
+    {
+      "id": "300heroes",
+      "title": "300 英雄",
+      "version": "202609021",
+      "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes",
+      "entry": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/ASSET_LIBRARY.md",
+      "scope": "native assets and static OBJ; native skeletal animation data",
+      "character_entries": 276,
+      "indexed_records": 240759,
+      "kinds": {
+        "animation": 49859,
+        "audio": 72439,
+        "metadata": 7098,
+        "model": 34378,
+        "other": 29408,
+        "texture": 47543,
+        "vfx": 11,
+        "video": 23
+      },
+      "missing_paths": 0
+    },
+    {
+      "id": "mba",
+      "title": "魔法少女武鬥祭",
+      "version": "Complete Form 1.60+",
+      "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena",
+      "entry": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/ASSET_LIBRARY.md",
+      "scope": "native assets and GLB; model presence tracked per character",
+      "character_entries": 21,
+      "indexed_records": 4171,
+      "kinds": {
+        "animation": 1614,
+        "audio": 640,
+        "metadata": 21,
+        "model": 447,
+        "other": 217,
+        "texture": 808,
+        "vfx": 423,
+        "video": 1
+      },
+      "missing_paths": 0
+    },
+    {
+      "id": "lol",
+      "title": "LoL 七位角色",
+      "version": "local snapshot 20260907",
+      "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-lol-models-20260907",
+      "entry": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-lol-models-20260907/README-local-preview.md",
+      "scope": "seven bodies, textures and animations; original VFX/audio not extracted",
+      "character_entries": 7,
+      "indexed_records": 955,
+      "kinds": {
+        "animation": 879,
+        "model": 42,
+        "skeleton": 7,
+        "texture": 27
+      },
+      "missing_paths": 0
+    },
+    {
+      "id": "community37",
+      "title": "37 名社群英雄工作流",
+      "version": "20260907",
+      "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名",
+      "entry": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/README.md",
+      "scope": "designs and 185 VFX scripts using GGD proxy assets",
+      "character_entries": 37,
+      "indexed_records": 296,
+      "kinds": {
+        "hero_project": 37,
+        "preview_package": 37,
+        "recipe": 37,
+        "vfx": 185
+      },
+      "missing_paths": 0
+    }
+  ],
+  "historical_registry": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/asset-library-registry-20260907",
+  "refresh_command": "python3 tools/prepare_existing.py"
+}

@@ -1,5 +1,6 @@
 /** Typed wrappers over the platform admin API (all via the shared ApiClient). */
 import { ApiClient, ApiError } from "./session";
+import type { heroCatalogApi, CatalogHeroChoice, CatalogHeroPreview, CatalogVersionChoice } from "./contentApi";
 import { diffDoc, normalizeStarter, normalizeWhitelist, verifySaved } from "./curation";
 import type { BulkRequest, StarterBundle, VerifyResult, WhitelistDoc } from "./curation";
 import type { ResetRequestBody } from "./curationReset";
@@ -35,6 +36,18 @@ import type {
 
 /** The app-wide client instance. */
 export const api = new ApiClient();
+
+async function catalogResult<T>(read:()=>Promise<T>):Promise<{data:T|null;error:string|null}> {
+  try { return {data:await read(),error:null}; } catch(error) { return {data:null,error:error instanceof Error ? error.message : String(error)}; }
+}
+/** Hosted full-hero history uses the same admin session as ordinary overlays. */
+export const platformHeroCatalogApi: typeof heroCatalogApi = {
+  heroes:()=>catalogResult(()=>api.request<{heroes:CatalogHeroChoice[];currentVersion:string}>("/content-overlay/hero-catalog/heroes")),
+  versions:(cursor)=>catalogResult(()=>api.request<{items:CatalogVersionChoice[];nextCursor:string|null}>("/content-overlay/hero-catalog/versions"+(cursor ? "?cursor="+encodeURIComponent(cursor) : ""))),
+  capture:()=>catalogResult(()=>api.request<{version:{versionId:string}}>("/content-overlay/hero-catalog/versions/capture",{body:{}})),
+  preview:(heroPath,versionId)=>catalogResult(()=>api.request<CatalogHeroPreview>("/content-overlay/hero-catalog/preview",{body:{heroPath,versionId}})),
+  restore:(preview)=>catalogResult(()=>api.request<{versionId:string;restoredFrom:string;previousVersion:string;contentVersion:string}>("/content-overlay/hero-catalog/restore",{body:{heroPath:preview.hero.path,versionId:preview.versionId,expectedCurrentVersion:preview.currentVersion,planDigest:preview.planDigest}})),
+};
 
 // ---- auth -------------------------------------------------------------------
 
@@ -139,6 +152,10 @@ export function denyAccount(id: string, reason = ""): Promise<{ account: Account
   return api.request<{ account: AccountRow }>(`/admin/accounts/${encodeURIComponent(id)}/deny`, {
     body: { reason },
   });
+}
+
+export function setPowerUser(id: string, certified: boolean): Promise<{ account: AccountRow }> {
+  return api.request<{ account: AccountRow }>(`/admin/accounts/${encodeURIComponent(id)}/power-user`, { body: { certified } });
 }
 
 export function getProfile(id: string): Promise<Profile> {

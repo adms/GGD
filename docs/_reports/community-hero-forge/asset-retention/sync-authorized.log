@@ -1,0 +1,12 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/content-api
+
+ ✓ src/editorSourceSurvivesSync.test.ts (3 tests) 24882ms
+   ✓ P0-1 §5 來源改動撐得過 sync（⭐ 在沙盒副本上，⛔ 不碰出貨樹） > ★★ ⭐ 改**來源**的一個非級距欄位 ⇒ 重生成 ⇒ 三支正規化器跑完，那個值**還在** 24717ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  21:52:44
+   Duration  25.55s (transform 144ms, setup 0ms, collect 140ms, tests 24.88s, environment 0ms, prepare 85ms)
+

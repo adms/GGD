@@ -53,6 +53,7 @@ import { len, sub } from "../math/vec2";
 
 /** 一筆「等這一次衝刺結束就跑」的待付回呼。 */
 export interface DashOnEndPending {
+  castInstance?: import("../content/castInstance").CastInstance;
   caster: EntityId;
   /** 起跳座標 —— 用來量「真的走了多遠」（`onEndOn: "completed"`）。 */
   from: Vec2;
@@ -113,6 +114,7 @@ export function dashOnEndSystem(world: SimWorld): void {
 
     // ⭐ 這一行是整個機制：圓心是**現在**的座標（衝刺終點），不是起點。
     runEffects(p.effects, {
+      castInstance: p.castInstance,
       world,
       caster: p.caster,
       rank: p.rank,

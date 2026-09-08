@@ -1,0 +1,13 @@
+test_hook_events_and_ops_come_from_the_shipped_source (__main__.Derived) ... ok
+test_stat_caps_only_names_real_stats (__main__.Derived) ... ok
+test_stats_come_from_the_shipped_enum (__main__.Derived) ... ok
+test_a_requirement_key_nobody_handles_raises (__main__.MissingIsLoud) ... ok
+test_label_table_covers_every_stat_and_rejects_unknown_ones (__main__.MissingIsLoud) ... ok
+test_reconcile_raises_when_a_token_has_no_label (__main__.MissingIsLoud) ... ok
+test_require_ops_raises_when_an_op_has_no_rendering (__main__.MissingIsLoud) ... ok
+test_unknown_hook_event_raises (__main__.MissingIsLoud) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.012s
+
+OK

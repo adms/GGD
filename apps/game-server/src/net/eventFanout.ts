@@ -250,6 +250,9 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // NO DOUBLE-FIRE: `audio/sfxEdges.ts` 只 diff kill/death/levelUp/exUnlock，
   // 沒有任何東西從快照推導「法力剛剛被扣」。
   "manaSpend",
+  // Nonlethal life payment: VfxSystem shows the actual debit as 生命支付.
+  // No damage, hurt, lifesteal or combat audio event is synthesized.
+  "healthSpend",
   // ⭐ GH#406 —— `resourceSwap`（44-002 交換筆記本）。**從 SERVER_ONLY 搬過來的**：
   // v0.21.1 把它暫時列在那邊，理由是「今天真的沒有客戶端消費者」，並在那裡寫下
   // 「接上呈現的那一版要搬回這裡」。這就是那一版。

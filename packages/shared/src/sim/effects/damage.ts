@@ -204,6 +204,7 @@ export const damageEffect: EffectKindSpec<"damage"> = {
       // 這裡取 `amount` 是為了讓分母就是真的被 push 出去的那個數。
       const unscaledFraction = unscaledFractionOf(world, amount, resPart, type);
       world.damageQueue.push({
+        castInstance: ctx.castInstance,
         source: ctx.caster,
         target,
         amount,

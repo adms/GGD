@@ -1,0 +1,2086 @@
+{
+  "schema": "ggd-lol-pose-comparison@1",
+  "method": "Babylon 7.54.3 NullEngine actual skinned vertex positions; 17 evenly spaced samples per retained clip and all 30 ordered distinct-clip transitions per character; no GPU/image or A17 device claim",
+  "normalizedMaxThreshold": 0.001,
+  "models": [
+    {
+      "character": "warwick",
+      "source": "ggd-selected/warwick.glb",
+      "sourceSha256": "d2fa699ad89c7a57772aa1ae037e13873d856614a28a7f4e6b5870874d065871",
+      "target": "ggd-runtime-candidate/warwick.glb",
+      "targetSha256": "c159e999e5e46650a166271092f1812d77b0f0ba2ba3a450d9606a91ec3d5ef8",
+      "height": 284.73715019226074,
+      "movementMax": 624.25887188162,
+      "clips": [
+        {
+          "name": "warwick_dance_loop",
+          "samples": 17,
+          "max": 0.0070407200988039376,
+          "rms": 0.002010803696578597,
+          "normalizedMax": 0.000024727086346301808
+        },
+        {
+          "name": "warwick_run",
+          "samples": 17,
+          "max": 0.0020879779546279,
+          "rms": 0.0007178569823451641,
+          "normalizedMax": 0.000007333001518130149
+        },
+        {
+          "name": "warwick_death",
+          "samples": 17,
+          "max": 0.004206564765382201,
+          "rms": 0.0012033659026584782,
+          "normalizedMax": 0.000014773501675288372
+        },
+        {
+          "name": "warwick_spell1",
+          "samples": 17,
+          "max": 0.00422493006513718,
+          "rms": 0.0012673237438401558,
+          "normalizedMax": 0.000014838000809815001
+        },
+        {
+          "name": "warwick_attack1",
+          "samples": 17,
+          "max": 0.005959865997785882,
+          "rms": 0.001449461359899547,
+          "normalizedMax": 0.00002093111486773556
+        },
+        {
+          "name": "warwick_idle_v1",
+          "samples": 17,
+          "max": 0.020275251974832105,
+          "rms": 0.010392628982290361,
+          "normalizedMax": 0.00007120690770818564
+        }
+      ],
+      "transitions": [
+        {
+          "from": "warwick_dance_loop",
+          "to": "warwick_run",
+          "max": 0.0019093769732541565,
+          "rms": 0.0005818188847579825,
+          "vertices": 5643,
+          "normalizedMax": 0.000006705752909182744
+        },
+        {
+          "from": "warwick_dance_loop",
+          "to": "warwick_death",
+          "max": 0.002916844350505847,
+          "rms": 0.0009067586999556867,
+          "vertices": 5643,
+          "normalizedMax": 0.000010243989407551245
+        },
+        {
+          "from": "warwick_dance_loop",
+          "to": "warwick_spell1",
+          "max": 0.0029327456090185522,
+          "rms": 0.0010418412008769988,
+          "vertices": 5643,
+          "normalizedMax": 0.000010299834802161567
+        },
+        {
+          "from": "warwick_dance_loop",
+          "to": "warwick_attack1",
+          "max": 0.002549657158152185,
+          "rms": 0.0008769810377654771,
+          "vertices": 5643,
+          "normalizedMax": 0.000008954423953567705
+        },
+        {
+          "from": "warwick_dance_loop",
+          "to": "warwick_idle_v1",
+          "max": 0.01847202701655492,
+          "rms": 0.00856245409553983,
+          "vertices": 5643,
+          "normalizedMax": 0.00006487396184193809
+        },
+        {
+          "from": "warwick_run",
+          "to": "warwick_dance_loop",
+          "max": 0.0033235537612453024,
+          "rms": 0.0013336528637458837,
+          "vertices": 5643,
+          "normalizedMax": 0.000011672357326752644
+        },
+        {
+          "from": "warwick_run",
+          "to": "warwick_death",
+          "max": 0.002916844350505847,
+          "rms": 0.0009067586999556867,
+          "vertices": 5643,
+          "normalizedMax": 0.000010243989407551245
+        },
+        {
+          "from": "warwick_run",
+          "to": "warwick_spell1",
+          "max": 0.0029327456090185522,
+          "rms": 0.0010418412008769988,
+          "vertices": 5643,
+          "normalizedMax": 0.000010299834802161567
+        },
+        {
+          "from": "warwick_run",
+          "to": "warwick_attack1",
+          "max": 0.002549657158152185,
+          "rms": 0.0008769810377654771,
+          "vertices": 5643,
+          "normalizedMax": 0.000008954423953567705
+        },
+        {
+          "from": "warwick_run",
+          "to": "warwick_idle_v1",
+          "max": 0.01847202701655492,
+          "rms": 0.00856245409553983,
+          "vertices": 5643,
+          "normalizedMax": 0.00006487396184193809
+        },
+        {
+          "from": "warwick_death",
+          "to": "warwick_dance_loop",
+          "max": 0.0033235537612453024,
+          "rms": 0.0013336528637458837,
+          "vertices": 5643,
+          "normalizedMax": 0.000011672357326752644
+        },
+        {
+          "from": "warwick_death",
+          "to": "warwick_run",
+          "max": 0.0019093769732541565,
+          "rms": 0.0005818188847579825,
+          "vertices": 5643,
+          "normalizedMax": 0.000006705752909182744
+        },
+        {
+          "from": "warwick_death",
+          "to": "warwick_spell1",
+          "max": 0.0029327456090185522,
+          "rms": 0.0010418412008769988,
+          "vertices": 5643,
+          "normalizedMax": 0.000010299834802161567
+        },
+        {
+          "from": "warwick_death",
+          "to": "warwick_attack1",
+          "max": 0.002549657158152185,
+          "rms": 0.0008769810377654771,
+          "vertices": 5643,
+          "normalizedMax": 0.000008954423953567705
+        },
+        {
+          "from": "warwick_death",
+          "to": "warwick_idle_v1",
+          "max": 0.01847202701655492,
+          "rms": 0.00856245409553983,
+          "vertices": 5643,
+          "normalizedMax": 0.00006487396184193809
+        },
+        {
+          "from": "warwick_spell1",
+          "to": "warwick_dance_loop",
+          "max": 0.0033235537612453024,
+          "rms": 0.0013336528637458837,
+          "vertices": 5643,
+          "normalizedMax": 0.000011672357326752644
+        },
+        {
+          "from": "warwick_spell1",
+          "to": "warwick_run",
+          "max": 0.0019093769732541565,
+          "rms": 0.0005818188847579825,
+          "vertices": 5643,
+          "normalizedMax": 0.000006705752909182744
+        },
+        {
+          "from": "warwick_spell1",
+          "to": "warwick_death",
+          "max": 0.002916844350505847,
+          "rms": 0.0009067586999556867,
+          "vertices": 5643,
+          "normalizedMax": 0.000010243989407551245
+        },
+        {
+          "from": "warwick_spell1",
+          "to": "warwick_attack1",
+          "max": 0.002549657158152185,
+          "rms": 0.0008769810377654771,
+          "vertices": 5643,
+          "normalizedMax": 0.000008954423953567705
+        },
+        {
+          "from": "warwick_spell1",
+          "to": "warwick_idle_v1",
+          "max": 0.01847202701655492,
+          "rms": 0.00856245409553983,
+          "vertices": 5643,
+          "normalizedMax": 0.00006487396184193809
+        },
+        {
+          "from": "warwick_attack1",
+          "to": "warwick_dance_loop",
+          "max": 0.0033235537612453024,
+          "rms": 0.0013336528637458837,
+          "vertices": 5643,
+          "normalizedMax": 0.000011672357326752644
+        },
+        {
+          "from": "warwick_attack1",
+          "to": "warwick_run",
+          "max": 0.0019093769732541565,
+          "rms": 0.0005818188847579825,
+          "vertices": 5643,
+          "normalizedMax": 0.000006705752909182744
+        },
+        {
+          "from": "warwick_attack1",
+          "to": "warwick_death",
+          "max": 0.002916844350505847,
+          "rms": 0.0009067586999556867,
+          "vertices": 5643,
+          "normalizedMax": 0.000010243989407551245
+        },
+        {
+          "from": "warwick_attack1",
+          "to": "warwick_spell1",
+          "max": 0.0029327456090185522,
+          "rms": 0.0010418412008769988,
+          "vertices": 5643,
+          "normalizedMax": 0.000010299834802161567
+        },
+        {
+          "from": "warwick_attack1",
+          "to": "warwick_idle_v1",
+          "max": 0.01847202701655492,
+          "rms": 0.00856245409553983,
+          "vertices": 5643,
+          "normalizedMax": 0.00006487396184193809
+        },
+        {
+          "from": "warwick_idle_v1",
+          "to": "warwick_dance_loop",
+          "max": 0.0033235537612453024,
+          "rms": 0.0013336528637458837,
+          "vertices": 5643,
+          "normalizedMax": 0.000011672357326752644
+        },
+        {
+          "from": "warwick_idle_v1",
+          "to": "warwick_run",
+          "max": 0.0019093769732541565,
+          "rms": 0.0005818188847579825,
+          "vertices": 5643,
+          "normalizedMax": 0.000006705752909182744
+        },
+        {
+          "from": "warwick_idle_v1",
+          "to": "warwick_death",
+          "max": 0.002916844350505847,
+          "rms": 0.0009067586999556867,
+          "vertices": 5643,
+          "normalizedMax": 0.000010243989407551245
+        },
+        {
+          "from": "warwick_idle_v1",
+          "to": "warwick_spell1",
+          "max": 0.0029327456090185522,
+          "rms": 0.0010418412008769988,
+          "vertices": 5643,
+          "normalizedMax": 0.000010299834802161567
+        },
+        {
+          "from": "warwick_idle_v1",
+          "to": "warwick_attack1",
+          "max": 0.002549657158152185,
+          "rms": 0.0008769810377654771,
+          "vertices": 5643,
+          "normalizedMax": 0.000008954423953567705
+        }
+      ],
+      "maxNormalized": 0.00007120690770818564,
+      "pass": true
+    },
+    {
+      "character": "karthus",
+      "source": "ggd-selected/karthus.glb",
+      "sourceSha256": "f47742bc4047f6a5d24c8f159fc852e12ac85bada3aedc6499be7a013265648a",
+      "target": "ggd-runtime-candidate/karthus.glb",
+      "targetSha256": "896b61306285904ec771460bc32266d607b04d5b43a4549db96fef18317d1f8c",
+      "height": 336.3611464500427,
+      "movementMax": 412.46490217908746,
+      "clips": [
+        {
+          "name": "karthus_attack1",
+          "samples": 17,
+          "max": 0.003239390066918377,
+          "rms": 0.0011066917796467139,
+          "normalizedMax": 0.000009630690408529393
+        },
+        {
+          "name": "karthus_run",
+          "samples": 17,
+          "max": 0.004400712359482725,
+          "rms": 0.0009767604208695657,
+          "normalizedMax": 0.000013083295754958223
+        },
+        {
+          "name": "karthus_idle01",
+          "samples": 17,
+          "max": 0.006135404549744275,
+          "rms": 0.001969618120863989,
+          "normalizedMax": 0.000018240526929157444
+        },
+        {
+          "name": "karthus_spell1a",
+          "samples": 17,
+          "max": 0.0006561809912700226,
+          "rms": 0.000128192923834704,
+          "normalizedMax": 0.000001950822793284421
+        },
+        {
+          "name": "karthus_death",
+          "samples": 17,
+          "max": 0.003439802159589082,
+          "rms": 0.001008671403196024,
+          "normalizedMax": 0.000010226514554052309
+        },
+        {
+          "name": "karthus_dance_loop",
+          "samples": 17,
+          "max": 0.00015579664502458296,
+          "rms": 0.000049363351542014663,
+          "normalizedMax": 4.63182643622373e-7
+        }
+      ],
+      "transitions": [
+        {
+          "from": "karthus_attack1",
+          "to": "karthus_run",
+          "max": 0.003066993471314621,
+          "rms": 0.0006152680185721411,
+          "vertices": 5888,
+          "normalizedMax": 0.000009118156195160131
+        },
+        {
+          "from": "karthus_attack1",
+          "to": "karthus_idle01",
+          "max": 0.0015261900107808816,
+          "rms": 0.00042664934216849447,
+          "vertices": 5888,
+          "normalizedMax": 0.000004537355241199225
+        },
+        {
+          "from": "karthus_attack1",
+          "to": "karthus_spell1a",
+          "max": 0.00012135294891805165,
+          "rms": 0.000040236820422517736,
+          "vertices": 5888,
+          "normalizedMax": 3.607817079909832e-7
+        },
+        {
+          "from": "karthus_attack1",
+          "to": "karthus_death",
+          "max": 0.003063700433294339,
+          "rms": 0.000966096490868995,
+          "vertices": 5888,
+          "normalizedMax": 0.000009108366009655543
+        },
+        {
+          "from": "karthus_attack1",
+          "to": "karthus_dance_loop",
+          "max": 0.0001413498482791817,
+          "rms": 0.000040340607407267655,
+          "vertices": 5888,
+          "normalizedMax": 4.202323894153315e-7
+        },
+        {
+          "from": "karthus_run",
+          "to": "karthus_attack1",
+          "max": 0.00008897326499702913,
+          "rms": 0.00003748123308871463,
+          "vertices": 5888,
+          "normalizedMax": 2.645170702266104e-7
+        },
+        {
+          "from": "karthus_run",
+          "to": "karthus_idle01",
+          "max": 0.0015261900107808816,
+          "rms": 0.00042664934216849447,
+          "vertices": 5888,
+          "normalizedMax": 0.000004537355241199225
+        },
+        {
+          "from": "karthus_run",
+          "to": "karthus_spell1a",
+          "max": 0.00012135294891805165,
+          "rms": 0.000040236820422517736,
+          "vertices": 5888,
+          "normalizedMax": 3.607817079909832e-7
+        },
+        {
+          "from": "karthus_run",
+          "to": "karthus_death",
+          "max": 0.003063700433294339,
+          "rms": 0.000966096490868995,
+          "vertices": 5888,
+          "normalizedMax": 0.000009108366009655543
+        },
+        {
+          "from": "karthus_run",
+          "to": "karthus_dance_loop",
+          "max": 0.0001413498482791817,
+          "rms": 0.000040340607407267655,
+          "vertices": 5888,
+          "normalizedMax": 4.202323894153315e-7
+        },
+        {
+          "from": "karthus_idle01",
+          "to": "karthus_attack1",
+          "max": 0.00008897326499702913,
+          "rms": 0.00003748123308871463,
+          "vertices": 5888,
+          "normalizedMax": 2.645170702266104e-7
+        },
+        {
+          "from": "karthus_idle01",
+          "to": "karthus_run",
+          "max": 0.003066993471314621,
+          "rms": 0.0006152680185721411,
+          "vertices": 5888,
+          "normalizedMax": 0.000009118156195160131
+        },
+        {
+          "from": "karthus_idle01",
+          "to": "karthus_spell1a",
+          "max": 0.00012135294891805165,
+          "rms": 0.000040236820422517736,
+          "vertices": 5888,
+          "normalizedMax": 3.607817079909832e-7
+        },
+        {
+          "from": "karthus_idle01",
+          "to": "karthus_death",
+          "max": 0.003063700433294339,
+          "rms": 0.000966096490868995,
+          "vertices": 5888,
+          "normalizedMax": 0.000009108366009655543
+        },
+        {
+          "from": "karthus_idle01",
+          "to": "karthus_dance_loop",
+          "max": 0.0001413498482791817,
+          "rms": 0.000040340607407267655,
+          "vertices": 5888,
+          "normalizedMax": 4.202323894153315e-7
+        },
+        {
+          "from": "karthus_spell1a",
+          "to": "karthus_attack1",
+          "max": 0.00008897326499702913,
+          "rms": 0.00003748123308871463,
+          "vertices": 5888,
+          "normalizedMax": 2.645170702266104e-7
+        },
+        {
+          "from": "karthus_spell1a",
+          "to": "karthus_run",
+          "max": 0.003066993471314621,
+          "rms": 0.0006152680185721411,
+          "vertices": 5888,
+          "normalizedMax": 0.000009118156195160131
+        },
+        {
+          "from": "karthus_spell1a",
+          "to": "karthus_idle01",
+          "max": 0.0015261900107808816,
+          "rms": 0.00042664934216849447,
+          "vertices": 5888,
+          "normalizedMax": 0.000004537355241199225
+        },
+        {
+          "from": "karthus_spell1a",
+          "to": "karthus_death",
+          "max": 0.003063700433294339,
+          "rms": 0.000966096490868995,
+          "vertices": 5888,
+          "normalizedMax": 0.000009108366009655543
+        },
+        {
+          "from": "karthus_spell1a",
+          "to": "karthus_dance_loop",
+          "max": 0.0001413498482791817,
+          "rms": 0.000040340607407267655,
+          "vertices": 5888,
+          "normalizedMax": 4.202323894153315e-7
+        },
+        {
+          "from": "karthus_death",
+          "to": "karthus_attack1",
+          "max": 0.00008897326499702913,
+          "rms": 0.00003748123308871463,
+          "vertices": 5888,
+          "normalizedMax": 2.645170702266104e-7
+        },
+        {
+          "from": "karthus_death",
+          "to": "karthus_run",
+          "max": 0.003066993471314621,
+          "rms": 0.0006152680185721411,
+          "vertices": 5888,
+          "normalizedMax": 0.000009118156195160131
+        },
+        {
+          "from": "karthus_death",
+          "to": "karthus_idle01",
+          "max": 0.0015261900107808816,
+          "rms": 0.00042664934216849447,
+          "vertices": 5888,
+          "normalizedMax": 0.000004537355241199225
+        },
+        {
+          "from": "karthus_death",
+          "to": "karthus_spell1a",
+          "max": 0.00012135294891805165,
+          "rms": 0.000040236820422517736,
+          "vertices": 5888,
+          "normalizedMax": 3.607817079909832e-7
+        },
+        {
+          "from": "karthus_death",
+          "to": "karthus_dance_loop",
+          "max": 0.0001413498482791817,
+          "rms": 0.000040340607407267655,
+          "vertices": 5888,
+          "normalizedMax": 4.202323894153315e-7
+        },
+        {
+          "from": "karthus_dance_loop",
+          "to": "karthus_attack1",
+          "max": 0.00008897326499702913,
+          "rms": 0.00003748123308871463,
+          "vertices": 5888,
+          "normalizedMax": 2.645170702266104e-7
+        },
+        {
+          "from": "karthus_dance_loop",
+          "to": "karthus_run",
+          "max": 0.003066993471314621,
+          "rms": 0.0006152680185721411,
+          "vertices": 5888,
+          "normalizedMax": 0.000009118156195160131
+        },
+        {
+          "from": "karthus_dance_loop",
+          "to": "karthus_idle01",
+          "max": 0.0015261900107808816,
+          "rms": 0.00042664934216849447,
+          "vertices": 5888,
+          "normalizedMax": 0.000004537355241199225
+        },
+        {
+          "from": "karthus_dance_loop",
+          "to": "karthus_spell1a",
+          "max": 0.00012135294891805165,
+          "rms": 0.000040236820422517736,
+          "vertices": 5888,
+          "normalizedMax": 3.607817079909832e-7
+        },
+        {
+          "from": "karthus_dance_loop",
+          "to": "karthus_death",
+          "max": 0.003063700433294339,
+          "rms": 0.000966096490868995,
+          "vertices": 5888,
+          "normalizedMax": 0.000009108366009655543
+        }
+      ],
+      "maxNormalized": 0.000018240526929157444,
+      "pass": true
+    },
+    {
+      "character": "lux",
+      "source": "ggd-selected/lux.glb",
+      "sourceSha256": "bbb7c61c8e77002696e46a92b7465de725c869a64175cc463aa140eb5db99739",
+      "target": "ggd-runtime-candidate/lux.glb",
+      "targetSha256": "6ccd3b50b01b4bb1c9bbda8352ca3c4b487f0cd034b6d2b62664a7df239d7375",
+      "height": 129.64548879116774,
+      "movementMax": 5124.611739153637,
+      "clips": [
+        {
+          "name": "lux_idle1",
+          "samples": 17,
+          "max": 0.0005957524085763113,
+          "rms": 0.00010050994493479127,
+          "normalizedMax": 0.0000045952421031475
+        },
+        {
+          "name": "lux_spell1",
+          "samples": 17,
+          "max": 0.00011247977654664229,
+          "rms": 0.000014201394913083241,
+          "normalizedMax": 8.675949899639325e-7
+        },
+        {
+          "name": "lux_death",
+          "samples": 17,
+          "max": 0.0033712164852483582,
+          "rms": 0.001317745382581272,
+          "normalizedMax": 0.00002600334586788975
+        },
+        {
+          "name": "lux_dance_60fps",
+          "samples": 17,
+          "max": 0.0018001834564441868,
+          "rms": 0.0006271050260701797,
+          "normalizedMax": 0.000013885430748337976
+        },
+        {
+          "name": "lux_run",
+          "samples": 17,
+          "max": 0.0006789827941370548,
+          "rms": 0.00003848234030319354,
+          "normalizedMax": 0.000005237226535747469
+        },
+        {
+          "name": "lux_attack1",
+          "samples": 17,
+          "max": 0.00013000050412349,
+          "rms": 0.000008553928828129848,
+          "normalizedMax": 0.0000010027383546904138
+        }
+      ],
+      "transitions": [
+        {
+          "from": "lux_idle1",
+          "to": "lux_spell1",
+          "max": 0.00003555875432491714,
+          "rms": 0.000005379163191617969,
+          "vertices": 3277,
+          "normalizedMax": 2.74276834901637e-7
+        },
+        {
+          "from": "lux_idle1",
+          "to": "lux_death",
+          "max": 0.00012595723709944958,
+          "rms": 0.000010853622802875125,
+          "vertices": 3277,
+          "normalizedMax": 9.71551253143415e-7
+        },
+        {
+          "from": "lux_idle1",
+          "to": "lux_dance_60fps",
+          "max": 0.00012903886623827246,
+          "rms": 0.000011321571090143034,
+          "vertices": 3277,
+          "normalizedMax": 9.953209127556115e-7
+        },
+        {
+          "from": "lux_idle1",
+          "to": "lux_run",
+          "max": 0.00016112298646501827,
+          "rms": 0.00000961242236401139,
+          "vertices": 3277,
+          "normalizedMax": 0.000001242796706367117
+        },
+        {
+          "from": "lux_idle1",
+          "to": "lux_attack1",
+          "max": 0.000002384185791015625,
+          "rms": 1.2043007995083752e-7,
+          "vertices": 3277,
+          "normalizedMax": 1.839004051159897e-8
+        },
+        {
+          "from": "lux_spell1",
+          "to": "lux_idle1",
+          "max": 0.00015986796883034424,
+          "rms": 0.000011768000224264864,
+          "vertices": 3277,
+          "normalizedMax": 0.0000012331163260748604
+        },
+        {
+          "from": "lux_spell1",
+          "to": "lux_death",
+          "max": 0.00012595723709944958,
+          "rms": 0.000010853622802875125,
+          "vertices": 3277,
+          "normalizedMax": 9.71551253143415e-7
+        },
+        {
+          "from": "lux_spell1",
+          "to": "lux_dance_60fps",
+          "max": 0.00012903886623827246,
+          "rms": 0.000011321571090143034,
+          "vertices": 3277,
+          "normalizedMax": 9.953209127556115e-7
+        },
+        {
+          "from": "lux_spell1",
+          "to": "lux_run",
+          "max": 0.00016112298646501827,
+          "rms": 0.00000961242236401139,
+          "vertices": 3277,
+          "normalizedMax": 0.000001242796706367117
+        },
+        {
+          "from": "lux_spell1",
+          "to": "lux_attack1",
+          "max": 0.000002384185791015625,
+          "rms": 1.2043007995083752e-7,
+          "vertices": 3277,
+          "normalizedMax": 1.839004051159897e-8
+        },
+        {
+          "from": "lux_death",
+          "to": "lux_idle1",
+          "max": 0.00015986796883034424,
+          "rms": 0.000011768000224264864,
+          "vertices": 3277,
+          "normalizedMax": 0.0000012331163260748604
+        },
+        {
+          "from": "lux_death",
+          "to": "lux_spell1",
+          "max": 0.00003555875432491714,
+          "rms": 0.000005379163191617969,
+          "vertices": 3277,
+          "normalizedMax": 2.74276834901637e-7
+        },
+        {
+          "from": "lux_death",
+          "to": "lux_dance_60fps",
+          "max": 0.00012903886623827246,
+          "rms": 0.000011321571090143034,
+          "vertices": 3277,
+          "normalizedMax": 9.953209127556115e-7
+        },
+        {
+          "from": "lux_death",
+          "to": "lux_run",
+          "max": 0.00016112298646501827,
+          "rms": 0.00000961242236401139,
+          "vertices": 3277,
+          "normalizedMax": 0.000001242796706367117
+        },
+        {
+          "from": "lux_death",
+          "to": "lux_attack1",
+          "max": 0.000002384185791015625,
+          "rms": 1.2043007995083752e-7,
+          "vertices": 3277,
+          "normalizedMax": 1.839004051159897e-8
+        },
+        {
+          "from": "lux_dance_60fps",
+          "to": "lux_idle1",
+          "max": 0.00015986796883034424,
+          "rms": 0.000011768000224264864,
+          "vertices": 3277,
+          "normalizedMax": 0.0000012331163260748604
+        },
+        {
+          "from": "lux_dance_60fps",
+          "to": "lux_spell1",
+          "max": 0.00003555875432491714,
+          "rms": 0.000005379163191617969,
+          "vertices": 3277,
+          "normalizedMax": 2.74276834901637e-7
+        },
+        {
+          "from": "lux_dance_60fps",
+          "to": "lux_death",
+          "max": 0.00012595723709944958,
+          "rms": 0.000010853622802875125,
+          "vertices": 3277,
+          "normalizedMax": 9.71551253143415e-7
+        },
+        {
+          "from": "lux_dance_60fps",
+          "to": "lux_run",
+          "max": 0.00016112298646501827,
+          "rms": 0.00000961242236401139,
+          "vertices": 3277,
+          "normalizedMax": 0.000001242796706367117
+        },
+        {
+          "from": "lux_dance_60fps",
+          "to": "lux_attack1",
+          "max": 0.000002384185791015625,
+          "rms": 1.2043007995083752e-7,
+          "vertices": 3277,
+          "normalizedMax": 1.839004051159897e-8
+        },
+        {
+          "from": "lux_run",
+          "to": "lux_idle1",
+          "max": 0.00015986796883034424,
+          "rms": 0.000011768000224264864,
+          "vertices": 3277,
+          "normalizedMax": 0.0000012331163260748604
+        },
+        {
+          "from": "lux_run",
+          "to": "lux_spell1",
+          "max": 0.00003555875432491714,
+          "rms": 0.000005379163191617969,
+          "vertices": 3277,
+          "normalizedMax": 2.74276834901637e-7
+        },
+        {
+          "from": "lux_run",
+          "to": "lux_death",
+          "max": 0.00012595723709944958,
+          "rms": 0.000010853622802875125,
+          "vertices": 3277,
+          "normalizedMax": 9.71551253143415e-7
+        },
+        {
+          "from": "lux_run",
+          "to": "lux_dance_60fps",
+          "max": 0.00012903886623827246,
+          "rms": 0.000011321571090143034,
+          "vertices": 3277,
+          "normalizedMax": 9.953209127556115e-7
+        },
+        {
+          "from": "lux_run",
+          "to": "lux_attack1",
+          "max": 0.000002384185791015625,
+          "rms": 1.2043007995083752e-7,
+          "vertices": 3277,
+          "normalizedMax": 1.839004051159897e-8
+        },
+        {
+          "from": "lux_attack1",
+          "to": "lux_idle1",
+          "max": 0.00015986796883034424,
+          "rms": 0.000011768000224264864,
+          "vertices": 3277,
+          "normalizedMax": 0.0000012331163260748604
+        },
+        {
+          "from": "lux_attack1",
+          "to": "lux_spell1",
+          "max": 0.00003555875432491714,
+          "rms": 0.000005379163191617969,
+          "vertices": 3277,
+          "normalizedMax": 2.74276834901637e-7
+        },
+        {
+          "from": "lux_attack1",
+          "to": "lux_death",
+          "max": 0.00012595723709944958,
+          "rms": 0.000010853622802875125,
+          "vertices": 3277,
+          "normalizedMax": 9.71551253143415e-7
+        },
+        {
+          "from": "lux_attack1",
+          "to": "lux_dance_60fps",
+          "max": 0.00012903886623827246,
+          "rms": 0.000011321571090143034,
+          "vertices": 3277,
+          "normalizedMax": 9.953209127556115e-7
+        },
+        {
+          "from": "lux_attack1",
+          "to": "lux_run",
+          "max": 0.00016112298646501827,
+          "rms": 0.00000961242236401139,
+          "vertices": 3277,
+          "normalizedMax": 0.000001242796706367117
+        }
+      ],
+      "maxNormalized": 0.00002600334586788975,
+      "pass": true
+    },
+    {
+      "character": "yasuo",
+      "source": "ggd-selected/yasuo.glb",
+      "sourceSha256": "b5538135f42e9cb14450adbe85da0c1add3799aa55f2ba1c4df5a2d983799b23",
+      "target": "ggd-runtime-candidate/yasuo.glb",
+      "targetSha256": "d1b6123438b0b8735fdc6585eb72c433530e951027ee1860746153e9955b16b2",
+      "height": 216.0111561222002,
+      "movementMax": 489.26014129260005,
+      "clips": [
+        {
+          "name": "yasuo_idle1",
+          "samples": 17,
+          "max": 0.06997091981047711,
+          "rms": 0.004091122350033332,
+          "normalizedMax": 0.00032392271337547814
+        },
+        {
+          "name": "yasuo_dance_loop",
+          "samples": 17,
+          "max": 0.024651209209991358,
+          "rms": 0.005489080789008086,
+          "normalizedMax": 0.00011412007440970253
+        },
+        {
+          "name": "yasuo_attack1",
+          "samples": 17,
+          "max": 0.011397705163921983,
+          "rms": 0.00214147590223477,
+          "normalizedMax": 0.000052764428321813894
+        },
+        {
+          "name": "yasuo_death",
+          "samples": 17,
+          "max": 0.003993702015659399,
+          "rms": 0.0004320573370256477,
+          "normalizedMax": 0.000018488406281202034
+        },
+        {
+          "name": "yasuo_spell1a",
+          "samples": 17,
+          "max": 0.004666399341610604,
+          "rms": 0.0007444161450101916,
+          "normalizedMax": 0.00002160258490987736
+        },
+        {
+          "name": "yasuo_run1",
+          "samples": 17,
+          "max": 0.000315399575936804,
+          "rms": 0.00004759515567411152,
+          "normalizedMax": 0.0000014601078092391607
+        }
+      ],
+      "transitions": [
+        {
+          "from": "yasuo_idle1",
+          "to": "yasuo_dance_loop",
+          "max": 0.008304696702324046,
+          "rms": 0.002347312031721341,
+          "vertices": 6181,
+          "normalizedMax": 0.00003844568424802086
+        },
+        {
+          "from": "yasuo_idle1",
+          "to": "yasuo_attack1",
+          "max": 0.008051399638180788,
+          "rms": 0.0012647975642195832,
+          "vertices": 6181,
+          "normalizedMax": 0.000037273073218616595
+        },
+        {
+          "from": "yasuo_idle1",
+          "to": "yasuo_death",
+          "max": 0.0014530792283596738,
+          "rms": 0.00016860836469876145,
+          "vertices": 6181,
+          "normalizedMax": 0.000006726871215566518
+        },
+        {
+          "from": "yasuo_idle1",
+          "to": "yasuo_spell1a",
+          "max": 0.0001419277585776187,
+          "rms": 0.000024221815810959976,
+          "vertices": 6181,
+          "normalizedMax": 6.570390211574461e-7
+        },
+        {
+          "from": "yasuo_idle1",
+          "to": "yasuo_run1",
+          "max": 0.00006210609495225882,
+          "rms": 0.000006342166826051531,
+          "vertices": 6181,
+          "normalizedMax": 2.87513367675902e-7
+        },
+        {
+          "from": "yasuo_dance_loop",
+          "to": "yasuo_idle1",
+          "max": 0.00014501181675881408,
+          "rms": 0.000023599956133258575,
+          "vertices": 6181,
+          "normalizedMax": 6.713163308879246e-7
+        },
+        {
+          "from": "yasuo_dance_loop",
+          "to": "yasuo_attack1",
+          "max": 0.008051399638180788,
+          "rms": 0.0012647975642195832,
+          "vertices": 6181,
+          "normalizedMax": 0.000037273073218616595
+        },
+        {
+          "from": "yasuo_dance_loop",
+          "to": "yasuo_death",
+          "max": 0.0014530792283596738,
+          "rms": 0.00016860836469876145,
+          "vertices": 6181,
+          "normalizedMax": 0.000006726871215566518
+        },
+        {
+          "from": "yasuo_dance_loop",
+          "to": "yasuo_spell1a",
+          "max": 0.0001419277585776187,
+          "rms": 0.000024221815810959976,
+          "vertices": 6181,
+          "normalizedMax": 6.570390211574461e-7
+        },
+        {
+          "from": "yasuo_dance_loop",
+          "to": "yasuo_run1",
+          "max": 0.00006210609495225882,
+          "rms": 0.000006342166826051531,
+          "vertices": 6181,
+          "normalizedMax": 2.87513367675902e-7
+        },
+        {
+          "from": "yasuo_attack1",
+          "to": "yasuo_idle1",
+          "max": 0.00014501181675881408,
+          "rms": 0.000023599956133258575,
+          "vertices": 6181,
+          "normalizedMax": 6.713163308879246e-7
+        },
+        {
+          "from": "yasuo_attack1",
+          "to": "yasuo_dance_loop",
+          "max": 0.008304696702324046,
+          "rms": 0.002347312031721341,
+          "vertices": 6181,
+          "normalizedMax": 0.00003844568424802086
+        },
+        {
+          "from": "yasuo_attack1",
+          "to": "yasuo_death",
+          "max": 0.0014530792283596738,
+          "rms": 0.00016860836469876145,
+          "vertices": 6181,
+          "normalizedMax": 0.000006726871215566518
+        },
+        {
+          "from": "yasuo_attack1",
+          "to": "yasuo_spell1a",
+          "max": 0.0001419277585776187,
+          "rms": 0.000024221815810959976,
+          "vertices": 6181,
+          "normalizedMax": 6.570390211574461e-7
+        },
+        {
+          "from": "yasuo_attack1",
+          "to": "yasuo_run1",
+          "max": 0.00006210609495225882,
+          "rms": 0.000006342166826051531,
+          "vertices": 6181,
+          "normalizedMax": 2.87513367675902e-7
+        },
+        {
+          "from": "yasuo_death",
+          "to": "yasuo_idle1",
+          "max": 0.00014501181675881408,
+          "rms": 0.000023599956133258575,
+          "vertices": 6181,
+          "normalizedMax": 6.713163308879246e-7
+        },
+        {
+          "from": "yasuo_death",
+          "to": "yasuo_dance_loop",
+          "max": 0.008304696702324046,
+          "rms": 0.002347312031721341,
+          "vertices": 6181,
+          "normalizedMax": 0.00003844568424802086
+        },
+        {
+          "from": "yasuo_death",
+          "to": "yasuo_attack1",
+          "max": 0.008051399638180788,
+          "rms": 0.0012647975642195832,
+          "vertices": 6181,
+          "normalizedMax": 0.000037273073218616595
+        },
+        {
+          "from": "yasuo_death",
+          "to": "yasuo_spell1a",
+          "max": 0.0001419277585776187,
+          "rms": 0.000024221815810959976,
+          "vertices": 6181,
+          "normalizedMax": 6.570390211574461e-7
+        },
+        {
+          "from": "yasuo_death",
+          "to": "yasuo_run1",
+          "max": 0.00006210609495225882,
+          "rms": 0.000006342166826051531,
+          "vertices": 6181,
+          "normalizedMax": 2.87513367675902e-7
+        },
+        {
+          "from": "yasuo_spell1a",
+          "to": "yasuo_idle1",
+          "max": 0.00014501181675881408,
+          "rms": 0.000023599956133258575,
+          "vertices": 6181,
+          "normalizedMax": 6.713163308879246e-7
+        },
+        {
+          "from": "yasuo_spell1a",
+          "to": "yasuo_dance_loop",
+          "max": 0.008304696702324046,
+          "rms": 0.002347312031721341,
+          "vertices": 6181,
+          "normalizedMax": 0.00003844568424802086
+        },
+        {
+          "from": "yasuo_spell1a",
+          "to": "yasuo_attack1",
+          "max": 0.008051399638180788,
+          "rms": 0.0012647975642195832,
+          "vertices": 6181,
+          "normalizedMax": 0.000037273073218616595
+        },
+        {
+          "from": "yasuo_spell1a",
+          "to": "yasuo_death",
+          "max": 0.0014530792283596738,
+          "rms": 0.00016860836469876145,
+          "vertices": 6181,
+          "normalizedMax": 0.000006726871215566518
+        },
+        {
+          "from": "yasuo_spell1a",
+          "to": "yasuo_run1",
+          "max": 0.00006210609495225882,
+          "rms": 0.000006342166826051531,
+          "vertices": 6181,
+          "normalizedMax": 2.87513367675902e-7
+        },
+        {
+          "from": "yasuo_run1",
+          "to": "yasuo_idle1",
+          "max": 0.00014501181675881408,
+          "rms": 0.000023599956133258575,
+          "vertices": 6181,
+          "normalizedMax": 6.713163308879246e-7
+        },
+        {
+          "from": "yasuo_run1",
+          "to": "yasuo_dance_loop",
+          "max": 0.008304696702324046,
+          "rms": 0.002347312031721341,
+          "vertices": 6181,
+          "normalizedMax": 0.00003844568424802086
+        },
+        {
+          "from": "yasuo_run1",
+          "to": "yasuo_attack1",
+          "max": 0.008051399638180788,
+          "rms": 0.0012647975642195832,
+          "vertices": 6181,
+          "normalizedMax": 0.000037273073218616595
+        },
+        {
+          "from": "yasuo_run1",
+          "to": "yasuo_death",
+          "max": 0.0014530792283596738,
+          "rms": 0.00016860836469876145,
+          "vertices": 6181,
+          "normalizedMax": 0.000006726871215566518
+        },
+        {
+          "from": "yasuo_run1",
+          "to": "yasuo_spell1a",
+          "max": 0.0001419277585776187,
+          "rms": 0.000024221815810959976,
+          "vertices": 6181,
+          "normalizedMax": 6.570390211574461e-7
+        }
+      ],
+      "maxNormalized": 0.00032392271337547814,
+      "pass": true
+    },
+    {
+      "character": "missfortune",
+      "source": "ggd-selected/missfortune.glb",
+      "sourceSha256": "d3db870199182b95bffc886abf5683e41685389b7817991688c0ddea81af93a0",
+      "target": "ggd-runtime-candidate/missfortune.glb",
+      "targetSha256": "c3bc5f079618f6de7e3e1d30960e32a755b9622ed403ea00f4103991918b5cc2",
+      "height": 167.59493324533105,
+      "movementMax": 300.5163055144373,
+      "clips": [
+        {
+          "name": "missfortune_dance",
+          "samples": 17,
+          "max": 0.006076457782361084,
+          "rms": 0.0016266309451688716,
+          "normalizedMax": 0.000036256810779990366
+        },
+        {
+          "name": "missfortune_attack1",
+          "samples": 17,
+          "max": 0.0009018451818396874,
+          "rms": 0.00019825126857190786,
+          "normalizedMax": 0.000005381100516443038
+        },
+        {
+          "name": "missfortune_spell1",
+          "samples": 17,
+          "max": 0.0015562682122310348,
+          "rms": 0.0004668614851138788,
+          "normalizedMax": 0.000009285890582103204
+        },
+        {
+          "name": "missfortune_run",
+          "samples": 17,
+          "max": 0.00011800924910169998,
+          "rms": 0.000026049188943425024,
+          "normalizedMax": 7.041337516388643e-7
+        },
+        {
+          "name": "missfortune_idle1",
+          "samples": 17,
+          "max": 0.0005473027142628751,
+          "rms": 0.0001115797631998715,
+          "normalizedMax": 0.00000326562804534022
+        },
+        {
+          "name": "missfortune_death",
+          "samples": 17,
+          "max": 0.0005537802590687325,
+          "rms": 0.0001422586357344495,
+          "normalizedMax": 0.000003304278049134639
+        }
+      ],
+      "transitions": [
+        {
+          "from": "missfortune_dance",
+          "to": "missfortune_attack1",
+          "max": 0,
+          "rms": 0,
+          "vertices": 4626,
+          "normalizedMax": 0
+        },
+        {
+          "from": "missfortune_dance",
+          "to": "missfortune_spell1",
+          "max": 0.0013453123625008694,
+          "rms": 0.000460677922021454,
+          "vertices": 4626,
+          "normalizedMax": 0.00000802716607507195
+        },
+        {
+          "from": "missfortune_dance",
+          "to": "missfortune_run",
+          "max": 0,
+          "rms": 0,
+          "vertices": 4626,
+          "normalizedMax": 0
+        },
+        {
+          "from": "missfortune_dance",
+          "to": "missfortune_idle1",
+          "max": 0.00001629639386237627,
+          "rms": 0.0000036236862966719715,
+          "vertices": 4626,
+          "normalizedMax": 9.72367931822919e-8
+        },
+        {
+          "from": "missfortune_dance",
+          "to": "missfortune_death",
+          "max": 0.0002981220081643627,
+          "rms": 0.000026276537719812708,
+          "vertices": 4626,
+          "normalizedMax": 0.000001778824707832675
+        },
+        {
+          "from": "missfortune_attack1",
+          "to": "missfortune_dance",
+          "max": 0.0012037115378539256,
+          "rms": 0.00016037795846176366,
+          "vertices": 4626,
+          "normalizedMax": 0.00000718226687731599
+        },
+        {
+          "from": "missfortune_attack1",
+          "to": "missfortune_spell1",
+          "max": 0.0013453123625008694,
+          "rms": 0.000460677922021454,
+          "vertices": 4626,
+          "normalizedMax": 0.00000802716607507195
+        },
+        {
+          "from": "missfortune_attack1",
+          "to": "missfortune_run",
+          "max": 0,
+          "rms": 0,
+          "vertices": 4626,
+          "normalizedMax": 0
+        },
+        {
+          "from": "missfortune_attack1",
+          "to": "missfortune_idle1",
+          "max": 0.00001629639386237627,
+          "rms": 0.0000036236862966719715,
+          "vertices": 4626,
+          "normalizedMax": 9.72367931822919e-8
+        },
+        {
+          "from": "missfortune_attack1",
+          "to": "missfortune_death",
+          "max": 0.0002981220081643627,
+          "rms": 0.000026276537719812708,
+          "vertices": 4626,
+          "normalizedMax": 0.000001778824707832675
+        },
+        {
+          "from": "missfortune_spell1",
+          "to": "missfortune_dance",
+          "max": 0.0012037115378539256,
+          "rms": 0.00016037795846176366,
+          "vertices": 4626,
+          "normalizedMax": 0.00000718226687731599
+        },
+        {
+          "from": "missfortune_spell1",
+          "to": "missfortune_attack1",
+          "max": 0,
+          "rms": 0,
+          "vertices": 4626,
+          "normalizedMax": 0
+        },
+        {
+          "from": "missfortune_spell1",
+          "to": "missfortune_run",
+          "max": 0.000015619601587447356,
+          "rms": 8.707498418012547e-7,
+          "vertices": 4626,
+          "normalizedMax": 9.319853103543926e-8
+        },
+        {
+          "from": "missfortune_spell1",
+          "to": "missfortune_idle1",
+          "max": 0.00001629639386237627,
+          "rms": 0.0000036236862966719715,
+          "vertices": 4626,
+          "normalizedMax": 9.72367931822919e-8
+        },
+        {
+          "from": "missfortune_spell1",
+          "to": "missfortune_death",
+          "max": 0.0002981220081643627,
+          "rms": 0.000026276537719812708,
+          "vertices": 4626,
+          "normalizedMax": 0.000001778824707832675
+        },
+        {
+          "from": "missfortune_run",
+          "to": "missfortune_dance",
+          "max": 0.0012037115378539256,
+          "rms": 0.00016037795846176366,
+          "vertices": 4626,
+          "normalizedMax": 0.00000718226687731599
+        },
+        {
+          "from": "missfortune_run",
+          "to": "missfortune_attack1",
+          "max": 0,
+          "rms": 0,
+          "vertices": 4626,
+          "normalizedMax": 0
+        },
+        {
+          "from": "missfortune_run",
+          "to": "missfortune_spell1",
+          "max": 0.0013453123625008694,
+          "rms": 0.000460677922021454,
+          "vertices": 4626,
+          "normalizedMax": 0.00000802716607507195
+        },
+        {
+          "from": "missfortune_run",
+          "to": "missfortune_idle1",
+          "max": 0.00001629639386237627,
+          "rms": 0.0000036236862966719715,
+          "vertices": 4626,
+          "normalizedMax": 9.72367931822919e-8
+        },
+        {
+          "from": "missfortune_run",
+          "to": "missfortune_death",
+          "max": 0.0002981220081643627,
+          "rms": 0.000026276537719812708,
+          "vertices": 4626,
+          "normalizedMax": 0.000001778824707832675
+        },
+        {
+          "from": "missfortune_idle1",
+          "to": "missfortune_dance",
+          "max": 0.0012037115378539256,
+          "rms": 0.00016037795846176366,
+          "vertices": 4626,
+          "normalizedMax": 0.00000718226687731599
+        },
+        {
+          "from": "missfortune_idle1",
+          "to": "missfortune_attack1",
+          "max": 0,
+          "rms": 0,
+          "vertices": 4626,
+          "normalizedMax": 0
+        },
+        {
+          "from": "missfortune_idle1",
+          "to": "missfortune_spell1",
+          "max": 0.0013453123625008694,
+          "rms": 0.000460677922021454,
+          "vertices": 4626,
+          "normalizedMax": 0.00000802716607507195
+        },
+        {
+          "from": "missfortune_idle1",
+          "to": "missfortune_run",
+          "max": 0.000015735626220703125,
+          "rms": 9.54026944843361e-7,
+          "vertices": 4626,
+          "normalizedMax": 9.389082304575873e-8
+        },
+        {
+          "from": "missfortune_idle1",
+          "to": "missfortune_death",
+          "max": 0.0002981220081643627,
+          "rms": 0.000026276537719812708,
+          "vertices": 4626,
+          "normalizedMax": 0.000001778824707832675
+        },
+        {
+          "from": "missfortune_death",
+          "to": "missfortune_dance",
+          "max": 0.0012037115378539256,
+          "rms": 0.00016037795846176366,
+          "vertices": 4626,
+          "normalizedMax": 0.00000718226687731599
+        },
+        {
+          "from": "missfortune_death",
+          "to": "missfortune_attack1",
+          "max": 0,
+          "rms": 0,
+          "vertices": 4626,
+          "normalizedMax": 0
+        },
+        {
+          "from": "missfortune_death",
+          "to": "missfortune_spell1",
+          "max": 0.0013453123625008694,
+          "rms": 0.000460677922021454,
+          "vertices": 4626,
+          "normalizedMax": 0.00000802716607507195
+        },
+        {
+          "from": "missfortune_death",
+          "to": "missfortune_run",
+          "max": 0.00001531131837030004,
+          "rms": 5.420060287776979e-7,
+          "vertices": 4626,
+          "normalizedMax": 9.13590767561381e-8
+        },
+        {
+          "from": "missfortune_death",
+          "to": "missfortune_idle1",
+          "max": 0.00001629639386237627,
+          "rms": 0.0000036236862966719715,
+          "vertices": 4626,
+          "normalizedMax": 9.72367931822919e-8
+        }
+      ],
+      "maxNormalized": 0.000036256810779990366,
+      "pass": true
+    },
+    {
+      "character": "leesin",
+      "source": "ggd-selected/leesin.glb",
+      "sourceSha256": "53066cd03840ac1546402933658b6bac55946a1b62a57fe624ad8e7ca326f0f0",
+      "target": "ggd-runtime-candidate/leesin.glb",
+      "targetSha256": "5a885d6c0a13cb719da5d1e838f4d19d3115b41b826b88cf913fb443e260d40c",
+      "height": 221.2643723487854,
+      "movementMax": 472.09062040814285,
+      "clips": [
+        {
+          "name": "death",
+          "samples": 17,
+          "max": 0.00011554129394419332,
+          "rms": 0.00001673660455622402,
+          "normalizedMax": 5.221866164791422e-7
+        },
+        {
+          "name": "attack1",
+          "samples": 17,
+          "max": 0.00012186437470577452,
+          "rms": 0.000011051255553624006,
+          "normalizedMax": 5.507636562187978e-7
+        },
+        {
+          "name": "spell1_cast",
+          "samples": 17,
+          "max": 0.0016814400618424701,
+          "rms": 0.0002116818510738437,
+          "normalizedMax": 0.000007599235448497636
+        },
+        {
+          "name": "run_combat",
+          "samples": 17,
+          "max": 0.0015931602574904304,
+          "rms": 0.00038696692718249016,
+          "normalizedMax": 0.00000720025660063829
+        },
+        {
+          "name": "dance",
+          "samples": 17,
+          "max": 0.01297093279159337,
+          "rms": 0.0023493528387245866,
+          "normalizedMax": 0.00005862187687020356
+        },
+        {
+          "name": "idle_active",
+          "samples": 17,
+          "max": 0.00014717901577942854,
+          "rms": 0.00003722798646311541,
+          "normalizedMax": 6.651726810651017e-7
+        }
+      ],
+      "transitions": [
+        {
+          "from": "death",
+          "to": "attack1",
+          "max": 0.0001000219397372248,
+          "rms": 0.000009832668384642632,
+          "vertices": 10191,
+          "normalizedMax": 4.5204719890266536e-7
+        },
+        {
+          "from": "death",
+          "to": "spell1_cast",
+          "max": 0.00011444091796875,
+          "rms": 0.000007646335644683031,
+          "vertices": 10191,
+          "normalizedMax": 5.172134887958983e-7
+        },
+        {
+          "from": "death",
+          "to": "run_combat",
+          "max": 0.0011298078639735984,
+          "rms": 0.0002729423735721739,
+          "vertices": 10191,
+          "normalizedMax": 0.000005106144527383061
+        },
+        {
+          "from": "death",
+          "to": "dance",
+          "max": 0.000536647545248924,
+          "rms": 0.0000849470268186912,
+          "vertices": 10191,
+          "normalizedMax": 0.00000242536807689487
+        },
+        {
+          "from": "death",
+          "to": "idle_active",
+          "max": 0.00009709228900317678,
+          "rms": 0.000012204020201283141,
+          "vertices": 10191,
+          "normalizedMax": 4.3880669975249066e-7
+        },
+        {
+          "from": "attack1",
+          "to": "death",
+          "max": 0.00011242455178901756,
+          "rms": 0.000011602343807278965,
+          "vertices": 10191,
+          "normalizedMax": 5.081005613131404e-7
+        },
+        {
+          "from": "attack1",
+          "to": "spell1_cast",
+          "max": 0.00011444091796875,
+          "rms": 0.000007646335644683031,
+          "vertices": 10191,
+          "normalizedMax": 5.172134887958983e-7
+        },
+        {
+          "from": "attack1",
+          "to": "run_combat",
+          "max": 0.0011298078639735984,
+          "rms": 0.0002729423735721739,
+          "vertices": 10191,
+          "normalizedMax": 0.000005106144527383061
+        },
+        {
+          "from": "attack1",
+          "to": "dance",
+          "max": 0.000536647545248924,
+          "rms": 0.0000849470268186912,
+          "vertices": 10191,
+          "normalizedMax": 0.00000242536807689487
+        },
+        {
+          "from": "attack1",
+          "to": "idle_active",
+          "max": 0.00009709228900317678,
+          "rms": 0.000012204020201283141,
+          "vertices": 10191,
+          "normalizedMax": 4.3880669975249066e-7
+        },
+        {
+          "from": "spell1_cast",
+          "to": "death",
+          "max": 0.00011242455178901756,
+          "rms": 0.000011602343807278965,
+          "vertices": 10191,
+          "normalizedMax": 5.081005613131404e-7
+        },
+        {
+          "from": "spell1_cast",
+          "to": "attack1",
+          "max": 0.0001000219397372248,
+          "rms": 0.000009832668384642632,
+          "vertices": 10191,
+          "normalizedMax": 4.5204719890266536e-7
+        },
+        {
+          "from": "spell1_cast",
+          "to": "run_combat",
+          "max": 0.0011298078639735984,
+          "rms": 0.0002729423735721739,
+          "vertices": 10191,
+          "normalizedMax": 0.000005106144527383061
+        },
+        {
+          "from": "spell1_cast",
+          "to": "dance",
+          "max": 0.000536647545248924,
+          "rms": 0.0000849470268186912,
+          "vertices": 10191,
+          "normalizedMax": 0.00000242536807689487
+        },
+        {
+          "from": "spell1_cast",
+          "to": "idle_active",
+          "max": 0.00009709228900317678,
+          "rms": 0.000012204020201283141,
+          "vertices": 10191,
+          "normalizedMax": 4.3880669975249066e-7
+        },
+        {
+          "from": "run_combat",
+          "to": "death",
+          "max": 0.00011242455178901756,
+          "rms": 0.000011602343807278965,
+          "vertices": 10191,
+          "normalizedMax": 5.081005613131404e-7
+        },
+        {
+          "from": "run_combat",
+          "to": "attack1",
+          "max": 0.0001000219397372248,
+          "rms": 0.000009832668384642632,
+          "vertices": 10191,
+          "normalizedMax": 4.5204719890266536e-7
+        },
+        {
+          "from": "run_combat",
+          "to": "spell1_cast",
+          "max": 0.00011444091796875,
+          "rms": 0.000007646335644683031,
+          "vertices": 10191,
+          "normalizedMax": 5.172134887958983e-7
+        },
+        {
+          "from": "run_combat",
+          "to": "dance",
+          "max": 0.000536647545248924,
+          "rms": 0.0000849470268186912,
+          "vertices": 10191,
+          "normalizedMax": 0.00000242536807689487
+        },
+        {
+          "from": "run_combat",
+          "to": "idle_active",
+          "max": 0.00009709228900317678,
+          "rms": 0.000012204020201283141,
+          "vertices": 10191,
+          "normalizedMax": 4.3880669975249066e-7
+        },
+        {
+          "from": "dance",
+          "to": "death",
+          "max": 0.00011242455178901756,
+          "rms": 0.000011602343807278965,
+          "vertices": 10191,
+          "normalizedMax": 5.081005613131404e-7
+        },
+        {
+          "from": "dance",
+          "to": "attack1",
+          "max": 0.0001000219397372248,
+          "rms": 0.000009832668384642632,
+          "vertices": 10191,
+          "normalizedMax": 4.5204719890266536e-7
+        },
+        {
+          "from": "dance",
+          "to": "spell1_cast",
+          "max": 0.00011444091796875,
+          "rms": 0.000007646335644683031,
+          "vertices": 10191,
+          "normalizedMax": 5.172134887958983e-7
+        },
+        {
+          "from": "dance",
+          "to": "run_combat",
+          "max": 0.0011298078639735984,
+          "rms": 0.0002729423735721739,
+          "vertices": 10191,
+          "normalizedMax": 0.000005106144527383061
+        },
+        {
+          "from": "dance",
+          "to": "idle_active",
+          "max": 0.00009709228900317678,
+          "rms": 0.000012204020201283141,
+          "vertices": 10191,
+          "normalizedMax": 4.3880669975249066e-7
+        },
+        {
+          "from": "idle_active",
+          "to": "death",
+          "max": 0.00011242455178901756,
+          "rms": 0.000011602343807278965,
+          "vertices": 10191,
+          "normalizedMax": 5.081005613131404e-7
+        },
+        {
+          "from": "idle_active",
+          "to": "attack1",
+          "max": 0.0001000219397372248,
+          "rms": 0.000009832668384642632,
+          "vertices": 10191,
+          "normalizedMax": 4.5204719890266536e-7
+        },
+        {
+          "from": "idle_active",
+          "to": "spell1_cast",
+          "max": 0.00011444091796875,
+          "rms": 0.000007646335644683031,
+          "vertices": 10191,
+          "normalizedMax": 5.172134887958983e-7
+        },
+        {
+          "from": "idle_active",
+          "to": "run_combat",
+          "max": 0.0011298078639735984,
+          "rms": 0.0002729423735721739,
+          "vertices": 10191,
+          "normalizedMax": 0.000005106144527383061
+        },
+        {
+          "from": "idle_active",
+          "to": "dance",
+          "max": 0.000536647545248924,
+          "rms": 0.0000849470268186912,
+          "vertices": 10191,
+          "normalizedMax": 0.00000242536807689487
+        }
+      ],
+      "maxNormalized": 0.00005862187687020356,
+      "pass": true
+    },
+    {
+      "character": "xerath",
+      "source": "ggd-selected/xerath.glb",
+      "sourceSha256": "e2d2bc800b94b11de9a631672eb67787e76365108c1ee71f500123a502369d23",
+      "target": "ggd-runtime-candidate/xerath.glb",
+      "targetSha256": "8c875d6c33a41f34830ca330f2278d5b14e09ed01bc4ac3e12afd13eec93110b",
+      "height": 140.67834663391113,
+      "movementMax": 281.02108956029053,
+      "clips": [
+        {
+          "name": "xerath_run",
+          "samples": 17,
+          "max": 0.000033703989118713935,
+          "rms": 0.00001188355366961282,
+          "normalizedMax": 2.395819251872657e-7
+        },
+        {
+          "name": "xerath_death",
+          "samples": 17,
+          "max": 0.00016752956110916562,
+          "rms": 0.000015958808826136935,
+          "normalizedMax": 0.0000011908695625001175
+        },
+        {
+          "name": "xerath_spell1",
+          "samples": 17,
+          "max": 0.00005712501194714331,
+          "rms": 0.000016182282178113956,
+          "normalizedMax": 4.0606826362411254e-7
+        },
+        {
+          "name": "xerath_dance",
+          "samples": 17,
+          "max": 0.00007715337207863189,
+          "rms": 0.000011516075775865388,
+          "normalizedMax": 5.484381493294699e-7
+        },
+        {
+          "name": "xerath_idle1",
+          "samples": 17,
+          "max": 0.0019525943650879809,
+          "rms": 0.0007172390293462903,
+          "normalizedMax": 0.000013879850110616095
+        },
+        {
+          "name": "xerath_attack1",
+          "samples": 17,
+          "max": 0.0002921482856242334,
+          "rms": 0.00001727982484544075,
+          "normalizedMax": 0.0000020767111116573913
+        }
+      ],
+      "transitions": [
+        {
+          "from": "xerath_run",
+          "to": "xerath_death",
+          "max": 0.00005514843862457642,
+          "rms": 0.0000035188240910851987,
+          "vertices": 5753,
+          "normalizedMax": 3.920179611442963e-7
+        },
+        {
+          "from": "xerath_run",
+          "to": "xerath_spell1",
+          "max": 0.00003145679951185349,
+          "rms": 0.000007108248693021535,
+          "vertices": 5753,
+          "normalizedMax": 2.2360796998641076e-7
+        },
+        {
+          "from": "xerath_run",
+          "to": "xerath_dance",
+          "max": 0.000026012767213794432,
+          "rms": 0.0000065186846104975105,
+          "vertices": 5753,
+          "normalizedMax": 1.8490953182359864e-7
+        },
+        {
+          "from": "xerath_run",
+          "to": "xerath_idle1",
+          "max": 0.0005532940673828335,
+          "rms": 0.00021731057572398906,
+          "vertices": 5753,
+          "normalizedMax": 0.000003933043575090323
+        },
+        {
+          "from": "xerath_run",
+          "to": "xerath_attack1",
+          "max": 0.0002489583196770526,
+          "rms": 0.000012337304735640195,
+          "vertices": 5753,
+          "normalizedMax": 0.000001769698931171829
+        },
+        {
+          "from": "xerath_death",
+          "to": "xerath_run",
+          "max": 0.000028203406967594875,
+          "rms": 0.000005811122158443408,
+          "vertices": 5753,
+          "normalizedMax": 2.0048150722860656e-7
+        },
+        {
+          "from": "xerath_death",
+          "to": "xerath_spell1",
+          "max": 0.00003145679951185349,
+          "rms": 0.000007108248693021535,
+          "vertices": 5753,
+          "normalizedMax": 2.2360796998641076e-7
+        },
+        {
+          "from": "xerath_death",
+          "to": "xerath_dance",
+          "max": 0.000026012767213794432,
+          "rms": 0.0000065186846104975105,
+          "vertices": 5753,
+          "normalizedMax": 1.8490953182359864e-7
+        },
+        {
+          "from": "xerath_death",
+          "to": "xerath_idle1",
+          "max": 0.0005532940673828335,
+          "rms": 0.00021731057572398906,
+          "vertices": 5753,
+          "normalizedMax": 0.000003933043575090323
+        },
+        {
+          "from": "xerath_death",
+          "to": "xerath_attack1",
+          "max": 0.0002489583196770526,
+          "rms": 0.000012337304735640195,
+          "vertices": 5753,
+          "normalizedMax": 0.000001769698931171829
+        },
+        {
+          "from": "xerath_spell1",
+          "to": "xerath_run",
+          "max": 0.000028203406967594875,
+          "rms": 0.000005811122158443408,
+          "vertices": 5753,
+          "normalizedMax": 2.0048150722860656e-7
+        },
+        {
+          "from": "xerath_spell1",
+          "to": "xerath_death",
+          "max": 0.00005514843862457642,
+          "rms": 0.0000035188240910851987,
+          "vertices": 5753,
+          "normalizedMax": 3.920179611442963e-7
+        },
+        {
+          "from": "xerath_spell1",
+          "to": "xerath_dance",
+          "max": 0.000026012767213794432,
+          "rms": 0.0000065186846104975105,
+          "vertices": 5753,
+          "normalizedMax": 1.8490953182359864e-7
+        },
+        {
+          "from": "xerath_spell1",
+          "to": "xerath_idle1",
+          "max": 0.0005532940673828335,
+          "rms": 0.00021731057572398906,
+          "vertices": 5753,
+          "normalizedMax": 0.000003933043575090323
+        },
+        {
+          "from": "xerath_spell1",
+          "to": "xerath_attack1",
+          "max": 0.0002489583196770526,
+          "rms": 0.000012337304735640195,
+          "vertices": 5753,
+          "normalizedMax": 0.000001769698931171829
+        },
+        {
+          "from": "xerath_dance",
+          "to": "xerath_run",
+          "max": 0.000028203406967594875,
+          "rms": 0.000005811122158443408,
+          "vertices": 5753,
+          "normalizedMax": 2.0048150722860656e-7
+        },
+        {
+          "from": "xerath_dance",
+          "to": "xerath_death",
+          "max": 0.00005514843862457642,
+          "rms": 0.0000035188240910851987,
+          "vertices": 5753,
+          "normalizedMax": 3.920179611442963e-7
+        },
+        {
+          "from": "xerath_dance",
+          "to": "xerath_spell1",
+          "max": 0.00003145679951185349,
+          "rms": 0.000007108248693021535,
+          "vertices": 5753,
+          "normalizedMax": 2.2360796998641076e-7
+        },
+        {
+          "from": "xerath_dance",
+          "to": "xerath_idle1",
+          "max": 0.0005532940673828335,
+          "rms": 0.00021731057572398906,
+          "vertices": 5753,
+          "normalizedMax": 0.000003933043575090323
+        },
+        {
+          "from": "xerath_dance",
+          "to": "xerath_attack1",
+          "max": 0.0002489583196770526,
+          "rms": 0.000012337304735640195,
+          "vertices": 5753,
+          "normalizedMax": 0.000001769698931171829
+        },
+        {
+          "from": "xerath_idle1",
+          "to": "xerath_run",
+          "max": 0.000028203406967594875,
+          "rms": 0.000005811122158443408,
+          "vertices": 5753,
+          "normalizedMax": 2.0048150722860656e-7
+        },
+        {
+          "from": "xerath_idle1",
+          "to": "xerath_death",
+          "max": 0.00005514843862457642,
+          "rms": 0.0000035188240910851987,
+          "vertices": 5753,
+          "normalizedMax": 3.920179611442963e-7
+        },
+        {
+          "from": "xerath_idle1",
+          "to": "xerath_spell1",
+          "max": 0.00003145679951185349,
+          "rms": 0.000007108248693021535,
+          "vertices": 5753,
+          "normalizedMax": 2.2360796998641076e-7
+        },
+        {
+          "from": "xerath_idle1",
+          "to": "xerath_dance",
+          "max": 0.000026012767213794432,
+          "rms": 0.0000065186846104975105,
+          "vertices": 5753,
+          "normalizedMax": 1.8490953182359864e-7
+        },
+        {
+          "from": "xerath_idle1",
+          "to": "xerath_attack1",
+          "max": 0.0002489583196770526,
+          "rms": 0.000012337304735640195,
+          "vertices": 5753,
+          "normalizedMax": 0.000001769698931171829
+        },
+        {
+          "from": "xerath_attack1",
+          "to": "xerath_run",
+          "max": 0.000028203406967594875,
+          "rms": 0.000005811122158443408,
+          "vertices": 5753,
+          "normalizedMax": 2.0048150722860656e-7
+        },
+        {
+          "from": "xerath_attack1",
+          "to": "xerath_death",
+          "max": 0.00005514843862457642,
+          "rms": 0.0000035188240910851987,
+          "vertices": 5753,
+          "normalizedMax": 3.920179611442963e-7
+        },
+        {
+          "from": "xerath_attack1",
+          "to": "xerath_spell1",
+          "max": 0.00003145679951185349,
+          "rms": 0.000007108248693021535,
+          "vertices": 5753,
+          "normalizedMax": 2.2360796998641076e-7
+        },
+        {
+          "from": "xerath_attack1",
+          "to": "xerath_dance",
+          "max": 0.000026012767213794432,
+          "rms": 0.0000065186846104975105,
+          "vertices": 5753,
+          "normalizedMax": 1.8490953182359864e-7
+        },
+        {
+          "from": "xerath_attack1",
+          "to": "xerath_idle1",
+          "max": 0.0005532940673828335,
+          "rms": 0.00021731057572398906,
+          "vertices": 5753,
+          "normalizedMax": 0.000003933043575090323
+        }
+      ],
+      "maxNormalized": 0.000013879850110616095,
+      "pass": true
+    }
+  ]
+}

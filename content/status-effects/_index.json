@@ -1,6 +1,6 @@
 {
   "collection": "status-effects",
-  "hash": "c669e9bd8976",
+  "hash": "7219076b5f8e",
   "entries": [
     {
       "id": "aban-x-mark",
@@ -133,6 +133,12 @@
       "path": "status-effects/light-wand-banked.json",
       "hash": "4a656eddc90d",
       "size": 354
+    },
+    {
+      "id": "lock-combo",
+      "path": "status-effects/lock-combo.json",
+      "hash": "17f6c67af7b1",
+      "size": 262
     },
     {
       "id": "magic-break",

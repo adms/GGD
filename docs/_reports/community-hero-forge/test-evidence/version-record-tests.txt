@@ -1,0 +1,12 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ apps/client/src/content/communityMatch.test.ts (4 tests) 1846ms
+ ✓ apps/game-server/src/content/communityRuntime.test.ts (1 test) 44ms
+
+ Test Files  2 passed (2)
+      Tests  5 passed (5)
+   Start at  18:22:20
+   Duration  6.63s (transform 2.22s, setup 0ms, collect 3.62s, tests 1.89s, environment 0ms, prepare 176ms)
+

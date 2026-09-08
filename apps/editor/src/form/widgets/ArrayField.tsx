@@ -3,7 +3,7 @@ import { FieldErrors, renderNode } from "../FormRenderer";
 import { defaultValueFor } from "../walk";
 import type { UIArray } from "../uiSchema";
 
-export function ArrayField({ node, value, dataPath, errors, onChange }: FieldProps & { node: UIArray }) {
+export function ArrayField({ node, value, dataPath, errors, onChange, readOnlyReasons }: FieldProps & { node: UIArray }) {
   const arr = Array.isArray(value) ? value : [];
 
   const setArr = (next: unknown[]) =>
@@ -52,6 +52,7 @@ export function ArrayField({ node, value, dataPath, errors, onChange }: FieldPro
             dataPath: dataPath ? `${dataPath}.${i}` : String(i),
             errors,
             onChange,
+            readOnlyReasons,
           })}
         </div>
       ))}

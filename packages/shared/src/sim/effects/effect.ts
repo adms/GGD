@@ -51,6 +51,10 @@ export type IncomingBasis = "raw" | "mitigated" | "hpLost";
  * 不會發生」不是一個能出貨的狀態。
  */
 export interface TriggerDamage {
+  /** The original accepted cast; absent for unrelated/derived damage. */
+  readonly castInstance?: import("../content/castInstance").CastInstance;
+  /** Contributing casts of one combined stacked-DoT payout. */
+  readonly castInstances?: readonly import("../content/castInstance").CastInstance[];
   /**
    * 封包原本的量,未經護甲/魔抗。
    *
@@ -284,6 +288,7 @@ import type { ShieldBreakVariant } from "./variants/shieldBreak";
 import type { DevourVariant } from "./variants/devour";
 import type { ModifyCooldownVariant } from "./variants/modifyCooldown";
 import type { WeightedBranchVariant } from "./variants/weightedBranch";
+import type { ConsumeStatusVariant } from "./variants/consumeStatus";
 import type { SwapResourceVariant } from "./variants/swapResource";
 import type { EventValueConversionVariant } from "./variants/eventValueConversion";
 import type { RandomAreaVariant } from "./variants/randomArea";
@@ -296,6 +301,7 @@ import type { ApplyStatusVariant } from "./variants/applyStatus";
 import type { ApplyBuffVariant } from "./variants/applyBuff";
 import type { CycleBuffVariant } from "./variants/cycleBuff";
 import type { RestoreVariant } from "./variants/restore";
+import type { SpendHealthVariant } from "./variants/spendHealth";
 import type { SpendManaVariant } from "./variants/spendMana";
 import type { DashVariant } from "./variants/dash";
 import type { LeapVariant } from "./variants/leap";
@@ -344,6 +350,7 @@ type EffectVariant =
   | DevourVariant
   | ModifyCooldownVariant
   | WeightedBranchVariant
+  | ConsumeStatusVariant
   | SwapResourceVariant
   | EventValueConversionVariant
   | RandomAreaVariant
@@ -356,6 +363,7 @@ type EffectVariant =
   | ApplyBuffVariant
   | CycleBuffVariant
   | RestoreVariant
+  | SpendHealthVariant
   | SpendManaVariant
   | DashVariant
   | LeapVariant
@@ -469,6 +477,7 @@ export interface EffectCommon {
 export type EffectDef = EffectVariant & EffectCommon;
 
 export interface EffectContext {
+  castInstance?: import("../content/castInstance").CastInstance;
   world: SimWorld;
   caster: EntityId;
   /** rank of the source ability (1 for items/augments/hooks) */

@@ -1,0 +1,12 @@
+
+> @ggd/editor@0.0.0 typecheck /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor
+> tsc --noEmit -p tsconfig.json
+
+src/form/editorFormInteractions.test.tsx(129,49): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '{ value: AllCondition | AnyCondition | NotCondition | ChanceLeaf | ResourceStatLeaf | PlainStatLeaf | ... 7 more ... | undefined; fieldPrefix: string; onChange(next: EffectCondition | undefined): void; }' is not assignable to parameter of type 'Attributes & ConditionEditorProps'.
+      Property 'label' is missing in type '{ value: AllCondition | AnyCondition | NotCondition | ChanceLeaf | ResourceStatLeaf | PlainStatLeaf | ... 7 more ... | undefined; fieldPrefix: string; onChange(next: EffectCondition | undefined): void; }' but required in type 'ConditionEditorProps'.
+src/form/walk.ts(111,46): error TS2454: Variable 'reference' is used before being assigned.
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @ggd/editor@0.0.0 typecheck: `tsc --noEmit -p tsconfig.json`
+Exit status 2

@@ -1,0 +1,22 @@
+{
+  "url": "http://127.0.0.1:5201/editor/",
+  "document": "godie-e001.q",
+  "literal": {
+    "text": "Count\n取值方式\n指定數值\n全部",
+    "hasNumber": false,
+    "rawJson": false
+  },
+  "numeric": {
+    "value": "3",
+    "min": "1",
+    "max": "999",
+    "step": "1"
+  },
+  "cost": {
+    "path": "statusCost.count",
+    "min": "1",
+    "max": "999"
+  },
+  "mutations": [],
+  "saved": false
+}

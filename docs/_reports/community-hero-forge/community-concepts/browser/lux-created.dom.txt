@@ -1,0 +1,631 @@
+- navigation:
+  - button "創作英雄"
+  - button "我的作品"
+  - button "🔨 鑄技工坊"
+  - button "✨ 特效工坊"
+  - button "📦 匯出中心"
+  - heading "Collections" [level=2]
+  - button "Champions"
+  - button "Abilities"
+  - button "Items"
+  - button "Augments"
+  - button "Projectiles"
+  - button "Status Effects"
+  - button "Loot Tables"
+  - button "Arenas"
+  - button "Maps"
+  - button "Config"
+  - button "Models"
+  - button "VFX"
+  - button "Skins"
+  - button "Ability Templates"
+  - button "VFX Scripts"
+  - button "VFX Subtypes"
+- main:
+  - heading "稜光引路人（拉克絲概念改編）" [level=1]
+  - paragraph: 從概念到六槽技能，逐項試作與調整。
+  - button "復原" [disabled]
+  - button "重做" [disabled]
+  - button "建立另一位英雄"
+  - generic: 已恢復本機草稿 · 已保存到本機
+  - paragraph: 已讀取本機內容設定 · AI 關閉
+  - navigation "英雄編輯模式":
+    - button "快速創作"
+    - button "視覺編輯" [pressed]
+    - button "進階編輯"
+  - navigation "技能槽":
+    - button "PASSIVE"
+    - button "Q" [pressed]
+    - button "W"
+    - button "E"
+    - button "R"
+    - button "EX"
+  - heading "Q 技能" [level=2]
+  - text: 招式名稱
+  - textbox "招式名稱": 稜光束縛
+  - button "鎖定"
+  - text: 完整說明與台詞
+  - textbox "完整說明與台詞": 命中指定敵人並鎖足 0.8 秒，不會同時束縛第二個目標。
+  - button "鎖定"
+  - paragraph: 槽位是裝備位置；主動或被動行為由模板機制決定。
+  - text: 最高階級
+  - combobox "最高階級":
+    - option "4" [selected]
+  - button "鎖定"
+  - group "Document (optional)":
+    - text: Document
+    - emphasis: (optional)
+    - group "🔒 此欄位目前為唯讀":
+      - generic: 🔒 此欄位目前為唯讀
+      - generic: Cooldown Sec
+      - textbox "Cooldown Sec" [disabled]: "10"
+      - paragraph: 冷卻秒數
+      - paragraph: 已使用下方級距設定；清除該級距後才能改固定值
+    - group "🔒 此欄位目前為唯讀":
+      - generic: 🔒 此欄位目前為唯讀
+      - generic: Mana Cost
+      - textbox "Mana Cost" [disabled]: "40"
+      - paragraph: 魔力消耗
+      - paragraph: 已使用下方級距設定；清除該級距後才能改固定值
+    - group "🔒 此欄位目前為唯讀":
+      - generic: 🔒 此欄位目前為唯讀
+      - generic: Range
+      - textbox "Range" [disabled]: "6"
+      - paragraph: 施放距離
+      - paragraph: 已使用下方級距設定；清除該級距後才能改固定值
+  - generic "級距與追加效果"
+  - option "—"
+  - option "極小"
+  - option "小"
+  - option "中" [selected]
+  - option "大"
+  - option "極大"
+  - option "—" [selected]
+  - option "極小"
+  - option "小"
+  - option "中"
+  - option "大"
+  - option "極大"
+  - option "—"
+  - option "極小"
+  - option "小" [selected]
+  - option "中"
+  - option "大"
+  - option "極大"
+  - option "—" [selected]
+  - option "單體"
+  - option "範圍"
+  - option "變身"
+  - option "—"
+  - option "極小"
+  - option "小" [selected]
+  - option "中"
+  - option "大"
+  - option "極大"
+  - option "—"
+  - option "極小"
+  - option "小" [selected]
+  - option "中"
+  - option "大"
+  - option "極大"
+  - option "damage"
+  - option "damageArea"
+  - option "damageLine"
+  - option "grantAttribute"
+  - option "revive"
+  - option "heal"
+  - option "shield"
+  - option "applyStatus" [selected]
+  - option "applyBuff"
+  - option "cycleBuff"
+  - option "restore"
+  - option "spendMana"
+  - option "dash"
+  - option "leap"
+  - option "blink"
+  - option "championForm"
+  - option "spawnProjectile"
+  - option "spawnVfx"
+  - option "dot"
+  - option "summon"
+  - option "invulnerable"
+  - option "knockback"
+  - option "evasion"
+  - option "taunt"
+  - option "grantGold"
+  - option "grantXp"
+  - option "dispel"
+  - option "shieldBreak"
+  - option "devour"
+  - option "modifyCooldown"
+  - option "weightedBranch"
+  - option "swapResource"
+  - option "eventValueConversion"
+  - option "randomArea"
+  - option "delayed"
+  - option "proxyCast"
+  - option "manaBarrier"
+  - option "extendBuff"
+  - option "carry"
+  - option "convertTeam"
+  - option "chainLightning"
+  - option "comboStrikes"
+  - option "pull"
+  - option "spawnModelFx"
+  - option "screenFlash"
+  - option "screenShake"
+  - option "floatingText"
+  - option "—"
+  - option "aban-x-mark"
+  - option "alcohol-enema"
+  - option "armor-break"
+  - option "bankai"
+  - option "berserk"
+  - option "blind"
+  - option "burn"
+  - option "burnstun"
+  - option "camera-mark"
+  - option "charmed"
+  - option "confusion"
+  - option "curse"
+  - option "devour-cooldown"
+  - option "evil-eye"
+  - option "fang-stun"
+  - option "fear"
+  - option "grail-strengthened-projection"
+  - option "grief-seed-charge"
+  - option "grievous-wounds"
+  - option "ingredient"
+  - option "light-wand-banked"
+  - option "lock-combo"
+  - option "magic-break"
+  - option "millennium-plot-armor"
+  - option "moon-combo"
+  - option "nen-banked"
+  - option "no-heal"
+  - option "numbness"
+  - option "octuple-slash-window"
+  - option "omnislash-lock"
+  - option "omnislash-perform"
+  - option "paralysis"
+  - option "poison"
+  - option "rage"
+  - option "red-comet"
+  - option "root" [selected]
+  - option "slow20"
+  - option "slow25"
+  - option "slow30"
+  - option "slow35"
+  - option "slow40"
+  - option "slow50"
+  - option "slow60"
+  - option "stun"
+  - option "trial-stun"
+  - option "triforce-courage"
+  - option "united-states-of-smash"
+  - option "witch-form"
+  - option "—" [selected]
+  - option "extend"
+  - option "keep"
+  - option "—"
+  - option "self"
+  - option "target" [selected]
+  - heading "技能產品鏈" [level=3]
+  - button "鎖定"
+  - text: 不同產品填入同一欄時
+  - combobox "不同產品填入同一欄時":
+    - option "停下來處理衝突" [selected]
+    - option "後面的產品覆寫前面"
+  - list:
+    - generic: 1. 單體斬擊
+    - button "鎖定"
+    - button "上移" [disabled]
+    - button "下移" [disabled]
+    - button "移除" [disabled]
+    - group "Document":
+      - generic: Document
+      - group "Damage":
+        - generic: Damage
+        - text: Damage Tier
+        - emphasis: (optional)
+        - combobox "Damage Tier (optional)":
+          - option "—"
+          - option "極小"
+          - option "小" [selected]
+          - option "中"
+          - option "大"
+          - option "極大"
+        - text: Condition Tier
+        - emphasis: (optional)
+        - combobox "Condition Tier (optional)":
+          - option "—" [selected]
+          - option "極小"
+          - option "小"
+          - option "中"
+          - option "大"
+          - option "極大"
+        - group "Damage Tier Per Rank (0)":
+          - text: Damage Tier Per Rank
+          - generic: (0)
+          - button "+ add damage tier per rank"
+        - text: Flat
+        - emphasis: (optional)
+        - textbox "Flat (optional)"
+        - group "Per Rank (0)":
+          - text: Per Rank
+          - generic: (0)
+          - button "+ add per rank"
+        - group "Ratios (0)":
+          - text: Ratios
+          - generic: (0)
+          - button "+ add ratio"
+        - group "Attr Ratios (0)":
+          - text: Attr Ratios
+          - generic: (0)
+          - button "+ add attr ratio"
+        - group "Slot Rank Ratios (0)":
+          - text: Slot Rank Ratios
+          - generic: (0)
+          - button "+ add slot rank ratio"
+        - text: Mult
+        - emphasis: (optional)
+        - textbox "Mult (optional)"
+      - generic: Damage Type
+      - combobox "Damage Type":
+        - option "magic" [selected]
+        - option "physical"
+        - option "true"
+      - group "🔒 此欄位目前為唯讀":
+        - generic: 🔒 此欄位目前為唯讀
+        - text: Cast Time Sec
+        - emphasis: (optional)
+        - textbox "Cast Time Sec (optional)" [disabled]: "0.1"
+        - paragraph: unit:s
+        - paragraph: 已使用下方吟唱級距；清除該級距後才能改固定秒數
+  - text: 加入產品（同一模板可重複加入）
+  - combobox "加入產品（同一模板可重複加入）":
+    - option "選擇一個模板…" [selected]
+    - option "翻滾光束（橫放光束砲）"
+    - option "瞬移突斬"
+    - option "變身強化-數值面"
+    - option "衝鋒推撞"
+    - option "龍虎亂舞（自動連段→收尾重招）"
+    - option "動地剁落點環"
+    - option "多實例龍形推進"
+    - option "汲取吸附"
+    - option "原地震波"
+    - option "成長蓄能"
+    - option "瞬發點爆"
+    - option "跳躍落地"
+    - option "生命操作"
+    - option "直線衝擊波（落點大爆炸）"
+    - option "直線分段掃擊"
+    - option "鎖定連段"
+    - option "沿線 N 具（蝗蟲群·一次擺出整條線）"
+    - option "球體定點（蝗蟲群·不動的那一群）"
+    - option "定點打擊（蝗蟲群·擺在腳下的那一具）"
+    - option "推進多具（蝗蟲群·等分散開各自推進）"
+    - option "推進單具（蝗蟲群·一具沿面向推出去）"
+    - option "具名標記-層數與免死"
+    - option "攻擊觸發"
+    - option "受擊反應"
+    - option "環形放射陣"
+    - option "週期領域"
+    - option "代理錨點施法"
+    - option "範圍逐一施法"
+    - option "拉扯投擲"
+    - option "圓周噴發（大冰塊）"
+    - option "亂數彈幕轟炸"
+    - option "單體斬擊"
+    - option "召喚代理"
+    - option "瞬移貼身"
+    - option "行進波動"
+  - text: 英雄模型
+  - combobox "英雄模型":
+    - option "champ.godie-zombiex"
+    - option "champ.sela" [selected]
+    - option "champ.skin.barbarian"
+    - option "champ.thorne"
+    - option "imported.bulbasaur"
+    - option "imported.cloud"
+    - option "imported.fox"
+    - option "imported.fox2"
+    - option "imported.goku"
+    - option "imported.herobiggon"
+    - option "imported.herobuu"
+    - option "imported.herohehi"
+    - option "imported.heroichigo"
+    - option "imported.heroichigo-bankai"
+    - option "imported.herokyo"
+    - option "imported.herolight"
+    - option "imported.herolingtong"
+    - option "imported.heromiku"
+    - option "imported.heromusashimiyamoto"
+    - option "imported.herooichi"
+    - option "imported.heropikachu"
+    - option "imported.herorider"
+    - option "imported.herosaber"
+    - option "imported.herosasuke"
+    - option "imported.herosephiroth"
+    - option "imported.heroshana"
+    - option "imported.herotoshiiemaeda"
+    - option "imported.heroxelloss"
+    - option "imported.horse"
+    - option "imported.kikyou"
+    - option "imported.linainvers"
+    - option "imported.linkstik"
+    - option "imported.long"
+    - option "imported.lubu"
+    - option "imported.luffe"
+    - option "imported.mfls"
+    - option "imported.negi"
+    - option "imported.picacugy"
+    - option "imported.pika"
+    - option "imported.rabbit"
+    - option "imported.renaryugu2"
+    - option "imported.sd2"
+    - option "imported.sesshomaru"
+    - option "w3x.stock.satyrtrickster"
+  - button "保留並鎖定"
+  - generic "英雄肖像與技能圖片"
+  - generic "施法特效與聲音"
+  - option "—" [selected]
+  - option "wc3.moongo"
+  - option "wc3.moonjump"
+  - option "wc3.nocute"
+  - complementary:
+    - heading "目前結果" [level=2]
+    - paragraph: 六槽編譯與模擬已通過
+    - paragraph: 目前預覽 Q · 第 1 版
+    - paragraph: 目標生命：4555 → 2527
+    - paragraph: 事件：castRejected × 1、abilityCast × 1、castBegin × 1、statusApplied × 1、abilityHit × 1、castEnd × 1、recoveryBegin × 1、damage × 1、recoveryEnd × 1、hitImpact × 1
+    - generic "檢視執行結果"
+    - region "可調整的試玩情境":
+      - generic "調整試玩情境"
+      - option "無" [selected]
+      - option "阿邦式 X 印記"
+      - option "酒精灌腸"
+      - option "破甲"
+      - option "卍解"
+      - option "暴走"
+      - option "致盲"
+      - option "燃燒"
+      - option "Searing Stun"
+      - option "攝影機鎖定"
+      - option "魅惑"
+      - option "混亂"
+      - option "詛咒"
+      - option "吞噬冷卻"
+      - option "邪眼全開"
+      - option "牙突・僵直"
+      - option "恐懼"
+      - option "強化投影"
+      - option "悲嘆"
+      - option "重創"
+      - option "食材化"
+      - option "光魔杖・燒盡的魔力"
+      - option "連段拘束"
+      - option "破魔"
+      - option "劇情需要"
+      - option "者、皆、陣 連段"
+      - option "燒盡的念"
+      - option "禁療"
+      - option "麻痺"
+      - option "八刀一閃 連段"
+      - option "超究武神霸斬・拘束"
+      - option "超究武神霸斬・演武"
+      - option "癱瘓"
+      - option "中毒"
+      - option "狂怒"
+      - option "赤色彗星"
+      - option "Rooted"
+      - option "Slow (20%)"
+      - option "Slow (25%)"
+      - option "Slow (30%)"
+      - option "Slow (35%)"
+      - option "Slow (40%)"
+      - option "Slow (50%)"
+      - option "Slow (60%)"
+      - option "暈眩"
+      - option "試煉衝擊"
+      - option "勇氣共鳴"
+      - option "力量已繼承"
+      - option "魔女化"
+      - option "無" [selected]
+      - option "阿邦式 X 印記"
+      - option "酒精灌腸"
+      - option "破甲"
+      - option "卍解"
+      - option "暴走"
+      - option "致盲"
+      - option "燃燒"
+      - option "Searing Stun"
+      - option "攝影機鎖定"
+      - option "魅惑"
+      - option "混亂"
+      - option "詛咒"
+      - option "吞噬冷卻"
+      - option "邪眼全開"
+      - option "牙突・僵直"
+      - option "恐懼"
+      - option "強化投影"
+      - option "悲嘆"
+      - option "重創"
+      - option "食材化"
+      - option "光魔杖・燒盡的魔力"
+      - option "連段拘束"
+      - option "破魔"
+      - option "劇情需要"
+      - option "者、皆、陣 連段"
+      - option "燒盡的念"
+      - option "禁療"
+      - option "麻痺"
+      - option "八刀一閃 連段"
+      - option "超究武神霸斬・拘束"
+      - option "超究武神霸斬・演武"
+      - option "癱瘓"
+      - option "中毒"
+      - option "狂怒"
+      - option "赤色彗星"
+      - option "Rooted"
+      - option "Slow (20%)"
+      - option "Slow (25%)"
+      - option "Slow (30%)"
+      - option "Slow (35%)"
+      - option "Slow (40%)"
+      - option "Slow (50%)"
+      - option "Slow (60%)"
+      - option "暈眩"
+      - option "試煉衝擊"
+      - option "勇氣共鳴"
+      - option "力量已繼承"
+      - option "魔女化"
+      - status: 完成施放 · 實際技能階級 1 · 目標生命 4555 → 3762
+      - region "Q 技能試玩與演出":
+        - heading "技能試玩與演出" [level=3]
+        - generic: 真 Sim → 真 VfxSystem · 雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step
+        - generic: 已定位 · 11/30 meshes · 6/3 particles/systems · eye -32.6,16.7,0.0
+        - text: 施法者：⚠ 共用替身 · 稜光引路人（拉克絲概念改編） · champ.sela · 2 meshes · ×1.000 · Main ChampionView · 材質正常
+        - text: 目標：⚠ 共用替身 · 稜光引路人（拉克絲概念改編） · champ.sela · 2 meshes · ×0.998 · Main ChampionView · 材質正常
+        - button "全螢幕預覽"
+        - button "切換實戰俯視"
+        - button "鏡頭拉近"
+        - button "鏡頭拉遠"
+        - button "底板未檢查"
+        - button "量尺未校準"
+        - region "真 Sim 與 3D 共用時間軸":
+          - heading "真 Sim × 3D 共用時間軸" [level=4]
+          - paragraph: 只播放 SimWorld 真正 emit 的事件；scrub、1/60 逐格與畫面使用同一個 playhead。
+          - strong: 0ms · Sim tick 0
+          - button "↺"
+          - button "−1 frame" [disabled]
+          - button "▶"
+          - button "+1 frame"
+          - slider "Sim 與 3D 播放位置": "0"
+          - generic "事件分布":
+            - generic "0ms · abilityCast · abilityId=hero-0ad7aaa5-b58e-4e3b-b949-293e731ad431.q · slot=Q"
+            - generic "0ms · castBegin · abilityId=hero-0ad7aaa5-b58e-4e3b-b949-293e731ad431.q · slot=Q"
+            - generic "100ms · statusApplied · origin=ability:hero-0ad7aaa5-b58e-4e3b-b949-293e731ad431.q"
+            - generic "100ms · abilityHit · slot=Q"
+            - generic "100ms · castEnd · abilityId=hero-0ad7aaa5-b58e-4e3b-b949-293e731ad431.q · slot=Q"
+            - generic "100ms · recoveryBegin · abilityId=hero-0ad7aaa5-b58e-4e3b-b949-293e731ad431.q · slot=Q"
+            - generic "100ms · damage · amount=823.5723884763413 · origin=ability:hero-0ad7aaa5-b58e-4e3b-b949-293e731ad431.q"
+            - generic "100ms · recoveryEnd · abilityId=hero-0ad7aaa5-b58e-4e3b-b949-293e731ad431.q · slot=Q · reason=hit"
+            - generic "100ms · hitImpact · amount=823.5723884763413"
+          - article:
+            - generic: abilityCast
+            - code: abilityId=hero-0ad7aaa5-b58e-4e3b-b949-293e731ad431.q · slot=Q
+          - article:
+            - generic: castBegin
+            - code: abilityId=hero-0ad7aaa5-b58e-4e3b-b949-293e731ad431.q · slot=Q
+          - generic "全部 9 筆事件"
+        - group "事件驅動的演出時間軸":
+          - generic: 事件驅動的演出時間軸
+          - paragraph: 演出依實際施法、命中與連段事件觸發；不會改動技能傷害。未觀察到觸發事件的段落不會播放。
+          - text: 加入特效子型
+          - combobox "加入特效子型":
+            - option "選擇已支援的特效子型…" [selected]
+            - option "八連斬（連段＋收尾）"
+            - option "隱身俯衝（落地雷擊）"
+            - option "末日印記（詠唱標記）"
+            - option "雙段爆破（小死＋大爆）"
+          - checkbox "由此演出接管預設施法裝飾（保留範圍與施法提示）"
+          - text: 由此演出接管預設施法裝飾（保留範圍與施法提示）
+          - button "↺"
+          - button "−1f"
+          - button "▶"
+          - button "+1f"
+          - strong: 0.00s
+          - text: 精確秒數
+          - spinbutton "精確秒數": "0.000"
+          - button "+ 3D 模型特效"
+          - button "+ 粒子特效"
+          - button "+ 浮動文字"
+          - button "+ 畫面閃光"
+          - button "+ 鏡頭震動"
+          - button "+ 音效"
+          - button "+ 角色動作"
+          - button "+ 角色位移"
+          - button "+ 隱藏角色"
+          - slider: "0"
+          - generic "施法提交 0.00s"
+          - generic "吟唱完成 0.10s"
+          - generic "建議關鍵格":
+            - generic: 建議關鍵格
+            - button "0.175s"
+            - button "0.280s"
+          - button "1. 角色動作 · 施法者施法 施法起手 · +0ms 施法提交 · anim":
+            - generic: 1. 角色動作 · 施法者施法
+            - generic "on:castStart": 施法起手 · +0ms
+            - generic "施法提交 · anim"
+          - button "2. 浮動文字 · 稜光束縛 技能結算 · +0ms 吟唱完成 · floatingText":
+            - generic: 2. 浮動文字 · 稜光束縛
+            - generic "on:castEffect": 技能結算 · +0ms
+            - generic "吟唱完成 · floatingText"
+          - generic: Document
+          - combobox "Document":
+            - option "modelFx"
+            - option "vfx"
+            - option "floatingText"
+            - option "screenFlash"
+            - option "screenShake"
+            - option "sound"
+            - option "anim" [selected]
+            - option "hideBody"
+            - option "bodyMove"
+          - generic: "On"
+          - combobox "On":
+            - option "castStart" [selected]
+            - option "castEffect"
+            - option "strike"
+            - option "projectileSpawn"
+            - option "projectileHit"
+            - option "reflectSuccess"
+          - text: At Ms
+          - emphasis: (optional)
+          - textbox "At Ms (optional)"
+          - text: Strike Index
+          - emphasis: (optional)
+          - textbox "Strike Index (optional)"
+          - text: Replaces
+          - emphasis: (optional)
+          - combobox "Replaces (optional)":
+            - option "—" [selected]
+            - option "caster.action"
+            - option "target.reaction"
+          - text: Replaces For Ms
+          - emphasis: (optional)
+          - textbox "Replaces For Ms (optional)"
+          - text: At
+          - emphasis: (optional)
+          - combobox "At (optional)":
+            - option "—"
+            - option "target"
+            - option "caster" [selected]
+          - generic: Pulse
+          - combobox "Pulse":
+            - option "attack"
+            - option "cast" [selected]
+            - option "hurt"
+            - option "guard"
+            - option "dodge"
+          - text: Clip Window Ms
+          - emphasis: (optional)
+          - textbox "Clip Window Ms (optional)"
+          - button "移除選取的演出段落"
+  - region "作品備份與完整英雄":
+    - heading "保存與分享作品" [level=2]
+    - paragraph: 草稿備份可保留未完成的欄位；完整英雄包含六槽技能、演出、固定依賴與圖片。
+    - button "下載草稿備份"
+    - text: 開啟作品檔
+    - button "開啟作品檔"
+    - button "建立完整英雄 ZIP"
+    - paragraph: 草稿備份與完整英雄 ZIP 均可離線開啟。建立完整英雄與送審時的遊戲相容檢查需要連線。
+    - region "雲端保存與社群投稿":
+      - heading "雲端保存與社群投稿" [level=3]
+      - text: 遊戲帳號
+      - textbox "遊戲帳號"
+      - text: 密碼
+      - textbox "密碼"
+      - button "登入以同步與投稿"
+      - paragraph: 未登入時可繼續離線創作與本機保存。

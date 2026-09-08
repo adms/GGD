@@ -73,6 +73,7 @@ export type Page =
   | "items"
   | "vfx"
   | "arenas"
+  | "models"
   /**
    * 鑄形工坊 (Project Voxel Forge, task #229) — the 體素角色生成器 studio. Same
    * dev chunk, same gate, same absence from SESSION_REQUIRED_PAGES as every

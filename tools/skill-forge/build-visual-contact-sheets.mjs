@@ -11,6 +11,8 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { acceptanceScope, assertVisualProofScope } from "./visual-proof-scope.mjs";
+
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const PROOF_DIR = join(ROOT, "docs/_reports/editor-skill-basic-visual-proof");
 const MANIFEST = join(PROOF_DIR, "manifest.json");
@@ -18,9 +20,9 @@ const OUT_DIR = join(ROOT, "docs/_reports/editor-skill-human-review/sheets");
 const RECEIPT = join(ROOT, "docs/_reports/editor-skill-human-review/sheets.json");
 const CHECK = process.argv.includes("--check");
 const manifest = JSON.parse(readFileSync(MANIFEST, "utf8"));
-if (manifest.schema !== "ggd-editor-basic-visual-proof-manifest@1" || manifest.cases?.length !== 46) {
-  fail("visual proof manifest must contain the exact 46-document scope");
-}
+if (manifest.schema !== "ggd-editor-basic-visual-proof-manifest@1") fail("invalid visual proof manifest schema");
+const scope = acceptanceScope(JSON.parse(readFileSync(join(ROOT, "docs/_reports/editor-skill-acceptance-42x46.json"), "utf8")));
+assertVisualProofScope(manifest, scope);
 
 const rows = manifest.cases.map((row) => {
   if (row.status !== "captured" || !Array.isArray(row.frames) || row.frames.length < 2 || row.frames.length > 18) {
@@ -56,7 +58,7 @@ const encoded = `${JSON.stringify(receipt, null, 2)}\n`;
 if (CHECK) {
   if (!existsSync(RECEIPT) || readFileSync(RECEIPT, "utf8") !== encoded) fail("contact sheet receipt is stale");
   for (const row of rows) if (!existsSync(row.output)) fail(`${row.id}: contact sheet is missing`);
-  console.log("PASS 46 chronological visual contact sheets are current");
+  console.log(`PASS ${scope.documents} chronological visual contact sheets are current`);
   process.exit(0);
 }
 

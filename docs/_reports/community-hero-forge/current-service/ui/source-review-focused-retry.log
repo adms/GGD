@@ -1,0 +1,13 @@
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor
+
+ ✓ src/hero/HeroSourceDesignPanel.test.tsx (7 tests) 49ms
+ ✓ src/hero/HeroSlotEditor.test.tsx (5 tests) 6107ms
+   ✓ hero product condition editing > edits the nested curse-reversal reward with actual controls and recompiles the reopened project 5243ms
+   ✓ hero product condition editing > edits a concept hero's shield and tier using actual controls, then compiles the reopened draft 334ms
+
+ Test Files  2 passed (2)
+      Tests  12 passed (12)
+   Start at  15:36:37
+   Duration  16.93s (transform 5.13s, setup 0ms, collect 15.16s, tests 6.16s, environment 0ms, prepare 471ms)
+

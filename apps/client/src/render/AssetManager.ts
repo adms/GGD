@@ -154,6 +154,11 @@ export function clearAssetByteCache(budget = DEFAULT_ASSET_BYTE_BUDGET): void {
  * ⭐ 同一個路徑兩族都要過（名字巧合）時，它同時帶兩個標籤 ⇒ 視同 shared 保留。
  */
 export type AssetTag = "shared" | "fx";
+import { frozenMatchAssetSource } from "../content/frozenAssets";
+export interface FrozenAssetSource {
+  resolveUrl(path: string): string;
+  resolvePath?(path: string): string;
+}
 
 export class AssetManager {
   private readonly cache = new Map<string, Promise<AssetContainer | null>>();
@@ -163,6 +168,7 @@ export class AssetManager {
   constructor(
     private readonly scene: Scene,
     private readonly baseUrl = "/content/",
+    private readonly frozenSource: FrozenAssetSource | undefined = frozenMatchAssetSource(),
   ) {
     // 🔁 讀一次貼圖去重的逃生口（`localStorage["ggd.textureDedup"]="off"`）。
     // ⭐ 掛在這裡而不是 boot：`main.tsx` 不在這條 lane 的柵欄內,而**每一條**載入
@@ -186,7 +192,7 @@ export class AssetManager {
    * settings change and the setting would silently do nothing again.
    */
   load(path: string, tag: AssetTag = "shared"): Promise<AssetContainer | null> {
-    const resolved = resolveLodPath(path);
+    const resolved = this.frozenSource ? this.frozenSource.resolvePath?.(path) ?? path : resolveLodPath(path);
     let tags = this.tags.get(resolved);
     if (!tags) {
       tags = new Set();
@@ -237,7 +243,7 @@ export class AssetManager {
     try {
       // register the glTF loader on demand (render/-only Babylon surface)
       await import("@babylonjs/loaders/glTF");
-      const url = this.baseUrl + path;
+      const url = this.frozenSource ? this.frozenSource.resolveUrl(path) : this.baseUrl + path;
       // Content cache key. `?h=<contentVersion>` is the ONLY thing that flips
       // nginx from `no-cache` to `public, max-age=31536000, immutable`
       // (nginx.conf `map $arg_h $content_cache`), and the .glb corpus is
@@ -246,10 +252,10 @@ export class AssetManager {
       // loader's `name`/`rootUrl` (and any sibling URI it resolves against
       // them) are unaffected. No-op until the manifest lands, so this needs no
       // ordering guarantee — see content/assetVersion.ts.
-      const bytes = await loadBytes(withContentVersion(url));
+      const bytes = await loadBytes(this.frozenSource ? url : withContentVersion(url));
       if (bytes === null) return null; // missing/unreachable — never reaches the loader
-      const dot = url.lastIndexOf(".");
-      const ext = dot < 0 ? "" : url.slice(dot).toLowerCase();
+      const dot = path.lastIndexOf(".");
+      const ext = dot < 0 ? "" : path.slice(dot).toLowerCase();
       const slash = url.lastIndexOf("/");
       if (ext !== ".glb") {
         // .gltf & friends resolve sibling .bin/texture URIs themselves, and the
@@ -260,12 +266,16 @@ export class AssetManager {
         // to this URL and a query arg would follow them into paths nginx does
         // not serve. Nothing under content/ is .gltf today, so this costs
         // nothing; if that changes, stamp the siblings, not the parent.
-        return await LoadAssetContainerAsync(url, this.scene);
+        return await LoadAssetContainerAsync(url, this.scene, { pluginExtension: ext });
       }
       const container = await LoadAssetContainerAsync(bytes, this.scene, {
         pluginExtension: ".glb",
         name: url.slice(slash + 1),
         rootUrl: url.slice(0, slash + 1),
+        // Uploaded clips have no implicit default order. Keep the cached source
+        // at rest so later instances get the same bounds and skeleton pose;
+        // ChampionView's ClipAnimator starts the explicitly mapped animation.
+        ...(path.startsWith("assets/models/community/") || /\/versions\/[a-f0-9]{64}\.glb$/.test(path) ? { pluginOptions: { gltf: { animationStartMode: 0 } } } : {}),
       });
       // 🎽 內容相同的貼圖只留一塊 GPU 記憶體（GH#382）。⚠️ 一定要在 await 之後 ——
       // `LoadAssetContainerAsync` 到這裡才保證每一張貼圖的 InternalTexture 已經生出來。

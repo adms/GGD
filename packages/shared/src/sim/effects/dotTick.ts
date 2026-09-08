@@ -123,6 +123,10 @@ export function dotTickSystem(world: SimWorld): void {
         const payout = d.amountPerTick + dyn;
         if (payout > 0) {
           world.damageQueue.push({
+            castInstance: d.castInstance,
+            castInstances: d.stackCastInstances?.filter(
+              (cast): cast is NonNullable<typeof cast> => cast !== undefined,
+            ),
             source: d.sourceId,
             target: id,
             amount: payout,

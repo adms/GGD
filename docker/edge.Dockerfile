@@ -57,11 +57,21 @@ COPY packages/shared/package.json packages/shared/
 COPY apps/client/package.json apps/client/
 COPY apps/editor/package.json apps/editor/
 COPY apps/admin/package.json apps/admin/
+# ⭐⭐ GH#1121（2026-09-08）—— content-api 的 `package.json` **必須**跟著進來。
+#   ⚠️ 下面有一行 `COPY apps/content-api/src/`（PR 1118 加的，build 期的相容性身分）
+#   ⇒ 映像裡就出現一個**符合 `pnpm-workspace.yaml` 的 `apps/*` 但沒有 package.json** 的目錄，
+#   而 vite 載入 `apps/editor/vite.config.ts` 時掃工作區成員 ⇒
+#   `ENOENT: lstat '/repo/apps/content-api/package.json'` ⇒ ⭐ **正式 build 直接死**。
+#   ⛔ 而本機全綠 —— 只有真的 build 一次才看得到（就是這一步存在的理由，見 ci.yml 的註解）。
+#   ⚠️ 它**不在** `--filter` 的閉包裡 ⇒ 不會多裝任何依賴，只是讓工作區自洽。
+COPY apps/content-api/package.json apps/content-api/
 RUN pnpm install --frozen-lockfile --filter "@ggd/client..." --filter "@ggd/editor..." --filter "@ggd/admin..."
 COPY packages/shared/ packages/shared/
 COPY apps/client/ apps/client/
 COPY apps/editor/ apps/editor/
 COPY apps/admin/ apps/admin/
+# Build-time community compatibility identity follows Main's compiler imports.
+COPY apps/content-api/src/ apps/content-api/src/
 # ---- ⛔ 唯一一份被 **build 進來** 的 content/ 檔（GH#437）--------------------
 # `content/` 是 live bind-mount，⛔ 刻意不進映像 —— 上面四行只 COPY 程式碼。
 # 但 `blizzardVfxCredits.ts` 是**靜態 import** 這一份出處帳本的（設計如此：
@@ -74,6 +84,8 @@ COPY apps/admin/ apps/admin/
 # 閘：`packages/shared/src/ops/clientContentImports.test.ts` 逐一比對兩邊。
 # ⛔ 想再加一份之前先問：它是不是該用 `contentAssetUrl` 在**執行期**抓？
 COPY content/assets/audio/wc3/PROVENANCE.json content/assets/audio/wc3/
+# Offline Editor image staging validates against the shipped default policy.
+COPY content/config/icon-upload.json content/config/
 # ---- tools/ 的跨界 import（GH#682/#683,2026-08-25）--------------------------
 # SkillListsPage 靜態 import 產生器的 lists.json（md 與後台頁**同一份**資料 ——
 # 第〇·四守則的單一住處,所以它非在建置脈絡不可）。同一條閘現在也掃 tools/。
@@ -96,6 +108,21 @@ COPY docs/editor-contract/ggd-type-catalog.json docs/editor-contract/
 COPY docs/editor-contract/ggd-bricks.json docs/editor-contract/
 COPY docs/editor-contract/ggd-editor-coverage.json docs/editor-contract/
 COPY docs/editor-contract/ggd-presentation-receipt.json docs/editor-contract/
+# These globbed JSON catalogs are the Editor's offline fallback. An empty glob
+# silently builds an unusable creation screen, so test the actual Vite module.
+COPY content/ability-templates/ content/ability-templates/
+COPY content/vfx-subtypes/ content/vfx-subtypes/
+COPY content/config/ content/config/
+COPY content/projectiles/ content/projectiles/
+COPY content/models/ content/models/
+COPY content/champions/ content/champions/
+COPY content/abilities/ content/abilities/
+COPY content/items/ content/items/
+COPY content/augments/ content/augments/
+COPY content/status-effects/ content/status-effects/
+COPY content/loot-tables/ content/loot-tables/
+COPY content/arenas/ content/arenas/
+RUN pnpm --filter @ggd/editor exec vitest run src/hero/catalog.test.ts --pool forks --maxWorkers 1 --minWorkers 1
 # ---- THE FULL-ASSET BUILD FLAG (task #176) ---------------------------------
 # apps/client/src/config/fullAssets.ts reads VITE_GGD_FULL_ASSETS and falls back
 # to import.meta.env.DEV, which is constant-folded to `false` in every

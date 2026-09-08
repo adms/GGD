@@ -7,6 +7,8 @@
  * `@ggd/shared/content/node`.
  */
 export * from "./schema/index";
+export * from "./heroForge";
+export * from "./heroForge/index";
 // 道具卡片的渲染時解析 (owner 2026-08-02「排版連在一起不好閱讀」)。純函式,
 // 不動 owner 的 description 一個字 —— 見 itemCardText.ts 的檔頭。
 export * from "./itemCardText";

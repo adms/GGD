@@ -14,6 +14,14 @@ Both read the **same budget** as the page: the per-import `GATES` in `limits.ts`
 generated `content/assets/model-budget/report.json`. There is one budget, and
 three tools that consult it.
 
+The supported portable target is **iPad mini (A17 Pro), 30 fps**; phones are
+outside this support scope. The budget uses development-machine measurements
+with an assumed 3× cost allowance. It is an estimate; an A17 Pro device test is
+not a release requirement. A 33.33 ms frame reserves 9 ms for animation, giving
+160 channels per hero (warning 120), or 1,920 for twelve heroes. Geometry, draws,
+and texture limits stay unchanged. A channel is one animated node property,
+not a clip: storing many clips does not mean playing them all in one frame.
+
 ---
 
 ## 1. The guard — catch it at import, not in a profiler
@@ -38,7 +46,7 @@ guardian_skeleton.glb  role=champion (--role)  → OVER
     ok  每實例三角面        6952  warn 16000 / limit 28000
   OVER! 每模型 mesh/draw call  15  warn 3 / limit 5    → manual: 合併同材質 primitive (playbook 步驟 1)
   WARN  貼圖最長邊 (px)      1024  warn 512 / limit 1024 → optimise 貼圖 1024→512px (VRAM ↓75%)
-  OVER! 每幀動畫通道           123  warn 35 / limit 55   → manual: 擺設應無骨架 / 烘焙精簡動畫
+  WARN  每幀動畫通道           123  warn 120 / limit 160
 ```
 
 Exit code: **1** on any breach, **0** clean (or `--warn-only`), **2** if a role

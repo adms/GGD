@@ -1,16 +1,19 @@
 import type { FieldProps } from "../FormRenderer";
 import { FieldErrors } from "../FormRenderer";
 import type { UINumber } from "../uiSchema";
+import { useRawInputs } from "../RawInputContext";
 
 export function NumberField({ node, value, dataPath, errors, onChange }: FieldProps & { node: UINumber }) {
   const numberValue = typeof value === "number" ? value : undefined;
-  const setRaw = (raw: string): void => {
-    if (raw === "") {
-      onChange(dataPath, node.optional ? undefined : 0);
+  const inputs = useRawInputs();
+  const setRaw = (text: string): void => {
+    inputs?.set(dataPath, text, "number");
+    if (text === "") {
+      onChange(dataPath, undefined);
       return;
     }
-    const n = node.int ? parseInt(raw, 10) : parseFloat(raw);
-    if (!Number.isNaN(n)) onChange(dataPath, n);
+    const n = Number(text);
+    if (Number.isFinite(n)) onChange(dataPath, n);
   };
   return (
     <label className="field field-number">
@@ -19,11 +22,13 @@ export function NumberField({ node, value, dataPath, errors, onChange }: FieldPr
         {node.optional ? <em> (optional)</em> : null}
       </span>
       <input
-        type="number"
+        data-field={dataPath}
+        type={inputs ? "text" : "number"}
+        inputMode="decimal"
         step={node.int ? 1 : "any"}
         min={node.min}
         max={node.max}
-        value={numberValue ?? ""}
+        value={inputs?.values[dataPath]?.text ?? numberValue ?? ""}
         onChange={(e) => setRaw(e.target.value)}
       />
       {node.min !== undefined && node.max !== undefined ? (

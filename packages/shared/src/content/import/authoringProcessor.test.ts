@@ -17,6 +17,7 @@ import {
   writeFileSync,
   readFileSync,
   cpSync,
+  rmSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
@@ -28,6 +29,7 @@ import {
   buildAuthoringProcessor,
   buildProcessorReceipt,
   processorFingerprint,
+  sourceClosure,
 } from "./authoringProcessor";
 
 const REPO = resolve(__dirname, "../../../../..");
@@ -35,8 +37,8 @@ const REPO = resolve(__dirname, "../../../../..");
 /** ⭐ 把七個面的檔案複製到一棵臨時樹 ⇒ 可以**真的改壞它**再量。 */
 function mirror(): string {
   const dir = mkdtempSync(join(tmpdir(), "ggd-proc-"));
-  for (const s of PROCESSOR_SURFACES) {
-    for (const p of s.paths) {
+  for (const s of buildProcessorReceipt(REPO).surfaces) {
+    for (const { path: p } of s.files) {
       const dst = join(dir, p);
       mkdirSync(dirname(dst), { recursive: true });
       cpSync(resolve(REPO, p), dst);
@@ -46,6 +48,25 @@ function mirror(): string {
 }
 
 describe("authoringProcessor（規格 §1 runtime-direct）", () => {
+  it("collects real imports behind glob comments, aliases and dynamic imports without reading fake imports in text", () => {
+    const root = mkdtempSync(join(tmpdir(), "ggd-source-parser-"));
+    try {
+      mkdirSync(join(root, "packages/shared/src"), { recursive: true });
+      writeFileSync(join(root, "entry.ts"), [
+        '// sim/** is a glob in a line comment, not the start of a block comment.',
+        'import { value } from "./live";',
+        '/** A later real block comment. */',
+        'const prose = `from "./missing-in-string"`;',
+        '// import "./missing-in-comment";',
+        'export { root } from "@ggd/shared";',
+        'export { aliased } from "@ggd/shared/alias";',
+        'const load = () => import("./dynamic");',
+      ].join('\n'));
+      for (const name of ["live", "dynamic", "packages/shared/src/index", "packages/shared/src/alias"]) writeFileSync(join(root, `${name}.ts`), "export const value = 1;");
+      expect(sourceClosure(root, ["entry.ts"])).toEqual(["dynamic.ts", "entry.ts", "live.ts", "packages/shared/src/alias.ts", "packages/shared/src/index.ts"]);
+    } finally { rmSync(root, { recursive: true, force: true }); }
+  });
+
   it("① ⭐ 宣告的三格逐字就是規格要的值（⛔ 不是「看起來像」）", () => {
     const d = buildAuthoringProcessor(REPO);
     expect(d.kind).toBe(AUTHORING_PROCESSOR_KIND);
@@ -86,8 +107,9 @@ describe("authoringProcessor（規格 §1 runtime-direct）", () => {
     ).toThrow(/不存在的檔/);
   });
 
-  it("④ ⭐ 七個面**逐字**就是規格點名的那七個（⛔ 不多不少）", () => {
+  it("④ runtime-direct 與完整英雄各自的實作面都納入指紋", () => {
     expect(PROCESSOR_SURFACES.map((s) => s.surface)).toEqual([
+      "hero-project-compiler",
       "ability-item-zod-schemas",
       "exact-ref-collector",
       "capability-applicability",

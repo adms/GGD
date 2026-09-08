@@ -105,6 +105,7 @@ export const devourEffect: EffectKindSpec<"devour"> = {
       if (!(devoured > 0)) continue;
 
       world.damageQueue.push({
+        castInstance: ctx.castInstance,
         source: ctx.caster,
         target: id,
         amount: lethal,

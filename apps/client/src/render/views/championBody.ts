@@ -323,6 +323,7 @@ export function championBodyHooks(deps: ChampionBodyDeps): ChampionBodyHooks {
     const overrideKey = bodyModelKeyFor(seatId, formIndex);
     const resolved = deps.resolveModelKey(overrideKey ?? modelKey, seatId);
     const doc = content.modelFor(resolved);
+    if (doc?.bodyVersion && !doc.bodyVersion.legacyAppearance) return doc;
     if (resolved !== modelKey) return doc; // equipped skin / 身體覆寫 is an explicit choice
     // WHICH BODY IS ON SCREEN, not which hero the seat picked. `inheritFrom`
     // is the base id: a 變身態 with no overlay unit of its own keeps the model
@@ -335,7 +336,10 @@ export function championBodyHooks(deps: ChampionBodyDeps): ChampionBodyHooks {
 
   const voxelSkinFor = (e: EntityViewState): VoxelSkinRecipe | null | undefined => {
     const championId = bodyChampionIdFor(e);
-    return voxelSkinForId(championId, content.voxelSkinOverrideFor(championId ?? ""));
+    const key = deps.resolveModelKey(bodyModelKeyFor(e.seatId, formIndexFromFlags(e.flags ?? 0)) ?? e.key, e.seatId);
+    const version = content.modelFor(key)?.bodyVersion;
+    const skin = voxelSkinForId(championId, content.voxelSkinOverrideFor(championId ?? ""), version?.legacyAppearance ? version.sourceModelKey : undefined);
+    return skin && version && !version.legacyAppearance ? { ...skin, preferVoxelBody: false } : skin;
   };
 
   const modelOverrideFor = (e: EntityViewState): ModelDocOverride | null => {
@@ -386,7 +390,9 @@ export function championBodyHooks(deps: ChampionBodyDeps): ChampionBodyHooks {
     // 另一個 archetype，卻還戴著上一具的臉」，而那是**兩條算繪路只改一條**的
     // 標準症狀（⚠️ 今天在 EX 魔法陣那一題已經踩過同型：粒子等解鎖、模型從出生
     // 就掛著）。⛔ 這一行與 `modelDocFor` 那一行必須同進退。
-    const archetype = ARCHETYPE_BY_MODEL_KEY[visual?.modelKey ?? e.key];
+    const bodyKey = visual?.modelKey ?? e.key;
+    const version = content.modelFor(bodyKey)?.bodyVersion;
+    const archetype = ARCHETYPE_BY_MODEL_KEY[version?.legacyAppearance ? version.sourceModelKey : bodyKey];
     if (!archetype) return base;
     return { ...(base ?? {}), voxel: voxelLookFor(championId, archetype) };
   };

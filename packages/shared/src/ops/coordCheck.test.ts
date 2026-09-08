@@ -17,6 +17,7 @@ import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { createHash } from "node:crypto";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const SHIPPED = "docs/editor-contract/coordination";
@@ -24,20 +25,20 @@ const REAL = join(REPO, SHIPPED, "claim.model-fx-emitter-remaining-four-fields.j
 
 type Packet = Record<string, unknown>;
 
-const run = (dir?: string) =>
-  spawnSync("node", ["tools/coord/check.mjs", ...(dir ? ["--dir", dir] : [])], {
+const run = (dir?: string, repro = false) =>
+  spawnSync("node", ["tools/coord/check.mjs", ...(dir ? ["--dir", dir] : []), ...(repro ? ["--run-repro"] : [])], {
     cwd: REPO,
     encoding: "utf8",
   });
 
 /** 把一份**合法**的 packet 改壞之後單獨丟進一個 temp 目錄跑（⛔ 不碰出貨目錄）。 */
-function checkOne(mutate: (p: Packet) => Packet): { status: number | null; out: string } {
+function checkOne(mutate: (p: Packet) => Packet, repro = false): { status: number | null; out: string } {
   const base = JSON.parse(readFileSync(REAL, "utf8")) as Packet;
   const packet = mutate(base);
   const dir = mkdtempSync(join(tmpdir(), "coord-check-"));
   try {
     writeFileSync(join(dir, `${String(packet["dedupeKey"])}.json`), JSON.stringify(packet, null, 2));
-    const r = run(dir);
+    const r = run(dir, repro);
     return { status: r.status, out: `${r.stdout}${r.stderr}` };
   } finally {
     rmSync(dir, { recursive: true, force: true });
@@ -45,6 +46,25 @@ function checkOne(mutate: (p: Packet) => Packet): { status: number | null; out: 
 }
 
 describe("coord:check —— packet 協定的閘", () => {
+  it("keeps unchanged merged receipts historical, including under --run-repro", () => {
+    const result = checkOne((packet) => packet, true);
+    expect(result.status, result.out).toBe(0);
+    expect(result.out).toContain("未宣稱已對目前契約重驗");
+  });
+
+  it("still rejects stale new packets and edited packets with the merged fingerprint", () => {
+    const stale = checkOne((packet) => ({ ...packet, dedupeKey: "claim.sentinel-stale", contractFingerprint: "0".repeat(16) }));
+    expect(stale.status).toBe(1); expect(stale.out).toContain("contractFingerprint 對不上");
+    const edited = checkOne((packet) => ({ ...packet, title: "Changed claim without a new contract" }));
+    expect(edited.status).toBe(1); expect(edited.out).toContain("同一題重問");
+  });
+
+  it("actually runs a new packet's repro against its declared exit code", () => {
+    const fingerprint = createHash("sha256").update(readFileSync(join(REPO, "docs/editor-contract/ggd-type-catalog.json"))).digest("hex").slice(0, 16);
+    const result = checkOne((packet) => ({ ...packet, dedupeKey: "claim.sentinel-repro", contractFingerprint: fingerprint, claims: [{ kind: "confirmed", text: "Test sentinel", commit: packet.baseCommit, repro: { command: "node tools/coord/check.mjs", expectedExit: 1 } }] }), true);
+    expect(result.status).toBe(1); expect(result.out).toContain("repro 重跑對不上");
+  });
+
   it("⭐ 出貨的 packet 目錄全過（⛔ 沒擋過頭）", () => {
     const r = run();
     expect(`${r.stdout}${r.stderr}`).toContain("✅");

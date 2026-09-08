@@ -14,8 +14,8 @@ import { AiFillProvider } from "../ai/AiFillContext";
 import { sourceWriteBlockers } from "../sourcePolicy";
 import { iconKindFor } from "../ai/prompt";
 import { LocalIconUploadPanel } from "../local-icons/LocalIconUploadPanel";
-import { AutosaveBanner } from "../autosave/AutosaveBanner";
-import { useDraftAutosave } from "../autosave/useDraftAutosave";
+import { LocalDraftStatus } from "../drafts/DraftLibrary";
+import { RawInputContext, rawInputErrors } from "../form/RawInputContext";
 // NOTE: the AI icon panel (../ai/AiIconPanel) is deliberately NOT rendered here.
 // The owner does not want CLOUD image generation — 「我不追求雲端生圖，只留本機端
 // SD 生圖」 — and this panel's Generate button is the one UI surface that POSTs to
@@ -29,11 +29,16 @@ import { useDraftAutosave } from "../autosave/useDraftAutosave";
 
 export function EditorView() {
   const qc = useQueryClient();
-  const { collection, docId, draft, dirty, serverErrors, past, future, update, undo, redo, markSaved, setServerErrors } =
+  const { collection, docId, draft, dirty, rawInputs, updateRaw, serverErrors, past, future, update, undo, redo, markSaved, setServerErrors } =
     useEditorStore();
   const [saveState, setSaveState] = useState<string | null>(null);
   // 💾 GH#1023：草稿自動存本機 ＋ 關頁提示 ＋ 重開接回（並在畫面上說它是草稿）。
-  const autosave = useDraftAutosave();
+  // ⛔⛔ 2026-09-08 合併 PR 1118：**兩邊各自做了 autosave**。
+  //   · main（GH#1023，v0.40.2）：`useDraftAutosave` ＋ `AutosaveBanner` —— 我上一版的權宜
+  //   · Codex（PR 1118）：`useDraftSession` ＋ `LocalDraftStatus` —— ⭐ 完整系統
+  //     （衝突狀態、還原、複製，是四層草稿管理的一部分）
+  //   ⇒ ⭐ 取 Codex 的那一份；`apps/editor/src/autosave/**` 從此**沒有消費端**。
+  //   ⛔ 沒有刪掉它 —— 那是 owner 的「另存,不壓縮取代」；要退場請開一張票。
 
   // the status line belongs to ONE doc — clear it when the selection changes
   useEffect(() => setSaveState(null), [collection, docId]);
@@ -90,7 +95,7 @@ export function EditorView() {
     return <main className="editor-empty">Pick a document.</main>;
   }
 
-  const errors: ErrorMap = { ...inlineErrors };
+  const errors: ErrorMap = { ...inlineErrors, ...rawInputErrors(rawInputs) };
   for (const [path, msgs] of Object.entries(serverErrors)) {
     errors[path] = [...(errors[path] ?? []), ...msgs];
   }
@@ -125,7 +130,7 @@ export function EditorView() {
         <header className="editor-head">
           <h2>
             {collection}/{docId}
-            {dirty ? <em className="dirty"> ● unsaved</em> : null}
+            {dirty ? <em className="dirty"> ● 尚未套用至來源</em> : null}
           </h2>
           <div className="editor-actions">
             <span className="save-state">{saveState}</span>
@@ -139,7 +144,7 @@ export function EditorView() {
             </button>
           </div>
         </header>
-        <AutosaveBanner {...autosave} />
+        <LocalDraftStatus />
         {errorCount > 0 ? <p className="error">⚠ {errorCount} field(s) invalid</p> : null}
         {warnings.length > 0 ? (
           <ul className="author-warnings" data-testid="author-warnings">
@@ -158,14 +163,14 @@ export function EditorView() {
         ) : null}
         <AiFillProvider>
           {iconKind ? <LocalIconUploadPanel kind={iconKind} docId={docId} /> : null}
-          <FormRenderer
+          <RawInputContext.Provider key={`${collection}/${docId}`} value={{ values: rawInputs, set: updateRaw }}><FormRenderer
             node={ui}
             value={draft}
             dataPath=""
             errors={errors}
             onChange={update}
             readOnlyReasons={readOnlyReasons}
-          />
+          /></RawInputContext.Provider>
         </AiFillProvider>
       </div>
       <PreviewPanel collection={collection} doc={draft} />

@@ -70,10 +70,12 @@ import { zApplyStatus } from "../schema/effects/applyStatus";
 import { zDot } from "../schema/effects/dot";
 import { zSpawnVfx } from "../schema/effects/spawnVfx";
 import { zId } from "../schema/common";
+import { paramsSchemaFor } from "./paramsSchema";
 // ⭐【週期領域】的 schema 過門用它，⛔ 不是在這裡抄一張半徑表：
 //    `resolveRadiusTier` 在載入時會用**出貨的** `config.aoe-tiers@1` 覆寫，
 //    這裡只是為了讓 `shape:"circle"` 通過 refine（見 `periodic-field` 家族）。
 import { DEFAULT_AOE_TIERS, type AoeTierName } from "../aoeTiers";
+import { EFFECT_HANDLERS } from "../../sim/effects/effectRegistry";
 
 // ---------------------------------------------------------------------------
 // LENGTH CONVERSION — load-bearing constant (design §四, verified in expand.test.ts)
@@ -193,6 +195,9 @@ export interface SimCapability {
 }
 
 export const SIM_CAPABILITIES: Readonly<Record<string, SimCapability>> = {
+  // Shipping preset templates already require this vocabulary. Derive its
+  // availability from the real handler; the getter avoids module-init cycles.
+  get modelFx() { return { p: 3 as const, available: Object.prototype.hasOwnProperty.call(EFFECT_HANDLERS, "spawnModelFx") }; },
   projectile: { p: 1, available: true },
   hooks: { p: 1, available: true },
   /**
@@ -240,8 +245,15 @@ export const SIM_CAPABILITIES: Readonly<Record<string, SimCapability>> = {
    * ⚠️ 名字只留 `modelFx` 一個（beam-roll 那一份是凍住的；兩條龍改成同一個名字），⛔ 不開 `spawnModelFx` 別名列 ——
    * 同一個能力兩個名字是第〇·四守則的第二個住處。
    */
-  modelFx: { p: 3, available: true },
-  grantAttribute: { p: 3, available: true },
+  // ⭐⭐ 2026-09-08 合併 PR 1118 —— 這兩列**兩側都加了**，而形狀不同：
+  //   · main：`{ p: 3, available: true }` —— 手寫的斷言
+  //   · Codex：檔案上方的 `get modelFx()` —— 從 `EFFECT_HANDLERS` **推導**
+  //   ⇒ ⭐ 留推導那一份。這個檔的檔頭逐字記著這張表**撒過兩次謊**
+  //   （`knockback` 寫 false 但早就有了、`invulnerable` 整列漏掉），而結論是
+  //   「a flag defended by prose outlives the prose's expiry date and **nothing goes red**」。
+  //   ⛔ 一個手寫的 `available: true` 正是那種旗標：handler 哪天被拿掉它也不會變。
+  // ⚠️ `grantAttribute` 沒有對應的 getter（它的 handler 名字與 key 同名）⇒ 照樣推導。
+  get grantAttribute() { return { p: 3 as const, available: Object.prototype.hasOwnProperty.call(EFFECT_HANDLERS, "grantAttribute") }; },
   /**
    * ⭐ GH#993（2026-09-07）—— 一顆 `damageLine`：一條從施法者長出去的線，一次結算。
    * `EFFECT_HANDLERS.damageLine` 自 `sim/effects/damageLine.ts` 就在（出貨 9 支手寫技能在用），
@@ -837,7 +849,7 @@ const modelFxFamily: Family = (t, p) => {
         //    兩條路產出兩種節點，而兩邊都不會有東西紅（第三守則的形狀）。
         //    ⚠️ 既有四族一格都沒宣告 ⇒ `has()` 回 false ⇒ 展開結果逐位元不變。
         ...(has(t, p, "clip") ? { clip: str(t, p, "clip") } : {}),
-        ...(has(t, p, "clipTimeScale") ? { clipTimeScale: num(t, p, "clipTimeScale") } : {}),
+        ...(has(t, p, "clip") && has(t, p, "clipTimeScale") ? { clipTimeScale: num(t, p, "clipTimeScale") } : {}),
         // ⭐ GH#693【外觀那兩格】—— 顏色與透明度是**逐支技能**的參數,⛔ 不是
         //    「換一份已經染好色的模型」。census 量到 133/236 隻 dummy 非白,而且
         //    每一具都不同 ⇒ 沒有這兩格,一個家族的每一種顏色都要多開一份
@@ -1354,6 +1366,23 @@ const FAMILIES: Readonly<Record<string, Family>> = {
   // ability wearing the same name (owner: 看不懂也不合理). The slot is OPTIONAL,
   // so a filled param is the only thing that produces a gate: every expansion
   // that omits it is byte-identical to the pre-condition expander.
+  // Schema-backed programs let community authors compose existing mechanics
+  // without character-specific engine branches or discarded effect overrides.
+  "effect-sequence": (t, p) => {
+    const values = paramsSchemaFor(t).parse(Object.fromEntries(Object.keys(t.params).map(key => [key, raw(t, p, key)])));
+    return {
+      castType: values.castType as CastType,
+      castTimeSec: num(t, p, "castTimeSec"),
+      radius: num(t, p, "radius"),
+      targetsEnemies: str(t, p, "side") === "enemies",
+      effects: values.effects as EffectDef[],
+    };
+  },
+  "event-passive": (t, p) => {
+    const values = paramsSchemaFor(t).parse({ hooks: raw(t, p, "hooks") });
+    return { castType: "self", innateKind: "passive", effects: [], passive: { ranks: [{ hooks: values.hooks as HookDef[] }] } };
+  },
+
   "on-attack": (t, p) => {
     const event = str(t, p, "event") as HookEvent;
     const hook: HookDef = {
@@ -3503,6 +3532,15 @@ export function mergeExpansion(
       return k !== null && !expandedKinds.has(k);
     });
     if (keep.length > 0) out["effects"] = [...expanded, ...keep];
+  }
+  // A template describes behavior; innateKind describes how that behavior is
+  // equipped in the innate slot. Passive products remain valid in Q/W/E/R/EX,
+  // and an active product in PASSIVE must remain a real cast. EXPANDED_KEYS
+  // already owns this field, so derive it from the complete resulting chain.
+  if (skeleton["slot"] === "PASSIVE") {
+    out["innateKind"] = Array.isArray(out["effects"]) && out["effects"].length > 0 ? "active" : "passive";
+  } else if (skeleton["slot"] !== undefined) {
+    delete out["innateKind"];
   }
   return out;
 }

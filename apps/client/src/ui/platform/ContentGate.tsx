@@ -13,6 +13,12 @@
 import { useSyncExternalStore } from "react";
 import { getContentBootSnapshot, subscribeContentBoot } from "../../content/bootContent";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
+import { communityLoadingSnapshot, subscribeCommunityLoading } from "../../content/communityMatch";
+
+export function CommunityContentGate({ children }: { children: import("react").ReactNode }) {
+  const message = useSyncExternalStore(subscribeCommunityLoading, communityLoadingSnapshot, communityLoadingSnapshot);
+  return message ? <div role="status" style={{ position: "fixed", inset: 0, display: "grid", placeItems: "center", color: TEXT_MAIN, background: PANEL_BG, padding: 32 }}>{message}</div> : children;
+}
 
 /**
  * React signal: true once the content registries are populated (full set OR the

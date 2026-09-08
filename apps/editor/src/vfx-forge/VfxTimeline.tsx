@@ -1,4 +1,6 @@
-import type { VfxScriptDoc, VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
+import { isVfxScriptCall, type VfxScriptAuthoredDoc, type VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
+import type { VfxSubtypeDoc } from "@ggd/shared/content/schema/vfxSubtype";
+import { authoredTimeline } from "./subtypeAuthoring";
 import type { AnimPulse } from "@ggd/shared/content/animPulse";
 import {
   VFX_FORGE_SEGMENT_KINDS,
@@ -71,6 +73,7 @@ export function segmentTrackSummary(segment: VfxScriptSegment): string {
 
 export function VfxTimeline({
   script,
+  subtypes = [],
   cues,
   durationMs,
   playheadMs,
@@ -84,7 +87,8 @@ export function VfxTimeline({
   onAddKind,
   onDropAsset,
 }: {
-  script: VfxScriptDoc;
+  script: VfxScriptAuthoredDoc;
+  subtypes?: readonly VfxSubtypeDoc[];
   cues: readonly TriggerCue[];
   durationMs: number;
   playheadMs: number;
@@ -98,8 +102,9 @@ export function VfxTimeline({
   onAddKind(kind: VfxScriptSegment["kind"]): void;
   onDropAsset(asset: AssetDrop): void;
 }) {
-  const times = segmentTimes(script, cues);
-  const evidenceTimes = recommendedEvidenceTimes(script, cues, 18);
+  const { expanded, owners, errors } = authoredTimeline(script, subtypes);
+  const times = segmentTimes(expanded, cues).map((entry) => ({ ...entry, segmentIndex: owners[entry.segmentIndex] }));
+  const evidenceTimes = recommendedEvidenceTimes(expanded, cues, 18);
   return (
     <section
       className="vfx-timeline"
@@ -171,12 +176,14 @@ export function VfxTimeline({
         ))}
       </div>
       <div className="vfx-tracks">
+        {errors.map((error) => <p role="alert" key={error}>{error}</p>)}
         {script.segments.map((seg, i) => {
           const occurrences = times.filter((x) => x.segmentIndex === i);
+          const call = isVfxScriptCall(seg);
           return (
             <button type="button" className={`vfx-track${selected === i ? " active" : ""}`} key={`${i}-${seg.kind}`} onClick={() => onSelect(i)}>
-              <b>{i + 1}. {segmentTrackSummary(seg)}</b>
-              <small title={`on:${seg.on}`}>{segmentTriggerSummary(seg)} · +{seg.atMs ?? 0}ms</small>
+              <b>{i + 1}. {call ? `特效子型 · ${subtypes.find((doc) => doc.id === seg.call.subtype)?.label ?? seg.call.subtype}` : segmentTrackSummary(seg)}</b>
+              <small title={`on:${seg.on}`}>{call ? "依子型內的事件與時序" : `${segmentTriggerSummary(seg)} · +${seg.atMs ?? 0}ms`}</small>
               <span className="vfx-track-line">
                 {occurrences.map((at, n) => <i key={n} style={{ left: `${(at.atMs / durationMs) * 100}%` }} title={at.label} />)}
               </span>

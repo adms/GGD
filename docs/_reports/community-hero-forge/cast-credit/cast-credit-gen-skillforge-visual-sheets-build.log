@@ -1,0 +1,12 @@
+
+> ggd@0.0.0 skillforge:visual-sheets:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> bash scripts/genrun.sh skillforge:visual-sheets:build skillforge:visual-sheets:build:raw
+
+🔓 隔離區:解鎖 335 份（追蹤 842,缺 0）
+
+> ggd@0.0.0 skillforge:visual-sheets:build:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> node tools/skill-forge/build-visual-contact-sheets.mjs
+
+WROTE 47 chronological visual contact sheets
+🔒 隔離區:上鎖 335 份（追蹤 842,缺 0,正規化器專屬 507 份不上鎖）
+✓ genrun: skillforge:visual-sheets:build 完成（產物已重新上鎖）

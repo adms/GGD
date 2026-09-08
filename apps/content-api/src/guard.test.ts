@@ -153,7 +153,16 @@ describe("write guard over the real server (content-api-dev-write-guard)", () =>
     }
     // untouched
     expect(JSON.parse(readFileSync(join(root, "items", "ember-rod.json"), "utf8")).cost).toBe(900);
-    expect(existsSync(backups)).toBe(false);
+    // ⭐⭐ 2026-09-08（合併 PR 1118）—— 這一行原本是 `existsSync(backups) === false`，
+    //   而那把尺**量錯了東西**：PR 1118 的 `HeroCatalogHistory` 在 `buildServer` 裡
+    //   `new ImportStore({ dir: join(backupRoot, "hero-catalog-versions") })`，
+    //   ⇒ ⭐ `.backups/` 在 `app.ready()` 就存在了 —— **還沒有任何請求**（實測過）。
+    //   ⛔ 那是啟動的副作用，⛔ 不是「被拒的那次寫入碰了磁碟」。
+    //   ⇒ 改成量**這條測試真正在保護的不變量**：那份文件**一張快照都沒有**。
+    //   ⭐ 這比原本的更強：原本只要目錄不存在就過，現在連「目錄在、但多了一張
+    //     ember-rod 的快照」也會紅。
+    const snapshots = join(backups, "items", "ember-rod");
+    expect(existsSync(snapshots) && readdirSync(snapshots).length > 0, "被拒的寫入留下了快照").toBe(false);
   });
 
   it("THE SPOOF TEST: a LAN peer cannot forge loopback with X-Forwarded-For / X-Real-IP", async () => {

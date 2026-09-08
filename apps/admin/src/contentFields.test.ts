@@ -20,7 +20,8 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
-import { getAt, type EditCollection } from "@ggd/shared/content/editModel";
+import { getAt, parseField, type EditCollection } from "@ggd/shared/content/editModel";
+import { heroBodyModelIds } from "@ggd/shared/content/heroForge/bodyModels";
 import {
   COLLECTION_LABEL,
   allFields,
@@ -43,6 +44,22 @@ function sampleDocs(collection: EditCollection, n: number): Record<string, unkno
 }
 
 describe("the field spec", () => {
+  it("maps all three model approval choices to the actual shared catalog policy", () => {
+    const field = fieldSpec("models", "heroBody")!;
+    const source = sampleDocs("models", 1)[0]!;
+    expect(field.readOnly).not.toBe(true);
+    expect(field.options?.map((option) => option.value)).toEqual(["", "true", "false"]);
+    for (const option of field.options!) {
+      const parsed = parseField(field.kind, option.value);
+      expect(parsed.ok).toBe(true);
+      if (!parsed.ok) throw new Error(parsed.error);
+      const document: Record<string, unknown> = { ...source, heroBody: parsed.value };
+      const entries: [string, unknown][] = [[`models/${document.id}`, document]];
+      expect(heroBodyModelIds(entries).includes(String(document.id))).toBe(option.value === "true");
+      entries.push(["champions/existing", { modelKey: document.id }]);
+      expect(heroBodyModelIds(entries).includes(String(document.id))).toBe(option.value !== "false");
+    }
+  });
   it("covers every editable collection with the user's own wording", () => {
     cover("content-admin-fields");
     // 三選一強化 (augments) are the DRAFT abilities — a SEPARATE editable

@@ -11,6 +11,7 @@
  */
 import type { ZodTypeAny } from "zod";
 import { refFromDescription } from "@ggd/shared/content";
+import { zEffectCondition } from "@ggd/shared/content/schema/condition";
 import { humanize, type UINode } from "./uiSchema";
 
 export interface WalkOptions {
@@ -66,6 +67,8 @@ interface Unwrapped {
   schema: ZodTypeAny;
   optional: boolean;
   description?: string;
+  reference?: ReturnType<typeof refFromDescription>;
+  condition?: boolean;
 }
 
 /** Peel Optional/Nullable/Default/Effects/Lazy/Branded wrappers. */
@@ -73,9 +76,20 @@ function unwrap(schema: ZodTypeAny): Unwrapped {
   let s = schema;
   let optional = false;
   let description: string | undefined;
+  let reference: ReturnType<typeof refFromDescription> = null;
   for (let i = 0; i < 20; i++) {
     description ??= (s as { description?: string }).description;
+    // An optional reference may carry its own human help text. Keep the
+    // inner zRef contract as well, so help text does not turn a picker into
+    // an unvalidated free-text control.
+    reference ??= refFromDescription((s as { description?: string }).description);
     const def = s._def as { typeName?: string } & Record<string, unknown>;
+    // .optional() / .describe() wrappers retain the same inner condition tree.
+    // Stop before unrolling it: the dedicated editor supplies its own bounds.
+    if (def.typeName === "ZodEffects" &&
+        def.schema === (zEffectCondition._def as { schema?: ZodTypeAny }).schema) {
+      return { schema: s, optional, description, reference, condition: true };
+    }
     switch (def.typeName) {
       case "ZodOptional":
       case "ZodNullable":
@@ -99,10 +113,10 @@ function unwrap(schema: ZodTypeAny): Unwrapped {
         s = def.out as ZodTypeAny;
         continue;
       default:
-        return { schema: s, optional, description };
+        return { schema: s, optional, description, reference };
     }
   }
-  return { schema: s, optional, description };
+  return { schema: s, optional, description, reference };
 }
 
 export function walkZod(
@@ -124,8 +138,10 @@ function walk(
   ancestors: ReadonlyMap<ZodTypeAny, number>,
   maxReentry: number,
 ): UINode {
-  const { schema, optional, description } = unwrap(raw);
+  const { schema, optional, description, reference, condition } = unwrap(raw);
   const base = { path, label, optional, ...(description && !description.startsWith("ref") ? { description } : {}) };
+
+  if (condition) return { kind: "condition", ...base };
 
   if (depth > maxDepth) return { kind: "unknown", ...base };
 
@@ -141,7 +157,7 @@ function walk(
   const def = schema._def as { typeName?: string } & Record<string, unknown>;
   switch (def.typeName) {
     case "ZodString": {
-      const ref = refFromDescription(description);
+      const ref = reference;
       return { kind: "text", ...base, ...(ref ? { ref } : {}) };
     }
     case "ZodNumber": {
@@ -163,6 +179,36 @@ function walk(
         ...(min !== undefined && minCheck?.inclusive === false ? { exclusiveMin: true } : {}),
         ...(max !== undefined && maxCheck?.inclusive === false ? { exclusiveMax: true } : {}),
       };
+    }
+    case "ZodUnion": {
+      const options = def.options as ZodTypeAny[];
+      // Inspect only the two tags first. Walking every arbitrary union would
+      // expand arbitrary recursive unions; shared conditions use their own editor.
+      const tags = options.map(opt => unwrap(opt).schema._def.typeName);
+      if (options.length === 2 && tags.includes("ZodNumber") && tags.includes("ZodArray")) {
+        const array = unwrap(options[tags.indexOf("ZodArray")]!).schema;
+        // Do not walk arbitrary array/recursive unions: only a numeric item
+        // has an unambiguous scalar-versus-rank-column editor.
+        if (unwrap(array._def.type as ZodTypeAny).schema._def.typeName === "ZodNumber") {
+          const number = down(options[tags.indexOf("ZodNumber")]!, path, label);
+          const item = down(array._def.type as ZodTypeAny, `${path}[]`, "數值");
+          if (number.kind === "number" && item.kind === "number" && !number.optional && !item.optional) {
+            return { kind: "numberOrArray", ...base, number, item,
+              minItems: array._def.minLength?.value ?? 0,
+              ...(array._def.maxLength ? { maxItems: array._def.maxLength.value } : {}) };
+          }
+        }
+      }
+      if (options.length === 2 && tags.includes("ZodNumber") && tags.includes("ZodLiteral")) {
+        const nodes = options.map(opt => down(opt, path, label));
+        const number = nodes.find(n => n.kind === "number");
+        const literal = nodes.find(n => n.kind === "literal");
+        if (number?.kind === "number" && literal?.kind === "literal" &&
+          !number.optional && !literal.optional && typeof literal.value === "string") {
+          return { kind: "numberOrLiteral", ...base, number, literal: literal.value };
+        }
+      }
+      return { kind: "unknown", ...base };
     }
     case "ZodBoolean":
       return { kind: "boolean", ...base };
@@ -226,6 +272,9 @@ export function defaultValueFor(node: UINode): unknown {
       return "";
     case "number":
       return defaultNumber(node);
+    case "numberOrLiteral":
+    case "numberOrArray":
+      return defaultNumber(node.number);
     case "boolean":
       return false;
     case "enum":
@@ -258,6 +307,7 @@ export function defaultValueFor(node: UINode): unknown {
       }
       return out;
     }
+    case "condition":
     case "unknown":
       return null;
   }

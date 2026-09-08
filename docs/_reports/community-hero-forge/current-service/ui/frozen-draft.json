@@ -1,0 +1,11 @@
+{
+  "scope": "Actual author edits and cloud sync while the reviewer reloads the frozen submission.",
+  "status": "failed",
+  "steps": [
+    {
+      "authorCloudRevision": 2,
+      "postSubmissionEdit": true
+    }
+  ],
+  "error": "Error: {\"exceptionId\":1,\"text\":\"Uncaught\",\"lineNumber\":0,\"columnNumber\":0,\"scriptId\":\"3943\",\"stackTrace\":{\"callFrames\":[{\"functionName\":\"\",\"scriptId\":\"3937\",\"url\":\"\",\"lineNumber\":0,\"columnNumber\":5}]},\"exception\":{\"type\":\"object\",\"subtype\":\"error\",\"className\":\"SyntaxError\",\"description\":\"SyntaxError: Unexpected end of JSON input\\n    at JSON.parse (<anonymous>)\\n    at <anonymous>:1:6\",\"objectId\":\"-30080647830351878.4.2\"}}"
+}

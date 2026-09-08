@@ -1,0 +1,45 @@
+{
+  "schema": "ggd-community-status-consumption-proof@1",
+  "capabilityFingerprint": "0a528213",
+  "coverageFingerprint": "6337323e6724",
+  "requiredCells": 5091,
+  "core": {
+    "exit": 0,
+    "files": 12,
+    "tests": 99,
+    "log": "status-consumption-final2-behavior.log"
+  },
+  "editorControls": {
+    "exit": 0,
+    "files": 5,
+    "tests": 21,
+    "log": "status-consumption-editor-controls-final.log"
+  },
+  "typecheck": {
+    "shared": 0,
+    "editor": 0,
+    "client": 0
+  },
+  "release": {
+    "exit": 0,
+    "tests": 555,
+    "productionBuild": true,
+    "log": "status-consumption-final-editor-accept-release.log"
+  },
+  "skills": {
+    "exit": 1,
+    "cause": "Existing 2026-09-06 message-ledger entries remain unmapped; current-day missing entries are non-blocking",
+    "log": "status-consumption-final-skills-check.log"
+  },
+  "coord": {
+    "exit": 0,
+    "log": "status-consumption-final-coord-check.log"
+  },
+  "ui": {
+    "receipt": "ui/receipt.json",
+    "saved": false,
+    "scope": "Generic controls and preview text only; not hero visual fidelity"
+  },
+  "goalComplete": false,
+  "heroesPublishedByThisBatch": 0
+}

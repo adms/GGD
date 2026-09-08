@@ -1,3 +1,4 @@
+import { BUILTIN_VFX_TEXTURES } from "@ggd/shared/content/builtinVfxTextures";
 /**
  * bloodPresets — the PURE math + recipes for the 濺血 / impact-debris layer
  * (task #39). Everything here is Babylon-free and unit-tested; `BloodFx`
@@ -177,12 +178,12 @@ export const STYLIZED_TINTS = {
 } as const satisfies Record<string, Rgb>;
 
 /** CC0 sprites (already shipped under content/assets/textures/particles). */
-const TEX_DROPLET = "assets/textures/particles/circle_05.png";
-const TEX_MIST = "assets/textures/particles/smoke_04.png";
-const TEX_SPARK = "assets/textures/particles/spark_05_rotated.png";
-const TEX_GLOW = "assets/textures/particles/light_01.png";
+const TEX_DROPLET = BUILTIN_VFX_TEXTURES.particles_circle_05;
+const TEX_MIST = BUILTIN_VFX_TEXTURES.particles_smoke_04;
+const TEX_SPARK = BUILTIN_VFX_TEXTURES.particles_spark_05_rotated;
+const TEX_GLOW = BUILTIN_VFX_TEXTURES.particles_light_01;
 /** Irregular splat silhouette — reads as a pool, not as a perfect circle. */
-export const TEX_BLOOD_DECAL = "assets/textures/particles/scorch_02.png";
+export const TEX_BLOOD_DECAL = BUILTIN_VFX_TEXTURES.particles_scorch_02;
 
 // ---------------------------------------------------------------------------
 // Ground decal

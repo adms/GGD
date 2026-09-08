@@ -1,0 +1,3505 @@
+{
+  "schema": "ggd-community-concept-proof@1",
+  "limits": "Deterministic source, real shared SimWorld and importer validation. No live multiplayer, balance or visual approval.",
+  "status": "passed",
+  "heroes": [
+    {
+      "id": "warwick",
+      "inspiration": "沃維克",
+      "name": "赤痕獵衛（沃維克概念改編）",
+      "projectDigest": "sha256:8845ccf9c20d7ac25b2d9505dc86fac6deecc2a81090be41d4d42cdc8cd8bea0",
+      "packageDigest": "sha256:b8b072f8a2a76a95456533b89b092e91fcdfde36397d4ca4fb5892bd000cd746",
+      "dependencyCount": 124,
+      "assetCount": 92,
+      "slots": [
+        {
+          "seed": 12648430,
+          "slot": "PASSIVE",
+          "rank": 1,
+          "ticks": 180,
+          "status": "passive",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4706.6351020408165,
+            "casterMana": 1487.0076530612246,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4706.6351020408165,
+            "targetMana": 743.5038265306123,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4751.480204081561,
+            "casterMana": 1487.0076530612246,
+            "casterPos": {
+              "x": -34.547089947089965,
+              "z": 0
+            },
+            "targetHp": 3773.6746898860174,
+            "targetMana": 1194.3486265306076,
+            "targetPos": {
+              "x": -33.36402116402119,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "attackWindup": 7,
+            "basicAttack": 7,
+            "damage": 6,
+            "hitImpact": 6,
+            "evade": 1
+          },
+          "digestTail": 406931241,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "被動來源已掛載，未偽裝成主動施放。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "Q",
+          "rank": 4,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4706.6351020408165,
+            "casterMana": 1487.0076530612246,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4706.6351020408165,
+            "targetMana": 743.5038265306123,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4876.480204081561,
+            "casterMana": 1487.0076530612246,
+            "casterPos": {
+              "x": -39.26666666666668,
+              "z": 0
+            },
+            "targetHp": 1484.0320623816945,
+            "targetMana": 1194.3486265306076,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "castRejected": 1,
+            "abilityCast": 1,
+            "castBegin": 1,
+            "heal": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "damage": 4,
+            "recoveryEnd": 1,
+            "hitImpact": 4
+          },
+          "digestTail": 1119415379,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "W",
+          "rank": 4,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4706.6351020408165,
+            "casterMana": 1487.0076530612246,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4706.6351020408165,
+            "targetMana": 743.5038265306123,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4751.480204081561,
+            "casterMana": 1487.0076530612246,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4751.480204081561,
+            "targetMana": 1194.3486265306076,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "buffApply": 1,
+            "castEnd": 1
+          },
+          "digestTail": 1896515248,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "E",
+          "rank": 4,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4706.6351020408165,
+            "casterMana": 1487.0076530612246,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4706.6351020408165,
+            "targetMana": 743.5038265306123,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4751.480204081561,
+            "casterMana": 1487.0076530612246,
+            "casterPos": {
+              "x": -39.26666666666668,
+              "z": 0
+            },
+            "targetHp": 3033.9391284446574,
+            "targetMana": 1194.3486265306076,
+            "targetPos": {
+              "x": -19.133333333333397,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "castRejected": 1,
+            "abilityCast": 1,
+            "castBegin": 1,
+            "statusApplied": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "damage": 1,
+            "recoveryEnd": 1,
+            "hitImpact": 1
+          },
+          "digestTail": 2043343294,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "R",
+          "rank": 3,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4706.6351020408165,
+            "casterMana": 1487.0076530612246,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4706.6351020408165,
+            "targetMana": 743.5038265306123,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4751.480204081561,
+            "casterMana": 1326.7867463945536,
+            "casterPos": {
+              "x": -39.26666666666668,
+              "z": 0
+            },
+            "targetHp": 972.8898376802742,
+            "targetMana": 1194.3486265306076,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "castRejected": 1,
+            "abilityCast": 1,
+            "castBegin": 1,
+            "statusApplied": 1,
+            "leapStart": 1,
+            "displace": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "damage": 4,
+            "hitImpact": 4,
+            "explosion": 1
+          },
+          "digestTail": 1723197814,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "pass",
+              "summaryZh": "施放後魔力已扣除。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "EX",
+          "rank": 1,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4706.6351020408165,
+            "casterMana": 1487.0076530612246,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4706.6351020408165,
+            "targetMana": 743.5038265306123,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4751.480204081561,
+            "casterMana": 1487.0076530612246,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4751.480204081561,
+            "targetMana": 1194.3486265306076,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "buffApply": 1,
+            "shieldGained": 1,
+            "castEnd": 1
+          },
+          "digestTail": 1896515248,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "eventCountsBySlot": {
+          "PASSIVE": {
+            "attackWindup": 7,
+            "basicAttack": 7,
+            "damage": 6,
+            "hitImpact": 6,
+            "evade": 1
+          },
+          "Q": {
+            "castRejected": 1,
+            "abilityCast": 1,
+            "castBegin": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "damage": 10,
+            "recoveryEnd": 1,
+            "hitImpact": 10,
+            "attackWindup": 7,
+            "basicAttack": 7,
+            "evade": 1
+          },
+          "W": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "buffApply": 1,
+            "castEnd": 1,
+            "attackWindup": 8,
+            "basicAttack": 8,
+            "damage": 7,
+            "hitImpact": 7,
+            "evade": 1
+          },
+          "E": {
+            "castRejected": 1,
+            "abilityCast": 1,
+            "castBegin": 1,
+            "statusApplied": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "damage": 5,
+            "recoveryEnd": 1,
+            "hitImpact": 5,
+            "attackWindup": 4,
+            "basicAttack": 4
+          },
+          "R": {
+            "castRejected": 1,
+            "abilityCast": 1,
+            "castBegin": 1,
+            "statusApplied": 1,
+            "leapStart": 1,
+            "displace": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "damage": 9,
+            "hitImpact": 9,
+            "explosion": 1,
+            "attackWindup": 6,
+            "basicAttack": 5
+          },
+          "EX": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "buffApply": 1,
+            "shieldGained": 1,
+            "castEnd": 1,
+            "attackWindup": 7,
+            "basicAttack": 7,
+            "damage": 6,
+            "hitImpact": 6,
+            "evade": 1
+          }
+        }
+      },
+      "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/warwick/",
+      "adaptations": [
+        "低血量獵物改為普攻追加傷害，追獵加速需主動施放；不提供全圖追蹤。",
+        "減傷改為短效護盾，恐懼為指定目標；大招可被反擊，沒有無敵。"
+      ]
+    },
+    {
+      "id": "karthus",
+      "inspiration": "卡爾瑟斯",
+      "name": "暮鐘詠者（卡爾瑟斯概念改編）",
+      "projectDigest": "sha256:4232ece0dce1455d66cfc0dc320c3f1c344b31bed20880de13465304292aaeb3",
+      "packageDigest": "sha256:b91220acc0928ba738db3f18ba57997043d8fb391e22b606ea8fa8a61e02e884",
+      "dependencyCount": 124,
+      "assetCount": 92,
+      "slots": [
+        {
+          "seed": 12648430,
+          "slot": "PASSIVE",
+          "rank": 1,
+          "ticks": 180,
+          "status": "passive",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4815.844897959184,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4815.844897959184,
+            "targetMana": 1065.094387755102,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4840.771836734754,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -41.40000000000003,
+              "z": 0
+            },
+            "targetHp": 4294.780838880769,
+            "targetMana": 1961.4751877551128,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "attackWindup": 6,
+            "basicAttack": 6,
+            "projectileSpawn": 6,
+            "basicAttackHit": 5,
+            "projectileEnd": 6,
+            "damage": 5,
+            "hitImpact": 5,
+            "evade": 1
+          },
+          "digestTail": 4185975044,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "被動來源已掛載，未偽裝成主動施放。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "Q",
+          "rank": 4,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4815.844897959184,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4815.844897959184,
+            "targetMana": 1065.094387755102,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4840.771836734754,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 2287.2510722621696,
+            "targetMana": 1961.4751877551128,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "explosion": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "damage": 1,
+            "recoveryEnd": 1,
+            "hitImpact": 1
+          },
+          "digestTail": 1533040275,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "W",
+          "rank": 4,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4815.844897959184,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4815.844897959184,
+            "targetMana": 1065.094387755102,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4840.771836734754,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -41.72000000000002,
+              "z": 0
+            },
+            "targetHp": 2287.2510722621705,
+            "targetMana": 1961.4751877551128,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "castRejected": 1,
+            "abilityCast": 1,
+            "castBegin": 1,
+            "statusApplied": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "damage": 1,
+            "recoveryEnd": 1,
+            "hitImpact": 1
+          },
+          "digestTail": 3436391385,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "E",
+          "rank": 4,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4815.844897959184,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4815.844897959184,
+            "targetMana": 1065.094387755102,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4840.771836734754,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4840.771836734754,
+            "targetMana": 1961.4751877551128,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "castEnd": 1,
+            "comboStrike": 3
+          },
+          "digestTail": 370096693,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "R",
+          "rank": 3,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4815.844897959184,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4815.844897959184,
+            "targetMana": 1065.094387755102,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4840.771836734754,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 116.7724489795929,
+            "targetMana": 1961.4751877551128,
+            "targetPos": {
+              "x": -33.455802723218305,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "explosion": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "lethalDamage": 1,
+            "markChanged": 1,
+            "lethalSaved": 1,
+            "immunityGranted": 1,
+            "heal": 1,
+            "damage": 1,
+            "recoveryEnd": 1,
+            "hitImpact": 1
+          },
+          "digestTail": 3519138622,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "EX",
+          "rank": 1,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4815.844897959184,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4815.844897959184,
+            "targetMana": 1065.094387755102,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4840.771836734754,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4840.771836734754,
+            "targetMana": 1961.4751877551128,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "buffApply": 1,
+            "shieldGained": 1,
+            "castEnd": 1
+          },
+          "digestTail": 370096693,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "eventCountsBySlot": {
+          "PASSIVE": {
+            "attackWindup": 6,
+            "basicAttack": 6,
+            "projectileSpawn": 6,
+            "basicAttackHit": 5,
+            "projectileEnd": 6,
+            "damage": 5,
+            "hitImpact": 5,
+            "evade": 1
+          },
+          "Q": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "explosion": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "damage": 7,
+            "recoveryEnd": 1,
+            "hitImpact": 7,
+            "attackWindup": 6,
+            "basicAttack": 6,
+            "projectileSpawn": 6,
+            "basicAttackHit": 6,
+            "projectileEnd": 6
+          },
+          "W": {
+            "castRejected": 1,
+            "abilityCast": 1,
+            "castBegin": 1,
+            "statusApplied": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "damage": 6,
+            "recoveryEnd": 1,
+            "hitImpact": 6,
+            "attackWindup": 6,
+            "basicAttack": 6,
+            "projectileSpawn": 6,
+            "evade": 1,
+            "projectileEnd": 6,
+            "basicAttackHit": 5
+          },
+          "E": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "castEnd": 1,
+            "attackWindup": 6,
+            "basicAttack": 6,
+            "projectileSpawn": 6,
+            "evade": 1,
+            "projectileEnd": 6,
+            "comboStrike": 3,
+            "basicAttackHit": 5,
+            "damage": 5,
+            "hitImpact": 5
+          },
+          "R": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "explosion": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "damage": 6,
+            "recoveryEnd": 1,
+            "hitImpact": 6,
+            "attackWindup": 5,
+            "basicAttack": 5,
+            "projectileSpawn": 5,
+            "basicAttackHit": 5,
+            "projectileEnd": 5
+          },
+          "EX": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "buffApply": 1,
+            "shieldGained": 1,
+            "castEnd": 1,
+            "attackWindup": 6,
+            "basicAttack": 6,
+            "projectileSpawn": 6,
+            "basicAttackHit": 6,
+            "projectileEnd": 6,
+            "damage": 6,
+            "hitImpact": 6
+          }
+        }
+      },
+      "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/karthus/",
+      "adaptations": [
+        "死亡後施法改為每場一次的免死續命，仍須存活才能施法。",
+        "安魂曲改成極大級施放距離內的落點轟擊，沒有全圖命中；領域有固定期限。"
+      ]
+    },
+    {
+      "id": "lux",
+      "inspiration": "拉克絲",
+      "name": "稜光引路人（拉克絲概念改編）",
+      "projectDigest": "sha256:b99f562fde617d62ad46d0fbe34c48120d9c28fbff57ed01f6d78a5f7fe82d90",
+      "packageDigest": "sha256:008be3f02a0f8ac7fa7d1feeaed2935a91e278ce3f4ea9c7d1a60ab4cdc83465",
+      "dependencyCount": 123,
+      "assetCount": 92,
+      "slots": [
+        {
+          "seed": 12648430,
+          "slot": "PASSIVE",
+          "rank": 1,
+          "ticks": 180,
+          "status": "passive",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4554.553469387754,
+            "casterMana": 1833.2428571428572,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4554.553469387754,
+            "targetMana": 916.6214285714286,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4585.449183673425,
+            "casterMana": 1833.2428571428572,
+            "casterPos": {
+              "x": -41.320000000000036,
+              "z": 0
+            },
+            "targetHp": 3744.8054133068663,
+            "targetMana": 1549.410228571427,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "attackWindup": 7,
+            "basicAttack": 6,
+            "projectileSpawn": 6,
+            "basicAttackHit": 5,
+            "projectileEnd": 6,
+            "damage": 7,
+            "hitImpact": 7,
+            "evade": 1
+          },
+          "digestTail": 184503027,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "被動來源已掛載，未偽裝成主動施放。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "Q",
+          "rank": 4,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4554.553469387754,
+            "casterMana": 1833.2428571428572,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4554.553469387754,
+            "targetMana": 916.6214285714286,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4585.449183673425,
+            "casterMana": 1833.2428571428572,
+            "casterPos": {
+              "x": -41.68000000000003,
+              "z": 0
+            },
+            "targetHp": 2526.518212482647,
+            "targetMana": 1549.410228571427,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "castRejected": 1,
+            "abilityCast": 1,
+            "castBegin": 1,
+            "statusApplied": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "damage": 1,
+            "recoveryEnd": 1,
+            "hitImpact": 1
+          },
+          "digestTail": 1328561184,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "W",
+          "rank": 4,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4554.553469387754,
+            "casterMana": 1833.2428571428572,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4554.553469387754,
+            "targetMana": 916.6214285714286,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4585.449183673425,
+            "casterMana": 1833.2428571428572,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4585.449183673425,
+            "targetMana": 1549.410228571427,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "buffApply": 1,
+            "shieldGained": 1,
+            "castEnd": 1
+          },
+          "digestTail": 100038956,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "E",
+          "rank": 4,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4554.553469387754,
+            "casterMana": 1833.2428571428572,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4554.553469387754,
+            "targetMana": 916.6214285714286,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4585.449183673425,
+            "casterMana": 1833.2428571428572,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 3761.876795197137,
+            "targetMana": 1549.410228571427,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "explosion": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "comboStrike": 3,
+            "damage": 3,
+            "hitImpact": 3
+          },
+          "digestTail": 3976145403,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "R",
+          "rank": 3,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4554.553469387754,
+            "casterMana": 1833.2428571428572,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4554.553469387754,
+            "targetMana": 916.6214285714286,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4585.449183673425,
+            "casterMana": 1833.2428571428572,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 3761.8767951971563,
+            "targetMana": 1549.410228571427,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "comboStrike": 4,
+            "damage": 1,
+            "recoveryEnd": 1,
+            "hitImpact": 1
+          },
+          "digestTail": 2070203852,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "EX",
+          "rank": 1,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4554.553469387754,
+            "casterMana": 1833.2428571428572,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4554.553469387754,
+            "targetMana": 916.6214285714286,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4665.449183673425,
+            "casterMana": 1833.2428571428572,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4585.449183673425,
+            "targetMana": 1549.410228571427,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "buffApply": 1,
+            "heal": 1,
+            "castEnd": 1
+          },
+          "digestTail": 2843409250,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "eventCountsBySlot": {
+          "PASSIVE": {
+            "attackWindup": 7,
+            "basicAttack": 6,
+            "projectileSpawn": 6,
+            "basicAttackHit": 5,
+            "projectileEnd": 6,
+            "damage": 7,
+            "hitImpact": 7,
+            "evade": 1
+          },
+          "Q": {
+            "castRejected": 1,
+            "abilityCast": 1,
+            "castBegin": 1,
+            "statusApplied": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "damage": 8,
+            "recoveryEnd": 1,
+            "hitImpact": 8,
+            "attackWindup": 6,
+            "basicAttack": 6,
+            "projectileSpawn": 6,
+            "basicAttackHit": 5,
+            "projectileEnd": 6,
+            "evade": 1
+          },
+          "W": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "buffApply": 1,
+            "shieldGained": 1,
+            "castEnd": 1,
+            "attackWindup": 6,
+            "basicAttack": 6,
+            "projectileSpawn": 6,
+            "basicAttackHit": 6,
+            "projectileEnd": 6,
+            "damage": 8,
+            "hitImpact": 8
+          },
+          "E": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "explosion": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "attackWindup": 6,
+            "basicAttack": 6,
+            "projectileSpawn": 6,
+            "basicAttackHit": 6,
+            "projectileEnd": 6,
+            "damage": 11,
+            "hitImpact": 11,
+            "comboStrike": 3
+          },
+          "R": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "comboStrike": 4,
+            "damage": 9,
+            "recoveryEnd": 1,
+            "hitImpact": 9,
+            "attackWindup": 6,
+            "basicAttack": 6,
+            "projectileSpawn": 6,
+            "basicAttackHit": 6,
+            "projectileEnd": 6
+          },
+          "EX": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "buffApply": 1,
+            "castEnd": 1,
+            "attackWindup": 6,
+            "basicAttack": 6,
+            "projectileSpawn": 6,
+            "basicAttackHit": 6,
+            "projectileEnd": 6,
+            "damage": 8,
+            "hitImpact": 8
+          }
+        }
+      },
+      "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/lux/",
+      "adaptations": [
+        "照明標記改為有內置冷卻的普攻魔法追加，不保留標記引爆條件。",
+        "護盾改為自身護盾，束縛只命中指定一人；光束依本遊戲距離與傷害級距結算。"
+      ]
+    },
+    {
+      "id": "yasuo",
+      "inspiration": "犽宿",
+      "name": "逐風浪客（犽宿概念改編）",
+      "projectDigest": "sha256:7c50dfe0bd0ee23e7f515dae3d55bac113f41884f595e23b9f4ae6a62b411e3e",
+      "packageDigest": "sha256:9b4f6ddb1239c6944a217125b9d087a786ec4136b43992ee39ba146e01e4f08d",
+      "dependencyCount": 125,
+      "assetCount": 92,
+      "slots": [
+        {
+          "seed": 12648430,
+          "slot": "PASSIVE",
+          "rank": 1,
+          "ticks": 180,
+          "status": "passive",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 5005.946938775511,
+            "casterMana": 1931.8214285714284,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 5005.946938775511,
+            "targetMana": 965.9107142857142,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 5036.247551020448,
+            "casterMana": 1931.8214285714284,
+            "casterPos": {
+              "x": -35.356402116402265,
+              "z": 0
+            },
+            "targetHp": 4038.841848110735,
+            "targetMana": 1438.830714285718,
+            "targetPos": {
+              "x": -34.19026455026469,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "attackWindup": 7,
+            "basicAttack": 7,
+            "damage": 7,
+            "hitImpact": 7,
+            "evade": 3
+          },
+          "digestTail": 1012427654,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "被動來源已掛載，未偽裝成主動施放。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "Q",
+          "rank": 4,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 5005.946938775511,
+            "casterMana": 1931.8214285714284,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 5005.946938775511,
+            "targetMana": 965.9107142857142,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 5036.247551020448,
+            "casterMana": 1931.8214285714284,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4324.488882348091,
+            "targetMana": 1438.830714285718,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "comboStrike": 4,
+            "damage": 1,
+            "recoveryEnd": 1,
+            "hitImpact": 1
+          },
+          "digestTail": 3978337744,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "W",
+          "rank": 4,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 5005.946938775511,
+            "casterMana": 1931.8214285714284,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 5005.946938775511,
+            "targetMana": 965.9107142857142,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 5036.247551020448,
+            "casterMana": 1931.8214285714284,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 5036.247551020448,
+            "targetMana": 1438.830714285718,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "buffApply": 1,
+            "shieldGained": 1,
+            "castEnd": 1
+          },
+          "digestTail": 272288518,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "E",
+          "rank": 4,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 5005.946938775511,
+            "casterMana": 1931.8214285714284,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 5005.946938775511,
+            "targetMana": 965.9107142857142,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 5036.247551020448,
+            "casterMana": 1931.8214285714284,
+            "casterPos": {
+              "x": -39.4,
+              "z": 0
+            },
+            "targetHp": 4324.488882348091,
+            "targetMana": 1438.830714285718,
+            "targetPos": {
+              "x": -33.89999999999999,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "explosion": 2,
+            "leapStart": 1,
+            "displace": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "damage": 1,
+            "hitImpact": 1
+          },
+          "digestTail": 2278477114,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "R",
+          "rank": 3,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 5005.946938775511,
+            "casterMana": 1931.8214285714284,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 5005.946938775511,
+            "targetMana": 965.9107142857142,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 5036.247551020448,
+            "casterMana": 1784.0767619047651,
+            "casterPos": {
+              "x": -39.37333333333337,
+              "z": 0
+            },
+            "targetHp": 1121.5748733224564,
+            "targetMana": 1438.830714285718,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "castRejected": 1,
+            "abilityCast": 1,
+            "castBegin": 1,
+            "statusApplied": 1,
+            "leapStart": 1,
+            "displace": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "damage": 4,
+            "hitImpact": 4,
+            "explosion": 1
+          },
+          "digestTail": 87066491,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "pass",
+              "summaryZh": "施放後魔力已扣除。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "EX",
+          "rank": 1,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 5005.946938775511,
+            "casterMana": 1931.8214285714284,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 5005.946938775511,
+            "targetMana": 965.9107142857142,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 5036.247551020448,
+            "casterMana": 1931.8214285714284,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4324.488882348091,
+            "targetMana": 1438.830714285718,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "statusApplied": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "damage": 1,
+            "recoveryEnd": 1,
+            "hitImpact": 1
+          },
+          "digestTail": 612499301,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "eventCountsBySlot": {
+          "PASSIVE": {
+            "attackWindup": 7,
+            "basicAttack": 7,
+            "damage": 7,
+            "hitImpact": 7,
+            "evade": 3
+          },
+          "Q": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "comboStrike": 4,
+            "damage": 8,
+            "recoveryEnd": 1,
+            "hitImpact": 8,
+            "attackWindup": 7,
+            "basicAttack": 7,
+            "evade": 2
+          },
+          "W": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "buffApply": 1,
+            "shieldGained": 1,
+            "castEnd": 1,
+            "attackWindup": 7,
+            "basicAttack": 7,
+            "damage": 9,
+            "hitImpact": 9,
+            "evade": 1
+          },
+          "E": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "explosion": 2,
+            "leapStart": 1,
+            "displace": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "damage": 7,
+            "hitImpact": 7,
+            "attackWindup": 7,
+            "basicAttack": 6,
+            "evade": 2
+          },
+          "R": {
+            "castRejected": 1,
+            "whiff": 1,
+            "abilityCast": 1,
+            "castBegin": 1,
+            "statusApplied": 1,
+            "leapStart": 1,
+            "displace": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "damage": 10,
+            "hitImpact": 10,
+            "explosion": 1,
+            "attackWindup": 5,
+            "basicAttack": 5,
+            "evade": 1
+          },
+          "EX": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "statusApplied": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "damage": 11,
+            "recoveryEnd": 1,
+            "hitImpact": 11,
+            "attackWindup": 7,
+            "basicAttack": 7
+          }
+        }
+      },
+      "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/yasuo/",
+      "adaptations": [
+        "第三次斬擊旋風改為獨立 EX；大招不要求擊飛，但有固定鎖足與冷卻。",
+        "風牆改為限時物理護盾，不摧毀投射物；不提供雙倍暴擊或無限突進。"
+      ]
+    },
+    {
+      "id": "missfortune",
+      "inspiration": "好運姐",
+      "name": "緋帆槍手（好運姐概念改編）",
+      "projectDigest": "sha256:61e8bb61a9d17fc1487a73f173fa8c87ce2c21dd1fd4a6d998a2c14148064dd9",
+      "packageDigest": "sha256:f24d3854608f0504c96398577218b4df138c9b38021a92a84d6f47df0580242e",
+      "dependencyCount": 123,
+      "assetCount": 92,
+      "slots": [
+        {
+          "seed": 12648430,
+          "slot": "PASSIVE",
+          "rank": 1,
+          "ticks": 180,
+          "status": "passive",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4250.390204081632,
+            "casterMana": 1993.8112244897961,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4250.390204081632,
+            "targetMana": 996.9056122448981,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4271.809591836754,
+            "casterMana": 1993.8112244897961,
+            "casterPos": {
+              "x": -41.40000000000003,
+              "z": 0
+            },
+            "targetHp": 2998.871542449125,
+            "targetMana": 1592.196812244904,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "attackWindup": 8,
+            "basicAttack": 7,
+            "projectileSpawn": 7,
+            "basicAttackHit": 4,
+            "projectileEnd": 7,
+            "damage": 7,
+            "hitImpact": 7,
+            "evade": 3
+          },
+          "digestTail": 379978530,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "被動來源已掛載，未偽裝成主動施放。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "Q",
+          "rank": 4,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4250.390204081632,
+            "casterMana": 1993.8112244897961,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4250.390204081632,
+            "targetMana": 996.9056122448981,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4271.809591836754,
+            "casterMana": 1993.8112244897961,
+            "casterPos": {
+              "x": -41.72000000000002,
+              "z": 0
+            },
+            "targetHp": 1277.0505625556784,
+            "targetMana": 1592.196812244904,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "castRejected": 1,
+            "abilityCast": 1,
+            "castBegin": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "chainLightning": 1,
+            "damage": 2,
+            "recoveryEnd": 1,
+            "hitImpact": 2
+          },
+          "digestTail": 3602499269,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "W",
+          "rank": 4,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4250.390204081632,
+            "casterMana": 1993.8112244897961,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4250.390204081632,
+            "targetMana": 996.9056122448981,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4271.809591836754,
+            "casterMana": 1993.8112244897961,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4271.809591836754,
+            "targetMana": 1592.196812244904,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "buffApply": 1,
+            "castEnd": 1
+          },
+          "digestTail": 737123466,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "E",
+          "rank": 4,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4250.390204081632,
+            "casterMana": 1993.8112244897961,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4250.390204081632,
+            "targetMana": 996.9056122448981,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4271.809591836754,
+            "casterMana": 1993.8112244897961,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 3459.840284228039,
+            "targetMana": 1592.196812244904,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "explosion": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "comboStrike": 3,
+            "damage": 3,
+            "hitImpact": 3
+          },
+          "digestTail": 3796427537,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "R",
+          "rank": 3,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4250.390204081632,
+            "casterMana": 1993.8112244897961,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4250.390204081632,
+            "targetMana": 996.9056122448981,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4271.809591836754,
+            "casterMana": 1993.8112244897961,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 0,
+            "targetMana": 1125.8853722448994,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "explosion": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "damage": 5,
+            "hitImpact": 5,
+            "lethalDamage": 1,
+            "death": 1,
+            "killCombo": 1
+          },
+          "digestTail": 961505199,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "EX",
+          "rank": 1,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4250.390204081632,
+            "casterMana": 1993.8112244897961,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4250.390204081632,
+            "targetMana": 996.9056122448981,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4271.809591836754,
+            "casterMana": 1993.8112244897961,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4271.809591836754,
+            "targetMana": 1592.196812244904,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "buffApply": 1,
+            "shieldGained": 1,
+            "castEnd": 1
+          },
+          "digestTail": 737123466,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "eventCountsBySlot": {
+          "PASSIVE": {
+            "attackWindup": 8,
+            "basicAttack": 7,
+            "projectileSpawn": 7,
+            "basicAttackHit": 4,
+            "projectileEnd": 7,
+            "damage": 7,
+            "hitImpact": 7,
+            "evade": 3
+          },
+          "Q": {
+            "castRejected": 1,
+            "abilityCast": 1,
+            "castBegin": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "chainLightning": 1,
+            "damage": 9,
+            "recoveryEnd": 1,
+            "hitImpact": 9,
+            "attackWindup": 7,
+            "basicAttack": 7,
+            "projectileSpawn": 7,
+            "basicAttackHit": 5,
+            "projectileEnd": 7,
+            "evade": 2
+          },
+          "W": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "buffApply": 1,
+            "castEnd": 1,
+            "attackWindup": 8,
+            "basicAttack": 8,
+            "projectileSpawn": 8,
+            "basicAttackHit": 7,
+            "projectileEnd": 8,
+            "damage": 10,
+            "hitImpact": 10,
+            "evade": 1
+          },
+          "E": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "explosion": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "attackWindup": 8,
+            "basicAttack": 7,
+            "projectileSpawn": 7,
+            "basicAttackHit": 6,
+            "projectileEnd": 7,
+            "damage": 11,
+            "hitImpact": 11,
+            "comboStrike": 3,
+            "evade": 1
+          },
+          "R": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "explosion": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "damage": 16,
+            "hitImpact": 16,
+            "attackWindup": 7,
+            "basicAttack": 7,
+            "projectileSpawn": 7,
+            "basicAttackHit": 7,
+            "projectileEnd": 7
+          },
+          "EX": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "buffApply": 1,
+            "shieldGained": 1,
+            "castEnd": 1,
+            "attackWindup": 8,
+            "basicAttack": 7,
+            "projectileSpawn": 7,
+            "basicAttackHit": 6,
+            "projectileEnd": 7,
+            "damage": 8,
+            "hitImpact": 8,
+            "evade": 1
+          }
+        }
+      },
+      "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/missfortune/",
+      "adaptations": [
+        "換目標額外傷害改為固定內置冷卻，不因切換目標重置。",
+        "彈射使用最多兩人的連鎖判定；大招改為有界落點彈幕，非自由轉向的錐形掃射。"
+      ]
+    },
+    {
+      "id": "leesin",
+      "inspiration": "李星",
+      "name": "聽雷行者（李星概念改編）",
+      "projectDigest": "sha256:5696b7e7e798369389e97809a03ee9c165b9ca3f9ef9cd3706c07b6eaf26b2be",
+      "packageDigest": "sha256:a270940957fd8f75dfde4349f296fd371858fc3ba3d46edbba1f9231eda47d7f",
+      "dependencyCount": 124,
+      "assetCount": 92,
+      "slots": [
+        {
+          "seed": 12648430,
+          "slot": "PASSIVE",
+          "rank": 1,
+          "ticks": 180,
+          "status": "passive",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 5005.946938775511,
+            "casterMana": 1931.8214285714284,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 5005.946938775511,
+            "targetMana": 965.9107142857142,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 5036.247551020448,
+            "casterMana": 1931.8214285714284,
+            "casterPos": {
+              "x": -35.356402116402265,
+              "z": 0
+            },
+            "targetHp": 4038.841848110735,
+            "targetMana": 1438.830714285718,
+            "targetPos": {
+              "x": -34.19026455026469,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "attackWindup": 7,
+            "basicAttack": 7,
+            "damage": 7,
+            "hitImpact": 7,
+            "evade": 3
+          },
+          "digestTail": 1012427654,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "被動來源已掛載，未偽裝成主動施放。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "Q",
+          "rank": 4,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 5005.946938775511,
+            "casterMana": 1931.8214285714284,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 5005.946938775511,
+            "targetMana": 965.9107142857142,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 5036.247551020448,
+            "casterMana": 1931.8214285714284,
+            "casterPos": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "targetHp": 3256.850879339555,
+            "targetMana": 1438.830714285718,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "castRejected": 1,
+            "abilityCast": 1,
+            "castBegin": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "damage": 1,
+            "recoveryEnd": 1,
+            "hitImpact": 1
+          },
+          "digestTail": 2422690673,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "W",
+          "rank": 4,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 5005.946938775511,
+            "casterMana": 1931.8214285714284,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 5005.946938775511,
+            "targetMana": 965.9107142857142,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 5036.247551020448,
+            "casterMana": 1931.8214285714284,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 5036.247551020448,
+            "targetMana": 1438.830714285718,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "buffApply": 1,
+            "shieldGained": 1,
+            "castEnd": 1
+          },
+          "digestTail": 272288518,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "E",
+          "rank": 4,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 5005.946938775511,
+            "casterMana": 1931.8214285714284,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 5005.946938775511,
+            "targetMana": 965.9107142857142,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 5036.247551020448,
+            "casterMana": 1931.8214285714284,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 3256.850879339555,
+            "targetMana": 1438.830714285718,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "explosion": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "damage": 1,
+            "recoveryEnd": 1,
+            "hitImpact": 1
+          },
+          "digestTail": 4082484102,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "R",
+          "rank": 3,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 5005.946938775511,
+            "casterMana": 1931.8214285714284,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 5005.946938775511,
+            "targetMana": 965.9107142857142,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 5036.247551020448,
+            "casterMana": 1828.7414285714322,
+            "casterPos": {
+              "x": -39.4,
+              "z": 0
+            },
+            "targetHp": 3256.850879339555,
+            "targetMana": 1438.830714285718,
+            "targetPos": {
+              "x": -32.07,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "explosion": 3,
+            "leapStart": 2,
+            "displace": 2,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "damage": 1,
+            "hitImpact": 1
+          },
+          "digestTail": 3237117834,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "pass",
+              "summaryZh": "施放後魔力已扣除。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "EX",
+          "rank": 1,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 5005.946938775511,
+            "casterMana": 1931.8214285714284,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 5005.946938775511,
+            "targetMana": 965.9107142857142,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 5036.247551020448,
+            "casterMana": 1931.8214285714284,
+            "casterPos": {
+              "x": -38.2,
+              "z": 0
+            },
+            "targetHp": 4324.488882348091,
+            "targetMana": 1438.830714285718,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "explosion": 2,
+            "leapStart": 1,
+            "displace": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "damage": 1,
+            "hitImpact": 1
+          },
+          "digestTail": 4003478974,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "eventCountsBySlot": {
+          "PASSIVE": {
+            "attackWindup": 7,
+            "basicAttack": 7,
+            "damage": 7,
+            "hitImpact": 7,
+            "evade": 3
+          },
+          "Q": {
+            "castRejected": 1,
+            "abilityCast": 1,
+            "castBegin": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "damage": 8,
+            "recoveryEnd": 1,
+            "hitImpact": 8,
+            "attackWindup": 7,
+            "basicAttack": 7,
+            "evade": 2
+          },
+          "W": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "buffApply": 1,
+            "shieldGained": 1,
+            "castEnd": 1,
+            "attackWindup": 8,
+            "basicAttack": 7,
+            "damage": 9,
+            "hitImpact": 9,
+            "evade": 1
+          },
+          "E": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "explosion": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "damage": 8,
+            "recoveryEnd": 1,
+            "hitImpact": 8,
+            "attackWindup": 7,
+            "basicAttack": 7,
+            "evade": 2
+          },
+          "R": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "explosion": 3,
+            "leapStart": 2,
+            "displace": 2,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "damage": 9,
+            "hitImpact": 9,
+            "attackWindup": 6,
+            "basicAttack": 6
+          },
+          "EX": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "explosion": 2,
+            "leapStart": 1,
+            "displace": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "attackWindup": 7,
+            "damage": 9,
+            "hitImpact": 9,
+            "basicAttack": 7,
+            "evade": 1
+          }
+        }
+      },
+      "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/leesin/",
+      "adaptations": [
+        "能量改用共通魔力，技能後兩次普攻改為有冷卻的普攻追加。",
+        "聲波與追擊分為 Q／EX，無二段重施放；護盾只給自身，踢擊使用共通推移機制。"
+      ]
+    },
+    {
+      "id": "xerath",
+      "inspiration": "齊勒斯",
+      "name": "星牢砲師（齊勒斯概念改編）",
+      "projectDigest": "sha256:602b002df7e62b9d15f9a395201047a022f3233b2b82330197bc6d52780835a1",
+      "packageDigest": "sha256:9699543bd567a9388938f928fd445103adaf9bb0a0a3de574d86357d07a501e4",
+      "dependencyCount": 124,
+      "assetCount": 92,
+      "slots": [
+        {
+          "seed": 12648430,
+          "slot": "PASSIVE",
+          "rank": 1,
+          "ticks": 180,
+          "status": "passive",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4815.844897959184,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4815.844897959184,
+            "targetMana": 1065.094387755102,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4840.771836734754,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -41.40000000000003,
+              "z": 0
+            },
+            "targetHp": 3992.1637569493228,
+            "targetMana": 1961.4751877551128,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "attackWindup": 6,
+            "basicAttack": 6,
+            "projectileSpawn": 6,
+            "basicAttackHit": 5,
+            "projectileEnd": 6,
+            "damage": 7,
+            "hitImpact": 7,
+            "evade": 1
+          },
+          "digestTail": 100759142,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "被動來源已掛載，未偽裝成主動施放。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "Q",
+          "rank": 4,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4815.844897959184,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4815.844897959184,
+            "targetMana": 1065.094387755102,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4840.771836734754,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 3819.363530945679,
+            "targetMana": 1961.4751877551128,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "comboStrike": 4,
+            "damage": 1,
+            "recoveryEnd": 1,
+            "hitImpact": 1
+          },
+          "digestTail": 4053544140,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "W",
+          "rank": 4,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4815.844897959184,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4815.844897959184,
+            "targetMana": 1065.094387755102,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4840.771836734754,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 2287.251072262167,
+            "targetMana": 1961.4751877551128,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "explosion": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "damage": 1,
+            "recoveryEnd": 1,
+            "hitImpact": 1
+          },
+          "digestTail": 2580692965,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "E",
+          "rank": 4,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4815.844897959184,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4815.844897959184,
+            "targetMana": 1065.094387755102,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4840.771836734754,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -41.72000000000002,
+              "z": 0
+            },
+            "targetHp": 2287.2510722621705,
+            "targetMana": 1961.4751877551128,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "castRejected": 1,
+            "abilityCast": 1,
+            "castBegin": 1,
+            "statusApplied": 1,
+            "stunApplied": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "damage": 1,
+            "recoveryEnd": 1,
+            "hitImpact": 1
+          },
+          "digestTail": 1694488695,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "R",
+          "rank": 3,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4815.844897959184,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4815.844897959184,
+            "targetMana": 1065.094387755102,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4840.771836734754,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 0,
+            "targetMana": 1289.1895877551046,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "explosion": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "damage": 2,
+            "hitImpact": 2,
+            "lethalDamage": 1,
+            "death": 1,
+            "killCombo": 1
+          },
+          "digestTail": 3845544848,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        },
+        {
+          "seed": 12648430,
+          "slot": "EX",
+          "rank": 1,
+          "ticks": 180,
+          "status": "accepted",
+          "rejectionReason": null,
+          "before": {
+            "casterHp": 4815.844897959184,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4815.844897959184,
+            "targetMana": 1065.094387755102,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "after": {
+            "casterHp": 4840.771836734754,
+            "casterMana": 2130.188775510204,
+            "casterPos": {
+              "x": -43,
+              "z": 0
+            },
+            "targetHp": 4840.771836734754,
+            "targetMana": 1961.4751877551128,
+            "targetPos": {
+              "x": -37,
+              "z": 0
+            },
+            "targetStatuses": 0,
+            "targetShields": 0
+          },
+          "eventCounts": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "buffApply": 1,
+            "shieldGained": 1,
+            "manaRestore": 1,
+            "castEnd": 1
+          },
+          "digestTail": 2138818103,
+          "assertions": [
+            {
+              "id": "intent-accepted",
+              "status": "pass",
+              "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+            },
+            {
+              "id": "mana-spent",
+              "status": "warning",
+              "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+            },
+            {
+              "id": "observable-result",
+              "status": "pass",
+              "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+            }
+          ]
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "eventCountsBySlot": {
+          "PASSIVE": {
+            "attackWindup": 6,
+            "basicAttack": 6,
+            "projectileSpawn": 6,
+            "basicAttackHit": 5,
+            "projectileEnd": 6,
+            "damage": 7,
+            "hitImpact": 7,
+            "evade": 1
+          },
+          "Q": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "comboStrike": 4,
+            "damage": 7,
+            "recoveryEnd": 1,
+            "hitImpact": 7,
+            "attackWindup": 6,
+            "basicAttack": 6,
+            "projectileSpawn": 6,
+            "basicAttackHit": 4,
+            "projectileEnd": 5,
+            "evade": 1
+          },
+          "W": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "basicAttackHit": 7,
+            "projectileEnd": 7,
+            "damage": 10,
+            "hitImpact": 10,
+            "explosion": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "recoveryEnd": 1,
+            "attackWindup": 6,
+            "basicAttack": 6,
+            "projectileSpawn": 6
+          },
+          "E": {
+            "castRejected": 1,
+            "abilityCast": 1,
+            "castBegin": 1,
+            "statusApplied": 1,
+            "stunApplied": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "recoveryBegin": 1,
+            "damage": 9,
+            "recoveryEnd": 1,
+            "hitImpact": 9,
+            "attackWindup": 6,
+            "basicAttack": 6,
+            "projectileSpawn": 6,
+            "basicAttackHit": 6,
+            "projectileEnd": 6
+          },
+          "R": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "explosion": 1,
+            "abilityHit": 1,
+            "castEnd": 1,
+            "damage": 10,
+            "hitImpact": 10,
+            "attackWindup": 5,
+            "basicAttack": 5,
+            "projectileSpawn": 5,
+            "basicAttackHit": 5,
+            "projectileEnd": 5
+          },
+          "EX": {
+            "abilityCast": 1,
+            "castBegin": 1,
+            "buffApply": 1,
+            "shieldGained": 1,
+            "manaRestore": 1,
+            "castEnd": 1,
+            "attackWindup": 6,
+            "basicAttack": 6,
+            "projectileSpawn": 6,
+            "basicAttackHit": 6,
+            "projectileEnd": 6,
+            "damage": 8,
+            "hitImpact": 8
+          }
+        }
+      },
+      "sourceUrl": "https://www.leagueoflegends.com/zh-tw/champions/xerath/",
+      "adaptations": [
+        "普攻回魔改為 EX 主動回復固定比例魔力，受冷卻限制。",
+        "蓄力及大招重瞄準改為一次施放的固定時序；最遠射程使用極大級距。"
+      ]
+    }
+  ]
+}

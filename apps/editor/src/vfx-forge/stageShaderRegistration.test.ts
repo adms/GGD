@@ -183,7 +183,7 @@ describe("VFX Forge paused rendering", () => {
     expect(source).toContain("textures.some((texture) => !texture.isReady())");
     expect(source).toContain("systems.some((system) => !system.isReady())");
     expect(source).toContain("system.manualEmitCount = 1");
-    expect(source).toContain("systems.some((system) => system.getActiveCount() === 0)");
+    expect(source).toContain("await observeParticleWarmup(systems,");
     expect(source).toContain("system.reset()");
     expect(source).toContain("throw new Error(");
   });

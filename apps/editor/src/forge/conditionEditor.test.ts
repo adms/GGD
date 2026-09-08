@@ -375,6 +375,19 @@ describe("ConditionEditor — the coupled dropdowns repair each other", () => {
     expect(zEffectCondition.safeParse(bus.value).success).toBe(true);
   });
 
+  it("施加者限制能設定、移除，切至分類時不殘留", () => {
+    const h = open({ kind: "status", subject: "target", statusId: "root" as never });
+    h.enter(h.field("cond.g0.c0.appliedBy"), "self");
+    expect(bus.value).toEqual({ kind: "status", subject: "target", statusId: "root", appliedBy: "self" });
+    expect(derivedSentence(h)).toContain("自己施加");
+    expect(zEffectCondition.safeParse(bus.value).success).toBe(true);
+    h.enter(h.field("cond.g0.c0.appliedBy"), "");
+    expect(bus.value).not.toHaveProperty("appliedBy");
+    h.enter(h.field("cond.g0.c0.appliedBy"), "self");
+    h.enter(h.field("cond.g0.c0.match"), "tag");
+    expect(bus.value).not.toHaveProperty("appliedBy");
+  });
+
   it("每一個 select 只列出 shared 模組承認的值", () => {
     const h = open({ kind: "kind", subject: "target", is: "champion" });
     expect(optionValues(h.field("cond.g0.c0.subject"))).toEqual(["self", "target"]);
@@ -610,5 +623,24 @@ describe("flatten / unflatten round-trip", () => {
     expect(
       flatten({ not: { all: [{ kind: "chance", p: 0.5 }, { kind: "chance", p: 0.25 }] } }),
     ).toBeNull();
+  });
+});
+
+
+describe("ConditionEditor facing controls", () => {
+  it("builds a facing leaf, changes subject and arc, and retains a valid editable sentence", () => {
+    const h = open({ kind: "distance", op: "<=", value: 2.5 });
+    h.enter(h.field("cond.g0.c0.kind"), "facing");
+    expect(bus.value).toEqual({ kind: "facing", subject: "self", arcDegrees: 120 });
+    h.enter(h.field("cond.g0.c0.subject"), "target");
+    h.enter(h.field("cond.g0.c0.arcDegrees"), "90");
+    expect(bus.value).toEqual({ kind: "facing", subject: "target", arcDegrees: 90 });
+    expect(zEffectCondition.safeParse(bus.value).success).toBe(true);
+    expect(derivedSentence(h)).toContain("90°");
+    h.enter(h.field("cond.g0.c0.arcDegrees"), "999");
+    expect(bus.value).toEqual({ kind: "facing", subject: "target", arcDegrees: 360 });
+    h.enter(h.field("cond.g0.c0.arcDegrees"), "0");
+    expect(bus.value).toEqual({ kind: "facing", subject: "target", arcDegrees: 1 });
+    expect(zEffectCondition.safeParse(bus.value).success).toBe(true);
   });
 });

@@ -1,0 +1,69 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "owner-decision.20260908-upload-everything-and-legacy-rename",
+  "kind": "owner-decision",
+  "from": "main",
+  "to": "codex",
+  "baseCommit": "5189f41737a54140d20c61297dfa21805bfc4720",
+  "contractFingerprint": "b91a0f59c31289ed",
+  "title": "🪣 owner 2026-09-08：本機 170 GB 原則上全部上 S3 或 Git；leagcy→legacy 已改名；⭐ outputs/ 110 GB 今天沒有人負責",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "⭐ **拼字已改**：S3 上 `leagcy/` 不存在了，`legacy/` 有 **222 物件 / 47.74 GB**（owner 手動改名）。⇒ 本 repo 我寫過的每一處 `leagcy` 已改成 `legacy`（含這族 packet 的檔名與 dedupeKey）；⛔ **owner 的逐字引言不改**（`tools/bgm-gen/{src/render.py,vox/RENDER.py}`、`content/assets/audio/bgm/MANIFEST.json`、`docs/_daily/`、戰情板 —— 那是他 2026-08-22／09-05 真的打的字，改掉就讀不出「這個拼字錯誤是什麼時候被發現的」）。",
+      "repro": {
+        "command": "bash scripts/asked-before.sh legacy 拼字",
+        "expectedExit": 0
+      },
+      "commit": "b5d8af29efaba4c9250a9176e285c8eb971f5b7e"
+    },
+    {
+      "kind": "confirmed",
+      "text": "⚠️ ⭐ **量到的缺口（2026-09-08 實跑，⛔ 不是引用文件）**：本機工作區 **170 GB**、S3 **61.40 GB / 2,324 物件** ⇒ ⭐ **約 109 GB 還沒上去**。逐塊：`outputs/`（轉換中間產物）**110 GB** · `GGD-Asset-Library/` 本機 48 GB vs S3 `legacy/` 47.74 GB（差約 0.3 GB） · `GGD-community-hero-forge` 4.6 GB · `GGD` repo clone 3.6 GB · `GGD-asset-library-management` 2.3 GB。",
+      "repro": {
+        "command": "python3 tools/asset-cdn/upload.py --check",
+        "expectedExit": 0
+      },
+      "commit": "b5d8af29efaba4c9250a9176e285c8eb971f5b7e"
+    },
+    {
+      "kind": "inferred",
+      "text": "⛔⛔ **`outputs/` 110 GB 今天沒有任何一方負責** —— 前綴分工是：Main 只有 `assets/**`；Codex 有 `legacy/**`／`hero-finetune-research/**`／`community-hero-forge/**`／`GGD-Asset-Library/**`。⭐ `outputs/` 不在任何一格裡，而它是**單一最大的一塊**（占缺口的 ~100%）。⇒ owner 2026-09-08 逐字：「通知沒人負責上傳後自己上傳並作記錄」⇒ ⭐ **這一則就是那個通知**：Codex 若不認領，Main 會把它上到 `legacy/outputs/**` 並附逐檔 SHA-256 manifest。",
+      "repro": {
+        "command": "bash scripts/asked-before.sh 上傳 分工",
+        "expectedExit": 0
+      },
+      "commit": "b5d8af29efaba4c9250a9176e285c8eb971f5b7e"
+    },
+    {
+      "kind": "confirmed",
+      "text": "⭐ **對外沒有 CDN**（2026-09-08 量到）：`ggd.adms.ai` 的回應標頭是 `server: nginx`，⛔ **沒有** `via`／`x-cache`／`x-amz-cf-id` 任何一個 CDN 標頭；DNS 解到 **122.116.95.244**（HiNet，Mac mini M4 本機）⇒ ⭐ **今天每一個位元組都是從那台機器直接出去的**。⚠️ `cloudfront:ListDistributions` 與 `s3:GetBucketLocation` 對這個 role 是 **AccessDenied**（⭐ 刻意的安全邊界，⛔ 我沒有嘗試繞過）⇒ 我只能證明「ggd.adms.ai 前面沒有 CloudFront」，⛔ 證明不了「這個帳號沒有任何 distribution」。",
+      "repro": {
+        "command": "bash scripts/asked-before.sh CloudFront CDN",
+        "expectedExit": 0
+      },
+      "commit": "b5d8af29efaba4c9250a9176e285c8eb971f5b7e"
+    }
+  ],
+  "ownerQuotes": [
+    {
+      "date": "2026-09-08",
+      "text": "本機 167 GB 理論上都要上去 S3 or Git ，有例外要跟我特別說明 (legacy/也要上傳, leagcy是錯誤的拼字，請你一併在所有文件與script中修正並留下記錄)"
+    },
+    {
+      "date": "2026-09-08",
+      "text": "誰負責上傳哪些檔案請先分工好，main 則是最後抓漏的角色(驗收與合併)，通知沒人負責上傳後自己上傳並作記錄"
+    },
+    {
+      "date": "2026-09-08",
+      "text": "CloudFront 是目前對外的 CDN 嗎? (包含 ggd.adms.ai ?) 目前 S3 是台北機房延遲最低，CDN 也是嗎?"
+    }
+  ],
+  "asks": [
+    "⭐ **Codex：`outputs/` 110 GB 你認領嗎？** 48 小時內沒有回應，Main 依 owner 的指示自己上傳到 `legacy/outputs/**` 並在這份 packet 追加收據。",
+    "⭐ 請確認 `GGD-Asset-Library/` 本機 48 GB vs S3 `legacy/` 47.74 GB 那 ~0.3 GB 的差是**刻意排除**還是**漏傳** —— ⛔ 「大小差不多」不是證據，要逐檔 SHA-256 比對。"
+  ],
+  "notes": [
+    "⚠️ ⭐ owner 的 S3／Git 逐類歸屬表（2026-09-08 逐字）已寫進 CLAUDE.md 第一·四之一：原始模型／動畫／**大型解析 JSON** → S3；解析／轉換程式、**英雄與技能設定 JSON**、版本清單、**SHA-256**、文件 → Git。⭐ 「JSON」在表裡出現兩次而去不同地方 —— 判準是「一個位元組如果只能靠雜湊驗、不能靠 diff 讀，它就不屬於 git」，⛔ 分界不是副檔名也不是目錄。"
+  ]
+}

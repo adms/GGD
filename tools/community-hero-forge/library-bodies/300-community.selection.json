@@ -1,0 +1,641 @@
+{
+  "schema": "ggd-native-library-selection@1",
+  "entries": [
+    {
+      "asset": "300heroes:70521f248a94658c5d1ed26c",
+      "meshes": [
+        4,
+        1
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:b829380697aa10a5d784d96a",
+        "2": "300heroes:2f152acbcf406b3e29cf7832"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:204",
+      "sourceName": "法老王",
+      "sourceOrigin": "遊戲王／遊戲王 怪獸之決鬥",
+      "target": {
+        "index": "01",
+        "name": "武藤遊戲",
+        "relationship": "exact"
+      },
+      "textureSearches": [
+        "204_1",
+        "204_a"
+      ],
+      "limitations": [
+        "hurt reuses idle; no independent native hit reaction selected",
+        "Body/weapon clips only; hero skill mechanics and complete VFX are separately reviewed"
+      ]
+    },
+    {
+      "asset": "300heroes:53fd11c0026fe928567b7760",
+      "meshes": [
+        0
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:0a3fc6a4784f878ad8d44612"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:163",
+      "sourceName": "空条承太郎",
+      "sourceOrigin": "JoJo 的奇妙冒險 第三部：星塵遠征軍",
+      "target": {
+        "index": "04",
+        "name": "空條承太郎",
+        "relationship": "exact"
+      },
+      "textureSearches": [
+        "163"
+      ],
+      "limitations": [
+        "hurt reuses idle; no independent native hit reaction selected",
+        "Body/weapon clips only; hero skill mechanics and complete VFX are separately reviewed"
+      ]
+    },
+    {
+      "asset": "300heroes:2b730a6724d72692c2c95046",
+      "meshes": [
+        0,
+        1
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:0a68203eb0da4ad979a6f795",
+        "1": "300heroes:62abb508620bccddf15b843a"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:107",
+      "sourceName": "笠笠笠",
+      "sourceOrigin": "進擊的巨人",
+      "target": {
+        "index": "08",
+        "name": "米卡莎",
+        "relationship": "exact"
+      },
+      "textureSearches": [
+        "107",
+        "107_a"
+      ],
+      "limitations": [
+        "hurt reuses idle; no independent native hit reaction selected",
+        "Body/weapon clips only; hero skill mechanics and complete VFX are separately reviewed"
+      ]
+    },
+    {
+      "asset": "300heroes:33317960eca2c46de312fce2",
+      "meshes": [
+        0
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:20083386a4d84ad96b77fe58"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01_a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:213",
+      "sourceName": "鲁路修",
+      "sourceOrigin": "Code Geass 反叛的魯路修",
+      "target": {
+        "index": "10",
+        "name": "魯路修",
+        "relationship": "exact"
+      },
+      "textureSearches": [
+        "213"
+      ],
+      "limitations": [
+        "hurt reuses idle; no independent native hit reaction selected",
+        "Body/weapon clips only; hero skill mechanics and complete VFX are separately reviewed"
+      ]
+    },
+    {
+      "asset": "300heroes:d4ce2cfc061185921d1cb222",
+      "meshes": [
+        2,
+        0
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:a95c3a494cf033f6e517414f",
+        "1": "300heroes:34f6a2cab556dbf98e6f7340"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_skill_03",
+        "cast": "single_skill_03",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:167",
+      "sourceName": "冰之狙击手",
+      "sourceOrigin": "刀劍神域 Sword Art Online",
+      "target": {
+        "index": "13",
+        "name": "朝田詩乃",
+        "relationship": "exact"
+      },
+      "textureSearches": [
+        "167",
+        "167_a"
+      ],
+      "limitations": [
+        "hurt reuses idle; no independent native hit reaction selected",
+        "Body/weapon clips only; hero skill mechanics and complete VFX are separately reviewed",
+        "Attack and cast share the native rifle aiming clip; shot timing and kit-specific presentation remain separate."
+      ]
+    },
+    {
+      "asset": "300heroes:3ec592fda559036e3b71758f",
+      "meshes": [
+        1,
+        0
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:aaae92a01d333599257ec51c",
+        "1": "300heroes:eb1ba1a6ab63dd2673a24e96"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:168",
+      "sourceName": "伊莉雅",
+      "sourceOrigin": "Fate/kaleid liner 魔法少女☆伊莉雅",
+      "target": {
+        "index": "16",
+        "name": "魔法少女☆伊莉雅",
+        "relationship": "exact"
+      },
+      "textureSearches": [
+        "168",
+        "168_a"
+      ],
+      "limitations": [
+        "hurt reuses idle; no independent native hit reaction selected",
+        "Body/weapon clips only; hero skill mechanics and complete VFX are separately reviewed"
+      ]
+    },
+    {
+      "asset": "300heroes:db4f9d278de0736a7541d18c",
+      "meshes": [
+        1,
+        0
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:db87ec75cd1e20a07e55c561",
+        "1": "300heroes:6903f14f56004a8c7d75cf5b"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_a",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:229",
+      "sourceName": "安兹乌尔恭",
+      "sourceOrigin": "OVERLORD",
+      "target": {
+        "index": "17",
+        "name": "安茲·烏爾·恭",
+        "relationship": "exact"
+      },
+      "textureSearches": [
+        "229",
+        "229_a"
+      ],
+      "limitations": [
+        "hurt reuses idle; no independent native hit reaction selected",
+        "Body/weapon clips only; hero skill mechanics and complete VFX are separately reviewed"
+      ]
+    },
+    {
+      "asset": "300heroes:0a857c33be1b779ffac18f74",
+      "meshes": [
+        0,
+        1,
+        6
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:cb9d66dd75225370aaccc3f9",
+        "1": "300heroes:aba140c0a5f3614cb93f3360",
+        "2": "300heroes:cb9d66dd75225370aaccc3f9"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:102",
+      "sourceName": "黑衣剑士",
+      "sourceOrigin": "刀劍神域 Sword Art Online",
+      "target": {
+        "index": "19",
+        "name": "桐谷和人",
+        "relationship": "exact"
+      },
+      "textureSearches": [
+        "102",
+        "102_b"
+      ],
+      "limitations": [
+        "hurt reuses idle; no independent native hit reaction selected",
+        "Body/weapon clips only; hero skill mechanics and complete VFX are separately reviewed"
+      ]
+    },
+    {
+      "asset": "300heroes:d397198ec699d52dbaff951e",
+      "meshes": [
+        2
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:9e752b15d96932f4811a3f38"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01_a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:96",
+      "sourceName": "御坂美琴",
+      "sourceOrigin": "魔法禁書目錄／科學超電磁砲",
+      "target": {
+        "index": "20",
+        "name": "御坂美琴",
+        "relationship": "exact"
+      },
+      "textureSearches": [
+        "096"
+      ],
+      "limitations": [
+        "hurt reuses idle; no independent native hit reaction selected",
+        "Body/weapon clips only; hero skill mechanics and complete VFX are separately reviewed"
+      ]
+    },
+    {
+      "asset": "300heroes:36223c09f16c6648e9508448",
+      "meshes": [
+        2,
+        0
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:182d2b32a4cd3fddda9827c9",
+        "1": "300heroes:87200ef9ed8f89ff1f331d37"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:150",
+      "sourceName": "鹿目圆香",
+      "sourceOrigin": "魔法少女小圓",
+      "target": {
+        "index": "21",
+        "name": "鹿目圓",
+        "relationship": "exact"
+      },
+      "textureSearches": [
+        "150",
+        "150_a"
+      ],
+      "limitations": [
+        "hurt reuses idle; no independent native hit reaction selected",
+        "Body/weapon clips only; hero skill mechanics and complete VFX are separately reviewed"
+      ]
+    },
+    {
+      "asset": "300heroes:4a4c507abbd6a236e206dd15",
+      "meshes": [
+        0,
+        1
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:c3114a31e9a7b22df7b4d766",
+        "1": "300heroes:89111e1cfec538d4b8bfb3d3"
+      },
+      "clips": {
+        "idle": "single_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_05",
+        "hurt": "single_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:137",
+      "sourceName": "坂田银时",
+      "sourceOrigin": "銀魂",
+      "target": {
+        "index": "23",
+        "name": "坂田銀時",
+        "relationship": "exact"
+      },
+      "textureSearches": [
+        "137",
+        "137_a"
+      ],
+      "limitations": [
+        "hurt reuses idle; no independent native hit reaction selected",
+        "Body/weapon clips only; hero skill mechanics and complete VFX are separately reviewed"
+      ]
+    },
+    {
+      "asset": "300heroes:37e03796cc2c9c2829f7e345",
+      "meshes": [
+        0,
+        2
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:17550b94009df030130332b0"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:161",
+      "sourceName": "奇犽",
+      "sourceOrigin": "HUNTER×HUNTER 獵人",
+      "target": {
+        "index": "24",
+        "name": "奇犽",
+        "relationship": "exact"
+      },
+      "textureSearches": [
+        "161"
+      ],
+      "limitations": [
+        "hurt reuses idle; no independent native hit reaction selected",
+        "Body/weapon clips only; hero skill mechanics and complete VFX are separately reviewed"
+      ]
+    },
+    {
+      "asset": "300heroes:8ab9713ac0d4058884378c3a",
+      "meshes": [
+        2,
+        0,
+        1
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:b9ba71b706e839119607600b"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_a",
+        "cast": "single_skill_01_a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:256",
+      "sourceName": "埼玉",
+      "sourceOrigin": "一拳超人 ONE-PUNCH MAN",
+      "target": {
+        "index": "25",
+        "name": "一拳超人",
+        "relationship": "exact"
+      },
+      "textureSearches": [
+        "256"
+      ],
+      "limitations": [
+        "hurt reuses idle; no independent native hit reaction selected",
+        "Body/weapon clips only; hero skill mechanics and complete VFX are separately reviewed"
+      ]
+    },
+    {
+      "asset": "300heroes:48546d36bb328cf6b78a6e9b",
+      "meshes": [
+        0
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:ea0458a891b1ac4e8c405538"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:139",
+      "sourceName": "万年小学生",
+      "sourceOrigin": "名偵探柯南",
+      "target": {
+        "index": "26",
+        "name": "名偵探柯南",
+        "relationship": "exact"
+      },
+      "textureSearches": [
+        "139"
+      ],
+      "limitations": [
+        "hurt reuses idle; no independent native hit reaction selected",
+        "Body/weapon clips only; hero skill mechanics and complete VFX are separately reviewed"
+      ]
+    },
+    {
+      "asset": "300heroes:cad6fc62e2fc00eae0234f38",
+      "meshes": [
+        0
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:bad31ca3ae1db0eddea12d55"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_05",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:336",
+      "sourceName": "艾莉丝",
+      "sourceOrigin": "無職轉生～到了異世界就拿出真本事～",
+      "target": {
+        "index": "28",
+        "name": "艾莉絲·伯雷亞斯·格雷拉特",
+        "relationship": "exact"
+      },
+      "textureSearches": [
+        "336"
+      ],
+      "limitations": [
+        "hurt reuses idle; no independent native hit reaction selected",
+        "Body/weapon clips only; hero skill mechanics and complete VFX are separately reviewed"
+      ]
+    },
+    {
+      "asset": "300heroes:cfce4a1a5c5ede186be83a40",
+      "meshes": [
+        4,
+        0
+      ],
+      "fps": 32,
+      "textures": {
+        "1": "300heroes:6cfbebc8871b52a361efbd50",
+        "5": "300heroes:44a6817482521baa6a0abe4e"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_2",
+        "cast": "single_skill_01_b",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:333",
+      "sourceName": "芙莉莲",
+      "sourceOrigin": "葬送的芙莉蓮",
+      "target": {
+        "index": "29",
+        "name": "芙莉蓮",
+        "relationship": "exact"
+      },
+      "textureSearches": [
+        "165_skin8",
+        "165_skin8_a"
+      ],
+      "limitations": [
+        "hurt reuses idle; no independent native hit reaction selected",
+        "Body/weapon clips only; hero skill mechanics and complete VFX are separately reviewed"
+      ]
+    },
+    {
+      "asset": "300heroes:19ab89526d5a6812479cb932",
+      "meshes": [
+        1,
+        0
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:c036806af6aa773821a24142",
+        "1": "300heroes:c036806af6aa773821a24142"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:267",
+      "sourceName": "灶门炭治郎",
+      "sourceOrigin": "鬼滅之刃",
+      "target": {
+        "index": "35",
+        "name": "炭治郎",
+        "relationship": "exact"
+      },
+      "textureSearches": [
+        "267"
+      ],
+      "limitations": [
+        "hurt reuses idle; no independent native hit reaction selected",
+        "Body/weapon clips only; hero skill mechanics and complete VFX are separately reviewed"
+      ]
+    },
+    {
+      "asset": "300heroes:1d306928d4f084b4b4a1a79a",
+      "meshes": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:2212a169cab56780cf96fba2",
+        "1": "300heroes:83101fa52b54c643e5cd7c00",
+        "3": "300heroes:2212a169cab56780cf96fba2",
+        "4": "300heroes:2212a169cab56780cf96fba2"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:126",
+      "sourceName": "真田幸村",
+      "sourceOrigin": "百花繚亂 SAMURAI GIRLS",
+      "target": {
+        "index": "03",
+        "name": "不知火舞",
+        "relationship": "style-proxy"
+      },
+      "textureSearches": [
+        "126_skin3",
+        "126_skin3_a"
+      ],
+      "limitations": [
+        "hurt reuses idle; no independent native hit reaction selected",
+        "Body/weapon clips only; hero skill mechanics and complete VFX are separately reviewed"
+      ]
+    }
+  ]
+}

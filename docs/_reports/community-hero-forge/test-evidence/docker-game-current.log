@@ -1,0 +1,74 @@
+#0 building with "orbstack" instance using docker driver
+
+#1 [build  1/37] FROM docker.io/library/node:22-alpine@sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32
+#1 resolve docker.io/library/node:22-alpine@sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from game.Dockerfile
+#2 transferring dockerfile: 3.91kB done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:22-alpine
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 3.66kB done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 258.87kB 0.0s done
+#5 DONE 0.1s
+
+#6 [build  2/12] RUN apk add --no-cache git
+#6 CACHED
+
+#7 [build  3/12] RUN corepack enable
+#7 CACHED
+
+#8 [build  6/12] COPY packages/shared/package.json packages/shared/
+#8 CACHED
+
+#9 [build  7/12] COPY apps/game-server/package.json apps/game-server/
+#9 CACHED
+
+#10 [build  4/12] WORKDIR /repo
+#10 CACHED
+
+#11 [build  5/12] COPY pnpm-workspace.yaml package.json pnpm-lock.yaml tsconfig.base.json ./
+#11 CACHED
+
+#12 [build  8/12] RUN pnpm install --frozen-lockfile --filter "@ggd/game-server..."
+#12 CACHED
+
+#13 [build  9/12] COPY packages/shared/ packages/shared/
+#13 DONE 0.2s
+
+#14 [build 10/12] COPY apps/game-server/ apps/game-server/
+#14 DONE 0.1s
+
+#15 [build 11/12] COPY apps/content-api/src/ apps/content-api/src/
+#15 DONE 0.1s
+
+#16 [build 12/12] COPY docs/editor-contract/ggd-presentation-token-manifest.json docs/editor-contract/
+#16 DONE 0.1s
+
+#17 [stage-1 2/4] RUN apk add --no-cache tini
+#17 CACHED
+
+#18 [stage-1 3/4] WORKDIR /repo/apps/game-server
+#18 CACHED
+
+#19 [stage-1 4/4] COPY --from=build /repo/ /repo/
+#19 DONE 0.6s
+
+#20 exporting to image
+#20 exporting layers
+#20 exporting layers 6.0s done
+#20 exporting manifest sha256:f358145916aa394ca0604eafa25c71929edb187084ffc647fe53a2f97c106bfc 0.0s done
+#20 exporting config sha256:8042e9a3ca1549a06daf21067b5c7a75ad7cd8b58cae4290cbb3e4776ec16ece 0.0s done
+#20 exporting attestation manifest sha256:873e20a8ec1702108c42070cf40b9ac74e83a34451e6fb26ece2fa8fdbb2a49e 0.0s done
+#20 exporting manifest list sha256:e878f970c22b8bd57b87ce28c636eb2befc4775989e781d322e21300abb8f584 0.0s done
+#20 naming to docker.io/library/ggd-community-game:local-proof done
+#20 unpacking to docker.io/library/ggd-community-game:local-proof
+#20 unpacking to docker.io/library/ggd-community-game:local-proof 1.3s done
+#20 DONE 7.4s

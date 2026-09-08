@@ -158,6 +158,8 @@ export interface ForgeInput {
   origin: Origin;
   /** 混血與均衡沒有內建攻擊型態，要自己選。純血填了與出身不符會被警告。 */
   attackType?: "melee" | "ranged";
+  /** Explicit authoring override; origin remains derived from the attributes. */
+  archetype?: Archetype;
   modelKey?: string;
   medians?: StatMedians;
   totalInitial?: number;
@@ -280,7 +282,7 @@ export function forgeChampion(input: ForgeInput): ForgeResult {
     role: attackType === "ranged" ? "marksman" : "fighter",
     attackType,
     modelKey: input.modelKey ?? "blocky-hero",
-    archetype: archetypeOf(probe as never),
+    archetype: input.archetype ?? archetypeOf(probe as never),
     attributes: { ...attrs, primary: PRIMARY_LABEL[primary], source: "authored" },
     baseStats,
     growth,

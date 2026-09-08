@@ -1,0 +1,56 @@
+{
+  "scope": "Actual frozen review of six uploaded-model slots. Captures do not approve original bespoke animation or skill fidelity.",
+  "url": "http://127.0.0.1:60801/admin/?heroReview=hero-9eac487c60dd74e11623cf66fc0a28c044edeee317e30ddce5cf2ce1555",
+  "steps": [
+    {
+      "slot": "PASSIVE",
+      "actors": [
+        "施法者：阿薩謝爾 · community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5 · 2 meshes · ×2.941 · Main ChampionView · 材質正常",
+        "目標：阿薩謝爾 · community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5 · 2 meshes · ×2.941 · Main ChampionView · 材質正常"
+      ],
+      "selection": "PASSIVE"
+    },
+    {
+      "slot": "Q",
+      "actors": [
+        "施法者：阿薩謝爾 · community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5 · 2 meshes · ×2.941 · Main ChampionView · 材質正常",
+        "目標：阿薩謝爾 · community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5 · 2 meshes · ×2.941 · Main ChampionView · 材質正常"
+      ],
+      "selection": "Q"
+    },
+    {
+      "slot": "W",
+      "actors": [
+        "施法者：阿薩謝爾 · community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5 · 2 meshes · ×2.941 · Main ChampionView · 材質正常",
+        "目標：阿薩謝爾 · community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5 · 2 meshes · ×2.941 · Main ChampionView · 材質正常"
+      ],
+      "selection": "W"
+    },
+    {
+      "slot": "E",
+      "actors": [
+        "施法者：阿薩謝爾 · community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5 · 2 meshes · ×2.941 · Main ChampionView · 材質正常",
+        "目標：阿薩謝爾 · community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5 · 2 meshes · ×2.941 · Main ChampionView · 材質正常"
+      ],
+      "selection": "E"
+    },
+    {
+      "slot": "R",
+      "actors": [
+        "施法者：阿薩謝爾 · community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5 · 2 meshes · ×2.941 · Main ChampionView · 材質正常",
+        "目標：阿薩謝爾 · community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5 · 2 meshes · ×2.941 · Main ChampionView · 材質正常"
+      ],
+      "selection": "R"
+    },
+    {
+      "slot": "EX",
+      "actors": [
+        "施法者：阿薩謝爾 · community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5 · 2 meshes · ×2.941 · Main ChampionView · 材質正常",
+        "目標：阿薩謝爾 · community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5 · 2 meshes · ×2.941 · Main ChampionView · 材質正常"
+      ],
+      "selection": "EX"
+    }
+  ],
+  "status": "passed",
+  "runtimeErrors": []
+}

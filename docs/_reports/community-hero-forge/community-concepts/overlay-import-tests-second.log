@@ -1,0 +1,32 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ apps/content-api/src/heroWorkRoutes.test.ts (6 tests) 25086ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > normalizes an original image before inspection and freezes the exact reviewed WebP 6777ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > validates all source, runtime, evidence and assets without store or registry mutation 1453ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > stores two works, restores exact authoring after restart, and leaves official ACTIVE unchanged 8099ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > rejects replacing operation input or sending a work to the official activation endpoint 1436ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > resumes after a crash between immutable placement and operation completion 4444ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > rejects forged target pins and detects damaged frozen asset bytes on read 891ms
+ ❯ apps/content-api/src/heroContentSnapshot.test.ts (2 tests | 1 failed) 4748ms
+   × publishes against the captured Platform overlay and loads the exact package into the game's merged room 4746ms
+     → 已發布英雄的來源身分不一致。
+ ✓ apps/content-api/src/heroImportServer.test.ts (3 tests) 128ms
+ ✓ tools/skill-forge/visualProofScope.test.ts (3 tests) 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  apps/content-api/src/heroContentSnapshot.test.ts > publishes against the captured Platform overlay and loads the exact package into the game's merged room
+Error: 已發布英雄的來源身分不一致。
+ ❯ Module.buildCommunityRoomContent packages/shared/src/content/communityRoom.ts:79:245
+
+ ❯ apps/content-api/src/heroContentSnapshot.test.ts:56:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  1 failed | 13 passed (14)
+   Start at  21:14:56
+   Duration  36.06s (transform 1.95s, setup 0ms, collect 4.35s, tests 29.97s, environment 0ms, prepare 226ms)
+

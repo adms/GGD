@@ -1,3 +1,4 @@
+import { CAST_APPROACHES, approachesOf, type CastApproach } from "../content/castApproachState";
 /**
  * Ability casting + rank-up. Validation order: learned → alive → not stunned →
  * off cooldown → mana → range. Cast is instant in the skeleton (no windup);
@@ -10,6 +11,7 @@ import { Abilities } from "../content/registry";
 import { bakeCastTimeConditionals, runEffects } from "../effects/effectRunner";
 import { fireHooks } from "../effects/hooks";
 import { recordAbilityCast } from "../stats/matchStats";
+import { consumableStatusStacks, consumeStatusStacks } from "../statusConsumption";
 import { noteAbilityCast } from "../content/castLedger";
 import { queryOverlap } from "../collision/queries";
 import { circle } from "../collision/shapes";
@@ -209,6 +211,7 @@ export type CastResult =
   | "silenced"
   | "cooldown"
   | "no-mana"
+  | "no-resource"
   | "out-of-range"
   | "bad-target"
   /** the ability is a PERMANENT passive (WC3 Cool=0) — there is nothing to cast */
@@ -253,10 +256,11 @@ export type CastResult =
   | "approaching";
 
 /**
- * `castAbility` 的可選旗標。目前只有一格,獨立成型別是為了讓下一個「只有內部
- * 呼叫端要的行為」不必再加第六個位置參數。
+ * `castAbility` 的內部可選旗標：接近重試與衍生施法來源。
  */
 export interface CastOptions {
+  /** Internal derived casts never earn primary-cast hit credit. */
+  suppressCastCredit?: boolean;
   /**
    * 距離不足時可不可以改發**接近指令**（出貨 true）。
    *
@@ -359,47 +363,6 @@ export function castApproachRulesFromDoc(doc: unknown): CastApproachRules {
 }
 
 /** 一次還沒放出去的施法：走到射程內就放。 */
-interface CastApproach {
-  slot: CastableSlot;
-  targetId: EntityId;
-  /** 按鍵那一格的施法者座標 —— `maxApproachDistance` 從這裡量起。 */
-  from: { x: number; z: number };
-  /**
-   * 我們寫進 `nav.moveTarget` 的**那一個物件**。
-   *
-   * ⭐ 它是一枚**身分權杖**,不只是一個座標:`OrderSystem` 每次套用一條新指令
-   * (玩家的走位、追擊、「卡住就接敵」)都會寫一個**新的**物件進去。所以
-   * `nav.moveTarget !== ours` 就是「移動通道被別人接管了」——
-   * ⛔ 不必去比對座標值(目標會動,值本來就每 tick 都不一樣)。
-   */
-  token: { x: number; z: number };
-  /** 同上，`nav.order` 的那一枚。 */
-  orderToken: Order;
-}
-
-/**
- * 每一個世界自己的待辦接近。
- *
- * ⚠️ **它應該住在 `SimWorld` 上**(和 `walkStall` / `autoEngaging` /
- * `suspendedOrder` 同一排),⛔ 這裡是 lane 柵欄的產物 —— `SimWorld.ts` 在
- * 柵欄外。主 session 接線時請把它搬過去(見回報的 needsOthers)。
- *
- * 在那之前它是安全的:key 是世界本身(WeakMap,世界被回收就一起走),而下面
- * 每一條路徑都會在施法者/目標消失時自己清掉,所以它不會單調長大。
- * 客戶端的預測影子(`LocalPrediction`)從不跑 `commandSystem`,所以它的那一格
- * 永遠是空的 ⇒ `castApproachSystem` 對它是嚴格 no-op。
- */
-const CAST_APPROACHES = new WeakMap<SimWorld, Map<EntityId, CastApproach>>();
-
-function approachesOf(world: SimWorld): Map<EntityId, CastApproach> {
-  let m = CAST_APPROACHES.get(world);
-  if (!m) {
-    m = new Map<EntityId, CastApproach>();
-    CAST_APPROACHES.set(world, m);
-  }
-  return m;
-}
-
 /** 這個單位現在有沒有在「走過去放技能」（測試與 HUD 用）。 */
 export function pendingCastApproach(
   world: SimWorld,
@@ -437,6 +400,7 @@ function armCastApproach(
   t: { pos: { x: number; z: number } },
   tgt: { pos: { x: number; z: number } },
   range: number,
+  suppressCastCredit?: boolean,
 ): boolean {
   const rules = castApproachRules(world);
   if (!rules.enabled) return false;
@@ -453,6 +417,7 @@ function armCastApproach(
   nav.order = orderToken;
   nav.moveTarget = token;
   approachesOf(world).set(caster, {
+    suppressCastCredit,
     slot,
     targetId,
     from: { x: t.pos.x, z: t.pos.z },
@@ -535,7 +500,7 @@ export function castApproachSystem(world: SimWorld): void {
         id,
         p.slot,
         { type: "entity", entityId: p.targetId },
-        { allowApproach: false }, // ⛔ 見 CastOptions:再武裝一次就是無限迴圈
+        { allowApproach: false, suppressCastCredit: p.suppressCastCredit }, // ⛔ 見 CastOptions:再武裝一次就是無限迴圈
       );
       // 走到了才發現魔力被花掉/被沉默了 —— 那一次按鍵**現在**才收到答案,
       // 而它欠玩家一個理由(`CommandSystem` 對即時失敗做的是同一件事)。
@@ -631,6 +596,11 @@ export function castAbility(
   if (berserkBlock) return berserkBlock;
   const mana = def.manaCost[inst.rank - 1] ?? 0;
   if (hp.mana < mana) return "no-mana";
+  const statusCost = def.statusCost;
+  const costApplier = statusCost?.appliedBy === "self" ? caster : undefined;
+  if (statusCost && consumableStatusStacks(world, caster, statusCost.statusId, costApplier) < statusCost.count) {
+    return "no-resource";
+  }
 
   // Still committed to the RECOVERY of a previous ability that WHIFFED. A
   // landed hit would already have cleared this on the tick it connected, so
@@ -685,7 +655,7 @@ export function castAbility(
         // ⚠️ 位置是刻意的:**在付出任何成本之前**,和其他每一道閘同一段。
         // 接近期間魔力一點都不扣、冷卻一格都不轉 —— 成本在真的施放的那一 tick
         // 才付,由 castApproachSystem 再走一次這整條驗證階梯。
-        return allowApproach && armCastApproach(world, caster, slot, target.entityId, t, tgt, range)
+        return allowApproach && armCastApproach(world, caster, slot, target.entityId, t, tgt, range, opts.suppressCastCredit)
           ? "approaching"
           : "out-of-range";
       }
@@ -730,6 +700,11 @@ export function castAbility(
   }
 
   // ---- pay costs (mana + cooldown paid up-front, at cast-begin) ----
+  // Recheck and debit atomically after targeting. No rejected cast may spend
+  // resources; no accepted cast may pay mana/cooldown without its full cost.
+  if (statusCost && consumeStatusStacks(world, caster, statusCost.statusId, statusCost.count, costApplier) === 0) {
+    return "no-resource";
+  }
   // ⭐ GH#733 —— 地板。今天 `:594` 的 `hp.mana < mana` 讓這一行**在這條路上**
   // 不可能扣成負數，但那是一個**別人維護的前置閘**：它與付款之間隔著整段
   // targeting 解析，而「魔力 ≥ 0」是不變量不是巧合。⛔ 不要拿掉。
@@ -811,7 +786,8 @@ export function castAbility(
   // ⭐ 連續技窗口的**唯一**寫入點（GH#937）。與上面那一行併排是刻意的：兩者的
   // 判準逐字相同（「一次真的提交出去的施放」），而它們在同一個位置就不可能分歧。
   // ⛔ 放在任何一道拒絕閘之前，「最近施放過」就會對著一次被拒的按鍵回 true。
-  noteAbilityCast(world, caster, slot, inst.abilityId);
+  const acceptedCast = noteAbilityCast(world, caster, slot, inst.abilityId);
+  const castInstance = opts.suppressCastCredit === true ? undefined : acceptedCast;
   // `vfxKey` (fx.prim.<element>.<shape>) rides along so the client's per-frame
   // audio mapper can play the ELEMENT whoosh (fire/ice/lightning) for the cast
   // without loading any ability data of its own (audio COMBAT-AUDIO routing).
@@ -866,6 +842,7 @@ export function castAbility(
         )
       : undefined;
     ab.cast = {
+      castInstance,
       slot,
       abilityId: inst.abilityId,
       rank: inst.rank,
@@ -930,6 +907,11 @@ export function castAbility(
   );
   if (!wardRefused) {
     runEffects(augmentedEffects, {
+      // ⭐ 2026-09-08 合併 PR 1118 補回 —— 這一發的施放身分（`oncePerCast` 的 credit key
+      //   與 `castLedger` 的 join key）。⚠️ 它與 `CastResolveSystem.ts` 那一行是**雙胞胎**：
+      //   ⛔ 只接吟唱那一邊的話，**每一支瞬發技能**的「一次施放只給一次額度」就整個失效
+      //   （`oncePerCast.test.ts` 的 28 條會一起紅，而它們讀的正是打出去的傷害）。
+      castInstance,
       world,
       caster,
       rank: inst.rank,

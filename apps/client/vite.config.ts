@@ -32,6 +32,7 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import { serveIconConsoleStamp } from "./dev/iconConsoleStamp";
 // task #66 / P0-6(a): env-first, git-second, LOUD-third build stamp resolution.
 import { computeBuildStamp } from "./dev/buildStamp";
+import { communityRuntimeIdentity } from "./dev/communityRuntime";
 
 const CONTENT_DIR = fileURLToPath(new URL("../../content", import.meta.url));
 
@@ -704,6 +705,7 @@ export default defineConfig({
   // Bake the build stamp into the bundle as a literal (see computeBuildStamp).
   // The VersionBadge reads this; there is deliberately no runtime git call.
   define: {
+    __GGD_COMMUNITY_RUNTIME__: JSON.stringify(communityRuntimeIdentity()),
     "import.meta.env.VITE_BUILD_STAMP": JSON.stringify(BUILD_STAMP),
   },
   // contentApiGuard FIRST: it must decide before vite's proxy middleware runs.
@@ -734,14 +736,19 @@ export default defineConfig({
     port: 39527,
     strictPort: true,
     proxy: {
+      "/content/assets/hero-instances/": {
+        target: process.env.VITE_PLATFORM_API_URL ?? "http://localhost:8080",
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/content\/assets\/hero-instances\//, "/api/v1/content-overlay/assets/"),
+      },
       "/colyseus": {
-        target: "http://localhost:2567",
+        target: process.env.VITE_GAME_API_URL ?? "http://localhost:2567",
         changeOrigin: true,
         ws: true,
         rewrite: (p) => p.replace(/^\/colyseus/, ""),
       },
       "/api": {
-        target: "http://localhost:8080",
+        target: process.env.VITE_PLATFORM_API_URL ?? "http://localhost:8080",
         changeOrigin: true,
         ws: true, // lobby WebSocket (/api/v1/lobby/ws) rides the same proxy
       },

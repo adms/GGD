@@ -1,0 +1,379 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ❯ packages/shared/src/sim/effects/oncePerCast.test.ts (26 tests | 14 failed) 305ms
+   × oncePerCast effective-damage credit > multiple direct hits and victims share a credit; distinct same-tick casts each earn one 53ms
+     → expected 'cooldown' to be 'ok' // Object.is equality
+   × oncePerCast effective-damage credit > channel release passes the accepted cast through all later waves; interrupt produces none 17ms
+     → expected 1 to be +0 // Object.is equality
+   × oncePerCast effective-damage credit > random area retains primary-cast credit 4ms
+     → [
+  {
+    "code": "invalid_type",
+    "expected": "array",
+    "received": "number",
+    "path": [
+      "effects",
+      0,
+      "count"
+    ],
+    "message": "Expected array, received number"
+  }
+]
+   × oncePerCast effective-damage credit > DoT refresh retains contributing casts without multiplying ordinary hooks 2ms
+     → expected 'cooldown' to be 'ok' // Object.is equality
+   × oncePerCast effective-damage credit > DoT independent retains contributing casts without multiplying ordinary hooks 2ms
+     → expected 'cooldown' to be 'ok' // Object.is equality
+   × oncePerCast effective-damage credit > DoT stack retains contributing casts without multiplying ordinary hooks 3ms
+     → expected 'cooldown' to be 'ok' // Object.is equality
+   × oncePerCast effective-damage credit > stack provenance replaces oldest at the cap and duplicate applications of one cast count once 3ms
+     → Cannot read properties of undefined (reading '0')
+   × oncePerCast effective-damage credit > proxy payCosts=none never earns primary credit 3ms
+     → expected 1 to be +0 // Object.is equality
+   × oncePerCast effective-damage credit > proxy payCosts=mana never earns primary credit 2ms
+     → expected 1 to be +0 // Object.is equality
+   × oncePerCast effective-damage credit > proxy payCosts=full never earns primary credit 1ms
+     → [
+  {
+    "received": "full",
+    "code": "invalid_enum_value",
+    "options": [
+      "none",
+      "mana",
+      "manaAndCooldown"
+    ],
+    "path": [
+      "effects",
+      0,
+      "payCosts"
+    ],
+    "message": "Invalid enum value. Expected 'none' | 'mana' | 'manaAndCooldown', received 'full'"
+  }
+]
+   × oncePerCast effective-damage credit > proxy suppression survives the out-of-range approach retry 3ms
+     → expected undefined to be true // Object.is equality
+   × oncePerCast effective-damage credit > shield-only, immune, and self hits leave a cast eligible for a later effective enemy hit 1ms
+     → Cannot read properties of undefined (reading 'get')
+   × oncePerCast effective-damage credit > rejects oncePerCast on events that cannot provide effective cast damage 2ms
+     → [
+  {
+    "code": "invalid_union",
+    "unionErrors": [
+      {
+        "issues": [
+          {
+            "code": "invalid_type",
+            "expected": "number",
+            "received": "undefined",
+            "path": [
+              "effects",
+              0,
+              "duration"
+            ],
+            "message": "Required"
+          }
+        ],
+        "name": "ZodError"
+      },
+      {
+        "issues": [
+          {
+            "code": "invalid_type",
+            "expected": "array",
+            "received": "undefined",
+            "path": [
+              "effects",
+              0,
+              "duration"
+            ],
+            "message": "Required"
+          }
+        ],
+        "name": "ZodError"
+      }
+    ],
+    "path": [
+      "effects",
+      0,
+      "duration"
+    ],
+    "message": "Invalid input"
+  },
+  {
+    "code": "unrecognized_keys",
+    "keys": [
+      "durationSec"
+    ],
+    "path": [
+      "effects",
+      0
+    ],
+    "message": "Unrecognized key(s) in object: 'durationSec'"
+  }
+]
+   × oncePerCast effective-damage credit > credit and serial identity are visible in the digest before any HP changes, including orphaned waves 2ms
+     → Cannot read properties of undefined (reading 'castInstance')
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 14 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/shared/src/sim/effects/oncePerCast.test.ts > oncePerCast effective-damage credit > multiple direct hits and victims share a credit; distinct same-tick casts each earn one
+AssertionError: expected 'cooldown' to be 'ok' // Object.is equality
+
+Expected: "ok"
+Received: "cooldown"
+
+ ❯ packages/shared/src/sim/effects/oncePerCast.test.ts:66:22
+     64|     expect(r.cast()).toBe("ok"); expect(r.count()).toBe(0); r.step(); …
+     65|     expect(r.world.health.get(r.second)!.hp).toBeLessThan(r.world.heal…
+     66|     expect(r.cast()).toBe("ok"); expect(r.cast()).toBe("ok"); r.step()…
+       |                      ^
+     67|     expect(r.cast("E")).toBe("ok"); expect(r.count()).toBe(0);
+     68|     expect(r.cast()).toBe("ok"); r.step(); expect(r.count()).toBe(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/14]⎯
+
+ FAIL  packages/shared/src/sim/effects/oncePerCast.test.ts > oncePerCast effective-damage credit > channel release passes the accepted cast through all later waves; interrupt produces none
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ packages/shared/src/sim/effects/oncePerCast.test.ts:79:34
+     77|   it("channel release passes the accepted cast through all later waves…
+     78|     const r = rig([wave], { castTimeSec: 0.2 }); expect(r.cast()).toBe…
+     79|     r.step(4); expect(r.count()).toBe(0); r.step(40); expect(r.count()…
+       |                                  ^
+     80|     const canceled = rig([hit], { castTimeSec: 0.2 }); canceled.cast();
+     81|     canceled.world.status.get(canceled.caster)!.effects.push({ sourceI…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/14]⎯
+
+ FAIL  packages/shared/src/sim/effects/oncePerCast.test.ts > oncePerCast effective-damage credit > random area retains primary-cast credit
+ZodError: [
+  {
+    "code": "invalid_type",
+    "expected": "array",
+    "received": "number",
+    "path": [
+      "effects",
+      0,
+      "count"
+    ],
+    "message": "Expected array, received number"
+  }
+]
+ ❯ Object.get error [as error] ../../../../%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/zod@3.25.76/node_modules/zod/v3/types.js:39:31
+ ❯ ZodEffects.parse ../../../../%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/zod@3.25.76/node_modules/zod/v3/types.js:114:22
+ ❯ rig packages/shared/src/sim/effects/oncePerCast.test.ts:34:25
+     32| 
+     33| function rig(effects: EffectDef[] = [hit], overrides: Partial<AbilityD…
+     34|   const Q = zAbilityDoc.parse({ schema: "ability@1", id: `${HERO}.q`, …
+       |                         ^
+     35|     castType: "targeted", maxRank: 1, range: 30, cooldown: [0], manaCo…
+     36|     recoverySec: 0, effects, ...overrides }) as AbilityDef;
+ ❯ packages/shared/src/sim/effects/oncePerCast.test.ts:104:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/14]⎯
+
+ FAIL  packages/shared/src/sim/effects/oncePerCast.test.ts > oncePerCast effective-damage credit > DoT refresh retains contributing casts without multiplying ordinary hooks
+ FAIL  packages/shared/src/sim/effects/oncePerCast.test.ts > oncePerCast effective-damage credit > DoT independent retains contributing casts without multiplying ordinary hooks
+ FAIL  packages/shared/src/sim/effects/oncePerCast.test.ts > oncePerCast effective-damage credit > DoT stack retains contributing casts without multiplying ordinary hooks
+AssertionError: expected 'cooldown' to be 'ok' // Object.is equality
+
+Expected: "ok"
+Received: "cooldown"
+
+ ❯ packages/shared/src/sim/effects/oncePerCast.test.ts:113:51
+    111|     const r = rig([{ ...dot, stacking, ...(stacking === "stack" ? { ma…
+    112|     installMark(r.world, r.caster, { markId: OTHER, initial: 0, max: 9…
+    113|     expect(r.cast()).toBe("ok"); expect(r.cast()).toBe("ok"); r.step(5…
+       |                                                   ^
+    114|     expect(r.count()).toBe(stacking === "refresh" ? 1 : 2);
+    115|     expect(r.world.marks.get(r.caster)!.get(OTHER)!.count).toBe(stacki…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/14]⎯
+
+ FAIL  packages/shared/src/sim/effects/oncePerCast.test.ts > oncePerCast effective-damage credit > stack provenance replaces oldest at the cap and duplicate applications of one cast count once
+TypeError: Cannot read properties of undefined (reading '0')
+ ❯ packages/shared/src/sim/effects/oncePerCast.test.ts:123:36
+    121|     const r = rig([d, d]); r.cast(); r.step(5); expect(r.count()).toBe…
+    122|     r.cast(); r.cast(); r.step(5); expect(r.count()).toBe(2);
+    123|     expect(r.world.dot.get(r.target)![0]!.stackCastInstances).toHaveLe…
+       |                                    ^
+    124|   });
+    125| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/14]⎯
+
+ FAIL  packages/shared/src/sim/effects/oncePerCast.test.ts > oncePerCast effective-damage credit > proxy payCosts=none never earns primary credit
+ FAIL  packages/shared/src/sim/effects/oncePerCast.test.ts > oncePerCast effective-damage credit > proxy payCosts=mana never earns primary credit
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ packages/shared/src/sim/effects/oncePerCast.test.ts:129:82
+    127|     const r = rig([{ kind: "proxyCast", shape: "single", slot: "W", pa…
+    128|     const hp = r.world.health.get(r.target)!.hp; r.cast(); r.step();
+    129|     expect(r.world.health.get(r.target)!.hp).toBeLessThan(hp); expect(…
+       |                                                                                  ^
+    130|     expect(r.cast("W")).toBe("ok"); r.step(); expect(r.count()).toBe(1…
+    131|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/14]⎯
+
+ FAIL  packages/shared/src/sim/effects/oncePerCast.test.ts > oncePerCast effective-damage credit > proxy payCosts=full never earns primary credit
+ZodError: [
+  {
+    "received": "full",
+    "code": "invalid_enum_value",
+    "options": [
+      "none",
+      "mana",
+      "manaAndCooldown"
+    ],
+    "path": [
+      "effects",
+      0,
+      "payCosts"
+    ],
+    "message": "Invalid enum value. Expected 'none' | 'mana' | 'manaAndCooldown', received 'full'"
+  }
+]
+ ❯ Object.get error [as error] ../../../../%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/zod@3.25.76/node_modules/zod/v3/types.js:39:31
+ ❯ ZodEffects.parse ../../../../%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/zod@3.25.76/node_modules/zod/v3/types.js:114:22
+ ❯ rig packages/shared/src/sim/effects/oncePerCast.test.ts:34:25
+     32| 
+     33| function rig(effects: EffectDef[] = [hit], overrides: Partial<AbilityD…
+     34|   const Q = zAbilityDoc.parse({ schema: "ability@1", id: `${HERO}.q`, …
+       |                         ^
+     35|     castType: "targeted", maxRank: 1, range: 30, cooldown: [0], manaCo…
+     36|     recoverySec: 0, effects, ...overrides }) as AbilityDef;
+ ❯ packages/shared/src/sim/effects/oncePerCast.test.ts:127:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/14]⎯
+
+ FAIL  packages/shared/src/sim/effects/oncePerCast.test.ts > oncePerCast effective-damage credit > proxy suppression survives the out-of-range approach retry
+AssertionError: expected undefined to be true // Object.is equality
+
+- Expected: 
+true
+
++ Received: 
+undefined
+
+ ❯ packages/shared/src/sim/effects/oncePerCast.test.ts:138:77
+    136|       world: r.world, caster: r.caster, targets: [r.target], rank: 1, …
+    137|     });
+    138|     expect(CAST_APPROACHES.get(r.world)?.get(r.caster)?.suppressCastCr…
+       |                                                                             ^
+    139|     r.world.transform.get(r.caster)!.pos = { ...r.world.transform.get(…
+    140|     castApproachSystem(r.world); combatResolveSystem(r.world); expect(…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/14]⎯
+
+ FAIL  packages/shared/src/sim/effects/oncePerCast.test.ts > oncePerCast effective-damage credit > shield-only, immune, and self hits leave a cast eligible for a later effective enemy hit
+TypeError: Cannot read properties of undefined (reading 'get')
+ ❯ packages/shared/src/sim/effects/oncePerCast.test.ts:147:48
+    145|     for (const blocked of ["shield", "immune", "self"] as const) {
+    146|       const r = rig([hit, wave]);
+    147|       if (blocked === "shield") r.world.shield.get(r.target)!.pools.pu…
+       |                                                ^
+    148|       if (blocked === "immune") r.world.status.get(r.target)!.effects.…
+    149|         invulnerable: true, expiresAtTick: 30 });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/14]⎯
+
+ FAIL  packages/shared/src/sim/effects/oncePerCast.test.ts > oncePerCast effective-damage credit > rejects oncePerCast on events that cannot provide effective cast damage
+ZodError: [
+  {
+    "code": "invalid_union",
+    "unionErrors": [
+      {
+        "issues": [
+          {
+            "code": "invalid_type",
+            "expected": "number",
+            "received": "undefined",
+            "path": [
+              "effects",
+              0,
+              "duration"
+            ],
+            "message": "Required"
+          }
+        ],
+        "name": "ZodError"
+      },
+      {
+        "issues": [
+          {
+            "code": "invalid_type",
+            "expected": "array",
+            "received": "undefined",
+            "path": [
+              "effects",
+              0,
+              "duration"
+            ],
+            "message": "Required"
+          }
+        ],
+        "name": "ZodError"
+      }
+    ],
+    "path": [
+      "effects",
+      0,
+      "duration"
+    ],
+    "message": "Invalid input"
+  },
+  {
+    "code": "unrecognized_keys",
+    "keys": [
+      "durationSec"
+    ],
+    "path": [
+      "effects",
+      0
+    ],
+    "message": "Unrecognized key(s) in object: 'durationSec'"
+  }
+]
+ ❯ Object.get error [as error] ../../../../%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/zod@3.25.76/node_modules/zod/v3/types.js:39:31
+ ❯ ZodEffects.parse ../../../../%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/zod@3.25.76/node_modules/zod/v3/types.js:114:22
+ ❯ packages/shared/src/sim/effects/oncePerCast.test.ts:188:21
+    186| 
+    187|   it("rejects oncePerCast on events that cannot provide effective cast…
+    188|     expect(zHookDef.parse(credit).oncePerCast).toBe(true);
+       |                     ^
+    189|     for (const on of ["onAbilityHit", "onDamageTaken", "onInterval", "…
+    190|       expect(zHookDef.safeParse({ ...credit, on }).success).toBe(false…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/14]⎯
+
+ FAIL  packages/shared/src/sim/effects/oncePerCast.test.ts > oncePerCast effective-damage credit > credit and serial identity are visible in the digest before any HP changes, including orphaned waves
+TypeError: Cannot read properties of undefined (reading 'castInstance')
+ ❯ packages/shared/src/sim/effects/oncePerCast.test.ts:195:74
+    193| 
+    194|   it("credit and serial identity are visible in the digest before any …
+    195|     const r = rig([wave]); r.cast(); const pending = r.world.delayed[0…
+       |                                                                          ^
+    196|     forgetCasts(r.world, r.caster); const before = r.world.digest();
+    197|     pending.creditedHooks.push("credit"); expect(r.world.digest()).not…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/14]⎯
+
+ Test Files  1 failed (1)
+      Tests  14 failed | 12 passed (26)
+   Start at  05:39:56
+   Duration  4.35s (transform 2.23s, setup 0ms, collect 3.08s, tests 305ms, environment 0ms, prepare 132ms)
+

@@ -14,6 +14,7 @@ import {
   type ForgeOverlay,
   type VfxVisualEvidenceFrame,
   type VfxForgeStageMode,
+  type VfxForgeStageOptions,
 } from "./VfxForgeStage";
 import { visualHygieneTriage } from "./backdropFrameAudit";
 
@@ -39,6 +40,7 @@ export interface VfxForgePreviewHandle {
 }
 
 interface VfxForgePreviewProps {
+  frozenContent?: Pick<VfxForgeStageOptions, "fetchDoc" | "resolveAssetUrl">;
   script: VfxScriptDoc;
   ability: ForgeAbility;
   schedule: readonly ScheduledSimEvent[];
@@ -60,6 +62,7 @@ interface VfxForgePreviewProps {
 
 export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreviewProps>(function VfxForgePreview({
   script,
+  frozenContent,
   ability,
   schedule,
   durationMs,
@@ -193,6 +196,7 @@ export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreview
       return;
     }
     const stage = new VfxForgeStage(canvas, script, ability, schedule, {
+      ...frozenContent,
       actors: { caster, target },
       mode,
       assetRefsVerifiedSafe,
@@ -229,7 +233,7 @@ export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreview
     // Stage ownership follows the selected ability and the real Sim home pose.
     // Draft changes that keep the same world frame use setContent below.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ability.id, assetRefsVerifiedSafe, caster?.id, coldAssetRetry, homePoseKey, mode, target?.id]);
+  }, [ability.id, assetRefsVerifiedSafe, caster?.id, coldAssetRetry, homePoseKey, mode, target?.id, frozenContent]);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -305,6 +309,10 @@ export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreview
       <canvas ref={canvasRef} />
       {overlay.flash ? <div className="vfx-flash" style={{ background: `rgba(${overlay.flash.color.join(",")},${overlay.flash.alpha})` }} /> : null}
       <div className="vfx-floating-texts">{overlay.texts.map((t) => <b key={t.id}>{t.text}</b>)}</div>
+      <div className="vfx-world-floating-texts">{overlay.runtimeTexts?.map(text => <b key={text.id} data-role="floating-text" style={{
+        transform: `translate(${text.x}px, ${text.y}px) translate(-50%, -50%)`,
+        color: text.color, opacity: text.alpha, fontSize: text.fontSize,
+      }}>{text.text}</b>)}</div>
       <div className="vfx-stage-badge">
         {mode === "runtime" ? "真 Sim → 真 VfxSystem" : "真 IntentFrame → VFX Script"}
         {" · "}雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step

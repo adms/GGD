@@ -1,0 +1,8 @@
+{
+  "id": "lock-combo",
+  "schema": "status-effect@1",
+  "name": "連段拘束",
+  "description": "連段期間的控制標記；鎖足或暈眩由技能產品的 lockTarget 決定。",
+  "polarity": "debuff",
+  "tags": ["lock-combo", "combo", "cc", "debuff"]
+}

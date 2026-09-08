@@ -8,6 +8,7 @@ import { Stat } from "../stats/statTypes";
 import { ModOp } from "../stats/modifiers";
 import type { AugmentDef, ChampionDef, ItemDef, LootTable, ProjectileDef } from "./defs";
 import { registerChampion, Items, Augments, Projectiles, LootTables } from "./registry";
+import { ContextualRegistryMap } from "./registryContext";
 
 const id = <T extends string>(s: string): T => s as T;
 
@@ -502,12 +503,14 @@ const ROUND_LOOT: LootTable = {
   ],
 };
 
-let registered = false;
+// Bootstrap belongs to a content context. A process-wide flag would make the
+// second independently loaded baseline omit the skeleton fallback documents.
+const registration = new ContextualRegistryMap<"ready", boolean>("sim.skeleton-bootstrap");
 
 /** Idempotent registration of all skeleton content. */
 export function registerSkeletonContent(): void {
-  if (registered) return;
-  registered = true;
+  if (registration.get("ready")) return;
+  registration.set("ready", true);
   for (const p of PROJECTILES) Projectiles.register(p.id, p);
   registerChampion(SELA);
   registerChampion(THORNE);

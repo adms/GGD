@@ -48,6 +48,7 @@ import {
   type EditCollection,
   type WritePlanStep,
 } from "@ggd/shared/content/editModel";
+import type { ChampionModelVersionState, ModelVersionCommand } from "@ggd/shared/content/schema/championModelVersions";
 
 /** Vite dev flag, guarded so plain node (vitest) never throws. */
 function isDevBuild(): boolean {
@@ -568,6 +569,7 @@ export interface ContentEditApi {
   readonly remove: typeof deleteDoc;
   /** Hash-locked AI review ledger; verdict and Promote are always separate. */
   readonly aiReview: AiReviewApi;
+  readonly modelVersions: { read: typeof readModelVersions; update: typeof updateModelVersions; catalog: typeof readModelVersionCatalog };
 }
 
 /**
@@ -590,5 +592,61 @@ export function createContentEditApi(): ContentEditApi {
     create: createDoc,
     remove: deleteDoc,
     aiReview: aiReviewApi,
+    modelVersions: { read: readModelVersions, update: updateModelVersions, catalog: readModelVersionCatalog },
   };
 }
+
+export async function readModelVersions(id: string, opts: ContentApiOptions = {}): Promise<{ state: ChampionModelVersionState | null; error: string | null }> {
+  if (!ENABLED) return { state: null, error: OFF_MESSAGE };
+  const url = `/content-api/champions/${encodeURIComponent(id)}/model-versions`;
+  try {
+    const res = await send(opts.fetchFn ?? defaultFetch, url, "GET");
+    return res.status === 200 ? { state: res.body as ChampionModelVersionState, error: null } : { state: null, error: errorOf(res.body, res.status, url) };
+  } catch (error) { return { state: null, error: String(error) }; }
+}
+
+export async function readModelVersionCatalog(opts: ContentApiOptions = {}): Promise<{ ids: string[]; error: string | null }> {
+  if (!ENABLED) return { ids: [], error: OFF_MESSAGE };
+  const url = "/content-api/models/_index";
+  try {
+    const res = await send(opts.fetchFn ?? defaultFetch, url, "GET");
+    if (res.status !== 200) return { ids: [], error: errorOf(res.body, res.status, url) };
+    const entries = (res.body as { entries?: { id?: unknown }[] }).entries;
+    if (!Array.isArray(entries)) return { ids: [], error: "模型清單格式不完整。" };
+    return { ids: entries.flatMap((entry) => typeof entry.id === "string" && !entry.id.startsWith("version.body.") ? [entry.id] : []), error: null };
+  } catch (error) { return { ids: [], error: String(error) }; }
+}
+
+export async function updateModelVersions(id: string, command: ModelVersionCommand, opts: ContentApiOptions = {}): Promise<{ state: (ChampionModelVersionState & { contentVersion: string }) | null; error: string | null }> {
+  if (!ENABLED) return { state: null, error: OFF_MESSAGE };
+  const url = `/content-api/champions/${encodeURIComponent(id)}/model-versions`;
+  try {
+    const res = await send(opts.fetchFn ?? defaultFetch, url, "POST", command);
+    return res.status === 200 ? { state: res.body as ChampionModelVersionState & { contentVersion: string }, error: null } : { state: null, error: errorOf(res.body, res.status, url) };
+  } catch (error) { return { state: null, error: String(error) }; }
+}
+
+export interface CatalogHeroChoice { id: string; name: string; path: string; catalog: "shipping" | "legacy" | "overlay" }
+export interface CatalogVersionChoice { versionId: string; createdAt: string; fileCount: number; bytes: number }
+export interface CatalogHeroPreview {
+  hero: CatalogHeroChoice; versionId: string; currentVersion: string; planDigest: string; heroDigest: string;
+  changes: { path: string; bytes: number; sha256: string; beforeSha256: string | null; kind: "changed" | "added" }[];
+  affected: CatalogHeroChoice[]; issues: string[]; blockedSources: {path: string; authors: string[]}[];
+  files: {path: string; bytes: number; sha256: string}[]; documents: {path: string; source: string; currentSource: string | null}[];
+  generatorSources?: {productPath: string; sourcePath: string | null; adapterId: string | null; generatorVersion: string | null; source: string | null}[];
+}
+async function catalogRequest<T>(suffix: string, method: "GET" | "POST", body?: unknown, opts: ContentApiOptions = {}): Promise<{data: T | null; error: string | null}> {
+  if (!ENABLED) return { data: null, error: OFF_MESSAGE };
+  const url = "/content-api/hero-catalog/" + suffix;
+  try {
+    const response = await send(opts.fetchFn ?? defaultFetch, url, method, body);
+    return response.status === 200 ? { data: response.body as T, error: null } : { data: null, error: errorOf(response.body, response.status, url) };
+  } catch (error) { return { data: null, error: String(error) }; }
+}
+export const heroCatalogApi = {
+  heroes: (opts?: ContentApiOptions) => catalogRequest<{heroes: CatalogHeroChoice[]; currentVersion: string}>("heroes", "GET", undefined, opts),
+  versions: (cursor?: string, opts?: ContentApiOptions) => catalogRequest<{items: CatalogVersionChoice[]; nextCursor: string | null}>("versions" + (cursor ? "?cursor=" + encodeURIComponent(cursor) : ""), "GET", undefined, opts),
+  capture: (opts?: ContentApiOptions) => catalogRequest<{version: {versionId: string}}>("versions/capture", "POST", {}, opts),
+  preview: (heroPath: string, versionId: string, opts?: ContentApiOptions) => catalogRequest<CatalogHeroPreview>("preview", "POST", {heroPath, versionId}, opts),
+  restore: (preview: CatalogHeroPreview, opts?: ContentApiOptions) => catalogRequest<{versionId: string; restoredFrom: string; previousVersion: string; contentVersion: string}>("restore", "POST", {heroPath: preview.hero.path, versionId: preview.versionId, expectedCurrentVersion: preview.currentVersion, planDigest: preview.planDigest}, opts),
+};

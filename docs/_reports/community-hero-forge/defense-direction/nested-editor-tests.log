@@ -1,0 +1,23 @@
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor
+
+ ✓ src/forge/conditionEditor.test.ts (36 tests) 107ms
+ ✓ src/hero/HeroSlotEditor.test.tsx (6 tests) 9459ms
+   ✓ hero product condition editing > edits E's nested defensive direction and distance without JSON, then reopens and compiles 5630ms
+   ✓ hero product condition editing > edits the nested curse-reversal reward with actual controls and recompiles the reopened project 3325ms
+ ✓ src/form/walk.test.ts (12 tests) 45582ms
+   ✓ number or literal controls > exposes the shipping consumeStatus count as an editable number/all choice 1367ms
+   ✓ numeric rank column controls > offers actual spendHealth percentages as numeric rank columns 1864ms
+   ✓ walkZod widget kinds (editor-01) > maps strings/numbers/bools/enums/arrays/refs/literals from the REAL shared schemas 18259ms
+   ✓ discriminated EffectDef union (editor-02) > renders variant cards keyed by kind, recursion depth-capped 3065ms
+   ✓ discriminated EffectDef union (editor-02) > the leap variant is a REAL editable card, not just a tag 4555ms
+   ✓ discriminated EffectDef union (editor-02) > the damageArea variant is a REAL editable card whose seed SAVES 6732ms
+   ✓ discriminated EffectDef union (editor-02) > every seeded number lands INSIDE its own declared bounds 5909ms
+   ✓ discriminated EffectDef union (editor-02) > provides sane defaults for new items and variant switches 3789ms
+ ✓ src/form/FormRenderer.readOnly.test.tsx (1 test) 13ms
+
+ Test Files  4 passed (4)
+      Tests  55 passed (55)
+   Start at  15:58:25
+   Duration  51.88s (transform 3.76s, setup 0ms, collect 10.99s, tests 55.16s, environment 1ms, prepare 383ms)
+

@@ -1,3 +1,4 @@
+import { BUILTIN_VFX_TEXTURES } from "@ggd/shared/content/builtinVfxTextures";
 /**
  * Telegraph — ground ring + magic-circle fill for AoE casts, with a RESOLVE
  * POP payoff (task #33 retune). The outer ring shows the full area
@@ -38,7 +39,7 @@ import {
 // 值住 `config.ui-cues@1`（後台『畫面提示』頁），⛔ 不是這個檔裡的兩個字面值。
 import { uiCues } from "../ui/uiCuesConfig";
 
-const MAGIC_CIRCLE_PATH = "assets/textures/particles/magic_02.png";
+const MAGIC_CIRCLE_PATH = BUILTIN_VFX_TEXTURES.particles_magic_02;
 const shippedTextureUrl = (path: string): string => `/content/${path}`;
 const SPIN_RAD_PER_MS = 0.0012;
 
@@ -288,7 +289,7 @@ function emberKickSpec(radius: number): BurstSpec {
     stretched: true,
     tailLength: 2.2,
     emitterRadius: Math.max(0.15, radius * 0.5),
-    texture: "assets/textures/particles/spark_05_rotated.png",
+    texture: BUILTIN_VFX_TEXTURES.particles_spark_05_rotated,
   };
 }
 
@@ -303,7 +304,7 @@ function dustKickSpec(radius: number): BurstSpec {
     gravityY: 0.6,
     drag: 0.85,
     emitterRadius: Math.max(0.2, radius * 0.6),
-    texture: "assets/textures/particles/smoke_05.png",
+    texture: BUILTIN_VFX_TEXTURES.particles_smoke_05,
   };
 }
 

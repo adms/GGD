@@ -1,0 +1,14 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+(node:41592) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ apps/editor/src/vfx-forge/stageShaderRegistration.test.ts (20 tests) 22ms
+ ✓ apps/editor/src/vfx-forge/particleWarmup.test.ts (2 tests) 5ms
+
+ Test Files  2 passed (2)
+      Tests  22 passed (22)
+   Start at  03:47:14
+   Duration  5.53s (transform 2.88s, setup 0ms, collect 4.49s, tests 27ms, environment 0ms, prepare 149ms)
+

@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "services": [
+    "edge",
+    "game",
+    "hero-import",
+    "platform",
+    "redis",
+    "review"
+  ],
+  "importerPlatformUrl": "http://platform:8080",
+  "gamePlatformUrl": "http://platform:8080",
+  "importerHasHostPorts": false,
+  "importerReadOnly": true,
+  "contentReadOnly": true
+}

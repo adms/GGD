@@ -1,3 +1,4 @@
+import { BUILTIN_VFX_TEXTURES } from "@ggd/shared/content/builtinVfxTextures";
 /**
  * VfxSystem — consumes the MSG.EVENT fanout (abilityCast / projectileHit /
  * damage / death) drained once per frame by the GameApp:
@@ -165,7 +166,7 @@ import type {
   ScreenShakeEvent,
 } from "@ggd/shared/sim/effects/clientCues";
 import { ScreenFxLayer } from "./ScreenFxLayer";
-import { FloatingTextFx } from "./FloatingTextFx";
+import { FloatingTextFx, type FloatingTextEntry } from "./FloatingTextFx";
 import { MoveTrailFx } from "./MoveTrailFx";
 import {
   screenCueIsForViewer,
@@ -362,7 +363,7 @@ const DEATH_SMOKE: VfxDoc = {
   blendMode: "alpha",
   gravityY: 1.1, // ash lifts as it dissipates
   speed: { min: 1.6, max: 4.2 },
-  texture: "assets/textures/particles/smoke_05.png",
+  texture: BUILTIN_VFX_TEXTURES.particles_smoke_05,
 };
 
 /**
@@ -1055,7 +1056,7 @@ export class VfxSystem {
   }
 
   /** ⭐ 特效文字的目前清單 —— 由 `ui/WorldAnchorLayer` 每幀讀（GH#543）。 */
-  get floatingTextEntries(): readonly unknown[] {
+  get floatingTextEntries(): readonly FloatingTextEntry[] {
     return this.floatingText.entries;
   }
 
@@ -2101,16 +2102,17 @@ export class VfxSystem {
       // 寫死是 `+`，而少掉的東西必須讀起來像少掉。沒有這一段，71-00 暗夜契約的
       // 【魔力全失】就是一整條藍條在一個 tick 內無聲清空（sim/effects/spendMana.ts
       // 的 VISIBILITY 段），而風王結界的每擊扣魔同樣一個字都沒有。
-      case "manaSpend": {
+      case "manaSpend":
+      case "healthSpend": {
         const target = ev.data.target as number | undefined;
         const amount = ev.data.amount as number | undefined;
         if (target === undefined || amount === undefined || !(amount > 0)) break;
         const pos = this.posFromEvent(ev, target);
         if (!pos) break;
         pushCombatText({
-          kind: "mana",
+          kind: ev.type === "healthSpend" ? "damage" : "mana",
           amount,
-          label: `-${Math.round(amount)}`,
+          label: `${ev.type === "healthSpend" ? "生命支付 " : ""}-${Math.round(amount)}`,
           sourceRel: this.relationOf(ev.data.source as number | undefined),
           targetRel: this.relationOf(target),
           crit: false,

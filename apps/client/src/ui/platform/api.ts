@@ -247,7 +247,7 @@ export function createRoom(settings: {
  *  for the NEXT match — arenaRules is frozen at match start. */
 export function updateRoomSettings(
   roomId: string,
-  settings: { name?: string; mapId?: string; botDifficulty?: string; rogueliteMobs?: boolean },
+  settings: { name?: string; mapId?: string; botDifficulty?: string; rogueliteMobs?: boolean; allowCommunityHeroes?: boolean; communityWorkIds?: string[] },
 ): Promise<RoomResp> {
   return api.request<RoomResp>(`/rooms/${encodeURIComponent(roomId)}/settings`, { method: "PATCH", body: settings });
 }

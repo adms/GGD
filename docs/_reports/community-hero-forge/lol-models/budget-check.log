@@ -1,0 +1,25 @@
+
+> @ggd/model-budget@0.0.0 budget:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/tools/model-budget
+> tsx emit_report.ts --check
+
+wrote content/assets/model-budget/report.json — 260 models, 17 screens
+  login                tris  104048 · draws  235 · vram   21.3 MB · chan   824  drawCalls:warn animChannels:warn
+  champ-select         tris       0 · draws    0 · vram   81.0 MB · chan     0  vramBytes:over
+  intermission         tris   33337 · draws  254 · vram   15.8 MB · chan    75  drawCalls:over
+  combat-castle        tris  121550 · draws  193 · vram   28.7 MB · chan   216  drawCalls:warn
+  combat-colosseum     tris  109074 · draws  219 · vram   39.4 MB · chan   216  drawCalls:warn vramBytes:warn
+  combat-dota          tris  123628 · draws  209 · vram   23.4 MB · chan   216  drawCalls:warn
+  combat-frieren       tris   89137 · draws  190 · vram   32.7 MB · chan   216  drawCalls:warn vramBytes:warn
+  combat-godie         tris   74888 · draws  226 · vram   26.3 MB · chan   244  drawCalls:warn
+  combat-heavens-arena tris  113715 · draws  176 · vram   51.6 MB · chan   219  drawCalls:warn vramBytes:over
+  combat-holy-grail    tris   81212 · draws  190 · vram   30.0 MB · chan   216  drawCalls:warn
+  combat-infinity-castle tris   89425 · draws  233 · vram   31.6 MB · chan   232  drawCalls:warn
+  combat-nazarick      tris   94020 · draws  198 · vram   40.9 MB · chan   219  drawCalls:warn vramBytes:warn
+  combat-royale        tris   66568 · draws  129 · vram   26.0 MB · chan   216  ok
+  combat-shiganshina   tris  105610 · draws  196 · vram   32.9 MB · chan   219  drawCalls:warn vramBytes:warn
+  combat-skeleton      tris   75488 · draws  133 · vram   26.0 MB · chan   216  ok
+  combat-world-tree    tris   99956 · draws  200 · vram   32.9 MB · chan   219  drawCalls:warn vramBytes:warn
+  settlement           tris  123628 · draws  209 · vram   23.4 MB · chan   216  drawCalls:warn
+✓ no new budget regressions (9 breaches, all accepted AND reasoned)
+(node:69581) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)

@@ -1,0 +1,247 @@
+- complementary:
+  - generic: GGD Ops
+  - generic: operator console
+  - navigation:
+    - button "⊞ 全部展開"
+    - button "營運 19":
+      - generic: ▸
+      - generic: 營運
+      - generic: "19"
+    - button "內容·素材管理 14" [expanded]:
+      - generic: ▾
+      - generic: 內容·素材管理
+      - generic: "14"
+    - button "🎵 音樂音效素材管理":
+      - generic: 🎵
+      - generic: 音樂音效素材管理
+    - button "🦸 英雄管理":
+      - generic: 🦸
+      - generic: 英雄管理
+    - button "✨ 新英雄模板":
+      - generic: ✨
+      - generic: 新英雄模板
+    - button "🔮 技能管理":
+      - generic: 🔮
+      - generic: 技能管理
+    - button "⚔️ 武器道具管理":
+      - generic: ⚔️
+      - generic: 武器道具管理
+    - button "🎆 特效管理":
+      - generic: 🎆
+      - generic: 特效管理
+    - button "🏟️ 場景物件管理":
+      - generic: 🏟️
+      - generic: 場景物件管理
+    - button "🧍 模型管理":
+      - generic: 🧍
+      - generic: 模型管理
+    - button "🧱 鑄形工坊":
+      - generic: 🧱
+      - generic: 鑄形工坊
+    - button "🎨 特效工坊 · 演出腳本":
+      - generic: 🎨
+      - generic: 特效工坊 · 演出腳本
+    - button "🎙️ 角色語音生成":
+      - generic: 🎙️
+      - generic: 角色語音生成
+    - button "✅ 內容白名單 🔒":
+      - generic: ✅
+      - generic: 內容白名單
+      - generic: 🔒
+    - button "🎭 英雄上下架 🔒":
+      - generic: 🎭
+      - generic: 英雄上下架
+      - generic: 🔒
+    - button "🗂 內容覆蓋層 🔒":
+      - generic: 🗂
+      - generic: 內容覆蓋層
+      - generic: 🔒
+    - button "資產產線 9":
+      - generic: ▸
+      - generic: 資產產線
+      - generic: "9"
+    - button "戰鬥規則 16":
+      - generic: ▸
+      - generic: 戰鬥規則
+      - generic: "16"
+    - button "五級距·數值 20":
+      - generic: ▸
+      - generic: 五級距·數值
+      - generic: "20"
+    - button "狀態規則 13":
+      - generic: ▸
+      - generic: 狀態規則
+      - generic: "13"
+    - button "武器道具 3":
+      - generic: ▸
+      - generic: 武器道具
+      - generic: "3"
+    - button "肉鴿殭屍 2":
+      - generic: ▸
+      - generic: 肉鴿殭屍
+      - generic: "2"
+    - button "畫面·演出 20":
+      - generic: ▸
+      - generic: 畫面·演出
+      - generic: "20"
+    - button "鑄技工坊 4":
+      - generic: ▸
+      - generic: 鑄技工坊
+      - generic: "4"
+    - button "系統 9":
+      - generic: ▸
+      - generic: 系統
+      - generic: "9"
+    - button "技能對照·視覺化 14":
+      - generic: ▸
+      - generic: 技能對照·視覺化
+      - generic: "14"
+  - generic: 內容編輯免登入 · 玩家管理需登入
+  - button "登入 Sign in"
+- main:
+  - heading "內容管理" [level=2]
+  - generic: content-api 已連線
+  - generic: cv_2ffcca4c3d1f
+  - button "重新檢查"
+  - generic: 編輯只在本機（127.0.0.1）成立：這個主控台的 dev server 綁定 loopback 並拒絕 --host， content-api 也只聽 loopback 並逐次檢查連線對端。遊戲用的 :39527 沒有這條路由，所以 手機連進來也拿不到寫入權限。
+  - generic: 英雄 清單
+  - textbox "搜尋 id 或名稱…": sela
+  - generic: 自動產圖 待補
+  - button "重新檢查"
+  - generic: 產圖服務未啟動，新內容會先用文字方塊代替。啟動方式：tools/icon-gen/.venv/bin/python tools/icon-gen/local/daemon.py --warm
+  - generic: 1 / 71
+  - button "Sela, the Ember Sagesela":
+    - generic: Sela, the Ember Sagesela
+  - generic: 上線模型版本
+  - text: 選擇上線套用的 3D 模型
+  - combobox "上線模型版本":
+    - option "拉克絲六動作 · 隔離驗收 · 相近風格替代 · 最新"
+    - option "原上線模型 · 原上線版本 · 使用中" [selected]
+  - text: 素材角色：Sela, the Ember Sage · 作品：原上線內容 · 素材庫：GGD
+  - text: 來源：models/champ.sela.json
+  - text: 保存時間：2026/9/7 上午2:30:35
+  - generic "檢視此版模型與動作綁定"
+  - button "套用選取版本" [disabled]
+  - generic "新增已匯入的模型版本"
+  - option "同一角色" [selected]
+  - option "同角色其他形態"
+  - option "相近風格替代"
+  - status: 已套用模型版本，下一場對戰生效。舊版模型與動作設定已保留，可隨時切回。
+  - generic: 英雄／Sela, the Ember Sage
+  - generic: 未修改
+  - generic: 圖示待補（產圖服務未啟動）
+  - button "重新載入"
+  - button "捨棄修改" [disabled]
+  - button "檢查並預覽" [disabled]
+  - generic: 識別
+  - generic: id
+  - textbox: sela
+  - generic: 檔名即 id，不可在此改
+  - generic: schema
+  - textbox: champion@1
+  - generic: 結構標籤，由 collection 決定
+  - generic: 基本資料
+  - generic: 名稱
+  - textbox: Sela, the Ember Sage
+  - generic: 介紹
+  - textbox
+  - generic: 圖鑑與選角畫面顯示的全文
+  - generic: 定位
+  - textbox: mage
+  - generic: fighter / mage / marksman / support / tank / assassin
+  - generic: 攻擊類型
+  - textbox: ranged
+  - generic: melee 或 ranged
+  - generic: 模型 key
+  - textbox: version.body.97dec5b902d0f03414d985a3693062ca42296a1f0d1fbb69
+  - generic: 請在上方「上線模型版本」選單切換。
+  - generic: 圖示
+  - textbox: assets/icons/champions/sela.webp
+  - generic: content 相對路徑，需以 assets/ 開頭
+  - generic: 標籤
+  - textbox: mage, burst, ranged, magic
+  - generic: 逗號分隔
+  - generic: 基礎數值 (baseStats)
+  - generic: 生命
+  - textbox: "70"
+  - generic: 生命回復
+  - textbox: "0.3"
+  - generic: 魔力
+  - textbox: "10"
+  - generic: 魔力回復
+  - textbox: "0.3"
+  - generic: 攻擊力
+  - textbox: "34"
+  - generic: 法術強度
+  - textbox: "0"
+  - generic: 護甲
+  - textbox: "15.2"
+  - generic: 魔抗
+  - textbox: "28"
+  - generic: 攻速
+  - textbox: "0.492424"
+  - generic: 每秒攻擊次數
+  - generic: 移速
+  - textbox: "6.6"
+  - generic: 遊戲單位／秒
+  - generic: 攻擊距離
+  - textbox: "11"
+  - generic: 爆擊率
+  - textbox: "0"
+  - generic: 0–1
+  - generic: 爆擊倍率
+  - textbox: "1.75"
+  - generic: 冷卻縮減
+  - textbox: "0"
+  - generic: 0–1
+  - generic: 吸血
+  - textbox: "0"
+  - generic: 0–1
+  - generic: 每級成長 (growth)
+  - generic: 魔抗
+  - textbox: "1.2"
+  - generic: 三圍 (attributes)
+  - generic: 力量
+  - textbox: "18"
+  - generic: 敏捷
+  - textbox: "16"
+  - generic: 智慧
+  - textbox: "26"
+  - generic: 力量成長
+  - textbox: "3.6"
+  - generic: 每級
+  - generic: 敏捷成長
+  - textbox: "2.031"
+  - generic: 每級
+  - generic: 智慧成長
+  - textbox: "3"
+  - generic: 每級
+  - generic: 主屬性
+  - textbox: INT
+  - generic: STR / AGI / INT
+  - generic: 來源
+  - textbox: authored
+  - generic: w3x（原始地圖）／authored（手工）
+  - generic: 技能與出裝
+  - generic: EX 技能 id
+  - textbox
+  - generic: abilities/ 的 id；清空代表沒有 EX
+  - generic: 加點順序
+  - textbox: Q, E, W, R
+  - generic: Q, W, E, R
+  - generic: 這份文件另外有 abilities、attackDamagePoint、buildPriority、hitFeel、missileSpeed、passive 沒有對應的表單欄位（結構太深，例如技能的 effects 或英雄的 abilities）。 要改它們請用下面的「原始 JSON」——一樣會經過同一套 schema 驗證。
+  - generic: 原始 JSON（進階，整份覆蓋）
+  - button "展開"
+  - generic: 備份／復原（沒有 git，這就是你的 undo）
+  - button "重新整理"
+  - button "復原上一次儲存"
+  - code: 2026-09-06T18-32-20-740Z.json
+  - generic: 2026/9/7 上午2:32:20
+  - generic: 7240 bytes
+  - button "復原這一份"
+  - code: 2026-09-06T18-30-35-415Z.json
+  - generic: 2026/9/7 上午2:30:35
+  - generic: 5880 bytes
+  - button "復原這一份"
+  - generic: 復原本身也會先備份目前的內容，所以「復原的復原」也還在。
+  - generic: © 2026 Moriyamouse/Adms 糟糕騎士團

@@ -1,0 +1,28 @@
+{
+  "results": [
+    {
+      "id": "300heroes:233",
+      "library": "300heroes",
+      "name": "珂朵莉",
+      "origin": "末日時在做什麼？有沒有空？可以來拯救嗎？",
+      "aliases": [
+        "233",
+        "Name_KeDuoLi",
+        "珂朵莉",
+        "珂朵莉·諾塔·瑟尼歐里斯"
+      ],
+      "origin_sources": [
+        "https://300data.com/hero/233.html",
+        "https://300data.com/data/api/hero_info/id/233"
+      ],
+      "origin_status": "角色身分對照",
+      "source_index": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/character-candidates.json",
+      "base_model": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/233.x",
+      "base_model_present": true,
+      "model_files": 13,
+      "animation_clips": 171,
+      "mapping_note": "Variants associated by numeric filename prefix; full asset index also contains other naming schemes.",
+      "readiness": "native_and_static_preview"
+    }
+  ]
+}

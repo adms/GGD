@@ -175,6 +175,7 @@ function checkPacket(file, fingerprint, accept, originMain) {
     err(`kind「${packet.kind}」不在 ${S.KINDS.join(" / ")}`);
 
   const key = packet.dedupeKey;
+  let sameAsMerged = false;
   if (isStr(key)) {
     if (!S.DEDUPE_KEY_RE.test(key)) err(`dedupeKey 格式不合（小寫 kebab ＋ \`.\`，⛔ 不可以有 \`/\`）：${key}`);
     if (basename(file) !== `${key}.json`) err(`檔名要等於 \`${key}.json\`，現在是 ${basename(file)}`);
@@ -187,7 +188,7 @@ function checkPacket(file, fingerprint, accept, originMain) {
     // ⭐ 判準是**兩份的關係**，⛔ 不是「有沒有一份併進去了」：
     //   內容一模一樣 ⇒ 這就是那一份（歷史），放行；
     //   內容變了而 key 與指紋都沒變 ⇒ **那才是重問**，紅。
-    const sameAsMerged = merged !== null && JSON.stringify(merged) === JSON.stringify(packet);
+    sameAsMerged = merged !== null && JSON.stringify(merged) === JSON.stringify(packet);
     if (merged && !sameAsMerged && merged.contractFingerprint === packet.contractFingerprint)
       err(
         `⛔ 同一題重問：\`${key}\` 已經併進 origin/main，而 contractFingerprint 沒變` +
@@ -196,7 +197,11 @@ function checkPacket(file, fingerprint, accept, originMain) {
       );
   }
 
-  if (fingerprint && isStr(packet.contractFingerprint) && packet.contractFingerprint !== fingerprint)
+  // An unchanged, merged packet is a historical receipt. Requiring its hash
+  // to follow today's contract rewrites history on every schema change, and
+  // rerunning old claims against today's implementation can invert their truth.
+  // New or edited packets still require the CURRENT fingerprint and repros.
+  if (!sameAsMerged && fingerprint && isStr(packet.contractFingerprint) && packet.contractFingerprint !== fingerprint)
     err(`contractFingerprint 對不上（packet ${packet.contractFingerprint} ≠ 現在 ${fingerprint}）⇒ 契約已變，重算它`);
 
   if (isStr(packet.baseCommit)) {
@@ -217,7 +222,8 @@ function checkPacket(file, fingerprint, accept, originMain) {
   for (const e of packet.evidence ?? [])
     if (!isStr(e) || !existsSync(join(REPO, e))) err(`evidence 路徑不存在：${e}`);
 
-  if (RUN_REPRO && errs.length === 0) errs.push(...runRepro(packet));
+  if (sameAsMerged && errs.length === 0) warnings.push(`${key} 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。`);
+  if (RUN_REPRO && errs.length === 0 && !sameAsMerged) errs.push(...runRepro(packet));
   return errs;
 }
 

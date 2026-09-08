@@ -1,0 +1,33 @@
+{
+  "asset": "300heroes:ff525e143d53b09dab32f9e0",
+  "meshes": [
+    6
+  ],
+  "fps": 32,
+  "textures": {
+    "0": "300heroes:6ef099fec879f06fad0cb621"
+  },
+  "clips": {
+    "idle": "bat_idle",
+    "run": "single_run",
+    "attack": "single_attack_attcom_1",
+    "cast": "single_skill_01",
+    "hurt": "bat_idle",
+    "death": "dead"
+  },
+  "characterId": "300heroes:50",
+  "sourceName": "黑羽快斗",
+  "sourceOrigin": "神偷怪盜／魔術快斗；名偵探柯南",
+  "target": {
+    "index": "07",
+    "name": "西索",
+    "relationship": "style-proxy"
+  },
+  "textureSearches": [
+    "050"
+  ],
+  "limitations": [
+    "Candidate only until rendered appearance review; game name and source design remain unchanged",
+    "hurt reuses idle; native body animation is not kit-specific choreography"
+  ]
+}

@@ -14,8 +14,8 @@ package contentoverlay_test
 //
 // ⛔ 不驗 commit 訊息長相、不驗 hash 字面值 —— 那些是實作細節，會過期。
 //
-// 突變紀錄：把 `contentoverlay.go` 的 `s.snapshot(o, by, op, k)` 那一行刪掉
-// → ①②③④ 全部紅（版本清單永遠是空的）。改回來即綠。
+// 突變紀錄：略過 `contentoverlay.go` 的 `s.prepareSnapshot`
+// → 儲存前版本保障與歷史回復測試必須失敗。歷次實測突變紀錄另存驗收證據。
 
 import (
 	"context"
@@ -47,7 +47,7 @@ func TestVersionsAndRollback(t *testing.T) {
 	list, err := svc.Versions(ctx, 0)
 	require.NoError(t, err)
 	require.Empty(t, list.Unavailable, "版本庫壞了 —— 空清單與壞掉不可以長得一樣")
-	require.Len(t, list.Entries, 3)
+	require.Len(t, list.Entries, 4, "三次修改與首次修改前的基線")
 	assert.True(t, list.Entries[0].Current, "最新的那一版要標成 current")
 
 	v1 := list.Entries[2].Hash // 最舊的：只有「第一版」
@@ -64,7 +64,7 @@ func TestVersionsAndRollback(t *testing.T) {
 
 	after, err := svc.Versions(ctx, 0)
 	require.NoError(t, err)
-	assert.Len(t, after.Entries, 4, "回滾自己也是一版")
+	assert.Len(t, after.Entries, 5, "回滾自己也是一版，基線保留")
 }
 
 func TestRestoreDocTouchesOnlyThatDoc(t *testing.T) {

@@ -1,3 +1,4 @@
+import { BUILTIN_VFX_TEXTURES } from "@ggd/shared/content/builtinVfxTextures";
 /**
  * ChickenFireworkFx — the tier-2 (吃雞) match-win firework: a launch comet, a
  * break flash, and a FULL-SCREEN roast chicken made of a few thousand glowing
@@ -245,9 +246,9 @@ function buildFormationMesh(pts: readonly SilhouettePoint[], scene: Scene): Mesh
  * glitter layer was silently invisible — caught by a frame-stepped screenshot,
  * never by a test, which is exactly why the audition page exists.
  */
-const FLARE = "assets/textures/particles/flare_01.png";
-const SPARK = "assets/textures/particles/spark_05_rotated.png";
-const STAR = "assets/textures/particles/star_08.png";
+const FLARE = BUILTIN_VFX_TEXTURES.particles_flare_01;
+const SPARK = BUILTIN_VFX_TEXTURES.particles_spark_05_rotated;
+const STAR = BUILTIN_VFX_TEXTURES.particles_star_08;
 
 /** The rising shell: a stretched golden comet with a short sparking tail. */
 export function launchCometSpec(): BurstSpec {

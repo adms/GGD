@@ -1,0 +1,31 @@
+{
+  "results": [
+    {
+      "id": "300heroes:d568447cc4f61f5d9a44f07a",
+      "library": "300heroes",
+      "kind": "model",
+      "tags": [
+        "model"
+      ],
+      "format": "x",
+      "name": "099.x",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/099.x",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/099.x",
+        "original_path": "..\\data\\character\\roleaction\\099.x",
+        "package": "Data2.jmp",
+        "entry": 720,
+        "bytes": 1422941,
+        "md5": "392ffe298c6c61129b6d3cbb02f91599",
+        "source_md5": "392ffe298c6c61129b6d3cbb02f91599",
+        "source_md5_match": true,
+        "category": "character_model_animation",
+        "extension": ".x"
+      },
+      "character_links": []
+    }
+  ]
+}

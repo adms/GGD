@@ -1,0 +1,17 @@
+{
+  "schema": "ggd-model-upload-prototype@1",
+  "bodySha256": "6ccd3b50b01b4bb1c9bbda8352ca3c4b487f0cd034b6d2b62664a7df239d7375",
+  "librarySha256": "9f23e153b511c90d98657ce4a3d6283366cc05e42fe24adc9cd1313fa46f8786",
+  "mergedSha256": "b2c092999586d301f6ecb62f1d644596822386034cc9b4aa940e224bb264db99",
+  "originalNodesMeshesSkinsAndBinaryPreserved": true,
+  "animationTargetsAndSamplerValuesPreserved": true,
+  "added": [
+    {
+      "sourceIndex": 0,
+      "index": 6,
+      "name": "lux_dance_60fps (2)"
+    }
+  ],
+  "errors": 0,
+  "truncated": false
+}

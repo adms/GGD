@@ -34,6 +34,7 @@ import type { IntentFrame } from "@ggd/shared/sim/intents";
 import type { Cheat } from "@ggd/shared/protocol/messages";
 import type { CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
 import type { FireRingConfig } from "@ggd/shared/content";
+import type { CommunityRoomManifest } from "@ggd/shared/content/communityRoom";
 
 /**
  * Bumped whenever a change makes previously-written files unplayable by the
@@ -64,6 +65,8 @@ export interface ReplaySeat {
  * recording's header and the host replaying it is a REFUSAL, not a warning.
  */
 export interface ReplayHeader {
+  /** Exact published dependencies; never re-resolve the current publication. */
+  communityContent?: CommunityRoomManifest;
   formatVersion: number;
   matchId: string;
   /** Wall-clock match start (presentation only — never read by the sim). */

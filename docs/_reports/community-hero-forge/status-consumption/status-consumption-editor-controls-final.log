@@ -1,0 +1,24 @@
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor
+
+ ✓ src/form/fullCoverageMatchesContract.test.ts (2 tests) 4784ms
+   ✓ all editor-contract fields have a real authoring control > the ruler is live and reads the current full contract 4770ms
+ ✓ src/vfx-forge/mechanicVisualOverlay.test.ts (6 tests) 618ms
+ ✓ src/form/coverageMatchesContract.test.ts (2 tests) 7592ms
+   ✓ 表單產生器走得出契約宣告的每一種 effect > ⭐ 量尺先自證：兩邊都讀得到，⛔ 不是掃到 0 在空轉 3799ms
+   ✓ 表單產生器走得出契約宣告的每一種 effect > ★ 兩個方向：契約有而表單沒有 ⇒ 紅；表單有而契約沒有 ⇒ 也紅 3792ms
+ ✓ src/form/walk.test.ts (10 tests) 34094ms
+   ✓ number or literal controls > exposes the shipping consumeStatus count as an editable number/all choice 954ms
+   ✓ walkZod widget kinds (editor-01) > maps strings/numbers/bools/enums/arrays/refs/literals from the REAL shared schemas 14825ms
+   ✓ discriminated EffectDef union (editor-02) > renders variant cards keyed by kind, recursion depth-capped 3670ms
+   ✓ discriminated EffectDef union (editor-02) > the leap variant is a REAL editable card, not just a tag 3866ms
+   ✓ discriminated EffectDef union (editor-02) > the damageArea variant is a REAL editable card whose seed SAVES 3500ms
+   ✓ discriminated EffectDef union (editor-02) > every seeded number lands INSIDE its own declared bounds 3783ms
+   ✓ discriminated EffectDef union (editor-02) > provides sane defaults for new items and variant switches 3490ms
+ ✓ src/form/FormRenderer.readOnly.test.tsx (1 test) 10ms
+
+ Test Files  5 passed (5)
+      Tests  21 passed (21)
+   Start at  05:03:28
+   Duration  38.14s (transform 2.23s, setup 0ms, collect 6.54s, tests 47.10s, environment 1ms, prepare 367ms)
+

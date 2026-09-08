@@ -1,0 +1,21 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ packages/shared/src/content/heroForge/planControls.test.ts (26 tests) 1512ms
+   ✓ hero plan designer controls > equips active innate and passive EX products through their actual mechanisms 395ms
+ ✓ packages/shared/src/content/heroForge/communityExamples.test.ts (25 tests) 10863ms
+   ✓ seven adapted community heroes > '沃維克' survives all six slots, package simulation and immutable import 1752ms
+   ✓ seven adapted community heroes > '卡爾瑟斯' survives all six slots, package simulation and immutable import 1496ms
+   ✓ seven adapted community heroes > '拉克絲' survives all six slots, package simulation and immutable import 1708ms
+   ✓ seven adapted community heroes > '犽宿' survives all six slots, package simulation and immutable import 1998ms
+   ✓ seven adapted community heroes > '好運姐' survives all six slots, package simulation and immutable import 1346ms
+   ✓ seven adapted community heroes > '李星' survives all six slots, package simulation and immutable import 1071ms
+   ✓ seven adapted community heroes > '齊勒斯' survives all six slots, package simulation and immutable import 862ms
+ ✓ packages/shared/src/content/vfxSubtypes/context.test.ts (1 test) 4ms
+
+ Test Files  3 passed (3)
+      Tests  52 passed (52)
+   Start at  20:52:16
+   Duration  20.03s (transform 2.83s, setup 0ms, collect 5.78s, tests 12.38s, environment 1ms, prepare 327ms)
+

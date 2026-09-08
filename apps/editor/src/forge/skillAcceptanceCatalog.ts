@@ -306,7 +306,7 @@ export const SKILL_ACCEPTANCE_THEME_IDS = new Set(
 );
 
 export const CAPABILITY_ONLY_EFFECT_KINDS = [
-  "carry", "convertTeam", "evasion", "pull", "revive", "shieldBreak",
+  "spendHealth", "carry", "consumeStatus", "convertTeam", "evasion", "pull", "revive", "shieldBreak",
 ] as const;
 
 export const CAPABILITY_ONLY_HOOK_EVENTS = [
@@ -317,4 +317,4 @@ export const CAPABILITY_ONLY_HOOK_EVENTS = [
   "onShieldGained", "onStatCapReached", "onStatusApplied", "onUltimateCast", "onUltimateHit",
 ] as const;
 
-export const CAPABILITY_ONLY_CONDITION_KINDS = ["chance", "equipment"] as const;
+export const CAPABILITY_ONLY_CONDITION_KINDS = ["chance", "equipment", "facing"] as const;

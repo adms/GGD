@@ -1,0 +1,76 @@
+{
+  "schema": "ggd-library-motion-inspection@1",
+  "modelSha256": "fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da",
+  "sourceModel": {
+    "id": "community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "single_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_1",
+      "cast": "single_skill_01_b",
+      "hurt": "single_idle",
+      "death": "dead"
+    },
+    "yawOffsetDeg": 0
+  },
+  "method": "Babylon NullEngine CPU skinning at first and 60% frame; sequential states; materials skipped",
+  "bones": [
+    48
+  ],
+  "rows": [
+    {
+      "state": "idle",
+      "clip": "single_idle",
+      "changedVertices": 2556,
+      "maxDelta": 0.06913927304837696,
+      "vertices": 2654
+    },
+    {
+      "state": "run",
+      "clip": "single_run",
+      "changedVertices": 2654,
+      "maxDelta": 0.8679214992637783,
+      "vertices": 2654
+    },
+    {
+      "state": "attack",
+      "clip": "single_attack_attcom_1",
+      "changedVertices": 2654,
+      "maxDelta": 0.9019097667563033,
+      "vertices": 2654
+    },
+    {
+      "state": "cast",
+      "clip": "single_skill_01_b",
+      "changedVertices": 2654,
+      "maxDelta": 0.24705535471802184,
+      "vertices": 2654
+    },
+    {
+      "state": "hurt",
+      "clip": "single_idle",
+      "changedVertices": 2556,
+      "maxDelta": 0.06913927304837696,
+      "vertices": 2654
+    },
+    {
+      "state": "death",
+      "clip": "dead",
+      "changedVertices": 2654,
+      "maxDelta": 1.345124978855393,
+      "vertices": 2654
+    }
+  ],
+  "nativePoseComparison": {
+    "comparedVertices": 328,
+    "maxErrorMetres": 0.0000020403696855585484,
+    "toleranceMetres": 0.0002
+  },
+  "stationaryClips": [],
+  "visualAcceptance": "pending",
+  "textureAcceptance": "pending"
+}

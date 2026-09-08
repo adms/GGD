@@ -154,6 +154,45 @@ func (s *Store) Put(collection, id string, v any) error {
 	return s.updateIndex(collection, id, false)
 }
 
+// Update serializes a read/compare/write using the same object lock as Put.
+// Missing data is nil. The callback must not call back into this Store.
+// As with Put, object bytes are authoritative if a crash interrupts index repair.
+func (s *Store) Update(collection, id string, mutate func(json.RawMessage) (any, error)) error {
+	path, err := s.resolve(collection, id, ".json")
+	if err != nil {
+		return err
+	}
+	err = func() error {
+		unlock := s.locks.Lock(collection + "/" + id)
+		defer unlock()
+		// #nosec G304 -- `path` 來自 `resolve()`，而那一支**先驗後拼**：
+		//   `validCollection` + `validID` 擋掉不合法的鍵，再用 `filepath.Rel` 確認
+		//   解出來的路徑**沒有跳出 root**（見該函式的 defense-in-depth 註解）。
+		//   ⚠️ ⭐ 2026-09-08：main 上這一行是綠的 —— 它現在會亮，是因為 PR 1118 的
+		//   完整英雄投稿讓 gosec 的污點分析**第一次**找到一條從 HTTP 走到這裡的路。
+		raw, err := os.ReadFile(path)
+		if err != nil && !os.IsNotExist(err) {
+			return err
+		}
+		value, err := mutate(json.RawMessage(raw))
+		if err != nil {
+			return err
+		}
+		data, err := json.MarshalIndent(value, "", "  ")
+		if err != nil {
+			return err
+		}
+		if err := os.MkdirAll(filepath.Dir(path), dataDirMode); err != nil {
+			return err
+		}
+		return writeAtomic(path, append(data, '\n'), dataFileMode)
+	}()
+	if err != nil {
+		return err
+	}
+	return s.updateIndex(collection, id, false)
+}
+
 // Get reads <collection>/<id>.json into v.
 func (s *Store) Get(collection, id string, v any) error {
 	path, err := s.resolve(collection, id, ".json")

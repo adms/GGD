@@ -30,6 +30,8 @@ export interface FieldSpec {
   readonly hint?: string;
   /** id/schema are structural: rendered read-only, never editable here */
   readonly readOnly?: boolean;
+  /** Labelled choices still pass through the shared field parser. */
+  readonly options?: readonly { value: string; label: string }[];
 }
 
 export interface FieldGroup {
@@ -321,8 +323,8 @@ const ARENA_GROUPS: readonly FieldGroup[] = [
  * reason it is derived in the studio — typing it is how a model lands under
  * `assets/models/imported/` and silently gains 90° of yaw (#68/#1).
  *
- * What IS editable here is the one number that is a genuine gameplay
- * judgement: `collisionRadius`. Everything else this form does not cover is
+ * The form exposes gameplay collision radius and curated hero-body approval.
+ * Everything else this form does not cover is
  * NAMED by `uncoveredKeys` and reachable through 原始 JSON, as everywhere else.
  */
 const MODEL_GROUPS: readonly FieldGroup[] = [
@@ -349,6 +351,17 @@ const MODEL_GROUPS: readonly FieldGroup[] = [
         label: "碰撞半徑",
         kind: "number",
         hint: "sim 用的平面半徑，預設 0.6",
+      },
+      {
+        path: "heroBody",
+        label: "英雄本體選用",
+        kind: "boolean",
+        options: [
+          { value: "", label: "沿用既有英雄綁定" },
+          { value: "true", label: "允許創作者選用" },
+          { value: "false", label: "停止提供新作品選用" },
+        ],
+        hint: "核准後可直接用於新英雄，不需先建立官方英雄；素材來源與分發審查仍須完成。停止提供不改動進行中對局。",
       },
       {
         path: "teamTintMaterials",

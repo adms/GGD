@@ -1,0 +1,11 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ packages/shared/src/sim/effects/oncePerCast.test.ts (26 tests) 197ms
+
+ Test Files  1 passed (1)
+      Tests  26 passed (26)
+   Start at  05:41:09
+   Duration  2.50s (transform 1.15s, setup 0ms, collect 1.63s, tests 197ms, environment 0ms, prepare 74ms)
+

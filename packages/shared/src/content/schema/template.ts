@@ -68,6 +68,8 @@ export const zParamType = z.enum([
   "condition",
   "docRef",
   "rgb",
+  "effects",
+  "hooks",
   /**
    * ⭐ GH#1066 —— 一整個 `applyStatus` 節點（去掉 `kind`）。機制欄位（root／stun／moveSpeedMult／
    * berserk／missChance／逐階 duration…）住在值上，由 `zApplyStatus` 本人驗 —— ⛔ 不是一個 id 的下拉：
@@ -217,6 +219,8 @@ export const zAbilityTemplateCard = z
     ref: zRef("ability-templates"),
     /** filled slot values; each is validated by its slot's semantics at fill time */
     params: z.record(z.string(), z.unknown()),
+    /** New authoring inherits template defaults at resolution; params stores only differences. */
+    inheritDefaults: z.boolean().optional(),
     /** §5 breaking-migration hook — P1 only STORES it and re-expands on load */
     version: z.number().int().min(1).optional(),
     /**

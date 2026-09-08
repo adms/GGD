@@ -1,0 +1,11 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ tools/model-budget/trimClips.test.ts (18 tests) 54ms
+
+ Test Files  1 passed (1)
+      Tests  18 passed (18)
+   Start at  00:05:18
+   Duration  2.28s (transform 557ms, setup 0ms, collect 600ms, tests 54ms, environment 0ms, prepare 275ms)
+

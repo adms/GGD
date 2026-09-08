@@ -1,0 +1,38 @@
+{
+  "asset": "300heroes:69984f1ef03f84baa007b28d",
+  "meshes": [
+    3,
+    2
+  ],
+  "fps": 32,
+  "textures": {
+    "2": "300heroes:f0b2c9a345a50f10ae2c2b18",
+    "3": "300heroes:596cb1f4b82b07fc7fb5de15"
+  },
+  "clips": {
+    "idle": "bat_idle",
+    "run": "single_run",
+    "attack": "single_attack_attcom_a",
+    "cast": "single_skill_01",
+    "hurt": "bat_idle",
+    "death": "dead"
+  },
+  "characterId": "300heroes:233",
+  "sourceName": "珂朵莉",
+  "sourceOrigin": "末日時在做什麼？有沒有空？可以來拯救嗎？",
+  "target": {
+    "index": "11",
+    "name": "利姆路",
+    "relationship": "style-proxy"
+  },
+  "textureSearches": [
+    "233",
+    "233_b",
+    "233_b1"
+  ],
+  "limitations": [
+    "Candidate only until rendered appearance review; game name and source design remain unchanged",
+    "hurt reuses idle; native body animation is not kit-specific choreography",
+    "Remove separate fairy-wing mesh for the blue-haired human-form proxy; no source-character identity claim for the target"
+  ]
+}

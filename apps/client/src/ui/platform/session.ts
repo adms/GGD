@@ -12,6 +12,9 @@ import type { TokenPair } from "./types";
 export type { TokenPair };
 
 const STORAGE_KEY = "ggd.session.v1";
+function sessionSubject(tokens: TokenPair | null): string | null {
+  try { const part = tokens?.accessToken.split(".")[1]; if (!part) return null; const data = JSON.parse(atob(part.replace(/-/g, "+").replace(/_/g, "/"))) as { sub?: unknown }; return typeof data.sub === "string" ? data.sub : null; } catch { return null; }
+}
 
 export class ApiError extends Error {
   constructor(
@@ -63,6 +66,7 @@ export interface ApiClientOptions {
 }
 
 interface RequestOptions {
+  signal?: AbortSignal;
   method?: string;
   body?: unknown;
   /** attach Authorization + auto-refresh on 401 (default true) */
@@ -160,6 +164,7 @@ export class ApiClient {
       method: opts.method ?? (opts.body !== undefined ? "POST" : "GET"),
       headers,
       body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined,
+      ...(opts.signal ? { signal: opts.signal } : {}),
     });
   }
 
@@ -168,7 +173,9 @@ export class ApiClient {
    * Returns false (and clears the session) when the refresh is rejected.
    */
   private refreshOnce(): Promise<boolean> {
+    if (!this.tokens?.refreshToken) return Promise.resolve(false);
     if (!this.refreshing) {
+      const original = this.tokens;
       this.refreshing = (async () => {
         const refreshToken = this.tokens?.refreshToken;
         if (!refreshToken) return false;
@@ -178,12 +185,15 @@ export class ApiClient {
             body: { refreshToken },
             auth: false,
           });
+          if (this.tokens !== original) return false;
           if (!res.ok) {
             this.setTokens(null);
             this.onSessionExpired?.();
             return false;
           }
           const body = (await res.json()) as { tokens: TokenPair; refreshCookie?: unknown };
+          if (this.tokens !== original) return false;
+          if (sessionSubject(original) !== sessionSubject(body.tokens)) { this.setTokens(null); this.onSessionExpired?.(); return false; }
           // ⭐ 伺服器說它收下 refresh 了（種成 cookie）⇒ 磁碟上不再留一份（GH#813 B）。
           this.setTokens(body.tokens, body.refreshCookie === true);
           return true;
@@ -199,12 +209,22 @@ export class ApiClient {
 
   /** JSON request with the 401 → refresh-once → retry-once policy. */
   async request<T>(path: string, opts: RequestOptions = {}): Promise<T> {
+    const original = this.tokens;
     let res = await this.rawRequest(path, opts);
-    if (res.status === 401 && opts.auth !== false && opts.refreshOn401 !== false && this.tokens) {
+    if (res.status === 401 && opts.auth !== false && opts.refreshOn401 !== false && original && this.tokens === original) {
       const refreshed = await this.refreshOnce();
-      if (refreshed) res = await this.rawRequest(path, opts);
+      if (refreshed && sessionSubject(this.tokens) === sessionSubject(original)) res = await this.rawRequest(path, opts);
     }
     if (!res.ok) throw await parseError(res);
     return (await res.json()) as T;
+  }
+
+  /** Binary game content keeps the same authenticated account across a refresh. */
+  async binaryResponse(path: string, opts: RequestOptions = {}): Promise<Response> {
+    const original = this.tokens;
+    let response = await this.rawRequest(path, opts);
+    if (response.status === 401 && opts.auth !== false && original && this.tokens === original && await this.refreshOnce() && sessionSubject(original) === sessionSubject(this.tokens)) response = await this.rawRequest(path, opts);
+    if (!response.ok) throw await parseError(response);
+    return response;
   }
 }

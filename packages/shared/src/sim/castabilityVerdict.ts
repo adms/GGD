@@ -54,6 +54,7 @@ export const EFFECT_EVENTS: ReadonlySet<string> = new Set([
   "damage",
   "heal",
   "manaRestore",
+  "healthSpend",
   "projectileSpawn",
   "knockdown",
   "championForm",
@@ -253,6 +254,10 @@ export const CAST_CHANNEL_ORDER: readonly CastChannelRule[] = [
   { channel: "projectile", zh: "投射物", fired: (o) => o.events.includes("projectileSpawn") },
   { channel: "heal", zh: "補血", fired: (o) => o.events.includes("heal") },
   { channel: "manaRestore", zh: "補魔", fired: (o) => o.events.includes("manaRestore") },
+  // ⭐ 2026-09-08 合併 PR 1118 補回：Codex 那一側的 if-chain 有 `healthSpend`,
+  //   ⛔ 而 main 換成推導表時漏了它 —— 取 main 的表而不補這一格,就會**弄丟一個頻道**。
+  //   位置照 codex 原本的順序（`manaRestore` 之後、`shield` 之前）。
+  { channel: "healthSpend", zh: "耗血", fired: (o) => o.events.includes("healthSpend") },
   { channel: "shield", zh: "護盾", fired: (o) => o.after.shields > o.before.shields },
   { channel: "status", zh: "狀態", fired: (o) => o.after.statuses > o.before.statuses },
   { channel: "buff", zh: "buff", fired: (o) => o.after.buffs > o.before.buffs },

@@ -1,0 +1,39 @@
+{
+  "asset": "300heroes:3afc0ea6519ff5a221a230b7",
+  "meshes": [
+    0,
+    1,
+    2
+  ],
+  "fps": 32,
+  "textures": {
+    "0": "300heroes:a306c8920f2797867257c75a",
+    "1": "300heroes:c99150bbc0fc1eabf5ffde9c",
+    "2": "300heroes:c99150bbc0fc1eabf5ffde9c"
+  },
+  "clips": {
+    "idle": "bat_idle",
+    "run": "single_run",
+    "attack": "single_attack_attcom_1",
+    "cast": "single_skill_01",
+    "hurt": "bat_idle",
+    "death": "dead"
+  },
+  "characterId": "300heroes:323",
+  "sourceName": "奴良陆生",
+  "sourceOrigin": "妖怪少爺／滑頭鬼之孫",
+  "target": {
+    "index": "23",
+    "name": "坂田銀時",
+    "relationship": "style-proxy"
+  },
+  "textureSearches": [
+    "323",
+    "323_a",
+    "323_a"
+  ],
+  "limitations": [
+    "Candidate only until rendered appearance review; game name and source design remain unchanged",
+    "hurt reuses idle; native body animation is not kit-specific choreography"
+  ]
+}

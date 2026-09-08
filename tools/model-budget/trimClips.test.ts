@@ -30,6 +30,16 @@ afterAll(() => fs.rmSync(tmp, { recursive: true, force: true }));
 const clipNames = (file: string): string[] => (readGlb(file).json.animations ?? []).map((a: any) => a.name);
 
 describe("the keep-set is derived from the content, not hardcoded", () => {
+  it("preserves guard and dodge used outside clipMap without keeping unrelated emotes", () => {
+    const file = path.join(tmp, "unbound.glb");
+    const names = ["Idle", "Run", "Attack", "Cast", "Hurt", "Death", "Cheer", "Defend", "Roll", "Joke"];
+    const req = requiredClips(file, names, []);
+    expect(req.clips).toContain("Defend");
+    expect(req.clips).toContain("Roll");
+    expect(req.reasons.get("Defend")).toContain("ClipAnimator → guard");
+    expect(req.reasons.get("Roll")).toContain("ClipAnimator → dodge");
+    expect(req.clips).not.toContain("Joke");
+  });
   it("blocky-knight.glb's required set covers every champ.thorne clipMap value", () => {
     const doc = JSON.parse(fs.readFileSync(path.join(ROOT, "content/models/champ.thorne.json"), "utf8"));
     const req = requiredClips(path.join(CHAMPS, "blocky-knight.glb"), clipNames(path.join(CHAMPS, "blocky-knight.glb")));

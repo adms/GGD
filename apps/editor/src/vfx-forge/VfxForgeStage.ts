@@ -35,6 +35,7 @@ import { AssetManager } from "../../../client/src/render/AssetManager";
 import { CameraRig } from "../../../client/src/render/CameraRig";
 import { setupLighting, type LightingHandle } from "../../../client/src/render/Lighting";
 import { Renderer } from "../../../client/src/render/Renderer";
+import { GetEnvironmentBRDFTexture } from "@babylonjs/core/Misc/brdfTextureTools";
 import { buildZoneGround } from "../../../client/src/render/ArenaGround";
 import { ChampionView } from "../../../client/src/render/views/ChampionView";
 import { championTintForId } from "../../../client/src/render/views/championTint";
@@ -60,6 +61,7 @@ import { yawDegToward } from "../../../client/src/vfx/orient";
 import { api } from "../api/client";
 import { assetUrl } from "../preview3d/assetUrl";
 import { burstNow, toParticleSystem } from "../preview3d/particles";
+import { observeParticleWarmup } from "./particleWarmup";
 import { projectileIdsOf, scriptVisualFocus, type ForgeAbility, type ScheduledSimEvent } from "./model";
 import { calibrateTwoWay } from "../../../client/src/vfx/auditionCalibrate";
 import type { PreviewActorPose } from "../preview/PreviewController";
@@ -69,6 +71,8 @@ import {
   type BackdropFrameAudit,
 } from "./backdropFrameAudit";
 import { PRESENTATION_RECEIPT } from "./presentationContract";
+import { projectFloatingTexts, type ForgeFloatingText } from "./floatingTextOverlay";
+import { ACTOR_MODEL_LOAD_BUDGET_MS, waitForActorModel } from "./waitForActorModel";
 
 const STEP_MS = 1000 / 60;
 const EVIDENCE_SEEK_PRIMER_MS = 150;
@@ -127,6 +131,7 @@ export type VfxForgeStageMode = "script" | "runtime";
 export interface ForgeOverlay {
   flash: { color: readonly [number, number, number]; alpha: number } | null;
   texts: readonly { id: number; text: string; x: number; z: number; untilMs: number }[];
+  runtimeTexts?: readonly ForgeFloatingText[];
   status: string;
   actors: { caster: string; target: string };
 }
@@ -174,6 +179,7 @@ export interface VfxVisualEvidenceFrame {
 
 export interface VfxForgeStageOptions {
   fetchDoc?<T>(collection: "models" | "vfx", id: string): Promise<T>;
+  resolveAssetUrl?(path: string): string;
   onOverlay?(overlay: ForgeOverlay): void;
   actors?: {
     caster?: ChampionDef | null;
@@ -271,6 +277,7 @@ export class VfxForgeStage {
   /** Same scenery-aware lighting path as the playable client; Forge owns no light constants. */
   private readonly lighting: LightingHandle;
   private readonly fetchDoc: NonNullable<VfxForgeStageOptions["fetchDoc"]>;
+  private readonly resolveAssetUrl: (path: string) => string;
   private readonly onOverlay: NonNullable<VfxForgeStageOptions["onOverlay"]>;
   private readonly onColdAssetRetry: VfxForgeStageOptions["onColdAssetRetry"];
   private readonly modelRig: ModelFxRig;
@@ -318,6 +325,7 @@ export class VfxForgeStage {
     this.homePose = homePoseOf(schedule);
     this.castFocus = castFocusOf(schedule, this.homePose);
     this.fetchDoc = opts.fetchDoc ?? ((collection, id) => api.doc(collection, id));
+    this.resolveAssetUrl = opts.resolveAssetUrl ?? assetUrl;
     this.onOverlay = opts.onOverlay ?? (() => undefined);
     this.onColdAssetRetry = opts.onColdAssetRetry;
     // Use the Main renderer as-is.  Reconstructing just Engine + Scene in the
@@ -337,7 +345,7 @@ export class VfxForgeStage {
     // Use the game's exact GLB byte cache, LOD resolver, texture deduplication
     // and source-container lifetime. Only the content mount differs: local or
     // remote editor reference assets are served through content-api.
-    this.assets = new AssetManager(this.scene, "/content-api/");
+    this.assets = new AssetManager(this.scene, "/content-api/", opts.resolveAssetUrl ? { resolveUrl: opts.resolveAssetUrl } : undefined);
     // PBR actors must be judged under the exact client lighting resolver.
     // A hand-written Forge hemi/sun pair had drifted in intensity, ground fill
     // and palette from the playable renderer, which made the paused scene
@@ -437,7 +445,7 @@ export class VfxForgeStage {
           localEntityId: () => this.casterEntityId() ?? null,
           teamOf: (id) => id === this.casterEntityId() ? 0 : 1,
           vfxDoc: (id) => VfxDefs.tryGet(id) ?? this.vfx.get(id) ?? null,
-          resolveTextureUrl: assetUrl,
+          resolveTextureUrl: this.resolveAssetUrl,
           modelDocFor: (id) => Models.tryGet(id) ?? this.models.get(id) ?? null,
           loadModelContainer: (path) => this.loadModelFxContainer(path),
           pulseAnim: (id, kind, pulse) => this.pulseActor(id, kind, pulse?.clipWindowMs),
@@ -468,6 +476,7 @@ export class VfxForgeStage {
     // preloads parallel, but certify the two visible bodies in a stable order.
     const actors = this.actors;
     this.actorReady = (async (): Promise<void> => {
+      await this.prepareEnvironmentBrdf();
       await this.loadActor(actors.caster);
       await this.loadActor(actors.target);
       for (const actor of this.summonActors.values()) await this.loadActor(actor);
@@ -1456,16 +1465,9 @@ export class VfxForgeStage {
       system.manualEmitCount = 1;
     }
     const emissionDeadline = Date.now() + ACTOR_READY_BUDGET_MS;
-    while (
-      systems.some((system) => system.getActiveCount() === 0) &&
-      Date.now() < emissionDeadline &&
-      !this.disposed &&
-      !this.scene.isDisposed
-    ) {
-      this.renderScene();
-      await this.waitForBrowserFrame();
-    }
-    const cold = systems.filter((system) => system.getActiveCount() === 0);
+    const cold = await observeParticleWarmup(systems,
+      () => this.renderScene(), () => this.waitForBrowserFrame(),
+      () => Date.now() < emissionDeadline && !this.disposed && !this.scene.isDisposed);
     for (const system of systems) {
       system.stop();
       system.reset();
@@ -1674,19 +1676,21 @@ export class VfxForgeStage {
       actor.bodyRoot = view.root;
       actor.fallback.setEnabled(false);
       // AssetManager's cache and the view's adoption callback are both async.
-      // Wait only through the same bounded authoring window used by the Forge;
-      // a missing GLB is a rejected visual candidate, never an infinite spinner.
-      const deadline = Date.now() + ACTOR_READY_BUDGET_MS;
-      while (!view.adoptedGlb && Date.now() < deadline && !this.disposed && !this.scene.isDisposed) {
-        this.renderScene();
-        await new Promise<void>((resolve) => globalThis.setTimeout(resolve, STEP_MS));
-      }
+      // Cold model decoding must not share the short scene warm-up deadline.
+      // A replaced scene is abandoned; a genuinely missing model still times
+      // out and cannot pass the independent material/framebuffer checks below.
+      const adoption = await waitForActorModel({
+        ready: () => Boolean(view.adoptedGlb),
+        cancelled: () => this.disposed || this.scene.isDisposed,
+        render: () => this.renderScene(),
+      });
+      if (adoption === "cancelled") return;
       const glbRoot = this.scene.getTransformNodeByName(`champ-${entityId}-glb`);
       if (!view.adoptedGlb || !glbRoot) {
         actor.fallbackForced = true;
         view.root.setEnabled(false);
         actor.fallback.setEnabled(true);
-        const issue = `${champion.name} · ${appearance.modelKey} 未在 ${ACTOR_READY_BUDGET_MS}ms 內採用遊戲 GLB`;
+        const issue = `${champion.name} · ${appearance.modelKey} 未在 ${ACTOR_MODEL_LOAD_BUDGET_MS}ms 內採用遊戲 GLB`;
         this.visualAssetIssues.add(issue);
         this.setActorStatus(actor, `⚠ ${issue}，已顯示替身並封鎖視覺驗收`);
         this.emitOverlay("3D 模型未就緒，候選不得送審");
@@ -2224,6 +2228,37 @@ export class VfxForgeStage {
     this.scene.render();
   }
 
+  private async prepareEnvironmentBrdf(): Promise<void> {
+    // A cold RGBD decode can report ready with an all-zero lookup. That makes
+    // PBR energy compensation blow out to white despite healthy model textures.
+    // Check the known nonzero midpoint of Babylon's default LUT and retry that
+    // same decode once; retain normal lighting and reject a second failure.
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const texture = GetEnvironmentBRDFTexture(this.scene);
+      const deadline = Date.now() + ACTOR_SHADER_BUDGET_MS;
+      while (!texture.isReady() && !this.disposed && Date.now() < deadline) {
+        await this.waitForBrowserFrame();
+      }
+      if (this.disposed) return;
+      if (!texture.isReady()) throw new Error("3D 場景的 PBR 光照貼圖尚未就緒");
+      const size = texture.getSize();
+      const pixel = await texture.readPixels(0, 0, null, true, false,
+        Math.floor(size.width / 2), Math.floor(size.height / 2), 1, 1);
+      if (this.disposed) return;
+      if ((pixel instanceof Float32Array || pixel instanceof Uint8Array)
+        && pixel.slice(0, 3).some((value) => Number.isFinite(value) && value > 0)) return;
+      if (attempt === 1) throw new Error("3D 場景的 PBR 光照貼圖解碼為空白");
+      Reflect.deleteProperty(this.scene, "environmentBRDFTexture");
+      const replacement = GetEnvironmentBRDFTexture(this.scene);
+      for (const material of this.scene.materials) {
+        if ("environmentBRDFTexture" in material && material.environmentBRDFTexture === texture) {
+          material.environmentBRDFTexture = replacement;
+        }
+      }
+      texture.dispose();
+    }
+  }
+
   /**
    * A successful GLB parse is not visual evidence. Sample the actual
    * framebuffer with just this actor hidden, once at load time: a model whose
@@ -2648,7 +2683,7 @@ export class VfxForgeStage {
       }
       if (generation !== this.generation) return;
       const rendered = applyAimYaw(applyVfxOverrides(doc, overrides), aimYaw ?? null);
-      const ps = toParticleSystem(rendered, this.scene);
+      const ps = toParticleSystem(rendered, this.scene, { resolveTextureUrl: this.resolveAssetUrl });
       ps.emitter = new Vector3(x, y, z);
       // Babylon does not simulate a freshly constructed ParticleSystem until
       // start() is called.  `manualEmitCount` only queues the burst; it does
@@ -2701,6 +2736,8 @@ export class VfxForgeStage {
     const view = eye
       ? `${status} · ${visible}/${this.scene.meshes.length} meshes · ${particleCount}/${this.scene.particleSystems.length} particles/systems · eye ${eye.x.toFixed(1)},${eye.y.toFixed(1)},${eye.z.toFixed(1)}${aim}`
       : status;
-    this.onOverlay({ flash: this.flash, texts: this.texts, status: view, actors: { ...this.actorStatus } });
+    const runtimeTexts = projectFloatingTexts(this.runtimeVfx?.floatingTextEntries ?? [],
+      (x, y, z) => this.cameraRig.projectToScreen(x, y, z));
+    this.onOverlay({ flash: this.flash, texts: this.texts, runtimeTexts, status: view, actors: { ...this.actorStatus } });
   }
 }

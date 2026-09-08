@@ -148,6 +148,7 @@ export function projectileSystem(world: SimWorld): void {
         // scoreboard: an ability skillshot connecting with an enemy champion
         if (proj.origin.startsWith("ability:")) recordAbilityHit(world, owner, bestId);
         runEffects(proj.onHit, {
+          castInstance: proj.castInstance,
           world,
           caster: owner,
           rank: proj.rank,

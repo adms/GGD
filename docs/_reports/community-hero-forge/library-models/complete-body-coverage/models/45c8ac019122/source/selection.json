@@ -1,0 +1,33 @@
+{
+  "asset": "300heroes:cb2c63b8a72af4572f8e8550",
+  "meshes": [
+    3
+  ],
+  "fps": 32,
+  "textures": {
+    "0": "300heroes:a6c6a09e259cc7d383c21ec5"
+  },
+  "clips": {
+    "idle": "bat_idle",
+    "run": "single_run",
+    "attack": "single_attack_attcom_1",
+    "cast": "single_skill_01",
+    "hurt": "bat_idle",
+    "death": "dead"
+  },
+  "characterId": "300heroes:41",
+  "sourceName": "赫拉克勒斯",
+  "sourceOrigin": "Fate/stay night",
+  "target": {
+    "index": "15",
+    "name": "比利海靈頓",
+    "relationship": "style-proxy"
+  },
+  "textureSearches": [
+    "041"
+  ],
+  "limitations": [
+    "Candidate only until rendered appearance review; game name and source design remain unchanged",
+    "hurt reuses idle; native body animation is not kit-specific choreography"
+  ]
+}

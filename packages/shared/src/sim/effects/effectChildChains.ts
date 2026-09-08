@@ -39,6 +39,8 @@ export const EFFECT_CHILD_CHAINS = [
   "finisher", // comboStrikes —— 收尾那一發（#541）
   "onArrive", // blink · spawnModelFx（#551 抵達/壽命到的落點那一串）
   "onDevour", // devour
+  "onConsumed", // consumeStatus
+  "onMissing", // consumeStatus
   "onEnd", // dash
   "onHit", // spawnProjectile
   "onHitTargets", // damageArea · damageLine

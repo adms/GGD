@@ -1,0 +1,46 @@
+{
+  "schema": "ggd-community-cast-credit-proof@1",
+  "capabilityFingerprint": "cd7ca9fa",
+  "coverageFingerprint": "a03d92bfa21f",
+  "requiredCells": 5099,
+  "core": {
+    "exit": 0,
+    "files": 13,
+    "tests": 129,
+    "newTests": 34,
+    "log": "cast-credit-core-final.log"
+  },
+  "typecheck": {
+    "shared": 0,
+    "editor": 0,
+    "client": 0
+  },
+  "release": {
+    "exit": 0,
+    "tests": 558,
+    "productionBuild": true,
+    "log": "cast-credit-editor-final.log"
+  },
+  "skills": {
+    "exit": 1,
+    "cause": "Existing 2026-09-06 message-ledger entries remain unmapped; current-day entries are non-blocking",
+    "log": "cast-credit-skills-final.log"
+  },
+  "coord": {
+    "exit": 0,
+    "log": "cast-credit-coord-final.log"
+  },
+  "ui": {
+    "receipt": "ui/receipt.json",
+    "screenshotsReviewed": 2,
+    "saved": false,
+    "scope": "Isolated authoring controls, not original hero visual acceptance"
+  },
+  "mutation": {
+    "expectedFailure": true,
+    "restoredByteIdentical": true,
+    "proof": "cast-credit-mutation.json"
+  },
+  "heroesPublishedByThisBatch": 0,
+  "goalComplete": false
+}

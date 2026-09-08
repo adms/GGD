@@ -1,0 +1,66 @@
+{
+  "schema": "ggd-community-hero-local-evidence@1",
+  "date": "2026-09-06",
+  "branch": "codex/community-hero-forge-integration",
+  "baseCommit": "4793eaaaf2775b2081f5eca5881db32e0aab0ea8",
+  "workingTreeModified": true,
+  "scope": "Local Editor, Admin, Go Platform, Redis and Main content API integration. This is not a game, release, Windows or macOS installation acceptance result.",
+  "environment": {
+    "editor": "http://127.0.0.1:5194",
+    "admin": "http://127.0.0.1:60724/admin/",
+    "platform": "http://127.0.0.1:8084",
+    "contentApi": "http://127.0.0.1:8794",
+    "platformData": "isolated ephemeral test directory",
+    "featureFlags": "Only the isolated test Platform config enables submission and discovery. Shipping defaults remain disabled.",
+    "accounts": "Two generated local test accounts; no production account or production data was used."
+  },
+  "originalWork": {
+    "id": "hero-e88f0af4-f1b8-4382-9d4b-c4e7d4af57d5",
+    "author": "01M1TY947RZYT7JAFZ938AZYK3",
+    "name": "驗收星界守望者",
+    "revision": 7,
+    "cloudRevision": 3,
+    "ownerText": "守護隊友的近戰英雄。\n「星光會記得每一個人。」\n保留完整台詞與換行。"
+  },
+  "returnedSnapshot": {
+    "id": "hero-76c0e119c9da2d82340ea661631ac4b82e09dfe6509c84092fbe90947e3",
+    "packageDigest": "sha256:ed3bd0c2814881afba2d5d1dcd01c244e5f5c5e78ce10cd5af6a0f37720ecafb",
+    "failure": "Actual isolated preview threw: 快照缺少資產：assets/textures/particles/magic_02.png",
+    "action": "Returned through Admin UI with a concrete reason, observed by the author. Snapshot retained."
+  },
+  "publishedSnapshot": {
+    "id": "hero-4b2e4cc1a031322e532ee08b9f29f7c77374f2b8faf86a75a4ab0a2c456",
+    "packageDigest": "sha256:7f01a381872d6730eacc19df22424c75e7d6aaa4ed15f4300167dc6b9ad6b753",
+    "snapshotDigest": "sha256:82c78c5006241299cade67d312f4416659b49e91fbf00d9a661a7e5937d46103",
+    "runtimeDocuments": 124,
+    "assets": 92,
+    "submittedAt": "2026-09-06T08:59:24.254126Z",
+    "reviewedAtLocal": "2026-09-06 17:05:32 Asia/Taipei",
+    "reviewer": "01M1TY944MP4T5XR71HSG7FE0P",
+    "allowAttributionRemix": true,
+    "observedUiStatus": "已發布",
+    "visualChecks": {
+      "slots": ["PASSIVE", "Q", "W", "E", "R", "EX"],
+      "model": "champ.thorne",
+      "modelLabel": "Explicit shared substitute, normal material",
+      "events": { "PASSIVE": 28, "Q": 6, "W": 2, "E": 11, "R": 7, "EX": 7 },
+      "checks": ["Full three-line owner text", "Fixed package replay loaded in a separate browsing context", "Q, W, R and EX frame-step", "PASSIVE playback", "E playback and translated actor at landing", "No asset error in the new preview console"],
+      "limits": "CUA screenshots were inspected in the task conversation. They are not retained as repository image artifacts; this does not close the 46-document visual acceptance requirement. No balance or full gameplay quality conclusion is claimed."
+    }
+  },
+  "remix": {
+    "id": "hero-0f29ce90-692d-4fca-803d-f54dc2c86d57",
+    "author": "01M1TY944MP4T5XR71HSG7FE0P",
+    "cloudRevision": 1,
+    "sourceSubmissionId": "hero-4b2e4cc1a031322e532ee08b9f29f7c77374f2b8faf86a75a4ab0a2c456",
+    "observed": ["Created through published-work UI", "New project and ability identity", "Full original text retained", "Six-slot compilation and simulation accepted", "Source author and exact version displayed", "Cloud draft reopened as local copy", "Cloud revision remains synchronized after reopen"],
+    "crossAuthorWrite": "Switched to original author's account and tried to sync the remix ID; Platform rejected with 只能保存自己的作品. Original and remix owners and revisions were read back unchanged."
+  },
+  "accountRefresh": {
+    "failureObserved": "After another app logged in, an expired author token refreshed with the other account's shared-domain cookie. The old UI badge still named the author; reload confirmed reviewer identity.",
+    "fix": "Refuse refresh to a different JWT subject, clear only this app's session, and never replay the pending mutation with the other account. Ignore stale refresh completion after explicit account change.",
+    "verification": "JSON and binary cross-account refresh regressions plus stale completion regression passed."
+  },
+  "authorResult": ["My Works shows the original cloud revision 3", "My submission result says 已發布 and retains review reason", "Published list identifies original author", "Author clicked download for the immutable submission ZIP; no download-file byte assertion in this browser step"],
+  "requiredRemaining": ["Two distinct community heroes in a real game room", "Immutable room and replay content contexts", "Client asset integrity handshake", "Full eight end-to-end groups", "Affected 46-document visual artifacts", "Generated target profile and final contract refresh", "skills:check, editor:accept:release and coord:check", "Signed Windows and macOS installation/update acceptance"]
+}

@@ -5,6 +5,11 @@ import { EditorView } from "./views/EditorView";
 import { ForgePage } from "./forge/ForgePage";
 import { useEditorStore } from "./store";
 import { appModeFromPathname, pathnameForAppMode, type AppMode } from "./appRoute";
+import { DraftLibrary } from "./drafts/DraftLibrary";
+import { documentPayload, initializeDraftSession, restoreDocumentDraft, useDraftSession } from "./drafts/session";
+import { useHeroStore } from "./hero/store";
+
+const HeroPage = lazy(() => import("./hero/HeroPage").then((module) => ({ default: module.HeroPage })));
 
 const VfxForgePage = lazy(() =>
   import("./vfx-forge/VfxForgePage").then((m) => ({ default: m.VfxForgePage })),
@@ -20,6 +25,14 @@ const queryClient = new QueryClient({
 export function App() {
   const [mode, setMode] = useState<AppMode>(() => appModeFromPathname(window.location.pathname));
   const clearSelection = useEditorStore((s) => s.clearSelection);
+  const ready = useDraftSession((s) => s.ready);
+
+  useEffect(() => { void initializeDraftSession(); }, []);
+  useEffect(() => {
+    if (!ready || mode.kind !== "collection" || useEditorStore.getState().docId) return;
+    const latest = useDraftSession.getState().drafts.find((draft) => documentPayload(draft)?.collection === mode.collection);
+    if (latest) restoreDocumentDraft(latest);
+  }, [ready, mode]);
 
   useEffect(() => {
     const onPopState = () => {
@@ -37,6 +50,8 @@ export function App() {
     clearSelection();
   };
 
+  if (!ready) return <main className="editor-empty">正在恢復本機草稿…</main>;
+
   return (
     <QueryClientProvider client={queryClient}>
       <div className="app">
@@ -45,6 +60,10 @@ export function App() {
           forgeActive={mode.kind === "forge"}
           vfxForgeActive={mode.kind === "vfx-forge"}
           exportActive={mode.kind === "export"}
+          worksActive={mode.kind === "works"}
+          onPickWorks={() => navigate({ kind: "works" })}
+          heroActive={mode.kind === "hero"}
+          onPickHero={() => navigate({ kind: "hero" })}
           onPick={(c) => {
             navigate({ kind: "collection", collection: c });
           }}
@@ -58,7 +77,11 @@ export function App() {
             navigate({ kind: "export" });
           }}
         />
-        {mode.kind === "export" ? (
+        {mode.kind === "hero" ? (
+          <Suspense fallback={<main className="editor-empty">載入英雄工坊…</main>}><HeroPage /></Suspense>
+        ) : mode.kind === "works" ? (
+          <DraftLibrary onOpenDocument={(collection) => navigate({ kind: "collection", collection })} onOpenHero={(draft) => { useHeroStore.getState().open(draft); navigate({ kind: "hero" }); }} />
+        ) : mode.kind === "export" ? (
           <Suspense fallback={<main className="editor-empty">載入匯出中心…</main>}>
             <ExportCenterPage />
           </Suspense>

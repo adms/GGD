@@ -1,0 +1,69 @@
+{
+  "schema": "ggd-lol-clip-selection@1",
+  "states": [
+    "idle",
+    "run",
+    "attack",
+    "cast",
+    "death",
+    "celebrate"
+  ],
+  "models": {
+    "warwick": [
+      "warwick_idle_v1",
+      "warwick_run",
+      "warwick_attack1",
+      "warwick_spell1",
+      "warwick_death",
+      "warwick_dance_loop"
+    ],
+    "karthus": [
+      "karthus_idle01",
+      "karthus_run",
+      "karthus_attack1",
+      "karthus_spell1a",
+      "karthus_death",
+      "karthus_dance_loop"
+    ],
+    "lux": [
+      "lux_idle1",
+      "lux_run",
+      "lux_attack1",
+      "lux_spell1",
+      "lux_death",
+      "lux_dance_60fps"
+    ],
+    "yasuo": [
+      "yasuo_idle1",
+      "yasuo_run1",
+      "yasuo_attack1",
+      "yasuo_spell1a",
+      "yasuo_death",
+      "yasuo_dance_loop"
+    ],
+    "missfortune": [
+      "missfortune_idle1",
+      "missfortune_run",
+      "missfortune_attack1",
+      "missfortune_spell1",
+      "missfortune_death",
+      "missfortune_dance"
+    ],
+    "leesin": [
+      "idle_active",
+      "run_combat",
+      "attack1",
+      "spell1_cast",
+      "death",
+      "dance"
+    ],
+    "xerath": [
+      "xerath_idle1",
+      "xerath_run",
+      "xerath_attack1",
+      "xerath_spell1",
+      "xerath_death",
+      "xerath_dance"
+    ]
+  }
+}

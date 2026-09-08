@@ -173,6 +173,7 @@ export interface ComboStrikeEvent {
 
 /** 一次施放排出來的一整串。 */
 export interface DelayedWave {
+  castInstance?: import("../content/castInstance").CastInstance;
   /**
    * ⭐【逐段瞬移】GH#838 M1 —— 每一段把 `who` 挪到目標周圍環上的一點。
    * 只有 `comboStrikes` 會填（作者介面在那一側）。缺席 ⇒ 誰都不動（嚴格 no-op）。
@@ -292,6 +293,7 @@ export const delayedEffect: EffectKindSpec<"delayed"> = {
     }
 
     delayedQueue(world).push({
+      castInstance: ctx.castInstance,
       caster: ctx.caster,
       rank: ctx.rank,
       origin: ctx.origin,
@@ -406,6 +408,7 @@ export function delayedSystem(world: SimWorld): void {
           : origin;
 
       const base: EffectContext = {
+        castInstance: wave.castInstance,
         world,
         caster: wave.caster,
         rank: wave.rank,

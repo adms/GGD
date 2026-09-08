@@ -1,0 +1,38 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ packages/shared/src/sim/effects/consumeStatus.test.ts (21 tests) 99ms
+ ❯ packages/shared/src/content/consumeStatusContract.test.ts (4 tests | 2 failed) 22ms
+   × status consumption authoring contracts > onConsumed keeps nested no-op checks active 11ms
+     → expected false to be true // Object.is equality
+   × status consumption authoring contracts > onMissing keeps nested no-op checks active 2ms
+     → expected false to be true // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/shared/src/content/consumeStatusContract.test.ts > status consumption authoring contracts > onConsumed keeps nested no-op checks active
+ FAIL  packages/shared/src/content/consumeStatusContract.test.ts > status consumption authoring contracts > onMissing keeps nested no-op checks active
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ packages/shared/src/content/consumeStatusContract.test.ts:30:81
+     28|   it.each(["onConsumed", "onMissing"] as const)("%s keeps nested no-op…
+     29|     const doc = zAbilityDoc.parse(make(branch, { kind: "damage", damag…
+     30|     expect(analyseAbility(doc).some(f => f.path === `effects[0].${bran…
+       |                                                                                 ^
+     31|   });
+     32| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  2 failed | 23 passed (25)
+   Start at  04:54:54
+   Duration  3.15s (transform 2.51s, setup 0ms, collect 4.77s, tests 121ms, environment 0ms, prepare 201ms)
+

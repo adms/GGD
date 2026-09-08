@@ -1,0 +1,30 @@
+# Opt-in infrastructure; playerContent submit/discover remain separate config gates.
+# docker compose -f docker/compose.yaml -f docker/compose.community.yaml up -d
+services:
+  platform:
+    environment:
+      GGD_CONTENT_API_URL: http://hero-import:8788
+      GGD_HERO_IMPORT_SECRET: "${GGD_HERO_IMPORT_SECRET:?set a private import secret of at least 32 characters}"
+  game:
+    environment:
+      GGD_CONTENT_API_URL: http://hero-import:8788
+      GGD_HERO_IMPORT_SECRET: "${GGD_HERO_IMPORT_SECRET:?set GGD_HERO_IMPORT_SECRET}"
+      GGD_BUILD_STAMP: "${GGD_BUILD_STAMP:?use the same build stamp for edge game and Main}"
+  hero-import:
+    build:
+      context: ..
+      dockerfile: docker/hero-import.Dockerfile
+    environment:
+      GGD_PLATFORM_URL: http://platform:8080
+      GGD_HERO_IMPORT_SECRET: "${GGD_HERO_IMPORT_SECRET:?set GGD_HERO_IMPORT_SECRET}"
+      GGD_BUILD_STAMP: "${GGD_BUILD_STAMP:?set GGD_BUILD_STAMP}"
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    volumes:
+      - ../content:/srv/content:ro
+      - hero-import-data:/data
+    # No host port and no edge route. Only authenticated service calls reach it.
+volumes:
+  hero-import-data:

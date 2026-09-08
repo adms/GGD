@@ -77,6 +77,7 @@ export type CastRejectReason =
   | "silenced"
   | "cooldown"
   | "no-mana"
+  | "no-resource"
   | "out-of-range"
   | "bad-target"
   | "passive"
@@ -95,6 +96,7 @@ export const CAST_REJECT_TEXT: Record<CastRejectReason, string> = {
   silenced: "被沉默，無法施放技能",
   cooldown: "冷卻中",
   "no-mana": "魔力不足",
+  "no-resource": "技能資源不足，請先累積所需層數",
   "out-of-range": "距離太遠",
   "bad-target": "沒有可施放的目標",
   passive: "這是被動技，永久生效，不需施放",

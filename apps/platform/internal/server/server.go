@@ -22,6 +22,7 @@ import (
 	"github.com/ggd/platform/internal/approvelink"
 	"github.com/ggd/platform/internal/auth"
 	"github.com/ggd/platform/internal/combatenv"
+	"github.com/ggd/platform/internal/community"
 	"github.com/ggd/platform/internal/config"
 	"github.com/ggd/platform/internal/contentoverlay"
 	"github.com/ggd/platform/internal/curation"
@@ -64,6 +65,7 @@ type Server struct {
 	// ⚠️ 它的公開讀與投稿寫都由 `config.ui-cues@1` 的 `playerContent` 兩格開關擋著，
 	// ⭐ 而出貨兩格**都是關的** —— 對外開放的東西不預設開。
 	Submissions *submissions.Service
+	HeroWorks   *submissions.HeroService
 	Overlay     *contentoverlay.Service
 	CombatEnv   *combatenv.Service
 	OpsEnv      *opsenv.Service
@@ -348,7 +350,12 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 	// alone cannot — "has the SHIPPED doc moved underneath this entry?" — by
 	// reading the hashes the TS content build already wrote into each
 	// collection's _index.json. Read-only; it never writes under content/.
-	overlaySvc := contentoverlay.New(store, rdb, contentoverlay.WithContentDir(cfg.ContentDir))
+	heroBridge := submissions.ContentAPIHeroBridge(os.Getenv("GGD_CONTENT_API_URL"), nil, os.Getenv("GGD_HERO_IMPORT_SECRET"))
+	overlayOptions := []contentoverlay.Option{contentoverlay.WithContentDir(cfg.ContentDir)}
+	if catalogBridge, ok := heroBridge.(contentoverlay.CatalogBridge); ok {
+		overlayOptions = append(overlayOptions, contentoverlay.WithCatalogBridge(catalogBridge))
+	}
+	overlaySvc := contentoverlay.New(store, rdb, overlayOptions...)
 	// One line in the deploy log about what is overlaid, plus a warning per
 	// entry the shipped tree has moved underneath. Never fails a boot.
 	overlaySvc.LogBootSummary(context.Background())
@@ -452,12 +459,29 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 		Auth: authSvc, Friends: friends, Presence: pres, Rooms: rooms,
 		Ranking: rank, Gamelink: glink, Wallet: walletSvc, Admin: adminSvc,
 		Curation: curationSvc, Submissions: submissionsSvc, Overlay: overlaySvc, CombatEnv: combatEnvSvc, OpsEnv: opsEnvSvc, Invites: inviteSvc,
-		AI: aiSvc, Approve: approveSvc, Archive: archiveSvc, MatchStats: matchStatsSvc,
+		HeroWorks: submissions.NewHeroService(store, heroBridge),
+		AI:        aiSvc, Approve: approveSvc, Archive: archiveSvc, MatchStats: matchStatsSvc,
 		Hub: hub, Sessions: sessions,
 		registerRateLimit:  envInt("GGD_REGISTER_RATE_LIMIT", 0),
 		requireApproval:    requireApproval,
 		pendingApprovalTTL: cfg.PendingApprovalTTL,
 	}
+	glink.SetCommunityResolver(func(ctx context.Context, _ []string) ([]community.HeroPin, error) {
+		pins, err := s.HeroWorks.ResolveRoster(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for i := range pins {
+			author, err := accounts.GetByID(ctx, pins[i].AuthorID)
+			if err != nil {
+				return nil, err
+			}
+			pins[i].AuthorName = author.Username
+		}
+		return pins, nil
+	})
+	s.HeroWorks.SetIntakePolicy(s.heroIntakePolicy)
+	s.HeroWorks.SetAccountIntakePolicy(s.heroAccountIntakePolicy)
 	s.buildRouter(templates)
 	return s, nil
 }
@@ -523,6 +547,13 @@ func capRequestBody(next http.Handler) http.Handler {
 				limit = maxArchiveUploadBytes
 			case matchstats.IngestPath:
 				limit = maxMatchStatsBytes
+			case "/api/v1/hero-submissions", "/api/v1/hero-import/build", "/api/v1/hero-import/inspect":
+				limit = submissions.MaxHeroArchiveBytes
+			case "/api/v1/hero-works/draft":
+				limit = submissions.MaxHeroDraftBytes + 4096
+			}
+			if r.Method == http.MethodPut && submissions.IsHeroModelAssetPath(r.URL.Path) {
+				limit = submissions.MaxHeroModelAssetBytes
 			}
 			r.Body = http.MaxBytesReader(w, r.Body, limit)
 		}
@@ -586,6 +617,8 @@ func (s *Server) buildRouter(templates *room.Templates) {
 		// GET /submissions/discoverable —— ⭐ 只回「核准過**而且內容沒被換過**」的那些。
 		//   ⚠️ 開關關著時它回**空清單**，⛔ 不是 404（見 submissions/handlers.go）。
 		submissions.NewHandlers(s.Submissions, s.Admin.AdminOnly, s.playerContentFlags).MountPublic(api)
+		s.heroHandlers().MountPublic(api)
+		s.Gamelink.MountReplayContent(api)
 		// #189 durable content overlay: public read of the merged-content bundle
 		// (game-server + client), admin-gated writes on the authed router below.
 		contentoverlay.NewHandlers(s.Overlay, s.Admin.AdminOnly).MountPublic(api)
@@ -629,6 +662,7 @@ func (s *Server) buildRouter(templates *room.Templates) {
 			// WebSocket handshake applies — see auth.PlayableOnly.
 			pr.Group(func(rr chi.Router) {
 				rr.Use(s.Auth.PlayableOnly)
+				s.Gamelink.MountCommunity(rr)
 				room.NewHandlers(s.Rooms, templates, s.Cfg.InviteTTL).Mount(rr)
 				// GET /lobby/online — the lobby's 線上玩家 roster (owner
 				// 2026-08-03). It is the ONE endpoint that hands a caller
@@ -651,6 +685,7 @@ func (s *Server) buildRouter(templates *room.Templates) {
 			//   ⛔ 它今天**沒有** revalidator ⇒ 呼叫一律 503（見 playercontent.go）。
 			submissions.NewHandlers(s.Submissions, s.Admin.AdminOnly, s.playerContentFlags).
 				WithPromote(s.submissionPromoteDeps()).Mount(pr)
+			s.heroHandlers().Mount(pr)
 			// #189 /content-overlay/docs/* writes — AdminOnly inside
 			contentoverlay.NewHandlers(s.Overlay, s.Admin.AdminOnly).Mount(pr)
 			// /admin/combat-env — AdminOnly inside
@@ -925,4 +960,15 @@ func (r lobbyRoster) InLobby(ctx context.Context) ([]room.LobbyAccount, error) {
 		out = append(out, room.LobbyAccount{ID: a.ID, Username: a.Username, State: a.State, MMR: a.MMR})
 	}
 	return out, nil
+}
+
+// ⭐⭐ GH#1121 —— 完整英雄的 handlers **一個組裝處**（⛔ 不是兩處各接一半）。
+//
+// ⚠️ ⭐ 在此之前這兩行是各自 `NewHeroHandlers(...)` 展開的 ⇒ 我要加第四個依賴
+// （`config.ugc@1` 的總開關）時，**漏掉其中一處**不會有任何東西紅 ——
+// 而那一處正好是公開路由（`MountPublic`）。⇒ 收成一支。
+func (s *Server) heroHandlers() *submissions.HeroHandlers {
+	h := submissions.NewHeroHandlers(s.HeroWorks, s.Admin.AdminOnly, s.playerContentFlags, s.heroAuthorName)
+	h.SetUgcPolicy(s.ugcSubmissionPolicy)
+	return h
 }

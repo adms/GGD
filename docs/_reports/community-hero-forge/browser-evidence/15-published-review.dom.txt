@@ -1,0 +1,620 @@
+- complementary:
+  - generic: GGD Ops
+  - generic: operator console
+  - navigation:
+    - button "⊟ 全部收合"
+    - button "營運 19" [expanded]:
+      - generic: ▾
+      - generic: 營運
+      - generic: "19"
+    - button "🛂 帳號審核":
+      - generic: 🛂
+      - generic: 帳號審核
+    - button "🚦 Quick Approval":
+      - generic: 🚦
+      - generic: Quick Approval
+    - button "👤 Players":
+      - generic: 👤
+      - generic: Players
+    - button "🤝 管理員預設好友":
+      - generic: 🤝
+      - generic: 管理員預設好友
+    - button "⚔️ Matches":
+      - generic: ⚔️
+      - generic: Matches
+    - button "🏅 排名獎勵":
+      - generic: 🏅
+      - generic: 排名獎勵
+    - button "🎞️ 對戰回放":
+      - generic: 🎞️
+      - generic: 對戰回放
+    - button "💥 傷害排行榜":
+      - generic: 💥
+      - generic: 傷害排行榜
+    - button "📢 Announcements":
+      - generic: 📢
+      - generic: Announcements
+    - button "🪙 M幣 發放":
+      - generic: 🪙
+      - generic: M幣 發放
+    - button "🎟️ 邀請碼":
+      - generic: 🎟️
+      - generic: 邀請碼
+    - button "📜 Audit log":
+      - generic: 📜
+      - generic: Audit log
+    - button "🧯 內容載入政策":
+      - generic: 🧯
+      - generic: 內容載入政策
+    - button "📐 編輯器創作規則":
+      - generic: 📐
+      - generic: 編輯器創作規則
+    - button "🖼 編輯器 icon 上傳":
+      - generic: 🖼
+      - generic: 編輯器 icon 上傳
+    - button "🧑‍🎨 玩家自製內容":
+      - generic: 🧑‍🎨
+      - generic: 玩家自製內容
+    - button "🚨 新英雄檢查警示":
+      - generic: 🚨
+      - generic: 新英雄檢查警示
+    - button "🧑‍⚖️ 批次驗收（連續圖片）":
+      - generic: 🧑‍⚖️
+      - generic: 批次驗收（連續圖片）
+    - button "📥 投稿批核（AI／玩家）":
+      - generic: 📥
+      - generic: 投稿批核（AI／玩家）
+    - button "內容·素材管理 12" [expanded]:
+      - generic: ▾
+      - generic: 內容·素材管理
+      - generic: "12"
+    - button "🎵 音樂音效素材管理":
+      - generic: 🎵
+      - generic: 音樂音效素材管理
+    - button "🦸 英雄管理":
+      - generic: 🦸
+      - generic: 英雄管理
+    - button "✨ 新英雄模板":
+      - generic: ✨
+      - generic: 新英雄模板
+    - button "🔮 技能管理":
+      - generic: 🔮
+      - generic: 技能管理
+    - button "⚔️ 武器道具管理":
+      - generic: ⚔️
+      - generic: 武器道具管理
+    - button "🎆 特效管理":
+      - generic: 🎆
+      - generic: 特效管理
+    - button "🏟️ 場景物件管理":
+      - generic: 🏟️
+      - generic: 場景物件管理
+    - button "🧱 鑄形工坊":
+      - generic: 🧱
+      - generic: 鑄形工坊
+    - button "🎨 特效工坊 · 演出腳本":
+      - generic: 🎨
+      - generic: 特效工坊 · 演出腳本
+    - button "✅ 內容白名單":
+      - generic: ✅
+      - generic: 內容白名單
+    - button "🎭 英雄上下架":
+      - generic: 🎭
+      - generic: 英雄上下架
+    - button "🗂 內容覆蓋層":
+      - generic: 🗂
+      - generic: 內容覆蓋層
+    - button "資產產線 9" [expanded]:
+      - generic: ▾
+      - generic: 資產產線
+      - generic: "9"
+    - button "🤖 AI 生成設定":
+      - generic: 🤖
+      - generic: AI 生成設定
+    - button "📐 模型預算":
+      - generic: 📐
+      - generic: 模型預算
+    - button "🖼️ ICON 生成追蹤":
+      - generic: 🖼️
+      - generic: ICON 生成追蹤
+    - button "🧱 體素外觀對照表":
+      - generic: 🧱
+      - generic: 體素外觀對照表
+    - button "🧰 體素鑄造廠":
+      - generic: 🧰
+      - generic: 體素鑄造廠
+    - button "🎨 體素條碼":
+      - generic: 🎨
+      - generic: 體素條碼
+    - button "🧍 體素身體":
+      - generic: 🧍
+      - generic: 體素身體
+    - button "🖌 圖示風格":
+      - generic: 🖌
+      - generic: 圖示風格
+    - button "🏭 圖示工坊":
+      - generic: 🏭
+      - generic: 圖示工坊
+    - button "戰鬥規則 16" [expanded]:
+      - generic: ▾
+      - generic: 戰鬥規則
+      - generic: "16"
+    - button "⚖️ 戰鬥系統":
+      - generic: ⚖️
+      - generic: 戰鬥系統
+    - button "⏱ 冷卻規則":
+      - generic: ⏱
+      - generic: 冷卻規則
+    - button "📜 詠唱超過1秒":
+      - generic: 📜
+      - generic: 詠唱超過1秒
+    - button "💨 移速加成清單":
+      - generic: 💨
+      - generic: 移速加成清單
+    - button "🏆 介面用語（Fate）":
+      - generic: 🏆
+      - generic: 介面用語（Fate）
+    - button "⏳ 吟唱規則":
+      - generic: ⏳
+      - generic: 吟唱規則
+    - button "🛡️ 減傷規則":
+      - generic: 🛡️
+      - generic: 減傷規則
+    - button "🗺️ 小地圖規格":
+      - generic: 🗺️
+      - generic: 小地圖規格
+    - button "🎥 戰鬥鏡頭":
+      - generic: 🎥
+      - generic: 戰鬥鏡頭
+    - button "📋 地圖驗證報告":
+      - generic: 📋
+      - generic: 地圖驗證報告
+    - button "🎲 場地輪替":
+      - generic: 🎲
+      - generic: 場地輪替
+    - button "🥊 戰鬥手感":
+      - generic: 🥊
+      - generic: 戰鬥手感
+    - button "🏃 走過去放技能":
+      - generic: 🏃
+      - generic: 走過去放技能
+    - button "⏱️ 對戰設定":
+      - generic: ⏱️
+      - generic: 對戰設定
+    - button "🏟️ 競技場規則":
+      - generic: 🏟️
+      - generic: 競技場規則
+    - button "📏 體型與射程":
+      - generic: 📏
+      - generic: 體型與射程
+    - button "五級距·數值 20" [expanded]:
+      - generic: ▾
+      - generic: 五級距·數值
+      - generic: "20"
+    - button "➕ 基礎加成":
+      - generic: ➕
+      - generic: 基礎加成
+    - button "⛰️ 屬性上限":
+      - generic: ⛰️
+      - generic: 屬性上限
+    - button "◎ AoE 範圍五級距":
+      - generic: ◎
+      - generic: AoE 範圍五級距
+    - button "➶ 施法距離五級距":
+      - generic: ➶
+      - generic: 施法距離五級距
+    - button "⏲ 冷卻五級距":
+      - generic: ⏲
+      - generic: 冷卻五級距
+    - button "💥 傷害五級距":
+      - generic: 💥
+      - generic: 傷害五級距
+    - button "🔷 耗魔五級距":
+      - generic: 🔷
+      - generic: 耗魔五級距
+    - button "⏳ 吟唱五級距":
+      - generic: ⏳
+      - generic: 吟唱五級距
+    - button "🧮 AP 係數公式":
+      - generic: 🧮
+      - generic: AP 係數公式
+    - button "📈 升級成長率":
+      - generic: 📈
+      - generic: 升級成長率
+    - button "☠️ 一擊必殺夾限":
+      - generic: ☠️
+      - generic: 一擊必殺夾限
+    - button "🏃 速度成長五級距":
+      - generic: 🏃
+      - generic: 速度成長五級距
+    - button "💨 移速加成五級距":
+      - generic: 💨
+      - generic: 移速加成五級距
+    - button "🧮 技能正規化決策點":
+      - generic: 🧮
+      - generic: 技能正規化決策點
+    - button "🔵 魔力經濟（建議滿魔時間）":
+      - generic: 🔵
+      - generic: 魔力經濟（建議滿魔時間）
+    - button "🪜 五級距總覽（卡面→實際）":
+      - generic: 🪜
+      - generic: 五級距總覽（卡面→實際）
+    - button "🚫 ⚠️ 不吃五級距的傷害節點":
+      - generic: 🚫
+      - generic: ⚠️ 不吃五級距的傷害節點
+    - button "📐 英雄屬性正規化":
+      - generic: 📐
+      - generic: 英雄屬性正規化
+    - button "💨 位移級距":
+      - generic: 💨
+      - generic: 位移級距
+    - button "📈 每級加成":
+      - generic: 📈
+      - generic: 每級加成
+    - button "狀態規則 13" [expanded]:
+      - generic: ▾
+      - generic: 狀態規則
+      - generic: "13"
+    - button "🛡️ 護盾規則":
+      - generic: 🛡️
+      - generic: 護盾規則
+    - button "🪖 格擋規則":
+      - generic: 🪖
+      - generic: 格擋規則
+    - button "💥 暴擊規則":
+      - generic: 💥
+      - generic: 暴擊規則
+    - button "😡 暴走規則":
+      - generic: 😡
+      - generic: 暴走規則
+    - button "✨ 淨化規則":
+      - generic: ✨
+      - generic: 淨化規則
+    - button "🩸 重創規則":
+      - generic: 🩸
+      - generic: 重創規則
+    - button "🥀 虛弱規則":
+      - generic: 🥀
+      - generic: 虛弱規則
+    - button "⚔️ 傷害規則":
+      - generic: ⚔️
+      - generic: 傷害規則
+    - button "🔮 AP 傷害加成":
+      - generic: 🔮
+      - generic: AP 傷害加成
+    - button "🧟 增益卡敵方過濾":
+      - generic: 🧟
+      - generic: 增益卡敵方過濾
+    - button "👻 隱形規則":
+      - generic: 👻
+      - generic: 隱形規則
+    - button "🎯 嘲弄規則":
+      - generic: 🎯
+      - generic: 嘲弄規則
+    - button "💚 回血與扣血規則":
+      - generic: 💚
+      - generic: 回血與扣血規則
+    - button "武器道具 3" [expanded]:
+      - generic: ▾
+      - generic: 武器道具
+      - generic: "3"
+    - button "💎 商店經濟":
+      - generic: 💎
+      - generic: 商店經濟
+    - button "🗡️ 傳說武器三選一":
+      - generic: 🗡️
+      - generic: 傳說武器三選一
+    - button "🃏 道具卡片排版":
+      - generic: 🃏
+      - generic: 道具卡片排版
+    - button "肉鴿殭屍 2" [expanded]:
+      - generic: ▾
+      - generic: 肉鴿殭屍
+      - generic: "2"
+    - button "🧟 殭屍波系統":
+      - generic: 🧟
+      - generic: 殭屍波系統
+    - button "📜 殭屍王出場演出":
+      - generic: 📜
+      - generic: 殭屍王出場演出
+    - button "畫面·演出 20" [expanded]:
+      - generic: ▾
+      - generic: 畫面·演出
+      - generic: "20"
+    - button "✨ 變身外觀":
+      - generic: ✨
+      - generic: 變身外觀
+    - button "🪄 畫質分級":
+      - generic: 🪄
+      - generic: 畫質分級
+    - button "🌧️ 場地天氣":
+      - generic: 🌧️
+      - generic: 場地天氣
+    - button "🧹 特效回收":
+      - generic: 🧹
+      - generic: 特效回收
+    - button "🎬 演出腳本":
+      - generic: 🎬
+      - generic: 演出腳本
+    - button "🎚️ 粒子密度上限":
+      - generic: 🎚️
+      - generic: 粒子密度上限
+    - button "🪙 爽度特效":
+      - generic: 🪙
+      - generic: 爽度特效
+    - button "🩸 濺血程度":
+      - generic: 🩸
+      - generic: 濺血程度
+    - button "🎨 傷害數字配色":
+      - generic: 🎨
+      - generic: 傷害數字配色
+    - button "🎯 範圍指引與預告":
+      - generic: 🎯
+      - generic: 範圍指引與預告
+    - button "🌀 開關型技能外觀":
+      - generic: 🌀
+      - generic: 開關型技能外觀
+    - button "📐 HUD 底部版面":
+      - generic: 📐
+      - generic: HUD 底部版面
+    - button "👕 外觀關鍵字":
+      - generic: 👕
+      - generic: 外觀關鍵字
+    - button "💬 畫面提示":
+      - generic: 💬
+      - generic: 畫面提示
+    - button "✨ 世界演出":
+      - generic: ✨
+      - generic: 世界演出
+    - button "🎚️ 混音":
+      - generic: 🎚️
+      - generic: 混音
+    - button "🔊 音訊對照表":
+      - generic: 🔊
+      - generic: 音訊對照表
+    - button "🔥 場地環境火焰":
+      - generic: 🔥
+      - generic: 場地環境火焰
+    - button "🎆 勝利煙火":
+      - generic: 🎆
+      - generic: 勝利煙火
+    - button "🏆 回合頒獎台":
+      - generic: 🏆
+      - generic: 回合頒獎台
+    - button "鑄技工坊 3" [expanded]:
+      - generic: ▾
+      - generic: 鑄技工坊
+      - generic: "3"
+    - button "🔮 鑄技工坊 · 特效綁定":
+      - generic: 🔮
+      - generic: 鑄技工坊 · 特效綁定
+    - button "🧬 新英雄轉生設計":
+      - generic: 🧬
+      - generic: 新英雄轉生設計
+    - link "↗️ 鑄技工坊（/editor/）":
+      - /url: /editor/
+      - generic: ↗️
+      - generic: 鑄技工坊（/editor/）
+    - generic: 技能／特效編輯器目前仍住在獨立的 /editor/，尚未搬進本後台（#272）。這一列會在新分頁開啟它。
+    - button "系統 9" [expanded]:
+      - generic: ▾
+      - generic: 系統
+      - generic: "9"
+    - button "🗂️ Console Hub":
+      - generic: 🗂️
+      - generic: Console Hub
+    - button "🗺 導覽地圖":
+      - generic: 🗺
+      - generic: 導覽地圖
+    - button "🎬 對戰錄影":
+      - generic: 🎬
+      - generic: 對戰錄影
+    - button "🎮 手把操作版本":
+      - generic: 🎮
+      - generic: 手把操作版本
+    - button "🎯 練習模式":
+      - generic: 🎯
+      - generic: 練習模式
+    - button "📣 大廳集合令":
+      - generic: 📣
+      - generic: 大廳集合令
+    - button "🎮 手把手感":
+      - generic: 🎮
+      - generic: 手把手感
+    - button "🛠️ 系統運維":
+      - generic: 🛠️
+      - generic: 系統運維
+    - button "📦 資料搬遷":
+      - generic: 📦
+      - generic: 資料搬遷
+    - button "技能對照·視覺化 14" [expanded]:
+      - generic: ▾
+      - generic: 技能對照·視覺化
+      - generic: "14"
+    - button "🌪 MDL特效家族":
+      - generic: 🌪
+      - generic: MDL特效家族
+    - button "🧭 平行處理盤":
+      - generic: 🧭
+      - generic: 平行處理盤
+    - button "🚧 平行柵欄":
+      - generic: 🚧
+      - generic: 平行柵欄
+    - button "🎬 JASS特效對照":
+      - generic: 🎬
+      - generic: JASS特效對照
+    - button "🦗 蝗蟲群對照":
+      - generic: 🦗
+      - generic: 蝗蟲群對照
+    - button "🧩 機制模板·範圍":
+      - generic: 🧩
+      - generic: 機制模板·範圍
+    - button "🧬 特效模板·視覺":
+      - generic: 🧬
+      - generic: 特效模板·視覺
+    - button "🔊 技能音效對照":
+      - generic: 🔊
+      - generic: 技能音效對照
+    - button "📡 出身屬性雷達":
+      - generic: 📡
+      - generic: 出身屬性雷達
+    - button "📈 技能級距雷達":
+      - generic: 📈
+      - generic: 技能級距雷達
+    - button "✍️ 說明→JSON":
+      - generic: ✍️
+      - generic: 說明→JSON
+    - button "🧿 EX根源三選一":
+      - generic: 🧿
+      - generic: EX根源三選一
+    - button "🗡️ 寶具三選一":
+      - generic: 🗡️
+      - generic: 寶具三選一
+    - button "📐 90支重製對照":
+      - generic: 📐
+      - generic: 90支重製對照
+  - generic: hero-reviewer
+  - button "變更密碼 Change password"
+  - button "Sign out"
+- main:
+  - generic: 📥 投稿批核（AI／玩家內容）
+  - generic: 完整英雄作品審查
+  - paragraph: 檢查作者原文、六槽技能與演出後，一次核准並發布。伺服器會重新驗證同一份快照；發布失敗時保留既有上線版本。
+  - text: 搜尋作品
+  - textbox "搜尋作品"
+  - text: 狀態
+  - combobox "狀態":
+    - option "全部" [selected]
+    - option "待審"
+    - option "已審未發布"
+    - option "退回修改"
+    - option "已拒絕"
+    - option "發布中"
+    - option "已審、發布失敗"
+    - option "已發布"
+    - option "已下架"
+    - option "歷史候選"
+  - button "重新查詢"
+  - status: 已核准並成功發布這份固定版本。
+  - paragraph: 共 8 份送審版本
+  - list:
+    - button "晨星守望者・桌面驗收 · 已發布 · 2026/9/6 下午8:05:44"
+    - button "晨星守望者・桌面驗收 · 退回修改 · 2026/9/6 下午7:55:19"
+    - button "同局驗證英雄 1・新版 · 已發布 · 2026/9/6 下午7:19:40"
+    - button "同局驗證英雄 2 · 已下架 · 2026/9/6 下午7:19:34"
+    - button "同局驗證英雄 1 · 已下架 · 2026/9/6 下午7:19:28"
+    - button "同局驗證英雄 1・新版 · 已發布 · 2026/9/6 下午7:10:00"
+    - button "同局驗證英雄 2 · 已下架 · 2026/9/6 下午7:09:53"
+    - button "同局驗證英雄 1 · 已下架 · 2026/9/6 下午7:09:47"
+  - button "上一頁" [disabled]
+  - button "下一頁" [disabled]
+  - article:
+    - heading "晨星守望者・桌面驗收 · 第 11 版 · 已發布" [level=2]
+    - paragraph: 作者：01M1V6FYSTMJDEFNB5G527WGB1 · 送審：2026/9/6 下午8:05:44
+    - paragraph: 原創作品
+    - paragraph: 改作授權：未開放改作
+    - heading "作者完整原文" [level=3]
+    - generic: 守望者用晨光保護隊友，再以連段向前突進。 「晚起的太陽，也要準時下班！」 這一句玩笑不是技能機制；保留第三行與原標點。
+    - heading "六槽技能" [level=3]
+    - generic "PASSIVE · 晨星守望者・桌面驗收・PASSIVE"
+    - generic "Q · 晨光雙斬・作者續編未投稿"
+    - generic "W · 晨星守望者・桌面驗收・W"
+    - generic "E · 晨星守望者・桌面驗收・E"
+    - generic "R · 晨星守望者・桌面驗收・R"
+    - generic "EX · 晨星守望者・桌面驗收・EX"
+    - generic "屬性、來源鎖與素材固定紀錄"
+    - figure "hero":
+      - img "hero 送審圖片"
+      - generic: hero
+    - heading "送審版本試玩與演出" [level=3]
+    - paragraph:
+      - link "另開視窗檢查固定版本":
+        - /url: /admin/?heroReview=hero-d9323c49b402f0df19521e9c011a9376ef30f527c70d684e62e69d2c4a2
+    - iframe:
+      - main:
+        - paragraph: 第 11 版的固定模擬紀錄 · 晨星守望者・桌面驗收
+        - group "選擇審查技能":
+          - button "PASSIVE"
+          - button "Q" [pressed]
+          - button "W"
+          - button "E"
+          - button "R"
+          - button "EX"
+        - region "Q 技能試玩與演出":
+          - heading "技能試玩與演出" [level=3]
+          - generic: 真 Sim → 真 VfxSystem · 雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step
+          - generic: 已定位 · 34/50 meshes · 46/16 particles/systems · eye -32.6,16.7,0.0
+          - text: 施法者：⚠ 共用替身 · 晨星守望者・桌面驗收 · champ.thorne · 2 meshes · ×1.000 · Main ChampionView · 材質正常
+          - text: 目標：⚠ 共用替身 · 晨星守望者・桌面驗收 · champ.thorne · 2 meshes · ×0.998 · Main ChampionView · 材質正常
+          - button "全螢幕預覽"
+          - button "切換實戰俯視"
+          - button "鏡頭拉近"
+          - button "鏡頭拉遠"
+          - button "底板未檢查"
+          - button "量尺未校準"
+          - region "真 Sim 與 3D 共用時間軸":
+            - heading "真 Sim × 3D 共用時間軸" [level=4]
+            - paragraph: 只播放 SimWorld 真正 emit 的事件；scrub、1/60 逐格與畫面使用同一個 playhead。
+            - strong: 0ms · Sim tick 0
+            - button "↺"
+            - button "−1 frame" [disabled]
+            - button "▶"
+            - button "+1 frame"
+            - slider "Sim 與 3D 播放位置"
+            - generic "事件分布":
+              - generic "0ms · abilityCast · abilityId=hero-04ad6f95-1841-4f83-a5b8-76656bb590fa.q · slot=Q"
+              - generic "0ms · abilityHit · slot=Q"
+              - generic "0ms · recoveryBegin · abilityId=hero-04ad6f95-1841-4f83-a5b8-76656bb590fa.q · slot=Q"
+              - generic "0ms · damage · amount=485.9104403948945 · origin=ability:hero-04ad6f95-1841-4f83-a5b8-76656bb590fa.q"
+              - generic "0ms · recoveryEnd · abilityId=hero-04ad6f95-1841-4f83-a5b8-76656bb590fa.q · slot=Q · reason=hit"
+              - generic "0ms · hitImpact · amount=485.9104403948945"
+              - generic "0ms · damage · amount=242.95522019744726 · origin=ability:hero-04ad6f95-1841-4f83-a5b8-76656bb590fa.q"
+              - generic "0ms · hitImpact · amount=242.95522019744726"
+            - article:
+              - generic: abilityCast
+              - code: abilityId=hero-04ad6f95-1841-4f83-a5b8-76656bb590fa.q · slot=Q
+            - article:
+              - generic: abilityHit
+              - code: slot=Q
+            - article:
+              - generic: recoveryBegin
+              - code: abilityId=hero-04ad6f95-1841-4f83-a5b8-76656bb590fa.q · slot=Q
+            - article:
+              - generic: damage
+              - code: amount=485.9104403948945 · origin=ability:hero-04ad6f95-1841-4f83-a5b8-76656bb590fa.q
+            - article:
+              - generic: recoveryEnd
+              - code: abilityId=hero-04ad6f95-1841-4f83-a5b8-76656bb590fa.q · slot=Q · reason=hit
+            - article:
+              - generic: hitImpact
+              - code: amount=485.9104403948945
+            - article:
+              - generic: damage
+              - code: amount=242.95522019744726 · origin=ability:hero-04ad6f95-1841-4f83-a5b8-76656bb590fa.q
+            - article:
+              - generic: hitImpact
+              - code: amount=242.95522019744726
+            - generic "全部 8 筆事件"
+    - generic "相依資料與驗證結果"
+    - paragraph: 上次審查：01M1V6FYQCMCT8Y2T0W5HVQ7W9 · 2026/9/6 下午8:07:13 · 本機驗收帳號核准流程測試：第 11 版只更新 Q 名稱，前版原文、兩段參數與六槽演出已逐槽檢查。共用替身標記正常；僅發布至此可丟棄的 loopback 平台，不代表 Owner 美術核准或正式上線。
+    - paragraph: 目前上線版本：hero-d9323c49b402f0df19521e9c011a9376ef30f527c70d684e62e69d2c4a2 （本次查看版本）
+    - text: 審查意見（必填）
+    - textbox "審查意見（必填）": 本機驗收帳號核准流程測試：第 11 版只更新 Q 名稱，前版原文、兩段參數與六槽演出已逐槽檢查。共用替身標記正常；僅發布至此可丟棄的 loopback 平台，不代表 Owner 美術核准或正式上線。
+    - button "新增欄位問題"
+    - checkbox "我已檢查完整原文、六槽技能與演出" [checked]
+    - text: 我已檢查完整原文、六槽技能與演出
+    - button "核准並發布完整英雄" [disabled]
+    - button "退回修改" [disabled]
+    - button "拒絕此版本" [disabled]
+    - button "下架此作品"
+    - generic "發布歷程與可恢復版本"
+  - paragraph:
+    - text: ⭐ 通過與套用是兩個決定。「通過」只代表「編輯器做得出來」， ⛔ 不代表可以出貨 —— 要上線得再按一次套用， 而那一刻伺服器會重驗 base／schema／capability／資產安全。
+    - text: ⚠️
+    - code: editor-capability-fixture
+    - text: （八招驗收技能）永遠不可套用，⛔ 即使人工通過（owner 2026-09-01）。
+  - paragraph: ⭐ 佇列是空的 —— 沒有等審的投稿。
+  - heading "🤖 Editor／AI 候選（hash 鎖定）" [level=3]
+  - paragraph: 每張候選都顯示實際擷圖、機器分數與候選 hash。人工必填審查者、0～10 肉眼分數及意見；能力驗收樣本只能 pass／fail，production candidate 才能 approve／reject，且核准後仍需另按一次 Promote。
+  - paragraph: 目前沒有 Editor／AI 候選。
+  - generic: © 2026 Moriyamouse/Adms 糟糕騎士團

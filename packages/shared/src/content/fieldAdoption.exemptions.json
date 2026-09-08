@@ -905,9 +905,9 @@
     "group": "GH#299 第一輪「授權格」(2026-08-09)"
   },
   "field:champions.abilities.*.augment": {
-    "status": "landing",
+    "status": "debt",
     "since": "2026-08-08",
-    "why": "同上,而且是**鏡像側**:同步方向永遠 standalone→embedded,所以它結構上不可能早於 field:abilities.augment 有採用。兩格要一起刪。",
+    "why": "同上,而且是**鏡像側**:同步方向永遠 standalone→embedded,所以它結構上不可能早於 field:abilities.augment 有採用。兩格要一起刪。 ⚠️ ⭐ 2026-09-08 改判 `landing` → `debt`（30 天到期，閘要求「⛔ 一個新欄位不可以永遠是新的」）：⭐ 這一格的零是**結構性的**（鏡射方向永遠 standalone→embedded，而內嵌側只放 Q/W/E/R）⇒ ⛔ 它**不會**因為時間過去就被採用，`landing` 是一句到期的承諾。⭐ `debt` 是誠實的字：它每一輪都出現在橫幅上，⛔ 而不是假裝有一次遷移正在進行。",
     "group": "跨技能強化 ability@1.augment (2026-08-08)"
   },
   "field:abilities.effects[]#damageArea.maxTargetsCounts": {
@@ -1043,9 +1043,9 @@
     "group": "2026-08-13：這一族的四格豁免**整組被刪掉了**,因為容器 FELL BACK UNDER"
   },
   "field:champions.abilities.*.marks": {
-    "status": "landing",
+    "status": "debt",
     "since": "2026-08-08",
-    "why": "具名標記（十二道試煉／風王結界／縮地）剛上架。standalone 那一半已經有使用者（`abilities.marks` = 1/696，`godie-hapm.passive`），紅的是 **champion 文件裡的內嵌鏡像**。⚠️ 這一格的零採用是**結構性的、預期永遠成立的**，不是「還沒有人用」：champion doc 的 `abilities` 只內嵌 Q/W/E/R，PASSIVE 與 EX 走 `passiveAbility`/`exAbility` 兩個字串參照（見 `content/champions/godie-hapm.json`）。而標記天生屬於天生技那一族 —— 它是「這個英雄整場帶著的東西」。所以要讓這一格自然變綠，需要的是一支把標記掛在 Q/W/E/R 上的技能（完全合法，例如「Q 命中累積層數，滿 5 層強化 R」），而不是把十二道試煉搬進鏡像。⛔ 若三十天後仍是 0，正確的處置是問「Q/W/E/R 標記到底該不該存在」，不是延長這筆豁免。",
+    "why": "具名標記（十二道試煉／風王結界／縮地）剛上架。standalone 那一半已經有使用者（`abilities.marks` = 1/696，`godie-hapm.passive`），紅的是 **champion 文件裡的內嵌鏡像**。⚠️ 這一格的零採用是**結構性的、預期永遠成立的**，不是「還沒有人用」：champion doc 的 `abilities` 只內嵌 Q/W/E/R，PASSIVE 與 EX 走 `passiveAbility`/`exAbility` 兩個字串參照（見 `content/champions/godie-hapm.json`）。而標記天生屬於天生技那一族 —— 它是「這個英雄整場帶著的東西」。所以要讓這一格自然變綠，需要的是一支把標記掛在 Q/W/E/R 上的技能（完全合法，例如「Q 命中累積層數，滿 5 層強化 R」），而不是把十二道試煉搬進鏡像。⛔ 若三十天後仍是 0，正確的處置是問「Q/W/E/R 標記到底該不該存在」，不是延長這筆豁免。 ⚠️ ⭐ 2026-09-08 改判 `landing` → `debt`（30 天到期，閘要求「⛔ 一個新欄位不可以永遠是新的」）：⭐ 這一格的零是**結構性的**（鏡射方向永遠 standalone→embedded，而內嵌側只放 Q/W/E/R）⇒ ⛔ 它**不會**因為時間過去就被採用，`landing` 是一句到期的承諾。⭐ `debt` 是誠實的字：它每一輪都出現在橫幅上，⛔ 而不是假裝有一次遷移正在進行。",
     "group": "2026-08-13：這一族的四格豁免**整組被刪掉了**,因為容器 FELL BACK UNDER"
   },
   "field:items.auras[].lingerSec": {
@@ -2141,15 +2141,17 @@
     "why": "⛔⛔ **這個零是我 2026-09-05 自己造成的**：`radial` 原本只有兩個採用者（`godie-u010.ex` ＋ `godie-uvng.ex`，38-002 的三條黑龍），⭐ 而逐行讀 war3map.j 之後確認原作是**並排往前衝**（j:44070 `CreateNUnitsAtLoc(…, GetUnitFacing(施法者))` 說三具 facing 同一個）⇒ 兩支都改走新的 `path:\"fan\"`。⇒ `radial` 從 2 掉到 0。⭐ 而它**不該被刪掉**：兩個獨立的理由 —— ① **10 份模板**的 `path` enum 仍列著它，其中 `tpl-radial-burst` 與 `tpl-locust-swarm` 的 **default 就是 radial**（⇒ 編輯器用那兩份模板開一張新卡，出來的就是 radial）② 它是唯一「整圈等分、起始相位固定」的路徑，⛔ 而 `fan` 是「以面向為中心的一段弧」—— 兩者語意不同，⛔ 不可互相取代。⚠️ 30 天到期時要問的是「有沒有一支技能真的需要整圈星爆」，⛔ 不是把這一條續期，⛔ 更不是為了讓它變綠而把某支技能改回 radial。",
     "group": "2026-09-05 因為內容遷移而歸零的（landing，30 天到期）"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|7.slot=R": {
+  "enum:abilities.effects[]#applyBuff.condition|0|8.slot=R": {
     "status": "landing",
     "since": "2026-09-06",
-    "why": "⭐ GH#1020 `learned` 葉（「主體已學會某一格」＝原作 `udg_EX_Mode` 旗標的翻譯）的 `slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有客戶（小傑 06-00 猜猜拳三個變體的殺意追加段：解鎖 EX 才掛減速／出血／追擊暈眩，`gonGuessPunch.test.ts` ③ 兩個方向驗過）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**：五格全走同一行 `effects/slotRank.ts::slotRankOf`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「學了 W 才⋯」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
+    "why": "⭐ GH#1020 `learned` 葉（「主體已學會某一格」＝原作 `udg_EX_Mode` 旗標的翻譯）的 `slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有客戶（小傑 06-00 猜猜拳三個變體的殺意追加段：解鎖 EX 才掛減速／出血／追擊暈眩，`gonGuessPunch.test.ts` ③ 兩個方向驗過）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**：五格全走同一行 `effects/slotRank.ts::slotRankOf`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「學了 W 才⋯」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。",
+    "note": "⚠️ ⭐ 2026-09-08（合併 PR 1118）：鍵從 `condition|0|7`／`|0|8` 位移到 `|0|8`／`|0|9` —— ⛔ 內容一個字都沒變,是**條件 union 插入了 `facing` 葉**讓每個位置索引往後移一格。⭐ 這暴露了一件事：這張表用**位置索引**當鍵 ⇒ 任何人在 union 中間插一顆葉子,整批豁免會一起變成「指向空氣」。"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|7.slot=W": {
+  "enum:abilities.effects[]#applyBuff.condition|0|8.slot=W": {
     "status": "landing",
     "since": "2026-09-06",
-    "why": "⭐ GH#1020 `learned` 葉（「主體已學會某一格」＝原作 `udg_EX_Mode` 旗標的翻譯）的 `slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有客戶（小傑 06-00 猜猜拳三個變體的殺意追加段：解鎖 EX 才掛減速／出血／追擊暈眩，`gonGuessPunch.test.ts` ③ 兩個方向驗過）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**：五格全走同一行 `effects/slotRank.ts::slotRankOf`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「學了 W 才⋯」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
+    "why": "⭐ GH#1020 `learned` 葉（「主體已學會某一格」＝原作 `udg_EX_Mode` 旗標的翻譯）的 `slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有客戶（小傑 06-00 猜猜拳三個變體的殺意追加段：解鎖 EX 才掛減速／出血／追擊暈眩，`gonGuessPunch.test.ts` ③ 兩個方向驗過）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**：五格全走同一行 `effects/slotRank.ts::slotRankOf`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「學了 W 才⋯」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。",
+    "note": "⚠️ ⭐ 2026-09-08（合併 PR 1118）：鍵從 `condition|0|7`／`|0|8` 位移到 `|0|8`／`|0|9` —— ⛔ 內容一個字都沒變,是**條件 union 插入了 `facing` 葉**讓每個位置索引往後移一格。⭐ 這暴露了一件事：這張表用**位置索引**當鍵 ⇒ 任何人在 union 中間插一顆葉子,整批豁免會一起變成「指向空氣」。"
   },
   "enum:abilities.effects[]#weightedBranch.branches[].weightFrom.attr=int": {
     "status": "landing",
@@ -2183,23 +2185,26 @@
     "why": "GH#1082（2026-09-07）把 11-03／11-04 的 `recentCast PASSIVE 15` 換成 `status` 葉（三刀流有 statusId 了）⇒ slot=PASSIVE 今天 0 個採用者。同上，⛔ 不砍 enum。",
     "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|7.slot=E": {
+  "enum:abilities.effects[]#applyBuff.condition|0|8.slot=E": {
     "status": "landing",
     "since": "2026-09-07",
     "why": "同 |0|5|1.slot=E（learned 葉的 slot 值域）：今天沒有「E 學了才…」的內容；EX 那一格有（#1020 小傑）。",
-    "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件"
+    "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件",
+    "note": "⚠️ ⭐ 2026-09-08（合併 PR 1118）：鍵從 `condition|0|7`／`|0|8` 位移到 `|0|8`／`|0|9` —— ⛔ 內容一個字都沒變,是**條件 union 插入了 `facing` 葉**讓每個位置索引往後移一格。⭐ 這暴露了一件事：這張表用**位置索引**當鍵 ⇒ 任何人在 union 中間插一顆葉子,整批豁免會一起變成「指向空氣」。"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|7.slot=PASSIVE": {
+  "enum:abilities.effects[]#applyBuff.condition|0|8.slot=PASSIVE": {
     "status": "landing",
     "since": "2026-09-07",
     "why": "同上：learned PASSIVE 沒有內容意義（天生技 rank 1 就有）—— 可反駁：哪天天生技可以未學，這一列就該有採用者或該砍 enum。",
-    "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件"
+    "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件",
+    "note": "⚠️ ⭐ 2026-09-08（合併 PR 1118）：鍵從 `condition|0|7`／`|0|8` 位移到 `|0|8`／`|0|9` —— ⛔ 內容一個字都沒變,是**條件 union 插入了 `facing` 葉**讓每個位置索引往後移一格。⭐ 這暴露了一件事：這張表用**位置索引**當鍵 ⇒ 任何人在 union 中間插一顆葉子,整批豁免會一起變成「指向空氣」。"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|8.form=base": {
+  "enum:abilities.effects[]#applyBuff.condition|0|9.form=base": {
     "status": "landing",
     "since": "2026-09-07",
     "why": "GH#1070 的 `form` 葉兩個值裡，出貨內容只用 `alternate`（變身增幅）；`base` 是對稱值 —— 第一個「本體限定」的技能出現前它是 0。⛔ 不砍：求值端 CONDITION_FORMS 兩個值同一份。",
-    "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件"
+    "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件",
+    "note": "⚠️ ⭐ 2026-09-08（合併 PR 1118）：鍵從 `condition|0|7`／`|0|8` 位移到 `|0|8`／`|0|9` —— ⛔ 內容一個字都沒變,是**條件 union 插入了 `facing` 葉**讓每個位置索引往後移一格。⭐ 這暴露了一件事：這張表用**位置索引**當鍵 ⇒ 任何人在 union 中間插一顆葉子,整批豁免會一起變成「指向空氣」。"
   },
   "enum:abilities.effects[]#summon.formation=line": {
     "status": "landing",
@@ -2212,5 +2217,83 @@
     "since": "2026-09-07",
     "why": "GH#1076／#993 第三批之後普查改讀展開後的文件，`summon.formation` 才第一次被看見；出貨三支召喚都是 circle。scatter 是模板槽的合法值（隨機散佈），等第一支散佈型召喚（原作：亡靈狂潮那一族）。",
     "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件"
+  },
+  "field:abilities.effects[]#applyBuff.condition|0|3|0.appliedBy": {
+    "status": "landing",
+    "since": "2026-09-08",
+    "why": "⭐ PR 1118 —— 狀態條件的**來源過濾**（「這個狀態是**我**掛的嗎」）。⛔ 出貨 107 份可以用它的技能今天零採用,而那個零是誠實的：既有 421 支是逐支從 JASS 翻過來的,原作的狀態判定**不分來源**（`GetUnitAbilityLevel(u,'Axxx')>0`）⇒ 沒有一支翻譯得出這一格。⭐ 它的第一份採用者會是**編輯器產出的內容**（社群英雄要區分「我的中毒」與「隊友的中毒」才疊得對）。⛔ 我不先填它 —— 替既有技能加一個原作沒有的來源條件,就是改設計。",
+    "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）"
+  },
+  "field:abilities.effects[]#applyBuff.hooks[].oncePerCast": {
+    "status": "landing",
+    "since": "2026-09-08",
+    "why": "⭐ PR 1118 —— hook 的**一次施放只給一次額度**（`sim/effects/hooks.ts:293`,守衛 `oncePerCast.test.ts` 34 條）。⛔ 出貨 171 份零採用：既有的「打到就給一層」全部是逐發計數（原作就是那樣）⇒ 沒有一支需要去重。⭐ 第一份採用者是**集氣類**的社群英雄（一次 AoE 打到五個人只該給一層）——那正是這個機制存在的理由,而它今天還沒有內容。",
+    "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）"
+  },
+  "field:abilities.effects[]#applyBuff.sourceScope": {
+    "status": "landing",
+    "since": "2026-09-08",
+    "why": "⭐ PR 1118 —— buff 的**來源作用域**。同 `condition.appliedBy` 那一列的理由：既有 184 份是原作翻譯,原作不分來源。⛔ 不先填。",
+    "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）"
+  },
+  "field:abilities.effects[]#applyStatus.sourceScope": {
+    "status": "landing",
+    "since": "2026-09-08",
+    "why": "⭐ PR 1118 —— 同上,`applyStatus` 那一側（164 份）。⚠️ 兩格**刻意成對**：只接一邊的話「掛上去分來源、判定不分來源」會變成一個查不出來的錯配。",
+    "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）"
+  },
+  "field:abilities.statusCost": {
+    "status": "landing",
+    "since": "2026-09-08",
+    "why": "⭐ PR 1118 —— 技能的**狀態消耗**（消耗 N 層某標記才放得出來）。⛔ 出貨 421 支零採用,而零是誠實的：既有的資源門檻全部走 `manaCost`／冷卻,原作的「集氣放大招」在 GGD 是用 `condition.status` + 分支做的。⭐ 第一份採用者是編輯器的 no-code 積木（`tpl-event-passive` 的集氣路線,見 `templateFamiliesAreAdopted.test.ts` 的 AWAITING_CONTENT）。",
+    "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）"
+  },
+  "field:abilities.template|0.cards[].inheritDefaults": {
+    "status": "landing",
+    "since": "2026-09-08",
+    "why": "⭐ PR 1118 —— 多張模板卡疊用時「這一張要不要繼承家族預設」。⛔ 出貨 260 份零採用：既有技能全部是**單卡**（`template.ref` 一個 ref）⇒ 結構上碰不到 `cards[]`。⭐ 第一份採用者是編輯器的多卡組合（no-code 積木疊起來時才需要決定繼承）。",
+    "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）"
+  },
+  "field:champions.abilities.*.statusCost": {
+    "status": "landing",
+    "since": "2026-09-08",
+    "why": "⭐ PR 1118 —— `abilities.statusCost` 的**內嵌鏡像**。⛔ 它結構上不可能早於 standalone 那一側有採用（鏡射方向永遠 standalone→embedded）⇒ **兩格要一起刪**。",
+    "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）"
+  },
+  "field:champions.modelVersions": {
+    "status": "landing",
+    "since": "2026-09-08",
+    "why": "⭐ PR 1118 —— 一位英雄的**多版模型**（社群投稿會有「作者的第 N 版」）。⛔ 出貨 71 位零採用：官方英雄一位一具模型,⛔ 沒有版本這個概念。⭐ 第一份採用者是**社群投稿的英雄**（`hero_intake.go` 收的完整英雄 ZIP 帶版本）—— 而那條路今天還沒有第一份投稿（同 `ugc.ts` 那一頁的狀態）。",
+    "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）"
+  },
+  "field:items.passive[].oncePerCast": {
+    "status": "landing",
+    "since": "2026-09-08",
+    "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "⭐ PR 1118 —— `hooks[].oncePerCast` 在**道具被動**那一側的同一格。⛔ 出貨 77 件零採用,理由與技能那一側逐字相同：既有被動全部是逐發計數（原作就是那樣）⇒ 沒有一件需要去重。⚠️ 兩格**刻意成對**（同一個 `HookDef`）—— ⛔ 只在一邊開,道具與技能對同一句「一次施放只給一次」會給出不同答案。"
+  },
+  "field:models.bodyVersion": {
+    "status": "landing",
+    "since": "2026-09-08",
+    "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "⭐ PR 1118 —— 模型的**身體版本**（社群投稿會有「同一位英雄的第 N 版身體」）。⛔ 出貨 152 份零採用：官方模型一具就是一具,⛔ 沒有版本這個概念。⚠️ 它與 `champions.modelVersions` 是**同一件事的兩半**（英雄那一份指哪幾版、模型那一份說自己是第幾版）⇒ 兩格一起等第一份社群投稿（`hero_intake.go`）。"
+  },
+  "field:models.heroBody": {
+    "status": "landing",
+    "since": "2026-09-08",
+    "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "⭐ PR 1118 —— 標記一具模型是**可共用的英雄身體**（社群英雄鑄造用它挑底模）。⛔ 出貨 152 份零採用：官方模型是逐位英雄專屬的,⛔ 沒有「共用身體」這個概念。⭐ 與 `models.bodyVersion`／`champions.modelVersions` 同一族,一起等第一份社群投稿。"
+  },
+  "variant:abilities.effects[]#consumeStatus": {
+    "status": "landing",
+    "since": "2026-09-08",
+    "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "⭐ PR 1118 —— **消耗狀態層數**的 effect kind（集氣放大招的下半：`statusCost` 是門檻,這一顆是真的扣掉）。⛔ 出貨 593 份零採用,理由與 `abilities.statusCost` 逐字相同：既有的集氣家族在 GGD 全部做成 `condition.status` + 分支,⛔ 沒有一支真的扣層。⭐ 第一份採用者是編輯器的 no-code 集氣積木（`tpl-event-passive`）。⚠️ 這一格與 `bricksComplete` 那條棘輪指向同一件事：機制在、編輯器表單還沒做。"
+  },
+  "variant:abilities.effects[]#spendHealth": {
+    "status": "landing",
+    "since": "2026-09-08",
+    "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "⭐ PR 1118 —— **以生命為代價**的 effect kind（`sim/effects/spendHealth.ts`,守衛見 `newKindShape.test.ts` 的第四類 SELF_ONLY_KINDS）。⛔ 出貨 593 份零採用,而零是誠實的：既有 421 支逐支從 JASS 翻過來,原作的「扣血施法」全部寫在 `SetUnitState(u, UNIT_STATE_LIFE, …)` 裡並被翻成 `damage{to:self}`（那是**傷害**,吃減傷與護盾）⇒ ⛔ 沒有一支該改成這一顆（改了就是改設計）。⭐ 第一份採用者是社群英雄（`spendHealth` 不吃減傷、有 `minimumHp` 底線,那是**代價**不是傷害）。"
   }
 }

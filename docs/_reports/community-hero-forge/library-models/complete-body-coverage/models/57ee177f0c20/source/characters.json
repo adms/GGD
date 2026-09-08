@@ -1,0 +1,27 @@
+{
+  "results": [
+    {
+      "id": "300heroes:239",
+      "library": "300heroes",
+      "name": "夜斗",
+      "origin": "流浪神差／野良神",
+      "aliases": [
+        "239",
+        "Name_yedou",
+        "夜斗"
+      ],
+      "origin_sources": [
+        "https://300data.com/hero/239.html",
+        "https://300data.com/data/api/hero_info/id/239"
+      ],
+      "origin_status": "角色身分對照",
+      "source_index": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/character-candidates.json",
+      "base_model": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/239.x",
+      "base_model_present": true,
+      "model_files": 17,
+      "animation_clips": 287,
+      "mapping_note": "Variants associated by numeric filename prefix; full asset index also contains other naming schemes.",
+      "readiness": "native_and_static_preview"
+    }
+  ]
+}

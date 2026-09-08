@@ -1,0 +1,110 @@
+{
+  "branch": "cebd230b3ba1b5053c2da21a77f11667cfdf45de",
+  "main": "4e11f1b0253c106e08a0e873e289f8822e32681d",
+  "packets": [
+    {
+      "key": "brick-request.solid-beam",
+      "changedFields": [
+        "contractFingerprint"
+      ],
+      "branchFingerprint": "ede2a824444ea458",
+      "mainFingerprint": "bdb64ca51f9b3b1d",
+      "claimsUnchanged": true,
+      "ownerQuotesUnchanged": true
+    },
+    {
+      "key": "claim.codex-lane-visual-advisory-and-brick-ids",
+      "changedFields": [
+        "contractFingerprint"
+      ],
+      "branchFingerprint": "ede2a824444ea458",
+      "mainFingerprint": "bdb64ca51f9b3b1d",
+      "claimsUnchanged": true,
+      "ownerQuotesUnchanged": true
+    },
+    {
+      "key": "claim.export-champion-package",
+      "changedFields": [
+        "contractFingerprint"
+      ],
+      "branchFingerprint": "ede2a824444ea458",
+      "mainFingerprint": "bdb64ca51f9b3b1d",
+      "claimsUnchanged": true,
+      "ownerQuotesUnchanged": true
+    },
+    {
+      "key": "claim.main-night-20260905-what-is-already-done",
+      "changedFields": [
+        "contractFingerprint"
+      ],
+      "branchFingerprint": "ede2a824444ea458",
+      "mainFingerprint": "bdb64ca51f9b3b1d",
+      "claimsUnchanged": true,
+      "ownerQuotesUnchanged": true
+    },
+    {
+      "key": "claim.model-fx-emitter-remaining-four-fields",
+      "changedFields": [
+        "contractFingerprint"
+      ],
+      "branchFingerprint": "ede2a824444ea458",
+      "mainFingerprint": "bdb64ca51f9b3b1d",
+      "claimsUnchanged": true,
+      "ownerQuotesUnchanged": true
+    },
+    {
+      "key": "claim.vfx-subtype-picker",
+      "changedFields": [
+        "contractFingerprint"
+      ],
+      "branchFingerprint": "ede2a824444ea458",
+      "mainFingerprint": "bdb64ca51f9b3b1d",
+      "claimsUnchanged": true,
+      "ownerQuotesUnchanged": true
+    },
+    {
+      "key": "owner-decision.20260906-main-tickets-codex-implements",
+      "changedFields": [
+        "title",
+        "contractFingerprint",
+        "claims"
+      ],
+      "branchFingerprint": "ede2a824444ea458",
+      "mainFingerprint": "bdb64ca51f9b3b1d",
+      "claimsUnchanged": false,
+      "ownerQuotesUnchanged": true
+    },
+    {
+      "key": "question.effect-graph-bridge",
+      "changedFields": [
+        "contractFingerprint"
+      ],
+      "branchFingerprint": "ede2a824444ea458",
+      "mainFingerprint": "bdb64ca51f9b3b1d",
+      "claimsUnchanged": true,
+      "ownerQuotesUnchanged": true
+    }
+  ],
+  "scope": "Read-only comparison and packet lint using the branch checker with exact pinned Main packets. This is not a merged-source or run-repro result.",
+  "checkerBlob": "4d454dd27ddecea9e261fe76afdf11eaf079e1ff",
+  "missingBranchEvidencePresentOnMain": [
+    {
+      "path": "docs/_reports/1025_temp_20260907-1550.md",
+      "mainBlob": "45fc431e9ecf63b9157d28b07735e60e6d346f8e",
+      "branchExists": false
+    },
+    {
+      "path": "apps/game-server/src/config/contentHotApply.ts",
+      "mainBlob": "7a38d0bce5570a6bccfb996e52e85ab9d8925c64",
+      "branchExists": false
+    }
+  ],
+  "check": {
+    "command": "node tools/coord/check.mjs --dir /private/tmp/ggd-coord-integration-evidence/main-history",
+    "exitCode": 1,
+    "passedPackets": 7,
+    "failedPackets": 1,
+    "failure": "The owner-decision Main packet references two files not yet integrated into the branch. Both pinned Main blobs exist.",
+    "runRepro": false
+  }
+}

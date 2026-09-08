@@ -1,0 +1,77 @@
+
+> ggd@0.0.0 editor:accept:release /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> node tools/editor-acceptance/check.mjs --release
+
+{"schema":"ggd-editor-acceptance-run@1","mode":"release","generatedAt":"2026-09-07T08:00Z","branch":"codex/community-hero-forge-integration","head":"e2706f68b9c9","originMain":"1de2bd31fb62","dirty":true,"worktreeChangeCount":22,"handbackMainCommit":null,"coverageFingerprint":"6135aecd8818","capabilityFingerprint":"9a0cd1be","geminiVisualReview":"disabled-not-requested"}
+PASS Main capability receipt
+PASS Editor coverage freshness (2 tests)
+FAIL Skill Forge
+
+> ggd@0.0.0 skillforge:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> node tools/skill-forge/check.mjs -- --machine-only
+
+ ELIFECYCLE  Command failed with exit code 1.
+
+FAIL Skill Forge no-code acceptance
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor
+
+ ✓ src/forge/conditionEditor.test.ts (36 tests) 109ms
+ ✓ src/vfx-forge/visualAcceptanceIssues.test.ts (22 tests) 23ms
+ ✓ src/preview/forgeRealCast.test.ts (19 tests) 1453ms
+stdout | src/preview/forgeRealCast.test.ts > GH#174 鑄技工坊的試放走玩家那條路 > Babylon 版：一顆 Engine、特效走共用工廠、dispose 收乾淨
+BJS - [16:01:00]: Babylon.js v7.54.3 - Null engine
+
+ ✓ src/forge/skillTypePresets.test.ts (12 tests) 1513ms
+   ✓ 鑄技工坊技能類型 > 所有可用友善配方都能經真正 SimWorld 點火，不以表單合法冒充可玩 445ms
+ ✓ src/vfx-forge/assetSafety.test.ts (8 tests) 52ms
+ ✓ src/forge/forgeWritebackTemplateGate.test.ts (13 tests) 26ms
+ ✓ src/vfx-forge/backdropFrameAudit.test.ts (20 tests) 161ms
+ ✓ src/forge/forgeStudioStack.test.ts (16 tests) 293ms
+ ❯ src/forge/skillAcceptanceCatalog.test.ts (9 tests | 1 failed) 39ms
+   × 鑄技工坊 47 份現有技能驗收清單 > capability-only 清單正好是契約有、正式技能沒採用的格，不能冒充已驗收 17ms
+     → expected Set{ 'chance', 'equipment' } to deeply equal Set{ 'chance', 'equipment', 'facing' }
+ ✓ src/forge/forgeStudioCondition.test.ts (7 tests) 99ms
+ ✓ src/vfx-forge/mechanicVisualOverlay.test.ts (6 tests) 792ms
+ ✓ src/vfx-forge/basicVisualAuthoring.test.ts (7 tests) 43ms
+ ✓ src/collections.test.ts (3 tests) 12ms
+ ✓ src/forge/runtimePreviewDoc.test.ts (2 tests) 10ms
+ ✓ src/forge/skillReasonableness.test.ts (4 tests) 6ms
+
+ Test Files  1 failed | 14 passed (15)
+      Tests  1 failed | 183 passed (184)
+   Start at  16:00:54
+   Duration  20.29s (transform 4.96s, setup 0ms, collect 11.86s, tests 4.63s, environment 3ms, prepare 1.08s)
+
+undefined
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/collections.test.ts src/forge/skillTypePresets.test.ts src/forge/skillAcceptanceCatalog.test.ts src/forge/skillReasonableness.test.ts src/forge/runtimePreviewDoc.test.ts src/forge/forgeRealCast.test.ts src/forge/conditionEditor.test.ts src/forge/forgeStudioCondition.test.ts src/forge/forgeStudioStack.test.ts src/forge/forgeWritebackTemplateGate.test.ts src/preview/forgeRealCast.test.ts src/vfx-forge/backdropFrameAudit.test.ts src/vfx-forge/assetSafety.test.ts src/vfx-forge/basicVisualAuthoring.test.ts src/vfx-forge/mechanicVisualOverlay.test.ts src/vfx-forge/visualAcceptanceIssues.test.ts ../../tools/skill-forge/visualProofImport.test.ts ../../tools/skill-forge/visualProofScope.test.ts --pool=threads --minWorkers=1 --maxWorkers=1 --reporter=dot
+
+(node:67967) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:67967) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/forge/skillAcceptanceCatalog.test.ts > 鑄技工坊 47 份現有技能驗收清單 > capability-only 清單正好是契約有、正式技能沒採用的格，不能冒充已驗收
+AssertionError: expected Set{ 'chance', 'equipment' } to deeply equal Set{ 'chance', 'equipment', 'facing' }
+
+- Expected
++ Received
+
+  Set {
+    "chance",
+    "equipment",
+-   "facing",
+  }
+
+ ❯ src/forge/skillAcceptanceCatalog.test.ts:176:54
+    174|       new Set(capabilities.hookEvents.filter((hook) => !usedHooks.has(…
+    175|     );
+    176|     expect(new Set(CAPABILITY_ONLY_CONDITION_KINDS)).toEqual(
+       |                                                      ^
+    177|       new Set(capabilities.conditionLeafKinds.filter((kind) => !usedCo…
+    178|     );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+ ELIFECYCLE  Command failed with exit code 1.

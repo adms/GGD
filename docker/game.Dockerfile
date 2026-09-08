@@ -37,11 +37,11 @@ COPY apps/game-server/package.json apps/game-server/
 RUN pnpm install --frozen-lockfile --filter "@ggd/game-server..."
 COPY packages/shared/ packages/shared/
 COPY apps/game-server/ apps/game-server/
-# NOT --prod: the app is executed by tsx, which is a devDependency. A --prod
-# deploy would strip the one binary the runtime needs. deploy bundles the
-# package plus its workspace dep @ggd/shared (source, since shared has no build)
-# into a self-contained /out.
-RUN pnpm --filter "@ggd/game-server" deploy /out
+# The community compatibility receipt hashes Main's actual compiler closure.
+# Keep the monorepo layout: pnpm deploy relocates shared's relative JSON imports
+# and removes the Main source files needed to prove the compiler identity.
+COPY apps/content-api/src/ apps/content-api/src/
+COPY docs/editor-contract/ggd-presentation-token-manifest.json docs/editor-contract/
 
 FROM node:22-alpine
 # tini: PID-1 signal handling so Colyseus shuts down gracefully on SIGTERM.
@@ -52,8 +52,8 @@ RUN apk add --no-cache tini
 # A bare `docker compose up` (dev) must keep working, so the image default is
 # development and the deploy overlay is what hardens it — see secretGuard.ts.
 ENV NODE_ENV=development
-WORKDIR /app
-COPY --from=build /out/ ./
+WORKDIR /repo/apps/game-server
+COPY --from=build /repo/ /repo/
 
 # Secrets (PLATFORM_GAME_SHARED_SECRET, …) come from the environment only —
 # never baked into the image (infra-09).

@@ -8,11 +8,11 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_9271e9ecf3ec`
+contentVersion `cv_4afa36ccb49b`
 
 ---
 
-## 效果（effect kind） —— 47 種
+## 效果（effect kind） —— 49 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
@@ -23,6 +23,7 @@ contentVersion `cv_9271e9ecf3ec`
 | `chainLightning` | 連鎖閃電 | 2 | `godie-o00k.r`、`godie-udea.r` |
 | `championForm` | 變身／切換形態 | 12 | `godie-e002.w`、`godie-e00l.w`、`godie-e00s.passive`、`godie-e00w.e`、`godie-e010.passive`、`godie-h01n.r`、`godie-h02v.q`、`godie-ogrh.e`、`godie-u034.r`、`godie-ucrl.r`、`godie-umal.r`、`godie-uvng.passive` |
 | `comboStrikes` | 連段（多次獨立斬擊＋可選收尾） | 1 | `godie-hart.r` |
+| `consumeStatus` | 足額消耗狀態並分支 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `convertTeam` | 陣營轉換（把一個既有單位借到自己這一隊） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `cycleBuff` | 輪替增益 | 1 | `godie-efur.passive` |
 | `damage` | 傷害 | 87 | `godie-e002.ex`、`godie-e002.r`、`godie-e002.w`、`godie-e007.e`、`godie-e007.ex`、`godie-e007.q`、`godie-e008.ex`、`godie-e00l.ex`、`godie-e00l.r`、`godie-e00l.w`、`godie-e00x.e`、`godie-e00x.q` …（共 87） |
@@ -58,6 +59,7 @@ contentVersion `cv_9271e9ecf3ec`
 | `spawnModelFx` | 模型特效（帶模型的單位沿路徑移動 —— 光束／砲擊／衝擊波） | 55 | `godie-e002.e`、`godie-e002.r`、`godie-e008.r`、`godie-e00l.e`、`godie-e00l.r`、`godie-e00r.r`、`godie-e00w.q`、`godie-e00w.r`、`godie-e00x.q`、`godie-e00x.r`、`godie-edem.e`、`godie-edem.ex` …（共 55） |
 | `spawnProjectile` | 投射物 | 4 | `godie-e010.q`、`grail-c-16`、`grail-c-20`、`storm-arrow` |
 | `spawnVfx` | 純演出（特效／音效） | 54 | `godie-e002.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e00l.e`、`godie-e00l.ex`、`godie-e00l.r`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.r`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00x.r` …（共 54） |
+| `spendHealth` | 支付生命（保留生存底線） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `spendMana` | 燒魔 | 4 | `godie-e00l.w`、`godie-emfr.passive`、`godie-u00k.passive`、`godie-udea.r` |
 | `summon` | 召喚 | 2 | `godie-e00s.r`、`godie-e010.r` |
 | `swapResource` | 資源互換 | 1 | `godie-emns.ex` |
@@ -102,13 +104,14 @@ contentVersion `cv_9271e9ecf3ec`
 | `onUltimateCast` | 大招（R）施放時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onUltimateHit` | 大招（R）命中時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 
-## 條件葉（condition leaf） —— 9 種
+## 條件葉（condition leaf） —— 10 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
 | `chance` | 機率 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `distance` | 與目標的距離（GGD 格）—— ⭐ GH#1020 小傑猜猜拳的近／中／遠三段（≤4.58 石頭／≤9.17 剪刀／>9.17 布 ＝ JASS 250／500／600）；op 是 ≤ 或 >。 | 2 | `godie-u034.passive`、`godie-ucrl.passive` |
 | `equipment` | 裝備了某道具時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `facing` | 正面方向：指定自己或目標，判斷對方是否位於其正面扇形內。完整角度 1–360°、含邊界，以當下位置與朝向計算；不同區、重疊中心或無有效朝向不成立。 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `form` | 主體現在是本體／變身態 —— ⭐ GH#1070 原作 `GetUnitTypeId(caster) == 'O00X'` 那一族（09-04 龜派／11-03 鬼氣九刀流／11-04 三千世界的「超級賽亞人／武裝色狀態可增加威力」）。讀的是與 `whileForm` 同一支 `inAlternateForm`；⛔ 不要用 `recentCast withinSec=變身秒數` 代替 —— 那是變身秒數的第二個住處。 | 9 | `godie-h01n.e`、`godie-h01n.w`、`godie-h01o.w`、`godie-o00x.r`、`godie-ogrh.r`、`godie-u01u.e`、`godie-u01u.r`、`godie-udre.e`、`godie-udre.r` |
 | `kind` | 對象是誰（小兵／英雄／BOSS） | 1 | `godie-h02k.ex` |
 | `learned` | 已學會某一格 —— ⭐ 「EX 已解鎖」那一族（原作 udg_EX_Mode 滿 30 級）：猜猜拳三分支各帶一段 learned:EX 的追加效果。 | 6 | `godie-hpb1.e`、`godie-hpb1.w`、`godie-u034.passive`、`godie-u034.r`、`godie-ucrl.passive`、`godie-ucrl.r` |
@@ -116,7 +119,7 @@ contentVersion `cv_9271e9ecf3ec`
 | `stat` | 屬性門檻（血量低於 X%…） | 9 | `godie-e002.w`、`godie-e00l.w`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-emfr.passive`、`godie-h00l.ex`、`godie-h02u.w`、`godie-h02v.w`、`grail-ex-13` |
 | `status` | 身上有某狀態時 | 37 | `godie-e007.ex`、`godie-e00r.q`、`godie-edem.r`、`godie-efur.ex`、`godie-emns.e`、`godie-emns.r`、`godie-ewar.e`、`godie-ewar.ex`、`godie-h00l.e`、`godie-h01n.e`、`godie-h01n.w`、`godie-h01o.w` …（共 37） |
 
-## 狀態標籤 —— 120 個
+## 狀態標籤 —— 121 個
 
 開放詞彙（自由字串）。條件葉 `status` 的**類別分支**查的就是它。
 
@@ -141,17 +144,17 @@ contentVersion `cv_9271e9ecf3ec`
 | `burnstun` | `burnstun` |
 | `camera-mark` | `camera-mark` |
 | `cast-denied` | `burnstun`、`fang-stun`、`ingredient`、`omnislash-lock`、`omnislash-perform`、`stun`、`trial-stun` |
-| `cc` | `blind`、`burnstun`、`charmed`、`confusion`、`curse`、`fang-stun`、`fear`、`ingredient`、`numbness`、`omnislash-lock`、`paralysis`、`root`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60`、`stun`、`trial-stun` |
+| `cc` | `blind`、`burnstun`、`charmed`、`confusion`、`curse`、`fang-stun`、`fear`、`ingredient`、`lock-combo`、`numbness`、`omnislash-lock`、`paralysis`、`root`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60`、`stun`、`trial-stun` |
 | `channel` | `omnislash-perform` |
 | `charmed` | `charmed` |
-| `combo` | `moon-combo`、`octuple-slash-window` |
+| `combo` | `lock-combo`、`moon-combo`、`octuple-slash-window` |
 | `combo-mark` | `aban-x-mark` |
 | `confusion` | `confusion` |
 | `cooldown` | `devour-cooldown` |
 | `counter` | `grief-seed-charge`、`triforce-courage` |
 | `curse` | `curse` |
 | `damage-bank` | `light-wand-banked`、`nen-banked` |
-| `debuff` | `aban-x-mark`、`alcohol-enema`、`armor-break`、`blind`、`burn`、`burnstun`、`camera-mark`、`charmed`、`confusion`、`curse`、`fang-stun`、`fear`、`grievous-wounds`、`ingredient`、`magic-break`、`no-heal`、`numbness`、`omnislash-lock`、`paralysis`、`poison`、`root`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60`、`stun`、`trial-stun` |
+| `debuff` | `aban-x-mark`、`alcohol-enema`、`armor-break`、`blind`、`burn`、`burnstun`、`camera-mark`、`charmed`、`confusion`、`curse`、`fang-stun`、`fear`、`grievous-wounds`、`ingredient`、`lock-combo`、`magic-break`、`no-heal`、`numbness`、`omnislash-lock`、`paralysis`、`poison`、`root`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60`、`stun`、`trial-stun` |
 | `devour-cooldown` | `devour-cooldown` |
 | `disable` | `burnstun`、`fang-stun`、`fear`、`ingredient`、`numbness`、`omnislash-lock`、`omnislash-perform`、`paralysis`、`root`、`stun`、`trial-stun` |
 | `dot` | `burn`、`poison` |
@@ -186,6 +189,7 @@ contentVersion `cv_9271e9ecf3ec`
 | `lifesteal-down` | `grievous-wounds`、`no-heal` |
 | `lifesteal-up` | `rage` |
 | `light-wand-banked` | `light-wand-banked` |
+| `lock-combo` | `lock-combo` |
 | `magic-break` | `magic-break` |
 | `magic-resist-down` | `magic-break` |
 | `magical` | `magic-break` |

@@ -129,6 +129,8 @@ import type { StatusEffect } from "../components";
 // 這裡另外開一份 id→tag 表。
 import { Abilities, Items, Statuses } from "./registry";
 import { Stat } from "../stats/statTypes";
+// ⭐ 決定性的 cos（只用 + − × ÷）—— `facing` 條件葉不可以呼叫 `Math.cos/atan2`（purity 禁令）。
+import { cosDeg } from "../math/cosDeg";
 import type { AttrKey } from "../stats/attributes";
 import { liveAttribute } from "../stats/attrSources";
 // ⛔ 不要在這裡再寫一次「他身上還有沒有這個 status」。`effects/effectCommon.ts`
@@ -357,6 +359,18 @@ export interface DistanceLeaf {
 export const CONDITION_DISTANCE_MIN = 0;
 export const CONDITION_DISTANCE_MAX = 40;
 
+/** The other entity is within this subject's forward arc, measured at evaluation.
+ * arcDegrees is the full cone width. Missing transforms, different zones, zero
+ * facing and overlapping centers have no usable direction and return false.
+ */
+export interface FacingLeaf {
+  kind: "facing";
+  subject: ConditionSubject;
+  arcDegrees: number;
+}
+export const CONDITION_FACING_ARC_MIN = 1;
+export const CONDITION_FACING_ARC_MAX = 360;
+
 /**
  * ⭐ GH#1020 —— 「**主體已學會某一格技能**」（該格階級 ≥ 1）。
  *
@@ -549,6 +563,8 @@ export interface StatusIdLeaf {
   subject: ConditionSubject;
   /** `status-effect@1` 的編號 —— 跟 `applyStatus.statusId` 是同一個命名空間。 */
   statusId: StatusId;
+  /** Match only explicit caster-scoped applications by ctx.self. */
+  appliedBy?: "self";
   /**
    * ⭐ 「至少疊了幾層」（GH#301-5）。缺席 = 只問有無，逐字等於這一格出現之前。
    *
@@ -728,6 +744,7 @@ export type ConditionLeaf =
   | EquipmentLeaf
   | RecentCastLeaf
   | DistanceLeaf
+  | FacingLeaf
   | LearnedLeaf
   | FormLeaf;
 
@@ -1039,6 +1056,7 @@ export const STATUS_FIELD_TAGS: Readonly<
   statusId: [],
   /** 誰掛的。它回答的是歸屬，不是效果。 */
   sourceId: [],
+  applierId: [],
   /** 到期。`hasStatusTag` 已經先用它篩過「這一 tick 還算不算」。 */
   expiresAtTick: [],
 
@@ -1329,8 +1347,9 @@ function evalNode(
     // ⛔ `minStacks` 缺席時走的是**原本那一行**，不是 `statusStacks(...) >= 1`：
     // 兩者在今天等價，但 `hasStatus` 是「有沒有」的唯一定義，而層數是另一個問題。
     // 合成一行等於把兩個問題綁在一起，之後任何一邊改語意都會安靜地拖動另一邊。
-    if (cond.minStacks === undefined) return hasStatus(world, id, cond.statusId);
-    return statusStacks(world, id, cond.statusId) >= cond.minStacks;
+    const applierId = cond.appliedBy === "self" ? ctx.self : undefined;
+    if (cond.minStacks === undefined) return hasStatus(world, id, cond.statusId, applierId);
+    return statusStacks(world, id, cond.statusId, applierId) >= cond.minStacks;
   }
   if (cond.kind === "equipment") {
     const id = subjectOf(ctx, cond.subject);
@@ -1344,6 +1363,25 @@ function evalNode(
     const b = world.transform.get(ctx.target);
     if (a === undefined || b === undefined) return false;
     return compare(cond.op, dist(a.pos, b.pos), cond.value);
+  }
+  if (cond.kind === "facing") {
+    if (ctx.target === undefined) return false;
+    const from = world.transform.get(cond.subject === "self" ? ctx.self : ctx.target);
+    const to = world.transform.get(cond.subject === "self" ? ctx.target : ctx.self);
+    if (from === undefined || to === undefined || from.zone !== to.zone) return false;
+    const dx = to.pos.x - from.pos.x, dz = to.pos.z - from.pos.z;
+    const fx = from.facing.x, fz = from.facing.z;
+    // ⭐ 2026-09-08 合併 PR 1118 改寫 —— 原本是
+    //   `atan2(|cross|, dot) * 180 / π ≤ arc/2`,而 `atan2` 與 `hypot` **都是 purity 禁令**
+    //   （ECMA-262 允許它們的結果是實作定義的 ⇒ 兩台機器可能對「在不在正面」給出不同答案）。
+    //   ⇒ 兩邊取 cos：`angle ≤ h` ⟺ `dot ≥ cos(h)·|f|·|d|`。左邊只剩乘加與 `sqrt`
+    //   （IEEE 要求正確捨入）,而 cos 只吃**作者填的那個常數**,由 `cosDeg` 用 `+ − × ÷` 算。
+    const dLenSq = dx * dx + dz * dz, fLenSq = fx * fx + fz * fz;
+    if (![dx, dz, fx, fz].every(Number.isFinite) || dLenSq === 0 || fLenSq === 0) return false;
+    // ⚠️ 半角 > 90° 時 `cos` 是負的,而這個不等式仍然成立（右邊是負數 × 正長度）——
+    //   ⛔ 不要把它「優化」成先比 `dot >= 0`,那會把 arc > 180° 的錐體切掉一半。
+    return fx * dx + fz * dz
+      >= cosDeg(cond.arcDegrees / 2) * Math.sqrt(fLenSq * dLenSq) - 1e-9;
   }
   if (cond.kind === "learned") {
     const id = subjectOf(ctx, cond.subject);
@@ -1606,9 +1644,10 @@ function statusMatchLabel(leaf: StatusLeaf): string {
   if (!isStatusIdLeaf(leaf)) return `【${leaf.tag}】類的狀態`;
   // ⛔ 層數一定要進句子：一張「疊到 5 層才引爆」的卡如果印成「帶有【破甲】」，
   // 那句文案對玩家與作者**兩邊**都是假的（#202 / #227 是同一個形態）。
-  return leaf.minStacks === undefined
+  const label = leaf.minStacks === undefined
     ? `【${statusLabel(leaf.statusId)}】`
     : `${leaf.minStacks} 層以上的【${statusLabel(leaf.statusId)}】`;
+  return leaf.appliedBy === "self" ? `自己施加的${label}` : label;
 }
 
 /**
@@ -1677,6 +1716,7 @@ function describeLeaf(leaf: ConditionLeaf): string {
   // ⭐ GH#1020 —— 門檻一定要進句子（同 recentCast 的秒數）：一張「近距離才擊飛」的卡
   // 若印成「距離近」，「近」是多少對玩家與作者兩邊都是假的。單位是 sim 單位。
   if (leaf.kind === "distance") return `與目標距離 ${OP_LABEL[leaf.op]} ${num(leaf.value)}`;
+  if (leaf.kind === "facing") return `${SUBJECT_LABEL[leaf.subject === "self" ? "target" : "self"]}位於${SUBJECT_LABEL[leaf.subject]}正面 ${num(leaf.arcDegrees)}° 內`;
   if (leaf.kind === "learned") return `${SUBJECT_LABEL[leaf.subject]}已學會 ${leaf.slot}`;
   // ⭐ GH#1070 —— 形態一定要進句子：「自己是變身態」與「自己是本體」是兩條相反的閘。
   if (leaf.kind === "form") return `${SUBJECT_LABEL[leaf.subject]}是${FORM_LABEL[leaf.form]}`;

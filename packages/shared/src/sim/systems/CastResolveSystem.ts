@@ -108,6 +108,9 @@ export function castResolveSystem(world: SimWorld): void {
     );
     if (!wardRefused) {
       runEffects(augmentedEffects, {
+        // ⭐ PR 1118 —— 這一發的施放身分（`castLedger` 的 join key）。⛔ 不傳的話
+        //   帶吟唱的那一半技能在帳本上會變成「無主的傷害」，而瞬發那一半有主。
+        castInstance: cast.castInstance,
         world,
         caster: id,
         rank: cast.rank,

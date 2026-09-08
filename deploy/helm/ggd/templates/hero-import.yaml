@@ -1,0 +1,132 @@
+{{- if .Values.community.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-hero-import
+  labels:
+    {{- include "ggd.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "ggd.selector" (dict "root" . "name" "hero-import") | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "ggd.selector" (dict "root" . "name" "hero-import") | nindent 8 }}
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - name: hero-import
+          image: {{ .Values.community.image | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          ports:
+            - name: http
+              containerPort: {{ .Values.community.port }}
+          env:
+            - name: GGD_PLATFORM_URL
+              value: {{ printf "http://%s-platform:%d" .Release.Name (int .Values.platform.port) | quote }}
+            - name: PORT
+              value: {{ .Values.community.port | quote }}
+            - name: GGD_BUILD_STAMP
+              value: {{ required "community.buildStamp is required" .Values.community.buildStamp | quote }}
+            - name: GGD_HERO_IMPORT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-secrets
+                  key: GGD_HERO_IMPORT_SECRET
+          readinessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 3
+          volumeMounts:
+            - name: content
+              mountPath: /srv/content
+              readOnly: true
+            - name: work-data
+              mountPath: /data
+            - name: temporary
+              mountPath: /tmp
+          {{- with .Values.community.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      volumes:
+        - name: temporary
+          emptyDir: {}
+        - name: work-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-hero-import-data
+        - name: content
+          {{- if .Values.content.hostPath }}
+          hostPath:
+            path: {{ .Values.content.hostPath | quote }}
+            type: Directory
+          {{- else if .Values.content.existingClaim }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.content.existingClaim | quote }}
+            readOnly: true
+          {{- else }}
+          {{- fail "community importer requires content.hostPath or content.existingClaim" }}
+          {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-hero-import
+spec:
+  type: ClusterIP
+  selector:
+    {{- include "ggd.selector" (dict "root" . "name" "hero-import") | nindent 4 }}
+  ports:
+    - name: http
+      port: {{ .Values.community.port }}
+      targetPort: http
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-hero-import-data
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: {{ .Values.community.storage }}
+  {{- with .Values.community.storageClass }}
+  storageClassName: {{ . | quote }}
+  {{- end }}
+{{- if .Values.networkPolicy.enabled }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ .Release.Name }}-hero-import
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "ggd.selector" (dict "root" . "name" "hero-import") | nindent 6 }}
+  policyTypes: ["Ingress"]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              {{- include "ggd.selector" (dict "root" . "name" "platform") | nindent 14 }}
+        - podSelector:
+            matchLabels:
+              {{- include "ggd.selector" (dict "root" . "name" "game") | nindent 14 }}
+      ports:
+        - protocol: TCP
+          port: {{ .Values.community.port }}
+{{- end }}
+{{- end }}

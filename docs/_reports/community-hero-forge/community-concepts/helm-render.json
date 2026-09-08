@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "communityEnabled": false,
+      "platformAllowsImporter": false,
+      "documents": 13
+    },
+    {
+      "communityEnabled": true,
+      "platformAllowsImporter": true,
+      "documents": 17
+    }
+  ]
+}

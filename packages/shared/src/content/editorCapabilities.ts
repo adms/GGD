@@ -2260,6 +2260,7 @@ const FAMILY_PROBE_LIST: readonly string[] = [
   "barrier-domain", "beam-roll", "buff-self", "blink-strike", "channel-beam", "charge-push",
   "data-no-trigger", "death-mechanic", "drain-leech", "global-rule", "ground-nova",
   "growth-charge", "instant-blast", "leap-strike", "life-manipulate", "line-sweep",
+  "effect-sequence", "event-passive",
   "lock-combo", "mark-stacks", "on-attack", "on-hit-react", "orbit-array",
   "periodic-field", "proxy-cast", "proxy-fanout", "pull-throw", "pure-cosmetic",
   // ⭐【動畫特效三支】owner 2026-08-22 點名的三支驗收技能，三個家族共用

@@ -28,6 +28,13 @@
         "scripts/watchdog.sh"
       ],
       "reason": "⭐ 它**不是** package.json 的 script,是 `docs/_data/deploy-timings.json` 的**帳本鍵名**。`scripts/watchdog.sh:19` 的註解在引用一個量測（「74 次 `ship:total`,中位數 370s,健康的最慢 463s ⇒ 距離 480s 只剩 3.5% 餘裕」)——⇒ 把它改成任何真的 script 名都會讓那句話變成**假的**。反駁方式:哪天帳本把這個鍵改名,這一列跟著改;帳本不再記時間 ⇒ 整句註解與這一列一起刪。"
+    },
+    {
+      "ref": "lol:lux",
+      "files": [
+        "CLAUDE.md"
+      ],
+      "reason": "⛔ 不是指令，是**角色 ID**：CLAUDE.md 第一·四之一（素材庫入口，owner 2026-09-08 逐字給的用法）示範 `python3 query.py 'lol:lux' --pending` —— `<作品>:<角色>` 是那支查詢工具的參數格式，而它剛好長得像 pnpm script 名。⭐ 反駁方式：CLAUDE.md 那一行若改寫成不含冒號的範例，這一列就罩不住任何幽靈，棘輪會要求刪掉它。"
     }
   ]
 }

@@ -70,6 +70,7 @@ export const dashEffect: EffectKindSpec<"dash"> = {
     if (world.nav.get(ctx.caster)?.override?.kind !== "dash") return;
 
     dashOnEndQueue(world).push({
+      castInstance: ctx.castInstance,
       caster: ctx.caster,
       from: { x: t.pos.x, z: t.pos.z },
       maxDistance: e.maxDistance,

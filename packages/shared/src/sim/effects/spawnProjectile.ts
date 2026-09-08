@@ -25,6 +25,7 @@ export const spawnProjectileEffect: EffectKindSpec<"spawnProjectile"> = {
       zone: t.zone,
     });
     world.projectile.set(id, {
+      castInstance: ctx.castInstance,
       projectileId: e.projectileId,
       ownerId: ctx.caster,
       dir,

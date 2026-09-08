@@ -22,7 +22,11 @@ const rotr = (x: number, n: number): number => (x >>> n) | (x << (32 - n));
 
 /** SHA-256 of a UTF-8 string, as a 64-char lowercase hex digest. */
 export function sha256Hex(input: string): string {
-  const data = new TextEncoder().encode(input);
+  return sha256Bytes(new TextEncoder().encode(input));
+}
+
+/** SHA-256 of exact binary bytes; shared by frozen packages and the browser. */
+export function sha256Bytes(data: Uint8Array): string {
   const bitLenLo = (data.length << 3) >>> 0;
   const bitLenHi = Math.floor(data.length / 0x20000000);
 

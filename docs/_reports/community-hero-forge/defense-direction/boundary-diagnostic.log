@@ -1,0 +1,73 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+stdout | packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts > Azazel authored six-slot refinement > E contact at 0 degrees and 2.5 units: defense=true
+contact diagnostic 0 2.5 {"defender":{"pos":{"x":-40,"z":10},"vel":{"x":0,"z":0},"facing":{"x":1,"z":0},"radius":0.6,"zone":0},"attacker":{"pos":{"x":-37.5,"z":10},"vel":{"x":0,"z":0},"facing":{"x":-1,"z":0},"radius":0.6,"zone":0}} {"defender":{"pos":{"x":-40.168,"z":10},"vel":{"x":0,"z":0},"facing":{"x":1,"z":0},"radius":0.6,"zone":0,"accel":0},"attacker":{"pos":{"x":-37.5,"z":10},"vel":{"x":0,"z":0},"facing":{"x":-1,"z":0},"radius":0.6,"zone":0,"accel":0}}
+
+stdout | packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts > Azazel authored six-slot refinement > E contact at 60 degrees and 2 units: defense=true
+contact diagnostic 60 2 {"defender":{"pos":{"x":-40,"z":10},"vel":{"x":0,"z":0},"facing":{"x":1,"z":0},"radius":0.6,"zone":0},"attacker":{"pos":{"x":-39,"z":11.732050807568877},"vel":{"x":0,"z":0},"facing":{"x":-1,"z":0},"radius":0.6,"zone":0}} {"defender":{"pos":{"x":-40.168,"z":10},"vel":{"x":0,"z":0},"facing":{"x":1,"z":0},"radius":0.6,"zone":0,"accel":0},"attacker":{"pos":{"x":-39,"z":11.732050807568877},"vel":{"x":0,"z":0},"facing":{"x":-1,"z":0},"radius":0.6,"zone":0,"accel":0}}
+
+stdout | packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts > Azazel authored six-slot refinement > E contact at 60.01 degrees and 2 units: defense=false
+contact diagnostic 60.01 2 {"defender":{"pos":{"x":-40,"z":10},"vel":{"x":0,"z":0},"facing":{"x":1,"z":0},"radius":0.6,"zone":0},"attacker":{"pos":{"x":-39.00030231512338,"z":11.732225314112547},"vel":{"x":0,"z":0},"facing":{"x":-1,"z":0},"radius":0.6,"zone":0}} {"defender":{"pos":{"x":-40.168,"z":10},"vel":{"x":0,"z":0},"facing":{"x":1,"z":0},"radius":0.6,"zone":0,"accel":0},"attacker":{"pos":{"x":-39.00030231512338,"z":11.732225314112547},"vel":{"x":0,"z":0},"facing":{"x":-1,"z":0},"radius":0.6,"zone":0,"accel":0}}
+
+stdout | packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts > Azazel authored six-slot refinement > E contact at 90 degrees and 2 units: defense=false
+contact diagnostic 90 2 {"defender":{"pos":{"x":-40,"z":10},"vel":{"x":0,"z":0},"facing":{"x":1,"z":0},"radius":0.6,"zone":0},"attacker":{"pos":{"x":-40,"z":12},"vel":{"x":0,"z":0},"facing":{"x":-1,"z":0},"radius":0.6,"zone":0}} {"defender":{"pos":{"x":-40.168,"z":10},"vel":{"x":0,"z":0},"facing":{"x":1,"z":0},"radius":0.6,"zone":0,"accel":0},"attacker":{"pos":{"x":-40,"z":12},"vel":{"x":0,"z":0},"facing":{"x":-1,"z":0},"radius":0.6,"zone":0,"accel":0}}
+
+stdout | packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts > Azazel authored six-slot refinement > E contact at 180 degrees and 2 units: defense=false
+contact diagnostic 180 2 {"defender":{"pos":{"x":-40,"z":10},"vel":{"x":0,"z":0},"facing":{"x":1,"z":0},"radius":0.6,"zone":0},"attacker":{"pos":{"x":-42,"z":10},"vel":{"x":0,"z":0},"facing":{"x":-1,"z":0},"radius":0.6,"zone":0}} {"defender":{"pos":{"x":-40.168,"z":10},"vel":{"x":0,"z":0},"facing":{"x":1,"z":0},"radius":0.6,"zone":0,"accel":0},"attacker":{"pos":{"x":-42,"z":10},"vel":{"x":0,"z":0},"facing":{"x":-1,"z":0},"radius":0.6,"zone":0,"accel":0}}
+
+stdout | packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts > Azazel authored six-slot refinement > E contact at 0 degrees and 2.501 units: defense=false
+contact diagnostic 0 2.501 {"defender":{"pos":{"x":-40,"z":10},"vel":{"x":0,"z":0},"facing":{"x":1,"z":0},"radius":0.6,"zone":0},"attacker":{"pos":{"x":-37.499,"z":10},"vel":{"x":0,"z":0},"facing":{"x":-1,"z":0},"radius":0.6,"zone":0}} {"defender":{"pos":{"x":-40.168,"z":10},"vel":{"x":0,"z":0},"facing":{"x":1,"z":0},"radius":0.6,"zone":0,"accel":0},"attacker":{"pos":{"x":-37.499,"z":10},"vel":{"x":0,"z":0},"facing":{"x":-1,"z":0},"radius":0.6,"zone":0,"accel":0}}
+
+ ❯ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts (27 tests | 2 failed | 21 skipped) 63ms
+   × Azazel authored six-slot refinement > E contact at 0 degrees and 2.5 units: defense=true 27ms
+     → expected [] to have a length of 1 but got +0
+   × Azazel authored six-slot refinement > E contact at 60.01 degrees and 2 units: defense=false 10ms
+     → expected [ { type: 'reflectSuccess', …(2) } ] to have a length of +0 but got 1
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts > Azazel authored six-slot refinement > E contact at 0 degrees and 2.5 units: defense=true
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts:249:71
+    247|     r.step(2);
+    248|     console.log("contact diagnostic", angle, distance, beforeContact, …
+    249|     expect(r.events.filter(event => event.type === "reflectSuccess")).…
+       |                                                                       ^
+    250|     expect(hasStatus(r.world, r.caster, ids.counter as StatusId)).toBe…
+    251|     if (defended) { expect(r.hp(r.caster)).toBe(hp); expect(r.hp()).to…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts > Azazel authored six-slot refinement > E contact at 60.01 degrees and 2 units: defense=false
+AssertionError: expected [ { type: 'reflectSuccess', …(2) } ] to have a length of +0 but got 1
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts:249:71
+    247|     r.step(2);
+    248|     console.log("contact diagnostic", angle, distance, beforeContact, …
+    249|     expect(r.events.filter(event => event.type === "reflectSuccess")).…
+       |                                                                       ^
+    250|     expect(hasStatus(r.world, r.caster, ids.counter as StatusId)).toBe…
+    251|     if (defended) { expect(r.hp(r.caster)).toBe(hp); expect(r.hp()).to…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 4 passed | 21 skipped (27)
+   Start at  15:55:07
+   Duration  6.48s (transform 1.85s, setup 0ms, collect 5.80s, tests 63ms, environment 0ms, prepare 106ms)
+

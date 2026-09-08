@@ -1,0 +1,13 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ packages/shared/src/content/heroForge/handoff.test.ts (3 tests) 69ms
+ ✓ apps/editor/src/hero/projectModel.test.ts (2 tests) 53ms
+ ✓ packages/shared/src/content/heroForge/migration.test.ts (2 tests) 38ms
+
+ Test Files  3 passed (3)
+      Tests  7 passed (7)
+   Start at  03:41:34
+   Duration  7.06s (transform 2.61s, setup 0ms, collect 5.28s, tests 161ms, environment 0ms, prepare 240ms)
+

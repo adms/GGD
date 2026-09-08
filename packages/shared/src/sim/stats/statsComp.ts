@@ -60,6 +60,7 @@ export interface AbilityInstance {
  * at cast-begin (LoL-style: an interrupted cast loses the mana, not refunded).
  */
 export interface CastState {
+  castInstance?: import("../content/castInstance").CastInstance;
   /** `CastableSlot`: the sixth slot (天生技) casts through this state too. */
   slot: CastableSlot;
   abilityId: AbilityId;

@@ -1,0 +1,1697 @@
+{
+  "schema": "ggd-library-body-ready@1",
+  "preparation": {
+    "schema": "ggd-library-model-preparation@1",
+    "asset": "300heroes:8bb741c66037340e2f7efec7",
+    "source": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/202.x",
+      "sha256": "15cd9943652e12826d897fc6a96b0bea0ecfdb4bc05c24961d62be2d995d252f",
+      "bytes": 1401954,
+      "characterLinks": [
+        {
+          "character_id": "300heroes:202",
+          "confidence": "official_base_model"
+        }
+      ],
+      "identity": {
+        "basis": "official_base_model",
+        "links": [
+          {
+            "character_id": "300heroes:202",
+            "confidence": "official_base_model"
+          }
+        ]
+      }
+    },
+    "output": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-hero-asset-integration/additional-native-batch-v2/300heroes-202/body.glb",
+      "sha256": "33236f569d967a4ec0a964c6c36bcdb9f9d44598b62e274681eaeae926a64b2c",
+      "bytes": 916540
+    },
+    "stateClips": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_1",
+      "cast": "single_skill_01",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "validation": "pending-shared-validator-and-visual-review",
+    "nativeVersion": 6,
+    "nativeInverseAffineMaxError": 1.7881393432617188e-7,
+    "originalBoneCount": 74,
+    "retainedBones": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73
+    ],
+    "bodyMeshes": [
+      {
+        "index": 0,
+        "name": "周防尊",
+        "sourceName": "周防尊"
+      }
+    ],
+    "excludedMeshIndices": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "originalClipCount": 21,
+    "nativeFrameRanges": {
+      "bat_idle": [
+        3,
+        33
+      ],
+      "single_run": [
+        63,
+        83
+      ],
+      "single_attack_attcom_1": [
+        136,
+        166
+      ],
+      "single_skill_01": [
+        485,
+        487
+      ],
+      "dead": [
+        618,
+        686
+      ]
+    },
+    "fps": 32,
+    "fpsBasis": "Explicit adaptation setting; bundled native viewer advances at 1/32 s",
+    "coordinateConversion": "Max Z-up to glTF Y-up; 0.01 metres/native unit",
+    "textures": [
+      {
+        "asset": "300heroes:07a0a1acc397cafbfca1f8b8",
+        "nativeReference": "202.dds",
+        "actualPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/202.dds",
+        "sha256": "16bd2e31972183ffb29240576602f0b5b0dca3f6b266dc483540d07363d436da"
+      }
+    ],
+    "visibilityLeafBones": [],
+    "adaptations": [
+      "Selected body/weapon meshes only; native particles and other appearances excluded",
+      "Original weighted joints and ancestors retained; global native poses converted into local glTF hierarchy",
+      "Diffuse textures converted to embedded PNG with unlit double-sided materials"
+    ],
+    "nativePoseSamples": [
+      {
+        "clip": "bat_idle",
+        "nativeFrame": 3,
+        "seconds": 0,
+        "meshName": "周防尊",
+        "vertices": [
+          0,
+          799,
+          1598,
+          2397,
+          3196,
+          3995,
+          4794,
+          5594
+        ],
+        "positions": [
+          [
+            -0.08024779485126927,
+            0.01736366687693724,
+            0.038999060250822996
+          ],
+          [
+            -0.16118437300929211,
+            0.49413672236953604,
+            -0.07070426470806992
+          ],
+          [
+            0.09176289496938193,
+            0.5074909407977296,
+            -0.03221901826508177
+          ],
+          [
+            -0.038089550174314216,
+            0.38699849841231365,
+            0.04200173195760298
+          ],
+          [
+            -0.0641247884076475,
+            0.8053672991529895,
+            -0.033873918292536526
+          ],
+          [
+            0.03396318069564393,
+            0.8991716311672734,
+            -0.09158405608143359
+          ],
+          [
+            -0.04396859225247352,
+            0.9325065908038306,
+            -0.04910833302563616
+          ],
+          [
+            -0.02455346390782488,
+            0.8247037913964395,
+            -0.03047548531624079
+          ]
+        ]
+      },
+      {
+        "clip": "bat_idle",
+        "nativeFrame": 18,
+        "seconds": 0.46875,
+        "meshName": "周防尊",
+        "vertices": [
+          0,
+          799,
+          1598,
+          2397,
+          3196,
+          3995,
+          4794,
+          5594
+        ],
+        "positions": [
+          [
+            -0.08164966975736616,
+            0.013302572472696986,
+            0.03851955531122508
+          ],
+          [
+            -0.15026562533691398,
+            0.4885235807918318,
+            -0.06259744661217488
+          ],
+          [
+            0.0895794324231236,
+            0.49848555125010197,
+            -0.02886257494572668
+          ],
+          [
+            -0.03710673235305603,
+            0.38222759280303775,
+            0.0465296166584149
+          ],
+          [
+            -0.06190028218748369,
+            0.7963519495044672,
+            -0.02559005695954065
+          ],
+          [
+            0.03756058245436932,
+            0.8934284761624102,
+            -0.09632462371840943
+          ],
+          [
+            -0.04042286454710821,
+            0.9333255999602525,
+            -0.06005384588903279
+          ],
+          [
+            -0.025741177539409688,
+            0.8303493766014648,
+            -0.03718364687454639
+          ]
+        ]
+      },
+      {
+        "clip": "bat_idle",
+        "nativeFrame": 32,
+        "seconds": 0.90625,
+        "meshName": "周防尊",
+        "vertices": [
+          0,
+          799,
+          1598,
+          2397,
+          3196,
+          3995,
+          4794,
+          5594
+        ],
+        "positions": [
+          [
+            -0.08033131768109524,
+            0.017129625981115414,
+            0.038964132117147686
+          ],
+          [
+            -0.1603365010096868,
+            0.49391212719580013,
+            -0.07161055514350839
+          ],
+          [
+            0.09211764522233899,
+            0.5057241069119293,
+            -0.03434434595079653
+          ],
+          [
+            -0.037862167139920126,
+            0.38676474704345143,
+            0.041593887570523236
+          ],
+          [
+            -0.06401814463658212,
+            0.8048480597077537,
+            -0.03224835073365
+          ],
+          [
+            0.03420261811099863,
+            0.8993578141398535,
+            -0.09008332542621297
+          ],
+          [
+            -0.04373873363428199,
+            0.9328300851102961,
+            -0.047733348069426605
+          ],
+          [
+            -0.025778120241763753,
+            0.8244809022775961,
+            -0.026885306395152266
+          ]
+        ]
+      },
+      {
+        "clip": "single_run",
+        "nativeFrame": 63,
+        "seconds": 0,
+        "meshName": "周防尊",
+        "vertices": [
+          0,
+          799,
+          1598,
+          2397,
+          3196,
+          3995,
+          4794,
+          5594
+        ],
+        "positions": [
+          [
+            -0.018757055121814734,
+            0.015775788410992257,
+            0.26219070311845677
+          ],
+          [
+            -0.24071626292523618,
+            0.5213290729399979,
+            0.08393225139600125
+          ],
+          [
+            0.08155300757373357,
+            0.4412423247005016,
+            0.018036770827920493
+          ],
+          [
+            -0.05687296910708744,
+            0.36140697345480177,
+            0.1162627359291174
+          ],
+          [
+            -0.11683397996211359,
+            0.6433422152089088,
+            0.21549184838330504
+          ],
+          [
+            0.00025901109298737346,
+            0.7367774570142243,
+            0.23358378132289212
+          ],
+          [
+            -0.0679756016677908,
+            0.7831507266328467,
+            0.28029914607781825
+          ],
+          [
+            -0.08446861882753638,
+            0.6790962884174647,
+            0.31634294691170534
+          ]
+        ]
+      },
+      {
+        "clip": "single_run",
+        "nativeFrame": 73,
+        "seconds": 0.3125,
+        "meshName": "周防尊",
+        "vertices": [
+          0,
+          799,
+          1598,
+          2397,
+          3196,
+          3995,
+          4794,
+          5594
+        ],
+        "positions": [
+          [
+            -0.010157388740679263,
+            0.3929375944095108,
+            -0.43356065098980184
+          ],
+          [
+            0.02886584813803288,
+            0.5958921669153859,
+            0.42516797576914317
+          ],
+          [
+            0.11045576245574701,
+            0.44312506578940103,
+            0.047378349046212166
+          ],
+          [
+            -0.07212117586191268,
+            0.35786940204096546,
+            -0.07509897780370231
+          ],
+          [
+            -0.017840345319305,
+            0.6243912844594518,
+            0.26758110217175857
+          ],
+          [
+            0.07130784439999235,
+            0.7394306665303408,
+            0.23863629656181573
+          ],
+          [
+            -0.0002841481326416151,
+            0.7754816796509146,
+            0.289269081159427
+          ],
+          [
+            0.0038069223868283865,
+            0.6877544999180009,
+            0.33768650955411067
+          ]
+        ]
+      },
+      {
+        "clip": "single_run",
+        "nativeFrame": 82,
+        "seconds": 0.59375,
+        "meshName": "周防尊",
+        "vertices": [
+          0,
+          799,
+          1598,
+          2397,
+          3196,
+          3995,
+          4794,
+          5594
+        ],
+        "positions": [
+          [
+            -0.028222996736904326,
+            0.07471598727283194,
+            0.2811917860975031
+          ],
+          [
+            -0.23576986538277583,
+            0.5564190031151615,
+            0.05016648516459173
+          ],
+          [
+            0.07823345243016804,
+            0.46341426235138045,
+            0.027494769473924558
+          ],
+          [
+            -0.062216796686304435,
+            0.41445457190175666,
+            0.12992366421507398
+          ],
+          [
+            -0.11647789085923979,
+            0.6704736906546238,
+            0.21272483014483917
+          ],
+          [
+            0.000498884863123541,
+            0.7634699281545706,
+            0.2400468451507232
+          ],
+          [
+            -0.07052927088950468,
+            0.805859978140095,
+            0.28638098559301206
+          ],
+          [
+            -0.061217953085633034,
+            0.6999620621736644,
+            0.30727271318914545
+          ]
+        ]
+      },
+      {
+        "clip": "single_attack_attcom_1",
+        "nativeFrame": 136,
+        "seconds": 0,
+        "meshName": "周防尊",
+        "vertices": [
+          0,
+          799,
+          1598,
+          2397,
+          3196,
+          3995,
+          4794,
+          5594
+        ],
+        "positions": [
+          [
+            -0.08024789021870092,
+            0.017363437995101302,
+            0.038998492814604734
+          ],
+          [
+            -0.16118437300929211,
+            0.49413672236953604,
+            -0.07070426470806992
+          ],
+          [
+            0.09122309275684298,
+            0.5084031256779388,
+            -0.031240585495384963
+          ],
+          [
+            -0.038089752185617685,
+            0.3869981898781114,
+            0.04200103869195539
+          ],
+          [
+            -0.0641247884076475,
+            0.8053672991529895,
+            -0.033873918292536526
+          ],
+          [
+            0.03396318069564393,
+            0.8991716311672734,
+            -0.09158405608143359
+          ],
+          [
+            -0.04396859225247352,
+            0.9325065908038306,
+            -0.04910833302563616
+          ],
+          [
+            -0.025308434716235676,
+            0.8251329567286142,
+            -0.0327301818217563
+          ]
+        ]
+      },
+      {
+        "clip": "single_attack_attcom_1",
+        "nativeFrame": 151,
+        "seconds": 0.46875,
+        "meshName": "周防尊",
+        "vertices": [
+          0,
+          799,
+          1598,
+          2397,
+          3196,
+          3995,
+          4794,
+          5594
+        ],
+        "positions": [
+          [
+            -0.08345146313908032,
+            0.011967525218779156,
+            0.057623397745633353
+          ],
+          [
+            0.1355767070638202,
+            0.5914721027839493,
+            0.0767580829200405
+          ],
+          [
+            0.035733021731453325,
+            0.41279228065705265,
+            -0.04504108741110215
+          ],
+          [
+            -0.09732100772725705,
+            0.34178710529347456,
+            0.11805814412044029
+          ],
+          [
+            0.019030041750270853,
+            0.6229014663072294,
+            0.12979013922066807
+          ],
+          [
+            0.06799939127361722,
+            0.7384221283963455,
+            0.08586929908231185
+          ],
+          [
+            0.002450822870353586,
+            0.7670410005677281,
+            0.1481036397138421
+          ],
+          [
+            -0.014359071193147912,
+            0.7042237913538089,
+            0.12626596583868008
+          ]
+        ]
+      },
+      {
+        "clip": "single_attack_attcom_1",
+        "nativeFrame": 165,
+        "seconds": 0.90625,
+        "meshName": "周防尊",
+        "vertices": [
+          0,
+          799,
+          1598,
+          2397,
+          3196,
+          3995,
+          4794,
+          5594
+        ],
+        "positions": [
+          [
+            -0.08239371595868239,
+            0.01295914158544055,
+            0.04133009515343678
+          ],
+          [
+            -0.15318284247645148,
+            0.4942654819657363,
+            0.031930031440011594
+          ],
+          [
+            0.08281524892322828,
+            0.4919743605949688,
+            -0.032084881000207476
+          ],
+          [
+            -0.04093300856163245,
+            0.3808582058456726,
+            0.06509371993597526
+          ],
+          [
+            -0.06035743334428518,
+            0.7881076267908554,
+            -0.0017600128650833114
+          ],
+          [
+            0.03184894365886013,
+            0.8843541758895057,
+            -0.059494540221079396
+          ],
+          [
+            -0.044531496522774924,
+            0.9165509343594128,
+            -0.01347101450204363
+          ],
+          [
+            -0.030658258569996814,
+            0.80778828566263,
+            0.002176398606217589
+          ]
+        ]
+      },
+      {
+        "clip": "single_skill_01",
+        "nativeFrame": 485,
+        "seconds": 0,
+        "meshName": "周防尊",
+        "vertices": [
+          0,
+          799,
+          1598,
+          2397,
+          3196,
+          3995,
+          4794,
+          5594
+        ],
+        "positions": [
+          [
+            -0.08024774716755345,
+            0.01736371456065306,
+            0.038998793222014404
+          ],
+          [
+            -0.16118437300929211,
+            0.49413672236953604,
+            -0.07070426470806992
+          ],
+          [
+            0.09146395801429989,
+            0.5080199911643066,
+            -0.031657108224631025
+          ],
+          [
+            -0.03808942268415299,
+            0.3869985591970913,
+            0.04200190630220256
+          ],
+          [
+            -0.0641247884076475,
+            0.8053672991529895,
+            -0.033873918292536526
+          ],
+          [
+            0.0339631803976207,
+            0.8991716311672734,
+            -0.09158405608143359
+          ],
+          [
+            -0.043968592550496746,
+            0.9325065908038306,
+            -0.04910833302563616
+          ],
+          [
+            -0.024886240729732362,
+            0.8249221243878816,
+            -0.03160314227580411
+          ]
+        ]
+      },
+      {
+        "clip": "single_skill_01",
+        "nativeFrame": 486,
+        "seconds": 0.03125,
+        "meshName": "周防尊",
+        "vertices": [
+          0,
+          799,
+          1598,
+          2397,
+          3196,
+          3995,
+          4794,
+          5594
+        ],
+        "positions": [
+          [
+            -0.14808686122761316,
+            0.017238235180343,
+            0.03921112923384211
+          ],
+          [
+            -0.1320099051816587,
+            0.4733959933076961,
+            -0.1918590460370661
+          ],
+          [
+            0.1125261142458357,
+            0.3558317359189324,
+            0.017266852592526867
+          ],
+          [
+            -0.07297018413926065,
+            0.3328190414323685,
+            0.08027667299105204
+          ],
+          [
+            -0.1410512978652345,
+            0.5829783501407777,
+            0.03003285752930285
+          ],
+          [
+            -0.06351503170017067,
+            0.6754569574641611,
+            0.08768039563411704
+          ],
+          [
+            -0.13539208524727697,
+            0.7191383886401735,
+            0.13143413332271145
+          ],
+          [
+            -0.11111479058555218,
+            0.6719680712762269,
+            0.12710622409259487
+          ]
+        ]
+      },
+      {
+        "clip": "dead",
+        "nativeFrame": 618,
+        "seconds": 0,
+        "meshName": "周防尊",
+        "vertices": [
+          0,
+          799,
+          1598,
+          2397,
+          3196,
+          3995,
+          4794,
+          5594
+        ],
+        "positions": [
+          [
+            -0.08024812106373304,
+            0.01736416872510093,
+            0.0389979638437034
+          ],
+          [
+            -0.16118437300929211,
+            0.49413672236953604,
+            -0.07070426470806992
+          ],
+          [
+            0.09146395801429989,
+            0.5080199911643066,
+            -0.031657108224631025
+          ],
+          [
+            -0.03808896559026731,
+            0.3869991645212305,
+            0.042003292574343896
+          ],
+          [
+            -0.0641247884076475,
+            0.8053672991529895,
+            -0.033873918292536526
+          ],
+          [
+            0.03396318009959748,
+            0.8991716311672734,
+            -0.09158405608143359
+          ],
+          [
+            -0.04396859284851997,
+            0.9325065908038306,
+            -0.04910833302563616
+          ],
+          [
+            -0.02488623734389625,
+            0.824922130294719,
+            -0.031603152044172876
+          ]
+        ]
+      },
+      {
+        "clip": "dead",
+        "nativeFrame": 652,
+        "seconds": 1.0625,
+        "meshName": "周防尊",
+        "vertices": [
+          0,
+          799,
+          1598,
+          2397,
+          3196,
+          3995,
+          4794,
+          5594
+        ],
+        "positions": [
+          [
+            0.008062430008332342,
+            0.04135911354964955,
+            -0.1304653878687269
+          ],
+          [
+            -0.14465610314027083,
+            0.09656816664021278,
+            0.1896627839438766
+          ],
+          [
+            0.07417981982559567,
+            0.19307757161675504,
+            0.06681234711299773
+          ],
+          [
+            -0.12172959608578059,
+            0.13105915897106143,
+            0.11055772639549435
+          ],
+          [
+            -0.06553104297976164,
+            0.2964797551805824,
+            0.2869646364872716
+          ],
+          [
+            0.02059509100023904,
+            0.31868658346076617,
+            0.38110718209725897
+          ],
+          [
+            -0.053979220172700584,
+            0.26349545707172956,
+            0.40063612213279565
+          ],
+          [
+            -0.06992998105671443,
+            0.27671951584672,
+            0.3362947455645165
+          ]
+        ]
+      },
+      {
+        "clip": "dead",
+        "nativeFrame": 685,
+        "seconds": 2.09375,
+        "meshName": "周防尊",
+        "vertices": [
+          0,
+          799,
+          1598,
+          2397,
+          3196,
+          3995,
+          4794,
+          5594
+        ],
+        "positions": [
+          [
+            0.037549867062646305,
+            0.09380642296650564,
+            -0.0725116885588411
+          ],
+          [
+            -0.36140586882390735,
+            0.00735450346786605,
+            0.3027166736818132
+          ],
+          [
+            -0.15823933323552297,
+            0.0059314286761550155,
+            0.412853010373118
+          ],
+          [
+            -0.2212375499026252,
+            0.029975714432951026,
+            0.19473462517929363
+          ],
+          [
+            -0.43404871625944963,
+            0.01387484269103977,
+            0.5683314988284764
+          ],
+          [
+            -0.40308202867247284,
+            0.040089581402898776,
+            0.6935795784512954
+          ],
+          [
+            -0.48955675252079295,
+            0.07728940789477463,
+            0.6823073620653436
+          ],
+          [
+            -0.47330276998529486,
+            0.012435769474938567,
+            0.5908710887960106
+          ]
+        ]
+      }
+    ],
+    "staticChannelOptimization": {
+      "before": 222,
+      "after": 82,
+      "omitted": [
+        {
+          "bone": 0,
+          "path": "scale"
+        },
+        {
+          "bone": 1,
+          "path": "scale"
+        },
+        {
+          "bone": 1,
+          "path": "translation"
+        },
+        {
+          "bone": 2,
+          "path": "scale"
+        },
+        {
+          "bone": 2,
+          "path": "translation"
+        },
+        {
+          "bone": 3,
+          "path": "scale"
+        },
+        {
+          "bone": 4,
+          "path": "scale"
+        },
+        {
+          "bone": 4,
+          "path": "translation"
+        },
+        {
+          "bone": 5,
+          "path": "scale"
+        },
+        {
+          "bone": 5,
+          "path": "translation"
+        },
+        {
+          "bone": 6,
+          "path": "scale"
+        },
+        {
+          "bone": 6,
+          "path": "translation"
+        },
+        {
+          "bone": 7,
+          "path": "scale"
+        },
+        {
+          "bone": 7,
+          "path": "translation"
+        },
+        {
+          "bone": 8,
+          "path": "scale"
+        },
+        {
+          "bone": 8,
+          "path": "translation"
+        },
+        {
+          "bone": 9,
+          "path": "scale"
+        },
+        {
+          "bone": 9,
+          "path": "translation"
+        },
+        {
+          "bone": 10,
+          "path": "scale"
+        },
+        {
+          "bone": 10,
+          "path": "translation"
+        },
+        {
+          "bone": 11,
+          "path": "scale"
+        },
+        {
+          "bone": 11,
+          "path": "translation"
+        },
+        {
+          "bone": 12,
+          "path": "scale"
+        },
+        {
+          "bone": 12,
+          "path": "translation"
+        },
+        {
+          "bone": 13,
+          "path": "scale"
+        },
+        {
+          "bone": 13,
+          "path": "translation"
+        },
+        {
+          "bone": 14,
+          "path": "scale"
+        },
+        {
+          "bone": 14,
+          "path": "translation"
+        },
+        {
+          "bone": 15,
+          "path": "scale"
+        },
+        {
+          "bone": 15,
+          "path": "translation"
+        },
+        {
+          "bone": 16,
+          "path": "scale"
+        },
+        {
+          "bone": 16,
+          "path": "translation"
+        },
+        {
+          "bone": 17,
+          "path": "scale"
+        },
+        {
+          "bone": 18,
+          "path": "scale"
+        },
+        {
+          "bone": 18,
+          "path": "translation"
+        },
+        {
+          "bone": 19,
+          "path": "scale"
+        },
+        {
+          "bone": 19,
+          "path": "translation"
+        },
+        {
+          "bone": 20,
+          "path": "scale"
+        },
+        {
+          "bone": 20,
+          "path": "translation"
+        },
+        {
+          "bone": 21,
+          "path": "scale"
+        },
+        {
+          "bone": 22,
+          "path": "scale"
+        },
+        {
+          "bone": 22,
+          "path": "translation"
+        },
+        {
+          "bone": 23,
+          "path": "scale"
+        },
+        {
+          "bone": 23,
+          "path": "translation"
+        },
+        {
+          "bone": 24,
+          "path": "scale"
+        },
+        {
+          "bone": 25,
+          "path": "scale"
+        },
+        {
+          "bone": 25,
+          "path": "translation"
+        },
+        {
+          "bone": 26,
+          "path": "scale"
+        },
+        {
+          "bone": 26,
+          "path": "translation"
+        },
+        {
+          "bone": 27,
+          "path": "scale"
+        },
+        {
+          "bone": 27,
+          "path": "translation"
+        },
+        {
+          "bone": 28,
+          "path": "scale"
+        },
+        {
+          "bone": 28,
+          "path": "translation"
+        },
+        {
+          "bone": 29,
+          "path": "scale"
+        },
+        {
+          "bone": 29,
+          "path": "translation"
+        },
+        {
+          "bone": 30,
+          "path": "scale"
+        },
+        {
+          "bone": 30,
+          "path": "translation"
+        },
+        {
+          "bone": 31,
+          "path": "scale"
+        },
+        {
+          "bone": 31,
+          "path": "translation"
+        },
+        {
+          "bone": 32,
+          "path": "scale"
+        },
+        {
+          "bone": 32,
+          "path": "translation"
+        },
+        {
+          "bone": 33,
+          "path": "scale"
+        },
+        {
+          "bone": 33,
+          "path": "translation"
+        },
+        {
+          "bone": 34,
+          "path": "scale"
+        },
+        {
+          "bone": 34,
+          "path": "translation"
+        },
+        {
+          "bone": 35,
+          "path": "scale"
+        },
+        {
+          "bone": 35,
+          "path": "translation"
+        },
+        {
+          "bone": 36,
+          "path": "scale"
+        },
+        {
+          "bone": 36,
+          "path": "translation"
+        },
+        {
+          "bone": 37,
+          "path": "scale"
+        },
+        {
+          "bone": 37,
+          "path": "translation"
+        },
+        {
+          "bone": 38,
+          "path": "scale"
+        },
+        {
+          "bone": 39,
+          "path": "scale"
+        },
+        {
+          "bone": 39,
+          "path": "translation"
+        },
+        {
+          "bone": 40,
+          "path": "scale"
+        },
+        {
+          "bone": 40,
+          "path": "translation"
+        },
+        {
+          "bone": 41,
+          "path": "scale"
+        },
+        {
+          "bone": 41,
+          "path": "translation"
+        },
+        {
+          "bone": 42,
+          "path": "scale"
+        },
+        {
+          "bone": 43,
+          "path": "scale"
+        },
+        {
+          "bone": 44,
+          "path": "scale"
+        },
+        {
+          "bone": 44,
+          "path": "translation"
+        },
+        {
+          "bone": 45,
+          "path": "scale"
+        },
+        {
+          "bone": 45,
+          "path": "translation"
+        },
+        {
+          "bone": 46,
+          "path": "scale"
+        },
+        {
+          "bone": 46,
+          "path": "translation"
+        },
+        {
+          "bone": 47,
+          "path": "scale"
+        },
+        {
+          "bone": 47,
+          "path": "translation"
+        },
+        {
+          "bone": 48,
+          "path": "scale"
+        },
+        {
+          "bone": 48,
+          "path": "translation"
+        },
+        {
+          "bone": 49,
+          "path": "scale"
+        },
+        {
+          "bone": 49,
+          "path": "translation"
+        },
+        {
+          "bone": 50,
+          "path": "scale"
+        },
+        {
+          "bone": 50,
+          "path": "translation"
+        },
+        {
+          "bone": 51,
+          "path": "scale"
+        },
+        {
+          "bone": 51,
+          "path": "translation"
+        },
+        {
+          "bone": 52,
+          "path": "scale"
+        },
+        {
+          "bone": 52,
+          "path": "translation"
+        },
+        {
+          "bone": 53,
+          "path": "scale"
+        },
+        {
+          "bone": 53,
+          "path": "translation"
+        },
+        {
+          "bone": 54,
+          "path": "scale"
+        },
+        {
+          "bone": 54,
+          "path": "translation"
+        },
+        {
+          "bone": 55,
+          "path": "scale"
+        },
+        {
+          "bone": 55,
+          "path": "translation"
+        },
+        {
+          "bone": 56,
+          "path": "scale"
+        },
+        {
+          "bone": 56,
+          "path": "translation"
+        },
+        {
+          "bone": 57,
+          "path": "scale"
+        },
+        {
+          "bone": 57,
+          "path": "translation"
+        },
+        {
+          "bone": 58,
+          "path": "scale"
+        },
+        {
+          "bone": 58,
+          "path": "translation"
+        },
+        {
+          "bone": 59,
+          "path": "scale"
+        },
+        {
+          "bone": 59,
+          "path": "translation"
+        },
+        {
+          "bone": 60,
+          "path": "scale"
+        },
+        {
+          "bone": 60,
+          "path": "translation"
+        },
+        {
+          "bone": 61,
+          "path": "scale"
+        },
+        {
+          "bone": 61,
+          "path": "translation"
+        },
+        {
+          "bone": 62,
+          "path": "scale"
+        },
+        {
+          "bone": 62,
+          "path": "translation"
+        },
+        {
+          "bone": 63,
+          "path": "scale"
+        },
+        {
+          "bone": 63,
+          "path": "translation"
+        },
+        {
+          "bone": 64,
+          "path": "scale"
+        },
+        {
+          "bone": 64,
+          "path": "translation"
+        },
+        {
+          "bone": 65,
+          "path": "scale"
+        },
+        {
+          "bone": 65,
+          "path": "translation"
+        },
+        {
+          "bone": 66,
+          "path": "scale"
+        },
+        {
+          "bone": 66,
+          "path": "translation"
+        },
+        {
+          "bone": 67,
+          "path": "scale"
+        },
+        {
+          "bone": 67,
+          "path": "translation"
+        },
+        {
+          "bone": 68,
+          "path": "scale"
+        },
+        {
+          "bone": 68,
+          "path": "translation"
+        },
+        {
+          "bone": 69,
+          "path": "scale"
+        },
+        {
+          "bone": 69,
+          "path": "translation"
+        },
+        {
+          "bone": 70,
+          "path": "scale"
+        },
+        {
+          "bone": 70,
+          "path": "translation"
+        },
+        {
+          "bone": 71,
+          "path": "scale"
+        },
+        {
+          "bone": 71,
+          "path": "translation"
+        },
+        {
+          "bone": 72,
+          "path": "scale"
+        },
+        {
+          "bone": 72,
+          "path": "translation"
+        },
+        {
+          "bone": 73,
+          "path": "scale"
+        },
+        {
+          "bone": 73,
+          "path": "translation"
+        }
+      ],
+      "tolerance": 0.000001,
+      "policy": "Only values constant across ALL selected clips become node defaults; changing properties stay keyed in every clip to reset sequential playback"
+    }
+  },
+  "selectedClips": {
+    "idle": "bat_idle",
+    "run": "single_run",
+    "attack": "single_attack_attcom_1",
+    "cast": "single_skill_01",
+    "hurt": "bat_idle",
+    "death": "dead"
+  },
+  "originalClipCount": 5,
+  "runtimeClips": [
+    {
+      "index": 0,
+      "name": "bat_idle",
+      "duration": 0.90625,
+      "channels": 82
+    },
+    {
+      "index": 1,
+      "name": "single_run",
+      "duration": 0.59375,
+      "channels": 82
+    },
+    {
+      "index": 2,
+      "name": "single_attack_attcom_1",
+      "duration": 0.90625,
+      "channels": 82
+    },
+    {
+      "index": 3,
+      "name": "single_skill_01",
+      "duration": 0.03125,
+      "channels": 82
+    },
+    {
+      "index": 4,
+      "name": "dead",
+      "duration": 2.09375,
+      "channels": 82
+    }
+  ],
+  "model": {
+    "schema": "ggd-uploaded-hero-model@1",
+    "sha256": "e55e9d2db49004f56d19091d4b7f6f74ffef19c8606b1b793650022f2924148c",
+    "byteSize": 916264,
+    "clipMap": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_1",
+      "cast": "single_skill_01",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "yawOffsetDeg": 0
+  },
+  "document": {
+    "id": "community.body.ac67d58d3ea571d13000b2a03d2910aa71d810dfd9b42525",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/e55e9d2db49004f56d19091d4b7f6f74ffef19c8606b1b793650022f2924148c.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_1",
+      "cast": "single_skill_01",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "yawOffsetDeg": 0
+  },
+  "metrics": {
+    "triangles": 7198,
+    "drawPrimitives": 1,
+    "textures": [
+      {
+        "width": 512,
+        "height": 512,
+        "bytes": 242325,
+        "sha256": "8273164275ab5d406b383890c3e08be6e79700daf8ba29cd780dd17526fcc4dc"
+      }
+    ]
+  },
+  "warnings": [],
+  "validator": {
+    "mimeType": "model/gltf-binary",
+    "validatorVersion": "2.0.0-dev.3.10",
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    },
+    "info": {
+      "version": "2.0",
+      "generator": "GGD native JUMPX body conversion",
+      "extensionsUsed": [
+        "KHR_materials_unlit"
+      ],
+      "resources": [
+        {
+          "pointer": "/buffers/0",
+          "mimeType": "application/gltf-buffer",
+          "storage": "glb",
+          "byteLength": 796172
+        },
+        {
+          "pointer": "/images/0",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 512,
+            "height": 512,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        }
+      ],
+      "animationCount": 5,
+      "materialCount": 1,
+      "hasMorphTargets": false,
+      "hasSkins": true,
+      "hasTextures": true,
+      "hasDefaultScene": true,
+      "drawCallCount": 1,
+      "totalVertexCount": 5595,
+      "totalTriangleCount": 7198,
+      "maxUVs": 1,
+      "maxInfluences": 4,
+      "maxAttributes": 5
+    }
+  },
+  "evidence": {
+    "pruningPreservesBody": true,
+    "sharedUploadVerification": true,
+    "visualAcceptance": "pending",
+    "heroMechanicsAcceptance": "pending"
+  }
+}

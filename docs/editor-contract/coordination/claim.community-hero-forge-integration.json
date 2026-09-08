@@ -1,0 +1,396 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.community-hero-forge-integration",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "4793eaaaf2775b2081f5eca5881db32e0aab0ea8",
+  "contractFingerprint": "b91a0f59c31289ed",
+  "title": "社群英雄編輯器與獨立版本回復；37 名／222 槽完成隔離投稿發布驗收",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "舊素材的我的投稿與待審端點排除完整英雄材料，避免把已發布、已撤回及歷史版本誤列為待審；完整英雄專用審查列表仍保留三種版本及各自真實狀態。HTTP 整合測試與 Platform 並行測試通過。",
+      "repro": {
+        "command": "pnpm exec go -C apps/platform test -race ./internal/submissions ./internal/server",
+        "expectedExit": 0
+      },
+      "commit": "91d0abdb97fba7d7ce4139c32c024559fca293e2",
+      "evidence": [
+        "apps/platform/internal/submissions/handlers.go",
+        "apps/platform/internal/submissions/hero_handlers_test.go"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "英雄投稿即時讀取既有 Main UGC 覆蓋層政策，驗證開關與 ZIP 大小，依不可變候選計算 UTC 每日配額，沿用投稿材料與目前候選計算待審深度；有界帳號鎖阻止並行超額。作者撤回使用既有操作紀錄及 CAS，保留快照、歷史與原發布版，不能冒充管理員裁決。Go 測試涵蓋政策中途關閉、重啟、遺失索引、最後額度競爭與撤回對審查的並行競爭。",
+      "repro": {
+        "command": "pnpm exec go -C apps/platform test -race ./internal/submissions ./internal/server",
+        "expectedExit": 0
+      },
+      "commit": "7f6278811ae71e3d4cac6fed8f0a3785faa19771",
+      "evidence": [
+        "apps/platform/internal/submissions/hero_intake_test.go",
+        "apps/platform/internal/submissions/hero_withdraw_test.go",
+        "apps/platform/internal/server/hero_policy_test.go"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "草稿衝突可逐欄比較完整原文與圖片並選採本機、採遠端或另存新作；先保存雙方副本，再以已比較的 revision 更新。我的作品可複製未完成英雄、唯讀檢視未知新版草稿；草稿可比較固定投稿，兩處投稿結果提供作者撤回。Editor 完整回歸 83 檔 541 項通過，含 headless React 與替身儲存邊界測試，未冒充瀏覽器、原生安裝或 47 文件畫格驗收。",
+      "repro": {
+        "command": "pnpm --filter @ggd/editor exec vitest run --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "7f6278811ae71e3d4cac6fed8f0a3785faa19771",
+      "evidence": [
+        "apps/editor/src/hero/conflictResolution.test.ts",
+        "apps/editor/src/hero/HeroDraftConflictView.test.tsx",
+        "apps/editor/src/hero/HeroWithdrawAction.test.tsx",
+        "apps/editor/src/drafts/DraftLibrary.test.tsx"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "圖示快取採暫存檔、fsync 與 rename；部分磁碟寫入失敗後可重試。背景回收保留 30 日快取、1 日未提交暫存，每次最多 256 項檢查與 16 項單檔／空目錄刪除，跳過編譯中的 worker，不進入有效版本或官方歷史，永久保留原圖到正規化 digest 的來源收據；快取清除後固定版本仍完整，草稿攜帶圖片可重建相同套件。",
+      "repro": {
+        "command": "pnpm exec vitest run apps/content-api/src/importTransientCleanup.test.ts apps/content-api/src/importIconAtomic.test.ts apps/content-api/src/heroWorkRoutes.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "cde5ef06a887f223781b4974ddc71a374ac62a62",
+      "evidence": [
+        "apps/content-api/src/importTransientCleanup.ts",
+        "apps/content-api/src/importTransientCleanup.test.ts",
+        "apps/content-api/src/importIconAtomic.test.ts",
+        "apps/content-api/src/heroWorkRoutes.test.ts"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "七位概念作品沿用 Main 出身、五級距、六槽與模板契約；42 槽通過 schema/編譯，35 個主動槽以真實 SimWorld 施放；另以 8 個具名情境驗證七位被動的觸發、冷卻、健康目標拒絕與一次免死消耗。原作差異明寫在配方，使用既有 GGD 替身模型。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityExamples.test.ts packages/shared/src/content/heroForge/communityPassives.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "90e5c16ea830a2170fc864464ce738c3cc411260",
+      "evidence": [
+        "packages/shared/src/content/heroForge/communityExamples.ts",
+        "docs/_reports/community-hero-forge/community-concepts/deterministic/proof.json",
+        "docs/_reports/community-hero-forge/community-concepts/summary.json",
+        "docs/_reports/community-hero-forge/community-concepts/passive-tests.log"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "私有 Main importer 與遊戲採相同 Platform 覆蓋層快照，凍結來源可建包並載入房間；內容漂移拒絕舊套件，覆蓋層離線回應 503，不回退到出貨目錄。",
+      "repro": {
+        "command": "pnpm exec vitest run apps/content-api/src/heroContentSnapshot.test.ts apps/content-api/src/heroImportServer.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "365bbcbb00dd15d9ed4e64807d2634ad6719345e",
+      "evidence": [
+        "apps/content-api/src/heroContentSnapshot.test.ts",
+        "docs/_reports/community-hero-forge/community-concepts/overlay-import-tests-passed.log",
+        "docs/_reports/community-hero-forge/community-concepts/content-api-regression.log"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "視覺證據的分母來自目前 acceptance 完整 ID 集合；舊的較小批次、重複、替換 ID 與錯誤總計均拒絕。這不產生人工 verdict。",
+      "repro": {
+        "command": "pnpm exec vitest run tools/skill-forge/visualProofScope.test.ts tools/skill-forge/visualProofImport.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "365bbcbb00dd15d9ed4e64807d2634ad6719345e",
+      "evidence": [
+        "tools/skill-forge/visual-proof-scope.mjs",
+        "docs/_reports/community-hero-forge/community-concepts/visual-scope-tests.log"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "目前 47 份 PreviewDriver 驗收為 38 可施放、0 拒絕、9 需指定被動觸發情境；未將後者計為施放通過。",
+      "repro": {
+        "command": "pnpm skillforge:sim-audit -- --summary",
+        "expectedExit": 0
+      },
+      "commit": "365bbcbb00dd15d9ed4e64807d2634ad6719345e",
+      "evidence": [
+        "docs/_reports/community-hero-forge/community-concepts/sim-preview-47.log"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "七位範例保留原角色名稱；平板預算採 A17 Pro／30 fps 估算、每英雄 160 動畫通道，實機測試不列交付門檻。動作裁剪保留模型綁定、ClipAnimator 解析與購買反應，防止誤刪格擋／閃避。",
+      "repro": {
+        "command": "pnpm exec vitest run tools/model-budget/limits.test.ts tools/model-budget/guard.test.ts tools/model-budget/trimClips.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "8ce1cd4c44533a913ecf824bf85e9cfa4ba169fe",
+      "evidence": [
+        "docs/_reports/community-hero-forge/lol-models/animation-requirements.md",
+        "docs/_reports/community-hero-forge/lol-models/budget-tests-passed.log",
+        "docs/_reports/community-hero-forge/lol-models/trim-tests.log"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "可信模型目錄以 heroBody 三態核准新英雄本體，Editor 與 Main importer 共用規則，作者作品不能自行核准；false 可停止新作品選用，未填沿用既有英雄綁定。後台模型管理有可操作入口與核准選單，隔離 UI 完成三態往返；七位原 LoL 模型已接到英雄工坊，僅保留待機／Q 施法畫面證據，未視為完整美術或對局驗收。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/bodyModels.test.ts apps/editor/src/hero/validationBaseline.test.ts apps/admin/src/contentFields.test.ts apps/admin/src/contentSuite.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "1f29504b1901716ee42e990502429aa05c8fd9f0",
+      "evidence": [
+        "packages/shared/src/content/heroForge/bodyModels.ts",
+        "apps/admin/src/ui/ContentPage.tsx",
+        "docs/_reports/community-hero-forge/lol-models/forge-preview/summary.json",
+        "docs/_reports/community-hero-forge/lol-models/forge-preview/README.md"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "社群 GLB 本體與相容獨立動作庫通過驗證、合併與選定片段裁剪；私人原始資料與 runtime 套件分開保存。隔離瀏覽器完成投稿、固定候選審查、發布、跨帳號署名改作及投稿開關回滾；不將測試法師或代理素材視為 37 名原設計完成。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/modelUpload/modelUpload.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "ce12723f4d0a418870fdfa286c0dea65c9b37ed3",
+      "evidence": [
+        "docs/_reports/community-hero-forge/model-upload/summary.json",
+        "docs/_reports/community-hero-forge/model-upload/roundtrip-proof.json",
+        "docs/_reports/community-hero-forge/model-upload/README.md"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "每位英雄的後台模型選單可新增並預設套用新版本，保存原 GLB、動作映射及尺寸朝向。不可變版本檔與完整 SHA-256、英雄 CAS 及一般 CRUD／備份還原防繞過共同保護歷史；隔離 UI 完成新→舊→新，實際渲染路徑使用新版並可恢復舊外觀。相關回歸 72 項、Editor 549 項與正式建置通過；不宣稱已正式部署或 37 名原設計完成。",
+      "repro": {
+        "command": "pnpm exec vitest run apps/content-api/src/modelVersions.test.ts apps/content-api/src/server.test.ts apps/content-api/src/editorSourceRoutes.test.ts apps/admin/src/contentApi.test.ts apps/client/src/render/views/championModelVersions.test.ts apps/client/src/render/uploadedModelInstances.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "2a16ac683fe2a539be8174e2ac0e53e4c010e99b",
+      "evidence": [
+        "docs/_reports/community-hero-forge/model-versions/README.md",
+        "docs/_reports/community-hero-forge/model-versions/proof.json",
+        "docs/_reports/community-hero-forge/model-versions/regression.log",
+        "docs/_reports/community-hero-forge/model-versions/editor-release.log"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "19 名社群英雄的素材庫 GLB 完成 Editor 實際渲染與六用途抽樣姿勢檢查，包含衛宮士郎採 Archer 互通、不知火舞採真田幸村風格替代，以及詩乃以原生步槍片段共用 attack/cast；每份保留來源角色、動漫作品、原生／Babylon 姿勢比對與限制。不是完整技能演出或效能實機驗收。",
+      "repro": {
+        "command": "python3 tools/community-hero-forge/test_convert_jumpx_body.py",
+        "expectedExit": 0
+      },
+      "commit": "d0b1c27b2bcd43af60db8ccd23ff534f3b1fcd54",
+      "evidence": [
+        "docs/_reports/community-hero-forge/library-models/native-batch/README.md",
+        "docs/_reports/community-hero-forge/library-models/native-batch/visual-review.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "資料夾匯入保留 37 名英雄、222 槽完整原稿與待補項，逐一驗證 19 份隨附 GLB／動作再建立獨立草稿；缺模型拒絕且原草稿不變。模型來源與逐槽處理說明可隨 ZIP 往返，來源標示綁定 SHA，沒有將作者說明變成驗收裁決。Editor 552 項、Main importer 10 項及 Editor release 通過；skills:check 仍因既有訊息帳本未對應失敗。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/handoff.test.ts packages/shared/src/content/import/heroPackage.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "60331b05dbf4601ed763b4bc055cc7198a28f69b",
+      "evidence": [
+        "docs/_reports/community-hero-forge/handoff-import/README.md",
+        "docs/_reports/community-hero-forge/handoff-import/acceptance.json",
+        "docs/_reports/community-hero-forge/handoff-import/handoff-release-gates.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "37 名英雄現在均有明示來源的模型與六用途綁定，共 34 個 GLB，18 名同角色、1 名互通、18 名風格替代。完成逐模型正面檢查及資料夾實際匯入，37／222／37 的原文、參數、來源與 IndexedDB 模型 SHA 回讀相符；11 項轉換測試與 Editor TypeScript 通過。此為本體覆蓋，原設計逐槽機制、專屬演出、當前服務 ZIP 及 37 名投稿尚未完成。",
+      "repro": {
+        "command": "python3 tools/community-hero-forge/test_convert_jumpx_body.py",
+        "expectedExit": 0
+      },
+      "commit": "0cdd33944f74d442d85896dd0b868526f5a5d3fa",
+      "evidence": [
+        "docs/_reports/community-hero-forge/library-models/complete-body-coverage/README.md",
+        "docs/_reports/community-hero-forge/library-models/complete-body-coverage/visual-review.json",
+        "docs/_reports/community-hero-forge/library-models/complete-body-coverage/folder-import/acceptance.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "新增可選的施法者狀態／增益歸屬、自己施加的具名狀態條件、獨立疊層／到期與回放摘要，Editor 可選並移除來源限制。引擎／回放 38 項及完整 Editor 553 項、build 通過；skills 仍因既有 2026-09-06 訊息帳本未對票失敗。這是同來源詛咒反轉的前置能力，阿薩謝爾三層扣除、移除／反轉分支、反噬與專屬演出仍未完成。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/sim/effects/casterScopedStatus.test.ts packages/shared/src/sim/effects/statusBuffFamily.test.ts packages/shared/src/sim/content/conditionStacks.test.ts packages/shared/src/sim/content/conditionDerivedStatusTag.test.ts packages/shared/src/sim/clearPools.test.ts packages/shared/src/sim/reservedStores.test.ts apps/game-server/src/replay/digestCoverage.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "bf280dd5b010a6e0c732e00afd024feb8ee152a4",
+      "evidence": [
+        "docs/_reports/community-hero-forge/caster-status/README.md",
+        "docs/_reports/community-hero-forge/caster-status/gates.json",
+        "docs/_reports/community-hero-forge/caster-status/ui/receipt.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "新增全額原子消耗狀態、成功／不足互斥分支及施法資源費用；支援只消耗自己施加的詛咒，資源或目標不足不扣魔力與冷卻。真實 castAbility 治具驗證 R→EX 反轉增益且無通常 EX 傷害、淨化後走通常分支；核心回歸 99 項、Editor 555 項與 build 通過，隔離畫面驗證數字／全部選單及資源費用。skills 仍因既有訊息帳本未對票失敗；阿薩謝爾正式配方、集氣、反噬、專屬演出及 37 名投稿仍待完成。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/sim/effects/consumeStatus.test.ts packages/shared/src/sim/abilities/statusCost.test.ts packages/shared/src/content/consumeStatusContract.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "681c595cab5c58da46c7cba2882b4559e0dbe9ed",
+      "evidence": [
+        "docs/_reports/community-hero-forge/status-consumption/README.md",
+        "docs/_reports/community-hero-forge/status-consumption/gates.json",
+        "docs/_reports/community-hero-forge/status-consumption/ui/receipt.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "新增施法者非致死生命支付，固定／逐階百分比與生命底線可調；實際 0.8 秒吟唱治具只於釋放時付最大生命 3%，中斷不付未釋放反噬。護盾／無敵不抵銷成本，不觸發傷害、吸血、反擊或死亡；生命支付事件可外送、獨立飄字及普查。核心 88 項、完整 Editor 558 項／build 通過；隔離 UI 驗證共用／逐階值切換和隱藏 raw input 清除。skills 仍因既有訊息帳本未對票失敗，正式阿薩謝爾配方、每施法一次集氣與原作演出／37 名投稿仍待完成。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/sim/effects/spendHealth.test.ts packages/shared/src/sim/effects/consumeStatus.test.ts packages/shared/src/sim/abilities/statusCost.test.ts packages/shared/src/content/consumeStatusContract.test.ts packages/shared/src/sim/castabilityVfxOnly.test.ts packages/shared/src/content/schema/effects/effectShardWiring.test.ts packages/shared/src/sim/purity.test.ts apps/game-server/src/net/eventFanout.test.ts apps/client/src/vfx/VfxSystem.resourceWire.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "b9bf2f6ace5da9d12226df741e5bd1e7fb155d67",
+      "evidence": [
+        "docs/_reports/community-hero-forge/health-payment/README.md",
+        "docs/_reports/community-hero-forge/health-payment/gates.json",
+        "docs/_reports/community-hero-forge/health-payment/ui/receipt.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "新增每次有效施法一次的觸發額度，跨直接／投射物／延遲波次／移動結束／持續傷害保留來源；只在真正扣除其他單位生命時計入，排除自傷、反傷、反擊與三種代放成本路徑。疊層延燒保留各次施法來源，普通觸發器仍每跳一次；回放摘要含額度與載體關聯且讀取不改變狀態。新增 34 項、相關核心 129 項、三端型別與完整 Editor 558 項／build 通過；隔離表單開關／錯誤提示與突變驗證完成。skills 仍因既有每日訊息帳本未對票失敗；阿薩謝爾正式配方與完整反轉演出、37 名逐槽驗收及投稿仍待完成。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/sim/effects/oncePerCast.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "3a7a86fd128b685efa354c7530326f5bd3925b25",
+      "evidence": [
+        "docs/_reports/community-hero-forge/cast-credit/README.md",
+        "docs/_reports/community-hero-forge/cast-credit/gates.json",
+        "docs/_reports/community-hero-forge/cast-credit/ui/receipt.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "阿薩謝爾六槽配方已接入通用效果／事件模板，保留完整原文及模型來源；正式模擬驗證同來源 R→EX 反轉敵方增益且沒有通常 EX 傷害。Editor 支援已安裝資源補足開關及真實前置施法，並修復正式 VfxSystem 浮字池漏顯示。實際瀏覽器確認兩分支／資源不足、金色反轉文字、AD 10%→12% 重開保存再還原；五檔 48 項、三端型別與完整 Editor 560 項／build 通過。skills 仍因既有訊息帳本未對票失敗；E 方向／近身技能條件、專屬演出、遊戲內敵方增益 UI、37 名原設計完整驗收與當前服務投稿尚未完成。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts packages/shared/src/content/templates/paramsSchema.test.ts packages/shared/src/content/import/heroPackage.test.ts apps/editor/src/hero/HeroSlotEditor.test.tsx apps/editor/src/vfx-forge/floatingTextOverlay.test.ts --maxWorkers=2 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "c418923c0ad13e3a2ac62dda1862ac6e61ae996a",
+      "evidence": [
+        "docs/_reports/community-hero-forge/azazel-refinement/README.md",
+        "docs/_reports/community-hero-forge/azazel-refinement/gates.json",
+        "docs/_reports/community-hero-forge/azazel-refinement/ui/acceptance.json",
+        "docs/_reports/community-hero-forge/azazel-refinement/ui/persistence.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "Admin 重用 Editor 原設計面板，以唯讀模式完整顯示固定 sourceDesign 原文、六槽 baselineBehavior／requiredRefinement 及作者處理說明。七項表單檢查逐項比對全文並禁止編輯，既有五項技能表單檢查通過；實際隔離審查六槽比對、投稿後雲端修改不改固定稿、退回問題回傳作者的收據另行保留。",
+      "repro": {
+        "command": "pnpm --filter @ggd/editor exec vitest run src/hero/HeroSourceDesignPanel.test.tsx src/hero/HeroSlotEditor.test.tsx",
+        "expectedExit": 0
+      },
+      "commit": "2968f800a2e6b9a796e39b53d33830ef7c166180",
+      "evidence": [
+        "apps/editor/src/hero/HeroSourceDesignPanel.test.tsx",
+        "apps/admin/src/ui/HeroSubmissionsSection.tsx",
+        "docs/_reports/community-hero-forge/current-service/ui/source-review.json",
+        "docs/_reports/community-hero-forge/current-service/ui/frozen-draft-completed.json",
+        "docs/_reports/community-hero-forge/current-service/ui/return-review.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "冷 GLB 採用與短暫場景暖機分開計時，獨立 10 秒有界等待，場景替換即取消；材質與 framebuffer 檢查保留。900 ms 才就緒、永久缺少與取消三項時間測試及既有 20 項 stage 守衛通過，實際 Editor／Admin 六槽模型载入收據不視為原作完整演出驗收。",
+      "repro": {
+        "command": "pnpm --filter @ggd/editor exec vitest run src/vfx-forge/waitForActorModel.test.ts src/vfx-forge/stageShaderRegistration.test.ts",
+        "expectedExit": 0
+      },
+      "commit": "2968f800a2e6b9a796e39b53d33830ef7c166180",
+      "evidence": [
+        "apps/editor/src/vfx-forge/waitForActorModel.test.ts",
+        "apps/editor/src/vfx-forge/VfxForgeStage.ts",
+        "docs/_reports/community-hero-forge/current-service/ui/review-preview.json",
+        "docs/_reports/community-hero-forge/current-service/README.md"
+      ]
+    }
+  ],
+  "ownerQuotes": [
+    {
+      "date": "2026-09-06",
+      "text": "main 只做審查跟合併，你可以依照計畫全部由你來執行"
+    },
+    {
+      "date": "2026-09-06",
+      "text": "那七個角色就直接叫那七個名字不用改，並且看看能不能擷取到 lol 模型跟動作來用"
+    },
+    {
+      "date": "2026-09-06",
+      "text": "不 手機是 30fps 並且我們已經排除手機，只採用平板 ipad mini 的 A17 Pro 能跑 30fps 已經足夠"
+    },
+    {
+      "date": "2026-09-06",
+      "text": "A17 Pro 不必通過測試 你換算差不多對等效能就好 不必那麼嚴謹"
+    },
+    {
+      "date": "2026-09-07",
+      "text": "應該只要對應到 GGD 需求的動作就好了吧? GGD 是否有動作要求清單列表?"
+    },
+    {
+      "date": "2026-09-07",
+      "text": "所以這也是一個新功能 能讓社群自行上傳通用格式的 3d model 及動作庫"
+    },
+    {
+      "date": "2026-09-07",
+      "text": "如果有同名英雄可以替換現在已上線的 3d model ，請你也上架，但是在後台每個英雄有下拉選單可以選擇上線套用實際 3d model (預設新 3d model)，方便 rollback, 版本控制，避免直接替換的災難無法還原"
+    },
+    {
+      "date": "2026-09-07",
+      "text": "我可以接受完全沒有 3d model 的先套用相近風格的角色 model, 例如你剛提到的 `卫宫` 對應的是 Archer UBW 士郎 對我來說是互通的，如果有紅色衣服性感女性 我也可以接受套用 不知火舞，因為沒有任何 3d model 才是最糟的"
+    },
+    {
+      "date": "2026-09-08",
+      "text": "請你將以上要整合進 目標"
+    },
+    {
+      "date": "2026-09-08",
+      "text": "確保這些相關文件跟材料、素材都有 commit 上去"
+    },
+    {
+      "date": "2026-09-08",
+      "text": "合併衝突 包含戰鬥核心與平台程式 看起來非常關鍵  這個部分你要有足夠清楚關鍵說明 如何整合合併的文件 md 並配合開票讓 main 去了解後整合 這個文件也要先給我看過 也要 commit 上去"
+    },
+    {
+      "date": "2026-09-08",
+      "text": "你可以 commit 回工作流來處理"
+    },
+    {
+      "date": "2026-09-08",
+      "text": "如果缺乏 main 整合版本，請你自行告訴 main "
+    },
+    {
+      "date": "2026-09-08",
+      "text": "有另外一個 session 正在做這件事情 你們協調一下"
+    }
+  ],
+  "asks": [
+    "依 Main 的 S3 裁決 https://github.com/adms/GGD/pull/1112#issuecomment-5580460119，改以 替代 PR #1118（https://github.com/adms/GGD/pull/1118；codex/community-hero-forge-s3） 交付程式、文件、37 名配方、manifest 與還原工具；34 個大型分段在授權 S3，不進替代分支可達 Git 歷史。原 PR #1112 與原分支保留為歷史，請勿合併原大型材料提交；不 force-push 或改寫歷史。材料入口為 materials/community-hero-forge/README.md，原 manifest 雜湊不變。",
+    "請 Main 在 PR #1118 回覆接手情況及可供集中驗收的整合提交／服務版本。#1115 繼續承接 docs/_reports/community-hero-forge/merge-integration/README.md 的 M01–M11 核心與平台整合；替代分支的產品來源與原 a84cfd197 相同，尚未合併當前 Main。接手先刷新雙方 SHA 並合併 Main，重算 conflicts.json 的 pinned 61 路徑診斷；來源穩定後同批 G1–G7。保留護盾／連段／施法識別、阿薩謝爾同來源詛咒反轉、嚴格 UGC 解碼、新舊對局版本與普通正式英雄內容池的交會。",
+    "本批目標採 docs/_reports/community-hero-forge/editor-publication/README.md 的「本批集中執行目標」：Main 先整合來源並重生成產物，再於固定版本同批跑必要檢查、用同一版服務串投稿到正常對局／回放及未上架英雄回復，最後審查合併 S3 替代 PR。37 名英雄／222 槽核准後進入一般正式名單，模板、生成器、英雄與模型獨立版本回復不影響其他英雄；失敗只重跑受影響範圍，沿用已核對且未受影響的證據。#1115 已建立；材料搬遷與交接不代表核心整合或正式上線已完成。",
+    "合併後以部署中的 Main 服務版本重新取得建包目標，重建 37 份 ZIP 並走正式投稿、審查與發布。127.0.0.1 的 37 份核准版本是隔離驗收，不能直接當作正式站已部署；風格替代素材與原設計差異保留在逐槽審查說明。",
+    "本批以 37 名英雄實際工作流及獨立版本管理為交付範圍，不再擴充模板或追加桌面跨平台安裝驗收。已完成的桌面保存修正保留；簽署安裝、更新降級、Windows 實機及歷史 Python 完整環境重建仍未驗證，不宣稱完成。A17 Pro 30 fps 按估算處理，不要求實機。",
+    "既有訊息帳本閘仍有未對票及漏列，必須如實呈現；不得為通過閘而捏造票號。正式合併依實際 CI 與 Main review 處理。",
+    "相關交付文件與實際材料由 materials/community-hero-forge/README.md 進入：固定 S3 位置、逐檔 manifest、還原工具、37 名／222 槽核對及既有套件契約檢查。從 S3 取得並還原本批 ZIP、模型／動作／特效／音效與驗收證據，不依賴原機器的 /private/tmp；九份歷史腳本已移除隔離密碼，三份可重建執行檔及未選用的外部素材庫明列不包含。所有 AWS 操作只用預先配置的 vibe-coding profile 與 ap-east-2，不讀取憑證、不操作 IAM、不刪除 S3 物件；遇 AccessDenied 停止。",
+    "S3 完整性已補漏：materials/community-hero-forge/supplements/workspace-assets-20260908 保存固定 manifest、上傳／讀回收據及可重跑盤點；20,830 路徑副本去重 5,444 素材，四個工作樹目前 29,108 資源路徑 SHA-256 核對無缺件。156 份目前資源庫工具／JSON 定義／文件另保存在 asset-library-sources。原始大庫搬移僅重驗物件大小與 manifest，未再次讀回全部 47.69 GiB；既有 Git 資源與歷史保留，若要移出 Git 需 Main 同時整合部署及載入。原存儲缺口已補上，不代表 M01–M11 或正式發布完成。",
+    "2026-09-08 兩個任務已確認分工：共用素材庫存放規則、索引及解析／轉換程式由 codex/asset-library-management 維護；PR #1118 維護 37 英雄配方與工作流、156 份歷史來源快照及素材補漏收據，不建立第二份持續演進的素材管理來源。原始模型、動畫及大型解析 JSON 放 S3，程式、英雄／技能設定 JSON、版本清單、SHA-256 與文件放 Git 的決策已確認；歷史快照內 pending user choice 文字不再代表現行決策，原始位元組及雜湊保留。canonical 來源目錄為 materials/asset-library/，來源鏡像為 materials/asset-library/source/；素材庫任務已推送 PR #1119（https://github.com/adms/GGD/pull/1119），固定提交 3a0c3bf7ebf19bd63c7932bc65bb35b64158a61d 含 620 份來源與原生解析工具；已從 GitHub 核對來源清單、解析程式 SHA-256 與存放規則。原 local-only 指標已更新為此已推送來源，兩個 PR 分工不變；PR #1119 尚未合併，CI 與審查結果以該 PR 為準。詳見 materials/community-hero-forge/asset-library-sources/README.md。本次只更新分工與指標，不重傳素材、不重跑未受影響的產品驗收。"
+  ],
+  "notes": [
+    "2026-09-08 Main：contractFingerprint 由 60eac8487db1f780 重算為 b91a0f59c31289ed —— ⭐ 契約在合併 PR 1118 的當下就變了（這份 packet 主張的正是那次合併）,⛔ 這不是「重問同一題」。claims 一個字都沒動。"
+  ]
+}

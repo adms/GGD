@@ -1,0 +1,76 @@
+{
+  "schema": "ggd-library-motion-inspection@1",
+  "modelSha256": "913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd",
+  "sourceModel": {
+    "id": "community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_1",
+      "cast": "single_skill_01",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "yawOffsetDeg": 0
+  },
+  "method": "Babylon NullEngine CPU skinning at first and 60% frame; sequential states; materials skipped",
+  "bones": [
+    89
+  ],
+  "rows": [
+    {
+      "state": "idle",
+      "clip": "bat_idle",
+      "changedVertices": 4793,
+      "maxDelta": 0.18338849685013797,
+      "vertices": 4997
+    },
+    {
+      "state": "run",
+      "clip": "single_run",
+      "changedVertices": 4997,
+      "maxDelta": 0.6164931374097514,
+      "vertices": 4997
+    },
+    {
+      "state": "attack",
+      "clip": "single_attack_attcom_1",
+      "changedVertices": 4997,
+      "maxDelta": 0.7576505904607107,
+      "vertices": 4997
+    },
+    {
+      "state": "cast",
+      "clip": "single_skill_01",
+      "changedVertices": 4997,
+      "maxDelta": 0.5907077460100078,
+      "vertices": 4997
+    },
+    {
+      "state": "hurt",
+      "clip": "bat_idle",
+      "changedVertices": 4793,
+      "maxDelta": 0.18338849685013797,
+      "vertices": 4997
+    },
+    {
+      "state": "death",
+      "clip": "dead",
+      "changedVertices": 4997,
+      "maxDelta": 1.2918414735279165,
+      "vertices": 4997
+    }
+  ],
+  "nativePoseComparison": {
+    "comparedVertices": 240,
+    "maxErrorMetres": 0.0000010943894416408583,
+    "toleranceMetres": 0.0002
+  },
+  "stationaryClips": [],
+  "visualAcceptance": "pending",
+  "textureAcceptance": "pending"
+}

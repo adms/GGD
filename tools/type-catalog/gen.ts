@@ -259,7 +259,7 @@ const rows = templates.map((t) => {
      * · `doc`   —— `{"template":{"ref":"<id>","params":{…}}}`（由 expand() 展開）
      * · `both`  —— 兩條都走得通（beam-roll / locust 家族）
      */
-    wiring: nodeSlots.length > 0 ? (keys.length > nodeSlots.length ? "both" : "node") : "doc",
+    wiring: nodeSlots.length > 0 ? (probe.ok ? "both" : "node") : "doc",
     usedVia: { preset: presetUses, ref: refUses },
     /** ⛔ 這幾格**填了也不會發生** —— 模板自己宣告的（見 `params[*].inert` 的理由）。 */
     inertParams: keys.filter((k) => (t.params ?? {})[k]?.inert !== undefined),
@@ -274,6 +274,12 @@ const rows = templates.map((t) => {
             ...(s.values ? { values: s.values } : {}),
             /** ⭐ 這一格是**誰**填的 —— 挑錯邊就是失敗形態⑧。 */
             fillsVia: NODE_SLOTS.has(k) ? "spawnModelFx.preset" : "template.ref → expand()",
+            // A shared geometry field can be consumed on BOTH routes. The old
+            // single label incorrectly disabled working template-card inputs.
+            fillsViaByContext: {
+              ...(probe.ok ? { doc: "template.ref → expand()" } : {}),
+              ...(NODE_SLOTS.has(k) ? { node: "spawnModelFx.preset" } : {}),
+            },
             /** ⛔ 非 null ＝ 模板自己宣告「本版不生效」⇒ ⭐ 填了也不會發生。 */
             inert: s.inert ?? null,
           },

@@ -34,7 +34,22 @@
  */
 import type { TokenPair } from "./types";
 
-const STORAGE_KEY = "ggd.admin.session.v1";
+export function scopedSessionKey(base: string): string {
+  const origin = (globalThis as { ggdDesktopPlatform?: { origin?: unknown } }).ggdDesktopPlatform?.origin;
+  return typeof origin === "string" ? `${base}@${encodeURIComponent(origin)}` : base;
+}
+const STORAGE_KEY = scopedSessionKey("ggd.admin.session.v1");
+
+// A consistency check only: Platform remains responsible for JWT verification.
+// Shared-domain cookies may belong to an account logged in from another app.
+function accessSubject(tokens: TokenPair | null): string | null {
+  try {
+    const part = tokens?.accessToken.split(".")[1];
+    if (!part) return null;
+    const claims = JSON.parse(atob(part.replace(/-/g, "+").replace(/_/g, "/"))) as { sub?: unknown };
+    return typeof claims.sub === "string" && claims.sub ? claims.sub : null;
+  } catch { return null; }
+}
 
 /**
  * 存到 localStorage 的形狀。⭐ 比 `TokenPair` 多一格 `rtCookie` —— 它記的是
@@ -214,8 +229,10 @@ export class ApiClient {
   }
 
   private refreshOnce(): Promise<boolean> {
+    if (!this.tokens || (!this.tokens.refreshToken && !this.serverHoldsRefresh)) return Promise.resolve(false);
     if (!this.refreshing) {
       this.refreshing = (async () => {
+        const original = this.tokens;
         const refreshToken = this.tokens?.refreshToken ?? "";
         // ⭐ 空字串 ＋ cookie 模式 = 「重新載入之後的後台」：憑證在瀏覽器的
         // httpOnly cookie 裡，由伺服器自己去讀（#724/F-21）。
@@ -227,12 +244,20 @@ export class ApiClient {
             body: { refreshToken },
             auth: false,
           });
+          if (this.tokens !== original) return false;
           if (!res.ok) {
             this.setTokens(null);
             this.onSessionExpired?.();
             return false;
           }
           const body = (await res.json()) as { tokens: TokenPair; refreshCookie?: boolean };
+          if (this.tokens !== original) return false;
+          if (accessSubject(original) !== accessSubject(body.tokens)) {
+            // Clear this app without logging out the other app's cookie owner.
+            this.serverHoldsRefresh = false;
+            this.setTokens(null); this.onSessionExpired?.();
+            return false;
+          }
           this.noteRefreshCookie(body);
           this.setTokens(body.tokens);
           return true;
@@ -248,10 +273,11 @@ export class ApiClient {
 
   /** JSON request with the 401 → refresh-once → retry-once policy. */
   async request<T>(path: string, opts: RequestOptions = {}): Promise<T> {
+    const original = this.tokens;
     let res = await this.rawRequest(path, opts);
-    if (res.status === 401 && opts.auth !== false && opts.refreshOn401 !== false && this.tokens) {
+    if (res.status === 401 && opts.auth !== false && opts.refreshOn401 !== false && original && this.tokens && accessSubject(original) === accessSubject(this.tokens)) {
       const refreshed = await this.refreshOnce();
-      if (refreshed) res = await this.rawRequest(path, opts);
+      if (refreshed && this.tokens && accessSubject(original) === accessSubject(this.tokens)) res = await this.rawRequest(path, opts);
     }
     if (!res.ok) throw await parseError(res);
     const parsed = (await res.json()) as T;
@@ -276,10 +302,11 @@ export class ApiClient {
    * the server's brute-force budget twice.
    */
   async requestBlob(path: string, body: unknown, opts: RequestOptions = {}): Promise<Blob> {
+    const original = this.tokens;
     let res = await this.rawRequest(path, { ...opts, body, method: opts.method ?? "POST" });
-    if (res.status === 401 && opts.refreshOn401 === true && this.tokens) {
+    if (res.status === 401 && opts.refreshOn401 === true && original && this.tokens && accessSubject(original) === accessSubject(this.tokens)) {
       const refreshed = await this.refreshOnce();
-      if (refreshed) res = await this.rawRequest(path, { ...opts, body, method: opts.method ?? "POST" });
+      if (refreshed && this.tokens && accessSubject(original) === accessSubject(this.tokens)) res = await this.rawRequest(path, { ...opts, body, method: opts.method ?? "POST" });
     }
     if (!res.ok) throw await parseError(res);
     return await res.blob();
@@ -296,6 +323,21 @@ export class ApiClient {
     const res = await this.fetchFn(this.base + path, { method: "POST", headers, body });
     if (!res.ok) throw await parseError(res);
     return (await res.json()) as T;
+  }
+
+  /** Binary hero packages use the existing session and refresh at most once. */
+  async binaryResponse(path: string, body?: BodyInit, options: { method?: string; contentType?: string; headers?: Record<string, string> } = {}): Promise<Response> {
+    const original = this.tokens;
+    const send = () => {
+      const headers = new Headers(options.headers);
+      if (options.contentType) headers.set("Content-Type", options.contentType);
+      if (this.tokens) headers.set("Authorization", `Bearer ${this.tokens.accessToken}`);
+      return this.fetchFn(this.base + path, { method: options.method ?? (body === undefined ? "GET" : "POST"), body, headers, credentials: "same-origin" });
+    };
+    let response = await send();
+    if (response.status === 401 && original && this.tokens && accessSubject(original) === accessSubject(this.tokens) && await this.refreshOnce() && this.tokens && accessSubject(original) === accessSubject(this.tokens)) response = await send();
+    if (!response.ok) throw await parseError(response);
+    return response;
   }
 }
 

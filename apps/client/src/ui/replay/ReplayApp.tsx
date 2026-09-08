@@ -18,6 +18,8 @@ import { GameApp } from "../../GameApp";
 import { ensureContentLoaded, isContentReady } from "../../content/bootContent";
 import { GlobalChrome } from "../GlobalChrome";
 import { bindReplayRoom, ReplayControls } from "./ReplayControls";
+import { prepareReplayCommunity, setCommunityLoading, type CommunityContentLease } from "../../content/communityMatch";
+import { CommunityContentGate } from "../platform/ContentGate";
 
 /** Parse `#replay=<id>&ticket=<t>` from the URL. */
 export function parseReplayHash(hash: string): { id: string; ticket: string } | null {
@@ -36,26 +38,38 @@ export function ReplayApp({ id, ticket }: { id: string; ticket: string }): React
     let app: GameApp | null = null;
     let unbind: (() => void) | null = null;
     let disposed = false;
+    let contentLease: CommunityContentLease | null = null;
 
     void (async () => {
-      if (!isContentReady()) await ensureContentLoaded();
-      if (disposed || !canvasRef.current) return;
-      app = new GameApp(canvasRef.current, { accountId: "replay-viewer" });
-      app.start();
       try {
+        if (!isContentReady()) await ensureContentLoaded();
+        if (disposed || !canvasRef.current) return;
+        setCommunityLoading("正在核對回放固定版本…");
+        contentLease = await prepareReplayCommunity(id, ticket, () => !disposed);
+        if (disposed) { contentLease?.dispose(); return; }
+        contentLease?.activate();
+        app = new GameApp(canvasRef.current, { accountId: "replay-viewer", onContentError: (message) => {
+          contentLease?.dispose(); contentLease = null;
+          unbind?.(); unbind = null;
+          if (!disposed) { setRoom(null); setError(message); }
+        } });
+        app.start();
         const r = await app.connectReplay(id, ticket);
         if (disposed) return;
         unbind = bindReplayRoom(r);
         setRoom(r);
       } catch (e) {
-        setError(e instanceof Error ? e.message : "無法連線到回放伺服器");
-      }
+        app?.dispose(); app = null; contentLease?.dispose(); contentLease = null;
+        if (!disposed) setError(e instanceof Error ? e.message : "無法連線到回放伺服器");
+      } finally { if (!disposed) setCommunityLoading(""); }
     })();
 
     return () => {
       disposed = true;
       unbind?.();
       app?.dispose();
+      contentLease?.dispose();
+      setCommunityLoading("");
     };
   }, [id, ticket]);
 
@@ -80,7 +94,7 @@ export function ReplayApp({ id, ticket }: { id: string; ticket: string }): React
           {error}
         </div>
       ) : (
-        <ReplayControls room={room} />
+        <CommunityContentGate><ReplayControls room={room} /></CommunityContentGate>
       )}
       {/* THE CHROME THAT IS SUPPOSED TO BE ON EVERY PAGE (defect P0-6(b)).
           This is a SECOND render tree — main.tsx renders ReplayApp INSTEAD of

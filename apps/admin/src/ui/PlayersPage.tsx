@@ -179,6 +179,16 @@ export function PlayersPage(): React.JSX.Element {
     }
   }
 
+  async function doPowerUser(row: AccountRow): Promise<void> {
+    try {
+      await apiFns.setPowerUser(row.id, !row.roles.includes("power-user"));
+      await search(page);
+      if (selected?.account.id === row.id) await refreshSelected(row.id);
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Power User 認證更新失敗");
+    }
+  }
+
   // client-side refinement over the current server page
   const visible = filterAccounts(rows, "");
   const maxPage = Math.max(1, Math.ceil(total / pageSize));
@@ -321,6 +331,9 @@ export function PlayersPage(): React.JSX.Element {
                           婉拒
                         </Btn>
                       )}
+                      <Btn small onClick={() => void doPowerUser(r)} title="認證後套用 UGC 設定的較高每日英雄投稿額度">
+                        {r.roles.includes("power-user") ? "撤銷 Power User 認證" : "認證 Power User"}
+                      </Btn>
                       {r.banned ? (
                         <Btn small onClick={() => void doUnban(r)}>
                           解除停權

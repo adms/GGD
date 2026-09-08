@@ -47,6 +47,7 @@ z
   .object({
     kind: z.literal("applyStatus"),
     ...EFFECT_COMMON_SHAPE,
+    sourceScope: z.enum(["caster"]).optional().describe("依施法者分開刷新與增減層數，不修改同名的共用標記計數器；省略沿用原有規則。"),
     statusId: zRef<StatusId>("status-effects", { soft: true }),
     /**
      * ⭐⭐ **M4（GH#965）—— 強制受害者播某一段剪輯**（原作那一族「被打飛時定格」）。

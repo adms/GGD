@@ -1,0 +1,7 @@
+{
+  "status": "failed",
+  "scope": "Local author draft only. No cloud submission or original-design approval.",
+  "steps": [],
+  "editedSentence": "實際效果：與目標距離 ≤ 2.5 且 目標位於自己正面 90° 內",
+  "error": "Error: {\"exceptionId\":7,\"text\":\"Uncaught\",\"lineNumber\":0,\"columnNumber\":81,\"scriptId\":\"405359\",\"stackTrace\":{\"callFrames\":[{\"functionName\":\"\",\"scriptId\":\"405359\",\"url\":\"\",\"lineNumber\":0,\"columnNumber\":81}]},\"exception\":{\"type\":\"object\",\"subtype\":\"error\",\"className\":\"TypeError\",\"description\":\"TypeError: Cannot read properties of undefined (reading 'click')\\n    at <anonymous>:1:82\",\"objectId\":\"8147237707349567001.222.2\"}}"
+}

@@ -33,6 +33,16 @@ export const zModelDoc = z
     collisionRadius: z.number().positive(),
     /** logical state -> AnimationGroup clip name inside the .glb */
     clipMap: zClipMap,
+    /**
+     * Trusted catalog approval for use as a Hero Forge body. true allows a new
+     * model before any official champion references it; false withdraws it from
+     * new authoring. Omission retains the existing champion-binding policy.
+     * This is model metadata owned by the catalog, never a project permission.
+     * It does not grant asset distribution rights or bypass package checks.
+     */
+    heroBody: z.boolean().optional(),
+    /** Frozen body revision. Legacy snapshots retain the former stand-in/overlay behavior. */
+    bodyVersion: z.object({ sourceModelKey: zId, legacyAppearance: z.boolean() }).strict().optional(),
     /** named local-space offsets for vfx/projectile muzzles, overhead UI, … */
     attachPoints: z
       .record(

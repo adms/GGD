@@ -140,6 +140,8 @@ const CHILD_KEYS = [
   "onEnd",
   "onArrive",
   "onDevour",
+  "onConsumed",
+  "onMissing",
   "onDevourPer",
   "onCarrierDeath",
 ] as const;

@@ -22,6 +22,7 @@
  * 呼叫端（`VfxSystem`）自己決定 fail-open 的形狀，⛔ 但要出聲。
  */
 import type { ContentStore } from "../store";
+import { ContextualRegistryMap } from "../../sim/content/registryContext";
 import {
   isVfxScriptCall,
   zVfxScriptSegment,
@@ -194,7 +195,7 @@ export function expandVfxScriptDoc<T extends Pick<VfxScriptAuthoredDoc, "id" | "
  * 「還沒 registerVfxSubtypes」—— 而那是**刻意出聲**的，⛔ 不是靜默少一段。
  */
 class VfxSubtypeRegistry {
-  private readonly map = new Map<string, VfxSubtypeDoc>();
+  private readonly map = new ContextualRegistryMap<string, VfxSubtypeDoc>("content.vfx-subtypes");
   register(d: VfxSubtypeDoc): void {
     this.map.set(d.id, d);
   }

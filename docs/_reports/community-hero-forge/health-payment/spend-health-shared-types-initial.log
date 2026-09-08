@@ -1,0 +1,8 @@
+src/sim/effects/spendHealth.test.ts(99,23): error TS2540: Cannot assign to 'damageDealt' because it is a read-only property.
+src/sim/effects/spendHealth.test.ts(99,58): error TS2540: Cannot assign to 'healing' because it is a read-only property.
+src/sim/effects/spendHealth.test.ts(129,25): error TS2322: Type '{ kind: "stat"; subject: "self"; stat: "hp"; op: ">"; value: number; }' is not assignable to type 'EffectCondition | undefined'.
+  Type '{ kind: "stat"; subject: "self"; stat: "hp"; op: ">"; value: number; }' is not assignable to type 'AllCondition | AnyCondition | NotCondition | ResourceStatLeaf'.
+    Property 'mode' is missing in type '{ kind: "stat"; subject: "self"; stat: "hp"; op: ">"; value: number; }' but required in type 'ResourceStatLeaf'.
+undefined
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 2: tsc --noEmit

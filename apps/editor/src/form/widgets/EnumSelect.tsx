@@ -10,6 +10,7 @@ export function EnumSelect({ node, value, dataPath, errors, onChange }: FieldPro
         {node.optional ? <em> (optional)</em> : null}
       </span>
       <select
+        data-field={dataPath}
         value={value === undefined || value === null ? "" : String(value)}
         onChange={(e) => {
           const raw = e.target.value;

@@ -47,6 +47,9 @@ import { liveRecordingIds } from "./replay/Recorder";
 import { probeReplayDirWritable, pruneReplays, replayDir } from "./replay/store";
 import { replayHealth } from "./replay/replayHealth";
 import { buildHealthzPayload, healthzStatus } from "./healthz";
+import { initializeCommunityRuntime } from "./content/communityRuntime";
+import { handleCommunityContent } from "./content/communityHttp";
+import { zCommunityHeroPin, MAX_COMMUNITY_HEROES, type CommunityHeroPin } from "@ggd/shared/content/communityRoom";
 
 // MULTI-PROCESS (A). Resolved here rather than read from env piecemeal so the
 // port this shard BINDS and the address it ADVERTISES can never disagree — see
@@ -115,6 +118,7 @@ if (bootErr) {
 console.log(deployTierBootLine());
 
 interface InternalMatchRequest {
+  communityHeroes?: CommunityHeroPin[];
   matchId: string;
   mode: string;
   mapId?: string;
@@ -186,6 +190,10 @@ async function handleInternalMatches(req: IncomingMessage, res: ServerResponse, 
   let body: InternalMatchRequest;
   try {
     body = JSON.parse(rawBody) as InternalMatchRequest;
+    if (body.communityHeroes !== undefined) {
+      if (!Array.isArray(body.communityHeroes) || body.communityHeroes.length > MAX_COMMUNITY_HEROES) throw new Error("invalid community heroes");
+      body.communityHeroes = body.communityHeroes.map((hero) => zCommunityHeroPin.parse(hero));
+    }
   } catch {
     res.writeHead(400, { "content-type": "application/json" });
     res.end(JSON.stringify({ error: { code: "bad-request", message: "invalid json" } }));
@@ -213,6 +221,7 @@ async function handleInternalMatches(req: IncomingMessage, res: ServerResponse, 
     }));
 
   const room = await matchMaker.createRoom("match", {
+    communityHeroes: body.communityHeroes,
     matchId: body.matchId,
     seed: body.seed,
     mapId: body.mapId,
@@ -253,12 +262,19 @@ async function handleInternalMatches(req: IncomingMessage, res: ServerResponse, 
       matchId: body.matchId,
       colyseusRoomId: room.roomId,
       endpoint: PUBLIC_ENDPOINT,
+      communityContent: await matchMaker.remoteRoomCall(room.roomId, "getCommunityManifest", []),
       reservations,
     }),
   );
 }
 
 const httpServer = createServer((req, res) => {
+  if (req.url === "/_internal/community-content" && req.method === "POST") {
+    let raw = "";
+    req.on("data", (chunk: Buffer) => { raw += chunk.toString("utf8"); if (raw.length > 32000) req.destroy(); });
+    req.on("end", () => { void handleCommunityContent(req, res, raw, SHARED_SECRET).catch(() => { if (!res.headersSent) res.writeHead(500); res.end(); }); });
+    return;
+  }
   if (req.url === "/healthz") {
     // The payload and the status policy live in ./healthz so they are testable
     // — index.ts binds a port at import time, which made every field on this
@@ -425,6 +441,9 @@ async function loadContent(): Promise<void> {
         performance.now() - tLoad,
       );
     registerAll(result.store);
+    registerSkeletonContent();
+    try { initializeCommunityRuntime(result.store, result.manifest.contentVersion); }
+    catch (error) { console.warn("[community-content] unavailable:", error); }
     // ⭐⭐ GH#1025 —— 熱套用的參數在這裡設一次（⛔ 不在 contentHotApply 裡
     //   把 CONTENT_DIR 再算一遍 —— 那會是第二個住處而它會漂）。
     //   ⇒ 之後平台一公告 `content-overlay`，這一台就把**新增的**內容註冊進來。

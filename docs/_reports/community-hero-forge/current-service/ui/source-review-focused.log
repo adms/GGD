@@ -1,0 +1,45 @@
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor
+
+ ❯ src/hero/HeroSourceDesignPanel.test.tsx (6 tests | 6 failed) 41ms
+   × fixed source-design review > shows the complete original PASSIVE and its remaining requirements without enabling edits 23ms
+     → Cannot read properties of undefined (reading 'map')
+   × fixed source-design review > shows the complete original Q and its remaining requirements without enabling edits 4ms
+     → Cannot read properties of undefined (reading 'map')
+   × fixed source-design review > shows the complete original W and its remaining requirements without enabling edits 3ms
+     → Cannot read properties of undefined (reading 'map')
+   × fixed source-design review > shows the complete original E and its remaining requirements without enabling edits 2ms
+     → Cannot read properties of undefined (reading 'map')
+   × fixed source-design review > shows the complete original R and its remaining requirements without enabling edits 4ms
+     → Cannot read properties of undefined (reading 'map')
+   × fixed source-design review > shows the complete original EX and its remaining requirements without enabling edits 3ms
+     → Cannot read properties of undefined (reading 'map')
+ ✓ src/hero/HeroSlotEditor.test.tsx (5 tests) 4432ms
+   ✓ hero product condition editing > edits the nested curse-reversal reward with actual controls and recompiles the reopened project 3667ms
+   ✓ hero product condition editing > edits a concept hero's shield and tier using actual controls, then compiles the reopened draft 309ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/hero/HeroSourceDesignPanel.test.tsx > fixed source-design review > shows the complete original PASSIVE and its remaining requirements without enabling edits
+ FAIL  src/hero/HeroSourceDesignPanel.test.tsx > fixed source-design review > shows the complete original Q and its remaining requirements without enabling edits
+ FAIL  src/hero/HeroSourceDesignPanel.test.tsx > fixed source-design review > shows the complete original W and its remaining requirements without enabling edits
+ FAIL  src/hero/HeroSourceDesignPanel.test.tsx > fixed source-design review > shows the complete original E and its remaining requirements without enabling edits
+ FAIL  src/hero/HeroSourceDesignPanel.test.tsx > fixed source-design review > shows the complete original R and its remaining requirements without enabling edits
+ FAIL  src/hero/HeroSourceDesignPanel.test.tsx > fixed source-design review > shows the complete original EX and its remaining requirements without enabling edits
+TypeError: Cannot read properties of undefined (reading 'map')
+ ❯ text src/hero/HeroSourceDesignPanel.test.tsx:9:64
+      7| import { HeroSourceDesignPanel } from "./HeroSourceDesignPanel";
+      8| 
+      9| const text = (nodes: readonly RenderedNode[]): string => nodes.map(nod…
+       |                                                                ^
+     10| const elements = (nodes: readonly RenderedNode[]): HostNode[] => nodes…
+     11| const project = refineAzazelProject(zHeroProject.parse(JSON.parse(read…
+ ❯ src/hero/HeroSourceDesignPanel.test.tsx:18:22
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  6 failed | 5 passed (11)
+   Start at  15:36:11
+   Duration  14.97s (transform 5.05s, setup 0ms, collect 14.85s, tests 4.47s, environment 1ms, prepare 471ms)
+

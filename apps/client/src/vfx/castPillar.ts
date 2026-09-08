@@ -1,3 +1,4 @@
+import { BUILTIN_VFX_TEXTURES } from "@ggd/shared/content/builtinVfxTextures";
 /**
  * castPillar — the PURE half of the 0.6 s cast telegraph light pillar.
  *
@@ -354,7 +355,7 @@ export function moteSpec(
     stretched: true,
     tailLength: 1.8,
     flatRing: { radius: SHELL_RADIUS * 0.78, height: 0.12 },
-    texture: "assets/textures/particles/spark_05_rotated.png",
+    texture: BUILTIN_VFX_TEXTURES.particles_spark_05_rotated,
   };
 }
 

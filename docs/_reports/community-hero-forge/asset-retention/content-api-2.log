@@ -1,0 +1,146 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/content-api
+
+ ✓ src/server.test.ts (39 tests) 4758ms
+   ✓ reads (capi-01) > serves manifest, _index and objects 302ms
+ ✓ src/importRoutesG2.test.ts (27 tests) 4259ms
+   ✓ G2 routes —— 六條走真的 HTTP > ★★ ⭐⭐ `apply` → `active` → `runtime-bundle` → `rollback` 走得通 311ms
+   ✓ G2 可達性 > ★★ ⭐⭐ `/capabilities` · `/health` · `/active/target-profile` **三條說同一個 stage** 327ms
+ ✓ src/guard.test.ts (24 tests) 568ms
+ ✓ src/iconAssetRoundTrip.test.ts (9 tests) 1519ms
+   ✓ GH#966 編輯器打包的 icon > ★★ ⭐⭐ 一張圖 → zip → apply ⇒ **檔案落地** 且文件的 `icon` 指到它 342ms
+ ❯ src/editorSourceSurvivesSync.test.ts (3 tests | 1 failed) 2560ms
+   × P0-1 §5 來源改動撐得過 sync（⭐ 在沙盒副本上，⛔ 不碰出貨樹） > ★★ ⭐ 改**來源**的一個非級距欄位 ⇒ 重生成 ⇒ 三支正規化器跑完，那個值**還在** 2419ms
+     → ⛔ 沙盒裡的產生器步驟失敗：tsx packages/shared/scripts/buildIndexes.ts（exit 1 signal null）
+⭐ 這是**沙盒**（/var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/ggd-source-sandbox-tUIloQ）—— 出貨樹沒被碰；先看下面的輸出，⛔ 不要去改 content/。
+stdout:
+
+stderr:
+node:net:1986
+      const error = new UVExceptionWithHostPort(rval, 'listen', address, port);
+                    ^
+
+Error: listen EPERM: operation not permitted /var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/tsx-503/11444.pipe
+    at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+    at listenInCluster (node:net:2065:12)
+    at Server.listen (node:net:2187:5)
+    at file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:53:31472
+    at new Promise (<anonymous>)
+    at createIpcServer (file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:53:31450)
+    at async file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:55:500 {
+  code: 'EPERM',
+  errno: -1,
+  syscall: 'listen',
+  address: '/var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/tsx-503/11444.pipe',
+  port: -1
+}
+
+Node.js v25.9.0
+
+ ✓ src/importRoutesDigest.test.ts (10 tests) 1310ms
+ ✓ src/heroWorkRoutes.test.ts (6 tests) 32666ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > normalizes an original image before inspection and freezes the exact reviewed WebP 10955ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > validates all source, runtime, evidence and assets without store or registry mutation 1860ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > stores two works, restores exact authoring after restart, and leaves official ACTIVE unchanged 9180ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > rejects replacing operation input or sending a work to the official activation endpoint 1837ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > resumes after a crash between immutable placement and operation completion 5291ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > rejects forged target pins and detects damaged frozen asset bytes on read 1207ms
+ ✓ src/importStore.test.ts (12 tests) 626ms
+ ✓ src/editorSourceRoutes.test.ts (6 tests) 226ms
+ ✓ src/zipReader.test.ts (7 tests) 12ms
+ ✓ src/remoteAsset.test.ts (6 tests) 262ms
+ ✓ src/editorSourceNoRemoteExec.test.ts (3 tests) 147ms
+ ✓ src/importStoreCrashRecovery.test.ts (3 tests) 90ms
+ ✓ src/heroContentSnapshot.test.ts (2 tests) 11248ms
+   ✓ publishes against the captured Platform overlay and loads the exact package into the game's merged room 11245ms
+ ✓ src/importTransientCleanup.test.ts (4 tests) 302ms
+ ✓ src/productWriteGuardCoversEveryRoute.test.ts (4 tests) 6ms
+ ✓ src/heroImportServer.test.ts (3 tests) 348ms
+   ✓ offers the same work importer while official activation and Editor CRUD remain unreachable 303ms
+ ✓ src/externalProfile.test.ts (4 tests) 21ms
+ ✓ src/externalContractIndex.test.ts (2 tests) 13ms
+ ✓ src/externalContractIndexRoute.test.ts (1 test) 112ms
+ ✓ src/importIconAtomic.test.ts (1 test) 39ms
+ ✓ src/desktopSource.test.ts (1 test) 87ms
+ ✓ src/externalProfileRoute.test.ts (1 test) 84ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/editorSourceSurvivesSync.test.ts > P0-1 §5 來源改動撐得過 sync（⭐ 在沙盒副本上，⛔ 不碰出貨樹） > ★★ ⭐ 改**來源**的一個非級距欄位 ⇒ 重生成 ⇒ 三支正規化器跑完，那個值**還在**
+Error: ⛔ 沙盒裡的產生器步驟失敗：tsx packages/shared/scripts/buildIndexes.ts（exit 1 signal null）
+⭐ 這是**沙盒**（/var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/ggd-source-sandbox-tUIloQ）—— 出貨樹沒被碰；先看下面的輸出，⛔ 不要去改 content/。
+stdout:
+
+stderr:
+node:net:1986
+      const error = new UVExceptionWithHostPort(rval, 'listen', address, port);
+                    ^
+
+Error: listen EPERM: operation not permitted /var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/tsx-503/11444.pipe
+    at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+    at listenInCluster (node:net:2065:12)
+    at Server.listen (node:net:2187:5)
+    at file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:53:31472
+    at new Promise (<anonymous>)
+    at createIpcServer (file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:53:31450)
+    at async file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:55:500 {
+  code: 'EPERM',
+  errno: -1,
+  syscall: 'listen',
+  address: '/var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/tsx-503/11444.pipe',
+  port: -1
+}
+
+Node.js v25.9.0
+
+ ❯ ../../../../../../%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:53:31472
+ ❯ createIpcServer ../../../../../../%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:53:31450
+ ❯ run src/editorSourceSurvivesSync.test.ts:113:11
+    111|     const err = e as { status?: number | null; signal?: string | null;…
+    112|     const tail = (b?: Buffer): string => (b ? b.toString("utf8").slice…
+    113|     throw new Error(
+       |           ^
+    114|       `⛔ 沙盒裡的產生器步驟失敗：${step.name}（exit ${String(err.statu…
+    115|         `⭐ 這是**沙盒**（${root}）—— 出貨樹沒被碰；先看下面的輸出，⛔ …
+ ❯ src/editorSourceSurvivesSync.test.ts:155:39
+
+Caused by: Error: Command failed: /usr/local/Cellar/node/25.9.0_3/bin/node /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/tsx/dist/cli.mjs /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared/scripts/buildIndexes.ts
+node:net:1986
+      const error = new UVExceptionWithHostPort(rval, 'listen', address, port);
+                    ^
+
+Error: listen EPERM: operation not permitted /var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/tsx-503/11444.pipe
+    at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+    at listenInCluster (node:net:2065:12)
+    at Server.listen (node:net:2187:5)
+    at file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:53:31472
+    at new Promise (<anonymous>)
+    at createIpcServer (file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:53:31450)
+    at async file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:55:500 {
+  code: 'EPERM',
+  errno: -1,
+  syscall: 'listen',
+  address: '/var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/tsx-503/11444.pipe',
+  port: -1
+}
+
+Node.js v25.9.0
+
+ ❯ ../../../../../../%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:53:31472
+ ❯ createIpcServer ../../../../../../%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:53:31450
+ ❯ run src/editorSourceSurvivesSync.test.ts:101:5
+ ❯ src/editorSourceSurvivesSync.test.ts:155:39
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { status: 1, signal: null, output: [ null, { type: 'Buffer', data: [] }, { type: 'Buffer', data: [ 110, 111, 100, 101, 58, 110, 101, 116, 58, 49, 57, 56, 54, 10, 32, 32, 32, 32, 32, 32, 99, 111, 110, 115, 116, 32, 101, 114, 114, 111, 114, 32, 61, 32, 110, 101, 119, 32, 85, 86, 69, 120, 99, 101, 112, 116, 105, 111, 110, 87, 105, 116, 104, 72, 111, 115, 116, 80, 111, 114, 116, 40, 114, 118, 97, 108, 44, 32, 39, 108, 105, 115, 116, 101, 110, 39, 44, 32, 97, 100, 100, 114, 101, 115, 115, 44, 32, 112, 111, 114, 116, 41, 59, 10, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 94, 10, 10, 69, 114, 114, 111, 114, 58, 32, 108, 105, 115, 116, 101, 110, 32, 69, 80, 69, 82, 77, 58, 32, 111, 112, 101, 114, 97, 116, 105, 111, 110, 32, 110, 111, 116, 32, 112, 101, 114, 109, 105, 116, 116, 101, 100, 32, 47, 118, 97, 114, 47, 102, 111, 108, 100, 101, 114, 115, 47, 110, 104, 47, 48, 120, 119, 99, 109, 55, 57, 100, 53, 50, 118, 51, 113, 121, 114, 49, 110, 116, 122, 113, 118, 119, 110, 99, 48, 48, 48, 48, 103, 113, 47, 84, 47, 116, 115, 120, 45, 53, 48, 51, 47, 49, 49, 52, 52, 52, 46, 112, 105, 112, 101, 10, 32, 32, 32, 32, 97, 116, 32, 83, 101, 114, 118, 101, 114, 46, 115, 101, 116, 117, 112, 76, 105, 115, 116, 101, 110, 72, 97, 110, 100, 108, 101, 32, 91, 97, 115, 32, 95, 108, 105, 115, 116, 101, 110, 50, 93, 32, 40, 110, 111, 100, 101, 58, 110, 101, 116, 58, 49, 57, 56, 54, 58, 50, 49, 41, 10, 32, 32, 32, 32, 97, 116, 32, 108, 105, 115, 116, 101, 110, 73, 110, 67, 108, 117, 115, 116, 101, 114, 32, 40, 110, 111, 100, 101, 58, 110, 101, 116, 58, 50, 48, 54, 53, 58, 49, 50, 41, 10, 32, 32, 32, 32, 97, 116, 32, 83, 101, 114, 118, 101, 114, 46, 108, 105, 115, 116, 101, 110, 32, 40, 110, 111, 100, 101, 58, 110, 101, 116, 58, 50, 49, 56, 55, 58, 53, 41, 10, 32, 32, 32, 32, 97, 116, 32, 102, 105, 108, 101, 58, 47, 47, 47, 85, 115, 101, 114, 115, 47, 84, 97, 107, 117, 114, 111, 47, 68, 114, 111, 112, 98, 111, 120, 47, 37, 69, 54, 37, 56, 56, 37, 57, 49, 37, 69, 55, 37, 57, 65, 37, 56, 52, 37, 50, 48, 77, 97, 99, 37, 50, 48, 40, 77, 111, 114, 105, 121, 97, 46, 108, 111, 99, 97, 108, 41, 47, 68, 111, 99, 117, 109, 101, 110, 116, 115, 47, 65, 66, 120, 86, 70, 88, 95, 69, 68, 73, 84, 47, 71, 71, 68, 45, 99, 111, 109, 109, 117, 110, 105, 116, 121, 45, 104, 101, 114, 111, 45, 102, 111, 114, 103, 101, 47, 110, 111, 100, 101, 95, 109, 111, 100, 117, 108, 101, 115, 47, 46, 112, 110, 112, 109, 47, 116, 115, 120, 64, 52, 46, 50, 51, 46, 49, 47, 110, 111, 100, 101, 95, 109, 111, 100, 117, 108, 101, 115, 47, 116, 115, 120, 47, 100, 105, 115, 116, 47, 99, 108, 105, 46, 109, 106, 115, 58, 53, 51, 58, 51, 49, 52, 55, 50, 10, 32, 32, 32, 32, 97, 116, 32, 110, 101, 119, 32, 80, 114, 111, 109, 105, 115, 101, 32, 40, 60, 97, 110, 111, 110, 121, 109, 111, 117, 115, 62, 41, 10, 32, 32, 32, 32, 97, 116, 32, 99, 114, 101, 97, 116, 101, 73, 112, 99, 83, 101, 114, 118, 101, 114, 32, 40, 102, 105, 108, 101, 58, 47, 47, 47, 85, 115, 101, 114, 115, 47, 84, 97, 107, 117, 114, 111, 47, 68, 114, 111, 112, 98, 111, 120, 47, 37, 69, 54, 37, 56, 56, 37, 57, 49, 37, 69, 55, 37, 57, 65, 37, 56, 52, 37, 50, 48, 77, 97, 99, 37, 50, 48, 40, 77, 111, 114, 105, 121, 97, 46, 108, 111, 99, 97, 108, 41, 47, 68, 111, 99, 117, 109, 101, 110, 116, 115, 47, 65, 66, 120, 86, 70, 88, 95, 69, 68, 73, 84, 47, 71, 71, 68, 45, 99, 111, 109, 109, 117, 110, 105, 116, 121, 45, 104, 101, 114, 111, 45, 102, 111, 114, 103, 101, 47, 110, 111, 100, 101, 95, 109, 111, 100, 117, 108, 101, 115, 47, 46, 112, 110, 112, 109, 47, 116, 115, 120, 64, 52, 46, 50, 51, 46, 49, 47, 110, 111, 100, 101, 95, 109, 111, 100, 117, 108, 101, 115, 47, 116, 115, 120, 47, 100, 105, 115, 116, 47, 99, 108, 105, 46, 109, 106, 115, 58, 53, 51, 58, 51, 49, 52, 53, 48, 41, 10, 32, 32, 32, 32, 97, 116, 32, 97, 115, 121, 110, 99, 32, 102, 105, 108, 101, 58, 47, 47, 47, 85, 115, 101, 114, 115, 47, 84, 97, 107, 117, 114, 111, 47, 68, 114, 111, 112, 98, 111, 120, 47, 37, 69, 54, 37, 56, 56, 37, 57, 49, 37, 69, 55, 37, 57, 65, 37, 56, 52, 37, 50, 48, 77, 97, 99, 37, 50, 48, 40, 77, 111, 114, 105, 121, 97, 46, 108, 111, 99, 97, 108, 41, 47, 68, 111, 99, 117, 109, 101, 110, 116, 115, 47, 65, 66, 120, 86, 70, 88, 95, 69, 68, 73, 84, 47, 71, 71, 68, 45, 99, 111, 109, 109, 117, 110, 105, 116, 121, 45, 104, 101, 114, 111, 45, 102, 111, 114, 103, 101, 47, 110, 111, 100, 101, 95, 109, 111, 100, 117, 108, 101, 115, 47, 46, 112, 110, 112, 109, 47, 116, 115, 120, 64, 52, 46, 50, 51, 46, 49, 47, 110, 111, 100, 101, 95, 109, 111, 100, 117, 108, 101, 115, 47, 116, 115, 120, 47, 100, 105, 115, 116, 47, 99, 108, 105, 46, 109, 106, 115, 58, 53, 53, 58, 53, 48, 48, 32, 123, 10, 32, 32, 99, 111, 100, 101, 58, 32, 39, 69, 80, 69, 82, 77, 39, 44, 10, 32, 32, 101, 114, 114, 110, 111, 58, 32, 45, 49, 44, 10, 32, 32, 115, 121, 115, 99, 97, 108, 108, 58, 32, 39, 108, 105, 115, 116, 101, 110, 39, 44, 10, 32, 32, 97, 100, 100, 114, 101, 115, 115, 58, 32, 39, 47, 118, 97, 114, 47, 102, 111, 108, 100, 101, 114, 115, 47, 110, 104, 47, 48, 120, 119, 99, 109, 55, 57, 100, 53, 50, 118, 51, 113, 121, 114, 49, 110, 116, 122, 113, 118, 119, 110, 99, 48, 48, 48, 48, 103, 113, 47, 84, 47, 116, 115, 120, 45, 53, 48, 51, 47, 49, 49, 52, 52, 52, 46, 112, 105, 112, 101, 39, 44, 10, 32, 32, 112, 111, 114, 116, 58, 32, 45, 49, 10, 125, 10, 10, 78, 111, 100, 101, 46, 106, 115, 32, 118, 50, 53, 46, 57, 46, 48, 10 ] } ], pid: 11444, stdout: { type: 'Buffer', data: [] }, stderr: { type: 'Buffer', data: [ 110, 111, 100, 101, 58, 110, 101, 116, 58, 49, 57, 56, 54, 10, 32, 32, 32, 32, 32, 32, 99, 111, 110, 115, 116, 32, 101, 114, 114, 111, 114, 32, 61, 32, 110, 101, 119, 32, 85, 86, 69, 120, 99, 101, 112, 116, 105, 111, 110, 87, 105, 116, 104, 72, 111, 115, 116, 80, 111, 114, 116, 40, 114, 118, 97, 108, 44, 32, 39, 108, 105, 115, 116, 101, 110, 39, 44, 32, 97, 100, 100, 114, 101, 115, 115, 44, 32, 112, 111, 114, 116, 41, 59, 10, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 94, 10, 10, 69, 114, 114, 111, 114, 58, 32, 108, 105, 115, 116, 101, 110, 32, 69, 80, 69, 82, 77, 58, 32, 111, 112, 101, 114, 97, 116, 105, 111, 110, 32, 110, 111, 116, 32, 112, 101, 114, 109, 105, 116, 116, 101, 100, 32, 47, 118, 97, 114, 47, 102, 111, 108, 100, 101, 114, 115, 47, 110, 104, 47, 48, 120, 119, 99, 109, 55, 57, 100, 53, 50, 118, 51, 113, 121, 114, 49, 110, 116, 122, 113, 118, 119, 110, 99, 48, 48, 48, 48, 103, 113, 47, 84, 47, 116, 115, 120, 45, 53, 48, 51, 47, 49, 49, 52, 52, 52, 46, 112, 105, 112, 101, 10, 32, 32, 32, 32, 97, 116, 32, 83, 101, 114, 118, 101, 114, 46, 115, 101, 116, 117, 112, 76, 105, 115, 116, 101, 110, 72, 97, 110, 100, 108, 101, 32, 91, 97, 115, 32, 95, 108, 105, 115, 116, 101, 110, 50, 93, 32, 40, 110, 111, 100, 101, 58, 110, 101, 116, 58, 49, 57, 56, 54, 58, 50, 49, 41, 10, 32, 32, 32, 32, 97, 116, 32, 108, 105, 115, 116, 101, 110, 73, 110, 67, 108, 117, 115, 116, 101, 114, 32, 40, 110, 111, 100, 101, 58, 110, 101, 116, 58, 50, 48, 54, 53, 58, 49, 50, 41, 10, 32, 32, 32, 32, 97, 116, 32, 83, 101, 114, 118, 101, 114, 46, 108, 105, 115, 116, 101, 110, 32, 40, 110, 111, 100, 101, 58, 110, 101, 116, 58, 50, 49, 56, 55, 58, 53, 41, 10, 32, 32, 32, 32, 97, 116, 32, 102, 105, 108, 101, 58, 47, 47, 47, 85, 115, 101, 114, 115, 47, 84, 97, 107, 117, 114, 111, 47, 68, 114, 111, 112, 98, 111, 120, 47, 37, 69, 54, 37, 56, 56, 37, 57, 49, 37, 69, 55, 37, 57, 65, 37, 56, 52, 37, 50, 48, 77, 97, 99, 37, 50, 48, 40, 77, 111, 114, 105, 121, 97, 46, 108, 111, 99, 97, 108, 41, 47, 68, 111, 99, 117, 109, 101, 110, 116, 115, 47, 65, 66, 120, 86, 70, 88, 95, 69, 68, 73, 84, 47, 71, 71, 68, 45, 99, 111, 109, 109, 117, 110, 105, 116, 121, 45, 104, 101, 114, 111, 45, 102, 111, 114, 103, 101, 47, 110, 111, 100, 101, 95, 109, 111, 100, 117, 108, 101, 115, 47, 46, 112, 110, 112, 109, 47, 116, 115, 120, 64, 52, 46, 50, 51, 46, 49, 47, 110, 111, 100, 101, 95, 109, 111, 100, 117, 108, 101, 115, 47, 116, 115, 120, 47, 100, 105, 115, 116, 47, 99, 108, 105, 46, 109, 106, 115, 58, 53, 51, 58, 51, 49, 52, 55, 50, 10, 32, 32, 32, 32, 97, 116, 32, 110, 101, 119, 32, 80, 114, 111, 109, 105, 115, 101, 32, 40, 60, 97, 110, 111, 110, 121, 109, 111, 117, 115, 62, 41, 10, 32, 32, 32, 32, 97, 116, 32, 99, 114, 101, 97, 116, 101, 73, 112, 99, 83, 101, 114, 118, 101, 114, 32, 40, 102, 105, 108, 101, 58, 47, 47, 47, 85, 115, 101, 114, 115, 47, 84, 97, 107, 117, 114, 111, 47, 68, 114, 111, 112, 98, 111, 120, 47, 37, 69, 54, 37, 56, 56, 37, 57, 49, 37, 69, 55, 37, 57, 65, 37, 56, 52, 37, 50, 48, 77, 97, 99, 37, 50, 48, 40, 77, 111, 114, 105, 121, 97, 46, 108, 111, 99, 97, 108, 41, 47, 68, 111, 99, 117, 109, 101, 110, 116, 115, 47, 65, 66, 120, 86, 70, 88, 95, 69, 68, 73, 84, 47, 71, 71, 68, 45, 99, 111, 109, 109, 117, 110, 105, 116, 121, 45, 104, 101, 114, 111, 45, 102, 111, 114, 103, 101, 47, 110, 111, 100, 101, 95, 109, 111, 100, 117, 108, 101, 115, 47, 46, 112, 110, 112, 109, 47, 116, 115, 120, 64, 52, 46, 50, 51, 46, 49, 47, 110, 111, 100, 101, 95, 109, 111, 100, 117, 108, 101, 115, 47, 116, 115, 120, 47, 100, 105, 115, 116, 47, 99, 108, 105, 46, 109, 106, 115, 58, 53, 51, 58, 51, 49, 52, 53, 48, 41, 10, 32, 32, 32, 32, 97, 116, 32, 97, 115, 121, 110, 99, 32, 102, 105, 108, 101, 58, 47, 47, 47, 85, 115, 101, 114, 115, 47, 84, 97, 107, 117, 114, 111, 47, 68, 114, 111, 112, 98, 111, 120, 47, 37, 69, 54, 37, 56, 56, 37, 57, 49, 37, 69, 55, 37, 57, 65, 37, 56, 52, 37, 50, 48, 77, 97, 99, 37, 50, 48, 40, 77, 111, 114, 105, 121, 97, 46, 108, 111, 99, 97, 108, 41, 47, 68, 111, 99, 117, 109, 101, 110, 116, 115, 47, 65, 66, 120, 86, 70, 88, 95, 69, 68, 73, 84, 47, 71, 71, 68, 45, 99, 111, 109, 109, 117, 110, 105, 116, 121, 45, 104, 101, 114, 111, 45, 102, 111, 114, 103, 101, 47, 110, 111, 100, 101, 95, 109, 111, 100, 117, 108, 101, 115, 47, 46, 112, 110, 112, 109, 47, 116, 115, 120, 64, 52, 46, 50, 51, 46, 49, 47, 110, 111, 100, 101, 95, 109, 111, 100, 117, 108, 101, 115, 47, 116, 115, 120, 47, 100, 105, 115, 116, 47, 99, 108, 105, 46, 109, 106, 115, 58, 53, 53, 58, 53, 48, 48, 32, 123, 10, 32, 32, 99, 111, 100, 101, 58, 32, 39, 69, 80, 69, 82, 77, 39, 44, 10, 32, 32, 101, 114, 114, 110, 111, 58, 32, 45, 49, 44, 10, 32, 32, 115, 121, 115, 99, 97, 108, 108, 58, 32, 39, 108, 105, 115, 116, 101, 110, 39, 44, 10, 32, 32, 97, 100, 100, 114, 101, 115, 115, 58, 32, 39, 47, 118, 97, 114, 47, 102, 111, 108, 100, 101, 114, 115, 47, 110, 104, 47, 48, 120, 119, 99, 109, 55, 57, 100, 53, 50, 118, 51, 113, 121, 114, 49, 110, 116, 122, 113, 118, 119, 110, 99, 48, 48, 48, 48, 103, 113, 47, 84, 47, 116, 115, 120, 45, 53, 48, 51, 47, 49, 49, 52, 52, 52, 46, 112, 105, 112, 101, 39, 44, 10, 32, 32, 112, 111, 114, 116, 58, 32, 45, 49, 10, 125, 10, 10, 78, 111, 100, 101, 46, 106, 115, 32, 118, 50, 53, 46, 57, 46, 48, 10 ] } }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed | 22 passed (23)
+      Tests  1 failed | 177 passed (178)
+   Start at  21:50:34
+   Duration  87.04s (transform 3.74s, setup 0ms, collect 14.95s, tests 61.26s, environment 3ms, prepare 1.74s)
+
+undefined
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/content-api:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run --pool=forks --poolOptions.forks.minForks=1 --poolOptions.forks.maxForks=1 --poolOptions.threads.minThreads=1 --poolOptions.threads.maxThreads=1

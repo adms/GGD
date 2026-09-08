@@ -8,6 +8,8 @@ import type { UINode } from "./uiSchema";
 import type { ErrorMap } from "../store";
 import { TextField } from "./widgets/TextField";
 import { NumberField } from "./widgets/NumberField";
+import { NumberOrLiteralField } from "./widgets/NumberOrLiteralField";
+import { NumberOrArrayField } from "./widgets/NumberOrArrayField";
 import { BoolToggle } from "./widgets/BoolToggle";
 import { EnumSelect } from "./widgets/EnumSelect";
 import { ArrayField } from "./widgets/ArrayField";
@@ -16,6 +18,8 @@ import { RefSelect } from "./widgets/RefSelect";
 import { ObjectFields } from "./widgets/ObjectFields";
 import { RecordField } from "./widgets/RecordField";
 import { JsonField } from "./widgets/JsonField";
+import { ConditionEditor } from "../forge/ConditionEditor";
+import { zEffectCondition } from "@ggd/shared/content/schema/condition";
 
 export interface FieldProps {
   node: UINode;
@@ -24,7 +28,7 @@ export interface FieldProps {
   dataPath: string;
   errors: ErrorMap;
   onChange(dataPath: string, value: unknown): void;
-  /** Schema paths protected by the generated editor contract. */
+  /** Schema paths from the contract, or concrete data paths for value-dependent rules. */
   readOnlyReasons?: ReadonlyMap<string, string>;
 }
 
@@ -78,10 +82,10 @@ export function renderNode(props: FieldProps): ReactElement {
   ) : (
     el
   );
-  const readOnlyReason = props.readOnlyReasons?.get(props.node.path);
+  const readOnlyReason = props.readOnlyReasons?.get(props.dataPath) ?? props.readOnlyReasons?.get(props.node.path);
   return readOnlyReason ? (
     <fieldset className="owner-only-field" disabled data-owner-only-path={props.node.path}>
-      <legend>🔒 Owner 專屬設定 · 唯讀</legend>
+      <legend>🔒 此欄位目前為唯讀</legend>
       {described}
       <p>{readOnlyReason}</p>
     </fieldset>
@@ -95,6 +99,10 @@ function renderWidget(props: FieldProps): ReactElement {
       return node.ref ? <RefSelect {...props} node={node} /> : <TextField {...props} node={node} />;
     case "number":
       return <NumberField {...props} node={node} />;
+    case "numberOrLiteral":
+      return <NumberOrLiteralField {...props} node={node} />;
+    case "numberOrArray":
+      return <NumberOrArrayField {...props} node={node} />;
     case "boolean":
       return <BoolToggle {...props} node={node} />;
     case "enum":
@@ -130,6 +138,17 @@ function renderWidget(props: FieldProps): ReactElement {
       return <RecordField {...props} node={node} />;
     case "discriminatedUnion":
       return <DiscriminatedUnionField {...props} node={node} />;
+    case "condition": {
+      const parsed = zEffectCondition.safeParse(props.value);
+      // Keep malformed imported values visible and repairable; never coerce them
+      // into an empty condition (which would silently remove a gameplay gate).
+      if (props.value !== undefined && !parsed.success) return <JsonField {...props} node={{ ...node, kind: "unknown" }} />;
+      return <div className="field field-condition">
+        <ConditionEditor label={node.label} value={parsed.success ? parsed.data : undefined}
+          fieldPrefix={props.dataPath} onChange={value => props.onChange(props.dataPath, value)} />
+        <FieldErrors dataPath={props.dataPath} errors={props.errors} />
+      </div>;
+    }
     case "unknown":
       return <JsonField {...props} node={node} />;
   }

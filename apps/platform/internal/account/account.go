@@ -52,6 +52,9 @@ const (
 // so every existing reference keeps compiling and reading naturally.
 const RoleAdmin = "admin"
 
+// RolePowerUser grants only the configured hero intake quota, never admin access.
+const RolePowerUser = "power-user"
+
 // Account is the durable truth for one player. PasswordHash is an encoded
 // argon2id string and is never serialized to API responses (see Public).
 //

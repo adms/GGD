@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_9271e9ecf3ec",
+    "contentVersion": "cv_4afa36ccb49b",
     "collections": {
       "champions": {
         "hash": "fc7a594de0e4",
@@ -26,8 +26,8 @@
         "count": 21
       },
       "status-effects": {
-        "hash": "c669e9bd8976",
-        "count": 50
+        "hash": "7219076b5f8e",
+        "count": 51
       },
       "loot-tables": {
         "hash": "50b52195cd4a",
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "abb97b8a914d",
+        "hash": "1df2b396132f",
         "count": 101
       },
       "models": {
@@ -58,8 +58,8 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "e223ab42a946",
-        "count": 52
+        "hash": "6534b2a0b44a",
+        "count": 54
       },
       "vfx-scripts": {
         "hash": "3d945d196d0a",
@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "c7b932f6",
+    "fingerprint": "43cd2f44",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -106,6 +106,7 @@
       "chainLightning",
       "championForm",
       "comboStrikes",
+      "consumeStatus",
       "convertTeam",
       "cycleBuff",
       "damage",
@@ -141,6 +142,7 @@
       "spawnModelFx",
       "spawnProjectile",
       "spawnVfx",
+      "spendHealth",
       "spendMana",
       "summon",
       "swapResource",
@@ -186,6 +188,7 @@
       "chance",
       "distance",
       "equipment",
+      "facing",
       "form",
       "kind",
       "learned",
@@ -195,6 +198,8 @@
     ],
     "conditionLeafFields": [
       "abilityId",
+      "appliedBy",
+      "arcDegrees",
       "form",
       "is",
       "itemId",
@@ -229,6 +234,7 @@
       "maxTriggers",
       "on",
       "onConsumed",
+      "oncePerCast",
       "perTarget",
       "reflectedDamageSource",
       "reflectedDamageType",
@@ -249,6 +255,7 @@
       "anchorCount",
       "anchorRadius",
       "apexHeight",
+      "appliedBy",
       "applyTo",
       "arriveSoundKey",
       "at",
@@ -381,6 +388,7 @@
       "maxTargetsCounts",
       "maxTotalJumps",
       "minManaReserve",
+      "minimumHp",
       "missChance",
       "mobLevelSource",
       "mobTargetable",
@@ -393,6 +401,7 @@
       "onCap",
       "onCarrierDeath",
       "onCasterDeath",
+      "onConsumed",
       "onDevour",
       "onDevourPer",
       "onEnd",
@@ -404,13 +413,16 @@
       "onHitTargetsMode",
       "onInvalidTarget",
       "onLand",
+      "onMissing",
       "onOwnerDeath",
       "onTouch",
       "oncePerRoundPerVictim",
       "order",
       "path",
       "payCosts",
+      "pctCurrentHealth",
       "pctCurrentMana",
+      "pctMaxHealth",
       "pctMaxMana",
       "peakAlpha",
       "penetration",
@@ -455,6 +467,7 @@
       "slot",
       "soundKey",
       "source",
+      "sourceScope",
       "spacing",
       "speed",
       "spinDegPerSec",
@@ -474,6 +487,7 @@
       "strikeReposition",
       "strikes",
       "stun",
+      "subject",
       "subtractGap",
       "target",
       "targetMode",
@@ -554,6 +568,7 @@
       "anchorCount",
       "anchorRadius",
       "apexHeight",
+      "appliedBy",
       "applyTo",
       "arriveSoundKey",
       "at",
@@ -764,6 +779,7 @@
       "maxTargetsCounts",
       "maxTotalJumps",
       "minManaReserve",
+      "minimumHp",
       "missChance",
       "mobLevelSource",
       "mobTargetable",
@@ -784,6 +800,7 @@
       "onCap",
       "onCarrierDeath",
       "onCasterDeath",
+      "onConsumed",
       "onDevour",
       "onDevourPer",
       "onEnd",
@@ -795,13 +812,16 @@
       "onHitTargetsMode",
       "onInvalidTarget",
       "onLand",
+      "onMissing",
       "onOwnerDeath",
       "onTouch",
       "oncePerRoundPerVictim",
       "order",
       "path",
       "payCosts",
+      "pctCurrentHealth",
       "pctCurrentMana",
+      "pctMaxHealth",
       "pctMaxMana",
       "peakAlpha",
       "penetration",
@@ -873,6 +893,7 @@
       "slot",
       "soundKey",
       "source",
+      "sourceScope",
       "spacing",
       "speed",
       "spinDegPerSec",
@@ -908,6 +929,7 @@
       "strikeReposition.who",
       "strikes",
       "stun",
+      "subject",
       "subtractGap",
       "target",
       "targetMode",
@@ -991,6 +1013,7 @@
       "rootWhileCasting",
       "sfxKey",
       "slot",
+      "statusCost",
       "targetsEnemies",
       "template",
       "toggle",
@@ -1171,6 +1194,7 @@
         "rootWhileCasting",
         "sfxKey",
         "slot",
+        "statusCost",
         "targetsEnemies",
         "template",
         "toggle",
@@ -1262,6 +1286,7 @@
         "immobile",
         "missileSpeed",
         "modelKey",
+        "modelVersions",
         "msGrowthTier",
         "name",
         "origin",
@@ -1301,6 +1326,8 @@
       "dragon-quake",
       "dragon-serpent",
       "drain-leech",
+      "effect-sequence",
+      "event-passive",
       "ground-nova",
       "growth-charge",
       "heal",
@@ -2872,6 +2899,86 @@
               "unit": "s",
               "optional": true,
               "origin": "taxonomy: ⛔ **刻意不給 default** —— 兩支候選差太遠（`godie-h02r.passive` 1.7 vs `godie-osam.passive` 0.267），⭐ 給一個 default 就是編一個（同 `tpl-locust-orb.tint` 留空的理由）。"
+            }
+          }
+        },
+        {
+          "id": "tpl-effect-sequence",
+          "family": "effect-sequence",
+          "status": "enabled",
+          "params": {
+            "castType": {
+              "type": "enum",
+              "default": "targeted",
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+              "values": [
+                "targeted",
+                "self",
+                "ground",
+                "skillshot"
+              ]
+            },
+            "castTimeSec": {
+              "type": "number",
+              "default": 0,
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+              "min": 0,
+              "max": 10,
+              "unit": "s"
+            },
+            "radius": {
+              "type": "number",
+              "default": 2,
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+              "min": 0,
+              "max": 40
+            },
+            "side": {
+              "type": "enum",
+              "default": "enemies",
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+              "values": [
+                "enemies",
+                "allies"
+              ]
+            },
+            "effects": {
+              "type": "effects",
+              "default": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ],
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+            }
+          }
+        },
+        {
+          "id": "tpl-event-passive",
+          "family": "event-passive",
+          "status": "enabled",
+          "params": {
+            "hooks": {
+              "type": "hooks",
+              "default": [
+                {
+                  "on": "onBasicAttack",
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "極小"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
             }
           }
         },
@@ -5186,7 +5293,7 @@
         }
       ],
       "templateStatus": {
-        "enabled": 41,
+        "enabled": 43,
         "draft": 11
       },
       "innateKinds": [
@@ -5522,12 +5629,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "c7b932f6",
+    "engineFingerprint": "43cd2f44",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 c7b932f6 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 43cd2f44 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -6373,11 +6480,11 @@
       }
     ]
   },
-  "assetManifestDigest": "c39fb286321b",
+  "assetManifestDigest": "c72e67a72494",
   "assetManifest": {
     "path": "assets-manifest.json",
-    "entries": 1642,
-    "totalBytes": 103621971
+    "entries": 1650,
+    "totalBytes": 103970638
   },
   "effectiveVfxLimits": {
     "schema": "ggd-effective-vfx-limits@1",
@@ -6395,19 +6502,23 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "c8e71c5f37d5",
+    "fingerprint": "963b5a9580e8",
     "surfaces": [
       {
+        "surface": "hero-project-compiler",
+        "digest": "b90d5b84940b"
+      },
+      {
         "surface": "ability-item-zod-schemas",
-        "digest": "0845fb60c65e"
+        "digest": "5a894eaddf3c"
       },
       {
         "surface": "exact-ref-collector",
-        "digest": "7c9a6245318f"
+        "digest": "a484076f6f97"
       },
       {
         "surface": "capability-applicability",
-        "digest": "323cbdbc9005"
+        "digest": "9b05758ffb11"
       },
       {
         "surface": "authoring-rules",
@@ -6423,7 +6534,7 @@
       },
       {
         "surface": "golden-vectors",
-        "digest": "43f495864380"
+        "digest": "76d853c8e1cc"
       }
     ]
   },
@@ -6447,7 +6558,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "f7548bee4ec4",
+  "migrationFingerprint": "4d3fea0bcc0d",
   "supportedModes": [
     "bootstrap"
   ],
@@ -6461,5 +6572,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "a54d7029ed63"
+  "profileDigest": "eb42bfbee1d3"
 }

@@ -5,6 +5,8 @@ export type AppMode =
   | { kind: "collection"; collection: CollectionName | null }
   | { kind: "forge" }
   | { kind: "vfx-forge" }
+  | { kind: "works" }
+  | { kind: "hero" }
   | { kind: "export" };
 
 const DEFAULT_MODE: AppMode = { kind: "collection", collection: "champions" };
@@ -21,6 +23,8 @@ function normalizedPath(pathname: string): string {
  */
 export function appModeFromPathname(pathname: string): AppMode {
   const path = normalizedPath(pathname);
+  if (path.endsWith("/works")) return { kind: "works" };
+  if (path.endsWith("/hero-forge")) return { kind: "hero" };
   if (path.endsWith("/vfx-forge")) return { kind: "vfx-forge" };
   if (path.endsWith("/forge")) return { kind: "forge" };
   if (path.endsWith("/export")) return { kind: "export" };
@@ -30,6 +34,8 @@ export function appModeFromPathname(pathname: string): AppMode {
 /** Build a stable top-level URL under Vite's configured editor base path. */
 export function pathnameForAppMode(mode: AppMode, basePath: string): string {
   const normalizedBase = `/${basePath}`.replace(/\/{2,}/g, "/").replace(/\/+$/, "");
+  if (mode.kind === "works") return `${normalizedBase}/works`;
+  if (mode.kind === "hero") return `${normalizedBase}/hero-forge`;
   if (mode.kind === "vfx-forge") return `${normalizedBase}/vfx-forge`;
   if (mode.kind === "forge") return `${normalizedBase}/forge`;
   if (mode.kind === "export") return `${normalizedBase}/export`;

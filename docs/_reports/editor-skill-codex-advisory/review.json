@@ -1,16 +1,17 @@
 {
   "schema": "ggd-editor-skill-codex-advisory@2",
   "reviewedAt": "2026-09-04T06:19:27+08:00",
-  "packetDigest": "b49b1e01b0277f53d83103373b5deb5f4e8b79b26d50e5dcbc6826eecf0aaf24",
+  "packetDigest": "d9cfdf5967e837c06e40471dba53edbb2f719b6c979c79da71ace902ef64dfe1",
   "authority": "advisory-only",
   "scope": {
     "themes": 43,
     "acceptanceDocuments": 47,
-    "capturedDocuments": 46,
+    "capturedDocuments": 47,
     "reviewedDocuments": 46
   },
   "coverage": {
-    "awaitingCapture": [
+    "awaitingCapture": [],
+    "awaitingReview": [
       "godie-u034.passive"
     ]
   },
@@ -23,86 +24,17 @@
   },
   "summary": {
     "reviewFreshness": {
-      "current": 41,
-      "stale": 5
+      "current": 0,
+      "stale": 46
     },
-    "dispositions": {
-      "editor-rework": 30,
-      "main-blocked": 4,
-      "ready-for-owner-review": 7
-    },
+    "dispositions": {},
     "noCode": {
-      "ready": 25,
-      "effect-graph-bridge": 16,
+      "ready": 0,
+      "effect-graph-bridge": 0,
       "blocked": 0
     },
-    "averageVisualScore": 4.68,
-    "flagCounts": {
-      "crescent-overuse": 4,
-      "missing-solid-beam": 4,
-      "timeline-sparse": 4,
-      "impact-weak": 3,
-      "placeholder-geometry": 3,
-      "proc-readable": 3,
-      "branch-outcome-weak": 2,
-      "buff-readable": 2,
-      "finisher-scale": 2,
-      "projectile-then-blast": 2,
-      "shape-conflict": 2,
-      "summon-readability": 2,
-      "absorption-readable": 1,
-      "action-cadence": 1,
-      "area-scale-weak": 1,
-      "barrage-missing": 1,
-      "blink-strike-readable": 1,
-      "blood-field-readable": 1,
-      "chain-topology-weak": 1,
-      "charge-vs-blink": 1,
-      "conditional-finisher-readable": 1,
-      "dash-missing": 1,
-      "dot-phase-missing": 1,
-      "evade-reaction-missing": 1,
-      "event-source-weak": 1,
-      "execute-unreadable": 1,
-      "extension-unproven": 1,
-      "field-missing": 1,
-      "grab-throw-missing": 1,
-      "guard-effect-missing": 1,
-      "guard-readable": 1,
-      "heal-unreadable": 1,
-      "heal-weak": 1,
-      "impact-readable": 1,
-      "incoming-hit-missing": 1,
-      "lifetime-unproven": 1,
-      "lightning-weak": 1,
-      "line-damage-missing": 1,
-      "mount-readability": 1,
-      "multi-hit-readable": 1,
-      "on-hit-readable": 1,
-      "on-hit-weak": 1,
-      "paired-consistency": 1,
-      "parry-mismatch": 1,
-      "passive-proc-readable": 1,
-      "proc-unreadable": 1,
-      "proxy-cast-weak": 1,
-      "refresh-vs-stack-unproven": 1,
-      "resource-conversion-unproven": 1,
-      "restore-state-unproven": 1,
-      "rotation-order-unproven": 1,
-      "secondary-lightning-weak": 1,
-      "shield-readable": 1,
-      "status-layering-weak": 1,
-      "summon-missing": 1,
-      "swap-moment-weak": 1,
-      "target-link-weak": 1,
-      "target-readability": 1,
-      "tick-and-kill-progression-unproven": 1,
-      "tick-feedback-missing": 1,
-      "timeline-readable": 1,
-      "transform-readable": 1,
-      "transform-weak": 1,
-      "two-mode-separation": 1
-    },
+    "averageVisualScore": null,
+    "flagCounts": {},
     "missingBrickBlocks": {
       "solid-beam": {
         "documents": 7,
@@ -125,8 +57,8 @@
       "name": "01-04 超究武神霸斬",
       "themeId": "ability:godie-hart.r",
       "sourceDigest": "b6f997397b5d97bea1acd5402fb9ef3911406ea6ab65adf7ab1e4c98cae04b5e",
-      "currentDigest": "b6f997397b5d97bea1acd5402fb9ef3911406ea6ab65adf7ab1e4c98cae04b5e",
-      "reviewState": "current",
+      "currentDigest": "14ee1866d16bf079bb09938de9fb9c4cafa9a584824ec287529a2efcd00a79a6",
+      "reviewState": "stale",
       "missingBricks": [
         "solid-beam"
       ],
@@ -167,8 +99,8 @@
       "name": "04-03 龍破斬",
       "themeId": "ability:godie-hjai.e",
       "sourceDigest": "07f8de839246fbe6c2663dfd7d4a585bf10ce9acfdf051f10a87296569317a7c",
-      "currentDigest": "07f8de839246fbe6c2663dfd7d4a585bf10ce9acfdf051f10a87296569317a7c",
-      "reviewState": "current",
+      "currentDigest": "281764d4a80eac341fe3ab37cb708069639df5076ae31805063e0bd0ae1afffd",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": true,
       "score": 7,
@@ -195,8 +127,8 @@
       "name": "04-03 龍破斬",
       "themeId": "ability:godie-hjai.e",
       "sourceDigest": "002aadf8f5aff0234218c3d8dd5b2897816c91fc9ca2a7a96592e8ceaba5585e",
-      "currentDigest": "002aadf8f5aff0234218c3d8dd5b2897816c91fc9ca2a7a96592e8ceaba5585e",
-      "reviewState": "current",
+      "currentDigest": "4b3fb166bd09d2a91f696b18fc381fbb3501d5c3c6872d0acce2d321723c07a5",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": true,
       "score": 7,
@@ -224,7 +156,7 @@
       "name": "04-04 神滅斬",
       "themeId": "ability:godie-hjai.r",
       "sourceDigest": "1ad8f7ee20130ba007cfe8895ce8b264ad7feb3a9ecd1529bbb75c8f6b2777e1",
-      "currentDigest": "147acf96cff5e3698c7cab51f3bd2a4b05f317756a9d83461b2abe3f33beb53d",
+      "currentDigest": "fa2ce5e144bc07eec99e0092f808dbe045491325306091e16d3b674fd6b8e29d",
       "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
@@ -253,8 +185,8 @@
       "name": "08-04 阿邦快速劍X",
       "themeId": "ability:godie-nbbc.r",
       "sourceDigest": "08aa7623c8bf6309d95db7b7f248e0f2c5288db5de1f20f4a08147729c92e06c",
-      "currentDigest": "08aa7623c8bf6309d95db7b7f248e0f2c5288db5de1f20f4a08147729c92e06c",
-      "reviewState": "current",
+      "currentDigest": "be2ed03878cc28518ce1b3e8ad44e66528b7592feb016f3292a084fb4e4638b6",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": true,
       "score": 7,
@@ -282,7 +214,7 @@
       "name": "08-03 龍鬥氣砲咒文",
       "themeId": "ability:godie-nbbc.e",
       "sourceDigest": "d95f8c535d7eb2e728cf0f3917d660424df35f56b74eb3f289f71af3afe87db6",
-      "currentDigest": "656b0de13b550e103670c71ab62796b595b356bdf4aa9b3aed632d2da8790748",
+      "currentDigest": "1b46e2739eefb814ba58b17b7c861b6f25589c3dfb9bcf17f51a7932fcd1ef2b",
       "reviewState": "stale",
       "missingBricks": [
         "solid-beam"
@@ -294,7 +226,7 @@
         "missing-solid-beam"
       ],
       "note": "角色前方只形成數條細 trace，沒有藍色寬而連續的橫向氣功砲；禁止再用珠串或多條細線假裝完成。",
-      "frameCount": 3,
+      "frameCount": 4,
       "proofSource": "acceptance-fixture",
       "mechanicVisualAdditions": [],
       "noCode": {
@@ -306,6 +238,13 @@
         "authoringBlockers": []
       },
       "machineIssues": [
+        {
+          "code": "PRESENTATION_ARTIFACT",
+          "severity": "high",
+          "owner": "editor",
+          "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面",
+          "nextAction": "Editor 改用乾淨 primitive 或調整配色／密度後單項重跑；不可因來源收據安全而自動通過。"
+        },
         {
           "code": "MISSING_VISUAL_BRICK",
           "severity": "blocker",
@@ -321,7 +260,7 @@
       "name": "09-04 龜派氣功",
       "themeId": "ability:godie-ogrh.r",
       "sourceDigest": "ec382d33f58474b5f3fe858179a42291ba25d8a191b7b827578ac5a72054f3c5",
-      "currentDigest": "b37bcdea315dc63a19272742e2a97cf3f3b9244959a43c2706e564296b5f8397",
+      "currentDigest": "8cf55433041828358e360acb956a1d8bf096fe2fae961494060d95c7f63ea734",
       "reviewState": "stale",
       "missingBricks": [
         "solid-beam"
@@ -333,7 +272,7 @@
         "missing-solid-beam"
       ],
       "note": "橘色方向可辨，但畫面仍是稀疏細線與粒子，沒有龜派氣功應有的連續實心寬光束。",
-      "frameCount": 3,
+      "frameCount": 4,
       "proofSource": "acceptance-fixture",
       "mechanicVisualAdditions": [],
       "noCode": {
@@ -345,6 +284,13 @@
         "authoringBlockers": []
       },
       "machineIssues": [
+        {
+          "code": "PRESENTATION_ARTIFACT",
+          "severity": "high",
+          "owner": "editor",
+          "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面",
+          "nextAction": "Editor 改用乾淨 primitive 或調整配色／密度後單項重跑；不可因來源收據安全而自動通過。"
+        },
         {
           "code": "MISSING_VISUAL_BRICK",
           "severity": "blocker",
@@ -360,7 +306,7 @@
       "name": "09-04 龜派氣功",
       "themeId": "ability:godie-ogrh.r",
       "sourceDigest": "e9b23b3d745aba5a459ed7085dcf3d0f506cc9f3b50c183207073a05dfc41bb5",
-      "currentDigest": "cd852a600ca70fc46f32066c650be88cd4ac756bba6869b4fa824ad8ccd95ca1",
+      "currentDigest": "ebb6d31fbc32a6612a131a818a65e2370a1c643a9abaf6ea1537764f3ee52cf8",
       "reviewState": "stale",
       "missingBricks": [
         "solid-beam"
@@ -373,7 +319,7 @@
         "paired-consistency"
       ],
       "note": "與另一份龜派氣功維持一致，但兩份同樣缺連續實心光束，因此只能保留安全 fallback 證據。",
-      "frameCount": 3,
+      "frameCount": 4,
       "proofSource": "acceptance-fixture",
       "mechanicVisualAdditions": [],
       "noCode": {
@@ -385,6 +331,13 @@
         "authoringBlockers": []
       },
       "machineIssues": [
+        {
+          "code": "PRESENTATION_ARTIFACT",
+          "severity": "high",
+          "owner": "editor",
+          "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面",
+          "nextAction": "Editor 改用乾淨 primitive 或調整配色／密度後單項重跑；不可因來源收據安全而自動通過。"
+        },
         {
           "code": "MISSING_VISUAL_BRICK",
           "severity": "blocker",
@@ -400,8 +353,8 @@
       "name": "20-002 解放.約束勝利劍MAX",
       "themeId": "chain:avalon-ex",
       "sourceDigest": "9d13ed8f4492ee5b99bf477f04fa851b6a26dddb75c5781a49d3fb51b554d6dc",
-      "currentDigest": "9d13ed8f4492ee5b99bf477f04fa851b6a26dddb75c5781a49d3fb51b554d6dc",
-      "reviewState": "current",
+      "currentDigest": "996a12eebccc1179954ef0baa0e8936c618b2b15930f23c2b13ebe1e18245174",
+      "reviewState": "stale",
       "missingBricks": [
         "solid-beam"
       ],
@@ -414,7 +367,7 @@
         "finisher-scale"
       ],
       "note": "七段位移與攻擊節點可見，但畫面被重複大月牙取代角色斬擊，終結只剩細 trace；反擊連段尚不具成品說服力。",
-      "frameCount": 9,
+      "frameCount": 10,
       "proofSource": "acceptance-fixture",
       "mechanicVisualAdditions": [],
       "noCode": {
@@ -426,6 +379,13 @@
         "authoringBlockers": []
       },
       "machineIssues": [
+        {
+          "code": "PRESENTATION_ARTIFACT",
+          "severity": "high",
+          "owner": "editor",
+          "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面",
+          "nextAction": "Editor 改用乾淨 primitive 或調整配色／密度後單項重跑；不可因來源收據安全而自動通過。"
+        },
         {
           "code": "MISSING_VISUAL_BRICK",
           "severity": "blocker",
@@ -441,8 +401,8 @@
       "name": "20-04 Avalon-永恆的理想鄉",
       "themeId": "chain:avalon-ex",
       "sourceDigest": "3c3e3be1c8123f94bd090ea12a7aeaadd1b2fb3653de230c4a47e993d3c9469b",
-      "currentDigest": "3c3e3be1c8123f94bd090ea12a7aeaadd1b2fb3653de230c4a47e993d3c9469b",
-      "reviewState": "current",
+      "currentDigest": "44b9ccf4b4518834da6e9e9a4aa62dd027846e1b57ed8a4811011749fe44c4b1",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": true,
       "score": 7,
@@ -472,8 +432,8 @@
       "name": "20-002 解放.約束勝利劍MAX",
       "themeId": "chain:avalon-ex",
       "sourceDigest": "cd3a7d8ebacab7f962ac9cbd0826b67044107b2a69a2b31af7dc49c222420f1a",
-      "currentDigest": "cd3a7d8ebacab7f962ac9cbd0826b67044107b2a69a2b31af7dc49c222420f1a",
-      "reviewState": "current",
+      "currentDigest": "6aa25dc8aa064e6040f1c1c5de5d5701d9dbbf0a7b1793d01643f615a23d0e8c",
+      "reviewState": "stale",
       "missingBricks": [
         "solid-beam"
       ],
@@ -486,7 +446,7 @@
         "target-readability"
       ],
       "note": "連段節點存在但目標與逐擊關係很弱，大月牙重複且終結砲仍是細線，無法完成理想鄉 EX 的反擊高潮。",
-      "frameCount": 9,
+      "frameCount": 10,
       "proofSource": "acceptance-fixture",
       "mechanicVisualAdditions": [],
       "noCode": {
@@ -498,6 +458,13 @@
         "authoringBlockers": []
       },
       "machineIssues": [
+        {
+          "code": "PRESENTATION_ARTIFACT",
+          "severity": "high",
+          "owner": "editor",
+          "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面",
+          "nextAction": "Editor 改用乾淨 primitive 或調整配色／密度後單項重跑；不可因來源收據安全而自動通過。"
+        },
         {
           "code": "MISSING_VISUAL_BRICK",
           "severity": "blocker",
@@ -513,8 +480,8 @@
       "name": "48-04 騎英之疆繩",
       "themeId": "ability:godie-hvsh.r",
       "sourceDigest": "40533830859edcf8572e254b4ee9121cef2f540bc603a50bb37c04cb790a49df",
-      "currentDigest": "40533830859edcf8572e254b4ee9121cef2f540bc603a50bb37c04cb790a49df",
-      "reviewState": "current",
+      "currentDigest": "fbe0e0599340182ebc1179297cffef8bb98161b89fe4841c8beece37b335f306",
+      "reviewState": "stale",
       "missingBricks": [
         "solid-beam"
       ],
@@ -526,7 +493,7 @@
         "mount-readability"
       ],
       "note": "衝刺與接敵可辨，但飛馬載人感很弱，後段藍色橫向砲仍只有細 trace，無法驗收衝撞接光束。",
-      "frameCount": 3,
+      "frameCount": 4,
       "proofSource": "acceptance-fixture",
       "mechanicVisualAdditions": [],
       "noCode": {
@@ -538,6 +505,13 @@
         "authoringBlockers": []
       },
       "machineIssues": [
+        {
+          "code": "PRESENTATION_ARTIFACT",
+          "severity": "high",
+          "owner": "editor",
+          "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面",
+          "nextAction": "Editor 改用乾淨 primitive 或調整配色／密度後單項重跑；不可因來源收據安全而自動通過。"
+        },
         {
           "code": "MISSING_VISUAL_BRICK",
           "severity": "blocker",
@@ -553,8 +527,8 @@
       "name": "02-03 魂飛魄散",
       "themeId": "ability:godie-hvwd.e",
       "sourceDigest": "24e4393e2029bdb6a81768d692d8bf063b5c46c04f4d22c489e62e6a39a3f59a",
-      "currentDigest": "24e4393e2029bdb6a81768d692d8bf063b5c46c04f4d22c489e62e6a39a3f59a",
-      "reviewState": "current",
+      "currentDigest": "80044bbc444fbbd57f5958093b159f408324ffb771873b17da50c6229d7d8c79",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 4,
@@ -564,7 +538,7 @@
         "impact-weak"
       ],
       "note": "只看到目標周邊小型紫色命中，完全無法判讀卡面所述直線；Editor 必須把形狀衝突與換積木結果一起呈現。",
-      "frameCount": 8,
+      "frameCount": 2,
       "proofSource": "editor-effect-graph-preview",
       "mechanicVisualAdditions": [
         {
@@ -589,8 +563,8 @@
       "name": "86-03 神鳴",
       "themeId": "ability:godie-o00k.e",
       "sourceDigest": "dc272729648a4f3b3f0465f91122ba544fb1068cad017ec272e1c2040bec9792",
-      "currentDigest": "dc272729648a4f3b3f0465f91122ba544fb1068cad017ec272e1c2040bec9792",
-      "reviewState": "current",
+      "currentDigest": "1cbe427c342b49eb7b5c24755c982693926c71ebc3d20811002463fa5532ce23",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 4,
@@ -600,7 +574,7 @@
         "lightning-weak"
       ],
       "note": "稀疏白點不足以表達神鳴或前方直線雷擊，現況仍像瞬發小範圍粒子。",
-      "frameCount": 8,
+      "frameCount": 3,
       "proofSource": "editor-effect-graph-preview",
       "mechanicVisualAdditions": [
         {
@@ -618,15 +592,23 @@
         "scriptTimelineGaps": [],
         "authoringBlockers": []
       },
-      "machineIssues": []
+      "machineIssues": [
+        {
+          "code": "LOW_VISUAL_HYGIENE",
+          "severity": "medium",
+          "owner": "editor",
+          "summary": "畫面雖可擷取，但時間軸／關鍵格最低清晰度只有 0/10",
+          "nextAction": "人工檢查構圖、遮擋與格狀外觀；不可把素材安全分數當成美術通過。"
+        }
+      ]
     },
     {
       "id": "godie-hjai.w",
       "name": "04-02 炸彈陣",
       "themeId": "ability:godie-hjai.w",
       "sourceDigest": "81628782c7d5c5ee30b4cf3d5a3bd6d8122301116048ab11c36617e44032b26e",
-      "currentDigest": "81628782c7d5c5ee30b4cf3d5a3bd6d8122301116048ab11c36617e44032b26e",
-      "reviewState": "current",
+      "currentDigest": "62d76ebc992de1503da11975a11f8b22f6982bed652c6c8127793a5a385b3527",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 2,
@@ -637,7 +619,7 @@
         "dot-phase-missing"
       ],
       "note": "多個時間點幾乎只有角色站立，五秒炸彈陣、週期火柱與殘留 DoT 三者皆無可讀視覺。",
-      "frameCount": 8,
+      "frameCount": 7,
       "proofSource": "editor-effect-graph-preview",
       "mechanicVisualAdditions": [
         {
@@ -662,8 +644,8 @@
       "name": "08-02 萊丁快速劍",
       "themeId": "ability:godie-nbbc.w",
       "sourceDigest": "e60dc32935681d29f1818728f3a3230d2bc050a39459ee14383159f505101b0b",
-      "currentDigest": "e60dc32935681d29f1818728f3a3230d2bc050a39459ee14383159f505101b0b",
-      "reviewState": "current",
+      "currentDigest": "94394da6dafa6399869ddb32d1db88390879730169a055bd51b22324d8b33864",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 6,
@@ -673,7 +655,7 @@
         "secondary-lightning-weak"
       ],
       "note": "瞬移近身與斬擊月牙清楚，但附近雷擊作為第二個範圍效果不夠可見。",
-      "frameCount": 8,
+      "frameCount": 2,
       "proofSource": "editor-effect-graph-preview",
       "mechanicVisualAdditions": [
         {
@@ -704,8 +686,8 @@
       "name": "78-04 死亡噴射肘擊",
       "themeId": "ability:godie-u00v.r",
       "sourceDigest": "5664369660d17d939413a155706c927fbca2a6b1d068d8a768939f8d7f0f32d4",
-      "currentDigest": "5664369660d17d939413a155706c927fbca2a6b1d068d8a768939f8d7f0f32d4",
-      "reviewState": "current",
+      "currentDigest": "8f863abd5592f005171f2c846922c00c544b70adef6e4d3cfb4dc080ce9c84b1",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 6,
@@ -715,7 +697,7 @@
         "charge-vs-blink"
       ],
       "note": "火焰撞擊圈有重量，但只有前後兩格，仍看不出飛奔路徑、沿途動勢與擊退是否不是 blink。",
-      "frameCount": 8,
+      "frameCount": 2,
       "proofSource": "editor-effect-graph-preview",
       "mechanicVisualAdditions": [
         {
@@ -758,8 +740,8 @@
       "name": "52-02 蹂躪編年史",
       "themeId": "ability:godie-hapm.w",
       "sourceDigest": "4a15440630ab8b4ec5a8b51cf7cab55461cf915f5ed9b697af3a1f141c81e283",
-      "currentDigest": "4a15440630ab8b4ec5a8b51cf7cab55461cf915f5ed9b697af3a1f141c81e283",
-      "reviewState": "current",
+      "currentDigest": "fb6ccb5528f3e262359d1705ffebbd9f04484f1a410b1f4d6f8913134f2a7122",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 4,
@@ -769,7 +751,7 @@
         "timeline-sparse"
       ],
       "note": "遠端白點不能說明抓取、拋出、沿線碰撞三階段；角色與目標的連續動作需要補齊。",
-      "frameCount": 8,
+      "frameCount": 2,
       "proofSource": "editor-effect-graph-preview",
       "mechanicVisualAdditions": [
         {
@@ -806,7 +788,7 @@
       "name": "22-04 雛見澤症候群L5",
       "themeId": "ability:godie-e001.r",
       "sourceDigest": "e26a22d7c7ea7c5986d9ea33ffdb9d7fcd735aafd21b9e94831736492337bcc2",
-      "currentDigest": "bce092d3de7df6752eb582ec6f7946bf96e19d4d84c967bc95b8e08870d26ba0",
+      "currentDigest": "79e3a740e33fc5c52a8113aa359c4265b004737609e152dc9a53f92a4d607558",
       "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
@@ -817,7 +799,7 @@
         "restore-state-unproven"
       ],
       "note": "紅色暴走／變身氣氛可讀，但證據未顯示速度、最大生命副作用與結束後完整復原。",
-      "frameCount": 8,
+      "frameCount": 2,
       "proofSource": "editor-effect-graph-preview",
       "mechanicVisualAdditions": [
         {
@@ -842,8 +824,8 @@
       "name": "70-02 大怒石",
       "themeId": "ability:godie-e00s.w",
       "sourceDigest": "95c47ab06a74d3096f497f08d29f14023c648e35dc9f1b04c1a818393ca47cb2",
-      "currentDigest": "95c47ab06a74d3096f497f08d29f14023c648e35dc9f1b04c1a818393ca47cb2",
-      "reviewState": "current",
+      "currentDigest": "cf2529044b89326612020d4c4d8189db69f8083c1be173d886ff78840a9b22ce",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 3,
@@ -898,8 +880,8 @@
       "name": "14-04 聖夜降臨",
       "themeId": "ability:godie-etyr.r",
       "sourceDigest": "0070f571f0c7d0db6cc99e0373c615e7e3641d025b257ba82f3c9ff1f7102890",
-      "currentDigest": "0070f571f0c7d0db6cc99e0373c615e7e3641d025b257ba82f3c9ff1f7102890",
-      "reviewState": "current",
+      "currentDigest": "8d014178edf1dfaf2049815799e558eb161ebfa04cfd121ed488dec3ed3ec51f",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 5,
@@ -940,8 +922,8 @@
       "name": "72-002 億萬衛星殞落",
       "themeId": "ability:godie-ogld.ex",
       "sourceDigest": "abc61982dc40bf563a8d416a888c5a95ec73fd4c11d0cfb29ae833f211a5b649",
-      "currentDigest": "abc61982dc40bf563a8d416a888c5a95ec73fd4c11d0cfb29ae833f211a5b649",
-      "reviewState": "current",
+      "currentDigest": "3b9e16a27cf94c9e872b6f9668e2161136e95dd70a72283771366566b074b935",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 2,
@@ -976,8 +958,8 @@
       "name": "65-04 天譴",
       "themeId": "ability:godie-udea.r",
       "sourceDigest": "1c11cf362199a4bfec4518f6975a4b63ef4c6eed9ba153b6a1687090207f80c3",
-      "currentDigest": "1c11cf362199a4bfec4518f6975a4b63ef4c6eed9ba153b6a1687090207f80c3",
-      "reviewState": "current",
+      "currentDigest": "07d38372e5cc18ad25e37aea86e98d4a9430bb688357f8355b5609567021a033",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": true,
       "score": 6,
@@ -1005,8 +987,8 @@
       "name": "79-04 卍解",
       "themeId": "ability:godie-h01n.r",
       "sourceDigest": "a781413c3ab87d27792cd6105a69d33d62c93a8b43ed1d5dabae929569a55757",
-      "currentDigest": "a781413c3ab87d27792cd6105a69d33d62c93a8b43ed1d5dabae929569a55757",
-      "reviewState": "current",
+      "currentDigest": "fda265db367f0a034ce07215331664cfac2af109335ba367bc01e90f291d59be",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": true,
       "score": 6,
@@ -1034,8 +1016,8 @@
       "name": "60-04 完美盾反",
       "themeId": "ability:godie-h00l.r",
       "sourceDigest": "57f8a88f83374ac25192c4aba8f6db7b7a1821a1342b3252f3079c4797f1a9ae",
-      "currentDigest": "57f8a88f83374ac25192c4aba8f6db7b7a1821a1342b3252f3079c4797f1a9ae",
-      "reviewState": "current",
+      "currentDigest": "c8943e4777aaa7f771952928a95f31c5c131ea650ec2a741dd59aac584256560",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": true,
       "score": 4,
@@ -1065,8 +1047,8 @@
       "name": "48-03 鮮血神殿",
       "themeId": "ability:godie-hvsh.e",
       "sourceDigest": "e417ec8ce14c547465fe55d799c8428f78fcdc59a6164888d84ba582c6637b53",
-      "currentDigest": "e417ec8ce14c547465fe55d799c8428f78fcdc59a6164888d84ba582c6637b53",
-      "reviewState": "current",
+      "currentDigest": "87962dd68706cb0dbc32d558328160c9b86f5a0090d92d29dbb40a08dc7920a1",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 5,
@@ -1076,7 +1058,7 @@
         "tick-and-kill-progression-unproven"
       ],
       "note": "紅色血域氣氛可辨，但領域邊界、逐秒傷害／治療與十四擊殺永久成長沒有視覺分層。",
-      "frameCount": 8,
+      "frameCount": 2,
       "proofSource": "editor-effect-graph-preview",
       "mechanicVisualAdditions": [
         {
@@ -1134,8 +1116,8 @@
       "name": "57-00 四次元口袋",
       "themeId": "ability:godie-n00b.passive",
       "sourceDigest": "fdce42ba5f5de6ba8954919d6e02fd919e856b4dc3919dbc1ac600bbd1e167d6",
-      "currentDigest": "fdce42ba5f5de6ba8954919d6e02fd919e856b4dc3919dbc1ac600bbd1e167d6",
-      "reviewState": "current",
+      "currentDigest": "e6652ea4d14496196d845b26fb407f7d8c9e8b304f3b9348465b69f60a7bc026",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 5,
@@ -1145,7 +1127,7 @@
         "branch-outcome-weak"
       ],
       "note": "紫色被動觸發光點可見，但金錢、回復、增益三種互斥結果及後續嘲諷沒有各自可辨提示。",
-      "frameCount": 8,
+      "frameCount": 2,
       "proofSource": "editor-effect-graph-preview",
       "mechanicVisualAdditions": [
         {
@@ -1188,8 +1170,8 @@
       "name": "59-001 完全暴走",
       "themeId": "ability:godie-e00r.ex",
       "sourceDigest": "881db1709137109a15d4d708afc5beaafab047673dbced37062cf77bd9fe9292",
-      "currentDigest": "881db1709137109a15d4d708afc5beaafab047673dbced37062cf77bd9fe9292",
-      "reviewState": "current",
+      "currentDigest": "95e38615d32cdb3b69755ffa31cfc4ebdadd06b5a8956e27639ef69a406f99d9",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 8,
@@ -1245,8 +1227,8 @@
       "name": "70-002 樹海降臨",
       "themeId": "ability:godie-e00s.ex",
       "sourceDigest": "e97473d4941ea2a8d1dc9ed7c35be12c3bcacb413db885e24b972ec14d2e434f",
-      "currentDigest": "e97473d4941ea2a8d1dc9ed7c35be12c3bcacb413db885e24b972ec14d2e434f",
-      "reviewState": "current",
+      "currentDigest": "21f04cb9988c551b08d3c71a4fab4086866b2f173645bc8f92329a836588643f",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 2,
@@ -1284,8 +1266,8 @@
       "name": "77-00 浮雲-旋一閃",
       "themeId": "ability:godie-e00w.passive",
       "sourceDigest": "ee07ac027c3e835e537834366f5cafe5fb519daae108a5320d2c84ee6ba793d3",
-      "currentDigest": "ee07ac027c3e835e537834366f5cafe5fb519daae108a5320d2c84ee6ba793d3",
-      "reviewState": "current",
+      "currentDigest": "53008b87716849a1e71280d23b87c604356b0fb7443ae3bb36937af8a42f18d0",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 3,
@@ -1328,8 +1310,8 @@
       "name": "45-04 哥哥",
       "themeId": "ability:godie-edem.r",
       "sourceDigest": "2ea07301125298908ef2f1b0ab495a80d05db1ca11b3eac6c2409c06ce835bc3",
-      "currentDigest": "2ea07301125298908ef2f1b0ab495a80d05db1ca11b3eac6c2409c06ce835bc3",
-      "reviewState": "current",
+      "currentDigest": "56950402e33f66370483ff4532d7b7aaaab61f7b9cfbaa99f8d3230085764891",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 7,
@@ -1377,8 +1359,8 @@
       "name": "15-03 獄炎煉我",
       "themeId": "ability:godie-emfr.e",
       "sourceDigest": "399261ef0c84f8441a6f9dade7e945c911d668da272d83ce52c15f1e8e49286f",
-      "currentDigest": "399261ef0c84f8441a6f9dade7e945c911d668da272d83ce52c15f1e8e49286f",
-      "reviewState": "current",
+      "currentDigest": "99ddc91b9e14e0791993efdc93ebba3725e7b88893bd1a3b28dbe0bafbe68583",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 4,
@@ -1434,8 +1416,8 @@
       "name": "08-00 龍紋記憶",
       "themeId": "ability:godie-nbbc.passive",
       "sourceDigest": "cc80b984e18fb993759ccfcb358aee6e49da6615d310524a9edb6e2b4fca80c2",
-      "currentDigest": "cc80b984e18fb993759ccfcb358aee6e49da6615d310524a9edb6e2b4fca80c2",
-      "reviewState": "current",
+      "currentDigest": "a68c7d693d82d38b314167e20293282a9029a6c10d06c5fbd39111b5b24a9b5e",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 6,
@@ -1472,8 +1454,8 @@
       "name": "20-00 銀色甲胄",
       "themeId": "ability:godie-e00l.passive",
       "sourceDigest": "c014c67c9b6d78a16f66bd142b1a00c99a7fae8593e9b370c20345c18f98928d",
-      "currentDigest": "c014c67c9b6d78a16f66bd142b1a00c99a7fae8593e9b370c20345c18f98928d",
-      "reviewState": "current",
+      "currentDigest": "7a3c0f07e998e368217c086b7eb164e9c9bd078f676c0ef1e0f05353760e76cb",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 2,
@@ -1510,8 +1492,8 @@
       "name": "59-01 吞噬",
       "themeId": "ability:godie-e00r.q",
       "sourceDigest": "bb894c12ea9d022c1d02722608b67ca028e1add9cadfa7a97207664feda1d712",
-      "currentDigest": "bb894c12ea9d022c1d02722608b67ca028e1add9cadfa7a97207664feda1d712",
-      "reviewState": "current",
+      "currentDigest": "c4de11b6a8a1927ad7cd400b5e81a1ff6c6f0f64fedd44ba99c73d9ab1bdb35d",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 2,
@@ -1566,8 +1548,8 @@
       "name": "70-04 千年練成",
       "themeId": "ability:godie-e00s.r",
       "sourceDigest": "d0ebfd9a0f9556ec8ad8b4bfc504b9fe244c66105232c84d4a8755377ce3d8a0",
-      "currentDigest": "d0ebfd9a0f9556ec8ad8b4bfc504b9fe244c66105232c84d4a8755377ce3d8a0",
-      "reviewState": "current",
+      "currentDigest": "711f9614660bb0b0d42a9f5798c373c2216c5ffb91d5854d98c40a153d3d8247",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 3,
@@ -1608,8 +1590,8 @@
       "name": "89-002 俄羅斯輪盤",
       "themeId": "ability:godie-h02k.ex",
       "sourceDigest": "8fe6a9ea9ba03f597553fef4b53f21d5b373607e10dba5b8f76b6b6215584afd",
-      "currentDigest": "8fe6a9ea9ba03f597553fef4b53f21d5b373607e10dba5b8f76b6b6215584afd",
-      "reviewState": "current",
+      "currentDigest": "9a302cf61be7ae5343c87d7e1df51ef7f8ce89019984bbb5637ac7efcb972277",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 5,
@@ -1692,8 +1674,8 @@
       "name": "45-03 千鳥",
       "themeId": "ability:godie-edem.e",
       "sourceDigest": "146134a46f45842ec974436dde4bd30daa9a1fee2b914292d2112861036043a8",
-      "currentDigest": "146134a46f45842ec974436dde4bd30daa9a1fee2b914292d2112861036043a8",
-      "reviewState": "current",
+      "currentDigest": "7f89e5a53c96da65c734671cb43dc1a29cf9f44a9b88dd8e7cf42ae705c080f9",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 3,
@@ -1703,7 +1685,7 @@
         "line-damage-missing"
       ],
       "note": "只看到小型白色效果，角色沿直線衝刺與沿途傷害線皆不清楚，無法排除退化成瞬移或終點爆炸。",
-      "frameCount": 8,
+      "frameCount": 2,
       "proofSource": "editor-effect-graph-preview",
       "mechanicVisualAdditions": [
         {
@@ -1734,8 +1716,8 @@
       "name": "45-002 天照",
       "themeId": "ability:godie-edem.ex",
       "sourceDigest": "df77927cd78c14abec30d76b76cd983e8b11306ff11f27bf42fa70f45c529730",
-      "currentDigest": "df77927cd78c14abec30d76b76cd983e8b11306ff11f27bf42fa70f45c529730",
-      "reviewState": "current",
+      "currentDigest": "d70c0c0d98f7ead2505fce05c671776e3ce5189a5c5b7fa7bb08bc5b71dfe1ca",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 4,
@@ -1788,8 +1770,8 @@
       "name": "13-00 念。攻防轉換",
       "themeId": "ability:godie-efur.passive",
       "sourceDigest": "b24bc01bbde2759c793131312a8fe78d87732f449cfa17b554195a462ac2b204",
-      "currentDigest": "b24bc01bbde2759c793131312a8fe78d87732f449cfa17b554195a462ac2b204",
-      "reviewState": "current",
+      "currentDigest": "fa18c977555d1c5f6975f4aa2acec0a27c1dce3c15c6e61660215fbf41ae338f",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 6,
@@ -1826,8 +1808,8 @@
       "name": "15-002 敵彈吸收陣。太陰道",
       "themeId": "ability:godie-emfr.ex",
       "sourceDigest": "b080855409fd914ca000479c5672ade50ce526108036ed2e89e097dd51f91598",
-      "currentDigest": "b080855409fd914ca000479c5672ade50ce526108036ed2e89e097dd51f91598",
-      "reviewState": "current",
+      "currentDigest": "5e7f338343d41772d06713f9493e1e4e3fd0fcf4938ebdbd2fd0f6af1760e797",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 7,
@@ -1875,8 +1857,8 @@
       "name": "44-002 交換筆記本",
       "themeId": "ability:godie-emns.ex",
       "sourceDigest": "d408b8c657f248830cd2c00c2df041d2bcb871bfc1abb397f010f8fd08a895a6",
-      "currentDigest": "d408b8c657f248830cd2c00c2df041d2bcb871bfc1abb397f010f8fd08a895a6",
-      "reviewState": "current",
+      "currentDigest": "ed47fdc0607b6eaeb7c64bfa9b7efcb284e662a57743cf16653a286f477d75a3",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 6,
@@ -1886,7 +1868,7 @@
         "swap-moment-weak"
       ],
       "note": "目標周邊紫色狀態可見，但雙方現存生命交換的連線與交換瞬間不夠明確。",
-      "frameCount": 8,
+      "frameCount": 2,
       "proofSource": "editor-effect-graph-preview",
       "mechanicVisualAdditions": [
         {
@@ -1917,8 +1899,8 @@
       "name": "44-00 機警",
       "themeId": "ability:godie-emns.passive",
       "sourceDigest": "696a855ed373dfeeef994feaf1c0d20cf5e257258bb44a826bc4656ba3f74429",
-      "currentDigest": "696a855ed373dfeeef994feaf1c0d20cf5e257258bb44a826bc4656ba3f74429",
-      "reviewState": "current",
+      "currentDigest": "891c1179f7c60e02d92127f4d86e1a2bb9aae1bfe9fffc9798c291a5e86fa763",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 5,
@@ -1928,7 +1910,7 @@
         "resource-conversion-unproven"
       ],
       "note": "角色身上有被動防禦光效且沒有假施法，但1MP抵3傷害與魔力耗盡後才扣生命仍只能靠事件數據驗證。",
-      "frameCount": 8,
+      "frameCount": 2,
       "proofSource": "editor-effect-graph-preview",
       "mechanicVisualAdditions": [
         {
@@ -1953,8 +1935,8 @@
       "name": "80-04 赤兔咆哮",
       "themeId": "ability:godie-h01u.r",
       "sourceDigest": "85754731abae706367760210ac6c3a874cf136464bef9ace482402e9e9b72c08",
-      "currentDigest": "85754731abae706367760210ac6c3a874cf136464bef9ace482402e9e9b72c08",
-      "reviewState": "current",
+      "currentDigest": "28bd3fb6e1ff58b3334b53e72efdddd27c2b9507e06e0f476e85223236a7aa87",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 5,
@@ -1985,15 +1967,23 @@
         ],
         "authoringBlockers": []
       },
-      "machineIssues": []
+      "machineIssues": [
+        {
+          "code": "LOW_VISUAL_HYGIENE",
+          "severity": "medium",
+          "owner": "editor",
+          "summary": "畫面雖可擷取，但時間軸／關鍵格最低清晰度只有 0.5/10",
+          "nextAction": "人工檢查構圖、遮擋與格狀外觀；不可把素材安全分數當成美術通過。"
+        }
+      ]
     },
     {
       "id": "godie-h02u.ex",
       "name": "92-002 最終戈壁",
       "themeId": "ability:godie-h02u.ex",
       "sourceDigest": "163e869c1e1264338aa6c70ae3871b87a6467b6d80ddcbb86d2aa9d50ae6f4c4",
-      "currentDigest": "163e869c1e1264338aa6c70ae3871b87a6467b6d80ddcbb86d2aa9d50ae6f4c4",
-      "reviewState": "current",
+      "currentDigest": "53a62c49f11471736b28d90fbad224d991fe0c957943a113e4098b45808fe3ab",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 2,
@@ -2034,8 +2024,8 @@
       "name": "52-01 狂戰士之怒",
       "themeId": "ability:godie-hapm.q",
       "sourceDigest": "a2f344d5e5969d5ebc0d7cd7f6dcc416f9fa89eb8d0882019fde0c0e3cc50b2f",
-      "currentDigest": "a2f344d5e5969d5ebc0d7cd7f6dcc416f9fa89eb8d0882019fde0c0e3cc50b2f",
-      "reviewState": "current",
+      "currentDigest": "1d880c6651b85fcd9a10c982c65f9bea319263ab23cea7275db91fde37a4f93a",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 6,
@@ -2045,7 +2035,7 @@
         "extension-unproven"
       ],
       "note": "藍色狂怒氣場可讀且沒有主動攻擊假動作，但承受每5%最大生命延長兩秒與單門檻只延長一次仍需時間軸提示。",
-      "frameCount": 8,
+      "frameCount": 2,
       "proofSource": "editor-effect-graph-preview",
       "mechanicVisualAdditions": [
         {
@@ -2071,7 +2061,15 @@
         ],
         "authoringBlockers": []
       },
-      "machineIssues": []
+      "machineIssues": [
+        {
+          "code": "LOW_VISUAL_HYGIENE",
+          "severity": "medium",
+          "owner": "editor",
+          "summary": "畫面雖可擷取，但時間軸／關鍵格最低清晰度只有 1/10",
+          "nextAction": "人工檢查構圖、遮擋與格狀外觀；不可把素材安全分數當成美術通過。"
+        }
+      ]
     }
   ]
 }

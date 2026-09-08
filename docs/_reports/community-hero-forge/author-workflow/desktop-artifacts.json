@@ -1,0 +1,67 @@
+{
+  "schema": "ggd-community-desktop-artifacts@1",
+  "uiSourceCommit": "7f6278811ae71e3d4cac6fed8f0a3785faa19771",
+  "processorFingerprint": "df99921d8f29",
+  "files": [
+    {
+      "path": "/private/tmp/ggd-community-desktop-author-final/GGD Ability & VFX Editor 0.1.0.exe",
+      "bytes": 102429925,
+      "sha256": "83c7d113d73dca1b9a17770de744a0f3cc1ed33e8e1f1661dbd52638f03b8c98",
+      "authenticode": {
+        "certificateOffset": 0,
+        "certificateBytes": 0,
+        "publisherSigned": false
+      }
+    },
+    {
+      "path": "/private/tmp/ggd-community-desktop-author-final/GGD Ability & VFX Editor Setup 0.1.0.exe",
+      "bytes": 102596949,
+      "sha256": "248fed89ab647282a02c4894a6aaa0cf56b192b9bfc1ebf44fee81925b385238",
+      "authenticode": {
+        "certificateOffset": 0,
+        "certificateBytes": 0,
+        "publisherSigned": false
+      }
+    },
+    {
+      "path": "/private/tmp/ggd-community-desktop-author-final/GGD Ability & VFX Editor-0.1.0-universal-mac.zip",
+      "bytes": 212422397,
+      "sha256": "c7b14992f4d748a3908f6ad8d02b64764a9efbe0751a8f5283a8875a3494b3f7"
+    },
+    {
+      "path": "/private/tmp/ggd-community-desktop-author-final/GGD Ability & VFX Editor-0.1.0-universal.dmg",
+      "bytes": 212478209,
+      "sha256": "c643e4698ef0a77812d0bce84526ebcd9ba9cecfeabd0c2f0b8c70e96f48eaa2"
+    }
+  ],
+  "renderers": [
+    {
+      "platform": "macOS",
+      "renderer": "editor",
+      "fileCount": 128,
+      "allBytesMatchBuiltRenderer": true
+    },
+    {
+      "platform": "macOS",
+      "renderer": "admin",
+      "fileCount": 122,
+      "allBytesMatchBuiltRenderer": true
+    },
+    {
+      "platform": "Windows",
+      "renderer": "editor",
+      "fileCount": 128,
+      "allBytesMatchBuiltRenderer": true
+    },
+    {
+      "platform": "Windows",
+      "renderer": "admin",
+      "fileCount": 122,
+      "allBytesMatchBuiltRenderer": true
+    }
+  ],
+  "macSignatureExit": 0,
+  "macPublisherSigned": false,
+  "nativeInstallUpdateDowngradeVerified": false,
+  "published": false
+}

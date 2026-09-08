@@ -1,0 +1,44 @@
+{
+  "schema": "ggd-integration-handoff-remote-proof@1",
+  "observedAt": "2026-09-08T03:54:25.443121+00:00",
+  "head": "e916757d2b3902d66328ac0738636b64bcd1214c",
+  "main": "631dd1048f9b5150d361c180692125929f0be7c0",
+  "verifiedObjects": [
+    {
+      "path": "materials/community-hero-forge",
+      "type": "tree",
+      "sha": "cb7f2b69acb766211e4bcb6a34d2c631bc6872f4",
+      "size": null
+    },
+    {
+      "path": "docs/_reports/community-hero-forge/merge-integration/README.md",
+      "type": "blob",
+      "sha": "37c39c23c97220f39fa326b12b0a068963bb71a9",
+      "size": 36685
+    },
+    {
+      "path": "docs/_reports/community-hero-forge/merge-integration/conflicts.json",
+      "type": "blob",
+      "sha": "dcdc91dcc685b49bfdf4cbfe7a92756b867daf9f",
+      "size": 29551
+    },
+    {
+      "path": "docs/_reports/community-hero-forge/merge-integration/issue-draft.md",
+      "type": "blob",
+      "sha": "0bc8e29b02e2f932476b731f6628e17b534871e4",
+      "size": 9676
+    },
+    {
+      "path": "docs/_reports/community-hero-forge/editor-publication/README.md",
+      "type": "blob",
+      "sha": "757b85bf6f28b376186f209940ee7b85f6910206",
+      "size": 43817
+    },
+    {
+      "path": "docs/editor-contract/coordination/claim.community-hero-forge-integration.json",
+      "type": "blob",
+      "sha": "63bfd6e26a2d21fd8eaf0f7b26dfd28f44f5379e",
+      "size": 27524
+    }
+  ]
+}

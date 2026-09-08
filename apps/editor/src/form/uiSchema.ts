@@ -42,6 +42,22 @@ export interface UIBoolean extends UIBase {
   kind: "boolean";
 }
 
+/** A constrained numeric value or one explicit string sentinel, e.g. 3 | all. */
+export interface UINumberOrLiteral extends UIBase {
+  kind: "numberOrLiteral";
+  number: UINumber;
+  literal: string;
+}
+
+/** One scalar for all ranks, or explicit numeric columns. */
+export interface UINumberOrArray extends UIBase {
+  kind: "numberOrArray";
+  number: UINumber;
+  item: UINumber;
+  minItems: number;
+  maxItems?: number;
+}
+
 export interface UIEnum extends UIBase {
   kind: "enum";
   options: (string | number)[];
@@ -83,9 +99,16 @@ export interface UIUnknown extends UIBase {
   kind: "unknown";
 }
 
+/** Bounded visual editor for the shared recursive effect-condition contract. */
+export interface UICondition extends UIBase {
+  kind: "condition";
+}
+
 export type UINode =
   | UIText
   | UINumber
+  | UINumberOrLiteral
+  | UINumberOrArray
   | UIBoolean
   | UIEnum
   | UILiteral
@@ -94,6 +117,7 @@ export type UINode =
   | UIObject
   | UIRecord
   | UIDiscriminatedUnion
+  | UICondition
   | UIUnknown;
 
 /** "buildPriority" -> "Build Priority" */

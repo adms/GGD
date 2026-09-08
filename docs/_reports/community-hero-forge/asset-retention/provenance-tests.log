@@ -1,0 +1,41 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ apps/content-api/src/heroWorkRoutes.test.ts (6 tests) 33642ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > normalizes an original image before inspection and freezes the exact reviewed WebP 12480ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > validates all source, runtime, evidence and assets without store or registry mutation 1846ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > stores two works, restores exact authoring after restart, and leaves official ACTIVE unchanged 8706ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > rejects replacing operation input or sending a work to the official activation endpoint 1620ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > resumes after a crash between immutable placement and operation completion 4669ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > rejects forged target pins and detects damaged frozen asset bytes on read 1120ms
+ ❯ apps/content-api/src/importTransientCleanup.test.ts (4 tests | 1 failed) 230ms
+   × importer transient retention > evicts expired cache copies but preserves complete immutable assets and official history 70ms
+     → expected [ …(2) ] to have a length of 1 but got 2
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  apps/content-api/src/importTransientCleanup.test.ts > importer transient retention > evicts expired cache copies but preserves complete immutable assets and official history
+AssertionError: expected [ …(2) ] to have a length of 1 but got 2
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ❯ apps/content-api/src/importTransientCleanup.test.ts:36:26
+     34|     for (const group of ["icons", "icon-sources"]) expect(readdirSync(…
+     35|     const receiptFiles = readdirSync(join(dir, "objects/icon-receipts"…
+     36|     expect(receiptFiles).toHaveLength(1);
+       |                          ^
+     37|     expect(JSON.parse(readFileSync(join(dir, "objects/icon-receipts", …
+     38|     expect(store.readWorkFile("hero-one", version.record.versionId, ic…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 9 passed (10)
+   Start at  21:55:51
+   Duration  38.80s (transform 2.38s, setup 0ms, collect 3.77s, tests 33.87s, environment 0ms, prepare 193ms)
+

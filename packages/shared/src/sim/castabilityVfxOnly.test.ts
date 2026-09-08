@@ -53,6 +53,7 @@ const VFX_CHAMP = "test.castability.champ.vfx" as ChampionId;
 const REAL_CHAMP = "test.castability.champ.real" as ChampionId;
 const SWAP_CHAMP = "test.castability.champ.swap" as ChampionId;
 const GOLD_CHAMP = "test.castability.champ.gold" as ChampionId;
+const PAYMENT_CHAMP = "test.castability.champ.payment" as ChampionId;
 
 /**
  * SELA 的骨架卡片，Q 換成受測的那一支。
@@ -70,6 +71,9 @@ beforeAll(() => {
   registerChampion(champWithQ(REAL_CHAMP, REAL), { overrideAbilities: true });
   registerChampion(champWithQ(SWAP_CHAMP, SWAP), { overrideAbilities: true });
   registerChampion(champWithQ(GOLD_CHAMP, GOLD), { overrideAbilities: true });
+  registerChampion(champWithQ(PAYMENT_CHAMP, qDef("payment", [
+    { kind: "spendHealth", amount: { flat: 0 }, pctMaxHealth: 0.03 },
+  ])), { overrideAbilities: true });
 });
 
 /** 普查那條路的最小版：真的按一次 Q，再用出貨的判定看它。 */
@@ -102,6 +106,12 @@ describe("castability sweep — 只有特效的技能不算「有效果」（GH#
 
   it("控制組：同一條路上一支真的有傷害的技能仍然是 PASS", () => {
     expect(probeQ(REAL_CHAMP).verdict).toBe("PASS");
+  });
+
+  it("life payment has its own measurable gameplay channel without ordinary damage", () => {
+    const out = probeQ(PAYMENT_CHAMP);
+    expect(out.verdict).toBe("PASS");
+    expect(out.channel).toBe("healthSpend");
   });
 
   it("交換資源（`swapResource`）是 gameplay 頻道，⛔ 不是「量不到效果」", () => {

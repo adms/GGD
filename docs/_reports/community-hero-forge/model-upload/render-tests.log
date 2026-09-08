@@ -1,0 +1,72 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ packages/shared/src/ops/helmNginxInSync.test.ts (1 test) 5ms
+(node:95800) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | apps/client/src/render/AssetManager.test.ts > AssetManager > loads a real .glb with ONE GET and no HEAD probe
+BJS - [01:51:19]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/AssetManager.test.ts > AssetManager > re-uses the bytes across SCENES but never the container
+BJS - [01:51:19]: Babylon.js v7.54.3 - Null engine
+BJS - [01:51:19]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/AssetManager.test.ts > AssetManager > a missing file resolves null (procedural fallback stays) and is not re-probed
+BJS - [01:51:20]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/AssetManager.test.ts > AssetManager > a missing file resolves null (procedural fallback stays) and is not re-probed
+BJS - [01:51:20]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/AssetManager.test.ts > AssetManager > accounts the bytes it holds and clears them on demand
+BJS - [01:51:20]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/AssetManager.test.ts > AssetManager > evicts least-recently-used bytes to stay under its budget
+BJS - [01:51:20]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/AssetManager.test.ts > AssetManager > evicts least-recently-used bytes to stay under its budget
+BJS - [01:51:20]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/AssetManager.test.ts > AssetManager > survives a thrown fetch (offline / relative URL under Node) and stays retryable
+BJS - [01:51:20]: Babylon.js v7.54.3 - Null engine
+BJS - [01:51:20]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/AssetManager.test.ts > AssetManager × model LOD tier > fetches the -small file at the low preset and the authored file at high
+BJS - [01:51:20]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/AssetManager.test.ts > AssetManager × model LOD tier > fetches the -small file at the low preset and the authored file at high
+BJS - [01:51:20]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/AssetManager.test.ts > AssetManager × model LOD tier > keys the container cache on the RESOLVED path, so a tier change is not swallowed
+BJS - [01:51:20]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/AssetManager.test.ts > AssetManager × model LOD tier > a model with no generated tier is fetched unchanged (no 404 probe)
+BJS - [01:51:20]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/AssetManager.test.ts > AssetManager × the model-LOD policy doc > ships the repo's own model-lod.json, and it puts the low preset on -small
+BJS - [01:51:20]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/AssetManager.test.ts > AssetManager × the model-LOD policy doc > an operator remapping low→mid changes the FILE ON THE WIRE, mid-session
+BJS - [01:51:20]: Babylon.js v7.54.3 - Null engine
+BJS - [01:51:20]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/AssetManager.test.ts > AssetManager × the model-LOD policy doc > `enabled: false` is a real kill switch — the AUTHORED file goes on the wire
+BJS - [01:51:20]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/AssetManager.test.ts > AssetManager × the model-LOD policy doc > a policy naming a tier that was never generated for a model falls back, never 404s
+BJS - [01:51:20]: Babylon.js v7.54.3 - Null engine
+
+ ✓ apps/client/src/render/AssetManager.test.ts (13 tests) 986ms
+   ✓ AssetManager > loads a real .glb with ONE GET and no HEAD probe 429ms
+(node:96184) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | apps/client/src/render/uploadedModelInstances.test.ts > keeps uploaded source rigs at rest and independent instances keep identical initial bounds
+BJS - [01:51:21]: Babylon.js v7.54.3 - Null engine
+
+ ✓ apps/client/src/render/uploadedModelInstances.test.ts (1 test) 195ms
+
+ Test Files  3 passed (3)
+      Tests  15 passed (15)
+   Start at  01:51:14
+   Duration  7.49s (transform 2.86s, setup 0ms, collect 5.21s, tests 1.19s, environment 0ms, prepare 257ms)
+

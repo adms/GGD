@@ -28,6 +28,7 @@
 package submissions
 
 import (
+	"encoding/json"
 	"fmt"
 	"regexp"
 	"sort"
@@ -57,8 +58,9 @@ const (
 // ⭐⭐ GH#991 —— 投稿那條路的**政策**（`config.ugc@1` 的四格）。
 //
 // ⚠️ 上面那兩個常數與這裡的四格**不是同一種東西**，⛔ 不要合併：
-//   · 常數是**絕對天花板**（誤打守衛／記憶體保護），它由這個二進位檔決定；
-//   · 政策是 owner 在後台轉的旋鈕，它只能**更緊**。
+//
+//	· 常數是**絕對天花板**（誤打守衛／記憶體保護），它由這個二進位檔決定；
+//	· 政策是 owner 在後台轉的旋鈕，它只能**更緊**。
 //
 // ⇒ 生效值一律 `min(政策, 常數)` —— ⭐ 後台調不出一個比映像能承受的更大的數字，
 // ⛔ 而那不是「忽略設定」：它是「這一格有一個這個版本管不到的上界」，
@@ -194,6 +196,9 @@ type View struct {
 //
 // ⛔ 只驗 status 對「先送乾淨的、核准後換內容」是全綠的 —— 那正是要擋的攻擊。
 func Discoverable(m Material, v Verdict) bool {
+	if m.Kind == KindHero {
+		return false
+	}
 	if v.Status != StatusApproved {
 		return false
 	}
@@ -337,16 +342,30 @@ func (s *Service) Submit(in Material) (View, error) {
 			return View{}, err
 		}
 	}
-	ids, err := s.store.List(CollectionMaterial)
+	unlock := submissionIntakeLocks.Lock(s.store.Root() + "\x00" + m.AccountID)
+	defer unlock()
+	// ⭐⭐ 2026-09-08 合併 PR 1118：**兩側各對一半**，⇒ 取聯集，⛔ 不是二選一。
+	//   · Codex：`pendingSubmissions()`（`hero_intake.go:60`）—— 待審數的**唯一住處**，
+	//     而且它**排除 `Kind == KindHero`**（完整英雄有自己的配額）⇒ ⛔ 不要在這裡再數一次。
+	//   · main：**政策上限**（`policy.effectiveMaxPending()`，後台可調）＋ **每日配額**（GH#991）。
+	//   ⚠️ 我第一次把兩份**都留下來**了 ⇒ `pending` 宣告兩次、`ids` 從來沒被定義
+	//     ⇒ 整個 platform 模組 build 失敗（CI 的 go-platform，⛔ 而我本機只跑了 vitest 與 tsc）。
+	pending, err := pendingSubmissions(s.store, m.AccountID, m.ID, "")
 	if err != nil {
 		return View{}, err
 	}
-	pending := 0
 	// ⭐ GH#991 —— `quotaPerPlayerPerDay`：**今天送過幾份**（不論後來被退還是被收）。
 	//   ⚠️ 它與待審深度**不是同一件事**：待審深度擋得住「一次塞爆佇列」，
 	//   ⛔ 擋不住「送一份、被退、立刻再送」——後者的待審深度永遠是 1。
 	//   ⭐ 日界用 platform 自己的時鐘切 UTC 日（⛔ 不是滾動 24 小時）：
 	//   一格叫「一天幾份」的設定要能被人算得出來，⛔ 而滾動視窗算不出來。
+	//   ⚠️ ⭐ 這個迴圈**只**數 `todayCount` —— 待審那一半上面那支 helper 已經算完了。
+	//     ⛔ 這裡刻意**不**跳過 `m.ID`：重送同一個 id 是**改稿**，它不佔待審深度，
+	//     ⭐ 但它**佔每日配額**（配額擋的就是「磨佇列」，而改稿正是磨佇列最便宜的形狀）。
+	ids, err := s.store.List(CollectionMaterial)
+	if err != nil {
+		return View{}, err
+	}
 	today := now.UTC().Format("2006-01-02")
 	todayCount := 0
 	for _, id := range ids {
@@ -356,15 +375,6 @@ func (s *Service) Submit(in Material) (View, error) {
 		}
 		if other.CreatedAt.UTC().Format("2006-01-02") == today {
 			todayCount++
-		}
-		if id == m.ID {
-			// ⭐ 重送同一個 id 是**改稿**，⛔ 不是新的一份 —— 它不佔待審深度
-			//   （那一格數的是「幾份東西在排隊」），⚠️ 但它**佔每日配額**：
-			//   配額擋的就是「磨佇列」，而改稿正是磨佇列最便宜的形狀。
-			continue
-		}
-		if v, _ := s.verdictOf(id); v.Status == StatusPending || v.Status == "" {
-			pending++
 		}
 	}
 	if max := policy.effectiveMaxPending(); pending >= max {
@@ -377,7 +387,22 @@ func (s *Service) Submit(in Material) (View, error) {
 			"daily submission quota reached (%d of %d today, UTC); it resets at 00:00 UTC",
 			todayCount, q))
 	}
-	if err := s.store.Put(CollectionMaterial, m.ID, m); err != nil {
+	if err := s.store.Update(CollectionMaterial, m.ID, func(raw json.RawMessage) (any, error) {
+		if len(raw) > 0 {
+			var prior Material
+			if err := json.Unmarshal(raw, &prior); err != nil {
+				return nil, err
+			}
+			if prior.AccountID != m.AccountID {
+				return nil, httpx.Forbidden("cannot replace another account's submission")
+			}
+			if prior.Kind == KindHero {
+				return nil, heroConflict("complete hero submissions are immutable")
+			}
+			m.CreatedAt = prior.CreatedAt
+		}
+		return m, nil
+	}); err != nil {
 		return View{}, err
 	}
 	return s.viewOf(m), nil
@@ -391,6 +416,9 @@ func (s *Service) Decide(id, status, reason, by string) (View, error) {
 	var m Material
 	if err := s.store.Get(CollectionMaterial, id, &m); err != nil {
 		return View{}, httpx.NotFound("no such submission")
+	}
+	if m.Kind == KindHero {
+		return View{}, httpx.BadRequest("完整英雄請使用綁定版本的審查發布流程。")
 	}
 	v := Verdict{Version: SchemaVersion, ID: id, Status: status, Reason: reason, DecidedBy: by, DecidedAt: s.now()}
 	if status == StatusApproved {

@@ -190,7 +190,10 @@ export const ZIP_ALLOWED_EXTENSION = '.json';
  * ⛔ 這一層擋的是「你連宣稱都不該這樣宣稱」，⛔ 不是「這真的是一張 PNG」。
  * ⇒ ⭐ 兩層都要有：這一層讓 `.exe` 連進門都不行，那一層讓「改名成 .png 的 .exe」進不去。
  */
-export const ZIP_ALLOWED_ASSET_EXTENSIONS: readonly string[] = ['.png', '.webp', '.jpg', '.jpeg'];
+// Complete hero packages freeze existing distributable media. Ordinary icon
+// uploads still pass the narrower checkIconAssets gate after ZIP inspection.
+import { BINARY_ASSET_TYPES } from "../assetReferences";
+export const ZIP_ALLOWED_ASSET_EXTENSIONS: readonly string[] = Object.keys(BINARY_ASSET_TYPES);
 
 /** 二進位資產的前綴（⭐ 它底下**不收** `.json`）。 */
 export const ZIP_ASSET_ROOT = 'assets';

@@ -47,6 +47,10 @@ const def = (d: ImportDiagnosticDef): ImportDiagnosticDef => Object.freeze(d);
  * 最後一條（「診斷碼登錄表的 key 與 code 必須一致」）。
  */
 export const IMPORT_DIAGNOSTICS = {
+  HERO_PACKAGE_INVALID: def({
+    code: "HERO_PACKAGE_INVALID", message: "完整英雄驗證失敗：{detail}",
+    spec: "社群英雄計畫 §6.2 / §7.2", failClosed: true, severity: "error", origin: "ggd-extension",
+  }),
   /**
    * ⭐ 這條 route 還沒實作（計畫 §4.1）。
    *

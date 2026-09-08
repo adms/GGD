@@ -34,6 +34,7 @@ import { sub, scale, normalize, lenSq } from "../math/vec2";
 
 /** One touchdown, queued during the walk and detonated after it. See below. */
 interface PendingLanding {
+  castInstance?: import("../content/castInstance").CastInstance;
   flyerId: EntityId;
   casterId: EntityId;
   landRadius: number;
@@ -117,6 +118,7 @@ export function leapSystem(world: SimWorld): void {
     world.airborne.delete(id);
     nav.override = null;
     landings.push({
+      castInstance: ov.castInstance,
       flyerId: id,
       casterId: ov.casterId,
       landRadius: ov.landRadius,
@@ -129,7 +131,7 @@ export function leapSystem(world: SimWorld): void {
 
   // ---- PHASE 2: detonate, now that nothing is iterating world.transform ----
   for (const L of landings) {
-    detonate(world, L.flyerId, L.casterId, L.landRadius, L.rank, L.origin, L.onLand, L.slot);
+    detonate(world, L.flyerId, L.casterId, L.landRadius, L.rank, L.origin, L.onLand, L.slot, L.castInstance);
   }
 }
 
@@ -142,6 +144,7 @@ function detonate(
   origin: string,
   onLand: import("../effects/effect").EffectDef[],
   slot: import("../intents").CastableSlot | undefined,
+  castInstance?: import("../content/castInstance").CastInstance,
 ): void {
   const t = world.transform.get(flyerId);
   if (!t) return;
@@ -158,6 +161,7 @@ function detonate(
       ? enemiesInCircle(world, casterId, point, resolveAbilityRadius(world, landRadius))
       : [];
   runEffects(onLand, {
+    castInstance,
     world,
     caster: casterId,
     rank,

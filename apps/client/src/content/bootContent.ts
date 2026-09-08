@@ -29,6 +29,7 @@ import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import { setContentAssetVersion } from "./assetVersion";
 import { fetchOverlayBundle } from "./clientOverlay";
+import { captureClientCommunityBase } from "./communityMatch";
 
 /** Default content mount — nginx serves it in prod; the vite plugin in dev. */
 export const CONTENT_BASE_URL = "/content";
@@ -200,6 +201,7 @@ export async function loadAllContent(opts: ContentBootOptions = {}): Promise<Con
     }
     const { store, manifest } = loaded;
     registerAll(store);
+    captureClientCommunityBase(store, manifest.contentVersion);
     // Publish the tree's cache key. Every content ASSET url (glb / mp3 / icon)
     // is stamped `?h=<contentVersion>` from here on, which is the ONLY thing that
     // flips nginx from `no-cache` to `immutable` for those files. Set after the

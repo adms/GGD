@@ -42,9 +42,16 @@ function effectRefs(effects: readonly EffectDef[] | undefined, base: string, out
   if (!effects) return;
   effects.forEach((e, i) => {
     const p = `${base}.${i}`;
+    if (e.kind === "consumeStatus") {
+      out.push({ field: `${p}.statusId`, targetCollection: "status-effects", targetId: e.statusId, soft: true });
+      effectRefs(e.onConsumed, `${p}.onConsumed`, out);
+      effectRefs(e.onMissing, `${p}.onMissing`, out);
+    }
     if (e.kind === "spawnProjectile") {
       out.push({ field: `${p}.projectileId`, targetCollection: "projectiles", targetId: e.projectileId });
       effectRefs(e.onHit, `${p}.onHit`, out);
+    } else if (e.kind === "summon" && e.championId !== undefined && e.championId !== "self") {
+      out.push({ field: `${p}.championId`, targetCollection: "champions", targetId: e.championId });
     } else if (e.kind === "applyStatus") {
       out.push({ field: `${p}.statusId`, targetCollection: "status-effects", targetId: e.statusId, soft: true });
     } else if (e.kind === "spawnVfx") {
@@ -86,6 +93,8 @@ function hookRefs(hooks: readonly HookDef[] | undefined, base: string, out: RefE
 
 function abilityRefs(a: Omit<AbilityDoc, "schema">, base: string, out: RefEdge[]): void {
   effectRefs(a.effects, base ? `${base}.effects` : "effects", out);
+  if (a.statusCost) out.push({ field: base ? `${base}.statusCost.statusId` : "statusCost.statusId",
+    targetCollection: "status-effects", targetId: a.statusCost.statusId, soft: true });
   // 【跨技能強化】的目標是 **HARD** ref —— 這就是計畫 §13 要的 fail closed:
   // 指到一支不存在(或被改名)的技能,內容在**載入時**就丟 DanglingRefError 並
   // 指名這一格。⛔ 不可以做成 soft: 一個指不到目標的強化在遊戲裡跟正常的完全
@@ -105,6 +114,10 @@ function abilityRefs(a: Omit<AbilityDoc, "schema">, base: string, out: RefEdge[]
       soft: true,
     });
   }
+  (a.vfxLayers ?? []).forEach((layer, i) => out.push({
+    field: base ? `${base}.vfxLayers.${i}.vfxKey` : `vfxLayers.${i}.vfxKey`,
+    targetCollection: "vfx", targetId: layer.vfxKey, soft: true,
+  }));
   // GH#566 —— `ability@1.persistentVfx[].vfxKey` 在 schema 裡**已經宣告**成
   // `zRef("vfx", { soft: true })`(GH#539),⛔ 但這張表從來沒有把它抽出來 ⇒ 那個宣告
   // 對載入期是**裝飾**。⭐ SOFT(只 warn),與 `ability.vfxKey` 同一個規矩:內容可以先
@@ -159,6 +172,9 @@ export const REFERENCES: Partial<Record<CollectionName, (doc: never) => RefEdge[
       out.push({ field: `buildPriority.${i}`, targetCollection: "items", targetId: itemId }),
     );
     out.push({ field: "modelKey", targetCollection: "models", targetId: doc.modelKey });
+    doc.modelVersions?.forEach((version, index) => out.push({
+      field: `modelVersions.${index}.modelKey`, targetCollection: "models", targetId: version.modelKey,
+    }));
     return out;
   },
   abilities: (doc: AbilityDoc): RefEdge[] => {

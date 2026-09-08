@@ -1,0 +1,19 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ apps/content-api/src/heroWorkRoutes.test.ts (6 tests) 34052ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > normalizes an original image before inspection and freezes the exact reviewed WebP 11806ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > validates all source, runtime, evidence and assets without store or registry mutation 1898ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > stores two works, restores exact authoring after restart, and leaves official ACTIVE unchanged 9082ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > rejects replacing operation input or sending a work to the official activation endpoint 1457ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > resumes after a crash between immutable placement and operation completion 4875ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > rejects forged target pins and detects damaged frozen asset bytes on read 1099ms
+ ✓ apps/content-api/src/importStore.test.ts (12 tests) 516ms
+ ✓ apps/content-api/src/importTransientCleanup.test.ts (4 tests) 208ms
+
+ Test Files  3 passed (3)
+      Tests  22 passed (22)
+   Start at  21:47:35
+   Duration  41.67s (transform 3.12s, setup 0ms, collect 5.09s, tests 34.78s, environment 1ms, prepare 252ms)
+

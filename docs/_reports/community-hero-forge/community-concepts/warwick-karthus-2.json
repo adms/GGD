@@ -1,0 +1,35 @@
+{
+  "schema": "ggd-community-socket-proof@1",
+  "runId": "socket-proof-1788699730754",
+  "platform": "http://127.0.0.1:8086/api/v1",
+  "startedAt": "2026-09-06T13:02:10.755Z",
+  "status": "failed",
+  "limits": "HTTP and game socket proof only; no browser or visual acceptance.",
+  "target": {
+    "gameRevision": "community-concepts-main-c7194118",
+    "contentVersion": "cv_31a79dcccfa6",
+    "migrationFingerprint": "c8ba205d0ecf",
+    "processorFingerprint": "4fcac2b66ca9"
+  },
+  "publications": [
+    {
+      "workId": "socket-proof-1788699730754-1",
+      "exampleId": "warwick",
+      "name": "赤痕獵衛（沃維克概念改編）",
+      "submissionId": "hero-840e4de39d9324a7e06716ca9edc7bbb55d56a2b5544a1ecefa8e3a9a67",
+      "packageDigest": "sha256:a9ef07367da404d5f43fc94e638c3ff87055f1f9d0d2ec9b6f6f7c29f4dc0cf8",
+      "snapshotDigest": "sha256:2815c84bc97377d00744c1ba742029867e1b979d242eac7eebb883ac816ea04f"
+    },
+    {
+      "workId": "socket-proof-1788699730754-2",
+      "exampleId": "karthus",
+      "name": "暮鐘詠者（卡爾瑟斯概念改編）",
+      "submissionId": "hero-8f2ab815aef10f61efe2924872e068d062a82448091f382b6559cfb0492",
+      "packageDigest": "sha256:a3fd232e8b6e703f795e198cb45a62955c7ef29d852726fa8e008b35f38e6596",
+      "snapshotDigest": "sha256:720c60a52f944cbf4819d70436f0cc1eb20ba649e4e3d6cc7635bd6c03e17fe5"
+    }
+  ],
+  "lastStep": "published local fixture",
+  "platformRoomId": "r_01M1VD06X9HMWPE7C0RYBDG0B0",
+  "error": "Error: /rooms/r_01M1VD06X9HMWPE7C0RYBDG0B0/start: HTTP 502 {\"error\":{\"code\":\"game_rejected\",\"message\":\"game server rejected the match (500)\"}}\n\n    at response (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/tools/community-hero-forge/local-game-proof.ts:46:22)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async json (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/tools/community-hero-forge/local-game-proof.ts:49:132)\n    at async <anonymous> (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/tools/community-hero-forge/local-game-proof.ts:132:17)"
+}

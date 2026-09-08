@@ -1,0 +1,116 @@
+#0 building with "orbstack" instance using docker driver
+
+#1 [internal] load build definition from game.Dockerfile
+#1 transferring dockerfile: 3.91kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:22-alpine
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context:
+#3 transferring context: 3.66kB done
+#3 DONE 0.0s
+
+#4 [build  1/12] FROM docker.io/library/node:22-alpine@sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32
+#4 resolve docker.io/library/node:22-alpine@sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32 0.0s done
+#4 DONE 0.0s
+
+#5 [stage-1 2/4] RUN apk add --no-cache tini
+#5 CACHED
+
+#6 [internal] load build context
+#6 ...
+
+#7 [stage-1 3/4] WORKDIR /repo/apps/game-server
+#7 DONE 0.1s
+
+#6 [internal] load build context
+#6 transferring context: 20.05MB 0.2s done
+#6 DONE 0.3s
+
+#8 [build  3/12] RUN corepack enable
+#8 CACHED
+
+#9 [build  2/12] RUN apk add --no-cache git
+#9 CACHED
+
+#10 [build  4/12] WORKDIR /repo
+#10 CACHED
+
+#11 [build  5/12] COPY pnpm-workspace.yaml package.json pnpm-lock.yaml tsconfig.base.json ./
+#11 DONE 0.1s
+
+#12 [build  6/12] COPY packages/shared/package.json packages/shared/
+#12 DONE 0.0s
+
+#13 [build  7/12] COPY apps/game-server/package.json apps/game-server/
+#13 DONE 0.0s
+
+#14 [build  8/12] RUN pnpm install --frozen-lockfile --filter "@ggd/game-server..."
+#14 0.218 ! Corepack is about to download https://registry.npmjs.org/pnpm/-/pnpm-9.15.9.tgz
+#14 2.465 Scope: 2 of 3 workspace projects
+#14 2.512 Lockfile is up to date, resolution step is skipped
+#14 2.544 Progress: resolved 1, reused 0, downloaded 0, added 0
+#14 2.651 .                                        | +396 ++++++++++++++++++++++++++++++++
+#14 3.317 
+#14 3.317    ╭──────────────────────────────────────────────────────────────────╮
+#14 3.317    │                                                                  │
+#14 3.317    │                Update available! 9.15.9 → 12.3.4.                │
+#14 3.317    │   Changelog: https://github.com/pnpm/pnpm/releases/tag/v12.3.4   │
+#14 3.317    │            Run "corepack use pnpm@12.3.4" to update.             │
+#14 3.317    │                                                                  │
+#14 3.317    ╰──────────────────────────────────────────────────────────────────╯
+#14 3.317 
+#14 3.544 Progress: resolved 396, reused 0, downloaded 29, added 26
+#14 4.546 Progress: resolved 396, reused 0, downloaded 99, added 86
+#14 ...
+
+#4 [build  1/12] FROM docker.io/library/node:22-alpine@sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32
+#4 CACHED
+
+#14 [build  8/12] RUN pnpm install --frozen-lockfile --filter "@ggd/game-server..."
+#14 5.549 Progress: resolved 396, reused 0, downloaded 186, added 179
+#14 6.547 Progress: resolved 396, reused 0, downloaded 261, added 255
+#14 7.548 Progress: resolved 396, reused 0, downloaded 362, added 362
+#14 8.550 Progress: resolved 396, reused 0, downloaded 395, added 395
+#14 31.58 Packages are cloned from the content-addressable store to the virtual store.
+#14 31.58   Content-addressable store is at: /root/.local/share/pnpm/store/v3
+#14 31.58   Virtual store is at:             node_modules/.pnpm
+#14 31.58 Progress: resolved 396, reused 0, downloaded 396, added 395
+#14 31.58 Progress: resolved 396, reused 0, downloaded 396, added 396, done
+#14 31.64 .../node_modules/msgpackr-extract install$ node-gyp-build-optional-packages
+#14 31.64 .../esbuild@0.28.1/node_modules/esbuild postinstall$ node install.js
+#14 31.64 .../esbuild@0.21.5/node_modules/esbuild postinstall$ node install.js
+#14 31.68 .../esbuild@0.28.1/node_modules/esbuild postinstall: Done
+#14 31.68 .../esbuild@0.21.5/node_modules/esbuild postinstall: Done
+#14 31.68 .../node_modules/msgpackr-extract install: Done
+#14 31.77 Done in 29.6s using pnpm v9.15.9
+#14 DONE 31.9s
+
+#15 [build  9/12] COPY packages/shared/ packages/shared/
+#15 DONE 0.2s
+
+#16 [build 10/12] COPY apps/game-server/ apps/game-server/
+#16 DONE 0.1s
+
+#17 [build 11/12] COPY apps/content-api/src/ apps/content-api/src/
+#17 DONE 0.0s
+
+#18 [build 12/12] COPY docs/editor-contract/ggd-presentation-token-manifest.json docs/editor-contract/
+#18 DONE 0.0s
+
+#19 [stage-1 4/4] COPY --from=build /repo/ /repo/
+#19 DONE 0.5s
+
+#20 exporting to image
+#20 exporting layers
+#20 exporting layers 5.9s done
+#20 exporting manifest sha256:b857275b8d3f4956b6700f78da80fa473ea47cce72a08cdf18bc6fcb6119d9ce done
+#20 exporting config sha256:75e9063f9725f73b1f241122e20c0bc54add098426dd06c9bb01f828e2e8b250 done
+#20 exporting attestation manifest sha256:c344edadce444c89c165bc6642d1f6725dbe10184146b88fda0a14f59abacf26 0.0s done
+#20 exporting manifest list sha256:123acd38f229a65e02c282f49d29482e8ae8a6ffc49f3b3c49a5a6e1aa6ce600 done
+#20 naming to docker.io/library/ggd-community-game:local-proof done
+#20 unpacking to docker.io/library/ggd-community-game:local-proof
+#20 unpacking to docker.io/library/ggd-community-game:local-proof 1.2s done
+#20 DONE 7.2s

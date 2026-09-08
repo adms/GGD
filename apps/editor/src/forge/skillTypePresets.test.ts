@@ -127,13 +127,13 @@ describe("鑄技工坊技能類型", () => {
     expect(gaps).toEqual([{ id: "combo", axes: ["damage"] }]);
   });
 
-  it("友善配方會 fail closed：目前 Main 的兩個真缺口不能讓玩家產出壞檔", () => {
+  it("友善配方保留連段傷害缺口；已接上文件路徑的光束 spacing 可以使用", () => {
     const issues = Object.fromEntries(
       SKILL_TYPE_PRESETS.map((preset) => [preset.id, skillTypeRecipeIssues(preset, templates, docPickable)] as const)
         .filter(([, rows]) => rows.length > 0),
     );
-    // ⭐ 2026-09-06 GH#1047：beam-roll 的 spacing 缺口補上（count≥2 才發 spacing）⇒ 只剩 combo 一個真缺口。
     expect(Object.keys(issues)).toEqual(["combo"]);
+    expect(issues["beam"]).toBeUndefined();
     expect(issues["combo"]).toEqual(["傷害沒有可寫入的模板參數"]);
   });
 

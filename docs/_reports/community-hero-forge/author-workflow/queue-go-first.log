@@ -1,0 +1,6 @@
+--- FAIL: TestHeroHistoryDoesNotMasqueradeAsPendingLegacyMaterials (0.14s)
+    hero_handlers_test.go:76: hero history disappeared: {"items":[{"allowAttributionRemix":true,"id":"hero-e674390830e81894b08f15c9771e502662ea8a0f30509e8f0fd6c96b2a8","workId":"hero-proof","accountId":"alice","name":"","status":"pending","packageDigest":"sha256:1cdaedef147c6c170b42587a1362ed8d1c55829258d11ee81b32f4ea2bed2976","submittedAt":"2026-09-06T00:00:14Z"},{"allowAttributionRemix":true,"id":"hero-2c7b783897201384cfcb760369d0eea5efa67e8d28daa305aedb965a924","workId":"hero-proof","accountId":"alice","name":"","status":"withdrawn","packageDigest":"sha256:576506f61f53440f1edd95d28631a17e26f50d613eef2943a030220b66c5f5b3","submittedAt":"2026-09-06T00:00:10Z"},{"allowAttributionRemix":true,"id":"hero-9b7fff210a767a4daac28d67583fefc06090c0b4fd0722dea588e59d677","workId":"hero-proof","accountId":"alice","name":"","status":"published","packageDigest":"sha256:161078e42e8fef3ba4b9c984035baa2e431a50b31a18ac95614cc6820394af13","submittedAt":"2026-09-06T00:00:05Z"}],"nextOffset":3,"total":3}
+FAIL
+FAIL	github.com/ggd/platform/internal/submissions	4.696s
+ok  	github.com/ggd/platform/internal/server	16.041s
+FAIL

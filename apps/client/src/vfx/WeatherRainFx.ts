@@ -1,3 +1,4 @@
+import { BUILTIN_VFX_TEXTURES } from "@ggd/shared/content/builtinVfxTextures";
 /**
  * 🌧️ WeatherRainFx —— 天氣的**降水**那一層（GH#654）。
  *
@@ -77,7 +78,7 @@ import { qualityController } from "../render/QualityController";
 import { markVfxPersistent } from "./vfxHardCap";
 
 /** 雨的貼圖（一顆柔邊的亮點；`BILLBOARDMODE_STRETCHED` 把它拉成一道雨絲）。 */
-const RAIN_TEXTURE = "/content/assets/textures/particles/light_01.png";
+const RAIN_TEXTURE = `/content/${BUILTIN_VFX_TEXTURES.particles_light_01}`;
 /** 一滴的橫向粗細（世界單位）。⛔ 不是後台一格：它只有「看得見」與「太粗」兩種值。 */
 const DROP_WIDTH = 0.05;
 /** 雨柱高度 = 場地跨距 × 這個比例，夾在 8..24 之間。 */

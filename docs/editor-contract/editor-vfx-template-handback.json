@@ -36,8 +36,8 @@
     "path": "docs/editor-contract/ggd-type-catalog.json",
     "schema": "ggd-type-catalog@1",
     "counts": {
-      "templates": 52,
-      "pickable": 41,
+      "templates": 54,
+      "pickable": 43,
       "analysedButUnwired": 1,
       "shells": 9,
       "sentinels": 1,
@@ -233,9 +233,9 @@
   ],
   "mechanicRecommendationSource": {
     "path": "docs/_reports/editor-skill-basic-visual-proof/manifest.json",
-    "themes": 42,
-    "documents": 46,
-    "sourceGeneratedAt": "2026-09-04T03:16:34.906Z",
+    "themes": 43,
+    "documents": 47,
+    "sourceGeneratedAt": "2026-09-06T15:30:46.896Z",
     "rule": "只讀結構化 runtime effect；Owner 對白不參與機制或家族推論"
   },
   "mechanicRecommendationTypes": [
@@ -286,13 +286,14 @@
           "key": "mechanic-applyStatus/target-fx-prim-arcane-pulse",
           "at": "target",
           "vfxId": "fx.prim.arcane.pulse",
-          "occurrences": 8,
+          "occurrences": 9,
           "exampleAbilityIds": [
             "godie-e00r.ex",
             "godie-e00r.q",
             "godie-edem.ex",
             "godie-h02k.ex",
-            "godie-hvsh.e"
+            "godie-hvsh.e",
+            "godie-u034.passive"
           ]
         },
         {
@@ -312,9 +313,10 @@
           "key": "mechanic-applyStatus/target-fx-prim-physical-pulse",
           "at": "target",
           "vfxId": "fx.prim.physical.pulse",
-          "occurrences": 1,
+          "occurrences": 2,
           "exampleAbilityIds": [
-            "godie-e00w.passive"
+            "godie-e00w.passive",
+            "godie-u034.passive"
           ]
         }
       ]
@@ -330,10 +332,11 @@
           "key": "mechanic-blink/self-fx-prim-arcane-dash",
           "at": "self",
           "vfxId": "fx.prim.arcane.dash",
-          "occurrences": 2,
+          "occurrences": 3,
           "exampleAbilityIds": [
             "godie-nbbc.w",
-            "godie-u00v.r"
+            "godie-u00v.r",
+            "godie-u034.passive"
           ]
         }
       ]
@@ -395,14 +398,15 @@
           "key": "mechanic-damage/target-fx-prim-arcane-pulse",
           "at": "target",
           "vfxId": "fx.prim.arcane.pulse",
-          "occurrences": 6,
+          "occurrences": 7,
           "exampleAbilityIds": [
             "godie-emfr.e",
             "godie-emfr.ex",
             "godie-hapm.w",
             "godie-hjai.w",
             "godie-hvwd.e",
-            "godie-o00k.e"
+            "godie-o00k.e",
+            "godie-u034.passive"
           ]
         },
         {
@@ -439,7 +443,7 @@
           "key": "mechanic-damageArea/target-fx-prim-arcane-nova-lg",
           "at": "target",
           "vfxId": "fx.prim.arcane.nova-lg",
-          "occurrences": 9,
+          "occurrences": 10,
           "exampleAbilityIds": [
             "godie-e00s.r",
             "godie-edem.ex",
@@ -447,7 +451,8 @@
             "godie-emfr.e",
             "godie-etyr.r",
             "godie-hvsh.e",
-            "godie-ogld.ex"
+            "godie-ogld.ex",
+            "godie-u034.passive"
           ]
         },
         {
@@ -674,9 +679,10 @@
           "key": "mechanic-knockback/target-fx-prim-physical-shockwave",
           "at": "target",
           "vfxId": "fx.prim.physical.shockwave",
-          "occurrences": 1,
+          "occurrences": 2,
           "exampleAbilityIds": [
-            "godie-u00v.r"
+            "godie-u00v.r",
+            "godie-u034.passive"
           ]
         }
       ]
@@ -1536,5 +1542,5 @@
       "blockingBrickRequests": []
     }
   ],
-  "fingerprint": "daf301d2f051"
+  "fingerprint": "eb941a82ceb7"
 }

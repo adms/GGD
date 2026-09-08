@@ -2,7 +2,7 @@ import type { FieldProps } from "../FormRenderer";
 import { FieldErrors, renderNode } from "../FormRenderer";
 import type { UIObject } from "../uiSchema";
 
-export function ObjectFields({ node, value, dataPath, errors, onChange }: FieldProps & { node: UIObject }) {
+export function ObjectFields({ node, value, dataPath, errors, onChange, readOnlyReasons }: FieldProps & { node: UIObject }) {
   const record = typeof value === "object" && value !== null ? (value as Record<string, unknown>) : {};
   const body = node.fields.map((f) => {
     const key = f.path.split(".").pop() ?? f.path;
@@ -14,6 +14,7 @@ export function ObjectFields({ node, value, dataPath, errors, onChange }: FieldP
           dataPath: dataPath ? `${dataPath}.${key}` : key,
           errors,
           onChange,
+          readOnlyReasons,
         })}
       </div>
     );

@@ -31,12 +31,50 @@ import type {
   UIText,
 } from "./uiSchema";
 
+describe("number or literal controls", () => {
+  it("keeps numeric limits and starts with a valid value instead of raw JSON", () => {
+    const schema = z.union([z.number().int().min(3).max(9), z.literal("all")]);
+    const node = walkZod(schema);
+    expect(node).toMatchObject({ kind: "numberOrLiteral", literal: "all", number: { min: 3, max: 9, int: true } });
+    expect(schema.safeParse(defaultValueFor(node)).success).toBe(true);
+  });
+
+  it("exposes the shipping consumeStatus count as an editable number/all choice", () => {
+    const node = walkZod(zEffectDef) as UIDiscriminatedUnion;
+    const count = node.variants.find(v => v.tag === "consumeStatus")!.fields.find(f => f.path === "count")!;
+    expect(count).toMatchObject({ kind: "numberOrLiteral", literal: "all", number: { min: 1, max: 999 } });
+    expect(defaultValueFor(count)).toBe(1);
+  });
+});
+
+describe("numeric rank column controls", () => {
+  it("retains scalar and column limits without expanding unrelated unions", () => {
+    const schema = z.union([z.number().min(0).max(1), z.array(z.number().min(0.1).max(0.5)).min(1).max(4)]);
+    const node = walkZod(schema);
+    expect(node).toMatchObject({ kind: "numberOrArray", number: { min: 0, max: 1 },
+      item: { min: 0.1, max: 0.5 }, minItems: 1, maxItems: 4 });
+    expect(schema.safeParse(defaultValueFor(node)).success).toBe(true);
+    expect(walkZod(z.union([z.number(), z.array(z.object({ x: z.string() }))])).kind).toBe("unknown");
+  });
+
+  it("offers actual spendHealth percentages as numeric rank columns", () => {
+    const node = walkZod(zEffectDef) as UIDiscriminatedUnion;
+    const pct = node.variants.find(v => v.tag === "spendHealth")!.fields.find(f => f.path === "pctMaxHealth")!;
+    expect(pct).toMatchObject({ kind: "numberOrArray", optional: true, minItems: 1, number: { min: 0, max: 1 } });
+  });
+});
+
 function fieldsOf(node: UINode): Map<string, UINode> {
   expect(node.kind).toBe("object");
   return new Map((node as UIObject).fields.map((f) => [f.path.split(".").pop()!, f]));
 }
 
 describe("walkZod widget kinds (editor-01)", () => {
+  it("keeps a reference picker when optional wrappers add human help text", () => {
+    expect(walkZod(zRef("ability-templates").optional().describe("選擇已核准的演出模板"))).toMatchObject({
+      kind: "text", optional: true, description: "選擇已核准的演出模板", ref: { target: "ability-templates", soft: false },
+    });
+  });
   it("maps strings/numbers/bools/enums/arrays/refs/literals from the REAL shared schemas", () => {
     cover("editor-walker-widgets");
     const ability = walkZod(zAbilityDoc, "", "Ability");
@@ -112,6 +150,7 @@ describe("discriminated EffectDef union (editor-02)", () => {
       [
         "applyBuff",
         "applyStatus",
+        "consumeStatus",
         // ⭐ 真瞬移（owner 2026-08-09 / GH#301-2）。它推翻了 templates/expand.ts
         // 那句「a `kind: "blink"` … deliberately was not added」—— 那句辯護的
         // 前提（三個檔正被別的 lane 同時編輯）不再成立，而 owner 的裁決是
@@ -213,6 +252,7 @@ describe("discriminated EffectDef union (editor-02)", () => {
         "spawnModelFx",
         "spawnProjectile",
         "spawnVfx",
+        "spendHealth",
         "spendMana", // 20-01 風王結界 / 13-002 絕。暗殺奧義 —— 燒法力
         "summon", // lane P2 — 召喚物
         "taunt", // [嘲弄] —— 強迫敵人優先攻擊施法者 (sim/taunt.ts)

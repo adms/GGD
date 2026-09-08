@@ -1,0 +1,31 @@
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor
+
+ ❯ src/form/editorFormInteractions.test.tsx (1 test | 1 failed) 316ms
+   × all Main brick forms through shipped React handlers > measures every brick, edits controls, serializes and remounts without claiming browser acceptance 315ms
+     → No enabled option tpl-beam-roll: expected undefined to be defined
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/form/editorFormInteractions.test.tsx > all Main brick forms through shipped React handlers > measures every brick, edits controls, serializes and remounts without claiming browser acceptance
+AssertionError: No enabled option tpl-beam-roll: expected undefined to be defined
+ ❯ choose src/form/editorFormInteractions.test.tsx:59:45
+     57| function choose(form: Harness, id: string): void {
+     58|   const select = controls(form.nodes()).find((node) => node.type === "…
+     59|   expect(select, `No enabled option ${id}`).toBeDefined();
+       |                                             ^
+     60|   form.enter(select!, id);
+     61| }
+ ❯ generic src/form/editorFormInteractions.test.tsx:94:3
+ ❯ src/form/editorFormInteractions.test.tsx:122:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  19:56:29
+   Duration  10.37s (transform 3.38s, setup 0ms, collect 9.34s, tests 316ms, environment 0ms, prepare 116ms)
+
+undefined
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/form/editorFormInteractions.test.tsx --pool=forks --maxWorkers=1 --minWorkers=1

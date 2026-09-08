@@ -11,6 +11,7 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { acceptanceScope, assertVisualProofScope } from "../skill-forge/visual-proof-scope.mjs";
 
 import {
   VFX_FORGE_RECIPES,
@@ -122,14 +123,13 @@ const familyVariantSuggestions = [...familyMembers.entries()].map(([familyId, me
   })),
 })).sort((left, right) => left.familyId.localeCompare(right.familyId));
 
-// Preserve the mechanic-aware work from the complete 42-theme/46-document
+// Preserve the mechanic-aware work from the complete current acceptance
 // run. These are live automatic recommendation types, not hand-authored skill
 // timelines. Grouping by the authoritative effect kind lets a designer start
 // from a proven recommendation while the matrix remains available afterward.
 const proofManifest = JSON.parse(readFileSync(proofManifestPath, "utf8"));
-if (proofManifest.themes !== 42 || proofManifest.documents !== 46 || !Array.isArray(proofManifest.cases)) {
-  throw new Error("visual proof manifest must contain the exact 42-theme/46-document scope");
-}
+const scope = acceptanceScope(JSON.parse(readFileSync(resolve(root, "docs/_reports/editor-skill-acceptance-42x46.json"), "utf8")));
+assertVisualProofScope(proofManifest, scope);
 const mechanicVariantMap = new Map();
 for (const row of proofManifest.cases) {
   for (const addition of row.mechanicVisualAdditions ?? []) {
@@ -243,7 +243,7 @@ const md = [
   `- ${payload.adoptionRule}`,
   `- ${payload.familyVariantPolicy}`,
   `- ${payload.designerWorkflow}`,
-  `- 本次保存 ${payload.preservationReceipt.preservedTypeOutcomes} 個成果：${payload.preservationReceipt.selectablePresetTypes} 個具名完整配方，加上 ${payload.preservationReceipt.automaticMechanicTypes} 個已在 42／46 使用的具名機制推薦；不把既有成果丟回矩陣重調。`,
+  `- 本次保存 ${payload.preservationReceipt.preservedTypeOutcomes} 個成果：${payload.preservationReceipt.selectablePresetTypes} 個具名完整配方，加上 ${payload.preservationReceipt.automaticMechanicTypes} 個已在 ${scope.themes}／${scope.documents} 使用的具名機制推薦；不把既有成果丟回矩陣重調。`,
   "- Editor 修明顯大錯：顏色、方向、形狀、尺度、物理意義。亮度、密度、數幀節奏、鏡頭手感與美術偏好只送人工微調。",
   "- AI 與本檔都沒有 Promote 權限；人工批核前不得套回正式內容。",
   "",
@@ -255,7 +255,7 @@ const md = [
     `| \`${candidate.suggestedVariantKey}\` | \`${candidate.id}\` ${candidate.label} | ${candidate.acceptanceAbilityIds.join("<br>") || "—"} | ${candidate.segmentKinds.join(" + ")} | ${candidate.mainDisposition === "review-blocking-brick-extension" ? "檢查上列低階缺口；其餘時間軸留 Editor" : "參考即可；維持 Editor 組合模板"} |`,
   ),
   "",
-  "## 42／46 已收斂的具名機制推薦",
+  `## ${scope.themes}／${scope.documents} 已收斂的具名機制推薦`,
   "",
   `自動盤點得到 ${mechanicRecommendationTypeCount} 個可重用機制視覺變體；它們已在 Editor 的「依技能自動組裝基本視覺」使用。Owner 對白不參與推論，現有 framebuffer 仍全部等待人工批核。`,
   "",

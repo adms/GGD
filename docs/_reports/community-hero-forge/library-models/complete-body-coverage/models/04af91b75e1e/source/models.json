@@ -1,0 +1,228 @@
+{
+  "results": [
+    {
+      "id": "300heroes:1b46757671158e661a0105d1",
+      "library": "300heroes",
+      "kind": "model",
+      "tags": [
+        "model"
+      ],
+      "format": "x",
+      "name": "030.x",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/030.x",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/030.x",
+        "original_path": "..\\data\\character\\roleaction\\030.x",
+        "package": "Data1.jmp",
+        "entry": 1556,
+        "bytes": 1087238,
+        "md5": "92ca40a1f1a2d61b85219ce26277670c",
+        "source_md5": "92ca40a1f1a2d61b85219ce26277670c",
+        "source_md5_match": true,
+        "category": "character_model_animation",
+        "extension": ".x"
+      },
+      "character_links": [
+        {
+          "character_id": "300heroes:30",
+          "confidence": "official_base_model"
+        }
+      ]
+    },
+    {
+      "id": "300heroes:654c82a271f0b90e6ba87f54",
+      "library": "300heroes",
+      "kind": "model",
+      "tags": [
+        "model"
+      ],
+      "format": "x",
+      "name": "030_skin7.x",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/030_skin7.x",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/030_skin7.x",
+        "original_path": "..\\data\\character\\roleaction\\030_skin7.x",
+        "package": "Data1.jmp",
+        "entry": 1566,
+        "bytes": 1494581,
+        "md5": "f9ff3ab3249a7101c5524dfe527fdfe4",
+        "source_md5": "f9ff3ab3249a7101c5524dfe527fdfe4",
+        "source_md5_match": true,
+        "category": "character_model_animation",
+        "extension": ".x"
+      },
+      "character_links": [
+        {
+          "character_id": "300heroes:30",
+          "confidence": "numeric_prefix_candidate"
+        }
+      ]
+    },
+    {
+      "id": "300heroes:7e813acdf1fc576af504b32c",
+      "library": "300heroes",
+      "kind": "model",
+      "tags": [
+        "model"
+      ],
+      "format": "x",
+      "name": "030_skin5.x",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/030_skin5.x",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/030_skin5.x",
+        "original_path": "..\\data\\character\\roleaction\\030_skin5.x",
+        "package": "Data1.jmp",
+        "entry": 1561,
+        "bytes": 1020097,
+        "md5": "8becdeb02f0dc26ddfd8aef86995003a",
+        "source_md5": "8becdeb02f0dc26ddfd8aef86995003a",
+        "source_md5_match": true,
+        "category": "character_model_animation",
+        "extension": ".x"
+      },
+      "character_links": [
+        {
+          "character_id": "300heroes:30",
+          "confidence": "numeric_prefix_candidate"
+        }
+      ]
+    },
+    {
+      "id": "300heroes:b8c42837ed6d2b477981f077",
+      "library": "300heroes",
+      "kind": "model",
+      "tags": [
+        "model"
+      ],
+      "format": "x",
+      "name": "030_skin4.x",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/030_skin4.x",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/030_skin4.x",
+        "original_path": "..\\data\\character\\roleaction\\030_skin4.x",
+        "package": "Data1.jmp",
+        "entry": 1563,
+        "bytes": 1461662,
+        "md5": "052f5406a9108ddd4a627f4db95a8526",
+        "source_md5": "052f5406a9108ddd4a627f4db95a8526",
+        "source_md5_match": true,
+        "category": "character_model_animation",
+        "extension": ".x"
+      },
+      "character_links": [
+        {
+          "character_id": "300heroes:30",
+          "confidence": "numeric_prefix_candidate"
+        }
+      ]
+    },
+    {
+      "id": "300heroes:cd379e5aec7cabb639bf5326",
+      "library": "300heroes",
+      "kind": "model",
+      "tags": [
+        "model"
+      ],
+      "format": "x",
+      "name": "030_skin1.x",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/030_skin1.x",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/030_skin1.x",
+        "original_path": "..\\data\\character\\roleaction\\030_skin1.x",
+        "package": "Data1.jmp",
+        "entry": 1559,
+        "bytes": 1074287,
+        "md5": "eb80f01bec024d4dd14873e140e175a4",
+        "source_md5": "eb80f01bec024d4dd14873e140e175a4",
+        "source_md5_match": true,
+        "category": "character_model_animation",
+        "extension": ".x"
+      },
+      "character_links": [
+        {
+          "character_id": "300heroes:30",
+          "confidence": "numeric_prefix_candidate"
+        }
+      ]
+    },
+    {
+      "id": "300heroes:d93757ba215497e7f1bd99e1",
+      "library": "300heroes",
+      "kind": "model",
+      "tags": [
+        "model"
+      ],
+      "format": "x",
+      "name": "030_skin6.x",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/030_skin6.x",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/030_skin6.x",
+        "original_path": "..\\data\\character\\roleaction\\030_skin6.x",
+        "package": "Data1.jmp",
+        "entry": 1567,
+        "bytes": 1562259,
+        "md5": "9eecae141337f2c6ebb3b6f99c3da3f4",
+        "source_md5": "9eecae141337f2c6ebb3b6f99c3da3f4",
+        "source_md5_match": true,
+        "category": "character_model_animation",
+        "extension": ".x"
+      },
+      "character_links": [
+        {
+          "character_id": "300heroes:30",
+          "confidence": "numeric_prefix_candidate"
+        }
+      ]
+    },
+    {
+      "id": "300heroes:f5d3a026071a2eb2136061bc",
+      "library": "300heroes",
+      "kind": "model",
+      "tags": [
+        "model"
+      ],
+      "format": "x",
+      "name": "030_skin2.x",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/030_skin2.x",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/030_skin2.x",
+        "original_path": "..\\data\\character\\roleaction\\030_skin2.x",
+        "package": "Data1.jmp",
+        "entry": 1562,
+        "bytes": 2014256,
+        "md5": "01c2f1fd25ac93d9e5ffe5e8cd276729",
+        "source_md5": "01c2f1fd25ac93d9e5ffe5e8cd276729",
+        "source_md5_match": true,
+        "category": "character_model_animation",
+        "extension": ".x"
+      },
+      "character_links": [
+        {
+          "character_id": "300heroes:30",
+          "confidence": "numeric_prefix_candidate"
+        }
+      ]
+    }
+  ]
+}

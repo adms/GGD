@@ -1,0 +1,45 @@
+{
+  "schema": "ggd-community-health-payment-proof@1",
+  "capabilityFingerprint": "b3d1603e",
+  "coverageFingerprint": "1a109c48735c",
+  "requiredCells": 5098,
+  "effectKinds": 49,
+  "core": {
+    "exit": 0,
+    "files": 9,
+    "tests": 88,
+    "log": "spend-health-core-final.log"
+  },
+  "typecheck": {
+    "shared": 0,
+    "editor": 0,
+    "client": 0
+  },
+  "release": {
+    "exit": 0,
+    "tests": 558,
+    "productionBuild": true,
+    "log": "spend-health-editor-release-final.log"
+  },
+  "skills": {
+    "exit": 1,
+    "cause": "Existing 2026-09-06 message-ledger entries remain unmapped; current-day entries are non-blocking",
+    "log": "spend-health-skills-final.log"
+  },
+  "coord": {
+    "exit": 0,
+    "log": "spend-health-coord-final.log"
+  },
+  "ui": {
+    "receipt": "ui/receipt.json",
+    "saved": false,
+    "scope": "Isolated form and text preview; no original hero 3D/VFX visual verdict"
+  },
+  "mutation": {
+    "expectedFailure": true,
+    "restoredByteIdentical": true,
+    "proof": "spend-health-mutation.json"
+  },
+  "heroesPublishedByThisBatch": 0,
+  "goalComplete": false
+}

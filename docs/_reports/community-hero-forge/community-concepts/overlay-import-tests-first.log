@@ -1,0 +1,50 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ❯ apps/content-api/src/heroWorkRoutes.test.ts (6 tests | 1 failed) 19028ms
+   × complete hero over the existing Main ZIP/import/store seam > normalizes an original image before inspection and freezes the exact reviewed WebP 647ms
+     → {"schema":"ggd-content-import-error@1","code":"HERO_PACKAGE_INVALID","message":"cwebp 轉檔失敗（-quiet -q 90 -resize 128 128 /var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/ggd-icon-Sd7ODl/in -o /var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/ggd-icon-Sd7ODl/out.webp）：spawnSync cwebp ENOENT","retryable":false}: expected 422 to be 200 // Object.is equality
+   ✓ complete hero over the existing Main ZIP/import/store seam > validates all source, runtime, evidence and assets without store or registry mutation 1412ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > stores two works, restores exact authoring after restart, and leaves official ACTIVE unchanged 7819ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > rejects replacing operation input or sending a work to the official activation endpoint 1440ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > resumes after a crash between immutable placement and operation completion 4458ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > rejects forged target pins and detects damaged frozen asset bytes on read 858ms
+ ❯ apps/content-api/src/heroContentSnapshot.test.ts (2 tests | 1 failed) 394ms
+   × publishes against the captured Platform overlay and loads the exact package into the game's merged room 392ms
+     → Cannot read properties of undefined (reading 'contentVersion')
+ ✓ apps/content-api/src/heroImportServer.test.ts (3 tests) 125ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  apps/content-api/src/heroContentSnapshot.test.ts > publishes against the captured Platform overlay and loads the exact package into the game's merged room
+TypeError: Cannot read properties of undefined (reading 'contentVersion')
+ ❯ apps/content-api/src/heroContentSnapshot.test.ts:40:89
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  apps/content-api/src/heroWorkRoutes.test.ts > complete hero over the existing Main ZIP/import/store seam > normalizes an original image before inspection and freezes the exact reviewed WebP
+AssertionError: {"schema":"ggd-content-import-error@1","code":"HERO_PACKAGE_INVALID","message":"cwebp 轉檔失敗（-quiet -q 90 -resize 128 128 /var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/ggd-icon-Sd7ODl/in -o /var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/ggd-icon-Sd7ODl/out.webp）：spawnSync cwebp ENOENT","retryable":false}: expected 422 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 422
+
+ ❯ apps/content-api/src/heroWorkRoutes.test.ts:52:74
+     50|     const raw = await buildRuntimePackageZip(packageZipInput(source, h…
+     51|     const built = await upload("hero-package", "icon-build", "icon-wor…
+     52|     expect(built.statusCode, built.statusCode === 200 ? "" : built.bod…
+       |                                                                          ^
+     53|     const inspected = await upload("inspect-hero-package", "icon-inspe…
+     54|     expect(inspected.statusCode, inspected.statusCode === 200 ? "" : i…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+ Test Files  2 failed | 1 passed (3)
+      Tests  2 failed | 9 passed (11)
+   Start at  21:13:23
+   Duration  24.97s (transform 1.83s, setup 0ms, collect 4.10s, tests 19.55s, environment 0ms, prepare 174ms)
+

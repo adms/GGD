@@ -1,0 +1,129 @@
+{
+  "files": [
+    {
+      "path": "content-api-2.log",
+      "bytes": 21039,
+      "sha256": "833e3605c2037ba49176b99ddb2e60351275304dcbe30cfe496ab139f238a03c"
+    },
+    {
+      "path": "content-api.log",
+      "bytes": 194,
+      "sha256": "78a15fb496aaa79033d31d4c3c9735843f844a65ae8aa4d116db09f43c2802a6"
+    },
+    {
+      "path": "desktop-bundle.log",
+      "bytes": 186,
+      "sha256": "d9eac942f40426dbfe1a3b5f79b0be54f9fcfc604f911f7eff25e4ce0fb72db2"
+    },
+    {
+      "path": "final-desktop-bundle.log",
+      "bytes": 186,
+      "sha256": "d9eac942f40426dbfe1a3b5f79b0be54f9fcfc604f911f7eff25e4ce0fb72db2"
+    },
+    {
+      "path": "final-mac-build.log",
+      "bytes": 3193,
+      "sha256": "f73d49e3670081a3bf3e9806d8875fb0342544eefc374d108af6702a9ec44cca"
+    },
+    {
+      "path": "final-types.log",
+      "bytes": 206,
+      "sha256": "598dd80ce026c16d5b6ce18045ea8decd8e46747693022c37df02e178dd8a142"
+    },
+    {
+      "path": "final-win-build.log",
+      "bytes": 2733,
+      "sha256": "43b9c7fda8e7a5f09ae52659f1fd664be791b54b0dc45c49d12ba916e7796a71"
+    },
+    {
+      "path": "gate-1.log",
+      "bytes": 3501,
+      "sha256": "f0542c913ca6da9300ac437bb0b97f274abcb9f39f887958e05f96d2e91ac07c"
+    },
+    {
+      "path": "gate-2.log",
+      "bytes": 2031,
+      "sha256": "39bd0a28002a067410815b255520422fbfc5700f85b1e93ef62fe02c087f9148"
+    },
+    {
+      "path": "gate-3.log",
+      "bytes": 2146,
+      "sha256": "5d34b7fb62d54ae335a193e705a88124788471a8936c83430e8635dd26ff0c46"
+    },
+    {
+      "path": "gate-authorized-1.log",
+      "bytes": 4694,
+      "sha256": "e3fb7291f4c5aed61e70f530884e4672390edc3dc3b68003603a564352f5cee2"
+    },
+    {
+      "path": "gate-authorized-2.log",
+      "bytes": 2353,
+      "sha256": "8590aa3f5872e2923e2f490eac46337f3cbcc898e263ce5676b9152aeb5ce376"
+    },
+    {
+      "path": "gate-authorized-3.log",
+      "bytes": 2146,
+      "sha256": "5d34b7fb62d54ae335a193e705a88124788471a8936c83430e8635dd26ff0c46"
+    },
+    {
+      "path": "mac-build.log",
+      "bytes": 3139,
+      "sha256": "82ed0f8e70889828ece9425e2e90b8fa0992d44160ad466e06024b9c22416fcc"
+    },
+    {
+      "path": "private-tests.log",
+      "bytes": 769,
+      "sha256": "a7b9ebaec338fb8207e490b699732df7b4a8b31c69eca8c549a56d9a6e265538"
+    },
+    {
+      "path": "processor.json",
+      "bytes": 797,
+      "sha256": "9d4eeed2701c1ec1e58384c404abbecc5ed6459b1d016546a96f8e8bad86890a"
+    },
+    {
+      "path": "provenance-desktop-bundle.log",
+      "bytes": 186,
+      "sha256": "d9eac942f40426dbfe1a3b5f79b0be54f9fcfc604f911f7eff25e4ce0fb72db2"
+    },
+    {
+      "path": "provenance-final-tests.log",
+      "bytes": 520,
+      "sha256": "ba678eaaf98eebcb4302921ded9c0416f6bfee173e22fd704b1a0198d059edf6"
+    },
+    {
+      "path": "provenance-tests.log",
+      "bytes": 2674,
+      "sha256": "e015f3b79852e8b57b6ff55fda24e335caa298ca92fc4b08df04077eae30306a"
+    },
+    {
+      "path": "renderer.log",
+      "bytes": 34337,
+      "sha256": "b2a1f81e77f56eded6ace0098c242365d75feb25e7e274a2cbdbbee7f7a3b4ce"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 7639,
+      "sha256": "dbf8aaffcff867e37fa588d098fec390511a27fb85f137311b3189109adbf5ae"
+    },
+    {
+      "path": "sync-authorized.log",
+      "bytes": 742,
+      "sha256": "6914df24e14e8ff96d26c4cff6f1923ea1b283279b300ffd98cdc48383f910cb"
+    },
+    {
+      "path": "tests.log",
+      "bytes": 1606,
+      "sha256": "f0dbfc84bc0ff470fae373b1ecfc5cfb36bb35127a8803ceecf0ed297c2a0983"
+    },
+    {
+      "path": "types.log",
+      "bytes": 181,
+      "sha256": "3712b35aa6412e7317faaa40d71e1ca6783b3e5645e0a7469cce2c8be592bd34"
+    },
+    {
+      "path": "win-build.log",
+      "bytes": 2667,
+      "sha256": "027994e1e4c18544b185d878f8da84f504b35f4049b3082be15c92c7116012ce"
+    }
+  ]
+}

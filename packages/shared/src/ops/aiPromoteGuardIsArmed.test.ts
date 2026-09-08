@@ -62,7 +62,7 @@ function promoteSources(): string {
         "(post|put|patch|delete|Handle|HandleFunc|route).*ai-review/promote",
         "apps",
       ],
-      { cwd: ROOT, encoding: "utf8" },
+      { cwd: ROOT, encoding: "utf8", /* ⚠️ ⭐ Node 預設 maxBuffer 是 1 MB，而這個 repo 早就超過了（2026-09-08 量到 `git ls-files` 就 1.47 MB）⇒ 沒有這一格,閘會以 `spawnSync … ENOBUFS` 倒下,而那個訊息**指不出**真正的原因。 */ maxBuffer: 64 * 1024 * 1024 },
     );
     return out.trim();
   } catch (e) {
@@ -87,7 +87,7 @@ describe("AI promote 的規格閘（GH#932）", () => {
   it("★★ ⭐ 端點不存在 ⇒ 沒有洞；一旦出現就必須綁齊四格", () => {
     const files = promoteSources();
     if (files === "") return; // ⭐ 今天走這條：端點零命中
-    const text = execFileSync("cat", files.split("\n"), { cwd: ROOT, encoding: "utf8" });
+    const text = execFileSync("cat", files.split("\n"), { cwd: ROOT, encoding: "utf8", /* ⚠️ ⭐ Node 預設 maxBuffer 是 1 MB，而這個 repo 早就超過了（2026-09-08 量到 `git ls-files` 就 1.47 MB）⇒ 沒有這一格,閘會以 `spawnSync … ENOBUFS` 倒下,而那個訊息**指不出**真正的原因。 */ maxBuffer: 64 * 1024 * 1024 });
     expect(
       missingBindings(text),
       "⛔⛔ `ai-review/promote` 出現了，而 verdict 沒有鎖住這幾格 ⇒\n" +

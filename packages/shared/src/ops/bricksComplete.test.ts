@@ -36,7 +36,13 @@ const GATED = new Set(["effect", "hook", "template", "vfx-subtype", "vfx-call"])
 //   （`tools/brick-census/bricks.ts:634`＝後台開不開得了 `ability-templates` 這個集合）
 //   ⇒ 35 顆 template 積木**每一顆**都是 false ⇒ ⛔ 這一顆補不了「只補它自己」，
 //     它與前一批四個家族一樣在等 #992 的 schemaToForm。
-const BASELINE_GAPS = 49
+// · 2026-09-08 合併 PR 1118：Codex 的兩個 no-code 積木家族 `effect-sequence` 與
+//   `event-passive` 進清冊 ⇒ 分母 +2。
+//   ⚠️ ⭐ 逐列比對過：**新增的缺口只有那兩列 `缺 後台表單`，⛔ 沒有任何一列消失**
+//   ⇒ 同上一條例外，這是**分母變了**，⛔ 不是回歸。
+//   ⭐ 而它們缺的是**整層**那一格（`adminOpensHome("template")` ⇒ 35 顆 template 積木
+//     每一顆都 false）⇒ ⛔ 補不了「只補這兩顆」，它們與前幾批一起在等 #992 的 schemaToForm。
+const BASELINE_GAPS = 51
 
 interface Brick {
   id: string;

@@ -28,6 +28,8 @@
  * as data so the caller can decide between「擋下存檔」and「只降級這一支」.
  */
 import type { AbilityTemplateCard, TemplateConflictPolicy, TemplateDoc } from "../schema/template";
+import { defaultParamsFor } from "./paramsSchema";
+import { contentSha256 } from "../import/jcs";
 import {
   expandStackOrThrow,
   mergeExpansion,
@@ -119,8 +121,14 @@ export function resolveTemplateExpansion(
   }
 
   try {
+    for (const card of cards) {
+      if (card.contentSha256 && contentSha256(templates.get(card.ref)!) !== card.contentSha256) {
+        throw new Error(`template ${card.ref}: pinned contentSha256 does not match the supplied template`);
+      }
+      if (card.version !== undefined && card.version !== 1) throw new Error(`template ${card.ref}: unsupported template version ${card.version}`);
+    }
     const expansion = expandStackOrThrow(
-      cards.map((c) => ({ template: templates.get(c.ref)!, params: c.params })),
+      cards.map((c) => ({ template: templates.get(c.ref)!, params: c.inheritDefaults ? { ...defaultParamsFor(templates.get(c.ref)!), ...c.params } : c.params })),
       onConflict,
     );
     return { ok: true, refs, expansion, merged: mergeExpansion(doc, expansion) };

@@ -1,0 +1,23 @@
+{
+  "schema": "ggd-handoff-refinement-report@1",
+  "heroCount": 37,
+  "slotCount": 222,
+  "changedProject": "community-review-32-20260907",
+  "previousDigest": "sha256:f4339b259a72829a95ea9e207758d6c4f6a5f7c5ffd2e92589e4433ed6ef2a1a",
+  "refinedDigest": "sha256:e1307e5d1edbbbd09a3123bf1d4cfa2ae8bbff5e260f6fb5ae08a78130adc1e6",
+  "sourceDigest": "ed0e66a70e6e716451057ce449ebd3bfa3ac513153fa07414dd18bc8d002da59",
+  "runtimeDocuments": 130,
+  "dependencies": 122,
+  "assets": 98,
+  "published": false,
+  "visualAcceptance": "pending",
+  "fullMechanicsAcceptance": "pending-direction-and-close-ability-defense",
+  "notes": {
+    "PASSIVE": "M01/M10：正式 oncePerCast + 回合標記；需六槽整體模擬收據。",
+    "Q": "M10：短起手與固定 0.4u 目標擊退；誇張／普通的視覺反差待驗。",
+    "W": "M10/M11：固定落點三波、重新取敵；原作特效及漫畫表情未完成。",
+    "E": "M07/M10：取代舊護盾為一次近身普攻防守反擊；方向門檻與近身技能分類尚未表達，不標記 M07 完成；闇人格來源及影子演出待驗。",
+    "R": "M10：0.8s 釋放支付、非傷害生命代價、各施法者獨立詛咒。虛空彈是代理素材。",
+    "EX": "M10：三層施放資格／原子消耗、只反轉同來源 R。兩分支已有不同文字，金光、上揚圖示及施法者表情仍待視覺驗收。"
+  }
+}

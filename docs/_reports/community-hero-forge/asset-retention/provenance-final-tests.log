@@ -1,0 +1,11 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ apps/content-api/src/importTransientCleanup.test.ts (4 tests) 223ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  21:56:21
+   Duration  1.12s (transform 242ms, setup 0ms, collect 252ms, tests 223ms, environment 0ms, prepare 104ms)
+

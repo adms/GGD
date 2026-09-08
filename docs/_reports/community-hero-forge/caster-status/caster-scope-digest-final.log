@@ -1,0 +1,13 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ packages/shared/src/sim/effects/casterScopedStatus.test.ts (9 tests) 46ms
+ ✓ packages/shared/src/sim/reservedStores.test.ts (5 tests) 8ms
+ ✓ apps/game-server/src/replay/digestCoverage.test.ts (2 tests) 55ms
+
+ Test Files  3 passed (3)
+      Tests  16 passed (16)
+   Start at  04:34:48
+   Duration  5.15s (transform 2.07s, setup 0ms, collect 3.64s, tests 109ms, environment 0ms, prepare 191ms)
+

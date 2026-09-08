@@ -1,7 +1,7 @@
 /** champion@1 — mirrors `ChampionDef` in sim/content/defs.ts (abilities embedded). */
 import { z } from "zod";
 // 角色定位的四個值。⛔ 不要在這裡重打一份字串陣列。
-import { ARCHETYPES, NORMAL_BANDS, NORMALIZED_STAT_KEYS, ORIGINS } from "../statNormalization";
+import { ARCHETYPES, ORIGINS } from "../statNormalization";
 import {
   SPEED_GROWTH_AXIS_LABEL,
   SPEED_GROWTH_TIER_NAMES,
@@ -18,6 +18,8 @@ import {
 } from "./common";
 import { zHookDef } from "./effect";
 import { zAbilityDef, zHitFeel } from "./ability";
+import { zChampionStatOverrides } from "./championStats";
+import { zChampionModelVersions } from "./championModelVersions";
 
 /**
  * Per-level numbers off a WC3 ability, keyed by the LEVEL as a string ("1".."4").
@@ -26,23 +28,6 @@ import { zAbilityDef, zHitFeel } from "./ability";
  * holes.
  */
 const zPerLevelSeconds = z.record(z.string().regex(/^[1-9]\d?$/), z.number().nonnegative());
-
-/**
- * `statOverrides` 的一格：只收級別名。⭐ 錯誤訊息**指名那一格**並說出為什麼 ——
- * 填數字是「把算好的值烘進文件」（第〇·四守則），而一般的 enum 錯誤訊息看不出這件事。
- */
-const zBandOverride = (key: string) =>
-  z
-    .enum(NORMAL_BANDS, {
-      errorMap: (_issue, ctx) => ({
-        message:
-          typeof ctx.data === "number"
-            ? `statOverrides.${key} 是算好的值（${ctx.data}）—— 這一格只收級別名（${NORMAL_BANDS.join("/")}），` +
-              "值在載入時從 stat-normalization 解析，⛔ 不烘進文件"
-            : `statOverrides.${key} 只收級別名（${NORMAL_BANDS.join("/")}），收到 ${JSON.stringify(ctx.data)}`,
-      }),
-    })
-    .optional();
 
 /**
  * 變身 — the base⇄alternate FORM LINK, recovered from the source map's WC3
@@ -202,14 +187,7 @@ export const zChampionDef = z
      * ⚠️ 覆寫只對 `appliesTo` 裡的屬性生效 —— 覆寫一項沒有被正規化的屬性等於卡面
      * 說了不會發生的事（第一·五守則），守衛 `championOriginCoverage.test.ts`。
      */
-    statOverrides: z
-      .object(
-        Object.fromEntries(NORMALIZED_STAT_KEYS.map((k) => [k, zBandOverride(k)])) as Record<
-          (typeof NORMALIZED_STAT_KEYS)[number],
-          ReturnType<typeof zBandOverride>
-        >,
-      )
-      .strict()
+    statOverrides: zChampionStatOverrides
       .optional()
       .describe(
         "屬性覆寫（微調）—— 逐格填級別名（極小/小/中/大/極大），沒填的格子走出身那一列。" +
@@ -257,6 +235,8 @@ export const zChampionDef = z
           "批次修改請用 `pnpm champions:csv:export`。",
       ),
     modelKey: zRef("models"),
+    /** Immutable retained bodies; modelKey is the sole active runtime selection. */
+    modelVersions: zChampionModelVersions.optional(),
     /**
      * The RAW stat card. Since #248 the eight attribute-derived rows hold the
      * source map's own numbers, WITHOUT the 三圍 term — `maxHealth` on
@@ -502,6 +482,12 @@ export const zChampionDoc = zChampionDef
   .extend({ schema: z.literal("champion@1") })
   .strict()
   .superRefine((doc, ctx) => {
+    if (doc.modelVersions) {
+      const keys = doc.modelVersions.map((version) => version.modelKey);
+      if (new Set(keys).size !== keys.length || !keys.includes(doc.modelKey)) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["modelVersions"], message: "模型版本不得重複，且必須包含目前套用的 modelKey。" });
+      }
+    }
     for (const slot of ["Q", "W", "E", "R"] as const) {
       if (doc.abilities[slot].slot !== slot) {
         ctx.addIssue({

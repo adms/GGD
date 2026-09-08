@@ -4,6 +4,7 @@
  * JSON ContentLoader later) is invisible to engine code.
  */
 import type { AbilityId, AugmentId, ChampionId, ItemId, ProjectileId } from "../../ids";
+import { ContextualRegistryMap } from "./registryContext";
 import type {
   AbilityDef,
   AugmentDef,
@@ -15,7 +16,8 @@ import type {
 } from "./defs";
 
 class Registry<K extends string, V> {
-  private map = new Map<K, V>();
+  private readonly map: ContextualRegistryMap<K, V>;
+  constructor(name: string) { this.map = new ContextualRegistryMap(name); }
 
   register(id: K, v: V): void {
     this.map.set(id, v);
@@ -39,12 +41,12 @@ class Registry<K extends string, V> {
   }
 }
 
-export const Champions = new Registry<ChampionId, ChampionDef>();
-export const Abilities = new Registry<AbilityId, AbilityDef>();
-export const Items = new Registry<ItemId, ItemDef>();
-export const Augments = new Registry<AugmentId, AugmentDef>();
-export const Projectiles = new Registry<ProjectileId, ProjectileDef>();
-export const LootTables = new Registry<string, LootTable>();
+export const Champions = new Registry<ChampionId, ChampionDef>("sim.champions");
+export const Abilities = new Registry<AbilityId, AbilityDef>("sim.abilities");
+export const Items = new Registry<ItemId, ItemDef>("sim.items");
+export const Augments = new Registry<AugmentId, AugmentDef>("sim.augments");
+export const Projectiles = new Registry<ProjectileId, ProjectileDef>("sim.projectiles");
+export const LootTables = new Registry<string, LootTable>("sim.loot-tables");
 /**
  * statusId → 它是增益還是減益（A4b，#278）。
  *
@@ -58,7 +60,7 @@ export const LootTables = new Registry<string, LootTable>();
  * 空的登錄表（骨架、單元測試）＝ 查不到 ＝ `polarity` 留 undefined，
  * 而 `clearPools` 對「不知道」的答案是**不拔**，所以退化方向是安全的那一邊。
  */
-export const Statuses = new Registry<string, StatusMeta>();
+export const Statuses = new Registry<string, StatusMeta>("sim.statuses");
 
 const CORE_SLOTS = ["Q", "W", "E", "R"] as const;
 

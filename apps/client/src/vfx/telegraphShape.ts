@@ -104,10 +104,11 @@ export interface TelegraphEffectLike {
   /**
    * GH#393 沿向量分段推進（`delayed` + `advance`）—— 走廊的長與寬從這三格算出來。
    * ⚠️ `count` 寫成聯集是**必要**的，⛔ 不是偷懶：`delayed.count` 是單一數字，
-   * 而同一個 `EffectDef` union 裡的 `randomArea.count` 是 **per-rank 陣列**。
+   * 而同一個 `EffectDef` union 裡的 `randomArea.count` 是 **per-rank 陣列**，
+   * `consumeStatus.count` 也可以是 `all`。後者是狀態操作，不是幾何次數。
    * 窄成 `number` 會讓整個 union 賦值不過去 —— 使用端一律 `typeof === "number"` 才讀。
    */
-  readonly count?: number | readonly number[];
+  readonly count?: number | readonly number[] | "all";
   readonly radius?: number;
   readonly advance?: {
     readonly stepDist: number;

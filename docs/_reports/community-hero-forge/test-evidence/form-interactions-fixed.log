@@ -1,0 +1,18 @@
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor
+
+ ✓ src/form/walk.test.ts (7 tests) 31479ms
+   ✓ walkZod widget kinds (editor-01) > maps strings/numbers/bools/enums/arrays/refs/literals from the REAL shared schemas 14586ms
+   ✓ discriminated EffectDef union (editor-02) > renders variant cards keyed by kind, recursion depth-capped 3298ms
+   ✓ discriminated EffectDef union (editor-02) > the leap variant is a REAL editable card, not just a tag 3403ms
+   ✓ discriminated EffectDef union (editor-02) > the damageArea variant is a REAL editable card whose seed SAVES 3155ms
+   ✓ discriminated EffectDef union (editor-02) > every seeded number lands INSIDE its own declared bounds 3797ms
+   ✓ discriminated EffectDef union (editor-02) > provides sane defaults for new items and variant switches 3239ms
+ ✓ src/form/editorFormInteractions.test.tsx (1 test) 1047ms
+   ✓ all Main brick forms through shipped React handlers > measures every brick, edits controls, serializes and remounts without claiming browser acceptance 1046ms
+
+ Test Files  2 passed (2)
+      Tests  8 passed (8)
+   Start at  19:57:52
+   Duration  43.45s (transform 3.05s, setup 0ms, collect 9.88s, tests 32.53s, environment 0ms, prepare 154ms)
+

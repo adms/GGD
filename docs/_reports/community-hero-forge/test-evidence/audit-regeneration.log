@@ -1,0 +1,12 @@
+🔓 隔離區:解鎖 335 份（追蹤 842,缺 0）
+
+> ggd@0.0.0 audit:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> bash scripts/genrun.sh audit:build audit:build:raw
+
+
+> ggd@0.0.0 audit:build:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> python3 tools/skill-audit/audit.py
+
+寫了 docs/技能模板驗收標準.md（421 支，其中 271 支有缺口）
+🔒 隔離區:上鎖 335 份（追蹤 842,缺 0,正規化器專屬 507 份不上鎖）
+✓ genrun: audit:build 完成（產物已重新上鎖）

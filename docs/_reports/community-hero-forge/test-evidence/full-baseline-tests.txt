@@ -1,0 +1,66 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ packages/shared/src/content/heroForge/planControls.test.ts (14 tests) 933ms
+ ❯ packages/shared/src/content/import/heroPackage.test.ts (9 tests | 9 failed) 4323ms
+   × complete hero through Main's package representation > round trips source text, repeated products, locks and six compiled slots through the existing validator 1198ms
+     → Q: IntentFrame 被拒：approaching；整套技能未完成：Q
+   × complete hero through Main's package representation > rejects runtime drift even after an attacker recomputes the outer digest 494ms
+     → Q: IntentFrame 被拒：approaching；整套技能未完成：Q
+   × complete hero through Main's package representation > rejects dependency drift even after an attacker recomputes the outer digest 414ms
+     → Q: IntentFrame 被拒：approaching；整套技能未完成：Q
+   × complete hero through Main's package representation > rejects root drift even after an attacker recomputes the outer digest 320ms
+     → Q: IntentFrame 被拒：approaching；整套技能未完成：Q
+   × complete hero through Main's package representation > rejects simulation drift even after an attacker recomputes the outer digest 535ms
+     → Q: IntentFrame 被拒：approaching；整套技能未完成：Q
+   × complete hero through Main's package representation > rejects missing drift even after an attacker recomputes the outer digest 286ms
+     → Q: IntentFrame 被拒：approaching；整套技能未完成：Q
+   × complete hero through Main's package representation > rejects scope drift even after an attacker recomputes the outer digest 455ms
+     → Q: IntentFrame 被拒：approaching；整套技能未完成：Q
+   × complete hero through Main's package representation > rejects manifest drift even after an attacker recomputes the outer digest 287ms
+     → Q: IntentFrame 被拒：approaching；整套技能未完成：Q
+   × complete hero through Main's package representation > rejects changed server defaults instead of silently recompiling the approved version 332ms
+     → Q: IntentFrame 被拒：approaching；整套技能未完成：Q
+ ✓ apps/editor/src/hero/catalog.test.ts (1 test) 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/shared/src/content/import/heroPackage.test.ts > complete hero through Main's package representation > round trips source text, repeated products, locks and six compiled slots through the existing validator
+Error: Q: IntentFrame 被拒：approaching；整套技能未完成：Q
+ ❯ compileHeroPackageProject packages/shared/src/content/import/heroPackage.ts:207:32
+
+ ❯ Module.buildHeroImportPackage packages/shared/src/content/import/heroPackage.ts:216:18
+ ❯ packages/shared/src/content/import/heroPackage.test.ts:14:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/9]⎯
+
+ FAIL  packages/shared/src/content/import/heroPackage.test.ts > complete hero through Main's package representation > rejects runtime drift even after an attacker recomputes the outer digest
+ FAIL  packages/shared/src/content/import/heroPackage.test.ts > complete hero through Main's package representation > rejects dependency drift even after an attacker recomputes the outer digest
+ FAIL  packages/shared/src/content/import/heroPackage.test.ts > complete hero through Main's package representation > rejects root drift even after an attacker recomputes the outer digest
+ FAIL  packages/shared/src/content/import/heroPackage.test.ts > complete hero through Main's package representation > rejects simulation drift even after an attacker recomputes the outer digest
+ FAIL  packages/shared/src/content/import/heroPackage.test.ts > complete hero through Main's package representation > rejects missing drift even after an attacker recomputes the outer digest
+ FAIL  packages/shared/src/content/import/heroPackage.test.ts > complete hero through Main's package representation > rejects scope drift even after an attacker recomputes the outer digest
+ FAIL  packages/shared/src/content/import/heroPackage.test.ts > complete hero through Main's package representation > rejects manifest drift even after an attacker recomputes the outer digest
+Error: Q: IntentFrame 被拒：approaching；整套技能未完成：Q
+ ❯ compileHeroPackageProject packages/shared/src/content/import/heroPackage.ts:207:32
+
+ ❯ Module.buildHeroImportPackage packages/shared/src/content/import/heroPackage.ts:216:18
+ ❯ packages/shared/src/content/import/heroPackage.test.ts:26:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/9]⎯
+
+ FAIL  packages/shared/src/content/import/heroPackage.test.ts > complete hero through Main's package representation > rejects changed server defaults instead of silently recompiling the approved version
+Error: Q: IntentFrame 被拒：approaching；整套技能未完成：Q
+ ❯ compileHeroPackageProject packages/shared/src/content/import/heroPackage.ts:207:32
+
+ ❯ Module.buildHeroImportPackage packages/shared/src/content/import/heroPackage.ts:216:18
+ ❯ packages/shared/src/content/import/heroPackage.test.ts:41:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/9]⎯
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  9 failed | 15 passed (24)
+   Start at  18:51:23
+   Duration  16.03s (transform 4.01s, setup 0ms, collect 9.00s, tests 5.26s, environment 0ms, prepare 299ms)
+

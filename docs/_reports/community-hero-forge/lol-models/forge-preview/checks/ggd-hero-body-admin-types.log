@@ -1,0 +1,11 @@
+
+> @ggd/admin@0.0.0 typecheck /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/admin
+> tsc --noEmit -p tsconfig.json
+
+src/contentFields.test.ts(57,65): error TS2339: Property 'id' does not exist on type '{ heroBody: unknown; }'.
+src/contentFields.test.ts(58,65): error TS2339: Property 'id' does not exist on type '{ heroBody: unknown; }'.
+src/contentFields.test.ts(59,64): error TS2339: Property 'id' does not exist on type '{ heroBody: unknown; }'.
+src/contentFields.test.ts(60,65): error TS2339: Property 'id' does not exist on type '{ heroBody: unknown; }'.
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/admin:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @ggd/admin@0.0.0 typecheck: `tsc --noEmit -p tsconfig.json`
+Exit status 2

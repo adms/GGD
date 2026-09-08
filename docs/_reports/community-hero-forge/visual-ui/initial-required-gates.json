@@ -1,0 +1,24 @@
+{
+  "schema": "ggd-local-required-gates@1",
+  "startedAt": "2026-09-06T15:34:33.588995+00:00",
+  "finishedAt": "2026-09-06T15:35:33.917784+00:00",
+  "sourceCommit": "2afcf5989161fde58c953f43039397fb90306a8f",
+  "dirty": true,
+  "results": [
+    {
+      "command": "pnpm skills:check",
+      "exit": 1,
+      "log": "skills-check.log"
+    },
+    {
+      "command": "pnpm editor:accept:release",
+      "exit": 1,
+      "log": "editor-accept-release.log"
+    },
+    {
+      "command": "pnpm coord:check",
+      "exit": 0,
+      "log": "coord-check.log"
+    }
+  ]
+}

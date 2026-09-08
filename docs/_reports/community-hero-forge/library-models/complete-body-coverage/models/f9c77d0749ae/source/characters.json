@@ -1,0 +1,27 @@
+{
+  "results": [
+    {
+      "id": "300heroes:323",
+      "library": "300heroes",
+      "name": "奴良陆生",
+      "origin": "妖怪少爺／滑頭鬼之孫",
+      "aliases": [
+        "323",
+        "Name_lusheng",
+        "奴良陆生"
+      ],
+      "origin_sources": [
+        "https://300data.com/hero/323.html",
+        "https://300data.com/data/api/hero_info/id/323"
+      ],
+      "origin_status": "角色身分對照",
+      "source_index": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/character-candidates.json",
+      "base_model": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/323.x",
+      "base_model_present": true,
+      "model_files": 4,
+      "animation_clips": 54,
+      "mapping_note": "Variants associated by numeric filename prefix; full asset index also contains other naming schemes.",
+      "readiness": "native_and_static_preview"
+    }
+  ]
+}

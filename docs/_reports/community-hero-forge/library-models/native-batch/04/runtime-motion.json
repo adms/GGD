@@ -1,0 +1,76 @@
+{
+  "schema": "ggd-library-motion-inspection@1",
+  "modelSha256": "e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a",
+  "sourceModel": {
+    "id": "community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_1",
+      "cast": "single_skill_01",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "yawOffsetDeg": 0
+  },
+  "method": "Babylon NullEngine CPU skinning at first and 60% frame; sequential states; materials skipped",
+  "bones": [
+    55
+  ],
+  "rows": [
+    {
+      "state": "idle",
+      "clip": "bat_idle",
+      "changedVertices": 3554,
+      "maxDelta": 0.03281913342652726,
+      "vertices": 3706
+    },
+    {
+      "state": "run",
+      "clip": "single_run",
+      "changedVertices": 3706,
+      "maxDelta": 0.7195764497256073,
+      "vertices": 3706
+    },
+    {
+      "state": "attack",
+      "clip": "single_attack_attcom_1",
+      "changedVertices": 3508,
+      "maxDelta": 0.37464451208348987,
+      "vertices": 3706
+    },
+    {
+      "state": "cast",
+      "clip": "single_skill_01",
+      "changedVertices": 3706,
+      "maxDelta": 0.43353514690338296,
+      "vertices": 3706
+    },
+    {
+      "state": "hurt",
+      "clip": "bat_idle",
+      "changedVertices": 3554,
+      "maxDelta": 0.03281913342652726,
+      "vertices": 3706
+    },
+    {
+      "state": "death",
+      "clip": "dead",
+      "changedVertices": 3706,
+      "maxDelta": 0.8046005067667733,
+      "vertices": 3706
+    }
+  ],
+  "nativePoseComparison": {
+    "comparedVertices": 120,
+    "maxErrorMetres": 7.884996902543186e-7,
+    "toleranceMetres": 0.0002
+  },
+  "stationaryClips": [],
+  "visualAcceptance": "pending",
+  "textureAcceptance": "pending"
+}

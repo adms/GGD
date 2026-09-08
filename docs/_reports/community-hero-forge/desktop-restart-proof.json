@@ -1,0 +1,105 @@
+{
+  "schema": "ggd-desktop-restart-proof@1",
+  "status": "passed",
+  "receipts": [
+    {
+      "schema": "ggd-editor-desktop-smoke@1",
+      "origin": "http://127.0.0.1:59665",
+      "platformOrigin": "http://127.0.0.1:8085",
+      "source": {
+        "schema": "ggd-editor-desktop-source@1",
+        "kind": "local",
+        "state": "local",
+        "sourceUrl": null,
+        "contentBaseUrl": null,
+        "workspacePath": "/Users/Takuro/Dropbox/\u6211\u7684 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge",
+        "pinnedContentVersion": "cv_085f572d8932",
+        "latestRemoteContentVersion": "cv_085f572d8932",
+        "workingContentVersion": "cv_085f572d8932",
+        "offline": false,
+        "conflicts": [],
+        "compatibilityWarnings": [],
+        "contractStatus": "local-content-api",
+        "targetProfileDigest": null,
+        "message": "\u4f7f\u7528\u672c\u6a5f GGD \u5c08\u6848"
+      },
+      "checks": [
+        {
+          "path": "/editor/",
+          "status": 200,
+          "contentType": "text/html; charset=utf-8"
+        },
+        {
+          "path": "/admin/",
+          "status": 200,
+          "contentType": "text/html; charset=utf-8"
+        },
+        {
+          "path": "/content-api/manifest",
+          "status": 200,
+          "contentType": "application/json; charset=utf-8"
+        },
+        {
+          "path": "/content-api/desktop-source",
+          "status": 200,
+          "contentType": "application/json; charset=utf-8"
+        },
+        {
+          "path": "/api/v1/healthz",
+          "status": 200,
+          "contentType": "application/json; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "schema": "ggd-editor-desktop-smoke@1",
+      "origin": "http://127.0.0.1:59665",
+      "platformOrigin": "http://127.0.0.1:8085",
+      "source": {
+        "schema": "ggd-editor-desktop-source@1",
+        "kind": "local",
+        "state": "local",
+        "sourceUrl": null,
+        "contentBaseUrl": null,
+        "workspacePath": "/Users/Takuro/Dropbox/\u6211\u7684 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge",
+        "pinnedContentVersion": "cv_085f572d8932",
+        "latestRemoteContentVersion": "cv_085f572d8932",
+        "workingContentVersion": "cv_085f572d8932",
+        "offline": false,
+        "conflicts": [],
+        "compatibilityWarnings": [],
+        "contractStatus": "local-content-api",
+        "targetProfileDigest": null,
+        "message": "\u4f7f\u7528\u672c\u6a5f GGD \u5c08\u6848"
+      },
+      "checks": [
+        {
+          "path": "/editor/",
+          "status": 200,
+          "contentType": "text/html; charset=utf-8"
+        },
+        {
+          "path": "/admin/",
+          "status": 200,
+          "contentType": "text/html; charset=utf-8"
+        },
+        {
+          "path": "/content-api/manifest",
+          "status": 200,
+          "contentType": "application/json; charset=utf-8"
+        },
+        {
+          "path": "/content-api/desktop-source",
+          "status": 200,
+          "contentType": "application/json; charset=utf-8"
+        },
+        {
+          "path": "/api/v1/healthz",
+          "status": 200,
+          "contentType": "application/json; charset=utf-8"
+        }
+      ]
+    }
+  ],
+  "limits": "Native Electron HTTP smoke and stable origin; no browser draft or installer UI acceptance."
+}

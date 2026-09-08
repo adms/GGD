@@ -61,6 +61,8 @@ import {
   type FieldSpec,
 } from "../contentFields";
 import { AudioAuditionPage } from "./AudioAuditionPage";
+import { ChampionModelVersions } from "./ChampionModelVersions";
+import { ChampionDataVersions } from "./ChampionDataVersions";
 import { VfxStudioPage } from "./VfxStudioPage";
 import { NewHeroPageRoot } from "./NewHeroPage";
 // ⭐⭐ GH#730 的回歸修復 —— **鑄形工坊要 lazy**。
@@ -103,6 +105,7 @@ const ALL_TABS: readonly EditCollection[] = [
   "loot-tables",
   "vfx",
   "arenas",
+  "models",
 ];
 
 // Collections the owner may CREATE via the inline ＋新增 box. `augments` (task
@@ -251,6 +254,7 @@ export const CONTENT_ROUTES: readonly ContentRoute[] = [
   { page: "items", label: "武器道具管理", emoji: "⚔️", only: ["items", "loot-tables"] },
   { page: "vfx", label: "特效管理", emoji: "🎆", only: ["vfx"] },
   { page: "arenas", label: "場景物件管理", emoji: "🏟️", only: ["arenas"] },
+  { page: "models", label: "模型管理", emoji: "🧍", only: ["models"] },
   // 鑄形工坊 (Project Voxel Forge, task #229) — the sibling of 鑄技工坊
   // (Project Skill Forge): that one forges 技 (skills), this one forges 形
   // (form). Like `audio`/`newHero` it renders its OWN component rather than the
@@ -284,7 +288,7 @@ export function renderContentDevPage(
   if (page === "vfxStudio") return <VfxStudioPage />;
   const route = CONTENT_ROUTES.find((r) => r.page === page && r.only !== undefined);
   if (route === undefined) return null;
-  return <ContentPageRoot only={route.only} />;
+  return <ContentPageRoot key={route.page} only={route.only} />;
 }
 
 /**
@@ -851,10 +855,12 @@ function DocEditor(props: {
 
   const issueFor = (path: string): string[] =>
     issues.filter((i) => i.path === path).map((i) => i.message);
-  const extras = uncoveredKeys(collection, doc);
+  const extras = uncoveredKeys(collection, doc).filter((key) => collection !== "champions" || key !== "modelVersions");
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      {collection === "champions" && api.enabled && <ChampionDataVersions key={`data-${id}`} championId={id} document={doc} disabled={busy} dirty={dirty || hasParseErrors} onBusy={setBusy} onSaved={() => { props.onSaved(); reload(); }} />}
+      {collection === "champions" && <ChampionModelVersions key={id} api={api} championId={id} document={doc} disabled={busy || !api.enabled} dirty={dirty || hasParseErrors} onBusy={setBusy} onSaved={() => { props.onSaved(); reload(); }} />}
       <Panel
         title={`${COLLECTION_LABEL[collection]}／${typeof doc["name"] === "string" ? doc["name"] : id}`}
       >
@@ -933,7 +939,7 @@ function DocEditor(props: {
               {group.fields.map((spec) => (
                 <FieldRow
                   key={spec.path}
-                  spec={spec}
+                  spec={collection === "champions" && spec.path === "modelKey" ? { ...spec, readOnly: true, hint: "請在上方「上線模型版本」選單切換。" } : spec}
                   value={getAt(working, spec.path)}
                   raw={draft.raw[spec.path]}
                   parseError={draft.parseErrors[spec.path]}
@@ -1042,7 +1048,12 @@ function FieldRow(props: {
     <div style={{ display: "grid", gridTemplateColumns: "132px 1fr", gap: 10, alignItems: "start" }}>
       <label style={{ fontSize: 12, color: TEXT_DIM, paddingTop: 7 }}>{spec.label}</label>
       <div>
-        {spec.kind === "multiline" || spec.kind === "json" ? (
+        {spec.options ? (
+          <select aria-label={spec.label} value={shown} disabled={props.disabled || spec.readOnly === true} onChange={(e) => props.onChange(e.target.value)} style={common}>
+            {!spec.options.some((option) => option.value === shown) && <option value={shown}>目前值：{shown}</option>}
+            {spec.options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+          </select>
+        ) : spec.kind === "multiline" || spec.kind === "json" ? (
           <textarea
             value={shown}
             rows={spec.kind === "json" ? 10 : 5}
@@ -1100,8 +1111,8 @@ function ConfirmPanel(props: {
   return (
     <Panel title="即將覆蓋這些內容">
       <div style={{ fontSize: 12, color: WARN, marginBottom: 10, lineHeight: 1.7 }}>
-        這個專案還沒有版本控制（#65），寫下去就是直接覆蓋磁碟上的檔案。伺服器會在覆蓋前先備份，
-        下面的「備份／復原」可以還原——但請先看清楚差異。
+        請確認以下檔案與欄位差異。修改前的資料會先保存，可從「備份／復原」還原。
+        英雄的相關資料可在英雄頁的「完整英雄版本」一起比較與回復。
       </div>
 
       <div style={{ fontSize: 11, color: GOLD, fontWeight: 700, marginBottom: 6 }}>
@@ -1150,7 +1161,7 @@ function BackupPanel(props: {
   onRefresh: () => void;
 }): React.JSX.Element {
   return (
-    <Panel title="備份／復原（沒有 git，這就是你的 undo）">
+    <Panel title="備份／復原">
       <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
         <Btn small onClick={props.onRefresh} disabled={props.busy}>
           重新整理

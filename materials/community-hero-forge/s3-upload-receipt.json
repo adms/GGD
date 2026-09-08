@@ -1,0 +1,292 @@
+{
+  "schema": "ggd-community-materials-s3-receipt@1",
+  "bucket": "ggd-390630837668-ap-east-2-an",
+  "region": "ap-east-2",
+  "profile": "vibe-coding",
+  "manifestSha256": "3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74",
+  "prefix": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/",
+  "objects": [
+    {
+      "path": "payload.tar.gz.part000",
+      "bytes": 33554432,
+      "sha256": "c30ddd2fc7ca33f96a454c9252b8c953e7dc429478aa1ca339b09d5346d4276e",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part000",
+      "etag": "\"582aed82203a00328c7f98907f9faaf0\"",
+      "checksumSHA256": "ww3dL8fKM/lqRUySUrjJU+fcQpR4qhyjObCdU0bUJ24="
+    },
+    {
+      "path": "payload.tar.gz.part001",
+      "bytes": 33554432,
+      "sha256": "d7e5e30078abb0a1983956cb50f2016e7583b5514b3447ab525b397154322075",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part001",
+      "etag": "\"221c225028c953aba65e2bb962bca4f9\"",
+      "checksumSHA256": "1+XjAHirsKGYOVbLUPIBbnWDtVFLNEerUls5cVQyIHU="
+    },
+    {
+      "path": "payload.tar.gz.part002",
+      "bytes": 33554432,
+      "sha256": "b939110c11ae30580b4c6043516ed2229df9432ff37851f4ded787c5a3ecac3d",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part002",
+      "etag": "\"cb101d33cdc0edd44757a67b8ba0add9\"",
+      "checksumSHA256": "uTkRDBGuMFgLTGBDUW7SIp35Qy/zeFH03teHxaPsrD0="
+    },
+    {
+      "path": "payload.tar.gz.part003",
+      "bytes": 33554432,
+      "sha256": "218969ad466dd5e5299b64507ecc97044f95b632d40efbadd79e508e86a1855e",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part003",
+      "etag": "\"3a00e39afb1cf8da9d3936da5b9f3722\"",
+      "checksumSHA256": "IYlprUZt1eUpm2RQfsyXBE+VtjLUDvut155QjoahhV4="
+    },
+    {
+      "path": "payload.tar.gz.part004",
+      "bytes": 33554432,
+      "sha256": "302ebdf9b8b831e0cb3b7447fd4127fa79c2ab5020938896ebd9bd4666c4529a",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part004",
+      "etag": "\"10f47264886209b66514a1dd936beaaf\"",
+      "checksumSHA256": "MC69+bi4MeDLO3RH/UEn+nnCq1Agk4iW69m9RmbEUpo="
+    },
+    {
+      "path": "payload.tar.gz.part005",
+      "bytes": 33554432,
+      "sha256": "f7deac1807321778931949a845d2e06673078318aea660f9893b3e6ed1bb7282",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part005",
+      "etag": "\"89aa09df59699a13490a68b9e3ca3943\"",
+      "checksumSHA256": "996sGAcyF3iTGUmoRdLgZnMHgxiupmD5iTs+btG7coI="
+    },
+    {
+      "path": "payload.tar.gz.part006",
+      "bytes": 33554432,
+      "sha256": "a8d2a836054aa7675a9b03fd0a57a83dab8c06e7a7f2846349486f3542a1417a",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part006",
+      "etag": "\"6733d72185000fa557c3258f0142a91b\"",
+      "checksumSHA256": "qNKoNgVKp2damwP9CleoPauMBuen8oRjSUhvNUKhQXo="
+    },
+    {
+      "path": "payload.tar.gz.part007",
+      "bytes": 33554432,
+      "sha256": "4f396652833d3e467baafd46083fbf93df9e9e647bb85335b1987925f001476e",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part007",
+      "etag": "\"bb379dcf5a1252e6b86e1f23f274a6ff\"",
+      "checksumSHA256": "TzlmUoM9PkZ7qv1GCD+/k9+enmR7uFM1sZh5JfABR24="
+    },
+    {
+      "path": "payload.tar.gz.part008",
+      "bytes": 33554432,
+      "sha256": "c8d5dd06d1e6eb7747d300dfe2e67c62bc32a050af25fab3cb8d9a3311e2a446",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part008",
+      "etag": "\"e99cbc54246f53baf2dd9f5e68f2e32b\"",
+      "checksumSHA256": "yNXdBtHm63dH0wDf4uZ8YrwyoFCvJfqzy42aMxHipEY="
+    },
+    {
+      "path": "payload.tar.gz.part009",
+      "bytes": 33554432,
+      "sha256": "2945ffc169461f588262840fdf163659c0a2017cab7a3ecdb4e994c2de04cde4",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part009",
+      "etag": "\"440312c7e6b9775fb20ab043cff7fc27\"",
+      "checksumSHA256": "KUX/wWlGH1iCYoQP3xY2WcCiAXyrej7NtOmUwt4EzeQ="
+    },
+    {
+      "path": "payload.tar.gz.part010",
+      "bytes": 33554432,
+      "sha256": "eba3966183c57b24fdcbeda1ccf3fba5b6f4e2d688edcea4668ddafd8eb9886c",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part010",
+      "etag": "\"7495d621cd6316c0183f0d07c66a24f7\"",
+      "checksumSHA256": "66OWYYPFeyT9y+2hzPP7pbb04taI7c6kZo3a/Y65iGw="
+    },
+    {
+      "path": "payload.tar.gz.part011",
+      "bytes": 33554432,
+      "sha256": "016fcda0ccdac88f19afa074f362e9c3a53cf705790e2d82e4ef1ea1ef213309",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part011",
+      "etag": "\"5f1ec88f0677ffef2c15fc86dae06d7c\"",
+      "checksumSHA256": "AW/NoMzayI8Zr6B082Lpw6U89wV5Di2C5O8eoe8hMwk="
+    },
+    {
+      "path": "payload.tar.gz.part012",
+      "bytes": 33554432,
+      "sha256": "fd45e71bfdcddbc710d8c4b5fbb3014edd0927d75e591b5bc0210a8a7fe81ef2",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part012",
+      "etag": "\"468fb8480d69eae15b55f82ac8e7a905\"",
+      "checksumSHA256": "/UXnG/3N28cQ2MS1+7MBTt0JJ9deWRtbwCEKin/oHvI="
+    },
+    {
+      "path": "payload.tar.gz.part013",
+      "bytes": 33554432,
+      "sha256": "5d03fada1ee7b564ceb478f254d2b5afb19bc13614a94d6c06280bef851f9167",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part013",
+      "etag": "\"5258fa7aeccd6bdbd3d1a82f022180be\"",
+      "checksumSHA256": "XQP62h7ntWTOtHjyVNK1r7GbwTYUqU1sBigL74UfkWc="
+    },
+    {
+      "path": "payload.tar.gz.part014",
+      "bytes": 33554432,
+      "sha256": "c013254320fe5635c77e9cf65fb1f154cb6e182f97a5f631f3bdd58aa1f15df9",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part014",
+      "etag": "\"1df33a3b3ad963bdbfc49a92b0051fb2\"",
+      "checksumSHA256": "wBMlQyD+VjXHfpz2X7HxVMtuGC+XpfYx873ViqHxXfk="
+    },
+    {
+      "path": "payload.tar.gz.part015",
+      "bytes": 33554432,
+      "sha256": "58a00f66334b61fd3281fa337c82866874606e66f4a7f1a6f1a74d9a0b55a0bc",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part015",
+      "etag": "\"085cb7712c6255fb6631056c4b7b35c9\"",
+      "checksumSHA256": "WKAPZjNLYf0ygfozfIKGaHRgbmb0p/Gm8adNmgtVoLw="
+    },
+    {
+      "path": "payload.tar.gz.part016",
+      "bytes": 33554432,
+      "sha256": "bbeaa721f0e3add68e1cd199d52e322ba29659a499c890991ea117110c3f464e",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part016",
+      "etag": "\"0ea30191859c649d0050d893adef354e\"",
+      "checksumSHA256": "u+qnIfDjrdaOHNGZ1S4yK6KWWaSZyJCZHqEXEQw/Rk4="
+    },
+    {
+      "path": "payload.tar.gz.part017",
+      "bytes": 33554432,
+      "sha256": "0cac1941bd6550d2af482d0fcbea77605401b6d91a7a905511add617e408ef93",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part017",
+      "etag": "\"53466b1cfba9efb7299119e20d8b983d\"",
+      "checksumSHA256": "DKwZQb1lUNKvSC0Py+p3YFQBttkaepBVEa3WF+QI75M="
+    },
+    {
+      "path": "payload.tar.gz.part018",
+      "bytes": 33554432,
+      "sha256": "b1dc15dceb00f41423717a147dbf09df2229917542288a3261d33995cc137f40",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part018",
+      "etag": "\"13a821e4a795764973f55ce5da4fcddb\"",
+      "checksumSHA256": "sdwV3OsA9BQjcXoUfb8J3yIpkXVCKIoyYdM5lcwTf0A="
+    },
+    {
+      "path": "payload.tar.gz.part019",
+      "bytes": 33554432,
+      "sha256": "7ca4e419fcfb504906741731f61d057fa6041546ea2f742fd22e724cf460b3d3",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part019",
+      "etag": "\"cb78171ad0c83a26f6e6586e514a9306\"",
+      "checksumSHA256": "fKTkGfz7UEkGdBcx9h0Ff6YEFUbqL3Qv0i5yTPRgs9M="
+    },
+    {
+      "path": "payload.tar.gz.part020",
+      "bytes": 33554432,
+      "sha256": "5748a972846c7f4194444bc8df2971e6e2e9e8302b0f849479c503f674f61d01",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part020",
+      "etag": "\"ec0e19360d873b749ec2b313959356fa\"",
+      "checksumSHA256": "V0ipcoRsf0GUREvI3ylx5uLp6DArD4SUecUD9nT2HQE="
+    },
+    {
+      "path": "payload.tar.gz.part021",
+      "bytes": 33554432,
+      "sha256": "b7bc274b9c59722d7ef153d5886dadd3bc10c292a790b4cf25eec2b768d1e31f",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part021",
+      "etag": "\"f5b4b1c17dc453e274022badd03fa832\"",
+      "checksumSHA256": "t7wnS5xZci1+8VPViG2t07wQwpKnkLTPJe7Ct2jR4x8="
+    },
+    {
+      "path": "payload.tar.gz.part022",
+      "bytes": 33554432,
+      "sha256": "bbdef4498737ebae8b74be54c2d552fffb74efa51956d310f34e96e619f50d92",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part022",
+      "etag": "\"c9c1207f227e009d01bf8fde5d63de92\"",
+      "checksumSHA256": "u970SYc3666LdL5UwtVS//t076UZVtMQ806W5hn1DZI="
+    },
+    {
+      "path": "payload.tar.gz.part023",
+      "bytes": 33554432,
+      "sha256": "0a11ea15232ec0d607001fc1ecfe05c0e42896e5d2ce61ba25d9472c21a5199f",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part023",
+      "etag": "\"4b8bf9901cb7d357e595d1c0fe5cf28d\"",
+      "checksumSHA256": "ChHqFSMuwNYHAB/B7P4FwOQoluXSzmG6JdlHLCGlGZ8="
+    },
+    {
+      "path": "payload.tar.gz.part024",
+      "bytes": 33554432,
+      "sha256": "d1e87dbb1248f03152ad40294cfe2c637a4c519e4b0929a5f4ad0e31dac01cf9",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part024",
+      "etag": "\"4c9d6bd679eeab22ed3fe5e3fffb359e\"",
+      "checksumSHA256": "0eh9uxJI8DFSrUApTP4sY3pMUZ5LCSml9K0OMdrAHPk="
+    },
+    {
+      "path": "payload.tar.gz.part025",
+      "bytes": 33554432,
+      "sha256": "2dcdf8b30d705dae691ddd2d4da3b6e963b03038588af725a80afed25b8c75a6",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part025",
+      "etag": "\"1321452b0d8346797a921dd43dec8680\"",
+      "checksumSHA256": "Lc34sw1wXa5pHd0tTaO26WOwMDhYivclqAr+0luMdaY="
+    },
+    {
+      "path": "payload.tar.gz.part026",
+      "bytes": 33554432,
+      "sha256": "13b14bcd50bb24f21a0a77a81fae3d06703192cd28d3cd6cb9032b55c3c5ca76",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part026",
+      "etag": "\"a11ca821fd1ceca899c9a6e475a632c6\"",
+      "checksumSHA256": "E7FLzVC7JPIaCneoH649BnAxks0o081suQMrVcPFynY="
+    },
+    {
+      "path": "payload.tar.gz.part027",
+      "bytes": 33554432,
+      "sha256": "f1b5d2772d92cd174f804de9476d1ddf27ceffbf78a18e1edb10a0981d74b4e2",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part027",
+      "etag": "\"04c3e6269d21103c0a00a9e67d731b1f\"",
+      "checksumSHA256": "8bXSdy2SzRdPgE3pR20d3yfO/794oY4e2xCgmB10tOI="
+    },
+    {
+      "path": "payload.tar.gz.part028",
+      "bytes": 33554432,
+      "sha256": "79471ee38d46108cc1326e100954f6728452fd5e27a29ab9683ae899fcf26b54",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part028",
+      "etag": "\"a30263c28b5556a18841baaf19643d58\"",
+      "checksumSHA256": "eUce441GEIzBMm4QCVT2coRS/V4nopq5aDromfzya1Q="
+    },
+    {
+      "path": "payload.tar.gz.part029",
+      "bytes": 33554432,
+      "sha256": "610ba8e32fc2daee94ec49f0b9c3a90676edeff79177df862608d2f0eb2b9d20",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part029",
+      "etag": "\"91445d1b622aa1b469e317e76fb8fafa\"",
+      "checksumSHA256": "YQuo4y/C2u6U7EnwucOpBnbt7/eRd9+GJgjS8OsrnSA="
+    },
+    {
+      "path": "payload.tar.gz.part030",
+      "bytes": 33554432,
+      "sha256": "f089bed3925461ef3ae7eae4a54bb973ea6d70724888ab7a0ca239e7c02b089c",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part030",
+      "etag": "\"6695864d74b976d349b8b7d2a31e575c\"",
+      "checksumSHA256": "8Im+05JUYe865+rkpUu5c+ptcHJIiKt6DKI558ArCJw="
+    },
+    {
+      "path": "payload.tar.gz.part031",
+      "bytes": 33554432,
+      "sha256": "3a255ebb28add02fbd51a3f3db6437c596104d14dfdb1b690fc3edab4f5988c8",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part031",
+      "etag": "\"ea9c34aad777916a53e7dec16bbb2e83\"",
+      "checksumSHA256": "OiVeuyit0C+9UaPz22Q3xZYQTRTf2xtpD8Ptq09ZiMg="
+    },
+    {
+      "path": "payload.tar.gz.part032",
+      "bytes": 33554432,
+      "sha256": "90d1bb80f4c47bf7654e53d45b89424a3f0d43e0f2e1fb9d00443ba3ddc05588",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part032",
+      "etag": "\"85e6ddfae1e0e9a8eda3b38fbdcfe990\"",
+      "checksumSHA256": "kNG7gPTEe/dlTlPUW4lCSj8NQ+Dy4fudAEQ7o93AVYg="
+    },
+    {
+      "path": "payload.tar.gz.part033",
+      "bytes": 18735826,
+      "sha256": "2ac449b89a4e96adc89a1122dacfb0f004e632185fb8ed030c523dc3c9671840",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/payload.tar.gz.part033",
+      "etag": "\"a6e1ac3e5fcf76f1880c5f275e02c68b\"",
+      "checksumSHA256": "KsRJuJpOlq3ImhEi2s+w8ATmMhhfuO0DDFI9w8lnGEA="
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 14641926,
+      "sha256": "3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74",
+      "key": "community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/manifest.json",
+      "etag": "\"704e2ac36214baa11db6d5856f6264af\"",
+      "checksumSHA256": "M4L6uMErrdnCmOvJN2IO+pk0XYiwbmtNOHrloyHZHnQ="
+    }
+  ],
+  "parts": 34,
+  "partBytes": 1126032082
+}

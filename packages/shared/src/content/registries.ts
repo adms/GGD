@@ -32,31 +32,16 @@ import type { VfxScriptAuthoredDoc, VfxScriptDoc } from "./schema/vfxScript";
 import { expandVfxScriptDoc, registerVfxSubtypes, VfxSubtypes } from "./vfxSubtypes/expand";
 import { zAbilityDef, zAbilityDoc } from "./schema/ability";
 // AoE 四級距 → 半徑。全專案唯一的查表處，理由寫在那支檔案。
-import { aoeTiersFromDoc, resolveRadiusTier } from "./aoeTiers";
-import { rangeTiersFromDoc, resolveRangeTier } from "./rangeTiers";
-// 冷卻五級距 → 秒數（GH#445）／傷害五級距 → 基礎值（GH#447）。同上，唯一的查表處。
-import { cooldownTiersFromDoc, resolveCooldownTier } from "./cooldownTiers";
-import { DEFAULT_CAST_TIME_TIERS, resolveCastTimeTierOnDoc } from "./castTimeTiers";
-import {
-  DEFAULT_AP_COEFFICIENT,
-  resolveApCoeffOnDocWithTiers,
-  comboStrikeCountsFrom,
-  withLiteralApCoeffs,
-  type ApCoefficientConfig,
-} from "./apCoefficient";
-import { DEFAULT_RANK_GROWTH_RULES, resolveRankGrowthOnDoc, type RankGrowthRules } from "./rankGrowth";
-import { damageTiersFromDoc, resolveDamageTier } from "./damageTiers";
+import { createRuntimeResolver } from "./runtimeResolver";
+import { withLiteralApCoeffs } from "./apCoefficient";
 // GH#541 —— 連段的間隔序列住 `config.combo-strikes@1`（第〇·四守則的共用表）,
 // 在**載入時**被解析進每一個 `comboStrikes` 節點。⛔ 沒有這一步,只寫 `family`
 // 的技能會在 sim 裡擲錯,而 `content:build` 與全套測試對它是綠的。
-import { normalizeComboTable, resolveComboFamilies } from "../sim/effects/comboFamilies";
-import { manaTiersFromDoc, resolveManaCostTier } from "./manaTiers";
-import {
-  DEFAULT_MOVE_SPEED_TIERS,
-  moveSpeedTiersFromDoc,
-  resolveMsBonusTier,
-} from "./moveSpeedTiers";
-import { resolveSpeedGrowthTiers, speedGrowthTiersFromDoc } from "./speedGrowthTiers";
+import { DEFAULT_MOVE_SPEED_TIERS } from "./moveSpeedTiers";
+import { resolveChampionRuntimeStats } from "./championRuntimeResolver";
+// ⭐ GH#1064 —— 只取索引器。⛔ 這裡不再 import 整包 statNormalization（那一族已經
+//   被抽進 `championRuntimeResolver.ts`，唯一的例外是名冊：只有這裡看得到全部英雄）。
+import { championRoster } from "./statNormalization";
 // ⭐ 說明推導（票號待開） —— 技能說明的佔位符在 `withProse` 被代入（見下面那一格的說明）。
 import { type ProseTables } from "./abilityProse";
 // ⭐ 唯一入口（抽量 → 算實際值 → 代入）。⛔ 不要退回自己組那三步，見 `withProse`。
@@ -64,26 +49,10 @@ import { liveDepsFromConfigs, renderAbilityDescription } from "./renderAbilityTe
 // GH#792 —— `{{cast}}` 的吟唱規則（含 owner 的 castTimeMaxSec 夾，#787）。
 import { castTimeRulesFromDoc } from "../sim/castTimeRules";
 // 位移四級距 + **無條件的速度天花板**（GH#318）。同上，唯一的查表處。
-import {
-  displacementTiersFromDoc,
-  minBodyRadiusFromConfigs,
-  resolveDisplacementTier,
-} from "./displacementTiers";
 // 英雄屬性正規化（owner 2026-08-12）。全專案唯一知道「級別怎麼變成數字」的地方。
-import {
-  championRoster,
-  resolveChampionRole,
-  resolveChampionStats,
-  statNormalizationFromDoc,
-  NORMALIZED_STAT_TO_STAT,
-  type StatResolveDeps,
-  type NormalizedStatKey,
-} from "./statNormalization";
 // ⭐ 反解要用**出貨的**那支算式，⛔ 不自己抄公式（失敗形態⑤）。
 //   注入而不是讓 `statNormalization.ts` 自己 import —— `content/` → `sim/stats/`
 //   那條邊會做出模組初始化循環（2026-08-12 實測，見那個檔的 `StatResolveDeps`）。
-import { championStatBase } from "../sim/stats/attributes";
-import { Stat } from "../sim/stats/statTypes";
 import {
   hasTemplateBinding,
   resolveTemplateExpansion,
@@ -94,10 +63,12 @@ import {
   templateExpansionFailureSummary,
   type TemplateExpansionFailure,
 } from "./templates/failures";
-import { resolveModelFxPreset } from "./modelFxPreset";
+
+import { ContextualRegistryMap } from "../sim/content/registryContext";
 
 class ContentRegistry<V extends { id: string }> {
-  private map = new Map<string, V>();
+  private readonly map: ContextualRegistryMap<string, V>;
+  constructor(name: string) { this.map = new ContextualRegistryMap(name); }
 
   register(v: V): void {
     this.map.set(v.id, v);
@@ -121,12 +92,12 @@ class ContentRegistry<V extends { id: string }> {
   }
 }
 
-export const Arenas = new ContentRegistry<ArenaDoc>();
-export const Configs = new ContentRegistry<ConfigDoc>();
-export const Models = new ContentRegistry<ModelDoc>();
-export const VfxDefs = new ContentRegistry<VfxDoc>();
+export const Arenas = new ContentRegistry<ArenaDoc>("content.arenas");
+export const Configs = new ContentRegistry<ConfigDoc>("content.config");
+export const Models = new ContentRegistry<ModelDoc>("content.models");
+export const VfxDefs = new ContentRegistry<VfxDoc>("content.vfx");
 /** ribbon@1 docs (same `vfx` collection, split out at registration). */
-export const RibbonDefs = new ContentRegistry<RibbonDoc>();
+export const RibbonDefs = new ContentRegistry<RibbonDoc>("content.ribbons");
 /**
  * attachment@1 docs (same `vfx` collection, split out at registration, GH#392).
  *
@@ -134,11 +105,11 @@ export const RibbonDefs = new ContentRegistry<RibbonDoc>();
  * 的東西被當粒子文件發出去，而 `vfxFor()` 的呼叫端讀 `doc.emitter` 會拿到
  * undefined。⛔ 不會丟例外，只會什麼都不畫（失敗形態②）。
  */
-export const AttachmentDefs = new ContentRegistry<AttachmentDoc>();
-export const StatusEffects = new ContentRegistry<StatusEffectDoc>();
-export const Skins = new ContentRegistry<SkinDoc>();
+export const AttachmentDefs = new ContentRegistry<AttachmentDoc>("content.attachments");
+export const StatusEffects = new ContentRegistry<StatusEffectDoc>("content.status-effects");
+export const Skins = new ContentRegistry<SkinDoc>("content.skins");
 /** vfx-script@1 docs（GH#838 特效工坊）—— 客戶端 VfxScriptPlayer 的唯一資料源。 */
-export const VfxScripts = new ContentRegistry<VfxScriptDoc>();
+export const VfxScripts = new ContentRegistry<VfxScriptDoc>("content.vfx-scripts");
 
 /** One field where a champion's embedded ability copy disagrees with the standalone doc. */
 export interface AbilityMirrorDrift {
@@ -213,19 +184,6 @@ function stable(v: unknown): string {
  */
 /** `NormalizedStatKey` → 引擎的 `Stat`。⚠️ 加新 key 時這裡漏一格 = 那一項靜默不生效。 */
 //: ⭐ 這張表住在 `statNormalization.ts`（唯一一份），⛔ 這裡不再抄第二份。
-const STAT_OF = NORMALIZED_STAT_TO_STAT;
-
-const STAT_RESOLVE_DEPS: StatResolveDeps = Object.freeze({
-  // ⚠️ `championStatBase` 直接讀 `def.baseStats[stat]` 與 `def.growth[stat]`，
-  //    兩個欄位**都假設存在**。註冊路徑收得到還沒補齊的文件（骨架、測試夾具、
-  //    只寫了一半的內容），所以這裡補上預設 —— ⛔ 不改 `championStatBase`，
-  //    那支是熱路徑，而缺欄位是**這個接縫**才會遇到的事。
-  statAt: (def: unknown, key: NormalizedStatKey, level: number): number => {
-    const d = def as { baseStats?: unknown; growth?: unknown };
-    const safe = { ...(d as object), baseStats: d.baseStats ?? {}, growth: d.growth ?? {} };
-    return championStatBase(safe as never, STAT_OF[key], level);
-  },
-});
 
 export function registerAll(store: ContentStore, options: RegisterAllOptions = {}): void {
   // 鑄技工坊: build the template map first, then expand any templated ability at
@@ -241,16 +199,17 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   // ⭐ 級距解析包在展開**之後**：模板也可以填 `radiusTier`，而且兩條路
   //   （standalone 與 champion-embedded）必須拿到同一個答案 —— 只包一邊就是
   //   「商店顯示 6.0、場上打 4.5」那種對不起來的死法。
-  // ⭐ 展開後、解析前那一份留給 `withProse` —— `proseFromFormula:false` 時卡面 `{{ap}}` 要印文件字面值。
   const expandStandalone = (d: AbilityDef): AbilityDef => {
-    const x = expandIfTemplated(d, templates, true, onFailure, failures, undefined);
-    return withProse(withTiers(x), x);
+    if (options.representation === "verified-runtime") return d;
+    const authored = expandIfTemplated(d, templates, true, onFailure, failures, undefined);
+    return withProse(withTiers(authored), authored);
   };
   const expandEmbedded =
     (championId: string, slot: string) =>
     (d: AbilityDef): AbilityDef => {
-      const x = expandIfTemplated(d, templates, false, onFailure, failures, { championId, slot });
-      return withProse(withTiers(x), x);
+      if (options.representation === "verified-runtime") return d;
+      const authored = expandIfTemplated(d, templates, false, onFailure, failures, { championId, slot });
+      return withProse(withTiers(authored), authored);
     };
 
   // AoE 級距表要在**技能之前**讀出來（owner 2026-08-11「原則上不寫範圍數字」）。
@@ -260,133 +219,8 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   //    `zConfigMatchDoc` 的 infer（`schema/config.ts:5177`），不是那個
   //    discriminated union。用它會讓這一行的 `.schema` 比對被 tsc 判成永遠 false。
   const configDocs = store.all<{ schema?: string }>("config");
-  const aoeTiers = aoeTiersFromDoc(configDocs.find((c) => c.schema === "config.aoe-tiers@1"));
-  // 位移級距（GH#318）。⚠️ 速度天花板是**推導**出來的，輸入是最小身體半徑 ——
-  // 所以這裡要先把 `config.arena-rules@1` 讀出來，⛔ 不可以寫死 16
-  //（有人把 mob 半徑調到 0.4 的那天，16 就再次說謊，而且沒有東西會紅）。
-  const displacementTiers = displacementTiersFromDoc(
-    configDocs.find((c) => c.schema === "config.displacement-tiers@1"),
-    minBodyRadiusFromConfigs(configDocs),
-  );
-  /**
-   * 兩個級距合成**一個**接縫。⭐ 每一支技能（standalone / 內嵌 / 模板展開後）
-   * 與每一件道具都要走這裡，⛔ 不是只有模板技 —— 見下面 `mapChampionAbilities`
-   * 的說明，AoE 那條內嵌路徑到今天為止一次都沒真的跑過。
-   */
-  // 施法距離級距（GH#414）—— owner 2026-08-19「可施展技能的距離普遍超遠」。
-  // ⚠️ 這一軸在此之前**沒有表**，216 支各帶一個從 w3a 換算來的自由數字。
-  const rangeTiers = rangeTiersFromDoc(
-    configDocs.find((c) => c.schema === "config.range-tiers@1"),
-  );
-  // 冷卻五級距（GH#445）與傷害五級距（GH#447）—— 成本軸的第三條與**唯一**的
-  // 回報軸。⚠️ 兩者都掛在**同一個** `withTiers` 接縫上，理由同上面那一段：
-  // standalone / 內嵌 / 模板展開後 / 道具，四條路只能有一個答案。
-  const cooldownTiers = cooldownTiersFromDoc(
-    configDocs.find((c) => c.schema === "config.cooldown-tiers@1"),
-  );
-  const damageTiers = damageTiersFromDoc(
-    configDocs.find((c) => c.schema === "config.damage-tiers@1"),
-  );
-  // 耗魔五級距（2026-08-21）—— 五軸的最後一軸。⚠️ 在它之前 `ability@1` 上根本
-  // 沒有 `manaCostTier` 一格，所以 212 支要花魔力的技能各自帶一個自由數字：
-  // 級距表一改它們一動都不會動，⛔ 而且沒有任何東西會紅。
-  const manaTiers = manaTiersFromDoc(configDocs.find((c) => c.schema === "config.mana-tiers@1"));
-  // ⭐ 吟唱五級距（GH#943）—— ⛔ 缺席時用 `DEFAULT_`（＝出貨值），
-  //   而 `resolveCastTimeTierOnDoc` 在 `enabled:false` 時逐位元 no-op。
-  const castTimeTiers =
-    (configDocs.find((c) => c.schema === "config.cast-time-tiers@1") as unknown as
-      | typeof DEFAULT_CAST_TIME_TIERS
-      | undefined) ?? DEFAULT_CAST_TIME_TIERS;
-  // ⭐ 升級成長率（GH#938 的機制，GH#906 的接線）—— ⛔ 缺席時用 `DEFAULT_`（＝出貨值），
-  //   而 `resolveRankGrowthOnDoc` 在 `enabled:false` 時逐位元 no-op（⭐ 那格就是 rollback）。
-  const rankGrowth =
-    (configDocs.find((c) => c.schema === "config.rank-growth@1") as unknown as
-      | RankGrowthRules
-      | undefined) ?? DEFAULT_RANK_GROWTH_RULES;
-  // 移速**加成**五級距（GH#789，owner 2026-08-27「%轉換為五級距⋯0.1~4」）。
-  // ⚠️ 它級距化的是 **modifier 節點**（任意深度的 `{stat:"ms", op:pctAdd|pctMult}`），
-  // 帶 `msBonusTier` 的節點**沒有** `value`（#534 exclusive）——所以這一層**不可以漏**：
-  // 漏了＝modifier 沒有 value＝statPipeline 的 `m.value * stacks` 算出 NaN 傳染進移速。
-  const moveSpeedTiers = moveSpeedTiersFromDoc(
-    configDocs.find((c) => c.schema === "config.move-speed-tiers@1"),
-  );
-  // GH#541 —— 29 個 JASS 連段函式的間隔表。⭐ 間隔就是動畫節奏的來源(owner 2026-08-22),
-  // 所以它**逐支不同**(克勞德 0.2/0.6/0.4 · 龍虎亂舞 0.3/0.05/0.5 · 理想鄉 0.1/0.3/0.2)——
-  // ⛔ 統一成一個 `intervalSec` 會把每一支的手感抹平。
-  const comboFamilies = normalizeComboTable(
-    configDocs.find((c) => c.schema === "config.combo-strikes@1"),
-  );
-  // ⭐⭐ AP 係數公式（GH#942/#945，接線 GH#1035 —— owner 2026-09-06「全部技能接上公式」）。
-  //   ⛔ 缺席時用 `DEFAULT_`（＝出貨值）；`enabled:false` ⇒ `resolveApCoeffOnDoc` 逐位元 no-op
-  //   （手填的 `coeff` 原封不動）—— ⭐ 那一格就是 rollback。
-  //   ⚠️ 冷卻中位／秒數由 `apCoeffCooldownFor()` **逐節點**決定，與 `tools/ap-coeff-apply/gen.ts` 的報表**同一支**：
-  //   報表上看到的公式值就是場上跑的值，⛔ 不會再有「這裡印 A、場上跑 B」。
-  const apCoeff =
-    (configDocs.find((c) => c.schema === "config.ap-coefficient@1") as unknown as
-      | ApCoefficientConfig
-      | undefined) ?? DEFAULT_AP_COEFFICIENT;
-  const cooldownTiersRaw = configDocs.find((c) => c.schema === "config.cooldown-tiers@1") as unknown as
-    | { seconds?: Record<string, Record<string, number>> }
-    | undefined;
-  // ⭐ 第七維（發數）要連段家族的每段數 —— 與報表／棘輪同一支 `comboStrikeCountsFrom`。
-  const comboStrikeCounts = comboStrikeCountsFrom(configDocs.find((c) => c.schema === "config.combo-strikes@1"));
-  const withApCoeff = <T extends object>(d: T): T =>
-    resolveApCoeffOnDocWithTiers(d as Record<string, unknown>, cooldownTiersRaw, apCoeff, comboStrikeCounts) as T;
-  // ⭐ AP 係數包在**最外層**，而位置是承重的：它讀 `resolveCooldownTier` 寫完的 `cooldown[]`、
-  //   `resolveRangeTier` 寫完的 `range`、`resolveCastTimeTierOnDoc` 寫完的 `castTimeSec`、
-  //   `resolveRadiusTier` 寫完的 `radius`（形狀）—— 包在裡面任何一層，它就讀到退路值。
-  const withTiers = <T extends object>(d: T): T => withApCoeff(withTiersCore(d));
-  const withTiersCore = <T extends object>(d: T): T =>
-    // ⚠️ 冷卻在**幾何之外**是刻意的：`cooldownShapeOf` 的自動推形狀會去看
-    // `radius`/`radiusTier`，而 `resolveRadiusTier` 只**加**欄位不刪 ——
-    // 先跑幾何再跑冷卻，兩種寫法（填數字／填級距）看到的形狀才會一樣。
-    // ⭐ 耗魔包在最外層只是**順序無關**（它只讀頂層 `manaCostTier`／`manaCost`，
-    // ⛔ 不看幾何也不看傷害），⛔ 不要因此以為它有優先權。
-    // ⭐ 連段家族包在最外層與耗魔同理:它只讀 `comboStrikes` 節點的 `family`,
-    // ⛔ 不看幾何、不看傷害、不看冷卻 ⇒ 順序無關。
-    // ⭐ 移速加成級距包在最外層與耗魔同理：它只讀 modifier 節點的 `msBonusTier`，
-    // ⛔ 不看幾何、不看傷害、不看冷卻 ⇒ 順序無關。
-    // ⭐ 吟唱級距（GH#943）包在最外層與耗魔同理：它只讀頂層 `castTimeTier`，
-    // ⛔ 不看幾何、不看傷害、不看冷卻 ⇒ 順序無關。
-    // ⚠️ ⛔ 少了這一層，`castTimeTier` 就是「有欄位而沒有人翻譯」（失敗形態⑧）。
-    // ⭐⭐ 升級成長率（GH#906）包在**最外層**，而位置是承重的：
-    //   它讀的是 `resolveDamageTier` **寫完之後**的 `flat`
-    //   ⇒ 包在裡面的話它會讀到 `undefined`，那一層逐位元 no-op 而**沒有任何東西會紅**。
-    // ⚠️ ⭐ 它與吟唱／耗魔那幾層不同：那些只讀頂層欄位所以順序無關，
-    //   ⛔ 這一層**有順序相依**。
-    resolveRankGrowthOnDoc(
-    resolveCastTimeTierOnDoc(
-    resolveMsBonusTier(
-    resolveComboFamilies(
-      resolveManaCostTier(
-      resolveCooldownTier(
-        resolveDamageTier(
-          resolveDisplacementTier(
-            resolveRangeTier(
-              // ⭐【橫放光束砲】特效模板（owner 2026-08-23）—— `spawnModelFx.preset`
-              // 在**最內層**解開：模板補的是演出幾何（modelKey/path/speed/distance/
-              // spin/scale/touch*），⛔ 沒有一格是級距的輸入，所以它與外面五層
-              // 順序無關；擺在最內層只是讓下游看到的永遠是**補完**的節點。
-              // 表住 `content/ability-templates/tpl-beam-roll.json`（第〇·四守則）。
-              resolveRadiusTier(resolveModelFxPreset(d, templates) as never, aoeTiers) as never,
-              rangeTiers,
-            ) as never,
-            displacementTiers,
-          ),
-          damageTiers,
-        ) as never,
-        cooldownTiers,
-      ) as never,
-      manaTiers,
-      ) as never,
-      comboFamilies,
-    ) as never,
-      moveSpeedTiers,
-    ) as never,
-      castTimeTiers,
-    ) as never,
-      rankGrowth,
-    ) as T;
+  const { resolve: withTiers, aoeTiers, displacementTiers, rangeTiers, damageTiers, moveSpeedTiers, apCoeff } =
+    createRuntimeResolver(templates, configDocs);
 
   /**
    * ⭐【技能說明的**唯一**算繪處】說明推導（票號待開） —— `{{cd}}` / `{{dmg}}` / `{{range}}`…
@@ -452,24 +286,18 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   // 接縫**（`withTiers` 那一格是技能與道具的，這裡是英雄的那一格）——⛔ 不另立一條
   // 解析路徑，理由同上：一個接縫 ⇒ 選人畫面／商店預覽／後台試算／文件產生器不可能
   // 各自算出不一樣的答案。
-  const speedGrowth = speedGrowthTiersFromDoc(
-    configDocs.find((c) => c.schema === "config.speed-growth-tiers@1"),
-  );
-  const statNorm = statNormalizationFromDoc(
-    store.all<{ schema?: string }>("config").find((c) => c.schema === "config.stat-normalization@1"),
-  );
 
   for (const d of store.all<ProjectileDef>("projectiles")) Projectiles.register(d.id, d);
   // ⚠️ 道具也要過級距 —— 出貨就有一件帶 dash 的道具（近擊的巨人鎧），
   //    而它的速度正好是 18，穿牆平手線上的那個值（GH#318）。
   //    AoE 的接縫漏掉了 `Items`，理由是「今天 0 件道具用 radiusTier」——
   //    那是巧合正確，不是設計，所以這裡一次把兩個機制都接上。
-  for (const d of store.all<ItemDef>("items")) Items.register(d.id, withTiers(d));
+  for (const d of store.all<ItemDef>("items")) Items.register(d.id, options.representation === "verified-runtime" ? d : withTiers(d));
   // ⚠️ 增益卡也要過級距（GH#789）—— 出貨就有 5 張帶 `msBonusTier` 的移速卡，
   //    而帶級別的節點**沒有** value（#534 exclusive）：漏了這一格，那 5 張卡的
   //    modifier 進 statPipeline 就是 `undefined * stacks` = NaN。
   //    理由同上面 Items 那一行（AoE 漏掉 Items 是巧合正確，不是設計）。
-  for (const d of store.all<AugmentDef>("augments")) Augments.register(d.id, withTiers(d));
+  for (const d of store.all<AugmentDef>("augments")) Augments.register(d.id, options.representation === "verified-runtime" ? d : withTiers(d));
   for (const d of store.all<AbilityDef>("abilities")) {
     const e = expandStandalone(d);
     Abilities.register(e.id, e);
@@ -478,28 +306,16 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   //   不保證本體先進來 ⇒ 先把整份名冊索引起來再跑。⛔ 不 import 註冊表（見那個檔）。
   const roster = championRoster(store.all<ChampionDef>("champions") as unknown as Record<string, unknown>[]);
   for (const d of store.all<ChampionDef>("champions")) {
-    // ⚠️ 級距解析包在 `resolveChampionStats` 的**外面**是硬性的：`msGrowthTier` /
-    //    `asGrowthTier` 是**這一位作者填的**，它應該是 `growth.ms` / `growth.as`
-    //    的最後一句話。⛔ 包在裡面的話，屬性正規化哪天把 `as` 加進 `appliesTo`
-    //    （它的 `channel` 已經寫著 `growth`）就會靜靜地蓋掉級別，而級別欄位照樣
-    //    在卡上、後台照樣顯示它 —— 失敗形態②。
-    //    ⭐ 今天不會發生：出貨 `appliesTo` 沒有 `as`，而 `ms` 走 `baseStats` 通道
-    //    （L1 的值與成長無關），所以兩者順序無關；`speedtiers:check` 在守這個前提。
-    const resolved = resolveSpeedGrowthTiers(
-      resolveChampionStats(
-        mapChampionAbilities(d, expandEmbedded) as never,
-        statNorm,
-        STAT_RESOLVE_DEPS,
-        // ⭐ GH#1064 的消費端②：`transformInheritsOrigin` 開著時，變身態的 `origin`
-        //   在這裡被填成本體的 ⇒ 十一屬性級距／尺標／下一行的 `role` 全部跟著同一格。
-        roster,
-      ) as never,
-      speedGrowth,
-    ) as unknown as ChampionDef;
-    // ⭐ GH#1024 A4：`role` 由出身推導（`config.stat-normalization@1.roleFromOrigin`，出貨 true）。
-    //    這一行就是那一格開關的**消費端** —— 圖鑑篩選、選人畫面、戰後評分讀的都是註冊表上的
-    //    這一格，⛔ 不是英雄卡上的退路值。
-    registerChampion({ ...resolved, role: resolveChampionRole(resolved, statNorm) });
+    registerChampion(
+      // ⚠️ 級距解析包在 `resolveChampionStats` 的**外面**是硬性的：`msGrowthTier` /
+      //    `asGrowthTier` 是**這一位作者填的**，它應該是 `growth.ms` / `growth.as`
+      //    的最後一句話。⛔ 包在裡面的話，屬性正規化哪天把 `as` 加進 `appliesTo`
+      //    （它的 `channel` 已經寫著 `growth`）就會靜靜地蓋掉級別，而級別欄位照樣
+      //    在卡上、後台照樣顯示它 —— 失敗形態②。
+      //    ⭐ 今天不會發生：出貨 `appliesTo` 沒有 `as`，而 `ms` 走 `baseStats` 通道
+      //    （L1 的值與成長無關），所以兩者順序無關；`speedtiers:check` 在守這個前提。
+      options.representation === "verified-runtime" ? d : resolveChampionRuntimeStats(mapChampionAbilities(d, expandEmbedded), configDocs, roster),
+    );
   }
   for (const d of store.all<LootTable>("loot-tables")) LootTables.register(d.id, d);
   for (const d of store.all<ArenaDoc>("arenas")) Arenas.register(d);
@@ -562,6 +378,8 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
  * failure this replaces is the 2026-08-01 empty-champion-select outage.
  */
 export interface RegisterAllOptions {
+  /** Only for Main-validated immutable runtime; prevents a second numeric/prose expansion. */
+  readonly representation?: "authoring" | "verified-runtime";
   readonly onTemplateFailure?: "degrade" | "throw";
 }
 

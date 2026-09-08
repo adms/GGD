@@ -154,6 +154,9 @@ export interface SourceAdapter {
   readonly sourceFor: (productPath: string) => string | null;
   /** ⭐ **唯一**的重生成指令。⛔ 不是一串步驟。 */
   readonly regenerate: string;
+  /** Trusted source archive inputs; content/config/templates live in the
+   * accompanying catalog snapshot. This does not authorize source execution. */
+  readonly archive: { readonly pythonDirectories: readonly string[]; readonly files: readonly string[] };
   readonly why: string;
 }
 
@@ -179,6 +182,7 @@ export const SOURCE_ADAPTERS: readonly SourceAdapter[] = Object.freeze([
       return m ? `tools/skill-remake/heroes/${m[1]!}.py` : null;
     },
     regenerate: "bash scripts/genrun.sh skillremake:json",
+    archive: { pythonDirectories: ["tools/skill-remake"], files: ["skill-tag-manifest.json"] },
     why:
       "⭐ 90 份技能 JSON 由 `tools/skill-remake/heroes/<英雄 id>.py` 產生 —— " +
       "產物 id 的第一段**就是**英雄 id（`godie-e00s.r` → `godie-e00s.py`）。",
@@ -191,6 +195,7 @@ export const SOURCE_ADAPTERS: readonly SourceAdapter[] = Object.freeze([
       return m ? `tools/skill-remake/heroes/${m[1]!}.py` : null;
     },
     regenerate: "bash scripts/genrun.sh skillremake:json",
+    archive: { pythonDirectories: ["tools/skill-remake"], files: ["skill-tag-manifest.json"] },
     why: "⭐ 英雄卡內嵌的技能鏡像與技能 JSON **同一份來源**（同編號＝同一支技能）。",
   },
 ]);

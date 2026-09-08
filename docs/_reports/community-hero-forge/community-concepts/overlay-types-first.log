@@ -1,0 +1,12 @@
+
+> @ggd/content-api@0.0.0 typecheck /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/content-api
+> tsc --noEmit -p tsconfig.json
+
+src/heroContentSnapshot.test.ts(34,165): error TS2345: Argument of type 'Uint8Array<ArrayBufferLike>' is not assignable to parameter of type 'Uint8Array<ArrayBuffer>'.
+  Type 'ArrayBufferLike' is not assignable to type 'ArrayBuffer'.
+    Type 'SharedArrayBuffer' is not assignable to type 'ArrayBuffer'.
+      Types of property '[Symbol.toStringTag]' are incompatible.
+        Type '"SharedArrayBuffer"' is not assignable to type '"ArrayBuffer"'.
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/content-api:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @ggd/content-api@0.0.0 typecheck: `tsc --noEmit -p tsconfig.json`
+Exit status 2

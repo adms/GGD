@@ -25,7 +25,9 @@ import {
  * 它一格順序都沒有寫，只把每一根指針都撥動一次。
  */
 const EVERYTHING: CastObservation = {
-  events: ["damage", "projectileSpawn", "heal", "manaRestore", "championForm", "resourceSwap", COSMETIC_ONLY_EVENT],
+  // ⭐ 2026-09-08 合併 PR 1118 補一根指針：`healthSpend` 是 `effects/spendHealth.ts:30`
+  //   真的發出的事件（Codex 的新 kind）⇒ 它進了 `CAST_CHANNEL_ORDER`，這份夾具就要撥它。
+  events: ["damage", "projectileSpawn", "heal", "manaRestore", "healthSpend", "championForm", "resourceSwap", COSMETIC_ONLY_EVENT],
   before: { shields: 0, statuses: 0, buffs: 0, projectiles: 0, taunts: 0, gold: 0, summons: 0 },
   after: { shields: 1, statuses: 1, buffs: 1, projectiles: 1, taunts: 1, gold: 1, summons: 1 },
   moved: true,

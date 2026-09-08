@@ -8,7 +8,8 @@
 import { createRoot } from "react-dom/client";
 import { GameApp } from "./GameApp";
 import { AppRoot } from "./ui/platform/AppRoot";
-import { appStore } from "./ui/platform/store";
+import { appStore, type MatchLaunch } from "./ui/platform/store";
+import { prepareCommunityMatch, setCommunityLoading } from "./content/communityMatch";
 import { resetHudStore } from "./net/RoomStore";
 import { resetClientGlobals } from "./clientGlobals";
 import { resetAudioForNewMatch } from "./audio";
@@ -70,6 +71,8 @@ const rootHost = window as unknown as { __ggdRoot?: ReturnType<typeof createRoot
 const root = rootHost.__ggdRoot ?? (rootHost.__ggdRoot = createRoot(hudEl));
 
 let app: GameApp | null = null;
+let preparingMatch = false;
+let communityLease: Awaited<ReturnType<typeof prepareCommunityMatch>> | null = null;
 /**
  * ⭐ GH#587 —— **這是第幾次進場**。⛔ 不是統計：`join.catch` 的閉包會晚到，
  * 而 `matchJoinFailed()` 是**無條件**把 screen 打回 lobby/auth 的。
@@ -83,12 +86,32 @@ let joinGen = 0;
 
 function startMatch(): void {
   const { match } = appStore.getState();
-  if (!match || app) return;
+  if (!match || app || preparingMatch) return;
   // Never start the sim/render against a half-populated registry. If the
   // background content load has not finished yet, this no-ops; the
   // ensureContentLoaded().then callback below re-invokes startMatch the moment
   // the registries are ready (ScreenBody shows MatchContentGate meanwhile).
   if (!isContentReady()) return;
+  const gen = ++joinGen;
+  if (match.communityContent) {
+    preparingMatch = true;
+    const current = () => gen === joinGen && appStore.getState().match === match && appStore.getState().account?.id === match.accountId;
+    setCommunityLoading("正在取得本場固定社群英雄…");
+    void prepareCommunityMatch(match.matchId, match.communityContent, current).then((lease) => {
+      if (!current()) { lease.dispose(); return; }
+      communityLease = lease; lease.activate(); preparingMatch = false;
+      startVerifiedMatch(match, gen); setCommunityLoading("");
+    }).catch((error: unknown) => {
+      if (!current()) return;
+      preparingMatch = false; setCommunityLoading("");
+      appStore.getState().matchJoinFailed(error instanceof Error ? error.message : "無法校驗社群英雄內容。");
+    });
+    return;
+  }
+  startVerifiedMatch(match, gen);
+}
+
+function startVerifiedMatch(match: MatchLaunch, gen: number): void {
   resetHudStore();
   // GH#585 / GH#586 —— 上一間房的「魔力不足」提示、**按住的技能格**、以及那顆
   // **還沒開火**的 hover 計時器都住在模組層，而 HUD 在 `screen !== "match"` 時
@@ -100,6 +123,7 @@ function startMatch(): void {
   resetAudioForNewMatch();
   const platform = match.mode === "platform" && match.endpoint && match.seatTokens;
   app = new GameApp(canvas, {
+    onContentError: (message) => { if (gen === joinGen) appStore.getState().matchJoinFailed(message); },
     accountId: match.accountId ?? undefined,
     skinOverrides: match.skinOverrides,
     // couch play: platform mode gets one connection per seat token;
@@ -112,7 +136,6 @@ function startMatch(): void {
     practice: match.practice,
   });
   app.start(); // render the arena immediately; entities appear once connected
-  const gen = ++joinGen; // GH#587 —— 這一次進場的世代
   const join = platform ? app.connectPlatform(match.endpoint!, match.seatTokens!) : app.connect();
   join.catch((err) => {
     // ⭐ GH#587 —— 上一場的失敗 ⛔ 不可以踢掉這一場。
@@ -124,20 +147,23 @@ function startMatch(): void {
 }
 
 function stopMatch(): void {
+  joinGen++;
+  preparingMatch = false;
+  setCommunityLoading("");
   const a = app;
-  if (!a) return;
+  if (!a) { communityLease?.dispose(); communityLease = null; return; }
   // ⭐ GH#597 —— **先放閂再拆**。`dispose()` 第一行就是 `if (this.disposed) return`，
   // 所以一顆半拆的 GameApp 再也拆不完；而在此之前 `app = null` 排在 `dispose()`
   // **後面** ⇒ dispose 丟例外時 `app` 永遠不是 null ⇒ `startMatch()` 的
   // `if (!match || app) return;` 從此永遠 early-return ⇒ 這個分頁只有 F5 能救。
   app = null;
-  joinGen++; // GH#587：離開也讓上一場的 `join.catch` 失效
   try {
     a.dispose();
   } catch (err) {
     // fail-open **但不靜默**（第二守則）：拆不乾淨也不可以卡住下一場。
     console.error("[client] GameApp.dispose() 失敗 —— 這一場沒有拆乾淨", err);
   }
+  communityLease?.dispose(); communityLease = null;
   resetHudStore();
   // ⭐ 出口也清一次。owner 2026-08-23：「不管是**出口**還是**入口**⋯
   //    你**寧願多次清理乾淨開始回合 也不要漏清到**」。

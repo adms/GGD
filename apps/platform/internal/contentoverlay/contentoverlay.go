@@ -18,12 +18,12 @@
 // shared, pure `mergeOverlay` in packages/shared — this package only owns the
 // durable store and the HTTP surface that serves it.
 //
-// ── SAVE IS LOCAL, INSTANT, NEVER-FAIL (docs/design/content-sync.md §2) ───────
+// ── SAVE IS LOCAL AND VERSIONED ─────────────────────────────────────────────
 // A write here appends a generation to a single-writer, atomically-rewritten
 // JSON file. It never contacts a peer and never blocks on the network. The
 // two-console SYNC engine (the tick-box arbitration table) is deliberately a
-// separate, later piece of work — #189 is only the durable store it needs to
-// exist first.
+// separate concern. The owner now requires recoverable versions for every
+// hero edit, so a failed version write stops the active content replacement.
 //
 // ── WHAT THIS PACKAGE DOES AND DOES NOT VALIDATE (#283) ──────────────────────
 // It is NOT the schema authority: the Zod schemas live in TypeScript and cannot
@@ -54,6 +54,7 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"net/http"
 	"os"
 	"regexp"
 	"sort"
@@ -129,12 +130,16 @@ func truncate(s string, n int) string {
 // Deleted (a write to one clears the other). Both maps are ALWAYS non-nil so the
 // JSON encodes `{}` (never `null`) and consumers can range without a nil check.
 type Overlay struct {
-	SchemaVersion int                        `json:"schemaVersion"`
-	Generation    int                        `json:"generation"`
-	UpdatedAt     time.Time                  `json:"updatedAt"`
-	UpdatedBy     string                     `json:"updatedBy"`
-	Docs          map[string]json.RawMessage `json:"docs"`
-	Deleted       map[string]bool            `json:"deleted"`
+	SchemaVersion int       `json:"schemaVersion"`
+	Generation    int       `json:"generation"`
+	UpdatedAt     time.Time `json:"updatedAt"`
+	UpdatedBy     string    `json:"updatedBy"`
+	// HistoryVersion pins the already-stored Git snapshot in the SAME atomic
+	// write as the active data. Git HEAD is only a convenience index: a crash
+	// before updating it must not lose the current version or expose a proposal.
+	HistoryVersion string                     `json:"historyVersion,omitempty"`
+	Docs           map[string]json.RawMessage `json:"docs"`
+	Deleted        map[string]bool            `json:"deleted"`
 	// Bases records, per key, WHAT THE SHIPPED TREE SAID AT EDIT TIME — the
 	// three-way-merge base the owner's 2026-07-24 directive requires
 	// (docs/_requirements-audit-gaps.md). It is what turns "overlay wins" from
@@ -175,8 +180,8 @@ type Overlay struct {
 // PublicBundle is the copy of the overlay the UNauthenticated /bundle endpoint
 // may serve.
 //
-// It strips two things, both for the same reason: the merge consumers do not
-// need them and they name an operator.
+// It strips private version and operator metadata which merge consumers do
+// not need.
 //
 //   - UpdatedBy — the editing admin's account ULID (the v0.4.9 leak fix).
 //   - Bases — every entry's `by`/`at` provenance. This one is new with the
@@ -184,6 +189,7 @@ type Overlay struct {
 //     immediately: `bases` re-leaked exactly the id `updatedBy` was blanked to
 //     hide. The merge (packages/shared/src/content/overlay.ts) reads only
 //     `docs` and `deleted`, so nothing downstream loses anything.
+//   - HistoryVersion — the private snapshot pointer, not a runtime content ID.
 //
 // ⚠️ ⭐ `Community` is deliberately KEPT: it names content ids, ⛔ never an
 // operator. Which champion a player made is a fact every player reads off the
@@ -194,6 +200,7 @@ type Overlay struct {
 func (o Overlay) PublicBundle() Overlay {
 	o.UpdatedBy = ""
 	o.Bases = nil
+	o.HistoryVersion = ""
 	return o
 }
 
@@ -297,6 +304,7 @@ type Service struct {
 	store   *jsonstore.Store
 	rdb     *redisx.Client
 	shipped *ShippedTree
+	catalog CatalogBridge
 	mu      sync.Mutex
 	now     func() time.Time
 	// degraded is non-nil while the durable file on disk is unparseable and the
@@ -684,6 +692,19 @@ func (s *Service) RevertDoc(ctx context.Context, collection, id string, by strin
 // lose data (the log is a convenience history, and a missed invalidation only
 // costs a shard its cache TTL).
 func (s *Service) commit(ctx context.Context, o Overlay, by, op, k string) (Head, error) {
+	return s.commitSaved(ctx, o, by, op, k, false)
+}
+
+func (s *Service) commitSaved(ctx context.Context, o Overlay, by, op, k string, catalogSaved bool) (Head, error) {
+	before, err := s.load()
+	if err != nil {
+		return Head{}, err
+	}
+	if !catalogSaved {
+		if err = s.captureCatalog(ctx, before); err != nil {
+			return Head{}, err
+		}
+	}
 	o.SchemaVersion = SchemaVersion
 	o.Generation++
 	o.UpdatedAt = s.now().UTC()
@@ -694,20 +715,20 @@ func (s *Service) commit(ctx context.Context, o Overlay, by, op, k string) (Head
 	}); err != nil {
 		return Head{}, fmt.Errorf("contentoverlay: refusing an unaudited content change: %w", err)
 	}
+	version, err := s.prepareSnapshot(before, o, by, op, k)
+	if err != nil {
+		slog.Error("contentoverlay: refusing an unversioned content change", "err", err)
+		return Head{}, httpx.Err(http.StatusServiceUnavailable, "version_unavailable", "版本無法保存，未套用內容變更。請確認版本庫與儲存空間。")
+	}
+	o.HistoryVersion = version.String()
 	if err := s.store.Put(Collection, DocID, o); err != nil {
 		return Head{}, err
 	}
 	// the durable file now parses again by construction
 	s.degraded = nil
-	// ⭐ GH#326 —— 把這一版存進 go-git 版本庫（回滾用）。
-	//
-	// ⚠️ 這裡是**唯一**的掛載點:每一條寫入路徑(PutDoc / DeleteDoc / RestoreAll /
-	// RestoreDoc)都經過 commit(),所以版本歷史不可能漏掉一次存檔。
-	// ⛔ 不要在各個 handler 裡各自呼叫 —— 那是「到處改改改」,而且漏一處是靜默的。
-	//
-	// best-effort:版本存不進去不可以讓一次成功的存檔變成失敗,但它會 warn 並且
-	// 在 `Versions()` 的 `Unavailable` 裡說出來(fail-open 沒錯,靜默才是缺陷)。
-	s.snapshot(o, by, op, k)
+	// Every mutation comes through this path. The immutable snapshot is already
+	// retained; only the optional Git HEAD index remains best-effort.
+	s.indexSnapshot(version)
 	// append-only history (undo/audit trail) — best effort
 	if err := s.store.AppendLine(LogCollection, o.UpdatedAt.Format("2006-01-02"), logEntry{
 		Generation: o.Generation, At: o.UpdatedAt, By: by, Op: op, Key: k,

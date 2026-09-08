@@ -1,0 +1,5 @@
+Scope: 2 of 20 workspace projects
+packages/shared typecheck$ tsc --noEmit -p tsconfig.json
+packages/shared typecheck: Done
+apps/game-server typecheck$ tsc --noEmit -p tsconfig.json
+apps/game-server typecheck: Done

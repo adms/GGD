@@ -1,0 +1,408 @@
+
+> ggd@0.0.0 skills:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> pnpm tiers:apply:check && pnpm spec:check && pnpm overview:check && pnpm tiers:check && pnpm mana:audit:check && pnpm typecat:check && pnpm skillforge:audit:check && pnpm skillforge:visual-review:check && pnpm skillforge:visual-sheets:check && pnpm vfxforge:handback:check && pnpm editorcov:check && pnpm bricks:check && pnpm assets:manifest:check && pnpm jasstpl:check && pnpm caps:check && pnpm collections:check && pnpm skillremake:docs:check && pnpm skillremake:json:check && pnpm skillremake:provenance:check && pnpm grail:wishes:check && pnpm contract:numbers:check && pnpm atlas:check && pnpm treasure:csv:check && pnpm docs:readme:check && pnpm docs:status:check && pnpm roster:check && pnpm pitch:check && pnpm newhero:check && pnpm lowdmg:check && pnpm anchors:check && pnpm statcaps:check && pnpm apconv:plan:check && pnpm apconv:check && pnpm apdmg:check && pnpm board:check && pnpm msgledger:check && pnpm skillnorm:check && pnpm speedtiers:check && pnpm jasscombo:check && pnpm vfxbind:check && pnpm models:check && pnpm lod:check && pnpm audit:check && pnpm echoloop:check && pnpm templates:check && pnpm prose:check && pnpm sfxbind:check && pnpm shapes:check && pnpm beam:check && pnpm archetypes:check && pnpm enableaudit:check && pnpm review:check && pnpm declshape:check && pnpm decor:check && pnpm speedlists:check && pnpm locust:check && pnpm w3a:check && pnpm board:roll:check && pnpm ruleslip:check && pnpm receipt:check && pnpm handback:check && pnpm clipdeg:check && pnpm apcoeffdiff:check && pnpm decor:check && pnpm appearance:check && pnpm ptokens:check && pnpm coord:check
+
+
+> ggd@0.0.0 tiers:apply:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> python3 tools/skill-remake/apply_tiers.py --check
+
+收進級距：0 / 421 份直接編的技能文件（產生器擁有的 15 位英雄由 batch1.py 套用同一個 tierize）
+英雄卡內嵌鏡射：0 份
+
+> ggd@0.0.0 spec:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/skill-spec/gen_spec.ts --check
+
+✅ 技能規則說明是最新的（4688 行）
+
+> ggd@0.0.0 overview:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/innate-legendary/gen_overview.ts --check
+
+✅ 固有能力及寶具總覽是最新的（3166 行）
+
+> ggd@0.0.0 tiers:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/skill-tiers/gen_tiers.ts --check
+
+✅ 技能級距文件是最新的
+
+> ggd@0.0.0 mana:audit:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/mana-audit/gen_mana_audit.ts --check
+
+✅ 魔力回復例外清單是最新的
+
+> ggd@0.0.0 typecat:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> bash scripts/gencheck.sh tsx tools/type-catalog/gen.ts --check
+
+✓ type 目錄是新的（35 可挑 · 1 待接線 · 9 空殼）
+
+> ggd@0.0.0 skillforge:audit:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> node --import tsx tools/skill-forge/audit-42x46.ts --check
+
+PASS Skill acceptance receipt current · 43/47
+
+> ggd@0.0.0 skillforge:visual-review:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> node tools/skill-forge/build-visual-review-packet.mjs --check
+
+PASS human review packet · 12 pages / 47 documents · 275138b81e8c5138 · advisory stale
+
+> ggd@0.0.0 skillforge:visual-sheets:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> node tools/skill-forge/build-visual-contact-sheets.mjs --check
+
+PASS 47 chronological visual contact sheets are current
+
+> ggd@0.0.0 vfxforge:handback:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> node --import tsx tools/vfx-forge/build-template-handback.mjs --check
+
+PASS Editor VFX template handback 7fac4641a749 (21 recipes)
+
+> ggd@0.0.0 editorcov:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/editor-contract/gen_editor_coverage.ts --check
+
+✓ ggd-editor-coverage.json 是新鮮的
+
+> ggd@0.0.0 bricks:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/brick-census/gen.ts --check
+
+bricks:check OK
+(node:96281) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+> ggd@0.0.0 assets:manifest:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/asset-manifest/gen.ts --check
+
+assets:manifest:check OK
+
+> ggd@0.0.0 jasstpl:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> node tools/jass-template-map/gen.mjs --check
+
+
+> ggd@0.0.0 caps:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/capability-export/export.ts --check
+
+能力清單是最新的（指紋 093abd95）
+
+> ggd@0.0.0 collections:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/collections-gen/gen.ts --check
+
+collections:check OK（16 個 collection · apps/platform/internal/contentoverlay/collections_gen.go）
+
+> ggd@0.0.0 skillremake:docs:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> python3 tools/skill-remake/refresh_docs.py --check
+
+§13.10 是最新的
+檔頭指紋行 是最新的
+
+> ggd@0.0.0 skillremake:json:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> python3 tools/skill-remake/batch1.py --check
+
+⚠️  12-03 的變身被**明示**放掉：B-4 owner 2026-08-12 尚未裁決（志狼退場 or 變身換綁別的槽）
+ℹ️  帶 [變身]/[切換] 標籤但沒有第二具身體（buff 形態，不換身體）：15-02、15-03、15-04
+championForm：5 支（w3x 觸發技 6 支，明示放掉 1 支）
+變身態作者：6 對　產生器擁有 0　明示手編 6（閘＝abilityCodeParityForms.test.ts）
+── 機制差異報表：2 支與舊出貨文件不同 ──
+  godie-hapm.w: 沿用 invulnerable
+  godie-hapm.ex: 沿用 invulnerable
+── A-6 明示退場的欄位：50 份文件 ──
+  godie-e002.e: castTimeSec
+  godie-e002.r: castTimeSec
+  godie-e002.w: castTimeSec
+  godie-e00r.r: castTimeSec
+  godie-e00s.e: castTimeSec
+  godie-e00s.passive: castTimeSec
+  godie-e00s.q: castTimeSec
+  godie-e00s.r: castTimeSec
+  godie-e00w.e: castTimeSec
+  godie-e00w.q: castTimeSec
+  godie-e00w.r: castTimeSec
+  godie-edem.e: castTimeSec
+  godie-edem.ex: castTimeSec
+  godie-edem.q: castTimeSec
+  godie-edem.w: castTimeSec
+  godie-efur.e: castTimeSec
+  godie-efur.q: castTimeSec
+  godie-efur.r: castTimeSec
+  godie-efur.w: castTimeSec
+  godie-emfr.e: castTimeSec
+  godie-emfr.ex: castTimeSec
+  godie-emfr.q: castTimeSec
+  godie-emfr.r: castTimeSec
+  godie-emfr.w: castTimeSec
+  godie-emns.e: castTimeSec
+  godie-emns.ex: castTimeSec
+  godie-emns.passive: castTimeSec
+  godie-emns.q: castTimeSec
+  godie-emns.r: castTimeSec
+  godie-ewar.ex: castTimeSec
+  godie-ewar.q: castTimeSec
+  godie-ewar.r: castTimeSec
+  godie-ewar.w: castTimeSec
+  godie-h00l.q: castTimeSec
+  godie-h00l.r: castTimeSec
+  godie-h00l.w: castTimeSec
+  godie-h01n.e: castTimeSec
+  godie-h01n.q: castTimeSec
+  godie-h01n.r: castTimeSec
+  godie-h01n.w: castTimeSec
+  godie-h01u.e: castTimeSec
+  godie-h01u.r: castTimeSec
+  godie-h01u.w: castTimeSec
+  godie-h02k.ex: castTimeSec
+  godie-h02v.q: castTimeSec
+  godie-h02v.r: castTimeSec
+  godie-hapm.ex: castTimeSec
+  godie-hapm.q: castTimeSec
+  godie-hapm.r: castTimeSec
+  godie-hapm.w: castTimeSec
+── 五級距全轉：138 格 / 51 支 ──
+  godie-e002.e: range-tier 14.0→12.0（極大）；range 14.0→12.0（極大）；damage (None, None, [350.0, 550.0, 750.0, 950.0])→1000.0（中）；mana [250.0, 350.0, 450.0, 550.0]→288.0（收進耗魔級距 中（首階參照））
+  godie-e002.r: mana [150.0, 250.0, 350.0]→144.0（收進耗魔級距 小（首階參照））
+  godie-e002.w: mana-free [50.0, 100.0, 150.0, 200.0]→0.0（非主動傷害技⇒免魔）
+  godie-e00r.ex: cooldown [150.0]→60.0（單體/極大/超過上限⇒夾）
+  godie-e00r.passive: cooldown [150.0]→60.0（單體/極大/超過上限⇒夾）
+  godie-e00r.r: range-tier 8.25→8.0（大）；range 8.25→8.0（大）；damage (None, None, [750.0, 1200.0, 1650.0])→1500.0（大）；cooldown [90.0, 90.0, 90.0]→60.0（單體/極大/超過上限⇒夾）；mana [350.0, 500.0, 650.0]→288.0（收進耗魔級距 中（首階參照））
+  godie-e00s.e: mana-free [100.0, 150.0, 150.0, 250.0]→0.0（非主動傷害技⇒免魔）
+  godie-e00s.passive: cooldown [15.0]→30.0（變身/極小/低於下限⇒夾）
+  godie-e00s.q: range-tier 11.0→12.0（極大）；range 11.0→12.0（極大）；damage (None, None, [150.0, 300.0, 450.0, 600.0])→500.0（小）；mana [250.0, 300.0, 350.0, 400.0]→288.0（收進耗魔級距 中（首階參照））
+  godie-e00s.r: damage (None, None, [250.0, 350.0, 450.0])→500.0（小）；damage (None, None, [250.0, 350.0, 450.0])→500.0（小）；mana [240.0, 420.0, 600.0]→288.0（收進耗魔級距 中（首階參照））
+  godie-e00w.e: mana-free [90.0, 180.0, 270.0, 360.0]→0.0（非主動傷害技⇒免魔）
+  godie-e00w.q: damage (None, None, [200.0, 300.0, 400.0, 500.0])→500.0（小）；cooldown [40.0, 40.0, 40.0, 40.0]→45.0（範圍/小/傷害級距 小⇒往後靠）；mana [75.0, 110.0, 145.0, 180.0]→72.0（收進耗魔級距 極小（首階參照））
+  godie-e00w.r: range-tier 11.0→12.0（極大）；range 11.0→12.0（極大）；damage (None, None, [600.0, 800.0, 1000.0])→1000.0（中）；cooldown [70.0, 70.0, 70.0]→60.0（範圍/中/傷害級距 中⇒往前靠）；mana [150.0, 225.0, 300.0]→144.0（收進耗魔級距 小（首階參照））
+  godie-edem.e: range-tier 12.83→12.0（極大）；range 12.83→12.0（極大）；damage (None, None, [400.0, 500.0, 600.0, 700.0])→500.0（小）；mana [120.0, 185.0, 250.0, 315.0]→144.0（收進耗魔級距 小（首階參照））
+  godie-edem.ex: mana [650.0]→576.0（收進耗魔級距 大（首階參照））
+  godie-edem.q: range-tier 14.67→12.0（極大）；range 14.67→12.0（極大）；damage (None, None, [250.0, 350.0, 450.0, 550.0])→500.0（小）；mana [150.0, 190.0, 230.0, 240.0]→144.0（收進耗魔級距 小（首階參照））
+  godie-edem.w: damage (None, None, [75.0, 150.0, 225.0, 300.0])→200.0（極小）；mana [70.0, 120.0, 170.0, 220.0]→72.0（收進耗魔級距 極小（首階參照））
+  godie-efur.e: damage (None, None, [150.0, 250.0, 350.0, 450.0])→500.0（小）；mana [120.0, 180.0, 240.0, 300.0]→144.0（收進耗魔級距 小（首階參照））
+  godie-efur.q: range-tier 4.0→4.5（小）；range 4.0→4.5（小）；cooldown [4.0, 3.0, 2.0, 1.0]→6.0（單體/極小/低於下限⇒夾）
+  godie-efur.r: damage (None, None, [150.0, 200.0, 250.0])→200.0（極小）；mana [150.0, 200.0, 250.0]→144.0（收進耗魔級距 小（首階參照））
+  godie-efur.w: range-tier 2.0→3.0（極小）；range 2.0→3.0（極小）；damage (None, None, [40.0, 60.0, 80.0, 100.0])→200.0（極小）；mana [60.0, 90.0, 120.0, 150.0]→72.0（收進耗魔級距 極小（首階參照））
+  godie-emfr.e: damage (None, None, [60.0, 90.0, 120.0, 150.0])→200.0（極小）；damage (None, None, [100.0, 150.0, 200.0, 250.0])→200.0（極小）；cooldown [55.0, 55.0, 55.0, 55.0]→45.0（範圍/小/傷害級距 極小⇒往前靠）；mana [180.0, 260.0, 340.0, 420.0]→144.0（收進耗魔級距 小（首階參照））
+  godie-emfr.q: range-tier 6.42→6.0（中）；range 6.42→6.0（中）；damage (None, None, [250.0, 350.0, 450.0, 550.0])→500.0（小）；mana [175.0, 275.0, 375.0, 475.0]→144.0（收進耗魔級距 小（首階參照））
+  godie-emfr.r: damage (None, None, [150.0, 225.0, 300.0])→200.0（極小）；mana [200.0, 400.0, 600.0]→144.0（收進耗魔級距 小（首階參照））；ms-bonus 1.0→1.0（大）
+  godie-emfr.w: damage (None, None, [30.0, 45.0, 60.0, 75.0])→200.0（極小）；mana [120.0, 180.0, 240.0, 300.0]→144.0（收進耗魔級距 小（首階參照））；ms-bonus 0.2→0.2（小）
+  godie-emns.e: range-tier 12.0→12.0（極大）；damage (None, None, [650.0, 750.0, 850.0, 950.0])→1000.0（中）；cooldown [60.0, 50.0, 40.0, 30.0]→30.0（範圍/極小/低於下限⇒夾）；mana [150.0, 250.0, 350.0, 450.0]→144.0（收進耗魔級距 小（首階參照））
+  godie-emns.ex: range-tier 5.29→6.0（中）；range 5.29→6.0（中）；cooldown [120.0]→60.0（單體/極大/超過上限⇒夾）；mana-free [450.0]→0.0（非主動傷害技⇒免魔）
+  godie-emns.q: range-tier 12.0→12.0（極大）；mana-free [150.0, 200.0, 250.0, 300.0]→0.0（非主動傷害技⇒免魔）
+  godie-emns.r: range-tier 12.0→12.0（極大）；cooldown [35.0, 35.0, 35.0]→30.0（單體/中/傷害級距 極小⇒往前靠）；mana [150.0, 250.0, 350.0]→144.0（收進耗魔級距 小（首階參照））
+  godie-ewar.ex: range-tier 2.0→3.0（極小）；range 2.0→3.0（極小）；damage (None, 1800.0, None)→2000.0（極大）；mana [600.0]→576.0（收進耗魔級距 大（首階參照））
+  godie-ewar.q: range-tier 4.0→4.5（小）；range 4.0→4.5（小）；damage (None, None, [150.0, 283.0, 350.0, 350.0])→200.0（極小）；cooldown [12.0, 12.0, 12.0, 12.0]→6.0（單體/極小/傷害級距 極小⇒往前靠）；mana [30.0, 57.0, 83.0, 90.0]→72.0（收進耗魔級距 極小（首階參照））
+  godie-ewar.r: radius 6.0→8.0（大）；damage (None, None, [550.0, 750.0, 950.0])→1000.0（中）；mana [250.0, 350.0, 450.0]→288.0（收進耗魔級距 中（首階參照））
+  godie-ewar.w: mana-free [50.0, 100.0, 150.0, 200.0]→0.0（非主動傷害技⇒免魔）
+  godie-h00l.ex: cooldown [120.0]→60.0（單體/極大/超過上限⇒夾）
+  godie-h00l.q: damage (None, None, [150.0, 250.0, 350.0, 450.0])→500.0（小）；mana [100.0, 150.0, 200.0, 250.0]→72.0（收進耗魔級距 極小（首階參照））
+  godie-h00l.r: mana-free [120.0, 150.0, 180.0]→0.0（非主動傷害技⇒免魔）
+  godie-h00l.w: range-tier 11.0→12.0（極大）；range 11.0→12.0（極大）；damage (None, None, [150.0, 250.0, 350.0, 450.0])→500.0（小）；mana [50.0, 75.0, 100.0, 125.0]→72.0（收進耗魔級距 極小（首階參照））
+  godie-h01n.e: range-tier 11.0→12.0（極大）；range 11.0→12.0（極大）；damage (None, None, [450.0, 600.0, 750.0, 900.0])→1000.0（中）；cooldown [55.0, 55.0, 55.0, 55.0]→45.0（單體/大/傷害級距 中⇒往前靠）；mana [250.0, 350.0, 450.0, 550.0]→288.0（收進耗魔級距 中（首階參照））
+  godie-h01n.q: range-tier 9.17→8.0（大）；range 9.17→8.0（大）；mana-free [60.0, 80.0, 100.0, 120.0]→0.0（非主動傷害技⇒免魔）
+  godie-h01n.r: mana-free [100.0, 200.0, 300.0]→0.0（非主動傷害技⇒免魔）
+  godie-h01n.w: range-tier 4.5→4.5（小）；damage (None, None, [200.0, 350.0, 500.0, 650.0])→500.0（小）；mana [80.0, 160.0, 240.0, 320.0]→72.0（收進耗魔級距 極小（首階參照））
+  godie-h01u.e: range-tier 10.0→8.0（大）；range 10.0→8.0（大）；damage (None, None, [150.0, 200.0, 250.0, 300.0])→200.0（極小）；mana [150.0, 200.0, 250.0, 300.0]→144.0（收進耗魔級距 小（首階參照））
+  godie-h01u.r: cooldown [90.0, 90.0, 90.0]→60.0（單體/極大/超過上限⇒夾）；mana-free [250.0, 400.0, 550.0]→0.0（非主動傷害技⇒免魔）
+  godie-h01u.w: damage (None, None, [120.0, 220.0, 320.0, 420.0])→500.0（小）；mana [90.0, 180.0, 270.0, 360.0]→72.0（收進耗魔級距 極小（首階參照））
+  godie-h02k.ex: range-tier 5.29→6.0（中）；range 5.29→6.0（中）；cooldown [10.0]→6.0（單體/極小/傷害級距 極小⇒往前靠）；mana-free [666.0]→0.0（非主動傷害技⇒免魔）
+  godie-h02v.q: mana-free [160.0, 220.0, 280.0, 340.0]→0.0（非主動傷害技⇒免魔）
+  godie-h02v.r: mana-free [300.0, 420.0, 540.0]→0.0（非主動傷害技⇒免魔）
+  godie-hapm.ex: range-tier 5.29→6.0（中）；range 5.29→6.0（中）；cooldown [120.0]→60.0（單體/極大/超過上限⇒夾）；mana [400.0]→288.0（收進耗魔級距 中（首階參照））
+  godie-hapm.q: mana-free [100.0, 140.0, 180.0, 220.0]→0.0（非主動傷害技⇒免魔）
+  godie-hapm.r: damage (None, None, [600.0, 1000.0, 1400.0])→1500.0（大）；mana [400.0, 600.0, 800.0]→288.0（收進耗魔級距 中（首階參照））
+  godie-hapm.w: range-tier 11.0→12.0（極大）；range 11.0→12.0（極大）；damage (None, None, [350.0, 450.0, 550.0, 650.0])→500.0（小）；mana [70.0, 95.0, 120.0, 145.0]→72.0（收進耗魔級距 極小（首階參照））
+── GH#375 純視覺彈道 → spawnVfx：6 支 ──
+  godie-e002.e: imported.wave → fx.wave.physical
+  godie-e00r.r: imported.wave.ki → fx.wave.ki
+  godie-e00s.q: imported.wave.arcane → fx.wave.arcane
+  godie-h01n.q: imported.bolt.void → fx.prim.void.bolt
+  godie-h01u.r: imported.wave.physical → fx.wave.physical
+  godie-h01u.w: imported.wave.physical → fx.wave.physical
+── B1-B 兄弟酬載折進 onHitTargets：13 個節點 / 9 支 ──
+  15-01: damageLine←applyStatus
+  45-002: damageArea←applyStatus、damageArea←applyStatus、damageArea←dot
+  45-01: damageArea←applyStatus、damageArea←dot
+  45-02: damageArea←applyStatus
+  60-01: damageArea←knockback
+  70-03: damageArea←applyStatus
+  77-01: damageArea←knockback
+  79-01: damageArea←applyStatus
+  92-04: damageArea←applyStatus、damageArea←applyStatus
+
+─── B1 閘清單（⚠️ 不擋出貨，是待填清單）───
+  M·dash 酬載在起跳瞬間結算（沒有 onEnd） —— 4 支
+     45-03(damageLine,spawnModelFx) · 79-01(applyBuff,damageArea,spawnVfx) · 80-03(damageLine) · 52-04(damageArea)
+  M·說明有時序用語但 effects 全是平行兄弟 —— 1 支
+     52-00(隨後)
+  O·ground 但沒有圓（多半是線/跳躍，正常） —— 5 支
+     20-03(damageLine,floatingText,spawnModelFx,spawnVfx) · 59-04(damageLine,spawnModelFx,spawnVfx) · 15-01(damageLine) · 79-03(damageLine,spawnModelFx) · 52-02(invulnerable,leap)
+  O·借到頂層 radiusTier —— 1 支
+     79-01(極小)
+標籤閘：90 支的標籤全部找得到對應機制（含 5 筆有理由的豁免）
+產生器印記一致：90 支
+
+> ggd@0.0.0 skillremake:provenance:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> python3 tools/skill-remake/stamp_provenance.py --check
+
+provenance 齊了：421 份（owner-spec 91 / w3x-import 330）
+
+> ggd@0.0.0 grail:wishes:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> python3 tools/grail-wishes/build_wishes.py --check
+
+✅ 60 份聖杯願望與 CSV 母本一致
+
+> ggd@0.0.0 contract:numbers:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> python3 tools/editor-contract/gen_contract_numbers.py --check
+
+✓ 2 份文件的 9 個產生區塊都是最新的
+
+> ggd@0.0.0 atlas:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/engine-atlas/atlas.ts --check
+
+✓ engine atlas 是最新的
+
+> ggd@0.0.0 treasure:csv:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> python3 tools/economy/gen_treasure_csv.py --check
+
+✓ 寶具總表_EX三階.csv 是最新的
+
+> ggd@0.0.0 docs:readme:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> python3 tools/reference/gen_readme_lists.py --check
+
+README.md + docs/reference/*.md up to date with contentVersion cv_524b26abb1e3
+
+> ggd@0.0.0 docs:status:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> python3 tools/status/gen_status.py --check
+
+gen_status --check: OK — 286 tasks (✅218 🔄15 ⬜53) from ~/.claude/tasks/1fc1e42e-e26b-4bec-88ef-ca25238c0f4c
+
+> ggd@0.0.0 roster:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/roster-guard/check.ts
+
+
+> ggd@0.0.0 pitch:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> python3 tools/w3x-import/build_pitch.py --check
+
+合併 34 支 —— 動畫量到 31 支（優先）· w3a 推到 3 支 · 兩邊都沒有 1 支
+✅ content 是最新的
+
+> ggd@0.0.0 newhero:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/newhero/gen.ts --check
+
+✅ docs/new-hero-defaults.json 是最新的；30 組預設值全部通過自己的警示（語料 293 支技能）。
+
+> ggd@0.0.0 lowdmg:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/low-damage/gen.ts --check
+
+✅ docs/傷害偏低警告清單.md 是最新的（語料 293 支技能）。
+
+> ggd@0.0.0 anchors:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/balance-anchors/gen.ts --check
+
+✔ anchors 產物都是最新的（母體 49 張卡 · 純基礎 LV30 中位 2776.2 · 引擎最終 12304.8）
+
+> ggd@0.0.0 statcaps:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/stat-caps/gen_stat_caps.ts --check
+
+✔ statcaps 三份產物都是最新的（母體 49、錨點 LV30）
+
+> ggd@0.0.0 apconv:plan:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> python3 tools/ap-conversion/gen.py --check
+
+✅ AP 換算計畫是最新的（56 支 / 73 條）
+
+> ggd@0.0.0 apconv:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> python3 tools/ap-conversion/apply.py --check
+
+[apconv] 開關 enabled=True mode=replace physical=keepDamageType rounding=halfUp step=10% ap/點=0.25
+[apconv] 語料 56 支（產生器擁有 2，直接編 JSON 54）
+[apconv] check OK
+
+> ggd@0.0.0 apdmg:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/ap-damage-scaling/gen.ts --check
+
+[apdmg] ✅ 2 份產物都是最新的；三個住處一致
+
+> ggd@0.0.0 board:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> python3 tools/board/gen_board.py --check
+
+ggd-board.html is current
+
+> ggd@0.0.0 msgledger:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> bash scripts/message-ledger.sh --check
+
+⛔ 漏了 23:21 · 2026-09-06  你還有一堆票沒收完…
+⛔ 漏了 23:55 · 2026-09-06  請你開票修改所有來源 本遊戲不支援手機但支援平板最高 30fps  手機是 30fps  以 ipad mini 的 A17 Pro 為最低…
+⛔ 漏了 23:57 · 2026-09-06  你還要做多久？視覺化進度給我看…
+⛔ 未對票 docs/_daily/2026-09-06.md:18  00:19  如何？…
+⛔ 未對票 docs/_daily/2026-09-06.md:20  00:48  我已經看不懂你在說什麼 接下來可以做什麼了…
+⛔ 未對票 docs/_daily/2026-09-06.md:21  00:50  先做 A 但我想深入了解 B…
+⛔ 未對票 docs/_daily/2026-09-06.md:27  01:30  看不懂 ＆ 我的目標是把基礎生命倍率 調回到 2倍左右 讓技能基礎傷害能有作用 但目前 AD/AP 傷害都太高…
+⛔ 未對票 docs/_daily/2026-09-06.md:29  01:39  你要真的拿幾個實際案例驗算過 再建議我 before/after 的數值要多少…
+⛔ 未對票 docs/_daily/2026-09-06.md:32  02:13  早就超過20分鐘了吧…
+⛔ 未對票 docs/_daily/2026-09-06.md:33  02:21  你可以多跑幾場不同英雄組合來記錄分析比較…
+⛔ 未對票 docs/_daily/2026-09-06.md:35  02:44  ② AD 那一側整個問錯了 => 當然是問普攻流 不是技能加成阿 AD技能加成是少數吧? 列給我…
+⛔ 未對票 docs/_daily/2026-09-06.md:37  02:50  你覺得統一把AD加成都改成AP加成會比較好嗎? 普攻流 簡單暴力 可以加成 on-hit, 吸血, 攻速...等，當然也…
+⛔ 未對票 docs/_daily/2026-09-06.md:38  02:54  致盲問題開票…
+⛔ 未對票 docs/_daily/2026-09-06.md:39  02:58  我覺得對玩家玩法直覺也很重要 跟平衡一樣重要…
+⛔ 未對票 docs/_daily/2026-09-06.md:40  03:35  等等你寫那麼多 我還是沒看到哪個強 要怎麼建議 before/after…
+⛔ 未對票 docs/_daily/2026-09-06.md:41  03:36  我覺得ap公式也有問題吧…
+⛔ 未對票 docs/_daily/2026-09-06.md:44  03:39  我不希望複雜化 才用ap 統一，你可以改變公式但要保持AP為技能主要增強手段的目標，因為這樣對玩家更簡單直覺…
+⛔ 未對票 docs/_daily/2026-09-06.md:45  03:41  但不是所有技能都有ap加成…
+⛔ 未對票 docs/_daily/2026-09-06.md:46  03:43  看不懂…
+⛔ 未對票 docs/_daily/2026-09-06.md:47  03:45  我只想優化公式本身…
+⛔ 未對票 docs/_daily/2026-09-06.md:48  03:45  都不要 因為有些技能是基礎傷害高 或是基礎傷害低但加成高 或是基礎傷害低但機制、負面狀態多 等機制補償…
+⛔ 未對票 docs/_daily/2026-09-06.md:49  03:49  這個機制很好 但我想知道結合我們之前討論的 生命倍率降到 2倍時，這個旋鈕要多少，並且普攻流也能抗衡而不是人人簡單普攻流…
+⛔ 未對票 docs/_daily/2026-09-06.md:50  03:50  finish it…
+⛔ 未對票 docs/_daily/2026-09-06.md:54  11:19  看不懂…
+⛔ 未對票 docs/_daily/2026-09-06.md:55  11:21  血量2是什麼 你是不是簡寫太多東西了 我真的看不懂…
+⛔ 未對票 docs/_daily/2026-09-06.md:56  11:22  你試用等級多少 怎樣的裝備條件下反算的？ 我們之前討論過有 30/50/99 三種情形條件不太一樣喔…
+⛔ 未對票 docs/_daily/2026-09-06.md:57  11:24  06-02 山形修煉-變（小傑 ucrl.w／u034.w）的 AP 係數 1.0 → 0.158 why? 我們不是有…
+⛔ 未對票 docs/_daily/2026-09-06.md:58  11:43  ① 「30 級當標準」那句已經過時 它住在 docs/平衡錨點量測.md，⛔ 而那份是 anchors:build 的產…
+⛔ 未對票 docs/_daily/2026-09-06.md:59  11:54  我推薦 M = 15 · K = 1000 物理意義是什麼? 不要改得讓技能流無法生存阿 解釋 30/50/99 級的情…
+⛔ 未對票 docs/_daily/2026-09-06.md:60  11:56  1. 以為公式在載入時會贏、字面值只是報表用 => 我以為目前全部都已經是公式載入執行了 給我看 那張表 並簡單舉例解釋…
+⛔ 未對票 docs/_daily/2026-09-06.md:61  12:01  ⛔ K=100 的問題：轉彎點在法強 100，⭐ 而裸裝英雄的法強就是 127 ⇒ 一上場就已經在曲線的平坦段，之後堆法…
+⛔ 未對票 docs/_daily/2026-09-06.md:62  12:25  血量倍率4x, M15 K400 這樣呢…
+⛔ 未對票 docs/_daily/2026-09-06.md:63  12:33  你不是提議也要改公式嗎?…
+⛔ 未對票 docs/_daily/2026-09-06.md:64  12:35  其實有個很重要的事情是 AP加成五級距公式還沒接上執行，main 正在實作…
+⛔ 未對票 docs/_daily/2026-09-06.md:67  13:03  ⭐ 我會把它寫成「六維公式的母體要涵蓋零係數節點」，⛔ 而不是「逐支手填」。 => why? 原本我的公式 ap 乘數 …
+⛔ 未對票 docs/_daily/2026-09-06.md:68  13:05  補開 A票 + 動態即時再技能說明試算後的數值…
+⛔ 未對票 docs/_daily/2026-09-06.md:69  13:09  用新係數重量一次 M/K —— 確認 15/1000 還對不對?…
+⛔ 未對票 docs/_daily/2026-09-06.md:70  13:10  M40/K400 追加驗算比較…
+⛔ 未對票 docs/_daily/2026-09-06.md:72  13:15  你壓太過頭 道具變得反而沒用了 你應該是思考 技能流有ap 道具可以增幅, 普攻流也有其他攻速跟吸血暈眩等增幅…
+⛔ 未對票 docs/_daily/2026-09-06.md:73  13:17  好 我們今天先不考慮道具的狀況 來重新驗算公式 求M/K, ap技能乘數 這些旋鈕…
+⛔ 未對票 docs/_daily/2026-09-06.md:74  13:19  我們先不考慮道具影響，我道具可以另外再調整，請考慮 M/K, 技能ap乘數 與 普攻流 30/50/99級的情況…
+⛔ 未對票 docs/_daily/2026-09-06.md:75  13:22  M/K 這時候就要考慮道具問題(雖然我會調高道具取得難度跟調低強度)，但 M =40, K=400 應該還是有用吧? 你…
+⛔ 未對票 docs/_daily/2026-09-06.md:76  13:27  問題是ap不會爆到K那麼高阿 你講的實務上部合理…
+⛔ 未對票 docs/_daily/2026-09-06.md:77  13:29  不改 rate 好 那我們定義為純安全網 M40, K 1000 好了 這樣會驗算看看…
+⛔ 未對票 docs/_daily/2026-09-06.md:78  13:30  不對阿 相較於本來就沒有 MK 他至少有上限跟曲率不是嗎…
+⛔ 未對票 docs/_daily/2026-09-06.md:79  13:32  如果我就是要 M40, K1000 會發生什麼事情? 物理意義是什麼? 請實際的衡量數值 不要用不可能的數值來幻想…
+⛔ 未對票 docs/_daily/2026-09-06.md:80  13:33  並且我以為 K 是少於 K 以前是線性，高於開始平坦高原化的曲線不是嗎…
+⛔ 未對票 docs/_daily/2026-09-06.md:81  13:35  你這個太粗暴 應該是法強高到最後效益遞減的邊際效益曲線就好 不要0收益硬卡…
+⛔ 未對票 docs/_daily/2026-09-06.md:82  13:36  K的物理意義變成什麼了?…
+⛔ 未對票 docs/_daily/2026-09-06.md:83  13:38  那K應該要設定在99級ap上限的數值(裸裝) 裝備帶來的ap價值會開始遞減才對…
+⛔ 未對票 docs/_daily/2026-09-06.md:84  13:40  幫我試算 M=40, K=400, p=0.8 的結果 技能流vs普攻流 30/50/99, 以及1/3/6裝備的情況…
+⛔ 未對票 docs/_daily/2026-09-06.md:86  13:47  如果我只拿到一件天胡 那會是卡M多少? 兩件呢?…
+⛔ 未對票 docs/_daily/2026-09-06.md:87  13:49  好綜合以上我們這麼多討論 M/K/p 的數值你會怎麼建議?…
+⛔ 未對票 docs/_daily/2026-09-06.md:88  13:50  K = 400 · p = 0.8 · M = 40 ok, 開票 千年積木我們也來討論怎麼改比較好 先給我原本說明與機…
+⛔ 未對票 docs/_daily/2026-09-06.md:89  13:52  做什麼 保住什麼 A pctMult 9 → pctAdd（例 +300%） ⭐ 爆發還在，⛔ 但不再乘掉全部堆疊 =>…
+⛔ 未對票 docs/_daily/2026-09-06.md:90  13:54  ok 開票…
+⛔ 未對票 docs/_daily/2026-09-06.md:94  14:12  請你照說明 被動就被動 多段技的發數維度 96 張卡面寫著字面「N% [AP]」接上公式顯示 但可以後台開關…
+⛔ 未對票 docs/_daily/2026-09-06.md:95  14:15  你開票任務全部結束乾淨了嗎…
+⛔ 未對票 docs/_daily/2026-09-06.md:96  19:35  結論呢?…
+⛔ 未對票 docs/_daily/2026-09-06.md:97  19:38  ap 公式接上了嗎? 14支重新判斷了嗎？ 系統新HP倍率MKp 公式套用了嗎?…
+⛔ 未對票 docs/_daily/2026-09-06.md:98  19:55  盡量給我中文 不然我看很慢…
+⏳ 漏了 00:28 · 2026-09-07  我們調整 ap 公式跟生命倍率很成功 但目前技能流反而太強勢了 普攻流 沒有遊戲體驗 尤其對到 LINA 龍破斬 都是直接死 你可以查證看看…
+⏳ 漏了 00:41 · 2026-09-07  好 先做 B 普查…
+⏳ 漏了 01:07 · 2026-09-07  查看細節再判斷吧…
+⏳ 漏了 01:14 · 2026-09-07  普查 後開票…
+⏳ 漏了 01:22 · 2026-09-07  那修 龍破斬 開票就好…
+⏳ 漏了 01:23 · 2026-09-07  也太長了吧 你票還剩多少呢…
+⏳ 漏了 01:28 · 2026-09-07  08-04 阿邦快速劍X	⚠️ 可能是刻意的兩段（線＋範圍）=> 是刻意的…
+⏳ 漏了 01:29 · 2026-09-07  ok…
+⏳ 漏了 01:30 · 2026-09-07  yes 請更新票的狀態 但要小心查證…
+⏳ 漏了 01:30 · 2026-09-07  現在生命系統倍率是多少呢…
+⏳ 漏了 01:33 · 2026-09-07  更正後關閉…
+⏳ 漏了 01:36 · 2026-09-07  別又改成果 而不是改產生器喔 這太常發生了…
+⏳ 漏了 01:44 · 2026-09-07  ok…
+⏳ 漏了 01:52 · 2026-09-07  我沒改過 上後台的 combat-env 覆蓋層…
+⏳ 上面 14 則漏列 + 0 列未對票是**今天（2026-09-07）**的 —— 這條 session 還在跑,transcript 還在長 ⇒ ⛔ **不擋**。
+   收工/發版時硬檢查它：`bash scripts/message-ledger.sh --check --date 2026-09-07`（或 GGD_LEDGER_STRICT_TODAY=1）
+→ 漏列：跑 `pnpm msgledger:build` 補上
+→ 未對票：`python3 scripts/ledger_table.py --map <帳本.md> <HH:MM> '<票號 或 — 理由>'`
+   （⛔ 不要手動 chmod、⛔ 不要直接編那份 444 的帳本；對不到票就寫 `— <為什麼不需要開票>`，⛔ 不要留空也不要留 ⏸ 未對票）
+ ELIFECYCLE  Command failed with exit code 1.
+ ELIFECYCLE  Command failed with exit code 1.

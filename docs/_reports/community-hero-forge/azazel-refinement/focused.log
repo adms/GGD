@@ -1,0 +1,34 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ packages/shared/src/content/templates/paramsSchema.test.ts (11 tests) 375ms
+ ✓ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts (20 tests) 2707ms
+   ✓ Azazel authored six-slot refinement > single-slot preparation is explicit; the actual kit earns its own EX resources 1980ms
+   ✓ Azazel authored six-slot refinement > precasts the real R for EX preview, preserving expiry, life payment and resource failure 455ms
+ ✓ apps/editor/src/hero/HeroSlotEditor.test.tsx (5 tests) 3629ms
+   ✓ hero product condition editing > edits the nested curse-reversal reward with actual controls and recompiles the reopened project 3010ms
+ ✓ packages/shared/src/content/import/heroPackage.test.ts (11 tests) 12549ms
+   ✓ complete hero through Main's package representation > carries original slot requirements and author notes through ZIP without turning them into verdicts 3030ms
+   ✓ complete hero through Main's package representation > pins authored subtype calls, compiles them once and rejects missing or changed dependencies 1119ms
+   ✓ complete hero through Main's package representation > round trips source text, repeated products, locks and six compiled slots through the existing validator 1875ms
+   ✓ complete hero through Main's package representation > rejects runtime drift even after an attacker recomputes the outer digest 956ms
+   ✓ complete hero through Main's package representation > rejects dependency drift even after an attacker recomputes the outer digest 981ms
+   ✓ complete hero through Main's package representation > rejects root drift even after an attacker recomputes the outer digest 980ms
+   ✓ complete hero through Main's package representation > rejects simulation drift even after an attacker recomputes the outer digest 948ms
+   ✓ complete hero through Main's package representation > rejects missing drift even after an attacker recomputes the outer digest 870ms
+   ✓ complete hero through Main's package representation > rejects scope drift even after an attacker recomputes the outer digest 429ms
+   ✓ complete hero through Main's package representation > rejects manifest drift even after an attacker recomputes the outer digest 948ms
+   ✓ complete hero through Main's package representation > rejects changed server defaults instead of silently recompiling the approved version 410ms
+(node:97016) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | apps/editor/src/vfx-forge/floatingTextOverlay.test.ts > Forge world-anchored authored floating text > renders both actual VfxSystem subjects with their authored colors and expiry
+BJS - [15:06:35]: Babylon.js v7.54.3 - Null engine
+
+ ✓ apps/editor/src/vfx-forge/floatingTextOverlay.test.ts (1 test) 56ms
+
+ Test Files  5 passed (5)
+      Tests  48 passed (48)
+   Start at  15:06:10
+   Duration  25.15s (transform 4.67s, setup 0ms, collect 13.05s, tests 19.32s, environment 1ms, prepare 483ms)
+

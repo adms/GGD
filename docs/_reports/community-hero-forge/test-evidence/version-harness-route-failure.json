@@ -1,0 +1,1026 @@
+{
+  "schema": "ggd-community-socket-proof@1",
+  "runId": "socket-proof-1788690914178",
+  "startedAt": "2026-09-06T10:35:14.178Z",
+  "status": "failed",
+  "limits": "HTTP and game socket proof only; no browser or visual acceptance.",
+  "target": {
+    "gameRevision": "4793eaaaf2775b2081f5eca5881db32e0aab0ea8",
+    "contentVersion": "cv_085f572d8932",
+    "migrationFingerprint": "c8ba205d0ecf",
+    "processorFingerprint": "1752c1bad9b5"
+  },
+  "publications": [
+    {
+      "workId": "socket-proof-1788690914178-1",
+      "submissionId": "hero-5c097a684c02de7b5c5e0b4302674a57ccdb08cc39c91a564985181961e",
+      "packageDigest": "sha256:fed19315a33756e62ff60dbb63eca7621885e3af970fc038cf8ab9559011f11b",
+      "snapshotDigest": "sha256:acb9bae72b66f326cbf457b5a50b137a48e6c787b717fdc11172ef6f210819da"
+    },
+    {
+      "workId": "socket-proof-1788690914178-2",
+      "submissionId": "hero-06fad0c4bf8cad64ab71d7a4017ee4b61ec2f7ed85545d40c417d8b5259",
+      "packageDigest": "sha256:37ae2f523753d0e5b66ca4694b9d4e14a53074743daf2602442462fd76675dc0",
+      "snapshotDigest": "sha256:7a54f35b69251a9ee0882c1a1b8182d7d639393bf4394d9ed79a1d28cba25b95"
+    }
+  ],
+  "lastStep": "two community champions selected in one live room",
+  "updateCandidate": {
+    "id": "hero-dbba64a1b7a6ae4f27a9b2cb70724c87ed2759634740c1e223bd7725b2d",
+    "packageDigest": "sha256:adcdfc6875ad1c818b5a4bd34e1de9890174eeee6e74c39bf5fd65645e3399e6",
+    "previousManaCost": 40,
+    "newManaCost": 41
+  },
+  "platformRoomId": "r_01M1V4KF6235GW6C3ZRHZ3GF9R",
+  "matchId": "m_01M1V4KF6HQ74PTZ0VWCM3D5DE",
+  "roomContent": {
+    "digest": "sha256:98fa4776600c4548bbb0faf1fbbf37d680989c383139e32edb5e074089c2478c",
+    "heroes": [
+      {
+        "workId": "socket-proof-1788690914178-1",
+        "submissionId": "hero-5c097a684c02de7b5c5e0b4302674a57ccdb08cc39c91a564985181961e",
+        "authorId": "01M1TY947RZYT7JAFZ938AZYK3",
+        "authorName": "hero-author",
+        "name": "同局驗證英雄 1",
+        "packageDigest": "sha256:fed19315a33756e62ff60dbb63eca7621885e3af970fc038cf8ab9559011f11b",
+        "snapshotDigest": "sha256:acb9bae72b66f326cbf457b5a50b137a48e6c787b717fdc11172ef6f210819da"
+      },
+      {
+        "workId": "socket-proof-1788690914178-2",
+        "submissionId": "hero-06fad0c4bf8cad64ab71d7a4017ee4b61ec2f7ed85545d40c417d8b5259",
+        "authorId": "01M1TY947RZYT7JAFZ938AZYK3",
+        "authorName": "hero-author",
+        "name": "同局驗證英雄 2",
+        "packageDigest": "sha256:37ae2f523753d0e5b66ca4694b9d4e14a53074743daf2602442462fd76675dc0",
+        "snapshotDigest": "sha256:7a54f35b69251a9ee0882c1a1b8182d7d639393bf4394d9ed79a1d28cba25b95"
+      }
+    ],
+    "assets": 92
+  },
+  "networkEvents": [
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 1,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 1,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 1,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 1,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 1,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 1,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 1,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 1,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 1,
+        "slot": "Q",
+        "rank": 4
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 2,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 2,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 2,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 2,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 2,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 2,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 2,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 2,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 2,
+        "slot": "Q",
+        "rank": 4
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 3,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 3,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 3,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 3,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 3,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 3,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 3,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 3,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 3,
+        "slot": "Q",
+        "rank": 4
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 4,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 4,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 4,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 4,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 4,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 4,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 4,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 4,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 4,
+        "slot": "Q",
+        "rank": 4
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 5,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 5,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 5,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 5,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 5,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 5,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 5,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 5,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 5,
+        "slot": "Q",
+        "rank": 4
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 6,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 6,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 6,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 6,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 6,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 6,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 6,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 6,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 6,
+        "slot": "Q",
+        "rank": 4
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 7,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 7,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 7,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 7,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 7,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 7,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 7,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 7,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 7,
+        "slot": "Q",
+        "rank": 4
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 8,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 8,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 8,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 8,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 8,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 8,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 8,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 8,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 8,
+        "slot": "Q",
+        "rank": 4
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 9,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 9,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 9,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 9,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 9,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 9,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 9,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 9,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 9,
+        "slot": "Q",
+        "rank": 4
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 10,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 10,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 10,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 10,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 10,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 10,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 10,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 10,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 10,
+        "slot": "Q",
+        "rank": 4
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 11,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 11,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 11,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 11,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 11,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 11,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 11,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 11,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 11,
+        "slot": "Q",
+        "rank": 4
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 12,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 12,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 12,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 12,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 12,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 12,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 12,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 12,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 12,
+        "slot": "Q",
+        "rank": 4
+      }
+    }
+  ],
+  "rejections": [],
+  "selectedSeats": [
+    {
+      "accountId": "01M1TY944MP4T5XR71HSG7FE0P",
+      "championId": "socket-proof-1788690914178-2"
+    },
+    {
+      "accountId": "01M1TY947RZYT7JAFZ938AZYK3",
+      "championId": "socket-proof-1788690914178-1"
+    }
+  ],
+  "admission": {
+    "beforeOtherPlayerReady": 0,
+    "afterBothJoined": 6
+  },
+  "error": "Error: /admin/hero-submissions/hero-06fad0c4bf8cad64ab71d7a4017ee4b61ec2f7ed85545d40c417d8b5259/publish: HTTP 400 {\"error\":{\"code\":\"bad_request\",\"message\":\"發布操作身分不合法。\"}}\n\n    at response (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/tools/community-hero-forge/local-game-proof.ts:39:22)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async json (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/tools/community-hero-forge/local-game-proof.ts:42:132)\n    at async <anonymous> (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/tools/community-hero-forge/local-game-proof.ts:153:5)"
+}

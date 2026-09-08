@@ -205,7 +205,9 @@ func (h *Handlers) submit(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handlers) mine(w http.ResponseWriter, r *http.Request) {
 	me := auth.MustIdentity(r.Context())
-	out, err := h.svc.List(func(v View) bool { return v.AccountID == me.AccountID })
+	// Complete heroes use their version-bound review views; a legacy verdict
+	// lookup would incorrectly label every immutable historical material pending.
+	out, err := h.svc.List(func(v View) bool { return v.AccountID == me.AccountID && v.Kind != KindHero })
 	if err != nil {
 		httpx.WriteError(w, err)
 		return
@@ -214,7 +216,7 @@ func (h *Handlers) mine(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handlers) pending(w http.ResponseWriter, r *http.Request) {
-	out, err := h.svc.List(func(v View) bool { return v.Status == StatusPending })
+	out, err := h.svc.List(func(v View) bool { return v.Status == StatusPending && v.Kind != KindHero })
 	if err != nil {
 		httpx.WriteError(w, err)
 		return

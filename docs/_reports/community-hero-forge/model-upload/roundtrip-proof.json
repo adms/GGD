@@ -1,0 +1,85 @@
+{
+  "schema": "ggd-model-upload-ui-roundtrip@1",
+  "scope": "authorized disposable localhost only",
+  "authorProject": "hero-c2a03c07-26b4-4a15-8534-169d2a2d74d7",
+  "remixProject": "hero-8e9aa473-0ca8-4a2e-9acf-9c8f1421c7f8",
+  "source": {
+    "workId": "hero-c2a03c07-26b4-4a15-8534-169d2a2d74d7",
+    "submissionId": "hero-081261a5977ec59a0fc3dab3154e1240ce8be634c072b51da5c0a20f5cf",
+    "packageDigest": "sha256:ad2c99799cd6a4d7fb4f005230a9c1770efc3ec46dd7950bee52386abbbc2fee",
+    "authorId": "01M1VXHK05YSRHV63PT76833QZ"
+  },
+  "originalCount": 2,
+  "authorFiles": [
+    {
+      "sha256": "6ccd3b50b01b4bb1c9bbda8352ca3c4b487f0cd034b6d2b62664a7df239d7375",
+      "bytes": 2011696,
+      "ownerGet": 200
+    },
+    {
+      "sha256": "833a22bca853516b5cdbceb3f5ca722baad3f593b6ee89ab7f44fc21cad0093e",
+      "bytes": 1918268,
+      "ownerGet": 200
+    },
+    {
+      "sha256": "660d460510d201f20c216d938b8d05000907db4df4cbcb95f2b4a2db9051673d",
+      "bytes": 3395320,
+      "ownerGet": 200
+    },
+    {
+      "sha256": "da0e68104c3e4692b2fd7c372c871cd2f1de9fff8540824d8c32653ed353a342",
+      "bytes": 3352968,
+      "ownerGet": 200
+    }
+  ],
+  "privateLibraryDeniedStatus": 404,
+  "privateLibraryAnonymousStatus": 401,
+  "publishedSourcePackage": {
+    "status": 200,
+    "bytes": 6171645,
+    "sha256": "c15f5c79101d191f807409e555d107913c87c0d11556d566376c4796ceae68bf",
+    "packageDigest": "sha256:ad2c99799cd6a4d7fb4f005230a9c1770efc3ec46dd7950bee52386abbbc2fee"
+  },
+  "runtime": {
+    "path": "assets/models/community/da0e68104c3e4692b2fd7c372c871cd2f1de9fff8540824d8c32653ed353a342.glb",
+    "sha256": "da0e68104c3e4692b2fd7c372c871cd2f1de9fff8540824d8c32653ed353a342",
+    "bytes": 3352968,
+    "clips": [
+      "驗收_獨立動作庫_舞蹈",
+      "lux_run",
+      "lux_attack1",
+      "lux_spell1",
+      "lux_idle1",
+      "lux_death"
+    ],
+    "descriptor": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "da0e68104c3e4692b2fd7c372c871cd2f1de9fff8540824d8c32653ed353a342",
+      "byteSize": 3352968,
+      "clipMap": {
+        "idle": "驗收_獨立動作庫_舞蹈",
+        "run": "lux_run",
+        "attack": "lux_attack1",
+        "cast": "lux_spell1",
+        "hurt": "lux_idle1",
+        "death": "lux_death"
+      },
+      "yawOffsetDeg": 0
+    }
+  },
+  "remixOriginals": [
+    {
+      "sha256": "da0e68104c3e4692b2fd7c372c871cd2f1de9fff8540824d8c32653ed353a342",
+      "name": "hero-body.glb",
+      "bytes": 3352968
+    }
+  ],
+  "remixSelections": {
+    "idle": 0,
+    "run": 1,
+    "attack": 2,
+    "cast": 3,
+    "hurt": 4,
+    "death": 5
+  }
+}

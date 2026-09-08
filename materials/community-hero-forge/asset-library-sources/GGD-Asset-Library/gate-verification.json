@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "check": "Missing or escaping dependency",
+      "result": "rejected"
+    },
+    {
+      "check": "GGD schema validation failed",
+      "result": "rejected"
+    },
+    {
+      "check": "Undeclared bundle files",
+      "result": "rejected"
+    },
+    {
+      "check": "hurt mapped to idle",
+      "result": "rejected"
+    },
+    {
+      "check": "modified ready file",
+      "result": "hidden from query"
+    },
+    {
+      "check": "standardized VFX query",
+      "result": 60
+    },
+    {
+      "check": "Lina remains pending",
+      "result": 2
+    }
+  ],
+  "catalog_unchanged_by_negative_checks": true
+}

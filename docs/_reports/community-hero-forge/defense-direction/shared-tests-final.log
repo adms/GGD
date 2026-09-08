@@ -1,0 +1,16 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ packages/shared/src/content/editorCapabilities.test.ts (6 tests) 327ms
+ ✓ packages/shared/src/sim/content/conditionDistanceLearned.test.ts (3 tests) 29ms
+ ✓ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts (27 tests) 1922ms
+   ✓ Azazel authored six-slot refinement > single-slot preparation is explicit; the actual kit earns its own EX resources 1407ms
+   ✓ Azazel authored six-slot refinement > precasts the real R for EX preview, preserving expiry, life payment and resource failure 326ms
+ ✓ packages/shared/src/sim/content/conditionFacing.test.ts (15 tests) 34ms
+
+ Test Files  4 passed (4)
+      Tests  51 passed (51)
+   Start at  15:55:25
+   Duration  11.65s (transform 3.79s, setup 0ms, collect 15.11s, tests 2.31s, environment 1ms, prepare 326ms)
+

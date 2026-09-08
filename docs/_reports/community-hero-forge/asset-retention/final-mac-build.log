@@ -1,0 +1,24 @@
+  • electron-builder  version=26.15.3 os=25.4.0
+  • loaded configuration  file=package.json ("build" field)
+  • packageManager not detected by file, falling back to environment detection  resolvedPackageManager=pnpm detected=/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor-desktop
+  • detected workspace root for project using packageManager field  pm=pnpm config=pnpm@9.15.9 resolved=/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge projectDir=/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor-desktop
+  • executing @electron/rebuild  electronVersion=37.10.3 arch=x64 buildFromSource=false workspaceRoot=/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge projectDir=./ appDir=./
+  • installing native dependencies  arch=x64
+  • completed installing native dependencies
+  • packaging       platform=darwin arch=x64 electron=37.10.3 appOutDir=/private/tmp/ggd-community-desktop-retention-final/mac-universal-x64-temp
+  • downloaded      label=electron progress=100%
+  • downloaded electron zip extracted successfully  output=/private/tmp/ggd-community-desktop-retention-final/mac-universal-x64-temp
+  • searching for node modules  pm=pnpm searchDir=/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor-desktop
+  • executing @electron/rebuild  electronVersion=37.10.3 arch=arm64 buildFromSource=false workspaceRoot=/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge projectDir=./ appDir=./
+  • installing native dependencies  arch=arm64
+  • completed installing native dependencies
+  • packaging       platform=darwin arch=arm64 electron=37.10.3 appOutDir=/private/tmp/ggd-community-desktop-retention-final/mac-universal-arm64-temp
+  • downloaded      label=electron progress=100%
+  • downloaded electron zip extracted successfully  output=/private/tmp/ggd-community-desktop-retention-final/mac-universal-arm64-temp
+  • searching for node modules  pm=pnpm searchDir=/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor-desktop
+  • packaging       platform=darwin arch=universal electron=37.10.3 appOutDir=/private/tmp/ggd-community-desktop-retention-final/mac-universal
+  • skipped macOS application code signing  reason=, see https://electron.build/code-signing CSC_IDENTITY_AUTO_DISCOVERY=false
+  • building        target=macOS zip arch=universal file=/private/tmp/ggd-community-desktop-retention-final/GGD Ability & VFX Editor-0.1.0-universal-mac.zip
+  • building        target=DMG arch=universal file=/private/tmp/ggd-community-desktop-retention-final/GGD Ability & VFX Editor-0.1.0-universal.dmg
+  • building block map  blockMapFile=/private/tmp/ggd-community-desktop-retention-final/GGD Ability & VFX Editor-0.1.0-universal.dmg.blockmap
+  • building block map  blockMapFile=/private/tmp/ggd-community-desktop-retention-final/GGD Ability & VFX Editor-0.1.0-universal-mac.zip.blockmap

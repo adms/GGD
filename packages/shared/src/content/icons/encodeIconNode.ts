@@ -30,7 +30,7 @@ export function encodeIcon(input: Uint8Array, opts: EncodeIconOptions = {}): Buf
   const run =
     opts.run ??
     ((args: readonly string[]): void => {
-      execFileSync("cwebp", [...args], { stdio: "pipe" });
+      execFileSync("cwebp", [...args], { stdio: "pipe", timeout: 15_000, maxBuffer: 1024 * 1024 });
     });
   const dir = mkdtempSync(join(tmpdir(), "ggd-icon-"));
   const src = join(dir, "in");

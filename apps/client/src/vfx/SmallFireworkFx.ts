@@ -1,3 +1,4 @@
+import { BUILTIN_VFX_TEXTURES } from "@ggd/shared/content/builtinVfxTextures";
 /**
  * SmallFireworkFx — the tier-1 (round-win) fireworks: a short volley of small
  * peony bursts popping over the grey screen.
@@ -57,9 +58,9 @@ export const SMALL_DISTANCE = SMALL_REF_DISTANCE;
 // Pooled specs MUST name a texture, or the ParticleSystem renders nothing —
 // see ChickenFireworkFx's note. Flare for the glowing cores, spark for streaks,
 // smoke for the body puff.
-const FLARE = "assets/textures/particles/flare_01.png";
-const SPARK = "assets/textures/particles/spark_05_rotated.png";
-const SMOKE = "assets/textures/particles/smoke_05.png";
+const FLARE = BUILTIN_VFX_TEXTURES.particles_flare_01;
+const SPARK = BUILTIN_VFX_TEXTURES.particles_spark_05_rotated;
+const SMOKE = BUILTIN_VFX_TEXTURES.particles_smoke_05;
 
 /**
  * One small shell's layers. Three, in the same grammar as `impactRecipe`:

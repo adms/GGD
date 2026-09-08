@@ -1,0 +1,36 @@
+{
+  "asset": "300heroes:7d330d5e4eae4e8c4a9b7c34",
+  "meshes": [
+    3,
+    0,
+    1,
+    2
+  ],
+  "fps": 32,
+  "textures": {
+    "0": "300heroes:78d86d9ebd349ad153b16686"
+  },
+  "clips": {
+    "idle": "bat_idle",
+    "run": "single_run",
+    "attack": "single_attack_attcom_1",
+    "cast": "single_skill_01",
+    "hurt": "bat_idle",
+    "death": "dead"
+  },
+  "characterId": "300heroes:151",
+  "sourceName": "八云紫",
+  "sourceOrigin": "東方 Project",
+  "target": {
+    "index": "34",
+    "name": "高速婆婆",
+    "relationship": "style-proxy"
+  },
+  "textureSearches": [
+    "151"
+  ],
+  "limitations": [
+    "Candidate only until rendered appearance review; game name and source design remain unchanged",
+    "hurt reuses idle; native body animation is not kit-specific choreography"
+  ]
+}

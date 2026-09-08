@@ -1,8 +1,10 @@
 /**
  * RenderConfig — the client quality tier. "mobile" (auto-detected on touch
  * devices / <=4 logical cores, manual override in the HUD settings corner)
- * caps hardware scaling at 1.5x and halves particle budgets to hold 60 fps on
- * iPhone; "desktop" keeps the 2x retina cap. Plain module state (discrete —
+ * caps hardware scaling at 1.5x and halves particle budgets. The supported
+ * portable target is iPad mini (A17 Pro), default 30 fps (frameCap.ts); the
+ * legacy "mobile" tier name remains for saved settings compatibility.
+ * "desktop" keeps the 2x retina cap. Plain module state (discrete —
  * changed by user action only); the Renderer subscribes to re-apply scaling
  * live. No @babylonjs imports needed here.
  */

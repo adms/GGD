@@ -1,0 +1,65 @@
+{
+  "sqlite_integrity": "ok",
+  "all_indexed_paths_checked": true,
+  "unique_missing_paths": [],
+  "stats": {
+    "300heroes": {
+      "character_entries": 276,
+      "indexed_records": 240759,
+      "kinds": {
+        "animation": 49859,
+        "audio": 72439,
+        "metadata": 7098,
+        "model": 34378,
+        "other": 29408,
+        "texture": 47543,
+        "vfx": 11,
+        "video": 23
+      },
+      "missing_paths": 0
+    },
+    "mba": {
+      "character_entries": 21,
+      "indexed_records": 4171,
+      "kinds": {
+        "animation": 1614,
+        "audio": 640,
+        "metadata": 21,
+        "model": 447,
+        "other": 217,
+        "texture": 808,
+        "vfx": 423,
+        "video": 1
+      },
+      "missing_paths": 0
+    },
+    "lol": {
+      "character_entries": 7,
+      "indexed_records": 955,
+      "kinds": {
+        "animation": 879,
+        "model": 42,
+        "skeleton": 7,
+        "texture": 27
+      },
+      "missing_paths": 0
+    },
+    "community37": {
+      "character_entries": 37,
+      "indexed_records": 296,
+      "kinds": {
+        "hero_project": 37,
+        "preview_package": 37,
+        "recipe": 37,
+        "vfx": 185
+      },
+      "missing_paths": 0
+    }
+  },
+  "evidence_scope": "File existence and index integrity; no new visual/runtime or content hash audit.",
+  "patch160_query_checks": {
+    "lina_glb": 1,
+    "lina_animation_clips": 78,
+    "kukuri_native_present_conversion_failure_reported": true
+  }
+}

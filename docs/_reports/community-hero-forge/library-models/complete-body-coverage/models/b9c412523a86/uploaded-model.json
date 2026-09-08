@@ -1,0 +1,14 @@
+{
+  "schema": "ggd-uploaded-hero-model@1",
+  "sha256": "b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03",
+  "byteSize": 199556,
+  "clipMap": {
+    "idle": "idle",
+    "run": "run",
+    "attack": "attack",
+    "cast": "cast",
+    "hurt": "hurt",
+    "death": "death"
+  },
+  "yawOffsetDeg": 0
+}

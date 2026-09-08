@@ -1,0 +1,33 @@
+{
+  "asset": "300heroes:64db6774e13416da32390b5b",
+  "meshes": [
+    2
+  ],
+  "fps": 32,
+  "textures": {
+    "0": "300heroes:c44f505307e217f6c91d3dee"
+  },
+  "clips": {
+    "idle": "bat_idle",
+    "run": "single_run",
+    "attack": "single_attack_attcom_a",
+    "cast": "single_skill_01_a",
+    "hurt": "bat_idle",
+    "death": "dead"
+  },
+  "characterId": "300heroes:239",
+  "sourceName": "夜斗",
+  "sourceOrigin": "流浪神差／野良神",
+  "target": {
+    "index": "22",
+    "name": "菜月昴",
+    "relationship": "style-proxy"
+  },
+  "textureSearches": [
+    "239"
+  ],
+  "limitations": [
+    "Candidate only until rendered appearance review; game name and source design remain unchanged",
+    "hurt reuses idle; native body animation is not kit-specific choreography"
+  ]
+}

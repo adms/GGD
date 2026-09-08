@@ -1,0 +1,41 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ❯ packages/shared/src/ops/clientContentImports.test.ts (1 test | 1 failed) 318ms
+   × 客戶端跨界 import 進 content/ 的檔案（GH#437） > 每一份都在 edge 的建置脈絡裡，且沒有多餘的 COPY 317ms
+     → 這些檔案被 client 原始碼靜態 import，但 docker/edge.Dockerfile 沒把它們帶進建置脈絡 ⇒ 正式 build 會死在 rollup 的 Could not resolve（而本機全綠）。補一行 COPY，或把它改成 `contentAssetUrl` 在執行期抓:
+  content/config/icon-upload.json: expected [ 'content/config/icon-upload.json' ] to deeply equal []
+ ✓ apps/content-api/src/heroImportServer.test.ts (3 tests) 415ms
+   ✓ offers the same work importer while official activation and Editor CRUD remain unreachable 319ms
+ ✓ apps/game-server/src/content/communityRuntime.test.ts (1 test) 131ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/shared/src/ops/clientContentImports.test.ts > 客戶端跨界 import 進 content/ 的檔案（GH#437） > 每一份都在 edge 的建置脈絡裡，且沒有多餘的 COPY
+AssertionError: 這些檔案被 client 原始碼靜態 import，但 docker/edge.Dockerfile 沒把它們帶進建置脈絡 ⇒ 正式 build 會死在 rollup 的 Could not resolve（而本機全綠）。補一行 COPY，或把它改成 `contentAssetUrl` 在執行期抓:
+  content/config/icon-upload.json: expected [ 'content/config/icon-upload.json' ] to deeply equal []
+
+- Expected
++ Received
+
+- Array []
++ Array [
++   "content/config/icon-upload.json",
++ ]
+
+ ❯ packages/shared/src/ops/clientContentImports.test.ts:105:7
+    103|         "正式 build 會死在 rollup 的 Could not resolve（而本機全綠）。…
+    104|         "補一行 COPY，或把它改成 `contentAssetUrl` 在執行期抓:\n  " + …
+    105|     ).toEqual([]);
+       |       ^
+    106| 
+    107|     const orphan = [...copied].filter((p) => !imported.has(p));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 4 passed (5)
+   Start at  18:29:00
+   Duration  9.11s (transform 3.12s, setup 0ms, collect 6.55s, tests 864ms, environment 1ms, prepare 279ms)
+

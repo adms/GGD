@@ -1,0 +1,134 @@
+- navigation:
+  - button "創作英雄"
+  - button "我的作品" [active]
+  - button "🔨 鑄技工坊"
+  - button "✨ 特效工坊"
+  - button "📦 匯出中心"
+  - heading "Collections" [level=2]
+  - button "Champions"
+  - button "Abilities"
+  - button "Items"
+  - button "Augments"
+  - button "Projectiles"
+  - button "Status Effects"
+  - button "Loot Tables"
+  - button "Arenas"
+  - button "Maps"
+  - button "Config"
+  - button "Models"
+  - button "VFX"
+  - button "Skins"
+  - button "Ability Templates"
+  - button "VFX Scripts"
+  - button "VFX Subtypes"
+- main:
+  - heading "我的作品" [level=1]
+  - paragraph: 本機草稿會保留未完成的欄位。保存草稿後仍需另行提交審查。
+  - generic: 已保存到本機
+  - list:
+    - heading "星牢砲師（齊勒斯概念改編）" [level=2]
+    - paragraph: 英雄作品 · 本機第 1 版 · 2026/9/6 下午8:56:18
+    - paragraph: 獨立恢復副本
+    - button "繼續編輯"
+    - heading "聽雷行者（李星概念改編）" [level=2]
+    - paragraph: 英雄作品 · 本機第 1 版 · 2026/9/6 下午8:54:48
+    - paragraph: 獨立恢復副本
+    - button "繼續編輯"
+    - heading "緋帆槍手（好運姐概念改編）" [level=2]
+    - paragraph: 英雄作品 · 本機第 1 版 · 2026/9/6 下午8:53:46
+    - paragraph: 獨立恢復副本
+    - button "繼續編輯"
+    - heading "逐風浪客（犽宿概念改編）" [level=2]
+    - paragraph: 英雄作品 · 本機第 1 版 · 2026/9/6 下午8:52:43
+    - paragraph: 獨立恢復副本
+    - button "繼續編輯"
+    - heading "稜光引路人（拉克絲概念改編）" [level=2]
+    - paragraph: 英雄作品 · 本機第 1 版 · 2026/9/6 下午8:52:29
+    - paragraph: 獨立恢復副本
+    - button "繼續編輯"
+    - heading "暮鐘詠者（卡爾瑟斯概念改編）" [level=2]
+    - paragraph: 英雄作品 · 本機第 1 版 · 2026/9/6 下午8:48:11
+    - paragraph: 獨立恢復副本
+    - button "繼續編輯"
+    - heading "赤痕獵衛（沃維克概念改編）" [level=2]
+    - paragraph: 英雄作品 · 本機第 1 版 · 2026/9/6 下午8:41:50
+    - paragraph: 獨立恢復副本
+    - button "繼續編輯"
+    - heading "驗收星界守望者" [level=2]
+    - paragraph: 英雄作品 · 本機第 1 版 · 2026/9/6 下午5:10:30
+    - paragraph: 獨立恢復副本
+    - button "繼續編輯"
+    - heading "驗收星界守望者" [level=2]
+    - paragraph: 英雄作品 · 本機第 2 版 · 2026/9/6 下午5:08:43
+    - paragraph: 獨立恢復副本
+    - button "繼續編輯"
+    - heading "驗收星界守望者" [level=2]
+    - paragraph: 英雄作品 · 本機第 18 版 · 2026/9/6 下午4:59:24
+    - button "繼續編輯"
+    - heading "未命名英雄" [level=2]
+    - paragraph: 英雄作品 · 本機第 1 版 · 2026/9/6 下午3:17:57
+    - button "繼續編輯"
+  - region "雲端與社群作品":
+    - heading "雲端與社群作品" [level=2]
+    - text: 遊戲帳號
+    - textbox "遊戲帳號"
+    - text: 密碼
+    - textbox "密碼"
+    - button "登入以同步與投稿"
+    - button "更新雲端與發布清單"
+    - paragraph: 登入後可取回雲端草稿，或開啟作者授權的署名改作。
+    - heading "已發布英雄" [level=3]
+    - list:
+      - heading "驗收星界守望者" [level=4]
+      - paragraph: 作者 hero-author · 已發布
+      - button "建立署名改作" [disabled]
+      - heading "同局驗證英雄 1" [level=4]
+      - paragraph: 作者 hero-author · 已發布
+      - button "建立署名改作" [disabled]
+      - heading "同局驗證英雄 2" [level=4]
+      - paragraph: 作者 hero-author · 已發布
+      - button "建立署名改作" [disabled]
+      - heading "同局驗證英雄 1・新版" [level=4]
+      - paragraph: 作者 hero-author · 已發布
+      - button "建立署名改作" [disabled]
+      - heading "同局驗證英雄 2" [level=4]
+      - paragraph: 作者 hero-author · 已發布
+      - button "建立署名改作" [disabled]
+      - heading "同局驗證英雄 1・新版" [level=4]
+      - paragraph: 作者 hero-author · 已發布
+      - button "建立署名改作" [disabled]
+      - heading "同局驗證英雄 1・新版" [level=4]
+      - paragraph: 作者 hero-author · 已發布
+      - button "建立署名改作" [disabled]
+  - region "社群角色驗收範例":
+    - heading "LoL 概念改編・社群角色驗收" [level=2]
+    - paragraph: 建立自己的六槽英雄副本，直接試玩、調整及送審。範例使用本遊戲的積木與級距，AI 關閉也能完成。
+    - list:
+      - heading "沃維克 → 赤痕獵衛" [level=3]
+      - paragraph: 循血追擊的近戰獵手，以短程撲擊、持續汲取與壓制連段作戰。
+      - generic "查看改編差異"
+      - button "建立沃維克改編作品"
+      - heading "卡爾瑟斯 → 暮鐘詠者" [level=3]
+      - paragraph: 在陣地間敲響暮鐘，使用延遲爆破、持續領域與有預警的遠端轟擊。
+      - generic "查看改編差異"
+      - button "建立卡爾瑟斯改編作品"
+      - heading "拉克絲 → 稜光引路人" [level=3]
+      - paragraph: 結合光束、短效束縛與護盾，以清楚的施法提示協助隊伍創造進攻空間。
+      - generic "查看改編差異"
+      - button "建立拉克絲改編作品"
+      - heading "犽宿 → 逐風浪客" [level=3]
+      - paragraph: 以短程穿行與風刃連擊掌握距離，使用防護姿態承受反擊。
+      - generic "查看改編差異"
+      - button "建立犽宿改編作品"
+      - heading "好運姐 → 緋帆槍手" [level=3]
+      - paragraph: 以雙重射擊、機動增益與持續彈雨控制交戰區域。
+      - generic "查看改編差異"
+      - button "建立好運姐改編作品"
+      - heading "李星 → 聽雷行者" [level=3]
+      - paragraph: 以聲波探擊、短程進身、護身與踢離敵人的連續節奏作戰。
+      - generic "查看改編差異"
+      - button "建立李星改編作品"
+      - heading "齊勒斯 → 星牢砲師" [level=3]
+      - paragraph: 以蓄能光路、落點爆破與定身咒彈控制距離，施放有限次數的奧術轟擊。
+      - generic "查看改編差異"
+      - button "建立齊勒斯改編作品"

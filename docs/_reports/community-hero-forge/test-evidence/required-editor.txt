@@ -1,0 +1,59 @@
+
+> ggd@0.0.0 editor:accept:release /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> node tools/editor-acceptance/check.mjs --release
+
+{"schema":"ggd-editor-acceptance-run@1","mode":"release","generatedAt":"2026-09-06T10:34Z","branch":"codex/community-hero-forge-integration","head":"4793eaaaf277","originMain":"4793eaaaf277","dirty":true,"worktreeChangeCount":193,"handbackMainCommit":null,"coverageFingerprint":"32be1c0cc048","capabilityFingerprint":"094ecc9c","geminiVisualReview":"disabled-not-requested"}
+PASS Main capability receipt
+FAIL Editor coverage freshness
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ❯ packages/shared/src/ops/editorCoverageFresh.test.ts (2 tests | 1 failed) 3071ms
+   × 編輯器涵蓋率清單不可能過期（owner 2026-08-30「分工明確」） > ★ 清單與出貨註冊表逐位元組同步 3063ms
+     → ⛔ 編輯器涵蓋率清單過期了 —— ⭐ 這代表引擎長出了新機制而清單沒跟上。
+   跑：pnpm editorcov:build && git add docs/editor-contract/
+   ⚠️ ⛔ 不要手改那份 JSON（第〇·四守則：它從出貨註冊表推導）。
+
+⛔ docs/editor-contract/ggd-editor-coverage.json 過期了。
+   ⭐ 跑：pnpm editorcov:build && git add docs/editor-contract/
+   ⚠️ ⛔ 不要手改那份 JSON —— 它從出貨註冊表推導（第〇·四守則）。
+: expected 1 to be +0 // Object.is equality
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  18:34:24
+   Duration  3.59s (transform 81ms, setup 0ms, collect 56ms, tests 3.07s, environment 0ms, prepare 103ms)
+
+
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+⛔ docs/editor-contract/ggd-editor-coverage.json 過期了。
+   ⭐ 跑：pnpm editorcov:build && git add docs/editor-contract/
+   ⚠️ ⛔ 不要手改那份 JSON —— 它從出貨註冊表推導（第〇·四守則）。
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/shared/src/ops/editorCoverageFresh.test.ts > 編輯器涵蓋率清單不可能過期（owner 2026-08-30「分工明確」） > ★ 清單與出貨註冊表逐位元組同步
+AssertionError: ⛔ 編輯器涵蓋率清單過期了 —— ⭐ 這代表引擎長出了新機制而清單沒跟上。
+   跑：pnpm editorcov:build && git add docs/editor-contract/
+   ⚠️ ⛔ 不要手改那份 JSON（第〇·四守則：它從出貨註冊表推導）。
+
+⛔ docs/editor-contract/ggd-editor-coverage.json 過期了。
+   ⭐ 跑：pnpm editorcov:build && git add docs/editor-contract/
+   ⚠️ ⛔ 不要手改那份 JSON —— 它從出貨註冊表推導（第〇·四守則）。
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ packages/shared/src/ops/editorCoverageFresh.test.ts:76:7
+     74|         out.slice(0, 600),
+     75|       ].join("\n"),
+     76|     ).toBe(0);
+       |       ^
+     77|   });
+     78| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+ ELIFECYCLE  Command failed with exit code 1.

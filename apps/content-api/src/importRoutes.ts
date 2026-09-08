@@ -54,6 +54,12 @@ import type { ImportDiagnostic } from "@ggd/shared/content/import/diagnostics";
 // ⭐⭐ GH#1022 —— `POST /digest` 的三個零件。⛔ 這裡**不算** JCS，只把 TS 側唯一那份
 //   `packageDigest()` / `contentSha256()` 掛成一個純函式端點給 platform（Go）問。
 import { parseImportPackage } from "@ggd/shared/content/import/packageSchema";
+import type { HeroPackageTarget } from "@ggd/shared/content/import/heroPackage";
+import { runHeroPackageJob, heroPackageJobsIdle } from "./heroPackageWorkerClient";
+import { ImportTransientCleanup } from "./importTransientCleanup";
+import { registerHeroWorkRoutes, HERO_WORK_ENDPOINTS } from "./heroWorkRoutes";
+import { readHeroContentSnapshot, type HeroOverlayReader } from "./heroContentSnapshot";
+import type { OverlayBundle } from "@ggd/shared/content/overlay";
 import { packageDigest } from "@ggd/shared/content/import/digest";
 import { contentSha256 } from "@ggd/shared/content/import/jcs";
 import { buildAuthoringProcessor } from "@ggd/shared/content/import/authoringProcessor";
@@ -63,25 +69,19 @@ import {
   validatePackage,
 } from "@ggd/shared/content/import/validatePackage";
 import type { BaseFacts } from "@ggd/shared/content/import/validatePackage";
-import {
-  ZIP_LIMITS,
-  checkZipSafety,
-} from "@ggd/shared/content/import/zipSafety";
-import {
-  ZipFormatError,
-  archiveSha256,
-  extractEntry,
-  readCentralDirectory,
-} from "./zipReader";
+import { ZIP_LIMITS } from "@ggd/shared/content/import/zipSafety";
+import { readPackageZip } from "@ggd/shared/content/import/readPackageZip";
+import { ZipFormatError, archiveSha256 } from "./zipReader";
+import { inflateRawSync } from "node:zlib";
 // ⭐⭐ GH#966 —— icon 二進位通道。⭐ 轉檔規則**只有一個住處**（`encodeIcon`），
 //   而驗證（magic bytes／檔頭長寬／CAS）住 shared 的純函式那一側。
-import { ASSET_ROLE, type IconUploadPolicy } from "@ggd/shared/content/import/iconAssets";
+import type { IconUploadPolicy } from "@ggd/shared/content/import/iconAssets";
 import {
   ICON_UPLOAD_DOC_ID,
   resolveIconUpload,
 } from "@ggd/shared/content/schema/config/iconUpload";
 import { assetSha256, existingIconShas, landIconAssets } from "./iconLanding";
-import { createHash } from "node:crypto";
+import { currentMigrationFingerprint } from "@ggd/shared/content/import/migrationFingerprint";
 import { ImportStore } from "./importStore";
 import type { ActivePointer } from "./importStore";
 import { sha256Hex } from "@ggd/shared/content/sha256";
@@ -122,8 +122,13 @@ export interface ImportRoutesOptions {
   repoRoot?: string;
   /** ⭐ 匯入狀態的落點。預設 `<contentDir>/../data/content-import`（⛔ 在 content/ 之外）。 */
   importDir?: string;
+  templateHistoryDir?: string;
   /** 注入時鐘，讓守衛拿得到穩定的 `generatedAt`。 */
   now?: () => Date;
+  /** Private community channel: register work storage without official activation. */
+  workOnly?: boolean;
+  /** Deployment-owned overlay snapshot source, shared with the game's content target. */
+  heroOverlay?: HeroOverlayReader;
 }
 
 /**
@@ -273,6 +278,18 @@ export function registerImportRoutes(
   const store = new ImportStore({
     dir: opts.importDir ?? resolve(root, "..", "data", "content-import"),
   });
+  const cleanup = new ImportTransientCleanup(store.directory);
+  const cleanTransient = () => {
+    if (!heroPackageJobsIdle()) return;
+    const result = cleanup.step();
+    if (result.removed || result.errors) {
+      app.log.info(result, "content-import: transient cache cleanup");
+      if (!store.audit("content-api", "content-import.transient-cleanup", { ...result })) app.log.warn("content-import: transient cleanup audit could not be saved");
+    }
+  };
+  let cleanupTimer: ReturnType<typeof setInterval> | undefined;
+  app.addHook("onReady", async () => { cleanTransient(); cleanupTimer = setInterval(cleanTransient, 60_000); cleanupTimer.unref(); });
+  app.addHook("onClose", async () => { clearInterval(cleanupTimer); cleanup.close(); });
 
   /**
    * ⭐ profile 要的那幾格「這台**現在**是什麼狀態」。
@@ -287,7 +304,6 @@ export function registerImportRoutes(
     migrationFingerprint: string;
   } => {
     const a = store.active();
-    const caps = buildCapabilityManifest();
     return {
       active: {
         hasSnapshot: a !== null,
@@ -297,15 +313,9 @@ export function registerImportRoutes(
         //   ⛔ 而兩格**刻意分開**：之後 authoring store 與 activation 會分家。
         authoringDigest: a?.activationDigest ?? null,
       },
-      migrationFingerprint: sha12(
-        JSON.stringify(caps.docSurface) + "|" + JSON.stringify(caps.templateFamilies),
-      ),
+      migrationFingerprint: currentMigrationFingerprint(),
     };
   };
-
-  /** ⭐ 與 repo 其餘 digest 同一個政策（sha256 前 12 hex）。 */
-  const sha12 = (t: string): string =>
-    createHash("sha256").update(t, "utf8").digest("hex").slice(0, 12);
 
   const { limits, clamped } = clampImportLimits(opts.limits);
   if (clamped.length > 0) {
@@ -478,7 +488,7 @@ export function registerImportRoutes(
     );
 
     app.get(`${prefix}/active/target-profile`, async (_req, reply) => {
-      const content = await readContentFacts(root);
+      const content = opts.workOnly && opts.heroOverlay ? (await readHeroContentSnapshot(root, opts.heroOverlay)).content : await readContentFacts(root);
       return reply.send(
         buildTargetProfile({
           generatedAt: now().toISOString(),
@@ -492,7 +502,7 @@ export function registerImportRoutes(
           authoringProcessor,
           // ⭐ 與上面**同一支** `g2Facts()` ⇒ ⛔ 兩份 profile 不可能對 stage 說不同的話。
           ...g2Facts(),
-          importerEndpoints: IMPORTER_ENDPOINTS,
+          importerEndpoints: opts.workOnly ? HERO_WORK_ENDPOINTS : IMPORTER_ENDPOINTS,
           ...(opts.reloadMode !== undefined
             ? { reloadMode: opts.reloadMode }
             : {}),
@@ -555,8 +565,16 @@ export function registerImportRoutes(
 
     registerG2Routes(app, prefix, {
       root,
+      repoRoot,
       store,
+      templateHistoryDir: opts.templateHistoryDir ?? (opts.importDir ? resolve(opts.importDir, "template-history") : undefined),
+      workOnly: opts.workOnly,
       authoringProcessor,
+      heroContext: async () => {
+        if (!opts.gameVersion || !authoringProcessor) return null;
+        const snapshot = await readHeroContentSnapshot(root, opts.heroOverlay);
+        return { target: { gameRevision: opts.gameVersion, contentVersion: snapshot.content.contentVersion, migrationFingerprint: g2Facts().migrationFingerprint, processorFingerprint: authoringProcessor.fingerprint }, overlay: snapshot.overlay };
+      },
       // ⭐ 這一台**支援**的 capability id ——
       //   ⛔ 從出貨的 `simCapabilities`（available=true 的那些）＋ 出貨 effect kinds 推導，
       //   ⛔ 不是一張手寫名單（第〇·五守則：能力清單是**推導出來**的）。
@@ -588,6 +606,7 @@ export function registerImportRoutes(
  * ⛔ 不是兩份會漂的清單。閘：`importRoutesG2.test.ts` 逐條 inject 打得到。
  */
 export const IMPORTER_ENDPOINTS: readonly { method: string; path: string }[] = Object.freeze([
+  ...HERO_WORK_ENDPOINTS,
   { method: "POST", path: "/validate" },
   // ⭐ GH#931 —— 後台「載入單檔 JSON」的**安全便道**：server 建 canonical
   //   single-root delta package，⛔ 不是讓人把 raw JSON 冒充 package。
@@ -713,9 +732,13 @@ export function computeDigestReport(
 }
 
 interface G2Deps {
+  readonly repoRoot: string;
+  readonly templateHistoryDir?: string;
   readonly root: string;
   readonly store: ImportStore;
   readonly authoringProcessor: { readonly fingerprint: string } | null;
+  readonly heroContext: () => Promise<{ target: HeroPackageTarget; overlay?: OverlayBundle } | null>;
+  readonly workOnly?: boolean;
   readonly capabilities: () => Set<string>;
   readonly reloadMode: ReloadMode;
 }
@@ -737,10 +760,12 @@ async function readBaseFacts(
     try {
       const b = JSON.parse(await readFile(idx, "utf8")) as {
         docs?: Record<string, Record<string, unknown>>;
+        collections?: Record<string, { entries?: { id: string }[] }>;
       };
       for (const [collection, byId] of Object.entries(b.docs ?? {})) {
         present.set(collection, new Set(Object.keys(byId)));
       }
+      for (const [collection, value] of Object.entries(b.collections ?? {})) present.set(collection, new Set((value.entries ?? []).map((entry) => entry.id)));
     } catch {
       // ⛔ 讀不到就是空的 —— 呼叫端會在 full 模式看到「隱式刪除」而停下來。
     }
@@ -789,106 +814,10 @@ function registerG2Routes(
    *   ③ **只解**通過的那些 entry，且逐份驗 local header／長度／CRC
    * ⇒ ⭐ ②夾在①③之間 —— ⛔ 任何「先解開再檢查」的寫法都讓檢查變成裝飾。
    */
-  const fromZip = (body: Buffer): unknown => {
-    if (body.length > ZIP_LIMITS.maxArchiveCompressedBytes) {
-      throw new ZipFormatError(
-        "ZIP_ARCHIVE_TOO_LARGE",
-        `ZIP ${body.length} bytes 超過上限 ${ZIP_LIMITS.maxArchiveCompressedBytes}。`,
-      );
-    }
-    const cd = readCentralDirectory(body);
-    const safety = checkZipSafety(cd.entries);
-    if (!safety.ok) {
-      const first = safety.diagnostics[0];
-      throw new ZipFormatError(
-        first?.code ?? "ZIP_UNSAFE",
-        safety.diagnostics
-          .map((x) => `${x.code} ${x.path}: ${x.message}`)
-          .join(" | "),
-      );
-    }
-    // ⭐⭐ **二進位感知** —— ⛔ 在此之前這裡是 `.toString("utf8")` **無條件**跑在
-    //   每一個 entry 上。⚠️ 一張 PNG 被 UTF-8 解碼再也回不去（無效序列全部變成 U+FFFD）
-    //   ⇒ ⭐ 「圖進來了」與「圖沒進來」在這一行之後**長得一模一樣**。
-    const raw = new Map<string, Buffer>();
-    for (const e of cd.entries) {
-      if (e.isDirectory === true) continue;
-      raw.set(e.path, extractEntry(body, e));
-    }
-    const manifestRaw = raw.get("manifest.json");
-    if (manifestRaw === undefined) {
-      throw new ZipFormatError(
-        "ZIP_MANIFEST_MISSING",
-        "ZIP 裡沒有 manifest.json。",
-      );
-    }
-    const manifest = JSON.parse(manifestRaw.toString("utf8")) as unknown;
-
-    // ── ⭐⭐ **兩個方向都要對得上** —— ⛔ 沒有這一段，設計師永遠不知道圖掉了 ────
-    //
-    // ⛔ 在此之前這裡是 `if (!path.startsWith("authoring/")) continue;` ——
-    //   ⚠️ 一個**靜默的 continue**。疊上上面那個 `.toString("utf8")` 之後，
-    //   症狀是本 repo 記錄過最糟的一種：
-    //   **匯出成功 · 上傳成功 · validate 通過 · ⛔ 而 icon 不見了**，
-    //   ⛔ 而沒有任何一步會說。
-    //
-    // ⭐ 而它是**失敗形態⑫**（只驗名詞不驗關係的反方向）的教科書實例：
-    //   舊的迴圈從「**宣告**」那一頭走（manifest 說有什麼 ⇒ 去 zip 拿），
-    //   ⇒ ⛔ 結構上看不見「**有實體而無宣告**」的那一種。
-    //   ⇒ ⭐ 所以這裡**兩頭都走**，⛔ 一頭不算。
-    const declared = new Map<string, string>(); // path → role
-    const entries = (manifest as { entries?: unknown })?.entries;
-    if (Array.isArray(entries)) {
-      for (const e of entries as { path?: unknown; role?: unknown }[]) {
-        if (typeof e?.path === "string") {
-          declared.set(e.path, typeof e.role === "string" ? e.role : "");
-        }
-      }
-    }
-    // ⭐ `manifest.json` 是**傳輸層自己的**檔（規格 §8），⛔ 不是一份 entry ——
-    //   它是那張清單本身，一份清單不可能列出自己。
-    const STRUCTURAL = new Set(["manifest.json"]);
-    for (const path of raw.keys()) {
-      if (STRUCTURAL.has(path) || declared.has(path)) continue;
-      throw new ZipFormatError(
-        "ZIP_ENTRY_UNDECLARED",
-        `⛔⛔ ZIP 裡有 \`${path}\`，而 manifest 的 entries[] **沒有宣告它** ⇒ ` +
-          "⭐ 它會被靜靜地丟掉，而匯出／上傳／validate 三步都會說成功。" +
-          "⇒ 請在 manifest 補一列（icon 圖片用 `role: \"asset\"`），或把它從 zip 拿掉。",
-      );
-    }
-    for (const path of declared.keys()) {
-      if (raw.has(path)) continue;
-      throw new ZipFormatError(
-        "ZIP_ENTRY_MISSING",
-        `⛔ manifest 宣告了 \`${path}\`，而 ZIP 裡沒有這一份 ⇒ ` +
-          "⭐ 宣告與位元組必須兩邊都在（⛔ 一頭不算）。",
-      );
-    }
-
-    const documents: { path: string; document: unknown }[] = [];
-    const assets: { path: string; bytes: Buffer }[] = [];
-    for (const [path, buf] of raw) {
-      // ⭐ `role: "asset"` 的 entry **保持 Buffer**，⛔ 不 `.toString("utf8")`。
-      if (declared.get(path) === ASSET_ROLE) {
-        assets.push({ path, bytes: buf });
-        continue;
-      }
-      if (!path.startsWith("authoring/")) continue;
-      documents.push({ path, document: JSON.parse(buf.toString("utf8")) as unknown });
-    }
-    documents.sort((a, b) => (a.path < b.path ? -1 : 1));
-    assets.sort((a, b) => (a.path < b.path ? -1 : 1));
-    return {
-      schema: "ggd-editor-import@1",
-      manifest,
-      documents,
-      // ⭐ 二進位不進 zod（`zEditorImportPackage` 讀得懂的是 JSON）——
-      //   它走**旁邊**的通道，由 `checkIconAssets()` 驗。
-      //   ⚠️ ⛔ 不可以把圖 `toString()` 出來算雜湊：那就是本票要修的那個 bug 的第二次。
-      assets,
-    };
-  };
+  const fromZip = (body: Buffer): unknown => readPackageZip(body, {
+    inflate: (compressed, maxBytes) => inflateRawSync(compressed, { maxOutputLength: Math.max(1, maxBytes) }),
+    verifyContent: false, // validatePackage supplies the authoritative field-level diagnostics.
+  });
 
   /**
    * ⭐ body 可能是 JSON 也可能是 ZIP。
@@ -913,6 +842,11 @@ function registerG2Routes(
   const runValidate = async (raw: unknown) => {
     const entries =
       (raw as { manifest?: { entries?: unknown } } | null)?.manifest?.entries;
+    const isHero = (raw as { manifest?: { scope?: string } } | null)?.manifest?.scope === "community-work";
+    if (isHero) {
+      const context = await d.heroContext();
+      return runHeroPackageJob(d.root, { kind: "validate", repoRoot: d.repoRoot, templateHistoryDir: d.templateHistoryDir, overlay: context?.overlay, input: { raw, base: await readBaseFacts(d.root, d.store.active()), capabilities: d.capabilities(), processorFingerprint: fp, heroTarget: context?.target ?? null } }, d.store.directory);
+    }
     return validatePackage({
       raw,
       base: await readBaseFacts(d.root, d.store.active()),
@@ -965,6 +899,9 @@ function registerG2Routes(
     authoringStoreState: d.store.active() === null ? "absent" : "present",
     ...extra,
   });
+
+  registerHeroWorkRoutes(app, prefix, { root: d.root, repoRoot: d.repoRoot, templateHistoryDir: d.templateHistoryDir, store: d.store, context: d.heroContext, packageOf, validate: runValidate, iconPolicy });
+  if (d.workOnly) return;
 
   // ── POST /validate —— ⭐ **無狀態變更**（規格逐字）───────────────────────
   app.post(
@@ -1101,6 +1038,7 @@ function registerG2Routes(
       }
       // ⭐ 冪等：已經到終態的操作**直接回它自己**（⛔ 不重跑）。
       const prior = d.store.getOperation(operationId);
+      if (prior?.kind === "work-prepare") return reply.code(409).send({ schema: IMPORT_ERROR_SCHEMA, code: "OPERATION_INPUT_CONFLICT", message: "作品安置操作不能改作官方啟用操作。", retryable: false });
       if (
         prior !== null &&
         (prior.status === "activated" || prior.status === "rejected")
@@ -1128,6 +1066,10 @@ function registerG2Routes(
         });
       }
       const v = await runValidate(rawPkg);
+      if (v.value?.manifest.scope === "community-work" || v.hero) {
+        d.store.updateOperation(operationId, { status: "rejected", diagnostics: [{ code: "WORK_SCOPE_REQUIRED", severity: "error", message: "社群英雄只能安置作品版本，不能切換官方 ACTIVE。" }] });
+        return reply.code(422).send({ schema: IMPORT_ERROR_SCHEMA, code: "WORK_SCOPE_REQUIRED", message: "社群英雄只能安置作品版本，不能切換官方 ACTIVE。", retryable: false });
+      }
       if (!v.ok || v.value === null) {
         d.store.updateOperation(operationId, {
           status: "rejected",

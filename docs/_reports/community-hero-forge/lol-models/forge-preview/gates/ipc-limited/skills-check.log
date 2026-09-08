@@ -1,0 +1,36 @@
+
+> ggd@0.0.0 skills:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> pnpm tiers:apply:check && pnpm spec:check && pnpm overview:check && pnpm tiers:check && pnpm mana:audit:check && pnpm typecat:check && pnpm skillforge:audit:check && pnpm skillforge:visual-review:check && pnpm skillforge:visual-sheets:check && pnpm vfxforge:handback:check && pnpm editorcov:check && pnpm bricks:check && pnpm assets:manifest:check && pnpm jasstpl:check && pnpm caps:check && pnpm collections:check && pnpm skillremake:docs:check && pnpm skillremake:json:check && pnpm skillremake:provenance:check && pnpm grail:wishes:check && pnpm contract:numbers:check && pnpm atlas:check && pnpm treasure:csv:check && pnpm docs:readme:check && pnpm docs:status:check && pnpm roster:check && pnpm pitch:check && pnpm newhero:check && pnpm lowdmg:check && pnpm anchors:check && pnpm statcaps:check && pnpm apconv:plan:check && pnpm apconv:check && pnpm apdmg:check && pnpm board:check && pnpm msgledger:check && pnpm skillnorm:check && pnpm speedtiers:check && pnpm jasscombo:check && pnpm vfxbind:check && pnpm models:check && pnpm lod:check && pnpm audit:check && pnpm echoloop:check && pnpm templates:check && pnpm prose:check && pnpm sfxbind:check && pnpm shapes:check && pnpm beam:check && pnpm archetypes:check && pnpm enableaudit:check && pnpm review:check && pnpm declshape:check && pnpm decor:check && pnpm speedlists:check && pnpm locust:check && pnpm w3a:check && pnpm board:roll:check && pnpm ruleslip:check && pnpm receipt:check && pnpm handback:check && pnpm clipdeg:check && pnpm apcoeffdiff:check && pnpm decor:check && pnpm appearance:check && pnpm ptokens:check && pnpm coord:check
+
+
+> ggd@0.0.0 tiers:apply:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> python3 tools/skill-remake/apply_tiers.py --check
+
+收進級距：0 / 421 份直接編的技能文件（產生器擁有的 15 位英雄由 batch1.py 套用同一個 tierize）
+英雄卡內嵌鏡射：0 份
+
+> ggd@0.0.0 spec:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/skill-spec/gen_spec.ts --check
+
+node:net:1986
+      const error = new UVExceptionWithHostPort(rval, 'listen', address, port);
+                    ^
+
+Error: listen EPERM: operation not permitted /var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/tsx-503/29147.pipe
+    at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+    at listenInCluster (node:net:2065:12)
+    at Server.listen (node:net:2187:5)
+    at file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:53:31472
+    at new Promise (<anonymous>)
+    at createIpcServer (file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:53:31450)
+    at async file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:55:500 {
+  code: 'EPERM',
+  errno: -1,
+  syscall: 'listen',
+  address: '/var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/tsx-503/29147.pipe',
+  port: -1
+}
+
+Node.js v25.9.0
+ ELIFECYCLE  Command failed with exit code 1.
+ ELIFECYCLE  Command failed with exit code 1.

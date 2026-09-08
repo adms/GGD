@@ -1,0 +1,2 @@
+ ERROR  Unknown options: 'pool', 'poolOptions.forks.minForks', 'poolOptions.forks.maxForks', 'poolOptions.threads.minThreads', 'poolOptions.threads.maxThreads'
+For help, run: pnpm help test

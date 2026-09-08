@@ -1,0 +1,19 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ packages/shared/src/ops/coordCheck.test.ts (8 tests) 4605ms
+   ✓ coord:check —— packet 協定的閘 > keeps unchanged merged receipts historical, including under --run-repro 371ms
+   ✓ coord:check —— packet 協定的閘 > still rejects stale new packets and edited packets with the merged fingerprint 702ms
+   ✓ coord:check —— packet 協定的閘 > actually runs a new packet's repro against its declared exit code 1020ms
+   ✓ coord:check —— packet 協定的閘 > ⭐ 出貨的 packet 目錄全過（⛔ 沒擋過頭） 850ms
+   ✓ coord:check —— packet 協定的閘 > ⭐ 哨兵：`brick-request` 只列 1 支 unblocks ⇒ 紅，而且訊息指名 unblocks 336ms
+   ✓ coord:check —— packet 協定的閘 > ⭐ 哨兵：有 `status` 欄位 ⇒ 紅（狀態住在 PR） 334ms
+   ✓ coord:check —— packet 協定的閘 > ⭐ 哨兵：`repro.command` 不在白名單 ⇒ 紅（安全邊界：CI 會真的執行它） 336ms
+   ✓ coord:check —— packet 協定的閘 > ⭐ 哨兵：缺必填欄位 / baseCommit 不是 origin/main 的祖先 ⇒ 紅並逐條列出 654ms
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  18:33:13
+   Duration  5.68s (transform 96ms, setup 0ms, collect 72ms, tests 4.60s, environment 0ms, prepare 139ms)
+

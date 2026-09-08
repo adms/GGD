@@ -1,0 +1,152 @@
+{
+  "scope": "Current tracked resource-format bytes across four GGD worktrees and editor pack. Not Git history, dependency caches, unrelated AI research, or the entire Mac.",
+  "resourcePathsChecked": 29108,
+  "uncoveredPaths": 0,
+  "uncovered": [],
+  "repositories": [
+    {
+      "repository": "GGD",
+      "head": "d28511454d962ed69db1821e14e9e4b723178ab6"
+    },
+    {
+      "repository": "GGD-community-hero-forge",
+      "head": "a84cfd1976b66a8214ea7ce39365376240d5f3ad"
+    },
+    {
+      "repository": "GGD-community-hero-forge-s3",
+      "head": "ac722c55096157b735df7624f7dc9e6b70b99acc"
+    },
+    {
+      "repository": "GGD-hero-auto-forge",
+      "head": "596b2613c19ee6ac78ded74f99ad0d64f33381f6"
+    }
+  ],
+  "resourceExtensions": [
+    "avi",
+    "bin",
+    "blend",
+    "blp",
+    "dds",
+    "doo",
+    "exr",
+    "fbx",
+    "gif",
+    "glb",
+    "gltf",
+    "gz",
+    "hdr",
+    "imp",
+    "jpeg",
+    "jpg",
+    "ktx",
+    "ktx2",
+    "mdl",
+    "mdx",
+    "mmp",
+    "mp3",
+    "mp4",
+    "obj",
+    "ogg",
+    "png",
+    "psd",
+    "sf3",
+    "shd",
+    "svg",
+    "tar",
+    "tga",
+    "w3a",
+    "w3b",
+    "w3c",
+    "w3d",
+    "w3e",
+    "w3h",
+    "w3i",
+    "w3q",
+    "w3r",
+    "w3s",
+    "w3t",
+    "w3u",
+    "wav",
+    "wct",
+    "webm",
+    "webp",
+    "wpm",
+    "wtg",
+    "zip"
+  ],
+  "inventories": [
+    {
+      "path": "materials/community-hero-forge/manifest.json",
+      "sha256": "3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74"
+    },
+    {
+      "path": "materials/community-hero-forge/supplements/workspace-assets-20260908/manifest.json",
+      "sha256": "283184343e1b6ff01481d745c8bc5f714484d25ee5a05dd4a9eab2fb383f6d2d"
+    },
+    {
+      "path": "../GGD-Asset-Library/shared/releases/edce15c8630cc80ba8b6a14a/release-manifest.json",
+      "sha256": "c7fd3144f4f0db60a59df12dc6ce64795ddb8c1796f0a5f11a8412561a253376"
+    },
+    {
+      "path": "../GGD-Asset-Library/backups/20260908T075704221576Z/300heroes-audio/files.jsonl",
+      "sha256": "92d46f7692eefb9aef7c33385a21bac90d13b15ca45b22ca692d676d3a0abe27"
+    },
+    {
+      "path": "../GGD-Asset-Library/backups/20260908T075704221576Z/300heroes-client/files.jsonl",
+      "sha256": "81dfd242ed5aec0b51358eea5c9252f8b870d2c07fb06c6b07f2d08710ad017f"
+    },
+    {
+      "path": "../GGD-Asset-Library/backups/20260908T075704221576Z/300heroes-downloads/files.jsonl",
+      "sha256": "5444771168853bbc56fe07d1cc995a8676fe9e336cc4f3916f969bb85e095b99"
+    },
+    {
+      "path": "../GGD-Asset-Library/backups/20260908T075704221576Z/300heroes-indexes/files.jsonl",
+      "sha256": "98fa586c4e80c187eed19cbd048e14f86dd8939bff8390b33c7ef25d79eb2254"
+    },
+    {
+      "path": "../GGD-Asset-Library/backups/20260908T075704221576Z/300heroes-indexes-root/files.jsonl",
+      "sha256": "04098ab8bcad94753da96e63e6a0320becaa0b5b7c02b43aba2aa21947b333a0"
+    },
+    {
+      "path": "../GGD-Asset-Library/backups/20260908T075704221576Z/300heroes-models/files.jsonl",
+      "sha256": "bc90ce4f8bdc9e2a3fcdd9dd7b5f5b7de42fa80b60438bc83280ab40047eabcd"
+    },
+    {
+      "path": "../GGD-Asset-Library/backups/20260908T075704221576Z/300heroes-raw/files.jsonl",
+      "sha256": "24920a727d7e17e1605393c6f820852e911c70d374748884a984ca4d9cb9ec85"
+    },
+    {
+      "path": "../GGD-Asset-Library/backups/20260908T075704221576Z/300heroes-snapshot-originals/files.jsonl",
+      "sha256": "6231152c6c03f3c39450f6bbda382bd8cf71efecdd90bb330685765ed1a31209"
+    },
+    {
+      "path": "../GGD-Asset-Library/backups/20260908T075704221576Z/candidate-registry/files.jsonl",
+      "sha256": "bf87e4696e0b90344fd43a4bc8e389388ea8c30344bf4bdecce0588d25ba27bf"
+    },
+    {
+      "path": "../GGD-Asset-Library/backups/20260908T075704221576Z/community37-handoff/files.jsonl",
+      "sha256": "d059c696128cbae6030e72451437906a3a49f35152a11ddeb221688757875da0"
+    },
+    {
+      "path": "../GGD-Asset-Library/backups/20260908T075704221576Z/game-source-docs-tools/files.jsonl",
+      "sha256": "0aebdc021a8a50faaa3bd2710086e0ad0ee958cf8d9bc745e9b9099e121850f4"
+    },
+    {
+      "path": "../GGD-Asset-Library/backups/20260908T075704221576Z/intake/files.jsonl",
+      "sha256": "88a08f36ac2db1c56e06874b383774712cfe57b414779d7c26780eef39b2eed8"
+    },
+    {
+      "path": "../GGD-Asset-Library/backups/20260908T075704221576Z/lol-intermediate/files.jsonl",
+      "sha256": "dfc08eb9a2899299404f80e048a47f4d3e7da635ff01074383bfbfa416d0b0eb"
+    },
+    {
+      "path": "../GGD-Asset-Library/backups/20260908T075704221576Z/magical-battle-arena/files.jsonl",
+      "sha256": "647e0990e4fc911b05cac5877abacb5606731540d0c17d1f4b58d2acc843f876"
+    },
+    {
+      "path": "../GGD-Asset-Library/backups/20260908T075704221576Z/staging/files.jsonl",
+      "sha256": "51727ccc8250253027efed3993eeec64ad49ea36acf11b28a71385601fa714c2"
+    }
+  ],
+  "remoteVerification": "Refer to upload/read-back receipts for each archive; this check compares local bytes with their inventories."
+}

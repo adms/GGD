@@ -141,7 +141,7 @@ export function readTargetProfileFacts(profile: unknown): TargetProfileFacts {
     compilerFingerprint: stringOrNull(compiler?.["fingerprint"]),
     activationDigest: stringOrNull(base?.["activationDigest"]),
     authoringDigest: stringOrNull(base?.["authoringDigest"]),
-    gameRevision: stringOrNull(base?.["gameRevision"]) ?? stringOrNull(root["gameRevision"]),
+    gameRevision: stringOrNull(base?.["gameRevision"]) ?? stringOrNull(root["gameRevision"]) ?? stringOrNull(root["gameVersion"]),
     migrationFingerprint: stringOrNull(base?.["migrationFingerprint"]) ?? stringOrNull(root["migrationFingerprint"]),
     authoringAccepts: Array.isArray(authoringModel?.["accepts"])
       ? authoringModel["accepts"].filter((value): value is string => typeof value === "string")

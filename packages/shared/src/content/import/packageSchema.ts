@@ -168,6 +168,8 @@ export const zAuthoringKind = z.enum([
   "champion",
   "item",
   "vfx",
+  "hero",
+  "runtime-dependency",
 ]);
 
 /** ⛔ V1 只有 upsert（規格 §8「V1 禁止 delete」、§14）。 */
@@ -365,6 +367,8 @@ const zManifestShape = z
     schema: z.literal("ggd-editor-package@1"),
     mode: zPackageMode,
     gameId: zShort,
+    /** Community works are staged independently and never replace official ACTIVE. */
+    scope: z.enum(["official", "community-work"]).optional(),
     packageDigest: zDigest,
     base: zPackageBase,
     /** bootstrap 必填（下面 superRefine 在守）；其餘允許省略或明示 null。 */

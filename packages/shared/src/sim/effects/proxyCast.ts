@@ -226,7 +226,7 @@ export const proxyCastEffect: EffectKindSpec<"proxyCast"> = {
     proxyStackDepth = depth + 1;
     let result;
     try {
-      result = castAbility(world, ctx.caster, slot, target);
+      result = castAbility(world, ctx.caster, slot, target, { suppressCastCredit: true });
     } finally {
       proxyStackDepth = depth;
     }

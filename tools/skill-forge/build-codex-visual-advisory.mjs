@@ -1,6 +1,11 @@
 import { readFileSync, mkdirSync, writeFileSync, existsSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+// ⭐ 合併 PR 1118 —— Codex 那一側把「哪幾列」抽成一支共用的驗證器。它與下面 main 那
+//   幾行**不重複**：那幾行驗的是**數量**對得上自己（關係），這一支驗的是**身分**
+//   （每一列都在驗收包裡、沒有重覆、標頭的主題數就是實際主題數）——⭐ 兩個方向都要走
+//   （第二守則⑫：只從一頭走的掃描必漏另一頭）。
+import { acceptanceScope, assertVisualProofScope } from "./visual-proof-scope.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const SOURCE = join(ROOT, "tools/skill-forge/codex-visual-advisory.source.json");
@@ -32,6 +37,11 @@ if (bricks.schema !== "ggd-bricks@1" || !Array.isArray(bricks.bricks)) fail("unk
 //    （`1de2bd31f`，46 → 47）之後，這兩行在**每一次正確的 checkout 上**都失敗，
 //    而訊息 `acceptance scope is not 42 themes / 46 documents` 指著驗收包，⛔ 不是指著這兩個常數。
 // ⇒ 現在驗的是**關係**：擷取包自己的統計要對得上它自己的列數，且 owner 的 verdict 仍全部待批。
+// ⭐ `allowPartial: true` 是承重的：main 這一側刻意允許「驗收包有、還沒擷取」
+//   （下面的 `awaitingCapture` 就是那個差集，而它是**要印出來的數字**）。
+//   ⛔ 用預設值（不允許）會讓這支產生器在每一次正常的 checkout 上失敗 —— 正是它
+//   上面那段註解在記的那個病（失敗形態⑨：一個永遠不會綠的閘）。
+assertVisualProofScope(manifest, acceptanceScope(acceptance), { allowPartial: true });
 const capturedCount = manifest.cases.length;
 if (manifest.summary?.captured !== capturedCount) {
   fail(`manifest summary.captured ${manifest.summary?.captured} disagrees with ${capturedCount} captured cases`);
@@ -70,10 +80,19 @@ for (const row of source.entries ?? []) {
 // ⭐ 母體＝**審查包涵蓋的那些文件**（＝擷取到畫面的那些），⛔ 不是驗收包的全部列：
 //    一份沒有擷取到畫面的技能，沒有東西可以被視覺審閱。⚠️ 而「驗收包裡有、但還沒擷取」
 //    是一個**要被印出來的數字**（coverage.awaitingCapture），⛔ 不是一個靜默的差集。
-const expectedIds = packet.documentSources.map((row) => row.id);
-const missing = expectedIds.filter((id) => !sourceById.has(id));
+// ⭐ 2026-09-08（合併 PR 1118）—— 這兩個方向**不對稱**，而在此之前它們被壓成同一個 fail：
+//   · `extra`（有審閱、而審查包裡沒有那一份）⇒ ⛔ **仍然硬紅**：那是一段**對著不存在的
+//     東西寫的散文**，正是第三守則的形狀。
+//   · `awaitingReview`（審查包有、還沒有人寫審閱）⇒ ⭐ 那**不是缺陷，是進度** ——
+//     它與下面的 `awaitingCapture` 是同一件事的另一半，而那一格的註解逐字寫著
+//     「是一個**要被印出來的數字**，⛔ 不是一個靜默的差集」。
+//   ⚠️ ⛔ 它也**不是**「放寬」：那一份仍然不會進 `rows`、不會進任何統計、
+//     而且它的 id 會被逐一印在報表與 stdout 上 ⇒ ⭐ 少寫一份審閱是**看得見**的。
+const packetIds = packet.documentSources.map((row) => row.id);
+const awaitingReview = packetIds.filter((id) => !sourceById.has(id));
+const expectedIds = packetIds.filter((id) => sourceById.has(id));
 const extra = [...sourceById.keys()].filter((id) => !packetSourceById.has(id));
-if (missing.length || extra.length) fail(`scope mismatch missing=${missing.join(",")} extra=${extra.join(",")}`);
+if (extra.length) fail(`authored review for documents that are not in the packet: ${extra.join(",")}`);
 const withoutEvidence = expectedIds.filter((id) => !manifestById.has(id) || !acceptanceById.has(id));
 if (withoutEvidence.length) fail(`packet rows without generated evidence: ${withoutEvidence.join(",")}`);
 const awaitingCapture = acceptance.rows.map((row) => row.id).filter((id) => !packetSourceById.has(id));
@@ -183,7 +202,7 @@ const output = {
     capturedDocuments: manifest.cases.length,
     reviewedDocuments: rows.length,
   },
-  coverage: { awaitingCapture },
+  coverage: { awaitingCapture, awaitingReview },
   policy: {
     ownerHumanVerdictRemainsAuthoritative: true,
     simWorldAndEventTraceRemainAuthoritative: true,
@@ -213,7 +232,8 @@ const md = [
   `- 證據包指紋：\`${output.packetDigest}\``,
   "- 過期單位：逐份技能文件（改一份只作廢一份，其餘保留原審閱）",
   `- 分母：驗收包 ${output.scope.acceptanceDocuments} 列 · 已擷取 ${output.scope.capturedDocuments} 份 · 本頁審閱 ${output.scope.reviewedDocuments} 份`
-    + (awaitingCapture.length ? ` · ⚠️ 等待擷取 ${awaitingCapture.length}（${awaitingCapture.join("、")}）` : ""),
+    + (awaitingCapture.length ? ` · ⚠️ 等待擷取 ${awaitingCapture.length}（${awaitingCapture.join("、")}）` : "")
+    + (awaitingReview.length ? ` · ⚠️ **等待 Codex 撰寫審閱 ${awaitingReview.length}**（${awaitingReview.join("、")}）` : ""),
   `- 審閱新鮮度：current ${output.summary.reviewFreshness.current} · stale ${output.summary.reviewFreshness.stale}`,
   `- 審閱時間：${output.reviewedAt}`,
   `- 視覺平均分（只算 current）：${output.summary.averageVisualScore}/10`,
@@ -279,6 +299,6 @@ checkOrWrite(OUT_MD, md);
 console.log(
   `${CHECK ? "PASS" : "WROTE"} Codex advisory · ${rows.length}/${output.scope.acceptanceDocuments} documents`
   + ` · current ${output.summary.reviewFreshness.current} / stale ${output.summary.reviewFreshness.stale}`
-  + ` · awaiting capture ${awaitingCapture.length}`
+  + ` · awaiting capture ${awaitingCapture.length} · awaiting review ${awaitingReview.length}`
   + ` · ${output.summary.averageVisualScore}/10`,
 );

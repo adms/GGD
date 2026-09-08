@@ -20,9 +20,11 @@
     "chainLightning": "連鎖閃電",
     "championForm": "變身／切換形態",
     "comboStrikes": "連段（多次獨立斬擊＋可選收尾）",
+    "consumeStatus": "足額消耗狀態並分支",
     "convertTeam": "陣營轉換（把一個既有單位借到自己這一隊）",
     "cycleBuff": "輪替增益",
     "damage": "傷害",
+    "spendHealth": "支付生命（保留生存底線）",
     "damageArea": "範圍傷害",
     "damageLine": "直線傷害",
     "dash": "衝刺（腳不離地）",
@@ -97,6 +99,7 @@
     "onUltimateHit": "大招（R）命中時"
   },
   "conditionLeaves": {
+    "facing": "正面方向：指定自己或目標，判斷對方是否位於其正面扇形內。完整角度 1–360°、含邊界，以當下位置與朝向計算；不同區、重疊中心或無有效朝向不成立。",
     "chance": "機率",
     "equipment": "裝備了某道具時",
     "kind": "對象是誰（小兵／英雄／BOSS）",

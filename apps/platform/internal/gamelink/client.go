@@ -16,6 +16,7 @@ import (
 	"github.com/redis/go-redis/v9"
 
 	"github.com/ggd/platform/internal/account"
+	"github.com/ggd/platform/internal/community"
 	"github.com/ggd/platform/internal/data/redisx"
 	"github.com/ggd/platform/internal/data/wal"
 	"github.com/ggd/platform/internal/httpx"
@@ -86,12 +87,13 @@ type BotFill struct {
 
 // MatchRequest is the outbound POST /_internal/matches body.
 type MatchRequest struct {
-	MatchID     string  `json:"matchId"`
-	Mode        string  `json:"mode"`
-	MapID       string  `json:"mapId"`
-	Seats       []Seat  `json:"seats"`
-	BotFill     BotFill `json:"botFill"`
-	CallbackURL string  `json:"callbackUrl"`
+	CommunityHeroes []community.HeroPin `json:"communityHeroes,omitempty"`
+	MatchID         string              `json:"matchId"`
+	Mode            string              `json:"mode"`
+	MapID           string              `json:"mapId"`
+	Seats           []Seat              `json:"seats"`
+	BotFill         BotFill             `json:"botFill"`
+	CallbackURL     string              `json:"callbackUrl"`
 	// RogueliteMobs is the per-room 肉鴿殭屍模式 toggle (#215), *bool so an omitted
 	// value (nil) reaches the game server as absent === ON. The JSON tag MUST
 	// match the game server's InternalMatchRequest.rogueliteMobs byte-for-byte;
@@ -124,36 +126,39 @@ type Reservation struct {
 
 // MatchResponse is the game server's reply.
 type MatchResponse struct {
-	MatchID        string        `json:"matchId"`
-	ColyseusRoomID string        `json:"colyseusRoomId"`
-	Reservations   []Reservation `json:"reservations"`
-	Endpoint       string        `json:"endpoint"`
+	CommunityContent json.RawMessage `json:"communityContent,omitempty"`
+	MatchID          string          `json:"matchId"`
+	ColyseusRoomID   string          `json:"colyseusRoomId"`
+	Reservations     []Reservation   `json:"reservations"`
+	Endpoint         string          `json:"endpoint"`
 }
 
 // SeatPush is delivered to each human over the lobby WS. SeatToken stays the
 // member's OWN token (compat with older clients); SeatTokens carries one entry
 // per local player on that member's machine (owner first, then :p2..:p4).
 type SeatPush struct {
-	Type       string        `json:"type"` // "match_ready"
-	MatchID    string        `json:"matchId"`
-	Endpoint   string        `json:"endpoint"`
-	SeatToken  string        `json:"seatToken"`
-	SeatTokens []Reservation `json:"seatTokens,omitempty"`
+	CommunityContent json.RawMessage `json:"communityContent,omitempty"`
+	Type             string          `json:"type"` // "match_ready"
+	MatchID          string          `json:"matchId"`
+	Endpoint         string          `json:"endpoint"`
+	SeatToken        string          `json:"seatToken"`
+	SeatTokens       []Reservation   `json:"seatTokens,omitempty"`
 }
 
 // Service implements the seam. It satisfies room.MatchStarter.
 type Service struct {
-	rdb      *redisx.Client
-	accounts *account.Repo
-	pres     *presence.Service
-	rank     *ranking.Service
-	journal  *wal.WAL
-	settle   *Settler
-	cat      wallet.Catalog
-	http     *http.Client
-	secret   string
-	gameAddr string
-	callback string
+	resolveCommunity func(context.Context, []string) ([]community.HeroPin, error)
+	rdb              *redisx.Client
+	accounts         *account.Repo
+	pres             *presence.Service
+	rank             *ranking.Service
+	journal          *wal.WAL
+	settle           *Settler
+	cat              wallet.Catalog
+	http             *http.Client
+	secret           string
+	gameAddr         string
+	callback         string
 	// pendTTL is the BLIND deadline used only until the first liveness
 	// heartbeat arrives for a match; liveGrace is the evidence-based one that
 	// replaces it from then on. See liveness.go.
@@ -182,6 +187,10 @@ func New(rdb *redisx.Client, accounts *account.Repo, pres *presence.Service, ran
 
 // SetNow overrides the clock (tests).
 func (s *Service) SetNow(fn func() time.Time) { s.now = fn }
+
+func (s *Service) SetCommunityResolver(resolve func(context.Context, []string) ([]community.HeroPin, error)) {
+	s.resolveCommunity = resolve
+}
 
 // BuildSeats deterministically assigns humans (members in ULID order, each
 // expanded into its couch group: owner + ":p2".."p4" guest pseudo-ids) to
@@ -288,9 +297,28 @@ func (s *Service) StartMatch(ctx context.Context, rm room.Room, members []room.M
 	// stay unenforced. A lookup failure leaves the seat unenforced rather than
 	// bricking the match — the game-server treats absent ownership as fail-open.
 	s.attachOwnership(ctx, seats)
+	var communityHeroes []community.HeroPin
+	if s.resolveCommunity != nil {
+		var err error
+		// The server selects all approved active versions. Legacy room opt-in
+		// fields cannot add unpublished works or hide official heroes.
+		communityHeroes, err = s.resolveCommunity(ctx, nil)
+		if err != nil {
+			return room.StartInfo{}, err
+		}
+		for i := range seats {
+			if seats[i].IsBot {
+				continue
+			}
+			for _, pin := range communityHeroes {
+				seats[i].Owned = append(seats[i].Owned, pin.WorkID)
+			}
+		}
+	}
 
 	req := MatchRequest{
-		MatchID: matchID, Mode: "PairedDuels", MapID: rm.MapID,
+		CommunityHeroes: communityHeroes,
+		MatchID:         matchID, Mode: "PairedDuels", MapID: rm.MapID,
 		Seats: seats, BotFill: botFill,
 		CallbackURL: s.callback + "/api/v1/internal/matches/" + matchID + "/result",
 		// Forward the per-room #215 toggle; nil stays nil === ON on the wire.
@@ -323,12 +351,22 @@ func (s *Service) StartMatch(ctx context.Context, rm room.Room, members []room.M
 	httpReq.Header.Set(HeaderTimestamp, ts)
 	httpReq.Header.Set(HeaderAuth, Sign(s.secret, ts, body))
 
-	resp, err := s.http.Do(httpReq)
+	client := s.http
+	if len(communityHeroes) > 0 {
+		bounded := *s.http
+		bounded.Timeout = 90 * time.Second
+		client = &bounded
+	}
+	resp, err := client.Do(httpReq)
 	if err != nil {
 		return room.StartInfo{}, httpx.Err(http.StatusBadGateway, "game_unreachable", "game server unreachable")
 	}
 	defer resp.Body.Close()
-	respBody, _ := io.ReadAll(io.LimitReader(resp.Body, 1<<20))
+	responseLimit := int64(1 << 20)
+	if len(communityHeroes) > 0 {
+		responseLimit = 4 << 20
+	}
+	respBody, _ := io.ReadAll(io.LimitReader(resp.Body, responseLimit))
 	if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusCreated {
 		return room.StartInfo{}, httpx.Err(http.StatusBadGateway, "game_rejected",
 			fmt.Sprintf("game server rejected the match (%d)", resp.StatusCode))
@@ -336,6 +374,9 @@ func (s *Service) StartMatch(ctx context.Context, rm room.Room, members []room.M
 	var mr MatchResponse
 	if err := json.Unmarshal(respBody, &mr); err != nil {
 		return room.StartInfo{}, httpx.Err(http.StatusBadGateway, "game_bad_response", "malformed game server response")
+	}
+	if len(communityHeroes) > 0 && (len(mr.CommunityContent) == 0 || string(mr.CommunityContent) == "null") {
+		return room.StartInfo{}, httpx.Err(http.StatusBadGateway, "community_runtime_unsupported", "遊戲伺服器沒有回傳固定社群內容，已阻止進場。")
 	}
 
 	// Track the pending match for the reaper. The deadline written here is the
@@ -347,6 +388,11 @@ func (s *Service) StartMatch(ctx context.Context, rm room.Room, members []room.M
 	// operator (and the reaper's logs) tie a stuck platform record to the actual
 	// room on the game server.
 	pend := map[string]any{"roomId": rm.ID, "startedAt": s.now().UnixMilli()}
+	if len(communityHeroes) > 0 {
+		// Keep immutable replay/version pins without changing match eligibility.
+		// Old pending matches retain their historical community flag.
+		pend["communityContent"] = string(mr.CommunityContent)
+	}
 	if rm.Practice {
 		// GH#349. The reaper is the ONLY thing that ever ends a practice match,
 		// and by the time it runs the lobby room is long gone — this hash is
@@ -388,7 +434,8 @@ func (s *Service) StartMatch(ctx context.Context, rm room.Room, members []room.M
 			return pi < pj
 		})
 		_ = s.rdb.PublishJSON(ctx, redisx.ChanLobby(base), SeatPush{
-			Type: "match_ready", MatchID: matchID, Endpoint: mr.Endpoint,
+			CommunityContent: mr.CommunityContent,
+			Type:             "match_ready", MatchID: matchID, Endpoint: mr.Endpoint,
 			SeatToken: entries[0].SeatToken, SeatTokens: entries,
 		})
 	}

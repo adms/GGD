@@ -879,6 +879,18 @@ function effectLines(
       // ⚠️ 這一格漏掉的代價不是「預覽少一行字」：這個 switch 的 default 分支是
       // `throw`,所以少一個 case = **編輯器預覽碰到這個 kind 直接爆**,
       // 也就違反了「新機制要編輯器可調」。2026-07-31 由駁斥者量到。
+      case "spendHealth": {
+        const pct = (value: number | readonly number[]) => typeof value === "number"
+          ? String(Math.round(value * 10000) / 100)
+          : ranks(maxRank).map((r) => Math.round((rankScalar(value, r) ?? 0) * 10000) / 100).join("/");
+        out.push({ depth, kind: e.kind,
+          summary: `支付自己生命${e.pctMaxHealth !== undefined ? ` + 最大生命 ${pct(e.pctMaxHealth)}%` : ""}` +
+            `${e.pctCurrentHealth !== undefined ? ` + 當前生命 ${pct(e.pctCurrentHealth)}%` : ""}` +
+            `，保留至少 ${e.minimumHp ?? 1} HP；不觸發傷害／吸血／反擊`,
+          perRank: ranks(maxRank).map((r) => resolveScaling(finalStats, e.amount, r, attrs)),
+        });
+        break;
+      }
       case "spendMana": {
         const perRank = ranks(maxRank).map((r) => resolveScaling(finalStats, e.amount, r, attrs));
         out.push({
@@ -1030,6 +1042,19 @@ function effectLines(
           kind: e.kind,
           summary: `${e.who === "target" ? "目標" : "自己"}的 ${which} ${how}`,
         });
+        break;
+      }
+      case "consumeStatus": {
+        out.push({ depth, kind: e.kind, summary:
+          `消耗${e.subject === "self" ? "自己" : "各目標"}的 ${e.statusId}：` +
+          `${e.count === "all" ? "全部有效層數" : `${e.count} 層`}` +
+          `${e.appliedBy === "self" ? "（只限自己施加）" : "（所有來源）"}；不足時不扣除` });
+        out.push({ depth: depth + 1, kind: e.kind, summary: "足額扣除後：" });
+        effectLines(e.onConsumed, finalStats, attrs, maxRank, depth + 2, out);
+        if (e.onMissing?.length) {
+          out.push({ depth: depth + 1, kind: e.kind, summary: "層數不足時：" });
+          effectLines(e.onMissing, finalStats, attrs, maxRank, depth + 2, out);
+        }
         break;
       }
       case "weightedBranch": {

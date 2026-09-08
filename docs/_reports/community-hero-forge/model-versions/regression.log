@@ -1,0 +1,36 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ apps/content-api/src/server.test.ts (39 tests) 9519ms
+   ✓ reads (capi-01) > serves manifest, _index and objects 559ms
+   ✓ AI change control > forces all eight acceptance IDs to non-promotable fixtures 398ms
+   ✓ AI change control > requires candidate-bound visual evidence for VFX and rejects malformed image payloads 304ms
+ ✓ apps/admin/src/contentApi.test.ts (15 tests) 35ms
+ ✓ apps/content-api/src/editorSourceRoutes.test.ts (6 tests) 422ms
+ ✓ apps/content-api/src/modelVersions.test.ts (7 tests) 2837ms
+   ✓ retained hero model versions > defaults to the new frozen body, retains old bytes/bindings, and rolls both ways after the import source is deleted 962ms
+   ✓ retained hero model versions > rejects stale and simultaneous selections without losing a version 379ms
+   ✓ retained hero model versions > blocks direct replacement, history removal, frozen-model edits/deletes, and pre-version backup restore 385ms
+   ✓ retained hero model versions > rejects incomplete bindings and missing original files before publishing anything 301ms
+   ✓ retained hero model versions > detects damaged retained bytes and refuses to activate them 308ms
+(node:67642) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | apps/client/src/render/uploadedModelInstances.test.ts > keeps assets/models/community/fixture.glb rigs at rest and independent instances keep identical initial bounds
+BJS - [02:55:10]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/uploadedModelInstances.test.ts > keeps assets/models/imported/versions/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.glb rigs at rest and independent instances keep identical initial bounds
+BJS - [02:55:11]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/uploadedModelInstances.test.ts > plays sparse cubic library motion correctly after merging and pruning the runtime model
+BJS - [02:55:11]: Babylon.js v7.54.3 - Null engine
+
+ ✓ apps/client/src/render/uploadedModelInstances.test.ts (3 tests) 729ms
+   ✓ plays sparse cubic library motion correctly after merging and pruning the runtime model 390ms
+ ✓ apps/client/src/render/views/championModelVersions.test.ts (2 tests) 38ms
+
+ Test Files  6 passed (6)
+      Tests  72 passed (72)
+   Start at  02:54:43
+   Duration  31.07s (transform 5.25s, setup 0ms, collect 12.19s, tests 13.58s, environment 1ms, prepare 761ms)
+

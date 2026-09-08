@@ -82,6 +82,7 @@ import { restoreEffect } from "./restore";
 import { shieldEffect } from "./shield";
 import { spawnProjectileEffect } from "./spawnProjectile";
 import { spawnVfxEffect } from "./spawnVfx";
+import { spendHealthEffect } from "./spendHealth";
 import { spendManaEffect } from "./spendMana";
 
 // ── landed primitives (GH#289 lanes) ─────────────────────────────────────────
@@ -115,6 +116,7 @@ import { reviveEffect } from "./revive";
 // ── Lane 1 (2026-08-08) — 同一個形狀的四個實例，界共用 ./kindLimits.ts ──────
 import { modifyCooldownEffect } from "./modifyCooldown";
 import { weightedBranchEffect } from "./weightedBranch";
+import { consumeStatusEffect } from "./consumeStatus";
 import { swapResourceEffect } from "./swapResource";
 import { eventValueConversionEffect } from "./eventValueConversion";
 
@@ -169,6 +171,7 @@ export const EFFECT_HANDLERS: EffectRegistry = {
   restore: restoreEffect,
   // 消耗法力 — the WC3 ORB per-swing charge (20-01 風王結界). Gated by the
   // hook's own `condition`, never by itself; see effects/spendMana.ts.
+  spendHealth: spendHealthEffect,
   spendMana: spendManaEffect,
   dash: dashEffect,
   leap: leapEffect,
@@ -209,6 +212,7 @@ export const EFFECT_HANDLERS: EffectRegistry = {
   modifyCooldown: modifyCooldownEffect,
   // 一次 RNG 抽一個加權分支（俄羅斯輪盤）。⭐ 只 draw 一次，見 ./weightedBranch.ts。
   weightedBranch: weightedBranchEffect,
+  consumeStatus: consumeStatusEffect,
   // 原子交換雙方資源（交換筆記本）。行為 ./swapResource.ts。
   swapResource: swapResourceEffect,
   // 把這次事件的數值轉成另一種資源（太陰道 / 吞噬）。行為 ./eventValueConversion.ts。

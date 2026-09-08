@@ -170,6 +170,7 @@ export interface ChainStrand {
 
 /** 一次施放排出來的全部鏈。 */
 export interface ChainLightningCast {
+  castInstance?: import("../content/castInstance").CastInstance;
   caster: EntityId;
   rank: number;
   origin: string;
@@ -272,6 +273,7 @@ function boltOnce(world: SimWorld, cast: ChainLightningCast, s: ChainStrand, rng
     critSources = cr.critSources;
   }
   world.damageQueue.push({
+    castInstance: cast.castInstance,
     source: cast.caster,
     target: s.target,
     amount: dealt,
@@ -325,6 +327,7 @@ function boltOnce(world: SimWorld, cast: ChainLightningCast, s: ChainStrand, rng
 function payOnHit(world: SimWorld, cast: ChainLightningCast): void {
   if (cast.onHit.onHitTargets === undefined && cast.onHit.runOnEmptyHit !== true) return;
   const ctx: EffectContext = {
+    castInstance: cast.castInstance,
     world,
     caster: cast.caster,
     rank: cast.rank,
@@ -384,6 +387,7 @@ export const chainLightningEffect: EffectKindSpec<"chainLightning"> = {
     const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0], ctx.castCommitTick), casterSlotRank(ctx));
     const t = world.transform.get(ctx.caster);
     const cast: ChainLightningCast = {
+      castInstance: ctx.castInstance,
       caster: ctx.caster,
       rank: ctx.rank,
       origin: ctx.origin,

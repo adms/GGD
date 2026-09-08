@@ -1,0 +1,37 @@
+{
+  "schema": "template@1",
+  "status": "enabled",
+  "requires": [
+    "hooks",
+    "conditions"
+  ],
+  "gapScore": 10,
+  "exemplar": {
+    "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+    "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+  },
+  "id": "tpl-event-passive",
+  "name": "自訂事件被動",
+  "family": "event-passive",
+  "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+  "params": {
+    "hooks": {
+      "type": "hooks",
+      "default": [
+        {
+          "on": "onBasicAttack",
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ]
+        }
+      ],
+      "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+    }
+  }
+}

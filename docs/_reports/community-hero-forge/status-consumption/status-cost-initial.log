@@ -1,0 +1,34 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ❯ packages/shared/src/sim/abilities/statusCost.test.ts (6 tests | 1 failed) 35ms
+   × ability status cost > insufficient resources reject before mana, cooldown, or cast effects are paid 17ms
+     → expected undefined to be null
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/shared/src/sim/abilities/statusCost.test.ts > ability status cost > insufficient resources reject before mana, cooldown, or cast effects are paid
+AssertionError: expected undefined to be null
+
+- Expected: 
+null
+
++ Received: 
+undefined
+
+ ❯ packages/shared/src/sim/abilities/statusCost.test.ts:48:23
+     46|     expect(r.cast()).toBe("no-resource");
+     47|     expect(hp.mana).toBe(mana); expect(r.ab.slots.Q.cooldownRemainingT…
+     48|     expect(r.ab.cast).toBeNull(); expect(r.resource()).toBe(2);
+       |                       ^
+     49|     r.world.step(new Map());
+     50|     expect(r.world.health.get(r.target)!.hp).toBe(targetHp);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)
+   Start at  04:52:44
+   Duration  2.86s (transform 1.42s, setup 0ms, collect 1.95s, tests 35ms, environment 0ms, prepare 98ms)
+

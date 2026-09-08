@@ -52,6 +52,8 @@ import {
   CONDITION_CHANCE_MIN,
   CONDITION_DISTANCE_MAX,
   CONDITION_DISTANCE_MIN,
+  CONDITION_FACING_ARC_MIN,
+  CONDITION_FACING_ARC_MAX,
   CONDITION_ENTITY_KINDS,
   CONDITION_FORMS,
   CONDITION_MAX_CHILDREN,
@@ -207,6 +209,7 @@ export const zStatusIdLeaf = z
     kind: z.literal("status"),
     subject: zConditionSubject,
     statusId: zRef<StatusId>("status-effects", { soft: true }),
+    appliedBy: z.enum(["self"]).optional().describe("只比對由自己施加且依施法者分開保存的狀態；省略比對所有來源。"),
     /**
      * ⭐ 「至少疊了幾層」（GH#301-5 的**讀取端**）。缺席 = 只問有無 ——
      * 出貨的 2,030 份文件一份都沒寫，所以缺席那一條路逐字等於這一格出現之前。
@@ -360,6 +363,12 @@ export const zLearnedLeaf = z
   })
   .strict();
 
+export const zFacingLeaf = z.object({
+  kind: z.literal("facing"),
+  subject: zConditionSubject,
+  arcDegrees: z.number().finite().min(CONDITION_FACING_ARC_MIN).max(CONDITION_FACING_ARC_MAX)
+    .describe("正面扇形的完整角度；120 表示左右各 60°。以命中當下朝向和雙方中心判斷，含邊界。"),
+}).strict();
 /**
  * ⭐ GH#1070 —— 「主體現在是本體／變身態」。原作 `GetUnitTypeId(caster) == 'O00X'`
  * 那一族分支的翻譯；語意（讀 `inAlternateForm`、為什麼沒有 `any`）寫在
@@ -388,6 +397,7 @@ export const zConditionLeaf = z.union([
   zEquipmentLeaf,
   zRecentCastLeaf,
   zDistanceLeaf,
+  zFacingLeaf,
   zLearnedLeaf,
   zFormLeaf,
 ]);

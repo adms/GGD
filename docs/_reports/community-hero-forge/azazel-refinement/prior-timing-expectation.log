@@ -1,0 +1,32 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ❯ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts (20 tests | 1 failed) 1664ms
+   ✓ Azazel authored six-slot refinement > single-slot preparation is explicit; the actual kit earns its own EX resources 1225ms
+   × Azazel authored six-slot refinement > precasts the real R for EX preview, preserving expiry, life payment and resource failure 283ms
+     → expected 'accepted' to be 'rejected' // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts > Azazel authored six-slot refinement > precasts the real R for EX preview, preserving expiry, life payment and resource failure
+AssertionError: expected 'accepted' to be 'rejected' // Object.is equality
+
+Expected: "rejected"
+Received: "accepted"
+
+ ❯ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts:122:32
+    120|     expect(insufficient.events.some(event => event.type === "abilityCa…
+    121|     const interrupted = scene(0.1);
+    122|     expect(interrupted.status).toBe("rejected");
+       |                                ^
+    123|     expect(JSON.stringify(interrupted.events)).not.toContain("反轉增益…
+    124|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 19 passed (20)
+   Start at  14:58:00
+   Duration  4.76s (transform 1.66s, setup 0ms, collect 2.54s, tests 1.66s, environment 0ms, prepare 74ms)
+

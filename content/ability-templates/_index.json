@@ -1,6 +1,6 @@
 {
   "collection": "ability-templates",
-  "hash": "e223ab42a946",
+  "hash": "6534b2a0b44a",
   "entries": [
     {
       "id": "tpl-apply-status",
@@ -91,6 +91,18 @@
       "path": "ability-templates/tpl-drain-leech.json",
       "hash": "eeb97623763a",
       "size": 4266
+    },
+    {
+      "id": "tpl-effect-sequence",
+      "path": "ability-templates/tpl-effect-sequence.json",
+      "hash": "7737c132c322",
+      "size": 1932
+    },
+    {
+      "id": "tpl-event-passive",
+      "path": "ability-templates/tpl-event-passive.json",
+      "hash": "c33b22d34085",
+      "size": 1088
     },
     {
       "id": "tpl-global-rule",

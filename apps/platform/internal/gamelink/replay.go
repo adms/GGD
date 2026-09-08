@@ -10,6 +10,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/ggd/platform/internal/httpx"
 )
@@ -20,6 +21,12 @@ import (
 // carry player names. The admin console reaches them THROUGH this platform proxy
 // so a single admin session gates the whole surface; the platform never stores a
 // recording, it only forwards the admin's request with a fresh HMAC signature.
+
+// A cold replay reconstructs its entire pinned roster. communityRuntime.ts
+// bounds that download at 80 s; the ordinary RPC client's 10 s deadline used to
+// abort valid 37-hero recordings before the game could answer. Keep a bounded
+// replay-only budget including validation, and retain the caller's cancellation.
+const replayRequestTimeout = 90 * time.Second
 
 // ReplaySummary mirrors the game server's list row (kept loose: the platform
 // forwards it to the admin UI verbatim and does not interpret the fields).
@@ -86,7 +93,12 @@ func (s *Service) replaySend(ctx context.Context, method, path string, body []by
 	// Signed over the SAME bytes the game server verifies (empty for GET).
 	req.Header.Set(HeaderAuth, Sign(s.secret, ts, body))
 	// #nosec G704 -- same request as above; see the containment argument there.
-	resp, err := s.http.Do(req)
+	replayHTTP := *s.http
+	replayHTTP.Timeout = replayRequestTimeout
+	// #nosec G704 -- ⭐ 標註要貼在**被指的那一行**上：上面第 95 行那一句原本罩得住它，
+	//   而 PR 1118 讓行號位移之後就脫鉤了（⚠️ 行錨式的抑制會被無關的改動打斷）。
+	//   目的地是 `s.base`（營運設定的 game server），⛔ 不是請求帶進來的。
+	resp, err := replayHTTP.Do(req)
 	if err != nil {
 		return nil, httpx.Err(http.StatusBadGateway, "game_unreachable", "game server unreachable")
 	}

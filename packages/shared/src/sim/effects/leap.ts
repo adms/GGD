@@ -121,6 +121,7 @@ export const leapEffect: EffectKindSpec<"leap"> = {
         casterId: ctx.caster,
         rank: ctx.rank,
         origin: ctx.origin,
+        castInstance: ctx.castInstance,
         ...(ctx.abilitySlot !== undefined ? { slot: ctx.abilitySlot } : {}),
       });
     }

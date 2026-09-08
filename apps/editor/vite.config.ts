@@ -1,6 +1,8 @@
 /// <reference types="vitest/config" />
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { resolve, relative } from "node:path";
+import { snapshotHeroGenerator } from "../../packages/shared/src/content/import/heroBuildSources";
 
 // Served by nginx at /editor/ in the dev profile; talks to the dev-only
 // content-api (default 127.0.0.1:8787, override VITE_CONTENT_API_URL) and, for
@@ -8,15 +10,36 @@ import react from "@vitejs/plugin-react";
 // (default localhost:8080, override VITE_PLATFORM_API_URL — same-origin under
 // nginx in the dev profile). The provider API key stays server-side; the editor
 // only ever calls the proxy.
-export default defineConfig(({ mode }) => ({
+export default defineConfig(({ mode }) => {
+  const repoRoot = resolve(__dirname, "../..");
+  const generator = snapshotHeroGenerator(repoRoot);
+  return ({
   base: "/editor/",
   // `.env.*` is intentionally ignored repository-wide.  Desktop mode must be
   // reproducible in a clean clone, so compile the local-loopback authority flag
   // from the tracked Vite mode instead of relying on an untracked env file.
-  define: mode === "desktop"
-    ? { "import.meta.env.VITE_DESKTOP": JSON.stringify("1") }
-    : undefined,
-  plugins: [react()],
+  define: {
+    ...(mode === "desktop" ? { "import.meta.env.VITE_DESKTOP": JSON.stringify("1") } : {}),
+    "import.meta.env.VITE_HERO_GENERATOR_VERSION": JSON.stringify(generator.versionId),
+  },
+  plugins: [react(), {
+    name: "ggd-generator-version",
+    configureServer(server) {
+      // Locks and package metadata also change the source version, even when
+      // Vite's module graph does not import them directly.
+      server.watcher.add([...generator.files.keys()].filter((path) => path.startsWith("source/")).map((path) => resolve(repoRoot, path.slice(7))));
+    },
+    // A new source implementation must never keep the previous build's label.
+    handleHotUpdate({ file, server }) {
+      if (generator.files.has(`source/${relative(repoRoot, file).replaceAll("\\", "/")}`)) {
+        void server.restart();
+        return [];
+      }
+    },
+  }],
+  // The GLB validator is loaded lazily inside the model worker. Its separate
+  // chunk requires ES module output, matching new Worker(..., { type: "module" }).
+  worker: { format: "es" },
   server: {
     port: 5174,
     // A silent 5174 -> 5175 fallback leaves the UI readable but makes every
@@ -54,4 +77,4 @@ export default defineConfig(({ mode }) => ({
     // 第一個踩到的，它在被加進來的那一刻是「綠的」，因為它根本沒被執行。
     include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
   },
-}));
+}); });

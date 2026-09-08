@@ -1,0 +1,785 @@
+{
+  "scope": "Current asset-library tools, policies, source indexes and resource definitions; byte-exact snapshot, not raw archives or binary payloads. Historical manifests and receipts remain in their existing pinned archive locations.",
+  "files": [
+    {
+      "path": "ASSET_LIBRARIES.md",
+      "bytes": 2355,
+      "sha256": "aca6118761961248d76539952cd566216a2c336be0239e8655b8cae92307acef"
+    },
+    {
+      "path": "GGD-Asset-Library/AGENTS.md",
+      "bytes": 961,
+      "sha256": "552bfd3f33485f5fa9774887603a3e5160897958719c36024e06435471a93af1"
+    },
+    {
+      "path": "GGD-Asset-Library/BACKUP_POLICY.json",
+      "bytes": 672,
+      "sha256": "8505bc3957b676fe35a18eae1166372634633af7eade136575e8b604dc82c7fb"
+    },
+    {
+      "path": "GGD-Asset-Library/BACKUP_README.md",
+      "bytes": 2349,
+      "sha256": "7600b28c3224b7aed12eaf60c933ecd9b9cc9277b9e59a9dee8ca23d0850b0da"
+    },
+    {
+      "path": "GGD-Asset-Library/COPY_TO_WORKFLOW.txt",
+      "bytes": 1669,
+      "sha256": "752bd17094e9eeddde62cf17838ebad263309c608c3ef4991cbcf1b53c3e4577"
+    },
+    {
+      "path": "GGD-Asset-Library/DOWNLOAD.py",
+      "bytes": 2446,
+      "sha256": "59ce7f0950703cac3f7fb9daa091aadc33337754bd40391e4c59f251b8d3adff"
+    },
+    {
+      "path": "GGD-Asset-Library/GIT_SOURCE.json",
+      "bytes": 481,
+      "sha256": "b7b505a68f3bb769cc18ea903df996c40dc4e73b9f1cabb5886e5d24035fac06"
+    },
+    {
+      "path": "GGD-Asset-Library/README.md",
+      "bytes": 5037,
+      "sha256": "e1ba53f86aa4913b98914fc480797b2a604eba03eb6eba48dccfcf4d9b1a6e02"
+    },
+    {
+      "path": "GGD-Asset-Library/SHARED_README.md",
+      "bytes": 3620,
+      "sha256": "771d7b5c17c83bd37fa4ec175b092f88c0deacdd4736cff5202c700fb2e3d9bb"
+    },
+    {
+      "path": "GGD-Asset-Library/STORAGE_AUDIT.md",
+      "bytes": 1936,
+      "sha256": "0ccb74279930d9b23a579f1fb01b13101c430d9481fd283e112d7bf32b23ae79"
+    },
+    {
+      "path": "GGD-Asset-Library/catalog.json",
+      "bytes": 805,
+      "sha256": "6a933793faa84e70ebba59cf021950c77119521fbaca5cbfd664bc88fe21a043"
+    },
+    {
+      "path": "GGD-Asset-Library/gate-verification.json",
+      "bytes": 657,
+      "sha256": "bb7bf542c96442c28986c4ef4624900a101c691bba7c7920d36ff01e43f5abc4"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/catalog.json",
+      "bytes": 444396,
+      "sha256": "266649bf0f4cb0bb5bebbaca228cf9ae5ae9d67a5cc7851a2fb41fca832dac38"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/sources.json",
+      "bytes": 3097,
+      "sha256": "500c90ce27c5433134e31250658b3d0317fe599cf9db27c629f9644a91979fb1"
+    },
+    {
+      "path": "GGD-Asset-Library/policy.json",
+      "bytes": 1313,
+      "sha256": "6accd7ead1f00ba9439a6a31aa8ad445bdec36f82187fb199d1b0d1f1b0a555a"
+    },
+    {
+      "path": "GGD-Asset-Library/query.py",
+      "bytes": 2556,
+      "sha256": "4d1d99f003834a6145bf996c5c0bfa2d101997cc003ec70e3d5e50ff4ede8e2e"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.arcane.arc.json",
+      "bytes": 1143,
+      "sha256": "18f1f0e4f439c504d6532107927d66c08ea3e54189123e7ab83be882472a7254"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.arcane.beam.json",
+      "bytes": 1123,
+      "sha256": "52ddfbba6cff720cd2f3d7d498af989b7816ed32e3b3c990fb31fed9b12e1041"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.arcane.nova.json",
+      "bytes": 1065,
+      "sha256": "e59a93ca42fe2abba6e19c098e760b4a204ed13dff7cf17665ddd2735c1cbf6d"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.arcane.pulse-sm.json",
+      "bytes": 1071,
+      "sha256": "34e0b0808a53359baede9d9f6a11e0750db626753c12acdf96e972627db9b399"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.arcane.pulse.json",
+      "bytes": 1063,
+      "sha256": "9663bd0ae435dc17695625ea6681bbc4f7b0bd858564d486cb56a993a241184f"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.arcane.slash.json",
+      "bytes": 1127,
+      "sha256": "68383c17ac225a4eb703a1d993bc7da0ea681e93728feb2ea3d26efe7073ab3d"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.arcane.summon.json",
+      "bytes": 1068,
+      "sha256": "afb5ac9d0ad5b07a846de8602eb7dad80f3202e72bf2d1829f390b0602bb9da8"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.blood.pulse-sm.json",
+      "bytes": 1081,
+      "sha256": "ce17bb9c7447045f180db6403165481c26019d13673a25da115a6397db5a124c"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.blood.slash.json",
+      "bytes": 1137,
+      "sha256": "12165b653b63fa93ddc0482bc2f2b4bf9679332ec687c3c997dafaccef1f73ff"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.fire.arc.json",
+      "bytes": 1132,
+      "sha256": "2336851b8c35c5dac084de36d2467c7b094598d90d416809a7b689801a3a9fc1"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.fire.beam.json",
+      "bytes": 1112,
+      "sha256": "d1d5ddba751fab8f27c190767f578d3c1359b5588a7b65547927cc8dd88fd5d0"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.fire.bolt.json",
+      "bytes": 1112,
+      "sha256": "5cbac00322d16c699bc52a8058633785231cdae51c3770321b5efe8f49f80687"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.fire.pulse-sm.json",
+      "bytes": 1060,
+      "sha256": "60144080380fab39ffebf55ac3c7a7c103df482c89272934826bf91ca7bf7475"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.fire.pulse.json",
+      "bytes": 1052,
+      "sha256": "a9704736a0a0a4170cba5352d5123e80ec36f4e69d39003b17a133c764200b09"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.fire.slash.json",
+      "bytes": 1116,
+      "sha256": "470ef44855efc6cfa88196c24af5cc59296a03749d0555e34db5efe01420f3ba"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.holy.arc.json",
+      "bytes": 1144,
+      "sha256": "f8cc781e4765a9ecdffe7fce01e7c302c38f00fd2352234ff4be4b4b53977d5f"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.holy.beam.json",
+      "bytes": 1124,
+      "sha256": "8035a8f504a311cd45bfd041cf64a5c85787a62ce0f2a3c0a3862b676b7be9bc"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.holy.nova.json",
+      "bytes": 1066,
+      "sha256": "5c5195830722e44c11d0c4ee196c2783cbfbe77dbfa4237fb91eb95c1ba70596"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.holy.pulse-sm.json",
+      "bytes": 1072,
+      "sha256": "7a722ef8d78f71a6399b40ac524b4080f6ee1040e37dfa96f74d37e20d69c24f"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.holy.pulse.json",
+      "bytes": 1064,
+      "sha256": "2bf4d46f6b0ac143869f8575ee95b96a5aee3293ea2c7fbf37e37f6924486678"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.holy.slash.json",
+      "bytes": 1128,
+      "sha256": "b1b5eed3e9d55603ed247c2e102d6921e10b3969878ec52aefe2d634e618365c"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ice.beam.json",
+      "bytes": 1120,
+      "sha256": "f3139012b7daf8e4aae5bffdeefbc9c18155168ed8addb6f560518de4fb51493"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ice.bolt.json",
+      "bytes": 1120,
+      "sha256": "442e355789ee1eb0250dbdcb47716f2c5c7d8d8df3a2bd39f7c05bff48219896"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ice.nova.json",
+      "bytes": 1062,
+      "sha256": "700d164031252cbd87918f699e17068f2e79ecc6791c4f1e65dc1964c0f4f652"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ice.pulse-sm.json",
+      "bytes": 1068,
+      "sha256": "14a9b373d78985e8c02e2cfff3a3a08a31bc6f37fb74ab7a3b929a073b8ae3c2"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ki.beam.json",
+      "bytes": 1122,
+      "sha256": "9ed603b47a592e386529cb714039f5371ec020b5f72089782f8555953bf5e864"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ki.pulse-sm.json",
+      "bytes": 1070,
+      "sha256": "2738e4be33d85ca497ecb8aff470ef5c190293894f38155f73e5eb8fcecf31c6"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ki.pulse.json",
+      "bytes": 1062,
+      "sha256": "2587e7175170d76effd1ef79bb16c0ae472b83373fc1a4dc69cee845b922980d"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ki.slash.json",
+      "bytes": 1126,
+      "sha256": "1db1505c67a5a2383e2bab3f6fee884cdf8acf80eb628da8a19dc153d63aef1f"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.lightning.arc.json",
+      "bytes": 1144,
+      "sha256": "274459f270f56cbfbd5b0187dbfb3900ecb4f787ecc1f53791e31a64cd1d6cf8"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.lightning.beam.json",
+      "bytes": 1124,
+      "sha256": "dd516e830edfedb717b416038f1516cb33c217c7b56a8b7878e657cb0221028e"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.lightning.bolt.json",
+      "bytes": 1124,
+      "sha256": "c5b7765ee003efdf4e8968caf4afa2af14c71ce8e24116bcb2171daadfe0ba66"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.lightning.nova.json",
+      "bytes": 1066,
+      "sha256": "10317ad420977934f0427799a6056e73b7f37334081ba371257017c8ed9d4007"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.lightning.pulse-sm.json",
+      "bytes": 1072,
+      "sha256": "9d9901dd71395f7e27ff66f1e6286c62b4a15c0a235af05b94fee9e75426f245"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.lightning.pulse.json",
+      "bytes": 1064,
+      "sha256": "5a0e5dc1f85d02df74e206d34af671af4e4d60d33463b38c93ad2329eb26d91e"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.lightning.slash.json",
+      "bytes": 1128,
+      "sha256": "653b50e28c97f43ce1bd6db46fbae69e92b06c8c8c0b9cf9f1361ae89f441a45"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.nature.pulse-sm.json",
+      "bytes": 1072,
+      "sha256": "ba8f4b5d115b965a718e164e352cb63c76ba6b6b091b6df17cb01c84bfcb858d"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.nature.pulse.json",
+      "bytes": 1064,
+      "sha256": "1eb1c1b2d3386c874c9b7573b31b0a3c33182cc434aabc1928dced1fa409f07f"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.nature.slash.json",
+      "bytes": 1128,
+      "sha256": "f4b681346127a14457194abc1f176e8706e6af7f24a88458dbafb60838f4208c"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.physical.arc.json",
+      "bytes": 1148,
+      "sha256": "a15ddf768687a3793bb70c8be2c08cf447f898ecc477521a67b93056eb52af49"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.physical.beam.json",
+      "bytes": 1128,
+      "sha256": "243c956d82f798806e065e360991223cc3408ec76132fad7968e052bbd6f1879"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.physical.bolt.json",
+      "bytes": 1128,
+      "sha256": "12dd65dca612c6ed9a46353024b7e21e10dfb55008a6dce07e3031d701043e2c"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.physical.nova.json",
+      "bytes": 1070,
+      "sha256": "7f24d4cb9d1df46dd806ecc7e48a0177b1f356cee95a2b8db5e6869db6550fdf"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.physical.pulse-sm.json",
+      "bytes": 1076,
+      "sha256": "7a5f7c62484df2469369474ded86ee4f7500637e3d5ebf69cf855fbfed449f15"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.physical.pulse.json",
+      "bytes": 1068,
+      "sha256": "830bb38fc1f77187233e67b06615b5ccc9d1b03cb33babc71da4b5b448c1ad20"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.physical.slash.json",
+      "bytes": 1132,
+      "sha256": "a8ad96506751cf759bc381ef349dab1743f140f1803e1e3e41a4157d52d423cd"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.sound.nova.json",
+      "bytes": 1077,
+      "sha256": "55ca331dcba679bd7e512fd53d720f62abce4cef32bf1549b9a57d92b7093137"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.sound.pulse-sm.json",
+      "bytes": 1083,
+      "sha256": "d7023103e4f1d08f0ca93c39605f4d555a988c8ec900a372a81f9f3c3a1d8fde"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.sound.pulse.json",
+      "bytes": 1075,
+      "sha256": "b222bb1b94a1b5cd93b67954caed226199ac00ff05b0427dbec7fbf70f84d8ac"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.void.arc.json",
+      "bytes": 1156,
+      "sha256": "f0f7cca7fa12f13fe2dbfc2bc38dd707f7e8974cbc54d647152256cac665db2e"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.void.nova.json",
+      "bytes": 1078,
+      "sha256": "91b61ab4b26a5aa0d7bfd1b4175c9c8e6b41d02608ee26d73fac6902811f03c8"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.void.pulse-sm.json",
+      "bytes": 1084,
+      "sha256": "8529dd44aba81353126d2356373851adb0e3ac0e3af6815d0f3082f0df58799c"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.void.pulse.json",
+      "bytes": 1076,
+      "sha256": "6aa43b259e98578b4d8739cbf46032959e6c111dedac311fd7daf048991c56f9"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.void.slash.json",
+      "bytes": 1140,
+      "sha256": "3a29b59e75b05d46bc3654c79d1a6d394b8234b3e275cd259158d3f9f0a98656"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.void.summon.json",
+      "bytes": 1081,
+      "sha256": "b1c33b665aa1f6dfce3ae3a94015c4ff1fa58930ecd87f5c909728c0611b92bd"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.wind.arc.json",
+      "bytes": 1162,
+      "sha256": "c29b36b68b8db6b4e0b6519f54af4570308c02dc8c3a4f154784632c27bdb5d4"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.wind.nova.json",
+      "bytes": 1084,
+      "sha256": "14a86614ab02366d0b3017ca1479d78a1416abaab0d563a9e42af4765a8abe72"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.wind.pulse-sm.json",
+      "bytes": 1090,
+      "sha256": "2e55e2b72cb4d229131776ceb01fda5d6594f843848388fe182531919c00a022"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.wind.pulse.json",
+      "bytes": 1082,
+      "sha256": "09644812a1f69f76fb6eac9a8b765885db336c5e6c8c6940ca722f8d25580930"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.wind.slash.json",
+      "bytes": 1146,
+      "sha256": "37860f2cf9ecaa4841e91ba7b5eee6bc34e59dd76635c77ead3a142402af44ac"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/resource.json",
+      "bytes": 2546,
+      "sha256": "93ff90797d0b025d884c09f7c86b566037d80ba7d0998ebb52598d0ac266a6fb"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/validation.json",
+      "bytes": 12206,
+      "sha256": "2c2e45c4b6894d7baa357f7ba892b37cfc9471aa07b5a87e21d5ed72e6650c25"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.arc.json",
+      "bytes": 1143,
+      "sha256": "18f1f0e4f439c504d6532107927d66c08ea3e54189123e7ab83be882472a7254"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.beam.json",
+      "bytes": 1123,
+      "sha256": "52ddfbba6cff720cd2f3d7d498af989b7816ed32e3b3c990fb31fed9b12e1041"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.nova.json",
+      "bytes": 1065,
+      "sha256": "e59a93ca42fe2abba6e19c098e760b4a204ed13dff7cf17665ddd2735c1cbf6d"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.pulse-sm.json",
+      "bytes": 1071,
+      "sha256": "34e0b0808a53359baede9d9f6a11e0750db626753c12acdf96e972627db9b399"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.pulse.json",
+      "bytes": 1063,
+      "sha256": "9663bd0ae435dc17695625ea6681bbc4f7b0bd858564d486cb56a993a241184f"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.slash.json",
+      "bytes": 1127,
+      "sha256": "68383c17ac225a4eb703a1d993bc7da0ea681e93728feb2ea3d26efe7073ab3d"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.summon.json",
+      "bytes": 1068,
+      "sha256": "afb5ac9d0ad5b07a846de8602eb7dad80f3202e72bf2d1829f390b0602bb9da8"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.blood.pulse-sm.json",
+      "bytes": 1081,
+      "sha256": "ce17bb9c7447045f180db6403165481c26019d13673a25da115a6397db5a124c"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.blood.slash.json",
+      "bytes": 1137,
+      "sha256": "12165b653b63fa93ddc0482bc2f2b4bf9679332ec687c3c997dafaccef1f73ff"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.arc.json",
+      "bytes": 1132,
+      "sha256": "2336851b8c35c5dac084de36d2467c7b094598d90d416809a7b689801a3a9fc1"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.beam.json",
+      "bytes": 1112,
+      "sha256": "d1d5ddba751fab8f27c190767f578d3c1359b5588a7b65547927cc8dd88fd5d0"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.bolt.json",
+      "bytes": 1112,
+      "sha256": "5cbac00322d16c699bc52a8058633785231cdae51c3770321b5efe8f49f80687"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.pulse-sm.json",
+      "bytes": 1060,
+      "sha256": "60144080380fab39ffebf55ac3c7a7c103df482c89272934826bf91ca7bf7475"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.pulse.json",
+      "bytes": 1052,
+      "sha256": "a9704736a0a0a4170cba5352d5123e80ec36f4e69d39003b17a133c764200b09"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.slash.json",
+      "bytes": 1116,
+      "sha256": "470ef44855efc6cfa88196c24af5cc59296a03749d0555e34db5efe01420f3ba"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.arc.json",
+      "bytes": 1144,
+      "sha256": "f8cc781e4765a9ecdffe7fce01e7c302c38f00fd2352234ff4be4b4b53977d5f"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.beam.json",
+      "bytes": 1124,
+      "sha256": "8035a8f504a311cd45bfd041cf64a5c85787a62ce0f2a3c0a3862b676b7be9bc"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.nova.json",
+      "bytes": 1066,
+      "sha256": "5c5195830722e44c11d0c4ee196c2783cbfbe77dbfa4237fb91eb95c1ba70596"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.pulse-sm.json",
+      "bytes": 1072,
+      "sha256": "7a722ef8d78f71a6399b40ac524b4080f6ee1040e37dfa96f74d37e20d69c24f"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.pulse.json",
+      "bytes": 1064,
+      "sha256": "2bf4d46f6b0ac143869f8575ee95b96a5aee3293ea2c7fbf37e37f6924486678"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.slash.json",
+      "bytes": 1128,
+      "sha256": "b1b5eed3e9d55603ed247c2e102d6921e10b3969878ec52aefe2d634e618365c"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ice.beam.json",
+      "bytes": 1120,
+      "sha256": "f3139012b7daf8e4aae5bffdeefbc9c18155168ed8addb6f560518de4fb51493"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ice.bolt.json",
+      "bytes": 1120,
+      "sha256": "442e355789ee1eb0250dbdcb47716f2c5c7d8d8df3a2bd39f7c05bff48219896"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ice.nova.json",
+      "bytes": 1062,
+      "sha256": "700d164031252cbd87918f699e17068f2e79ecc6791c4f1e65dc1964c0f4f652"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ice.pulse-sm.json",
+      "bytes": 1068,
+      "sha256": "14a9b373d78985e8c02e2cfff3a3a08a31bc6f37fb74ab7a3b929a073b8ae3c2"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ki.beam.json",
+      "bytes": 1122,
+      "sha256": "9ed603b47a592e386529cb714039f5371ec020b5f72089782f8555953bf5e864"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ki.pulse-sm.json",
+      "bytes": 1070,
+      "sha256": "2738e4be33d85ca497ecb8aff470ef5c190293894f38155f73e5eb8fcecf31c6"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ki.pulse.json",
+      "bytes": 1062,
+      "sha256": "2587e7175170d76effd1ef79bb16c0ae472b83373fc1a4dc69cee845b922980d"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ki.slash.json",
+      "bytes": 1126,
+      "sha256": "1db1505c67a5a2383e2bab3f6fee884cdf8acf80eb628da8a19dc153d63aef1f"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.arc.json",
+      "bytes": 1144,
+      "sha256": "274459f270f56cbfbd5b0187dbfb3900ecb4f787ecc1f53791e31a64cd1d6cf8"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.beam.json",
+      "bytes": 1124,
+      "sha256": "dd516e830edfedb717b416038f1516cb33c217c7b56a8b7878e657cb0221028e"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.bolt.json",
+      "bytes": 1124,
+      "sha256": "c5b7765ee003efdf4e8968caf4afa2af14c71ce8e24116bcb2171daadfe0ba66"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.nova.json",
+      "bytes": 1066,
+      "sha256": "10317ad420977934f0427799a6056e73b7f37334081ba371257017c8ed9d4007"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.pulse-sm.json",
+      "bytes": 1072,
+      "sha256": "9d9901dd71395f7e27ff66f1e6286c62b4a15c0a235af05b94fee9e75426f245"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.pulse.json",
+      "bytes": 1064,
+      "sha256": "5a0e5dc1f85d02df74e206d34af671af4e4d60d33463b38c93ad2329eb26d91e"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.slash.json",
+      "bytes": 1128,
+      "sha256": "653b50e28c97f43ce1bd6db46fbae69e92b06c8c8c0b9cf9f1361ae89f441a45"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.nature.pulse-sm.json",
+      "bytes": 1072,
+      "sha256": "ba8f4b5d115b965a718e164e352cb63c76ba6b6b091b6df17cb01c84bfcb858d"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.nature.pulse.json",
+      "bytes": 1064,
+      "sha256": "1eb1c1b2d3386c874c9b7573b31b0a3c33182cc434aabc1928dced1fa409f07f"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.nature.slash.json",
+      "bytes": 1128,
+      "sha256": "f4b681346127a14457194abc1f176e8706e6af7f24a88458dbafb60838f4208c"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.arc.json",
+      "bytes": 1148,
+      "sha256": "a15ddf768687a3793bb70c8be2c08cf447f898ecc477521a67b93056eb52af49"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.beam.json",
+      "bytes": 1128,
+      "sha256": "243c956d82f798806e065e360991223cc3408ec76132fad7968e052bbd6f1879"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.bolt.json",
+      "bytes": 1128,
+      "sha256": "12dd65dca612c6ed9a46353024b7e21e10dfb55008a6dce07e3031d701043e2c"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.nova.json",
+      "bytes": 1070,
+      "sha256": "7f24d4cb9d1df46dd806ecc7e48a0177b1f356cee95a2b8db5e6869db6550fdf"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.pulse-sm.json",
+      "bytes": 1076,
+      "sha256": "7a5f7c62484df2469369474ded86ee4f7500637e3d5ebf69cf855fbfed449f15"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.pulse.json",
+      "bytes": 1068,
+      "sha256": "830bb38fc1f77187233e67b06615b5ccc9d1b03cb33babc71da4b5b448c1ad20"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.slash.json",
+      "bytes": 1132,
+      "sha256": "a8ad96506751cf759bc381ef349dab1743f140f1803e1e3e41a4157d52d423cd"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.sound.nova.json",
+      "bytes": 1077,
+      "sha256": "55ca331dcba679bd7e512fd53d720f62abce4cef32bf1549b9a57d92b7093137"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.sound.pulse-sm.json",
+      "bytes": 1083,
+      "sha256": "d7023103e4f1d08f0ca93c39605f4d555a988c8ec900a372a81f9f3c3a1d8fde"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.sound.pulse.json",
+      "bytes": 1075,
+      "sha256": "b222bb1b94a1b5cd93b67954caed226199ac00ff05b0427dbec7fbf70f84d8ac"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.arc.json",
+      "bytes": 1156,
+      "sha256": "f0f7cca7fa12f13fe2dbfc2bc38dd707f7e8974cbc54d647152256cac665db2e"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.nova.json",
+      "bytes": 1078,
+      "sha256": "91b61ab4b26a5aa0d7bfd1b4175c9c8e6b41d02608ee26d73fac6902811f03c8"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.pulse-sm.json",
+      "bytes": 1084,
+      "sha256": "8529dd44aba81353126d2356373851adb0e3ac0e3af6815d0f3082f0df58799c"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.pulse.json",
+      "bytes": 1076,
+      "sha256": "6aa43b259e98578b4d8739cbf46032959e6c111dedac311fd7daf048991c56f9"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.slash.json",
+      "bytes": 1140,
+      "sha256": "3a29b59e75b05d46bc3654c79d1a6d394b8234b3e275cd259158d3f9f0a98656"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.summon.json",
+      "bytes": 1081,
+      "sha256": "b1c33b665aa1f6dfce3ae3a94015c4ff1fa58930ecd87f5c909728c0611b92bd"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.wind.arc.json",
+      "bytes": 1162,
+      "sha256": "c29b36b68b8db6b4e0b6519f54af4570308c02dc8c3a4f154784632c27bdb5d4"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.wind.nova.json",
+      "bytes": 1084,
+      "sha256": "14a86614ab02366d0b3017ca1479d78a1416abaab0d563a9e42af4765a8abe72"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.wind.pulse-sm.json",
+      "bytes": 1090,
+      "sha256": "2e55e2b72cb4d229131776ceb01fda5d6594f843848388fe182531919c00a022"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.wind.pulse.json",
+      "bytes": 1082,
+      "sha256": "09644812a1f69f76fb6eac9a8b765885db336c5e6c8c6940ca722f8d25580930"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.wind.slash.json",
+      "bytes": 1146,
+      "sha256": "37860f2cf9ecaa4841e91ba7b5eee6bc34e59dd76635c77ead3a142402af44ac"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/resource.json",
+      "bytes": 2546,
+      "sha256": "93ff90797d0b025d884c09f7c86b566037d80ba7d0998ebb52598d0ac266a6fb"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/validation.json",
+      "bytes": 12483,
+      "sha256": "0cf68cae8573be4733a874279fa89eed7de943cb689adfb23708ddcaa116b409"
+    },
+    {
+      "path": "GGD-Asset-Library/tools/admit.py",
+      "bytes": 9715,
+      "sha256": "02da4f0e3ba3b6fd5a73ab061e96f97a454ed013ebccd92f16264714dbd3a9cc"
+    },
+    {
+      "path": "GGD-Asset-Library/tools/backup_s3.py",
+      "bytes": 10686,
+      "sha256": "88b523f7e59d201a00e63ba82a82a75c96bbd001656a4b29fd33435d685f49c1"
+    },
+    {
+      "path": "GGD-Asset-Library/tools/prepare_existing.py",
+      "bytes": 2813,
+      "sha256": "42acf4f2d3395ec71efc28debd13ad1ed0e4d04d931cb5a2d90a42c8361e9967"
+    },
+    {
+      "path": "GGD-Asset-Library/tools/publish_s3.py",
+      "bytes": 9218,
+      "sha256": "0f8a582de15475ee3acf45bd5acdb6d53432b2b7374b9c9077c4c5fe131065d7"
+    },
+    {
+      "path": "GGD-Asset-Library/tools/validate-schema.mts",
+      "bytes": 981,
+      "sha256": "49fe459e684a59e0f33e63b51e05eb469b76f6f04fad50c00ad4475638d64164"
+    },
+    {
+      "path": "GGD-Asset-Library/tools/verify_backup.py",
+      "bytes": 3711,
+      "sha256": "63d2d01dba73ea15084bf228c72ac81d35bc185299ff8f72adeb82ead1227bd6"
+    },
+    {
+      "path": "GGD-Asset-Library/tools/verify_gate.py",
+      "bytes": 3224,
+      "sha256": "1146e8f54539040e7b619be871370a13102333f3004449dff851266709104ac6"
+    },
+    {
+      "path": "outputs/asset-library-registry-20260907/COPY_TO_WORKFLOW.txt",
+      "bytes": 1669,
+      "sha256": "752bd17094e9eeddde62cf17838ebad263309c608c3ef4991cbcf1b53c3e4577"
+    },
+    {
+      "path": "outputs/asset-library-registry-20260907/README.md",
+      "bytes": 8730,
+      "sha256": "93cde61c777f22b70c60f0a353662a5ac06f2dbfb34082f47a0abc6071026f84"
+    },
+    {
+      "path": "outputs/asset-library-registry-20260907/build_registry.py",
+      "bytes": 18341,
+      "sha256": "d92fa953116a4376636c10e3c512b1e4f5ccf7d8406c9732faff8c331f364ab6"
+    },
+    {
+      "path": "outputs/asset-library-registry-20260907/catalog.json",
+      "bytes": 18595,
+      "sha256": "a476a5302501fcc80121d2c2def7e48db6e2d86c2f8bfca49b42a046c719d541"
+    },
+    {
+      "path": "outputs/asset-library-registry-20260907/characters.json",
+      "bytes": 351416,
+      "sha256": "60fd2cbdeab55ead822cc9928655bfbb699aa8031b922514db6d8d488dd05adb"
+    },
+    {
+      "path": "outputs/asset-library-registry-20260907/community-crosswalk.json",
+      "bytes": 9434,
+      "sha256": "d367e1f8a253590a774ece9df1ac382ce23635191f9cee844c2f7da60b6592d3"
+    },
+    {
+      "path": "outputs/asset-library-registry-20260907/issues.json",
+      "bytes": 954,
+      "sha256": "86c84173691fa3f17c1678be01dcf99ac710c8f59eba43fe5b1166e88b0611de"
+    },
+    {
+      "path": "outputs/asset-library-registry-20260907/query.py",
+      "bytes": 3709,
+      "sha256": "a9d4bb1364e2422c5410393af703d251596813c98c4b75fdd9766221a79e1dc8"
+    },
+    {
+      "path": "outputs/asset-library-registry-20260907/validation.json",
+      "bytes": 1475,
+      "sha256": "b4e08d9a267f49cfa681546d38c7058a38d6327b5193ec8c0112ca1bcb10f51b"
+    }
+  ]
+}

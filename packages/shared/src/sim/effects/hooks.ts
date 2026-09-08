@@ -4,6 +4,7 @@
  * produce goes into the damage queue (resolved by combatResolveSystem's bounded
  * multi-pass drain), keeping ordering deterministic.
  */
+import { enableCastCreditTracking } from "../content/castLedger";
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import type { HookDef, HookEvent } from "../stats/modifiers";
@@ -287,268 +288,287 @@ export function fireHooks(
       if (hook.on !== event) continue;
       // ⭐ 45-00 —— 呼叫端的互補謂詞（見上）。rng-FREE，所以擋在 ICD 與骰子前面。
       if (hookFilter !== undefined && !hookFilter(hook)) continue;
-      if (hook.abilitySlot && hook.abilitySlot !== abilitySlot) continue;
-      // #244 — WHAT died / was hit. Absent or "any" = no filter, so every
-      // pre-#244 hook is untouched. An entity-less event never filters.
-      //
-      // 批 1 (2026-08-04) 把 union 從「是什麼」加寬到「站在哪一邊」
-      // (enemyChampion / allyChampion / enemy),判斷搬進 `victimPasses`。
-      // ⛔ 位置一個字都沒動 —— 它必須留在 ICD 閘與機率骰**之前**(理由與下方
-      // `requires` 那一段完全相同:被擋掉的一發不可以燒 ICD、不可以動 seed)。
-      if (hook.victim !== undefined && hook.victim !== "any" && target !== undefined) {
-        if (!victimPasses(world, owner, hook.victim, target)) continue;
-      }
-
-      // [反彈] 「普通攻擊」 過濾 —— owner 的文案是「反彈**普通攻擊**傷害 200%」,
-      // 而在這之前 `onDamageTaken` 分不出普攻、技能與 DoT。
-      //
-      // 位置:緊跟著 `victim`,因為它跟 `victim` 是同一類東西 —— 「這一則事件
-      // 是什麼」的過濾,rng-FREE,而且**在內部冷卻閘與機率骰之前**。理由與
-      // `requires` 完全相同(見下方那一段):被這條擋掉的一發不可以燒掉持有者的
-      // ICD、也不可以動到 seed,否則每一次被技能打到都會偷偷推進亂數流,
-      // 而那一發根本不可能觸發。
-      //
-      // 沒有封包 = 不通過(跟 `victim` 相反,理由見 `HookDef.damageSource`)。
-      if (hook.damageSource !== undefined && hook.damageSource !== "any") {
-        if (incoming === undefined) continue;
-        if (!damageSourcePasses(hook.damageSource, incoming.origin)) continue;
-      }
-
-      // B2 (2026-08-05) —— 「那一發是什麼型別 / 是不是暴擊」。
-      //
-      // ⛔ 位置與 `damageSource` 完全相同,而且理由**一個字都沒變**:這兩條是
-      // 「這一則事件是什麼」的過濾,rng-FREE,必須在**內部冷卻閘與機率骰之前**。
-      // 搬到骰子後面 = 被擋掉的一發也抽了籤 = 每一次被非暴擊打到都偷偷推進亂數流,
-      // 而那一發根本不可能觸發 —— 那是一條只有 `world.rng.state` 前後比對才看得見
-      // 的決定性缺陷,錄影會在幾百 tick 之後才對不起來。
-      //
-      // 沒有封包 = 不通過(同 `damageSource`):「沒有傷害」不可能是一發魔法傷害,
-      // 也不可能是一次暴擊。載入時 `refineHookDamageContext` 已經擋掉把它們掛到
-      // 無傷害事件上的文件,所以正常內容碰不到這一行。
-      if (hook.damageType !== undefined && hook.damageType !== "any") {
-        if (incoming === undefined) continue;
-        if (incoming.type !== hook.damageType) continue;
-      }
-      if (hook.damageCrit !== undefined && hook.damageCrit !== "any") {
-        if (incoming === undefined) continue;
-        if (incoming.crit !== (hook.damageCrit === "crit")) continue;
-      }
-
-      // ⭐ G8 —— 「這一發暴擊是**我自己那條** critStrike 打出來的嗎」
-      // (89-01 憤怒的頭槌:「**這一招**想起頭槌的那一下把敵人震昏」)。
-      //
-      // 在這個欄位之前,唯一寫得出來的是 `damageCrit: "crit"`,而那是一道**粗
-      // 過濾**:持有者身上任何一條暴擊來源(甚至他天生的 `Stat.CritChance`)打出
-      // 的暴擊都會觸發它。畫面上的差別是「這一招偶爾震昏」變成「這位英雄的每一
-      // 次暴擊都震昏」—— 一個沒有人設計過的控場量。
-      //
-      // ⛔ 位置與上面三條**完全相同**,理由一個字都沒變:這是「這一則事件是什麼」
-      // 的過濾,rng-FREE,必須在 ICD 閘與機率骰之前。
-      //
-      // ⚠️ 這同時是「一次判定、一串結果」的整個答案(G8 的另一半):hook 自己
-      // **不填 `chance`**,判定就只有暴擊那一次骰 —— 於是 77-02「暴擊時追加落雷」
-      // 不可能再出現「暴擊了但沒落雷」。
-      // ⛔ 所以**不需要**第二套 `CritStrikeGrant.onProc`:那會是第二個「暴擊時
-      // 做什麼」的住處,而它拿不到 target、也接不上 `victim`/`condition`/
-      // `internalCooldown`/`maxTriggers` 那一整排既有的閘(第零守則⑨)。
-      //
-      // ⚠️ 2026-08-10 —— 上面那段論證在**技能**暴擊上曾經是假的:
-      // `effects/damage.ts` 那一族只設 `crit`、**不設 `critSources`**,所以這一格
-      // 只有普攻通得過,而作者被逼回「grant 抽一次 + hook 再抽一次」。⛔ 修法**不是**
-      // 補一格 `onProc`,是把那三支的就地擲骰換成 `combat/critStrike.ts::
-      // rollAbilityCrit`（同一份合成、同一份名單）—— 那一行改完,這段論證才第一次
-      // 對全部的暴擊成立。
-      //
-      // 沒有封包 = 不通過(同 `damageSource`);`critSources` 缺席 = 這一發沒有
-      // 任何 grant 參與 = 一定不是「我那一條」。
-      if (hook.critSource === "thisSource") {
-        if (incoming?.critSources?.includes(src.id) !== true) continue;
-      }
-
-      // ⭐ S10 —— 被反彈掉的**原封包**是什麼(60-04 迴旋斬:「若成功反彈敵方
-      // **技能** AP 傷害」)。
-      //
-      // 在這兩格之前,`onReflectSuccess` 的過濾讀的是**反彈封包**自己 —— 而那一發
-      // 的 origin 永遠是反彈者的技能、type 永遠是作者填的那一個,所以「原本打過來
-      // 的是不是技能 AP」這個問題**問不出來**,60-04 的條件只能整條放棄。
-      //
-      // ⛔ 判定走 `damageSourcePasses` 那一份既有函式,不是第二份
-      // `startsWith("ability:")`(理由逐字見那個函式的檔頭)。
-      // ⚠️ 沒有原封包 = 不通過,與 `damageSource` 的不對稱一致。
-      if (hook.reflectedDamageSource !== undefined && hook.reflectedDamageSource !== "any") {
-        const from = incoming?.reflectedFrom;
-        if (from === undefined) continue;
-        if (!damageSourcePasses(hook.reflectedDamageSource, from.origin)) continue;
-      }
-      if (hook.reflectedDamageType !== undefined && hook.reflectedDamageType !== "any") {
-        const from = incoming?.reflectedFrom;
-        if (from === undefined) continue;
-        if (from.type !== hook.reflectedDamageType) continue;
-      }
-
-      // 職業限定閘 (owner 2026-07-30: 近戰專用擴散 / 法師保命 / 坦克衝刺 /
-      // 射手百分比傷害). See sim/content/requirement.ts for the axes and why
-      // `role` is not one of them.
-      //
-      // EVALUATED AGAINST `owner`, WHICH IS ALSO THE FIX FOR AURAS. `owner` is
-      // whoever CARRIES this source — the item holder for an item passive, and
-      // the ALLY STANDING IN THE RADIUS for a hook projected by an `auras`
-      // block (auraSystem attaches the payload to the recipient's own
-      // `sources`). So one field spells both 「近戰專用」 and 「周圍的近戰友軍」.
-      //
-      // ORDER IS LOAD-BEARING: this runs BEFORE the internal-cooldown gate and
-      // BEFORE the proc roll, so a BLOCKED clause costs its carrier nothing —
-      // no ICD burned, no `world.rng` draw consumed. Gating after the roll would
-      // make a melee-only proc silently eat the rng stream on every ranged
-      // champion's attack, which is both a wasted proc and a determinism trap
-      // for anyone reasoning about the seed. `scale` is a pure function of world
-      // state, so every replica takes the identical branch.
-      //
-      // Absent `requires` → scale 1 → both lines below are exact no-ops, which
-      // is why no pre-existing hook changes behaviour.
-      const scale = requirementScale(world, owner, hook.requires);
-      if (scale === 0) continue;
-
-      // ⭐ S6 —— 額度閘（`maxTriggers`）。
-      //
-      // ⛔ 位置與 `victim` / `damageSource` / `requires` 完全同一族，理由**一個字
-      // 都沒變**：這是一條 rng-FREE 的「這條 hook 還有沒有資格發動」過濾，必須在
-      // **內部冷卻閘與機率骰之前**。搬到骰子後面 = 一條額度早就用完的 hook 每一次
-      // 普攻都偷偷推進亂數流，而那是一條只有 `world.rng.state` 前後比對才看得見的
-      // 決定性缺陷。
-      //
-      // 缺席 = **無限次** = 這個欄位出現之前每一條 hook 的行為，所以既有內容
-      // 一份都碰不到這一行。
-      const perTargetQuota = hook.perTarget === true;
-      const used = triggersUsed(src, hi, perTargetQuota, target);
-      if (hook.maxTriggers !== undefined && used >= hook.maxTriggers) continue;
-
-      // Internal cooldown.
-      //
-      // `combatEnv.itemCooldown` (#189) scales this and ONLY this, and only for
-      // an ITEM source: owner asked for 道具冷卻 to be tunable independently of
-      // the ability `cooldown` factor, which multiplies ability cast cooldowns
-      // in abilities/abilitySystem.ts and has never touched an item.
-      //
-      // The kind check is what keeps the knob honest — champion passives,
-      // augments, auras and timed buffs all reach this same line, and scaling
-      // their ICDs from a factor labelled 道具冷卻 in the console would be a
-      // number that does not do what it says. Shipped at 1.0, so every existing
-      // hook keeps its exact pre-#189 cadence.
-      //
-      // `internalCooldownScope` (批 1, 決策點 1-4) 只換**記在哪一格**,不換
-      // 上面任何一句:省略 = `"source"` = `hookLastFired[hi]`,也就是這個欄位
-      // 出現之前每一份文件走的那一格,所以既有節奏一個 tick 都沒動。
-      const perSlot = hook.internalCooldownScope === "perAbilitySlot";
-      const slotKey = abilitySlot ?? ICD_NO_SLOT_KEY;
-      if (hook.internalCooldown) {
-        const icdTicks = hookIcdTicks(world, src, hook);
-        const last = perSlot
-          ? (src.hookLastFiredBySlot?.[hi]?.get(slotKey) ?? NEVER_FIRED)
-          : src.hookLastFired[hi]!;
-        if (world.tick - last < icdTicks) continue;
-      }
-      // proc chance (WC3 Hbh1/Ocr1/War1 …) — seeded rng, so a replay of the
-      // same seed rolls identically. A failed roll leaves the ICD clock alone.
-      //
-      // ⚠️ `chanceFrom`(朗基努斯之槍「(總敏捷)% 機率」)佔的是**同一個抽籤位置**,
-      // 而且照樣只抽一次:動的是**門檻**,不是抽的次數或時機。所以每一份既有
-      // 文件的亂數流一個位元都沒動 —— 這正是 `sim/content/condition.ts`
-      // DECISION 1 要保住的性質。兩個欄位互斥(schema 在載入時擋),所以
-      // 「相乘還是取代」這個沒有正確答案的問題不會出現。
-      const procChance = hookProcChance(world, owner, hook);
-      if (procChance !== undefined && !world.rng.chance(procChance)) continue;
-
-      // 觸發條件 (owner 2026-07-30 「on-attack by condition」). See
-      // sim/content/condition.ts — the whole model, both determinism decisions
-      // and the human-readable renderer live there.
-      //
-      // ORDER, AND WHY IT IS HERE AND NOT ANYWHERE ELSE:
-      //
-      //   · AFTER the `requires` class gate and AFTER the internal-cooldown
-      //     gate, because both of those are rng-FREE and a condition tree is
-      //     not. A melee-only clause on a ranged champion, or a clause still on
-      //     cooldown, must cost that carrier nothing — no draw, no stream
-      //     movement — for the same reason `requires` is gated before the proc
-      //     roll: otherwise every ranged champion's every swing silently
-      //     advances the seed on a proc that can never fire.
-      //   · AFTER the legacy `chance` roll, so the WC3 proc column keeps its
-      //     exact pre-existing draw position and every ported passive's stream
-      //     is byte-identical to before this field existed. A condition tree
-      //     draws AFTER it, never before.
-      //   · BEFORE `hookLastFired`, so a condition that does not hold does NOT
-      //     burn the internal cooldown — the same WC3 semantics a failed proc
-      //     roll already has ("a failed proc does not consume the cooldown").
-      //
-      // `target` is passed through as the condition's 敵人 subject: absent on an
-      // entity-less event, where every `subject:"target"` leaf reads FALSE by
-      // design (condition.ts DECISION 2).
-      if (!evaluateCondition(world, hook.condition, { self: owner, ...(target !== undefined ? { target } : {}) })) {
-        continue;
-      }
-      // 記帳。`"source"` 那一格**永遠**寫,連 `perAbilitySlot` 也寫 —— 這樣
-      // 一條 hook 從 per-slot 改回 source(後台切一格)不會拿到一份空的歷史,
-      // 而且 `hookLastFired` 仍是「這條 hook 最後一次發動」的單一真相
-      // (診斷面板、未來的 UI 都讀它)。
-      // ⭐ S6 —— 扣額度。`consumeOn` 今天只有 `"fire"`（發動的那一刻），而這一格
-      // 刻意先存在：它把「這裡有二選一」寫進契約，`"hit"`（下游真的打到人才算）
-      // 上線那天只是加一個 enum 成員，不是改語意。
-      // ⛔ 位置在**條件通過之後**：一個沒通過條件的事件不可以吃掉「下一次普攻」，
-      // 理由與它下面那行不燒 ICD 逐字相同。
-      if (hook.maxTriggers !== undefined) {
-        const nowUsed = consumeTrigger(src, hi, perTargetQuota, target, used);
-        // 用完之後整份來源卸下（圖示跟著消失）。⚠️ 真的卸下要等這一輪跑完 ——
-        // `detachSource` 會 splice 掉 `sc.sources`，而我們正在迭代它。
-        if (nowUsed >= hook.maxTriggers && hook.onConsumed === "detachSource") {
-          if (!detachAfter) detachAfter = [];
-          if (!detachAfter.includes(src.id)) detachAfter.push(src.id);
+      // Stacked DoTs may contain several contributing casts in one packet.
+      // Only this opt-in hook visits each; legacy hooks still fire once.
+      const creditCasts = hook.oncePerCast === true
+        ? incoming?.castInstances ?? [incoming?.castInstance]
+        : [undefined];
+      for (const creditCast of creditCasts) {
+        const creditKey = hook.oncePerCast === true ? JSON.stringify([owner, src.id, hi]) : undefined;
+        if (hook.oncePerCast === true) {
+          if (event !== "onDamageDealt" || creditCast === undefined || creditCast.caster !== owner ||
+              incoming === undefined || !(incoming.hpLost > 0) || target === undefined || target === owner ||
+              incoming.reflectDepth !== 0 || !originInScope(incoming.origin ?? "", "ability") ||
+              creditCast.creditedHooks.includes(creditKey!)) continue;
         }
-      }
-      src.hookLastFired[hi] = world.tick;
-      if (perSlot) {
-        if (!src.hookLastFiredBySlot) src.hookLastFiredBySlot = new Array(src.hooks.length);
-        let m = src.hookLastFiredBySlot[hi];
-        if (!m) {
-          m = new Map<string, number>();
-          src.hookLastFiredBySlot[hi] = m;
+        if (hook.abilitySlot && hook.abilitySlot !== (abilitySlot ?? creditCast?.slot)) continue;
+        // #244 — WHAT died / was hit. Absent or "any" = no filter, so every
+        // pre-#244 hook is untouched. An entity-less event never filters.
+        //
+        // 批 1 (2026-08-04) 把 union 從「是什麼」加寬到「站在哪一邊」
+        // (enemyChampion / allyChampion / enemy),判斷搬進 `victimPasses`。
+        // ⛔ 位置一個字都沒動 —— 它必須留在 ICD 閘與機率骰**之前**(理由與下方
+        // `requires` 那一段完全相同:被擋掉的一發不可以燒 ICD、不可以動 seed)。
+        if (hook.victim !== undefined && hook.victim !== "any" && target !== undefined) {
+          if (!victimPasses(world, owner, hook.victim, target)) continue;
         }
-        m.set(slotKey, world.tick);
-      }
 
-      const resolveAgainst =
-        hook.target === "allies"
-          ? alliedChampions(world, owner)
-          : hook.target === "self" || target === undefined
-            ? [owner]
-            : [target];
-      runEffects(scaleEffects(hook.effects, scale), {
-        world,
-        caster: owner,
-        // ⭐ G4 —— 這條 hook 的 payload 以**授予它的那一階**求值。
+        // [反彈] 「普通攻擊」 過濾 —— owner 的文案是「反彈**普通攻擊**傷害 200%」,
+        // 而在這之前 `onDamageTaken` 分不出普攻、技能與 DoT。
         //
-        // 在這一行之前它寫死 `rank: 1`,所以一支被動技的 hook 效果不管學到第幾階
-        // 都只讀得到 `perRank` 的第 1 欄。代價不是三支技能而是**全 repo 的抄寫稅**:
-        // 一支七階被動的作者被迫在 `passive.ranks[]` 的每一階**各抄一份**同樣的
-        // hook 只為了換掉裡面那個數字,而抄漏一階**不會紅** —— 那一階的玩家安靜地
-        // 拿到第 1 階的數值(失敗形態 ②)。
+        // 位置:緊跟著 `victim`,因為它跟 `victim` 是同一類東西 —— 「這一則事件
+        // 是什麼」的過濾,rng-FREE,而且**在內部冷卻閘與機率骰之前**。理由與
+        // `requires` 完全相同(見下方那一段):被這條擋掉的一發不可以燒掉持有者的
+        // ICD、也不可以動到 seed,否則每一次被技能打到都會偷偷推進亂數流,
+        // 而那一發根本不可能觸發。
         //
-        // ⛔ 不在這裡回頭查 `world.abilities` 反推 rank:一份來源可能來自道具
-        //(無 rank)、augment(無 rank)、靈氣(rank 屬於發射者)、`applyBuff`
-        //(rank 屬於那一次施放)—— 四種來路四個 if 就是第〇·五守則的越線。
-        // rank 是**授予那一刻**的性質,所以它騎在 source 上(`grantRank`)。
+        // 沒有封包 = 不通過(跟 `victim` 相反,理由見 `HookDef.damageSource`)。
+        if (hook.damageSource !== undefined && hook.damageSource !== "any") {
+          if (incoming === undefined) continue;
+          if (!damageSourcePasses(hook.damageSource, incoming.origin)) continue;
+        }
+
+        // B2 (2026-08-05) —— 「那一發是什麼型別 / 是不是暴擊」。
         //
-        // 缺席 = 1 = 這一行以前的行為,所以道具與增益卡逐位元不變;而載入時的
-        // `refineUnrankedHookPerRank` 擋掉「掛在拿不到 rank 的載體上卻寫了多欄
-        // perRank」的文件 —— fail-loud,不是靜默付第 1 欄。
-        rank: Math.max(1, src.grantRank ?? 1),
-        targets: resolveAgainst,
-        origin: `hook:${src.id}`,
-        // 觸發這一次的那一發封包,原封不動往下傳。`damage.incomingPct` 讀它,
-        // 而且它同時帶著 `reflectDepth` —— 反彈鏈的終止性就掛在這個欄位上。
-        ...(incoming !== undefined ? { incoming } : {}),
-        rng: world.rng,
-      });
-      fired++;
+        // ⛔ 位置與 `damageSource` 完全相同,而且理由**一個字都沒變**:這兩條是
+        // 「這一則事件是什麼」的過濾,rng-FREE,必須在**內部冷卻閘與機率骰之前**。
+        // 搬到骰子後面 = 被擋掉的一發也抽了籤 = 每一次被非暴擊打到都偷偷推進亂數流,
+        // 而那一發根本不可能觸發 —— 那是一條只有 `world.rng.state` 前後比對才看得見
+        // 的決定性缺陷,錄影會在幾百 tick 之後才對不起來。
+        //
+        // 沒有封包 = 不通過(同 `damageSource`):「沒有傷害」不可能是一發魔法傷害,
+        // 也不可能是一次暴擊。載入時 `refineHookDamageContext` 已經擋掉把它們掛到
+        // 無傷害事件上的文件,所以正常內容碰不到這一行。
+        if (hook.damageType !== undefined && hook.damageType !== "any") {
+          if (incoming === undefined) continue;
+          if (incoming.type !== hook.damageType) continue;
+        }
+        if (hook.damageCrit !== undefined && hook.damageCrit !== "any") {
+          if (incoming === undefined) continue;
+          if (incoming.crit !== (hook.damageCrit === "crit")) continue;
+        }
+
+        // ⭐ G8 —— 「這一發暴擊是**我自己那條** critStrike 打出來的嗎」
+        // (89-01 憤怒的頭槌:「**這一招**想起頭槌的那一下把敵人震昏」)。
+        //
+        // 在這個欄位之前,唯一寫得出來的是 `damageCrit: "crit"`,而那是一道**粗
+        // 過濾**:持有者身上任何一條暴擊來源(甚至他天生的 `Stat.CritChance`)打出
+        // 的暴擊都會觸發它。畫面上的差別是「這一招偶爾震昏」變成「這位英雄的每一
+        // 次暴擊都震昏」—— 一個沒有人設計過的控場量。
+        //
+        // ⛔ 位置與上面三條**完全相同**,理由一個字都沒變:這是「這一則事件是什麼」
+        // 的過濾,rng-FREE,必須在 ICD 閘與機率骰之前。
+        //
+        // ⚠️ 這同時是「一次判定、一串結果」的整個答案(G8 的另一半):hook 自己
+        // **不填 `chance`**,判定就只有暴擊那一次骰 —— 於是 77-02「暴擊時追加落雷」
+        // 不可能再出現「暴擊了但沒落雷」。
+        // ⛔ 所以**不需要**第二套 `CritStrikeGrant.onProc`:那會是第二個「暴擊時
+        // 做什麼」的住處,而它拿不到 target、也接不上 `victim`/`condition`/
+        // `internalCooldown`/`maxTriggers` 那一整排既有的閘(第零守則⑨)。
+        //
+        // ⚠️ 2026-08-10 —— 上面那段論證在**技能**暴擊上曾經是假的:
+        // `effects/damage.ts` 那一族只設 `crit`、**不設 `critSources`**,所以這一格
+        // 只有普攻通得過,而作者被逼回「grant 抽一次 + hook 再抽一次」。⛔ 修法**不是**
+        // 補一格 `onProc`,是把那三支的就地擲骰換成 `combat/critStrike.ts::
+        // rollAbilityCrit`（同一份合成、同一份名單）—— 那一行改完,這段論證才第一次
+        // 對全部的暴擊成立。
+        //
+        // 沒有封包 = 不通過(同 `damageSource`);`critSources` 缺席 = 這一發沒有
+        // 任何 grant 參與 = 一定不是「我那一條」。
+        if (hook.critSource === "thisSource") {
+          if (incoming?.critSources?.includes(src.id) !== true) continue;
+        }
+
+        // ⭐ S10 —— 被反彈掉的**原封包**是什麼(60-04 迴旋斬:「若成功反彈敵方
+        // **技能** AP 傷害」)。
+        //
+        // 在這兩格之前,`onReflectSuccess` 的過濾讀的是**反彈封包**自己 —— 而那一發
+        // 的 origin 永遠是反彈者的技能、type 永遠是作者填的那一個,所以「原本打過來
+        // 的是不是技能 AP」這個問題**問不出來**,60-04 的條件只能整條放棄。
+        //
+        // ⛔ 判定走 `damageSourcePasses` 那一份既有函式,不是第二份
+        // `startsWith("ability:")`(理由逐字見那個函式的檔頭)。
+        // ⚠️ 沒有原封包 = 不通過,與 `damageSource` 的不對稱一致。
+        if (hook.reflectedDamageSource !== undefined && hook.reflectedDamageSource !== "any") {
+          const from = incoming?.reflectedFrom;
+          if (from === undefined) continue;
+          if (!damageSourcePasses(hook.reflectedDamageSource, from.origin)) continue;
+        }
+        if (hook.reflectedDamageType !== undefined && hook.reflectedDamageType !== "any") {
+          const from = incoming?.reflectedFrom;
+          if (from === undefined) continue;
+          if (from.type !== hook.reflectedDamageType) continue;
+        }
+
+        // 職業限定閘 (owner 2026-07-30: 近戰專用擴散 / 法師保命 / 坦克衝刺 /
+        // 射手百分比傷害). See sim/content/requirement.ts for the axes and why
+        // `role` is not one of them.
+        //
+        // EVALUATED AGAINST `owner`, WHICH IS ALSO THE FIX FOR AURAS. `owner` is
+        // whoever CARRIES this source — the item holder for an item passive, and
+        // the ALLY STANDING IN THE RADIUS for a hook projected by an `auras`
+        // block (auraSystem attaches the payload to the recipient's own
+        // `sources`). So one field spells both 「近戰專用」 and 「周圍的近戰友軍」.
+        //
+        // ORDER IS LOAD-BEARING: this runs BEFORE the internal-cooldown gate and
+        // BEFORE the proc roll, so a BLOCKED clause costs its carrier nothing —
+        // no ICD burned, no `world.rng` draw consumed. Gating after the roll would
+        // make a melee-only proc silently eat the rng stream on every ranged
+        // champion's attack, which is both a wasted proc and a determinism trap
+        // for anyone reasoning about the seed. `scale` is a pure function of world
+        // state, so every replica takes the identical branch.
+        //
+        // Absent `requires` → scale 1 → both lines below are exact no-ops, which
+        // is why no pre-existing hook changes behaviour.
+        const scale = requirementScale(world, owner, hook.requires);
+        if (scale === 0) continue;
+
+        // ⭐ S6 —— 額度閘（`maxTriggers`）。
+        //
+        // ⛔ 位置與 `victim` / `damageSource` / `requires` 完全同一族，理由**一個字
+        // 都沒變**：這是一條 rng-FREE 的「這條 hook 還有沒有資格發動」過濾，必須在
+        // **內部冷卻閘與機率骰之前**。搬到骰子後面 = 一條額度早就用完的 hook 每一次
+        // 普攻都偷偷推進亂數流，而那是一條只有 `world.rng.state` 前後比對才看得見的
+        // 決定性缺陷。
+        //
+        // 缺席 = **無限次** = 這個欄位出現之前每一條 hook 的行為，所以既有內容
+        // 一份都碰不到這一行。
+        const perTargetQuota = hook.perTarget === true;
+        const used = triggersUsed(src, hi, perTargetQuota, target);
+        if (hook.maxTriggers !== undefined && used >= hook.maxTriggers) continue;
+
+        // Internal cooldown.
+        //
+        // `combatEnv.itemCooldown` (#189) scales this and ONLY this, and only for
+        // an ITEM source: owner asked for 道具冷卻 to be tunable independently of
+        // the ability `cooldown` factor, which multiplies ability cast cooldowns
+        // in abilities/abilitySystem.ts and has never touched an item.
+        //
+        // The kind check is what keeps the knob honest — champion passives,
+        // augments, auras and timed buffs all reach this same line, and scaling
+        // their ICDs from a factor labelled 道具冷卻 in the console would be a
+        // number that does not do what it says. Shipped at 1.0, so every existing
+        // hook keeps its exact pre-#189 cadence.
+        //
+        // `internalCooldownScope` (批 1, 決策點 1-4) 只換**記在哪一格**,不換
+        // 上面任何一句:省略 = `"source"` = `hookLastFired[hi]`,也就是這個欄位
+        // 出現之前每一份文件走的那一格,所以既有節奏一個 tick 都沒動。
+        const perSlot = hook.internalCooldownScope === "perAbilitySlot";
+        const slotKey = abilitySlot ?? creditCast?.slot ?? ICD_NO_SLOT_KEY;
+        if (hook.internalCooldown) {
+          const icdTicks = hookIcdTicks(world, src, hook);
+          const last = perSlot
+            ? (src.hookLastFiredBySlot?.[hi]?.get(slotKey) ?? NEVER_FIRED)
+            : src.hookLastFired[hi]!;
+          if (world.tick - last < icdTicks) continue;
+        }
+        // proc chance (WC3 Hbh1/Ocr1/War1 …) — seeded rng, so a replay of the
+        // same seed rolls identically. A failed roll leaves the ICD clock alone.
+        //
+        // ⚠️ `chanceFrom`(朗基努斯之槍「(總敏捷)% 機率」)佔的是**同一個抽籤位置**,
+        // 而且照樣只抽一次:動的是**門檻**,不是抽的次數或時機。所以每一份既有
+        // 文件的亂數流一個位元都沒動 —— 這正是 `sim/content/condition.ts`
+        // DECISION 1 要保住的性質。兩個欄位互斥(schema 在載入時擋),所以
+        // 「相乘還是取代」這個沒有正確答案的問題不會出現。
+        const procChance = hookProcChance(world, owner, hook);
+        if (procChance !== undefined && !world.rng.chance(procChance)) continue;
+
+        // 觸發條件 (owner 2026-07-30 「on-attack by condition」). See
+        // sim/content/condition.ts — the whole model, both determinism decisions
+        // and the human-readable renderer live there.
+        //
+        // ORDER, AND WHY IT IS HERE AND NOT ANYWHERE ELSE:
+        //
+        //   · AFTER the `requires` class gate and AFTER the internal-cooldown
+        //     gate, because both of those are rng-FREE and a condition tree is
+        //     not. A melee-only clause on a ranged champion, or a clause still on
+        //     cooldown, must cost that carrier nothing — no draw, no stream
+        //     movement — for the same reason `requires` is gated before the proc
+        //     roll: otherwise every ranged champion's every swing silently
+        //     advances the seed on a proc that can never fire.
+        //   · AFTER the legacy `chance` roll, so the WC3 proc column keeps its
+        //     exact pre-existing draw position and every ported passive's stream
+        //     is byte-identical to before this field existed. A condition tree
+        //     draws AFTER it, never before.
+        //   · BEFORE `hookLastFired`, so a condition that does not hold does NOT
+        //     burn the internal cooldown — the same WC3 semantics a failed proc
+        //     roll already has ("a failed proc does not consume the cooldown").
+        //
+        // `target` is passed through as the condition's 敵人 subject: absent on an
+        // entity-less event, where every `subject:"target"` leaf reads FALSE by
+        // design (condition.ts DECISION 2).
+        if (!evaluateCondition(world, hook.condition, { self: owner, ...(target !== undefined ? { target } : {}) })) {
+          continue;
+        }
+        // Commit after all condition/chance gates, before any reentrant payload.
+        if (creditCast !== undefined && creditKey !== undefined) {
+          enableCastCreditTracking(world);
+          creditCast.creditedHooks.push(creditKey);
+        }
+        // 記帳。`"source"` 那一格**永遠**寫,連 `perAbilitySlot` 也寫 —— 這樣
+        // 一條 hook 從 per-slot 改回 source(後台切一格)不會拿到一份空的歷史,
+        // 而且 `hookLastFired` 仍是「這條 hook 最後一次發動」的單一真相
+        // (診斷面板、未來的 UI 都讀它)。
+        // ⭐ S6 —— 扣額度。`consumeOn` 今天只有 `"fire"`（發動的那一刻），而這一格
+        // 刻意先存在：它把「這裡有二選一」寫進契約，`"hit"`（下游真的打到人才算）
+        // 上線那天只是加一個 enum 成員，不是改語意。
+        // ⛔ 位置在**條件通過之後**：一個沒通過條件的事件不可以吃掉「下一次普攻」，
+        // 理由與它下面那行不燒 ICD 逐字相同。
+        if (hook.maxTriggers !== undefined) {
+          const nowUsed = consumeTrigger(src, hi, perTargetQuota, target, used);
+          // 用完之後整份來源卸下（圖示跟著消失）。⚠️ 真的卸下要等這一輪跑完 ——
+          // `detachSource` 會 splice 掉 `sc.sources`，而我們正在迭代它。
+          if (nowUsed >= hook.maxTriggers && hook.onConsumed === "detachSource") {
+            if (!detachAfter) detachAfter = [];
+            if (!detachAfter.includes(src.id)) detachAfter.push(src.id);
+          }
+        }
+        src.hookLastFired[hi] = world.tick;
+        if (perSlot) {
+          if (!src.hookLastFiredBySlot) src.hookLastFiredBySlot = new Array(src.hooks.length);
+          let m = src.hookLastFiredBySlot[hi];
+          if (!m) {
+            m = new Map<string, number>();
+            src.hookLastFiredBySlot[hi] = m;
+          }
+          m.set(slotKey, world.tick);
+        }
+
+        const resolveAgainst =
+          hook.target === "allies"
+            ? alliedChampions(world, owner)
+            : hook.target === "self" || target === undefined
+              ? [owner]
+              : [target];
+        runEffects(scaleEffects(hook.effects, scale), {
+          world,
+          caster: owner,
+          // ⭐ G4 —— 這條 hook 的 payload 以**授予它的那一階**求值。
+          //
+          // 在這一行之前它寫死 `rank: 1`,所以一支被動技的 hook 效果不管學到第幾階
+          // 都只讀得到 `perRank` 的第 1 欄。代價不是三支技能而是**全 repo 的抄寫稅**:
+          // 一支七階被動的作者被迫在 `passive.ranks[]` 的每一階**各抄一份**同樣的
+          // hook 只為了換掉裡面那個數字,而抄漏一階**不會紅** —— 那一階的玩家安靜地
+          // 拿到第 1 階的數值(失敗形態 ②)。
+          //
+          // ⛔ 不在這裡回頭查 `world.abilities` 反推 rank:一份來源可能來自道具
+          //(無 rank)、augment(無 rank)、靈氣(rank 屬於發射者)、`applyBuff`
+          //(rank 屬於那一次施放)—— 四種來路四個 if 就是第〇·五守則的越線。
+          // rank 是**授予那一刻**的性質,所以它騎在 source 上(`grantRank`)。
+          //
+          // 缺席 = 1 = 這一行以前的行為,所以道具與增益卡逐位元不變;而載入時的
+          // `refineUnrankedHookPerRank` 擋掉「掛在拿不到 rank 的載體上卻寫了多欄
+          // perRank」的文件 —— fail-loud,不是靜默付第 1 欄。
+          rank: Math.max(1, src.grantRank ?? 1),
+          targets: resolveAgainst,
+          origin: `hook:${src.id}`,
+          // 觸發這一次的那一發封包,原封不動往下傳。`damage.incomingPct` 讀它,
+          // 而且它同時帶著 `reflectDepth` —— 反彈鏈的終止性就掛在這個欄位上。
+          ...(incoming !== undefined ? { incoming } : {}),
+          rng: world.rng,
+        });
+        fired++;
+      }
     }
   }
   // ⭐ S6 —— `onConsumed: "detachSource"`：額度用完的來源整份卸下（圖示跟著消失）。

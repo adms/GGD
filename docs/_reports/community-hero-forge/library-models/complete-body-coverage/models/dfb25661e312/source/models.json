@@ -1,0 +1,68 @@
+{
+  "results": [
+    {
+      "id": "300heroes:7d330d5e4eae4e8c4a9b7c34",
+      "library": "300heroes",
+      "kind": "model",
+      "tags": [
+        "model"
+      ],
+      "format": "x",
+      "name": "151.x",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/151.x",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/151.x",
+        "original_path": "..\\data\\character\\roleaction\\151.x",
+        "package": "Data3.jmp",
+        "entry": 285,
+        "bytes": 2058382,
+        "md5": "bd32adb114f25dfbd742ee1274dc68a5",
+        "source_md5": "bd32adb114f25dfbd742ee1274dc68a5",
+        "source_md5_match": true,
+        "category": "character_model_animation",
+        "extension": ".x"
+      },
+      "character_links": [
+        {
+          "character_id": "300heroes:151",
+          "confidence": "official_base_model"
+        }
+      ]
+    },
+    {
+      "id": "300heroes:c4b8c7647953904f4bbf4797",
+      "library": "300heroes",
+      "kind": "model",
+      "tags": [
+        "model"
+      ],
+      "format": "x",
+      "name": "151_skin1.x",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/151_skin1.x",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/151_skin1.x",
+        "original_path": "..\\data\\character\\roleaction\\151_skin1.x",
+        "package": "Data3.jmp",
+        "entry": 292,
+        "bytes": 4216490,
+        "md5": "2cf85020632c94ad627c7cd2a1351115",
+        "source_md5": "2cf85020632c94ad627c7cd2a1351115",
+        "source_md5_match": true,
+        "category": "character_model_animation",
+        "extension": ".x"
+      },
+      "character_links": [
+        {
+          "character_id": "300heroes:151",
+          "confidence": "numeric_prefix_candidate"
+        }
+      ]
+    }
+  ]
+}
