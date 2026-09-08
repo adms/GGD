@@ -1,0 +1,50 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.hero-status-inventory",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+  "contractFingerprint": "bdb64ca51f9b3b1d",
+  "title": "提供全角色狀態清單與可程式讀取快照，供其他工作線取用",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "固定來源名冊有 163 筆：45 預設上架白名單、4 隱藏、6 已下架本體、36 歷史庫、2 內建示範、37 社群機制審查／修正中作品、7 工坊原型、26 變身型態。檢查器重驗 159 份固定 Git 來源的 SHA-256、全部原生 ID、名稱／名冊分類與 Markdown 一致性。這是專案預設與候選內容快照，不是正式站即時白名單，亦不宣稱 163 名獨立可選英雄。",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "repro": { "command": "node tools/editor-acceptance/hero-status-inventory-check.mjs", "expectedExit": 0 },
+      "evidence": [
+        "docs/_reports/hero-character-status-20260909/全角色狀態清單.md",
+        "docs/_reports/hero-character-status-20260909/inventory.json",
+        "tools/editor-acceptance/hero-status-inventory-check.mjs"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "檢查器拒絕重複 ID、維持總數但交換隱藏與一般上架分類、來源 hash 變動、Markdown 名稱缺漏，以及將快照提升為 productionVerified=true。兩份外部本地審查證據只保留相對來源路徑／hash 並明列未打包；檢查通過不代表重驗這兩份原始證據、正式站營運狀態或英雄機制。",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "repro": { "command": "node tools/editor-acceptance/hero-status-inventory-check.test.mjs", "expectedExit": 0 },
+      "evidence": ["tools/editor-acceptance/hero-status-inventory-check.test.mjs"]
+    }
+  ],
+  "validation": {
+    "requiredGatesStartedConcurrently": true,
+    "results": [
+      { "command": "node --test tools/editor-acceptance/hero-status-inventory-check.test.mjs", "exit": 0, "detail": "5 tests passed." },
+      { "command": "node tools/editor-acceptance/hero-status-inventory-check.mjs", "exit": 0, "detail": "163 entries, 159 verified Git source hashes; 2 external local sources and production state explicitly unverified." },
+      { "command": "node tools/coord/check.mjs --dir ONE_PACKET_TEMP_DIR --run-repro", "exit": 0, "detail": "Both new packet repro commands executed with their expected exit codes." },
+      { "command": "pnpm coord:check", "exit": 0, "detail": "23 packets, 0 invalid; unchanged historical packets are not new runtime verification." },
+      { "command": "pnpm skills:check", "exit": 1, "detail": "Stops at stale docs/editor-contract/ggd-type-catalog.json and .md, after preceding checks pass." },
+      { "command": "GGD_VFX_GEMINI_ENABLED=0 pnpm editor:accept:release", "exit": 1, "detail": "Stops at stale docs/editor-contract/ggd-runtime-capabilities.json and .md; later release gates were not run." }
+    ],
+    "baselineEvidence": "All pre-existing tracked files remained byte-identical to baseCommit during validation (git diff --exit-code). This PR only adds five report/check/packet files and does not regenerate Main-owned catalogs. The initial sandbox run failed on tsx IPC permissions; all three required gates were then rerun concurrently outside that sandbox, yielding the results above. No GPU or paid visual review was started. Full release is not green; this is not authorization to merge or deploy."
+  },
+  "ownerQuotes": [
+    { "date": "2026-09-09", "text": "請你先 commit & push 這個清單 讓其他線可以用到這份清單" }
+  ],
+  "asks": [
+    "其他工作線請由 docs/_reports/hero-character-status-20260909/全角色狀態清單.md 閱讀，程式以同目錄 inventory.json 的 rows[].id、category 與 counts 消費；不要依角色名稱合併型態／原型。",
+    "這份 2026-09-09 快照不會自動更新；讀取時保留 baseCommit、observedAt、limitations 和 productionVerified=false。37 名的審查／修正中是機制工作階段，不是正式後台 pending submission 計數。正式站狀態須取得即時白名單與營運覆蓋層後另行核對。",
+    "本 PR 只發布清單、最小重驗工具與協作 packet，不改英雄、引擎、上架設定或訓練資料；不混入微調工作分支，也不自動合併。既有機制修正仍由 #1132 與 #1133 追蹤，不新增重複修正要求。"
+  ]
+}
