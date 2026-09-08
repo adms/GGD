@@ -1388,6 +1388,17 @@ export function combatResolveSystem(world: SimWorld): void {
         }
       }
 
+      // GH#1141: combat activity follows actual HP/shield loss, not the score's
+      // pre-block output. Fully blocked / immune / friendly hits earn nothing.
+      const from = world.transform.get(pkt.source), to = world.transform.get(pkt.target);
+      const sourceTeam = world.team.get(pkt.source), targetTeam = world.team.get(pkt.target);
+      if (dmg + shieldAbsorbed > 0 && world.combatActive && pkt.source !== pkt.target
+        && from && to && from.zone === to.zone && !world.settledZones.has(from.zone)
+        && sourceTeam && targetTeam && sourceTeam.teamId !== targetTeam.teamId) {
+        world.combatActivity.set(pkt.source, world.tick);
+        world.combatActivity.set(pkt.target, world.tick);
+      }
+
       // ---- match scoreboard: attribute this resolved packet ----
       // output = mitigated force pre-shield (credits attacker even if shielded);
       // hpLoss = HP actually removed; blocked = armor/MR mitigation + shield

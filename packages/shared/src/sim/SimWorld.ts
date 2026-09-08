@@ -314,6 +314,9 @@ export class SimWorld {
    * death. Deterministic (tick-stamped), transient, NOT part of the digest.
    */
   readonly recentDamagers = new Map<EntityId, Map<EntityId, number>>();
+  /** Latest hostile HP/shield impact, both participants. Bounded by live entities;
+   * read by nearbyCombat, cleared on fresh body/round/despawn and digested. */
+  readonly combatActivity = new Map<EntityId, number>();
 
   /** Multikill streak bookkeeping per killer (tick of last kill + streak len). */
   readonly killTracking = new Map<EntityId, { lastKillTick: number; streak: number }>();
@@ -1579,6 +1582,7 @@ export class SimWorld {
     this.deathWard.delete(id);
     this.matchStats.delete(id);
     this.recentDamagers.delete(id);
+    this.combatActivity.delete(id);
     this.killTracking.delete(id);
     // 連殺 combo: a recycled entityId must never inherit a stale chain — the
     // same defensive contract every other per-entity store here follows.
@@ -2307,6 +2311,9 @@ export class SimWorld {
         mix(attacker);
         mix(byAttacker.get(attacker)!);
       }
+    }
+    for (const id of [...this.combatActivity.keys()].sort((a, b) => a - b)) {
+      mix(id); mix(this.combatActivity.get(id)!);
     }
     digestCastCredits(this, mix);
     mix(this.rng.state);

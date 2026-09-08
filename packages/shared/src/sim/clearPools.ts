@@ -41,6 +41,8 @@ import type { EntityId } from "../ids";
 import type { StatusEffect } from "./components";
 import type { DotInstance } from "./effects/dot";
 import { detachSource } from "./stats/statPipeline";
+import { statusInstanceHasTag } from "./content/condition";
+import { Statuses } from "./content/registry";
 
 /** 一個實體身上四種「暫時性」的東西。 */
 export interface PoolSelection {
@@ -65,6 +67,8 @@ export type ClearPolarity = "buff" | "debuff" | "any";
 export type ClearOrder = "newest" | "oldest";
 
 export interface ClearPoolsOpts {
+  /** Filter status entries only. The dispel schema restricts this to status-only pools. */
+  statusTag?: string;
   pools: PoolSelection;
   /**
    * 只拔這一種極性的。`"any"` = 不分。
@@ -188,7 +192,8 @@ export function clearPools(
         st.effects,
         (e) =>
           (!need || dispellableOf(e.dispellable, opts.defaults?.status)) &&
-          polarityPasses(polarity, e.polarity),
+          polarityPasses(polarity, e.polarity) &&
+          (opts.statusTag === undefined || statusInstanceHasTag(e, opts.statusTag) || Statuses.tryGet(e.statusId)?.tags?.includes(opts.statusTag) === true),
         cmpByOrder(
           order,
           (e) => e.expiresAtTick,
@@ -290,6 +295,7 @@ export function clearPools(
  * 不可驅散的減速也不可以跨過墳墓／回合活下來。
  */
 export function clearForFreshBody(world: SimWorld, id: EntityId): ClearPoolsResult {
+  world.combatActivity.delete(id);
   return clearPools(world, id, {
     pools: { status: true, shields: true, dot: true },
     polarity: "any",
@@ -373,6 +379,7 @@ export function clearRoundScoped(world: SimWorld, id: EntityId): number {
   // ⭐ 回合邊界歸零同型連擊（見上面那一段）。⛔ 不計進回傳值 ——
   // 回傳的語意是「拔掉幾份 roundScoped 來源」，混進另一池會讓呼叫端的帳失真。
   world.damageStreak.delete(id);
+  world.combatActivity.delete(id);
   const sc = world.stats.get(id);
   if (!sc) return 0;
   // ⛔ 先收集再拔 —— `detachSource` 會改寫 `sc.sources`，邊走邊拔會跳過元素。

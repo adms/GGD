@@ -1,6 +1,6 @@
 {
   "schema": "ggd-community-design-refinement@1",
-  "version": 1,
+  "version": 2,
   "projectId": "community-review-37-20260907",
   "sourceSha256": "d6914597576ea4f3967a26e03b87190b41c306cd0006d8cc45aa5f9d2f57ac5e",
   "slots": {
@@ -26,6 +26,15 @@
                   "delaySec": 0.03333333333333333,
                   "count": 1,
                   "effects": [
+                    {
+                      "kind": "dispel",
+                      "shape": "single",
+                      "pools": {
+                        "status": true
+                      },
+                      "statusTag": "fear",
+                      "polarity": "debuff"
+                    },
                     {
                       "absorbs": "all",
                       "amount": {
@@ -56,13 +65,439 @@
           }
         }
       ],
-      "purpose": "【修正行為】以自身為中心給附近存活友軍及自己護盾與三秒抗恐懼；敵方與範圍外不受益。\n【原設計】為附近友軍提供護盾與短效抗恐懼，自己也獲得相同效果。",
-      "note": "以自身為中心給附近存活友軍及自己護盾與三秒抗恐懼；敵方與範圍外不受益。",
+      "purpose": "【修正行為】以自身為中心給附近存活友軍及自己護盾與三秒抗恐懼，並清除可驅散的恐懼；敵方與範圍外不受益，不移除暈眩、緩速或其他負面狀態。遵守 GGD 淨化總開關、數量上限與不可驅散規則。\n【原設計】為附近友軍提供護盾與短效抗恐懼，自己也獲得相同效果。",
+      "note": "以自身為中心給附近存活友軍及自己護盾與三秒抗恐懼，並清除可驅散的恐懼；敵方與範圍外不受益，不移除暈眩、緩速或其他負面狀態。遵守 GGD 淨化總開關、數量上限與不可驅散規則。",
       "removeOverrides": [
         "effects"
       ],
       "visualTargets": {
         "castEffect": "self"
+      }
+    },
+    "PASSIVE": {
+      "products": [
+        {
+          "instanceId": "passive-courage",
+          "template": {
+            "ref": "tpl-mark-stacks",
+            "params": {
+              "markId": "community-review-37-20260907.courage",
+              "initial": 0,
+              "max": 3,
+              "durationSec": -1,
+              "resetOn": "round",
+              "lethalMode": "none",
+              "perStackLost": []
+            }
+          }
+        },
+        {
+          "instanceId": "passive-courage-clock",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onInterval",
+                  "target": "self",
+                  "internalCooldown": 2,
+                  "condition": {
+                    "kind": "nearbyCombat",
+                    "subject": "self",
+                    "radius": 5,
+                    "withinSec": 2
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-37-20260907.courage",
+                      "stacks": 1,
+                      "duration": 1
+                    }
+                  ]
+                },
+                {
+                  "on": "onAbilityCast",
+                  "abilitySlot": "W",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "consumeStatus",
+                      "shape": "single",
+                      "subject": "self",
+                      "statusId": "community-review-37-20260907.courage",
+                      "count": 1,
+                      "onConsumed": [
+                        {
+                          "kind": "shield",
+                          "amount": {
+                            "flat": 70,
+                            "ratios": []
+                          },
+                          "duration": 2,
+                          "absorbs": "all",
+                          "stackKey": "community-review-37-20260907.w.guard",
+                          "onExisting": "keepLarger"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】5 格內其他存活友軍於最近 2 秒造成或承受敵對 HP／護盾命中，最多每 2 秒獲得 1 層勇氣，上限 3；不按命中次數累積。勇氣回合重置。成功施放瞬發 W 時扣 1 層給自身小盾；零層仍可撤退。\n【原設計】附近友軍交戰時累積勇氣，上限三層；以時間間隔累積，避免多段傷害快速疊滿。",
+      "note": "5 格內其他存活友軍於最近 2 秒造成或承受敵對 HP／護盾命中，最多每 2 秒獲得 1 層勇氣，上限 3；不按命中次數累積。勇氣回合重置。成功施放瞬發 W 時扣 1 層給自身小盾；零層仍可撤退。",
+      "removeOverrides": [
+        "effects",
+        "rangeTier",
+        "castTimeTier"
+      ],
+      "abilityOverrides": {}
+    },
+    "Q": {
+      "products": [
+        {
+          "instanceId": "q-effect",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "damageLine",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "小",
+                    "ratios": []
+                  },
+                  "length": 2,
+                  "width": 0.6,
+                  "aim": "facing",
+                  "fromCaster": true,
+                  "includeOrigin": true,
+                  "maxTargets": 12
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】前方長 2、寬 0.6 的短距叉刺，每名敵人最多一筆小級物理傷害；後方、側邊與範圍外可避開。討伐叉模型、專用刺擊動作與判定對齊仍待視覺驗收。\n【原設計】短距離刺擊，武器判定與外觀一致。",
+      "note": "前方長 2、寬 0.6 的短距叉刺，每名敵人最多一筆小級物理傷害；後方、側邊與範圍外可避開。討伐叉模型、專用刺擊動作與判定對齊仍待視覺驗收。",
+      "removeOverrides": [
+        "effects",
+        "rangeTier",
+        "castTimeTier"
+      ],
+      "abilityOverrides": {
+        "castTimeTier": "小",
+        "range": 2
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-37-20260907.q",
+        "abilityId": "community-review-37-20260907.q",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast",
+            "replaces": "caster.action",
+            "replacesForMs": 350
+          }
+        ]
+      }
+    },
+    "W": {
+      "products": [
+        {
+          "instanceId": "w-effect",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "dash",
+                  "mode": "forward",
+                  "speed": 10,
+                  "maxDistance": 3
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】沿輸入方向移動最多 3 格，受牆與場界阻擋，不造成衝撞傷害或擊退。勇氣扣除與小盾由被動的成功施法 W hook 執行一次；零層可施放。\n【原設計】朝指定方向短距離逃跑，消耗一層勇氣可取得小護盾。",
+      "note": "沿輸入方向移動最多 3 格，受牆與場界阻擋，不造成衝撞傷害或擊退。勇氣扣除與小盾由被動的成功施法 W hook 執行一次；零層可施放。",
+      "removeOverrides": [
+        "effects",
+        "rangeTier",
+        "castTimeTier"
+      ],
+      "abilityOverrides": {
+        "castTimeTier": "極小",
+        "range": 3
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-37-20260907.w",
+        "abilityId": "community-review-37-20260907.w",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast",
+            "replaces": "caster.action",
+            "replacesForMs": 350
+          }
+        ]
+      }
+    },
+    "E": {
+      "products": [
+        {
+          "instanceId": "e-effect",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 70,
+                    "ratios": []
+                  },
+                  "applyTo": "self"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】原地停留 1 秒後恢復少量生命；吟唱期間 HP 受傷取消，護盾完全吸收不取消（沿用 GGD interruptOn=damage）；不先回血。点心道具與進食動作仍待視覺驗收。\n【原設計】短暫停留恢復少量生命，受擊中斷。",
+      "note": "原地停留 1 秒後恢復少量生命；吟唱期間 HP 受傷取消，護盾完全吸收不取消（沿用 GGD interruptOn=damage）；不先回血。点心道具與進食動作仍待視覺驗收。",
+      "removeOverrides": [
+        "effects",
+        "rangeTier",
+        "castTimeTier"
+      ],
+      "abilityOverrides": {
+        "castTimeTier": "極大",
+        "range": 0,
+        "rootWhileCasting": true,
+        "interruptOn": "damage"
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-37-20260907.e",
+        "abilityId": "community-review-37-20260907.e",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast",
+            "replaces": "caster.action",
+            "replacesForMs": 350
+          }
+        ]
+      }
+    },
+    "R": {
+      "products": [
+        {
+          "instanceId": "r-effect",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "subject": "self",
+                  "statusId": "community-review-37-20260907.courage",
+                  "count": 3,
+                  "onConsumed": [
+                    {
+                      "kind": "delayed",
+                      "shape": "single",
+                      "anchor": "caster",
+                      "delaySec": 0.03333333333333333,
+                      "count": 6,
+                      "intervalSec": 0.18,
+                      "dropDeadTargets": true,
+                      "stopOnCasterDeath": true,
+                      "effects": [
+                        {
+                          "kind": "damageLine",
+                          "damageType": "physical",
+                          "amount": {
+                            "damageTier": "極小",
+                            "ratios": []
+                          },
+                          "length": 2,
+                          "width": 0.6,
+                          "aim": "facing",
+                          "fromCaster": true,
+                          "includeOrigin": true,
+                          "maxTargets": 12
+                        }
+                      ]
+                    }
+                  ],
+                  "onMissing": [
+                    {
+                      "kind": "consumeStatus",
+                      "shape": "single",
+                      "subject": "self",
+                      "statusId": "community-review-37-20260907.courage",
+                      "count": 2,
+                      "onConsumed": [
+                        {
+                          "kind": "delayed",
+                          "shape": "single",
+                          "anchor": "caster",
+                          "delaySec": 0.03333333333333333,
+                          "count": 5,
+                          "intervalSec": 0.18,
+                          "dropDeadTargets": true,
+                          "stopOnCasterDeath": true,
+                          "effects": [
+                            {
+                              "kind": "damageLine",
+                              "damageType": "physical",
+                              "amount": {
+                                "damageTier": "極小",
+                                "ratios": []
+                              },
+                              "length": 2,
+                              "width": 0.6,
+                              "aim": "facing",
+                              "fromCaster": true,
+                              "includeOrigin": true,
+                              "maxTargets": 12
+                            }
+                          ]
+                        }
+                      ],
+                      "onMissing": [
+                        {
+                          "kind": "consumeStatus",
+                          "shape": "single",
+                          "subject": "self",
+                          "statusId": "community-review-37-20260907.courage",
+                          "count": 1,
+                          "onConsumed": [
+                            {
+                              "kind": "delayed",
+                              "shape": "single",
+                              "anchor": "caster",
+                              "delaySec": 0.03333333333333333,
+                              "count": 4,
+                              "intervalSec": 0.18,
+                              "dropDeadTargets": true,
+                              "stopOnCasterDeath": true,
+                              "effects": [
+                                {
+                                  "kind": "damageLine",
+                                  "damageType": "physical",
+                                  "amount": {
+                                    "damageTier": "極小",
+                                    "ratios": []
+                                  },
+                                  "length": 2,
+                                  "width": 0.6,
+                                  "aim": "facing",
+                                  "fromCaster": true,
+                                  "includeOrigin": true,
+                                  "maxTargets": 12
+                                }
+                              ]
+                            }
+                          ],
+                          "onMissing": [
+                            {
+                              "kind": "delayed",
+                              "shape": "single",
+                              "anchor": "caster",
+                              "delaySec": 0.03333333333333333,
+                              "count": 3,
+                              "intervalSec": 0.18,
+                              "dropDeadTargets": true,
+                              "stopOnCasterDeath": true,
+                              "effects": [
+                                {
+                                  "kind": "damageLine",
+                                  "damageType": "physical",
+                                  "amount": {
+                                    "damageTier": "極小",
+                                    "ratios": []
+                                  },
+                                  "length": 2,
+                                  "width": 0.6,
+                                  "aim": "facing",
+                                  "fromCaster": true,
+                                  "includeOrigin": true,
+                                  "maxTargets": 12
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】吟唱後消耗當時全部 0–3 層勇氣，進行 3–6 次短距叉擊，每 0.18 秒一擊，逐擊用當下位置與面向重新判定；離開範圍可躲避，施法者死亡／分區結算即停止。沒有遠距追蹤傷害或無限強化。叉擊武器與專用動作仍待視覺驗收。\n【原設計】消耗勇氣發動數次叉擊，層數決定有限的強化幅度。",
+      "note": "吟唱後消耗當時全部 0–3 層勇氣，進行 3–6 次短距叉擊，每 0.18 秒一擊，逐擊用當下位置與面向重新判定；離開範圍可躲避，施法者死亡／分區結算即停止。沒有遠距追蹤傷害或無限強化。叉擊武器與專用動作仍待視覺驗收。",
+      "removeOverrides": [
+        "effects",
+        "rangeTier",
+        "castTimeTier"
+      ],
+      "abilityOverrides": {
+        "castTimeTier": "大",
+        "range": 2
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-37-20260907.r",
+        "abilityId": "community-review-37-20260907.r",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast",
+            "replaces": "caster.action",
+            "replacesForMs": 350
+          }
+        ]
       }
     }
   }

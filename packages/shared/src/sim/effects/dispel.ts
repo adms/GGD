@@ -50,6 +50,7 @@ export const dispelEffect: EffectKindSpec<"dispel"> = {
       if (!rules.appliesToMobs && world.mob.has(id)) continue;
       clearPools(world, id, {
         pools,
+        ...(e.statusTag !== undefined ? { statusTag: e.statusTag } : {}),
         polarity,
         // ⛔ 淨化**一定**看 `dispellable`。回合重置不看（`clearForFreshBody`
         // 傳 false）—— 那是兩件不同的事，而它們共用同一支函式正是為了讓這個
