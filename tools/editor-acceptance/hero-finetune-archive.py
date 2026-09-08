@@ -28,17 +28,28 @@ def write(path, value):
         f.write('\n')
 
 
-def build(workspace, out):
+def build(workspace, out, include=None, terminal_state=None):
+    workspace, out = workspace.resolve(), out.resolve()
     assert not out.exists(), 'NEW_ARCHIVE_DIRECTORY_REQUIRED'
     outputs = workspace / 'outputs'
-    roots = [p for p in sorted(outputs.iterdir()) if p.name.startswith(('forge-', 'community37-')) or p.name in
-        {'hero-forge-12b-restart-20260908', 'mid-model-comparison-20260907', 'qwen38-local-comparison-20260907', 'model-research-integrated-20260908'}]
-    roots += [workspace / 'GGD-hero-auto-forge/tools/forge-training']
-    roots += [workspace / name for name in ['Finetune 英雄技能特效與機制全自動鑄造小模型全自動實作計畫.md', 'Finetune_英雄技能模型_最終研究報告_20260907.md']]
+    if include:
+        assert terminal_state, 'EXPLICIT_TERMINAL_STATE_REQUIRED'
+        assert all(not p.is_absolute() and '..' not in p.parts for p in include), 'RELATIVE_SOURCE_PATH_REQUIRED'
+        roots = [workspace / p for p in include]
+        assert len(set(roots)) == len(roots), 'DUPLICATE_ROOT'
+        assert all(not a.is_relative_to(b) for a in roots for b in roots if a != b), 'OVERLAPPING_ROOTS'
+    else:
+        roots = [p for p in sorted(outputs.iterdir()) if p.name.startswith(('forge-', 'community37-')) or p.name in
+            {'hero-forge-12b-restart-20260908', 'mid-model-comparison-20260907', 'qwen38-local-comparison-20260907', 'model-research-integrated-20260908'}]
+        roots += [workspace / 'GGD-hero-auto-forge/tools/forge-training']
+        roots += [workspace / name for name in ['Finetune 英雄技能特效與機制全自動鑄造小模型全自動實作計畫.md', 'Finetune_英雄技能模型_最終研究報告_20260907.md']]
     assert all(p.exists() for p in roots)
+    assert all(p.resolve().is_relative_to(workspace) and not out.is_relative_to(p.resolve()) for p in roots), 'SOURCE_SCOPE_OR_RECURSIVE_OUTPUT'
     # Only archive a terminal new workflow, never a misleading running snapshot.
-    workflow = json.loads((outputs / 'hero-forge-12b-restart-20260908/ir5-workflow-v1/state.json').read_text())
-    assert workflow['status'] != 'running', 'WORKFLOW_STILL_RUNNING'
+    terminal = terminal_state or Path('outputs/hero-forge-12b-restart-20260908/ir5-workflow-v1/state.json')
+    assert not terminal.is_absolute() and '..' not in terminal.parts, 'RELATIVE_STATE_PATH_REQUIRED'
+    workflow = json.loads((workspace / terminal).read_text())
+    assert workflow['status'] in {'completed-experiment-not-promoted', 'completed-control-not-promoted', 'stopped-report-written'}, 'WORKFLOW_NOT_TERMINAL'
     out.mkdir(parents=True)
     (out / 'archives').mkdir()
     (out / 'models').mkdir()
@@ -92,7 +103,8 @@ def build(workspace, out):
         archives.append({'path': archive_name, 'bytes': (out / archive_name).stat().st_size, 'sha256': digest(out / archive_name)})
     # Readable source mirrors allow review without opening ZIPs; hashes stay original.
     mirrors = []
-    for name, src in [('12b', outputs / 'hero-forge-12b-restart-20260908'), ('4b', workspace / 'GGD-hero-auto-forge/tools/forge-training')]:
+    mirror_roots = [] if include else [('12b', outputs / 'hero-forge-12b-restart-20260908'), ('4b', workspace / 'GGD-hero-auto-forge/tools/forge-training')]
+    for name, src in mirror_roots:
         dest = out / 'sources' / name
         dest.mkdir(parents=True)
         for f in sorted(src.iterdir()):
@@ -101,10 +113,20 @@ def build(workspace, out):
                 name = f.name if f.suffix == '.md' else f.name + '.txt'
                 shutil.copyfile(f, dest / name)
                 mirrors.append({'path': (dest / name).relative_to(out).as_posix(), 'sha256': digest(f)})
+    if include:
+        for f in roots:
+            if f.is_file() and f.suffix in {'.py', '.mjs', '.mts', '.ts', '.md'}:
+                rel = f.relative_to(workspace).as_posix() + ('' if f.suffix == '.md' else '.txt')
+                dest = out / 'sources' / 'supplement' / rel
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(f, dest)
+                mirrors.append({'path': dest.relative_to(out).as_posix(), 'sha256': digest(f)})
     manifest = {'schema': 'ggd-hero-finetune-research-archive@1', 'entries': entries, 'archives': archives,
         'sourceMirrors': mirrors, 'omitted': omitted, 'secretPatternCheckPassed': True,
         'scriptSha256': digest(Path(__file__)), 'productionQualified': False,
-        'scope': 'Historical 4B/9B/12B/27B research, new IR5 experiment, scripts, raw evidence and selected adapters. Base/fused weights and duplicate environments excluded.',
+        'scope': 'Explicit incremental research supplement; baseline dependencies remain in the original archive.' if include else 'Historical 4B/9B/12B/27B research, new IR5 experiment, scripts, raw evidence and selected adapters. Base/fused weights and duplicate environments excluded.',
+        'includedRoots': [p.relative_to(workspace).as_posix() for p in roots],
+        'terminalState': {'path': str(terminal), 'sha256': digest(workspace / terminal), 'status': workflow['status']},
         'privacyNote': 'Historical machine paths and fictional hero source texts are preserved for evidence integrity; no credential files are included.'}
     write(out / 'manifest.json', manifest)
     verify(out)
@@ -165,10 +187,12 @@ if __name__ == '__main__':
     p.add_argument('archive', type=Path)
     p.add_argument('--workspace', type=Path)
     p.add_argument('--destination', type=Path)
+    p.add_argument('--include', type=Path, action='append')
+    p.add_argument('--terminal-state', type=Path)
     a = p.parse_args()
     if a.mode == 'build':
         assert a.workspace
-        build(a.workspace.resolve(), a.archive.resolve())
+        build(a.workspace.resolve(), a.archive.resolve(), a.include, a.terminal_state)
     elif a.mode == 'verify':
         verify(a.archive.resolve())
     else:

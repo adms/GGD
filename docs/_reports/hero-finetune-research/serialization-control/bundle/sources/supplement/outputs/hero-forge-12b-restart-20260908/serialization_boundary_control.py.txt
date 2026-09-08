@@ -1,0 +1,161 @@
+"""CPU-only, semantics-preserving whitespace control for excluded JSON values.
+Never unmask an unknown value to rescue adjacent punctuation; never train a model.
+"""
+import argparse
+import hashlib
+import importlib.util
+import json
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+spec = importlib.util.spec_from_file_location('mask_alignment', HERE/'prepare-semantic-mask-v2.py')
+alignment = importlib.util.module_from_spec(spec); spec.loader.exec_module(alignment)
+spec = importlib.util.spec_from_file_location('serialization_audit', HERE/'audit-ir5-serialization.py')
+audit = importlib.util.module_from_spec(spec); spec.loader.exec_module(audit)
+
+
+def serialize_padded(value, requests, padding):
+    assert padding and padding.isspace() and len(padding) <= 8, 'JSON_WHITESPACE_REQUIRED'
+    wanted = {r['pointer']: r['reason'] for r in requests}
+    assert len(wanted) == len(requests) and '' not in wanted, 'UNIQUE_NONROOT_EXCLUSIONS'
+    chunks, spans, length = [], {}, 0
+
+    def put(text):
+        nonlocal length
+        chunks.append(text); length += len(text.encode())
+
+    def visit(item, pointer='', depth=0):
+        assert depth <= 32
+        padded = pointer in wanted
+        if padded: put(padding)
+        start = length
+        if isinstance(item, dict):
+            put('{')
+            for i, (key, child) in enumerate(item.items()):
+                if i: put(',')
+                put(json.dumps(key, ensure_ascii=False)+':')
+                visit(child, pointer+'/'+key.replace('~','~0').replace('/','~1'), depth+1)
+            put('}')
+        elif isinstance(item, list):
+            put('[')
+            for i, child in enumerate(item):
+                if i: put(',')
+                visit(child, pointer+'/'+str(i), depth+1)
+            put(']')
+        else:
+            put(json.dumps(item, ensure_ascii=False, separators=(',', ':'), allow_nan=False))
+        spans[pointer] = {'startByte': start, 'endByte': length}
+        if padded: put(padding)
+
+    visit(value)
+    text=''.join(chunks); encoded=text.encode()
+    assert json.loads(text) == value, 'SEMANTIC_CHANGE'
+    excluded=[]
+    for pointer, reason in wanted.items():
+        span=spans[pointer]
+        excluded.append({'pointer':pointer, 'reason':reason, **span,
+            'valueSha256':audit.sha(encoded[span['startByte']:span['endByte']])})
+    excluded.sort(key=lambda r:r['startByte'])
+    assert all(a['endByte']<=b['startByte'] for a,b in zip(excluded,excluded[1:])), 'OVERLAPPING_EXCLUSIONS'
+    return {'text':text, 'spans':spans, 'encoding':'utf8-byte-half-open',
+        'textSha256':audit.sha(encoded), 'excluded':excluded,
+        'maskedBytes':sum(x['endByte']-x['startByte'] for x in excluded), 'totalBytes':len(encoded),
+        'policy':'Only whitespace inserted around excluded values. Entire overlapping tokens remain excluded.'}
+
+
+def punctuation_coverage(answer, excluded, offsets, mask, prefix_bytes):
+    outside, inside, supervised = [], [], 0
+    for byte, char in audit.punctuation_offsets(answer):
+        absolute = prefix_bytes + byte
+        covers=[i for i,(lo,hi) in enumerate(offsets) if lo <= absolute < hi]
+        assert covers, 'UNMAPPED_SYNTAX'
+        if all(mask[i] for i in covers):
+            supervised += 1
+        elif any(s['startByte']<=byte<s['endByte'] for s in excluded):
+            inside.append({'byte':byte,'char':char,'tokens':covers})
+        else:
+            outside.append({'byte':byte,'char':char,'tokens':covers})
+    return {'supervised':supervised,'maskedInsideExcludedValues':inside,'maskedOutsideExcludedValues':outside}
+
+
+def build(output, model):
+    assert not output.exists(), 'NEW_CONTROL_DIRECTORY_REQUIRED'
+    original_path=HERE/'ir5-data-stage-v1/dataset.private.json'
+    original_bytes=original_path.read_bytes(); original=json.loads(original_bytes)
+    original_tokens=json.loads((HERE/'ir5-mask-tokens-v1/tokens.private.json').read_text())
+    original_token_manifest=json.loads((HERE/'ir5-mask-tokens-v1/manifest.json').read_text())
+    assert audit.sha(audit.canonical(original))==original_token_manifest['datasetSha256'], 'SOURCE_DRIFT'
+    assert audit.sha(audit.canonical(original_tokens))==original_token_manifest['tokenizedDataSha256']
+    for name,h in original_token_manifest['tokenizerFiles'].items():
+        assert audit.sha((model/name).read_bytes())==h, 'TOKENIZER_DRIFT'
+    from transformers import AutoTokenizer
+    tokenizer=AutoTokenizer.from_pretrained(str(model), local_files_only=True, trust_remote_code=False)
+    before=[]
+    for row,token in zip(original,original_tokens):
+        assert row['id']==token['id']
+        prefix=token['tokenByteOffsets'][token['promptTokens']][0]
+        before.append({'id':row['id'],**punctuation_coverage(row['target']['text'],row['target']['excluded'],
+            token['tokenByteOffsets'],token['labelMask'],prefix)})
+    candidates=[]; selected=None; selected_rows=selected_tokens=None
+    # Predetermined finite alternatives. Selection is by tokenizer invariants,
+    # never by model output, dev score, teacher loss or a holdout answer.
+    for padding in [' ', '\n', '\n \n']:
+        rows=[]; tokens=[]; details=[]
+        for source in original:
+            target=serialize_padded(json.loads(source['target']['text']),source['target']['excluded'],padding)
+            assert [(s['pointer'],s['reason'],s['valueSha256']) for s in target['excluded']]==[
+                (s['pointer'],s['reason'],s['valueSha256']) for s in source['target']['excluded']], 'EXCLUDED_VALUE_CHANGE'
+            row={**source,'target':target,'trainingMayStart':False,
+                'serializationControl':{'originalTargetSha256':source['target']['textSha256'],
+                    'padding':padding,'semanticsUnchanged':True,'productionAdmitted':False}}
+            prompt=tokenizer.apply_chat_template(row['messages'],tokenize=False,add_generation_prompt=True,enable_thinking=False)
+            prefix=tokenizer.encode(prompt,add_special_tokens=False)
+            text=prompt+target['text']+'<turn|>\n'
+            enc=tokenizer(text,add_special_tokens=False,return_offsets_mapping=True)
+            ids=enc['input_ids']; assert ids[:len(prefix)]==prefix
+            mask,offsets,touched=alignment.align_loss_mask(text,enc['offset_mapping'],len(prefix),len(prompt.encode()),target['excluded'])
+            coverage=punctuation_coverage(target['text'],target['excluded'],offsets,mask,len(prompt.encode()))
+            eos_id=tokenizer.convert_tokens_to_ids('<turn|>')
+            eos=[i for i in range(len(prefix),len(ids)) if ids[i]==eos_id]
+            assert len(eos)==1 and mask[eos[0]]==1, 'END_TURN_LOSS_MISSING'
+            assert not any(mask[:len(prefix)]), 'PROMPT_LOSS'
+            token={'id':row['id'],'heroId':row['heroId'],'ids':ids,'labelMask':mask,
+                'promptTokens':len(prefix),'completionTokens':len(ids)-len(prefix),'directLossTokens':sum(mask),
+                'maskedCompletionTokens':len(ids)-len(prefix)-sum(mask),'tokenByteOffsets':offsets,
+                'excludedSpans':[{**s,'overlappingTokens':n} for s,n in zip(target['excluded'],touched)],
+                'textSha256':audit.sha(text.encode()),'trainingAdmitted':False,'indirectConditioningStillPresent':True}
+            rows.append(row); tokens.append(token)
+            details.append({'id':row['id'],'tokens':len(ids),'endTurnSupervised':True,**coverage})
+        candidate={'padding':padding,'details':details,'maxSequenceTokens':max(len(t['ids']) for t in tokens),
+            'punctuationOutsideExclusionsMasked':sum(len(d['maskedOutsideExcludedValues']) for d in details)}
+        candidate['tokenizerGatePassed']=candidate['punctuationOutsideExclusionsMasked']==0 and candidate['maxSequenceTokens']<=8192
+        candidates.append(candidate)
+        if candidate['tokenizerGatePassed']:
+            selected=padding;selected_rows=rows;selected_tokens=tokens;break
+    manifest={'schema':'ggd-ir5-serialization-boundary-control@1','cpuOnly':True,'modelWeightsLoaded':False,'gpuStarted':False,
+        'sourceDatasetSha256':audit.sha(audit.canonical(original)),'sourceFileSha256':audit.sha(original_bytes),
+        'scriptSha256':audit.sha(Path(__file__).read_bytes()),
+        'dependencyPins':{name:audit.sha((HERE/name).read_bytes()) for name in ['prepare-semantic-mask-v2.py','audit-ir5-serialization.py']},
+        'tokenizerPins':original_token_manifest['tokenizerFiles'],
+        'originalMaskedSyntaxOutsideExcludedValues':sum(len(d['maskedOutsideExcludedValues']) for d in before),
+        'originalMaskedSyntaxInsideExcludedValues':sum(len(d['maskedInsideExcludedValues']) for d in before),
+        'candidateSelection':'first of three predetermined whitespace layouts satisfying exact token invariants; no model scoring',
+        'selectedPadding':selected,'tokenizerGatePassed':selected is not None,
+        'trainingMayStart':False,'productionTrainingAdmitted':False,'modelImprovementProven':False,
+        'datasetSha256':audit.sha(audit.canonical(selected_rows)) if selected_rows else None,
+        'tokenizedDataSha256':audit.sha(audit.canonical(selected_tokens)) if selected_tokens else None,
+        'limitations':['Same exposed and single-family engineering controls; no independent generalization.',
+            'This controls masking of syntax, not whole-hero understanding; no model benefit measured.',
+            'Excluded preview values remain indirect conditioning; no attempt to learn them directly.']}
+    assert original_path.read_bytes()==original_bytes,'SOURCE_CHANGED'
+    output.mkdir()
+    artifacts={'manifest.json':manifest,'original-boundaries.json':before,'candidate-boundaries.json':candidates}
+    if selected_rows: artifacts.update({'dataset.private.json':selected_rows,'tokens.private.json':selected_tokens})
+    for name,data in artifacts.items():
+        with (output/name).open('x') as f: json.dump(data,f,ensure_ascii=False,indent=2);f.write('\n')
+    print(json.dumps(manifest,ensure_ascii=False,indent=2))
+
+
+if __name__=='__main__':
+    p=argparse.ArgumentParser();p.add_argument('output',type=Path);p.add_argument('--model',type=Path,required=True)
+    args=p.parse_args();build(args.output.resolve(),args.model.resolve())

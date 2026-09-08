@@ -1,0 +1,28 @@
+import copy
+import unittest
+from verify_serialization_control import verify_targets,without_json_whitespace
+
+
+class StrictVerificationTests(unittest.TestCase):
+    def fixture(self,text):return [{'id':'a','messages':[],'split':'train','target':{'text':text,'excluded':[]}}]
+
+    def test_whitespace_inside_string_is_preserved(self):
+        self.assertEqual(without_json_whitespace('{ "x": "a b" }'),'{"x":"a b"}')
+
+    def test_escaped_quotes_preserved(self):
+        text='{ "x" : "a\\\" b" }'
+        self.assertEqual(without_json_whitespace(text),'{"x":"a\\\" b"}')
+
+    def test_boolean_number_swap_is_rejected(self):
+        with self.assertRaisesRegex(AssertionError,'NON_WHITESPACE_EDIT'):
+            verify_targets(self.fixture('{"x":true}'),self.fixture('{"x":1}'))
+
+    def test_string_space_removal_is_rejected(self):
+        with self.assertRaisesRegex(AssertionError,'NON_WHITESPACE_EDIT'):
+            verify_targets(self.fixture('{"x":"a b"}'),self.fixture('{"x":"ab"}'))
+
+    def test_only_external_whitespace_passes(self):
+        self.assertEqual(verify_targets(self.fixture('{"x":null}'),self.fixture('{ "x" : null }')),1)
+
+
+if __name__=='__main__':unittest.main()

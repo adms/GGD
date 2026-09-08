@@ -64,5 +64,23 @@ class ArchiveTests(unittest.TestCase):
             (out/'manifest.json').write_text(json.dumps(m))
             with self.assertRaisesRegex(AssertionError,'UNREGISTERED_ARCHIVE'): a.verify(out)
 
+    def test_scoped_increment_requires_a_terminal_workflow(self):
+        with tempfile.TemporaryDirectory() as d, contextlib.redirect_stdout(io.StringIO()):
+            root=Path(d)/'workspace'; r=self.fixture(root)
+            state=Path('outputs/hero-forge-12b-restart-20260908/ir5-workflow-v1/state.json')
+            (root/state).write_text(json.dumps({'status':'running'}))
+            include=[Path('outputs/hero-forge-12b-restart-20260908/sample.py')]
+            with self.assertRaisesRegex(AssertionError,'WORKFLOW_NOT_TERMINAL'): a.build(root,Path(d)/'out',include,state)
+            (root/state).write_text(json.dumps({'status':'completed-control-not-promoted'}))
+            out=Path(d)/'out'; a.build(root,out,include,state)
+            m=json.loads((out/'manifest.json').read_text())
+            self.assertEqual([e['path'] for e in m['entries']],[str(include[0])])
+
+    def test_scoped_increment_rejects_escaping_source(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d)/'workspace'; self.fixture(root)
+            with self.assertRaisesRegex(AssertionError,'RELATIVE_SOURCE_PATH'):
+                a.build(root,Path(d)/'out',[Path('../outside')],Path('state.json'))
+
 
 if __name__ == '__main__': unittest.main()

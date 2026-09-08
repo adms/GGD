@@ -1,0 +1,36 @@
+import copy
+import importlib.util
+import json
+from pathlib import Path
+import unittest
+
+s=importlib.util.spec_from_file_location('runner',Path(__file__).with_name('run-ir5-serialization-control.py'))
+r=importlib.util.module_from_spec(s);s.loader.exec_module(r)
+
+
+class RunnerTests(unittest.TestCase):
+    def fixture(self):
+        original=[{'id':str(i),'split':'engineering-train-candidate' if i<8 else 'dev',
+            'messages':[{'role':'user','content':'source'}],'target':{'text':'{"v":null}','excluded':[]}} for i in range(10)]
+        candidate=copy.deepcopy(original)
+        for row in candidate: row['target']['text']='{ "v" : null }'
+        tokens=[{'id':str(i),'ids':[0,1],'labelMask':[0,1],'directLossTokens':1} for i in range(10)]
+        return original,candidate,tokens
+
+    def test_only_whitespace_change_admitted_and_dev_excluded(self):
+        a,b,t=self.fixture();self.assertEqual([x['id'] for x in r.select_training(a,b,t)],[str(i) for i in range(8)])
+
+    def test_semantic_edit_rejected(self):
+        a,b,t=self.fixture();b[0]['target']['text']='{"v":1}'
+        with self.assertRaisesRegex(AssertionError,'SEMANTIC_TARGET_CHANGE'):r.select_training(a,b,t)
+
+    def test_prompt_or_split_change_rejected(self):
+        a,b,t=self.fixture();b[9]['split']='engineering-train-candidate'
+        with self.assertRaisesRegex(AssertionError,'INPUT_OR_SPLIT_CHANGE'):r.select_training(a,b,t)
+
+    def test_changed_loss_exclusions_rejected(self):
+        a,b,t=self.fixture();b[0]['target']['excluded']=[{'pointer':'/v','reason':'changed','valueSha256':'x'}]
+        with self.assertRaisesRegex(AssertionError,'EXCLUSION_CHANGE'):r.select_training(a,b,t)
+
+
+if __name__=='__main__':unittest.main()

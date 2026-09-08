@@ -1,0 +1,45 @@
+// CPU-only deterministic analysis of fixed outputs and training coverage.
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {fileURLToPath} from 'node:url';
+const here=path.dirname(fileURLToPath(import.meta.url)),out=path.resolve(process.argv[2]);
+assert.equal(path.dirname(out),here);assert(!fs.existsSync(out));
+const read=n=>JSON.parse(fs.readFileSync(path.join(here,n),'utf8'));
+const inputs=['ir5-data-stage-v1/dataset.private.json','ir5-base-v1-assessment/cases.json','ir5-lora-v1-assessment/cases.json','ir5-serialization-lora-v1-assessment/cases.json'];
+const data=read(inputs[0]),arms=inputs.slice(1).map(read);
+assert(arms.every(a=>a.length===6));
+const ids=arms[0].map(r=>r.id);assert(arms.every(a=>JSON.stringify(a.map(r=>r.id))===JSON.stringify(ids)));
+const joint=ids.filter((id,i)=>arms.every(a=>a[i].jsonValid));
+const coverage=[];
+for(const slot of ['Q','W','E'])for(const op of ['damage','area_pulses','line_sequence']){
+  const relevant=data.filter(r=>JSON.parse(r.target.text).slots[slot].actions.some(a=>a.op===op));
+  const train=relevant.filter(r=>r.split==='engineering-train-candidate');
+  const dev=relevant.filter(r=>r.synthetic&&r.split!=='engineering-train-candidate');
+  const real=relevant.filter(r=>!r.synthetic);
+  coverage.push({slot,op,trainExamples:train.length,syntheticDev:dev.length,exposedRealControls:real.length,
+    trainIds:train.map(r=>r.id),devIds:dev.map(r=>r.id),zeroTrainingExposure:train.length===0});
+}
+const modelErrors=arms[2].map(row=>({id:row.id,irError:row.irError??null,
+  failedSourceFields:row.sourceFacets.rows.filter(x=>!x.passed)}));
+const pathCounts={};for(const row of modelErrors)for(const error of row.failedSourceFields)pathCounts[error.path]=(pathCounts[error.path]??0)+1;
+const paired=[];
+// Compare exact shared field paths only, without dropping the six-hero gate denominator.
+for(let i=0;i<6;i++){
+  const scores=arms.map(a=>a[i].sourceFacets?.rows??[]);
+  const common=scores[0].map(r=>r.path).filter(p=>scores.every(a=>a.some(r=>r.path===p)));
+  paired.push({id:ids[i],allThreeParsed:joint.includes(ids[i]),sharedScoredFields:common.length,
+    correct: scores.map(a=>common.filter(p=>a.find(r=>r.path===p).passed).length)});
+}
+const report={schema:'ggd-ir5-serialization-followup-analysis@1',cpuOnly:true,modelPromoted:false,
+  qualityGoalAchieved:false,cohortHeroes:6,allThreeParsedHeroes:joint,
+  sourceHashes:Object.fromEntries(inputs.map(n=>[n,createHash('sha256').update(fs.readFileSync(path.join(here,n))).digest('hex')])),
+  coverage,modelErrors,pathCounts,paired,
+  inference:'Slot-role coverage is skewed: a zero cell is an extrapolation challenge, not mislabeled source data. Do not train on exposed dev and reuse it as blind evaluation.',
+  nextDataRequirements:['Maintain a coverage matrix for slot × target geometry × temporal qualifiers before admitting broad training.',
+    'Separate unseen combinations from unseen slot-role components; neither is an independent source-family holdout.',
+    'Use mixed-slot timing and varied source wording; do not encode the answer in hero names.',
+    'Retain source-fidelity guards for targeted vs ground, fixed point vs line, and not_specified vs none.']};
+fs.mkdirSync(out);fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify(report,null,2)+'\n',{flag:'wx'});
+console.log(JSON.stringify({coverage:coverage.map(({slot,op,trainExamples,syntheticDev})=>({slot,op,trainExamples,syntheticDev})),pathCounts,paired},null,2));

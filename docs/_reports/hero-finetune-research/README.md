@@ -2,6 +2,8 @@
 
 Research artifacts only. No editor activation, model service, cloud training, game-mechanic changes or production qualification is included.
 
+Latest local follow-up: [serialization-boundary control](serialization-control/README.md) restored JSON validity to 6/6, but IR/compilation/whole-hero engineering checks remain 0/6. The original results below remain unchanged. The supplement includes new scripts, raw evidence and the research adapter; this is not a production-qualified model.
+
 The bounded IR5 run finished in 838.09 seconds. JSON validity regressed from 5/6 to 1/6; valid IR, compilation and complete engineering checks remained 0/6. The 16-step adapter is **not recommended for adoption**. Training itself took 207.44 seconds with 34.27 GiB peak Metal memory. The 0.137833 → 0.015402 training loss reduction did not translate to usable output quality.
 
 ## Start here

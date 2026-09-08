@@ -1,0 +1,136 @@
+"""One bounded whitespace-only SFT control, reusing the unchanged IR5 worker/scorer.
+No production admission, hidden semantic repair, checkpoint selection or retry.
+"""
+import argparse
+import importlib.util
+import json
+from pathlib import Path
+import shutil
+import signal
+import sys
+import time
+
+HERE=Path(__file__).resolve().parent
+spec=importlib.util.spec_from_file_location('frozen_flow',HERE/'run-ir5-workflow.py')
+flow=importlib.util.module_from_spec(spec);spec.loader.exec_module(flow)
+gpu=flow.gpu
+CONTROL=HERE/'ir5-serialization-boundary-control-v1'
+PILOT=HERE/'ir5-serialization-lora-v1'
+ASSESSMENT=HERE/'ir5-serialization-lora-v1-assessment'
+
+
+def select_training(original, candidate, tokens):
+    assert [r['id'] for r in original]==[r['id'] for r in candidate]==[r['id'] for r in tokens], 'COHORT_CHANGE'
+    for a,b in zip(original,candidate):
+        assert a['messages']==b['messages'] and a['split']==b['split'], 'INPUT_OR_SPLIT_CHANGE'
+        assert json.loads(a['target']['text'])==json.loads(b['target']['text']), 'SEMANTIC_TARGET_CHANGE'
+        assert [(s['pointer'],s['reason'],s['valueSha256']) for s in a['target']['excluded']]==[
+            (s['pointer'],s['reason'],s['valueSha256']) for s in b['target']['excluded']], 'EXCLUSION_CHANGE'
+    ids={r['id'] for r in original if r['split']=='engineering-train-candidate'}
+    selected=[t for t in tokens if t['id'] in ids]
+    assert len(selected)==len(ids)==8, 'TRAIN_COHORT_COUNT'
+    assert all(len(t['ids'])<=8192 and sum(t['labelMask'])==t['directLossTokens'] for t in selected)
+    return selected
+
+
+def prepare():
+    assert not PILOT.exists(), 'NEW_PILOT_REQUIRED'
+    c=gpu.read(CONTROL/'manifest.json')
+    assert c['tokenizerGatePassed'] and c['selectedPadding']==' ' and not c['modelImprovementProven']
+    assert gpu.digest(HERE/'serialization_boundary_control.py')==c['scriptSha256']
+    for f,h in c['dependencyPins'].items(): assert gpu.digest(HERE/f)==h, 'CONTROL_DEPENDENCY_DRIFT'
+    rows=gpu.read(CONTROL/'dataset.private.json'); tokens=gpu.read(CONTROL/'tokens.private.json')
+    assert gpu.json_hash(rows)==c['datasetSha256'] and gpu.json_hash(tokens)==c['tokenizedDataSha256']
+    original=gpu.read(HERE/'ir5-data-stage-v1/dataset.private.json')
+    assert gpu.json_hash(original)==c['sourceDatasetSha256']
+    train=select_training(original,rows,tokens)
+    previous=gpu.read(HERE/'ir5-lora-v1/manifest.json')
+    old_train=gpu.read(HERE/'ir5-lora-v1/tokens.private.json')
+    assert [r['id'] for r in train]==[r['id'] for r in old_train]
+    assert previous['steps']==16 and previous['learningRate']==2e-5 and previous['seed']==20260908
+    protocol,requests,prompts=gpu.prepare(flow.BASE)
+    evaluation={'whole_hero':{'baseRun':flow.BASE.name,'protocol':protocol,'requests':requests,'prompts':prompts}}
+    assert gpu.json_hash(evaluation)==previous['evaluationSha256'], 'PAIRED_EVALUATION_CHANGE'
+    assert not {t['heroId'] for t in train}&{r['id'] for r in requests}, 'TRAIN_EVAL_OVERLAP'
+    assert gpu.digest(HERE/'ir5-lora-pilot.py')==previous['workerSha256'], 'WORKER_CHANGE'
+    p={**previous,'schema':'ggd-ir5-whitespace-control-pilot@1','createdAt':time.time(),
+        'purpose':'Same 8 examples/16 steps/worker/evaluation; only whitespace placement and corresponding token mask change.',
+        'datasetSha256':c['datasetSha256'],'tokenizedTrainingSha256':gpu.json_hash(train),
+        'baselineDatasetSha256':previous['datasetSha256'],'preparerSha256':gpu.digest(Path(__file__)),
+        'boundaryControlManifestSha256':gpu.digest(CONTROL/'manifest.json'),
+        'engineeringWhitespaceControlAdmitted':True,'productionTrainingAdmitted':False,
+        'controlLimits':'No causal claim beyond this one fixed exposed cohort; this is not additional families or larger training.'}
+    p['checkerPins']={**p['checkerPins'],**{f:gpu.digest(HERE/f) for f in [
+        'serialization_boundary_control.py','audit-ir5-serialization.py','prepare-semantic-mask-v2.py']}}
+    PILOT.mkdir()
+    for name,data in [('manifest.json',p),('tokens.private.json',train),('evaluation.private.json',evaluation)]:
+        gpu.atomic(PILOT/name,data)
+
+
+def report(out,state):
+    assessments={}
+    for name,path in [('base',HERE/'ir5-base-v1-assessment'),('originalMaskedLora',HERE/'ir5-lora-v1-assessment'),('spacedMaskedLora',ASSESSMENT)]:
+        if (path/'manifest.json').exists(): assessments[name]=gpu.read(path/'manifest.json')
+    if len(assessments)==3:
+        base=assessments['base']
+        assert all(a['requestSha256']==base['requestSha256'] and a['checkerPins']==base['checkerPins'] for a in assessments.values())
+    training=gpu.read(PILOT/'result.json') if (PILOT/'result.json').exists() else None
+    result={'schema':'ggd-ir5-whitespace-control-result@1','status':state['status'],'error':state.get('error'),
+        'seconds':time.time()-state['startedAt'],'assessments':assessments,'training':training,
+        'originalScoresChanged':False,'productionQualified':False,'modelPromoted':False,'cloudSpendUSD':0,
+        'control':gpu.read(CONTROL/'manifest.json'),'stages':state['stages']}
+    if training:
+        cp=PILOT/training['checkpoint']['path']; target=out/'research-adapter';target.mkdir()
+        for name in ['adapter_config.json','adapters.safetensors']: shutil.copyfile(cp/name,target/name)
+        assert gpu.digest(target/'adapters.safetensors')==training['checkpoint']['sha256']
+        p=gpu.read(PILOT/'manifest.json')
+        gpu.atomic(target/'model-card.json',{'model':p['model'],'revision':p['revision'],'baseQuantization':'8-bit',
+            'adapterSha256':training['checkpoint']['sha256'],'qualified':False,'scope':'8 synthetic examples, whitespace serialization control only',
+            'load':'mlx_vlm.load(BASE_DIRECTORY, adapter_path=ADAPTER_DIRECTORY, trust_remote_code=False)'})
+    gpu.atomic(out/'result.json',result)
+    lines=['# IR5 序列邊界對照結果','',f"狀態：{state['status']}",'',
+        '固定相同 8 筆合成訓練、16 步、原 worker／評分器／六例輸入；只在排除值前後插入空白並重新分詞。',
+        'JSON 物件值、來源、切分、參數與排除值內容完全相同。舊答案與舊分數未修改。',
+        '資料仍是一個合成家族與已曝光控制組；不是獨立泛化或完整英雄設定驗收。','',
+        '| 指標（每組 6 例） | 基底 | 原遮罩 LoRA | 空白邊界 LoRA |','|---|---:|---:|---:|']
+    for metric in ['jsonValid','irValid','compiled','engineeringPassed','fullHeroQualified']:
+        values=[str(assessments[k]['counts'][metric]) if k in assessments else '未完成' for k in ['base','originalMaskedLora','spacedMaskedLora']]
+        lines.append('| '+metric+' | '+' | '.join(values)+' |')
+    if training:
+        lines+=['',f"訓練 {training['trainingStepSeconds']:.2f} 秒，Metal 峰值 {training['peakTrainingMetalBytes']/gpu.GIB:.2f} GiB；loss 不作採用指標。"]
+    lines+=['','本對照不自動採用模型。即使 JSON 改善，仍須逐例機制與完整英雄驗證，不可以包裝修正充當語意成功。',
+        '所有原始推論、每例評分、模型收據及失敗原因均保留。'+(' 錯誤：'+str(state['error']) if state.get('error') else ''),'']
+    (out/'REPORT.md').write_text('\n'.join(lines))
+
+
+def main(out,allow):
+    assert out.parent==HERE and not out.exists(), 'NEW_WORKFLOW_REQUIRED'
+    assert not PILOT.exists() and not ASSESSMENT.exists(), 'REFUSE_RETRY'
+    out.mkdir(); state={'status':'running','startedAt':time.time(),'deadline':time.time()+1500,
+        'stages':[],'automaticRetries':0,'reportReserveSeconds':300,'scriptSha256':gpu.digest(Path(__file__))}
+    gpu.atomic(out/'state.json',state)
+    def interrupted(signum,frame): raise InterruptedError('WORKFLOW_INTERRUPTED')
+    signal.signal(signal.SIGINT,interrupted);signal.signal(signal.SIGTERM,interrupted)
+    try:
+        assert allow,'ENGINEERING_ONLY_ACK_REQUIRED'
+        prepare()
+        gpu.atomic(out/'preflight.json',gpu.resources())
+        flow.command(out,state,'fixed-worker',[sys.executable,str(HERE/'ir5-lora-pilot.py'),str(PILOT)],HERE,1100)
+        flow.mirror(PILOT,flow.ISO/PILOT.name)
+        flow.command(out,state,'fixed-assessment',[shutil.which('node'),'--import','tsx',str(flow.ISO/'assess-ir5.mts'),
+            str(flow.ISO/flow.BASE.name),str(flow.ISO/ASSESSMENT.name),str(flow.ISO/PILOT.name)],flow.ENGINE,90)
+        flow.mirror(flow.ISO/ASSESSMENT.name,ASSESSMENT)
+        p=gpu.read(PILOT/'manifest.json'); files=gpu.read(HERE/'gpu-preflight-v1.json')['files']
+        assert all(gpu.digest(Path(p['modelDirectory'])/f['name'])==f['sha256'] for f in files), 'BASE_WEIGHT_CHANGE'
+        gpu.atomic(out/'base-weights-verified.json',{'verified':True,'files':len(files),'source':'gpu-preflight-v1.json'})
+        state['status']='completed-control-not-promoted'
+    except BaseException as exc: state.update(status='stopped-report-written',error=repr(exc))
+    finally:
+        state['finishedAt']=time.time();gpu.atomic(out/'state.json',state);report(out,state)
+    print(json.dumps({'status':state['status'],'error':state.get('error'),'report':str(out/'REPORT.md')}))
+    if state['status']!='completed-control-not-promoted': raise SystemExit(1)
+
+
+if __name__=='__main__':
+    p=argparse.ArgumentParser();p.add_argument('output',type=Path);p.add_argument('--allow-engineering-control',action='store_true')
+    args=p.parse_args();main(args.output.resolve(),args.allow_engineering_control)
