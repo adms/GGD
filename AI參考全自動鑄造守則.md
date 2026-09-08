@@ -147,6 +147,10 @@ pnpm --filter @ggd/shared typecheck
 
 這組測試不代表其餘英雄已完成。推送前依 AGENTS **同批啟動** `pnpm skills:check`、`pnpm editor:accept:release`、`pnpm coord:check`；記錄各自退出碼、版本與失敗原因。檢查失敗不改寫成通過，也不靠刪測試、降低需求或假填訊息／發布帳本解決。
 
+具名資源的持續技能可用 `toggle.upkeepResource="status"`＋`upkeepStatus.statusId`；費用為正整數層數，沿用 `whileOn` 的真實生命週期。`statusCost.count="all"` 在合法施法開始時一次扣清，零層拒絕，不可用效果結尾的扣款假裝前置成本。測試須包含週期間被其他技能耗盡、最後一次扣款、手動關閉、歸屬及不足不部分扣款。
+
+`onEvade` 的既有提示事件也包含攻擊者失手。需要「有效迴避」時指定 `evadeSource="defender"`；只獎勵本技能造成的迴避則用 `thisSource`，按實際抽中的來源判定，不猜最高迴避來源。`evadeChannel="basic"`／`"ability"` 可限定通道。零上下文、失手、其他來源與無敵免傷需有負例；限次反擊還須驗證共用額度、間隔及雙方反擊不循環。參考 [奇犽配方](materials/community-hero-forge/refinements/24.json) 與 [行為測試](packages/shared/src/content/heroForge/communityRefinements/kirua.test.ts)，模型及原作特效未因此取得視覺通過。
+
 ## 9. 投稿、版本、存放與協作
 
 1. 先在 Editor 完成作品，再讀取**當下目標服務**的 profile，透過既有流程建立 ZIP。不能靠修改舊 ZIP 內版本欄位偽裝新服務相容。

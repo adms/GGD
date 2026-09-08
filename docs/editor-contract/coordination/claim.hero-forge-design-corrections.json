@@ -6,7 +6,7 @@
   "to": "main",
   "baseCommit": "6efdd3bfb4df593a26fa2e94d4d65f8e572c3c64",
   "contractFingerprint": "b91a0f59c31289ed",
-  "title": "#1132 局部機制修正含鹿目圓六槽、版本化作品與批次驗證；37 名整體未完成",
+  "title": "#1132 局部機制修正含奇犽與鹿目圓六槽、版本化作品及批次驗證；37 名整體未完成",
   "claims": [
     {
       "kind": "confirmed",
@@ -240,6 +240,20 @@
         "content/editor-target-profile.json",
         "tools/asset-cdn/outputs/reconcile_outputs.py"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "奇犽六槽已從原始配方生成具名電力、落雷、有效自身迴避回電、持續加速開關、共用限次反擊及全電力 EX。24 項行為案例與 213 項集中回歸通過，三項故意回退被檢出；保留原稿與其餘 36 名作品。具名資源維持費、all 施法成本、迴避來源／通道均為通用欄位。畫面、當下服務 ZIP 與正式發布仍未完成。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements/kirua.test.ts packages/shared/src/sim/abilities/statusCost.test.ts packages/shared/src/sim/abilities/toggle.test.ts --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "996fa4a45053c3831d3a820c03f342cda76de5b8",
+      "evidence": [
+        "materials/community-hero-forge/refinements/24.json",
+        "materials/community-hero-forge/refinements/kirua-verification.json",
+        "packages/shared/src/content/heroForge/communityRefinements/kirua.test.ts"
+      ]
     }
   ],
   "unblocks": [],
@@ -250,6 +264,6 @@
     }
   ],
   "asks": [
-    "請 Main 加入審查鹿目圓 onAllyProtected、盾吸收歸屬、applyStatus.grantMark 及每回合救援次數的 schema/runtime 與版本化配方。請 Main 一併審查 #1143 批次驗證入口、失敗集中回報、來源綁定續跑及批次測試治具。請 Main 審查 #1141 nearbyCombat 条件與表單、dispel.statusTag 過濾、微調 version 對應作品 revision 與吉伊卡哇六槽；以及 #1140 的共用 chainLightning.retargetOnLost schema／runtime 選项及對應配方、#1139 換牌、友軍盾、radius:0 生成器修正、官方契約與 AI 守則。最新 37 份可共用作品在 materials/community-hero-forge/projects；#1132 保持開啟，完整原設計、修正後畫面／服務 ZIP 及正式發布仍未完成，不據此發布 37 名。"
+    "請 Main 加入審查奇犽的通用具名資源維持費、全量施法成本、迴避來源／通道過濾與六槽配方。請 Main 加入審查鹿目圓 onAllyProtected、盾吸收歸屬、applyStatus.grantMark 及每回合救援次數的 schema/runtime 與版本化配方。請 Main 一併審查 #1143 批次驗證入口、失敗集中回報、來源綁定續跑及批次測試治具。請 Main 審查 #1141 nearbyCombat 条件與表單、dispel.statusTag 過濾、微調 version 對應作品 revision 與吉伊卡哇六槽；以及 #1140 的共用 chainLightning.retargetOnLost schema／runtime 選项及對應配方、#1139 換牌、友軍盾、radius:0 生成器修正、官方契約與 AI 守則。最新 37 份可共用作品在 materials/community-hero-forge/projects；#1132 保持開啟，完整原設計、修正後畫面／服務 ZIP 及正式發布仍未完成，不據此發布 37 名。"
   ]
 }

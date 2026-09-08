@@ -1,6 +1,6 @@
 {
   "schema": "ggd-shared-authoring-handoff@1",
-  "sourceCommit": "597db32918ad27262ca6e343217a9d12672d672d",
+  "sourceCommit": "996fa4a45053c3831d3a820c03f342cda76de5b8",
   "heroCount": 37,
   "slotCount": 222,
   "compilation": "passed",
@@ -25,6 +25,10 @@
     {
       "path": "refinements/21.json",
       "sha256": "9bfa5a527ca95c2c4412c0af01f2a7213ac33e67575e8c14cf7e1b096186e362"
+    },
+    {
+      "path": "refinements/24.json",
+      "sha256": "8304d4ebb0201bfa84b10975829a5a2800f2673953dbd2748d567778d9d7371a"
     },
     {
       "path": "refinements/27.json",
@@ -273,8 +277,8 @@
     },
     {
       "path": "projects/24.hero-project.json",
-      "bytes": 35485,
-      "sha256": "ab31f2fc109e6b6ecf024ef120266bfe0a689090d19a7d14af765967bc6d50c0"
+      "bytes": 56538,
+      "sha256": "d35f9c665352437c3d3d1e45a4b74004844cb8781f183c51344a2a1fe33797bf"
     },
     {
       "path": "recipes/24.upload-recipe.json",
@@ -676,7 +680,8 @@
   "requiredRuntimeCommits": [
     "db53e47e456e6230e782222dc5f63dcf9c685ebe",
     "63b81b0754a4d8b14720b93cc182fb4d852f414d",
-    "597db32918ad27262ca6e343217a9d12672d672d"
+    "597db32918ad27262ca6e343217a9d12672d672d",
+    "996fa4a45053c3831d3a820c03f342cda76de5b8"
   ],
   "requiredEffectFields": [
     "chainLightning.retargetOnLost",
@@ -691,5 +696,14 @@
   ],
   "requiredHooks": [
     "onAllyProtected"
+  ],
+  "requiredAbilityFields": [
+    "statusCost.count=all",
+    "toggle.upkeepResource=status",
+    "toggle.upkeepStatus"
+  ],
+  "requiredHookFields": [
+    "evadeSource",
+    "evadeChannel"
   ]
 }

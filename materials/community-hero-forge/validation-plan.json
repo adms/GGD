@@ -1,6 +1,6 @@
 {
   "schema": "ggd-batch-validation-plan@1",
-  "manifestSha256": "14ad5a89197127fedd61ec4169456e8d6161b1550abcc81bf1e10c60728407ed",
+  "manifestSha256": "b469769f6c3f63cbd09abb278815327ede8cadbd8f8b2c3bc6f3b21dbe504857",
   "suites": [
     {
       "id": "implemented-mechanisms",
@@ -10,7 +10,8 @@
         "packages/shared/src/content/heroForge/communityRefinements/cardVariants.test.ts",
         "packages/shared/src/content/heroForge/communityRefinements/friendlyProtection.test.ts",
         "packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts",
-        "packages/shared/src/content/heroForge/communityRefinements/madoka.test.ts"
+        "packages/shared/src/content/heroForge/communityRefinements/madoka.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/kirua.test.ts"
       ],
       "heroSlots": {
         "community-review-20-20260907": [
@@ -35,6 +36,14 @@
           "EX"
         ],
         "community-review-37-20260907": [
+          "PASSIVE",
+          "Q",
+          "W",
+          "E",
+          "R",
+          "EX"
+        ],
+        "community-review-24-20260907": [
           "PASSIVE",
           "Q",
           "W",
