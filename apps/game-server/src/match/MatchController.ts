@@ -247,7 +247,7 @@ import {
 } from "@ggd/shared/sim/economy/draft";
 import { pickWeaponTable, disadvantageScore } from "@ggd/shared/sim/economy/weaponTiers";
 import { rollItemReward, grantItemFree, commitShopSession } from "@ggd/shared/sim/economy/shop";
-import { releaseOrbSlot } from "@ggd/shared/sim/economy/legendaryOrb";
+import { releaseOrbSlot, reserveOrbSlot } from "@ggd/shared/sim/economy/legendaryOrb";
 import { DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES } from "@ggd/shared/sim/economy/offerEligibility";
 import { applyAttrPick, rollAttrChoices, ATTR_OFFER_TIER } from "@ggd/shared/sim/economy/attrDraft";
 import type { AugmentTier } from "@ggd/shared/sim/content/defs";
@@ -3942,7 +3942,17 @@ export class MatchController {
       // outlived its card would cost the player a slot for the rest of the
       // match.
       if (offer.reservesSlot) releaseOrbSlot(this.world, offer.entity);
-      applyItemPick(this.world, offer, choice as ItemId);
+      const picked = applyItemPick(this.world, offer, choice as ItemId);
+      // ⭐⭐ GH#1110（owner 2026-09-06「A ＋ B 開票」的 A）——
+      //   背包滿的時候**留著這張卡**，⛔ 不消耗那次機會。
+      //   ⚠️ 在此之前這個方法無條件 `offers.delete` ⇒ 玩家點了一張卡、
+      //   什麼都沒發生、而卡片消失了。
+      //   ⚠️ ⭐ 寶玉的格子上面剛剛才 `releaseOrbSlot` 過 —— 要**放回去**，
+      //   ⛔ 否則留著的那張卡下一次按下去仍然沒有格子（而且那一格永久漏掉）。
+      if (picked === "no-slot") {
+        if (offer.reservesSlot) reserveOrbSlot(this.world, offer.entity);
+        return;
+      }
     } else if (offer.kind === "attr") {
       // 能力屬性強化 (#260). The 375g was charged when the card OPENED, so the
       // pick is a pure grant: it adds the rolled 力/敏/智 magnitude into

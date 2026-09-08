@@ -415,12 +415,35 @@ export function offerItems(
   return offer;
 }
 
-/** Apply an item-offer pick: grants the chosen item FREE into the inventory. */
-export function applyItemPick(world: SimWorld, offer: ItemOffer, pick: ItemId): boolean {
-  if (offer.picked || !offer.choices.includes(pick)) return false;
+/**
+ * ⭐ 為什麼要回**原因**而不是 `boolean`（GH#1110，owner 2026-09-06「A ＋ B 開票」）：
+ *
+ * 在此之前這一支在背包滿的時候 `return false`，⛔ 而呼叫端無條件把卡片刪掉
+ * ⇒ ⭐⭐ **玩家點了一張卡，什麼都沒發生，而那次機會消失了。**
+ * ⚠️ `components.ts:315` 自己記著這個形狀（「have the legendary land nowhere:
+ * `grantItemFree` returns -1」）—— ⭐ 有人知道會這樣，⛔ 而沒有東西處理它。
+ *
+ * ⚠️ 買寶玉那條路（`legendaryOrb.ts:174`）**早就是對的** —— 它在扣錢**之前**檢查，
+ * 滿背包是**拒絕**而不是 2400g 的 no-op。⇒ ⭐ 這一支只是把同一個設計補到免費那條路。
+ *
+ * ⭐ 回傳的三種：
+ * · `"ok"`        —— 進了背包
+ * · `"no-slot"`   —— ⭐ 背包滿。呼叫端**要留著這張卡**（⛔ 不消耗機會）
+ * · `"invalid"`   —— 已經選過了 / 這個 id 不在這張卡上（⛔ 那是壞掉的請求，卡片照樣消耗）
+ */
+export type ItemPickResult = "ok" | "no-slot" | "invalid";
+
+export function applyItemPick(world: SimWorld, offer: ItemOffer, pick: ItemId): ItemPickResult {
+  if (offer.picked || !offer.choices.includes(pick)) return "invalid";
   const slot = grantItemFree(world, offer.entity, pick);
-  if (slot < 0) return false;
+  if (slot < 0) {
+    // ⭐ 走**既有**的拒絕提示機制（`buyRejected` / `sellRejected` 那一族，
+    //   它們在 `eventFanout.ts` 已經是送得到客戶端的）——
+    //   ⛔ 不發明新的通道（第〇·五守則：機制在引擎，內容用既有的組）。
+    world.emit("itemPickRejected", { entity: offer.entity, itemId: pick, reason: "no-slot" });
+    return "no-slot";
+  }
   offer.picked = pick;
   world.emit("itemPicked", { entity: offer.entity, itemId: pick, slot });
-  return true;
+  return "ok";
 }
