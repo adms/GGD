@@ -317,4 +317,4 @@ export const CAPABILITY_ONLY_HOOK_EVENTS = [
   "onShieldGained", "onStatCapReached", "onStatusApplied", "onUltimateCast", "onUltimateHit",
 ] as const;
 
-export const CAPABILITY_ONLY_CONDITION_KINDS = ["chance", "equipment", "facing"] as const;
+export const CAPABILITY_ONLY_CONDITION_KINDS = ["chance", "equipment", "facing", "nearbyCombat"] as const;
