@@ -212,6 +212,20 @@
         "materials/community-hero-forge/refinements/21.json",
         "packages/shared/src/content/heroForge/communityRefinements/madoka.test.ts"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "鹿目圓修正後，同批 skills:check、editor:accept:release、coord:check 全部 exit 0；Editor 593 項測試、型別與正式建置通過。37 名模型綁定和 87 項已登記行為测试通過。清單對應 21 槽，另外 201 槽尚未登記 suite，總執行器如實回 exit 2；這不是完整原設計或視覺通過。",
+      "repro": {
+        "command": "pnpm editor:accept:release",
+        "expectedExit": 0
+      },
+      "commit": "c57a73c5a15aa428d82c657a9d0233c5762503e9",
+      "evidence": [
+        "materials/community-hero-forge/refinements/madoka-verification.json",
+        "materials/community-hero-forge/validation-plan.json",
+        "apps/editor/README.md"
+      ]
     }
   ],
   "unblocks": [],
