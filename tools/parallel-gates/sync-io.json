@@ -29548,21 +29548,6 @@
       "writeCount": 0,
       "reads": [],
       "writes": []
-    },
-    {
-      "name": "formreceipts:build",
-      "ok": false,
-      "ms": 4555,
-      "readCount": 1294,
-      "writeCount": 0,
-      "reads": [
-        "packages/shared/src/content/balanceAnchorsDerived.ts",
-        "packages/shared/src/sim/statCapsDerived.ts"
-      ],
-      "writes": [
-        "docs/editor-contract/coordination/claim.editor-form-receipts.json"
-      ],
-      "note": "⭐ GH#1107 B —— 這一支的產物在此之前**戶籍無主** ⇒ genguard 對它是瞎的,任何人手改它下一次重生成就被打回,⛔ 而沒有東西會紅。⚠️ ⭐ `trace.mjs` 在沙盒裡量不到它的 writes（沙盒缺它要讀的編輯器表單輸入 ⇒ 那一支在沙盒紅）,⭐ 而它在**真的工作樹**跑得起來（實測 171 顆積木 · 166 可畫 · 5 缺）⇒ 這一格是**手動補的**,並在此註明原因（⛔ 本文件的規矩是「手寫的表會過期」—— 所以這一列帶著它自己的到期條件）。⭐ 到期條件：沙盒能跑起它的那一天,重新 `trace.mjs --script formreceipts:build` 覆蓋這一格。⛔ 它**不在** `skills:sync` 的鏈上,因為那份 packet 是 `from: codex` —— Codex 的產物,Main 只驗不生成。"
     }
   ],
   "mergeNote": "⭐ 三趟聯集:pass1(乾淨樹) + pass2(HEAD~60 回捲) + **上一版的 sync-io.json**。⚠️ 第三份的 chain 是舊的(45 支),merge-io.mjs 正確地拒絕併它 —— 這一步是手動做的,理由是 merge-io 自己的原則:「併法一律取聯集,觀察到的 I/O 是事實」。⛔ 為什麼非併不可:`castderive:build:raw` 與 `tiers:apply` 是正規化器,在已正規化的樹上 0 寫,純量測會丟掉 404 個產物(含全部 godie-*.json)。⭐ 2026-09-03 追加:`prose:build` 原本也是這個病(兩趟都 0 寫),已改用 `// ggd:writes` 靜態宣告根治(見 tools/card-prose/apply_placeholders.ts 檔頭)——⛔ 不再需要靠這次聯集救它。 ⭐ 2026-09-04 追加:`board:roll` 的 writes 從**寫死日期**(`戰情版-20260903.md`)改成 **glob**(`戰情版-*.md` ＋ `戰情版_temp_*.md`)——⛔ 那個檔**每天換名**,寫死日期的戶籍在跨日的第一次 sync 就會判「無人認領」(實測 exit 3)。⭐ 同型前例:`msgledger:build` 的 `ledger-source_temp_*.md`。 ｜ 2026-09-04：typecat:build 由 `node tools/parallel-gates/trace.mjs --script typecat:build` **單步量測**後併入（讀 32682 · 寫 2）。⚠️ ⭐ 這是**單趟**量測，⛔ 不是完整的兩趟 —— 而它對這一支成立，因為它是**無條件寫**（每次都重寫兩份產物），⇒ 乾淨樹上量到的 writes 就是全貌。⛔ 下一次完整重量測時它會被正常覆蓋。 ｜ 2026-09-05：Codex `35b231ef` 帶進來的四支由 `trace.mjs --script <名>` **單步量測**後併入（skillforge:audit 寫 2 · visual-review 寫 2 · visual-sheets 寫 **47** · vfxforge:handback 寫 2）。⚠️ ⭐ 第五支 `skillforge:visual-advisory:build` **量不到**（ok=False, 寫 0）——它卡在一個**人工批核過期**（`stale manual review`），⛔ 而那不是我能自動解的 ⇒ 它今天不在 skills:sync 裡，等人重新批核之後要補量。"

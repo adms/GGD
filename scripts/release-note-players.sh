@@ -168,7 +168,13 @@ for N in $CLOSED; do
         # ⭐ 判準：`named`（只是被 commit 提到）＋ 進度標記的 commit **不在這一段**
         #   ⇒ 這一版沒有改它。⚠️ ⭐ 「沒有標記」的那一種**仍然要求** ——
         #   那可能是一次真的落地而沒人寫標記,⛔ 正是這條閘的用途。
-        if [ "$IN" = named ] && [ -n "$SHA" ] && ! in_range "$SHA"; then
+        # ⚠️ ⭐ `${IN:-}` 是必要的,⛔ 不是防禦性寫法：這支腳本是 `set -u`,
+        #   而 `IN` **只在 `SCOPE=commits` 那一段被賦值** ——
+        #   `SCOPE=updated`（舊行為）從來不進那一段 ⇒ 裸的 `$IN` 會讓整支在**第一張票**就死
+        #   （`line 171: IN: unbound variable`）。
+        #   ⭐ 2026-09-09 我就是這樣弄壞了 `releaseNotePlayersRange.test.ts` 的**校準**斷言,
+        #   而我先前**只在 `commits` scope 測過** —— ⛔ 一把只驗過單邊的尺。
+        if [ "${IN:-}" = named ] && [ -n "$SHA" ] && ! in_range "$SHA"; then
           trace "$N" "$SHA" "skip（只是被 commit 提到,這一版沒有改它 —— GH#1109）"
         else
         MISSING="${MISSING}  · #$N $T

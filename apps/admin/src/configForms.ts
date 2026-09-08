@@ -80,7 +80,7 @@ import { AUGMENT_FILTER_SPEC, BERSERK_SPEC, DISPEL_SPEC, STAT_NORMALIZATION_SPEC
 import { ARENA_FIRE_SPEC, BODY_SCALE_SPEC, BOSS_INTRO_SPEC, DAMAGE_COLORS_SPEC, REGEN_SPEC, REPLAY_SPEC, VICTORY_FX_SPEC, VICTORY_PODIUM_SPEC } from "./configForms/specs/visuals";
 import { ITEM_CARD_SPEC } from "./configForms/specs/itemCard";
 import { CAMERA_SPEC, MAP_SPEC_SPEC, MITIGATION_SPEC } from "./configForms/specs/arena";
-import { AUDIO_MIX_SPEC, GAMEPAD_SPEC, ICON_STYLE_SPEC, PRACTICE_SPEC, RANKING_SPEC, ASSET_CDN_SPEC } from "./configForms/specs/ops";
+import { AUDIO_MIX_SPEC, GAMEPAD_SPEC, ICON_STYLE_SPEC, PRACTICE_SPEC, RANKING_SPEC, ASSET_CDN_SPEC, ASSET_DOWNLOADS_SPEC } from "./configForms/specs/ops";
 import { DISPLACEMENT_TIERS_SPEC, RANGE_GUIDE_SPEC, TOGGLE_ABILITY_SPEC, UI_LEXICON_SPEC } from "./configForms/specs/ui";
 import { ARENA_RULES_SPEC } from "./configForms/specs/arenaRules";
 import { HUD_LAYOUT_SPEC } from "./configForms/specs/hudLayout";
@@ -222,6 +222,7 @@ export const CONFIG_DOC_SPECS = [
   // ⭐ 升級成長率（GH#938）—— 它從**冷卻級距**推導,所以緊接在級距那一族後面。
   RANK_GROWTH_SPEC,
   ASSET_CDN_SPEC,
+  ASSET_DOWNLOADS_SPEC,
   UI_LEXICON_SPEC,
   STAT_NORMALIZATION_SPEC,
   WOUNDS_SPEC,

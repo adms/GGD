@@ -58,6 +58,27 @@
       "kind": "skeleton-not-implemented",
       "reason": "同上一列：整個 `round11` 區塊是骨架；`bombardment.enabled: true` 巢在一個 `enabled: false` 的區塊底下，⛔ 沒有任何讀端（GH#923）。",
       "refute": "GH#923 大轟炸落地後這一列要刪。"
+    },
+    {
+      "switch": "content/config/asset-downloads.json:enabled",
+      "kind": "feature-not-wired",
+      "reason": "⭐ GH#1124 第 4 項。消費端 `needsSignedUrl()`（apps/client/src/content/assetVersion.ts）已經寫好而**還沒有人呼叫** —— ⭐ 呼叫端是 **GH#1125** 的三層快取（記憶體 → Cache Storage → 簽署網址），那是另一張票。⚠️ ⭐ 而它今天就算接上也**跑不通**：2026-09-09 在正式站 mini 實測，`aws` 指令不存在、`~/.aws` 不存在 ⇒ 後端簽不出任何網址；bucket 也沒有任何 CORS（`OPTIONS` 預檢回 403）⇒ 瀏覽器 fetch 會被擋。⛔ 兩個都是 owner 的動作（憑證是安全決策；CORS 他明說「目前授權未包含修改」）。⇒ ⭐ 這一格**先把線接好**，⛔ 而不是等憑證到位那天再從頭做四個住處。",
+      "refute": "⭐ GH#1125 落地（有人呼叫 `needsSignedUrl`）的那一天，這一列就不成立 ⇒ 刪掉它。⭐ 一行可查：`grep -rn 'needsSignedUrl' apps/client/src | grep -v assetVersion.ts | grep -v test`",
+      "evidence": [
+        {
+          "file": "apps/client/src/content/assetVersion.ts",
+          "mustContain": [
+            "needsSignedUrl",
+            "downloads?.enabled"
+          ]
+        },
+        {
+          "file": "content/config/asset-downloads.json",
+          "mustContain": [
+            "\"enabled\": false"
+          ]
+        }
+      ]
     }
   ],
   "absentConfigTags": [

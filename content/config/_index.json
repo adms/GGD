@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "f4648881cd86",
+  "hash": "941e71ff9401",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -55,6 +55,12 @@
       "path": "config/asset-cdn.json",
       "hash": "0ccc9fd36c70",
       "size": 413
+    },
+    {
+      "id": "asset-downloads",
+      "path": "config/asset-downloads.json",
+      "hash": "63f283b1f496",
+      "size": 431
     },
     {
       "id": "audio-map",
