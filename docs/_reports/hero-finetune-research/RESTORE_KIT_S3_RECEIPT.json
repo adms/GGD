@@ -1,0 +1,20 @@
+{
+  "schema": "ggd-hero-restore-kit-s3-receipt@1",
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "bucket": "ggd-390630837668-ap-east-2-an",
+  "identityRole": "vibe-coding-s3-role",
+  "sourceCommit": "bc0ee2197352a62df3edcec446284f555fa7c316",
+  "verifiedAt": "2026-09-08T08:40:00.015489+00:00",
+  "verification": "get-object-sha256",
+  "archive": {
+    "key": "hero-finetune-research/restore-kits/gemma-4-12b-200bb6db-20260908-v1/restore-kit.tar.gz",
+    "bytes": 1212717,
+    "sha256": "e2ac90f41b8eda8cec1ffc14f8fcce567a83d04e12a4530d4c9634d8d90baec0"
+  },
+  "baseIndexSha256": "36367145f25f600eb86d7a72a129268bdc69478c129a791b91d764b4aa4898ba",
+  "researchIndexSha256": "d079095b10df0bc7e7bf7e29662267602b29b9307618019e2087cc01737dbbdc",
+  "portableMetadataChecksPassed": true,
+  "noModelPayloadInKit": true,
+  "gpuStarted": false
+}

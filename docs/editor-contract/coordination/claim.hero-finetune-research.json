@@ -46,9 +46,30 @@
       },
       "commit": "b67f6516d1f2248df8a48313b3073e9beaea6bab",
       "evidence": ["tools/editor-acceptance/hero-finetune-s3.py", "tools/editor-acceptance/hero-finetune-s3.test.py", "docs/_reports/hero-finetune-research/S3_RECEIPT.json"]
+    },
+    {
+      "kind": "confirmed",
+      "text": "實際訓練用 mlx-community/gemma-4-12B-it-8bit、revision 200bb6db075e137a4deb08838865ac4ddb86292e 已另行備份 12,748,534,481 bytes／11 檔。56 個 S3 塊逐一 GET／SHA-256 通過；只用回讀塊重組後 11 個完整檔案 hash 均符合當時訓練前紀錄。這是位元組可還原證據，不是完整機器環境或模型準確率保證。本 CI 命令只檢查基底索引及歷史收據一致性，不連 AWS、不載模型。",
+      "repro": {
+        "command": "python3 tools/editor-acceptance/hero-finetune-base-s3.py verify-index docs/_reports/hero-finetune-research --receipt",
+        "expectedExit": 0
+      },
+      "commit": "bc0ee2197352a62df3edcec446284f555fa7c316",
+      "evidence": ["docs/_reports/hero-finetune-research/BASE_S3_INDEX.json", "docs/_reports/hero-finetune-research/BASE_S3_RECEIPT.json", "docs/_reports/hero-finetune-research/BASE_RESTORE_VERIFICATION.json", "docs/_reports/hero-finetune-research/BASE_MODEL_RESTORE.md"]
+    },
+    {
+      "kind": "confirmed",
+      "text": "基底備份工具 12 項測試通過，含完整檔案重組、斷線續傳與已驗證塊重用、AccessDenied 停止、不信任毀損快取或缺漏收據、來源漂移、路徑／profile／版本與塊 offset 守衛，以及有界連線重試；未知、TLS 與 credential-provider 錯誤不重試。驗證報告只在全檔校驗成功後產生。測試使用隔離 fixture，不需 AWS 或 GPU。",
+      "repro": {
+        "command": "python3 tools/editor-acceptance/hero-finetune-base-s3.test.py",
+        "expectedExit": 0
+      },
+      "commit": "7471821d687f0ed5429bb2477bf9e05ed3977495",
+      "evidence": ["tools/editor-acceptance/hero-finetune-base-s3.py", "tools/editor-acceptance/hero-finetune-base-s3.test.py"]
     }
   ],
   "asks": [
+    "移機時使用 BASE_MODEL_RESTORE.md：另有 12.75 GB 的實際 12B 基底備份，不要把原本 290 MB adapter／研究 ZIP 當作完整模型。S3 還原工具包含腳本、索引、收據與說明，不依賴本機尚未公開的 Git 分支即可還原；記錄的 runtime／引擎與絕對路徑限制仍需遵守。",
     "Main 依 S3_STORAGE.md 還原研究權重與 ZIP；公開 CI 保持離線、不配置 AWS 憑證。此追加提交只移出目前樹的二進位檔，既有公開 Git 歷史仍有舊 blobs，未 force-push 或重寫歷史。",
     "Main 審查 #1113 的研究封存交付；不新增引擎積木、不啟用 Editor AI，也不把此 adapter 升格成正式成品。",
     "IR5 同六題 JSON 5/6 → 1/6，IR／編譯／完整工程通過 0/6 → 0/6，完整英雄品質目標未達。loss 下降不作採用證據。",
