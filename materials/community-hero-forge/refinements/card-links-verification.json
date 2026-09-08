@@ -1,0 +1,58 @@
+{
+  "schema": "ggd-community-card-links-verification@1",
+  "issue": 1132,
+  "refinementVersion": 2,
+  "checks": [
+    {
+      "name": "card-and-friendly-behavior",
+      "exitCode": 0,
+      "tests": 17,
+      "logSha256": "ca8b6421354ab6b9774268f5d81f23de8f3f2809390ed720ba0ec90075ac1441"
+    },
+    {
+      "name": "editor-contract-repair",
+      "exitCode": 0,
+      "tests": 5,
+      "logSha256": "3ebae3fe086c18603fda736d8494c03d048fe3882900de5fc4e5798b3ffe3972"
+    },
+    {
+      "name": "shared-typecheck",
+      "exitCode": 0,
+      "tests": null,
+      "logSha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    }
+  ],
+  "mutations": {
+    "status": "passed",
+    "cases": [
+      {
+        "mutation": "repeat-card-gains",
+        "exitCode": 1,
+        "assertionFailureDetected": true,
+        "logSha256": "2d9d44020d6c3bd4251b3098f87f82b8dbf31d70cdd1d74c930c414c3762a044"
+      },
+      {
+        "mutation": "partial-charge-uses-full-shield",
+        "exitCode": 1,
+        "assertionFailureDetected": true,
+        "logSha256": "48636c1bba083654d79476dec1f41a47c48579360c5b1ea4f24c2f329f3abdc9"
+      }
+    ],
+    "originalRestored": true
+  },
+  "handoff": {
+    "heroes": 37,
+    "slots": 222,
+    "changedSlots": 4,
+    "parametersComparedToCanonical": true,
+    "originalRecipeAndModelPreserved": true
+  },
+  "remaining": [
+    "Other original mechanics",
+    "Sakura EX and separate tree-card identity",
+    "Updated UI/model/VFX review",
+    "Current-service ZIP and publication"
+  ],
+  "originalDesignAcceptance": "incomplete",
+  "published": false
+}

@@ -1,6 +1,6 @@
 {
   "schema": "ggd-community-design-refinement@1",
-  "version": 1,
+  "version": 2,
   "projectId": "community-review-27-20260907",
   "sourceSha256": "3a105938fa54ec021b5701ecb97b0b90a52b7ac83035df99318d683ecfd1510b",
   "slots": {
@@ -17,29 +17,257 @@
               "side": "allies",
               "effects": [
                 {
-                  "absorbs": "all",
-                  "amount": {
-                    "flat": 120,
-                    "ratios": []
-                  },
-                  "duration": 3,
-                  "kind": "shield",
-                  "onExisting": "keepLarger",
-                  "stackKey": "community-review-27-20260907.w.guard"
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "subject": "self",
+                  "statusId": "community-review-27-20260907.card-link",
+                  "count": 3,
+                  "onConsumed": [
+                    {
+                      "absorbs": "all",
+                      "amount": {
+                        "flat": 180,
+                        "ratios": []
+                      },
+                      "duration": 3,
+                      "kind": "shield",
+                      "onExisting": "keepLarger",
+                      "stackKey": "community-review-27-20260907.w.guard"
+                    }
+                  ],
+                  "onMissing": [
+                    {
+                      "kind": "consumeStatus",
+                      "shape": "single",
+                      "subject": "self",
+                      "statusId": "community-review-27-20260907.card-link",
+                      "count": 2,
+                      "onConsumed": [
+                        {
+                          "absorbs": "all",
+                          "amount": {
+                            "flat": 160,
+                            "ratios": []
+                          },
+                          "duration": 3,
+                          "kind": "shield",
+                          "onExisting": "keepLarger",
+                          "stackKey": "community-review-27-20260907.w.guard"
+                        }
+                      ],
+                      "onMissing": [
+                        {
+                          "kind": "consumeStatus",
+                          "shape": "single",
+                          "subject": "self",
+                          "statusId": "community-review-27-20260907.card-link",
+                          "count": 1,
+                          "onConsumed": [
+                            {
+                              "absorbs": "all",
+                              "amount": {
+                                "flat": 140,
+                                "ratios": []
+                              },
+                              "duration": 3,
+                              "kind": "shield",
+                              "onExisting": "keepLarger",
+                              "stackKey": "community-review-27-20260907.w.guard"
+                            }
+                          ],
+                          "onMissing": [
+                            {
+                              "absorbs": "all",
+                              "amount": {
+                                "flat": 120,
+                                "ratios": []
+                              },
+                              "duration": 3,
+                              "kind": "shield",
+                              "onExisting": "keepLarger",
+                              "stackKey": "community-review-27-20260907.w.guard"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             }
           }
         }
       ],
-      "purpose": "【修正行為】可選自己或指定友軍提供護盾；不同牌序累積連結與下一盾強化仍待修正。\n【原設計】為自己或指定友軍提供護盾。",
-      "note": "可選自己或指定友軍提供護盾；不同牌序累積連結與下一盾強化仍待修正。",
+      "purpose": "【修正行為】為自己或指定友軍提供三秒護盾；結算時消耗既有全部連結（0–3），基礎盾量為 120 + 每層 20，再套用 GGD 等級成長。不同卡牌累積在此次結算後處理，不回頭強化同一片盾。敵方或超距施法不消耗連結。\n【原設計】為自己或指定友軍提供護盾。",
+      "note": "友軍／自己盾與 0–3 層連結消耗已建立，數值在此版本 JSON 可調。需行為、原文與畫面核對；EX 換牌相關牌序仍待補。",
       "removeOverrides": [
         "effects"
       ],
       "visualTargets": {
         "castEffect": "target"
       }
+    },
+    "PASSIVE": {
+      "products": [
+        {
+          "instanceId": "passive-card-links",
+          "template": {
+            "ref": "tpl-mark-stacks",
+            "params": {
+              "markId": "community-review-27-20260907.card-link",
+              "initial": 0,
+              "max": 3,
+              "durationSec": -1,
+              "resetOn": "round",
+              "lethalMode": "none",
+              "perStackLost": []
+            }
+          }
+        },
+        {
+          "instanceId": "passive-card-sequence",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onAbilityCast",
+                  "abilitySlot": "Q",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-27-20260907.card-link",
+                      "stacks": 1,
+                      "duration": 1,
+                      "condition": {
+                        "not": {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-27-20260907.card-last.q"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "applyTo": "self",
+                      "statusId": "community-review-27-20260907.card-last.q",
+                      "stackKey": "community-review-27-20260907.card-last.q",
+                      "maxStacks": 1,
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "exclusiveGroup": "community-review-27-20260907.last-card",
+                      "exclusiveOnExisting": "replace"
+                    }
+                  ]
+                },
+                {
+                  "on": "onAbilityCast",
+                  "abilitySlot": "W",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-27-20260907.card-link",
+                      "stacks": 1,
+                      "duration": 1,
+                      "condition": {
+                        "not": {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-27-20260907.card-last.w"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "applyTo": "self",
+                      "statusId": "community-review-27-20260907.card-last.w",
+                      "stackKey": "community-review-27-20260907.card-last.w",
+                      "maxStacks": 1,
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "exclusiveGroup": "community-review-27-20260907.last-card",
+                      "exclusiveOnExisting": "replace"
+                    }
+                  ]
+                },
+                {
+                  "on": "onAbilityCast",
+                  "abilitySlot": "E",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-27-20260907.card-link",
+                      "stacks": 1,
+                      "duration": 1,
+                      "condition": {
+                        "not": {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-27-20260907.card-last.e"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "applyTo": "self",
+                      "statusId": "community-review-27-20260907.card-last.e",
+                      "stackKey": "community-review-27-20260907.card-last.e",
+                      "maxStacks": 1,
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "exclusiveGroup": "community-review-27-20260907.last-card",
+                      "exclusiveOnExisting": "replace"
+                    }
+                  ]
+                },
+                {
+                  "on": "onAbilityCast",
+                  "abilitySlot": "R",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-27-20260907.card-link",
+                      "stacks": 1,
+                      "duration": 1,
+                      "condition": {
+                        "not": {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-27-20260907.card-last.r"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "applyTo": "self",
+                      "statusId": "community-review-27-20260907.card-last.r",
+                      "stackKey": "community-review-27-20260907.card-last.r",
+                      "maxStacks": 1,
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "exclusiveGroup": "community-review-27-20260907.last-card",
+                      "exclusiveOnExisting": "replace"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】Q/W/E/R 完成施法後，與上一張卡不同即累積一層連結，上限三層。相同卡連用不增加；下次 W 先消耗既有全部連結強化盾，再將此次盾牌計入牌序。回合開始重置連結與上一張牌。EX 換牌及 Q 樹牌獨立識別仍待完成。\n【原設計】依序使用不同卡牌累積連結，上限三層，強化下一次護盾。",
+      "note": "已以實際施法事件建立四張卡牌順序、三層上限及下一盾消耗；一般攻擊不集氣。EX 的風／樹 Q 替換尚未完成，樹牌獨立識別仍列待補，不宣稱整套牌組完成。",
+      "removeOverrides": [
+        "effects"
+      ]
     }
   }
 }

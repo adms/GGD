@@ -4,8 +4,8 @@
   "scope": "Original requirements versus compiled authoring; compilation is not design acceptance",
   "heroes": 37,
   "slots": 222,
-  "changedSlots": 3,
-  "passiveOnAttackTemplates": 30,
+  "changedSlots": 4,
+  "passiveOnAttackTemplates": 29,
   "originalDesignAcceptance": "incomplete",
   "published": false,
   "rows": [
@@ -3272,16 +3272,20 @@
       "ownerDescription": "依序使用不同卡牌累積連結，上限三層，強化下一次護盾。",
       "requiredRefinement": "需不同牌序列三層與護盾消耗。",
       "products": [
-        "tpl-on-attack"
+        "tpl-mark-stacks",
+        "tpl-event-passive"
       ],
       "castType": "self",
       "effects": [],
       "hooks": [
-        "onBasicAttack"
+        "onAbilityCast",
+        "onAbilityCast",
+        "onAbilityCast",
+        "onAbilityCast"
       ],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "已以實際施法事件建立四張卡牌順序、三層上限及下一盾消耗；一般攻擊不集氣。EX 的風／樹 Q 替換尚未完成，樹牌獨立識別仍列待補，不宣稱整套牌組完成。"
     },
     {
       "hero": "27",
@@ -3318,12 +3322,12 @@
       "castType": "targeted",
       "targetsEnemies": false,
       "effects": [
-        "shield"
+        "consumeStatus"
       ],
       "hooks": [],
       "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": "可選自己或指定友軍提供護盾；不同牌序累積連結與下一盾強化仍待修正。"
+      "refinementNote": "友軍／自己盾與 0–3 層連結消耗已建立，數值在此版本 JSON 可調。需行為、原文與畫面核對；EX 換牌相關牌序仍待補。"
     },
     {
       "hero": "27",

@@ -1,6 +1,6 @@
 # 37 名英雄編輯器投稿與版本驗收
 
-最新進度：原設計機制尚未完成，已由 [#1132](https://github.com/adms/GGD/issues/1132) 追蹤。實際 37 包中有 30 名仍使用通用普攻加傷被動；布局、電力、線索等不能以此作替代。第一批修正鹿目圓 W、庫洛魔法使 W、吉伊卡哇 EX 的友軍護盾對象，完整 [222 槽對照與未完成要求](../../../../materials/community-hero-forge/refinements/README.md) 保留原文。先完成逐項 requiredRefinement，再走正式發布；模型風格替代同意不等於機制替代同意。
+最新進度：原設計機制尚未完成，已由 [#1132](https://github.com/adms/GGD/issues/1132) 追蹤。最近一次重建 37 名交接資料中有 29 名仍使用通用普攻加傷被動；布局、電力、線索等不能以此作替代。已修正鹿目圓 W、庫洛魔法使 W、吉伊卡哇 EX 的友軍護盾對象，並將庫洛魔法使被動改為四張卡牌順序、三層連結與下一盾消耗；EX 樹牌識別仍待補。完整 [222 槽對照與未完成要求](../../../../materials/community-hero-forge/refinements/README.md) 保留原文。先完成逐項 requiredRefinement，再走正式發布；模型風格替代同意不等於機制替代同意。
 
 Main 已於 `6efdd3bfb` 收錄 #1120 程式修正，並關閉 #1123。先前同版隔離投稿、核准發布、普通對局、重連、結算、固定重播及未上架英雄獨立還原收據，由 [版本索引](../../../../materials/community-hero-forge/supplements/release-13956d93b/README.md) 與 [S3 證據封存](../../../../materials/community-hero-forge/supplements/release-evidence-c2487661f/README.md) 定址。這些只證明流程；正式服務部署、37 名正式發布與原設計驗收均未完成。
 
