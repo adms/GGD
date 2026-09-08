@@ -1,0 +1,430 @@
+{
+  "schema": "ggd-batch2-validation-sample@1",
+  "sourceCommit": "0a8da174ead82e2241fa595d0f1c37f3194df334",
+  "baselineDigest": "sha256:c812ee02fc73efa3bbcf85a961b79a801f9470b4c24f4f710024d31ddfc94acf",
+  "sampledHeroes": 5,
+  "mechanismProseSlotsRead": 30,
+  "checks": [
+    {
+      "id": "b2-naofumi",
+      "name": "causal Q->W",
+      "passed": true
+    },
+    {
+      "id": "b2-naofumi",
+      "name": "causal E->R",
+      "passed": true
+    },
+    {
+      "id": "b2-naofumi",
+      "name": "passive onAllyDamaged",
+      "passed": true
+    },
+    {
+      "id": "b2-naofumi",
+      "name": "Q shields ally, not caster",
+      "passed": true
+    },
+    {
+      "id": "b2-naofumi",
+      "name": "Q rejects enemy",
+      "passed": true
+    },
+    {
+      "id": "b2-rin",
+      "name": "causal Q->W",
+      "passed": true
+    },
+    {
+      "id": "b2-rin",
+      "name": "causal E->R",
+      "passed": true
+    },
+    {
+      "id": "b2-rin",
+      "name": "passive onBasicAttack",
+      "passed": true
+    },
+    {
+      "id": "b2-rin",
+      "name": "Q->W spends bank and does not transfer mana to victim",
+      "passed": true
+    },
+    {
+      "id": "b2-noor",
+      "name": "causal Q->W",
+      "passed": true
+    },
+    {
+      "id": "b2-noor",
+      "name": "causal E->R",
+      "passed": true
+    },
+    {
+      "id": "b2-noor",
+      "name": "passive onReflectSuccess",
+      "passed": true
+    },
+    {
+      "id": "b2-noor",
+      "name": "physical-only reflect: incoming fixture W",
+      "passed": true
+    },
+    {
+      "id": "b2-noor",
+      "name": "physical-only reflect: incoming fixture E",
+      "passed": true
+    },
+    {
+      "id": "b2-noor",
+      "name": "physical-only reflect: incoming fixture Q",
+      "passed": true
+    },
+    {
+      "id": "b2-haga",
+      "name": "causal Q->W",
+      "passed": true
+    },
+    {
+      "id": "b2-haga",
+      "name": "causal E->R",
+      "passed": true
+    },
+    {
+      "id": "b2-haga",
+      "name": "passive onAbilityCast",
+      "passed": true
+    },
+    {
+      "id": "b2-haga",
+      "name": "W does not teleport without own mark",
+      "passed": true
+    },
+    {
+      "id": "b2-haga",
+      "name": "E silences rather than stuns",
+      "passed": true
+    },
+    {
+      "id": "b2-kisaragi",
+      "name": "causal Q->R",
+      "passed": true
+    },
+    {
+      "id": "b2-kisaragi",
+      "name": "causal W->E",
+      "passed": true
+    },
+    {
+      "id": "b2-kisaragi",
+      "name": "passive onDamageTaken",
+      "passed": true
+    },
+    {
+      "id": "b2-kisaragi",
+      "name": "R enemy three flags; ally/far unaffected; expiry",
+      "passed": true
+    },
+    {
+      "id": "b2-kisaragi",
+      "name": "R fixed seed is reproducible",
+      "passed": true
+    }
+  ],
+  "passed": 25,
+  "failed": 0,
+  "causalCombos": 10,
+  "causalTimelines": 40,
+  "heroes": [
+    {
+      "id": "b2-naofumi",
+      "combos": [
+        {
+          "schema": "ggd-batch2-causal-combo@1",
+          "source": "Q",
+          "target": "W",
+          "metric": {
+            "actor": "ally",
+            "field": "hp"
+          },
+          "expect": "increase",
+          "values": {
+            "prepared": 204.75995918367698,
+            "preparedAblated": 4.759959183676983,
+            "unprepared": 4.759959183676983,
+            "unpreparedAblated": 4.759959183676983
+          },
+          "preparedContribution": 200,
+          "unpreparedContribution": 0,
+          "interaction": 200,
+          "status": "passed",
+          "validationErrors": [],
+          "method": "Difference in response-window deltas across four matched timelines. Source-only residuals remain in both prepared runs and are subtracted; no required status/resource is injected.",
+          "limits": [
+            "Nonlinear damage caps, deaths and position changes remain visible in snapshots; origin-specific metrics may be required for an intended attribution."
+          ]
+        },
+        {
+          "schema": "ggd-batch2-causal-combo@1",
+          "source": "E",
+          "target": "R",
+          "metric": {
+            "actor": "ally",
+            "field": "distance:caster"
+          },
+          "expect": "decrease",
+          "values": {
+            "prepared": -3.80000000000139,
+            "preparedAblated": -0.3200000000000003,
+            "unprepared": -0.3200000000000003,
+            "unpreparedAblated": -0.3200000000000003
+          },
+          "preparedContribution": -3.4800000000013895,
+          "unpreparedContribution": 0,
+          "interaction": -3.4800000000013895,
+          "status": "passed",
+          "validationErrors": [],
+          "method": "Difference in response-window deltas across four matched timelines. Source-only residuals remain in both prepared runs and are subtracted; no required status/resource is injected.",
+          "limits": [
+            "Nonlinear damage caps, deaths and position changes remain visible in snapshots; origin-specific metrics may be required for an intended attribution."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b2-rin",
+      "combos": [
+        {
+          "schema": "ggd-batch2-causal-combo@1",
+          "source": "Q",
+          "target": "W",
+          "metric": {
+            "actor": "foe",
+            "field": "hp"
+          },
+          "expect": "decrease",
+          "values": {
+            "prepared": -1261.5609114232643,
+            "preparedAblated": -1016.4229180339039,
+            "unprepared": -1016.4229180339039,
+            "unpreparedAblated": -1016.4229180339039
+          },
+          "preparedContribution": -245.13799338936042,
+          "unpreparedContribution": 0,
+          "interaction": -245.13799338936042,
+          "status": "passed",
+          "validationErrors": [],
+          "method": "Difference in response-window deltas across four matched timelines. Source-only residuals remain in both prepared runs and are subtracted; no required status/resource is injected.",
+          "limits": [
+            "Nonlinear damage caps, deaths and position changes remain visible in snapshots; origin-specific metrics may be required for an intended attribution."
+          ]
+        },
+        {
+          "schema": "ggd-batch2-causal-combo@1",
+          "source": "E",
+          "target": "R",
+          "metric": {
+            "actor": "caster",
+            "field": "mana"
+          },
+          "expect": "increase",
+          "values": {
+            "prepared": 290.89881306122675,
+            "preparedAblated": 35.276160000002164,
+            "unprepared": 35.276160000002164,
+            "unpreparedAblated": 35.276160000002164
+          },
+          "preparedContribution": 255.62265306122458,
+          "unpreparedContribution": 0,
+          "interaction": 255.62265306122458,
+          "status": "passed",
+          "validationErrors": [],
+          "method": "Difference in response-window deltas across four matched timelines. Source-only residuals remain in both prepared runs and are subtracted; no required status/resource is injected.",
+          "limits": [
+            "Nonlinear damage caps, deaths and position changes remain visible in snapshots; origin-specific metrics may be required for an intended attribution."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b2-noor",
+      "combos": [
+        {
+          "schema": "ggd-batch2-causal-combo@1",
+          "source": "Q",
+          "target": "W",
+          "metric": {
+            "actor": "caster",
+            "field": "hp"
+          },
+          "expect": "increase",
+          "note": "Q → 敵方物理 W 觸發 P 取得 rage → 自己 W 消耗回復 220 HP；只量自己 W 階段，無 Q 對照保留敵 W。",
+          "values": {
+            "prepared": 222.16551020408224,
+            "preparedAblated": 2.1655102040822385,
+            "unprepared": 2.1655102040822385,
+            "unpreparedAblated": 2.1655102040822385
+          },
+          "preparedContribution": 220,
+          "unpreparedContribution": 0,
+          "interaction": 220,
+          "status": "passed",
+          "validationErrors": [],
+          "method": "Difference in response-window deltas across four matched timelines. Source-only residuals remain in both prepared runs and are subtracted; no required status/resource is injected.",
+          "limits": [
+            "Nonlinear damage caps, deaths and position changes remain visible in snapshots; origin-specific metrics may be required for an intended attribution."
+          ]
+        },
+        {
+          "schema": "ggd-batch2-causal-combo@1",
+          "source": "E",
+          "target": "R",
+          "metric": {
+            "actor": "caster",
+            "field": "shield",
+            "sample": "max"
+          },
+          "expect": "increase",
+          "values": {
+            "prepared": 200,
+            "preparedAblated": 0,
+            "unprepared": 0,
+            "unpreparedAblated": 0
+          },
+          "preparedContribution": 200,
+          "unpreparedContribution": 0,
+          "interaction": 200,
+          "status": "passed",
+          "validationErrors": [],
+          "method": "Difference in response-window deltas across four matched timelines. Source-only residuals remain in both prepared runs and are subtracted; no required status/resource is injected.",
+          "limits": [
+            "Nonlinear damage caps, deaths and position changes remain visible in snapshots; origin-specific metrics may be required for an intended attribution."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b2-haga",
+      "combos": [
+        {
+          "schema": "ggd-batch2-causal-combo@1",
+          "source": "Q",
+          "target": "W",
+          "metric": {
+            "actor": "caster",
+            "field": "x"
+          },
+          "expect": "increase",
+          "values": {
+            "prepared": 3.260000000000005,
+            "preparedAblated": 0,
+            "unprepared": 0.23999999999999488,
+            "unpreparedAblated": 0.23999999999999488
+          },
+          "preparedContribution": 3.260000000000005,
+          "unpreparedContribution": 0,
+          "interaction": 3.260000000000005,
+          "status": "passed",
+          "validationErrors": [],
+          "method": "Difference in response-window deltas across four matched timelines. Source-only residuals remain in both prepared runs and are subtracted; no required status/resource is injected.",
+          "limits": [
+            "Nonlinear damage caps, deaths and position changes remain visible in snapshots; origin-specific metrics may be required for an intended attribution."
+          ]
+        },
+        {
+          "schema": "ggd-batch2-causal-combo@1",
+          "source": "E",
+          "target": "R",
+          "metric": {
+            "actor": "caster",
+            "field": "mana"
+          },
+          "expect": "increase",
+          "values": {
+            "prepared": 165.88204571428537,
+            "preparedAblated": -17.44224000000031,
+            "unprepared": -17.44224000000031,
+            "unpreparedAblated": -17.44224000000031
+          },
+          "preparedContribution": 183.32428571428568,
+          "unpreparedContribution": 0,
+          "interaction": 183.32428571428568,
+          "status": "passed",
+          "validationErrors": [],
+          "method": "Difference in response-window deltas across four matched timelines. Source-only residuals remain in both prepared runs and are subtracted; no required status/resource is injected.",
+          "limits": [
+            "Nonlinear damage caps, deaths and position changes remain visible in snapshots; origin-specific metrics may be required for an intended attribution."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b2-kisaragi",
+      "combos": [
+        {
+          "schema": "ggd-batch2-causal-combo@1",
+          "source": "Q",
+          "target": "R",
+          "metric": {
+            "actor": "foe",
+            "field": "status:curse"
+          },
+          "expect": "increase",
+          "values": {
+            "prepared": 1,
+            "preparedAblated": 0,
+            "unprepared": 0,
+            "unpreparedAblated": 0
+          },
+          "preparedContribution": 1,
+          "unpreparedContribution": 0,
+          "interaction": 1,
+          "status": "passed",
+          "validationErrors": [],
+          "method": "Difference in response-window deltas across four matched timelines. Source-only residuals remain in both prepared runs and are subtracted; no required status/resource is injected.",
+          "limits": [
+            "Nonlinear damage caps, deaths and position changes remain visible in snapshots; origin-specific metrics may be required for an intended attribution."
+          ]
+        },
+        {
+          "schema": "ggd-batch2-causal-combo@1",
+          "source": "W",
+          "target": "E",
+          "metric": {
+            "actor": "caster",
+            "field": "x"
+          },
+          "expect": "increase",
+          "values": {
+            "prepared": 4.300000000000033,
+            "preparedAblated": 0,
+            "unprepared": 0,
+            "unpreparedAblated": 0
+          },
+          "preparedContribution": 4.300000000000033,
+          "unpreparedContribution": 0,
+          "interaction": 4.300000000000033,
+          "status": "passed",
+          "validationErrors": [],
+          "method": "Difference in response-window deltas across four matched timelines. Source-only residuals remain in both prepared runs and are subtracted; no required status/resource is injected.",
+          "limits": [
+            "Nonlinear damage caps, deaths and position changes remain visible in snapshots; origin-specific metrics may be required for an intended attribution."
+          ]
+        }
+      ]
+    }
+  ],
+  "evidence": {
+    "path": "sample-raw.json.gz",
+    "sha256": "2c4709449772299d1dcaa25916e54d2481559e0032f33ebe53351cb256277b74",
+    "bytes": 321828
+  },
+  "limits": [
+    "Risk-selected sample, not all-37 semantic review or statistical quality estimate.",
+    "Reuses pinned upstream SimWorld harness; additional assertions authored in this intake.",
+    "Rank 1 on level 18 isolated simulation, not live-game import/render/balance.",
+    "Teacher-specific tests are not the scorer for arbitrary equivalent generated designs."
+  ],
+  "modelInferenceStarted": false,
+  "trainingChanged": false
+}

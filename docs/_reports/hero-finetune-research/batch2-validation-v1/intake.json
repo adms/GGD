@@ -1,0 +1,720 @@
+{
+  "schema": "ggd-batch2-validation-intake@1",
+  "sourceCommit": "0a8da174ead82e2241fa595d0f1c37f3194df334",
+  "engineCommit": "ed547549fb453f6652f53bd7ed9548b0ccef3a36",
+  "buildHash": "5117955476f4fd14832936836a3b1c1633905fd8d0cd1edb32cfe5bb731c308c",
+  "counts": {
+    "heroes": 37,
+    "slots": 222,
+    "publicFiles": 39
+  },
+  "sourcePins": {
+    "docs/_reports/hero-validation-batch2-37/data/ACTIVE.json": {
+      "sha256": "2ac4cae6a0d44fbd134beab4bfcbc702af06d5dc53fac11484e91e3a5a1525c9",
+      "bytes": 436
+    },
+    "docs/_reports/hero-validation-batch2-37/data/report.json": {
+      "sha256": "5fdb875e7b7b4e6e96029c1a607741c7aaa62b80c1d69c37c42fcc4fbda0643d",
+      "bytes": 35634
+    },
+    "docs/_reports/hero-validation-batch2-37/data/partition-report.json": {
+      "sha256": "7ababd9373a138de89a30b1339443abc9d9495cb801643f168ba69f7a0742db2",
+      "bytes": 30411
+    },
+    "docs/_reports/hero-validation-batch2-37/data/author-review.json": {
+      "sha256": "24c9a82870d91e14fe58f42c1161353e0e6e5796f15d6c9b0f39208a960e2ced",
+      "bytes": 160830
+    },
+    "docs/_reports/hero-validation-batch2-37/data/behavior-report.json": {
+      "sha256": "5625eb6c60d79ebe1eecb266f168990368a690be35430850f9f847340963eabe",
+      "bytes": 266068
+    },
+    "docs/_reports/hero-validation-batch2-37/data/special-report.json": {
+      "sha256": "9318f70784c204ddd3cd70eb5af90391ecd4b4aee89c6577718726bd73bafea2",
+      "bytes": 77303
+    },
+    "docs/_reports/hero-validation-batch2-37/data/train-report.json": {
+      "sha256": "b464e23fcb95557e72dcb906b63725b20f89b887096b5a8bcfc562da10d62999",
+      "bytes": 862084
+    },
+    "docs/_reports/hero-validation-batch2-37/data/package-report.json": {
+      "sha256": "bd3645b86854bf16b53b712708b3acb9a8234a65a3cf8b45930379d65e2af7e9",
+      "bytes": 3435402
+    },
+    "docs/_reports/hero-validation-batch2-37/data/diversity-report.json": {
+      "sha256": "ff556a9cdcbc74249045e0a551cd0fca60cd1fb72c414b75a948f02147fc2821",
+      "bytes": 56232
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/catalog.json": {
+      "sha256": "dec5a1bc8df80cdd114485eb12c7e345a39ae788abc40ac77cda501e11da23d6",
+      "bytes": 1116875
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-popp.json": {
+      "sha256": "209f978cfd5943466101395900e14b14d0397427d687f877b11f221e69943782",
+      "bytes": 975
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-rem.json": {
+      "sha256": "483e8a7c40a60bc4d23aa7f9d6416693c970cc236e90c69b6c51d9a24d1c16a6",
+      "bytes": 986
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-zenitsu.json": {
+      "sha256": "b715b8e9d51210ddee648bf97e4d8735d1edad14fbeb244a49fd1589535d9c4e",
+      "bytes": 999
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-rin.json": {
+      "sha256": "4a09923ae9e7344cf695fb0d1693773c1a0beddef0690a83258ebb91db903c67",
+      "bytes": 999
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-uncle.json": {
+      "sha256": "efb9e09a6719768521af563a47ef436e17c8d6cdc7caf64b3b4696cadb16bd43",
+      "bytes": 1012
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-boxxo.json": {
+      "sha256": "98fc831e6c32ffd0b71b5f69bf30b2b4920cf4de7a59ca532fd1735375a7abc0",
+      "bytes": 1027
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-shadow.json": {
+      "sha256": "1bebefcd81bc48976e0f938095901d8e493535804d7ee8dd212eb4b8fcb02f64",
+      "bytes": 1010
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-bojji.json": {
+      "sha256": "f54a382304debafc8f7c600144400811a62c84fa140c008da6baadd3fa80188b",
+      "bytes": 991
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-maomao.json": {
+      "sha256": "e704045f83fc2e67857f17d9b58ec4a5c3d5749ee861abf3427f864e62705454",
+      "bytes": 1007
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-elma.json": {
+      "sha256": "94ff140976fa4d6fb1607b2e9e77fd5b8c5f8f9116fc1eb4427d5e83eeda4f3d",
+      "bytes": 1002
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-albus.json": {
+      "sha256": "f06c26f103dcd66aabfab29e9d7170091ad92b592c76296919c654b0a13cf69e",
+      "bytes": 994
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-goblin.json": {
+      "sha256": "fbd5cb5bb6ecbdf28abe4dfec3ebf86470bae0b6a1539b4776d31b7b5033ab34",
+      "bytes": 1004
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-maple.json": {
+      "sha256": "a680d70e394922b998cff7c67e8dc27414c4a0211c094d367853bd73b26f2240",
+      "bytes": 1021
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-naofumi.json": {
+      "sha256": "1041e72fb39cb41ffe2a356e7ee0e81e85c0a6862b8d980d8e8835acad43a3e8",
+      "bytes": 1002
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-makoto.json": {
+      "sha256": "72695da1e970fb8f05e41773a8efb4538f5e1ca2754fd68dd8a12f38b3e1949a",
+      "bytes": 1010
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-noor.json": {
+      "sha256": "7b6395f1c15fe7231d7470c0a6010aadcec343496bcf627deab3ed7ab084230c",
+      "bytes": 999
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-touka.json": {
+      "sha256": "0cbf59c06a24363cc845b3f68ca2303110d16494ae42931adfbbc8504a32ca57",
+      "bytes": 1003
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-haga.json": {
+      "sha256": "c72f6caf977a660b734a324ce1ee4ec7d37bfa84803b522bc3da03b8176b5fb9",
+      "bytes": 1008
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-guts.json": {
+      "sha256": "b7d5c9dcbacfd8d7fd1a01e494ad301639af199cb1d26eb4cc8b5785bde9248d",
+      "bytes": 996
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-keyaru.json": {
+      "sha256": "c86e2b50cfa6efa973e02c495f65ce2cd6e74c18e43e80fa4220642e5c2f40a8",
+      "bytes": 1034
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-kaede.json": {
+      "sha256": "dcf68f2c024cc0e1d084f85b73269617bef457d442ea8f3225b3c962413dec28",
+      "bytes": 1009
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-matthias.json": {
+      "sha256": "75c39d9eb377b8f2e31a4e0fad1d989ea95c81fd9f28b50d85d971309d8d4643",
+      "bytes": 1012
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-sinbad.json": {
+      "sha256": "91a8dc3c0e5c9bfe26962240aacd20f102b27897b8e1c8f2f0703b29f8f40169",
+      "bytes": 1013
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-kumoko.json": {
+      "sha256": "a0e8f064061314d8b4dc59ef94ecd010dd5f7d189fada8aa942a0bc43913c9aa",
+      "bytes": 1004
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-yogiri.json": {
+      "sha256": "112e87658eb11b921e68dba83f7755b732fd59afffda92eb1b79ca41a46aa4ee",
+      "bytes": 1031
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-kaiji.json": {
+      "sha256": "817b9ea3fbf9f5ab1a949da79914241872c857c2197e7e18578103cb829066ce",
+      "bytes": 1003
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-fushi.json": {
+      "sha256": "547239dcef4f9625fe563bd5875160b4ba68a34079a3ac09a77dc28d6f8a85f0",
+      "bytes": 994
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-orphen.json": {
+      "sha256": "15d9360fe30780c3b873a4b895c8d48b84761fcc295e0308b4362f7afbaf9c80",
+      "bytes": 989
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-klaus.json": {
+      "sha256": "0ebcfeeb413665339c7e6a901a1a54d48fb0765f592f1fc9d99af3dcf2b2065b",
+      "bytes": 1015
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-takopi.json": {
+      "sha256": "43e14f299ca288c1b725abd695ad75a8f1824a907b7d65b1242b6b0723afd713",
+      "bytes": 1010
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-luckyman.json": {
+      "sha256": "df9d4ef7229b4e6ecafe20b0aaa40120629e354b3a1293c092d262ff86794542",
+      "bytes": 997
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-misery.json": {
+      "sha256": "bee349a4adc6f6628f271a9f10fcfa7e988c609aa059c66f471f5ac836b49907",
+      "bytes": 1007
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-nube.json": {
+      "sha256": "cf3593005a1f15c44b3cde3265036c0b5f201525129d4eebd385f697f4abd4e9",
+      "bytes": 1002
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-shinchan.json": {
+      "sha256": "8754578c1fb3b752c08f8a8ac04aeedd222b6a458782a61dc7dcbd232ecee34c",
+      "bytes": 1009
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-aladdin.json": {
+      "sha256": "8afae5548580542268aeec5bb0f594568e39d6e599a07af9603c846917a03ecc",
+      "bytes": 1015
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-ned.json": {
+      "sha256": "ec5387e89fc4ad93880e609f1a456fee8c06eb87b71e4816c240d840bac59d83",
+      "bytes": 1011
+    },
+    "docs/_reports/hero-validation-batch2-37/data/public/prompts/b2-kisaragi.json": {
+      "sha256": "2ef17b1e8568ef9c4ed09b91a01c23803de9efb0b7008b30b99dd3ffeeb9bb68",
+      "bytes": 1748
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-popp.project.json": {
+      "sha256": "3360e704d25d6ecf45ac3f4656015fe6c7b6f371cd52667da9725a87bf6d6d91",
+      "bytes": 33080
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-popp.json": {
+      "sha256": "c7bbf979842f26fe96dbdb61304c4f1be015eafd8adc64828e08581d84cecb56",
+      "bytes": 44685
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-rem.project.json": {
+      "sha256": "cd7b460e44a3cb19ea320480c0035be8d817accd007b0418af42468491d40966",
+      "bytes": 26810
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-rem.json": {
+      "sha256": "7572e5ffadc20d77a1377b0e7e85c70f9b54bc2f5f4f154ac82821f38142a8c9",
+      "bytes": 40827
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-zenitsu.project.json": {
+      "sha256": "6138042e3725eef6b65bf46b0cd52fe8cefdd4ebf34765f65962fb51142d9614",
+      "bytes": 26518
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-zenitsu.json": {
+      "sha256": "071a00c5dcc7139ed8668c0edf760a3f34465e54044c6826c5bd596759acff92",
+      "bytes": 42558
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-rin.project.json": {
+      "sha256": "5ec624045b4964390e5bb3fd8be3ac9aa65948cbd622018c13c1ddc04484eff3",
+      "bytes": 26642
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-rin.json": {
+      "sha256": "29f9a4a17593407484df550e1e8e67faa34a3ad1203882a55c6ae99a2f643d64",
+      "bytes": 40235
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-uncle.project.json": {
+      "sha256": "10f3ee700b22bb1afcdf94c73ab7cd95e59ffbd773a6563cc9d206cfe47d2bf8",
+      "bytes": 27189
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-uncle.json": {
+      "sha256": "7dfdfbea8b7cb7413b77d44e43411b810927dbf5f63c7eb6861b396ffc40c2f0",
+      "bytes": 39258
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-boxxo.project.json": {
+      "sha256": "44eda2885d758657eb30b9605641a17d2850f78b5c54855d920fe0a13d5981a5",
+      "bytes": 28536
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-boxxo.json": {
+      "sha256": "c95d6095dc2590c370c879b5ffc9c62ebb0bad2c02e1a8646ec6cdd4ce617083",
+      "bytes": 42968
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-shadow.project.json": {
+      "sha256": "666ac8dcb9938dccdfad9ba1df8cf81b762aeebab1ed38dc278a41dd5e9d6975",
+      "bytes": 31684
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-shadow.json": {
+      "sha256": "f2a5f1588dcb64732b55b56b8fd216e947df3af4d0fff1478c92297b9ed26556",
+      "bytes": 43621
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-bojji.project.json": {
+      "sha256": "2458acfb83b7d9709577225576bd78d3cc1a358a600949d5cc869cf090a4da1d",
+      "bytes": 24740
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-bojji.json": {
+      "sha256": "d96279032e2ab95b8c4a9214d57a593542388fd649e3bb59fa3873bd28161814",
+      "bytes": 35333
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-maomao.project.json": {
+      "sha256": "f4e3906077ffd59b2c0ef3bc70062cdfed259c7d431aed6389e5338450311483",
+      "bytes": 25580
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-maomao.json": {
+      "sha256": "0040d61d786c44296828b081c120f7576482a64a34bc6b0c09fabbc66d01d7f3",
+      "bytes": 40883
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-elma.project.json": {
+      "sha256": "1ae81c776d1e297178ab76c2e8b18a91ac97d14d370747d79f548ad6d4f08907",
+      "bytes": 27809
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-elma.json": {
+      "sha256": "2b792968ba16b0a87635cba4f0a53b30f76e40fd8eb6435708f920c04cd41f95",
+      "bytes": 38877
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-albus.project.json": {
+      "sha256": "4c4af9a3a4a07dc0481cdd3de438f8be7b58028a1c4597ac24fc17bb56e3d2f7",
+      "bytes": 28105
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-albus.json": {
+      "sha256": "7e164feb7ce664349b7fb50bf3437677a2ca1a6e4e8f200fa7b4dfe400710bff",
+      "bytes": 39290
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-goblin.project.json": {
+      "sha256": "f2dbefda3c6bef9d658382d9fffb44826496a0b08903b02574c6a017b4894ec6",
+      "bytes": 23814
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-goblin.json": {
+      "sha256": "cb9c37f25f8495e680bc2a35b325bc46cb676ef9104344660ec763bc135bfc6a",
+      "bytes": 36987
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-maple.project.json": {
+      "sha256": "6e50eecf4718b04986a39c0b34c155f32271fde971ed8a6f00a77f48cc3f27ec",
+      "bytes": 26241
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-maple.json": {
+      "sha256": "e048cf5367ea4098220bcb7d31f967e15daa36dc6187a35ef30552a2b552d61b",
+      "bytes": 54270
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-naofumi.project.json": {
+      "sha256": "2f2bdef3d8013974e37efa1727ade770b2010e609609ee6bd6a8b89eb7a89dc9",
+      "bytes": 22275
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-naofumi.json": {
+      "sha256": "35e2e15e939dededae22b89f22abce744cccc449ef5792bb031c8bc8ec5546cf",
+      "bytes": 37336
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-makoto.project.json": {
+      "sha256": "7bfe7ad38d6872f28253ac250cabcdf0d60c7448749f519572bc7d1594fce05b",
+      "bytes": 24384
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-makoto.json": {
+      "sha256": "db993df67a81893b0f268eecec75b96c5e644c6b35acd8fadb6b03df78826278",
+      "bytes": 36472
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-noor.project.json": {
+      "sha256": "e1dc48d1283ff74267370ec4f8f64cd218259ce63700dba49681fe5ceda8d95b",
+      "bytes": 25502
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-noor.json": {
+      "sha256": "7bd2c9415030b525a8a4bf21cba3c9cf1a83a2b9585f0da5300198bd58e37292",
+      "bytes": 42832
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-touka.project.json": {
+      "sha256": "5d2d3e71d6689a0196693bef25a06161610b33f7eed02e544f52817c3da73f68",
+      "bytes": 32998
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-touka.json": {
+      "sha256": "af21f300f15e0edc8e5c69095f3ceef7a888eb5d06d61f977669b00bda88dd4f",
+      "bytes": 45277
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-haga.project.json": {
+      "sha256": "0fa3263b2beef67aa954e17a9b56576924dddc7ddbf79eee8b1eeff932f2695b",
+      "bytes": 22000
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-haga.json": {
+      "sha256": "6d37da6ab640880a1b96f6abe34b025aa6a43c31ce9b38c7335632352426c377",
+      "bytes": 33595
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-guts.project.json": {
+      "sha256": "1fb7ee5c15f6f24942a25a8597e386b3089a065b8d073d14aa264d850f0e7995",
+      "bytes": 29395
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-guts.json": {
+      "sha256": "81c0a09b1ddc58022b97d9c1a491942866cc48ce98631c97b81d3c52138566a2",
+      "bytes": 42555
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-keyaru.project.json": {
+      "sha256": "3545f86f385310f43da9294b54d262f765673e112bd2fcc2305df4469c391de2",
+      "bytes": 27072
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-keyaru.json": {
+      "sha256": "2a4d0d03a816c0933c92c8f14b141d4ea2692ee388a269c95d1b13bbe4c3bfb7",
+      "bytes": 39023
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-kaede.project.json": {
+      "sha256": "9fbd5fdf47fc0b362d24c7c1bd25856d403757d6cfb72ba6ead87a192a12b43d",
+      "bytes": 32425
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-kaede.json": {
+      "sha256": "f289f1189164b0a27f7bfa034e2850c70a37b0121baf8d2c2b5132eb09f24f78",
+      "bytes": 44269
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-matthias.project.json": {
+      "sha256": "d09950fdf56f79501f9f3a05f3399b96851099aadf6b42fcc2fda9a77e9e0a8f",
+      "bytes": 23027
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-matthias.json": {
+      "sha256": "8aab2ef9d338bce623148be6b81e7327822caf235f832edf0c414d503f334100",
+      "bytes": 33518
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-sinbad.project.json": {
+      "sha256": "fb92f5d05bc12cf18adafb2bea08111b4d693ecdf8713eb81bcccf5eaaebac22",
+      "bytes": 31049
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-sinbad.json": {
+      "sha256": "f621795f9da5379f14e3ad175aea4994e6b74c51ce54183fd8c8fc2e9609e5ce",
+      "bytes": 41157
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-kumoko.project.json": {
+      "sha256": "a6f26785079d75c8efa44ea70da4cce4b2e8fa7e9b39810976530983460fb5c9",
+      "bytes": 29676
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-kumoko.json": {
+      "sha256": "29150bf2879f0c4a03f9c860bcee28b53aae178a0b9b8d356dee22903dd32e43",
+      "bytes": 42195
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-yogiri.project.json": {
+      "sha256": "8e95c491552530f87f02c097a587a23038166c813423363a4668be7710294383",
+      "bytes": 24606
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-yogiri.json": {
+      "sha256": "100577b17e4a9425a3f5c4b36c5681a9efe873b0b0355e45f8d5ae4e445de7b5",
+      "bytes": 39803
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-kaiji.project.json": {
+      "sha256": "8e2a313cbe67cd66760b651799f739effdc457f441f7f3ff37f1293c03b2ec45",
+      "bytes": 24641
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-kaiji.json": {
+      "sha256": "927d5691639090a683cc920c95557f2a974cecc226e0b59bbb21b87bb1aca548",
+      "bytes": 38061
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-fushi.project.json": {
+      "sha256": "dabcd743c6ebd745c509c3a5091a8b7dea4af0603cc124527e5c303c6e732632",
+      "bytes": 25167
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-fushi.json": {
+      "sha256": "72c5c92abea5ed10e21724e21d0b70ea41db397a4b2436fd40592041ad3203a9",
+      "bytes": 37898
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-orphen.project.json": {
+      "sha256": "d89db45bb87d66208fb1b953294c2ebd16221c0085b3669ed7291fc6ff9c61cd",
+      "bytes": 33374
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-orphen.json": {
+      "sha256": "d5d9688192d4255bd6644aa626d9d602045559807ddba056c46b0f75ccea5e58",
+      "bytes": 43913
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-klaus.project.json": {
+      "sha256": "4d910f6040219cc9784241d33fc8ebf01b46d8cabd862cfa2529fed3732fffe9",
+      "bytes": 27001
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-klaus.json": {
+      "sha256": "7145ece445293968e70af320ba6fc25cc0f0610b6c4b4ca7744dec097a30586a",
+      "bytes": 38897
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-takopi.project.json": {
+      "sha256": "83d659f572137a43a51bbdd9cb85355e95c207a6eb84abbd1dbb98ebc085131b",
+      "bytes": 27524
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-takopi.json": {
+      "sha256": "6b061016e3a35edd3a74ba597c9ca5bb61a0497832b880e9d5b0023316ca9d28",
+      "bytes": 39482
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-luckyman.project.json": {
+      "sha256": "769d099cac943a6b5683d878c9bdc97d113569b1a522eb26ef531a498ffa82f8",
+      "bytes": 24788
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-luckyman.json": {
+      "sha256": "c8f1108af78454f985f5b81b22dba68b59ed57cf7e56ea6fc390a9426ec1f1a1",
+      "bytes": 36035
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-misery.project.json": {
+      "sha256": "8e9e1ce35942bdbb1693a4f5de8dd9cad9887e9b8968be9d4b176374c5c577b1",
+      "bytes": 23033
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-misery.json": {
+      "sha256": "9d14e822568e03c3a383e0569975b6106cac66580fa8751df6fc42a11ebe26e1",
+      "bytes": 33085
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-nube.project.json": {
+      "sha256": "1e95e27e86acb513c02c17420156e3b1fe16782c698c14c4bf0a504bd39c128c",
+      "bytes": 27186
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-nube.json": {
+      "sha256": "205412aeab24c7209d600c0406a8943faed2ab771c0dc03e3ef102bcf62d3af2",
+      "bytes": 39789
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-shinchan.project.json": {
+      "sha256": "a86edee5fa8c85d73f902a9531b5bd724f610e768906ff42f4babe79d172c42c",
+      "bytes": 25502
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-shinchan.json": {
+      "sha256": "a11394a75e1414bab92a9d5843f670eb0f706b2ec8c71c3e5361816e8478e7ad",
+      "bytes": 35597
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-aladdin.project.json": {
+      "sha256": "309675b52b41ac3cf9eb0c5ae1490f183b89eb3c798f2641fae2e376de3f32c9",
+      "bytes": 36133
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-aladdin.json": {
+      "sha256": "fa97d3c0598f2bd419b2142b5947f1623223fe5e96a20648f3dc766f335663ff",
+      "bytes": 48806
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-ned.project.json": {
+      "sha256": "f4cfd2415bebab354baf2e7ef7959a23aafa9deb7010622b9a2a5c11347b052d",
+      "bytes": 31021
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-ned.json": {
+      "sha256": "5efb73568efff1d3b0681616b3f0875181f7376c3b054d039683dc2043f28e73",
+      "bytes": 43092
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-kisaragi.project.json": {
+      "sha256": "72d30f5117fbb5a6c5c5790a01270f56009b89104281e68a0d1011db5890cc37",
+      "bytes": 28765
+    },
+    "docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-kisaragi.json": {
+      "sha256": "e0839b791e4e16b92966e499489241ffda71e8ee79ff9e5c9e36e91fa6c5e9c1",
+      "bytes": 53469
+    }
+  },
+  "upstreamReceiptCheck": {
+    "exit": 0,
+    "result": {
+      "mode": "committed-receipts-only",
+      "heroes": 37,
+      "slots": 222,
+      "templates": 19,
+      "statuses": 20,
+      "vfx": 11,
+      "reviewedSimilarPairs": 11,
+      "completeLiveHeroes": 0,
+      "blindCertifiedHeroes": 0,
+      "trainEligible": false
+    },
+    "runtimeReplay": false
+  },
+  "trainingSnapshot": {
+    "sha256": "41f49e105364471236d38fdbac6749c722ce4909b0c58b2f689a8cf2ea4b1b56",
+    "examples": 124,
+    "basename": "examples.json"
+  },
+  "overlapAudit": [
+    {
+      "id": "b2-popp",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-rem",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-zenitsu",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-rin",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-uncle",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-boxxo",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-shadow",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-bojji",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-maomao",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-elma",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-albus",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-goblin",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-maple",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-naofumi",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-makoto",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-noor",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-touka",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-haga",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-guts",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-keyaru",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-kaede",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-matthias",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-sinbad",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-kumoko",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-yogiri",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-kaiji",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-fushi",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-orphen",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-klaus",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-takopi",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-luckyman",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-misery",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-nube",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-shinchan",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-aladdin",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-ned",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    },
+    {
+      "id": "b2-kisaragi",
+      "matches": [],
+      "scope": "Exact normalized IDs/known aliases/heroName in the explicitly supplied frozen split only; not a full historical exposure certification."
+    }
+  ],
+  "blindCertified": false,
+  "trainEligible": false,
+  "trainingChanged": false,
+  "modelInferenceStarted": false,
+  "exposure": "This assistant has inspected inventory names and five teacher kits for audit. The evaluated 12B must only receive model-input. Historical model training exposure remains uncertified.",
+  "samplePlan": {
+    "selection": "Risk-based, fixed before replay; not a random quality estimate",
+    "heroes": [
+      "b2-naofumi",
+      "b2-rin",
+      "b2-noor",
+      "b2-haga",
+      "b2-kisaragi"
+    ]
+  }
+}

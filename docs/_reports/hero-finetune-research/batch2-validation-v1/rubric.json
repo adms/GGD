@@ -1,0 +1,29 @@
+{
+  "schema": "ggd-full-hero-evaluation-policy@1",
+  "unit": "whole-hero",
+  "trainEligible": false,
+  "blindCertified": false,
+  "comparison": [
+    "unmodified Gemma 4 12B IT + scripts",
+    "same base + fixed LoRA + identical scripts",
+    "pinned Codex reference (historical budget unknown)"
+  ],
+  "priorities": [
+    "identity/origin/attributes",
+    "six-slot mechanics/teams/timing/resources/causality",
+    "legal templates and references",
+    "required VFX/assets bindings",
+    "save/reload/compiler/import/game behavior"
+  ],
+  "exactTeacherNamesOrTemplatesRequired": false,
+  "allowEquivalentDesigns": true,
+  "hiddenRequirementsForbidden": true,
+  "missingEvidence": "not-tested, never pass",
+  "upstreamTeacherCombos": "Do not directly grade arbitrary model designs using private teacher-specific slots, IDs or preconditions.",
+  "modelInputRootOnly": "model-input",
+  "noPrivateRetrieval": true,
+  "noCodexRepair": true,
+  "use": "User-supplied held-out evaluation; not training, checkpoint selection, prompt tuning or automatic scorer tuning.",
+  "readiness": "Dataset intake only. Candidate-output behavioral scorer and identical A/B generation settings must be frozen before running models.",
+  "fullGameReadinessProven": false
+}

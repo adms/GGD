@@ -1,0 +1,1112 @@
+[
+  {
+    "id": "b2-popp",
+    "name": "何布",
+    "work": "神龍之謎",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-popp.json",
+    "teacher": "evaluator/private/teachers/b2-popp.project.json",
+    "compiled": "evaluator/private/compiled/b2-popp.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-rem",
+    "name": "蕾姆",
+    "work": "Re:從零開始",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-rem.json",
+    "teacher": "evaluator/private/teachers/b2-rem.project.json",
+    "compiled": "evaluator/private/compiled/b2-rem.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-zenitsu",
+    "name": "我妻善逸",
+    "work": "鬼滅之刃",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-zenitsu.json",
+    "teacher": "evaluator/private/teachers/b2-zenitsu.project.json",
+    "compiled": "evaluator/private/compiled/b2-zenitsu.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-rin",
+    "name": "遠坂凜",
+    "work": "Fate",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-rin.json",
+    "teacher": "evaluator/private/teachers/b2-rin.project.json",
+    "compiled": "evaluator/private/compiled/b2-rin.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-uncle",
+    "name": "異世界舅舅",
+    "work": "異世界舅舅",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-uncle.json",
+    "teacher": "evaluator/private/teachers/b2-uncle.project.json",
+    "compiled": "evaluator/private/compiled/b2-uncle.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-boxxo",
+    "name": "阿箱＋拉蜜絲",
+    "work": "轉生成自動販賣機",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-boxxo.json",
+    "teacher": "evaluator/private/teachers/b2-boxxo.project.json",
+    "compiled": "evaluator/private/compiled/b2-boxxo.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-shadow",
+    "name": "闇影",
+    "work": "我想成為影之強者",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-shadow.json",
+    "teacher": "evaluator/private/teachers/b2-shadow.project.json",
+    "compiled": "evaluator/private/compiled/b2-shadow.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-bojji",
+    "name": "波吉",
+    "work": "國王排名",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-bojji.json",
+    "teacher": "evaluator/private/teachers/b2-bojji.project.json",
+    "compiled": "evaluator/private/compiled/b2-bojji.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-maomao",
+    "name": "貓貓",
+    "work": "藥師少女的獨語",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-maomao.json",
+    "teacher": "evaluator/private/teachers/b2-maomao.project.json",
+    "compiled": "evaluator/private/compiled/b2-maomao.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-elma",
+    "name": "艾爾瑪",
+    "work": "轉生重騎士無雙",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-elma.json",
+    "teacher": "evaluator/private/teachers/b2-elma.project.json",
+    "compiled": "evaluator/private/compiled/b2-elma.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-albus",
+    "name": "阿爾巴斯",
+    "work": "勇者再次啟程",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-albus.json",
+    "teacher": "evaluator/private/teachers/b2-albus.project.json",
+    "compiled": "evaluator/private/compiled/b2-albus.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-goblin",
+    "name": "哥布林殺手",
+    "work": "哥布林殺手",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-goblin.json",
+    "teacher": "evaluator/private/teachers/b2-goblin.project.json",
+    "compiled": "evaluator/private/compiled/b2-goblin.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-maple",
+    "name": "梅普露",
+    "work": "怕痛的我把防禦力點滿",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-maple.json",
+    "teacher": "evaluator/private/teachers/b2-maple.project.json",
+    "compiled": "evaluator/private/compiled/b2-maple.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-naofumi",
+    "name": "岩谷尚文",
+    "work": "盾之勇者",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-naofumi.json",
+    "teacher": "evaluator/private/teachers/b2-naofumi.project.json",
+    "compiled": "evaluator/private/compiled/b2-naofumi.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-makoto",
+    "name": "深澄真",
+    "work": "月光下的異世界之旅",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-makoto.json",
+    "teacher": "evaluator/private/teachers/b2-makoto.project.json",
+    "compiled": "evaluator/private/compiled/b2-makoto.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-noor",
+    "name": "諾爾",
+    "work": "我要招架一切",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-noor.json",
+    "teacher": "evaluator/private/teachers/b2-noor.project.json",
+    "compiled": "evaluator/private/compiled/b2-noor.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-touka",
+    "name": "托卡・史考特",
+    "work": "勇者死了",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-touka.json",
+    "teacher": "evaluator/private/teachers/b2-touka.project.json",
+    "compiled": "evaluator/private/compiled/b2-touka.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-haga",
+    "name": "羽賀",
+    "work": "這個世界漏洞百出",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-haga.json",
+    "teacher": "evaluator/private/teachers/b2-haga.project.json",
+    "compiled": "evaluator/private/compiled/b2-haga.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-guts",
+    "name": "凱茲",
+    "work": "烙印勇士",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-guts.json",
+    "teacher": "evaluator/private/teachers/b2-guts.project.json",
+    "compiled": "evaluator/private/compiled/b2-guts.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-keyaru",
+    "name": "凱亞爾",
+    "work": "回復術士的重來人生",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-keyaru.json",
+    "teacher": "evaluator/private/teachers/b2-keyaru.project.json",
+    "compiled": "evaluator/private/compiled/b2-keyaru.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-kaede",
+    "name": "楓",
+    "work": "異世界轉移魔法劍士",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-kaede.json",
+    "teacher": "evaluator/private/teachers/b2-kaede.project.json",
+    "compiled": "evaluator/private/compiled/b2-kaede.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-matthias",
+    "name": "馬提亞斯",
+    "work": "失格紋的最強賢者",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-matthias.json",
+    "teacher": "evaluator/private/teachers/b2-matthias.project.json",
+    "compiled": "evaluator/private/compiled/b2-matthias.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-sinbad",
+    "name": "辛巴達",
+    "work": "辛巴達的冒險",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-sinbad.json",
+    "teacher": "evaluator/private/teachers/b2-sinbad.project.json",
+    "compiled": "evaluator/private/compiled/b2-sinbad.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-kumoko",
+    "name": "蜘蛛子",
+    "work": "轉生成蜘蛛又怎樣",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-kumoko.json",
+    "teacher": "evaluator/private/teachers/b2-kumoko.project.json",
+    "compiled": "evaluator/private/compiled/b2-kumoko.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-yogiri",
+    "name": "高遠夜霧",
+    "work": "秒殺外掛太強了",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-yogiri.json",
+    "teacher": "evaluator/private/teachers/b2-yogiri.project.json",
+    "compiled": "evaluator/private/compiled/b2-yogiri.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-kaiji",
+    "name": "伊藤開司",
+    "work": "賭博默示錄",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-kaiji.json",
+    "teacher": "evaluator/private/teachers/b2-kaiji.project.json",
+    "compiled": "evaluator/private/compiled/b2-kaiji.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-fushi",
+    "name": "不死",
+    "work": "致不滅的你",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-fushi.json",
+    "teacher": "evaluator/private/teachers/b2-fushi.project.json",
+    "compiled": "evaluator/private/compiled/b2-fushi.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-orphen",
+    "name": "歐菲",
+    "work": "魔術士歐菲",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-orphen.json",
+    "teacher": "evaluator/private/teachers/b2-orphen.project.json",
+    "compiled": "evaluator/private/compiled/b2-orphen.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-klaus",
+    "name": "克勞斯",
+    "work": "覺醒了自動機能",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-klaus.json",
+    "teacher": "evaluator/private/teachers/b2-klaus.project.json",
+    "compiled": "evaluator/private/compiled/b2-klaus.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-takopi",
+    "name": "章魚嗶",
+    "work": "章魚嗶的原罪",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-takopi.json",
+    "teacher": "evaluator/private/teachers/b2-takopi.project.json",
+    "compiled": "evaluator/private/compiled/b2-takopi.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-luckyman",
+    "name": "幸運超人",
+    "work": "幸運超人",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-luckyman.json",
+    "teacher": "evaluator/private/teachers/b2-luckyman.project.json",
+    "compiled": "evaluator/private/compiled/b2-luckyman.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-misery",
+    "name": "米瑟利",
+    "work": "來自魔界",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-misery.json",
+    "teacher": "evaluator/private/teachers/b2-misery.project.json",
+    "compiled": "evaluator/private/compiled/b2-misery.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-nube",
+    "name": "鵺野鳴介",
+    "work": "靈異教師神眉",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-nube.json",
+    "teacher": "evaluator/private/teachers/b2-nube.project.json",
+    "compiled": "evaluator/private/compiled/b2-nube.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-shinchan",
+    "name": "野原新之助",
+    "work": "蠟筆小新",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-shinchan.json",
+    "teacher": "evaluator/private/teachers/b2-shinchan.project.json",
+    "compiled": "evaluator/private/compiled/b2-shinchan.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-aladdin",
+    "name": "阿拉丁",
+    "work": "魔笛MAGI",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-aladdin.json",
+    "teacher": "evaluator/private/teachers/b2-aladdin.project.json",
+    "compiled": "evaluator/private/compiled/b2-aladdin.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-ned",
+    "name": "青蛙劍士 Ned",
+    "work": "AVARTH",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-ned.json",
+    "teacher": "evaluator/private/teachers/b2-ned.project.json",
+    "compiled": "evaluator/private/compiled/b2-ned.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  },
+  {
+    "id": "b2-kisaragi",
+    "name": "如月電車",
+    "work": "如月車站・GGD原創",
+    "partition": "external-evaluation-only",
+    "trainEligible": false,
+    "prompt": "model-input/prompts/b2-kisaragi.json",
+    "teacher": "evaluator/private/teachers/b2-kisaragi.project.json",
+    "compiled": "evaluator/private/compiled/b2-kisaragi.json",
+    "sourceReportedAdmission": {
+      "legal": true,
+      "behavior": true,
+      "agentSemanticReview": true,
+      "diversity": "reviewed-with-explicit-similar-exceptions",
+      "offlinePackage": true,
+      "scopedDevelopmentReference": true,
+      "completeLiveHero": false,
+      "blindEvaluation": false,
+      "trainEligible": false
+    },
+    "skillSlots": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "teacherSpecificComboTests": "Reference self-consistency tests only; not mandatory exact implementation for alternative model answers."
+  }
+]
