@@ -12,6 +12,15 @@ Each original filename, byte count and complete SHA-256 is pinned. All 11 files 
 
 The index records the runtime package versions observed in that training preflight. Research archives retain the original runtime/resource receipts, adapter configurations and pinned engine information. Model license/notice materials remain in `LICENSE-MODELS` and `NOTICE-MODELS` beside this guide.
 
+## Completed verification
+
+- All 56 chunks were uploaded and downloaded with matching SHA-256. The recorded verified-read interval was 2026-09-08 08:21:17–08:37:49 UTC (about 16.5 minutes, including a resumed invocation).
+- An independent new model directory was assembled using only those downloaded chunks, not by copying the original model directory. **All 11 full-file hashes match the original training-time pins.** The tensor-to-shard index and JSON files also pass consistency/parsing checks.
+- `BASE_S3_RECEIPT.json` records every verified remote chunk. `BASE_RESTORE_VERIFICATION.json` records the full reconstruction, index hash and verifier script hash. The reconstruction used the already verified cache and correctly reports `remoteReadThisRun: false`.
+- 31 deterministic tests passed: 12 base-backup/restore tests, 12 shared S3-boundary/archive-storage tests and seven original archive tests. These are storage tests, not model-accuracy tests.
+- The first publication attempt stopped on a non-AccessDenied CLI failure before completion. No final receipt was issued for that attempt; a new invocation reused hash-verified progress and completed all chunks. The original diagnostic was sanitized, so its exact root cause is not asserted.
+- Original local base weights, research outputs and the prior 290 MB S3 index/receipt are unchanged. No GPU worker was started.
+
 ## Storage and resumability
 
 The existing fixed AWS profile/region/bucket boundary is reused: `vibe-coding`, `ap-east-2`, `ggd-390630837668-ap-east-2-an`. Every network run checks the expected STS role first. There are 56 content-addressed chunks, each at most 256 MiB, stored under `hero-finetune-research/base-model/sha256/<sha256>.bin`.

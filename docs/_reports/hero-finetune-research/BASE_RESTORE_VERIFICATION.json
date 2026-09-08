@@ -1,0 +1,16 @@
+{
+  "schema": "ggd-hero-base-restore-verification@1",
+  "verifiedAt": "2026-09-08T08:38:20.896848+00:00",
+  "model": "mlx-community/gemma-4-12B-it-8bit",
+  "revision": "200bb6db075e137a4deb08838865ac4ddb86292e",
+  "indexSha256": "36367145f25f600eb86d7a72a129268bdc69478c129a791b91d764b4aa4898ba",
+  "restoreScriptSha256": "4a142c091162f6dd6920733e953e2a7645fd6cf713258044beb473e9fcaf3a3b",
+  "source": "verified-chunk-cache",
+  "sourceModelDirectoryUsed": false,
+  "destination": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-research-s3-migration-20260908/restored-base/gemma-4-12B-it-8bit",
+  "restoredFiles": 11,
+  "bytes": 12748534481,
+  "allOriginalFileHashesMatch": true,
+  "remoteReadThisRun": false,
+  "gpuStarted": false
+}
