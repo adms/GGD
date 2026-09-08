@@ -52,5 +52,12 @@
     "fly-card presentation",
     "other original requirements in issue 1132"
   ],
-  "formalPublication": false
+  "formalPublication": false,
+  "explicitPushGuard": {
+    "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/cardVariants.test.ts --pool=threads --minWorkers=1 --maxWorkers=1",
+    "exitCode": 0,
+    "tests": 9,
+    "logSha256": "3dc979e4a42662e91bf50fdbd1f000d70965dedfff450c03c91dfcdb08f01ff5",
+    "assertion": "Wind Q must create an authored knockback override, not only the generic damage impact."
+  }
 }

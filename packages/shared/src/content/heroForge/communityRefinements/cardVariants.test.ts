@@ -42,7 +42,11 @@ describe("GH#1132 wind/tree card switching", () => {
     const r = setup(rank);
     const before = { ...r.world.transform.get(r.enemy)!.pos };
     const hp = r.world.health.get(r.enemy)!.hp;
-    expect(r.cast("Q", r.enemy, 10)).toBe("ok");
+    expect(r.cast("Q", r.enemy, 0)).toBe("ok");
+    for (let ticks = 0; ticks < 30 && r.links() === 0; ticks++) r.step(1);
+    // Damage has its own impact rule. Prove the card's explicit push also ran.
+    expect(r.world.nav.get(r.enemy)!.override).toMatchObject({ kind: "knockback", authored: true });
+    r.step(10);
     expect(r.world.health.get(r.enemy)!.hp).toBeLessThan(hp);
     expect(r.world.transform.get(r.enemy)!.pos.x).toBeGreaterThan(before.x);
     expect(r.rooted()).toBe(false);
