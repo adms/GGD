@@ -1,0 +1,29 @@
+{
+  "schema": "ggd-distillation-preparation-verification@1",
+  "date": "2026-09-09",
+  "nodeUnitTests": {"command": "node --test tools/editor-acceptance/hero-distillation-pairs.test.mjs", "passed": 12, "failed": 0},
+  "pythonUnitTests": {"command": "python -m unittest discover -s tools/editor-acceptance -p test_hero_distillation_tokens.py", "passed": 4, "failed": 0},
+  "rebuild": {
+    "method": "Call build with the fixed source commit and manual exclusion file; compare input pins, counts, and SHA256 of every JSON-serialized output against saved artifacts.",
+    "inputPins": 576,
+    "dataOutputFiles": 4,
+    "inputPinsEqual": true,
+    "countsEqual": true,
+    "scriptHashEqual": true,
+    "savedOutputHashesEqual": true,
+    "rebuiltSerializedOutputsEqual": true,
+    "note": "The first diagnostic used deep object comparison, which distinguishes omitted JSON fields from JavaScript undefined. Comparing serialized JSON, the actual persisted contract, passed for all outputs; no data was changed to force a pass."
+  },
+  "tokenPreflight": {
+    "candidateRowsSized": 756,
+    "sourcePairedRowsAfterKnownExclusions": 358,
+    "catalogVersions": 2,
+    "fullSuppliedSequences": true,
+    "truncation": false,
+    "elapsedSeconds": 57.882,
+    "weightsLoaded": false,
+    "gpuStarted": false,
+    "trainingStarted": false
+  },
+  "notProven": ["complete dataset semantic quality", "HeroProject output integration", "schema/compile/E2E acceptance", "final train/dev split", "training duration or memory", "model improvement", "95% whole-hero generation success"]
+}

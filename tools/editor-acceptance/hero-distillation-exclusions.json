@@ -1,0 +1,33 @@
+[
+  {
+    "heroId": "community-review-01-20260907",
+    "slot": "E",
+    "teacherSha256": "008a20687627a38b888476d6eff8afaed0282aa595be6ec5ae5ddf282e759420",
+    "reason": "documented-trap-reflection-gap-in-pinned-teacher",
+    "evidence": {
+      "sourcePath": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/01/after/community-review-01-20260907-draft.json",
+      "sourceRequirement": "設置一個可辨識的陷阱；範圍內首次敵方普攻觸發時，抵消該次攻擊並反擊來源，隨後消失。",
+      "teacherPath": "payload.project.acceptedPlan.slots.E",
+      "teacherVersion": 13,
+      "product": "tpl-buff-self",
+      "productContentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+      "overridesEffectKinds": ["shield"],
+      "teacherAcknowledgement": "目標設計是一次觸發陷阱與反射；目前只有自身護盾，不能驗收陷阱。",
+      "scope": "Exclude this teacher pairing and its complete-hero positive, not all other slots. This is not a claim about all later engine versions."
+    }
+  },
+  {
+    "heroId": "godie-emns",
+    "slot": "Q",
+    "teacherSha256": "46196646451f730f9f657cc99c0817312613fb35f9f59b8a8928b9b1879a68c9",
+    "reason": "source-teacher-life-cost-version-conflict",
+    "evidence": {
+      "sourcePath": "ggd-editor-pack-v2/tools/owner_skill_descriptions_20260808.tsv",
+      "sourceRequirement": "與死神暫時交換眼睛來鎖定殺人目標，相對地以自己生命75%作交換，需要搭配[火車輾過]以及[心臟麻痺]才能遙控殺人。",
+      "teacherPath": "catalog/abilities/godie-emns.q.json",
+      "teacherVersion": "sha256:5c22a03d7420a2d225612d7ae76d22674b89a2f1e7d6c9d3e8adfc7db0b4be08",
+      "teacherEffectKinds": ["applyStatus"],
+      "scope": "The older input requires a 75% life cost; this teacher has only curse application and its description omits that requirement. Exclude the mismatched pairing without deciding that the newer adopted design is wrong."
+    }
+  }
+]
