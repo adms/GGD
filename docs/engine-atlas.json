@@ -1,12 +1,12 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "19747904",
+  "capabilityFingerprint": "309a8d1c",
   "counts": {
     "effectKinds": 49,
     "hookEvents": 33,
-    "conditionLeafKinds": 10,
+    "conditionLeafKinds": 11,
     "templateFamilies": 43,
-    "effectFields": 275,
+    "effectFields": 276,
     "stats": 23,
     "combatEnvKeys": 39
   },
@@ -582,6 +582,7 @@
       "form",
       "kind",
       "learned",
+      "nearbyCombat",
       "recentCast",
       "stat",
       "status"

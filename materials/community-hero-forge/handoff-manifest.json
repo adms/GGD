@@ -1,6 +1,6 @@
 {
   "schema": "ggd-shared-authoring-handoff@1",
-  "sourceCommit": "db53e47e456e6230e782222dc5f63dcf9c685ebe",
+  "sourceCommit": "63b81b0754a4d8b14720b93cc182fb4d852f414d",
   "heroCount": 37,
   "slotCount": 222,
   "compilation": "passed",
@@ -11,7 +11,8 @@
   "issues": [
     1132,
     1139,
-    1140
+    1140,
+    1141
   ],
   "modelArchive": "supplements/release-13956d93b",
   "modelArchiveManifestSha256": "abecb2b2cb9d47d981b7688903d22c6627cf7e8b84af9c1cc7c852159390dada",
@@ -31,7 +32,7 @@
     },
     {
       "path": "refinements/37.json",
-      "sha256": "6e583d6a4f9cd7dbb100acb06d90e7d6dcd263088906d04856c4e922dd9e5b9b"
+      "sha256": "88f2f05f40e9025ac2df62c390c7d537298e8439962325e530570d129cae95c8"
     }
   ],
   "files": [
@@ -303,7 +304,7 @@
     {
       "path": "projects/27.hero-project.json",
       "bytes": 54053,
-      "sha256": "f51c75289856437ba50c0f77ebadcfdcab9f315b27c79a3ecb2a9f959e6a6d00"
+      "sha256": "e8cc0beac95cd6247f83202c039f696fd73fb81a83c3905df56d9428b7eb41ce"
     },
     {
       "path": "recipes/27.upload-recipe.json",
@@ -402,8 +403,8 @@
     },
     {
       "path": "projects/37.hero-project.json",
-      "bytes": 44838,
-      "sha256": "2e9797d9e626eaae90000a7f2ed4abfb5f56e282c1c27209ecf27acfcb322007"
+      "bytes": 46455,
+      "sha256": "fa35edc611b51bfe5dbefa3c639f3559984f7a25b3adab84b76c6df8377f044a"
     },
     {
       "path": "recipes/37.upload-recipe.json",
@@ -673,9 +674,14 @@
     }
   ],
   "requiredRuntimeCommits": [
-    "db53e47e456e6230e782222dc5f63dcf9c685ebe"
+    "db53e47e456e6230e782222dc5f63dcf9c685ebe",
+    "63b81b0754a4d8b14720b93cc182fb4d852f414d"
   ],
   "requiredEffectFields": [
-    "chainLightning.retargetOnLost"
+    "chainLightning.retargetOnLost",
+    "dispel.statusTag"
+  ],
+  "requiredConditionLeaves": [
+    "nearbyCombat"
   ]
 }

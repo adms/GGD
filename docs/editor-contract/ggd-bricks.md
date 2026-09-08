@@ -4,16 +4,16 @@
 
 owner 2026-09-05：「[後台編輯器及codex編輯器] 是**堆積木**的角色 **要充分了解有哪些積木**, 而 main 遊戲主程式 是**做出積木**供使用的角色」
 
-capability 指紋：`19747904`
+capability 指紋：`309a8d1c`
 
 ## 一眼看完
 
 | | |
 |---|---:|
-| total | 171 |
+| total | 172 |
 | effect | 49 |
 | hook | 33 |
-| leaf | 10 |
+| leaf | 11 |
 | template | 43 |
 | vfx-prim | 13 |
 | vfx-subtype | 4 |
@@ -23,7 +23,7 @@ capability 指紋：`19747904`
 | gaps | 51 |
 | missingAdminForm | 51 |
 | missingEditorForm | 9 |
-| zeroAdoption | 63 |
+| zeroAdoption | 64 |
 
 ## 兩個編輯器的表單怎麼量的
 
@@ -51,7 +51,7 @@ capability 指紋：`19747904`
 | `dash` | 8 | 1 | 0 | ✅ | ✅ | 8 |
 | `delayed` | 18 | 1 | 0 | ✅ | ✅ | 24 |
 | `devour` | 12 | 1 | 0 | ✅ | ✅ | 3 |
-| `dispel` | 10 | 1 | 0 | ✅ | ✅ | 7 |
+| `dispel` | 11 | 1 | 0 | ✅ | ✅ | 7 |
 | `dot` | 13 | 0 | 0 | ✅ | ✅ | 8 |
 | `evasion` | 6 | 0 | 0 | ✅ | ✅ | 0 |
 | `eventValueConversion` | 12 | 1 | 0 | ✅ | ✅ | 1 |
@@ -123,7 +123,7 @@ capability 指紋：`19747904`
 | `onUltimateCast` | 22 | 0 | 0 | ✅ | ✅ | 0 |
 | `onUltimateHit` | 22 | 0 | 0 | ✅ | ✅ | 0 |
 
-## `leaf`（10）
+## `leaf`（11）
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
@@ -134,6 +134,7 @@ capability 指紋：`19747904`
 | `form` | 2 | 0 | 0 | ✅ | ✅ | 3 |
 | `kind` | 2 | 0 | 0 | ✅ | ✅ | 2 |
 | `learned` | 2 | 0 | 0 | ✅ | ✅ | 4 |
+| `nearbyCombat` | 3 | 0 | 0 | ✅ | ✅ | 0 |
 | `recentCast` | 0 | 0 | 0 | ✅ | ✅ | 0 |
 | `stat` | 0 | 0 | 0 | ✅ | ✅ | 8 |
 | `status` | 0 | 0 | 0 | ✅ | ✅ | 30 |

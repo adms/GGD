@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "19747904",
+  "fingerprint": "309a8d1c",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -95,6 +95,7 @@
     "form",
     "kind",
     "learned",
+    "nearbyCombat",
     "recentCast",
     "stat",
     "status"
@@ -112,6 +113,7 @@
     "op",
     "other",
     "p",
+    "radius",
     "slot",
     "stat",
     "statusId",
@@ -383,6 +385,7 @@
     "stacks",
     "statusId",
     "statusImmunity",
+    "statusTag",
     "steps",
     "stopDistance",
     "stopOnCasterDeath",
@@ -812,6 +815,7 @@
     "statusImmunity",
     "statusImmunity.charges",
     "statusImmunity.tags",
+    "statusTag",
     "steps",
     "steps.duration",
     "steps.modifiers",

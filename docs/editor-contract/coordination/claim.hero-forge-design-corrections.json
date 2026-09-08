@@ -6,7 +6,7 @@
   "to": "main",
   "baseCommit": "6efdd3bfb4df593a26fa2e94d4d65f8e572c3c64",
   "contractFingerprint": "b91a0f59c31289ed",
-  "title": "#1132 局部修正：友軍盾、#1139 換牌與 #1140 電荷／連鎖；37 名完整機制仍未完成",
+  "title": "#1132 局部修正：友軍盾、換牌、電荷及 #1141 吉伊卡哇六槽；37 名整體仍未完成",
   "claims": [
     {
       "kind": "confirmed",
@@ -24,12 +24,12 @@
     },
     {
       "kind": "confirmed",
-      "text": "型別檢查通過；37 名原稿與模型不變，222 槽保留全部 requiredRefinement。28 名仍使用通用普攻被動；布局／線索、希望、庫洛魔法使劍牌普攻／武器及動態牌面等仍未落地。本 PR 不代表完整原設計完成，不關閉 #1132；修正後 UI、目前服務 ZIP 與正式發布尚未驗證。",
+      "text": "型別檢查通過；37 名原稿與模型不變，222 槽保留全部 requiredRefinement。27 名仍使用通用普攻被動；布局／線索、希望、庫洛魔法使劍牌普攻／武器及動態牌面等仍未落地。本 PR 不代表完整原設計完成，不關閉 #1132；修正後 UI、目前服務 ZIP 與正式發布尚未驗證。",
       "repro": {
         "command": "pnpm --filter @ggd/shared typecheck",
         "expectedExit": 0
       },
-      "commit": "db53e47e456e6230e782222dc5f63dcf9c685ebe",
+      "commit": "63b81b0754a4d8b14720b93cc182fb4d852f414d",
       "evidence": [
         "materials/community-hero-forge/refinements/README.md",
         "materials/community-hero-forge/refinements/verification.json",
@@ -155,6 +155,21 @@
       "evidence": [
         "materials/community-hero-forge/refinements/electric-charge-verification.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "#1141：吉伊卡哇勇氣按附近友軍真實交戰與固定間隔累積；短叉刺、撤退耗一層盾、站定點心受傷中斷、0–3 層對應 3–6 次近距叉擊，EX 清除可驅散恐懼並保護友軍。26 項行為測試；三個承重反例均檢出。微調 version 推進作品 revision；27 號僅補正舊 v3 revision，37 號六槽更新。叉模型／動作與畫面及新服務 ZIP／正式發布未驗證，#1132 保持開啟。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts apps/editor/src/forge/conditionEditor.test.ts",
+        "expectedExit": 0
+      },
+      "commit": "63b81b0754a4d8b14720b93cc182fb4d852f414d",
+      "evidence": [
+        "materials/community-hero-forge/refinements/chiikawa-verification.json",
+        "materials/community-hero-forge/refinements/37.json",
+        "packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/apply.ts"
+      ]
     }
   ],
   "unblocks": [],
@@ -165,6 +180,6 @@
     }
   ],
   "asks": [
-    "請 Main 審查 #1140 的共用 chainLightning.retargetOnLost schema／runtime 選项及對應配方、#1139 換牌、友軍盾、radius:0 生成器修正、官方契約與 AI 守則。最新 37 份可共用作品在 materials/community-hero-forge/projects；#1132 保持開啟，完整原設計、修正後畫面／服務 ZIP 及正式發布仍未完成，不據此發布 37 名。"
+    "請 Main 審查 #1141 nearbyCombat 条件與表單、dispel.statusTag 過濾、微調 version 對應作品 revision 與吉伊卡哇六槽；以及 #1140 的共用 chainLightning.retargetOnLost schema／runtime 選项及對應配方、#1139 換牌、友軍盾、radius:0 生成器修正、官方契約與 AI 守則。最新 37 份可共用作品在 materials/community-hero-forge/projects；#1132 保持開啟，完整原設計、修正後畫面／服務 ZIP 及正式發布仍未完成，不據此發布 37 名。"
   ]
 }

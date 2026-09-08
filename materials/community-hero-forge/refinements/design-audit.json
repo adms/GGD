@@ -4,8 +4,8 @@
   "scope": "Original requirements versus compiled authoring; compilation is not design acceptance",
   "heroes": 37,
   "slots": 222,
-  "changedSlots": 11,
-  "passiveOnAttackTemplates": 28,
+  "changedSlots": 16,
+  "passiveOnAttackTemplates": 27,
   "originalDesignAcceptance": "incomplete",
   "published": false,
   "rows": [
@@ -4532,16 +4532,18 @@
       "ownerDescription": "附近友軍交戰時累積勇氣，上限三層；以時間間隔累積，避免多段傷害快速疊滿。",
       "requiredRefinement": "需附近友軍交战依時間累積勇氣，上限三層。",
       "products": [
-        "tpl-on-attack"
+        "tpl-mark-stacks",
+        "tpl-event-passive"
       ],
       "castType": "self",
       "effects": [],
       "hooks": [
-        "onBasicAttack"
+        "onInterval",
+        "onAbilityCast"
       ],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "5 格內其他存活友軍於最近 2 秒造成或承受敵對 HP／護盾命中，最多每 2 秒獲得 1 層勇氣，上限 3；不按命中次數累積。勇氣回合重置。成功施放瞬發 W 時扣 1 層給自身小盾；零層仍可撤退。"
     },
     {
       "hero": "37",
@@ -4552,17 +4554,17 @@
       "ownerDescription": "短距離刺擊，武器判定與外觀一致。",
       "requiredRefinement": "討伐叉造型與近身命中對齊待製。",
       "products": [
-        "tpl-single-strike"
+        "tpl-effect-sequence"
       ],
-      "castType": "targeted",
+      "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "damage"
+        "damageLine"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "前方長 2、寬 0.6 的短距叉刺，每名敵人最多一筆小級物理傷害；後方、側邊與範圍外可避開。討伐叉模型、專用刺擊動作與判定對齊仍待視覺驗收。"
     },
     {
       "hero": "37",
@@ -4573,17 +4575,17 @@
       "ownerDescription": "朝指定方向短距離逃跑，消耗一層勇氣可取得小護盾。",
       "requiredRefinement": "需無傷害撤退並可扣勇氣換小盾；目前衝撞模板不等價。",
       "products": [
-        "tpl-charge-push"
+        "tpl-effect-sequence"
       ],
-      "castType": "ground",
+      "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "leap"
+        "dash"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "沿輸入方向移動最多 3 格，受牆與場界阻擋，不造成衝撞傷害或擊退。勇氣扣除與小盾由被動的成功施法 W hook 執行一次；零層可施放。"
     },
     {
       "hero": "37",
@@ -4594,17 +4596,17 @@
       "ownerDescription": "短暫停留恢復少量生命，受擊中斷。",
       "requiredRefinement": "需停留吃點心及受擊中斷。",
       "products": [
-        "tpl-buff-self"
+        "tpl-effect-sequence"
       ],
       "castType": "self",
+      "targetsEnemies": true,
       "effects": [
-        "applyBuff",
         "heal"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "原地停留 1 秒後恢復少量生命；吟唱期間 HP 受傷取消，護盾完全吸收不取消（沿用 GGD interruptOn=damage）；不先回血。点心道具與進食動作仍待視覺驗收。"
     },
     {
       "hero": "37",
@@ -4615,18 +4617,17 @@
       "ownerDescription": "消耗勇氣發動數次叉擊，層數決定有限的強化幅度。",
       "requiredRefinement": "固定三段；需勇氣消耗与有限強化幅度。",
       "products": [
-        "tpl-lock-combo"
+        "tpl-effect-sequence"
       ],
-      "castType": "targeted",
+      "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "dot",
-        "leap"
+        "consumeStatus"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "吟唱後消耗當時全部 0–3 層勇氣，進行 3–6 次短距叉擊，每 0.18 秒一擊，逐擊用當下位置與面向重新判定；離開範圍可躲避，施法者死亡／分區結算即停止。沒有遠距追蹤傷害或無限強化。叉擊武器與專用動作仍待視覺驗收。"
     },
     {
       "hero": "37",
@@ -4647,7 +4648,7 @@
       "hooks": [],
       "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": "以自身為中心給附近存活友軍及自己護盾與三秒抗恐懼；敵方與範圍外不受益。"
+      "refinementNote": "以自身為中心給附近存活友軍及自己護盾與三秒抗恐懼，並清除可驅散的恐懼；敵方與範圍外不受益，不移除暈眩、緩速或其他負面狀態。遵守 GGD 淨化總開關、數量上限與不可驅散規則。"
     }
   ]
 }
