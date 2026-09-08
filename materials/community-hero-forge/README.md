@@ -2,6 +2,8 @@
 
 此目錄把原先位於 Git 工作樹外的計畫、交接、實際 ZIP、模型／動作／特效／音效、圖片、來源版本庫與驗收證據保存在同一 Git 分支。`payload.tar.gz.part*` 是實際資料，**不是 Git LFS 指標或本機路徑捷徑**；`manifest.json` 列出每份還原檔案及每個分段的大小與 SHA-256。封裝內重複資料只保存一次，還原後各檔案彼此獨立，不會因硬連結而連帶修改其他英雄。
 
+封存內的計畫與交接文件保留當時內容；目前分工與後續整合以 [整合說明](../../docs/_reports/community-hero-forge/merge-integration/README.md) 及 [#1115](https://github.com/adms/GGD/issues/1115) 為準。Main 接手核心／平台衝突整合，原分段與雜湊不因交接更新而改動。
+
 ## 讀取與還原
 
 `documents/` 保存四份原文件的可讀副本，`recipes/` 保存 37 名原配方。完整資料使用標準 gzip／tar，分段不超過 32 MiB；需要 Python 3.10 以上，無須其他套件或外部素材庫即可還原本批資料。

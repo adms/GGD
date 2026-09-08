@@ -372,7 +372,7 @@
     }
   ],
   "asks": [
-    "Owner 已授權將合併整合文件 commit 回主工作流：請 Main 依 docs/_reports/community-hero-forge/merge-integration/README.md 的 M01–M11 接手戰鬥核心與平台整合；conflicts.json 保存 61 個衝突的 pinned 診斷，接手時重新固定雙方 SHA。主工作流負責推送本次文件、依 issue-draft.md 查重後建立或更新整合票，回填 PR #1112 與本 packet。不得整檔保留單側而遺失護盾／連段／施法識別，並核對嚴格 UGC 解碼、新舊對局版本與正式英雄內容池的交會。",
+    "Main 整合票為 https://github.com/adms/GGD/issues/1115，文件提交 e916757d2b3902d66328ac0738636b64bcd1214c 已推送至 PR #1112，GitHub 五份文件與材料子樹核對通過。請 Main 依 docs/_reports/community-hero-forge/merge-integration/README.md 的 M01–M11 接手戰鬥核心與平台整合；conflicts.json 保存 61 個衝突的 pinned 診斷，遠端 Main 已前進至 631dd1048f9b5150d361c180692125929f0be7c0，接手重新固定雙方 SHA。不得整檔保留單側而遺失護盾／連段／施法識別，並核對嚴格 UGC 解碼、新舊對局版本與正式英雄內容池的交會。文件、素材推送及開票完成不等於整合或正式部署完成。",
     "本批目標採 docs/_reports/community-hero-forge/editor-publication/README.md 的「本批集中執行目標」：Main 先整合來源並重生成產物，再於固定版本同批跑必要檢查、用同一版服務串投稿到正常對局／回放及未上架英雄回復，最後審查合併既有 PR。37 名英雄／222 槽核准後進入一般正式名單，模板、生成器、英雄與模型獨立版本回復不影響其他英雄；失敗只重跑受影響範圍，沿用已核對且未受影響的證據。本次是文件交接，不代表整合、開票或正式上線已完成。",
     "合併後以部署中的 Main 服務版本重新取得建包目標，重建 37 份 ZIP 並走正式投稿、審查與發布。127.0.0.1 的 37 份核准版本是隔離驗收，不能直接當作正式站已部署；風格替代素材與原設計差異保留在逐槽審查說明。",
     "本批以 37 名英雄實際工作流及獨立版本管理為交付範圍，不再擴充模板或追加桌面跨平台安裝驗收。已完成的桌面保存修正保留；簽署安裝、更新降級、Windows 實機及歷史 Python 完整環境重建仍未驗證，不宣稱完成。A17 Pro 30 fps 按估算處理，不要求實機。",

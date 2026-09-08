@@ -1,12 +1,12 @@
 [重要][fix] PR #1112：整合戰鬥結算、平台版本與正式英雄發布流程
 
-> Owner 明確要求的整合票草稿，已授權 commit 回主工作流，尚未發布。由主工作流推送文件、查重後決定建立新票或更新既有票；不加 [自動]。先前 GitHub API 連線失敗，查重仍待完成，不能當作無重複票。
+> 已發布為 [#1115](https://github.com/adms/GGD/issues/1115)。以下為建立時票文；後續狀態以 GitHub 為準。
 
 ## Objective
 
-[重要][fix] 由 Main 整合 PR #1112，保留 Main 現有戰鬥／平台功能與社群完整英雄版本流程，讓 37 名英雄、222 槽能在同一相容服務完成 Editor 投稿、管理員核准、一般正式選角與獨立回復。解衝突不是正式上線完成；正式部署後還需依當時目標重建 ZIP 並投稿／審核發布。
+PR #1112 目前 GitHub mergeable 為 CONFLICTING，阻擋 37 名英雄進入相容的正式服務。由 Main 整合 PR #1112，保留 Main 現有戰鬥／平台功能與社群完整英雄版本流程，讓 37 名英雄、222 槽能在同一相容服務完成 Editor 投稿、管理員核准、一般正式選角與獨立回復。解衝突不是正式上線完成；正式部署後還需依當時目標重建 ZIP 並投稿／審核發布。
 
-完整方案：`docs/_reports/community-hero-forge/merge-integration/README.md`；逐路徑證據：`docs/_reports/community-hero-forge/merge-integration/conflicts.json`。PR：https://github.com/adms/GGD/pull/1112 。待文件提交後將本段補成固定 commit permalink。
+完整方案：[M01–M11 與 G1–G7](https://github.com/adms/GGD/blob/e916757d2b3902d66328ac0738636b64bcd1214c/docs/_reports/community-hero-forge/merge-integration/README.md)；[逐路徑衝突證據](https://github.com/adms/GGD/blob/e916757d2b3902d66328ac0738636b64bcd1214c/docs/_reports/community-hero-forge/merge-integration/conflicts.json)。兩者均已提交並推送至 [PR #1112](https://github.com/adms/GGD/pull/1112)。
 
 ## Scope
 
@@ -39,7 +39,7 @@
 
 ## Acceptance criteria
 
-- [ ] 文件與本票提交後更新 PR／coordination packet，將舊目標的整合負責者修正為 Main，附可重取文件 commit。
+- [ ] 本票連回 PR／coordination packet；整合文件已於 e916757d2 推送，既有目標及 packet 已改為 Main 整合。
 - [ ] Main 新護盾／連段固定／form／變身出身與社群能量／生命支付／facing 同時正確；雙施法入口均覆蓋。
 - [ ] 阿薩謝爾 THE END OF SON 的同來源 R→EX 消耗三層及自己的詛咒、敵方 AD/AP +10% 2 秒且不執行普通 EX 傷害；異來源、淨化／過期與無資源反例通過。
 - [ ] 合併後實際 ugc 配置可解碼；100／200／50、認證撤銷、並發及重試語意正確；舊入口不能覆寫他人／完整英雄。
@@ -62,10 +62,11 @@
 
 ## Dependencies
 
-- PR #1112；本文件 pinned Main `4e11f1b0253c106e08a0e873e289f8822e32681d`、社群程式評估 `4e682a7e865c8c239a741ca20a2ea47299a1fffe`、文件基準 `9acf806c5658c5ec6515690bf811e0c660f2b213`，接手時刷新。
-- Main 程式註記 #986、#991、#992、#993、#1023、#1024、#1025、#1064、#1066、#1068、#1070、#1086、#1088、#1091、#1103：本票整合已實作行為，不重做其原功能；各票狀態需開票前查實。
-- 先搜尋 open／closed／進行中及第二組症狀詞；有同範圍票則更新／按守則重開。GitHub 連線失敗的此次查詢未算完成。
-- 主工作已另行建立材料提交 `aa24208cc72a362b09281e686db58f97895db41f`；開票前核對遠端可重取性與原工作的摘要／分卷還原證據。本次文件沒有重做大型歸檔驗證。
+- PR #1112；本文件 pinned Main `4e11f1b0253c106e08a0e873e289f8822e32681d`（2026-09-08 遠端已前進至 `631dd1048f9b5150d361c180692125929f0be7c0`，61 僅是 pinned 診斷，接手重算）、社群程式評估 `4e682a7e865c8c239a741ca20a2ea47299a1fffe`、文件基準 `9acf806c5658c5ec6515690bf811e0c660f2b213`，接手時刷新。
+- 2026-09-08 遠端查核：#991／#993／#1024 為 OPEN，其餘引用 #986、#992、#1023、#1025、#1064、#1066、#1068、#1070、#1086、#1088、#1091、#1103 為 CLOSED。狀態不是覆蓋全部驗收的證據：#992／#1023 的最新進度仍列 Codex 剩餘範圍。
+- 與 #991／#1024 的差別：它們是 UGC／英雄包原功能；本票只承接已存在兩條實作在 PR #1112 的整合、相容性與集中發布驗收，不另重做功能。與已關 #1025 的差別：保留其熱更新與舊房固定版本，按新的完整英雄規則讓核准英雄進普通正式房；尚未證明既有實作回歸，故不重開。#1086／#1091 的連段及護盾同樣是合併必保留的已落地功能。
+- 已查 open／closed 並讀最新進度：`1112`／`community-hero-forge` 全文查詢無命中；ticket-similar 標題查詢 `合併 衝突` 無命中，全文廣搜另命中無關歷史票與 #838／#1106 等編輯器票；第二組 `CastResolveSystem`／`contentoverlay` 命中既有機制或 UGC 票，逐張核對後未找到承接此 PR 跨分支整合的票。未將早先連線失敗算成查重成功。
+- [材料提交 aa24208cc](https://github.com/adms/GGD/blob/aa24208cc72a362b09281e686db58f97895db41f/materials/community-hero-forge/README.md) 已推送並核對 GitHub tree／blob：36,115 檔、34 分段、37 ZIP／222 槽與 146 份實際素材。還原與套件契約證據在該目錄；本輪文件交接沿用該材料驗證，不重跑大型還原。
 
 ## Non-goals
 
@@ -73,6 +74,6 @@
 
 ## Known risks
 
-61 個文字衝突之外已確認 strict decoder／新配置不相容；房間 context 與熱更新時序是語意整合風險。全套測試未在整合版本跑過，不能宣稱產品已回歸或已修復。既有對局快照異常若再現且影響遊玩才擋住 G5，未重現記錄限制而非宣稱根因已修。
+目前 coord:check 在 origin/main=4e11f1b0 時有 8 份歷史 packet 指紋不符，本次社群 packet 通過；不可批次重寫歷史指紋或宣稱整體通過。61 個文字衝突之外已確認 strict decoder／新配置不相容；房間 context 與熱更新時序是語意整合風險。全套測試未在整合版本跑過，不能宣稱產品已回歸或已修復。既有對局快照異常若再現且影響遊玩才擋住 G5，未重現記錄限制而非宣稱根因已修。
 
 本次牽涉完整服務建置，不能只 content-only 部署。回復需保留舊相容服務、資料備份、不可變套件與素材；舊對局繼續固定版本，新存儲格式不可未經相容驗證交給舊 binary。保留失败與歷史證據，不刪資料強行 rollback。

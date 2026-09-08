@@ -1,6 +1,6 @@
 # PR #1112：戰鬥核心、平台與社群英雄的合併整合說明
 
-**狀態：文件已提供 Owner 審閱，Owner 已授權 commit 回主工作流。Main 負責依本文件整合、驗證與合併；推送、查重開票與 PR 更新由主工作流承接。尚未解衝突、開票或部署。**
+**狀態：整合文件已於 `e916757d2` 推送到 [PR #1112](https://github.com/adms/GGD/pull/1112)，完成查重並建立 [Main 整合票 #1115](https://github.com/adms/GGD/issues/1115)。Main 接手 M01–M11 整合、G1–G7 驗證與合併；衝突整合及正式部署仍未完成。**
 
 本次目標仍是用 37 名英雄、222 槽，驗證「Editor 建立／微調 → 投稿 → 後台審查 → 正式英雄名單 → 獨立版本回復」。本文件處理兩條分支交會的行為，不擴充新模板或重做既有美術。通過合併測試也不等於正式站已發布。
 
@@ -234,13 +234,22 @@ Platform 在 `apps/platform` 目錄對 `./internal/submissions`、`./internal/co
 - [x] 文件已提供 Owner 審閱，並取得 commit 回主工作流的授權。
 - [x] 重新核對本文件以外的工作樹變動；本次提交範圍固定為五份交接文件，舊目標／packet 已更新 Main 分工。
 - [x] 文件、票稿、衝突清單及目標／packet 一同納入本文件所在提交；提交識別以 Git 為準。
-- [ ] 主工作流推送此提交，附遠端可重取 commit。
-- [ ] 查重完成後建立或更新整合票，回填票號、PR、packet。
+- [x] 主工作流推送文件提交 [e916757d2](https://github.com/adms/GGD/commit/e916757d2b3902d66328ac0738636b64bcd1214c)；五份文件與完整材料子樹均核對 GitHub 物件，見 [remote-proof.json](remote-proof.json)。
+- [x] 完成查重，建立 [#1115](https://github.com/adms/GGD/issues/1115)，回填本文件、PR 與 packet；[dedupe-search.json](dedupe-search.json) 保存 open／closed 查詢命中。
 - [ ] Main 固定新的兩側 SHA，完成 M01–M11 與自動合併區交會檢查。
 - [ ] G1–G7 收據連到同一個整合提交，必要失敗解決後審查合併。
 - [ ] 正式部署後重建及發布 37 名，另附正式收據才標示正式開放完成。
 
 文件驗證：61 路徑與附錄一致、引用路徑／Git 物件、Markdown、歷史 claims 保留及票稿 lint 均通過；本次社群 packet 通過。整體 `pnpm coord:check` 為 exit 1：10 份中 8 份舊 packet 的指紋 ede2a824444ea458 與目前 60eac8487db1f780 不符。這 8 份 packet 與契約檔在本次均未修改；主工作流需核對 origin/main 的歷史 packet 辨識與契約基準，不可直接批次重寫舊指紋。受影響 key：brick-request.solid-beam、claim.codex-lane-visual-advisory-and-brick-ids、claim.export-champion-package、claim.main-night-20260905-what-is-already-done、claim.model-fx-emitter-remaining-four-fields、claim.vfx-subtype-picker、owner-decision.20260906-main-tickets-codex-implements、question.effect-graph-bridge。沒有因單一 packet 通過而宣稱整體 coord 通過。產品測試、遠端查重、實際整合與正式上線均未在本次文件提交中執行。
+
+## 主工作流接收紀錄（2026-09-08）
+
+前述「未查遠端／未開票」是文件準備階段的歷史紀錄；本節補上實際接收結果，不更改 pinned 衝突證據。
+
+- 已從 GitHub 讀回 `e916757d2`，核對五份交接文件 blob 與材料子樹 `cb7f2b69acb766211e4bcb6a34d2c631bc6872f4`；36,115 檔／34 分段仍可由 [材料入口](../../../../materials/community-hero-forge/README.md) 還原。這次沿用已完成的材料還原及套件契約驗證，沒有重跑大型還原。
+- 查詢時遠端 Main 已前進至 `631dd1048f9b5150d361c180692125929f0be7c0`。因此 61 路徑仍只是前述 `4e11f1b0` 的診斷；Main 接手刷新 SHA，不能把此數量當成最新整合結果。
+- `1112`／`community-hero-forge` 查詢無既有票；標題查詢「合併 衝突」無命中，全文廣搜及 `CastResolveSystem`／`contentoverlay` 命中既有功能票。已讀相關進度；#991／#993／#1024 為 OPEN，其餘原票稿引用為 CLOSED，狀態不代表所有跨分支驗收完成。#838 是特效工坊總票、#1106 是報表分欄；本次不擴張到兩者。#1115 只承接本 PR 整合，與原功能票的差異詳列票文。
+- 本次文件 lint、連結與變更空白檢查通過，歷史 claims／Owner 引言未改，社群 packet 通過（[coord 原始 log](coord-check.log)）。`pnpm coord:check` 在本機 `origin/main=4e11f1b0` 仍為 8 份歷史指紋失敗，沒有重寫歷史 packet 或放寬閘；整合時處理。產品程式自 `4e682a7e` 未變，本批遵循集中驗收計畫，只驗文件及交接，不重跑產品全套，也不宣稱合併檢查通過。
 
 ## 附錄：61 個衝突的逐檔去向
 
