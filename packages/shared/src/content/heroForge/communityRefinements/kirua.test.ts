@@ -76,7 +76,7 @@ describe("GH#1132 Kirua authored six slots", () => {
     if (mode === "fumble") r.effects([{ kind: "applyStatus", statusId: "test:miss" as StatusId, duration: 5, missChance: 1 }]);
     if (mode === "evade") r.effects([{ kind: "applyBuff", duration: 5, modifiers: [{ stat: Stat.Evasion, op: ModOp.Override, value: 1 }] }], r.enemy);
     const nav = r.world.nav.get(r.caster)!;
-    nav.order = { kind: "attackTarget", target: r.enemy }; nav.attackTarget = r.enemy;
+    nav.order = { kind: "attackTarget", entity: r.enemy }; nav.attackTarget = r.enemy;
     r.step(1); expect(r.world.abilities.get(r.caster)!.basicAttackCdTicks).toBeGreaterThan(0);
     const busy = `${r.prefix}.busy` as StatusId;
     expect(hasStatus(r.world, r.caster, busy)).toBe(true);

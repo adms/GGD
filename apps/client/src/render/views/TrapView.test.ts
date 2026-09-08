@@ -23,7 +23,7 @@ describe("single-use trap presentation", () => {
   });
   it("registry removes consumed traps immediately and reuses them with fresh state", () => {
     const reg = new EntityViewRegistry(scene, new AssetManager(scene));
-    const sync = (entities: EntityViewState[]) => reg.sync({ entities, nowMs: 0, poseFor: e => ({ x: e.x, z: e.z, fx: e.fx, fz: e.fz }), content: {} } as Parameters<EntityViewRegistry["sync"]>[0]);
+    const sync = (entities: EntityViewState[]) => reg.sync({ entities, nowMs: 0, dtMs: 33.333, poseFor: e => ({ x: e.x, z: e.z, fx: e.fx, fz: e.fz }), content: {} } as Parameters<EntityViewRegistry["sync"]>[0]);
     sync([entity(10)]); expect(reg.getChampionView(10)).toBeUndefined(); expect(hasOverheadBar(KIND_TRAP)).toBe(false); expect(KIND_TRAP).toBe(ENTITY_KIND.TRAP);
     const root = scene.transformNodes.find(n => n.name === "trap")!; const meshes = scene.meshes.length;
     sync([]); expect(root.isEnabled()).toBe(false);
