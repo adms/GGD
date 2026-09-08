@@ -1,0 +1,1174 @@
+{
+  "schema": "ggd-hero-finetune-s3-index@1",
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "bucket": "ggd-390630837668-ap-east-2-an",
+  "prefix": "hero-finetune-research/sha256/",
+  "sourceCommit": "69c2b3c0345d5a16b25013abe903ff1f79f9ec9b",
+  "productionQualified": false,
+  "bundles": [
+    {
+      "path": "admission-ledger/bundle/manifest.json",
+      "sha256": "842c28a14ba1ea41f27e520f06a638ce24e679d6ddcdd916753cf6438df57e9d"
+    },
+    {
+      "path": "bundle/manifest.json",
+      "sha256": "9fb8709e04673d61a52bb46b387b4bf1752c5f1d046e6dc36a039efa425258ab"
+    },
+    {
+      "path": "field-composition/bundle/manifest.json",
+      "sha256": "3dd5910fef90df51254c775def67ef3df0cdb0b56de37ec1ec5cb189638a70e9"
+    },
+    {
+      "path": "fixed-data-72/bundle/manifest.json",
+      "sha256": "828d900a75dfeddf294da2364f15a861ada0f341b3d2fd0dcaf6e4cb03412d12"
+    },
+    {
+      "path": "leesin-source/bundle/manifest.json",
+      "sha256": "1cb7a1accc54afc7b2aa1c62f62a0c4c7256e3e9ee9bef4ad85aeb52ae325ce9"
+    },
+    {
+      "path": "selected-point-fields/bundle/manifest.json",
+      "sha256": "dabd56573486ca3f1aa4529713693638f43857b5b9bc951e40900bc71d06f232"
+    },
+    {
+      "path": "serialization-control/bundle/manifest.json",
+      "sha256": "286b05c431a98371e415c96ab31ce09acb84441e67fec1a739e359230d5051c1"
+    },
+    {
+      "path": "source-admission/bundle/manifest.json",
+      "sha256": "6e719b9529859281a133668c813c4b728a99c243ac5e1c521a9e76ccef713fd8"
+    }
+  ],
+  "objects": [
+    {
+      "key": "hero-finetune-research/sha256/053e0935ddcfdc39fd8734116db8b1ade7f1c879b4599e3fc1f061ea19849fcb.zip",
+      "sha256": "053e0935ddcfdc39fd8734116db8b1ade7f1c879b4599e3fc1f061ea19849fcb",
+      "bytes": 34436,
+      "paths": [
+        "fixed-data-72/bundle/archives/11-frozen-facts-72-v2-assessment.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/05d02e0c8bb9912e776303398e12939520d68d710c542c72059404e3be1ae475.zip",
+      "sha256": "05d02e0c8bb9912e776303398e12939520d68d710c542c72059404e3be1ae475",
+      "bytes": 2752,
+      "paths": [
+        "fixed-data-72/bundle/archives/07-frozen-facts-72-v1.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/07607469fc22758e3db15e82b13e9a7e97ebcaf5e2e3c0dfc126b52d482af806.zip",
+      "sha256": "07607469fc22758e3db15e82b13e9a7e97ebcaf5e2e3c0dfc126b52d482af806",
+      "bytes": 3639,
+      "paths": [
+        "field-composition/bundle/archives/00-audit-field-composition-v1.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/08564fb18e3d342f4148c79bf6c3aff552a9b587c6d23de573c4deef63750016.zip",
+      "sha256": "08564fb18e3d342f4148c79bf6c3aff552a9b587c6d23de573c4deef63750016",
+      "bytes": 3853,
+      "paths": [
+        "serialization-control/bundle/archives/02-serialization_boundary_control.py.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/08d6f10e89e526bd033d4eaad324e956c8892736dcc91a23f97435cfea7acaec.zip",
+      "sha256": "08d6f10e89e526bd033d4eaad324e956c8892736dcc91a23f97435cfea7acaec",
+      "bytes": 1113,
+      "paths": [
+        "serialization-control/bundle/archives/03-test_serialization_boundary_control.py.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/0afaab64445432719302f03df1f6fed1f99c3a055335a8b24c38583601995d9f.zip",
+      "sha256": "0afaab64445432719302f03df1f6fed1f99c3a055335a8b24c38583601995d9f",
+      "bytes": 848,
+      "paths": [
+        "serialization-control/bundle/archives/09-serialization-control-tests-v1.log.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/0e4ac61c0f3d21daf96b0a60511a7c832051364fba16ad281e57709d3ac39146.zip",
+      "sha256": "0e4ac61c0f3d21daf96b0a60511a7c832051364fba16ad281e57709d3ac39146",
+      "bytes": 4986987,
+      "paths": [
+        "bundle/archives/35-hero-forge-12b-restart-20260908.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/104c3c7e704c9d6692d7474a5709ec0b20106455d099e93f77e6f0b508102962.zip",
+      "sha256": "104c3c7e704c9d6692d7474a5709ec0b20106455d099e93f77e6f0b508102962",
+      "bytes": 2803870,
+      "paths": [
+        "bundle/archives/25-forge-mechanism-priority-r3-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/108396e1ee835f65692f0c03ecae6caac8cea4cd33478cdf4f6e5d983a58926f.safetensors",
+      "sha256": "108396e1ee835f65692f0c03ecae6caac8cea4cd33478cdf4f6e5d983a58926f",
+      "bytes": 385530,
+      "paths": [
+        "bundle/models/108396e1ee835f65692f0c03ecae6caac8cea4cd33478cdf4f6e5d983a58926f.safetensors"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/11ba1a317aa3c30f3837db56c6cfb7bd44275d488a58638649b9ca2fe5946d39.zip",
+      "sha256": "11ba1a317aa3c30f3837db56c6cfb7bd44275d488a58638649b9ca2fe5946d39",
+      "bytes": 1396352,
+      "paths": [
+        "bundle/archives/23-forge-low-lr-r7-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/121ad55e2c5b3606fdce9da912ef08d0a4d58c961051ebc4aabd862581e29aa7.zip",
+      "sha256": "121ad55e2c5b3606fdce9da912ef08d0a4d58c961051ebc4aabd862581e29aa7",
+      "bytes": 584,
+      "paths": [
+        "source-admission/bundle/archives/11-source-admission-state-v1.json.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/134644a983f175ee61f8891256740b33c485c92de99b480c68b0791e6705f56b.zip",
+      "sha256": "134644a983f175ee61f8891256740b33c485c92de99b480c68b0791e6705f56b",
+      "bytes": 87449,
+      "paths": [
+        "leesin-source/bundle/archives/10-leesin-plan-audit-v2.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/1404590a97a60a4cf98ed8ad49b8d77ec3c7fbeea1575973f266df61a2057fcf.zip",
+      "sha256": "1404590a97a60a4cf98ed8ad49b8d77ec3c7fbeea1575973f266df61a2057fcf",
+      "bytes": 2279,
+      "paths": [
+        "source-admission/bundle/archives/06-audit-missfortune-plan-v3.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/1409ccaabe3ff83157b595cba7c933a2755c4c9af8912817a16a86b60935ae3e.safetensors",
+      "sha256": "1409ccaabe3ff83157b595cba7c933a2755c4c9af8912817a16a86b60935ae3e",
+      "bytes": 32480560,
+      "paths": [
+        "bundle/models/1409ccaabe3ff83157b595cba7c933a2755c4c9af8912817a16a86b60935ae3e.safetensors"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/155861f42abcc3c5af32c4687cc67ca29cc42676df5bc056efd17309f6ba470a.zip",
+      "sha256": "155861f42abcc3c5af32c4687cc67ca29cc42676df5bc056efd17309f6ba470a",
+      "bytes": 1394677,
+      "paths": [
+        "bundle/archives/21-forge-joint-source-stack-r6-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/17f3998f20d4f197cd94ed24388eec90c5a13e97093186421e94555cb50c4ed0.zip",
+      "sha256": "17f3998f20d4f197cd94ed24388eec90c5a13e97093186421e94555cb50c4ed0",
+      "bytes": 2219,
+      "paths": [
+        "source-admission/bundle/archives/00-missfortune-plan-v1.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/19ce1b704894ee2f80a00379c8b66fd2fed02235f0a4f775b0e66ecf240626e2.zip",
+      "sha256": "19ce1b704894ee2f80a00379c8b66fd2fed02235f0a4f775b0e66ecf240626e2",
+      "bytes": 7847,
+      "paths": [
+        "serialization-control/bundle/archives/10-ir5-serialization-audit-v1.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/1b08e813734e70d46ad85bbd50e2a878628a3bfb2d5962fa82ff1e0e604c7803.zip",
+      "sha256": "1b08e813734e70d46ad85bbd50e2a878628a3bfb2d5962fa82ff1e0e604c7803",
+      "bytes": 84236,
+      "paths": [
+        "selected-point-fields/bundle/archives/03-selected-point-fields-audit-v2.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/1b8d55f2c39486910c8e4e47ea8c4fd1ef36cb721952d4321eda24d10c0652e3.zip",
+      "sha256": "1b8d55f2c39486910c8e4e47ea8c4fd1ef36cb721952d4321eda24d10c0652e3",
+      "bytes": 5104,
+      "paths": [
+        "fixed-data-72/bundle/archives/00-run-frozen-facts-finetune.py.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/1ebc1bb4cee11b2f627062029e25431ed969ca451be2f056c63ae24bfa954993.zip",
+      "sha256": "1ebc1bb4cee11b2f627062029e25431ed969ca451be2f056c63ae24bfa954993",
+      "bytes": 19619,
+      "paths": [
+        "bundle/archives/17-forge-current-main-candidate-v4-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/2124044cabd17d049f2dca2e70fb678f9a7e993b4ba22c2beed7d511a2c566ff.zip",
+      "sha256": "2124044cabd17d049f2dca2e70fb678f9a7e993b4ba22c2beed7d511a2c566ff",
+      "bytes": 681411,
+      "paths": [
+        "bundle/archives/01-community37-inference-full-20260907-v1.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/2465836b6d5ceff90cee1147c8563822fc246365854aa2ab878275a3d4db9b4f.zip",
+      "sha256": "2465836b6d5ceff90cee1147c8563822fc246365854aa2ab878275a3d4db9b4f",
+      "bytes": 97232,
+      "paths": [
+        "fixed-data-72/bundle/archives/10-frozen-facts-72-v2-pilot.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/25a571d9cbb87b2da97c1446789e24a17d2d82de3465089237f5f0a52c09fa51.zip",
+      "sha256": "25a571d9cbb87b2da97c1446789e24a17d2d82de3465089237f5f0a52c09fa51",
+      "bytes": 2384,
+      "paths": [
+        "leesin-source/bundle/archives/04-audit-leesin-plan-v1.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/2627e2a3bfcb1c9df01003ed0722ef7fd3464831eca155efe3715eab718125bf.safetensors",
+      "sha256": "2627e2a3bfcb1c9df01003ed0722ef7fd3464831eca155efe3715eab718125bf",
+      "bytes": 1278949,
+      "paths": [
+        "bundle/models/2627e2a3bfcb1c9df01003ed0722ef7fd3464831eca155efe3715eab718125bf.safetensors"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/27bac2e9122f228590b5ba3b7b45e945fa6bee1dac3c7882b97365573af99065.safetensors",
+      "sha256": "27bac2e9122f228590b5ba3b7b45e945fa6bee1dac3c7882b97365573af99065",
+      "bytes": 1278949,
+      "paths": [
+        "bundle/models/27bac2e9122f228590b5ba3b7b45e945fa6bee1dac3c7882b97365573af99065.safetensors"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/28b5ce6dd54861814e8ec8a7eeabb7690a0d62a0a169ce165e7f32e070245bfe.zip",
+      "sha256": "28b5ce6dd54861814e8ec8a7eeabb7690a0d62a0a169ce165e7f32e070245bfe",
+      "bytes": 2890218,
+      "paths": [
+        "leesin-source/leesin-reviewed-offline.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/28bc5a3581aa87364fd63f34d67437811fe487b6a4d92df15e481341a167911a.zip",
+      "sha256": "28bc5a3581aa87364fd63f34d67437811fe487b6a4d92df15e481341a167911a",
+      "bytes": 1282,
+      "paths": [
+        "bundle/archives/06-forge-cache-check-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/2d651fbb863cda8d48faa161fd88e7b72fcc9e298a7fee7577f9ec1b42a86f56.zip",
+      "sha256": "2d651fbb863cda8d48faa161fd88e7b72fcc9e298a7fee7577f9ec1b42a86f56",
+      "bytes": 535,
+      "paths": [
+        "bundle/archives/34-forge-workflow-finalize-20260906.json.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/2e98dde531a02b326415ab41669c0d40853052ba4c7e380ef36f464755b834a9.zip",
+      "sha256": "2e98dde531a02b326415ab41669c0d40853052ba4c7e380ef36f464755b834a9",
+      "bytes": 256854,
+      "paths": [
+        "bundle/archives/30-forge-source-policy-probe-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/32622452a958a79c1faf599ed7d415a513acda1e01641c11a040c2e3d78cd979.safetensors",
+      "sha256": "32622452a958a79c1faf599ed7d415a513acda1e01641c11a040c2e3d78cd979",
+      "bytes": 1278949,
+      "paths": [
+        "serialization-control/bundle/models/32622452a958a79c1faf599ed7d415a513acda1e01641c11a040c2e3d78cd979.safetensors"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/3317dddbedf617f536fe45549303ba29dddb72f21f2a158ba8a606e01299717e.zip",
+      "sha256": "3317dddbedf617f536fe45549303ba29dddb72f21f2a158ba8a606e01299717e",
+      "bytes": 2263,
+      "paths": [
+        "source-admission/bundle/archives/05-audit-missfortune-plan-v2.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/34361657b68e3dcb0d2c2270bfa4531a79acb5aea1171391836cf501a753bc21.zip",
+      "sha256": "34361657b68e3dcb0d2c2270bfa4531a79acb5aea1171391836cf501a753bc21",
+      "bytes": 677989,
+      "paths": [
+        "bundle/archives/05-forge-broad-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/36003069bf69a67e47db9c8a22671ac4953846bb7eca94b4ff69c03192bd4ee2.zip",
+      "sha256": "36003069bf69a67e47db9c8a22671ac4953846bb7eca94b4ff69c03192bd4ee2",
+      "bytes": 461572,
+      "paths": [
+        "serialization-control/bundle/archives/12-ir5-serialization-lora-v1.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/36e2b17f2f6b0ecde17b28388ebed74d28b9745ad71d68a0a883233314d01a05.safetensors",
+      "sha256": "36e2b17f2f6b0ecde17b28388ebed74d28b9745ad71d68a0a883233314d01a05",
+      "bytes": 1278949,
+      "paths": [
+        "fixed-data-72/bundle/models/36e2b17f2f6b0ecde17b28388ebed74d28b9745ad71d68a0a883233314d01a05.safetensors"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/392e522753fd0612d43d8f4ffaea315dd1dc990b276b1cd5d69ce91e28dec5db.zip",
+      "sha256": "392e522753fd0612d43d8f4ffaea315dd1dc990b276b1cd5d69ce91e28dec5db",
+      "bytes": 11665,
+      "paths": [
+        "admission-ledger/bundle/archives/01-source-additions-audit-v1.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/3dfd716e088103dbf865ae18bd2a0c42d8147af6949718f64ba817ceeb2b907f.zip",
+      "sha256": "3dfd716e088103dbf865ae18bd2a0c42d8147af6949718f64ba817ceeb2b907f",
+      "bytes": 707954,
+      "paths": [
+        "bundle/archives/00-community37-corrected-dataset-20260907-v1.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/3e342c4528d67c14ecf64b10ec372224ddbe722ad35c161c54569d30392c9b67.safetensors",
+      "sha256": "3e342c4528d67c14ecf64b10ec372224ddbe722ad35c161c54569d30392c9b67",
+      "bytes": 1278949,
+      "paths": [
+        "bundle/models/3e342c4528d67c14ecf64b10ec372224ddbe722ad35c161c54569d30392c9b67.safetensors"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/421b00f8f1a9a1f662f625cc13d22115d4b1c2c7eea0fe26117bd81d45fd5f6d.zip",
+      "sha256": "421b00f8f1a9a1f662f625cc13d22115d4b1c2c7eea0fe26117bd81d45fd5f6d",
+      "bytes": 2607,
+      "paths": [
+        "leesin-source/bundle/archives/01-leesin-plan-v1.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/42d5096f1356ff7fe8fef79256ccf3881f8f8e989d4416c4999e3202950040d6.zip",
+      "sha256": "42d5096f1356ff7fe8fef79256ccf3881f8f8e989d4416c4999e3202950040d6",
+      "bytes": 2833,
+      "paths": [
+        "fixed-data-72/bundle/archives/12-ir-v6.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/442ec472f50601048d14f656d9bff9a6dba4a26e99947a686074a36d625bf0ad.zip",
+      "sha256": "442ec472f50601048d14f656d9bff9a6dba4a26e99947a686074a36d625bf0ad",
+      "bytes": 3623,
+      "paths": [
+        "fixed-data-72/bundle/archives/13-ir6-compiler.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/4540d6eadf95ea8db677a5fe2aeef602c7dfe702d3dfc713e88b4062e0331d91.zip",
+      "sha256": "4540d6eadf95ea8db677a5fe2aeef602c7dfe702d3dfc713e88b4062e0331d91",
+      "bytes": 640158,
+      "paths": [
+        "bundle/archives/39-forge-training.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/45e4d2a68c10f5188af832855f65c15566c4422f1fab475ccaf1fd27bcdbebf9.zip",
+      "sha256": "45e4d2a68c10f5188af832855f65c15566c4422f1fab475ccaf1fd27bcdbebf9",
+      "bytes": 4295,
+      "paths": [
+        "serialization-control/bundle/archives/04-run-ir5-serialization-control.py.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/496401edeea3e151370e5fa293d0e3cc0f82abbb94765b9774515b486ca67c13.zip",
+      "sha256": "496401edeea3e151370e5fa293d0e3cc0f82abbb94765b9774515b486ca67c13",
+      "bytes": 4294,
+      "paths": [
+        "leesin-source/bundle/archives/03-leesin-probes-v2.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/497eabbad26e5a23bf31c27e22dc9324aad3f9ba5f9562320119f8d1a97e12a8.zip",
+      "sha256": "497eabbad26e5a23bf31c27e22dc9324aad3f9ba5f9562320119f8d1a97e12a8",
+      "bytes": 8411,
+      "paths": [
+        "fixed-data-72/bundle/archives/09-frozen-facts-72-v2.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/49a3acf660377e9b514eff6f03fd023f6049cf77c7403bcaba43bd6249137a80.zip",
+      "sha256": "49a3acf660377e9b514eff6f03fd023f6049cf77c7403bcaba43bd6249137a80",
+      "bytes": 990,
+      "paths": [
+        "serialization-control/bundle/archives/05-test_ir5_serialization_runner.py.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/49cf35628ffe3d09d329a46a41f87fe6be0edc1e89bbef3f2d70b40f42406797.zip",
+      "sha256": "49cf35628ffe3d09d329a46a41f87fe6be0edc1e89bbef3f2d70b40f42406797",
+      "bytes": 847677,
+      "paths": [
+        "bundle/archives/32-forge-stack-full-inference-20260907-v1.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/4d26b5a23febd38155503d3a2c5c9409c1a199e6b225677cfe2ea32d2e2c6437.safetensors",
+      "sha256": "4d26b5a23febd38155503d3a2c5c9409c1a199e6b225677cfe2ea32d2e2c6437",
+      "bytes": 32480560,
+      "paths": [
+        "bundle/models/4d26b5a23febd38155503d3a2c5c9409c1a199e6b225677cfe2ea32d2e2c6437.safetensors"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/4e2a63bee51cd027922371b5ab96bc3bce00e9e92ed92f9f45913a6daa51ece9.zip",
+      "sha256": "4e2a63bee51cd027922371b5ab96bc3bce00e9e92ed92f9f45913a6daa51ece9",
+      "bytes": 436233,
+      "paths": [
+        "bundle/archives/04-forge-additional-four-hours-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/5121c86ac22dbe5a1b596e9d75db275f2b2adf03bba7ea51b12f1c250ad792c8.zip",
+      "sha256": "5121c86ac22dbe5a1b596e9d75db275f2b2adf03bba7ea51b12f1c250ad792c8",
+      "bytes": 1074,
+      "paths": [
+        "admission-ledger/bundle/archives/03-source-admission-ledger.test.mjs.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/51f368d1b5aabe11da107e4cf0b92175deb994a391188cd55de712f5064217db.zip",
+      "sha256": "51f368d1b5aabe11da107e4cf0b92175deb994a391188cd55de712f5064217db",
+      "bytes": 11784975,
+      "paths": [
+        "bundle/archives/11-forge-classification-reviewed-r2-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/52d904801c38aead2249221f5c983cc705c247e6dd8c8c72c638330260669d15.zip",
+      "sha256": "52d904801c38aead2249221f5c983cc705c247e6dd8c8c72c638330260669d15",
+      "bytes": 506549,
+      "paths": [
+        "bundle/archives/36-mid-model-comparison-20260907.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/54ca2eb91c3c2313f1911ee4e7026571685776650f1505d2af67bc38bd436c06.safetensors",
+      "sha256": "54ca2eb91c3c2313f1911ee4e7026571685776650f1505d2af67bc38bd436c06",
+      "bytes": 32480560,
+      "paths": [
+        "bundle/models/54ca2eb91c3c2313f1911ee4e7026571685776650f1505d2af67bc38bd436c06.safetensors"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/56aa9290399b131605441c8f7843e5276bb7c574103c5485288a408ef9f778fc.zip",
+      "sha256": "56aa9290399b131605441c8f7843e5276bb7c574103c5485288a408ef9f778fc",
+      "bytes": 51903,
+      "paths": [
+        "bundle/archives/27-forge-owner-inventory-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/57391441b5df4a699ef521d61991b7ebab257b3aff506ada6061ed0f48a6ba78.zip",
+      "sha256": "57391441b5df4a699ef521d61991b7ebab257b3aff506ada6061ed0f48a6ba78",
+      "bytes": 284326,
+      "paths": [
+        "bundle/archives/38-qwen38-local-comparison-20260907.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/59ab15e6b93774888bf4102d64ab2473a66f145814b84d439d8f804b5602af0c.zip",
+      "sha256": "59ab15e6b93774888bf4102d64ab2473a66f145814b84d439d8f804b5602af0c",
+      "bytes": 7293912,
+      "paths": [
+        "leesin-source/bundle/archives/11-leesin-package-v1.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/5b03d9498999f39fa3f6e8769bf43d80218e4c20b9424e3c3aeafdb722f13a6b.safetensors",
+      "sha256": "5b03d9498999f39fa3f6e8769bf43d80218e4c20b9424e3c3aeafdb722f13a6b",
+      "bytes": 1278949,
+      "paths": [
+        "serialization-control/bundle/models/5b03d9498999f39fa3f6e8769bf43d80218e4c20b9424e3c3aeafdb722f13a6b.safetensors"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/5b2740bd7f5b0f63863517f967ece1a1db729b97cf6445002f5e91f63059190c.zip",
+      "sha256": "5b2740bd7f5b0f63863517f967ece1a1db729b97cf6445002f5e91f63059190c",
+      "bytes": 3056,
+      "paths": [
+        "source-admission/bundle/archives/10-SOURCE_ADMISSION_REPORT.md.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/5bec6c49f1ffbcb1357afd7ee73a528596caf90dc95ceb48280dcb5c7d9c42fc.zip",
+      "sha256": "5bec6c49f1ffbcb1357afd7ee73a528596caf90dc95ceb48280dcb5c7d9c42fc",
+      "bytes": 967835,
+      "paths": [
+        "bundle/archives/33-forge-thinking-benchmark-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/5cc69d243f6ffaeb45c5977ac1654922dfecd68f506909cb0ac28e2bcc060a12.zip",
+      "sha256": "5cc69d243f6ffaeb45c5977ac1654922dfecd68f506909cb0ac28e2bcc060a12",
+      "bytes": 1372,
+      "paths": [
+        "serialization-control/bundle/archives/06-verify_serialization_control.py.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/5d95eb23da486c8682e7a62f0b5b27ec892bdd874f0ab9539e061ba3346b2fc9.zip",
+      "sha256": "5d95eb23da486c8682e7a62f0b5b27ec892bdd874f0ab9539e061ba3346b2fc9",
+      "bytes": 2379346,
+      "paths": [
+        "bundle/archives/15-forge-contrastive-r5-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/6013cd40318967ee39ad14be1a96675fb0e8ab9e1c8208aab5bfad1c7bea8c50.zip",
+      "sha256": "6013cd40318967ee39ad14be1a96675fb0e8ab9e1c8208aab5bfad1c7bea8c50",
+      "bytes": 898,
+      "paths": [
+        "fixed-data-72/bundle/archives/05-FROZEN_FACTS_72_VERIFICATION.json.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/612b3d015fef6ec294ac89908838963af4c457168089860ab2f01b1f12e37936.safetensors",
+      "sha256": "612b3d015fef6ec294ac89908838963af4c457168089860ab2f01b1f12e37936",
+      "bytes": 32480560,
+      "paths": [
+        "bundle/models/612b3d015fef6ec294ac89908838963af4c457168089860ab2f01b1f12e37936.safetensors"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/6299919434682a1afbb149da2cf4011b27b37f3198a7c5c3d9d17776d9c19646.zip",
+      "sha256": "6299919434682a1afbb149da2cf4011b27b37f3198a7c5c3d9d17776d9c19646",
+      "bytes": 105536,
+      "paths": [
+        "source-admission/bundle/archives/07-missfortune-plan-audit-v1.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/630343572023ed6e7d86b5246ddeeaf620abae96c1c29ecb6397b78f763dcea5.zip",
+      "sha256": "630343572023ed6e7d86b5246ddeeaf620abae96c1c29ecb6397b78f763dcea5",
+      "bytes": 964648,
+      "paths": [
+        "bundle/archives/12-forge-classification-v2-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/6526b96e01735975576a84b9b84ee8ae768c7fde4ce8a8d71a292e486c7787eb.zip",
+      "sha256": "6526b96e01735975576a84b9b84ee8ae768c7fde4ce8a8d71a292e486c7787eb",
+      "bytes": 572637,
+      "paths": [
+        "bundle/archives/10-forge-classification-reviewed-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/65464f01ea5cfe09a965ad75b79b331d43663e2a323092718e3ed5ff030c9268.zip",
+      "sha256": "65464f01ea5cfe09a965ad75b79b331d43663e2a323092718e3ed5ff030c9268",
+      "bytes": 2017,
+      "paths": [
+        "fixed-data-72/bundle/archives/02-verify-frozen-facts.mjs.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/681e2a38dbdeabb58d2489a7fb73e63817d267ee101e5f28489fe8d155f58e39.zip",
+      "sha256": "681e2a38dbdeabb58d2489a7fb73e63817d267ee101e5f28489fe8d155f58e39",
+      "bytes": 834,
+      "paths": [
+        "serialization-control/bundle/archives/01-test_ir5_serialization_audit.py.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/6ccccc54efc43379bf531c86df19a20e65e52d82d6c44c8da13c4601dd4624d1.zip",
+      "sha256": "6ccccc54efc43379bf531c86df19a20e65e52d82d6c44c8da13c4601dd4624d1",
+      "bytes": 77904,
+      "paths": [
+        "leesin-source/bundle/archives/09-leesin-plan-audit-v1.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/6e036902a1cd93d0fdc2667bb5e87a416a731288d60b40e33972c860797bdf4a.zip",
+      "sha256": "6e036902a1cd93d0fdc2667bb5e87a416a731288d60b40e33972c860797bdf4a",
+      "bytes": 3761,
+      "paths": [
+        "selected-point-fields/bundle/archives/01-audit-selected-point-fields-v2.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/6f92ade822715f7689d8dbb1a436ec8c7a809c9a025b0f5385285d0ae762f596.zip",
+      "sha256": "6f92ade822715f7689d8dbb1a436ec8c7a809c9a025b0f5385285d0ae762f596",
+      "bytes": 2359,
+      "paths": [
+        "field-composition/bundle/archives/01-FIELD_COMPOSITION_REPORT.md.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/710dcba1670c17d759a3cea36300f29626873c99d32aee69106225a68bc5cbf4.safetensors",
+      "sha256": "710dcba1670c17d759a3cea36300f29626873c99d32aee69106225a68bc5cbf4",
+      "bytes": 1278949,
+      "paths": [
+        "serialization-control/bundle/models/710dcba1670c17d759a3cea36300f29626873c99d32aee69106225a68bc5cbf4.safetensors"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/712ba0076b82cec7d1fec97cfd6c612190b9da564ef2c97ae1d4281d3a0f609f.zip",
+      "sha256": "712ba0076b82cec7d1fec97cfd6c612190b9da564ef2c97ae1d4281d3a0f609f",
+      "bytes": 350441,
+      "paths": [
+        "bundle/archives/26-forge-nonllm-baseline-v1-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/77391a81dd51832d29507af3450cf80bc94af671c44e1119f875f03ea6d6076d.zip",
+      "sha256": "77391a81dd51832d29507af3450cf80bc94af671c44e1119f875f03ea6d6076d",
+      "bytes": 14299,
+      "paths": [
+        "fixed-data-72/bundle/archives/06-PLAN.md.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/778573cfda38e67c8781ae8734ad17d851513f3707685de7392ac9cddd8931bf.zip",
+      "sha256": "778573cfda38e67c8781ae8734ad17d851513f3707685de7392ac9cddd8931bf",
+      "bytes": 5070,
+      "paths": [
+        "bundle/archives/07-forge-cache-check-final-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/7a8fca428a72a0991cf481f29958000f5859c4910b2bb63193f9425830bb611e.zip",
+      "sha256": "7a8fca428a72a0991cf481f29958000f5859c4910b2bb63193f9425830bb611e",
+      "bytes": 14201,
+      "paths": [
+        "source-admission/bundle/archives/13-PLAN.md.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/7ae2544b89ccb91985f97beec494d8b5884b58a727f4431c0e260cfe0675c59f.zip",
+      "sha256": "7ae2544b89ccb91985f97beec494d8b5884b58a727f4431c0e260cfe0675c59f",
+      "bytes": 5241,
+      "paths": [
+        "source-admission/bundle/archives/12-README.md.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/7dfe7078defaf4b46dd6c59698e858b398c11319c7a38587d6d193c3d71a64e9.zip",
+      "sha256": "7dfe7078defaf4b46dd6c59698e858b398c11319c7a38587d6d193c3d71a64e9",
+      "bytes": 3703,
+      "paths": [
+        "leesin-source/bundle/archives/08-LEESIN_SOURCE_CANDIDATE_REPORT.md.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/8244f92c56414f4512b6d49f7a5227507881db6a302c50f8c1620c58c25243a4.zip",
+      "sha256": "8244f92c56414f4512b6d49f7a5227507881db6a302c50f8c1620c58c25243a4",
+      "bytes": 1010076,
+      "paths": [
+        "bundle/archives/09-forge-classification-final-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/828092abdb905af895777e01adc1ca384449358636efc93c6c33c4fd589cf0d6.zip",
+      "sha256": "828092abdb905af895777e01adc1ca384449358636efc93c6c33c4fd589cf0d6",
+      "bytes": 105902,
+      "paths": [
+        "source-admission/bundle/archives/08-missfortune-plan-audit-v2.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/831d4e9b30e33d61b90b0b9d3401dcd38e43cd8d900be982b6e5ce599a3c1fa7.zip",
+      "sha256": "831d4e9b30e33d61b90b0b9d3401dcd38e43cd8d900be982b6e5ce599a3c1fa7",
+      "bytes": 2074502,
+      "paths": [
+        "bundle/archives/24-forge-low-lr-r7-v2-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/8513547e4d493bdbe3e6906559ce7c6fa739c87a7f13ecb92cfe62a0b71b2631.zip",
+      "sha256": "8513547e4d493bdbe3e6906559ce7c6fa739c87a7f13ecb92cfe62a0b71b2631",
+      "bytes": 590519,
+      "paths": [
+        "bundle/archives/28-forge-owner-remaining-inference-20260907-v1.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/89527f49c33d9426692b945f3c2f2ef4e26339db9b8a46bf98aae138ba38b40e.zip",
+      "sha256": "89527f49c33d9426692b945f3c2f2ef4e26339db9b8a46bf98aae138ba38b40e",
+      "bytes": 3416,
+      "paths": [
+        "selected-point-fields/bundle/archives/00-audit-selected-point-fields-v1.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/8a352a646eef5f28b5f8a5942c18580edfffacd1f49545de4fa7be2525c88660.safetensors",
+      "sha256": "8a352a646eef5f28b5f8a5942c18580edfffacd1f49545de4fa7be2525c88660",
+      "bytes": 1278949,
+      "paths": [
+        "bundle/models/8a352a646eef5f28b5f8a5942c18580edfffacd1f49545de4fa7be2525c88660.safetensors"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/8cfd8a825c24192087b6a27551d051f5d497150ea0c48f1b5046dcd15584acdc.zip",
+      "sha256": "8cfd8a825c24192087b6a27551d051f5d497150ea0c48f1b5046dcd15584acdc",
+      "bytes": 4116,
+      "paths": [
+        "source-admission/bundle/archives/02-missfortune-probes-v2.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/8e0c08f9a7e57c04ece2c269aee9f82e161682a4aa9f29523fd6d7aae214b293.zip",
+      "sha256": "8e0c08f9a7e57c04ece2c269aee9f82e161682a4aa9f29523fd6d7aae214b293",
+      "bytes": 766045,
+      "paths": [
+        "bundle/archives/08-forge-classification-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/8f18981a6e0cfb9670ec54efd622ae1a62f26fd59657ee3fb2ded49cb45b9acf.safetensors",
+      "sha256": "8f18981a6e0cfb9670ec54efd622ae1a62f26fd59657ee3fb2ded49cb45b9acf",
+      "bytes": 1278949,
+      "paths": [
+        "bundle/models/8f18981a6e0cfb9670ec54efd622ae1a62f26fd59657ee3fb2ded49cb45b9acf.safetensors",
+        "fixed-data-72/bundle/models/8f18981a6e0cfb9670ec54efd622ae1a62f26fd59657ee3fb2ded49cb45b9acf.safetensors"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/9062f11e75b2aec5a4a14253362907dd4b1494f35e23e656238c93fa3ee94d78.zip",
+      "sha256": "9062f11e75b2aec5a4a14253362907dd4b1494f35e23e656238c93fa3ee94d78",
+      "bytes": 61794,
+      "paths": [
+        "bundle/archives/40-Finetune 英雄技能特效與機制全自動鑄造小模型全自動實作計畫.md.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/913fff3e86ae4246c4a89eaf74bd11ad133c17056c9446b9ae2df129ee63a0cf.safetensors",
+      "sha256": "913fff3e86ae4246c4a89eaf74bd11ad133c17056c9446b9ae2df129ee63a0cf",
+      "bytes": 32480560,
+      "paths": [
+        "bundle/models/913fff3e86ae4246c4a89eaf74bd11ad133c17056c9446b9ae2df129ee63a0cf.safetensors"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/9413961b6830560fafe4982ee1f6ddda6ecf62094fb08646ca12bf0c8fc05348.zip",
+      "sha256": "9413961b6830560fafe4982ee1f6ddda6ecf62094fb08646ca12bf0c8fc05348",
+      "bytes": 263211,
+      "paths": [
+        "field-composition/bundle/archives/02-field-composition-audit-v1.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/9687234f32b88f9a1014557b7891111d7d8ae2173aaed7a1d2b182585f1303d1.zip",
+      "sha256": "9687234f32b88f9a1014557b7891111d7d8ae2173aaed7a1d2b182585f1303d1",
+      "bytes": 2667,
+      "paths": [
+        "leesin-source/bundle/archives/05-audit-leesin-plan-v2.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/9bf7f4c67434fe99a2e32a054fc37925df9b327331ca6092a2f16a1510d81c29.zip",
+      "sha256": "9bf7f4c67434fe99a2e32a054fc37925df9b327331ca6092a2f16a1510d81c29",
+      "bytes": 731,
+      "paths": [
+        "serialization-control/bundle/archives/07-test_verify_serialization_control.py.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/9ca44838523a9c86e8359a460f0432fff71cfaefb0590456da242db17b319e2f.zip",
+      "sha256": "9ca44838523a9c86e8359a460f0432fff71cfaefb0590456da242db17b319e2f",
+      "bytes": 4929,
+      "paths": [
+        "serialization-control/bundle/archives/19-README.md.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/9f68078203d29a46173a251458f9d6cd87bc15e7626e97cf1810aa8099d506b2.zip",
+      "sha256": "9f68078203d29a46173a251458f9d6cd87bc15e7626e97cf1810aa8099d506b2",
+      "bytes": 2131,
+      "paths": [
+        "source-admission/bundle/archives/04-audit-missfortune-plan-v1.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/9f942e1cd500030b811c864aaf301df3511e017057b6476946dfb6c5c17de31e.zip",
+      "sha256": "9f942e1cd500030b811c864aaf301df3511e017057b6476946dfb6c5c17de31e",
+      "bytes": 1045683,
+      "paths": [
+        "bundle/archives/13-forge-classification-v3-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/a2b0e05693c44af05d0deefdf9e49c8394bfb0e71f2a427dfbd30eaf59f4ba5b.zip",
+      "sha256": "a2b0e05693c44af05d0deefdf9e49c8394bfb0e71f2a427dfbd30eaf59f4ba5b",
+      "bytes": 13691,
+      "paths": [
+        "serialization-control/bundle/archives/18-PLAN.md.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/a4a01a98f5a60f35e224f98d1d5c4755c6f782f81dd5321346d2aeffe83909ff.zip",
+      "sha256": "a4a01a98f5a60f35e224f98d1d5c4755c6f782f81dd5321346d2aeffe83909ff",
+      "bytes": 1981,
+      "paths": [
+        "leesin-source/bundle/archives/00-compile-reviewed-products-v1.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/a81513bfbe87fd3aba7bae360e3fb07627c648800ed45231be709dd6750fca89.zip",
+      "sha256": "a81513bfbe87fd3aba7bae360e3fb07627c648800ed45231be709dd6750fca89",
+      "bytes": 3219,
+      "paths": [
+        "fixed-data-72/bundle/archives/04-FROZEN_FACTS_72_FINDINGS.md.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/acd0f96d0397fbd4ddd9946b9420418512b9d5ae34f6eebd7329cbf0393c2e5d.zip",
+      "sha256": "acd0f96d0397fbd4ddd9946b9420418512b9d5ae34f6eebd7329cbf0393c2e5d",
+      "bytes": 3922,
+      "paths": [
+        "source-admission/bundle/archives/01-missfortune-probes-v1.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/ae74890ec5232a1dd18abe702a225a4a9c0ad885eba7c00eb522665791a7b039.zip",
+      "sha256": "ae74890ec5232a1dd18abe702a225a4a9c0ad885eba7c00eb522665791a7b039",
+      "bytes": 21481,
+      "paths": [
+        "bundle/archives/16-forge-current-main-candidate-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/af4e79abfd7ec6a26e53be7b34b9b03cecffa2c5857dbb3ab337589d3fde148c.zip",
+      "sha256": "af4e79abfd7ec6a26e53be7b34b9b03cecffa2c5857dbb3ab337589d3fde148c",
+      "bytes": 1455555,
+      "paths": [
+        "bundle/archives/31-forge-source-rehearsal-r8-v1-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/af5519afb6bf9ee8fe3123819af6ce16127d9647c0d5e6638055e6d37e64eb26.zip",
+      "sha256": "af5519afb6bf9ee8fe3123819af6ce16127d9647c0d5e6638055e6d37e64eb26",
+      "bytes": 76140,
+      "paths": [
+        "bundle/archives/02-community37-inference-smoke-20260907-v1.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/b2a49f93f54db86f852cc5a0342866975232f65814d26a23eca9577c941d80a6.zip",
+      "sha256": "b2a49f93f54db86f852cc5a0342866975232f65814d26a23eca9577c941d80a6",
+      "bytes": 1995,
+      "paths": [
+        "fixed-data-72/bundle/archives/15-ir6-contract.test.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/b2f5b3dc085ff8e74225ffa1fa9a9e5b23204805c1906b2ed2dacc1c038c1678.zip",
+      "sha256": "b2f5b3dc085ff8e74225ffa1fa9a9e5b23204805c1906b2ed2dacc1c038c1678",
+      "bytes": 89457,
+      "paths": [
+        "selected-point-fields/bundle/archives/02-selected-point-fields-audit-v1.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/b510d85394adbfe0200024d98666fc9981db1fe29cab26b6fd36c26b4f597afc.safetensors",
+      "sha256": "b510d85394adbfe0200024d98666fc9981db1fe29cab26b6fd36c26b4f597afc",
+      "bytes": 1278949,
+      "paths": [
+        "bundle/models/b510d85394adbfe0200024d98666fc9981db1fe29cab26b6fd36c26b4f597afc.safetensors"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/be07b000f9826b471d9d38fa433e2c208a6b876a03e6f1c43f9cd58746b3e1a6.zip",
+      "sha256": "be07b000f9826b471d9d38fa433e2c208a6b876a03e6f1c43f9cd58746b3e1a6",
+      "bytes": 3174,
+      "paths": [
+        "serialization-control/bundle/archives/16-SERIALIZATION_AUDIT_REPORT.md.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/be7c7146d48dce2cbe321203e1f2bd1e004085170a43e8d4f91a92223ad8e0c6.zip",
+      "sha256": "be7c7146d48dce2cbe321203e1f2bd1e004085170a43e8d4f91a92223ad8e0c6",
+      "bytes": 1860,
+      "paths": [
+        "serialization-control/bundle/archives/15-ir5-serialization-followup-v1.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/beb2265004a5c553b7b3eb31a4c620b8c3da34f1b364426cb046da8004a59c19.zip",
+      "sha256": "beb2265004a5c553b7b3eb31a4c620b8c3da34f1b364426cb046da8004a59c19",
+      "bytes": 1563,
+      "paths": [
+        "fixed-data-72/bundle/archives/03-FINETUNE_ONLY_SCOPE.md.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/bf86b77ce223ef33a94d6f4b06cd8b59d9da699890889deceb667734247087fa.zip",
+      "sha256": "bf86b77ce223ef33a94d6f4b06cd8b59d9da699890889deceb667734247087fa",
+      "bytes": 4610707,
+      "paths": [
+        "bundle/archives/19-forge-finetune-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/bf9a2e7834043bf130af82c42a1daaad25c93ffec83ca66458dc47056f04cdd9.zip",
+      "sha256": "bf9a2e7834043bf130af82c42a1daaad25c93ffec83ca66458dc47056f04cdd9",
+      "bytes": 4660,
+      "paths": [
+        "serialization-control/bundle/archives/13-ir5-serialization-lora-v1-assessment.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/c119035da84b6b86d14ce46756dfba1e29cd5779ae6b630cfb2ca0847e8ae18d.zip",
+      "sha256": "c119035da84b6b86d14ce46756dfba1e29cd5779ae6b630cfb2ca0847e8ae18d",
+      "bytes": 3787,
+      "paths": [
+        "admission-ledger/bundle/archives/00-audit-source-additions-v1.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/c182eebb0e0853fa14337696851b51a278df5df0241591567651e9e0552ac6ca.safetensors",
+      "sha256": "c182eebb0e0853fa14337696851b51a278df5df0241591567651e9e0552ac6ca",
+      "bytes": 1278949,
+      "paths": [
+        "fixed-data-72/bundle/models/c182eebb0e0853fa14337696851b51a278df5df0241591567651e9e0552ac6ca.safetensors"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/c2adf8ac36f7e6149c043b50875a08e841c7a416667af81cf953a4817244560d.zip",
+      "sha256": "c2adf8ac36f7e6149c043b50875a08e841c7a416667af81cf953a4817244560d",
+      "bytes": 1416,
+      "paths": [
+        "fixed-data-72/bundle/archives/14-ir6-json-schema.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/c5a5463c13c20dc1f0804cc19c4ef7bcaa0caf54e290e5410a572b7f4016155b.zip",
+      "sha256": "c5a5463c13c20dc1f0804cc19c4ef7bcaa0caf54e290e5410a572b7f4016155b",
+      "bytes": 90299,
+      "paths": [
+        "bundle/archives/03-community37-static-review-20260907-v1.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/c6fdcc3549d04327a0800d6ca157b3988a0003fc1fc670013cbc4cfe0b98a139.zip",
+      "sha256": "c6fdcc3549d04327a0800d6ca157b3988a0003fc1fc670013cbc4cfe0b98a139",
+      "bytes": 1904,
+      "paths": [
+        "serialization-control/bundle/archives/08-serialization-followup-analysis.mjs.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/c8ca1f6a199790bec050c9f50e66eb2504f46acc8f02b0f9d9c05428e0a3c83d.zip",
+      "sha256": "c8ca1f6a199790bec050c9f50e66eb2504f46acc8f02b0f9d9c05428e0a3c83d",
+      "bytes": 3417,
+      "paths": [
+        "serialization-control/bundle/archives/00-audit-ir5-serialization.py.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/c91d119c424122a83a2e4e72e6080e9d65ebd23e86cb9863d4fa32fc0081eba4.safetensors",
+      "sha256": "c91d119c424122a83a2e4e72e6080e9d65ebd23e86cb9863d4fa32fc0081eba4",
+      "bytes": 1278949,
+      "paths": [
+        "serialization-control/bundle/models/c91d119c424122a83a2e4e72e6080e9d65ebd23e86cb9863d4fa32fc0081eba4.safetensors"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/cf6fe8d581aac899836bb269c88ba020781128d7d3fbaba79d9943d4f6e84764.zip",
+      "sha256": "cf6fe8d581aac899836bb269c88ba020781128d7d3fbaba79d9943d4f6e84764",
+      "bytes": 1300,
+      "paths": [
+        "fixed-data-72/bundle/archives/16-leesin-ir6-v1.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/d006aed9029b314a7d35e7b3c7276d5216cd332fec196d1c4a76e795e6c56a5d.zip",
+      "sha256": "d006aed9029b314a7d35e7b3c7276d5216cd332fec196d1c4a76e795e6c56a5d",
+      "bytes": 1275,
+      "paths": [
+        "serialization-control/bundle/archives/17-PR1114_CI_REVIEW.md.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/d1b925c64ed557bc5118cb52de3d366c7bf9e946651d27de2f9129f731ff1231.zip",
+      "sha256": "d1b925c64ed557bc5118cb52de3d366c7bf9e946651d27de2f9129f731ff1231",
+      "bytes": 3152016,
+      "paths": [
+        "bundle/archives/37-model-research-integrated-20260908.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/d350e2c9c6119baca6a2bf2f7f73e308de6d038f5a6142eb9598eca68ec8e8d3.zip",
+      "sha256": "d350e2c9c6119baca6a2bf2f7f73e308de6d038f5a6142eb9598eca68ec8e8d3",
+      "bytes": 3028,
+      "paths": [
+        "admission-ledger/bundle/archives/05-DATA_ADMISSION_READINESS_REPORT.md.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/d3e3876286e590b9825821c7b92af23e046e6f69fd69f8768bfb44fdcdbd3c00.zip",
+      "sha256": "d3e3876286e590b9825821c7b92af23e046e6f69fd69f8768bfb44fdcdbd3c00",
+      "bytes": 5953,
+      "paths": [
+        "bundle/archives/41-Finetune_英雄技能模型_最終研究報告_20260907.md.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/d7c3afe901e7cab733da1cda7617cf74904903d105b01f1f0b468e4ac378432f.zip",
+      "sha256": "d7c3afe901e7cab733da1cda7617cf74904903d105b01f1f0b468e4ac378432f",
+      "bytes": 10968,
+      "paths": [
+        "serialization-control/bundle/archives/14-ir5-serialization-workflow-v1.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/d8a7cfee5c0d85fba3e728557a62e49475dec8f48526e56c58e1fb2ec1bd6d0a.zip",
+      "sha256": "d8a7cfee5c0d85fba3e728557a62e49475dec8f48526e56c58e1fb2ec1bd6d0a",
+      "bytes": 25178,
+      "paths": [
+        "admission-ledger/bundle/archives/04-source-admission-ledger-v1.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/dbe17c9fa0b46a2d4fe6eca779d5dd80fcdd27c317848b133f900a1243690501.zip",
+      "sha256": "dbe17c9fa0b46a2d4fe6eca779d5dd80fcdd27c317848b133f900a1243690501",
+      "bytes": 863,
+      "paths": [
+        "fixed-data-72/bundle/archives/01-test_frozen_facts_finetune.py.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/df58ed84855419bb9df651eb0af9e398596bd2fac0d6a917323ddffd2a66c1dd.zip",
+      "sha256": "df58ed84855419bb9df651eb0af9e398596bd2fac0d6a917323ddffd2a66c1dd",
+      "bytes": 5252,
+      "paths": [
+        "admission-ledger/bundle/archives/02-source-admission-ledger.mjs.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/dfa7ecea128986021e859b6d30c0529c08fed58b6fd4f9c8e3a6d61d287818cb.safetensors",
+      "sha256": "dfa7ecea128986021e859b6d30c0529c08fed58b6fd4f9c8e3a6d61d287818cb",
+      "bytes": 1278949,
+      "paths": [
+        "bundle/models/dfa7ecea128986021e859b6d30c0529c08fed58b6fd4f9c8e3a6d61d287818cb.safetensors"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/e06c2f84f7e7e5ad292f28a9ba5feee2b28d74411ab9592df1b06b38b459e2c5.zip",
+      "sha256": "e06c2f84f7e7e5ad292f28a9ba5feee2b28d74411ab9592df1b06b38b459e2c5",
+      "bytes": 1699177,
+      "paths": [
+        "bundle/archives/29-forge-source-calibration-r4-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/e0b4b0dafbfafacf4a0c28879b1160dd1eca9213f454c019aacd759ffcb32521.zip",
+      "sha256": "e0b4b0dafbfafacf4a0c28879b1160dd1eca9213f454c019aacd759ffcb32521",
+      "bytes": 4063,
+      "paths": [
+        "leesin-source/bundle/archives/02-leesin-probes-v1.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/e42c383b6e6d328b1467bce85dce2f7bbd9bd6085b5a74639cec42c52fc22221.safetensors",
+      "sha256": "e42c383b6e6d328b1467bce85dce2f7bbd9bd6085b5a74639cec42c52fc22221",
+      "bytes": 1278949,
+      "paths": [
+        "bundle/models/e42c383b6e6d328b1467bce85dce2f7bbd9bd6085b5a74639cec42c52fc22221.safetensors"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/e480abf79ac03181a280a6dcdad8f2c6e788bdcae1cb5315115be1d35ce9dc4b.zip",
+      "sha256": "e480abf79ac03181a280a6dcdad8f2c6e788bdcae1cb5315115be1d35ce9dc4b",
+      "bytes": 11797118,
+      "paths": [
+        "bundle/archives/18-forge-final-three-hours-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/e790fb699f24e0cbec40fe654eb2ec4a9d250c77a5aaf79fcd5df20bc1ef4c98.zip",
+      "sha256": "e790fb699f24e0cbec40fe654eb2ec4a9d250c77a5aaf79fcd5df20bc1ef4c98",
+      "bytes": 113530,
+      "paths": [
+        "bundle/archives/20-forge-intake-smoke-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/e8c7fdcbc9ed61fb1cc3ebedc9e0d7022fc6b87ebcfc1bded66136bcf3a76893.safetensors",
+      "sha256": "e8c7fdcbc9ed61fb1cc3ebedc9e0d7022fc6b87ebcfc1bded66136bcf3a76893",
+      "bytes": 32480560,
+      "paths": [
+        "bundle/models/e8c7fdcbc9ed61fb1cc3ebedc9e0d7022fc6b87ebcfc1bded66136bcf3a76893.safetensors"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/e9accb2b6ce5fbe51f4df79118821b64c6cb4475eb689b489a8af2195a0fb4d9.zip",
+      "sha256": "e9accb2b6ce5fbe51f4df79118821b64c6cb4475eb689b489a8af2195a0fb4d9",
+      "bytes": 4238,
+      "paths": [
+        "source-admission/bundle/archives/03-missfortune-probes-v3.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/ebf79b608c8e31536c04b7308a6c89ae49066c4e4ec266d0339d6891a07d0f28.zip",
+      "sha256": "ebf79b608c8e31536c04b7308a6c89ae49066c4e4ec266d0339d6891a07d0f28",
+      "bytes": 848003,
+      "paths": [
+        "serialization-control/bundle/archives/11-ir5-serialization-boundary-control-v1.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/ecd89411b7ddcb3990690a2118c9d0f448987e83509ddcb8db17ca4b39586bdb.zip",
+      "sha256": "ecd89411b7ddcb3990690a2118c9d0f448987e83509ddcb8db17ca4b39586bdb",
+      "bytes": 74267,
+      "paths": [
+        "bundle/archives/14-forge-composition-supplement-inference-20260907-v1.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/edd3a6f290c3e48a78f98a8697994e62e3fb078a39cbab7d5229ceb5fd4e7bed.zip",
+      "sha256": "edd3a6f290c3e48a78f98a8697994e62e3fb078a39cbab7d5229ceb5fd4e7bed",
+      "bytes": 2415,
+      "paths": [
+        "leesin-source/bundle/archives/07-package-leesin-v1.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/efb6fd5ef9d87bcb807d19c02887e43d7d1c556ae50d73c95789880564d88a06.zip",
+      "sha256": "efb6fd5ef9d87bcb807d19c02887e43d7d1c556ae50d73c95789880564d88a06",
+      "bytes": 106167,
+      "paths": [
+        "source-admission/bundle/archives/09-missfortune-plan-audit-v3.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/f7803a89f61c7b9daf3a3b07960b245edd52d109bdc6733ecf829c7c780a23cd.zip",
+      "sha256": "f7803a89f61c7b9daf3a3b07960b245edd52d109bdc6733ecf829c7c780a23cd",
+      "bytes": 1072,
+      "paths": [
+        "leesin-source/bundle/archives/06-reviewed-products.test.mts.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/f83999b1872b4c03b29b461201e298f4c61703acc7e8b99eae505511afbf225f.zip",
+      "sha256": "f83999b1872b4c03b29b461201e298f4c61703acc7e8b99eae505511afbf225f",
+      "bytes": 2633207,
+      "paths": [
+        "bundle/archives/22-forge-joint-source-stack-r6-v2-20260906.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/fba8394569beb51ef59a9372330dd588c80bc32ddc747ac687c05f14651f6544.zip",
+      "sha256": "fba8394569beb51ef59a9372330dd588c80bc32ddc747ac687c05f14651f6544",
+      "bytes": 63361,
+      "paths": [
+        "fixed-data-72/bundle/archives/08-frozen-facts-72-v1-pilot.zip"
+      ]
+    },
+    {
+      "key": "hero-finetune-research/sha256/ff24dd165abb4fa3a1164f0ed7ca47c73f444c813440e5f33d093e76b4ff06fd.zip",
+      "sha256": "ff24dd165abb4fa3a1164f0ed7ca47c73f444c813440e5f33d093e76b4ff06fd",
+      "bytes": 2751,
+      "paths": [
+        "selected-point-fields/bundle/archives/04-SELECTED_POINT_FIELDS_REPORT.md.zip"
+      ]
+    }
+  ]
+}

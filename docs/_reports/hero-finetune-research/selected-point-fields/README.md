@@ -1,5 +1,7 @@
 # Selected-point field admission supplement
 
+Payloads are in private S3. First follow the [hydrate instructions](../S3_STORAGE.md); archive commands below use the separate restored delivery directory.
+
 Local research evidence, not a qualified model or an engine fix. The source-point problem affects Lux E, Miss Fortune E and Xerath R in the reviewed candidates. Read [the report](REPORT.md) and [the exact result](RESULT.json).
 
 Real compiler/registry/SimWorld checks: 12/12 empty-or-centered controls pass; all six off-center cases fail on two seeds. The stationary witness receives zero of the three expected field hits. V2 verifies zero witness movement across all 180 frames; V1 is retained with its body-separation limitation. No source or old model score was changed.
@@ -7,7 +9,7 @@ Real compiler/registry/SimWorld checks: 12/12 empty-or-centered controls pass; a
 The bundle contains nine original files in five archives, no adapter weights. Its scripts depend on the original research bundle and the earlier source-admission supplement, including the pinned engine and runtime described there. This is not a standalone dependency installer.
 
 ```sh
-python3 tools/editor-acceptance/hero-finetune-archive.py verify docs/_reports/hero-finetune-research/selected-point-fields/bundle
+python3 tools/editor-acceptance/hero-finetune-archive.py verify /absolute/new/hydrated-delivery/selected-point-fields/bundle
 node tools/editor-acceptance/hero-ground-barrage-repro.mjs --verify-selected-field-controls
 node tools/editor-acceptance/hero-ground-barrage-repro.mjs --expect-selected-field-point
 ```

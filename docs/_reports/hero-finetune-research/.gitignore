@@ -1,0 +1,3 @@
+# Private S3 payloads are restored into a separate directory, not committed.
+*.zip
+*.safetensors

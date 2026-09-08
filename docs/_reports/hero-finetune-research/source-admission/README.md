@@ -1,5 +1,7 @@
 # Real-source recipe admission supplement
 
+Payloads are in private S3. First follow the [hydrate instructions](../S3_STORAGE.md); archive commands below use the separate restored delivery directory.
+
 CPU only. No new model inference, training, activation or release. The full hero-quality goal is not complete.
 
 The reviewed Miss Fortune candidate compiles but fails an empty selected-ground barrage scenario on both seeds: all six points are scattered around the caster rather than the selected ground location. The final audit passes 26/28 positive scenarios and detects 7/7 semantic mutations with clean controls. These counts are fixture checks, not model accuracy or independent heroes. The candidate stays quarantined before training.
@@ -20,8 +22,8 @@ Expected exits: 0 for current self/entity control contexts; 1 for the required e
 ## Archive checks
 
 ```sh
-python3 tools/editor-acceptance/hero-finetune-archive.py verify docs/_reports/hero-finetune-research/source-admission/bundle
-python3 tools/editor-acceptance/hero-finetune-archive.py extract docs/_reports/hero-finetune-research/source-admission/bundle --destination /absolute/new/source-admission-supplement
+python3 tools/editor-acceptance/hero-finetune-archive.py verify /absolute/new/hydrated-delivery/source-admission/bundle
+python3 tools/editor-acceptance/hero-finetune-archive.py extract /absolute/new/hydrated-delivery/source-admission/bundle --destination /absolute/new/source-admission-supplement
 ```
 
 Keep supplements and baseline extraction separate; copy only absent files into a restored research workspace. Do not overwrite historical PLAN/README snapshots. The current local workspace already contains all dependencies. This supplement is local-only until publication is authorized for the continued goal.

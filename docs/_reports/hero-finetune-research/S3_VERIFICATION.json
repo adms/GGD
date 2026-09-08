@@ -1,0 +1,46 @@
+{
+  "schema": "ggd-hero-finetune-storage-verification@1",
+  "sourceCommit": "69c2b3c0345d5a16b25013abe903ff1f79f9ec9b",
+  "productionQualified": false,
+  "gpuStarted": false,
+  "credentialsInspected": false,
+  "iamModified": false,
+  "s3ObjectsDeleted": false,
+  "gitHistoryRewritten": false,
+  "originalResearchOutputsModified": false,
+  "remoteProof": {
+    "receipt": "S3_RECEIPT.json",
+    "index": "S3_INDEX.json",
+    "verification": "get-object-sha256-every-object",
+    "uniqueObjects": 141,
+    "uniqueAdapters": 21,
+    "uniqueZipFiles": 120,
+    "uniqueBytes": 290033569,
+    "payloadPaths": 142,
+    "payloadPathBytes": 291312518
+  },
+  "restoreProof": {
+    "mode": "offline-from-S3-readback-cache",
+    "copiedSourcePayloads": false,
+    "fullOriginalArchiveVerifierPassed": true,
+    "bundleCount": 8,
+    "summedBundleEntryCount": 3568,
+    "standaloneOfflineZipVerified": true,
+    "localEvidenceRoot": "outputs/hero-research-s3-migration-20260908",
+    "restoredDelivery": "restored-delivery",
+    "cache": "cache",
+    "extractedSupplement": "extracted-fixed-data-72",
+    "extractedSupplementEntryCount": 59
+  },
+  "tests": [
+    {"command": "python3 tools/editor-acceptance/hero-finetune-s3.test.py", "exitCode": 0, "passed": 12},
+    {"command": "python3 tools/editor-acceptance/hero-finetune-archive.test.py", "exitCode": 0, "passed": 7},
+    {"command": "python3 tools/editor-acceptance/hero-finetune-s3.py verify-index docs/_reports/hero-finetune-research --receipt", "exitCode": 0, "scope": "metadata-and-historical-receipt-only-not-remote-payload-verification"}
+  ],
+  "limitations": [
+    "Historical GET receipt is not a guarantee of present S3 availability; run hydrate for a live remote check.",
+    "Existing Git history still contains earlier blobs; only the current tree changes.",
+    "Storage validation does not establish model accuracy or full-hero qualification.",
+    "No new public GitHub push, CI rerun or merge is represented by this receipt."
+  ]
+}

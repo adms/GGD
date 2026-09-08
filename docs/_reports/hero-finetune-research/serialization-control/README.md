@@ -1,5 +1,7 @@
 # Serialization-boundary follow-up (local research)
 
+Payloads are in private S3. First follow the [hydrate instructions](../S3_STORAGE.md); archive commands below use the separate restored delivery directory.
+
 The active quality goal continues after the earlier delivery. This supplement is a separate fixed experiment; it does not overwrite the original bundle or change its scores.
 
 ## Result
@@ -19,8 +21,8 @@ The original training split contains zero Q-slot `line_sequence` cases, while al
 ## Verify and restore
 
 ```sh
-python3 tools/editor-acceptance/hero-finetune-archive.py verify docs/_reports/hero-finetune-research/serialization-control/bundle
-python3 tools/editor-acceptance/hero-finetune-archive.py extract docs/_reports/hero-finetune-research/serialization-control/bundle --destination /absolute/new/serialization-supplement
+python3 tools/editor-acceptance/hero-finetune-archive.py verify /absolute/new/hydrated-delivery/serialization-control/bundle
+python3 tools/editor-acceptance/hero-finetune-archive.py extract /absolute/new/hydrated-delivery/serialization-control/bundle --destination /absolute/new/serialization-supplement
 ```
 
 This is an incremental archive of explicitly named paths. The original research bundle contains the unchanged baseline, worker, evaluator and engine/model receipts that these scripts depend on. Extract each bundle to a separate new directory. To combine them in a restored research workspace, copy only previously absent files from the supplement; do not overwrite the frozen baseline. The original local workspace already has the complete layout. This remains Mac/MLX-specific, not a portable dependency installer.

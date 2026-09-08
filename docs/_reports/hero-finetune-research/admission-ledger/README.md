@@ -1,5 +1,7 @@
 # Formal real-source admission ledger
 
+Payloads are in private S3. First follow the [hydrate instructions](../S3_STORAGE.md); archive commands below use the separate restored delivery directory.
+
 Local CPU-only follow-up. No model run, base/adapter change, release or additional push.
 
 All 44 heroes / 264 slots / 33 provisional source families are linked to existing source reviews and exact text hashes. Nine heroes have more detailed whole-intent annotations. Formal executable-Gold and fresh independent-holdout admission remain zero. This is not a claim that this turn manually re-reviewed all 44 heroes.
@@ -11,8 +13,8 @@ The eight explicit issues comprise four inherited source ambiguities, three newl
 ## Verify / restore
 
 ```sh
-python3 tools/editor-acceptance/hero-finetune-archive.py verify docs/_reports/hero-finetune-research/admission-ledger/bundle
-python3 tools/editor-acceptance/hero-finetune-archive.py extract docs/_reports/hero-finetune-research/admission-ledger/bundle --destination /absolute/new/admission-ledger-supplement
+python3 tools/editor-acceptance/hero-finetune-archive.py verify /absolute/new/hydrated-delivery/admission-ledger/bundle
+python3 tools/editor-acceptance/hero-finetune-archive.py extract /absolute/new/hydrated-delivery/admission-ledger/bundle --destination /absolute/new/admission-ledger-supplement
 ```
 
 This incremental supplement depends on the original research bundle and the `source-admission` supplement for unchanged source reviews, compiler/catalog receipts, harness and Miss Fortune audit. Extract separately and combine only absent files, without overwriting historical source/score snapshots. The original local research workspace already has the full layout.

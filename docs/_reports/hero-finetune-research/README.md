@@ -19,7 +19,7 @@ The scripts automate the **bounded engineering experiment**, not the admission o
 - [Ground-barrage admission evidence](source-admission/README.md): the candidate remains quarantined after an empty-ground anchor failure; the corresponding Main question is `docs/editor-contract/coordination/question.ground-barrage-anchor.json` in this PR.
 - [Serialization control](serialization-control/README.md): JSON 6/6, but valid IR, compilation and complete engineering checks remain 0/6. The research adapter is retained, not activated.
 
-The original archive and all three supplements are additive. Their manifests preserve the exact files and omissions; base-model weights are references, not bundled weights. The source-admission command returns exit 2 for the current unqualified formal dataset and does not start a GPU. It is not a semantic judge that can certify new data without review.
+The original archive and seven supplements are additive. Their manifests preserve the exact files and omissions; base-model weights are references, not bundled weights. The source-admission command returns exit 2 for the current unqualified formal dataset and does not start a GPU. It is not a semantic judge that can certify new data without review.
 
 Further model work must follow the fixed-data scope, not restart data expansion or engine repairs. Independent qualification remains unproven; a source-verdict adapter must not be presented as an executable whole-hero model. Historical statements that a supplement was local-only describe its recording time; Git/PR state determines publication, not those frozen receipts.
 
@@ -42,16 +42,24 @@ Readable code mirrors have an additional `.txt` suffix so repository-wide test d
 
 ## Verify and restore
 
-From the repository root, no GPU or third-party Python packages are needed for archival verification:
+Weights and ZIP payloads now live in private S3, not the current Git tree. Git retains scripts, readable reports, original bundle manifests, [S3 index](S3_INDEX.json), and the [storage/restore guide](S3_STORAGE.md). This does not rewrite existing Git history.
+
+From the repository root, check the index offline (this does **not** download or verify remote payloads):
 
 ```sh
-python3 tools/editor-acceptance/hero-finetune-archive.py verify docs/_reports/hero-finetune-research/bundle
-python3 tools/editor-acceptance/hero-finetune-archive.py extract docs/_reports/hero-finetune-research/bundle --destination /absolute/new/research-workspace
+python3 tools/editor-acceptance/hero-finetune-s3.py verify-index docs/_reports/hero-finetune-research --receipt
 ```
 
-The extraction target must not exist. Original file bytes are verified before extraction; base/fused model weights, duplicate engine copies, caches and environments are deliberately absent. The omission ledger distinguishes real model payloads from references: a SHA-256 record is not a committed base weight.
+Download to a new separate directory using the preconfigured AWS profile, verify every payload and all eight bundles, then extract the original workspace layout:
 
-Selected historical adapters and the new research adapter are stored once by content hash in `bundle/models/`; extraction recreates their recorded workspace paths. Base model receipts and revision/configuration records remain in the evidence archives. Do not load a 4B adapter on the 12B model, or confuse 8-bit Gemma inference with Qwen BF16 compatibility.
+```sh
+python3 tools/editor-acceptance/hero-finetune-s3.py hydrate docs/_reports/hero-finetune-research --destination /absolute/new/hydrated-delivery
+python3 tools/editor-acceptance/hero-finetune-archive.py extract /absolute/new/hydrated-delivery/bundle --destination /absolute/new/research-workspace
+```
+
+Both targets must not exist. Only the AWS CLI and Python standard library are required; no GPU is started. Supplements are verified/extracted with the same original archive tool under their hydrated subdirectories. Base/fused weights, duplicate engine copies, caches and environments are deliberately absent. A SHA-256 record is not a bundled base weight.
+
+Selected adapters are stored by content hash in S3. Hydration recreates `bundle/models/` and the supplement model directories; extraction recreates their recorded workspace paths. Base model receipts and revision/configuration records remain in the evidence archives. Do not load a 4B adapter on the 12B model, or confuse 8-bit Gemma inference with Qwen BF16 compatibility.
 
 ## Run the bounded experiment
 
