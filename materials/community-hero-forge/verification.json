@@ -1,0 +1,496 @@
+{
+  "schema": "ggd-community-materials-verification@1",
+  "status": "verified",
+  "scope": "Offline restored bytes and prior isolated publication receipts; not new gameplay or production publication",
+  "filesVerified": 36115,
+  "heroCount": 37,
+  "slotCount": 222,
+  "uniqueAssets": 146,
+  "assetBytes": 39337379,
+  "redactedFiles": 9,
+  "rows": [
+    {
+      "number": 1,
+      "name": "武藤遊戲",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/01/package/community-review-01-20260907-r13.zip",
+      "archiveSha256": "67500dcda72e3558bb08df23ae019b2a71d6b65794d664a684ddeccec0d30e02",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/01/after/community-review-01-20260907-draft.json",
+      "packageDigest": "sha256:ef87155d4ab0cc122c5e07bf0d660577d90587a88b5003644ceb151271cdec40",
+      "modelPaths": [
+        "assets/models/champions/blocky-mage.glb",
+        "assets/models/community/b63525363cc0739e8dd7e2dc80c59b4d9e292bb135bbab10350b5ea28b0538b0.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 2,
+      "name": "八神庵",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/02/package/community-review-02-20260907-r11.zip",
+      "archiveSha256": "399aca6995a6f28bb00a8c9e1d6831058147295fa99a9915b665d0179d012111",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/02/after/community-review-02-20260907-draft.json",
+      "packageDigest": "sha256:3fa050a36f09ca45aaa49252ed7b23feb6c4338e33b622d8d799bd4c9ef1dd7b",
+      "modelPaths": [
+        "assets/models/community/e55e9d2db49004f56d19091d4b7f6f74ffef19c8606b1b793650022f2924148c.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 3,
+      "name": "不知火舞",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/03/package/community-review-03-20260907-r11.zip",
+      "archiveSha256": "e96d4026e5045009b9e215afbc6807e58f1c2e75e75280b4160867b1c020ba18",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/03/after/community-review-03-20260907-draft.json",
+      "packageDigest": "sha256:4beb561b78be3d50abc9e5bc8584c8548c56beaf99e369dc0818c72308664746",
+      "modelPaths": [
+        "assets/models/community/296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 4,
+      "name": "空條承太郎",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/04/package/community-review-04-20260907-r11.zip",
+      "archiveSha256": "c533a14e23888a64255d3cfa7e80958e785b39c11f14794db433f626a9ec7d52",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/04/after/community-review-04-20260907-draft.json",
+      "packageDigest": "sha256:e11e9ed3cfd179a052e1443e52d6d6476aa15f6e3c92600d693d7630ecb5bf66",
+      "modelPaths": [
+        "assets/models/community/e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 5,
+      "name": "洛克人",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/05/package/community-review-05-20260907-r11.zip",
+      "archiveSha256": "d1d3c3b2f4e714d82963eb2191bfd498322057d0da0a83ee52aee3df83b07dee",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/05/after/community-review-05-20260907-draft.json",
+      "packageDigest": "sha256:ed1a25da32498a438374863c724a7e55b12547106ee0757820855b43185dbd27",
+      "modelPaths": [
+        "assets/models/community/9d0476bdc39349e9169dc99e5326496b7d5e1301e3ef660b49ba5b562bd53efd.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 6,
+      "name": "卡比",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/06/package/community-review-06-20260907-r11.zip",
+      "archiveSha256": "ff0d37a8bf9bb5b8d055c7c3fc65b206bb264a1a36738c5d868eaf780713f4ef",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/06/after/community-review-06-20260907-draft.json",
+      "packageDigest": "sha256:70817d8fcc1ef7e69ba77247395842fcba91cba11573b248469f22027b1dfc03",
+      "modelPaths": [
+        "assets/models/community/b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 7,
+      "name": "西索",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/07/package/community-review-07-20260907-r11.zip",
+      "archiveSha256": "b098eb7e379f8a73f634754b406d2f36d3357950da0e0d4883198edba1d8e4d4",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/07/after/community-review-07-20260907-draft.json",
+      "packageDigest": "sha256:ea8eee9f41cd5edd4984d7ef747bd5b01686cd345b0449c1fe38689809c5b1d1",
+      "modelPaths": [
+        "assets/models/community/eeb903a85ee447a044d77d6bc058753bd714fe822eea335bd948fb2766c76789.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 8,
+      "name": "米卡莎",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/08/package/community-review-08-20260907-r11.zip",
+      "archiveSha256": "b0ac792fb0702ed0092af830f364b70e6217c9bf6d37ec6672414bc8dbb49513",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/08/after/community-review-08-20260907-draft.json",
+      "packageDigest": "sha256:d7ab09b624183ed7d4eca381c372b2d67ef2f9c897da25cf751c7d64be1171e3",
+      "modelPaths": [
+        "assets/models/community/97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 9,
+      "name": "赫蘿",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/09/package/community-review-09-20260907-r11.zip",
+      "archiveSha256": "15e41d4700be94bcf7f54e6037fbb37de6e75173c7f0a27b1665afab65359207",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/09/after/community-review-09-20260907-draft.json",
+      "packageDigest": "sha256:d9da0bcc8aef0375e0e30911ea9708102df232801bb563117f04230cc40574cf",
+      "modelPaths": [
+        "assets/models/community/6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 10,
+      "name": "魯路修",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/10/package/community-review-10-20260907-r11.zip",
+      "archiveSha256": "b1f46e20c109d2a71b376065b3ee4e32ee465c0322fe508837a3738e46c14e94",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/10/after/community-review-10-20260907-draft.json",
+      "packageDigest": "sha256:07cb4d58a64d7269523d8e787cc94e2da2de8328a57dca68cce16959bd0e9f76",
+      "modelPaths": [
+        "assets/models/community/a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 11,
+      "name": "利姆路",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/11/package/community-review-11-20260907-r11.zip",
+      "archiveSha256": "579c0fae0044cb611deb6ddd24b87e894357262db29cda5d88c9a5279a8121a8",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/11/after/community-review-11-20260907-draft.json",
+      "packageDigest": "sha256:a3b1d5f643d8943c6d5442e6646285384968396f395d0f832421f6fdadb4ab2c",
+      "modelPaths": [
+        "assets/models/community/90d695d9ce758198bbc503100af86b443eb8008bdaf48d6a82aa23f3ace7023e.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 12,
+      "name": "衛宮士郎",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/12/package/community-review-12-20260907-r11.zip",
+      "archiveSha256": "a0fe6de2a93d0bdefea38f9693e5e7de706b1280aadf69687bcb05873862a754",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/12/after/community-review-12-20260907-draft.json",
+      "packageDigest": "sha256:be337013b4eadfa3cdd97977e864d75f65e78825233e5112021f8d05037e3b36",
+      "modelPaths": [
+        "assets/models/community/fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 13,
+      "name": "朝田詩乃",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/13/package/community-review-13-20260907-r11.zip",
+      "archiveSha256": "41830d08d7b52e8bc6b08ed3319b03c722b1881793943c57dccfa0d9de4dd9c2",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/13/after/community-review-13-20260907-draft.json",
+      "packageDigest": "sha256:23920ea5242b234826d83eecd927d2cc7775fd6601b86f47eba13abffe362269",
+      "modelPaths": [
+        "assets/models/community/9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 14,
+      "name": "殺老師",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/14/package/community-review-14-20260907-r11.zip",
+      "archiveSha256": "4e200061a63caef69ab4e174580e240dbeeb7fde91e46df1e5fb4acf0070e736",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/14/after/community-review-14-20260907-draft.json",
+      "packageDigest": "sha256:25b5d1ccb6c90753bdff526413155c2399daa85f66fe39b0c8209ed37d7b604c",
+      "modelPaths": [
+        "assets/models/community/50b7fd3fbdb685b6640102ebcdfc8a6e1e02c65d8f122c40f4d83e4cbce8fc4a.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 15,
+      "name": "比利海靈頓",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/15/package/community-review-15-20260907-r23.zip",
+      "archiveSha256": "403c904134c78ba5876469242889612009617e7149a3ab6858a38538b2e1923a",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/15/after/community-review-15-20260907-draft.json",
+      "packageDigest": "sha256:2edbce930c6199a6c21f7e9a1a535ae6917489546125a85634dbe0f3b7094f1e",
+      "modelPaths": [
+        "assets/models/community/45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 16,
+      "name": "魔法少女☆伊莉雅",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/16/package/community-review-16-20260907-r11.zip",
+      "archiveSha256": "5f82d425b9076ecc27b6451c0ece607be681b64e2409ba2ba72ee223770e2559",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/16/after/community-review-16-20260907-draft.json",
+      "packageDigest": "sha256:ebd2c6ba5ba718cf0c6eb652aa0d3eb4dd1ce21e4b7e267730ef01437a62d061",
+      "modelPaths": [
+        "assets/models/community/913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 17,
+      "name": "安茲·烏爾·恭",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/17/package/community-review-17-20260907-r11.zip",
+      "archiveSha256": "2f701443e133619bcbc8a5b8dea7018a85634d4aa7a0fb668c29f52cdc52e965",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/17/after/community-review-17-20260907-draft.json",
+      "packageDigest": "sha256:0d71f69c117a2c0fc199f8371a7ace78f10508b30e8bdff26a7926233228fca2",
+      "modelPaths": [
+        "assets/models/champions/blocky-knight.glb",
+        "assets/models/community/df7bc9e1b9fcda02b88ad164cad2a3ca2b0eb27b79a2bf5717c5ae6d2a25c285.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 18,
+      "name": "吉爾伽美什",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/18/package/community-review-18-20260907-r11.zip",
+      "archiveSha256": "93c57a952b46dcd7e5b6e75d27672fe33ad22221bfd3485d068139113cf4a33d",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/18/after/community-review-18-20260907-draft.json",
+      "packageDigest": "sha256:31202e2353de10085ce67055a9674fbd4d1767e6403af8a31978e65d902dba8b",
+      "modelPaths": [
+        "assets/models/community/cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 19,
+      "name": "桐谷和人",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/19/package/community-review-19-20260907-r11.zip",
+      "archiveSha256": "d86062deeff4f30df0f71d208b14ae79052cdbe5bbd0937c01fbc7d9c70c2288",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/19/after/community-review-19-20260907-draft.json",
+      "packageDigest": "sha256:680f4761c5ae8c0035cecbe366e5b932d8a5e81e1bb510da8fa02435d5c43475",
+      "modelPaths": [
+        "assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 20,
+      "name": "御坂美琴",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/20/package/community-review-20-20260907-r11.zip",
+      "archiveSha256": "2e184069c7ccb9f5acb761943b833c1090f5ea812eea28be73bbbcec5f8bedad",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/20/after/community-review-20-20260907-draft.json",
+      "packageDigest": "sha256:44c00653f168353714ce56022b5ffa8eac1e8c7af86fb17c7889c03e39a08348",
+      "modelPaths": [
+        "assets/models/community/3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 21,
+      "name": "鹿目圓",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/21/package/community-review-21-20260907-r11.zip",
+      "archiveSha256": "b22c0840801f53c003293d229658069be35afbdd19e4e0ab1068e79981b0a60d",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/21/after/community-review-21-20260907-draft.json",
+      "packageDigest": "sha256:d4b77c353463bab63179524ab46a24de3651df927212996afce8e430a75e173e",
+      "modelPaths": [
+        "assets/models/community/b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 22,
+      "name": "菜月昴",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/22/package/community-review-22-20260907-r11.zip",
+      "archiveSha256": "17da3e304f89018882a55a2bfd40d69083b3e50847fe76f0e4cbe80c6a873ab1",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/22/after/community-review-22-20260907-draft.json",
+      "packageDigest": "sha256:cdac016faedf2c7081c33ad4dece4038e96caa65dea938c8667fb75ea1d8eb15",
+      "modelPaths": [
+        "assets/models/community/57ee177f0c20a31aaa7b729e5b5311f67c5a2427040060b5f317b70d633398a9.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 23,
+      "name": "坂田銀時",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/23/package/community-review-23-20260907-r11.zip",
+      "archiveSha256": "8dff5c9312b98175cec905abeb09208befab9d6c0384ca34c70f585ee323e7fa",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/23/after/community-review-23-20260907-draft.json",
+      "packageDigest": "sha256:7df380f2361dc24d506a623b6e6043d9b479758c52c0245e235ebc54c0cf0137",
+      "modelPaths": [
+        "assets/models/community/f9c77d0749ae3cb6c5341c9cd01bbf117d52b14158ddc06007b93b90875e7bd2.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 24,
+      "name": "奇犽",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/24/package/community-review-24-20260907-r11.zip",
+      "archiveSha256": "a89309ed8888141dbbf2983283799280c0a37d420f20d6e3e9ea3e8a429f9c52",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/24/after/community-review-24-20260907-draft.json",
+      "packageDigest": "sha256:c41d4e7daa208c4151c9a9439f77367c4197d29e5ee7ad7b26574385d67e893e",
+      "modelPaths": [
+        "assets/models/community/43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 25,
+      "name": "一拳超人",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/25/package/community-review-25-20260907-r11.zip",
+      "archiveSha256": "f709194d8d0dc232b6a950014ad9aac8242b4fe569ac3b64d34fb52b18218978",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/25/after/community-review-25-20260907-draft.json",
+      "packageDigest": "sha256:35a80c31fc4e01fe1446f083674e247865f7b1473a0903b08e86c42d9718132d",
+      "modelPaths": [
+        "assets/models/community/90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 26,
+      "name": "名偵探柯南",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/26/package/community-review-26-20260907-r11.zip",
+      "archiveSha256": "e79b9b7cd90fa597d9ddde1e92b46a2367619993b972bfc1c1c88cdcbb5585c4",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/26/after/community-review-26-20260907-draft.json",
+      "packageDigest": "sha256:8da76b1bb2e8ed7f5a568c90aedd679f5db2713a2f92ea4729d8e60cd5ee0c6c",
+      "modelPaths": [
+        "assets/models/community/ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 27,
+      "name": "庫洛魔法使",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/27/package/community-review-27-20260907-r11.zip",
+      "archiveSha256": "972b7a021634a504210b1d0a599e316955b8e7dd5a9357733d03143ac6a57a83",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/27/after/community-review-27-20260907-draft.json",
+      "packageDigest": "sha256:c57eec617880921b442de352cadecd18eda9291730986fbdc6b5cc76230f1101",
+      "modelPaths": [
+        "assets/models/community/e9cd3994fc2c47af182ec454b7b7edde0822aca9176f2e72259145202e40f8d3.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 28,
+      "name": "艾莉絲·伯雷亞斯·格雷拉特",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/28/package/community-review-28-20260907-r11.zip",
+      "archiveSha256": "36bea75b785888a896a8c2489241fb7488d3efba15a9df6ab1d6d66925274619",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/28/after/community-review-28-20260907-draft.json",
+      "packageDigest": "sha256:0cce0f6691ae69cf6c3fa3606e62454ada000a8f28e4ffdec19386720d133d9d",
+      "modelPaths": [
+        "assets/models/community/d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 29,
+      "name": "芙莉蓮",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/29/package/community-review-29-20260907-r11.zip",
+      "archiveSha256": "41b59c95471730e0fe4e9d14b14fa95b6d5183d259607e7bdf2988725203bb61",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/29/after/community-review-29-20260907-draft.json",
+      "packageDigest": "sha256:ba0191e38b89295a28f32fde8d0a9303bdec24648383a5023e98bfdd315734a9",
+      "modelPaths": [
+        "assets/models/community/3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 30,
+      "name": "尼古貓貓",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/30/package/community-review-30-20260907-r11.zip",
+      "archiveSha256": "d2d8b0e5252b71f60bdb2797ecbef92c9bdebf8d50088dbfc23b335fbb9e20ff",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/30/after/community-review-30-20260907-draft.json",
+      "packageDigest": "sha256:cd088a0f20aa8a283c164e645282acdfd90be9bccbc36494eeb9a027cc7f6591",
+      "modelPaths": [
+        "assets/models/community/6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 31,
+      "name": "SUN樂",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/31/package/community-review-31-20260907-r11.zip",
+      "archiveSha256": "faf6f36eb827354ae059a7f4176b4dde2d334ad9acb47d7cf98e17f575293fe3",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/31/after/community-review-31-20260907-draft.json",
+      "packageDigest": "sha256:9f1e46342e95065a0dfb7ea6b4415ac5e1b4eb07a94b765050d9d57f275f1f8d",
+      "modelPaths": [
+        "assets/models/community/04af91b75e1e6e6d2dfab2d59cc5e008a18e71718f6774848810f9266043908d.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 32,
+      "name": "阿薩謝爾",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/32/package/community-review-32-20260907-r29.zip",
+      "archiveSha256": "3f2cdba5eb3c8b548d7aaa0b7c19d40fbdf21ca6875fe7de154c3cba7b9450a0",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/32/after/community-review-32-20260907-draft.json",
+      "packageDigest": "sha256:b2442d9b884ce93b004b8cdea97dfb3e4d5d04013a027226f7490895fd767b19",
+      "modelPaths": [
+        "assets/models/community/e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 33,
+      "name": "近衛刀太",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/33/package/community-review-33-20260907-r11.zip",
+      "archiveSha256": "b91faa36f8821bc28e3448c0da2849d8afc58564c157da2588e542f04e32954a",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/33/after/community-review-33-20260907-draft.json",
+      "packageDigest": "sha256:47649ff1369703a53fe5c90509ba9693802b1dc9452e4214b9398db1308d0ea7",
+      "modelPaths": [
+        "assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 34,
+      "name": "高速婆婆",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/34/package/community-review-34-20260907-r11.zip",
+      "archiveSha256": "054be56564ba79f862b1eb097c2ee93d82f23758eb23d09d6735ff478301b458",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/34/after/community-review-34-20260907-draft.json",
+      "packageDigest": "sha256:ff6061adb663aead5c8785f5a74d164245c8791e70398aa192fa872934657868",
+      "modelPaths": [
+        "assets/models/community/dfb25661e3126984d719393d02721ee0c0ea0cd2f09f21626d29165ea1481084.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 35,
+      "name": "炭治郎",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/35/package/community-review-35-20260907-r11.zip",
+      "archiveSha256": "2ef01bd5bb58c0f485c164dab8819d003f0e9dbea3e55c7da210af424406cca9",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/35/after/community-review-35-20260907-draft.json",
+      "packageDigest": "sha256:a7cbf4ffa12e01eabe9cdc4d9ca942b09e1dfe79587f87fd057a5974a3074f2e",
+      "modelPaths": [
+        "assets/models/community/ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 36,
+      "name": "鬼畜王蘭斯",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/36/package/community-review-36-20260907-r11.zip",
+      "archiveSha256": "2b3cbe719bf6fe5f95e190f3f365f6e3f269fc2467555d1a633fa4b51d4f6381",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/36/after/community-review-36-20260907-draft.json",
+      "packageDigest": "sha256:f02069fa7a87da8d8a5dc2eead9999f2aacec8c6c84c00706f994b73692aaadb",
+      "modelPaths": [
+        "assets/models/community/8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    },
+    {
+      "number": 37,
+      "name": "吉伊卡哇",
+      "package": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/37/package/community-review-37-20260907-r11.zip",
+      "archiveSha256": "5e33a7fd99c3942fe2d55a8060616527accc8495f7283f95959c49ab3393b274",
+      "draft": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/37/after/community-review-37-20260907-draft.json",
+      "packageDigest": "sha256:0a660b088e1baf777dc581c3a5fba95f5881a75663ac15346290af30ee36fc55",
+      "modelPaths": [
+        "assets/models/community/e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c.glb",
+        "assets/models/imported/tornadoelemental.glb"
+      ],
+      "originalTextAndRefinementsExact": true
+    }
+  ]
+}

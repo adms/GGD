@@ -154,6 +154,10 @@ Go 完整英雄回復這輪也一起執行三項總檢查：Editor 583 項測試
 
 ## 證據與續作
 
+交付材料已補入 repository 的 [`materials/community-hero-forge`](../../../../materials/community-hero-forge/README.md)：原目標文件、37 名原始交接／配方、目前與歷史 ZIP、模型／動作／特效／音效、逐槽畫面、來源版本庫、七名 LoL 候選及本機素材查詢索引。34 個分段保存實際壓縮資料，合計 1,126,032,082 bytes；可還原 36,115 份檔案，不是只有本機路徑或 LFS 指標。`manifest.json` 列逐檔 SHA-256，`restore.py` 只寫入全新目錄，還原後檔案彼此獨立。`verification.json` 核對完整還原資料及 37 名／222 槽，`contract-verification.json` 使用既有套件讀取器核對內容與傳輸契約。
+
+九份歷史驗收腳本的隔離密碼以佔位文字取代，清單記錄此差異；三份可重建的本機 Platform 執行檔排除，來源與建置紀錄保留。英雄 ZIP、技能原文與素材未修改；這不是正式發布或新一輪遊戲驗收。整座未選用的 300 英雄／MBA 外部素材庫不在本批範圍，但本批實際選用素材已隨作品與 ZIP 保存。以下 `outputs/...` 是還原後的原始資料結構，歷史紀錄中的絕對路徑與服務狀態不會自動變成目前環境。
+
 完整 ZIP、逐槽畫面、操作結果與腳本在工作區 `outputs/community-hero-asset-integration/editor-publication-20260907`；目前 37 名新版證據與生成來源庫位於其 `generator-rebuild/` 子目錄，從 `/private/tmp/ggd-community37-generator-rebuild` 完整複製並逐檔 SHA-256 比對。普通對局、錄影、回放畫面、原始失敗與回歸證據從 `/private/tmp/ggd-community37-live-match` 保存在 `live-match/`，亦逐檔核對；各目錄的 `evidence-retention.json` 保存檔案清單與摘要。服務證據的基準 commit 曾含未提交修改，`runtime-source-proof.json` 與 patch 明列實際來源，六份程式／測試已逐位元組對照本機提交 `84cbbdc5`，不以舊服務標籤冒充完整執行來源。前輪 `/private/tmp/ggd-community37-editor-publish` 的證據保留。過往逾時、錯誤和階段性狀態另保存在證據中，不再與本頁目前狀態混列。
 
 覆蓋層與肖像證據保存在同一入口的 `overlay-versions/`：121 份檔案、20,797,046 bytes，包含前後完整 go-git 庫、失敗紀錄、真 UI 圖片及測試來源；已從暫存目錄複製並逐檔核對。`source-proof.json` 的 10 份程式／測試均與本機提交 `160acbad` 完整相同。隔離 Platform 使用本次 Go 實作；Editor／Admin 使用同一工作樹來源，正式站未部署。

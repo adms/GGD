@@ -1,0 +1,231 @@
+{
+  "status": "verified",
+  "heroes": 37,
+  "entries": 13007,
+  "reader": "packages/shared/src/content/import/readPackageZip.ts",
+  "verifyContent": true,
+  "rows": [
+    {
+      "number": 1,
+      "packageDigest": "sha256:ef87155d4ab0cc122c5e07bf0d660577d90587a88b5003644ceb151271cdec40",
+      "entries": 382,
+      "assets": 103
+    },
+    {
+      "number": 2,
+      "packageDigest": "sha256:3fa050a36f09ca45aaa49252ed7b23feb6c4338e33b622d8d799bd4c9ef1dd7b",
+      "entries": 349,
+      "assets": 97
+    },
+    {
+      "number": 3,
+      "packageDigest": "sha256:4beb561b78be3d50abc9e5bc8584c8548c56beaf99e369dc0818c72308664746",
+      "entries": 351,
+      "assets": 97
+    },
+    {
+      "number": 4,
+      "packageDigest": "sha256:e11e9ed3cfd179a052e1443e52d6d6476aa15f6e3c92600d693d7630ecb5bf66",
+      "entries": 350,
+      "assets": 97
+    },
+    {
+      "number": 5,
+      "packageDigest": "sha256:ed1a25da32498a438374863c724a7e55b12547106ee0757820855b43185dbd27",
+      "entries": 350,
+      "assets": 97
+    },
+    {
+      "number": 6,
+      "packageDigest": "sha256:70817d8fcc1ef7e69ba77247395842fcba91cba11573b248469f22027b1dfc03",
+      "entries": 350,
+      "assets": 97
+    },
+    {
+      "number": 7,
+      "packageDigest": "sha256:ea8eee9f41cd5edd4984d7ef747bd5b01686cd345b0449c1fe38689809c5b1d1",
+      "entries": 351,
+      "assets": 97
+    },
+    {
+      "number": 8,
+      "packageDigest": "sha256:d7ab09b624183ed7d4eca381c372b2d67ef2f9c897da25cf751c7d64be1171e3",
+      "entries": 351,
+      "assets": 97
+    },
+    {
+      "number": 9,
+      "packageDigest": "sha256:d9da0bcc8aef0375e0e30911ea9708102df232801bb563117f04230cc40574cf",
+      "entries": 348,
+      "assets": 97
+    },
+    {
+      "number": 10,
+      "packageDigest": "sha256:07cb4d58a64d7269523d8e787cc94e2da2de8328a57dca68cce16959bd0e9f76",
+      "entries": 349,
+      "assets": 97
+    },
+    {
+      "number": 11,
+      "packageDigest": "sha256:a3b1d5f643d8943c6d5442e6646285384968396f395d0f832421f6fdadb4ab2c",
+      "entries": 350,
+      "assets": 97
+    },
+    {
+      "number": 12,
+      "packageDigest": "sha256:be337013b4eadfa3cdd97977e864d75f65e78825233e5112021f8d05037e3b36",
+      "entries": 351,
+      "assets": 97
+    },
+    {
+      "number": 13,
+      "packageDigest": "sha256:23920ea5242b234826d83eecd927d2cc7775fd6601b86f47eba13abffe362269",
+      "entries": 350,
+      "assets": 97
+    },
+    {
+      "number": 14,
+      "packageDigest": "sha256:25b5d1ccb6c90753bdff526413155c2399daa85f66fe39b0c8209ed37d7b604c",
+      "entries": 350,
+      "assets": 97
+    },
+    {
+      "number": 15,
+      "packageDigest": "sha256:2edbce930c6199a6c21f7e9a1a535ae6917489546125a85634dbe0f3b7094f1e",
+      "entries": 349,
+      "assets": 97
+    },
+    {
+      "number": 16,
+      "packageDigest": "sha256:ebd2c6ba5ba718cf0c6eb652aa0d3eb4dd1ce21e4b7e267730ef01437a62d061",
+      "entries": 349,
+      "assets": 97
+    },
+    {
+      "number": 17,
+      "packageDigest": "sha256:0d71f69c117a2c0fc199f8371a7ace78f10508b30e8bdff26a7926233228fca2",
+      "entries": 384,
+      "assets": 107
+    },
+    {
+      "number": 18,
+      "packageDigest": "sha256:31202e2353de10085ce67055a9674fbd4d1767e6403af8a31978e65d902dba8b",
+      "entries": 350,
+      "assets": 97
+    },
+    {
+      "number": 19,
+      "packageDigest": "sha256:680f4761c5ae8c0035cecbe366e5b932d8a5e81e1bb510da8fa02435d5c43475",
+      "entries": 349,
+      "assets": 97
+    },
+    {
+      "number": 20,
+      "packageDigest": "sha256:44c00653f168353714ce56022b5ffa8eac1e8c7af86fb17c7889c03e39a08348",
+      "entries": 349,
+      "assets": 97
+    },
+    {
+      "number": 21,
+      "packageDigest": "sha256:d4b77c353463bab63179524ab46a24de3651df927212996afce8e430a75e173e",
+      "entries": 349,
+      "assets": 97
+    },
+    {
+      "number": 22,
+      "packageDigest": "sha256:cdac016faedf2c7081c33ad4dece4038e96caa65dea938c8667fb75ea1d8eb15",
+      "entries": 349,
+      "assets": 97
+    },
+    {
+      "number": 23,
+      "packageDigest": "sha256:7df380f2361dc24d506a623b6e6043d9b479758c52c0245e235ebc54c0cf0137",
+      "entries": 349,
+      "assets": 97
+    },
+    {
+      "number": 24,
+      "packageDigest": "sha256:c41d4e7daa208c4151c9a9439f77367c4197d29e5ee7ad7b26574385d67e893e",
+      "entries": 349,
+      "assets": 97
+    },
+    {
+      "number": 25,
+      "packageDigest": "sha256:35a80c31fc4e01fe1446f083674e247865f7b1473a0903b08e86c42d9718132d",
+      "entries": 351,
+      "assets": 97
+    },
+    {
+      "number": 26,
+      "packageDigest": "sha256:8da76b1bb2e8ed7f5a568c90aedd679f5db2713a2f92ea4729d8e60cd5ee0c6c",
+      "entries": 350,
+      "assets": 97
+    },
+    {
+      "number": 27,
+      "packageDigest": "sha256:c57eec617880921b442de352cadecd18eda9291730986fbdc6b5cc76230f1101",
+      "entries": 349,
+      "assets": 97
+    },
+    {
+      "number": 28,
+      "packageDigest": "sha256:0cce0f6691ae69cf6c3fa3606e62454ada000a8f28e4ffdec19386720d133d9d",
+      "entries": 349,
+      "assets": 97
+    },
+    {
+      "number": 29,
+      "packageDigest": "sha256:ba0191e38b89295a28f32fde8d0a9303bdec24648383a5023e98bfdd315734a9",
+      "entries": 350,
+      "assets": 97
+    },
+    {
+      "number": 30,
+      "packageDigest": "sha256:cd088a0f20aa8a283c164e645282acdfd90be9bccbc36494eeb9a027cc7f6591",
+      "entries": 351,
+      "assets": 97
+    },
+    {
+      "number": 31,
+      "packageDigest": "sha256:9f1e46342e95065a0dfb7ea6b4415ac5e1b4eb07a94b765050d9d57f275f1f8d",
+      "entries": 349,
+      "assets": 97
+    },
+    {
+      "number": 32,
+      "packageDigest": "sha256:b2442d9b884ce93b004b8cdea97dfb3e4d5d04013a027226f7490895fd767b19",
+      "entries": 353,
+      "assets": 98
+    },
+    {
+      "number": 33,
+      "packageDigest": "sha256:47649ff1369703a53fe5c90509ba9693802b1dc9452e4214b9398db1308d0ea7",
+      "entries": 349,
+      "assets": 97
+    },
+    {
+      "number": 34,
+      "packageDigest": "sha256:ff6061adb663aead5c8785f5a74d164245c8791e70398aa192fa872934657868",
+      "entries": 350,
+      "assets": 97
+    },
+    {
+      "number": 35,
+      "packageDigest": "sha256:a7cbf4ffa12e01eabe9cdc4d9ca942b09e1dfe79587f87fd057a5974a3074f2e",
+      "entries": 349,
+      "assets": 97
+    },
+    {
+      "number": 36,
+      "packageDigest": "sha256:f02069fa7a87da8d8a5dc2eead9999f2aacec8c6c84c00706f994b73692aaadb",
+      "entries": 349,
+      "assets": 97
+    },
+    {
+      "number": 37,
+      "packageDigest": "sha256:0a660b088e1baf777dc581c3a5fba95f5881a75663ac15346290af30ee36fc55",
+      "entries": 350,
+      "assets": 97
+    }
+  ]
+}
