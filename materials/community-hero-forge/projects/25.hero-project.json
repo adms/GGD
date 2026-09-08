@@ -1,0 +1,1321 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "community-review-25-20260907",
+  "revision": 12,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "一拳超人",
+    "concept": "一拳超人 社群英雄功能驗收稿。作品：《一拳超人》  \n角色實體：埼玉；保留「一拳超人」顯示名稱。  \n定位：高辨識單擊、長起手、傷害上限。\n\n視覺方向：白拳壓、黃色衣色識別、認真一拳前安靜蓄勢後單次強衝擊。\n以 GGD 狂戰 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "PASSIVE": "〔興趣使然的英雄〕",
+      "Q": "普通拳",
+      "W": "連續普通拳",
+      "E": "〔趕上特賣〕",
+      "R": "認真系列・認真一拳",
+      "EX": "認真系列・認真反覆橫跳"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      }
+    },
+    "attributes": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 12,
+      "state": "draft",
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      }
+    },
+    "mechanics": {
+      "revision": 1,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 3,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 1,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 3,
+      "state": "stale",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "community-review-25-20260907.plan",
+    "title": "一拳超人",
+    "summary": "一拳超人 社群英雄功能驗收稿。作品：《一拳超人》  \n角色實體：埼玉；保留「一拳超人」顯示名稱。  \n定位：高辨識單擊、長起手、傷害上限。\n\n視覺方向：白拳壓、黃色衣色識別、認真一拳前安靜蓄勢後單次強衝擊。\n以 GGD 狂戰 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "狂戰",
+    "archetype": "fighter",
+    "attackType": "melee",
+    "budget": {
+      "power": 50,
+      "complexity": 60
+    },
+    "statOverrides": {
+      "ms": "中",
+      "mr": "小",
+      "armor": "中",
+      "maxHealth": "大",
+      "maxMana": "小",
+      "ad": "大",
+      "ap": "小",
+      "as": "中",
+      "healthRegen": "大",
+      "manaRegen": "小",
+      "range": "小"
+    },
+    "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
+    "templateVersions": {
+      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
+        "id": "tpl-buff-self",
+        "schema": "template@1",
+        "name": "變身強化-數值面",
+        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
+        "family": "buff-self",
+        "status": "enabled",
+        "params": {
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          },
+          "duration": {
+            "type": "number",
+            "default": 15,
+            "min": 1,
+            "max": 60,
+            "unit": "s"
+          },
+          "modifiers": {
+            "type": "statModifiers",
+            "default": [
+              {
+                "op": "flat",
+                "stat": "ad",
+                "value": 50
+              }
+            ]
+          }
+        },
+        "requires": [],
+        "gapScore": 6,
+        "exemplar": {
+          "skill": "82-04 闇之魔法",
+          "jass": "A0Q6"
+        }
+      },
+      "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0": {
+        "id": "tpl-on-attack",
+        "schema": "template@1",
+        "name": "攻擊觸發",
+        "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
+        "family": "on-attack",
+        "status": "enabled",
+        "params": {
+          "bonusDamage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                100
+              ],
+              "ratios": []
+            }
+          },
+          "chance": {
+            "type": "number",
+            "min": 0,
+            "max": 1,
+            "unit": "ratio",
+            "optional": true
+          },
+          "condition": {
+            "type": "condition",
+            "default": {
+              "any": [
+                {
+                  "all": [
+                    {
+                      "not": {
+                        "is": "champion",
+                        "kind": "kind",
+                        "subject": "target"
+                      }
+                    },
+                    {
+                      "kind": "stat",
+                      "mode": "percent",
+                      "op": "<",
+                      "stat": "hp",
+                      "subject": "target",
+                      "value": 0.35
+                    }
+                  ]
+                },
+                {
+                  "all": [
+                    {
+                      "is": "champion",
+                      "kind": "kind",
+                      "subject": "target"
+                    },
+                    {
+                      "kind": "chance",
+                      "p": 0.01
+                    }
+                  ]
+                }
+              ]
+            },
+            "optional": true
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "event": {
+            "type": "enum",
+            "default": "onBasicAttack",
+            "values": [
+              "onBasicAttack",
+              "onDamageDealt"
+            ]
+          },
+          "internalCooldown": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 60,
+            "unit": "s",
+            "optional": true
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者",
+          "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效"
+        }
+      },
+      "sha256:431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699006b55c40f5b54c7": {
+        "id": "tpl-line-sweep",
+        "schema": "template@1",
+        "name": "直線分段掃擊",
+        "description": "沿直線分段的掃擊：每一段各自在自己的落點結算一次（`delayed` + `advance`，GH#393 的機制）。⭐ 同一個目標整串只被打一次（`hitOncePerTarget`）—— 那是原作的規則，卡片寫的是**一次**的數字。",
+        "family": "line-sweep",
+        "status": "enabled",
+        "params": {
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          },
+          "damage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                150
+              ],
+              "ratios": []
+            }
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "segmentAoe": {
+            "type": "number",
+            "default": 400,
+            "min": 100,
+            "max": 900,
+            "unit": "wc3u",
+            "origin": "j:32337 —— `GetUnitsInRangeOfLocMatching(400.00, udg_LocPoint3, …)` ⇒ 每段半徑 **400 wc3u**"
+          },
+          "segmentCount": {
+            "type": "number",
+            "default": 6,
+            "min": 3,
+            "max": 20,
+            "unit": "count",
+            "origin": "j:32335 —— `exitwhen udg_WinSwordCounter > 6`，而 j:32333 是 `set udg_WinSwordCounter = 1` ⇒ 正好 **6 段**（⛔ 不是 7：它從 **1** 起算，⛔ 不是 0）"
+          },
+          "stepSize": {
+            "type": "number",
+            "default": 200,
+            "min": 100,
+            "max": 300,
+            "unit": "wc3u",
+            "origin": "j:32336 —— `PolarProjectionBJ(udg_LocPoint1, I2R(udg_WinSwordCounter) * 200.00, …)` ⇒ 每段 **200 wc3u**"
+          }
+        },
+        "requires": [
+          "projectile"
+        ],
+        "gapScore": 7,
+        "exemplar": {
+          "skill": "20-03 約束與勝利之劍",
+          "jass": "A0D5"
+        }
+      },
+      "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b": {
+        "id": "tpl-single-strike",
+        "schema": "template@1",
+        "name": "單體斬擊",
+        "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。",
+        "family": "single-strike",
+        "status": "enabled",
+        "params": {
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          },
+          "damage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            }
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          }
+        },
+        "requires": [],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "23-04 雷焰聖劍",
+          "jass": "A0OD"
+        }
+      },
+      "sha256:e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771cd614a89d04e016c6": {
+        "id": "tpl-lock-combo",
+        "schema": "template@1",
+        "name": "鎖定連段",
+        "description": "把一個人鎖住打完一整段。命中後目標被定住、施法者進入演出狀態（這段期間打不到他），連段一擊一擊落下，最後一記終結技在收招那一刻結算並掃過周圍。「連段次數 × 每段間隔」就是整段長度 —— 它是算出來的，所以沒有『持續時間』這個欄位可以填。⚠️ 原作的連段中施法者會一擊一擊瞬移到目標身邊，這裡沒有搬過來：那段期間雙方都被 pause + 無敵，施法者站哪裡不影響任何結算，只有終結技的圓心用得到，所以收成原地演出。想要遞減間隔（52-002 射殺百頭的 CD×0.75）也還做不到。 ⭐ owner 2026-08-13：終結技可以是**另一支具名技能**（finisherAbility，走 proxyCast 代放），⛔ 不是把那支技能的傷害抄一份進來 —— 抄一份之後那支技能改了，連段裡的版本不會跟著改。留空則沿用 finisherDamage 那個數字。發動條件也是一格（trigger）：預設 onCast，20-002 是 onReflectSuccess（反彈成功才發），所以整段連段可以掛在被動 hook 上而不是主動施放。",
+        "family": "lock-combo",
+        "status": "enabled",
+        "params": {
+          "casterGuard": {
+            "type": "enum",
+            "default": "all",
+            "values": [
+              "all",
+              "magic",
+              "none"
+            ]
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "finisherAbility": {
+            "type": "docRef",
+            "optional": true
+          },
+          "finisherDamage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                450
+              ],
+              "ratios": []
+            }
+          },
+          "finisherRadius": {
+            "type": "number",
+            "default": 150,
+            "min": 50,
+            "max": 1800,
+            "unit": "wc3u"
+          },
+          "hitCount": {
+            "type": "number",
+            "default": 5,
+            "min": 1,
+            "max": 20,
+            "unit": "count"
+          },
+          "hitIntervalSec": {
+            "type": "number",
+            "default": 0.4,
+            "min": 0.05,
+            "max": 3,
+            "unit": "s"
+          },
+          "lockTarget": {
+            "type": "enum",
+            "default": "stun",
+            "values": [
+              "stun",
+              "root",
+              "none"
+            ]
+          },
+          "perHitDamage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                100
+              ],
+              "ratios": []
+            }
+          },
+          "trigger": {
+            "type": "enum",
+            "default": "onCast",
+            "values": [
+              "onCast",
+              "onReflectSuccess",
+              "onKill",
+              "onBasicAttack",
+              "onDamageTaken"
+            ]
+          }
+        },
+        "requires": [
+          "periodicDamage",
+          "invulnerable",
+          "applyStatus",
+          "leap"
+        ],
+        "gapScore": 6,
+        "exemplar": {
+          "skill": "84-04 給我蜂蜜",
+          "jass": "A0CX"
+        }
+      },
+      "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e": {
+        "id": "tpl-charge-push",
+        "schema": "template@1",
+        "name": "衝鋒推撞",
+        "description": "朝目標點直線衝鋒，抵達後對落點周圍造成範圍傷害，並把該處的敵人推開。預設貼地衝刺（衝鋒弧高 0）；把弧高拉起來就變成 52-02 蹂躪編年史那種掄飛。「推開距離」清空 = 只衝鋒不推撞（52-04 巨神一擊）。傷害與推撞都在抵達點結算，不是在起跳點。",
+        "family": "charge-push",
+        "status": "enabled",
+        "params": {
+          "apexHeight": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 600,
+            "unit": "wc3h"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          },
+          "damage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            }
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "physical",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "dashDistance": {
+            "type": "number",
+            "default": 600,
+            "min": 100,
+            "max": 1309,
+            "unit": "wc3u"
+          },
+          "dashDurationSec": {
+            "type": "number",
+            "default": 0.4,
+            "min": 0.05,
+            "max": 2,
+            "unit": "s"
+          },
+          "pushDistance": {
+            "type": "number",
+            "default": 400,
+            "min": 50,
+            "max": 1090,
+            "unit": "wc3u",
+            "optional": true
+          },
+          "pushFrom": {
+            "type": "enum",
+            "default": "facing",
+            "values": [
+              "caster",
+              "facing",
+              "pull"
+            ]
+          },
+          "pushLaunchHeight": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 600,
+            "unit": "wc3h"
+          },
+          "pushSpeed": {
+            "type": "number",
+            "default": 872,
+            "min": 100,
+            "max": 2181,
+            "unit": "wc3u"
+          },
+          "radius": {
+            "type": "number",
+            "default": 300,
+            "min": 50,
+            "max": 900,
+            "unit": "wc3u"
+          }
+        },
+        "requires": [
+          "leap",
+          "knockback"
+        ],
+        "gapScore": 5,
+        "exemplar": {
+          "skill": "38-01 邪王炎殺劍",
+          "jass": "A0OG"
+        }
+      }
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "〔興趣使然的英雄〕",
+        "purpose": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。\n【目標設計】一段時間未攻擊後，下一次普通拳獲得有限強化。\n【待補機制】需未攻擊時間與下一拳一次消耗。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-25-20260907-passive-1",
+            "template": {
+              "ref": "tpl-on-attack",
+              "params": {
+                "bonusDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "condition": {
+                  "kind": "chance",
+                  "p": 1
+                },
+                "damageType": "physical",
+                "event": "onBasicAttack",
+                "internalCooldown": 3
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "普通拳",
+        "purpose": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】短距離單次重拳。\n【待補機制】普通拳仍走標準傷害。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-25-20260907-q-1",
+            "template": {
+              "ref": "tpl-single-strike",
+              "params": {
+                "castTimeSec": 0.2,
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "physical"
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "連續普通拳",
+        "purpose": "【目前模板可執行】5 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】多段拳擊，整招使用固定傷害預算。\n【待補機制】需要整招總傷害預算；目前每段各自級距。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "極小"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-25-20260907-w-1",
+            "template": {
+              "ref": "tpl-lock-combo",
+              "params": {
+                "casterGuard": "none",
+                "damageType": "physical",
+                "finisherDamage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "finisherRadius": 150,
+                "hitCount": 5,
+                "hitIntervalSec": 0.18,
+                "lockTarget": "none",
+                "perHitDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "trigger": "onCast"
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771cd614a89d04e016c6"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "periodicDamage",
+          "invulnerable",
+          "applyStatus",
+          "leap"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "〔趕上特賣〕",
+        "purpose": "【目前模板可執行】向指定方向突進 450 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】直線快速移動，碰撞後停止。\n【待補機制】碰撞安全需場景驗收。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-25-20260907-e-1",
+            "template": {
+              "ref": "tpl-charge-push",
+              "params": {
+                "apexHeight": 0,
+                "castTimeSec": 0.1,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "dashDistance": 450,
+                "dashDurationSec": 0.3,
+                "pushDistance": 200,
+                "pushFrom": "facing",
+                "pushLaunchHeight": 0,
+                "pushSpeed": 872,
+                "radius": 150
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "leap",
+          "knockback"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "認真系列・認真一拳",
+        "purpose": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】長起手後的高傷害衝擊波，具有明顯方向與閃避窗口。\n【待補機制】四段衝擊波不等於單拳總結算；需高單擊預算與較長起手。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "castTimeTier": "極大",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "大"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-25-20260907-r-1",
+            "template": {
+              "ref": "tpl-line-sweep",
+              "params": {
+                "castTimeSec": 0.35,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "segmentAoe": 150,
+                "segmentCount": 4,
+                "stepSize": 100
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699006b55c40f5b54c7"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        },
+        "capabilityIds": [
+          "projectile"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "認真系列・認真反覆橫跳",
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】短期快速左右移動並產生殘像，提供有限迴避機會。\n【待補機制】目前移速增益；需左右連續側移與有限次有效迴避。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-25-20260907-ex-1",
+            "template": {
+              "ref": "tpl-buff-self",
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": [
+                  {
+                    "msBonusTier": "極小",
+                    "op": "pctAdd",
+                    "stat": "ms"
+                  }
+                ]
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58",
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637",
+      "byteSize": 852356,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_a",
+        "cast": "single_skill_01_a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "modelProvenance": {
+      "schema": "ggd-hero-model-provenance@1",
+      "modelSha256": "90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637",
+      "sourceAssetId": "300heroes:8ab9713ac0d4058884378c3a",
+      "sourceCharacter": "埼玉",
+      "sourceWork": "一拳超人 ONE-PUNCH MAN",
+      "relationship": "exact",
+      "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+    },
+    "championIcon": "assets/icons/champions/thorne.webp",
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-25-20260907.q",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-25-20260907.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.ki.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                255,
+                209,
+                89
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.ki.slash",
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                255,
+                209,
+                89
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-25-20260907.w",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-25-20260907.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.ki.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                255,
+                209,
+                89
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.ki.slash",
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                255,
+                209,
+                89
+              ],
+              "alpha": 0.85
+            },
+            {
+              "vfxId": "fx.prim.ki.slash",
+              "at": "target",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "strike",
+              "strikeIndex": 5,
+              "w3xScale": 1,
+              "tint": [
+                255,
+                209,
+                89
+              ],
+              "alpha": 0.9
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-25-20260907.e",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-25-20260907.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.ki.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                255,
+                209,
+                89
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.ki.slash",
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                255,
+                209,
+                89
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-25-20260907.r",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-25-20260907.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.ki.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                255,
+                209,
+                89
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.ki.beam",
+              "at": "target",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 1.25,
+              "tint": [
+                255,
+                209,
+                89
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-25-20260907.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-25-20260907.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.ki.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                255,
+                209,
+                89
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.ki.pulse",
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                255,
+                209,
+                89
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637.glb",
+        "byteSize": 852356,
+        "mediaType": "model/gltf-binary",
+        "sha256": "90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "sourceDesign": {
+    "schema": "ggd-hero-source-design@1",
+    "sourceSha256": "abcad4bd0109fab996039d46fe9b9aef79ce4386a5a04f85a79792cc6c1d1240",
+    "name": "一拳超人",
+    "identity": "作品：《一拳超人》  \n角色實體：埼玉；保留「一拳超人」顯示名稱。  \n定位：高辨識單擊、長起手、傷害上限。",
+    "ownerText": "### 25｜一拳超人\n\n作品：《一拳超人》  \n角色實體：埼玉；保留「一拳超人」顯示名稱。  \n定位：高辨識單擊、長起手、傷害上限。\n\n- **PASSIVE｜〔興趣使然的英雄〕**：一段時間未攻擊後，下一次普通拳獲得有限強化。\n- **Q｜普通拳**：短距離單次重拳。\n- **W｜連續普通拳**：多段拳擊，整招使用固定傷害預算。\n- **E｜〔趕上特賣〕**：直線快速移動，碰撞後停止。\n- **R｜認真系列・認真一拳**：長起手後的高傷害衝擊波，具有明顯方向與閃避窗口。\n- **EX｜認真系列・認真反覆橫跳**：短期快速左右移動並產生殘像，提供有限迴避機會。\n\n**審查重點**：認真一拳仍經過護盾、減傷與保命結算；驗證高傷害溢位、碰撞與多段觸發，保留「一拳」演出而不直接刪除敵人。\n\n",
+    "reviewText": "認真一拳仍經過護盾、減傷與保命結算；驗證高傷害溢位、碰撞與多段觸發，保留「一拳」演出而不直接刪除敵人。",
+    "slots": {
+      "PASSIVE": {
+        "name": "〔興趣使然的英雄〕",
+        "ownerDescription": "一段時間未攻擊後，下一次普通拳獲得有限強化。",
+        "baselineBehavior": "普攻追加極小級物理傷害，內置冷卻 3 秒。",
+        "requiredRefinement": "需未攻擊時間與下一拳一次消耗。",
+        "refinementContracts": [
+          "M02",
+          "M07",
+          "M11"
+        ]
+      },
+      "Q": {
+        "name": "普通拳",
+        "ownerDescription": "短距離單次重拳。",
+        "baselineBehavior": "指定單一敵人造成小級物理傷害。",
+        "requiredRefinement": "普通拳仍走標準傷害。",
+        "refinementContracts": [
+          "M02",
+          "M07",
+          "M11"
+        ]
+      },
+      "W": {
+        "name": "連續普通拳",
+        "ownerDescription": "多段拳擊，整招使用固定傷害預算。",
+        "baselineBehavior": "5 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。",
+        "requiredRefinement": "需要整招總傷害預算；目前每段各自級距。",
+        "refinementContracts": [
+          "M02",
+          "M07",
+          "M11"
+        ]
+      },
+      "E": {
+        "name": "〔趕上特賣〕",
+        "ownerDescription": "直線快速移動，碰撞後停止。",
+        "baselineBehavior": "向指定方向突進 450 wc3u，造成極小級碰撞範圍傷害與推移。",
+        "requiredRefinement": "碰撞安全需場景驗收。",
+        "refinementContracts": [
+          "M02",
+          "M07",
+          "M11"
+        ]
+      },
+      "R": {
+        "name": "認真系列・認真一拳",
+        "ownerDescription": "長起手後的高傷害衝擊波，具有明顯方向與閃避窗口。",
+        "baselineBehavior": "向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。",
+        "requiredRefinement": "四段衝擊波不等於單拳總結算；需高單擊預算與較長起手。",
+        "refinementContracts": [
+          "M02",
+          "M07",
+          "M11"
+        ]
+      },
+      "EX": {
+        "name": "認真系列・認真反覆橫跳",
+        "ownerDescription": "短期快速左右移動並產生殘像，提供有限迴避機會。",
+        "baselineBehavior": "自身取得 3 秒增益：極小級移速。",
+        "requiredRefinement": "目前移速增益；需左右連續側移與有限次有效迴避。",
+        "refinementContracts": [
+          "M02",
+          "M07",
+          "M11"
+        ]
+      }
+    }
+  },
+  "validationState": {
+    "identity": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 12,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 1,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 3,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 1,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 3,
+      "status": "stale",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": [
+    {
+      "kind": "generator-adopted",
+      "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+      "projectRevision": 5,
+      "digest": "4e3e344add56b09c5a3d76961358ea17a255f87de671450f6134ac67b68a7440"
+    },
+    {
+      "kind": "generator-adopted",
+      "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
+      "projectRevision": 12,
+      "digest": "0fee62f42013f7079f465e507e95598c9ce472a67f2bcb8927b099ed1a393ab4"
+    }
+  ]
+}

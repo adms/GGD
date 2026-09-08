@@ -4,7 +4,7 @@
   "scope": "Original requirements versus compiled authoring; compilation is not design acceptance",
   "heroes": 37,
   "slots": 222,
-  "changedSlots": 4,
+  "changedSlots": 6,
   "passiveOnAttackTemplates": 29,
   "originalDesignAcceptance": "incomplete",
   "published": false,
@@ -3281,11 +3281,12 @@
         "onAbilityCast",
         "onAbilityCast",
         "onAbilityCast",
+        "onAbilityCast",
         "onAbilityCast"
       ],
       "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": "已以實際施法事件建立四張卡牌順序、三層上限及下一盾消耗；一般攻擊不集氣。EX 的風／樹 Q 替換尚未完成，樹牌獨立識別仍列待補，不宣稱整套牌組完成。"
+      "refinementNote": "風牌與樹牌依實際 Q 分支分別識別；EX 切換本身不增加連結。一般攻擊不集氣。牌面／圖示狀態同步仍待畫面實作驗收。"
     },
     {
       "hero": "27",
@@ -3296,17 +3297,21 @@
       "ownerDescription": "以風束攻擊並推動目標。",
       "requiredRefinement": "風束推動缺 knockback；目前單體魔法。",
       "products": [
-        "tpl-single-strike"
+        "tpl-effect-sequence"
       ],
       "castType": "targeted",
       "targetsEnemies": true,
       "effects": [
-        "damage"
+        "damage",
+        "knockback",
+        "spawnVfx",
+        "applyStatus",
+        "spawnVfx"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "風／樹分支由 EX 狀態決定。風與自然類既有特效僅為分支提示，未宣稱原作風束／葉枝演出或圖示完成。"
     },
     {
       "hero": "27",
@@ -3327,7 +3332,7 @@
       "hooks": [],
       "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": "友軍／自己盾與 0–3 層連結消耗已建立，數值在此版本 JSON 可調。需行為、原文與畫面核對；EX 換牌相關牌序仍待補。"
+      "refinementNote": "友军／自己盾與 0–3 層連結消耗已建立，數值在此版本 JSON 可調；原文及畫面驗收狀態分開記錄。"
     },
     {
       "hero": "27",
@@ -3379,18 +3384,17 @@
       "ownerDescription": "將 Q 在風牌推動與樹牌束縛之間切換；兩者共享 Q 的冷卻與資源。",
       "requiredRefinement": "目前固定樹牌鎖足；需風／樹 Q 版本切換，共享冷卻。",
       "products": [
-        "tpl-single-strike"
+        "tpl-effect-sequence"
       ],
-      "castType": "targeted",
+      "castType": "self",
       "targetsEnemies": true,
       "effects": [
-        "damage",
-        "applyStatus"
+        "consumeStatus"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "Q 真正改走擊退或束縛分支，EX 本身不集氣。兩者共用同一 Q 實例；牌面／圖示隨模式同步仍待補，不把分支色彩提示當成完整美術。"
     },
     {
       "hero": "28",

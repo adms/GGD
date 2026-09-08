@@ -1,0 +1,1274 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "community-review-30-20260907",
+  "revision": 12,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "尼古貓貓",
+    "concept": "尼古貓貓 社群英雄功能驗收稿。作品識別：《ヤニねこ／尼古喵喵》  \n角色實體：佐藤ヤニ子；保留「尼古貓貓」顯示名稱。  \n定位：日常喜劇角色轉譯、區域干擾。  \n註：以下戰鬥技能全部為 GGD 創編。\n\n視覺方向：灰煙低透明、雜物卡通輪廓、紅色驚慌符號；技能全部為 GGD 日常惡搞改編。\n以 GGD 法師 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "PASSIVE": "〔拖延症〕",
+      "Q": "〔菸灰缸飛過去〕",
+      "W": "〔煙霧瀰漫〕",
+      "E": "〔先溜再說〕",
+      "R": "〔房間大崩壞〕",
+      "EX": "〔今天真的不想動〕"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      }
+    },
+    "attributes": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 12,
+      "state": "draft",
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      }
+    },
+    "mechanics": {
+      "revision": 1,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 3,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 1,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 3,
+      "state": "stale",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "community-review-30-20260907.plan",
+    "title": "尼古貓貓",
+    "summary": "尼古貓貓 社群英雄功能驗收稿。作品識別：《ヤニねこ／尼古喵喵》  \n角色實體：佐藤ヤニ子；保留「尼古貓貓」顯示名稱。  \n定位：日常喜劇角色轉譯、區域干擾。  \n註：以下戰鬥技能全部為 GGD 創編。\n\n視覺方向：灰煙低透明、雜物卡通輪廓、紅色驚慌符號；技能全部為 GGD 日常惡搞改編。\n以 GGD 法師 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "法師",
+    "archetype": "mage",
+    "attackType": "ranged",
+    "budget": {
+      "power": 50,
+      "complexity": 60
+    },
+    "statOverrides": {
+      "ms": "中",
+      "mr": "中",
+      "armor": "小",
+      "maxHealth": "小",
+      "maxMana": "大",
+      "ad": "小",
+      "ap": "大",
+      "as": "小",
+      "healthRegen": "小",
+      "manaRegen": "大",
+      "range": "大"
+    },
+    "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
+    "templateVersions": {
+      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
+        "id": "tpl-buff-self",
+        "schema": "template@1",
+        "name": "變身強化-數值面",
+        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
+        "family": "buff-self",
+        "status": "enabled",
+        "params": {
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          },
+          "duration": {
+            "type": "number",
+            "default": 15,
+            "min": 1,
+            "max": 60,
+            "unit": "s"
+          },
+          "modifiers": {
+            "type": "statModifiers",
+            "default": [
+              {
+                "op": "flat",
+                "stat": "ad",
+                "value": 50
+              }
+            ]
+          }
+        },
+        "requires": [],
+        "gapScore": 6,
+        "exemplar": {
+          "skill": "82-04 闇之魔法",
+          "jass": "A0Q6"
+        }
+      },
+      "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0": {
+        "id": "tpl-on-attack",
+        "schema": "template@1",
+        "name": "攻擊觸發",
+        "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
+        "family": "on-attack",
+        "status": "enabled",
+        "params": {
+          "bonusDamage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                100
+              ],
+              "ratios": []
+            }
+          },
+          "chance": {
+            "type": "number",
+            "min": 0,
+            "max": 1,
+            "unit": "ratio",
+            "optional": true
+          },
+          "condition": {
+            "type": "condition",
+            "default": {
+              "any": [
+                {
+                  "all": [
+                    {
+                      "not": {
+                        "is": "champion",
+                        "kind": "kind",
+                        "subject": "target"
+                      }
+                    },
+                    {
+                      "kind": "stat",
+                      "mode": "percent",
+                      "op": "<",
+                      "stat": "hp",
+                      "subject": "target",
+                      "value": 0.35
+                    }
+                  ]
+                },
+                {
+                  "all": [
+                    {
+                      "is": "champion",
+                      "kind": "kind",
+                      "subject": "target"
+                    },
+                    {
+                      "kind": "chance",
+                      "p": 0.01
+                    }
+                  ]
+                }
+              ]
+            },
+            "optional": true
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "event": {
+            "type": "enum",
+            "default": "onBasicAttack",
+            "values": [
+              "onBasicAttack",
+              "onDamageDealt"
+            ]
+          },
+          "internalCooldown": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 60,
+            "unit": "s",
+            "optional": true
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者",
+          "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效"
+        }
+      },
+      "sha256:34fc1fc2579e395212180f244209347185c83466671e8b1d041e2f0933004424": {
+        "id": "tpl-random-barrage",
+        "schema": "template@1",
+        "name": "亂數彈幕轟炸",
+        "description": "在一個區域裡連續丟 N 發爆炸,每一發的落點都是隨機的。原作 8 支成員全部是同一個迴圈:`GetRandomLocInRect(RectFromCenterSizeBJ(中心, S, S))` → 生一隻 dummy → 叫它放一發 → 睡一下 → 再來。\n\n**總時長不是欄位,是算出來的**(發數 − 1) × 每發間隔 —— 原作的迴圈也是這樣,把它做成第三個可填的數字只會讓三個數字互相打架。\n\n決策點是「傷害怎麼付」:\n· 逐發結算(預設,5/8 支) —— 站在轟炸區裡的人每一發都會挨一下。\n· 施法瞬間一次付清(3/8 支) —— 23-03 雷牙一閃、81-02 Acxel Shooter、53-01 獸王牙操彈 的彈幕**完全是演出**,傷害在觸發裡只判一次矩形。把整片火光算成 N 段傷害會讓這三支變成原作的好幾倍。\n\n「開場直傷」清空 = 純轟炸;填了 = 先來一發大的再開始炸(42-04 世界終結 的 100% [AP] 起手)。\n\n⚠️ 已知落差:sim 的持續傷害綁在**施法當下解出來的目標**上,所以(a)開炸之後才走進區域的人不會挨,先走出去的人還是會繼續挨;(b)每一發的隨機落點沒有模擬 —— 區域內的人是**每一發都吃到**,而不是機率性地吃到其中幾發。原作 42-04 的雷震半徑(375)本來就大於它的散佈半徑(225),那一支剛好完全吻合;21-002 天破壤碎(散佈 600 / 半徑 320)則是這個模型最不準的一支。",
+        "family": "random-barrage",
+        "status": "enabled",
+        "params": {
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          },
+          "count": {
+            "type": "number",
+            "default": 9,
+            "min": 2,
+            "max": 100,
+            "unit": "count"
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "impactDamage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                150
+              ],
+              "ratios": []
+            }
+          },
+          "impactRadius": {
+            "type": "number",
+            "default": 320,
+            "min": 50,
+            "max": 900,
+            "unit": "wc3u"
+          },
+          "intervalSec": {
+            "type": "number",
+            "default": 0.1,
+            "min": 0.04,
+            "max": 0.6,
+            "unit": "s"
+          },
+          "openingDamage": {
+            "type": "scaling",
+            "optional": true
+          },
+          "payout": {
+            "type": "enum",
+            "default": "perImpact",
+            "values": [
+              "perImpact",
+              "onceAtCast"
+            ]
+          },
+          "scatterRadius": {
+            "type": "number",
+            "default": 225,
+            "min": 0,
+            "max": 1500,
+            "unit": "wc3u"
+          }
+        },
+        "requires": [
+          "periodicDamage"
+        ],
+        "gapScore": 6,
+        "exemplar": {
+          "skill": "74-03 闇之天使",
+          "jass": "A0F4 → dummy A011 ×8 (war3map.j:48501-48519)"
+        }
+      },
+      "sha256:976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68b5c12bc9a25ee7e4": {
+        "id": "tpl-ground-nova",
+        "schema": "template@1",
+        "name": "原地震波",
+        "description": "以施法者為中心的環形震波。",
+        "family": "ground-nova",
+        "status": "enabled",
+        "params": {
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          },
+          "damage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                150
+              ],
+              "ratios": []
+            }
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "radius": {
+            "type": "number",
+            "default": 530,
+            "min": 200,
+            "max": 900,
+            "unit": "wc3u"
+          }
+        },
+        "requires": [],
+        "gapScore": 8,
+        "exemplar": {
+          "skill": "80-03 鬼神烈戟",
+          "jass": "A0N0"
+        }
+      },
+      "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b": {
+        "id": "tpl-single-strike",
+        "schema": "template@1",
+        "name": "單體斬擊",
+        "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。",
+        "family": "single-strike",
+        "status": "enabled",
+        "params": {
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          },
+          "damage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            }
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          }
+        },
+        "requires": [],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "23-04 雷焰聖劍",
+          "jass": "A0OD"
+        }
+      },
+      "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e": {
+        "id": "tpl-charge-push",
+        "schema": "template@1",
+        "name": "衝鋒推撞",
+        "description": "朝目標點直線衝鋒，抵達後對落點周圍造成範圍傷害，並把該處的敵人推開。預設貼地衝刺（衝鋒弧高 0）；把弧高拉起來就變成 52-02 蹂躪編年史那種掄飛。「推開距離」清空 = 只衝鋒不推撞（52-04 巨神一擊）。傷害與推撞都在抵達點結算，不是在起跳點。",
+        "family": "charge-push",
+        "status": "enabled",
+        "params": {
+          "apexHeight": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 600,
+            "unit": "wc3h"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          },
+          "damage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            }
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "physical",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "dashDistance": {
+            "type": "number",
+            "default": 600,
+            "min": 100,
+            "max": 1309,
+            "unit": "wc3u"
+          },
+          "dashDurationSec": {
+            "type": "number",
+            "default": 0.4,
+            "min": 0.05,
+            "max": 2,
+            "unit": "s"
+          },
+          "pushDistance": {
+            "type": "number",
+            "default": 400,
+            "min": 50,
+            "max": 1090,
+            "unit": "wc3u",
+            "optional": true
+          },
+          "pushFrom": {
+            "type": "enum",
+            "default": "facing",
+            "values": [
+              "caster",
+              "facing",
+              "pull"
+            ]
+          },
+          "pushLaunchHeight": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 600,
+            "unit": "wc3h"
+          },
+          "pushSpeed": {
+            "type": "number",
+            "default": 872,
+            "min": 100,
+            "max": 2181,
+            "unit": "wc3u"
+          },
+          "radius": {
+            "type": "number",
+            "default": 300,
+            "min": 50,
+            "max": 900,
+            "unit": "wc3u"
+          }
+        },
+        "requires": [
+          "leap",
+          "knockback"
+        ],
+        "gapScore": 5,
+        "exemplar": {
+          "skill": "38-01 邪王炎殺劍",
+          "jass": "A0OG"
+        }
+      }
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "〔拖延症〕",
+        "purpose": "【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。\n【目標設計】停止移動後逐步累積拖延，上限三層；受擊時清空，施法可消耗強化。\n【待補機制】需靜止三層拖延、受擊清除與施法消耗。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-30-20260907-passive-1",
+            "template": {
+              "ref": "tpl-on-attack",
+              "params": {
+                "bonusDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "condition": {
+                  "kind": "chance",
+                  "p": 1
+                },
+                "damageType": "magic",
+                "event": "onBasicAttack",
+                "internalCooldown": 3
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "〔菸灰缸飛過去〕",
+        "purpose": "【目前模板可執行】指定落點半徑 300 wc3u 的一次小級範圍傷害。\n【目標設計】投擲道具，落地造成一次小範圍傷害。\n【待補機制】菸灰缸道具拋物線未綁；落地一次傷害可測。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-30-20260907-q-1",
+            "template": {
+              "ref": "tpl-ground-nova",
+              "params": {
+                "castTimeSec": 0.4,
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "radius": 300
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68b5c12bc9a25ee7e4"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "〔煙霧瀰漫〕",
+        "purpose": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"slow30\",\"duration\":1.5,\"applyTo\":\"target\",\"moveSpeedMult\":0.7}]。\n【目標設計】形成有期限的小型煙霧區，提供明示的命中干擾；不自動賦予完整隱形。\n【待補機制】單體緩速不是煙霧區命中干擾；需區域及明示效果。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "effects": [
+            {
+              "applyTo": "target",
+              "duration": 1.5,
+              "kind": "applyStatus",
+              "moveSpeedMult": 0.7,
+              "statusId": "slow30"
+            }
+          ],
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-30-20260907-w-1",
+            "template": {
+              "ref": "tpl-single-strike",
+              "params": {
+                "castTimeSec": 0.2,
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "magic"
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "〔先溜再說〕",
+        "purpose": "【目前模板可執行】向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】短距離狼狽撤退，留下純視覺雜物殘影。\n【待補機制】撤退应無碰撞輸出，模板帶推移傷害，須審查改編。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-30-20260907-e-1",
+            "template": {
+              "ref": "tpl-charge-push",
+              "params": {
+                "apexHeight": 0,
+                "castTimeSec": 0.1,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "dashDistance": 250,
+                "dashDurationSec": 0.3,
+                "pushDistance": 200,
+                "pushFrom": "facing",
+                "pushLaunchHeight": 0,
+                "pushSpeed": 872,
+                "radius": 150
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "leap",
+          "knockback"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "〔房間大崩壞〕",
+        "purpose": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.5 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】在指定區域分三波掉落卡通雜物，具有清楚落點預警。\n【待補機制】三波落點可測；卡通雜物模型與逐波預警待補。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "castTimeTier": "大",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-30-20260907-r-1",
+            "template": {
+              "ref": "tpl-random-barrage",
+              "params": {
+                "castTimeSec": 0.5,
+                "count": 3,
+                "damageType": "physical",
+                "impactDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "impactRadius": 150,
+                "intervalSec": 0.5,
+                "payout": "perImpact",
+                "scatterRadius": 120
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:34fc1fc2579e395212180f244209347185c83466671e8b1d041e2f0933004424"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        },
+        "capabilityIds": [
+          "periodicDamage"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "〔今天真的不想動〕",
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":160,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-30-20260907.ex.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】消耗拖延層數，原地取得護盾；移動後提前結束。\n【待補機制】需拖延消耗與移動取消盾。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "大",
+          "effects": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 160,
+                "ratios": []
+              },
+              "duration": 3,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "community-review-30-20260907.ex.guard"
+            }
+          ],
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "products": [
+          {
+            "instanceId": "community-review-30-20260907-ex-1",
+            "template": {
+              "ref": "tpl-buff-self",
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": []
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "community.body.c1d58311b32ce991b89fd6a2aba74ac9548a4bd1340b4e18",
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf",
+      "byteSize": 1275656,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01_a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "modelProvenance": {
+      "schema": "ggd-hero-model-provenance@1",
+      "modelSha256": "6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf",
+      "sourceAssetId": "300heroes:42198014d654ce4602d8ffd2",
+      "sourceCharacter": "玉藻前",
+      "sourceWork": "Fate/EXTRA 系列",
+      "relationship": "style-proxy",
+      "notes": "暫採獸耳尾巴女性造型；實際為玉藻前的狐狸造型，不是尼古貓貓原作貓人外觀、髮色或日常服裝。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。"
+    },
+    "championIcon": "assets/icons/champions/sela.webp",
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-30-20260907.q",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-30-20260907.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.sound.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                166,
+                158,
+                150
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.sound.nova",
+              "at": "point",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                166,
+                158,
+                150
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-30-20260907.w",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-30-20260907.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.sound.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                166,
+                158,
+                150
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.sound.pulse",
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                166,
+                158,
+                150
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.w.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-30-20260907.e",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-30-20260907.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.sound.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                166,
+                158,
+                150
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.sound.pulse",
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                166,
+                158,
+                150
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.e.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-30-20260907.r",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-30-20260907.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.sound.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                166,
+                158,
+                150
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.sound.nova",
+              "at": "point",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 1.25,
+              "tint": [
+                166,
+                158,
+                150
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-30-20260907.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-30-20260907.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.sound.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                166,
+                158,
+                150
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.sound.pulse",
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                166,
+                158,
+                150
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/sela.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf.glb",
+        "byteSize": 1275656,
+        "mediaType": "model/gltf-binary",
+        "sha256": "6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "sourceDesign": {
+    "schema": "ggd-hero-source-design@1",
+    "sourceSha256": "82c2538225564d97e4b00273bfc19181e67b9dd02a03316389aa0f6b51a3eb63",
+    "name": "尼古貓貓",
+    "identity": "作品識別：《ヤニねこ／尼古喵喵》  \n角色實體：佐藤ヤニ子；保留「尼古貓貓」顯示名稱。  \n定位：日常喜劇角色轉譯、區域干擾。  \n註：以下戰鬥技能全部為 GGD 創編。",
+    "ownerText": "### 30｜尼古貓貓\n\n作品識別：《ヤニねこ／尼古喵喵》  \n角色實體：佐藤ヤニ子；保留「尼古貓貓」顯示名稱。  \n定位：日常喜劇角色轉譯、區域干擾。  \n註：以下戰鬥技能全部為 GGD 創編。\n\n- **PASSIVE｜〔拖延症〕**：停止移動後逐步累積拖延，上限三層；受擊時清空，施法可消耗強化。\n- **Q｜〔菸灰缸飛過去〕**：投擲道具，落地造成一次小範圍傷害。\n- **W｜〔煙霧瀰漫〕**：形成有期限的小型煙霧區，提供明示的命中干擾；不自動賦予完整隱形。\n- **E｜〔先溜再說〕**：短距離狼狽撤退，留下純視覺雜物殘影。\n- **R｜〔房間大崩壞〕**：在指定區域分三波掉落卡通雜物，具有清楚落點預警。\n- **EX｜〔今天真的不想動〕**：消耗拖延層數，原地取得護盾；移動後提前結束。\n\n**審查重點**：日常設定與 GGD 原創效果清楚分開；驗證煙霧資訊、場景道具併發、靜止蓄力與受擊清除，保留喜劇辨識度。\n\n",
+    "reviewText": "日常設定與 GGD 原創效果清楚分開；驗證煙霧資訊、場景道具併發、靜止蓄力與受擊清除，保留喜劇辨識度。",
+    "slots": {
+      "PASSIVE": {
+        "name": "〔拖延症〕",
+        "ownerDescription": "停止移動後逐步累積拖延，上限三層；受擊時清空，施法可消耗強化。",
+        "baselineBehavior": "普攻追加極小級魔法傷害，內置冷卻 3 秒。",
+        "requiredRefinement": "需靜止三層拖延、受擊清除與施法消耗。",
+        "refinementContracts": [
+          "M01",
+          "M11",
+          "M12"
+        ]
+      },
+      "Q": {
+        "name": "〔菸灰缸飛過去〕",
+        "ownerDescription": "投擲道具，落地造成一次小範圍傷害。",
+        "baselineBehavior": "指定落點半徑 300 wc3u 的一次小級範圍傷害。",
+        "requiredRefinement": "菸灰缸道具拋物線未綁；落地一次傷害可測。",
+        "refinementContracts": [
+          "M01",
+          "M11",
+          "M12"
+        ]
+      },
+      "W": {
+        "name": "〔煙霧瀰漫〕",
+        "ownerDescription": "形成有期限的小型煙霧區，提供明示的命中干擾；不自動賦予完整隱形。",
+        "baselineBehavior": "指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"slow30\",\"duration\":1.5,\"applyTo\":\"target\",\"moveSpeedMult\":0.7}]。",
+        "requiredRefinement": "單體緩速不是煙霧區命中干擾；需區域及明示效果。",
+        "refinementContracts": [
+          "M01",
+          "M11",
+          "M12"
+        ]
+      },
+      "E": {
+        "name": "〔先溜再說〕",
+        "ownerDescription": "短距離狼狽撤退，留下純視覺雜物殘影。",
+        "baselineBehavior": "向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。",
+        "requiredRefinement": "撤退应無碰撞輸出，模板帶推移傷害，須審查改編。",
+        "refinementContracts": [
+          "M01",
+          "M11",
+          "M12"
+        ]
+      },
+      "R": {
+        "name": "〔房間大崩壞〕",
+        "ownerDescription": "在指定區域分三波掉落卡通雜物，具有清楚落點預警。",
+        "baselineBehavior": "在指定區域依序落下 3 發；每發間隔 0.5 秒、半徑 150 wc3u、極小級傷害，可多次命中。",
+        "requiredRefinement": "三波落點可測；卡通雜物模型與逐波預警待補。",
+        "refinementContracts": [
+          "M01",
+          "M11",
+          "M12"
+        ]
+      },
+      "EX": {
+        "name": "〔今天真的不想動〕",
+        "ownerDescription": "消耗拖延層數，原地取得護盾；移動後提前結束。",
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":160,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-30-20260907.ex.guard\",\"onExisting\":\"keepLarger\"}]。",
+        "requiredRefinement": "需拖延消耗與移動取消盾。",
+        "refinementContracts": [
+          "M01",
+          "M11",
+          "M12"
+        ]
+      }
+    }
+  },
+  "validationState": {
+    "identity": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 12,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 1,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 3,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 1,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 3,
+      "status": "stale",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": [
+    {
+      "kind": "generator-adopted",
+      "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+      "projectRevision": 5,
+      "digest": "35527e56c98455927a509e9419bc30d2df1ea8301ad7942064abc968112d8d6e"
+    },
+    {
+      "kind": "generator-adopted",
+      "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
+      "projectRevision": 12,
+      "digest": "a58994acd9d245ed28702a6aab5c7388e334ddcb5835c5b63e959b738bcd6a13"
+    }
+  ]
+}

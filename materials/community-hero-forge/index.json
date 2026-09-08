@@ -1,0 +1,266 @@
+{
+  "schema": "ggd-workflow-handoff-index@1",
+  "heroCount": 37,
+  "slotCount": 222,
+  "heroes": [
+    {
+      "index": "01",
+      "name": "武藤遊戲",
+      "projectId": "community-review-01-20260907",
+      "project": "projects/01.hero-project.json",
+      "recipe": "recipes/01.upload-recipe.json"
+    },
+    {
+      "index": "02",
+      "name": "八神庵",
+      "projectId": "community-review-02-20260907",
+      "project": "projects/02.hero-project.json",
+      "recipe": "recipes/02.upload-recipe.json"
+    },
+    {
+      "index": "03",
+      "name": "不知火舞",
+      "projectId": "community-review-03-20260907",
+      "project": "projects/03.hero-project.json",
+      "recipe": "recipes/03.upload-recipe.json"
+    },
+    {
+      "index": "04",
+      "name": "空條承太郎",
+      "projectId": "community-review-04-20260907",
+      "project": "projects/04.hero-project.json",
+      "recipe": "recipes/04.upload-recipe.json"
+    },
+    {
+      "index": "05",
+      "name": "洛克人",
+      "projectId": "community-review-05-20260907",
+      "project": "projects/05.hero-project.json",
+      "recipe": "recipes/05.upload-recipe.json"
+    },
+    {
+      "index": "06",
+      "name": "卡比",
+      "projectId": "community-review-06-20260907",
+      "project": "projects/06.hero-project.json",
+      "recipe": "recipes/06.upload-recipe.json"
+    },
+    {
+      "index": "07",
+      "name": "西索",
+      "projectId": "community-review-07-20260907",
+      "project": "projects/07.hero-project.json",
+      "recipe": "recipes/07.upload-recipe.json"
+    },
+    {
+      "index": "08",
+      "name": "米卡莎",
+      "projectId": "community-review-08-20260907",
+      "project": "projects/08.hero-project.json",
+      "recipe": "recipes/08.upload-recipe.json"
+    },
+    {
+      "index": "09",
+      "name": "赫蘿",
+      "projectId": "community-review-09-20260907",
+      "project": "projects/09.hero-project.json",
+      "recipe": "recipes/09.upload-recipe.json"
+    },
+    {
+      "index": "10",
+      "name": "魯路修",
+      "projectId": "community-review-10-20260907",
+      "project": "projects/10.hero-project.json",
+      "recipe": "recipes/10.upload-recipe.json"
+    },
+    {
+      "index": "11",
+      "name": "利姆路",
+      "projectId": "community-review-11-20260907",
+      "project": "projects/11.hero-project.json",
+      "recipe": "recipes/11.upload-recipe.json"
+    },
+    {
+      "index": "12",
+      "name": "衛宮士郎",
+      "projectId": "community-review-12-20260907",
+      "project": "projects/12.hero-project.json",
+      "recipe": "recipes/12.upload-recipe.json"
+    },
+    {
+      "index": "13",
+      "name": "朝田詩乃",
+      "projectId": "community-review-13-20260907",
+      "project": "projects/13.hero-project.json",
+      "recipe": "recipes/13.upload-recipe.json"
+    },
+    {
+      "index": "14",
+      "name": "殺老師",
+      "projectId": "community-review-14-20260907",
+      "project": "projects/14.hero-project.json",
+      "recipe": "recipes/14.upload-recipe.json"
+    },
+    {
+      "index": "15",
+      "name": "比利海靈頓",
+      "projectId": "community-review-15-20260907",
+      "project": "projects/15.hero-project.json",
+      "recipe": "recipes/15.upload-recipe.json"
+    },
+    {
+      "index": "16",
+      "name": "魔法少女☆伊莉雅",
+      "projectId": "community-review-16-20260907",
+      "project": "projects/16.hero-project.json",
+      "recipe": "recipes/16.upload-recipe.json"
+    },
+    {
+      "index": "17",
+      "name": "安茲·烏爾·恭",
+      "projectId": "community-review-17-20260907",
+      "project": "projects/17.hero-project.json",
+      "recipe": "recipes/17.upload-recipe.json"
+    },
+    {
+      "index": "18",
+      "name": "吉爾伽美什",
+      "projectId": "community-review-18-20260907",
+      "project": "projects/18.hero-project.json",
+      "recipe": "recipes/18.upload-recipe.json"
+    },
+    {
+      "index": "19",
+      "name": "桐谷和人",
+      "projectId": "community-review-19-20260907",
+      "project": "projects/19.hero-project.json",
+      "recipe": "recipes/19.upload-recipe.json"
+    },
+    {
+      "index": "20",
+      "name": "御坂美琴",
+      "projectId": "community-review-20-20260907",
+      "project": "projects/20.hero-project.json",
+      "recipe": "recipes/20.upload-recipe.json"
+    },
+    {
+      "index": "21",
+      "name": "鹿目圓",
+      "projectId": "community-review-21-20260907",
+      "project": "projects/21.hero-project.json",
+      "recipe": "recipes/21.upload-recipe.json"
+    },
+    {
+      "index": "22",
+      "name": "菜月昴",
+      "projectId": "community-review-22-20260907",
+      "project": "projects/22.hero-project.json",
+      "recipe": "recipes/22.upload-recipe.json"
+    },
+    {
+      "index": "23",
+      "name": "坂田銀時",
+      "projectId": "community-review-23-20260907",
+      "project": "projects/23.hero-project.json",
+      "recipe": "recipes/23.upload-recipe.json"
+    },
+    {
+      "index": "24",
+      "name": "奇犽",
+      "projectId": "community-review-24-20260907",
+      "project": "projects/24.hero-project.json",
+      "recipe": "recipes/24.upload-recipe.json"
+    },
+    {
+      "index": "25",
+      "name": "一拳超人",
+      "projectId": "community-review-25-20260907",
+      "project": "projects/25.hero-project.json",
+      "recipe": "recipes/25.upload-recipe.json"
+    },
+    {
+      "index": "26",
+      "name": "名偵探柯南",
+      "projectId": "community-review-26-20260907",
+      "project": "projects/26.hero-project.json",
+      "recipe": "recipes/26.upload-recipe.json"
+    },
+    {
+      "index": "27",
+      "name": "庫洛魔法使",
+      "projectId": "community-review-27-20260907",
+      "project": "projects/27.hero-project.json",
+      "recipe": "recipes/27.upload-recipe.json"
+    },
+    {
+      "index": "28",
+      "name": "艾莉絲·伯雷亞斯·格雷拉特",
+      "projectId": "community-review-28-20260907",
+      "project": "projects/28.hero-project.json",
+      "recipe": "recipes/28.upload-recipe.json"
+    },
+    {
+      "index": "29",
+      "name": "芙莉蓮",
+      "projectId": "community-review-29-20260907",
+      "project": "projects/29.hero-project.json",
+      "recipe": "recipes/29.upload-recipe.json"
+    },
+    {
+      "index": "30",
+      "name": "尼古貓貓",
+      "projectId": "community-review-30-20260907",
+      "project": "projects/30.hero-project.json",
+      "recipe": "recipes/30.upload-recipe.json"
+    },
+    {
+      "index": "31",
+      "name": "SUN樂",
+      "projectId": "community-review-31-20260907",
+      "project": "projects/31.hero-project.json",
+      "recipe": "recipes/31.upload-recipe.json"
+    },
+    {
+      "index": "32",
+      "name": "阿薩謝爾",
+      "projectId": "community-review-32-20260907",
+      "project": "projects/32.hero-project.json",
+      "recipe": "recipes/32.upload-recipe.json"
+    },
+    {
+      "index": "33",
+      "name": "近衛刀太",
+      "projectId": "community-review-33-20260907",
+      "project": "projects/33.hero-project.json",
+      "recipe": "recipes/33.upload-recipe.json"
+    },
+    {
+      "index": "34",
+      "name": "高速婆婆",
+      "projectId": "community-review-34-20260907",
+      "project": "projects/34.hero-project.json",
+      "recipe": "recipes/34.upload-recipe.json"
+    },
+    {
+      "index": "35",
+      "name": "炭治郎",
+      "projectId": "community-review-35-20260907",
+      "project": "projects/35.hero-project.json",
+      "recipe": "recipes/35.upload-recipe.json"
+    },
+    {
+      "index": "36",
+      "name": "鬼畜王蘭斯",
+      "projectId": "community-review-36-20260907",
+      "project": "projects/36.hero-project.json",
+      "recipe": "recipes/36.upload-recipe.json"
+    },
+    {
+      "index": "37",
+      "name": "吉伊卡哇",
+      "projectId": "community-review-37-20260907",
+      "project": "projects/37.hero-project.json",
+      "recipe": "recipes/37.upload-recipe.json"
+    }
+  ]
+}

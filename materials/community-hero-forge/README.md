@@ -1,5 +1,29 @@
 # 社群英雄交付材料
 
+## 最新可共用作品（2026-09-09）
+
+[index.json](index.json)＋[projects/](projects/) 已保存 37 份實際 HeroProject，配對既有 [recipes/](recipes/)；包含 #1139 風／樹 Q 切換及前批友軍盾、卡牌連結修正。逐檔版本與 SHA-256 在 [handoff-manifest.json](handoff-manifest.json)。**37 名／222 槽重新編譯通過；29 名仍有通用普攻被動，完整原設計、畫面與正式發布尚未完成**，詳見 [逐槽對照](refinements/design-audit.json) 及 #1132。
+
+只需閱讀／再編輯設定時，直接使用 Git 的作品及原稿。要在 Editor「選擇交接資料夾」批次匯入，先還原既有 S3 模型封存，再組合成一個新目錄：
+
+```sh
+# 離線核對 Git 作品、原文 SHA 與 222 槽重新編譯。
+pnpm exec node --import tsx tools/community-hero-forge/prepare-published-handoff.mts
+# 第一次需要模型時：依固定 profile／bucket 下載既有封存；不要使用舊交接內的作品蓋過 Git 最新版本。
+python3 materials/community-hero-forge/restore.py \
+  --manifest-dir materials/community-hero-forge/supplements/release-13956d93b \
+  --download --parts-dir /private/tmp/ggd-release-parts \
+  --output /private/tmp/ggd-release-payload
+# 核對 ZIP 與模型 SHA 後，搭配 Git 作品輸出完整可選取資料夾；output 必須不存在。
+pnpm exec node --import tsx tools/community-hero-forge/prepare-published-handoff.mts \
+  --release-root /private/tmp/ggd-release-payload \
+  --output /private/tmp/ggd-current-authoring-handoff
+```
+
+模型仍保存在 S3；本次沒有新增或替換模型。還原工具不修改服務、不投稿，也不重用歷史發布收據宣稱新作品已上線。取得後先依 [AI 守則](../../AI參考全自動鑄造守則.md) 逐項補原機制，再於目標服務重建 ZIP。其他工作線可直接引用本分支，不必等 Main 合併；正式整合仍由 PR #1135 審查。
+
+## 歷史大型材料
+
 本批大型材料保存在授權 S3 bucket；Git 保留原文、37 名配方、逐檔 manifest、固定下載位置、還原工具及驗證收據。34 個 `payload.tar.gz.part*` 分段不在本分支的檔案或提交歷史中，不能只 clone repository 就假定已下載材料。原 Git 交付分支保留為歷史，不改寫、不強制推送。
 
 固定位置：`s3://ggd-390630837668-ap-east-2-an/community-hero-forge/3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74/`。`s3-location.json` 固定 bucket、region、profile 及 manifest SHA-256；`manifest.json` 原有逐檔與分段雜湊不變。
