@@ -56,3 +56,11 @@ python3 tools/hero74-handoff/restore.py \\
 2. 沿PR #1144審查第二批及本交接，核對材料清單、S3還原與模型輸入隔離。
 3. 更換引擎版本或合併後重跑各自驗證；舊引擎綁定的第二批收據不能直接當新引擎結果。
 4. CI及必要review通過後由Main合併；本輪未執行合併或正式部署。
+
+## 本輪檢查結果
+
+材料清單39,041項、2,660個固定Git檔案及3,798份快照核對通過；S3新增106檔全新下載還原通過；完整性檢查器4項測試通過，包含快照竄改、封存來源不符及路徑越界負例。公開模型輸入39檔＋allowlist已另匯出並核SHA，見[export收據](model-input-export.json)。
+
+三项倉庫gate在同一版本一起執行，全部exit1，見[完整收據](prepush/summary.json)。skills仍卡在sparse缺9份音效manifest；Editor通過185項Skill Forge測試後卡在既有advisory過期；coord只有舊editor-form packet指紋不符，本批兩份packet均通過。詳細既有原因見[前輪只讀分類](../hero-validation-batch2-37/prepush/final-classification.json)。後段未觸達的檢查仍未驗，未修改歷史產物或引擎以換綠燈。
+
+兩個原依賴symlink已恢復，6項外工作樹快取前後雜湊不變。此次只提交本任務檔案，第一批進行中工作樹的原檔與index沒有被本任務修改。

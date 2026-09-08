@@ -20,6 +20,10 @@ PR：https://github.com/adms/GGD/pull/1135
 
 二、公開輸入與教師隔離
 
+本次已核對的公開輸入目錄（39個公開檔案＋1份allowlist）：
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero74-model-input-20260909
+可直接使用這份目錄，無需把教師資料複製給模型。
+
 以下是給評估協調者的操作指令，不是直接給受測模型的提示。在第二批 repo root：
 node tools/editor-acceptance/batch2-37/check.mjs --receipt-only
 node tools/editor-acceptance/batch2-37/partition.mjs --export=/absolute/new/model-input
