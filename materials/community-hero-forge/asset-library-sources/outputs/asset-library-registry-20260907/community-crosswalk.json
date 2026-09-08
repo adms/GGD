@@ -1,0 +1,334 @@
+[
+  {
+    "character_id": "community37:01",
+    "name": "武藤遊戲",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:02",
+    "name": "八神庵",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:03",
+    "name": "不知火舞",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:04",
+    "name": "空條承太郎",
+    "candidates": [
+      {
+        "character_id": "300heroes:163",
+        "name": "空条承太郎",
+        "origin": "JoJo 的奇妙冒險 第三部：星塵遠征軍",
+        "matched_aliases": [
+          "空條承太郎"
+        ],
+        "readiness": "native_and_static_preview",
+        "confidence": "name_match_candidate_not_identity_proof"
+      }
+    ],
+    "unmatched_note": null
+  },
+  {
+    "character_id": "community37:05",
+    "name": "洛克人",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:06",
+    "name": "卡比",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:07",
+    "name": "西索",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:08",
+    "name": "米卡莎",
+    "candidates": [
+      {
+        "character_id": "300heroes:107",
+        "name": "笠笠笠",
+        "origin": "進擊的巨人",
+        "matched_aliases": [
+          "米卡莎"
+        ],
+        "readiness": "native_and_static_preview",
+        "confidence": "name_match_candidate_not_identity_proof"
+      }
+    ],
+    "unmatched_note": null
+  },
+  {
+    "character_id": "community37:09",
+    "name": "赫蘿",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:10",
+    "name": "魯路修",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:11",
+    "name": "利姆路",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:12",
+    "name": "衛宮士郎",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:13",
+    "name": "朝田詩乃",
+    "candidates": [
+      {
+        "character_id": "300heroes:167",
+        "name": "冰之狙击手",
+        "origin": "刀劍神域 Sword Art Online",
+        "matched_aliases": [
+          "朝田詩乃"
+        ],
+        "readiness": "native_and_static_preview",
+        "confidence": "name_match_candidate_not_identity_proof"
+      }
+    ],
+    "unmatched_note": null
+  },
+  {
+    "character_id": "community37:14",
+    "name": "殺老師",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:15",
+    "name": "比利海靈頓",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:16",
+    "name": "魔法少女☆伊莉雅",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:17",
+    "name": "安茲·烏爾·恭",
+    "candidates": [
+      {
+        "character_id": "300heroes:229",
+        "name": "安兹乌尔恭",
+        "origin": "OVERLORD",
+        "matched_aliases": [
+          "安茲·烏爾·恭"
+        ],
+        "readiness": "native_and_static_preview",
+        "confidence": "name_match_candidate_not_identity_proof"
+      }
+    ],
+    "unmatched_note": null
+  },
+  {
+    "character_id": "community37:18",
+    "name": "吉爾伽美什",
+    "candidates": [
+      {
+        "character_id": "300heroes:104",
+        "name": "吉尔伽美什",
+        "origin": "Fate/stay night",
+        "matched_aliases": [
+          "吉爾伽美什"
+        ],
+        "readiness": "native_and_static_preview",
+        "confidence": "name_match_candidate_not_identity_proof"
+      }
+    ],
+    "unmatched_note": null
+  },
+  {
+    "character_id": "community37:19",
+    "name": "桐谷和人",
+    "candidates": [
+      {
+        "character_id": "300heroes:102",
+        "name": "黑衣剑士",
+        "origin": "刀劍神域 Sword Art Online",
+        "matched_aliases": [
+          "桐谷和人"
+        ],
+        "readiness": "native_and_static_preview",
+        "confidence": "name_match_candidate_not_identity_proof"
+      }
+    ],
+    "unmatched_note": null
+  },
+  {
+    "character_id": "community37:20",
+    "name": "御坂美琴",
+    "candidates": [
+      {
+        "character_id": "300heroes:96",
+        "name": "御坂美琴",
+        "origin": "魔法禁書目錄／科學超電磁砲",
+        "matched_aliases": [
+          "御坂美琴"
+        ],
+        "readiness": "native_and_static_preview",
+        "confidence": "name_match_candidate_not_identity_proof"
+      }
+    ],
+    "unmatched_note": null
+  },
+  {
+    "character_id": "community37:21",
+    "name": "鹿目圓",
+    "candidates": [
+      {
+        "character_id": "300heroes:150",
+        "name": "鹿目圆香",
+        "origin": "魔法少女小圓",
+        "matched_aliases": [
+          "鹿目圓"
+        ],
+        "readiness": "native_and_static_preview",
+        "confidence": "name_match_candidate_not_identity_proof"
+      }
+    ],
+    "unmatched_note": null
+  },
+  {
+    "character_id": "community37:22",
+    "name": "菜月昴",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:23",
+    "name": "坂田銀時",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:24",
+    "name": "奇犽",
+    "candidates": [
+      {
+        "character_id": "300heroes:161",
+        "name": "奇犽",
+        "origin": "HUNTER×HUNTER 獵人",
+        "matched_aliases": [
+          "奇犽"
+        ],
+        "readiness": "native_and_static_preview",
+        "confidence": "name_match_candidate_not_identity_proof"
+      }
+    ],
+    "unmatched_note": null
+  },
+  {
+    "character_id": "community37:25",
+    "name": "一拳超人",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:26",
+    "name": "名偵探柯南",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:27",
+    "name": "庫洛魔法使",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:28",
+    "name": "艾莉絲·伯雷亞斯·格雷拉特",
+    "candidates": [
+      {
+        "character_id": "300heroes:336",
+        "name": "艾莉丝",
+        "origin": "無職轉生～到了異世界就拿出真本事～",
+        "matched_aliases": [
+          "艾莉絲·伯雷亞斯·格雷拉特"
+        ],
+        "readiness": "native_and_static_preview",
+        "confidence": "name_match_candidate_not_identity_proof"
+      }
+    ],
+    "unmatched_note": null
+  },
+  {
+    "character_id": "community37:29",
+    "name": "芙莉蓮",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:30",
+    "name": "尼古貓貓",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:31",
+    "name": "SUN樂",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:32",
+    "name": "阿薩謝爾",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:33",
+    "name": "近衛刀太",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:34",
+    "name": "高速婆婆",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:35",
+    "name": "炭治郎",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:36",
+    "name": "鬼畜王蘭斯",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  },
+  {
+    "character_id": "community37:37",
+    "name": "吉伊卡哇",
+    "candidates": [],
+    "unmatched_note": "No exact normalized alias match; query manually by work/name."
+  }
+]

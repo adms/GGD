@@ -6,6 +6,10 @@
 
 封存內的計畫與交接文字保留當時內容；目前分工以 [整合說明](../../docs/_reports/community-hero-forge/merge-integration/README.md) 及 [#1115](https://github.com/adms/GGD/issues/1115) 為準。大型材料改放 S3 不表示核心／平台衝突整合或正式發布已完成。
 
+## 補充盤點與來源
+
+2026-09-08 全量盤點發現原三批未涵蓋所有既有 Git 素材，已另建 [素材補漏封存](supplements/workspace-assets-20260908/README.md)：5,444 份去重素材已上傳、重新下載並逐檔還原；四個工作樹目前 29,108 個資源路徑核對為 0 漏件。原 34 分段及 manifest 不變。[目前資源庫來源](asset-library-sources/README.md) 的 156 份 script、JSON 與文件另外保存在 Git。歷史備份、現有 Git 素材及未涵蓋範圍詳見補漏說明，不能擴大解讀為整台 Mac 所有檔案或正式上線均已完成。
+
 ## 讀取與還原
 
 `documents/` 保存四份原文件的歷史副本，`recipes/` 保存 37 名原配方。完整資料使用標準 gzip／tar；需要 Python 3.10 以上，以及已配置 `vibe-coding` profile 的 AWS CLI。工具只使用 `ap-east-2`、授權 bucket 和該 profile，由 AWS CLI 自動處理 AssumeRole／更新；不讀取、列印或寫入憑證，不使用其他 profile，不操作 IAM 或刪除 S3 物件。

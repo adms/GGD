@@ -1,0 +1,10 @@
+{
+  "schema": "ggd-asset-library-git-location@1",
+  "repository": "git@github.com:adms/GGD.git",
+  "branch": "codex/asset-library-management",
+  "path": "materials/asset-library",
+  "source_path": "materials/asset-library/source",
+  "publication_status": "local_commit_only_not_pushed",
+  "local_worktree": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-asset-library-management",
+  "native_parsing_json_scope": "pending user choice; preserved in S3"
+}
