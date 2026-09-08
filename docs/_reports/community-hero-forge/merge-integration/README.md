@@ -251,6 +251,16 @@ Platform 在 `apps/platform` 目錄對 `./internal/submissions`、`./internal/co
 - `1112`／`community-hero-forge` 查詢無既有票；標題查詢「合併 衝突」無命中，全文廣搜及 `CastResolveSystem`／`contentoverlay` 命中既有功能票。已讀相關進度；#991／#993／#1024 為 OPEN，其餘原票稿引用為 CLOSED，狀態不代表所有跨分支驗收完成。#838 是特效工坊總票、#1106 是報表分欄；本次不擴張到兩者。#1115 只承接本 PR 整合，與原功能票的差異詳列票文。
 - 本次文件 lint、連結與變更空白檢查通過，歷史 claims／Owner 引言未改，社群 packet 通過（[coord 原始 log](coord-check.log)）。`pnpm coord:check` 在本機 `origin/main=4e11f1b0` 仍為 8 份歷史指紋失敗，沒有重寫歷史 packet 或放寬閘；整合時處理。產品程式自 `4e682a7e` 未變，本批遵循集中驗收計畫，只驗文件及交接，不重跑產品全套，也不宣稱合併檢查通過。
 
+## 協調文件失敗的整合去向
+
+已逐份比對分支 `cebd230b3` 與 pinned Main `4e11f1b0`，結果及 blob 在 [coord-history.json](coord-history.json)。原先 8 份歷史 packet 失敗的處理方式已可具體區分：
+
+- **7 份只有 `contractFingerprint` 與 JSON 排版不同**：其餘欄位、claims 與原始引言皆一致。整合時保留 Main 的完整既有 packet，不改成社群分支指紋，也不為它們另開新 packet。分支現有 checker 能辨識與 Main 完全相同的歷史收據；以 Main 原文作唯讀輸入，這 7 份均通過。
+- **`owner-decision.20260906-main-tickets-codex-implements` 另有實質更新**：Main 在首條加入分工更正，原首條加上被更正的說明，其餘舊 claims 保留。不能把它當作單純指紋差異抹掉。Main 新增引用的 `docs/_reports/1025_temp_20260907-1550.md` 及 `apps/game-server/src/config/contentHotApply.ts` 都已核對 pinned Main blob 存在；目前分支未整合這兩份檔，所以單獨以 Main packet 在分支跑仍失敗，並非檔案在 Main 遺失。
+- **保留 checker 的歷史收據規則**：`tools/coord/check.mjs` 已在本分支區分「與 Main 完全相同的歷史收據」與「新／被修改的 packet」。整合時保留該規則及 Main 新增來源，再於整合版本執行全體 `coord:check`；不能退回對所有歷史 packet 重寫指紋，亦不能略過新 claims／證據路徑檢查。
+
+[原始檢查 log](coord-history-check.log) 為 8 份中 7 份通過、1 份缺上述尚未整合的證據。沒有執行歷史 `repro.command`，沒有修改任何歷史 packet、產品程式或現有工作樹的未提交內容；此證據只釐清整合去向，不宣稱整體 coord 或 Main 整合已完成。
+
 ## 附錄：61 個衝突的逐檔去向
 
 此表的「人工／查權威」包括程式來源、政策及歷史文件；不代表每個都要人工重寫。產物最後由整合後的來源生成。未產生正式整合結果前，不填寫虛構的 resolved 狀態。
