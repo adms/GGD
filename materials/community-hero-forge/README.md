@@ -1,12 +1,12 @@
 # 社群英雄交付材料
 
-目前可供其他工作線使用的最新來源為 `e94963582ecab32274720dd7e526cc9cd0a4eee9`。武藤遊戲 revision 14→15、奇犽 revision 13→14；37 名／222 槽重編譯通過，33 槽已登記行為測試，189 槽尚未對應。武藤遊戲的召喚／布局／陷阱／EX 及奇犽攻擊回電修正見 [本批證據](refinements/yugi-verification.json)。**這是機制修正版，完整原設計、原作演出、當下服務 ZIP 與正式發布仍未完成。** 以下舊收據按各自版本閱讀。
+目前可供其他工作線使用的最新來源為 `92ce186ace9f341046f8a2aea778eb74f0de095f`。武藤遊戲 revision 14→15、奇犽 revision 13→14；37 名／222 槽重編譯通過，33 槽已登記行為測試，189 槽尚未對應。武藤遊戲的召喚／布局／陷阱／EX 及奇犽攻擊回電修正見 [本批證據](refinements/yugi-verification.json)。**這是機制修正版，完整原設計、原作演出、當下服務 ZIP 與正式發布仍未完成。** 以下舊收據按各自版本閱讀。
 
 批次檢查統一入口：[操作說明](../../tools/community-hero-forge/BATCH_VERIFICATION.md)。指定資料夾即可核對來源、重新編譯、集中跑已登記的機制測試；支援發布前檢查、來源綁定續跑與逐槽缺口報告。數量不固定為 37／222，第二批需提供自己的原稿與行為案例對應。
 
 ## 最新可共用作品（2026-09-09）
 
-[index.json](index.json)＋[projects/](projects/) 已保存 37 份實際 HeroProject，配對既有 [recipes/](recipes/)；包含奇犽六槽電力／有效迴避／限次反擊修正、鹿目圓希望／友軍保命與六槽修正、#1141 吉伊卡哇六槽機制與版本修正、#1140 御坂美琴電荷、EX 與單發／連鎖修正，#1139 風／樹 Q 切換及前批友軍盾、卡牌連結修正。逐檔版本與 SHA-256 在 [handoff-manifest.json](handoff-manifest.json)。**37 名／222 槽重新編譯通過；25 名仍有通用普攻被動，完整原設計、畫面與正式發布尚未完成**，詳見 [逐槽對照](refinements/design-audit.json) 及 #1132。
+[index.json](index.json)＋[projects/](projects/) 已保存 37 份實際 HeroProject，配對既有 [recipes/](recipes/)；包含奇犽六槽電力／有效迴避／限次反擊修正、鹿目圓希望／友軍保命與六槽修正、#1141 吉伊卡哇六槽機制與版本修正、#1140 御坂美琴電荷、EX 與單發／連鎖修正，#1139 風／樹 Q 切換及前批友軍盾、卡牌連結修正。逐檔版本與 SHA-256 在 [handoff-manifest.json](handoff-manifest.json)。**37 名／222 槽重新編譯通過；24 名仍有通用普攻被動，完整原設計、畫面與正式發布尚未完成**，詳見 [逐槽對照](refinements/design-audit.json) 及 #1132。
 
 #1140 的御坂美琴使用新增 `chainLightning.retargetOnLost` 欄位；執行／編譯這批作品的工作線，須包含機制提交 `db53e47e456e6230e782222dc5f63dcf9c685ebe`（PR #1135），或已具備同等欄位支援。只複製設定到舊引擎不能完成匯入。#1141 另需機制／生成修正提交 `63b81b0754a4d8b14720b93cc182fb4d852f414d`，提供 `nearbyCombat` 條件、`dispel.statusTag` 與微調版本對應作品 revision。吉伊卡哇 revision 13→14；庫洛魔法使補正既有微調 v3 的 revision 13→15，後者技能／原稿／模型皆未改。
 

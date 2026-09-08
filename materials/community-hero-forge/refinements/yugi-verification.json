@@ -119,12 +119,12 @@
     "Missing no-summon in the Valhalla feedback map.",
     "Test fixtures used an invalid Order property and omitted SyncArgs.dtMs. All corrected before the final successful typechecks."
   ],
-  "integrationFixCommit": "e94963582ecab32274720dd7e526cc9cd0a4eee9",
+  "integrationFixCommit": "92ce186ace9f341046f8a2aea778eb74f0de095f",
   "batchRunnerFollowup": {
     "issue": 1143,
     "tests": 10,
     "exitCode": 0,
-    "logSha256": "d67d95886a48d4c9e19ad1de412c406fd1664d412b87f1cc41171954b4b2b890",
+    "logSha256": "1881acb33ca605c6c5d656aca9a82498d698b95903dbd618dea121f5f03dd166",
     "allowedRoots": [
       "packages/shared/",
       "apps/editor/",
@@ -136,7 +136,8 @@
       "Member containment and symlink checks",
       "No suite commands",
       "Exact source/log/argv cache binding"
-    ]
+    ],
+    "command": "python3 tools/community-hero-forge/test_verify_authoring_batch.py -v"
   },
   "initialReleaseFailure": {
     "head": "d0b64c0860a35f96254ba4031bc3bbb0146c084c",
@@ -146,5 +147,30 @@
       "Editor capability-only effect list omitted trap.",
       "Contract numbers and decoration census stale; regenerated using official genrun."
     ]
+  },
+  "secondReleaseFailure": {
+    "head": "54077f68a55ed846e243c4c0ab022b9ceb22cbb9",
+    "reportSha256": "ebb9293731a439b9e32c542d1a6c1d4890ea506a1863288e9037f20d7023c3c4",
+    "reasons": [
+      "Editor PreviewController exhaustive summary omitted trap. Added trap summary and recursive child effects; Editor typecheck and 20 targeted tests now pass.",
+      "Coordination packet used disallowed python3 -m prefix. Changed to direct python3 tools/ entry; all 10 verifier tests pass."
+    ],
+    "behaviorTestsPassed": 139,
+    "mappedSlots": 33,
+    "unmappedSlots": 189
+  },
+  "editorIntegration": {
+    "sourceCommit": "92ce186ace9f341046f8a2aea778eb74f0de095f",
+    "typecheck": {
+      "command": "pnpm --filter @ggd/editor typecheck",
+      "exitCode": 0,
+      "logSha256": "486eafd3c0debbbff5ae7dddb4aa8823f853e470eff3bacbda032617862caca2"
+    },
+    "tests": {
+      "exitCode": 0,
+      "tests": 20,
+      "files": 3,
+      "logSha256": "8098f9660a497c782f91c5f43fb6b10848d1703713534e0ac0eddb08d8af70b5"
+    }
   }
 }
