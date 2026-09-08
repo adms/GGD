@@ -30,3 +30,5 @@ Editor 的單槽、整套與互動情境取得對應體。ZIP 包含對應體，
 skills 初次在上一日 15 列未對票停止；用 `ledger_table.py --map` 對到已查證的既有票或明確免開票理由，也補入當日 2 則並經官方工具重生成看板（`7ca30efe2`）。原訊息與時間未改，詳見 `ledger-map-receipt.json`。重跑後訊息帳本通過；後續在 `decor:check` 發現新增 `forms.ts` 使 corpusFiles 從 2512 增至 2513，已由 `pnpm decor:build` 更新兩份索引。自該失敗步驟接續全部剩餘檢查均通過，未重跑已通過的 Editor 測試。
 
 因此 skills 的證據是 `skills-check-final.log` 中 decor 之前的成功步驟，加上 `skills-tail.log`／`skills-tail-receipt.json` 的剩餘成功步驟；不是宣稱某一次完整 skills 指令直接 exit 0。初次失敗亦保留在 `skills-check.log`。37 名的後續工作仍以 [集中執行目標](../editor-publication/README.md) 為準；部署版本、正式投稿發布及整合後完整對局尚未以本次單項修正驗證。
+
+PR #1123 首次遠端 contract 檢查（run `34255584267`）停在看板版本：本機原先缺少 release tag，產物仍為 `v0.41.4`，CI 取得的最新 tag 是 `v0.41.5`。同步 tag 後執行官方 `pnpm board:build`，只更新版本欄位及自動留底；`pnpm board:check` 通過。遠端失敗原始 log 與修正後檢查皆保留，見 `ci-contract-before.log`、`board-check-after.log`。此修正不改遊戲或鑄造器執行程式。
