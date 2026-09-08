@@ -34,6 +34,7 @@ import { describe, it, expect, beforeAll } from "vitest";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { readdirSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { ContentLoader } from "../content/loader";
 import { FsContentSource } from "../content/node/FsContentSource";
 import { Arenas, Configs, Models, StatusEffects, VfxDefs, registerAll } from "../content/registries";
@@ -51,7 +52,16 @@ import type { IntentFrame } from "./intents";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "../../../..");
 const CONTENT_DIR = join(ROOT, "content");
-const REPORT = join(ROOT, "docs/_auto-attack-census.md");
+/**
+ * ⭐ GH#1136 —— 與 `castabilitySweep.test.ts` **同一個病**：跑一次測試就改動出貨樹。
+ * ⇒ 預設寫進暫存;要更新出貨那一份就明說
+ *   `GGD_AUTO_ATTACK_CENSUS=docs/_auto-attack-census.md npx vitest run …`。
+ * ⛔ 報告沒有被丟掉 —— 它仍然每一次都產生。
+ */
+const REPORT =
+  process.env.GGD_AUTO_ATTACK_CENSUS !== undefined
+    ? join(ROOT, process.env.GGD_AUTO_ATTACK_CENSUS)
+    : join(tmpdir(), "ggd-auto-attack-census.md");
 
 const NO_INTENTS = new Map<SeatId, IntentFrame>();
 /**
