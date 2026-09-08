@@ -347,6 +347,11 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   "itemSold",
   "buyRejected",
   "sellRejected",
+  // ⭐ GH#1110 —— 免費三選一的**同一件事**。上面那句註解逐字寫著「背包已滿」
+  //   是這一族要解釋的東西，⛔ 而三選一那條路在此之前是**靜默 return false**：
+  //   玩家點了一張卡、什麼都沒發生、而卡片消失了。
+  //   ⚠️ 買寶玉那條路早就是對的（扣錢前檢查）—— 這是把同一個設計補到免費那條。
+  "itemPickRejected",
   // buy/sell UNDO (task #121): confirmation + rejection for the undo button.
   "shopUndone",
   "undoRejected",

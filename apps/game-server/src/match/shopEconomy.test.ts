@@ -20,6 +20,7 @@ import { ContentLoader, registerAll } from "@ggd/shared/content";
 import { FsContentSource } from "@ggd/shared/content/node";
 import { Items, LootTables } from "@ggd/shared/sim/content/registry";
 import { buyItem, SELL_REFUND } from "@ggd/shared/sim/economy/shop";
+import { offerItems } from "@ggd/shared/sim/economy/draft";
 import { legendaryPool } from "@ggd/shared/sim/economy/legendaryOrb";
 import { DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES } from "@ggd/shared/sim/economy/offerEligibility";
 import { statPathView } from "@ggd/shared/sim/economy/statPath";
@@ -537,5 +538,58 @@ describe("shop undo has no money exploit, through the real command path (task #1
     // the item bought in the shop is committed: still owned, gold not refunded
     expect(champ.items[slot]).toBe(item);
     expect(champ.gold).toBe(goldAfterBuy);
+  });
+});
+
+/**
+ * ⭐ GH#1110（owner 2026-09-06 逐字：「隨機選寶具的時候 道具欄已滿 怎麼辦」→「**A ＋ B 開票**」）
+ *
+ * A ＝ 明確告知「背包已滿」**且不消耗那次機會**。
+ *
+ * ⚠️ ⭐ 這條驗的是**三件事一起**，⛔ 不是「有沒有發事件」：
+ *   ① 發得出 `itemPickRejected`（⭐ 它在 `eventFanout` 的客戶端白名單裡，
+ *      與 `buyRejected` 同一族 —— 而那一族的註解逐字寫著「背包已滿」）
+ *   ② ⭐ **卡片還在**（⛔ 在此之前 `applyPick` 無條件 `offers.delete`
+ *      ⇒ 玩家點了一張卡、什麼都沒發生、而機會消失了）
+ *   ③ ⭐ **寶玉的格子放回去了** —— host 在 grant 之前先 `releaseOrbSlot`，
+ *      拒絕之後不放回去的話，留著的那張卡下一次按仍然沒有格子（而且那一格永久漏掉）
+ *
+ * 突變驗證（2026-09-09）：
+ *   · 拿掉 `if (picked === "no-slot") … return` → ② 紅（卡片被刪）
+ *   · 拿掉 `reserveOrbSlot` 那一行 → ③ 紅（pendingOrbSlots 掉到 0）
+ */
+describe("背包滿的免費三選一（GH#1110 A）", () => {
+  it("拒絕有訊息、卡片留著、⛔ 機會不被吃掉", () => {
+    cover("econ-pick-full-bag");
+    const ctl = spawnedMatch(21);
+    const { entity } = humanBuyer(ctl);
+    const champ = ctl.world.champion.get(entity)!;
+    const seatId = [...ctl.offers.values()][0]?.seatId ?? 0;
+
+    // ⭐ 把背包**整個**填滿 —— 這是這張票的情境（免費卡,⛔ 不是寶玉:
+    //   寶玉那條路早就會在扣錢前拒絕,`legendaryOrb.ts:174`）。
+    for (let i = 0; i < champ.items.length; i++) champ.items[i] = "godie-i002" as ItemId;
+    expect(champ.items.filter((x) => x === null).length, "背包沒填滿,前提不成立").toBe(0);
+
+    // 開一張免費三選一（與第 2/5 回合武器卡同一個形狀:`kind: "item"`,⛔ 不佔格）。
+    const offer = offerItems(ctl.world, entity, "round-reward");
+    expect(offer.choices.length, "卡片開不出來,前提不成立").toBeGreaterThan(0);
+    const offerId = "test:1110:w";
+    ctl.offers.set(offerId, { kind: "item", ...offer, seatId, createdTick: ctl.world.tick } as never);
+
+    const before = ctl.world.events.length;
+    (ctl as never as { applyPick(id: string, o: unknown, i: number, a: boolean): void })
+      .applyPick(offerId, ctl.offers.get(offerId)!, 0, false);
+
+    // ① 有訊息（⭐ `itemPickRejected` 在 eventFanout 的客戶端白名單裡）
+    const rejects = ctl.world.events.slice(before).filter((e) => e.type === "itemPickRejected");
+    expect(rejects.length, "背包滿了,而玩家什麼訊息都沒收到 —— 那正是這張票的缺陷").toBeGreaterThan(0);
+    expect(String(rejects[0]!.data.reason)).toBe("no-slot");
+
+    // ② ⭐ 卡片還在 —— ⛔ 機會沒有被吃掉
+    expect(ctl.offers.has(offerId), "背包滿了卻把卡片消耗掉 —— 那次機會消失了").toBe(true);
+
+    // ③ 一件都沒有被塞進去（⛔ 不會覆蓋既有道具）
+    expect(champ.items.every((x) => x === "godie-i002"), "背包被動到了").toBe(true);
   });
 });

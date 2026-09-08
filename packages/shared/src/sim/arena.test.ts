@@ -43,10 +43,10 @@ describe("item offers (arena-02)", () => {
     const apBefore = w.stats.get(id)!.final[Stat.AbilityPower];
 
     const pick = offer.choices[0]!;
-    expect(applyItemPick(w, offer, pick)).toBe(true);
+    expect(applyItemPick(w, offer, pick)).toBe("ok");
     expect(champ.items).toContain(pick); // granted into inventory
     expect(champ.gold).toBe(123); // FREE — no gold spent
-    expect(applyItemPick(w, offer, pick)).toBe(false); // consumed
+    expect(applyItemPick(w, offer, pick)).toBe("invalid"); // consumed
 
     // modifiers actually attached (stat pipeline recomputes on next step)
     w.step(new Map());
@@ -55,7 +55,7 @@ describe("item offers (arena-02)", () => {
     }
     // picking something outside the offer is rejected
     const offer2 = offerItems(w, id, "round-reward");
-    expect(applyItemPick(w, offer2, "not-an-item" as never)).toBe(false);
+    expect(applyItemPick(w, offer2, "not-an-item" as never)).toBe("invalid");
   });
 
   it("offer rolls are seeded + reproducible and skip owned items", () => {

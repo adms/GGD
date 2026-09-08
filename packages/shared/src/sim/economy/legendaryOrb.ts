@@ -91,6 +91,26 @@ export function releaseOrbSlot(world: SimWorld, id: EntityId): void {
   champ.pendingOrbSlots -= 1;
 }
 
+/**
+ * ⭐ Re-take one orb reservation (GH#1110). The mirror of {@link releaseOrbSlot}.
+ *
+ * ⚠️ Why this has to exist: the host releases the reservation BEFORE granting,
+ * so the grant can use the very slot the reservation was protecting. When the
+ * grant is then refused for a full inventory the card **stays on the table**
+ * (owner 2026-09-06: a full bag must not eat the chance) — and a card that is
+ * still on the table must still own its slot, or the next press finds no room
+ * and the seat has silently leaked a slot for the rest of the match.
+ *
+ * ⛔ Not clamped upward on purpose: the only caller re-takes exactly what it
+ * just released, so a ceiling here would hide a double-release rather than fix
+ * one. `purchasableSlots()` already floors the derived number at 0.
+ */
+export function reserveOrbSlot(world: SimWorld, id: EntityId): void {
+  const champ = world.champion.get(id);
+  if (!champ) return;
+  champ.pendingOrbSlots += 1;
+}
+
 export function legendaryPool(world: SimWorld, id: EntityId): ItemId[] {
   const champ = world.champion.get(id);
   if (!champ) return [];

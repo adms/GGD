@@ -1012,8 +1012,13 @@ export const DEFAULT_LEGENDARY_SHELF: LegendaryShelfConfig = {
   // ⚠️ 歷史：6 →（owner 2026-08-17「一場根本買不起 2 把⋯改成 4 倍比較好?」）→ 4 → 3。
   priceMultiplier: 3,
   sellRefundPct: 0.4,
-  // 出貨沒有任何一張隨機限定表 —— 49 把寶具照樣全部上架，這一批只做機制。
-  randomOnlyTables: [],
+  // ⭐ GH#1111（owner 2026-09-06:「開票 確保所有EX都進隨機清單」）——
+  //   [EX解放] 與 [EX∅ 根源] 兩階**只能隨機**,而在此之前那件事是靠
+  //   ⛔ **`cost: 0` 的副作用**達成的（`shop.ts:199-202` 算不出價 ⇒ `"not-purchasable"`）。
+  //   ⇒ ⭐ 現在它是**宣告**的:`shop.ts:181` 讀這一格,命中就回 `"shelf-closed"`。
+  //   ⚠️ 兩條路的差別在**訊息**:前者說「這件買不起」,後者說「這件不在貨架上」——
+  //   ⭐ 而只有後者說得出**為什麼**。
+  randomOnlyTables: ["ex-release-weapons", "ex-origin-weapons"],
 };
 
 export const zConfigArenaRulesDoc = z
