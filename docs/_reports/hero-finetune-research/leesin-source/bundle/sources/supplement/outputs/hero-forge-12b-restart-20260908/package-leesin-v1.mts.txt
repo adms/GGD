@@ -1,0 +1,65 @@
+/** Offline package proof only. Never imports into a live game or activates a model. */
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import {fileURLToPath} from 'node:url';
+import {leesinPlan} from './leesin-plan-v1.mts';
+import {compileReviewedProducts} from './compile-reviewed-products-v1.mts';
+import {checkEnginePins,currentCatalog,hash} from './ir4-compiler.mts';
+import {buildHeroImportPackage,validateHeroImportPackage} from '../../GGD-community-hero-forge/packages/shared/src/content/import/heroPackage.ts';
+import {buildRuntimePackageZip,packageZipInput} from '../../GGD-community-hero-forge/packages/shared/src/content/import/packageZip.ts';
+import {readPackageZip} from '../../GGD-community-hero-forge/packages/shared/src/content/import/readPackageZip.ts';
+import {contentSha256,jcsByteLength} from '../../GGD-community-hero-forge/packages/shared/src/content/import/jcs.ts';
+import {packageDigest} from '../../GGD-community-hero-forge/packages/shared/src/content/import/digest.ts';
+const here=path.dirname(fileURLToPath(import.meta.url));
+assert.equal(process.argv.length,3,'USAGE: package-leesin-v1.mts NEW_OUTPUT');
+const out=path.resolve(process.argv[2]);assert.equal(path.dirname(out),here,'OUTPUT_SCOPE');assert(!fs.existsSync(out),'NO_OVERWRITE');
+const manifest:any={schema:'ggd-reviewed-hero-offline-package@1',status:'running',startedAt:new Date().toISOString(),
+  modelInference:false,modelTraining:false,liveImport:false,modelActivated:false,formalTraining:false,freshHoldout:false};
+fs.mkdirSync(out);
+const save=(name:string,value:any)=>fs.writeFileSync(path.join(out,name),JSON.stringify(value,null,2)+'\n',{flag:'wx'});
+try{
+  checkEnginePins();const catalog:any=currentCatalog(),candidate=leesinPlan();
+  const old=JSON.parse(fs.readFileSync(path.join(here,'leesin-plan-audit-v2/manifest.json'),'utf8'));
+  assert.equal(old.positive.passed,old.positive.total);assert.equal(old.mutations.detected,old.mutations.total);
+  for(const [p,digest] of Object.entries(old.pins))assert.equal(hash(fs.readFileSync(path.join(here,p))),digest,`PRIOR_EVIDENCE_DRIFT:${p}`);
+  const b=compileReviewedProducts(candidate,catalog);
+  assert.deepEqual(b,JSON.parse(fs.readFileSync(path.join(here,'leesin-plan-audit-v2/compiled-preview.private.json'),'utf8')));
+  const target={gameRevision:'382fd664303a31ed56cb5a9d7832778a059f671c',
+    contentVersion:`research-${hash(fs.readFileSync(path.join(here,'current-engine-v1/catalog-pins.json'))).slice(0,16)}`,
+    migrationFingerprint:'offline-research-not-live',processorFingerprint:catalog.buildSources?.processorFingerprint??'offline-research-not-live'};
+  const pkg=buildHeroImportPackage(b.project,catalog,target);
+  const zip=await buildRuntimePackageZip(packageZipInput(pkg,'leesin-reviewed-offline'));
+  const again=await buildRuntimePackageZip(packageZipInput(buildHeroImportPackage(b.project,catalog,target),'leesin-reviewed-offline'));
+  assert.deepEqual(zip.bytes,again.bytes,'NONDETERMINISTIC_PACKAGE');
+  const wire=readPackageZip(zip.bytes),validated=validateHeroImportPackage(wire,catalog);
+  assert.deepEqual(validated.diagnostics,[],'ROUNDTRIP_DIAGNOSTICS');assert(validated.result,'ROUNDTRIP_NO_RESULT');
+  assert.deepEqual(validated.result.project,b.project,'ROUNDTRIP_PROJECT');
+  assert.deepEqual(validated.result.compiled,b.compiled,'ROUNDTRIP_COMPILED');
+  assert.equal(validated.result.project.sourceDesign!.ownerText,candidate.source.hero.originalText);
+  const forged=structuredClone(wire);
+  const entry:any=forged.compiled.find((x:any)=>x.path===`compiled/abilities/${b.compiled.abilityDrafts.R.id}.json`);assert(entry);
+  entry.document.effects[0].maxDistance+=1;
+  const declared=forged.manifest.entries.find((x:any)=>x.path===entry.path)!;
+  Object.assign(declared,{contentSha256:contentSha256(entry.document),contentSize:jcsByteLength(entry.document)});
+  forged.manifest.expectedCompiled.find((x:any)=>x.path===entry.path)!.contentSha256=declared.contentSha256;
+  delete forged.manifest.transport;forged.manifest.packageDigest=packageDigest(forged.manifest);
+  const forgedZip=await buildRuntimePackageZip(packageZipInput(forged,'forged-control'));
+  const forgedWire=readPackageZip(forgedZip.bytes); // Valid transport is not semantic acceptance.
+  const rejected=validateHeroImportPackage(forgedWire,catalog);
+  assert.equal(rejected.result,null,'FORGED_RUNTIME_ACCEPTED');assert(rejected.diagnostics.some(d=>d.severity==='error'));
+  save('hero-project.json',b.project);save('package.json',pkg);
+  fs.writeFileSync(path.join(out,zip.filename),zip.bytes,{flag:'wx'});
+  save('forged-runtime-rejection.json',{diagnostics:rejected.diagnostics,transportReadPassed:true,outerHashesRecomputed:true});
+  Object.assign(manifest,{status:'completed',heroId:candidate.id,target,targetIsLiveDeployment:false,
+    archiveSha256:zip.archiveSha256,archiveBytes:zip.bytes.length,packageDigest:pkg.manifest.packageDigest,
+    entries:pkg.manifest.entries.length,sourceBytesPreserved:true,deterministicRebuild:true,
+    roundtripProjectEqual:true,roundtripCompiledEqual:true,forgedRuntimeRejected:true,
+    sourceAudit:{positive:old.positive,mutations:{detected:old.mutations.detected,total:old.mutations.total}},
+    completeHeroModelQualified:false,limitations:['Offline compiler and package validator only; not live importer/game or visual acceptance.',
+      'Exact recipe previews are not uniquely source-specified labels; no SFT admission is implied.']});
+  checkEnginePins();
+}catch(e){manifest.status='failed';manifest.error=String(e);process.exitCode=1;}
+manifest.finishedAt=new Date().toISOString();
+manifest.scriptSha256=hash(fs.readFileSync(fileURLToPath(import.meta.url)));
+save('manifest.json',manifest);console.log(JSON.stringify(manifest,null,2));

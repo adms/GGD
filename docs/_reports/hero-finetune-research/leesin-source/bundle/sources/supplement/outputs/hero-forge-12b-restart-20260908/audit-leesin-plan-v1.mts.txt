@@ -1,0 +1,58 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import {fileURLToPath} from 'node:url';
+import {leesinPlan} from './leesin-plan-v1.mts';
+import {leesinProbes} from './leesin-probes-v1.mts';
+import {compileReviewedProducts} from './compile-reviewed-products-v1.mts';
+import {checkEnginePins,currentCatalog,hash} from './ir4-compiler.mts';
+import {originOf} from '../../GGD-community-hero-forge/packages/shared/src/content/statNormalization.ts';
+const here=path.dirname(fileURLToPath(import.meta.url));
+assert.equal(process.argv.length,3,'USAGE: audit-leesin-plan-v1.mts NEW_OUTPUT');
+const out=path.resolve(process.argv[2]);assert.equal(path.dirname(out),here,'OUTPUT_SCOPE');assert(!fs.existsSync(out),'NO_OVERWRITE');
+checkEnginePins();const catalog=currentCatalog(),candidate=leesinPlan(),before=hash(JSON.stringify(candidate));
+const built=compileReviewedProducts(candidate,catalog);
+assert.equal(built.project.sourceDesign!.ownerText,candidate.source.hero.originalText);
+assert.equal(originOf(built.compiled.champion),'鬥士','COMPILED_ORIGIN');
+for(const s of candidate.source.slots)assert.equal(built.project.sourceDesign!.slots[s.slot].ownerDescription,s.originalText);
+const positives=leesinProbes(built.compiled,catalog);
+const params=(c:any,s:string)=>c.recipe.slots[s].products[0].params;
+const mutations=[
+  {id:'passive-wrong-type',names:['PASSIVE-basic-physical-tier-and-shared-ICD'],change:(c:any)=>params(c,'PASSIVE').hooks[0].effects[0].damageType='magic'},
+  {id:'passive-no-ICD',names:['PASSIVE-basic-physical-tier-and-shared-ICD'],change:(c:any)=>params(c,'PASSIVE').hooks[0].internalCooldown=0},
+  {id:'Q-unasked-dash',names:['Q-targeted-middle-range-no-automatic-recast'],change:(c:any)=>params(c,'Q').effects.push({kind:'dash',mode:'forward',speed:6,maxDistance:2})},
+  {id:'Q-wrong-range-tier',names:['Q-targeted-middle-range-no-automatic-recast'],change:(c:any)=>c.recipe.slots.Q.abilityOverrides.rangeTier='小'},
+  {id:'W-no-shield',names:['W-self-shield-attack-speed-and-expiry'],change:(c:any)=>params(c,'W').effects.shift()},
+  {id:'W-no-attack-speed',names:['W-self-shield-attack-speed-and-expiry'],change:(c:any)=>params(c,'W').effects.pop()},
+  {id:'E-not-selected-ground',names:['E-selected-ground-inside'],change:(c:any)=>params(c,'E').castType='self'},
+  {id:'E-wrong-type',names:['E-selected-ground-inside'],change:(c:any)=>params(c,'E').effects[0].damageType='magic'},
+  {id:'R-damage-before-dash-end',names:['R-move-then-impact-near'],change:(c:any)=>{const e=params(c,'R').effects[0];const end=e.onEnd;delete e.onEnd;params(c,'R').effects.push(...end);}},
+  {id:'R-missing-push',names:['R-move-then-impact-near'],change:(c:any)=>delete params(c,'R').effects[0].onEnd[0].onHitTargets},
+  {id:'R-unasked-invulnerability',names:['R-caster-remains-vulnerable'],change:(c:any)=>params(c,'R').effects.push({kind:'invulnerable',applyTo:'self',durationSec:1,blocksDamage:'all',blocksControl:false})},
+  {id:'EX-hit-at-release',names:['EX-land-then-hit-without-Q'],change:(c:any)=>{const e=params(c,'EX').effects[0];const hits=e.onLand;delete e.onLand;params(c,'EX').effects.push(...hits);}},
+];
+const negatives=mutations.map(m=>{
+  const c=structuredClone(candidate);m.change(c);
+  const control=positives.rows.filter((r:any)=>m.names.includes(r.name));
+  const controlPassed=control.length===m.names.length*2&&control.every((r:any)=>r.passed);
+  try{const b=compileReviewedProducts(c,catalog),probes=leesinProbes(b.compiled,catalog,m.names);
+    return{id:m.id,compiled:true,controlPassed,detected:controlPassed&&probes.rows.some((r:any)=>!r.passed),probes,recipe:c.recipe};}
+  catch(e){return{id:m.id,compiled:false,controlPassed,detected:false,error:String(e),recipe:c.recipe};}
+});
+assert.equal(hash(JSON.stringify(candidate)),before,'CANDIDATE_MUTATED');checkEnginePins();
+const manifest={schema:'ggd-leesin-source-recipe-audit@1',status:'stopped-report-written',createdAt:new Date().toISOString(),heroId:candidate.id,
+  originalSourceSha256:candidate.source.hero.sourceSha256,compiled:true,sourceBytesPreserved:true,originVerified:true,
+  positive:{passed:positives.passed,total:positives.total,failures:positives.rows.filter((r:any)=>!r.passed).map((r:any)=>({name:r.name,seed:r.seed,error:r.error}))},
+  mutations:{detected:negatives.filter(n=>n.detected).length,total:negatives.length,rows:negatives.map(n=>({id:n.id,compiled:n.compiled,controlPassed:n.controlPassed,detected:n.detected}))},
+  admission:{formalTraining:false,freshHoldout:false,modelActivated:false,completeHeroQualified:false,
+    reason:'Source-reviewed content candidate; source-choice-aware target encoding and broader package/runtime certification remain separate.'},
+  modelInference:false,modelTraining:false,engineEdited:false,
+  pins:Object.fromEntries(['compile-reviewed-products-v1.mts','leesin-plan-v1.mts','leesin-probes-v1.mts','audit-leesin-plan-v1.mts',
+    'probe-harness.mts','source-review-v1/model-inputs.json','current-engine-v1/source-pins.json','current-engine-v1/catalog-pins.json']
+    .map(f=>[f,hash(fs.readFileSync(path.join(here,f)))]))};
+fs.mkdirSync(out);
+for(const [name,value] of Object.entries({'manifest.json':manifest,'candidate.private.json':candidate,'compiled-preview.private.json':built,
+  'positive-evidence.json':positives,'mutation-evidence.json':negatives}))
+  fs.writeFileSync(path.join(out,name),JSON.stringify(value,null,2)+'\n',{flag:'wx'});
+console.log(JSON.stringify(manifest,null,2));
+process.exitCode=positives.passed===positives.total&&negatives.every(n=>n.detected)?0:1;

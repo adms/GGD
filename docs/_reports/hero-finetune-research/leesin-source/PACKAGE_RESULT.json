@@ -1,0 +1,46 @@
+{
+  "schema": "ggd-reviewed-hero-offline-package@1",
+  "status": "completed",
+  "startedAt": "2026-09-08T06:24:31.989Z",
+  "modelInference": false,
+  "modelTraining": false,
+  "liveImport": false,
+  "modelActivated": false,
+  "formalTraining": false,
+  "freshHoldout": false,
+  "heroId": "community7-leesin",
+  "target": {
+    "gameRevision": "382fd664303a31ed56cb5a9d7832778a059f671c",
+    "contentVersion": "research-11757b76c9e1287f",
+    "migrationFingerprint": "offline-research-not-live",
+    "processorFingerprint": "offline-research-not-live"
+  },
+  "targetIsLiveDeployment": false,
+  "archiveSha256": "sha256:28b5ce6dd54861814e8ec8a7eeabb7690a0d62a0a169ce165e7f32e070245bfe",
+  "archiveBytes": 2890218,
+  "packageDigest": "sha256:edf3942ab44c39d1fd10ef640583d9ac1a279a8d260861fec38f5780e28df9bc",
+  "entries": 336,
+  "sourceBytesPreserved": true,
+  "deterministicRebuild": true,
+  "roundtripProjectEqual": true,
+  "roundtripCompiledEqual": true,
+  "forgedRuntimeRejected": true,
+  "sourceAudit": {
+    "positive": {
+      "passed": 28,
+      "total": 28,
+      "failures": []
+    },
+    "mutations": {
+      "detected": 12,
+      "total": 12
+    }
+  },
+  "completeHeroModelQualified": false,
+  "limitations": [
+    "Offline compiler and package validator only; not live importer/game or visual acceptance.",
+    "Exact recipe previews are not uniquely source-specified labels; no SFT admission is implied."
+  ],
+  "finishedAt": "2026-09-08T06:24:34.623Z",
+  "scriptSha256": "70acebcb1c69d46ff76801bf5a53ee0fd18c7b770bf7dbe33caaf64885b7c1b1"
+}

@@ -1,0 +1,160 @@
+/** Source-first full-slot probes. Assertions check effects in the real simulation. */
+import assert from 'node:assert/strict';
+import {engineProbe} from './probe-harness.mts';
+import {Abilities} from '../../GGD-community-hero-forge/packages/shared/src/sim/content/registry.ts';
+import {castAbility} from '../../GGD-community-hero-forge/packages/shared/src/sim/abilities/abilitySystem.ts';
+import {recomputeStats} from '../../GGD-community-hero-forge/packages/shared/src/sim/stats/statPipeline.ts';
+import {Stat} from '../../GGD-community-hero-forge/packages/shared/src/sim/stats/statTypes.ts';
+import {asSeatId} from '../../GGD-community-hero-forge/packages/shared/src/ids.ts';
+
+const near=(a:number,b:number,label:string)=>assert(Math.abs(a-b)<1e-5,`${label}:${a} != ${b}`);
+const pos=(r:any,id=r.caster)=>({...r.world.transform.get(id).pos});
+const dist=(a:any,b:any)=>Math.hypot(a.x-b.x,a.z-b.z);
+function place(r:any,id:any,p:any){Object.assign(r.world.transform.get(id).pos,p);r.world.rebuildGrid();}
+function disarm(r:any,keepCaster=false){for(const id of [r.caster,r.foe,r.other])if(!keepCaster||id!==r.caster)
+  r.world.status.get(id).effects.push({statusId:'research.no-basics',sourceId:'fixture-only',applierId:id,
+    expiresAtTick:100000,stacks:1,disarmed:true});}
+function stat(r:any,key:string,id=r.caster){recomputeStats(r.world,id);return r.world.stats.get(id).final[key];}
+const shield=(r:any,id=r.caster)=>r.world.health.get(id).shields.filter((s:any)=>s.expiresAtTick>r.world.tick&&s.amount>0)
+  .reduce((n:number,s:any)=>n+s.amount,0);
+const allDamage=(r:any,c:any,s:string,id?:any)=>r.events.filter((e:any)=>e.type==='damage'&&e.data.source===r.caster&&
+  (id===undefined||e.data.target===id)&&String(e.data.origin).includes(c.abilityDrafts[s].id));
+const allNodes=(v:any):any[]=>v&&typeof v==='object'?[
+  ...(typeof v.kind==='string'?[v]:[]),...Object.values(v).flatMap(allNodes)]:[];
+
+export function leesinProbes(compiled:any,catalog:any,only?:string[]){
+  const rows:any[]=[];
+  for(const seed of [20260908,20260909]){
+    const run=(name:string,slot:string,fn:(r:any)=>any)=>{
+      if(only&&!only.includes(name))return;
+      rows.push({...engineProbe(compiled,catalog,name,r=>{
+        for(const s of ['PASSIVE','Q','W','E','R','EX']){
+          const a=compiled.abilityDrafts[s],actual=Abilities.get(a.id);
+          for(const k of ['effects','passive','cooldown','castTimeSec','range','manaCost'])
+            assert.deepEqual(actual[k],a[k],`REGISTRY_MIRROR:${s}:${k}`);
+        }
+        return fn(r);
+      },seed),slot});
+    };
+    run('PASSIVE-basic-physical-tier-and-shared-ICD','PASSIVE',r=>{
+      disarm(r,true);r.world.team.get(r.other).teamId=r.world.team.get(r.foe).teamId;
+      // A melee fixture cannot assume the ranged fixture's initial reach or
+      // bypass the public input path by replacing only nav.order.
+      const p=pos(r);place(r,r.foe,{x:p.x+1.2,z:p.z});place(r,r.other,{x:p.x,z:p.z+1.2});
+      r.world.step(new Map([[asSeatId(0),{commands:[],order:{kind:'attackTarget',entity:r.foe}}]]));
+      r.events.push(...structuredClone(r.world.events));
+      for(let n=0;n<120&&!allDamage(r,compiled,'PASSIVE').length;n++)r.step(1);
+      assert.equal(allDamage(r,compiled,'PASSIVE').length,1,'NO_BASIC_PROC');
+      r.world.step(new Map([[asSeatId(0),{commands:[],order:{kind:'attackTarget',entity:r.other}}]]));
+      r.events.push(...structuredClone(r.world.events));r.step(180);
+      const hits=allDamage(r,compiled,'PASSIVE');assert(hits.some((h:any)=>h.data.target===r.other),'NO_REAL_RETARGET');
+      assert(hits.every((h:any)=>h.data.dmgType==='physical'),'PASSIVE_NOT_PHYSICAL');
+      for(let i=1;i<hits.length;i++)assert(hits[i].tick-hits[i-1].tick>=60,'PASSIVE_ICD');
+      const damage=allNodes(compiled.abilityDrafts.PASSIVE.passive).find(e=>e.kind==='damage');
+      assert.equal(damage.amount.damageTier,'極小');assert.equal(damage.amount.flat,catalog.documents.get('config/damage-tiers').damage['極小']);
+      return{ticks:hits.map((h:any)=>h.tick),targets:hits.map((h:any)=>h.data.target)};
+    });
+    run('Q-targeted-middle-range-no-automatic-recast','Q',r=>{
+      disarm(r);const a=compiled.abilityDrafts.Q;assert.equal(a.castType,'targeted');assert.equal(a.rangeTier,'中');
+      const start=pos(r),mana=r.world.health.get(r.caster).mana;
+      assert.equal(r.cast('Q'),'ok');r.step(60);
+      assert.equal(r.hits('Q').length,1,'Q_SINGLE_ATTACK');assert.equal(r.hits('PASSIVE').length,0,'SPELL_BASIC_PROC');
+      assert.equal(r.hits('EX').length,0,'AUTO_SECOND_CAST');assert(dist(pos(r),start)<1e-5,'Q_MOVED_CASTER');
+      assert(!r.events.some((e:any)=>e.type==='displace'&&e.data.id===r.caster),'Q_DISPLACEMENT');
+      assert(r.world.health.get(r.caster).mana<mana,'COMMON_MANA_NOT_USED');
+      assert.equal(castAbility(r.world,r.caster,'Q',{type:'entity',entityId:r.foe}),'cooldown','Q_RECAST_BYPASS');
+      return{hits:1,range:a.range,manaSpent:mana-r.world.health.get(r.caster).mana,noSecondCast:true};
+    });
+    run('Q-cannot-hit-ally','Q',r=>{
+      disarm(r);assert.equal(r.cast('Q',{type:'entity',entityId:r.other}),'bad-target');r.step(2);
+      assert.equal(allDamage(r,compiled,'Q').length,0);return{allyRejected:true};
+    });
+    run('W-self-shield-attack-speed-and-expiry','W',r=>{
+      disarm(r);const attackSpeed=stat(r,Stat.AttackSpeed),allySpeed=stat(r,Stat.AttackSpeed,r.other);
+      const start=pos(r);assert.equal(r.cast('W'),'ok');const amount=shield(r);assert(amount>0,'NO_W_SHIELD');
+      assert(stat(r,Stat.AttackSpeed)>attackSpeed,'NO_W_ATTACK_SPEED');near(stat(r,Stat.AttackSpeed,r.other),allySpeed,'ALLY_AS');
+      assert.equal(shield(r,r.other),0,'ALLY_SHIELD');
+      const nodes=allNodes(compiled.abilityDrafts.W.effects);
+      assert(nodes.some(n=>n.kind==='applyBuff'&&n.duration===3&&n.modifiers.some((m:any)=>m.stat==='as'&&m.op==='pctAdd'&&m.value===0.2)),'W_SOURCE_AS_20PCT');
+      const h=r.world.health.get(r.caster),before=h.hp;
+      r.world.damageQueue.push({source:r.foe,target:r.caster,amount:10,type:'true',crit:false,origin:'research:shield-control'});r.step(1);
+      near(h.hp,before,'CHOSEN_SHIELD_NOT_ABSORBING');assert(shield(r)<amount);r.step(90);
+      assert.equal(shield(r),0,'W_SHIELD_NOT_EXPIRED');near(stat(r,Stat.AttackSpeed),attackSpeed,'W_AS_NOT_EXPIRED');
+      const after=h.hp;r.world.damageQueue.push({source:r.foe,target:r.caster,amount:10,type:'true',crit:false,origin:'research:expired'});r.step(1);
+      near(after-h.hp,10,'EXPIRED_SHIELD_ABSORBED');assert(dist(pos(r),start)<1e-5,'W_MOVED_CASTER');
+      return{selfOnly:true,durationTicks:90,attackSpeedModifier:0.2,shieldTypeIsPreview:true};
+    });
+    for(const location of ['inside','outside'])run(`E-selected-ground-${location}`,'E',r=>{
+      disarm(r);const start=pos(r),point={x:start.x+4,z:start.z};
+      place(r,r.foe,{x:point.x+(location==='inside'?0:8),z:point.z});
+      place(r,r.other,{x:point.x,z:point.z+1.5});assert.equal(r.cast('E',{type:'point',point}),'ok');r.step(2);
+      const cast=r.events.find((e:any)=>e.type==='abilityCast'&&e.data.abilityId===compiled.abilityDrafts.E.id);
+      assert(cast?.data.point&&dist(cast.data.point,point)<1e-5,'E_POINT_LOST');
+      assert.equal(r.hits('E').length,location==='inside'?1:0,'E_GEOMETRY');
+      assert.equal(allDamage(r,compiled,'E',r.other).length,0,'E_FRIENDLY_FIRE');
+      if(location==='inside')assert(r.hits('E').every((h:any)=>h.data.dmgType==='physical'),'E_DAMAGE_TYPE');
+      const d=allNodes(compiled.abilityDrafts.E.effects).find(n=>n.kind==='damage');
+      assert.equal(d.amount.damageTier,'小');assert.equal(d.amount.flat,catalog.documents.get('config/damage-tiers').damage['小']);
+      return{location,requested:point,actual:cast.data.point,hits:r.hits('E').length};
+    });
+    for(const targetMode of ['near','far','escapes'])run(`R-move-then-impact-${targetMode}`,'R',r=>{
+      disarm(r);const start=pos(r),initial={x:start.x+(targetMode==='far'?16:3.2),z:start.z};
+      place(r,r.foe,initial);place(r,r.other,{x:start.x+3.2,z:start.z+1.5});
+      assert.equal(r.cast('R',{type:'point',point:initial}),'ok');
+      assert.equal(r.hits('R').length,0,'R_HIT_BEFORE_MOVEMENT');assert.equal(r.world.nav.get(r.caster).override?.kind,'dash','R_NO_APPROACH');
+      if(targetMode==='escapes')place(r,r.foe,{x:initial.x+12,z:initial.z});
+      r.step(90);const hits=r.hits('R'),end=pos(r),travel=dist(start,end);
+      assert(travel>0.5&&travel<3,'R_NOT_SHORT_BOUNDED_APPROACH');
+      assert.equal(hits.length,targetMode==='near'?1:0,'R_IMPACT_TARGETING');
+      assert.equal(allDamage(r,compiled,'R',r.other).length,0,'R_ALLY_DAMAGE');
+      if(targetMode==='near'){
+        // Events describe the step just executed; the world increments tick
+        // before engineProbe records its post-step snapshot.
+        const frame=r.frames.find((f:any)=>f.tick===hits[0].tick+1),at=frame.actors.find((a:any)=>a.id===r.caster);
+        assert(dist(at.position,start)>0.5,'R_HIT_AT_START');
+        assert(pos(r,r.foe).x>initial.x+0.2,'R_NO_FORWARD_PUSH');
+      }
+      assert.equal(castAbility(r.world,r.caster,'R',{type:'point',point:initial}),'cooldown','R_INFINITE_CAST');
+      return{targetMode,start,end,travel,hitTicks:hits.map((h:any)=>h.tick),enemyEnd:pos(r,r.foe)};
+    });
+    run('R-caster-remains-vulnerable','R',r=>{
+      disarm(r);const start=pos(r);place(r,r.foe,{x:start.x+3.2,z:start.z});
+      assert.equal(r.cast('R',{type:'point',point:pos(r,r.foe)}),'ok');
+      const h=r.world.health.get(r.caster),before=h.hp;
+      r.world.damageQueue.push({source:r.foe,target:r.caster,amount:10,type:'true',crit:false,origin:'research:counter-hit'});r.step(1);
+      near(before-h.hp,10,'R_GRANTED_INVULNERABILITY');return{incomingTrueDamage:before-h.hp};
+    });
+    for(const prerequisite of ['without-Q','after-Q'])run(`EX-land-then-hit-${prerequisite}`,'EX',r=>{
+      disarm(r);const start=pos(r),point={x:start.x+4,z:start.z};
+      place(r,r.foe,{x:point.x+1.2,z:point.z});place(r,r.other,{x:point.x,z:point.z+1.5});
+      if(prerequisite==='after-Q'){assert.equal(r.cast('Q'),'ok');r.step(2);assert.equal(r.hits('EX').length,0);}
+      const fromTick=r.world.tick;assert.equal(r.cast('EX',{type:'point',point}),'ok');
+      assert.equal(r.hits('EX').length,0,'EX_DAMAGE_AT_LAUNCH');
+      assert.equal(r.world.nav.get(r.caster).override?.kind,'leap','EX_NO_LEAP');
+      r.step(3);assert.equal(r.hits('EX').length,0,'EX_DAMAGE_IN_FLIGHT');
+      r.step(40);const hits=r.hits('EX');assert.equal(hits.length,1,'EX_NO_LANDING_HIT');
+      const frame=r.frames.find((f:any)=>f.tick===hits[0].tick+1),at=frame.actors.find((a:any)=>a.id===r.caster);
+      const landing=r.events.find((e:any)=>e.type==='explosion'&&e.tick===hits[0].tick&&
+        e.data.abilityId===`ability:${compiled.abilityDrafts.EX.id}`);
+      assert(landing&&dist({x:landing.data.x,z:landing.data.z},point)<1e-5,'NO_SAME_TICK_LANDING_EVENT');
+      assert(dist(at.position,point)<1e-5,'EX_WRONG_LANDING');assert(at.override?.kind!=='leap','EX_HIT_WHILE_AIRBORNE');
+      assert.equal(allDamage(r,compiled,'EX',r.other).length,0,'EX_ALLY_DAMAGE');
+      assert(dist(pos(r,r.foe),{x:point.x+1.2,z:point.z})<1e-5,'EX_UNSTATED_ENEMY_PUSH');
+      assert.equal(castAbility(r.world,r.caster,'EX',{type:'point',point}),'cooldown','EX_RECAST_BYPASS');
+      return{prerequisite,flightTicks:hits[0].tick-fromTick,point,landing:at.position};
+    });
+    run('EX-enemy-leaves-before-landing','EX',r=>{
+      disarm(r);const start=pos(r),point={x:start.x+4,z:start.z};place(r,r.foe,{x:point.x+1.2,z:point.z});
+      assert.equal(r.cast('EX',{type:'point',point}),'ok');place(r,r.foe,{x:point.x+12,z:point.z});r.step(45);
+      assert.equal(r.hits('EX').length,0,'EX_FROZEN_TARGET_HIT');assert(dist(pos(r),point)<1e-5,'EX_REAIMED');
+      return{hits:0,landing:pos(r)};
+    });
+    run('all-actives-use-mana-and-reject-death','ALL',r=>{
+      disarm(r);for(const slot of ['Q','W','E','R','EX'])assert(compiled.abilityDrafts[slot].manaCost[0]>0,'NO_COMMON_MANA_COST');
+      r.world.health.get(r.caster).alive=false;
+      for(const slot of ['Q','W','E','R','EX'])assert.equal(r.cast(slot),'dead',`DEAD_CAST:${slot}`);
+      return{deadCastRejected:5,resource:'mana'};
+    });
+  }
+  return{passed:rows.filter(r=>r.passed).length,total:rows.length,rows};
+}

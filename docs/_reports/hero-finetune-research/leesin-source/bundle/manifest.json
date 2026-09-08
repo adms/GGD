@@ -1,0 +1,275 @@
+{
+  "schema": "ggd-hero-finetune-research-archive@1",
+  "entries": [
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/compile-reviewed-products-v1.mts",
+      "bytes": 4526,
+      "sha256": "fa866249e21bb1d71da8c5f92a141fccc60b1a9ec0598f4bf2101ef2213cf1dc",
+      "archive": "archives/00-compile-reviewed-products-v1.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/leesin-plan-v1.mts",
+      "bytes": 4618,
+      "sha256": "6f0820e775b182f4d6e0e43816c9a42846f6fd3befdb1117a1b26b739ec0d40a",
+      "archive": "archives/01-leesin-plan-v1.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/leesin-probes-v1.mts",
+      "bytes": 11677,
+      "sha256": "246f6b6f5e3507199d44dc559cb39c0a7b76d4dca13b770c3b214a5427f008d7",
+      "archive": "archives/02-leesin-probes-v1.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/leesin-probes-v2.mts",
+      "bytes": 12341,
+      "sha256": "df28eae990b1adeaa6582847a55e487ff7366e7be5f1a265418a1fa9c84cb497",
+      "archive": "archives/03-leesin-probes-v2.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/audit-leesin-plan-v1.mts",
+      "bytes": 5583,
+      "sha256": "7a77978b826904b77ef052c297b938646cea0b3a71d05148e8c92d0da5b5f21c",
+      "archive": "archives/04-audit-leesin-plan-v1.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/audit-leesin-plan-v2.mts",
+      "bytes": 6162,
+      "sha256": "af246dcb4e66ed4bbe376f9fd3aa8f9cb9ad638e4d34a1210763c44669740cd3",
+      "archive": "archives/05-audit-leesin-plan-v2.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/reviewed-products.test.mts",
+      "bytes": 2475,
+      "sha256": "cf6110305319653ed1fdace4a8363669a304994a9a4935220651fe4e45f81a5b",
+      "archive": "archives/06-reviewed-products.test.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/package-leesin-v1.mts",
+      "bytes": 5791,
+      "sha256": "70acebcb1c69d46ff76801bf5a53ee0fd18c7b770bf7dbe33caaf64885b7c1b1",
+      "archive": "archives/07-package-leesin-v1.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/LEESIN_SOURCE_CANDIDATE_REPORT.md",
+      "bytes": 6032,
+      "sha256": "57cd8ec99f9f40fa40f966ef399a69d296d2f5c56dfa91d73333828bb04be0c1",
+      "archive": "archives/08-LEESIN_SOURCE_CANDIDATE_REPORT.md.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/leesin-plan-audit-v1/candidate.private.json",
+      "bytes": 12157,
+      "sha256": "97bb0d86eea25bcf9243ca2e5dac2555465b114b89dfdaf3177851ab5f73dcc8",
+      "archive": "archives/09-leesin-plan-audit-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/leesin-plan-audit-v1/compiled-preview.private.json",
+      "bytes": 57018,
+      "sha256": "7c5e7c646261566fd134ab3ffb129682356f0f72ed051e9128727b425909aaa8",
+      "archive": "archives/09-leesin-plan-audit-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/leesin-plan-audit-v1/manifest.json",
+      "bytes": 4303,
+      "sha256": "3fc7c0a5ee4bad53abae58fedd74801157bf59c6797b423ab11bc57b846e036c",
+      "archive": "archives/09-leesin-plan-audit-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/leesin-plan-audit-v1/mutation-evidence.json",
+      "bytes": 1182786,
+      "sha256": "5bdaa08388224c4daa212d5066650aa2f997c09e3ad84633bf9d16c13ba37579",
+      "archive": "archives/09-leesin-plan-audit-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/leesin-plan-audit-v1/positive-evidence.json",
+      "bytes": 1381566,
+      "sha256": "38f0ec5059602a2abdb36d0f36b9f06b6acaf908e0777c81cf1b7fe5d517bb9f",
+      "archive": "archives/09-leesin-plan-audit-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/leesin-plan-audit-v2/candidate.private.json",
+      "bytes": 12157,
+      "sha256": "97bb0d86eea25bcf9243ca2e5dac2555465b114b89dfdaf3177851ab5f73dcc8",
+      "archive": "archives/10-leesin-plan-audit-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/leesin-plan-audit-v2/compiled-preview.private.json",
+      "bytes": 57018,
+      "sha256": "7c5e7c646261566fd134ab3ffb129682356f0f72ed051e9128727b425909aaa8",
+      "archive": "archives/10-leesin-plan-audit-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/leesin-plan-audit-v2/manifest.json",
+      "bytes": 3789,
+      "sha256": "8cd4f3b62efde3fac2c56b59dedd5a8fd000407807d82d0750d08bca1911c9eb",
+      "archive": "archives/10-leesin-plan-audit-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/leesin-plan-audit-v2/mutation-evidence.json",
+      "bytes": 1548896,
+      "sha256": "fa45271beb1808845f9d012a8f848eef57805111991e7609b0bbf6c2fa81bd64",
+      "archive": "archives/10-leesin-plan-audit-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/leesin-plan-audit-v2/positive-evidence.json",
+      "bytes": 1533298,
+      "sha256": "3e6d6ee8d7cac81a2fd483112d26ce9226f84b8dbb5fd319ee844fe72adf9f18",
+      "archive": "archives/10-leesin-plan-audit-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/leesin-package-v1/forged-runtime-rejection.json",
+      "bytes": 755,
+      "sha256": "73ede5af613b19e0085236d8360c966a58817902269cc5e48f55f5aeaa157182",
+      "archive": "archives/11-leesin-package-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/leesin-package-v1/hero-project.json",
+      "bytes": 22574,
+      "sha256": "f165fc043f8892f50c19d4d30405baa96493716b1e41370ba39e993a25a29a10",
+      "archive": "archives/11-leesin-package-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/leesin-package-v1/manifest.json",
+      "bytes": 1552,
+      "sha256": "2827eca497113061a3038208d170474bcd884e4eaa591040bbd90b60e55d025c",
+      "archive": "archives/11-leesin-package-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/leesin-package-v1/package.json",
+      "bytes": 38325321,
+      "sha256": "1c220965d542decb1bd3e933f18323275b434c09e6f0ff7cafaf1c8dcdbf2a74",
+      "archive": "archives/11-leesin-package-v1.zip"
+    }
+  ],
+  "archives": [
+    {
+      "path": "archives/00-compile-reviewed-products-v1.mts.zip",
+      "bytes": 1981,
+      "sha256": "a4a01a98f5a60f35e224f98d1d5c4755c6f782f81dd5321346d2aeffe83909ff"
+    },
+    {
+      "path": "archives/01-leesin-plan-v1.mts.zip",
+      "bytes": 2607,
+      "sha256": "421b00f8f1a9a1f662f625cc13d22115d4b1c2c7eea0fe26117bd81d45fd5f6d"
+    },
+    {
+      "path": "archives/02-leesin-probes-v1.mts.zip",
+      "bytes": 4063,
+      "sha256": "e0b4b0dafbfafacf4a0c28879b1160dd1eca9213f454c019aacd759ffcb32521"
+    },
+    {
+      "path": "archives/03-leesin-probes-v2.mts.zip",
+      "bytes": 4294,
+      "sha256": "496401edeea3e151370e5fa293d0e3cc0f82abbb94765b9774515b486ca67c13"
+    },
+    {
+      "path": "archives/04-audit-leesin-plan-v1.mts.zip",
+      "bytes": 2384,
+      "sha256": "25a571d9cbb87b2da97c1446789e24a17d2d82de3465089237f5f0a52c09fa51"
+    },
+    {
+      "path": "archives/05-audit-leesin-plan-v2.mts.zip",
+      "bytes": 2667,
+      "sha256": "9687234f32b88f9a1014557b7891111d7d8ae2173aaed7a1d2b182585f1303d1"
+    },
+    {
+      "path": "archives/06-reviewed-products.test.mts.zip",
+      "bytes": 1072,
+      "sha256": "f7803a89f61c7b9daf3a3b07960b245edd52d109bdc6733ecf829c7c780a23cd"
+    },
+    {
+      "path": "archives/07-package-leesin-v1.mts.zip",
+      "bytes": 2415,
+      "sha256": "edd3a6f290c3e48a78f98a8697994e62e3fb078a39cbab7d5229ceb5fd4e7bed"
+    },
+    {
+      "path": "archives/08-LEESIN_SOURCE_CANDIDATE_REPORT.md.zip",
+      "bytes": 3703,
+      "sha256": "7dfe7078defaf4b46dd6c59698e858b398c11319c7a38587d6d193c3d71a64e9"
+    },
+    {
+      "path": "archives/09-leesin-plan-audit-v1.zip",
+      "bytes": 77904,
+      "sha256": "6ccccc54efc43379bf531c86df19a20e65e52d82d6c44c8da13c4601dd4624d1"
+    },
+    {
+      "path": "archives/10-leesin-plan-audit-v2.zip",
+      "bytes": 87449,
+      "sha256": "134644a983f175ee61f8891256740b33c485c92de99b480c68b0791e6705f56b"
+    },
+    {
+      "path": "archives/11-leesin-package-v1.zip",
+      "bytes": 7293912,
+      "sha256": "59ab15e6b93774888bf4102d64ab2473a66f145814b84d439d8f804b5602af0c"
+    }
+  ],
+  "sourceMirrors": [
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/compile-reviewed-products-v1.mts.txt",
+      "sha256": "fa866249e21bb1d71da8c5f92a141fccc60b1a9ec0598f4bf2101ef2213cf1dc"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/leesin-plan-v1.mts.txt",
+      "sha256": "6f0820e775b182f4d6e0e43816c9a42846f6fd3befdb1117a1b26b739ec0d40a"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/leesin-probes-v1.mts.txt",
+      "sha256": "246f6b6f5e3507199d44dc559cb39c0a7b76d4dca13b770c3b214a5427f008d7"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/leesin-probes-v2.mts.txt",
+      "sha256": "df28eae990b1adeaa6582847a55e487ff7366e7be5f1a265418a1fa9c84cb497"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/audit-leesin-plan-v1.mts.txt",
+      "sha256": "7a77978b826904b77ef052c297b938646cea0b3a71d05148e8c92d0da5b5f21c"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/audit-leesin-plan-v2.mts.txt",
+      "sha256": "af246dcb4e66ed4bbe376f9fd3aa8f9cb9ad638e4d34a1210763c44669740cd3"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/reviewed-products.test.mts.txt",
+      "sha256": "cf6110305319653ed1fdace4a8363669a304994a9a4935220651fe4e45f81a5b"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/package-leesin-v1.mts.txt",
+      "sha256": "70acebcb1c69d46ff76801bf5a53ee0fd18c7b770bf7dbe33caaf64885b7c1b1"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/LEESIN_SOURCE_CANDIDATE_REPORT.md",
+      "sha256": "57cd8ec99f9f40fa40f966ef399a69d296d2f5c56dfa91d73333828bb04be0c1"
+    }
+  ],
+  "omitted": [
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/leesin-package-v1/leesin-reviewed-offline.zip",
+      "bytes": 2890218,
+      "reason": "non-source-or-nested-package",
+      "sha256": "28b5ce6dd54861814e8ec8a7eeabb7690a0d62a0a169ce165e7f32e070245bfe"
+    }
+  ],
+  "secretPatternCheckPassed": true,
+  "scriptSha256": "d34642e4dbf75fabaa83d61ec278152a2334024fe25d8939e3f3e450acd93d59",
+  "productionQualified": false,
+  "scope": "Explicit incremental research supplement; baseline dependencies remain in the original archive.",
+  "includedRoots": [
+    "outputs/hero-forge-12b-restart-20260908/compile-reviewed-products-v1.mts",
+    "outputs/hero-forge-12b-restart-20260908/leesin-plan-v1.mts",
+    "outputs/hero-forge-12b-restart-20260908/leesin-probes-v1.mts",
+    "outputs/hero-forge-12b-restart-20260908/leesin-probes-v2.mts",
+    "outputs/hero-forge-12b-restart-20260908/audit-leesin-plan-v1.mts",
+    "outputs/hero-forge-12b-restart-20260908/audit-leesin-plan-v2.mts",
+    "outputs/hero-forge-12b-restart-20260908/reviewed-products.test.mts",
+    "outputs/hero-forge-12b-restart-20260908/package-leesin-v1.mts",
+    "outputs/hero-forge-12b-restart-20260908/LEESIN_SOURCE_CANDIDATE_REPORT.md",
+    "outputs/hero-forge-12b-restart-20260908/leesin-plan-audit-v1",
+    "outputs/hero-forge-12b-restart-20260908/leesin-plan-audit-v2",
+    "outputs/hero-forge-12b-restart-20260908/leesin-package-v1"
+  ],
+  "terminalState": {
+    "path": "outputs/hero-forge-12b-restart-20260908/leesin-plan-audit-v2/manifest.json",
+    "sha256": "8cd4f3b62efde3fac2c56b59dedd5a8fd000407807d82d0750d08bca1911c9eb",
+    "status": "stopped-report-written"
+  },
+  "privacyNote": "Historical machine paths and fictional hero source texts are preserved for evidence integrity; no credential files are included."
+}

@@ -1,0 +1,56 @@
+/** Research content compiler. No model answer repair, engine edit or automatic admission. */
+import assert from 'node:assert/strict';
+import {SLOTS,sha} from './intake.mjs';
+import {compileHeroPackageProject} from '../../GGD-community-hero-forge/packages/shared/src/content/import/heroPackage.ts';
+import {zHeroProject} from '../../GGD-community-hero-forge/packages/shared/src/content/heroForge/schema.ts';
+import {pinHeroPlanTemplates} from '../../GGD-community-hero-forge/packages/shared/src/content/heroForge/templateVersions.ts';
+import {HERO_PROJECT_SCHEMA,HERO_PLAN_SCHEMA,HERO_SECTION_IDS} from '../../GGD-community-hero-forge/packages/shared/src/content/heroForge/constants.ts';
+import {defaultHeroPresentation} from '../../GGD-community-hero-forge/packages/shared/src/content/heroForge/presentation.ts';
+import {archetypeForOrigin,ORIGIN_ATTACK_TYPE} from '../../GGD-community-hero-forge/packages/shared/src/content/heroForge.ts';
+import {defaultParamsFor,paramsSchemaFor} from '../../GGD-community-hero-forge/packages/shared/src/content/templates/paramsSchema.ts';
+
+export function compileReviewedProducts(candidate:any,catalog:any){
+  const {source,recipe}=candidate;
+  assert.equal(sha(source.hero.originalText),source.hero.sourceSha256,'SOURCE_HASH');
+  assert.deepEqual(source.slots.map((s:any)=>s.slot),SLOTS,'SOURCE_SLOTS');
+  for(const s of source.slots)assert.equal(sha(s.originalText),s.sourceSha256,'SLOT_HASH');
+  assert(source.hero.originalText.includes(`出身：${recipe.origin}`),'ORIGIN_SOURCE');
+  assert(source.hero.originalText.includes(recipe.identitySummary),'IDENTITY_SOURCE');
+  const templates:any[]=[...catalog.documents].filter(([k])=>k.startsWith('ability-templates/')).map(([,v])=>v);
+  const byId=new Map(templates.map(t=>[t.id,t]));
+  const originals=Object.fromEntries(source.slots.map((s:any)=>[s.slot,s]));
+  assert.deepEqual(Object.keys(recipe.slots),SLOTS,'RECIPE_SLOTS');
+  const slots=Object.fromEntries(SLOTS.map(slot=>{
+    const s=recipe.slots[slot];assert(s.products.length>0,'EMPTY_SLOT');
+    for(const p of s.products){
+      const t=byId.get(p.ref);assert(t?.status==='enabled','DISABLED_TEMPLATE');
+      assert(Object.keys(p.params).every(k=>Object.hasOwn(t.params,k)),'UNKNOWN_PARAM');
+      paramsSchemaFor(t).parse({...defaultParamsFor(t),...p.params});
+    }
+    return[slot,{slot,name:originals[slot].name,purpose:originals[slot].originalText,
+      maxRank:slot==='R'?3:slot==='PASSIVE'||slot==='EX'?1:4,
+      products:s.products.map((p:any,i:number)=>({instanceId:`${slot.toLowerCase()}-${i+1}`,
+        template:{...p,inheritDefaults:true}})),
+      abilityOverrides:{provenance:'editor-json',...s.abilityOverrides},templateConflictPolicy:'reject',
+      capabilityIds:[...new Set(s.products.flatMap((p:any)=>byId.get(p.ref).requires))],
+      directionOptionIds:[],fallbackOptionIds:[]}];
+  }));
+  const projectId=`reviewed12b-${source.id}`,sourceLock={canonicalId:null,versionId:null};
+  const project=zHeroProject.parse({schema:HERO_PROJECT_SCHEMA,projectId,revision:1,sourceLock,
+    brief:{name:source.hero.name,concept:source.hero.originalText,
+      moveNames:Object.fromEntries(SLOTS.map(s=>[s,originals[s].name]))},
+    acceptedPlan:{schema:HERO_PLAN_SCHEMA,planId:`${projectId}.plan`,title:source.hero.name,
+      summary:recipe.identitySummary,sourceLock,origin:recipe.origin,archetype:archetypeForOrigin(recipe.origin),
+      attackType:ORIGIN_ATTACK_TYPE[recipe.origin],budget:{power:50,complexity:40},statOverrides:{},slots},
+    presentation:defaultHeroPresentation(),receipts:[],
+    sections:Object.fromEntries(HERO_SECTION_IDS.map(id=>[id,{revision:1,state:'draft',fieldOwnership:{}}])),
+    validationState:Object.fromEntries(HERO_SECTION_IDS.map(id=>[id,{revision:1,status:'idle',diagnosticCodes:[]} ])),
+    sourceDesign:{schema:'ggd-hero-source-design@1',sourceSha256:source.hero.sourceSha256,name:source.hero.name,
+      identity:source.hero.originalText,ownerText:source.hero.originalText,reviewText:'',
+      slots:Object.fromEntries(SLOTS.map(s=>[s,{name:originals[s].name,ownerDescription:originals[s].originalText,
+        baselineBehavior:'',requiredRefinement:'',refinementContracts:[]}]))}});
+  project.acceptedPlan=pinHeroPlanTemplates(project.acceptedPlan!,templates);
+  const built=compileHeroPackageProject(project,catalog,false);
+  return{project,compiled:built.compiled,runtimeDocuments:built.runtime.length,dependencies:built.dependencies.length,
+    modelGenerated:false,automaticAccept:false,releaseQualified:false};
+}

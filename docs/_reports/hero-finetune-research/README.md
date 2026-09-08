@@ -4,6 +4,8 @@ Research artifacts only. No editor activation, model service, cloud training, ga
 
 ## Latest delivery status
 
+New local data progress: [Lee Sin's six-slot candidate](leesin-source/README.md) passes 28/28 source-oriented scenarios, rejects 12/12 wrong recipes, and round trips through the official offline ZIP format with matching compiled content. This is a source-reviewed development recipe, not model generation or formal SFT admission. Work on unaffected heroes can continue while point-anchor coordination remains unresolved.
+
 [Current delivery and unresolved conditions](CURRENT_STATUS.md) distinguishes completed scripts/artifacts from the unqualified hero model. The latest [bounded content-composition comparison](field-composition/REPORT.md) rejects a proposed delayed/damageArea replacement: 18/36 versus 24/36 original checks, including 12 new out-of-field wrongful-hit cases. No GPU run or engine edit was made.
 
 Additional local evidence: [selected-point fields](selected-point-fields/README.md) failed all six off-center cases across Lux E, Miss Fortune E and Xerath R, with 12/12 empty/centered controls passing. These three newly documented recipe mismatches are additive to the older eight-issue ledger; that frozen ledger has not been silently rewritten. They prevent promoting the reviewed candidates to complete executable targets.

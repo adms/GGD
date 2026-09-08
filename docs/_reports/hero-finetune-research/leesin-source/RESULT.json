@@ -1,0 +1,120 @@
+{
+  "schema": "ggd-leesin-source-recipe-audit@2",
+  "status": "stopped-report-written",
+  "createdAt": "2026-09-08T06:21:58.738Z",
+  "heroId": "community7-leesin",
+  "priorRun": "leesin-plan-audit-v1",
+  "compiledArtifactIdenticalToPrior": true,
+  "harnessCorrections": [
+    "Public attack order for the initial melee attack, with both targets in valid non-overlapping melee range.",
+    "Post-step snapshot tick is event tick plus one. EX additionally requires a same-tick landing explosion at the requested point."
+  ],
+  "originalSourceSha256": "790a2442f9b5a653dd937707e7790678012e736d6037ab133ed51d851c778726",
+  "compiled": true,
+  "sourceBytesPreserved": true,
+  "originVerified": true,
+  "positive": {
+    "passed": 28,
+    "total": 28,
+    "failures": []
+  },
+  "mutations": {
+    "detected": 12,
+    "total": 12,
+    "rows": [
+      {
+        "id": "passive-wrong-type",
+        "compiled": true,
+        "controlPassed": true,
+        "detected": true
+      },
+      {
+        "id": "passive-no-ICD",
+        "compiled": true,
+        "controlPassed": true,
+        "detected": true
+      },
+      {
+        "id": "Q-unasked-dash",
+        "compiled": true,
+        "controlPassed": true,
+        "detected": true
+      },
+      {
+        "id": "Q-wrong-range-tier",
+        "compiled": true,
+        "controlPassed": true,
+        "detected": true
+      },
+      {
+        "id": "W-no-shield",
+        "compiled": true,
+        "controlPassed": true,
+        "detected": true
+      },
+      {
+        "id": "W-no-attack-speed",
+        "compiled": true,
+        "controlPassed": true,
+        "detected": true
+      },
+      {
+        "id": "E-not-selected-ground",
+        "compiled": true,
+        "controlPassed": true,
+        "detected": true
+      },
+      {
+        "id": "E-wrong-type",
+        "compiled": true,
+        "controlPassed": true,
+        "detected": true
+      },
+      {
+        "id": "R-damage-before-dash-end",
+        "compiled": true,
+        "controlPassed": true,
+        "detected": true
+      },
+      {
+        "id": "R-missing-push",
+        "compiled": true,
+        "controlPassed": true,
+        "detected": true
+      },
+      {
+        "id": "R-unasked-invulnerability",
+        "compiled": true,
+        "controlPassed": true,
+        "detected": true
+      },
+      {
+        "id": "EX-hit-at-release",
+        "compiled": true,
+        "controlPassed": true,
+        "detected": true
+      }
+    ]
+  },
+  "admission": {
+    "formalTraining": false,
+    "freshHoldout": false,
+    "modelActivated": false,
+    "completeHeroQualified": false,
+    "reason": "Source-reviewed content candidate; source-choice-aware target encoding and broader package/runtime certification remain separate."
+  },
+  "modelInference": false,
+  "modelTraining": false,
+  "engineEdited": false,
+  "pins": {
+    "compile-reviewed-products-v1.mts": "fa866249e21bb1d71da8c5f92a141fccc60b1a9ec0598f4bf2101ef2213cf1dc",
+    "leesin-plan-v1.mts": "6f0820e775b182f4d6e0e43816c9a42846f6fd3befdb1117a1b26b739ec0d40a",
+    "leesin-probes-v2.mts": "df28eae990b1adeaa6582847a55e487ff7366e7be5f1a265418a1fa9c84cb497",
+    "audit-leesin-plan-v2.mts": "af246dcb4e66ed4bbe376f9fd3aa8f9cb9ad638e4d34a1210763c44669740cd3",
+    "leesin-plan-audit-v1/compiled-preview.private.json": "7c5e7c646261566fd134ab3ffb129682356f0f72ed051e9128727b425909aaa8",
+    "probe-harness.mts": "3ed5122114f4dfc8885c0433d42e89bec519ef45d4a251e704591f7cfe73c0f6",
+    "source-review-v1/model-inputs.json": "03fbd4109220d38b3a65b05815b98cd5c6b3ba76821ca91e6f95deae17a51908",
+    "current-engine-v1/source-pins.json": "f828a45215b8d9af9d20d6713a63500578719a919fd7b2a841c462c86884933e",
+    "current-engine-v1/catalog-pins.json": "11757b76c9e1287f34b7a0ac5cd8af06c49842215b1367e2da5d8110cbecc04c"
+  }
+}

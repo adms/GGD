@@ -1,0 +1,38 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {leesinPlan} from './leesin-plan-v1.mts';
+import {compileReviewedProducts} from './compile-reviewed-products-v1.mts';
+import {checkEnginePins,currentCatalog,hash} from './ir4-compiler.mts';
+checkEnginePins();const catalog=currentCatalog();
+test('six-slot original source is retained and compilation never promotes',()=>{
+  const c=leesinPlan(),before=hash(JSON.stringify(c)),b=compileReviewedProducts(c,catalog);
+  assert.equal(b.project.sourceDesign!.ownerText,c.source.hero.originalText);
+  for(const s of c.source.slots)assert.equal(b.project.sourceDesign!.slots[s.slot].ownerDescription,s.originalText);
+  assert.equal(hash(JSON.stringify(c)),before);assert.equal(b.automaticAccept,false);assert.equal(b.releaseQualified,false);
+});
+test('a stale source hash fails closed',()=>{
+  const c=leesinPlan();c.source.hero.originalText+=' changed';assert.throws(()=>compileReviewedProducts(c,catalog),/SOURCE_HASH/);
+});
+test('a source-unanchored origin fails closed',()=>{
+  const c=leesinPlan();c.recipe.origin='法師';assert.throws(()=>compileReviewedProducts(c,catalog),/ORIGIN_SOURCE/);
+});
+test('unknown template ids are rejected',()=>{
+  const c=leesinPlan();c.recipe.slots.Q.products[0].ref='unapproved-template';
+  assert.throws(()=>compileReviewedProducts(c,catalog),/DISABLED_TEMPLATE/);
+});
+test('unknown or malformed parameters are rejected before compilation',()=>{
+  const c:any=leesinPlan();c.recipe.slots.Q.products[0].params.notAParameter=true;
+  assert.throws(()=>compileReviewedProducts(c,catalog),/UNKNOWN_PARAM/);
+  const d:any=leesinPlan();d.recipe.slots.Q.products[0].params.radius=500;
+  assert.throws(()=>compileReviewedProducts(d,catalog));
+});
+test('missing and extra slots cannot silently disappear',()=>{
+  const c:any=leesinPlan();delete c.recipe.slots.E;assert.throws(()=>compileReviewedProducts(c,catalog),/RECIPE_SLOTS/);
+  const d:any=leesinPlan();d.recipe.slots.X=d.recipe.slots.E;assert.throws(()=>compileReviewedProducts(d,catalog),/RECIPE_SLOTS/);
+});
+test('schema-valid wrong ordering is not falsely called source-certified',()=>{
+  const c=leesinPlan(),p=c.recipe.slots.R.products[0].params;
+  const e:any=p.effects[0],end=e.onEnd;delete e.onEnd;p.effects.push(...end);
+  const b=compileReviewedProducts(c,catalog);assert.equal(b.automaticAccept,false);assert.equal(b.releaseQualified,false);
+  assert.equal(b.compiled.abilityDrafts.R.effects.length,2);
+});

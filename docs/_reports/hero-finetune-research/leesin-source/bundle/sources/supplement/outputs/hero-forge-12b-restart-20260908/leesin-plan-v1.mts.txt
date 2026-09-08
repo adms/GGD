@@ -1,0 +1,56 @@
+/** Whole-source Lee Sin candidate. Final recipes use only existing public templates. */
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import {sha} from './intake.mjs';
+
+export function leesinPlan(){
+  const all=JSON.parse(fs.readFileSync(new URL('./source-review-v1/model-inputs.json',import.meta.url),'utf8'));
+  const source=all.find((s:any)=>s.id==='community7-leesin');assert(source);
+  assert.equal(source.hero.sourceSha256,'790a2442f9b5a653dd937707e7790678012e736d6037ab133ed51d851c778726');
+  assert.equal(sha(source.hero.originalText),source.hero.sourceSha256);
+  const hit=(damageType='magic',tier='極小')=>({kind:'damage',damageType,amount:{damageTier:tier}});
+  const sequence=(castType:string,effects:any[],abilityOverrides={},radius=2.75)=>({
+    products:[{ref:'tpl-effect-sequence',params:{castType,castTimeSec:0,radius,side:'enemies',effects}}],abilityOverrides});
+  const recipe={origin:'鬥士',identitySummary:'以聲波探擊、短程進身、護身與踢離敵人的連續節奏作戰。',slots:{
+    PASSIVE:{products:[{ref:'tpl-event-passive',params:{hooks:[{on:'onBasicAttack',target:'event',victim:'enemy',
+      internalCooldown:2,effects:[hit('physical')]}]}}],abilityOverrides:{}},
+    Q:sequence('targeted',[hit()],{rangeTier:'中'}),
+    W:sequence('self',[
+      {kind:'shield',amount:{flat:100},duration:3,absorbs:'all',stackKey:'research.leesin.w',onExisting:'replace'},
+      {kind:'applyBuff',applyTo:'self',duration:3,modifiers:[{stat:'as',op:'pctAdd',value:0.2}]},
+    ]),
+    E:sequence('ground',[hit('physical','小')],{rangeTier:'小'}),
+    R:sequence('ground',[{kind:'dash',mode:'toPoint',speed:6,maxDistance:2,onEndOn:'always',onEndWhenDead:false,
+      onEnd:[{kind:'damageArea',radius:1.6,damageType:'magic',amount:{damageTier:'極小'},includeOrigin:true,falloff:1,
+        onHitTargets:[{kind:'knockback',distance:2,speed:8,from:'facing',subtractGap:false}]}]}],{rangeTier:'小'}),
+    EX:sequence('ground',[{kind:'leap',applyTo:'self',mode:'toPoint',apexHeight:1,durationSec:0.3,
+      landRadius:2.75,onLand:[hit()]}],{rangeTier:'小'}),
+  }};
+  const semanticRequirements=[
+    ['PASSIVE','普攻追加極小級物理傷害，內置冷卻 2 秒。'],
+    ['Q','以中級距射程攻擊指定敵人；不會自動開啟第二段位移。'],
+    ['W','獲得 3 秒護盾與 20% 攻速加成。'],
+    ['E','在指定近處引爆小級物理傷害，保留可瞄準的落點。'],
+    ['R','短距進身後打擊並向前推開敵人，不附帶無敵或全場追蹤。'],
+    ['EX','朝落點跳躍並在著地時打擊附近敵人，作為獨立追擊技能。'],
+  ].map(([slot,evidence])=>{assert(source.slots.find((s:any)=>s.slot===slot).originalText.includes(evidence));return{slot,evidence};});
+  return{id:source.id,source,recipe,semanticRequirements,
+    identityConstraints:['energy_replaced_by_common_mana','basic_proc_not_two_attacks_after_cast',
+      'Q_and_EX_independent_no_recast','W_shield_self_only','R_no_invulnerability_or_global_tracking'],
+    sourceChoices:[
+      {scope:'Q/R/EX damage',choice:'magic and extreme-small preview',sourceSpecified:false},
+      {scope:'W shield',choice:'100 all-damage shield; replacement stacking',sourceSpecified:false},
+      {scope:'E/R/EX range',choice:'small tier for near/short preview',sourceSpecified:false},
+      {scope:'E radius',choice:2.75,sourceSpecified:false},
+      {scope:'R delivery',choice:'ground direction, fixed 2-unit approach, 6-unit/s speed, 1.6-unit endpoint hit area',sourceSpecified:false},
+      {scope:'R push',choice:'2 units at 8-unit/s, no gap subtraction, engine facing at impact',sourceSpecified:false},
+      {scope:'R interruption',choice:'onEnd always if alive; no completion hit after death',sourceSpecified:false},
+      {scope:'EX trajectory',choice:'0.3 seconds, apex 1, landing radius 2.75',sourceSpecified:false},
+      {scope:'unspecified timing/cooldown/cost',choice:'zero startup and current template defaults',sourceSpecified:false},
+      {scope:'hero stats and presentation',choice:'existing origin/default presentation; no VFX tuning',sourceSpecified:false},
+    ],
+    review:{completeOriginalRead:true,oldMappingCopied:false,authority:'historical GGD adaptation, not canonical LoL or fresh Owner approval',
+      knownExposure:true,freshHoldout:false,unknownChoicesAreNotUniqueSourceLabels:true},
+    admission:{formalTraining:false,fullValueTraining:false,modelContractTarget:false,completeHeroQualified:false,
+      reason:'Needs whole-source coverage, behavior and mutation results plus a source-choice-aware training contract.'}};
+}
