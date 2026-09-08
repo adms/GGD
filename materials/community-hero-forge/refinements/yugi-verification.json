@@ -172,5 +172,139 @@
       "files": 3,
       "logSha256": "8098f9660a497c782f91c5f43fb6b10848d1703713534e0ac0eddb08d8af70b5"
     }
+  },
+  "thirdReleaseFailure": {
+    "head": "1dcea3b1ced6570a546a849861d10c203a6ed003",
+    "reportSha256": "84360624defa751d38995aaf793d54437e1aa8131d8c8b5a1906c4e30c8a4c47",
+    "reason": "Fixed form-walker effect-kind list omitted trap; 594 other Editor tests passed. Added explicit trap entry after runtime, preview and wire support; 22 targeted tests pass.",
+    "fixCommit": "9e68e3cd94383e6a37ba07ec8c3e4a22390bfabf",
+    "focusedTests": 22,
+    "focusedLogSha256": "f494b0fe1417d4782fbfcbc848e0e866a0eddfdd1a83721cfe6dd847c612fd54"
+  },
+  "releaseVerification": {
+    "testedHead": "9e68e3cd94383e6a37ba07ec8c3e4a22390bfabf",
+    "workingTreeClean": true,
+    "command": "python3 tools/community-hero-forge/verify-authoring-batch.py --batch-dir materials/community-hero-forge --release --jobs 3 --release-root <existing-model-release> --output <new-directory>",
+    "reportSha256": "6ef182921094ea752cac087649411bd33c652ce93e09096bea4c1a11c3ebc16e",
+    "sourceFingerprint": "b427d5dd090c4bc7ba13be4b0815000c6f0ac98006e07d20a6fd90f0dfa910ae",
+    "exitCode": 2,
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 33,
+      "slotsWithoutBehaviorSuite": 189
+    },
+    "editorTests": 595,
+    "editorProductionBuild": "passed",
+    "jobs": [
+      {
+        "id": "skills",
+        "argv": [
+          "pnpm",
+          "skills:check"
+        ],
+        "exitCode": 0,
+        "fingerprint": "e32db9dea6bbec82f2f41b6b1566f3c35e2222c5efbe1161a7d68c06a202aadc",
+        "log": "skills.log",
+        "logSha256": "904214163b0e4dd25b54e1fcb73caeec30e2687968cdd87abe7a829bbd14e1fa",
+        "seconds": 122.59,
+        "reused": false
+      },
+      {
+        "id": "editor",
+        "argv": [
+          "pnpm",
+          "editor:accept:release"
+        ],
+        "exitCode": 0,
+        "fingerprint": "7d587bddfe7d1686a6dc1dee89f9cdd2d09d6b3ed75feb747e6eeb09b7907c4b",
+        "log": "editor.log",
+        "logSha256": "b72166891f760ce91b6aa0c6b01f2245d8d747721f4cb0f0d60d440d9c943207",
+        "seconds": 307.51,
+        "reused": false
+      },
+      {
+        "id": "coord",
+        "argv": [
+          "pnpm",
+          "coord:check"
+        ],
+        "exitCode": 0,
+        "fingerprint": "dac8ad46e4a98cb7eeaf8b2c6bba5278a8b65920da88c7ff2b5c0e42dd747ce8",
+        "log": "coord.log",
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271",
+        "seconds": 3.15,
+        "reused": false
+      },
+      {
+        "id": "compile-and-models",
+        "argv": [
+          "pnpm",
+          "exec",
+          "node",
+          "--import",
+          "tsx",
+          "tools/community-hero-forge/prepare-published-handoff.mts",
+          "--batch-dir",
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge",
+          "--release-root",
+          "/private/tmp/ggd-model-upload-acceptance/release-13956d93b"
+        ],
+        "exitCode": 0,
+        "fingerprint": "ea06c4802132265beab387945021ebe6117d4d1f0688b4d4c3299802800c8ebf",
+        "log": "compile-and-models.log",
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c",
+        "seconds": 6.08,
+        "reused": false
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "argv": [
+          "pnpm",
+          "exec",
+          "vitest",
+          "run",
+          "packages/shared/src/content/heroForge/communityRefinements/electricCharge.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/cardLinks.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/cardVariants.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/friendlyProtection.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/madoka.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/kirua.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/yugi.test.ts",
+          "--pool=threads",
+          "--minWorkers=1",
+          "--maxWorkers=1"
+        ],
+        "exitCode": 0,
+        "fingerprint": "420ba79c5430753a2230463acdafd9bbda57f4b489be77c28e44d8ee4e7eac3f",
+        "log": "behavior-implemented-mechanisms.log",
+        "logSha256": "42079cb584b3d59b0cfb84b9312da6c35a499fff322ddd1696241720be91cf7a",
+        "seconds": 19.19,
+        "reused": false
+      },
+      {
+        "id": "behavior-trap-view-and-transport",
+        "argv": [
+          "pnpm",
+          "exec",
+          "vitest",
+          "run",
+          "apps/client/src/render/views/TrapView.test.ts",
+          "apps/editor/src/vfx-forge/TrapReplay.test.ts",
+          "apps/game-server/src/net/trapWire.test.ts",
+          "--pool=threads",
+          "--minWorkers=1",
+          "--maxWorkers=1"
+        ],
+        "exitCode": 0,
+        "fingerprint": "f438b929571eaa15dc5a563d505d125b0f87a1e4b9fddd73c4edcaf220c5262f",
+        "log": "behavior-trap-view-and-transport.log",
+        "logSha256": "34fa534611071ecc766836d97165feebbd724c39bea1aa874803c5f66832600c",
+        "seconds": 5.54,
+        "reused": false
+      }
+    ],
+    "scope": "Mechanical checks pass; 189 slots have no registered behavior suite. Source design, art and current-service publication acceptance remain incomplete. This receipt commit is later than the tested head."
   }
 }

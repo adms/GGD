@@ -294,6 +294,19 @@
         "materials/community-hero-forge/refinements/yugi-verification.json",
         "tools/community-hero-forge/BATCH_VERIFICATION.md"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "乾淨提交 9e68e3cd9438 同批通過 skills、Editor release 與 coord。Editor 595 項測試、型別及正式建置通過；37 名／222 槽编譯、37 份模型綁定及 139 項已登記機制／跨端測試通過。批次退出碼 2 保留 189 槽無案例對應，原設計、畫面與正式發布仍未完成。#1143 跨端路徑修正已完成；#1132 原驗收條件不變。",
+      "repro": {
+        "command": "pnpm editor:accept:release",
+        "expectedExit": 0
+      },
+      "commit": "9e68e3cd94383e6a37ba07ec8c3e4a22390bfabf",
+      "evidence": [
+        "materials/community-hero-forge/refinements/yugi-verification.json",
+        "materials/community-hero-forge/validation-plan.json"
+      ]
     }
   ],
   "unblocks": [],
@@ -304,6 +317,6 @@
     }
   ],
   "asks": [
-    "請 Main 加入審查奇犽的通用具名資源維持費、全量施法成本、迴避來源／通道過濾與六槽配方。請 Main 加入審查鹿目圓 onAllyProtected、盾吸收歸屬、applyStatus.grantMark 及每回合救援次數的 schema/runtime 與版本化配方。請 Main 一併審查 #1143 批次驗證入口、失敗集中回報、來源綁定續跑及批次測試治具。請 Main 審查 #1141 nearbyCombat 条件與表單、dispel.statusTag 過濾、微調 version 對應作品 revision 與吉伊卡哇六槽；以及 #1140 的共用 chainLightning.retargetOnLost schema／runtime 選项及對應配方、#1139 換牌、友軍盾、radius:0 生成器修正、官方契約與 AI 守則。最新 37 份可共用作品在 materials/community-hero-forge/projects；#1132 保持開啟，完整原設計、修正後畫面／服務 ZIP 及正式發布仍未完成，不據此發布 37 名。"
+    "請 Main 審查本批武藤遊戲與奇犽修正：onSummonHit／onAttackAttempt、trap 與 onTrigger 子鏈、召喚換目標與槽位來源、requiredSummonSlot、黑魔導發射位置、Client／Server 傳輸與 Forge 回放。請 Main 加入審查奇犽的通用具名資源維持費、全量施法成本、迴避來源／通道過濾與六槽配方。請 Main 加入審查鹿目圓 onAllyProtected、盾吸收歸屬、applyStatus.grantMark 及每回合救援次數的 schema/runtime 與版本化配方。請 Main 一併審查 #1143 批次驗證入口、失敗集中回報、來源綁定續跑及批次測試治具。請 Main 審查 #1141 nearbyCombat 条件與表單、dispel.statusTag 過濾、微調 version 對應作品 revision 與吉伊卡哇六槽；以及 #1140 的共用 chainLightning.retargetOnLost schema／runtime 選项及對應配方、#1139 換牌、友軍盾、radius:0 生成器修正、官方契約與 AI 守則。最新 37 份可共用作品在 materials/community-hero-forge/projects；#1132 保持開啟，完整原設計、修正後畫面／服務 ZIP 及正式發布仍未完成，不據此發布 37 名。"
   ]
 }
