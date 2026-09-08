@@ -17,7 +17,10 @@ function fixture() {
   const hero=JSON.parse(readFileSync(join(repo,"content/champions/sela.json"),"utf8")); delete hero.icon;
   hero.id="hero-a";hero.name="原始名稱";hero.description="原文\n角色台詞";hero.modelKey="shared-model";hero.buildPriority=[];hero.passive={name:"被動",hooks:[]};
   for(const slot of ["Q","W","E","R"]) {
-    const a={...hero.abilities.Q,id:`skill.${slot.toLowerCase()}`,name:slot,slot,effects:[{kind:"damage",damageType:"magic",amount:{flat:20}}],description:"原始技能"}; delete a.icon;delete a.vfxKey;
+    // ⭐ 2026-09-08（合併 PR 1118）—— `delete a.template` 的理由與
+    //   `catalogHeroRoutes.test.ts` 的那一行逐字相同：main 的 GH#993 把 sela 的 Q
+    //   模板化了，而這個 tmp 內容樹沒有那份模板／投射物。
+    const a={...hero.abilities.Q,id:`skill.${slot.toLowerCase()}`,name:slot,slot,effects:[{kind:"damage",damageType:"magic",amount:{flat:20}}],description:"原始技能"}; delete a.icon;delete a.vfxKey;delete a.template;
     hero.abilities[slot]=a;put(`abilities/${a.id}.json`,{...a,schema:"ability@1"});
   }
   const model={id:"shared-model",schema:"model@1",glbPath:"assets/body.glb",scale:1,collisionRadius:0.6,clipMap:{idle:"Idle",run:"Run",attack:"Attack",cast:"Cast",hurt:"Hurt",death:"Death"}};

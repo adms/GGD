@@ -85,7 +85,13 @@ describe("A: the game client (LAN-published) has NO content-api route", () => {
     expect(at).toBeGreaterThan(0);
     const tail = src.slice(at, src.indexOf("build: {", at));
     const keys = [...tail.matchAll(/["'](\/[a-z0-9._\-/]+)["']\s*:\s*\{/gi)].map((m) => m[1]);
-    expect(keys.sort()).toEqual(["/api", "/colyseus"]);
+    // ⭐ 2026-09-08（合併 PR 1118）—— 第三條進來了：`/content/assets/hero-instances/`。
+    //   ⚠️ ⭐ 逐行查過它**指向哪裡**（⛔ 不是「看起來無害」）：`vite.config.ts:740` 的
+    //   target 是 **platform API（8080）**，rewrite 到 `/api/v1/content-overlay/assets/`
+    //   ⇒ ⛔ 它**不是**通往 content-api（8787）的路，而這條閘守的正是那一條
+    //   （cover id `content-admin-no-lan-route`）。⇒ 允許，並且**列名**：
+    //   ⭐ 下一條新的 proxy 仍然會讓這裡紅，那才是這張白名單存在的理由。
+    expect(keys.sort()).toEqual(["/api", "/colyseus", "/content/assets/hero-instances/"]);
   });
 
   it("keeps the tripwire: /content-api 404s on EVERY verb, GET included", () => {
@@ -248,8 +254,14 @@ describe("C: 內容編輯進得了正式 build，而預設是關的（GH#730）"
         "fetchDoc",
         "listBackups",
         "probeContentApi",
+        // ⭐ 2026-09-08（合併 PR 1118）—— 社群英雄的多版模型三支。
+        //   ⚠️ 列進來**不是**放行：下面那個迴圈仍然逐支要求「第一個分支就短路在閘上」，
+        //   ⇒ 這三支若少了那一行照樣紅。列名的意義是**它們存在**（改名會讓這裡紅）。
+        "readModelVersionCatalog",
+        "readModelVersions",
         "restoreBackup",
         "saveDocs",
+        "updateModelVersions",
         "validateDoc",
       ].sort(),
     );

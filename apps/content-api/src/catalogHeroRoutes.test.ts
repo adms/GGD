@@ -20,7 +20,14 @@ function fixture() {
   base.modelKey = "shared-body"; base.buildPriority = []; base.passive = { name: "原始被動", hooks: [] };
   for (const slot of ["Q", "W", "E", "R"]) {
     const ability = { ...base.abilities.Q, id: `version-test.${slot.toLowerCase()}`, name: slot, slot, effects: [{ kind: "damage", damageType: "magic", amount: { flat: 20 } }], description: "原文\n「角色台詞」\n" };
-    delete ability.icon; delete ability.vfxKey; base.abilities[slot] = ability;
+    // ⭐ 2026-09-08（合併 PR 1118）—— 也要拿掉 `template`：main 的 GH#993 把 sela 的 Q
+    //   模板化了（`template.ref = "tpl-projectile-strike"`，params 指向 `sela.q.bolt`），
+    //   而這個夾具的 tmp 內容樹**只有它自己寫進去的那幾份檔** ⇒ 沿用那一格會讓
+    //   目錄擷取報出 10 條「缺少 ability-templates/…／projectiles/…」。
+    //   ⛔ 不是把那兩份檔複製進來：這條測試驗的是**版本擷取與還原**，
+    //   ⛔ 不是模板解析 —— 多帶兩份檔只會讓它多一個會漂的相依。
+    //   ⚠️ 同一行本來就在拿掉 `icon`／`vfxKey`，理由一模一樣。
+    delete ability.icon; delete ability.vfxKey; delete ability.template; base.abilities[slot] = ability;
     json(`abilities/${ability.id}.json`, { ...ability, schema: "ability@1" });
   }
   const hero = { ...base, id: "version-test", name: "版本英雄", description: "完整\n原文" };

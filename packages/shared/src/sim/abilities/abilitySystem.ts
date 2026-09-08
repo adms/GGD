@@ -907,6 +907,11 @@ export function castAbility(
   );
   if (!wardRefused) {
     runEffects(augmentedEffects, {
+      // ⭐ 2026-09-08 合併 PR 1118 補回 —— 這一發的施放身分（`oncePerCast` 的 credit key
+      //   與 `castLedger` 的 join key）。⚠️ 它與 `CastResolveSystem.ts` 那一行是**雙胞胎**：
+      //   ⛔ 只接吟唱那一邊的話，**每一支瞬發技能**的「一次施放只給一次額度」就整個失效
+      //   （`oncePerCast.test.ts` 的 28 條會一起紅，而它們讀的正是打出去的傷害）。
+      castInstance,
       world,
       caster,
       rank: inst.rank,

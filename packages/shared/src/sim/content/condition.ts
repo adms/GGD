@@ -129,6 +129,8 @@ import type { StatusEffect } from "../components";
 // 這裡另外開一份 id→tag 表。
 import { Abilities, Items, Statuses } from "./registry";
 import { Stat } from "../stats/statTypes";
+// ⭐ 決定性的 cos（只用 + − × ÷）—— `facing` 條件葉不可以呼叫 `Math.cos/atan2`（purity 禁令）。
+import { cosDeg } from "../math/cosDeg";
 import type { AttrKey } from "../stats/attributes";
 import { liveAttribute } from "../stats/attrSources";
 // ⛔ 不要在這裡再寫一次「他身上還有沒有這個 status」。`effects/effectCommon.ts`
@@ -1369,11 +1371,17 @@ function evalNode(
     if (from === undefined || to === undefined || from.zone !== to.zone) return false;
     const dx = to.pos.x - from.pos.x, dz = to.pos.z - from.pos.z;
     const fx = from.facing.x, fz = from.facing.z;
-    if (![dx, dz, fx, fz].every(Number.isFinite) ||
-        Math.hypot(dx, dz) === 0 || Math.hypot(fx, fz) === 0) return false;
-    const angle = Math.atan2(Math.abs(fx * dz - fz * dx), fx * dx + fz * dz) * 180 / Math.PI;
-    // Inclusive boundary; tolerance only absorbs floating point angle conversion.
-    return angle <= cond.arcDegrees / 2 + 1e-9;
+    // ⭐ 2026-09-08 合併 PR 1118 改寫 —— 原本是
+    //   `atan2(|cross|, dot) * 180 / π ≤ arc/2`,而 `atan2` 與 `hypot` **都是 purity 禁令**
+    //   （ECMA-262 允許它們的結果是實作定義的 ⇒ 兩台機器可能對「在不在正面」給出不同答案）。
+    //   ⇒ 兩邊取 cos：`angle ≤ h` ⟺ `dot ≥ cos(h)·|f|·|d|`。左邊只剩乘加與 `sqrt`
+    //   （IEEE 要求正確捨入）,而 cos 只吃**作者填的那個常數**,由 `cosDeg` 用 `+ − × ÷` 算。
+    const dLenSq = dx * dx + dz * dz, fLenSq = fx * fx + fz * fz;
+    if (![dx, dz, fx, fz].every(Number.isFinite) || dLenSq === 0 || fLenSq === 0) return false;
+    // ⚠️ 半角 > 90° 時 `cos` 是負的,而這個不等式仍然成立（右邊是負數 × 正長度）——
+    //   ⛔ 不要把它「優化」成先比 `dot >= 0`,那會把 arc > 180° 的錐體切掉一半。
+    return fx * dx + fz * dz
+      >= cosDeg(cond.arcDegrees / 2) * Math.sqrt(fLenSq * dLenSq) - 1e-9;
   }
   if (cond.kind === "learned") {
     const id = subjectOf(ctx, cond.subject);

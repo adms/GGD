@@ -167,13 +167,10 @@ describe("寫回前就擋下展開不了的模板（不是等下一次 registerA
     expect(calls).toEqual([]);
   });
 
-  it("契約限制 node-only 時，即使模板能展開也不能偷渡到技能 template.ref", async () => {
-    // Locust now has both shipping routes. Model the narrower contract here
-    // explicitly to keep testing the ingress guard without lying about it.
-    const contract = typeCatalog.GGD_TYPE_CATALOG!.types.find((entry) => entry.id === NODE_ONLY_TPL.id)!;
-    const originalWiring = contract.wiring;
-    contract.wiring = "node";
-    try {
+  // ⚠️ ⭐ 2026-09-08 合併 PR 1118：這裡原本有一個**孤兒的** `it(…) { … try {` ——
+  //    合併把 main 的下面那一條測試整個**包進了** Codex 的 try 區塊裡，
+  //    而收尾的 `} finally` 在 60 行之外 ⇒ 整個檔是語法錯（TS1005／TS1472）。
+  //    ⇒ 孤兒開頭已拿掉；Codex 那條測試完整地住在下面（它自己帶 try/finally）。
   // ⭐ GH#1062 —— 出貨那條路是**兩步**（registries.ts::expandIfTemplated）：resolve →
   //    zAbilityDoc.safeParse(merged)。在此之前這個閘只跑第一步 ⇒ 「展得開、但 refine 擋」
   //    的參數組合存得下去，載入時被降級成「模板展開失敗，此技能目前沒有效果」。
@@ -208,7 +205,16 @@ describe("寫回前就擋下展開不了的模板（不是等下一次 registerA
     expect(calls).toEqual([]);
   });
 
-  it("node-only 模板即使能展開，也不能偷渡到技能 template.ref", async () => {
+  it("契約限制 node-only 時，即使模板能展開也不能偷渡到技能 template.ref", async () => {
+    // ⭐ 2026-09-08 合併 PR 1118 補回 —— Codex 那一側把契約**暫時**改窄再還原
+    //   （locust 今天兩條出貨路線都有了）。⚠️ 我上一版只留了尾巴的 `} finally {…}`
+    //   而丟掉了 `try {` 與 `originalWiring` ⇒ 整個檔是 **TS1005 語法錯**。
+    //   ⛔ 還原那一行不可以省：不還原的話，這個 `describe` 後面每一條都在一個
+    //   被改窄的契約下跑，而它們會**綠得毫無道理**。
+    const contract = typeCatalog.GGD_TYPE_CATALOG!.types.find((entry) => entry.id === NODE_ONLY_TPL.id)!;
+    const originalWiring = contract.wiring;
+    contract.wiring = "node";
+    try {
     const bad = abilityDoc({
       ref: NODE_ONLY_TPL.id,
       params: defaultParamsFor(NODE_ONLY_TPL),

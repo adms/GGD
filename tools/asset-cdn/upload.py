@@ -35,6 +35,7 @@ import pathlib
 import random
 import shutil
 import subprocess
+import tempfile
 import sys
 
 REPO = pathlib.Path(__file__).resolve().parents[2]
@@ -42,7 +43,9 @@ MANIFEST = REPO / "content" / "assets-manifest.json"
 PROFILE = os.environ.get("GGD_S3_PROFILE", "vibe-coding")
 REGION = os.environ.get("GGD_S3_REGION", "ap-east-2")
 BUCKET = os.environ.get("GGD_S3_BUCKET", "ggd-390630837668-ap-east-2-an")
-STAGE = pathlib.Path(os.environ.get("GGD_S3_STAGE", "/private/tmp/ggd-cdn-stage"))
+# ⚠️ ⛔ 不可以寫死 `/private/tmp`（GH#1003）—— 那是 macOS 專屬的，Linux 上建不出來
+#   而且**是靜默失敗**：這支腳本在 CI 或伺服器上跑就會找不到暫存區。
+STAGE = pathlib.Path(os.environ.get("GGD_S3_STAGE") or os.path.join(tempfile.gettempdir(), "ggd-cdn-stage"))
 # ⭐ 一年 ＋ immutable —— 只有在 key 是內容定址時才成立（內容變了 key 就變）。
 CACHE_CONTROL = "public, max-age=31536000, immutable"
 

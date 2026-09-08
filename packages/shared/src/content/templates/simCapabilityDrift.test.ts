@@ -82,9 +82,11 @@ const CAPABILITY_KIND: Readonly<Record<string, EffectDef["kind"]>> = {
   //    自 GH#301-2 就在 registry 上），而 `tpl-blink-strike.requires:["blink"]` 因此被編輯器印成
   //    「blink 未支援」。同 `invulnerable` 那一列的病：只比對有的列看不見缺的列 ⇒ 下面多了反方向。
   blink: "blink",
-  // ⭐ 同一條反方向守衛第一次跑就抓到的另外兩列（11 份出貨模板 requires 了不存在的 key）：
+  // ⭐ 同一條反方向守衛第一次跑就抓到的另一列（11 份出貨模板 requires 了不存在的 key）：
   //    模型特效家族（beam-roll／radial-burst／line-blast／locust-×5／兩條龍）與成長蓄能。
-  modelFx: "spawnModelFx",
+  // ⚠️ ⭐ 2026-09-08 合併 PR 1118：`modelFx` **在這張表上面 54 行已經有一列了**
+  //    （兩側各自加了一次）—— 重複鍵是 tsc 的紅，⛔ 而它在 JS 裡只是靜靜地覆蓋。
+  //    ⇒ 只留一列；這裡保留的是 `grantAttribute`。
   grantAttribute: "grantAttribute",
 };
 

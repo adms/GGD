@@ -16,26 +16,12 @@
     "vfx-call": 4,
     "model-preset": 15,
     "gated": 133,
-    "gaps": 53,
+    "gaps": 51,
     "missingAdminForm": 51,
-    "missingEditorForm": 13,
+    "missingEditorForm": 9,
     "zeroAdoption": 63
   },
   "gaps": [
-    {
-      "id": "consumeStatus",
-      "layer": "effect",
-      "missing": [
-        "editorForm"
-      ]
-    },
-    {
-      "id": "spendHealth",
-      "layer": "effect",
-      "missing": [
-        "editorForm"
-      ]
-    },
     {
       "id": "apply-status",
       "layer": "template",
@@ -110,16 +96,14 @@
       "id": "effect-sequence",
       "layer": "template",
       "missing": [
-        "adminForm",
-        "editorForm"
+        "adminForm"
       ]
     },
     {
       "id": "event-passive",
       "layer": "template",
       "missing": [
-        "adminForm",
-        "editorForm"
+        "adminForm"
       ]
     },
     {
@@ -1259,7 +1243,7 @@
         }
       ],
       "adminForm": true,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 0,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
@@ -3930,7 +3914,7 @@
         }
       ],
       "adminForm": true,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 0,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
@@ -11669,7 +11653,7 @@
         }
       ],
       "adminForm": true,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
     },
@@ -13738,7 +13722,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 0,
       "origin": "template@1:content/ability-templates/tpl-effect-sequence.json"
     },
@@ -13767,7 +13751,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 0,
       "origin": "template@1:content/ability-templates/tpl-event-passive.json"
     },

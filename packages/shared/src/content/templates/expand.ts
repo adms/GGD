@@ -245,8 +245,15 @@ export const SIM_CAPABILITIES: Readonly<Record<string, SimCapability>> = {
    * ⚠️ 名字只留 `modelFx` 一個（beam-roll 那一份是凍住的；兩條龍改成同一個名字），⛔ 不開 `spawnModelFx` 別名列 ——
    * 同一個能力兩個名字是第〇·四守則的第二個住處。
    */
-  modelFx: { p: 3, available: true },
-  grantAttribute: { p: 3, available: true },
+  // ⭐⭐ 2026-09-08 合併 PR 1118 —— 這兩列**兩側都加了**，而形狀不同：
+  //   · main：`{ p: 3, available: true }` —— 手寫的斷言
+  //   · Codex：檔案上方的 `get modelFx()` —— 從 `EFFECT_HANDLERS` **推導**
+  //   ⇒ ⭐ 留推導那一份。這個檔的檔頭逐字記著這張表**撒過兩次謊**
+  //   （`knockback` 寫 false 但早就有了、`invulnerable` 整列漏掉），而結論是
+  //   「a flag defended by prose outlives the prose's expiry date and **nothing goes red**」。
+  //   ⛔ 一個手寫的 `available: true` 正是那種旗標：handler 哪天被拿掉它也不會變。
+  // ⚠️ `grantAttribute` 沒有對應的 getter（它的 handler 名字與 key 同名）⇒ 照樣推導。
+  get grantAttribute() { return { p: 3 as const, available: Object.prototype.hasOwnProperty.call(EFFECT_HANDLERS, "grantAttribute") }; },
   /**
    * ⭐ GH#993（2026-09-07）—— 一顆 `damageLine`：一條從施法者長出去的線，一次結算。
    * `EFFECT_HANDLERS.damageLine` 自 `sim/effects/damageLine.ts` 就在（出貨 9 支手寫技能在用），

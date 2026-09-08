@@ -535,6 +535,33 @@ export function forEachApRatio(
   ) => void,
 ): void {
   if (!isApFormulaDomain(def)) return;
+  forEachApRatioInFragment(def, visit);
+}
+
+/**
+ * ⭐⭐ 同一個走訪，⛔ **不做定義域檢查** —— 給「手上只有一個片段」的呼叫端。
+ *
+ * ⚠️ ⭐ 為什麼要有這一支（2026-09-08，合併 PR 1118 時量到的）：
+ * `apps/editor/src/hero/HeroSlotEditor.tsx` 的 `protectApRatios()` 呼叫的是
+ * `forEachApRatio({ effects: [params] }, …)` —— ⭐ 一個**技能文件的片段**，
+ * ⛔ 而 `isApFormulaDomain()`（GH#1105）要求 `zAbilityDef` 的**每一個必填欄位**都在
+ * ⇒ 它當場 `return`，⭐ 於是編輯器「公式接管的 AP 係數要唯讀」**整個靜靜地失效**：
+ * 欄位照樣可以編、存下去被公式蓋掉，⛔ 而畫面上跟正常一模一樣（失敗形態⑧）。
+ * ⚠️ 抓到它的是 `HeroSlotEditor.test.tsx` 那一條逐路徑的斷言 —— ⛔ 不是任何型別檢查。
+ *
+ * ⛔ **⛔ 不要用這一支取代 `forEachApRatio`**：定義域檢查在**載入層與報表**是承重的
+ * （它擋住「把一份道具文件當成技能來走」）。這一支的合法客戶只有
+ * 「明知自己只有片段、而且只拿路徑去做 UI 唯讀」的那一種。
+ */
+export function forEachApRatioInFragment(
+  def: Record<string, unknown>,
+  visit: (
+    node: Record<string, unknown>,
+    ratio: Record<string, unknown>,
+    ancestors: readonly Record<string, unknown>[],
+    nodeKey: string,
+  ) => void,
+): void {
   const rankKeys = apRankArrayKeys();
   const walk = (o: unknown, anc: Record<string, unknown>[], path: string, collapse: boolean): void => {
     if (Array.isArray(o)) return o.forEach((v, i) => walk(v, anc, collapse ? `${path}[*]` : `${path}[${i}]`, false));

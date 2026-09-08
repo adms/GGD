@@ -11,6 +11,10 @@ import { describe, expect, it } from "vitest";
 
 const REPO = resolve(__dirname, "../../../..");
 const SCRIPT = "tools/skill-forge/build-codex-visual-advisory.mjs";
+// ⭐ 2026-09-08（合併 PR 1118）—— 產生器現在 import 這一支（驗「哪幾列」的身分檢查）。
+//   ⚠️ 它**必須**跟著複製進 tmp 樹：漏了它三條斷言會一起以「Command failed」倒下，
+//   而那個訊息**指不出**真正的原因（一個模組不存在），⛔ 不是「產生器邏輯錯了」。
+const SCRIPT_DEPS = ["tools/skill-forge/visual-proof-scope.mjs"];
 const OUT = "docs/_reports/editor-skill-codex-advisory/review.json";
 const DOCS = {
   source: "tools/skill-forge/codex-visual-advisory.source.json",
@@ -28,7 +32,7 @@ function run(edit: (docs: Docs) => void = () => {}): any {
     Object.entries(DOCS).map(([k, rel]) => [k, JSON.parse(readFileSync(join(REPO, rel), "utf8"))]),
   ) as Docs;
   edit(docs);
-  for (const [k, rel] of [["", SCRIPT] as const, ...Object.entries(DOCS)]) {
+  for (const [k, rel] of [["", SCRIPT] as const, ...SCRIPT_DEPS.map((d) => ["", d] as const), ...Object.entries(DOCS)]) {
     mkdirSync(join(dir, dirname(rel)), { recursive: true });
     if (k === "") cpSync(join(REPO, rel), join(dir, rel));
     else writeFileSync(join(dir, rel), JSON.stringify(docs[k as keyof Docs]));
@@ -38,11 +42,25 @@ function run(edit: (docs: Docs) => void = () => {}): any {
 }
 
 describe("GH#986 Codex visual advisory", () => {
+  /**
+   * ⭐ 把每一列的 digest 對齊 ⇒ 全部 `current`。
+   * ⚠️ 這一行是 2026-09-08 加的，而理由值得寫下來：在此之前這條斷言靠的是
+   * 「**出貨資料裡剛好還有一列是 current**」這個前提，而合併 PR 1118 之後
+   * 46 列**一起過期** ⇒ 斷言在 `find(...)` 上以 `undefined.id` 倒下，
+   * 而那個訊息**指不出**原因。⭐ 它驗的是**機制**（改一份只作廢一份），
+   * ⛔ 不是「今天剛好有幾份新鮮」—— 所以前提要由它自己建立（形態⑩）。
+   */
+  const allCurrent = (d: Docs) => {
+    const digest = new Map(d.packet.documentSources.map((r: any) => [r.id, r.sourceDigest]));
+    for (const e of d.source.entries) if (digest.has(e.id)) e.sourceDigest = digest.get(e.id);
+  };
+
   it("⭐ 一份證據變了只作廢那一份 —— 其餘保留原審閱（⛔ 不是整包重來）", () => {
-    const before = run();
+    const before = run(allCurrent);
     const staleIds = (o: any) => o.rows.filter((r: any) => r.reviewState === "stale").map((r: any) => r.id).sort();
     const victim = before.rows.find((r: any) => r.reviewState === "current").id as string;
     const after = run((d) => {
+      allCurrent(d);
       const row = d.packet.documentSources.find((r: any) => r.id === victim);
       row.sourceDigest = row.sourceDigest.replace(/^./, (c: string) => (c === "a" ? "b" : "a"));
     });
@@ -61,7 +79,12 @@ describe("GH#986 Codex visual advisory", () => {
       d.acceptance.summary.documents = d.acceptance.rows.length;
     });
     expect(out.coverage.awaitingCapture).toContain("godie-zzzz.q");
-    expect(out.scope.acceptanceDocuments).toBe(out.scope.reviewedDocuments + out.coverage.awaitingCapture.length);
+    // ⭐ 三分割要**加得回去**（⛔ 不是兩分割）：2026-09-08 起「審查包有、但還沒有人
+    //   寫審閱」不再是硬紅，而是第三個要印出來的桶 `awaitingReview` ——
+    //   ⚠️ 少算它，這條恆等式就會在**正常狀態下**紅，而它指著錯的地方。
+    expect(out.scope.acceptanceDocuments).toBe(
+      out.scope.reviewedDocuments + out.coverage.awaitingCapture.length + out.coverage.awaitingReview.length,
+    );
   });
 
   it("⭐ 積木名從清冊推導 —— 換一顆仍數得出擋住幾支；已出貨的積木被標成缺 ⇒ 紅", () => {

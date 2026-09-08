@@ -20,9 +20,9 @@ capability 指紋：`43cd2f44`
 | vfx-call | 4 |
 | model-preset | 15 |
 | gated | 133 |
-| gaps | 53 |
+| gaps | 51 |
 | missingAdminForm | 51 |
-| missingEditorForm | 13 |
+| missingEditorForm | 9 |
 | zeroAdoption | 63 |
 
 ## 兩個編輯器的表單怎麼量的
@@ -42,7 +42,7 @@ capability 指紋：`43cd2f44`
 | `chainLightning` | 18 | 1 | 0 | ✅ | ✅ | 2 |
 | `championForm` | 3 | 0 | 0 | ✅ | ✅ | 12 |
 | `comboStrikes` | 18 | 0 | 0 | ✅ | ✅ | 1 |
-| `consumeStatus` | 12 | 1 | 0 | ✅ | ⛔ | 0 |
+| `consumeStatus` | 12 | 1 | 0 | ✅ | ✅ | 0 |
 | `convertTeam` | 9 | 1 | 0 | ✅ | ✅ | 0 |
 | `cycleBuff` | 4 | 0 | 0 | ✅ | ✅ | 1 |
 | `damage` | 12 | 0 | 0 | ✅ | ✅ | 75 |
@@ -78,7 +78,7 @@ capability 指紋：`43cd2f44`
 | `spawnModelFx` | 32 | 0 | 0 | ✅ | ✅ | 55 |
 | `spawnProjectile` | 3 | 0 | 0 | ✅ | ✅ | 1 |
 | `spawnVfx` | 6 | 0 | 0 | ✅ | ✅ | 54 |
-| `spendHealth` | 5 | 0 | 0 | ✅ | ⛔ | 0 |
+| `spendHealth` | 5 | 0 | 0 | ✅ | ✅ | 0 |
 | `spendMana` | 6 | 0 | 0 | ✅ | ✅ | 4 |
 | `summon` | 23 | 0 | 0 | ✅ | ✅ | 2 |
 | `swapResource` | 9 | 1 | 0 | ✅ | ✅ | 1 |
@@ -130,7 +130,7 @@ capability 指紋：`43cd2f44`
 | `chance` | 1 | 0 | 0 | ✅ | ✅ | 0 |
 | `distance` | 2 | 0 | 0 | ✅ | ✅ | 2 |
 | `equipment` | 0 | 0 | 0 | ✅ | ✅ | 0 |
-| `facing` | 2 | 0 | 0 | ✅ | ⛔ | 0 |
+| `facing` | 2 | 0 | 0 | ✅ | ✅ | 0 |
 | `form` | 2 | 0 | 0 | ✅ | ✅ | 3 |
 | `kind` | 2 | 0 | 0 | ✅ | ✅ | 2 |
 | `learned` | 2 | 0 | 0 | ✅ | ✅ | 4 |
@@ -172,8 +172,8 @@ capability 指紋：`43cd2f44`
 | `dragon-quake` | 15 | 0 | 8 | ⛔ | ✅ | 0 |
 | `dragon-serpent` | 17 | 0 | 5 | ⛔ | ✅ | 0 |
 | `drain-leech` | 8 | 1 | 0 | ⛔ | ✅ | 5 |
-| `effect-sequence` | 5 | 0 | 0 | ⛔ | ⛔ | 0 |
-| `event-passive` | 1 | 0 | 0 | ⛔ | ⛔ | 0 |
+| `effect-sequence` | 5 | 0 | 0 | ⛔ | ✅ | 0 |
+| `event-passive` | 1 | 0 | 0 | ⛔ | ✅ | 0 |
 | `ground-nova` | 4 | 0 | 0 | ⛔ | ✅ | 0 |
 | `growth-charge` | 9 | 0 | 0 | ⛔ | ✅ | 0 |
 | `heal` | 4 | 0 | 0 | ⛔ | ✅ | 6 |
@@ -246,8 +246,6 @@ capability 指紋：`43cd2f44`
 
 | 積木 | 層 | 缺什麼 |
 |---|---|---|
-| `consumeStatus` | effect | editorForm |
-| `spendHealth` | effect | editorForm |
 | `apply-status` | template | adminForm |
 | `beam-roll` | template | adminForm |
 | `blink` | template | adminForm |
@@ -258,8 +256,8 @@ capability 指紋：`43cd2f44`
 | `dragon-quake` | template | adminForm |
 | `dragon-serpent` | template | adminForm |
 | `drain-leech` | template | adminForm |
-| `effect-sequence` | template | adminForm + editorForm |
-| `event-passive` | template | adminForm + editorForm |
+| `effect-sequence` | template | adminForm |
+| `event-passive` | template | adminForm |
 | `ground-nova` | template | adminForm |
 | `growth-charge` | template | adminForm |
 | `heal` | template | adminForm |

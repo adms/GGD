@@ -172,7 +172,10 @@ function FacingFields({ path, leaf, onChange }: {
     <span>度內（左右各一半，含邊界）</span>
   </span>;
 }
-type ClauseKind = "stat" | "kind" | "chance" | "status" | "equipment" | "recentCast" | "distance" | "learned" | "form";
+// ⭐⭐ 2026-09-08 合併 PR 1118 —— 這裡原本有**第二份** `ClauseKind`，寫成字面 union。
+//   ⛔ 它已經在說謊了：它沒有 `facing`（PR 1118 新增的條件葉）⇒ 留著它，
+//   那顆積木就是「做出來了而編輯器看不到」—— 正是上面那段註解在防的東西。
+//   ⇒ 只留推導的那一份（`type ClauseKind = ConditionLeaf["kind"]`，見上方）。
 
 /**
  * ⭐ 連續技窗口的欄位（GH#937）。

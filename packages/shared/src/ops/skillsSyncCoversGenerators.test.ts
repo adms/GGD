@@ -80,6 +80,16 @@ const NO_ARTIFACT: Record<string, string> = {
  * 2026-08-23 實測:21 個產生器目錄、11 個沒被涵蓋,逐支分類後 6 支進豁免、2 支補了腳本。
  */
 const GENERATOR_NO_CHECK: Record<string, string> = {
+  "asset-cdn":
+    "⭐ 2026-09-08（GH#1116）—— 它是**上傳器**，⛔ 不是產生器：`upload.py` 只**讀** " +
+    "`content/assets-manifest.json`，把每一筆的 `sha256` 算成內容定址的 S3 key " +
+    "（`assets/<sha[0:2]>/<sha><ext>`）再上傳。⛔ 它一個位元組都沒有寫進那份清單。" +
+    "⚠️ 這條閘會點名它，是因為偵測用的是 `trackedFiles.has(p)` —— **提到一份追蹤中的檔** " +
+    "就算「寫它」；⭐ 那個放寬是刻意的（出貨產生器多半把落點寫成模組常數再用別的名字寫出去），" +
+    "⇒ 代價就是這一類**只讀**的工具會被誤判。" +
+    "⭐ 那份清單真正的產生器是 `tools/asset-manifest/gen.ts`，而它已經在聚合指令裡。" +
+    "⇒ 到期條件（可被反駁）：哪一天 `upload.py` 真的回寫那份清單（例如把 S3 key 寫回去，" +
+    "今天 1,650 筆裡帶 key 的是 **0** 筆），這一列當場作廢，要給它一支 `assetcdn:check`。",
   "vfx-forge":
     "⭐ GH#838 —— 它是**編輯器的寫入端**，⛔ 不是產生器：`middleware.mjs` 只在 dev " +
     "server 上把**人在 studio 裡拖 slider 拖出來的東西**寫進 `content/vfx-scripts/`。" +
@@ -277,7 +287,12 @@ function scripts(): Record<string, string> {
 }
 
 const ls = (args: string[]) =>
-  execFileSync("git", ["ls-files", ...args], { cwd: REPO, encoding: "utf8" })
+  // ⚠️ ⭐ `maxBuffer` 是承重的，⛔ 不是防禦性程式：Node 的預設是 **1 MB**，而
+  //   `git ls-files` 在這個 repo 今天吐 **1.47 MB**（2026-09-08 量的）⇒ 這條閘會以
+  //   `spawnSync git ENOBUFS` 倒下，而那個訊息**指不出**真正的原因（repo 長大了）。
+  //   ⭐ 它是「一條被無關的成長撐爆的閘」——與本專案記過的量尺陷阱同一族。
+  //   前例：`ops/noAwsKeysInRepo.test.ts` 與 `tools/config-decor/gen.ts` 都已經帶著它。
+  execFileSync("git", ["ls-files", ...args], { cwd: REPO, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 })
     .split("\n")
     .filter((p) => p && !p.includes("node_modules"));
 const pkgJsonPaths = () => ls(["package.json", "**/package.json"]);

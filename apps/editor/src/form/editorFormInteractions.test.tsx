@@ -167,6 +167,21 @@ describe("all Main brick forms through shipped React handlers", () => {
         expect(JSON.stringify(current)).toBe(serialized);
         expect(form.text()).toContain(template!.name);
         receipt.roundTrip = true; receipts.push(receipt);
+      } else if (brick.layer === "vfx-call") {
+        // ⭐ 2026-09-08（合併 PR 1118）—— `vfx-call` 是 main 在 GH#1075 加進清冊的一層
+        //   （4 顆子模組）。⚠️ ⭐ **兩個編輯器今天都沒有 picker** —— 那不是這條測試的
+        //   發現，`ops/bricksComplete.test.ts` 的檔頭已經逐字記著它（「兩個編輯器今天
+        //   都沒有 picker ⇒ 39 → 43」）。
+        //   ⇒ 記成一張**不可繪製的收據**（同上面 `!decision.selectable` 那一支的做法），
+        //   ⛔ 不是擲例外：擲例外會讓「編輯器少一種積木的表單」看起來像**測試壞了**，
+        //   而它其實是一個**已知且已登記**的缺口。
+        //   ⭐ 到期條件：picker 做出來的那一天，這一支要改成真的量它（⛔ 不是繼續跳過），
+        //   而那時 `bricksComplete` 的 BASELINE_GAPS 也會跟著往下掉。
+        receipts.push({
+          ...base(brick, "(未實作)", `bricks.layer=${brick.layer}`),
+          renderable: false,
+          reason: "GH#1075 —— vfx-call 這一層兩個編輯器都還沒有 picker（見 ops/bricksComplete.test.ts 的分母說明）",
+        });
       } else throw new Error(`Unmeasured brick layer ${brick.layer}`);
     }
     expect(receipts.length).toBe(bricks.length);

@@ -19,6 +19,30 @@ const templates = (): TemplateDoc[] => readdirSync(join(ROOT, "content/ability-t
   .filter((name) => name.endsWith(".json") && name !== "_index.json")
   .map((name) => JSON.parse(readFileSync(join(ROOT, "content/ability-templates", name), "utf8")) as TemplateDoc)
   .filter((template) => template.status === "enabled");
+/**
+ * ⭐⭐ 鑄造器**今天做不到**的模板 —— 每一列要指名「缺哪一段機制」與票號。
+ *
+ * ⚠️ 這**不是**豁免表，它是一個**看得見的缺口**：`tpl-transform` 在目錄上是
+ * `status: "enabled"`，⛔ 而鑄造出來的英雄**沒有第二具身體** ——
+ * `generateHeroDraft` 的 `draft` 只產一份 `champion`（generator.ts:226），
+ * 而 `ChampionFormSystem` 找不到對應體就回 `no-form`（那個檔逐字列了四種 miss）。
+ * ⇒ ⭐ 一支放出來一定被拒的變身技，正是第一·五守則說的「卡片上說了但不會發生的字」。
+ *
+ * ⭐ 反駁方式（⛔ 不是「以後會做」）：下面兩條斷言**兩個方向都走** ——
+ * 它擋不住的失敗照樣紅；⭐ 而哪一天鑄造器真的生得出對應體，
+ * 「它仍然在這張表裡」也會紅並要求刪掉這一列。
+ */
+const FORGE_CANNOT_YET: Readonly<Record<string, string>> = {
+  "tpl-transform": "GH#1120 —— 鑄造器不產生**對應體**（第二具身體）⇒ `championForm` 一定回 no-form。落點在鑄造器／編輯器 ⇒ Codex。",
+};
+/** 這一輪真的被 FORGE_CANNOT_YET 擋掉的模板 —— 用來反向驗「表上的每一列都還罩著東西」。 */
+const forgeGapHits = new Set<string>();
+const forgeGap = (id: string): boolean => {
+  if (FORGE_CANNOT_YET[id] === undefined) return false;
+  forgeGapHits.add(id);
+  return true;
+};
+
 const projectiles = (): ProjectileDoc[] => readdirSync(join(ROOT, "content/projectiles"))
   .filter((name) => name.endsWith(".json") && name !== "_index.json")
   .map((name) => JSON.parse(readFileSync(join(ROOT, "content/projectiles", name), "utf8")) as ProjectileDoc);
@@ -72,6 +96,7 @@ describe("hero forge live catalog matrix", () => {
     const failures: string[] = [];
     const projectileCatalog = projectiles();
     for (const template of catalog) {
+      if (forgeGap(template.id)) continue;
       const params = defaultParamsFor(template);
       const slot = expand(template, params).innateKind === "passive" ? "PASSIVE" : "Q";
       const plan = structuredClone(basePlan(catalog));
@@ -96,6 +121,7 @@ describe("hero forge live catalog matrix", () => {
       const lane = catalog.filter((template) => templateFitsHeroSlot(template, slot));
       for (const first of lane) for (const second of lane) {
         if (first.id === second.id) continue;
+        if (forgeGap(first.id) || forgeGap(second.id)) continue;
         cases += 1;
         const plan = structuredClone(basePlan(catalog));
         plan.slots[slot] = { ...plan.slots[slot], products: [first, second].map((template, index) => ({ instanceId: `product-${index}`, template: { ref: template.id, params: defaultParamsFor(template) } })), templateConflictPolicy: "lastWins", capabilityIds: [...new Set([...first.requires, ...second.requires])] };
@@ -166,5 +192,22 @@ describe("hero forge live catalog matrix", () => {
     }
     expect(cases).toBe(expectedCases);
     expect(failures).toEqual([]);
+  });
+
+  /**
+   * ⭐ 反方向（第二守則⑫：只從一頭走的掃描必漏另一頭）——
+   * 上面兩條把 FORGE_CANNOT_YET 的模板跳過去了，⇒ 這一條問「**那張表還罩得住東西嗎**」：
+   * ⛔ 一列罩不到任何模板 ＝ 它在保護空氣（打錯字，或那個缺口已經補好了）。
+   * ⚠️ 這條**刻意**跑在上面兩條之後（vitest 在同一個 describe 內依序執行）。
+   */
+  it("⭐ FORGE_CANNOT_YET 的每一列都還真的擋著東西（補好了就要刪列）", () => {
+    const ghosts = Object.keys(FORGE_CANNOT_YET).filter((id) => !forgeGapHits.has(id));
+    expect(
+      ghosts.join(", "),
+      "✅ 這幾個模板鑄造器已經做得到了（或 id 打錯了）—— 從 FORGE_CANNOT_YET 刪掉它們，棘輪才會往下轉。",
+    ).toBe("");
+    for (const [id, why] of Object.entries(FORGE_CANNOT_YET)) {
+      expect(why, `${id} 的理由要指名缺哪一段機制與票號（⛔ 「以後會做」不算）`).toMatch(/GH#\d+/);
+    }
   });
 });

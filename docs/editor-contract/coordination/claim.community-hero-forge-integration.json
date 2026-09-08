@@ -5,7 +5,7 @@
   "from": "codex",
   "to": "main",
   "baseCommit": "4793eaaaf2775b2081f5eca5881db32e0aab0ea8",
-  "contractFingerprint": "60eac8487db1f780",
+  "contractFingerprint": "b91a0f59c31289ed",
   "title": "社群英雄編輯器與獨立版本回復；37 名／222 槽完成隔離投稿發布驗收",
   "claims": [
     {
@@ -383,5 +383,8 @@
     "本批以 37 名英雄實際工作流及獨立版本管理為交付範圍，不再擴充模板或追加桌面跨平台安裝驗收。已完成的桌面保存修正保留；簽署安裝、更新降級、Windows 實機及歷史 Python 完整環境重建仍未驗證，不宣稱完成。A17 Pro 30 fps 按估算處理，不要求實機。",
     "既有訊息帳本閘仍有未對票及漏列，必須如實呈現；不得為通過閘而捏造票號。正式合併依實際 CI 與 Main review 處理。",
     "相關交付文件與實際材料由 materials/community-hero-forge/README.md 進入：固定 S3 位置、逐檔 manifest、還原工具、37 名／222 槽核對及既有套件契約檢查。從 S3 取得並還原本批 ZIP、模型／動作／特效／音效與驗收證據，不依賴原機器的 /private/tmp；九份歷史腳本已移除隔離密碼，三份可重建執行檔及未選用的外部素材庫明列不包含。所有 AWS 操作只用預先配置的 vibe-coding profile 與 ap-east-2，不讀取憑證、不操作 IAM、不刪除 S3 物件；遇 AccessDenied 停止。"
+  ],
+  "notes": [
+    "2026-09-08 Main：contractFingerprint 由 60eac8487db1f780 重算為 b91a0f59c31289ed —— ⭐ 契約在合併 PR 1118 的當下就變了（這份 packet 主張的正是那次合併）,⛔ 這不是「重問同一題」。claims 一個字都沒動。"
   ]
 }

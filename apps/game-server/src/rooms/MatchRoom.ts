@@ -553,12 +553,18 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
     // ⚠️ ⭐ 這一份還**不是**這一場最後用的那一份 —— 房主的內容池（#1025 Scope C）
     //    在下面 `roomSettings` 洗好之後才切得下去（那一格住在房間設定裡）。
     //    ⇒ 名字刻意不同，⛔ 不要在這裡就叫它 `whitelist`。
-    const resolvedWhitelist =
+    let resolvedWhitelist =
       options.whitelist ?? (WHITELIST_BYPASS ? Whitelist.allowAll() : await sharedWhitelistCache().get());
-    if (this.communityManifest && !whitelist.bypass) whitelist = new Whitelist({
-      champions: [...whitelist.snapshotChampions(), ...this.communityManifest.heroes.map((hero) => hero.workId)],
-      abilities: [...whitelist.snapshotAbilities(), ...this.communityManifest.heroes.flatMap((hero) => HERO_SLOTS.map((slot) => `${hero.workId}.${slot.toLowerCase()}`))],
-      items: whitelist.snapshotItems(),
+    // ⭐⭐ 2026-09-08 合併 PR 1118 —— 社群英雄（`communityManifest`）要**加進白名單**，
+    //   否則這一場鎖不到它們（失敗形態②：投稿發布了、房間裡選不到）。
+    //   ⚠️ ⭐ 這一段 Codex 那側寫的是 `whitelist`，⛔ 而 main 這側把這一格改名成
+    //   `resolvedWhitelist`（它還要再過下面的 `applyContentPool`）⇒ 照抄會**指到一個
+    //   還沒宣告的變數**。⭐ 正確的接點就是這裡：擴充**先**發生，內容池的收斂**後**發生
+    //   —— 反過來的話房主選「官方內容」時，社群英雄會從池子的縫裡漏進來。
+    if (this.communityManifest && !resolvedWhitelist.bypass) resolvedWhitelist = new Whitelist({
+      champions: [...resolvedWhitelist.snapshotChampions(), ...this.communityManifest.heroes.map((hero) => hero.workId)],
+      abilities: [...resolvedWhitelist.snapshotAbilities(), ...this.communityManifest.heroes.flatMap((hero) => HERO_SLOTS.map((slot) => `${hero.workId}.${slot.toLowerCase()}`))],
+      items: resolvedWhitelist.snapshotItems(),
     }, false);
 
     // Build 12 seat specs: reserved humans + bot fill.

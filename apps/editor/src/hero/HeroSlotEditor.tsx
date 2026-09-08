@@ -7,7 +7,7 @@ import { templateParamDecision, templateSelectionDecision } from "../forge/typeC
 import type { ErrorMap } from "../store";
 import { editHeroProject, fieldOwner, moveHeroProduct, replaceHeroProducts, setHeroFieldOwner } from "./projectModel";
 import { createRuntimeResolver } from "@ggd/shared/content/runtimeResolver";
-import { forEachApRatio } from "@ggd/shared/content/apCoefficient";
+import { forEachApRatioInFragment } from "@ggd/shared/content/apCoefficient";
 import { resolveTemplateExpansion } from "@ggd/shared/content/templates/resolve";
 import { heroProductTemplate } from "@ggd/shared/content/heroForge/templateVersions";
 import { contentSha256 } from "@ggd/shared/content/import/jcs";
@@ -28,7 +28,8 @@ function versionValue(value: unknown): string {
 /** Use Main's ratio visitor; only the AP coefficient is controlled, not AD or the ratio's condition. */
 function protectApRatios(value: Record<string, unknown>, prefix: string, reasons: Map<string, string>) {
   const ratios = new Set<Record<string, unknown>>();
-  forEachApRatio({ effects: [value] }, (_node, ratio) => { if (typeof ratio.coeff === "number") ratios.add(ratio); });
+  // ⭐ 片段版（⛔ 不是 forEachApRatio）：這裡手上只有 `template.params`,⛔ 不是一份完整的技能文件 —— 理由寫在那支函式的檔頭。
+  forEachApRatioInFragment({ effects: [value] }, (_node, ratio) => { if (typeof ratio.coeff === "number") ratios.add(ratio); });
   const visit = (node: unknown, path: string) => {
     if (node === null || typeof node !== "object") return;
     if (ratios.has(node as Record<string, unknown>)) reasons.set(`${path}.coeff`, apFormulaReason);

@@ -93,6 +93,23 @@ const OWN_GEOMETRY_KINDS: ReadonlyMap<string, string> = new Map([["randomArea", 
  */
 const PAYOUT_KINDS: ReadonlyMap<string, string> = new Map([["grantXp", "to"]]);
 
+/**
+ * ⭐⭐ E1 的**第四類**：作用對象**結構上就是施法者**，一格範圍欄位都沒有（2026-09-08）。
+ *
+ * ⭐ `spendHealth`（PR 1118）是這一類：`sim/effects/spendHealth.ts:30` 逐字發的是
+ * `{ source: caster, target: caster }` —— ⛔ 它**沒有** `to`、也沒有幾何，
+ * 「打到誰」不是作者填的一格，而是這個 kind 的定義本身。
+ *
+ * ⛔ 為什麼不給它一個 `shape`：上面兩段註解已經寫過判準 ——
+ * 「一個必填卻沒有人讀的 `shape` **只滿足 E1 的字面，不滿足 E1 的意思**」。
+ *
+ * ⚠️ ⭐ 紀律：這一格的檢查是**兩個否定**（⛔ 不是「什麼都不問」）——
+ * 它**不可以**收 `shape`（收了就代表那一格沒有人讀），
+ * 也**不可以**收 `to`（收了就代表它其實是 `PAYOUT_KINDS`，作用對象是作者填的）。
+ * ⇒ 哪一天有人給 `spendHealth` 加上收款人，這條就會紅並要求它換一類。
+ */
+const SELF_ONLY_KINDS: ReadonlySet<string> = new Set(["spendHealth"]);
+
 /** 這一格（`shape` 或自帶的幾何欄位）schema 收不收。 */
 function acceptsField(kind: string, field: string, value: unknown): boolean {
   const probe = { kind, [field]: value } as unknown;
@@ -116,6 +133,10 @@ function acceptsShape(kind: string): boolean {
     // ⭐ 收款型的：⛔ 兩個方向一起問 —— 它必須收 `to`，**而且**不可以偷偷
     //   還留著 `shape`（留著就代表那一格是「有設、沒有人讀」）。
     return acceptsField(kind, payout, "self") && !acceptsField(kind, "shape", "single");
+  }
+  if (SELF_ONLY_KINDS.has(kind)) {
+    // ⭐ 兩個否定一起問（理由見那張表的註解）。
+    return !acceptsField(kind, "shape", "single") && !acceptsField(kind, "to", "self");
   }
   const own = OWN_GEOMETRY_KINDS.get(kind);
   if (own !== undefined) {

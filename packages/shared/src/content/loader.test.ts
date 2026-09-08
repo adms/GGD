@@ -169,6 +169,10 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
       "grievous-wounds",
       "ingredient",
       "light-wand-banked",
+      // ⭐ 2026-09-08（PR 1118）—— 連段拘束：連段期間的控制標記。
+      //    ⚠️ 鎖足還是暈眩由**技能產品的 `lockTarget`** 決定,⛔ 不是這份文件說了算
+      //    （status 文件只是**身分**：名字／極性／分類 —— 同這一段開頭那條規矩）。
+      "lock-combo",
       "magic-break",
       "millennium-plot-armor",
       "moon-combo",
