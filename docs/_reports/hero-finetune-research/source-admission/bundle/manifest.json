@@ -1,0 +1,302 @@
+{
+  "schema": "ggd-hero-finetune-research-archive@1",
+  "entries": [
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/missfortune-plan-v1.mts",
+      "bytes": 3959,
+      "sha256": "2e1452938d55594d62417cea6c714dea2b82f9ae54966d6aae1f1795ebcf2937",
+      "archive": "archives/00-missfortune-plan-v1.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/missfortune-probes-v1.mts",
+      "bytes": 10823,
+      "sha256": "6ac1d3e571ec0d5636b2fc510faff7c76449ace92323e47cba2af70c503f3dd8",
+      "archive": "archives/01-missfortune-probes-v1.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/missfortune-probes-v2.mts",
+      "bytes": 11347,
+      "sha256": "3751532404d1b753c1a8adb4aa6e760ba1863012500c47177905f564f3c075a2",
+      "archive": "archives/02-missfortune-probes-v2.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/missfortune-probes-v3.mts",
+      "bytes": 11677,
+      "sha256": "d5918741d899f9e9b6a0efe1896ec9563427226a0caf2913f917869f6b0af2e6",
+      "archive": "archives/03-missfortune-probes-v3.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/audit-missfortune-plan-v1.mts",
+      "bytes": 4500,
+      "sha256": "254091977b4e001efc3e0a616d717e455d1e365c878407976224acfcaaca5c3a",
+      "archive": "archives/04-audit-missfortune-plan-v1.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/audit-missfortune-plan-v2.mts",
+      "bytes": 4729,
+      "sha256": "7f421fcc58e4ae4d666f3fb1ba1578874790aad472e5b7c38d76d4b3fc23ed47",
+      "archive": "archives/05-audit-missfortune-plan-v2.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/audit-missfortune-plan-v3.mts",
+      "bytes": 4757,
+      "sha256": "a3da773a803d4f54e29a0c6fe6e59faa47c926baeb6e05bf279e2e7291ad38f4",
+      "archive": "archives/06-audit-missfortune-plan-v3.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/missfortune-plan-audit-v1/candidate.private.json",
+      "bytes": 9644,
+      "sha256": "056aa05b44e79ddf60828727fe4deaf2777255d757713787da35e588255b3fc3",
+      "archive": "archives/07-missfortune-plan-audit-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/missfortune-plan-audit-v1/compiled-preview.private.json",
+      "bytes": 78019,
+      "sha256": "ebfeac81051e7f4125106a3b8348461f7dab62cc38caa10a17c84d5f8f7c34bb",
+      "archive": "archives/07-missfortune-plan-audit-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/missfortune-plan-audit-v1/manifest.json",
+      "bytes": 6207,
+      "sha256": "f73093ad4c397cf463b5e938416c64f7e24c47b34068408ceb4bd5b0753d1e3d",
+      "archive": "archives/07-missfortune-plan-audit-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/missfortune-plan-audit-v1/mutation-evidence.json",
+      "bytes": 1149549,
+      "sha256": "bd58b6a5c13a11039af4519eff1d9a69e6ab6263377ffc67bfa2a390ec5a6d62",
+      "archive": "archives/07-missfortune-plan-audit-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/missfortune-plan-audit-v1/positive-evidence.json",
+      "bytes": 2956472,
+      "sha256": "b42ace68b92fbdd470d66db95bafae308e537a387b62f22bfb2c92d2bac056cb",
+      "archive": "archives/07-missfortune-plan-audit-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/missfortune-plan-audit-v2/candidate.private.json",
+      "bytes": 9644,
+      "sha256": "056aa05b44e79ddf60828727fe4deaf2777255d757713787da35e588255b3fc3",
+      "archive": "archives/08-missfortune-plan-audit-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/missfortune-plan-audit-v2/compiled-preview.private.json",
+      "bytes": 78019,
+      "sha256": "ebfeac81051e7f4125106a3b8348461f7dab62cc38caa10a17c84d5f8f7c34bb",
+      "archive": "archives/08-missfortune-plan-audit-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/missfortune-plan-audit-v2/manifest.json",
+      "bytes": 5251,
+      "sha256": "e02c2ba290ea83e43aea109317f1cb017f82983038e613725acf94b814be1d52",
+      "archive": "archives/08-missfortune-plan-audit-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/missfortune-plan-audit-v2/mutation-evidence.json",
+      "bytes": 1149547,
+      "sha256": "b19eefcf1d07b970bf0622a18904b1371d9981715810b115d7f374d7e4011656",
+      "archive": "archives/08-missfortune-plan-audit-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/missfortune-plan-audit-v2/positive-evidence.json",
+      "bytes": 2969446,
+      "sha256": "5e3d4ec6d5e9dfa7c36c8f3ff946e2fa0e4ad5b2144e5edcef4da15a48af031c",
+      "archive": "archives/08-missfortune-plan-audit-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/missfortune-plan-audit-v3/candidate.private.json",
+      "bytes": 9644,
+      "sha256": "056aa05b44e79ddf60828727fe4deaf2777255d757713787da35e588255b3fc3",
+      "archive": "archives/09-missfortune-plan-audit-v3.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/missfortune-plan-audit-v3/compiled-preview.private.json",
+      "bytes": 78019,
+      "sha256": "ebfeac81051e7f4125106a3b8348461f7dab62cc38caa10a17c84d5f8f7c34bb",
+      "archive": "archives/09-missfortune-plan-audit-v3.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/missfortune-plan-audit-v3/manifest.json",
+      "bytes": 4931,
+      "sha256": "bcd7d875ea88ae16a254dc48fb7b9917b62e71fde8c985cfbe44e8ce9f4e431c",
+      "archive": "archives/09-missfortune-plan-audit-v3.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/missfortune-plan-audit-v3/mutation-evidence.json",
+      "bytes": 1149547,
+      "sha256": "b19eefcf1d07b970bf0622a18904b1371d9981715810b115d7f374d7e4011656",
+      "archive": "archives/09-missfortune-plan-audit-v3.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/missfortune-plan-audit-v3/positive-evidence.json",
+      "bytes": 2970912,
+      "sha256": "579fe5b54d2278edc55c13e4d17cb4f62ffb334cbffc44cd65310fce8e469e6d",
+      "archive": "archives/09-missfortune-plan-audit-v3.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/SOURCE_ADMISSION_REPORT.md",
+      "bytes": 4664,
+      "sha256": "ac2bd55bc5087408d536c40a0779c0f3f80a1f3d5f60bc05b39461cd50d239a1",
+      "archive": "archives/10-SOURCE_ADMISSION_REPORT.md.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/source-admission-state-v1.json",
+      "bytes": 562,
+      "sha256": "cf44414f24d6eab298bc5fc5b0c67bb1b2e97cdfe7a6f0951a8fe0d3549fa006",
+      "archive": "archives/11-source-admission-state-v1.json.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/README.md",
+      "bytes": 9914,
+      "sha256": "3f84f5584a2a4c42e8bb996a6b7f79a9c22e85001b48825b35aae07fbfbb52ca",
+      "archive": "archives/12-README.md.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/PLAN.md",
+      "bytes": 27788,
+      "sha256": "5362f7ce3300d4fdc1621f0339eae2421ebc2a4fe5c99644cb39f241e5b268e3",
+      "archive": "archives/13-PLAN.md.zip"
+    }
+  ],
+  "archives": [
+    {
+      "path": "archives/00-missfortune-plan-v1.mts.zip",
+      "bytes": 2219,
+      "sha256": "17f3998f20d4f197cd94ed24388eec90c5a13e97093186421e94555cb50c4ed0"
+    },
+    {
+      "path": "archives/01-missfortune-probes-v1.mts.zip",
+      "bytes": 3922,
+      "sha256": "acd0f96d0397fbd4ddd9946b9420418512b9d5ae34f6eebd7329cbf0393c2e5d"
+    },
+    {
+      "path": "archives/02-missfortune-probes-v2.mts.zip",
+      "bytes": 4116,
+      "sha256": "8cfd8a825c24192087b6a27551d051f5d497150ea0c48f1b5046dcd15584acdc"
+    },
+    {
+      "path": "archives/03-missfortune-probes-v3.mts.zip",
+      "bytes": 4238,
+      "sha256": "e9accb2b6ce5fbe51f4df79118821b64c6cb4475eb689b489a8af2195a0fb4d9"
+    },
+    {
+      "path": "archives/04-audit-missfortune-plan-v1.mts.zip",
+      "bytes": 2131,
+      "sha256": "9f68078203d29a46173a251458f9d6cd87bc15e7626e97cf1810aa8099d506b2"
+    },
+    {
+      "path": "archives/05-audit-missfortune-plan-v2.mts.zip",
+      "bytes": 2263,
+      "sha256": "3317dddbedf617f536fe45549303ba29dddb72f21f2a158ba8a606e01299717e"
+    },
+    {
+      "path": "archives/06-audit-missfortune-plan-v3.mts.zip",
+      "bytes": 2279,
+      "sha256": "1404590a97a60a4cf98ed8ad49b8d77ec3c7fbeea1575973f266df61a2057fcf"
+    },
+    {
+      "path": "archives/07-missfortune-plan-audit-v1.zip",
+      "bytes": 105536,
+      "sha256": "6299919434682a1afbb149da2cf4011b27b37f3198a7c5c3d9d17776d9c19646"
+    },
+    {
+      "path": "archives/08-missfortune-plan-audit-v2.zip",
+      "bytes": 105902,
+      "sha256": "828092abdb905af895777e01adc1ca384449358636efc93c6c33c4fd589cf0d6"
+    },
+    {
+      "path": "archives/09-missfortune-plan-audit-v3.zip",
+      "bytes": 106167,
+      "sha256": "efb6fd5ef9d87bcb807d19c02887e43d7d1c556ae50d73c95789880564d88a06"
+    },
+    {
+      "path": "archives/10-SOURCE_ADMISSION_REPORT.md.zip",
+      "bytes": 3056,
+      "sha256": "5b2740bd7f5b0f63863517f967ece1a1db729b97cf6445002f5e91f63059190c"
+    },
+    {
+      "path": "archives/11-source-admission-state-v1.json.zip",
+      "bytes": 584,
+      "sha256": "121ad55e2c5b3606fdce9da912ef08d0a4d58c961051ebc4aabd862581e29aa7"
+    },
+    {
+      "path": "archives/12-README.md.zip",
+      "bytes": 5241,
+      "sha256": "7ae2544b89ccb91985f97beec494d8b5884b58a727f4431c0e260cfe0675c59f"
+    },
+    {
+      "path": "archives/13-PLAN.md.zip",
+      "bytes": 14201,
+      "sha256": "7a8fca428a72a0991cf481f29958000f5859c4910b2bb63193f9425830bb611e"
+    }
+  ],
+  "sourceMirrors": [
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/missfortune-plan-v1.mts.txt",
+      "sha256": "2e1452938d55594d62417cea6c714dea2b82f9ae54966d6aae1f1795ebcf2937"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/missfortune-probes-v1.mts.txt",
+      "sha256": "6ac1d3e571ec0d5636b2fc510faff7c76449ace92323e47cba2af70c503f3dd8"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/missfortune-probes-v2.mts.txt",
+      "sha256": "3751532404d1b753c1a8adb4aa6e760ba1863012500c47177905f564f3c075a2"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/missfortune-probes-v3.mts.txt",
+      "sha256": "d5918741d899f9e9b6a0efe1896ec9563427226a0caf2913f917869f6b0af2e6"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/audit-missfortune-plan-v1.mts.txt",
+      "sha256": "254091977b4e001efc3e0a616d717e455d1e365c878407976224acfcaaca5c3a"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/audit-missfortune-plan-v2.mts.txt",
+      "sha256": "7f421fcc58e4ae4d666f3fb1ba1578874790aad472e5b7c38d76d4b3fc23ed47"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/audit-missfortune-plan-v3.mts.txt",
+      "sha256": "a3da773a803d4f54e29a0c6fe6e59faa47c926baeb6e05bf279e2e7291ad38f4"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/SOURCE_ADMISSION_REPORT.md",
+      "sha256": "ac2bd55bc5087408d536c40a0779c0f3f80a1f3d5f60bc05b39461cd50d239a1"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/README.md",
+      "sha256": "3f84f5584a2a4c42e8bb996a6b7f79a9c22e85001b48825b35aae07fbfbb52ca"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/PLAN.md",
+      "sha256": "5362f7ce3300d4fdc1621f0339eae2421ebc2a4fe5c99644cb39f241e5b268e3"
+    }
+  ],
+  "omitted": [],
+  "secretPatternCheckPassed": true,
+  "scriptSha256": "d34642e4dbf75fabaa83d61ec278152a2334024fe25d8939e3f3e450acd93d59",
+  "productionQualified": false,
+  "scope": "Explicit incremental research supplement; baseline dependencies remain in the original archive.",
+  "includedRoots": [
+    "outputs/hero-forge-12b-restart-20260908/missfortune-plan-v1.mts",
+    "outputs/hero-forge-12b-restart-20260908/missfortune-probes-v1.mts",
+    "outputs/hero-forge-12b-restart-20260908/missfortune-probes-v2.mts",
+    "outputs/hero-forge-12b-restart-20260908/missfortune-probes-v3.mts",
+    "outputs/hero-forge-12b-restart-20260908/audit-missfortune-plan-v1.mts",
+    "outputs/hero-forge-12b-restart-20260908/audit-missfortune-plan-v2.mts",
+    "outputs/hero-forge-12b-restart-20260908/audit-missfortune-plan-v3.mts",
+    "outputs/hero-forge-12b-restart-20260908/missfortune-plan-audit-v1",
+    "outputs/hero-forge-12b-restart-20260908/missfortune-plan-audit-v2",
+    "outputs/hero-forge-12b-restart-20260908/missfortune-plan-audit-v3",
+    "outputs/hero-forge-12b-restart-20260908/SOURCE_ADMISSION_REPORT.md",
+    "outputs/hero-forge-12b-restart-20260908/source-admission-state-v1.json",
+    "outputs/hero-forge-12b-restart-20260908/README.md",
+    "outputs/hero-forge-12b-restart-20260908/PLAN.md"
+  ],
+  "terminalState": {
+    "path": "outputs/hero-forge-12b-restart-20260908/source-admission-state-v1.json",
+    "sha256": "cf44414f24d6eab298bc5fc5b0c67bb1b2e97cdfe7a6f0951a8fe0d3549fa006",
+    "status": "stopped-report-written"
+  },
+  "privacyNote": "Historical machine paths and fictional hero source texts are preserved for evidence integrity; no credential files are included."
+}

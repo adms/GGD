@@ -1,0 +1,54 @@
+/** Source-reviewed engineering candidate; not a new blind hero or production Gold. */
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import {SLOTS, sha} from './intake.mjs';
+
+export function missfortunePlan() {
+  const inputs = JSON.parse(fs.readFileSync(new URL('./source-review-v1/model-inputs.json', import.meta.url), 'utf8'));
+  const source = inputs.find((s:any) => s.id === 'community7-missfortune');
+  assert(source, 'SOURCE_MISSING');
+  assert.equal(source.hero.sourceSha256, '2e9568ca0a974f40033956bbbbfb9f0633fd09dbdd9824483ef9243868e63f36');
+  assert.equal(sha(source.hero.originalText), source.hero.sourceSha256);
+  assert.deepEqual(source.slots.map((s:any) => s.slot), SLOTS);
+  for (const s of source.slots) assert.equal(sha(s.originalText), s.sourceSha256);
+  const text = Object.fromEntries(source.slots.map((s:any) => [s.slot, s.originalText]));
+  const a = (slot:string, op:string, fields:any) => ({op, evidence:text[slot], ...fields});
+  const slots:any = Object.fromEntries(SLOTS.map((s:string) => [s, {
+    delivery:s === 'PASSIVE' ? 'passive' : 'self', rangeTier:null,
+    castTiming:{requirement:'not_specified', seconds:null, evidence:null},
+    actions:[], cost:null, mechanismGaps:[], tuningNotes:[],
+  }]));
+  const set = (s:string, delivery:string, actions:any[]) => Object.assign(slots[s], {delivery, actions});
+  set('PASSIVE', 'passive', [a('PASSIVE','attack_proc', {damageType:'physical',tier:'極小',cooldown:2,targetHpBelow:null})]);
+  set('Q','targeted', [
+    // "物理" explicitly modifies the chain, not necessarily the preceding initial hit.
+    a('Q','damage',{damageType:null,tier:null}),
+    a('Q','chain',{damageType:'physical',tier:null,totalTargets:2,decay:1,jumpRange:null}),
+  ]);
+  set('W','self',[a('W','buff_self',{duration:3,moveSpeedTier:'極小',attackSpeedPct:0.2})]);
+  set('E','ground',[a('E','area_pulses',{damageType:'magic',tier:'極小',count:3,interval:1,
+    firstDelay:null,radiusTier:null,anchor:'point'})]);
+  set('R','ground',[a('R','barrage',{damageType:'physical',tier:null,count:6,interval:null,scatterRadius:null,hitRadius:null})]);
+  set('EX','self',[a('EX','shield_self',{duration:3,amount:null,absorbs:'all',stacking:null})]);
+  const identity = '以雙重射擊、機動增益與持續彈雨控制交戰區域。';
+  const ir = {schema:'hero-semantic-ir@5', hero:{origin:'射手',originBasis:'source',
+    identitySummary:identity,identityEvidence:[identity]},relations:[],slots};
+  return {id:source.id, source, ir,
+    review:{allOriginalHeroAndSixSlotTextRead:true, oldTemplateMappingUsed:false,
+      sourceAuthority:'historical GGD adaptation, not canonical LoL or new Owner approval',
+      historicallyExposed:true, freshBlind:false, priorUse:'development; excluded from current IR5 train/dev selection',
+      sourceEntailmentNotes:[
+        'Q explicitly adds a hit to the starting target; deleting the initial damage action would lose that hit.',
+        'Two chain participants includes the start; it does not mean two additional targets.',
+        'PASSIVE target switching must not reset its shared two-second ICD.',
+        'E is a fixed ground field with each pulse at the original extreme-small magic tier, not unit-following DoT.',
+        'R requires six finite scatter shots; six guaranteed hits on every target is not implied.',
+        'EX shield covers repositioning; no automatic leap or enemy knockback is specified.',
+        'Absent windup, range, power, decay and shield stacking are not unique source classifications.',
+      ]},
+    previewChoices:[{path:'slots.Q.actions.1.decay', value:1, sourceSpecified:false,
+      excludeFromSemanticLabels:true, reason:'IR5 requires a number; source does not specify decay. Full-value training is forbidden.'}],
+    admission:{engineeringCandidate:true, formalTraining:false, fullValueTraining:false,
+      independentHoldout:false, productionModel:false, completeHeroQualified:false},
+  };
+}

@@ -1,0 +1,52 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import {fileURLToPath} from 'node:url';
+import {missfortunePlan} from './missfortune-plan-v1.mts';
+import {missfortuneProbes} from './missfortune-probes-v1.mts';
+import {compileIR5} from './ir-v5.mts';
+import {checkEnginePins,currentCatalog,hash} from './ir4-compiler.mts';
+const here=path.dirname(fileURLToPath(import.meta.url));
+assert.equal(process.argv.length,3,'USAGE: node --import tsx audit-missfortune-plan-v1.mts NEW_OUTPUT');
+const out=path.resolve(process.argv[2]);assert.equal(path.dirname(out),here,'OUTPUT_SCOPE');assert(!fs.existsSync(out),'NO_OVERWRITE');
+checkEnginePins();const catalog=currentCatalog(),candidate=missfortunePlan();
+const built=compileIR5(candidate.ir,candidate.source,catalog);
+assert.equal(built.project.sourceDesign!.ownerText,candidate.source.hero.originalText,'ORIGINAL_TEXT_LOSS');
+const probes=missfortuneProbes(built.compiled,catalog);
+const mutations=[
+  {id:'remove-start-extra-hit',names:['Q-start-extra-hit-and-chain-enemy'],change:(ir:any)=>ir.slots.Q.actions.shift()},
+  {id:'third-chain-participant',names:['Q-start-extra-hit-and-chain-enemy'],change:(ir:any)=>ir.slots.Q.actions[1].totalTargets=3},
+  {id:'E-unit-following-DOT',names:['E-fixed-field-leave','E-fixed-field-enter'],change:(ir:any)=>{
+    ir.slots.E.delivery='targeted';ir.slots.E.actions=[{op:'dot',evidence:ir.slots.E.actions[0].evidence,damageType:'magic',tier:'極小',duration:3,interval:1}];}},
+  {id:'E-only-one-pulse',names:['E-fixed-field-stay'],change:(ir:any)=>ir.slots.E.actions[0].count=1},
+  {id:'R-five-shots',names:['R-six-bounded-shots-fixed-area-and-no-reaim'],change:(ir:any)=>ir.slots.R.actions[0].count=5},
+  {id:'EX-magic-only-shield',names:['EX-self-three-second-shield-physical'],change:(ir:any)=>ir.slots.EX.actions[0].absorbs='magic'},
+  {id:'W-no-attack-speed',names:['W-self-speed-and-attack-speed-expire'],change:(ir:any)=>ir.slots.W.actions[0].attackSpeedPct=null},
+];
+const negatives=mutations.map(m=>{
+  const ir=structuredClone(candidate.ir);m.change(ir);
+  try{const b=compileIR5(ir,candidate.source,catalog),p=missfortuneProbes(b.compiled,catalog,m.names);
+    // A mutation is a valid witness only if the unmutated fixture passes those same probes.
+    const controlRows=probes.rows.filter((r:any)=>m.names.includes(r.name));
+    const cleanControl=controlRows.length>0&&controlRows.every((r:any)=>r.passed);
+    return {id:m.id,ir,compiled:true,controlPassed:cleanControl,detected:cleanControl&&p.rows.some((r:any)=>!r.passed),probes:p};
+  }catch(e){return {id:m.id,ir,compiled:false,controlPassed:false,detected:false,error:String(e)};}
+});
+checkEnginePins();
+const manifest={schema:'ggd-real-source-recipe-audit@1',createdAt:new Date().toISOString(),heroId:candidate.id,
+  originalSourceSha256:candidate.source.hero.sourceSha256,sourceBytesPreserved:true,compiled:true,
+  positive:{passed:probes.passed,total:probes.total,failures:probes.rows.filter((r:any)=>!r.passed).map((r:any)=>({name:r.name,seed:r.seed,error:r.error}))},
+  mutations:{detected:negatives.filter(n=>n.detected).length,total:negatives.length,rows:negatives.map(n=>({id:n.id,compiled:n.compiled,controlPassed:n.controlPassed,detected:n.detected}))},
+  admission:{formalTraining:false,fullValueTraining:false,freshBlind:false,releaseQualified:false,
+    reason:probes.passed===probes.total?'Engineering-only candidate; source choices and full-source semantic acceptance remain distinct.':'Positive behavior failures: candidate quarantined before training.'},
+  modelInference:false,modelTraining:false,engineEdited:false,
+  pins:Object.fromEntries(['missfortune-plan-v1.mts','missfortune-probes-v1.mts','audit-missfortune-plan-v1.mts','ir-v5.mts',
+    'ir4-compiler.mts','probe-harness.mts','current-engine-v1/source-pins.json','current-engine-v1/catalog-pins.json']
+    .map(f=>[f,hash(fs.readFileSync(path.join(here,f)))]))};
+fs.mkdirSync(out);
+for(const [file,data] of Object.entries({'manifest.json':manifest,'candidate.private.json':candidate,
+  'compiled-preview.private.json':built,'positive-evidence.json':probes,'mutation-evidence.json':negatives}))
+  fs.writeFileSync(path.join(out,file),JSON.stringify(data,null,2)+'\n',{flag:'wx'});
+console.log(JSON.stringify(manifest,null,2));
+// A failed candidate is a successful quarantine, but nonzero prevents automated training from continuing.
+if(probes.passed!==probes.total||negatives.some(n=>!n.detected))process.exitCode=1;
