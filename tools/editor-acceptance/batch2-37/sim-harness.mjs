@@ -215,23 +215,30 @@ export function evaluateCombo(draft,combo,options){
   const preparedAblated=runSequence(draft,{...common,steps:normalSteps,remove:combo.remove});
   const unprepared=runSequence(draft,{...common,steps:noSourceSteps});
   const unpreparedAblated=runSequence(draft,{...common,steps:noSourceSteps,remove:combo.remove});
+  const runs={prepared,preparedAblated,unprepared,unpreparedAblated};
   const validationErrors=[];
   const check=(ok,error)=>{if(!ok)validationErrors.push(error);};
+  const controls=['preparedAblated','unprepared','unpreparedAblated'];
+  const controlRejections=combo.expectedControlResponseRejections??{};
+  check(typeof controlRejections==='object'&&!Array.isArray(controlRejections)
+    &&Object.entries(controlRejections).every(([key,reason])=>controls.includes(key)&&typeof reason==='string'&&reason.length>0),'INVALID_CONTROL_REJECTION_DECLARATION');
+  check(!combo.expectedResponseRejection||Object.keys(controlRejections).length===0,'CONFLICTING_RESPONSE_REJECTION_DECLARATIONS');
+  if(combo.expectedResponseRejection||Object.keys(controlRejections).length)check(normalSteps[index].kind==='cast','REJECTION_DECLARATION_REQUIRES_RESPONSE_CAST');
   for(const i of sourceIndexes)if(prepared.steps[i].step.kind==='cast')check(prepared.steps[i].accepted,`SOURCE_CAST_REJECTED:${JSON.stringify(prepared.steps[i].rejections)}`);
-  for(const [i,step]of prepared.steps.entries())if(i>=index&&step.step.kind==='cast'){
-    if(i===index&&combo.expectedResponseRejection){
-      check(!step.accepted&&step.rejections.some(e=>e.data.reason===combo.expectedResponseRejection),'EXPECTED_RESPONSE_REJECTION_NOT_OBSERVED');
-      for(const control of [preparedAblated,unprepared,unpreparedAblated])check(control.steps[index].accepted,'CONTROL_RESPONSE_MUST_CAST_WITHOUT_REJECTION_CAUSE');
-    }else check(step.accepted,`RESPONSE_CAST_REJECTED:${JSON.stringify(step.rejections)}`);
+  for(const [key,run]of Object.entries(runs))for(const [i,step]of run.steps.entries())if(i>=index&&step.step.kind==='cast'){
+    const expected=i===index?(key==='prepared'?combo.expectedResponseRejection:controlRejections[key]):undefined;
+    if(expected){
+      const exact=!step.accepted&&step.rejections.length>0&&step.rejections.every(e=>e.data.reason===expected);
+      check(exact,key==='prepared'?'EXPECTED_RESPONSE_REJECTION_NOT_OBSERVED':`EXPECTED_CONTROL_RESPONSE_REJECTION_NOT_OBSERVED:${key}:${expected}`);
+    }else check(step.accepted,key==='prepared'?`RESPONSE_CAST_REJECTED:${JSON.stringify(step.rejections)}`:`UNDECLARED_CONTROL_RESPONSE_REJECTION:${key}:${i}:${JSON.stringify(step.rejections)}`);
   }
-  const runs={prepared,preparedAblated,unprepared,unpreparedAblated};
   const values=Object.fromEntries(Object.entries(runs).map(([key,run])=>[key,metricDelta(run,index,combo.metric)]));
   const preparedContribution=values.prepared-values.preparedAblated;
   const unpreparedContribution=values.unprepared-values.unpreparedAblated;
   const interaction=preparedContribution-unpreparedContribution;
   const epsilon=combo.epsilon??1e-6;
   const passed=validationErrors.length===0&&(combo.expect==='increase'?interaction>epsilon:combo.expect==='decrease'?interaction< -epsilon:false);
-  return{schema:'ggd-batch2-causal-combo@1',source:combo.source,target:combo.target,metric:combo.metric,expect:combo.expect,
+  return{schema:'ggd-batch2-causal-combo@1',source:combo.source,target:combo.target,metric:combo.metric,expect:combo.expect,...(combo.note?{note:combo.note}:{}),
     values,preparedContribution,unpreparedContribution,interaction,status:passed?'passed':'failed',validationErrors,runs,
     method:'Difference in response-window deltas across four matched timelines. Source-only residuals remain in both prepared runs and are subtracted; no required status/resource is injected.',
     limits:['Nonlinear damage caps, deaths and position changes remain visible in snapshots; origin-specific metrics may be required for an intended attribution.']};

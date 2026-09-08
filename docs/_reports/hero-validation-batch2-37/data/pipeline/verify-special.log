@@ -1,4 +1,5 @@
 b2-noor physical-once-consumed passed  
+b2-noor reflect-passive-receipt-own-w-heal-chain passed  
 b2-noor exclude-basic passed  
 b2-noor exclude-magic passed  
 b2-noor exclude-true passed  
@@ -15,4 +16,4 @@ b2-kaiji weighted-branch-seed-census passed
 b2-luckyman evasion-seed-census passed  
 b2-uncle root-releases-movement passed  
 b2-yogiri silence-releases-casting passed  
-{"status":"passed","cases":17,"passed":17,"timelines":166,"assertions":325,"drift":[]}
+{"status":"passed","cases":18,"passed":18,"timelines":170,"assertions":340,"drift":[]}

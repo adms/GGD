@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {gzipSync} from 'node:zlib';
-import {root,hash,loadBaseline,runSequence,metricValue} from './sim-harness.mjs';
+import {root,hash,loadBaseline,runSequence,metricValue,evaluateCombo} from './sim-harness.mjs';
+import {roster} from './roster.mjs';
 
 const dir=resolve(root,'docs/_reports/hero-validation-batch2-37/data');
 const read=p=>JSON.parse(readFileSync(resolve(dir,p),'utf8'));
@@ -43,7 +44,11 @@ function scenario(id,name,body){
       const r=runSequence(draft,{baseline,relatedChampions:draft.relatedChampions??draft.formChampions??[],seed:1234,steps,...extra});
       runs[key]=r;return r;
     };
-    body({draft,run,check});
+    const evaluate=combo=>{
+      const result=evaluateCombo(draft,combo,{baseline,relatedChampions:draft.relatedChampions??draft.formChampions??[],seed:1234});
+      Object.assign(runs,result.runs);return result;
+    };
+    body({draft,run,check,evaluate});
     row.status=checks.length&&checks.every(c=>c.passed)?'passed':'failed';
   }catch(error){row.error=String(error);}
   const evidence=`private/evidence/special/${id}.${name}.json.gz`;
@@ -67,6 +72,26 @@ scenario('b2-noor','physical-once-consumed',({run,check})=>{
   check('second physical ability damages and does not reflect',second.length===0&&events(r.steps[2],'damage',d=>d.target===r.actors.caster&&d.amount>0).length===1);
   check('consumed Q buff removed before original expiry',!r.steps[1].after.caster.sources.some(s=>s.id.startsWith('buff:ability:b2-noor.q')));
   check('successful reflection earned passive receipt',countStatus(r.steps[1].after,'caster','rage')===1);
+});
+scenario('b2-noor','reflect-passive-receipt-own-w-heal-chain',({evaluate,check})=>{
+  const combo=roster.find(h=>h.id==='b2-noor').combos[0];
+  const result=evaluate(combo),{prepared,preparedAblated,unprepared,unpreparedAblated}=result.runs;
+  check('authored combo measures own W after Q and enemy trigger',combo.source==='Q'&&combo.target==='W'&&combo.responseIndex===2
+    &&prepared.steps[2].step.actor==='caster'&&prepared.steps[2].step.slot==='W',combo);
+  check('four-control interaction is exactly the W heal',result.status==='passed'&&same(result.interaction,220),{
+    values:result.values,preparedContribution:result.preparedContribution,unpreparedContribution:result.unpreparedContribution,interaction:result.interaction,validationErrors:result.validationErrors});
+  for(const [key,r]of Object.entries(result.runs)){
+    check(`${key}: incoming physical ability and own response really cast`,r.steps[1].accepted&&r.steps[2].accepted);
+    check(`${key}: no Q-origin damage or healing enters response window`,events(r.steps[2],'damage',d=>d.origin?.includes('b2-noor.q')).length===0
+      &&events(r.steps[2],'heal',d=>d.origin?.includes('b2-noor.q')).length===0);
+  }
+  check('no-Q controls retain the enemy physical cast',unprepared.steps[0].step.kind==='wait'&&unpreparedAblated.steps[0].step.kind==='wait'
+    &&unprepared.steps[1].step.actor==='foe'&&unpreparedAblated.steps[1].step.actor==='foe');
+  check('reflection and rage precede own response',events(prepared.steps[1],'reflectSuccess').length===1&&countStatus(prepared.steps[2].before,'caster','rage')===1);
+  const heals=events(prepared.steps[2],'heal',d=>d.origin==='ability:b2-noor.w'&&d.target===prepared.actors.caster);
+  check('own W emits a single 220 heal and consumes rage',heals.length===1&&same(heals[0].data.amount,220)&&countStatus(prepared.after,'caster','rage')===0,heals);
+  check('removing W consumption leaves receipt but removes heal',countStatus(preparedAblated.after,'caster','rage')===1&&events(preparedAblated.steps[2],'heal').length===0);
+  check('without Q there is neither receipt nor W heal',countStatus(unprepared.steps[2].before,'caster','rage')===0&&events(unprepared.steps[2],'heal').length===0);
 });
 for(const [channel,step]of [['basic',attack('foe','caster',1.1)],['magic',foeCast('E')],['true',foeCast('Q')]]){
   scenario('b2-noor',`exclude-${channel}`,({run,check})=>{

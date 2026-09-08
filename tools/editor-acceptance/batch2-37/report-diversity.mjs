@@ -3,6 +3,7 @@ import {resolve,dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 import {roster} from './roster.mjs';
+import {comboLabel} from './report-utils.mjs';
 import {inspectDiversity} from './diversity.mjs';
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'../../..'),dir=resolve(root,'docs/_reports/hero-validation-batch2-37/data');
 const read=p=>JSON.parse(readFileSync(resolve(dir,p),'utf8'));
@@ -40,7 +41,7 @@ const result={...inspectDiversity(heroes),schema:'ggd-batch2-diversity-report@2'
 writeFileSync(resolve(dir,'diversity-report.json'),JSON.stringify(result,null,2)+'\n');
 const md=['# 37 名招牌玩法與相似例外','',result.interpretation,'',
  '| # | 英雄／定位 | 招牌與可執行笑點 | 最接近者與實質差異 | 兩條因果測量 |','|---|---|---|---|---|'];
-for(const h of roster)md.push(`| ${h.number} | ${h.name}／${h.origin} | ${h.signature} | ${roster.find(x=>x.id===h.closest)?.name}：${h.difference} | ${h.combos.map(c=>`${c.sourceActor??'caster'}.${c.source} → ${c.targetActor??'caster'}.${c.target}，${c.metric.actor}.${c.metric.field}`).join('；')} |`);
+for(const h of roster)md.push(`| ${h.number} | ${h.name}／${h.origin} | ${h.signature} | ${roster.find(x=>x.id===h.closest)?.name}：${h.difference} | ${h.combos.map(c=>`${comboLabel(c)}，${c.metric.actor}.${c.metric.field}`).join('；')} |`);
 md.push('','## 明列接受的相似例外','');
 for(const pair of semantic.pairs)md.push(`### ${pair.heroes.map(id=>roster.find(h=>h.id===id).name).join('／')}`,'',`分類：${pair.classification}。共同機制：${pair.shared}`,'',`角色契合與實際笑點：${pair.fitAndJoke}`,'',`仍有差異：${pair.difference}`,'',`保留的相似性：${pair.residual}`,'');
 md.push('## 編譯產物覆蓋','',`結構診斷：整套完全相同 ${result.exactDuplicateKitPairs.length} 對、Jaccard ≥ 0.7 的整套近似 ${result.nearDuplicateKitPairs.length} 對；${result.distinctNormalizedAbilities} 種正規化技能形狀，最常共用技能形狀涵蓋 ${result.mostSharedAbilityHeroCount} 名。這些不是獨創玩法或好玩證明。`,'',`多卡槽 ${multiCardSlots}／222。完整頻率與英雄 ID 見 data/diversity-report.json。`,'');

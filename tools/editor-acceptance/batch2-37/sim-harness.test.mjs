@@ -82,6 +82,32 @@ test('explicit silence rejection is causal only if all three controls accept the
   assert.equal(wrong.status,'failed');assert(wrong.validationErrors.includes('EXPECTED_RESPONSE_REJECTION_NOT_OBSERVED'));
 });
 
+test('a real passive mana trigger enables a response only with three precisely declared no-mana controls',()=>{
+  const d=fixture({},{castType:'targeted',targetsEnemies:false,manaCost:[100],effects:[{kind:'heal',amount:{flat:40}}]}),a=d.abilityDrafts.PASSIVE;
+  a.innateKind='passive';a.passive={ranks:[{hooks:[{on:'onAllyDamaged',target:'self',effects:[{kind:'restore',manaPct:.2,applyTo:'self'}]}]}]};
+  d.champion.passiveAbility=a.id;
+  const combo={source:'Q',sourceActor:'foe',sourceTarget:'ally',target:'W',targetTarget:'ally',waitSec:.2,observeSec:.2,
+    setup:{caster:{manaPct:0}},metric:{actor:'ally',field:'hp'},expect:'increase',remove:{slot:'PASSIVE',kind:'restore'},
+    expectedControlResponseRejections:{preparedAblated:'no-mana',unprepared:'no-mana',unpreparedAblated:'no-mana'}};
+  const r=evaluateCombo(d,combo,{baseline});
+  assert.equal(r.status,'passed');assert.equal(r.interaction,40);assert(r.runs.prepared.steps[1].accepted);
+  for(const key of Object.keys(combo.expectedControlResponseRejections)){
+    assert(!r.runs[key].steps[1].accepted);assert.deepEqual(r.runs[key].steps[1].rejections.map(e=>e.data.reason),['no-mana']);
+  }
+  const undeclared=evaluateCombo(d,{...combo,expectedControlResponseRejections:undefined},{baseline});
+  assert.equal(undeclared.status,'failed');assert.equal(undeclared.validationErrors.filter(e=>e.startsWith('UNDECLARED_CONTROL_RESPONSE_REJECTION:')).length,3);
+  const wrong=evaluateCombo(d,{...combo,expectedControlResponseRejections:{...combo.expectedControlResponseRejections,unprepared:'silenced'}},{baseline});
+  assert.equal(wrong.status,'failed');assert(wrong.validationErrors.includes('EXPECTED_CONTROL_RESPONSE_REJECTION_NOT_OBSERVED:unprepared:silenced'));
+  const missing=evaluateCombo(d,{...combo,expectedControlResponseRejections:{preparedAblated:'no-mana',unprepared:'no-mana'}},{baseline});
+  assert.equal(missing.status,'failed');assert(missing.validationErrors.some(e=>e.startsWith('UNDECLARED_CONTROL_RESPONSE_REJECTION:unpreparedAblated:')));
+});
+
+test('a declared no-mana control must actually reject instead of quietly accepting',()=>{
+  const d=marked(),r=evaluateCombo(d,{...gate,expectedControlResponseRejections:{preparedAblated:'no-mana'}},{baseline});
+  assert.equal(r.status,'failed');assert(r.runs.preparedAblated.steps[1].accepted);
+  assert(r.validationErrors.includes('EXPECTED_CONTROL_RESPONSE_REJECTION_NOT_OBSERVED:preparedAblated:no-mana'));
+});
+
 test('stat metrics read the real stat pipeline and dispel requires a dispellable buff',()=>{
   const d=fixture({castType:'targeted',targetsEnemies:true,effects:[{kind:'applyBuff',applyTo:'target',polarity:'buff',dispellable:true,duration:3,modifiers:[{stat:'ad',op:'flat',value:50}]}]},
     {castType:'targeted',targetsEnemies:true,effects:[{kind:'dispel',shape:'single',pools:{buffs:true},polarity:'buff',count:1}]});

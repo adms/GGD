@@ -131,7 +131,11 @@ export function designsA(hero,presets){
   E:self('先做好防護，spell-shield 收據 3 秒與 100 護盾。',[status('spell-shield',{},3,'self'),shield(100)]),
   R:self('把防護收據換成 300 護盾 3 秒；沒有收據不發厚盾。收據不等於萬能反彈。',[consume('spell-shield',[shield(300)],'self')]),
   EX:move('將指定敵人拉到身旁，準備下一次反制；不是反射位移。',seq([{kind:'pull',shape:'single',destination:'caster',speed:15,stopDistance:1.5}])),
- },[edge('Q','W','caster','hp',{slot:'Q',kind:'applyBuff'},{targetActor:'foe',targetTarget:'caster',waitSec:.2,observeSec:.5}),edge('E','R','caster','shield',{slot:'R',kind:'consumeStatus'},{metric:{actor:'caster',field:'shield',sample:'max'}})],['Q 不承諾方向角判定；只承諾有界的物理技能時間窗。']);
+ },[edge('Q','W','caster','hp',{slot:'W',kind:'consumeStatus'},{
+   note:'Q → 敵方物理 W 觸發 P 取得 rage → 自己 W 消耗回復 220 HP；只量自己 W 階段，無 Q 對照保留敵 W。',
+   sourceSteps:[{kind:'cast',slot:'Q',waitSec:.2},{kind:'cast',actor:'foe',slot:'W',target:'caster',waitSec:.3}],
+   sourceIndexes:[0],responseIndex:2,observeSec:.4,
+ }),edge('E','R','caster','shield',{slot:'R',kind:'consumeStatus'},{metric:{actor:'caster',field:'shield',sample:'max'}})],['Q 不承諾方向角判定；只承諾有界的物理技能時間窗。']);
  case 'b2-touka': return kit('工頭坑洞：拋入延時落點，再用入坑紀錄收場','b2-goblin','托卡用單次延時地點與空中拋投，哥殺是反覆重選的固定施工區。',{
   PASSIVE:passive('位移成功後回復自己 50 生命，每 3 秒一次；沒有死亡換身。',[hook('onDashOrBlink',[heal(50,'self')],{internalCooldown:3})]),
   Q:ground('以起手命中中心（沒有命中則施法點）定坑，0.6 秒後重選半徑 2.5 的敌人，各定身 2 秒；坑是一次排程區域，沒有永久地形洞。',[delayed([status('root',{root:true},2)],.6,{shape:'circle',radius:2.5,side:'enemies',maxTargets:4,targetMode:'reresolve',anchor:'point'})]),

@@ -4,6 +4,7 @@ import {resolve,dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 import {roster} from './roster.mjs';
+import {comboLabel} from './report-utils.mjs';
 import {reviewReceipts,commonFindings} from './author-review.mjs';
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'../../..'),dir=resolve(root,'docs/_reports/hero-validation-batch2-37/data');
 const read=p=>JSON.parse(readFileSync(resolve(dir,p),'utf8'));
@@ -26,7 +27,7 @@ for(const h of roster){
   admission:{legal:legality,behavior:behaviorOK,agentSemanticReview:true,diversity:'reviewed-with-explicit-similar-exceptions',offlinePackage:pr.status==='passed',scopedDevelopmentReference:scoped,completeLiveHero:false,blindEvaluation:false,trainEligible:false},
   limits:[...(h.limitations??[]),...(receipt.limitations??[]),'rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。','正式遊戲匯入、渲染、操作與碰撞未驗收。',...(h.id==='b2-kisaragi'?['真電車模型已驗；細長車體仍用既有0.6碰撞半徑，需遊戲視覺對位審查。']:['本體使用已核准代理；原作角色外觀尚未完成。']),'沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。']};
  reviewed.heroes.push(row);reviewed.legalityHeroes+=+legality;reviewed.behaviorHeroes+=+behaviorOK;reviewed.scopedReferenceHeroes+=+scoped;reviewed.reviewedSlots+=h.moves.length;
- md.push(`## ${h.number}. ${h.name}｜${h.origin}`,'',`${h.work}：${h.theme}。`,'',`來源身分：${identity.originalIdentityFinding}；版本：${identity.versionScope}。${identity.ggdAdaptationBoundary}`,'',identity.sources.map(s=>`[${s.title}](${s.url})`).join('；'),'',`招牌：${h.signature}`,'',`最接近者：${h.difference}`,'',`因果：${b.pairs.map(x=>`${x.source} → ${x.target}，${x.metric.actor}.${x.metric.field}，差中差 ${x.interaction}（${x.status}）`).join('；')}。`,'',
+ md.push(`## ${h.number}. ${h.name}｜${h.origin}`,'',`${h.work}：${h.theme}。`,'',`來源身分：${identity.originalIdentityFinding}；版本：${identity.versionScope}。${identity.ggdAdaptationBoundary}`,'',identity.sources.map(s=>`[${s.title}](${s.url})`).join('；'),'',`招牌：${h.signature}`,'',`最接近者：${h.difference}`,'',`因果：${b.pairs.map((x,i)=>`${comboLabel(h.combos[i])}，${x.metric.actor}.${x.metric.field}，差中差 ${x.interaction}（${x.status}）`).join('；')}。`,'',
   '| 槽 | 招式與模板 | 冷卻／魔力／射程 rank1 | 逐槽審查 |','|---|---|---|---|');
  for(const m of h.moves){const a=d.abilityDrafts[m.slot],s=p.acceptedPlan.slots[m.slot];md.push(`| ${m.slot} | ${m.name}；${s.products.map(x=>x.template.ref).join(' + ')} | ${a.cooldown[0]}秒／${a.manaCost[0]}／${a.range} | ${receipt.slots[m.slot]} |`);}
  md.push('');for(const m of h.moves)md.push(`**${m.slot}：${m.name}**`,'',d.abilityDrafts[m.slot].description,'');

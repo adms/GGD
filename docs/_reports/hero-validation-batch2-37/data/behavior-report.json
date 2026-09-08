@@ -1,10 +1,10 @@
 {
   "schema": "ggd-batch2-behavior-review@2",
   "engineCommit": "ed547549fb453f6652f53bd7ed9548b0ccef3a36",
-  "buildHash": "946d2c8d919d2ca2eceb28fa7e571659d3e5174f124c99cd55ef183ce6e8d9ba",
+  "buildHash": "5117955476f4fd14832936836a3b1c1633905fd8d0cd1edb32cfe5bb731c308c",
   "baselineDigest": "sha256:c812ee02fc73efa3bbcf85a961b79a801f9470b4c24f4f710024d31ddfc94acf",
   "verifierSha256": "4231b30a9d75359103576a81fe5cf0dc5e6ee7d7a773def3fafcc06cd30da58f",
-  "harnessSha256": "bba486ef392225c795fcba7aa9ced631bde299cea3956f95eb81afb390f6eeaa",
+  "harnessSha256": "4e04220dfdfcc6eb93e7df9d7d7a2645e3c6c20f9b948d8144202a8a57cf3f0f",
   "heroes": [
     {
       "id": "b2-popp",
@@ -3316,15 +3316,16 @@
             "field": "hp"
           },
           "expect": "increase",
+          "note": "Q → 敵方物理 W 觸發 P 取得 rage → 自己 W 消耗回復 220 HP；只量自己 W 階段，無 Q 對照保留敵 W。",
           "values": {
-            "prepared": 2.706887755102798,
-            "preparedAblated": -76.75434405237775,
-            "unprepared": -76.75434405237775,
-            "unpreparedAblated": -76.75434405237775
+            "prepared": 222.16551020408224,
+            "preparedAblated": 2.1655102040822385,
+            "unprepared": 2.1655102040822385,
+            "unpreparedAblated": 2.1655102040822385
           },
-          "preparedContribution": 79.46123180748054,
+          "preparedContribution": 220,
           "unpreparedContribution": 0,
-          "interaction": 79.46123180748054,
+          "interaction": 220,
           "status": "passed",
           "validationErrors": [],
           "method": "Difference in response-window deltas across four matched timelines. Source-only residuals remain in both prepared runs and are subtracted; no required status/resource is injected.",
@@ -3332,7 +3333,7 @@
             "Nonlinear damage caps, deaths and position changes remain visible in snapshots; origin-specific metrics may be required for an intended attribution."
           ],
           "evidence": "private/evidence/b2-noor.combo-1.json.gz",
-          "evidenceSha256": "7b472e8b95b9aa7a3259e20e450b892c0b80414f3d27982198aeba9db121f44d"
+          "evidenceSha256": "3088b74b214eebb3da91289d6a02954ade0bcdfbc0471ab9c6aac095d59cd0d9"
         },
         {
           "schema": "ggd-batch2-causal-combo@1",
@@ -4019,6 +4020,7 @@
             "field": "hp"
           },
           "expect": "increase",
+          "note": "先從 60% 血支付 18% 最大生命，再確認低血補助；沒有 W 時 E 無效。",
           "values": {
             "prepared": 168.9690204081503,
             "preparedAblated": 8.969020408165306,
@@ -4035,7 +4037,7 @@
             "Nonlinear damage caps, deaths and position changes remain visible in snapshots; origin-specific metrics may be required for an intended attribution."
           ],
           "evidence": "private/evidence/b2-guts.combo-2.json.gz",
-          "evidenceSha256": "62e5d2f8058126080e1ab4a1df89fa6ec13f3be3585d3ee61ccf9048066b8d2f"
+          "evidenceSha256": "76333d4d3b063a83188b7df4b9cac5952d47a898eb6a3d16411c4a8ffd418705"
         }
       ],
       "boundaries": [
@@ -4869,22 +4871,23 @@
         },
         {
           "schema": "ggd-batch2-causal-combo@1",
-          "source": "W",
-          "target": "W",
+          "source": "E",
+          "target": "R",
           "metric": {
-            "actor": "caster",
+            "actor": "foe",
             "field": "hp"
           },
-          "expect": "increase",
+          "expect": "decrease",
+          "note": "E 真換位讓原本在 R 長度 11 外的客人進入展示線；量 R 傷害，E 本身的 P 治療不充當第二連動。",
           "values": {
-            "prepared": 1.5150306122468464,
-            "preparedAblated": -83.89600962843633,
-            "unprepared": -83.89600962843633,
-            "unpreparedAblated": -83.89600962843633
+            "prepared": -1385.7904929650012,
+            "preparedAblated": 2.5250510204114107,
+            "unprepared": 2.5250510204114107,
+            "unpreparedAblated": 2.5250510204114107
           },
-          "preparedContribution": 85.41104024068318,
+          "preparedContribution": -1388.3155439854127,
           "unpreparedContribution": 0,
-          "interaction": 85.41104024068318,
+          "interaction": -1388.3155439854127,
           "status": "passed",
           "validationErrors": [],
           "method": "Difference in response-window deltas across four matched timelines. Source-only residuals remain in both prepared runs and are subtracted; no required status/resource is injected.",
@@ -4892,7 +4895,7 @@
             "Nonlinear damage caps, deaths and position changes remain visible in snapshots; origin-specific metrics may be required for an intended attribution."
           ],
           "evidence": "private/evidence/b2-sinbad.combo-2.json.gz",
-          "evidenceSha256": "4470835e34d8e3e78701375bbf6bc904d6e8d2ccdb87b1f32123a74970e93d81"
+          "evidenceSha256": "01522534d3736b126d8701fe485e692956644ededd831da1ffefc216de1c6358"
         }
       ],
       "boundaries": [
@@ -5928,22 +5931,23 @@
         },
         {
           "schema": "ggd-batch2-causal-combo@1",
-          "source": "E",
-          "target": "W",
+          "source": "R",
+          "target": "ATTACK",
           "metric": {
             "actor": "caster",
-            "field": "hp"
+            "field": "mana"
           },
           "expect": "increase",
+          "note": "R 先把人送到近戰距離，後續真普攻在同一短窗口觸發 P 回魔；無 R 尚在接近，消融 P 時照樣命中但沒有回款。這是提早取得回魔，不承諾無 R 永遠無法普攻。",
           "values": {
-            "prepared": 1.295938775511786,
-            "preparedAblated": -134.56184382449646,
-            "unprepared": -134.56184382449646,
-            "unpreparedAblated": -134.56184382449646
+            "prepared": 174.84563102040795,
+            "preparedAblated": 89.63807999999983,
+            "unprepared": 89.63808000000108,
+            "unpreparedAblated": 89.63808000000108
           },
-          "preparedContribution": 135.85778260000825,
+          "preparedContribution": 85.20755102040812,
           "unpreparedContribution": 0,
-          "interaction": 135.85778260000825,
+          "interaction": 85.20755102040812,
           "status": "passed",
           "validationErrors": [],
           "method": "Difference in response-window deltas across four matched timelines. Source-only residuals remain in both prepared runs and are subtracted; no required status/resource is injected.",
@@ -5951,7 +5955,7 @@
             "Nonlinear damage caps, deaths and position changes remain visible in snapshots; origin-specific metrics may be required for an intended attribution."
           ],
           "evidence": "private/evidence/b2-orphen.combo-2.json.gz",
-          "evidenceSha256": "1f594245226c099f6b4df3766742f949d0d4a678737a0590bcf823ec0b460343"
+          "evidenceSha256": "4c1f6f223aa715f2ee7ed155219f1f97364be9b4505babf4dbd7a5f95c9d78e5"
         }
       ],
       "boundaries": [
@@ -6566,6 +6570,7 @@
             "field": "mana"
           },
           "expect": "increase",
+          "note": "Q 提高普通攻擊迴避，敵人真普攻觸發 P 回魔；消融 P 後仍可閃避，回魔收益消失。",
           "values": {
             "prepared": 291.8165612244909,
             "preparedAblated": 141.8760000000011,
@@ -6582,7 +6587,7 @@
             "Nonlinear damage caps, deaths and position changes remain visible in snapshots; origin-specific metrics may be required for an intended attribution."
           ],
           "evidence": "private/evidence/b2-luckyman.combo-1.json.gz",
-          "evidenceSha256": "2b57a1bccd246f4c7e0065674999d94d72c10e40b7391e9621cb26b30808ccd3"
+          "evidenceSha256": "6312ac8312bddae388c5806f669d2019579fc2f0dc1eeaa80f942ddee288ee76"
         },
         {
           "schema": "ggd-batch2-causal-combo@1",
@@ -6590,18 +6595,19 @@
           "target": "W",
           "metric": {
             "actor": "caster",
-            "field": "hp"
+            "field": "mana"
           },
           "expect": "increase",
+          "note": "E 打開技能迴避通道，敵人真物理技能觸發 P 回魔；消融 P 後仍閃過但不回魔。與 Q 是同一迴避回魔家族的兩種來源，不計為兩種全新招牌。",
           "values": {
-            "prepared": 1.6241326530616789,
-            "preparedAblated": -77.83709915441887,
-            "unprepared": -77.83709915441887,
-            "unpreparedAblated": -77.83709915441887
+            "prepared": 173.58656122448997,
+            "preparedAblated": 23.646000000000186,
+            "unprepared": 23.646000000000186,
+            "unpreparedAblated": 23.646000000000186
           },
-          "preparedContribution": 79.46123180748054,
+          "preparedContribution": 149.94056122448978,
           "unpreparedContribution": 0,
-          "interaction": 79.46123180748054,
+          "interaction": 149.94056122448978,
           "status": "passed",
           "validationErrors": [],
           "method": "Difference in response-window deltas across four matched timelines. Source-only residuals remain in both prepared runs and are subtracted; no required status/resource is injected.",
@@ -6609,7 +6615,7 @@
             "Nonlinear damage caps, deaths and position changes remain visible in snapshots; origin-specific metrics may be required for an intended attribution."
           ],
           "evidence": "private/evidence/b2-luckyman.combo-2.json.gz",
-          "evidenceSha256": "70479d45bf5464418f6a7995c2e0908e733661ab252435ac4c064676340697c8"
+          "evidenceSha256": "d7edda96518af9046aea88a3a91fea352bb2668ea38ff612ea91e272ae938f06"
         }
       ],
       "boundaries": [
@@ -7020,22 +7026,23 @@
         },
         {
           "schema": "ggd-batch2-causal-combo@1",
-          "source": "W",
-          "target": "W",
+          "source": "Q",
+          "target": "EX",
           "metric": {
             "actor": "ally",
             "field": "hp"
           },
           "expect": "increase",
+          "note": "敵方測試 Q 真傷同學，觸發本人的 P 回魔，讓原本只有 4% 魔力的老師及時施放 EX 治療。源 Q 不是神眉的 Q；三個缺少 P 回款的對照在施法時都必須因 no-mana 拒絕，較晚自然回魔後仍可再救。",
           "values": {
-            "prepared": 1.1899897959192458,
-            "preparedAblated": -111.95211220472083,
-            "unprepared": -111.95211220472083,
-            "unpreparedAblated": -111.95211220472083
+            "prepared": 121.58665306122566,
+            "preparedAblated": 1.586653061225661,
+            "unprepared": 1.586653061225661,
+            "unpreparedAblated": 1.586653061225661
           },
-          "preparedContribution": 113.14210200064008,
+          "preparedContribution": 120,
           "unpreparedContribution": 0,
-          "interaction": 113.14210200064008,
+          "interaction": 120,
           "status": "passed",
           "validationErrors": [],
           "method": "Difference in response-window deltas across four matched timelines. Source-only residuals remain in both prepared runs and are subtracted; no required status/resource is injected.",
@@ -7043,7 +7050,7 @@
             "Nonlinear damage caps, deaths and position changes remain visible in snapshots; origin-specific metrics may be required for an intended attribution."
           ],
           "evidence": "private/evidence/b2-nube.combo-2.json.gz",
-          "evidenceSha256": "4218a8ffc1f90187dfcae47e8c72ac32c526afc63a9e1ca22621ec204060e8f3"
+          "evidenceSha256": "6fb9314d22f00651185b9fe2f3694f275828b562ae2730e73d62326538937ae8"
         }
       ],
       "boundaries": [

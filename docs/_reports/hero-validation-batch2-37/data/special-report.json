@@ -1,10 +1,10 @@
 {
   "schema": "ggd-batch2-special-review@1",
-  "buildHash": "946d2c8d919d2ca2eceb28fa7e571659d3e5174f124c99cd55ef183ce6e8d9ba",
+  "buildHash": "5117955476f4fd14832936836a3b1c1633905fd8d0cd1edb32cfe5bb731c308c",
   "engineCommit": "ed547549fb453f6652f53bd7ed9548b0ccef3a36",
   "baselineDigest": "sha256:c812ee02fc73efa3bbcf85a961b79a801f9470b4c24f4f710024d31ddfc94acf",
-  "verifierSha256": "d11391261cb1b9ddd2f885c0375acdd4e968e7c16f5d4e5a9014657e3d953a50",
-  "harnessSha256": "bba486ef392225c795fcba7aa9ced631bde299cea3956f95eb81afb390f6eeaa",
+  "verifierSha256": "c973ad2b63b4830e414cd1d77cd932baab3043544646fcdae3b90793039f6498",
+  "harnessSha256": "4e04220dfdfcc6eb93e7df9d7d7a2645e3c6c20f9b948d8144202a8a57cf3f0f",
   "status": "passed",
   "drift": [],
   "cases": [
@@ -57,8 +57,139 @@
         }
       ],
       "evidence": "private/evidence/special/b2-noor.physical-once-consumed.json.gz",
-      "evidenceSha256": "5ae3e5eb268064a7e5399e1606dbfaa761d73514e6ae7b84f89ccb62e856d384",
+      "evidenceSha256": "b3771003fdc05d455af3508a2fcf5727e66ccfe93be672de05b586b9e1e1623a",
       "timelineCount": 1
+    },
+    {
+      "heroId": "b2-noor",
+      "name": "reflect-passive-receipt-own-w-heal-chain",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "authored combo measures own W after Q and enemy trigger",
+          "passed": true,
+          "observed": {
+            "source": "Q",
+            "target": "W",
+            "metric": {
+              "actor": "caster",
+              "field": "hp"
+            },
+            "expect": "increase",
+            "waitSec": 0.8,
+            "observeSec": 0.4,
+            "remove": {
+              "slot": "W",
+              "kind": "consumeStatus"
+            },
+            "note": "Q → 敵方物理 W 觸發 P 取得 rage → 自己 W 消耗回復 220 HP；只量自己 W 階段，無 Q 對照保留敵 W。",
+            "sourceSteps": [
+              {
+                "kind": "cast",
+                "slot": "Q",
+                "waitSec": 0.2
+              },
+              {
+                "kind": "cast",
+                "actor": "foe",
+                "slot": "W",
+                "target": "caster",
+                "waitSec": 0.3
+              }
+            ],
+            "sourceIndexes": [
+              0
+            ],
+            "responseIndex": 2
+          }
+        },
+        {
+          "name": "four-control interaction is exactly the W heal",
+          "passed": true,
+          "observed": {
+            "values": {
+              "prepared": 222.16551020408224,
+              "preparedAblated": 2.1655102040822385,
+              "unprepared": 2.1655102040822385,
+              "unpreparedAblated": 2.1655102040822385
+            },
+            "preparedContribution": 220,
+            "unpreparedContribution": 0,
+            "interaction": 220,
+            "validationErrors": []
+          }
+        },
+        {
+          "name": "prepared: incoming physical ability and own response really cast",
+          "passed": true
+        },
+        {
+          "name": "prepared: no Q-origin damage or healing enters response window",
+          "passed": true
+        },
+        {
+          "name": "preparedAblated: incoming physical ability and own response really cast",
+          "passed": true
+        },
+        {
+          "name": "preparedAblated: no Q-origin damage or healing enters response window",
+          "passed": true
+        },
+        {
+          "name": "unprepared: incoming physical ability and own response really cast",
+          "passed": true
+        },
+        {
+          "name": "unprepared: no Q-origin damage or healing enters response window",
+          "passed": true
+        },
+        {
+          "name": "unpreparedAblated: incoming physical ability and own response really cast",
+          "passed": true
+        },
+        {
+          "name": "unpreparedAblated: no Q-origin damage or healing enters response window",
+          "passed": true
+        },
+        {
+          "name": "no-Q controls retain the enemy physical cast",
+          "passed": true
+        },
+        {
+          "name": "reflection and rage precede own response",
+          "passed": true
+        },
+        {
+          "name": "own W emits a single 220 heal and consumes rage",
+          "passed": true,
+          "observed": [
+            {
+              "type": "heal",
+              "tick": 19,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 220,
+                "overheal": 0,
+                "origin": "ability:b2-noor.w"
+              }
+            }
+          ]
+        },
+        {
+          "name": "removing W consumption leaves receipt but removes heal",
+          "passed": true
+        },
+        {
+          "name": "without Q there is neither receipt nor W heal",
+          "passed": true
+        }
+      ],
+      "evidence": "private/evidence/special/b2-noor.reflect-passive-receipt-own-w-heal-chain.json.gz",
+      "evidenceSha256": "f4c162a951cb235ded865dd6bac181a4e8ca531e0683ee6e8f64b20351fedfc2",
+      "timelineCount": 4
     },
     {
       "heroId": "b2-noor",
@@ -91,7 +222,7 @@
         }
       ],
       "evidence": "private/evidence/special/b2-noor.exclude-basic.json.gz",
-      "evidenceSha256": "0112c58aec61236aa321b8a6df6ecde9321fa980b3f9c43a12d68af6ed99331b",
+      "evidenceSha256": "a548d4a0fac1672cdcb822cee5f02f17b0a6a13f8295f460baafc7c86c094c1f",
       "timelineCount": 1
     },
     {
@@ -125,7 +256,7 @@
         }
       ],
       "evidence": "private/evidence/special/b2-noor.exclude-magic.json.gz",
-      "evidenceSha256": "f565539c1a14259c12785de9c7ce879ef4172eba2f00d4bfcb2cb7c3790098ee",
+      "evidenceSha256": "23dd573671d37b1d2b76c892448bb45323415dc09a203dc12120d339bb020df0",
       "timelineCount": 1
     },
     {
@@ -159,7 +290,7 @@
         }
       ],
       "evidence": "private/evidence/special/b2-noor.exclude-true.json.gz",
-      "evidenceSha256": "aaff22ebc50e19a815be922e05515c1f211b303f2e87000be6e0163bd48e5531",
+      "evidenceSha256": "9910abe7905a99238967a7b6ca72a9d8a458aa27901ee278bab4138f4d93462d",
       "timelineCount": 1
     },
     {
@@ -181,7 +312,7 @@
         }
       ],
       "evidence": "private/evidence/special/b2-noor.past-reflect-window.json.gz",
-      "evidenceSha256": "ce64ac4e99a4f67c704b3c800b6f97c7f55c0656432ebad299823551f7874692",
+      "evidenceSha256": "4732c30740b48f9bed28f3e6ce86d20786031f0e573680d040acbdcb34c3d24b",
       "timelineCount": 1
     },
     {
@@ -221,7 +352,7 @@
         }
       ],
       "evidence": "private/evidence/special/b2-yogiri.threshold-high-unnotified.json.gz",
-      "evidenceSha256": "f0f9bba580331219fd7b251e28f7b2f3c1f31689bd620b574e120da2d9878c15",
+      "evidenceSha256": "8779a5b280c0f6a28072d12df0b1cb9841025871919b4a3bd0d0b78514c3ccb8",
       "timelineCount": 2
     },
     {
@@ -261,7 +392,7 @@
         }
       ],
       "evidence": "private/evidence/special/b2-yogiri.threshold-high-notified.json.gz",
-      "evidenceSha256": "44bed59d08617c8dd0f3784cefe14dcac95a5abac83131e31b14fe368a20bc84",
+      "evidenceSha256": "739a26e9cb5e57e74a3a42d76f12bc6779340d9f489cab2dbb47496e578692f4",
       "timelineCount": 2
     },
     {
@@ -301,7 +432,7 @@
         }
       ],
       "evidence": "private/evidence/special/b2-yogiri.threshold-low-unnotified.json.gz",
-      "evidenceSha256": "409a26ac26eda64d790cecd2a34cc687207a1bf4e5d7d3108f89c9e2f472adc8",
+      "evidenceSha256": "d258768973f3d7354290b85c2f1d34f0f83a17acc966512c744d653981370d27",
       "timelineCount": 2
     },
     {
@@ -341,7 +472,7 @@
         }
       ],
       "evidence": "private/evidence/special/b2-yogiri.threshold-low-notified.json.gz",
-      "evidenceSha256": "751d93fb60b8598073fe8fdb584491ea0384aa931d8c3adcf3e8747057f0b8f1",
+      "evidenceSha256": "af42538db1a111c23f1ca3d432e6f48cf5792000b9e83c3ea2763b6677ef6908",
       "timelineCount": 2
     },
     {
@@ -394,7 +525,7 @@
         }
       ],
       "evidence": "private/evidence/special/b2-klaus.cancel-outstanding-schedule.json.gz",
-      "evidenceSha256": "891773cd2a1400ca8917425543daf6b8a6bf52ea54460d3db46045043db677f7",
+      "evidenceSha256": "2bc76793431cd92a80760352c9aee5fb60a997316948c386d8e3712862cb2c12",
       "timelineCount": 2
     },
     {
@@ -436,7 +567,7 @@
         }
       ],
       "evidence": "private/evidence/special/b2-kaede.uninstall-passive-keep-ad-until-expiry.json.gz",
-      "evidenceSha256": "5ec6e162dc2636fb827937e8b24528c9b34cdd3b609b436353de7569b4d628c7",
+      "evidenceSha256": "5989d5986fb01a7acad54cf0cd2c49c16080ae5b091194e95e7dbaf285a90c4c",
       "timelineCount": 2
     },
     {
@@ -476,7 +607,7 @@
         }
       ],
       "evidence": "private/evidence/special/b2-rin.bank-consumed-no-repeat-bonus.json.gz",
-      "evidenceSha256": "05af7659eb6a14a399bf6cb5bade2665016feed55d751a041ee74bcb144d1721",
+      "evidenceSha256": "90c4e6453b0359b3a9dd97acd3d526cdd1c252d0b82f6aae46f9e9052b1fb04d",
       "timelineCount": 3
     },
     {
@@ -1251,7 +1382,7 @@
         }
       ],
       "evidence": "private/evidence/special/b2-luckyman.weighted-branch-seed-census.json.gz",
-      "evidenceSha256": "1b77276bc425282302203a1706e9f58a924119d585716b1059fd116229214b44",
+      "evidenceSha256": "1db81461f305d91f8165dc1c586e4974f72a28497b846bbd836c69a20f563fe3",
       "timelineCount": 48
     },
     {
@@ -2032,7 +2163,7 @@
         }
       ],
       "evidence": "private/evidence/special/b2-kaiji.weighted-branch-seed-census.json.gz",
-      "evidenceSha256": "6602edb989c93f7643451e7e27905bea11dc3b0a30cf59b7192ca44914f66e5f",
+      "evidenceSha256": "bc9e1fd0cda8375d6d97637fb859415e9ad40d2c9bf2aefb2c3552fa01012764",
       "timelineCount": 48
     },
     {
@@ -2708,7 +2839,7 @@
         }
       ],
       "evidence": "private/evidence/special/b2-luckyman.evasion-seed-census.json.gz",
-      "evidenceSha256": "e812636bad900d6f2113d9a15bc2055a96a9983e3b8f14bb66a6729400a75843",
+      "evidenceSha256": "db32adc887d1f3b640b7870c7043bc28c5a5ee9d1e02ee2feaf779f5e628ec89",
       "timelineCount": 48
     },
     {
@@ -2742,7 +2873,7 @@
         }
       ],
       "evidence": "private/evidence/special/b2-uncle.root-releases-movement.json.gz",
-      "evidenceSha256": "29c65f2d30f13dd0030dd46532924a7babfcf1d11f3b406f40552d8bf3709710",
+      "evidenceSha256": "072b43bf369664178d670c08b3e3c3d77fca46f57c977313e5d0063222a59d34",
       "timelineCount": 1
     },
     {
@@ -2772,15 +2903,15 @@
         }
       ],
       "evidence": "private/evidence/special/b2-yogiri.silence-releases-casting.json.gz",
-      "evidenceSha256": "4494323bf774adbb2e24e88afc8604b2477ea3649a0e140bc4d91f6cb4e2103f",
+      "evidenceSha256": "07cb43ed3b9681e7ace13b0752fd8a9e692c4e9aafdbadf65793deca093aa29a",
       "timelineCount": 1
     }
   ],
   "counts": {
-    "cases": 17,
-    "passed": 17,
-    "timelines": 166,
-    "assertions": 325
+    "cases": 18,
+    "passed": 18,
+    "timelines": 170,
+    "assertions": 340
   },
   "limits": [
     "Bounded level-18, rank-1 practice scenarios with real casts, attacks, movement, runtime flags and expiry; not exhaustive combat, balance or multiplayer validation.",

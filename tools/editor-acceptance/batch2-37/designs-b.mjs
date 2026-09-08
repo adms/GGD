@@ -47,14 +47,14 @@ function designsBInner(hero,presets){
   EX:named('重修請先看黑板',move('消耗目標全部 magic-break，再施加正式 blind 出貨配方。沒有封咒時不能轉換為致盲。',seq([consume('magic-break',[clone(presets.blind.node)])])))
  },[attackEdge('Q',{slot:'Q',kind:'applyBuff',stat:'armor'}),edge('R','EX','foe','status:blind',{slot:'EX',kind:'consumeStatus'})],[finite,'採用轉生後第四紋魔法戰鬥者辨識點，批改與重修為 GGD 笑點。']);
 
- case 'b2-sinbad': return kit('少年商會把合夥人強化送上前線，以魔力屏障承擔自己的巡迴推銷成本。','b2-aladdin','辛巴達直接提高隊友戰鬥能力並自行進場；阿拉丁另召喚有期限的代理身體。',{
+ case 'b2-sinbad': return kit('少年商會強化合夥人出擊，自己巡迴換位讓遠處客人進入直線展示範圍。','b2-aladdin','辛巴達直接提高隊友戰鬥能力並自行進場；阿拉丁另召喚有期限的代理身體。',{
   PASSIVE:named('剪綵也是一種續航',passive('自己發生衝刺或瞬移後回復 70 生命，每 3 秒最多一次。',[hook('onDashOrBlink',[heal(70,'self')],{internalCooldown:3})])),
   Q:named('合夥人早鳥紅利',ally('指定友軍增加 70 攻擊力，持續 4 秒；可明確驅散，不改友敵陣營。',[buff('ad',70,4,{applyTo:'target',dispellable:true})])),
   W:named('商會代表自備保險',self('自身取得 3 秒魔力屏障，每 1 魔力抵擋 2 物理／魔法傷害，保留 10 魔力。',[manaWall()])),
   E:named('巡迴剪綵走捷徑',mobility('自身瞬移至指定合法地點；移動事件可觸發被動回復。')),
   R:named('七海規格產品示範',line('向前打出大範圍直線魔法展示；不宣稱七種魔裝皆已完整實作。',{length:11,width:2.1})),
   EX:named('合作夥伴急救條款',healing('治療指定友軍 120 生命，再清除可驅散負面效果。','ally',[cleanse()]))
- },[edge('Q','ATTACK','foe','hp',{slot:'Q',kind:'applyBuff',stat:'ad'},{sourceTarget:'ally',targetActor:'ally',targetTarget:'foe',expect:'decrease',setup:{ally:{x:1,z:0}}}),edge('W','W','caster','hp',{slot:'W',kind:'manaBarrier'},{targetActor:'foe',targetTarget:'caster',waitSec:.3,observeSec:.3})],[finite,'採少年辛巴達前傳的領袖與冒險者辨識點；不混入本篇成年王者所有能力。']);
+ },[edge('Q','ATTACK','foe','hp',{slot:'Q',kind:'applyBuff',stat:'ad'},{sourceTarget:'ally',targetActor:'ally',targetTarget:'foe',expect:'decrease',setup:{ally:{x:1,z:0}}}),edge('E','R','foe','hp',{slot:'E',kind:'blink'},{expect:'decrease',sourcePoint:{x:5,z:0},targetPoint:{x:6,z:0},setup:{foe:{x:14,z:0}},waitSec:.8,observeSec:.5,note:'E 真換位讓原本在 R 長度 11 外的客人進入展示線；量 R 傷害，E 本身的 P 治療不充當第二連動。'})],[finite,'採少年辛巴達前傳的領袖與冒險者辨識點；不混入本篇成年王者所有能力。']);
 
  case 'b2-kumoko': return kit('蛛網把住客留在租屋處，毒牙持續扣血；主動撤步讓跟身毒圈改變覆盖位置。','b2-maomao','蜘蛛子控制領地與自身距離；貓貓以解毒和藥理處置為主。',{
   PASSIVE:named('租屋警報八隻眼',passive('自己施加控制後取得 100 點護盾 2 秒，內置冷卻 3 秒。',[hook('onCrowdControlApplied',[shield(100,2)],{internalCooldown:3})])),
@@ -91,14 +91,14 @@ function designsBInner(hero,presets){
   R:named('耐用形狀保固四秒',move('獲得 60 護甲及 30 魔抗 4 秒；這是形態意象的數值強化，沒有換模或復活。',card('tpl-buff-self',{duration:4,modifiers:[{stat:'armor',op:'flat',value:60},{stat:'mr',op:'flat',value:30}],castTimeSec:.1}))),
   EX:named('換一雙腿先跑路',mobility('瞬移至指定合法地點；適應暫態仍依原期限到期。'))
  },[edge('Q','W','caster','hp',{slot:'W',kind:'consumeStatus'},{sourceActor:'foe',sourceTarget:'caster',waitSec:.2}),edge('Q','E','ally','hp',{slot:'E',kind:'heal',conditionalOnly:true},{sourceActor:'foe',sourceTarget:'caster',targetTarget:'ally',waitSec:.2})],[finite,'前世篇刺激與再生意象；未提供原作無限再生、死後復活、模仿外觀或死者復活。']);
- case 'b2-orphen': return kit('催收時先收定額醫療訂金、再讓欠款分期扣血，配合冷卻減免催收與封咒禁止還手。','b2-keyaru','歐菲把敵人當債務人，主體是敵方 DOT 及自己定量回血；凱亞爾是自療後消耗病歷保護同伴。',{
+ case 'b2-orphen': return kit('催收函先收訂金並分期扣血，縮短冷卻再寄；瞬移登門後提早普攻，真正觸發回魔被動。','b2-keyaru','歐菲把敵人當債務人，主體是敵方 DOT 及自己定量回血；凱亞爾是自療後消耗病歷保護同伴。',{
   PASSIVE:named('催收電話無須長談',passive('普通攻擊命中後回復自己最大魔力 4%，每 2 秒最多一次。',[hook('onBasicAttack',[mana(.04)])])),
   Q:named('我放出的光之催繳函',move('打擊敵人並施加 3 秒 DOT，每秒一跳；施法當下只回復自己一次 100 生命，不是每跳吸血。',card('tpl-drain-leech',{damageTier:'極小',apRatio:.2,damageType:'magic',leechFlat:100,intervalSec:1,durationSec:3,stacking:'refresh',castTimeSec:.1}),'fx.prim.arcane.bolt')),
   W:named('利息可以再寄一次',self('縮短 Q 尚未結束的冷卻 2 秒。Q 未進冷卻時不預存折扣。',[cd('Q',2)])),
   E:named('債務人請勿插話',move('指定敵人獲得 magic-break 與 silenced 旗標 2.5 秒，期間不能施法。',card('tpl-apply-status',{status:{statusId:'magic-break',duration:2.5,silenced:true},castTimeSec:.1}))),
   R:named('債主不用敲門',move('瞬移接近指定敵人後斬擊，落點保持現有模板安全間距。',card('tpl-blink-strike',{range:6,stopShortUnits:1.2,damage:tier('中'),damageType:'magic',castTimeSec:.1}),'fx.prim.arcane.dash')),
   EX:named('這筆急救算借你的',healing('回復指定友軍 120 生命，所有借款話術只是角色喜劇。'))
- },[edge('Q','W','caster','cooldown:Q',{slot:'W',kind:'modifyCooldown'},{expect:'decrease'}),edge('E','W','caster','hp',{slot:'E',kind:'applyStatus'},{targetActor:'foe',targetTarget:'caster',waitSec:.2,observeSec:.3,expectedResponseRejection:'silenced'})],[finite,'詠唱魔術士、地下放貸者為來源辨識；持續吸血連結與無限還款皆未宣稱。']);
+ },[edge('Q','W','caster','cooldown:Q',{slot:'W',kind:'modifyCooldown'},{expect:'decrease'}),edge('R','ATTACK','caster','mana',{slot:'PASSIVE',kind:'restore'},{setup:{caster:{manaPct:.5},foe:{x:5,z:0}},waitSec:.3,observeSec:.6,note:'R 先把人送到近戰距離，後續真普攻在同一短窗口觸發 P 回魔；無 R 尚在接近，消融 P 時照樣命中但沒有回款。這是提早取得回魔，不承諾無 R 永遠無法普攻。'})],[finite,'詠唱魔術士、地下放貸者為來源辨識；持續吸血連結與無限還款皆未宣稱。']);
 
  case 'b2-klaus': return kit('按開始排程後，後續傷害仍分時抵達；移動自己改變跟身自動作業的工作地點。','b2-albus','克勞斯把幾次出手預先排好等待執行；阿爾巴斯縮冷卻後重新主動操作。',{
   PASSIVE:named('自動回覆我正在忙',passive('每 4 秒回復自身最大魔力 4%；是真週期事件，不是離線掛機收入。',[hook('onInterval',[mana(.04)],{internalCooldown:4})])),
@@ -125,7 +125,7 @@ function designsBInner(hero,presets){
   E:named('剛好有張技能保單',self('增加普攻及技能迴避機會 3 秒，仍受正式機率上限限制，真傷未獲豁免。',[evasion({durationSec:3,dodgesAbilities:true})])),
   R:named('剛好天上掉贈品',self('等權抽取回復 150 生命或 180 點護盾 3 秒；結果由種子重現，不挑成功樣本冒稱必定保命。',[{kind:'weightedBranch',shape:'single',branches:[{weight:1,effects:[heal(150,'self')]},{weight:1,effects:[shield(180,3)]}]}])),
   EX:named('沒那麼幸運先搭便車',mobility('瞬移至合法落點；提供主動撤退途徑，不能只靠機率。'))
- },[edge('Q','ATTACK','caster','mana',{slot:'Q',kind:'evasion'},{targetActor:'foe',targetTarget:'caster',waitSec:.2,observeSec:1.8,setup:{caster:{manaPct:.5}},seed:1234}),edge('E','W','caster','hp',{slot:'E',kind:'evasion'},{targetActor:'foe',targetTarget:'caster',waitSec:.2,observeSec:.3,seed:1234})],[finite,'任何單一種子只證明該種子行為；機率與到期仍需獨立邊界測試。']);
+ },[edge('Q','ATTACK','caster','mana',{slot:'PASSIVE',kind:'restore'},{targetActor:'foe',targetTarget:'caster',waitSec:.2,observeSec:1.8,setup:{caster:{manaPct:.5}},seed:1234,note:'Q 提高普通攻擊迴避，敵人真普攻觸發 P 回魔；消融 P 後仍可閃避，回魔收益消失。'}),edge('E','W','caster','mana',{slot:'PASSIVE',kind:'restore'},{targetActor:'foe',targetTarget:'caster',waitSec:.2,observeSec:.3,setup:{caster:{manaPct:.5}},seed:1234,note:'E 打開技能迴避通道，敵人真物理技能觸發 P 回魔；消融 P 後仍閃過但不回魔。與 Q 是同一迴避回魔家族的兩種來源，不計為兩種全新招牌。'})],[finite,'任何單一種子只證明該種子行為；機率與到期仍需獨立邊界測試。','Q 普攻迴避與 E 技能迴避都銜接同一 P 回魔，屬兩種真事件通道的同族連動，不冒稱兩種全新機制。']);
 
  case 'b2-misery': return kit('贈品先讓敵人跑得快，退貨時消耗贈品轉成致盲；留著贈品則到期前吃到延遲封咒。','b2-yogiri','米瑟利先給敵方真移速好處，再用持有期限和退貨抉擇變成代價；夜霧需要低血加通知才結算有限傷害。',{
   PASSIVE:named('異界店主不包售後',passive('自己受到控制時回復最大魔力 8%，每 4 秒最多一次。',[hook('onCrowdControlReceived',[mana(.08)],{internalCooldown:4})])),
@@ -136,14 +136,14 @@ function designsBInner(hero,presets){
   EX:named('小字條款稍後生效',move('0.7 秒後再次檢查目標是否仍持有 rage 贈品；仍持有才施加 2.5 秒 magic-break 沉默。標記提早消失就取消。',seq([delayed([when(silence(),has('rage'))],.7)])))
  },[edge('Q','W','foe','status:blind',{slot:'W',kind:'consumeStatus'}),edge('Q','EX','foe','status:magic-break',{slot:'EX',kind:'applyStatus',conditionalOnly:true},{observeSec:1.3})],[finite,'原作身分是神秘異界案內人；贈品條款商店與本六槽玩法是 GGD 原創，不稱為原作契約惡魔。']);
 
- case 'b2-nube': return kit('鬼手把遠處敵人拉進點名圈，教師護盾實際吸收同學受傷；控制與保護用不同目標。','b2-naofumi','神眉以鬼手拉近點名及封咒控制為特徵；尚文以盾牌保護和隔離威脅為主。',{
+ case 'b2-nube': return kit('鬼手把遠處敵人拉進點名圈；魔力不足時，同學真受傷觸發班導回魔，才趕得及施放急救。','b2-naofumi','神眉以鬼手拉近點名及封咒控制為特徵；尚文以盾牌保護和隔離威脅為主。',{
   PASSIVE:named('班導還不能下班',passive('友軍受到傷害後，自己回復最大魔力 6%，每 3 秒最多一次。',[hook('onAllyDamaged',[mana(.06)],{internalCooldown:3})])),
   Q:named('鬼手抓回來點名',move('對指定敵人造成極小傷害並向自己拉近 3 單位；這是既有 knockback 拉向模式，不是空中抓取。',seq([dmg('極小'),push(3,'pull')]))),
   W:named('老師先幫你擋著',ally('指定友軍取得 210 點全傷害護盾 3 秒；確實放在該友軍身上。',[shield(210,3)])),
   E:named('符咒貼上禁止聊天',move('指定敵人施加 magic-break 與 silenced 旗標 2.5 秒。',card('tpl-apply-status',{status:{statusId:'magic-break',duration:2.5,silenced:true},castTimeSec:.1}))),
   R:named('全班留下來補課',self('對自身周圍半徑 2.5 的敵人造成小級範圍傷害，並施加 root 定身 1.5 秒；拉進點名圈才會命中。',[aoe([status('root',{root:true},1.5)],2.5,{amount:tier('小')})],'fx.prim.arcane.nova')),
   EX:named('保健室先解除惡靈',healing('治療指定友軍 120 生命並解除可驅散負面效果；不是對死亡單位復活。','ally',[cleanse()]))
- },[edge('Q','R','foe','hp',{slot:'Q',kind:'knockback'},{expect:'decrease',setup:{foe:{x:5,z:0}},observeSec:.6}),edge('W','W','ally','hp',{slot:'W',kind:'shield'},{sourceTarget:'ally',targetActor:'foe',targetTarget:'ally',waitSec:.2,observeSec:.3})],[finite,'鬼手與教師保護學生為辨識點；不宣稱新驅魔狀態或靈體專用引擎規則。']);
+ },[edge('Q','R','foe','hp',{slot:'Q',kind:'knockback'},{expect:'decrease',setup:{foe:{x:5,z:0}},observeSec:.6}),edge('Q','EX','ally','hp',{slot:'PASSIVE',kind:'restore'},{sourceActor:'foe',sourceTarget:'ally',targetTarget:'ally',setup:{caster:{manaPct:.04}},waitSec:.2,observeSec:.4,expectedControlResponseRejections:{preparedAblated:'no-mana',unprepared:'no-mana',unpreparedAblated:'no-mana'},note:'敵方測試 Q 真傷同學，觸發本人的 P 回魔，讓原本只有 4% 魔力的老師及時施放 EX 治療。源 Q 不是神眉的 Q；三個缺少 P 回款的對照在施法時都必須因 no-mana 拒絕，較晚自然回魔後仍可再救。'})],[finite,'鬼手與教師保護學生為辨識點；不宣稱新驅魔狀態或靈體專用引擎規則。','P→EX 是低魔力下提早取得救援施法的資源連動；完整護盾仍可能觸發正式 onAllyDamaged，不能宣稱護住同學就不會回魔。']);
 
  case 'b2-shinchan': return kit('春日部接力讓隊友更快追上對手，踩到玩具被定住後再由玩具箱送走。','b2-takopi','小新讓隊友自行跑得更快與把敵人送走；章魚嗶主動搬回隊友並給近距離道具保護。',{
   PASSIVE:named('動感超人不用補習',passive('自己施加控制後回復 60 生命，每 3 秒最多一次。',[hook('onCrowdControlApplied',[heal(60,'self')],{internalCooldown:3})])),

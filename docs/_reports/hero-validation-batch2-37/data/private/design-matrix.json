@@ -692,14 +692,31 @@
           "field": "hp"
         },
         "expect": "increase",
-        "waitSec": 0.2,
-        "observeSec": 0.5,
+        "waitSec": 0.8,
+        "observeSec": 0.4,
         "remove": {
-          "slot": "Q",
-          "kind": "applyBuff"
+          "slot": "W",
+          "kind": "consumeStatus"
         },
-        "targetActor": "foe",
-        "targetTarget": "caster"
+        "note": "Q → 敵方物理 W 觸發 P 取得 rage → 自己 W 消耗回復 220 HP；只量自己 W 階段，無 Q 對照保留敵 W。",
+        "sourceSteps": [
+          {
+            "kind": "cast",
+            "slot": "Q",
+            "waitSec": 0.2
+          },
+          {
+            "kind": "cast",
+            "actor": "foe",
+            "slot": "W",
+            "target": "caster",
+            "waitSec": 0.3
+          }
+        ],
+        "sourceIndexes": [
+          0
+        ],
+        "responseIndex": 2
       },
       {
         "source": "E",
@@ -1030,7 +1047,7 @@
     "id": "b2-sinbad",
     "name": "辛巴達",
     "origin": "鬥士",
-    "signature": "少年商會把合夥人強化送上前線，以魔力屏障承擔自己的巡迴推銷成本。",
+    "signature": "少年商會強化合夥人出擊，自己巡迴換位讓遠處客人進入直線展示範圍。",
     "closest": "b2-aladdin",
     "difference": "辛巴達直接提高隊友戰鬥能力並自行進場；阿拉丁另召喚有期限的代理身體。",
     "combos": [
@@ -1060,21 +1077,34 @@
         }
       },
       {
-        "source": "W",
-        "target": "W",
+        "source": "E",
+        "target": "R",
         "metric": {
-          "actor": "caster",
+          "actor": "foe",
           "field": "hp"
         },
-        "expect": "increase",
-        "waitSec": 0.3,
-        "observeSec": 0.3,
+        "expect": "decrease",
+        "waitSec": 0.8,
+        "observeSec": 0.5,
         "remove": {
-          "slot": "W",
-          "kind": "manaBarrier"
+          "slot": "E",
+          "kind": "blink"
         },
-        "targetActor": "foe",
-        "targetTarget": "caster"
+        "sourcePoint": {
+          "x": 5,
+          "z": 0
+        },
+        "targetPoint": {
+          "x": 6,
+          "z": 0
+        },
+        "setup": {
+          "foe": {
+            "x": 14,
+            "z": 0
+          }
+        },
+        "note": "E 真換位讓原本在 R 長度 11 外的客人進入展示線；量 R 傷害，E 本身的 P 治療不充當第二連動。"
       }
     ],
     "limitations": [
@@ -1285,7 +1315,7 @@
     "id": "b2-orphen",
     "name": "歐菲",
     "origin": "法鬥",
-    "signature": "催收時先收定額醫療訂金、再讓欠款分期扣血，配合冷卻減免催收與封咒禁止還手。",
+    "signature": "催收函先收訂金並分期扣血，縮短冷卻再寄；瞬移登門後提早普攻，真正觸發回魔被動。",
     "closest": "b2-keyaru",
     "difference": "歐菲把敵人當債務人，主體是敵方 DOT 及自己定量回血；凱亞爾是自療後消耗病歷保護同伴。",
     "combos": [
@@ -1305,22 +1335,29 @@
         }
       },
       {
-        "source": "E",
-        "target": "W",
+        "source": "R",
+        "target": "ATTACK",
         "metric": {
           "actor": "caster",
-          "field": "hp"
+          "field": "mana"
         },
         "expect": "increase",
-        "waitSec": 0.2,
-        "observeSec": 0.3,
+        "waitSec": 0.3,
+        "observeSec": 0.6,
         "remove": {
-          "slot": "E",
-          "kind": "applyStatus"
+          "slot": "PASSIVE",
+          "kind": "restore"
         },
-        "targetActor": "foe",
-        "targetTarget": "caster",
-        "expectedResponseRejection": "silenced"
+        "setup": {
+          "caster": {
+            "manaPct": 0.5
+          },
+          "foe": {
+            "x": 5,
+            "z": 0
+          }
+        },
+        "note": "R 先把人送到近戰距離，後續真普攻在同一短窗口觸發 P 回魔；無 R 尚在接近，消融 P 時照樣命中但沒有回款。這是提早取得回魔，不承諾無 R 永遠無法普攻。"
       }
     ],
     "limitations": [
@@ -1457,8 +1494,8 @@
         "waitSec": 0.2,
         "observeSec": 1.8,
         "remove": {
-          "slot": "Q",
-          "kind": "evasion"
+          "slot": "PASSIVE",
+          "kind": "restore"
         },
         "targetActor": "foe",
         "targetTarget": "caster",
@@ -1467,30 +1504,38 @@
             "manaPct": 0.5
           }
         },
-        "seed": 1234
+        "seed": 1234,
+        "note": "Q 提高普通攻擊迴避，敵人真普攻觸發 P 回魔；消融 P 後仍可閃避，回魔收益消失。"
       },
       {
         "source": "E",
         "target": "W",
         "metric": {
           "actor": "caster",
-          "field": "hp"
+          "field": "mana"
         },
         "expect": "increase",
         "waitSec": 0.2,
         "observeSec": 0.3,
         "remove": {
-          "slot": "E",
-          "kind": "evasion"
+          "slot": "PASSIVE",
+          "kind": "restore"
         },
         "targetActor": "foe",
         "targetTarget": "caster",
-        "seed": 1234
+        "setup": {
+          "caster": {
+            "manaPct": 0.5
+          }
+        },
+        "seed": 1234,
+        "note": "E 打開技能迴避通道，敵人真物理技能觸發 P 回魔；消融 P 後仍閃過但不回魔。與 Q 是同一迴避回魔家族的兩種來源，不計為兩種全新招牌。"
       }
     ],
     "limitations": [
       "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
-      "任何單一種子只證明該種子行為；機率與到期仍需獨立邊界測試。"
+      "任何單一種子只證明該種子行為；機率與到期仍需獨立邊界測試。",
+      "Q 普攻迴避與 E 技能迴避都銜接同一 P 回魔，屬兩種真事件通道的同族連動，不冒稱兩種全新機制。"
     ]
   },
   {
@@ -1542,7 +1587,7 @@
     "id": "b2-nube",
     "name": "鵺野鳴介",
     "origin": "硬輔",
-    "signature": "鬼手把遠處敵人拉進點名圈，教師護盾實際吸收同學受傷；控制與保護用不同目標。",
+    "signature": "鬼手把遠處敵人拉進點名圈；魔力不足時，同學真受傷觸發班導回魔，才趕得及施放急救。",
     "closest": "b2-naofumi",
     "difference": "神眉以鬼手拉近點名及封咒控制為特徵；尚文以盾牌保護和隔離威脅為主。",
     "combos": [
@@ -1568,27 +1613,39 @@
         }
       },
       {
-        "source": "W",
-        "target": "W",
+        "source": "Q",
+        "target": "EX",
         "metric": {
           "actor": "ally",
           "field": "hp"
         },
         "expect": "increase",
         "waitSec": 0.2,
-        "observeSec": 0.3,
+        "observeSec": 0.4,
         "remove": {
-          "slot": "W",
-          "kind": "shield"
+          "slot": "PASSIVE",
+          "kind": "restore"
         },
+        "sourceActor": "foe",
         "sourceTarget": "ally",
-        "targetActor": "foe",
-        "targetTarget": "ally"
+        "targetTarget": "ally",
+        "setup": {
+          "caster": {
+            "manaPct": 0.04
+          }
+        },
+        "expectedControlResponseRejections": {
+          "preparedAblated": "no-mana",
+          "unprepared": "no-mana",
+          "unpreparedAblated": "no-mana"
+        },
+        "note": "敵方測試 Q 真傷同學，觸發本人的 P 回魔，讓原本只有 4% 魔力的老師及時施放 EX 治療。源 Q 不是神眉的 Q；三個缺少 P 回款的對照在施法時都必須因 no-mana 拒絕，較晚自然回魔後仍可再救。"
       }
     ],
     "limitations": [
       "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
-      "鬼手與教師保護學生為辨識點；不宣稱新驅魔狀態或靈體專用引擎規則。"
+      "鬼手與教師保護學生為辨識點；不宣稱新驅魔狀態或靈體專用引擎規則。",
+      "P→EX 是低魔力下提早取得救援施法的資源連動；完整護盾仍可能觸發正式 onAllyDamaged，不能宣稱護住同學就不會回魔。"
     ]
   },
   {
