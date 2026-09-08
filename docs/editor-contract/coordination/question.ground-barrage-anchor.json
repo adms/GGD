@@ -6,7 +6,7 @@
   "to": "main",
   "baseCommit": "4e11f1b0253c106e08a0e873e289f8822e32681d",
   "contractFingerprint": "bdb64ca51f9b3b1d",
-  "title": "自動英雄鑄造資料准入：確認指定空地彈幕的合法點位錨定；目前配方隔離（研究 #1113）",
+  "title": "自動英雄鑄造資料准入：指定落點彈幕與領域的點位錨定；目前配方隔離（研究 #1113）",
   "claims": [
     {
       "kind": "confirmed",
@@ -48,9 +48,50 @@
         "docs/_reports/hero-finetune-research/source-admission/bundle/manifest.json",
         "docs/_reports/hero-finetune-research/source-admission/REPORT.md"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "未修改的 delayed scheduler 在 anchor=point 的非前進分支仍於 packages/shared/src/sim/effects/delayed.ts:283-287 優先採 frozen[0] 位置。最小重現的已解析單目標列表，指定點 (4,0)、實體 (5,0) 時，兩個 seeds 均排到 (5,0)，exit 1；空列表及置中實體控制 exit 0。最小工具不冒充完整圓形領域傷害測試。",
+      "repro": {
+        "command": "node tools/editor-acceptance/hero-ground-barrage-repro.mjs --expect-selected-field-point",
+        "expectedExit": 1
+      },
+      "commit": "7a13c5e196abbb91f4a1e973a3003eef8fb8c110",
+      "evidence": [
+        "tools/editor-acceptance/hero-ground-barrage-repro.mjs",
+        "packages/shared/src/sim/effects/delayed.ts",
+        "docs/_reports/hero-finetune-research/selected-point-fields/RESULT.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "同一 delayed 最小重現工具的空列表與置中實體控制均保留指定點，避免把無法執行的 fixture 當成來源問題。",
+      "repro": {
+        "command": "node tools/editor-acceptance/hero-ground-barrage-repro.mjs --verify-selected-field-controls",
+        "expectedExit": 0
+      },
+      "commit": "7a13c5e196abbb91f4a1e973a3003eef8fb8c110",
+      "evidence": [
+        "tools/editor-acceptance/hero-ground-barrage-repro.mjs"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "新增來源保真封存有 9 檔／5 archives／零 adapter，含 v1 與排除碰撞位移干擾的 v2。v2 的三位真實候選由原有 IR5 重新編譯，在 registry mirror 一致的 SimWorld 中執行 18 個情境：空地／置中控制 12/12，偏心來源檢查 0/6。原始位置 frame 與傷害事件均保留；受測敵人 180 frames 零位移。這些不是模型分數，也不是已窮舉所有合法替代組合。",
+      "repro": {
+        "command": "python3 tools/editor-acceptance/hero-finetune-archive.py verify docs/_reports/hero-finetune-research/selected-point-fields/bundle",
+        "expectedExit": 0
+      },
+      "commit": "7a13c5e196abbb91f4a1e973a3003eef8fb8c110",
+      "evidence": [
+        "docs/_reports/hero-finetune-research/selected-point-fields/bundle/manifest.json",
+        "docs/_reports/hero-finetune-research/selected-point-fields/REPORT.md",
+        "docs/_reports/hero-finetune-research/selected-point-fields/RESULT.json"
+      ]
     }
   ],
   "asks": [
+    "新增 delayed 領域反例：拉克絲 E、好運姐 E、齊勒斯 R 的指定點附近若有偏心敵人，排程圓心改為該實體。請提供不改原文的合法明示點位配方，或釐清 anchor=point 與目標位置優先的契約；驗收需含空地、置中／偏心實體、固定圈內邊緣目標、後续移動與友敵過濾。研究端不新增英雄特判，不以數值微調掩蓋圓心偏移。",
     "請確認已有哪個合法、可編譯且附同一空地反例重現的組合，能將六發有限散布固定在玩家指定點；不能只用近處有敵人的受傷結果代替空地錨定證據。",
     "若現行能力確實無法表示，請提出通用且明示的點位錨定契約，保留既有 who=self/target 行為；不要將全部 target 默默改成 point，也不要新增單一英雄特判。必要驗收包括空地、有偏離中心的實體、後續移動、有限六發／散布及友敵過濾。",
     "此問題會影響全自動判斷生成與訓練資料品質；在合法配方通過前保留隔離，不得把原文改成自身周圍、以更多 finetune 掩蓋，或將研究 adapter 啟用。此為機制能力詢問，不冒充符合 MISSING_VISUAL_BRICK 計數規則的視覺 brick-request。"

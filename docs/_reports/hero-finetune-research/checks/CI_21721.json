@@ -1,0 +1,45 @@
+{
+  "schema": "ggd-research-ci-followup@1",
+  "publishedHead": "21721e2bca6b8b56e897082d3281275c0b51d436",
+  "runId": 34190155450,
+  "runUrl": "https://github.com/adms/GGD/actions/runs/34190155450",
+  "terminalWatchExitCode": 1,
+  "jobs": {
+    "setup": "success",
+    "contract": "success",
+    "go-platform": "success",
+    "vuln": "success",
+    "unit": "failure"
+  },
+  "sharedTests": {"passed": 5217, "failed": 2, "skipped": 3},
+  "failures": [
+    {
+      "test": "src/content/fieldAdoption.test.ts: no landing grace has expired",
+      "keys": ["field:champions.abilities.*.augment", "field:champions.abilities.*.marks"],
+      "classification": "previously reproduced expired landing exemptions; not changed by research branch",
+      "priorFeedback": "https://github.com/adms/GGD/pull/1114#issuecomment-5579234314"
+    },
+    {
+      "test": "src/ops/referencedCommandsExist.test.ts: quoted step-shaped token must exist in package.json scripts",
+      "observed": "CLAUDE.md:934 quotes lol:lux as an argument to query.py, which is detected as a nonexistent package script",
+      "mainSourceCommit": "631dd1048f9b5150d361c180692125929f0be7c0",
+      "mainSourcePath": "CLAUDE.md:934",
+      "tokenPresentInLocalResearchBranchCLAUDE": false,
+      "classification": "guidance-token failure also present in inspected Main source; not a modified research file",
+      "potentialNarrowFixForMain": "Preserve the literal query argument while avoiding command-name quoting, then rerun the exact gate. Do not loosen the extractor or add a fake package script."
+    }
+  ],
+  "relevantResearchFilesUnchangedSinceBranchBase": [
+    "CLAUDE.md",
+    "packages/shared/src/ops/referencedCommandsExist.test.ts",
+    "packages/shared/src/content/fieldAdoption.test.ts",
+    "packages/shared/src/content/fieldAdoption.exemptions.json"
+  ],
+  "branchBase": "4e11f1b0253c106e08a0e873e289f8822e32681d",
+  "sourceVerification": "Read the failed job log and exact Main file. git diff base HEAD on all four listed research-branch files was empty.",
+  "exemptionsOrAssertionsChanged": false,
+  "ciRestarted": false,
+  "modelRunStarted": false,
+  "modelQualified": false,
+  "limitation": "This is diagnosis, not a claim that remote CI or complete hero qualification passed."
+}
