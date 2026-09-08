@@ -1,0 +1,22 @@
+{"mode":"committed-receipts-only","heroes":37,"slots":222,"templates":19,"statuses":20,"vfx":11,"reviewedSimilarPairs":11,"completeLiveHeroes":0,"blindCertifiedHeroes":0,"trainEligible":false}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: FULL_HERO_ACCEPTANCE_PENDING
+
+0 !== 37
+
+    at file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/tools/editor-acceptance/batch2-37/check.mjs:64:55
+    at ModuleJob.run (node:internal/modules/esm/module_job:437:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:639:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 37,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v25.9.0

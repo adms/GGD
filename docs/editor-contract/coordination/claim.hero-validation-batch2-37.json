@@ -1,0 +1,80 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.hero-validation-batch2-37",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "ed547549fb453f6652f53bd7ed9548b0ccef3a36",
+  "contractFingerprint": "b91a0f59c31289ed",
+  "title": "第二批37名v2完整六槽參考：真因果、逐槽審查與素材收據；限定開發驗證",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "取代被否決v1，已實際重寫37名222槽；正式schema/compile/numeric mirrors，74因果連動四組共296時間線，37被動、313邊界、76到期，17工具測試；逐槽內容和compiled以手寫review receipt鎖SHA。此命令核對已提交收據，不宣稱重新執行SimWorld。",
+      "repro": {
+        "command": "node tools/editor-acceptance/batch2-37/check.mjs --receipt-only",
+        "expectedExit": 0
+      },
+      "commit": "0e001412a32ae1dddffb64e3528cfff923bf6cf6",
+      "evidence": [
+        "docs/_reports/hero-validation-batch2-37/data/report.json",
+        "docs/_reports/hero-validation-batch2-37/data/behavior-report.json",
+        "docs/_reports/hero-validation-batch2-37/data/author-review.json",
+        "docs/_reports/hero-validation-batch2-37/data/pipeline-report.json",
+        "docs/_reports/hero-validation-batch2-37/prepush-gates.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "如月已使用真原創電車GLB，三正式狀態與16場景17組專項檢查通過；37包實際寫磁碟重讀ZIP通過。另18特殊場景170時間線340assertions通過。二進位ZIP/GLB留本地可由來源重建，Git保留metadata與原始行為收據，不是遊戲端import證明。",
+      "repro": {
+        "command": "node tools/editor-acceptance/batch2-37/check.mjs --receipt-only",
+        "expectedExit": 0
+      },
+      "commit": "0e001412a32ae1dddffb64e3528cfff923bf6cf6",
+      "evidence": [
+        "docs/_reports/hero-validation-batch2-37/data/train-report.json",
+        "docs/_reports/hero-validation-batch2-37/data/special-report.json",
+        "docs/_reports/hero-validation-batch2-37/data/package-report.json",
+        "tools/editor-acceptance/batch2-37/assets/kisaragi-tram.json"
+      ]
+    },
+    {
+      "kind": "owner-decision",
+      "text": "依Owner最新偏好，11對共用子循環或相似家族逐對列明共同機制、角色契合笑點、差異及剩餘相似性；未見六槽完全同套，不以此宣稱零相似或37種獨立玩法。",
+      "repro": {
+        "command": "node tools/editor-acceptance/batch2-37/check.mjs --receipt-only",
+        "expectedExit": 0
+      },
+      "commit": "0e001412a32ae1dddffb64e3528cfff923bf6cf6",
+      "evidence": [
+        "docs/_reports/hero-validation-batch2-37/特色差異矩陣.md",
+        "docs/_reports/hero-validation-batch2-37/data/diversity-report.json"
+      ]
+    },
+    {
+      "kind": "refuted",
+      "text": "此批尚不能宣稱37名完整可上場或嚴格盲測：36名仍代理本體，遊戲渲染/碰撞/對戰與歷史暴露未驗收，completeGoldHeroes=0；完整gate應exit1。可用範圍僅external-evaluation-only開發參考，trainEligible=false，模型只可讀allowlist公開輸入。沒有訓練、雲端操作或引擎修改。",
+      "repro": {
+        "command": "node tools/editor-acceptance/batch2-37/check.mjs --receipt-only --require-complete",
+        "expectedExit": 1
+      },
+      "commit": "0e001412a32ae1dddffb64e3528cfff923bf6cf6",
+      "evidence": [
+        "docs/_reports/hero-validation-batch2-37/data/author-review.json",
+        "docs/_reports/hero-validation-batch2-37/data/partition-report.json",
+        "docs/_reports/hero-validation-batch2-37/README.md"
+      ]
+    }
+  ],
+  "ownerQuotes": [
+    {
+      "date": "2026-09-09",
+      "text": "偶爾有幾個雖然相似重複 但是因為契合角色本身特色跟足夠惡搞 是可以接受 但你要跟我說明"
+    }
+  ],
+  "asks": [
+    "沿用GH#1142審查並接入限定範圍的開發驗證工作流；保留trainEligible=false及完整上場/盲測0准入。CI與必要review未通過前不合併。",
+    "三項全倉庫pre-push皆exit1，詳prepush-gates.json：skills的sparse音效manifest計數、既有visual-advisory過期，以及另一份editor-form packet指紋不符。本批資料及packet通過；請Main處理既有發布阻礙，保留Draft直到CI與必要review通過。"
+  ]
+}

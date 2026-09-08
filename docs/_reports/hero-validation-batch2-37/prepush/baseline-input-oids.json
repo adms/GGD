@@ -1,0 +1,134 @@
+[
+  {
+    "path": "tools/skill-forge/build-codex-visual-advisory.mjs",
+    "exists": true,
+    "worktreeEqualsHead": true,
+    "baseEqualsHead": true,
+    "oids": {
+      "ed547549fb453f6652f53bd7ed9548b0ccef3a36": "573548fd5f05cf1cfd2f2600d29014ec5efa5650",
+      "HEAD": "573548fd5f05cf1cfd2f2600d29014ec5efa5650",
+      "origin/main": "573548fd5f05cf1cfd2f2600d29014ec5efa5650"
+    }
+  },
+  {
+    "path": "tools/skill-forge/visual-proof-scope.mjs",
+    "exists": true,
+    "worktreeEqualsHead": true,
+    "baseEqualsHead": true,
+    "oids": {
+      "ed547549fb453f6652f53bd7ed9548b0ccef3a36": "73d9a4be476ba3927888e68ad3f3a8aa726bd623",
+      "HEAD": "73d9a4be476ba3927888e68ad3f3a8aa726bd623",
+      "origin/main": "73d9a4be476ba3927888e68ad3f3a8aa726bd623"
+    }
+  },
+  {
+    "path": "tools/skill-forge/codex-visual-advisory.source.json",
+    "exists": true,
+    "worktreeEqualsHead": true,
+    "baseEqualsHead": true,
+    "oids": {
+      "ed547549fb453f6652f53bd7ed9548b0ccef3a36": "6631f2d2d6b88480a92e279c27b65c9938632e65",
+      "HEAD": "6631f2d2d6b88480a92e279c27b65c9938632e65",
+      "origin/main": "6631f2d2d6b88480a92e279c27b65c9938632e65"
+    }
+  },
+  {
+    "path": "docs/_reports/editor-skill-human-review/index.json",
+    "exists": true,
+    "worktreeEqualsHead": true,
+    "baseEqualsHead": true,
+    "oids": {
+      "ed547549fb453f6652f53bd7ed9548b0ccef3a36": "de754d8275f811b283934f4a8f9f72df805f148e",
+      "HEAD": "de754d8275f811b283934f4a8f9f72df805f148e",
+      "origin/main": "de754d8275f811b283934f4a8f9f72df805f148e"
+    }
+  },
+  {
+    "path": "docs/_reports/editor-skill-basic-visual-proof/manifest.json",
+    "exists": true,
+    "worktreeEqualsHead": true,
+    "baseEqualsHead": true,
+    "oids": {
+      "ed547549fb453f6652f53bd7ed9548b0ccef3a36": "0de915e6cd5eb6944e23cec2333ee0cf7db1804f",
+      "HEAD": "0de915e6cd5eb6944e23cec2333ee0cf7db1804f",
+      "origin/main": "0de915e6cd5eb6944e23cec2333ee0cf7db1804f"
+    }
+  },
+  {
+    "path": "docs/_reports/editor-skill-acceptance-42x46.json",
+    "exists": true,
+    "worktreeEqualsHead": true,
+    "baseEqualsHead": true,
+    "oids": {
+      "ed547549fb453f6652f53bd7ed9548b0ccef3a36": "e564864e1c45b4f876318c525e6eeb7652ad7a50",
+      "HEAD": "e564864e1c45b4f876318c525e6eeb7652ad7a50",
+      "origin/main": "e564864e1c45b4f876318c525e6eeb7652ad7a50"
+    }
+  },
+  {
+    "path": "docs/editor-contract/ggd-bricks.json",
+    "exists": true,
+    "worktreeEqualsHead": true,
+    "baseEqualsHead": true,
+    "oids": {
+      "ed547549fb453f6652f53bd7ed9548b0ccef3a36": "a2c83d3b7b70cefea116a4e8702d317ca49fe94e",
+      "HEAD": "a2c83d3b7b70cefea116a4e8702d317ca49fe94e",
+      "origin/main": "b5767c970b6e7f7e685bc530191cd9d415229917"
+    }
+  },
+  {
+    "path": "docs/_reports/editor-skill-codex-advisory/review.json",
+    "exists": true,
+    "worktreeEqualsHead": true,
+    "baseEqualsHead": true,
+    "oids": {
+      "ed547549fb453f6652f53bd7ed9548b0ccef3a36": "ef02ee7a07e1a65bebbc39978f853c54a32b0d6c",
+      "HEAD": "ef02ee7a07e1a65bebbc39978f853c54a32b0d6c",
+      "origin/main": "9facf864b3b454b2ac8ad8a493b98416cef266fe"
+    }
+  },
+  {
+    "path": "docs/_reports/editor-skill-codex-advisory/review.md",
+    "exists": true,
+    "worktreeEqualsHead": true,
+    "baseEqualsHead": true,
+    "oids": {
+      "ed547549fb453f6652f53bd7ed9548b0ccef3a36": "0108fe3309fa553747374bca41e2e740c51a9de2",
+      "HEAD": "0108fe3309fa553747374bca41e2e740c51a9de2",
+      "origin/main": "f7bf6f1c94955b363b9c7dcd877382469c45e095"
+    }
+  },
+  {
+    "path": "tools/skill-forge/check.mjs",
+    "exists": true,
+    "worktreeEqualsHead": true,
+    "baseEqualsHead": true,
+    "oids": {
+      "ed547549fb453f6652f53bd7ed9548b0ccef3a36": "e9ee6a886582348a44f1fcc60e69215d8836f3e5",
+      "HEAD": "e9ee6a886582348a44f1fcc60e69215d8836f3e5",
+      "origin/main": "e9ee6a886582348a44f1fcc60e69215d8836f3e5"
+    }
+  },
+  {
+    "path": "tools/skill-spec/gen_spec.ts",
+    "exists": true,
+    "worktreeEqualsHead": true,
+    "baseEqualsHead": true,
+    "oids": {
+      "ed547549fb453f6652f53bd7ed9548b0ccef3a36": "4a0814ac70f3d370b4ba65c0dcd33d6e9f17dae5",
+      "HEAD": "4a0814ac70f3d370b4ba65c0dcd33d6e9f17dae5",
+      "origin/main": "4a0814ac70f3d370b4ba65c0dcd33d6e9f17dae5"
+    }
+  },
+  {
+    "path": "docs/\u6280\u80fd\u6a19\u8a18\u6a5f\u5236\u8207\u6548\u679c\u898f\u5247.md",
+    "exists": true,
+    "worktreeEqualsHead": true,
+    "baseEqualsHead": true,
+    "oids": {
+      "ed547549fb453f6652f53bd7ed9548b0ccef3a36": "30591a2cebde974f059baaede4037db91c1bca85",
+      "HEAD": "30591a2cebde974f059baaede4037db91c1bca85",
+      "origin/main": "057d3ff2ba6cd88291715093657031e75eeb639d"
+    }
+  }
+]

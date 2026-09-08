@@ -1,25 +1,69 @@
 {
-  "schema": "ggd-batch2-prepush-gates@1",
-  "status": "blocked-environment-not-certified",
+  "schema": "ggd-batch2-prepush-gates@2",
+  "status": "failed-global-gates-scoped-dataset-passed",
+  "testedSourceCommit": "0e001412a32ae1dddffb64e3528cfff923bf6cf6",
+  "buildHash": "5117955476f4fd14832936836a3b1c1633905fd8d0cd1edb32cfe5bb731c308c",
+  "ranTogether": true,
+  "allPassed": false,
+  "sourceSnapshotUnchanged": true,
+  "latestReceipt": "prepush/strict-final-summary.json",
+  "rawArtifacts": "prepush/artifacts.json",
+  "historicalReceipts": [
+    "prepush/legacy-v1.json",
+    "prepush/initial-summary.json",
+    "prepush/environment-repair-summary.json"
+  ],
   "runs": [
     {
       "command": "pnpm skills:check",
-      "exitCode": 2,
-      "output": "\n> ggd@0.0.0 tiers:apply:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2\n> python3 tools/skill-remake/apply_tiers.py --check\n\n/usr/local/bin/python3: can't open file '/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/tools/skill-remake/apply_tiers.py': [Errno 2] No such file or directory\n ELIFECYCLE  Command failed with exit code 2.\n ELIFECYCLE  Command failed with exit code 2.\n",
-      "outputMayBeTruncated": false
+      "status": "failed",
+      "exitCode": 1,
+      "durationMs": 5612,
+      "timedOut": false,
+      "stdout": "prepush/strict-final-skills-check.stdout.log",
+      "stderr": "prepush/strict-final-skills-check.stderr.log",
+      "classification": "sparse-environment-missing-unrelated-inputs",
+      "firstFailure": "spec:check：本工作樹缺content/audio-manifests的9份HEAD JSON（175869 bytes），唯讀生成與HEAD文檔唯一差異為audio-manifests數量9的表格行。",
+      "notReached": "spec之後的skills鏈未執行；後續包含同一個既有stale visual-advisory gate，不能宣稱全skills通過。"
     },
     {
       "command": "pnpm editor:accept:release",
+      "status": "failed",
       "exitCode": 1,
-      "output": "{\"schema\":\"ggd-editor-acceptance-run@1\",\"mode\":\"release\",\"generatedAt\":\"2026-09-08T21:06Z\",\"branch\":\"codex/hero-validation-batch2-37\",\"head\":\"ed547549fb45\",\"originMain\":\"ed547549fb45\",\"dirty\":true,\"worktreeChangeCount\":4,\"handbackMainCommit\":null,\"coverageFingerprint\":\"ed44cfd5f2d5\",\"capabilityFingerprint\":\"43cd2f44\",\"geminiVisualReview\":\"disabled-explicit\"}\nFAIL Main capability receipt\n\n> ggd@0.0.0 caps:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2\n> tsx tools/capability-export/export.ts --check\n\n ELIFECYCLE  Command failed with exit code 1.\n\nnode:net:1986\n      const error = new UVExceptionWithHostPort(rval, 'listen', address, port);\n                    ^\n\nError: listen EPERM: operation not permitted /var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/tsx-503/48495.pipe\n    at Server.setupListenHandle [as _listen2] (node:net:1986:21)\n    at listenInCluster (node:net:2065:12)\n    at Server.listen (node:net:2187:5)\n    at file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:53:31472\n    at new Promise (<anonymous>)\n    at createIpcServer (file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:53:31450)\n    at async file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:55:500 {\n  code: 'EPERM',\n  errno: -1,\n  syscall: 'listen',\n  address: '/var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/tsx-503/48495.pipe',\n  port: -1\n}\n\nNode.js v25.9.0\n ELIFECYCLE  Command failed with exit code 1.\n",
-      "outputMayBeTruncated": false
+      "durationMs": 39320,
+      "timedOut": false,
+      "stdout": "prepush/strict-final-editor-accept-release.stdout.log",
+      "stderr": "prepush/strict-final-editor-accept-release.stderr.log",
+      "classification": "pre-existing-advisory-receipt-mismatch",
+      "firstFailure": "Skill Forge後段Codex visual advisory review.json過期；其5項固定輸入、generator/helper與輸出均等於HEAD及merge-base。",
+      "passedBeforeFailure": [
+        "Main capability receipt",
+        "Editor coverage freshness：2 tests",
+        "Skill Forge no-code acceptance：185 tests",
+        "acceptance receipt／real Sim routes／proof importer／human review packet／chronological contact sheets"
+      ],
+      "notReached": "VFX Forge、Editor typecheck、完整Editor tests及production build未執行。"
     },
     {
       "command": "pnpm coord:check",
+      "status": "failed",
       "exitCode": 1,
-      "output": "Warning: truncated output (original token count: 4856)\nTotal output lines: 206\n\n⛔ docs/editor-contract/coordination/brick-request.solid-beam.json\n   · claims[0].evidence 路徑不存在：docs/_reports/editor-skill-acceptance-42x46.json\n   · claims[0].evidence 路徑不存在：docs/_reports/editor-skill-codex-advisory/review.json\n   · claims[0].evidence 路徑不存在：apps/editor/src/vfx-forge/recipes.ts\n   · claims[0].evidence 路徑不存在：apps/editor/src/vfx-forge/VfxForgeStage.ts\n⛔ docs/editor-contract/coordination/claim.20260907-open-tickets-handoff.json\n   · claims[3].evidence 路徑不存在：docs/_reports/editor-skill-acceptance-42x46.json\n   · claims[3].evidence 路徑不存在：apps/admin/src/abilityNodes.ts\n   · claims[4].evidence 路徑不存在：apps/game-server/src/config/contentHotApply.ts\n   · claims[4].evidence 路徑不存在：apps/platform/internal/contentoverlay/community.go\n   · claims[5].evidence 路徑不存在：tools/skill-remake/templatize.py\n   · claims[6].evidence 路徑不存在：docs/_reports/1098_temp_20260907-1436.md\n⛔ docs/editor-contract/coordination/claim.20260908-codex-blockers-cleared.json\n   · claims[0].evidence 路徑不存在：apps/editor/\n   · claims[1].evidence 路徑不存在：docs/_reports/editor-skill-codex-advisory/review.json\n   · claims[2].evidence 路徑不存在：docs/_reports/editor-skill-codex-advisory/\n✅ docs/editor-contract/coordination/claim.20260908-s3-asset-library-split.json\n⛔ docs/editor-contract/coordination/claim.codex-lane-visual-advisory-and-brick-ids.json\n   · claims[0].evidence 路徑不存在：tools/skill-forge/codex-visual-advisory.source.json\n   · claims[0].evidence 路徑不存在：tools/skill-forge/build-codex-visual-advisory.mjs\n   · claims[0].evidence 路徑不存在：docs/_reports/editor-skill-human-review/index.json\n   · claims[1].evidence 路徑不存在：docs/_reports/editor-skill-basic-visual-proof/manifest.json\n   · claims[1].evidence 路徑不存在：docs/_reports/editor-skill-codex-advisory/review.md\n   · claims[1].evidence 路徑不存在：tools/skill-forge/check.mjs\n   · claims[2].evidence 路徑不存在：tools/skill-forge/build-visual-review-packet.mjs\n   · claims[2].evidence 路徑不存在：tools/skill-forge/build-visual-contact-sheets.mjs\n   · claims[2].evidence 路徑不存在：docs/_reports/editor-skill-human-review/index.json\n   · claims[3].evidence 路徑不存在：docs/_reports/editor-skill-acceptance-42x46.json\n   · claims[3].evidence 路徑不存在：docs/_reports/editor-skill-basic-visual-proof/manifest.json\n   · claims[4].evidence 路徑不存在：tools/skill-forge/codex-visual-advisory.source.json\n   · claims[4].evidence 路徑不存在：docs/_reports/editor-skill-basic-visual-proof/manifest.json\n⛔ docs/editor-contract/coordination/claim.community-hero-forge-integration.json\n   · claims[0].evidence 路徑不存在：apps/platform/internal/submissions/handlers.go\n   · claims[0].evidence 路徑不存在：apps/platform/internal/submissions/hero_handlers_test.go\n   · claims[1].evidence 路徑不存在：apps/platform/internal/submissions/hero_intake_test.go\n   · claims[1].evidence 路徑不存在：apps/platform/internal/submissions/hero_withdraw_test.go\n   · claims[1].evidence 路徑不存在：apps/platform/internal/server/hero_policy_test.go\n   · claims[2].evidence 路徑不存在：apps/editor/src/hero/conflictResolution.test.ts\n   · claims[2].evidence 路徑不存在：apps/editor/src/hero/HeroDraftConflictView.test.tsx\n   · claims[2].evidence 路徑不存在：apps/editor/src/hero/HeroWithdrawAction.test.tsx\n   · claims[2].evidence 路徑不存在：apps/editor/src/drafts/DraftLibrary.test.tsx\n   · claims[3].evidence 路徑不存在：apps/content-api/src/importTransientCleanup.ts\n   · claims[3].evidence 路徑不存在：apps/content-api/src/importTransientCleanup.test.ts\n   · claims[3].evidence 路徑不存在：apps/content-api/src/importIconAtomic.test.ts\n   · claims[3].evidence 路徑不存在：apps/content-api/src/heroWor…2856 tokens truncated… · claims[1].evidence 路徑不存在：tools/vfx-subtypes/callify.mjs\n   · claims[1].evidence 路徑不存在：content/vfx-scripts/godie-o00x.r.json\n   · claims[1].evidence 路徑不存在：content/vfx-scripts/godie-e002.ex.json\n   · claims[1].evidence 路徑不存在：content/vfx-subtypes/sub.bladestorm-8hit.json\n   · claims[1].evidence 路徑不存在：content/vfx-subtypes/sub.forward-twin-blast.json\n   · claims[2].evidence 路徑不存在：apps/editor/src/vfx-forge/acceptanceFixtures.ts\n   · claims[2].evidence 路徑不存在：apps/editor/src/vfx-forge/basicVisualAuthoring.ts\n   · claims[2].evidence 路徑不存在：apps/editor/src/vfx-forge/writeback.ts\n⛔ docs/editor-contract/coordination/owner-decision.20260906-main-tickets-codex-implements.json\n   · claims[0].evidence 路徑不存在：docs/_reports/1025_temp_20260907-1550.md\n   · claims[0].evidence 路徑不存在：apps/platform/internal/submissions/promote.go\n   · claims[0].evidence 路徑不存在：apps/game-server/src/config/contentHotApply.ts\n   · claims[1].evidence 路徑不存在：docs/_daily/2026-09-06.md\n   · claims[2].evidence 路徑不存在：docs/_daily/2026-09-06.md\n   · claims[4].evidence 路徑不存在：docs/plans/community-authoring-20260905.md\n   · claims[5].evidence 路徑不存在：docs/_release/ggd-board.html\n   · claims[6].evidence 路徑不存在：content/vfx-subtypes\n   · claims[8].evidence 路徑不存在：docs/_daily/2026-09-06.md\n⛔ docs/editor-contract/coordination/owner-decision.20260908-assets-to-s3-not-git.json\n   · claims[0].evidence 路徑不存在：docs/_daily/2026-09-08.md\n⛔ docs/editor-contract/coordination/owner-decision.20260908-s3-prefix-split-and-legacy-private.json\n   · claims[0].evidence 路徑不存在：docs/_daily/2026-09-08.md\n   · claims[1].evidence 路徑不存在：tools/asset-cdn/upload.py\n   · claims[2].evidence 路徑不存在：docs/_daily/2026-09-08.md\n   · claims[4].evidence 路徑不存在：tools/asset-cdn/upload.py\n✅ docs/editor-contract/coordination/owner-decision.20260908-upload-everything-and-legacy-rename.json\n⛔ docs/editor-contract/coordination/question.effect-graph-bridge.json\n   · claims[0].evidence 路徑不存在：docs/_reports/editor-skill-acceptance-42x46.json\n   · claims[1].evidence 路徑不存在：apps/admin/src/abilityNodes.ts\n   · claims[1].evidence 路徑不存在：apps/admin/src/abilityNodes.test.ts\n   · claims[1].evidence 路徑不存在：apps/editor/src/preview/PreviewController.ts\n   · claims[2].evidence 路徑不存在：apps/admin/src/configForms/schemaToForm.ts\n⛔ docs/editor-contract/coordination/question.ground-barrage-anchor.json\n   · claims[0].evidence 路徑不存在：docs/_reports/hero-finetune-research/source-admission/minimal-source-point.json\n   · claims[0].evidence 路徑不存在：docs/_reports/hero-finetune-research/source-admission/RESULT.json\n   · claims[1].evidence 路徑不存在：docs/_reports/hero-finetune-research/source-admission/minimal-source-point.json\n   · claims[2].evidence 路徑不存在：docs/_reports/hero-finetune-research/source-admission/bundle/manifest.json\n   · claims[2].evidence 路徑不存在：docs/_reports/hero-finetune-research/source-admission/REPORT.md\n⚠️  讀不到 docs/_reports/editor-skill-acceptance-42x46.json ⇒ unblocks[] 的 id **沒驗到**\n⚠️  claim.20260908-s3-asset-library-split 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。\n⚠️  讀不到 docs/_reports/editor-skill-acceptance-42x46.json ⇒ unblocks[] **沒驗到**\n⚠️  claim.community-hero-forge-plan 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。\n⚠️  owner-decision.20260908-upload-everything-and-legacy-rename 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。\n\ncoord:check —— 25 份 packet，22 份有缺\n ELIFECYCLE  Command failed with exit code 1.\n",
-      "outputMayBeTruncated": true
+      "durationMs": 3546,
+      "timedOut": false,
+      "stdout": "prepush/strict-final-coord-check.stdout.log",
+      "stderr": "prepush/strict-final-coord-check.stderr.log",
+      "classification": "pre-existing-unrelated-packet-fingerprint",
+      "firstFailure": "claim.editor-form-receipts.json指紋bdb64ca51f9b3b1d與當前b91a0f59c31289ed不同；該packet保持merge-base原blob。",
+      "passedBeforeFailure": [
+        "本批claim.hero-validation-batch2-37.json通過",
+        "26份packet中25份通過"
+      ]
     }
   ],
-  "interpretation": "Dedicated batch gates are separate. Whole-repository gates are NOT green: sparse checkout omits unrelated evidence/tools; tsx CLI IPC was denied. This is not evidence that a production regression exists or that CI will pass. No bypass or merge authorization is claimed."
+  "scope": "本批37名離線參考驗證通過；本檔記錄另外三項全倉庫發布gate。沒有跳過或更新歷史文件假造通過。CI與必要Main review仍待處理，不得合併。",
+  "preservation": {
+    "originalDependencyLinksRestored": "prepush/node-cache-restored.json",
+    "otherWorktreeCachesUnchanged": "prepush/external-cache-comparison.json"
+  },
+  "classification": "prepush/final-classification.json"
 }

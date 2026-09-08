@@ -1,0 +1,51 @@
+{
+  "required": [
+    {
+      "path": "content/audio-manifests/ability-sfx-cues.json",
+      "oid": "ccd173cfa6f87dc02a66c9884b8bb99a5757a9f2",
+      "bytes": 19066
+    },
+    {
+      "path": "content/audio-manifests/announcer.cast.json",
+      "oid": "0e50cae901c0fc40129d85fa60eade27bf2d7ede",
+      "bytes": 22740
+    },
+    {
+      "path": "content/audio-manifests/announcer.ja-JP-kyoko-retired.json",
+      "oid": "d371d986a02bae1614c460ea7e0d6047dddb5cb4",
+      "bytes": 3199
+    },
+    {
+      "path": "content/audio-manifests/announcer.jank-novelty-retired.json",
+      "oid": "662c27119e1b519bc11ccb7e7aca03d2031bc8dd",
+      "bytes": 3567
+    },
+    {
+      "path": "content/audio-manifests/announcer.json",
+      "oid": "0a523ce2b254dd56db90d58756ebfc4949fcbac1",
+      "bytes": 3711
+    },
+    {
+      "path": "content/audio-manifests/announcer.zh-TW.json",
+      "oid": "9a48c70ed1dd382361c4ea9779f26d8ef12f7fe7",
+      "bytes": 2158
+    },
+    {
+      "path": "content/audio-manifests/champ-names.ja-JP.json",
+      "oid": "41ce14aba705d2c3a48c4face4202531b163e9ec",
+      "bytes": 20548
+    },
+    {
+      "path": "content/audio-manifests/sfx-preload.json",
+      "oid": "8fc55494bbd6075d38fc84f852f208f2f2c39a38",
+      "bytes": 1000
+    },
+    {
+      "path": "content/audio-manifests/taunts.json",
+      "oid": "4f29ca2daa7eea9adb51c5c25a7350282500ed22",
+      "bytes": 99880
+    }
+  ],
+  "totalBytes": 175869,
+  "exactOnlyDifference": "--- HEAD document\n+++ read-only buildSpecMarkdown result\n@@ -197,5 +197,4 @@\n | `arenas` | 13 |\n | `vfx-scripts` | 10 |\n-| `audio-manifests` | 9 |\n | `maps` | 7 |\n | `skins` | 5 |\n\n"
+}

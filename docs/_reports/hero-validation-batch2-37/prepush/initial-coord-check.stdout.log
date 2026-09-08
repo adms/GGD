@@ -1,0 +1,210 @@
+
+> ggd@0.0.0 coord:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2
+> node tools/coord/check.mjs
+
+⛔ docs/editor-contract/coordination/brick-request.solid-beam.json
+   · claims[0].evidence 路徑不存在：docs/_reports/editor-skill-acceptance-42x46.json
+   · claims[0].evidence 路徑不存在：docs/_reports/editor-skill-codex-advisory/review.json
+   · claims[0].evidence 路徑不存在：apps/editor/src/vfx-forge/recipes.ts
+   · claims[0].evidence 路徑不存在：apps/editor/src/vfx-forge/VfxForgeStage.ts
+⛔ docs/editor-contract/coordination/claim.20260907-open-tickets-handoff.json
+   · claims[3].evidence 路徑不存在：docs/_reports/editor-skill-acceptance-42x46.json
+   · claims[3].evidence 路徑不存在：apps/admin/src/abilityNodes.ts
+   · claims[4].evidence 路徑不存在：apps/game-server/src/config/contentHotApply.ts
+   · claims[4].evidence 路徑不存在：apps/platform/internal/contentoverlay/community.go
+   · claims[5].evidence 路徑不存在：tools/skill-remake/templatize.py
+   · claims[6].evidence 路徑不存在：docs/_reports/1098_temp_20260907-1436.md
+⛔ docs/editor-contract/coordination/claim.20260908-codex-blockers-cleared.json
+   · claims[0].evidence 路徑不存在：apps/editor/
+   · claims[1].evidence 路徑不存在：docs/_reports/editor-skill-codex-advisory/review.json
+   · claims[2].evidence 路徑不存在：docs/_reports/editor-skill-codex-advisory/
+✅ docs/editor-contract/coordination/claim.20260908-s3-asset-library-split.json
+⛔ docs/editor-contract/coordination/claim.codex-lane-visual-advisory-and-brick-ids.json
+   · claims[0].evidence 路徑不存在：tools/skill-forge/codex-visual-advisory.source.json
+   · claims[0].evidence 路徑不存在：tools/skill-forge/build-codex-visual-advisory.mjs
+   · claims[0].evidence 路徑不存在：docs/_reports/editor-skill-human-review/index.json
+   · claims[1].evidence 路徑不存在：docs/_reports/editor-skill-basic-visual-proof/manifest.json
+   · claims[1].evidence 路徑不存在：docs/_reports/editor-skill-codex-advisory/review.md
+   · claims[1].evidence 路徑不存在：tools/skill-forge/check.mjs
+   · claims[2].evidence 路徑不存在：tools/skill-forge/build-visual-review-packet.mjs
+   · claims[2].evidence 路徑不存在：tools/skill-forge/build-visual-contact-sheets.mjs
+   · claims[2].evidence 路徑不存在：docs/_reports/editor-skill-human-review/index.json
+   · claims[3].evidence 路徑不存在：docs/_reports/editor-skill-acceptance-42x46.json
+   · claims[3].evidence 路徑不存在：docs/_reports/editor-skill-basic-visual-proof/manifest.json
+   · claims[4].evidence 路徑不存在：tools/skill-forge/codex-visual-advisory.source.json
+   · claims[4].evidence 路徑不存在：docs/_reports/editor-skill-basic-visual-proof/manifest.json
+⛔ docs/editor-contract/coordination/claim.community-hero-forge-integration.json
+   · claims[0].evidence 路徑不存在：apps/platform/internal/submissions/handlers.go
+   · claims[0].evidence 路徑不存在：apps/platform/internal/submissions/hero_handlers_test.go
+   · claims[1].evidence 路徑不存在：apps/platform/internal/submissions/hero_intake_test.go
+   · claims[1].evidence 路徑不存在：apps/platform/internal/submissions/hero_withdraw_test.go
+   · claims[1].evidence 路徑不存在：apps/platform/internal/server/hero_policy_test.go
+   · claims[2].evidence 路徑不存在：apps/editor/src/hero/conflictResolution.test.ts
+   · claims[2].evidence 路徑不存在：apps/editor/src/hero/HeroDraftConflictView.test.tsx
+   · claims[2].evidence 路徑不存在：apps/editor/src/hero/HeroWithdrawAction.test.tsx
+   · claims[2].evidence 路徑不存在：apps/editor/src/drafts/DraftLibrary.test.tsx
+   · claims[3].evidence 路徑不存在：apps/content-api/src/importTransientCleanup.ts
+   · claims[3].evidence 路徑不存在：apps/content-api/src/importTransientCleanup.test.ts
+   · claims[3].evidence 路徑不存在：apps/content-api/src/importIconAtomic.test.ts
+   · claims[3].evidence 路徑不存在：apps/content-api/src/heroWorkRoutes.test.ts
+   · claims[4].evidence 路徑不存在：docs/_reports/community-hero-forge/community-concepts/deterministic/proof.json
+   · claims[4].evidence 路徑不存在：docs/_reports/community-hero-forge/community-concepts/summary.json
+   · claims[4].evidence 路徑不存在：docs/_reports/community-hero-forge/community-concepts/passive-tests.log
+   · claims[5].evidence 路徑不存在：apps/content-api/src/heroContentSnapshot.test.ts
+   · claims[5].evidence 路徑不存在：docs/_reports/community-hero-forge/community-concepts/overlay-import-tests-passed.log
+   · claims[5].evidence 路徑不存在：docs/_reports/community-hero-forge/community-concepts/content-api-regression.log
+   · claims[6].evidence 路徑不存在：tools/skill-forge/visual-proof-scope.mjs
+   · claims[6].evidence 路徑不存在：docs/_reports/community-hero-forge/community-concepts/visual-scope-tests.log
+   · claims[7].evidence 路徑不存在：docs/_reports/community-hero-forge/community-concepts/sim-preview-47.log
+   · claims[8].evidence 路徑不存在：docs/_reports/community-hero-forge/lol-models/animation-requirements.md
+   · claims[8].evidence 路徑不存在：docs/_reports/community-hero-forge/lol-models/budget-tests-passed.log
+   · claims[8].evidence 路徑不存在：docs/_reports/community-hero-forge/lol-models/trim-tests.log
+   · claims[9].evidence 路徑不存在：apps/admin/src/ui/ContentPage.tsx
+   · claims[9].evidence 路徑不存在：docs/_reports/community-hero-forge/lol-models/forge-preview/summary.json
+   · claims[9].evidence 路徑不存在：docs/_reports/community-hero-forge/lol-models/forge-preview/README.md
+   · claims[10].evidence 路徑不存在：docs/_reports/community-hero-forge/model-upload/summary.json
+   · claims[10].evidence 路徑不存在：docs/_reports/community-hero-forge/model-upload/roundtrip-proof.json
+   · claims[10].evidence 路徑不存在：docs/_reports/community-hero-forge/model-upload/README.md
+   · claims[11].evidence 路徑不存在：docs/_reports/community-hero-forge/model-versions/README.md
+   · claims[11].evidence 路徑不存在：docs/_reports/community-hero-forge/model-versions/proof.json
+   · claims[11].evidence 路徑不存在：docs/_reports/community-hero-forge/model-versions/regression.log
+   · claims[11].evidence 路徑不存在：docs/_reports/community-hero-forge/model-versions/editor-release.log
+   · claims[12].evidence 路徑不存在：docs/_reports/community-hero-forge/library-models/native-batch/README.md
+   · claims[12].evidence 路徑不存在：docs/_reports/community-hero-forge/library-models/native-batch/visual-review.json
+   · claims[13].evidence 路徑不存在：docs/_reports/community-hero-forge/handoff-import/README.md
+   · claims[13].evidence 路徑不存在：docs/_reports/community-hero-forge/handoff-import/acceptance.json
+   · claims[13].evidence 路徑不存在：docs/_reports/community-hero-forge/handoff-import/handoff-release-gates.json
+   · claims[14].evidence 路徑不存在：docs/_reports/community-hero-forge/library-models/complete-body-coverage/README.md
+   · claims[14].evidence 路徑不存在：docs/_reports/community-hero-forge/library-models/complete-body-coverage/visual-review.json
+   · claims[14].evidence 路徑不存在：docs/_reports/community-hero-forge/library-models/complete-body-coverage/folder-import/acceptance.json
+   · claims[15].evidence 路徑不存在：docs/_reports/community-hero-forge/caster-status/README.md
+   · claims[15].evidence 路徑不存在：docs/_reports/community-hero-forge/caster-status/gates.json
+   · claims[15].evidence 路徑不存在：docs/_reports/community-hero-forge/caster-status/ui/receipt.json
+   · claims[16].evidence 路徑不存在：docs/_reports/community-hero-forge/status-consumption/README.md
+   · claims[16].evidence 路徑不存在：docs/_reports/community-hero-forge/status-consumption/gates.json
+   · claims[16].evidence 路徑不存在：docs/_reports/community-hero-forge/status-consumption/ui/receipt.json
+   · claims[17].evidence 路徑不存在：docs/_reports/community-hero-forge/health-payment/README.md
+   · claims[17].evidence 路徑不存在：docs/_reports/community-hero-forge/health-payment/gates.json
+   · claims[17].evidence 路徑不存在：docs/_reports/community-hero-forge/health-payment/ui/receipt.json
+   · claims[18].evidence 路徑不存在：docs/_reports/community-hero-forge/cast-credit/README.md
+   · claims[18].evidence 路徑不存在：docs/_reports/community-hero-forge/cast-credit/gates.json
+   · claims[18].evidence 路徑不存在：docs/_reports/community-hero-forge/cast-credit/ui/receipt.json
+   · claims[19].evidence 路徑不存在：docs/_reports/community-hero-forge/azazel-refinement/README.md
+   · claims[19].evidence 路徑不存在：docs/_reports/community-hero-forge/azazel-refinement/gates.json
+   · claims[19].evidence 路徑不存在：docs/_reports/community-hero-forge/azazel-refinement/ui/acceptance.json
+   · claims[19].evidence 路徑不存在：docs/_reports/community-hero-forge/azazel-refinement/ui/persistence.json
+   · claims[20].evidence 路徑不存在：apps/editor/src/hero/HeroSourceDesignPanel.test.tsx
+   · claims[20].evidence 路徑不存在：apps/admin/src/ui/HeroSubmissionsSection.tsx
+   · claims[20].evidence 路徑不存在：docs/_reports/community-hero-forge/current-service/ui/source-review.json
+   · claims[20].evidence 路徑不存在：docs/_reports/community-hero-forge/current-service/ui/frozen-draft-completed.json
+   · claims[20].evidence 路徑不存在：docs/_reports/community-hero-forge/current-service/ui/return-review.json
+   · claims[21].evidence 路徑不存在：apps/editor/src/vfx-forge/waitForActorModel.test.ts
+   · claims[21].evidence 路徑不存在：apps/editor/src/vfx-forge/VfxForgeStage.ts
+   · claims[21].evidence 路徑不存在：docs/_reports/community-hero-forge/current-service/ui/review-preview.json
+   · claims[21].evidence 路徑不存在：docs/_reports/community-hero-forge/current-service/README.md
+✅ docs/editor-contract/coordination/claim.community-hero-forge-plan.json
+⛔ docs/editor-contract/coordination/claim.community-teacher-mechanism-corrections.json
+   · claims[0].evidence 路徑不存在：docs/_reports/community-teacher-mechanism-corrections/fixtures.json
+   · claims[0].evidence 路徑不存在：materials/community-hero-forge/recipes/01.upload-recipe.json
+   · claims[0].evidence 路徑不存在：materials/community-hero-forge/recipes/24.upload-recipe.json
+   · claims[0].evidence 路徑不存在：materials/community-hero-forge/recipes/26.upload-recipe.json
+   · claims[1].evidence 路徑不存在：docs/_reports/community-teacher-mechanism-corrections/fixtures.json
+   · claims[1].evidence 路徑不存在：materials/community-hero-forge/recipes/09.upload-recipe.json
+   · claims[1].evidence 路徑不存在：materials/community-hero-forge/recipes/21.upload-recipe.json
+   · claims[1].evidence 路徑不存在：materials/community-hero-forge/recipes/27.upload-recipe.json
+⛔ docs/editor-contract/coordination/claim.community37-icons.json
+   · claims[0].evidence 路徑不存在：docs/_reports/community-hero-icons-20260909/manifest.json
+   · claims[1].evidence 路徑不存在：tools/icon-gen/local/data/community37-subjects.json
+   · claims[2].evidence 路徑不存在：tools/icon-gen/local/community_batch.py
+⛔ docs/editor-contract/coordination/claim.editor-form-receipts.json
+   · claims[0].evidence 路徑不存在：apps/editor/src/form/editorFormReceipts.ts
+   · claims[0].evidence 路徑不存在：apps/editor/src/form/editorFormReceipts.test.ts
+   · claims[0].evidence 路徑不存在：tools/skill-forge/build-editor-form-receipts.mjs
+⛔ docs/editor-contract/coordination/claim.editor-write-gate-zod.json
+   · claims[0].evidence 路徑不存在：apps/editor/src/forge/ForgeWriteback.ts
+   · claims[0].evidence 路徑不存在：apps/editor/src/forge/forgeWritebackTemplateGate.test.ts
+⛔ docs/editor-contract/coordination/claim.export-champion-package-landed.json
+   · claims[0].evidence 路徑不存在：apps/editor/src/export-center/exportPolicy.ts
+   · claims[0].evidence 路徑不存在：apps/editor/src/export-center/exportBuilder.ts
+   · claims[0].evidence 路徑不存在：apps/editor/src/export-center/exportBuilder.test.ts
+   · claims[0].evidence 路徑不存在：apps/editor/src/export-center/ExportCenterPage.tsx
+   · claims[1].evidence 路徑不存在：apps/editor/src/export-center/exportPolicy.ts
+   · claims[1].evidence 路徑不存在：apps/editor/src/export-center/exportBuilder.ts
+   · claims[2].evidence 路徑不存在：apps/editor/src/export-center/exportBuilder.test.ts
+   · claims[3].evidence 路徑不存在：apps/editor/src/export-center/exportBuilder.ts
+   · claims[4].evidence 路徑不存在：apps/editor/src/export-center/exportBuilder.test.ts
+⛔ docs/editor-contract/coordination/claim.export-champion-package.json
+   · claims[1].evidence 路徑不存在：apps/editor/src/export-center/exportBuilder.ts
+   · claims[1].evidence 路徑不存在：docs/plans/community-authoring-20260905.md
+   · claims[3].evidence 路徑不存在：apps/editor/src/export-center/exportBuilder.ts
+⛔ docs/editor-contract/coordination/claim.hero-finetune-research.json
+   · claims[0].evidence 路徑不存在：docs/_reports/hero-finetune-research/bundle/manifest.json
+   · claims[0].evidence 路徑不存在：docs/_reports/hero-finetune-research/IR5_RESULT.json
+   · claims[0].evidence 路徑不存在：docs/_reports/hero-finetune-research/IR5_REPORT.md
+   · claims[0].evidence 路徑不存在：docs/_reports/hero-finetune-research/FINDINGS.md
+⛔ docs/editor-contract/coordination/claim.hero-forge-plan-main-response.json
+   · claims[0].evidence 路徑不存在：apps/game-server/src/config/contentHotApply.ts
+   · claims[0].evidence 路徑不存在：apps/platform/internal/submissions/publish.go
+   · claims[1].evidence 路徑不存在：apps/platform/internal/contentoverlay/community.go
+   · claims[1].evidence 路徑不存在：apps/client/src/ui/platform/RoomListPanel.tsx
+   · claims[2].evidence 路徑不存在：apps/platform/internal/submissions/
+   · claims[3].evidence 路徑不存在：apps/platform/internal/server/ugcgate_routes_test.go
+   · claims[4].evidence 路徑不存在：apps/admin/src/abilityNodes.ts
+   · claims[4].evidence 路徑不存在：apps/admin/src/abilityBrickCoverage.test.ts
+   · claims[6].evidence 路徑不存在：tools/skill-remake/templatize.py
+⛔ docs/editor-contract/coordination/claim.hero-status-inventory.json
+   · claims[0].evidence 路徑不存在：docs/_reports/hero-character-status-20260909/全角色狀態清單.md
+   · claims[0].evidence 路徑不存在：docs/_reports/hero-character-status-20260909/inventory.json
+⛔ docs/editor-contract/coordination/claim.main-night-20260905-what-is-already-done.json
+   · claims[2].evidence 路徑不存在：content/vfx-subtypes
+   · claims[4].evidence 路徑不存在：apps/content-api/src/importRoutes.ts
+⛔ docs/editor-contract/coordination/claim.model-fx-emitter-remaining-four-fields.json
+   · claims[0].evidence 路徑不存在：apps/client/src/render/modelFxEmitterLook.test.ts
+   · claims[1].evidence 路徑不存在：tools/type-catalog/gen.ts
+⛔ docs/editor-contract/coordination/claim.vfx-subtype-picker.json
+   · claims[1].evidence 路徑不存在：tools/vfx-subtypes/callify.mjs
+   · claims[1].evidence 路徑不存在：content/vfx-scripts/godie-o00x.r.json
+   · claims[1].evidence 路徑不存在：content/vfx-scripts/godie-e002.ex.json
+   · claims[1].evidence 路徑不存在：content/vfx-subtypes/sub.bladestorm-8hit.json
+   · claims[1].evidence 路徑不存在：content/vfx-subtypes/sub.forward-twin-blast.json
+   · claims[2].evidence 路徑不存在：apps/editor/src/vfx-forge/acceptanceFixtures.ts
+   · claims[2].evidence 路徑不存在：apps/editor/src/vfx-forge/basicVisualAuthoring.ts
+   · claims[2].evidence 路徑不存在：apps/editor/src/vfx-forge/writeback.ts
+⛔ docs/editor-contract/coordination/owner-decision.20260906-main-tickets-codex-implements.json
+   · claims[0].evidence 路徑不存在：docs/_reports/1025_temp_20260907-1550.md
+   · claims[0].evidence 路徑不存在：apps/platform/internal/submissions/promote.go
+   · claims[0].evidence 路徑不存在：apps/game-server/src/config/contentHotApply.ts
+   · claims[1].evidence 路徑不存在：docs/_daily/2026-09-06.md
+   · claims[2].evidence 路徑不存在：docs/_daily/2026-09-06.md
+   · claims[4].evidence 路徑不存在：docs/plans/community-authoring-20260905.md
+   · claims[5].evidence 路徑不存在：docs/_release/ggd-board.html
+   · claims[6].evidence 路徑不存在：content/vfx-subtypes
+   · claims[8].evidence 路徑不存在：docs/_daily/2026-09-06.md
+⛔ docs/editor-contract/coordination/owner-decision.20260908-assets-to-s3-not-git.json
+   · claims[0].evidence 路徑不存在：docs/_daily/2026-09-08.md
+⛔ docs/editor-contract/coordination/owner-decision.20260908-s3-prefix-split-and-legacy-private.json
+   · claims[0].evidence 路徑不存在：docs/_daily/2026-09-08.md
+   · claims[1].evidence 路徑不存在：tools/asset-cdn/upload.py
+   · claims[2].evidence 路徑不存在：docs/_daily/2026-09-08.md
+   · claims[4].evidence 路徑不存在：tools/asset-cdn/upload.py
+✅ docs/editor-contract/coordination/owner-decision.20260908-upload-everything-and-legacy-rename.json
+⛔ docs/editor-contract/coordination/question.effect-graph-bridge.json
+   · claims[0].evidence 路徑不存在：docs/_reports/editor-skill-acceptance-42x46.json
+   · claims[1].evidence 路徑不存在：apps/admin/src/abilityNodes.ts
+   · claims[1].evidence 路徑不存在：apps/admin/src/abilityNodes.test.ts
+   · claims[1].evidence 路徑不存在：apps/editor/src/preview/PreviewController.ts
+   · claims[2].evidence 路徑不存在：apps/admin/src/configForms/schemaToForm.ts
+⛔ docs/editor-contract/coordination/question.ground-barrage-anchor.json
+   · claims[0].evidence 路徑不存在：docs/_reports/hero-finetune-research/source-admission/minimal-source-point.json
+   · claims[0].evidence 路徑不存在：docs/_reports/hero-finetune-research/source-admission/RESULT.json
+   · claims[1].evidence 路徑不存在：docs/_reports/hero-finetune-research/source-admission/minimal-source-point.json
+   · claims[2].evidence 路徑不存在：docs/_reports/hero-finetune-research/source-admission/bundle/manifest.json
+   · claims[2].evidence 路徑不存在：docs/_reports/hero-finetune-research/source-admission/REPORT.md
+⚠️  讀不到 docs/_reports/editor-skill-acceptance-42x46.json ⇒ unblocks[] 的 id **沒驗到**
+⚠️  claim.20260908-s3-asset-library-split 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  讀不到 docs/_reports/editor-skill-acceptance-42x46.json ⇒ unblocks[] **沒驗到**
+⚠️  claim.community-hero-forge-plan 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  owner-decision.20260908-upload-everything-and-legacy-rename 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+
+coord:check —— 25 份 packet，22 份有缺
+ ELIFECYCLE  Command failed with exit code 1.

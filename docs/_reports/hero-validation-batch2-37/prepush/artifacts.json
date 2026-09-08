@@ -1,0 +1,206 @@
+[
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/initial-start.json",
+    "original": "/private/tmp/batch2-prepush-initial/start.json",
+    "sha256": "511f331dd64c0d097047ce4c9b894b8b5aac66ab31c12c7f5719ae3bb9d3baec",
+    "bytes": 5769
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/initial-summary.json",
+    "original": "/private/tmp/batch2-prepush-initial/summary.json",
+    "sha256": "816f24bdfdb657d9f124a56bd1f743a3989e3413bcff3c661b9fc6e5b50e04be",
+    "bytes": 7164
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/initial-coord-check.stderr.log",
+    "original": "/private/tmp/batch2-prepush-initial/coord-check.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/initial-coord-check.stdout.log",
+    "original": "/private/tmp/batch2-prepush-initial/coord-check.stdout.log",
+    "sha256": "41fdfb686bfcb79d4a3000cec2af2f91419a443352acf66bef3e5c7867906e03",
+    "bytes": 19576
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/initial-editor-accept-release.stderr.log",
+    "original": "/private/tmp/batch2-prepush-initial/editor-accept-release.stderr.log",
+    "sha256": "ca5443230ae90a7b2968f62f87ed3d857651028fd3ed81e08cc0e6a11b7c65ac",
+    "bytes": 1428
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/initial-editor-accept-release.stdout.log",
+    "original": "/private/tmp/batch2-prepush-initial/editor-accept-release.stdout.log",
+    "sha256": "8258329744e77479e289ce0bfec5716885c02768a7b44aba04870ac9b00a0ae3",
+    "bytes": 601
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/initial-skills-check.stderr.log",
+    "original": "/private/tmp/batch2-prepush-initial/skills-check.stderr.log",
+    "sha256": "2fba3a8950c87d9d7b1ee7f3c054a1db9ff1f479e8f85d61c4595db5addfb129",
+    "bytes": 210
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/initial-skills-check.stdout.log",
+    "original": "/private/tmp/batch2-prepush-initial/skills-check.stdout.log",
+    "sha256": "6c2f7933034e824f00f9df7472687b05474e9551d33d1306ff229bea5d3773fe",
+    "bytes": 2050
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/environment-repair-start.json",
+    "original": "/private/tmp/batch2-prepush-final/start.json",
+    "sha256": "10cab7e5e13ff5dd603b84b9afcd3c881184db4d47f230cf546d743851157ed4",
+    "bytes": 5423
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/environment-repair-summary.json",
+    "original": "/private/tmp/batch2-prepush-final/summary.json",
+    "sha256": "4be859c1ecef8953396a786fa984e21cd5ba0cd42a52e107756d53a6bf65e4bf",
+    "bytes": 6807
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/environment-repair-coord-check.stderr.log",
+    "original": "/private/tmp/batch2-prepush-final/coord-check.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/environment-repair-coord-check.stdout.log",
+    "original": "/private/tmp/batch2-prepush-final/coord-check.stdout.log",
+    "sha256": "0511fe7d174b8667e2ceecc724af0acc9f5765f472ff3ece658cfefe0655cb8a",
+    "bytes": 6806
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/environment-repair-editor-accept-release.stderr.log",
+    "original": "/private/tmp/batch2-prepush-final/editor-accept-release.stderr.log",
+    "sha256": "e665fd26798d812ffecef7f1c878cc3f35e37c1fc4e143225be7b77dd4747886",
+    "bytes": 2496
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/environment-repair-editor-accept-release.stdout.log",
+    "original": "/private/tmp/batch2-prepush-final/editor-accept-release.stdout.log",
+    "sha256": "72f51938424c1d49b02681d7d3985cd15273a76e26da8893bc4361fd2b65bfcf",
+    "bytes": 670
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/environment-repair-skills-check.stderr.log",
+    "original": "/private/tmp/batch2-prepush-final/skills-check.stderr.log",
+    "sha256": "ca59d2b3b855913e9a3a4fe14d1f1b036fd8054c1fc13c93d38bc130f6bc4c34",
+    "bytes": 1752
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/environment-repair-skills-check.stdout.log",
+    "original": "/private/tmp/batch2-prepush-final/skills-check.stdout.log",
+    "sha256": "cd1cc7bc574bcb45b5a8c894044666ff3ac945d9909881e7be51c635d02355c1",
+    "bytes": 2370
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/strict-final-start.json",
+    "original": "/private/tmp/batch2-prepush-strict-final/start.json",
+    "sha256": "ed22f7082605e927049f70a8d775229a62349053aa34266bb3743e46b26ccfca",
+    "bytes": 5440
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/strict-final-summary.json",
+    "original": "/private/tmp/batch2-prepush-strict-final/summary.json",
+    "sha256": "7ecddd4f0c0f3b15766a6609f753bdf904639d47a0977edc97d9deda0a9fc556",
+    "bytes": 6867
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/strict-final-coord-check.stderr.log",
+    "original": "/private/tmp/batch2-prepush-strict-final/coord-check.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/strict-final-coord-check.stdout.log",
+    "original": "/private/tmp/batch2-prepush-strict-final/coord-check.stdout.log",
+    "sha256": "45522a3975efcd45d3d0dc6d34ff139b39cf56ba92ce0cc7602e60b2819a6571",
+    "bytes": 5908
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/strict-final-editor-accept-release.stderr.log",
+    "original": "/private/tmp/batch2-prepush-strict-final/editor-accept-release.stderr.log",
+    "sha256": "5b0de86333656a609f51344b23b0e64fd8a9015fc6bc25bdbd580c4cd7a392ca",
+    "bytes": 2336
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/strict-final-editor-accept-release.stdout.log",
+    "original": "/private/tmp/batch2-prepush-strict-final/editor-accept-release.stdout.log",
+    "sha256": "ab37be49130622ce170ddfb81585a597e4d7f9af47d3bbfbbc624fbbb8103130",
+    "bytes": 670
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/strict-final-skills-check.stderr.log",
+    "original": "/private/tmp/batch2-prepush-strict-final/skills-check.stderr.log",
+    "sha256": "721a98ff08bf8412ecec67549f60fc0477f770de9b3ec7dac17c7acfee351e50",
+    "bytes": 384
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/strict-final-skills-check.stdout.log",
+    "original": "/private/tmp/batch2-prepush-strict-final/skills-check.stdout.log",
+    "sha256": "cd1cc7bc574bcb45b5a8c894044666ff3ac945d9909881e7be51c635d02355c1",
+    "bytes": 2370
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/node-cache-restored.json",
+    "original": "/private/tmp/batch2-prepush-strict-final/node-cache-restored.json",
+    "sha256": "1eb2537aecd0159b715e89f075f457f868b3b6c7fc9fbf59ff15519a001165b5",
+    "bytes": 607
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/external-cache-comparison.json",
+    "original": "/private/tmp/batch2-prepush-strict-final/external-cache-comparison.json",
+    "sha256": "14cfcd0d9feeba2418bbfdf810a042e62c3b230020acc3f261f6beade5cb260c",
+    "bytes": 719
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/final-classification.json",
+    "original": "/private/tmp/batch2-prepush-strict-final/final-classification.json",
+    "sha256": "737d65bac3a70fc7b427f3a3d6b19b3a80c7950b4e624dc807bde24b60cc6b5c",
+    "bytes": 4208
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/final-classification.md",
+    "original": "/private/tmp/batch2-prepush-strict-final/final-classification.md",
+    "sha256": "1f3f2497bc8175e362341ab5d462e057e279efc54f1402bf88f171be856621b0",
+    "bytes": 2092
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/spec-readonly-analysis.json",
+    "original": "/private/tmp/batch2-prepush-strict-final/spec-readonly-analysis.json",
+    "sha256": "db7ae9a05c17be3be786d8e9853810a2c325126a32c20a5cb07488b84ecfaafa",
+    "bytes": 246594
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/spec-readonly.mjs",
+    "original": "/private/tmp/batch2-prepush-strict-final/spec-readonly.mjs",
+    "sha256": "a63eb12017810643a03667cf444c1ddda79e9f7d4702dffea1349cfc2e255836",
+    "bytes": 2473
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/spec-missing-inputs.json",
+    "original": "/private/tmp/batch2-prepush-strict-final/spec-missing-inputs.json",
+    "sha256": "d04e17fa5a8ad5003e0aabb715fd6c084d98ed05e03b604fd5c59eb8fa0dcce9",
+    "bytes": 1650
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/baseline-input-oids.json",
+    "original": "/private/tmp/batch2-prepush-strict-final/baseline-input-oids.json",
+    "sha256": "70f6b4b6bdb4c24c1717da0468eac492d898b23269c1f479c234b8c698e4ff26",
+    "bytes": 4661
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/editor-accept-release.stderr.log",
+    "original": "/private/tmp/batch2-prepush-strict-final/editor-accept-release.stderr.log",
+    "sha256": "5b0de86333656a609f51344b23b0e64fd8a9015fc6bc25bdbd580c4cd7a392ca",
+    "bytes": 2336
+  },
+  {
+    "path": "docs/_reports/hero-validation-batch2-37/prepush/coord-check.stdout.log",
+    "original": "/private/tmp/batch2-prepush-strict-final/coord-check.stdout.log",
+    "sha256": "45522a3975efcd45d3d0dc6d34ff139b39cf56ba92ce0cc7602e60b2819a6571",
+    "bytes": 5908
+  }
+]

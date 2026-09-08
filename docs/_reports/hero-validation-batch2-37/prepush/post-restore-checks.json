@@ -1,0 +1,24 @@
+[
+  {
+    "command": [
+      "node",
+      "tools/editor-acceptance/batch2-37/check.mjs"
+    ],
+    "expectedExit": 0,
+    "exitCode": 0,
+    "log": "docs/_reports/hero-validation-batch2-37/prepush/local-package-check.log",
+    "sha256": "200416c4342aed1b1801c14c45a85bb0afb455a99e7a3465266b4585dd26ded0"
+  },
+  {
+    "command": [
+      "node",
+      "tools/editor-acceptance/batch2-37/check.mjs",
+      "--receipt-only",
+      "--require-complete"
+    ],
+    "expectedExit": 1,
+    "exitCode": 1,
+    "log": "docs/_reports/hero-validation-batch2-37/prepush/complete-admission-check.log",
+    "sha256": "ea20a1d922543c8682ce0775cb86f39632737422891b870d79dd927a49fa8c79"
+  }
+]

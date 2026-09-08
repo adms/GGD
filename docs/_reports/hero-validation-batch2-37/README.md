@@ -76,4 +76,4 @@ node tools/editor-acceptance/batch2-37/check.mjs --require-complete
 
 套件資產預設只讀本repo content及旁邊既有 `GGD-community-hero-forge/content`；也可對 `verify-package.mjs` 明確傳其他完整content根目錄。缺bytes即失敗，不補假檔、不下載、不改該目錄。ZIP／GLB／預覽二進位留在本地，由原創資產來源與已核准素材引用重建；本次Git提交來源、正式JSON與原始測試收據，不提交依賴symlink或第三方素材。
 
-完整repo的三項pre-push gate與此批資料資格是不同層，執行紀錄見 `prepush-gates.json`；CI與必要Main review未完成前不視為合併。
+完整repo的三項pre-push gate已在同一來源版本一起重跑，**三項均exit 1**：[完整收據與原因](prepush-gates.json)。skills首個失敗是sparse缺9份音效manifest，唯讀比對只少該目錄計數行；Editor通過185項Skill Forge測試及機器收據後，卡在原有視覺審查收據過期；coord只有另一份原有editor-form packet契約指紋不符，本批packet通過。未觸達的後段檢查不宣稱已驗。未改寫歷史收據或引擎以消除紅燈；原root/shared依賴連結已還原，外工作樹快取逐檔比對未變。CI與必要Main review未完成前不合併。
