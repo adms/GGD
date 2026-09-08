@@ -1,0 +1,65 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.hero-forge-transform-counterpart",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "117057a821aed67e7f60578f6ddb565b99ce5757",
+  "contractFingerprint": "b91a0f59c31289ed",
+  "title": "#1120 鑄造器依實際變身效果生成獨立對應體，貫通預覽、ZIP 與房間名單",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "生成器依編譯後 championForm 效果實體化雙向對應體，兩態走同一 roster 屬性解析。改名模板仍有效；原模板與出貨英雄未修改。原本第 1、4 階與 74 組有序組合的 no-form 已排除；移除對應體輸出會重現 no-form。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/forms.test.ts packages/shared/src/content/heroForge/catalogMatrix.test.ts packages/shared/src/content/championForms.test.ts packages/shared/src/content/transformInheritsOrigin.test.ts packages/shared/src/sim/championFormToggle.test.ts packages/shared/src/sim/championFormExclusive.test.ts --maxWorkers=2 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "4be59032ed44c6de11e3919f0b58b3c03e7ee802",
+      "evidence": [
+        "docs/_reports/community-hero-forge/transform-counterpart/README.md",
+        "docs/_reports/community-hero-forge/transform-counterpart/before.log",
+        "docs/_reports/community-hero-forge/transform-counterpart/matrix-and-legacy.log",
+        "docs/_reports/community-hero-forge/transform-counterpart/mutation.log",
+        "docs/_reports/community-hero-forge/transform-counterpart/mutation-receipt.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "Editor 單槽與整套預覽取得對應體；ZIP 往返與房間只將衍生體加入該作品的 runtime ownership，不增加獨立選角項，也不改出貨 Registry。ID 衝突拒絕。生成器新依賴隨既有來源版本機制保存。實際 UI 第 1、4 階施放成功，模型仍為既有替身。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/import/heroPackage.test.ts packages/shared/src/content/communityRoom.test.ts apps/editor/src/hero/validationBaseline.test.ts apps/content-api/src/heroBuildHistory.test.ts --maxWorkers=2 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "4be59032ed44c6de11e3919f0b58b3c03e7ee802",
+      "evidence": [
+        "docs/_reports/community-hero-forge/transform-counterpart/targeted.log",
+        "docs/_reports/community-hero-forge/transform-counterpart/matrix-and-legacy.log",
+        "docs/_reports/community-hero-forge/transform-counterpart/ui-receipt.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "本批三閘同時啟動，Editor 592 項、正式建置、全工作區型別與 coord 通過。skills 先因 15 列歷史帳本未對票失敗，已用官方工具補正並重生成；重跑帳本通過。其後 decor 的來源檔數因新 forms.ts 增一，已用產生器更新並從失敗處跑完剩餘檢查，所有步驟有成功收據，保留初次失敗紀錄。",
+      "repro": {
+        "command": "pnpm skills:check",
+        "expectedExit": 0
+      },
+      "commit": "019f854dab2099e4fb2d8949f9d85bf5243cda7c",
+      "evidence": [
+        "docs/_reports/community-hero-forge/transform-counterpart/README.md",
+        "docs/_reports/community-hero-forge/transform-counterpart/editor-release.log",
+        "docs/_reports/community-hero-forge/transform-counterpart/workspace-typecheck.log",
+        "docs/_reports/community-hero-forge/transform-counterpart/ledger-map-receipt.json",
+        "docs/_reports/community-hero-forge/transform-counterpart/skills-check-final.log",
+        "docs/_reports/community-hero-forge/transform-counterpart/skills-tail-receipt.json"
+      ]
+    }
+  ],
+  "unblocks": [],
+  "ownerQuotes": [],
+  "asks": [
+    "請 Main 依本 PR 審查並合併 #1120 修正，特別是 champion transform 的可選 WC3 provenance 與 sim 型別；不另行分派實作。Fixes #1120.",
+    "#1118 已合併至 ed3909de0；本分支從 117057a82 延續。37 名正式服務建包、投稿發布與同版完整對局驗收仍列於 editor-publication/README.md，不以本修正測試冒充完成。"
+  ]
+}

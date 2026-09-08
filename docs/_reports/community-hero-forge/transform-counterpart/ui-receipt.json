@@ -1,0 +1,32 @@
+{
+  "schema": "ggd-manual-ui-receipt@1",
+  "codeCommit": "4be59032ed44c6de11e3919f0b58b3c03e7ee802",
+  "origin": "http://127.0.0.1:5196",
+  "contentApiOrigin": "http://127.0.0.1:8820",
+  "route": "/editor/hero-forge",
+  "generatorVersionLabel": "1476928e",
+  "projectId": "hero-edc34d36-aed3-41a0-a5d2-3643e013fb0e",
+  "heroName": "變身對應體驗收",
+  "method": "CUA browser: create local draft, adopt stable plan, select actual transform template in visual editor, remove original Q template, compare rank 1 and 4. DOM and full-screen viewport inspected.",
+  "templateVersionLabel": "c9ccb3b4",
+  "observations": [
+    "六槽編譯與模擬已通過",
+    "事件：abilityCast × 1、castBegin × 1、championForm × 1、castEnd × 1",
+    "完成施放 · 實際技能階級 1 · 目標生命 5006 → 5036",
+    "完成施放 · 實際技能階級 4 · 目標生命 5006 → 5036",
+    "667ms · championForm · 無摘要欄位",
+    "5983ms · Sim tick 179; 已重播; both proxy actors still visible"
+  ],
+  "visualLimit": "champ.thorne is the existing shared proxy, visibly labeled 共用替身. Both actors render with normal materials; this proves UI/runtime counterpart execution, not a different alternate model or original-design art.",
+  "published": false,
+  "sourceTreeWrites": false,
+  "evidenceKind": "Recorded browser observations, not an automated screenshot artifact",
+  "toolLimit": "In-app browser content export unsupported; the observed UI text is recorded here.",
+  "consoleExceptions": [
+    {
+      "timestamp": "2026-09-08T17:01:18.298Z",
+      "message": "BJS: Error: Operation timed out after maximum retries. - Effect: postprocess+rgbdDecode@",
+      "classification": "Observed render-layer warning/error; causality not established. UI casting and event results passed; not a clean-console or full visual fidelity result."
+    }
+  ]
+}

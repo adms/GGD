@@ -1,0 +1,64 @@
+{
+  "source": "package.json scripts.skills:check",
+  "previousPrefixLog": "skills-check-final.log",
+  "resumeFrom": 54,
+  "results": [
+    {
+      "command": "pnpm decor:check",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm speedlists:check",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm locust:check",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm w3a:check",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm board:roll:check",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm ruleslip:check",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm receipt:check",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm handback:check",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm clipdeg:check",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm apcoeffdiff:check",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm decor:check",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm appearance:check",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm ptokens:check",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm coord:check",
+      "exitCode": 0
+    }
+  ],
+  "allRemainingPassed": true
+}

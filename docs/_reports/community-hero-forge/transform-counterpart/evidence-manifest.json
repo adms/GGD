@@ -1,0 +1,97 @@
+{
+  "codeCommit": "4be59032ed44c6de11e3919f0b58b3c03e7ee802",
+  "files": {
+    "README.md": {
+      "bytes": 3817,
+      "sha256": "fc747c57b327c47b0487600bb984dad64b8f95767c37fb06fe42fd68ef3ab9ba"
+    },
+    "before.log": {
+      "bytes": 5598,
+      "sha256": "396e3f32d0b9e68a8b069e0ce40cacc0cfbfb0dbfa10bf6b32da80d29feb9f05"
+    },
+    "coord-check.log": {
+      "bytes": 4817,
+      "sha256": "490b7d3e214c632e3441d7e072eabe40bc71bac1cc4ad6a1026e91be35536c9f"
+    },
+    "decor-build.log": {
+      "bytes": 924,
+      "sha256": "03b3747372e8ef80455ede591dda3b9534d46df51fa8884ebe5951252b9936d9"
+    },
+    "editor-release.log": {
+      "bytes": 904,
+      "sha256": "cef24acdee2bfd03934c8a32fa90509ffe203591ed46e78f5dd4a88516cacb8f"
+    },
+    "editor-typecheck.log": {
+      "bytes": 174,
+      "sha256": "486eafd3c0debbbff5ae7dddb4aa8823f853e470eff3bacbda032617862caca2"
+    },
+    "game-typecheck.log": {
+      "bytes": 184,
+      "sha256": "b05c3d89729ac8d5380fe460caa7c9227683cd32eda0fd3fbdcddaedd946d715"
+    },
+    "ledger-build.log": {
+      "bytes": 1042,
+      "sha256": "fe10c1ea6c3be412c337b820953454ed42a8a48f1193144fe403d36540c144d9"
+    },
+    "ledger-map-receipt.json": {
+      "bytes": 842,
+      "sha256": "9cf94011eae964eb896e70cc395cb401eb88a1dc54fc7a2a0afde8d24578d561"
+    },
+    "ledger-map.log": {
+      "bytes": 3544,
+      "sha256": "8667db54d07534fe77277486780591ca72933fbb3ad7f2f3bcbeb51a4d626dad"
+    },
+    "lint.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "matrix-and-legacy.log": {
+      "bytes": 1632,
+      "sha256": "6c004b84c20de0c2bc932359ee2cafb654574cd0a00774bb9c91b4090a1a4dfe"
+    },
+    "mutation-receipt.json": {
+      "bytes": 546,
+      "sha256": "278a154cd1b84085848fa6adf96bc9e7ed300bde213701bd5bf4f16667b396f1"
+    },
+    "mutation.log": {
+      "bytes": 1453,
+      "sha256": "f6a99560f6414dd6888a4e0e97b212109825d2a457f934a33ba05f8c1e964f89"
+    },
+    "restored.log": {
+      "bytes": 677,
+      "sha256": "397cd7a16c35f0cde8917a5eecd22c99b501d4bf62bff0a44500505e64567df7"
+    },
+    "skills-check-final.log": {
+      "bytes": 43364,
+      "sha256": "e54ea41060c99ec221a6f02386bf19f05ef9cfbfd121e8d8df4d17c1c989955a"
+    },
+    "skills-check.log": {
+      "bytes": 26787,
+      "sha256": "9260f3aec98f8d7cc134fd3d42fde0fdc1d7201214401f8cb276626e37c8294c"
+    },
+    "skills-tail-receipt.json": {
+      "bytes": 1182,
+      "sha256": "693de0a682150e0be5778fef260c3482afe6c920e2b42e1ab776346e7e2c23d4"
+    },
+    "skills-tail.log": {
+      "bytes": 8064,
+      "sha256": "353fb603368aa0925e31a6f7a4b5b03ddcd052d8ef28ba37e699e33e0366d333"
+    },
+    "targeted.log": {
+      "bytes": 4057,
+      "sha256": "59cb11fa19c6ecb2490166f11a8344f43eceb68c28b867c020ea1e26876f93f4"
+    },
+    "typecheck.log": {
+      "bytes": 178,
+      "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    },
+    "ui-receipt.json": {
+      "bytes": 1874,
+      "sha256": "5a1ae9700d4815fcec3d54637c8efa0da10c116a1d41780d50b4ca6fcf0accbd"
+    },
+    "workspace-typecheck.log": {
+      "bytes": 1939,
+      "sha256": "c0ef014a41d51bf804a8af2af92d5a40ad44c29bb00ea99fa4942c10f1a902a1"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "mutation": "Remove only compiled relatedChampions emission; retain base transform link",
+  "originalSha256": "ab36e7bee2e8638a9542f4a3b381f877d35e415d4b47bfc1bcc3698e43275b77",
+  "command": [
+    "pnpm",
+    "exec",
+    "vitest",
+    "run",
+    "packages/shared/src/content/heroForge/catalogMatrix.test.ts",
+    "-t",
+    "compiles and executes every enabled",
+    "--maxWorkers=1",
+    "--minWorkers=1"
+  ],
+  "exitCode": 1,
+  "restoredSha256": "ab36e7bee2e8638a9542f4a3b381f877d35e415d4b47bfc1bcc3698e43275b77",
+  "sourceRestored": true
+}
