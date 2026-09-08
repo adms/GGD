@@ -6,7 +6,7 @@
   "to": "main",
   "baseCommit": "6efdd3bfb4df593a26fa2e94d4d65f8e572c3c64",
   "contractFingerprint": "b91a0f59c31289ed",
-  "title": "#1132 局部原設計修正：友軍盾與卡牌連結；37 名完整機制仍未完成",
+  "title": "#1132 局部原設計修正：友軍盾、卡牌連結與 #1139 風／樹換牌；37 名完整機制仍未完成",
   "claims": [
     {
       "kind": "confirmed",
@@ -24,7 +24,7 @@
     },
     {
       "kind": "confirmed",
-      "text": "型別檢查通過；重新對照的 37 名原稿與模型不變，222 槽保留全部 requiredRefinement。29 名仍使用通用普攻被動；布局／電力／線索、庫洛魔法使 EX 樹牌識別等尚未落地。本 PR 不代表原設計完成，不關閉 #1132；UI 匯入與修正後目前服務 ZIP 尚未驗證。",
+      "text": "型別檢查通過；重新對照的 37 名原稿與模型不變，222 槽保留全部 requiredRefinement。29 名仍使用通用普攻被動；布局／電力／線索、庫洛魔法使劍牌普攻／武器及動態牌面等尚未落地。本 PR 不代表原設計完成，不關閉 #1132；UI 匯入與修正後目前服務 ZIP 尚未驗證。",
       "repro": {
         "command": "pnpm --filter @ggd/shared typecheck",
         "expectedExit": 0
@@ -64,7 +64,7 @@
     },
     {
       "kind": "confirmed",
-      "text": "庫洛魔法使 Q/W/E/R 完成施法時按不同卡牌累積連結，最多三層；W 結算先消耗既有全部連結強化盾，再把 W 記入下一段牌序。重複卡、非法目標、不同施法者及回合重置已驗證，兩個回退 mutation 被檢出。EX 換牌與樹牌獨立識別仍待補，未宣稱完整牌組完成。",
+      "text": "庫洛魔法使 Q/W/E/R 完成施法時按不同卡牌累積連結，最多三層；W 結算先消耗既有全部連結強化盾，再把 W 記入下一段牌序。重複卡、非法目標、不同施法者及回合重置已驗證，兩個回退 mutation 被檢出。此處為前批牌序證據；後續 #1139 換牌新增證據另列，未宣稱完整牌組美術完成。",
       "repro": {
         "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/cardLinks.test.ts src/content/heroForge/communityRefinements/friendlyProtection.test.ts",
         "expectedExit": 0
@@ -100,6 +100,33 @@
       "evidence": [
         "materials/community-hero-forge/refinements/card-release-gates.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "#1139 風 Q 傷害／推動與樹 Q 束縛實際分流，EX 自身切換不重置 Q 冷卻／魔力；風／樹分別記牌序，施法途中、非法目標、資源不足及回合重置均驗證。9 項新增測試與合計 57 項回歸通過；兩個故意回退被檢出。動態牌面／圖示、劍牌與翔牌呈現仍未完成。",
+      "repro": {
+        "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/cardVariants.test.ts src/content/heroForge/communityRefinements/cardLinks.test.ts src/content/heroForge/communityRefinements/friendlyProtection.test.ts --pool=threads --minWorkers=1 --maxWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "4b1822a12a2be22992126a622d689b9f293b3b48",
+      "evidence": [
+        "materials/community-hero-forge/refinements/card-variants-verification.json",
+        "packages/shared/src/content/heroForge/communityRefinements/cardVariants.test.ts"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "Git 已保存 37 份實際 HeroProject、配對 index 與完整原始 recipes，可由其他工作線直接讀取。離線工具核對 75 份設定 SHA、原文配對並重新編譯 222 槽；可從既有 S3 ZIP 還原 37 名所綁定的 34 份模型。此離線命令不下載 S3，也不證明正式發布或原設計全部完成。",
+      "repro": {
+        "command": "pnpm exec node --import tsx tools/community-hero-forge/prepare-published-handoff.mts",
+        "expectedExit": 0
+      },
+      "commit": "06d24437319137191b7d385475c3055d1c14edd4",
+      "evidence": [
+        "materials/community-hero-forge/handoff-manifest.json",
+        "materials/community-hero-forge/index.json",
+        "materials/community-hero-forge/README.md"
+      ]
     }
   ],
   "unblocks": [],
@@ -110,6 +137,6 @@
     }
   ],
   "asks": [
-    "請 Main 審查四槽局部修正、radius:0 生成器修正、官方契約重生成與 AI 守則；文件可獨立 cherry-pick c5a6a81fc。#1132 保持開啟，完整原設計、修正後畫面／服務 ZIP 及正式發布尚未完成，不據此發布 37 名。"
+    "請 Main 審查六槽局部修正及 #1139 換牌、radius:0 生成器修正、官方契約重生成與 AI 守則；最新 37 份可共用作品在 materials/community-hero-forge/projects。#1132 保持開啟，完整原設計、修正後畫面／服務 ZIP 及正式發布尚未完成，不據此發布 37 名。"
   ]
 }
