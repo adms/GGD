@@ -118,5 +118,33 @@
     "Missing trap.onTrigger in the exhaustive effect child-chain list.",
     "Missing no-summon in the Valhalla feedback map.",
     "Test fixtures used an invalid Order property and omitted SyncArgs.dtMs. All corrected before the final successful typechecks."
-  ]
+  ],
+  "integrationFixCommit": "e94963582ecab32274720dd7e526cc9cd0a4eee9",
+  "batchRunnerFollowup": {
+    "issue": 1143,
+    "tests": 10,
+    "exitCode": 0,
+    "logSha256": "d67d95886a48d4c9e19ad1de412c406fd1664d412b87f1cc41171954b4b2b890",
+    "allowedRoots": [
+      "packages/shared/",
+      "apps/editor/",
+      "apps/client/",
+      "apps/game-server/"
+    ],
+    "preservedGuards": [
+      "Existing .test.ts/.test.tsx files only",
+      "Member containment and symlink checks",
+      "No suite commands",
+      "Exact source/log/argv cache binding"
+    ]
+  },
+  "initialReleaseFailure": {
+    "head": "d0b64c0860a35f96254ba4031bc3bbb0146c084c",
+    "reportSha256": "7b8de441f23effa56bb7a2e49d52f89c019e1f1fd2a48a318f5f89ea8fc8eefe",
+    "reasons": [
+      "Client and Server test roots rejected by the batch-plan allowlist, so behavior suites were not run.",
+      "Editor capability-only effect list omitted trap.",
+      "Contract numbers and decoration census stale; regenerated using official genrun."
+    ]
+  }
 }

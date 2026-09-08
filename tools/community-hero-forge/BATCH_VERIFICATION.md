@@ -41,3 +41,5 @@ python3 -m unittest discover -s tools/community-hero-forge -p test_verify_author
 ```
 
 武藤遊戲的陷阱另登記 `trap-view-and-transport` suite，一次檢查實際傳輸、Client 圖形生命週期及 Forge 回放。它使用 NullEngine，不等於已完成真實瀏覽器畫面驗收；仍需保留原稿素材與視覺缺口。
+
+測試路徑限 `packages/shared/`、`apps/editor/`、`apps/client/`、`apps/game-server/` 中實際存在的 `.test.ts`／`.test.tsx`，不接受任意指令、來源外路徑或越界 symlink。新增 effect kind 後，除了能力契約也須用官方 `contract:numbers` 更新數字，所有程式變更完成後再執行 `decor:build`，避免過期文件使整批失敗。
