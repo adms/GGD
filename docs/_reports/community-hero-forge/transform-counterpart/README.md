@@ -32,3 +32,7 @@ skills 初次在上一日 15 列未對票停止；用 `ledger_table.py --map` �
 因此 skills 的證據是 `skills-check-final.log` 中 decor 之前的成功步驟，加上 `skills-tail.log`／`skills-tail-receipt.json` 的剩餘成功步驟；不是宣稱某一次完整 skills 指令直接 exit 0。初次失敗亦保留在 `skills-check.log`。37 名的後續工作仍以 [集中執行目標](../editor-publication/README.md) 為準；部署版本、正式投稿發布及整合後完整對局尚未以本次單項修正驗證。
 
 PR #1123 首次遠端 contract 檢查（run `34255584267`）停在看板版本：本機原先缺少 release tag，產物仍為 `v0.41.4`，CI 取得的最新 tag 是 `v0.41.5`。同步 tag 後執行官方 `pnpm board:build`，只更新版本欄位及自動留底；`pnpm board:check` 通過。遠端失敗原始 log 與修正後檢查皆保留，見 `ci-contract-before.log`、`board-check-after.log`。此修正不改遊戲或鑄造器執行程式。
+
+第二次遠端 contract（run `34256551636`）已通過看板與訊息帳本，停在語料普查。CI 的測試樹是 `fd6f785fd` 合入較新的 main `7778c10c5`，後者新增 4 份素材 Python 工具；本機原先只有分支母體，因此本機檢查與 CI 母體不同。已將該 main 提交合入本分支並官方重生成普查，計數 2513 → 2517，其他普查結果未變。保留遠端原始失敗 log 與新母體檢查：`ci-contract-after-board.log`、`decor-after-main.log`。
+
+同步 main 後，三項必跑檢查再次同批啟動，這次 `pnpm skills:check`、`pnpm editor:accept:release`、`pnpm coord:check` 都各自完整 exit 0；Editor 包含 592 項測試、型別與正式建置。新 log 為 `skills-current.log`、`editor-current.log`、`coord-current.log`。此結果取代前述分段 skills 收據作為本次 PR 最新出貨檢查，早期失敗保留供查核。
