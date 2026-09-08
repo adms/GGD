@@ -1,0 +1,108 @@
+/** Real-engine source fidelity audit. Does not change old scores, recipes or the engine. */
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import {fileURLToPath} from 'node:url';
+import {wholePlan5} from './whole-plan-seeds-v2.mts';
+import {missfortunePlan} from './missfortune-plan-v1.mts';
+import {compileIR5} from './ir-v5.mts';
+import {checkEnginePins,currentCatalog,hash} from './ir4-compiler.mts';
+import {engineProbe} from './probe-harness.mts';
+import {Abilities} from '../../GGD-community-hero-forge/packages/shared/src/sim/content/registry.ts';
+
+const here=path.dirname(fileURLToPath(import.meta.url));
+assert.equal(process.argv.length,3,'USAGE: node --import tsx audit-selected-point-fields-v1.mts NEW_DIRECTORY');
+const out=path.resolve(process.argv[2]);
+assert.equal(path.dirname(out),here,'OUTPUT_SCOPE');assert(!fs.existsSync(out),'NO_OVERWRITE');
+checkEnginePins();const catalog=currentCatalog();
+const candidates=[
+  {f:wholePlan5('community7-lux'),slot:'E'},
+  {f:wholePlan5('community7-xerath'),slot:'R'},
+  {f:missfortunePlan(),slot:'E'},
+];
+const rows:any[]=[];const artifacts:any[]=[];
+const dist=(a:any,b:any)=>Math.hypot(a.x-b.x,a.z-b.z);
+for(const {f,slot} of candidates){
+  assert.equal(hash(f.source.hero.originalText),f.source.hero.sourceSha256,'SOURCE_DRIFT');
+  const source=f.source.slots.find((s:any)=>s.slot===slot);assert(source);
+  assert.equal(hash(source.originalText),source.sourceSha256,'SLOT_SOURCE_DRIFT');
+  const before=hash(JSON.stringify(f));
+  const built=compileIR5(f.ir,f.source,catalog),compiled=built.compiled;
+  assert.equal(built.project.sourceDesign!.ownerText,f.source.hero.originalText,'ORIGINAL_IDENTITY_NOT_PRESERVED');
+  const ability:any=compiled.abilityDrafts[slot];
+  assert.equal(ability.effects.length,1,'EXPECTED_ONE_FIELD_SCHEDULER');
+  const effect:any=ability.effects[0];
+  assert.equal(effect.kind,'delayed');assert.equal(effect.anchor,'point');assert.equal(effect.count,3);
+  assert.equal(effect.side,'enemies');assert.equal(effect.targetMode,'reresolve');
+  assert(Number.isFinite(effect.radius)&&effect.radius>1.1,'PROBE_GEOMETRY_REQUIRES_RADIUS');
+  artifacts.push({heroId:f.id,slot,source:f.source,ir:f.ir,project:built.project,compiled,
+    sourceSha256:f.source.hero.sourceSha256,compiledSha256:hash(JSON.stringify(compiled)),
+    previewProposals:built.previewProposals,modelGenerated:false});
+  for(const seed of [20260908,20260909])for(const placement of ['empty','centered-enemy','offset-enemy']){
+    let observation:any=null;
+    const result=engineProbe(compiled,catalog,`${f.id}-${slot}-${placement}`,r=>{
+      for(const s of ['PASSIVE','Q','W','E','R','EX']){
+        const actual:any=Abilities.get(compiled.abilityDrafts[s].id);
+        for(const k of ['effects','passive','cooldown','castTimeSec','range'])
+          assert.deepEqual(actual[k],compiled.abilityDrafts[s][k],`REGISTRY_MIRROR:${s}:${k}`);
+      }
+      for(const actor of [r.caster,r.foe,r.other])r.world.status.get(actor).effects.push({
+        statusId:'research.no-basics',sourceId:'fixture-only',applierId:actor,
+        expiresAtTick:100000,stacks:1,disarmed:true});
+      const caster={...r.world.transform.get(r.caster).pos};
+      const requested={x:caster.x+4,z:caster.z};
+      assert(ability.range>=4,'REQUEST_MUST_NOT_BE_CLAMPED');
+      const atCast={x:requested.x+(placement==='empty'?15:placement==='offset-enemy'?1:0),z:requested.z};
+      Object.assign(r.world.transform.get(r.foe).pos,atCast);r.world.rebuildGrid();
+      assert.equal(r.cast(slot,{type:'point',point:requested}),'ok');
+      const cast=r.events.find((e:any)=>e.type==='abilityCast'&&e.data.abilityId===ability.id);
+      assert(cast?.data.point,'NO_CAST_POINT');assert(dist(cast.data.point,requested)<1e-6,'POINT_CLAMPED');
+      const wave=r.world.delayed.find((w:any)=>String(w.origin).includes(ability.id));
+      assert(wave?.point,'NO_QUEUED_FIELD');assert.equal(wave.strikes.length,3);
+      const queuedPoint={...wave.point};
+      // After scheduling, place the same enemy just inside the requested circle's
+      // opposite edge. An incorrectly shifted circle excludes this real target.
+      const probePoint={x:requested.x-effect.radius+0.2,z:requested.z};
+      Object.assign(r.world.transform.get(r.foe).pos,probePoint);r.world.rebuildGrid();
+      r.step(180);
+      const hits=r.hits(slot);
+      observation={requested,actualCastPoint:cast.data.point,initialEnemy:atCast,queuedPoint,
+        radius:effect.radius,probePoint,insideRequested:dist(probePoint,requested)<effect.radius,
+        insideQueued:dist(probePoint,queuedPoint)<effect.radius,
+        anchorDistance:dist(requested,queuedPoint),hitTicks:hits.map((h:any)=>h.tick),
+        actualHits:hits.length,expectedHits:3,
+        alliedDamage:r.events.filter((e:any)=>e.type==='damage'&&e.data.target===r.other&&
+          e.data.source===r.caster&&String(e.data.origin).includes(ability.id)).length};
+      assert(observation.insideRequested,'BAD_SOURCE_CONTROL_GEOMETRY');
+      assert(dist(requested,queuedPoint)<1e-6,'SELECTED_POINT_REPLACED_BY_INITIAL_ENTITY');
+      assert.equal(hits.length,3,'INSIDE_SELECTED_FIELD_NOT_HIT_THREE_TIMES');
+      assert.equal(observation.alliedDamage,0,'FRIENDLY_FIRE');return observation;
+    },seed);
+    rows.push({heroId:f.id,slot,placement,sourceText:source.originalText,sourceSha256:source.sourceSha256,
+      observation,...result});
+  }
+  assert.equal(hash(JSON.stringify(f)),before,'CANDIDATE_MUTATED');
+}
+checkEnginePins();
+const controls=rows.filter(r=>r.placement!=='offset-enemy'),offset=rows.filter(r=>r.placement==='offset-enemy');
+const pins=['audit-selected-point-fields-v1.mts','whole-plan-seeds-v1.mts','whole-plan-seeds-v2.mts',
+  'missfortune-plan-v1.mts','ir-v5.mts','ir-v4.mts','ir4-compiler.mts','native-mechanism-actions.mts',
+  'probe-harness.mts','source-review-v1/model-inputs.json','current-engine-v1/source-pins.json','current-engine-v1/catalog-pins.json'];
+const manifest={schema:'ggd-selected-point-field-audit@1',status:'stopped-report-written',createdAt:new Date().toISOString(),
+  heroes:candidates.length,slots:candidates.map(({f,slot})=>`${f.id}:${slot}`),
+  sourceChecks:{passed:rows.filter(r=>r.passed).length,total:rows.length},
+  controls:{passed:controls.filter(r=>r.passed).length,total:controls.length},
+  offsetCases:{passed:offset.filter(r=>r.passed).length,total:offset.length},
+  failures:rows.filter(r=>!r.passed).map(({heroId,slot,placement,seed,error,observation})=>({heroId,slot,placement,seed,error,observation})),
+  pins:Object.fromEntries(pins.map(p=>[p,hash(fs.readFileSync(path.join(here,p)))])),
+  evidenceSha256:hash(JSON.stringify(rows)),artifactsSha256:hash(JSON.stringify(artifacts)),
+  modelInference:false,modelTraining:false,sourceChanged:false,liveEngineEdited:false,
+  trainingAdmitted:0,fullHeroQualified:0,goalComplete:false,
+  scope:'Three source-explicit selected-point fields, two seeds, empty/centered/off-center initial enemy. Real registry, compiler and SimWorld; no model scoring or mutation of historical receipts.',
+  limitations:['These are concrete source-recipe checks, not exhaustive hero certification.',
+    'The radius and spell timing are unchanged preview choices, not newly assigned source values.',
+    'A mismatch does not by itself establish a regression of every historical delayed contract.']};
+fs.mkdirSync(out);
+for(const [name,value] of Object.entries({'manifest.json':manifest,'evidence.json':rows,'compiled-artifacts.private.json':artifacts}))
+  fs.writeFileSync(path.join(out,name),JSON.stringify(value,null,2)+'\n',{flag:'wx'});
+console.log(JSON.stringify(manifest,null,2));process.exitCode=rows.every(r=>r.passed)?0:1;

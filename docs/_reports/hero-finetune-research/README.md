@@ -4,6 +4,8 @@ Research artifacts only. No editor activation, model service, cloud training, ga
 
 ## Latest delivery status
 
+Additional local evidence: [selected-point fields](selected-point-fields/README.md) failed all six off-center cases across Lux E, Miss Fortune E and Xerath R, with 12/12 empty/centered controls passing. These three newly documented recipe mismatches are additive to the older eight-issue ledger; that frozen ledger has not been silently rewritten. They prevent promoting the reviewed candidates to complete executable targets.
+
 The scripts automate the **bounded engineering experiment**, not the admission of arbitrary hero data. Training, paired inference, fixed scoring, resource stop conditions and reporting have been executed. Complete-source semantic review and an independent final evaluation are still missing; this delivery must not be described as a working fully automatic hero model.
 
 - [Current 44-hero admission ledger](admission-ledger/README.md): 264 slots, nine detailed whole-intent records, eight explicit issues; zero certified full-hero training targets and zero fresh independent holdout heroes. These counts are an audit of existing evidence, not an exhaustive semantic certification.

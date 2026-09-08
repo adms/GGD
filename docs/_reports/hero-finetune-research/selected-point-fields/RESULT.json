@@ -1,0 +1,284 @@
+{
+  "schema": "ggd-selected-point-field-audit@2",
+  "status": "stopped-report-written",
+  "createdAt": "2026-09-08T05:32:35.649Z",
+  "priorRun": "selected-point-fields-audit-v1",
+  "harnessCorrection": "Caster moved clear after scheduling; ordinary collision remains on. All 180 post-cast frames must retain the source-interior witness position. V1 remains preliminary because body separation moved that witness.",
+  "heroes": 3,
+  "slots": [
+    "community7-lux:E",
+    "community7-xerath:R",
+    "community7-missfortune:E"
+  ],
+  "sourceChecks": {
+    "passed": 12,
+    "total": 18
+  },
+  "controls": {
+    "passed": 12,
+    "total": 12
+  },
+  "offsetCases": {
+    "passed": 0,
+    "total": 6
+  },
+  "failures": [
+    {
+      "heroId": "community7-lux",
+      "slot": "E",
+      "placement": "offset-enemy",
+      "seed": 20260908,
+      "error": "AssertionError [ERR_ASSERTION]: SELECTED_POINT_REPLACED_BY_INITIAL_ENTITY",
+      "observation": {
+        "requested": {
+          "x": -36,
+          "z": 10
+        },
+        "actualCastPoint": {
+          "x": -36,
+          "z": 10
+        },
+        "initialEnemy": {
+          "x": -35,
+          "z": 10
+        },
+        "queuedPoint": {
+          "x": -35,
+          "z": 10
+        },
+        "radius": 4.5,
+        "probePoint": {
+          "x": -40.3,
+          "z": 10
+        },
+        "insideRequested": true,
+        "insideQueued": false,
+        "actualProbeMaxDrift": 0,
+        "anchorDistance": 1,
+        "hitTicks": [],
+        "actualHits": 0,
+        "expectedHits": 3,
+        "alliedDamage": 0
+      }
+    },
+    {
+      "heroId": "community7-lux",
+      "slot": "E",
+      "placement": "offset-enemy",
+      "seed": 20260909,
+      "error": "AssertionError [ERR_ASSERTION]: SELECTED_POINT_REPLACED_BY_INITIAL_ENTITY",
+      "observation": {
+        "requested": {
+          "x": -36,
+          "z": 10
+        },
+        "actualCastPoint": {
+          "x": -36,
+          "z": 10
+        },
+        "initialEnemy": {
+          "x": -35,
+          "z": 10
+        },
+        "queuedPoint": {
+          "x": -35,
+          "z": 10
+        },
+        "radius": 4.5,
+        "probePoint": {
+          "x": -40.3,
+          "z": 10
+        },
+        "insideRequested": true,
+        "insideQueued": false,
+        "actualProbeMaxDrift": 0,
+        "anchorDistance": 1,
+        "hitTicks": [],
+        "actualHits": 0,
+        "expectedHits": 3,
+        "alliedDamage": 0
+      }
+    },
+    {
+      "heroId": "community7-xerath",
+      "slot": "R",
+      "placement": "offset-enemy",
+      "seed": 20260908,
+      "error": "AssertionError [ERR_ASSERTION]: SELECTED_POINT_REPLACED_BY_INITIAL_ENTITY",
+      "observation": {
+        "requested": {
+          "x": -36,
+          "z": 10
+        },
+        "actualCastPoint": {
+          "x": -36,
+          "z": 10
+        },
+        "initialEnemy": {
+          "x": -35,
+          "z": 10
+        },
+        "queuedPoint": {
+          "x": -35,
+          "z": 10
+        },
+        "radius": 4.5,
+        "probePoint": {
+          "x": -40.3,
+          "z": 10
+        },
+        "insideRequested": true,
+        "insideQueued": false,
+        "actualProbeMaxDrift": 0,
+        "anchorDistance": 1,
+        "hitTicks": [],
+        "actualHits": 0,
+        "expectedHits": 3,
+        "alliedDamage": 0
+      }
+    },
+    {
+      "heroId": "community7-xerath",
+      "slot": "R",
+      "placement": "offset-enemy",
+      "seed": 20260909,
+      "error": "AssertionError [ERR_ASSERTION]: SELECTED_POINT_REPLACED_BY_INITIAL_ENTITY",
+      "observation": {
+        "requested": {
+          "x": -36,
+          "z": 10
+        },
+        "actualCastPoint": {
+          "x": -36,
+          "z": 10
+        },
+        "initialEnemy": {
+          "x": -35,
+          "z": 10
+        },
+        "queuedPoint": {
+          "x": -35,
+          "z": 10
+        },
+        "radius": 4.5,
+        "probePoint": {
+          "x": -40.3,
+          "z": 10
+        },
+        "insideRequested": true,
+        "insideQueued": false,
+        "actualProbeMaxDrift": 0,
+        "anchorDistance": 1,
+        "hitTicks": [],
+        "actualHits": 0,
+        "expectedHits": 3,
+        "alliedDamage": 0
+      }
+    },
+    {
+      "heroId": "community7-missfortune",
+      "slot": "E",
+      "placement": "offset-enemy",
+      "seed": 20260908,
+      "error": "AssertionError [ERR_ASSERTION]: SELECTED_POINT_REPLACED_BY_INITIAL_ENTITY",
+      "observation": {
+        "requested": {
+          "x": -36,
+          "z": 10
+        },
+        "actualCastPoint": {
+          "x": -36,
+          "z": 10
+        },
+        "initialEnemy": {
+          "x": -35,
+          "z": 10
+        },
+        "queuedPoint": {
+          "x": -35,
+          "z": 10
+        },
+        "radius": 4.5,
+        "probePoint": {
+          "x": -40.3,
+          "z": 10
+        },
+        "insideRequested": true,
+        "insideQueued": false,
+        "actualProbeMaxDrift": 0,
+        "anchorDistance": 1,
+        "hitTicks": [],
+        "actualHits": 0,
+        "expectedHits": 3,
+        "alliedDamage": 0
+      }
+    },
+    {
+      "heroId": "community7-missfortune",
+      "slot": "E",
+      "placement": "offset-enemy",
+      "seed": 20260909,
+      "error": "AssertionError [ERR_ASSERTION]: SELECTED_POINT_REPLACED_BY_INITIAL_ENTITY",
+      "observation": {
+        "requested": {
+          "x": -36,
+          "z": 10
+        },
+        "actualCastPoint": {
+          "x": -36,
+          "z": 10
+        },
+        "initialEnemy": {
+          "x": -35,
+          "z": 10
+        },
+        "queuedPoint": {
+          "x": -35,
+          "z": 10
+        },
+        "radius": 4.5,
+        "probePoint": {
+          "x": -40.3,
+          "z": 10
+        },
+        "insideRequested": true,
+        "insideQueued": false,
+        "actualProbeMaxDrift": 0,
+        "anchorDistance": 1,
+        "hitTicks": [],
+        "actualHits": 0,
+        "expectedHits": 3,
+        "alliedDamage": 0
+      }
+    }
+  ],
+  "pins": {
+    "audit-selected-point-fields-v2.mts": "ae569578699165516c68556ab3645871e085584a7212d0be1a53efe6af351e4b",
+    "whole-plan-seeds-v1.mts": "77c987f372387ed0164c14b841f2b74b28a7f2ad5b793ba6799e0b7c6dd3bf94",
+    "whole-plan-seeds-v2.mts": "0acbd5693a29f9f7c50fc4c2e4395997eefa8fc6b550deaf7220e2f2ef52b3eb",
+    "missfortune-plan-v1.mts": "2e1452938d55594d62417cea6c714dea2b82f9ae54966d6aae1f1795ebcf2937",
+    "ir-v5.mts": "8de7719eb03150d7a0bba69d11d3d811189fce0993805343f2d2ccb98c8b452f",
+    "ir-v4.mts": "9a8f74ee7e6bc82967ee418d458056bfba427e763ffecb5c2c8de969e8170882",
+    "ir4-compiler.mts": "2fbc10c967ff1e6c35ebed3e7e18e32ef4709d0c1f26cbd9e84f569f87ad5381",
+    "native-mechanism-actions.mts": "573b65f4f7f1f26e52a4fcb2b45b78f0a61e6b892c52507d38931ddbb357ecb5",
+    "probe-harness.mts": "3ed5122114f4dfc8885c0433d42e89bec519ef45d4a251e704591f7cfe73c0f6",
+    "source-review-v1/model-inputs.json": "03fbd4109220d38b3a65b05815b98cd5c6b3ba76821ca91e6f95deae17a51908",
+    "current-engine-v1/source-pins.json": "f828a45215b8d9af9d20d6713a63500578719a919fd7b2a841c462c86884933e",
+    "current-engine-v1/catalog-pins.json": "11757b76c9e1287f34b7a0ac5cd8af06c49842215b1367e2da5d8110cbecc04c"
+  },
+  "evidenceSha256": "9f046ee9feb050740bd08fee22a66d762804f6d515150d6c7b5204032c0fae1d",
+  "artifactsSha256": "4cc9aad84350725ae06a98488c9bb53c3154aa660d8b3ac67e7941c0b778a7f8",
+  "modelInference": false,
+  "modelTraining": false,
+  "sourceChanged": false,
+  "liveEngineEdited": false,
+  "trainingAdmitted": 0,
+  "fullHeroQualified": 0,
+  "goalComplete": false,
+  "scope": "Three source-explicit selected-point fields, two seeds, empty/centered/off-center initial enemy. Real registry, compiler and SimWorld; no model scoring or mutation of historical receipts.",
+  "limitations": [
+    "These are concrete source-recipe checks, not exhaustive hero certification.",
+    "The radius and spell timing are unchanged preview choices, not newly assigned source values.",
+    "A mismatch does not by itself establish a regression of every historical delayed contract."
+  ]
+}

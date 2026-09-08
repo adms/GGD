@@ -1,0 +1,118 @@
+{
+  "schema": "ggd-hero-finetune-research-archive@1",
+  "entries": [
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/audit-selected-point-fields-v1.mts",
+      "bytes": 7722,
+      "sha256": "6fe2297ac375270ee266fe0094d3fa7d398edf7df38b018c0b29b9fbb5d915ab",
+      "archive": "archives/00-audit-selected-point-fields-v1.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/audit-selected-point-fields-v2.mts",
+      "bytes": 8590,
+      "sha256": "ae569578699165516c68556ab3645871e085584a7212d0be1a53efe6af351e4b",
+      "archive": "archives/01-audit-selected-point-fields-v2.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/selected-point-fields-audit-v1/compiled-artifacts.private.json",
+      "bytes": 218923,
+      "sha256": "9564ca89a417e1dd032c733dd935a30941f9ae20c71bd673711f2d9acfd6805c",
+      "archive": "archives/02-selected-point-fields-audit-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/selected-point-fields-audit-v1/evidence.json",
+      "bytes": 2779779,
+      "sha256": "bbe9841cd5100951af4ee8e91f5d46a19195f3274779c73ee0e2a5afbd2f64cb",
+      "archive": "archives/02-selected-point-fields-audit-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/selected-point-fields-audit-v1/manifest.json",
+      "bytes": 7579,
+      "sha256": "f154803dc3fe6bc3d5f596d931fd3cca3f5f6bd15544755978c267da2fb4220c",
+      "archive": "archives/02-selected-point-fields-audit-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/selected-point-fields-audit-v2/compiled-artifacts.private.json",
+      "bytes": 218923,
+      "sha256": "9564ca89a417e1dd032c733dd935a30941f9ae20c71bd673711f2d9acfd6805c",
+      "archive": "archives/03-selected-point-fields-audit-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/selected-point-fields-audit-v2/evidence.json",
+      "bytes": 2784891,
+      "sha256": "7ff596585bfbd5d4258055304fb4a4aecdc6b3ff38796f53c9358afc581b3111",
+      "archive": "archives/03-selected-point-fields-audit-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/selected-point-fields-audit-v2/manifest.json",
+      "bytes": 8067,
+      "sha256": "e7c13314f083f89647838534d34ed7ea751aea932f3804f9bc317b1e7a2f5a37",
+      "archive": "archives/03-selected-point-fields-audit-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/SELECTED_POINT_FIELDS_REPORT.md",
+      "bytes": 4302,
+      "sha256": "c29814d934e0fcd1314de68141358d8c96f5a5a97d7a9c2a417937b81657b415",
+      "archive": "archives/04-SELECTED_POINT_FIELDS_REPORT.md.zip"
+    }
+  ],
+  "archives": [
+    {
+      "path": "archives/00-audit-selected-point-fields-v1.mts.zip",
+      "bytes": 3416,
+      "sha256": "89527f49c33d9426692b945f3c2f2ef4e26339db9b8a46bf98aae138ba38b40e"
+    },
+    {
+      "path": "archives/01-audit-selected-point-fields-v2.mts.zip",
+      "bytes": 3761,
+      "sha256": "6e036902a1cd93d0fdc2667bb5e87a416a731288d60b40e33972c860797bdf4a"
+    },
+    {
+      "path": "archives/02-selected-point-fields-audit-v1.zip",
+      "bytes": 89457,
+      "sha256": "b2f5b3dc085ff8e74225ffa1fa9a9e5b23204805c1906b2ed2dacc1c038c1678"
+    },
+    {
+      "path": "archives/03-selected-point-fields-audit-v2.zip",
+      "bytes": 84236,
+      "sha256": "1b08e813734e70d46ad85bbd50e2a878628a3bfb2d5962fa82ff1e0e604c7803"
+    },
+    {
+      "path": "archives/04-SELECTED_POINT_FIELDS_REPORT.md.zip",
+      "bytes": 2751,
+      "sha256": "ff24dd165abb4fa3a1164f0ed7ca47c73f444c813440e5f33d093e76b4ff06fd"
+    }
+  ],
+  "sourceMirrors": [
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/audit-selected-point-fields-v1.mts.txt",
+      "sha256": "6fe2297ac375270ee266fe0094d3fa7d398edf7df38b018c0b29b9fbb5d915ab"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/audit-selected-point-fields-v2.mts.txt",
+      "sha256": "ae569578699165516c68556ab3645871e085584a7212d0be1a53efe6af351e4b"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/SELECTED_POINT_FIELDS_REPORT.md",
+      "sha256": "c29814d934e0fcd1314de68141358d8c96f5a5a97d7a9c2a417937b81657b415"
+    }
+  ],
+  "omitted": [],
+  "secretPatternCheckPassed": true,
+  "scriptSha256": "d34642e4dbf75fabaa83d61ec278152a2334024fe25d8939e3f3e450acd93d59",
+  "productionQualified": false,
+  "scope": "Explicit incremental research supplement; baseline dependencies remain in the original archive.",
+  "includedRoots": [
+    "outputs/hero-forge-12b-restart-20260908/audit-selected-point-fields-v1.mts",
+    "outputs/hero-forge-12b-restart-20260908/audit-selected-point-fields-v2.mts",
+    "outputs/hero-forge-12b-restart-20260908/selected-point-fields-audit-v1",
+    "outputs/hero-forge-12b-restart-20260908/selected-point-fields-audit-v2",
+    "outputs/hero-forge-12b-restart-20260908/SELECTED_POINT_FIELDS_REPORT.md"
+  ],
+  "terminalState": {
+    "path": "outputs/hero-forge-12b-restart-20260908/selected-point-fields-audit-v2/manifest.json",
+    "sha256": "e7c13314f083f89647838534d34ed7ea751aea932f3804f9bc317b1e7a2f5a37",
+    "status": "stopped-report-written"
+  },
+  "privacyNote": "Historical machine paths and fictional hero source texts are preserved for evidence integrity; no credential files are included."
+}
