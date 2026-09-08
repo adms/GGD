@@ -1,0 +1,14 @@
+
+> ggd@0.0.0 decor:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> bash scripts/genrun.sh decor:build decor:build:raw
+
+🔓 隔離區:解鎖 449 份（追蹤 854,缺 0）
+
+> ggd@0.0.0 decor:build:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> tsx tools/config-decor/gen.ts
+
+✅ /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/docs/editor-contract/ggd-config-decoration-census.json
+✅ /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/docs/editor-contract/ggd-config-decoration-census.md
+   旋鈕 1975 · A 45 · B 9 · C 1613
+🔒 隔離區:上鎖 449 份（追蹤 854,缺 0,正規化器專屬 403 份不上鎖,部分產物 2 份不上鎖(GH#1097)）
+✓ genrun: decor:build 完成（產物已重新上鎖）

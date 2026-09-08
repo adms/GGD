@@ -1,0 +1,39 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+
+ ✓ packages/shared/src/content/communityRoom.test.ts (6 tests) 6279ms
+   ✓ admits a generated counterpart with its approved work without adding a second roster choice 631ms
+   ✓ loads approved heroes into an immutable match snapshot without mutating the release base 309ms
+   ✓ loads different versions of the same template in one room without sharing mutable definitions 1097ms
+   ✓ loads package-local uploaded model bindings and shares identical models across approved heroes 1629ms
+ ✓ apps/editor/src/hero/validationBaseline.test.ts (6 tests) 3747ms
+   ✓ previews generated forms on the same paired-body baseline as the trusted package 1420ms
+   ✓ requires explicit generator adoption before preview and keeps every authored slot and binding 311ms
+   ✓ runs all six offline Editor slots on the identical full Main baseline 676ms
+   ✓ applies designer positions, HP/MP and condition markers without changing the authored hero 923ms
+   ✓ uses the same trusted approval for a new body in Editor and Main, including withdrawal 340ms
+ ✓ packages/shared/src/content/import/heroPackage.test.ts (18 tests) 13895ms
+   ✓ complete hero through Main's package representation > round trips a generated counterpart as owned content and rejects an existing identity collision 1777ms
+   ✓ complete hero through Main's package representation > round trips the exact generator and processor identities alongside the full editable hero 1359ms
+   ✓ complete hero through Main's package representation > leaves a legacy plan's unknown generator explicit while identifying its current compiler 349ms
+   ✓ complete hero through Main's package representation > rejects changed build provenance even with newly signed manifest hashes 700ms
+   ✓ complete hero through Main's package representation > rejects missing build provenance even with newly signed manifest hashes 683ms
+   ✓ complete hero through Main's package representation > pins a summoned champion and its appearance instead of relying on the server-only baseline 1190ms
+   ✓ complete hero through Main's package representation > carries original slot requirements and author notes through ZIP without turning them into verdicts 1305ms
+   ✓ complete hero through Main's package representation > pins authored subtype calls, compiles them once and rejects missing or changed dependencies 731ms
+   ✓ complete hero through Main's package representation > round trips source text, repeated products, locks and six compiled slots through the existing validator 1207ms
+   ✓ complete hero through Main's package representation > rejects runtime drift even after an attacker recomputes the outer digest 683ms
+   ✓ complete hero through Main's package representation > rejects dependency drift even after an attacker recomputes the outer digest 696ms
+   ✓ complete hero through Main's package representation > rejects root drift even after an attacker recomputes the outer digest 594ms
+   ✓ complete hero through Main's package representation > rejects simulation drift even after an attacker recomputes the outer digest 722ms
+   ✓ complete hero through Main's package representation > rejects missing drift even after an attacker recomputes the outer digest 580ms
+   ✓ complete hero through Main's package representation > rejects scope drift even after an attacker recomputes the outer digest 309ms
+   ✓ complete hero through Main's package representation > rejects manifest drift even after an attacker recomputes the outer digest 624ms
+ ✓ packages/shared/src/content/heroForge/forms.test.ts (4 tests) 403ms
+
+ Test Files  4 passed (4)
+      Tests  34 passed (34)
+   Start at  00:48:14
+   Duration  19.33s (transform 3.34s, setup 0ms, collect 10.32s, tests 24.32s, environment 0ms, prepare 308ms)
+

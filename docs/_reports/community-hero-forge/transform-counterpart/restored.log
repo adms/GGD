@@ -1,0 +1,12 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+
+ ✓ packages/shared/src/content/heroForge/catalogMatrix.test.ts (5 tests | 4 skipped) 2236ms
+   ✓ hero forge live catalog matrix > compiles and executes every enabled template in its active or passive lane 2236ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 4 skipped (5)
+   Start at  00:58:33
+   Duration  4.93s (transform 1.49s, setup 0ms, collect 2.12s, tests 2.24s, environment 0ms, prepare 89ms)
+

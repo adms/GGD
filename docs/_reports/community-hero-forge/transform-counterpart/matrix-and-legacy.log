@@ -1,0 +1,22 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+
+ ✓ packages/shared/src/content/championForms.test.ts (8 tests) 42ms
+ ✓ packages/shared/src/sim/championFormToggle.test.ts (5 tests) 570ms
+ ✓ packages/shared/src/sim/championFormExclusive.test.ts (2 tests) 28ms
+ ✓ packages/shared/src/content/transformInheritsOrigin.test.ts (2 tests) 457ms
+ ✓ packages/shared/src/content/heroForge/catalogMatrix.test.ts (5 tests | 1 skipped) 44869ms
+   ✓ hero forge live catalog matrix > generates all 10 origins across all three deterministic profiles 2279ms
+   ✓ hero forge live catalog matrix > compiles and executes every enabled template in its active or passive lane 1618ms
+   ✓ hero forge live catalog matrix > executes every ordered pair of compatible templates with explicit last-wins 40599ms
+   ✓ hero forge live catalog matrix > compiles every template at the eight-card boundary, repeated and in rotating mixed stacks 373ms
+ ✓ apps/content-api/src/heroBuildHistory.test.ts (3 tests) 8729ms
+   ✓ restores exact generator and processor sources and lock files after restarting the history store 7741ms
+   ✓ records a new generator version when a source dependency or the dependency lock changes 720ms
+
+ Test Files  6 passed (6)
+      Tests  24 passed | 1 skipped (25)
+   Start at  00:50:11
+   Duration  57.54s (transform 2.33s, setup 0ms, collect 6.02s, tests 54.70s, environment 1ms, prepare 420ms)
+

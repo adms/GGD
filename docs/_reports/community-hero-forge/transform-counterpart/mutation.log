@@ -1,0 +1,37 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+
+ ❯ packages/shared/src/content/heroForge/catalogMatrix.test.ts (5 tests | 1 failed | 4 skipped) 1880ms
+   × hero forge live catalog matrix > compiles and executes every enabled template in its active or passive lane 1879ms
+     → expected [ …(2) ] to deeply equal []
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/shared/src/content/heroForge/catalogMatrix.test.ts > hero forge live catalog matrix > compiles and executes every enabled template in its active or passive lane
+AssertionError: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- Array []
++ Array [
++   "tpl-transform/rank1: scenario no-form",
++   "tpl-transform/rank4: scenario no-form",
++ ]
+
+ ❯ packages/shared/src/content/heroForge/catalogMatrix.test.ts:87:22
+     85|       }
+     86|     }
+     87|     expect(failures).toEqual([]);
+       |                      ^
+     88|   });
+     89| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 skipped (5)
+   Start at  00:52:50
+   Duration  4.36s (transform 1.36s, setup 0ms, collect 1.93s, tests 1.88s, environment 0ms, prepare 87ms)
+

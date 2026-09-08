@@ -1,0 +1,41 @@
+
+> ggd@0.0.0 typecheck /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> pnpm -r --no-bail --if-present typecheck
+
+Scope: 20 of 21 workspace projects
+apps/test-dashboard typecheck$ tsc --noEmit -p tsconfig.json
+packages/shared typecheck$ tsc --noEmit -p tsconfig.json
+tools/capability-export typecheck$ tsc --noEmit -p tsconfig.json
+tools/model-budget typecheck$ tsc --noEmit -p tsconfig.json
+apps/test-dashboard typecheck: Done
+tools/todo-check typecheck$ tsc --noEmit -p tsconfig.json
+packages/shared typecheck: Done
+tools/tts-gen typecheck$ node --check src/generate.mjs && node --check src/build-champ-names.mjs && node --check src/build-champ-quotes.mjs
+tools/tts-gen typecheck: Done
+tools/uptime-probe typecheck$ tsc --noEmit -p tsconfig.json
+tools/todo-check typecheck: Done
+tools/vfx-visual-review typecheck$ tsc --noEmit -p tsconfig.json
+tools/uptime-probe typecheck: Done
+tools/vfx-visual-review typecheck: Done
+tools/capability-export typecheck: Done
+tools/model-budget typecheck: Done
+apps/admin typecheck$ tsc --noEmit -p tsconfig.json
+apps/client typecheck$ tsc --noEmit -p tsconfig.json
+apps/content-api typecheck$ tsc --noEmit -p tsconfig.json
+apps/editor typecheck$ tsc --noEmit -p tsconfig.json
+apps/editor typecheck: Done
+apps/editor-desktop typecheck$ tsc --noEmit -p tsconfig.json
+apps/content-api typecheck: Done
+apps/game-server typecheck$ tsc --noEmit -p tsconfig.json
+apps/game-server typecheck: Done
+tools/anime-arena-map typecheck$ tsc --noEmit -p tsconfig.json
+apps/editor-desktop typecheck: Done
+tools/role-classify typecheck$ tsc --noEmit -p tsconfig.json
+tools/anime-arena-map typecheck: Done
+tools/voxel-gen typecheck$ tsc --noEmit -p tsconfig.json
+tools/role-classify typecheck: Done
+apps/admin typecheck: Done
+apps/client typecheck: Done
+tools/voxel-gen typecheck: Done
+tools/ttk-sim typecheck$ tsc --noEmit -p tsconfig.json
+tools/ttk-sim typecheck: Done

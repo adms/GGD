@@ -1,0 +1,133 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+
+ ❯ packages/shared/src/content/heroForge/catalogMatrix.test.ts (6 tests | 2 failed | 4 skipped) 40303ms
+   × hero forge live catalog matrix > compiles and executes every enabled template in its active or passive lane 1913ms
+     → expected [ …(2) ] to deeply equal []
+   × hero forge live catalog matrix > executes every ordered pair of compatible templates with explicit last-wins 38390ms
+     → expected [ …(74) ] to deeply equal []
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/shared/src/content/heroForge/catalogMatrix.test.ts > hero forge live catalog matrix > compiles and executes every enabled template in its active or passive lane
+AssertionError: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- Array []
++ Array [
++   "tpl-transform/rank1: scenario no-form",
++   "tpl-transform/rank4: scenario no-form",
++ ]
+
+ ❯ packages/shared/src/content/heroForge/catalogMatrix.test.ts:111:22
+    109|       }
+    110|     }
+    111|     expect(failures).toEqual([]);
+       |                      ^
+    112|   });
+    113| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/shared/src/content/heroForge/catalogMatrix.test.ts > hero forge live catalog matrix > executes every ordered pair of compatible templates with explicit last-wins
+AssertionError: expected [ …(74) ] to deeply equal []
+
+- Expected
++ Received
+
+- Array []
++ Array [
++   "tpl-apply-status>tpl-transform:no-form",
++   "tpl-beam-roll>tpl-transform:no-form",
++   "tpl-blink-strike>tpl-transform:no-form",
++   "tpl-blink>tpl-transform:no-form",
++   "tpl-buff-self>tpl-transform:no-form",
++   "tpl-charge-push>tpl-transform:no-form",
++   "tpl-combo-finisher>tpl-transform:no-form",
++   "tpl-dragon-quake>tpl-transform:no-form",
++   "tpl-dragon-serpent>tpl-transform:no-form",
++   "tpl-drain-leech>tpl-transform:no-form",
++   "tpl-effect-sequence>tpl-transform:no-form",
++   "tpl-ground-nova>tpl-transform:no-form",
++   "tpl-heal>tpl-transform:no-form",
++   "tpl-instant-blast>tpl-transform:no-form",
++   "tpl-leap-strike>tpl-transform:no-form",
++   "tpl-life-manipulate>tpl-transform:no-form",
++   "tpl-line-blast>tpl-transform:no-form",
++   "tpl-line-strike>tpl-transform:no-form",
++   "tpl-line-sweep>tpl-transform:no-form",
++   "tpl-lock-combo>tpl-transform:no-form",
++   "tpl-locust-line>tpl-transform:no-form",
++   "tpl-locust-orb>tpl-transform:no-form",
++   "tpl-locust-strike>tpl-transform:no-form",
++   "tpl-locust-swarm>tpl-transform:no-form",
++   "tpl-locust-travel>tpl-transform:no-form",
++   "tpl-orbit-array>tpl-transform:no-form",
++   "tpl-periodic-field>tpl-transform:no-form",
++   "tpl-projectile-strike>tpl-transform:no-form",
++   "tpl-proxy-cast>tpl-transform:no-form",
++   "tpl-proxy-fanout>tpl-transform:no-form",
++   "tpl-pull-throw>tpl-transform:no-form",
++   "tpl-radial-burst>tpl-transform:no-form",
++   "tpl-random-barrage>tpl-transform:no-form",
++   "tpl-single-strike>tpl-transform:no-form",
++   "tpl-summon-agent>tpl-transform:no-form",
++   "tpl-teleport>tpl-transform:no-form",
++   "tpl-transform>tpl-apply-status:no-form",
++   "tpl-transform>tpl-beam-roll:no-form",
++   "tpl-transform>tpl-blink-strike:no-form",
++   "tpl-transform>tpl-blink:no-form",
++   "tpl-transform>tpl-buff-self:no-form",
++   "tpl-transform>tpl-charge-push:no-form",
++   "tpl-transform>tpl-combo-finisher:no-form",
++   "tpl-transform>tpl-dragon-quake:no-form",
++   "tpl-transform>tpl-dragon-serpent:no-form",
++   "tpl-transform>tpl-drain-leech:no-form",
++   "tpl-transform>tpl-effect-sequence:no-form",
++   "tpl-transform>tpl-ground-nova:no-form",
++   "tpl-transform>tpl-heal:no-form",
++   "tpl-transform>tpl-instant-blast:no-form",
++   "tpl-transform>tpl-leap-strike:no-form",
++   "tpl-transform>tpl-life-manipulate:no-form",
++   "tpl-transform>tpl-line-blast:no-form",
++   "tpl-transform>tpl-line-strike:no-form",
++   "tpl-transform>tpl-line-sweep:no-form",
++   "tpl-transform>tpl-lock-combo:no-form",
++   "tpl-transform>tpl-locust-line:no-form",
++   "tpl-transform>tpl-locust-orb:no-form",
++   "tpl-transform>tpl-locust-strike:no-form",
++   "tpl-transform>tpl-locust-swarm:no-form",
++   "tpl-transform>tpl-locust-travel:no-form",
++   "tpl-transform>tpl-orbit-array:no-form",
++   "tpl-transform>tpl-periodic-field:no-form",
++   "tpl-transform>tpl-projectile-strike:no-form",
++   "tpl-transform>tpl-proxy-cast:no-form",
++   "tpl-transform>tpl-proxy-fanout:no-form",
++   "tpl-transform>tpl-pull-throw:no-form",
++   "tpl-transform>tpl-radial-burst:no-form",
++   "tpl-transform>tpl-random-barrage:no-form",
++   "tpl-transform>tpl-single-strike:no-form",
++   "tpl-transform>tpl-summon-agent:no-form",
++   "tpl-transform>tpl-teleport:no-form",
++   "tpl-transform>tpl-traveling-wave:no-form",
++   "tpl-traveling-wave>tpl-transform:no-form",
++ ]
+
+ ❯ packages/shared/src/content/heroForge/catalogMatrix.test.ts:134:22
+    132|     }
+    133|     expect(cases).toBeGreaterThan(100);
+    134|     expect(failures).toEqual([]);
+       |                      ^
+    135|   });
+    136| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 4 skipped (6)
+   Start at  00:43:36
+   Duration  43.03s (transform 1.49s, setup 0ms, collect 2.12s, tests 40.30s, environment 0ms, prepare 89ms)
+

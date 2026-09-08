@@ -1,0 +1,14 @@
+
+> ggd@0.0.0 msgledger:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> bash scripts/genrun.sh msgledger:build msgledger:build:raw
+
+🔓 隔離區:解鎖 0 份（追蹤 850,缺 0）
+
+> ggd@0.0.0 msgledger:build:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> bash scripts/message-ledger.sh
+
+✓ 2026-09-09：2 則訊息,補了 2 列（其餘已經有列）
+⚠️ 新列的票號是**推出來**的;推不出來的是 `⏸ 未對票` —— 去填掉,⛔ 留著 `pnpm msgledger:check` 會紅
+  ⏭ 在 genrun／skills:sync 鏈裡 ⇒ 這裡不重生成 board（skills:sync 鏈上有 board:roll／board:build；單獨跑 msgledger:build 的話收工請跑 `bash scripts/genrun.sh board:roll` ＋ `board:build`，⛔ 不然 commit 閘會擋）
+🔒 隔離區:上鎖 447 份（追蹤 852,缺 0,正規化器專屬 403 份不上鎖,部分產物 2 份不上鎖(GH#1097)）
+✓ genrun: msgledger:build 完成（產物已重新上鎖）
