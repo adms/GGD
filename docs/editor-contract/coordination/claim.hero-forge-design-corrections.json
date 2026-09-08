@@ -6,7 +6,7 @@
   "to": "main",
   "baseCommit": "6efdd3bfb4df593a26fa2e94d4d65f8e572c3c64",
   "contractFingerprint": "b91a0f59c31289ed",
-  "title": "#1132 局部修正：友軍盾、換牌、電荷及 #1141 吉伊卡哇六槽；37 名整體仍未完成",
+  "title": "#1132 局部機制修正、#1141 吉伊卡哇六槽與 #1143 批次驗證；37 名整體未完成",
   "claims": [
     {
       "kind": "confirmed",
@@ -170,6 +170,21 @@
         "packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts",
         "packages/shared/src/content/heroForge/communityRefinements/apply.ts"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "#1143 批次驗證器接受指定資料夾並推導數量、原文及六槽；綁定 manifest 的現有行為測試集中執行，成功證據僅在來源／命令／日誌 SHA 相符時重用。第一批 37／222 實跑與一名／六槽入口通過；68 項行為測試涵蓋清單中的 16 槽，206 槽未配對。release 失敗後自動展開全部 skills 子檢查，保留失敗；未宣稱第二批、原設計、視覺或正式發布完成。",
+      "repro": {
+        "command": "python3 tools/community-hero-forge/test_verify_authoring_batch.py -v",
+        "expectedExit": 0
+      },
+      "commit": "d635f8fcfe371e6c7f6214d46288c33c4efd3a79",
+      "evidence": [
+        "tools/community-hero-forge/verify-authoring-batch.py",
+        "tools/community-hero-forge/BATCH_VERIFICATION.md",
+        "materials/community-hero-forge/validation-plan.json",
+        "materials/community-hero-forge/refinements/batch-verifier-verification.json"
+      ]
     }
   ],
   "unblocks": [],
@@ -180,6 +195,6 @@
     }
   ],
   "asks": [
-    "請 Main 審查 #1141 nearbyCombat 条件與表單、dispel.statusTag 過濾、微調 version 對應作品 revision 與吉伊卡哇六槽；以及 #1140 的共用 chainLightning.retargetOnLost schema／runtime 選项及對應配方、#1139 換牌、友軍盾、radius:0 生成器修正、官方契約與 AI 守則。最新 37 份可共用作品在 materials/community-hero-forge/projects；#1132 保持開啟，完整原設計、修正後畫面／服務 ZIP 及正式發布仍未完成，不據此發布 37 名。"
+    "請 Main 一併審查 #1143 批次驗證入口、失敗集中回報、來源綁定續跑及批次測試治具。請 Main 審查 #1141 nearbyCombat 条件與表單、dispel.statusTag 過濾、微調 version 對應作品 revision 與吉伊卡哇六槽；以及 #1140 的共用 chainLightning.retargetOnLost schema／runtime 選项及對應配方、#1139 換牌、友軍盾、radius:0 生成器修正、官方契約與 AI 守則。最新 37 份可共用作品在 materials/community-hero-forge/projects；#1132 保持開啟，完整原設計、修正後畫面／服務 ZIP 及正式發布仍未完成，不據此發布 37 名。"
   ]
 }

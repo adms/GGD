@@ -1,5 +1,7 @@
 # 社群英雄交付材料
 
+批次檢查統一入口：[操作說明](../../tools/community-hero-forge/BATCH_VERIFICATION.md)。指定資料夾即可核對來源、重新編譯、集中跑已登記的機制測試；支援發布前檢查、來源綁定續跑與逐槽缺口報告。數量不固定為 37／222，第二批需提供自己的原稿與行為案例對應。
+
 ## 最新可共用作品（2026-09-09）
 
 [index.json](index.json)＋[projects/](projects/) 已保存 37 份實際 HeroProject，配對既有 [recipes/](recipes/)；包含 #1141 吉伊卡哇六槽機制與版本修正、#1140 御坂美琴電荷、EX 與單發／連鎖修正，#1139 風／樹 Q 切換及前批友軍盾、卡牌連結修正。逐檔版本與 SHA-256 在 [handoff-manifest.json](handoff-manifest.json)。**37 名／222 槽重新編譯通過；27 名仍有通用普攻被動，完整原設計、畫面與正式發布尚未完成**，詳見 [逐槽對照](refinements/design-audit.json) 及 #1132。

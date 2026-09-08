@@ -1,7 +1,7 @@
 {
   "file": "AI參考全自動鑄造守則.md",
-  "sha256": "664a3ac93f47f42ec4f1e095da0bf69a99ec41b33d61af6408b3b17d1a7788e5",
-  "localLinksChecked": 29,
+  "sha256": "75b32a6edef422e861d7a6800397a15de74fd9933138495e6e0a144b213e0fd3",
+  "localLinksChecked": 30,
   "missingLinks": [],
   "commandsAndReferencedTests": "checked against current repository",
   "semanticReview": [
@@ -18,5 +18,15 @@
     "ticket closure only after acceptance",
     "AWS existing-profile boundary"
   ],
-  "runtimeClaims": "guide does not claim full hero acceptance"
+  "runtimeClaims": "guide does not claim full hero acceptance",
+  "batchVerificationReview": {
+    "issue": 1143,
+    "source": "tools/community-hero-forge/BATCH_VERIFICATION.md",
+    "checks": [
+      "manifest-bound suites",
+      "same-source success-only cache",
+      "exit 2 does not mean complete",
+      "new batch requires its own source/test mapping"
+    ]
+  }
 }

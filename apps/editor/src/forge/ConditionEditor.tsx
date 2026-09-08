@@ -422,6 +422,7 @@ export const CONDITION_EDITOR_LEAF_FIELDS = Object.freeze([
   "op",
   "other",
   "p",
+  "radius",
   "stat",
   "statusId",
   "slot",
