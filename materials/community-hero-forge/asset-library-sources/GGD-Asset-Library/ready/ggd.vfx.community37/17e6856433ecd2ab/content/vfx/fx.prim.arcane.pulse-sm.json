@@ -1,0 +1,91 @@
+{
+  "id": "fx.prim.arcane.pulse-sm",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "sphere",
+    "radius": 0.432
+  },
+  "mode": "burst",
+  "burstCount": 32,
+  "lifetimeSec": {
+    "min": 0.3,
+    "max": 0.7
+  },
+  "size": {
+    "start": 0.151,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      0.9532,
+      0.901,
+      1,
+      1
+    ],
+    "end": [
+      0.1332,
+      0.081,
+      0.18,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.151
+    ],
+    [
+      0.2,
+      0.36
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        0.9532,
+        0.901,
+        1,
+        1
+      ]
+    ],
+    [
+      0.2,
+      [
+        0.74,
+        0.45,
+        1,
+        1
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.37,
+        0.225,
+        0.5,
+        0.42
+      ]
+    ],
+    [
+      1,
+      [
+        0.1332,
+        0.081,
+        0.18,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 1,
+  "speed": {
+    "min": 1.5,
+    "max": 4
+  },
+  "texture": "assets/textures/particles/magic_02.png"
+}

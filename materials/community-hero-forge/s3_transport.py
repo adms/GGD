@@ -132,6 +132,7 @@ def publish(here, source):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('--manifest-dir', type=Path, help='Committed manifest and S3 location directory; defaults to this script directory')
     commands = ap.add_subparsers(dest='command', required=True)
     upload = commands.add_parser('upload', help='Create only; refuses replacement, uses no deletion or IAM actions')
     upload.add_argument('--source-parts', type=Path, required=True)
@@ -139,7 +140,7 @@ def main():
     download = commands.add_parser('download', help='Fetch verified parts for restore.py --parts-dir')
     download.add_argument('--parts-dir', type=Path, required=True)
     args = ap.parse_args()
-    here = Path(__file__).resolve().parent
+    here = args.manifest_dir.resolve() if args.manifest_dir else Path(__file__).resolve().parent
     if args.command == 'upload':
         if args.receipt.exists() or args.receipt.is_symlink():
             raise ValueError('Receipt must be a new file')

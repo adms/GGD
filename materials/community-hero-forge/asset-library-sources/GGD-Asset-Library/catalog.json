@@ -1,0 +1,21 @@
+{
+  "schema": "ggd-standardized-resource-catalog@1",
+  "entries": [
+    {
+      "id": "ggd.vfx.community37",
+      "kind": "vfx-library",
+      "title": "GGD 社群英雄使用的標準特效元件",
+      "status": "standardized",
+      "path": "ready/ggd.vfx.community37/ea945b712cb3702d",
+      "vfx_count": 60,
+      "content_digest": "17e6856433ecd2ab4bb7035c803933372bd5c0f733ced655ae80566e5fda708f",
+      "validation": "ready/ggd.vfx.community37/ea945b712cb3702d/validation.json",
+      "provenance": {
+        "source": "GGD authored primitive VFX; used by the 37-hero workflow",
+        "repo": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge",
+        "not_game_rips": true
+      }
+    }
+  ],
+  "updated_at": "2026-09-08T10:48:02.228683+08:00"
+}

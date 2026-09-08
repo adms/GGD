@@ -1,0 +1,17 @@
+{
+  "missing_paths": [],
+  "mba_missing_character_models": [],
+  "mba_conversion_failures": [
+    {
+      "source": "Model/Chara07/Kukuri.x",
+      "status": "failed",
+      "error": "Command '['assimp', 'export', '/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/raw/Model/Chara07/Kukuri.x', '/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara07/Kukuri.glb', '-fglb2']' died with <Signals.SIGSEGV: 11>.",
+      "log": "models/Model/Chara07/Kukuri.conversion.log"
+    }
+  ],
+  "notes": [
+    "300 Heroes: 4 undecoded audio payloads; 4 OBJ conversion issues; 3236 unresolved material references.",
+    "MBA: 21 definitions, 20 matched main models. 1.70 not acquired.",
+    "Character VFX/audio links are incomplete; use global path search. No result is not proof of absence."
+  ]
+}

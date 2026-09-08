@@ -156,6 +156,8 @@ Go 完整英雄回復這輪也一起執行三項總檢查：Editor 583 項測試
 
 ## 證據與續作
 
+S3 全量盤點已補上原封存未涵蓋的既有素材，見 [補漏與完整性範圍](../../../../materials/community-hero-forge/supplements/workspace-assets-20260908/README.md)。去重 5,444 份、約 427 MB，重新下載還原通過；四個工作樹 29,108 個資源路徑實際 SHA-256 核對無缺件。目前資源庫 script、JSON 定義及文件也加入 Git 來源快照。這次是存儲完整性修正，不是新一輪遊戲／正式發布驗收。
+
 交付材料入口為 [`materials/community-hero-forge`](../../../../materials/community-hero-forge/README.md)。Git 保留原目標／交接文字、37 名原始配方、逐檔 manifest 與還原工具；34 個分段改存指定 S3，合計 1,126,032,082 bytes，可還原 36,115 份檔案，分段不在替代分支的檔案或可達歷史中。封存包含目前與歷史 ZIP、模型／動作／特效／音效、逐槽畫面、來源版本庫、七名 LoL 候選及當時素材查詢索引。
 
 `restore.py --download` 以已配置的 `vibe-coding` profile 取得固定 SHA-256 分段，驗證後只還原到新目錄，檔案彼此獨立。原 `manifest.json`、`verification.json` 與 `contract-verification.json` 不變；新增 S3 上傳及從遠端完整還原收據，區分本次傳輸核對與原本的隔離驗收。

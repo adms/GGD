@@ -1,0 +1,533 @@
+{
+  "scope": "Declared game libraries and community37 working materials; path/size inventory compared with published SHA256 manifests. Does not assert every unrelated workspace or all Git history has been audited.",
+  "remoteExpectedObjects": 331,
+  "remoteInventoryProblems": [],
+  "legacyFiles": 233280,
+  "legacyArchiveBytes": 51211505407,
+  "communityFiles": 36115,
+  "communityArchiveBytes": 1126032082,
+  "sharedRelease": "edce15c8630cc80ba8b6a14a",
+  "sharedResources": 60,
+  "sourceCounts": {
+    "outputs/game-asset-library-20260907": 232454,
+    "outputs/community-lol-models-20260907": 501,
+    "outputs/community-hero-asset-integration": 35322,
+    "outputs/asset-library-registry-20260907": 10,
+    "GGD社群英雄上傳內容_37名": 236,
+    "GGD-Asset-Library/intake": 2,
+    "GGD-Asset-Library/staging": 67,
+    "GGD-Asset-Library/ready": 136
+  },
+  "missingFromPublishedManifests": [
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/resource.json",
+      "bytes": 2546,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/validation.json",
+      "bytes": 12206,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.void.nova.json",
+      "bytes": 1078,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.fire.bolt.json",
+      "bytes": 1112,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.nature.pulse-sm.json",
+      "bytes": 1072,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.holy.arc.json",
+      "bytes": 1144,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.physical.pulse-sm.json",
+      "bytes": 1076,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ki.beam.json",
+      "bytes": 1122,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.wind.nova.json",
+      "bytes": 1084,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ki.slash.json",
+      "bytes": 1126,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ice.nova.json",
+      "bytes": 1062,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.fire.pulse-sm.json",
+      "bytes": 1060,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ice.pulse-sm.json",
+      "bytes": 1068,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.arcane.beam.json",
+      "bytes": 1123,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.holy.slash.json",
+      "bytes": 1128,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.nature.pulse.json",
+      "bytes": 1064,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.void.pulse-sm.json",
+      "bytes": 1084,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.wind.pulse-sm.json",
+      "bytes": 1090,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.lightning.slash.json",
+      "bytes": 1128,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.lightning.bolt.json",
+      "bytes": 1124,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.arcane.pulse.json",
+      "bytes": 1063,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ki.pulse-sm.json",
+      "bytes": 1070,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.arcane.pulse-sm.json",
+      "bytes": 1071,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.wind.slash.json",
+      "bytes": 1146,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.physical.bolt.json",
+      "bytes": 1128,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.void.slash.json",
+      "bytes": 1140,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.arcane.nova.json",
+      "bytes": 1065,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.fire.pulse.json",
+      "bytes": 1052,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ice.beam.json",
+      "bytes": 1120,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.sound.nova.json",
+      "bytes": 1077,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.physical.pulse.json",
+      "bytes": 1068,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.arcane.summon.json",
+      "bytes": 1068,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.void.pulse.json",
+      "bytes": 1076,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.physical.arc.json",
+      "bytes": 1148,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.blood.pulse-sm.json",
+      "bytes": 1081,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.physical.beam.json",
+      "bytes": 1128,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ice.bolt.json",
+      "bytes": 1120,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.physical.slash.json",
+      "bytes": 1132,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.fire.arc.json",
+      "bytes": 1132,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.arcane.arc.json",
+      "bytes": 1143,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.fire.slash.json",
+      "bytes": 1116,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.void.summon.json",
+      "bytes": 1081,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.lightning.pulse.json",
+      "bytes": 1064,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.lightning.beam.json",
+      "bytes": 1124,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.arcane.slash.json",
+      "bytes": 1127,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.nature.slash.json",
+      "bytes": 1128,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.holy.beam.json",
+      "bytes": 1124,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.wind.pulse.json",
+      "bytes": 1082,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.lightning.pulse-sm.json",
+      "bytes": 1072,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.blood.slash.json",
+      "bytes": 1137,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.wind.arc.json",
+      "bytes": 1162,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.sound.pulse.json",
+      "bytes": 1075,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.holy.pulse-sm.json",
+      "bytes": 1072,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ki.pulse.json",
+      "bytes": 1062,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.void.arc.json",
+      "bytes": 1156,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.physical.nova.json",
+      "bytes": 1070,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.holy.pulse.json",
+      "bytes": 1064,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.fire.beam.json",
+      "bytes": 1112,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.lightning.arc.json",
+      "bytes": 1144,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.holy.nova.json",
+      "bytes": 1066,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.lightning.nova.json",
+      "bytes": 1066,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.sound.pulse-sm.json",
+      "bytes": 1083,
+      "suffix": ".json"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/assets/textures/particles/trace_03.png",
+      "bytes": 39767,
+      "suffix": ".png"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/assets/textures/particles/magic_05.png",
+      "bytes": 69579,
+      "suffix": ".png"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/assets/textures/particles/magic_02.png",
+      "bytes": 82611,
+      "suffix": ".png"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/assets/textures/particles/spark_04.png",
+      "bytes": 78726,
+      "suffix": ".png"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/assets/textures/particles/slash_01.png",
+      "bytes": 23710,
+      "suffix": ".png"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/assets/textures/particles/light_01.png",
+      "bytes": 86592,
+      "suffix": ".png"
+    }
+  ],
+  "sizeChangedSinceArchive": [
+    {
+      "path": "outputs/community-hero-asset-integration/editor-publication-20260907/check-draft-versions.mjs",
+      "bytes": 6427,
+      "suffix": ".mjs"
+    },
+    {
+      "path": "outputs/community-hero-asset-integration/editor-publication-20260907/reviewer-login.mjs",
+      "bytes": 1187,
+      "suffix": ".mjs"
+    },
+    {
+      "path": "outputs/community-hero-asset-integration/editor-publication-20260907/overlay-versions/verify-ui-attempt-1.mjs",
+      "bytes": 5920,
+      "suffix": ".mjs"
+    },
+    {
+      "path": "outputs/community-hero-asset-integration/editor-publication-20260907/overlay-versions/verify-ui.mjs",
+      "bytes": 6001,
+      "suffix": ".mjs"
+    },
+    {
+      "path": "outputs/community-hero-asset-integration/editor-publication-20260907/overlay-versions/prepare-ui.mjs",
+      "bytes": 2217,
+      "suffix": ".mjs"
+    },
+    {
+      "path": "outputs/community-hero-asset-integration/editor-publication-20260907/live-match/open-replay-ui.mjs",
+      "bytes": 2166,
+      "suffix": ".mjs"
+    },
+    {
+      "path": "outputs/community-hero-asset-integration/editor-publication-20260907/catalog-overlay/verify-retained.mjs",
+      "bytes": 1792,
+      "suffix": ".mjs"
+    },
+    {
+      "path": "outputs/community-hero-asset-integration/editor-publication-20260907/catalog-overlay/ui-restore.mjs",
+      "bytes": 7443,
+      "suffix": ".mjs"
+    },
+    {
+      "path": "outputs/community-hero-asset-integration/editor-publication-20260907/catalog-overlay/before-global-scope-fix/ui-restore.mjs",
+      "bytes": 7443,
+      "suffix": ".mjs"
+    }
+  ],
+  "symlinks": [],
+  "explicitExecutableExclusions": [
+    {
+      "path": "outputs/community-hero-asset-integration/editor-publication-20260907/catalog-overlay/platform",
+      "bytes": 18622480,
+      "sha256": "9d11e26af920938cbd6867caf85ddf30f4d326963aef005bccd1f1bbec4722f2",
+      "reason": "Built executable; source and build evidence retained"
+    },
+    {
+      "path": "outputs/community-hero-asset-integration/editor-publication-20260907/live-match/platform-replay-budget",
+      "bytes": 19170448,
+      "sha256": "478846e74df0a3323f658586c93addd42d40d6366dba435eccd69c2e63626763",
+      "reason": "Built executable; source and build evidence retained"
+    },
+    {
+      "path": "outputs/community-hero-asset-integration/editor-publication-20260907/overlay-versions/platform",
+      "bytes": 18575024,
+      "sha256": "f9f03353ce067d0585095a88243ef7bff18163c78fd6e02ab5d39932d4300edd",
+      "reason": "Built executable; source and build evidence retained"
+    }
+  ],
+  "extensionCounts": {
+    ".md": 52,
+    ".json": 55979,
+    ".csv": 7,
+    ".c": 3,
+    ".py": 103,
+    ".cpp": 41,
+    ".h": 78,
+    ".dylib": 1,
+    "": 160,
+    ".bt": 1,
+    ".pack": 2,
+    ".idx": 2,
+    ".sample": 26,
+    ".sln": 5,
+    ".dll": 3,
+    ".vcxproj": 6,
+    ".filters": 6,
+    ".lib": 3,
+    ".user": 6,
+    ".rc": 4,
+    ".def": 2,
+    ".aps": 3,
+    ".ui": 126,
+    ".vspscc": 1,
+    ".txt": 963,
+    ".ico": 4,
+    ".png": 13982,
+    ".qrc": 2,
+    ".glsl": 14,
+    ".dump": 1,
+    ".log": 705,
+    ".jsonl": 29,
+    ".jpg": 101,
+    ".headers": 82,
+    ".html": 30,
+    ".xml": 18,
+    ".bmp": 9841,
+    ".js": 5,
+    ".gz": 8,
+    ".dat": 1326,
+    ".bin": 4024,
+    ".chr": 84,
+    ".dds": 26481,
+    ".stg": 42,
+    ".exe": 5,
+    ".htm": 4,
+    ".fac": 32,
+    ".gdp": 13,
+    ".glb": 1823,
+    ".zip": 317,
+    ".iso": 1,
+    ".inf": 1,
+    ".db": 1,
+    ".gif": 8,
+    ".mpg": 2,
+    ".css": 1,
+    ".x": 30605,
+    ".wav": 30040,
+    ".efc": 422,
+    ".dmf": 1,
+    ".fx": 12,
+    ".ogg": 41791,
+    ".ini": 25398,
+    ".lua": 2464,
+    ".mtl": 2370,
+    ".obj": 2370,
+    ".wmv": 46,
+    ".jmp": 9,
+    ".mp3": 3128,
+    ".tab": 1,
+    ".tga": 628,
+    ".string": 3,
+    ".ttf": 1,
+    ".vs": 1,
+    ".ps": 3,
+    ".moc": 16,
+    ".mtn": 157,
+    ".model": 1631,
+    ".xmap": 20,
+    ".map": 1,
+    ".bank": 2043,
+    ".psh": 6,
+    ".scc": 1,
+    ".mjs": 88,
+    ".cjs": 4,
+    ".ts": 2305,
+    ".skn": 7,
+    ".skl": 7,
+    ".anm": 251,
+    ".mts": 28,
+    ".patch": 5,
+    ".yaml": 8,
+    ".go": 12,
+    ".tsx": 8,
+    ".webp": 6262,
+    ".70c54893e286d17f42b3df2c464de4e98ef31bdace55efa885b4d2bb8a247a67": 1,
+    ".ebe22fe4224feb1b3020f82c74aabb6451f7f4801f625e0e9e79a69d074d8706": 1,
+    ".dockerfile": 1,
+    ".conf": 1,
+    ".sqlite": 1
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "ggd-backup-access-policy@1",
+  "backup_root": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/",
+  "purpose": "backup_only",
+  "allow_automatic_consumption": false,
+  "requires_explicit_human_authorization": true,
+  "allow_automated_backup_and_integrity_verification": true,
+  "excluded_from": [
+    "current.json",
+    "catalog.json",
+    "resources.json",
+    "DOWNLOAD.py",
+    "default query.py"
+  ],
+  "authorization_scope": [
+    "specific snapshot",
+    "specific assets",
+    "specific purpose"
+  ],
+  "enforcement": "workflow_contract_only; existing AWS permissions unchanged",
+  "local_copies": "preserve",
+  "delete_remote": false
+}

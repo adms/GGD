@@ -54,11 +54,12 @@ def relative(name):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('--manifest-dir', type=Path, help='Committed manifest and S3 location directory; defaults to this script directory')
     ap.add_argument('--output', type=Path, help='Must not already exist; no source workspace or live service is changed')
     ap.add_argument('--parts-dir', type=Path, help='Local part cache; defaults to this script directory for old archives')
     ap.add_argument('--download', action='store_true', help='Fetch from the fixed S3 location using profile vibe-coding')
     args = ap.parse_args()
-    here = Path(__file__).resolve().parent
+    here = args.manifest_dir.resolve() if args.manifest_dir else Path(__file__).resolve().parent
     if args.output and (args.output.exists() or args.output.is_symlink()):
         raise ValueError('Output must not already exist')
     parts_dir = args.parts_dir if args.parts_dir else here
