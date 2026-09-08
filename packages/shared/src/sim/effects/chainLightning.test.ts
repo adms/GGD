@@ -5,7 +5,7 @@
  * owner 2026-08-20：「重點在於**隨機選擇單位遞減時間差的閃電特效與傷害**
  *  （**每個閃電有極小的時間間隔播放閃電動畫與傷害才到下一個**）」
  *
- * 三條，一條一件事，⛔ 沒有第四條瑣碎斷言（owner：不要做小範圍瑣碎測試）：
+ * 原有三條，一條一件事；GH#1140 另驗失效目標的選配重選與配額不變：
  *   ① ⭐ **承重** —— 逐跳真的跨了很多個 tick，而且**每一跳各發一次**渲染事件。
  *      走的是**出貨的那條路**（`world.step()`，⛔ 不是手動叫 system），所以
  *      「忘了把 system 掛進 step()」也會紅（失敗形態⑤）。
@@ -76,6 +76,35 @@ function advance(world: SimWorld, ticks: number): void {
 }
 
 describe("chainLightning — 逐跳有時間差、隨機挑下一個、逐跳遞減 (do-chain-lightning)", () => {
+  it.each([false, true])("lost pending target: opt-in %s preserves the remaining damage budget", retargetOnLost => {
+    const { world, caster } = rig([1, 2, 3, 4]);
+    const enemies = [...world.transform.keys()].filter(id => id !== caster);
+    runEffects([chain({ shape: "single", jumps: 3, revisit: false, retargetOnLost, jumpIntervalSec: 0.12 })],
+      { ...ctxOf(world, caster), targets: [enemies[0]!] });
+    advance(world, 1);
+    const strand = world.chainLightning[0]!.strands[0]!;
+    const lost = strand.target;
+    world.transform.delete(lost); world.rebuildGrid();
+    advance(world, 20);
+    expect(world.chainLightning).toHaveLength(0);
+    expect(world.damageQueue.map(p => p.amount)).toEqual(retargetOnLost ? [100, 50, 25] : [100]);
+    const victims = world.damageQueue.map(p => p.target);
+    expect(victims).not.toContain(lost);
+    expect(new Set(victims).size).toBe(victims.length);
+  });
+
+  it("retargeting ends without candidates instead of revisiting the previous node", () => {
+    const { world, caster } = rig([1, 2]);
+    const first = [...world.transform.keys()].find(id => id !== caster)!;
+    runEffects([chain({ shape: "single", revisit: false, retargetOnLost: true })],
+      { ...ctxOf(world, caster), targets: [first] });
+    advance(world, 1);
+    world.transform.delete(world.chainLightning[0]!.strands[0]!.target); world.rebuildGrid();
+    advance(world, 20);
+    expect(world.damageQueue.map(p => p.target)).toEqual([first]);
+    expect(world.chainLightning).toHaveLength(0);
+  });
+
   it("⭐ 每一跳各發一次事件，而且散落在**很多個 tick** 上（走真的 step()）", () => {
     cover("do-chain-lightning");
     const { world, caster } = rig([1, 2, 3]);

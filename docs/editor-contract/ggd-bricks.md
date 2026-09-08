@@ -4,7 +4,7 @@
 
 owner 2026-09-05：「[後台編輯器及codex編輯器] 是**堆積木**的角色 **要充分了解有哪些積木**, 而 main 遊戲主程式 是**做出積木**供使用的角色」
 
-capability 指紋：`43cd2f44`
+capability 指紋：`19747904`
 
 ## 一眼看完
 
@@ -39,7 +39,7 @@ capability 指紋：`43cd2f44`
 | `applyStatus` | 24 | 0 | 0 | ✅ | ✅ | 63 |
 | `blink` | 12 | 1 | 0 | ✅ | ✅ | 12 |
 | `carry` | 11 | 1 | 0 | ✅ | ✅ | 0 |
-| `chainLightning` | 18 | 1 | 0 | ✅ | ✅ | 2 |
+| `chainLightning` | 19 | 1 | 0 | ✅ | ✅ | 2 |
 | `championForm` | 3 | 0 | 0 | ✅ | ✅ | 12 |
 | `comboStrikes` | 18 | 0 | 0 | ✅ | ✅ | 1 |
 | `consumeStatus` | 12 | 1 | 0 | ✅ | ✅ | 0 |

@@ -75,6 +75,8 @@ export interface ChainLightningVariant {
   jumpIntervalSec?: number;
   /** 同一個目標能不能在**同一條鏈**裡被跳到第二次。省略 = false。 */
   revisit?: boolean;
+  /** Opt in to reselecting a lost pending target from the previous valid node. */
+  retargetOnLost?: boolean;
   /** 這一次施放的總跳數上限（保險絲）。省略 = `CHAIN_MAX_TOTAL_JUMPS`。 */
   maxTotalJumps?: number;
   canCrit?: boolean;

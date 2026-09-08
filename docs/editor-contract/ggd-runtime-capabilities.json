@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "43cd2f44",
+  "fingerprint": "19747904",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -355,6 +355,7 @@
     "resourcePct",
     "resourcePctPhase",
     "respectCooldown",
+    "retargetOnLost",
     "revisit",
     "riseSpeed",
     "root",
@@ -781,6 +782,7 @@
     "resourcePct.subject",
     "resourcePctPhase",
     "respectCooldown",
+    "retargetOnLost",
     "revisit",
     "riseSpeed",
     "root",

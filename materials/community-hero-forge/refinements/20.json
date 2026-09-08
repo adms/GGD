@@ -1,0 +1,695 @@
+{
+  "schema": "ggd-community-design-refinement@1",
+  "version": 1,
+  "projectId": "community-review-20-20260907",
+  "sourceSha256": "f6f564d27fb8c192755c725a27e9ae2e521c9b55be2322bbf7bd3344d0412399",
+  "slots": {
+    "PASSIVE": {
+      "products": [
+        {
+          "instanceId": "passive-charge",
+          "template": {
+            "ref": "tpl-mark-stacks",
+            "params": {
+              "markId": "community-review-20-20260907.charge",
+              "initial": 0,
+              "max": 3,
+              "durationSec": -1,
+              "resetOn": "round",
+              "lethalMode": "none",
+              "perStackLost": []
+            }
+          }
+        },
+        {
+          "instanceId": "passive-overload",
+          "template": {
+            "ref": "tpl-mark-stacks",
+            "params": {
+              "markId": "community-review-20-20260907.overload",
+              "initial": 0,
+              "max": 3,
+              "durationSec": -1,
+              "resetOn": "round",
+              "lethalMode": "none",
+              "perStackLost": []
+            }
+          }
+        },
+        {
+          "instanceId": "passive-hit-sequence",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onDamageDealt",
+                  "abilitySlot": "Q",
+                  "damageSource": "ability",
+                  "oncePerCast": true,
+                  "target": "self",
+                  "condition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "community-review-20-20260907.last-q"
+                    }
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-20-20260907.charge",
+                      "stacks": 1,
+                      "duration": 1
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "applyTo": "self",
+                      "statusId": "community-review-20-20260907.last-q",
+                      "stackKey": "community-review-20-20260907.last-q",
+                      "maxStacks": 1,
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "exclusiveGroup": "community-review-20-20260907.last-skill",
+                      "exclusiveOnExisting": "replace"
+                    }
+                  ]
+                },
+                {
+                  "on": "onDamageDealt",
+                  "abilitySlot": "W",
+                  "damageSource": "ability",
+                  "oncePerCast": true,
+                  "target": "self",
+                  "condition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "community-review-20-20260907.last-w"
+                    }
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-20-20260907.charge",
+                      "stacks": 1,
+                      "duration": 1
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "applyTo": "self",
+                      "statusId": "community-review-20-20260907.last-w",
+                      "stackKey": "community-review-20-20260907.last-w",
+                      "maxStacks": 1,
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "exclusiveGroup": "community-review-20-20260907.last-skill",
+                      "exclusiveOnExisting": "replace"
+                    }
+                  ]
+                },
+                {
+                  "on": "onDamageDealt",
+                  "abilitySlot": "R",
+                  "damageSource": "ability",
+                  "oncePerCast": true,
+                  "target": "self",
+                  "condition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "community-review-20-20260907.last-r"
+                    }
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-20-20260907.charge",
+                      "stacks": 1,
+                      "duration": 1
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "applyTo": "self",
+                      "statusId": "community-review-20-20260907.last-r",
+                      "stackKey": "community-review-20-20260907.last-r",
+                      "maxStacks": 1,
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "exclusiveGroup": "community-review-20-20260907.last-skill",
+                      "exclusiveOnExisting": "replace"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】Q／W／R 實際扣除敵人生命時，與上一個成功技能不同才加一層電荷，上限三層；同次多目標／多跳只計一次。普攻、空招與只打掉盾不集氣。電荷與過載在回合重置。\n【原設計】不同技能命中累積電荷，上限三層；下一次強化技消耗。",
+      "note": "以實際 onDamageDealt、oncePerCast 和技能來源去重；E 純護盾不算命中，EX 只準備下一次 Q／W，不造成被動傷害。",
+      "removeOverrides": [
+        "effects"
+      ]
+    },
+    "Q": {
+      "products": [
+        {
+          "instanceId": "q-electric-effect",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "subject": "self",
+                  "statusId": "community-review-20-20260907.overload",
+                  "count": 3,
+                  "onConsumed": [
+                    {
+                      "kind": "damageLine",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "小",
+                        "ratios": []
+                      },
+                      "length": 7.5,
+                      "width": 2.0,
+                      "aim": "facing",
+                      "fromCaster": true,
+                      "includeOrigin": true,
+                      "maxTargets": 12
+                    },
+                    {
+                      "kind": "floatingText",
+                      "shape": "single",
+                      "text": "強化電擊：長 7.5／寬 2",
+                      "applyTo": "self",
+                      "durationSec": 1.5,
+                      "colorRgb": [
+                        180,
+                        225,
+                        255
+                      ]
+                    }
+                  ],
+                  "onMissing": [
+                    {
+                      "kind": "consumeStatus",
+                      "shape": "single",
+                      "subject": "self",
+                      "statusId": "community-review-20-20260907.overload",
+                      "count": 2,
+                      "onConsumed": [
+                        {
+                          "kind": "damageLine",
+                          "damageType": "magic",
+                          "amount": {
+                            "damageTier": "小",
+                            "ratios": []
+                          },
+                          "length": 7.0,
+                          "width": 1.6,
+                          "aim": "facing",
+                          "fromCaster": true,
+                          "includeOrigin": true,
+                          "maxTargets": 12
+                        },
+                        {
+                          "kind": "floatingText",
+                          "shape": "single",
+                          "text": "強化電擊：長 7／寬 1.6",
+                          "applyTo": "self",
+                          "durationSec": 1.5,
+                          "colorRgb": [
+                            180,
+                            225,
+                            255
+                          ]
+                        }
+                      ],
+                      "onMissing": [
+                        {
+                          "kind": "consumeStatus",
+                          "shape": "single",
+                          "subject": "self",
+                          "statusId": "community-review-20-20260907.overload",
+                          "count": 1,
+                          "onConsumed": [
+                            {
+                              "kind": "damageLine",
+                              "damageType": "magic",
+                              "amount": {
+                                "damageTier": "小",
+                                "ratios": []
+                              },
+                              "length": 6.5,
+                              "width": 1.2,
+                              "aim": "facing",
+                              "fromCaster": true,
+                              "includeOrigin": true,
+                              "maxTargets": 12
+                            },
+                            {
+                              "kind": "floatingText",
+                              "shape": "single",
+                              "text": "強化電擊：長 6.5／寬 1.2",
+                              "applyTo": "self",
+                              "durationSec": 1.5,
+                              "colorRgb": [
+                                180,
+                                225,
+                                255
+                              ]
+                            }
+                          ],
+                          "onMissing": [
+                            {
+                              "kind": "damageLine",
+                              "damageType": "magic",
+                              "amount": {
+                                "damageTier": "小",
+                                "ratios": []
+                              },
+                              "length": 6.0,
+                              "width": 0.8,
+                              "aim": "facing",
+                              "fromCaster": true,
+                              "includeOrigin": true,
+                              "maxTargets": 12
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】單一直線傷害，線內每位敵人一次。基礎長 6、寬 0.8 GGD 單位；過載每層增加長 0.5、寬 0.4，消耗全部已準備強化，實際使用時提示結果。\n【原設計】直線電擊，主要作為穩定消耗。",
+      "note": "採 GGD 現行 damageLine 單位碰撞，不再四段交疊傷害；未新增牆體遮擋規則。原作電弧美術仍待呈現驗收。",
+      "removeOverrides": [
+        "effects"
+      ],
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-20-20260907.q",
+        "abilityId": "community-review-20-20260907.q",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast",
+            "replaces": "caster.action",
+            "replacesForMs": 350
+          }
+        ]
+      }
+    },
+    "W": {
+      "products": [
+        {
+          "instanceId": "w-electric-effect",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "subject": "self",
+                  "statusId": "community-review-20-20260907.overload",
+                  "count": 3,
+                  "onConsumed": [
+                    {
+                      "kind": "chainLightning",
+                      "shape": "single",
+                      "amount": {
+                        "damageTier": "小",
+                        "ratios": []
+                      },
+                      "damageType": "magic",
+                      "jumps": 6,
+                      "jumpRange": 3,
+                      "decay": 0.8,
+                      "revisit": false,
+                      "maxTotalJumps": 6,
+                      "jumpIntervalSec": 0.12,
+                      "retargetOnLost": true
+                    },
+                    {
+                      "kind": "floatingText",
+                      "shape": "single",
+                      "text": "強化連鎖：最多 6 名",
+                      "applyTo": "self",
+                      "durationSec": 1.5,
+                      "colorRgb": [
+                        180,
+                        225,
+                        255
+                      ]
+                    }
+                  ],
+                  "onMissing": [
+                    {
+                      "kind": "consumeStatus",
+                      "shape": "single",
+                      "subject": "self",
+                      "statusId": "community-review-20-20260907.overload",
+                      "count": 2,
+                      "onConsumed": [
+                        {
+                          "kind": "chainLightning",
+                          "shape": "single",
+                          "amount": {
+                            "damageTier": "小",
+                            "ratios": []
+                          },
+                          "damageType": "magic",
+                          "jumps": 5,
+                          "jumpRange": 3,
+                          "decay": 0.8,
+                          "revisit": false,
+                          "maxTotalJumps": 5,
+                          "jumpIntervalSec": 0.12,
+                          "retargetOnLost": true
+                        },
+                        {
+                          "kind": "floatingText",
+                          "shape": "single",
+                          "text": "強化連鎖：最多 5 名",
+                          "applyTo": "self",
+                          "durationSec": 1.5,
+                          "colorRgb": [
+                            180,
+                            225,
+                            255
+                          ]
+                        }
+                      ],
+                      "onMissing": [
+                        {
+                          "kind": "consumeStatus",
+                          "shape": "single",
+                          "subject": "self",
+                          "statusId": "community-review-20-20260907.overload",
+                          "count": 1,
+                          "onConsumed": [
+                            {
+                              "kind": "chainLightning",
+                              "shape": "single",
+                              "amount": {
+                                "damageTier": "小",
+                                "ratios": []
+                              },
+                              "damageType": "magic",
+                              "jumps": 4,
+                              "jumpRange": 3,
+                              "decay": 0.8,
+                              "revisit": false,
+                              "maxTotalJumps": 4,
+                              "jumpIntervalSec": 0.12,
+                              "retargetOnLost": true
+                            },
+                            {
+                              "kind": "floatingText",
+                              "shape": "single",
+                              "text": "強化連鎖：最多 4 名",
+                              "applyTo": "self",
+                              "durationSec": 1.5,
+                              "colorRgb": [
+                                180,
+                                225,
+                                255
+                              ]
+                            }
+                          ],
+                          "onMissing": [
+                            {
+                              "kind": "chainLightning",
+                              "shape": "single",
+                              "amount": {
+                                "damageTier": "小",
+                                "ratios": []
+                              },
+                              "damageType": "magic",
+                              "jumps": 3,
+                              "jumpRange": 3,
+                              "decay": 0.8,
+                              "revisit": false,
+                              "maxTotalJumps": 3,
+                              "jumpIntervalSec": 0.12,
+                              "retargetOnLost": true
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】只有一條連鎖，含起點共三名，起點不再多吃一筆單體傷害。過載每層多一名，最多六名；同一發不回訪，每跳間隔 0.12 秒。預選目標死亡／離場時從上一有效節點重選，無候選停止。\n【原設計】在附近不同敵人間跳躍，同一施法不重複命中同一目標。",
+      "note": "jumps 與 maxTotalJumps 同時按強化層數設定；連鎖只在實際命中時計電荷，一條鏈跨 tick 仍只計一次。",
+      "removeOverrides": [
+        "effects"
+      ],
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-20-20260907.w",
+        "abilityId": "community-review-20-20260907.w",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast",
+            "replaces": "caster.action",
+            "replacesForMs": 350
+          }
+        ]
+      }
+    },
+    "R": {
+      "products": [
+        {
+          "instanceId": "r-electric-effect",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "damageLine",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "大",
+                    "ratios": []
+                  },
+                  "length": 8,
+                  "width": 1.2,
+                  "aim": "facing",
+                  "fromCaster": true,
+                  "includeOrigin": true,
+                  "maxTargets": 12
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】依 GGD 大級吟唱預警後，單一長 8、寬 1.2 的高傷害直線結算，每個敵人最多一筆；不消耗 Q／W 的過載準備。\n【原設計】彈出硬幣後發射有預警的高傷害直線攻擊。",
+      "note": "單發高傷害／施法預警機制已配置；硬幣模型、彈出動作與原作射線呈現仍待補，不以預設粒子宣稱完成。",
+      "removeOverrides": [
+        "effects"
+      ],
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-20-20260907.r",
+        "abilityId": "community-review-20-20260907.r",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast",
+            "replaces": "caster.action",
+            "replacesForMs": 350
+          },
+          {
+            "kind": "vfx",
+            "on": "castStart",
+            "at": "self",
+            "vfxId": "fx.prim.lightning.pulse-sm",
+            "durationSec": 0.5,
+            "alpha": 0.7
+          }
+        ]
+      }
+    },
+    "EX": {
+      "products": [
+        {
+          "instanceId": "ex-electric-effect",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "subject": "self",
+                  "statusId": "community-review-20-20260907.charge",
+                  "count": 2,
+                  "onConsumed": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-20-20260907.overload",
+                      "stacks": -3,
+                      "duration": 1
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-20-20260907.overload",
+                      "stacks": 3,
+                      "duration": 1
+                    },
+                    {
+                      "kind": "floatingText",
+                      "shape": "single",
+                      "text": "過載 3 層：下一次 Q 擴大／W +3 名",
+                      "applyTo": "self",
+                      "durationSec": 1.5,
+                      "colorRgb": [
+                        180,
+                        225,
+                        255
+                      ]
+                    }
+                  ],
+                  "onMissing": [
+                    {
+                      "kind": "consumeStatus",
+                      "shape": "single",
+                      "subject": "self",
+                      "statusId": "community-review-20-20260907.charge",
+                      "count": 1,
+                      "onConsumed": [
+                        {
+                          "kind": "applyStatus",
+                          "statusId": "community-review-20-20260907.overload",
+                          "stacks": -3,
+                          "duration": 1
+                        },
+                        {
+                          "kind": "applyStatus",
+                          "statusId": "community-review-20-20260907.overload",
+                          "stacks": 2,
+                          "duration": 1
+                        },
+                        {
+                          "kind": "floatingText",
+                          "shape": "single",
+                          "text": "過載 2 層：下一次 Q 擴大／W +2 名",
+                          "applyTo": "self",
+                          "durationSec": 1.5,
+                          "colorRgb": [
+                            180,
+                            225,
+                            255
+                          ]
+                        }
+                      ],
+                      "onMissing": [
+                        {
+                          "kind": "applyStatus",
+                          "statusId": "community-review-20-20260907.overload",
+                          "stacks": -3,
+                          "duration": 1
+                        },
+                        {
+                          "kind": "applyStatus",
+                          "statusId": "community-review-20-20260907.overload",
+                          "stacks": 1,
+                          "duration": 1
+                        },
+                        {
+                          "kind": "floatingText",
+                          "shape": "single",
+                          "text": "過載 1 層：下一次 Q 擴大／W +1 名",
+                          "applyTo": "self",
+                          "durationSec": 1.5,
+                          "colorRgb": [
+                            180,
+                            225,
+                            255
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】至少一層電荷才能啟動：提交先扣一層，瞬間結算消耗其餘並準備 1–3 層過載。只強化下一次 Q 或 W，按實際使用者消耗同一份強化；E／R 不消耗。重新充填會覆蓋舊準備，不疊加。\n【原設計】消耗電荷，強化下一次 Q 的範圍或 W 的跳躍數；使用時明示強化結果。",
+      "note": "有真正施法資格檢查與扣除，不再給 AP 百分比增益。強化準備保持至使用或回合結束；過載提示與實際寬度／跳數分開驗證。",
+      "removeOverrides": [
+        "effects",
+        "castTimeTier",
+        "rangeTier"
+      ],
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-20-20260907.ex",
+        "abilityId": "community-review-20-20260907.ex",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast",
+            "replaces": "caster.action",
+            "replacesForMs": 350
+          }
+        ]
+      },
+      "abilityOverrides": {
+        "statusCost": {
+          "statusId": "community-review-20-20260907.charge",
+          "count": 1
+        },
+        "castTimeTier": "極小",
+        "range": 0
+      }
+    }
+  }
+}
