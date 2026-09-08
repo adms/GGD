@@ -1,0 +1,30 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.asset-library-storage-ownership",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "5189f41737a54140d20c61297dfa21805bfc4720",
+  "contractFingerprint": "bdb64ca51f9b3b1d",
+  "title": "將共用素材管理来源納入 Git 並固定 S3／Git 存放分工",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "Git 管理快照具備逐檔 SHA-256、原生解析相依來源與已確認的存放規則；排除原始素材與大型原生解析 JSON。",
+      "repro": {
+        "command": "python3 tools/asset-library/verify.py",
+        "expectedExit": 0
+      },
+      "commit": "54da00cfbcac94a9a0d9e3897300378099affe59",
+      "evidence": [
+        "materials/asset-library/source-manifest.json",
+        "materials/asset-library/source/GGD-Asset-Library/STORAGE_POLICY.json",
+        "materials/asset-library/DEPENDENCIES.md"
+      ]
+    }
+  ],
+  "unblocks": [],
+  "asks": [
+    "Review the shared asset-management source and storage contract; PR #1118 owns the 37-hero workflow and retains its historical snapshots."
+  ]
+}
