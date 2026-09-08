@@ -14,6 +14,7 @@ import { withRegistryContext } from "../sim/content/registryContext";
 import { contentSha256 } from "./import/jcs";
 import { buildCommunityRoomContent, captureCommunityContentBase, verifyCommunityRoomManifest, type CommunityContentBase, type CommunityHeroPin } from "./communityRoom";
 import type { ChampionId } from "../ids";
+import { runHeroAbilityScenario } from "./heroForge/scenario";
 
 const catalog = shippedHeroCatalog();
 const target = { gameRevision: "fixture-revision", contentVersion: "fixture-content", migrationFingerprint: "fixture-migration", processorFingerprint: "fixture-processor" };
@@ -35,6 +36,27 @@ beforeAll(async () => {
     pins.push({ workId: id, submissionId: `submission-${id}`, authorId: "author", authorName: "作者", name: "封包驗證英雄", packageDigest: pkg.manifest.packageDigest, snapshotDigest: contentSha256(id) });
   }
 }, 30000);
+
+it("admits a generated counterpart with its approved work without adding a second roster choice", async () => {
+  const project = heroPackageProject(catalog, "room-form-proof");
+  project.acceptedPlan!.slots.Q.products = [{ instanceId: "form", template: { ref: "tpl-transform", inheritDefaults: true, params: {} } }];
+  const pkg = buildHeroImportPackage(project, catalog, target);
+  const zip = await buildRuntimePackageZip(packageZipInput(pkg, project.projectId));
+  const pin = { ...pins[0]!, workId: project.projectId, name: project.brief.name, packageDigest: pkg.manifest.packageDigest };
+  const room = buildCommunityRoomContent({ base, target, pins: [pin], archives: new Map([[pin.workId, zip.bytes]]) });
+  let alternateId: ChampionId;
+  withRegistryContext(room.context, () => {
+    const champion = Champions.get(project.projectId as ChampionId);
+    alternateId = champion.transform!.counterpartId!;
+    const alternate = Champions.get(alternateId);
+    expect(alternate.transform).toMatchObject({ role: "alternate", counterpartId: project.projectId });
+    const scenario = runHeroAbilityScenario(champion, { ...champion.abilities.Q, slot: "Q" });
+    expect(scenario.status).toBe("accepted");
+    expect(scenario.eventCounts.championForm).toBeGreaterThan(0);
+  });
+  expect(room.manifest.heroes.map((hero) => hero.workId)).toEqual([project.projectId]);
+  withRegistryContext(base.context, () => expect(Champions.tryGet(alternateId!)).toBeUndefined());
+});
 
 it("loads approved heroes into an immutable match snapshot without mutating the release base", () => {
   const room = buildCommunityRoomContent({ base, target, pins, archives });

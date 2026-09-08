@@ -38,9 +38,9 @@ export function validateHero(project: unknown, catalog: HeroCatalog, playground?
     result.compiled = compiled.draft;
     const baseline = createHeroSimulationBaseline(new Map(catalog.simulationDocuments));
     result.scenarios = (playground ? [playground.slot] : HERO_SLOTS).map((slot) => runHeroAbilityScenario(compiled.draft.champion, compiled.draft.abilityDrafts[slot], {
-      setup: playground?.setup, baseline, ticks: 180, relatedAbilities: Object.values(compiled.draft.abilityDrafts), relatedProjectiles: catalog.projectiles,
+      setup: playground?.setup, baseline, ticks: 180, relatedAbilities: Object.values(compiled.draft.abilityDrafts), relatedProjectiles: catalog.projectiles, relatedChampions: compiled.draft.relatedChampions,
     }));
-    if (!playground) result.kit = runHeroKitScenario(compiled.draft.champion, compiled.draft.abilityDrafts, { baseline, ticksPerStep: 180, relatedProjectiles: catalog.projectiles });
+    if (!playground) result.kit = runHeroKitScenario(compiled.draft.champion, compiled.draft.abilityDrafts, { baseline, ticksPerStep: 180, relatedProjectiles: catalog.projectiles, relatedChampions: compiled.draft.relatedChampions });
     result.errors.push(...result.scenarios.flatMap((scenario) => scenario.assertions.filter((assertion) => assertion.status === "fail").map((assertion) => `${scenario.slot}: ${assertion.summaryZh}`)));
     if (result.kit?.status === "rejected") result.errors.push(`整套技能未完成：${result.kit.rejectedSlots.join("、")}`);
   } catch (error) { result.errors.push(error instanceof Error ? error.message : String(error)); }

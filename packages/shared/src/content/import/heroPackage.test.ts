@@ -14,6 +14,20 @@ const target = { gameRevision: "fixture-revision", contentVersion: "fixture-cont
 const project = heroPackageProject(catalog);
 
 describe("complete hero through Main's package representation", () => {
+  it("round trips a generated counterpart as owned content and rejects an existing identity collision", async () => {
+    const authored = structuredClone(project);
+    authored.acceptedPlan!.slots.Q.products = [{ instanceId: "form", template: { ref: "tpl-transform", inheritDefaults: true, params: {} } }];
+    const pkg = buildHeroImportPackage(authored, catalog, target);
+    const wire = readPackageZip((await buildRuntimePackageZip(packageZipInput(pkg, "form-proof"))).bytes);
+    const validated = validateHeroImportPackage(wire, catalog);
+    expect(validated.diagnostics).toEqual([]);
+    const alternate = validated.result!.compiled.relatedChampions[0]!;
+    expect(wire.compiled).toContainEqual(expect.objectContaining({ path: `compiled/champions/${alternate.id}.json` }));
+    expect(wire.manifest.requires.some((entry) => entry.kind === "champions" && entry.id === alternate.id)).toBe(false);
+    expect(validated.result!.compiled.champion.transform?.counterpartId).toBe(alternate.id);
+    const occupied = new Map(catalog.documents); occupied.set(`champions/${alternate.id}`, { ...alternate });
+    expect(() => compileHeroPackageProject(authored, { ...catalog, documents: occupied }, false)).toThrow("身分衝突");
+  });
   const buildSources = { generatorVersion: `sha256:${"a".repeat(64)}`, processorVersion: `sha256:${"b".repeat(64)}`, processorFingerprint: "123456abcdef" };
   const versionedCatalog = { ...catalog, buildSources };
   const versionedTarget = { ...target, processorFingerprint: buildSources.processorFingerprint };

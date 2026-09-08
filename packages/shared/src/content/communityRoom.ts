@@ -8,6 +8,8 @@ import { zHeroProject } from "./heroForge/schema";
 import { HERO_SLOTS } from "./heroForge/constants";
 import { heroTemplateInstances } from "./heroForge/templateVersions";
 import { uploadedHeroModelDoc } from "./modelUpload/heroModel";
+import { heroCounterpartId } from "./heroForge/forms";
+import type { ChampionDoc } from "./schema/champion";
 import { captureRegistryContext, extendRegistryContext, type RegistryContext } from "../sim/content/registryContext";
 
 const digest = z.string().regex(/^sha256:[a-f0-9]{64}$/);
@@ -83,6 +85,17 @@ export function buildCommunityRoomContent(input: {
     const templateVersions = new Map((project.acceptedPlan ? heroTemplateInstances(project.acceptedPlan) : []).map((template) => [`ability-templates/${template.id}`, template]));
     if (project.projectId !== pin.workId || project.brief.name !== pin.name || manifest.selectionRoots.length !== 1 || manifest.selectionRoots[0]!.id !== pin.workId || manifest.selectionRoots[0]!.contentSha256 !== contentSha256(project)) throw new Error("已發布英雄的來源身分不一致。");
     const own = new Set([`champions/${pin.workId}`, ...HERO_SLOTS.map((slot) => `abilities/${pin.workId}.${slot.toLowerCase()}`)]);
+    const body = pkg.compiled.find((entry) => entry.path === `compiled/champions/${pin.workId}.json`)?.document as ChampionDoc | undefined;
+    if (body?.transform) {
+      const counterpartId = heroCounterpartId(pin.workId);
+      const counterpart = pkg.compiled.find((entry) => entry.path === `compiled/champions/${counterpartId}.json`)?.document as ChampionDoc | undefined;
+      if (body.transform.role !== "base" || body.transform.counterpartId !== counterpartId
+        || counterpart?.id !== counterpartId || counterpart.transform?.role !== "alternate" || counterpart.transform.counterpartId !== pin.workId) {
+        throw new Error("生成英雄的變身對應體缺少或連結不一致。");
+      }
+      // A paired body is runtime content, not another independently selectable work.
+      own.add(`champions/${counterpartId}`);
+    }
     // Uploaded models are immutable package-local dependencies, not documents
     // shipped in the release base. Match their exact descriptor before admission.
     const uploaded = project.presentation.uploadedModel ? uploadedHeroModelDoc(project.presentation.uploadedModel) : null;

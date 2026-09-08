@@ -66,10 +66,10 @@ const zTransformLink = z
      * name both halves, imported or not.
      */
     counterpartId: zRef<ChampionId>("champions").optional(),
-    /** `Eme1` — the rawcode of the NORMAL-form unit in war3map.w3u. */
-    normalUnitRawcode: z.string().min(4).max(4),
-    /** `Emeu` — the rawcode of the ALTERNATE-form unit in war3map.w3u. */
-    alternateUnitRawcode: z.string().min(4).max(4),
+    /** `Eme1` provenance for imported units; generated heroes have no WC3 rawcode. */
+    normalUnitRawcode: z.string().min(4).max(4).optional(),
+    /** `Emeu` provenance for imported units; omitted for generated counterparts. */
+    alternateUnitRawcode: z.string().min(4).max(4).optional(),
     /**
      * 【變身唯一狀態】的**碰撞規則** —— 一個實體已經在形態中，又被要求再次進入
      * 形態時，舊形態的**剩餘時間**怎麼辦。
@@ -106,7 +106,7 @@ const zTransformLink = z
         /** `acdn` per level, in seconds. Absent on the two toggles. */
         cooldownSec: zPerLevelSeconds.optional(),
       })
-      .strict(),
+      .strict().optional(),
   })
   .strict();
 

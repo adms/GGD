@@ -127,6 +127,9 @@ export function compileHeroPackageProject(raw: unknown, catalog: HeroPackageCata
   const result = compileGeneratedHeroDraft(generated, templates, HERO_RESOLVER_CONFIG_IDS.map((id) => include("config", id)), [...vfxSubtypes.values()]);
   if (!result.ok) throw new Error(result.failures.map((failure) => `${failure.slot}: ${failure.message}`).join("；"));
   const compiled = result.draft;
+  for (const body of compiled.relatedChampions) {
+    if (catalog.documents.has(`champions/${body.id}`)) throw new Error(`生成的英雄對應體與既有內容身分衝突：${body.id}`);
+  }
   // Named counters and buffs may be declared by this kit itself. They do not
   // need a separate status-effects document; missing visual assets still do.
   // Inspect only compiled semantic roots, never arbitrary template params or
@@ -146,6 +149,7 @@ export function compileHeroPackageProject(raw: unknown, catalog: HeroPackageCata
   }
   const runtime: HeroPackageDocument[] = [
     { collection: "champions", id: compiled.champion.id, document: json(compiled.champion) },
+    ...compiled.relatedChampions.map((body) => ({ collection: "champions" as const, id: body.id, document: json(body) })),
     ...HERO_SLOTS.map((slot) => ({ collection: "abilities" as const, id: compiled.abilityDrafts[slot].id, document: json(compiled.abilityDrafts[slot]) })),
     ...compiled.vfxScripts.map((script) => ({ collection: "vfx-scripts" as const, id: script.id, document: json(script) })),
   ];
