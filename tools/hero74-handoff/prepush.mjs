@@ -4,7 +4,7 @@ import {createWriteStream,existsSync,mkdirSync,readFileSync,readdirSync,writeFil
 import {dirname,relative,resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 
-const sourceDir=dirname(fileURLToPath(import.meta.url)),root=resolve(sourceDir,'../../..');
+const sourceDir=dirname(fileURLToPath(import.meta.url)),root=resolve(sourceDir,'../..');
 const output=resolve(process.argv[2]??'/private/tmp/hero74-prepush');
 if(existsSync(resolve(output,'summary.json')))throw new Error('A prepush receipt already exists; supply a new output directory to retain the earlier evidence.');
 mkdirSync(output,{recursive:true});
