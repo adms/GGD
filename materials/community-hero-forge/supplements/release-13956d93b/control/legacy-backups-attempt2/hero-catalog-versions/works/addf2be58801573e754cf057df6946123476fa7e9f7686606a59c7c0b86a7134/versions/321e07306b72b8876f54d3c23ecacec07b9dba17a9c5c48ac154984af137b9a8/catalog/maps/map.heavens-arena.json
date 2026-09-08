@@ -1,0 +1,576 @@
+{
+  "schema": "map@1",
+  "id": "map.heavens-arena",
+  "name": "天空鬥技場",
+  "template": "ARENA_RING",
+  "groundStyle": "wood",
+  "scenery": {
+    "palette": {
+      "floor": "#f0dcc0",
+      "wall": "#c9a97e",
+      "sky": "#eaf0ff",
+      "ground": "#3a2c1c",
+      "void": "#0a0e16"
+    },
+    "lighting": {
+      "keyColor": "#ffffff",
+      "keyIntensity": 1.05,
+      "keyYawDeg": 305,
+      "keyPitchDeg": 74,
+      "fillIntensity": 0.9,
+      "wave": "sweep",
+      "periodSec": 12,
+      "intensityAmp": 0.14,
+      "yawSweepDeg": 30
+    },
+    "props": [
+      {
+        "model": "assets/models/scenery/stand_section.glb",
+        "count": 6,
+        "bandFrom": 0.955,
+        "bandTo": 0.99,
+        "scaleMin": 1.1,
+        "scaleMax": 1.28,
+        "facing": "faceIn",
+        "seed": 151
+      },
+      {
+        "model": "assets/models/scenery/hanging_banner.glb",
+        "count": 4,
+        "bandFrom": 0.97,
+        "bandTo": 1.0,
+        "scaleMin": 0.95,
+        "scaleMax": 1.05,
+        "facing": "faceIn",
+        "seed": 152
+      },
+      {
+        "model": "assets/models/scenery/torii.glb",
+        "count": 2,
+        "bandFrom": 0.94,
+        "bandTo": 0.98,
+        "scaleMin": 0.9,
+        "scaleMax": 1.0,
+        "facing": "faceIn",
+        "seed": 153
+      },
+      {
+        "model": "assets/models/props/banner_shield_blue.glb",
+        "count": 6,
+        "bandFrom": 0.97,
+        "bandTo": 1.0,
+        "scaleMin": 1.6,
+        "scaleMax": 1.8,
+        "facing": "faceIn",
+        "seed": 15,
+        "arcFromDeg": 200,
+        "arcSpanDeg": 140
+      },
+      {
+        "model": "assets/models/props/banner_shield_red.glb",
+        "count": 6,
+        "bandFrom": 0.97,
+        "bandTo": 1.0,
+        "scaleMin": 1.6,
+        "scaleMax": 1.8,
+        "facing": "faceIn",
+        "seed": 27,
+        "arcFromDeg": 20,
+        "arcSpanDeg": 140
+      },
+      {
+        "model": "assets/models/props/crates_stacked.glb",
+        "count": 6,
+        "bandFrom": 0.88,
+        "bandTo": 0.95,
+        "scaleMin": 1.0,
+        "scaleMax": 1.1,
+        "facing": "random",
+        "seed": 39
+      }
+    ]
+  },
+  "grid": {
+    "cols": 24,
+    "rows": 18,
+    "tileSize": 2
+  },
+  "tiles": [
+    "########################",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#............####......#",
+    "#...............#......#",
+    "#.......#.......#......#",
+    "#.......#.......#......#",
+    "#.......#..............#",
+    "#.......####...........#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "########################"
+  ],
+  "regions": [
+    {
+      "id": "ring",
+      "label": "競技擂台",
+      "role": "landmark",
+      "rects": [
+        {
+          "col": 7,
+          "row": 5,
+          "w": 10,
+          "h": 8
+        }
+      ]
+    },
+    {
+      "id": "fighters",
+      "label": "選手區",
+      "role": "court",
+      "rects": [
+        {
+          "col": 1,
+          "row": 1,
+          "w": 22,
+          "h": 4
+        }
+      ]
+    },
+    {
+      "id": "gallery",
+      "label": "觀眾廊",
+      "role": "corridor",
+      "rects": [
+        {
+          "col": 1,
+          "row": 5,
+          "w": 6,
+          "h": 8
+        }
+      ]
+    },
+    {
+      "id": "elevator",
+      "label": "電梯",
+      "role": "platform",
+      "rects": [
+        {
+          "col": 17,
+          "row": 5,
+          "w": 6,
+          "h": 8
+        }
+      ]
+    },
+    {
+      "id": "backstage",
+      "label": "後台",
+      "role": "outer",
+      "rects": [
+        {
+          "col": 1,
+          "row": 13,
+          "w": 22,
+          "h": 4
+        }
+      ]
+    }
+  ],
+  "landmark": "ring",
+  "interactions": [
+    {
+      "id": "ring-a",
+      "kind": "capture",
+      "at": {
+        "col": 10,
+        "row": 8
+      },
+      "radius": 2,
+      "regionId": "ring",
+      "params": {}
+    },
+    {
+      "id": "ring-b",
+      "kind": "pickup",
+      "at": {
+        "col": 13,
+        "row": 8
+      },
+      "radius": 2,
+      "regionId": "ring",
+      "params": {}
+    },
+    {
+      "id": "fight-w",
+      "kind": "pickup",
+      "at": {
+        "col": 3,
+        "row": 2
+      },
+      "radius": 2,
+      "regionId": "fighters",
+      "params": {}
+    },
+    {
+      "id": "fight-e",
+      "kind": "pickup",
+      "at": {
+        "col": 20,
+        "row": 2
+      },
+      "radius": 2,
+      "regionId": "fighters",
+      "params": {}
+    },
+    {
+      "id": "gal-mid",
+      "kind": "toggleGate",
+      "at": {
+        "col": 3,
+        "row": 8
+      },
+      "radius": 2,
+      "regionId": "gallery",
+      "params": {
+        "gateGroup": "ring_open_a",
+        "mode": "open"
+      }
+    },
+    {
+      "id": "elev-mid",
+      "kind": "toggleGate",
+      "at": {
+        "col": 20,
+        "row": 8
+      },
+      "radius": 2,
+      "regionId": "elevator",
+      "params": {
+        "gateGroup": "ring_open_b",
+        "mode": "open"
+      }
+    },
+    {
+      "id": "back-w",
+      "kind": "pickup",
+      "at": {
+        "col": 3,
+        "row": 15
+      },
+      "radius": 2,
+      "regionId": "backstage",
+      "params": {}
+    },
+    {
+      "id": "back-e",
+      "kind": "pickup",
+      "at": {
+        "col": 20,
+        "row": 15
+      },
+      "radius": 2,
+      "regionId": "backstage",
+      "params": {}
+    }
+  ],
+  "gimmick": {
+    "kind": "routeSwap",
+    "gateGroups": [
+      {
+        "id": "ring_open_a",
+        "tiles": [
+          {
+            "col": 8,
+            "row": 6
+          },
+          {
+            "col": 9,
+            "row": 6
+          }
+        ]
+      },
+      {
+        "id": "ring_open_b",
+        "tiles": [
+          {
+            "col": 15,
+            "row": 11
+          },
+          {
+            "col": 16,
+            "row": 11
+          }
+        ]
+      }
+    ],
+    "schedule": {
+      "kind": "periodic",
+      "periodTicks": 900,
+      "telegraphTicks": 60,
+      "configurations": [
+        [
+          "ring_open_a"
+        ],
+        [
+          "ring_open_b"
+        ]
+      ]
+    }
+  },
+  "landmarkProps": [
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "at": {
+        "col": 3,
+        "row": 8
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "at": {
+        "col": 20,
+        "row": 8
+      },
+      "rotQuarter": 2,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 11,
+        "row": 7
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 12,
+        "row": 10
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/floor_tile_large.glb",
+      "at": {
+        "col": 11,
+        "row": 9
+      },
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/props/floor_tile_large.glb",
+      "at": {
+        "col": 12,
+        "row": 9
+      },
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleColumn_Art.glb",
+      "at": {
+        "col": 1,
+        "row": 1
+      },
+      "rotQuarter": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/medieval-fair__Fair_Flags_Line.glb",
+      "at": {
+        "col": 22,
+        "row": 1
+      },
+      "rotQuarter": 1,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/lunar-year__Banner.glb",
+      "at": {
+        "col": 1,
+        "row": 16
+      },
+      "rotQuarter": 2,
+      "scale": 0.67
+    },
+    {
+      "model": "assets/models/scenery-cc0/medieval-fair__Lamp.glb",
+      "at": {
+        "col": 22,
+        "row": 16
+      },
+      "rotQuarter": 3,
+      "scale": 0.44
+    }
+  ],
+  "backgroundProps": [
+    {
+      "model": "assets/models/props/crates_stacked.glb",
+      "at": {
+        "col": 8,
+        "row": 6
+      },
+      "rotQuarter": 0,
+      "scale": 1.1
+    },
+    {
+      "model": "assets/models/props/crates_stacked.glb",
+      "at": {
+        "col": 16,
+        "row": 9
+      },
+      "rotQuarter": 0,
+      "scale": 1.1
+    },
+    {
+      "model": "assets/models/props/crates_stacked.glb",
+      "at": {
+        "col": 9,
+        "row": 11
+      },
+      "rotQuarter": 0,
+      "scale": 1.1
+    },
+    {
+      "model": "assets/models/props/crates_stacked.glb",
+      "at": {
+        "col": 15,
+        "row": 6
+      },
+      "rotQuarter": 0,
+      "scale": 1.1
+    },
+    {
+      "model": "assets/models/props/barrel_small.glb",
+      "at": {
+        "col": 8,
+        "row": 9
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/props/barrel_small.glb",
+      "at": {
+        "col": 16,
+        "row": 7
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "at": {
+        "col": 5,
+        "row": 0
+      },
+      "rotQuarter": 0,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "at": {
+        "col": 12,
+        "row": 0
+      },
+      "rotQuarter": 0,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "at": {
+        "col": 19,
+        "row": 0
+      },
+      "rotQuarter": 0,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 0,
+        "row": 8
+      },
+      "rotQuarter": 0,
+      "scale": 1.3
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 23,
+        "row": 8
+      },
+      "rotQuarter": 2,
+      "scale": 1.3
+    }
+  ],
+  "note": "獵人・天空鬥技場。⭐ 機制「競技場開放／封閉」＝通用 gate。兩個 toggleGate 互動點讓玩家**站著把擂台的門撐開** —— ⛔ 不是按一下切換（那要複寫狀態，而 MatchState 是 append-only），站著才有效是當下位置的純函式，wire 成本 0。",
+  "backdrop": {
+    "layers": [
+      {
+        "fromRadius": 1.0,
+        "toRadius": 2.1,
+        "y": -5,
+        "color": "#e8eef7",
+        "alpha": 1,
+        "profile": "cloudSea",
+        "jitter": 0.5,
+        "segments": 42,
+        "rim": {
+          "color": "#ffffff",
+          "width": 2.2
+        }
+      },
+      {
+        "fromRadius": 1.9,
+        "toRadius": 3.5,
+        "y": -16,
+        "color": "#8fa6c9",
+        "alpha": 1,
+        "profile": "cloudSea",
+        "jitter": 0.55,
+        "segments": 42,
+        "rim": {
+          "color": "#dfe9f7",
+          "width": 1.8
+        }
+      },
+      {
+        "fromRadius": 3.2,
+        "toRadius": 5.2,
+        "y": -38,
+        "color": "#4a5f88",
+        "alpha": 1,
+        "profile": "lightning",
+        "jitter": 0.7,
+        "segments": 45,
+        "rim": {
+          "color": "#ffe98a",
+          "width": 1.4
+        }
+      },
+      {
+        "fromRadius": 4.8,
+        "toRadius": 6.0,
+        "y": -80,
+        "color": "#1e2b45",
+        "alpha": 1,
+        "profile": "flat",
+        "jitter": 0.0,
+        "segments": 20
+      }
+    ]
+  }
+}

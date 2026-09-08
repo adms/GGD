@@ -1,0 +1,259 @@
+{
+  "id": "godie-e00u",
+  "schema": "champion@1",
+  "name": "完全而瀟灑的女僕 - 十六夜Sakuya",
+  "icon": "assets/icons/champions/godie-e00u.webp",
+  "description": "故事：\n(出自:東方Project)\n\n推薦玩家 : --\n上手度 : --\n\n角色成長：\n力量 + 1.40\n敏捷 + 2.80\n智慧 + 1.70\n基礎跑速 300\n\n可學習的技能：\n離間之劍、千刃‧聚華、血染的銀匕首、夜霧的殺人鬼",
+  "role": "marksman",
+  "attackType": "ranged",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 20.5,
+    "ap": 0,
+    "armor": 0,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 6.0
+  },
+  "growth": {
+    "maxHealth": 28,
+    "healthRegen": 0.07,
+    "maxMana": 20,
+    "manaRegen": 0.07,
+    "ad": 2.8,
+    "armor": 0.8,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "attributes": {
+    "str": 14,
+    "agi": 25,
+    "int": 19,
+    "strGrowth": 1.4,
+    "agiGrowth": 2.8,
+    "intGrowth": 1.7,
+    "primary": "AGI",
+    "source": "w3x"
+  },
+  "bodyScale": 1.2,
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.28,
+    "knockbackMag": 0.0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-e00u.q",
+      "name": "none",
+      "icon": "assets/icons/abilities/godie-e00u.q.webp",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200,
+              240
+            ],
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.physical.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.3,
+      "provenance": "w3x-import",
+      "rangeTier": "極大",
+      "range": 12
+    },
+    "W": {
+      "id": "godie-e00u.w",
+      "name": "none",
+      "icon": "assets/icons/abilities/godie-e00u.w.webp",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200,
+              240
+            ],
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.physical.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.3,
+      "provenance": "w3x-import",
+      "rangeTier": "極大",
+      "range": 12
+    },
+    "E": {
+      "id": "godie-e00u.e",
+      "name": "none",
+      "icon": "assets/icons/abilities/godie-e00u.e.webp",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200,
+              240
+            ],
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.physical.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.3,
+      "provenance": "w3x-import",
+      "rangeTier": "極大",
+      "range": 12
+    },
+    "R": {
+      "id": "godie-e00u.r",
+      "name": "none",
+      "icon": "assets/icons/abilities/godie-e00u.r.webp",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160
+            ],
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.physical.nova-lg",
+      "targetsEnemies": true,
+      "castTimeSec": 0.3,
+      "provenance": "w3x-import",
+      "rangeTier": "極大",
+      "range": 12
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin",
+    "thrown"
+  ],
+  "passiveAbility": "godie-e00u.passive"
+}

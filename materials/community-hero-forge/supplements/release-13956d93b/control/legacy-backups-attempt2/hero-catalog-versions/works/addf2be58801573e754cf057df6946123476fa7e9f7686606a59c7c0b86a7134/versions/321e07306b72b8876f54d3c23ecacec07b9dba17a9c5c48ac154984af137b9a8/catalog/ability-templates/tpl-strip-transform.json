@@ -1,0 +1,15 @@
+{
+  "id": "tpl-strip-transform",
+  "schema": "template@1",
+  "name": "剝奪變化",
+  "description": "P3 剝奪變化。",
+  "family": "strip-transform",
+  "status": "draft",
+  "params": {},
+  "requires": [],
+  "gapScore": 2,
+  "exemplar": {
+    "skill": "(draft)",
+    "jass": "(P2/P3)"
+  }
+}

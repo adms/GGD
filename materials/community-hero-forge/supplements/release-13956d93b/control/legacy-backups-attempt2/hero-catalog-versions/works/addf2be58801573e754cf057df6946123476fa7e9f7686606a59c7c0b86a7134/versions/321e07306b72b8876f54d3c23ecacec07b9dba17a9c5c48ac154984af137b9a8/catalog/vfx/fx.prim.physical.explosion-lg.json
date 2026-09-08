@@ -1,0 +1,91 @@
+{
+  "id": "fx.prim.physical.explosion-lg",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "sphere",
+    "radius": 0.525
+  },
+  "mode": "burst",
+  "burstCount": 48,
+  "lifetimeSec": {
+    "min": 0.16,
+    "max": 0.46
+  },
+  "size": {
+    "start": 0.536,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      0.9856,
+      0.9892,
+      1,
+      1
+    ],
+    "end": [
+      0.1656,
+      0.1692,
+      0.18,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.536
+    ],
+    [
+      0.14,
+      1.275
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        0.9856,
+        0.9892,
+        1,
+        1
+      ]
+    ],
+    [
+      0.2,
+      [
+        0.92,
+        0.94,
+        1,
+        1
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.46,
+        0.47,
+        0.5,
+        0.42
+      ]
+    ],
+    [
+      1,
+      [
+        0.1656,
+        0.1692,
+        0.18,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 1.6,
+  "speed": {
+    "min": 5,
+    "max": 11
+  },
+  "texture": "assets/textures/particles/flame_04.png"
+}

@@ -1,0 +1,133 @@
+{
+  "id": "godie-hapm.q",
+  "schema": "ability@1",
+  "name": "52-01 狂戰士之怒",
+  "provenance": "owner-spec",
+  "description": "[主動][輔助]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n持續6秒\n\n「吼叫不是技能前搖，只是想嚇嚇他」\n進入[狂怒]狀態，提升60/90/120/150% [攻擊速度] 與10/15/20/25%[吸血]。\n期間每承受自身[最大生命]5%的傷害，「狂怒」持續時間延長2秒。",
+  "slot": "Q",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 0.6
+        },
+        {
+          "stat": "lifesteal",
+          "op": "flat",
+          "value": 0.1
+        }
+      ],
+      "duration": 6.0,
+      "statusId": "rage",
+      "perRank": [
+        {
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.6
+            },
+            {
+              "stat": "lifesteal",
+              "op": "flat",
+              "value": 0.1
+            }
+          ],
+          "duration": 6.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.9
+            },
+            {
+              "stat": "lifesteal",
+              "op": "flat",
+              "value": 0.15
+            }
+          ],
+          "duration": 6.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 1.2
+            },
+            {
+              "stat": "lifesteal",
+              "op": "flat",
+              "value": 0.2
+            }
+          ],
+          "duration": 6.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 1.5
+            },
+            {
+              "stat": "lifesteal",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 6.0
+        }
+      ]
+    }
+  ],
+  "passive": {
+    "name": "52-01 狂戰士之怒",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onDamageTaken",
+            "effects": [
+              {
+                "kind": "extendBuff",
+                "shape": "single",
+                "who": "self",
+                "stackKey": "rage",
+                "addSec": 2.0,
+                "perDamagePctOfMaxHealth": 0.05,
+                "maxRemainingSec": 30.0
+              }
+            ],
+            "target": "self"
+          }
+        ]
+      }
+    ]
+  },
+  "icon": "assets/icons/abilities/godie-hapm.q.webp",
+  "vfxKey": "fx.prim.physical.pulse",
+  "cooldownTier": "極大",
+  "castTimeSec": 0.067
+}

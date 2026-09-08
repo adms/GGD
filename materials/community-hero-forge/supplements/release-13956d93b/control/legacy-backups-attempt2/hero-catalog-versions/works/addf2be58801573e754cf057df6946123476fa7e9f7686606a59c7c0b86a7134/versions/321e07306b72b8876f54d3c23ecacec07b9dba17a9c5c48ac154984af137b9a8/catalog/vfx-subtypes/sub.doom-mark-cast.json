@@ -1,0 +1,77 @@
+{
+  "id": "sub.doom-mark-cast",
+  "schema": "vfx-subtype@1",
+  "label": "末日印記（詠唱標記）",
+  "notes": "GH#990 盤點：godie-h020.e 與 godie-hjai.e 的 2 段 **逐位元組完全相同** ⇒ 抽成一塊。形狀是「一具落地的大模型 ＋ 一層貼在自己身上的印記粒子」，兩段都錨在 castStart。⭐ markVfxId 開成參數是因為這一塊的**身分**就是那一顆印記 —— 換一顆就是另一支技能的詠唱，⛔ 而它在此之前是寫死在兩份各自的腳本裡。",
+  "derivedFrom": [
+    "godie-h020.e",
+    "godie-hjai.e"
+  ],
+  "params": {
+    "doomScale": {
+      "type": "number",
+      "default": 1.6,
+      "min": 0.1,
+      "max": 20,
+      "origin": "census:vfx-scripts/godie-h020.e#0.scale",
+      "bind": [
+        {
+          "segment": 0,
+          "field": "scale"
+        }
+      ]
+    },
+    "doomLifeSec": {
+      "type": "number",
+      "default": 1.5,
+      "min": 0.05,
+      "max": 30,
+      "origin": "census:vfx-scripts/godie-h020.e#0.lifeSec —— path:\"static\" 唯一的終止條件",
+      "bind": [
+        {
+          "segment": 0,
+          "field": "lifeSec"
+        }
+      ]
+    },
+    "markVfxId": {
+      "type": "docRef",
+      "default": "fx.w3x.stock.markofchaostarget.p00",
+      "origin": "census:vfx-scripts/godie-h020.e#1.vfxId",
+      "bind": [
+        {
+          "segment": 1,
+          "field": "vfxId"
+        }
+      ]
+    },
+    "markDurationSec": {
+      "type": "number",
+      "default": 1.2,
+      "min": 0,
+      "max": 30,
+      "origin": "census:vfx-scripts/godie-h020.e#1.durationSec",
+      "bind": [
+        {
+          "segment": 1,
+          "field": "durationSec"
+        }
+      ]
+    }
+  },
+  "segments": [
+    {
+      "kind": "modelFx",
+      "on": "castStart",
+      "modelKey": "imported.doom",
+      "path": "static",
+      "anchor": "self",
+      "heightU": 1.1
+    },
+    {
+      "kind": "vfx",
+      "on": "castStart",
+      "at": "self"
+    }
+  ]
+}

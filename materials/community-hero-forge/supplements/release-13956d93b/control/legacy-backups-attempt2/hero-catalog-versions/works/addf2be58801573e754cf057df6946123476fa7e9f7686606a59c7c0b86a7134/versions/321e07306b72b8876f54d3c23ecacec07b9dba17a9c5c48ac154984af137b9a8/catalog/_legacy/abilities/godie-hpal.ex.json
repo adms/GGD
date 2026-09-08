@@ -1,0 +1,35 @@
+{
+  "id": "godie-hpal.ex",
+  "name": "35-002 出來吧!全部的魔獸",
+  "icon": "assets/icons/abilities/godie-hpal.ex.webp",
+  "provenance": "w3x-import",
+  "description": "[被動]\n0秒冷卻時間\n\n在佩死掉的三秒內如果施展光牙將會變成招喚出所有魔獸，額外出現八道魔獸衝擊波造成2400傷害。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60
+  ],
+  "manaCost": [
+    120
+  ],
+  "range": 0,
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 6,
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "castTimeSec": 1.033
+    }
+  },
+  "vfxKey": "fx.prim.void.swarm-lg",
+  "schema": "ability@1",
+  "castTimeSec": 1.033
+}

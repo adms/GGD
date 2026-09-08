@@ -1,0 +1,52 @@
+{
+  "schema": "ggd-unpublished-legacy-restore-proof@1",
+  "status": "passed",
+  "scope": "Actual existing local Editor content API, same runtime source, separate copy of content. Fixture changes one archived hero health value; restore uses normal preview and guarded restore. No publication or browser-action claim.",
+  "codeCommit": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+  "hero": {
+    "id": "godie-e00j",
+    "name": "皇者 - 騜",
+    "path": "catalog/_legacy/champions/godie-e00j.json",
+    "catalog": "legacy"
+  },
+  "beforeVersion": "sha256:321e07306b72b8876f54d3c23ecacec07b9dba17a9c5c48ac154984af137b9a8",
+  "beforeHealth": 150,
+  "fixtureHealth": 151,
+  "restoredHealth": 150,
+  "afterVersion": "sha256:fc932a5822daf651c9484677b84f3896fc7da238de940c5c545a2146162fc647",
+  "restoreReceipt": {
+    "versionId": "sha256:fc932a5822daf651c9484677b84f3896fc7da238de940c5c545a2146162fc647",
+    "restoredFrom": "sha256:321e07306b72b8876f54d3c23ecacec07b9dba17a9c5c48ac154984af137b9a8",
+    "previousVersion": "sha256:d9d38c1eb4b8fe40df47a8eb91feff0a3fcf746aae27c80ee00f1cb92b9850c6",
+    "contentVersion": "cv_427710c1f052",
+    "affected": [
+      {
+        "id": "godie-e00j",
+        "name": "皇者 - 騜",
+        "path": "catalog/_legacy/champions/godie-e00j.json",
+        "catalog": "legacy"
+      }
+    ]
+  },
+  "allOtherHeroesUnchanged": 118,
+  "sharedDefinitionsUnchanged": 1394,
+  "independentDependencies": [
+    "_legacy/models/instance.85500dd12eba.969995d41880.48bb6ce2da77b0bc027a.json",
+    "_legacy/abilities/instance.85500dd12eba.969995d41880.a512225a90d6ea677284.json",
+    "_legacy/abilities/instance.85500dd12eba.969995d41880.b44bba407ce48372ccb1.json",
+    "_legacy/abilities/instance.85500dd12eba.969995d41880.4b10ea3ed09d0de43346.json",
+    "_legacy/abilities/instance.85500dd12eba.969995d41880.7af9bcd8319ab0a73b9c.json",
+    "_legacy/abilities/instance.85500dd12eba.969995d41880.19165a5407798fab422d.json",
+    "_legacy/abilities/instance.85500dd12eba.969995d41880.88c22c4585ff9383ad31.json",
+    "_legacy/vfx/instance.85500dd12eba.969995d41880.24e6ef3c8052caa30a83.json",
+    "_legacy/vfx/instance.85500dd12eba.969995d41880.33ec5e1d3005bdf87e5e.json",
+    "_legacy/vfx/instance.85500dd12eba.969995d41880.4ea4770713cb181584a6.json",
+    "_legacy/vfx/instance.85500dd12eba.969995d41880.227c8b75b9c32756abfb.json",
+    "_legacy/vfx/instance.85500dd12eba.969995d41880.bc2bb9aa81a9b64bc332.json",
+    "_legacy/vfx/instance.85500dd12eba.969995d41880.78dd44529223769fdfb1.json",
+    "_legacy/status-effects/instance.85500dd12eba.969995d41880.6f5bf023ff631aeb4fc2.json",
+    "_legacy/projectiles/instance.85500dd12eba.969995d41880.c4179d923f6525be7ac3.json"
+  ],
+  "stayedUnpublished": true,
+  "targetMatchesCompletePreview": true
+}

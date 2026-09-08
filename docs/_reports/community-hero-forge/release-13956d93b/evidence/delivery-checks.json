@@ -1,0 +1,18 @@
+{
+  "schema": "ggd-same-batch-release-checks@1",
+  "status": "passed",
+  "checks": [
+    {
+      "check": "skills:check",
+      "exitCode": 0
+    },
+    {
+      "check": "editor:accept:release",
+      "exitCode": 0
+    },
+    {
+      "check": "coord:check",
+      "exitCode": 0
+    }
+  ]
+}

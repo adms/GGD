@@ -1,0 +1,94 @@
+{
+  "id": "fx.wave.physical",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.55,
+    "angleDeg": 34
+  },
+  "mode": "burst",
+  "burstCount": 42,
+  "lifetimeSec": {
+    "min": 0.45,
+    "max": 1.05
+  },
+  "size": {
+    "start": 0.75,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      0.9856,
+      0.9892,
+      1,
+      1
+    ],
+    "end": [
+      0.1656,
+      0.1692,
+      0.18,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.75
+    ],
+    [
+      0.16,
+      1.25
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        0.9856,
+        0.9892,
+        1,
+        1
+      ]
+    ],
+    [
+      0.2,
+      [
+        0.92,
+        0.94,
+        1,
+        1
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.46,
+        0.47,
+        0.5,
+        0.42
+      ]
+    ],
+    [
+      1,
+      [
+        0.1656,
+        0.1692,
+        0.18,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 0,
+  "speed": {
+    "min": 3.5,
+    "max": 7
+  },
+  "texture": "assets/textures/particles/light_02.png",
+  "stretched": true,
+  "tailLength": 5.5
+}

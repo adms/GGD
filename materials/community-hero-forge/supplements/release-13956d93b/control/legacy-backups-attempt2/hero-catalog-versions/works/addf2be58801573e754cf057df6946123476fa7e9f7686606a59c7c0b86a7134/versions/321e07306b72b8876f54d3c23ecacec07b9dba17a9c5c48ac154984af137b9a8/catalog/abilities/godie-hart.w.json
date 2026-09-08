@@ -1,0 +1,76 @@
+{
+  "id": "godie-hart.w",
+  "name": "01-02 隕石擊",
+  "icon": "assets/icons/abilities/godie-hart.w.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n招喚隕石擊落攻擊區域內的敵人造成100傷害並且跳躍到該範圍給予斬殺造成100傷害。",
+  "slot": "W",
+  "castType": "ground",
+  "maxRank": 5,
+  "cooldown": [
+    30.0,
+    30.0,
+    30.0,
+    30.0,
+    30.0
+  ],
+  "cooldownTier": "極小",
+  "manaCost": [
+    72.0,
+    72.0,
+    72.0,
+    72.0,
+    72.0
+  ],
+  "manaCostTier": "極小",
+  "effects": [
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "imported.meteor",
+      "clip": "idle",
+      "soundKey": "wc3.infernalbirth1",
+      "scale": 0.8,
+      "tint": [
+        0.7843,
+        0.5882,
+        0.5882
+      ]
+    }
+  ],
+  "template": {
+    "ref": "tpl-leap-strike",
+    "params": {
+      "mode": "toPoint",
+      "applyTo": "self",
+      "apexHeight": 600.0,
+      "durationSec": 0.82,
+      "landRadius": 249.82,
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ad",
+            "coeff": 0.5
+          }
+        ]
+      },
+      "damageType": "physical",
+      "status": {
+        "statusId": "slow40",
+        "duration": 1.5,
+        "moveSpeedMult": 0.6
+      },
+      "castTimeSec": 1.133
+    }
+  },
+  "vfxKey": "fx.prim.fire.explosion",
+  "targetsEnemies": true,
+  "radius": 4.5,
+  "schema": "ability@1",
+  "castTimeSec": 1.133,
+  "rangeTier": "大",
+  "range": 8,
+  "radiusTier": "小"
+}

@@ -1,0 +1,1212 @@
+{
+  "acceptedPlan": {
+    "archetype": "fighter",
+    "attackType": "melee",
+    "budget": {
+      "complexity": 60,
+      "power": 50
+    },
+    "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+    "origin": "狂戰",
+    "planId": "community-review-34-20260907.plan",
+    "schema": "ggd-hero-plan@2",
+    "slots": {
+      "E": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "effects": [
+            {
+              "applyTo": "target",
+              "duration": 1.5,
+              "kind": "applyStatus",
+              "moveSpeedMult": 0.7,
+              "statusId": "slow30"
+            }
+          ],
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "〔妖怪的咒印〕",
+        "products": [
+          {
+            "instanceId": "community-review-34-20260907-e-1",
+            "template": {
+              "contentSha256": "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.2,
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "magic"
+              },
+              "ref": "tpl-single-strike"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"slow30\",\"duration\":1.5,\"applyTo\":\"target\",\"moveSpeedMult\":0.7}]。\n【目標設計】標記一個可見敵人，使自己朝其移動時獲得有限加速。\n【待補機制】緩速只是底稿；需追獵目標標記與朝向加速。",
+        "slot": "E",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "EX": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "capabilityIds": [
+          "leap",
+          "knockback"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔百公里衝撞〕",
+        "products": [
+          {
+            "instanceId": "community-review-34-20260907-ex-1",
+            "template": {
+              "contentSha256": "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e",
+              "inheritDefaults": true,
+              "params": {
+                "apexHeight": 0,
+                "castTimeSec": 0.1,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "dashDistance": 500,
+                "dashDurationSec": 0.3,
+                "pushDistance": 200,
+                "pushFrom": "facing",
+                "pushLaunchHeight": 0,
+                "pushSpeed": 872,
+                "radius": 150
+              },
+              "ref": "tpl-charge-push"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】向指定方向突進 500 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】蓄勢後沿長直線衝撞，命中第一名英雄或障礙物時停止。\n【待補機制】需命中第一英雄或牆即停止，不能穿越後繼續連撞。",
+        "slot": "EX",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "PASSIVE": {
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔追上你了〕",
+        "products": [
+          {
+            "instanceId": "community-review-34-20260907-passive-1",
+            "template": {
+              "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0",
+              "inheritDefaults": true,
+              "params": {
+                "bonusDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "condition": {
+                  "kind": "chance",
+                  "p": 1
+                },
+                "damageType": "physical",
+                "event": "onBasicAttack",
+                "internalCooldown": 3
+              },
+              "ref": "tpl-on-attack"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。\n【目標設計】持續追逐同一可見目標時累積速度，轉換目標、失去視線或停止追逐後衰退。\n【待補機制】需同一可見目標追逐速度與轉目標衰退。",
+        "slot": "PASSIVE",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        }
+      },
+      "Q": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "capabilityIds": [
+          "leap",
+          "knockback"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "〔疾走爪擊〕",
+        "products": [
+          {
+            "instanceId": "community-review-34-20260907-q-1",
+            "template": {
+              "contentSha256": "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e",
+              "inheritDefaults": true,
+              "params": {
+                "apexHeight": 0,
+                "castTimeSec": 0.1,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "dashDistance": 250,
+                "dashDurationSec": 0.3,
+                "pushDistance": 200,
+                "pushFrom": "facing",
+                "pushLaunchHeight": 0,
+                "pushSpeed": 872,
+                "radius": 150
+              },
+              "ref": "tpl-charge-push"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】短距離突進爪擊。\n【待補機制】爪擊模型待製。",
+        "slot": "Q",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "R": {
+        "abilityOverrides": {
+          "castTimeTier": "大",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 3,
+        "name": "〔全速追獵〕",
+        "products": [
+          {
+            "instanceId": "community-review-34-20260907-r-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": [
+                  {
+                    "msBonusTier": "極小",
+                    "op": "pctAdd",
+                    "stat": "ms"
+                  }
+                ]
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】短期提升速度上限與轉向能力，期間仍須通過碰撞檢查。\n【待補機制】3 秒移速增益；需上限与轉向能力独立参数。",
+        "slot": "R",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "W": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [
+          "leap"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "〔急轉彎〕",
+        "products": [
+          {
+            "instanceId": "community-review-34-20260907-w-1",
+            "template": {
+              "contentSha256": "sha256:fc256a57c55a0705dbb6660316bfeb64402f80fa154f09336fb1a8d393eeb5e5",
+              "inheritDefaults": true,
+              "params": {
+                "apexHeight": 30,
+                "applyTo": "self",
+                "castTimeSec": 0.15,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "durationSec": 0.5,
+                "landRadius": 150,
+                "mode": "toPoint"
+              },
+              "ref": "tpl-leap-strike"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】快速改變方向，降低當前加速層數以換取操作能力。\n【待補機制】需急轉向與消耗加速層，不能單純低跳。",
+        "slot": "W",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      }
+    },
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "statOverrides": {
+      "ad": "大",
+      "ap": "小",
+      "armor": "中",
+      "as": "中",
+      "healthRegen": "大",
+      "manaRegen": "小",
+      "maxHealth": "大",
+      "maxMana": "小",
+      "mr": "小",
+      "ms": "大",
+      "range": "小"
+    },
+    "summary": "高速婆婆 社群英雄功能驗收稿。作品：《膽大黨》  \n採用：高速婆婆本體的妖怪戰鬥意象。  \n定位：高速追擊、轉向、有限詛咒。\n\n視覺方向：紅黑風線、追獵咒紋、急轉地面擦痕；採妖怪本體，不用厄卡倫或招財貓。\n以 GGD 狂戰 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "templateVersions": {
+      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
+        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
+        "exemplar": {
+          "jass": "A0Q6",
+          "skill": "82-04 闇之魔法"
+        },
+        "family": "buff-self",
+        "gapScore": 6,
+        "id": "tpl-buff-self",
+        "name": "變身強化-數值面",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "duration": {
+            "default": 15,
+            "max": 60,
+            "min": 1,
+            "type": "number",
+            "unit": "s"
+          },
+          "modifiers": {
+            "default": [
+              {
+                "op": "flat",
+                "stat": "ad",
+                "value": 50
+              }
+            ],
+            "type": "statModifiers"
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0": {
+        "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
+        "exemplar": {
+          "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效",
+          "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者"
+        },
+        "family": "on-attack",
+        "gapScore": 9,
+        "id": "tpl-on-attack",
+        "name": "攻擊觸發",
+        "params": {
+          "bonusDamage": {
+            "default": {
+              "perRank": [
+                100
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "chance": {
+            "max": 1,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "ratio"
+          },
+          "condition": {
+            "default": {
+              "any": [
+                {
+                  "all": [
+                    {
+                      "not": {
+                        "is": "champion",
+                        "kind": "kind",
+                        "subject": "target"
+                      }
+                    },
+                    {
+                      "kind": "stat",
+                      "mode": "percent",
+                      "op": "<",
+                      "stat": "hp",
+                      "subject": "target",
+                      "value": 0.35
+                    }
+                  ]
+                },
+                {
+                  "all": [
+                    {
+                      "is": "champion",
+                      "kind": "kind",
+                      "subject": "target"
+                    },
+                    {
+                      "kind": "chance",
+                      "p": 0.01
+                    }
+                  ]
+                }
+              ]
+            },
+            "optional": true,
+            "type": "condition"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "event": {
+            "default": "onBasicAttack",
+            "type": "enum",
+            "values": [
+              "onBasicAttack",
+              "onDamageDealt"
+            ]
+          },
+          "internalCooldown": {
+            "default": 0,
+            "max": 60,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b": {
+        "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。",
+        "exemplar": {
+          "jass": "A0OD",
+          "skill": "23-04 雷焰聖劍"
+        },
+        "family": "single-strike",
+        "gapScore": 9,
+        "id": "tpl-single-strike",
+        "name": "單體斬擊",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e": {
+        "description": "朝目標點直線衝鋒，抵達後對落點周圍造成範圍傷害，並把該處的敵人推開。預設貼地衝刺（衝鋒弧高 0）；把弧高拉起來就變成 52-02 蹂躪編年史那種掄飛。「推開距離」清空 = 只衝鋒不推撞（52-04 巨神一擊）。傷害與推撞都在抵達點結算，不是在起跳點。",
+        "exemplar": {
+          "jass": "A0OG",
+          "skill": "38-01 邪王炎殺劍"
+        },
+        "family": "charge-push",
+        "gapScore": 5,
+        "id": "tpl-charge-push",
+        "name": "衝鋒推撞",
+        "params": {
+          "apexHeight": {
+            "default": 0,
+            "max": 600,
+            "min": 0,
+            "type": "number",
+            "unit": "wc3h"
+          },
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "physical",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "dashDistance": {
+            "default": 600,
+            "max": 1309,
+            "min": 100,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "dashDurationSec": {
+            "default": 0.4,
+            "max": 2,
+            "min": 0.05,
+            "type": "number",
+            "unit": "s"
+          },
+          "pushDistance": {
+            "default": 400,
+            "max": 1090,
+            "min": 50,
+            "optional": true,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "pushFrom": {
+            "default": "facing",
+            "type": "enum",
+            "values": [
+              "caster",
+              "facing",
+              "pull"
+            ]
+          },
+          "pushLaunchHeight": {
+            "default": 0,
+            "max": 600,
+            "min": 0,
+            "type": "number",
+            "unit": "wc3h"
+          },
+          "pushSpeed": {
+            "default": 872,
+            "max": 2181,
+            "min": 100,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "radius": {
+            "default": 300,
+            "max": 900,
+            "min": 50,
+            "type": "number",
+            "unit": "wc3u"
+          }
+        },
+        "requires": [
+          "leap",
+          "knockback"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:fc256a57c55a0705dbb6660316bfeb64402f80fa154f09336fb1a8d393eeb5e5": {
+        "description": "拋物線跳躍到指定點（或原地垂直跳），落地造成範圍傷害。飛行中無視地形；落點被障礙物（牆）或場地邊界擋住時，起跳當下就改瞄最近的合法落點（`world.wallBlock` 出貨 leap:\"clamp\"，落點截在牆前；只有 `flightExempt` 且被搬的那具身體本來就 `flightIgnoresObstacles` 的飛行狀態才豁免牆體，邊界照樣截斷），弧線隨之重算，你看到的落地位置就是實際位置。",
+        "exemplar": {
+          "jass": "A0G3",
+          "skill": "07-03 列、在、前"
+        },
+        "family": "leap-strike",
+        "gapScore": 5,
+        "id": "tpl-leap-strike",
+        "name": "跳躍落地",
+        "params": {
+          "apexHeight": {
+            "default": 600,
+            "max": 2000,
+            "min": 0,
+            "type": "number",
+            "unit": "wc3h"
+          },
+          "applyTo": {
+            "default": "self",
+            "type": "enum",
+            "values": [
+              "self",
+              "target"
+            ]
+          },
+          "castTimeSec": {
+            "default": 0.5,
+            "max": 5,
+            "min": 0,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                450
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "physical",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "durationSec": {
+            "default": 0.82,
+            "max": 3,
+            "min": 0.1,
+            "type": "number",
+            "unit": "s"
+          },
+          "landRadius": {
+            "default": 330,
+            "max": 900,
+            "min": 0,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "mode": {
+            "default": "toPoint",
+            "type": "enum",
+            "values": [
+              "toPoint",
+              "inPlace"
+            ]
+          }
+        },
+        "requires": [
+          "leap"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      }
+    },
+    "title": "高速婆婆"
+  },
+  "brief": {
+    "concept": "高速婆婆 社群英雄功能驗收稿。作品：《膽大黨》  \n採用：高速婆婆本體的妖怪戰鬥意象。  \n定位：高速追擊、轉向、有限詛咒。\n\n視覺方向：紅黑風線、追獵咒紋、急轉地面擦痕；採妖怪本體，不用厄卡倫或招財貓。\n以 GGD 狂戰 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "E": "〔妖怪的咒印〕",
+      "EX": "〔百公里衝撞〕",
+      "PASSIVE": "〔追上你了〕",
+      "Q": "〔疾走爪擊〕",
+      "R": "〔全速追獵〕",
+      "W": "〔急轉彎〕"
+    },
+    "name": "高速婆婆"
+  },
+  "presentation": {
+    "assetLocks": [
+      {
+        "byteSize": 946740,
+        "consumers": [
+          "champion:model"
+        ],
+        "kind": "model",
+        "mediaType": "model/gltf-binary",
+        "path": "assets/models/community/dfb25661e3126984d719393d02721ee0c0ea0cd2f09f21626d29165ea1481084.glb",
+        "registry": "normalized-upload",
+        "sha256": "dfb25661e3126984d719393d02721ee0c0ea0cd2f09f21626d29165ea1481084"
+      }
+    ],
+    "championIcon": "assets/icons/champions/thorne.webp",
+    "modelKey": "community.body.022b9aa2fc736b1b6fa974532e47edfc590d78ce161c90aa",
+    "modelProvenance": {
+      "modelSha256": "dfb25661e3126984d719393d02721ee0c0ea0cd2f09f21626d29165ea1481084",
+      "notes": "暫採妖怪女性與和式衣裝氛圍；實際為八雲紫，外觀年齡、金髮、陽傘與高速婆婆不同，不是原作老婦造型。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。",
+      "relationship": "style-proxy",
+      "schema": "ggd-hero-model-provenance@1",
+      "sourceAssetId": "300heroes:7d330d5e4eae4e8c4a9b7c34",
+      "sourceCharacter": "八云紫",
+      "sourceWork": "東方 Project"
+    },
+    "schema": "ggd-hero-presentation@1",
+    "slots": {
+      "E": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "script": {
+          "abilityId": "community-review-34-20260907.e",
+          "id": "community-review-34-20260907.e",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                204,
+                46,
+                46
+              ],
+              "vfxId": "fx.prim.wind.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                204,
+                46,
+                46
+              ],
+              "vfxId": "fx.prim.wind.slash",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "E",
+        "vfxLayers": []
+      },
+      "EX": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "script": {
+          "abilityId": "community-review-34-20260907.ex",
+          "id": "community-review-34-20260907.ex",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                204,
+                46,
+                46
+              ],
+              "vfxId": "fx.prim.wind.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                204,
+                46,
+                46
+              ],
+              "vfxId": "fx.prim.wind.slash",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "EX",
+        "vfxLayers": []
+      },
+      "PASSIVE": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "script": null,
+        "sfxKey": null,
+        "slot": "PASSIVE",
+        "vfxLayers": []
+      },
+      "Q": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "script": {
+          "abilityId": "community-review-34-20260907.q",
+          "id": "community-review-34-20260907.q",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                204,
+                46,
+                46
+              ],
+              "vfxId": "fx.prim.wind.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                204,
+                46,
+                46
+              ],
+              "vfxId": "fx.prim.wind.slash",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "Q",
+        "vfxLayers": []
+      },
+      "R": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "script": {
+          "abilityId": "community-review-34-20260907.r",
+          "id": "community-review-34-20260907.r",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                204,
+                46,
+                46
+              ],
+              "vfxId": "fx.prim.wind.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                204,
+                46,
+                46
+              ],
+              "vfxId": "fx.prim.wind.pulse",
+              "w3xScale": 1.25
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "R",
+        "vfxLayers": []
+      },
+      "W": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "script": {
+          "abilityId": "community-review-34-20260907.w",
+          "id": "community-review-34-20260907.w",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                204,
+                46,
+                46
+              ],
+              "vfxId": "fx.prim.wind.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "point",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                204,
+                46,
+                46
+              ],
+              "vfxId": "fx.prim.wind.arc",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "W",
+        "vfxLayers": []
+      }
+    },
+    "uploadedModel": {
+      "byteSize": 946740,
+      "clipMap": {
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "death": "dead",
+        "hurt": "bat_idle",
+        "idle": "bat_idle",
+        "run": "single_run"
+      },
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "dfb25661e3126984d719393d02721ee0c0ea0cd2f09f21626d29165ea1481084",
+      "yawOffsetDeg": 0
+    }
+  },
+  "projectId": "community-review-34-20260907",
+  "receipts": [
+    {
+      "digest": "7bc5cc5da9ae0608d67c4ca3828b542a5686356289fef4d532ef8487d18b4998",
+      "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+      "kind": "generator-adopted",
+      "projectRevision": 5
+    }
+  ],
+  "revision": 11,
+  "schema": "ggd-hero-project@2",
+  "sections": {
+    "attributes": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "draft"
+    },
+    "identity": {
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      },
+      "revision": 1,
+      "state": "draft"
+    },
+    "mechanics": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    },
+    "package": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "presentation": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "skills": {
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      },
+      "revision": 11,
+      "state": "draft"
+    },
+    "validation": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    }
+  },
+  "sourceDesign": {
+    "identity": "作品：《膽大黨》  \n採用：高速婆婆本體的妖怪戰鬥意象。  \n定位：高速追擊、轉向、有限詛咒。",
+    "name": "高速婆婆",
+    "ownerText": "### 34｜高速婆婆\n\n作品：《膽大黨》  \n採用：高速婆婆本體的妖怪戰鬥意象。  \n定位：高速追擊、轉向、有限詛咒。\n\n- **PASSIVE｜〔追上你了〕**：持續追逐同一可見目標時累積速度，轉換目標、失去視線或停止追逐後衰退。\n- **Q｜〔疾走爪擊〕**：短距離突進爪擊。\n- **W｜〔急轉彎〕**：快速改變方向，降低當前加速層數以換取操作能力。\n- **E｜〔妖怪的咒印〕**：標記一個可見敵人，使自己朝其移動時獲得有限加速。\n- **R｜〔全速追獵〕**：短期提升速度上限與轉向能力，期間仍須通過碰撞檢查。\n- **EX｜〔百公里衝撞〕**：蓄勢後沿長直線衝撞，命中第一名英雄或障礙物時停止。\n\n**審查重點**：測試高速穿牆、轉角、目標死亡及追擊超距；區分高速婆婆、招財貓容器與厄卡倫的能力持有狀態。\n\n",
+    "reviewText": "測試高速穿牆、轉角、目標死亡及追擊超距；區分高速婆婆、招財貓容器與厄卡倫的能力持有狀態。",
+    "schema": "ggd-hero-source-design@1",
+    "slots": {
+      "E": {
+        "baselineBehavior": "指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"slow30\",\"duration\":1.5,\"applyTo\":\"target\",\"moveSpeedMult\":0.7}]。",
+        "name": "〔妖怪的咒印〕",
+        "ownerDescription": "標記一個可見敵人，使自己朝其移動時獲得有限加速。",
+        "refinementContracts": [
+          "M01",
+          "M06"
+        ],
+        "requiredRefinement": "緩速只是底稿；需追獵目標標記與朝向加速。"
+      },
+      "EX": {
+        "baselineBehavior": "向指定方向突進 500 wc3u，造成極小級碰撞範圍傷害與推移。",
+        "name": "〔百公里衝撞〕",
+        "ownerDescription": "蓄勢後沿長直線衝撞，命中第一名英雄或障礙物時停止。",
+        "refinementContracts": [
+          "M01",
+          "M06"
+        ],
+        "requiredRefinement": "需命中第一英雄或牆即停止，不能穿越後繼續連撞。"
+      },
+      "PASSIVE": {
+        "baselineBehavior": "普攻追加極小級物理傷害，內置冷卻 3 秒。",
+        "name": "〔追上你了〕",
+        "ownerDescription": "持續追逐同一可見目標時累積速度，轉換目標、失去視線或停止追逐後衰退。",
+        "refinementContracts": [
+          "M01",
+          "M06"
+        ],
+        "requiredRefinement": "需同一可見目標追逐速度與轉目標衰退。"
+      },
+      "Q": {
+        "baselineBehavior": "向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。",
+        "name": "〔疾走爪擊〕",
+        "ownerDescription": "短距離突進爪擊。",
+        "refinementContracts": [
+          "M01",
+          "M06"
+        ],
+        "requiredRefinement": "爪擊模型待製。"
+      },
+      "R": {
+        "baselineBehavior": "自身取得 3 秒增益：極小級移速。",
+        "name": "〔全速追獵〕",
+        "ownerDescription": "短期提升速度上限與轉向能力，期間仍須通過碰撞檢查。",
+        "refinementContracts": [
+          "M01",
+          "M06"
+        ],
+        "requiredRefinement": "3 秒移速增益；需上限与轉向能力独立参数。"
+      },
+      "W": {
+        "baselineBehavior": "朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。",
+        "name": "〔急轉彎〕",
+        "ownerDescription": "快速改變方向，降低當前加速層數以換取操作能力。",
+        "refinementContracts": [
+          "M01",
+          "M06"
+        ],
+        "requiredRefinement": "需急轉向與消耗加速層，不能單純低跳。"
+      }
+    },
+    "sourceSha256": "1992d2a65620e63219a53f44a52d450d11ee2de2b1e27bcd8b1ce3812ba35af9"
+  },
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "validationState": {
+    "attributes": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "identity": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "mechanics": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    },
+    "package": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "presentation": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "skills": {
+      "diagnosticCodes": [],
+      "revision": 11,
+      "status": "idle"
+    },
+    "validation": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    }
+  }
+}

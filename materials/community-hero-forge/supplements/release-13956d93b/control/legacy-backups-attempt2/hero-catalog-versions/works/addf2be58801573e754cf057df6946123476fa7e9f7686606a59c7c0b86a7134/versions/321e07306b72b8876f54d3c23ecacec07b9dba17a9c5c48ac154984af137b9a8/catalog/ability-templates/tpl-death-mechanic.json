@@ -1,0 +1,15 @@
+{
+  "id": "tpl-death-mechanic",
+  "schema": "template@1",
+  "name": "死亡機制",
+  "description": "P3 死亡機制。",
+  "family": "death-mechanic",
+  "status": "draft",
+  "params": {},
+  "requires": [],
+  "gapScore": 2,
+  "exemplar": {
+    "skill": "(draft)",
+    "jass": "(P2/P3)"
+  }
+}

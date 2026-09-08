@@ -1,0 +1,46 @@
+{
+  "id": "instance.85500dd12eba.969995d41880.19165a5407798fab422d",
+  "name": "95-02 大和戰氣",
+  "icon": "assets/hero-instances/382d42ab768bb5fbde6044c7ddd3c1ded4fe750700498c2b8e9b17f21335fdaf.webp",
+  "description": "[被動]\n0秒冷卻時間\n\n攻擊時有20%的機會，造成40點額外傷害。\n\n《龍氣》 - 被擊中的單位將會因為痛苦難耐而陷入無法行動的狀態，暈眩0.3秒。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    12,
+    12,
+    12,
+    12
+  ],
+  "manaCost": [
+    60,
+    60,
+    60,
+    60
+  ],
+  "range": 11,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          20,
+          20,
+          20,
+          20
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "instance.85500dd12eba.969995d41880.4ea4770713cb181584a6",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "castTimeSec": 0.3
+}

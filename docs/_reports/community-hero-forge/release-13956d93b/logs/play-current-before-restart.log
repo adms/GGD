@@ -1,0 +1,7 @@
+Error: /rooms/r_01M211PWQT6Z3N1TYR3WTDKWF3/start: HTTP 502 {"error":{"code":"game_rejected","message":"game server rejected the match (500)"}}
+
+    at response (/private/tmp/ggd-model-upload-acceptance/release-13956d93b/play-current.mts:41:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async json (/private/tmp/ggd-model-upload-acceptance/release-13956d93b/play-current.mts:44:132)
+    at async <anonymous> (/private/tmp/ggd-model-upload-acceptance/release-13956d93b/play-current.mts:89:17)
+Evidence: /private/tmp/ggd-model-upload-acceptance/release-13956d93b/evidence/match.json

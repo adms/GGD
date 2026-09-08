@@ -1,0 +1,91 @@
+{
+  "id": "fx.fam.mirror-image.physical.s150",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "sphere",
+    "radius": 0.9
+  },
+  "mode": "burst",
+  "burstCount": 32,
+  "lifetimeSec": {
+    "min": 0.33,
+    "max": 0.77
+  },
+  "size": {
+    "start": 0.315,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      0.9856,
+      0.9892,
+      1,
+      0.8
+    ],
+    "end": [
+      0.1656,
+      0.1692,
+      0.18,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.315
+    ],
+    [
+      0.2,
+      0.75
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        0.9856,
+        0.9892,
+        1,
+        0.8
+      ]
+    ],
+    [
+      0.2,
+      [
+        0.92,
+        0.94,
+        1,
+        0.8
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.46,
+        0.47,
+        0.5,
+        0.336
+      ]
+    ],
+    [
+      1,
+      [
+        0.1656,
+        0.1692,
+        0.18,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 1,
+  "speed": {
+    "min": 1.5,
+    "max": 4
+  },
+  "texture": "assets/textures/particles/magic_02.png"
+}

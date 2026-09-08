@@ -1,0 +1,62 @@
+{
+  "id": "imported.sd2",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/sd2.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand - 1",
+    "run": "Walk",
+    "attack": "Attack - 1",
+    "cast": "Spell",
+    "hurt": "Stand - 1",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Hand Left": {
+      "x": -0.0302,
+      "y": 0.7574,
+      "z": -0.3615
+    },
+    "Hand Right": {
+      "x": -0.0302,
+      "y": 0.7574,
+      "z": 0.3908
+    },
+    "Chest": {
+      "x": -0.0302,
+      "y": 1.384,
+      "z": -0.0071
+    },
+    "Weapon": {
+      "x": 0.607,
+      "y": 0.5089,
+      "z": 0.9124
+    },
+    "Head -": {
+      "x": -0.0302,
+      "y": 1.5876,
+      "z": -0.0071
+    },
+    "Foot Left": {
+      "x": -0.0302,
+      "y": -0.0052,
+      "z": -0.3023
+    },
+    "Foot Right": {
+      "x": -0.0302,
+      "y": -0.0052,
+      "z": 0.2262
+    },
+    "Origin": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -0.0
+    },
+    "OverHead": {
+      "x": 0.0,
+      "y": 1.8014,
+      "z": -0.0
+    }
+  }
+}

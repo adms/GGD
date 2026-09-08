@@ -1,0 +1,41 @@
+{
+  "id": "godie-h00w.r",
+  "name": "26-04 開天闢地‧洨者聖臨",
+  "icon": "assets/icons/abilities/godie-h00w.r.webp",
+  "description": "[輔助]\n75秒冷卻時間\n\n舉行禁忌的食子儀式獲得強大的力量，攻擊類型轉為攻城，增加25%的基礎攻擊速度，5點裝甲，維持7秒。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    75.0,
+    75.0,
+    75.0
+  ],
+  "manaCost": [
+    140.0,
+    210.0,
+    280.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 0.25
+        },
+        {
+          "stat": "armor",
+          "op": "flat",
+          "value": 5
+        }
+      ],
+      "duration": 7
+    }
+  ],
+  "vfxKey": "fx.prim.holy.pulse-lg",
+  "schema": "ability@1",
+  "castTimeSec": 0.4
+}

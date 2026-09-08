@@ -1,0 +1,15 @@
+{
+  "id": "root",
+  "schema": "status-effect@1",
+  "name": "Rooted",
+  "description": "Cannot move.",
+  "polarity": "debuff",
+  "tags": [
+    "root",
+    "immobilize",
+    "move-denied",
+    "disable",
+    "cc",
+    "debuff"
+  ]
+}

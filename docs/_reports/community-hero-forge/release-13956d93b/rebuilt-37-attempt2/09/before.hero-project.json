@@ -1,0 +1,1034 @@
+{
+  "acceptedPlan": {
+    "archetype": "fighter",
+    "attackType": "ranged",
+    "budget": {
+      "complexity": 60,
+      "power": 50
+    },
+    "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+    "origin": "軟輔",
+    "planId": "community-review-09-20260907.plan",
+    "schema": "ggd-hero-plan@2",
+    "slots": {
+      "E": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "effects": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 120,
+                "ratios": []
+              },
+              "duration": 3,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "community-review-09-20260907.e.guard"
+            }
+          ],
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "大"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "〔麥穗庇護〕",
+        "products": [
+          {
+            "instanceId": "community-review-09-20260907-e-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": []
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-09-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】為指定友軍提供小額護盾及短效移速。\n【待補機制】目前自身；需指定友軍盾與加速。",
+        "slot": "E",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        }
+      },
+      "EX": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "大",
+          "effects": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 150,
+                "ratios": []
+              },
+              "duration": 3,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "community-review-09-20260907.ex.guard"
+            }
+          ],
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "大"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔豐收的約定〕",
+        "products": [
+          {
+            "instanceId": "community-review-09-20260907-ex-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": []
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":150,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-09-20260907.ex.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】消耗剩餘籌碼，按消耗量強化附近友軍的護盾；不另外產生金幣。\n【待補機制】目前自身固定盾；需扣除剩餘籌碼並擴展附近友軍。",
+        "slot": "EX",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 8
+        }
+      },
+      "PASSIVE": {
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔賢狼的眼光〕",
+        "products": [
+          {
+            "instanceId": "community-review-09-20260907-passive-1",
+            "template": {
+              "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0",
+              "inheritDefaults": true,
+              "params": {
+                "bonusDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "condition": {
+                  "kind": "chance",
+                  "p": 1
+                },
+                "damageType": "magic",
+                "event": "onBasicAttack",
+                "internalCooldown": 3
+              },
+              "ref": "tpl-on-attack"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。\n【目標設計】參與有效助攻獲得交易籌碼，上限三枚；同一擊殺事件只結算一次。\n【待補機制】需助攻一次性籌碼，上限三枚。",
+        "slot": "PASSIVE",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        }
+      },
+      "Q": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "effects": [
+            {
+              "applyTo": "target",
+              "duration": 1,
+              "kind": "applyStatus",
+              "moveSpeedMult": 0.7,
+              "statusId": "slow30"
+            }
+          ],
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "〔狼牙警告〕",
+        "products": [
+          {
+            "instanceId": "community-review-09-20260907-q-1",
+            "template": {
+              "contentSha256": "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.2,
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "physical"
+              },
+              "ref": "tpl-single-strike"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】指定單一敵人造成小級物理傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"slow30\",\"duration\":1,\"applyTo\":\"target\",\"moveSpeedMult\":0.7}]。\n【目標設計】短距離狼影撲咬，造成傷害與短暫緩速。\n【待補機制】狼影造型待補。",
+        "slot": "Q",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        }
+      },
+      "R": {
+        "abilityOverrides": {
+          "castTimeTier": "大",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "大"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 3,
+        "name": "賢狼真身",
+        "products": [
+          {
+            "instanceId": "community-review-09-20260907-r-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 4,
+                "modifiers": [
+                  {
+                    "op": "pctAdd",
+                    "stat": "ad",
+                    "value": 0.15
+                  },
+                  {
+                    "msBonusTier": "極小",
+                    "op": "pctAdd",
+                    "stat": "ms"
+                  }
+                ]
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 4 秒增益：ad +15%、極小級移速。\n【目標設計】變為有限體型的大狼，強化普攻與 Q，暫時失去 W 的交易功能。\n【待補機制】目前 4 秒 AD／移速；需狼形態、碰撞調整、Q 替換及 W 禁用。",
+        "slot": "R",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 8
+        }
+      },
+      "W": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "effects": [
+            {
+              "applyTo": "self",
+              "kind": "restore",
+              "manaPct": 0.1
+            }
+          ],
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "大"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "〔行商議價〕",
+        "products": [
+          {
+            "instanceId": "community-review-09-20260907-w-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": []
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"restore\",\"manaPct\":0.1,\"applyTo\":\"self\"}]。\n【目標設計】消耗一枚籌碼，取得少量當局戰鬥金幣；每回合最多三次。\n【待補機制】預覽只回復 10% 魔力；需籌碼消耗與每回合三次戰鬥金幣交易。",
+        "slot": "W",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        }
+      }
+    },
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "statOverrides": {
+      "ad": "小",
+      "ap": "中",
+      "armor": "中",
+      "as": "小",
+      "healthRegen": "中",
+      "manaRegen": "大",
+      "maxHealth": "中",
+      "maxMana": "大",
+      "mr": "中",
+      "ms": "中",
+      "range": "中"
+    },
+    "summary": "赫蘿 社群英雄功能驗收稿。作品：《狼與辛香料》  \n定位：資源支援、判斷、狼形態。  \n註：戰鬥招式及交易效果為依角色特徵創編。\n\n視覺方向：麥金色護盾、麥穗環、赤褐狼影；交易用小型籌碼提示，狼本體待製。\n以 GGD 軟輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "templateVersions": {
+      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
+        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
+        "exemplar": {
+          "jass": "A0Q6",
+          "skill": "82-04 闇之魔法"
+        },
+        "family": "buff-self",
+        "gapScore": 6,
+        "id": "tpl-buff-self",
+        "name": "變身強化-數值面",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "duration": {
+            "default": 15,
+            "max": 60,
+            "min": 1,
+            "type": "number",
+            "unit": "s"
+          },
+          "modifiers": {
+            "default": [
+              {
+                "op": "flat",
+                "stat": "ad",
+                "value": 50
+              }
+            ],
+            "type": "statModifiers"
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0": {
+        "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
+        "exemplar": {
+          "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效",
+          "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者"
+        },
+        "family": "on-attack",
+        "gapScore": 9,
+        "id": "tpl-on-attack",
+        "name": "攻擊觸發",
+        "params": {
+          "bonusDamage": {
+            "default": {
+              "perRank": [
+                100
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "chance": {
+            "max": 1,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "ratio"
+          },
+          "condition": {
+            "default": {
+              "any": [
+                {
+                  "all": [
+                    {
+                      "not": {
+                        "is": "champion",
+                        "kind": "kind",
+                        "subject": "target"
+                      }
+                    },
+                    {
+                      "kind": "stat",
+                      "mode": "percent",
+                      "op": "<",
+                      "stat": "hp",
+                      "subject": "target",
+                      "value": 0.35
+                    }
+                  ]
+                },
+                {
+                  "all": [
+                    {
+                      "is": "champion",
+                      "kind": "kind",
+                      "subject": "target"
+                    },
+                    {
+                      "kind": "chance",
+                      "p": 0.01
+                    }
+                  ]
+                }
+              ]
+            },
+            "optional": true,
+            "type": "condition"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "event": {
+            "default": "onBasicAttack",
+            "type": "enum",
+            "values": [
+              "onBasicAttack",
+              "onDamageDealt"
+            ]
+          },
+          "internalCooldown": {
+            "default": 0,
+            "max": 60,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b": {
+        "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。",
+        "exemplar": {
+          "jass": "A0OD",
+          "skill": "23-04 雷焰聖劍"
+        },
+        "family": "single-strike",
+        "gapScore": 9,
+        "id": "tpl-single-strike",
+        "name": "單體斬擊",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      }
+    },
+    "title": "赫蘿"
+  },
+  "brief": {
+    "concept": "赫蘿 社群英雄功能驗收稿。作品：《狼與辛香料》  \n定位：資源支援、判斷、狼形態。  \n註：戰鬥招式及交易效果為依角色特徵創編。\n\n視覺方向：麥金色護盾、麥穗環、赤褐狼影；交易用小型籌碼提示，狼本體待製。\n以 GGD 軟輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "E": "〔麥穗庇護〕",
+      "EX": "〔豐收的約定〕",
+      "PASSIVE": "〔賢狼的眼光〕",
+      "Q": "〔狼牙警告〕",
+      "R": "賢狼真身",
+      "W": "〔行商議價〕"
+    },
+    "name": "赫蘿"
+  },
+  "presentation": {
+    "assetLocks": [
+      {
+        "byteSize": 1275656,
+        "consumers": [
+          "champion:model"
+        ],
+        "kind": "model",
+        "mediaType": "model/gltf-binary",
+        "path": "assets/models/community/6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf.glb",
+        "registry": "normalized-upload",
+        "sha256": "6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf"
+      }
+    ],
+    "championIcon": "assets/icons/champions/sela.webp",
+    "modelKey": "community.body.c1d58311b32ce991b89fd6a2aba74ac9548a4bd1340b4e18",
+    "modelProvenance": {
+      "modelSha256": "6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf",
+      "notes": "以獸耳、毛尾與女性造型暫代人形赫蘿；實際為玉藻前，非賢狼本人或狼形態。已保留尾巴網格。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。",
+      "relationship": "style-proxy",
+      "schema": "ggd-hero-model-provenance@1",
+      "sourceAssetId": "300heroes:42198014d654ce4602d8ffd2",
+      "sourceCharacter": "玉藻前",
+      "sourceWork": "Fate/EXTRA 系列"
+    },
+    "schema": "ggd-hero-presentation@1",
+    "slots": {
+      "E": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.e.webp",
+        "script": {
+          "abilityId": "community-review-09-20260907.e",
+          "id": "community-review-09-20260907.e",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                235,
+                166,
+                56
+              ],
+              "vfxId": "fx.prim.nature.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                235,
+                166,
+                56
+              ],
+              "vfxId": "fx.prim.nature.pulse",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "E",
+        "vfxLayers": []
+      },
+      "EX": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.r.webp",
+        "script": {
+          "abilityId": "community-review-09-20260907.ex",
+          "id": "community-review-09-20260907.ex",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                235,
+                166,
+                56
+              ],
+              "vfxId": "fx.prim.nature.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                235,
+                166,
+                56
+              ],
+              "vfxId": "fx.prim.nature.pulse",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "EX",
+        "vfxLayers": []
+      },
+      "PASSIVE": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.q.webp",
+        "script": null,
+        "sfxKey": null,
+        "slot": "PASSIVE",
+        "vfxLayers": []
+      },
+      "Q": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.q.webp",
+        "script": {
+          "abilityId": "community-review-09-20260907.q",
+          "id": "community-review-09-20260907.q",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                235,
+                166,
+                56
+              ],
+              "vfxId": "fx.prim.nature.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                235,
+                166,
+                56
+              ],
+              "vfxId": "fx.prim.nature.slash",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "Q",
+        "vfxLayers": []
+      },
+      "R": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.r.webp",
+        "script": {
+          "abilityId": "community-review-09-20260907.r",
+          "id": "community-review-09-20260907.r",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                235,
+                166,
+                56
+              ],
+              "vfxId": "fx.prim.nature.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                235,
+                166,
+                56
+              ],
+              "vfxId": "fx.prim.nature.pulse",
+              "w3xScale": 1.25
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "R",
+        "vfxLayers": []
+      },
+      "W": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.w.webp",
+        "script": {
+          "abilityId": "community-review-09-20260907.w",
+          "id": "community-review-09-20260907.w",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                235,
+                166,
+                56
+              ],
+              "vfxId": "fx.prim.nature.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                235,
+                166,
+                56
+              ],
+              "vfxId": "fx.prim.nature.pulse",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "W",
+        "vfxLayers": []
+      }
+    },
+    "uploadedModel": {
+      "byteSize": 1275656,
+      "clipMap": {
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01_a",
+        "death": "dead",
+        "hurt": "bat_idle",
+        "idle": "bat_idle",
+        "run": "single_run"
+      },
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf",
+      "yawOffsetDeg": 0
+    }
+  },
+  "projectId": "community-review-09-20260907",
+  "receipts": [
+    {
+      "digest": "ac61ff62c5e17d1362ce95f4fe458791e0c7b2bb56a8040971de557926a0e390",
+      "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+      "kind": "generator-adopted",
+      "projectRevision": 5
+    }
+  ],
+  "revision": 11,
+  "schema": "ggd-hero-project@2",
+  "sections": {
+    "attributes": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "draft"
+    },
+    "identity": {
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      },
+      "revision": 1,
+      "state": "draft"
+    },
+    "mechanics": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    },
+    "package": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "presentation": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "skills": {
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      },
+      "revision": 11,
+      "state": "draft"
+    },
+    "validation": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    }
+  },
+  "sourceDesign": {
+    "identity": "作品：《狼與辛香料》  \n定位：資源支援、判斷、狼形態。  \n註：戰鬥招式及交易效果為依角色特徵創編。",
+    "name": "赫蘿",
+    "ownerText": "### 09｜赫蘿\n\n作品：《狼與辛香料》  \n定位：資源支援、判斷、狼形態。  \n註：戰鬥招式及交易效果為依角色特徵創編。\n\n- **PASSIVE｜〔賢狼的眼光〕**：參與有效助攻獲得交易籌碼，上限三枚；同一擊殺事件只結算一次。\n- **Q｜〔狼牙警告〕**：短距離狼影撲咬，造成傷害與短暫緩速。\n- **W｜〔行商議價〕**：消耗一枚籌碼，取得少量當局戰鬥金幣；每回合最多三次。\n- **E｜〔麥穗庇護〕**：為指定友軍提供小額護盾及短效移速。\n- **R｜賢狼真身**：變為有限體型的大狼，強化普攻與 Q，暫時失去 W 的交易功能。\n- **EX｜〔豐收的約定〕**：消耗剩餘籌碼，按消耗量強化附近友軍的護盾；不另外產生金幣。\n\n**審查重點**：區分交易籌碼、戰鬥金幣與帳號資產；測試助攻去重、交易上限、變形碰撞與 EX 消耗，不把她寫成原作已有整套元素魔法。\n\n",
+    "reviewText": "區分交易籌碼、戰鬥金幣與帳號資產；測試助攻去重、交易上限、變形碰撞與 EX 消耗，不把她寫成原作已有整套元素魔法。",
+    "schema": "ggd-hero-source-design@1",
+    "slots": {
+      "E": {
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-09-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。",
+        "name": "〔麥穗庇護〕",
+        "ownerDescription": "為指定友軍提供小額護盾及短效移速。",
+        "refinementContracts": [
+          "M01",
+          "M05",
+          "M12"
+        ],
+        "requiredRefinement": "目前自身；需指定友軍盾與加速。"
+      },
+      "EX": {
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":150,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-09-20260907.ex.guard\",\"onExisting\":\"keepLarger\"}]。",
+        "name": "〔豐收的約定〕",
+        "ownerDescription": "消耗剩餘籌碼，按消耗量強化附近友軍的護盾；不另外產生金幣。",
+        "refinementContracts": [
+          "M01",
+          "M05",
+          "M12"
+        ],
+        "requiredRefinement": "目前自身固定盾；需扣除剩餘籌碼並擴展附近友軍。"
+      },
+      "PASSIVE": {
+        "baselineBehavior": "普攻追加極小級魔法傷害，內置冷卻 3 秒。",
+        "name": "〔賢狼的眼光〕",
+        "ownerDescription": "參與有效助攻獲得交易籌碼，上限三枚；同一擊殺事件只結算一次。",
+        "refinementContracts": [
+          "M01",
+          "M05",
+          "M12"
+        ],
+        "requiredRefinement": "需助攻一次性籌碼，上限三枚。"
+      },
+      "Q": {
+        "baselineBehavior": "指定單一敵人造成小級物理傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"slow30\",\"duration\":1,\"applyTo\":\"target\",\"moveSpeedMult\":0.7}]。",
+        "name": "〔狼牙警告〕",
+        "ownerDescription": "短距離狼影撲咬，造成傷害與短暫緩速。",
+        "refinementContracts": [
+          "M01",
+          "M05",
+          "M12"
+        ],
+        "requiredRefinement": "狼影造型待補。"
+      },
+      "R": {
+        "baselineBehavior": "自身取得 4 秒增益：ad +15%、極小級移速。",
+        "name": "賢狼真身",
+        "ownerDescription": "變為有限體型的大狼，強化普攻與 Q，暫時失去 W 的交易功能。",
+        "refinementContracts": [
+          "M01",
+          "M05",
+          "M12"
+        ],
+        "requiredRefinement": "目前 4 秒 AD／移速；需狼形態、碰撞調整、Q 替換及 W 禁用。"
+      },
+      "W": {
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"restore\",\"manaPct\":0.1,\"applyTo\":\"self\"}]。",
+        "name": "〔行商議價〕",
+        "ownerDescription": "消耗一枚籌碼，取得少量當局戰鬥金幣；每回合最多三次。",
+        "refinementContracts": [
+          "M01",
+          "M05",
+          "M12"
+        ],
+        "requiredRefinement": "預覽只回復 10% 魔力；需籌碼消耗與每回合三次戰鬥金幣交易。"
+      }
+    },
+    "sourceSha256": "15667448b50c1276ed00e302de5abca78fbd41a6ab44c71756417bfd7fa48dd4"
+  },
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "validationState": {
+    "attributes": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "identity": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "mechanics": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    },
+    "package": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "presentation": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "skills": {
+      "diagnosticCodes": [],
+      "revision": 11,
+      "status": "idle"
+    },
+    "validation": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    }
+  }
+}

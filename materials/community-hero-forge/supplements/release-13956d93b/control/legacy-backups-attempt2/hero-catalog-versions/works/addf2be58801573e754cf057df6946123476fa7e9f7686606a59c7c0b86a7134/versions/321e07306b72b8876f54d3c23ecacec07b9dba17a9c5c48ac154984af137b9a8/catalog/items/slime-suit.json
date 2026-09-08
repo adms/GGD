@@ -1,0 +1,24 @@
+{
+  "schema": "item@1",
+  "cost": 0,
+  "tier": 5,
+  "craftRole": "none",
+  "id": "slime-suit",
+  "name": "史萊姆裝",
+  "icon": "assets/icons/items/slime-suit.webp",
+  "description": "道具\n效能\n[黏性體質] 連續受到 2 次同一種傷害後，免疫該種傷害\n[黏性體質] 分開計算的是「物理」與「魔法」兩種\n[黏性體質] 受到另一種傷害時連擊重算，免疫立刻解除\n[黏性體質] 真實傷害不列入連擊，也擋不下來\n\n解說\n打第一下有效，打第二下有效，打第三下開始它就記住你的手法了。\n想打穿它？換一招。",
+  "tags": [
+    "legendary",
+    "ex-origin",
+    "survivability",
+    "reversal"
+  ],
+  "typeStreakImmunity": {
+    "damageTypes": [
+      "physical",
+      "magic"
+    ],
+    "threshold": 2
+  },
+  "authoringNote": "⭐ owner 2026-08-18 的原文只有一句：「連續受到 2 次同型別傷害後免疫該型別」。這一件因此**只有一個機制、零屬性加成** —— ⛔ 沒有順手補 AD/HP，那會讓卡片上出現一句 owner 沒說過的話。\n\n【機制】= item@1.typeStreakImmunity {damageTypes:[physical,magic], threshold:2}，引擎側是 sim/combat/typeStreakImmunity.ts 的兩支解析器（閘 refusesByTypeStreak 掛在 combat/damage.ts 的無敵閘之後、記帳 noteDamageStreak 掛在閃避之後扣血之前）。⛔ 它不是一個 bespoke 分支：threshold / damageTypes / resetMode / streakTimeoutSec 四根軸都是後台欄位，同一個 grant 也掛得上天生技 rank、三選一增益卡與 applyBuff 的限時來源（SOURCE_GRANT_SHAPE）。\n\n【卡片上每一句話都對得上一格】（第一·五守則，逐句回頭對照過 JSON）：\n  · 「連續受到 2 次同一種傷害後，免疫該種傷害」= threshold 2。\n  · 「分開計算的是物理與魔法兩種」= damageTypes 這個陣列的**內容**，⛔ 不是程式裡的 if。\n  · 「受到另一種傷害時連擊重算，免疫立刻解除」= resetMode 缺席 ⇒ restart（異型的那一發自己算新連擊的第 1 發）。⚠️ 這一句是這件寶具唯一的破解方式，所以它必須印在卡上：被免疫擋掉的那一發**不會**被記進連擊（它在閘那裡就 continue 了），因此免疫會一直持續到有人換一種傷害為止。\n  · 「真實傷害不列入連擊，也擋不下來」= true 不在 damageTypes 裡。⚠️ 而且「不列入」是雙向的：一發真傷既不累積連擊、也**不會打斷**物理連擊（schema 的 .describe() 寫的是「會被計進連擊」，反過來讀會讓這一格變成一個沒有人說過的負面效果）。⇒ 火圈（#270，真傷）照樣燒得到穿著它的人。\n\n【⛔ 與 owner 原文的差異：沒有】—— 這一句話的四個字面成分全部落地了。但有**一件要 owner 拍板的事**（計畫書 §4-4 ②，⛔ 我不挑數字）：\n  · streakTimeoutSec **留空 = 連擊永不逾時**。後果有兩個，兩個都不是 bug 而是缺一個平衡數字：\n      ① 面對一波**純物理**的殭屍，連擊凍結在 2 之後就是**無限免疫**（zInvulnerable.durationSec 已經寫過「an unbounded immunity is an unwinnable round」）。\n      ② 連擊會**跨回合**殘留 —— sim/clearPools.ts::clearRoundScoped 清的是 status/shields/dot/buffs 四池，⛔ 不含 world.damageStreak。上一回合結束時凍結在門檻上的連擊，下一回合第一發物理就直接被免。\n    ⇒ 填上任何一個 streakTimeoutSec（中場遠比它長）會**同時**修掉這兩件事。要填的話後台一格就好，⛔ 不要改程式；而且卡片要跟著加一句「X 秒內沒有再受到同型傷害則連擊歸零」。\n\n【icon】⛔ 這一版沒有 assets/icons/items/slime-suit.webp，所以刻意**不填** icon 欄位 —— 指一個不存在的檔案會在商店與裝備欄變成 404，那比沒有圖更糟。等 #178 的圖示管線補上之後再加這一格。"
+}

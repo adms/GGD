@@ -1,0 +1,52 @@
+{
+  "id": "godie-zombiex.ex",
+  "schema": "ability@1",
+  "name": "100-002 此世全部之咖哩・バタンキュー",
+  "icon": "assets/icons/abilities/godie-zombiex.ex.webp",
+  "provenance": "w3x-import",
+  "description": "[強化]\n倒地詐死再猛然起身，黑泥狂化，短時間大幅提升攻擊力。マイ・キョー・グァ・エ・ミャー、キョー・グァ・カン・リンニャー。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "cooldownTier": "極大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "w3x.stock.forgottenonetent",
+      "clip": "idle",
+      "soundKey": "wc3.parasite",
+      "scale": 2.0,
+      "tint": [
+        0.1176,
+        0.0,
+        0.0
+      ],
+      "distance": 1.5
+    }
+  ],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 6,
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.5
+        }
+      ],
+      "castTimeSec": 1.033
+    }
+  },
+  "vfxKey": "fx.prim.blood.pulse-lg",
+  "castTimeSec": 1.033
+}

@@ -1,0 +1,103 @@
+{
+  "id": "controller-scheme",
+  "schema": "config.controller-scheme@1",
+  "note": "手把操作版本（GH#863）。owner 2026-08-28：「把這版當作 v4 後台可切換的其中一種手把操作版本」。⭐ 切 active 一格就換版本，⛔ 不必重新部署（⚠️ game shard 要重啟才吃得到 sim 那一半）。⭐ 出貨在 v4（第〇·六守則：優先權大的更新預設啟動）。⚠️ **⛔ 未經玩家實測驗收** —— 覺得哪裡不對，把這一格改回 v3-shipped 就是完整 rollback。",
+  "active": "v4",
+  "schemes": {
+    "v3-shipped": {
+      "label": "v3（出貨）",
+      "note": "2026-07-27 起的出貨配置。owner 當時的裁決：「the triggers swapped」。LT 是 attack-move，自動索敵走 GH#652 的 LoL 模型 —— 有指令就聽指令，走位時不索敵。切回這一版 ＝ 一鍵 rollback。",
+      "bindings": {
+        "A": "ability:Q",
+        "B": "ability:W",
+        "X": "ability:E",
+        "Y": "ability:R",
+        "LB": "ability:EX",
+        "RB": "ability:PASSIVE",
+        "LT": "attackMove",
+        "RT": "basicAttack",
+        "L3": "cameraFollowToggle",
+        "R3": "cameraZoomStep"
+      },
+      "combatInput": {
+        "aimStick": true,
+        "moveStick": true,
+        "basicAttack": true,
+        "pvpFocus": true,
+        "ability": true
+      },
+      "autoFarm": {
+        "enabled": true,
+        "idleDelaySecOverride": null,
+        "pveOnly": false,
+        "pveOnlyWaiverReason": "出貨行為：GH#846 的 idle 索敵來自 owner 2026-08-28「停頓一段時間就會自動索敵攻擊」—— ⭐ 那句話沒有限定對象，而出貨確實會挑上敵方英雄。v3 的存在理由是逐位元不變，所以這一版刻意不套 spec §8。⛔ 這不是同意「自動打人」是對的，是同意「⛔ 不要偷改出貨行為」。"
+      },
+      "aim": {
+        "manualScoring": "legacy-nearest-enemy",
+        "aimAssistRadiusMult": {
+          "player": 1.0,
+          "zombie": 1.0,
+          "boss": 1.0
+        }
+      },
+      "autoApproach": {
+        "enabled": false,
+        "maxRangeMult": 1.0,
+        "pveOnly": true,
+        "allowBoss": false,
+        "requireMoveStickNeutral": true,
+        "maxAbsoluteUnits": 0
+      }
+    },
+    "v4": {
+      "label": "v4（自動清怪／玩家專注）",
+      "note": "owner 2026-08-28 的 v4 設計（docs/controller-combat-spec-v4.md）。三個本質差別：① LT 從 attack-move 變成「玩家專注」—— 按住時敵對單位只認敵方玩家；② 左搖桿移動⛔不算戰鬥輸入，所以走位時自動清怪仍然活著（§50）；③ 近戰允許短距貼近 PvE（§29），LS 一動同一幀取消。",
+      "bindings": {
+        "A": "ability:Q",
+        "X": "ability:W",
+        "Y": "ability:E",
+        "B": "ability:R",
+        "LB": "ability:PASSIVE",
+        "RB": "ability:EX",
+        "LT": "pvpFocus",
+        "RT": "basicAttack",
+        "L3": "cameraFollowToggle",
+        "R3": "cameraZoomStep"
+      },
+      "combatInput": {
+        "aimStick": true,
+        "moveStick": false,
+        "basicAttack": true,
+        "pvpFocus": true,
+        "ability": true
+      },
+      "autoFarm": {
+        "enabled": true,
+        "idleDelaySecOverride": null,
+        "pveOnly": true
+      },
+      "aim": {
+        "manualScoring": "weighted",
+        "weights": {
+          "direction": 0.75,
+          "distance": 0.15,
+          "stickiness": 0.1
+        },
+        "switchThreshold": 0.1,
+        "aimAssistRadiusMult": {
+          "player": 1.0,
+          "zombie": 1.0,
+          "boss": 1.5
+        }
+      },
+      "autoApproach": {
+        "enabled": true,
+        "maxRangeMult": 1.67,
+        "pveOnly": true,
+        "allowBoss": false,
+        "requireMoveStickNeutral": true,
+        "maxAbsoluteUnits": 3.0
+      }
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "id": "godie-etyr.r",
+  "name": "14-04 聖夜降臨",
+  "icon": "assets/icons/abilities/godie-etyr.r.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n0秒冷卻時間\n\n利用木乃香身上深不可測的魔力使得周圍死去的亡靈轉換成1個式神，持續8秒，召喚瞬間會造成周圍{{dmg}}傷害。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    30.0,
+    30.0,
+    30.0
+  ],
+  "cooldownTier": "極小",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "effects": [
+    {
+      "kind": "damageArea",
+      "damageType": "magic",
+      "radiusTier": "中",
+      "amount": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.7
+          }
+        ]
+      },
+      "radius": 6
+    }
+  ],
+  "template": {
+    "ref": "tpl-summon-agent",
+    "params": {
+      "count": 1,
+      "body": "self",
+      "durationSec": 8,
+      "damageMult": 0.5,
+      "hpMult": 0.5,
+      "formation": "ring",
+      "spread": 2,
+      "onOwnerDeath": "despawn"
+    }
+  },
+  "vfxKey": "fx.prim.holy.nova-lg",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "rangeTier": "大",
+  "range": 8,
+  "castTimeSec": 0.667
+}

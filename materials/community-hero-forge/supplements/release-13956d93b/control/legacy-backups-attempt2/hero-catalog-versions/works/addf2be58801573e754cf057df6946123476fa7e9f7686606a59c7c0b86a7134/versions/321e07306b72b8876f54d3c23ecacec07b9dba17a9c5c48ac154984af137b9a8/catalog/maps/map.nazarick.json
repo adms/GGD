@@ -1,0 +1,614 @@
+{
+  "schema": "map@1",
+  "id": "map.nazarick",
+  "name": "納薩力克大墳墓",
+  "template": "CROSS_RING",
+  "groundStyle": "obsidian",
+  "scenery": {
+    "palette": {
+      "floor": "#8f7a4a",
+      "wall": "#4a3f22",
+      "sky": "#9fffc4",
+      "ground": "#0e1a12",
+      "void": "#030604"
+    },
+    "lighting": {
+      "keyColor": "#b8ffd0",
+      "keyIntensity": 0.6,
+      "keyYawDeg": 325,
+      "keyPitchDeg": 66,
+      "fillIntensity": 0.45,
+      "wave": "flicker",
+      "periodSec": 4.2,
+      "intensityAmp": 0.22,
+      "yawSweepDeg": 0,
+      "peakColor": "#eaffe0"
+    },
+    "props": [
+      {
+        "model": "assets/models/scenery/gravestone.glb",
+        "count": 9,
+        "bandFrom": 0.88,
+        "bandTo": 0.96,
+        "scaleMin": 1.2,
+        "scaleMax": 1.6,
+        "facing": "random",
+        "seed": 111
+      },
+      {
+        "model": "assets/models/scenery/iron_fence.glb",
+        "count": 5,
+        "bandFrom": 0.955,
+        "bandTo": 0.99,
+        "scaleMin": 1.2,
+        "scaleMax": 1.5,
+        "facing": "faceIn",
+        "seed": 112
+      },
+      {
+        "model": "assets/models/scenery/sarcophagus.glb",
+        "count": 3,
+        "bandFrom": 0.86,
+        "bandTo": 0.92,
+        "scaleMin": 1.2,
+        "scaleMax": 1.5,
+        "facing": "faceIn",
+        "seed": 113
+      },
+      {
+        "model": "assets/models/scenery/dead_tree.glb",
+        "count": 3,
+        "bandFrom": 0.9,
+        "bandTo": 0.97,
+        "scaleMin": 1.0,
+        "scaleMax": 1.25,
+        "facing": "random",
+        "seed": 114
+      },
+      {
+        "model": "assets/models/props/pillar.glb",
+        "count": 10,
+        "bandFrom": 0.93,
+        "bandTo": 0.98,
+        "scaleMin": 1.6,
+        "scaleMax": 2.0,
+        "facing": "faceIn",
+        "seed": 2
+      },
+      {
+        "model": "assets/models/props/torch.glb",
+        "count": 6,
+        "bandFrom": 0.965,
+        "bandTo": 0.99,
+        "scaleMin": 1.5,
+        "scaleMax": 1.8,
+        "facing": "faceIn",
+        "seed": 34
+      },
+      {
+        "model": "assets/models/props/chest.glb",
+        "count": 2,
+        "bandFrom": 0.86,
+        "bandTo": 0.92,
+        "scaleMin": 1.2,
+        "scaleMax": 1.2,
+        "facing": "faceIn",
+        "seed": 71
+      }
+    ]
+  },
+  "grid": {
+    "cols": 24,
+    "rows": 20,
+    "tileSize": 2
+  },
+  "tiles": [
+    "########################",
+    "#......................#",
+    "#...#####..............#",
+    "#...#####..............#",
+    "#...#####......#####...#",
+    "#...#####......#####...#",
+    "#..............#####...#",
+    "#..............#####...#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#...#####......#####...#",
+    "#...#####......#####...#",
+    "#...#####......#####...#",
+    "#...#####......#####...#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "########################"
+  ],
+  "regions": [
+    {
+      "id": "throne",
+      "label": "王座廳",
+      "role": "landmark",
+      "rects": [
+        {
+          "col": 9,
+          "row": 7,
+          "w": 6,
+          "h": 6
+        }
+      ]
+    },
+    {
+      "id": "treasury",
+      "label": "寶物庫",
+      "role": "court",
+      "rects": [
+        {
+          "col": 1,
+          "row": 1,
+          "w": 10,
+          "h": 6
+        }
+      ]
+    },
+    {
+      "id": "tomb",
+      "label": "墓室",
+      "role": "court",
+      "rects": [
+        {
+          "col": 13,
+          "row": 1,
+          "w": 10,
+          "h": 6
+        }
+      ]
+    },
+    {
+      "id": "maid_hall",
+      "label": "女僕廊",
+      "role": "corridor",
+      "rects": [
+        {
+          "col": 1,
+          "row": 7,
+          "w": 8,
+          "h": 12
+        }
+      ]
+    },
+    {
+      "id": "colosseum",
+      "label": "競技場",
+      "role": "outer",
+      "rects": [
+        {
+          "col": 15,
+          "row": 7,
+          "w": 8,
+          "h": 12
+        }
+      ]
+    }
+  ],
+  "landmark": "throne",
+  "interactions": [
+    {
+      "id": "throne-n",
+      "kind": "capture",
+      "at": {
+        "col": 11,
+        "row": 8
+      },
+      "radius": 2,
+      "regionId": "throne",
+      "params": {}
+    },
+    {
+      "id": "throne-s",
+      "kind": "pickup",
+      "at": {
+        "col": 12,
+        "row": 11
+      },
+      "radius": 2,
+      "regionId": "throne",
+      "params": {}
+    },
+    {
+      "id": "treasury-mid",
+      "kind": "pickup",
+      "at": {
+        "col": 5,
+        "row": 1
+      },
+      "radius": 2,
+      "regionId": "treasury",
+      "params": {}
+    },
+    {
+      "id": "tomb-mid",
+      "kind": "pickup",
+      "at": {
+        "col": 18,
+        "row": 2
+      },
+      "radius": 2,
+      "regionId": "tomb",
+      "params": {}
+    },
+    {
+      "id": "maid-n",
+      "kind": "capture",
+      "at": {
+        "col": 4,
+        "row": 9
+      },
+      "radius": 2,
+      "regionId": "maid_hall",
+      "params": {}
+    },
+    {
+      "id": "maid-s",
+      "kind": "pickup",
+      "at": {
+        "col": 4,
+        "row": 17
+      },
+      "radius": 2,
+      "regionId": "maid_hall",
+      "params": {}
+    },
+    {
+      "id": "colo-n",
+      "kind": "capture",
+      "at": {
+        "col": 19,
+        "row": 9
+      },
+      "radius": 2,
+      "regionId": "colosseum",
+      "params": {}
+    },
+    {
+      "id": "colo-s",
+      "kind": "pickup",
+      "at": {
+        "col": 19,
+        "row": 17
+      },
+      "radius": 2,
+      "regionId": "colosseum",
+      "params": {}
+    }
+  ],
+  "gimmick": {
+    "kind": "routeSwap",
+    "gateGroups": [
+      {
+        "id": "guard_north",
+        "tiles": [
+          {
+            "col": 11,
+            "row": 6
+          },
+          {
+            "col": 12,
+            "row": 6
+          }
+        ]
+      },
+      {
+        "id": "guard_south",
+        "tiles": [
+          {
+            "col": 11,
+            "row": 13
+          },
+          {
+            "col": 12,
+            "row": 13
+          }
+        ]
+      }
+    ],
+    "schedule": {
+      "kind": "periodic",
+      "periodTicks": 900,
+      "telegraphTicks": 60,
+      "configurations": [
+        [
+          "guard_north"
+        ],
+        [
+          "guard_south"
+        ]
+      ]
+    }
+  },
+  "landmarkProps": [
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "at": {
+        "col": 10,
+        "row": 2
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "at": {
+        "col": 12,
+        "row": 2
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 1,
+        "row": 8
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 22,
+        "row": 8
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 11,
+        "row": 1
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 11,
+        "row": 16
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/floor_tile_large.glb",
+      "at": {
+        "col": 11,
+        "row": 10
+      },
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/props/floor_tile_large.glb",
+      "at": {
+        "col": 11,
+        "row": 11
+      },
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleColumn_Art.glb",
+      "at": {
+        "col": 1,
+        "row": 1
+      },
+      "rotQuarter": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleWall01_Art.glb",
+      "at": {
+        "col": 22,
+        "row": 1
+      },
+      "rotQuarter": 1,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__Shrine_Art.glb",
+      "at": {
+        "col": 1,
+        "row": 18
+      },
+      "rotQuarter": 2,
+      "scale": 0.62
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleBaseStaircase_Art.glb",
+      "at": {
+        "col": 22,
+        "row": 18
+      },
+      "rotQuarter": 3,
+      "scale": 0.49
+    }
+  ],
+  "backgroundProps": [
+    {
+      "model": "assets/models/props/chest.glb",
+      "at": {
+        "col": 3,
+        "row": 2
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/props/chest.glb",
+      "at": {
+        "col": 5,
+        "row": 3
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/props/chest.glb",
+      "at": {
+        "col": 17,
+        "row": 4
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/props/chest.glb",
+      "at": {
+        "col": 17,
+        "row": 13
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/props/crates_stacked.glb",
+      "at": {
+        "col": 6,
+        "row": 13
+      },
+      "rotQuarter": 0,
+      "scale": 1.1
+    },
+    {
+      "model": "assets/models/props/crates_stacked.glb",
+      "at": {
+        "col": 5,
+        "row": 14
+      },
+      "rotQuarter": 0,
+      "scale": 1.1
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 0,
+        "row": 9
+      },
+      "rotQuarter": 0,
+      "scale": 1.3
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 23,
+        "row": 9
+      },
+      "rotQuarter": 2,
+      "scale": 1.3
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 0,
+        "row": 15
+      },
+      "rotQuarter": 0,
+      "scale": 1.3
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 23,
+        "row": 15
+      },
+      "rotQuarter": 2,
+      "scale": 1.3
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "at": {
+        "col": 6,
+        "row": 0
+      },
+      "rotQuarter": 0,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "at": {
+        "col": 12,
+        "row": 0
+      },
+      "rotQuarter": 0,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "at": {
+        "col": 18,
+        "row": 0
+      },
+      "rotQuarter": 0,
+      "scale": 0.11
+    }
+  ],
+  "backdrop": {
+    "layers": [
+      {
+        "fromRadius": 1.0,
+        "toRadius": 1.9,
+        "y": -3,
+        "color": "#3d2a48",
+        "alpha": 1,
+        "profile": "pagoda",
+        "jitter": 0.7,
+        "segments": 32,
+        "rim": {
+          "color": "#7dffc2",
+          "width": 1.8
+        }
+      },
+      {
+        "fromRadius": 1.6,
+        "toRadius": 3.0,
+        "y": -11,
+        "color": "#2a1c33",
+        "alpha": 1,
+        "profile": "shards",
+        "jitter": 0.6,
+        "segments": 32,
+        "rim": {
+          "color": "#4fbf8f",
+          "width": 1.4
+        }
+      },
+      {
+        "fromRadius": 2.8,
+        "toRadius": 4.6,
+        "y": -28,
+        "color": "#180f1d",
+        "alpha": 1,
+        "profile": "shards",
+        "jitter": 0.75,
+        "segments": 36,
+        "rim": {
+          "color": "#2e6b52",
+          "width": 1.0
+        }
+      },
+      {
+        "fromRadius": 4.3,
+        "toRadius": 6.0,
+        "y": -60,
+        "color": "#08050b",
+        "alpha": 1,
+        "profile": "flat",
+        "jitter": 0.0,
+        "segments": 20
+      }
+    ]
+  }
+}

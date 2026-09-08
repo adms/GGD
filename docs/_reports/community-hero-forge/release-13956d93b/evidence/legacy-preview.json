@@ -1,0 +1,433 @@
+{
+  "hero": {
+    "id": "godie-e00j",
+    "name": "皇者 - 騜",
+    "path": "catalog/_legacy/champions/godie-e00j.json",
+    "catalog": "legacy"
+  },
+  "versionId": "sha256:321e07306b72b8876f54d3c23ecacec07b9dba17a9c5c48ac154984af137b9a8",
+  "currentVersion": "sha256:d9d38c1eb4b8fe40df47a8eb91feff0a3fcf746aae27c80ee00f1cb92b9850c6",
+  "planDigest": "sha256:7665a2f91aab2a43de6480fd939f06cb21c750baa43823992e4d2fcd0a1c36c0",
+  "heroDigest": "sha256:969995d41880ea53d609fc2d2768ec7b21fa466bade1c9a05b562a93159069be",
+  "changes": [
+    {
+      "path": "assets/hero-instances/0691c5a90891d06a1e4dfc7f307d26fe281ba832fa674b2e6a4814243e7e53e9.webp",
+      "bytes": 9180,
+      "sha256": "sha256:0691c5a90891d06a1e4dfc7f307d26fe281ba832fa674b2e6a4814243e7e53e9",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "assets/hero-instances/32843fd5b20c734033ad26616640d2b6439d46afc51736a9db7d35c6fde862d7.webp",
+      "bytes": 7288,
+      "sha256": "sha256:32843fd5b20c734033ad26616640d2b6439d46afc51736a9db7d35c6fde862d7",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "assets/hero-instances/382d42ab768bb5fbde6044c7ddd3c1ded4fe750700498c2b8e9b17f21335fdaf.webp",
+      "bytes": 6306,
+      "sha256": "sha256:382d42ab768bb5fbde6044c7ddd3c1ded4fe750700498c2b8e9b17f21335fdaf",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "assets/hero-instances/67601d8bf8cb7d7ec3ead3ba2b52aa42dba10f7c69f91ffaceeb53b48af8609e.glb",
+      "bytes": 269500,
+      "sha256": "sha256:67601d8bf8cb7d7ec3ead3ba2b52aa42dba10f7c69f91ffaceeb53b48af8609e",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "assets/hero-instances/8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece.png",
+      "bytes": 82611,
+      "sha256": "sha256:8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "assets/hero-instances/a1ce4be26e7a070559f909a784ae086d1142a531c70a0dc9232358eb63111830.webp",
+      "bytes": 8974,
+      "sha256": "sha256:a1ce4be26e7a070559f909a784ae086d1142a531c70a0dc9232358eb63111830",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "assets/hero-instances/bd0fd64194a88447a8d63170de33a7b46e99d92a4eeb742db5e2573e08c0edd3.webp",
+      "bytes": 8330,
+      "sha256": "sha256:bd0fd64194a88447a8d63170de33a7b46e99d92a4eeb742db5e2573e08c0edd3",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "assets/hero-instances/d8bdc819e67d5964137f92c2469a549860a6233e4af1b386c2196a1e9bc33a27.webp",
+      "bytes": 4160,
+      "sha256": "sha256:d8bdc819e67d5964137f92c2469a549860a6233e4af1b386c2196a1e9bc33a27",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "assets/hero-instances/e15db5a8ccea012f4df82689f1a829bdaac04fd8a3066a723f157e0b01ffbf0a.png",
+      "bytes": 86592,
+      "sha256": "sha256:e15db5a8ccea012f4df82689f1a829bdaac04fd8a3066a723f157e0b01ffbf0a",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "assets/hero-instances/e3fac37e94127b3b5fcfaaf91eca8c157dc32d08a760e8c9df35dc5fcf017407.png",
+      "bytes": 78726,
+      "sha256": "sha256:e3fac37e94127b3b5fcfaaf91eca8c157dc32d08a760e8c9df35dc5fcf017407",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "assets/hero-instances/f3720d2178dfd56948b20da5bc13ef5718794dba17806d99a4e8c1253f3019fa.png",
+      "bytes": 6714,
+      "sha256": "sha256:f3720d2178dfd56948b20da5bc13ef5718794dba17806d99a4e8c1253f3019fa",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "catalog/_legacy/abilities/instance.85500dd12eba.969995d41880.19165a5407798fab422d.json",
+      "bytes": 1043,
+      "sha256": "sha256:df5f50d992387914faa2ddd2534a20a8c5089de80f71ee0ce647705f7140a92d",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "catalog/_legacy/abilities/instance.85500dd12eba.969995d41880.4b10ea3ed09d0de43346.json",
+      "bytes": 1156,
+      "sha256": "sha256:27aef5609a7c28f42b830fa77cb5b4c49599f78c27c22435cb804a9052da8879",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "catalog/_legacy/abilities/instance.85500dd12eba.969995d41880.7af9bcd8319ab0a73b9c.json",
+      "bytes": 1324,
+      "sha256": "sha256:034bd76c3275c0591c500d1196cb823c431728590c9c8d72fc1206727744938c",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "catalog/_legacy/abilities/instance.85500dd12eba.969995d41880.88c22c4585ff9383ad31.json",
+      "bytes": 996,
+      "sha256": "sha256:3935a5ecd0463e313274adcb5c504cf63ca7541182c7c6c3560adf04f1ca3778",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "catalog/_legacy/abilities/instance.85500dd12eba.969995d41880.a512225a90d6ea677284.json",
+      "bytes": 1450,
+      "sha256": "sha256:6f7f876f7a0011af9e36c21f2b15f6bc8e5d31940d5577a95452fb768f762b75",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "catalog/_legacy/abilities/instance.85500dd12eba.969995d41880.b44bba407ce48372ccb1.json",
+      "bytes": 824,
+      "sha256": "sha256:f7a1999c062be1fb3619bed3a211a7b4170c39b4d69618dd2577e28d0240a9b8",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "catalog/_legacy/champions/godie-e00j.json",
+      "bytes": 7626,
+      "sha256": "sha256:5671f492874434b59fa52e9a96050c0925f7aad47afd015be60d856d55b143a8",
+      "beforeSha256": "sha256:ba52cf9c62bcb6eedde31bee18ffe2d8f043a28224d6fa375461525a9b4e2905",
+      "kind": "changed"
+    },
+    {
+      "path": "catalog/_legacy/models/instance.85500dd12eba.969995d41880.48bb6ce2da77b0bc027a.json",
+      "bytes": 1124,
+      "sha256": "sha256:718bc9cb2cc4a00b7a214788f7167722c432a05798ff2b57449c78f01e055583",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "catalog/_legacy/projectiles/instance.85500dd12eba.969995d41880.c4179d923f6525be7ac3.json",
+      "bytes": 245,
+      "sha256": "sha256:9632bb6269f72dc0c22ca9b68d3d568d8366e0031a42ccc6c0fce5f19e965e0f",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "catalog/_legacy/status-effects/instance.85500dd12eba.969995d41880.6f5bf023ff631aeb4fc2.json",
+      "bytes": 321,
+      "sha256": "sha256:fc15e16228e83985ae4137f3444bbf3a2a5be9775feabe444c1ac5d42e9a3425",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "catalog/_legacy/vfx/instance.85500dd12eba.969995d41880.227c8b75b9c32756abfb.json",
+      "bytes": 1141,
+      "sha256": "sha256:136c31b855b6c43d7aa182bfb0aeead62dff9bd73ee903313b584aa76d889fa2",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "catalog/_legacy/vfx/instance.85500dd12eba.969995d41880.24e6ef3c8052caa30a83.json",
+      "bytes": 1158,
+      "sha256": "sha256:a4595d0ae5ccdd0c2a9a953583d92420ea7b529c6c39e7bda2698cd7715ff411",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "catalog/_legacy/vfx/instance.85500dd12eba.969995d41880.33ec5e1d3005bdf87e5e.json",
+      "bytes": 1144,
+      "sha256": "sha256:77587759574f0da9363382fb9732e6bd6d49bb5facee89517947ac6285bf5f97",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "catalog/_legacy/vfx/instance.85500dd12eba.969995d41880.4ea4770713cb181584a6.json",
+      "bytes": 1158,
+      "sha256": "sha256:289b5fe02e9351706dcd4f6a8e2bf314ef44344a723af075b8e1b74ca8329d81",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "catalog/_legacy/vfx/instance.85500dd12eba.969995d41880.78dd44529223769fdfb1.json",
+      "bytes": 1153,
+      "sha256": "sha256:154ac2297d80c370743752de078a44ef3f06215102c1a1f67fc3a6ba3f2ba7a7",
+      "beforeSha256": null,
+      "kind": "added"
+    },
+    {
+      "path": "catalog/_legacy/vfx/instance.85500dd12eba.969995d41880.bc2bb9aa81a9b64bc332.json",
+      "bytes": 1214,
+      "sha256": "sha256:06a502f52b57c7049200de2d79f1a75932b4b88a0621e1076741a85e085328dd",
+      "beforeSha256": null,
+      "kind": "added"
+    }
+  ],
+  "affected": [
+    {
+      "id": "godie-e00j",
+      "name": "皇者 - 騜",
+      "path": "catalog/_legacy/champions/godie-e00j.json",
+      "catalog": "legacy"
+    }
+  ],
+  "issues": [],
+  "blockedSources": [],
+  "generatorSources": [],
+  "files": [
+    {
+      "path": "assets/hero-instances/0691c5a90891d06a1e4dfc7f307d26fe281ba832fa674b2e6a4814243e7e53e9.webp",
+      "bytes": 9180,
+      "sha256": "sha256:0691c5a90891d06a1e4dfc7f307d26fe281ba832fa674b2e6a4814243e7e53e9"
+    },
+    {
+      "path": "assets/hero-instances/32843fd5b20c734033ad26616640d2b6439d46afc51736a9db7d35c6fde862d7.webp",
+      "bytes": 7288,
+      "sha256": "sha256:32843fd5b20c734033ad26616640d2b6439d46afc51736a9db7d35c6fde862d7"
+    },
+    {
+      "path": "assets/hero-instances/382d42ab768bb5fbde6044c7ddd3c1ded4fe750700498c2b8e9b17f21335fdaf.webp",
+      "bytes": 6306,
+      "sha256": "sha256:382d42ab768bb5fbde6044c7ddd3c1ded4fe750700498c2b8e9b17f21335fdaf"
+    },
+    {
+      "path": "assets/hero-instances/67601d8bf8cb7d7ec3ead3ba2b52aa42dba10f7c69f91ffaceeb53b48af8609e.glb",
+      "bytes": 269500,
+      "sha256": "sha256:67601d8bf8cb7d7ec3ead3ba2b52aa42dba10f7c69f91ffaceeb53b48af8609e"
+    },
+    {
+      "path": "assets/hero-instances/8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece.png",
+      "bytes": 82611,
+      "sha256": "sha256:8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece"
+    },
+    {
+      "path": "assets/hero-instances/a1ce4be26e7a070559f909a784ae086d1142a531c70a0dc9232358eb63111830.webp",
+      "bytes": 8974,
+      "sha256": "sha256:a1ce4be26e7a070559f909a784ae086d1142a531c70a0dc9232358eb63111830"
+    },
+    {
+      "path": "assets/hero-instances/bd0fd64194a88447a8d63170de33a7b46e99d92a4eeb742db5e2573e08c0edd3.webp",
+      "bytes": 8330,
+      "sha256": "sha256:bd0fd64194a88447a8d63170de33a7b46e99d92a4eeb742db5e2573e08c0edd3"
+    },
+    {
+      "path": "assets/hero-instances/d8bdc819e67d5964137f92c2469a549860a6233e4af1b386c2196a1e9bc33a27.webp",
+      "bytes": 4160,
+      "sha256": "sha256:d8bdc819e67d5964137f92c2469a549860a6233e4af1b386c2196a1e9bc33a27"
+    },
+    {
+      "path": "assets/hero-instances/e15db5a8ccea012f4df82689f1a829bdaac04fd8a3066a723f157e0b01ffbf0a.png",
+      "bytes": 86592,
+      "sha256": "sha256:e15db5a8ccea012f4df82689f1a829bdaac04fd8a3066a723f157e0b01ffbf0a"
+    },
+    {
+      "path": "assets/hero-instances/e3fac37e94127b3b5fcfaaf91eca8c157dc32d08a760e8c9df35dc5fcf017407.png",
+      "bytes": 78726,
+      "sha256": "sha256:e3fac37e94127b3b5fcfaaf91eca8c157dc32d08a760e8c9df35dc5fcf017407"
+    },
+    {
+      "path": "assets/hero-instances/f3720d2178dfd56948b20da5bc13ef5718794dba17806d99a4e8c1253f3019fa.png",
+      "bytes": 6714,
+      "sha256": "sha256:f3720d2178dfd56948b20da5bc13ef5718794dba17806d99a4e8c1253f3019fa"
+    },
+    {
+      "path": "catalog/_legacy/abilities/instance.85500dd12eba.969995d41880.19165a5407798fab422d.json",
+      "bytes": 1043,
+      "sha256": "sha256:df5f50d992387914faa2ddd2534a20a8c5089de80f71ee0ce647705f7140a92d"
+    },
+    {
+      "path": "catalog/_legacy/abilities/instance.85500dd12eba.969995d41880.4b10ea3ed09d0de43346.json",
+      "bytes": 1156,
+      "sha256": "sha256:27aef5609a7c28f42b830fa77cb5b4c49599f78c27c22435cb804a9052da8879"
+    },
+    {
+      "path": "catalog/_legacy/abilities/instance.85500dd12eba.969995d41880.7af9bcd8319ab0a73b9c.json",
+      "bytes": 1324,
+      "sha256": "sha256:034bd76c3275c0591c500d1196cb823c431728590c9c8d72fc1206727744938c"
+    },
+    {
+      "path": "catalog/_legacy/abilities/instance.85500dd12eba.969995d41880.88c22c4585ff9383ad31.json",
+      "bytes": 996,
+      "sha256": "sha256:3935a5ecd0463e313274adcb5c504cf63ca7541182c7c6c3560adf04f1ca3778"
+    },
+    {
+      "path": "catalog/_legacy/abilities/instance.85500dd12eba.969995d41880.a512225a90d6ea677284.json",
+      "bytes": 1450,
+      "sha256": "sha256:6f7f876f7a0011af9e36c21f2b15f6bc8e5d31940d5577a95452fb768f762b75"
+    },
+    {
+      "path": "catalog/_legacy/abilities/instance.85500dd12eba.969995d41880.b44bba407ce48372ccb1.json",
+      "bytes": 824,
+      "sha256": "sha256:f7a1999c062be1fb3619bed3a211a7b4170c39b4d69618dd2577e28d0240a9b8"
+    },
+    {
+      "path": "catalog/_legacy/champions/godie-e00j.json",
+      "bytes": 7626,
+      "sha256": "sha256:5671f492874434b59fa52e9a96050c0925f7aad47afd015be60d856d55b143a8"
+    },
+    {
+      "path": "catalog/_legacy/models/instance.85500dd12eba.969995d41880.48bb6ce2da77b0bc027a.json",
+      "bytes": 1124,
+      "sha256": "sha256:718bc9cb2cc4a00b7a214788f7167722c432a05798ff2b57449c78f01e055583"
+    },
+    {
+      "path": "catalog/_legacy/projectiles/instance.85500dd12eba.969995d41880.c4179d923f6525be7ac3.json",
+      "bytes": 245,
+      "sha256": "sha256:9632bb6269f72dc0c22ca9b68d3d568d8366e0031a42ccc6c0fce5f19e965e0f"
+    },
+    {
+      "path": "catalog/_legacy/status-effects/instance.85500dd12eba.969995d41880.6f5bf023ff631aeb4fc2.json",
+      "bytes": 321,
+      "sha256": "sha256:fc15e16228e83985ae4137f3444bbf3a2a5be9775feabe444c1ac5d42e9a3425"
+    },
+    {
+      "path": "catalog/_legacy/vfx/instance.85500dd12eba.969995d41880.227c8b75b9c32756abfb.json",
+      "bytes": 1141,
+      "sha256": "sha256:136c31b855b6c43d7aa182bfb0aeead62dff9bd73ee903313b584aa76d889fa2"
+    },
+    {
+      "path": "catalog/_legacy/vfx/instance.85500dd12eba.969995d41880.24e6ef3c8052caa30a83.json",
+      "bytes": 1158,
+      "sha256": "sha256:a4595d0ae5ccdd0c2a9a953583d92420ea7b529c6c39e7bda2698cd7715ff411"
+    },
+    {
+      "path": "catalog/_legacy/vfx/instance.85500dd12eba.969995d41880.33ec5e1d3005bdf87e5e.json",
+      "bytes": 1144,
+      "sha256": "sha256:77587759574f0da9363382fb9732e6bd6d49bb5facee89517947ac6285bf5f97"
+    },
+    {
+      "path": "catalog/_legacy/vfx/instance.85500dd12eba.969995d41880.4ea4770713cb181584a6.json",
+      "bytes": 1158,
+      "sha256": "sha256:289b5fe02e9351706dcd4f6a8e2bf314ef44344a723af075b8e1b74ca8329d81"
+    },
+    {
+      "path": "catalog/_legacy/vfx/instance.85500dd12eba.969995d41880.78dd44529223769fdfb1.json",
+      "bytes": 1153,
+      "sha256": "sha256:154ac2297d80c370743752de078a44ef3f06215102c1a1f67fc3a6ba3f2ba7a7"
+    },
+    {
+      "path": "catalog/_legacy/vfx/instance.85500dd12eba.969995d41880.bc2bb9aa81a9b64bc332.json",
+      "bytes": 1214,
+      "sha256": "sha256:06a502f52b57c7049200de2d79f1a75932b4b88a0621e1076741a85e085328dd"
+    }
+  ],
+  "documents": [
+    {
+      "path": "catalog/_legacy/champions/godie-e00j.json",
+      "source": "{\n  \"id\": \"godie-e00j\",\n  \"schema\": \"champion@1\",\n  \"name\": \"皇者 - 騜\",\n  \"description\": \"故事：\\n出生於東方之珠的真龍天子，一出生就有龍氣附身，註定是強者中的強者。不過在初次與扁皇的對決中，騜被徹底打敗。後來騜得到十六天王的團結相助，終於擊敗了扁皇和其接班人謝常霆，登上尊位，成為真正的皇者。\\n(出自:馬皇降臨)\\n\\n推薦玩家 : 牽制追擊\\n上手度 : 中\\n\\n角色成長：\\n力量 + 2.40\\n敏捷 + 1.60\\n智慧 + 1.70\\n基礎跑速 310\\n\\n可學習的技能：\\n謝謝指教、大和戰氣、皇者戰氣第五十重天、藍色戰氣一百重天\",\n  \"role\": \"fighter\",\n  \"attackType\": \"melee\",\n  \"modelKey\": \"instance.85500dd12eba.969995d41880.48bb6ce2da77b0bc027a\",\n  \"attackDamagePoint\": 0.5,\n  \"baseStats\": {\n    \"maxHealth\": 150,\n    \"healthRegen\": 0.25,\n    \"maxMana\": 100,\n    \"manaRegen\": 0.1,\n    \"ad\": 10,\n    \"ap\": 0,\n    \"armor\": 0,\n    \"mr\": 28,\n    \"as\": 0.526316,\n    \"ms\": 6,\n    \"critChance\": 0,\n    \"critDamage\": 1.75,\n    \"cdr\": 0,\n    \"lifesteal\": 0,\n    \"range\": 1.6\n  },\n  \"growth\": {\n    \"maxHealth\": 36,\n    \"healthRegen\": 0.09,\n    \"maxMana\": 20,\n    \"manaRegen\": 0.07,\n    \"ad\": 1.6,\n    \"armor\": 0.5,\n    \"mr\": 1.2,\n    \"as\": 0.02\n  },\n  \"attributes\": {\n    \"str\": 22,\n    \"agi\": 16,\n    \"int\": 14,\n    \"strGrowth\": 1.4,\n    \"agiGrowth\": 1.6,\n    \"intGrowth\": 1.7,\n    \"primary\": \"STR\",\n    \"source\": \"w3x\"\n  },\n  \"hitFeel\": {\n    \"hitstopTicks\": 1,\n    \"shakeMag\": 0.18,\n    \"knockbackMag\": 0\n  },\n  \"abilities\": {\n    \"Q\": {\n      \"id\": \"instance.85500dd12eba.969995d41880.a512225a90d6ea677284\",\n      \"name\": \"95-01 謝謝指教\",\n      \"icon\": \"assets/hero-instances/32843fd5b20c734033ad26616640d2b6439d46afc51736a9db7d35c6fde862d7.webp\",\n      \"description\": \"[主動傷害]\\n25秒冷卻時間\\n\\n左手是謝謝，右手是指教，談笑間將目標擊飛，每滑行50距離便會受到30點傷害，最遠距離400。被打中的人不會有任何的怨恨，眼神只會透露出如火一般的尊敬。\\n\\n《龍氣》 - 擊飛的同時將勁力打入目標體內，若因撞到物體而停止時勁力將會爆發，造成範圍傷害80點。\",\n      \"slot\": \"Q\",\n      \"castType\": \"targeted\",\n      \"maxRank\": 5,\n      \"cooldown\": [\n        25,\n        25,\n        25,\n        25,\n        25\n      ],\n      \"manaCost\": [\n        70,\n        110,\n        150,\n        190,\n        190\n      ],\n      \"range\": 3.67,\n      \"effects\": [\n        {\n          \"kind\": \"damage\",\n          \"damageType\": \"magic\",\n          \"amount\": {\n            \"perRank\": [\n              240,\n              360,\n              480,\n              600,\n              600\n            ],\n            \"ratios\": [\n              {\n                \"stat\": \"ap\",\n                \"coeff\": 0.6\n              }\n            ]\n          }\n        },\n        {\n          \"kind\": \"applyStatus\",\n          \"statusId\": \"instance.85500dd12eba.969995d41880.6f5bf023ff631aeb4fc2\",\n          \"duration\": 0.3,\n          \"moveSpeedMult\": 0.6\n        }\n      ],\n      \"vfxKey\": \"instance.85500dd12eba.969995d41880.33ec5e1d3005bdf87e5e\",\n      \"targetsEnemies\": true,\n      \"castTimeSec\": 0.3\n    },\n    \"W\": {\n      \"id\": \"instance.85500dd12eba.969995d41880.19165a5407798fab422d\",\n      \"name\": \"95-02 大和戰氣\",\n      \"icon\": \"assets/hero-instances/382d42ab768bb5fbde6044c7ddd3c1ded4fe750700498c2b8e9b17f21335fdaf.webp\",\n      \"description\": \"[被動]\\n0秒冷卻時間\\n\\n攻擊時有20%的機會，造成40點額外傷害。\\n\\n《龍氣》 - 被擊中的單位將會因為痛苦難耐而陷入無法行動的狀態，暈眩0.3秒。\",\n      \"slot\": \"W\",\n      \"castType\": \"targeted\",\n      \"maxRank\": 4,\n      \"cooldown\": [\n        12,\n        12,\n        12,\n        12\n      ],\n      \"manaCost\": [\n        60,\n        60,\n        60,\n        60\n      ],\n      \"range\": 11,\n      \"effects\": [\n        {\n          \"kind\": \"damage\",\n          \"damageType\": \"magic\",\n          \"amount\": {\n            \"perRank\": [\n              20,\n              20,\n              20,\n              20\n            ],\n            \"ratios\": [\n              {\n                \"stat\": \"ap\",\n                \"coeff\": 0.6\n              }\n            ]\n          }\n        }\n      ],\n      \"vfxKey\": \"instance.85500dd12eba.969995d41880.4ea4770713cb181584a6\",\n      \"targetsEnemies\": true,\n      \"castTimeSec\": 0.3\n    },\n    \"E\": {\n      \"id\": \"instance.85500dd12eba.969995d41880.7af9bcd8319ab0a73b9c\",\n      \"name\": \"95-03 皇者戰氣第五十重天\",\n      \"icon\": \"assets/hero-instances/a1ce4be26e7a070559f909a784ae086d1142a531c70a0dc9232358eb63111830.webp\",\n      \"description\": \"[主動攻擊]\\n45秒冷卻時間\\n\\n把發揮到五十重天金黃色的皇者戰氣纏繞在身上，飛行到目標身旁給予沉痛的一擊，給予600點傷害。由於威力過於強大，若敵方偏移瞄準地點將不會受到傷害。\\n\\n《龍氣》 - 擊中目標後將全身勁力炸開，造成大規模的毀滅性打擊，傷害值等於飛行距離的一半。\",\n      \"slot\": \"E\",\n      \"castType\": \"skillshot\",\n      \"maxRank\": 4,\n      \"cooldown\": [\n        45,\n        45,\n        45,\n        45\n      ],\n      \"manaCost\": [\n        120,\n        160,\n        200,\n        240\n      ],\n      \"range\": 14,\n      \"effects\": [\n        {\n          \"kind\": \"spawnProjectile\",\n          \"projectileId\": \"instance.85500dd12eba.969995d41880.c4179d923f6525be7ac3\",\n          \"onHit\": [\n            {\n              \"kind\": \"damage\",\n              \"damageType\": \"magic\",\n              \"amount\": {\n                \"perRank\": [\n                  600,\n                  800,\n                  1000,\n                  1200\n                ]\n              }\n            }\n          ]\n        }\n      ],\n      \"vfxKey\": \"instance.85500dd12eba.969995d41880.bc2bb9aa81a9b64bc332\",\n      \"castTimeSec\": 0.6\n    },\n    \"R\": {\n      \"id\": \"instance.85500dd12eba.969995d41880.4b10ea3ed09d0de43346\",\n      \"name\": \"95-04 藍色戰氣一百重天\",\n      \"icon\": \"assets/hero-instances/bd0fd64194a88447a8d63170de33a7b46e99d92a4eeb742db5e2573e08c0edd3.webp\",\n      \"description\": \"[主動攻擊]\\n60秒冷卻時間\\n\\n人性本善，當戰氣運轉到最高時，便能驅逐人心中的邪惡，將他的心靈淨化成剛出生純真的樣子，淨化目標並給予600點傷害，同時移除目標300點法力。\\n\\n《龍氣》 - 揮拳同時用力踏擊地面，造成範圍暈眩0.5秒。\",\n      \"slot\": \"R\",\n      \"castType\": \"targeted\",\n      \"maxRank\": 3,\n      \"cooldown\": [\n        60,\n        60,\n        60\n      ],\n      \"manaCost\": [\n        140,\n        220,\n        300\n      ],\n      \"range\": 3.67,\n      \"effects\": [\n        {\n          \"kind\": \"damage\",\n          \"damageType\": \"magic\",\n          \"amount\": {\n            \"perRank\": [\n              600,\n              900,\n              1200\n            ],\n            \"ratios\": [\n              {\n                \"stat\": \"ap\",\n                \"coeff\": 0.7\n              }\n            ]\n          }\n        }\n      ],\n      \"vfxKey\": \"instance.85500dd12eba.969995d41880.24e6ef3c8052caa30a83\",\n      \"targetsEnemies\": true,\n      \"castTimeSec\": 0.6\n    }\n  },\n  \"skillOrder\": [\n    \"Q\",\n    \"W\",\n    \"E\",\n    \"R\"\n  ],\n  \"buildPriority\": [\n    \"swift-boots\",\n    \"serrated-edge\"\n  ],\n  \"tags\": [\n    \"wc3-import\",\n    \"godie\"\n  ],\n  \"exAbility\": \"instance.85500dd12eba.969995d41880.88c22c4585ff9383ad31\",\n  \"passiveAbility\": \"instance.85500dd12eba.969995d41880.b44bba407ce48372ccb1\",\n  \"icon\": \"assets/hero-instances/f3720d2178dfd56948b20da5bc13ef5718794dba17806d99a4e8c1253f3019fa.png\"\n}\n",
+      "currentSource": "{\n  \"id\": \"godie-e00j\",\n  \"schema\": \"champion@1\",\n  \"name\": \"皇者 - 騜\",\n  \"description\": \"故事：\\n出生於東方之珠的真龍天子，一出生就有龍氣附身，註定是強者中的強者。不過在初次與扁皇的對決中，騜被徹底打敗。後來騜得到十六天王的團結相助，終於擊敗了扁皇和其接班人謝常霆，登上尊位，成為真正的皇者。\\n(出自:馬皇降臨)\\n\\n推薦玩家 : 牽制追擊\\n上手度 : 中\\n\\n角色成長：\\n力量 + 2.40\\n敏捷 + 1.60\\n智慧 + 1.70\\n基礎跑速 310\\n\\n可學習的技能：\\n謝謝指教、大和戰氣、皇者戰氣第五十重天、藍色戰氣一百重天\",\n  \"role\": \"fighter\",\n  \"attackType\": \"melee\",\n  \"modelKey\": \"imported.ma\",\n  \"attackDamagePoint\": 0.5,\n  \"baseStats\": {\n    \"maxHealth\": 151,\n    \"healthRegen\": 0.25,\n    \"maxMana\": 100,\n    \"manaRegen\": 0.1,\n    \"ad\": 10,\n    \"ap\": 0,\n    \"armor\": 0,\n    \"mr\": 28,\n    \"as\": 0.526316,\n    \"ms\": 6.0,\n    \"critChance\": 0,\n    \"critDamage\": 1.75,\n    \"cdr\": 0,\n    \"lifesteal\": 0,\n    \"range\": 1.6\n  },\n  \"growth\": {\n    \"maxHealth\": 36,\n    \"healthRegen\": 0.09,\n    \"maxMana\": 20,\n    \"manaRegen\": 0.07,\n    \"ad\": 1.6,\n    \"armor\": 0.5,\n    \"mr\": 1.2,\n    \"as\": 0.02\n  },\n  \"attributes\": {\n    \"str\": 22,\n    \"agi\": 16,\n    \"int\": 14,\n    \"strGrowth\": 1.4,\n    \"agiGrowth\": 1.6,\n    \"intGrowth\": 1.7,\n    \"primary\": \"STR\",\n    \"source\": \"w3x\"\n  },\n  \"hitFeel\": {\n    \"hitstopTicks\": 1,\n    \"shakeMag\": 0.18,\n    \"knockbackMag\": 0.0\n  },\n  \"abilities\": {\n    \"Q\": {\n      \"id\": \"godie-e00j.q\",\n      \"name\": \"95-01 謝謝指教\",\n      \"icon\": \"assets/icons/abilities/godie-e00j.q.webp\",\n      \"description\": \"[主動傷害]\\n25秒冷卻時間\\n\\n左手是謝謝，右手是指教，談笑間將目標擊飛，每滑行50距離便會受到30點傷害，最遠距離400。被打中的人不會有任何的怨恨，眼神只會透露出如火一般的尊敬。\\n\\n《龍氣》 - 擊飛的同時將勁力打入目標體內，若因撞到物體而停止時勁力將會爆發，造成範圍傷害80點。\",\n      \"slot\": \"Q\",\n      \"castType\": \"targeted\",\n      \"maxRank\": 5,\n      \"cooldown\": [\n        25.0,\n        25.0,\n        25.0,\n        25.0,\n        25.0\n      ],\n      \"manaCost\": [\n        70.0,\n        110.0,\n        150.0,\n        190.0,\n        190.0\n      ],\n      \"range\": 3.67,\n      \"effects\": [\n        {\n          \"kind\": \"damage\",\n          \"damageType\": \"magic\",\n          \"amount\": {\n            \"perRank\": [\n              240,\n              360,\n              480,\n              600,\n              600\n            ],\n            \"ratios\": [\n              {\n                \"stat\": \"ap\",\n                \"coeff\": 0.6\n              }\n            ]\n          }\n        },\n        {\n          \"kind\": \"applyStatus\",\n          \"statusId\": \"slow25\",\n          \"duration\": 0.3,\n          \"moveSpeedMult\": 0.6\n        }\n      ],\n      \"vfxKey\": \"fx.prim.fire.nova\",\n      \"targetsEnemies\": true,\n      \"castTimeSec\": 0.3\n    },\n    \"W\": {\n      \"id\": \"godie-e00j.w\",\n      \"name\": \"95-02 大和戰氣\",\n      \"icon\": \"assets/icons/abilities/godie-e00j.w.webp\",\n      \"description\": \"[被動]\\n0秒冷卻時間\\n\\n攻擊時有20%的機會，造成40點額外傷害。\\n\\n《龍氣》 - 被擊中的單位將會因為痛苦難耐而陷入無法行動的狀態，暈眩0.3秒。\",\n      \"slot\": \"W\",\n      \"castType\": \"targeted\",\n      \"maxRank\": 4,\n      \"cooldown\": [\n        12.0,\n        12.0,\n        12.0,\n        12.0\n      ],\n      \"manaCost\": [\n        60.0,\n        60.0,\n        60.0,\n        60.0\n      ],\n      \"range\": 11.0,\n      \"effects\": [\n        {\n          \"kind\": \"damage\",\n          \"damageType\": \"magic\",\n          \"amount\": {\n            \"perRank\": [\n              20.0,\n              20.0,\n              20.0,\n              20.0\n            ],\n            \"ratios\": [\n              {\n                \"stat\": \"ap\",\n                \"coeff\": 0.6\n              }\n            ]\n          }\n        }\n      ],\n      \"vfxKey\": \"fx.prim.ki.pulse-sm\",\n      \"targetsEnemies\": true,\n      \"castTimeSec\": 0.3\n    },\n    \"E\": {\n      \"id\": \"godie-e00j.e\",\n      \"name\": \"95-03 皇者戰氣第五十重天\",\n      \"icon\": \"assets/icons/abilities/godie-e00j.e.webp\",\n      \"description\": \"[主動攻擊]\\n45秒冷卻時間\\n\\n把發揮到五十重天金黃色的皇者戰氣纏繞在身上，飛行到目標身旁給予沉痛的一擊，給予600點傷害。由於威力過於強大，若敵方偏移瞄準地點將不會受到傷害。\\n\\n《龍氣》 - 擊中目標後將全身勁力炸開，造成大規模的毀滅性打擊，傷害值等於飛行距離的一半。\",\n      \"slot\": \"E\",\n      \"castType\": \"skillshot\",\n      \"maxRank\": 4,\n      \"cooldown\": [\n        45.0,\n        45.0,\n        45.0,\n        45.0\n      ],\n      \"manaCost\": [\n        120.0,\n        160.0,\n        200.0,\n        240.0\n      ],\n      \"range\": 14.0,\n      \"effects\": [\n        {\n          \"kind\": \"spawnProjectile\",\n          \"projectileId\": \"imported.bolt.ki\",\n          \"onHit\": [\n            {\n              \"kind\": \"damage\",\n              \"damageType\": \"magic\",\n              \"amount\": {\n                \"perRank\": [\n                  600.0,\n                  800.0,\n                  1000.0,\n                  1200.0\n                ]\n              }\n            }\n          ]\n        }\n      ],\n      \"vfxKey\": \"fx.prim.ki.bolt\",\n      \"castTimeSec\": 0.6\n    },\n    \"R\": {\n      \"id\": \"godie-e00j.r\",\n      \"name\": \"95-04 藍色戰氣一百重天\",\n      \"icon\": \"assets/icons/abilities/godie-e00j.r.webp\",\n      \"description\": \"[主動攻擊]\\n60秒冷卻時間\\n\\n人性本善，當戰氣運轉到最高時，便能驅逐人心中的邪惡，將他的心靈淨化成剛出生純真的樣子，淨化目標並給予600點傷害，同時移除目標300點法力。\\n\\n《龍氣》 - 揮拳同時用力踏擊地面，造成範圍暈眩0.5秒。\",\n      \"slot\": \"R\",\n      \"castType\": \"targeted\",\n      \"maxRank\": 3,\n      \"cooldown\": [\n        60.0,\n        60.0,\n        60.0\n      ],\n      \"manaCost\": [\n        140.0,\n        220.0,\n        300.0\n      ],\n      \"range\": 3.67,\n      \"effects\": [\n        {\n          \"kind\": \"damage\",\n          \"damageType\": \"magic\",\n          \"amount\": {\n            \"perRank\": [\n              600.0,\n              900.0,\n              1200.0\n            ],\n            \"ratios\": [\n              {\n                \"stat\": \"ap\",\n                \"coeff\": 0.7\n              }\n            ]\n          }\n        }\n      ],\n      \"vfxKey\": \"fx.prim.ki.nova-lg\",\n      \"targetsEnemies\": true,\n      \"castTimeSec\": 0.6\n    }\n  },\n  \"skillOrder\": [\n    \"Q\",\n    \"W\",\n    \"E\",\n    \"R\"\n  ],\n  \"buildPriority\": [\n    \"swift-boots\",\n    \"serrated-edge\"\n  ],\n  \"tags\": [\n    \"wc3-import\",\n    \"godie\"\n  ],\n  \"exAbility\": \"godie-e00j.ex\",\n  \"passiveAbility\": \"godie-e00j.passive\",\n  \"icon\": \"assets/icons/champions/godie-e00j.png\"\n}\n"
+    },
+    {
+      "path": "catalog/_legacy/abilities/instance.85500dd12eba.969995d41880.a512225a90d6ea677284.json",
+      "source": "{\n  \"id\": \"instance.85500dd12eba.969995d41880.a512225a90d6ea677284\",\n  \"name\": \"95-01 謝謝指教\",\n  \"icon\": \"assets/hero-instances/32843fd5b20c734033ad26616640d2b6439d46afc51736a9db7d35c6fde862d7.webp\",\n  \"description\": \"[主動傷害]\\n25秒冷卻時間\\n\\n左手是謝謝，右手是指教，談笑間將目標擊飛，每滑行50距離便會受到30點傷害，最遠距離400。被打中的人不會有任何的怨恨，眼神只會透露出如火一般的尊敬。\\n\\n《龍氣》 - 擊飛的同時將勁力打入目標體內，若因撞到物體而停止時勁力將會爆發，造成範圍傷害80點。\",\n  \"slot\": \"Q\",\n  \"castType\": \"targeted\",\n  \"maxRank\": 5,\n  \"cooldown\": [\n    25,\n    25,\n    25,\n    25,\n    25\n  ],\n  \"manaCost\": [\n    70,\n    110,\n    150,\n    190,\n    190\n  ],\n  \"range\": 3.67,\n  \"effects\": [\n    {\n      \"kind\": \"damage\",\n      \"damageType\": \"magic\",\n      \"amount\": {\n        \"perRank\": [\n          240,\n          360,\n          480,\n          600,\n          600\n        ],\n        \"ratios\": [\n          {\n            \"stat\": \"ap\",\n            \"coeff\": 0.6\n          }\n        ]\n      }\n    },\n    {\n      \"kind\": \"applyStatus\",\n      \"statusId\": \"instance.85500dd12eba.969995d41880.6f5bf023ff631aeb4fc2\",\n      \"duration\": 0.3,\n      \"moveSpeedMult\": 0.6\n    }\n  ],\n  \"vfxKey\": \"instance.85500dd12eba.969995d41880.33ec5e1d3005bdf87e5e\",\n  \"targetsEnemies\": true,\n  \"schema\": \"ability@1\",\n  \"castTimeSec\": 0.3\n}\n",
+      "currentSource": null
+    },
+    {
+      "path": "catalog/_legacy/status-effects/instance.85500dd12eba.969995d41880.6f5bf023ff631aeb4fc2.json",
+      "source": "{\n  \"id\": \"instance.85500dd12eba.969995d41880.6f5bf023ff631aeb4fc2\",\n  \"schema\": \"status-effect@1\",\n  \"name\": \"Slow (25%)\",\n  \"description\": \"Movement speed reduced by 25%.\",\n  \"polarity\": \"debuff\",\n  \"tags\": [\n    \"slow25\",\n    \"slow\",\n    \"move-speed-down\",\n    \"stat-down\",\n    \"soft-cc\",\n    \"cc\",\n    \"debuff\"\n  ]\n}\n",
+      "currentSource": null
+    },
+    {
+      "path": "catalog/_legacy/vfx/instance.85500dd12eba.969995d41880.33ec5e1d3005bdf87e5e.json",
+      "source": "{\n  \"id\": \"instance.85500dd12eba.969995d41880.33ec5e1d3005bdf87e5e\",\n  \"schema\": \"vfx@1\",\n  \"emitter\": {\n    \"shape\": \"sphere\",\n    \"radius\": 0.55\n  },\n  \"mode\": \"burst\",\n  \"burstCount\": 40,\n  \"lifetimeSec\": {\n    \"min\": 0.18,\n    \"max\": 0.5\n  },\n  \"size\": {\n    \"start\": 0.294,\n    \"end\": 0\n  },\n  \"color\": {\n    \"start\": [\n      1,\n      0.91,\n      0.847,\n      1\n    ],\n    \"end\": [\n      0.18,\n      0.09,\n      0.027,\n      0\n    ]\n  },\n  \"sizeStops\": [\n    [\n      0,\n      0.294\n    ],\n    [\n      0.14,\n      0.7\n    ],\n    [\n      1,\n      0\n    ]\n  ],\n  \"colorStops\": [\n    [\n      0,\n      [\n        1,\n        0.91,\n        0.847,\n        1\n      ]\n    ],\n    [\n      0.2,\n      [\n        1,\n        0.5,\n        0.15,\n        1\n      ]\n    ],\n    [\n      0.6,\n      [\n        0.5,\n        0.25,\n        0.075,\n        0.42\n      ]\n    ],\n    [\n      1,\n      [\n        0.18,\n        0.09,\n        0.027,\n        0\n      ]\n    ]\n  ],\n  \"blendMode\": \"additive\",\n  \"gravityY\": 0,\n  \"speed\": {\n    \"min\": 4,\n    \"max\": 9\n  },\n  \"texture\": \"assets/hero-instances/e15db5a8ccea012f4df82689f1a829bdaac04fd8a3066a723f157e0b01ffbf0a.png\"\n}\n",
+      "currentSource": null
+    },
+    {
+      "path": "catalog/_legacy/abilities/instance.85500dd12eba.969995d41880.19165a5407798fab422d.json",
+      "source": "{\n  \"id\": \"instance.85500dd12eba.969995d41880.19165a5407798fab422d\",\n  \"name\": \"95-02 大和戰氣\",\n  \"icon\": \"assets/hero-instances/382d42ab768bb5fbde6044c7ddd3c1ded4fe750700498c2b8e9b17f21335fdaf.webp\",\n  \"description\": \"[被動]\\n0秒冷卻時間\\n\\n攻擊時有20%的機會，造成40點額外傷害。\\n\\n《龍氣》 - 被擊中的單位將會因為痛苦難耐而陷入無法行動的狀態，暈眩0.3秒。\",\n  \"slot\": \"W\",\n  \"castType\": \"targeted\",\n  \"maxRank\": 4,\n  \"cooldown\": [\n    12,\n    12,\n    12,\n    12\n  ],\n  \"manaCost\": [\n    60,\n    60,\n    60,\n    60\n  ],\n  \"range\": 11,\n  \"effects\": [\n    {\n      \"kind\": \"damage\",\n      \"damageType\": \"magic\",\n      \"amount\": {\n        \"perRank\": [\n          20,\n          20,\n          20,\n          20\n        ],\n        \"ratios\": [\n          {\n            \"stat\": \"ap\",\n            \"coeff\": 0.6\n          }\n        ]\n      }\n    }\n  ],\n  \"vfxKey\": \"instance.85500dd12eba.969995d41880.4ea4770713cb181584a6\",\n  \"targetsEnemies\": true,\n  \"schema\": \"ability@1\",\n  \"castTimeSec\": 0.3\n}\n",
+      "currentSource": null
+    },
+    {
+      "path": "catalog/_legacy/vfx/instance.85500dd12eba.969995d41880.4ea4770713cb181584a6.json",
+      "source": "{\n  \"id\": \"instance.85500dd12eba.969995d41880.4ea4770713cb181584a6\",\n  \"schema\": \"vfx@1\",\n  \"emitter\": {\n    \"shape\": \"sphere\",\n    \"radius\": 0.432\n  },\n  \"mode\": \"burst\",\n  \"burstCount\": 32,\n  \"lifetimeSec\": {\n    \"min\": 0.3,\n    \"max\": 0.7\n  },\n  \"size\": {\n    \"start\": 0.151,\n    \"end\": 0\n  },\n  \"color\": {\n    \"start\": [\n      1,\n      0.9748,\n      0.8956,\n      1\n    ],\n    \"end\": [\n      0.18,\n      0.1548,\n      0.0756,\n      0\n    ]\n  },\n  \"sizeStops\": [\n    [\n      0,\n      0.151\n    ],\n    [\n      0.2,\n      0.36\n    ],\n    [\n      1,\n      0\n    ]\n  ],\n  \"colorStops\": [\n    [\n      0,\n      [\n        1,\n        0.9748,\n        0.8956,\n        1\n      ]\n    ],\n    [\n      0.2,\n      [\n        1,\n        0.86,\n        0.42,\n        1\n      ]\n    ],\n    [\n      0.6,\n      [\n        0.5,\n        0.43,\n        0.21,\n        0.42\n      ]\n    ],\n    [\n      1,\n      [\n        0.18,\n        0.1548,\n        0.0756,\n        0\n      ]\n    ]\n  ],\n  \"blendMode\": \"additive\",\n  \"gravityY\": 1,\n  \"speed\": {\n    \"min\": 1.5,\n    \"max\": 4\n  },\n  \"texture\": \"assets/hero-instances/8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece.png\"\n}\n",
+      "currentSource": null
+    },
+    {
+      "path": "catalog/_legacy/abilities/instance.85500dd12eba.969995d41880.7af9bcd8319ab0a73b9c.json",
+      "source": "{\n  \"id\": \"instance.85500dd12eba.969995d41880.7af9bcd8319ab0a73b9c\",\n  \"name\": \"95-03 皇者戰氣第五十重天\",\n  \"icon\": \"assets/hero-instances/a1ce4be26e7a070559f909a784ae086d1142a531c70a0dc9232358eb63111830.webp\",\n  \"description\": \"[主動攻擊]\\n45秒冷卻時間\\n\\n把發揮到五十重天金黃色的皇者戰氣纏繞在身上，飛行到目標身旁給予沉痛的一擊，給予600點傷害。由於威力過於強大，若敵方偏移瞄準地點將不會受到傷害。\\n\\n《龍氣》 - 擊中目標後將全身勁力炸開，造成大規模的毀滅性打擊，傷害值等於飛行距離的一半。\",\n  \"slot\": \"E\",\n  \"castType\": \"skillshot\",\n  \"maxRank\": 4,\n  \"cooldown\": [\n    45,\n    45,\n    45,\n    45\n  ],\n  \"manaCost\": [\n    120,\n    160,\n    200,\n    240\n  ],\n  \"range\": 14,\n  \"effects\": [\n    {\n      \"kind\": \"spawnProjectile\",\n      \"projectileId\": \"instance.85500dd12eba.969995d41880.c4179d923f6525be7ac3\",\n      \"onHit\": [\n        {\n          \"kind\": \"damage\",\n          \"damageType\": \"magic\",\n          \"amount\": {\n            \"perRank\": [\n              600,\n              800,\n              1000,\n              1200\n            ]\n          }\n        }\n      ]\n    }\n  ],\n  \"vfxKey\": \"instance.85500dd12eba.969995d41880.bc2bb9aa81a9b64bc332\",\n  \"schema\": \"ability@1\",\n  \"castTimeSec\": 0.6\n}\n",
+      "currentSource": null
+    },
+    {
+      "path": "catalog/_legacy/projectiles/instance.85500dd12eba.969995d41880.c4179d923f6525be7ac3.json",
+      "source": "{\n  \"id\": \"instance.85500dd12eba.969995d41880.c4179d923f6525be7ac3\",\n  \"schema\": \"projectile@1\",\n  \"speed\": 22,\n  \"maxRange\": 12,\n  \"hitRadius\": 0.5,\n  \"vfxKey\": \"instance.85500dd12eba.969995d41880.bc2bb9aa81a9b64bc332\",\n  \"meshShape\": \"bolt\"\n}\n",
+      "currentSource": null
+    },
+    {
+      "path": "catalog/_legacy/vfx/instance.85500dd12eba.969995d41880.bc2bb9aa81a9b64bc332.json",
+      "source": "{\n  \"id\": \"instance.85500dd12eba.969995d41880.bc2bb9aa81a9b64bc332\",\n  \"schema\": \"vfx@1\",\n  \"emitter\": {\n    \"shape\": \"cone\",\n    \"radius\": 0.14,\n    \"angleDeg\": 6\n  },\n  \"mode\": \"burst\",\n  \"burstCount\": 18,\n  \"lifetimeSec\": {\n    \"min\": 0.18,\n    \"max\": 0.46\n  },\n  \"size\": {\n    \"start\": 0.26,\n    \"end\": 0\n  },\n  \"color\": {\n    \"start\": [\n      1,\n      0.9748,\n      0.8956,\n      1\n    ],\n    \"end\": [\n      0.18,\n      0.1548,\n      0.0756,\n      0\n    ]\n  },\n  \"sizeStops\": [\n    [\n      0,\n      0.26\n    ],\n    [\n      0.12,\n      0.62\n    ],\n    [\n      1,\n      0\n    ]\n  ],\n  \"colorStops\": [\n    [\n      0,\n      [\n        1,\n        0.9748,\n        0.8956,\n        1\n      ]\n    ],\n    [\n      0.2,\n      [\n        1,\n        0.86,\n        0.42,\n        1\n      ]\n    ],\n    [\n      0.6,\n      [\n        0.5,\n        0.43,\n        0.21,\n        0.42\n      ]\n    ],\n    [\n      1,\n      [\n        0.18,\n        0.1548,\n        0.0756,\n        0\n      ]\n    ]\n  ],\n  \"blendMode\": \"additive\",\n  \"gravityY\": 0,\n  \"speed\": {\n    \"min\": 9,\n    \"max\": 15\n  },\n  \"texture\": \"assets/hero-instances/e3fac37e94127b3b5fcfaaf91eca8c157dc32d08a760e8c9df35dc5fcf017407.png\",\n  \"stretched\": true,\n  \"tailLength\": 2\n}\n",
+      "currentSource": null
+    },
+    {
+      "path": "catalog/_legacy/abilities/instance.85500dd12eba.969995d41880.4b10ea3ed09d0de43346.json",
+      "source": "{\n  \"id\": \"instance.85500dd12eba.969995d41880.4b10ea3ed09d0de43346\",\n  \"name\": \"95-04 藍色戰氣一百重天\",\n  \"icon\": \"assets/hero-instances/bd0fd64194a88447a8d63170de33a7b46e99d92a4eeb742db5e2573e08c0edd3.webp\",\n  \"description\": \"[主動攻擊]\\n60秒冷卻時間\\n\\n人性本善，當戰氣運轉到最高時，便能驅逐人心中的邪惡，將他的心靈淨化成剛出生純真的樣子，淨化目標並給予600點傷害，同時移除目標300點法力。\\n\\n《龍氣》 - 揮拳同時用力踏擊地面，造成範圍暈眩0.5秒。\",\n  \"slot\": \"R\",\n  \"castType\": \"targeted\",\n  \"maxRank\": 3,\n  \"cooldown\": [\n    60,\n    60,\n    60\n  ],\n  \"manaCost\": [\n    140,\n    220,\n    300\n  ],\n  \"range\": 3.67,\n  \"effects\": [\n    {\n      \"kind\": \"damage\",\n      \"damageType\": \"magic\",\n      \"amount\": {\n        \"perRank\": [\n          600,\n          900,\n          1200\n        ],\n        \"ratios\": [\n          {\n            \"stat\": \"ap\",\n            \"coeff\": 0.7\n          }\n        ]\n      }\n    }\n  ],\n  \"vfxKey\": \"instance.85500dd12eba.969995d41880.24e6ef3c8052caa30a83\",\n  \"targetsEnemies\": true,\n  \"schema\": \"ability@1\",\n  \"castTimeSec\": 0.6\n}\n",
+      "currentSource": null
+    },
+    {
+      "path": "catalog/_legacy/vfx/instance.85500dd12eba.969995d41880.24e6ef3c8052caa30a83.json",
+      "source": "{\n  \"id\": \"instance.85500dd12eba.969995d41880.24e6ef3c8052caa30a83\",\n  \"schema\": \"vfx@1\",\n  \"emitter\": {\n    \"shape\": \"sphere\",\n    \"radius\": 0.825\n  },\n  \"mode\": \"burst\",\n  \"burstCount\": 40,\n  \"lifetimeSec\": {\n    \"min\": 0.18,\n    \"max\": 0.5\n  },\n  \"size\": {\n    \"start\": 0.441,\n    \"end\": 0\n  },\n  \"color\": {\n    \"start\": [\n      1,\n      0.9748,\n      0.8956,\n      1\n    ],\n    \"end\": [\n      0.18,\n      0.1548,\n      0.0756,\n      0\n    ]\n  },\n  \"sizeStops\": [\n    [\n      0,\n      0.441\n    ],\n    [\n      0.14,\n      1.05\n    ],\n    [\n      1,\n      0\n    ]\n  ],\n  \"colorStops\": [\n    [\n      0,\n      [\n        1,\n        0.9748,\n        0.8956,\n        1\n      ]\n    ],\n    [\n      0.2,\n      [\n        1,\n        0.86,\n        0.42,\n        1\n      ]\n    ],\n    [\n      0.6,\n      [\n        0.5,\n        0.43,\n        0.21,\n        0.42\n      ]\n    ],\n    [\n      1,\n      [\n        0.18,\n        0.1548,\n        0.0756,\n        0\n      ]\n    ]\n  ],\n  \"blendMode\": \"additive\",\n  \"gravityY\": 0,\n  \"speed\": {\n    \"min\": 4,\n    \"max\": 9\n  },\n  \"texture\": \"assets/hero-instances/e15db5a8ccea012f4df82689f1a829bdaac04fd8a3066a723f157e0b01ffbf0a.png\"\n}\n",
+      "currentSource": null
+    },
+    {
+      "path": "catalog/_legacy/abilities/instance.85500dd12eba.969995d41880.88c22c4585ff9383ad31.json",
+      "source": "{\n  \"id\": \"instance.85500dd12eba.969995d41880.88c22c4585ff9383ad31\",\n  \"name\": \"95-002 固有結界-和諧世界\",\n  \"icon\": \"assets/hero-instances/d8bdc819e67d5964137f92c2469a549860a6233e4af1b386c2196a1e9bc33a27.webp\",\n  \"description\": \"[主動攻擊]\\n100秒冷卻時間\\n\\n馬皇全力運起藍色戰氣強大地流轉，讓正直與善良遍佈周圍，使身邊一片和諧，在此範圍600內友方單位每秒回復200點生命，發動時讓已死亡的英雄復活後將全員隊友傳送至騜身旁，持續12秒。需持續施法。\",\n  \"slot\": \"EX\",\n  \"castType\": \"self\",\n  \"maxRank\": 1,\n  \"cooldown\": [\n    100\n  ],\n  \"manaCost\": [\n    700\n  ],\n  \"range\": 0,\n  \"effects\": [\n    {\n      \"kind\": \"applyBuff\",\n      \"modifiers\": [\n        {\n          \"stat\": \"ad\",\n          \"op\": \"pctAdd\",\n          \"value\": 0.35\n        }\n      ],\n      \"duration\": 6\n    }\n  ],\n  \"vfxKey\": \"instance.85500dd12eba.969995d41880.78dd44529223769fdfb1\",\n  \"schema\": \"ability@1\",\n  \"castTimeSec\": 0.4\n}\n",
+      "currentSource": null
+    },
+    {
+      "path": "catalog/_legacy/vfx/instance.85500dd12eba.969995d41880.78dd44529223769fdfb1.json",
+      "source": "{\n  \"id\": \"instance.85500dd12eba.969995d41880.78dd44529223769fdfb1\",\n  \"schema\": \"vfx@1\",\n  \"emitter\": {\n    \"shape\": \"sphere\",\n    \"radius\": 0.9\n  },\n  \"mode\": \"burst\",\n  \"burstCount\": 32,\n  \"lifetimeSec\": {\n    \"min\": 0.3,\n    \"max\": 0.7\n  },\n  \"size\": {\n    \"start\": 0.315,\n    \"end\": 0\n  },\n  \"color\": {\n    \"start\": [\n      0.9532,\n      0.901,\n      1,\n      1\n    ],\n    \"end\": [\n      0.1332,\n      0.081,\n      0.18,\n      0\n    ]\n  },\n  \"sizeStops\": [\n    [\n      0,\n      0.315\n    ],\n    [\n      0.2,\n      0.75\n    ],\n    [\n      1,\n      0\n    ]\n  ],\n  \"colorStops\": [\n    [\n      0,\n      [\n        0.9532,\n        0.901,\n        1,\n        1\n      ]\n    ],\n    [\n      0.2,\n      [\n        0.74,\n        0.45,\n        1,\n        1\n      ]\n    ],\n    [\n      0.6,\n      [\n        0.37,\n        0.225,\n        0.5,\n        0.42\n      ]\n    ],\n    [\n      1,\n      [\n        0.1332,\n        0.081,\n        0.18,\n        0\n      ]\n    ]\n  ],\n  \"blendMode\": \"additive\",\n  \"gravityY\": 1,\n  \"speed\": {\n    \"min\": 1.5,\n    \"max\": 4\n  },\n  \"texture\": \"assets/hero-instances/8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece.png\"\n}\n",
+      "currentSource": null
+    },
+    {
+      "path": "catalog/_legacy/abilities/instance.85500dd12eba.969995d41880.b44bba407ce48372ccb1.json",
+      "source": "{\n  \"id\": \"instance.85500dd12eba.969995d41880.b44bba407ce48372ccb1\",\n  \"schema\": \"ability@1\",\n  \"name\": \"95-00 紅色龍氣\",\n  \"icon\": \"assets/hero-instances/0691c5a90891d06a1e4dfc7f307d26fe281ba832fa674b2e6a4814243e7e53e9.webp\",\n  \"description\": \"[輔助]\\n30秒冷卻時間\\n\\n運用龍氣調整呼吸與氣的流動，能夠在短時間內重新進入戰鬥姿態。施展成功後將恢復10%的生命與法力，並且10秒內施展的技能會附加龍氣效果。\",\n  \"slot\": \"PASSIVE\",\n  \"innateKind\": \"active\",\n  \"castType\": \"self\",\n  \"maxRank\": 1,\n  \"cooldown\": [\n    30\n  ],\n  \"manaCost\": [\n    0\n  ],\n  \"range\": 0,\n  \"effects\": [\n    {\n      \"kind\": \"restore\",\n      \"healthPct\": 0.1,\n      \"manaPct\": 0.1\n    }\n  ],\n  \"vfxKey\": \"instance.85500dd12eba.969995d41880.227c8b75b9c32756abfb\",\n  \"castTimeSec\": 0.3\n}\n",
+      "currentSource": null
+    },
+    {
+      "path": "catalog/_legacy/vfx/instance.85500dd12eba.969995d41880.227c8b75b9c32756abfb.json",
+      "source": "{\n  \"id\": \"instance.85500dd12eba.969995d41880.227c8b75b9c32756abfb\",\n  \"schema\": \"vfx@1\",\n  \"emitter\": {\n    \"shape\": \"sphere\",\n    \"radius\": 0.6\n  },\n  \"mode\": \"burst\",\n  \"burstCount\": 32,\n  \"lifetimeSec\": {\n    \"min\": 0.3,\n    \"max\": 0.7\n  },\n  \"size\": {\n    \"start\": 0.21,\n    \"end\": 0\n  },\n  \"color\": {\n    \"start\": [\n      1,\n      0.91,\n      0.847,\n      1\n    ],\n    \"end\": [\n      0.18,\n      0.09,\n      0.027,\n      0\n    ]\n  },\n  \"sizeStops\": [\n    [\n      0,\n      0.21\n    ],\n    [\n      0.2,\n      0.5\n    ],\n    [\n      1,\n      0\n    ]\n  ],\n  \"colorStops\": [\n    [\n      0,\n      [\n        1,\n        0.91,\n        0.847,\n        1\n      ]\n    ],\n    [\n      0.2,\n      [\n        1,\n        0.5,\n        0.15,\n        1\n      ]\n    ],\n    [\n      0.6,\n      [\n        0.5,\n        0.25,\n        0.075,\n        0.42\n      ]\n    ],\n    [\n      1,\n      [\n        0.18,\n        0.09,\n        0.027,\n        0\n      ]\n    ]\n  ],\n  \"blendMode\": \"additive\",\n  \"gravityY\": 1,\n  \"speed\": {\n    \"min\": 1.5,\n    \"max\": 4\n  },\n  \"texture\": \"assets/hero-instances/8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece.png\"\n}\n",
+      "currentSource": null
+    },
+    {
+      "path": "catalog/_legacy/models/instance.85500dd12eba.969995d41880.48bb6ce2da77b0bc027a.json",
+      "source": "{\n  \"id\": \"instance.85500dd12eba.969995d41880.48bb6ce2da77b0bc027a\",\n  \"schema\": \"model@1\",\n  \"glbPath\": \"assets/hero-instances/67601d8bf8cb7d7ec3ead3ba2b52aa42dba10f7c69f91ffaceeb53b48af8609e.glb\",\n  \"scale\": 1,\n  \"collisionRadius\": 0.55,\n  \"clipMap\": {\n    \"idle\": \"Stand -1\",\n    \"run\": \"Walk\",\n    \"attack\": \"Attack -1\",\n    \"cast\": \"Spell First\",\n    \"hurt\": \"Stand -1\",\n    \"death\": \"Death\"\n  },\n  \"attachPoints\": {\n    \"Foot Left\": {\n      \"x\": 0.0684,\n      \"y\": 0.7567,\n      \"z\": -0.1101\n    },\n    \"Foot Right\": {\n      \"x\": 0.0686,\n      \"y\": 0.7562,\n      \"z\": 0.1041\n    },\n    \"Hand Right\": {\n      \"x\": 0.0324,\n      \"y\": 1.3436,\n      \"z\": 0.2151\n    },\n    \"Weapon\": {\n      \"x\": 0.0324,\n      \"y\": 1.3336,\n      \"z\": 0.2151\n    },\n    \"Hand Left\": {\n      \"x\": 0.0323,\n      \"y\": 1.3442,\n      \"z\": -0.2181\n    },\n    \"Head -\": {\n      \"x\": 0.0155,\n      \"y\": 1.9835,\n      \"z\": -0.0001\n    },\n    \"Chest\": {\n      \"x\": 0.0314,\n      \"y\": 1.75,\n      \"z\": 0\n    },\n    \"OverHead\": {\n      \"x\": 0,\n      \"y\": 2.2477,\n      \"z\": 0\n    },\n    \"Origin\": {\n      \"x\": 0,\n      \"y\": 0,\n      \"z\": 0\n    }\n  }\n}\n",
+      "currentSource": null
+    }
+  ]
+}

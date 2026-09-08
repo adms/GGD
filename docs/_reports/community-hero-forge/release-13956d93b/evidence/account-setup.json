@@ -1,0 +1,19 @@
+{
+  "origin": "http://127.0.0.1:8097",
+  "method": "auth/register",
+  "accounts": [
+    {
+      "id": "01M210NXCFYD4PEQHQ4DEMFT8G",
+      "username": "model-reviewer",
+      "status": "approved",
+      "roles": [
+        "admin"
+      ]
+    },
+    {
+      "id": "01M210NXETAXE000A55QTJAMYG",
+      "username": "model-author",
+      "status": "approved"
+    }
+  ]
+}

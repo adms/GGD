@@ -1,0 +1,57 @@
+{
+  "id": "imported.konyui",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/konyui.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Origin": {
+      "x": 0.0558,
+      "y": 0.0911,
+      "z": -0.0033
+    },
+    "Overhead": {
+      "x": 0.0558,
+      "y": 3.8436,
+      "z": -0.0033
+    },
+    "Foot Right": {
+      "x": 0.0225,
+      "y": 0.04,
+      "z": -0.0
+    },
+    "Foot Left": {
+      "x": 0.0225,
+      "y": 0.04,
+      "z": -0.0
+    },
+    "Head": {
+      "x": 0.0295,
+      "y": 1.623,
+      "z": -0.0017
+    },
+    "Hand Left": {
+      "x": 0.0,
+      "y": 0.6293,
+      "z": -0.0
+    },
+    "Hand Right": {
+      "x": 0.0,
+      "y": 0.6293,
+      "z": -0.0
+    },
+    "Chest": {
+      "x": 0.0295,
+      "y": 0.7313,
+      "z": -0.0017
+    }
+  }
+}

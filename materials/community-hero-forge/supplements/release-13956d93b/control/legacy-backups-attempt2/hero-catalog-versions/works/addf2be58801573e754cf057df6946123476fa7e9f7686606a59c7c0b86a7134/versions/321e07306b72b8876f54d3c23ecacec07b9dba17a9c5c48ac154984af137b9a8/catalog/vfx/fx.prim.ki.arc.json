@@ -1,0 +1,94 @@
+{
+  "id": "fx.prim.ki.arc",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.02,
+    "angleDeg": 1
+  },
+  "mode": "burst",
+  "burstCount": 1,
+  "lifetimeSec": {
+    "min": 0.22,
+    "max": 0.28
+  },
+  "size": {
+    "start": 1.2684,
+    "end": 1.7123
+  },
+  "color": {
+    "start": [
+      1,
+      0.9748,
+      0.8956,
+      1
+    ],
+    "end": [
+      0.18,
+      0.1548,
+      0.0756,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.6976
+    ],
+    [
+      0.18,
+      1.2684
+    ],
+    [
+      1,
+      1.7123
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        0.9748,
+        0.8956,
+        1
+      ]
+    ],
+    [
+      0.2,
+      [
+        1,
+        0.86,
+        0.42,
+        1
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.5,
+        0.43,
+        0.21,
+        0.42
+      ]
+    ],
+    [
+      1,
+      [
+        0.18,
+        0.1548,
+        0.0756,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 0,
+  "speed": {
+    "min": 0.0,
+    "max": 0.0
+  },
+  "texture": "assets/textures/particles/slash_01.png",
+  "stretched": false,
+  "tailLength": 2.6
+}

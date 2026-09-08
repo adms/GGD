@@ -1,0 +1,57 @@
+{
+  "id": "imported.pika",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/pika.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand - 1",
+    "run": "Walk",
+    "attack": "Attack - 1",
+    "cast": "Attack - 1",
+    "hurt": "Stand - 1",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Head -": {
+      "x": 0.0,
+      "y": 1.3484,
+      "z": -0.0
+    },
+    "Hand Right": {
+      "x": -0.0586,
+      "y": 0.727,
+      "z": 0.204
+    },
+    "Hand Left": {
+      "x": -0.0586,
+      "y": 0.727,
+      "z": -0.2111
+    },
+    "Foot Left": {
+      "x": 0.0152,
+      "y": 0.041,
+      "z": -0.0539
+    },
+    "Foot Right": {
+      "x": 0.0158,
+      "y": 0.041,
+      "z": 0.0528
+    },
+    "Chest": {
+      "x": 0.0,
+      "y": 1.0904,
+      "z": -0.0
+    },
+    "Origin": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -0.0
+    },
+    "Overhead": {
+      "x": 0.0,
+      "y": 1.6415,
+      "z": -0.0
+    }
+  }
+}

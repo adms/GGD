@@ -1,0 +1,58 @@
+{
+  "id": "godie-i06g",
+  "schema": "item@1",
+  "name": "殺豬刀",
+  "icon": "assets/icons/items/godie-i06g.webp",
+  "description": "傳說\n效能\n攻擊力+37\n防禦+13\n攻擊速度+30%\n[變形] 專殺畜牲，7%機率將敵人變成食材，無法動作\n[格擋] 30%機率 抵擋致命一擊(超過現存生命的傷害)\n\n解說\n傳說中由上古寒鐵煉制而成，食神專用菜刀，可以隨機將敵人變成食材，而且還可以拿來擋子彈。",
+  "cost": 0,
+  "tier": 3,
+  "modifiers": [
+    {
+      "stat": "ad",
+      "op": "flat",
+      "value": 37
+    },
+    {
+      "stat": "armor",
+      "op": "flat",
+      "value": 13
+    },
+    {
+      "stat": "as",
+      "op": "pctAdd",
+      "value": 0.3
+    }
+  ],
+  "block": {
+    "damageTypes": [
+      "physical",
+      "magic",
+      "true"
+    ],
+    "chance": 0.3,
+    "fraction": 1,
+    "lethalOnly": true,
+    "internalCooldown": 1
+  },
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "victim": "any",
+      "chance": 0.07,
+      "internalCooldown": 3,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "ingredient",
+          "duration": 0.3,
+          "stun": true
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "wc3-import"
+  ],
+  "craftRole": "none",
+  "authoringNote": "【2026-08-01 [變形] 落地】\n· [變形]「專殺畜牲，7%機率將敵人變成食材，無法動作」= passive[0]，**全部用既有原語**：onBasicAttack + chance + victim + applyStatus{stun:true}。沒有新 effect kind、沒有新 sim 事件、net/eventFanout.ts 不用動 —— stunApplied 早就過線、ENTITY_FLAG.STUNNED 早就在快照上。\n  · 「無法動作」→ stun:true。sim 裡「不能動作」就是它（movementHold/abilitySystem/CastResolveSystem/BasicAttackSystem/RecoverySystem 全部讀它）；root 只擋位移，沒有 silence。\n  · ⚠️ **「專殺畜牲」是目標過濾，而 sim 沒有『畜牲』分類。** 生物只分英雄(ChampionComp)/肉鴿小怪(MobComp)/召喚物/守衛塔。w3x 也幫不上忙：本件兩支 BEHAVIOUR 是 A03U◄ANss Spell Shield 與 A0KW◄Asph Sphere（裝飾光球），**原作根本沒有變形技**，所以「畜牲」是 owner 新寫的設計，無來源可對照。最初出貨用 victim:\"mob\"（=「不是英雄的東西」），並把後果說在明處：第 1–2 回合沒有小怪，那一行完全不會觸發。\n  · ✅ **owner 2026-08-01 裁定「也殺敵方英雄單位」→ victim:\"any\"。** 所以「畜牲」是風味不是過濾器，敵方英雄與小怪一律吃 7%。這也順帶解掉前兩回合完全不觸發的問題。改動只有這一個欄位，sim 一行沒動。\n  · ✅ **owner 2026-08-01「0.3秒就可以了」→ duration: 0.3。** 舊註解寫「持續秒數是 owner 沒給的數字，出貨 1 秒是保守值」—— 那句話從這天起是假的，已刪（第三守則）。30 Hz 下 `Math.round(0.3/(1/30))` = **正好 9 tick**，不是被 round 吃掉的邊界值。行為守衛在 `pigButcher.shipped.test.ts`：斷言「第 9 tick 還被按住、第 10 tick 自由」，不是「欄位等於 0.3」。文案沒有寫秒數，所以 description 不動，`legendary49OwnerText.test.ts` 維持綠。\n  · ⚠️ **internalCooldown: 3 秒仍然是 owner 沒給的數字**（保守值）：ICD 封住攻速上限那一端。0.3 秒控場配 3 秒 ICD = 上線率上限 10%。\n  · ⚠️ **「變成食材」的視覺沒有做。** championForm 換的是**施法者自己**的 transform.counterpartId（sim/effects/championForm.ts：主詞永遠是 ctx.caster），指不到別人也指不到非英雄模型。要做需要一格 ENTITY_FLAG（⚠️ 2026-08-18：`ENTITY_FLAG_FREE_BITS` 已是**空陣列**，16 顆用光，這條路關了）或一個新的狀態視覺事件 + 客戶端消費者。目前玩家看到的是既有暈眩表現。\n· [格擋]「30%機率 抵擋致命一擊」= block{damageTypes:[physical,magic,true],chance:.3,fraction:1,lethalOnly:true} —— 與 晨曦之光 godie-i016 同一句話同一組值，理由寫在那一份，不重複。w3x 這一格是 A03U◄ANss Spell Shield **Cool 100**；owner 改寫時把那一行刪掉，之後在 2026-08-01 裁定 **internalCooldown: 1 秒**（出貨值，見 block.internalCooldown）。\n  · ⚠️ **2026-08-01 owner 推翻了原本的多來源規則。** 舊註解寫「取 chance×fraction 最大者…帶兩件格擋不會比一件強」—— 那已經**不是**現在的行為。owner 裁定「獨立判斷兩次，拿第一次擋掉剩餘繼續算下一次」，所以每個來源各抽各的骰、各自從**剩餘**傷害再削一次：本件 + 晨曦之光 兩件 30% 實測是 **51%**（1−0.7²），三件是 65.7%。規則是欄位 blockRules.stacking（出貨 \"independent\"，舊行為 \"best\" 仍可切）。機制在 sim/combat/block.ts。"
+}

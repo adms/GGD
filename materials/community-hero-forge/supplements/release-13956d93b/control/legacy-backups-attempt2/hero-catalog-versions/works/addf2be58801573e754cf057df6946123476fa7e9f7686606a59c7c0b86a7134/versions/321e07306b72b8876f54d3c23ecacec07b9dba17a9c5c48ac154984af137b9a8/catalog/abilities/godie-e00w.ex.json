@@ -1,0 +1,75 @@
+{
+  "id": "godie-e00w.ex",
+  "schema": "ability@1",
+  "name": "77-002 御雷劍",
+  "provenance": "owner-spec",
+  "description": "[被動][機率]\n\n「御雷劍。飛行」\n使用從者道具「御雷劍」的剎那，其雷鳴劍發動[機率]上升至50%，[GLADIARIA ALAT] 持續時間增加至30秒。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "targetsEnemies": false,
+  "effects": [],
+  "passive": {
+    "name": "77-002 御雷劍",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damageArea",
+                "damageType": "magic",
+                "amount": {
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.1
+                    }
+                  ]
+                },
+                "radius": 3.0,
+                "radiusTier": "極小"
+              }
+            ],
+            "chance": 0.4,
+            "target": "event"
+          }
+        ]
+      }
+    ]
+  },
+  "augment": {
+    "targets": [
+      {
+        "abilityId": "godie-e00w.w",
+        "ops": [
+          {
+            "op": "procChance",
+            "mode": "set",
+            "value": 0.5
+          }
+        ]
+      },
+      {
+        "abilityId": "godie-e00w.e",
+        "ops": [
+          {
+            "op": "durationSec",
+            "mode": "set",
+            "value": 30.0
+          }
+        ]
+      }
+    ]
+  },
+  "icon": "assets/icons/abilities/godie-e00w.ex.webp",
+  "vfxKey": "fx.prim.lightning.beam-lg"
+}

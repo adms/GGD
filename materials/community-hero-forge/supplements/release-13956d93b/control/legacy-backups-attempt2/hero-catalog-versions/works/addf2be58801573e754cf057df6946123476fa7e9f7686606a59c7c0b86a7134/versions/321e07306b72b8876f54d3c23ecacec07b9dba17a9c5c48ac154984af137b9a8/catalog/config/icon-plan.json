@@ -1,0 +1,74 @@
+{
+  "id": "icon-plan",
+  "schema": "config.icon-plan@1",
+  "templateVersion": "icon-gen/1",
+  "contentDigest": "eaae774b3870408b",
+  "counts": {
+    "total": {
+      "docs": 989,
+      "have": 973,
+      "drop": 16,
+      "blocked": 0,
+      "generate": 0,
+      "tier1": 0,
+      "tier2": 0
+    },
+    "byFamily": {
+      "champions": {
+        "docs": 113,
+        "have": 113,
+        "drop": 0,
+        "blocked": 0,
+        "generate": 0
+      },
+      "abilities": {
+        "docs": 662,
+        "have": 646,
+        "drop": 16,
+        "blocked": 0,
+        "generate": 0
+      },
+      "items": {
+        "docs": 214,
+        "have": 214,
+        "drop": 0,
+        "blocked": 0,
+        "generate": 0
+      }
+    }
+  },
+  "provenance": {
+    "no-wc3-source": 16
+  },
+  "dropped": {
+    "placeholder-ability": {
+      "label": "佔位技能（name 是 none）",
+      "note": "名稱就是字面上的 \"none\"，說明也是空的。這是原圖的佔位格，沒有任何可以下筆的內容。",
+      "ids": [
+        "godie-e00u.e",
+        "godie-e00u.q",
+        "godie-e00u.r",
+        "godie-e00u.w",
+        "godie-h02n.e",
+        "godie-h02n.q",
+        "godie-h02n.r",
+        "godie-h02n.w",
+        "godie-u01f.e",
+        "godie-u01f.q",
+        "godie-u01f.r",
+        "godie-u01f.w",
+        "godie-u01q.e",
+        "godie-u01q.q",
+        "godie-u01q.r",
+        "godie-u01q.w"
+      ]
+    }
+  },
+  "blocked": {},
+  "generate": {
+    "tier1": [],
+    "tier2": []
+  },
+  "vetoed": [],
+  "missingSurfaceFiles": []
+}

@@ -1,0 +1,82 @@
+{
+  "id": "godie-supershinythingy-p0",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.001,
+    "angleDeg": 1.0
+  },
+  "mode": "continuous",
+  "rate": 20.0,
+  "lifetimeSec": {
+    "min": 0.3,
+    "max": 0.3
+  },
+  "size": {
+    "start": 3.334,
+    "end": 1.389
+  },
+  "color": {
+    "start": [
+      0.494,
+      0.749,
+      0.945,
+      0.796
+    ],
+    "end": [
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.494,
+        0.749,
+        0.945,
+        0.796
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.475,
+        0.647,
+        1.0,
+        0.667
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      3.334
+    ],
+    [
+      0.5,
+      1.945
+    ],
+    [
+      1,
+      1.389
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/circle_03.png",
+  "speed": {
+    "min": 0.2667,
+    "max": 0.8445
+  }
+}

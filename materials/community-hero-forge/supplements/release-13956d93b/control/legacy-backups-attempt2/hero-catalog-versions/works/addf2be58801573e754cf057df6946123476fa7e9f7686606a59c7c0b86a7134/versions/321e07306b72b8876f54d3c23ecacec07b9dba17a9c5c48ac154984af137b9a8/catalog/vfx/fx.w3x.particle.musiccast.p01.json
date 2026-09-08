@@ -1,0 +1,82 @@
+{
+  "id": "fx.w3x.particle.musiccast.p01",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.278,
+    "angleDeg": 180
+  },
+  "mode": "burst",
+  "lifetimeSec": {
+    "min": 0.5,
+    "max": 0.5
+  },
+  "size": {
+    "start": 0.056,
+    "end": 0.556
+  },
+  "color": {
+    "start": [
+      1,
+      1,
+      0,
+      1
+    ],
+    "end": [
+      1,
+      1,
+      0,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        1,
+        0,
+        1
+      ]
+    ],
+    [
+      0.5,
+      [
+        1,
+        0,
+        0,
+        1
+      ]
+    ],
+    [
+      1,
+      [
+        1,
+        1,
+        0,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.056
+    ],
+    [
+      0.5,
+      0.278
+    ],
+    [
+      1,
+      0.556
+    ]
+  ],
+  "blendMode": "additive",
+  "speed": {
+    "min": 0,
+    "max": 15.2779
+  },
+  "burstCount": 10,
+  "texture": "assets/textures/particles/star_05.png"
+}

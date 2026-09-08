@@ -1,0 +1,82 @@
+{
+  "id": "fx.w3x.particle.blackhole1.p01",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.028,
+    "angleDeg": 7.5
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 3.5,
+    "max": 3.5
+  },
+  "size": {
+    "start": 0.056,
+    "end": 0.007
+  },
+  "color": {
+    "start": [
+      1,
+      1,
+      1,
+      0.588
+    ],
+    "end": [
+      1,
+      1,
+      1,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        1,
+        1,
+        0.588
+      ]
+    ],
+    [
+      0.4,
+      [
+        1,
+        1,
+        1,
+        0.235
+      ]
+    ],
+    [
+      1,
+      [
+        1,
+        1,
+        1,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.056
+    ],
+    [
+      0.4,
+      0.028
+    ],
+    [
+      1,
+      0.007
+    ]
+  ],
+  "blendMode": "additive",
+  "speed": {
+    "min": 0.3889,
+    "max": 0.7223
+  },
+  "rate": 10,
+  "texture": "assets/textures/particles/star_07.png"
+}

@@ -1,0 +1,49 @@
+{
+  "id": "godie-u011.passive",
+  "schema": "ability@1",
+  "name": "61-00百連我殺",
+  "icon": "assets/icons/abilities/godie-u011.passive.webp",
+  "description": "[被動]\n0秒冷卻時間\n\n被打會痛，痛了就吼，吼完手速就變快。這是死亡金屬的基本原理。\n\n• 觸發：每次【受到傷害】時擲一次，4% 機率發動地獄吶喊\n• 發動後攻擊速度 ×4，持續 0.4 秒（= 12 個模擬 tick，短到你只會發現螢幕上多了兩刀）\n• 不可疊乘：在 0.4 秒內再吼一次只會把時間刷新回 0.4 秒，攻速仍然是 ×4 而不是 ×16\n• 沒有內部冷卻：連續被打就是連續有機會，被 AoE 洗臉最爽\n• 攻擊速度上限仍然是 4.0 次/秒 —— 這一招只給速度，不解鎖天花板",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "effects": [],
+  "passive": {
+    "name": "61-00百連我殺",
+    "ranks": [
+      {
+        "modifiers": [],
+        "hooks": [
+          {
+            "on": "onDamageTaken",
+            "target": "self",
+            "chance": 0.04,
+            "effects": [
+              {
+                "kind": "applyBuff",
+                "duration": 0.4,
+                "modifiers": [
+                  {
+                    "stat": "as",
+                    "op": "pctMult",
+                    "value": 3
+                  }
+                ],
+                "stackKey": "krauser-hellscream",
+                "maxStacks": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

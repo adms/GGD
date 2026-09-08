@@ -1,0 +1,113 @@
+{
+  "id": "godie-emfr.e",
+  "schema": "ability@1",
+  "name": "15-03 獄炎煉我",
+  "provenance": "owner-spec",
+  "description": "[主動][變身][普攻時][範圍][AP加成]\n{{cd}}秒冷卻\n消耗[MP] {{mp}}\n持續12秒\n\n「問問這砂鍋大的火拳？」\n普通攻擊附加 60/90/120/150 + {{ap}}% [AP] 火焰傷害，每次技能命中都會引發爆炎[燃燒]標記，對[周圍]敵人造成 {{dmg2}} +{{ap2}}% [AP] [範圍]傷害，但[移動速度]減半。\n([變身]為唯一狀態不可疊加)",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "range": 0.0,
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ms",
+          "op": "pctMult",
+          "value": -0.5
+        }
+      ],
+      "duration": 12.0,
+      "exclusiveGroup": "emfr-form",
+      "hooks": [
+        {
+          "on": "onBasicAttack",
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.4
+                  }
+                ]
+              }
+            }
+          ],
+          "target": "event"
+        },
+        {
+          "on": "onDamageDealt",
+          "effects": [
+            {
+              "kind": "damageArea",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.6
+                  }
+                ]
+              },
+              "radius": 4.5,
+              "radiusTier": "小"
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "burn",
+              "duration": 3.0
+            }
+          ],
+          "target": "event",
+          "damageSource": "ability"
+        }
+      ]
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-strike",
+      "modelKey": "w3x.stock.monsoonbolttarget",
+      "anchor": "self"
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "w3x.stock.tornadoelemental",
+      "clip": "idle",
+      "soundKey": "wc3.blademasterwhirlwind",
+      "scale": 3.0,
+      "tint": [
+        0.5882,
+        0.5882,
+        1.0
+      ],
+      "lifeSec": 2.0
+    }
+  ],
+  "vfxKey": "fx.prim.fire.nova",
+  "icon": "assets/icons/abilities/godie-emfr.e.webp",
+  "cooldownTier": "小",
+  "manaCostTier": "小",
+  "castTimeSec": 0.267
+}

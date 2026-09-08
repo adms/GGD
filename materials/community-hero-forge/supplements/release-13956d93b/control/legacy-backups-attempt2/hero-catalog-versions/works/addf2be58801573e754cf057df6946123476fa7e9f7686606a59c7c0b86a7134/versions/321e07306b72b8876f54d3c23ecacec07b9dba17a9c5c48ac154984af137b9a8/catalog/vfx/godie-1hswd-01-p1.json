@@ -1,0 +1,83 @@
+{
+  "id": "godie-1hswd-01-p1",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.019,
+    "angleDeg": 90.0
+  },
+  "mode": "continuous",
+  "rate": 10.0,
+  "lifetimeSec": {
+    "min": 1.5,
+    "max": 1.5
+  },
+  "size": {
+    "start": 0.058,
+    "end": 0.096
+  },
+  "color": {
+    "start": [
+      0.871,
+      1.0,
+      0.89,
+      0.0
+    ],
+    "end": [
+      0.133,
+      0.529,
+      0.133,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.871,
+        1.0,
+        0.89,
+        0.0
+      ]
+    ],
+    [
+      0.25,
+      [
+        0.243,
+        0.859,
+        0.271,
+        0.196
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.133,
+        0.529,
+        0.133,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.058
+    ],
+    [
+      0.25,
+      0.077
+    ],
+    [
+      1,
+      0.096
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/smoke_01.png",
+  "speed": {
+    "min": 0.0,
+    "max": 0.3542
+  },
+  "anchorBone": "bone_b10"
+}

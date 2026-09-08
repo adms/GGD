@@ -1,0 +1,30 @@
+{
+  "collection": "vfx-subtypes",
+  "hash": "356bb93fc4d8",
+  "entries": [
+    {
+      "id": "sub.bladestorm-8hit",
+      "path": "vfx-subtypes/sub.bladestorm-8hit.json",
+      "hash": "c067e5f4c5bc",
+      "size": 6145
+    },
+    {
+      "id": "sub.dive-dash-thunder",
+      "path": "vfx-subtypes/sub.dive-dash-thunder.json",
+      "hash": "0a8664234da4",
+      "size": 2347
+    },
+    {
+      "id": "sub.doom-mark-cast",
+      "path": "vfx-subtypes/sub.doom-mark-cast.json",
+      "hash": "e77e5a9386f7",
+      "size": 1985
+    },
+    {
+      "id": "sub.forward-twin-blast",
+      "path": "vfx-subtypes/sub.forward-twin-blast.json",
+      "hash": "0725dad2c5bd",
+      "size": 2630
+    }
+  ]
+}

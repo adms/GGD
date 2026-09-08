@@ -1,0 +1,28 @@
+{
+  "id": "champ.godie-zombiex",
+  "schema": "model@1",
+  "glbPath": "assets/models/champions/blocky-undead.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "idle",
+    "run": "walk",
+    "attack": "attack",
+    "cast": "attack",
+    "hurt": "hurt",
+    "death": "death"
+  },
+  "attachPoints": {
+    "rightHand": {
+      "x": 0.41,
+      "y": 1.06,
+      "z": 0.12
+    },
+    "overhead": {
+      "x": 0,
+      "y": 1.94,
+      "z": 0
+    }
+  },
+  "teamTintMaterials": []
+}

@@ -1,0 +1,65 @@
+{
+  "id": "godie-efur.q",
+  "schema": "ability@1",
+  "name": "13-01 暗步。極限之圓",
+  "provenance": "owner-spec",
+  "description": "[主動][指定][瞬移]\n施法距離：{{range}}\n{{cd}}秒冷卻\n\n「年輕全盛時期的老朽可以把圓擴大到整個競技場呢」\n[指定一名]敵人，無視地形與碰撞[瞬移]至其身旁，並造成[致盲]效果，持續1秒。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    6.0,
+    6.0,
+    6.0,
+    6.0
+  ],
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 4.5,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "blink",
+      "shape": "single",
+      "to": "targetUnit",
+      "applyTo": "self",
+      "stopShortUnits": 1.0,
+      "onArrive": [
+        {
+          "kind": "spawnVfx",
+          "vfxId": "fx.fam.blink.arcane.s65",
+          "at": "point"
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "blind",
+          "duration": 1.0,
+          "missChance": 0.5
+        }
+      ]
+    }
+  ],
+  "icon": "assets/icons/abilities/godie-efur.q.webp",
+  "vfxKey": "fx.fam.blink.ki.s65",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.fam.blink.ki.s65",
+      "w3xScale": 1.1
+    },
+    {
+      "vfxKey": "fx.prim.ki.bolt-lg",
+      "delayMs": 60,
+      "attachTo": "point",
+      "w3xScale": 0.8,
+      "alpha": 0.8
+    }
+  ],
+  "recoverySec": 0.25,
+  "cooldownTier": "極小",
+  "rangeTier": "小",
+  "castTimeSec": 0.233
+}

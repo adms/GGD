@@ -1,0 +1,52 @@
+{
+  "id": "godie-emns.w",
+  "schema": "ability@1",
+  "name": "44-02 死神的規則",
+  "provenance": "owner-spec",
+  "description": "[被動]\n\n「我是新世界的神」\n將這份知識化為 [智慧] 7/12/17/22點。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "targetsEnemies": false,
+  "effects": [],
+  "passive": {
+    "name": "44-02 死神的規則",
+    "ranks": [
+      {
+        "attributes": {
+          "int": 7
+        }
+      },
+      {
+        "attributes": {
+          "int": 12
+        }
+      },
+      {
+        "attributes": {
+          "int": 17
+        }
+      },
+      {
+        "attributes": {
+          "int": 22
+        }
+      }
+    ]
+  },
+  "icon": "assets/icons/abilities/godie-emns.w.webp",
+  "vfxKey": "fx.prim.void.pulse"
+}

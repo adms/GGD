@@ -1,0 +1,82 @@
+{
+  "id": "fx.w3x.particle.lasercannonfinalred.p03",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.001,
+    "angleDeg": 1
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 4,
+    "max": 4
+  },
+  "size": {
+    "start": 2.389,
+    "end": 2.389
+  },
+  "color": {
+    "start": [
+      1,
+      0.502,
+      0.502,
+      1
+    ],
+    "end": [
+      1,
+      0.502,
+      0.502,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        0.502,
+        0.502,
+        1
+      ]
+    ],
+    [
+      0.999,
+      [
+        1,
+        0.502,
+        0.502,
+        1
+      ]
+    ],
+    [
+      1,
+      [
+        1,
+        0.502,
+        0.502,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      2.389
+    ],
+    [
+      0.999,
+      2.389
+    ],
+    [
+      1,
+      2.389
+    ]
+  ],
+  "blendMode": "additive",
+  "speed": {
+    "min": 0,
+    "max": 0
+  },
+  "rate": 90,
+  "texture": "assets/textures/particles/flare_01.png"
+}

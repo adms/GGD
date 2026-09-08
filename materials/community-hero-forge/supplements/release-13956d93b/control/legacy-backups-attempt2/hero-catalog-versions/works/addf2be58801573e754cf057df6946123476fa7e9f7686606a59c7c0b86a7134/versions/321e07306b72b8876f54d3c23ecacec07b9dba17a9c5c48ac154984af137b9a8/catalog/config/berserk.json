@@ -1,0 +1,8 @@
+{
+  "id": "berserk",
+  "schema": "config.berserk@1",
+  "note": "暴走規則（59-00 初號機那一族）。三格：主動暴走可以按下去的生命門檻、暴走期間施法的冷卻倍率、以及這兩格套用在誰身上。⚠️ 這份文件在 2026-08-05 之前**不存在** —— `sim/abilities/berserkRules.ts` 早就有 `DEFAULT_BERSERK_RULES` 與 `berserkRulesFromDoc()`，sim 也在讀 `world.berserkRules`，但沒有任何文件、沒有後台頁、也沒有人把文件灌進 world，所以那個解析器從來沒有拿到過一份真的文件。這三個值**逐字等於**當時寫死的預設，所以建立這份文件不改變任何平衡。語意與上下界寫在 `packages/shared/src/sim/abilities/berserkRules.ts`。⚠️ 後台『暴走規則』頁存的是耐久覆蓋層（data/），覆蓋層會蓋掉這一個檔案 —— 線上存過之後，改這裡不會生效。",
+  "castHpPct": 0.15,
+  "cooldownMult": 2,
+  "trigger": "berserkGrantors"
+}

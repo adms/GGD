@@ -1,0 +1,43 @@
+{
+  "id": "godie-h02r.w",
+  "name": "90-02 麻痺粉",
+  "icon": "assets/icons/abilities/godie-h02r.w.webp",
+  "provenance": "w3x-import",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n散發出麻痺的粉末，令周圍600的敵人減緩速度60%，持續3秒。",
+  "slot": "W",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    30.0,
+    30.0,
+    30.0,
+    30.0
+  ],
+  "cooldownTier": "極小",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "template": {
+    "ref": "tpl-apply-status",
+    "params": {
+      "status": {
+        "statusId": "slow60",
+        "duration": 4.0,
+        "moveSpeedMult": 0.4
+      },
+      "radius": 327.27,
+      "castTimeSec": 1.133
+    }
+  },
+  "vfxKey": "fx.prim.nature.swarm",
+  "targetsEnemies": true,
+  "radius": 6.0,
+  "schema": "ability@1",
+  "castTimeSec": 1.133,
+  "radiusTier": "中"
+}

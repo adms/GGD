@@ -1,0 +1,241 @@
+{
+  "schema": "ggd-current-service-batch-proof@1",
+  "startedAt": "2026-09-08T17:25:46.290Z",
+  "status": "failed",
+  "scope": "Editor generator-adoption function plus authenticated current-service compilation and inspection. Does not prove UI submission or original-art fidelity.",
+  "oldIndex": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/current-package-audit.json",
+  "target": {
+    "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+    "contentVersion": "cv_720a022a110a",
+    "migrationFingerprint": "4d3fea0bcc0d",
+    "processorFingerprint": "f8ae3104cbe5"
+  },
+  "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
+  "rows": [
+    {
+      "number": 1,
+      "name": "武藤遊戲",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:67500dcda72e3558bb08df23ae019b2a71d6b65794d664a684ddeccec0d30e02'\n- '67500dcda72e3558bb08df23ae019b2a71d6b65794d664a684ddeccec0d30e02'\n"
+    },
+    {
+      "number": 2,
+      "name": "八神庵",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:399aca6995a6f28bb00a8c9e1d6831058147295fa99a9915b665d0179d012111'\n- '399aca6995a6f28bb00a8c9e1d6831058147295fa99a9915b665d0179d012111'\n"
+    },
+    {
+      "number": 3,
+      "name": "不知火舞",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:e96d4026e5045009b9e215afbc6807e58f1c2e75e75280b4160867b1c020ba18'\n- 'e96d4026e5045009b9e215afbc6807e58f1c2e75e75280b4160867b1c020ba18'\n"
+    },
+    {
+      "number": 4,
+      "name": "空條承太郎",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:c533a14e23888a64255d3cfa7e80958e785b39c11f14794db433f626a9ec7d52'\n- 'c533a14e23888a64255d3cfa7e80958e785b39c11f14794db433f626a9ec7d52'\n"
+    },
+    {
+      "number": 5,
+      "name": "洛克人",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:d1d3c3b2f4e714d82963eb2191bfd498322057d0da0a83ee52aee3df83b07dee'\n- 'd1d3c3b2f4e714d82963eb2191bfd498322057d0da0a83ee52aee3df83b07dee'\n"
+    },
+    {
+      "number": 6,
+      "name": "卡比",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:ff0d37a8bf9bb5b8d055c7c3fc65b206bb264a1a36738c5d868eaf780713f4ef'\n- 'ff0d37a8bf9bb5b8d055c7c3fc65b206bb264a1a36738c5d868eaf780713f4ef'\n"
+    },
+    {
+      "number": 7,
+      "name": "西索",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:b098eb7e379f8a73f634754b406d2f36d3357950da0e0d4883198edba1d8e4d4'\n- 'b098eb7e379f8a73f634754b406d2f36d3357950da0e0d4883198edba1d8e4d4'\n"
+    },
+    {
+      "number": 8,
+      "name": "米卡莎",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:b0ac792fb0702ed0092af830f364b70e6217c9bf6d37ec6672414bc8dbb49513'\n- 'b0ac792fb0702ed0092af830f364b70e6217c9bf6d37ec6672414bc8dbb49513'\n"
+    },
+    {
+      "number": 9,
+      "name": "赫蘿",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:15e41d4700be94bcf7f54e6037fbb37de6e75173c7f0a27b1665afab65359207'\n- '15e41d4700be94bcf7f54e6037fbb37de6e75173c7f0a27b1665afab65359207'\n"
+    },
+    {
+      "number": 10,
+      "name": "魯路修",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:b1f46e20c109d2a71b376065b3ee4e32ee465c0322fe508837a3738e46c14e94'\n- 'b1f46e20c109d2a71b376065b3ee4e32ee465c0322fe508837a3738e46c14e94'\n"
+    },
+    {
+      "number": 11,
+      "name": "利姆路",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:579c0fae0044cb611deb6ddd24b87e894357262db29cda5d88c9a5279a8121a8'\n- '579c0fae0044cb611deb6ddd24b87e894357262db29cda5d88c9a5279a8121a8'\n"
+    },
+    {
+      "number": 12,
+      "name": "衛宮士郎",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:a0fe6de2a93d0bdefea38f9693e5e7de706b1280aadf69687bcb05873862a754'\n- 'a0fe6de2a93d0bdefea38f9693e5e7de706b1280aadf69687bcb05873862a754'\n"
+    },
+    {
+      "number": 13,
+      "name": "朝田詩乃",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:41830d08d7b52e8bc6b08ed3319b03c722b1881793943c57dccfa0d9de4dd9c2'\n- '41830d08d7b52e8bc6b08ed3319b03c722b1881793943c57dccfa0d9de4dd9c2'\n"
+    },
+    {
+      "number": 14,
+      "name": "殺老師",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:4e200061a63caef69ab4e174580e240dbeeb7fde91e46df1e5fb4acf0070e736'\n- '4e200061a63caef69ab4e174580e240dbeeb7fde91e46df1e5fb4acf0070e736'\n"
+    },
+    {
+      "number": 15,
+      "name": "比利海靈頓",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:403c904134c78ba5876469242889612009617e7149a3ab6858a38538b2e1923a'\n- '403c904134c78ba5876469242889612009617e7149a3ab6858a38538b2e1923a'\n"
+    },
+    {
+      "number": 16,
+      "name": "魔法少女☆伊莉雅",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:5f82d425b9076ecc27b6451c0ece607be681b64e2409ba2ba72ee223770e2559'\n- '5f82d425b9076ecc27b6451c0ece607be681b64e2409ba2ba72ee223770e2559'\n"
+    },
+    {
+      "number": 17,
+      "name": "安茲·烏爾·恭",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:2f701443e133619bcbc8a5b8dea7018a85634d4aa7a0fb668c29f52cdc52e965'\n- '2f701443e133619bcbc8a5b8dea7018a85634d4aa7a0fb668c29f52cdc52e965'\n"
+    },
+    {
+      "number": 18,
+      "name": "吉爾伽美什",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:93c57a952b46dcd7e5b6e75d27672fe33ad22221bfd3485d068139113cf4a33d'\n- '93c57a952b46dcd7e5b6e75d27672fe33ad22221bfd3485d068139113cf4a33d'\n"
+    },
+    {
+      "number": 19,
+      "name": "桐谷和人",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:d86062deeff4f30df0f71d208b14ae79052cdbe5bbd0937c01fbc7d9c70c2288'\n- 'd86062deeff4f30df0f71d208b14ae79052cdbe5bbd0937c01fbc7d9c70c2288'\n"
+    },
+    {
+      "number": 20,
+      "name": "御坂美琴",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:2e184069c7ccb9f5acb761943b833c1090f5ea812eea28be73bbbcec5f8bedad'\n- '2e184069c7ccb9f5acb761943b833c1090f5ea812eea28be73bbbcec5f8bedad'\n"
+    },
+    {
+      "number": 21,
+      "name": "鹿目圓",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:b22c0840801f53c003293d229658069be35afbdd19e4e0ab1068e79981b0a60d'\n- 'b22c0840801f53c003293d229658069be35afbdd19e4e0ab1068e79981b0a60d'\n"
+    },
+    {
+      "number": 22,
+      "name": "菜月昴",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:17da3e304f89018882a55a2bfd40d69083b3e50847fe76f0e4cbe80c6a873ab1'\n- '17da3e304f89018882a55a2bfd40d69083b3e50847fe76f0e4cbe80c6a873ab1'\n"
+    },
+    {
+      "number": 23,
+      "name": "坂田銀時",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:8dff5c9312b98175cec905abeb09208befab9d6c0384ca34c70f585ee323e7fa'\n- '8dff5c9312b98175cec905abeb09208befab9d6c0384ca34c70f585ee323e7fa'\n"
+    },
+    {
+      "number": 24,
+      "name": "奇犽",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:a89309ed8888141dbbf2983283799280c0a37d420f20d6e3e9ea3e8a429f9c52'\n- 'a89309ed8888141dbbf2983283799280c0a37d420f20d6e3e9ea3e8a429f9c52'\n"
+    },
+    {
+      "number": 25,
+      "name": "一拳超人",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:f709194d8d0dc232b6a950014ad9aac8242b4fe569ac3b64d34fb52b18218978'\n- 'f709194d8d0dc232b6a950014ad9aac8242b4fe569ac3b64d34fb52b18218978'\n"
+    },
+    {
+      "number": 26,
+      "name": "名偵探柯南",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:e79b9b7cd90fa597d9ddde1e92b46a2367619993b972bfc1c1c88cdcbb5585c4'\n- 'e79b9b7cd90fa597d9ddde1e92b46a2367619993b972bfc1c1c88cdcbb5585c4'\n"
+    },
+    {
+      "number": 27,
+      "name": "庫洛魔法使",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:972b7a021634a504210b1d0a599e316955b8e7dd5a9357733d03143ac6a57a83'\n- '972b7a021634a504210b1d0a599e316955b8e7dd5a9357733d03143ac6a57a83'\n"
+    },
+    {
+      "number": 28,
+      "name": "艾莉絲·伯雷亞斯·格雷拉特",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:36bea75b785888a896a8c2489241fb7488d3efba15a9df6ab1d6d66925274619'\n- '36bea75b785888a896a8c2489241fb7488d3efba15a9df6ab1d6d66925274619'\n"
+    },
+    {
+      "number": 29,
+      "name": "芙莉蓮",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:41b59c95471730e0fe4e9d14b14fa95b6d5183d259607e7bdf2988725203bb61'\n- '41b59c95471730e0fe4e9d14b14fa95b6d5183d259607e7bdf2988725203bb61'\n"
+    },
+    {
+      "number": 30,
+      "name": "尼古貓貓",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:d2d8b0e5252b71f60bdb2797ecbef92c9bdebf8d50088dbfc23b335fbb9e20ff'\n- 'd2d8b0e5252b71f60bdb2797ecbef92c9bdebf8d50088dbfc23b335fbb9e20ff'\n"
+    },
+    {
+      "number": 31,
+      "name": "SUN樂",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:faf6f36eb827354ae059a7f4176b4dde2d334ad9acb47d7cf98e17f575293fe3'\n- 'faf6f36eb827354ae059a7f4176b4dde2d334ad9acb47d7cf98e17f575293fe3'\n"
+    },
+    {
+      "number": 32,
+      "name": "阿薩謝爾",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:3f2cdba5eb3c8b548d7aaa0b7c19d40fbdf21ca6875fe7de154c3cba7b9450a0'\n- '3f2cdba5eb3c8b548d7aaa0b7c19d40fbdf21ca6875fe7de154c3cba7b9450a0'\n"
+    },
+    {
+      "number": 33,
+      "name": "近衛刀太",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:b91faa36f8821bc28e3448c0da2849d8afc58564c157da2588e542f04e32954a'\n- 'b91faa36f8821bc28e3448c0da2849d8afc58564c157da2588e542f04e32954a'\n"
+    },
+    {
+      "number": 34,
+      "name": "高速婆婆",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:054be56564ba79f862b1eb097c2ee93d82f23758eb23d09d6735ff478301b458'\n- '054be56564ba79f862b1eb097c2ee93d82f23758eb23d09d6735ff478301b458'\n"
+    },
+    {
+      "number": 35,
+      "name": "炭治郎",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:2ef01bd5bb58c0f485c164dab8819d003f0e9dbea3e55c7da210af424406cca9'\n- '2ef01bd5bb58c0f485c164dab8819d003f0e9dbea3e55c7da210af424406cca9'\n"
+    },
+    {
+      "number": 36,
+      "name": "鬼畜王蘭斯",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:2b3cbe719bf6fe5f95e190f3f365f6e3f269fc2467555d1a633fa4b51d4f6381'\n- '2b3cbe719bf6fe5f95e190f3f365f6e3f269fc2467555d1a633fa4b51d4f6381'\n"
+    },
+    {
+      "number": 37,
+      "name": "吉伊卡哇",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:5e33a7fd99c3942fe2d55a8060616527accc8495f7283f95959c49ab3393b274'\n- '5e33a7fd99c3942fe2d55a8060616527accc8495f7283f95959c49ab3393b274'\n"
+    }
+  ],
+  "passed": 0,
+  "failed": 37,
+  "finishedAt": "2026-09-08T17:25:46.798Z"
+}

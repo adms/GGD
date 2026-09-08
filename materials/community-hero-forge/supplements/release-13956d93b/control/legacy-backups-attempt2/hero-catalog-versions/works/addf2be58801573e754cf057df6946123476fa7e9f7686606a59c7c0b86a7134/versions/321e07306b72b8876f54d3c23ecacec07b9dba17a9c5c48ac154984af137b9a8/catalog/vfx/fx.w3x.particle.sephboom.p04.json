@@ -1,0 +1,83 @@
+{
+  "id": "fx.w3x.particle.sephboom.p04",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 6.945,
+    "angleDeg": 5
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 6.5,
+    "max": 6.5
+  },
+  "size": {
+    "start": 0.001,
+    "end": 1.806
+  },
+  "color": {
+    "start": [
+      1,
+      0.502,
+      0.247,
+      1
+    ],
+    "end": [
+      0.494,
+      0.114,
+      0.004,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        0.502,
+        0.247,
+        1
+      ]
+    ],
+    [
+      0.05,
+      [
+        0.984,
+        0.302,
+        0.008,
+        1
+      ]
+    ],
+    [
+      1,
+      [
+        0.494,
+        0.114,
+        0.004,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.001
+    ],
+    [
+      0.05,
+      1.528
+    ],
+    [
+      1,
+      1.806
+    ]
+  ],
+  "blendMode": "additive",
+  "speed": {
+    "min": 0,
+    "max": 0
+  },
+  "rate": 333,
+  "texture": "assets/textures/particles/fire_02.png",
+  "anchorBone": "Column"
+}

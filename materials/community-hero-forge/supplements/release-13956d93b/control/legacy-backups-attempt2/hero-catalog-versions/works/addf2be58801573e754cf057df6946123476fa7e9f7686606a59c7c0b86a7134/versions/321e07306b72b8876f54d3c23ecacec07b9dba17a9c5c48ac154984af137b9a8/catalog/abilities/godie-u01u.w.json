@@ -1,0 +1,54 @@
+{
+  "id": "godie-u01u.w",
+  "name": "11-02 虎狩獵",
+  "icon": "assets/icons/abilities/godie-u01u.w.webp",
+  "provenance": "w3x-import",
+  "description": "[主動傷害]\n{{cd}}秒冷卻時間\n\n由背負著2把刀的型態下揮出「斬擊」系招式。據說名稱的由來是因為其傷痕簡直好像老虎的條紋一樣。給予多個對手250傷害並擊暈對手1.25秒。",
+  "slot": "W",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    72.0,
+    72.0,
+    72.0,
+    72.0
+  ],
+  "manaCostTier": "極小",
+  "range": 0.0,
+  "effects": [],
+  "template": {
+    "ref": "tpl-proxy-fanout",
+    "params": {
+      "radius": 163.64,
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ad",
+            "coeff": 0.5
+          }
+        ]
+      },
+      "damageType": "physical",
+      "status": {
+        "statusId": "burnstun",
+        "duration": 0.8,
+        "stun": true
+      },
+      "castTimeSec": 0.8
+    }
+  },
+  "vfxKey": "fx.prim.physical.slash",
+  "targetsEnemies": true,
+  "radius": 3.0,
+  "schema": "ability@1",
+  "castTimeSec": 0.8,
+  "radiusTier": "極小"
+}

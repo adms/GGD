@@ -1,0 +1,1380 @@
+{
+  "acceptedPlan": {
+    "archetype": "mage",
+    "attackType": "melee",
+    "budget": {
+      "complexity": 60,
+      "power": 50
+    },
+    "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
+    "origin": "法鬥",
+    "planId": "community-review-32-20260907.plan",
+    "schema": "ggd-hero-plan@2",
+    "slots": {
+      "E": {
+        "abilityOverrides": {
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "闇ぱんち",
+        "products": [
+          {
+            "instanceId": "e-sequence",
+            "template": {
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15",
+              "params": {
+                "castTimeSec": 0,
+                "castType": "self",
+                "effects": [
+                  {
+                    "applyTo": "self",
+                    "duration": 0.5,
+                    "hooks": [
+                      {
+                        "condition": {
+                          "all": [
+                            {
+                              "kind": "distance",
+                              "op": "<=",
+                              "value": 2.5
+                            },
+                            {
+                              "arcDegrees": 120,
+                              "kind": "facing",
+                              "subject": "self"
+                            }
+                          ]
+                        },
+                        "damageSource": "basic",
+                        "effects": [
+                          {
+                            "amount": {
+                              "damageTier": "小"
+                            },
+                            "damageType": "physical",
+                            "incomingPct": {
+                              "maxChainDepth": 0,
+                              "negateOriginal": true,
+                              "perRank": [
+                                0
+                              ]
+                            },
+                            "kind": "damage"
+                          },
+                          {
+                            "applyTo": "self",
+                            "colorRgb": [
+                              140,
+                              89,
+                              217
+                            ],
+                            "durationSec": 1.2,
+                            "kind": "floatingText",
+                            "shape": "single",
+                            "text": "闇ぱんち！"
+                          }
+                        ],
+                        "maxTriggers": 1,
+                        "on": "onDamageTaken",
+                        "onConsumed": "detachSource",
+                        "victim": "enemy"
+                      }
+                    ],
+                    "kind": "applyBuff",
+                    "maxStacks": 1,
+                    "modifiers": [],
+                    "stackKey": "community-review-32-20260907.e.counter",
+                    "statusId": "community-review-32-20260907.e.counter"
+                  }
+                ],
+                "radius": 2.75,
+                "side": "enemies"
+              },
+              "ref": "tpl-effect-sequence"
+            }
+          }
+        ],
+        "purpose": "GGD 反擊草案：0.5 秒內承接一次 2.5 單位內敵方普攻，免除該次傷害並反擊原攻擊者，隨即移除窗口；反擊不可再反擊。方向門檻、近身技能分類及闇人格影子仍待補強。",
+        "slot": "E",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "EX": {
+        "abilityOverrides": {
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "小",
+          "statusCost": {
+            "count": 3,
+            "statusId": "community-review-32-20260907.negative-energy"
+          }
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "THE END OF SON〔終章〕",
+        "products": [
+          {
+            "instanceId": "ex-sequence",
+            "template": {
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15",
+              "params": {
+                "castTimeSec": 0,
+                "castType": "targeted",
+                "effects": [
+                  {
+                    "appliedBy": "self",
+                    "count": "all",
+                    "kind": "consumeStatus",
+                    "onConsumed": [
+                      {
+                        "dispellable": true,
+                        "duration": 2,
+                        "kind": "applyBuff",
+                        "maxStacks": 1,
+                        "modifiers": [
+                          {
+                            "op": "pctAdd",
+                            "stat": "ad",
+                            "value": 0.1
+                          },
+                          {
+                            "op": "pctAdd",
+                            "stat": "ap",
+                            "value": 0.1
+                          }
+                        ],
+                        "polarity": "buff",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-32-20260907.ex.boon",
+                        "statusId": "community-review-32-20260907.ex.boon"
+                      },
+                      {
+                        "applyTo": "victim",
+                        "colorRgb": [
+                          255,
+                          204,
+                          38
+                        ],
+                        "durationSec": 1.2,
+                        "kind": "floatingText",
+                        "shape": "single",
+                        "text": "反轉增益 ↑ AD/AP +10%"
+                      },
+                      {
+                        "applyTo": "self",
+                        "colorRgb": [
+                          255,
+                          230,
+                          128
+                        ],
+                        "durationSec": 1.2,
+                        "kind": "floatingText",
+                        "shape": "single",
+                        "text": "怎麼反而變強了？！"
+                      }
+                    ],
+                    "onMissing": [
+                      {
+                        "amount": {
+                          "damageTier": "小"
+                        },
+                        "damageType": "magic",
+                        "kind": "damage"
+                      },
+                      {
+                        "dispellable": true,
+                        "duration": 2,
+                        "kind": "applyBuff",
+                        "maxStacks": 1,
+                        "modifiers": [
+                          {
+                            "op": "pctAdd",
+                            "stat": "ad",
+                            "value": -0.2
+                          },
+                          {
+                            "op": "pctAdd",
+                            "stat": "ap",
+                            "value": -0.2
+                          }
+                        ],
+                        "polarity": "debuff",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-32-20260907.ex.curse",
+                        "statusId": "community-review-32-20260907.ex.curse"
+                      },
+                      {
+                        "applyTo": "victim",
+                        "colorRgb": [
+                          166,
+                          77,
+                          204
+                        ],
+                        "durationSec": 1.2,
+                        "kind": "floatingText",
+                        "shape": "single",
+                        "text": "終章萎靡 ↓ AD/AP -20%"
+                      }
+                    ],
+                    "shape": "single",
+                    "statusId": "community-review-32-20260907.r.curse"
+                  }
+                ],
+                "radius": 2.75,
+                "side": "enemies"
+              },
+              "ref": "tpl-effect-sequence"
+            }
+          }
+        ],
+        "purpose": "先消耗三層負面能量。目標若有本施法者 R 萎靡，僅移除該詛咒，改給兩秒 AD/AP +10%，不造成一般 EX 傷害；否則造成小級距魔法傷害與兩秒 AD/AP -20%。金光、上揚圖示與驚愕表情待驗。",
+        "slot": "EX",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "PASSIVE": {
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "淫奔",
+        "products": [
+          {
+            "instanceId": "passive-energy",
+            "template": {
+              "contentSha256": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39",
+              "params": {
+                "durationSec": -1,
+                "initial": 0,
+                "lethalMode": "none",
+                "markId": "community-review-32-20260907.negative-energy",
+                "max": 3,
+                "perStackLost": [],
+                "resetOn": "round"
+              },
+              "ref": "tpl-mark-stacks"
+            }
+          },
+          {
+            "instanceId": "passive-effective-cast",
+            "template": {
+              "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c",
+              "params": {
+                "hooks": [
+                  {
+                    "effects": [
+                      {
+                        "duration": 1,
+                        "kind": "applyStatus",
+                        "stacks": 1,
+                        "statusId": "community-review-32-20260907.negative-energy"
+                      }
+                    ],
+                    "on": "onDamageDealt",
+                    "oncePerCast": true,
+                    "target": "self",
+                    "victim": "enemy"
+                  }
+                ]
+              },
+              "ref": "tpl-event-passive"
+            }
+          }
+        ],
+        "purpose": "有效技能扣除敵人生命時，每次施法最多獲得一層負面能量；上限三層、回合重置。自傷、反傷、衍生效果與同次多段不重複集氣。",
+        "slot": "PASSIVE",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        }
+      },
+      "Q": {
+        "abilityOverrides": {
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "肩パンチ",
+        "products": [
+          {
+            "instanceId": "q-sequence",
+            "template": {
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15",
+              "params": {
+                "castTimeSec": 0.2,
+                "castType": "targeted",
+                "effects": [
+                  {
+                    "amount": {
+                      "damageTier": "小"
+                    },
+                    "damageType": "physical",
+                    "kind": "damage"
+                  },
+                  {
+                    "distance": 0.4,
+                    "kind": "knockback",
+                    "speed": 8,
+                    "subtractGap": false
+                  }
+                ],
+                "radius": 2.75,
+                "side": "enemies"
+              },
+              "ref": "tpl-effect-sequence"
+            }
+          }
+        ],
+        "purpose": "短起手後普通一拳，造成小級距物理傷害並將目標擊退 0.4 GGD 單位。誇張起手與表情演出待驗。",
+        "slot": "Q",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "R": {
+        "abilityOverrides": {
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 3,
+        "name": "THE END OF SON",
+        "products": [
+          {
+            "instanceId": "r-sequence",
+            "template": {
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15",
+              "params": {
+                "castTimeSec": 0.8,
+                "castType": "targeted",
+                "effects": [
+                  {
+                    "amount": {
+                      "flat": 0
+                    },
+                    "kind": "spendHealth",
+                    "minimumHp": 1,
+                    "pctMaxHealth": 0.03
+                  },
+                  {
+                    "kind": "spawnProjectile",
+                    "onHit": [
+                      {
+                        "amount": {
+                          "damageTier": "小"
+                        },
+                        "damageType": "magic",
+                        "kind": "damage"
+                      },
+                      {
+                        "dispellable": true,
+                        "duration": 4,
+                        "kind": "applyBuff",
+                        "maxStacks": 1,
+                        "modifiers": [
+                          {
+                            "op": "pctAdd",
+                            "stat": "ad",
+                            "value": -0.15
+                          },
+                          {
+                            "op": "pctAdd",
+                            "stat": "ap",
+                            "value": -0.15
+                          }
+                        ],
+                        "polarity": "debuff",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-32-20260907.r.curse",
+                        "statusId": "community-review-32-20260907.r.curse"
+                      },
+                      {
+                        "applyTo": "victim",
+                        "colorRgb": [
+                          166,
+                          102,
+                          217
+                        ],
+                        "durationSec": 1.2,
+                        "kind": "floatingText",
+                        "shape": "single",
+                        "text": "萎靡 ↓"
+                      }
+                    ],
+                    "projectileId": "imported.bolt.void"
+                  }
+                ],
+                "radius": 2.75,
+                "side": "enemies"
+              },
+              "ref": "tpl-effect-sequence"
+            }
+          }
+        ],
+        "purpose": "蓄力 0.8 秒後支付最大生命 3%（至少保留 1 HP）並放出能量球；命中造成小級距魔法傷害，施加自身來源的萎靡四秒（AD/AP -15%）。當前虛空彈為代理演出。",
+        "slot": "R",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "W": {
+        "abilityOverrides": {
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [
+          "periodicDamage"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "流精群（ホワイトレイン）",
+        "products": [
+          {
+            "instanceId": "w-sequence",
+            "template": {
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15",
+              "params": {
+                "castTimeSec": 0.1,
+                "castType": "ground",
+                "effects": [
+                  {
+                    "count": 3,
+                    "delaySec": 0.05,
+                    "effects": [
+                      {
+                        "amount": {
+                          "damageTier": "極小"
+                        },
+                        "damageType": "magic",
+                        "kind": "damage"
+                      },
+                      {
+                        "applyTo": "victim",
+                        "colorRgb": [
+                          255,
+                          255,
+                          255
+                        ],
+                        "durationSec": 1.2,
+                        "kind": "floatingText",
+                        "shape": "single",
+                        "text": "白色魔力雨 {{i}}"
+                      }
+                    ],
+                    "intervalSec": 0.45,
+                    "kind": "delayed",
+                    "radius": 2.75,
+                    "shape": "circle",
+                    "side": "enemies",
+                    "targetMode": "reresolve"
+                  }
+                ],
+                "radius": 2.75,
+                "side": "enemies"
+              },
+              "ref": "tpl-effect-sequence"
+            }
+          }
+        ],
+        "purpose": "固定落點落下三波白色魔力雨，間隔 0.45 秒；每波重查範圍內敵人，每敵人一次極小級距魔法傷害。白點、速度線及表情待視覺驗收。",
+        "slot": "W",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      }
+    },
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "statOverrides": {
+      "ad": "中",
+      "ap": "大",
+      "armor": "中",
+      "as": "中",
+      "healthRegen": "中",
+      "manaRegen": "中",
+      "maxHealth": "中",
+      "maxMana": "中",
+      "mr": "中",
+      "ms": "中",
+      "range": "小"
+    },
+    "summary": "阿薩謝爾 社群英雄功能驗收稿。作品：《召喚惡魔／よんでますよ、アザゼルさん。》  \n角色實體：アザゼル篤史。  \n定位：負面能量、反噬、重複詛咒反轉、惡搞演出。\n\n**查證紀錄**：\n\n- 淫奔：角色的職能，官方動畫介紹可確認。\n- 肩パンチ：招式辭典記載於第 34 話，使用者為阿薩謝爾。\n- THE END OF SON：官方動畫採此拼法；辭典記載漫畫第 64 話出現。\n- 闇ぱんち：辭典記載第 73 話，使用者為闇阿薩謝爾。\n- 流精群（ホワイトレイン）：辭典記載第 160 話，使用者為阿薩謝爾。\n- THE END OF SON FAINAL：辭典的終章條目原樣拼字，尚未核對漫畫原頁。\n- 遊戲以 THE END OF SON〔終章〕顯示最後一項；「終章」是本稿區分標籤。\n- ファイナルビッグベン 屬於貝西卜，不納入阿薩謝爾本人基本技能。\n\n視覺方向：Q 普通一拳配誇張凝重起手；W 白色魔力雨；R 紫黑能量球；EX 反轉時敵人金光、施法者驚愕。\n以 GGD 法鬥 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "templateVersions": {
+      "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "exemplar": {
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。",
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能"
+        },
+        "family": "effect-sequence",
+        "gapScore": 10,
+        "id": "tpl-effect-sequence",
+        "name": "自訂效果序列",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 10,
+            "min": 0,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+            "type": "number",
+            "unit": "s"
+          },
+          "castType": {
+            "default": "targeted",
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+            "type": "enum",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ]
+          },
+          "effects": {
+            "default": [
+              {
+                "amount": {
+                  "damageTier": "極小"
+                },
+                "damageType": "magic",
+                "kind": "damage"
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+            "type": "effects"
+          },
+          "radius": {
+            "default": 2,
+            "max": 40,
+            "min": 0,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+            "type": "number"
+          },
+          "side": {
+            "default": "enemies",
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+            "type": "enum",
+            "values": [
+              "enemies",
+              "allies"
+            ]
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+        "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+        "exemplar": {
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。",
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能"
+        },
+        "family": "event-passive",
+        "gapScore": 10,
+        "id": "tpl-event-passive",
+        "name": "自訂事件被動",
+        "params": {
+          "hooks": {
+            "default": [
+              {
+                "effects": [
+                  {
+                    "amount": {
+                      "damageTier": "極小"
+                    },
+                    "damageType": "magic",
+                    "kind": "damage"
+                  }
+                ],
+                "on": "onBasicAttack"
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+            "type": "hooks"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39": {
+        "description": "在持有者身上裝一個有層數的具名標記（【試煉】【風王結界】【縮地】），可跨回合、可永久，並可選擇讓它變成一張免死牌：受致命傷害時消耗一層 → 無敵 → 回復 → 擊退暈眩周圍敵人；每失去一層永久獲得一組加成。⚠️ 落差：無敵/回復/擊退是救活的同一格一起發生，文案上的「隨後」看不出來 —— ⛔ 那是**這張模板**尚未把回復／擊退接上延後排程，⛔ 不是引擎沒有：引擎**有** `kind:\"delayed\"`（`delaySec`／`count`／`intervalSec`／`effects`，出貨例：初號機 `godie-e00r` 的 berserk_smoke），⭐ 但 lethalSave 的 `selfEffects`／`aoeEffects` 是同格跑的；要接延後得另驗死亡／重觸發／施法者狀態／排程取消的時序，⛔ 不是改說明就算做了（GH#1044）；火圈燒傷不走傷害佇列，這張免死牌擋不到它。",
+        "exemplar": {
+          "jass": "無 JASS 出處 —— owner 2026-08-08 口述規格，不是從 war3map.j 復原的家族",
+          "skill": "52-00 十二道試煉（海克力斯 Berserker 天生技）"
+        },
+        "family": "mark-stacks",
+        "gapScore": 8,
+        "id": "tpl-mark-stacks",
+        "name": "具名標記-層數與免死",
+        "params": {
+          "aoeRadius": {
+            "default": 6,
+            "max": 12,
+            "min": 0,
+            "type": "number"
+          },
+          "durationSec": {
+            "default": -1,
+            "max": 600,
+            "min": -1,
+            "type": "number",
+            "unit": "s"
+          },
+          "initial": {
+            "default": 12,
+            "max": 999,
+            "min": 0,
+            "type": "number",
+            "unit": "count"
+          },
+          "internalCooldown": {
+            "default": 0.5,
+            "max": 30,
+            "min": 0,
+            "type": "number",
+            "unit": "s"
+          },
+          "invulnerableScope": {
+            "default": "damageAndControl",
+            "type": "enum",
+            "values": [
+              "damageAndControl",
+              "damageOnly"
+            ]
+          },
+          "invulnerableSec": {
+            "default": 1.5,
+            "max": 30,
+            "min": 0.1,
+            "type": "number",
+            "unit": "s"
+          },
+          "knockbackDistance": {
+            "default": 4,
+            "max": 20,
+            "min": 0.1,
+            "optional": true,
+            "type": "number"
+          },
+          "knockbackFrom": {
+            "default": "caster",
+            "type": "enum",
+            "values": [
+              "caster",
+              "facing",
+              "pull"
+            ]
+          },
+          "knockbackSpeed": {
+            "default": 16,
+            "max": 40,
+            "min": 1,
+            "type": "number"
+          },
+          "lethalConsume": {
+            "default": 1,
+            "max": 999,
+            "min": 1,
+            "type": "number",
+            "unit": "count"
+          },
+          "lethalDamageTypes": {
+            "default": "all",
+            "type": "enum",
+            "values": [
+              "all",
+              "physicalMagic",
+              "physical",
+              "magic",
+              "true"
+            ]
+          },
+          "lethalMode": {
+            "default": "save",
+            "type": "enum",
+            "values": [
+              "save",
+              "none"
+            ]
+          },
+          "markId": {
+            "default": "godie-hapm.passive",
+            "type": "docRef"
+          },
+          "max": {
+            "default": 12,
+            "max": 999,
+            "min": 1,
+            "type": "number",
+            "unit": "count"
+          },
+          "perStackLost": {
+            "default": [
+              {
+                "op": "pctAdd",
+                "stat": "ad",
+                "value": 0.1
+              },
+              {
+                "op": "pctAdd",
+                "stat": "maxHealth",
+                "value": 0.1
+              }
+            ],
+            "optional": true,
+            "type": "statModifiers"
+          },
+          "resetOn": {
+            "default": "match",
+            "type": "enum",
+            "values": [
+              "match",
+              "round",
+              "never"
+            ]
+          },
+          "restoreHealthPct": {
+            "default": 0.5,
+            "max": 1,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "ratio"
+          },
+          "stunSec": {
+            "default": 0.5,
+            "max": 20,
+            "min": 0.034,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "stunStatusId": {
+            "default": "trial-stun",
+            "type": "docRef"
+          },
+          "surviveHpPct": {
+            "default": 0.01,
+            "max": 1,
+            "min": 0.01,
+            "type": "number",
+            "unit": "ratio"
+          }
+        },
+        "requires": [
+          "marks",
+          "invulnerable",
+          "knockback",
+          "applyStatus"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      }
+    },
+    "title": "阿薩謝爾"
+  },
+  "brief": {
+    "concept": "阿薩謝爾 社群英雄功能驗收稿。作品：《召喚惡魔／よんでますよ、アザゼルさん。》  \n角色實體：アザゼル篤史。  \n定位：負面能量、反噬、重複詛咒反轉、惡搞演出。\n\n**查證紀錄**：\n\n- 淫奔：角色的職能，官方動畫介紹可確認。\n- 肩パンチ：招式辭典記載於第 34 話，使用者為阿薩謝爾。\n- THE END OF SON：官方動畫採此拼法；辭典記載漫畫第 64 話出現。\n- 闇ぱんち：辭典記載第 73 話，使用者為闇阿薩謝爾。\n- 流精群（ホワイトレイン）：辭典記載第 160 話，使用者為阿薩謝爾。\n- THE END OF SON FAINAL：辭典的終章條目原樣拼字，尚未核對漫畫原頁。\n- 遊戲以 THE END OF SON〔終章〕顯示最後一項；「終章」是本稿區分標籤。\n- ファイナルビッグベン 屬於貝西卜，不納入阿薩謝爾本人基本技能。\n\n視覺方向：Q 普通一拳配誇張凝重起手；W 白色魔力雨；R 紫黑能量球；EX 反轉時敵人金光、施法者驚愕。\n以 GGD 法鬥 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "E": "闇ぱんち",
+      "EX": "THE END OF SON〔終章〕",
+      "PASSIVE": "淫奔",
+      "Q": "肩パンチ",
+      "R": "THE END OF SON",
+      "W": "流精群（ホワイトレイン）"
+    },
+    "name": "阿薩謝爾"
+  },
+  "presentation": {
+    "assetLocks": [
+      {
+        "byteSize": 553876,
+        "consumers": [
+          "champion:model"
+        ],
+        "kind": "model",
+        "mediaType": "model/gltf-binary",
+        "path": "assets/models/community/e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c.glb",
+        "registry": "normalized-upload",
+        "sha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c"
+      }
+    ],
+    "championIcon": "assets/icons/champions/sela.webp",
+    "modelKey": "community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5",
+    "modelProvenance": {
+      "modelSha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c",
+      "notes": "以矮小卡通羊角動物暫代阿薩謝爾；實際為白色喜羊羊，不是原作黃色惡魔。THE END OF SON 的重複詛咒反轉原文及敵方增益要求完整保留，不能以本體到位宣稱該機制完成。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。",
+      "relationship": "style-proxy",
+      "schema": "ggd-hero-model-provenance@1",
+      "sourceAssetId": "300heroes:f2f3b69f7b0f9e4884f94fff",
+      "sourceCharacter": "喜羊羊",
+      "sourceWork": "喜羊羊與灰太狼"
+    },
+    "schema": "ggd-hero-presentation@1",
+    "slots": {
+      "E": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.e.webp",
+        "script": {
+          "abilityId": "community-review-32-20260907.e",
+          "id": "community-review-32-20260907.e",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                125,
+                43,
+                150
+              ],
+              "vfxId": "fx.prim.void.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                125,
+                43,
+                150
+              ],
+              "vfxId": "fx.prim.void.pulse",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "E",
+        "vfxLayers": []
+      },
+      "EX": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.r.webp",
+        "script": {
+          "abilityId": "community-review-32-20260907.ex",
+          "id": "community-review-32-20260907.ex",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                125,
+                43,
+                150
+              ],
+              "vfxId": "fx.prim.void.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                125,
+                43,
+                150
+              ],
+              "vfxId": "fx.prim.void.slash",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "EX",
+        "vfxLayers": []
+      },
+      "PASSIVE": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.q.webp",
+        "script": null,
+        "sfxKey": null,
+        "slot": "PASSIVE",
+        "vfxLayers": []
+      },
+      "Q": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.q.webp",
+        "script": {
+          "abilityId": "community-review-32-20260907.q",
+          "id": "community-review-32-20260907.q",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                125,
+                43,
+                150
+              ],
+              "vfxId": "fx.prim.void.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                125,
+                43,
+                150
+              ],
+              "vfxId": "fx.prim.void.slash",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "Q",
+        "vfxLayers": []
+      },
+      "R": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.r.webp",
+        "script": {
+          "abilityId": "community-review-32-20260907.r",
+          "id": "community-review-32-20260907.r",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                125,
+                43,
+                150
+              ],
+              "vfxId": "fx.prim.void.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                125,
+                43,
+                150
+              ],
+              "vfxId": "fx.prim.void.slash",
+              "w3xScale": 1.25
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "R",
+        "vfxLayers": []
+      },
+      "W": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.w.webp",
+        "script": {
+          "abilityId": "community-review-32-20260907.w",
+          "id": "community-review-32-20260907.w",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                247,
+                247,
+                255
+              ],
+              "vfxId": "fx.prim.void.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "point",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                247,
+                247,
+                255
+              ],
+              "vfxId": "fx.prim.void.nova",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "W",
+        "vfxLayers": []
+      }
+    },
+    "uploadedModel": {
+      "byteSize": 553876,
+      "clipMap": {
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "death": "dead",
+        "hurt": "bat_idle",
+        "idle": "bat_idle",
+        "run": "single_run"
+      },
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c",
+      "yawOffsetDeg": 0
+    }
+  },
+  "projectId": "community-review-32-20260907",
+  "receipts": [
+    {
+      "digest": "95cba661064f17b1ae569518c0302adaf9e93c564f683ae6d3417ad25191c80b",
+      "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+      "kind": "generator-adopted",
+      "projectRevision": 22
+    },
+    {
+      "kind": "generator-adopted",
+      "projectRevision": 30,
+      "digest": "c21170f9efc20f8f994475b2d99d7877e2ad1d5ae375bd72ae1407def072c4da",
+      "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597"
+    }
+  ],
+  "refinementNotes": {
+    "E": "M07/M10：取代舊護盾為一次近身普攻防守反擊；方向門檻與近身技能分類尚未表達，不標記 M07 完成；闇人格來源及影子演出待驗。",
+    "EX": "M10：三層施放資格／原子消耗、只反轉同來源 R。兩分支已有不同文字，金光、上揚圖示及施法者表情仍待視覺驗收。",
+    "PASSIVE": "M01/M10：正式 oncePerCast + 回合標記；需六槽整體模擬收據。",
+    "Q": "M10：短起手與固定 0.4u 目標擊退；誇張／普通的視覺反差待驗。",
+    "R": "M10：0.8s 釋放支付、非傷害生命代價、各施法者獨立詛咒。虛空彈是代理素材。",
+    "W": "M10/M11：固定落點三波、重新取敵；原作特效及漫畫表情未完成。"
+  },
+  "revision": 30,
+  "schema": "ggd-hero-project@2",
+  "sections": {
+    "attributes": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "draft"
+    },
+    "identity": {
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      },
+      "revision": 1,
+      "state": "draft"
+    },
+    "mechanics": {
+      "fieldOwnership": {
+        "refinementNotes.Q": "manual"
+      },
+      "revision": 11,
+      "state": "stale"
+    },
+    "package": {
+      "fieldOwnership": {},
+      "revision": 4,
+      "state": "stale"
+    },
+    "presentation": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "skills": {
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.E.products.0.template.params.effects.0.hooks.0.condition": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.EX.products.0.template.params.effects.0.onConsumed.0.modifiers.0.value": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.products.1.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      },
+      "revision": 30,
+      "state": "draft"
+    },
+    "validation": {
+      "fieldOwnership": {},
+      "revision": 4,
+      "state": "stale"
+    }
+  },
+  "sourceDesign": {
+    "identity": "作品：《召喚惡魔／よんでますよ、アザゼルさん。》  \n角色實體：アザゼル篤史。  \n定位：負面能量、反噬、重複詛咒反轉、惡搞演出。\n\n**查證紀錄**：\n\n- 淫奔：角色的職能，官方動畫介紹可確認。\n- 肩パンチ：招式辭典記載於第 34 話，使用者為阿薩謝爾。\n- THE END OF SON：官方動畫採此拼法；辭典記載漫畫第 64 話出現。\n- 闇ぱんち：辭典記載第 73 話，使用者為闇阿薩謝爾。\n- 流精群（ホワイトレイン）：辭典記載第 160 話，使用者為阿薩謝爾。\n- THE END OF SON FAINAL：辭典的終章條目原樣拼字，尚未核對漫畫原頁。\n- 遊戲以 THE END OF SON〔終章〕顯示最後一項；「終章」是本稿區分標籤。\n- ファイナルビッグベン 屬於貝西卜，不納入阿薩謝爾本人基本技能。",
+    "name": "阿薩謝爾",
+    "ownerText": "### 32｜阿薩謝爾\n\n作品：《召喚惡魔／よんでますよ、アザゼルさん。》  \n角色實體：アザゼル篤史。  \n定位：負面能量、反噬、重複詛咒反轉、惡搞演出。\n\n**查證紀錄**：\n\n- 淫奔：角色的職能，官方動畫介紹可確認。\n- 肩パンチ：招式辭典記載於第 34 話，使用者為阿薩謝爾。\n- THE END OF SON：官方動畫採此拼法；辭典記載漫畫第 64 話出現。\n- 闇ぱんち：辭典記載第 73 話，使用者為闇阿薩謝爾。\n- 流精群（ホワイトレイン）：辭典記載第 160 話，使用者為阿薩謝爾。\n- THE END OF SON FAINAL：辭典的終章條目原樣拼字，尚未核對漫畫原頁。\n- 遊戲以 THE END OF SON〔終章〕顯示最後一項；「終章」是本稿區分標籤。\n- ファイナルビッグベン 屬於貝西卜，不納入阿薩謝爾本人基本技能。\n\n- **PASSIVE｜淫奔**：轉譯為「負面能量」資源。對敵人造成有效技能傷害時累積，最多三層，每次施法最多一層。自傷、反傷及持續傷害的每跳不重複增加。\n- **Q｜肩パンチ**：近距離肩膀拳，造成小幅擊退。演出重點是一本正經地使出很普通的一拳，保留喜劇落差。\n- **W｜流精群（ホワイトレイン）**：指定區域落下三波白色魔力雨。每波對同一目標最多命中一次；以白色光點、漫畫速度線及誇張表情演出。\n- **E｜闇ぱんち**：短暫叫出闇人格的影子進入反擊窗口。受到第一個符合條件的近身攻擊後，影子向攻擊者出拳並消失。「闇人格向敵人反擊」為 GGD 改編，不改寫原作招式使用者。\n- **R｜THE END OF SON**：舉起負面能量球，蓄力後投出。命中造成傷害，並施加四秒「萎靡」：降低目標輸出。成功放出時，阿薩謝爾承受有生命底線的少量反噬。施法被中斷時按 GGD 中斷規則處理，不產生完整命中效果。\n- **EX｜THE END OF SON〔終章〕**：消耗三層負面能量，施放較集中的強化詛咒。未處於「萎靡」的目標受到傷害及較強、較短的輸出降低。已處於「萎靡」的目標移除原詛咒，改獲短暫的有限輸出增益，作為重複詛咒的反效果。因此 R→EX 可以實際觸發「本來想補刀，結果把對手弄強」的惡搞失誤。\n\n**審查重點**：\n\n1. 原作招式名稱、使用者與 GGD 改編效果分欄保存。\n2. E 的影子只反擊一次，反擊傷害不再觸發反擊。\n3. R 反噬不自行觸發負面能量、吸血或無限保命循環。\n4. R→EX 分別測試成功命中、R 被淨化、R 到期、控制免疫及同幀命中。\n5. 反效果的友好增益必須在敵方 UI 顯示，不能只換特效。\n6. 保留卡通魔力、失落表情、垂下的武器圖示等喜劇演出；不以角色身體部位作命中判定。\n7. 終章名稱的來源拼字保留於註記，不宣稱 FAINAL 已經漫畫原頁核實。\n\n",
+    "reviewText": "1. 原作招式名稱、使用者與 GGD 改編效果分欄保存。\n2. E 的影子只反擊一次，反擊傷害不再觸發反擊。\n3. R 反噬不自行觸發負面能量、吸血或無限保命循環。\n4. R→EX 分別測試成功命中、R 被淨化、R 到期、控制免疫及同幀命中。\n5. 反效果的友好增益必須在敵方 UI 顯示，不能只換特效。\n6. 保留卡通魔力、失落表情、垂下的武器圖示等喜劇演出；不以角色身體部位作命中判定。\n7. 終章名稱的來源拼字保留於註記，不宣稱 FAINAL 已經漫畫原頁核實。",
+    "schema": "ggd-hero-source-design@1",
+    "slots": {
+      "E": {
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-32-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。",
+        "name": "闇ぱんち",
+        "ownerDescription": "短暫叫出闇人格的影子進入反擊窗口。受到第一個符合條件的近身攻擊後，影子向攻擊者出拳並消失。「闇人格向敵人反擊」為 GGD 改編，不改寫原作招式使用者。",
+        "refinementContracts": [
+          "M01",
+          "M07",
+          "M10"
+        ],
+        "requiredRefinement": "護盾不代表闇人格反擊；需第一個近身受擊成功事件及一次出拳。"
+      },
+      "EX": {
+        "baselineBehavior": "指定單一敵人造成小級魔法傷害。",
+        "name": "THE END OF SON〔終章〕",
+        "ownerDescription": "消耗三層負面能量，施放較集中的強化詛咒。未處於「萎靡」的目標受到傷害及較強、較短的輸出降低。已處於「萎靡」的目標移除原詛咒，改獲短暫的有限輸出增益，作為重複詛咒的反效果。因此 R→EX 可以實際觸發「本來想補刀，結果把對手弄強」的惡搞失誤。",
+        "refinementContracts": [
+          "M01",
+          "M07",
+          "M10"
+        ],
+        "requiredRefinement": "需三層消耗及已萎靡目標反轉增益。R→EX 把敵人變強是必要驗收，不得刪成普通強化傷害。"
+      },
+      "PASSIVE": {
+        "baselineBehavior": "普攻追加極小級魔法傷害，內置冷卻 3 秒。",
+        "name": "淫奔",
+        "ownerDescription": "轉譯為「負面能量」資源。對敵人造成有效技能傷害時累積，最多三層，每次施法最多一層。自傷、反傷及持續傷害的每跳不重複增加。",
+        "refinementContracts": [
+          "M01",
+          "M07",
+          "M10"
+        ],
+        "requiredRefinement": "需每次有效施法一次負面能量，上限三；自傷反傷與每跳不得增加。"
+      },
+      "Q": {
+        "baselineBehavior": "指定單一敵人造成小級物理傷害。",
+        "name": "肩パンチ",
+        "ownerDescription": "近距離肩膀拳，造成小幅擊退。演出重點是一本正經地使出很普通的一拳，保留喜劇落差。",
+        "refinementContracts": [
+          "M01",
+          "M07",
+          "M10"
+        ],
+        "requiredRefinement": "肩膀拳需小幅擊退与一本正經起手，当前只是單擊。"
+      },
+      "R": {
+        "baselineBehavior": "指定單一敵人造成小級魔法傷害。",
+        "name": "THE END OF SON",
+        "ownerDescription": "舉起負面能量球，蓄力後投出。命中造成傷害，並施加四秒「萎靡」：降低目標輸出。成功放出時，阿薩謝爾承受有生命底線的少量反噬。施法被中斷時按 GGD 中斷規則處理，不產生完整命中效果。",
+        "refinementContracts": [
+          "M01",
+          "M07",
+          "M10"
+        ],
+        "requiredRefinement": "需四秒萎靡的輸出降低，以及不致死反噬；目前只有可預覽的單體魔法命中。"
+      },
+      "W": {
+        "baselineBehavior": "在指定區域依序落下 3 發；每發間隔 0.45 秒、半徑 150 wc3u、極小級傷害，可多次命中。",
+        "name": "流精群（ホワイトレイン）",
+        "ownerDescription": "指定區域落下三波白色魔力雨。每波對同一目標最多命中一次；以白色光點、漫畫速度線及誇張表情演出。",
+        "refinementContracts": [
+          "M01",
+          "M07",
+          "M10"
+        ],
+        "requiredRefinement": "三波白色雨可作時序預覽；每波同目標一次與白點落下造型須驗收。"
+      }
+    },
+    "sourceSha256": "ed0e66a70e6e716451057ce449ebd3bfa3ac513153fa07414dd18bc8d002da59"
+  },
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "validationState": {
+    "attributes": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "identity": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "mechanics": {
+      "diagnosticCodes": [],
+      "revision": 11,
+      "status": "stale"
+    },
+    "package": {
+      "diagnosticCodes": [],
+      "revision": 4,
+      "status": "stale"
+    },
+    "presentation": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "skills": {
+      "revision": 30,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "diagnosticCodes": [],
+      "revision": 4,
+      "status": "stale"
+    }
+  }
+}

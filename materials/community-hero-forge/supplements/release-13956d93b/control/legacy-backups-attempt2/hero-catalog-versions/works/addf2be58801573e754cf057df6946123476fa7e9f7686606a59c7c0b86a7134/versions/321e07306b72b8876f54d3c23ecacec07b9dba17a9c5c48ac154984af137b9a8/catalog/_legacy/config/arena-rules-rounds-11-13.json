@@ -1,0 +1,29 @@
+{
+  "note": "⛔ 這不是一份會被載入的 content 文件（`content/_legacy/` 不在 COLLECTION_NAMES 裡）。\n⭐ owner 2026-08-18：「我早就已經把**第十回合作為最終回合**全部玩家同一地圖大亂鬥，並且**打完就全部結算了**」「你是不是又查到舊資料了阿 快整理到 legacy 去」。\n⚠️ `apps/game-server/src/match/PairedDuels.ts` 的 `FINAL_ROUND = 10` 是結束條件本身（檔頭逐字：「the match ends when round FINAL_ROUND's resolution completes, full stop」），所以下面這幾筆設定**永遠不會被讀到** —— 第 11–13 回合不存在，第 13 回合之後的溢出規則更不存在。它們原本住在 `content/config/arena-rules.json`。\n⛔ 搬過來不是刪除：哪一天 owner 把終局回合往後移，把對應的鍵搬回去即可，數值一個都沒動（第一·五守則：知識不可以無聲消失）。\n⚠️ 同一份文件的 `weaponTiers[].maxRound` 也曾經寫 12（＝「最終回合開始前」按 13 回合排程算的），同一次改成 10。",
+  "supersededBy": "apps/game-server/src/match/PairedDuels.ts FINAL_ROUND = 10",
+  "sourceDoc": "content/config/arena-rules.json",
+  "retiredOn": "2026-08-18",
+  "rounds": {
+    "11": {
+      "grantLevels": 0,
+      "grantGold": 4000,
+      "augmentTier": "prismatic"
+    },
+    "12": {
+      "grantLevels": 0,
+      "grantGold": 4000,
+      "augmentTier": "prismatic"
+    },
+    "13": {
+      "grantLevels": 0,
+      "grantGold": 4000,
+      "augmentTier": "prismatic"
+    }
+  },
+  "overflow": {
+    "grantLevels": 0,
+    "grantGold": 4000,
+    "grantGoldPerRound": 0,
+    "augmentTier": "prismatic"
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "id": "godie-lightningtornado-p8",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.278,
+    "angleDeg": 1.0
+  },
+  "mode": "continuous",
+  "rate": 10.0,
+  "lifetimeSec": {
+    "min": 1.2,
+    "max": 1.2
+  },
+  "size": {
+    "start": 1.111,
+    "end": 0.111
+  },
+  "color": {
+    "start": [
+      0.275,
+      0.459,
+      1.0,
+      0.294
+    ],
+    "end": [
+      0.0,
+      0.0,
+      0.627,
+      0.294
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.275,
+        0.459,
+        1.0,
+        0.294
+      ]
+    ],
+    [
+      0.35,
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.843
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.0,
+        0.0,
+        0.627,
+        0.294
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      1.111
+    ],
+    [
+      0.35,
+      1.111
+    ],
+    [
+      1,
+      0.111
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/smoke_07.png",
+  "speed": {
+    "min": 5.4449,
+    "max": 5.6671
+  },
+  "anchorBone": "UNNAMED"
+}

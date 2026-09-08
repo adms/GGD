@@ -1,0 +1,85 @@
+{
+  "id": "fx.w3x.orb.lightningnova.p01",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.797,
+    "angleDeg": 1
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 0.865,
+    "max": 0.865
+  },
+  "size": {
+    "start": 0.003,
+    "end": 0.003
+  },
+  "color": {
+    "start": [
+      1,
+      1,
+      1,
+      0.427
+    ],
+    "end": [
+      1,
+      1,
+      1,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        1,
+        1,
+        0.427
+      ]
+    ],
+    [
+      0.5,
+      [
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    [
+      1,
+      [
+        1,
+        1,
+        1,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.003
+    ],
+    [
+      0.5,
+      0.522
+    ],
+    [
+      1,
+      0.003
+    ]
+  ],
+  "blendMode": "additive",
+  "speed": {
+    "min": 11.8648,
+    "max": 11.8648
+  },
+  "rate": 24.6,
+  "texture": "assets/textures/particles/spark_04.png",
+  "stretched": true,
+  "tailLength": 2.2,
+  "ambient": true
+}

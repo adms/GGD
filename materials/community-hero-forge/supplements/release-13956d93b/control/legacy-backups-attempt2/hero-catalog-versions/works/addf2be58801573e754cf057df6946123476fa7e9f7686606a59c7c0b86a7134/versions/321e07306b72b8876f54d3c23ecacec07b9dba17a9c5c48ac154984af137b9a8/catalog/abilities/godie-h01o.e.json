@@ -1,0 +1,69 @@
+{
+  "id": "godie-h01o.e",
+  "name": "79-03 月牙天衝",
+  "icon": "assets/icons/abilities/godie-h01o.e.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n讓斬月吸收靈力的力量，再由刀尖放出超高密度靈壓的斬擊，造成一直線上的敵方部隊受到450傷害。\n在卍解狀態下轉變為黑色月牙，傷害加成250",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ],
+        "damageTierPerRank": [
+          "極小",
+          "極小",
+          "小",
+          "小"
+        ]
+      }
+    },
+    {
+      "kind": "spawnVfx",
+      "vfxId": "godie-deathwave-p0",
+      "at": "target"
+    },
+    {
+      "kind": "spawnVfx",
+      "vfxId": "godie-bloodbreathstream-p0",
+      "at": "bone",
+      "attach": "hand",
+      "boneOn": "victim"
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "imported.deathwave",
+      "soundKey": "wc3.crushingwavecaster1"
+    }
+  ],
+  "vfxKey": "fx.prim.void.dash",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "castTimeSec": 0.667,
+  "rangeTier": "極大",
+  "range": 12
+}

@@ -1,0 +1,84 @@
+{
+  "id": "fx.w3x.orb.divinering.p09",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.028,
+    "angleDeg": 1
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 0.5,
+    "max": 0.5
+  },
+  "size": {
+    "start": 0.556,
+    "end": 0.556
+  },
+  "color": {
+    "start": [
+      0,
+      0.502,
+      1,
+      0.502
+    ],
+    "end": [
+      0,
+      0.502,
+      1,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        0,
+        0.502,
+        1,
+        0.502
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.494,
+        0.749,
+        0.945,
+        0.502
+      ]
+    ],
+    [
+      1,
+      [
+        0,
+        0.502,
+        1,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.556
+    ],
+    [
+      0.5,
+      0.556
+    ],
+    [
+      1,
+      0.556
+    ]
+  ],
+  "blendMode": "additive",
+  "speed": {
+    "min": 4.0837,
+    "max": 4.2503
+  },
+  "rate": 40,
+  "texture": "assets/textures/particles/fire_01.png",
+  "anchorBone": "BlizParticle06",
+  "ambient": true
+}

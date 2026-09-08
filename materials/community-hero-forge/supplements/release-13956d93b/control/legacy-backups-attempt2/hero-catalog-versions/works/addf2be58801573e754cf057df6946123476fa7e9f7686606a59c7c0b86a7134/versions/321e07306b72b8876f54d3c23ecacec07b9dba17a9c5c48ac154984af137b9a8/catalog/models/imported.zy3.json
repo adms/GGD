@@ -1,0 +1,67 @@
+{
+  "id": "imported.zy3",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/zy3.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Foot Right": {
+      "x": -0.0189,
+      "y": 0.0903,
+      "z": 0.2056
+    },
+    "Foot Left": {
+      "x": -0.0189,
+      "y": 0.0903,
+      "z": -0.1769
+    },
+    "Hand Left": {
+      "x": 0.0034,
+      "y": 0.9033,
+      "z": -0.4851
+    },
+    "Weapon": {
+      "x": 1.1018,
+      "y": 0.9033,
+      "z": 0.4786
+    },
+    "Hand Right": {
+      "x": 0.0034,
+      "y": 0.9033,
+      "z": 0.4786
+    },
+    "Overhead": {
+      "x": -0.0189,
+      "y": 1.7035,
+      "z": 0.0019
+    },
+    "Head": {
+      "x": -0.0189,
+      "y": 1.5111,
+      "z": 0.0019
+    },
+    "Chest": {
+      "x": -0.0189,
+      "y": 1.2607,
+      "z": 0.0019
+    },
+    "Origin": {
+      "x": -0.0189,
+      "y": 0.0189,
+      "z": 0.0019
+    },
+    "feet": {
+      "x": -0.0189,
+      "y": 0.0903,
+      "z": 0.0019
+    }
+  }
+}

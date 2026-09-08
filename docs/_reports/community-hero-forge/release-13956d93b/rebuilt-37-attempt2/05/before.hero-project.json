@@ -1,0 +1,1211 @@
+{
+  "acceptedPlan": {
+    "archetype": "marksman",
+    "attackType": "ranged",
+    "budget": {
+      "complexity": 60,
+      "power": 50
+    },
+    "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+    "origin": "射手",
+    "planId": "community-review-05-20260907.plan",
+    "schema": "ggd-hero-plan@2",
+    "slots": {
+      "E": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "effects": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 120,
+                "ratios": []
+              },
+              "duration": 3,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "community-review-05-20260907.e.guard"
+            }
+          ],
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "大"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "Leaf Shield",
+        "products": [
+          {
+            "instanceId": "community-review-05-20260907-e-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": []
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-05-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】形成有限耐久的葉片護盾；再次使用可將剩餘葉片射出。\n【待補機制】缺再次輸入射出剩餘葉片及護盾剩餘量換算。",
+        "slot": "E",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        }
+      },
+      "EX": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "大"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔特殊武器切換〕",
+        "products": [
+          {
+            "instanceId": "community-review-05-20260907-ex-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": [
+                  {
+                    "op": "pctAdd",
+                    "stat": "as",
+                    "value": 0.2
+                  }
+                ]
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：as +20%。\n【目標設計】讓 Q 在洛克砲與已核准的特殊武器版本間切換；保留各自冷卻與共用能源。\n【待補機制】僅自身攻速增益；需 Q 技能版本切換、圖示與共用冷卻。",
+        "slot": "EX",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 8
+        }
+      },
+      "PASSIVE": {
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔武器能源管理〕",
+        "products": [
+          {
+            "instanceId": "community-review-05-20260907-passive-1",
+            "template": {
+              "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0",
+              "inheritDefaults": true,
+              "params": {
+                "bonusDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "condition": {
+                  "kind": "chance",
+                  "p": 1
+                },
+                "damageType": "magic",
+                "event": "onBasicAttack",
+                "internalCooldown": 3
+              },
+              "ref": "tpl-on-attack"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。\n【目標設計】特殊武器共用有限能源；能源隨時間恢復，切換武器不補滿。\n【待補機制】需共用武器能源、恢復與切換保留；預覽沿用 GGD 魔力。",
+        "slot": "PASSIVE",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        }
+      },
+      "Q": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "大"
+        },
+        "capabilityIds": [
+          "projectile"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "洛克砲",
+        "products": [
+          {
+            "instanceId": "community-review-05-20260907-q-1",
+            "template": {
+              "contentSha256": "sha256:431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699006b55c40f5b54c7",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.35,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "segmentAoe": 150,
+                "segmentCount": 4,
+                "stepSize": 100
+              },
+              "ref": "tpl-line-sweep"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】按住蓄力、放開射擊；依蓄力階段決定彈體與傷害。\n【待補機制】目前固定起手；需按住／放開與分段蓄力。",
+        "slot": "Q",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        }
+      },
+      "R": {
+        "abilityOverrides": {
+          "castTimeTier": "大",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "大"
+        },
+        "capabilityIds": [
+          "periodicDamage"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 3,
+        "name": "〔全武裝齊射〕",
+        "products": [
+          {
+            "instanceId": "community-review-05-20260907-r-1",
+            "template": {
+              "contentSha256": "sha256:34fc1fc2579e395212180f244209347185c83466671e8b1d041e2f0933004424",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.5,
+                "count": 6,
+                "damageType": "physical",
+                "impactDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "impactRadius": 150,
+                "intervalSec": 0.35,
+                "payout": "perImpact",
+                "scatterRadius": 120
+              },
+              "ref": "tpl-random-barrage"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】在指定區域依序落下 6 發；每發間隔 0.35 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】按固定次序發射砲彈、刀刃與葉片，整套共享總傷害預算。\n【待補機制】彈種固定時序及整套共享總預算需補。",
+        "slot": "R",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 8
+        }
+      },
+      "W": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "大"
+        },
+        "capabilityIds": [
+          "travelingWave"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "Metal Blade",
+        "products": [
+          {
+            "instanceId": "community-review-05-20260907-w-1",
+            "template": {
+              "contentSha256": "sha256:bd9d8342c4ff231d5c4eb94f3e87434981ccc5d4ba402b7e615b292317436add",
+              "inheritDefaults": true,
+              "params": {
+                "aoePerStep": 100,
+                "castTimeSec": 0.2,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "stepCount": 4,
+                "stepIntervalSec": 0.12,
+                "stepSize": 100
+              },
+              "ref": "tpl-traveling-wave"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。\n【目標設計】投出金屬刀刃，可選擇射擊方向，消耗武器能源。\n【待補機制】Metal Blade 的方向與刀刃模型待補。",
+        "slot": "W",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        }
+      }
+    },
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "statOverrides": {
+      "ad": "大",
+      "ap": "小",
+      "armor": "小",
+      "as": "大",
+      "healthRegen": "小",
+      "manaRegen": "中",
+      "maxHealth": "小",
+      "maxMana": "中",
+      "mr": "小",
+      "ms": "中",
+      "range": "大"
+    },
+    "summary": "洛克人 社群英雄功能驗收稿。作品：《Mega Man》  \n採用：初代洛克人，不混入 X 或 EXE。  \n定位：蓄力、武器能源、技能切換。\n\n視覺方向：青藍砲口、白心彈體；刀刃用金屬灰、Leaf Shield 用綠色。\n以 GGD 射手 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "templateVersions": {
+      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
+        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
+        "exemplar": {
+          "jass": "A0Q6",
+          "skill": "82-04 闇之魔法"
+        },
+        "family": "buff-self",
+        "gapScore": 6,
+        "id": "tpl-buff-self",
+        "name": "變身強化-數值面",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "duration": {
+            "default": 15,
+            "max": 60,
+            "min": 1,
+            "type": "number",
+            "unit": "s"
+          },
+          "modifiers": {
+            "default": [
+              {
+                "op": "flat",
+                "stat": "ad",
+                "value": 50
+              }
+            ],
+            "type": "statModifiers"
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0": {
+        "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
+        "exemplar": {
+          "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效",
+          "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者"
+        },
+        "family": "on-attack",
+        "gapScore": 9,
+        "id": "tpl-on-attack",
+        "name": "攻擊觸發",
+        "params": {
+          "bonusDamage": {
+            "default": {
+              "perRank": [
+                100
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "chance": {
+            "max": 1,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "ratio"
+          },
+          "condition": {
+            "default": {
+              "any": [
+                {
+                  "all": [
+                    {
+                      "not": {
+                        "is": "champion",
+                        "kind": "kind",
+                        "subject": "target"
+                      }
+                    },
+                    {
+                      "kind": "stat",
+                      "mode": "percent",
+                      "op": "<",
+                      "stat": "hp",
+                      "subject": "target",
+                      "value": 0.35
+                    }
+                  ]
+                },
+                {
+                  "all": [
+                    {
+                      "is": "champion",
+                      "kind": "kind",
+                      "subject": "target"
+                    },
+                    {
+                      "kind": "chance",
+                      "p": 0.01
+                    }
+                  ]
+                }
+              ]
+            },
+            "optional": true,
+            "type": "condition"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "event": {
+            "default": "onBasicAttack",
+            "type": "enum",
+            "values": [
+              "onBasicAttack",
+              "onDamageDealt"
+            ]
+          },
+          "internalCooldown": {
+            "default": 0,
+            "max": 60,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:34fc1fc2579e395212180f244209347185c83466671e8b1d041e2f0933004424": {
+        "description": "在一個區域裡連續丟 N 發爆炸,每一發的落點都是隨機的。原作 8 支成員全部是同一個迴圈:`GetRandomLocInRect(RectFromCenterSizeBJ(中心, S, S))` → 生一隻 dummy → 叫它放一發 → 睡一下 → 再來。\n\n**總時長不是欄位,是算出來的**(發數 − 1) × 每發間隔 —— 原作的迴圈也是這樣,把它做成第三個可填的數字只會讓三個數字互相打架。\n\n決策點是「傷害怎麼付」:\n· 逐發結算(預設,5/8 支) —— 站在轟炸區裡的人每一發都會挨一下。\n· 施法瞬間一次付清(3/8 支) —— 23-03 雷牙一閃、81-02 Acxel Shooter、53-01 獸王牙操彈 的彈幕**完全是演出**,傷害在觸發裡只判一次矩形。把整片火光算成 N 段傷害會讓這三支變成原作的好幾倍。\n\n「開場直傷」清空 = 純轟炸;填了 = 先來一發大的再開始炸(42-04 世界終結 的 100% [AP] 起手)。\n\n⚠️ 已知落差:sim 的持續傷害綁在**施法當下解出來的目標**上,所以(a)開炸之後才走進區域的人不會挨,先走出去的人還是會繼續挨;(b)每一發的隨機落點沒有模擬 —— 區域內的人是**每一發都吃到**,而不是機率性地吃到其中幾發。原作 42-04 的雷震半徑(375)本來就大於它的散佈半徑(225),那一支剛好完全吻合;21-002 天破壤碎(散佈 600 / 半徑 320)則是這個模型最不準的一支。",
+        "exemplar": {
+          "jass": "A0F4 → dummy A011 ×8 (war3map.j:48501-48519)",
+          "skill": "74-03 闇之天使"
+        },
+        "family": "random-barrage",
+        "gapScore": 6,
+        "id": "tpl-random-barrage",
+        "name": "亂數彈幕轟炸",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "count": {
+            "default": 9,
+            "max": 100,
+            "min": 2,
+            "type": "number",
+            "unit": "count"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "impactDamage": {
+            "default": {
+              "perRank": [
+                150
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "impactRadius": {
+            "default": 320,
+            "max": 900,
+            "min": 50,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "intervalSec": {
+            "default": 0.1,
+            "max": 0.6,
+            "min": 0.04,
+            "type": "number",
+            "unit": "s"
+          },
+          "openingDamage": {
+            "optional": true,
+            "type": "scaling"
+          },
+          "payout": {
+            "default": "perImpact",
+            "type": "enum",
+            "values": [
+              "perImpact",
+              "onceAtCast"
+            ]
+          },
+          "scatterRadius": {
+            "default": 225,
+            "max": 1500,
+            "min": 0,
+            "type": "number",
+            "unit": "wc3u"
+          }
+        },
+        "requires": [
+          "periodicDamage"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699006b55c40f5b54c7": {
+        "description": "沿直線分段的掃擊：每一段各自在自己的落點結算一次（`delayed` + `advance`，GH#393 的機制）。⭐ 同一個目標整串只被打一次（`hitOncePerTarget`）—— 那是原作的規則，卡片寫的是**一次**的數字。",
+        "exemplar": {
+          "jass": "A0D5",
+          "skill": "20-03 約束與勝利之劍"
+        },
+        "family": "line-sweep",
+        "gapScore": 7,
+        "id": "tpl-line-sweep",
+        "name": "直線分段掃擊",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                150
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "segmentAoe": {
+            "default": 400,
+            "max": 900,
+            "min": 100,
+            "origin": "j:32337 —— `GetUnitsInRangeOfLocMatching(400.00, udg_LocPoint3, …)` ⇒ 每段半徑 **400 wc3u**",
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "segmentCount": {
+            "default": 6,
+            "max": 20,
+            "min": 3,
+            "origin": "j:32335 —— `exitwhen udg_WinSwordCounter > 6`，而 j:32333 是 `set udg_WinSwordCounter = 1` ⇒ 正好 **6 段**（⛔ 不是 7：它從 **1** 起算，⛔ 不是 0）",
+            "type": "number",
+            "unit": "count"
+          },
+          "stepSize": {
+            "default": 200,
+            "max": 300,
+            "min": 100,
+            "origin": "j:32336 —— `PolarProjectionBJ(udg_LocPoint1, I2R(udg_WinSwordCounter) * 200.00, …)` ⇒ 每段 **200 wc3u**",
+            "type": "number",
+            "unit": "wc3u"
+          }
+        },
+        "requires": [
+          "projectile"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:bd9d8342c4ff231d5c4eb94f3e87434981ccc5d4ba402b7e615b292317436add": {
+        "description": "傷害點沿一條線逐段推進，每一段各播一次特效並各結算一次傷害（同一個人整串只吃一次），可帶終點爆發。設計正典範例：龍破斬。",
+        "exemplar": {
+          "jass": "A04R",
+          "skill": "04-03 龍破斬"
+        },
+        "family": "traveling-wave",
+        "gapScore": 7,
+        "id": "tpl-traveling-wave",
+        "name": "行進波動",
+        "params": {
+          "aoePerStep": {
+            "default": 200,
+            "max": 900,
+            "min": 50,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                200
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "stepCount": {
+            "default": 20,
+            "max": 140,
+            "min": 3,
+            "type": "number"
+          },
+          "stepIntervalSec": {
+            "default": 0.03,
+            "max": 1,
+            "min": 0.01,
+            "type": "number",
+            "unit": "s"
+          },
+          "stepSize": {
+            "default": 45,
+            "max": 200,
+            "min": 20,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "stepVfx": {
+            "optional": true,
+            "type": "docRef"
+          },
+          "terminalBurst": {
+            "default": 450,
+            "max": 900,
+            "min": 100,
+            "optional": true,
+            "type": "number",
+            "unit": "wc3u"
+          }
+        },
+        "requires": [
+          "travelingWave"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      }
+    },
+    "title": "洛克人"
+  },
+  "brief": {
+    "concept": "洛克人 社群英雄功能驗收稿。作品：《Mega Man》  \n採用：初代洛克人，不混入 X 或 EXE。  \n定位：蓄力、武器能源、技能切換。\n\n視覺方向：青藍砲口、白心彈體；刀刃用金屬灰、Leaf Shield 用綠色。\n以 GGD 射手 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "E": "Leaf Shield",
+      "EX": "〔特殊武器切換〕",
+      "PASSIVE": "〔武器能源管理〕",
+      "Q": "洛克砲",
+      "R": "〔全武裝齊射〕",
+      "W": "Metal Blade"
+    },
+    "name": "洛克人"
+  },
+  "presentation": {
+    "assetLocks": [
+      {
+        "byteSize": 3139792,
+        "consumers": [
+          "champion:model"
+        ],
+        "kind": "model",
+        "mediaType": "model/gltf-binary",
+        "path": "assets/models/community/9d0476bdc39349e9169dc99e5326496b7d5e1301e3ef660b49ba5b562bd53efd.glb",
+        "registry": "normalized-upload",
+        "sha256": "9d0476bdc39349e9169dc99e5326496b7d5e1301e3ef660b49ba5b562bd53efd"
+      }
+    ],
+    "championIcon": "assets/icons/champions/thorne.webp",
+    "modelKey": "community.body.d18b74cbefdf28dedc0f9c09ed6df77815ab9f05509874c9",
+    "modelProvenance": {
+      "modelSha256": "9d0476bdc39349e9169dc99e5326496b7d5e1301e3ef660b49ba5b562bd53efd",
+      "notes": "暫採持槍裝甲人形；紅白配色及成人比例與初代洛克人不同，不是 X／EXE 版本。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。",
+      "relationship": "style-proxy",
+      "schema": "ggd-hero-model-provenance@1",
+      "sourceAssetId": "300heroes:ad8377d942a4909779a1b20c",
+      "sourceCharacter": "刑天",
+      "sourceWork": "鎧甲勇士刑天"
+    },
+    "schema": "ggd-hero-presentation@1",
+    "slots": {
+      "E": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "script": {
+          "abilityId": "community-review-05-20260907.e",
+          "id": "community-review-05-20260907.e",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                36,
+                145,
+                255
+              ],
+              "vfxId": "fx.prim.lightning.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                36,
+                145,
+                255
+              ],
+              "vfxId": "fx.prim.lightning.pulse",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "E",
+        "vfxLayers": []
+      },
+      "EX": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "script": {
+          "abilityId": "community-review-05-20260907.ex",
+          "id": "community-review-05-20260907.ex",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                36,
+                145,
+                255
+              ],
+              "vfxId": "fx.prim.lightning.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                36,
+                145,
+                255
+              ],
+              "vfxId": "fx.prim.lightning.pulse",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "EX",
+        "vfxLayers": []
+      },
+      "PASSIVE": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "script": null,
+        "sfxKey": null,
+        "slot": "PASSIVE",
+        "vfxLayers": []
+      },
+      "Q": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "script": {
+          "abilityId": "community-review-05-20260907.q",
+          "id": "community-review-05-20260907.q",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                36,
+                145,
+                255
+              ],
+              "vfxId": "fx.prim.lightning.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                36,
+                145,
+                255
+              ],
+              "vfxId": "fx.prim.lightning.beam",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "Q",
+        "vfxLayers": []
+      },
+      "R": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "script": {
+          "abilityId": "community-review-05-20260907.r",
+          "id": "community-review-05-20260907.r",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                36,
+                145,
+                255
+              ],
+              "vfxId": "fx.prim.lightning.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "point",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                36,
+                145,
+                255
+              ],
+              "vfxId": "fx.prim.lightning.nova",
+              "w3xScale": 1.25
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "R",
+        "vfxLayers": []
+      },
+      "W": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "script": {
+          "abilityId": "community-review-05-20260907.w",
+          "id": "community-review-05-20260907.w",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                36,
+                145,
+                255
+              ],
+              "vfxId": "fx.prim.lightning.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                36,
+                145,
+                255
+              ],
+              "vfxId": "fx.prim.lightning.bolt",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "W",
+        "vfxLayers": []
+      }
+    },
+    "uploadedModel": {
+      "byteSize": 3139792,
+      "clipMap": {
+        "attack": "single_attack_attcom_a",
+        "cast": "single_skill_01",
+        "death": "dead",
+        "hurt": "bat_idle",
+        "idle": "bat_idle",
+        "run": "single_run"
+      },
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "9d0476bdc39349e9169dc99e5326496b7d5e1301e3ef660b49ba5b562bd53efd",
+      "yawOffsetDeg": 0
+    }
+  },
+  "projectId": "community-review-05-20260907",
+  "receipts": [
+    {
+      "digest": "1b2109d3088659f50630e00146e0e803b87417fe5f26f1a039a7b9b3722eb19c",
+      "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+      "kind": "generator-adopted",
+      "projectRevision": 5
+    }
+  ],
+  "revision": 11,
+  "schema": "ggd-hero-project@2",
+  "sections": {
+    "attributes": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "draft"
+    },
+    "identity": {
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      },
+      "revision": 1,
+      "state": "draft"
+    },
+    "mechanics": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    },
+    "package": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "presentation": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "skills": {
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      },
+      "revision": 11,
+      "state": "draft"
+    },
+    "validation": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    }
+  },
+  "sourceDesign": {
+    "identity": "作品：《Mega Man》  \n採用：初代洛克人，不混入 X 或 EXE。  \n定位：蓄力、武器能源、技能切換。",
+    "name": "洛克人",
+    "ownerText": "### 05｜洛克人\n\n作品：《Mega Man》  \n採用：初代洛克人，不混入 X 或 EXE。  \n定位：蓄力、武器能源、技能切換。\n\n- **PASSIVE｜〔武器能源管理〕**：特殊武器共用有限能源；能源隨時間恢復，切換武器不補滿。\n- **Q｜洛克砲**：按住蓄力、放開射擊；依蓄力階段決定彈體與傷害。\n- **W｜Metal Blade**：投出金屬刀刃，可選擇射擊方向，消耗武器能源。\n- **E｜Leaf Shield**：形成有限耐久的葉片護盾；再次使用可將剩餘葉片射出。\n- **R｜〔全武裝齊射〕**：按固定次序發射砲彈、刀刃與葉片，整套共享總傷害預算。\n- **EX｜〔特殊武器切換〕**：讓 Q 在洛克砲與已核准的特殊武器版本間切換；保留各自冷卻與共用能源。\n\n**審查重點**：蓄力中斷、護盾剩餘耐久轉換、切換後圖示與實際技能一致；反覆切換不能重置冷卻或複製能源。\n\n",
+    "reviewText": "蓄力中斷、護盾剩餘耐久轉換、切換後圖示與實際技能一致；反覆切換不能重置冷卻或複製能源。",
+    "schema": "ggd-hero-source-design@1",
+    "slots": {
+      "E": {
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-05-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。",
+        "name": "Leaf Shield",
+        "ownerDescription": "形成有限耐久的葉片護盾；再次使用可將剩餘葉片射出。",
+        "refinementContracts": [
+          "M02",
+          "M05"
+        ],
+        "requiredRefinement": "缺再次輸入射出剩餘葉片及護盾剩餘量換算。"
+      },
+      "EX": {
+        "baselineBehavior": "自身取得 3 秒增益：as +20%。",
+        "name": "〔特殊武器切換〕",
+        "ownerDescription": "讓 Q 在洛克砲與已核准的特殊武器版本間切換；保留各自冷卻與共用能源。",
+        "refinementContracts": [
+          "M02",
+          "M05"
+        ],
+        "requiredRefinement": "僅自身攻速增益；需 Q 技能版本切換、圖示與共用冷卻。"
+      },
+      "PASSIVE": {
+        "baselineBehavior": "普攻追加極小級魔法傷害，內置冷卻 3 秒。",
+        "name": "〔武器能源管理〕",
+        "ownerDescription": "特殊武器共用有限能源；能源隨時間恢復，切換武器不補滿。",
+        "refinementContracts": [
+          "M02",
+          "M05"
+        ],
+        "requiredRefinement": "需共用武器能源、恢復與切換保留；預覽沿用 GGD 魔力。"
+      },
+      "Q": {
+        "baselineBehavior": "向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。",
+        "name": "洛克砲",
+        "ownerDescription": "按住蓄力、放開射擊；依蓄力階段決定彈體與傷害。",
+        "refinementContracts": [
+          "M02",
+          "M05"
+        ],
+        "requiredRefinement": "目前固定起手；需按住／放開與分段蓄力。"
+      },
+      "R": {
+        "baselineBehavior": "在指定區域依序落下 6 發；每發間隔 0.35 秒、半徑 150 wc3u、極小級傷害，可多次命中。",
+        "name": "〔全武裝齊射〕",
+        "ownerDescription": "按固定次序發射砲彈、刀刃與葉片，整套共享總傷害預算。",
+        "refinementContracts": [
+          "M02",
+          "M05"
+        ],
+        "requiredRefinement": "彈種固定時序及整套共享總預算需補。"
+      },
+      "W": {
+        "baselineBehavior": "四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。",
+        "name": "Metal Blade",
+        "ownerDescription": "投出金屬刀刃，可選擇射擊方向，消耗武器能源。",
+        "refinementContracts": [
+          "M02",
+          "M05"
+        ],
+        "requiredRefinement": "Metal Blade 的方向與刀刃模型待補。"
+      }
+    },
+    "sourceSha256": "801a6de40c5eaf8a97f0f3bba1156a9ed2548cb5914a3002de39b6eea80cef25"
+  },
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "validationState": {
+    "attributes": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "identity": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "mechanics": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    },
+    "package": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "presentation": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "skills": {
+      "diagnosticCodes": [],
+      "revision": 11,
+      "status": "idle"
+    },
+    "validation": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "id": "godie-o02s.r",
+  "name": "53-03 破法對咒",
+  "icon": "assets/icons/abilities/godie-o02s.r.webp",
+  "description": "[輔助]\n27秒冷卻時間\n\n使用強大的魔力展開結界承受住範圍500內650點的法術傷害，持續6秒。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    27.0,
+    27.0,
+    27.0
+  ],
+  "manaCost": [
+    120.0,
+    180.0,
+    240.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "shield",
+      "amount": {
+        "perRank": [
+          650,
+          1300,
+          1950
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      },
+      "duration": 6.0,
+      "absorbs": "magic"
+    }
+  ],
+  "vfxKey": "fx.prim.arcane.nova-lg",
+  "sfxKey": "wc3.waygatewhat1",
+  "targetsEnemies": false,
+  "radius": 1.5,
+  "schema": "ability@1",
+  "castTimeSec": 0.3
+}

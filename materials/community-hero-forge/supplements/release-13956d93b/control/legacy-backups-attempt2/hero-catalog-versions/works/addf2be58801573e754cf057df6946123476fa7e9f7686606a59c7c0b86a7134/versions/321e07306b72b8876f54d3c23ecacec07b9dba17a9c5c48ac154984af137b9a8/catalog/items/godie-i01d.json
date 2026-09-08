@@ -1,0 +1,69 @@
+{
+  "id": "godie-i01d",
+  "schema": "item@1",
+  "name": "死之王的長槍",
+  "icon": "assets/icons/items/godie-i01d.webp",
+  "description": "傳說\n效能\n攻擊力額外增加 17%\n[無視] 普通攻擊無視防禦給予傷害\n[普通攻擊時] 普攻附加敵方現存 MP 10%傷害，並且回復敵方最大 MP 10%\n額外 [死之王套裝] 同時裝備死之王長槍、意志、神盾，則總 AP 額外 + 300%\n\n解說\n「幫對方補魔就是我的攻擊方式」傳說不朽王與飛鼠先生在腎虧谷之役中，刺穿飛鼠先生盔甲的邪惡武器。據說該物是從死靈之谷中名匠\"深遂之手\"鑄造，並刺穿自己身體完成槍身。",
+  "cost": 0,
+  "tier": 3,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "ad",
+      "op": "pctAdd",
+      "value": 0.17
+    }
+  ],
+  "sets": [
+    {
+      "id": "godie-set-lichking",
+      "name": "死之王套裝",
+      "pieces": [
+        "godie-i01d",
+        "godie-i060",
+        "godie-i061"
+      ],
+      "modifiers": [
+        {
+          "stat": "ap",
+          "op": "pctAdd",
+          "value": 3
+        }
+      ]
+    }
+  ],
+  "craftRole": "none",
+  "damageTypeOverride": {
+    "scope": "basic",
+    "becomes": "true"
+  },
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "effects": [
+        {
+          "kind": "restore",
+          "manaPct": 0.1
+        },
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "flat": 0
+          },
+          "resourcePct": {
+            "subject": "target",
+            "resource": "mana",
+            "basis": "current",
+            "perRank": [
+              0.1
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "authoringNote": "⭐ 2026-08-18 逐句稽核（第一·五守則「不放任何無效說明」）—— 四句效能全部對得上，而且**補回了唯一一句零實作的**：「敵方現存 MP 10%傷害」。\n\n[普通攻擊時]「普攻附加敵方現存 MP 10%傷害，並且回復敵方最大 MP 10%」= passive[0] 的兩個 effect：\n· 「回復敵方最大 MP 10%」= `restore {manaPct: 0.1}`。hook 的 `target` 省略 = 事件實體 = 被你打的那個人，`restore` 讀的是目標自己的最大值（WC3 SetUnitManaPercentBJ）—— 連這件道具的笑點（「幫對方補魔就是我的攻擊方式」）都逐字在。\n· ⭐ **【2026-08-18 落地】「敵方現存 MP 10%傷害」** = `damage.resourcePct {subject:\"target\", resource:\"mana\", basis:\"current\", perRank:[0.1]}`。這一句在此之前是**整句空的**，而 `content:build` 與全套測試都是綠的 —— 舊備註寫的「damage 沒有魔力的對應物」在 GH#299 的 `zResourcePctTerm` 上線後就變成假話（第三守則）。形狀直接照 瑪那魔杖 godie-i020 「普攻附加敵方現存 MP 5%傷害」那一份抄，同一個 schema、同一個讀取器（sim/effects/dynamicTerms.ts::resourcePctAmount）。上界：`subject:\"target\"` 的 ratio 模式是 RESOURCE_PCT_RATIO_MAX = 1，0.1 遠低於它。\n· ⚠️ **順序上的一個已知偏差，故意留著，請主控端裁決**：卡面的順序是「先傷害、後補魔」，而出貨的 `effects[]` 是「先補魔、後傷害」。`resourcePctAmount` 在**發射當下**求值（damage 才進佇列），所以傷害讀到的是**補魔之後**的現存 MP ⇒ 每一下多出 `0.01 × 目標最大魔力`（1,000 魔的目標約 +10 點）。⛔ 沒有把 damage 放到 index 0，是因為 `sim/economy/legendaryTags.test.ts` 用 `effects[0]` 硬索引釘住 restore，而這一輪不准動 packages/。正解是那條測試改成 `find(kind===\"restore\")`，再把兩個 effect 對調。\n\n「攻擊力額外增加 17%」= `ad pctAdd 0.17`。\n[無視]「普通攻擊無視防禦給予傷害」= `damageTypeOverride {scope:\"basic\", becomes:\"true\"}`，與 霸王破甲槍 godie-i00f 同一個機制。蓋的地方在**傷害佇列**（combat/damage.ts → combat/damageTypeOverride.ts），⛔ 不是 BasicAttackSystem —— 那裡蓋的話遠程普攻（ProjectileSystem）拿不到，是失敗形態②。⚠️ 它只重蓋**那一發普攻封包**的型別；上面兩個 hook effect 是獨立的，補魔與 MP 傷害不受它影響（MP 傷害自己填 magic，會吃魔抗）。\n[死之王套裝]「同時裝備死之王長槍、意志、神盾，則總 AP 額外 + 300%」= `sets` 的 `ap pctAdd 3`。三份成員文件各帶一份相同區塊，獎勵依 set id 只發**一份** `item-set:` 來源（⛔ 不是每件各發一份）。機制在 sim/economy/itemSets.ts，守衛在 sim/lichkingSet.test.ts。⚠️ 平衡註記（量到的，不是估的）：它與 惡夢魔王碎片 godie-i067（也是 +100% AP）同一個 pctAdd 桶，兩者齊帶時 AP 是 base×(1+3+1) —— 要不要封頂是 owner 的決定，這裡沒有偷偷夾。"
+}

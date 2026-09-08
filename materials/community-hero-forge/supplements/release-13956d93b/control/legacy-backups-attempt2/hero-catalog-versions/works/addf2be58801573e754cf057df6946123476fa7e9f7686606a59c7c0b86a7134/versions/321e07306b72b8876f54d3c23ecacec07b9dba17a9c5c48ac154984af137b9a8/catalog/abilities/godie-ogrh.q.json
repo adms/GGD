@@ -1,0 +1,59 @@
+{
+  "id": "godie-ogrh.q",
+  "name": "09-01 界王拳",
+  "icon": "assets/icons/abilities/godie-ogrh.q.webp",
+  "provenance": "w3x-import",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n悟空在界王神那邊以10倍重力之下所習得的招數，可增加55點的額外傷害，但是將會每秒消耗生命10點。\n持續10秒。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    72.0,
+    72.0,
+    72.0,
+    72.0,
+    72.0
+  ],
+  "manaCostTier": "極小",
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      },
+      "damageType": "magic",
+      "dot": {
+        "damageType": "true",
+        "applyTo": "self",
+        "amountPerTick": {
+          "flat": 10.0
+        },
+        "intervalSec": 1.0,
+        "durationSec": 10.0,
+        "stacking": "refresh"
+      },
+      "castTimeSec": 1.7
+    }
+  },
+  "vfxKey": "fx.prim.holy.slash",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "castTimeSec": 1.7,
+  "rangeTier": "極大",
+  "range": 12
+}

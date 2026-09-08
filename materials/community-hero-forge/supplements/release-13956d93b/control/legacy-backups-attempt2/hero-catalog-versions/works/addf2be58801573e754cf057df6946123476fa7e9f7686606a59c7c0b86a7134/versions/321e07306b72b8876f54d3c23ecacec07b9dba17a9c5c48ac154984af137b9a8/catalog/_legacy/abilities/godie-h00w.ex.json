@@ -1,0 +1,32 @@
+{
+  "id": "godie-h00w.ex",
+  "name": "26-002 鄉民的正義",
+  "icon": "assets/icons/abilities/godie-h00w.ex.webp",
+  "description": "[輔助]\n80秒冷卻時間\n\n傳說中的鄭洨在PTT有很大的影響力，膽敢違背豪洨天王的人，將會被鄉民們人肉搜索，造成場上每位敵軍英雄將會受到五位鄉民攻擊，持續15秒。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    80.0
+  ],
+  "manaCost": [
+    250.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.prim.arcane.pulse-lg",
+  "schema": "ability@1",
+  "castTimeSec": 0.4
+}

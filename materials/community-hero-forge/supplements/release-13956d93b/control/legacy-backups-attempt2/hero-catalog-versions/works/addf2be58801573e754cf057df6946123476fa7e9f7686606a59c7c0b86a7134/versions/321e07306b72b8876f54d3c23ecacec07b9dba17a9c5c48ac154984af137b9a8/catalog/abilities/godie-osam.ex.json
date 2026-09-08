@@ -1,0 +1,60 @@
+{
+  "id": "godie-osam.ex",
+  "name": "34-002 冥道殘月破",
+  "icon": "assets/icons/abilities/godie-osam.ex.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n40秒冷卻時間\n\n完整的冥道殘月破，可將範圍內不分敵我，全部送往冥界，6秒後現身，並受到1300點傷害。",
+  "slot": "EX",
+  "castType": "ground",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "cooldownTier": "中",
+  "manaCost": [
+    576.0
+  ],
+  "manaCostTier": "大",
+  "effects": [
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "imported.blackhole1",
+      "clip": "idle",
+      "soundKey": "wc3.darksummoninglaunch1",
+      "scale": 2.5,
+      "tint": [
+        0.3922,
+        0.0,
+        0.0
+      ],
+      "lifeSec": 7.0
+    }
+  ],
+  "template": {
+    "ref": "tpl-instant-blast",
+    "params": {
+      "radius": 257,
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.7
+          }
+        ]
+      },
+      "damageType": "magic",
+      "castTimeSec": 2.233
+    }
+  },
+  "vfxKey": "fx.prim.void.nova-lg",
+  "schema": "ability@1",
+  "radius": 4.5,
+  "targetsEnemies": true,
+  "castTimeSec": 2.233,
+  "rangeTier": "大",
+  "range": 8,
+  "radiusTier": "小"
+}

@@ -1,0 +1,100 @@
+room created m_01M211YC6FW976CAN5AB55C757
+selection projection {
+  expectedPlayers: [
+    [ '01M210NXETAXE000A55QTJAMYG', 'community-review-01-20260907' ],
+    [ '01M210NXCFYD4PEQHQ4DEMFT8G', 'community-review-17-20260907' ]
+  ],
+  phase: 'intermission',
+  tick: 21,
+  seats: [
+    {
+      accountId: '01M210NXCFYD4PEQHQ4DEMFT8G',
+      championId: 'community-review-17-20260907',
+      seatId: 0,
+      connected: true,
+      driver: 'human'
+    },
+    {
+      accountId: '01M210NXETAXE000A55QTJAMYG',
+      championId: 'community-review-01-20260907',
+      seatId: 1,
+      connected: true,
+      driver: 'human'
+    },
+    {
+      accountId: 'bot-2',
+      championId: 'community-review-37-20260907',
+      seatId: 2,
+      connected: false,
+      driver: 'ai'
+    },
+    {
+      accountId: 'bot-3',
+      championId: 'community-review-21-20260907',
+      seatId: 3,
+      connected: false,
+      driver: 'ai'
+    },
+    {
+      accountId: 'bot-4',
+      championId: 'community-review-27-20260907',
+      seatId: 4,
+      connected: false,
+      driver: 'ai'
+    },
+    {
+      accountId: 'bot-5',
+      championId: 'community-review-28-20260907',
+      seatId: 5,
+      connected: false,
+      driver: 'ai'
+    },
+    {
+      accountId: 'bot-6',
+      championId: 'community-review-16-20260907',
+      seatId: 6,
+      connected: false,
+      driver: 'ai'
+    },
+    {
+      accountId: 'bot-7',
+      championId: 'community-review-08-20260907',
+      seatId: 7,
+      connected: false,
+      driver: 'ai'
+    },
+    {
+      accountId: 'bot-8',
+      championId: 'community-review-14-20260907',
+      seatId: 8,
+      connected: false,
+      driver: 'ai'
+    },
+    {
+      accountId: 'bot-9',
+      championId: 'community-review-02-20260907',
+      seatId: 9,
+      connected: false,
+      driver: 'ai'
+    },
+    {
+      accountId: 'bot-10',
+      championId: 'community-review-09-20260907',
+      seatId: 10,
+      connected: false,
+      driver: 'ai'
+    },
+    {
+      accountId: 'bot-11',
+      championId: 'community-review-23-20260907',
+      seatId: 11,
+      connected: false,
+      driver: 'ai'
+    }
+  ]
+}
+two community champions selected in one live room 
+Actual reconnect retained selected hero and all 37 version pins 
+both human seats produced real W cast events 
+Complete ordinary match settled and both player game counts increased 
+Evidence: /private/tmp/ggd-model-upload-acceptance/release-13956d93b/evidence/match.json

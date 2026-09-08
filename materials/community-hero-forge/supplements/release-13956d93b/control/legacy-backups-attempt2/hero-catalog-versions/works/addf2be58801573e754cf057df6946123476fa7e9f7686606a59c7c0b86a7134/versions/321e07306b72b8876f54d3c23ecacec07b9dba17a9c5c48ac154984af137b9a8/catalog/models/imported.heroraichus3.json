@@ -1,0 +1,15 @@
+{
+  "id": "imported.heroraichus3",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/heroraichus3.glb",
+  "scale": 130.7692,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Stand",
+    "attack": "Stand",
+    "cast": "Stand",
+    "hurt": "Stand",
+    "death": "Death"
+  }
+}

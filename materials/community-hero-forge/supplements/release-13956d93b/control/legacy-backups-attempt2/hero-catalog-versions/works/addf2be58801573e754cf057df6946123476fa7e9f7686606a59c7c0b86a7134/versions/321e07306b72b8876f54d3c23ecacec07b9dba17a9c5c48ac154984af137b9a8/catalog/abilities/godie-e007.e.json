@@ -1,0 +1,45 @@
+{
+  "id": "godie-e007.e",
+  "name": "12-03 破凰之心-徒手空破山",
+  "provenance": "w3x-import",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n使用破凰之力的志狼徒手空破山，劃出大氣之刃，對目標造成{{dmg}}點傷害。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    72.0,
+    72.0,
+    72.0,
+    72.0
+  ],
+  "manaCostTier": "極小",
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.prim.ki.shockwave",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/godie-e007.e.png",
+  "castTimeSec": 1.233,
+  "rangeTier": "極大",
+  "range": 12
+}

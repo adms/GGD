@@ -1,0 +1,45 @@
+{
+  "id": "instance.85500dd12eba.969995d41880.7af9bcd8319ab0a73b9c",
+  "name": "95-03 皇者戰氣第五十重天",
+  "icon": "assets/hero-instances/a1ce4be26e7a070559f909a784ae086d1142a531c70a0dc9232358eb63111830.webp",
+  "description": "[主動攻擊]\n45秒冷卻時間\n\n把發揮到五十重天金黃色的皇者戰氣纏繞在身上，飛行到目標身旁給予沉痛的一擊，給予600點傷害。由於威力過於強大，若敵方偏移瞄準地點將不會受到傷害。\n\n《龍氣》 - 擊中目標後將全身勁力炸開，造成大規模的毀滅性打擊，傷害值等於飛行距離的一半。",
+  "slot": "E",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    120,
+    160,
+    200,
+    240
+  ],
+  "range": 14,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "instance.85500dd12eba.969995d41880.c4179d923f6525be7ac3",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              600,
+              800,
+              1000,
+              1200
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "instance.85500dd12eba.969995d41880.bc2bb9aa81a9b64bc332",
+  "schema": "ability@1",
+  "castTimeSec": 0.6
+}

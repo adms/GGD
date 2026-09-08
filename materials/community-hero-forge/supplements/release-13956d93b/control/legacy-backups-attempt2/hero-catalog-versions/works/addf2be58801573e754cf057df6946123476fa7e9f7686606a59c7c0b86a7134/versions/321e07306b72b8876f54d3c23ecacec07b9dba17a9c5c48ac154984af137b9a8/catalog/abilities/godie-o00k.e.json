@@ -1,0 +1,50 @@
+{
+  "id": "godie-o00k.e",
+  "name": "86-03 神鳴",
+  "icon": "assets/icons/abilities/godie-o00k.e.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n皮卡娘大絕招之一，將雷電集中在手上，再放射出去，可造成前方一直線{{dmg}}點的傷害。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "cooldownTier": "中",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "effects": [],
+  "template": {
+    "ref": "tpl-instant-blast",
+    "params": {
+      "radius": 500,
+      "damage": {
+        "damageTier": "大",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      },
+      "damageType": "magic",
+      "castTimeSec": 2.267
+    }
+  },
+  "vfxKey": "fx.prim.lightning.nova",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "radius": 8.0,
+  "castTimeSec": 2.267,
+  "rangeTier": "中",
+  "range": 6,
+  "radiusTier": "大"
+}

@@ -1,0 +1,85 @@
+{
+  "id": "fx.w3x.orb.magical-sword.p00",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.139,
+    "angleDeg": 15
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 2.5,
+    "max": 2.5
+  },
+  "size": {
+    "start": 0.003,
+    "end": 0.003
+  },
+  "color": {
+    "start": [
+      1,
+      1,
+      1,
+      0.086
+    ],
+    "end": [
+      1,
+      1,
+      1,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        1,
+        1,
+        0.086
+      ]
+    ],
+    [
+      0.5,
+      [
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    [
+      1,
+      [
+        1,
+        1,
+        1,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.003
+    ],
+    [
+      0.5,
+      0.406
+    ],
+    [
+      1,
+      0.003
+    ]
+  ],
+  "blendMode": "additive",
+  "speed": {
+    "min": 1.3751,
+    "max": 1.4029
+  },
+  "rate": 20,
+  "gravityY": -0.056,
+  "texture": "assets/textures/particles/star_09.png",
+  "anchorBone": "etoile",
+  "ambient": true
+}

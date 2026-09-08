@@ -1,0 +1,15 @@
+{
+  "id": "imported.windmissle",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/windmissle.glb",
+  "scale": 0.3956,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "stand",
+    "run": "stand",
+    "attack": "stand",
+    "cast": "stand",
+    "hurt": "stand",
+    "death": "Death"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "id": "godie-zombiex.r",
+  "schema": "ability@1",
+  "name": "100-04 百式・哈基米",
+  "icon": "assets/icons/abilities/godie-zombiex.r.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n聖杯的黑泥從體內爆發，對周圍造成大範圍魔法傷害並重減速。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "cooldownTier": "中",
+  "manaCost": [
+    72.0,
+    72.0,
+    72.0
+  ],
+  "manaCostTier": "極小",
+  "range": 0,
+  "radius": 4.5,
+  "effects": [
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "w3x.stock.forgottenonetent",
+      "clip": "idle",
+      "soundKey": "wc3.parasite",
+      "path": "orbit",
+      "count": 9,
+      "distance": 3.0,
+      "scale": 2.0,
+      "tint": [
+        0.1176,
+        0.0,
+        0.0
+      ],
+      "lifeSec": 8.0
+    }
+  ],
+  "template": {
+    "ref": "tpl-proxy-cast",
+    "params": {
+      "anchor": "point",
+      "radius": 218,
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      },
+      "damageType": "magic",
+      "castTimeSec": 1.5,
+      "statusId": "slow40",
+      "statusDurationSec": 1.5
+    }
+  },
+  "vfxKey": "fx.prim.void.nova-lg",
+  "targetsEnemies": true,
+  "castTimeSec": 1.5,
+  "radiusTier": "小"
+}

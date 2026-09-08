@@ -1,0 +1,178 @@
+{
+  "id": "godie-emfr.r",
+  "schema": "ability@1",
+  "name": "15-04 雷天大壯。貳式",
+  "provenance": "owner-spec",
+  "description": "[主動][變身][普攻時][AP加成]\n{{cd}}秒冷卻\n消耗[MP] {{mp}}\n持續12秒\n\n「比光更快的是思念，比思念更快的是昨天」\n獲得 2倍 [移動速度]、100/150/200% [攻擊速度]、[攻擊速度上限]提升至10。施放技能後的下一次普通攻擊將釋放雷神一擊，造成 {{dmg}} + {{ap}}% [AP] 雷屬性傷害。\n([變身]為唯一狀態不可疊加)",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0
+  ],
+  "range": 0.0,
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ms",
+          "op": "pctMult",
+          "msBonusTier": "大"
+        },
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 1.0
+        },
+        {
+          "stat": "as",
+          "op": "capRaise",
+          "value": 10.0
+        }
+      ],
+      "duration": 12.0,
+      "exclusiveGroup": "emfr-form",
+      "perRank": [
+        {
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctMult",
+              "value": 1.0
+            },
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 1.0
+            },
+            {
+              "stat": "as",
+              "op": "capRaise",
+              "value": 10.0
+            }
+          ],
+          "duration": 12.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctMult",
+              "value": 1.0
+            },
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 1.5
+            },
+            {
+              "stat": "as",
+              "op": "capRaise",
+              "value": 10.0
+            }
+          ],
+          "duration": 12.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctMult",
+              "value": 1.0
+            },
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 2.0
+            },
+            {
+              "stat": "as",
+              "op": "capRaise",
+              "value": 10.0
+            }
+          ],
+          "duration": 12.0
+        }
+      ],
+      "hooks": [
+        {
+          "on": "onAbilityCast",
+          "effects": [
+            {
+              "kind": "applyBuff",
+              "modifiers": [],
+              "duration": 3.0,
+              "stackKey": "emfr-thunder-arm",
+              "maxStacks": 1,
+              "hooks": [
+                {
+                  "on": "onBasicAttack",
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "極小",
+                        "ratios": [
+                          {
+                            "stat": "ap",
+                            "coeff": 0.7
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "kind": "spawnVfx",
+                      "vfxId": "fx.prim.lightning.bolt",
+                      "at": "target"
+                    }
+                  ],
+                  "target": "event",
+                  "maxTriggers": 1,
+                  "consumeOn": "fire",
+                  "onConsumed": "detachSource"
+                }
+              ]
+            }
+          ],
+          "target": "self"
+        }
+      ]
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-strike",
+      "modelKey": "w3x.stock.monsoonbolttarget",
+      "anchor": "self"
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "w3x.stock.tornadoelemental",
+      "clip": "idle",
+      "soundKey": "wc3.blademasterwhirlwind",
+      "scale": 2.0,
+      "tint": [
+        1.0,
+        0.0,
+        1.0
+      ]
+    }
+  ],
+  "icon": "assets/icons/abilities/godie-emfr.r.webp",
+  "vfxKey": "fx.prim.lightning.beam-lg",
+  "cooldownTier": "極大",
+  "manaCostTier": "小",
+  "castTimeSec": 0.667
+}

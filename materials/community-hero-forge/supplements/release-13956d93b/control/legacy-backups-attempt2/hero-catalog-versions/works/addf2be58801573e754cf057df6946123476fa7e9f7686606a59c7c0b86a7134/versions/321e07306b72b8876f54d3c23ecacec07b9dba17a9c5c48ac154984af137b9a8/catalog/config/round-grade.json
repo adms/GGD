@@ -1,0 +1,37 @@
+{
+  "id": "round-grade",
+  "schema": "config.round-grade@1",
+  "grade": {
+    "cuts": {
+      "S": 0.8,
+      "A": 0.65,
+      "B": 0.5,
+      "C": 0.32
+    },
+    "weights": {
+      "combat": 0.2,
+      "damage": 0.22,
+      "tanking": 0.12,
+      "survival": 0.16,
+      "support": 0.1,
+      "objective": 0.1,
+      "accuracy": 0.1
+    },
+    "refs": {
+      "kda": 4,
+      "damage": 2000,
+      "tanking": 3000,
+      "healing": 1000,
+      "ccTicks": 300,
+      "objective": 8
+    },
+    "mix": {
+      "supportHealShare": 0.6,
+      "bossKillWeight": 10,
+      "neutralAccuracy": 0.5
+    },
+    "adviceCount": 3,
+    "adviceCeiling": 0.6,
+    "praiseFloor": 0.7
+  }
+}

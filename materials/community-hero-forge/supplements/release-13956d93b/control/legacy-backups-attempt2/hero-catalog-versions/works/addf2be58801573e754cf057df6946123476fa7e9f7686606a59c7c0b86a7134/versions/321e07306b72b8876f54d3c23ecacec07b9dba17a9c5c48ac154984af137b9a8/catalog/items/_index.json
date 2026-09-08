@@ -1,0 +1,858 @@
+{
+  "collection": "items",
+  "hash": "1ee281a7f136",
+  "entries": [
+    {
+      "id": "all-might-hair",
+      "path": "items/all-might-hair.json",
+      "hash": "a59aaec57be0",
+      "size": 5956
+    },
+    {
+      "id": "bezoar-of-the-apothecary",
+      "path": "items/bezoar-of-the-apothecary.json",
+      "hash": "fd9bfc6a3b24",
+      "size": 4164
+    },
+    {
+      "id": "book-of-gospel",
+      "path": "items/book-of-gospel.json",
+      "hash": "32d3a9e32e3e",
+      "size": 13901
+    },
+    {
+      "id": "bulwark-charge-greaves",
+      "path": "items/bulwark-charge-greaves.json",
+      "hash": "aacc547975e5",
+      "size": 3172
+    },
+    {
+      "id": "cleaver-of-the-warden",
+      "path": "items/cleaver-of-the-warden.json",
+      "hash": "c4c259f49c2f",
+      "size": 3463
+    },
+    {
+      "id": "collar-of-the-deadly-soul",
+      "path": "items/collar-of-the-deadly-soul.json",
+      "hash": "9d068fbae83d",
+      "size": 5720
+    },
+    {
+      "id": "endless-edge",
+      "path": "items/endless-edge.json",
+      "hash": "6de4f4ff280a",
+      "size": 2941
+    },
+    {
+      "id": "fingerless-gloves",
+      "path": "items/fingerless-gloves.json",
+      "hash": "5e3d8754c99d",
+      "size": 8137
+    },
+    {
+      "id": "gantz-suit",
+      "path": "items/gantz-suit.json",
+      "hash": "c4d161f9738f",
+      "size": 3890
+    },
+    {
+      "id": "godie-i000",
+      "path": "items/godie-i000.json",
+      "hash": "b1a257ca5f55",
+      "size": 3694
+    },
+    {
+      "id": "godie-i001",
+      "path": "items/godie-i001.json",
+      "hash": "8fbb3a3bd028",
+      "size": 219
+    },
+    {
+      "id": "godie-i002",
+      "path": "items/godie-i002.json",
+      "hash": "118b1651ac40",
+      "size": 606
+    },
+    {
+      "id": "godie-i003",
+      "path": "items/godie-i003.json",
+      "hash": "164fce6e38ea",
+      "size": 364
+    },
+    {
+      "id": "godie-i004",
+      "path": "items/godie-i004.json",
+      "hash": "a26297f77d90",
+      "size": 2108
+    },
+    {
+      "id": "godie-i006",
+      "path": "items/godie-i006.json",
+      "hash": "4df095995e13",
+      "size": 2991
+    },
+    {
+      "id": "godie-i007",
+      "path": "items/godie-i007.json",
+      "hash": "10749604410a",
+      "size": 4065
+    },
+    {
+      "id": "godie-i008",
+      "path": "items/godie-i008.json",
+      "hash": "c575adbecb90",
+      "size": 625
+    },
+    {
+      "id": "godie-i00c",
+      "path": "items/godie-i00c.json",
+      "hash": "63ec5f51046f",
+      "size": 605
+    },
+    {
+      "id": "godie-i00d",
+      "path": "items/godie-i00d.json",
+      "hash": "e667400a895e",
+      "size": 219
+    },
+    {
+      "id": "godie-i00e",
+      "path": "items/godie-i00e.json",
+      "hash": "7d4315d8b247",
+      "size": 219
+    },
+    {
+      "id": "godie-i00f",
+      "path": "items/godie-i00f.json",
+      "hash": "ee4af163426f",
+      "size": 3419
+    },
+    {
+      "id": "godie-i00i",
+      "path": "items/godie-i00i.json",
+      "hash": "d11bc04d6ea0",
+      "size": 3632
+    },
+    {
+      "id": "godie-i00j",
+      "path": "items/godie-i00j.json",
+      "hash": "d8d3c957d57b",
+      "size": 4254
+    },
+    {
+      "id": "godie-i00l",
+      "path": "items/godie-i00l.json",
+      "hash": "8402e026a2ae",
+      "size": 2224
+    },
+    {
+      "id": "godie-i00m",
+      "path": "items/godie-i00m.json",
+      "hash": "ea9b414a5f50",
+      "size": 407
+    },
+    {
+      "id": "godie-i00o",
+      "path": "items/godie-i00o.json",
+      "hash": "eff7627dec64",
+      "size": 266
+    },
+    {
+      "id": "godie-i00s",
+      "path": "items/godie-i00s.json",
+      "hash": "caa39d69a8b9",
+      "size": 4359
+    },
+    {
+      "id": "godie-i00u",
+      "path": "items/godie-i00u.json",
+      "hash": "1e1b012a7b79",
+      "size": 3175
+    },
+    {
+      "id": "godie-i00z",
+      "path": "items/godie-i00z.json",
+      "hash": "a163e363507d",
+      "size": 2914
+    },
+    {
+      "id": "godie-i010",
+      "path": "items/godie-i010.json",
+      "hash": "cbcfbd81dc72",
+      "size": 516
+    },
+    {
+      "id": "godie-i012",
+      "path": "items/godie-i012.json",
+      "hash": "d8aaaf45961c",
+      "size": 4738
+    },
+    {
+      "id": "godie-i013",
+      "path": "items/godie-i013.json",
+      "hash": "842f86e82d21",
+      "size": 3423
+    },
+    {
+      "id": "godie-i014",
+      "path": "items/godie-i014.json",
+      "hash": "0330d5297719",
+      "size": 2598
+    },
+    {
+      "id": "godie-i016",
+      "path": "items/godie-i016.json",
+      "hash": "398b830884c1",
+      "size": 5604
+    },
+    {
+      "id": "godie-i018",
+      "path": "items/godie-i018.json",
+      "hash": "23e15bfc4ef2",
+      "size": 5016
+    },
+    {
+      "id": "godie-i01a",
+      "path": "items/godie-i01a.json",
+      "hash": "0396a480c9b6",
+      "size": 368
+    },
+    {
+      "id": "godie-i01d",
+      "path": "items/godie-i01d.json",
+      "hash": "c4277699c8d6",
+      "size": 4889
+    },
+    {
+      "id": "godie-i01g",
+      "path": "items/godie-i01g.json",
+      "hash": "887bce4034eb",
+      "size": 4868
+    },
+    {
+      "id": "godie-i01i",
+      "path": "items/godie-i01i.json",
+      "hash": "ba29839e5979",
+      "size": 5188
+    },
+    {
+      "id": "godie-i01j",
+      "path": "items/godie-i01j.json",
+      "hash": "b4ed41c83b73",
+      "size": 611
+    },
+    {
+      "id": "godie-i01n",
+      "path": "items/godie-i01n.json",
+      "hash": "e0af0515d7aa",
+      "size": 4427
+    },
+    {
+      "id": "godie-i01o",
+      "path": "items/godie-i01o.json",
+      "hash": "31b1b6c92317",
+      "size": 906
+    },
+    {
+      "id": "godie-i01s",
+      "path": "items/godie-i01s.json",
+      "hash": "09d0a1179ee5",
+      "size": 4484
+    },
+    {
+      "id": "godie-i01v",
+      "path": "items/godie-i01v.json",
+      "hash": "4f93d37ff1dd",
+      "size": 4629
+    },
+    {
+      "id": "godie-i01w",
+      "path": "items/godie-i01w.json",
+      "hash": "89986ecbbbf1",
+      "size": 4708
+    },
+    {
+      "id": "godie-i020",
+      "path": "items/godie-i020.json",
+      "hash": "b0ba737229e7",
+      "size": 3070
+    },
+    {
+      "id": "godie-i027",
+      "path": "items/godie-i027.json",
+      "hash": "ae2433735aa3",
+      "size": 5109
+    },
+    {
+      "id": "godie-i02d",
+      "path": "items/godie-i02d.json",
+      "hash": "8a52a27cdb40",
+      "size": 4044
+    },
+    {
+      "id": "godie-i02e",
+      "path": "items/godie-i02e.json",
+      "hash": "1828472f8c67",
+      "size": 2827
+    },
+    {
+      "id": "godie-i02g",
+      "path": "items/godie-i02g.json",
+      "hash": "6c927677a6cd",
+      "size": 658
+    },
+    {
+      "id": "godie-i02r",
+      "path": "items/godie-i02r.json",
+      "hash": "41035c5c807e",
+      "size": 846
+    },
+    {
+      "id": "godie-i02t",
+      "path": "items/godie-i02t.json",
+      "hash": "f96331eae0ca",
+      "size": 1785
+    },
+    {
+      "id": "godie-i02x",
+      "path": "items/godie-i02x.json",
+      "hash": "97977bdd8efa",
+      "size": 892
+    },
+    {
+      "id": "godie-i030",
+      "path": "items/godie-i030.json",
+      "hash": "d42709275838",
+      "size": 617
+    },
+    {
+      "id": "godie-i031",
+      "path": "items/godie-i031.json",
+      "hash": "b5181c6c7bd9",
+      "size": 3709
+    },
+    {
+      "id": "godie-i033",
+      "path": "items/godie-i033.json",
+      "hash": "6031ab72ddf9",
+      "size": 732
+    },
+    {
+      "id": "godie-i038",
+      "path": "items/godie-i038.json",
+      "hash": "334c2c254bd2",
+      "size": 752
+    },
+    {
+      "id": "godie-i039",
+      "path": "items/godie-i039.json",
+      "hash": "f4dfc5707828",
+      "size": 3789
+    },
+    {
+      "id": "godie-i03b",
+      "path": "items/godie-i03b.json",
+      "hash": "5f02c71db74d",
+      "size": 1808
+    },
+    {
+      "id": "godie-i03d",
+      "path": "items/godie-i03d.json",
+      "hash": "2e8f0ac53503",
+      "size": 949
+    },
+    {
+      "id": "godie-i03f",
+      "path": "items/godie-i03f.json",
+      "hash": "e9e7d71f6ec2",
+      "size": 2706
+    },
+    {
+      "id": "godie-i03h",
+      "path": "items/godie-i03h.json",
+      "hash": "33d560a577e3",
+      "size": 4224
+    },
+    {
+      "id": "godie-i03j",
+      "path": "items/godie-i03j.json",
+      "hash": "9f569e6c39ec",
+      "size": 390
+    },
+    {
+      "id": "godie-i03l",
+      "path": "items/godie-i03l.json",
+      "hash": "6e31f1fa0dc9",
+      "size": 407
+    },
+    {
+      "id": "godie-i03m",
+      "path": "items/godie-i03m.json",
+      "hash": "57f35d235cee",
+      "size": 2030
+    },
+    {
+      "id": "godie-i03n",
+      "path": "items/godie-i03n.json",
+      "hash": "10d008888541",
+      "size": 340
+    },
+    {
+      "id": "godie-i040",
+      "path": "items/godie-i040.json",
+      "hash": "a41d2f7e172b",
+      "size": 1161
+    },
+    {
+      "id": "godie-i041",
+      "path": "items/godie-i041.json",
+      "hash": "adbde4654276",
+      "size": 681
+    },
+    {
+      "id": "godie-i045",
+      "path": "items/godie-i045.json",
+      "hash": "ed1660f46135",
+      "size": 951
+    },
+    {
+      "id": "godie-i049",
+      "path": "items/godie-i049.json",
+      "hash": "8e62b6a1695d",
+      "size": 888
+    },
+    {
+      "id": "godie-i04b",
+      "path": "items/godie-i04b.json",
+      "hash": "2fd58e82f03d",
+      "size": 1092
+    },
+    {
+      "id": "godie-i04d",
+      "path": "items/godie-i04d.json",
+      "hash": "24258e0fc6c2",
+      "size": 3880
+    },
+    {
+      "id": "godie-i04i",
+      "path": "items/godie-i04i.json",
+      "hash": "2d028cd29b30",
+      "size": 787
+    },
+    {
+      "id": "godie-i04j",
+      "path": "items/godie-i04j.json",
+      "hash": "2987c2ed7ccc",
+      "size": 206
+    },
+    {
+      "id": "godie-i04v",
+      "path": "items/godie-i04v.json",
+      "hash": "f585680654e9",
+      "size": 1912
+    },
+    {
+      "id": "godie-i05h",
+      "path": "items/godie-i05h.json",
+      "hash": "523f26a5aad2",
+      "size": 891
+    },
+    {
+      "id": "godie-i05k",
+      "path": "items/godie-i05k.json",
+      "hash": "382397e04653",
+      "size": 612
+    },
+    {
+      "id": "godie-i05l",
+      "path": "items/godie-i05l.json",
+      "hash": "892b5f47800c",
+      "size": 638
+    },
+    {
+      "id": "godie-i05m",
+      "path": "items/godie-i05m.json",
+      "hash": "205bc46e7bc0",
+      "size": 562
+    },
+    {
+      "id": "godie-i05n",
+      "path": "items/godie-i05n.json",
+      "hash": "ef0166b26865",
+      "size": 645
+    },
+    {
+      "id": "godie-i05o",
+      "path": "items/godie-i05o.json",
+      "hash": "395eb53a5df4",
+      "size": 915
+    },
+    {
+      "id": "godie-i05q",
+      "path": "items/godie-i05q.json",
+      "hash": "80f8dab1193c",
+      "size": 575
+    },
+    {
+      "id": "godie-i05r",
+      "path": "items/godie-i05r.json",
+      "hash": "1ed9cce3a63a",
+      "size": 420
+    },
+    {
+      "id": "godie-i05t",
+      "path": "items/godie-i05t.json",
+      "hash": "09d66d4b1655",
+      "size": 450
+    },
+    {
+      "id": "godie-i05u",
+      "path": "items/godie-i05u.json",
+      "hash": "34d430ae05b8",
+      "size": 434
+    },
+    {
+      "id": "godie-i05v",
+      "path": "items/godie-i05v.json",
+      "hash": "f861fcd537d8",
+      "size": 421
+    },
+    {
+      "id": "godie-i05x",
+      "path": "items/godie-i05x.json",
+      "hash": "3f27514904d2",
+      "size": 444
+    },
+    {
+      "id": "godie-i05z",
+      "path": "items/godie-i05z.json",
+      "hash": "7da85e7019ed",
+      "size": 219
+    },
+    {
+      "id": "godie-i060",
+      "path": "items/godie-i060.json",
+      "hash": "d3efe9d2c00c",
+      "size": 4980
+    },
+    {
+      "id": "godie-i061",
+      "path": "items/godie-i061.json",
+      "hash": "e48c743a5526",
+      "size": 4165
+    },
+    {
+      "id": "godie-i062",
+      "path": "items/godie-i062.json",
+      "hash": "ac16a0bfb533",
+      "size": 270
+    },
+    {
+      "id": "godie-i063",
+      "path": "items/godie-i063.json",
+      "hash": "76339e656d9f",
+      "size": 3748
+    },
+    {
+      "id": "godie-i067",
+      "path": "items/godie-i067.json",
+      "hash": "058f43ac852e",
+      "size": 4781
+    },
+    {
+      "id": "godie-i068",
+      "path": "items/godie-i068.json",
+      "hash": "3c017044bfa6",
+      "size": 525
+    },
+    {
+      "id": "godie-i06a",
+      "path": "items/godie-i06a.json",
+      "hash": "219da272a62b",
+      "size": 3290
+    },
+    {
+      "id": "godie-i06c",
+      "path": "items/godie-i06c.json",
+      "hash": "f62d867a28ed",
+      "size": 483
+    },
+    {
+      "id": "godie-i06d",
+      "path": "items/godie-i06d.json",
+      "hash": "d2f80205be3f",
+      "size": 2589
+    },
+    {
+      "id": "godie-i06e",
+      "path": "items/godie-i06e.json",
+      "hash": "8bb7629b2d3e",
+      "size": 4584
+    },
+    {
+      "id": "godie-i06f",
+      "path": "items/godie-i06f.json",
+      "hash": "db88d7e7c82c",
+      "size": 2569
+    },
+    {
+      "id": "godie-i06g",
+      "path": "items/godie-i06g.json",
+      "hash": "b4de4e8236e7",
+      "size": 4884
+    },
+    {
+      "id": "godie-i06h",
+      "path": "items/godie-i06h.json",
+      "hash": "229d54bdb777",
+      "size": 653
+    },
+    {
+      "id": "godie-i06i",
+      "path": "items/godie-i06i.json",
+      "hash": "6bf1869b359e",
+      "size": 4662
+    },
+    {
+      "id": "godie-i06j",
+      "path": "items/godie-i06j.json",
+      "hash": "8ad5e5b8c21b",
+      "size": 2767
+    },
+    {
+      "id": "godie-i06k",
+      "path": "items/godie-i06k.json",
+      "hash": "ebe98013d34b",
+      "size": 389
+    },
+    {
+      "id": "godie-i06l",
+      "path": "items/godie-i06l.json",
+      "hash": "01c63a10b18c",
+      "size": 381
+    },
+    {
+      "id": "godie-i06n",
+      "path": "items/godie-i06n.json",
+      "hash": "274f68f77e8a",
+      "size": 2395
+    },
+    {
+      "id": "godie-i06o",
+      "path": "items/godie-i06o.json",
+      "hash": "55c3f2b78781",
+      "size": 3421
+    },
+    {
+      "id": "godie-i06q",
+      "path": "items/godie-i06q.json",
+      "hash": "16c8e2033d82",
+      "size": 4537
+    },
+    {
+      "id": "godie-i06s",
+      "path": "items/godie-i06s.json",
+      "hash": "a0095aeb6b02",
+      "size": 841
+    },
+    {
+      "id": "gravity-sword-black-rod",
+      "path": "items/gravity-sword-black-rod.json",
+      "hash": "2053f0b90024",
+      "size": 4989
+    },
+    {
+      "id": "grief-seed",
+      "path": "items/grief-seed.json",
+      "hash": "b8eeda41300a",
+      "size": 5877
+    },
+    {
+      "id": "icha-icha-paradise",
+      "path": "items/icha-icha-paradise.json",
+      "hash": "c9c59505cb47",
+      "size": 3899
+    },
+    {
+      "id": "lance-kongotetsu",
+      "path": "items/lance-kongotetsu.json",
+      "hash": "6f8f4956f7e1",
+      "size": 4976
+    },
+    {
+      "id": "legendary-orb",
+      "path": "items/legendary-orb.json",
+      "hash": "f14ddf663e3e",
+      "size": 536
+    },
+    {
+      "id": "magic-armor-type-zero",
+      "path": "items/magic-armor-type-zero.json",
+      "hash": "3a536af77e74",
+      "size": 5439
+    },
+    {
+      "id": "master-ball",
+      "path": "items/master-ball.json",
+      "hash": "754924c2b7a1",
+      "size": 4676
+    },
+    {
+      "id": "meat-cleaver",
+      "path": "items/meat-cleaver.json",
+      "hash": "765f6409cf99",
+      "size": 5581
+    },
+    {
+      "id": "meteor-ring",
+      "path": "items/meteor-ring.json",
+      "hash": "9d18c1bfe4cc",
+      "size": 10808
+    },
+    {
+      "id": "millennium-puzzle",
+      "path": "items/millennium-puzzle.json",
+      "hash": "0c208609b32d",
+      "size": 4189
+    },
+    {
+      "id": "mystery-scrap-of-paper",
+      "path": "items/mystery-scrap-of-paper.json",
+      "hash": "5af688d9f681",
+      "size": 4003
+    },
+    {
+      "id": "nezuko-box",
+      "path": "items/nezuko-box.json",
+      "hash": "643ac8f7080a",
+      "size": 4450
+    },
+    {
+      "id": "odm-gear",
+      "path": "items/odm-gear.json",
+      "hash": "4493978ccac0",
+      "size": 3851
+    },
+    {
+      "id": "pale-moon-requiem-crown",
+      "path": "items/pale-moon-requiem-crown.json",
+      "hash": "7211373e5231",
+      "size": 5514
+    },
+    {
+      "id": "piercer-crossbow",
+      "path": "items/piercer-crossbow.json",
+      "hash": "915b5c9f3835",
+      "size": 4188
+    },
+    {
+      "id": "red-comet-mask",
+      "path": "items/red-comet-mask.json",
+      "hash": "5c253492d58d",
+      "size": 3164
+    },
+    {
+      "id": "sage-ward-amulet",
+      "path": "items/sage-ward-amulet.json",
+      "hash": "037bc90ec9a4",
+      "size": 2685
+    },
+    {
+      "id": "sasumata",
+      "path": "items/sasumata.json",
+      "hash": "fd97665bf767",
+      "size": 4419
+    },
+    {
+      "id": "scouter",
+      "path": "items/scouter.json",
+      "hash": "c6cfb9dddb02",
+      "size": 5127
+    },
+    {
+      "id": "senzu-bean",
+      "path": "items/senzu-bean.json",
+      "hash": "86a02e8a3599",
+      "size": 7181
+    },
+    {
+      "id": "shining-golden-orbs",
+      "path": "items/shining-golden-orbs.json",
+      "hash": "04e4360b0a19",
+      "size": 8615
+    },
+    {
+      "id": "slime-suit",
+      "path": "items/slime-suit.json",
+      "hash": "3d3f9962ecf3",
+      "size": 3984
+    },
+    {
+      "id": "soul-eater",
+      "path": "items/soul-eater.json",
+      "hash": "bb8c59dea76e",
+      "size": 6088
+    },
+    {
+      "id": "soul-gem",
+      "path": "items/soul-gem.json",
+      "hash": "be114443e0f4",
+      "size": 6914
+    },
+    {
+      "id": "spear-of-lightning",
+      "path": "items/spear-of-lightning.json",
+      "hash": "12b2049066bb",
+      "size": 5821
+    },
+    {
+      "id": "staff-of-ainz-ooal-gown",
+      "path": "items/staff-of-ainz-ooal-gown.json",
+      "hash": "03140fb91687",
+      "size": 12796
+    },
+    {
+      "id": "stat-attunement",
+      "path": "items/stat-attunement.json",
+      "hash": "be9101c31c78",
+      "size": 584
+    },
+    {
+      "id": "stone-mask",
+      "path": "items/stone-mask.json",
+      "hash": "a7ca7f56dd29",
+      "size": 8994
+    },
+    {
+      "id": "teardrop-of-rebirth",
+      "path": "items/teardrop-of-rebirth.json",
+      "hash": "fe5aae28f272",
+      "size": 5516
+    },
+    {
+      "id": "torch-master",
+      "path": "items/torch-master.json",
+      "hash": "f4c448064d74",
+      "size": 4495
+    },
+    {
+      "id": "touyako",
+      "path": "items/touyako.json",
+      "hash": "c18556e22d6b",
+      "size": 3614
+    },
+    {
+      "id": "ultimate-mod-shiranui",
+      "path": "items/ultimate-mod-shiranui.json",
+      "hash": "94878bcaa2b6",
+      "size": 8752
+    },
+    {
+      "id": "usagizuki-twin-crescents",
+      "path": "items/usagizuki-twin-crescents.json",
+      "hash": "4285e147f0a9",
+      "size": 7365
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "trial-stun",
+  "schema": "status-effect@1",
+  "name": "試煉衝擊",
+  "description": "被一個剛剛拒絕死亡的人震開。那一瞬間的衝擊不是攻擊 —— 是十二條命裡少掉一條時，世界替他讓開的位置。",
+  "polarity": "debuff",
+  "tags": [
+    "trial-stun",
+    "stun",
+    "hard-cc",
+    "cc",
+    "disable",
+    "move-denied",
+    "attack-denied",
+    "cast-denied",
+    "named-variant",
+    "debuff"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "alcohol-enema",
+  "schema": "status-effect@1",
+  "name": "酒精灌腸",
+  "description": "整個人泡在酒裡，腳步慢下來、刀也揮得歪。它同時是一個查得到的標記 —— 30-002 變態紳士專門等你醉了才動手（「攻擊身上有酒精灌腸效果的敵人」）。減速多少、醉多久，寫在施加它的那張卡（30-02 酒精灌腸）上，不在這裡。",
+  "polarity": "debuff",
+  "tags": [
+    "alcohol-enema",
+    "drunk",
+    "slow",
+    "marker",
+    "debuff"
+  ]
+}

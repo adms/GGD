@@ -1,0 +1,2015 @@
+{
+  "id": "audio-map",
+  "schema": "config.audio-map@1",
+  "bgm": {
+    "menu": {
+      "file": "assets/audio/bgm/menu.mp3",
+      "loop": true,
+      "gain": 0.72
+    },
+    "menuNocturne": {
+      "file": "assets/audio/bgm/menuNocturne.mp3",
+      "loop": true,
+      "gain": 0.44
+    },
+    "lobby": {
+      "file": "assets/audio/bgm/lobby.mp3",
+      "loop": true,
+      "gain": 0.504
+    },
+    "room": {
+      "file": "assets/audio/bgm/room.mp3",
+      "loop": true,
+      "gain": 0.72
+    },
+    "champSelect": {
+      "file": "assets/audio/bgm/champSelect.mp3",
+      "loop": true,
+      "gain": 0.72
+    },
+    "intermission": {
+      "file": "assets/audio/bgm/intermission.mp3",
+      "loop": true,
+      "gain": 0.68
+    },
+    "battleStart": {
+      "file": "assets/audio/bgm/battleStart.mp3",
+      "loop": false,
+      "gain": 0.8
+    },
+    "combat": {
+      "file": "assets/audio/bgm/combat.mp3",
+      "loop": true,
+      "gain": 0.52
+    },
+    "fireRing": {
+      "file": "assets/audio/bgm/fireRing.mp3",
+      "loop": true,
+      "gain": 0.56
+    },
+    "settlement": {
+      "file": "assets/audio/bgm/settlement.mp3",
+      "loop": true,
+      "gain": 0.68
+    },
+    "victory": {
+      "file": "assets/audio/bgm/victory.mp3",
+      "loop": false,
+      "gain": 0.8
+    },
+    "defeat": {
+      "file": "assets/audio/bgm/defeat.mp3",
+      "loop": false,
+      "gain": 0.76
+    }
+  },
+  "mapBgm": {
+    "arena.frieren": {
+      "file": "assets/audio/bgm/map.frieren.mp3",
+      "loop": true,
+      "gain": 0.5
+    },
+    "arena.heavens-arena": {
+      "file": "assets/audio/bgm/map.heavens-arena.mp3",
+      "loop": true,
+      "gain": 0.52
+    },
+    "arena.holy-grail": {
+      "file": "assets/audio/bgm/map.holy-grail.mp3",
+      "loop": true,
+      "gain": 0.52
+    },
+    "arena.infinity-castle": {
+      "file": "assets/audio/bgm/map.infinity-castle.mp3",
+      "loop": true,
+      "gain": 0.52
+    },
+    "arena.nazarick": {
+      "file": "assets/audio/bgm/map.nazarick.mp3",
+      "loop": true,
+      "gain": 0.54
+    },
+    "arena.shiganshina": {
+      "file": "assets/audio/bgm/map.shiganshina.mp3",
+      "loop": true,
+      "gain": 0.54
+    },
+    "arena.world-tree": {
+      "file": "assets/audio/bgm/map.world-tree.mp3",
+      "loop": true,
+      "gain": 0.5
+    },
+    "arena.castle": {
+      "file": "assets/audio/bgm/map.castle.mp3",
+      "loop": true,
+      "gain": 0.52
+    },
+    "arena.colosseum": {
+      "file": "assets/audio/bgm/map.colosseum.mp3",
+      "loop": true,
+      "gain": 0.54
+    },
+    "arena.dota": {
+      "file": "assets/audio/bgm/map.dota.mp3",
+      "loop": true,
+      "gain": 0.48
+    },
+    "arena.godie": {
+      "file": "assets/audio/bgm/map.godie.mp3",
+      "loop": true,
+      "gain": 0.54
+    },
+    "arena.skeleton": {
+      "file": "assets/audio/bgm/map.skeleton.mp3",
+      "loop": true,
+      "gain": 0.44
+    },
+    "arena.royale": {
+      "file": "assets/audio/bgm/map.royale.mp3",
+      "loop": true,
+      "gain": 0.56
+    }
+  },
+  "sfx": {
+    "attackWindup": {
+      "files": [
+        "assets/audio/sfx/fx/windup.mp3"
+      ],
+      "gain": 0.28,
+      "cooldownMs": 130,
+      "maxConcurrent": 2
+    },
+    "basicAttack": {
+      "files": [
+        "assets/audio/sfx/fx/swing.mp3"
+      ],
+      "gain": 0.55,
+      "cooldownMs": 90,
+      "maxConcurrent": 3
+    },
+    "basicAttackHit": {
+      "files": [
+        "assets/audio/sfx/fx/thud.mp3"
+      ],
+      "gain": 0.85,
+      "cooldownMs": 70,
+      "maxConcurrent": 4
+    },
+    "damage": {
+      "files": [
+        "assets/audio/sfx/fx/tick.mp3"
+      ],
+      "gain": 0.3,
+      "cooldownMs": 90,
+      "maxConcurrent": 3
+    },
+    "hit": {
+      "files": [
+        "assets/audio/sfx/fx/thud.mp3"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 85,
+      "maxConcurrent": 4
+    },
+    "hitMagic": {
+      "files": [
+        "assets/audio/sfx/fx/hit_magic.mp3"
+      ],
+      "gain": 0.62,
+      "cooldownMs": 85,
+      "maxConcurrent": 4
+    },
+    "hitTrue": {
+      "files": [
+        "assets/audio/sfx/fx/hit_true.mp3"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 90,
+      "maxConcurrent": 3
+    },
+    "block": {
+      "files": [
+        "assets/audio/sfx/fx/guard.mp3",
+        "assets/audio/sfx/fx/block-hit.mp3"
+      ],
+      "gain": 0.7,
+      "cooldownMs": 110,
+      "maxConcurrent": 3
+    },
+    "crit": {
+      "files": [
+        "assets/audio/sfx/fx/crit.mp3"
+      ],
+      "gain": 0.95,
+      "cooldownMs": 140,
+      "maxConcurrent": 2
+    },
+    "guardBreak": {
+      "files": [
+        "assets/audio/sfx/fx/guard_break.mp3"
+      ],
+      "gain": 1.0,
+      "cooldownMs": 220,
+      "maxConcurrent": 2
+    },
+    "knockdown": {
+      "files": [
+        "assets/audio/sfx/fx/knockdown.mp3"
+      ],
+      "gain": 0.95,
+      "cooldownMs": 250,
+      "maxConcurrent": 2
+    },
+    "hit-light": {
+      "files": [
+        "assets/audio/sfx/fx/hit-light.mp3"
+      ],
+      "gain": 0.55,
+      "cooldownMs": 70,
+      "maxConcurrent": 4
+    },
+    "hit-medium": {
+      "files": [
+        "assets/audio/sfx/fx/hit-medium.mp3"
+      ],
+      "gain": 0.72,
+      "cooldownMs": 75,
+      "maxConcurrent": 4
+    },
+    "hit-heavy": {
+      "files": [
+        "assets/audio/sfx/fx/hit-heavy.mp3"
+      ],
+      "gain": 0.95,
+      "cooldownMs": 85,
+      "maxConcurrent": 3
+    },
+    "hit-crit": {
+      "files": [
+        "assets/audio/sfx/fx/hit-crit.mp3"
+      ],
+      "gain": 1.0,
+      "cooldownMs": 90,
+      "maxConcurrent": 3
+    },
+    "block-hit": {
+      "files": [
+        "assets/audio/sfx/fx/block-hit.mp3"
+      ],
+      "gain": 0.7,
+      "cooldownMs": 90,
+      "maxConcurrent": 3
+    },
+    "whiff": {
+      "files": [
+        "assets/audio/sfx/lab/whiff-sword.mp3"
+      ],
+      "gain": 0.43,
+      "cooldownMs": 120,
+      "maxConcurrent": 2
+    },
+    "footstep": {
+      "files": [
+        "assets/audio/sfx/fx/footstep.mp3"
+      ],
+      "gain": 0.22,
+      "cooldownMs": 170,
+      "maxConcurrent": 2
+    },
+    "projectileSpawn": {
+      "files": [
+        "assets/audio/sfx/fx/launch.mp3"
+      ],
+      "gain": 0.4,
+      "cooldownMs": 70,
+      "maxConcurrent": 4
+    },
+    "projectileHit": {
+      "files": [
+        "assets/audio/sfx/fx/impact.mp3"
+      ],
+      "gain": 0.75,
+      "cooldownMs": 60,
+      "maxConcurrent": 4
+    },
+    "castBegin": {
+      "files": [
+        "assets/audio/sfx/fx/cast_begin.mp3"
+      ],
+      "gain": 0.3,
+      "cooldownMs": 120,
+      "maxConcurrent": 3
+    },
+    "castEnd": {
+      "files": [
+        "assets/audio/sfx/fx/cast_end.mp3"
+      ],
+      "gain": 0.5,
+      "cooldownMs": 120,
+      "maxConcurrent": 3
+    },
+    "castInterrupt": {
+      "files": [
+        "assets/audio/sfx/fx/cast_break.mp3"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 150,
+      "maxConcurrent": 2
+    },
+    "abilityCast": {
+      "files": [
+        "assets/audio/sfx/fx/whiff.mp3"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.moongo": {
+      "files": [
+        "assets/audio/sfx/moongo.mp3"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.moonjump": {
+      "files": [
+        "assets/audio/sfx/moonjump.mp3"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.nocute": {
+      "files": [
+        "assets/audio/sfx/nocute.mp3"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.akamapissed8": {
+      "files": [
+        "assets/audio/wc3/akamapissed8.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.altarofelderswhat1": {
+      "files": [
+        "assets/audio/wc3/altarofelderswhat1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.axemissilelaunch1": {
+      "files": [
+        "assets/audio/wc3/axemissilelaunch1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.chickenwhat1": {
+      "files": [
+        "assets/audio/wc3/chickenwhat1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.darksummoninglaunch1": {
+      "files": [
+        "assets/audio/wc3/darksummoninglaunch1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.defendcaster": {
+      "files": [
+        "assets/audio/wc3/defendcaster.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.demonhuntermissilehit3": {
+      "files": [
+        "assets/audio/wc3/demonhuntermissilehit3.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.dragonroostwhat1": {
+      "files": [
+        "assets/audio/wc3/dragonroostwhat1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.dragonyes2": {
+      "files": [
+        "assets/audio/wc3/dragonyes2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.druidofthetalonmissilelaunch2": {
+      "files": [
+        "assets/audio/wc3/druidofthetalonmissilelaunch2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.eggsackdeath1": {
+      "files": [
+        "assets/audio/wc3/eggsackdeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.flaretarget2": {
+      "files": [
+        "assets/audio/wc3/flaretarget2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.flaretarget3": {
+      "files": [
+        "assets/audio/wc3/flaretarget3.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.gluescreenmeteorhit1": {
+      "files": [
+        "assets/audio/wc3/gluescreenmeteorhit1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.gruntpissed3": {
+      "files": [
+        "assets/audio/wc3/gruntpissed3.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.gruntyesattack1": {
+      "files": [
+        "assets/audio/wc3/gruntyesattack1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.gruntyesattack3": {
+      "files": [
+        "assets/audio/wc3/gruntyesattack3.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.hcancelbuilding": {
+      "files": [
+        "assets/audio/wc3/hcancelbuilding.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.headhunteryes4": {
+      "files": [
+        "assets/audio/wc3/headhunteryes4.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.kaelyesattack3": {
+      "files": [
+        "assets/audio/wc3/kaelyesattack3.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.markofchaos": {
+      "files": [
+        "assets/audio/wc3/markofchaos.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.mercenarywhat1": {
+      "files": [
+        "assets/audio/wc3/mercenarywhat1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.mortarimpact": {
+      "files": [
+        "assets/audio/wc3/mortarimpact.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.mortarteampissed9": {
+      "files": [
+        "assets/audio/wc3/mortarteampissed9.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.nazgrelyes2": {
+      "files": [
+        "assets/audio/wc3/nazgrelyes2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.necropolisupgrade2": {
+      "files": [
+        "assets/audio/wc3/necropolisupgrade2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.pandarenbrewmasterpissed8": {
+      "files": [
+        "assets/audio/wc3/pandarenbrewmasterpissed8.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.pandarenbrewmasterwarcry1": {
+      "files": [
+        "assets/audio/wc3/pandarenbrewmasterwarcry1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.pandarenbrewmasteryes1": {
+      "files": [
+        "assets/audio/wc3/pandarenbrewmasteryes1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.parasite": {
+      "files": [
+        "assets/audio/wc3/parasite.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.peasantpissed3": {
+      "files": [
+        "assets/audio/wc3/peasantpissed3.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.peondeath": {
+      "files": [
+        "assets/audio/wc3/peondeath.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.rokhanwhat2": {
+      "files": [
+        "assets/audio/wc3/rokhanwhat2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.sealwhat2": {
+      "files": [
+        "assets/audio/wc3/sealwhat2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.shadowhunterready1": {
+      "files": [
+        "assets/audio/wc3/shadowhunterready1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.shamanready1": {
+      "files": [
+        "assets/audio/wc3/shamanready1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.snapdragonmissilelaunch1": {
+      "files": [
+        "assets/audio/wc3/snapdragonmissilelaunch1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.soulgem": {
+      "files": [
+        "assets/audio/wc3/soulgem.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.soulpreservation": {
+      "files": [
+        "assets/audio/wc3/soulpreservation.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.spellbreakerpissed4": {
+      "files": [
+        "assets/audio/wc3/spellbreakerpissed4.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.spiritofvengeanceyes3": {
+      "files": [
+        "assets/audio/wc3/spiritofvengeanceyes3.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.stampedecaster1": {
+      "files": [
+        "assets/audio/wc3/stampedecaster1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.taunt": {
+      "files": [
+        "assets/audio/wc3/taunt.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.thunderboltmissiledeath": {
+      "files": [
+        "assets/audio/wc3/thunderboltmissiledeath.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.thunderclapcaster": {
+      "files": [
+        "assets/audio/wc3/thunderclapcaster.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.treantready1": {
+      "files": [
+        "assets/audio/wc3/treantready1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.trollbatriderpissed2": {
+      "files": [
+        "assets/audio/wc3/trollbatriderpissed2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.trollwoodworkswhat1": {
+      "files": [
+        "assets/audio/wc3/trollwoodworkswhat1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.waygatewhat1": {
+      "files": [
+        "assets/audio/wc3/waygatewhat1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "flowerSpawn": {
+      "files": [
+        "assets/audio/sfx/fx/chime_soft.mp3"
+      ],
+      "gain": 0.45,
+      "cooldownMs": 400,
+      "maxConcurrent": 2
+    },
+    "flowerBurst": {
+      "files": [
+        "assets/audio/sfx/fx/chime_burst.mp3"
+      ],
+      "gain": 0.85,
+      "cooldownMs": 250,
+      "maxConcurrent": 3
+    },
+    "levelUp": {
+      "files": [
+        "assets/audio/announcer/level-up-1.mp3",
+        "assets/audio/announcer/level-up-2.mp3"
+      ],
+      "gain": 0.85,
+      "cooldownMs": 250,
+      "maxConcurrent": 2
+    },
+    "death": {
+      "files": [
+        "assets/audio/announcer/death-1.mp3",
+        "assets/audio/announcer/death-2.mp3",
+        "assets/audio/announcer/death-3.mp3"
+      ],
+      "gain": 0.9,
+      "cooldownMs": 300,
+      "maxConcurrent": 2
+    },
+    "exUnlock": {
+      "files": [
+        "assets/audio/announcer/ex-unlock.mp3"
+      ],
+      "gain": 0.85,
+      "cooldownMs": 2500,
+      "maxConcurrent": 1
+    },
+    "kill": {
+      "files": [
+        "assets/audio/sfx/fx/chime_burst.mp3"
+      ],
+      "gain": 1.15,
+      "cooldownMs": 900,
+      "maxConcurrent": 1
+    },
+    "multiKill": {
+      "files": [
+        "assets/audio/announcer/multi-kill-1.mp3",
+        "assets/audio/announcer/multi-kill-2.mp3",
+        "assets/audio/announcer/multi-kill-3.mp3"
+      ],
+      "gain": 0.9,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "crowdCheer": {
+      "files": [
+        "assets/audio/sfx/fx/crowd-cheer.mp3"
+      ],
+      "gain": 0.45,
+      "cooldownMs": 2400,
+      "maxConcurrent": 1
+    },
+    "crowdCheerBig": {
+      "files": [
+        "assets/audio/sfx/fx/crowd-cheer-big.mp3"
+      ],
+      "gain": 0.5,
+      "cooldownMs": 2400,
+      "maxConcurrent": 1
+    },
+    "allySlain": {
+      "files": [
+        "assets/audio/announcer/ally-slain.mp3"
+      ],
+      "gain": 0.7,
+      "cooldownMs": 1500,
+      "maxConcurrent": 1
+    },
+    "champSelectConfirm": {
+      "files": [
+        "assets/audio/sfx/fx/draft-confirm.mp3"
+      ],
+      "gain": 1.2,
+      "cooldownMs": 250,
+      "maxConcurrent": 1
+    },
+    "countTick": {
+      "files": [
+        "assets/audio/sfx/fx/count-tick.mp3"
+      ],
+      "gain": 0.9,
+      "cooldownMs": 300,
+      "maxConcurrent": 2
+    },
+    "countFinal": {
+      "files": [
+        "assets/audio/sfx/fx/count-final.mp3"
+      ],
+      "gain": 0.9,
+      "cooldownMs": 300,
+      "maxConcurrent": 2
+    },
+    "matchStart": {
+      "files": [
+        "assets/audio/announcer/match-start.mp3"
+      ],
+      "gain": 0.7,
+      "cooldownMs": 3000,
+      "maxConcurrent": 1
+    },
+    "roundStart": {
+      "files": [
+        "assets/audio/announcer/round-start-1.mp3",
+        "assets/audio/announcer/round-start-2.mp3"
+      ],
+      "gain": 0.8,
+      "cooldownMs": 3000,
+      "maxConcurrent": 1
+    },
+    "taunt": {
+      "files": [
+        "assets/audio/sfx/yooooooooooooo.mp3",
+        "assets/audio/sfx/kickme.mp3",
+        "assets/audio/sfx/nog.mp3"
+      ],
+      "gain": 0.55,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "mapFlavorIntro": {
+      "files": [
+        "assets/audio/sfx/heycharlie.mp3",
+        "assets/audio/sfx/letsgo.mp3"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 10000,
+      "maxConcurrent": 1
+    },
+    "mapFlavorAnnounce": {
+      "files": [
+        "assets/audio/sfx/up.mp3",
+        "assets/audio/sfx/die.mp3",
+        "assets/audio/sfx/4die.mp3",
+        "assets/audio/sfx/pcdie.mp3"
+      ],
+      "gain": 1.3,
+      "cooldownMs": 1500,
+      "maxConcurrent": 1
+    },
+    "dragonRoar": {
+      "files": [
+        "assets/audio/sfx/dragon-roar.mp3",
+        "assets/audio/sfx/dragon-roar2.mp3"
+      ],
+      "gain": 0.425,
+      "cooldownMs": 2000,
+      "maxConcurrent": 2
+    },
+    "dragonRoarBig": {
+      "files": [
+        "assets/audio/sfx/dragon-roar-angry.mp3"
+      ],
+      "gain": 0.5,
+      "cooldownMs": 1500,
+      "maxConcurrent": 2
+    },
+    "uiClick": {
+      "files": [
+        "assets/audio/sfx/ui-click.mp3"
+      ],
+      "gain": 0.55,
+      "cooldownMs": 60,
+      "maxConcurrent": 3
+    },
+    "uiHover": {
+      "files": [
+        "assets/audio/sfx/ui-hover.mp3"
+      ],
+      "gain": 0.3,
+      "cooldownMs": 40,
+      "maxConcurrent": 3
+    },
+    "uiType": {
+      "files": [
+        "assets/audio/sfx/ui-type.mp3"
+      ],
+      "gain": 0.25,
+      "cooldownMs": 25,
+      "maxConcurrent": 4
+    },
+    "uiDenied": {
+      "files": [
+        "assets/audio/sfx/lab/ui-denied.mp3"
+      ],
+      "gain": 0.31,
+      "cooldownMs": 250,
+      "maxConcurrent": 2
+    },
+    "uiCancel": {
+      "files": [
+        "assets/audio/sfx/lab/ui-cancel.mp3"
+      ],
+      "gain": 0.33,
+      "cooldownMs": 60,
+      "maxConcurrent": 3
+    },
+    "panelOpen": {
+      "files": [
+        "assets/audio/sfx/lab/panel-open.mp3"
+      ],
+      "gain": 0.24,
+      "cooldownMs": 150,
+      "maxConcurrent": 2
+    },
+    "shopPurchase": {
+      "files": [
+        "assets/audio/sfx/lab/shop-purchase.mp3"
+      ],
+      "gain": 0.38,
+      "cooldownMs": 250,
+      "maxConcurrent": 2
+    },
+    "goldGain": {
+      "files": [
+        "assets/audio/sfx/lab/gold-gain.mp3"
+      ],
+      "gain": 1.51,
+      "cooldownMs": 300,
+      "maxConcurrent": 2
+    },
+    "lowHealth": {
+      "files": [
+        "assets/audio/sfx/lab/low-health.mp3"
+      ],
+      "gain": 1.0,
+      "cooldownMs": 3000,
+      "maxConcurrent": 1
+    },
+    "abilityRankUp": {
+      "files": [
+        "assets/audio/sfx/lab/ability-rank-up.mp3"
+      ],
+      "gain": 0.24,
+      "cooldownMs": 250,
+      "maxConcurrent": 2
+    },
+    "settlementReveal": {
+      "files": [
+        "assets/audio/sfx/lab/settlement-reveal.mp3"
+      ],
+      "gain": 0.36,
+      "cooldownMs": 1000,
+      "maxConcurrent": 1
+    },
+    "vsReveal": {
+      "files": [
+        "assets/audio/sfx/lab/vs-reveal.mp3"
+      ],
+      "gain": 1.58,
+      "cooldownMs": 2000,
+      "maxConcurrent": 1
+    },
+    "matchStartGong": {
+      "files": [
+        "assets/audio/sfx/lab/match-start-gong.mp3"
+      ],
+      "gain": 1.6,
+      "cooldownMs": 3000,
+      "maxConcurrent": 1
+    },
+    "matchEndGong": {
+      "files": [
+        "assets/audio/sfx/lab/match-end-gong.mp3"
+      ],
+      "gain": 1.11,
+      "cooldownMs": 3000,
+      "maxConcurrent": 1
+    },
+    "levelUpJingle": {
+      "files": [
+        "assets/audio/sfx/lab/level-up-jingle.mp3"
+      ],
+      "gain": 1.17,
+      "cooldownMs": 1000,
+      "maxConcurrent": 1
+    },
+    "exUnlockSting": {
+      "files": [
+        "assets/audio/sfx/lab/magic-holy.mp3"
+      ],
+      "gain": 1.6,
+      "cooldownMs": 2500,
+      "maxConcurrent": 1
+    },
+    "heal": {
+      "files": [
+        "assets/audio/sfx/lab/magic-heal.mp3"
+      ],
+      "gain": 0.41,
+      "cooldownMs": 400,
+      "maxConcurrent": 2
+    },
+    "buffApply": {
+      "files": [
+        "assets/audio/sfx/lab/magic-buff.mp3"
+      ],
+      "gain": 0.23,
+      "cooldownMs": 400,
+      "maxConcurrent": 2
+    },
+    "explosion": {
+      "files": [
+        "assets/audio/sfx/lab/explosion.mp3"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 300,
+      "maxConcurrent": 3
+    },
+    "uiHoverCyber": {
+      "files": [
+        "assets/audio/sfx/fx/ui-hover-cyber.mp3"
+      ],
+      "gain": 0.3,
+      "cooldownMs": 55,
+      "maxConcurrent": 3
+    },
+    "draftConfirm": {
+      "files": [
+        "assets/audio/sfx/fx/draft-confirm.mp3"
+      ],
+      "gain": 1.0,
+      "cooldownMs": 200,
+      "maxConcurrent": 1
+    },
+    "legendaryRoll": {
+      "files": [
+        "assets/audio/sfx/lab/legendaryRoll.mp3"
+      ],
+      "gain": 1.0,
+      "cooldownMs": 500,
+      "maxConcurrent": 1
+    },
+    "uiTabSwitch": {
+      "files": [
+        "assets/audio/sfx/lab/uiTabSwitch.mp3"
+      ],
+      "gain": 0.3,
+      "cooldownMs": 60,
+      "maxConcurrent": 2
+    },
+    "uiToggle": {
+      "files": [
+        "assets/audio/sfx/lab/uiToggle.mp3"
+      ],
+      "gain": 0.22,
+      "cooldownMs": 60,
+      "maxConcurrent": 2
+    },
+    "reviveChannel": {
+      "files": [
+        "assets/audio/sfx/lab/reviveChannel.mp3"
+      ],
+      "gain": 0.5,
+      "cooldownMs": 250,
+      "maxConcurrent": 1
+    },
+    "reviveComplete": {
+      "files": [
+        "assets/audio/sfx/lab/reviveComplete.mp3"
+      ],
+      "gain": 0.5,
+      "cooldownMs": 500,
+      "maxConcurrent": 2
+    },
+    "respawn": {
+      "files": [
+        "assets/audio/sfx/lab/respawn.mp3"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 500,
+      "maxConcurrent": 2
+    },
+    "fireRingLoop": {
+      "files": [
+        "assets/audio/sfx/lab/fireRingLoop.mp3"
+      ],
+      "gain": 0.5,
+      "cooldownMs": 250,
+      "maxConcurrent": 1
+    },
+    "arenaAmbience": {
+      "files": [
+        "assets/audio/sfx/lab/arenaAmbience.mp3"
+      ],
+      "gain": 0.35,
+      "cooldownMs": 250,
+      "maxConcurrent": 1
+    },
+    "merchantAmbience": {
+      "files": [
+        "assets/audio/sfx/lab/merchantAmbience.mp3"
+      ],
+      "gain": 0.35,
+      "cooldownMs": 250,
+      "maxConcurrent": 1
+    },
+    "attackSword1": {
+      "files": [
+        "assets/audio/sfx/lab/attack-sword-1.mp3"
+      ],
+      "gain": 0.42,
+      "cooldownMs": 90,
+      "maxConcurrent": 3
+    },
+    "attackSword2": {
+      "files": [
+        "assets/audio/sfx/lab/attack-sword-2.mp3"
+      ],
+      "gain": 0.63,
+      "cooldownMs": 90,
+      "maxConcurrent": 3
+    },
+    "attackGreatsword": {
+      "files": [
+        "assets/audio/sfx/lab/attack-greatsword.mp3"
+      ],
+      "gain": 0.44,
+      "cooldownMs": 90,
+      "maxConcurrent": 2
+    },
+    "attackKatana": {
+      "files": [
+        "assets/audio/sfx/lab/attack-katana.mp3"
+      ],
+      "gain": 0.23,
+      "cooldownMs": 90,
+      "maxConcurrent": 3
+    },
+    "bowDraw": {
+      "files": [
+        "assets/audio/sfx/lab/bow-draw.mp3"
+      ],
+      "gain": 0.57,
+      "cooldownMs": 130,
+      "maxConcurrent": 2
+    },
+    "arrowRelease": {
+      "files": [
+        "assets/audio/sfx/lab/arrow-release.mp3"
+      ],
+      "gain": 0.42,
+      "cooldownMs": 90,
+      "maxConcurrent": 3
+    },
+    "arrowPierce": {
+      "files": [
+        "assets/audio/sfx/lab/arrow-pierce.mp3"
+      ],
+      "gain": 0.34,
+      "cooldownMs": 110,
+      "maxConcurrent": 2
+    },
+    "gunshot": {
+      "files": [
+        "assets/audio/sfx/lab/gunshot.mp3"
+      ],
+      "gain": 1.4,
+      "cooldownMs": 70,
+      "maxConcurrent": 3
+    },
+    "magicBolt": {
+      "files": [
+        "assets/audio/sfx/lab/magic-bolt.mp3"
+      ],
+      "gain": 0.45,
+      "cooldownMs": 130,
+      "maxConcurrent": 2
+    },
+    "magicFire": {
+      "files": [
+        "assets/audio/sfx/lab/magic-fire.mp3"
+      ],
+      "gain": 0.62,
+      "cooldownMs": 250,
+      "maxConcurrent": 2
+    },
+    "magicIce": {
+      "files": [
+        "assets/audio/sfx/lab/magic-ice.mp3"
+      ],
+      "gain": 0.64,
+      "cooldownMs": 250,
+      "maxConcurrent": 2
+    },
+    "magicLightning": {
+      "files": [
+        "assets/audio/sfx/lab/magic-lightning.mp3"
+      ],
+      "gain": 0.53,
+      "cooldownMs": 250,
+      "maxConcurrent": 2
+    },
+    "castCircle": {
+      "files": [
+        "assets/audio/sfx/lab/cast-circle.mp3"
+      ],
+      "gain": 0.72,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "guardianSlam": {
+      "files": [
+        "assets/audio/sfx/lab/guardianSlam.mp3"
+      ],
+      "gain": 0.9,
+      "cooldownMs": 300,
+      "maxConcurrent": 2
+    },
+    "guardianLastHit": {
+      "files": [
+        "assets/audio/sfx/lab/guardianLastHit.mp3"
+      ],
+      "gain": 0.89,
+      "cooldownMs": 500,
+      "maxConcurrent": 2
+    },
+    "coinPickup": {
+      "files": [
+        "assets/audio/sfx/lab/guardianLastHit.mp3"
+      ],
+      "gain": 1.9,
+      "cooldownMs": 120,
+      "maxConcurrent": 3
+    },
+    "coinDrop": {
+      "files": [
+        "assets/audio/sfx/lab/gold-gain.mp3"
+      ],
+      "gain": 1.2,
+      "cooldownMs": 150,
+      "maxConcurrent": 3
+    },
+    "draftCardReveal": {
+      "files": [
+        "assets/audio/sfx/lab/draftCardReveal.mp3"
+      ],
+      "gain": 0.45,
+      "cooldownMs": 120,
+      "maxConcurrent": 3
+    },
+    "legendaryWin": {
+      "files": [
+        "assets/audio/sfx/lab/legendaryWin.mp3"
+      ],
+      "gain": 1.44,
+      "cooldownMs": 2000,
+      "maxConcurrent": 1
+    },
+    "bossHorror": {
+      "files": [
+        "assets/audio/sfx/fx/boss-horror.mp3"
+      ],
+      "gain": 0.85,
+      "cooldownMs": 4000,
+      "maxConcurrent": 1
+    },
+    "bossJackpot": {
+      "files": [
+        "assets/audio/sfx/fx/boss-jackpot.mp3"
+      ],
+      "gain": 0.95,
+      "cooldownMs": 4000,
+      "maxConcurrent": 1
+    },
+    "zombieRoar": {
+      "files": [
+        "assets/audio/sfx/lab/zombie-roar.mp3"
+      ],
+      "gain": 0.95,
+      "cooldownMs": 2000,
+      "maxConcurrent": 1
+    },
+    "zombieBite": {
+      "files": [
+        "assets/audio/sfx/lab/zombie-bite.mp3"
+      ],
+      "gain": 0.71,
+      "cooldownMs": 200,
+      "maxConcurrent": 2
+    },
+    "wc3.ancestralspirit": {
+      "files": [
+        "assets/audio/wc3/ancestralspirit.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.archerdeath1": {
+      "files": [
+        "assets/audio/wc3/archerdeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.banditdeath1": {
+      "files": [
+        "assets/audio/wc3/banditdeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.blademasterwhirlwind": {
+      "files": [
+        "assets/audio/wc3/blademasterwhirlwind.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.blinkbirth1": {
+      "files": [
+        "assets/audio/wc3/blinkbirth1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.bloodelfsorcerordeath": {
+      "files": [
+        "assets/audio/wc3/bloodelfsorcerordeath.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.bloodlusttarget": {
+      "files": [
+        "assets/audio/wc3/bloodlusttarget.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.brewmasterdeath1": {
+      "files": [
+        "assets/audio/wc3/brewmasterdeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.buildingdeathlargehuman": {
+      "files": [
+        "assets/audio/wc3/buildingdeathlargehuman.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.catapultmissile1": {
+      "files": [
+        "assets/audio/wc3/catapultmissile1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.catapultmissile2": {
+      "files": [
+        "assets/audio/wc3/catapultmissile2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.catapultmissile3": {
+      "files": [
+        "assets/audio/wc3/catapultmissile3.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.catapultmissile4": {
+      "files": [
+        "assets/audio/wc3/catapultmissile4.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.coldarrow1": {
+      "files": [
+        "assets/audio/wc3/coldarrow1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.coldarrow2": {
+      "files": [
+        "assets/audio/wc3/coldarrow2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.coldarrow3": {
+      "files": [
+        "assets/audio/wc3/coldarrow3.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.criticalstrike": {
+      "files": [
+        "assets/audio/wc3/criticalstrike.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.crushingwavecaster1": {
+      "files": [
+        "assets/audio/wc3/crushingwavecaster1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.deathcoilmissilelaunch1": {
+      "files": [
+        "assets/audio/wc3/deathcoilmissilelaunch1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.dispelmagictarget": {
+      "files": [
+        "assets/audio/wc3/dispelmagictarget.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.fanofknives": {
+      "files": [
+        "assets/audio/wc3/fanofknives.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.farmwhat1": {
+      "files": [
+        "assets/audio/wc3/farmwhat1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.farseermissile": {
+      "files": [
+        "assets/audio/wc3/farseermissile.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.feralspirittarget1": {
+      "files": [
+        "assets/audio/wc3/feralspirittarget1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.fireballmissilelaunch1": {
+      "files": [
+        "assets/audio/wc3/fireballmissilelaunch1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.fireballmissilelaunch2": {
+      "files": [
+        "assets/audio/wc3/fireballmissilelaunch2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.fireballmissilelaunch3": {
+      "files": [
+        "assets/audio/wc3/fireballmissilelaunch3.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.flamestrikebirth1": {
+      "files": [
+        "assets/audio/wc3/flamestrikebirth1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.flaretarget1": {
+      "files": [
+        "assets/audio/wc3/flaretarget1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.flashback1second": {
+      "files": [
+        "assets/audio/wc3/flashback1second.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.footmandeath": {
+      "files": [
+        "assets/audio/wc3/footmandeath.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.fountainoflifewhat1": {
+      "files": [
+        "assets/audio/wc3/fountainoflifewhat1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.furbolgdeath1": {
+      "files": [
+        "assets/audio/wc3/furbolgdeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.gluescreenmeteorhit2": {
+      "files": [
+        "assets/audio/wc3/gluescreenmeteorhit2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.gruntwhat2": {
+      "files": [
+        "assets/audio/wc3/gruntwhat2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.healtarget": {
+      "files": [
+        "assets/audio/wc3/healtarget.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.heroblademasterattack1": {
+      "files": [
+        "assets/audio/wc3/heroblademasterattack1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.heroblademasterattack2": {
+      "files": [
+        "assets/audio/wc3/heroblademasterattack2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.heroblademasterdeath": {
+      "files": [
+        "assets/audio/wc3/heroblademasterdeath.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.herodeathknightattack1": {
+      "files": [
+        "assets/audio/wc3/herodeathknightattack1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.herodeathknightdeath": {
+      "files": [
+        "assets/audio/wc3/herodeathknightdeath.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.herodemonhunterdeath1": {
+      "files": [
+        "assets/audio/wc3/herodemonhunterdeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.heropaladindeath": {
+      "files": [
+        "assets/audio/wc3/heropaladindeath.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.holybolt": {
+      "files": [
+        "assets/audio/wc3/holybolt.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.humandissipate1": {
+      "files": [
+        "assets/audio/wc3/humandissipate1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.infernalbirth1": {
+      "files": [
+        "assets/audio/wc3/infernalbirth1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.invisibilitytarget": {
+      "files": [
+        "assets/audio/wc3/invisibilitytarget.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.irongolemattack1": {
+      "files": [
+        "assets/audio/wc3/irongolemattack1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.irongolemdeath1": {
+      "files": [
+        "assets/audio/wc3/irongolemdeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.jainaonfootdeath1": {
+      "files": [
+        "assets/audio/wc3/jainaonfootdeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.keeperofthegrovemissilehit1": {
+      "files": [
+        "assets/audio/wc3/keeperofthegrovemissilehit1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.keeperofthegrovemissilehit2": {
+      "files": [
+        "assets/audio/wc3/keeperofthegrovemissilehit2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.keeperofthegrovemissilehit3": {
+      "files": [
+        "assets/audio/wc3/keeperofthegrovemissilehit3.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.keeperofthegrovemissilelaunch1": {
+      "files": [
+        "assets/audio/wc3/keeperofthegrovemissilelaunch1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.keeperofthegrovemissilelaunch2": {
+      "files": [
+        "assets/audio/wc3/keeperofthegrovemissilelaunch2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.keeperofthegrovemissilelaunch3": {
+      "files": [
+        "assets/audio/wc3/keeperofthegrovemissilelaunch3.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.knightnoriderdeath1": {
+      "files": [
+        "assets/audio/wc3/knightnoriderdeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.meatwagonmissilehit1": {
+      "files": [
+        "assets/audio/wc3/meatwagonmissilehit1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.nagabuildingcancel": {
+      "files": [
+        "assets/audio/wc3/nagabuildingcancel.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.nightelfdissipate1": {
+      "files": [
+        "assets/audio/wc3/nightelfdissipate1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.orcdissipate1": {
+      "files": [
+        "assets/audio/wc3/orcdissipate1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.peasantdeath": {
+      "files": [
+        "assets/audio/wc3/peasantdeath.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.peonwhat2": {
+      "files": [
+        "assets/audio/wc3/peonwhat2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.priestdeath": {
+      "files": [
+        "assets/audio/wc3/priestdeath.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.reincarnation": {
+      "files": [
+        "assets/audio/wc3/reincarnation.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.shimmeringportaldeath": {
+      "files": [
+        "assets/audio/wc3/shimmeringportaldeath.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.shockwave": {
+      "files": [
+        "assets/audio/wc3/shockwave.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.stasistotem": {
+      "files": [
+        "assets/audio/wc3/stasistotem.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.step1": {
+      "files": [
+        "assets/audio/wc3/step1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.step2": {
+      "files": [
+        "assets/audio/wc3/step2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.step3": {
+      "files": [
+        "assets/audio/wc3/step3.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.step4": {
+      "files": [
+        "assets/audio/wc3/step4.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.succubusdeath1": {
+      "files": [
+        "assets/audio/wc3/succubusdeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.tuskarrdeath1": {
+      "files": [
+        "assets/audio/wc3/tuskarrdeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.undeaddissipate2": {
+      "files": [
+        "assets/audio/wc3/undeaddissipate2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.villagerchilddeath1": {
+      "files": [
+        "assets/audio/wc3/villagerchilddeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.villagermaledeath1": {
+      "files": [
+        "assets/audio/wc3/villagermaledeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.wandofneutralization": {
+      "files": [
+        "assets/audio/wc3/wandofneutralization.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.wardenattackeffort1": {
+      "files": [
+        "assets/audio/wc3/wardenattackeffort1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.wardendeath1": {
+      "files": [
+        "assets/audio/wc3/wardendeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.warstomp": {
+      "files": [
+        "assets/audio/wc3/warstomp.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.waterelementalmissile3": {
+      "files": [
+        "assets/audio/wc3/waterelementalmissile3.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.witchdoctorcastattack1": {
+      "files": [
+        "assets/audio/wc3/witchdoctorcastattack1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    }
+  },
+  "castLayerCap": {
+    "enabled": true,
+    "maxLayers": 5,
+    "whitelist": []
+  },
+  "modelFxSound": {
+    "enabled": true,
+    "arrive": true
+  },
+  "rankUpAudience": "self"
+}

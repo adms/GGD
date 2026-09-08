@@ -1,0 +1,612 @@
+{
+  "collection": "config",
+  "hash": "1df2b396132f",
+  "entries": [
+    {
+      "id": "ability-vfx-bindings",
+      "path": "config/ability-vfx-bindings.json",
+      "hash": "ef617199ca50",
+      "size": 59274
+    },
+    {
+      "id": "admin-friend",
+      "path": "config/admin-friend.json",
+      "hash": "f62b5374ce71",
+      "size": 1789
+    },
+    {
+      "id": "ambient-vfx",
+      "path": "config/ambient-vfx.json",
+      "hash": "b1ba3b61f86c",
+      "size": 4959
+    },
+    {
+      "id": "aoe-tiers",
+      "path": "config/aoe-tiers.json",
+      "hash": "5f4b138cc6e9",
+      "size": 1142
+    },
+    {
+      "id": "ap-coefficient",
+      "path": "config/ap-coefficient.json",
+      "hash": "33bb88afbeaf",
+      "size": 2450
+    },
+    {
+      "id": "ap-damage-scaling",
+      "path": "config/ap-damage-scaling.json",
+      "hash": "3187f452df71",
+      "size": 1250
+    },
+    {
+      "id": "arena-pool",
+      "path": "config/arena-pool.json",
+      "hash": "de967097e50b",
+      "size": 966
+    },
+    {
+      "id": "arena-rules",
+      "path": "config/arena-rules.json",
+      "hash": "c7f43d8468d3",
+      "size": 9568
+    },
+    {
+      "id": "audio-map",
+      "path": "config/audio-map.json",
+      "hash": "53f5d3149cc2",
+      "size": 44549
+    },
+    {
+      "id": "audio-mix",
+      "path": "config/audio-mix.json",
+      "hash": "325c2458388e",
+      "size": 1912
+    },
+    {
+      "id": "augment-filter",
+      "path": "config/augment-filter.json",
+      "hash": "759e7cc37d82",
+      "size": 1140
+    },
+    {
+      "id": "authoring-rules",
+      "path": "config/authoring-rules.json",
+      "hash": "debe3d095be9",
+      "size": 5477
+    },
+    {
+      "id": "base-bonus",
+      "path": "config/base-bonus.json",
+      "hash": "77ad44a246fd",
+      "size": 169
+    },
+    {
+      "id": "berserk",
+      "path": "config/berserk.json",
+      "hash": "fc2afe60e751",
+      "size": 985
+    },
+    {
+      "id": "block",
+      "path": "config/block.json",
+      "hash": "346c580ce8fd",
+      "size": 1178
+    },
+    {
+      "id": "body-scale",
+      "path": "config/body-scale.json",
+      "hash": "a205bb9aabbf",
+      "size": 1445
+    },
+    {
+      "id": "boss-intro",
+      "path": "config/boss-intro.json",
+      "hash": "7923400b57e3",
+      "size": 3305
+    },
+    {
+      "id": "camera",
+      "path": "config/camera.json",
+      "hash": "16038f879da4",
+      "size": 1577
+    },
+    {
+      "id": "cast-approach",
+      "path": "config/cast-approach.json",
+      "hash": "9289c4300fc4",
+      "size": 1343
+    },
+    {
+      "id": "cast-time",
+      "path": "config/cast-time.json",
+      "hash": "54107ce3c680",
+      "size": 1656
+    },
+    {
+      "id": "cast-time-tiers",
+      "path": "config/cast-time-tiers.json",
+      "hash": "d8473dae1ef5",
+      "size": 620
+    },
+    {
+      "id": "champion-voices",
+      "path": "config/champion-voices.json",
+      "hash": "4f9ccff9d6c8",
+      "size": 12722
+    },
+    {
+      "id": "combat-env",
+      "path": "config/combat-env.json",
+      "hash": "32747e200711",
+      "size": 1066
+    },
+    {
+      "id": "combat-feel",
+      "path": "config/combat-feel.json",
+      "hash": "8c855e98a355",
+      "size": 2097
+    },
+    {
+      "id": "combo-strikes",
+      "path": "config/combo-strikes.json",
+      "hash": "12c42556d5c8",
+      "size": 31810
+    },
+    {
+      "id": "config.match",
+      "path": "config/config.match.json",
+      "hash": "4909c6237044",
+      "size": 2061
+    },
+    {
+      "id": "content-load",
+      "path": "config/content-load.json",
+      "hash": "353591cea474",
+      "size": 513
+    },
+    {
+      "id": "controller-scheme",
+      "path": "config/controller-scheme.json",
+      "hash": "c84034a8e049",
+      "size": 3861
+    },
+    {
+      "id": "cooldown-rules",
+      "path": "config/cooldown-rules.json",
+      "hash": "fc0a73ab9351",
+      "size": 1531
+    },
+    {
+      "id": "cooldown-tiers",
+      "path": "config/cooldown-tiers.json",
+      "hash": "46868e5860ae",
+      "size": 1273
+    },
+    {
+      "id": "crit",
+      "path": "config/crit.json",
+      "hash": "3345634f03ec",
+      "size": 1183
+    },
+    {
+      "id": "damage-colors",
+      "path": "config/damage-colors.json",
+      "hash": "a6f5c09245fc",
+      "size": 1500
+    },
+    {
+      "id": "damage-rules",
+      "path": "config/damage-rules.json",
+      "hash": "03e9dd42bdb2",
+      "size": 679
+    },
+    {
+      "id": "damage-tier-exemptions",
+      "path": "config/damage-tier-exemptions.json",
+      "hash": "195461728e14",
+      "size": 5615
+    },
+    {
+      "id": "damage-tiers",
+      "path": "config/damage-tiers.json",
+      "hash": "c24538adce9f",
+      "size": 3351
+    },
+    {
+      "id": "dispel",
+      "path": "config/dispel.json",
+      "hash": "37c0ea2cf961",
+      "size": 2147
+    },
+    {
+      "id": "displacement-tiers",
+      "path": "config/displacement-tiers.json",
+      "hash": "b3e44fc40e26",
+      "size": 3022
+    },
+    {
+      "id": "feel-fx",
+      "path": "config/feel-fx.json",
+      "hash": "58709dd24f79",
+      "size": 2038
+    },
+    {
+      "id": "form-visuals",
+      "path": "config/form-visuals.json",
+      "hash": "b0c96c9b51df",
+      "size": 5131
+    },
+    {
+      "id": "gamepad",
+      "path": "config/gamepad.json",
+      "hash": "93e063ded264",
+      "size": 467
+    },
+    {
+      "id": "gore",
+      "path": "config/gore.json",
+      "hash": "89daaf3c38c9",
+      "size": 415
+    },
+    {
+      "id": "hud-layout",
+      "path": "config/hud-layout.json",
+      "hash": "76d6078a7b9a",
+      "size": 1498
+    },
+    {
+      "id": "icon-plan",
+      "path": "config/icon-plan.json",
+      "hash": "2ae649af96ee",
+      "size": 1542
+    },
+    {
+      "id": "icon-style",
+      "path": "config/icon-style.json",
+      "hash": "eccc429706da",
+      "size": 3924
+    },
+    {
+      "id": "icon-upload",
+      "path": "config/icon-upload.json",
+      "hash": "a5e5329cfd64",
+      "size": 1096
+    },
+    {
+      "id": "item-card",
+      "path": "config/item-card.json",
+      "hash": "81809523e0a7",
+      "size": 2190
+    },
+    {
+      "id": "lobby-layout",
+      "path": "config/lobby-layout.json",
+      "hash": "01b29afb39ea",
+      "size": 2375
+    },
+    {
+      "id": "lobby-rally",
+      "path": "config/lobby-rally.json",
+      "hash": "1b2d16e456ef",
+      "size": 2899
+    },
+    {
+      "id": "mana-economy",
+      "path": "config/mana-economy.json",
+      "hash": "a9c130dc45e0",
+      "size": 2365
+    },
+    {
+      "id": "mana-tiers",
+      "path": "config/mana-tiers.json",
+      "hash": "0995909cf692",
+      "size": 956
+    },
+    {
+      "id": "map-report",
+      "path": "config/map-report.json",
+      "hash": "2c4746142fec",
+      "size": 4944
+    },
+    {
+      "id": "map-spec",
+      "path": "config/map-spec.json",
+      "hash": "ef37f05a75aa",
+      "size": 1380
+    },
+    {
+      "id": "mitigation",
+      "path": "config/mitigation.json",
+      "hash": "3d2fdc92403a",
+      "size": 835
+    },
+    {
+      "id": "model-lod",
+      "path": "config/model-lod.json",
+      "hash": "27d4d83780b4",
+      "size": 1078
+    },
+    {
+      "id": "move-speed-tiers",
+      "path": "config/move-speed-tiers.json",
+      "hash": "28475b952c34",
+      "size": 2940
+    },
+    {
+      "id": "new-hero-checks",
+      "path": "config/new-hero-checks.json",
+      "hash": "6908e89dd53f",
+      "size": 1252
+    },
+    {
+      "id": "one-shot-clamp",
+      "path": "config/one-shot-clamp.json",
+      "hash": "18be96faf9c3",
+      "size": 1256
+    },
+    {
+      "id": "origin-routes",
+      "path": "config/origin-routes.json",
+      "hash": "1b75573e79be",
+      "size": 8930
+    },
+    {
+      "id": "owner-knobs",
+      "path": "config/owner-knobs.json",
+      "hash": "6d1c98f7bc46",
+      "size": 14705
+    },
+    {
+      "id": "per-level-bonus",
+      "path": "config/per-level-bonus.json",
+      "hash": "4787ecfd66fb",
+      "size": 649
+    },
+    {
+      "id": "practice",
+      "path": "config/practice.json",
+      "hash": "3431ce6b1ce8",
+      "size": 1800
+    },
+    {
+      "id": "range-guide",
+      "path": "config/range-guide.json",
+      "hash": "2fb5de9b43fd",
+      "size": 1392
+    },
+    {
+      "id": "range-tiers",
+      "path": "config/range-tiers.json",
+      "hash": "d87cdbcfecf4",
+      "size": 789
+    },
+    {
+      "id": "rank-growth",
+      "path": "config/rank-growth.json",
+      "hash": "e77c1d073320",
+      "size": 1064
+    },
+    {
+      "id": "ranking",
+      "path": "config/ranking.json",
+      "hash": "601d5eb9e578",
+      "size": 304
+    },
+    {
+      "id": "regen",
+      "path": "config/regen.json",
+      "hash": "c51fc34f99aa",
+      "size": 1474
+    },
+    {
+      "id": "replay",
+      "path": "config/replay.json",
+      "hash": "fd1721f9edc7",
+      "size": 723
+    },
+    {
+      "id": "review-tuning",
+      "path": "config/review-tuning.json",
+      "hash": "6bdc3fa6b487",
+      "size": 1023
+    },
+    {
+      "id": "roster",
+      "path": "config/roster.json",
+      "hash": "b8ee47643f51",
+      "size": 8945
+    },
+    {
+      "id": "round-grade",
+      "path": "config/round-grade.json",
+      "hash": "fe58dd47b882",
+      "size": 675
+    },
+    {
+      "id": "screen-fx",
+      "path": "config/screen-fx.json",
+      "hash": "ac0473f75637",
+      "size": 2762
+    },
+    {
+      "id": "shield",
+      "path": "config/shield.json",
+      "hash": "70c8ab068aa0",
+      "size": 1080
+    },
+    {
+      "id": "skill-normalize",
+      "path": "config/skill-normalize.json",
+      "hash": "790f4a7be6f1",
+      "size": 1038
+    },
+    {
+      "id": "speed-growth-tiers",
+      "path": "config/speed-growth-tiers.json",
+      "hash": "44d5928e9d17",
+      "size": 2424
+    },
+    {
+      "id": "stat-caps",
+      "path": "config/stat-caps.json",
+      "hash": "e1d91f5745c5",
+      "size": 920
+    },
+    {
+      "id": "stat-normalization",
+      "path": "config/stat-normalization.json",
+      "hash": "2c83473621e7",
+      "size": 17905
+    },
+    {
+      "id": "stealth",
+      "path": "config/stealth.json",
+      "hash": "2fd33aee2bf7",
+      "size": 1019
+    },
+    {
+      "id": "store",
+      "path": "config/store.json",
+      "hash": "1f9242bdfe64",
+      "size": 653
+    },
+    {
+      "id": "taunt",
+      "path": "config/taunt.json",
+      "hash": "501b1b2be7b7",
+      "size": 697
+    },
+    {
+      "id": "toggle-ability",
+      "path": "config/toggle-ability.json",
+      "hash": "6ce567e661a5",
+      "size": 1378
+    },
+    {
+      "id": "ugc",
+      "path": "config/ugc.json",
+      "hash": "74e355aa74d6",
+      "size": 1986
+    },
+    {
+      "id": "ui-cues",
+      "path": "config/ui-cues.json",
+      "hash": "d491b704a40d",
+      "size": 3555
+    },
+    {
+      "id": "ui-lexicon",
+      "path": "config/ui-lexicon.json",
+      "hash": "4804e90cd0f5",
+      "size": 2264
+    },
+    {
+      "id": "unit-tints",
+      "path": "config/unit-tints.json",
+      "hash": "e4773bf9eb11",
+      "size": 11203
+    },
+    {
+      "id": "unsafe-textures",
+      "path": "config/unsafe-textures.json",
+      "hash": "d2133597dd85",
+      "size": 5852
+    },
+    {
+      "id": "valhalla-sandbox",
+      "path": "config/valhalla-sandbox.json",
+      "hash": "ec920637826e",
+      "size": 1374
+    },
+    {
+      "id": "vfx-ability-art",
+      "path": "config/vfx-ability-art.json",
+      "hash": "e427905fef6a",
+      "size": 89257
+    },
+    {
+      "id": "vfx-budget",
+      "path": "config/vfx-budget.json",
+      "hash": "9e928e600a2a",
+      "size": 505
+    },
+    {
+      "id": "vfx-cleanup",
+      "path": "config/vfx-cleanup.json",
+      "hash": "589690f20e30",
+      "size": 13361
+    },
+    {
+      "id": "vfx-families",
+      "path": "config/vfx-families.json",
+      "hash": "ba31fc3947db",
+      "size": 29012
+    },
+    {
+      "id": "vfx-scripts",
+      "path": "config/vfx-scripts.json",
+      "hash": "1b951b2a6090",
+      "size": 610
+    },
+    {
+      "id": "victory-fx",
+      "path": "config/victory-fx.json",
+      "hash": "23bbb1946e37",
+      "size": 794
+    },
+    {
+      "id": "victory-podium",
+      "path": "config/victory-podium.json",
+      "hash": "45bfbd580028",
+      "size": 3393
+    },
+    {
+      "id": "victory-taunts",
+      "path": "config/victory-taunts.json",
+      "hash": "0fccc289c0ff",
+      "size": 108780
+    },
+    {
+      "id": "voxel-barcodes",
+      "path": "config/voxel-barcodes.json",
+      "hash": "494b633baa8a",
+      "size": 1241
+    },
+    {
+      "id": "voxel-bodies",
+      "path": "config/voxel-bodies.json",
+      "hash": "2c4008f4c7ac",
+      "size": 598
+    },
+    {
+      "id": "voxel-look",
+      "path": "config/voxel-look.json",
+      "hash": "584bed02ff43",
+      "size": 447
+    },
+    {
+      "id": "weakness",
+      "path": "config/weakness.json",
+      "hash": "0b3229cb05e5",
+      "size": 560
+    },
+    {
+      "id": "weather",
+      "path": "config/weather.json",
+      "hash": "61a63dbd8665",
+      "size": 1106
+    },
+    {
+      "id": "world-cues",
+      "path": "config/world-cues.json",
+      "hash": "937b1c925963",
+      "size": 3727
+    },
+    {
+      "id": "wounds",
+      "path": "config/wounds.json",
+      "hash": "0f1d752b60e0",
+      "size": 357
+    }
+  ]
+}

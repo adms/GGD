@@ -1,0 +1,97 @@
+{
+  "schema": "voxel-skins@1",
+  "note": "OVERRIDES ONLY (layer L1) for the generated per-champion voxel skin, task #231. Every champion already has a complete, distinct generated look; nothing needs an entry here. This file exists so a 驗收 call-out on the 體素外觀對照表 can be answered by AUTHORING one hero rather than by special-casing the generator. Any subset of any axis may be given: palette / face / hair / outfit / motifs / preferVoxelBody. Leading '_' keeps it out of the models _index.json (it is not a model@1 doc); it is fetched by direct path, exactly like _standin-overrides.json.",
+  "axes": {
+    "palette": "skin hair outfitPrimary outfitSecondary metal eye accent — each '#rrggbb'",
+    "face": "eye: dot|slash|closed|visor-bar|wide|single-eyepatch · mouth: neutral|fang|grin|mask-band|stitch · mark: none|scar|forehead-gem|warpaint|tribal-band|tear-line",
+    "hair": "style: bowl|spiky|long-back|topknot|bald|shaved-band|braid|tufts",
+    "outfit": "top: tunic|plate|robe|jacket|bare-chest|vest|kimono|coat · legs: trousers|greaves|skirt|hakama|shorts|boots-tall · emblem: cross|chevron|star|ring|bolt|skull|leaf|gear|drop|flame|crescent|eye|spiral|grid|arrow|bone",
+    "motifs": "head: hood|horns|beast-ears|brim-hat|crown|halo|mask|antenna|headband|none · shoulder: pauldrons|spikes|epaulets|shawl|none · back: cape|scarf-tail|tail|backpack|wing-stubs|none"
+  },
+  "overrides": {
+    "godie-h02s": {
+      "note": "死亡騎士 — no 稱號, no w3x model row, and it shares champ.thorne, the same four vfx families AND hero number 91 with godie-h02z (an un-renumbered map clone). The generator separates them on id entropy alone, which is correct but arbitrary; these two are authored so the difference is INTENTIONAL.",
+      "palette": {
+        "outfitPrimary": "#3b3550",
+        "outfitSecondary": "#22202e",
+        "metal": "#8d93a3"
+      },
+      "hair": {
+        "style": "bald"
+      },
+      "face": {
+        "eye": "visor-bar",
+        "mouth": "stitch",
+        "mark": "scar"
+      },
+      "outfit": {
+        "top": "plate",
+        "legs": "greaves",
+        "emblem": "skull"
+      },
+      "motifs": {
+        "head": "horns",
+        "shoulder": "pauldrons",
+        "back": "cape"
+      }
+    },
+    "godie-h02z": {
+      "note": "不良少年 — the other half of the h02s clone pair. Deliberately the opposite silhouette: street, not armour.",
+      "palette": {
+        "outfitPrimary": "#8a5a2b",
+        "outfitSecondary": "#2f2a26",
+        "accent": "#e8c04a"
+      },
+      "hair": {
+        "style": "spiky",
+        "tone": "gold"
+      },
+      "face": {
+        "eye": "slash",
+        "mouth": "grin",
+        "mark": "scar"
+      },
+      "outfit": {
+        "top": "jacket",
+        "legs": "trousers",
+        "emblem": "bolt"
+      },
+      "motifs": {
+        "head": "headband",
+        "shoulder": "none",
+        "back": "scarf-tail"
+      }
+    },
+    "godie-zombiex": {
+      "note": "聖杯黑泥醬 - 喪標麥可。owner 2026-07-26：『他應該是綠色系為主』。走 L1 是刻意的 —— 這一層優先於關鍵字規則、技能特效元素與 id 雜湊三層推導，所以不必去動產生器（那條路 #264 正在改，而且改規則會波及其他角色）。\n綠要讀起來像腐敗不像草地：屍綠的皮膚配暗掉的橄欖布料，金屬是鏽掉的，只有眼睛用高彩度的病黃綠當唯一的亮點 —— 一隻整身同一個綠的殭屍看起來像玩具。",
+      "palette": {
+        "skin": "#6d8f4e",
+        "hair": "#3f4a2a",
+        "outfitPrimary": "#46553a",
+        "outfitSecondary": "#2f3a28",
+        "metal": "#6b6f5e",
+        "eye": "#c8e64a",
+        "accent": "#8fbf3f"
+      },
+      "preferVoxelBody": true
+    },
+    "godie-h01n": {
+      "note": "開外掛的死神 - 黑崎一護 —— ⭐ 死霸裝就是和服形制。GH#881 之前這件上衣是**意外**來的（`#817` 為武器機制加的 `katana` tag 命中了外觀規則的「武士」正則）；那條路已經關掉，所以它改住這裡：一個**刻意的**美術決定，⛔ 不是一個機制詞彙的副作用。",
+      "outfit": {
+        "top": "kimono"
+      }
+    },
+    "godie-h01o": {
+      "note": "外掛開很大的死神 - 黑崎一護（卍解態）—— 同 godie-h01n。⚠️ 兩態要一致，⛔ 否則變身當下上衣會換。",
+      "outfit": {
+        "top": "kimono"
+      }
+    },
+    "godie-osam": {
+      "note": "犬妖 - 殺生丸 —— ⭐ 原作就是和服／羽織。理由同上：GH#881 把它從「武器 tag 的副作用」改成刻意指定。",
+      "outfit": {
+        "top": "kimono"
+      }
+    }
+  }
+}

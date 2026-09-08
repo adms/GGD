@@ -1,0 +1,8 @@
+{
+  "id": "poison",
+  "schema": "status-effect@1",
+  "name": "中毒",
+  "description": "血液裡混進了不該有的東西。它不燒也不凍，只是讓你在接下來的每一秒都少一點——而且你會咳。與【燃燒】刻意分開：那是火，這是毒，兩者的抗性、解法與台詞都不是同一件事。",
+  "polarity": "debuff",
+  "tags": ["poison", "dot", "toxic", "debuff"]
+}

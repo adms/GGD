@@ -1,0 +1,44 @@
+{
+  "id": "godie-osam.q",
+  "name": "34-01 毒華爪",
+  "icon": "assets/icons/abilities/godie-osam.q.webp",
+  "provenance": "w3x-import",
+  "description": "[被動]\n0秒冷卻時間\n\n殺生丸以毒華爪攻擊,爪中劇毒，導致這一擊之中10%的傷害會擊穿對方，並造成附近敵人的傷害。",
+  "slot": "Q",
+  "castType": "self",
+  "maxRank": 5,
+  "cooldown": [
+    6.0,
+    6.0,
+    6.0,
+    6.0,
+    6.0
+  ],
+  "cooldownTier": "極小",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 12,
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.1
+        }
+      ],
+      "castTimeSec": 0.067
+    }
+  },
+  "vfxKey": "fx.prim.wind.slash",
+  "schema": "ability@1",
+  "castTimeSec": 0.067
+}

@@ -1,0 +1,84 @@
+{
+  "id": "godie-bulbasaur-p0",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.122,
+    "angleDeg": 60.0
+  },
+  "mode": "continuous",
+  "rate": 10.0,
+  "lifetimeSec": {
+    "min": 2.0,
+    "max": 2.0
+  },
+  "size": {
+    "start": 0.244,
+    "end": 2.445
+  },
+  "color": {
+    "start": [
+      0.51,
+      0.667,
+      0.329,
+      0.498
+    ],
+    "end": [
+      0.51,
+      0.667,
+      0.329,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.51,
+        0.667,
+        0.329,
+        0.498
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.51,
+        0.667,
+        0.329,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.51,
+        0.667,
+        0.329,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.244
+    ],
+    [
+      0.5,
+      0.489
+    ],
+    [
+      1,
+      2.445
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/star_08.png",
+  "speed": {
+    "min": 0.7822,
+    "max": 2.3467
+  },
+  "gravityY": -0.489,
+  "anchorBone": "bone_root"
+}

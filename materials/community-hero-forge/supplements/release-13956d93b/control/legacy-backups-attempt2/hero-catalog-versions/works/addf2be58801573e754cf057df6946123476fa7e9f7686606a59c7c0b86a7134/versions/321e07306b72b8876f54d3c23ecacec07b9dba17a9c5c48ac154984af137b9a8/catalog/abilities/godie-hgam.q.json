@@ -1,0 +1,67 @@
+{
+  "id": "godie-hgam.q",
+  "name": "90-01 飛葉快刀",
+  "icon": "assets/icons/abilities/godie-hgam.q.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n發出飛快的葉子進行攻擊，每秒對附近的敵人造成{{dmg}}點傷害，持續2秒。",
+  "slot": "Q",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    30.0,
+    30.0,
+    30.0
+  ],
+  "cooldownTier": "極小",
+  "manaCost": [
+    72.0,
+    72.0,
+    72.0
+  ],
+  "manaCostTier": "極小",
+  "range": 0.0,
+  "effects": [],
+  "template": {
+    "ref": "tpl-periodic-field",
+    "params": {
+      "intervalSec": 1,
+      "durationSec": 2,
+      "radiusTier": "小",
+      "anchor": "caster",
+      "applyTo": "enemies",
+      "damageTier": "小",
+      "damageType": "magic",
+      "castTimeSec": 0.667
+    }
+  },
+  "vfxKey": "fx.prim.nature.slash",
+  "vfxLayers": [
+    {
+      "vfxKey": "godie-earthtornado2-p0",
+      "attachTo": "point"
+    },
+    {
+      "vfxKey": "godie-earthtornado2-p13",
+      "attachTo": "point",
+      "delayMs": 120
+    },
+    {
+      "vfxKey": "godie-earthtornado2-p1",
+      "attachTo": "point",
+      "delayMs": 260
+    },
+    {
+      "vfxKey": "godie-earthtornado2-p9",
+      "attachTo": "point",
+      "delayMs": 420
+    },
+    {
+      "vfxKey": "godie-earthtornado2-p2",
+      "delayMs": 700
+    }
+  ],
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "castTimeSec": 0.667,
+  "radiusTier": "小"
+}

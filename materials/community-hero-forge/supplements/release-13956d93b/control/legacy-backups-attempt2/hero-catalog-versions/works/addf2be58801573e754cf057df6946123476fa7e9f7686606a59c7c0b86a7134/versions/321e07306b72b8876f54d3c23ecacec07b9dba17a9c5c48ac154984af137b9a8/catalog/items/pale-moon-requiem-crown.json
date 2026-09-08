@@ -1,0 +1,104 @@
+{
+  "id": "pale-moon-requiem-crown",
+  "schema": "item@1",
+  "name": "蒼月葬送・千年彼方花冠",
+  "description": "武器\n效能\n[蒼月開花] 自己受到過量治療時（每 3 秒最多一次）生成 1 朵蒼月花，最多 8 朵，本回合內不凋謝\n[花瓣] 每朵使你的治療與護盾輸出 +4%（八朵 ×1.32）\n[溢流成盾] 開花的同時，把那一次的溢出化成 120 + AP×0.5 的護盾，持續 4 秒\n[千年花園] 集滿八朵時展開 8 秒「千年花園」：我方全體的治療與護盾輸出 ×1.40，並各自獲得 200 + AP×0.8 的護盾（每 30 秒最多展開一次）\n\n解說\n治過頭的那一半沒有浪費，它開成花了",
+  "cost": 0,
+  "tier": 5,
+  "tags": [
+    "legendary",
+    "support",
+    "shield"
+  ],
+  "passive": [
+    {
+      "key": "moonflower-bloom",
+      "on": "onOverheal",
+      "target": "self",
+      "internalCooldown": 3,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "modifiers": [
+            {
+              "stat": "outputHealingPct",
+              "op": "flat",
+              "value": 0.04
+            },
+            {
+              "stat": "outputShieldPct",
+              "op": "flat",
+              "value": 0.04
+            }
+          ],
+          "permanent": true,
+          "permanentScope": "round",
+          "maxStacks": 8,
+          "statusId": "pale-moon-flower"
+        },
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 120,
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.5
+              }
+            ]
+          },
+          "duration": 4
+        }
+      ]
+    },
+    {
+      "key": "millennium-garden",
+      "on": "onOverheal",
+      "target": "allies",
+      "internalCooldown": 30,
+      "condition": {
+        "kind": "status",
+        "subject": "self",
+        "statusId": "pale-moon-flower",
+        "minStacks": 8
+      },
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "outputHealingPct",
+              "op": "flat",
+              "value": 0.4
+            },
+            {
+              "stat": "outputShieldPct",
+              "op": "flat",
+              "value": 0.4
+            }
+          ],
+          "duration": 8,
+          "stackKey": "pale-moon-garden",
+          "maxStacks": 1
+        },
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 200,
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.8
+              }
+            ]
+          },
+          "duration": 8
+        }
+      ]
+    }
+  ],
+  "icon": "assets/icons/items/pale-moon-requiem-crown.webp",
+  "craftRole": "none",
+  "authoringNote": "⛔ **全文（逐句對照 + 三處落差的完整理由）在 `docs/legacy/_item-authoring-notes-full.md` 的「蒼月葬送・千年彼方花冠 (#69)」一節** —— 這一份撞到 `authoringNote` 的 2000 字上限，依 owner 2026-08-18 的規矩備份而不截斷。\n\n⭐ 2026-08-18 逐句稽核（第一·五守則「不放任何無效說明」）——**實作零改動，卡面整段重寫**，四處：\n① 「每產生相當於目標最大生命 8%的過量治療或過量護盾」→「**自己**受到過量治療時（每 3 秒最多一次）」。三個理由：量讀不到（G7）、護盾溢出**不發任何事件**（只有 heal 那一則帶 overheal 欄位）、而且**方向是反的**（`WorldHookSystem` 的 onOverheal 那一列 `actorKey:\"target\"` ＝持有者是**被治的身體**）。⛔ 舊卡面教玩家去治隊友，而那樣一朵花都開不出來。\n② 「每朵 ×1.04」→「每朵 +4%（八朵 ×1.32）」。`outputHealingPct`/`outputShieldPct` 的 base 是 0、管線是 `(0+Σflat)×(1+ΣpctAdd)×Π(1+pctMult)`，**只有 flat 動得了它們** ⇒ 線性。owner 的複利讀法八朵是 ×1.369，差 3.7 個百分點。\n③ ⛔ **刪掉**「其中 50%同步給另一名隊友」（G18 治療分流）與「所有過量治療轉為護盾」（G9 溢出轉換）——**兩條零實作**，留在卡面就是兩句永遠不兌現的承諾。已列進「需要新引擎機制」。\n④ 補上兩個真的存在而卡面沒寫的閘：花的壽命（`permanentScope:\"round\"`，本回合）與花園的 30 秒 ICD（`internalCooldown: 30`，⚠️ 這個數字是**這份文件自己決定的**，owner 的規格沒有寫再觸發規則）。\n⚠️ 花園那一條的 `target:\"allies\"` ＝ `alliedChampions()` ＝同隊每一位英雄（含自己、含死者），這就是卡面「我方全體」的來源。\n⭐ 2026-08-18 二次修正（owner 規則：不放無效說明，而且**要替換類似效果**，⛔ 不是刪掉）：S3b「50% 同步給另一名隊友」與 S3c「所有過量治療轉為護盾」原本被整句刪除 —— 那消掉了假話，卻也把這張卡的一半強度一起消掉了。改成兩個**引擎真的做得到**的等價效果：①[溢流成盾] 開花的同一個 hook 追加 `shield` 120+AP×0.5／4 秒（形狀抄 sage-ward-amulet），語意就是「溢出的那一半變成護盾」，⚠️ 差別是量讀不到（G7），所以是定額而不是等量；②[花園分享] 千年花園的 hook 本來就是 `target:\"allies\"`，追加 `shield` 200+AP×0.8／8 秒，「分給隊友」因此變成真的會發生的事。⛔ 兩個數字都是新定的，屬平衡值，後台可調。"
+}

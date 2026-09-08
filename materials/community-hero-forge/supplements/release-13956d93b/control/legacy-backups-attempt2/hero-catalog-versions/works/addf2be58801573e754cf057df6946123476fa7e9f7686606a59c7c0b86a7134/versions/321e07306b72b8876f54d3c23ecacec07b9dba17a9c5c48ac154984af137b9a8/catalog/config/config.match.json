@@ -1,0 +1,96 @@
+{
+  "id": "config.match",
+  "schema": "config@1",
+  "tick": {
+    "tickHz": 30,
+    "snapshotHz": 20
+  },
+  "match": {
+    "teamCount": 4,
+    "teamSize": 3,
+    "startingTeamLives": 20,
+    "maxRounds": 0,
+    "champSelectSec": 20,
+    "champSelectSecVsBot": 120,
+    "champSelectEarlyStartVsBot": true,
+    "intermissionEarlyStartVsBot": true,
+    "forceSettleVsBot": true,
+    "settlementCardOnHealthSpent": false,
+    "disposeEmptyChampSelect": true,
+    "intermissionSec": 25,
+    "combatMaxSec": 180,
+    "fireRing": {
+      "startSec": 60,
+      "shrinkSec": 20,
+      "stage1Radius": 4,
+      "stage2StartSec": 90,
+      "stage2ShrinkSec": 20,
+      "minRadius": 0,
+      "burnCurve": [
+        {
+          "sec": 0,
+          "pctPerSec": 0.04
+        },
+        {
+          "sec": 20,
+          "pctPerSec": 0.2
+        },
+        {
+          "sec": 40,
+          "pctPerSec": 1
+        }
+      ],
+      "maxPctPerSec": 0.5,
+      "lethalSaveApplies": false,
+      "roundHardCapSec": 300,
+      "boss": {
+        "extendCombatSec": 180,
+        "delayFireRingSec": 180
+      }
+    },
+    "resolutionSec": 6,
+    "roomCombatMaxSec": 1800,
+    "roomCombatCapEnabled": true,
+    "championLockEnforced": true,
+    "scoreCheatedMatches": false
+  },
+  "economy": {
+    "startingGold": 600,
+    "killGold": 150,
+    "killBounty": 100,
+    "assistGold": 75,
+    "roundWinGold": 300,
+    "roundLoseGold": 150,
+    "sellRefund": 0.4,
+    "inventorySlots": 6,
+    "legendaryOrbPrice": 2400,
+    "statTickPrice": 375,
+    "statTickTarget": 20,
+    "capstoneRoundGate": 6,
+    "assistWindowTicks": 300
+  },
+  "progression": {
+    "levelCap": 99,
+    "heroStartLevel": 6,
+    "xpBase": 100,
+    "xpPerLevel": 80,
+    "xpKill": 120,
+    "xpAssist": 60,
+    "xpRoundSurvive": 100,
+    "roundGrantKeepsRemainder": true
+  },
+  "rating": {
+    "kda": 5,
+    "killParticipation": 8,
+    "damage": 12000,
+    "tanked": 18000,
+    "healed": 6000,
+    "ccTicks": 300,
+    "objectives": 6,
+    "rescues": 3
+  },
+  "draft": {
+    "offerCount": 3,
+    "tierSchedule": {}
+  }
+}

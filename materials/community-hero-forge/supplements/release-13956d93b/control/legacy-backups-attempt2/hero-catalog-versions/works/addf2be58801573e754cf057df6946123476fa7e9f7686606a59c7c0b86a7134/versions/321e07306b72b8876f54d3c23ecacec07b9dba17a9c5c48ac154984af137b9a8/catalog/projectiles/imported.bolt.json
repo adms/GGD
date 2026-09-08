@@ -1,0 +1,9 @@
+{
+  "id": "imported.bolt",
+  "schema": "projectile@1",
+  "speed": 22,
+  "maxRange": 12,
+  "hitRadius": 0.5,
+  "vfxKey": "fx.ember-bolt",
+  "meshShape": "bolt"
+}

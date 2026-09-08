@@ -1,0 +1,12 @@
+{
+  "id": "millennium-plot-armor",
+  "schema": "status-effect@1",
+  "name": "劇情需要",
+  "description": "主角不能在這裡輸，所以他不會輸。十五秒的版面保護。",
+  "polarity": "buff",
+  "tags": [
+    "millennium-plot-armor",
+    "empowered",
+    "buff"
+  ]
+}

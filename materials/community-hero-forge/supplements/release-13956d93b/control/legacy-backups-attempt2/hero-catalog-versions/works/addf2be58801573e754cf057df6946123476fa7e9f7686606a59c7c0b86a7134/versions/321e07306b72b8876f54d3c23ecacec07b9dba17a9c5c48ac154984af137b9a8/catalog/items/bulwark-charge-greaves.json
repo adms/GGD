@@ -1,0 +1,48 @@
+{
+  "schema": "item@1",
+  "cost": 0,
+  "tier": 5,
+  "craftRole": "none",
+  "id": "bulwark-charge-greaves",
+  "name": "近擊的巨人鎧",
+  "icon": "assets/icons/items/bulwark-charge-greaves.webp",
+  "description": "傳說\n效能\n裝甲+100\n每秒生命回復+12\n[衝刺] 力量主屬性的近戰英雄施放技能時向前衝刺 4.5 距離（冷卻 8 秒）\n\n解說\n附魔鎧之巨人力量的戰甲，會有極強的衝刺慾望，但旁人會想叫你坐下。",
+  "tags": [
+    "legendary",
+    "mobility",
+    "tank"
+  ],
+  "modifiers": [
+    {
+      "stat": "armor",
+      "op": "flat",
+      "value": 100
+    },
+    {
+      "stat": "healthRegen",
+      "op": "flat",
+      "value": 12
+    }
+  ],
+  "passive": [
+    {
+      "on": "onAbilityCast",
+      "target": "self",
+      "requires": {
+        "attackType": "melee",
+        "primaryStat": "STR",
+        "onMismatch": "block"
+      },
+      "internalCooldown": 8,
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "forward",
+          "speed": 16,
+          "maxDistance": 4.5
+        }
+      ]
+    }
+  ],
+  "authoringNote": "逐句對照（2026-08-18 稽核）：\n「裝甲+100」= modifiers armor flat 100。✅\n「每秒生命回復+12」= modifiers healthRegen flat 12（`Stat.HealthRegen` 的單位就是每秒）。✅\n「[衝刺] …施放技能時向前衝刺 4.5 距離（冷卻 8 秒）」= passive[0]：onAbilityCast + internalCooldown 8 + dash mode:\"forward\" maxDistance 4.5。✅\n· `speed` **16** 是文案沒有給的（owner 只給了距離與冷卻），它是一個欄位 —— 16 u/s ⇒ 4.5 距離約 0.28 秒衝完。⚠️ 這一行以前寫「speed 18」而 JSON 是 16，第三守則的形狀（註解說謊），2026-08-18 改成讀得到的那個數字。\n· ⚠️ 道具來源的 `internalCooldown` 還會再乘後台 `config.combat-env@1` 的 `itemCooldown`（出貨 1.0），所以「8 秒」是後台可調的。\n⭐ **2026-08-18 改的是描述，不是資料**：hook 上一直掛著 `requires: {attackType:\"melee\", primaryStat:\"STR\", onMismatch:\"block\"}`（只有**力量近戰**英雄衝得動），而描述從頭到尾沒有提。量到的代價：出貨名冊 78 張卡裡符合的只有 **25 張（32%）**，也就是三分之二的持有者拿到一件「裝甲+100、回復+12、然後什麼都不會發生」的鎧甲 —— 正是 owner 2026-08-18「不放任何無效說明」要消滅的形狀。\n⛔ 我沒有拿掉 `requires`：那是**平衡改動**（把一件限定裝變成通用裝），不是把說明講清楚。改的是描述那一行，現在它說得出真的會發生的事。\n⚠️ owner 若認為這件鎧甲本來就該人人可衝，修法只改資料、兩選一：(a) 整格拿掉 `requires`；(b) 保留閘但 `onMismatch:\"reduced\"` + `mismatchScale`（不符條件的人衝短一點）。**兩者都要記得把描述那一行改回去。**\n⚠️ `requires` 是 **equip time** 解析（`economy/itemSource.ts`），但 hook 這一半是 **fire time** 解析（`content/requirement.ts`），所以變身跨越近戰／遠程時衝刺會跟著變 —— 這是刻意的，不是缺陷。"
+}

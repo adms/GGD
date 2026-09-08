@@ -1,0 +1,3722 @@
+{
+  "id": "victory-taunts",
+  "schema": "config.victory-taunts@1",
+  "note": "Task #93 victory VO copy. roundWin = tier 1 (grey screen, small fireworks), keyed by champion id and riffing on that champion's source character + 稱號. matchWin = tier 2 (dark screen, giant roast-chicken firework), champion-agnostic. roundWinFallback covers a drained pool and champions with no quotable source. Lines are ORIGINAL writing that twists a well-known catchphrase into an insult aimed at the loser — never a reproduced quote.",
+  "direction": "Flat, crisp, emotionless — Google-Assistant register, not a robot voice. The line is the joke; the voice never performs it. Every fragment is read by a native voice for its own language.",
+  "voices": {
+    "zh-TW": "Shelley (中文（台灣）)",
+    "ja-JP": "Kyoko",
+    "en-AU": "Karen"
+  },
+  "rate": {
+    "roundWin": 185,
+    "matchWin": 175
+  },
+  "roundWin": {
+    "godie-e001": {
+      "name": "蟬在叫人壞掉 - 龍宮禮奈",
+      "source": "寒蟬鳴泣之時",
+      "lines": [
+        {
+          "id": "taunt-round-godie-e001-1",
+          "file": "assets/audio/voice-taunt/round/godie-e001-1.mp3",
+          "text": "蟬在叫。你也在叫。差別是蟬比較有節奏。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e001-2",
+          "file": "assets/audio/voice-taunt/round/godie-e001-2.mp3",
+          "text": "うそだ！抱歉，是真的。你真的輸了。",
+          "langs": [
+            "ja",
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e001-3",
+          "file": "assets/audio/voice-taunt/round/godie-e001-3.mp3",
+          "text": "你太可愛了。我要把你的裝備帶回家。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-e002": {
+      "name": "亞瑟王 - Saber",
+      "source": "Fate/stay night",
+      "lines": [
+        {
+          "id": "taunt-round-godie-e002-1",
+          "file": "assets/audio/voice-taunt/round/godie-e002-1.mp3",
+          "text": "王有選擇的權利。你有離開的權利。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e002-2",
+          "file": "assets/audio/voice-taunt/round/godie-e002-2.mp3",
+          "text": "エクスカリバー。用完了。你也用完了。",
+          "langs": [
+            "ja",
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e002-3",
+          "file": "assets/audio/voice-taunt/round/godie-e002-3.mp3",
+          "text": "亞瑟王吃很多。你連經驗值都沒吃到。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-e007": {
+      "name": "龍之子 - 天地志狼",
+      "source": "龍狼傳",
+      "lines": [
+        {
+          "id": "taunt-round-godie-e007-1",
+          "file": "assets/audio/voice-taunt/round/godie-e007-1.mp3",
+          "text": "龍之子已經回去寫作業了。你還在這裡。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e007-2",
+          "file": "assets/audio/voice-taunt/round/godie-e007-2.mp3",
+          "text": "你被一個學生打敗了。他明天還要上課。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e007-3",
+          "file": "assets/audio/voice-taunt/round/godie-e007-3.mp3",
+          "text": "天地人三才。你三個都沒有。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-e008": {
+      "name": "火霧戰士 - 夏娜",
+      "source": "灼眼的夏娜",
+      "lines": [
+        {
+          "id": "taunt-round-godie-e008-1",
+          "file": "assets/audio/voice-taunt/round/godie-e008-1.mp3",
+          "text": "うるさい、うるさい、うるさい。你剛剛沒有說話。是我耳鳴。",
+          "langs": [
+            "ja",
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e008-2",
+          "file": "assets/audio/voice-taunt/round/godie-e008-2.mp3",
+          "text": "火霧戰士的工作是處理殘渣。已處理。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e008-3",
+          "file": "assets/audio/voice-taunt/round/godie-e008-3.mp3",
+          "text": "我不是為了你才贏的。別誤會。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-e00j": {
+      "name": "皇者 - 騜",
+      "source": "馬皇降臨",
+      "lines": [
+        {
+          "id": "taunt-round-godie-e00j-1",
+          "file": "assets/audio/voice-taunt/round/godie-e00j-1.mp3",
+          "text": "皇者已閱。你已結案。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00j-2",
+          "file": "assets/audio/voice-taunt/round/godie-e00j-2.mp3",
+          "text": "朕知道了。以上。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00j-3",
+          "file": "assets/audio/voice-taunt/round/godie-e00j-3.mp3",
+          "text": "皇者降臨。你負責跪。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-e00k": {
+      "name": "戰國刺客Azumi - 安云",
+      "source": "安云",
+      "lines": [
+        {
+          "id": "taunt-round-godie-e00k-1",
+          "file": "assets/audio/voice-taunt/round/godie-e00k-1.mp3",
+          "text": "刺客的工作是不被看見。你連看都沒看到。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00k-2",
+          "file": "assets/audio/voice-taunt/round/godie-e00k-2.mp3",
+          "text": "我數到一。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00k-3",
+          "file": "assets/audio/voice-taunt/round/godie-e00k-3.mp3",
+          "text": "戰國時代很殘酷。你比戰國時代更慘。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-e00l": {
+      "name": "亞瑟王 - Saber",
+      "source": null,
+      "lines": [
+        {
+          "id": "taunt-round-godie-e00l-1",
+          "file": "assets/audio/voice-taunt/round/godie-e00l-1.mp3",
+          "text": "聖劍出鞘的時間，比你活著的時間長。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00l-2",
+          "file": "assets/audio/voice-taunt/round/godie-e00l-2.mp3",
+          "text": "本場勝方：我。理由欄：我是王。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00l-3",
+          "file": "assets/audio/voice-taunt/round/godie-e00l-3.mp3",
+          "text": "王でしょう？不是你。",
+          "langs": [
+            "ja",
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-e00n": {
+      "name": "蟬在叫人壞掉 - 龍宮禮奈",
+      "source": null,
+      "lines": [
+        {
+          "id": "taunt-round-godie-e00n-1",
+          "file": "assets/audio/voice-taunt/round/godie-e00n-1.mp3",
+          "text": "嘿嘿嘿。這個笑聲不是開心的意思。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00n-2",
+          "file": "assets/audio/voice-taunt/round/godie-e00n-2.mp3",
+          "text": "你的破綻，我從第一回合就看到了。我在等。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00n-3",
+          "file": "assets/audio/voice-taunt/round/godie-e00n-3.mp3",
+          "text": "帶回家的規矩是，要先拆開。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-e00q": {
+      "name": "英靈-亞瑟王 - 黑化Saber",
+      "source": "Fate/hollow ataraxia",
+      "lines": [
+        {
+          "id": "taunt-round-godie-e00q-1",
+          "file": "assets/audio/voice-taunt/round/godie-e00q-1.mp3",
+          "text": "黑化的王不需要理由。你也不需要下一場。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00q-2",
+          "file": "assets/audio/voice-taunt/round/godie-e00q-2.mp3",
+          "text": "消えろ。已消失。感謝配合。",
+          "langs": [
+            "ja",
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00q-3",
+          "file": "assets/audio/voice-taunt/round/godie-e00q-3.mp3",
+          "text": "墮落只需要一秒。你花了一整場。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-e00r": {
+      "name": "最終泛用人型決戰兵器 - 初號機",
+      "source": null,
+      "lines": [
+        {
+          "id": "taunt-round-godie-e00r-1",
+          "file": "assets/audio/voice-taunt/round/godie-e00r-1.mp3",
+          "text": "逃げちゃダメだ。你逃了。所以你輸了。",
+          "langs": [
+            "ja",
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00r-2",
+          "file": "assets/audio/voice-taunt/round/godie-e00r-2.mp3",
+          "text": "AT力場展開。用來擋你，太浪費了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00r-3",
+          "file": "assets/audio/voice-taunt/round/godie-e00r-3.mp3",
+          "text": "決戰兵器出動。這不算決戰。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-e00s": {
+      "name": "白木老樹精 - 白木卡迪那",
+      "source": "去死團逆襲原創",
+      "lines": [
+        {
+          "id": "taunt-round-godie-e00s-1",
+          "file": "assets/audio/voice-taunt/round/godie-e00s-1.mp3",
+          "text": "樹站在原地就贏了。你有腳。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00s-2",
+          "file": "assets/audio/voice-taunt/round/godie-e00s-2.mp3",
+          "text": "老樹精比你有耐心，也比你會走位。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00s-3",
+          "file": "assets/audio/voice-taunt/round/godie-e00s-3.mp3",
+          "text": "年輪顯示我贏過很多次。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-e00t": {
+      "name": "七夜怪談 - 貞子",
+      "source": "七夜怪談",
+      "lines": [
+        {
+          "id": "taunt-round-godie-e00t-1",
+          "file": "assets/audio/voice-taunt/round/godie-e00t-1.mp3",
+          "text": "七天後你會變強。我等不到那天。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00t-2",
+          "file": "assets/audio/voice-taunt/round/godie-e00t-2.mp3",
+          "text": "我從螢幕爬出來，發現你還在讀取。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00t-3",
+          "file": "assets/audio/voice-taunt/round/godie-e00t-3.mp3",
+          "text": "錄影帶播完了。內容是你的失誤。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-e00u": {
+      "name": "完全而瀟灑的女僕 - 十六夜Sakuya",
+      "source": "東方Project",
+      "lines": [
+        {
+          "id": "taunt-round-godie-e00u-1",
+          "file": "assets/audio/voice-taunt/round/godie-e00u-1.mp3",
+          "text": "時間停止了。你沒發現。你平常也沒在動。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00u-2",
+          "file": "assets/audio/voice-taunt/round/godie-e00u-2.mp3",
+          "text": "完全而瀟灑的女僕，剛剛打掃完你。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00u-3",
+          "file": "assets/audio/voice-taunt/round/godie-e00u-3.mp3",
+          "text": "我把時間還給你了。請善用。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-e00v": {
+      "name": "百畝森林的霸主 - 維尼",
+      "source": "小熊維尼",
+      "lines": [
+        {
+          "id": "taunt-round-godie-e00v-1",
+          "file": "assets/audio/voice-taunt/round/godie-e00v-1.mp3",
+          "text": "百畝森林的霸主。你連一畝都守不住。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00v-2",
+          "file": "assets/audio/voice-taunt/round/godie-e00v-2.mp3",
+          "text": "我只是來找蜂蜜。你剛好擋路。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00v-3",
+          "file": "assets/audio/voice-taunt/round/godie-e00v-3.mp3",
+          "text": "一隻沒穿褲子的熊贏了你。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-e00w": {
+      "name": "神鳴流劍士 - 櫻綻剎那",
+      "source": "魔法老師",
+      "lines": [
+        {
+          "id": "taunt-round-godie-e00w-1",
+          "file": "assets/audio/voice-taunt/round/godie-e00w-1.mp3",
+          "text": "神鳴流，斬空閃。你連空氣都沒斬到。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00w-2",
+          "file": "assets/audio/voice-taunt/round/godie-e00w-2.mp3",
+          "text": "我的工作是保護。不是保護你。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00w-3",
+          "file": "assets/audio/voice-taunt/round/godie-e00w-3.mp3",
+          "text": "劍已收。你可以起來了。你起不來。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-e00x": {
+      "name": "神鳴流劍士 - 櫻綻剎那",
+      "source": "魔法老師",
+      "lines": [
+        {
+          "id": "taunt-round-godie-e00x-1",
+          "file": "assets/audio/voice-taunt/round/godie-e00x-1.mp3",
+          "text": "神鳴流劍士出手一次。只需要一次。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00x-2",
+          "file": "assets/audio/voice-taunt/round/godie-e00x-2.mp3",
+          "text": "認真的人贏了。你在玩。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00x-3",
+          "file": "assets/audio/voice-taunt/round/godie-e00x-3.mp3",
+          "text": "翅膀是用來飛的，不是用來逃的。你不懂。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-e00z": {
+      "name": "戰國刺客Azumi - 安云",
+      "source": null,
+      "lines": [
+        {
+          "id": "taunt-round-godie-e00z-1",
+          "file": "assets/audio/voice-taunt/round/godie-e00z-1.mp3",
+          "text": "已完成暗殺。目標無反應。目標本來就沒反應。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00z-2",
+          "file": "assets/audio/voice-taunt/round/godie-e00z-2.mp3",
+          "text": "你的名字在名單上。已劃掉。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e00z-3",
+          "file": "assets/audio/voice-taunt/round/godie-e00z-3.mp3",
+          "text": "安靜一點。你已經很安靜了。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-e012": {
+      "name": "殺人劍客 - 佐佐木小次郎",
+      "source": null,
+      "lines": [
+        {
+          "id": "taunt-round-godie-e012-1",
+          "file": "assets/audio/voice-taunt/round/godie-e012-1.mp3",
+          "text": "燕返。三刀同時。你一刀都沒擋。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e012-2",
+          "file": "assets/audio/voice-taunt/round/godie-e012-2.mp3",
+          "text": "我只是個路人劍客。這樣你更難看。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e012-3",
+          "file": "assets/audio/voice-taunt/round/godie-e012-3.mp3",
+          "text": "我這把是曬衣桿。你輸給曬衣桿。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-e015": {
+      "name": "夜市人生 - 金居福",
+      "source": "夜市人生",
+      "lines": [
+        {
+          "id": "taunt-round-godie-e015-1",
+          "file": "assets/audio/voice-taunt/round/godie-e015-1.mp3",
+          "text": "夜市人生第一集。你是被撞的那個。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e015-2",
+          "file": "assets/audio/voice-taunt/round/godie-e015-2.mp3",
+          "text": "本土劇的規則：輸的人會失憶。恭喜。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-e015-3",
+          "file": "assets/audio/voice-taunt/round/godie-e015-3.mp3",
+          "text": "這集播完了。你沒有下一集。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-ecen": {
+      "name": "姜窩肯 - 約翰走路",
+      "source": "約翰走路",
+      "lines": [
+        {
+          "id": "taunt-round-godie-ecen-1",
+          "file": "assets/audio/voice-taunt/round/godie-ecen-1.mp3",
+          "text": "Keep walking.往重生點走。",
+          "langs": [
+            "en",
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-ecen-2",
+          "file": "assets/audio/voice-taunt/round/godie-ecen-2.mp3",
+          "text": "我一直在走。你一直在躺。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-ecen-3",
+          "file": "assets/audio/voice-taunt/round/godie-ecen-3.mp3",
+          "text": "這杯敬你。你喝不到。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-edem": {
+      "name": "寫輪眼復仇者 - 宇智波佐助",
+      "source": "火影忍者",
+      "lines": [
+        {
+          "id": "taunt-round-godie-edem-1",
+          "file": "assets/audio/voice-taunt/round/godie-edem-1.mp3",
+          "text": "寫輪眼看穿了你。其實不用寫輪眼。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-edem-2",
+          "file": "assets/audio/voice-taunt/round/godie-edem-2.mp3",
+          "text": "我是復仇者。你連被復仇的資格都沒有。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-edem-3",
+          "file": "assets/audio/voice-taunt/round/godie-edem-3.mp3",
+          "text": "千鳥。聽到聲音就代表結束了。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-efur": {
+      "name": "揍敵客大家長 - 揍敵客桀諾",
+      "source": "偽獵人X獵人",
+      "lines": [
+        {
+          "id": "taunt-round-godie-efur-1",
+          "file": "assets/audio/voice-taunt/round/godie-efur-1.mp3",
+          "text": "一個老人贏了你。他明天還要上工。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-efur-2",
+          "file": "assets/audio/voice-taunt/round/godie-efur-2.mp3",
+          "text": "揍敵客不做虧本生意。打你算虧本。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-efur-3",
+          "file": "assets/audio/voice-taunt/round/godie-efur-3.mp3",
+          "text": "暗殺是專業。你這個不需要專業。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-ekee": {
+      "name": "會叫的野獸 - 傳說中的大刀",
+      "source": "學期末校園大刀傳說(誤",
+      "lines": [
+        {
+          "id": "taunt-round-godie-ekee-1",
+          "file": "assets/audio/voice-taunt/round/godie-ekee-1.mp3",
+          "text": "本學期你被當了。這場也是。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-ekee-2",
+          "file": "assets/audio/voice-taunt/round/godie-ekee-2.mp3",
+          "text": "大刀一揮，全班剩我一個。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-ekee-3",
+          "file": "assets/audio/voice-taunt/round/godie-ekee-3.mp3",
+          "text": "補考時間：下一場。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-emfr": {
+      "name": "魔法老師 - 涅吉。史普林。菲爾德",
+      "source": "魔法老師",
+      "lines": [
+        {
+          "id": "taunt-round-godie-emfr-1",
+          "file": "assets/audio/voice-taunt/round/godie-emfr-1.mp3",
+          "text": "一個十歲的老師教了你一課。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-emfr-2",
+          "file": "assets/audio/voice-taunt/round/godie-emfr-2.mp3",
+          "text": "千之雷。我只用了一道。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-emfr-3",
+          "file": "assets/audio/voice-taunt/round/godie-emfr-3.mp3",
+          "text": "老師要點名了。你缺席。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-emns": {
+      "name": "奇樂 - 夜神月",
+      "source": "死亡筆記本",
+      "lines": [
+        {
+          "id": "taunt-round-godie-emns-1",
+          "file": "assets/audio/voice-taunt/round/godie-emns-1.mp3",
+          "text": "你的名字寫上去了。四十秒。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-emns-2",
+          "file": "assets/audio/voice-taunt/round/godie-emns-2.mp3",
+          "text": "計画通り。其實沒有計畫。你就是這麼弱。",
+          "langs": [
+            "ja",
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-emns-3",
+          "file": "assets/audio/voice-taunt/round/godie-emns-3.mp3",
+          "text": "新世界的神已誕生。舊世界的你已刪除。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-etyr": {
+      "name": "治癒系公主 - 木乃香",
+      "source": "魔法老師",
+      "lines": [
+        {
+          "id": "taunt-round-godie-etyr-1",
+          "file": "assets/audio/voice-taunt/round/godie-etyr-1.mp3",
+          "text": "我是補師。我補不了你的心情。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-etyr-2",
+          "file": "assets/audio/voice-taunt/round/godie-etyr-2.mp3",
+          "text": "治癒系公主治好了大家。除了你。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-etyr-3",
+          "file": "assets/audio/voice-taunt/round/godie-etyr-3.mp3",
+          "text": "不要緊喔。真的不要緊。完全不要緊。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-ewar": {
+      "name": "龍之子 - 天地志狼",
+      "source": "龍狼傳",
+      "lines": [
+        {
+          "id": "taunt-round-godie-ewar-1",
+          "file": "assets/audio/voice-taunt/round/godie-ewar-1.mp3",
+          "text": "龍之子。你是龍的飼料。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-ewar-2",
+          "file": "assets/audio/voice-taunt/round/godie-ewar-2.mp3",
+          "text": "歷史上沒有記載你。這是好事。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-ewar-3",
+          "file": "assets/audio/voice-taunt/round/godie-ewar-3.mp3",
+          "text": "回到過去也救不了這一場。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-ewrd": {
+      "name": "天上天下 - 棗 真夜",
+      "source": "天上天下",
+      "lines": [
+        {
+          "id": "taunt-round-godie-ewrd-1",
+          "file": "assets/audio/voice-taunt/round/godie-ewrd-1.mp3",
+          "text": "天上天下。你在地上趴著。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-ewrd-2",
+          "file": "assets/audio/voice-taunt/round/godie-ewrd-2.mp3",
+          "text": "我變回原本的樣子要三秒。你撐不到三秒。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-ewrd-3",
+          "file": "assets/audio/voice-taunt/round/godie-ewrd-3.mp3",
+          "text": "執行部處理完畢。下一位。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-h001": {
+      "name": "地獄來襲者 - 斑剎",
+      "source": "天堂",
+      "lines": [
+        {
+          "id": "taunt-round-godie-h001-1",
+          "file": "assets/audio/voice-taunt/round/godie-h001-1.mp3",
+          "text": "地獄來襲。連地獄都懶得收你。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h001-2",
+          "file": "assets/audio/voice-taunt/round/godie-h001-2.mp3",
+          "text": "踩到你了。抱歉，沒看到。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h001-3",
+          "file": "assets/audio/voice-taunt/round/godie-h001-3.mp3",
+          "text": "從地獄爬上來，發現你在下面。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-h00l": {
+      "name": "時空勇者 - 林克",
+      "source": "薩爾達傳說",
+      "lines": [
+        {
+          "id": "taunt-round-godie-h00l-1",
+          "file": "assets/audio/voice-taunt/round/godie-h00l-1.mp3",
+          "text": "勇者不說話。所以剛剛那些是你在叫。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h00l-2",
+          "file": "assets/audio/voice-taunt/round/godie-h00l-2.mp3",
+          "text": "我打破的罐子比你打出的傷害多。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h00l-3",
+          "file": "assets/audio/voice-taunt/round/godie-h00l-3.mp3",
+          "text": "你的愛心剩四分之一格。現在零格。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-h01n": {
+      "name": "開外掛的死神 - 黑崎一護",
+      "source": "死神BLEACH",
+      "lines": [
+        {
+          "id": "taunt-round-godie-h01n-1",
+          "file": "assets/audio/voice-taunt/round/godie-h01n-1.mp3",
+          "text": "我開外掛。你連外掛都不會開。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h01n-2",
+          "file": "assets/audio/voice-taunt/round/godie-h01n-2.mp3",
+          "text": "卍解。這是外掛。我承認。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h01n-3",
+          "file": "assets/audio/voice-taunt/round/godie-h01n-3.mp3",
+          "text": "死神的工作是送人走。你已送達。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-h01o": {
+      "name": "外掛開很大的死神 - 黑崎一護",
+      "source": null,
+      "lines": [
+        {
+          "id": "taunt-round-godie-h01o-1",
+          "file": "assets/audio/voice-taunt/round/godie-h01o-1.mp3",
+          "text": "我外掛開很大。你輸得也很大。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h01o-2",
+          "file": "assets/audio/voice-taunt/round/godie-h01o-2.mp3",
+          "text": "外掛開到滿。還是覺得對你太多了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h01o-3",
+          "file": "assets/audio/voice-taunt/round/godie-h01o-3.mp3",
+          "text": "這場不公平。我知道。我不打算改。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-h01u": {
+      "name": "亂世癿王者 - 呂布奉先",
+      "source": "東漢世紀末傳說",
+      "lines": [
+        {
+          "id": "taunt-round-godie-h01u-1",
+          "file": "assets/audio/voice-taunt/round/godie-h01u-1.mp3",
+          "text": "人中呂布。人下是你。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h01u-2",
+          "file": "assets/audio/voice-taunt/round/godie-h01u-2.mp3",
+          "text": "三個人一起上都輸。你只有一個。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h01u-3",
+          "file": "assets/audio/voice-taunt/round/godie-h01u-3.mp3",
+          "text": "亂世出英雄。也出你這種。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-h020": {
+      "name": "黑魔導士 - 莉娜因巴斯",
+      "source": "秀逗魔導士",
+      "lines": [
+        {
+          "id": "taunt-round-godie-h020-1",
+          "file": "assets/audio/voice-taunt/round/godie-h020-1.mp3",
+          "text": "ドラグ・スレイブ！地圖沒了。你也沒了。",
+          "langs": [
+            "ja",
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h020-2",
+          "file": "assets/audio/voice-taunt/round/godie-h020-2.mp3",
+          "text": "龍破斬是拿來對付魔族的。對你是浪費。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h020-3",
+          "file": "assets/audio/voice-taunt/round/godie-h020-3.mp3",
+          "text": "你的裝備我收下了。這是慣例。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-h021": {
+      "name": "破銅爛鐵 - 阿強一號",
+      "source": null,
+      "lines": [
+        {
+          "id": "taunt-round-godie-h021-1",
+          "file": "assets/audio/voice-taunt/round/godie-h021-1.mp3",
+          "text": "一堆破銅爛鐵贏了你。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h021-2",
+          "file": "assets/audio/voice-taunt/round/godie-h021-2.mp3",
+          "text": "我生鏽了。反應還是比你快。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h021-3",
+          "file": "assets/audio/voice-taunt/round/godie-h021-3.mp3",
+          "text": "零件掉了三個。還是夠用。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-h022": {
+      "name": "白色之翼 - 涅吉。史普林。菲爾德",
+      "source": "魔法老師",
+      "lines": [
+        {
+          "id": "taunt-round-godie-h022-1",
+          "file": "assets/audio/voice-taunt/round/godie-h022-1.mp3",
+          "text": "白色之翼展開。你連地面都還沒離開。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h022-2",
+          "file": "assets/audio/voice-taunt/round/godie-h022-2.mp3",
+          "text": "雷之拉丁語。你連咒文都念不完。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h022-3",
+          "file": "assets/audio/voice-taunt/round/godie-h022-3.mp3",
+          "text": "翅膀是白的。你的畫面是灰的。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-h02k": {
+      "name": "國寶級的畜生 - 熊貓",
+      "source": "去死團原創",
+      "lines": [
+        {
+          "id": "taunt-round-godie-h02k-1",
+          "file": "assets/audio/voice-taunt/round/godie-h02k-1.mp3",
+          "text": "我是國寶。你是紀念品。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h02k-2",
+          "file": "assets/audio/voice-taunt/round/godie-h02k-2.mp3",
+          "text": "熊貓一天睡十四小時。剩下十小時夠打贏你。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h02k-3",
+          "file": "assets/audio/voice-taunt/round/godie-h02k-3.mp3",
+          "text": "黑眼圈是天生的。你的是熬夜練習來的。沒用。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-h02n": {
+      "name": "腦包英雄 - 打我阿笨蛋",
+      "source": null,
+      "lines": [
+        {
+          "id": "taunt-round-godie-h02n-1",
+          "file": "assets/audio/voice-taunt/round/godie-h02n-1.mp3",
+          "text": "怎樣，打我阿笨蛋。你真的沒打到。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h02n-2",
+          "file": "assets/audio/voice-taunt/round/godie-h02n-2.mp3",
+          "text": "腦包英雄贏了。這代表什麼，你自己想。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h02n-3",
+          "file": "assets/audio/voice-taunt/round/godie-h02n-3.mp3",
+          "text": "我沒有戰術。我只有臉。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-h02r": {
+      "name": "種子神奇寶貝 - 妙蛙花",
+      "source": null,
+      "lines": [
+        {
+          "id": "taunt-round-godie-h02r-1",
+          "file": "assets/audio/voice-taunt/round/godie-h02r-1.mp3",
+          "text": "我已經進化到最終型態。你還在原地。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h02r-2",
+          "file": "assets/audio/voice-taunt/round/godie-h02r-2.mp3",
+          "text": "花開了。你謝了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h02r-3",
+          "file": "assets/audio/voice-taunt/round/godie-h02r-3.mp3",
+          "text": "陽光烈焰要蓄力一回合。你連一回合都撐不到。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-h02s": {
+      "name": "死亡騎士",
+      "source": "WarCraft",
+      "lines": [
+        {
+          "id": "taunt-round-godie-h02s-1",
+          "file": "assets/audio/voice-taunt/round/godie-h02s-1.mp3",
+          "text": "死亡騎士上線。你下線。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h02s-2",
+          "file": "assets/audio/voice-taunt/round/godie-h02s-2.mp3",
+          "text": "我已經死過一次。你這是第一次。習慣就好。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h02s-3",
+          "file": "assets/audio/voice-taunt/round/godie-h02s-3.mp3",
+          "text": "亡靈天災不收活人。你剛好合格。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-h02u": {
+      "name": "看似憂鬱的神獸 - 草泥馬",
+      "source": "中國大陸",
+      "lines": [
+        {
+          "id": "taunt-round-godie-h02u-1",
+          "file": "assets/audio/voice-taunt/round/godie-h02u-1.mp3",
+          "text": "神獸看似憂鬱。其實只是覺得你很無聊。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h02u-2",
+          "file": "assets/audio/voice-taunt/round/godie-h02u-2.mp3",
+          "text": "神獸贏了。請自行體會。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h02u-3",
+          "file": "assets/audio/voice-taunt/round/godie-h02u-3.mp3",
+          "text": "我吐口水都比你準。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-h02v": {
+      "name": "看似憂鬱的神獸 - 草泥馬",
+      "source": "中國大陸",
+      "lines": [
+        {
+          "id": "taunt-round-godie-h02v-1",
+          "file": "assets/audio/voice-taunt/round/godie-h02v-1.mp3",
+          "text": "這隻神獸的表情從頭到尾沒變。你的變了很多次。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h02v-2",
+          "file": "assets/audio/voice-taunt/round/godie-h02v-2.mp3",
+          "text": "牠只是路過。你只是躺著。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h02v-3",
+          "file": "assets/audio/voice-taunt/round/godie-h02v-3.mp3",
+          "text": "戈壁的風沙都比你猛。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-h02y": {
+      "name": "幕末復仇狂者 - 志志雄真實",
+      "source": "神劍闖江湖",
+      "lines": [
+        {
+          "id": "taunt-round-godie-h02y-1",
+          "file": "assets/audio/voice-taunt/round/godie-h02y-1.mp3",
+          "text": "弱肉強食。你是肉。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h02y-2",
+          "file": "assets/audio/voice-taunt/round/godie-h02y-2.mp3",
+          "text": "我全身是繃帶。還是比你完整。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h02y-3",
+          "file": "assets/audio/voice-taunt/round/godie-h02y-3.mp3",
+          "text": "我只能動十五分鐘。用了三分鐘。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-h02z": {
+      "name": "不良少年",
+      "source": "WarCraft",
+      "lines": [
+        {
+          "id": "taunt-round-godie-h02z-1",
+          "file": "assets/audio/voice-taunt/round/godie-h02z-1.mp3",
+          "text": "不良少年沒在讀書。還是算得比你準。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h02z-2",
+          "file": "assets/audio/voice-taunt/round/godie-h02z-2.mp3",
+          "text": "放學後校門口見。不用來了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-h02z-3",
+          "file": "assets/audio/voice-taunt/round/godie-h02z-3.mp3",
+          "text": "我蹲在那邊什麼都沒做。你就自己倒了。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-hapm": {
+      "name": "海克力斯 - Berserker",
+      "source": "Fate/stay night",
+      "lines": [
+        {
+          "id": "taunt-round-godie-hapm-1",
+          "file": "assets/audio/voice-taunt/round/godie-hapm-1.mp3",
+          "text": "十二條命。用掉零條。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-hapm-2",
+          "file": "assets/audio/voice-taunt/round/godie-hapm-2.mp3",
+          "text": "Berserker不會說話。所以這句是旁白幫他說的。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-hapm-3",
+          "file": "assets/audio/voice-taunt/round/godie-hapm-3.mp3",
+          "text": "他只是揮了一下手。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-harf": {
+      "name": "豪洨天王 - 鄭先生",
+      "source": "台大PTT",
+      "lines": [
+        {
+          "id": "taunt-round-godie-harf-1",
+          "file": "assets/audio/voice-taunt/round/godie-harf-1.mp3",
+          "text": "豪洨天王沒有豪洨。這次是真的。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-harf-2",
+          "file": "assets/audio/voice-taunt/round/godie-harf-2.mp3",
+          "text": "我隨便講講就贏了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-harf-3",
+          "file": "assets/audio/voice-taunt/round/godie-harf-3.mp3",
+          "text": "這場我可以吹一輩子。你也是。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-hart": {
+      "name": "最終幻想 - 克勞德",
+      "source": "太空戰士7",
+      "lines": [
+        {
+          "id": "taunt-round-godie-hart-1",
+          "file": "assets/audio/voice-taunt/round/godie-hart-1.mp3",
+          "text": "興味ないね。對你的操作，真的沒有興趣。",
+          "langs": [
+            "ja",
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-hart-2",
+          "file": "assets/audio/voice-taunt/round/godie-hart-2.mp3",
+          "text": "這把劍比我重。也比你重要。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-hart-3",
+          "file": "assets/audio/voice-taunt/round/godie-hart-3.mp3",
+          "text": "傭兵收錢辦事。這場算免費的。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-hblm": {
+      "name": "慈悲的王者 - 賈修貝爾",
+      "source": "魔法少年賈修",
+      "lines": [
+        {
+          "id": "taunt-round-godie-hblm-1",
+          "file": "assets/audio/voice-taunt/round/godie-hblm-1.mp3",
+          "text": "ザケル！這是最初的咒文。對你夠用了。",
+          "langs": [
+            "ja",
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-hblm-2",
+          "file": "assets/audio/voice-taunt/round/godie-hblm-2.mp3",
+          "text": "我要當溫柔的王。所以我只打了一次。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-hblm-3",
+          "file": "assets/audio/voice-taunt/round/godie-hblm-3.mp3",
+          "text": "書燒完了嗎？沒有。是你先結束的。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-hgam": {
+      "name": "種子神奇寶貝 - 妙蛙種子",
+      "source": "神奇寶貝",
+      "lines": [
+        {
+          "id": "taunt-round-godie-hgam-1",
+          "file": "assets/audio/voice-taunt/round/godie-hgam-1.mp3",
+          "text": "我是第一階段。你被第一階段打敗。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-hgam-2",
+          "file": "assets/audio/voice-taunt/round/godie-hgam-2.mp3",
+          "text": "編號零零一。你的排名比較後面。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-hgam-3",
+          "file": "assets/audio/voice-taunt/round/godie-hgam-3.mp3",
+          "text": "我背上是種子。你背上是我的傷害。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-hjai": {
+      "name": "黑魔導士 - 莉娜因巴斯",
+      "source": "秀逗魔導士",
+      "lines": [
+        {
+          "id": "taunt-round-godie-hjai-1",
+          "file": "assets/audio/voice-taunt/round/godie-hjai-1.mp3",
+          "text": "黑魔導士的原則：先炸再說。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-hjai-2",
+          "file": "assets/audio/voice-taunt/round/godie-hjai-2.mp3",
+          "text": "我把整座山夷平了。你在山的那一邊。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-hjai-3",
+          "file": "assets/audio/voice-taunt/round/godie-hjai-3.mp3",
+          "text": "賞金我領走了。你是附贈的。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-hlgr": {
+      "name": "鋼彈 - 煌",
+      "source": "鋼彈Seed",
+      "lines": [
+        {
+          "id": "taunt-round-godie-hlgr-1",
+          "file": "assets/audio/voice-taunt/round/godie-hlgr-1.mp3",
+          "text": "殺したくない。所以我只拆了你的裝備。",
+          "langs": [
+            "ja",
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-hlgr-2",
+          "file": "assets/audio/voice-taunt/round/godie-hlgr-2.mp3",
+          "text": "我只打四肢。你也只剩四肢。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-hlgr-3",
+          "file": "assets/audio/voice-taunt/round/godie-hlgr-3.mp3",
+          "text": "種子已爆發。其實不用爆發。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-hpal": {
+      "name": "不死之身-無 - 藤井八雲",
+      "source": "三隻眼",
+      "lines": [
+        {
+          "id": "taunt-round-godie-hpal-1",
+          "file": "assets/audio/voice-taunt/round/godie-hpal-1.mp3",
+          "text": "不死之身的意思是，我可以慢慢來。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-hpal-2",
+          "file": "assets/audio/voice-taunt/round/godie-hpal-2.mp3",
+          "text": "我死不了。你剛好相反。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-hpal-3",
+          "file": "assets/audio/voice-taunt/round/godie-hpal-3.mp3",
+          "text": "無。你的貢獻也是。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-hpb1": {
+      "name": "獸矛傳承使 - 蒼月潮",
+      "source": "魔力小馬、潮與虎",
+      "lines": [
+        {
+          "id": "taunt-round-godie-hpb1-1",
+          "file": "assets/audio/voice-taunt/round/godie-hpb1-1.mp3",
+          "text": "獸之槍認可了我。它連看都沒看你。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-hpb1-2",
+          "file": "assets/audio/voice-taunt/round/godie-hpb1-2.mp3",
+          "text": "拿起槍頭髮會變白。我還沒拿就贏了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-hpb1-3",
+          "file": "assets/audio/voice-taunt/round/godie-hpb1-3.mp3",
+          "text": "我旁邊有一隻妖怪。牠在笑你。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-huth": {
+      "name": "超級普烏 - 魔人普烏",
+      "source": "七龍珠",
+      "lines": [
+        {
+          "id": "taunt-round-godie-huth-1",
+          "file": "assets/audio/voice-taunt/round/godie-huth-1.mp3",
+          "text": "普烏把你變成糖果了。普烏不吃。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-huth-2",
+          "file": "assets/audio/voice-taunt/round/godie-huth-2.mp3",
+          "text": "普烏會再生。你不會。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-huth-3",
+          "file": "assets/audio/voice-taunt/round/godie-huth-3.mp3",
+          "text": "普烏生氣。普烏沒有生氣。普烏在笑。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-hvsh": {
+      "name": "梅杜莎 - Rider",
+      "source": "Fate/stay night",
+      "lines": [
+        {
+          "id": "taunt-round-godie-hvsh-1",
+          "file": "assets/audio/voice-taunt/round/godie-hvsh-1.mp3",
+          "text": "我戴著眼罩。還是看得到你的破綻。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-hvsh-2",
+          "file": "assets/audio/voice-taunt/round/godie-hvsh-2.mp3",
+          "text": "魔眼開了會石化。不想浪費在你身上。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-hvsh-3",
+          "file": "assets/audio/voice-taunt/round/godie-hvsh-3.mp3",
+          "text": "騎乘職階。我從你頭上飛過去三次。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-hvwd": {
+      "name": "除魔巫女 - 桔梗",
+      "source": "犬夜叉",
+      "lines": [
+        {
+          "id": "taunt-round-godie-hvwd-1",
+          "file": "assets/audio/voice-taunt/round/godie-hvwd-1.mp3",
+          "text": "破魔箭是射妖怪用的。給你算加班。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-hvwd-2",
+          "file": "assets/audio/voice-taunt/round/godie-hvwd-2.mp3",
+          "text": "我已經死了。你連死都比我慢。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-hvwd-3",
+          "file": "assets/audio/voice-taunt/round/godie-hvwd-3.mp3",
+          "text": "除魔巫女在此。沒有魔可除。只有你。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-n003": {
+      "name": "黑暗福音 - 依文潔琳",
+      "source": "魔法老師",
+      "lines": [
+        {
+          "id": "taunt-round-godie-n003-1",
+          "file": "assets/audio/voice-taunt/round/godie-n003-1.mp3",
+          "text": "這才是我真正的力量。剛剛那個不是。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-n003-2",
+          "file": "assets/audio/voice-taunt/round/godie-n003-2.mp3",
+          "text": "我活了六百年。沒看過這麼悠閒的走位。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-n003-3",
+          "file": "assets/audio/voice-taunt/round/godie-n003-3.mp3",
+          "text": "黑暗福音已宣讀。你負責聽。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-n00b": {
+      "name": "小叮噹 - 哆拉A夢",
+      "source": "小叮噹",
+      "lines": [
+        {
+          "id": "taunt-round-godie-n00b-1",
+          "file": "assets/audio/voice-taunt/round/godie-n00b-1.mp3",
+          "text": "四次元口袋。我拿出來的是勝利。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-n00b-2",
+          "file": "assets/audio/voice-taunt/round/godie-n00b-2.mp3",
+          "text": "任意門。你要去哪？重生點。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-n00b-3",
+          "file": "assets/audio/voice-taunt/round/godie-n00b-3.mp3",
+          "text": "我沒有耳朵。還是聽到你在哀嚎。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-n00p": {
+      "name": "妖狐藏馬 - 南野秀一",
+      "source": "幽遊白書",
+      "lines": [
+        {
+          "id": "taunt-round-godie-n00p-1",
+          "file": "assets/audio/voice-taunt/round/godie-n00p-1.mp3",
+          "text": "薔薇有刺。你連花都沒看到。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-n00p-2",
+          "file": "assets/audio/voice-taunt/round/godie-n00p-2.mp3",
+          "text": "我用腦。你用運氣。兩個都用完了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-n00p-3",
+          "file": "assets/audio/voice-taunt/round/godie-n00p-3.mp3",
+          "text": "植物都比你有攻擊性。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-n01c": {
+      "name": "傳說的龍騎士 - 勇者小呆",
+      "source": "神龍之謎",
+      "lines": [
+        {
+          "id": "taunt-round-godie-n01c-1",
+          "file": "assets/audio/voice-taunt/round/godie-n01c-1.mp3",
+          "text": "額頭發光就代表你完了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-n01c-2",
+          "file": "assets/audio/voice-taunt/round/godie-n01c-2.mp3",
+          "text": "勇者的第一課：不要站在原地。你沒上這堂課。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-n01c-3",
+          "file": "assets/audio/voice-taunt/round/godie-n01c-3.mp3",
+          "text": "傳說的龍騎士。你會被寫進註腳。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-n01g": {
+      "name": "黑暗福音 - 依文潔琳",
+      "source": "魔法老師",
+      "lines": [
+        {
+          "id": "taunt-round-godie-n01g-1",
+          "file": "assets/audio/voice-taunt/round/godie-n01g-1.mp3",
+          "text": "一個六百歲的人打贏你。而且她還被困在這裡。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-n01g-2",
+          "file": "assets/audio/voice-taunt/round/godie-n01g-2.mp3",
+          "text": "永遠的冰之女王。你的畫面也結凍了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-n01g-3",
+          "file": "assets/audio/voice-taunt/round/godie-n01g-3.mp3",
+          "text": "我連認真都懶。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-n01l": {
+      "name": "學姊 - 小派",
+      "source": "現實的人生",
+      "lines": [
+        {
+          "id": "taunt-round-godie-n01l-1",
+          "file": "assets/audio/voice-taunt/round/godie-n01l-1.mp3",
+          "text": "學姊贏了。學弟妹請重修。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-n01l-2",
+          "file": "assets/audio/voice-taunt/round/godie-n01l-2.mp3",
+          "text": "現實的人生比較難。這場比較簡單。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-n01l-3",
+          "file": "assets/audio/voice-taunt/round/godie-n01l-3.mp3",
+          "text": "學姊注意到你了。因為你倒在路中間。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-naka": {
+      "name": "猿飛佐助 - 風魔小次郎",
+      "source": "忍者傳說",
+      "lines": [
+        {
+          "id": "taunt-round-godie-naka-1",
+          "file": "assets/audio/voice-taunt/round/godie-naka-1.mp3",
+          "text": "忍者的第一守則是不被發現。你連發現我都沒有。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-naka-2",
+          "file": "assets/audio/voice-taunt/round/godie-naka-2.mp3",
+          "text": "風魔一族。風已經過了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-naka-3",
+          "file": "assets/audio/voice-taunt/round/godie-naka-3.mp3",
+          "text": "忍術用完了嗎？沒有。用了一個。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-nbbc": {
+      "name": "傳說的龍騎士 - 勇者小呆",
+      "source": "神龍之謎",
+      "lines": [
+        {
+          "id": "taunt-round-godie-nbbc-1",
+          "file": "assets/audio/voice-taunt/round/godie-nbbc-1.mp3",
+          "text": "阿邦老師教過我。他沒教過你。這很明顯。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-nbbc-2",
+          "file": "assets/audio/voice-taunt/round/godie-nbbc-2.mp3",
+          "text": "龍之紋章發動。其實不用發動。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-nbbc-3",
+          "file": "assets/audio/voice-taunt/round/godie-nbbc-3.mp3",
+          "text": "勇者不會輸。這不是設定，這是事實。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-nbst": {
+      "name": "變態正義 - 瘋狂假面",
+      "source": "瘋狂假面",
+      "lines": [
+        {
+          "id": "taunt-round-godie-nbst-1",
+          "file": "assets/audio/voice-taunt/round/godie-nbst-1.mp3",
+          "text": "你輸給一個頭上戴著內褲的人。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-nbst-2",
+          "file": "assets/audio/voice-taunt/round/godie-nbst-2.mp3",
+          "text": "變態也是一種正義。你是一種參考資料。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-nbst-3",
+          "file": "assets/audio/voice-taunt/round/godie-nbst-3.mp3",
+          "text": "這個造型贏了你。請思考一下。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-nman": {
+      "name": "地獄歌神 - 憤怒的胖虎",
+      "source": "小叮噹",
+      "lines": [
+        {
+          "id": "taunt-round-godie-nman-1",
+          "file": "assets/audio/voice-taunt/round/godie-nman-1.mp3",
+          "text": "我的東西是我的。你的東西也是我的。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-nman-2",
+          "file": "assets/audio/voice-taunt/round/godie-nman-2.mp3",
+          "text": "地獄歌神開唱。你是唯一的觀眾。你沒撐完。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-nman-3",
+          "file": "assets/audio/voice-taunt/round/godie-nman-3.mp3",
+          "text": "安可。沒有安可。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-nplh": {
+      "name": "通靈人 - 麻倉葉",
+      "source": "通靈童子",
+      "lines": [
+        {
+          "id": "taunt-round-godie-nplh-1",
+          "file": "assets/audio/voice-taunt/round/godie-nplh-1.mp3",
+          "text": "船到橋頭自然直。你的船沉了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-nplh-2",
+          "file": "assets/audio/voice-taunt/round/godie-nplh-2.mp3",
+          "text": "我在睡覺。阿彌陀丸幫我打的。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-nplh-3",
+          "file": "assets/audio/voice-taunt/round/godie-nplh-3.mp3",
+          "text": "通靈王比賽還沒開始。這只是熱身。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-nsjs": {
+      "name": "妖狐藏馬 - 南野秀一",
+      "source": "幽遊白書",
+      "lines": [
+        {
+          "id": "taunt-round-godie-nsjs-1",
+          "file": "assets/audio/voice-taunt/round/godie-nsjs-1.mp3",
+          "text": "你遇到的不是好學生那一面。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-nsjs-2",
+          "file": "assets/audio/voice-taunt/round/godie-nsjs-2.mp3",
+          "text": "這一戰我算了三十七步。用了兩步。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-nsjs-3",
+          "file": "assets/audio/voice-taunt/round/godie-nsjs-3.mp3",
+          "text": "種子早就種在你身上了。剛剛開花。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-ntin": {
+      "name": "時空管理局執務官 - 菲特·泰斯塔羅沙",
+      "source": "魔法少女奈葉",
+      "lines": [
+        {
+          "id": "taunt-round-godie-ntin-1",
+          "file": "assets/audio/voice-taunt/round/godie-ntin-1.mp3",
+          "text": "時空管理局執務官，執行完畢。已歸檔。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-ntin-2",
+          "file": "assets/audio/voice-taunt/round/godie-ntin-2.mp3",
+          "text": "バルディッシュ。他說你太慢了。",
+          "langs": [
+            "ja",
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-ntin-3",
+          "file": "assets/audio/voice-taunt/round/godie-ntin-3.mp3",
+          "text": "雷光已經通過。你才要開始動。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-o00k": {
+      "name": "傲嬌電氣老鼠 - 皮卡娘",
+      "source": "SATO X PICA",
+      "lines": [
+        {
+          "id": "taunt-round-godie-o00k-1",
+          "file": "assets/audio/voice-taunt/round/godie-o00k-1.mp3",
+          "text": "我不是為了你才放電的。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-o00k-2",
+          "file": "assets/audio/voice-taunt/round/godie-o00k-2.mp3",
+          "text": "傲嬌的意思是我贏了也不會說。我說了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-o00k-3",
+          "file": "assets/audio/voice-taunt/round/godie-o00k-3.mp3",
+          "text": "十萬伏特。對你用一萬就夠。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-o00l": {
+      "name": "獸神官 - 傑洛士",
+      "source": "秀逗魔導士",
+      "lines": [
+        {
+          "id": "taunt-round-godie-o00l-1",
+          "file": "assets/audio/voice-taunt/round/godie-o00l-1.mp3",
+          "text": "それは秘密です。你為什麼會輸，這也是秘密。",
+          "langs": [
+            "ja",
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-o00l-2",
+          "file": "assets/audio/voice-taunt/round/godie-o00l-2.mp3",
+          "text": "我全程閉著眼睛。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-o00l-3",
+          "file": "assets/audio/voice-taunt/round/godie-o00l-3.mp3",
+          "text": "神官是來收集負面情緒的。謝謝你。剛好夠。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-o00x": {
+      "name": "超級賽亞人 - 悟空",
+      "source": "七龍珠",
+      "lines": [
+        {
+          "id": "taunt-round-godie-o00x-1",
+          "file": "assets/audio/voice-taunt/round/godie-o00x-1.mp3",
+          "text": "我變身了。其實不用變身。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-o00x-2",
+          "file": "assets/audio/voice-taunt/round/godie-o00x-2.mp3",
+          "text": "戰鬥力：你的數字我不唸出來，太傷人。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-o00x-3",
+          "file": "assets/audio/voice-taunt/round/godie-o00x-3.mp3",
+          "text": "還有沒有更強的？看來沒有。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-o01z": {
+      "name": "魔砲少女 - 高町奈葉",
+      "source": "魔砲少女奈葉",
+      "lines": [
+        {
+          "id": "taunt-round-godie-o01z-1",
+          "file": "assets/audio/voice-taunt/round/godie-o01z-1.mp3",
+          "text": "スターライトブレイカー！這招是用來談心的。",
+          "langs": [
+            "ja",
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-o01z-2",
+          "file": "assets/audio/voice-taunt/round/godie-o01z-2.mp3",
+          "text": "我們可以好好談談。談完再打也可以。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-o01z-3",
+          "file": "assets/audio/voice-taunt/round/godie-o01z-3.mp3",
+          "text": "魔砲少女。重點在砲。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-o02l": {
+      "name": "神騎寶貝 - 皮卡丘",
+      "source": null,
+      "lines": [
+        {
+          "id": "taunt-round-godie-o02l-1",
+          "file": "assets/audio/voice-taunt/round/godie-o02l-1.mp3",
+          "text": "神騎寶貝。名字打錯了。你還是輸了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-o02l-2",
+          "file": "assets/audio/voice-taunt/round/godie-o02l-2.mp3",
+          "text": "皮卡。丘。翻譯：結束了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-o02l-3",
+          "file": "assets/audio/voice-taunt/round/godie-o02l-3.mp3",
+          "text": "十萬伏特。收據在你身上。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-o02o": {
+      "name": "曹操孟德 - 阿瞞大人",
+      "source": null,
+      "lines": [
+        {
+          "id": "taunt-round-godie-o02o-1",
+          "file": "assets/audio/voice-taunt/round/godie-o02o-1.mp3",
+          "text": "寧我負天下人。今天負的是你。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-o02o-2",
+          "file": "assets/audio/voice-taunt/round/godie-o02o-2.mp3",
+          "text": "治世之能臣，亂世之奸雄。這場算亂世。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-o02o-3",
+          "file": "assets/audio/voice-taunt/round/godie-o02o-3.mp3",
+          "text": "阿瞞大人已經在寫詩了。內容不是你。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-o02p": {
+      "name": "夢幻之星 - 初音",
+      "source": "HATSUNE MIKU",
+      "lines": [
+        {
+          "id": "taunt-round-godie-o02p-1",
+          "file": "assets/audio/voice-taunt/round/godie-o02p-1.mp3",
+          "text": "這場的背景音樂是我唱的。你沒聽完。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-o02p-2",
+          "file": "assets/audio/voice-taunt/round/godie-o02p-2.mp3",
+          "text": "みくみくにしてあげる。已完成。",
+          "langs": [
+            "ja",
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-o02p-3",
+          "file": "assets/audio/voice-taunt/round/godie-o02p-3.mp3",
+          "text": "我拿的是蔥。你輸給一根蔥。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-o02s": {
+      "name": "憂鬱少女 - 涼宮八ㄦ匕",
+      "source": "秀逗魔導士",
+      "lines": [
+        {
+          "id": "taunt-round-godie-o02s-1",
+          "file": "assets/audio/voice-taunt/round/godie-o02s-1.mp3",
+          "text": "我對普通的人類沒有興趣。你連普通都沒到。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-o02s-2",
+          "file": "assets/audio/voice-taunt/round/godie-o02s-2.mp3",
+          "text": "我覺得無聊，世界就會改變。剛剛就是。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-o02s-3",
+          "file": "assets/audio/voice-taunt/round/godie-o02s-3.mp3",
+          "text": "SOS團招募中。不收你。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-o02v": {
+      "name": "白色惡魔 - 高町奈葉",
+      "source": "魔砲少女奈葉",
+      "lines": [
+        {
+          "id": "taunt-round-godie-o02v-1",
+          "file": "assets/audio/voice-taunt/round/godie-o02v-1.mp3",
+          "text": "他們叫我白色惡魔。你現在知道為什麼了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-o02v-2",
+          "file": "assets/audio/voice-taunt/round/godie-o02v-2.mp3",
+          "text": "我不是要打你。我是要跟你做朋友。你躺好。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-o02v-3",
+          "file": "assets/audio/voice-taunt/round/godie-o02v-3.mp3",
+          "text": "砲擊完畢。友情確認。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-o02w": {
+      "name": "笑傲江湖 - 令狐沖",
+      "source": "笑傲江湖",
+      "lines": [
+        {
+          "id": "taunt-round-godie-o02w-1",
+          "file": "assets/audio/voice-taunt/round/godie-o02w-1.mp3",
+          "text": "獨孤九劍破盡天下武功。你的不算武功。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-o02w-2",
+          "file": "assets/audio/voice-taunt/round/godie-o02w-2.mp3",
+          "text": "我喝醉了。劍沒醉。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-o02w-3",
+          "file": "assets/audio/voice-taunt/round/godie-o02w-3.mp3",
+          "text": "笑傲江湖。江湖已經笑了。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-obla": {
+      "name": "被剝削的勞工階級 - 牧太郎",
+      "source": "牧場物語",
+      "lines": [
+        {
+          "id": "taunt-round-godie-obla-1",
+          "file": "assets/audio/voice-taunt/round/godie-obla-1.mp3",
+          "text": "農夫下班了。你還在加班。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-obla-2",
+          "file": "assets/audio/voice-taunt/round/godie-obla-2.mp3",
+          "text": "我是種田的。你是我的肥料。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-obla-3",
+          "file": "assets/audio/voice-taunt/round/godie-obla-3.mp3",
+          "text": "被剝削的勞工階級贏了。這很有意義。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-ofar": {
+      "name": "神奇寶貝兒 - 皮卡丘",
+      "source": "神奇寶貝",
+      "lines": [
+        {
+          "id": "taunt-round-godie-ofar-1",
+          "file": "assets/audio/voice-taunt/round/godie-ofar-1.mp3",
+          "text": "我不進化。因為不需要。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-ofar-2",
+          "file": "assets/audio/voice-taunt/round/godie-ofar-2.mp3",
+          "text": "ピカ、チュウ。牠說謝謝指教。",
+          "langs": [
+            "ja",
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-ofar-3",
+          "file": "assets/audio/voice-taunt/round/godie-ofar-3.mp3",
+          "text": "一隻電氣老鼠打贏你。老鼠。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-ogld": {
+      "name": "美白大法師 - 黑人牙膏",
+      "source": "去死去死團的逆襲原創",
+      "lines": [
+        {
+          "id": "taunt-round-godie-ogld-1",
+          "file": "assets/audio/voice-taunt/round/godie-ogld-1.mp3",
+          "text": "大法師施法完畢。請記得刷牙。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-ogld-2",
+          "file": "assets/audio/voice-taunt/round/godie-ogld-2.mp3",
+          "text": "本場最亮的東西是我的牙齒。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-ogld-3",
+          "file": "assets/audio/voice-taunt/round/godie-ogld-3.mp3",
+          "text": "法師的工作是清潔戰場。已清潔。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-ogrh": {
+      "name": "賽亞人 - 悟空",
+      "source": "七龍珠",
+      "lines": [
+        {
+          "id": "taunt-round-godie-ogrh-1",
+          "file": "assets/audio/voice-taunt/round/godie-ogrh-1.mp3",
+          "text": "我還沒變身。就這樣結束了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-ogrh-2",
+          "file": "assets/audio/voice-taunt/round/godie-ogrh-2.mp3",
+          "text": "龜派氣功要蓄力。你給了我很多時間。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-ogrh-3",
+          "file": "assets/audio/voice-taunt/round/godie-ogrh-3.mp3",
+          "text": "我肚子餓了。你耽誤我吃飯。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-opgh": {
+      "name": "常勝將軍 - 趙子龍",
+      "source": "三國無雙",
+      "lines": [
+        {
+          "id": "taunt-round-godie-opgh-1",
+          "file": "assets/audio/voice-taunt/round/godie-opgh-1.mp3",
+          "text": "吾乃常山趙子龍。你是誰不重要。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-opgh-2",
+          "file": "assets/audio/voice-taunt/round/godie-opgh-2.mp3",
+          "text": "七進七出。這場只進出一次。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-opgh-3",
+          "file": "assets/audio/voice-taunt/round/godie-opgh-3.mp3",
+          "text": "常勝將軍。紀錄還在延長。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-orkn": {
+      "name": "電車癡漢 - 臭作",
+      "source": "臭作",
+      "lines": [
+        {
+          "id": "taunt-round-godie-orkn-1",
+          "file": "assets/audio/voice-taunt/round/godie-orkn-1.mp3",
+          "text": "本班列車已到站。您坐過站了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-orkn-2",
+          "file": "assets/audio/voice-taunt/round/godie-orkn-2.mp3",
+          "text": "請站穩、拉好。您沒有拉好。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-orkn-3",
+          "file": "assets/audio/voice-taunt/round/godie-orkn-3.mp3",
+          "text": "下一班列車還要三分鐘。你可以慢慢想。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-osam": {
+      "name": "犬妖 - 殺生丸",
+      "source": "犬夜叉",
+      "lines": [
+        {
+          "id": "taunt-round-godie-osam-1",
+          "file": "assets/audio/voice-taunt/round/godie-osam-1.mp3",
+          "text": "本大爺沒有興趣知道你的名字。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-osam-2",
+          "file": "assets/audio/voice-taunt/round/godie-osam-2.mp3",
+          "text": "我只有一隻手。你有兩隻。結果一樣。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-osam-3",
+          "file": "assets/audio/voice-taunt/round/godie-osam-3.mp3",
+          "text": "天生牙可以救你。我不想用。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-oshd": {
+      "name": "魔鬼筋肉人 - 鬼王達",
+      "source": "破壞之王",
+      "lines": [
+        {
+          "id": "taunt-round-godie-oshd-1",
+          "file": "assets/audio/voice-taunt/round/godie-oshd-1.mp3",
+          "text": "怎樣，打我啊。算了，你打不到。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-oshd-2",
+          "file": "assets/audio/voice-taunt/round/godie-oshd-2.mp3",
+          "text": "魔鬼筋肉人。肌肉是真的。你的操作不是。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-oshd-3",
+          "file": "assets/audio/voice-taunt/round/godie-oshd-3.mp3",
+          "text": "我讓你先出手。你出手了嗎？",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-othr": {
+      "name": "X戰警 - 金鋼狼",
+      "source": "偽特異功能組",
+      "lines": [
+        {
+          "id": "taunt-round-godie-othr-1",
+          "file": "assets/audio/voice-taunt/round/godie-othr-1.mp3",
+          "text": "我做的事不太好看。你剛剛看到了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-othr-2",
+          "file": "assets/audio/voice-taunt/round/godie-othr-2.mp3",
+          "text": "爪子出來三根。用了一根。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-othr-3",
+          "file": "assets/audio/voice-taunt/round/godie-othr-3.mp3",
+          "text": "我會自癒。你會重生。差別是我不用等。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-u00b": {
+      "name": "最M的魔法Jizz - 清蒸 飛鼠先生",
+      "source": null,
+      "lines": [
+        {
+          "id": "taunt-round-godie-u00b-1",
+          "file": "assets/audio/voice-taunt/round/godie-u00b-1.mp3",
+          "text": "清蒸完畢。火候剛好。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u00b-2",
+          "file": "assets/audio/voice-taunt/round/godie-u00b-2.mp3",
+          "text": "我很耐打。你不夠力。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u00b-3",
+          "file": "assets/audio/voice-taunt/round/godie-u00b-3.mp3",
+          "text": "飛鼠先生已升空。你在地面。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-u00h": {
+      "name": "鬼畜紅王 - 鬼畜狂刀KYO",
+      "source": "鬼眼狂刀KYO",
+      "lines": [
+        {
+          "id": "taunt-round-godie-u00h-1",
+          "file": "assets/audio/voice-taunt/round/godie-u00h-1.mp3",
+          "text": "鬼眼開了。你就在那裡站著。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u00h-2",
+          "file": "assets/audio/voice-taunt/round/godie-u00h-2.mp3",
+          "text": "千人斬的紀錄裡沒有你。你不夠格。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u00h-3",
+          "file": "assets/audio/voice-taunt/round/godie-u00h-3.mp3",
+          "text": "紅王已登基。你負責跪著鼓掌。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-u00j": {
+      "name": "神性的流失 - 賽菲洛斯",
+      "source": "最終幻想7",
+      "lines": [
+        {
+          "id": "taunt-round-godie-u00j-1",
+          "file": "assets/audio/voice-taunt/round/godie-u00j-1.mp3",
+          "text": "片翼的天使。單邊就夠了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u00j-2",
+          "file": "assets/audio/voice-taunt/round/godie-u00j-2.mp3",
+          "text": "我走過火場沒有回頭。你回頭了三次。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u00j-3",
+          "file": "assets/audio/voice-taunt/round/godie-u00j-3.mp3",
+          "text": "正宗有兩公尺。你的距離感有問題。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-u00k": {
+      "name": "邪惡意念集合體 - 死之王",
+      "source": "去死去死團的逆襲原創",
+      "lines": [
+        {
+          "id": "taunt-round-godie-u00k-1",
+          "file": "assets/audio/voice-taunt/round/godie-u00k-1.mp3",
+          "text": "邪惡意念集合體。你的意念也在裡面了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u00k-2",
+          "file": "assets/audio/voice-taunt/round/godie-u00k-2.mp3",
+          "text": "死之王收人。條件很低。你符合。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u00k-3",
+          "file": "assets/audio/voice-taunt/round/godie-u00k-3.mp3",
+          "text": "我是集合體。你是零件。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-u00l": {
+      "name": "北斗之鼠 - 拳四郎",
+      "source": "北斗神拳",
+      "lines": [
+        {
+          "id": "taunt-round-godie-u00l-1",
+          "file": "assets/audio/voice-taunt/round/godie-u00l-1.mp3",
+          "text": "北斗之鼠。一隻老鼠贏了你。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u00l-2",
+          "file": "assets/audio/voice-taunt/round/godie-u00l-2.mp3",
+          "text": "お前はもう死んでいる。三秒後你就知道了。",
+          "langs": [
+            "ja",
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u00l-3",
+          "file": "assets/audio/voice-taunt/round/godie-u00l-3.mp3",
+          "text": "我戳了你七下。你只記得第一下。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-u00n": {
+      "name": "草帽小子 - 蒙其.D.魯夫",
+      "source": "航海王",
+      "lines": [
+        {
+          "id": "taunt-round-godie-u00n-1",
+          "file": "assets/audio/voice-taunt/round/godie-u00n-1.mp3",
+          "text": "我是要成為海賊王的男人。你是被打敗的那個。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u00n-2",
+          "file": "assets/audio/voice-taunt/round/godie-u00n-2.mp3",
+          "text": "橡膠不怕電。也不怕你。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u00n-3",
+          "file": "assets/audio/voice-taunt/round/godie-u00n-3.mp3",
+          "text": "打完了嗎？那我要去吃肉了。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-u00o": {
+      "name": "草帽小子 - 蒙其.D.魯夫",
+      "source": "航海王",
+      "lines": [
+        {
+          "id": "taunt-round-godie-u00o-1",
+          "file": "assets/audio/voice-taunt/round/godie-u00o-1.mp3",
+          "text": "草帽是我的寶物。你的寶物掉在地上。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u00o-2",
+          "file": "assets/audio/voice-taunt/round/godie-u00o-2.mp3",
+          "text": "我不記得你的名字。我也不記得路。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u00o-3",
+          "file": "assets/audio/voice-taunt/round/godie-u00o-3.mp3",
+          "text": "二檔。沒用到。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-u00v": {
+      "name": "黑手黨老大 - 基廉列克",
+      "source": "監獄兔",
+      "lines": [
+        {
+          "id": "taunt-round-godie-u00v-1",
+          "file": "assets/audio/voice-taunt/round/godie-u00v-1.mp3",
+          "text": "一隻兔子。紫色的。贏了你。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u00v-2",
+          "file": "assets/audio/voice-taunt/round/godie-u00v-2.mp3",
+          "text": "基廉列克不說話。他動手。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u00v-3",
+          "file": "assets/audio/voice-taunt/round/godie-u00v-3.mp3",
+          "text": "監獄的規矩：不要惹兔子。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-u010": {
+      "name": "邪眼師 - 飛影",
+      "source": "幽遊白書",
+      "lines": [
+        {
+          "id": "taunt-round-godie-u010-1",
+          "file": "assets/audio/voice-taunt/round/godie-u010-1.mp3",
+          "text": "不要小看邪眼的力量。你小看了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u010-2",
+          "file": "assets/audio/voice-taunt/round/godie-u010-2.mp3",
+          "text": "黑龍波燒完了。連灰都整理好了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u010-3",
+          "file": "assets/audio/voice-taunt/round/godie-u010-3.mp3",
+          "text": "我很矮。我還是打得到你。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-u011": {
+      "name": "死亡老二 - 克勞薩先生",
+      "source": null,
+      "lines": [
+        {
+          "id": "taunt-round-godie-u011-1",
+          "file": "assets/audio/voice-taunt/round/godie-u011-1.mp3",
+          "text": "音量已經開到最大。你聽不到自己在求饒。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u011-2",
+          "file": "assets/audio/voice-taunt/round/godie-u011-2.mp3",
+          "text": "死亡金屬沒有安可。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u011-3",
+          "file": "assets/audio/voice-taunt/round/godie-u011-3.mp3",
+          "text": "我平常是很溫柔的人。平常。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-u012": {
+      "name": "重金屬樂團的怪物 - 克勞薩II世",
+      "source": "搖滾重金屬雙面人",
+      "lines": [
+        {
+          "id": "taunt-round-godie-u012-1",
+          "file": "assets/audio/voice-taunt/round/godie-u012-1.mp3",
+          "text": "重金屬樂團的怪物出場了。你是暖場的。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u012-2",
+          "file": "assets/audio/voice-taunt/round/godie-u012-2.mp3",
+          "text": "這首歌只有一個音。夠了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u012-3",
+          "file": "assets/audio/voice-taunt/round/godie-u012-3.mp3",
+          "text": "觀眾在喊安可。他們不是在喊你。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-u01f": {
+      "name": "萬夫莫敵 - 黑化張飛",
+      "source": null,
+      "lines": [
+        {
+          "id": "taunt-round-godie-u01f-1",
+          "file": "assets/audio/voice-taunt/round/godie-u01f-1.mp3",
+          "text": "我在橋上喊一聲。你就這樣了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u01f-2",
+          "file": "assets/audio/voice-taunt/round/godie-u01f-2.mp3",
+          "text": "萬夫莫敵。你只有一夫。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u01f-3",
+          "file": "assets/audio/voice-taunt/round/godie-u01f-3.mp3",
+          "text": "黑化的張飛不喝酒。這對你比較糟。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-u01q": {
+      "name": "測試英雄 - 索隆",
+      "source": null,
+      "lines": [
+        {
+          "id": "taunt-round-godie-u01q-1",
+          "file": "assets/audio/voice-taunt/round/godie-u01q-1.mp3",
+          "text": "我是測試英雄。你被測試英雄打敗。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u01q-2",
+          "file": "assets/audio/voice-taunt/round/godie-u01q-2.mp3",
+          "text": "這場不算正式。對你來說算。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u01q-3",
+          "file": "assets/audio/voice-taunt/round/godie-u01q-3.mp3",
+          "text": "我還沒調完平衡。你已經結束了。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-u01u": {
+      "name": "三刀流劍士 - 索隆",
+      "source": "航海王",
+      "lines": [
+        {
+          "id": "taunt-round-godie-u01u-1",
+          "file": "assets/audio/voice-taunt/round/godie-u01u-1.mp3",
+          "text": "三把刀。用了一把。剩下兩把在睡覺。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u01u-2",
+          "file": "assets/audio/voice-taunt/round/godie-u01u-2.mp3",
+          "text": "我迷路了。還是先到了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u01u-3",
+          "file": "assets/audio/voice-taunt/round/godie-u01u-3.mp3",
+          "text": "我認不得路。我認得贏。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-u034": {
+      "name": "職業獵人 - 傑 富力士",
+      "source": "獵人X獵人",
+      "lines": [
+        {
+          "id": "taunt-round-godie-u034-1",
+          "file": "assets/audio/voice-taunt/round/godie-u034-1.mp3",
+          "text": "最初的猜拳。石頭。結束。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u034-2",
+          "file": "assets/audio/voice-taunt/round/godie-u034-2.mp3",
+          "text": "獵人執照的用途很多。不包括同情你。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-u034-3",
+          "file": "assets/audio/voice-taunt/round/godie-u034-3.mp3",
+          "text": "我用釣竿贏的。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-ubal": {
+      "name": "魔界霸主 - 巴恩大魔王",
+      "source": "神龍之謎",
+      "lines": [
+        {
+          "id": "taunt-round-godie-ubal-1",
+          "file": "assets/audio/voice-taunt/round/godie-ubal-1.mp3",
+          "text": "魔界霸主用老人的樣子跟你打。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-ubal-2",
+          "file": "assets/audio/voice-taunt/round/godie-ubal-2.mp3",
+          "text": "天地魔鬥之構。對你來說是三倍浪費。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-ubal-3",
+          "file": "assets/audio/voice-taunt/round/godie-ubal-3.mp3",
+          "text": "魔界很大。你的位置在最下面。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-ucrl": {
+      "name": "職業獵人 - 傑 富力士",
+      "source": "獵人X獵人",
+      "lines": [
+        {
+          "id": "taunt-round-godie-ucrl-1",
+          "file": "assets/audio/voice-taunt/round/godie-ucrl-1.mp3",
+          "text": "我猜拳從來不出剪刀。你還是輸了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-ucrl-2",
+          "file": "assets/audio/voice-taunt/round/godie-ucrl-2.mp3",
+          "text": "獵人的工作是找東西。我找不到你的貢獻。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-ucrl-3",
+          "file": "assets/audio/voice-taunt/round/godie-ucrl-3.mp3",
+          "text": "小傑很單純。單純打贏你。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-udea": {
+      "name": "至尊學長 - 飛鼠先生",
+      "source": "去死去死團的逆襲原創",
+      "lines": [
+        {
+          "id": "taunt-round-godie-udea-1",
+          "file": "assets/audio/voice-taunt/round/godie-udea-1.mp3",
+          "text": "至尊學長給你的評語：再加油。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-udea-2",
+          "file": "assets/audio/voice-taunt/round/godie-udea-2.mp3",
+          "text": "學長制的意思是，我說了算。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-udea-3",
+          "file": "assets/audio/voice-taunt/round/godie-udea-3.mp3",
+          "text": "飛鼠會滑翔。你只會下墜。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-udre": {
+      "name": "三刀流劍士 - 索隆",
+      "source": "航海王",
+      "lines": [
+        {
+          "id": "taunt-round-godie-udre-1",
+          "file": "assets/audio/voice-taunt/round/godie-udre-1.mp3",
+          "text": "世界第一大劍豪的路上，你不是關卡。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-udre-2",
+          "file": "assets/audio/voice-taunt/round/godie-udre-2.mp3",
+          "text": "我睡著了。刀自己動的。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-udre-3",
+          "file": "assets/audio/voice-taunt/round/godie-udre-3.mp3",
+          "text": "往南走。你的重生點在那邊。應該吧。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-umal": {
+      "name": "北斗神拳掌門人 - 拳四郎",
+      "source": "北斗神拳",
+      "lines": [
+        {
+          "id": "taunt-round-godie-umal-1",
+          "file": "assets/audio/voice-taunt/round/godie-umal-1.mp3",
+          "text": "北斗神拳的傳人只有一個。不是你。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-umal-2",
+          "file": "assets/audio/voice-taunt/round/godie-umal-2.mp3",
+          "text": "你的祕孔已經被封住了。是嘴巴那個。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-umal-3",
+          "file": "assets/audio/voice-taunt/round/godie-umal-3.mp3",
+          "text": "あたたたた。以上是結算。",
+          "langs": [
+            "ja",
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-usyl": {
+      "name": "殺戮之牙 - 異形",
+      "source": "異形",
+      "lines": [
+        {
+          "id": "taunt-round-godie-usyl-1",
+          "file": "assets/audio/voice-taunt/round/godie-usyl-1.mp3",
+          "text": "In space, no one can hear you scream.在這裡聽得到。而且很吵。",
+          "langs": [
+            "en",
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-usyl-2",
+          "file": "assets/audio/voice-taunt/round/godie-usyl-2.mp3",
+          "text": "我的血是酸的。你的裝備也化了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-usyl-3",
+          "file": "assets/audio/voice-taunt/round/godie-usyl-3.mp3",
+          "text": "異形沒有眼睛。還是找得到你。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-uvng": {
+      "name": "邪眼師 - 飛影",
+      "source": "幽遊白書",
+      "lines": [
+        {
+          "id": "taunt-round-godie-uvng-1",
+          "file": "assets/audio/voice-taunt/round/godie-uvng-1.mp3",
+          "text": "邪眼看到了你的未來。跟現在一樣。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-uvng-2",
+          "file": "assets/audio/voice-taunt/round/godie-uvng-2.mp3",
+          "text": "我沒有把繃帶解開。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-uvng-3",
+          "file": "assets/audio/voice-taunt/round/godie-uvng-3.mp3",
+          "text": "速度是我的。慢動作是你的。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "godie-uwar": {
+      "name": "食神 - 撒尿牛丸",
+      "source": "食神",
+      "lines": [
+        {
+          "id": "taunt-round-godie-uwar-1",
+          "file": "assets/audio/voice-taunt/round/godie-uwar-1.mp3",
+          "text": "這顆牛丸彈了三次才停。你一次就停了。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-uwar-2",
+          "file": "assets/audio/voice-taunt/round/godie-uwar-2.mp3",
+          "text": "食神評分：你這道菜不及格。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-godie-uwar-3",
+          "file": "assets/audio/voice-taunt/round/godie-uwar-3.mp3",
+          "text": "用心做的東西才好吃。你沒有用心。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "sela": {
+      "name": "Sela, the Ember Sage",
+      "source": null,
+      "lines": [
+        {
+          "id": "taunt-round-sela-1",
+          "file": "assets/audio/voice-taunt/round/sela-1.mp3",
+          "text": "餘燼賢者。你連火都沒點著。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-sela-2",
+          "file": "assets/audio/voice-taunt/round/sela-2.mp3",
+          "text": "Sela.這是預設角色。你輸給預設值。",
+          "langs": [
+            "en",
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-sela-3",
+          "file": "assets/audio/voice-taunt/round/sela-3.mp3",
+          "text": "我是來測數值的。數值正常。你不正常。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    },
+    "thorne": {
+      "name": "Thorne, the Bramble Knight",
+      "source": null,
+      "lines": [
+        {
+          "id": "taunt-round-thorne-1",
+          "file": "assets/audio/voice-taunt/round/thorne-1.mp3",
+          "text": "荊棘騎士。你是被勾到的那個。",
+          "langs": [
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-thorne-2",
+          "file": "assets/audio/voice-taunt/round/thorne-2.mp3",
+          "text": "Thorne.範例角色。範例已結束。",
+          "langs": [
+            "en",
+            "zh"
+          ]
+        },
+        {
+          "id": "taunt-round-thorne-3",
+          "file": "assets/audio/voice-taunt/round/thorne-3.mp3",
+          "text": "我只有一套技能。夠了。",
+          "langs": [
+            "zh"
+          ]
+        }
+      ]
+    }
+  },
+  "roundWinFallback": [
+    {
+      "id": "taunt-round-fallback-1",
+      "file": "assets/audio/voice-taunt/round/_fallback-1.mp3",
+      "text": "回合結束。你的畫面變灰了。這是提示。"
+    },
+    {
+      "id": "taunt-round-fallback-2",
+      "file": "assets/audio/voice-taunt/round/_fallback-2.mp3",
+      "text": "本回合重點整理：你死了。"
+    },
+    {
+      "id": "taunt-round-fallback-3",
+      "file": "assets/audio/voice-taunt/round/_fallback-3.mp3",
+      "text": "你剛剛很努力。我看到了。沒有用。"
+    },
+    {
+      "id": "taunt-round-fallback-4",
+      "file": "assets/audio/voice-taunt/round/_fallback-4.mp3",
+      "text": "下一回合會更好。統計上不會。"
+    },
+    {
+      "id": "taunt-round-fallback-5",
+      "file": "assets/audio/voice-taunt/round/_fallback-5.mp3",
+      "text": "煙火放完了。你可以起來了。"
+    },
+    {
+      "id": "taunt-round-fallback-6",
+      "file": "assets/audio/voice-taunt/round/_fallback-6.mp3",
+      "text": "本回合最佳表現：對方。"
+    },
+    {
+      "id": "taunt-round-fallback-7",
+      "file": "assets/audio/voice-taunt/round/_fallback-7.mp3",
+      "text": "已為您記錄一次失敗。累計中。"
+    },
+    {
+      "id": "taunt-round-fallback-8",
+      "file": "assets/audio/voice-taunt/round/_fallback-8.mp3",
+      "text": "你的裝備很好。真的很好。"
+    },
+    {
+      "id": "taunt-round-fallback-9",
+      "file": "assets/audio/voice-taunt/round/_fallback-9.mp3",
+      "text": "請不要氣餒。請。"
+    },
+    {
+      "id": "taunt-round-fallback-10",
+      "file": "assets/audio/voice-taunt/round/_fallback-10.mp3",
+      "text": "重新來過的機會還有很多。你需要很多。"
+    },
+    {
+      "id": "taunt-round-fallback-11",
+      "file": "assets/audio/voice-taunt/round/_fallback-11.mp3",
+      "text": "你剛剛的走位，我看不懂。"
+    },
+    {
+      "id": "taunt-round-fallback-12",
+      "file": "assets/audio/voice-taunt/round/_fallback-12.mp3",
+      "text": "回合結束。請前往灰色區域。您已經在那裡了。"
+    }
+  ],
+  "matchWin": [
+    {
+      "id": "taunt-chicken-granny-base",
+      "file": "assets/audio/voice-taunt/chicken/granny-base.mp3",
+      "text": "我阿嬤都比你強。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-granny-retract",
+      "file": "assets/audio/voice-taunt/chicken/granny-retract.mp3",
+      "text": "更正。我阿嬤說她不想被拿來跟你比。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-granny-queued",
+      "file": "assets/audio/voice-taunt/chicken/granny-queued.mp3",
+      "text": "我阿嬤已經進下一場了。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-granny-sincere",
+      "file": "assets/audio/voice-taunt/chicken/granny-sincere.mp3",
+      "text": "我阿嬤叫我跟你說加油。她是認真的。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-granny-ping",
+      "file": "assets/audio/voice-taunt/chicken/granny-ping.mp3",
+      "text": "我阿嬤的網路都比你的反應快。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-granny-tutorial",
+      "file": "assets/audio/voice-taunt/chicken/granny-tutorial.mp3",
+      "text": "我阿嬤問你要不要她讓你一隻手。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-sys-optional",
+      "file": "assets/audio/voice-taunt/chicken/sys-optional.mp3",
+      "text": "本場比賽已結束。您的參與屬於選填項目。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-sys-thanks",
+      "file": "assets/audio/voice-taunt/chicken/sys-thanks.mp3",
+      "text": "感謝您的參與。也僅止於參與。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-sys-present",
+      "file": "assets/audio/voice-taunt/chicken/sys-present.mp3",
+      "text": "系統偵測到您全程在場。已記錄。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-sys-ranked-1st",
+      "file": "assets/audio/voice-taunt/chicken/sys-ranked-1st.mp3",
+      "text": "敗方名單已更新。您排第一。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-sys-savefail",
+      "file": "assets/audio/voice-taunt/chicken/sys-savefail.mp3",
+      "text": "您的表現已存檔。存檔失敗。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-sys-reserved",
+      "file": "assets/audio/voice-taunt/chicken/sys-reserved.mp3",
+      "text": "已為您預約下一場的敗方席位。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-sys-tutorial",
+      "file": "assets/audio/voice-taunt/chicken/sys-tutorial.mp3",
+      "text": "已自動為您開啟新手教學。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-sys-uptime",
+      "file": "assets/audio/voice-taunt/chicken/sys-uptime.mp3",
+      "text": "統計顯示，您本場最佳表現是連線穩定。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-chx-sidedish",
+      "file": "assets/audio/voice-taunt/chicken/chx-sidedish.mp3",
+      "text": "烤雞已出爐。您是配菜。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-chx-supplier",
+      "file": "assets/audio/voice-taunt/chicken/chx-supplier.mp3",
+      "text": "今晚吃雞。您負責提供雞。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-chx-rank",
+      "file": "assets/audio/voice-taunt/chicken/chx-rank.mp3",
+      "text": "這隻雞的排名比您高。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-chx-defrost",
+      "file": "assets/audio/voice-taunt/chicken/chx-defrost.mp3",
+      "text": "雞已經烤好了。你還在退冰。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-chx-recipe",
+      "file": "assets/audio/voice-taunt/chicken/chx-recipe.mp3",
+      "text": "食譜第一步：找一個不會反抗的。感謝配合。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-cmp-dummy",
+      "file": "assets/audio/voice-taunt/chicken/cmp-dummy.mp3",
+      "text": "訓練假人有給您機會。您沒有把握。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-cmp-loadbar",
+      "file": "assets/audio/voice-taunt/chicken/cmp-loadbar.mp3",
+      "text": "讀取畫面的進度條贏過您。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-cmp-spectator",
+      "file": "assets/audio/voice-taunt/chicken/cmp-spectator.mp3",
+      "text": "觀戰模式表現得比您積極。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-cmp-difficulty",
+      "file": "assets/audio/voice-taunt/chicken/cmp-difficulty.mp3",
+      "text": "最低難度已為您新增一個更低的難度。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-cmp-champ-ok",
+      "file": "assets/audio/voice-taunt/chicken/cmp-champ-ok.mp3",
+      "text": "您的角色沒有問題。",
+      "langs": [
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-mix-mvp",
+      "file": "assets/audio/voice-taunt/chicken/mix-mvp.mp3",
+      "text": "本場最有價值球員是the other team.",
+      "langs": [
+        "en",
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-mix-dinner",
+      "file": "assets/audio/voice-taunt/chicken/mix-dinner.mp3",
+      "text": "Winner winner,烤雞晚餐。お疲れ様でした。",
+      "langs": [
+        "en",
+        "ja",
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-mix-gokurou",
+      "file": "assets/audio/voice-taunt/chicken/mix-gokurou.mp3",
+      "text": "ご苦労様でした。以上。",
+      "langs": [
+        "ja",
+        "zh"
+      ]
+    },
+    {
+      "id": "taunt-chicken-mix-skill",
+      "file": "assets/audio/voice-taunt/chicken/mix-skill.mp3",
+      "text": "Skill issue.以上為系統判定。",
+      "langs": [
+        "en",
+        "zh"
+      ]
+    }
+  ]
+}

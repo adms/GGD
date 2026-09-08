@@ -1,0 +1,668 @@
+[
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/sela.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-e72ff23372f874cecca786ce03d70e1f978c4e91733eb30f0d760fc085c",
+    "workId": "community-review-01-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "武藤遊戲",
+    "status": "published",
+    "packageDigest": "sha256:c8958a4adabd5217adbce744cedcad740dd7733d3c2e064f2790dc695b1f36e9",
+    "submittedAt": "2026-09-08T17:30:51.333779Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-4feecfaace00862ae490abee7e9a447e65ff5ccedad4ecb3d5c05c20354",
+    "workId": "community-review-02-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "八神庵",
+    "status": "published",
+    "packageDigest": "sha256:c6e8675c7e0f1d87725fb393c2bd9fc636cb020bc8490a842d8698dea0250eb8",
+    "submittedAt": "2026-09-08T17:30:59.243723Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-47089e36951570a54f9fd5286211b8db70c789a7761c6b1d8cdb98e7b67",
+    "workId": "community-review-03-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "不知火舞",
+    "status": "published",
+    "packageDigest": "sha256:13a5125729d9888a141d00ed25bc418813ee928c0edad2411250ff295f6cb1de",
+    "submittedAt": "2026-09-08T17:31:07.370579Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-e99608ce286e517b6f2d1ec6e9d0159d4bf7037c3761363ee9965f8b16b",
+    "workId": "community-review-04-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "空條承太郎",
+    "status": "published",
+    "packageDigest": "sha256:f71d418c3d2466f1bff4c55a25d112b0f7136ccb3686d86636f1ed6acb3238ba",
+    "submittedAt": "2026-09-08T17:31:15.45812Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-7310de7670e64bbeb908120bb8b07d92f89b8f95a8c2f7f0e5dd99c5b39",
+    "workId": "community-review-05-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "洛克人",
+    "status": "published",
+    "packageDigest": "sha256:00ed4194104501cd0cb156e72abb7d9f99591b967ea38ebab2cbedb5301e6412",
+    "submittedAt": "2026-09-08T17:31:23.583501Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-2f224300403912b1b0f8a9a8656a70aa03f0cc208aeac86a5dffa22c3ac",
+    "workId": "community-review-06-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "卡比",
+    "status": "published",
+    "packageDigest": "sha256:ef9a6c0de07ba7b8ce6bd51ec5aee5eccdad9577a5719cf52550df28bc30a931",
+    "submittedAt": "2026-09-08T17:31:30.980084Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-37a62ec7d504ed977c6bd93f5e6a239b1172ef0885efceb476e22d2fbfd",
+    "workId": "community-review-07-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "西索",
+    "status": "published",
+    "packageDigest": "sha256:d415ae4664179787d10fd88a24dc8eb0c51468f904195bbc3ba445fd418ee437",
+    "submittedAt": "2026-09-08T17:31:38.724145Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-409b8a8376b5b5430eeeeb3bd636bb9d8f35d0ae28c561c2973b53a2d6d",
+    "workId": "community-review-08-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "米卡莎",
+    "status": "published",
+    "packageDigest": "sha256:796cbdd36f3ee676e3ea51c59694f9aa6d1aadd3e80ca9197fbb200a9626a2ab",
+    "submittedAt": "2026-09-08T17:31:46.575744Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/sela.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-28ccc30f0cd7d4db82e30a59ea4624eb9e02856b9f959d4b07616bb88e2",
+    "workId": "community-review-09-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "赫蘿",
+    "status": "published",
+    "packageDigest": "sha256:f64a22956984ee97ee0b4147ec31be6087da68431f78657b5d94186902d3756a",
+    "submittedAt": "2026-09-08T17:31:54.509197Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/sela.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-57685813f9823aca1164d761d25646396a94be5c5d9f466a9ffdf06e026",
+    "workId": "community-review-10-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "魯路修",
+    "status": "published",
+    "packageDigest": "sha256:6be85d34ae5f51a2bcee306db3a9da58ea43cea9a43fa873201f5e5022780050",
+    "submittedAt": "2026-09-08T17:32:02.347266Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/sela.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-097bab0e94fa6191562659e798fd61ec6f2be43c0d6e6f72dcbea962a4f",
+    "workId": "community-review-11-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "利姆路",
+    "status": "published",
+    "packageDigest": "sha256:ed86fcfd8d272be4bb9a2654fe3672b0f6d50b634a03be68708c00e1dfa52525",
+    "submittedAt": "2026-09-08T17:32:10.285782Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/sela.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-4f753832a86392df315fddaf1efb6be851880b10b732beb39f9e534112f",
+    "workId": "community-review-12-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "衛宮士郎",
+    "status": "published",
+    "packageDigest": "sha256:68a5746aab8d86bf08a8027c2ea7483fff833642fea6ff8c91f7caa165622ac0",
+    "submittedAt": "2026-09-08T17:32:18.29903Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-d9b06fb1290a1d1e9ba3309cf5574b61ca58525928eee3a4681f0ad3a0e",
+    "workId": "community-review-13-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "朝田詩乃",
+    "status": "published",
+    "packageDigest": "sha256:350e47096ad91cfa3602a2160a708202110c111ebce71f86ba328e140b323ad4",
+    "submittedAt": "2026-09-08T17:32:26.41852Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-d03b25718770b4f3c21395ff95fe09d1112c48f2937326afe75b4f4b334",
+    "workId": "community-review-14-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "殺老師",
+    "status": "published",
+    "packageDigest": "sha256:81cfd3f281c0f37dc8d722775b38251420ce640409a3212cc6de65e8a77edceb",
+    "submittedAt": "2026-09-08T17:32:34.392914Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-cf5d314fdf75c2dbfbd3db5665165d4b68b94716ce550fd05be587d75b4",
+    "workId": "community-review-15-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "比利海靈頓",
+    "status": "published",
+    "packageDigest": "sha256:fc04aa8edb7eb042dc4784557ca80c8d33d13dedd73c0a1d587ca80a32f2003f",
+    "submittedAt": "2026-09-08T17:32:42.63072Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/sela.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-f450dbb8c75811e2e2e2e137cc28eb5cd908f551a6ca387d7dc60cc85a9",
+    "workId": "community-review-16-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "魔法少女☆伊莉雅",
+    "status": "published",
+    "packageDigest": "sha256:916d7d74a0111d3afb2773c031ca5e94d26520af19fe3beeb1963ec2436bd89b",
+    "submittedAt": "2026-09-08T17:32:50.79977Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/sela.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-6e5e3db0e411e4a29432b68e4bbf72359fe6b8d99cb06bb1612ec9585e9",
+    "workId": "community-review-17-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "安茲·烏爾·恭",
+    "status": "published",
+    "packageDigest": "sha256:44fc42d350849dacf23ce13f3cefbec6aede17c3fa19a9dd3a8615646d8a0578",
+    "submittedAt": "2026-09-08T17:32:59.327618Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-e22668207efed3d0f9365ab777478064bbb022c64999d8c5294088e93af",
+    "workId": "community-review-18-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "吉爾伽美什",
+    "status": "published",
+    "packageDigest": "sha256:3d5c6e1357f630e673375ba7fe66559eff630cadbb10374929ac06740358f157",
+    "submittedAt": "2026-09-08T17:33:07.441965Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-8c5a791936bdcbb61460ba6d02fb0fa7444718d87010931dc8fa8d323e4",
+    "workId": "community-review-19-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "桐谷和人",
+    "status": "published",
+    "packageDigest": "sha256:d1a2507d43dfd6cb67b43a35f38dd82ab7b5e1a9794a81d93742364cc46b33be",
+    "submittedAt": "2026-09-08T17:33:15.829797Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/sela.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-c7883faa227e8322c789f12fb324c463fceac04b84f6e5fcde2ffcfdeb0",
+    "workId": "community-review-20-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "御坂美琴",
+    "status": "published",
+    "packageDigest": "sha256:9f0f602f70d29481e2f29b15ba4429053d2858c0836e8b76fe72c95665ee2c44",
+    "submittedAt": "2026-09-08T17:33:23.919992Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/sela.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-97ae6424c55587d7c1be0c1f21bf7454c3a09e2040e7002945a0c46cf0e",
+    "workId": "community-review-21-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "鹿目圓",
+    "status": "published",
+    "packageDigest": "sha256:a0f271dd396daa5b0e5cc9672666b011a897f0eb4f59e9699e1af86e92ad3a8f",
+    "submittedAt": "2026-09-08T17:33:31.716731Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-9cb83151b00cce91e60d404416de97a3d38f74a52b11e445044a9472906",
+    "workId": "community-review-22-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "菜月昴",
+    "status": "published",
+    "packageDigest": "sha256:1a060cf70c40997d51662d260ceb0c1a2a5b0cbca60944945024e9b930d6aca0",
+    "submittedAt": "2026-09-08T17:33:39.48503Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-f41a1e4786474e7d30afbdcfe1437bb8a4f0951dfcb9072551dbf0b8d2b",
+    "workId": "community-review-23-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "坂田銀時",
+    "status": "published",
+    "packageDigest": "sha256:c57148e9b7d60aaa032097e0cdabbea13a820a1f9bf2312f6b51bb1617b7c0d1",
+    "submittedAt": "2026-09-08T17:33:47.664077Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-d69a65ce33a502e45e83a3e523f5ec8e5893a97d42fc9a4dcf8b5772e63",
+    "workId": "community-review-24-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "奇犽",
+    "status": "published",
+    "packageDigest": "sha256:bfcd6c007d1b60493b1702a9520ab0f3e49acedfd8c7f13019ad742bbf3e9fe4",
+    "submittedAt": "2026-09-08T17:33:55.996271Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-85f086eaaadef3bf9b939c695a0ff9834e4c9b857fbcf0ac0c5598b858b",
+    "workId": "community-review-25-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "一拳超人",
+    "status": "published",
+    "packageDigest": "sha256:cbf19ca0fdb9dea7c7011113c63a5bfaa13983256ae56a4e5d7b12a90cc5f625",
+    "submittedAt": "2026-09-08T17:34:05.257318Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-c703e4d8ee1fe4c1d916de56171594b9acb0d1eaa3141be29db06e8be47",
+    "workId": "community-review-26-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "名偵探柯南",
+    "status": "published",
+    "packageDigest": "sha256:050b6b9abd54b4fce3ff089be42b377af5571bd136ec31040e870e81800a376f",
+    "submittedAt": "2026-09-08T17:34:13.136586Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/sela.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-75d72f34c4b32cfa0edd6d0b7f94593f426f5d1334a18883d0111ca4c3d",
+    "workId": "community-review-27-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "庫洛魔法使",
+    "status": "published",
+    "packageDigest": "sha256:040ba59436e72d7a3ee1088e1dce2fd01fe4156d6e03b039d15825c8cb73743e",
+    "submittedAt": "2026-09-08T17:34:21.214937Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-73aec8701ce18f8f8007bd34e667de40512375392752a2c272d1aa4588c",
+    "workId": "community-review-28-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "艾莉絲·伯雷亞斯·格雷拉特",
+    "status": "published",
+    "packageDigest": "sha256:11db43051eebddf1960ce1baee40c038eed590c319e02da164824c7df7a4bcc0",
+    "submittedAt": "2026-09-08T17:34:29.392589Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/sela.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-b571f005b7b138b3e09dde6b5f29f80950feaf38d03f93a430e2cd15ac7",
+    "workId": "community-review-29-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "芙莉蓮",
+    "status": "published",
+    "packageDigest": "sha256:95d248932f2e978e1c40c889802279410058ced773cd07775187160a2e58a4a6",
+    "submittedAt": "2026-09-08T17:34:37.635624Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/sela.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-a4a4a0f76cf4bd187461666b99b86617ba42f61de83da258cfeb1f7992f",
+    "workId": "community-review-30-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "尼古貓貓",
+    "status": "published",
+    "packageDigest": "sha256:bd7615196e4f64bf0da83afd672779d58b6e23bd27525977953fbf58c418c746",
+    "submittedAt": "2026-09-08T17:34:45.776991Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-e3be8760d959d665e4e16ff87f7759e9cee0dbd0ab6586a6e700fae01d0",
+    "workId": "community-review-31-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "SUN樂",
+    "status": "published",
+    "packageDigest": "sha256:373cf893c6e09ece2b91c03f87f88cb8ff4b076df4b7fce38ed872edbef378eb",
+    "submittedAt": "2026-09-08T17:34:53.789015Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/sela.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-f13759432cd7b56a4bf6662862dae9b36507710393981cb0f6a04d66029",
+    "workId": "community-review-32-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "阿薩謝爾",
+    "status": "published",
+    "packageDigest": "sha256:504c2c2c3eb323a7247d335e5cac449581586140651c183d55d3b3f927c60927",
+    "submittedAt": "2026-09-08T17:35:01.563875Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-49bca1bdc74d6719cf31bb07b6a2dcb5b7eefe87b3d4d916d57d392c9c5",
+    "workId": "community-review-33-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "近衛刀太",
+    "status": "published",
+    "packageDigest": "sha256:ffe1c0345ca62fbb7a41039f97e1937956f22d9a851aed4a3d865e276ec03bb0",
+    "submittedAt": "2026-09-08T17:35:09.608323Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-85300842fac916fd8f461694f1fafb003f0917ea0e29240e04c01c505e2",
+    "workId": "community-review-34-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "高速婆婆",
+    "status": "published",
+    "packageDigest": "sha256:54638b260e0da2eaf1641791cb385498b79a3b31cfa33416cfadf6b77667439e",
+    "submittedAt": "2026-09-08T17:35:17.53944Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-5995330bca6f7f7531798e7343bb147ca3dde54caa7e4b0a5522fbc59f3",
+    "workId": "community-review-35-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "炭治郎",
+    "status": "published",
+    "packageDigest": "sha256:9b9c7d62b6ef722bd3db9f427dc5cfedbebe3e3ee95e414662e013744086eb9a",
+    "submittedAt": "2026-09-08T17:35:25.465038Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-9c95285e8eeb9992aebfcdd6ae591b483601878bbc9e32afc721c69276f",
+    "workId": "community-review-36-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "鬼畜王蘭斯",
+    "status": "published",
+    "packageDigest": "sha256:2308f1e8b736284df1ac7f85fc592ef32e113dab621d8e4dc329742f7af0f379",
+    "submittedAt": "2026-09-08T17:35:33.529568Z"
+  },
+  {
+    "authorName": "model-author",
+    "allowAttributionRemix": true,
+    "portraitPath": "assets/icons/champions/thorne.webp",
+    "target": {
+      "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+      "contentVersion": "cv_720a022a110a",
+      "migrationFingerprint": "4d3fea0bcc0d",
+      "processorFingerprint": "f8ae3104cbe5"
+    },
+    "id": "hero-1d33ff8cc3672ca7ca415a52b1685f9fa5d1eb693c96782a0229423af22",
+    "workId": "community-review-37-20260907",
+    "accountId": "01M210NXETAXE000A55QTJAMYG",
+    "name": "吉伊卡哇",
+    "status": "published",
+    "packageDigest": "sha256:20f4734422fa7dc971433eb7613df91098b374be0dac0b185c29de4abdde1620",
+    "submittedAt": "2026-09-08T17:35:41.508326Z"
+  }
+]

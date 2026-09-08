@@ -1,0 +1,11 @@
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/packages/shared
+
+ ✓ src/content/heroForge/communityRefinements/azazel.test.ts (27 tests) 1763ms
+   ✓ Azazel authored six-slot refinement > single-slot preparation is explicit; the actual kit earns its own EX resources 1296ms
+
+ Test Files  1 passed (1)
+      Tests  27 passed (27)
+   Start at  01:30:46
+   Duration  5.76s (transform 1.92s, setup 0ms, collect 3.39s, tests 1.76s, environment 0ms, prepare 91ms)
+

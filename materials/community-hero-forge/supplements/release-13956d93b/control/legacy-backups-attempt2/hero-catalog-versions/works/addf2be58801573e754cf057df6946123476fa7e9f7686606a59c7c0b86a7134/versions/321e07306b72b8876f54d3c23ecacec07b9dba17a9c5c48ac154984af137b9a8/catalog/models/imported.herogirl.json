@@ -1,0 +1,62 @@
+{
+  "id": "imported.herogirl",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/herogirl.glb",
+  "scale": 1.01,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "foot Right": {
+      "x": -0.0267,
+      "y": 0.0327,
+      "z": 0.0926
+    },
+    "foot Left": {
+      "x": -0.0243,
+      "y": 0.0357,
+      "z": -0.0946
+    },
+    "Hand Right": {
+      "x": 0.1009,
+      "y": 0.8035,
+      "z": 0.1846
+    },
+    "Hand Left": {
+      "x": 0.0773,
+      "y": 0.8058,
+      "z": -0.1924
+    },
+    "Head": {
+      "x": 0.0072,
+      "y": 1.54,
+      "z": 0.0062
+    },
+    "Chest": {
+      "x": -0.0024,
+      "y": 1.2325,
+      "z": 0.0022
+    },
+    "Origin": {
+      "x": -0.0088,
+      "y": -0.0031,
+      "z": 0.0037
+    },
+    "OverHead": {
+      "x": -0.0088,
+      "y": 1.7527,
+      "z": 0.0037
+    },
+    "Weapon": {
+      "x": 0.963,
+      "y": 0.8141,
+      "z": 0.1846
+    }
+  }
+}

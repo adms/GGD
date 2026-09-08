@@ -1,0 +1,38 @@
+{
+  "id": "godie-h02y.e",
+  "schema": "ability@1",
+  "name": "97-03 弱肉強食",
+  "icon": "assets/icons/abilities/godie-h02y.e.webp",
+  "description": "[被動]\n0秒冷卻時間\n\n每次攻擊都能汲取10%的傷害化為自己的生命值",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "lifesteal",
+          "op": "flat",
+          "value": 0.1
+        }
+      ],
+      "duration": 12.0
+    }
+  ],
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "castTimeSec": 0.3
+}

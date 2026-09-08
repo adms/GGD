@@ -1,0 +1,1234 @@
+{
+  "acceptedPlan": {
+    "archetype": "fighter",
+    "attackType": "melee",
+    "budget": {
+      "complexity": 60,
+      "power": 50
+    },
+    "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
+    "origin": "狂戰",
+    "planId": "community-review-33-20260907.plan",
+    "schema": "ggd-hero-plan@2",
+    "slots": {
+      "E": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "capabilityIds": [
+          "leap",
+          "knockback"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "〔踏地突進〕",
+        "products": [
+          {
+            "instanceId": "community-review-33-20260907-e-1",
+            "template": {
+              "contentSha256": "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e",
+              "inheritDefaults": true,
+              "params": {
+                "apexHeight": 0,
+                "castTimeSec": 0.1,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "dashDistance": 250,
+                "dashDurationSec": 0.3,
+                "pushDistance": 200,
+                "pushFrom": "facing",
+                "pushLaunchHeight": 0,
+                "pushSpeed": 872,
+                "radius": 150
+              },
+              "ref": "tpl-charge-push"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】短距離接近並揮劍。\n【待補機制】近身突進可作基礎驗收。",
+        "slot": "E",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "EX": {
+        "abilityOverrides": {
+          "castTimeTier": "大",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [
+          "projectile"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔重力劍・壓潰〕",
+        "products": [
+          {
+            "instanceId": "community-review-33-20260907-ex-1",
+            "template": {
+              "contentSha256": "sha256:431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699006b55c40f5b54c7",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.35,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "segmentAoe": 150,
+                "segmentCount": 4,
+                "stepSize": 100
+              },
+              "ref": "tpl-line-sweep"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】固定為重劍模式的蓄力重擊，完成後短暫降低移速。\n【待補機制】需固定重劍模式蓄力与完成後緩速。",
+        "slot": "EX",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "PASSIVE": {
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "capabilityIds": [
+          "marks",
+          "invulnerable",
+          "knockback",
+          "applyStatus"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔不死者再生〕",
+        "products": [
+          {
+            "instanceId": "community-review-33-20260907-passive-1",
+            "template": {
+              "contentSha256": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39",
+              "inheritDefaults": true,
+              "params": {
+                "aoeRadius": 0,
+                "durationSec": -1,
+                "initial": 1,
+                "internalCooldown": 1,
+                "invulnerableSec": 0.5,
+                "knockbackDistance": 0,
+                "lethalConsume": 1,
+                "lethalMode": "save",
+                "markId": "community-review-33-20260907.last-chance",
+                "max": 1,
+                "perStackLost": [],
+                "resetOn": "match",
+                "restoreHealthPct": 0.15,
+                "stunSec": 0,
+                "surviveHpPct": 0.01
+              },
+              "ref": "tpl-mark-stacks"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】本場一層免死標記，首次致死消耗並回復 15% 生命，保護 0.5 秒。\n【目標設計】受到傷害後延遲恢復部分損失生命；再次受擊延後恢復，且有每段時間上限。\n【待補機制】本場被動免死只是基底；需受傷延後再生与 R 短期再起资格，不能無條件常駐代替。",
+        "slot": "PASSIVE",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        }
+      },
+      "Q": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [
+          "projectile"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "〔重力劍・橫掃〕",
+        "products": [
+          {
+            "instanceId": "community-review-33-20260907-q-1",
+            "template": {
+              "contentSha256": "sha256:431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699006b55c40f5b54c7",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.35,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "segmentAoe": 150,
+                "segmentCount": 4,
+                "stepSize": 100
+              },
+              "ref": "tpl-line-sweep"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】使用重力劍進行扇形斬擊。\n【待補機制】需重力劍扇形判定。",
+        "slot": "Q",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "R": {
+        "abilityOverrides": {
+          "castTimeTier": "大",
+          "cooldownTier": "大",
+          "effects": [
+            {
+              "amount": {
+                "flat": 100,
+                "ratios": []
+              },
+              "applyTo": "self",
+              "kind": "heal"
+            }
+          ],
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 3,
+        "name": "〔不死者的再起〕",
+        "products": [
+          {
+            "instanceId": "community-review-33-20260907-r-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": []
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":100,\"ratios\":[]},\"applyTo\":\"self\"}]。\n【目標設計】短時間準備再起；首次致死傷害被攔截，經明顯恢復動作後回復有限生命。每回合一次。\n【待補機制】目前立即回復；需主動再起窗口、首次致死截取與每回合一次。",
+        "slot": "R",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "W": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "〔重量切換〕",
+        "products": [
+          {
+            "instanceId": "community-review-33-20260907-w-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": [
+                  {
+                    "op": "pctAdd",
+                    "stat": "ad",
+                    "value": 0.15
+                  }
+                ]
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：ad +15%。\n【目標設計】在輕劍與重劍模式間切換：輕模式較快、重模式傷害較高且動作較慢。\n【待補機制】固定 AD 增益；需輕／重模式、攻速與動作時長同步。",
+        "slot": "W",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      }
+    },
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "statOverrides": {
+      "ad": "大",
+      "ap": "小",
+      "armor": "中",
+      "as": "中",
+      "healthRegen": "大",
+      "manaRegen": "小",
+      "maxHealth": "大",
+      "maxMana": "小",
+      "mr": "小",
+      "ms": "中",
+      "range": "小"
+    },
+    "summary": "近衛刀太 社群英雄功能驗收稿。作品：《UQ HOLDER!》  \n採用：不死身與重力劍為核心的版本。  \n定位：再生、武器重量、有限致死恢復。\n\n視覺方向：暗紅再生細線、重劍深色厚軌、輕劍白色細軌；再起保留可辨識硬直。\n以 GGD 狂戰 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "templateVersions": {
+      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
+        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
+        "exemplar": {
+          "jass": "A0Q6",
+          "skill": "82-04 闇之魔法"
+        },
+        "family": "buff-self",
+        "gapScore": 6,
+        "id": "tpl-buff-self",
+        "name": "變身強化-數值面",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "duration": {
+            "default": 15,
+            "max": 60,
+            "min": 1,
+            "type": "number",
+            "unit": "s"
+          },
+          "modifiers": {
+            "default": [
+              {
+                "op": "flat",
+                "stat": "ad",
+                "value": 50
+              }
+            ],
+            "type": "statModifiers"
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699006b55c40f5b54c7": {
+        "description": "沿直線分段的掃擊：每一段各自在自己的落點結算一次（`delayed` + `advance`，GH#393 的機制）。⭐ 同一個目標整串只被打一次（`hitOncePerTarget`）—— 那是原作的規則，卡片寫的是**一次**的數字。",
+        "exemplar": {
+          "jass": "A0D5",
+          "skill": "20-03 約束與勝利之劍"
+        },
+        "family": "line-sweep",
+        "gapScore": 7,
+        "id": "tpl-line-sweep",
+        "name": "直線分段掃擊",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                150
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "segmentAoe": {
+            "default": 400,
+            "max": 900,
+            "min": 100,
+            "origin": "j:32337 —— `GetUnitsInRangeOfLocMatching(400.00, udg_LocPoint3, …)` ⇒ 每段半徑 **400 wc3u**",
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "segmentCount": {
+            "default": 6,
+            "max": 20,
+            "min": 3,
+            "origin": "j:32335 —— `exitwhen udg_WinSwordCounter > 6`，而 j:32333 是 `set udg_WinSwordCounter = 1` ⇒ 正好 **6 段**（⛔ 不是 7：它從 **1** 起算，⛔ 不是 0）",
+            "type": "number",
+            "unit": "count"
+          },
+          "stepSize": {
+            "default": 200,
+            "max": 300,
+            "min": 100,
+            "origin": "j:32336 —— `PolarProjectionBJ(udg_LocPoint1, I2R(udg_WinSwordCounter) * 200.00, …)` ⇒ 每段 **200 wc3u**",
+            "type": "number",
+            "unit": "wc3u"
+          }
+        },
+        "requires": [
+          "projectile"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39": {
+        "description": "在持有者身上裝一個有層數的具名標記（【試煉】【風王結界】【縮地】），可跨回合、可永久，並可選擇讓它變成一張免死牌：受致命傷害時消耗一層 → 無敵 → 回復 → 擊退暈眩周圍敵人；每失去一層永久獲得一組加成。⚠️ 落差：無敵/回復/擊退是救活的同一格一起發生，文案上的「隨後」看不出來 —— ⛔ 那是**這張模板**尚未把回復／擊退接上延後排程，⛔ 不是引擎沒有：引擎**有** `kind:\"delayed\"`（`delaySec`／`count`／`intervalSec`／`effects`，出貨例：初號機 `godie-e00r` 的 berserk_smoke），⭐ 但 lethalSave 的 `selfEffects`／`aoeEffects` 是同格跑的；要接延後得另驗死亡／重觸發／施法者狀態／排程取消的時序，⛔ 不是改說明就算做了（GH#1044）；火圈燒傷不走傷害佇列，這張免死牌擋不到它。",
+        "exemplar": {
+          "jass": "無 JASS 出處 —— owner 2026-08-08 口述規格，不是從 war3map.j 復原的家族",
+          "skill": "52-00 十二道試煉（海克力斯 Berserker 天生技）"
+        },
+        "family": "mark-stacks",
+        "gapScore": 8,
+        "id": "tpl-mark-stacks",
+        "name": "具名標記-層數與免死",
+        "params": {
+          "aoeRadius": {
+            "default": 6,
+            "max": 12,
+            "min": 0,
+            "type": "number"
+          },
+          "durationSec": {
+            "default": -1,
+            "max": 600,
+            "min": -1,
+            "type": "number",
+            "unit": "s"
+          },
+          "initial": {
+            "default": 12,
+            "max": 999,
+            "min": 0,
+            "type": "number",
+            "unit": "count"
+          },
+          "internalCooldown": {
+            "default": 0.5,
+            "max": 30,
+            "min": 0,
+            "type": "number",
+            "unit": "s"
+          },
+          "invulnerableScope": {
+            "default": "damageAndControl",
+            "type": "enum",
+            "values": [
+              "damageAndControl",
+              "damageOnly"
+            ]
+          },
+          "invulnerableSec": {
+            "default": 1.5,
+            "max": 30,
+            "min": 0.1,
+            "type": "number",
+            "unit": "s"
+          },
+          "knockbackDistance": {
+            "default": 4,
+            "max": 20,
+            "min": 0.1,
+            "optional": true,
+            "type": "number"
+          },
+          "knockbackFrom": {
+            "default": "caster",
+            "type": "enum",
+            "values": [
+              "caster",
+              "facing",
+              "pull"
+            ]
+          },
+          "knockbackSpeed": {
+            "default": 16,
+            "max": 40,
+            "min": 1,
+            "type": "number"
+          },
+          "lethalConsume": {
+            "default": 1,
+            "max": 999,
+            "min": 1,
+            "type": "number",
+            "unit": "count"
+          },
+          "lethalDamageTypes": {
+            "default": "all",
+            "type": "enum",
+            "values": [
+              "all",
+              "physicalMagic",
+              "physical",
+              "magic",
+              "true"
+            ]
+          },
+          "lethalMode": {
+            "default": "save",
+            "type": "enum",
+            "values": [
+              "save",
+              "none"
+            ]
+          },
+          "markId": {
+            "default": "godie-hapm.passive",
+            "type": "docRef"
+          },
+          "max": {
+            "default": 12,
+            "max": 999,
+            "min": 1,
+            "type": "number",
+            "unit": "count"
+          },
+          "perStackLost": {
+            "default": [
+              {
+                "op": "pctAdd",
+                "stat": "ad",
+                "value": 0.1
+              },
+              {
+                "op": "pctAdd",
+                "stat": "maxHealth",
+                "value": 0.1
+              }
+            ],
+            "optional": true,
+            "type": "statModifiers"
+          },
+          "resetOn": {
+            "default": "match",
+            "type": "enum",
+            "values": [
+              "match",
+              "round",
+              "never"
+            ]
+          },
+          "restoreHealthPct": {
+            "default": 0.5,
+            "max": 1,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "ratio"
+          },
+          "stunSec": {
+            "default": 0.5,
+            "max": 20,
+            "min": 0.034,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "stunStatusId": {
+            "default": "trial-stun",
+            "type": "docRef"
+          },
+          "surviveHpPct": {
+            "default": 0.01,
+            "max": 1,
+            "min": 0.01,
+            "type": "number",
+            "unit": "ratio"
+          }
+        },
+        "requires": [
+          "marks",
+          "invulnerable",
+          "knockback",
+          "applyStatus"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e": {
+        "description": "朝目標點直線衝鋒，抵達後對落點周圍造成範圍傷害，並把該處的敵人推開。預設貼地衝刺（衝鋒弧高 0）；把弧高拉起來就變成 52-02 蹂躪編年史那種掄飛。「推開距離」清空 = 只衝鋒不推撞（52-04 巨神一擊）。傷害與推撞都在抵達點結算，不是在起跳點。",
+        "exemplar": {
+          "jass": "A0OG",
+          "skill": "38-01 邪王炎殺劍"
+        },
+        "family": "charge-push",
+        "gapScore": 5,
+        "id": "tpl-charge-push",
+        "name": "衝鋒推撞",
+        "params": {
+          "apexHeight": {
+            "default": 0,
+            "max": 600,
+            "min": 0,
+            "type": "number",
+            "unit": "wc3h"
+          },
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "physical",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "dashDistance": {
+            "default": 600,
+            "max": 1309,
+            "min": 100,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "dashDurationSec": {
+            "default": 0.4,
+            "max": 2,
+            "min": 0.05,
+            "type": "number",
+            "unit": "s"
+          },
+          "pushDistance": {
+            "default": 400,
+            "max": 1090,
+            "min": 50,
+            "optional": true,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "pushFrom": {
+            "default": "facing",
+            "type": "enum",
+            "values": [
+              "caster",
+              "facing",
+              "pull"
+            ]
+          },
+          "pushLaunchHeight": {
+            "default": 0,
+            "max": 600,
+            "min": 0,
+            "type": "number",
+            "unit": "wc3h"
+          },
+          "pushSpeed": {
+            "default": 872,
+            "max": 2181,
+            "min": 100,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "radius": {
+            "default": 300,
+            "max": 900,
+            "min": 50,
+            "type": "number",
+            "unit": "wc3u"
+          }
+        },
+        "requires": [
+          "leap",
+          "knockback"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      }
+    },
+    "title": "近衛刀太"
+  },
+  "brief": {
+    "concept": "近衛刀太 社群英雄功能驗收稿。作品：《UQ HOLDER!》  \n採用：不死身與重力劍為核心的版本。  \n定位：再生、武器重量、有限致死恢復。\n\n視覺方向：暗紅再生細線、重劍深色厚軌、輕劍白色細軌；再起保留可辨識硬直。\n以 GGD 狂戰 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "E": "〔踏地突進〕",
+      "EX": "〔重力劍・壓潰〕",
+      "PASSIVE": "〔不死者再生〕",
+      "Q": "〔重力劍・橫掃〕",
+      "R": "〔不死者的再起〕",
+      "W": "〔重量切換〕"
+    },
+    "name": "近衛刀太"
+  },
+  "presentation": {
+    "assetLocks": [
+      {
+        "byteSize": 1104488,
+        "consumers": [
+          "champion:model"
+        ],
+        "kind": "model",
+        "mediaType": "model/gltf-binary",
+        "path": "assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
+        "registry": "normalized-upload",
+        "sha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7"
+      }
+    ],
+    "championIcon": "assets/icons/champions/thorne.webp",
+    "modelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+    "modelProvenance": {
+      "modelSha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+      "notes": "以黑髮年輕劍士暫代近衛刀太；實際為桐人，保留其原生雙劍，尚非重力劍專屬造型或重量切換動作。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。",
+      "relationship": "style-proxy",
+      "schema": "ggd-hero-model-provenance@1",
+      "sourceAssetId": "300heroes:0a857c33be1b779ffac18f74",
+      "sourceCharacter": "黑衣剑士",
+      "sourceWork": "刀劍神域 Sword Art Online"
+    },
+    "schema": "ggd-hero-presentation@1",
+    "slots": {
+      "E": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "script": {
+          "abilityId": "community-review-33-20260907.e",
+          "id": "community-review-33-20260907.e",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                214,
+                46,
+                64
+              ],
+              "vfxId": "fx.prim.blood.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                214,
+                46,
+                64
+              ],
+              "vfxId": "fx.prim.blood.slash",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "E",
+        "vfxLayers": []
+      },
+      "EX": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "script": {
+          "abilityId": "community-review-33-20260907.ex",
+          "id": "community-review-33-20260907.ex",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                214,
+                46,
+                64
+              ],
+              "vfxId": "fx.prim.blood.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                214,
+                46,
+                64
+              ],
+              "vfxId": "fx.prim.blood.pulse-sm",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "EX",
+        "vfxLayers": []
+      },
+      "PASSIVE": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "script": null,
+        "sfxKey": null,
+        "slot": "PASSIVE",
+        "vfxLayers": []
+      },
+      "Q": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "script": {
+          "abilityId": "community-review-33-20260907.q",
+          "id": "community-review-33-20260907.q",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                214,
+                46,
+                64
+              ],
+              "vfxId": "fx.prim.blood.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                214,
+                46,
+                64
+              ],
+              "vfxId": "fx.prim.blood.pulse-sm",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "Q",
+        "vfxLayers": []
+      },
+      "R": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "script": {
+          "abilityId": "community-review-33-20260907.r",
+          "id": "community-review-33-20260907.r",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                214,
+                46,
+                64
+              ],
+              "vfxId": "fx.prim.blood.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                214,
+                46,
+                64
+              ],
+              "vfxId": "fx.prim.blood.pulse-sm",
+              "w3xScale": 1.25
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "R",
+        "vfxLayers": []
+      },
+      "W": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "script": {
+          "abilityId": "community-review-33-20260907.w",
+          "id": "community-review-33-20260907.w",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                214,
+                46,
+                64
+              ],
+              "vfxId": "fx.prim.blood.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                214,
+                46,
+                64
+              ],
+              "vfxId": "fx.prim.blood.pulse-sm",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "W",
+        "vfxLayers": []
+      }
+    },
+    "uploadedModel": {
+      "byteSize": 1104488,
+      "clipMap": {
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01a",
+        "death": "dead",
+        "hurt": "bat_idle",
+        "idle": "bat_idle",
+        "run": "single_run"
+      },
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+      "yawOffsetDeg": 0
+    }
+  },
+  "projectId": "community-review-33-20260907",
+  "receipts": [
+    {
+      "digest": "60a9a09869a167fd9c475f43e369014f715b08dda1a3e0ab180a6ee0875cba8b",
+      "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+      "kind": "generator-adopted",
+      "projectRevision": 5
+    },
+    {
+      "kind": "generator-adopted",
+      "projectRevision": 12,
+      "digest": "fce620ab93692c2fdb967daf90f4bab901e9ac5cf5ec2215dce7b460d63b320c",
+      "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597"
+    }
+  ],
+  "revision": 12,
+  "schema": "ggd-hero-project@2",
+  "sections": {
+    "attributes": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "draft"
+    },
+    "identity": {
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      },
+      "revision": 1,
+      "state": "draft"
+    },
+    "mechanics": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    },
+    "package": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "presentation": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "skills": {
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      },
+      "revision": 12,
+      "state": "draft"
+    },
+    "validation": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    }
+  },
+  "sourceDesign": {
+    "identity": "作品：《UQ HOLDER!》  \n採用：不死身與重力劍為核心的版本。  \n定位：再生、武器重量、有限致死恢復。",
+    "name": "近衛刀太",
+    "ownerText": "### 33｜近衛刀太\n\n作品：《UQ HOLDER!》  \n採用：不死身與重力劍為核心的版本。  \n定位：再生、武器重量、有限致死恢復。\n\n- **PASSIVE｜〔不死者再生〕**：受到傷害後延遲恢復部分損失生命；再次受擊延後恢復，且有每段時間上限。\n- **Q｜〔重力劍・橫掃〕**：使用重力劍進行扇形斬擊。\n- **W｜〔重量切換〕**：在輕劍與重劍模式間切換：輕模式較快、重模式傷害較高且動作較慢。\n- **E｜〔踏地突進〕**：短距離接近並揮劍。\n- **R｜〔不死者的再起〕**：短時間準備再起；首次致死傷害被攔截，經明顯恢復動作後回復有限生命。每回合一次。\n- **EX｜〔重力劍・壓潰〕**：固定為重劍模式的蓄力重擊，完成後短暫降低移速。\n\n**審查重點**：測試極低生命、同幀多次致死、治療限制、再起中受控與重量切換；避免死亡獎勵、生命底線及復原事件重複。\n\n",
+    "reviewText": "測試極低生命、同幀多次致死、治療限制、再起中受控與重量切換；避免死亡獎勵、生命底線及復原事件重複。",
+    "schema": "ggd-hero-source-design@1",
+    "slots": {
+      "E": {
+        "baselineBehavior": "向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。",
+        "name": "〔踏地突進〕",
+        "ownerDescription": "短距離接近並揮劍。",
+        "refinementContracts": [
+          "M05",
+          "M09"
+        ],
+        "requiredRefinement": "近身突進可作基礎驗收。"
+      },
+      "EX": {
+        "baselineBehavior": "向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。",
+        "name": "〔重力劍・壓潰〕",
+        "ownerDescription": "固定為重劍模式的蓄力重擊，完成後短暫降低移速。",
+        "refinementContracts": [
+          "M05",
+          "M09"
+        ],
+        "requiredRefinement": "需固定重劍模式蓄力与完成後緩速。"
+      },
+      "PASSIVE": {
+        "baselineBehavior": "本場一層免死標記，首次致死消耗並回復 15% 生命，保護 0.5 秒。",
+        "name": "〔不死者再生〕",
+        "ownerDescription": "受到傷害後延遲恢復部分損失生命；再次受擊延後恢復，且有每段時間上限。",
+        "refinementContracts": [
+          "M05",
+          "M09"
+        ],
+        "requiredRefinement": "本場被動免死只是基底；需受傷延後再生与 R 短期再起资格，不能無條件常駐代替。"
+      },
+      "Q": {
+        "baselineBehavior": "向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。",
+        "name": "〔重力劍・橫掃〕",
+        "ownerDescription": "使用重力劍進行扇形斬擊。",
+        "refinementContracts": [
+          "M05",
+          "M09"
+        ],
+        "requiredRefinement": "需重力劍扇形判定。"
+      },
+      "R": {
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":100,\"ratios\":[]},\"applyTo\":\"self\"}]。",
+        "name": "〔不死者的再起〕",
+        "ownerDescription": "短時間準備再起；首次致死傷害被攔截，經明顯恢復動作後回復有限生命。每回合一次。",
+        "refinementContracts": [
+          "M05",
+          "M09"
+        ],
+        "requiredRefinement": "目前立即回復；需主動再起窗口、首次致死截取與每回合一次。"
+      },
+      "W": {
+        "baselineBehavior": "自身取得 3 秒增益：ad +15%。",
+        "name": "〔重量切換〕",
+        "ownerDescription": "在輕劍與重劍模式間切換：輕模式較快、重模式傷害較高且動作較慢。",
+        "refinementContracts": [
+          "M05",
+          "M09"
+        ],
+        "requiredRefinement": "固定 AD 增益；需輕／重模式、攻速與動作時長同步。"
+      }
+    },
+    "sourceSha256": "30869e4829e4896cb117eeac7687c7866d3910595958fbfe4847d219ea99ef8c"
+  },
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "validationState": {
+    "attributes": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "identity": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "mechanics": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    },
+    "package": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "presentation": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "skills": {
+      "revision": 12,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    }
+  }
+}

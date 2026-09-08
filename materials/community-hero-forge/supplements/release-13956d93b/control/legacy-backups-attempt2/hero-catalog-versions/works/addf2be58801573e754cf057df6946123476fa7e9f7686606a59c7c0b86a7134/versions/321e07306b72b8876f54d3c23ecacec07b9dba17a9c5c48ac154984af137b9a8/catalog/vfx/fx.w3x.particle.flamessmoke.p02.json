@@ -1,0 +1,83 @@
+{
+  "id": "fx.w3x.particle.flamessmoke.p02",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.851,
+    "angleDeg": 45
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 4,
+    "max": 4
+  },
+  "size": {
+    "start": 0.695,
+    "end": 0.167
+  },
+  "color": {
+    "start": [
+      1,
+      0.871,
+      0,
+      1
+    ],
+    "end": [
+      0.008,
+      0,
+      0,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        0.871,
+        0,
+        1
+      ]
+    ],
+    [
+      0.5,
+      [
+        1,
+        0,
+        0,
+        1
+      ]
+    ],
+    [
+      1,
+      [
+        0.008,
+        0,
+        0,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.695
+    ],
+    [
+      0.5,
+      0.278
+    ],
+    [
+      1,
+      0.167
+    ]
+  ],
+  "blendMode": "additive",
+  "speed": {
+    "min": 10.8898,
+    "max": 11.3342
+  },
+  "rate": 3,
+  "gravityY": -8.334,
+  "texture": "assets/textures/particles/flare_01.png"
+}

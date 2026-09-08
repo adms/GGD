@@ -1,0 +1,82 @@
+{
+  "id": "fx.w3x.particle.oblivionaura.p00",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.139,
+    "angleDeg": 76
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 3,
+    "max": 3
+  },
+  "size": {
+    "start": 0.278,
+    "end": 0.139
+  },
+  "color": {
+    "start": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "end": [
+      1,
+      1,
+      1,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    [
+      0.72,
+      [
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    [
+      1,
+      [
+        1,
+        1,
+        1,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.278
+    ],
+    [
+      0.72,
+      1.389
+    ],
+    [
+      1,
+      0.139
+    ]
+  ],
+  "blendMode": "additive",
+  "speed": {
+    "min": 1.3612,
+    "max": 1.4168
+  },
+  "rate": 0.9,
+  "texture": "assets/textures/particles/light_01.png"
+}

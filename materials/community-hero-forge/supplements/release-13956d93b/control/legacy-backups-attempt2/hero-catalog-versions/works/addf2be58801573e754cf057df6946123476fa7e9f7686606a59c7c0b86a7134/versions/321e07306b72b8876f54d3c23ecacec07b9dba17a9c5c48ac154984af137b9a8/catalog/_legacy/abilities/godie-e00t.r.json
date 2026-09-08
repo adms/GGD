@@ -1,0 +1,89 @@
+{
+  "id": "godie-e00t.r",
+  "schema": "ability@1",
+  "name": "66-04  靈壓震撼",
+  "icon": "assets/icons/abilities/godie-e00t.r.webp",
+  "description": "[輔助]\n10秒冷卻時間\n\n貞子發出凜人的靈壓，2 秒內周圍 11 範圍的敵方單位攻擊速度減慢 65%，移動速度減慢 10%／20%／30%（依等級）。\n\n施放消耗 50／70／90 點法力。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    10.0,
+    10.0,
+    10.0
+  ],
+  "manaCost": [
+    50.0,
+    70.0,
+    90.0
+  ],
+  "range": 0,
+  "radius": 11.0,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "value": -0.1
+        },
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": -0.65
+        }
+      ],
+      "duration": 2.0,
+      "perRank": [
+        {
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": -0.1
+            },
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": -0.65
+            }
+          ],
+          "duration": 2.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": -0.2
+            },
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": -0.65
+            }
+          ],
+          "duration": 2.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": -0.3
+            },
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": -0.65
+            }
+          ],
+          "duration": 2.0
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.prim.void.bolt-lg"
+}

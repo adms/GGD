@@ -1,0 +1,85 @@
+{
+  "id": "fx.w3x.particle.flash.p01",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.001,
+    "angleDeg": 180
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 0.45,
+    "max": 0.45
+  },
+  "size": {
+    "start": 0.144,
+    "end": 0.033
+  },
+  "color": {
+    "start": [
+      1,
+      1,
+      1,
+      0.502
+    ],
+    "end": [
+      1,
+      1,
+      1,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        1,
+        1,
+        0.502
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.965,
+        0.741,
+        0.145,
+        0.396
+      ]
+    ],
+    [
+      1,
+      [
+        1,
+        1,
+        1,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.144
+    ],
+    [
+      0.5,
+      0.267
+    ],
+    [
+      1,
+      0.033
+    ]
+  ],
+  "blendMode": "additive",
+  "speed": {
+    "min": 2.2002,
+    "max": 10.023
+  },
+  "rate": 74.6,
+  "texture": "assets/textures/particles/star_07.png",
+  "stretched": true,
+  "tailLength": 0.45,
+  "anchorBone": "Dummy01"
+}

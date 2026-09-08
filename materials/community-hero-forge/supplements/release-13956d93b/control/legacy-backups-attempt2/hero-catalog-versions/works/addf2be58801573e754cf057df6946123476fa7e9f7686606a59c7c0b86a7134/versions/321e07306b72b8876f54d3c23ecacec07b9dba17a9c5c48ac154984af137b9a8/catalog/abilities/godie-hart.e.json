@@ -1,0 +1,116 @@
+{
+  "id": "godie-hart.e",
+  "name": "01-03 畫龍點睛",
+  "icon": "assets/icons/abilities/godie-hart.e.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n快速迴旋巨劍產生龍捲風砍殺敵人造成{{dmg}}點傷害，並降低目標裝甲3點，持續5秒。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "physical",
+      "amount": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ad",
+            "coeff": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "armor",
+          "op": "flat",
+          "value": -3
+        }
+      ],
+      "dispellable": true,
+      "polarity": "debuff",
+      "duration": 5.0,
+      "perRank": [
+        {
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": -3
+            }
+          ],
+          "duration": 5.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": -6
+            }
+          ],
+          "duration": 5.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": -9
+            }
+          ],
+          "duration": 5.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": -12
+            }
+          ],
+          "duration": 5.0
+        }
+      ]
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "w3x.stock.tornadoelemental",
+      "clip": "idle",
+      "soundKey": "wc3.blademasterwhirlwind",
+      "scale": 2.0,
+      "tint": [
+        0.5882,
+        0.5882,
+        1.0
+      ]
+    }
+  ],
+  "vfxKey": "fx.prim.physical.beam",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "radius": 6.0,
+  "castTimeSec": 1.633,
+  "rangeTier": "極小",
+  "range": 3,
+  "radiusTier": "中"
+}

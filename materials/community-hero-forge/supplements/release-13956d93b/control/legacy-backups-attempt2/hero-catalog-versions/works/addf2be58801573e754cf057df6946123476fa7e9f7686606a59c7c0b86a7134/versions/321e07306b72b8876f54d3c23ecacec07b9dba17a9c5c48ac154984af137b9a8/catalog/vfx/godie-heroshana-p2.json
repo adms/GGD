@@ -1,0 +1,85 @@
+{
+  "id": "godie-heroshana-p2",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.18,
+    "angleDeg": 10.0
+  },
+  "mode": "continuous",
+  "rate": 18.0,
+  "lifetimeSec": {
+    "min": 0.6,
+    "max": 0.6
+  },
+  "size": {
+    "start": 0.252,
+    "end": 0.072
+  },
+  "color": {
+    "start": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "end": [
+      1.0,
+      0.008,
+      0.008,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        1.0,
+        0.984,
+        0.004,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        0.008,
+        0.008,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.252
+    ],
+    [
+      0.5,
+      0.18
+    ],
+    [
+      1,
+      0.072
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/smoke_07.png",
+  "speed": {
+    "min": 1.0782,
+    "max": 1.0782
+  },
+  "gravityY": 1.348,
+  "anchorBone": "Bone_Weapon",
+  "ambient": true
+}

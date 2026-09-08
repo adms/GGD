@@ -1,0 +1,15 @@
+{
+  "id": "imported.heroluffeattack",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/heroluffeattack.glb",
+  "scale": 0.4013,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Stand",
+    "attack": "Stand",
+    "cast": "Stand",
+    "hurt": "Stand",
+    "death": "Death"
+  }
+}

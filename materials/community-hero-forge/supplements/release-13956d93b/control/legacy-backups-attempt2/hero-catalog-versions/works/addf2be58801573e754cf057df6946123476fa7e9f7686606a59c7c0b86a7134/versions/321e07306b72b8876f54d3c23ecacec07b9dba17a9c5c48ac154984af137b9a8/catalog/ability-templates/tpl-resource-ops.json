@@ -1,0 +1,15 @@
+{
+  "id": "tpl-resource-ops",
+  "schema": "template@1",
+  "name": "資源運營",
+  "description": "P3 資源運營。",
+  "family": "resource-ops",
+  "status": "draft",
+  "params": {},
+  "requires": [],
+  "gapScore": 2,
+  "exemplar": {
+    "skill": "(draft)",
+    "jass": "(P2/P3)"
+  }
+}

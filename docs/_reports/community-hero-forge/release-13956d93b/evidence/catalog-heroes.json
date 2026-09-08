@@ -1,0 +1,719 @@
+{
+  "heroes": [
+    {
+      "id": "godie-e00j",
+      "name": "皇者 - 騜",
+      "path": "catalog/_legacy/champions/godie-e00j.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-e00k",
+      "name": "戰國刺客Azumi - 安云",
+      "path": "catalog/_legacy/champions/godie-e00k.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-e00q",
+      "name": "英靈-亞瑟王 - 黑化Saber",
+      "path": "catalog/_legacy/champions/godie-e00q.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-e00t",
+      "name": "七夜怪談 - 貞子",
+      "path": "catalog/_legacy/champions/godie-e00t.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-e00u",
+      "name": "完全而瀟灑的女僕 - 十六夜Sakuya",
+      "path": "catalog/_legacy/champions/godie-e00u.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-e00v",
+      "name": "百畝森林的霸主 - 維尼",
+      "path": "catalog/_legacy/champions/godie-e00v.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-e00z",
+      "name": "戰國刺客Azumi - 安云",
+      "path": "catalog/_legacy/champions/godie-e00z.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-e012",
+      "name": "殺人劍客 - 佐佐木小次郎",
+      "path": "catalog/_legacy/champions/godie-e012.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-e015",
+      "name": "夜市人生 - 金居福",
+      "path": "catalog/_legacy/champions/godie-e015.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-ecen",
+      "name": "姜窩肯 - 約翰走路",
+      "path": "catalog/_legacy/champions/godie-ecen.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-ekee",
+      "name": "會叫的野獸 - 傳說中的大刀",
+      "path": "catalog/_legacy/champions/godie-ekee.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-ewrd",
+      "name": "天上天下 - 棗 真夜",
+      "path": "catalog/_legacy/champions/godie-ewrd.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-h001",
+      "name": "地獄來襲者 - 斑剎",
+      "path": "catalog/_legacy/champions/godie-h001.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-h00w",
+      "name": "豪洨天王 - 鄭先生",
+      "path": "catalog/_legacy/champions/godie-h00w.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-h021",
+      "name": "破銅爛鐵 - 阿強一號",
+      "path": "catalog/_legacy/champions/godie-h021.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-h022",
+      "name": "白色之翼 - 涅吉。史普林。菲爾德",
+      "path": "catalog/_legacy/champions/godie-h022.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-h02n",
+      "name": "腦包英雄 - 打我阿笨蛋",
+      "path": "catalog/_legacy/champions/godie-h02n.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-h02s",
+      "name": "死亡騎士",
+      "path": "catalog/_legacy/champions/godie-h02s.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-h02y",
+      "name": "幕末復仇狂者 - 志志雄真實",
+      "path": "catalog/_legacy/champions/godie-h02y.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-h02z",
+      "name": "不良少年",
+      "path": "catalog/_legacy/champions/godie-h02z.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-harf",
+      "name": "豪洨天王 - 鄭先生",
+      "path": "catalog/_legacy/champions/godie-harf.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-hblm",
+      "name": "慈悲的王者 - 賈修貝爾",
+      "path": "catalog/_legacy/champions/godie-hblm.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-hlgr",
+      "name": "鋼彈 - 煌",
+      "path": "catalog/_legacy/champions/godie-hlgr.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-hpal",
+      "name": "不死之身-無 - 藤井八雲",
+      "path": "catalog/_legacy/champions/godie-hpal.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-n01b",
+      "name": "地獄歌神 - 憤怒的胖虎",
+      "path": "catalog/_legacy/champions/godie-n01b.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-n01l",
+      "name": "學姊 - 小派",
+      "path": "catalog/_legacy/champions/godie-n01l.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-naka",
+      "name": "猿飛佐助 - 風魔小次郎",
+      "path": "catalog/_legacy/champions/godie-naka.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-nbst",
+      "name": "變態正義 - 瘋狂假面",
+      "path": "catalog/_legacy/champions/godie-nbst.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-nman",
+      "name": "地獄歌神 - 憤怒的胖虎",
+      "path": "catalog/_legacy/champions/godie-nman.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-nplh",
+      "name": "通靈人 - 麻倉葉",
+      "path": "catalog/_legacy/champions/godie-nplh.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-ntin",
+      "name": "時空管理局執務官 - 菲特·泰斯塔羅沙",
+      "path": "catalog/_legacy/champions/godie-ntin.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-o01z",
+      "name": "魔砲少女 - 高町奈葉",
+      "path": "catalog/_legacy/champions/godie-o01z.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-o02n",
+      "name": "曹操孟德 - 阿瞞大人",
+      "path": "catalog/_legacy/champions/godie-o02n.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-o02o",
+      "name": "曹操孟德 - 阿瞞大人",
+      "path": "catalog/_legacy/champions/godie-o02o.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-o02s",
+      "name": "憂鬱少女 - 涼宮八ㄦ匕",
+      "path": "catalog/_legacy/champions/godie-o02s.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-o02v",
+      "name": "白色惡魔 - 高町奈葉",
+      "path": "catalog/_legacy/champions/godie-o02v.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-o02w",
+      "name": "笑傲江湖 - 令狐沖",
+      "path": "catalog/_legacy/champions/godie-o02w.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-obla",
+      "name": "被剝削的勞工階級 - 牧太郎",
+      "path": "catalog/_legacy/champions/godie-obla.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-opgh",
+      "name": "常勝將軍 - 趙子龍",
+      "path": "catalog/_legacy/champions/godie-opgh.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-oshd",
+      "name": "魔鬼筋肉人 - 鬼王達",
+      "path": "catalog/_legacy/champions/godie-oshd.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-othr",
+      "name": "X戰警 - 金鋼狼",
+      "path": "catalog/_legacy/champions/godie-othr.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-u00b",
+      "name": "最M的魔法Jizz - 清蒸 飛鼠先生",
+      "path": "catalog/_legacy/champions/godie-u00b.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-u011",
+      "name": "死亡老二 - 克勞薩先生",
+      "path": "catalog/_legacy/champions/godie-u011.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-u012",
+      "name": "重金屬樂團的怪物 - 克勞薩II世",
+      "path": "catalog/_legacy/champions/godie-u012.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-u01f",
+      "name": "萬夫莫敵 - 黑化張飛",
+      "path": "catalog/_legacy/champions/godie-u01f.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-u01q",
+      "name": "測試英雄 - 索隆",
+      "path": "catalog/_legacy/champions/godie-u01q.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-usyl",
+      "name": "殺戮之牙 - 異形",
+      "path": "catalog/_legacy/champions/godie-usyl.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-uwar",
+      "name": "食神 - 撒尿牛丸",
+      "path": "catalog/_legacy/champions/godie-uwar.json",
+      "catalog": "legacy"
+    },
+    {
+      "id": "godie-e001",
+      "name": "蟬在叫人壞掉 - 龍宮禮奈",
+      "path": "catalog/champions/godie-e001.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-e002",
+      "name": "亞瑟王 - Saber",
+      "path": "catalog/champions/godie-e002.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-e007",
+      "name": "龍之子 - 天地志狼",
+      "path": "catalog/champions/godie-e007.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-e008",
+      "name": "火霧戰士 - 夏娜",
+      "path": "catalog/champions/godie-e008.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-e00l",
+      "name": "亞瑟王 - Saber",
+      "path": "catalog/champions/godie-e00l.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-e00n",
+      "name": "蟬在叫人壞掉 - 龍宮禮奈",
+      "path": "catalog/champions/godie-e00n.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-e00r",
+      "name": "最終泛用人型決戰兵器 - 初號機",
+      "path": "catalog/champions/godie-e00r.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-e00s",
+      "name": "白木老樹精 - 白木卡迪那",
+      "path": "catalog/champions/godie-e00s.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-e00w",
+      "name": "神鳴流劍士 - 櫻綻剎那",
+      "path": "catalog/champions/godie-e00w.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-e00x",
+      "name": "神鳴流劍士 - 櫻綻剎那",
+      "path": "catalog/champions/godie-e00x.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-e010",
+      "name": "白木老樹精 - 白木卡迪那",
+      "path": "catalog/champions/godie-e010.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-edem",
+      "name": "寫輪眼復仇者 - 宇智波佐助",
+      "path": "catalog/champions/godie-edem.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-efur",
+      "name": "揍敵客大家長 - 揍敵客桀諾",
+      "path": "catalog/champions/godie-efur.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-emfr",
+      "name": "魔法老師 - 涅吉。史普林。菲爾德",
+      "path": "catalog/champions/godie-emfr.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-emns",
+      "name": "奇樂 - 夜神月",
+      "path": "catalog/champions/godie-emns.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-etyr",
+      "name": "治癒系公主 - 木乃香",
+      "path": "catalog/champions/godie-etyr.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-ewar",
+      "name": "龍之子 - 天地志狼",
+      "path": "catalog/champions/godie-ewar.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-h00l",
+      "name": "時空勇者 - 林克",
+      "path": "catalog/champions/godie-h00l.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-h01n",
+      "name": "開外掛的死神 - 黑崎一護",
+      "path": "catalog/champions/godie-h01n.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-h01o",
+      "name": "外掛開很大的死神 - 黑崎一護",
+      "path": "catalog/champions/godie-h01o.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-h01u",
+      "name": "亂世癿王者 - 呂布奉先",
+      "path": "catalog/champions/godie-h01u.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-h020",
+      "name": "黑魔導士 - 莉娜因巴斯",
+      "path": "catalog/champions/godie-h020.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-h02k",
+      "name": "國寶級的畜生 - 熊貓",
+      "path": "catalog/champions/godie-h02k.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-h02r",
+      "name": "種子神奇寶貝 - 妙蛙花",
+      "path": "catalog/champions/godie-h02r.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-h02u",
+      "name": "看似憂鬱的神獸 - 草泥馬",
+      "path": "catalog/champions/godie-h02u.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-h02v",
+      "name": "看似憂鬱的神獸 - 草泥馬",
+      "path": "catalog/champions/godie-h02v.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-hapm",
+      "name": "海克力斯 - Berserker",
+      "path": "catalog/champions/godie-hapm.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-hart",
+      "name": "最終幻想 - 克勞德",
+      "path": "catalog/champions/godie-hart.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-hgam",
+      "name": "種子神奇寶貝 - 妙蛙種子",
+      "path": "catalog/champions/godie-hgam.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-hjai",
+      "name": "黑魔導士 - 莉娜因巴斯",
+      "path": "catalog/champions/godie-hjai.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-hpb1",
+      "name": "獸矛傳承使 - 蒼月潮",
+      "path": "catalog/champions/godie-hpb1.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-huth",
+      "name": "超級普烏 - 魔人普烏",
+      "path": "catalog/champions/godie-huth.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-hvsh",
+      "name": "梅杜莎 - Rider",
+      "path": "catalog/champions/godie-hvsh.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-hvwd",
+      "name": "除魔巫女 - 桔梗",
+      "path": "catalog/champions/godie-hvwd.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-n003",
+      "name": "黑暗福音 - 依文潔琳",
+      "path": "catalog/champions/godie-n003.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-n00b",
+      "name": "小叮噹 - 哆拉A夢",
+      "path": "catalog/champions/godie-n00b.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-n00p",
+      "name": "妖狐藏馬 - 南野秀一",
+      "path": "catalog/champions/godie-n00p.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-n01c",
+      "name": "傳說的龍騎士 - 勇者小呆",
+      "path": "catalog/champions/godie-n01c.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-n01g",
+      "name": "黑暗福音 - 依文潔琳",
+      "path": "catalog/champions/godie-n01g.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-nbbc",
+      "name": "傳說的龍騎士 - 勇者小呆",
+      "path": "catalog/champions/godie-nbbc.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-nsjs",
+      "name": "妖狐藏馬 - 南野秀一",
+      "path": "catalog/champions/godie-nsjs.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-o00k",
+      "name": "傲嬌電氣老鼠 - 皮卡娘",
+      "path": "catalog/champions/godie-o00k.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-o00l",
+      "name": "獸神官 - 傑洛士",
+      "path": "catalog/champions/godie-o00l.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-o00x",
+      "name": "超級賽亞人 - 悟空",
+      "path": "catalog/champions/godie-o00x.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-o02l",
+      "name": "神騎寶貝 - 皮卡丘",
+      "path": "catalog/champions/godie-o02l.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-o02p",
+      "name": "夢幻之星 - 初音",
+      "path": "catalog/champions/godie-o02p.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-o030",
+      "name": "電車癡漢 - 臭作",
+      "path": "catalog/champions/godie-o030.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-ofar",
+      "name": "神奇寶貝兒 - 皮卡丘",
+      "path": "catalog/champions/godie-ofar.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-ogld",
+      "name": "美白大法師 - 黑人牙膏",
+      "path": "catalog/champions/godie-ogld.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-ogrh",
+      "name": "賽亞人 - 悟空",
+      "path": "catalog/champions/godie-ogrh.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-orkn",
+      "name": "電車癡漢 - 臭作",
+      "path": "catalog/champions/godie-orkn.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-osam",
+      "name": "犬妖 - 殺生丸",
+      "path": "catalog/champions/godie-osam.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-u00h",
+      "name": "鬼畜紅王 - 鬼畜狂刀KYO",
+      "path": "catalog/champions/godie-u00h.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-u00j",
+      "name": "神性的流失 - 賽菲洛斯",
+      "path": "catalog/champions/godie-u00j.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-u00k",
+      "name": "邪惡意念集合體 - 死之王",
+      "path": "catalog/champions/godie-u00k.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-u00l",
+      "name": "北斗之鼠 - 拳四郎",
+      "path": "catalog/champions/godie-u00l.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-u00n",
+      "name": "草帽小子 - 蒙其.D.魯夫",
+      "path": "catalog/champions/godie-u00n.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-u00o",
+      "name": "草帽小子 - 蒙其.D.魯夫",
+      "path": "catalog/champions/godie-u00o.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-u00v",
+      "name": "黑手黨老大 - 基廉列克",
+      "path": "catalog/champions/godie-u00v.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-u010",
+      "name": "邪眼師 - 飛影",
+      "path": "catalog/champions/godie-u010.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-u01u",
+      "name": "三刀流劍士 - 索隆",
+      "path": "catalog/champions/godie-u01u.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-u034",
+      "name": "職業獵人 - 傑 富力士",
+      "path": "catalog/champions/godie-u034.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-ubal",
+      "name": "魔界霸主 - 巴恩大魔王",
+      "path": "catalog/champions/godie-ubal.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-ucrl",
+      "name": "職業獵人 - 傑 富力士",
+      "path": "catalog/champions/godie-ucrl.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-udea",
+      "name": "至尊學長 - 飛鼠先生",
+      "path": "catalog/champions/godie-udea.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-udre",
+      "name": "三刀流劍士 - 索隆",
+      "path": "catalog/champions/godie-udre.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-umal",
+      "name": "北斗神拳掌門人 - 拳四郎",
+      "path": "catalog/champions/godie-umal.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-uvng",
+      "name": "邪眼師 - 飛影",
+      "path": "catalog/champions/godie-uvng.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "godie-zombiex",
+      "name": "聖杯黑泥醬 - 喪標麥可",
+      "path": "catalog/champions/godie-zombiex.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "sela",
+      "name": "Sela, the Ember Sage",
+      "path": "catalog/champions/sela.json",
+      "catalog": "shipping"
+    },
+    {
+      "id": "thorne",
+      "name": "Thorne, the Bramble Knight",
+      "path": "catalog/champions/thorne.json",
+      "catalog": "shipping"
+    }
+  ],
+  "currentVersion": "sha256:8214dcc72b5e1634dc6973232bd6ef20b5fee0e241c6c5d811d54b0793877659"
+}

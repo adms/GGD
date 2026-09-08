@@ -1,0 +1,16 @@
+{
+  "id": "taunt",
+  "schema": "config.taunt@1",
+  "note": "嘲弄規則。語意與每一格的理由見 packages/shared/src/sim/taunt.ts 的 TauntRules。出貨值 = 保守側：嘲弄只接管自動索敵與 bot/小怪 aggro，玩家自己右鍵點名的目標不會被動到；萬一把 overridesManualOrder 打開了，restoreManualOrderOnLapse 會在嘲弄退掉的那一刻把那條指令還回去。",
+  "enabled": true,
+  "overridesManualOrder": false,
+  "restoreManualOrderOnLapse": true,
+  "appliesToMobs": true,
+  "mobTauntMode": "replace",
+  "priority": "absolute",
+  "leashUnits": 24,
+  "maxTargetsCap": 20,
+  "capOrder": "nearest",
+  "conflictMode": "newest",
+  "durationMult": 1
+}

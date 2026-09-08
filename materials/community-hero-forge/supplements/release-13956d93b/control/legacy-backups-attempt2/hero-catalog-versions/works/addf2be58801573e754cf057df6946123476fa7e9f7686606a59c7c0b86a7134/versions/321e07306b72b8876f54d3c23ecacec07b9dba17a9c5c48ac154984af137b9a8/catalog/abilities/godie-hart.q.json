@@ -1,0 +1,60 @@
+{
+  "id": "godie-hart.q",
+  "name": "01-01 凶斬",
+  "icon": "assets/icons/abilities/godie-hart.q.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n使用大刀在敵人身上刻下凶字造成{{dmg}}傷害，並且使人暫時無法行動1秒。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    72.0,
+    72.0,
+    72.0,
+    72.0,
+    72.0
+  ],
+  "manaCostTier": "極小",
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "physical",
+      "amount": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ad",
+            "coeff": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 1.0,
+      "moveSpeedMult": 0.6
+    },
+    {
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "toPoint",
+      "apexHeight": 0,
+      "durationSec": 0.2
+    }
+  ],
+  "vfxKey": "fx.prim.physical.slash",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "castTimeSec": 0.567,
+  "rangeTier": "大",
+  "range": 8
+}

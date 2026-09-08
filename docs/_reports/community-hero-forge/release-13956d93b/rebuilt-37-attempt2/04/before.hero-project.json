@@ -1,0 +1,1222 @@
+{
+  "acceptedPlan": {
+    "archetype": "fighter",
+    "attackType": "melee",
+    "budget": {
+      "complexity": 60,
+      "power": 50
+    },
+    "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+    "origin": "鬥士",
+    "planId": "community-review-04-20260907.plan",
+    "schema": "ggd-hero-plan@2",
+    "slots": {
+      "E": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "effects": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 120,
+                "ratios": []
+              },
+              "duration": 3,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "community-review-04-20260907.e.guard"
+            }
+          ],
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "〔替身護衛〕",
+        "products": [
+          {
+            "instanceId": "community-review-04-20260907-e-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": []
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-04-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】白金之星進入短暫防禦姿態，減免一次正面攻擊並推開近身敵人。\n【待補機制】需正面一次格擋與推開近敵，不能以一般護盾驗收。",
+        "slot": "E",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "EX": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔歐拉終結拳〕",
+        "products": [
+          {
+            "instanceId": "community-review-04-20260907-ex-1",
+            "template": {
+              "contentSha256": "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.2,
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "physical"
+              },
+              "ref": "tpl-single-strike"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】有起手動作的重拳；時停期間使用時，加入同一套待結算命中佇列。\n【待補機制】目前立即结算；需與時停共用待結算佇列。",
+        "slot": "EX",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "PASSIVE": {
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔白金之星・精密動作〕",
+        "products": [
+          {
+            "instanceId": "community-review-04-20260907-passive-1",
+            "template": {
+              "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0",
+              "inheritDefaults": true,
+              "params": {
+                "bonusDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "condition": {
+                  "kind": "chance",
+                  "p": 1
+                },
+                "damageType": "physical",
+                "event": "onBasicAttack",
+                "internalCooldown": 3
+              },
+              "ref": "tpl-on-attack"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。\n【目標設計】近距離命中累積精密層數；滿層後強化下一次 Q 的末擊。\n【待補機制】需精密層數與 Q 末擊消耗。",
+        "slot": "PASSIVE",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        }
+      },
+      "Q": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "極小"
+        },
+        "capabilityIds": [
+          "periodicDamage",
+          "invulnerable",
+          "applyStatus",
+          "leap"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "歐拉連打",
+        "products": [
+          {
+            "instanceId": "community-review-04-20260907-q-1",
+            "template": {
+              "contentSha256": "sha256:e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771cd614a89d04e016c6",
+              "inheritDefaults": true,
+              "params": {
+                "casterGuard": "none",
+                "damageType": "physical",
+                "finisherDamage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "finisherRadius": 150,
+                "hitCount": 6,
+                "hitIntervalSec": 0.18,
+                "lockTarget": "none",
+                "perHitDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "trigger": "onCast"
+              },
+              "ref": "tpl-lock-combo"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】6 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】白金之星在前方進行多段拳擊，每段重新確認距離與目標。\n【待補機制】需逐段距離重新檢查、替身掛點及雙模型動作。",
+        "slot": "Q",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "R": {
+        "abilityOverrides": {
+          "castTimeTier": "大",
+          "cooldownTier": "大",
+          "effects": [
+            {
+              "applyTo": "target",
+              "duration": 0.8,
+              "kind": "applyStatus",
+              "statusId": "stun",
+              "stun": true
+            }
+          ],
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 3,
+        "name": "白金之星・世界",
+        "products": [
+          {
+            "instanceId": "community-review-04-20260907-r-1",
+            "template": {
+              "contentSha256": "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.2,
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "magic"
+              },
+              "ref": "tpl-single-strike"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"stun\",\"duration\":0.8,\"applyTo\":\"target\",\"stun\":true}]。\n【目標設計】建立短暫局部時停區域。暫停範圍內敵方單位的動作與指定計時器，以及敵方投射物運動。對決倒數及時停自身的結束計時繼續。承太郎在期間造成的命中記入有限佇列，時停結束後依序結算。\n【待補機制】此槽僅單體 0.8 秒暈眩作模板預覽；局部時停、投射物暫停、計時器分類及命中佇列尚未提供。",
+        "slot": "R",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "W": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [
+          "projectile"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "流星指刺",
+        "products": [
+          {
+            "instanceId": "community-review-04-20260907-w-1",
+            "template": {
+              "contentSha256": "sha256:431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699006b55c40f5b54c7",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.35,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "segmentAoe": 150,
+                "segmentCount": 4,
+                "stepSize": 100
+              },
+              "ref": "tpl-line-sweep"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】中短距離直線刺擊，用於追擊離開普攻範圍的敵人。\n【待補機制】需單條流星指刺與單目標去重。",
+        "slot": "W",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      }
+    },
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "statOverrides": {
+      "ad": "大",
+      "ap": "小",
+      "armor": "中",
+      "as": "中",
+      "healthRegen": "中",
+      "manaRegen": "中",
+      "maxHealth": "中",
+      "maxMana": "中",
+      "mr": "中",
+      "ms": "中",
+      "range": "小"
+    },
+    "summary": "空條承太郎 社群英雄功能驗收稿。作品：《JoJo 的奇妙冒險》  \n採用：第三部後期、已能停止時間。  \n定位：替身近戰、局部時停。\n\n視覺方向：白金之星為待製副模型；拳線紫白、時停要求灰階環界與恢復裂紋，視覺不能代替模擬。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "templateVersions": {
+      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
+        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
+        "exemplar": {
+          "jass": "A0Q6",
+          "skill": "82-04 闇之魔法"
+        },
+        "family": "buff-self",
+        "gapScore": 6,
+        "id": "tpl-buff-self",
+        "name": "變身強化-數值面",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "duration": {
+            "default": 15,
+            "max": 60,
+            "min": 1,
+            "type": "number",
+            "unit": "s"
+          },
+          "modifiers": {
+            "default": [
+              {
+                "op": "flat",
+                "stat": "ad",
+                "value": 50
+              }
+            ],
+            "type": "statModifiers"
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0": {
+        "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
+        "exemplar": {
+          "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效",
+          "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者"
+        },
+        "family": "on-attack",
+        "gapScore": 9,
+        "id": "tpl-on-attack",
+        "name": "攻擊觸發",
+        "params": {
+          "bonusDamage": {
+            "default": {
+              "perRank": [
+                100
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "chance": {
+            "max": 1,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "ratio"
+          },
+          "condition": {
+            "default": {
+              "any": [
+                {
+                  "all": [
+                    {
+                      "not": {
+                        "is": "champion",
+                        "kind": "kind",
+                        "subject": "target"
+                      }
+                    },
+                    {
+                      "kind": "stat",
+                      "mode": "percent",
+                      "op": "<",
+                      "stat": "hp",
+                      "subject": "target",
+                      "value": 0.35
+                    }
+                  ]
+                },
+                {
+                  "all": [
+                    {
+                      "is": "champion",
+                      "kind": "kind",
+                      "subject": "target"
+                    },
+                    {
+                      "kind": "chance",
+                      "p": 0.01
+                    }
+                  ]
+                }
+              ]
+            },
+            "optional": true,
+            "type": "condition"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "event": {
+            "default": "onBasicAttack",
+            "type": "enum",
+            "values": [
+              "onBasicAttack",
+              "onDamageDealt"
+            ]
+          },
+          "internalCooldown": {
+            "default": 0,
+            "max": 60,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699006b55c40f5b54c7": {
+        "description": "沿直線分段的掃擊：每一段各自在自己的落點結算一次（`delayed` + `advance`，GH#393 的機制）。⭐ 同一個目標整串只被打一次（`hitOncePerTarget`）—— 那是原作的規則，卡片寫的是**一次**的數字。",
+        "exemplar": {
+          "jass": "A0D5",
+          "skill": "20-03 約束與勝利之劍"
+        },
+        "family": "line-sweep",
+        "gapScore": 7,
+        "id": "tpl-line-sweep",
+        "name": "直線分段掃擊",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                150
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "segmentAoe": {
+            "default": 400,
+            "max": 900,
+            "min": 100,
+            "origin": "j:32337 —— `GetUnitsInRangeOfLocMatching(400.00, udg_LocPoint3, …)` ⇒ 每段半徑 **400 wc3u**",
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "segmentCount": {
+            "default": 6,
+            "max": 20,
+            "min": 3,
+            "origin": "j:32335 —— `exitwhen udg_WinSwordCounter > 6`，而 j:32333 是 `set udg_WinSwordCounter = 1` ⇒ 正好 **6 段**（⛔ 不是 7：它從 **1** 起算，⛔ 不是 0）",
+            "type": "number",
+            "unit": "count"
+          },
+          "stepSize": {
+            "default": 200,
+            "max": 300,
+            "min": 100,
+            "origin": "j:32336 —— `PolarProjectionBJ(udg_LocPoint1, I2R(udg_WinSwordCounter) * 200.00, …)` ⇒ 每段 **200 wc3u**",
+            "type": "number",
+            "unit": "wc3u"
+          }
+        },
+        "requires": [
+          "projectile"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b": {
+        "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。",
+        "exemplar": {
+          "jass": "A0OD",
+          "skill": "23-04 雷焰聖劍"
+        },
+        "family": "single-strike",
+        "gapScore": 9,
+        "id": "tpl-single-strike",
+        "name": "單體斬擊",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771cd614a89d04e016c6": {
+        "description": "把一個人鎖住打完一整段。命中後目標被定住、施法者進入演出狀態（這段期間打不到他），連段一擊一擊落下，最後一記終結技在收招那一刻結算並掃過周圍。「連段次數 × 每段間隔」就是整段長度 —— 它是算出來的，所以沒有『持續時間』這個欄位可以填。⚠️ 原作的連段中施法者會一擊一擊瞬移到目標身邊，這裡沒有搬過來：那段期間雙方都被 pause + 無敵，施法者站哪裡不影響任何結算，只有終結技的圓心用得到，所以收成原地演出。想要遞減間隔（52-002 射殺百頭的 CD×0.75）也還做不到。 ⭐ owner 2026-08-13：終結技可以是**另一支具名技能**（finisherAbility，走 proxyCast 代放），⛔ 不是把那支技能的傷害抄一份進來 —— 抄一份之後那支技能改了，連段裡的版本不會跟著改。留空則沿用 finisherDamage 那個數字。發動條件也是一格（trigger）：預設 onCast，20-002 是 onReflectSuccess（反彈成功才發），所以整段連段可以掛在被動 hook 上而不是主動施放。",
+        "exemplar": {
+          "jass": "A0CX",
+          "skill": "84-04 給我蜂蜜"
+        },
+        "family": "lock-combo",
+        "gapScore": 6,
+        "id": "tpl-lock-combo",
+        "name": "鎖定連段",
+        "params": {
+          "casterGuard": {
+            "default": "all",
+            "type": "enum",
+            "values": [
+              "all",
+              "magic",
+              "none"
+            ]
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "finisherAbility": {
+            "optional": true,
+            "type": "docRef"
+          },
+          "finisherDamage": {
+            "default": {
+              "perRank": [
+                450
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "finisherRadius": {
+            "default": 150,
+            "max": 1800,
+            "min": 50,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "hitCount": {
+            "default": 5,
+            "max": 20,
+            "min": 1,
+            "type": "number",
+            "unit": "count"
+          },
+          "hitIntervalSec": {
+            "default": 0.4,
+            "max": 3,
+            "min": 0.05,
+            "type": "number",
+            "unit": "s"
+          },
+          "lockTarget": {
+            "default": "stun",
+            "type": "enum",
+            "values": [
+              "stun",
+              "root",
+              "none"
+            ]
+          },
+          "perHitDamage": {
+            "default": {
+              "perRank": [
+                100
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "trigger": {
+            "default": "onCast",
+            "type": "enum",
+            "values": [
+              "onCast",
+              "onReflectSuccess",
+              "onKill",
+              "onBasicAttack",
+              "onDamageTaken"
+            ]
+          }
+        },
+        "requires": [
+          "periodicDamage",
+          "invulnerable",
+          "applyStatus",
+          "leap"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      }
+    },
+    "title": "空條承太郎"
+  },
+  "brief": {
+    "concept": "空條承太郎 社群英雄功能驗收稿。作品：《JoJo 的奇妙冒險》  \n採用：第三部後期、已能停止時間。  \n定位：替身近戰、局部時停。\n\n視覺方向：白金之星為待製副模型；拳線紫白、時停要求灰階環界與恢復裂紋，視覺不能代替模擬。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "E": "〔替身護衛〕",
+      "EX": "〔歐拉終結拳〕",
+      "PASSIVE": "〔白金之星・精密動作〕",
+      "Q": "歐拉連打",
+      "R": "白金之星・世界",
+      "W": "流星指刺"
+    },
+    "name": "空條承太郎"
+  },
+  "presentation": {
+    "assetLocks": [
+      {
+        "byteSize": 764552,
+        "consumers": [
+          "champion:model"
+        ],
+        "kind": "model",
+        "mediaType": "model/gltf-binary",
+        "path": "assets/models/community/e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a.glb",
+        "registry": "normalized-upload",
+        "sha256": "e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a"
+      }
+    ],
+    "championIcon": "assets/icons/champions/thorne.webp",
+    "modelKey": "community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c",
+    "modelProvenance": {
+      "modelSha256": "e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a",
+      "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。",
+      "relationship": "exact",
+      "schema": "ggd-hero-model-provenance@1",
+      "sourceAssetId": "300heroes:53fd11c0026fe928567b7760",
+      "sourceCharacter": "空条承太郎",
+      "sourceWork": "JoJo 的奇妙冒險 第三部：星塵遠征軍"
+    },
+    "schema": "ggd-hero-presentation@1",
+    "slots": {
+      "E": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "script": {
+          "abilityId": "community-review-04-20260907.e",
+          "id": "community-review-04-20260907.e",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                161,
+                94,
+                235
+              ],
+              "vfxId": "fx.prim.physical.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                161,
+                94,
+                235
+              ],
+              "vfxId": "fx.prim.physical.pulse",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "E",
+        "vfxLayers": []
+      },
+      "EX": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "script": {
+          "abilityId": "community-review-04-20260907.ex",
+          "id": "community-review-04-20260907.ex",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                161,
+                94,
+                235
+              ],
+              "vfxId": "fx.prim.physical.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                161,
+                94,
+                235
+              ],
+              "vfxId": "fx.prim.physical.slash",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "EX",
+        "vfxLayers": []
+      },
+      "PASSIVE": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "script": null,
+        "sfxKey": null,
+        "slot": "PASSIVE",
+        "vfxLayers": []
+      },
+      "Q": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "script": {
+          "abilityId": "community-review-04-20260907.q",
+          "id": "community-review-04-20260907.q",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                161,
+                94,
+                235
+              ],
+              "vfxId": "fx.prim.physical.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                161,
+                94,
+                235
+              ],
+              "vfxId": "fx.prim.physical.slash",
+              "w3xScale": 0.85
+            },
+            {
+              "alpha": 0.9,
+              "at": "target",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "strike",
+              "strikeIndex": 6,
+              "tint": [
+                161,
+                94,
+                235
+              ],
+              "vfxId": "fx.prim.physical.slash",
+              "w3xScale": 1
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "Q",
+        "vfxLayers": []
+      },
+      "R": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "script": {
+          "abilityId": "community-review-04-20260907.r",
+          "id": "community-review-04-20260907.r",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                161,
+                94,
+                235
+              ],
+              "vfxId": "fx.prim.physical.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                161,
+                94,
+                235
+              ],
+              "vfxId": "fx.prim.physical.slash",
+              "w3xScale": 1.25
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "R",
+        "vfxLayers": []
+      },
+      "W": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "script": {
+          "abilityId": "community-review-04-20260907.w",
+          "id": "community-review-04-20260907.w",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                161,
+                94,
+                235
+              ],
+              "vfxId": "fx.prim.physical.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                161,
+                94,
+                235
+              ],
+              "vfxId": "fx.prim.physical.beam",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "W",
+        "vfxLayers": []
+      }
+    },
+    "uploadedModel": {
+      "byteSize": 764552,
+      "clipMap": {
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "death": "dead",
+        "hurt": "bat_idle",
+        "idle": "bat_idle",
+        "run": "single_run"
+      },
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a",
+      "yawOffsetDeg": 0
+    }
+  },
+  "projectId": "community-review-04-20260907",
+  "receipts": [
+    {
+      "digest": "6e6372701110f6397bb6e260f0620c8acf0ca7374e23097d5f10b74372e00d88",
+      "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+      "kind": "generator-adopted",
+      "projectRevision": 5
+    }
+  ],
+  "revision": 11,
+  "schema": "ggd-hero-project@2",
+  "sections": {
+    "attributes": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "draft"
+    },
+    "identity": {
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      },
+      "revision": 1,
+      "state": "draft"
+    },
+    "mechanics": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    },
+    "package": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "presentation": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "skills": {
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      },
+      "revision": 11,
+      "state": "draft"
+    },
+    "validation": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    }
+  },
+  "sourceDesign": {
+    "identity": "作品：《JoJo 的奇妙冒險》  \n採用：第三部後期、已能停止時間。  \n定位：替身近戰、局部時停。",
+    "name": "空條承太郎",
+    "ownerText": "### 04｜空條承太郎\n\n作品：《JoJo 的奇妙冒險》  \n採用：第三部後期、已能停止時間。  \n定位：替身近戰、局部時停。\n\n- **PASSIVE｜〔白金之星・精密動作〕**：近距離命中累積精密層數；滿層後強化下一次 Q 的末擊。\n- **Q｜歐拉連打**：白金之星在前方進行多段拳擊，每段重新確認距離與目標。\n- **W｜流星指刺**：中短距離直線刺擊，用於追擊離開普攻範圍的敵人。\n- **E｜〔替身護衛〕**：白金之星進入短暫防禦姿態，減免一次正面攻擊並推開近身敵人。\n- **R｜白金之星・世界**：建立短暫局部時停區域。暫停範圍內敵方單位的動作與指定計時器，以及敵方投射物運動。對決倒數及時停自身的結束計時繼續。承太郎在期間造成的命中記入有限佇列，時停結束後依序結算。\n- **EX｜〔歐拉終結拳〕**：有起手動作的重拳；時停期間使用時，加入同一套待結算命中佇列。\n\n**審查重點**：驗證投射物、施法進度、持續效果與解除時序；時停須具有模擬行為，並測試承太郎死亡、兩個時停重疊及結束瞬間的致死傷害。\n\n",
+    "reviewText": "驗證投射物、施法進度、持續效果與解除時序；時停須具有模擬行為，並測試承太郎死亡、兩個時停重疊及結束瞬間的致死傷害。",
+    "schema": "ggd-hero-source-design@1",
+    "slots": {
+      "E": {
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-04-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。",
+        "name": "〔替身護衛〕",
+        "ownerDescription": "白金之星進入短暫防禦姿態，減免一次正面攻擊並推開近身敵人。",
+        "refinementContracts": [
+          "M01",
+          "M04",
+          "M07",
+          "M11"
+        ],
+        "requiredRefinement": "需正面一次格擋與推開近敵，不能以一般護盾驗收。"
+      },
+      "EX": {
+        "baselineBehavior": "指定單一敵人造成小級物理傷害。",
+        "name": "〔歐拉終結拳〕",
+        "ownerDescription": "有起手動作的重拳；時停期間使用時，加入同一套待結算命中佇列。",
+        "refinementContracts": [
+          "M01",
+          "M04",
+          "M07",
+          "M11"
+        ],
+        "requiredRefinement": "目前立即结算；需與時停共用待結算佇列。"
+      },
+      "PASSIVE": {
+        "baselineBehavior": "普攻追加極小級物理傷害，內置冷卻 3 秒。",
+        "name": "〔白金之星・精密動作〕",
+        "ownerDescription": "近距離命中累積精密層數；滿層後強化下一次 Q 的末擊。",
+        "refinementContracts": [
+          "M01",
+          "M04",
+          "M07",
+          "M11"
+        ],
+        "requiredRefinement": "需精密層數與 Q 末擊消耗。"
+      },
+      "Q": {
+        "baselineBehavior": "6 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。",
+        "name": "歐拉連打",
+        "ownerDescription": "白金之星在前方進行多段拳擊，每段重新確認距離與目標。",
+        "refinementContracts": [
+          "M01",
+          "M04",
+          "M07",
+          "M11"
+        ],
+        "requiredRefinement": "需逐段距離重新檢查、替身掛點及雙模型動作。"
+      },
+      "R": {
+        "baselineBehavior": "指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"stun\",\"duration\":0.8,\"applyTo\":\"target\",\"stun\":true}]。",
+        "name": "白金之星・世界",
+        "ownerDescription": "建立短暫局部時停區域。暫停範圍內敵方單位的動作與指定計時器，以及敵方投射物運動。對決倒數及時停自身的結束計時繼續。承太郎在期間造成的命中記入有限佇列，時停結束後依序結算。",
+        "refinementContracts": [
+          "M01",
+          "M04",
+          "M07",
+          "M11"
+        ],
+        "requiredRefinement": "此槽僅單體 0.8 秒暈眩作模板預覽；局部時停、投射物暫停、計時器分類及命中佇列尚未提供。"
+      },
+      "W": {
+        "baselineBehavior": "向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。",
+        "name": "流星指刺",
+        "ownerDescription": "中短距離直線刺擊，用於追擊離開普攻範圍的敵人。",
+        "refinementContracts": [
+          "M01",
+          "M04",
+          "M07",
+          "M11"
+        ],
+        "requiredRefinement": "需單條流星指刺與單目標去重。"
+      }
+    },
+    "sourceSha256": "efa6e215376a822eeb99001216c87c088f2f03e5875432f2d3d4c36f559cb66d"
+  },
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "validationState": {
+    "attributes": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "identity": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "mechanics": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    },
+    "package": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "presentation": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "skills": {
+      "diagnosticCodes": [],
+      "revision": 11,
+      "status": "idle"
+    },
+    "validation": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "instance.85500dd12eba.969995d41880.b44bba407ce48372ccb1",
+  "schema": "ability@1",
+  "name": "95-00 紅色龍氣",
+  "icon": "assets/hero-instances/0691c5a90891d06a1e4dfc7f307d26fe281ba832fa674b2e6a4814243e7e53e9.webp",
+  "description": "[輔助]\n30秒冷卻時間\n\n運用龍氣調整呼吸與氣的流動，能夠在短時間內重新進入戰鬥姿態。施展成功後將恢復10%的生命與法力，並且10秒內施展的技能會附加龍氣效果。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    30
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "restore",
+      "healthPct": 0.1,
+      "manaPct": 0.1
+    }
+  ],
+  "vfxKey": "instance.85500dd12eba.969995d41880.227c8b75b9c32756abfb",
+  "castTimeSec": 0.3
+}

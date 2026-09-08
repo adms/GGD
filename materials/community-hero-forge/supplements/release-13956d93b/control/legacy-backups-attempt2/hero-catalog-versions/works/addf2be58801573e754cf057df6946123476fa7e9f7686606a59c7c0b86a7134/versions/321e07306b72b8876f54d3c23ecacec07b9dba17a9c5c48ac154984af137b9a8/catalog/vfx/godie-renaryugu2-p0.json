@@ -1,0 +1,84 @@
+{
+  "id": "godie-renaryugu2-p0",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.036,
+    "angleDeg": 63.5
+  },
+  "mode": "continuous",
+  "rate": 250.0,
+  "lifetimeSec": {
+    "min": 0.365,
+    "max": 0.365
+  },
+  "size": {
+    "start": 0.208,
+    "end": 0.014
+  },
+  "color": {
+    "start": [
+      0.0,
+      0.392,
+      1.0,
+      1.0
+    ],
+    "end": [
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.0,
+        0.392,
+        1.0,
+        1.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.208
+    ],
+    [
+      0.5,
+      0.139
+    ],
+    [
+      1,
+      0.014
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/flame_03.png",
+  "stretched": true,
+  "tailLength": 0.2,
+  "speed": {
+    "min": 10.3106,
+    "max": 10.873
+  }
+}

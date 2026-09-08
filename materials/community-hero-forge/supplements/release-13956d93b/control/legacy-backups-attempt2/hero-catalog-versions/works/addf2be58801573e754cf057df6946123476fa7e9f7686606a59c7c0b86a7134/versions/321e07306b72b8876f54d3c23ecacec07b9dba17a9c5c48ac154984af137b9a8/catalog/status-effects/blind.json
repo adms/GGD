@@ -1,0 +1,16 @@
+{
+  "id": "blind",
+  "schema": "status-effect@1",
+  "name": "致盲",
+  "description": "眼前一片白 —— 人還在那裡，刀卻揮到旁邊去，普通攻擊有機率整個落空。⚠️ 它跟【詛咒】是同一種「打空」，差別只在來源：詛咒是被死神點了名，致盲是眼睛真的被弄瞎。要一次問「他現在會不會失手」就查 miss 這個標籤。失手機率與持續時間寫在施加它的那張卡上。",
+  "polarity": "debuff",
+  "tags": [
+    "blind",
+    "miss",
+    "accuracy-down",
+    "attack-debuff",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

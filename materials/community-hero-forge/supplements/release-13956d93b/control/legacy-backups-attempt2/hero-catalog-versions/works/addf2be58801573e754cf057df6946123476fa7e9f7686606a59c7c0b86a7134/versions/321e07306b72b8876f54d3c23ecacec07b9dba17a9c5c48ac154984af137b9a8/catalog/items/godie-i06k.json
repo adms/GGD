@@ -1,0 +1,20 @@
+{
+  "id": "godie-i06k",
+  "schema": "item@1",
+  "name": "奧理哈魯根劍身",
+  "description": "效能\n攻擊力+26\n\n解說\n常用於煉劍的材料",
+  "cost": 1200,
+  "tier": 2,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "ad",
+      "op": "flat",
+      "value": 26
+    }
+  ],
+  "icon": "assets/icons/items/godie-i06k.png",
+  "craftRole": "component"
+}

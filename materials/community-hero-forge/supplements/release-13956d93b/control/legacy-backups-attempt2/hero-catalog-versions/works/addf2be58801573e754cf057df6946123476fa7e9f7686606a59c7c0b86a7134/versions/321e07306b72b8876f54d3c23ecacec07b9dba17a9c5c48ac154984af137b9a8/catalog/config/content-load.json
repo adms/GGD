@@ -1,0 +1,8 @@
+{
+  "id": "content-load",
+  "schema": "config.content-load@1",
+  "note": "GH#326 — 一份壞文件要不要殺掉整份內容。owner 2026-08-14 裁定 quarantine 為預設：壞的隔離、好的照跑。cascadeDanglingRefs 擋的是「半個世界」（英雄在但技能不在）。maxQuarantined 是安全閥：超過就退回 fail-closed，因為「少幾份設定」和「內容整份跟映像不相容」是兩件事。",
+  "policy": "quarantine",
+  "cascadeDanglingRefs": true,
+  "maxQuarantined": 50
+}

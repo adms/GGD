@@ -1,0 +1,84 @@
+{
+  "id": "gravity-sword-black-rod",
+  "schema": "item@1",
+  "name": "重力劍〈黑棒〉",
+  "description": "武器\n效能\n[質量解放] 戰鬥中每 0.6 秒未普攻獲得 1 層〔質量〕，最多 5 層；普攻會讓計時重新開始\n[質量解放] 每層使攻擊力 ×1.18，五層約 ×2.29，本回合內持續\n[重力壓制] 五層〔質量〕時的普攻讓敵方英雄緩速 30%，持續 1.5 秒\n\n解說\n它不重，只是這一秒的地球比較認真。",
+  "cost": 0,
+  "tier": 5,
+  "tags": [
+    "legendary",
+    "melee",
+    "attack-damage"
+  ],
+  "requiresAttackType": "melee",
+  "passive": [
+    {
+      "key": "gravity-sword-mass",
+      "on": "onInterval",
+      "target": "self",
+      "internalCooldown": 0.6,
+      "condition": {
+        "not": {
+          "kind": "status",
+          "subject": "self",
+          "statusId": "gravity-sword-recent-swing"
+        }
+      },
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "permanentScope": "round",
+          "maxStacks": 5,
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "pctMult",
+              "value": 0.18
+            }
+          ],
+          "statusId": "gravity-sword-mass"
+        }
+      ]
+    },
+    {
+      "key": "gravity-sword-swing-mark",
+      "on": "onBasicAttack",
+      "target": "self",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "duration": 0.6,
+          "stackKey": "gravity-sword-recent-swing",
+          "maxStacks": 1,
+          "statusId": "gravity-sword-recent-swing",
+          "modifiers": []
+        }
+      ]
+    },
+    {
+      "key": "gravity-sword-crush",
+      "on": "onBasicAttack",
+      "victim": "enemyChampion",
+      "condition": {
+        "kind": "status",
+        "subject": "self",
+        "statusId": "gravity-sword-mass",
+        "minStacks": 5
+      },
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "slow30",
+          "duration": 1.5,
+          "moveSpeedMult": 0.7
+        }
+      ]
+    }
+  ],
+  "icon": "assets/icons/items/gravity-sword-black-rod.webp",
+  "craftRole": "none",
+  "authoringNote": "⭐ owner 原文（2026-08-17，⛔ 不可以讓它消失）：「[質量解放] 戰鬥中每 0.6 秒未普攻獲得 1 層質量，最多 5 層／下一次近戰普攻傷害 ×1.18^層數，五層約 ×2.29，**並使範圍傷害半徑增加 100%**」。逐句對照的全文在 `docs/legacy/_item-authoring-notes-full.md` 的〈gravity-sword-black-rod 重力劍〈黑棒〉〉一節（⛔ 原文一個字都沒被壓縮或截斷）。這裡留改動當下必須看到的：\n\n·「戰鬥中」✅ `systems/IntervalHookSystem.ts` 決策 2：onInterval **只在 `world.combatActive` 時發射**，是真的閘不是修辭。\n·「**未**普攻」✅ passive[1] 每刀掛一個 0.6 秒的具名標記〔gravity-sword-recent-swing〕（applyBuff + statusId，modifiers 空 = 純標記），passive[0] 的 condition 讀 `not(status self …)`。⛔ 先試過 `modifyCooldown{target:\"hookInternalCooldown\"}`，**實測會漏**：`basis:\"base\"` 每次只往前搬一個 ICD，追不上兩刀之間真實流逝的量，12 個週期漏 2 層。標記法沒有這個累積誤差。\n·「×1.18^層數，五層約 ×2.29」= applyBuff `ad pctMult 0.18`，**刻意不填 stackKey**（不填才是複利；實測 5 層 ×2.288）。⛔ 填了會被折成 1+0.18×5 = ×1.90。\n·「本回合內」= `permanent` + `permanentScope:\"round\"`（拆除點 `sim/clearPools.ts::clearRoundScoped`）。\n· ⚠️ 兩處仍缺機制，描述已改成不再承諾：①「**下一次**普攻⋯消耗全部層數」—— 引擎沒有「拔掉指定的一份增益」；②「範圍傷害半徑 +100%」—— `Stat` 裡沒有任何一條是 AoE 半徑。②的**替換**（⛔ 不是刪除）就是 [重力壓制]：五層時普攻附帶 slow30／1.5 秒 —— 主題對得起來（重力＝壓制）而且引擎真的做得到。⛔ 30%／1.5 秒是我定的平衡值，不是 owner 的數字，後台可調。\n· ⚠️「近戰普攻**傷害**」寫成 `ad pctMult`：引擎沒有 basic-only 的輸出倍率，吃 AD 係數的技能會一起變強，所以描述寫的是「攻擊力」。「近戰」= `requiresAttackType:\"melee\"`（發卡限制）。\n\n⭐ **2026-08-18 第三輪修正**：[重力壓制] 的 `applyStatus` 原本**一格機制欄位都沒有** —— `slow30` 只是一個字串，狀態列照樣畫圖示、玩家以為對方被黏住了，而他跑得跟平常一樣快（⛔ 比沒效果更糟，它會誤導決策）。補 `moveSpeedMult: 0.7`（＝ −30%，逐字對上卡面，與 冰晶虎魄-改 `godie-i04d` 同一個寫法）。⚠️ 減速**是**一筆 CC（`sim/effects/applyStatus.ts` 的 `isCc` 含 `moveSpeedMult < 1`），所以免控擋得掉、【淨化】拔得掉、秒數進 `ccAppliedTicks` 戰績。"
+}

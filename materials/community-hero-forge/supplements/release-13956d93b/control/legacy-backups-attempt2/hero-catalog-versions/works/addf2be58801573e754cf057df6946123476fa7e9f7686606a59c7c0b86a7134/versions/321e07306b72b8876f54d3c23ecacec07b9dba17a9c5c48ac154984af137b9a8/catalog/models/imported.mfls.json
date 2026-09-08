@@ -1,0 +1,72 @@
+{
+  "id": "imported.mfls",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/mfls.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Foot Right": {
+      "x": -0.0367,
+      "y": 0.0747,
+      "z": 0.0958
+    },
+    "Foot Left": {
+      "x": -0.0367,
+      "y": 0.0747,
+      "z": -0.0919
+    },
+    "Hand Right": {
+      "x": 0.0385,
+      "y": 0.8467,
+      "z": 0.1888
+    },
+    "Weapon Left": {
+      "x": -0.4199,
+      "y": 0.7752,
+      "z": -0.1951
+    },
+    "Hand Left": {
+      "x": 0.0385,
+      "y": 0.8467,
+      "z": -0.1951
+    },
+    "Head": {
+      "x": 0.0425,
+      "y": 1.5031,
+      "z": -0.0001
+    },
+    "Overhead": {
+      "x": 0.0207,
+      "y": 1.7022,
+      "z": -0.0
+    },
+    "Chest": {
+      "x": 0.0007,
+      "y": 1.2279,
+      "z": -0.0001
+    },
+    "Origin": {
+      "x": 0.0218,
+      "y": 0.0101,
+      "z": -0.0001
+    },
+    "feet": {
+      "x": 0.0218,
+      "y": 0.0965,
+      "z": -0.0001
+    },
+    "Weapon Right": {
+      "x": 0.4795,
+      "y": 0.7752,
+      "z": 0.1888
+    }
+  }
+}

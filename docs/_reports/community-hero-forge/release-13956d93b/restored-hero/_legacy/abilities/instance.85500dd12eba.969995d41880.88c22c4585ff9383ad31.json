@@ -1,0 +1,32 @@
+{
+  "id": "instance.85500dd12eba.969995d41880.88c22c4585ff9383ad31",
+  "name": "95-002 固有結界-和諧世界",
+  "icon": "assets/hero-instances/d8bdc819e67d5964137f92c2469a549860a6233e4af1b386c2196a1e9bc33a27.webp",
+  "description": "[主動攻擊]\n100秒冷卻時間\n\n馬皇全力運起藍色戰氣強大地流轉，讓正直與善良遍佈周圍，使身邊一片和諧，在此範圍600內友方單位每秒回復200點生命，發動時讓已死亡的英雄復活後將全員隊友傳送至騜身旁，持續12秒。需持續施法。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    100
+  ],
+  "manaCost": [
+    700
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6
+    }
+  ],
+  "vfxKey": "instance.85500dd12eba.969995d41880.78dd44529223769fdfb1",
+  "schema": "ability@1",
+  "castTimeSec": 0.4
+}

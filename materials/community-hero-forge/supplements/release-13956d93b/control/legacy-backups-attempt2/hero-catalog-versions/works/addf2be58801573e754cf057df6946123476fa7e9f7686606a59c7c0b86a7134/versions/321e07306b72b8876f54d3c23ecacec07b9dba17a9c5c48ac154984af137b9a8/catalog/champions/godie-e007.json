@@ -1,0 +1,310 @@
+{
+  "id": "godie-e007",
+  "schema": "champion@1",
+  "name": "龍之子 - 天地志狼",
+  "description": "故事：\n本是平凡的國中二年級學生，因為母親項鍊的神奇力量來到三國時代，而被當做龍之子，跟仙人學習仙術及武術，以拯救龍之女為目標。\n(出自:龍狼傳)\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.85\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n柳術、鬥仙術、雲體風身之術、仙氣發勁",
+  "role": "marksman",
+  "attackType": "ranged",
+  "modelKey": "imported.herolingtong",
+  "missileSpeed": 22.0,
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 6.0,
+    "ap": 0,
+    "armor": 0,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 8.2
+  },
+  "growth": {
+    "maxHealth": 36,
+    "healthRegen": 0.09,
+    "maxMana": 20,
+    "manaRegen": 0.07,
+    "ad": 1.68,
+    "armor": 0.9,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "attributes": {
+    "str": 18,
+    "agi": 24,
+    "int": 16,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "AGI",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.24,
+    "knockbackMag": 0.0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-e007.q",
+      "name": "12-01 鬥仙術",
+      "provenance": "w3x-import",
+      "description": "[主動][指定][混亂][AP加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n施法距離：{{range}}\n\n「我一個人無聊的時候，喜歡跟自己打麻將」\n以念體攻擊敵人，造成{{dmg}}+{{ap}}% [AP]傷害的同時可以[混亂]目標1秒。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        6.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "range": 4.5,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "confusion",
+          "duration": 1.0,
+          "berserk": true,
+          "targetsAllies": true
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-e007.q.webp",
+      "vfxKey": "fx.prim.ki.pulse-sm",
+      "cooldownTier": "極小",
+      "manaCostTier": "極小",
+      "rangeTier": "小",
+      "castTimeSec": 0.233
+    },
+    "W": {
+      "id": "godie-e007.w",
+      "name": "12-02 仙氣．採藥",
+      "provenance": "w3x-import",
+      "description": "[主動][輔助][治療][淨化]\n{{cd}}秒冷卻，吟唱{{cast}}秒\n消耗MP{{mp}}\n\n「OGC 身體好」\n利用身體小周天循環[治療]自己[回復] 5/7/9/11%[最大生命]，並且除去身上任何附加法術狀態([淨化])。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "restore",
+          "healthPct": [
+            0.05,
+            0.07,
+            0.09,
+            0.11
+          ],
+          "applyTo": "self"
+        },
+        {
+          "kind": "dispel",
+          "shape": "single",
+          "pools": {
+            "status": true,
+            "dot": true,
+            "buffs": true
+          }
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-e007.w.webp",
+      "vfxKey": "fx.prim.nature.pulse",
+      "cooldownTier": "極大",
+      "castTimeSec": 0.067
+    },
+    "E": {
+      "id": "godie-e007.e",
+      "name": "12-03 破凰之心-徒手空破山",
+      "provenance": "w3x-import",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n使用破凰之力的志狼徒手空破山，劃出大氣之刃，對目標造成{{dmg}}點傷害。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.ki.shockwave",
+      "targetsEnemies": true,
+      "icon": "assets/icons/abilities/godie-e007.e.png",
+      "castTimeSec": 1.233,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "大",
+      "manaCostTier": "極小"
+    },
+    "R": {
+      "id": "godie-e007.r",
+      "name": "12-04 龍氣爆發",
+      "provenance": "w3x-import",
+      "description": "[主動][範圍][淨化][AP加成]\n{{cd}}秒冷卻，吟唱{{cast}}秒\n消耗MP{{mp}}\n\n「使命創造命運」\n凝聚體內的龍氣造成[周圍][大範圍]敵方單位 550/750/950 + {{ap}}% [AP] 傷害，附帶[淨化]效果。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        288.0,
+        288.0,
+        288.0
+      ],
+      "range": 0.0,
+      "radiusTier": "中",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 2.0
+              }
+            ],
+            "damageTierPerRank": [
+              "小",
+              "中",
+              "中"
+            ]
+          },
+          "radius": 6.0,
+          "radiusTier": "中",
+          "includeOrigin": true
+        },
+        {
+          "kind": "dispel",
+          "shape": "circle",
+          "radius": 8.0,
+          "radiusTier": "大",
+          "side": "enemies",
+          "pools": {
+            "status": true,
+            "buffs": true
+          },
+          "polarity": "buff",
+          "count": 2
+        }
+      ],
+      "vfxKey": "fx.w3x.particle.supershinythingy.p00",
+      "icon": "assets/icons/abilities/godie-e007.r.png",
+      "hitFeel": {
+        "hitstopTicks": 4,
+        "hitstunTicks": 7,
+        "shakeMag": 0.52,
+        "shakeStyle": "omni",
+        "sparkKind": "magic",
+        "flashColor": [
+          1.0,
+          0.92,
+          0.6
+        ],
+        "flashMs": 178,
+        "camKick": 0.446
+      },
+      "cooldownTier": "中",
+      "manaCostTier": "中",
+      "castTimeSec": 1
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "thrown"
+  ],
+  "exAbility": "godie-e007.ex",
+  "passiveAbility": "godie-e007.passive",
+  "icon": "assets/icons/champions/godie-e007.png",
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-ewar",
+    "normalUnitRawcode": "EWAR",
+    "alternateUnitRawcode": "E007",
+    "triggerAbility": {
+      "rawcode": "A02W",
+      "name": "12-03 破凰之心-徒手空破山",
+      "durationSec": {
+        "1": 12.0,
+        "2": 18.0,
+        "3": 24.0,
+        "4": 30.0
+      },
+      "cooldownSec": {
+        "1": 45.0,
+        "2": 45.0,
+        "3": 45.0,
+        "4": 45.0
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "grail-strengthened-projection",
+  "schema": "status-effect@1",
+  "name": "強化投影",
+  "description": "投影魔術・強化投影（grail-c-20）施法後掛在自己身上的待命標記：下一次普攻會追加一枚投影彈。打出去就消失（maxTriggers 1 + onConsumed detachSource），5 秒沒打就自然退場。⛔ 它本身不改任何數值 —— 效果整個住在它自己的 onBasicAttack 觸發器上。",
+  "polarity": "buff",
+  "tags": [
+    "grail-strengthened-projection",
+    "grail-wish",
+    "next-attack",
+    "projectile",
+    "buff"
+  ]
+}

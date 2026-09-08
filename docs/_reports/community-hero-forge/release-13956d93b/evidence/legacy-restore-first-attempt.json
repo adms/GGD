@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-unpublished-legacy-restore-proof@1",
+  "status": "failed",
+  "scope": "Actual existing local Editor content API, same runtime source, separate copy of content. Fixture changes one archived hero health value; restore uses normal preview and guarded restore. No publication or browser-action claim.",
+  "codeCommit": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+  "hero": {
+    "id": "godie-e00j",
+    "name": "皇者 - 騜",
+    "path": "catalog/_legacy/champions/godie-e00j.json",
+    "catalog": "legacy"
+  },
+  "beforeVersion": "sha256:321e07306b72b8876f54d3c23ecacec07b9dba17a9c5c48ac154984af137b9a8",
+  "beforeHealth": 150,
+  "error": ""
+}

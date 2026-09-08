@@ -1,0 +1,84 @@
+{
+  "id": "godie-magical-sword-p0",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.139,
+    "angleDeg": 15.0
+  },
+  "mode": "continuous",
+  "rate": 20.0,
+  "lifetimeSec": {
+    "min": 2.5,
+    "max": 2.5
+  },
+  "size": {
+    "start": 0.01,
+    "end": 0.003
+  },
+  "color": {
+    "start": [
+      1.0,
+      1.0,
+      1.0,
+      0.086
+    ],
+    "end": [
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.086
+      ]
+    ],
+    [
+      0.5,
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.01
+    ],
+    [
+      0.5,
+      0.406
+    ],
+    [
+      1,
+      0.003
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/star_09.png",
+  "speed": {
+    "min": 1.3751,
+    "max": 1.4029
+  },
+  "gravityY": -0.056,
+  "anchorBone": "etoile"
+}

@@ -1,0 +1,61 @@
+{
+  "id": "godie-n00p.r",
+  "name": "18-04 億年樹",
+  "icon": "assets/icons/abilities/godie-n00p.r.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n讓魔界最具強大魔力的億年樹在現世甦醒，億年樹擁有500點生命，出現時造成附近敵軍{{dmg}}傷害，每秒回復附近友軍4%生命，降低敵軍30%攻擊速度、20%移動速度，當敵人攻擊藏馬的時候將有10%的機率受到老樹盤根的攻擊，持續8秒。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "cooldownTier": "中",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.7
+          }
+        ]
+      }
+    },
+    {
+      "kind": "delayed",
+      "shape": "circle",
+      "radius": 6,
+      "radiusTier": "中",
+      "side": "allies",
+      "delaySec": 1.0,
+      "count": 8,
+      "intervalSec": 1.0,
+      "targetMode": "reresolve",
+      "anchor": "caster",
+      "effects": [
+        {
+          "kind": "restore",
+          "healthPct": 0.04
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.prim.nature.shockwave-lg",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "castTimeSec": 1.233,
+  "rangeTier": "中",
+  "range": 6
+}

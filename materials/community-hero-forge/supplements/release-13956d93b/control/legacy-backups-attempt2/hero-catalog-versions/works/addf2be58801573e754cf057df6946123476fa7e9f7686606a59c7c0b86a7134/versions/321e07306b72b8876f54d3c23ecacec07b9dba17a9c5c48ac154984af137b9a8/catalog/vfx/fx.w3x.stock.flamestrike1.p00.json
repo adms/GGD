@@ -1,0 +1,82 @@
+{
+  "id": "fx.w3x.stock.flamestrike1.p00",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 2.083,
+    "angleDeg": 10.0
+  },
+  "mode": "continuous",
+  "rate": 15.0,
+  "lifetimeSec": {
+    "min": 0.9,
+    "max": 0.9
+  },
+  "size": {
+    "start": 0.139,
+    "end": 8.333
+  },
+  "color": {
+    "start": [
+      0.212,
+      0.702,
+      0.467,
+      1.0
+    ],
+    "end": [
+      0.212,
+      0.702,
+      0.467,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.212,
+        0.702,
+        0.467,
+        1.0
+      ]
+    ],
+    [
+      0.35,
+      [
+        0.212,
+        0.702,
+        0.467,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.212,
+        0.702,
+        0.467,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.139
+    ],
+    [
+      0.35,
+      6.667
+    ],
+    [
+      1,
+      8.333
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/circle_04.png",
+  "speed": {
+    "min": 0.0556,
+    "max": 0.0556
+  }
+}

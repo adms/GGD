@@ -1,0 +1,82 @@
+{
+  "id": "godie-heromiku-p1",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.021,
+    "angleDeg": 80.0
+  },
+  "mode": "continuous",
+  "rate": 100.0,
+  "lifetimeSec": {
+    "min": 0.6,
+    "max": 0.6
+  },
+  "size": {
+    "start": 0.711,
+    "end": 0.142
+  },
+  "color": {
+    "start": [
+      0.0,
+      1.0,
+      0.251,
+      1.0
+    ],
+    "end": [
+      0.0,
+      1.0,
+      0.251,
+      1.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.0,
+        1.0,
+        0.251,
+        1.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.0,
+        1.0,
+        0.251,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.0,
+        1.0,
+        0.251,
+        1.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.711
+    ],
+    [
+      0.5,
+      0.568
+    ],
+    [
+      1,
+      0.142
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/spark_06.png",
+  "speed": {
+    "min": 5.5703,
+    "max": 5.7977
+  }
+}

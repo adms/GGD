@@ -1,0 +1,19 @@
+{
+  "id": "voxel-barcodes",
+  "schema": "config.voxel-barcodes@1",
+  "note": "後台「體素條碼」頁寫進來的那一層（docs/_體素特徵生成規格.md L0）。這裡只放「owner 在後台改過」的角色；出貨的種子條碼在 content/models/_voxel-barcodes.json，那是一個 sidecar（底線開頭，索引器會跳過、由路徑直接抓）。\n\n為什麼要分兩個檔：耐久覆蓋層的 id 規則是 ^[a-zA-Z0-9][a-zA-Z0-9._-]{0,127}$ —— 第一個字元不能是底線，所以 models/_voxel-barcodes 這個 key 一定是 400，沒有別的寫法。這份文件就是「可被覆蓋層寫入」的那一半。\n\n生效順序：overlay(config/voxel-barcodes).barcodes[id] ?? seed(models/_voxel-barcodes.json).barcodes[id]。所以 barcodes 空的就代表「所有角色都還是出貨版」，後台的每角色徽章因此是一句關於資料的事實，不是裝飾。\n\n這一頁一個像素都不產生。貼圖在地端由 voxel:build 生成 —— 後台永遠不產生像素，地端永遠不決定顏色。",
+  "slotOrder": [
+    "hair",
+    "hatBand",
+    "hatBrim",
+    "face",
+    "collar",
+    "chestTrim",
+    "top",
+    "waist",
+    "pants",
+    "shin",
+    "shoe"
+  ],
+  "barcodes": {}
+}

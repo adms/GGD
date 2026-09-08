@@ -1,0 +1,1275 @@
+{
+  "acceptedPlan": {
+    "archetype": "fighter",
+    "attackType": "melee",
+    "budget": {
+      "complexity": 60,
+      "power": 50
+    },
+    "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+    "origin": "鬥士",
+    "planId": "community-review-02-20260907.plan",
+    "schema": "ggd-hero-plan@2",
+    "slots": {
+      "E": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "極小"
+        },
+        "capabilityIds": [
+          "periodicDamage",
+          "invulnerable",
+          "applyStatus",
+          "leap"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "百二十七式・葵花",
+        "products": [
+          {
+            "instanceId": "community-review-02-20260907-e-1",
+            "template": {
+              "contentSha256": "sha256:e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771cd614a89d04e016c6",
+              "inheritDefaults": true,
+              "params": {
+                "casterGuard": "none",
+                "damageType": "physical",
+                "finisherDamage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "finisherRadius": 150,
+                "hitCount": 3,
+                "hitIntervalSec": 0.18,
+                "lockTarget": "none",
+                "perHitDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "trigger": "onCast"
+              },
+              "ref": "tpl-lock-combo"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】3 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】三段接續技；每段須在指定窗口再次輸入，逾時、受控或第三段完成後結束。\n【待補機制】目前一次施法完成三段；需三次輸入窗口及中斷狀態機。",
+        "slot": "E",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "EX": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "極小"
+        },
+        "capabilityIds": [
+          "periodicDamage",
+          "invulnerable",
+          "applyStatus",
+          "leap"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "裏三百十六式・豺華",
+        "products": [
+          {
+            "instanceId": "community-review-02-20260907-ex-1",
+            "template": {
+              "contentSha256": "sha256:e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771cd614a89d04e016c6",
+              "inheritDefaults": true,
+              "params": {
+                "casterGuard": "none",
+                "damageType": "physical",
+                "finisherDamage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "finisherRadius": 150,
+                "hitCount": 3,
+                "hitIntervalSec": 0.18,
+                "lockTarget": "none",
+                "perHitDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "trigger": "onCast"
+              },
+              "ref": "tpl-lock-combo"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】3 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】可獨立使用；在八稚女完成後的短窗口內使用，改為接續追擊並消耗自己的冷卻。\n【待補機制】獨立三段追擊；需接八稚女成功事件的使用窗口。",
+        "slot": "EX",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "PASSIVE": {
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔八神之炎〕",
+        "products": [
+          {
+            "instanceId": "community-review-02-20260907-passive-1",
+            "template": {
+              "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0",
+              "inheritDefaults": true,
+              "params": {
+                "bonusDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "condition": {
+                  "kind": "chance",
+                  "p": 1
+                },
+                "damageType": "magic",
+                "event": "onBasicAttack",
+                "internalCooldown": 3
+              },
+              "ref": "tpl-on-attack"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。\n【目標設計】不同主動技能連續命中同一敵人，累積最多三層紫炎；下一次終結技消耗層數增傷。\n【待補機制】需技能命中三層紫炎與終結技消耗。",
+        "slot": "PASSIVE",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        }
+      },
+      "Q": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [
+          "travelingWave"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "百八式・闇拂",
+        "products": [
+          {
+            "instanceId": "community-review-02-20260907-q-1",
+            "template": {
+              "contentSha256": "sha256:bd9d8342c4ff231d5c4eb94f3e87434981ccc5d4ba402b7e615b292317436add",
+              "inheritDefaults": true,
+              "params": {
+                "aoePerStep": 100,
+                "castTimeSec": 0.2,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "stepCount": 4,
+                "stepIntervalSec": 0.12,
+                "stepSize": 100
+              },
+              "ref": "tpl-traveling-wave"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。\n【目標設計】沿地面前進的紫炎投射物，遇到有效碰撞結算。\n【待補機制】推進波並非遇第一個單位即停的投射物。",
+        "slot": "Q",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "R": {
+        "abilityOverrides": {
+          "castTimeTier": "大",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "極小"
+        },
+        "capabilityIds": [
+          "periodicDamage",
+          "invulnerable",
+          "applyStatus",
+          "leap"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 3,
+        "name": "禁千二百十一式・八稚女",
+        "products": [
+          {
+            "instanceId": "community-review-02-20260907-r-1",
+            "template": {
+              "contentSha256": "sha256:e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771cd614a89d04e016c6",
+              "inheritDefaults": true,
+              "params": {
+                "casterGuard": "none",
+                "damageType": "physical",
+                "finisherDamage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "finisherRadius": 150,
+                "hitCount": 8,
+                "hitIntervalSec": 0.18,
+                "lockTarget": "none",
+                "perHitDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "trigger": "onCast"
+              },
+              "ref": "tpl-lock-combo"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】8 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】突進命中後進入有限連擊，最後一擊引爆紫炎層數。\n【待補機制】缺命中突進接續與紫炎引爆。",
+        "slot": "R",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "W": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [
+          "leap"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "百式・鬼燒",
+        "products": [
+          {
+            "instanceId": "community-review-02-20260907-w-1",
+            "template": {
+              "contentSha256": "sha256:fc256a57c55a0705dbb6660316bfeb64402f80fa154f09336fb1a8d393eeb5e5",
+              "inheritDefaults": true,
+              "params": {
+                "apexHeight": 180,
+                "applyTo": "self",
+                "castTimeSec": 0.15,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "durationSec": 0.5,
+                "landRadius": 150,
+                "mode": "toPoint"
+              },
+              "ref": "tpl-leap-strike"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】原地上升火焰打擊，提供短暫迎擊窗口與有限擊退。\n【待補機制】固定落點跳擊；需原地迎擊與受擊窗口。",
+        "slot": "W",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      }
+    },
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "statOverrides": {
+      "ad": "大",
+      "ap": "小",
+      "armor": "中",
+      "as": "中",
+      "healthRegen": "中",
+      "manaRegen": "中",
+      "maxHealth": "中",
+      "maxMana": "中",
+      "mr": "中",
+      "ms": "中",
+      "range": "小"
+    },
+    "summary": "八神庵 社群英雄功能驗收稿。作品：《THE KING OF FIGHTERS》  \n採用：具有紫炎的八神庵。  \n定位：接續輸入、近身連段、爆發。\n\n視覺方向：紫炎低飽和外圈、白色拳爪切線；末段亮度提高但不延長實際判定。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "templateVersions": {
+      "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0": {
+        "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
+        "exemplar": {
+          "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效",
+          "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者"
+        },
+        "family": "on-attack",
+        "gapScore": 9,
+        "id": "tpl-on-attack",
+        "name": "攻擊觸發",
+        "params": {
+          "bonusDamage": {
+            "default": {
+              "perRank": [
+                100
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "chance": {
+            "max": 1,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "ratio"
+          },
+          "condition": {
+            "default": {
+              "any": [
+                {
+                  "all": [
+                    {
+                      "not": {
+                        "is": "champion",
+                        "kind": "kind",
+                        "subject": "target"
+                      }
+                    },
+                    {
+                      "kind": "stat",
+                      "mode": "percent",
+                      "op": "<",
+                      "stat": "hp",
+                      "subject": "target",
+                      "value": 0.35
+                    }
+                  ]
+                },
+                {
+                  "all": [
+                    {
+                      "is": "champion",
+                      "kind": "kind",
+                      "subject": "target"
+                    },
+                    {
+                      "kind": "chance",
+                      "p": 0.01
+                    }
+                  ]
+                }
+              ]
+            },
+            "optional": true,
+            "type": "condition"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "event": {
+            "default": "onBasicAttack",
+            "type": "enum",
+            "values": [
+              "onBasicAttack",
+              "onDamageDealt"
+            ]
+          },
+          "internalCooldown": {
+            "default": 0,
+            "max": 60,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:bd9d8342c4ff231d5c4eb94f3e87434981ccc5d4ba402b7e615b292317436add": {
+        "description": "傷害點沿一條線逐段推進，每一段各播一次特效並各結算一次傷害（同一個人整串只吃一次），可帶終點爆發。設計正典範例：龍破斬。",
+        "exemplar": {
+          "jass": "A04R",
+          "skill": "04-03 龍破斬"
+        },
+        "family": "traveling-wave",
+        "gapScore": 7,
+        "id": "tpl-traveling-wave",
+        "name": "行進波動",
+        "params": {
+          "aoePerStep": {
+            "default": 200,
+            "max": 900,
+            "min": 50,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                200
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "stepCount": {
+            "default": 20,
+            "max": 140,
+            "min": 3,
+            "type": "number"
+          },
+          "stepIntervalSec": {
+            "default": 0.03,
+            "max": 1,
+            "min": 0.01,
+            "type": "number",
+            "unit": "s"
+          },
+          "stepSize": {
+            "default": 45,
+            "max": 200,
+            "min": 20,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "stepVfx": {
+            "optional": true,
+            "type": "docRef"
+          },
+          "terminalBurst": {
+            "default": 450,
+            "max": 900,
+            "min": 100,
+            "optional": true,
+            "type": "number",
+            "unit": "wc3u"
+          }
+        },
+        "requires": [
+          "travelingWave"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771cd614a89d04e016c6": {
+        "description": "把一個人鎖住打完一整段。命中後目標被定住、施法者進入演出狀態（這段期間打不到他），連段一擊一擊落下，最後一記終結技在收招那一刻結算並掃過周圍。「連段次數 × 每段間隔」就是整段長度 —— 它是算出來的，所以沒有『持續時間』這個欄位可以填。⚠️ 原作的連段中施法者會一擊一擊瞬移到目標身邊，這裡沒有搬過來：那段期間雙方都被 pause + 無敵，施法者站哪裡不影響任何結算，只有終結技的圓心用得到，所以收成原地演出。想要遞減間隔（52-002 射殺百頭的 CD×0.75）也還做不到。 ⭐ owner 2026-08-13：終結技可以是**另一支具名技能**（finisherAbility，走 proxyCast 代放），⛔ 不是把那支技能的傷害抄一份進來 —— 抄一份之後那支技能改了，連段裡的版本不會跟著改。留空則沿用 finisherDamage 那個數字。發動條件也是一格（trigger）：預設 onCast，20-002 是 onReflectSuccess（反彈成功才發），所以整段連段可以掛在被動 hook 上而不是主動施放。",
+        "exemplar": {
+          "jass": "A0CX",
+          "skill": "84-04 給我蜂蜜"
+        },
+        "family": "lock-combo",
+        "gapScore": 6,
+        "id": "tpl-lock-combo",
+        "name": "鎖定連段",
+        "params": {
+          "casterGuard": {
+            "default": "all",
+            "type": "enum",
+            "values": [
+              "all",
+              "magic",
+              "none"
+            ]
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "finisherAbility": {
+            "optional": true,
+            "type": "docRef"
+          },
+          "finisherDamage": {
+            "default": {
+              "perRank": [
+                450
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "finisherRadius": {
+            "default": 150,
+            "max": 1800,
+            "min": 50,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "hitCount": {
+            "default": 5,
+            "max": 20,
+            "min": 1,
+            "type": "number",
+            "unit": "count"
+          },
+          "hitIntervalSec": {
+            "default": 0.4,
+            "max": 3,
+            "min": 0.05,
+            "type": "number",
+            "unit": "s"
+          },
+          "lockTarget": {
+            "default": "stun",
+            "type": "enum",
+            "values": [
+              "stun",
+              "root",
+              "none"
+            ]
+          },
+          "perHitDamage": {
+            "default": {
+              "perRank": [
+                100
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "trigger": {
+            "default": "onCast",
+            "type": "enum",
+            "values": [
+              "onCast",
+              "onReflectSuccess",
+              "onKill",
+              "onBasicAttack",
+              "onDamageTaken"
+            ]
+          }
+        },
+        "requires": [
+          "periodicDamage",
+          "invulnerable",
+          "applyStatus",
+          "leap"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:fc256a57c55a0705dbb6660316bfeb64402f80fa154f09336fb1a8d393eeb5e5": {
+        "description": "拋物線跳躍到指定點（或原地垂直跳），落地造成範圍傷害。飛行中無視地形；落點被障礙物（牆）或場地邊界擋住時，起跳當下就改瞄最近的合法落點（`world.wallBlock` 出貨 leap:\"clamp\"，落點截在牆前；只有 `flightExempt` 且被搬的那具身體本來就 `flightIgnoresObstacles` 的飛行狀態才豁免牆體，邊界照樣截斷），弧線隨之重算，你看到的落地位置就是實際位置。",
+        "exemplar": {
+          "jass": "A0G3",
+          "skill": "07-03 列、在、前"
+        },
+        "family": "leap-strike",
+        "gapScore": 5,
+        "id": "tpl-leap-strike",
+        "name": "跳躍落地",
+        "params": {
+          "apexHeight": {
+            "default": 600,
+            "max": 2000,
+            "min": 0,
+            "type": "number",
+            "unit": "wc3h"
+          },
+          "applyTo": {
+            "default": "self",
+            "type": "enum",
+            "values": [
+              "self",
+              "target"
+            ]
+          },
+          "castTimeSec": {
+            "default": 0.5,
+            "max": 5,
+            "min": 0,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                450
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "physical",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "durationSec": {
+            "default": 0.82,
+            "max": 3,
+            "min": 0.1,
+            "type": "number",
+            "unit": "s"
+          },
+          "landRadius": {
+            "default": 330,
+            "max": 900,
+            "min": 0,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "mode": {
+            "default": "toPoint",
+            "type": "enum",
+            "values": [
+              "toPoint",
+              "inPlace"
+            ]
+          }
+        },
+        "requires": [
+          "leap"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      }
+    },
+    "title": "八神庵"
+  },
+  "brief": {
+    "concept": "八神庵 社群英雄功能驗收稿。作品：《THE KING OF FIGHTERS》  \n採用：具有紫炎的八神庵。  \n定位：接續輸入、近身連段、爆發。\n\n視覺方向：紫炎低飽和外圈、白色拳爪切線；末段亮度提高但不延長實際判定。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "E": "百二十七式・葵花",
+      "EX": "裏三百十六式・豺華",
+      "PASSIVE": "〔八神之炎〕",
+      "Q": "百八式・闇拂",
+      "R": "禁千二百十一式・八稚女",
+      "W": "百式・鬼燒"
+    },
+    "name": "八神庵"
+  },
+  "presentation": {
+    "assetLocks": [
+      {
+        "byteSize": 916264,
+        "consumers": [
+          "champion:model"
+        ],
+        "kind": "model",
+        "mediaType": "model/gltf-binary",
+        "path": "assets/models/community/e55e9d2db49004f56d19091d4b7f6f74ffef19c8606b1b793650022f2924148c.glb",
+        "registry": "normalized-upload",
+        "sha256": "e55e9d2db49004f56d19091d4b7f6f74ffef19c8606b1b793650022f2924148c"
+      }
+    ],
+    "championIcon": "assets/icons/champions/thorne.webp",
+    "modelKey": "community.body.ac67d58d3ea571d13000b2a03d2910aa71d810dfd9b42525",
+    "modelProvenance": {
+      "modelSha256": "e55e9d2db49004f56d19091d4b7f6f74ffef19c8606b1b793650022f2924148c",
+      "notes": "紅髮、深色服裝的男性近戰造型；使用周防尊，並非八神庵原模型。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。",
+      "relationship": "style-proxy",
+      "schema": "ggd-hero-model-provenance@1",
+      "sourceAssetId": "300heroes:8bb741c66037340e2f7efec7",
+      "sourceCharacter": "周防尊",
+      "sourceWork": "K"
+    },
+    "schema": "ggd-hero-presentation@1",
+    "slots": {
+      "E": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "script": {
+          "abilityId": "community-review-02-20260907.e",
+          "id": "community-review-02-20260907.e",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                143,
+                38,
+                240
+              ],
+              "vfxId": "fx.prim.fire.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                143,
+                38,
+                240
+              ],
+              "vfxId": "fx.prim.fire.slash",
+              "w3xScale": 0.85
+            },
+            {
+              "alpha": 0.9,
+              "at": "target",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "strike",
+              "strikeIndex": 3,
+              "tint": [
+                143,
+                38,
+                240
+              ],
+              "vfxId": "fx.prim.fire.slash",
+              "w3xScale": 1
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "E",
+        "vfxLayers": []
+      },
+      "EX": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "script": {
+          "abilityId": "community-review-02-20260907.ex",
+          "id": "community-review-02-20260907.ex",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                143,
+                38,
+                240
+              ],
+              "vfxId": "fx.prim.fire.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                143,
+                38,
+                240
+              ],
+              "vfxId": "fx.prim.fire.slash",
+              "w3xScale": 0.85
+            },
+            {
+              "alpha": 0.9,
+              "at": "target",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "strike",
+              "strikeIndex": 3,
+              "tint": [
+                143,
+                38,
+                240
+              ],
+              "vfxId": "fx.prim.fire.slash",
+              "w3xScale": 1
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "EX",
+        "vfxLayers": []
+      },
+      "PASSIVE": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "script": null,
+        "sfxKey": null,
+        "slot": "PASSIVE",
+        "vfxLayers": []
+      },
+      "Q": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "script": {
+          "abilityId": "community-review-02-20260907.q",
+          "id": "community-review-02-20260907.q",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                143,
+                38,
+                240
+              ],
+              "vfxId": "fx.prim.fire.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                143,
+                38,
+                240
+              ],
+              "vfxId": "fx.prim.fire.bolt",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "Q",
+        "vfxLayers": []
+      },
+      "R": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "script": {
+          "abilityId": "community-review-02-20260907.r",
+          "id": "community-review-02-20260907.r",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                143,
+                38,
+                240
+              ],
+              "vfxId": "fx.prim.fire.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                143,
+                38,
+                240
+              ],
+              "vfxId": "fx.prim.fire.slash",
+              "w3xScale": 1.25
+            },
+            {
+              "alpha": 0.9,
+              "at": "target",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "strike",
+              "strikeIndex": 8,
+              "tint": [
+                143,
+                38,
+                240
+              ],
+              "vfxId": "fx.prim.fire.slash",
+              "w3xScale": 1
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "R",
+        "vfxLayers": []
+      },
+      "W": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "script": {
+          "abilityId": "community-review-02-20260907.w",
+          "id": "community-review-02-20260907.w",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                143,
+                38,
+                240
+              ],
+              "vfxId": "fx.prim.fire.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "point",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                143,
+                38,
+                240
+              ],
+              "vfxId": "fx.prim.fire.arc",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "W",
+        "vfxLayers": []
+      }
+    },
+    "uploadedModel": {
+      "byteSize": 916264,
+      "clipMap": {
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "death": "dead",
+        "hurt": "bat_idle",
+        "idle": "bat_idle",
+        "run": "single_run"
+      },
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "e55e9d2db49004f56d19091d4b7f6f74ffef19c8606b1b793650022f2924148c",
+      "yawOffsetDeg": 0
+    }
+  },
+  "projectId": "community-review-02-20260907",
+  "receipts": [
+    {
+      "digest": "cc8f71d049c3b6a14d2a4c23d117118dba6c0a48cacfef2b1a30b8b999e55079",
+      "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+      "kind": "generator-adopted",
+      "projectRevision": 5
+    }
+  ],
+  "revision": 11,
+  "schema": "ggd-hero-project@2",
+  "sections": {
+    "attributes": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "draft"
+    },
+    "identity": {
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      },
+      "revision": 1,
+      "state": "draft"
+    },
+    "mechanics": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    },
+    "package": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "presentation": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "skills": {
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      },
+      "revision": 11,
+      "state": "draft"
+    },
+    "validation": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    }
+  },
+  "sourceDesign": {
+    "identity": "作品：《THE KING OF FIGHTERS》  \n採用：具有紫炎的八神庵。  \n定位：接續輸入、近身連段、爆發。",
+    "name": "八神庵",
+    "ownerText": "### 02｜八神庵\n\n作品：《THE KING OF FIGHTERS》  \n採用：具有紫炎的八神庵。  \n定位：接續輸入、近身連段、爆發。\n\n- **PASSIVE｜〔八神之炎〕**：不同主動技能連續命中同一敵人，累積最多三層紫炎；下一次終結技消耗層數增傷。\n- **Q｜百八式・闇拂**：沿地面前進的紫炎投射物，遇到有效碰撞結算。\n- **W｜百式・鬼燒**：原地上升火焰打擊，提供短暫迎擊窗口與有限擊退。\n- **E｜百二十七式・葵花**：三段接續技；每段須在指定窗口再次輸入，逾時、受控或第三段完成後結束。\n- **R｜禁千二百十一式・八稚女**：突進命中後進入有限連擊，最後一擊引爆紫炎層數。\n- **EX｜裏三百十六式・豺華**：可獨立使用；在八稚女完成後的短窗口內使用，改為接續追擊並消耗自己的冷卻。\n\n**審查重點**：接續輸入是真正的技能狀態；測試晚按、連按、斷線重送、控制中斷，以及 R→EX 的消耗與傷害只結算一次。\n\n",
+    "reviewText": "接續輸入是真正的技能狀態；測試晚按、連按、斷線重送、控制中斷，以及 R→EX 的消耗與傷害只結算一次。",
+    "schema": "ggd-hero-source-design@1",
+    "slots": {
+      "E": {
+        "baselineBehavior": "3 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。",
+        "name": "百二十七式・葵花",
+        "ownerDescription": "三段接續技；每段須在指定窗口再次輸入，逾時、受控或第三段完成後結束。",
+        "refinementContracts": [
+          "M01",
+          "M02",
+          "M11"
+        ],
+        "requiredRefinement": "目前一次施法完成三段；需三次輸入窗口及中斷狀態機。"
+      },
+      "EX": {
+        "baselineBehavior": "3 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。",
+        "name": "裏三百十六式・豺華",
+        "ownerDescription": "可獨立使用；在八稚女完成後的短窗口內使用，改為接續追擊並消耗自己的冷卻。",
+        "refinementContracts": [
+          "M01",
+          "M02",
+          "M11"
+        ],
+        "requiredRefinement": "獨立三段追擊；需接八稚女成功事件的使用窗口。"
+      },
+      "PASSIVE": {
+        "baselineBehavior": "普攻追加極小級魔法傷害，內置冷卻 3 秒。",
+        "name": "〔八神之炎〕",
+        "ownerDescription": "不同主動技能連續命中同一敵人，累積最多三層紫炎；下一次終結技消耗層數增傷。",
+        "refinementContracts": [
+          "M01",
+          "M02",
+          "M11"
+        ],
+        "requiredRefinement": "需技能命中三層紫炎與終結技消耗。"
+      },
+      "Q": {
+        "baselineBehavior": "四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。",
+        "name": "百八式・闇拂",
+        "ownerDescription": "沿地面前進的紫炎投射物，遇到有效碰撞結算。",
+        "refinementContracts": [
+          "M01",
+          "M02",
+          "M11"
+        ],
+        "requiredRefinement": "推進波並非遇第一個單位即停的投射物。"
+      },
+      "R": {
+        "baselineBehavior": "8 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。",
+        "name": "禁千二百十一式・八稚女",
+        "ownerDescription": "突進命中後進入有限連擊，最後一擊引爆紫炎層數。",
+        "refinementContracts": [
+          "M01",
+          "M02",
+          "M11"
+        ],
+        "requiredRefinement": "缺命中突進接續與紫炎引爆。"
+      },
+      "W": {
+        "baselineBehavior": "朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。",
+        "name": "百式・鬼燒",
+        "ownerDescription": "原地上升火焰打擊，提供短暫迎擊窗口與有限擊退。",
+        "refinementContracts": [
+          "M01",
+          "M02",
+          "M11"
+        ],
+        "requiredRefinement": "固定落點跳擊；需原地迎擊與受擊窗口。"
+      }
+    },
+    "sourceSha256": "cc5732f3d513233d7dd106c63bb767ef94b59fb79fd213566130640e8ecf800d"
+  },
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "validationState": {
+    "attributes": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "identity": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "mechanics": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    },
+    "package": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "presentation": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "skills": {
+      "diagnosticCodes": [],
+      "revision": 11,
+      "status": "idle"
+    },
+    "validation": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "id": "godie-e00k.e",
+  "name": "19-03 瞬切百殺",
+  "icon": "assets/icons/abilities/godie-e00k.e.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n當安云開始殺戮時，刀子動的比反射神經還快，將會對附近的敵人進行斬殺，給予(40+敏捷*1)傷害，共八次斬殺。\n\n(迴切1秒內瞬切百殺附加力量*0.5傷害)",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    75.0,
+    150.0,
+    225.0,
+    300.0
+  ],
+  "effects": [
+    {
+      "kind": "invulnerable",
+      "durationSec": 1.51,
+      "applyTo": "self",
+      "blocksDamage": "all",
+      "blocksTrueDamage": false,
+      "blocksControl": true
+    },
+    {
+      "kind": "blink",
+      "shape": "single",
+      "to": "point",
+      "applyTo": "self",
+      "onArrive": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "perRank": [
+              40.0,
+              90.0,
+              140.0,
+              190.0
+            ],
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.prim.physical.beam",
+  "sfxKey": "wc3.flaretarget2",
+  "targetsEnemies": true,
+  "radius": 6.0,
+  "schema": "ability@1",
+  "castTimeSec": 1.033,
+  "rangeTier": "大",
+  "range": 8
+}

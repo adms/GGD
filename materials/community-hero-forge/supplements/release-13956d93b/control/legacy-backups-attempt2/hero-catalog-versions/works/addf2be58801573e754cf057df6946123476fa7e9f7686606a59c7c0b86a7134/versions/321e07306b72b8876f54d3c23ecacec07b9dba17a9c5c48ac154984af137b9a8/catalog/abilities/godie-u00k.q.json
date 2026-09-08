@@ -1,0 +1,48 @@
+{
+  "id": "godie-u00k.q",
+  "schema": "ability@1",
+  "name": "71-01 死亡隕落",
+  "icon": "assets/icons/abilities/godie-u00k.q.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n死之王可幻化成代表死亡的隕石造成敵方{{dmg}}點傷害。",
+  "slot": "Q",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    72.0,
+    72.0,
+    72.0
+  ],
+  "manaCostTier": "極小",
+  "effects": [],
+  "template": {
+    "ref": "tpl-instant-blast",
+    "params": {
+      "radius": 300,
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      },
+      "damageType": "magic",
+      "castTimeSec": 1.433
+    }
+  },
+  "vfxKey": "fx.prim.void.explosion",
+  "targetsEnemies": true,
+  "radius": 6.0,
+  "castTimeSec": 1.433,
+  "rangeTier": "極大",
+  "range": 12,
+  "radiusTier": "中"
+}

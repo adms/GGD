@@ -1,0 +1,43 @@
+{
+  "id": "godie-i06a",
+  "schema": "item@1",
+  "name": "妖物碎殺牙",
+  "icon": "assets/icons/items/godie-i06a.webp",
+  "description": "神器\n效能\n攻擊力+112\n吸血+15％\n[普通攻擊時] 6%機率造成255傷害，持續3秒\n\n解說\n碎殺牙一開始只是矮人族為了開發強力的武器，將吸血礦石不斷鍛造的傑作，但是這把武器卻被大量訂購的黑暗妖精拿來屠殺矮人，形成強烈的諷刺，此後才冠上妖物之名。",
+  "cost": 0,
+  "tier": 2,
+  "modifiers": [
+    {
+      "stat": "ad",
+      "op": "flat",
+      "value": 112
+    },
+    {
+      "stat": "lifesteal",
+      "op": "flat",
+      "value": 0.15
+    }
+  ],
+  "tags": [
+    "wc3-import"
+  ],
+  "craftRole": "none",
+  "authoringNote": "⭐ 2026-08-18 逐句稽核（第一·五守則「不放任何無效說明」）：**三句效能都對得上，資料與描述一個字都沒改**，這一輪只補上本來缺席的這份備註。\n\n「攻擊力+112」= modifiers 的 ad flat 112。\n「吸血+15％」= modifiers 的 lifesteal **flat 0.15**。⛔ 刻意是 flat：`lifesteal` 是**加成型**屬性（出貨每位英雄 base 0），而管線 `(base+Σflat)×(1+ΣpctAdd)×Π(1+pctMult)` 在 base=0 時讓百分比類的 op 逐位元等於零 —— 只有 flat 動得了（第一·五守則量到的四個陷阱之一）。0.15 在 `stat-caps` 的 `lifesteal.base` 0.8 之內。\n⚠️ `lifesteal` 在 combat/damage.ts 是被 `pkt.origin === \"basic\"` 閘住的，也就是**只吸普攻**；技能那一半是另一格 `spellVamp`。卡面寫「吸血」沒有承諾技能，所以不算無效說明 —— 但要做成「全能吸血」得同時填兩格。\n\n[普通攻擊時]「6%機率造成255傷害，持續3秒」= passive[0] 的 `dot`。「6%機率」= chance 0.06；「持續3秒」= durationSec 3；「造成255傷害」= **amountPerTick 85 × intervalSec 1 × 3 跳 = 255**。\n· ⭐ 這一句最容易寫錯的地方就是那個 85：`tickOnApply` 省略 = **不在施加當下付一跳**（sim/effects/dot.ts:197 `firstTick = world.tick + intervalTicks`），所以 3 秒 / 每秒一跳正好是 **3 跳**，⛔ 不是 4 跳。填 255/跳 會變成 765 總量，填 tickOnApply:true 會變成 340 —— 兩種都會讓卡面說謊。\n· damageType physical 是**文案沒有給**的值（「255傷害」沒講屬性）：這是牙咬出來的流血，走物理讓它吃護甲，也與這件裝自己的 ad/吸血同一條路。\n· stacking 省略 = `refresh`（同一位持有者再觸發時只是把窗口推後，⛔ 不會疊成兩份），onCasterDeath 省略 = `continue`。兩個都是欄位，⛔ 沒有寫死。\n\n✅ 反向對帳（JSON → 描述）：modifiers 兩條、passive 一條，沒有 auras、沒有 sets、沒有 recipe、沒有 requires 閘 —— 沒有任何「給了但卡面沒講」的效果。⚠️ 卡面的「15％」用的是全形百分號（owner 原文），⛔ 沒有順手改成半形。",
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "chance": 0.06,
+      "effects": [
+        {
+          "kind": "dot",
+          "damageType": "physical",
+          "amountPerTick": {
+            "flat": 85
+          },
+          "intervalSec": 1,
+          "durationSec": 3
+        }
+      ]
+    }
+  ]
+}

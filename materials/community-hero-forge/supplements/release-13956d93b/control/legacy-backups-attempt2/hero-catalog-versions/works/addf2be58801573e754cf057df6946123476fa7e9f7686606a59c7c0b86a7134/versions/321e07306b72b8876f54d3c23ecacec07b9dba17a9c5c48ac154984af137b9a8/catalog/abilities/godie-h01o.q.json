@@ -1,0 +1,79 @@
+{
+  "id": "godie-h01o.q",
+  "name": "79-01 瞬步",
+  "icon": "assets/icons/abilities/godie-h01o.q.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n以急快的速度移動至對方身旁並給予兩段式傷害，共計{{dmg}}點傷害。\n\n於斬擊蓄力狀態有額外{{ap}}% [AP]點傷害加成",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    30.0,
+    30.0,
+    30.0,
+    30.0
+  ],
+  "cooldownTier": "中",
+  "manaCost": [
+    72.0,
+    72.0,
+    72.0,
+    72.0
+  ],
+  "manaCostTier": "極小",
+  "effects": [
+    {
+      "kind": "blink",
+      "shape": "single",
+      "to": "targetUnit",
+      "applyTo": "self",
+      "stopShortUnits": 1.8,
+      "onArrive": [
+        {
+          "kind": "spawnVfx",
+          "vfxId": "fx.fam.blink.arcane.s65",
+          "at": "point"
+        },
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.5
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "kind": "blink",
+      "shape": "single",
+      "to": "targetUnit",
+      "applyTo": "self",
+      "stopShortUnits": 1.8,
+      "onArrive": [
+        {
+          "kind": "spawnVfx",
+          "vfxId": "fx.fam.blink.arcane.s65",
+          "at": "point"
+        },
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小"
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.prim.arcane.bolt",
+  "schema": "ability@1",
+  "castTimeSec": 0.267,
+  "rangeTier": "大",
+  "range": 8
+}

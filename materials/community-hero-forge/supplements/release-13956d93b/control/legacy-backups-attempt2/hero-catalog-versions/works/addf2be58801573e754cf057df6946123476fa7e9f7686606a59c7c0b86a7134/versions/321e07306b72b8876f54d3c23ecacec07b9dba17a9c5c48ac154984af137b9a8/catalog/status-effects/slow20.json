@@ -1,0 +1,16 @@
+{
+  "id": "slow20",
+  "schema": "status-effect@1",
+  "name": "Slow (20%)",
+  "description": "Movement speed reduced by 20%.",
+  "polarity": "debuff",
+  "tags": [
+    "slow20",
+    "slow",
+    "move-speed-down",
+    "stat-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "id": "thorne.r",
+  "schema": "ability@1",
+  "name": "Bramble Burst",
+  "icon": "assets/icons/abilities/thorne.r.webp",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    100,
+    85,
+    70
+  ],
+  "manaCost": [
+    100,
+    100,
+    100
+  ],
+  "range": 1,
+  "radius": 4.5,
+  "targetsEnemies": true,
+  "effects": [],
+  "template": {
+    "ref": "tpl-proxy-cast",
+    "params": {
+      "anchor": "point",
+      "radius": 245.45,
+      "damage": {
+        "perRank": [
+          150,
+          250,
+          350
+        ],
+        "ratios": [
+          {
+            "stat": "ad",
+            "coeff": 0.8
+          }
+        ]
+      },
+      "damageType": "physical",
+      "statusId": "slow40",
+      "statusDurationSec": 2,
+      "castTimeSec": 1.833
+    }
+  },
+  "vfxKey": "fx.bramble-burst",
+  "castTimeSec": 1.833,
+  "provenance": "w3x-import"
+}

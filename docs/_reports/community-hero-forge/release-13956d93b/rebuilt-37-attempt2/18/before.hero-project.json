@@ -1,0 +1,1183 @@
+{
+  "acceptedPlan": {
+    "archetype": "marksman",
+    "attackType": "ranged",
+    "budget": {
+      "complexity": 60,
+      "power": 50
+    },
+    "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+    "origin": "砲手",
+    "planId": "community-review-18-20260907.plan",
+    "schema": "ggd-hero-plan@2",
+    "slots": {
+      "E": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "effects": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 120,
+                "ratios": []
+              },
+              "duration": 3,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "community-review-18-20260907.e.guard"
+            }
+          ],
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "大"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "〔黃金甲冑〕",
+        "products": [
+          {
+            "instanceId": "community-review-18-20260907-e-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": []
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-18-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】提供短效護盾，降低正面承受的爆發。\n【待補機制】目前全方向盾；缺正面條件。",
+        "slot": "E",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        }
+      },
+      "EX": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "大"
+        },
+        "capabilityIds": [
+          "periodicDamage"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔王之財寶・齊射〕",
+        "products": [
+          {
+            "instanceId": "community-review-18-20260907-ex-1",
+            "template": {
+              "contentSha256": "sha256:34fc1fc2579e395212180f244209347185c83466671e8b1d041e2f0933004424",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.5,
+                "count": 12,
+                "damageType": "physical",
+                "impactDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "impactRadius": 150,
+                "intervalSec": 0.12,
+                "payout": "perImpact",
+                "scatterRadius": 120
+              },
+              "ref": "tpl-random-barrage"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】在指定區域依序落下 12 發；每發間隔 0.12 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】消耗財庫能量，分波發射最多十二件武器；各波有固定間隔。\n【待補機制】12 發已有限；需扣財庫能量及武器多樣外觀。",
+        "slot": "EX",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 8
+        }
+      },
+      "PASSIVE": {
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔王的財庫〕",
+        "products": [
+          {
+            "instanceId": "community-review-18-20260907-passive-1",
+            "template": {
+              "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0",
+              "inheritDefaults": true,
+              "params": {
+                "bonusDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "condition": {
+                  "kind": "chance",
+                  "p": 1
+                },
+                "damageType": "magic",
+                "event": "onBasicAttack",
+                "internalCooldown": 3
+              },
+              "ref": "tpl-on-attack"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。\n【目標設計】技能按次累積財庫能量，供 EX 消耗；命中段數不等於獲得次數。\n【待補機制】需每次施法一次財庫能量與 EX 消耗。",
+        "slot": "PASSIVE",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        }
+      },
+      "Q": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "大"
+        },
+        "capabilityIds": [
+          "periodicDamage"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "王之財寶",
+        "products": [
+          {
+            "instanceId": "community-review-18-20260907-q-1",
+            "template": {
+              "contentSha256": "sha256:34fc1fc2579e395212180f244209347185c83466671e8b1d041e2f0933004424",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.5,
+                "count": 3,
+                "damageType": "physical",
+                "impactDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "impactRadius": 150,
+                "intervalSec": 0.18,
+                "payout": "perImpact",
+                "scatterRadius": 120
+              },
+              "ref": "tpl-random-barrage"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.18 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】開啟三個門，依序發射武器。\n【待補機制】目前三發落點打擊；需三門武器投射物及門的掛點。",
+        "slot": "Q",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        }
+      },
+      "R": {
+        "abilityOverrides": {
+          "castTimeTier": "大",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "大"
+        },
+        "capabilityIds": [
+          "projectile"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 3,
+        "name": "天地乖離開闢之星",
+        "products": [
+          {
+            "instanceId": "community-review-18-20260907-r-1",
+            "template": {
+              "contentSha256": "sha256:431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699006b55c40f5b54c7",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.35,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "segmentAoe": 150,
+                "segmentCount": 4,
+                "stepSize": 100
+              },
+              "ref": "tpl-line-sweep"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】以 Ea 進行明顯蓄力後的扇形／直線範圍攻擊。\n【待補機制】Ea 造型、蓄力層與單一總傷害預算需補。",
+        "slot": "R",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 8
+        }
+      },
+      "W": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "effects": [
+            {
+              "applyTo": "target",
+              "duration": 0.7,
+              "kind": "applyStatus",
+              "root": true,
+              "statusId": "root"
+            }
+          ],
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "天之鎖",
+        "products": [
+          {
+            "instanceId": "community-review-18-20260907-w-1",
+            "template": {
+              "contentSha256": "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.2,
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "magic"
+              },
+              "ref": "tpl-single-strike"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"root\",\"duration\":0.7,\"applyTo\":\"target\",\"root\":true}]。\n【目標設計】射出鎖鏈，命中後短暫束縛；目標超出有效距離時解除。\n【待補機制】鎖足可作基礎控制；需超距解鎖、鎖鏈端點。",
+        "slot": "W",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        }
+      }
+    },
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "statOverrides": {
+      "ad": "大",
+      "ap": "中",
+      "armor": "中",
+      "as": "小",
+      "healthRegen": "小",
+      "manaRegen": "中",
+      "maxHealth": "中",
+      "maxMana": "大",
+      "mr": "小",
+      "ms": "小",
+      "range": "大"
+    },
+    "summary": "吉爾伽美什 社群英雄功能驗收稿。作品：《Fate》  \n採用：Archer 英雄王。  \n定位：多投射物、束縛、大型蓄力攻擊。\n\n視覺方向：金色門環、寶物白金軌跡、天之鎖金線、Ea 紅色旋流。\n以 GGD 砲手 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "templateVersions": {
+      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
+        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
+        "exemplar": {
+          "jass": "A0Q6",
+          "skill": "82-04 闇之魔法"
+        },
+        "family": "buff-self",
+        "gapScore": 6,
+        "id": "tpl-buff-self",
+        "name": "變身強化-數值面",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "duration": {
+            "default": 15,
+            "max": 60,
+            "min": 1,
+            "type": "number",
+            "unit": "s"
+          },
+          "modifiers": {
+            "default": [
+              {
+                "op": "flat",
+                "stat": "ad",
+                "value": 50
+              }
+            ],
+            "type": "statModifiers"
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0": {
+        "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
+        "exemplar": {
+          "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效",
+          "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者"
+        },
+        "family": "on-attack",
+        "gapScore": 9,
+        "id": "tpl-on-attack",
+        "name": "攻擊觸發",
+        "params": {
+          "bonusDamage": {
+            "default": {
+              "perRank": [
+                100
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "chance": {
+            "max": 1,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "ratio"
+          },
+          "condition": {
+            "default": {
+              "any": [
+                {
+                  "all": [
+                    {
+                      "not": {
+                        "is": "champion",
+                        "kind": "kind",
+                        "subject": "target"
+                      }
+                    },
+                    {
+                      "kind": "stat",
+                      "mode": "percent",
+                      "op": "<",
+                      "stat": "hp",
+                      "subject": "target",
+                      "value": 0.35
+                    }
+                  ]
+                },
+                {
+                  "all": [
+                    {
+                      "is": "champion",
+                      "kind": "kind",
+                      "subject": "target"
+                    },
+                    {
+                      "kind": "chance",
+                      "p": 0.01
+                    }
+                  ]
+                }
+              ]
+            },
+            "optional": true,
+            "type": "condition"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "event": {
+            "default": "onBasicAttack",
+            "type": "enum",
+            "values": [
+              "onBasicAttack",
+              "onDamageDealt"
+            ]
+          },
+          "internalCooldown": {
+            "default": 0,
+            "max": 60,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:34fc1fc2579e395212180f244209347185c83466671e8b1d041e2f0933004424": {
+        "description": "在一個區域裡連續丟 N 發爆炸,每一發的落點都是隨機的。原作 8 支成員全部是同一個迴圈:`GetRandomLocInRect(RectFromCenterSizeBJ(中心, S, S))` → 生一隻 dummy → 叫它放一發 → 睡一下 → 再來。\n\n**總時長不是欄位,是算出來的**(發數 − 1) × 每發間隔 —— 原作的迴圈也是這樣,把它做成第三個可填的數字只會讓三個數字互相打架。\n\n決策點是「傷害怎麼付」:\n· 逐發結算(預設,5/8 支) —— 站在轟炸區裡的人每一發都會挨一下。\n· 施法瞬間一次付清(3/8 支) —— 23-03 雷牙一閃、81-02 Acxel Shooter、53-01 獸王牙操彈 的彈幕**完全是演出**,傷害在觸發裡只判一次矩形。把整片火光算成 N 段傷害會讓這三支變成原作的好幾倍。\n\n「開場直傷」清空 = 純轟炸;填了 = 先來一發大的再開始炸(42-04 世界終結 的 100% [AP] 起手)。\n\n⚠️ 已知落差:sim 的持續傷害綁在**施法當下解出來的目標**上,所以(a)開炸之後才走進區域的人不會挨,先走出去的人還是會繼續挨;(b)每一發的隨機落點沒有模擬 —— 區域內的人是**每一發都吃到**,而不是機率性地吃到其中幾發。原作 42-04 的雷震半徑(375)本來就大於它的散佈半徑(225),那一支剛好完全吻合;21-002 天破壤碎(散佈 600 / 半徑 320)則是這個模型最不準的一支。",
+        "exemplar": {
+          "jass": "A0F4 → dummy A011 ×8 (war3map.j:48501-48519)",
+          "skill": "74-03 闇之天使"
+        },
+        "family": "random-barrage",
+        "gapScore": 6,
+        "id": "tpl-random-barrage",
+        "name": "亂數彈幕轟炸",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "count": {
+            "default": 9,
+            "max": 100,
+            "min": 2,
+            "type": "number",
+            "unit": "count"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "impactDamage": {
+            "default": {
+              "perRank": [
+                150
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "impactRadius": {
+            "default": 320,
+            "max": 900,
+            "min": 50,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "intervalSec": {
+            "default": 0.1,
+            "max": 0.6,
+            "min": 0.04,
+            "type": "number",
+            "unit": "s"
+          },
+          "openingDamage": {
+            "optional": true,
+            "type": "scaling"
+          },
+          "payout": {
+            "default": "perImpact",
+            "type": "enum",
+            "values": [
+              "perImpact",
+              "onceAtCast"
+            ]
+          },
+          "scatterRadius": {
+            "default": 225,
+            "max": 1500,
+            "min": 0,
+            "type": "number",
+            "unit": "wc3u"
+          }
+        },
+        "requires": [
+          "periodicDamage"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699006b55c40f5b54c7": {
+        "description": "沿直線分段的掃擊：每一段各自在自己的落點結算一次（`delayed` + `advance`，GH#393 的機制）。⭐ 同一個目標整串只被打一次（`hitOncePerTarget`）—— 那是原作的規則，卡片寫的是**一次**的數字。",
+        "exemplar": {
+          "jass": "A0D5",
+          "skill": "20-03 約束與勝利之劍"
+        },
+        "family": "line-sweep",
+        "gapScore": 7,
+        "id": "tpl-line-sweep",
+        "name": "直線分段掃擊",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                150
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "segmentAoe": {
+            "default": 400,
+            "max": 900,
+            "min": 100,
+            "origin": "j:32337 —— `GetUnitsInRangeOfLocMatching(400.00, udg_LocPoint3, …)` ⇒ 每段半徑 **400 wc3u**",
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "segmentCount": {
+            "default": 6,
+            "max": 20,
+            "min": 3,
+            "origin": "j:32335 —— `exitwhen udg_WinSwordCounter > 6`，而 j:32333 是 `set udg_WinSwordCounter = 1` ⇒ 正好 **6 段**（⛔ 不是 7：它從 **1** 起算，⛔ 不是 0）",
+            "type": "number",
+            "unit": "count"
+          },
+          "stepSize": {
+            "default": 200,
+            "max": 300,
+            "min": 100,
+            "origin": "j:32336 —— `PolarProjectionBJ(udg_LocPoint1, I2R(udg_WinSwordCounter) * 200.00, …)` ⇒ 每段 **200 wc3u**",
+            "type": "number",
+            "unit": "wc3u"
+          }
+        },
+        "requires": [
+          "projectile"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b": {
+        "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。",
+        "exemplar": {
+          "jass": "A0OD",
+          "skill": "23-04 雷焰聖劍"
+        },
+        "family": "single-strike",
+        "gapScore": 9,
+        "id": "tpl-single-strike",
+        "name": "單體斬擊",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      }
+    },
+    "title": "吉爾伽美什"
+  },
+  "brief": {
+    "concept": "吉爾伽美什 社群英雄功能驗收稿。作品：《Fate》  \n採用：Archer 英雄王。  \n定位：多投射物、束縛、大型蓄力攻擊。\n\n視覺方向：金色門環、寶物白金軌跡、天之鎖金線、Ea 紅色旋流。\n以 GGD 砲手 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "E": "〔黃金甲冑〕",
+      "EX": "〔王之財寶・齊射〕",
+      "PASSIVE": "〔王的財庫〕",
+      "Q": "王之財寶",
+      "R": "天地乖離開闢之星",
+      "W": "天之鎖"
+    },
+    "name": "吉爾伽美什"
+  },
+  "presentation": {
+    "assetLocks": [
+      {
+        "byteSize": 834460,
+        "consumers": [
+          "champion:model"
+        ],
+        "kind": "model",
+        "mediaType": "model/gltf-binary",
+        "path": "assets/models/community/cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937.glb",
+        "registry": "normalized-upload",
+        "sha256": "cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937"
+      }
+    ],
+    "championIcon": "assets/icons/champions/thorne.webp",
+    "modelKey": "community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c",
+    "modelProvenance": {
+      "modelSha256": "cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937",
+      "notes": "同角色英雄王金甲本體；來源角色 ID 104 的官方主模型路徑為 099.x，保留該明確證據而不製造數字檔名關聯。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。",
+      "relationship": "exact",
+      "schema": "ggd-hero-model-provenance@1",
+      "sourceAssetId": "300heroes:d568447cc4f61f5d9a44f07a",
+      "sourceCharacter": "吉尔伽美什",
+      "sourceWork": "Fate/stay night"
+    },
+    "schema": "ggd-hero-presentation@1",
+    "slots": {
+      "E": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "script": {
+          "abilityId": "community-review-18-20260907.e",
+          "id": "community-review-18-20260907.e",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                255,
+                186,
+                41
+              ],
+              "vfxId": "fx.prim.holy.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                255,
+                186,
+                41
+              ],
+              "vfxId": "fx.prim.holy.pulse",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "E",
+        "vfxLayers": []
+      },
+      "EX": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "script": {
+          "abilityId": "community-review-18-20260907.ex",
+          "id": "community-review-18-20260907.ex",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                255,
+                186,
+                41
+              ],
+              "vfxId": "fx.prim.holy.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "point",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                255,
+                186,
+                41
+              ],
+              "vfxId": "fx.prim.holy.nova",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "EX",
+        "vfxLayers": []
+      },
+      "PASSIVE": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "script": null,
+        "sfxKey": null,
+        "slot": "PASSIVE",
+        "vfxLayers": []
+      },
+      "Q": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "script": {
+          "abilityId": "community-review-18-20260907.q",
+          "id": "community-review-18-20260907.q",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                255,
+                186,
+                41
+              ],
+              "vfxId": "fx.prim.holy.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "point",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                255,
+                186,
+                41
+              ],
+              "vfxId": "fx.prim.holy.nova",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "Q",
+        "vfxLayers": []
+      },
+      "R": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "script": {
+          "abilityId": "community-review-18-20260907.r",
+          "id": "community-review-18-20260907.r",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                255,
+                186,
+                41
+              ],
+              "vfxId": "fx.prim.holy.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                255,
+                186,
+                41
+              ],
+              "vfxId": "fx.prim.holy.beam",
+              "w3xScale": 1.25
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "R",
+        "vfxLayers": []
+      },
+      "W": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "script": {
+          "abilityId": "community-review-18-20260907.w",
+          "id": "community-review-18-20260907.w",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                255,
+                186,
+                41
+              ],
+              "vfxId": "fx.prim.holy.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                255,
+                186,
+                41
+              ],
+              "vfxId": "fx.prim.holy.slash",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "W",
+        "vfxLayers": []
+      }
+    },
+    "uploadedModel": {
+      "byteSize": 834460,
+      "clipMap": {
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "death": "dead",
+        "hurt": "bat_idle",
+        "idle": "bat_idle",
+        "run": "single_run"
+      },
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937",
+      "yawOffsetDeg": 0
+    }
+  },
+  "projectId": "community-review-18-20260907",
+  "receipts": [
+    {
+      "digest": "785d3a3741fbc8706c9b742fdb4bac205fd9118a5e8efcc9a09e1ed69d520611",
+      "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+      "kind": "generator-adopted",
+      "projectRevision": 5
+    }
+  ],
+  "revision": 11,
+  "schema": "ggd-hero-project@2",
+  "sections": {
+    "attributes": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "draft"
+    },
+    "identity": {
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      },
+      "revision": 1,
+      "state": "draft"
+    },
+    "mechanics": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    },
+    "package": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "presentation": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "skills": {
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      },
+      "revision": 11,
+      "state": "draft"
+    },
+    "validation": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    }
+  },
+  "sourceDesign": {
+    "identity": "作品：《Fate》  \n採用：Archer 英雄王。  \n定位：多投射物、束縛、大型蓄力攻擊。",
+    "name": "吉爾伽美什",
+    "ownerText": "### 18｜吉爾伽美什\n\n作品：《Fate》  \n採用：Archer 英雄王。  \n定位：多投射物、束縛、大型蓄力攻擊。\n\n- **PASSIVE｜〔王的財庫〕**：技能按次累積財庫能量，供 EX 消耗；命中段數不等於獲得次數。\n- **Q｜王之財寶**：開啟三個門，依序發射武器。\n- **W｜天之鎖**：射出鎖鏈，命中後短暫束縛；目標超出有效距離時解除。\n- **E｜〔黃金甲冑〕**：提供短效護盾，降低正面承受的爆發。\n- **R｜天地乖離開闢之星**：以 Ea 進行明顯蓄力後的扇形／直線範圍攻擊。\n- **EX｜〔王之財寶・齊射〕**：消耗財庫能量，分波發射最多十二件武器；各波有固定間隔。\n\n**審查重點**：門、武器與命中判定分開計數；驗證同目標多彈傷害預算、鎖鏈解除、蓄力中斷與特效併發成本。\n\n",
+    "reviewText": "門、武器與命中判定分開計數；驗證同目標多彈傷害預算、鎖鏈解除、蓄力中斷與特效併發成本。",
+    "schema": "ggd-hero-source-design@1",
+    "slots": {
+      "E": {
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-18-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。",
+        "name": "〔黃金甲冑〕",
+        "ownerDescription": "提供短效護盾，降低正面承受的爆發。",
+        "refinementContracts": [
+          "M01",
+          "M02",
+          "M11"
+        ],
+        "requiredRefinement": "目前全方向盾；缺正面條件。"
+      },
+      "EX": {
+        "baselineBehavior": "在指定區域依序落下 12 發；每發間隔 0.12 秒、半徑 150 wc3u、極小級傷害，可多次命中。",
+        "name": "〔王之財寶・齊射〕",
+        "ownerDescription": "消耗財庫能量，分波發射最多十二件武器；各波有固定間隔。",
+        "refinementContracts": [
+          "M01",
+          "M02",
+          "M11"
+        ],
+        "requiredRefinement": "12 發已有限；需扣財庫能量及武器多樣外觀。"
+      },
+      "PASSIVE": {
+        "baselineBehavior": "普攻追加極小級魔法傷害，內置冷卻 3 秒。",
+        "name": "〔王的財庫〕",
+        "ownerDescription": "技能按次累積財庫能量，供 EX 消耗；命中段數不等於獲得次數。",
+        "refinementContracts": [
+          "M01",
+          "M02",
+          "M11"
+        ],
+        "requiredRefinement": "需每次施法一次財庫能量與 EX 消耗。"
+      },
+      "Q": {
+        "baselineBehavior": "在指定區域依序落下 3 發；每發間隔 0.18 秒、半徑 150 wc3u、極小級傷害，可多次命中。",
+        "name": "王之財寶",
+        "ownerDescription": "開啟三個門，依序發射武器。",
+        "refinementContracts": [
+          "M01",
+          "M02",
+          "M11"
+        ],
+        "requiredRefinement": "目前三發落點打擊；需三門武器投射物及門的掛點。"
+      },
+      "R": {
+        "baselineBehavior": "向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。",
+        "name": "天地乖離開闢之星",
+        "ownerDescription": "以 Ea 進行明顯蓄力後的扇形／直線範圍攻擊。",
+        "refinementContracts": [
+          "M01",
+          "M02",
+          "M11"
+        ],
+        "requiredRefinement": "Ea 造型、蓄力層與單一總傷害預算需補。"
+      },
+      "W": {
+        "baselineBehavior": "指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"root\",\"duration\":0.7,\"applyTo\":\"target\",\"root\":true}]。",
+        "name": "天之鎖",
+        "ownerDescription": "射出鎖鏈，命中後短暫束縛；目標超出有效距離時解除。",
+        "refinementContracts": [
+          "M01",
+          "M02",
+          "M11"
+        ],
+        "requiredRefinement": "鎖足可作基礎控制；需超距解鎖、鎖鏈端點。"
+      }
+    },
+    "sourceSha256": "01a071565fb9ebbfa398a8bda21b2f3dfa5e455487a760c0ba78429283f9a67d"
+  },
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "validationState": {
+    "attributes": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "identity": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "mechanics": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    },
+    "package": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "presentation": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "skills": {
+      "diagnosticCodes": [],
+      "revision": 11,
+      "status": "idle"
+    },
+    "validation": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    }
+  }
+}

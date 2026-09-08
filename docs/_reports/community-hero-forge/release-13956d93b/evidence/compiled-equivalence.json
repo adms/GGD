@@ -1,0 +1,1374 @@
+{
+  "schema": "ggd-compiled-artifact-equivalence@1",
+  "status": "differences",
+  "heroes": 37,
+  "rows": [
+    {
+      "number": 1,
+      "name": "武藤遊戲",
+      "oldPackageDigest": "sha256:ef87155d4ab0cc122c5e07bf0d660577d90587a88b5003644ceb151271cdec40",
+      "currentPackageDigest": "sha256:c8958a4adabd5217adbce744cedcad740dd7733d3c2e064f2790dc695b1f36e9",
+      "compiledDocuments": 141,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/abilities/sela.e.json",
+          "changedTopLevelFields": [
+            "effects",
+            "template"
+          ]
+        },
+        {
+          "path": "compiled/abilities/sela.q.json",
+          "changedTopLevelFields": [
+            "effects",
+            "template"
+          ]
+        },
+        {
+          "path": "compiled/abilities/sela.r.json",
+          "changedTopLevelFields": [
+            "effects",
+            "template"
+          ]
+        },
+        {
+          "path": "compiled/abilities/sela.w.json",
+          "changedTopLevelFields": [
+            "effects"
+          ]
+        },
+        {
+          "path": "compiled/champions/sela.json",
+          "changedTopLevelFields": [
+            "abilities"
+          ]
+        },
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "name": "八神庵",
+      "oldPackageDigest": "sha256:3fa050a36f09ca45aaa49252ed7b23feb6c4338e33b622d8d799bd4c9ef1dd7b",
+      "currentPackageDigest": "sha256:c6e8675c7e0f1d87725fb393c2bd9fc636cb020bc8490a842d8698dea0250eb8",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/abilities/community-review-02-20260907.q.json",
+          "changedTopLevelFields": [
+            "effects"
+          ]
+        },
+        {
+          "path": "compiled/champions/community-review-02-20260907.json",
+          "changedTopLevelFields": [
+            "abilities"
+          ]
+        },
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "name": "不知火舞",
+      "oldPackageDigest": "sha256:4beb561b78be3d50abc9e5bc8584c8548c56beaf99e369dc0818c72308664746",
+      "currentPackageDigest": "sha256:13a5125729d9888a141d00ed25bc418813ee928c0edad2411250ff295f6cb1de",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/abilities/community-review-03-20260907.q.json",
+          "changedTopLevelFields": [
+            "effects"
+          ]
+        },
+        {
+          "path": "compiled/champions/community-review-03-20260907.json",
+          "changedTopLevelFields": [
+            "abilities"
+          ]
+        },
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "name": "空條承太郎",
+      "oldPackageDigest": "sha256:e11e9ed3cfd179a052e1443e52d6d6476aa15f6e3c92600d693d7630ecb5bf66",
+      "currentPackageDigest": "sha256:f71d418c3d2466f1bff4c55a25d112b0f7136ccb3686d86636f1ed6acb3238ba",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "name": "洛克人",
+      "oldPackageDigest": "sha256:ed1a25da32498a438374863c724a7e55b12547106ee0757820855b43185dbd27",
+      "currentPackageDigest": "sha256:00ed4194104501cd0cb156e72abb7d9f99591b967ea38ebab2cbedb5301e6412",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/abilities/community-review-05-20260907.w.json",
+          "changedTopLevelFields": [
+            "effects"
+          ]
+        },
+        {
+          "path": "compiled/champions/community-review-05-20260907.json",
+          "changedTopLevelFields": [
+            "abilities"
+          ]
+        },
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "name": "卡比",
+      "oldPackageDigest": "sha256:70817d8fcc1ef7e69ba77247395842fcba91cba11573b248469f22027b1dfc03",
+      "currentPackageDigest": "sha256:ef9a6c0de07ba7b8ce6bd51ec5aee5eccdad9577a5719cf52550df28bc30a931",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/abilities/community-review-06-20260907.q.json",
+          "changedTopLevelFields": [
+            "effects"
+          ]
+        },
+        {
+          "path": "compiled/champions/community-review-06-20260907.json",
+          "changedTopLevelFields": [
+            "abilities"
+          ]
+        },
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "name": "西索",
+      "oldPackageDigest": "sha256:ea8eee9f41cd5edd4984d7ef747bd5b01686cd345b0449c1fe38689809c5b1d1",
+      "currentPackageDigest": "sha256:d415ae4664179787d10fd88a24dc8eb0c51468f904195bbc3ba445fd418ee437",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/abilities/community-review-07-20260907.e.json",
+          "changedTopLevelFields": [
+            "effects"
+          ]
+        },
+        {
+          "path": "compiled/champions/community-review-07-20260907.json",
+          "changedTopLevelFields": [
+            "abilities"
+          ]
+        },
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "name": "米卡莎",
+      "oldPackageDigest": "sha256:d7ab09b624183ed7d4eca381c372b2d67ef2f9c897da25cf751c7d64be1171e3",
+      "currentPackageDigest": "sha256:796cbdd36f3ee676e3ea51c59694f9aa6d1aadd3e80ca9197fbb200a9626a2ab",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "name": "赫蘿",
+      "oldPackageDigest": "sha256:d9da0bcc8aef0375e0e30911ea9708102df232801bb563117f04230cc40574cf",
+      "currentPackageDigest": "sha256:f64a22956984ee97ee0b4147ec31be6087da68431f78657b5d94186902d3756a",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "name": "魯路修",
+      "oldPackageDigest": "sha256:07cb4d58a64d7269523d8e787cc94e2da2de8328a57dca68cce16959bd0e9f76",
+      "currentPackageDigest": "sha256:6be85d34ae5f51a2bcee306db3a9da58ea43cea9a43fa873201f5e5022780050",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "name": "利姆路",
+      "oldPackageDigest": "sha256:a3b1d5f643d8943c6d5442e6646285384968396f395d0f832421f6fdadb4ab2c",
+      "currentPackageDigest": "sha256:ed86fcfd8d272be4bb9a2654fe3672b0f6d50b634a03be68708c00e1dfa52525",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/abilities/community-review-11-20260907.q.json",
+          "changedTopLevelFields": [
+            "effects"
+          ]
+        },
+        {
+          "path": "compiled/champions/community-review-11-20260907.json",
+          "changedTopLevelFields": [
+            "abilities"
+          ]
+        },
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "name": "衛宮士郎",
+      "oldPackageDigest": "sha256:be337013b4eadfa3cdd97977e864d75f65e78825233e5112021f8d05037e3b36",
+      "currentPackageDigest": "sha256:68a5746aab8d86bf08a8027c2ea7483fff833642fea6ff8c91f7caa165622ac0",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "name": "朝田詩乃",
+      "oldPackageDigest": "sha256:23920ea5242b234826d83eecd927d2cc7775fd6601b86f47eba13abffe362269",
+      "currentPackageDigest": "sha256:350e47096ad91cfa3602a2160a708202110c111ebce71f86ba328e140b323ad4",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "name": "殺老師",
+      "oldPackageDigest": "sha256:25b5d1ccb6c90753bdff526413155c2399daa85f66fe39b0c8209ed37d7b604c",
+      "currentPackageDigest": "sha256:81cfd3f281c0f37dc8d722775b38251420ce640409a3212cc6de65e8a77edceb",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "name": "比利海靈頓",
+      "oldPackageDigest": "sha256:2edbce930c6199a6c21f7e9a1a535ae6917489546125a85634dbe0f3b7094f1e",
+      "currentPackageDigest": "sha256:fc04aa8edb7eb042dc4784557ca80c8d33d13dedd73c0a1d587ca80a32f2003f",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/abilities/community-review-15-20260907.q.json",
+          "changedTopLevelFields": [
+            "effects"
+          ]
+        },
+        {
+          "path": "compiled/abilities/community-review-15-20260907.r.json",
+          "changedTopLevelFields": [
+            "effects"
+          ]
+        },
+        {
+          "path": "compiled/champions/community-review-15-20260907.json",
+          "changedTopLevelFields": [
+            "abilities"
+          ]
+        },
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "name": "魔法少女☆伊莉雅",
+      "oldPackageDigest": "sha256:ebd2c6ba5ba718cf0c6eb652aa0d3eb4dd1ce21e4b7e267730ef01437a62d061",
+      "currentPackageDigest": "sha256:916d7d74a0111d3afb2773c031ca5e94d26520af19fe3beeb1963ec2436bd89b",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "name": "安茲·烏爾·恭",
+      "oldPackageDigest": "sha256:0d71f69c117a2c0fc199f8371a7ace78f10508b30e8bdff26a7926233228fca2",
+      "currentPackageDigest": "sha256:44fc42d350849dacf23ce13f3cefbec6aede17c3fa19a9dd3a8615646d8a0578",
+      "compiledDocuments": 140,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/abilities/thorne.e.json",
+          "changedTopLevelFields": [
+            "template"
+          ]
+        },
+        {
+          "path": "compiled/abilities/thorne.r.json",
+          "changedTopLevelFields": [
+            "template"
+          ]
+        },
+        {
+          "path": "compiled/champions/thorne.json",
+          "changedTopLevelFields": [
+            "abilities"
+          ]
+        },
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "name": "吉爾伽美什",
+      "oldPackageDigest": "sha256:31202e2353de10085ce67055a9674fbd4d1767e6403af8a31978e65d902dba8b",
+      "currentPackageDigest": "sha256:3d5c6e1357f630e673375ba7fe66559eff630cadbb10374929ac06740358f157",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "name": "桐谷和人",
+      "oldPackageDigest": "sha256:680f4761c5ae8c0035cecbe366e5b932d8a5e81e1bb510da8fa02435d5c43475",
+      "currentPackageDigest": "sha256:d1a2507d43dfd6cb67b43a35f38dd82ab7b5e1a9794a81d93742364cc46b33be",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "name": "御坂美琴",
+      "oldPackageDigest": "sha256:44c00653f168353714ce56022b5ffa8eac1e8c7af86fb17c7889c03e39a08348",
+      "currentPackageDigest": "sha256:9f0f602f70d29481e2f29b15ba4429053d2858c0836e8b76fe72c95665ee2c44",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 21,
+      "name": "鹿目圓",
+      "oldPackageDigest": "sha256:d4b77c353463bab63179524ab46a24de3651df927212996afce8e430a75e173e",
+      "currentPackageDigest": "sha256:a0f271dd396daa5b0e5cc9672666b011a897f0eb4f59e9699e1af86e92ad3a8f",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/abilities/community-review-21-20260907.q.json",
+          "changedTopLevelFields": [
+            "effects"
+          ]
+        },
+        {
+          "path": "compiled/champions/community-review-21-20260907.json",
+          "changedTopLevelFields": [
+            "abilities"
+          ]
+        },
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 22,
+      "name": "菜月昴",
+      "oldPackageDigest": "sha256:cdac016faedf2c7081c33ad4dece4038e96caa65dea938c8667fb75ea1d8eb15",
+      "currentPackageDigest": "sha256:1a060cf70c40997d51662d260ceb0c1a2a5b0cbca60944945024e9b930d6aca0",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/abilities/community-review-22-20260907.w.json",
+          "changedTopLevelFields": [
+            "effects"
+          ]
+        },
+        {
+          "path": "compiled/champions/community-review-22-20260907.json",
+          "changedTopLevelFields": [
+            "abilities"
+          ]
+        },
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "name": "坂田銀時",
+      "oldPackageDigest": "sha256:7df380f2361dc24d506a623b6e6043d9b479758c52c0245e235ebc54c0cf0137",
+      "currentPackageDigest": "sha256:c57148e9b7d60aaa032097e0cdabbea13a820a1f9bf2312f6b51bb1617b7c0d1",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 24,
+      "name": "奇犽",
+      "oldPackageDigest": "sha256:c41d4e7daa208c4151c9a9439f77367c4197d29e5ee7ad7b26574385d67e893e",
+      "currentPackageDigest": "sha256:bfcd6c007d1b60493b1702a9520ab0f3e49acedfd8c7f13019ad742bbf3e9fe4",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "name": "一拳超人",
+      "oldPackageDigest": "sha256:35a80c31fc4e01fe1446f083674e247865f7b1473a0903b08e86c42d9718132d",
+      "currentPackageDigest": "sha256:cbf19ca0fdb9dea7c7011113c63a5bfaa13983256ae56a4e5d7b12a90cc5f625",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "name": "名偵探柯南",
+      "oldPackageDigest": "sha256:8da76b1bb2e8ed7f5a568c90aedd679f5db2713a2f92ea4729d8e60cd5ee0c6c",
+      "currentPackageDigest": "sha256:050b6b9abd54b4fce3ff089be42b377af5571bd136ec31040e870e81800a376f",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/abilities/community-review-26-20260907.ex.json",
+          "changedTopLevelFields": [
+            "effects"
+          ]
+        },
+        {
+          "path": "compiled/abilities/community-review-26-20260907.q.json",
+          "changedTopLevelFields": [
+            "effects"
+          ]
+        },
+        {
+          "path": "compiled/champions/community-review-26-20260907.json",
+          "changedTopLevelFields": [
+            "abilities"
+          ]
+        },
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "name": "庫洛魔法使",
+      "oldPackageDigest": "sha256:c57eec617880921b442de352cadecd18eda9291730986fbdc6b5cc76230f1101",
+      "currentPackageDigest": "sha256:040ba59436e72d7a3ee1088e1dce2fd01fe4156d6e03b039d15825c8cb73743e",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 28,
+      "name": "艾莉絲·伯雷亞斯·格雷拉特",
+      "oldPackageDigest": "sha256:0cce0f6691ae69cf6c3fa3606e62454ada000a8f28e4ffdec19386720d133d9d",
+      "currentPackageDigest": "sha256:11db43051eebddf1960ce1baee40c038eed590c319e02da164824c7df7a4bcc0",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "name": "芙莉蓮",
+      "oldPackageDigest": "sha256:ba0191e38b89295a28f32fde8d0a9303bdec24648383a5023e98bfdd315734a9",
+      "currentPackageDigest": "sha256:95d248932f2e978e1c40c889802279410058ced773cd07775187160a2e58a4a6",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "name": "尼古貓貓",
+      "oldPackageDigest": "sha256:cd088a0f20aa8a283c164e645282acdfd90be9bccbc36494eeb9a027cc7f6591",
+      "currentPackageDigest": "sha256:bd7615196e4f64bf0da83afd672779d58b6e23bd27525977953fbf58c418c746",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 31,
+      "name": "SUN樂",
+      "oldPackageDigest": "sha256:9f1e46342e95065a0dfb7ea6b4415ac5e1b4eb07a94b765050d9d57f275f1f8d",
+      "currentPackageDigest": "sha256:373cf893c6e09ece2b91c03f87f88cb8ff4b076df4b7fce38ed872edbef378eb",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 32,
+      "name": "阿薩謝爾",
+      "oldPackageDigest": "sha256:b2442d9b884ce93b004b8cdea97dfb3e4d5d04013a027226f7490895fd767b19",
+      "currentPackageDigest": "sha256:504c2c2c3eb323a7247d335e5cac449581586140651c183d55d3b3f927c60927",
+      "compiledDocuments": 130,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 33,
+      "name": "近衛刀太",
+      "oldPackageDigest": "sha256:47649ff1369703a53fe5c90509ba9693802b1dc9452e4214b9398db1308d0ea7",
+      "currentPackageDigest": "sha256:ffe1c0345ca62fbb7a41039f97e1937956f22d9a851aed4a3d865e276ec03bb0",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "name": "高速婆婆",
+      "oldPackageDigest": "sha256:ff6061adb663aead5c8785f5a74d164245c8791e70398aa192fa872934657868",
+      "currentPackageDigest": "sha256:54638b260e0da2eaf1641791cb385498b79a3b31cfa33416cfadf6b77667439e",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 35,
+      "name": "炭治郎",
+      "oldPackageDigest": "sha256:a7cbf4ffa12e01eabe9cdc4d9ca942b09e1dfe79587f87fd057a5974a3074f2e",
+      "currentPackageDigest": "sha256:9b9c7d62b6ef722bd3db9f427dc5cfedbebe3e3ee95e414662e013744086eb9a",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 36,
+      "name": "鬼畜王蘭斯",
+      "oldPackageDigest": "sha256:f02069fa7a87da8d8a5dc2eead9999f2aacec8c6c84c00706f994b73692aaadb",
+      "currentPackageDigest": "sha256:2308f1e8b736284df1ac7f85fc592ef32e113dab621d8e4dc329742f7af0f379",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 37,
+      "name": "吉伊卡哇",
+      "oldPackageDigest": "sha256:0a660b088e1baf777dc581c3a5fba95f5881a75663ac15346290af30ee36fc55",
+      "currentPackageDigest": "sha256:20f4734422fa7dc971433eb7613df91098b374be0dac0b185c29de4abdde1620",
+      "compiledDocuments": 128,
+      "allCompiledDocumentsEqual": false,
+      "differences": [
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "changedTopLevelFields": [
+            "base",
+            "keepAuthoredPerRankAp",
+            "note"
+          ]
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "changedTopLevelFields": [
+            "note",
+            "platformPolicy"
+          ]
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "changedTopLevelFields": [
+            "note",
+            "transformInheritsOrigin"
+          ]
+        }
+      ]
+    }
+  ]
+}

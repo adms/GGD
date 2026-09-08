@@ -1,0 +1,57 @@
+{
+  "id": "imported.azunyan",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/azunyan.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Foot Right": {
+      "x": -0.0,
+      "y": 0.0476,
+      "z": 0.0678
+    },
+    "Foot Left": {
+      "x": -0.0,
+      "y": 0.0476,
+      "z": -0.0678
+    },
+    "Chest": {
+      "x": 0.0397,
+      "y": 0.8728,
+      "z": -0.0005
+    },
+    "Hand Right": {
+      "x": -0.0434,
+      "y": 0.7227,
+      "z": 0.4033
+    },
+    "Hand Left": {
+      "x": -0.0434,
+      "y": 0.7227,
+      "z": -0.4033
+    },
+    "Head": {
+      "x": -0.0,
+      "y": 1.5806,
+      "z": -0.0
+    },
+    "Origin": {
+      "x": -0.0,
+      "y": 0.0465,
+      "z": -0.0
+    },
+    "Overhead": {
+      "x": -0.0,
+      "y": 2.0204,
+      "z": -0.0
+    }
+  }
+}

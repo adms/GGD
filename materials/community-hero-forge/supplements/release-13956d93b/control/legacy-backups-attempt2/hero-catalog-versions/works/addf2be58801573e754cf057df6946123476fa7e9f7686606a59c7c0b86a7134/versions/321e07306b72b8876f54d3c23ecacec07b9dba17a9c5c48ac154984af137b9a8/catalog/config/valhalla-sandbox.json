@@ -1,0 +1,12 @@
+{
+  "id": "valhalla-sandbox",
+  "schema": "config.valhalla-sandbox@1",
+  "note": "GH#254 英靈殿技能試放空間。owner 原話:「英靈殿 多一個施展技能小模擬空間(但人不會移動，鏡頭永遠跟著人) 以及一個生命 10,000 的假人 (生命歸零3秒後自動補滿)」—— dummyHealth 與 dummyRespawnSec 兩格是他明說的數字,其餘五格是被寫成欄位的決策點:dummyDistance 決定近戰站著打不打得到(房間裡不能走路,放遠等於功能壞掉)、applyCombatEnv 決定看到的傷害是不是乘完倍率的最終值(#125 預覽不可以說謊)、movementLock 決定「人不會移動」要硬到連擊退都推不動還是只吃走位指令、unlockAllSlots 決定六格技能是不是進場就全開、infiniteMana 決定放到第三發會不會 no-mana。⚠️ 值與上下界的唯一真相是 apps/client/src/ui/platform/valhalla/valhallaSandboxRules.ts(DEFAULT_VALHALLA_SANDBOX / VALHALLA_SANDBOX_BOUNDS),這一份是內容層的鏡像。⚠️ 這份文件目前**還沒有執行期消費端** —— 沙盒直接吃常數,改這裡不會改變行為。缺口記在 apps/admin/src/configDocCoverage.ts 的 DEFERRED 那一列。",
+  "dummyHealth": 10000,
+  "dummyRespawnSec": 3,
+  "dummyDistance": 3.2,
+  "applyCombatEnv": true,
+  "movementLock": "anchor",
+  "unlockAllSlots": true,
+  "infiniteMana": true
+}

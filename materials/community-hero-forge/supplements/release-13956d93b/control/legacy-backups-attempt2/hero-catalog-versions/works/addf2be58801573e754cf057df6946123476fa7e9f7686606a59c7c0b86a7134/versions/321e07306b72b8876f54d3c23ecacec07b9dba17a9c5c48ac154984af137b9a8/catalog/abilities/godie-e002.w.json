@@ -1,0 +1,250 @@
+{
+  "id": "godie-e002.w",
+  "schema": "ability@1",
+  "name": "20-01 風王結界",
+  "provenance": "owner-spec",
+  "description": "[主動][切換][普攻時][魔力耗盡][暴擊][屬性門檻][AP加成][範圍]\n{{cd}}秒冷卻\n每次[開關]耗[MP] {{mp}}\n\n「我不喜歡沒有放假的颱風」\n開啟時[每次攻擊][消耗]MP30/50/70/90，[MP]不足則自動關閉。\n以多層纏繞的風改變光線折射，隱藏劍身與強化劍刃的攻擊力，造成1.4/1.6/1.8/2倍[暴擊]傷害。關閉時，凝聚的風能一次釋放「風王鐵槌」，造成前方圓形[範圍] {{dmg}}+ {{ap}}% [AP]傷害。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "championForm",
+      "to": "toggle"
+    }
+  ],
+  "passive": {
+    "name": "20-01 風王結界 · 法球",
+    "ranks": [
+      {
+        "whileForm": "alternate",
+        "modifiers": [
+          {
+            "stat": "critChance",
+            "op": "flat",
+            "value": 1.0
+          },
+          {
+            "stat": "critDamage",
+            "op": "override",
+            "value": 1.4
+          }
+        ],
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 10.0,
+                  "ratios": [
+                    {
+                      "stat": "ad",
+                      "coeff": 0.5
+                    }
+                  ]
+                }
+              }
+            ],
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "mp",
+              "mode": "absolute",
+              "op": ">=",
+              "value": 30
+            },
+            "target": "event"
+          }
+        ]
+      },
+      {
+        "whileForm": "alternate",
+        "modifiers": [
+          {
+            "stat": "critChance",
+            "op": "flat",
+            "value": 1.0
+          },
+          {
+            "stat": "critDamage",
+            "op": "override",
+            "value": 1.6
+          }
+        ],
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 10.0,
+                  "ratios": [
+                    {
+                      "stat": "ad",
+                      "coeff": 0.5
+                    }
+                  ]
+                }
+              }
+            ],
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "mp",
+              "mode": "absolute",
+              "op": ">=",
+              "value": 50
+            },
+            "target": "event"
+          }
+        ]
+      },
+      {
+        "whileForm": "alternate",
+        "modifiers": [
+          {
+            "stat": "critChance",
+            "op": "flat",
+            "value": 1.0
+          },
+          {
+            "stat": "critDamage",
+            "op": "override",
+            "value": 1.8
+          }
+        ],
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 10.0,
+                  "ratios": [
+                    {
+                      "stat": "ad",
+                      "coeff": 0.5
+                    }
+                  ]
+                }
+              }
+            ],
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "mp",
+              "mode": "absolute",
+              "op": ">=",
+              "value": 70
+            },
+            "target": "event"
+          }
+        ]
+      },
+      {
+        "whileForm": "alternate",
+        "modifiers": [
+          {
+            "stat": "critChance",
+            "op": "flat",
+            "value": 1.0
+          },
+          {
+            "stat": "critDamage",
+            "op": "override",
+            "value": 2.0
+          }
+        ],
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 10.0,
+                  "ratios": [
+                    {
+                      "stat": "ad",
+                      "coeff": 0.5
+                    }
+                  ]
+                }
+              }
+            ],
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "mp",
+              "mode": "absolute",
+              "op": ">=",
+              "value": 90
+            },
+            "target": "event"
+          }
+        ]
+      }
+    ]
+  },
+  "toggle": {
+    "upkeepCadence": "perAttack",
+    "upkeepCost": [
+      30,
+      50,
+      70,
+      90
+    ],
+    "onExit": [
+      {
+        "kind": "championForm",
+        "to": "toggle"
+      },
+      {
+        "kind": "damageArea",
+        "damageType": "magic",
+        "amount": {
+          "damageTier": "極小",
+          "ratios": [
+            {
+              "stat": "ap",
+              "coeff": 0.3
+            }
+          ]
+        },
+        "radius": 4.5,
+        "radiusTier": "小"
+      }
+    ]
+  },
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.wind.tornado"
+    }
+  ],
+  "icon": "assets/icons/abilities/godie-e002.w.webp",
+  "vfxKey": "fx.prim.wind.tornado",
+  "cooldownTier": "中",
+  "castTimeSec": 0.267
+}

@@ -1,0 +1,3 @@
+AssertionError [ERR_ASSERTION]: complete recording requires a sealed footer
+    at <anonymous> (/private/tmp/ggd-model-upload-acceptance/release-13956d93b/replay-current.mts:72:3)
+Evidence: /private/tmp/ggd-model-upload-acceptance/release-13956d93b/evidence/replay.json

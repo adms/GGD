@@ -1,0 +1,36 @@
+{
+  "id": "thorne.q",
+  "schema": "ability@1",
+  "name": "Thorn Lash",
+  "icon": "assets/icons/abilities/thorne.q.webp",
+  "slot": "Q",
+  "castType": "dash",
+  "maxRank": 5,
+  "cooldown": [
+    9,
+    8,
+    7,
+    6,
+    5
+  ],
+  "manaCost": [
+    40,
+    40,
+    40,
+    40,
+    40
+  ],
+  "effects": [
+    {
+      "kind": "dash",
+      "mode": "forward",
+      "speed": 16,
+      "maxDistance": 6
+    }
+  ],
+  "vfxKey": "fx.thorn-lash",
+  "castTimeSec": 0.067,
+  "provenance": "w3x-import",
+  "rangeTier": "中",
+  "range": 6
+}

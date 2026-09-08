@@ -1,0 +1,42 @@
+{
+  "id": "fx.dragon-awaken",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "sphere",
+    "radius": 0.55
+  },
+  "mode": "continuous",
+  "rate": 46,
+  "lifetimeSec": {
+    "min": 0.45,
+    "max": 0.95
+  },
+  "size": {
+    "start": 0.24,
+    "end": 0
+  },
+  "sizeStops": [
+    [0, 0.1],
+    [0.18, 0.3],
+    [1, 0]
+  ],
+  "color": {
+    "start": [1, 0.86, 0.42, 1],
+    "end": [0.9, 0.32, 0.06, 0]
+  },
+  "colorStops": [
+    [0, [1, 0.97, 0.78, 1]],
+    [0.25, [1, 0.82, 0.34, 0.95]],
+    [0.65, [0.95, 0.5, 0.12, 0.5]],
+    [1, [0.6, 0.18, 0.02, 0]]
+  ],
+  "blendMode": "additive",
+  "gravityY": 2.6,
+  "speed": {
+    "min": 0.6,
+    "max": 1.9
+  },
+  "texture": "assets/textures/particles/light_02.png",
+  "stretched": true,
+  "tailLength": 1.6
+}

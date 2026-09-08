@@ -1,0 +1,62 @@
+{
+  "id": "imported.niya",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/niya.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Foot Right": {
+      "x": 0.0517,
+      "y": 0.1493,
+      "z": 0.0754
+    },
+    "Foot Left": {
+      "x": 0.0517,
+      "y": 0.1493,
+      "z": -0.0773
+    },
+    "Hand Right": {
+      "x": -0.0175,
+      "y": 0.8541,
+      "z": 0.2191
+    },
+    "Hand Left": {
+      "x": -0.0175,
+      "y": 0.8541,
+      "z": -0.2209
+    },
+    "Head": {
+      "x": 0.0145,
+      "y": 1.6233,
+      "z": -0.0021
+    },
+    "Chest": {
+      "x": 0.013,
+      "y": 1.0901,
+      "z": -0.0012
+    },
+    "Origin": {
+      "x": -0.0097,
+      "y": 0.0957,
+      "z": 0.0041
+    },
+    "OverHead": {
+      "x": -0.0097,
+      "y": 1.9005,
+      "z": 0.0041
+    },
+    "Weapon": {
+      "x": 0.742,
+      "y": 0.8323,
+      "z": 0.2114
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "ggd-release-ci-followup@1",
+  "ciRun": 34257737632,
+  "testedHead": "35df16f231861d7b22447c4aa29a6e7d68d77639",
+  "mainBase": "7778c10c5ebac216dc7bc21c1f684de6e1e55254",
+  "originalResult": {
+    "contract": "passed",
+    "go-platform": "passed",
+    "vuln": "passed",
+    "unit": "failed"
+  },
+  "fixed": [
+    "Regenerated content/editor-target-profile.json through pnpm content:build; only compiler fingerprints/profile digest changed. Runtime contentVersion unchanged.",
+    "Portable tempfile.gettempdir() plus explicit GGD_HERO_RESEARCH_DIR in inherited asset reconciliation script."
+  ],
+  "targetedResult": {
+    "filesPassed": 3,
+    "filesFailed": 1,
+    "testsPassed": 9,
+    "testsFailed": 1
+  },
+  "remainingFailure": "everyTagAnnounced.test.ts: v0.41.5 absent in docs/_release/_announced.tsv; ledger byte-identical to main 7778c10c5. No announcement or fabricated ledger entry made.",
+  "fullNewHeadCi": "pending push and run",
+  "serviceAcceptanceUnchanged": true
+}

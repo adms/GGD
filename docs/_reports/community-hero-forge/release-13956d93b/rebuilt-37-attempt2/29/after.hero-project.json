@@ -1,0 +1,1216 @@
+{
+  "acceptedPlan": {
+    "archetype": "mage",
+    "attackType": "ranged",
+    "budget": {
+      "complexity": 60,
+      "power": 50
+    },
+    "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
+    "origin": "法師",
+    "planId": "community-review-29-20260907.plan",
+    "schema": "ggd-hero-plan@2",
+    "slots": {
+      "E": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [
+          "leap"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "飛行魔法",
+        "products": [
+          {
+            "instanceId": "community-review-29-20260907-e-1",
+            "template": {
+              "contentSha256": "sha256:fc256a57c55a0705dbb6660316bfeb64402f80fa154f09336fb1a8d393eeb5e5",
+              "inheritDefaults": true,
+              "params": {
+                "apexHeight": 250,
+                "applyTo": "self",
+                "castTimeSec": 0.15,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "durationSec": 0.5,
+                "landRadius": 150,
+                "mode": "toPoint"
+              },
+              "ref": "tpl-leap-strike"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】短距離浮空移動。\n【待補機制】短期浮空可用落點跳躍預覽，不提供持續飛行。",
+        "slot": "E",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "EX": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "大",
+          "effects": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 120,
+                "ratios": []
+              },
+              "duration": 3,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "community-review-29-20260907.ex.guard"
+            }
+          ],
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "變出花田的魔法",
+        "products": [
+          {
+            "instanceId": "community-review-29-20260907-ex-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": []
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-29-20260907.ex.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】生成短期花田；GGD 改編效果為友軍首次進入時解除恐懼並取得小額護盾。\n【待補機制】目前自身盾；需花田區域、友軍首次進入解除恐懼及一次護盾。",
+        "slot": "EX",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "PASSIVE": {
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "魔力抑制",
+        "products": [
+          {
+            "instanceId": "community-review-29-20260907-passive-1",
+            "template": {
+              "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0",
+              "inheritDefaults": true,
+              "params": {
+                "bonusDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "condition": {
+                  "kind": "chance",
+                  "p": 1
+                },
+                "damageType": "magic",
+                "event": "onBasicAttack",
+                "internalCooldown": 3
+              },
+              "ref": "tpl-on-attack"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。\n【目標設計】降低敵方魔力感知類技能取得的強度資訊；不等同隱形，也不隱藏基本敵我識別。\n【待補機制】需魔力感知的資訊層抑制，不可用隱形或傷害被動冒充。",
+        "slot": "PASSIVE",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        }
+      },
+      "Q": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [
+          "projectile"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "一般攻擊魔法・Zoltraak",
+        "products": [
+          {
+            "instanceId": "community-review-29-20260907-q-1",
+            "template": {
+              "contentSha256": "sha256:431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699006b55c40f5b54c7",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.35,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "segmentAoe": 150,
+                "segmentCount": 4,
+                "stepSize": 100
+              },
+              "ref": "tpl-line-sweep"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】直線魔法射擊。\n【待補機制】Zoltraak 原型；需單束碰撞去重。",
+        "slot": "Q",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "R": {
+        "abilityOverrides": {
+          "castTimeTier": "大",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [
+          "periodicDamage"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 3,
+        "name": "〔葬送連射〕",
+        "products": [
+          {
+            "instanceId": "community-review-29-20260907-r-1",
+            "template": {
+              "contentSha256": "sha256:34fc1fc2579e395212180f244209347185c83466671e8b1d041e2f0933004424",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.5,
+                "count": 6,
+                "damageType": "magic",
+                "impactDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "impactRadius": 150,
+                "intervalSec": 0.35,
+                "payout": "perImpact",
+                "scatterRadius": 120
+              },
+              "ref": "tpl-random-barrage"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】在指定區域依序落下 6 發；每發間隔 0.35 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】依序射出多方向魔法束，每束有獨立射線及整招總傷害上限。\n【待補機制】目前定點六波；需各方向獨立射線及總傷害上限。",
+        "slot": "R",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "W": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "effects": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 120,
+                "ratios": []
+              },
+              "duration": 3,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "community-review-29-20260907.w.guard"
+            }
+          ],
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "防禦魔法",
+        "products": [
+          {
+            "instanceId": "community-review-29-20260907-w-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": []
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-29-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】展開方向明確的防壁，消耗資源抵擋有限傷害。\n【待補機制】目前無方向盾；需六角防壁方向、耐久與持續消耗。",
+        "slot": "W",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      }
+    },
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "statOverrides": {
+      "ad": "小",
+      "ap": "大",
+      "armor": "小",
+      "as": "小",
+      "healthRegen": "小",
+      "manaRegen": "大",
+      "maxHealth": "小",
+      "maxMana": "大",
+      "mr": "中",
+      "ms": "中",
+      "range": "大"
+    },
+    "summary": "芙莉蓮 社群英雄功能驗收稿。作品：《葬送的芙莉蓮》  \n定位：魔法射擊、防壁、魔力資訊、生活魔法改編。\n\n視覺方向：淡金 Zoltraak、青白六角防壁、柔色花田；不把其他角色專屬魔法填入。\n以 GGD 法師 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "templateVersions": {
+      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
+        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
+        "exemplar": {
+          "jass": "A0Q6",
+          "skill": "82-04 闇之魔法"
+        },
+        "family": "buff-self",
+        "gapScore": 6,
+        "id": "tpl-buff-self",
+        "name": "變身強化-數值面",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "duration": {
+            "default": 15,
+            "max": 60,
+            "min": 1,
+            "type": "number",
+            "unit": "s"
+          },
+          "modifiers": {
+            "default": [
+              {
+                "op": "flat",
+                "stat": "ad",
+                "value": 50
+              }
+            ],
+            "type": "statModifiers"
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0": {
+        "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
+        "exemplar": {
+          "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效",
+          "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者"
+        },
+        "family": "on-attack",
+        "gapScore": 9,
+        "id": "tpl-on-attack",
+        "name": "攻擊觸發",
+        "params": {
+          "bonusDamage": {
+            "default": {
+              "perRank": [
+                100
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "chance": {
+            "max": 1,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "ratio"
+          },
+          "condition": {
+            "default": {
+              "any": [
+                {
+                  "all": [
+                    {
+                      "not": {
+                        "is": "champion",
+                        "kind": "kind",
+                        "subject": "target"
+                      }
+                    },
+                    {
+                      "kind": "stat",
+                      "mode": "percent",
+                      "op": "<",
+                      "stat": "hp",
+                      "subject": "target",
+                      "value": 0.35
+                    }
+                  ]
+                },
+                {
+                  "all": [
+                    {
+                      "is": "champion",
+                      "kind": "kind",
+                      "subject": "target"
+                    },
+                    {
+                      "kind": "chance",
+                      "p": 0.01
+                    }
+                  ]
+                }
+              ]
+            },
+            "optional": true,
+            "type": "condition"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "event": {
+            "default": "onBasicAttack",
+            "type": "enum",
+            "values": [
+              "onBasicAttack",
+              "onDamageDealt"
+            ]
+          },
+          "internalCooldown": {
+            "default": 0,
+            "max": 60,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:34fc1fc2579e395212180f244209347185c83466671e8b1d041e2f0933004424": {
+        "description": "在一個區域裡連續丟 N 發爆炸,每一發的落點都是隨機的。原作 8 支成員全部是同一個迴圈:`GetRandomLocInRect(RectFromCenterSizeBJ(中心, S, S))` → 生一隻 dummy → 叫它放一發 → 睡一下 → 再來。\n\n**總時長不是欄位,是算出來的**(發數 − 1) × 每發間隔 —— 原作的迴圈也是這樣,把它做成第三個可填的數字只會讓三個數字互相打架。\n\n決策點是「傷害怎麼付」:\n· 逐發結算(預設,5/8 支) —— 站在轟炸區裡的人每一發都會挨一下。\n· 施法瞬間一次付清(3/8 支) —— 23-03 雷牙一閃、81-02 Acxel Shooter、53-01 獸王牙操彈 的彈幕**完全是演出**,傷害在觸發裡只判一次矩形。把整片火光算成 N 段傷害會讓這三支變成原作的好幾倍。\n\n「開場直傷」清空 = 純轟炸;填了 = 先來一發大的再開始炸(42-04 世界終結 的 100% [AP] 起手)。\n\n⚠️ 已知落差:sim 的持續傷害綁在**施法當下解出來的目標**上,所以(a)開炸之後才走進區域的人不會挨,先走出去的人還是會繼續挨;(b)每一發的隨機落點沒有模擬 —— 區域內的人是**每一發都吃到**,而不是機率性地吃到其中幾發。原作 42-04 的雷震半徑(375)本來就大於它的散佈半徑(225),那一支剛好完全吻合;21-002 天破壤碎(散佈 600 / 半徑 320)則是這個模型最不準的一支。",
+        "exemplar": {
+          "jass": "A0F4 → dummy A011 ×8 (war3map.j:48501-48519)",
+          "skill": "74-03 闇之天使"
+        },
+        "family": "random-barrage",
+        "gapScore": 6,
+        "id": "tpl-random-barrage",
+        "name": "亂數彈幕轟炸",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "count": {
+            "default": 9,
+            "max": 100,
+            "min": 2,
+            "type": "number",
+            "unit": "count"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "impactDamage": {
+            "default": {
+              "perRank": [
+                150
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "impactRadius": {
+            "default": 320,
+            "max": 900,
+            "min": 50,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "intervalSec": {
+            "default": 0.1,
+            "max": 0.6,
+            "min": 0.04,
+            "type": "number",
+            "unit": "s"
+          },
+          "openingDamage": {
+            "optional": true,
+            "type": "scaling"
+          },
+          "payout": {
+            "default": "perImpact",
+            "type": "enum",
+            "values": [
+              "perImpact",
+              "onceAtCast"
+            ]
+          },
+          "scatterRadius": {
+            "default": 225,
+            "max": 1500,
+            "min": 0,
+            "type": "number",
+            "unit": "wc3u"
+          }
+        },
+        "requires": [
+          "periodicDamage"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699006b55c40f5b54c7": {
+        "description": "沿直線分段的掃擊：每一段各自在自己的落點結算一次（`delayed` + `advance`，GH#393 的機制）。⭐ 同一個目標整串只被打一次（`hitOncePerTarget`）—— 那是原作的規則，卡片寫的是**一次**的數字。",
+        "exemplar": {
+          "jass": "A0D5",
+          "skill": "20-03 約束與勝利之劍"
+        },
+        "family": "line-sweep",
+        "gapScore": 7,
+        "id": "tpl-line-sweep",
+        "name": "直線分段掃擊",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                150
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "segmentAoe": {
+            "default": 400,
+            "max": 900,
+            "min": 100,
+            "origin": "j:32337 —— `GetUnitsInRangeOfLocMatching(400.00, udg_LocPoint3, …)` ⇒ 每段半徑 **400 wc3u**",
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "segmentCount": {
+            "default": 6,
+            "max": 20,
+            "min": 3,
+            "origin": "j:32335 —— `exitwhen udg_WinSwordCounter > 6`，而 j:32333 是 `set udg_WinSwordCounter = 1` ⇒ 正好 **6 段**（⛔ 不是 7：它從 **1** 起算，⛔ 不是 0）",
+            "type": "number",
+            "unit": "count"
+          },
+          "stepSize": {
+            "default": 200,
+            "max": 300,
+            "min": 100,
+            "origin": "j:32336 —— `PolarProjectionBJ(udg_LocPoint1, I2R(udg_WinSwordCounter) * 200.00, …)` ⇒ 每段 **200 wc3u**",
+            "type": "number",
+            "unit": "wc3u"
+          }
+        },
+        "requires": [
+          "projectile"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:fc256a57c55a0705dbb6660316bfeb64402f80fa154f09336fb1a8d393eeb5e5": {
+        "description": "拋物線跳躍到指定點（或原地垂直跳），落地造成範圍傷害。飛行中無視地形；落點被障礙物（牆）或場地邊界擋住時，起跳當下就改瞄最近的合法落點（`world.wallBlock` 出貨 leap:\"clamp\"，落點截在牆前；只有 `flightExempt` 且被搬的那具身體本來就 `flightIgnoresObstacles` 的飛行狀態才豁免牆體，邊界照樣截斷），弧線隨之重算，你看到的落地位置就是實際位置。",
+        "exemplar": {
+          "jass": "A0G3",
+          "skill": "07-03 列、在、前"
+        },
+        "family": "leap-strike",
+        "gapScore": 5,
+        "id": "tpl-leap-strike",
+        "name": "跳躍落地",
+        "params": {
+          "apexHeight": {
+            "default": 600,
+            "max": 2000,
+            "min": 0,
+            "type": "number",
+            "unit": "wc3h"
+          },
+          "applyTo": {
+            "default": "self",
+            "type": "enum",
+            "values": [
+              "self",
+              "target"
+            ]
+          },
+          "castTimeSec": {
+            "default": 0.5,
+            "max": 5,
+            "min": 0,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                450
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "physical",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "durationSec": {
+            "default": 0.82,
+            "max": 3,
+            "min": 0.1,
+            "type": "number",
+            "unit": "s"
+          },
+          "landRadius": {
+            "default": 330,
+            "max": 900,
+            "min": 0,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "mode": {
+            "default": "toPoint",
+            "type": "enum",
+            "values": [
+              "toPoint",
+              "inPlace"
+            ]
+          }
+        },
+        "requires": [
+          "leap"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      }
+    },
+    "title": "芙莉蓮"
+  },
+  "brief": {
+    "concept": "芙莉蓮 社群英雄功能驗收稿。作品：《葬送的芙莉蓮》  \n定位：魔法射擊、防壁、魔力資訊、生活魔法改編。\n\n視覺方向：淡金 Zoltraak、青白六角防壁、柔色花田；不把其他角色專屬魔法填入。\n以 GGD 法師 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "E": "飛行魔法",
+      "EX": "變出花田的魔法",
+      "PASSIVE": "魔力抑制",
+      "Q": "一般攻擊魔法・Zoltraak",
+      "R": "〔葬送連射〕",
+      "W": "防禦魔法"
+    },
+    "name": "芙莉蓮"
+  },
+  "presentation": {
+    "assetLocks": [
+      {
+        "byteSize": 2343924,
+        "consumers": [
+          "champion:model"
+        ],
+        "kind": "model",
+        "mediaType": "model/gltf-binary",
+        "path": "assets/models/community/3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd.glb",
+        "registry": "normalized-upload",
+        "sha256": "3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd"
+      }
+    ],
+    "championIcon": "assets/icons/champions/sela.webp",
+    "modelKey": "community.body.e2b3a504b3c20d18a41d2d5aa4fbde63a79c15faa4005bb6",
+    "modelProvenance": {
+      "modelSha256": "3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd",
+      "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。",
+      "relationship": "exact",
+      "schema": "ggd-hero-model-provenance@1",
+      "sourceAssetId": "300heroes:cfce4a1a5c5ede186be83a40",
+      "sourceCharacter": "芙莉莲",
+      "sourceWork": "葬送的芙莉蓮"
+    },
+    "schema": "ggd-hero-presentation@1",
+    "slots": {
+      "E": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.e.webp",
+        "script": {
+          "abilityId": "community-review-29-20260907.e",
+          "id": "community-review-29-20260907.e",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                209,
+                222,
+                166
+              ],
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "point",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                209,
+                222,
+                166
+              ],
+              "vfxId": "fx.prim.arcane.arc",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "E",
+        "vfxLayers": []
+      },
+      "EX": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.r.webp",
+        "script": {
+          "abilityId": "community-review-29-20260907.ex",
+          "id": "community-review-29-20260907.ex",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                209,
+                222,
+                166
+              ],
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                209,
+                222,
+                166
+              ],
+              "vfxId": "fx.prim.arcane.pulse",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "EX",
+        "vfxLayers": []
+      },
+      "PASSIVE": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.q.webp",
+        "script": null,
+        "sfxKey": null,
+        "slot": "PASSIVE",
+        "vfxLayers": []
+      },
+      "Q": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.q.webp",
+        "script": {
+          "abilityId": "community-review-29-20260907.q",
+          "id": "community-review-29-20260907.q",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                209,
+                222,
+                166
+              ],
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                209,
+                222,
+                166
+              ],
+              "vfxId": "fx.prim.arcane.beam",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "Q",
+        "vfxLayers": []
+      },
+      "R": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.r.webp",
+        "script": {
+          "abilityId": "community-review-29-20260907.r",
+          "id": "community-review-29-20260907.r",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                209,
+                222,
+                166
+              ],
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "point",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                209,
+                222,
+                166
+              ],
+              "vfxId": "fx.prim.arcane.nova",
+              "w3xScale": 1.25
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "R",
+        "vfxLayers": []
+      },
+      "W": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.w.webp",
+        "script": {
+          "abilityId": "community-review-29-20260907.w",
+          "id": "community-review-29-20260907.w",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                209,
+                222,
+                166
+              ],
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                209,
+                222,
+                166
+              ],
+              "vfxId": "fx.prim.arcane.pulse",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "W",
+        "vfxLayers": []
+      }
+    },
+    "uploadedModel": {
+      "byteSize": 2343924,
+      "clipMap": {
+        "attack": "single_attack_attcom_2",
+        "cast": "single_skill_01_b",
+        "death": "dead",
+        "hurt": "bat_idle",
+        "idle": "bat_idle",
+        "run": "single_run"
+      },
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd",
+      "yawOffsetDeg": 0
+    }
+  },
+  "projectId": "community-review-29-20260907",
+  "receipts": [
+    {
+      "digest": "82ac2c7294fdb31ffb26aa36068b0efeb89864571c09119d7dab09640431e547",
+      "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+      "kind": "generator-adopted",
+      "projectRevision": 5
+    },
+    {
+      "kind": "generator-adopted",
+      "projectRevision": 12,
+      "digest": "0bc9b568ddfe17cb00ebb8a75bec3215ac7e91c0ed0bf07357626fe313503882",
+      "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597"
+    }
+  ],
+  "revision": 12,
+  "schema": "ggd-hero-project@2",
+  "sections": {
+    "attributes": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "draft"
+    },
+    "identity": {
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      },
+      "revision": 1,
+      "state": "draft"
+    },
+    "mechanics": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    },
+    "package": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "presentation": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "skills": {
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      },
+      "revision": 12,
+      "state": "draft"
+    },
+    "validation": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    }
+  },
+  "sourceDesign": {
+    "identity": "作品：《葬送的芙莉蓮》  \n定位：魔法射擊、防壁、魔力資訊、生活魔法改編。",
+    "name": "芙莉蓮",
+    "ownerText": "### 29｜芙莉蓮\n\n作品：《葬送的芙莉蓮》  \n定位：魔法射擊、防壁、魔力資訊、生活魔法改編。\n\n- **PASSIVE｜魔力抑制**：降低敵方魔力感知類技能取得的強度資訊；不等同隱形，也不隱藏基本敵我識別。\n- **Q｜一般攻擊魔法・Zoltraak**：直線魔法射擊。\n- **W｜防禦魔法**：展開方向明確的防壁，消耗資源抵擋有限傷害。\n- **E｜飛行魔法**：短距離浮空移動。\n- **R｜〔葬送連射〕**：依序射出多方向魔法束，每束有獨立射線及整招總傷害上限。\n- **EX｜變出花田的魔法**：生成短期花田；GGD 改編效果為友軍首次進入時解除恐懼並取得小額護盾。\n\n**審查重點**：區分外觀魔力量、真實資源與可見性；防壁需處理方向及耐久。花田的戰鬥效果明列為 GGD 改編，不借用其他角色專屬魔法。\n\n",
+    "reviewText": "區分外觀魔力量、真實資源與可見性；防壁需處理方向及耐久。花田的戰鬥效果明列為 GGD 改編，不借用其他角色專屬魔法。",
+    "schema": "ggd-hero-source-design@1",
+    "slots": {
+      "E": {
+        "baselineBehavior": "朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。",
+        "name": "飛行魔法",
+        "ownerDescription": "短距離浮空移動。",
+        "refinementContracts": [
+          "M12"
+        ],
+        "requiredRefinement": "短期浮空可用落點跳躍預覽，不提供持續飛行。"
+      },
+      "EX": {
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-29-20260907.ex.guard\",\"onExisting\":\"keepLarger\"}]。",
+        "name": "變出花田的魔法",
+        "ownerDescription": "生成短期花田；GGD 改編效果為友軍首次進入時解除恐懼並取得小額護盾。",
+        "refinementContracts": [
+          "M12"
+        ],
+        "requiredRefinement": "目前自身盾；需花田區域、友軍首次進入解除恐懼及一次護盾。"
+      },
+      "PASSIVE": {
+        "baselineBehavior": "普攻追加極小級魔法傷害，內置冷卻 3 秒。",
+        "name": "魔力抑制",
+        "ownerDescription": "降低敵方魔力感知類技能取得的強度資訊；不等同隱形，也不隱藏基本敵我識別。",
+        "refinementContracts": [
+          "M12"
+        ],
+        "requiredRefinement": "需魔力感知的資訊層抑制，不可用隱形或傷害被動冒充。"
+      },
+      "Q": {
+        "baselineBehavior": "向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。",
+        "name": "一般攻擊魔法・Zoltraak",
+        "ownerDescription": "直線魔法射擊。",
+        "refinementContracts": [
+          "M12"
+        ],
+        "requiredRefinement": "Zoltraak 原型；需單束碰撞去重。"
+      },
+      "R": {
+        "baselineBehavior": "在指定區域依序落下 6 發；每發間隔 0.35 秒、半徑 150 wc3u、極小級傷害，可多次命中。",
+        "name": "〔葬送連射〕",
+        "ownerDescription": "依序射出多方向魔法束，每束有獨立射線及整招總傷害上限。",
+        "refinementContracts": [
+          "M12"
+        ],
+        "requiredRefinement": "目前定點六波；需各方向獨立射線及總傷害上限。"
+      },
+      "W": {
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-29-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。",
+        "name": "防禦魔法",
+        "ownerDescription": "展開方向明確的防壁，消耗資源抵擋有限傷害。",
+        "refinementContracts": [
+          "M12"
+        ],
+        "requiredRefinement": "目前無方向盾；需六角防壁方向、耐久與持續消耗。"
+      }
+    },
+    "sourceSha256": "541315ab12f52f3f0042eb9bfd98d3c58854cdf816a2cc1175d4445d161ac3a1"
+  },
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "validationState": {
+    "attributes": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "identity": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "mechanics": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    },
+    "package": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "presentation": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "skills": {
+      "revision": 12,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "id": "voxel-bodies",
+  "schema": "config.voxel-bodies@1",
+  "note": "GH#31 —— 每位英雄穿哪種身體的「後台開關」。owner 2026-07-28:「請你都先用暴雪的 3d model，要替換成體素是我從後台設定套用才生效」。空的 bodies 代表全部照預設規則 defaultPrefersVoxelBody:有自己的模型就用模型,只有真的沒有模型的才是體素。後台「體素身體」頁勾選後寫進 durable overlay,所以改動能撐過 deploy —— 這也是它不能住在 models/_voxel-skins.json 的原因,那份會被映像蓋回去。",
+  "bodies": {}
+}

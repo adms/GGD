@@ -1,0 +1,57 @@
+{
+  "id": "godie-e00w.r",
+  "schema": "ability@1",
+  "name": "77-04 真-雷光劍",
+  "provenance": "owner-spec",
+  "description": "[主動][範圍][AD加成]\n{{cd}}秒冷卻，施展時間2秒\n消耗MP{{mp}}\n施法距離：{{range}}\n\n「神鳴。雷光」\n神鳴流決戰奧義，聚集大量雷電於劍上予以斬擊，給予[小範圍]敵人600/800/1000+60% [AD]傷害。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0
+  ],
+  "range": 12.0,
+  "radiusTier": "極小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damageArea",
+      "damageType": "physical",
+      "amount": {
+        "damageTierPerRank": [
+          "小",
+          "中",
+          "中"
+        ],
+        "ratios": [
+          {
+            "stat": "ad",
+            "coeff": 0.6
+          }
+        ]
+      },
+      "radius": 3.0,
+      "radiusTier": "極小",
+      "includeOrigin": true
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-strike",
+      "modelKey": "w3x.stock.monsoonbolttarget"
+    }
+  ],
+  "icon": "assets/icons/abilities/godie-e00w.r.webp",
+  "vfxKey": "fx.prim.lightning.beam-lg",
+  "cooldownTier": "中",
+  "manaCostTier": "小",
+  "rangeTier": "極大",
+  "castTimeSec": 2
+}

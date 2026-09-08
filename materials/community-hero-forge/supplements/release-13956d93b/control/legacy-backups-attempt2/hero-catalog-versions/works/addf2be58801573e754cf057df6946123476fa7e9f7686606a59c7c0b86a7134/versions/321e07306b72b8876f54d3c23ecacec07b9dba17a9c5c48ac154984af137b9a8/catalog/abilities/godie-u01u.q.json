@@ -1,0 +1,56 @@
+{
+  "id": "godie-u01u.q",
+  "name": "11-01 燒鬼斬",
+  "icon": "assets/icons/abilities/godie-u01u.q.webp",
+  "provenance": "w3x-import",
+  "description": "[傷害加成]\n0秒冷卻時間\n\n在攻擊敵人時附加10點的火焰擴散傷害。",
+  "slot": "Q",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    6.0,
+    6.0,
+    6.0,
+    6.0
+  ],
+  "cooldownTier": "極小",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 3.0,
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "flat",
+          "value": 0.25
+        }
+      ],
+      "castTimeSec": 0.067
+    }
+  },
+  "vfxKey": "fx.w3x.particle.lavabreathdamage.p00",
+  "schema": "ability@1",
+  "castTimeSec": 0.067,
+  "hitFeel": {
+    "hitstopTicks": 3,
+    "hitstunTicks": 4,
+    "shakeMag": 0.315,
+    "shakeStyle": "directional",
+    "sparkKind": "heavy",
+    "flashColor": [
+      1.0,
+      0.52,
+      0.22
+    ],
+    "flashMs": 108,
+    "camKick": 0.27
+  }
+}

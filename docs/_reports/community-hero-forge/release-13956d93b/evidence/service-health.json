@@ -1,0 +1,139 @@
+{
+  "ok": true,
+  "rooms": {
+    "active": 0,
+    "capacity": 50,
+    "draining": false
+  },
+  "sim": {
+    "ticks": 1509,
+    "window": 512,
+    "p50Ms": 0.906,
+    "p95Ms": 1.776,
+    "p99Ms": 3.498,
+    "maxMs": 21.906,
+    "shedEvents": 0,
+    "shedTicks": 0,
+    "shedBehindMs": 0,
+    "lastShedAtMs": null,
+    "lastShedMatch": null,
+    "lastShedTicks": 0
+  },
+  "replay": {
+    "ok": true,
+    "reason": null,
+    "dir": "/private/tmp/ggd-model-upload-acceptance/release-13956d93b/replays",
+    "writable": true,
+    "probeError": null,
+    "required": true,
+    "unhealthyAfter": 3,
+    "degradedHealthzStatus": 200,
+    "opened": 1,
+    "recorded": 1,
+    "failures": 0,
+    "byPhase": {
+      "probe": 0,
+      "open": 0,
+      "collision": 0,
+      "write": 0,
+      "backlog": 0,
+      "seal": 0,
+      "compress": 0,
+      "prune": 0
+    },
+    "consecutiveFailures": 0,
+    "lastFailure": null,
+    "lastRecordedAtMs": 1788889550325,
+    "bytesWritten": 281203
+  },
+  "content": {
+    "ok": true,
+    "champions": 71,
+    "items": 146,
+    "abilities": 421,
+    "quarantined": 0,
+    "quarantinedDocs": [],
+    "reason": null
+  },
+  "contentCache": {
+    "enabled": true,
+    "engaged": false,
+    "backend": "none",
+    "mode": "n/a",
+    "ttlHours": 24,
+    "fingerprint": "n/a",
+    "reason": "帶 platform overlay 的那一趟**刻意不走快取**（失效鍵看不見 overlay）",
+    "ms": 676
+  },
+  "build": {
+    "stamp": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+    "stamped": true,
+    "source": "env",
+    "note": null
+  },
+  "platform": {
+    "url": "http://127.0.0.1:8097",
+    "source": "env",
+    "reason": "GGD_PLATFORM_URL set explicitly",
+    "degraded": false,
+    "degradations": [],
+    "content": {
+      "enabled": true,
+      "channel": "chan:content",
+      "state": "subscribed",
+      "connectedAt": "2026-09-08T17:44:21.327Z",
+      "lastError": null,
+      "unknownKinds": 0,
+      "documents": {
+        "curation": {
+          "announcedVersion": "",
+          "appliedVersion": "",
+          "documentUpdatedAt": null,
+          "lastRefreshAt": null,
+          "lastAttemptAt": null,
+          "lastRefreshOk": null,
+          "lastError": null,
+          "refreshes": 0,
+          "failures": 0,
+          "stale": false
+        },
+        "combat-env": {
+          "announcedVersion": "",
+          "appliedVersion": "",
+          "documentUpdatedAt": null,
+          "lastRefreshAt": null,
+          "lastAttemptAt": null,
+          "lastRefreshOk": null,
+          "lastError": null,
+          "refreshes": 0,
+          "failures": 0,
+          "stale": false
+        },
+        "server-ops": {
+          "announcedVersion": "",
+          "appliedVersion": "",
+          "documentUpdatedAt": null,
+          "lastRefreshAt": null,
+          "lastAttemptAt": null,
+          "lastRefreshOk": null,
+          "lastError": null,
+          "refreshes": 0,
+          "failures": 0,
+          "stale": false
+        },
+        "content-overlay": {
+          "announcedVersion": "",
+          "appliedVersion": "",
+          "documentUpdatedAt": null,
+          "lastRefreshAt": null,
+          "lastAttemptAt": null,
+          "lastRefreshOk": null,
+          "lastError": null,
+          "refreshes": 0,
+          "failures": 0,
+          "stale": false
+        }
+      }
+    }
+  }
+}

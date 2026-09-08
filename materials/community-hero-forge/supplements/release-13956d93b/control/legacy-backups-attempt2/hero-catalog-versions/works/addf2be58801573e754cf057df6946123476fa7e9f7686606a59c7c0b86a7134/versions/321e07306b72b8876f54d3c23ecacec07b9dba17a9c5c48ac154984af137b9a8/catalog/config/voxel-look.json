@@ -1,0 +1,14 @@
+{
+  "id": "voxel-look",
+  "schema": "config.voxel-look@1",
+  "note": "GH#881 —— 外觀關鍵字規則看不到的 tag。⭐ 這 7 個是 content/champions 裡全部的武器詞彙（2026-08-31 逐檔統計）。⚠️ 清空它 = rollback 回「武器 tag 決定上衣」的舊行為（9 隻英雄會變回和服）。",
+  "ignoredLookTags": [
+    "katana",
+    "sword",
+    "greatsword",
+    "fist",
+    "claw",
+    "bow",
+    "thrown"
+  ]
+}

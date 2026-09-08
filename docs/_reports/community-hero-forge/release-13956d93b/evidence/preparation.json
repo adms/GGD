@@ -1,0 +1,19 @@
+{
+  "codeCommit": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+  "contentDir": "/private/tmp/ggd-model-upload-acceptance/release-13956d93b/content",
+  "dataDir": "/private/tmp/ggd-model-upload-acceptance/release-13956d93b/data",
+  "retainedImportStore": {
+    "source": "/private/tmp/ggd-model-upload-acceptance/imports",
+    "files": 46752,
+    "allCopyHashesEqual": true
+  },
+  "ports": {
+    "redis": 6397,
+    "platform": 8097,
+    "importer": 8821,
+    "game": 2617,
+    "editor": 5197,
+    "contentApi": 8822
+  },
+  "scope": "Fresh isolated platform accounts; exact copy of prior immutable import history and current content. Original platform data and import store remain unchanged."
+}

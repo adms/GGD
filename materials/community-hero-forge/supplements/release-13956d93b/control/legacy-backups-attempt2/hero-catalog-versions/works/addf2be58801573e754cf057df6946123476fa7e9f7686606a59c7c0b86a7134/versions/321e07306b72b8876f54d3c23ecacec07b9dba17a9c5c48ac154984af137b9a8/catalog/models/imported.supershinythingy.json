@@ -1,0 +1,15 @@
+{
+  "id": "imported.supershinythingy",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/supershinythingy.glb",
+  "scale": 0.2122,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Stand",
+    "attack": "Stand",
+    "cast": "Stand",
+    "hurt": "Stand",
+    "death": "Stand"
+  }
+}

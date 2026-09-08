@@ -1,0 +1,16 @@
+{
+  "id": "godie-heroichigo-r1",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/wc3/ribbonblur1.png",
+  "widthAbove": 0.7,
+  "widthBelow": 0.68,
+  "lifespanSec": 0.2,
+  "color": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "blendMode": "additive",
+  "anchorBone": "bone_ribbon"
+}

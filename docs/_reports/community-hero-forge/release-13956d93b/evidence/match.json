@@ -1,0 +1,3409 @@
+{
+  "schema": "ggd-community-socket-proof@1",
+  "runId": "community37-current-1788889477024",
+  "platform": "http://127.0.0.1:8097/api/v1",
+  "startedAt": "2026-09-08T17:44:37.025Z",
+  "status": "passed",
+  "limits": "HTTP and game socket proof only; no browser or visual acceptance.",
+  "target": {
+    "gameRevision": "13956d93bb3e5f583c78296009ffc5db71a99dd3",
+    "contentVersion": "cv_720a022a110a",
+    "migrationFingerprint": "4d3fea0bcc0d",
+    "processorFingerprint": "f8ae3104cbe5"
+  },
+  "publications": [
+    {
+      "workId": "community-review-01-20260907",
+      "submissionId": "hero-e72ff23372f874cecca786ce03d70e1f978c4e91733eb30f0d760fc085c",
+      "packageDigest": "sha256:c8958a4adabd5217adbce744cedcad740dd7733d3c2e064f2790dc695b1f36e9",
+      "snapshotDigest": "sha256:dfc6186b1c69631cc8095dffe7475ff04c139bacc6e3ca90502d5cf7a2729474",
+      "name": "武藤遊戲"
+    },
+    {
+      "workId": "community-review-02-20260907",
+      "submissionId": "hero-4feecfaace00862ae490abee7e9a447e65ff5ccedad4ecb3d5c05c20354",
+      "packageDigest": "sha256:c6e8675c7e0f1d87725fb393c2bd9fc636cb020bc8490a842d8698dea0250eb8",
+      "snapshotDigest": "sha256:1474770d5a18f0b1c56554dfaffc855927c23a24f15f2110148a1b08102daa0d",
+      "name": "八神庵"
+    },
+    {
+      "workId": "community-review-03-20260907",
+      "submissionId": "hero-47089e36951570a54f9fd5286211b8db70c789a7761c6b1d8cdb98e7b67",
+      "packageDigest": "sha256:13a5125729d9888a141d00ed25bc418813ee928c0edad2411250ff295f6cb1de",
+      "snapshotDigest": "sha256:37bbdd780f3469645023e23005c1f7df2bfa1c1d619c11a0b3ae2755f1032c67",
+      "name": "不知火舞"
+    },
+    {
+      "workId": "community-review-04-20260907",
+      "submissionId": "hero-e99608ce286e517b6f2d1ec6e9d0159d4bf7037c3761363ee9965f8b16b",
+      "packageDigest": "sha256:f71d418c3d2466f1bff4c55a25d112b0f7136ccb3686d86636f1ed6acb3238ba",
+      "snapshotDigest": "sha256:d1e768954bd62f625149757736ce47b4e16b2829ca98bed8e7ccb271561aa463",
+      "name": "空條承太郎"
+    },
+    {
+      "workId": "community-review-05-20260907",
+      "submissionId": "hero-7310de7670e64bbeb908120bb8b07d92f89b8f95a8c2f7f0e5dd99c5b39",
+      "packageDigest": "sha256:00ed4194104501cd0cb156e72abb7d9f99591b967ea38ebab2cbedb5301e6412",
+      "snapshotDigest": "sha256:6e28f347e70507b030cab9330372790aab91032839010042b433809ecb6b823b",
+      "name": "洛克人"
+    },
+    {
+      "workId": "community-review-06-20260907",
+      "submissionId": "hero-2f224300403912b1b0f8a9a8656a70aa03f0cc208aeac86a5dffa22c3ac",
+      "packageDigest": "sha256:ef9a6c0de07ba7b8ce6bd51ec5aee5eccdad9577a5719cf52550df28bc30a931",
+      "snapshotDigest": "sha256:e9bdd3912c26fca0b0a59ed1f70ae82d45a10dd0e9611a097c7596e99ca9d0e0",
+      "name": "卡比"
+    },
+    {
+      "workId": "community-review-07-20260907",
+      "submissionId": "hero-37a62ec7d504ed977c6bd93f5e6a239b1172ef0885efceb476e22d2fbfd",
+      "packageDigest": "sha256:d415ae4664179787d10fd88a24dc8eb0c51468f904195bbc3ba445fd418ee437",
+      "snapshotDigest": "sha256:140036f9c5343b1420f06931752ecdd3a5c7538dbf8012106b24878be60d7bb3",
+      "name": "西索"
+    },
+    {
+      "workId": "community-review-08-20260907",
+      "submissionId": "hero-409b8a8376b5b5430eeeeb3bd636bb9d8f35d0ae28c561c2973b53a2d6d",
+      "packageDigest": "sha256:796cbdd36f3ee676e3ea51c59694f9aa6d1aadd3e80ca9197fbb200a9626a2ab",
+      "snapshotDigest": "sha256:1e2439e9fb2cd4b799498ba935b030a1efdae4731b717e50d198f641eb951018",
+      "name": "米卡莎"
+    },
+    {
+      "workId": "community-review-09-20260907",
+      "submissionId": "hero-28ccc30f0cd7d4db82e30a59ea4624eb9e02856b9f959d4b07616bb88e2",
+      "packageDigest": "sha256:f64a22956984ee97ee0b4147ec31be6087da68431f78657b5d94186902d3756a",
+      "snapshotDigest": "sha256:a5e2b28d9ab8a6d1077fca2cfbeeacffabee41ebd6f6a8f432e656d93fc91ebd",
+      "name": "赫蘿"
+    },
+    {
+      "workId": "community-review-10-20260907",
+      "submissionId": "hero-57685813f9823aca1164d761d25646396a94be5c5d9f466a9ffdf06e026",
+      "packageDigest": "sha256:6be85d34ae5f51a2bcee306db3a9da58ea43cea9a43fa873201f5e5022780050",
+      "snapshotDigest": "sha256:f3c6b5851560c5d7a3ff06033899b18dfee0157ca7763288d703ed0d3c05acc5",
+      "name": "魯路修"
+    },
+    {
+      "workId": "community-review-11-20260907",
+      "submissionId": "hero-097bab0e94fa6191562659e798fd61ec6f2be43c0d6e6f72dcbea962a4f",
+      "packageDigest": "sha256:ed86fcfd8d272be4bb9a2654fe3672b0f6d50b634a03be68708c00e1dfa52525",
+      "snapshotDigest": "sha256:a429a0a8a6f38073ff4ab9aba2db179bf499b1850ff97d300c2de0934da5bf76",
+      "name": "利姆路"
+    },
+    {
+      "workId": "community-review-12-20260907",
+      "submissionId": "hero-4f753832a86392df315fddaf1efb6be851880b10b732beb39f9e534112f",
+      "packageDigest": "sha256:68a5746aab8d86bf08a8027c2ea7483fff833642fea6ff8c91f7caa165622ac0",
+      "snapshotDigest": "sha256:9b1dbfa66dbb0c1cc2456b90e48a0c0d1042acf694d9017680f8d4cd260e013e",
+      "name": "衛宮士郎"
+    },
+    {
+      "workId": "community-review-13-20260907",
+      "submissionId": "hero-d9b06fb1290a1d1e9ba3309cf5574b61ca58525928eee3a4681f0ad3a0e",
+      "packageDigest": "sha256:350e47096ad91cfa3602a2160a708202110c111ebce71f86ba328e140b323ad4",
+      "snapshotDigest": "sha256:914589a36d3af4196cd6c72bf3d0ddafac55fb1dc66a6435d15b6682e51f0ba4",
+      "name": "朝田詩乃"
+    },
+    {
+      "workId": "community-review-14-20260907",
+      "submissionId": "hero-d03b25718770b4f3c21395ff95fe09d1112c48f2937326afe75b4f4b334",
+      "packageDigest": "sha256:81cfd3f281c0f37dc8d722775b38251420ce640409a3212cc6de65e8a77edceb",
+      "snapshotDigest": "sha256:3d2a8ac5974b8c118640ba31eb325e5f6663c040bfd761a3e81cb8c3ac524dbd",
+      "name": "殺老師"
+    },
+    {
+      "workId": "community-review-15-20260907",
+      "submissionId": "hero-cf5d314fdf75c2dbfbd3db5665165d4b68b94716ce550fd05be587d75b4",
+      "packageDigest": "sha256:fc04aa8edb7eb042dc4784557ca80c8d33d13dedd73c0a1d587ca80a32f2003f",
+      "snapshotDigest": "sha256:cea36a80e3db3d38fb4cef8578c12f3d056170b36bec5b2bfe230290b083c275",
+      "name": "比利海靈頓"
+    },
+    {
+      "workId": "community-review-16-20260907",
+      "submissionId": "hero-f450dbb8c75811e2e2e2e137cc28eb5cd908f551a6ca387d7dc60cc85a9",
+      "packageDigest": "sha256:916d7d74a0111d3afb2773c031ca5e94d26520af19fe3beeb1963ec2436bd89b",
+      "snapshotDigest": "sha256:b8cbdd19a4a253d1aa723e07144d975c342f9f0acdd575afceb00bb87af21d21",
+      "name": "魔法少女☆伊莉雅"
+    },
+    {
+      "workId": "community-review-17-20260907",
+      "submissionId": "hero-6e5e3db0e411e4a29432b68e4bbf72359fe6b8d99cb06bb1612ec9585e9",
+      "packageDigest": "sha256:44fc42d350849dacf23ce13f3cefbec6aede17c3fa19a9dd3a8615646d8a0578",
+      "snapshotDigest": "sha256:5c41a19c326f29fba860ed0fbb73e9774c974c7c566f029e3241ca306c26ec46",
+      "name": "安茲·烏爾·恭"
+    },
+    {
+      "workId": "community-review-18-20260907",
+      "submissionId": "hero-e22668207efed3d0f9365ab777478064bbb022c64999d8c5294088e93af",
+      "packageDigest": "sha256:3d5c6e1357f630e673375ba7fe66559eff630cadbb10374929ac06740358f157",
+      "snapshotDigest": "sha256:8fbdee5003769db96c99cced536f740f8a3b7485886b769c6015220d0f07552d",
+      "name": "吉爾伽美什"
+    },
+    {
+      "workId": "community-review-19-20260907",
+      "submissionId": "hero-8c5a791936bdcbb61460ba6d02fb0fa7444718d87010931dc8fa8d323e4",
+      "packageDigest": "sha256:d1a2507d43dfd6cb67b43a35f38dd82ab7b5e1a9794a81d93742364cc46b33be",
+      "snapshotDigest": "sha256:c1cd95eca2bba3e6c6afd8151f83dcdc73ffeb0d44caa063c69d91effc98e978",
+      "name": "桐谷和人"
+    },
+    {
+      "workId": "community-review-20-20260907",
+      "submissionId": "hero-c7883faa227e8322c789f12fb324c463fceac04b84f6e5fcde2ffcfdeb0",
+      "packageDigest": "sha256:9f0f602f70d29481e2f29b15ba4429053d2858c0836e8b76fe72c95665ee2c44",
+      "snapshotDigest": "sha256:bfd5f607bf743a2ca551aba8e3a226469af34be016e17e482670743f2a2eba31",
+      "name": "御坂美琴"
+    },
+    {
+      "workId": "community-review-21-20260907",
+      "submissionId": "hero-97ae6424c55587d7c1be0c1f21bf7454c3a09e2040e7002945a0c46cf0e",
+      "packageDigest": "sha256:a0f271dd396daa5b0e5cc9672666b011a897f0eb4f59e9699e1af86e92ad3a8f",
+      "snapshotDigest": "sha256:db09698b1c6305ce25c2b626209924cd26882352fc8c6f80444d2d0e38667439",
+      "name": "鹿目圓"
+    },
+    {
+      "workId": "community-review-22-20260907",
+      "submissionId": "hero-9cb83151b00cce91e60d404416de97a3d38f74a52b11e445044a9472906",
+      "packageDigest": "sha256:1a060cf70c40997d51662d260ceb0c1a2a5b0cbca60944945024e9b930d6aca0",
+      "snapshotDigest": "sha256:48532e9744ba2d5274e61144afca464fe2ff1e79f48e697a6a465011ebc9480b",
+      "name": "菜月昴"
+    },
+    {
+      "workId": "community-review-23-20260907",
+      "submissionId": "hero-f41a1e4786474e7d30afbdcfe1437bb8a4f0951dfcb9072551dbf0b8d2b",
+      "packageDigest": "sha256:c57148e9b7d60aaa032097e0cdabbea13a820a1f9bf2312f6b51bb1617b7c0d1",
+      "snapshotDigest": "sha256:a3346978926c41b5754e08f43790686f7a26ce8972a01c58759966ac37ae1cc5",
+      "name": "坂田銀時"
+    },
+    {
+      "workId": "community-review-24-20260907",
+      "submissionId": "hero-d69a65ce33a502e45e83a3e523f5ec8e5893a97d42fc9a4dcf8b5772e63",
+      "packageDigest": "sha256:bfcd6c007d1b60493b1702a9520ab0f3e49acedfd8c7f13019ad742bbf3e9fe4",
+      "snapshotDigest": "sha256:375b6852d70617f4ee4c55c98154107607ee79441d450483b769f165da78a022",
+      "name": "奇犽"
+    },
+    {
+      "workId": "community-review-25-20260907",
+      "submissionId": "hero-85f086eaaadef3bf9b939c695a0ff9834e4c9b857fbcf0ac0c5598b858b",
+      "packageDigest": "sha256:cbf19ca0fdb9dea7c7011113c63a5bfaa13983256ae56a4e5d7b12a90cc5f625",
+      "snapshotDigest": "sha256:56a49187fdb0b88c98f97969519d963aed68c2f1009b7a135e0b3dc0dfbe2863",
+      "name": "一拳超人"
+    },
+    {
+      "workId": "community-review-26-20260907",
+      "submissionId": "hero-c703e4d8ee1fe4c1d916de56171594b9acb0d1eaa3141be29db06e8be47",
+      "packageDigest": "sha256:050b6b9abd54b4fce3ff089be42b377af5571bd136ec31040e870e81800a376f",
+      "snapshotDigest": "sha256:69a1be555d7d0a096c4f10846284791cd7662a404f191a8fc42e209110365800",
+      "name": "名偵探柯南"
+    },
+    {
+      "workId": "community-review-27-20260907",
+      "submissionId": "hero-75d72f34c4b32cfa0edd6d0b7f94593f426f5d1334a18883d0111ca4c3d",
+      "packageDigest": "sha256:040ba59436e72d7a3ee1088e1dce2fd01fe4156d6e03b039d15825c8cb73743e",
+      "snapshotDigest": "sha256:b8a6e1e29768dc4dcdc91f88a473675c5fe9138bcc689e66d0d70f10f24d7bd8",
+      "name": "庫洛魔法使"
+    },
+    {
+      "workId": "community-review-28-20260907",
+      "submissionId": "hero-73aec8701ce18f8f8007bd34e667de40512375392752a2c272d1aa4588c",
+      "packageDigest": "sha256:11db43051eebddf1960ce1baee40c038eed590c319e02da164824c7df7a4bcc0",
+      "snapshotDigest": "sha256:08ea9847162d83376f9121d9988bc61c60a515398ddb82119517d2b5c8cd0bba",
+      "name": "艾莉絲·伯雷亞斯·格雷拉特"
+    },
+    {
+      "workId": "community-review-29-20260907",
+      "submissionId": "hero-b571f005b7b138b3e09dde6b5f29f80950feaf38d03f93a430e2cd15ac7",
+      "packageDigest": "sha256:95d248932f2e978e1c40c889802279410058ced773cd07775187160a2e58a4a6",
+      "snapshotDigest": "sha256:5b1081f55149319a3ad04490f73b611925199d0f4863abd2a9f7a1004421b77e",
+      "name": "芙莉蓮"
+    },
+    {
+      "workId": "community-review-30-20260907",
+      "submissionId": "hero-a4a4a0f76cf4bd187461666b99b86617ba42f61de83da258cfeb1f7992f",
+      "packageDigest": "sha256:bd7615196e4f64bf0da83afd672779d58b6e23bd27525977953fbf58c418c746",
+      "snapshotDigest": "sha256:3fca609e24258ffd34ddf5e1e8a01dc2065b3a657300bbcf5d85a86652b11088",
+      "name": "尼古貓貓"
+    },
+    {
+      "workId": "community-review-31-20260907",
+      "submissionId": "hero-e3be8760d959d665e4e16ff87f7759e9cee0dbd0ab6586a6e700fae01d0",
+      "packageDigest": "sha256:373cf893c6e09ece2b91c03f87f88cb8ff4b076df4b7fce38ed872edbef378eb",
+      "snapshotDigest": "sha256:d72d4a0991dcdb1b89123a30da5bf28c5847fbf90e64445fb0c92222ef01d8bd",
+      "name": "SUN樂"
+    },
+    {
+      "workId": "community-review-32-20260907",
+      "submissionId": "hero-f13759432cd7b56a4bf6662862dae9b36507710393981cb0f6a04d66029",
+      "packageDigest": "sha256:504c2c2c3eb323a7247d335e5cac449581586140651c183d55d3b3f927c60927",
+      "snapshotDigest": "sha256:a6b4e3ae8cbc6b97e5766d579d7764cf56fe4fd1f8b0dbe80221127c02f520d0",
+      "name": "阿薩謝爾"
+    },
+    {
+      "workId": "community-review-33-20260907",
+      "submissionId": "hero-49bca1bdc74d6719cf31bb07b6a2dcb5b7eefe87b3d4d916d57d392c9c5",
+      "packageDigest": "sha256:ffe1c0345ca62fbb7a41039f97e1937956f22d9a851aed4a3d865e276ec03bb0",
+      "snapshotDigest": "sha256:1c63df60efa1d6f27a4cce4a3030cbef9f092bf34487ee7cc79df879b375eb6a",
+      "name": "近衛刀太"
+    },
+    {
+      "workId": "community-review-34-20260907",
+      "submissionId": "hero-85300842fac916fd8f461694f1fafb003f0917ea0e29240e04c01c505e2",
+      "packageDigest": "sha256:54638b260e0da2eaf1641791cb385498b79a3b31cfa33416cfadf6b77667439e",
+      "snapshotDigest": "sha256:6e3a5711d7ae22b495fd065ec7f6a34c8dfc559c0115d9dd71a846d3621f0900",
+      "name": "高速婆婆"
+    },
+    {
+      "workId": "community-review-35-20260907",
+      "submissionId": "hero-5995330bca6f7f7531798e7343bb147ca3dde54caa7e4b0a5522fbc59f3",
+      "packageDigest": "sha256:9b9c7d62b6ef722bd3db9f427dc5cfedbebe3e3ee95e414662e013744086eb9a",
+      "snapshotDigest": "sha256:00eb7e1302dac18dd4bae55aa63e17346a06551173ec61ea480016ef680ebfbd",
+      "name": "炭治郎"
+    },
+    {
+      "workId": "community-review-36-20260907",
+      "submissionId": "hero-9c95285e8eeb9992aebfcdd6ae591b483601878bbc9e32afc721c69276f",
+      "packageDigest": "sha256:2308f1e8b736284df1ac7f85fc592ef32e113dab621d8e4dc329742f7af0f379",
+      "snapshotDigest": "sha256:99e3a4af0219300b36d88d6321cc7b598928955c05dd39f6402cdfe9976a9a30",
+      "name": "鬼畜王蘭斯"
+    },
+    {
+      "workId": "community-review-37-20260907",
+      "submissionId": "hero-1d33ff8cc3672ca7ca415a52b1685f9fa5d1eb693c96782a0229423af22",
+      "packageDigest": "sha256:20f4734422fa7dc971433eb7613df91098b374be0dac0b185c29de4abdde1620",
+      "snapshotDigest": "sha256:5b43598145fb8c0464f61fccf03248ff62c7eaaa1a9207c8c074f86924520c4b",
+      "name": "吉伊卡哇"
+    }
+  ],
+  "platformRoomId": "r_01M211YC63T1PH86D1XEKXDTCP",
+  "matchId": "m_01M211YC6FW976CAN5AB55C757",
+  "lastStep": "Complete ordinary match settled and both player game counts increased",
+  "loadedContentVersion": "cv_720a022a110a",
+  "roomContent": {
+    "digest": "sha256:f0aad6d593815ac436a25aeb83cd8f119aad430fa4977408d7953dd78221d692",
+    "heroes": [
+      {
+        "workId": "community-review-01-20260907",
+        "submissionId": "hero-e72ff23372f874cecca786ce03d70e1f978c4e91733eb30f0d760fc085c",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "武藤遊戲",
+        "packageDigest": "sha256:c8958a4adabd5217adbce744cedcad740dd7733d3c2e064f2790dc695b1f36e9",
+        "snapshotDigest": "sha256:dfc6186b1c69631cc8095dffe7475ff04c139bacc6e3ca90502d5cf7a2729474"
+      },
+      {
+        "workId": "community-review-02-20260907",
+        "submissionId": "hero-4feecfaace00862ae490abee7e9a447e65ff5ccedad4ecb3d5c05c20354",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "八神庵",
+        "packageDigest": "sha256:c6e8675c7e0f1d87725fb393c2bd9fc636cb020bc8490a842d8698dea0250eb8",
+        "snapshotDigest": "sha256:1474770d5a18f0b1c56554dfaffc855927c23a24f15f2110148a1b08102daa0d"
+      },
+      {
+        "workId": "community-review-03-20260907",
+        "submissionId": "hero-47089e36951570a54f9fd5286211b8db70c789a7761c6b1d8cdb98e7b67",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "不知火舞",
+        "packageDigest": "sha256:13a5125729d9888a141d00ed25bc418813ee928c0edad2411250ff295f6cb1de",
+        "snapshotDigest": "sha256:37bbdd780f3469645023e23005c1f7df2bfa1c1d619c11a0b3ae2755f1032c67"
+      },
+      {
+        "workId": "community-review-04-20260907",
+        "submissionId": "hero-e99608ce286e517b6f2d1ec6e9d0159d4bf7037c3761363ee9965f8b16b",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "空條承太郎",
+        "packageDigest": "sha256:f71d418c3d2466f1bff4c55a25d112b0f7136ccb3686d86636f1ed6acb3238ba",
+        "snapshotDigest": "sha256:d1e768954bd62f625149757736ce47b4e16b2829ca98bed8e7ccb271561aa463"
+      },
+      {
+        "workId": "community-review-05-20260907",
+        "submissionId": "hero-7310de7670e64bbeb908120bb8b07d92f89b8f95a8c2f7f0e5dd99c5b39",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "洛克人",
+        "packageDigest": "sha256:00ed4194104501cd0cb156e72abb7d9f99591b967ea38ebab2cbedb5301e6412",
+        "snapshotDigest": "sha256:6e28f347e70507b030cab9330372790aab91032839010042b433809ecb6b823b"
+      },
+      {
+        "workId": "community-review-06-20260907",
+        "submissionId": "hero-2f224300403912b1b0f8a9a8656a70aa03f0cc208aeac86a5dffa22c3ac",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "卡比",
+        "packageDigest": "sha256:ef9a6c0de07ba7b8ce6bd51ec5aee5eccdad9577a5719cf52550df28bc30a931",
+        "snapshotDigest": "sha256:e9bdd3912c26fca0b0a59ed1f70ae82d45a10dd0e9611a097c7596e99ca9d0e0"
+      },
+      {
+        "workId": "community-review-07-20260907",
+        "submissionId": "hero-37a62ec7d504ed977c6bd93f5e6a239b1172ef0885efceb476e22d2fbfd",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "西索",
+        "packageDigest": "sha256:d415ae4664179787d10fd88a24dc8eb0c51468f904195bbc3ba445fd418ee437",
+        "snapshotDigest": "sha256:140036f9c5343b1420f06931752ecdd3a5c7538dbf8012106b24878be60d7bb3"
+      },
+      {
+        "workId": "community-review-08-20260907",
+        "submissionId": "hero-409b8a8376b5b5430eeeeb3bd636bb9d8f35d0ae28c561c2973b53a2d6d",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "米卡莎",
+        "packageDigest": "sha256:796cbdd36f3ee676e3ea51c59694f9aa6d1aadd3e80ca9197fbb200a9626a2ab",
+        "snapshotDigest": "sha256:1e2439e9fb2cd4b799498ba935b030a1efdae4731b717e50d198f641eb951018"
+      },
+      {
+        "workId": "community-review-09-20260907",
+        "submissionId": "hero-28ccc30f0cd7d4db82e30a59ea4624eb9e02856b9f959d4b07616bb88e2",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "赫蘿",
+        "packageDigest": "sha256:f64a22956984ee97ee0b4147ec31be6087da68431f78657b5d94186902d3756a",
+        "snapshotDigest": "sha256:a5e2b28d9ab8a6d1077fca2cfbeeacffabee41ebd6f6a8f432e656d93fc91ebd"
+      },
+      {
+        "workId": "community-review-10-20260907",
+        "submissionId": "hero-57685813f9823aca1164d761d25646396a94be5c5d9f466a9ffdf06e026",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "魯路修",
+        "packageDigest": "sha256:6be85d34ae5f51a2bcee306db3a9da58ea43cea9a43fa873201f5e5022780050",
+        "snapshotDigest": "sha256:f3c6b5851560c5d7a3ff06033899b18dfee0157ca7763288d703ed0d3c05acc5"
+      },
+      {
+        "workId": "community-review-11-20260907",
+        "submissionId": "hero-097bab0e94fa6191562659e798fd61ec6f2be43c0d6e6f72dcbea962a4f",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "利姆路",
+        "packageDigest": "sha256:ed86fcfd8d272be4bb9a2654fe3672b0f6d50b634a03be68708c00e1dfa52525",
+        "snapshotDigest": "sha256:a429a0a8a6f38073ff4ab9aba2db179bf499b1850ff97d300c2de0934da5bf76"
+      },
+      {
+        "workId": "community-review-12-20260907",
+        "submissionId": "hero-4f753832a86392df315fddaf1efb6be851880b10b732beb39f9e534112f",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "衛宮士郎",
+        "packageDigest": "sha256:68a5746aab8d86bf08a8027c2ea7483fff833642fea6ff8c91f7caa165622ac0",
+        "snapshotDigest": "sha256:9b1dbfa66dbb0c1cc2456b90e48a0c0d1042acf694d9017680f8d4cd260e013e"
+      },
+      {
+        "workId": "community-review-13-20260907",
+        "submissionId": "hero-d9b06fb1290a1d1e9ba3309cf5574b61ca58525928eee3a4681f0ad3a0e",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "朝田詩乃",
+        "packageDigest": "sha256:350e47096ad91cfa3602a2160a708202110c111ebce71f86ba328e140b323ad4",
+        "snapshotDigest": "sha256:914589a36d3af4196cd6c72bf3d0ddafac55fb1dc66a6435d15b6682e51f0ba4"
+      },
+      {
+        "workId": "community-review-14-20260907",
+        "submissionId": "hero-d03b25718770b4f3c21395ff95fe09d1112c48f2937326afe75b4f4b334",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "殺老師",
+        "packageDigest": "sha256:81cfd3f281c0f37dc8d722775b38251420ce640409a3212cc6de65e8a77edceb",
+        "snapshotDigest": "sha256:3d2a8ac5974b8c118640ba31eb325e5f6663c040bfd761a3e81cb8c3ac524dbd"
+      },
+      {
+        "workId": "community-review-15-20260907",
+        "submissionId": "hero-cf5d314fdf75c2dbfbd3db5665165d4b68b94716ce550fd05be587d75b4",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "比利海靈頓",
+        "packageDigest": "sha256:fc04aa8edb7eb042dc4784557ca80c8d33d13dedd73c0a1d587ca80a32f2003f",
+        "snapshotDigest": "sha256:cea36a80e3db3d38fb4cef8578c12f3d056170b36bec5b2bfe230290b083c275"
+      },
+      {
+        "workId": "community-review-16-20260907",
+        "submissionId": "hero-f450dbb8c75811e2e2e2e137cc28eb5cd908f551a6ca387d7dc60cc85a9",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "魔法少女☆伊莉雅",
+        "packageDigest": "sha256:916d7d74a0111d3afb2773c031ca5e94d26520af19fe3beeb1963ec2436bd89b",
+        "snapshotDigest": "sha256:b8cbdd19a4a253d1aa723e07144d975c342f9f0acdd575afceb00bb87af21d21"
+      },
+      {
+        "workId": "community-review-17-20260907",
+        "submissionId": "hero-6e5e3db0e411e4a29432b68e4bbf72359fe6b8d99cb06bb1612ec9585e9",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "安茲·烏爾·恭",
+        "packageDigest": "sha256:44fc42d350849dacf23ce13f3cefbec6aede17c3fa19a9dd3a8615646d8a0578",
+        "snapshotDigest": "sha256:5c41a19c326f29fba860ed0fbb73e9774c974c7c566f029e3241ca306c26ec46"
+      },
+      {
+        "workId": "community-review-18-20260907",
+        "submissionId": "hero-e22668207efed3d0f9365ab777478064bbb022c64999d8c5294088e93af",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "吉爾伽美什",
+        "packageDigest": "sha256:3d5c6e1357f630e673375ba7fe66559eff630cadbb10374929ac06740358f157",
+        "snapshotDigest": "sha256:8fbdee5003769db96c99cced536f740f8a3b7485886b769c6015220d0f07552d"
+      },
+      {
+        "workId": "community-review-19-20260907",
+        "submissionId": "hero-8c5a791936bdcbb61460ba6d02fb0fa7444718d87010931dc8fa8d323e4",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "桐谷和人",
+        "packageDigest": "sha256:d1a2507d43dfd6cb67b43a35f38dd82ab7b5e1a9794a81d93742364cc46b33be",
+        "snapshotDigest": "sha256:c1cd95eca2bba3e6c6afd8151f83dcdc73ffeb0d44caa063c69d91effc98e978"
+      },
+      {
+        "workId": "community-review-20-20260907",
+        "submissionId": "hero-c7883faa227e8322c789f12fb324c463fceac04b84f6e5fcde2ffcfdeb0",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "御坂美琴",
+        "packageDigest": "sha256:9f0f602f70d29481e2f29b15ba4429053d2858c0836e8b76fe72c95665ee2c44",
+        "snapshotDigest": "sha256:bfd5f607bf743a2ca551aba8e3a226469af34be016e17e482670743f2a2eba31"
+      },
+      {
+        "workId": "community-review-21-20260907",
+        "submissionId": "hero-97ae6424c55587d7c1be0c1f21bf7454c3a09e2040e7002945a0c46cf0e",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "鹿目圓",
+        "packageDigest": "sha256:a0f271dd396daa5b0e5cc9672666b011a897f0eb4f59e9699e1af86e92ad3a8f",
+        "snapshotDigest": "sha256:db09698b1c6305ce25c2b626209924cd26882352fc8c6f80444d2d0e38667439"
+      },
+      {
+        "workId": "community-review-22-20260907",
+        "submissionId": "hero-9cb83151b00cce91e60d404416de97a3d38f74a52b11e445044a9472906",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "菜月昴",
+        "packageDigest": "sha256:1a060cf70c40997d51662d260ceb0c1a2a5b0cbca60944945024e9b930d6aca0",
+        "snapshotDigest": "sha256:48532e9744ba2d5274e61144afca464fe2ff1e79f48e697a6a465011ebc9480b"
+      },
+      {
+        "workId": "community-review-23-20260907",
+        "submissionId": "hero-f41a1e4786474e7d30afbdcfe1437bb8a4f0951dfcb9072551dbf0b8d2b",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "坂田銀時",
+        "packageDigest": "sha256:c57148e9b7d60aaa032097e0cdabbea13a820a1f9bf2312f6b51bb1617b7c0d1",
+        "snapshotDigest": "sha256:a3346978926c41b5754e08f43790686f7a26ce8972a01c58759966ac37ae1cc5"
+      },
+      {
+        "workId": "community-review-24-20260907",
+        "submissionId": "hero-d69a65ce33a502e45e83a3e523f5ec8e5893a97d42fc9a4dcf8b5772e63",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "奇犽",
+        "packageDigest": "sha256:bfcd6c007d1b60493b1702a9520ab0f3e49acedfd8c7f13019ad742bbf3e9fe4",
+        "snapshotDigest": "sha256:375b6852d70617f4ee4c55c98154107607ee79441d450483b769f165da78a022"
+      },
+      {
+        "workId": "community-review-25-20260907",
+        "submissionId": "hero-85f086eaaadef3bf9b939c695a0ff9834e4c9b857fbcf0ac0c5598b858b",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "一拳超人",
+        "packageDigest": "sha256:cbf19ca0fdb9dea7c7011113c63a5bfaa13983256ae56a4e5d7b12a90cc5f625",
+        "snapshotDigest": "sha256:56a49187fdb0b88c98f97969519d963aed68c2f1009b7a135e0b3dc0dfbe2863"
+      },
+      {
+        "workId": "community-review-26-20260907",
+        "submissionId": "hero-c703e4d8ee1fe4c1d916de56171594b9acb0d1eaa3141be29db06e8be47",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "名偵探柯南",
+        "packageDigest": "sha256:050b6b9abd54b4fce3ff089be42b377af5571bd136ec31040e870e81800a376f",
+        "snapshotDigest": "sha256:69a1be555d7d0a096c4f10846284791cd7662a404f191a8fc42e209110365800"
+      },
+      {
+        "workId": "community-review-27-20260907",
+        "submissionId": "hero-75d72f34c4b32cfa0edd6d0b7f94593f426f5d1334a18883d0111ca4c3d",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "庫洛魔法使",
+        "packageDigest": "sha256:040ba59436e72d7a3ee1088e1dce2fd01fe4156d6e03b039d15825c8cb73743e",
+        "snapshotDigest": "sha256:b8a6e1e29768dc4dcdc91f88a473675c5fe9138bcc689e66d0d70f10f24d7bd8"
+      },
+      {
+        "workId": "community-review-28-20260907",
+        "submissionId": "hero-73aec8701ce18f8f8007bd34e667de40512375392752a2c272d1aa4588c",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "艾莉絲·伯雷亞斯·格雷拉特",
+        "packageDigest": "sha256:11db43051eebddf1960ce1baee40c038eed590c319e02da164824c7df7a4bcc0",
+        "snapshotDigest": "sha256:08ea9847162d83376f9121d9988bc61c60a515398ddb82119517d2b5c8cd0bba"
+      },
+      {
+        "workId": "community-review-29-20260907",
+        "submissionId": "hero-b571f005b7b138b3e09dde6b5f29f80950feaf38d03f93a430e2cd15ac7",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "芙莉蓮",
+        "packageDigest": "sha256:95d248932f2e978e1c40c889802279410058ced773cd07775187160a2e58a4a6",
+        "snapshotDigest": "sha256:5b1081f55149319a3ad04490f73b611925199d0f4863abd2a9f7a1004421b77e"
+      },
+      {
+        "workId": "community-review-30-20260907",
+        "submissionId": "hero-a4a4a0f76cf4bd187461666b99b86617ba42f61de83da258cfeb1f7992f",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "尼古貓貓",
+        "packageDigest": "sha256:bd7615196e4f64bf0da83afd672779d58b6e23bd27525977953fbf58c418c746",
+        "snapshotDigest": "sha256:3fca609e24258ffd34ddf5e1e8a01dc2065b3a657300bbcf5d85a86652b11088"
+      },
+      {
+        "workId": "community-review-31-20260907",
+        "submissionId": "hero-e3be8760d959d665e4e16ff87f7759e9cee0dbd0ab6586a6e700fae01d0",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "SUN樂",
+        "packageDigest": "sha256:373cf893c6e09ece2b91c03f87f88cb8ff4b076df4b7fce38ed872edbef378eb",
+        "snapshotDigest": "sha256:d72d4a0991dcdb1b89123a30da5bf28c5847fbf90e64445fb0c92222ef01d8bd"
+      },
+      {
+        "workId": "community-review-32-20260907",
+        "submissionId": "hero-f13759432cd7b56a4bf6662862dae9b36507710393981cb0f6a04d66029",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "阿薩謝爾",
+        "packageDigest": "sha256:504c2c2c3eb323a7247d335e5cac449581586140651c183d55d3b3f927c60927",
+        "snapshotDigest": "sha256:a6b4e3ae8cbc6b97e5766d579d7764cf56fe4fd1f8b0dbe80221127c02f520d0"
+      },
+      {
+        "workId": "community-review-33-20260907",
+        "submissionId": "hero-49bca1bdc74d6719cf31bb07b6a2dcb5b7eefe87b3d4d916d57d392c9c5",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "近衛刀太",
+        "packageDigest": "sha256:ffe1c0345ca62fbb7a41039f97e1937956f22d9a851aed4a3d865e276ec03bb0",
+        "snapshotDigest": "sha256:1c63df60efa1d6f27a4cce4a3030cbef9f092bf34487ee7cc79df879b375eb6a"
+      },
+      {
+        "workId": "community-review-34-20260907",
+        "submissionId": "hero-85300842fac916fd8f461694f1fafb003f0917ea0e29240e04c01c505e2",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "高速婆婆",
+        "packageDigest": "sha256:54638b260e0da2eaf1641791cb385498b79a3b31cfa33416cfadf6b77667439e",
+        "snapshotDigest": "sha256:6e3a5711d7ae22b495fd065ec7f6a34c8dfc559c0115d9dd71a846d3621f0900"
+      },
+      {
+        "workId": "community-review-35-20260907",
+        "submissionId": "hero-5995330bca6f7f7531798e7343bb147ca3dde54caa7e4b0a5522fbc59f3",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "炭治郎",
+        "packageDigest": "sha256:9b9c7d62b6ef722bd3db9f427dc5cfedbebe3e3ee95e414662e013744086eb9a",
+        "snapshotDigest": "sha256:00eb7e1302dac18dd4bae55aa63e17346a06551173ec61ea480016ef680ebfbd"
+      },
+      {
+        "workId": "community-review-36-20260907",
+        "submissionId": "hero-9c95285e8eeb9992aebfcdd6ae591b483601878bbc9e32afc721c69276f",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "鬼畜王蘭斯",
+        "packageDigest": "sha256:2308f1e8b736284df1ac7f85fc592ef32e113dab621d8e4dc329742f7af0f379",
+        "snapshotDigest": "sha256:99e3a4af0219300b36d88d6321cc7b598928955c05dd39f6402cdfe9976a9a30"
+      },
+      {
+        "workId": "community-review-37-20260907",
+        "submissionId": "hero-1d33ff8cc3672ca7ca415a52b1685f9fa5d1eb693c96782a0229423af22",
+        "authorId": "01M210NXETAXE000A55QTJAMYG",
+        "authorName": "model-author",
+        "name": "吉伊卡哇",
+        "packageDigest": "sha256:20f4734422fa7dc971433eb7613df91098b374be0dac0b185c29de4abdde1620",
+        "snapshotDigest": "sha256:5b43598145fb8c0464f61fccf03248ff62c7eaaa1a9207c8c074f86924520c4b"
+      }
+    ],
+    "assets": 146
+  },
+  "networkEvents": [
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 1,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 1,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 1,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 1,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 1,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 1,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 1,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 1,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 1,
+        "slot": "Q",
+        "rank": 4
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 2,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 2,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 2,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 2,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 2,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 2,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 2,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 2,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 2,
+        "slot": "Q",
+        "rank": 4
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 3,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 3,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 3,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 3,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 3,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 3,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 3,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 3,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 3,
+        "slot": "Q",
+        "rank": 4
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 4,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 4,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 4,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 4,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 4,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 4,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 4,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 4,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 4,
+        "slot": "Q",
+        "rank": 4
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 5,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 5,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 5,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 5,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 5,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 5,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 5,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 5,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 5,
+        "slot": "Q",
+        "rank": 4
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 6,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 6,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 6,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 6,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 6,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 6,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 6,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 6,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 6,
+        "slot": "Q",
+        "rank": 4
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 7,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 7,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 7,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 7,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 7,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 7,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 7,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 7,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 7,
+        "slot": "Q",
+        "rank": 4
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 8,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 8,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 8,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 8,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 8,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 8,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 8,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 8,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 8,
+        "slot": "Q",
+        "rank": 4
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 9,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 9,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 9,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 9,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 9,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 9,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 9,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 9,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 9,
+        "slot": "Q",
+        "rank": 4
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 10,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 10,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 10,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 10,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 10,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 10,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 10,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 10,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 10,
+        "slot": "Q",
+        "rank": 4
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 11,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 11,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 11,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 11,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 11,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 11,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 11,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 11,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 11,
+        "slot": "Q",
+        "rank": 4
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 12,
+        "level": 7
+      }
+    },
+    {
+      "type": "levelUp",
+      "tick": 4,
+      "data": {
+        "id": 12,
+        "level": 8
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 12,
+        "slot": "Q",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 12,
+        "slot": "W",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 12,
+        "slot": "E",
+        "rank": 1
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 12,
+        "slot": "Q",
+        "rank": 3
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 12,
+        "slot": "W",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 12,
+        "slot": "E",
+        "rank": 2
+      }
+    },
+    {
+      "type": "rankUp",
+      "tick": 4,
+      "data": {
+        "id": 12,
+        "slot": "Q",
+        "rank": 4
+      }
+    }
+  ],
+  "rejections": [],
+  "expectedPlayers": [
+    [
+      "01M210NXETAXE000A55QTJAMYG",
+      "community-review-01-20260907"
+    ],
+    [
+      "01M210NXCFYD4PEQHQ4DEMFT8G",
+      "community-review-17-20260907"
+    ]
+  ],
+  "selectionProjection": [
+    {
+      "accountId": "01M210NXCFYD4PEQHQ4DEMFT8G",
+      "championId": "community-review-17-20260907",
+      "seatId": 0,
+      "connected": true,
+      "driver": "human"
+    },
+    {
+      "accountId": "01M210NXETAXE000A55QTJAMYG",
+      "championId": "community-review-01-20260907",
+      "seatId": 1,
+      "connected": true,
+      "driver": "human"
+    },
+    {
+      "accountId": "bot-2",
+      "championId": "community-review-37-20260907",
+      "seatId": 2,
+      "connected": false,
+      "driver": "ai"
+    },
+    {
+      "accountId": "bot-3",
+      "championId": "community-review-21-20260907",
+      "seatId": 3,
+      "connected": false,
+      "driver": "ai"
+    },
+    {
+      "accountId": "bot-4",
+      "championId": "community-review-27-20260907",
+      "seatId": 4,
+      "connected": false,
+      "driver": "ai"
+    },
+    {
+      "accountId": "bot-5",
+      "championId": "community-review-28-20260907",
+      "seatId": 5,
+      "connected": false,
+      "driver": "ai"
+    },
+    {
+      "accountId": "bot-6",
+      "championId": "community-review-16-20260907",
+      "seatId": 6,
+      "connected": false,
+      "driver": "ai"
+    },
+    {
+      "accountId": "bot-7",
+      "championId": "community-review-08-20260907",
+      "seatId": 7,
+      "connected": false,
+      "driver": "ai"
+    },
+    {
+      "accountId": "bot-8",
+      "championId": "community-review-14-20260907",
+      "seatId": 8,
+      "connected": false,
+      "driver": "ai"
+    },
+    {
+      "accountId": "bot-9",
+      "championId": "community-review-02-20260907",
+      "seatId": 9,
+      "connected": false,
+      "driver": "ai"
+    },
+    {
+      "accountId": "bot-10",
+      "championId": "community-review-09-20260907",
+      "seatId": 10,
+      "connected": false,
+      "driver": "ai"
+    },
+    {
+      "accountId": "bot-11",
+      "championId": "community-review-23-20260907",
+      "seatId": 11,
+      "connected": false,
+      "driver": "ai"
+    }
+  ],
+  "selectedSeats": [
+    {
+      "accountId": "01M210NXCFYD4PEQHQ4DEMFT8G",
+      "championId": "community-review-17-20260907"
+    },
+    {
+      "accountId": "01M210NXETAXE000A55QTJAMYG",
+      "championId": "community-review-01-20260907"
+    }
+  ],
+  "admission": {
+    "beforeOtherPlayerReady": 0,
+    "afterBothJoined": 21
+  },
+  "reconnection": {
+    "passed": true,
+    "manifestDigest": "sha256:f0aad6d593815ac436a25aeb83cd8f119aad430fa4977408d7953dd78221d692",
+    "championId": "community-review-01-20260907"
+  },
+  "combat": {
+    "scope": "Both humans cast W through normal progression; this live match does not claim all 222 slots were cast.",
+    "casts": [
+      {
+        "accountId": "01M210NXETAXE000A55QTJAMYG",
+        "championId": "community-review-01-20260907",
+        "type": "abilityCast",
+        "tick": 156,
+        "data": {
+          "caster": 2,
+          "slot": "W",
+          "abilityId": "community-review-01-20260907.w"
+        }
+      },
+      {
+        "accountId": "01M210NXCFYD4PEQHQ4DEMFT8G",
+        "championId": "community-review-17-20260907",
+        "type": "abilityCast",
+        "tick": 156,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "community-review-17-20260907.w"
+        }
+      }
+    ]
+  },
+  "castAttempts": [
+    {
+      "accountId": "01M210NXETAXE000A55QTJAMYG",
+      "slot": "W",
+      "definition": {
+        "castTimeSec": 0.1,
+        "castTimeTier": "小",
+        "castType": "self",
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "cooldownTier": "小",
+        "description": "【目前模板可執行】召喚 1 名 sela 樣板代理，6 秒、25% 傷害、30% 生命，同類上限 1、主人死亡清除。\n【目標設計】召喚一名可受擊的黑魔導女孩；與黑魔導共同攻擊同一目標時，觸發有內置冷卻的協同追加傷害。\n【待補機制】黑魔導女孩造型、與黑魔導協同事件未提供；目前同模板上限須驗證跨槽隔離。",
+        "effects": [
+          {
+            "championId": "sela",
+            "count": 1,
+            "damageMult": 0.25,
+            "durationSec": 6,
+            "formation": "ring",
+            "hpMult": 0.3,
+            "kind": "summon",
+            "maxAlive": 1,
+            "onOwnerDeath": "despawn",
+            "spread": 1.5
+          }
+        ],
+        "icon": "assets/icons/abilities/sela.w.webp",
+        "id": "community-review-01-20260907.w",
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "maxRank": 4,
+        "name": "黑魔導女孩",
+        "provenance": "editor-json",
+        "range": 6,
+        "rangeTier": "中",
+        "schema": "ability@1",
+        "slot": "W",
+        "targetsEnemies": false,
+        "template": {
+          "contentSha256": "sha256:d08ea1add026b0548f07c7d9d7362263b0e38701f3bb9b6237e963a5f78d1f6f",
+          "inheritDefaults": true,
+          "params": {
+            "body": "champion",
+            "castTimeSec": 0.35,
+            "championId": "sela",
+            "cleanse": "none",
+            "count": 1,
+            "damageMult": 0.25,
+            "durationSec": 6,
+            "formation": "ring",
+            "hpMult": 0.3,
+            "maxAlive": 1,
+            "onOwnerDeath": "despawn",
+            "spread": 1.5
+          },
+          "ref": "hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804"
+        }
+      },
+      "seat": {
+        "seatId": 1,
+        "teamId": 0,
+        "displayName": "model-author",
+        "accountId": "01M210NXETAXE000A55QTJAMYG",
+        "connected": true,
+        "driver": "human",
+        "championId": "community-review-01-20260907",
+        "entityId": 2,
+        "level": 8,
+        "gold": 1350,
+        "xp": 0,
+        "ready": false,
+        "lastAckSeq": 0,
+        "items": [
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "augments": [
+          "grail-c-01"
+        ],
+        "offers": [],
+        "abilityRanks": [
+          4,
+          2,
+          2,
+          0
+        ],
+        "cooldowns": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "unspentPoints": 0,
+        "exAbilityId": "community-review-01-20260907.ex",
+        "exRank": 0,
+        "exCooldown": 0,
+        "passiveCooldown": 0,
+        "statStacks": 0,
+        "statCapstonePct": 0,
+        "attrBonus": [
+          0,
+          0,
+          0
+        ],
+        "undoDepth": 0,
+        "roundKills": 0,
+        "roundDeaths": 0,
+        "coinsLeft": 10,
+        "statusIds": [],
+        "statusRemainTicks": [],
+        "mobKills": 0,
+        "roundDeathTick": 0,
+        "counterIds": [],
+        "counterCounts": [],
+        "itemRefund": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "itemRandom": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "rating": 1000,
+        "human": true,
+        "toggleMask": 0,
+        "locked": false,
+        "adNow": 87,
+        "apNow": 219,
+        "hpNow": 6183,
+        "hpMaxNow": 6183
+      },
+      "events": [
+        {
+          "type": "abilityCast",
+          "tick": 155,
+          "data": {
+            "caster": 6,
+            "slot": "W",
+            "abilityId": "community-review-28-20260907.w"
+          }
+        },
+        {
+          "type": "castBegin",
+          "tick": 155,
+          "data": {
+            "caster": 6,
+            "slot": "W",
+            "abilityId": "community-review-28-20260907.w",
+            "ticks": 3,
+            "castTimeSec": 0.1
+          }
+        },
+        {
+          "type": "abilityCast",
+          "tick": 155,
+          "data": {
+            "caster": 12,
+            "slot": "W",
+            "abilityId": "community-review-23-20260907.w"
+          }
+        },
+        {
+          "type": "castBegin",
+          "tick": 155,
+          "data": {
+            "caster": 12,
+            "slot": "W",
+            "abilityId": "community-review-23-20260907.w",
+            "ticks": 3,
+            "castTimeSec": 0.1
+          }
+        },
+        {
+          "type": "abilityCast",
+          "tick": 156,
+          "data": {
+            "caster": 1,
+            "slot": "W",
+            "abilityId": "community-review-17-20260907.w"
+          }
+        },
+        {
+          "type": "castBegin",
+          "tick": 156,
+          "data": {
+            "caster": 1,
+            "slot": "W",
+            "abilityId": "community-review-17-20260907.w",
+            "ticks": 3,
+            "castTimeSec": 0.1
+          }
+        },
+        {
+          "type": "abilityCast",
+          "tick": 156,
+          "data": {
+            "caster": 2,
+            "slot": "W",
+            "abilityId": "community-review-01-20260907.w"
+          }
+        },
+        {
+          "type": "castBegin",
+          "tick": 156,
+          "data": {
+            "caster": 2,
+            "slot": "W",
+            "abilityId": "community-review-01-20260907.w",
+            "ticks": 3,
+            "castTimeSec": 0.1
+          }
+        },
+        {
+          "type": "abilityCast",
+          "tick": 156,
+          "data": {
+            "caster": 7,
+            "slot": "W",
+            "abilityId": "community-review-16-20260907.w"
+          }
+        },
+        {
+          "type": "castBegin",
+          "tick": 156,
+          "data": {
+            "caster": 7,
+            "slot": "W",
+            "abilityId": "community-review-16-20260907.w",
+            "ticks": 3,
+            "castTimeSec": 0.1
+          }
+        },
+        {
+          "type": "abilityCast",
+          "tick": 157,
+          "data": {
+            "caster": 8,
+            "slot": "E",
+            "abilityId": "community-review-08-20260907.e"
+          }
+        },
+        {
+          "type": "castBegin",
+          "tick": 157,
+          "data": {
+            "caster": 8,
+            "slot": "E",
+            "abilityId": "community-review-08-20260907.e",
+            "ticks": 3,
+            "castTimeSec": 0.1
+          }
+        }
+      ],
+      "inputs": [
+        {
+          "seq": 2,
+          "commands": [
+            {
+              "kind": "castAbility",
+              "slot": "W",
+              "target": {
+                "type": "self"
+              }
+            }
+          ],
+          "observedDistance": 36.76955262170048
+        }
+      ]
+    },
+    {
+      "accountId": "01M210NXCFYD4PEQHQ4DEMFT8G",
+      "slot": "W",
+      "definition": {
+        "castTimeSec": 0.1,
+        "castTimeTier": "小",
+        "castType": "self",
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "cooldownTier": "小",
+        "description": "【目前模板可執行】召喚 1 名 thorne 樣板代理，6 秒、25% 傷害、30% 生命，同類上限 1、主人死亡清除。\n【目標設計】召喚一名可受擊的死亡騎士，負責近身牽制。\n【待補機制】死亡騎士造型待製，代理採 thorne。",
+        "effects": [
+          {
+            "championId": "thorne",
+            "count": 1,
+            "damageMult": 0.25,
+            "durationSec": 6,
+            "formation": "ring",
+            "hpMult": 0.3,
+            "kind": "summon",
+            "maxAlive": 1,
+            "onOwnerDeath": "despawn",
+            "spread": 1.5
+          }
+        ],
+        "icon": "assets/icons/abilities/sela.w.webp",
+        "id": "community-review-17-20260907.w",
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "maxRank": 4,
+        "name": "死亡騎士",
+        "provenance": "editor-json",
+        "range": 6,
+        "rangeTier": "中",
+        "schema": "ability@1",
+        "slot": "W",
+        "targetsEnemies": false,
+        "template": {
+          "contentSha256": "sha256:d08ea1add026b0548f07c7d9d7362263b0e38701f3bb9b6237e963a5f78d1f6f",
+          "inheritDefaults": true,
+          "params": {
+            "body": "champion",
+            "castTimeSec": 0.35,
+            "championId": "thorne",
+            "cleanse": "none",
+            "count": 1,
+            "damageMult": 0.25,
+            "durationSec": 6,
+            "formation": "ring",
+            "hpMult": 0.3,
+            "maxAlive": 1,
+            "onOwnerDeath": "despawn",
+            "spread": 1.5
+          },
+          "ref": "hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804"
+        }
+      },
+      "seat": {
+        "seatId": 0,
+        "teamId": 0,
+        "displayName": "model-reviewer",
+        "accountId": "01M210NXCFYD4PEQHQ4DEMFT8G",
+        "connected": true,
+        "driver": "human",
+        "championId": "community-review-17-20260907",
+        "entityId": 1,
+        "level": 8,
+        "gold": 1350,
+        "xp": 0,
+        "ready": false,
+        "lastAckSeq": 0,
+        "items": [
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "augments": [
+          "grail-c-12"
+        ],
+        "offers": [],
+        "abilityRanks": [
+          4,
+          2,
+          2,
+          0
+        ],
+        "cooldowns": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "unspentPoints": 0,
+        "exAbilityId": "community-review-17-20260907.ex",
+        "exRank": 0,
+        "exCooldown": 0,
+        "passiveCooldown": 0,
+        "statStacks": 0,
+        "statCapstonePct": 0,
+        "attrBonus": [
+          0,
+          0,
+          0
+        ],
+        "undoDepth": 0,
+        "roundKills": 0,
+        "roundDeaths": 0,
+        "coinsLeft": 10,
+        "statusIds": [],
+        "statusRemainTicks": [],
+        "mobKills": 0,
+        "roundDeathTick": 0,
+        "counterIds": [],
+        "counterCounts": [],
+        "itemRefund": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "itemRandom": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "rating": 1000,
+        "human": true,
+        "toggleMask": 0,
+        "locked": false,
+        "adNow": 87,
+        "apNow": 219,
+        "hpNow": 6183,
+        "hpMaxNow": 6183
+      },
+      "events": [
+        {
+          "type": "abilityCast",
+          "tick": 155,
+          "data": {
+            "caster": 6,
+            "slot": "W",
+            "abilityId": "community-review-28-20260907.w"
+          }
+        },
+        {
+          "type": "castBegin",
+          "tick": 155,
+          "data": {
+            "caster": 6,
+            "slot": "W",
+            "abilityId": "community-review-28-20260907.w",
+            "ticks": 3,
+            "castTimeSec": 0.1
+          }
+        },
+        {
+          "type": "abilityCast",
+          "tick": 155,
+          "data": {
+            "caster": 12,
+            "slot": "W",
+            "abilityId": "community-review-23-20260907.w"
+          }
+        },
+        {
+          "type": "castBegin",
+          "tick": 155,
+          "data": {
+            "caster": 12,
+            "slot": "W",
+            "abilityId": "community-review-23-20260907.w",
+            "ticks": 3,
+            "castTimeSec": 0.1
+          }
+        },
+        {
+          "type": "abilityCast",
+          "tick": 156,
+          "data": {
+            "caster": 1,
+            "slot": "W",
+            "abilityId": "community-review-17-20260907.w"
+          }
+        },
+        {
+          "type": "castBegin",
+          "tick": 156,
+          "data": {
+            "caster": 1,
+            "slot": "W",
+            "abilityId": "community-review-17-20260907.w",
+            "ticks": 3,
+            "castTimeSec": 0.1
+          }
+        },
+        {
+          "type": "abilityCast",
+          "tick": 156,
+          "data": {
+            "caster": 2,
+            "slot": "W",
+            "abilityId": "community-review-01-20260907.w"
+          }
+        },
+        {
+          "type": "castBegin",
+          "tick": 156,
+          "data": {
+            "caster": 2,
+            "slot": "W",
+            "abilityId": "community-review-01-20260907.w",
+            "ticks": 3,
+            "castTimeSec": 0.1
+          }
+        },
+        {
+          "type": "abilityCast",
+          "tick": 156,
+          "data": {
+            "caster": 7,
+            "slot": "W",
+            "abilityId": "community-review-16-20260907.w"
+          }
+        },
+        {
+          "type": "castBegin",
+          "tick": 156,
+          "data": {
+            "caster": 7,
+            "slot": "W",
+            "abilityId": "community-review-16-20260907.w",
+            "ticks": 3,
+            "castTimeSec": 0.1
+          }
+        },
+        {
+          "type": "abilityCast",
+          "tick": 157,
+          "data": {
+            "caster": 8,
+            "slot": "E",
+            "abilityId": "community-review-08-20260907.e"
+          }
+        },
+        {
+          "type": "castBegin",
+          "tick": 157,
+          "data": {
+            "caster": 8,
+            "slot": "E",
+            "abilityId": "community-review-08-20260907.e",
+            "ticks": 3,
+            "castTimeSec": 0.1
+          }
+        }
+      ],
+      "inputs": [
+        {
+          "seq": 2,
+          "commands": [
+            {
+              "kind": "castAbility",
+              "slot": "W",
+              "target": {
+                "type": "self"
+              }
+            }
+          ],
+          "observedDistance": 34.23448553724738
+        }
+      ]
+    }
+  ],
+  "latestCastAttempt": {
+    "accountId": "01M210NXCFYD4PEQHQ4DEMFT8G",
+    "slot": "W",
+    "definition": {
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "castType": "self",
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "cooldownTier": "小",
+      "description": "【目前模板可執行】召喚 1 名 thorne 樣板代理，6 秒、25% 傷害、30% 生命，同類上限 1、主人死亡清除。\n【目標設計】召喚一名可受擊的死亡騎士，負責近身牽制。\n【待補機制】死亡騎士造型待製，代理採 thorne。",
+      "effects": [
+        {
+          "championId": "thorne",
+          "count": 1,
+          "damageMult": 0.25,
+          "durationSec": 6,
+          "formation": "ring",
+          "hpMult": 0.3,
+          "kind": "summon",
+          "maxAlive": 1,
+          "onOwnerDeath": "despawn",
+          "spread": 1.5
+        }
+      ],
+      "icon": "assets/icons/abilities/sela.w.webp",
+      "id": "community-review-17-20260907.w",
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "死亡騎士",
+      "provenance": "editor-json",
+      "range": 6,
+      "rangeTier": "中",
+      "schema": "ability@1",
+      "slot": "W",
+      "targetsEnemies": false,
+      "template": {
+        "contentSha256": "sha256:d08ea1add026b0548f07c7d9d7362263b0e38701f3bb9b6237e963a5f78d1f6f",
+        "inheritDefaults": true,
+        "params": {
+          "body": "champion",
+          "castTimeSec": 0.35,
+          "championId": "thorne",
+          "cleanse": "none",
+          "count": 1,
+          "damageMult": 0.25,
+          "durationSec": 6,
+          "formation": "ring",
+          "hpMult": 0.3,
+          "maxAlive": 1,
+          "onOwnerDeath": "despawn",
+          "spread": 1.5
+        },
+        "ref": "hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804"
+      }
+    },
+    "seat": {
+      "seatId": 0,
+      "teamId": 0,
+      "displayName": "model-reviewer",
+      "accountId": "01M210NXCFYD4PEQHQ4DEMFT8G",
+      "connected": true,
+      "driver": "human",
+      "championId": "community-review-17-20260907",
+      "entityId": 1,
+      "level": 8,
+      "gold": 1350,
+      "xp": 0,
+      "ready": false,
+      "lastAckSeq": 0,
+      "items": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "augments": [
+        "grail-c-12"
+      ],
+      "offers": [],
+      "abilityRanks": [
+        4,
+        2,
+        2,
+        0
+      ],
+      "cooldowns": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "unspentPoints": 0,
+      "exAbilityId": "community-review-17-20260907.ex",
+      "exRank": 0,
+      "exCooldown": 0,
+      "passiveCooldown": 0,
+      "statStacks": 0,
+      "statCapstonePct": 0,
+      "attrBonus": [
+        0,
+        0,
+        0
+      ],
+      "undoDepth": 0,
+      "roundKills": 0,
+      "roundDeaths": 0,
+      "coinsLeft": 10,
+      "statusIds": [],
+      "statusRemainTicks": [],
+      "mobKills": 0,
+      "roundDeathTick": 0,
+      "counterIds": [],
+      "counterCounts": [],
+      "itemRefund": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "itemRandom": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "rating": 1000,
+      "human": true,
+      "toggleMask": 0,
+      "locked": false,
+      "adNow": 87,
+      "apNow": 219,
+      "hpNow": 6183,
+      "hpMaxNow": 6183
+    },
+    "events": [
+      {
+        "type": "abilityCast",
+        "tick": 155,
+        "data": {
+          "caster": 6,
+          "slot": "W",
+          "abilityId": "community-review-28-20260907.w"
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 155,
+        "data": {
+          "caster": 6,
+          "slot": "W",
+          "abilityId": "community-review-28-20260907.w",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 155,
+        "data": {
+          "caster": 12,
+          "slot": "W",
+          "abilityId": "community-review-23-20260907.w"
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 155,
+        "data": {
+          "caster": 12,
+          "slot": "W",
+          "abilityId": "community-review-23-20260907.w",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 156,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "community-review-17-20260907.w"
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 156,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "community-review-17-20260907.w",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 156,
+        "data": {
+          "caster": 2,
+          "slot": "W",
+          "abilityId": "community-review-01-20260907.w"
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 156,
+        "data": {
+          "caster": 2,
+          "slot": "W",
+          "abilityId": "community-review-01-20260907.w",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 156,
+        "data": {
+          "caster": 7,
+          "slot": "W",
+          "abilityId": "community-review-16-20260907.w"
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 156,
+        "data": {
+          "caster": 7,
+          "slot": "W",
+          "abilityId": "community-review-16-20260907.w",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 157,
+        "data": {
+          "caster": 8,
+          "slot": "E",
+          "abilityId": "community-review-08-20260907.e"
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 157,
+        "data": {
+          "caster": 8,
+          "slot": "E",
+          "abilityId": "community-review-08-20260907.e",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        }
+      }
+    ],
+    "inputs": [
+      {
+        "seq": 2,
+        "commands": [
+          {
+            "kind": "castAbility",
+            "slot": "W",
+            "target": {
+              "type": "self"
+            }
+          }
+        ],
+        "observedDistance": 34.23448553724738
+      }
+    ]
+  },
+  "recordedThroughTick": 1508,
+  "completeMatch": {
+    "hostSettings": {
+      "combatMaxSec": 110,
+      "maxRounds": 1
+    },
+    "phase": "matchEnd",
+    "finalTick": 1508,
+    "settlements": [
+      {
+        "type": "matchSettlement",
+        "tick": 1499,
+        "data": {
+          "matchId": "m_01M211YC6FW976CAN5AB55C757",
+          "winnerTeam": 1,
+          "perPlayer": [
+            {
+              "seatId": 0,
+              "accountId": "01M210NXCFYD4PEQHQ4DEMFT8G",
+              "champ": "community-review-17-20260907",
+              "teamId": 0,
+              "role": "mage",
+              "grade": "C-",
+              "rank": 12,
+              "stats": {
+                "kills": 0,
+                "deaths": 1,
+                "assists": 0,
+                "damageDealt": 155.40533040283285,
+                "damageTaken": 6601.124646509158,
+                "damageBlocked": 1713.4364963479857,
+                "healingDone": 0,
+                "ccAppliedTicks": 0,
+                "goldEarned": 1500,
+                "xp": 1130,
+                "abilityCasts": 1,
+                "abilityHits": 0,
+                "abilityWhiffs": 0,
+                "basicAttackHits": 0,
+                "flowersEaten": 0,
+                "timeAliveTicks": 534,
+                "killParticipation": 0,
+                "largestSingleHit": 155.40533040283285,
+                "multikills": 0,
+                "revivesPerformed": 0,
+                "revivesReceived": 0,
+                "coinsCollected": 0,
+                "guardianDamage": 0,
+                "guardiansSlain": 0,
+                "bountyGold": 0
+              },
+              "score": 97,
+              "survivalBonus": 0
+            },
+            {
+              "seatId": 1,
+              "accountId": "01M210NXETAXE000A55QTJAMYG",
+              "champ": "community-review-01-20260907",
+              "teamId": 0,
+              "role": "mage",
+              "grade": "C-",
+              "rank": 11,
+              "stats": {
+                "kills": 0,
+                "deaths": 1,
+                "assists": 0,
+                "damageDealt": 0,
+                "damageTaken": 6299.7556546911,
+                "damageBlocked": 1589.2246881660435,
+                "healingDone": 0,
+                "ccAppliedTicks": 0,
+                "goldEarned": 1500,
+                "xp": 1130,
+                "abilityCasts": 1,
+                "abilityHits": 0,
+                "abilityWhiffs": 0,
+                "basicAttackHits": 0,
+                "flowersEaten": 0,
+                "timeAliveTicks": 912,
+                "killParticipation": 0,
+                "largestSingleHit": 0,
+                "multikills": 0,
+                "revivesPerformed": 0,
+                "revivesReceived": 0,
+                "coinsCollected": 0,
+                "guardianDamage": 0,
+                "guardiansSlain": 0,
+                "bountyGold": 0
+              },
+              "score": 149,
+              "survivalBonus": 0
+            },
+            {
+              "seatId": 2,
+              "accountId": "bot-2",
+              "champ": "community-review-37-20260907",
+              "teamId": 0,
+              "role": "tank",
+              "grade": "C",
+              "rank": 10,
+              "stats": {
+                "kills": 0,
+                "deaths": 1,
+                "assists": 0,
+                "damageDealt": 6896.281474345517,
+                "damageTaken": 8736.642833656777,
+                "damageBlocked": 2107.8337663432235,
+                "healingDone": 210,
+                "ccAppliedTicks": 0,
+                "goldEarned": 1500,
+                "xp": 1130,
+                "abilityCasts": 7,
+                "abilityHits": 0,
+                "abilityWhiffs": 0,
+                "basicAttackHits": 6,
+                "flowersEaten": 0,
+                "timeAliveTicks": 361,
+                "killParticipation": 0,
+                "largestSingleHit": 2005.209881546172,
+                "multikills": 0,
+                "revivesPerformed": 0,
+                "revivesReceived": 0,
+                "coinsCollected": 0,
+                "guardianDamage": 0,
+                "guardiansSlain": 0,
+                "bountyGold": 0
+              },
+              "score": 247,
+              "survivalBonus": 0
+            },
+            {
+              "seatId": 3,
+              "accountId": "bot-3",
+              "champ": "community-review-21-20260907",
+              "teamId": 1,
+              "role": "fighter",
+              "grade": "B-",
+              "rank": 6,
+              "stats": {
+                "kills": 1,
+                "deaths": 0,
+                "assists": 2,
+                "damageDealt": 5409.440041064657,
+                "damageTaken": 0,
+                "damageBlocked": 0,
+                "healingDone": 0,
+                "ccAppliedTicks": 0,
+                "goldEarned": 1900,
+                "xp": 1300,
+                "abilityCasts": 16,
+                "abilityHits": 0,
+                "abilityWhiffs": 0,
+                "basicAttackHits": 12,
+                "flowersEaten": 0,
+                "timeAliveTicks": 1165,
+                "killParticipation": 3,
+                "largestSingleHit": 684.2496697636731,
+                "multikills": 0,
+                "revivesPerformed": 0,
+                "revivesReceived": 0,
+                "coinsCollected": 0,
+                "guardianDamage": 0,
+                "guardiansSlain": 0,
+                "bountyGold": 100
+              },
+              "score": 590,
+              "survivalBonus": 200
+            },
+            {
+              "seatId": 4,
+              "accountId": "bot-4",
+              "champ": "community-review-27-20260907",
+              "teamId": 1,
+              "role": "fighter",
+              "grade": "A-",
+              "rank": 2,
+              "stats": {
+                "kills": 0,
+                "deaths": 0,
+                "assists": 3,
+                "damageDealt": 12763.406856840673,
+                "damageTaken": 155.40533040283285,
+                "damageBlocked": 44.594669597167155,
+                "healingDone": 0,
+                "ccAppliedTicks": 0,
+                "goldEarned": 1650,
+                "xp": 1180,
+                "abilityCasts": 19,
+                "abilityHits": 0,
+                "abilityWhiffs": 0,
+                "basicAttackHits": 5,
+                "flowersEaten": 0,
+                "timeAliveTicks": 1165,
+                "killParticipation": 3,
+                "largestSingleHit": 1710.6241744091826,
+                "multikills": 0,
+                "revivesPerformed": 0,
+                "revivesReceived": 0,
+                "coinsCollected": 0,
+                "guardianDamage": 0,
+                "guardiansSlain": 0,
+                "bountyGold": 0
+              },
+              "score": 815,
+              "survivalBonus": 200
+            },
+            {
+              "seatId": 5,
+              "accountId": "bot-5",
+              "champ": "community-review-28-20260907",
+              "teamId": 1,
+              "role": "fighter",
+              "grade": "B+",
+              "rank": 4,
+              "stats": {
+                "kills": 2,
+                "deaths": 0,
+                "assists": 1,
+                "damageDealt": 3464.676236951706,
+                "damageTaken": 6356.281474345517,
+                "damageBlocked": 1763.626925654481,
+                "healingDone": 0,
+                "ccAppliedTicks": 0,
+                "goldEarned": 2150,
+                "xp": 1420,
+                "abilityCasts": 13,
+                "abilityHits": 0,
+                "abilityWhiffs": 0,
+                "basicAttackHits": 14,
+                "flowersEaten": 0,
+                "timeAliveTicks": 1165,
+                "killParticipation": 3,
+                "largestSingleHit": 417.45273551960827,
+                "multikills": 0,
+                "revivesPerformed": 0,
+                "revivesReceived": 0,
+                "coinsCollected": 0,
+                "guardianDamage": 0,
+                "guardiansSlain": 0,
+                "bountyGold": 200
+              },
+              "score": 682,
+              "survivalBonus": 200
+            },
+            {
+              "seatId": 6,
+              "accountId": "bot-6",
+              "champ": "community-review-16-20260907",
+              "teamId": 2,
+              "role": "mage",
+              "grade": "A+",
+              "rank": 1,
+              "stats": {
+                "kills": 2,
+                "deaths": 0,
+                "assists": 2,
+                "damageDealt": 6886.093455295043,
+                "damageTaken": 3606.608675312998,
+                "damageBlocked": 1677.1470104012883,
+                "healingDone": 0,
+                "ccAppliedTicks": 0,
+                "goldEarned": 2050,
+                "xp": 1420,
+                "abilityCasts": 15,
+                "abilityHits": 0,
+                "abilityWhiffs": 0,
+                "basicAttackHits": 9,
+                "flowersEaten": 1,
+                "timeAliveTicks": 1165,
+                "killParticipation": 4,
+                "largestSingleHit": 813.6246073240312,
+                "multikills": 1,
+                "revivesPerformed": 1,
+                "revivesReceived": 0,
+                "coinsCollected": 0,
+                "guardianDamage": 0,
+                "guardiansSlain": 0,
+                "bountyGold": 100
+              },
+              "score": 920,
+              "survivalBonus": 200
+            },
+            {
+              "seatId": 7,
+              "accountId": "bot-7",
+              "champ": "community-review-08-20260907",
+              "teamId": 2,
+              "role": "fighter",
+              "grade": "A",
+              "rank": 5,
+              "stats": {
+                "kills": 0,
+                "deaths": 1,
+                "assists": 2,
+                "damageDealt": 12320.547455808435,
+                "damageTaken": 8694.576509974648,
+                "damageBlocked": 1643.1254328824948,
+                "healingDone": 0,
+                "ccAppliedTicks": 0,
+                "goldEarned": 1650,
+                "xp": 1180,
+                "abilityCasts": 14,
+                "abilityHits": 0,
+                "abilityWhiffs": 0,
+                "basicAttackHits": 10,
+                "flowersEaten": 0,
+                "timeAliveTicks": 993,
+                "killParticipation": 2,
+                "largestSingleHit": 1707.452686986396,
+                "multikills": 0,
+                "revivesPerformed": 0,
+                "revivesReceived": 0,
+                "coinsCollected": 0,
+                "guardianDamage": 0,
+                "guardiansSlain": 0,
+                "bountyGold": 0
+              },
+              "score": 658,
+              "survivalBonus": 0
+            },
+            {
+              "seatId": 8,
+              "accountId": "bot-8",
+              "champ": "community-review-14-20260907",
+              "teamId": 2,
+              "role": "fighter",
+              "grade": "B",
+              "rank": 8,
+              "stats": {
+                "kills": 1,
+                "deaths": 2,
+                "assists": 2,
+                "damageDealt": 7570.048678036563,
+                "damageTaken": 11999.001053374725,
+                "damageBlocked": 2143.1445466252767,
+                "healingDone": 450,
+                "ccAppliedTicks": 0,
+                "goldEarned": 1900,
+                "xp": 1300,
+                "abilityCasts": 8,
+                "abilityHits": 0,
+                "abilityWhiffs": 0,
+                "basicAttackHits": 7,
+                "flowersEaten": 0,
+                "timeAliveTicks": 378,
+                "killParticipation": 3,
+                "largestSingleHit": 802.0839526184689,
+                "multikills": 0,
+                "revivesPerformed": 0,
+                "revivesReceived": 1,
+                "coinsCollected": 0,
+                "guardianDamage": 0,
+                "guardiansSlain": 0,
+                "bountyGold": 100
+              },
+              "score": 439,
+              "survivalBonus": 0
+            },
+            {
+              "seatId": 9,
+              "accountId": "bot-9",
+              "champ": "community-review-02-20260907",
+              "teamId": 3,
+              "role": "fighter",
+              "grade": "A-",
+              "rank": 7,
+              "stats": {
+                "kills": 1,
+                "deaths": 1,
+                "assists": 1,
+                "damageDealt": 10210.210061985441,
+                "damageTaken": 7162.187196849485,
+                "damageBlocked": 1590.0059460076593,
+                "healingDone": 0,
+                "ccAppliedTicks": 0,
+                "goldEarned": 1650,
+                "xp": 1250,
+                "abilityCasts": 6,
+                "abilityHits": 0,
+                "abilityWhiffs": 0,
+                "basicAttackHits": 7,
+                "flowersEaten": 0,
+                "timeAliveTicks": 787,
+                "killParticipation": 2,
+                "largestSingleHit": 1018.6491145588466,
+                "multikills": 0,
+                "revivesPerformed": 1,
+                "revivesReceived": 0,
+                "coinsCollected": 0,
+                "guardianDamage": 0,
+                "guardiansSlain": 0,
+                "bountyGold": 0
+              },
+              "score": 553,
+              "survivalBonus": 0
+            },
+            {
+              "seatId": 10,
+              "accountId": "bot-10",
+              "champ": "community-review-09-20260907",
+              "teamId": 3,
+              "role": "fighter",
+              "grade": "S-",
+              "rank": 3,
+              "stats": {
+                "kills": 2,
+                "deaths": 1,
+                "assists": 0,
+                "damageDealt": 12340.017777220033,
+                "damageTaken": 6922.354039664396,
+                "damageBlocked": 1951.1921317641754,
+                "healingDone": 0,
+                "ccAppliedTicks": 180,
+                "goldEarned": 2000,
+                "xp": 1370,
+                "abilityCasts": 24,
+                "abilityHits": 0,
+                "abilityWhiffs": 0,
+                "basicAttackHits": 6,
+                "flowersEaten": 0,
+                "timeAliveTicks": 1164,
+                "killParticipation": 2,
+                "largestSingleHit": 1963.7226436889264,
+                "multikills": 0,
+                "revivesPerformed": 0,
+                "revivesReceived": 0,
+                "coinsCollected": 0,
+                "guardianDamage": 0,
+                "guardiansSlain": 0,
+                "bountyGold": 200
+              },
+              "score": 766,
+              "survivalBonus": 0
+            },
+            {
+              "seatId": 11,
+              "accountId": "bot-11",
+              "champ": "community-review-23-20260907",
+              "teamId": 3,
+              "role": "fighter",
+              "grade": "C+",
+              "rank": 9,
+              "stats": {
+                "kills": 0,
+                "deaths": 2,
+                "assists": 2,
+                "damageDealt": 2585.1023002315906,
+                "damageTaken": 11447.346370229805,
+                "damageBlocked": 2964.4521726273338,
+                "healingDone": 300,
+                "ccAppliedTicks": 0,
+                "goldEarned": 1500,
+                "xp": 1130,
+                "abilityCasts": 9,
+                "abilityHits": 0,
+                "abilityWhiffs": 0,
+                "basicAttackHits": 8,
+                "flowersEaten": 0,
+                "timeAliveTicks": 410,
+                "killParticipation": 2,
+                "largestSingleHit": 679.0994097058978,
+                "multikills": 0,
+                "revivesPerformed": 0,
+                "revivesReceived": 1,
+                "coinsCollected": 0,
+                "guardianDamage": 0,
+                "guardiansSlain": 0,
+                "bountyGold": 0
+              },
+              "score": 298,
+              "survivalBonus": 0
+            }
+          ],
+          "rounds": [
+            {
+              "round": 1,
+              "players": [
+                {
+                  "seatId": 0,
+                  "hpRatio": 0,
+                  "kills": 0,
+                  "deaths": 1,
+                  "assists": 0,
+                  "damageDealt": 155.40533040283285,
+                  "damageTaken": 6601.124646509158,
+                  "damageBlocked": 1713.4364963479857,
+                  "healingDone": 0,
+                  "ccAppliedTicks": 0,
+                  "timeAliveTicks": 534,
+                  "revivesPerformed": 0,
+                  "mobKills": 0,
+                  "bye": false
+                },
+                {
+                  "seatId": 1,
+                  "hpRatio": 0,
+                  "kills": 0,
+                  "deaths": 1,
+                  "assists": 0,
+                  "damageDealt": 0,
+                  "damageTaken": 6299.7556546911,
+                  "damageBlocked": 1589.2246881660435,
+                  "healingDone": 0,
+                  "ccAppliedTicks": 0,
+                  "timeAliveTicks": 912,
+                  "revivesPerformed": 0,
+                  "mobKills": 0,
+                  "bye": false
+                },
+                {
+                  "seatId": 2,
+                  "hpRatio": 0,
+                  "kills": 0,
+                  "deaths": 1,
+                  "assists": 0,
+                  "damageDealt": 6896.281474345517,
+                  "damageTaken": 8736.642833656777,
+                  "damageBlocked": 2107.8337663432235,
+                  "healingDone": 210,
+                  "ccAppliedTicks": 0,
+                  "timeAliveTicks": 361,
+                  "revivesPerformed": 0,
+                  "mobKills": 0,
+                  "bye": false
+                },
+                {
+                  "seatId": 3,
+                  "hpRatio": 1,
+                  "kills": 1,
+                  "deaths": 0,
+                  "assists": 2,
+                  "damageDealt": 5409.440041064657,
+                  "damageTaken": 0,
+                  "damageBlocked": 0,
+                  "healingDone": 0,
+                  "ccAppliedTicks": 0,
+                  "timeAliveTicks": 1165,
+                  "revivesPerformed": 0,
+                  "mobKills": 0,
+                  "bye": false
+                },
+                {
+                  "seatId": 4,
+                  "hpRatio": 0.9882977936959173,
+                  "kills": 0,
+                  "deaths": 0,
+                  "assists": 3,
+                  "damageDealt": 12763.406856840673,
+                  "damageTaken": 155.40533040283285,
+                  "damageBlocked": 44.594669597167155,
+                  "healingDone": 0,
+                  "ccAppliedTicks": 0,
+                  "timeAliveTicks": 1165,
+                  "revivesPerformed": 0,
+                  "mobKills": 0,
+                  "bye": false
+                },
+                {
+                  "seatId": 5,
+                  "hpRatio": 0.11575560041473883,
+                  "kills": 2,
+                  "deaths": 0,
+                  "assists": 1,
+                  "damageDealt": 3464.676236951706,
+                  "damageTaken": 6356.281474345517,
+                  "damageBlocked": 1763.626925654481,
+                  "healingDone": 0,
+                  "ccAppliedTicks": 0,
+                  "timeAliveTicks": 1165,
+                  "revivesPerformed": 0,
+                  "mobKills": 0,
+                  "bye": false
+                },
+                {
+                  "seatId": 6,
+                  "hpRatio": 0.5335463380064998,
+                  "kills": 2,
+                  "deaths": 0,
+                  "assists": 2,
+                  "damageDealt": 6886.093455295043,
+                  "damageTaken": 3606.608675312998,
+                  "damageBlocked": 1677.1470104012883,
+                  "healingDone": 0,
+                  "ccAppliedTicks": 0,
+                  "timeAliveTicks": 1165,
+                  "revivesPerformed": 1,
+                  "mobKills": 0,
+                  "bye": false
+                },
+                {
+                  "seatId": 7,
+                  "hpRatio": 0,
+                  "kills": 0,
+                  "deaths": 1,
+                  "assists": 2,
+                  "damageDealt": 12320.547455808435,
+                  "damageTaken": 8694.576509974648,
+                  "damageBlocked": 1643.1254328824948,
+                  "healingDone": 0,
+                  "ccAppliedTicks": 0,
+                  "timeAliveTicks": 993,
+                  "revivesPerformed": 0,
+                  "mobKills": 0,
+                  "bye": false
+                },
+                {
+                  "seatId": 8,
+                  "hpRatio": 0,
+                  "kills": 1,
+                  "deaths": 2,
+                  "assists": 2,
+                  "damageDealt": 7570.048678036563,
+                  "damageTaken": 11999.001053374725,
+                  "damageBlocked": 2143.1445466252767,
+                  "healingDone": 450,
+                  "ccAppliedTicks": 0,
+                  "timeAliveTicks": 378,
+                  "revivesPerformed": 0,
+                  "mobKills": 0,
+                  "bye": false
+                },
+                {
+                  "seatId": 9,
+                  "hpRatio": 0,
+                  "kills": 1,
+                  "deaths": 1,
+                  "assists": 1,
+                  "damageDealt": 10210.210061985441,
+                  "damageTaken": 7162.187196849485,
+                  "damageBlocked": 1590.0059460076593,
+                  "healingDone": 0,
+                  "ccAppliedTicks": 0,
+                  "timeAliveTicks": 787,
+                  "revivesPerformed": 1,
+                  "mobKills": 0,
+                  "bye": false
+                },
+                {
+                  "seatId": 10,
+                  "hpRatio": 0,
+                  "kills": 2,
+                  "deaths": 1,
+                  "assists": 0,
+                  "damageDealt": 12340.017777220033,
+                  "damageTaken": 6922.354039664396,
+                  "damageBlocked": 1951.1921317641754,
+                  "healingDone": 0,
+                  "ccAppliedTicks": 180,
+                  "timeAliveTicks": 1164,
+                  "revivesPerformed": 0,
+                  "mobKills": 0,
+                  "bye": false
+                },
+                {
+                  "seatId": 11,
+                  "hpRatio": 0,
+                  "kills": 0,
+                  "deaths": 2,
+                  "assists": 2,
+                  "damageDealt": 2585.1023002315906,
+                  "damageTaken": 11447.346370229805,
+                  "damageBlocked": 2964.4521726273338,
+                  "healingDone": 300,
+                  "ccAppliedTicks": 0,
+                  "timeAliveTicks": 410,
+                  "revivesPerformed": 0,
+                  "mobKills": 0,
+                  "bye": false
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "platformRoomDisposed": true,
+    "beforeEconomy": [
+      {
+        "account": {
+          "id": "01M210NXETAXE000A55QTJAMYG",
+          "mmr": 1000,
+          "games": 0,
+          "wins": 0
+        },
+        "wallet": {
+          "mcoin": 0,
+          "crystal": 1000,
+          "crystalUnlockCost": 300,
+          "ownedChampions": [
+            "godie-e002",
+            "godie-emfr",
+            "godie-etyr",
+            "godie-h00l",
+            "godie-h01n",
+            "godie-hart",
+            "godie-hjai",
+            "godie-n00b",
+            "godie-ofar",
+            "godie-ogrh",
+            "godie-u00n",
+            "godie-udre"
+          ],
+          "ownedSkins": [],
+          "equippedSkins": {},
+          "favourites": []
+        },
+        "ranking": {
+          "ranked": false,
+          "season": "s1"
+        }
+      },
+      {
+        "account": {
+          "id": "01M210NXCFYD4PEQHQ4DEMFT8G",
+          "mmr": 1000,
+          "games": 0,
+          "wins": 0
+        },
+        "wallet": {
+          "mcoin": 0,
+          "crystal": 1000,
+          "crystalUnlockCost": 300,
+          "ownedChampions": [
+            "godie-e002",
+            "godie-emfr",
+            "godie-etyr",
+            "godie-h00l",
+            "godie-h01n",
+            "godie-hart",
+            "godie-hjai",
+            "godie-n00b",
+            "godie-ofar",
+            "godie-ogrh",
+            "godie-u00n",
+            "godie-udre"
+          ],
+          "ownedSkins": [],
+          "equippedSkins": {},
+          "favourites": []
+        },
+        "ranking": {
+          "ranked": false,
+          "season": "s1"
+        }
+      }
+    ],
+    "afterEconomy": [
+      {
+        "account": {
+          "id": "01M210NXETAXE000A55QTJAMYG",
+          "mmr": 1000,
+          "games": 1,
+          "wins": 0
+        },
+        "wallet": {
+          "mcoin": 0,
+          "crystal": 1105,
+          "crystalUnlockCost": 300,
+          "ownedChampions": [
+            "godie-e002",
+            "godie-emfr",
+            "godie-etyr",
+            "godie-h00l",
+            "godie-h01n",
+            "godie-hart",
+            "godie-hjai",
+            "godie-n00b",
+            "godie-ofar",
+            "godie-ogrh",
+            "godie-u00n",
+            "godie-udre"
+          ],
+          "ownedSkins": [],
+          "equippedSkins": {},
+          "favourites": []
+        },
+        "ranking": {
+          "division": "",
+          "percentile": 100,
+          "points": 0,
+          "rank": 1,
+          "ranked": true,
+          "season": "s1",
+          "tier": ""
+        }
+      },
+      {
+        "account": {
+          "id": "01M210NXCFYD4PEQHQ4DEMFT8G",
+          "mmr": 1000,
+          "games": 1,
+          "wins": 0
+        },
+        "wallet": {
+          "mcoin": 0,
+          "crystal": 1105,
+          "crystalUnlockCost": 300,
+          "ownedChampions": [
+            "godie-e002",
+            "godie-emfr",
+            "godie-etyr",
+            "godie-h00l",
+            "godie-h01n",
+            "godie-hart",
+            "godie-hjai",
+            "godie-n00b",
+            "godie-ofar",
+            "godie-ogrh",
+            "godie-u00n",
+            "godie-udre"
+          ],
+          "ownedSkins": [],
+          "equippedSkins": {},
+          "favourites": []
+        },
+        "ranking": {
+          "division": "",
+          "percentile": 0,
+          "points": 0,
+          "rank": 2,
+          "ranked": true,
+          "season": "s1",
+          "tier": ""
+        }
+      }
+    ],
+    "limits": "One complete custom match using ordinary host limits, without visual acceptance or R/EX progression coverage."
+  },
+  "finishedAt": "2026-09-08T17:45:50.652Z"
+}

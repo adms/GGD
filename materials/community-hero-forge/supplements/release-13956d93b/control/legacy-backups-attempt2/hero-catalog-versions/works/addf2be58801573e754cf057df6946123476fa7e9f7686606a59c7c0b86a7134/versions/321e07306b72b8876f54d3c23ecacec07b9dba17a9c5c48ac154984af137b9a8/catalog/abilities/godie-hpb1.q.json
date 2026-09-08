@@ -1,0 +1,42 @@
+{
+  "id": "godie-hpb1.q",
+  "name": "07-01 臨、兵、鬥",
+  "icon": "assets/icons/abilities/godie-hpb1.q.webp",
+  "provenance": "w3x-import",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n可抵擋對方負性魔法。",
+  "slot": "Q",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "applyTo": "self",
+      "permanent": true,
+      "modifiers": [],
+      "statusId": "spell-shield",
+      "polarity": "buff",
+      "exclusiveGroup": "spell-shield",
+      "statusImmunity": {
+        "tags": [
+          "debuff"
+        ],
+        "charges": 1
+      }
+    }
+  ],
+  "vfxKey": "fx.prim.physical.pulse-sm",
+  "schema": "ability@1",
+  "castTimeSec": 0.067
+}

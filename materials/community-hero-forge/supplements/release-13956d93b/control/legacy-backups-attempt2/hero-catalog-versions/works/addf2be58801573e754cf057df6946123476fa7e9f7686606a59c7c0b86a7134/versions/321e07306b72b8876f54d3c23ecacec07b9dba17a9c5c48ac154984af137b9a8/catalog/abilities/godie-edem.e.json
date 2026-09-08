@@ -1,0 +1,90 @@
+{
+  "id": "godie-edem.e",
+  "schema": "ability@1",
+  "name": "45-03 千鳥",
+  "provenance": "owner-spec",
+  "description": "[主動][指向][範圍][衝刺][AP加成]\n{{cd}}秒冷卻，吟唱{{cast}}秒\n消耗MP{{mp}}\n施法距離：{{range}}\n有效半徑：{{radius}}\n\n「千鳥・雷切」\n將查克拉集中在手上，以高速[直線][衝刺]，對沿途[周圍]敵人造成{{dmg}}+{{ap}}% [AP]點傷害。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "range": 12.0,
+  "radiusTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "dash",
+      "mode": "toPoint",
+      "speed": 16,
+      "maxDistance": 12.83
+    },
+    {
+      "kind": "damageLine",
+      "damageType": "magic",
+      "amount": {
+        "damageTierPerRank": [
+          "極小",
+          "小",
+          "小",
+          "小"
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      },
+      "length": 12.83,
+      "width": 12.0,
+      "aim": "facing",
+      "fromCaster": true,
+      "includeOrigin": true
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-strike",
+      "modelKey": "w3x.stock.monsoonbolttarget"
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "w3x.stock.thunderclapcaster",
+      "clip": "idle",
+      "soundKey": "wc3.thunderclapcaster",
+      "scale": 3.5,
+      "tint": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "lifeSec": 1.0
+    }
+  ],
+  "icon": "assets/icons/abilities/godie-edem.e.webp",
+  "vfxKey": "fx.prim.lightning.beam",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.lightning.bolt",
+      "attachTo": "point",
+      "pitchDeg": 0
+    }
+  ],
+  "cooldownTier": "小",
+  "manaCostTier": "小",
+  "rangeTier": "極大",
+  "castTimeSec": 0.067
+}

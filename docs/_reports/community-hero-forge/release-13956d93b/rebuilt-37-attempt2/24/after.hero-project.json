@@ -1,0 +1,1100 @@
+{
+  "acceptedPlan": {
+    "archetype": "fighter",
+    "attackType": "melee",
+    "budget": {
+      "complexity": 60,
+      "power": 50
+    },
+    "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
+    "origin": "法刺",
+    "planId": "community-review-24-20260907.plan",
+    "schema": "ggd-hero-plan@2",
+    "slots": {
+      "E": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "電光石火",
+        "products": [
+          {
+            "instanceId": "community-review-24-20260907-e-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": [
+                  {
+                    "msBonusTier": "極小",
+                    "op": "pctAdd",
+                    "stat": "ms"
+                  }
+                ]
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】持續消耗電力提高移動速度，關閉或電力耗盡時停止。\n【待補機制】目前固定 3 秒加速；需開關及持續扣電。",
+        "slot": "E",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "EX": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔充電釋放〕",
+        "products": [
+          {
+            "instanceId": "community-review-24-20260907-ex-1",
+            "template": {
+              "contentSha256": "sha256:976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68b5c12bc9a25ee7e4",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.4,
+                "damage": {
+                  "damageTier": "中",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "radius": 300
+              },
+              "ref": "tpl-ground-nova"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】指定落點半徑 300 wc3u 的一次中級範圍傷害。\n【目標設計】消耗剩餘電力進行近身爆發，之後進入低電力狀態。\n【待補機制】固定傷害；需消耗剩餘電力與低電力狀態。",
+        "slot": "EX",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "PASSIVE": {
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔電力儲備〕",
+        "products": [
+          {
+            "instanceId": "community-review-24-20260907-passive-1",
+            "template": {
+              "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0",
+              "inheritDefaults": true,
+              "params": {
+                "bonusDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "condition": {
+                  "kind": "chance",
+                  "p": 1
+                },
+                "damageType": "magic",
+                "event": "onBasicAttack",
+                "internalCooldown": 3
+              },
+              "ref": "tpl-on-attack"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。\n【目標設計】技能消耗電力；停止攻擊一段時間後逐步充電，設上限。\n【待補機制】需電力上限／脫戰充電；目前用標準魔力。",
+        "slot": "PASSIVE",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        }
+      },
+      "Q": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "落雷",
+        "products": [
+          {
+            "instanceId": "community-review-24-20260907-q-1",
+            "template": {
+              "contentSha256": "sha256:976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68b5c12bc9a25ee7e4",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.4,
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "radius": 300
+              },
+              "ref": "tpl-ground-nova"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】指定落點半徑 300 wc3u 的一次小級範圍傷害。\n【目標設計】指定小區域的延遲電擊。\n【待補機制】短起手落點電擊對應基礎版。",
+        "slot": "Q",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "R": {
+        "abilityOverrides": {
+          "castTimeTier": "大",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 3,
+        "name": "神速・疾風迅雷",
+        "products": [
+          {
+            "instanceId": "community-review-24-20260907-r-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": [
+                  {
+                    "op": "pctAdd",
+                    "stat": "as",
+                    "value": 0.2
+                  },
+                  {
+                    "msBonusTier": "極小",
+                    "op": "pctAdd",
+                    "stat": "ms"
+                  }
+                ]
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：as +20%、極小級移速。\n【目標設計】短期開啟自動反應：符合距離與攻擊條件時進行有限次反擊，每次消耗電力且有觸發間隔。\n【待補機制】目前攻速／移速；需受攻擊條件自動反應、限次扣電及循環防止。",
+        "slot": "R",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "W": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [
+          "leap"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "肢曲",
+        "products": [
+          {
+            "instanceId": "community-review-24-20260907-w-1",
+            "template": {
+              "contentSha256": "sha256:fc256a57c55a0705dbb6660316bfeb64402f80fa154f09336fb1a8d393eeb5e5",
+              "inheritDefaults": true,
+              "params": {
+                "apexHeight": 50,
+                "applyTo": "self",
+                "castTimeSec": 0.15,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "durationSec": 0.5,
+                "landRadius": 150,
+                "mode": "toPoint"
+              },
+              "ref": "tpl-leap-strike"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】短距離側移並留下殘像；只有有效迴避才觸發後續反擊資源。\n【待補機制】需貼地肢曲殘像與有效閃避事件。",
+        "slot": "W",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      }
+    },
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "statOverrides": {
+      "ad": "中",
+      "ap": "大",
+      "armor": "小",
+      "as": "中",
+      "healthRegen": "小",
+      "manaRegen": "中",
+      "maxHealth": "小",
+      "maxMana": "中",
+      "mr": "小",
+      "ms": "大",
+      "range": "小"
+    },
+    "summary": "奇犽 社群英雄功能驗收稿。作品：《HUNTER×HUNTER》  \n定位：電力資源、高速移動、自動反應。\n\n視覺方向：藍白短電弧、側移殘像、神速輪廓電流；電量 UI 不以裝飾光冒充。\n以 GGD 法刺 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "templateVersions": {
+      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
+        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
+        "exemplar": {
+          "jass": "A0Q6",
+          "skill": "82-04 闇之魔法"
+        },
+        "family": "buff-self",
+        "gapScore": 6,
+        "id": "tpl-buff-self",
+        "name": "變身強化-數值面",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "duration": {
+            "default": 15,
+            "max": 60,
+            "min": 1,
+            "type": "number",
+            "unit": "s"
+          },
+          "modifiers": {
+            "default": [
+              {
+                "op": "flat",
+                "stat": "ad",
+                "value": 50
+              }
+            ],
+            "type": "statModifiers"
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0": {
+        "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
+        "exemplar": {
+          "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效",
+          "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者"
+        },
+        "family": "on-attack",
+        "gapScore": 9,
+        "id": "tpl-on-attack",
+        "name": "攻擊觸發",
+        "params": {
+          "bonusDamage": {
+            "default": {
+              "perRank": [
+                100
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "chance": {
+            "max": 1,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "ratio"
+          },
+          "condition": {
+            "default": {
+              "any": [
+                {
+                  "all": [
+                    {
+                      "not": {
+                        "is": "champion",
+                        "kind": "kind",
+                        "subject": "target"
+                      }
+                    },
+                    {
+                      "kind": "stat",
+                      "mode": "percent",
+                      "op": "<",
+                      "stat": "hp",
+                      "subject": "target",
+                      "value": 0.35
+                    }
+                  ]
+                },
+                {
+                  "all": [
+                    {
+                      "is": "champion",
+                      "kind": "kind",
+                      "subject": "target"
+                    },
+                    {
+                      "kind": "chance",
+                      "p": 0.01
+                    }
+                  ]
+                }
+              ]
+            },
+            "optional": true,
+            "type": "condition"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "event": {
+            "default": "onBasicAttack",
+            "type": "enum",
+            "values": [
+              "onBasicAttack",
+              "onDamageDealt"
+            ]
+          },
+          "internalCooldown": {
+            "default": 0,
+            "max": 60,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68b5c12bc9a25ee7e4": {
+        "description": "以施法者為中心的環形震波。",
+        "exemplar": {
+          "jass": "A0N0",
+          "skill": "80-03 鬼神烈戟"
+        },
+        "family": "ground-nova",
+        "gapScore": 8,
+        "id": "tpl-ground-nova",
+        "name": "原地震波",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                150
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "radius": {
+            "default": 530,
+            "max": 900,
+            "min": 200,
+            "type": "number",
+            "unit": "wc3u"
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:fc256a57c55a0705dbb6660316bfeb64402f80fa154f09336fb1a8d393eeb5e5": {
+        "description": "拋物線跳躍到指定點（或原地垂直跳），落地造成範圍傷害。飛行中無視地形；落點被障礙物（牆）或場地邊界擋住時，起跳當下就改瞄最近的合法落點（`world.wallBlock` 出貨 leap:\"clamp\"，落點截在牆前；只有 `flightExempt` 且被搬的那具身體本來就 `flightIgnoresObstacles` 的飛行狀態才豁免牆體，邊界照樣截斷），弧線隨之重算，你看到的落地位置就是實際位置。",
+        "exemplar": {
+          "jass": "A0G3",
+          "skill": "07-03 列、在、前"
+        },
+        "family": "leap-strike",
+        "gapScore": 5,
+        "id": "tpl-leap-strike",
+        "name": "跳躍落地",
+        "params": {
+          "apexHeight": {
+            "default": 600,
+            "max": 2000,
+            "min": 0,
+            "type": "number",
+            "unit": "wc3h"
+          },
+          "applyTo": {
+            "default": "self",
+            "type": "enum",
+            "values": [
+              "self",
+              "target"
+            ]
+          },
+          "castTimeSec": {
+            "default": 0.5,
+            "max": 5,
+            "min": 0,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                450
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "physical",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "durationSec": {
+            "default": 0.82,
+            "max": 3,
+            "min": 0.1,
+            "type": "number",
+            "unit": "s"
+          },
+          "landRadius": {
+            "default": 330,
+            "max": 900,
+            "min": 0,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "mode": {
+            "default": "toPoint",
+            "type": "enum",
+            "values": [
+              "toPoint",
+              "inPlace"
+            ]
+          }
+        },
+        "requires": [
+          "leap"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      }
+    },
+    "title": "奇犽"
+  },
+  "brief": {
+    "concept": "奇犽 社群英雄功能驗收稿。作品：《HUNTER×HUNTER》  \n定位：電力資源、高速移動、自動反應。\n\n視覺方向：藍白短電弧、側移殘像、神速輪廓電流；電量 UI 不以裝飾光冒充。\n以 GGD 法刺 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "E": "電光石火",
+      "EX": "〔充電釋放〕",
+      "PASSIVE": "〔電力儲備〕",
+      "Q": "落雷",
+      "R": "神速・疾風迅雷",
+      "W": "肢曲"
+    },
+    "name": "奇犽"
+  },
+  "presentation": {
+    "assetLocks": [
+      {
+        "byteSize": 663584,
+        "consumers": [
+          "champion:model"
+        ],
+        "kind": "model",
+        "mediaType": "model/gltf-binary",
+        "path": "assets/models/community/43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246.glb",
+        "registry": "normalized-upload",
+        "sha256": "43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246"
+      }
+    ],
+    "championIcon": "assets/icons/champions/thorne.webp",
+    "modelKey": "community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df",
+    "modelProvenance": {
+      "modelSha256": "43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246",
+      "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。",
+      "relationship": "exact",
+      "schema": "ggd-hero-model-provenance@1",
+      "sourceAssetId": "300heroes:37e03796cc2c9c2829f7e345",
+      "sourceCharacter": "奇犽",
+      "sourceWork": "HUNTER×HUNTER 獵人"
+    },
+    "schema": "ggd-hero-presentation@1",
+    "slots": {
+      "E": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "script": {
+          "abilityId": "community-review-24-20260907.e",
+          "id": "community-review-24-20260907.e",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                138,
+                196,
+                255
+              ],
+              "vfxId": "fx.prim.lightning.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                138,
+                196,
+                255
+              ],
+              "vfxId": "fx.prim.lightning.pulse",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "E",
+        "vfxLayers": []
+      },
+      "EX": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "script": {
+          "abilityId": "community-review-24-20260907.ex",
+          "id": "community-review-24-20260907.ex",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                138,
+                196,
+                255
+              ],
+              "vfxId": "fx.prim.lightning.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "point",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                138,
+                196,
+                255
+              ],
+              "vfxId": "fx.prim.lightning.nova",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "EX",
+        "vfxLayers": []
+      },
+      "PASSIVE": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "script": null,
+        "sfxKey": null,
+        "slot": "PASSIVE",
+        "vfxLayers": []
+      },
+      "Q": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "script": {
+          "abilityId": "community-review-24-20260907.q",
+          "id": "community-review-24-20260907.q",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                138,
+                196,
+                255
+              ],
+              "vfxId": "fx.prim.lightning.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "point",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                138,
+                196,
+                255
+              ],
+              "vfxId": "fx.prim.lightning.nova",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "Q",
+        "vfxLayers": []
+      },
+      "R": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "script": {
+          "abilityId": "community-review-24-20260907.r",
+          "id": "community-review-24-20260907.r",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                138,
+                196,
+                255
+              ],
+              "vfxId": "fx.prim.lightning.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                138,
+                196,
+                255
+              ],
+              "vfxId": "fx.prim.lightning.pulse",
+              "w3xScale": 1.25
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "R",
+        "vfxLayers": []
+      },
+      "W": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "script": {
+          "abilityId": "community-review-24-20260907.w",
+          "id": "community-review-24-20260907.w",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                138,
+                196,
+                255
+              ],
+              "vfxId": "fx.prim.lightning.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "point",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                138,
+                196,
+                255
+              ],
+              "vfxId": "fx.prim.lightning.arc",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "W",
+        "vfxLayers": []
+      }
+    },
+    "uploadedModel": {
+      "byteSize": 663584,
+      "clipMap": {
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "death": "dead",
+        "hurt": "bat_idle",
+        "idle": "bat_idle",
+        "run": "single_run"
+      },
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246",
+      "yawOffsetDeg": 0
+    }
+  },
+  "projectId": "community-review-24-20260907",
+  "receipts": [
+    {
+      "digest": "d7b8f4a85569c595d2ce89eed478bf98773774c4791da462301d8c2d6e653a6c",
+      "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+      "kind": "generator-adopted",
+      "projectRevision": 5
+    },
+    {
+      "kind": "generator-adopted",
+      "projectRevision": 12,
+      "digest": "df0a10f9e3c1f76758f0645cb994068ef2a51a9d77db49429c17ee0df57e07a8",
+      "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597"
+    }
+  ],
+  "revision": 12,
+  "schema": "ggd-hero-project@2",
+  "sections": {
+    "attributes": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "draft"
+    },
+    "identity": {
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      },
+      "revision": 1,
+      "state": "draft"
+    },
+    "mechanics": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    },
+    "package": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "presentation": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "skills": {
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      },
+      "revision": 12,
+      "state": "draft"
+    },
+    "validation": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    }
+  },
+  "sourceDesign": {
+    "identity": "作品：《HUNTER×HUNTER》  \n定位：電力資源、高速移動、自動反應。",
+    "name": "奇犽",
+    "ownerText": "### 24｜奇犽\n\n作品：《HUNTER×HUNTER》  \n定位：電力資源、高速移動、自動反應。\n\n- **PASSIVE｜〔電力儲備〕**：技能消耗電力；停止攻擊一段時間後逐步充電，設上限。\n- **Q｜落雷**：指定小區域的延遲電擊。\n- **W｜肢曲**：短距離側移並留下殘像；只有有效迴避才觸發後續反擊資源。\n- **E｜電光石火**：持續消耗電力提高移動速度，關閉或電力耗盡時停止。\n- **R｜神速・疾風迅雷**：短期開啟自動反應：符合距離與攻擊條件時進行有限次反擊，每次消耗電力且有觸發間隔。\n- **EX｜〔充電釋放〕**：消耗剩餘電力進行近身爆發，之後進入低電力狀態。\n\n**審查重點**：區分有效迴避、攻擊落空與無敵免傷；反擊不得再次觸發自己的反擊，充電與消耗須可重播。\n\n",
+    "reviewText": "區分有效迴避、攻擊落空與無敵免傷；反擊不得再次觸發自己的反擊，充電與消耗須可重播。",
+    "schema": "ggd-hero-source-design@1",
+    "slots": {
+      "E": {
+        "baselineBehavior": "自身取得 3 秒增益：極小級移速。",
+        "name": "電光石火",
+        "ownerDescription": "持續消耗電力提高移動速度，關閉或電力耗盡時停止。",
+        "refinementContracts": [
+          "M01",
+          "M07"
+        ],
+        "requiredRefinement": "目前固定 3 秒加速；需開關及持續扣電。"
+      },
+      "EX": {
+        "baselineBehavior": "指定落點半徑 300 wc3u 的一次中級範圍傷害。",
+        "name": "〔充電釋放〕",
+        "ownerDescription": "消耗剩餘電力進行近身爆發，之後進入低電力狀態。",
+        "refinementContracts": [
+          "M01",
+          "M07"
+        ],
+        "requiredRefinement": "固定傷害；需消耗剩餘電力與低電力狀態。"
+      },
+      "PASSIVE": {
+        "baselineBehavior": "普攻追加極小級魔法傷害，內置冷卻 3 秒。",
+        "name": "〔電力儲備〕",
+        "ownerDescription": "技能消耗電力；停止攻擊一段時間後逐步充電，設上限。",
+        "refinementContracts": [
+          "M01",
+          "M07"
+        ],
+        "requiredRefinement": "需電力上限／脫戰充電；目前用標準魔力。"
+      },
+      "Q": {
+        "baselineBehavior": "指定落點半徑 300 wc3u 的一次小級範圍傷害。",
+        "name": "落雷",
+        "ownerDescription": "指定小區域的延遲電擊。",
+        "refinementContracts": [
+          "M01",
+          "M07"
+        ],
+        "requiredRefinement": "短起手落點電擊對應基礎版。"
+      },
+      "R": {
+        "baselineBehavior": "自身取得 3 秒增益：as +20%、極小級移速。",
+        "name": "神速・疾風迅雷",
+        "ownerDescription": "短期開啟自動反應：符合距離與攻擊條件時進行有限次反擊，每次消耗電力且有觸發間隔。",
+        "refinementContracts": [
+          "M01",
+          "M07"
+        ],
+        "requiredRefinement": "目前攻速／移速；需受攻擊條件自動反應、限次扣電及循環防止。"
+      },
+      "W": {
+        "baselineBehavior": "朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。",
+        "name": "肢曲",
+        "ownerDescription": "短距離側移並留下殘像；只有有效迴避才觸發後續反擊資源。",
+        "refinementContracts": [
+          "M01",
+          "M07"
+        ],
+        "requiredRefinement": "需貼地肢曲殘像與有效閃避事件。"
+      }
+    },
+    "sourceSha256": "be056be7a5e33d0f97f27dd29d8ddbeb066e5acf74d34dfcb824035667012e97"
+  },
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "validationState": {
+    "attributes": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "identity": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "mechanics": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    },
+    "package": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "presentation": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "skills": {
+      "revision": 12,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    }
+  }
+}

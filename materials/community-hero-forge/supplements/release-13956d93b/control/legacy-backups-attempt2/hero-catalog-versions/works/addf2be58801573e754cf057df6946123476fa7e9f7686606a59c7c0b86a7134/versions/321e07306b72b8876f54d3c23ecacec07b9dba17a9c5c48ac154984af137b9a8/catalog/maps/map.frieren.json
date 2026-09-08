@@ -1,0 +1,647 @@
+{
+  "schema": "map@1",
+  "id": "map.frieren",
+  "name": "芙莉蓮迷宮",
+  "template": "DOUBLE_LOOP",
+  "groundStyle": "stone",
+  "scenery": {
+    "palette": {
+      "floor": "#a8c0d8",
+      "wall": "#7d8fa8",
+      "sky": "#bcd6ff",
+      "ground": "#16202e",
+      "void": "#060a12"
+    },
+    "lighting": {
+      "keyColor": "#cfe4ff",
+      "keyIntensity": 0.7,
+      "keyYawDeg": 330,
+      "keyPitchDeg": 70,
+      "fillIntensity": 0.55,
+      "wave": "breathe",
+      "periodSec": 14,
+      "intensityAmp": 0.16,
+      "yawSweepDeg": 0,
+      "peakColor": "#e8f4ff"
+    },
+    "props": [
+      {
+        "model": "assets/models/scenery/torii.glb",
+        "count": 2,
+        "bandFrom": 0.95,
+        "bandTo": 0.99,
+        "scaleMin": 0.95,
+        "scaleMax": 1.0,
+        "facing": "faceIn",
+        "seed": 101
+      },
+      {
+        "model": "assets/models/scenery/stone_lantern.glb",
+        "count": 6,
+        "bandFrom": 0.88,
+        "bandTo": 0.94,
+        "scaleMin": 1.0,
+        "scaleMax": 1.3,
+        "facing": "faceIn",
+        "seed": 102
+      },
+      {
+        "model": "assets/models/scenery/shoji_door.glb",
+        "count": 4,
+        "bandFrom": 0.955,
+        "bandTo": 0.99,
+        "scaleMin": 1.0,
+        "scaleMax": 1.2,
+        "facing": "faceIn",
+        "seed": 103
+      },
+      {
+        "model": "assets/models/scenery/stone_steps.glb",
+        "count": 2,
+        "bandFrom": 0.86,
+        "bandTo": 0.9,
+        "scaleMin": 1.4,
+        "scaleMax": 1.8,
+        "facing": "faceIn",
+        "seed": 104
+      },
+      {
+        "model": "assets/models/props/pillar.glb",
+        "count": 10,
+        "bandFrom": 0.92,
+        "bandTo": 0.98,
+        "scaleMin": 1.4,
+        "scaleMax": 2.0,
+        "facing": "faceIn",
+        "seed": 9
+      },
+      {
+        "model": "assets/models/hex/rock.glb",
+        "count": 6,
+        "bandFrom": 0.86,
+        "bandTo": 0.96,
+        "scaleMin": 1.2,
+        "scaleMax": 1.4,
+        "facing": "random",
+        "seed": 23
+      },
+      {
+        "model": "assets/models/props/torch_mounted.glb",
+        "count": 6,
+        "bandFrom": 0.985,
+        "bandTo": 1.0,
+        "scaleMin": 1.4,
+        "scaleMax": 1.4,
+        "facing": "faceIn",
+        "seed": 51
+      }
+    ]
+  },
+  "grid": {
+    "cols": 24,
+    "rows": 18,
+    "tileSize": 2
+  },
+  "tiles": [
+    "########################",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#...........#..........#",
+    "#...........#..........#",
+    "#...####....#....####..#",
+    "#...####....#....####..#",
+    "#...####....#....####..#",
+    "#...####....#....####..#",
+    "#...####....#....####..#",
+    "#...####....#....####..#",
+    "#...........#..........#",
+    "#...........#..........#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "########################"
+  ],
+  "regions": [
+    {
+      "id": "ruin_hall",
+      "label": "遺跡大廳",
+      "role": "landmark",
+      "rects": [
+        {
+          "col": 11,
+          "row": 1,
+          "w": 2,
+          "h": 16
+        }
+      ]
+    },
+    {
+      "id": "chest_room",
+      "label": "寶箱室",
+      "role": "court",
+      "rects": [
+        {
+          "col": 1,
+          "row": 1,
+          "w": 10,
+          "h": 8
+        }
+      ]
+    },
+    {
+      "id": "statue_room",
+      "label": "石像室",
+      "role": "court",
+      "rects": [
+        {
+          "col": 1,
+          "row": 9,
+          "w": 10,
+          "h": 8
+        }
+      ]
+    },
+    {
+      "id": "magic_door",
+      "label": "魔法門",
+      "role": "corridor",
+      "rects": [
+        {
+          "col": 13,
+          "row": 1,
+          "w": 10,
+          "h": 8
+        }
+      ]
+    },
+    {
+      "id": "shrine",
+      "label": "祭壇",
+      "role": "platform",
+      "rects": [
+        {
+          "col": 13,
+          "row": 9,
+          "w": 10,
+          "h": 8
+        }
+      ]
+    }
+  ],
+  "landmark": "ruin_hall",
+  "interactions": [
+    {
+      "id": "chest-a",
+      "kind": "pickup",
+      "at": {
+        "col": 3,
+        "row": 3
+      },
+      "radius": 2,
+      "regionId": "chest_room",
+      "params": {
+        "mimic": "true"
+      }
+    },
+    {
+      "id": "chest-b",
+      "kind": "pickup",
+      "at": {
+        "col": 8,
+        "row": 3
+      },
+      "radius": 2,
+      "regionId": "chest_room",
+      "params": {
+        "mimic": "true"
+      }
+    },
+    {
+      "id": "statue-a",
+      "kind": "capture",
+      "at": {
+        "col": 3,
+        "row": 12
+      },
+      "radius": 2,
+      "regionId": "statue_room",
+      "params": {}
+    },
+    {
+      "id": "statue-b",
+      "kind": "capture",
+      "at": {
+        "col": 8,
+        "row": 12
+      },
+      "radius": 2,
+      "regionId": "statue_room",
+      "params": {}
+    },
+    {
+      "id": "door-n",
+      "kind": "capture",
+      "at": {
+        "col": 18,
+        "row": 3
+      },
+      "radius": 2,
+      "regionId": "magic_door",
+      "params": {}
+    },
+    {
+      "id": "door-s",
+      "kind": "pickup",
+      "at": {
+        "col": 18,
+        "row": 5
+      },
+      "radius": 2,
+      "regionId": "magic_door",
+      "params": {}
+    },
+    {
+      "id": "shrine-w",
+      "kind": "pickup",
+      "at": {
+        "col": 15,
+        "row": 13
+      },
+      "radius": 2,
+      "regionId": "shrine",
+      "params": {}
+    },
+    {
+      "id": "shrine-e",
+      "kind": "pickup",
+      "at": {
+        "col": 21,
+        "row": 13
+      },
+      "radius": 2,
+      "regionId": "shrine",
+      "params": {}
+    }
+  ],
+  "gimmick": {
+    "kind": "routeSwap",
+    "gateGroups": [
+      {
+        "id": "magic_door_w",
+        "tiles": [
+          {
+            "col": 1,
+            "row": 8
+          },
+          {
+            "col": 2,
+            "row": 8
+          },
+          {
+            "col": 3,
+            "row": 8
+          }
+        ]
+      },
+      {
+        "id": "magic_door_e",
+        "tiles": [
+          {
+            "col": 21,
+            "row": 8
+          },
+          {
+            "col": 22,
+            "row": 8
+          }
+        ]
+      }
+    ],
+    "schedule": {
+      "kind": "periodic",
+      "periodTicks": 900,
+      "telegraphTicks": 60,
+      "configurations": [
+        [
+          "magic_door_w"
+        ],
+        [
+          "magic_door_e"
+        ]
+      ]
+    }
+  },
+  "landmarkProps": [
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 2,
+        "row": 3
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 2,
+        "row": 14
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 22,
+        "row": 3
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 22,
+        "row": 14
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 10,
+        "row": 8
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 14,
+        "row": 8
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "at": {
+        "col": 12,
+        "row": 1
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "at": {
+        "col": 12,
+        "row": 16
+      },
+      "rotQuarter": 2,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/floor_tile_large.glb",
+      "at": {
+        "col": 9,
+        "row": 4
+      },
+      "rotQuarter": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/props/floor_tile_large.glb",
+      "at": {
+        "col": 15,
+        "row": 4
+      },
+      "rotQuarter": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/props/floor_tile_large.glb",
+      "at": {
+        "col": 9,
+        "row": 13
+      },
+      "rotQuarter": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/props/floor_tile_large.glb",
+      "at": {
+        "col": 15,
+        "row": 13
+      },
+      "rotQuarter": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/lunar-year__EntranceStairs.glb",
+      "at": {
+        "col": 1,
+        "row": 1
+      },
+      "rotQuarter": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/lunar-year__Lamp01.glb",
+      "at": {
+        "col": 22,
+        "row": 1
+      },
+      "rotQuarter": 1,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/lunar-year__Lamp02.glb",
+      "at": {
+        "col": 1,
+        "row": 16
+      },
+      "rotQuarter": 2,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/lunar-year__Fence01.glb",
+      "at": {
+        "col": 22,
+        "row": 16
+      },
+      "rotQuarter": 3,
+      "scale": 1.0
+    }
+  ],
+  "backgroundProps": [
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 5,
+        "row": 6
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 6,
+        "row": 9
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 18,
+        "row": 6
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 19,
+        "row": 9
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/chest.glb",
+      "at": {
+        "col": 7,
+        "row": 7
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/props/chest.glb",
+      "at": {
+        "col": 17,
+        "row": 10
+      },
+      "rotQuarter": 2,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/props/crates_stacked.glb",
+      "at": {
+        "col": 4,
+        "row": 11
+      },
+      "rotQuarter": 0,
+      "scale": 1.1
+    },
+    {
+      "model": "assets/models/props/crates_stacked.glb",
+      "at": {
+        "col": 20,
+        "row": 11
+      },
+      "rotQuarter": 0,
+      "scale": 1.1
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 0,
+        "row": 4
+      },
+      "rotQuarter": 0,
+      "scale": 1.3
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 23,
+        "row": 4
+      },
+      "rotQuarter": 2,
+      "scale": 1.3
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 0,
+        "row": 13
+      },
+      "rotQuarter": 0,
+      "scale": 1.3
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 23,
+        "row": 13
+      },
+      "rotQuarter": 2,
+      "scale": 1.3
+    }
+  ],
+  "backdrop": {
+    "layers": [
+      {
+        "fromRadius": 1.0,
+        "toRadius": 2.1,
+        "y": -4,
+        "color": "#5e7fa8",
+        "alpha": 1,
+        "profile": "peaks",
+        "jitter": 0.6,
+        "segments": 36,
+        "rim": {
+          "color": "#e8f4ff",
+          "width": 2.2
+        }
+      },
+      {
+        "fromRadius": 1.9,
+        "toRadius": 3.5,
+        "y": -13,
+        "color": "#3d5878",
+        "alpha": 1,
+        "profile": "peaks",
+        "jitter": 0.7,
+        "segments": 40,
+        "rim": {
+          "color": "#9fd6e8",
+          "width": 1.6
+        }
+      },
+      {
+        "fromRadius": 3.2,
+        "toRadius": 5.2,
+        "y": -31,
+        "color": "#26374f",
+        "alpha": 1,
+        "profile": "peaks",
+        "jitter": 0.8,
+        "segments": 42,
+        "rim": {
+          "color": "#5d94b5",
+          "width": 1.2
+        }
+      },
+      {
+        "fromRadius": 4.8,
+        "toRadius": 6.0,
+        "y": -66,
+        "color": "#101a28",
+        "alpha": 1,
+        "profile": "flat",
+        "jitter": 0.0,
+        "segments": 20
+      }
+    ]
+  }
+}

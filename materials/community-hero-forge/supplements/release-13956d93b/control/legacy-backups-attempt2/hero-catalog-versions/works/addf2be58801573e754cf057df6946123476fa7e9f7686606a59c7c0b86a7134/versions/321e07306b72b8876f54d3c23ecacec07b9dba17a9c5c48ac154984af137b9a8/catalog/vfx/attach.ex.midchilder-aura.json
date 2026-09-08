@@ -1,0 +1,14 @@
+{
+  "id": "attach.ex.midchilder-aura",
+  "schema": "attachment@1",
+  "note": "⭐ GH#539 —— EX 開啟時腳下的粉紫魔法陣。JASS war3map.j:8352 `Trig_EX_burst_Actions` 逐字：`AddSpecialEffectTargetUnitBJ(\"origin\", u, \"MidchilderNanohaAura.mdx\")`，⛔ 從來沒有 DestroyEffect ⇒ 它是常駐的。",
+  "modelKey": "imported.midchildernanohaaura",
+  "points": [
+    "origin"
+  ],
+  "scale": 1.0,
+  "offsetY": 0.02,
+  "follow": true,
+  "anim": "stand",
+  "animLoop": true
+}

@@ -1,0 +1,94 @@
+{
+  "id": "fx.prim.lightning.dash",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.22,
+    "angleDeg": 22
+  },
+  "mode": "burst",
+  "burstCount": 22,
+  "lifetimeSec": {
+    "min": 0.1,
+    "max": 0.28
+  },
+  "size": {
+    "start": 0.21,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      0.946,
+      0.9676,
+      1,
+      1
+    ],
+    "end": [
+      0.126,
+      0.1476,
+      0.18,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.21
+    ],
+    [
+      0.08,
+      0.5
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        0.946,
+        0.9676,
+        1,
+        1
+      ]
+    ],
+    [
+      0.2,
+      [
+        0.7,
+        0.82,
+        1,
+        1
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.35,
+        0.41,
+        0.5,
+        0.42
+      ]
+    ],
+    [
+      1,
+      [
+        0.126,
+        0.1476,
+        0.18,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 0,
+  "speed": {
+    "min": 6,
+    "max": 12
+  },
+  "texture": "assets/textures/particles/trace_05.png",
+  "stretched": true,
+  "tailLength": 3
+}

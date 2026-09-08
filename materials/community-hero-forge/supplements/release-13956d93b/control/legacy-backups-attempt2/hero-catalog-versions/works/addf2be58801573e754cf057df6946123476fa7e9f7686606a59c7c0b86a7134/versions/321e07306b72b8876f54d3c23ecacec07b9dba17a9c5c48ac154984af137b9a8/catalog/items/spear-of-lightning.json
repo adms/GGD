@@ -1,0 +1,117 @@
+{
+  "id": "spear-of-lightning",
+  "schema": "item@1",
+  "name": "雷槍",
+  "description": "武器\n效能\n[雷槍裝填] 戰鬥中每 1.5 秒獲得 1 層裝填，最多 5 層，本回合內不衰退\n[爆炸] 帶著裝填時，普攻或技能命中敵方英雄會在他腳下炸開 150 + AP×0.6 的中範圍魔法傷害（普攻與技能各自 3 秒冷卻，層數不會被消耗）\n[雷槍裝填] 每層裝填使你造成的所有傷害 +10%，五層 ×1.50\n[感電] 爆炸同時讓範圍內的敵人癱瘓（走不動、打不出手、放不出技能）0.75 秒\n\n解說\n背著它跑步的時候請不要跌倒，這句話不是玩笑。",
+  "cost": 0,
+  "tier": 5,
+  "tags": [
+    "legendary",
+    "mobility",
+    "burst"
+  ],
+  "passive": [
+    {
+      "key": "load",
+      "on": "onInterval",
+      "target": "self",
+      "internalCooldown": 1.5,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "permanentScope": "round",
+          "maxStacks": 5,
+          "statusId": "spear-of-lightning.load",
+          "modifiers": [
+            {
+              "stat": "outputDamagePct",
+              "op": "flat",
+              "value": 0.1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "burst-basic",
+      "on": "onBasicAttack",
+      "victim": "enemyChampion",
+      "internalCooldown": 3,
+      "condition": {
+        "kind": "status",
+        "subject": "self",
+        "statusId": "spear-of-lightning.load",
+        "minStacks": 1
+      },
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "flat": 150,
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "radius": 4,
+          "radiusTier": "小",
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "statusId": "paralysis",
+              "duration": 0.75,
+              "stun": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "burst-ability",
+      "on": "onAbilityHit",
+      "victim": "enemyChampion",
+      "internalCooldown": 3,
+      "condition": {
+        "kind": "status",
+        "subject": "self",
+        "statusId": "spear-of-lightning.load",
+        "minStacks": 1
+      },
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "flat": 150,
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "radius": 4,
+          "radiusTier": "小",
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "statusId": "paralysis",
+              "duration": 0.75,
+              "stun": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "icon": "assets/icons/items/spear-of-lightning.webp",
+  "craftRole": "none",
+  "authoringNote": "⭐ 全文（五個降級的完整理由 + 2026-08-18 前兩輪卡面重寫的逐句對照）在 `docs/legacy/_item-authoring-notes-full.md` 的〈spear-of-lightning 雷槍〉一節。⛔ 原文一個字都沒有被截掉 —— 這裡只留改動當下必須看到的三件事。\n\n① **五個降級的摘要**：G10 沒有移動距離累積器 ⇒「每移動 3 距離獲得 1 層」降級成 `onInterval` + `internalCooldown 1.5`（⛔ 站著不動也會裝填，與原設計「用移動換火力」相反）；引擎沒有「清掉自己指定的一份增益」⇒「消耗全部層數」降級成兩條 hook **各自** 3 秒內部冷卻、層數不被消耗；`outputDamagePct` 是**加成型**（base 0，只有 `flat` 動得了，而且**沒有 scope**）⇒ 5 層是 **×1.50 且對你造成的所有傷害生效**，不是文案的 ×1.61、也不只爆炸；G8 沒有「半徑隨層數縮放」的形狀 ⇒ 固定 `radiusTier:\"中\"`（`radius: 4` 是級別關掉時的退路）。\n\n② ⭐ **2026-08-18 第三輪修正 —— [感電] 掛錯了位置。** 兩條 hook 的 `applyStatus` 原本放在 `damageArea` 的**兄弟**位置：applyStatus 的受眾是 `ctx.targets`（`sim/effects/applyStatus.ts` 的 `subjects`），那是上游交下來的**單一**受害者，⛔ 不是爆炸真的炸到的那群人 ⇒ 卡面寫「範圍內的敵人」，實際只有被打中的那一個中招，而畫面上跟正常一模一樣（失敗形態②）。修法是**替換成做得到的等效機制**：搬進 `damageArea.onHitTargets`（`effect.target-set-chain@1`，`sim/effects/victimFilter.ts::runOnHitChain`），⛔ 不是刪掉那句話。`includeOrigin: true` 所以被命中的英雄本人也在名單裡。`onHitTargetsMode` 省略 = batch（applyStatus 自己就迭代整群）。\n⚠️ **兩條 hook 都要搬**：只搬 `burst-basic` 的話，普攻引爆是範圍、技能引爆是單體，而**沒有任何東西會紅**。\n\n③ ⭐ 同一輪：這兩個 `applyStatus` 原本**一格機制欄位都沒有** —— `paralysis` 只是一個字串，狀態列照樣畫圖示、玩家看到就不敢上，而對方完全自由（⛔ 比沒效果更糟）。補 `stun: true`（出貨前例 `godie-h02k.w` 也是 paralysis + stun）。\n⚠️ 卡面原本寫「麻痺」而 statusId 是 `paralysis` ＝ **癱瘓**（麻痺是另一份文件 `numbness`），已把卡面改成癱瘓並寫出它擋住哪幾格 —— `paralysis.json` 自己就說「擋住哪幾格不在這個標記上，由施加它的那張卡決定」。\n⛔ **0.75 秒是我定的數字，不是 owner 給的**；它跟著兩條 hook 的 3 秒 ICD 走，所以上限是每 3 秒一次。"
+}

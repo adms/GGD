@@ -1,0 +1,91 @@
+{
+  "id": "fx.fam.dissipate.void.s85",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "sphere",
+    "radius": 0.612
+  },
+  "mode": "burst",
+  "burstCount": 52,
+  "lifetimeSec": {
+    "min": 0.459,
+    "max": 1.107
+  },
+  "size": {
+    "start": 0.107,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      0.928,
+      0.8776,
+      0.9676,
+      0.75
+    ],
+    "end": [
+      0.108,
+      0.0576,
+      0.1476,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.107
+    ],
+    [
+      0.2,
+      0.255
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        0.928,
+        0.8776,
+        0.9676,
+        0.75
+      ]
+    ],
+    [
+      0.2,
+      [
+        0.6,
+        0.32,
+        0.82,
+        0.75
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.3,
+        0.16,
+        0.41,
+        0.315
+      ]
+    ],
+    [
+      1,
+      [
+        0.108,
+        0.0576,
+        0.1476,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 0.4,
+  "speed": {
+    "min": 2,
+    "max": 6
+  },
+  "texture": "assets/textures/particles/star_04.png"
+}

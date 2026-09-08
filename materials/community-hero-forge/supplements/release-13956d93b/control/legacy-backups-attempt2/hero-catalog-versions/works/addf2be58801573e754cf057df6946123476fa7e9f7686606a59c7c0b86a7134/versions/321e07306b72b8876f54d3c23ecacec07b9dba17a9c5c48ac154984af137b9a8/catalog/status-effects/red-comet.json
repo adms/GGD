@@ -1,0 +1,12 @@
+{
+  "id": "red-comet",
+  "schema": "status-effect@1",
+  "name": "赤色彗星",
+  "description": "紅色的東西快三倍，這是宇宙世紀的常識。",
+  "polarity": "buff",
+  "tags": [
+    "red-comet",
+    "haste",
+    "buff"
+  ]
+}

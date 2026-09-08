@@ -1,0 +1,79 @@
+{
+  "id": "godie-herosasuke-p3",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.177,
+    "angleDeg": 1.0
+  },
+  "mode": "continuous",
+  "rate": 50.0,
+  "lifetimeSec": {
+    "min": 0.5,
+    "max": 0.5
+  },
+  "size": {
+    "start": 0.354,
+    "end": 2.127
+  },
+  "color": {
+    "start": [
+      0.604,
+      0.176,
+      0.714,
+      1.0
+    ],
+    "end": [
+      0.055,
+      0.008,
+      0.62,
+      1.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.604,
+        0.176,
+        0.714,
+        1.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.322,
+        0.627,
+        0.875,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.055,
+        0.008,
+        0.62,
+        1.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.354
+    ],
+    [
+      0.5,
+      1.063
+    ],
+    [
+      1,
+      2.127
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/spark_04.png",
+  "anchorBone": "Bone_Arm2_R"
+}

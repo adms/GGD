@@ -1,0 +1,36 @@
+{
+  "id": "godie-hart.ex",
+  "name": "01-002 究極魔劍",
+  "icon": "assets/icons/abilities/godie-hart.ex.webp",
+  "provenance": "w3x-import",
+  "description": "[被動]\n0秒冷卻時間\n\n只有在使用究極魔劍時，克勞德才能發揮出他100%的力量。凶斬及超究武神霸斬升級為囧斬及超究武神霸斬-改，攻擊時100%造成1.5倍傷害且絕不失誤。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "cooldownTier": "極大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 6,
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "castTimeSec": 1.033
+    }
+  },
+  "vfxKey": "fx.prim.holy.beam-lg",
+  "schema": "ability@1",
+  "castTimeSec": 1.033
+}

@@ -1,0 +1,6 @@
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(lastTick >= (source.recordedThroughTick ?? 1))
+
+    at <anonymous> (/private/tmp/ggd-model-upload-acceptance/release-13956d93b/replay-current.mts:69:3)
+Evidence: /private/tmp/ggd-model-upload-acceptance/release-13956d93b/evidence/replay.json

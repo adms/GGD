@@ -1,0 +1,78 @@
+{
+  "id": "godie-demonfilth-p0",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.001,
+    "angleDeg": 180.0
+  },
+  "mode": "continuous",
+  "rate": 25.0,
+  "lifetimeSec": {
+    "min": 3.0,
+    "max": 3.0
+  },
+  "size": {
+    "start": 0.01,
+    "end": 4.306
+  },
+  "color": {
+    "start": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "end": [
+      0.502,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      0.1,
+      [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.502,
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.01
+    ],
+    [
+      0.1,
+      3.084
+    ],
+    [
+      1,
+      4.306
+    ]
+  ],
+  "blendMode": "alpha",
+  "texture": "assets/textures/particles/magic_01.png"
+}

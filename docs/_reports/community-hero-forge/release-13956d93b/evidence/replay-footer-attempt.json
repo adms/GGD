@@ -1,0 +1,16 @@
+{
+  "schema": "ggd-community-replay-proof@1",
+  "matchId": "m_01M211YC6FW976CAN5AB55C757",
+  "recordedDigest": "sha256:f0aad6d593815ac436a25aeb83cd8f119aad430fa4977408d7953dd78221d692",
+  "status": "failed",
+  "startedAt": "2026-09-08T17:46:43.608Z",
+  "limits": "Actual HTTP and replay socket; no browser, visual or complete-match settlement acceptance.",
+  "compatibility": {
+    "compatible": true,
+    "refusal": null,
+    "truncated": false
+  },
+  "refusals": [],
+  "divergences": [],
+  "error": "AssertionError [ERR_ASSERTION]: complete recording requires a sealed footer\n    at <anonymous> (/private/tmp/ggd-model-upload-acceptance/release-13956d93b/replay-current.mts:72:3)"
+}

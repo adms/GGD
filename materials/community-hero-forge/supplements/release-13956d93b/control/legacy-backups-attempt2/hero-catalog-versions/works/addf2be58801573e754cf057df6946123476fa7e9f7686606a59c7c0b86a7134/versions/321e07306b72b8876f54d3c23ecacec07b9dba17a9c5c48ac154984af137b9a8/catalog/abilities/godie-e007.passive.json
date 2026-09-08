@@ -1,0 +1,35 @@
+{
+  "id": "godie-e007.passive",
+  "schema": "ability@1",
+  "name": "12-00 感應意脈",
+  "provenance": "w3x-import",
+  "description": "[被動][迴避]\n{{cd}}秒冷卻\n\n志狼矇眼修行後，領悟到感應人意識流動，神一般的技巧，可以使自身物理攻擊[迴避]達到20%。",
+  "slot": "PASSIVE",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "innateKind": "passive",
+  "targetsEnemies": false,
+  "effects": [],
+  "passive": {
+    "name": "12-00 感應意脈",
+    "ranks": [
+      {
+        "modifiers": [
+          {
+            "stat": "evasion",
+            "op": "flat",
+            "value": 0.2
+          }
+        ]
+      }
+    ]
+  },
+  "icon": "assets/icons/abilities/godie-e007.passive.webp"
+}

@@ -1,0 +1,60 @@
+{
+  "id": "tpl-on-hit-react",
+  "schema": "template@1",
+  "name": "受擊反應",
+  "description": "受到傷害時的被動反制（反制窗/吸收轉化為紅色降級槽）。",
+  "family": "on-hit-react",
+  "status": "enabled",
+  "params": {
+    "chance": {
+      "type": "number",
+      "default": 1,
+      "min": 0,
+      "max": 1,
+      "unit": "ratio"
+    },
+    "reflectDamage": {
+      "type": "scaling",
+      "default": {
+        "perRank": [
+          30
+        ],
+        "ratios": []
+      }
+    },
+    "damageType": {
+      "type": "enum",
+      "values": [
+        "magic",
+        "physical",
+        "true"
+      ],
+      "default": "magic"
+    },
+    "reflectRadius": {
+      "type": "number",
+      "default": 900,
+      "min": 100,
+      "max": 1200,
+      "unit": "wc3u",
+      "optional": true,
+      "inert": "hook 無範圍結算：反擊只打觸發者，半徑不生效"
+    },
+    "internalCooldown": {
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 60,
+      "unit": "s",
+      "optional": true
+    }
+  },
+  "requires": [
+    "hooks"
+  ],
+  "gapScore": 7,
+  "exemplar": {
+    "skill": "20-04 Avalon",
+    "jass": "A0CT"
+  }
+}

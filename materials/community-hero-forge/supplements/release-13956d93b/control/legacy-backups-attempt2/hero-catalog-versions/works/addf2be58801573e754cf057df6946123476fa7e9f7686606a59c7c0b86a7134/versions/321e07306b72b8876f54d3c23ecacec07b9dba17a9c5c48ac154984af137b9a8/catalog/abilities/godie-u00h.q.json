@@ -1,0 +1,54 @@
+{
+  "id": "godie-u00h.q",
+  "name": "39-01 無明神風流-白虎",
+  "icon": "assets/icons/abilities/godie-u00h.q.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n35秒冷卻時間\n\n村正臨死前教授的真無名神風\n無明神風流-白虎，以疾快的速度和力道造成強大的風壓撲向對方，造成100點傷害的同時可以打昏目標1秒。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    72.0,
+    72.0,
+    72.0,
+    72.0,
+    72.0
+  ],
+  "manaCostTier": "極小",
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ad",
+            "coeff": 0.5
+          }
+        ]
+      },
+      "damageType": "physical",
+      "status": {
+        "statusId": "slow40",
+        "duration": 1.0,
+        "moveSpeedMult": 0.6
+      },
+      "castTimeSec": 0.567
+    }
+  },
+  "vfxKey": "fx.prim.wind.slash",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "castTimeSec": 0.567,
+  "rangeTier": "大",
+  "range": 8
+}

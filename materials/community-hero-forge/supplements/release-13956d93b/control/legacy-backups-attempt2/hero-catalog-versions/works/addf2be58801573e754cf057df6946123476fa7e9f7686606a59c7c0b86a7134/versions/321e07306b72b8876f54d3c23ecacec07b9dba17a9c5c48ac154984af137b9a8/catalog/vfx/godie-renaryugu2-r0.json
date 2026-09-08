@@ -1,0 +1,16 @@
+{
+  "id": "godie-renaryugu2-r0",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/wc3/ribbonblur1.png",
+  "widthAbove": 0.571,
+  "widthBelow": 0.571,
+  "lifespanSec": 0.15,
+  "color": [
+    0.494,
+    0.749,
+    0.945,
+    0.77
+  ],
+  "blendMode": "additive",
+  "anchorBone": "Weapon"
+}

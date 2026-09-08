@@ -1,0 +1,15 @@
+{
+  "id": "burn",
+  "schema": "status-effect@1",
+  "name": "燃燒",
+  "description": "火沾在身上甩不掉，一路燒著掉血。它同時是一個查得到的標記 —— 有人專門等你燒起來才動手（45-04 哥哥要「命中帶有燃燒標記的敵人」、89-01 要「敵方在燃燒狀態」）。每秒燒多少、燒多久，寫在施加它的那張卡上，不在這裡。",
+  "polarity": "debuff",
+  "tags": [
+    "burn",
+    "dot",
+    "fire",
+    "elemental",
+    "marker",
+    "debuff"
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "schema": "voxel-barcodes@1",
+  "note": "L0 條碼（docs/_體素特徵生成規格.md）—— 一個角色由頭到腳的色塊條碼，就是他的特徵主視覺。這一層權威最高，壓在 #231 的 hash 生成器（現在是 L3 保底）之上，只收「我們知道本人長什麼樣」的角色；其餘 w3x 原創單位沒有本人可比對，hash 生成器對它們仍是最好的答案。\n\n11 個槽的順序是解剖順序（頭頂→腳底），不可重排；缺席的槽寫成明確的 null，不可省略 key —— 「這角色沒有小腿」是一句陳述，省略只是資料被截斷。\n\n同色相鄰帶不可合併：香吉士的 top 與 pants 都是 #0D0D0D，仍然是兩個獨立的槽。中間那條髮絲線是髖關節，合併它人偶就不能走路。色帶是外觀，分節是結構。\n\nfrac 是佔全身高的比例，總和 = 1.0。跨部位的比例只在後台 CSS 預覽裡成立；3D 那條路 barcodeToParts() 會在 head/torso/legs 各自內部重新正規化，因為三個方塊的體素高度是固定的。\n\nsource 是強制欄位。三個月後看到一個難看的角色，唯一要問的問題是「這是 owner 指定的還是抽取器出的包」，而這兩者的處理方式完全相反。",
+  "slotOrder": [
+    "hair",
+    "hatBand",
+    "hatBrim",
+    "face",
+    "collar",
+    "chestTrim",
+    "top",
+    "waist",
+    "pants",
+    "shin",
+    "shoe"
+  ],
+  "barcodes": {
+    "placeholder.sanji": {
+      "v": 1,
+      "championId": "placeholder.sanji",
+      "note": "香吉士 —— owner 點名的三個名角之一，但 content/champions/ 裡沒有這個英雄（全庫搜尋『香吉士 / サンジ / Sanji』零命中）。用 placeholder. 命名空間佔位，等他真的上架時把 id 換成 godie-xxxx；census 測試會把所有非 placeholder 的 id 釘死在真實英雄文件上。\n黃髮 / 膚 / 黑西裝上下兩塊 / 黑鞋。長袖，沒有裸露小腿。pants 佔比 0.32 超出 §2.2 的 [0.18, 0.28]：只有 5 個槽的角色，典型上限總和僅 0.96，正規化到 1.0 一定要有人超界 —— 選了最能吸收的那條（他就是腿長）。",
+      "bands": {
+        "hair": { "hex": "#F2E205", "frac": 0.2 },
+        "hatBand": null,
+        "hatBrim": null,
+        "face": { "hex": "#F5CBA0", "frac": 0.14 },
+        "collar": null,
+        "chestTrim": null,
+        "top": { "hex": "#0D0D0D", "frac": 0.26 },
+        "waist": null,
+        "pants": { "hex": "#0D0D0D", "frac": 0.32 },
+        "shin": null,
+        "shoe": { "hex": "#000000", "frac": 0.08 }
+      },
+      "sleeve": "long",
+      "faceColors": { "eye": "#1A1A1A", "nose": null, "mouth": "#B5705C" },
+      "source": "manual"
+    },
+    "godie-u00n": {
+      "v": 1,
+      "championId": "godie-u00n",
+      "note": "草帽小子 - 蒙其.D.魯夫。草帽褐 + 紅帽帶 + 黑帽緣 / 膚 / 紅背心 / 藍短褲 / 膚色小腿 / 褐涼鞋，無袖。\n紅帽帶是細帶（0.04）而不是雜訊：拿掉它魯夫就只是「一頂褐色帽子」。辨識度有一半在細條上，任何『小於 N% 就併掉』的簡化都會殺死角色。\nshin 存在而 shoe 只有 0.08，是因為他穿涼鞋、小腿整段裸露 —— 這是他跟香吉士（長褲包到鞋）最大的下半身差異。",
+      "bands": {
+        "hair": { "hex": "#C9A96A", "frac": 0.16 },
+        "hatBand": { "hex": "#E8112D", "frac": 0.04 },
+        "hatBrim": { "hex": "#111111", "frac": 0.03 },
+        "face": { "hex": "#F5CBA0", "frac": 0.13 },
+        "collar": null,
+        "chestTrim": null,
+        "top": { "hex": "#E8112D", "frac": 0.22 },
+        "waist": null,
+        "pants": { "hex": "#0B5394", "frac": 0.22 },
+        "shin": { "hex": "#F5CBA0", "frac": 0.12 },
+        "shoe": { "hex": "#8A6A3A", "frac": 0.08 }
+      },
+      "sleeve": "none",
+      "faceColors": { "eye": "#1A1A1A", "nose": null, "mouth": "#B5705C" },
+      "source": "manual"
+    },
+    "godie-udre": {
+      "v": 1,
+      "championId": "godie-udre",
+      "note": "三刀流劍士 - 索隆。綠髮 / 膚 / 白襯衫 / 黑腹卷 / 深綠褲 / 黑鞋，長袖。\n黑腹卷（waist 0.08）跟魯夫的紅帽帶同一種東西：細帶就是特徵。白襯衫下面沒有那條黑，索隆看起來就是一個普通的綠頭髮白衣人。\n注意 content/champions/ 有三個索隆（godie-u01q 測試英雄 / godie-u01u / godie-udre），這裡綁的是 store.json 開放名單裡的那一個。",
+      "bands": {
+        "hair": { "hex": "#1E9E3E", "frac": 0.18 },
+        "hatBand": null,
+        "hatBrim": null,
+        "face": { "hex": "#F5CBA0", "frac": 0.13 },
+        "collar": null,
+        "chestTrim": null,
+        "top": { "hex": "#EFEFEF", "frac": 0.25 },
+        "waist": { "hex": "#111111", "frac": 0.08 },
+        "pants": { "hex": "#16301A", "frac": 0.28 },
+        "shin": null,
+        "shoe": { "hex": "#111111", "frac": 0.08 }
+      },
+      "sleeve": "long",
+      "faceColors": { "eye": "#1A1A1A", "nose": null, "mouth": "#B5705C" },
+      "source": "manual"
+    }
+  }
+}

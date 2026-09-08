@@ -1,0 +1,57 @@
+{
+  "id": "imported.student",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/student.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Hand Right": {
+      "x": 0.0249,
+      "y": 1.0415,
+      "z": 0.4969
+    },
+    "Hand Left": {
+      "x": 0.0249,
+      "y": 1.0415,
+      "z": -0.4969
+    },
+    "Head": {
+      "x": 0.0249,
+      "y": 1.665,
+      "z": -0.0
+    },
+    "Chest": {
+      "x": 0.0249,
+      "y": 0.9179,
+      "z": -0.0
+    },
+    "Foot Right": {
+      "x": 0.0943,
+      "y": 0.1348,
+      "z": 0.0756
+    },
+    "Foot Left": {
+      "x": 0.0943,
+      "y": 0.1348,
+      "z": -0.0756
+    },
+    "Origin": {
+      "x": 0.0,
+      "y": 0.2119,
+      "z": -0.0
+    },
+    "Overhead": {
+      "x": 0.0,
+      "y": 2.0072,
+      "z": -0.0
+    }
+  }
+}

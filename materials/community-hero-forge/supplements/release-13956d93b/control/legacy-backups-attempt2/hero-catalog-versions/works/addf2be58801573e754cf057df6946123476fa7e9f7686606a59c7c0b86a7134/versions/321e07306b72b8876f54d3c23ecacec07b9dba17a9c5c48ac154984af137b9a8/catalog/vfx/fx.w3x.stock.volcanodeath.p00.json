@@ -1,0 +1,82 @@
+{
+  "id": "fx.w3x.stock.volcanodeath.p00",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 2.778,
+    "angleDeg": 60.0
+  },
+  "mode": "burst",
+  "burstCount": 60,
+  "lifetimeSec": {
+    "min": 2.0,
+    "max": 2.0
+  },
+  "size": {
+    "start": 1.111,
+    "end": 3.056
+  },
+  "color": {
+    "start": [
+      0.529,
+      0.498,
+      0.376,
+      1.0
+    ],
+    "end": [
+      0.498,
+      0.42,
+      0.322,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.529,
+        0.498,
+        0.376,
+        1.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.557,
+        0.49,
+        0.31,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.498,
+        0.42,
+        0.322,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      1.111
+    ],
+    [
+      0.5,
+      1.667
+    ],
+    [
+      1,
+      3.056
+    ]
+  ],
+  "blendMode": "alpha",
+  "texture": "assets/textures/particles/smoke_03.png",
+  "speed": {
+    "min": 0.3111,
+    "max": 1.9111
+  }
+}

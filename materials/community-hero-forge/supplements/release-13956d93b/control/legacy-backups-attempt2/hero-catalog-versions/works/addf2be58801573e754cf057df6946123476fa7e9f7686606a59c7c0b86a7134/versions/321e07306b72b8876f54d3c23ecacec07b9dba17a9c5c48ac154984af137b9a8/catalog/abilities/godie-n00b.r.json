@@ -1,0 +1,50 @@
+{
+  "id": "godie-n00b.r",
+  "schema": "ability@1",
+  "name": "57-04 竹蜻蜓",
+  "icon": "assets/icons/abilities/godie-n00b.r.webp",
+  "provenance": "w3x-import",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n給目標帶上竹蜻蜓，而四周會產生共12道龍捲風每個龍捲風都有著{{dmg}}點傷害。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    288.0,
+    288.0,
+    288.0
+  ],
+  "manaCostTier": "中",
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.7
+          }
+        ]
+      },
+      "damageType": "magic",
+      "status": {
+        "statusId": "root",
+        "duration": 1.0,
+        "root": true
+      },
+      "castTimeSec": 1
+    }
+  },
+  "vfxKey": "fx.prim.wind.tornado-lg",
+  "targetsEnemies": true,
+  "castTimeSec": 1,
+  "rangeTier": "中",
+  "range": 6
+}

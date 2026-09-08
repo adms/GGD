@@ -1,0 +1,98 @@
+{
+  "id": "combat-feel",
+  "schema": "config.combat-feel@1",
+  "knockback": {
+    "minPct": 0.05,
+    "maxBodies": 10,
+    "bodyUnit": 1.0
+  },
+  "standstill": {
+    "enabled": true,
+    "walkEps": 0.5,
+    "applyToMobs": true,
+    "stillEps": 1e-06,
+    "closingRatio": 0.5,
+    "legacyAbsoluteClosing": false
+  },
+  "facing": {
+    "followThroughTicks": 3,
+    "instantCastTicks": 6
+  },
+  "manualOrder": {
+    "survivesGroundMove": true,
+    "leashUnits": 0,
+    "moveOrderNoAggroSec": 1.0,
+    "moveOrderNoAggroUntilArrival": true,
+    "lolControlModel": true,
+    "idleAutoEngageSec": 1,
+    "recoveryCancelOnOrder": true,
+    "attackMoveNearestToCursor": true
+  },
+  "autoEngage": {
+    "enabled": true,
+    "stallTicks": 30,
+    "stallSpeed": 0.5,
+    "seekRadius": 48,
+    "idleSeeks": false,
+    "respectLiveSteering": true,
+    "ccPausesStall": true,
+    "threatWindowTicks": 75,
+    "meleeAcquireFloor": 6,
+    "acquireLeash": 2
+  },
+  "aimAssist": {
+    "mobPenalty": 6
+  },
+  "stuckEscape": {
+    "enabled": true,
+    "thresholdSec": 2,
+    "releaseSec": 1,
+    "anchorRadius": 1.2
+  },
+  "hitstop": {
+    "holdsVictimWalk": false,
+    "holdsAttackerWalk": true,
+    "scale": 0,
+    "stuckGuard": {
+      "enabled": true,
+      "thresholdSec": 2,
+      "windowSec": 0.5,
+      "releaseSec": 1.5
+    }
+  },
+  "predictionHold": {
+    "enabled": true,
+    "flags": {
+      "casting": true,
+      "channelling": true,
+      "dashing": true,
+      "airborne": true,
+      "rooted": true,
+      "stunned": true
+    }
+  },
+  "impactFeel": {
+    "hitstopPerImpact": 55,
+    "hitstopCounterCap": 8,
+    "tierMediumImpact": 60,
+    "tierHeavyImpact": 120,
+    "hitstunPerImpact": 40,
+    "hitstunAdvantage": 2,
+    "knockdownTicks": 14,
+    "blockShakeMult": 0.6,
+    "blockCamKickMult": 0.5,
+    "exShakeMult": 1.25,
+    "exShakeCap": 1.4,
+    "exCamKickFloor": 0.7,
+    "exFreezeTicks": 8
+  },
+  "moveFeel": {
+    "accelTicks": 3,
+    "avoidMargin": 0.3,
+    "autoRangeBuffer": 4,
+    "whiffLungeDist": 0.8,
+    "holdFraction": 0.9,
+    "flowerClearance": 3,
+    "chaosRerollTicks": 15
+  }
+}

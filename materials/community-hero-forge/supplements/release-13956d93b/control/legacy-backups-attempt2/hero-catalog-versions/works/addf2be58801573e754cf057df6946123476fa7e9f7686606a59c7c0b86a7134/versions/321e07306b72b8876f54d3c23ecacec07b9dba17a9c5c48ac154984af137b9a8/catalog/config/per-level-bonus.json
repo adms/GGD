@@ -1,0 +1,11 @@
+{
+  "id": "per-level-bonus",
+  "schema": "config.per-level-bonus@1",
+  "note": "每級加成（owner 2026-08-13：「英雄每等級都會 +1 AP，這個參數一樣可在後台設定」）。⚠️ 它與 config.base-bonus@1 在 finalizeStat 裡是同一個位置（環境倍率之後、夾限之前），差別只有乘上 (等級 − 1)。⭐ appliesTo 的 nonPrimary 存在是因為扁平加成會壓平定位差距：實測 +1 AP/級（99 級 = +98）讓法師/坦克的 AP 比從 1.74 掉到 1.48。owner 因此同時把 intToAbilityPower 從 1 調到 4。",
+  "perLevel": {
+    "ap": {
+      "amount": 1,
+      "appliesTo": "all"
+    }
+  }
+}

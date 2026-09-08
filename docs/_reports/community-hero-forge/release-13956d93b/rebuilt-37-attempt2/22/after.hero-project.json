@@ -1,0 +1,1235 @@
+{
+  "acceptedPlan": {
+    "archetype": "tank",
+    "attackType": "melee",
+    "budget": {
+      "complexity": 60,
+      "power": 50
+    },
+    "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
+    "origin": "硬輔",
+    "planId": "community-review-22-20260907.plan",
+    "schema": "ggd-hero-plan@2",
+    "slots": {
+      "E": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "effects": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 120,
+                "ratios": []
+              },
+              "duration": 3,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "community-review-22-20260907.e.guard"
+            }
+          ],
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "〔重新振作〕",
+        "products": [
+          {
+            "instanceId": "community-review-22-20260907-e-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": []
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-22-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】提供自己與附近一名友軍小額護盾，協助重新進入戰鬥。\n【待補機制】需自己及附近一名友軍。",
+        "slot": "E",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "EX": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "大",
+          "effects": [
+            {
+              "amount": {
+                "flat": 80,
+                "ratios": []
+              },
+              "applyTo": "self",
+              "kind": "heal"
+            }
+          ],
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔重新選擇〕",
+        "products": [
+          {
+            "instanceId": "community-review-22-20260907-ex-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": []
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":80,\"ratios\":[]},\"applyTo\":\"self\"}]。\n【目標設計】R 存檔有效且自己仍存活時，主動消耗同一存檔，回復位置與受上限限制的生命。使用後該存檔不再攔截致死傷害。\n【待補機制】目前立即恢復 80 生命；需主動消耗 R 同一快照且不得重置冷卻。",
+        "slot": "EX",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "PASSIVE": {
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "capabilityIds": [
+          "marks",
+          "invulnerable",
+          "knockback",
+          "applyStatus"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔記住這次失敗〕",
+        "products": [
+          {
+            "instanceId": "community-review-22-20260907-passive-1",
+            "template": {
+              "contentSha256": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39",
+              "inheritDefaults": true,
+              "params": {
+                "aoeRadius": 0,
+                "durationSec": -1,
+                "initial": 1,
+                "internalCooldown": 1,
+                "invulnerableSec": 0.5,
+                "knockbackDistance": 0,
+                "lethalConsume": 1,
+                "lethalMode": "save",
+                "markId": "community-review-22-20260907.last-chance",
+                "max": 1,
+                "perStackLost": [],
+                "resetOn": "match",
+                "restoreHealthPct": 0.15,
+                "stunSec": 0,
+                "surviveHpPct": 0.01
+              },
+              "ref": "tpl-mark-stacks"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】本場一層免死標記，首次致死消耗並回復 15% 生命，保護 0.5 秒。\n【目標設計】完成一次死亡回歸後，短暫標記造成致死傷害的敵人；只顯示當前合法可見資訊。\n【待補機制】本場免死不是死亡回歸；需與 R／EX 共用存檔並合法顯示致死來源。",
+        "slot": "PASSIVE",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        }
+      },
+      "Q": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "effects": [
+            {
+              "applyTo": "target",
+              "duration": 1.5,
+              "kind": "applyStatus",
+              "moveSpeedMult": 0.7,
+              "statusId": "slow30"
+            }
+          ],
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "Shamac",
+        "products": [
+          {
+            "instanceId": "community-review-22-20260907-q-1",
+            "template": {
+              "contentSha256": "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.2,
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "magic"
+              },
+              "ref": "tpl-single-strike"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"slow30\",\"duration\":1.5,\"applyTo\":\"target\",\"moveSpeedMult\":0.7}]。\n【目標設計】製造短暫黑霧干擾，效果限定於 GGD 核准的視覺／命中干擾範圍。\n【待補機制】固定緩速不代表黑霧感官／命中干擾。",
+        "slot": "Q",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "R": {
+        "abilityOverrides": {
+          "castTimeTier": "大",
+          "cooldownTier": "大",
+          "effects": [
+            {
+              "amount": {
+                "flat": 100,
+                "ratios": []
+              },
+              "applyTo": "self",
+              "kind": "heal"
+            }
+          ],
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 3,
+        "name": "死亡回歸",
+        "products": [
+          {
+            "instanceId": "community-review-22-20260907-r-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": []
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":100,\"ratios\":[]},\"applyTo\":\"self\"}]。\n【目標設計】施放時保存自己的位置與生命，存檔有效五秒。期間首次致死傷害被攔截，返回合法存檔位置，恢復到存檔生命但不超過既定上限。每回合最多成功一次。其他角色、世界時間、傷害紀錄、金幣、經驗與冷卻均繼續。\n【待補機制】目前立即恢復 100 生命；需五秒位置生命快照、致死回溯與合法落點。",
+        "slot": "R",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "W": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "〔鞭繩牽制〕",
+        "products": [
+          {
+            "instanceId": "community-review-22-20260907-w-1",
+            "template": {
+              "contentSha256": "sha256:eed77432b653ea9503a4d1649ef677fe7641003db81eb04c88bfca47176804ad",
+              "inheritDefaults": true,
+              "params": {
+                "apexHeight": 1.2,
+                "castTimeSec": 0.2,
+                "damageType": "physical",
+                "durationSec": 0.45,
+                "grabMode": "dragToCaster",
+                "landApRatio": 0,
+                "landDamageTier": "小",
+                "landRadius": 2,
+                "mode": "toPoint",
+                "throwDistance": 100,
+                "throwMode": "distance"
+              },
+              "ref": "tpl-pull-throw"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】拖拉指定目標後向前投擲 100 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】中短距離鞭擊，命中後小幅牽引。\n【待補機制】抓投是模板預覽；需鞭擊後小幅牽引，不應拋飛目標。",
+        "slot": "W",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      }
+    },
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "statOverrides": {
+      "ad": "中",
+      "ap": "小",
+      "armor": "大",
+      "as": "小",
+      "healthRegen": "中",
+      "manaRegen": "中",
+      "maxHealth": "大",
+      "maxMana": "中",
+      "mr": "中",
+      "ms": "中",
+      "range": "小"
+    },
+    "summary": "菜月昴 社群英雄功能驗收稿。作品：《Re:從零開始的異世界生活》  \n定位：個人狀態保存、有限致死攔截、資訊累積。\n\n視覺方向：黑紫 Shamac、存檔沙漏符號、舊位置輪廓與回復線；不得以瞬移加回血冒稱回溯。\n以 GGD 硬輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "templateVersions": {
+      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
+        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
+        "exemplar": {
+          "jass": "A0Q6",
+          "skill": "82-04 闇之魔法"
+        },
+        "family": "buff-self",
+        "gapScore": 6,
+        "id": "tpl-buff-self",
+        "name": "變身強化-數值面",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "duration": {
+            "default": 15,
+            "max": 60,
+            "min": 1,
+            "type": "number",
+            "unit": "s"
+          },
+          "modifiers": {
+            "default": [
+              {
+                "op": "flat",
+                "stat": "ad",
+                "value": 50
+              }
+            ],
+            "type": "statModifiers"
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39": {
+        "description": "在持有者身上裝一個有層數的具名標記（【試煉】【風王結界】【縮地】），可跨回合、可永久，並可選擇讓它變成一張免死牌：受致命傷害時消耗一層 → 無敵 → 回復 → 擊退暈眩周圍敵人；每失去一層永久獲得一組加成。⚠️ 落差：無敵/回復/擊退是救活的同一格一起發生，文案上的「隨後」看不出來 —— ⛔ 那是**這張模板**尚未把回復／擊退接上延後排程，⛔ 不是引擎沒有：引擎**有** `kind:\"delayed\"`（`delaySec`／`count`／`intervalSec`／`effects`，出貨例：初號機 `godie-e00r` 的 berserk_smoke），⭐ 但 lethalSave 的 `selfEffects`／`aoeEffects` 是同格跑的；要接延後得另驗死亡／重觸發／施法者狀態／排程取消的時序，⛔ 不是改說明就算做了（GH#1044）；火圈燒傷不走傷害佇列，這張免死牌擋不到它。",
+        "exemplar": {
+          "jass": "無 JASS 出處 —— owner 2026-08-08 口述規格，不是從 war3map.j 復原的家族",
+          "skill": "52-00 十二道試煉（海克力斯 Berserker 天生技）"
+        },
+        "family": "mark-stacks",
+        "gapScore": 8,
+        "id": "tpl-mark-stacks",
+        "name": "具名標記-層數與免死",
+        "params": {
+          "aoeRadius": {
+            "default": 6,
+            "max": 12,
+            "min": 0,
+            "type": "number"
+          },
+          "durationSec": {
+            "default": -1,
+            "max": 600,
+            "min": -1,
+            "type": "number",
+            "unit": "s"
+          },
+          "initial": {
+            "default": 12,
+            "max": 999,
+            "min": 0,
+            "type": "number",
+            "unit": "count"
+          },
+          "internalCooldown": {
+            "default": 0.5,
+            "max": 30,
+            "min": 0,
+            "type": "number",
+            "unit": "s"
+          },
+          "invulnerableScope": {
+            "default": "damageAndControl",
+            "type": "enum",
+            "values": [
+              "damageAndControl",
+              "damageOnly"
+            ]
+          },
+          "invulnerableSec": {
+            "default": 1.5,
+            "max": 30,
+            "min": 0.1,
+            "type": "number",
+            "unit": "s"
+          },
+          "knockbackDistance": {
+            "default": 4,
+            "max": 20,
+            "min": 0.1,
+            "optional": true,
+            "type": "number"
+          },
+          "knockbackFrom": {
+            "default": "caster",
+            "type": "enum",
+            "values": [
+              "caster",
+              "facing",
+              "pull"
+            ]
+          },
+          "knockbackSpeed": {
+            "default": 16,
+            "max": 40,
+            "min": 1,
+            "type": "number"
+          },
+          "lethalConsume": {
+            "default": 1,
+            "max": 999,
+            "min": 1,
+            "type": "number",
+            "unit": "count"
+          },
+          "lethalDamageTypes": {
+            "default": "all",
+            "type": "enum",
+            "values": [
+              "all",
+              "physicalMagic",
+              "physical",
+              "magic",
+              "true"
+            ]
+          },
+          "lethalMode": {
+            "default": "save",
+            "type": "enum",
+            "values": [
+              "save",
+              "none"
+            ]
+          },
+          "markId": {
+            "default": "godie-hapm.passive",
+            "type": "docRef"
+          },
+          "max": {
+            "default": 12,
+            "max": 999,
+            "min": 1,
+            "type": "number",
+            "unit": "count"
+          },
+          "perStackLost": {
+            "default": [
+              {
+                "op": "pctAdd",
+                "stat": "ad",
+                "value": 0.1
+              },
+              {
+                "op": "pctAdd",
+                "stat": "maxHealth",
+                "value": 0.1
+              }
+            ],
+            "optional": true,
+            "type": "statModifiers"
+          },
+          "resetOn": {
+            "default": "match",
+            "type": "enum",
+            "values": [
+              "match",
+              "round",
+              "never"
+            ]
+          },
+          "restoreHealthPct": {
+            "default": 0.5,
+            "max": 1,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "ratio"
+          },
+          "stunSec": {
+            "default": 0.5,
+            "max": 20,
+            "min": 0.034,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "stunStatusId": {
+            "default": "trial-stun",
+            "type": "docRef"
+          },
+          "surviveHpPct": {
+            "default": 0.01,
+            "max": 1,
+            "min": 0.01,
+            "type": "number",
+            "unit": "ratio"
+          }
+        },
+        "requires": [
+          "marks",
+          "invulnerable",
+          "knockback",
+          "applyStatus"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b": {
+        "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。",
+        "exemplar": {
+          "jass": "A0OD",
+          "skill": "23-04 雷焰聖劍"
+        },
+        "family": "single-strike",
+        "gapScore": 9,
+        "id": "tpl-single-strike",
+        "name": "單體斬擊",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:eed77432b653ea9503a4d1649ef677fe7641003db81eb04c88bfca47176804ad": {
+        "description": "P2 拉扯投擲 (需位移詞彙)。\n\n⭐ 契約（GH#1050）：這一族是 ground 施法 —— 玩家選的點是**抓取圈的中心 ＋ 拋投的方向**，⛔ 不是終點。落點＝起跳點（`grabMode: dragToCaster` 是施法者、`throwOnly` 是受害者自己）＋ 方向 × `throwDistance`（`throwMode: distance`，原作這一族每一支都是方向×定長：A0U1 沿施法者朝向、A0L6/A0SQ 沿施法者→受害者）。`throwMode: point` 是 2026-09-06 之前的行為（選點＝終點），留著當 rollback；那個模式下 `throwDistance` 不寫進節點。",
+        "exemplar": {
+          "jass": "war3map.j:4753-4759 / 4793（共用投擲引擎）· 50201 / 29712 / 52208 / 54322（逐支 throwDistance）",
+          "skill": "52-02 蹂躪編年史（`A0U1`，`content/abilities/godie-hapm.w.json`）"
+        },
+        "family": "pull-throw",
+        "gapScore": 3,
+        "id": "tpl-pull-throw",
+        "name": "拉扯投擲",
+        "params": {
+          "apexHeight": {
+            "default": 1.2,
+            "max": 8,
+            "min": 0,
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.apexHeight = 1.2`。⚠️ ⭐ `wc3h` 與 `wc3u` 是**兩把不同的尺**（`expand.ts` 的 `toApex` vs `toLen`）—— 這一格走 apex。",
+            "type": "number",
+            "unit": "wc3h"
+          },
+          "castTimeSec": {
+            "max": 10,
+            "min": 0,
+            "optional": true,
+            "origin": "taxonomy: ⛔ **刻意不給 default** —— 逐支不同（出貨那一支是 0.833）。",
+            "type": "number",
+            "unit": "s"
+          },
+          "damageType": {
+            "default": "magic",
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].damageType = \"magic\"`。",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "durationSec": {
+            "default": 0.42,
+            "max": 10,
+            "min": 0.05,
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.durationSec = 0.42`。⭐ 與 `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） 的 `throwStepIntervalSec` 0.04（j:4793 共用引擎）× 約 10 步同一個量級。",
+            "type": "number",
+            "unit": "s"
+          },
+          "grabInvulnSec": {
+            "max": 10,
+            "min": 0,
+            "optional": true,
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `effects[0]` 是 `invulnerable{durationSec:1.05, applyTo:\"self\", blocksControl:true}`。⛔ **刻意不給 default** —— 「抓取期間施法者是不是無敵」是逐支的設計選擇，⛔ 不是這一族的性質。",
+            "type": "number",
+            "unit": "s"
+          },
+          "grabMode": {
+            "default": "dragToCaster",
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.dragToCaster = true`（＝先拉到施法者身上再拋）。⚠️ `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） §2.3 的 `approach` 欄記載另外兩種（`casterToVictimTile`=A0L6 j:50113 · `casterToVictimFront`=A0SQ j:29646）—— ⛔ 那兩種今天 `zLeap` 表達不了。⭐ 這一格同時決定拋投**方向**（`sim/effects/leap.ts` 的 `throwDirection`）：`dragToCaster` ⇒ 施法者朝向（A0U1 j:51765）；`throwOnly` ⇒ 施法者→受害者（A0L6 j:50109 / A0SQ j:29634）。",
+            "type": "enum",
+            "values": [
+              "dragToCaster",
+              "throwOnly"
+            ]
+          },
+          "landApRatio": {
+            "default": 0.5,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].amount.ratios = [{stat:\"ap\",coeff:**0.5**}]`。",
+            "type": "number",
+            "unit": "ratio"
+          },
+          "landDamageTier": {
+            "default": "小",
+            "optional": true,
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].amount.damageTierPerRank = [\"極小\",\"極小\",\"小\",\"小\"] ` ⇒ 家族取中位的「小」。⛔ 走級距，⛔ 不烘數字。",
+            "type": "enum",
+            "values": [
+              "極小",
+              "小",
+              "中",
+              "大",
+              "極大"
+            ]
+          },
+          "landRadius": {
+            "default": 4.95,
+            "max": 30,
+            "min": 0,
+            "optional": true,
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.landRadius = 4.95`（已是 GGD 單位）。",
+            "type": "number",
+            "unit": "count"
+          },
+          "mode": {
+            "default": "toPoint",
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.mode = \"toPoint\"`；`docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） 的六個力學形狀裡有五個是「把被害者搬到另一個點」。",
+            "type": "enum",
+            "values": [
+              "toPoint",
+              "inPlace"
+            ]
+          },
+          "throwDistance": {
+            "default": 500,
+            "max": 2600,
+            "min": 0,
+            "origin": "⚠️ 只在 `throwMode: distance` 讀 —— `point` 模式下 expand 不把它寫進節點（GH#1050）。j:4757 共用投擲引擎 `10 × 50 = **500**`。⭐ 這一格是**多支**的：A0L6 `20×40=800`（j:50201，⚠️ tooltip 說 1000 而 **JASS 勝**）· A0SQ `12×50=600`（j:29712）· A0U5 200（j:52208）· A0Y7 `(4+4L)×50`=400…1000（j:54322）⇒ 家族取共用引擎值。",
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "throwMode": {
+            "default": "distance",
+            "origin": "j:51765 A0U1 `PolarProjectionBJ(casterLoc, 400.00, GetUnitFacing(caster))` · j:50109 A0L6 / j:29634 A0SQ `AngleBetweenPoints(caster, victim)` ⇒ 原作這一族**沒有任何一支**有「落點」，每一次拋投都是**方向 × 定長** ⇒ 預設 `distance`。`point`＝2026-09-06 之前的出貨行為（玩家選的點就是終點；expand 在這個模式下**不寫** `throwDistance` 進節點，所以那一格不是「可調卻無效」而是不進節點）—— 留著當 rollback 開關（owner 2026-08-23「沒做完以前別問我了自己判斷 但是留後台開關可以簡易 rollback」）。GH#1050。",
+            "type": "enum",
+            "values": [
+              "distance",
+              "point"
+            ]
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      }
+    },
+    "title": "菜月昴"
+  },
+  "brief": {
+    "concept": "菜月昴 社群英雄功能驗收稿。作品：《Re:從零開始的異世界生活》  \n定位：個人狀態保存、有限致死攔截、資訊累積。\n\n視覺方向：黑紫 Shamac、存檔沙漏符號、舊位置輪廓與回復線；不得以瞬移加回血冒稱回溯。\n以 GGD 硬輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "E": "〔重新振作〕",
+      "EX": "〔重新選擇〕",
+      "PASSIVE": "〔記住這次失敗〕",
+      "Q": "Shamac",
+      "R": "死亡回歸",
+      "W": "〔鞭繩牽制〕"
+    },
+    "name": "菜月昴"
+  },
+  "presentation": {
+    "assetLocks": [
+      {
+        "byteSize": 691776,
+        "consumers": [
+          "champion:model"
+        ],
+        "kind": "model",
+        "mediaType": "model/gltf-binary",
+        "path": "assets/models/community/57ee177f0c20a31aaa7b729e5b5311f67c5a2427040060b5f317b70d633398a9.glb",
+        "registry": "normalized-upload",
+        "sha256": "57ee177f0c20a31aaa7b729e5b5311f67c5a2427040060b5f317b70d633398a9"
+      }
+    ],
+    "championIcon": "assets/icons/champions/thorne.webp",
+    "modelKey": "community.body.2956d65224d9c24236376242811bda048b1e0f45fb85254e",
+    "modelProvenance": {
+      "modelSha256": "57ee177f0c20a31aaa7b729e5b5311f67c5a2427040060b5f317b70d633398a9",
+      "notes": "以黑髮、黑色運動服青年造型暫代菜月昴；實際為夜斗。未選其神劍，不代表死亡回歸機制已完成。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。",
+      "relationship": "style-proxy",
+      "schema": "ggd-hero-model-provenance@1",
+      "sourceAssetId": "300heroes:64db6774e13416da32390b5b",
+      "sourceCharacter": "夜斗",
+      "sourceWork": "流浪神差／野良神"
+    },
+    "schema": "ggd-hero-presentation@1",
+    "slots": {
+      "E": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "script": {
+          "abilityId": "community-review-22-20260907.e",
+          "id": "community-review-22-20260907.e",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                140,
+                77,
+                171
+              ],
+              "vfxId": "fx.prim.void.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                140,
+                77,
+                171
+              ],
+              "vfxId": "fx.prim.void.pulse",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "E",
+        "vfxLayers": []
+      },
+      "EX": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "script": {
+          "abilityId": "community-review-22-20260907.ex",
+          "id": "community-review-22-20260907.ex",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                140,
+                77,
+                171
+              ],
+              "vfxId": "fx.prim.void.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                140,
+                77,
+                171
+              ],
+              "vfxId": "fx.prim.void.pulse",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "EX",
+        "vfxLayers": []
+      },
+      "PASSIVE": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "script": null,
+        "sfxKey": null,
+        "slot": "PASSIVE",
+        "vfxLayers": []
+      },
+      "Q": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "script": {
+          "abilityId": "community-review-22-20260907.q",
+          "id": "community-review-22-20260907.q",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                140,
+                77,
+                171
+              ],
+              "vfxId": "fx.prim.void.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                140,
+                77,
+                171
+              ],
+              "vfxId": "fx.prim.void.slash",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "Q",
+        "vfxLayers": []
+      },
+      "R": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "script": {
+          "abilityId": "community-review-22-20260907.r",
+          "id": "community-review-22-20260907.r",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                140,
+                77,
+                171
+              ],
+              "vfxId": "fx.prim.void.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                140,
+                77,
+                171
+              ],
+              "vfxId": "fx.prim.void.pulse",
+              "w3xScale": 1.25
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "R",
+        "vfxLayers": []
+      },
+      "W": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "script": {
+          "abilityId": "community-review-22-20260907.w",
+          "id": "community-review-22-20260907.w",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                140,
+                77,
+                171
+              ],
+              "vfxId": "fx.prim.void.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                140,
+                77,
+                171
+              ],
+              "vfxId": "fx.prim.void.arc",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "W",
+        "vfxLayers": []
+      }
+    },
+    "uploadedModel": {
+      "byteSize": 691776,
+      "clipMap": {
+        "attack": "single_attack_attcom_a",
+        "cast": "single_skill_01_a",
+        "death": "dead",
+        "hurt": "bat_idle",
+        "idle": "bat_idle",
+        "run": "single_run"
+      },
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "57ee177f0c20a31aaa7b729e5b5311f67c5a2427040060b5f317b70d633398a9",
+      "yawOffsetDeg": 0
+    }
+  },
+  "projectId": "community-review-22-20260907",
+  "receipts": [
+    {
+      "digest": "88c9bb0eabb061612f7f68520b8512843e70f9464cbc814707cc1c3ba5a50af1",
+      "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+      "kind": "generator-adopted",
+      "projectRevision": 5
+    },
+    {
+      "kind": "generator-adopted",
+      "projectRevision": 12,
+      "digest": "5ad4b2d9b978e5052bbb95eef9f89451ebd8f0082f4a3e29430ab020d5533f2a",
+      "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597"
+    }
+  ],
+  "revision": 12,
+  "schema": "ggd-hero-project@2",
+  "sections": {
+    "attributes": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "draft"
+    },
+    "identity": {
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      },
+      "revision": 1,
+      "state": "draft"
+    },
+    "mechanics": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    },
+    "package": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "presentation": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "skills": {
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      },
+      "revision": 12,
+      "state": "draft"
+    },
+    "validation": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    }
+  },
+  "sourceDesign": {
+    "identity": "作品：《Re:從零開始的異世界生活》  \n定位：個人狀態保存、有限致死攔截、資訊累積。",
+    "name": "菜月昴",
+    "ownerText": "### 22｜菜月昴\n\n作品：《Re:從零開始的異世界生活》  \n定位：個人狀態保存、有限致死攔截、資訊累積。\n\n- **PASSIVE｜〔記住這次失敗〕**：完成一次死亡回歸後，短暫標記造成致死傷害的敵人；只顯示當前合法可見資訊。\n- **Q｜Shamac**：製造短暫黑霧干擾，效果限定於 GGD 核准的視覺／命中干擾範圍。\n- **W｜〔鞭繩牽制〕**：中短距離鞭擊，命中後小幅牽引。\n- **E｜〔重新振作〕**：提供自己與附近一名友軍小額護盾，協助重新進入戰鬥。\n- **R｜死亡回歸**：施放時保存自己的位置與生命，存檔有效五秒。期間首次致死傷害被攔截，返回合法存檔位置，恢復到存檔生命但不超過既定上限。每回合最多成功一次。其他角色、世界時間、傷害紀錄、金幣、經驗與冷卻均繼續。\n- **EX｜〔重新選擇〕**：R 存檔有效且自己仍存活時，主動消耗同一存檔，回復位置與受上限限制的生命。使用後該存檔不再攔截致死傷害。\n\n**審查重點**：這是 GGD 個人回復版死亡回歸。驗證非法舊位置、連續致死、R/EX 同幀競爭，以及生命回復不重置技能、獎勵或其他角色狀態。\n\n",
+    "reviewText": "這是 GGD 個人回復版死亡回歸。驗證非法舊位置、連續致死、R/EX 同幀競爭，以及生命回復不重置技能、獎勵或其他角色狀態。",
+    "schema": "ggd-hero-source-design@1",
+    "slots": {
+      "E": {
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-22-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。",
+        "name": "〔重新振作〕",
+        "ownerDescription": "提供自己與附近一名友軍小額護盾，協助重新進入戰鬥。",
+        "refinementContracts": [
+          "M06",
+          "M09"
+        ],
+        "requiredRefinement": "需自己及附近一名友軍。"
+      },
+      "EX": {
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":80,\"ratios\":[]},\"applyTo\":\"self\"}]。",
+        "name": "〔重新選擇〕",
+        "ownerDescription": "R 存檔有效且自己仍存活時，主動消耗同一存檔，回復位置與受上限限制的生命。使用後該存檔不再攔截致死傷害。",
+        "refinementContracts": [
+          "M06",
+          "M09"
+        ],
+        "requiredRefinement": "目前立即恢復 80 生命；需主動消耗 R 同一快照且不得重置冷卻。"
+      },
+      "PASSIVE": {
+        "baselineBehavior": "本場一層免死標記，首次致死消耗並回復 15% 生命，保護 0.5 秒。",
+        "name": "〔記住這次失敗〕",
+        "ownerDescription": "完成一次死亡回歸後，短暫標記造成致死傷害的敵人；只顯示當前合法可見資訊。",
+        "refinementContracts": [
+          "M06",
+          "M09"
+        ],
+        "requiredRefinement": "本場免死不是死亡回歸；需與 R／EX 共用存檔並合法顯示致死來源。"
+      },
+      "Q": {
+        "baselineBehavior": "指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"slow30\",\"duration\":1.5,\"applyTo\":\"target\",\"moveSpeedMult\":0.7}]。",
+        "name": "Shamac",
+        "ownerDescription": "製造短暫黑霧干擾，效果限定於 GGD 核准的視覺／命中干擾範圍。",
+        "refinementContracts": [
+          "M06",
+          "M09"
+        ],
+        "requiredRefinement": "固定緩速不代表黑霧感官／命中干擾。"
+      },
+      "R": {
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":100,\"ratios\":[]},\"applyTo\":\"self\"}]。",
+        "name": "死亡回歸",
+        "ownerDescription": "施放時保存自己的位置與生命，存檔有效五秒。期間首次致死傷害被攔截，返回合法存檔位置，恢復到存檔生命但不超過既定上限。每回合最多成功一次。其他角色、世界時間、傷害紀錄、金幣、經驗與冷卻均繼續。",
+        "refinementContracts": [
+          "M06",
+          "M09"
+        ],
+        "requiredRefinement": "目前立即恢復 100 生命；需五秒位置生命快照、致死回溯與合法落點。"
+      },
+      "W": {
+        "baselineBehavior": "拖拉指定目標後向前投擲 100 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。",
+        "name": "〔鞭繩牽制〕",
+        "ownerDescription": "中短距離鞭擊，命中後小幅牽引。",
+        "refinementContracts": [
+          "M06",
+          "M09"
+        ],
+        "requiredRefinement": "抓投是模板預覽；需鞭擊後小幅牽引，不應拋飛目標。"
+      }
+    },
+    "sourceSha256": "09a5066e5650407ab61302b3432099c1feb6f97db8726e2eec31b246b0e638dc"
+  },
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "validationState": {
+    "attributes": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "identity": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "mechanics": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    },
+    "package": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "presentation": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "skills": {
+      "revision": 12,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    }
+  }
+}

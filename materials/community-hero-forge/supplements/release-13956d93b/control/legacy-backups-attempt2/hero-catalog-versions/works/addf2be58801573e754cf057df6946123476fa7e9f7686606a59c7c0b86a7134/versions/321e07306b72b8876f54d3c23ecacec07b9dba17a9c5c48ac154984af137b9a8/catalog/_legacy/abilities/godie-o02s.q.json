@@ -1,0 +1,47 @@
+{
+  "id": "godie-o02s.q",
+  "name": "53-02 強化炸彈陣",
+  "icon": "assets/icons/abilities/godie-o02s.q.webp",
+  "description": "[主動攻擊]\n35秒冷卻時間\n\n施展火焰爆裂魔法傷害敵方部隊，燒傷150點。",
+  "slot": "Q",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    35.0,
+    35.0,
+    35.0,
+    35.0
+  ],
+  "manaCost": [
+    50.0,
+    100.0,
+    150.0,
+    200.0
+  ],
+  "range": 11.92,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          150.0,
+          300.0,
+          450.0,
+          600.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.prim.fire.bolt",
+  "targetsEnemies": true,
+  "radius": 3.69,
+  "schema": "ability@1",
+  "castTimeSec": 0.5
+}

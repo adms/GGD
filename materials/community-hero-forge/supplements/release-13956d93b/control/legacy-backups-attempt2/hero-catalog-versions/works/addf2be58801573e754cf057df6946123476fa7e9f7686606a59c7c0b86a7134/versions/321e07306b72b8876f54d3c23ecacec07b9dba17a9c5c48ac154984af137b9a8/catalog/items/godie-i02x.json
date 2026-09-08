@@ -1,0 +1,43 @@
+{
+  "id": "godie-i02x",
+  "schema": "item@1",
+  "name": "斬岩刃",
+  "icon": "assets/icons/items/godie-i02x.webp",
+  "description": "武器\n效能\n30%機率造成100點範圍傷害\n攻擊力+30.2\n生命+222\n\n解說\n據說是遠古時知名刀匠所打造的不可褻瀆之刀。",
+  "cost": 0,
+  "tier": 3,
+  "modifiers": [
+    {
+      "stat": "ad",
+      "op": "flat",
+      "value": 30.2
+    },
+    {
+      "stat": "maxHealth",
+      "op": "flat",
+      "value": 222
+    }
+  ],
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "chance": 0.3,
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "physical",
+          "amount": {
+            "flat": 100
+          },
+          "radius": 3.0,
+          "maxTargets": 4,
+          "includeOrigin": true
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "wc3-import"
+  ],
+  "craftRole": "component"
+}

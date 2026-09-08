@@ -1,0 +1,67 @@
+{
+  "id": "godie-e00l.q",
+  "name": "20-02 感知能力",
+  "icon": "assets/icons/abilities/godie-e00l.q.webp",
+  "provenance": "w3x-import",
+  "description": "[被動]\n{{cd}}秒冷卻時間\n\n受到物理攻擊時有7%機率可迴避物理攻擊。",
+  "slot": "Q",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "schema": "ability@1",
+  "passive": {
+    "name": "20-02 感知能力",
+    "ranks": [
+      {
+        "modifiers": [
+          {
+            "stat": "evasion",
+            "op": "flat",
+            "value": 0.07
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "evasion",
+            "op": "flat",
+            "value": 0.14
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "evasion",
+            "op": "flat",
+            "value": 0.21
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "evasion",
+            "op": "flat",
+            "value": 0.28
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "id": "godie-zombiex.q",
+  "schema": "ability@1",
+  "name": "100-01 肝泥抹德",
+  "icon": "assets/icons/abilities/godie-zombiex.q.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n噴出一灘黑泥，對範圍內敵人造成魔法傷害並減速。",
+  "slot": "Q",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    30.0,
+    30.0,
+    30.0,
+    30.0
+  ],
+  "cooldownTier": "極小",
+  "manaCost": [
+    72.0,
+    72.0,
+    72.0,
+    72.0
+  ],
+  "manaCostTier": "極小",
+  "radius": 3,
+  "effects": [],
+  "template": {
+    "ref": "tpl-proxy-cast",
+    "params": {
+      "anchor": "point",
+      "radius": 163.5,
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.5
+          }
+        ]
+      },
+      "damageType": "magic",
+      "statusId": "slow30",
+      "statusDurationSec": 1.5
+    }
+  },
+  "vfxKey": "fx.prim.void.nova",
+  "targetsEnemies": true,
+  "castTimeSec": 1.133,
+  "rangeTier": "中",
+  "range": 6,
+  "radiusTier": "極小"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "tpl-pure-cosmetic",
+  "schema": "template@1",
+  "name": "純演出物件資料",
+  "description": "純演出物件資料 (無觸發)。",
+  "family": "pure-cosmetic",
+  "status": "draft",
+  "params": {},
+  "requires": [],
+  "gapScore": 7,
+  "exemplar": {
+    "skill": "(draft)",
+    "jass": "(P2/P3)"
+  }
+}

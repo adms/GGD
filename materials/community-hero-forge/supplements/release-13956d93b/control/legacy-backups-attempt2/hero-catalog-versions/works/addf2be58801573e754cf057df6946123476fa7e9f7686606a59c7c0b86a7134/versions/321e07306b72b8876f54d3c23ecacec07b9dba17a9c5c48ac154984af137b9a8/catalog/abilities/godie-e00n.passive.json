@@ -1,0 +1,61 @@
+{
+  "id": "godie-e00n.passive",
+  "schema": "ability@1",
+  "name": "22-00 嗚鎖打!",
+  "icon": "assets/icons/abilities/godie-e00n.passive.webp",
+  "provenance": "w3x-import",
+  "description": "[輔助][範圍]\n{{cd}}秒冷卻時間\n\n爆發殺氣，對附近的敵方地面部隊造成{{dmg}}的傷害，並將他們嚇昏0.5秒，殺氣將會使禮奈速度瞬間暴增。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    30.0
+  ],
+  "cooldownTier": "極小",
+  "manaCost": [
+    144.0
+  ],
+  "manaCostTier": "小",
+  "range": 0.0,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damageArea",
+      "damageType": "physical",
+      "amount": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ad",
+            "coeff": 0.5
+          }
+        ]
+      },
+      "radius": 6.0,
+      "radiusTier": "中",
+      "onHitTargets": [
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 0.1,
+          "stun": true
+        }
+      ]
+    },
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 4.0
+        }
+      ],
+      "duration": 4.0
+    }
+  ],
+  "vfxKey": "fx.prim.earth.shockwave",
+  "castTimeSec": 0.833,
+  "radiusTier": "中"
+}

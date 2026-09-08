@@ -1,0 +1,65 @@
+{
+  "id": "tpl-transform",
+  "schema": "template@1",
+  "name": "變身",
+  "description": "換一具身體（`championForm`）—— 英雄卡的 `transform.counterpartId` 那一份。`形態` 選 `alternate`（變過去）／`base`（變回來）／`toggle`（同一格按第二次就切回去，風王結界／紮根那一族）；`持續秒數` 清空 = 永不逾時（toggle 那四支就是）。⭐ **強化住在這一支技能裡，⛔ 不在變身身體的卡上**（owner 2026-08-13：「我決定變身所有的屬性改變都用技能標籤組合到該變身技能中就好，所以屬性不用多一份考量，都是一樣」）⇒ `增益` 那一格填 modifiers（清空 = 純換身體，出貨 9 支就是），`增益秒數` 是它自己的長度 —— ⚠️ 它**不一定等於**變身的長度（出貨 90-002 妙蛙花變身 18 秒而 AD 加成只有 6 秒）。`狀態` 那一格是伴隨的 buff/debuff 節點（38-00 邪眼那一族）。⛔ **這一族不發 `targetsEnemies`**（可組合鍵，文件自己的值站著），⛔ 也不管變身身體長什麼樣、換不換技能組 —— 那些住在 `content/champions/<變身態>.json`。⚠️ 逐階不同長度的（w3a `ahdu` 一階一格，例 06-04）今天填不進來：`持續秒數` 是單一數字槽。",
+  "family": "transform",
+  "status": "enabled",
+  "params": {
+    "to": {
+      "type": "enum",
+      "values": [
+        "alternate",
+        "base",
+        "toggle"
+      ],
+      "default": "alternate",
+      "origin": "census: 出貨 24 支帶 championForm 的手寫技能逐節點數 —— `alternate` **20**、`toggle` 4（20-01 誓約勝利之劍 ×2 · 70-00 白木老樹精 ×2）、`base` 0。"
+    },
+    "durationSec": {
+      "type": "number",
+      "optional": true,
+      "default": 6,
+      "min": 0.1,
+      "max": 120,
+      "unit": "s",
+      "origin": "derived: exemplar 58-04（content/abilities/godie-ofar.r.json）`effects[0].durationSec` 逐位元 6。⚠️ 這是 w3a `ahdu`；⛔ **不是**中位數（20 支 alternate 的分佈 6/7/8/10/15/18/20 很散，取 exemplar 那一支）。清空 = 永不逾時（toggle 那四支）。"
+    },
+    "modifiers": {
+      "type": "statModifiers",
+      "optional": true
+    },
+    "buffDurationSec": {
+      "type": "number",
+      "optional": true,
+      "default": 6,
+      "min": 0.1,
+      "max": 120,
+      "unit": "s",
+      "origin": "census: 出貨 11 支「變身＋增益」的 applyBuff.duration —— **6 秒 4 支**（04-002 · 42-002 · 90-002 · 77-03 rank1）是最多的一格，其餘 7/8/15/20 各 1–3 支。⚠️ 它有預設是**必要的**：`增益` 填了而這一格空著時，展開器會用它 —— ⛔ 沒有預設就是擲例外（＝一份表單存得起來、載入時整支技能降級成沒有效果）。"
+    },
+    "status": {
+      "type": "applyStatus",
+      "optional": true
+    },
+    "castTimeSec": {
+      "type": "number",
+      "optional": true,
+      "default": 0.667,
+      "min": 0,
+      "max": 5,
+      "unit": "s",
+      "origin": "derived: exemplar 58-04（godie-ofar.r）`castTimeSec` 0.667；castderive:build:raw 推導欄位，文件與 params 同值（同 71/79 位既有採用者的慣例）。"
+    }
+  },
+  "requires": [
+    "championForm",
+    "applyBuff",
+    "applyStatus"
+  ],
+  "gapScore": 9,
+  "exemplar": {
+    "skill": "58-04 神騎寶貝（content/abilities/godie-ofar.r.json）—— 出貨最單純的一支：只換身體、6 秒、沒有伴隨增益",
+    "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）；原作的 `ahdu`／`uabi` 對照見 content/champions/<變身態>.json 的 transform.triggerAbility"
+  }
+}

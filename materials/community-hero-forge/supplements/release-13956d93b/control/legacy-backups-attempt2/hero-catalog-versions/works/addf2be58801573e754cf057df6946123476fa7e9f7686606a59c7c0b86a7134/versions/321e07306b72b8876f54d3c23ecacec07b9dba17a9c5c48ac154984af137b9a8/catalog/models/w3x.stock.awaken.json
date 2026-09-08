@@ -1,0 +1,22 @@
+{
+  "id": "w3x.stock.awaken",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/awaken.glb",
+  "scale": 0.101,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Stand",
+    "attack": "Stand",
+    "cast": "Stand",
+    "hurt": "Stand",
+    "death": "Stand"
+  },
+  "fxLongAxis": "y",
+  "fxSpawnHeight": 0.55,
+  "fxEmitters": [
+    "fx.w3x.stock.awaken.p00",
+    "fx.w3x.stock.awaken.p01",
+    "fx.w3x.stock.awaken.p02"
+  ]
+}

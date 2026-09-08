@@ -1,0 +1,70 @@
+{
+  "id": "godie-i00i",
+  "schema": "item@1",
+  "name": "炎龍巨弩",
+  "icon": "assets/icons/items/godie-i00i.webp",
+  "description": "傳說\n效能\n[普通攻擊時] 每次普攻會同時發出 100% AP 傷害的炎龍怒火造成周圍 3名敵人燃燒傷害，持續3秒\nAP+228\n最大魔力+20%\n\n解說\n傳說中飛鼠先生曾經為了破除冰封城堡的魔咒，向脾氣暴躁的炎龍借助火焰之力，最終被飛鼠先生的魔法所收服，將力量引借到充滿魔法力量的巨弩上。",
+  "cost": 0,
+  "tier": 2,
+  "modifiers": [
+    {
+      "stat": "maxMana",
+      "op": "pctAdd",
+      "value": 0.2
+    },
+    {
+      "stat": "ap",
+      "op": "flat",
+      "value": 228
+    }
+  ],
+  "tags": [
+    "wc3-import"
+  ],
+  "craftRole": "final",
+  "recipe": {
+    "components": [
+      "godie-i012"
+    ],
+    "book": "godie-i04h"
+  },
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.25
+              }
+            ]
+          },
+          "radius": 3.5,
+          "maxTargets": 3,
+          "onHitTargets": [
+            {
+              "kind": "dot",
+              "damageType": "magic",
+              "amountPerTick": {
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.25
+                  }
+                ]
+              },
+              "intervalSec": 1,
+              "durationSec": 3,
+              "stacking": "independent"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "authoringNote": "逐句對照（2026-08-18 稽核）：\n「AP+228」= modifiers ap flat 228。✅ 「最大魔力+20%」= maxMana pctAdd 0.2。✅\n\n[普通攻擊時]「每次普攻會同時發出 100% AP 傷害的炎龍怒火造成周圍 3名敵人燃燒傷害，持續3秒」= passive[0]。radius 3.5 = 這一批 on-hit 範圍傷害的出貨慣例（文案沒有給半徑）；maxTargets 3 = 文案的「3名敵人」；includeOrigin 省略 = false，被普攻打中的那個人不會再吃一次（他已經吃過普攻了）。\n⭐ **2026-08-18 修的是「持續3秒」**。這一行在此之前登記為【仍缺】：整份 100% AP **一次打完**，卡面上「燃燒⋯持續3秒」是一句零實作的話（第一·五守則要消滅的形狀）。當時的理由是「damageArea 沒辦法帶 dot payload」—— 那個理由已經過期了，`damageArea.onHitTargets`（effect.target-set-chain@1）就是「這個圓真的打到的那群人再跑一段」，而 `dot` 讀的正是 ctx.targets。\n⛔ **總傷害一個字都沒動**：100% AP 拆成 **4 次 ×25% AP**——命中當下 1 次（damageArea 自己那一發）＋ dot 3 秒每秒 1 次（intervalSec 1、durationSec 3）。所以這是**分佈**的修正，不是加強；差別正是舊備註寫的那一句「對手有沒有機會在燒完之前把血補回來」。\n⚠️ `stacking: \"independent\"` 是承重的一格，⛔ 不可以改成預設的 refresh：refresh 只延長期限、不加傷害，於是攻速再快每秒也只燒 25% AP —— 那會把這件武器**砍掉大半**。independent 讓每一次普攻各自帶一段自己的 3 秒燒，N 刀就是 N×100% AP，與修改前逐位元同量。\n⚠️ 燒傷預設吃得到【淨化】（`config.dispel@1` 的 dotDefaultDispellable，出貨 true）—— 這是新出現的互動，文案沒有講，因為它是全 repo 燒傷的共同規則而不是這件武器的特性。"
+}

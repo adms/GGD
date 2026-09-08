@@ -1,0 +1,8 @@
+{
+  "id": "camera-mark",
+  "schema": "status-effect@1",
+  "name": "攝影機鎖定",
+  "description": "被 30-00 攝影機盯上的人。鏡頭已經架在你附近的樹上，而架鏡頭的那個人現在知道你在哪 —— 他隨時可以把自己送到鏡頭前面。標記本身不痛也不慢，它只是一條回去的路。",
+  "polarity": "debuff",
+  "tags": ["camera-mark", "mark", "recall-anchor", "debuff"]
+}

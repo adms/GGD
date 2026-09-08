@@ -1,0 +1,50 @@
+{
+  "id": "godie-ogld.r",
+  "name": "72-04 黑化",
+  "icon": "assets/icons/abilities/godie-ogld.r.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n黑化後的黑人牙膏將會在短時間內使出敵我皆傷的噴牙膏攻擊，對周圍所有生物造成最多{{ap}}% [AP]的傷害。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    288.0,
+    288.0,
+    288.0
+  ],
+  "manaCostTier": "中",
+  "range": 0,
+  "effects": [],
+  "template": {
+    "ref": "tpl-proxy-cast",
+    "params": {
+      "anchor": "point",
+      "radius": 200,
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 2.3
+          }
+        ]
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.8,
+      "statusId": "burnstun",
+      "statusDurationSec": 0.8
+    }
+  },
+  "vfxKey": "fx.prim.void.explosion-lg",
+  "targetsEnemies": true,
+  "radius": 3.0,
+  "schema": "ability@1",
+  "castTimeSec": 0.8,
+  "radiusTier": "極小"
+}

@@ -1,0 +1,184 @@
+{
+  "scope": "Authorized isolated local service only",
+  "changes": [
+    {
+      "id": "ui-cues",
+      "before": {
+        "id": "ui-cues",
+        "schema": "config.ui-cues@1",
+        "note": "畫面回話（owner 2026-08-23 的三則 [優先]）。① 「施法範圍預覽可以參考 w3x 的白色魔法陣，今天有出現在我上傳依文世界終結的擷圖前幾張還沒施展生效的時候」⇒ telegraphRune：預告圈的填滿改畫成白色魔法陣。⚠️ 只有填滿變白，外圈永遠是通道色（敵/友/自己一眼分得出來是 #228 的第 4 條，不可以被這一格吃掉）。② 「被動技 觸發作用的時候 還是要閃一下圖示（例如初號機暴走都看不出來有沒有生效冷卻剩多少）」⇒ passiveFlashMs / passiveFlashThrottleMs / passiveIcdReadout 三格：閃一下 + 看得到內部冷卻。⚠️ 節流是承重的，不是體感微調：onDamageTaken 這一族被動一秒可以觸發十次，沒有節流的話圖示會變成閃爍燈。③ 「邀請朋友的部分 除了可以等 10 秒、不等了以外，還可以選多等 1 分鐘」⇒ rallyExtendSeconds：主揪倒數條上「再等一下」的選項表。⭐ 「有幾個選項」本身就是這個陣列 —— 下次要再加一個 5 秒＝加一個 5，⛔ 不是改程式；按鈕上的字是從秒數推導的（第〇·四守則）。⚠️ 後台『畫面提示』頁存的是耐久覆蓋層（data/），覆蓋層會蓋掉這一個檔案 —— 線上存過之後，改這裡不會生效。 ④ 施法預告的形狀（2026-08-23）：`castType:\"ground\"` 帶 `damageLine` 的技能，判定是一條**膠囊**（`sim/effects/damageLine.ts` 的 `capsule(start,end,width/2)`），而 `ground` 的圓盤只負責**挑人**（`groundAoeTargets`）。畫圓盤會教玩家往旁邊躲沒用 —— 而那正好是唯一躲得掉的方向。⇒ telegraphGroundShape：`line`（出貨）＝畫那條膠囊；`circle`＝一律畫圓盤（#228 的舊行為，rollback 用，⛔ 不是對等選項）。 ⑤ 陣亡投幣被拒的回話（2026-08-23）：出貨經濟保證每個玩家每一場都撞得到（goldDrop.coinValue × goldDrop.coinsPerRound 遠大於 config@1 match.startingGold），而在此之前那顆按鈕照亮照可點、每一次都被 sim 拒掉且**畫面一個字都沒有**（coinDropRejected 在客戶端零個消費端）。⇒ 回饋本身是修好，⛔ 不是選項；coinThrowButtonMode 只管要不要**先**把按鈕變灰：`always-enabled`（出貨）＝權威側說了算，`grey-when-poor`＝客戶端預測金幣不足就變灰（rollback）。",
+        "lobbyStore": {
+          "champions": true,
+          "skins": false
+        },
+        "playerContent": {
+          "submit": false,
+          "discover": false
+        },
+        "telegraphRune": true,
+        "telegraphGroundShape": "line",
+        "telegraphRuneAlpha": 0.85,
+        "passiveFlashMs": 420,
+        "passiveFlashThrottleMs": 800,
+        "passiveIcdReadout": true,
+        "rallyExtendSeconds": [
+          60
+        ],
+        "coinThrowButtonMode": "always-enabled",
+        "mouseTwoStageCast": true,
+        "commsWheel": {
+          "enabled": true,
+          "holdKey": "KeyV",
+          "entries": [
+            {
+              "id": "retreat",
+              "zh": "撤退！",
+              "voiceCategory": "retreat"
+            },
+            {
+              "id": "watch",
+              "zh": "小心！",
+              "voiceCategory": "watch"
+            },
+            {
+              "id": "love",
+              "zh": "幹得好",
+              "voiceCategory": "love"
+            },
+            {
+              "id": "puzzled",
+              "zh": "？？？",
+              "voiceCategory": "puzzled"
+            },
+            {
+              "id": "hum",
+              "zh": "哼歌",
+              "voiceCategory": "hum"
+            }
+          ]
+        },
+        "draftShowPicked": true,
+        "draftShowStatPath": true
+      },
+      "after": {
+        "id": "ui-cues",
+        "schema": "config.ui-cues@1",
+        "note": "畫面回話（owner 2026-08-23 的三則 [優先]）。① 「施法範圍預覽可以參考 w3x 的白色魔法陣，今天有出現在我上傳依文世界終結的擷圖前幾張還沒施展生效的時候」⇒ telegraphRune：預告圈的填滿改畫成白色魔法陣。⚠️ 只有填滿變白，外圈永遠是通道色（敵/友/自己一眼分得出來是 #228 的第 4 條，不可以被這一格吃掉）。② 「被動技 觸發作用的時候 還是要閃一下圖示（例如初號機暴走都看不出來有沒有生效冷卻剩多少）」⇒ passiveFlashMs / passiveFlashThrottleMs / passiveIcdReadout 三格：閃一下 + 看得到內部冷卻。⚠️ 節流是承重的，不是體感微調：onDamageTaken 這一族被動一秒可以觸發十次，沒有節流的話圖示會變成閃爍燈。③ 「邀請朋友的部分 除了可以等 10 秒、不等了以外，還可以選多等 1 分鐘」⇒ rallyExtendSeconds：主揪倒數條上「再等一下」的選項表。⭐ 「有幾個選項」本身就是這個陣列 —— 下次要再加一個 5 秒＝加一個 5，⛔ 不是改程式；按鈕上的字是從秒數推導的（第〇·四守則）。⚠️ 後台『畫面提示』頁存的是耐久覆蓋層（data/），覆蓋層會蓋掉這一個檔案 —— 線上存過之後，改這裡不會生效。 ④ 施法預告的形狀（2026-08-23）：`castType:\"ground\"` 帶 `damageLine` 的技能，判定是一條**膠囊**（`sim/effects/damageLine.ts` 的 `capsule(start,end,width/2)`），而 `ground` 的圓盤只負責**挑人**（`groundAoeTargets`）。畫圓盤會教玩家往旁邊躲沒用 —— 而那正好是唯一躲得掉的方向。⇒ telegraphGroundShape：`line`（出貨）＝畫那條膠囊；`circle`＝一律畫圓盤（#228 的舊行為，rollback 用，⛔ 不是對等選項）。 ⑤ 陣亡投幣被拒的回話（2026-08-23）：出貨經濟保證每個玩家每一場都撞得到（goldDrop.coinValue × goldDrop.coinsPerRound 遠大於 config@1 match.startingGold），而在此之前那顆按鈕照亮照可點、每一次都被 sim 拒掉且**畫面一個字都沒有**（coinDropRejected 在客戶端零個消費端）。⇒ 回饋本身是修好，⛔ 不是選項；coinThrowButtonMode 只管要不要**先**把按鈕變灰：`always-enabled`（出貨）＝權威側說了算，`grey-when-poor`＝客戶端預測金幣不足就變灰（rollback）。",
+        "lobbyStore": {
+          "champions": true,
+          "skins": false
+        },
+        "playerContent": {
+          "submit": true,
+          "discover": true
+        },
+        "telegraphRune": true,
+        "telegraphGroundShape": "line",
+        "telegraphRuneAlpha": 0.85,
+        "passiveFlashMs": 420,
+        "passiveFlashThrottleMs": 800,
+        "passiveIcdReadout": true,
+        "rallyExtendSeconds": [
+          60
+        ],
+        "coinThrowButtonMode": "always-enabled",
+        "mouseTwoStageCast": true,
+        "commsWheel": {
+          "enabled": true,
+          "holdKey": "KeyV",
+          "entries": [
+            {
+              "id": "retreat",
+              "zh": "撤退！",
+              "voiceCategory": "retreat"
+            },
+            {
+              "id": "watch",
+              "zh": "小心！",
+              "voiceCategory": "watch"
+            },
+            {
+              "id": "love",
+              "zh": "幹得好",
+              "voiceCategory": "love"
+            },
+            {
+              "id": "puzzled",
+              "zh": "？？？",
+              "voiceCategory": "puzzled"
+            },
+            {
+              "id": "hum",
+              "zh": "哼歌",
+              "voiceCategory": "hum"
+            }
+          ]
+        },
+        "draftShowPicked": true,
+        "draftShowStatPath": true
+      },
+      "response": {
+        "schemaVersion": 1,
+        "generation": 1,
+        "fingerprint": "e365ed4869a5",
+        "docCount": 1,
+        "deletedCount": 0,
+        "updatedAt": "2026-09-08T17:23:18.069186Z",
+        "updatedBy": "01M210NXCFYD4PEQHQ4DEMFT8G",
+        "degraded": false
+      }
+    },
+    {
+      "id": "ugc",
+      "before": {
+        "id": "ugc",
+        "schema": "config.ugc@1",
+        "note": "⭐⭐ 玩家自製內容（UGC）的提交閘（GH#991）。owner 2026-09-05 逐字：「開放讓玩家自己設計 英雄、技能、特效，**不是靠 AI 無止境的逼近太沒效率**」。⭐ 這一份只管「那條路開不開、開多大」，⛔ 不管內容長什麼樣 —— 提交格式沿用 `ggd-ai-authoring-operation@1`（票文 Scope 3 逐字「⛔ 不設計第二種格式」）。⛔⛔ `enabled` 出貨是 **false**：UGC 流水線今天只有第一段（這份開關）落地，身分檢查／逐份機器閘／配額計數一個都還沒有 ⇒ 出貨開著＝一條公開的、沒有任何守衛的寫入路。票文 Known risks 逐字：「quota ＋ maxBytes ＋ 嚴格 Zod 是最低配，**缺一個就不要打開**」。⭐ 打開它的條件不是「時間到了」，是 `apps/platform/internal/server/ugcgate_routes_test.go` ——它從 `chi.Walk` **推導**真入口（今天＝`POST /api/v1/submissions`）、關著時打真的生產路由要 403、開著時要真的寫進耐久層（⭐ 那一段同時是這把尺的 calibrate）。⚠️ 2026-09-07（GH#1103）更正：在此之前這裡指的是 `ugcGateIsArmed.test.ts`，⛔ **而那條閘掃的是 `ugc/(proposals|submissions)` 這個路徑形狀、對真入口零命中就直接 return** ⇒ 它永遠不會「從紅轉綠」，這個條件寫著等於沒寫（失敗形態⑥＋⑨）。⚠️ 另外：`ugc.enabled` 只守**收件**，⛔ 不守 `promote` —— 因為 promote 是**所有**審核通過內容的出貨路徑（⛔ 不只 UGC），把它也掛上這一格會連編輯器投稿一起擋死。⇒ 這一格的 rollback 語意是「**停收件**」，⛔ 不是「停發布」。",
+        "enabled": false,
+        "requireAuth": true,
+        "maxPendingPerPlayer": 5,
+        "quotaPerPlayerPerDay": 20,
+        "maxBytes": 262144,
+        "autoPromote": false,
+        "publishMode": "immediate",
+        "communityRoomOnly": true,
+        "digestRecompute": true
+      },
+      "after": {
+        "id": "ugc",
+        "schema": "config.ugc@1",
+        "note": "⭐⭐ 玩家自製內容（UGC）的提交閘（GH#991）。owner 2026-09-05 逐字：「開放讓玩家自己設計 英雄、技能、特效，**不是靠 AI 無止境的逼近太沒效率**」。⭐ 這一份只管「那條路開不開、開多大」，⛔ 不管內容長什麼樣 —— 提交格式沿用 `ggd-ai-authoring-operation@1`（票文 Scope 3 逐字「⛔ 不設計第二種格式」）。⛔⛔ `enabled` 出貨是 **false**：UGC 流水線今天只有第一段（這份開關）落地，身分檢查／逐份機器閘／配額計數一個都還沒有 ⇒ 出貨開著＝一條公開的、沒有任何守衛的寫入路。票文 Known risks 逐字：「quota ＋ maxBytes ＋ 嚴格 Zod 是最低配，**缺一個就不要打開**」。⭐ 打開它的條件不是「時間到了」，是 `apps/platform/internal/server/ugcgate_routes_test.go` ——它從 `chi.Walk` **推導**真入口（今天＝`POST /api/v1/submissions`）、關著時打真的生產路由要 403、開著時要真的寫進耐久層（⭐ 那一段同時是這把尺的 calibrate）。⚠️ 2026-09-07（GH#1103）更正：在此之前這裡指的是 `ugcGateIsArmed.test.ts`，⛔ **而那條閘掃的是 `ugc/(proposals|submissions)` 這個路徑形狀、對真入口零命中就直接 return** ⇒ 它永遠不會「從紅轉綠」，這個條件寫著等於沒寫（失敗形態⑥＋⑨）。⚠️ 另外：`ugc.enabled` 只守**收件**，⛔ 不守 `promote` —— 因為 promote 是**所有**審核通過內容的出貨路徑（⛔ 不只 UGC），把它也掛上這一格會連編輯器投稿一起擋死。⇒ 這一格的 rollback 語意是「**停收件**」，⛔ 不是「停發布」。",
+        "enabled": true,
+        "requireAuth": true,
+        "maxPendingPerPlayer": 50,
+        "quotaPerPlayerPerDay": 100,
+        "maxBytes": 4194304,
+        "autoPromote": false,
+        "publishMode": "immediate",
+        "communityRoomOnly": true,
+        "digestRecompute": true,
+        "powerUserQuotaPerDay": 200,
+        "heroModelUploadsEnabled": true,
+        "heroModelMaxBytes": 33554432
+      },
+      "response": {
+        "schemaVersion": 1,
+        "generation": 2,
+        "fingerprint": "72acf14931de",
+        "docCount": 2,
+        "deletedCount": 0,
+        "updatedAt": "2026-09-08T17:23:22.666638Z",
+        "updatedBy": "01M210NXCFYD4PEQHQ4DEMFT8G",
+        "degraded": false
+      }
+    }
+  ],
+  "policy": {
+    "enabled": true,
+    "maxPendingPerPlayer": 50,
+    "quotaPerPlayerPerDay": 100,
+    "maxBytes": 4194304,
+    "modelUploadsEnabled": true,
+    "modelMaxBytes": 33554432
+  }
+}

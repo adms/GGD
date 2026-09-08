@@ -1,0 +1,42 @@
+{
+  "id": "godie-h01n.passive",
+  "schema": "ability@1",
+  "name": "79-00 靈壓",
+  "provenance": "owner-spec",
+  "description": "[被動]\n{{cd}}秒冷卻\n有效半徑：{{radius}}\n\n「看不見不代表不存在，可能只是你靈壓太低」\n此靈力產生的強大靈壓能[降低]小 [範圍] 敵人 [攻擊速度] 減半。",
+  "slot": "PASSIVE",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "innateKind": "passive",
+  "targetsEnemies": false,
+  "effects": [],
+  "passive": {
+    "name": "79-00 靈壓",
+    "ranks": [
+      {
+        "auras": [
+          {
+            "key": "ichigo-reiatsu",
+            "radius": 4.5,
+            "affects": "enemy",
+            "modifiers": [
+              {
+                "stat": "as",
+                "op": "pctAdd",
+                "value": -0.5
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "icon": "assets/icons/abilities/godie-h01n.passive.webp"
+}

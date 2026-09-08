@@ -1,0 +1,70 @@
+{
+  "id": "godie-e00s.ex",
+  "schema": "ability@1",
+  "name": "70-002 樹海降臨",
+  "provenance": "owner-spec",
+  "description": "[被動][範圍][治療][AP加成]\n\n「是誰說樹味像雞」\n集千年煉成之大成，[千年練成] 追加 {{ap}}% [AP]傷害，並且[回復][周圍]自己與友方隊伍生命10%。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "targetsEnemies": false,
+  "effects": [],
+  "passive": {
+    "name": "70-002 樹海降臨",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onAbilityCast",
+            "abilitySlot": "R",
+            "effects": [
+              {
+                "kind": "weightedBranch",
+                "shape": "circle",
+                "radiusTier": "中",
+                "radius": 6.0,
+                "side": "allies",
+                "maxTargets": 24,
+                "branches": [
+                  {
+                    "weight": 1,
+                    "effects": [
+                      {
+                        "kind": "restore",
+                        "healthPct": 0.1
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "target": "self"
+          }
+        ]
+      }
+    ]
+  },
+  "augment": {
+    "targets": [
+      {
+        "abilityId": "godie-e00s.r",
+        "ops": [
+          {
+            "op": "damageCoeffAp",
+            "mode": "add",
+            "value": 5.0
+          }
+        ]
+      }
+    ]
+  },
+  "icon": "assets/icons/abilities/godie-e00s.ex.webp",
+  "vfxKey": "fx.prim.blood.pulse-lg"
+}

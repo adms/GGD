@@ -1,0 +1,13 @@
+{
+  "id": "bankai",
+  "schema": "status-effect@1",
+  "name": "卍解",
+  "description": "黑崎一護解放斬魄刀的真正型態。⭐ 2026-09-07（GH#1090）起它**只是 HUD 上那顆圖示的名字** —— 79-04 卍解掛的攻速增益帶著這個具名狀態，好讓玩家在自己的狀態列上看得到「我在卍解」。⛔ **沒有任何條件葉再讀它**。⚠️ 它在此之前還兼任「我現在在卍解嗎」的答案（79-02 月牙斬擊／79-03 月牙天衝的「(卍解狀態下額外追加…)」用 `condition{kind:\"status\", statusId:\"bankai\"}` 問它），而那讓**變身秒數多了一個住處**：這顆增益的 `duration` 與 `championForm.durationSec` 是兩個 8，今天相等所以看不出來（第〇·四守則）。⇒ ⭐ 那三處讀端已改成 GH#1070 的形態葉 `condition{kind:\"form\", subject:\"self\", form:\"alternate\"}`，它讀 `sim/formGate.ts::inAlternateForm` —— 與 `whileForm` 同一支、同一個答案。⛔ 不要把條件讀端退回這顆狀態：那會把第二個住處長回來。",
+  "polarity": "buff",
+  "tags": [
+    "bankai",
+    "form",
+    "mechanism-on-card",
+    "buff"
+  ]
+}

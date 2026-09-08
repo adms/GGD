@@ -1,0 +1,79 @@
+{
+  "id": "fx.w3x.stock.awaken.p01",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.001,
+    "angleDeg": 1.0
+  },
+  "mode": "continuous",
+  "rate": 60.0,
+  "lifetimeSec": {
+    "min": 2.0,
+    "max": 2.0
+  },
+  "size": {
+    "start": 0.094,
+    "end": 0.061
+  },
+  "color": {
+    "start": [
+      1.0,
+      0.796,
+      0.173,
+      1.0
+    ],
+    "end": [
+      0.722,
+      0.173,
+      0.976,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        0.796,
+        0.173,
+        1.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.725,
+        0.318,
+        0.914,
+        0.784
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.722,
+        0.173,
+        0.976,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.094
+    ],
+    [
+      0.5,
+      0.361
+    ],
+    [
+      1,
+      0.061
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/light_02.png",
+  "anchorBone": "Dummy07"
+}

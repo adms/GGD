@@ -1,0 +1,9 @@
+{
+  "id": "admin-friend",
+  "schema": "config.admin-friend@1",
+  "note": "管理員預設好友（GH#499）。owner 2026-08-21 逐字:「所有人預設都會加管理員帳號為好友」「adminAccountId => yes, 如果只有一個就預設那一個」「管理員是強制雙向 不必請求 每個人創號自動預設有管理員好友」。⭐ 強制雙向:平台走 friend.Service.ForceFriend 直接寫兩邊的 Friends 邊,⛔ 不走 Request()(那是送出請求等對方接受,198 個既有帳號會變成 198 個沒有人會按的待處理請求)。⭐ adminAccountId 出貨值是字串 auto(⛔ 不是留空 —— 後台的文字格拒絕空字串,一旦填了 id 就再也回不去自動);auto 表示「照 owner 的規則自己判斷」—— 系統只有一個 RoleAdmin 帳號時就是那一個;有兩個以上時平台不替 owner 挑人,只記一行 log 等他來填。⚠️ 隱私後果:被指名的那個管理員會出現在每一個玩家的好友名單上,而好友名單會顯示在線狀態(online / in-lobby / in-match),也就是說這一格等於「讓這個帳號看得到全站每一個人現在在不在、在幹嘛」。⭐ backfillExisting 是 owner 那句「所有人」的另一半:只接新帳號等於絕大多數人沒有,所以平台每次開機會把既有帳號補一次(冪等,已經是好友的一次寫入都不會發生);後台 Quick Approval 的「加入」區也可以隨時手動再跑一次(POST /api/v1/friends/admin-backfill)。⛔ overrideBlocked 出貨關著:玩家封鎖管理員是一個明確的動作,強制加回去會讓封鎖這個功能對管理員無效 —— 需要「強制真的是強制」的部署才把它打開。",
+  "enabled": true,
+  "adminAccountId": "auto",
+  "backfillExisting": true,
+  "overrideBlocked": false
+}

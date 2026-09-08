@@ -1,0 +1,44 @@
+{
+  "id": "godie-osam.w",
+  "name": "34-02 閃光鞭",
+  "icon": "assets/icons/abilities/godie-osam.w.webp",
+  "provenance": "w3x-import",
+  "description": "[被動]\n0秒冷卻時間\n\n攻擊時有10%的機率造成1.5倍的傷害。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 5,
+  "cooldown": [
+    6.0,
+    6.0,
+    6.0,
+    6.0,
+    6.0
+  ],
+  "cooldownTier": "極小",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 6,
+      "modifiers": [
+        {
+          "stat": "critChance",
+          "op": "flat",
+          "value": 0.25
+        }
+      ],
+      "castTimeSec": 0.233
+    }
+  },
+  "vfxKey": "fx.prim.wind.slash",
+  "schema": "ability@1",
+  "castTimeSec": 0.233
+}

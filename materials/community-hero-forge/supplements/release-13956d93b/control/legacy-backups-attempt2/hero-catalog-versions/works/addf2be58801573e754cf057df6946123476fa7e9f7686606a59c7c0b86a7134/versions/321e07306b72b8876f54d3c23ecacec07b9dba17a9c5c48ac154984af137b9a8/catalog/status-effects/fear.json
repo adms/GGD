@@ -1,0 +1,17 @@
+{
+  "id": "fear",
+  "schema": "status-effect@1",
+  "name": "恐懼",
+  "description": "嚇到轉頭就跑：玩家的移動與攻擊指令全部失效，身體自己遠離最近的敵人，而且不會攻擊。它是控場效果 —— 免控（魔法免疫）擋得掉。只管腳不管手：技能仍然放得出來，要連技能一起封請在那張卡上再加一個【沉默】。",
+  "polarity": "debuff",
+  "tags": [
+    "fear",
+    "uncontrollable",
+    "ai-override",
+    "flee",
+    "attack-denied",
+    "disable",
+    "cc",
+    "debuff"
+  ]
+}

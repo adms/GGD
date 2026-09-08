@@ -1,0 +1,62 @@
+{
+  "id": "imported.xzz",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/xzz.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Overhead": {
+      "x": -0.0,
+      "y": 1.7315,
+      "z": -0.0
+    },
+    "Head": {
+      "x": -0.0,
+      "y": 1.7137,
+      "z": -0.0
+    },
+    "Hand Right": {
+      "x": -0.0,
+      "y": 0.7127,
+      "z": 0.2175
+    },
+    "Weapon": {
+      "x": -0.0,
+      "y": 0.6799,
+      "z": 0.2131
+    },
+    "Hand Left": {
+      "x": -0.0,
+      "y": 0.7127,
+      "z": -0.2187
+    },
+    "Foot Right": {
+      "x": -0.0,
+      "y": 0.0,
+      "z": 0.0972
+    },
+    "Foot Left": {
+      "x": -0.0,
+      "y": 0.0,
+      "z": -0.1057
+    },
+    "Chest": {
+      "x": -0.0,
+      "y": 1.1715,
+      "z": -0.0
+    },
+    "Origin": {
+      "x": -0.0,
+      "y": 0.0,
+      "z": -0.0
+    }
+  }
+}

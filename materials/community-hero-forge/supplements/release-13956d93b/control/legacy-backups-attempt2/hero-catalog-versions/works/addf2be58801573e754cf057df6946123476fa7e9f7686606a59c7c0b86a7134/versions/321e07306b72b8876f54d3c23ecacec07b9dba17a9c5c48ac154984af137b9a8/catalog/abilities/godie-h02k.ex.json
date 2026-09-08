@@ -1,0 +1,252 @@
+{
+  "id": "godie-h02k.ex",
+  "schema": "ability@1",
+  "name": "89-002 俄羅斯輪盤",
+  "provenance": "owner-spec",
+  "description": "[主動][指定][範圍][輔助][恐懼][機率]\n{{cd}}秒冷卻\n消耗[MP] {{mp}}\n施法距離：{{range}}\n\n拿出土製左輪手槍裝填一顆子彈，生死一瞬間，有1/6的機會讓對方或1/6自己死亡，剩餘4/6 對方會陷入 [恐懼] 狀態，持續 2秒。\n\n(敵方 [致盲] 狀態下對方的死亡[機率]提升到 2/6)\n(敵方 [混亂] 狀態下對方的死亡[機率]提升到 3/6)",
+  "slot": "EX",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    6.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 6.0,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "weightedBranch",
+      "condition": {
+        "kind": "status",
+        "subject": "target",
+        "statusId": "confusion"
+      },
+      "shape": "single",
+      "branches": [
+        {
+          "weight": 3,
+          "effects": [
+            {
+              "kind": "damage",
+              "condition": {
+                "kind": "kind",
+                "subject": "target",
+                "is": "champion"
+              },
+              "damageType": "true",
+              "amount": {
+                "flat": 0.0
+              },
+              "resourcePct": {
+                "subject": "target",
+                "resource": "health",
+                "basis": "max",
+                "perRank": [
+                  1.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "weight": 1,
+          "effects": [
+            {
+              "kind": "damage",
+              "applyTo": "self",
+              "damageType": "true",
+              "amount": {
+                "flat": 0.0
+              },
+              "resourcePct": {
+                "subject": "self",
+                "resource": "health",
+                "basis": "max",
+                "perRank": [
+                  1.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "weight": 2,
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "fear",
+              "duration": 2.0,
+              "feared": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "weightedBranch",
+      "condition": {
+        "all": [
+          {
+            "kind": "status",
+            "subject": "target",
+            "statusId": "blind"
+          },
+          {
+            "not": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "confusion"
+            }
+          }
+        ]
+      },
+      "shape": "single",
+      "branches": [
+        {
+          "weight": 2,
+          "effects": [
+            {
+              "kind": "damage",
+              "condition": {
+                "kind": "kind",
+                "subject": "target",
+                "is": "champion"
+              },
+              "damageType": "true",
+              "amount": {
+                "flat": 0.0
+              },
+              "resourcePct": {
+                "subject": "target",
+                "resource": "health",
+                "basis": "max",
+                "perRank": [
+                  1.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "weight": 1,
+          "effects": [
+            {
+              "kind": "damage",
+              "applyTo": "self",
+              "damageType": "true",
+              "amount": {
+                "flat": 0.0
+              },
+              "resourcePct": {
+                "subject": "self",
+                "resource": "health",
+                "basis": "max",
+                "perRank": [
+                  1.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "weight": 3,
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "fear",
+              "duration": 2.0,
+              "feared": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "weightedBranch",
+      "condition": {
+        "not": {
+          "any": [
+            {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "blind"
+            },
+            {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "confusion"
+            }
+          ]
+        }
+      },
+      "shape": "single",
+      "branches": [
+        {
+          "weight": 1,
+          "effects": [
+            {
+              "kind": "damage",
+              "condition": {
+                "kind": "kind",
+                "subject": "target",
+                "is": "champion"
+              },
+              "damageType": "true",
+              "amount": {
+                "flat": 0.0
+              },
+              "resourcePct": {
+                "subject": "target",
+                "resource": "health",
+                "basis": "max",
+                "perRank": [
+                  1.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "weight": 1,
+          "effects": [
+            {
+              "kind": "damage",
+              "applyTo": "self",
+              "damageType": "true",
+              "amount": {
+                "flat": 0.0
+              },
+              "resourcePct": {
+                "subject": "self",
+                "resource": "health",
+                "basis": "max",
+                "perRank": [
+                  1.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "weight": 4,
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "fear",
+              "duration": 2.0,
+              "feared": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "icon": "assets/icons/abilities/godie-h02k.ex.webp",
+  "vfxKey": "fx.prim.fire.explosion-lg",
+  "sfxKey": "wc3.mortarimpact",
+  "cooldownTier": "極小",
+  "rangeTier": "中",
+  "castTimeSec": 0.233
+}

@@ -1,0 +1,42 @@
+{
+  "id": "godie-n00b.w",
+  "schema": "ability@1",
+  "name": "57-03 複製鏡",
+  "icon": "assets/icons/abilities/godie-n00b.w.webp",
+  "provenance": "w3x-import",
+  "description": "[輔助攻擊]\n{{cd}}秒冷卻時間\n\n未來的法寶，可將鏡前的人或物加以複製，複製出來的人物擁有與本尊相同的攻擊力，但將承受200%額外傷害，持續20秒。\n對非英雄部隊及任務用英雄無效。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "cooldownTier": "極大",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "effects": [],
+  "template": {
+    "ref": "tpl-summon-agent",
+    "params": {
+      "count": 1,
+      "body": "self",
+      "damageMult": 1.0,
+      "hpMult": 0.333,
+      "durationSec": 20,
+      "formation": "ring",
+      "spread": 2,
+      "castTimeSec": 0.267
+    }
+  },
+  "vfxKey": "fx.prim.arcane.pulse",
+  "sfxKey": "wc3.spellbreakerpissed4",
+  "targetsEnemies": true,
+  "castTimeSec": 0.267,
+  "rangeTier": "極大",
+  "range": 12
+}

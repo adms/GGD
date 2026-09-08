@@ -1,0 +1,40 @@
+{
+  "id": "fx.cinder-ward",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "sphere",
+    "radius": 1.2
+  },
+  "mode": "burst",
+  "burstCount": 40,
+  "lifetimeSec": {
+    "min": 0.2,
+    "max": 0.45
+  },
+  "size": {
+    "start": 0.6,
+    "end": 0
+  },
+  "sizeStops": [
+    [0, 0.27],
+    [0.12, 0.6],
+    [1, 0]
+  ],
+  "color": {
+    "start": [1, 0.75, 0.35, 0.9],
+    "end": [1, 0.45, 0.15, 0]
+  },
+  "colorStops": [
+    [0, [1, 1, 1, 0.9]],
+    [0.15, [1, 0.75, 0.35, 0.9]],
+    [0.53, [0.35, 0.26, 0.12, 0.32]],
+    [1, [0, 0, 0, 0]]
+  ],
+  "speed": {
+    "min": 1.2,
+    "max": 2.6
+  },
+  "gravityY": 1,
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/magic_04.png"
+}

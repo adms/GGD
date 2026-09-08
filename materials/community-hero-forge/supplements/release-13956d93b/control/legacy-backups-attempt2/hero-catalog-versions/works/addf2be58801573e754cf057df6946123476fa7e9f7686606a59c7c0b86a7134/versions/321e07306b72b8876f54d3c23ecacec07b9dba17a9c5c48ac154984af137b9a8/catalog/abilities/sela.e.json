@@ -1,0 +1,58 @@
+{
+  "id": "sela.e",
+  "schema": "ability@1",
+  "name": "Scorch Ring",
+  "icon": "assets/icons/abilities/sela.e.webp",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 5,
+  "cooldown": [
+    12,
+    11,
+    10,
+    9,
+    8
+  ],
+  "manaCost": [
+    70,
+    75,
+    80,
+    85,
+    90
+  ],
+  "radius": 3,
+  "targetsEnemies": true,
+  "effects": [],
+  "template": {
+    "ref": "tpl-proxy-cast",
+    "params": {
+      "anchor": "point",
+      "radius": 163.64,
+      "damage": {
+        "flat": 40,
+        "perRank": [
+          30,
+          60,
+          90,
+          120,
+          150
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.5
+          }
+        ]
+      },
+      "damageType": "magic",
+      "statusId": "slow40",
+      "statusDurationSec": 1.5,
+      "castTimeSec": 0.3
+    }
+  },
+  "vfxKey": "fx.scorch-ring",
+  "castTimeSec": 0.3,
+  "provenance": "w3x-import",
+  "rangeTier": "極大",
+  "range": 12
+}

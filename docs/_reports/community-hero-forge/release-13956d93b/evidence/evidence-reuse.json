@@ -1,0 +1,143 @@
+{
+  "schema": "ggd-release-evidence-reuse@1",
+  "scope": "Artwork reuse only; current compilation, simulation and service results are separate. No new full browser or original-design fidelity claim.",
+  "unchangedArtwork": "All 37 old/new ZIP binary model, animation and icon assets byte-compared by rebuild-batch.mts. No VFX/model/projectile definition differences in the complete compiled-document comparison.",
+  "currentMechanismDifferences": [
+    {
+      "hero": "八神庵",
+      "ability": "community-review-02-20260907.q",
+      "changes": [
+        {
+          "path": "/effects/0/finalEffects/0/includeOrigin",
+          "before": null,
+          "after": true
+        }
+      ]
+    },
+    {
+      "hero": "不知火舞",
+      "ability": "community-review-03-20260907.q",
+      "changes": [
+        {
+          "path": "/effects/0/finalEffects/0/includeOrigin",
+          "before": null,
+          "after": true
+        }
+      ]
+    },
+    {
+      "hero": "洛克人",
+      "ability": "community-review-05-20260907.w",
+      "changes": [
+        {
+          "path": "/effects/0/finalEffects/0/includeOrigin",
+          "before": null,
+          "after": true
+        }
+      ]
+    },
+    {
+      "hero": "卡比",
+      "ability": "community-review-06-20260907.q",
+      "changes": [
+        {
+          "path": "/effects/0/onLand/0/amount/ratios/0/coeff",
+          "before": 0.4082,
+          "after": 0.617
+        }
+      ]
+    },
+    {
+      "hero": "西索",
+      "ability": "community-review-07-20260907.e",
+      "changes": [
+        {
+          "path": "/effects/0/onLand/0/amount/ratios/0/coeff",
+          "before": 0.4082,
+          "after": 0.617
+        }
+      ]
+    },
+    {
+      "hero": "利姆路",
+      "ability": "community-review-11-20260907.q",
+      "changes": [
+        {
+          "path": "/effects/0/finalEffects/0/includeOrigin",
+          "before": null,
+          "after": true
+        }
+      ]
+    },
+    {
+      "hero": "比利海靈頓",
+      "ability": "community-review-15-20260907.q",
+      "changes": [
+        {
+          "path": "/effects/0/onLand/0/amount/ratios/0/coeff",
+          "before": 0.4082,
+          "after": 0.617
+        }
+      ]
+    },
+    {
+      "hero": "比利海靈頓",
+      "ability": "community-review-15-20260907.r",
+      "changes": [
+        {
+          "path": "/effects/0/onLand/0/amount/ratios/0/coeff",
+          "before": 1.4577,
+          "after": 2.2037
+        }
+      ]
+    },
+    {
+      "hero": "鹿目圓",
+      "ability": "community-review-21-20260907.q",
+      "changes": [
+        {
+          "path": "/effects/0/finalEffects/0/includeOrigin",
+          "before": null,
+          "after": true
+        }
+      ]
+    },
+    {
+      "hero": "菜月昴",
+      "ability": "community-review-22-20260907.w",
+      "changes": [
+        {
+          "path": "/effects/0/onLand/0/amount/ratios/0/coeff",
+          "before": 0.4082,
+          "after": 0.617
+        }
+      ]
+    },
+    {
+      "hero": "名偵探柯南",
+      "ability": "community-review-26-20260907.ex",
+      "changes": [
+        {
+          "path": "/effects/0/onLand/0/amount/ratios/0/coeff",
+          "before": 2.6938,
+          "after": 4.0725
+        }
+      ]
+    },
+    {
+      "hero": "名偵探柯南",
+      "ability": "community-review-26-20260907.q",
+      "changes": [
+        {
+          "path": "/effects/0/finalEffects/0/includeOrigin",
+          "before": null,
+          "after": true
+        }
+      ]
+    }
+  ],
+  "sharedDependencies": "Sela AP coefficients and retained authoring templates; Thorne retained authoring templates; global AP, model-lod policy notes and transform inheritance config changed with main. See full compiled comparisons.",
+  "visualEvidenceSource": "materials/community-hero-forge/manifest.json: outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild",
+  "notRerun": "37 full browser clickthroughs and all 222 visual scenes. Current transformed-template UI checked separately in transform-counterpart/ui-receipt.json.",
+  "notCompleted": "Original artwork/animations/effects for proxy or style-substitute designs; production deployment."
+}

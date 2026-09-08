@@ -1,0 +1,100 @@
+{
+  "id": "godie-h02k.w",
+  "schema": "ability@1",
+  "name": "89-02 憤怒的菊花",
+  "provenance": "owner-spec",
+  "description": "[被動][範圍][機率]\n\n「菊花一緊，空氣力學就有了答案」\n當敵人攻擊熊貓的時候，有3%[機率][反彈]，[反彈時] 會胡亂噴放排泄物使[周圍][範圍] 敵人造成 [癱瘓] 及 [詛咒]。\n\n(敵方 [致盲] 狀態下額外追加 [混亂] 狀態，持續 10秒)",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "targetsEnemies": false,
+  "effects": [],
+  "passive": {
+    "name": "89-02 憤怒的菊花",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onDamageTaken",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 0.0
+                },
+                "incomingPct": {
+                  "perRank": [
+                    1.0
+                  ],
+                  "negateOriginal": true
+                }
+              }
+            ],
+            "internalCooldown": 1.0,
+            "chance": 0.03,
+            "target": "event",
+            "victim": "enemy"
+          },
+          {
+            "on": "onReflectSuccess",
+            "effects": [
+              {
+                "kind": "damageArea",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 1.0
+                },
+                "radius": 4.5,
+                "radiusTier": "小",
+                "onHitTargets": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "paralysis",
+                    "duration": 1.0,
+                    "stun": true
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "curse",
+                    "duration": 5.0,
+                    "missChance": 0.5
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "condition": {
+                      "kind": "status",
+                      "subject": "target",
+                      "statusId": "blind"
+                    },
+                    "statusId": "confusion",
+                    "duration": 10.0,
+                    "berserk": true,
+                    "targetsAllies": true
+                  }
+                ]
+              }
+            ],
+            "target": "self"
+          }
+        ]
+      }
+    ]
+  },
+  "icon": "assets/icons/abilities/godie-h02k.w.webp",
+  "vfxKey": "fx.prim.nature.explosion",
+  "sfxKey": "wc3.pandarenbrewmasterpissed8"
+}

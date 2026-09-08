@@ -1,0 +1,62 @@
+{
+  "id": "imported.ritsu",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/ritsu.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "hand right": {
+      "x": -0.005,
+      "y": 0.7174,
+      "z": 0.4023
+    },
+    "weapon": {
+      "x": 0.4993,
+      "y": 0.7174,
+      "z": 0.3989
+    },
+    "head": {
+      "x": -0.019,
+      "y": 1.6626,
+      "z": -0.0
+    },
+    "hand left": {
+      "x": -0.005,
+      "y": 0.7174,
+      "z": -0.4023
+    },
+    "chest": {
+      "x": 0.029,
+      "y": 0.8357,
+      "z": -0.0
+    },
+    "foot right": {
+      "x": 0.0295,
+      "y": 0.0834,
+      "z": 0.1041
+    },
+    "foot left": {
+      "x": 0.0295,
+      "y": 0.0834,
+      "z": -0.1041
+    },
+    "origin": {
+      "x": 0.0,
+      "y": 0.1574,
+      "z": -0.0
+    },
+    "overhead": {
+      "x": 0.0,
+      "y": 2.1407,
+      "z": -0.0
+    }
+  }
+}

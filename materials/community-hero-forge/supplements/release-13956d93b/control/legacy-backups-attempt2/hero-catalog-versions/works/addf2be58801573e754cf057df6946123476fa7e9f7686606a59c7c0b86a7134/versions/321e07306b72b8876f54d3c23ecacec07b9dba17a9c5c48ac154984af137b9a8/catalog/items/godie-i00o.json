@@ -1,0 +1,13 @@
+{
+  "id": "godie-i00o",
+  "schema": "item@1",
+  "name": "金雞蛋",
+  "icon": "assets/icons/items/godie-i00o.webp",
+  "description": "使用之後可以讓玩者獲得20黃金。",
+  "cost": 0,
+  "tier": 1,
+  "tags": [
+    "wc3-import"
+  ],
+  "craftRole": "none"
+}

@@ -1,0 +1,68 @@
+{
+  "id": "ex-origin-weapons",
+  "schema": "loot-table@1",
+  "name": "[EX∅ 根源] 寶具池",
+  "note": "⭐ owner 2026-08-18 交來的 **15 件 [EX∅ 根源]** 清單為唯一真相（『根源寶具 · 簡單逆轉條件 · 逆轉效果』那一張表）。\n**15 件全部落地**（2026-08-18 第二輪）—— 上一版卡住的 5 件，各自缺的那個**機制**已經做進引擎，⛔ 不是寫成 5 個 if（第〇·五守則：技能＝JSON 模板組合）：\n  · 討伐叉〈さすまた〉 → `zAuraDef.scaleByNearby`（靈氣強度隨範圍內人數線性縮放）\n  · 史萊姆裝 → `typeStreakImmunity` 授權面（連續同型計數 + 依傷害類型免疫）\n  · 禰豆子的木箱 → `effect.kind:\"carry\"` + `ENTITY_FLAG.CARRIED`（背負移動 + 四根不可選取軸）\n  · 大師球 → `effect.kind:\"convertTeam\"` + `ENTITY_FLAG.TEAM_OVERRIDE*`（陣營轉換，過網會換顏色）\n  · 戰鬥力探測器 → `taunt.side` / `forcedTarget` / `includeNeutrals`（指定我方去嘲諷指定目標）\n⚠️ **這 5 件的『逆轉條件』與大部分數值是 Claude 提的初值，⛔ 不是 owner 裁決過的** —— owner 那張 15 列原表（『簡單逆轉條件 · 逆轉效果』三欄）**不在這個 repo 裡**，五條 lane 各自 grep 過都找不到。每一件的『與 owner 原文哪裡不一樣、為什麼』逐句寫在那份 item JSON 的 `authoringNote`，**請 owner 逐件覆核**；改的全部是資料，⛔ 不必動程式。\n⚠️ 這 5 件**沒有圖示**（`content/assets/icons/items/` 缺檔），`icon` 一律留空而不是指向不存在的路徑 —— 走 #72/#178 的圖示產線補。\n⛔ 一件寶具只屬於一個池。上一版那 5 件（晨曦之光／天生牙／死之王的意志／殺豬刀／再誕之淚珠）是 Claude 的**提案**，owner 交來真清單後已經搬回 `ex-release-weapons`。",
+  "entries": [
+    {
+      "itemId": "soul-gem",
+      "weight": 1
+    },
+    {
+      "itemId": "bezoar-of-the-apothecary",
+      "weight": 1
+    },
+    {
+      "itemId": "all-might-hair",
+      "weight": 1
+    },
+    {
+      "itemId": "gantz-suit",
+      "weight": 1
+    },
+    {
+      "itemId": "icha-icha-paradise",
+      "weight": 1
+    },
+    {
+      "itemId": "red-comet-mask",
+      "weight": 1
+    },
+    {
+      "itemId": "touyako",
+      "weight": 1
+    },
+    {
+      "itemId": "senzu-bean",
+      "weight": 1
+    },
+    {
+      "itemId": "millennium-puzzle",
+      "weight": 1
+    },
+    {
+      "itemId": "grief-seed",
+      "weight": 1
+    },
+    {
+      "itemId": "sasumata",
+      "weight": 1
+    },
+    {
+      "itemId": "slime-suit",
+      "weight": 1
+    },
+    {
+      "itemId": "nezuko-box",
+      "weight": 1
+    },
+    {
+      "itemId": "master-ball",
+      "weight": 1
+    },
+    {
+      "itemId": "scouter",
+      "weight": 1
+    }
+  ]
+}

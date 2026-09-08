@@ -1,0 +1,72 @@
+{
+  "id": "imported.horse",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/horse.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand -1",
+    "run": "Walk",
+    "attack": "Attack -1",
+    "cast": "Attack -1",
+    "hurt": "Stand Hit",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Head": {
+      "x": 0.4981,
+      "y": 1.5179,
+      "z": 0.0047
+    },
+    "Foot Right": {
+      "x": 0.2196,
+      "y": 0.026,
+      "z": 0.1428
+    },
+    "Foot Left": {
+      "x": 0.2194,
+      "y": 0.0259,
+      "z": -0.137
+    },
+    "Chest Mount": {
+      "x": 0.3799,
+      "y": 0.8684,
+      "z": 0.001
+    },
+    "Foot Left Rear": {
+      "x": -0.2702,
+      "y": 0.036,
+      "z": -0.1513
+    },
+    "Foot Right Rear": {
+      "x": -0.2702,
+      "y": 0.036,
+      "z": 0.1511
+    },
+    "Mount Rear": {
+      "x": -0.3143,
+      "y": 0.8882,
+      "z": 0.001
+    },
+    "Chest Mount Right": {
+      "x": 0.1788,
+      "y": 0.9304,
+      "z": 0.1242
+    },
+    "Chest Mount Left": {
+      "x": 0.1782,
+      "y": 0.9305,
+      "z": -0.1249
+    },
+    "OverHead": {
+      "x": 0.0,
+      "y": 1.8229,
+      "z": -0.0
+    },
+    "Origin": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -0.0
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "champ.mob.zombie-special",
+  "schema": "model@1",
+  "glbPath": "assets/models/champions/blocky-undead.glb",
+  "scale": 1.22,
+  "collisionRadius": 1.08,
+  "clipMap": {
+    "idle": "idle",
+    "run": "walk",
+    "attack": "attack",
+    "cast": "attack",
+    "hurt": "hurt",
+    "death": "death"
+  },
+  "attachPoints": {
+    "rightHand": {
+      "x": 0.5,
+      "y": 1.29,
+      "z": 0.14
+    },
+    "overhead": {
+      "x": 0,
+      "y": 2.37,
+      "z": 0
+    }
+  },
+  "teamTintMaterials": []
+}

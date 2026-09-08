@@ -1,0 +1,615 @@
+{
+  "schema": "map@1",
+  "id": "map.shiganshina",
+  "name": "希干希納",
+  "template": "DOUBLE_LOOP",
+  "groundStyle": "dirt",
+  "scenery": {
+    "palette": {
+      "floor": "#c9b79a",
+      "wall": "#8f8272",
+      "sky": "#cdd6e0",
+      "ground": "#2e2820",
+      "void": "#0d1014"
+    },
+    "lighting": {
+      "keyColor": "#e8e4d8",
+      "keyIntensity": 0.78,
+      "keyYawDeg": 300,
+      "keyPitchDeg": 52,
+      "fillIntensity": 0.72,
+      "wave": "sweep",
+      "periodSec": 26,
+      "intensityAmp": 0.14,
+      "yawSweepDeg": 18
+    },
+    "props": [
+      {
+        "model": "assets/models/scenery/rubble_pile.glb",
+        "count": 10,
+        "bandFrom": 0.84,
+        "bandTo": 0.95,
+        "scaleMin": 1.2,
+        "scaleMax": 1.9,
+        "facing": "random",
+        "seed": 171
+      },
+      {
+        "model": "assets/models/scenery/leaning_beam.glb",
+        "count": 6,
+        "bandFrom": 0.88,
+        "bandTo": 0.96,
+        "scaleMin": 1.1,
+        "scaleMax": 1.4,
+        "facing": "random",
+        "seed": 172
+      },
+      {
+        "model": "assets/models/scenery/broken_pillar.glb",
+        "count": 4,
+        "bandFrom": 0.9,
+        "bandTo": 0.97,
+        "scaleMin": 1.1,
+        "scaleMax": 1.4,
+        "facing": "random",
+        "seed": 173
+      },
+      {
+        "model": "assets/models/scenery/iron_fence.glb",
+        "count": 4,
+        "bandFrom": 0.96,
+        "bandTo": 0.995,
+        "scaleMin": 1.2,
+        "scaleMax": 1.5,
+        "facing": "faceIn",
+        "seed": 174
+      },
+      {
+        "model": "assets/models/props/crates_stacked.glb",
+        "count": 6,
+        "bandFrom": 0.88,
+        "bandTo": 0.97,
+        "scaleMin": 1.0,
+        "scaleMax": 1.1,
+        "facing": "random",
+        "seed": 6
+      },
+      {
+        "model": "assets/models/props/barrel_small.glb",
+        "count": 5,
+        "bandFrom": 0.9,
+        "bandTo": 0.98,
+        "scaleMin": 1.1,
+        "scaleMax": 1.2,
+        "facing": "random",
+        "seed": 37
+      },
+      {
+        "model": "assets/models/hex/rock.glb",
+        "count": 4,
+        "bandFrom": 0.85,
+        "bandTo": 0.95,
+        "scaleMin": 1.2,
+        "scaleMax": 1.4,
+        "facing": "random",
+        "seed": 55
+      }
+    ]
+  },
+  "grid": {
+    "cols": 24,
+    "rows": 18,
+    "tileSize": 2
+  },
+  "tiles": [
+    "########################",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#...........#..........#",
+    "#...........#..........#",
+    "#...####....#....####..#",
+    "#...####....#....####..#",
+    "#...####....#....####..#",
+    "#...####....#....####..#",
+    "#...####....#....####..#",
+    "#...####....#....####..#",
+    "#...........#..........#",
+    "#...........#..........#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "########################"
+  ],
+  "regions": [
+    {
+      "id": "plaza",
+      "label": "中央廣場",
+      "role": "landmark",
+      "rects": [
+        {
+          "col": 11,
+          "row": 1,
+          "w": 2,
+          "h": 16
+        }
+      ]
+    },
+    {
+      "id": "gate_road",
+      "label": "城門大道",
+      "role": "corridor",
+      "rects": [
+        {
+          "col": 1,
+          "row": 1,
+          "w": 10,
+          "h": 5
+        }
+      ]
+    },
+    {
+      "id": "houses",
+      "label": "住宅巷",
+      "role": "outer",
+      "rects": [
+        {
+          "col": 1,
+          "row": 6,
+          "w": 10,
+          "h": 6
+        }
+      ]
+    },
+    {
+      "id": "wall_walk",
+      "label": "城牆步道",
+      "role": "corridor",
+      "rects": [
+        {
+          "col": 1,
+          "row": 12,
+          "w": 10,
+          "h": 5
+        }
+      ]
+    },
+    {
+      "id": "barracks",
+      "label": "兵營",
+      "role": "court",
+      "rects": [
+        {
+          "col": 13,
+          "row": 1,
+          "w": 10,
+          "h": 16
+        }
+      ]
+    }
+  ],
+  "landmark": "plaza",
+  "interactions": [
+    {
+      "id": "gate-n",
+      "kind": "capture",
+      "at": {
+        "col": 12,
+        "row": 1
+      },
+      "radius": 2,
+      "regionId": "plaza",
+      "params": {}
+    },
+    {
+      "id": "gate-s",
+      "kind": "capture",
+      "at": {
+        "col": 11,
+        "row": 15
+      },
+      "radius": 2,
+      "regionId": "plaza",
+      "params": {}
+    },
+    {
+      "id": "road-w",
+      "kind": "pickup",
+      "at": {
+        "col": 3,
+        "row": 3
+      },
+      "radius": 2,
+      "regionId": "gate_road",
+      "params": {}
+    },
+    {
+      "id": "house-w",
+      "kind": "pickup",
+      "at": {
+        "col": 3,
+        "row": 8
+      },
+      "radius": 2,
+      "regionId": "houses",
+      "params": {}
+    },
+    {
+      "id": "wall-w",
+      "kind": "capture",
+      "at": {
+        "col": 3,
+        "row": 14
+      },
+      "radius": 2,
+      "regionId": "wall_walk",
+      "params": {}
+    },
+    {
+      "id": "barr-n",
+      "kind": "pickup",
+      "at": {
+        "col": 18,
+        "row": 3
+      },
+      "radius": 2,
+      "regionId": "barracks",
+      "params": {}
+    },
+    {
+      "id": "barr-m",
+      "kind": "pickup",
+      "at": {
+        "col": 16,
+        "row": 9
+      },
+      "radius": 2,
+      "regionId": "barracks",
+      "params": {}
+    },
+    {
+      "id": "barr-s",
+      "kind": "pickup",
+      "at": {
+        "col": 18,
+        "row": 15
+      },
+      "radius": 2,
+      "regionId": "barracks",
+      "params": {}
+    }
+  ],
+  "gimmick": {
+    "kind": "routeSwap",
+    "gateGroups": [
+      {
+        "id": "city_gate_w",
+        "tiles": [
+          {
+            "col": 1,
+            "row": 8
+          },
+          {
+            "col": 2,
+            "row": 8
+          },
+          {
+            "col": 3,
+            "row": 8
+          }
+        ]
+      },
+      {
+        "id": "city_gate_e",
+        "tiles": [
+          {
+            "col": 21,
+            "row": 8
+          },
+          {
+            "col": 22,
+            "row": 8
+          }
+        ]
+      }
+    ],
+    "schedule": {
+      "kind": "periodic",
+      "periodTicks": 900,
+      "telegraphTicks": 60,
+      "configurations": [
+        [
+          "city_gate_w"
+        ],
+        [
+          "city_gate_e"
+        ]
+      ]
+    }
+  },
+  "landmarkProps": [
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "at": {
+        "col": 2,
+        "row": 3
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "at": {
+        "col": 2,
+        "row": 14
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "at": {
+        "col": 22,
+        "row": 3
+      },
+      "rotQuarter": 2,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "at": {
+        "col": 22,
+        "row": 14
+      },
+      "rotQuarter": 2,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 10,
+        "row": 8
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 14,
+        "row": 8
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/floor_tile_large.glb",
+      "at": {
+        "col": 12,
+        "row": 1
+      },
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/props/floor_tile_large.glb",
+      "at": {
+        "col": 12,
+        "row": 16
+      },
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/christmas__Fence.glb",
+      "at": {
+        "col": 1,
+        "row": 1
+      },
+      "rotQuarter": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/crystal-crossroads__Wall_CornerBroken.glb",
+      "at": {
+        "col": 22,
+        "row": 1
+      },
+      "rotQuarter": 1,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/crystal-crossroads__Wall_Small_01.glb",
+      "at": {
+        "col": 1,
+        "row": 16
+      },
+      "rotQuarter": 2,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/christmas__Lamp01.glb",
+      "at": {
+        "col": 22,
+        "row": 16
+      },
+      "rotQuarter": 3,
+      "scale": 0.64
+    }
+  ],
+  "backgroundProps": [
+    {
+      "model": "assets/models/props/crates_stacked.glb",
+      "at": {
+        "col": 5,
+        "row": 6
+      },
+      "rotQuarter": 0,
+      "scale": 1.1
+    },
+    {
+      "model": "assets/models/props/crates_stacked.glb",
+      "at": {
+        "col": 6,
+        "row": 11
+      },
+      "rotQuarter": 0,
+      "scale": 1.1
+    },
+    {
+      "model": "assets/models/props/crates_stacked.glb",
+      "at": {
+        "col": 18,
+        "row": 6
+      },
+      "rotQuarter": 0,
+      "scale": 1.1
+    },
+    {
+      "model": "assets/models/props/crates_stacked.glb",
+      "at": {
+        "col": 19,
+        "row": 11
+      },
+      "rotQuarter": 0,
+      "scale": 1.1
+    },
+    {
+      "model": "assets/models/props/barrel_small.glb",
+      "at": {
+        "col": 4,
+        "row": 9
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/props/barrel_small.glb",
+      "at": {
+        "col": 20,
+        "row": 9
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/props/chest.glb",
+      "at": {
+        "col": 7,
+        "row": 7
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/props/chest.glb",
+      "at": {
+        "col": 17,
+        "row": 7
+      },
+      "rotQuarter": 2,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "at": {
+        "col": 5,
+        "row": 0
+      },
+      "rotQuarter": 0,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "at": {
+        "col": 12,
+        "row": 0
+      },
+      "rotQuarter": 0,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "at": {
+        "col": 18,
+        "row": 0
+      },
+      "rotQuarter": 0,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 0,
+        "row": 9
+      },
+      "rotQuarter": 0,
+      "scale": 1.3
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 23,
+        "row": 9
+      },
+      "rotQuarter": 2,
+      "scale": 1.3
+    }
+  ],
+  "backdrop": {
+    "layers": [
+      {
+        "fromRadius": 1.0,
+        "toRadius": 1.95,
+        "y": -3,
+        "color": "#8a4a32",
+        "alpha": 1,
+        "profile": "towers",
+        "jitter": 0.6,
+        "segments": 36,
+        "rim": {
+          "color": "#ffd9a0",
+          "width": 1.8
+        }
+      },
+      {
+        "fromRadius": 1.7,
+        "toRadius": 3.3,
+        "y": -9,
+        "color": "#6b7a3a",
+        "alpha": 1,
+        "profile": "cloudSea",
+        "jitter": 0.5,
+        "segments": 36,
+        "rim": {
+          "color": "#c9d97a",
+          "width": 1.4
+        }
+      },
+      {
+        "fromRadius": 3.0,
+        "toRadius": 5.0,
+        "y": -24,
+        "color": "#3f3a30",
+        "alpha": 1,
+        "profile": "towers",
+        "jitter": 0.35,
+        "segments": 28,
+        "rim": {
+          "color": "#7a6f5a",
+          "width": 1.2
+        }
+      },
+      {
+        "fromRadius": 4.6,
+        "toRadius": 6.0,
+        "y": -52,
+        "color": "#1b1a16",
+        "alpha": 1,
+        "profile": "flat",
+        "jitter": 0.0,
+        "segments": 20
+      }
+    ]
+  }
+}

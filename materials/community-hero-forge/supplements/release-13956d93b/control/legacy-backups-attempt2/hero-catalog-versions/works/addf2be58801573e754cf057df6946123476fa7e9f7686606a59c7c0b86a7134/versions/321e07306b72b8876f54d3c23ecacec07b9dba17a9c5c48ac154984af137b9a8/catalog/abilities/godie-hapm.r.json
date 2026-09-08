@@ -1,0 +1,73 @@
+{
+  "id": "godie-hapm.r",
+  "schema": "ability@1",
+  "name": "52-04 巨神一擊",
+  "provenance": "owner-spec",
+  "description": "[主動][衝刺][範圍]\n{{cd}}秒冷卻，吟唱{{cast}}秒\n消耗[MP] {{mp}}\n\n「體型差不是霸凌，是傷害公式」\n向前[衝刺]一小段距離後揮出致命的一擊，對[周圍][範圍] 敵人造成{{dmg}} 傷害。\n(若敵人具有[恐懼]狀態，則額外追加 自身[最大生命]25%傷害)",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    120.0,
+    120.0,
+    120.0
+  ],
+  "manaCost": [
+    288.0,
+    288.0,
+    288.0
+  ],
+  "range": 0.0,
+  "radiusTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "dash",
+      "mode": "forward",
+      "speed": 16,
+      "maxDistance": 5.0
+    },
+    {
+      "kind": "damageArea",
+      "damageType": "physical",
+      "amount": {
+        "damageTierPerRank": [
+          "小",
+          "中",
+          "大"
+        ]
+      },
+      "radius": 6.0,
+      "radiusTier": "中",
+      "includeOrigin": true
+    },
+    {
+      "kind": "damageArea",
+      "damageType": "physical",
+      "amount": {
+        "flat": 0.0
+      },
+      "radius": 6.0,
+      "radiusTier": "中",
+      "includeOrigin": true,
+      "victimCondition": {
+        "kind": "status",
+        "subject": "target",
+        "tag": "fear"
+      },
+      "resourcePct": {
+        "subject": "self",
+        "resource": "health",
+        "basis": "max",
+        "perRank": [
+          0.25
+        ]
+      }
+    }
+  ],
+  "icon": "assets/icons/abilities/godie-hapm.r.webp",
+  "vfxKey": "fx.prim.physical.shockwave-lg",
+  "cooldownTier": "極大",
+  "manaCostTier": "中",
+  "castTimeSec": 0.067
+}

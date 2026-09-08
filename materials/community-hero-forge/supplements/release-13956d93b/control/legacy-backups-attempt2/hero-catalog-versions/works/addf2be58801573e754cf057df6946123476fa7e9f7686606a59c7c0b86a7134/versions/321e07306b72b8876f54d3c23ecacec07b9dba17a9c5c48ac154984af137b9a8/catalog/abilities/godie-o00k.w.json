@@ -1,0 +1,37 @@
+{
+  "id": "godie-o00k.w",
+  "name": "86-02 電光一閃",
+  "icon": "assets/icons/abilities/godie-o00k.w.webp",
+  "provenance": "w3x-import",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n讓皮卡娘以疾快的速度移動進出600的距離到指定的位置。",
+  "slot": "W",
+  "castType": "ground",
+  "maxRank": 5,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "effects": [],
+  "template": {
+    "ref": "tpl-blink",
+    "params": {
+      "castTimeSec": 0.467
+    }
+  },
+  "vfxKey": "fx.prim.lightning.beam",
+  "schema": "ability@1",
+  "castTimeSec": 0.467,
+  "rangeTier": "極大",
+  "range": 12
+}

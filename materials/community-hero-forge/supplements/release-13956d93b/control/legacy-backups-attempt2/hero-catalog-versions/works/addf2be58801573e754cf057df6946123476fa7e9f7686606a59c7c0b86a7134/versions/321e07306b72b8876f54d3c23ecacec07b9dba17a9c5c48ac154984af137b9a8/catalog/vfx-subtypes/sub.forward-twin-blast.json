@@ -1,0 +1,97 @@
+{
+  "id": "sub.forward-twin-blast",
+  "schema": "vfx-subtype@1",
+  "label": "雙段爆破（小死＋大爆）",
+  "notes": "GH#990 盤點：godie-o00x.r 與 godie-ogrh.r 的 2 段 **逐位元組完全相同** ⇒ 抽成一塊。⭐ 而這一對模型（nedeathsmall → neutralbuildingexplosion）**還有第三、第四個呼叫端**：godie-e002.ex#9/#11 與 godie-e00l.ex#9/#11 用的是同一對，只是 anchor 從 self 換成 target、觸發器從 castEffect 換成 strike ⇒ ⭐ 那兩格是**量到會變**的，所以它們是參數，⛔ 不是我猜這裡應該可以調。",
+  "derivedFrom": [
+    "godie-o00x.r",
+    "godie-ogrh.r"
+  ],
+  "params": {
+    "trigger": {
+      "type": "enum",
+      "default": "castEffect",
+      "values": [
+        "castStart",
+        "castEffect",
+        "strike",
+        "projectileSpawn",
+        "projectileHit",
+        "reflectSuccess"
+      ],
+      "origin": "census:vfx-scripts/godie-o00x.r#0.on（⭐ 第二個量值 \"strike\" 在 godie-e002.ex#9.on）",
+      "bind": [
+        {
+          "segment": 0,
+          "field": "on"
+        },
+        {
+          "segment": 1,
+          "field": "on"
+        }
+      ]
+    },
+    "anchor": {
+      "type": "enum",
+      "default": "self",
+      "values": [
+        "self",
+        "target"
+      ],
+      "origin": "census:vfx-scripts/godie-o00x.r#0.anchor（⭐ 第二個量值 \"target\" 在 godie-e002.ex#9.anchor）",
+      "bind": [
+        {
+          "segment": 0,
+          "field": "anchor"
+        },
+        {
+          "segment": 1,
+          "field": "anchor"
+        }
+      ]
+    },
+    "offsetForwardU": {
+      "type": "number",
+      "default": 2.75,
+      "min": -30,
+      "max": 30,
+      "origin": "census:vfx-scripts/godie-o00x.r#0.offsetForwardU —— 沿施法者面向往前推的距離",
+      "bind": [
+        {
+          "segment": 0,
+          "field": "offsetForwardU"
+        },
+        {
+          "segment": 1,
+          "field": "offsetForwardU"
+        }
+      ]
+    },
+    "burstLifeSec": {
+      "type": "number",
+      "default": 1.2,
+      "min": 0.05,
+      "max": 30,
+      "origin": "census:vfx-scripts/godie-o00x.r#1.lifeSec —— 大爆那一具活多久（小死那一具是 1.0，刻意不同步）",
+      "bind": [
+        {
+          "segment": 1,
+          "field": "lifeSec"
+        }
+      ]
+    }
+  },
+  "segments": [
+    {
+      "kind": "modelFx",
+      "modelKey": "w3x.stock.nedeathsmall",
+      "path": "static",
+      "lifeSec": 1
+    },
+    {
+      "kind": "modelFx",
+      "modelKey": "w3x.stock.neutralbuildingexplosion",
+      "path": "static"
+    }
+  ]
+}

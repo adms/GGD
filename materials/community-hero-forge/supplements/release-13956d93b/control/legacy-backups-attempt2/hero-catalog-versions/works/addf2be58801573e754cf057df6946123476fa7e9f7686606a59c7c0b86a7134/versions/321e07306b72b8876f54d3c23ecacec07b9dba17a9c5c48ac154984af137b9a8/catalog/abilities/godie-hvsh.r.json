@@ -1,0 +1,87 @@
+{
+  "id": "godie-hvsh.r",
+  "name": "48-04 騎英之疆繩",
+  "icon": "assets/icons/abilities/godie-hvsh.r.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n招喚飛馬以超快的速度衝擊前方，對指定地點上的地面部隊造成{{ap}}% [AP]+300的傷害。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "cooldownTier": "極大",
+  "manaCost": [
+    288.0,
+    288.0,
+    288.0
+  ],
+  "manaCostTier": "中",
+  "effects": [
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "w3x.stock.tomeofretrainingcaster",
+      "clip": "idle",
+      "soundKey": "wc3.thunderclapcaster",
+      "scale": 4.0,
+      "tint": [
+        1.0,
+        0.0,
+        1.0
+      ],
+      "lifeSec": 2.0
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "w3x.stock.tomeofretrainingcaster",
+      "clip": "idle",
+      "soundKey": "wc3.thunderclapcaster",
+      "scale": 5.0,
+      "lifeSec": 3.0
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "imported.midchildernanohaaura",
+      "clip": "idle",
+      "soundKey": "wc3.thunderclapcaster",
+      "scale": 1.5,
+      "tint": [
+        1.0,
+        0.3922,
+        0.3922
+      ],
+      "distance": 1.0,
+      "lifeSec": 3.0
+    }
+  ],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.8
+          }
+        ]
+      },
+      "damageType": "magic",
+      "castTimeSec": 1.633
+    }
+  },
+  "vfxKey": "fx.prim.arcane.beam-lg",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "castTimeSec": 1.633,
+  "rangeTier": "極大",
+  "range": 12
+}

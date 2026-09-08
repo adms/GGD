@@ -1,0 +1,47 @@
+{
+  "id": "godie-opgh.e",
+  "name": "32-03 閃光龍牙",
+  "icon": "assets/icons/abilities/godie-opgh.e.webp",
+  "description": "[主動攻擊]\n45秒冷卻時間\n\n以極快的速度朝對方進行突刺，像是飛龍掃過烈爪一般，造成力量*3+300點傷害，由於威力過於強大，若敵方偏移瞄準地點將不會受到傷害。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    150.0,
+    210.0,
+    270.0,
+    330.0
+  ],
+  "range": 14.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "physical",
+      "amount": {
+        "perRank": [
+          300,
+          600,
+          900,
+          1200
+        ],
+        "ratios": [
+          {
+            "stat": "ad",
+            "coeff": 0.5
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.prim.holy.beam",
+  "sfxKey": "wc3.nazgrelyes2",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "castTimeSec": 0.6
+}

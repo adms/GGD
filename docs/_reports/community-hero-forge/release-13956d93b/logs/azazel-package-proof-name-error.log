@@ -1,0 +1,21 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'THE END OF SON〔終章〕'
+- 'THE END OF SON'
+                 ^
+
+    at <anonymous> (/private/tmp/ggd-model-upload-acceptance/release-13956d93b/azazel-package-proof.mts:26:8) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'THE END OF SON〔終章〕',
+  expected: 'THE END OF SON',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v25.9.0

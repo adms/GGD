@@ -1,0 +1,20 @@
+{
+  "id": "burnstun",
+  "schema": "status-effect@1",
+  "name": "Searing Stun",
+  "description": "Stunned by the firestorm.",
+  "polarity": "debuff",
+  "tags": [
+    "burnstun",
+    "stun",
+    "hard-cc",
+    "cc",
+    "disable",
+    "move-denied",
+    "attack-denied",
+    "cast-denied",
+    "named-variant",
+    "fire",
+    "debuff"
+  ]
+}

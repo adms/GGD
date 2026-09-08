@@ -1,0 +1,48 @@
+{
+  "id": "godie-o00l.r",
+  "name": "53-04 暴爆咒",
+  "icon": "assets/icons/abilities/godie-o00l.r.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n火系黑魔法的最高等攻擊法術，需要的魔力相當驚人，賢者等級以上才能施展的毀滅性咒文，使用後施術者會以極快的速度移動，並以自我為中心逆時針放射火焰爆裂給予200+{{ap}}% [AP]點傷害，並暈眩0.2秒。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "cooldownTier": "極大",
+  "manaCost": [
+    288.0,
+    288.0,
+    288.0
+  ],
+  "manaCostTier": "中",
+  "effects": [],
+  "template": {
+    "ref": "tpl-orbit-array",
+    "params": {
+      "rayCount": 10,
+      "reach": 300,
+      "aim": "outward",
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.3
+          }
+        ]
+      },
+      "damageType": "magic",
+      "castTimeSec": 2.433
+    }
+  },
+  "vfxKey": "fx.prim.fire.explosion-lg",
+  "sfxKey": "wc3.taunt",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "castTimeSec": 2.433,
+  "range": 0.0
+}

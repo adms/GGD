@@ -1,0 +1,13 @@
+{
+  "id": "witch-form",
+  "schema": "status-effect@1",
+  "name": "魔女化",
+  "description": "已經死過一次的身體，靠某種不該存在的東西撐著。八秒，拿一條命換一條命。⚠️ 這份文件只是**身分** —— 讓玩家與條件系統認得出「他在魔女化」；「八秒後會死」與「擊殺就活」的機制住在 `soul-gem` 那張卡上。",
+  "polarity": "buff",
+  "tags": [
+    "witch-form",
+    "form",
+    "timed-window",
+    "buff"
+  ]
+}

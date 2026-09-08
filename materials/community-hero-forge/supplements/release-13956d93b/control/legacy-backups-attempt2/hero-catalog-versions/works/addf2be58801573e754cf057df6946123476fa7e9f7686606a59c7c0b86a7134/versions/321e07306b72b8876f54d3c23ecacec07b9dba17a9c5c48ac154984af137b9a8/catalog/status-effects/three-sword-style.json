@@ -1,0 +1,13 @@
+{
+  "id": "three-sword-style",
+  "schema": "status-effect@1",
+  "name": "三刀流",
+  "description": "索隆拔出三把刀的架式。⭐ 它存在的理由是**讓 11-03 鬼氣九刀流與 11-04 三千世界問得到「三刀流還在身上嗎」**（卡面逐字「點選三刀流持續期間，可增加威力」）—— 11-00 三刀流那一顆 applyBuff 同時掛上這個具名狀態，兩支就用 condition{kind:\"status\", subject:\"self\", statusId:\"three-sword-style\"} 過濾，⛔ 不再抄一份 15 秒當 recentCast 的窗口（GH#1082）。攻速加多少、每秒掉多少血、持續幾秒，全部寫在 11-00 那張卡上，不在這裡。",
+  "polarity": "buff",
+  "tags": [
+    "three-sword-style",
+    "haste",
+    "stat-up",
+    "buff"
+  ]
+}

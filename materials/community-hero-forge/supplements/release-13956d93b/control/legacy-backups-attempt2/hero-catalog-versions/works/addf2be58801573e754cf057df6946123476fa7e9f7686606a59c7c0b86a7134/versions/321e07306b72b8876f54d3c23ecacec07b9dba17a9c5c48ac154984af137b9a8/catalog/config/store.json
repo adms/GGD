@@ -1,0 +1,37 @@
+{
+  "id": "store",
+  "schema": "config.store@1",
+  "championUnlockCost": 300,
+  "freeChampionIds": [
+    "godie-e002",
+    "godie-emfr",
+    "godie-etyr",
+    "godie-h00l",
+    "godie-h01n",
+    "godie-hart",
+    "godie-hjai",
+    "godie-n00b",
+    "godie-ofar",
+    "godie-ogrh",
+    "godie-u00n",
+    "godie-udre"
+  ],
+  "randomPickOwnership": "block",
+  "crystalRewards": {
+    "base": {
+      "place1": 120,
+      "place2": 45,
+      "place3": 35,
+      "place4": 30
+    },
+    "minHumans": 2,
+    "offset": 1,
+    "maxMultiplier": 13
+  },
+  "mcoinRewards": {
+    "placement1": 1,
+    "placement2": 0,
+    "placement3": 0,
+    "placement4": 0
+  }
+}

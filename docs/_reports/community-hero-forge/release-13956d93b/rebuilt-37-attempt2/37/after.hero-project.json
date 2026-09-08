@@ -1,0 +1,1256 @@
+{
+  "acceptedPlan": {
+    "archetype": "tank",
+    "attackType": "melee",
+    "budget": {
+      "complexity": 60,
+      "power": 50
+    },
+    "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
+    "origin": "硬輔",
+    "planId": "community-review-37-20260907.plan",
+    "schema": "ggd-hero-plan@2",
+    "slots": {
+      "E": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "effects": [
+            {
+              "amount": {
+                "flat": 70,
+                "ratios": []
+              },
+              "applyTo": "self",
+              "kind": "heal"
+            }
+          ],
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "〔點心時間〕",
+        "products": [
+          {
+            "instanceId": "community-review-37-20260907-e-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": []
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":70,\"ratios\":[]},\"applyTo\":\"self\"}]。\n【目標設計】短暫停留恢復少量生命，受擊中斷。\n【待補機制】需停留吃點心及受擊中斷。",
+        "slot": "E",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "EX": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "大",
+          "effects": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 120,
+                "ratios": []
+              },
+              "duration": 3,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "community-review-37-20260907.ex.guard"
+            }
+          ],
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔一起加油〕",
+        "products": [
+          {
+            "instanceId": "community-review-37-20260907-ex-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": []
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-37-20260907.ex.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】為附近友軍提供護盾與短效抗恐懼，自己也獲得相同效果。\n【待補機制】目前自身；需附近友軍盾與短效抗恐懼。",
+        "slot": "EX",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "PASSIVE": {
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔雖然害怕還是努力〕",
+        "products": [
+          {
+            "instanceId": "community-review-37-20260907-passive-1",
+            "template": {
+              "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0",
+              "inheritDefaults": true,
+              "params": {
+                "bonusDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "condition": {
+                  "kind": "chance",
+                  "p": 1
+                },
+                "damageType": "physical",
+                "event": "onBasicAttack",
+                "internalCooldown": 3
+              },
+              "ref": "tpl-on-attack"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。\n【目標設計】附近友軍交戰時累積勇氣，上限三層；以時間間隔累積，避免多段傷害快速疊滿。\n【待補機制】需附近友軍交战依時間累積勇氣，上限三層。",
+        "slot": "PASSIVE",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        }
+      },
+      "Q": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "〔討伐叉刺擊〕",
+        "products": [
+          {
+            "instanceId": "community-review-37-20260907-q-1",
+            "template": {
+              "contentSha256": "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.2,
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "physical"
+              },
+              "ref": "tpl-single-strike"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】短距離刺擊，武器判定與外觀一致。\n【待補機制】討伐叉造型與近身命中對齊待製。",
+        "slot": "Q",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "R": {
+        "abilityOverrides": {
+          "castTimeTier": "大",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "極小"
+        },
+        "capabilityIds": [
+          "periodicDamage",
+          "invulnerable",
+          "applyStatus",
+          "leap"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 3,
+        "name": "〔鼓起勇氣討伐〕",
+        "products": [
+          {
+            "instanceId": "community-review-37-20260907-r-1",
+            "template": {
+              "contentSha256": "sha256:e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771cd614a89d04e016c6",
+              "inheritDefaults": true,
+              "params": {
+                "casterGuard": "none",
+                "damageType": "physical",
+                "finisherDamage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "finisherRadius": 150,
+                "hitCount": 3,
+                "hitIntervalSec": 0.18,
+                "lockTarget": "none",
+                "perHitDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "trigger": "onCast"
+              },
+              "ref": "tpl-lock-combo"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】3 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】消耗勇氣發動數次叉擊，層數決定有限的強化幅度。\n【待補機制】固定三段；需勇氣消耗与有限強化幅度。",
+        "slot": "R",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "W": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "capabilityIds": [
+          "leap",
+          "knockback"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "〔哇啊啊撤退〕",
+        "products": [
+          {
+            "instanceId": "community-review-37-20260907-w-1",
+            "template": {
+              "contentSha256": "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e",
+              "inheritDefaults": true,
+              "params": {
+                "apexHeight": 0,
+                "castTimeSec": 0.1,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "dashDistance": 220,
+                "dashDurationSec": 0.3,
+                "pushDistance": 200,
+                "pushFrom": "facing",
+                "pushLaunchHeight": 0,
+                "pushSpeed": 872,
+                "radius": 150
+              },
+              "ref": "tpl-charge-push"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】向指定方向突進 220 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】朝指定方向短距離逃跑，消耗一層勇氣可取得小護盾。\n【待補機制】需無傷害撤退並可扣勇氣換小盾；目前衝撞模板不等價。",
+        "slot": "W",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      }
+    },
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "statOverrides": {
+      "ad": "中",
+      "ap": "小",
+      "armor": "大",
+      "as": "小",
+      "healthRegen": "中",
+      "manaRegen": "中",
+      "maxHealth": "大",
+      "maxMana": "中",
+      "mr": "中",
+      "ms": "中",
+      "range": "小"
+    },
+    "summary": "吉伊卡哇 社群英雄功能驗收稿。作品：《吉伊卡哇》  \n採用：吉伊卡哇本人。  \n定位：膽怯與勇氣、短兵器、小型角色可讀性。  \n註：以下名稱與戰鬥效果為 GGD 創編。\n\n視覺方向：奶白輪廓、淡橘討伐叉線、星形勇氣提示、小點心回復光。\n以 GGD 硬輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "templateVersions": {
+      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
+        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
+        "exemplar": {
+          "jass": "A0Q6",
+          "skill": "82-04 闇之魔法"
+        },
+        "family": "buff-self",
+        "gapScore": 6,
+        "id": "tpl-buff-self",
+        "name": "變身強化-數值面",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "duration": {
+            "default": 15,
+            "max": 60,
+            "min": 1,
+            "type": "number",
+            "unit": "s"
+          },
+          "modifiers": {
+            "default": [
+              {
+                "op": "flat",
+                "stat": "ad",
+                "value": 50
+              }
+            ],
+            "type": "statModifiers"
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0": {
+        "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
+        "exemplar": {
+          "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效",
+          "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者"
+        },
+        "family": "on-attack",
+        "gapScore": 9,
+        "id": "tpl-on-attack",
+        "name": "攻擊觸發",
+        "params": {
+          "bonusDamage": {
+            "default": {
+              "perRank": [
+                100
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "chance": {
+            "max": 1,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "ratio"
+          },
+          "condition": {
+            "default": {
+              "any": [
+                {
+                  "all": [
+                    {
+                      "not": {
+                        "is": "champion",
+                        "kind": "kind",
+                        "subject": "target"
+                      }
+                    },
+                    {
+                      "kind": "stat",
+                      "mode": "percent",
+                      "op": "<",
+                      "stat": "hp",
+                      "subject": "target",
+                      "value": 0.35
+                    }
+                  ]
+                },
+                {
+                  "all": [
+                    {
+                      "is": "champion",
+                      "kind": "kind",
+                      "subject": "target"
+                    },
+                    {
+                      "kind": "chance",
+                      "p": 0.01
+                    }
+                  ]
+                }
+              ]
+            },
+            "optional": true,
+            "type": "condition"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "event": {
+            "default": "onBasicAttack",
+            "type": "enum",
+            "values": [
+              "onBasicAttack",
+              "onDamageDealt"
+            ]
+          },
+          "internalCooldown": {
+            "default": 0,
+            "max": 60,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b": {
+        "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。",
+        "exemplar": {
+          "jass": "A0OD",
+          "skill": "23-04 雷焰聖劍"
+        },
+        "family": "single-strike",
+        "gapScore": 9,
+        "id": "tpl-single-strike",
+        "name": "單體斬擊",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771cd614a89d04e016c6": {
+        "description": "把一個人鎖住打完一整段。命中後目標被定住、施法者進入演出狀態（這段期間打不到他），連段一擊一擊落下，最後一記終結技在收招那一刻結算並掃過周圍。「連段次數 × 每段間隔」就是整段長度 —— 它是算出來的，所以沒有『持續時間』這個欄位可以填。⚠️ 原作的連段中施法者會一擊一擊瞬移到目標身邊，這裡沒有搬過來：那段期間雙方都被 pause + 無敵，施法者站哪裡不影響任何結算，只有終結技的圓心用得到，所以收成原地演出。想要遞減間隔（52-002 射殺百頭的 CD×0.75）也還做不到。 ⭐ owner 2026-08-13：終結技可以是**另一支具名技能**（finisherAbility，走 proxyCast 代放），⛔ 不是把那支技能的傷害抄一份進來 —— 抄一份之後那支技能改了，連段裡的版本不會跟著改。留空則沿用 finisherDamage 那個數字。發動條件也是一格（trigger）：預設 onCast，20-002 是 onReflectSuccess（反彈成功才發），所以整段連段可以掛在被動 hook 上而不是主動施放。",
+        "exemplar": {
+          "jass": "A0CX",
+          "skill": "84-04 給我蜂蜜"
+        },
+        "family": "lock-combo",
+        "gapScore": 6,
+        "id": "tpl-lock-combo",
+        "name": "鎖定連段",
+        "params": {
+          "casterGuard": {
+            "default": "all",
+            "type": "enum",
+            "values": [
+              "all",
+              "magic",
+              "none"
+            ]
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "finisherAbility": {
+            "optional": true,
+            "type": "docRef"
+          },
+          "finisherDamage": {
+            "default": {
+              "perRank": [
+                450
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "finisherRadius": {
+            "default": 150,
+            "max": 1800,
+            "min": 50,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "hitCount": {
+            "default": 5,
+            "max": 20,
+            "min": 1,
+            "type": "number",
+            "unit": "count"
+          },
+          "hitIntervalSec": {
+            "default": 0.4,
+            "max": 3,
+            "min": 0.05,
+            "type": "number",
+            "unit": "s"
+          },
+          "lockTarget": {
+            "default": "stun",
+            "type": "enum",
+            "values": [
+              "stun",
+              "root",
+              "none"
+            ]
+          },
+          "perHitDamage": {
+            "default": {
+              "perRank": [
+                100
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "trigger": {
+            "default": "onCast",
+            "type": "enum",
+            "values": [
+              "onCast",
+              "onReflectSuccess",
+              "onKill",
+              "onBasicAttack",
+              "onDamageTaken"
+            ]
+          }
+        },
+        "requires": [
+          "periodicDamage",
+          "invulnerable",
+          "applyStatus",
+          "leap"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e": {
+        "description": "朝目標點直線衝鋒，抵達後對落點周圍造成範圍傷害，並把該處的敵人推開。預設貼地衝刺（衝鋒弧高 0）；把弧高拉起來就變成 52-02 蹂躪編年史那種掄飛。「推開距離」清空 = 只衝鋒不推撞（52-04 巨神一擊）。傷害與推撞都在抵達點結算，不是在起跳點。",
+        "exemplar": {
+          "jass": "A0OG",
+          "skill": "38-01 邪王炎殺劍"
+        },
+        "family": "charge-push",
+        "gapScore": 5,
+        "id": "tpl-charge-push",
+        "name": "衝鋒推撞",
+        "params": {
+          "apexHeight": {
+            "default": 0,
+            "max": 600,
+            "min": 0,
+            "type": "number",
+            "unit": "wc3h"
+          },
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "physical",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "dashDistance": {
+            "default": 600,
+            "max": 1309,
+            "min": 100,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "dashDurationSec": {
+            "default": 0.4,
+            "max": 2,
+            "min": 0.05,
+            "type": "number",
+            "unit": "s"
+          },
+          "pushDistance": {
+            "default": 400,
+            "max": 1090,
+            "min": 50,
+            "optional": true,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "pushFrom": {
+            "default": "facing",
+            "type": "enum",
+            "values": [
+              "caster",
+              "facing",
+              "pull"
+            ]
+          },
+          "pushLaunchHeight": {
+            "default": 0,
+            "max": 600,
+            "min": 0,
+            "type": "number",
+            "unit": "wc3h"
+          },
+          "pushSpeed": {
+            "default": 872,
+            "max": 2181,
+            "min": 100,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "radius": {
+            "default": 300,
+            "max": 900,
+            "min": 50,
+            "type": "number",
+            "unit": "wc3u"
+          }
+        },
+        "requires": [
+          "leap",
+          "knockback"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      }
+    },
+    "title": "吉伊卡哇"
+  },
+  "brief": {
+    "concept": "吉伊卡哇 社群英雄功能驗收稿。作品：《吉伊卡哇》  \n採用：吉伊卡哇本人。  \n定位：膽怯與勇氣、短兵器、小型角色可讀性。  \n註：以下名稱與戰鬥效果為 GGD 創編。\n\n視覺方向：奶白輪廓、淡橘討伐叉線、星形勇氣提示、小點心回復光。\n以 GGD 硬輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "E": "〔點心時間〕",
+      "EX": "〔一起加油〕",
+      "PASSIVE": "〔雖然害怕還是努力〕",
+      "Q": "〔討伐叉刺擊〕",
+      "R": "〔鼓起勇氣討伐〕",
+      "W": "〔哇啊啊撤退〕"
+    },
+    "name": "吉伊卡哇"
+  },
+  "presentation": {
+    "assetLocks": [
+      {
+        "byteSize": 553876,
+        "consumers": [
+          "champion:model"
+        ],
+        "kind": "model",
+        "mediaType": "model/gltf-binary",
+        "path": "assets/models/community/e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c.glb",
+        "registry": "normalized-upload",
+        "sha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c"
+      }
+    ],
+    "championIcon": "assets/icons/champions/thorne.webp",
+    "modelKey": "community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5",
+    "modelProvenance": {
+      "modelSha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c",
+      "notes": "以小型白色絨毛卡通動物暫代吉伊卡哇；實際為有羊角的喜羊羊，並非吉伊卡哇原模型。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。",
+      "relationship": "style-proxy",
+      "schema": "ggd-hero-model-provenance@1",
+      "sourceAssetId": "300heroes:f2f3b69f7b0f9e4884f94fff",
+      "sourceCharacter": "喜羊羊",
+      "sourceWork": "喜羊羊與灰太狼"
+    },
+    "schema": "ggd-hero-presentation@1",
+    "slots": {
+      "E": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "script": {
+          "abilityId": "community-review-37-20260907.e",
+          "id": "community-review-37-20260907.e",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                255,
+                201,
+                156
+              ],
+              "vfxId": "fx.prim.holy.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                255,
+                201,
+                156
+              ],
+              "vfxId": "fx.prim.holy.pulse",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "E",
+        "vfxLayers": []
+      },
+      "EX": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "script": {
+          "abilityId": "community-review-37-20260907.ex",
+          "id": "community-review-37-20260907.ex",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                255,
+                201,
+                156
+              ],
+              "vfxId": "fx.prim.holy.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                255,
+                201,
+                156
+              ],
+              "vfxId": "fx.prim.holy.pulse",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "EX",
+        "vfxLayers": []
+      },
+      "PASSIVE": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "script": null,
+        "sfxKey": null,
+        "slot": "PASSIVE",
+        "vfxLayers": []
+      },
+      "Q": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "script": {
+          "abilityId": "community-review-37-20260907.q",
+          "id": "community-review-37-20260907.q",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                255,
+                201,
+                156
+              ],
+              "vfxId": "fx.prim.holy.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                255,
+                201,
+                156
+              ],
+              "vfxId": "fx.prim.holy.slash",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "Q",
+        "vfxLayers": []
+      },
+      "R": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "script": {
+          "abilityId": "community-review-37-20260907.r",
+          "id": "community-review-37-20260907.r",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                255,
+                201,
+                156
+              ],
+              "vfxId": "fx.prim.holy.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                255,
+                201,
+                156
+              ],
+              "vfxId": "fx.prim.holy.slash",
+              "w3xScale": 1.25
+            },
+            {
+              "alpha": 0.9,
+              "at": "target",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "strike",
+              "strikeIndex": 3,
+              "tint": [
+                255,
+                201,
+                156
+              ],
+              "vfxId": "fx.prim.holy.slash",
+              "w3xScale": 1
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "R",
+        "vfxLayers": []
+      },
+      "W": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "script": {
+          "abilityId": "community-review-37-20260907.w",
+          "id": "community-review-37-20260907.w",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                255,
+                201,
+                156
+              ],
+              "vfxId": "fx.prim.holy.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                255,
+                201,
+                156
+              ],
+              "vfxId": "fx.prim.holy.slash",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "W",
+        "vfxLayers": []
+      }
+    },
+    "uploadedModel": {
+      "byteSize": 553876,
+      "clipMap": {
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "death": "dead",
+        "hurt": "bat_idle",
+        "idle": "bat_idle",
+        "run": "single_run"
+      },
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c",
+      "yawOffsetDeg": 0
+    }
+  },
+  "projectId": "community-review-37-20260907",
+  "receipts": [
+    {
+      "digest": "a35326b998159211b7064e866084749015edf1e98f2c9e12080f2e1696aaf50e",
+      "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+      "kind": "generator-adopted",
+      "projectRevision": 5
+    },
+    {
+      "kind": "generator-adopted",
+      "projectRevision": 12,
+      "digest": "5cc0583460e05bb428c64ebdc9d9db2500825680055466fd13988815087c919d",
+      "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597"
+    }
+  ],
+  "revision": 12,
+  "schema": "ggd-hero-project@2",
+  "sections": {
+    "attributes": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "draft"
+    },
+    "identity": {
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      },
+      "revision": 1,
+      "state": "draft"
+    },
+    "mechanics": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    },
+    "package": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "presentation": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "skills": {
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      },
+      "revision": 12,
+      "state": "draft"
+    },
+    "validation": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    }
+  },
+  "sourceDesign": {
+    "identity": "作品：《吉伊卡哇》  \n採用：吉伊卡哇本人。  \n定位：膽怯與勇氣、短兵器、小型角色可讀性。  \n註：以下名稱與戰鬥效果為 GGD 創編。",
+    "name": "吉伊卡哇",
+    "ownerText": "### 37｜吉伊卡哇\n\n作品：《吉伊卡哇》  \n採用：吉伊卡哇本人。  \n定位：膽怯與勇氣、短兵器、小型角色可讀性。  \n註：以下名稱與戰鬥效果為 GGD 創編。\n\n- **PASSIVE｜〔雖然害怕還是努力〕**：附近友軍交戰時累積勇氣，上限三層；以時間間隔累積，避免多段傷害快速疊滿。\n- **Q｜〔討伐叉刺擊〕**：短距離刺擊，武器判定與外觀一致。\n- **W｜〔哇啊啊撤退〕**：朝指定方向短距離逃跑，消耗一層勇氣可取得小護盾。\n- **E｜〔點心時間〕**：短暫停留恢復少量生命，受擊中斷。\n- **R｜〔鼓起勇氣討伐〕**：消耗勇氣發動數次叉擊，層數決定有限的強化幅度。\n- **EX｜〔一起加油〕**：為附近友軍提供護盾與短效抗恐懼，自己也獲得相同效果。\n\n**審查重點**：小型模型仍要有公平且清楚的受擊範圍；驗證勇氣產生、恐懼解除與撤退方向，避免將小八台詞或兔兔招式當成本人的原作招式。\n\n",
+    "reviewText": "小型模型仍要有公平且清楚的受擊範圍；驗證勇氣產生、恐懼解除與撤退方向，避免將小八台詞或兔兔招式當成本人的原作招式。",
+    "schema": "ggd-hero-source-design@1",
+    "slots": {
+      "E": {
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":70,\"ratios\":[]},\"applyTo\":\"self\"}]。",
+        "name": "〔點心時間〕",
+        "ownerDescription": "短暫停留恢復少量生命，受擊中斷。",
+        "refinementContracts": [
+          "M01",
+          "M12"
+        ],
+        "requiredRefinement": "需停留吃點心及受擊中斷。"
+      },
+      "EX": {
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-37-20260907.ex.guard\",\"onExisting\":\"keepLarger\"}]。",
+        "name": "〔一起加油〕",
+        "ownerDescription": "為附近友軍提供護盾與短效抗恐懼，自己也獲得相同效果。",
+        "refinementContracts": [
+          "M01",
+          "M12"
+        ],
+        "requiredRefinement": "目前自身；需附近友軍盾與短效抗恐懼。"
+      },
+      "PASSIVE": {
+        "baselineBehavior": "普攻追加極小級物理傷害，內置冷卻 3 秒。",
+        "name": "〔雖然害怕還是努力〕",
+        "ownerDescription": "附近友軍交戰時累積勇氣，上限三層；以時間間隔累積，避免多段傷害快速疊滿。",
+        "refinementContracts": [
+          "M01",
+          "M12"
+        ],
+        "requiredRefinement": "需附近友軍交战依時間累積勇氣，上限三層。"
+      },
+      "Q": {
+        "baselineBehavior": "指定單一敵人造成小級物理傷害。",
+        "name": "〔討伐叉刺擊〕",
+        "ownerDescription": "短距離刺擊，武器判定與外觀一致。",
+        "refinementContracts": [
+          "M01",
+          "M12"
+        ],
+        "requiredRefinement": "討伐叉造型與近身命中對齊待製。"
+      },
+      "R": {
+        "baselineBehavior": "3 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。",
+        "name": "〔鼓起勇氣討伐〕",
+        "ownerDescription": "消耗勇氣發動數次叉擊，層數決定有限的強化幅度。",
+        "refinementContracts": [
+          "M01",
+          "M12"
+        ],
+        "requiredRefinement": "固定三段；需勇氣消耗与有限強化幅度。"
+      },
+      "W": {
+        "baselineBehavior": "向指定方向突進 220 wc3u，造成極小級碰撞範圍傷害與推移。",
+        "name": "〔哇啊啊撤退〕",
+        "ownerDescription": "朝指定方向短距離逃跑，消耗一層勇氣可取得小護盾。",
+        "refinementContracts": [
+          "M01",
+          "M12"
+        ],
+        "requiredRefinement": "需無傷害撤退並可扣勇氣換小盾；目前衝撞模板不等價。"
+      }
+    },
+    "sourceSha256": "d6914597576ea4f3967a26e03b87190b41c306cd0006d8cc45aa5f9d2f57ac5e"
+  },
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "validationState": {
+    "attributes": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "identity": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "mechanics": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    },
+    "package": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "presentation": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "skills": {
+      "revision": 12,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    }
+  }
+}

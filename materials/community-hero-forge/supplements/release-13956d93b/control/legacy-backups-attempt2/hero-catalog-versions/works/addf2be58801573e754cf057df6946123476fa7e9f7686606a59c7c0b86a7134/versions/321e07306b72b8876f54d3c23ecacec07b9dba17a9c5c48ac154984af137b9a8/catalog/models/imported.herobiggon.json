@@ -1,0 +1,57 @@
+{
+  "id": "imported.herobiggon",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/herobiggon.glb",
+  "scale": 0.0468,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand - 1",
+    "run": "Walk",
+    "attack": "Attack - 2",
+    "cast": "Spell",
+    "hurt": "Stand - 1",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Hand Right": {
+      "x": 0.2635,
+      "y": 1.9603,
+      "z": 1.2007
+    },
+    "Head": {
+      "x": 0.0204,
+      "y": 3.9851,
+      "z": -0.0
+    },
+    "Hand Left": {
+      "x": 0.2635,
+      "y": 1.9624,
+      "z": -1.2007
+    },
+    "Chest": {
+      "x": 0.0699,
+      "y": 2.8796,
+      "z": 0.0022
+    },
+    "Foot Left": {
+      "x": 0.1333,
+      "y": 0.1173,
+      "z": -0.4634
+    },
+    "Foot Right": {
+      "x": 0.1337,
+      "y": 0.1156,
+      "z": 0.4634
+    },
+    "OverHead": {
+      "x": -0.0,
+      "y": 4.4444,
+      "z": -0.0
+    },
+    "Origin": {
+      "x": -0.0,
+      "y": 0.0,
+      "z": -0.0
+    }
+  }
+}

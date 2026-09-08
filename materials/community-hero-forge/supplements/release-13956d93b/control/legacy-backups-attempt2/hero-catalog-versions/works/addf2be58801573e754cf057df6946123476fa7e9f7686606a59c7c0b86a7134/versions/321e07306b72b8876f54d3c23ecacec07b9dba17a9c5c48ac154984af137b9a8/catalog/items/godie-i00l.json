@@ -1,0 +1,61 @@
+{
+  "id": "godie-i00l",
+  "schema": "item@1",
+  "name": "落魂的嗜血劍",
+  "icon": "assets/icons/items/godie-i00l.webp",
+  "description": "夢幻\n效能\n攻擊力+128\n[神速] 攻擊速度+200%，攻速上限提升到10 (預設上限為4)\n全能吸血+30%\n每秒損失 3%現存生命\n\n解說\n聖劍與魔劍的差異在於影響持有者和武器心智的交互作用，而這把嗜血劍代表的就是魔劍的極致，歷代持有者為控制魔劍皆付出慘痛代價，魔力會不斷被貪婪的魔劍吸收，考據持有最久是死之王軍團長之一\"魔霜奈洛\"。",
+  "cost": 0,
+  "tier": 3,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "ad",
+      "op": "flat",
+      "value": 128
+    },
+    {
+      "stat": "as",
+      "op": "pctAdd",
+      "value": 2
+    },
+    {
+      "stat": "as",
+      "op": "capRaise",
+      "value": 10
+    },
+    {
+      "stat": "lifesteal",
+      "op": "flat",
+      "value": 0.3
+    },
+    {
+      "stat": "spellVamp",
+      "op": "flat",
+      "value": 0.3
+    }
+  ],
+  "craftRole": "none",
+  "passive": [
+    {
+      "on": "onInterval",
+      "target": "self",
+      "internalCooldown": 1,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "true",
+          "amount": {},
+          "hpPct": {
+            "basis": "current",
+            "perRank": [
+              0.03
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "authoringNote": "四行效能全部落地：攻擊力+128、[神速] 攻速+200% + capRaise 10.0（ModOp.CapRaise，見 sim/statCaps.ts 與 GH#286）、吸血+30%、「每秒損失 3%現存生命」= passive[0]（onInterval + internalCooldown 1 + true damage hpPct basis \"current\" 0.03，打自己）。\n\n✅ 已落地（2026-08-11，GH#309）：「全能吸血+30%」= `lifesteal` 0.3 + `spellVamp` 0.3 **兩格**。`Stat.SpellVamp` 是 2026-08-10 加的，分流在 `sim/combat/damage.ts` —— 閘是 `pkt.origin.startsWith(\"ability:\")`（不是「非 basic 就算」）。⛔ 不是第三條屬性。上限兩層都查過：Zod band 1（schema/common.ts 的 ITEM_MODIFIER_LIMITS）、runtime clamp 0.8（statTypes.ts）—— 0.3 兩端都不會被靜默吃掉。"
+}

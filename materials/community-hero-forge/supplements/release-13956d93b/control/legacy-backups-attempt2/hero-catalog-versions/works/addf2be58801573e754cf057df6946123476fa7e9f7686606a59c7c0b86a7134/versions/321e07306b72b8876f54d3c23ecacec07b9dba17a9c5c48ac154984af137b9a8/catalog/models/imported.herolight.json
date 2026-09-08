@@ -1,0 +1,62 @@
+{
+  "id": "imported.herolight",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/herolight.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Weapon": {
+      "x": 1.0908,
+      "y": 0.8408,
+      "z": -0.4609
+    },
+    "Hand Right": {
+      "x": -0.0029,
+      "y": 0.8372,
+      "z": 0.4964
+    },
+    "Hand Left": {
+      "x": 0.0244,
+      "y": 0.8402,
+      "z": -0.5111
+    },
+    "Head -": {
+      "x": 0.0421,
+      "y": 1.6252,
+      "z": -0.0011
+    },
+    "Chest": {
+      "x": -0.0302,
+      "y": 1.0367,
+      "z": -0.0017
+    },
+    "Foot Right": {
+      "x": 0.0174,
+      "y": 0.1777,
+      "z": 0.2051
+    },
+    "Foot Left": {
+      "x": 0.0201,
+      "y": 0.1765,
+      "z": -0.2283
+    },
+    "Overhead": {
+      "x": 0.0034,
+      "y": 1.6484,
+      "z": -0.0011
+    },
+    "Origin": {
+      "x": 0.0,
+      "y": -0.0019,
+      "z": 0.0
+    }
+  }
+}

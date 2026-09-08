@@ -1,0 +1,257 @@
+{
+  "id": "godie-u011",
+  "schema": "champion@1",
+  "name": "死亡老二 - 克勞薩先生",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "champ.skin.barbarian",
+  "baseStats": {
+    "maxHealth": -450,
+    "healthRegen": 0,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
+    "ap": 0,
+    "armor": -10,
+    "mr": 28,
+    "as": 0.526316,
+    "ms": 5.5,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 56,
+    "healthRegen": 0.14,
+    "maxMana": 22,
+    "manaRegen": 0.07,
+    "ad": 1.8,
+    "armor": 0.4,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "attributes": {
+    "str": 23,
+    "agi": 14,
+    "int": 18,
+    "strGrowth": 2.8,
+    "agiGrowth": 1.5,
+    "intGrowth": 1.8,
+    "primary": "STR",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 3,
+    "shakeMag": 0.44,
+    "knockbackMag": 0.25
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-u011.q",
+      "name": "61-01惡魔球",
+      "icon": "assets/icons/abilities/godie-u011.q.webp",
+      "description": "[主動攻擊]\n25秒冷卻時間\n\n惡魔的象徵，只有真正的惡魔才有能力使出如此強大的招式\n對目標造成150點傷害並黏住1秒",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        25.0,
+        25.0,
+        25.0,
+        25.0
+      ],
+      "manaCost": [
+        60.0,
+        70.0,
+        80.0,
+        90.0
+      ],
+      "range": 7.33,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "perRank": [
+              150.0,
+              200.0,
+              250.0,
+              300.0
+            ],
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "root",
+          "duration": 1.0,
+          "root": true
+        }
+      ],
+      "vfxKey": "fx.prim.void.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.5
+    },
+    "W": {
+      "id": "godie-u011.w",
+      "name": "61-02 霸獸盔甲",
+      "icon": "assets/icons/abilities/godie-u011.w.webp",
+      "description": "[開關]\n0秒冷卻時間\n\n脫掉霸獸盔甲會每秒不斷的流失20點魔力，對附近的地面敵方部隊造成60點傷害。",
+      "slot": "W",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        20.0,
+        40.0,
+        60.0,
+        80.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave.arcane",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  60.0,
+                  120.0,
+                  180.0,
+                  240.0
+                ]
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "burnstun",
+              "duration": 1.2,
+              "stun": true
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "castTimeSec": 0.3
+    },
+    "E": {
+      "id": "godie-u011.e",
+      "name": "61-03 打屁股風林火豬",
+      "icon": "assets/icons/abilities/godie-u011.e.webp",
+      "description": "[被動]\n0秒冷卻時間\n\n調教被虐待狂的調教術，用在實戰中也有意想不到的效果。\n疾如風：攻擊速度增加50%",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.5
+            }
+          ],
+          "duration": 12.0
+        }
+      ],
+      "vfxKey": "fx.firestorm",
+      "sfxKey": "wc3.gruntpissed3",
+      "castTimeSec": 0.3
+    },
+    "R": {
+      "id": "godie-u011.r",
+      "name": "61-04 瘋狂怪物",
+      "icon": "assets/icons/abilities/godie-u011.r.webp",
+      "description": "[開關]\n0秒冷卻時間\n\n從地獄來的瘋狂怪物什麼都吃!!\n開啟時若受到傷害，可以把8%的傷害吸收轉變成魔力。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "mr",
+              "op": "pctAdd",
+              "value": 0.08
+            }
+          ],
+          "duration": 12.0
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-lg"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-u011.ex",
+  "passiveAbility": "godie-u011.passive",
+  "icon": "assets/icons/champions/godie-u011.png",
+  "tint": [
+    0.5882,
+    0.5882,
+    0.5882
+  ],
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-u012",
+    "normalUnitRawcode": "U012",
+    "alternateUnitRawcode": "U011",
+    "triggerAbility": {
+      "rawcode": "Aphx",
+      "name": "61-00百連我殺 效果"
+    }
+  }
+}

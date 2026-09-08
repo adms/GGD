@@ -1,0 +1,60 @@
+{
+  "id": "ui-lexicon",
+  "schema": "config.ui-lexicon@1",
+  "note": "玩家端看得到的 Fate 用語，全部可以在後台改。規則母本 docs/聖杯願望三選一-設計規則.md。⛔ 只管「叫什麼」不管「做什麼」——後台與 augment@1 的 silver/gold/prismatic 一個字都沒動。⛔ 迴避／格擋／彈反／淨化／復活這一族的機制詞刻意不在這裡（規則 §5：不能為了 Fate 味犧牲可讀性）。",
+  "grail": {
+    "systemName": "聖杯顯現",
+    "prompt": "聖杯自無數可能性中顯現三項願望 —— 選擇其中一項刻入靈基，直到本場聖杯戰爭結束。",
+    "inscribeVerb": "刻入靈基",
+    "inscriptionsTitle": "靈基刻印",
+    "ranks": {
+      "silver": "C級願望",
+      "gold": "A級願望",
+      "prismatic": "EX級願望"
+    }
+  },
+  "noblePhantasm": {
+    "systemName": "寶具顯現",
+    "defaultRank": "EX",
+    "defaultClass": "對人",
+    "classNames": {
+      "對人": "對人寶具",
+      "對軍": "對軍寶具",
+      "對陣": "對陣寶具",
+      "對城": "對城寶具",
+      "對國": "對國寶具",
+      "對界": "對界寶具",
+      "對星": "對星寶具",
+      "對粛正": "對粛正寶具",
+      "結界": "結界寶具",
+      "對神": "對神寶具",
+      "對魔術": "對魔術寶具"
+    },
+    "itemClass": {
+      "godie-i000": "對軍",
+      "godie-i00i": "對軍",
+      "godie-i01i": "對軍",
+      "godie-i01v": "對軍",
+      "godie-i03h": "對軍",
+      "godie-i04d": "對軍",
+      "godie-i06e": "對軍",
+      "cleaver-of-the-warden": "對軍",
+      "godie-i00z": "對陣",
+      "godie-i060": "對陣",
+      "godie-i061": "對陣",
+      "godie-i06q": "對城",
+      "godie-i012": "對魔術",
+      "godie-i027": "對魔術",
+      "godie-i018": "結界",
+      "godie-i01s": "結界",
+      "godie-i031": "結界",
+      "godie-i00j": "結界",
+      "godie-i03m": "結界"
+    }
+  },
+  "shopLines": {
+    "empty-pool": "寶具已無可顯現者（未扣除金幣）",
+    "not-purchasable": "寶具無法以金錢購得，只能經由顯現獲取（可用傳說寶玉）",
+    "shelf-closed": "寶具暫時下架，目前只提供能力屬性強化與傳說寶玉（顯現時仍可獲得）"
+  }
+}

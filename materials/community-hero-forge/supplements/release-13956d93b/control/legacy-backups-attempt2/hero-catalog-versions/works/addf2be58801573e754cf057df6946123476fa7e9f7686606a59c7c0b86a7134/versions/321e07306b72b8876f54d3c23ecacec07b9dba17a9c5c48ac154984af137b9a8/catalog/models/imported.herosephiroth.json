@@ -1,0 +1,62 @@
+{
+  "id": "imported.herosephiroth",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/herosephiroth.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Hand Right": {
+      "x": -0.0025,
+      "y": 0.8971,
+      "z": 0.4307
+    },
+    "Weapon": {
+      "x": 0.7913,
+      "y": 0.8979,
+      "z": 0.4018
+    },
+    "Hand Left": {
+      "x": 0.0212,
+      "y": 0.8997,
+      "z": -0.4435
+    },
+    "Head -": {
+      "x": 0.0365,
+      "y": 1.5808,
+      "z": -0.001
+    },
+    "Chest": {
+      "x": -0.0262,
+      "y": 1.0702,
+      "z": -0.0015
+    },
+    "Foot Right": {
+      "x": 0.0151,
+      "y": 0.3249,
+      "z": 0.178
+    },
+    "Foot Left": {
+      "x": 0.0174,
+      "y": 0.3238,
+      "z": -0.1981
+    },
+    "Origin": {
+      "x": 0.0,
+      "y": 0.169,
+      "z": -0.0
+    },
+    "Overhead": {
+      "x": 0.003,
+      "y": 1.6009,
+      "z": -0.001
+    }
+  }
+}

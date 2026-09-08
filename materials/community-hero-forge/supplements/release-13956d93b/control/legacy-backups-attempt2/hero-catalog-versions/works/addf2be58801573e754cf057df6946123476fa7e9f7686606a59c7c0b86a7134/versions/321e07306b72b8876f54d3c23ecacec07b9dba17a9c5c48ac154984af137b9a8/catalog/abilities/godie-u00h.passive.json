@@ -1,0 +1,47 @@
+{
+  "id": "godie-u00h.passive",
+  "schema": "ability@1",
+  "name": "39-00 無明神風流-玄武",
+  "icon": "assets/icons/abilities/godie-u00h.passive.webp",
+  "provenance": "w3x-import",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n提升鬼畜狂刀的攻擊力30點，生命回復12點和防禦8點，來增加戰場耐久度，效果持續12秒。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    30.0
+  ],
+  "cooldownTier": "中",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 12.0,
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "flat",
+          "value": 30.0
+        },
+        {
+          "stat": "armor",
+          "op": "flat",
+          "value": 8.0
+        },
+        {
+          "stat": "healthRegen",
+          "op": "flat",
+          "value": 12.0
+        }
+      ],
+      "castTimeSec": 0.267
+    }
+  },
+  "vfxKey": "fx.prim.earth.pulse-sm",
+  "castTimeSec": 0.267
+}

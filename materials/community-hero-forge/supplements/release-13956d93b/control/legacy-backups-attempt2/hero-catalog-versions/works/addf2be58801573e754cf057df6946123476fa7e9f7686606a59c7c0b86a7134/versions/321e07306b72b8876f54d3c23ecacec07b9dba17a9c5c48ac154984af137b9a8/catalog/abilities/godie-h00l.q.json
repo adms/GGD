@@ -1,0 +1,62 @@
+{
+  "id": "godie-h00l.q",
+  "schema": "ability@1",
+  "name": "60-01 旋風斬",
+  "provenance": "owner-spec",
+  "description": "[主動][範圍][AD加成][擊退]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n\n「看我先暈倒還是你先被我砍死」\n造成[周圍][範圍] {{dmg}}+50% [AD]點傷害，並且[擊退]敵人。",
+  "slot": "Q",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    30.0,
+    30.0,
+    30.0,
+    30.0
+  ],
+  "manaCost": [
+    72.0,
+    72.0,
+    72.0,
+    72.0
+  ],
+  "range": 0.0,
+  "radiusTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damageArea",
+      "damageType": "physical",
+      "amount": {
+        "damageTierPerRank": [
+          "極小",
+          "極小",
+          "小",
+          "小"
+        ],
+        "ratios": [
+          {
+            "stat": "ad",
+            "coeff": 0.5
+          }
+        ]
+      },
+      "radius": 4.5,
+      "radiusTier": "小",
+      "includeOrigin": true,
+      "onHitTargets": [
+        {
+          "kind": "knockback",
+          "distance": 3.0,
+          "speed": 15.0,
+          "from": "caster"
+        }
+      ]
+    }
+  ],
+  "icon": "assets/icons/abilities/godie-h00l.q.webp",
+  "vfxKey": "fx.prim.wind.slash",
+  "sfxKey": "wc3.druidofthetalonmissilelaunch2",
+  "cooldownTier": "極小",
+  "manaCostTier": "極小",
+  "castTimeSec": 0.667
+}

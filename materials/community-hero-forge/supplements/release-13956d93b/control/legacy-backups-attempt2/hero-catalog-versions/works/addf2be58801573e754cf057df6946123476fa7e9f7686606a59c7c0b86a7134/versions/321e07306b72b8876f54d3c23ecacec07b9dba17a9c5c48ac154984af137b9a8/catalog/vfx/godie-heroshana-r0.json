@@ -1,0 +1,16 @@
+{
+  "id": "godie-heroshana-r0",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/wc3/ribbonblur1.png",
+  "widthAbove": 0.403,
+  "widthBelow": 0.404,
+  "lifespanSec": 0.15,
+  "color": [
+    0.992,
+    0.729,
+    0.055,
+    0.35
+  ],
+  "blendMode": "additive",
+  "anchorBone": "Bone_Weapon"
+}

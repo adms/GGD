@@ -1,0 +1,15 @@
+{
+  "id": "imported.magical-sword",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/magical-sword.glb",
+  "scale": 1.4518,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Stand",
+    "attack": "Stand",
+    "cast": "Stand",
+    "hurt": "Stand",
+    "death": "Stand"
+  }
+}

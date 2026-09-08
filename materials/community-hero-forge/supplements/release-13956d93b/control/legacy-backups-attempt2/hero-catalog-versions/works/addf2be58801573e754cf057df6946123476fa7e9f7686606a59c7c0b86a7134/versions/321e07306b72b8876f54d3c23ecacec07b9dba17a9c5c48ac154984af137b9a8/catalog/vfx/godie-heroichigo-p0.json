@@ -1,0 +1,83 @@
+{
+  "id": "godie-heroichigo-p0",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.217,
+    "angleDeg": 90.0
+  },
+  "mode": "continuous",
+  "rate": 100.0,
+  "lifetimeSec": {
+    "min": 1.0,
+    "max": 1.0
+  },
+  "size": {
+    "start": 0.087,
+    "end": 0.217
+  },
+  "color": {
+    "start": [
+      0.337,
+      0.192,
+      0.357,
+      1.0
+    ],
+    "end": [
+      0.239,
+      0.102,
+      0.255,
+      1.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.337,
+        0.192,
+        0.357,
+        1.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.176,
+        0.114,
+        0.212,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.239,
+        0.102,
+        0.255,
+        1.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.087
+    ],
+    [
+      0.5,
+      0.434
+    ],
+    [
+      1,
+      0.217
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/smoke_02.png",
+  "speed": {
+    "min": 0.0,
+    "max": 0.2213
+  },
+  "anchorBone": "bone_handR"
+}

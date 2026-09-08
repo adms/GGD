@@ -1,0 +1,15 @@
+{
+  "id": "tpl-global-rule",
+  "schema": "template@1",
+  "name": "全場規則",
+  "description": "P3 全場規則。",
+  "family": "global-rule",
+  "status": "draft",
+  "params": {},
+  "requires": [],
+  "gapScore": 1,
+  "exemplar": {
+    "skill": "(draft)",
+    "jass": "(P2/P3)"
+  }
+}

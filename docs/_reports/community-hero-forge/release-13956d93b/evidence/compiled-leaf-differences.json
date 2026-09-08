@@ -1,0 +1,356 @@
+[
+  {
+    "number": 1,
+    "name": "武藤遊戲",
+    "document": "compiled/abilities/sela.e.json",
+    "differences": [
+      {
+        "path": "/effects/0/amount/ratios/0/coeff",
+        "before": 0.0507,
+        "after": 0.0767
+      },
+      {
+        "path": "/template",
+        "before": null,
+        "after": {
+          "params": {
+            "anchor": "point",
+            "castTimeSec": 0.3,
+            "damage": {
+              "flat": 40,
+              "perRank": [
+                30,
+                60,
+                90,
+                120,
+                150
+              ],
+              "ratios": [
+                {
+                  "coeff": 0.5,
+                  "stat": "ap"
+                }
+              ]
+            },
+            "damageType": "magic",
+            "radius": 163.64,
+            "statusDurationSec": 1.5,
+            "statusId": "slow40"
+          },
+          "ref": "tpl-proxy-cast"
+        }
+      }
+    ]
+  },
+  {
+    "number": 1,
+    "name": "武藤遊戲",
+    "document": "compiled/abilities/sela.q.json",
+    "differences": [
+      {
+        "path": "/effects/0/onHit/0/amount/ratios/0/coeff",
+        "before": 0.1195,
+        "after": 0.1807
+      },
+      {
+        "path": "/template",
+        "before": null,
+        "after": {
+          "params": {
+            "castTimeSec": 0.167,
+            "damage": {
+              "flat": 20,
+              "perRank": [
+                60,
+                95,
+                130,
+                165,
+                200
+              ],
+              "ratios": [
+                {
+                  "coeff": 0.7,
+                  "stat": "ap"
+                }
+              ]
+            },
+            "damageType": "magic",
+            "projectileId": "sela.q.bolt"
+          },
+          "ref": "tpl-projectile-strike"
+        }
+      }
+    ]
+  },
+  {
+    "number": 1,
+    "name": "武藤遊戲",
+    "document": "compiled/abilities/sela.r.json",
+    "differences": [
+      {
+        "path": "/effects/0/amount/ratios/0/coeff",
+        "before": 0.4995,
+        "after": 0.7552
+      },
+      {
+        "path": "/template",
+        "before": null,
+        "after": {
+          "params": {
+            "anchor": "point",
+            "castTimeSec": 0.767,
+            "damage": {
+              "perRank": [
+                200,
+                325,
+                450
+              ],
+              "ratios": [
+                {
+                  "coeff": 0.9,
+                  "stat": "ap"
+                }
+              ]
+            },
+            "damageType": "magic",
+            "radius": 272.73,
+            "statusDurationSec": 0.75,
+            "statusId": "burnstun"
+          },
+          "ref": "tpl-proxy-cast"
+        }
+      }
+    ]
+  },
+  {
+    "number": 1,
+    "name": "武藤遊戲",
+    "document": "compiled/abilities/sela.w.json",
+    "differences": [
+      {
+        "path": "/effects/0/amount/ratios/0/coeff",
+        "before": 0.4939,
+        "after": 0.7466
+      }
+    ]
+  },
+  {
+    "number": 2,
+    "name": "八神庵",
+    "document": "compiled/abilities/community-review-02-20260907.q.json",
+    "differences": [
+      {
+        "path": "/effects/0/finalEffects/0/includeOrigin",
+        "before": null,
+        "after": true
+      }
+    ]
+  },
+  {
+    "number": 3,
+    "name": "不知火舞",
+    "document": "compiled/abilities/community-review-03-20260907.q.json",
+    "differences": [
+      {
+        "path": "/effects/0/finalEffects/0/includeOrigin",
+        "before": null,
+        "after": true
+      }
+    ]
+  },
+  {
+    "number": 5,
+    "name": "洛克人",
+    "document": "compiled/abilities/community-review-05-20260907.w.json",
+    "differences": [
+      {
+        "path": "/effects/0/finalEffects/0/includeOrigin",
+        "before": null,
+        "after": true
+      }
+    ]
+  },
+  {
+    "number": 6,
+    "name": "卡比",
+    "document": "compiled/abilities/community-review-06-20260907.q.json",
+    "differences": [
+      {
+        "path": "/effects/0/onLand/0/amount/ratios/0/coeff",
+        "before": 0.4082,
+        "after": 0.617
+      }
+    ]
+  },
+  {
+    "number": 7,
+    "name": "西索",
+    "document": "compiled/abilities/community-review-07-20260907.e.json",
+    "differences": [
+      {
+        "path": "/effects/0/onLand/0/amount/ratios/0/coeff",
+        "before": 0.4082,
+        "after": 0.617
+      }
+    ]
+  },
+  {
+    "number": 11,
+    "name": "利姆路",
+    "document": "compiled/abilities/community-review-11-20260907.q.json",
+    "differences": [
+      {
+        "path": "/effects/0/finalEffects/0/includeOrigin",
+        "before": null,
+        "after": true
+      }
+    ]
+  },
+  {
+    "number": 15,
+    "name": "比利海靈頓",
+    "document": "compiled/abilities/community-review-15-20260907.q.json",
+    "differences": [
+      {
+        "path": "/effects/0/onLand/0/amount/ratios/0/coeff",
+        "before": 0.4082,
+        "after": 0.617
+      }
+    ]
+  },
+  {
+    "number": 15,
+    "name": "比利海靈頓",
+    "document": "compiled/abilities/community-review-15-20260907.r.json",
+    "differences": [
+      {
+        "path": "/effects/0/onLand/0/amount/ratios/0/coeff",
+        "before": 1.4577,
+        "after": 2.2037
+      }
+    ]
+  },
+  {
+    "number": 17,
+    "name": "安茲·烏爾·恭",
+    "document": "compiled/abilities/thorne.e.json",
+    "differences": [
+      {
+        "path": "/template",
+        "before": null,
+        "after": {
+          "params": {
+            "castTimeSec": 0.333,
+            "damage": {
+              "flat": 20,
+              "perRank": [
+                40,
+                70,
+                100,
+                130,
+                160
+              ],
+              "ratios": [
+                {
+                  "coeff": 0.6,
+                  "stat": "ad"
+                }
+              ]
+            },
+            "damageType": "physical",
+            "projectileId": "thorne.e.thorn",
+            "status": {
+              "duration": 1.25,
+              "root": true,
+              "statusId": "root"
+            }
+          },
+          "ref": "tpl-projectile-strike"
+        }
+      }
+    ]
+  },
+  {
+    "number": 17,
+    "name": "安茲·烏爾·恭",
+    "document": "compiled/abilities/thorne.r.json",
+    "differences": [
+      {
+        "path": "/template",
+        "before": null,
+        "after": {
+          "params": {
+            "anchor": "point",
+            "castTimeSec": 1.833,
+            "damage": {
+              "perRank": [
+                150,
+                250,
+                350
+              ],
+              "ratios": [
+                {
+                  "coeff": 0.8,
+                  "stat": "ad"
+                }
+              ]
+            },
+            "damageType": "physical",
+            "radius": 245.45,
+            "statusDurationSec": 2,
+            "statusId": "slow40"
+          },
+          "ref": "tpl-proxy-cast"
+        }
+      }
+    ]
+  },
+  {
+    "number": 21,
+    "name": "鹿目圓",
+    "document": "compiled/abilities/community-review-21-20260907.q.json",
+    "differences": [
+      {
+        "path": "/effects/0/finalEffects/0/includeOrigin",
+        "before": null,
+        "after": true
+      }
+    ]
+  },
+  {
+    "number": 22,
+    "name": "菜月昴",
+    "document": "compiled/abilities/community-review-22-20260907.w.json",
+    "differences": [
+      {
+        "path": "/effects/0/onLand/0/amount/ratios/0/coeff",
+        "before": 0.4082,
+        "after": 0.617
+      }
+    ]
+  },
+  {
+    "number": 26,
+    "name": "名偵探柯南",
+    "document": "compiled/abilities/community-review-26-20260907.ex.json",
+    "differences": [
+      {
+        "path": "/effects/0/onLand/0/amount/ratios/0/coeff",
+        "before": 2.6938,
+        "after": 4.0725
+      }
+    ]
+  },
+  {
+    "number": 26,
+    "name": "名偵探柯南",
+    "document": "compiled/abilities/community-review-26-20260907.q.json",
+    "differences": [
+      {
+        "path": "/effects/0/finalEffects/0/includeOrigin",
+        "before": null,
+        "after": true
+      }
+    ]
+  }
+]

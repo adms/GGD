@@ -1,0 +1,36 @@
+{
+  "id": "godie-o00k.ex",
+  "name": "86-002 雷電萌神",
+  "icon": "assets/icons/abilities/godie-o00k.ex.webp",
+  "provenance": "w3x-import",
+  "description": "0秒冷卻時間\n\n皮卡娘在雷電萌神狀態，閃電大決傷害將增加為兩倍。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "cooldownTier": "極大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 6,
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "castTimeSec": 1.033
+    }
+  },
+  "vfxKey": "fx.prim.lightning.explosion-lg",
+  "schema": "ability@1",
+  "castTimeSec": 1.033
+}

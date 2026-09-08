@@ -1,0 +1,22 @@
+{
+  "id": "prop.guardian.beast",
+  "schema": "model@1",
+  "glbPath": "assets/models/guardians/guardian_beast.glb",
+  "scale": 2.0,
+  "collisionRadius": 2.5,
+  "clipMap": {
+    "idle": "Armature|Triceratops_Idle",
+    "run": "Armature|Triceratops_Walk",
+    "attack": "Armature|Triceratops_Attack",
+    "cast": "Armature|Triceratops_Attack",
+    "hurt": "Armature|Triceratops_Idle",
+    "death": "Armature|Triceratops_Death"
+  },
+  "attachPoints": {
+    "overhead": {
+      "x": 0,
+      "y": 2.8,
+      "z": 0
+    }
+  }
+}

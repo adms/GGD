@@ -1,0 +1,343 @@
+{
+  "id": "unit-tints",
+  "schema": "config.unit-tints@1",
+  "units": {
+    "Hapm": {
+      "championId": "godie-hapm",
+      "name": "海克力斯",
+      "tint": [
+        0.3137,
+        0.3137,
+        0.3137
+      ],
+      "source": "w3u-static",
+      "evidence": "STATIC: tools/w3x-import/out/GoDieEX22s-src/raw/war3map.w3u original-table entry Hapm sets uclr=80 uclg=80 uclb=80 (=0.3137 each). RUNTIME CORROBORATION: war3map.j:51694 Trig_berserker_2_Actions restores SetUnitVertexColorBJ(udg_BerserkerUnit,30,30,30,0) and war3map.j:52027 Trig_Gigantomakhia_2_Actions does the same - the map's rest state is 30% grey, NOT white. Model is the stock Blizzard units\\demon\\FelgaurdBlue\\FelgaurdBlue.mdl, so without this tint it renders in the untouched Blizzard hero colours. The 黑 of 黑紅 is this 0.314 multiply; the 紅 is the Q-buff tint in `transient`."
+    },
+    "Ogld": {
+      "championId": "godie-ogld",
+      "name": "美白大法師",
+      "tint": [
+        0.1961,
+        0.1961,
+        0.1961
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u original entry Ogld: uclr=50 uclg=50 uclb=50. Champion 「美白大法師 - 黑人牙膏」; Ogld is a blizzard-overlay stock-mesh unit so the near-black multiply is the entire visual gag."
+    },
+    "E00R": {
+      "championId": "godie-e00r",
+      "name": "最終泛用人型決戰兵器",
+      "tint": [
+        0.3922,
+        0.3922,
+        0.3922
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry E00R (base Eill, model units\\creeps\\SatyrTrickster\\SatyrTrickster.mdl): uclr=uclg=uclb=100. Champion 「最終泛用人型決戰兵器 - 初號機」(EVA-01); blizzard-overlay unit."
+    },
+    "U034": {
+      "championId": "godie-u034",
+      "name": "職業獵人",
+      "tint": [
+        0.3922,
+        0.3922,
+        0.3922
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry U034 (base Ucrl, model HeroBigGon.mdl): uclr=uclg=uclb=100."
+    },
+    "Umal": {
+      "championId": "godie-umal",
+      "name": "北斗神拳掌門人",
+      "tint": [
+        0.7843,
+        0.7843,
+        0.7843
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u original entry Umal (model units\\critters\\VillagerMan1\\VillagerMan1.mdl): uclr=uclg=uclb=200. Champion 「北斗神拳掌門人 - 拳四郎」; blizzard-overlay unit."
+    },
+    "U00L": {
+      "championId": "godie-u00l",
+      "name": "北斗之鼠",
+      "tint": [
+        0.7843,
+        0.7843,
+        0.7843
+      ],
+      "source": "w3u-base-inherited",
+      "evidence": "TASK #263. war3map.w3u custom entry U00L (model HeroPikachu.mdl) sets NO uclr/uclg/uclb of its own; its base is the ORIGINAL-table entry Umal, which sets uclr=uclg=uclb=200 -> 0.7843 each. #49 resolved only 'entry has its own mod' and 'entry -> stock UnitUI.slk' and had no w3u->w3u step, so this one champion was dropped. It is the 變身 alternate form of 拳四郎 (TRANSFORM_FORMS pair 25, counterpart godie-umal which DOES carry 0.7843), so the miss was visible in play: transforming washed the grey off. Re-derived by tools/w3x-import/resolve_unit_tints.py; see out/GoDieEX22s-src/UNIT_TINTS.json entry U00L (channelSource = w3u:Umal(original) x3, baseChain = [U00L, Umal])."
+    },
+    "Ucrl": {
+      "championId": "godie-ucrl",
+      "name": "職業獵人",
+      "tint": [
+        0.3922,
+        1.0,
+        0.3922
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u original entry Ucrl (model units\\critters\\HighElfPeasant\\HighElfPeasant.mdl): uclr=100 uclb=100 (green tint) PLUS utco=6 (Art - Team Color forced to slot 6/orange instead of owner colour). blizzard-overlay unit. NOTE: utco is a second dropped art field, not expressible as a tint."
+    },
+    "E00S": {
+      "championId": "godie-e00s",
+      "name": "白木老樹精",
+      "tint": [
+        1.0,
+        0.7843,
+        1.0
+      ],
+      "source": "slk-inherited",
+      "evidence": "INHERITED from base Ecen (UnitUI.slk 255/200/255); custom entry E00S 「白木老樹精」 sets no tint mods. Model buildings\\nightelf\\AncientProtector\\AncientProtector.mdl."
+    },
+    "E010": {
+      "championId": "godie-e010",
+      "name": "白木老樹精",
+      "tint": [
+        1.0,
+        0.7843,
+        1.0
+      ],
+      "source": "slk-inherited",
+      "evidence": "INHERITED from base Ecen (UnitUI.slk 255/200/255). Custom entry E010 「白木老樹精」. TASK #249: it is the 變身 ALTERNATE form of 白木卡迪那 (TRANSFORM_FORMS pair 70, ability A0O6 70-00 紮根, counterpart godie-e00s which carries the SAME 255/200/255). The champion doc did not exist when this row was written — 'a second copy with no champion doc' — and had to be imported once the transform primitive landed, because Champions.get() throws on an unregistered id and the snapshot resolves the transformed body through it every tick. Now mapped; same inheritance chain as U00L below."
+    },
+    "Ubal": {
+      "championId": "godie-ubal",
+      "name": "魔界霸主",
+      "tint": [
+        1.0,
+        0.7843,
+        0.7843
+      ],
+      "source": "slk-inherited",
+      "evidence": "INHERITED default: UnitUI.slk row Ubal (Pit Lord) ships red=255 green=200 blue=200. Champion 「魔界霸主」."
+    },
+    "U00J": {
+      "championId": "godie-u00j",
+      "name": "神性的流失",
+      "tint": [
+        1.0,
+        0.7843,
+        0.7843
+      ],
+      "source": "slk-inherited",
+      "evidence": "INHERITED from base Ubal (255/200/200); custom entry U00J 「神性的流失」, model HeroSephiroth.mdl."
+    }
+  },
+  "transient": [
+    {
+      "championId": "godie-hart",
+      "trigger": "Trig_XFight_Actions",
+      "line": 33417,
+      "note": "克勞德 A0AZ 分身衝刺 — pale blue at 50% transparency (SetUnitVertexColorBJ 70,70,100,50). godie-hart has NO static tint, so the paired restore is a clean no-op.",
+      "tint": [
+        0.7,
+        0.7,
+        1.0
+      ],
+      "alpha": 0.5
+    },
+    {
+      "championId": "godie-hart",
+      "trigger": "Trig_XFight_Actions",
+      "line": 33420,
+      "note": "restore after the A0AZ branch (100,100,100,0 = opaque white).",
+      "tint": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "championId": "godie-hart",
+      "trigger": "Trig_XFight_Actions",
+      "line": 33429,
+      "note": "same state on the A072 branch of Trig_XFight.",
+      "tint": [
+        0.7,
+        0.7,
+        1.0
+      ],
+      "alpha": 0.5
+    },
+    {
+      "championId": "godie-hart",
+      "trigger": "Trig_XFight_Actions",
+      "line": 33431,
+      "note": "restore on the A072 branch.",
+      "tint": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "championId": "godie-hart",
+      "trigger": "Trig_SuperFF7_Actions",
+      "line": 33806,
+      "note": "克勞德 超級新星 limit break — red-washed and 50% transparent (100,60,60,50).",
+      "tint": [
+        1.0,
+        0.6,
+        0.6
+      ],
+      "alpha": 0.5
+    },
+    {
+      "championId": "godie-hart",
+      "trigger": "Trig_SuperFF7_Actions",
+      "line": 33927,
+      "note": "limit-break end restore.",
+      "tint": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "championId": "godie-h01n",
+      "trigger": "Trig_Bleach_Null_start_Actions",
+      "line": 37644,
+      "note": "黑崎一護 A0W5 虛化 — 30% grey. The rawcode is shared by H01N and H01O (the map ships an upgraded duplicate of the hero), so both champions get the state.",
+      "tint": [
+        0.3,
+        0.3,
+        0.3
+      ]
+    },
+    {
+      "championId": "godie-h01o",
+      "trigger": "Trig_Bleach_Null_start_Actions",
+      "line": 37644,
+      "note": "同上 — the A0W5 caster may also be the upgraded 外掛開很大的死神 (H01O).",
+      "tint": [
+        0.3,
+        0.3,
+        0.3
+      ]
+    },
+    {
+      "championId": "godie-h01n",
+      "trigger": "Trig_Bleach_Null_close_Actions",
+      "line": 37670,
+      "note": "虛化 end restore.",
+      "tint": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "championId": "godie-h01o",
+      "trigger": "Trig_Bleach_Null_close_Actions",
+      "line": 37670,
+      "note": "虛化 end restore (H01O copy).",
+      "tint": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "championId": "godie-o02l",
+      "trigger": "Trig_WildPika_Actions",
+      "line": 40329,
+      "note": "A040 is shared with the 神騎寶貝 duplicate (O02L); same harmless restore.",
+      "tint": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "championId": "godie-ofar",
+      "trigger": "Trig_WildPika_Actions",
+      "line": 40329,
+      "note": "皮卡丘 A040 restore to white; godie-ofar carries no static tint so this is harmless.",
+      "tint": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "championId": "godie-o02l",
+      "trigger": "Trig_WildPikaAttacked_Actions",
+      "line": 40369,
+      "note": "同上 for the O02L duplicate.",
+      "tint": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "championId": "godie-ofar",
+      "trigger": "Trig_WildPikaAttacked_Actions",
+      "line": 40369,
+      "note": "皮卡丘 hurt flash — pure red (100,0,0,0); the very next line fades it back per ability level.",
+      "tint": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "championId": "godie-ogld",
+      "trigger": "Trig_BlackTooth_Actions",
+      "line": 47379,
+      "note": "黑人牙膏 A0CO — 20% grey at 10% transparency (20,20,20,10). The only champion state in the whole map with alpha < 1 AND a colour change.",
+      "tint": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "alpha": 0.9
+    },
+    {
+      "championId": "godie-ogld",
+      "trigger": "Trig_BlackTooth_Actions",
+      "line": 47390,
+      "note": "ORIGINAL-MAP BUG: restores to WHITE and erases 美白大法師's static [0.1961,0.1961,0.1961] for the rest of the match. Port must restore to champion.tint.",
+      "tint": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "erasesStaticTint": true
+    },
+    {
+      "championId": "godie-hapm",
+      "trigger": "Trig_berserker_Actions",
+      "line": 51668,
+      "note": "海克力斯 Berserker Q 狂戰士之怒 (A0VJ) — the 紅 of 黑紅: SetUnitVertexColorBJ(udg_BerserkerUnit,100,30,30,0), i.e. rgb 1.0/0.3/0.3 fully OPAQUE, held for the 12s buff.",
+      "tint": [
+        1.0,
+        0.3,
+        0.3
+      ]
+    },
+    {
+      "championId": "godie-hapm",
+      "trigger": "Trig_berserker_2_Actions",
+      "line": 51694,
+      "note": "狂戰士之怒 expiry — restores to 30% grey, NOT white. This is the map itself confirming that Berserker's rest state is the 黑 (champion.tint 0.3137, w3u 80/255).",
+      "tint": [
+        0.3,
+        0.3,
+        0.3
+      ]
+    },
+    {
+      "championId": "godie-hapm",
+      "trigger": "Trig_Gigantomakhia_2_Actions",
+      "line": 52027,
+      "note": "巨神一擊 end — the same correct restore-to-grey. Hapm is the one champion the original map does NOT bug out.",
+      "tint": [
+        0.3,
+        0.3,
+        0.3
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "id": "godie-n01b.ex",
+  "name": "40-002 環繞音響",
+  "icon": "assets/icons/abilities/godie-n01b.ex.webp",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n胖虎的歌聲，擁有著毀滅世界的潛力，當他高歌一曲的時候，將會是你最大的惡夢，可造成全場敵方英雄1500點傷害。",
+  "slot": "EX",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    400.0
+  ],
+  "range": 14.12,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "flat": 300,
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.7
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.prim.sound.nova-lg",
+  "schema": "ability@1",
+  "targetsEnemies": true,
+  "castTimeSec": 0.5
+}

@@ -1,0 +1,36 @@
+{
+  "id": "godie-n00b.ex",
+  "name": "57-002 時光機",
+  "icon": "assets/icons/abilities/godie-n00b.ex.webp",
+  "provenance": "w3x-import",
+  "description": "[未來科技]\n\n可以穿梭時空回到過去的超先進科技。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "cooldownTier": "極大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 6,
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "castTimeSec": 1.033
+    }
+  },
+  "vfxKey": "fx.prim.arcane.nova-lg",
+  "schema": "ability@1",
+  "castTimeSec": 1.033
+}

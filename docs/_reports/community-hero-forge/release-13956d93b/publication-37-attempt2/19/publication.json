@@ -1,0 +1,3568 @@
+{
+  "schema": "ggd-hero-publication@1",
+  "workId": "community-review-19-20260907",
+  "revision": 3,
+  "publicationEpoch": 1,
+  "pendingSubmission": "hero-8c5a791936bdcbb61460ba6d02fb0fa7444718d87010931dc8fa8d323e4",
+  "pendingSubmittedAt": "2026-09-08T17:33:15.829797Z",
+  "submissions": [
+    "hero-8c5a791936bdcbb61460ba6d02fb0fa7444718d87010931dc8fa8d323e4"
+  ],
+  "published": {
+    "submissionId": "hero-8c5a791936bdcbb61460ba6d02fb0fa7444718d87010931dc8fa8d323e4",
+    "version": {
+      "schema": "ggd-work-version@1",
+      "workId": "community-review-19-20260907",
+      "versionId": "sha256:d1a2507d43dfd6cb67b43a35f38dd82ab7b5e1a9794a81d93742364cc46b33be",
+      "projectId": "community-review-19-20260907",
+      "packageDigest": "sha256:d1a2507d43dfd6cb67b43a35f38dd82ab7b5e1a9794a81d93742364cc46b33be",
+      "snapshotDigest": "sha256:c1cd95eca2bba3e6c6afd8151f83dcdc73ffeb0d44caa063c69d91effc98e978",
+      "files": [
+        {
+          "path": "assets/audio/wc3/blademasterwhirlwind.wav",
+          "sha256": "sha256:e9149cafa4e2101c1b51152d7d7b48f0aa0c6f8a7c08a7b6ab197a6d01eabf80",
+          "bytes": 37432
+        },
+        {
+          "path": "assets/icons/abilities/thorne.e.webp",
+          "sha256": "sha256:06c56be469894eebd7b75968b362c506fede035f74cde1b56f93a35f9012e7a3",
+          "bytes": 8514
+        },
+        {
+          "path": "assets/icons/abilities/thorne.q.webp",
+          "sha256": "sha256:f19a7aeb84c06968be0361afad87d7da4ad10f8c46f0d96c5a1f0d0167f1092a",
+          "bytes": 6812
+        },
+        {
+          "path": "assets/icons/abilities/thorne.r.webp",
+          "sha256": "sha256:6f515844d9d4e55b543e9a7eb95203fac0d5e7e48b7c6c3b6d7189f6ab706046",
+          "bytes": 6200
+        },
+        {
+          "path": "assets/icons/abilities/thorne.w.webp",
+          "sha256": "sha256:08d3a3912f3820e3e748b4def85ca097fd0ef0bc78d7a5d18b05ea16c728639e",
+          "bytes": 4740
+        },
+        {
+          "path": "assets/icons/champions/thorne.webp",
+          "sha256": "sha256:7675c079fda2ad5e9a3e02252f139a1e88ec28165280e4ca0a517cb58c6474cf",
+          "bytes": 8308
+        },
+        {
+          "path": "assets/icons/items/book-of-gospel.webp",
+          "sha256": "sha256:6709d502ac0e654fb994cfa9d9e23fc4aef94cf78fa235868c66087b57722822",
+          "bytes": 7116
+        },
+        {
+          "path": "assets/icons/items/bulwark-charge-greaves.webp",
+          "sha256": "sha256:3a92fb0678edba8d6285bb4a05badb7309a382107de2d400ade7a68d7e878397",
+          "bytes": 3384
+        },
+        {
+          "path": "assets/icons/items/cleaver-of-the-warden.webp",
+          "sha256": "sha256:8c58a9332520c230f368fd7a28781a6f91f5c18c0865d95d8ac92b54fa53a7d7",
+          "bytes": 4058
+        },
+        {
+          "path": "assets/icons/items/collar-of-the-deadly-soul.webp",
+          "sha256": "sha256:cce7222b0936f70647df8cd9872df7577b31b82edc39dc891b15af0429dd7f71",
+          "bytes": 4440
+        },
+        {
+          "path": "assets/icons/items/endless-edge.png",
+          "sha256": "sha256:6ba1d2e49afd5de3d2340b9951350f3ed3f5fba069e6dc19ab89297d92685b12",
+          "bytes": 6143
+        },
+        {
+          "path": "assets/icons/items/fingerless-gloves.webp",
+          "sha256": "sha256:b47264854c6cad93c04d2e6ef2813acca4a16c5161205454260cdc26e19fa3ce",
+          "bytes": 4416
+        },
+        {
+          "path": "assets/icons/items/godie-i000.webp",
+          "sha256": "sha256:f0773b6e3967b64b4f60f883996ab4ef710baf3c8b181e2595e68271d5f4c646",
+          "bytes": 4218
+        },
+        {
+          "path": "assets/icons/items/godie-i004.webp",
+          "sha256": "sha256:1b841781ddfa7f9c8d77aeb212c44ba7a4f4e137042fa632111b9395a873b8b0",
+          "bytes": 4172
+        },
+        {
+          "path": "assets/icons/items/godie-i006.webp",
+          "sha256": "sha256:12c4585858f276f647d77ebba7de630a9ac1b30b893613ff1efcf8a1404a0ecf",
+          "bytes": 3854
+        },
+        {
+          "path": "assets/icons/items/godie-i007.webp",
+          "sha256": "sha256:53c768516aec56f0e332ac733a4eb39929c0a946a39f6f950ab25878e83ff84e",
+          "bytes": 4902
+        },
+        {
+          "path": "assets/icons/items/godie-i00f.webp",
+          "sha256": "sha256:ddcb459d5c3bf0d9ae0bfa2f649bdc25c0aad86a5789ef764b29851b6f85b76d",
+          "bytes": 3462
+        },
+        {
+          "path": "assets/icons/items/godie-i00i.webp",
+          "sha256": "sha256:346c251d293a11a4111693472dba451a7ff040c43f0a364f4778a4bb873824ac",
+          "bytes": 7134
+        },
+        {
+          "path": "assets/icons/items/godie-i00j.webp",
+          "sha256": "sha256:ab3d6ae11a64fdba3163addf8d9fef41c5fb4f3e43a237cf30c275f83bb1b0bd",
+          "bytes": 3176
+        },
+        {
+          "path": "assets/icons/items/godie-i00l.webp",
+          "sha256": "sha256:0dc0278ba2120211245c02a7162b3a59279f355b82634ffc722ff331cdd35ef9",
+          "bytes": 4388
+        },
+        {
+          "path": "assets/icons/items/godie-i00s.webp",
+          "sha256": "sha256:39480ff2d9708b34d00381e246887af967f7518a4f7552638711b8d86df5435e",
+          "bytes": 5138
+        },
+        {
+          "path": "assets/icons/items/godie-i00u.webp",
+          "sha256": "sha256:2cc0a56d17b5568575d184de1b5c353d5a38dcbcf729b50877d8991d804b40dd",
+          "bytes": 2782
+        },
+        {
+          "path": "assets/icons/items/godie-i00z.webp",
+          "sha256": "sha256:c8da6ebec3594422284b60f9d2129f81837833e447fe6bf55875d9d85553b497",
+          "bytes": 3404
+        },
+        {
+          "path": "assets/icons/items/godie-i012.webp",
+          "sha256": "sha256:68bf6eba629564f8e5f34d967d8b64be1c12ed295641344e689e919978fd6b65",
+          "bytes": 2062
+        },
+        {
+          "path": "assets/icons/items/godie-i013.webp",
+          "sha256": "sha256:37ed2f675f9da5b09e75c25fd41353a40742f9d50c803a31bae638eeb057f225",
+          "bytes": 5426
+        },
+        {
+          "path": "assets/icons/items/godie-i014.webp",
+          "sha256": "sha256:203e44c8ffe3a5d1fab9e3740842dc98e08c3dc0f78064675c14b9f67beced9b",
+          "bytes": 4196
+        },
+        {
+          "path": "assets/icons/items/godie-i016.webp",
+          "sha256": "sha256:d54ce7ba4e203003c05aa080b795cac78723144570fe642ff917c8a5835e0679",
+          "bytes": 2510
+        },
+        {
+          "path": "assets/icons/items/godie-i018.webp",
+          "sha256": "sha256:af43efcb4e9ab7497fe1f708057bfc753e81519ee659634ca26a881b853ffb28",
+          "bytes": 3540
+        },
+        {
+          "path": "assets/icons/items/godie-i01d.webp",
+          "sha256": "sha256:e0f5d9b2a16c71b37b657d2566f21be44844ec8b020e14a7b5c5bfbb84fb9c8e",
+          "bytes": 5298
+        },
+        {
+          "path": "assets/icons/items/godie-i01g.webp",
+          "sha256": "sha256:01dbff9ffa20fc27f3623bb0932153492183393da003b0bb98294d8e7ff47326",
+          "bytes": 1760
+        },
+        {
+          "path": "assets/icons/items/godie-i01i.webp",
+          "sha256": "sha256:23db843cc1a563cd5cb7e7ddbb37ec5e8efe0ede985cb1cd72f067cb72724632",
+          "bytes": 5234
+        },
+        {
+          "path": "assets/icons/items/godie-i01n.webp",
+          "sha256": "sha256:6d960d49f869d0fb57d077a54b78eead3164c620f91a98fa45b377933fb43556",
+          "bytes": 2696
+        },
+        {
+          "path": "assets/icons/items/godie-i01s.webp",
+          "sha256": "sha256:269a48ffd8353d0088086d77258f37ef58982868b6054d642e43e051716c8ec0",
+          "bytes": 4764
+        },
+        {
+          "path": "assets/icons/items/godie-i01v.webp",
+          "sha256": "sha256:ea4e2f5f9bddccf956751561a2453186f913b50884ee56c458605421f7f21841",
+          "bytes": 3960
+        },
+        {
+          "path": "assets/icons/items/godie-i01w.webp",
+          "sha256": "sha256:e102833c4119f31323964ed1d12520c70e19481ee1d1b1884c4339e916f4355c",
+          "bytes": 3154
+        },
+        {
+          "path": "assets/icons/items/godie-i020.webp",
+          "sha256": "sha256:dc2a04305cc7d0d5c1653b8f3947cee91220221528fcdf0eef9a5606a8cf387f",
+          "bytes": 3288
+        },
+        {
+          "path": "assets/icons/items/godie-i027.webp",
+          "sha256": "sha256:d79fdec35e398c828d1fb678cd53deef3c4e650ef17be24ec95bdc0a85210d51",
+          "bytes": 1858
+        },
+        {
+          "path": "assets/icons/items/godie-i02d.png",
+          "sha256": "sha256:08643015f4fc80e3c5ba6689f3241d8b9be19274b2ab9afb3fcbb3c10f2c48ab",
+          "bytes": 11021
+        },
+        {
+          "path": "assets/icons/items/godie-i02e.webp",
+          "sha256": "sha256:6487e6134c8a99ca5315fbd2e22ea6e12aeb5808b580357b8008db4c4b2a73e3",
+          "bytes": 2970
+        },
+        {
+          "path": "assets/icons/items/godie-i031.webp",
+          "sha256": "sha256:ce05fba120c0b30fa0f03bacc56c94ab463e6a4d38fc1c61c5d5388ae5591fdc",
+          "bytes": 3170
+        },
+        {
+          "path": "assets/icons/items/godie-i039.webp",
+          "sha256": "sha256:116812a1276ffe2847edfbb81541d2c8cb0bcee97ab48b0bac1fe62c84155f48",
+          "bytes": 5766
+        },
+        {
+          "path": "assets/icons/items/godie-i03f.webp",
+          "sha256": "sha256:90471b88fe5f21a9a1c88a2c17b795380545f162950dee9813cd0c286effde19",
+          "bytes": 2714
+        },
+        {
+          "path": "assets/icons/items/godie-i03h.webp",
+          "sha256": "sha256:0ae9046599028c5a77352411407115f87c2f1dc17ec7d8a1af8aa6538caa3d9b",
+          "bytes": 3246
+        },
+        {
+          "path": "assets/icons/items/godie-i03m.webp",
+          "sha256": "sha256:5ba081492cca917e42c2e4e0e7d4dca413f0e77cbb1ac268fe827e39b97f9858",
+          "bytes": 3496
+        },
+        {
+          "path": "assets/icons/items/godie-i04d.png",
+          "sha256": "sha256:6d2e73978cbbe8c3aed37d7c5a2b7843328ba6a29bac9a6f0e4b01aad6bda661",
+          "bytes": 10972
+        },
+        {
+          "path": "assets/icons/items/godie-i060.webp",
+          "sha256": "sha256:e65065e6c233a2bbb657de66056fc6c56730faf8b5bc6b08339a1136ac55306a",
+          "bytes": 9346
+        },
+        {
+          "path": "assets/icons/items/godie-i061.webp",
+          "sha256": "sha256:fbc29a4a2e65af85b8cfcbddffd486ac73f289d93b165df06721eac1a3ccbbb4",
+          "bytes": 3540
+        },
+        {
+          "path": "assets/icons/items/godie-i067.webp",
+          "sha256": "sha256:cfc51854331eafeb76c506a947a47ef6fc2b23f0d31f26ceab651629ab4b2afe",
+          "bytes": 7876
+        },
+        {
+          "path": "assets/icons/items/godie-i06a.webp",
+          "sha256": "sha256:527fe87f44cf7a8006f6fa7c27a4167afb1569d1bb4662f97fcea87568ec537d",
+          "bytes": 3092
+        },
+        {
+          "path": "assets/icons/items/godie-i06d.png",
+          "sha256": "sha256:1becb4c55266320c99ab1c975a1b6c0fc7f81421159bd25dae16be9e44b65f56",
+          "bytes": 6453
+        },
+        {
+          "path": "assets/icons/items/godie-i06e.webp",
+          "sha256": "sha256:d49c66dc1fe178dd7f900e0061b5241ebf5b9123fb796dc4ee99bbdffb4dbe62",
+          "bytes": 5374
+        },
+        {
+          "path": "assets/icons/items/godie-i06f.webp",
+          "sha256": "sha256:4ef7f431a50a4cfeffbbe73523c190168d4d1bd57183bfdfea4f473fe56bd98e",
+          "bytes": 2442
+        },
+        {
+          "path": "assets/icons/items/godie-i06g.webp",
+          "sha256": "sha256:4bd3ac7266632c8661827f57bc2969765d8ce64200d98523c6800100bb3930ec",
+          "bytes": 3890
+        },
+        {
+          "path": "assets/icons/items/godie-i06i.webp",
+          "sha256": "sha256:ff7127b8b243a6074404ca55c9ff7a93f0d6c2f221000e77b0390e1ad441d3e2",
+          "bytes": 4890
+        },
+        {
+          "path": "assets/icons/items/godie-i06j.webp",
+          "sha256": "sha256:9633f3e4c44cc7ed591a34825cf8692052f65f8f8f0e0bb48c5bd118ef48e302",
+          "bytes": 2110
+        },
+        {
+          "path": "assets/icons/items/godie-i06n.webp",
+          "sha256": "sha256:69747ca10e37bb0e7696a5204030ceb54a829b06cfa1dc94ead8e51d7656da11",
+          "bytes": 5478
+        },
+        {
+          "path": "assets/icons/items/godie-i06o.webp",
+          "sha256": "sha256:2d5891053cc338cd27e3139a42446b01e11d3e0314139f7e429a7c840366536e",
+          "bytes": 4138
+        },
+        {
+          "path": "assets/icons/items/godie-i06q.webp",
+          "sha256": "sha256:0df2085f09bcf3668b0d934da9b9b1648a30a492035d9ac047e1ed4012e3219c",
+          "bytes": 3042
+        },
+        {
+          "path": "assets/icons/items/gravity-sword-black-rod.webp",
+          "sha256": "sha256:6c24abd9e5c77f6578fdf8fac192121cc2ca8c7cad4797fa084f3e0bd9eec5fb",
+          "bytes": 4818
+        },
+        {
+          "path": "assets/icons/items/lance-kongotetsu.webp",
+          "sha256": "sha256:37b0fb7a84e1b6e9ac4536116c926453a64fa13d6ec9cc78b575490153793809",
+          "bytes": 2622
+        },
+        {
+          "path": "assets/icons/items/magic-armor-type-zero.webp",
+          "sha256": "sha256:3f439bcde0a1a1e4248ebe2fb17205d2ca3e80edd50cd13e3d7ed7ca482556f1",
+          "bytes": 6774
+        },
+        {
+          "path": "assets/icons/items/meat-cleaver.webp",
+          "sha256": "sha256:6562d7a555059604b66e98a55df467c2a0f9c2f92a0827ab7a82c27321462091",
+          "bytes": 4162
+        },
+        {
+          "path": "assets/icons/items/meteor-ring.webp",
+          "sha256": "sha256:32296a3a94e6cc8d679307b7a34d1f167b85a176476fe88798e0ae30a132e001",
+          "bytes": 4356
+        },
+        {
+          "path": "assets/icons/items/mystery-scrap-of-paper.webp",
+          "sha256": "sha256:357c487acc5474e4ed9551322d01037beae3a967e10f252fa4d123c0b9e1721f",
+          "bytes": 6886
+        },
+        {
+          "path": "assets/icons/items/odm-gear.webp",
+          "sha256": "sha256:fccf9c6338e24e675ac0d619d72730b260b05f13e33442d3d5ca4a1864b6a48c",
+          "bytes": 6364
+        },
+        {
+          "path": "assets/icons/items/pale-moon-requiem-crown.webp",
+          "sha256": "sha256:1f09f8ac1ecdbbff914761417494268b2371067a489364ef9636436876e31984",
+          "bytes": 6314
+        },
+        {
+          "path": "assets/icons/items/shining-golden-orbs.webp",
+          "sha256": "sha256:c6ffc0d8fbea393714b71cd01051f8d015185fde93c4f98648d01c286735b71d",
+          "bytes": 4512
+        },
+        {
+          "path": "assets/icons/items/soul-eater.webp",
+          "sha256": "sha256:1ea68086c0d921ca433d8e59d29bd2c3f46534890440f5662aa184cf0a19dda0",
+          "bytes": 3724
+        },
+        {
+          "path": "assets/icons/items/spear-of-lightning.webp",
+          "sha256": "sha256:8211aeeed597d4c20b98170bb42f4a901a4073ec1a4ebbb601f9b62e4ed9e527",
+          "bytes": 7976
+        },
+        {
+          "path": "assets/icons/items/staff-of-ainz-ooal-gown.webp",
+          "sha256": "sha256:de7bcca31a23b925ed81cb8e6922889ea8f410b07f49411e9faf5254fc6539b4",
+          "bytes": 4362
+        },
+        {
+          "path": "assets/icons/items/stone-mask.webp",
+          "sha256": "sha256:9495104e1ef0fa789d7a0c6b00d46701536db550a7cab07bb5336d76f6b707f0",
+          "bytes": 3878
+        },
+        {
+          "path": "assets/icons/items/teardrop-of-rebirth.webp",
+          "sha256": "sha256:e4b6861b05e5e29508521b9d4b50470bd75836d72b3a49baad098cf7801d993c",
+          "bytes": 3250
+        },
+        {
+          "path": "assets/icons/items/torch-master.webp",
+          "sha256": "sha256:06d4afe1fd9f8eda3c4a1194516f7d50c68a5ea1fdd99c5aab0bcbc18e7e313a",
+          "bytes": 2874
+        },
+        {
+          "path": "assets/icons/items/ultimate-mod-shiranui.webp",
+          "sha256": "sha256:36f2876171e2a01e86d741ec3117b0650dffd81853135fec303340598a0e544d",
+          "bytes": 4756
+        },
+        {
+          "path": "assets/icons/items/usagizuki-twin-crescents.webp",
+          "sha256": "sha256:f084fca9664d768a362e0dc555a4e6593e0af3812f2f90062efa8cdc26e1a366",
+          "bytes": 5576
+        },
+        {
+          "path": "assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
+          "sha256": "sha256:b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+          "bytes": 1104488
+        },
+        {
+          "path": "assets/models/imported/tornadoelemental.glb",
+          "sha256": "sha256:720d5ba783e78ec3b7ada2f26078732d8008bc784de310eaa25af02fc6bde3c7",
+          "bytes": 212784
+        },
+        {
+          "path": "assets/textures/decals/crack_01.png",
+          "sha256": "sha256:d6030995065dfc1594234b5bb1daea76baa2d7f409f0d8a8a8101a7fefa2f6a5",
+          "bytes": 30830
+        },
+        {
+          "path": "assets/textures/decals/kickup_01.png",
+          "sha256": "sha256:57af805c03b082e6e32c593bb540e4c416a889d6b903ad95613f150c8a4335d1",
+          "bytes": 21882
+        },
+        {
+          "path": "assets/textures/decals/scorch_01.png",
+          "sha256": "sha256:f9ff974e43c1228a588c9a6d1a6960f1d765decae9d1f915dd066213361a8d15",
+          "bytes": 25938
+        },
+        {
+          "path": "assets/textures/particles/circle_05.png",
+          "sha256": "sha256:616c989de83cd805c80ed78f692c5a4cb754151edbb1d3550f20cc3a2857b706",
+          "bytes": 59553
+        },
+        {
+          "path": "assets/textures/particles/dirt_01.png",
+          "sha256": "sha256:5dc794d1cde78d48b92b538f3fb4eedc47edefb636724df00d9815c15b4dc987",
+          "bytes": 46129
+        },
+        {
+          "path": "assets/textures/particles/dirt_02.png",
+          "sha256": "sha256:ffd9d893775a42fa9d9d471cdd6d6fed15ed6ebf266f227274cd3ffeea7eaf05",
+          "bytes": 52813
+        },
+        {
+          "path": "assets/textures/particles/flare_01.png",
+          "sha256": "sha256:7ec33b6648f555b958eee8b3c799d44e76ff0e7516a06525d37911e208373d5b",
+          "bytes": 39143
+        },
+        {
+          "path": "assets/textures/particles/light_01.png",
+          "sha256": "sha256:e15db5a8ccea012f4df82689f1a829bdaac04fd8a3066a723f157e0b01ffbf0a",
+          "bytes": 86592
+        },
+        {
+          "path": "assets/textures/particles/light_03.png",
+          "sha256": "sha256:4e5ebf85c0b9b76336037330f6f6003aec0bfba4c266aba4e24f5876c0bd1d96",
+          "bytes": 94243
+        },
+        {
+          "path": "assets/textures/particles/magic_02.png",
+          "sha256": "sha256:8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece",
+          "bytes": 82611
+        },
+        {
+          "path": "assets/textures/particles/magic_05.png",
+          "sha256": "sha256:4df1710412939410a65b60133d4f54abe47d446eaecb9bbdf4528f0060faa63d",
+          "bytes": 69579
+        },
+        {
+          "path": "assets/textures/particles/muzzle_02.png",
+          "sha256": "sha256:8bc460888f4be1b263b1857cc167422a92da7f60454948666dc954772be47c56",
+          "bytes": 53879
+        },
+        {
+          "path": "assets/textures/particles/scorch_02.png",
+          "sha256": "sha256:7408707eb3cd1aacb86bd008a99696b71df21df233227002bb9ba6ddc6b4da02",
+          "bytes": 70510
+        },
+        {
+          "path": "assets/textures/particles/smoke_04.png",
+          "sha256": "sha256:be2579db131de274567e0e1b5a2e81f9790205f0e68a3c1a038d130a7b24e092",
+          "bytes": 92360
+        },
+        {
+          "path": "assets/textures/particles/smoke_05.png",
+          "sha256": "sha256:4c6607566fba4cb3e949f56ed0c38d49fddba844b29e8ec94d5fda20be1a8b01",
+          "bytes": 79571
+        },
+        {
+          "path": "assets/textures/particles/spark_05_rotated.png",
+          "sha256": "sha256:66967779ea341f982308e180b873c293c042e49d99d1597c7fef8c7841822e79",
+          "bytes": 52038
+        },
+        {
+          "path": "assets/textures/particles/star_08.png",
+          "sha256": "sha256:806b774dd9f70752dae2c221754b586e303f7b51f7ccbae890a70f286702d302",
+          "bytes": 25445
+        },
+        {
+          "path": "assets/textures/particles/star_09.png",
+          "sha256": "sha256:e6c58db1ca5ce4f7cec95c95f9ad60f07664ef32cfa21601da77679bd271496b",
+          "bytes": 47732
+        },
+        {
+          "path": "assets/textures/particles/trace_03.png",
+          "sha256": "sha256:0a08ccc56dcb937636d59cb4b747535f99b7a3a72d828ee2c8b3622900537574",
+          "bytes": 39767
+        },
+        {
+          "path": "assets/textures/particles/twirl_01.png",
+          "sha256": "sha256:a7031a2250cb2b98ef20ba049940fd7e8f4b4c4ee82000547ea12dd7445c9981",
+          "bytes": 47461
+        },
+        {
+          "path": "authoring/ability-templates/hero-template.086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c.json",
+          "sha256": "sha256:28e45ced2b921c84c79acbc6769e172f123dd7d7d8b406e6da355eeaacd728cf",
+          "bytes": 590
+        },
+        {
+          "path": "authoring/ability-templates/hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71.json",
+          "sha256": "sha256:c48bb325671065372356cd151d6a67d0e9c4708c57d483aa999d37496161f98e",
+          "bytes": 1512
+        },
+        {
+          "path": "authoring/ability-templates/hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c.json",
+          "sha256": "sha256:3564b6a4aa6e8ba56515a3e021d366443236e05e20c89a4267a82774cd521c26",
+          "bytes": 2254
+        },
+        {
+          "path": "authoring/ability-templates/hero-template.fc256a57c55a0705dbb6660316bfeb64402f80fa154f0933.json",
+          "sha256": "sha256:74fd2b044b264a38d49d4a6a913c85381e74439eaff75d6042fd57f0e490a12b",
+          "bytes": 1351
+        },
+        {
+          "path": "authoring/ability-templates/tpl-locust-orb.json",
+          "sha256": "sha256:1f6f98c673eaaba0cbf62ed332ab863bc5ced58cda94c5e99202ee55c32b9bca",
+          "bytes": 6837
+        },
+        {
+          "path": "authoring/config/aoe-tiers.json",
+          "sha256": "sha256:5f4b138cc6e944c77d4f1f963ec173f9d0c92f2cce5254200320c5d8aae64637",
+          "bytes": 1087
+        },
+        {
+          "path": "authoring/config/ap-coefficient.json",
+          "sha256": "sha256:33bb88afbeafd80ad81e0fdc5f266f6b1369972435793672594766ca7dc0665e",
+          "bytes": 1971
+        },
+        {
+          "path": "authoring/config/arena-rules.json",
+          "sha256": "sha256:c7f43d8468d3654f312395cad1f221fae27f75f69aeab4153a4b7d87ddb65ab7",
+          "bytes": 6539
+        },
+        {
+          "path": "authoring/config/audio-map.json",
+          "sha256": "sha256:53f5d3149cc25abd8471a8ce8de15cf96af0de3ed8fc3b9b2abcc31e8f2f3929",
+          "bytes": 29771
+        },
+        {
+          "path": "authoring/config/camera.json",
+          "sha256": "sha256:16038f879da40e82812c1f0e4fddc8b221a50abbda389b178b301598c4f3e271",
+          "bytes": 1526
+        },
+        {
+          "path": "authoring/config/cast-time-tiers.json",
+          "sha256": "sha256:d8473dae1ef5b3e75de0b329f0572459003f793b33ae420cab0386469f9f52ba",
+          "bytes": 563
+        },
+        {
+          "path": "authoring/config/combo-strikes.json",
+          "sha256": "sha256:12c42556d5c80f8ff2c912a3479a4f168bb256366f7656815d7d77e4e0c47463",
+          "bytes": 23245
+        },
+        {
+          "path": "authoring/config/cooldown-tiers.json",
+          "sha256": "sha256:46868e5860aec88cf16ec2a11d50f831c7b1178ed019deb7da169662b47865e5",
+          "bytes": 1193
+        },
+        {
+          "path": "authoring/config/damage-tiers.json",
+          "sha256": "sha256:c24538adce9ffe04c714b5ec5a8902d6fe9c61eb02d25b8035ca015f67bc6923",
+          "bytes": 3296
+        },
+        {
+          "path": "authoring/config/displacement-tiers.json",
+          "sha256": "sha256:b3e44fc40e2626cd45e683cd265d805f54f2fcdab3251494ef316b1573824fdb",
+          "bytes": 2656
+        },
+        {
+          "path": "authoring/config/feel-fx.json",
+          "sha256": "sha256:58709dd24f79779abb32423630dbbb97de1378456f34961a0f35e34a2d01621f",
+          "bytes": 1767
+        },
+        {
+          "path": "authoring/config/mana-tiers.json",
+          "sha256": "sha256:0995909cf6928edf526fbf30a2138e90d5827d6a7df277d76484319c5ba61bb4",
+          "bytes": 901
+        },
+        {
+          "path": "authoring/config/model-lod.json",
+          "sha256": "sha256:27d4d83780b4df0fd19018c748a519baa33c14c9189cb9902d45df6dacfcc8ed",
+          "bytes": 988
+        },
+        {
+          "path": "authoring/config/move-speed-tiers.json",
+          "sha256": "sha256:28475b952c342218b351853cd1a26750eb76ccf80fcd4bb7aea6dc4221bb4634",
+          "bytes": 2774
+        },
+        {
+          "path": "authoring/config/range-tiers.json",
+          "sha256": "sha256:d87cdbcfecf44c6167c6540fd28cc12b8f9e46d6dfd0e0e92959dc35b780ce09",
+          "bytes": 734
+        },
+        {
+          "path": "authoring/config/rank-growth.json",
+          "sha256": "sha256:e77c1d0733209a71160330f41bcddf1c53da805e777dce24a639b0bf81a1af63",
+          "bytes": 1003
+        },
+        {
+          "path": "authoring/config/screen-fx.json",
+          "sha256": "sha256:ac0473f75637af860c366af87fd239d79a719b5ed010c4ec15bcf7b700dae833",
+          "bytes": 2708
+        },
+        {
+          "path": "authoring/config/speed-growth-tiers.json",
+          "sha256": "sha256:44d5928e9d17d4407789545243e155b7c7a43e75560e8f7d49cf25c3bcd7de01",
+          "bytes": 2293
+        },
+        {
+          "path": "authoring/config/stat-normalization.json",
+          "sha256": "sha256:2c83473621e7c81b24f2a31ceb6afd97fa05519daa948ff70861f77b1cc26261",
+          "bytes": 15426
+        },
+        {
+          "path": "authoring/config/ui-cues.json",
+          "sha256": "sha256:34cfac8f35f1670dc231506203840d03f6d4b4fb43e465eb4690131ea9507608",
+          "bytes": 3199
+        },
+        {
+          "path": "authoring/config/vfx-budget.json",
+          "sha256": "sha256:9e928e600a2a9904dc4f4a192027c6a80def98c349a8db976d2e531ce3256924",
+          "bytes": 475
+        },
+        {
+          "path": "authoring/config/vfx-cleanup.json",
+          "sha256": "sha256:589690f20e305e321b9d4a579b097c077c166a1959f69e34fc263055ddb91fb7",
+          "bytes": 13192
+        },
+        {
+          "path": "authoring/config/vfx-scripts.json",
+          "sha256": "sha256:1b951b2a6090b71d249b8c408ce19894319d63c519054b42d895331a4b4461db",
+          "bytes": 588
+        },
+        {
+          "path": "authoring/config/weather.json",
+          "sha256": "sha256:61a63dbd8665efe0441b7e7a69852a93dff486f8ec83788c4bf6d5e50dbcd7f7",
+          "bytes": 911
+        },
+        {
+          "path": "authoring/hero-projects/community-review-19-20260907.json",
+          "sha256": "sha256:6b12fa228871256e28dcfb0b28c3daba8d41db46b65b7c19223a52d4b4bb5800",
+          "bytes": 26117
+        },
+        {
+          "path": "authoring/items/book-of-gospel.json",
+          "sha256": "sha256:32d3a9e32e3e28a418781c3ea8154147410af2efe07a81d7acf156e5fbc7a85c",
+          "bytes": 8584
+        },
+        {
+          "path": "authoring/items/bulwark-charge-greaves.json",
+          "sha256": "sha256:aacc547975e5e40417f79d3f8820863c6f911d77059aa9f8987da7d1c8d71f71",
+          "bytes": 2870
+        },
+        {
+          "path": "authoring/items/cleaver-of-the-warden.json",
+          "sha256": "sha256:c4c259f49c2fb57ea297d24d0cabec5b33f46cd2466c087f7c8e6d832444bb4d",
+          "bytes": 2879
+        },
+        {
+          "path": "authoring/items/collar-of-the-deadly-soul.json",
+          "sha256": "sha256:9d068fbae83d4f2e627a9942a9490a0dd8926e0678889d3a3de39d85fd77f7c7",
+          "bytes": 4825
+        },
+        {
+          "path": "authoring/items/endless-edge.json",
+          "sha256": "sha256:6de4f4ff280afb7fe2843dd93c52c341e4f7057748ff54e27e2951fb94bb3475",
+          "bytes": 2630
+        },
+        {
+          "path": "authoring/items/fingerless-gloves.json",
+          "sha256": "sha256:5e3d8754c99d14eeec08e2e6842e39f234c8e058529b58006ead6124f3cc64a4",
+          "bytes": 5412
+        },
+        {
+          "path": "authoring/items/godie-i000.json",
+          "sha256": "sha256:b1a257ca5f55da5c3ad149be651fa683eecae3d7a7e150e3200c015450fef0fa",
+          "bytes": 3331
+        },
+        {
+          "path": "authoring/items/godie-i004.json",
+          "sha256": "sha256:a26297f77d90dfefc9191aba919f36f55596130246809bf69df02d3ef409e4a7",
+          "bytes": 1970
+        },
+        {
+          "path": "authoring/items/godie-i006.json",
+          "sha256": "sha256:4df095995e131cd8e4fddfddec10d7d39ddb98b7bb7894646e10f4613cfb0887",
+          "bytes": 2634
+        },
+        {
+          "path": "authoring/items/godie-i007.json",
+          "sha256": "sha256:10749604410acde04c98f53ef892b06a505f63cd585bb5c59701c622a5af7a29",
+          "bytes": 3734
+        },
+        {
+          "path": "authoring/items/godie-i00f.json",
+          "sha256": "sha256:ee4af163426f0aebec37f35a176f59d4dff78960607521395eaedb3f41a0a425",
+          "bytes": 3240
+        },
+        {
+          "path": "authoring/items/godie-i00i.json",
+          "sha256": "sha256:d11bc04d6ea039ad1c475c53e3aed178b8caaa0226a4ce273052719bdea15e3b",
+          "bytes": 2977
+        },
+        {
+          "path": "authoring/items/godie-i00j.json",
+          "sha256": "sha256:d8d3c957d57be711ef63e35237d8cfbd2945771a6e8b48b1bac62465646048eb",
+          "bytes": 3927
+        },
+        {
+          "path": "authoring/items/godie-i00l.json",
+          "sha256": "sha256:8402e026a2aeeb6f6dc97a7415c9d2e71fb94c619f88827bb57233ad5a47f737",
+          "bytes": 1808
+        },
+        {
+          "path": "authoring/items/godie-i00s.json",
+          "sha256": "sha256:caa39d69a8b900ebe658d00429de6dbeb9171c34ac56beea3f29e7aa758527b1",
+          "bytes": 4129
+        },
+        {
+          "path": "authoring/items/godie-i00u.json",
+          "sha256": "sha256:1e1b012a7b791922991e3037134d35c3e4b36645fbcd5a018af9247c17abcc2d",
+          "bytes": 2869
+        },
+        {
+          "path": "authoring/items/godie-i00z.json",
+          "sha256": "sha256:a163e363507dae3b2659abe8b5c7271eebd5dd3940b15fa20fec3f83a146e933",
+          "bytes": 2634
+        },
+        {
+          "path": "authoring/items/godie-i012.json",
+          "sha256": "sha256:d8aaaf45961cdd2ec73c4835fa07839b320bdd5114c4d13abb9e535f8a912f80",
+          "bytes": 4286
+        },
+        {
+          "path": "authoring/items/godie-i013.json",
+          "sha256": "sha256:842f86e82d21b5a609c7a8cf5326c5dce88dcd198a7c24331914b4a88a72ed78",
+          "bytes": 3139
+        },
+        {
+          "path": "authoring/items/godie-i014.json",
+          "sha256": "sha256:0330d52977191b7fb17f29037d30db11fa381223fb81ea732f01ad1054a6f860",
+          "bytes": 2448
+        },
+        {
+          "path": "authoring/items/godie-i016.json",
+          "sha256": "sha256:398b830884c1e19051657f46a5d5075cf2f398386a887aab087f2d344f10d872",
+          "bytes": 5123
+        },
+        {
+          "path": "authoring/items/godie-i018.json",
+          "sha256": "sha256:23e15bfc4ef2b123c09750233bed8ffd2c8a622c67427385ff33f4f1a1e78342",
+          "bytes": 4449
+        },
+        {
+          "path": "authoring/items/godie-i01d.json",
+          "sha256": "sha256:c4277699c8d6cd9517fffd6d95803cbd1913a49428a9e2698f0761300480a100",
+          "bytes": 4367
+        },
+        {
+          "path": "authoring/items/godie-i01g.json",
+          "sha256": "sha256:887bce4034eb9de9c860f03fc8478d45dbaee31290bf08fe3ec8953d31e1b06d",
+          "bytes": 4349
+        },
+        {
+          "path": "authoring/items/godie-i01i.json",
+          "sha256": "sha256:ba29839e597976d0fa60d79adf38ef05f6b499b65ecb54913551b0caa9095163",
+          "bytes": 4430
+        },
+        {
+          "path": "authoring/items/godie-i01n.json",
+          "sha256": "sha256:e0af0515d7aadf4b8681da639b2def0ef5d15ee82b24b6ed4bfa3ecd8c37c671",
+          "bytes": 4299
+        },
+        {
+          "path": "authoring/items/godie-i01s.json",
+          "sha256": "sha256:09d0a1179ee52aee88ac0546fa44541002effe927ab3d0cffac8ec17d6f615cd",
+          "bytes": 4050
+        },
+        {
+          "path": "authoring/items/godie-i01v.json",
+          "sha256": "sha256:4f93d37ff1dd5f65e66ab4181a8c8e7b14ac76ad7f6e6e3668adf9c46e506e5a",
+          "bytes": 3865
+        },
+        {
+          "path": "authoring/items/godie-i01w.json",
+          "sha256": "sha256:89986ecbbbf172cf1ea6f87d8d3a488341f9756f62c59f49b6aaaf90e9ac1bc7",
+          "bytes": 4346
+        },
+        {
+          "path": "authoring/items/godie-i020.json",
+          "sha256": "sha256:b0ba737229e78cde066cb2244d4560c5bdbbc1652185ccd3193b6b5f0582630f",
+          "bytes": 2620
+        },
+        {
+          "path": "authoring/items/godie-i027.json",
+          "sha256": "sha256:ae2433735aa386fcf7053d5d2fcde111c0b6bdf4c911ab78a3956e79b4d0eb8b",
+          "bytes": 4551
+        },
+        {
+          "path": "authoring/items/godie-i02d.json",
+          "sha256": "sha256:8a52a27cdb40b44bc4c6bab439701172ed72593c15f731028b19380912eb12c0",
+          "bytes": 3699
+        },
+        {
+          "path": "authoring/items/godie-i02e.json",
+          "sha256": "sha256:1828472f8c67671b718ca6b352ebe2f10905b7680d801dd2ccc3741d52822421",
+          "bytes": 2589
+        },
+        {
+          "path": "authoring/items/godie-i031.json",
+          "sha256": "sha256:b5181c6c7bd9a75881afcb71909e754d5fdf0a3f94582efa200f6d7341b70ac9",
+          "bytes": 3434
+        },
+        {
+          "path": "authoring/items/godie-i039.json",
+          "sha256": "sha256:f4dfc5707828d90352a82cbb9910e119cd4803da580bc2eee08be6496be43044",
+          "bytes": 3432
+        },
+        {
+          "path": "authoring/items/godie-i03f.json",
+          "sha256": "sha256:e9e7d71f6ec2bc26315077efe1ddeb5aae48332870535c724668eb0fd405b32f",
+          "bytes": 2404
+        },
+        {
+          "path": "authoring/items/godie-i03h.json",
+          "sha256": "sha256:33d560a577e34c2493ea22bdcea8c7f3ffea2e27f6324e36ac6e1f2b0da2e6fa",
+          "bytes": 3706
+        },
+        {
+          "path": "authoring/items/godie-i03m.json",
+          "sha256": "sha256:57f35d235cee76816fe8d0296ee95e6c80a35ca44df575f24b5d0a4c80b266f0",
+          "bytes": 1788
+        },
+        {
+          "path": "authoring/items/godie-i04d.json",
+          "sha256": "sha256:24258e0fc6c22625f9f136acda3214449d3838710289792f31d82b9a640a39c3",
+          "bytes": 3420
+        },
+        {
+          "path": "authoring/items/godie-i060.json",
+          "sha256": "sha256:d3efe9d2c00c7b22b6c854fcf6c121c5886a181f964cafe7855a31debcec5edd",
+          "bytes": 4362
+        },
+        {
+          "path": "authoring/items/godie-i061.json",
+          "sha256": "sha256:e48c743a5526a612ec3a0692924718e3117394944dad7a9aab45cb6439a523d1",
+          "bytes": 3623
+        },
+        {
+          "path": "authoring/items/godie-i067.json",
+          "sha256": "sha256:058f43ac852e0fa2056854526abeb487f268d265a7c63b1c8ad33c46163abfdf",
+          "bytes": 4564
+        },
+        {
+          "path": "authoring/items/godie-i06a.json",
+          "sha256": "sha256:219da272a62bd04b8509c4108d36d7344c851a2edc68e76785126ee6f97f3844",
+          "bytes": 3014
+        },
+        {
+          "path": "authoring/items/godie-i06d.json",
+          "sha256": "sha256:d2f80205be3fcba935010ea597830690844552ce91ab5da66bdfb481eb8abdad",
+          "bytes": 2365
+        },
+        {
+          "path": "authoring/items/godie-i06e.json",
+          "sha256": "sha256:8bb7629b2d3e37f0b0c431922f3b5bb463660091a9ab9e76f9a89414d3cf5bd3",
+          "bytes": 4209
+        },
+        {
+          "path": "authoring/items/godie-i06f.json",
+          "sha256": "sha256:db88d7e7c82c382575c5a32e988e5d432a70e04b5215e32a08e33d6303380241",
+          "bytes": 2411
+        },
+        {
+          "path": "authoring/items/godie-i06g.json",
+          "sha256": "sha256:b4de4e8236e7909392e70907e63256fa5e11bf3a3685803954fc6cb377b60693",
+          "bytes": 4532
+        },
+        {
+          "path": "authoring/items/godie-i06i.json",
+          "sha256": "sha256:6bf1869b359e2f5ce7541bca314d4ec8c977a4fe16fefe295cd688749171b264",
+          "bytes": 4314
+        },
+        {
+          "path": "authoring/items/godie-i06j.json",
+          "sha256": "sha256:8ad5e5b8c21b64b12dc41ac979709f5c8776fa9aa8d154473ccc7444ad2d3586",
+          "bytes": 2603
+        },
+        {
+          "path": "authoring/items/godie-i06n.json",
+          "sha256": "sha256:274f68f77e8ad09f7f9fed6278f8a656ed5606be5c653c1667fec1b430359d41",
+          "bytes": 2226
+        },
+        {
+          "path": "authoring/items/godie-i06o.json",
+          "sha256": "sha256:55c3f2b787819ea9b47978165b33bfd19bfc7f9bbcec43a8b0fd89fb224fa478",
+          "bytes": 3075
+        },
+        {
+          "path": "authoring/items/godie-i06q.json",
+          "sha256": "sha256:16c8e2033d8217114b6e8f17b62174deaa78ac82e566c432ebaabf8d6761500b",
+          "bytes": 4037
+        },
+        {
+          "path": "authoring/items/gravity-sword-black-rod.json",
+          "sha256": "sha256:2053f0b90024234899537e2c859c42bea90bf72ba911b43d96b7aeba0437637b",
+          "bytes": 4283
+        },
+        {
+          "path": "authoring/items/lance-kongotetsu.json",
+          "sha256": "sha256:6f8f4956f7e138f731b6903436961ad54eca8b0c933c1c91aa12c3cf624e3bff",
+          "bytes": 4310
+        },
+        {
+          "path": "authoring/items/magic-armor-type-zero.json",
+          "sha256": "sha256:3a536af77e7420a1c059c20598a81b52606f27b30ba80ed890a63294262ee3d0",
+          "bytes": 4544
+        },
+        {
+          "path": "authoring/items/meat-cleaver.json",
+          "sha256": "sha256:765f6409cf99b91bfa6061c3332beb6d524e0d376f3c6b04b8db6d1e21551e15",
+          "bytes": 4759
+        },
+        {
+          "path": "authoring/items/meteor-ring.json",
+          "sha256": "sha256:9d18c1bfe4cc8d2040436edc150e52719a1692597ffd371bbac035168ed6bf3c",
+          "bytes": 7647
+        },
+        {
+          "path": "authoring/items/mystery-scrap-of-paper.json",
+          "sha256": "sha256:5af688d9f681b8a695488e4f11c60060cc7e9ae83f7fa7459e59bbc6b6d548ba",
+          "bytes": 3687
+        },
+        {
+          "path": "authoring/items/odm-gear.json",
+          "sha256": "sha256:4493978ccac0f71a4bcac8a21a333e34b486dc889eb7e25b6fd7c7e02d67c47c",
+          "bytes": 3289
+        },
+        {
+          "path": "authoring/items/pale-moon-requiem-crown.json",
+          "sha256": "sha256:7211373e52311ddb17a951ad1c678acdde40c671831aae04b04bab4282d01c03",
+          "bytes": 4436
+        },
+        {
+          "path": "authoring/items/shining-golden-orbs.json",
+          "sha256": "sha256:04e4360b0a196c98b398ae4737f80e7f9c9ef75eb30f09ff0a216b5da89a227e",
+          "bytes": 6134
+        },
+        {
+          "path": "authoring/items/soul-eater.json",
+          "sha256": "sha256:bb8c59dea76ed7bf68b0581a49f702345ad019ac7f1cd2c9bb07d977b66db5f1",
+          "bytes": 5126
+        },
+        {
+          "path": "authoring/items/spear-of-lightning.json",
+          "sha256": "sha256:12b2049066bbb49a3e17a8d691d0aa978fa266e9ca8e3adc82bd67678f12a5c4",
+          "bytes": 4644
+        },
+        {
+          "path": "authoring/items/staff-of-ainz-ooal-gown.json",
+          "sha256": "sha256:03140fb9168723801323ed9d5056f1f71b89d1b63a104ba33902c648b1d4fb10",
+          "bytes": 8508
+        },
+        {
+          "path": "authoring/items/stone-mask.json",
+          "sha256": "sha256:a7ca7f56dd2954afa1dd7b1ef6981f82c17352a6ac8e672c0d6d9005d8bb2550",
+          "bytes": 6032
+        },
+        {
+          "path": "authoring/items/teardrop-of-rebirth.json",
+          "sha256": "sha256:fe5aae28f2720d93eb60bfce60943cf5dd7713becb63d96e5c8664ab017fe676",
+          "bytes": 4389
+        },
+        {
+          "path": "authoring/items/torch-master.json",
+          "sha256": "sha256:f4c448064d74c9a9e560d5b56e2200c6b9c140855eab99f50426f32c48125082",
+          "bytes": 3620
+        },
+        {
+          "path": "authoring/items/ultimate-mod-shiranui.json",
+          "sha256": "sha256:94878bcaa2b63144eb211b5163740e09b8d5f4bdd46e22996f33a3b30ee059ab",
+          "bytes": 6474
+        },
+        {
+          "path": "authoring/items/usagizuki-twin-crescents.json",
+          "sha256": "sha256:4285e147f0a91d2bdd54f51c3dbb7fde3b05b5f2dcb99fac35aa3a3ab742161c",
+          "bytes": 5268
+        },
+        {
+          "path": "authoring/loot-tables/ex-release-weapons.json",
+          "sha256": "sha256:520969c67bfdcdbd7f632da099424e23ad930466c6d25843a0d311aa245393a1",
+          "bytes": 2371
+        },
+        {
+          "path": "authoring/loot-tables/legendary-weapons.json",
+          "sha256": "sha256:9bb6885aa606c881c08b550512549dd34c8af96bfa50aedfa898b4933b134bc8",
+          "bytes": 2146
+        },
+        {
+          "path": "authoring/models/community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3.json",
+          "sha256": "sha256:ce8de2a6c1f651aa4e06a5a7fc29c51e4ca55ae9042ba33718ab3f17c03417a2",
+          "bytes": 387
+        },
+        {
+          "path": "authoring/models/w3x.stock.tornadoelemental.json",
+          "sha256": "sha256:4c5184aa5cddc738d1dc934b6ede01e9f546afc0d62bb404faf00b4ba9f69ed0",
+          "bytes": 277
+        },
+        {
+          "path": "authoring/status-effects/armor-break.json",
+          "sha256": "sha256:583810c8d372225efa8ee1e9abe83253ffe8b0d2f211f079ccb36280d7a783ba",
+          "bytes": 451
+        },
+        {
+          "path": "authoring/status-effects/blind.json",
+          "sha256": "sha256:36474925f4bedad5d81ad8047392a9ff51d4074056b8af34c9855ec4bd63d9f6",
+          "bytes": 540
+        },
+        {
+          "path": "authoring/status-effects/burn.json",
+          "sha256": "sha256:36e23118d4c83cb90bf3ab05fd571a937c606c4264bd9e030ea9b73096e28cf5",
+          "bytes": 460
+        },
+        {
+          "path": "authoring/status-effects/confusion.json",
+          "sha256": "sha256:314d149a17878771e5f4c883d0943df8742409883dd9abf7f523b8572e1768e8",
+          "bytes": 406
+        },
+        {
+          "path": "authoring/status-effects/curse.json",
+          "sha256": "sha256:ee0697927abec9365a2c8842cf118e958922f6f4628b9c4f51f6616330c07864",
+          "bytes": 267
+        },
+        {
+          "path": "authoring/status-effects/fang-stun.json",
+          "sha256": "sha256:84afcf29061ef028bcb1346326e7fce9f8cea93f40dbb1c0a7c03c455cd5d419",
+          "bytes": 298
+        },
+        {
+          "path": "authoring/status-effects/fear.json",
+          "sha256": "sha256:560cef434917ba89f16c08b65350ba42b553f598c1fc7a657c37806b80984294",
+          "bytes": 486
+        },
+        {
+          "path": "authoring/status-effects/grievous-wounds.json",
+          "sha256": "sha256:afe1998cf66984f00f7f6de75f7abcc128e53355dd8adbb15abc5f9a577b5f6e",
+          "bytes": 433
+        },
+        {
+          "path": "authoring/status-effects/ingredient.json",
+          "sha256": "sha256:97819ca656b754b413e942aa92045ccc8efce2151e3a2465d414364be628ab6a",
+          "bytes": 297
+        },
+        {
+          "path": "authoring/status-effects/magic-break.json",
+          "sha256": "sha256:b7315d34c3dd76189a9e889c6031c120056f122e6b8afee2329ac6ea93cb4b61",
+          "bytes": 504
+        },
+        {
+          "path": "authoring/status-effects/no-heal.json",
+          "sha256": "sha256:81abd405499e25a7a78f90d4ddfddb68376f92e6788f8a78adf1e2fbbbe85e39",
+          "bytes": 395
+        },
+        {
+          "path": "authoring/status-effects/numbness.json",
+          "sha256": "sha256:40c2562c82aeaa8bbc34593a29ee557a44404ae03c7f8b3cad4eb934da46d5ee",
+          "bytes": 720
+        },
+        {
+          "path": "authoring/status-effects/paralysis.json",
+          "sha256": "sha256:92ac23eff89177fa58f82407297e4402d7a88ffdd8f096aecd4872e7b6ed5522",
+          "bytes": 666
+        },
+        {
+          "path": "authoring/status-effects/root.json",
+          "sha256": "sha256:be09afe3aed8ef1a2fcb01f1bffe569d536caa9f3a6bef035ae7ef83d247909c",
+          "bytes": 172
+        },
+        {
+          "path": "authoring/status-effects/slow30.json",
+          "sha256": "sha256:f99e76ea1ad92439f1f212b44ccb44fc52e9e8f1eaec8a101ac30247abc8f700",
+          "bytes": 208
+        },
+        {
+          "path": "authoring/status-effects/slow40.json",
+          "sha256": "sha256:d5cfebaef43af938abb8fc638a546aadc11a69f31c33189d0c63090ec5add54d",
+          "bytes": 208
+        },
+        {
+          "path": "authoring/status-effects/slow50.json",
+          "sha256": "sha256:b39142bbf3fef6cbe5da9fcbf6429d682603bc3f5d65322f0a5d78065c627e57",
+          "bytes": 208
+        },
+        {
+          "path": "authoring/status-effects/stun.json",
+          "sha256": "sha256:f7a864f72d313727e10082ea4d14fa8909a493eda13d73936666cfafaab3ff2b",
+          "bytes": 550
+        },
+        {
+          "path": "authoring/vfx/fx.prim.blood.spray-back.json",
+          "sha256": "sha256:bdf58a7bd5420a80b1789dd374ef46fad431b0cdb3606a468ab5c61d1c521d71",
+          "bytes": 638
+        },
+        {
+          "path": "compiled/abilities/community-review-19-20260907.e.json",
+          "sha256": "sha256:bb2c1d433fb36f56d44386d55be24c08d81875e8d373308b5279ebd338574a25",
+          "bytes": 1334
+        },
+        {
+          "path": "compiled/abilities/community-review-19-20260907.ex.json",
+          "sha256": "sha256:8c0c8f1e495c13bcd95d9247571e04415e363f8c8e359765e789e077f46b9261",
+          "bytes": 1604
+        },
+        {
+          "path": "compiled/abilities/community-review-19-20260907.passive.json",
+          "sha256": "sha256:57f128886e7e0f2942adab746b260c7ea5368efc9507efac269c171afa753315",
+          "bytes": 1155
+        },
+        {
+          "path": "compiled/abilities/community-review-19-20260907.q.json",
+          "sha256": "sha256:046d01d36af831eecd14c289d52c6569f637458fc73c5f2653776c9153c01e12",
+          "bytes": 1597
+        },
+        {
+          "path": "compiled/abilities/community-review-19-20260907.r.json",
+          "sha256": "sha256:0ef4eda42a855d37f6c7a85fe88367b885f96db5a6820f2fdf34b8757b73ac1f",
+          "bytes": 1686
+        },
+        {
+          "path": "compiled/abilities/community-review-19-20260907.w.json",
+          "sha256": "sha256:bbd1c95340259edefd14e88fb8eb6a94078babe880fa7ed6e02bdc6eb13863db",
+          "bytes": 1345
+        },
+        {
+          "path": "compiled/champions/community-review-19-20260907.json",
+          "sha256": "sha256:5ec36a7bbbf4f364a2fa527cf392db1532dd57a1bba5d486501be14e4e10e0e0",
+          "bytes": 7414
+        },
+        {
+          "path": "compiled/config/aoe-tiers.json",
+          "sha256": "sha256:5f4b138cc6e944c77d4f1f963ec173f9d0c92f2cce5254200320c5d8aae64637",
+          "bytes": 1087
+        },
+        {
+          "path": "compiled/config/ap-coefficient.json",
+          "sha256": "sha256:33bb88afbeafd80ad81e0fdc5f266f6b1369972435793672594766ca7dc0665e",
+          "bytes": 1971
+        },
+        {
+          "path": "compiled/config/arena-rules.json",
+          "sha256": "sha256:c7f43d8468d3654f312395cad1f221fae27f75f69aeab4153a4b7d87ddb65ab7",
+          "bytes": 6539
+        },
+        {
+          "path": "compiled/config/audio-map.json",
+          "sha256": "sha256:53f5d3149cc25abd8471a8ce8de15cf96af0de3ed8fc3b9b2abcc31e8f2f3929",
+          "bytes": 29771
+        },
+        {
+          "path": "compiled/config/camera.json",
+          "sha256": "sha256:16038f879da40e82812c1f0e4fddc8b221a50abbda389b178b301598c4f3e271",
+          "bytes": 1526
+        },
+        {
+          "path": "compiled/config/cast-time-tiers.json",
+          "sha256": "sha256:d8473dae1ef5b3e75de0b329f0572459003f793b33ae420cab0386469f9f52ba",
+          "bytes": 563
+        },
+        {
+          "path": "compiled/config/combo-strikes.json",
+          "sha256": "sha256:12c42556d5c80f8ff2c912a3479a4f168bb256366f7656815d7d77e4e0c47463",
+          "bytes": 23245
+        },
+        {
+          "path": "compiled/config/cooldown-tiers.json",
+          "sha256": "sha256:46868e5860aec88cf16ec2a11d50f831c7b1178ed019deb7da169662b47865e5",
+          "bytes": 1193
+        },
+        {
+          "path": "compiled/config/damage-tiers.json",
+          "sha256": "sha256:c24538adce9ffe04c714b5ec5a8902d6fe9c61eb02d25b8035ca015f67bc6923",
+          "bytes": 3296
+        },
+        {
+          "path": "compiled/config/displacement-tiers.json",
+          "sha256": "sha256:b3e44fc40e2626cd45e683cd265d805f54f2fcdab3251494ef316b1573824fdb",
+          "bytes": 2656
+        },
+        {
+          "path": "compiled/config/feel-fx.json",
+          "sha256": "sha256:58709dd24f79779abb32423630dbbb97de1378456f34961a0f35e34a2d01621f",
+          "bytes": 1767
+        },
+        {
+          "path": "compiled/config/mana-tiers.json",
+          "sha256": "sha256:0995909cf6928edf526fbf30a2138e90d5827d6a7df277d76484319c5ba61bb4",
+          "bytes": 901
+        },
+        {
+          "path": "compiled/config/model-lod.json",
+          "sha256": "sha256:27d4d83780b4df0fd19018c748a519baa33c14c9189cb9902d45df6dacfcc8ed",
+          "bytes": 988
+        },
+        {
+          "path": "compiled/config/move-speed-tiers.json",
+          "sha256": "sha256:28475b952c342218b351853cd1a26750eb76ccf80fcd4bb7aea6dc4221bb4634",
+          "bytes": 2774
+        },
+        {
+          "path": "compiled/config/range-tiers.json",
+          "sha256": "sha256:d87cdbcfecf44c6167c6540fd28cc12b8f9e46d6dfd0e0e92959dc35b780ce09",
+          "bytes": 734
+        },
+        {
+          "path": "compiled/config/rank-growth.json",
+          "sha256": "sha256:e77c1d0733209a71160330f41bcddf1c53da805e777dce24a639b0bf81a1af63",
+          "bytes": 1003
+        },
+        {
+          "path": "compiled/config/screen-fx.json",
+          "sha256": "sha256:ac0473f75637af860c366af87fd239d79a719b5ed010c4ec15bcf7b700dae833",
+          "bytes": 2708
+        },
+        {
+          "path": "compiled/config/speed-growth-tiers.json",
+          "sha256": "sha256:44d5928e9d17d4407789545243e155b7c7a43e75560e8f7d49cf25c3bcd7de01",
+          "bytes": 2293
+        },
+        {
+          "path": "compiled/config/stat-normalization.json",
+          "sha256": "sha256:2c83473621e7c81b24f2a31ceb6afd97fa05519daa948ff70861f77b1cc26261",
+          "bytes": 15426
+        },
+        {
+          "path": "compiled/config/ui-cues.json",
+          "sha256": "sha256:34cfac8f35f1670dc231506203840d03f6d4b4fb43e465eb4690131ea9507608",
+          "bytes": 3199
+        },
+        {
+          "path": "compiled/config/vfx-budget.json",
+          "sha256": "sha256:9e928e600a2a9904dc4f4a192027c6a80def98c349a8db976d2e531ce3256924",
+          "bytes": 475
+        },
+        {
+          "path": "compiled/config/vfx-cleanup.json",
+          "sha256": "sha256:589690f20e305e321b9d4a579b097c077c166a1959f69e34fc263055ddb91fb7",
+          "bytes": 13192
+        },
+        {
+          "path": "compiled/config/vfx-scripts.json",
+          "sha256": "sha256:1b951b2a6090b71d249b8c408ce19894319d63c519054b42d895331a4b4461db",
+          "bytes": 588
+        },
+        {
+          "path": "compiled/config/weather.json",
+          "sha256": "sha256:61a63dbd8665efe0441b7e7a69852a93dff486f8ec83788c4bf6d5e50dbcd7f7",
+          "bytes": 911
+        },
+        {
+          "path": "compiled/items/book-of-gospel.json",
+          "sha256": "sha256:32d3a9e32e3e28a418781c3ea8154147410af2efe07a81d7acf156e5fbc7a85c",
+          "bytes": 8584
+        },
+        {
+          "path": "compiled/items/bulwark-charge-greaves.json",
+          "sha256": "sha256:aacc547975e5e40417f79d3f8820863c6f911d77059aa9f8987da7d1c8d71f71",
+          "bytes": 2870
+        },
+        {
+          "path": "compiled/items/cleaver-of-the-warden.json",
+          "sha256": "sha256:c4c259f49c2fb57ea297d24d0cabec5b33f46cd2466c087f7c8e6d832444bb4d",
+          "bytes": 2879
+        },
+        {
+          "path": "compiled/items/collar-of-the-deadly-soul.json",
+          "sha256": "sha256:9d068fbae83d4f2e627a9942a9490a0dd8926e0678889d3a3de39d85fd77f7c7",
+          "bytes": 4825
+        },
+        {
+          "path": "compiled/items/endless-edge.json",
+          "sha256": "sha256:6de4f4ff280afb7fe2843dd93c52c341e4f7057748ff54e27e2951fb94bb3475",
+          "bytes": 2630
+        },
+        {
+          "path": "compiled/items/fingerless-gloves.json",
+          "sha256": "sha256:5e3d8754c99d14eeec08e2e6842e39f234c8e058529b58006ead6124f3cc64a4",
+          "bytes": 5412
+        },
+        {
+          "path": "compiled/items/godie-i000.json",
+          "sha256": "sha256:b1a257ca5f55da5c3ad149be651fa683eecae3d7a7e150e3200c015450fef0fa",
+          "bytes": 3331
+        },
+        {
+          "path": "compiled/items/godie-i004.json",
+          "sha256": "sha256:a26297f77d90dfefc9191aba919f36f55596130246809bf69df02d3ef409e4a7",
+          "bytes": 1970
+        },
+        {
+          "path": "compiled/items/godie-i006.json",
+          "sha256": "sha256:4df095995e131cd8e4fddfddec10d7d39ddb98b7bb7894646e10f4613cfb0887",
+          "bytes": 2634
+        },
+        {
+          "path": "compiled/items/godie-i007.json",
+          "sha256": "sha256:10749604410acde04c98f53ef892b06a505f63cd585bb5c59701c622a5af7a29",
+          "bytes": 3734
+        },
+        {
+          "path": "compiled/items/godie-i00f.json",
+          "sha256": "sha256:ee4af163426f0aebec37f35a176f59d4dff78960607521395eaedb3f41a0a425",
+          "bytes": 3240
+        },
+        {
+          "path": "compiled/items/godie-i00i.json",
+          "sha256": "sha256:d11bc04d6ea039ad1c475c53e3aed178b8caaa0226a4ce273052719bdea15e3b",
+          "bytes": 2977
+        },
+        {
+          "path": "compiled/items/godie-i00j.json",
+          "sha256": "sha256:d8d3c957d57be711ef63e35237d8cfbd2945771a6e8b48b1bac62465646048eb",
+          "bytes": 3927
+        },
+        {
+          "path": "compiled/items/godie-i00l.json",
+          "sha256": "sha256:8402e026a2aeeb6f6dc97a7415c9d2e71fb94c619f88827bb57233ad5a47f737",
+          "bytes": 1808
+        },
+        {
+          "path": "compiled/items/godie-i00s.json",
+          "sha256": "sha256:7bea1fa16bcbbd83c7856e2f27134889a83fdeebcee1086f58f9fc6b319f996f",
+          "bytes": 4141
+        },
+        {
+          "path": "compiled/items/godie-i00u.json",
+          "sha256": "sha256:1e1b012a7b791922991e3037134d35c3e4b36645fbcd5a018af9247c17abcc2d",
+          "bytes": 2869
+        },
+        {
+          "path": "compiled/items/godie-i00z.json",
+          "sha256": "sha256:a163e363507dae3b2659abe8b5c7271eebd5dd3940b15fa20fec3f83a146e933",
+          "bytes": 2634
+        },
+        {
+          "path": "compiled/items/godie-i012.json",
+          "sha256": "sha256:d8aaaf45961cdd2ec73c4835fa07839b320bdd5114c4d13abb9e535f8a912f80",
+          "bytes": 4286
+        },
+        {
+          "path": "compiled/items/godie-i013.json",
+          "sha256": "sha256:842f86e82d21b5a609c7a8cf5326c5dce88dcd198a7c24331914b4a88a72ed78",
+          "bytes": 3139
+        },
+        {
+          "path": "compiled/items/godie-i014.json",
+          "sha256": "sha256:3349d56aa9fd7627bfc9459562eeb118a0e761a01df09cbe1a273554d58203a8",
+          "bytes": 2460
+        },
+        {
+          "path": "compiled/items/godie-i016.json",
+          "sha256": "sha256:398b830884c1e19051657f46a5d5075cf2f398386a887aab087f2d344f10d872",
+          "bytes": 5123
+        },
+        {
+          "path": "compiled/items/godie-i018.json",
+          "sha256": "sha256:23e15bfc4ef2b123c09750233bed8ffd2c8a622c67427385ff33f4f1a1e78342",
+          "bytes": 4449
+        },
+        {
+          "path": "compiled/items/godie-i01d.json",
+          "sha256": "sha256:c4277699c8d6cd9517fffd6d95803cbd1913a49428a9e2698f0761300480a100",
+          "bytes": 4367
+        },
+        {
+          "path": "compiled/items/godie-i01g.json",
+          "sha256": "sha256:887bce4034eb9de9c860f03fc8478d45dbaee31290bf08fe3ec8953d31e1b06d",
+          "bytes": 4349
+        },
+        {
+          "path": "compiled/items/godie-i01i.json",
+          "sha256": "sha256:ba29839e597976d0fa60d79adf38ef05f6b499b65ecb54913551b0caa9095163",
+          "bytes": 4430
+        },
+        {
+          "path": "compiled/items/godie-i01n.json",
+          "sha256": "sha256:e0af0515d7aadf4b8681da639b2def0ef5d15ee82b24b6ed4bfa3ecd8c37c671",
+          "bytes": 4299
+        },
+        {
+          "path": "compiled/items/godie-i01s.json",
+          "sha256": "sha256:09d0a1179ee52aee88ac0546fa44541002effe927ab3d0cffac8ec17d6f615cd",
+          "bytes": 4050
+        },
+        {
+          "path": "compiled/items/godie-i01v.json",
+          "sha256": "sha256:c15d56d4a23f2e26913b0c437aff10ddab236d1f9d3af033c616935e35210bbf",
+          "bytes": 3927
+        },
+        {
+          "path": "compiled/items/godie-i01w.json",
+          "sha256": "sha256:89986ecbbbf172cf1ea6f87d8d3a488341f9756f62c59f49b6aaaf90e9ac1bc7",
+          "bytes": 4346
+        },
+        {
+          "path": "compiled/items/godie-i020.json",
+          "sha256": "sha256:b0ba737229e78cde066cb2244d4560c5bdbbc1652185ccd3193b6b5f0582630f",
+          "bytes": 2620
+        },
+        {
+          "path": "compiled/items/godie-i027.json",
+          "sha256": "sha256:ae2433735aa386fcf7053d5d2fcde111c0b6bdf4c911ab78a3956e79b4d0eb8b",
+          "bytes": 4551
+        },
+        {
+          "path": "compiled/items/godie-i02d.json",
+          "sha256": "sha256:8a52a27cdb40b44bc4c6bab439701172ed72593c15f731028b19380912eb12c0",
+          "bytes": 3699
+        },
+        {
+          "path": "compiled/items/godie-i02e.json",
+          "sha256": "sha256:1828472f8c67671b718ca6b352ebe2f10905b7680d801dd2ccc3741d52822421",
+          "bytes": 2589
+        },
+        {
+          "path": "compiled/items/godie-i031.json",
+          "sha256": "sha256:b5181c6c7bd9a75881afcb71909e754d5fdf0a3f94582efa200f6d7341b70ac9",
+          "bytes": 3434
+        },
+        {
+          "path": "compiled/items/godie-i039.json",
+          "sha256": "sha256:f4dfc5707828d90352a82cbb9910e119cd4803da580bc2eee08be6496be43044",
+          "bytes": 3432
+        },
+        {
+          "path": "compiled/items/godie-i03f.json",
+          "sha256": "sha256:e9e7d71f6ec2bc26315077efe1ddeb5aae48332870535c724668eb0fd405b32f",
+          "bytes": 2404
+        },
+        {
+          "path": "compiled/items/godie-i03h.json",
+          "sha256": "sha256:33d560a577e34c2493ea22bdcea8c7f3ffea2e27f6324e36ac6e1f2b0da2e6fa",
+          "bytes": 3706
+        },
+        {
+          "path": "compiled/items/godie-i03m.json",
+          "sha256": "sha256:57f35d235cee76816fe8d0296ee95e6c80a35ca44df575f24b5d0a4c80b266f0",
+          "bytes": 1788
+        },
+        {
+          "path": "compiled/items/godie-i04d.json",
+          "sha256": "sha256:24258e0fc6c22625f9f136acda3214449d3838710289792f31d82b9a640a39c3",
+          "bytes": 3420
+        },
+        {
+          "path": "compiled/items/godie-i060.json",
+          "sha256": "sha256:d3efe9d2c00c7b22b6c854fcf6c121c5886a181f964cafe7855a31debcec5edd",
+          "bytes": 4362
+        },
+        {
+          "path": "compiled/items/godie-i061.json",
+          "sha256": "sha256:e48c743a5526a612ec3a0692924718e3117394944dad7a9aab45cb6439a523d1",
+          "bytes": 3623
+        },
+        {
+          "path": "compiled/items/godie-i067.json",
+          "sha256": "sha256:058f43ac852e0fa2056854526abeb487f268d265a7c63b1c8ad33c46163abfdf",
+          "bytes": 4564
+        },
+        {
+          "path": "compiled/items/godie-i06a.json",
+          "sha256": "sha256:219da272a62bd04b8509c4108d36d7344c851a2edc68e76785126ee6f97f3844",
+          "bytes": 3014
+        },
+        {
+          "path": "compiled/items/godie-i06d.json",
+          "sha256": "sha256:d2f80205be3fcba935010ea597830690844552ce91ab5da66bdfb481eb8abdad",
+          "bytes": 2365
+        },
+        {
+          "path": "compiled/items/godie-i06e.json",
+          "sha256": "sha256:8bb7629b2d3e37f0b0c431922f3b5bb463660091a9ab9e76f9a89414d3cf5bd3",
+          "bytes": 4209
+        },
+        {
+          "path": "compiled/items/godie-i06f.json",
+          "sha256": "sha256:db88d7e7c82c382575c5a32e988e5d432a70e04b5215e32a08e33d6303380241",
+          "bytes": 2411
+        },
+        {
+          "path": "compiled/items/godie-i06g.json",
+          "sha256": "sha256:b4de4e8236e7909392e70907e63256fa5e11bf3a3685803954fc6cb377b60693",
+          "bytes": 4532
+        },
+        {
+          "path": "compiled/items/godie-i06i.json",
+          "sha256": "sha256:6bf1869b359e2f5ce7541bca314d4ec8c977a4fe16fefe295cd688749171b264",
+          "bytes": 4314
+        },
+        {
+          "path": "compiled/items/godie-i06j.json",
+          "sha256": "sha256:8ad5e5b8c21b64b12dc41ac979709f5c8776fa9aa8d154473ccc7444ad2d3586",
+          "bytes": 2603
+        },
+        {
+          "path": "compiled/items/godie-i06n.json",
+          "sha256": "sha256:274f68f77e8ad09f7f9fed6278f8a656ed5606be5c653c1667fec1b430359d41",
+          "bytes": 2226
+        },
+        {
+          "path": "compiled/items/godie-i06o.json",
+          "sha256": "sha256:55c3f2b787819ea9b47978165b33bfd19bfc7f9bbcec43a8b0fd89fb224fa478",
+          "bytes": 3075
+        },
+        {
+          "path": "compiled/items/godie-i06q.json",
+          "sha256": "sha256:16c8e2033d8217114b6e8f17b62174deaa78ac82e566c432ebaabf8d6761500b",
+          "bytes": 4037
+        },
+        {
+          "path": "compiled/items/gravity-sword-black-rod.json",
+          "sha256": "sha256:2053f0b90024234899537e2c859c42bea90bf72ba911b43d96b7aeba0437637b",
+          "bytes": 4283
+        },
+        {
+          "path": "compiled/items/lance-kongotetsu.json",
+          "sha256": "sha256:6f8f4956f7e138f731b6903436961ad54eca8b0c933c1c91aa12c3cf624e3bff",
+          "bytes": 4310
+        },
+        {
+          "path": "compiled/items/magic-armor-type-zero.json",
+          "sha256": "sha256:3a536af77e7420a1c059c20598a81b52606f27b30ba80ed890a63294262ee3d0",
+          "bytes": 4544
+        },
+        {
+          "path": "compiled/items/meat-cleaver.json",
+          "sha256": "sha256:765f6409cf99b91bfa6061c3332beb6d524e0d376f3c6b04b8db6d1e21551e15",
+          "bytes": 4759
+        },
+        {
+          "path": "compiled/items/meteor-ring.json",
+          "sha256": "sha256:9d18c1bfe4cc8d2040436edc150e52719a1692597ffd371bbac035168ed6bf3c",
+          "bytes": 7647
+        },
+        {
+          "path": "compiled/items/mystery-scrap-of-paper.json",
+          "sha256": "sha256:5af688d9f681b8a695488e4f11c60060cc7e9ae83f7fa7459e59bbc6b6d548ba",
+          "bytes": 3687
+        },
+        {
+          "path": "compiled/items/odm-gear.json",
+          "sha256": "sha256:5f25869f64e72856009f6aac345845674acd7343dfb5c26aefbfbb8a64aee340",
+          "bytes": 3301
+        },
+        {
+          "path": "compiled/items/pale-moon-requiem-crown.json",
+          "sha256": "sha256:7211373e52311ddb17a951ad1c678acdde40c671831aae04b04bab4282d01c03",
+          "bytes": 4436
+        },
+        {
+          "path": "compiled/items/shining-golden-orbs.json",
+          "sha256": "sha256:ccf4eb4c8ac9634c9639a13913f65ccb3a2cda99a82ec1a6ee3368fc590702bc",
+          "bytes": 6158
+        },
+        {
+          "path": "compiled/items/soul-eater.json",
+          "sha256": "sha256:bb8c59dea76ed7bf68b0581a49f702345ad019ac7f1cd2c9bb07d977b66db5f1",
+          "bytes": 5126
+        },
+        {
+          "path": "compiled/items/spear-of-lightning.json",
+          "sha256": "sha256:338ff03d6bdbbd462a107e7fb6650ce4cf77df6f84e32029d0c1751c1066d45a",
+          "bytes": 4648
+        },
+        {
+          "path": "compiled/items/staff-of-ainz-ooal-gown.json",
+          "sha256": "sha256:03140fb9168723801323ed9d5056f1f71b89d1b63a104ba33902c648b1d4fb10",
+          "bytes": 8508
+        },
+        {
+          "path": "compiled/items/stone-mask.json",
+          "sha256": "sha256:9b2baf784cd909161b776106d0862c1fb913faf1c8ba40a01b8f5d4ff421a336",
+          "bytes": 6044
+        },
+        {
+          "path": "compiled/items/teardrop-of-rebirth.json",
+          "sha256": "sha256:35347929218dc4995d7a3d10a6c0a7f25993f1fdc9bad6168e280c1ebdad22cf",
+          "bytes": 4401
+        },
+        {
+          "path": "compiled/items/torch-master.json",
+          "sha256": "sha256:f4c448064d74c9a9e560d5b56e2200c6b9c140855eab99f50426f32c48125082",
+          "bytes": 3620
+        },
+        {
+          "path": "compiled/items/ultimate-mod-shiranui.json",
+          "sha256": "sha256:94878bcaa2b63144eb211b5163740e09b8d5f4bdd46e22996f33a3b30ee059ab",
+          "bytes": 6474
+        },
+        {
+          "path": "compiled/items/usagizuki-twin-crescents.json",
+          "sha256": "sha256:4285e147f0a91d2bdd54f51c3dbb7fde3b05b5f2dcb99fac35aa3a3ab742161c",
+          "bytes": 5268
+        },
+        {
+          "path": "compiled/loot-tables/ex-release-weapons.json",
+          "sha256": "sha256:520969c67bfdcdbd7f632da099424e23ad930466c6d25843a0d311aa245393a1",
+          "bytes": 2371
+        },
+        {
+          "path": "compiled/loot-tables/legendary-weapons.json",
+          "sha256": "sha256:9bb6885aa606c881c08b550512549dd34c8af96bfa50aedfa898b4933b134bc8",
+          "bytes": 2146
+        },
+        {
+          "path": "compiled/models/community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3.json",
+          "sha256": "sha256:ce8de2a6c1f651aa4e06a5a7fc29c51e4ca55ae9042ba33718ab3f17c03417a2",
+          "bytes": 387
+        },
+        {
+          "path": "compiled/models/w3x.stock.tornadoelemental.json",
+          "sha256": "sha256:4c5184aa5cddc738d1dc934b6ede01e9f546afc0d62bb404faf00b4ba9f69ed0",
+          "bytes": 277
+        },
+        {
+          "path": "compiled/status-effects/armor-break.json",
+          "sha256": "sha256:583810c8d372225efa8ee1e9abe83253ffe8b0d2f211f079ccb36280d7a783ba",
+          "bytes": 451
+        },
+        {
+          "path": "compiled/status-effects/blind.json",
+          "sha256": "sha256:36474925f4bedad5d81ad8047392a9ff51d4074056b8af34c9855ec4bd63d9f6",
+          "bytes": 540
+        },
+        {
+          "path": "compiled/status-effects/burn.json",
+          "sha256": "sha256:36e23118d4c83cb90bf3ab05fd571a937c606c4264bd9e030ea9b73096e28cf5",
+          "bytes": 460
+        },
+        {
+          "path": "compiled/status-effects/confusion.json",
+          "sha256": "sha256:314d149a17878771e5f4c883d0943df8742409883dd9abf7f523b8572e1768e8",
+          "bytes": 406
+        },
+        {
+          "path": "compiled/status-effects/curse.json",
+          "sha256": "sha256:ee0697927abec9365a2c8842cf118e958922f6f4628b9c4f51f6616330c07864",
+          "bytes": 267
+        },
+        {
+          "path": "compiled/status-effects/fang-stun.json",
+          "sha256": "sha256:84afcf29061ef028bcb1346326e7fce9f8cea93f40dbb1c0a7c03c455cd5d419",
+          "bytes": 298
+        },
+        {
+          "path": "compiled/status-effects/fear.json",
+          "sha256": "sha256:560cef434917ba89f16c08b65350ba42b553f598c1fc7a657c37806b80984294",
+          "bytes": 486
+        },
+        {
+          "path": "compiled/status-effects/grievous-wounds.json",
+          "sha256": "sha256:afe1998cf66984f00f7f6de75f7abcc128e53355dd8adbb15abc5f9a577b5f6e",
+          "bytes": 433
+        },
+        {
+          "path": "compiled/status-effects/ingredient.json",
+          "sha256": "sha256:97819ca656b754b413e942aa92045ccc8efce2151e3a2465d414364be628ab6a",
+          "bytes": 297
+        },
+        {
+          "path": "compiled/status-effects/magic-break.json",
+          "sha256": "sha256:b7315d34c3dd76189a9e889c6031c120056f122e6b8afee2329ac6ea93cb4b61",
+          "bytes": 504
+        },
+        {
+          "path": "compiled/status-effects/no-heal.json",
+          "sha256": "sha256:81abd405499e25a7a78f90d4ddfddb68376f92e6788f8a78adf1e2fbbbe85e39",
+          "bytes": 395
+        },
+        {
+          "path": "compiled/status-effects/numbness.json",
+          "sha256": "sha256:40c2562c82aeaa8bbc34593a29ee557a44404ae03c7f8b3cad4eb934da46d5ee",
+          "bytes": 720
+        },
+        {
+          "path": "compiled/status-effects/paralysis.json",
+          "sha256": "sha256:92ac23eff89177fa58f82407297e4402d7a88ffdd8f096aecd4872e7b6ed5522",
+          "bytes": 666
+        },
+        {
+          "path": "compiled/status-effects/root.json",
+          "sha256": "sha256:be09afe3aed8ef1a2fcb01f1bffe569d536caa9f3a6bef035ae7ef83d247909c",
+          "bytes": 172
+        },
+        {
+          "path": "compiled/status-effects/slow30.json",
+          "sha256": "sha256:f99e76ea1ad92439f1f212b44ccb44fc52e9e8f1eaec8a101ac30247abc8f700",
+          "bytes": 208
+        },
+        {
+          "path": "compiled/status-effects/slow40.json",
+          "sha256": "sha256:d5cfebaef43af938abb8fc638a546aadc11a69f31c33189d0c63090ec5add54d",
+          "bytes": 208
+        },
+        {
+          "path": "compiled/status-effects/slow50.json",
+          "sha256": "sha256:b39142bbf3fef6cbe5da9fcbf6429d682603bc3f5d65322f0a5d78065c627e57",
+          "bytes": 208
+        },
+        {
+          "path": "compiled/status-effects/stun.json",
+          "sha256": "sha256:f7a864f72d313727e10082ea4d14fa8909a493eda13d73936666cfafaab3ff2b",
+          "bytes": 550
+        },
+        {
+          "path": "compiled/vfx-scripts/community-review-19-20260907.e.json",
+          "sha256": "sha256:b788c7f7933eca083ae65de8238835da5a689cce1254e05c4fa8977ad58ac0e3",
+          "bytes": 520
+        },
+        {
+          "path": "compiled/vfx-scripts/community-review-19-20260907.ex.json",
+          "sha256": "sha256:2ca164eae52ee42f87117ebf203b13459ed1dd0e30de42c134202b9e9fb8127c",
+          "bytes": 681
+        },
+        {
+          "path": "compiled/vfx-scripts/community-review-19-20260907.q.json",
+          "sha256": "sha256:19f024486abd5f09e0a5dcf9f603d1ff6e72e0ff1370a98d3b351c501845557a",
+          "bytes": 678
+        },
+        {
+          "path": "compiled/vfx-scripts/community-review-19-20260907.r.json",
+          "sha256": "sha256:9dc74dd1993e80f8a891dad7b7c61de633e0ec90e80eb0dcc77ec1559ad4f504",
+          "bytes": 679
+        },
+        {
+          "path": "compiled/vfx-scripts/community-review-19-20260907.w.json",
+          "sha256": "sha256:6919dafa79f28e70aa454f12e26c54907040f5f29ba17753eca43b736896bf07",
+          "bytes": 521
+        },
+        {
+          "path": "compiled/vfx/fx.prim.blood.spray-back.json",
+          "sha256": "sha256:bdf58a7bd5420a80b1789dd374ef46fad431b0cdb3606a468ab5c61d1c521d71",
+          "bytes": 638
+        },
+        {
+          "path": "manifest.json",
+          "sha256": "sha256:7f0906ad644c3552dd9f5ef606850123f4e74869f3c986dee2533e2b202a79cc",
+          "bytes": 134985
+        },
+        {
+          "path": "validation/hero-build-provenance.json",
+          "sha256": "sha256:629f8e567eb55cd81040291df8a4ec6e147f52d0e92823efeaf931a68cd7d1f8",
+          "bytes": 361
+        },
+        {
+          "path": "validation/hero-simulation.json",
+          "sha256": "sha256:d45348f3df7d981d0d0121618d4a9dc0c70f990db0046bbdd381f983ca591e66",
+          "bytes": 131544
+        }
+      ]
+    },
+    "decisionId": "hero-review-01M211K534XA22T969PKMWMTH1",
+    "publishedAt": "2026-09-08T17:38:35.635627Z",
+    "operationId": "0685b964-78ca-4dc7-87da-1766c670f602"
+  },
+  "reviews": {
+    "hero-8c5a791936bdcbb61460ba6d02fb0fa7444718d87010931dc8fa8d323e4": {
+      "id": "hero-review-01M211K534XA22T969PKMWMTH1",
+      "status": "approved",
+      "digest": "sha256:c6eed6e3b91431a9285361f7a8ec9dc656b7ec561a678bace905c3c60f20c155"
+    }
+  },
+  "operations": {
+    "0685b964-78ca-4dc7-87da-1766c670f602": {
+      "id": "0685b964-78ca-4dc7-87da-1766c670f602",
+      "action": "publish",
+      "inputDigest": "sha256:15835ae953b025bfd3bbd8fc63417015c9ed0648e27ad06f74256d9825a9eb3e",
+      "submissionId": "hero-8c5a791936bdcbb61460ba6d02fb0fa7444718d87010931dc8fa8d323e4",
+      "status": "published",
+      "expectedPublished": "sha256:eba0139d766b441cebee903df1f80e8fde28cb2edcc4635077eaebd589ce4ad4",
+      "expectedRevision": 1,
+      "guardRevision": 2,
+      "decisionId": "hero-review-01M211K534XA22T969PKMWMTH1",
+      "reason": "隔離流程驗收：本次服務版本重新編譯、六槽模擬及原文／微調／模型位元組比對通過。沿用既有角色視覺收據；代理外觀與替代效果仍依原標記保留，不宣稱原作設計或正式站已交付。",
+      "requestedBy": "01M210NXCFYD4PEQHQ4DEMFT8G",
+      "completedAt": "2026-09-08T17:38:35.635627Z"
+    }
+  },
+  "history": [
+    {
+      "submissionId": "hero-8c5a791936bdcbb61460ba6d02fb0fa7444718d87010931dc8fa8d323e4",
+      "version": {
+        "schema": "ggd-work-version@1",
+        "workId": "community-review-19-20260907",
+        "versionId": "sha256:d1a2507d43dfd6cb67b43a35f38dd82ab7b5e1a9794a81d93742364cc46b33be",
+        "projectId": "community-review-19-20260907",
+        "packageDigest": "sha256:d1a2507d43dfd6cb67b43a35f38dd82ab7b5e1a9794a81d93742364cc46b33be",
+        "snapshotDigest": "sha256:c1cd95eca2bba3e6c6afd8151f83dcdc73ffeb0d44caa063c69d91effc98e978",
+        "files": [
+          {
+            "path": "assets/audio/wc3/blademasterwhirlwind.wav",
+            "sha256": "sha256:e9149cafa4e2101c1b51152d7d7b48f0aa0c6f8a7c08a7b6ab197a6d01eabf80",
+            "bytes": 37432
+          },
+          {
+            "path": "assets/icons/abilities/thorne.e.webp",
+            "sha256": "sha256:06c56be469894eebd7b75968b362c506fede035f74cde1b56f93a35f9012e7a3",
+            "bytes": 8514
+          },
+          {
+            "path": "assets/icons/abilities/thorne.q.webp",
+            "sha256": "sha256:f19a7aeb84c06968be0361afad87d7da4ad10f8c46f0d96c5a1f0d0167f1092a",
+            "bytes": 6812
+          },
+          {
+            "path": "assets/icons/abilities/thorne.r.webp",
+            "sha256": "sha256:6f515844d9d4e55b543e9a7eb95203fac0d5e7e48b7c6c3b6d7189f6ab706046",
+            "bytes": 6200
+          },
+          {
+            "path": "assets/icons/abilities/thorne.w.webp",
+            "sha256": "sha256:08d3a3912f3820e3e748b4def85ca097fd0ef0bc78d7a5d18b05ea16c728639e",
+            "bytes": 4740
+          },
+          {
+            "path": "assets/icons/champions/thorne.webp",
+            "sha256": "sha256:7675c079fda2ad5e9a3e02252f139a1e88ec28165280e4ca0a517cb58c6474cf",
+            "bytes": 8308
+          },
+          {
+            "path": "assets/icons/items/book-of-gospel.webp",
+            "sha256": "sha256:6709d502ac0e654fb994cfa9d9e23fc4aef94cf78fa235868c66087b57722822",
+            "bytes": 7116
+          },
+          {
+            "path": "assets/icons/items/bulwark-charge-greaves.webp",
+            "sha256": "sha256:3a92fb0678edba8d6285bb4a05badb7309a382107de2d400ade7a68d7e878397",
+            "bytes": 3384
+          },
+          {
+            "path": "assets/icons/items/cleaver-of-the-warden.webp",
+            "sha256": "sha256:8c58a9332520c230f368fd7a28781a6f91f5c18c0865d95d8ac92b54fa53a7d7",
+            "bytes": 4058
+          },
+          {
+            "path": "assets/icons/items/collar-of-the-deadly-soul.webp",
+            "sha256": "sha256:cce7222b0936f70647df8cd9872df7577b31b82edc39dc891b15af0429dd7f71",
+            "bytes": 4440
+          },
+          {
+            "path": "assets/icons/items/endless-edge.png",
+            "sha256": "sha256:6ba1d2e49afd5de3d2340b9951350f3ed3f5fba069e6dc19ab89297d92685b12",
+            "bytes": 6143
+          },
+          {
+            "path": "assets/icons/items/fingerless-gloves.webp",
+            "sha256": "sha256:b47264854c6cad93c04d2e6ef2813acca4a16c5161205454260cdc26e19fa3ce",
+            "bytes": 4416
+          },
+          {
+            "path": "assets/icons/items/godie-i000.webp",
+            "sha256": "sha256:f0773b6e3967b64b4f60f883996ab4ef710baf3c8b181e2595e68271d5f4c646",
+            "bytes": 4218
+          },
+          {
+            "path": "assets/icons/items/godie-i004.webp",
+            "sha256": "sha256:1b841781ddfa7f9c8d77aeb212c44ba7a4f4e137042fa632111b9395a873b8b0",
+            "bytes": 4172
+          },
+          {
+            "path": "assets/icons/items/godie-i006.webp",
+            "sha256": "sha256:12c4585858f276f647d77ebba7de630a9ac1b30b893613ff1efcf8a1404a0ecf",
+            "bytes": 3854
+          },
+          {
+            "path": "assets/icons/items/godie-i007.webp",
+            "sha256": "sha256:53c768516aec56f0e332ac733a4eb39929c0a946a39f6f950ab25878e83ff84e",
+            "bytes": 4902
+          },
+          {
+            "path": "assets/icons/items/godie-i00f.webp",
+            "sha256": "sha256:ddcb459d5c3bf0d9ae0bfa2f649bdc25c0aad86a5789ef764b29851b6f85b76d",
+            "bytes": 3462
+          },
+          {
+            "path": "assets/icons/items/godie-i00i.webp",
+            "sha256": "sha256:346c251d293a11a4111693472dba451a7ff040c43f0a364f4778a4bb873824ac",
+            "bytes": 7134
+          },
+          {
+            "path": "assets/icons/items/godie-i00j.webp",
+            "sha256": "sha256:ab3d6ae11a64fdba3163addf8d9fef41c5fb4f3e43a237cf30c275f83bb1b0bd",
+            "bytes": 3176
+          },
+          {
+            "path": "assets/icons/items/godie-i00l.webp",
+            "sha256": "sha256:0dc0278ba2120211245c02a7162b3a59279f355b82634ffc722ff331cdd35ef9",
+            "bytes": 4388
+          },
+          {
+            "path": "assets/icons/items/godie-i00s.webp",
+            "sha256": "sha256:39480ff2d9708b34d00381e246887af967f7518a4f7552638711b8d86df5435e",
+            "bytes": 5138
+          },
+          {
+            "path": "assets/icons/items/godie-i00u.webp",
+            "sha256": "sha256:2cc0a56d17b5568575d184de1b5c353d5a38dcbcf729b50877d8991d804b40dd",
+            "bytes": 2782
+          },
+          {
+            "path": "assets/icons/items/godie-i00z.webp",
+            "sha256": "sha256:c8da6ebec3594422284b60f9d2129f81837833e447fe6bf55875d9d85553b497",
+            "bytes": 3404
+          },
+          {
+            "path": "assets/icons/items/godie-i012.webp",
+            "sha256": "sha256:68bf6eba629564f8e5f34d967d8b64be1c12ed295641344e689e919978fd6b65",
+            "bytes": 2062
+          },
+          {
+            "path": "assets/icons/items/godie-i013.webp",
+            "sha256": "sha256:37ed2f675f9da5b09e75c25fd41353a40742f9d50c803a31bae638eeb057f225",
+            "bytes": 5426
+          },
+          {
+            "path": "assets/icons/items/godie-i014.webp",
+            "sha256": "sha256:203e44c8ffe3a5d1fab9e3740842dc98e08c3dc0f78064675c14b9f67beced9b",
+            "bytes": 4196
+          },
+          {
+            "path": "assets/icons/items/godie-i016.webp",
+            "sha256": "sha256:d54ce7ba4e203003c05aa080b795cac78723144570fe642ff917c8a5835e0679",
+            "bytes": 2510
+          },
+          {
+            "path": "assets/icons/items/godie-i018.webp",
+            "sha256": "sha256:af43efcb4e9ab7497fe1f708057bfc753e81519ee659634ca26a881b853ffb28",
+            "bytes": 3540
+          },
+          {
+            "path": "assets/icons/items/godie-i01d.webp",
+            "sha256": "sha256:e0f5d9b2a16c71b37b657d2566f21be44844ec8b020e14a7b5c5bfbb84fb9c8e",
+            "bytes": 5298
+          },
+          {
+            "path": "assets/icons/items/godie-i01g.webp",
+            "sha256": "sha256:01dbff9ffa20fc27f3623bb0932153492183393da003b0bb98294d8e7ff47326",
+            "bytes": 1760
+          },
+          {
+            "path": "assets/icons/items/godie-i01i.webp",
+            "sha256": "sha256:23db843cc1a563cd5cb7e7ddbb37ec5e8efe0ede985cb1cd72f067cb72724632",
+            "bytes": 5234
+          },
+          {
+            "path": "assets/icons/items/godie-i01n.webp",
+            "sha256": "sha256:6d960d49f869d0fb57d077a54b78eead3164c620f91a98fa45b377933fb43556",
+            "bytes": 2696
+          },
+          {
+            "path": "assets/icons/items/godie-i01s.webp",
+            "sha256": "sha256:269a48ffd8353d0088086d77258f37ef58982868b6054d642e43e051716c8ec0",
+            "bytes": 4764
+          },
+          {
+            "path": "assets/icons/items/godie-i01v.webp",
+            "sha256": "sha256:ea4e2f5f9bddccf956751561a2453186f913b50884ee56c458605421f7f21841",
+            "bytes": 3960
+          },
+          {
+            "path": "assets/icons/items/godie-i01w.webp",
+            "sha256": "sha256:e102833c4119f31323964ed1d12520c70e19481ee1d1b1884c4339e916f4355c",
+            "bytes": 3154
+          },
+          {
+            "path": "assets/icons/items/godie-i020.webp",
+            "sha256": "sha256:dc2a04305cc7d0d5c1653b8f3947cee91220221528fcdf0eef9a5606a8cf387f",
+            "bytes": 3288
+          },
+          {
+            "path": "assets/icons/items/godie-i027.webp",
+            "sha256": "sha256:d79fdec35e398c828d1fb678cd53deef3c4e650ef17be24ec95bdc0a85210d51",
+            "bytes": 1858
+          },
+          {
+            "path": "assets/icons/items/godie-i02d.png",
+            "sha256": "sha256:08643015f4fc80e3c5ba6689f3241d8b9be19274b2ab9afb3fcbb3c10f2c48ab",
+            "bytes": 11021
+          },
+          {
+            "path": "assets/icons/items/godie-i02e.webp",
+            "sha256": "sha256:6487e6134c8a99ca5315fbd2e22ea6e12aeb5808b580357b8008db4c4b2a73e3",
+            "bytes": 2970
+          },
+          {
+            "path": "assets/icons/items/godie-i031.webp",
+            "sha256": "sha256:ce05fba120c0b30fa0f03bacc56c94ab463e6a4d38fc1c61c5d5388ae5591fdc",
+            "bytes": 3170
+          },
+          {
+            "path": "assets/icons/items/godie-i039.webp",
+            "sha256": "sha256:116812a1276ffe2847edfbb81541d2c8cb0bcee97ab48b0bac1fe62c84155f48",
+            "bytes": 5766
+          },
+          {
+            "path": "assets/icons/items/godie-i03f.webp",
+            "sha256": "sha256:90471b88fe5f21a9a1c88a2c17b795380545f162950dee9813cd0c286effde19",
+            "bytes": 2714
+          },
+          {
+            "path": "assets/icons/items/godie-i03h.webp",
+            "sha256": "sha256:0ae9046599028c5a77352411407115f87c2f1dc17ec7d8a1af8aa6538caa3d9b",
+            "bytes": 3246
+          },
+          {
+            "path": "assets/icons/items/godie-i03m.webp",
+            "sha256": "sha256:5ba081492cca917e42c2e4e0e7d4dca413f0e77cbb1ac268fe827e39b97f9858",
+            "bytes": 3496
+          },
+          {
+            "path": "assets/icons/items/godie-i04d.png",
+            "sha256": "sha256:6d2e73978cbbe8c3aed37d7c5a2b7843328ba6a29bac9a6f0e4b01aad6bda661",
+            "bytes": 10972
+          },
+          {
+            "path": "assets/icons/items/godie-i060.webp",
+            "sha256": "sha256:e65065e6c233a2bbb657de66056fc6c56730faf8b5bc6b08339a1136ac55306a",
+            "bytes": 9346
+          },
+          {
+            "path": "assets/icons/items/godie-i061.webp",
+            "sha256": "sha256:fbc29a4a2e65af85b8cfcbddffd486ac73f289d93b165df06721eac1a3ccbbb4",
+            "bytes": 3540
+          },
+          {
+            "path": "assets/icons/items/godie-i067.webp",
+            "sha256": "sha256:cfc51854331eafeb76c506a947a47ef6fc2b23f0d31f26ceab651629ab4b2afe",
+            "bytes": 7876
+          },
+          {
+            "path": "assets/icons/items/godie-i06a.webp",
+            "sha256": "sha256:527fe87f44cf7a8006f6fa7c27a4167afb1569d1bb4662f97fcea87568ec537d",
+            "bytes": 3092
+          },
+          {
+            "path": "assets/icons/items/godie-i06d.png",
+            "sha256": "sha256:1becb4c55266320c99ab1c975a1b6c0fc7f81421159bd25dae16be9e44b65f56",
+            "bytes": 6453
+          },
+          {
+            "path": "assets/icons/items/godie-i06e.webp",
+            "sha256": "sha256:d49c66dc1fe178dd7f900e0061b5241ebf5b9123fb796dc4ee99bbdffb4dbe62",
+            "bytes": 5374
+          },
+          {
+            "path": "assets/icons/items/godie-i06f.webp",
+            "sha256": "sha256:4ef7f431a50a4cfeffbbe73523c190168d4d1bd57183bfdfea4f473fe56bd98e",
+            "bytes": 2442
+          },
+          {
+            "path": "assets/icons/items/godie-i06g.webp",
+            "sha256": "sha256:4bd3ac7266632c8661827f57bc2969765d8ce64200d98523c6800100bb3930ec",
+            "bytes": 3890
+          },
+          {
+            "path": "assets/icons/items/godie-i06i.webp",
+            "sha256": "sha256:ff7127b8b243a6074404ca55c9ff7a93f0d6c2f221000e77b0390e1ad441d3e2",
+            "bytes": 4890
+          },
+          {
+            "path": "assets/icons/items/godie-i06j.webp",
+            "sha256": "sha256:9633f3e4c44cc7ed591a34825cf8692052f65f8f8f0e0bb48c5bd118ef48e302",
+            "bytes": 2110
+          },
+          {
+            "path": "assets/icons/items/godie-i06n.webp",
+            "sha256": "sha256:69747ca10e37bb0e7696a5204030ceb54a829b06cfa1dc94ead8e51d7656da11",
+            "bytes": 5478
+          },
+          {
+            "path": "assets/icons/items/godie-i06o.webp",
+            "sha256": "sha256:2d5891053cc338cd27e3139a42446b01e11d3e0314139f7e429a7c840366536e",
+            "bytes": 4138
+          },
+          {
+            "path": "assets/icons/items/godie-i06q.webp",
+            "sha256": "sha256:0df2085f09bcf3668b0d934da9b9b1648a30a492035d9ac047e1ed4012e3219c",
+            "bytes": 3042
+          },
+          {
+            "path": "assets/icons/items/gravity-sword-black-rod.webp",
+            "sha256": "sha256:6c24abd9e5c77f6578fdf8fac192121cc2ca8c7cad4797fa084f3e0bd9eec5fb",
+            "bytes": 4818
+          },
+          {
+            "path": "assets/icons/items/lance-kongotetsu.webp",
+            "sha256": "sha256:37b0fb7a84e1b6e9ac4536116c926453a64fa13d6ec9cc78b575490153793809",
+            "bytes": 2622
+          },
+          {
+            "path": "assets/icons/items/magic-armor-type-zero.webp",
+            "sha256": "sha256:3f439bcde0a1a1e4248ebe2fb17205d2ca3e80edd50cd13e3d7ed7ca482556f1",
+            "bytes": 6774
+          },
+          {
+            "path": "assets/icons/items/meat-cleaver.webp",
+            "sha256": "sha256:6562d7a555059604b66e98a55df467c2a0f9c2f92a0827ab7a82c27321462091",
+            "bytes": 4162
+          },
+          {
+            "path": "assets/icons/items/meteor-ring.webp",
+            "sha256": "sha256:32296a3a94e6cc8d679307b7a34d1f167b85a176476fe88798e0ae30a132e001",
+            "bytes": 4356
+          },
+          {
+            "path": "assets/icons/items/mystery-scrap-of-paper.webp",
+            "sha256": "sha256:357c487acc5474e4ed9551322d01037beae3a967e10f252fa4d123c0b9e1721f",
+            "bytes": 6886
+          },
+          {
+            "path": "assets/icons/items/odm-gear.webp",
+            "sha256": "sha256:fccf9c6338e24e675ac0d619d72730b260b05f13e33442d3d5ca4a1864b6a48c",
+            "bytes": 6364
+          },
+          {
+            "path": "assets/icons/items/pale-moon-requiem-crown.webp",
+            "sha256": "sha256:1f09f8ac1ecdbbff914761417494268b2371067a489364ef9636436876e31984",
+            "bytes": 6314
+          },
+          {
+            "path": "assets/icons/items/shining-golden-orbs.webp",
+            "sha256": "sha256:c6ffc0d8fbea393714b71cd01051f8d015185fde93c4f98648d01c286735b71d",
+            "bytes": 4512
+          },
+          {
+            "path": "assets/icons/items/soul-eater.webp",
+            "sha256": "sha256:1ea68086c0d921ca433d8e59d29bd2c3f46534890440f5662aa184cf0a19dda0",
+            "bytes": 3724
+          },
+          {
+            "path": "assets/icons/items/spear-of-lightning.webp",
+            "sha256": "sha256:8211aeeed597d4c20b98170bb42f4a901a4073ec1a4ebbb601f9b62e4ed9e527",
+            "bytes": 7976
+          },
+          {
+            "path": "assets/icons/items/staff-of-ainz-ooal-gown.webp",
+            "sha256": "sha256:de7bcca31a23b925ed81cb8e6922889ea8f410b07f49411e9faf5254fc6539b4",
+            "bytes": 4362
+          },
+          {
+            "path": "assets/icons/items/stone-mask.webp",
+            "sha256": "sha256:9495104e1ef0fa789d7a0c6b00d46701536db550a7cab07bb5336d76f6b707f0",
+            "bytes": 3878
+          },
+          {
+            "path": "assets/icons/items/teardrop-of-rebirth.webp",
+            "sha256": "sha256:e4b6861b05e5e29508521b9d4b50470bd75836d72b3a49baad098cf7801d993c",
+            "bytes": 3250
+          },
+          {
+            "path": "assets/icons/items/torch-master.webp",
+            "sha256": "sha256:06d4afe1fd9f8eda3c4a1194516f7d50c68a5ea1fdd99c5aab0bcbc18e7e313a",
+            "bytes": 2874
+          },
+          {
+            "path": "assets/icons/items/ultimate-mod-shiranui.webp",
+            "sha256": "sha256:36f2876171e2a01e86d741ec3117b0650dffd81853135fec303340598a0e544d",
+            "bytes": 4756
+          },
+          {
+            "path": "assets/icons/items/usagizuki-twin-crescents.webp",
+            "sha256": "sha256:f084fca9664d768a362e0dc555a4e6593e0af3812f2f90062efa8cdc26e1a366",
+            "bytes": 5576
+          },
+          {
+            "path": "assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
+            "sha256": "sha256:b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+            "bytes": 1104488
+          },
+          {
+            "path": "assets/models/imported/tornadoelemental.glb",
+            "sha256": "sha256:720d5ba783e78ec3b7ada2f26078732d8008bc784de310eaa25af02fc6bde3c7",
+            "bytes": 212784
+          },
+          {
+            "path": "assets/textures/decals/crack_01.png",
+            "sha256": "sha256:d6030995065dfc1594234b5bb1daea76baa2d7f409f0d8a8a8101a7fefa2f6a5",
+            "bytes": 30830
+          },
+          {
+            "path": "assets/textures/decals/kickup_01.png",
+            "sha256": "sha256:57af805c03b082e6e32c593bb540e4c416a889d6b903ad95613f150c8a4335d1",
+            "bytes": 21882
+          },
+          {
+            "path": "assets/textures/decals/scorch_01.png",
+            "sha256": "sha256:f9ff974e43c1228a588c9a6d1a6960f1d765decae9d1f915dd066213361a8d15",
+            "bytes": 25938
+          },
+          {
+            "path": "assets/textures/particles/circle_05.png",
+            "sha256": "sha256:616c989de83cd805c80ed78f692c5a4cb754151edbb1d3550f20cc3a2857b706",
+            "bytes": 59553
+          },
+          {
+            "path": "assets/textures/particles/dirt_01.png",
+            "sha256": "sha256:5dc794d1cde78d48b92b538f3fb4eedc47edefb636724df00d9815c15b4dc987",
+            "bytes": 46129
+          },
+          {
+            "path": "assets/textures/particles/dirt_02.png",
+            "sha256": "sha256:ffd9d893775a42fa9d9d471cdd6d6fed15ed6ebf266f227274cd3ffeea7eaf05",
+            "bytes": 52813
+          },
+          {
+            "path": "assets/textures/particles/flare_01.png",
+            "sha256": "sha256:7ec33b6648f555b958eee8b3c799d44e76ff0e7516a06525d37911e208373d5b",
+            "bytes": 39143
+          },
+          {
+            "path": "assets/textures/particles/light_01.png",
+            "sha256": "sha256:e15db5a8ccea012f4df82689f1a829bdaac04fd8a3066a723f157e0b01ffbf0a",
+            "bytes": 86592
+          },
+          {
+            "path": "assets/textures/particles/light_03.png",
+            "sha256": "sha256:4e5ebf85c0b9b76336037330f6f6003aec0bfba4c266aba4e24f5876c0bd1d96",
+            "bytes": 94243
+          },
+          {
+            "path": "assets/textures/particles/magic_02.png",
+            "sha256": "sha256:8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece",
+            "bytes": 82611
+          },
+          {
+            "path": "assets/textures/particles/magic_05.png",
+            "sha256": "sha256:4df1710412939410a65b60133d4f54abe47d446eaecb9bbdf4528f0060faa63d",
+            "bytes": 69579
+          },
+          {
+            "path": "assets/textures/particles/muzzle_02.png",
+            "sha256": "sha256:8bc460888f4be1b263b1857cc167422a92da7f60454948666dc954772be47c56",
+            "bytes": 53879
+          },
+          {
+            "path": "assets/textures/particles/scorch_02.png",
+            "sha256": "sha256:7408707eb3cd1aacb86bd008a99696b71df21df233227002bb9ba6ddc6b4da02",
+            "bytes": 70510
+          },
+          {
+            "path": "assets/textures/particles/smoke_04.png",
+            "sha256": "sha256:be2579db131de274567e0e1b5a2e81f9790205f0e68a3c1a038d130a7b24e092",
+            "bytes": 92360
+          },
+          {
+            "path": "assets/textures/particles/smoke_05.png",
+            "sha256": "sha256:4c6607566fba4cb3e949f56ed0c38d49fddba844b29e8ec94d5fda20be1a8b01",
+            "bytes": 79571
+          },
+          {
+            "path": "assets/textures/particles/spark_05_rotated.png",
+            "sha256": "sha256:66967779ea341f982308e180b873c293c042e49d99d1597c7fef8c7841822e79",
+            "bytes": 52038
+          },
+          {
+            "path": "assets/textures/particles/star_08.png",
+            "sha256": "sha256:806b774dd9f70752dae2c221754b586e303f7b51f7ccbae890a70f286702d302",
+            "bytes": 25445
+          },
+          {
+            "path": "assets/textures/particles/star_09.png",
+            "sha256": "sha256:e6c58db1ca5ce4f7cec95c95f9ad60f07664ef32cfa21601da77679bd271496b",
+            "bytes": 47732
+          },
+          {
+            "path": "assets/textures/particles/trace_03.png",
+            "sha256": "sha256:0a08ccc56dcb937636d59cb4b747535f99b7a3a72d828ee2c8b3622900537574",
+            "bytes": 39767
+          },
+          {
+            "path": "assets/textures/particles/twirl_01.png",
+            "sha256": "sha256:a7031a2250cb2b98ef20ba049940fd7e8f4b4c4ee82000547ea12dd7445c9981",
+            "bytes": 47461
+          },
+          {
+            "path": "authoring/ability-templates/hero-template.086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c.json",
+            "sha256": "sha256:28e45ced2b921c84c79acbc6769e172f123dd7d7d8b406e6da355eeaacd728cf",
+            "bytes": 590
+          },
+          {
+            "path": "authoring/ability-templates/hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71.json",
+            "sha256": "sha256:c48bb325671065372356cd151d6a67d0e9c4708c57d483aa999d37496161f98e",
+            "bytes": 1512
+          },
+          {
+            "path": "authoring/ability-templates/hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c.json",
+            "sha256": "sha256:3564b6a4aa6e8ba56515a3e021d366443236e05e20c89a4267a82774cd521c26",
+            "bytes": 2254
+          },
+          {
+            "path": "authoring/ability-templates/hero-template.fc256a57c55a0705dbb6660316bfeb64402f80fa154f0933.json",
+            "sha256": "sha256:74fd2b044b264a38d49d4a6a913c85381e74439eaff75d6042fd57f0e490a12b",
+            "bytes": 1351
+          },
+          {
+            "path": "authoring/ability-templates/tpl-locust-orb.json",
+            "sha256": "sha256:1f6f98c673eaaba0cbf62ed332ab863bc5ced58cda94c5e99202ee55c32b9bca",
+            "bytes": 6837
+          },
+          {
+            "path": "authoring/config/aoe-tiers.json",
+            "sha256": "sha256:5f4b138cc6e944c77d4f1f963ec173f9d0c92f2cce5254200320c5d8aae64637",
+            "bytes": 1087
+          },
+          {
+            "path": "authoring/config/ap-coefficient.json",
+            "sha256": "sha256:33bb88afbeafd80ad81e0fdc5f266f6b1369972435793672594766ca7dc0665e",
+            "bytes": 1971
+          },
+          {
+            "path": "authoring/config/arena-rules.json",
+            "sha256": "sha256:c7f43d8468d3654f312395cad1f221fae27f75f69aeab4153a4b7d87ddb65ab7",
+            "bytes": 6539
+          },
+          {
+            "path": "authoring/config/audio-map.json",
+            "sha256": "sha256:53f5d3149cc25abd8471a8ce8de15cf96af0de3ed8fc3b9b2abcc31e8f2f3929",
+            "bytes": 29771
+          },
+          {
+            "path": "authoring/config/camera.json",
+            "sha256": "sha256:16038f879da40e82812c1f0e4fddc8b221a50abbda389b178b301598c4f3e271",
+            "bytes": 1526
+          },
+          {
+            "path": "authoring/config/cast-time-tiers.json",
+            "sha256": "sha256:d8473dae1ef5b3e75de0b329f0572459003f793b33ae420cab0386469f9f52ba",
+            "bytes": 563
+          },
+          {
+            "path": "authoring/config/combo-strikes.json",
+            "sha256": "sha256:12c42556d5c80f8ff2c912a3479a4f168bb256366f7656815d7d77e4e0c47463",
+            "bytes": 23245
+          },
+          {
+            "path": "authoring/config/cooldown-tiers.json",
+            "sha256": "sha256:46868e5860aec88cf16ec2a11d50f831c7b1178ed019deb7da169662b47865e5",
+            "bytes": 1193
+          },
+          {
+            "path": "authoring/config/damage-tiers.json",
+            "sha256": "sha256:c24538adce9ffe04c714b5ec5a8902d6fe9c61eb02d25b8035ca015f67bc6923",
+            "bytes": 3296
+          },
+          {
+            "path": "authoring/config/displacement-tiers.json",
+            "sha256": "sha256:b3e44fc40e2626cd45e683cd265d805f54f2fcdab3251494ef316b1573824fdb",
+            "bytes": 2656
+          },
+          {
+            "path": "authoring/config/feel-fx.json",
+            "sha256": "sha256:58709dd24f79779abb32423630dbbb97de1378456f34961a0f35e34a2d01621f",
+            "bytes": 1767
+          },
+          {
+            "path": "authoring/config/mana-tiers.json",
+            "sha256": "sha256:0995909cf6928edf526fbf30a2138e90d5827d6a7df277d76484319c5ba61bb4",
+            "bytes": 901
+          },
+          {
+            "path": "authoring/config/model-lod.json",
+            "sha256": "sha256:27d4d83780b4df0fd19018c748a519baa33c14c9189cb9902d45df6dacfcc8ed",
+            "bytes": 988
+          },
+          {
+            "path": "authoring/config/move-speed-tiers.json",
+            "sha256": "sha256:28475b952c342218b351853cd1a26750eb76ccf80fcd4bb7aea6dc4221bb4634",
+            "bytes": 2774
+          },
+          {
+            "path": "authoring/config/range-tiers.json",
+            "sha256": "sha256:d87cdbcfecf44c6167c6540fd28cc12b8f9e46d6dfd0e0e92959dc35b780ce09",
+            "bytes": 734
+          },
+          {
+            "path": "authoring/config/rank-growth.json",
+            "sha256": "sha256:e77c1d0733209a71160330f41bcddf1c53da805e777dce24a639b0bf81a1af63",
+            "bytes": 1003
+          },
+          {
+            "path": "authoring/config/screen-fx.json",
+            "sha256": "sha256:ac0473f75637af860c366af87fd239d79a719b5ed010c4ec15bcf7b700dae833",
+            "bytes": 2708
+          },
+          {
+            "path": "authoring/config/speed-growth-tiers.json",
+            "sha256": "sha256:44d5928e9d17d4407789545243e155b7c7a43e75560e8f7d49cf25c3bcd7de01",
+            "bytes": 2293
+          },
+          {
+            "path": "authoring/config/stat-normalization.json",
+            "sha256": "sha256:2c83473621e7c81b24f2a31ceb6afd97fa05519daa948ff70861f77b1cc26261",
+            "bytes": 15426
+          },
+          {
+            "path": "authoring/config/ui-cues.json",
+            "sha256": "sha256:34cfac8f35f1670dc231506203840d03f6d4b4fb43e465eb4690131ea9507608",
+            "bytes": 3199
+          },
+          {
+            "path": "authoring/config/vfx-budget.json",
+            "sha256": "sha256:9e928e600a2a9904dc4f4a192027c6a80def98c349a8db976d2e531ce3256924",
+            "bytes": 475
+          },
+          {
+            "path": "authoring/config/vfx-cleanup.json",
+            "sha256": "sha256:589690f20e305e321b9d4a579b097c077c166a1959f69e34fc263055ddb91fb7",
+            "bytes": 13192
+          },
+          {
+            "path": "authoring/config/vfx-scripts.json",
+            "sha256": "sha256:1b951b2a6090b71d249b8c408ce19894319d63c519054b42d895331a4b4461db",
+            "bytes": 588
+          },
+          {
+            "path": "authoring/config/weather.json",
+            "sha256": "sha256:61a63dbd8665efe0441b7e7a69852a93dff486f8ec83788c4bf6d5e50dbcd7f7",
+            "bytes": 911
+          },
+          {
+            "path": "authoring/hero-projects/community-review-19-20260907.json",
+            "sha256": "sha256:6b12fa228871256e28dcfb0b28c3daba8d41db46b65b7c19223a52d4b4bb5800",
+            "bytes": 26117
+          },
+          {
+            "path": "authoring/items/book-of-gospel.json",
+            "sha256": "sha256:32d3a9e32e3e28a418781c3ea8154147410af2efe07a81d7acf156e5fbc7a85c",
+            "bytes": 8584
+          },
+          {
+            "path": "authoring/items/bulwark-charge-greaves.json",
+            "sha256": "sha256:aacc547975e5e40417f79d3f8820863c6f911d77059aa9f8987da7d1c8d71f71",
+            "bytes": 2870
+          },
+          {
+            "path": "authoring/items/cleaver-of-the-warden.json",
+            "sha256": "sha256:c4c259f49c2fb57ea297d24d0cabec5b33f46cd2466c087f7c8e6d832444bb4d",
+            "bytes": 2879
+          },
+          {
+            "path": "authoring/items/collar-of-the-deadly-soul.json",
+            "sha256": "sha256:9d068fbae83d4f2e627a9942a9490a0dd8926e0678889d3a3de39d85fd77f7c7",
+            "bytes": 4825
+          },
+          {
+            "path": "authoring/items/endless-edge.json",
+            "sha256": "sha256:6de4f4ff280afb7fe2843dd93c52c341e4f7057748ff54e27e2951fb94bb3475",
+            "bytes": 2630
+          },
+          {
+            "path": "authoring/items/fingerless-gloves.json",
+            "sha256": "sha256:5e3d8754c99d14eeec08e2e6842e39f234c8e058529b58006ead6124f3cc64a4",
+            "bytes": 5412
+          },
+          {
+            "path": "authoring/items/godie-i000.json",
+            "sha256": "sha256:b1a257ca5f55da5c3ad149be651fa683eecae3d7a7e150e3200c015450fef0fa",
+            "bytes": 3331
+          },
+          {
+            "path": "authoring/items/godie-i004.json",
+            "sha256": "sha256:a26297f77d90dfefc9191aba919f36f55596130246809bf69df02d3ef409e4a7",
+            "bytes": 1970
+          },
+          {
+            "path": "authoring/items/godie-i006.json",
+            "sha256": "sha256:4df095995e131cd8e4fddfddec10d7d39ddb98b7bb7894646e10f4613cfb0887",
+            "bytes": 2634
+          },
+          {
+            "path": "authoring/items/godie-i007.json",
+            "sha256": "sha256:10749604410acde04c98f53ef892b06a505f63cd585bb5c59701c622a5af7a29",
+            "bytes": 3734
+          },
+          {
+            "path": "authoring/items/godie-i00f.json",
+            "sha256": "sha256:ee4af163426f0aebec37f35a176f59d4dff78960607521395eaedb3f41a0a425",
+            "bytes": 3240
+          },
+          {
+            "path": "authoring/items/godie-i00i.json",
+            "sha256": "sha256:d11bc04d6ea039ad1c475c53e3aed178b8caaa0226a4ce273052719bdea15e3b",
+            "bytes": 2977
+          },
+          {
+            "path": "authoring/items/godie-i00j.json",
+            "sha256": "sha256:d8d3c957d57be711ef63e35237d8cfbd2945771a6e8b48b1bac62465646048eb",
+            "bytes": 3927
+          },
+          {
+            "path": "authoring/items/godie-i00l.json",
+            "sha256": "sha256:8402e026a2aeeb6f6dc97a7415c9d2e71fb94c619f88827bb57233ad5a47f737",
+            "bytes": 1808
+          },
+          {
+            "path": "authoring/items/godie-i00s.json",
+            "sha256": "sha256:caa39d69a8b900ebe658d00429de6dbeb9171c34ac56beea3f29e7aa758527b1",
+            "bytes": 4129
+          },
+          {
+            "path": "authoring/items/godie-i00u.json",
+            "sha256": "sha256:1e1b012a7b791922991e3037134d35c3e4b36645fbcd5a018af9247c17abcc2d",
+            "bytes": 2869
+          },
+          {
+            "path": "authoring/items/godie-i00z.json",
+            "sha256": "sha256:a163e363507dae3b2659abe8b5c7271eebd5dd3940b15fa20fec3f83a146e933",
+            "bytes": 2634
+          },
+          {
+            "path": "authoring/items/godie-i012.json",
+            "sha256": "sha256:d8aaaf45961cdd2ec73c4835fa07839b320bdd5114c4d13abb9e535f8a912f80",
+            "bytes": 4286
+          },
+          {
+            "path": "authoring/items/godie-i013.json",
+            "sha256": "sha256:842f86e82d21b5a609c7a8cf5326c5dce88dcd198a7c24331914b4a88a72ed78",
+            "bytes": 3139
+          },
+          {
+            "path": "authoring/items/godie-i014.json",
+            "sha256": "sha256:0330d52977191b7fb17f29037d30db11fa381223fb81ea732f01ad1054a6f860",
+            "bytes": 2448
+          },
+          {
+            "path": "authoring/items/godie-i016.json",
+            "sha256": "sha256:398b830884c1e19051657f46a5d5075cf2f398386a887aab087f2d344f10d872",
+            "bytes": 5123
+          },
+          {
+            "path": "authoring/items/godie-i018.json",
+            "sha256": "sha256:23e15bfc4ef2b123c09750233bed8ffd2c8a622c67427385ff33f4f1a1e78342",
+            "bytes": 4449
+          },
+          {
+            "path": "authoring/items/godie-i01d.json",
+            "sha256": "sha256:c4277699c8d6cd9517fffd6d95803cbd1913a49428a9e2698f0761300480a100",
+            "bytes": 4367
+          },
+          {
+            "path": "authoring/items/godie-i01g.json",
+            "sha256": "sha256:887bce4034eb9de9c860f03fc8478d45dbaee31290bf08fe3ec8953d31e1b06d",
+            "bytes": 4349
+          },
+          {
+            "path": "authoring/items/godie-i01i.json",
+            "sha256": "sha256:ba29839e597976d0fa60d79adf38ef05f6b499b65ecb54913551b0caa9095163",
+            "bytes": 4430
+          },
+          {
+            "path": "authoring/items/godie-i01n.json",
+            "sha256": "sha256:e0af0515d7aadf4b8681da639b2def0ef5d15ee82b24b6ed4bfa3ecd8c37c671",
+            "bytes": 4299
+          },
+          {
+            "path": "authoring/items/godie-i01s.json",
+            "sha256": "sha256:09d0a1179ee52aee88ac0546fa44541002effe927ab3d0cffac8ec17d6f615cd",
+            "bytes": 4050
+          },
+          {
+            "path": "authoring/items/godie-i01v.json",
+            "sha256": "sha256:4f93d37ff1dd5f65e66ab4181a8c8e7b14ac76ad7f6e6e3668adf9c46e506e5a",
+            "bytes": 3865
+          },
+          {
+            "path": "authoring/items/godie-i01w.json",
+            "sha256": "sha256:89986ecbbbf172cf1ea6f87d8d3a488341f9756f62c59f49b6aaaf90e9ac1bc7",
+            "bytes": 4346
+          },
+          {
+            "path": "authoring/items/godie-i020.json",
+            "sha256": "sha256:b0ba737229e78cde066cb2244d4560c5bdbbc1652185ccd3193b6b5f0582630f",
+            "bytes": 2620
+          },
+          {
+            "path": "authoring/items/godie-i027.json",
+            "sha256": "sha256:ae2433735aa386fcf7053d5d2fcde111c0b6bdf4c911ab78a3956e79b4d0eb8b",
+            "bytes": 4551
+          },
+          {
+            "path": "authoring/items/godie-i02d.json",
+            "sha256": "sha256:8a52a27cdb40b44bc4c6bab439701172ed72593c15f731028b19380912eb12c0",
+            "bytes": 3699
+          },
+          {
+            "path": "authoring/items/godie-i02e.json",
+            "sha256": "sha256:1828472f8c67671b718ca6b352ebe2f10905b7680d801dd2ccc3741d52822421",
+            "bytes": 2589
+          },
+          {
+            "path": "authoring/items/godie-i031.json",
+            "sha256": "sha256:b5181c6c7bd9a75881afcb71909e754d5fdf0a3f94582efa200f6d7341b70ac9",
+            "bytes": 3434
+          },
+          {
+            "path": "authoring/items/godie-i039.json",
+            "sha256": "sha256:f4dfc5707828d90352a82cbb9910e119cd4803da580bc2eee08be6496be43044",
+            "bytes": 3432
+          },
+          {
+            "path": "authoring/items/godie-i03f.json",
+            "sha256": "sha256:e9e7d71f6ec2bc26315077efe1ddeb5aae48332870535c724668eb0fd405b32f",
+            "bytes": 2404
+          },
+          {
+            "path": "authoring/items/godie-i03h.json",
+            "sha256": "sha256:33d560a577e34c2493ea22bdcea8c7f3ffea2e27f6324e36ac6e1f2b0da2e6fa",
+            "bytes": 3706
+          },
+          {
+            "path": "authoring/items/godie-i03m.json",
+            "sha256": "sha256:57f35d235cee76816fe8d0296ee95e6c80a35ca44df575f24b5d0a4c80b266f0",
+            "bytes": 1788
+          },
+          {
+            "path": "authoring/items/godie-i04d.json",
+            "sha256": "sha256:24258e0fc6c22625f9f136acda3214449d3838710289792f31d82b9a640a39c3",
+            "bytes": 3420
+          },
+          {
+            "path": "authoring/items/godie-i060.json",
+            "sha256": "sha256:d3efe9d2c00c7b22b6c854fcf6c121c5886a181f964cafe7855a31debcec5edd",
+            "bytes": 4362
+          },
+          {
+            "path": "authoring/items/godie-i061.json",
+            "sha256": "sha256:e48c743a5526a612ec3a0692924718e3117394944dad7a9aab45cb6439a523d1",
+            "bytes": 3623
+          },
+          {
+            "path": "authoring/items/godie-i067.json",
+            "sha256": "sha256:058f43ac852e0fa2056854526abeb487f268d265a7c63b1c8ad33c46163abfdf",
+            "bytes": 4564
+          },
+          {
+            "path": "authoring/items/godie-i06a.json",
+            "sha256": "sha256:219da272a62bd04b8509c4108d36d7344c851a2edc68e76785126ee6f97f3844",
+            "bytes": 3014
+          },
+          {
+            "path": "authoring/items/godie-i06d.json",
+            "sha256": "sha256:d2f80205be3fcba935010ea597830690844552ce91ab5da66bdfb481eb8abdad",
+            "bytes": 2365
+          },
+          {
+            "path": "authoring/items/godie-i06e.json",
+            "sha256": "sha256:8bb7629b2d3e37f0b0c431922f3b5bb463660091a9ab9e76f9a89414d3cf5bd3",
+            "bytes": 4209
+          },
+          {
+            "path": "authoring/items/godie-i06f.json",
+            "sha256": "sha256:db88d7e7c82c382575c5a32e988e5d432a70e04b5215e32a08e33d6303380241",
+            "bytes": 2411
+          },
+          {
+            "path": "authoring/items/godie-i06g.json",
+            "sha256": "sha256:b4de4e8236e7909392e70907e63256fa5e11bf3a3685803954fc6cb377b60693",
+            "bytes": 4532
+          },
+          {
+            "path": "authoring/items/godie-i06i.json",
+            "sha256": "sha256:6bf1869b359e2f5ce7541bca314d4ec8c977a4fe16fefe295cd688749171b264",
+            "bytes": 4314
+          },
+          {
+            "path": "authoring/items/godie-i06j.json",
+            "sha256": "sha256:8ad5e5b8c21b64b12dc41ac979709f5c8776fa9aa8d154473ccc7444ad2d3586",
+            "bytes": 2603
+          },
+          {
+            "path": "authoring/items/godie-i06n.json",
+            "sha256": "sha256:274f68f77e8ad09f7f9fed6278f8a656ed5606be5c653c1667fec1b430359d41",
+            "bytes": 2226
+          },
+          {
+            "path": "authoring/items/godie-i06o.json",
+            "sha256": "sha256:55c3f2b787819ea9b47978165b33bfd19bfc7f9bbcec43a8b0fd89fb224fa478",
+            "bytes": 3075
+          },
+          {
+            "path": "authoring/items/godie-i06q.json",
+            "sha256": "sha256:16c8e2033d8217114b6e8f17b62174deaa78ac82e566c432ebaabf8d6761500b",
+            "bytes": 4037
+          },
+          {
+            "path": "authoring/items/gravity-sword-black-rod.json",
+            "sha256": "sha256:2053f0b90024234899537e2c859c42bea90bf72ba911b43d96b7aeba0437637b",
+            "bytes": 4283
+          },
+          {
+            "path": "authoring/items/lance-kongotetsu.json",
+            "sha256": "sha256:6f8f4956f7e138f731b6903436961ad54eca8b0c933c1c91aa12c3cf624e3bff",
+            "bytes": 4310
+          },
+          {
+            "path": "authoring/items/magic-armor-type-zero.json",
+            "sha256": "sha256:3a536af77e7420a1c059c20598a81b52606f27b30ba80ed890a63294262ee3d0",
+            "bytes": 4544
+          },
+          {
+            "path": "authoring/items/meat-cleaver.json",
+            "sha256": "sha256:765f6409cf99b91bfa6061c3332beb6d524e0d376f3c6b04b8db6d1e21551e15",
+            "bytes": 4759
+          },
+          {
+            "path": "authoring/items/meteor-ring.json",
+            "sha256": "sha256:9d18c1bfe4cc8d2040436edc150e52719a1692597ffd371bbac035168ed6bf3c",
+            "bytes": 7647
+          },
+          {
+            "path": "authoring/items/mystery-scrap-of-paper.json",
+            "sha256": "sha256:5af688d9f681b8a695488e4f11c60060cc7e9ae83f7fa7459e59bbc6b6d548ba",
+            "bytes": 3687
+          },
+          {
+            "path": "authoring/items/odm-gear.json",
+            "sha256": "sha256:4493978ccac0f71a4bcac8a21a333e34b486dc889eb7e25b6fd7c7e02d67c47c",
+            "bytes": 3289
+          },
+          {
+            "path": "authoring/items/pale-moon-requiem-crown.json",
+            "sha256": "sha256:7211373e52311ddb17a951ad1c678acdde40c671831aae04b04bab4282d01c03",
+            "bytes": 4436
+          },
+          {
+            "path": "authoring/items/shining-golden-orbs.json",
+            "sha256": "sha256:04e4360b0a196c98b398ae4737f80e7f9c9ef75eb30f09ff0a216b5da89a227e",
+            "bytes": 6134
+          },
+          {
+            "path": "authoring/items/soul-eater.json",
+            "sha256": "sha256:bb8c59dea76ed7bf68b0581a49f702345ad019ac7f1cd2c9bb07d977b66db5f1",
+            "bytes": 5126
+          },
+          {
+            "path": "authoring/items/spear-of-lightning.json",
+            "sha256": "sha256:12b2049066bbb49a3e17a8d691d0aa978fa266e9ca8e3adc82bd67678f12a5c4",
+            "bytes": 4644
+          },
+          {
+            "path": "authoring/items/staff-of-ainz-ooal-gown.json",
+            "sha256": "sha256:03140fb9168723801323ed9d5056f1f71b89d1b63a104ba33902c648b1d4fb10",
+            "bytes": 8508
+          },
+          {
+            "path": "authoring/items/stone-mask.json",
+            "sha256": "sha256:a7ca7f56dd2954afa1dd7b1ef6981f82c17352a6ac8e672c0d6d9005d8bb2550",
+            "bytes": 6032
+          },
+          {
+            "path": "authoring/items/teardrop-of-rebirth.json",
+            "sha256": "sha256:fe5aae28f2720d93eb60bfce60943cf5dd7713becb63d96e5c8664ab017fe676",
+            "bytes": 4389
+          },
+          {
+            "path": "authoring/items/torch-master.json",
+            "sha256": "sha256:f4c448064d74c9a9e560d5b56e2200c6b9c140855eab99f50426f32c48125082",
+            "bytes": 3620
+          },
+          {
+            "path": "authoring/items/ultimate-mod-shiranui.json",
+            "sha256": "sha256:94878bcaa2b63144eb211b5163740e09b8d5f4bdd46e22996f33a3b30ee059ab",
+            "bytes": 6474
+          },
+          {
+            "path": "authoring/items/usagizuki-twin-crescents.json",
+            "sha256": "sha256:4285e147f0a91d2bdd54f51c3dbb7fde3b05b5f2dcb99fac35aa3a3ab742161c",
+            "bytes": 5268
+          },
+          {
+            "path": "authoring/loot-tables/ex-release-weapons.json",
+            "sha256": "sha256:520969c67bfdcdbd7f632da099424e23ad930466c6d25843a0d311aa245393a1",
+            "bytes": 2371
+          },
+          {
+            "path": "authoring/loot-tables/legendary-weapons.json",
+            "sha256": "sha256:9bb6885aa606c881c08b550512549dd34c8af96bfa50aedfa898b4933b134bc8",
+            "bytes": 2146
+          },
+          {
+            "path": "authoring/models/community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3.json",
+            "sha256": "sha256:ce8de2a6c1f651aa4e06a5a7fc29c51e4ca55ae9042ba33718ab3f17c03417a2",
+            "bytes": 387
+          },
+          {
+            "path": "authoring/models/w3x.stock.tornadoelemental.json",
+            "sha256": "sha256:4c5184aa5cddc738d1dc934b6ede01e9f546afc0d62bb404faf00b4ba9f69ed0",
+            "bytes": 277
+          },
+          {
+            "path": "authoring/status-effects/armor-break.json",
+            "sha256": "sha256:583810c8d372225efa8ee1e9abe83253ffe8b0d2f211f079ccb36280d7a783ba",
+            "bytes": 451
+          },
+          {
+            "path": "authoring/status-effects/blind.json",
+            "sha256": "sha256:36474925f4bedad5d81ad8047392a9ff51d4074056b8af34c9855ec4bd63d9f6",
+            "bytes": 540
+          },
+          {
+            "path": "authoring/status-effects/burn.json",
+            "sha256": "sha256:36e23118d4c83cb90bf3ab05fd571a937c606c4264bd9e030ea9b73096e28cf5",
+            "bytes": 460
+          },
+          {
+            "path": "authoring/status-effects/confusion.json",
+            "sha256": "sha256:314d149a17878771e5f4c883d0943df8742409883dd9abf7f523b8572e1768e8",
+            "bytes": 406
+          },
+          {
+            "path": "authoring/status-effects/curse.json",
+            "sha256": "sha256:ee0697927abec9365a2c8842cf118e958922f6f4628b9c4f51f6616330c07864",
+            "bytes": 267
+          },
+          {
+            "path": "authoring/status-effects/fang-stun.json",
+            "sha256": "sha256:84afcf29061ef028bcb1346326e7fce9f8cea93f40dbb1c0a7c03c455cd5d419",
+            "bytes": 298
+          },
+          {
+            "path": "authoring/status-effects/fear.json",
+            "sha256": "sha256:560cef434917ba89f16c08b65350ba42b553f598c1fc7a657c37806b80984294",
+            "bytes": 486
+          },
+          {
+            "path": "authoring/status-effects/grievous-wounds.json",
+            "sha256": "sha256:afe1998cf66984f00f7f6de75f7abcc128e53355dd8adbb15abc5f9a577b5f6e",
+            "bytes": 433
+          },
+          {
+            "path": "authoring/status-effects/ingredient.json",
+            "sha256": "sha256:97819ca656b754b413e942aa92045ccc8efce2151e3a2465d414364be628ab6a",
+            "bytes": 297
+          },
+          {
+            "path": "authoring/status-effects/magic-break.json",
+            "sha256": "sha256:b7315d34c3dd76189a9e889c6031c120056f122e6b8afee2329ac6ea93cb4b61",
+            "bytes": 504
+          },
+          {
+            "path": "authoring/status-effects/no-heal.json",
+            "sha256": "sha256:81abd405499e25a7a78f90d4ddfddb68376f92e6788f8a78adf1e2fbbbe85e39",
+            "bytes": 395
+          },
+          {
+            "path": "authoring/status-effects/numbness.json",
+            "sha256": "sha256:40c2562c82aeaa8bbc34593a29ee557a44404ae03c7f8b3cad4eb934da46d5ee",
+            "bytes": 720
+          },
+          {
+            "path": "authoring/status-effects/paralysis.json",
+            "sha256": "sha256:92ac23eff89177fa58f82407297e4402d7a88ffdd8f096aecd4872e7b6ed5522",
+            "bytes": 666
+          },
+          {
+            "path": "authoring/status-effects/root.json",
+            "sha256": "sha256:be09afe3aed8ef1a2fcb01f1bffe569d536caa9f3a6bef035ae7ef83d247909c",
+            "bytes": 172
+          },
+          {
+            "path": "authoring/status-effects/slow30.json",
+            "sha256": "sha256:f99e76ea1ad92439f1f212b44ccb44fc52e9e8f1eaec8a101ac30247abc8f700",
+            "bytes": 208
+          },
+          {
+            "path": "authoring/status-effects/slow40.json",
+            "sha256": "sha256:d5cfebaef43af938abb8fc638a546aadc11a69f31c33189d0c63090ec5add54d",
+            "bytes": 208
+          },
+          {
+            "path": "authoring/status-effects/slow50.json",
+            "sha256": "sha256:b39142bbf3fef6cbe5da9fcbf6429d682603bc3f5d65322f0a5d78065c627e57",
+            "bytes": 208
+          },
+          {
+            "path": "authoring/status-effects/stun.json",
+            "sha256": "sha256:f7a864f72d313727e10082ea4d14fa8909a493eda13d73936666cfafaab3ff2b",
+            "bytes": 550
+          },
+          {
+            "path": "authoring/vfx/fx.prim.blood.spray-back.json",
+            "sha256": "sha256:bdf58a7bd5420a80b1789dd374ef46fad431b0cdb3606a468ab5c61d1c521d71",
+            "bytes": 638
+          },
+          {
+            "path": "compiled/abilities/community-review-19-20260907.e.json",
+            "sha256": "sha256:bb2c1d433fb36f56d44386d55be24c08d81875e8d373308b5279ebd338574a25",
+            "bytes": 1334
+          },
+          {
+            "path": "compiled/abilities/community-review-19-20260907.ex.json",
+            "sha256": "sha256:8c0c8f1e495c13bcd95d9247571e04415e363f8c8e359765e789e077f46b9261",
+            "bytes": 1604
+          },
+          {
+            "path": "compiled/abilities/community-review-19-20260907.passive.json",
+            "sha256": "sha256:57f128886e7e0f2942adab746b260c7ea5368efc9507efac269c171afa753315",
+            "bytes": 1155
+          },
+          {
+            "path": "compiled/abilities/community-review-19-20260907.q.json",
+            "sha256": "sha256:046d01d36af831eecd14c289d52c6569f637458fc73c5f2653776c9153c01e12",
+            "bytes": 1597
+          },
+          {
+            "path": "compiled/abilities/community-review-19-20260907.r.json",
+            "sha256": "sha256:0ef4eda42a855d37f6c7a85fe88367b885f96db5a6820f2fdf34b8757b73ac1f",
+            "bytes": 1686
+          },
+          {
+            "path": "compiled/abilities/community-review-19-20260907.w.json",
+            "sha256": "sha256:bbd1c95340259edefd14e88fb8eb6a94078babe880fa7ed6e02bdc6eb13863db",
+            "bytes": 1345
+          },
+          {
+            "path": "compiled/champions/community-review-19-20260907.json",
+            "sha256": "sha256:5ec36a7bbbf4f364a2fa527cf392db1532dd57a1bba5d486501be14e4e10e0e0",
+            "bytes": 7414
+          },
+          {
+            "path": "compiled/config/aoe-tiers.json",
+            "sha256": "sha256:5f4b138cc6e944c77d4f1f963ec173f9d0c92f2cce5254200320c5d8aae64637",
+            "bytes": 1087
+          },
+          {
+            "path": "compiled/config/ap-coefficient.json",
+            "sha256": "sha256:33bb88afbeafd80ad81e0fdc5f266f6b1369972435793672594766ca7dc0665e",
+            "bytes": 1971
+          },
+          {
+            "path": "compiled/config/arena-rules.json",
+            "sha256": "sha256:c7f43d8468d3654f312395cad1f221fae27f75f69aeab4153a4b7d87ddb65ab7",
+            "bytes": 6539
+          },
+          {
+            "path": "compiled/config/audio-map.json",
+            "sha256": "sha256:53f5d3149cc25abd8471a8ce8de15cf96af0de3ed8fc3b9b2abcc31e8f2f3929",
+            "bytes": 29771
+          },
+          {
+            "path": "compiled/config/camera.json",
+            "sha256": "sha256:16038f879da40e82812c1f0e4fddc8b221a50abbda389b178b301598c4f3e271",
+            "bytes": 1526
+          },
+          {
+            "path": "compiled/config/cast-time-tiers.json",
+            "sha256": "sha256:d8473dae1ef5b3e75de0b329f0572459003f793b33ae420cab0386469f9f52ba",
+            "bytes": 563
+          },
+          {
+            "path": "compiled/config/combo-strikes.json",
+            "sha256": "sha256:12c42556d5c80f8ff2c912a3479a4f168bb256366f7656815d7d77e4e0c47463",
+            "bytes": 23245
+          },
+          {
+            "path": "compiled/config/cooldown-tiers.json",
+            "sha256": "sha256:46868e5860aec88cf16ec2a11d50f831c7b1178ed019deb7da169662b47865e5",
+            "bytes": 1193
+          },
+          {
+            "path": "compiled/config/damage-tiers.json",
+            "sha256": "sha256:c24538adce9ffe04c714b5ec5a8902d6fe9c61eb02d25b8035ca015f67bc6923",
+            "bytes": 3296
+          },
+          {
+            "path": "compiled/config/displacement-tiers.json",
+            "sha256": "sha256:b3e44fc40e2626cd45e683cd265d805f54f2fcdab3251494ef316b1573824fdb",
+            "bytes": 2656
+          },
+          {
+            "path": "compiled/config/feel-fx.json",
+            "sha256": "sha256:58709dd24f79779abb32423630dbbb97de1378456f34961a0f35e34a2d01621f",
+            "bytes": 1767
+          },
+          {
+            "path": "compiled/config/mana-tiers.json",
+            "sha256": "sha256:0995909cf6928edf526fbf30a2138e90d5827d6a7df277d76484319c5ba61bb4",
+            "bytes": 901
+          },
+          {
+            "path": "compiled/config/model-lod.json",
+            "sha256": "sha256:27d4d83780b4df0fd19018c748a519baa33c14c9189cb9902d45df6dacfcc8ed",
+            "bytes": 988
+          },
+          {
+            "path": "compiled/config/move-speed-tiers.json",
+            "sha256": "sha256:28475b952c342218b351853cd1a26750eb76ccf80fcd4bb7aea6dc4221bb4634",
+            "bytes": 2774
+          },
+          {
+            "path": "compiled/config/range-tiers.json",
+            "sha256": "sha256:d87cdbcfecf44c6167c6540fd28cc12b8f9e46d6dfd0e0e92959dc35b780ce09",
+            "bytes": 734
+          },
+          {
+            "path": "compiled/config/rank-growth.json",
+            "sha256": "sha256:e77c1d0733209a71160330f41bcddf1c53da805e777dce24a639b0bf81a1af63",
+            "bytes": 1003
+          },
+          {
+            "path": "compiled/config/screen-fx.json",
+            "sha256": "sha256:ac0473f75637af860c366af87fd239d79a719b5ed010c4ec15bcf7b700dae833",
+            "bytes": 2708
+          },
+          {
+            "path": "compiled/config/speed-growth-tiers.json",
+            "sha256": "sha256:44d5928e9d17d4407789545243e155b7c7a43e75560e8f7d49cf25c3bcd7de01",
+            "bytes": 2293
+          },
+          {
+            "path": "compiled/config/stat-normalization.json",
+            "sha256": "sha256:2c83473621e7c81b24f2a31ceb6afd97fa05519daa948ff70861f77b1cc26261",
+            "bytes": 15426
+          },
+          {
+            "path": "compiled/config/ui-cues.json",
+            "sha256": "sha256:34cfac8f35f1670dc231506203840d03f6d4b4fb43e465eb4690131ea9507608",
+            "bytes": 3199
+          },
+          {
+            "path": "compiled/config/vfx-budget.json",
+            "sha256": "sha256:9e928e600a2a9904dc4f4a192027c6a80def98c349a8db976d2e531ce3256924",
+            "bytes": 475
+          },
+          {
+            "path": "compiled/config/vfx-cleanup.json",
+            "sha256": "sha256:589690f20e305e321b9d4a579b097c077c166a1959f69e34fc263055ddb91fb7",
+            "bytes": 13192
+          },
+          {
+            "path": "compiled/config/vfx-scripts.json",
+            "sha256": "sha256:1b951b2a6090b71d249b8c408ce19894319d63c519054b42d895331a4b4461db",
+            "bytes": 588
+          },
+          {
+            "path": "compiled/config/weather.json",
+            "sha256": "sha256:61a63dbd8665efe0441b7e7a69852a93dff486f8ec83788c4bf6d5e50dbcd7f7",
+            "bytes": 911
+          },
+          {
+            "path": "compiled/items/book-of-gospel.json",
+            "sha256": "sha256:32d3a9e32e3e28a418781c3ea8154147410af2efe07a81d7acf156e5fbc7a85c",
+            "bytes": 8584
+          },
+          {
+            "path": "compiled/items/bulwark-charge-greaves.json",
+            "sha256": "sha256:aacc547975e5e40417f79d3f8820863c6f911d77059aa9f8987da7d1c8d71f71",
+            "bytes": 2870
+          },
+          {
+            "path": "compiled/items/cleaver-of-the-warden.json",
+            "sha256": "sha256:c4c259f49c2fb57ea297d24d0cabec5b33f46cd2466c087f7c8e6d832444bb4d",
+            "bytes": 2879
+          },
+          {
+            "path": "compiled/items/collar-of-the-deadly-soul.json",
+            "sha256": "sha256:9d068fbae83d4f2e627a9942a9490a0dd8926e0678889d3a3de39d85fd77f7c7",
+            "bytes": 4825
+          },
+          {
+            "path": "compiled/items/endless-edge.json",
+            "sha256": "sha256:6de4f4ff280afb7fe2843dd93c52c341e4f7057748ff54e27e2951fb94bb3475",
+            "bytes": 2630
+          },
+          {
+            "path": "compiled/items/fingerless-gloves.json",
+            "sha256": "sha256:5e3d8754c99d14eeec08e2e6842e39f234c8e058529b58006ead6124f3cc64a4",
+            "bytes": 5412
+          },
+          {
+            "path": "compiled/items/godie-i000.json",
+            "sha256": "sha256:b1a257ca5f55da5c3ad149be651fa683eecae3d7a7e150e3200c015450fef0fa",
+            "bytes": 3331
+          },
+          {
+            "path": "compiled/items/godie-i004.json",
+            "sha256": "sha256:a26297f77d90dfefc9191aba919f36f55596130246809bf69df02d3ef409e4a7",
+            "bytes": 1970
+          },
+          {
+            "path": "compiled/items/godie-i006.json",
+            "sha256": "sha256:4df095995e131cd8e4fddfddec10d7d39ddb98b7bb7894646e10f4613cfb0887",
+            "bytes": 2634
+          },
+          {
+            "path": "compiled/items/godie-i007.json",
+            "sha256": "sha256:10749604410acde04c98f53ef892b06a505f63cd585bb5c59701c622a5af7a29",
+            "bytes": 3734
+          },
+          {
+            "path": "compiled/items/godie-i00f.json",
+            "sha256": "sha256:ee4af163426f0aebec37f35a176f59d4dff78960607521395eaedb3f41a0a425",
+            "bytes": 3240
+          },
+          {
+            "path": "compiled/items/godie-i00i.json",
+            "sha256": "sha256:d11bc04d6ea039ad1c475c53e3aed178b8caaa0226a4ce273052719bdea15e3b",
+            "bytes": 2977
+          },
+          {
+            "path": "compiled/items/godie-i00j.json",
+            "sha256": "sha256:d8d3c957d57be711ef63e35237d8cfbd2945771a6e8b48b1bac62465646048eb",
+            "bytes": 3927
+          },
+          {
+            "path": "compiled/items/godie-i00l.json",
+            "sha256": "sha256:8402e026a2aeeb6f6dc97a7415c9d2e71fb94c619f88827bb57233ad5a47f737",
+            "bytes": 1808
+          },
+          {
+            "path": "compiled/items/godie-i00s.json",
+            "sha256": "sha256:7bea1fa16bcbbd83c7856e2f27134889a83fdeebcee1086f58f9fc6b319f996f",
+            "bytes": 4141
+          },
+          {
+            "path": "compiled/items/godie-i00u.json",
+            "sha256": "sha256:1e1b012a7b791922991e3037134d35c3e4b36645fbcd5a018af9247c17abcc2d",
+            "bytes": 2869
+          },
+          {
+            "path": "compiled/items/godie-i00z.json",
+            "sha256": "sha256:a163e363507dae3b2659abe8b5c7271eebd5dd3940b15fa20fec3f83a146e933",
+            "bytes": 2634
+          },
+          {
+            "path": "compiled/items/godie-i012.json",
+            "sha256": "sha256:d8aaaf45961cdd2ec73c4835fa07839b320bdd5114c4d13abb9e535f8a912f80",
+            "bytes": 4286
+          },
+          {
+            "path": "compiled/items/godie-i013.json",
+            "sha256": "sha256:842f86e82d21b5a609c7a8cf5326c5dce88dcd198a7c24331914b4a88a72ed78",
+            "bytes": 3139
+          },
+          {
+            "path": "compiled/items/godie-i014.json",
+            "sha256": "sha256:3349d56aa9fd7627bfc9459562eeb118a0e761a01df09cbe1a273554d58203a8",
+            "bytes": 2460
+          },
+          {
+            "path": "compiled/items/godie-i016.json",
+            "sha256": "sha256:398b830884c1e19051657f46a5d5075cf2f398386a887aab087f2d344f10d872",
+            "bytes": 5123
+          },
+          {
+            "path": "compiled/items/godie-i018.json",
+            "sha256": "sha256:23e15bfc4ef2b123c09750233bed8ffd2c8a622c67427385ff33f4f1a1e78342",
+            "bytes": 4449
+          },
+          {
+            "path": "compiled/items/godie-i01d.json",
+            "sha256": "sha256:c4277699c8d6cd9517fffd6d95803cbd1913a49428a9e2698f0761300480a100",
+            "bytes": 4367
+          },
+          {
+            "path": "compiled/items/godie-i01g.json",
+            "sha256": "sha256:887bce4034eb9de9c860f03fc8478d45dbaee31290bf08fe3ec8953d31e1b06d",
+            "bytes": 4349
+          },
+          {
+            "path": "compiled/items/godie-i01i.json",
+            "sha256": "sha256:ba29839e597976d0fa60d79adf38ef05f6b499b65ecb54913551b0caa9095163",
+            "bytes": 4430
+          },
+          {
+            "path": "compiled/items/godie-i01n.json",
+            "sha256": "sha256:e0af0515d7aadf4b8681da639b2def0ef5d15ee82b24b6ed4bfa3ecd8c37c671",
+            "bytes": 4299
+          },
+          {
+            "path": "compiled/items/godie-i01s.json",
+            "sha256": "sha256:09d0a1179ee52aee88ac0546fa44541002effe927ab3d0cffac8ec17d6f615cd",
+            "bytes": 4050
+          },
+          {
+            "path": "compiled/items/godie-i01v.json",
+            "sha256": "sha256:c15d56d4a23f2e26913b0c437aff10ddab236d1f9d3af033c616935e35210bbf",
+            "bytes": 3927
+          },
+          {
+            "path": "compiled/items/godie-i01w.json",
+            "sha256": "sha256:89986ecbbbf172cf1ea6f87d8d3a488341f9756f62c59f49b6aaaf90e9ac1bc7",
+            "bytes": 4346
+          },
+          {
+            "path": "compiled/items/godie-i020.json",
+            "sha256": "sha256:b0ba737229e78cde066cb2244d4560c5bdbbc1652185ccd3193b6b5f0582630f",
+            "bytes": 2620
+          },
+          {
+            "path": "compiled/items/godie-i027.json",
+            "sha256": "sha256:ae2433735aa386fcf7053d5d2fcde111c0b6bdf4c911ab78a3956e79b4d0eb8b",
+            "bytes": 4551
+          },
+          {
+            "path": "compiled/items/godie-i02d.json",
+            "sha256": "sha256:8a52a27cdb40b44bc4c6bab439701172ed72593c15f731028b19380912eb12c0",
+            "bytes": 3699
+          },
+          {
+            "path": "compiled/items/godie-i02e.json",
+            "sha256": "sha256:1828472f8c67671b718ca6b352ebe2f10905b7680d801dd2ccc3741d52822421",
+            "bytes": 2589
+          },
+          {
+            "path": "compiled/items/godie-i031.json",
+            "sha256": "sha256:b5181c6c7bd9a75881afcb71909e754d5fdf0a3f94582efa200f6d7341b70ac9",
+            "bytes": 3434
+          },
+          {
+            "path": "compiled/items/godie-i039.json",
+            "sha256": "sha256:f4dfc5707828d90352a82cbb9910e119cd4803da580bc2eee08be6496be43044",
+            "bytes": 3432
+          },
+          {
+            "path": "compiled/items/godie-i03f.json",
+            "sha256": "sha256:e9e7d71f6ec2bc26315077efe1ddeb5aae48332870535c724668eb0fd405b32f",
+            "bytes": 2404
+          },
+          {
+            "path": "compiled/items/godie-i03h.json",
+            "sha256": "sha256:33d560a577e34c2493ea22bdcea8c7f3ffea2e27f6324e36ac6e1f2b0da2e6fa",
+            "bytes": 3706
+          },
+          {
+            "path": "compiled/items/godie-i03m.json",
+            "sha256": "sha256:57f35d235cee76816fe8d0296ee95e6c80a35ca44df575f24b5d0a4c80b266f0",
+            "bytes": 1788
+          },
+          {
+            "path": "compiled/items/godie-i04d.json",
+            "sha256": "sha256:24258e0fc6c22625f9f136acda3214449d3838710289792f31d82b9a640a39c3",
+            "bytes": 3420
+          },
+          {
+            "path": "compiled/items/godie-i060.json",
+            "sha256": "sha256:d3efe9d2c00c7b22b6c854fcf6c121c5886a181f964cafe7855a31debcec5edd",
+            "bytes": 4362
+          },
+          {
+            "path": "compiled/items/godie-i061.json",
+            "sha256": "sha256:e48c743a5526a612ec3a0692924718e3117394944dad7a9aab45cb6439a523d1",
+            "bytes": 3623
+          },
+          {
+            "path": "compiled/items/godie-i067.json",
+            "sha256": "sha256:058f43ac852e0fa2056854526abeb487f268d265a7c63b1c8ad33c46163abfdf",
+            "bytes": 4564
+          },
+          {
+            "path": "compiled/items/godie-i06a.json",
+            "sha256": "sha256:219da272a62bd04b8509c4108d36d7344c851a2edc68e76785126ee6f97f3844",
+            "bytes": 3014
+          },
+          {
+            "path": "compiled/items/godie-i06d.json",
+            "sha256": "sha256:d2f80205be3fcba935010ea597830690844552ce91ab5da66bdfb481eb8abdad",
+            "bytes": 2365
+          },
+          {
+            "path": "compiled/items/godie-i06e.json",
+            "sha256": "sha256:8bb7629b2d3e37f0b0c431922f3b5bb463660091a9ab9e76f9a89414d3cf5bd3",
+            "bytes": 4209
+          },
+          {
+            "path": "compiled/items/godie-i06f.json",
+            "sha256": "sha256:db88d7e7c82c382575c5a32e988e5d432a70e04b5215e32a08e33d6303380241",
+            "bytes": 2411
+          },
+          {
+            "path": "compiled/items/godie-i06g.json",
+            "sha256": "sha256:b4de4e8236e7909392e70907e63256fa5e11bf3a3685803954fc6cb377b60693",
+            "bytes": 4532
+          },
+          {
+            "path": "compiled/items/godie-i06i.json",
+            "sha256": "sha256:6bf1869b359e2f5ce7541bca314d4ec8c977a4fe16fefe295cd688749171b264",
+            "bytes": 4314
+          },
+          {
+            "path": "compiled/items/godie-i06j.json",
+            "sha256": "sha256:8ad5e5b8c21b64b12dc41ac979709f5c8776fa9aa8d154473ccc7444ad2d3586",
+            "bytes": 2603
+          },
+          {
+            "path": "compiled/items/godie-i06n.json",
+            "sha256": "sha256:274f68f77e8ad09f7f9fed6278f8a656ed5606be5c653c1667fec1b430359d41",
+            "bytes": 2226
+          },
+          {
+            "path": "compiled/items/godie-i06o.json",
+            "sha256": "sha256:55c3f2b787819ea9b47978165b33bfd19bfc7f9bbcec43a8b0fd89fb224fa478",
+            "bytes": 3075
+          },
+          {
+            "path": "compiled/items/godie-i06q.json",
+            "sha256": "sha256:16c8e2033d8217114b6e8f17b62174deaa78ac82e566c432ebaabf8d6761500b",
+            "bytes": 4037
+          },
+          {
+            "path": "compiled/items/gravity-sword-black-rod.json",
+            "sha256": "sha256:2053f0b90024234899537e2c859c42bea90bf72ba911b43d96b7aeba0437637b",
+            "bytes": 4283
+          },
+          {
+            "path": "compiled/items/lance-kongotetsu.json",
+            "sha256": "sha256:6f8f4956f7e138f731b6903436961ad54eca8b0c933c1c91aa12c3cf624e3bff",
+            "bytes": 4310
+          },
+          {
+            "path": "compiled/items/magic-armor-type-zero.json",
+            "sha256": "sha256:3a536af77e7420a1c059c20598a81b52606f27b30ba80ed890a63294262ee3d0",
+            "bytes": 4544
+          },
+          {
+            "path": "compiled/items/meat-cleaver.json",
+            "sha256": "sha256:765f6409cf99b91bfa6061c3332beb6d524e0d376f3c6b04b8db6d1e21551e15",
+            "bytes": 4759
+          },
+          {
+            "path": "compiled/items/meteor-ring.json",
+            "sha256": "sha256:9d18c1bfe4cc8d2040436edc150e52719a1692597ffd371bbac035168ed6bf3c",
+            "bytes": 7647
+          },
+          {
+            "path": "compiled/items/mystery-scrap-of-paper.json",
+            "sha256": "sha256:5af688d9f681b8a695488e4f11c60060cc7e9ae83f7fa7459e59bbc6b6d548ba",
+            "bytes": 3687
+          },
+          {
+            "path": "compiled/items/odm-gear.json",
+            "sha256": "sha256:5f25869f64e72856009f6aac345845674acd7343dfb5c26aefbfbb8a64aee340",
+            "bytes": 3301
+          },
+          {
+            "path": "compiled/items/pale-moon-requiem-crown.json",
+            "sha256": "sha256:7211373e52311ddb17a951ad1c678acdde40c671831aae04b04bab4282d01c03",
+            "bytes": 4436
+          },
+          {
+            "path": "compiled/items/shining-golden-orbs.json",
+            "sha256": "sha256:ccf4eb4c8ac9634c9639a13913f65ccb3a2cda99a82ec1a6ee3368fc590702bc",
+            "bytes": 6158
+          },
+          {
+            "path": "compiled/items/soul-eater.json",
+            "sha256": "sha256:bb8c59dea76ed7bf68b0581a49f702345ad019ac7f1cd2c9bb07d977b66db5f1",
+            "bytes": 5126
+          },
+          {
+            "path": "compiled/items/spear-of-lightning.json",
+            "sha256": "sha256:338ff03d6bdbbd462a107e7fb6650ce4cf77df6f84e32029d0c1751c1066d45a",
+            "bytes": 4648
+          },
+          {
+            "path": "compiled/items/staff-of-ainz-ooal-gown.json",
+            "sha256": "sha256:03140fb9168723801323ed9d5056f1f71b89d1b63a104ba33902c648b1d4fb10",
+            "bytes": 8508
+          },
+          {
+            "path": "compiled/items/stone-mask.json",
+            "sha256": "sha256:9b2baf784cd909161b776106d0862c1fb913faf1c8ba40a01b8f5d4ff421a336",
+            "bytes": 6044
+          },
+          {
+            "path": "compiled/items/teardrop-of-rebirth.json",
+            "sha256": "sha256:35347929218dc4995d7a3d10a6c0a7f25993f1fdc9bad6168e280c1ebdad22cf",
+            "bytes": 4401
+          },
+          {
+            "path": "compiled/items/torch-master.json",
+            "sha256": "sha256:f4c448064d74c9a9e560d5b56e2200c6b9c140855eab99f50426f32c48125082",
+            "bytes": 3620
+          },
+          {
+            "path": "compiled/items/ultimate-mod-shiranui.json",
+            "sha256": "sha256:94878bcaa2b63144eb211b5163740e09b8d5f4bdd46e22996f33a3b30ee059ab",
+            "bytes": 6474
+          },
+          {
+            "path": "compiled/items/usagizuki-twin-crescents.json",
+            "sha256": "sha256:4285e147f0a91d2bdd54f51c3dbb7fde3b05b5f2dcb99fac35aa3a3ab742161c",
+            "bytes": 5268
+          },
+          {
+            "path": "compiled/loot-tables/ex-release-weapons.json",
+            "sha256": "sha256:520969c67bfdcdbd7f632da099424e23ad930466c6d25843a0d311aa245393a1",
+            "bytes": 2371
+          },
+          {
+            "path": "compiled/loot-tables/legendary-weapons.json",
+            "sha256": "sha256:9bb6885aa606c881c08b550512549dd34c8af96bfa50aedfa898b4933b134bc8",
+            "bytes": 2146
+          },
+          {
+            "path": "compiled/models/community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3.json",
+            "sha256": "sha256:ce8de2a6c1f651aa4e06a5a7fc29c51e4ca55ae9042ba33718ab3f17c03417a2",
+            "bytes": 387
+          },
+          {
+            "path": "compiled/models/w3x.stock.tornadoelemental.json",
+            "sha256": "sha256:4c5184aa5cddc738d1dc934b6ede01e9f546afc0d62bb404faf00b4ba9f69ed0",
+            "bytes": 277
+          },
+          {
+            "path": "compiled/status-effects/armor-break.json",
+            "sha256": "sha256:583810c8d372225efa8ee1e9abe83253ffe8b0d2f211f079ccb36280d7a783ba",
+            "bytes": 451
+          },
+          {
+            "path": "compiled/status-effects/blind.json",
+            "sha256": "sha256:36474925f4bedad5d81ad8047392a9ff51d4074056b8af34c9855ec4bd63d9f6",
+            "bytes": 540
+          },
+          {
+            "path": "compiled/status-effects/burn.json",
+            "sha256": "sha256:36e23118d4c83cb90bf3ab05fd571a937c606c4264bd9e030ea9b73096e28cf5",
+            "bytes": 460
+          },
+          {
+            "path": "compiled/status-effects/confusion.json",
+            "sha256": "sha256:314d149a17878771e5f4c883d0943df8742409883dd9abf7f523b8572e1768e8",
+            "bytes": 406
+          },
+          {
+            "path": "compiled/status-effects/curse.json",
+            "sha256": "sha256:ee0697927abec9365a2c8842cf118e958922f6f4628b9c4f51f6616330c07864",
+            "bytes": 267
+          },
+          {
+            "path": "compiled/status-effects/fang-stun.json",
+            "sha256": "sha256:84afcf29061ef028bcb1346326e7fce9f8cea93f40dbb1c0a7c03c455cd5d419",
+            "bytes": 298
+          },
+          {
+            "path": "compiled/status-effects/fear.json",
+            "sha256": "sha256:560cef434917ba89f16c08b65350ba42b553f598c1fc7a657c37806b80984294",
+            "bytes": 486
+          },
+          {
+            "path": "compiled/status-effects/grievous-wounds.json",
+            "sha256": "sha256:afe1998cf66984f00f7f6de75f7abcc128e53355dd8adbb15abc5f9a577b5f6e",
+            "bytes": 433
+          },
+          {
+            "path": "compiled/status-effects/ingredient.json",
+            "sha256": "sha256:97819ca656b754b413e942aa92045ccc8efce2151e3a2465d414364be628ab6a",
+            "bytes": 297
+          },
+          {
+            "path": "compiled/status-effects/magic-break.json",
+            "sha256": "sha256:b7315d34c3dd76189a9e889c6031c120056f122e6b8afee2329ac6ea93cb4b61",
+            "bytes": 504
+          },
+          {
+            "path": "compiled/status-effects/no-heal.json",
+            "sha256": "sha256:81abd405499e25a7a78f90d4ddfddb68376f92e6788f8a78adf1e2fbbbe85e39",
+            "bytes": 395
+          },
+          {
+            "path": "compiled/status-effects/numbness.json",
+            "sha256": "sha256:40c2562c82aeaa8bbc34593a29ee557a44404ae03c7f8b3cad4eb934da46d5ee",
+            "bytes": 720
+          },
+          {
+            "path": "compiled/status-effects/paralysis.json",
+            "sha256": "sha256:92ac23eff89177fa58f82407297e4402d7a88ffdd8f096aecd4872e7b6ed5522",
+            "bytes": 666
+          },
+          {
+            "path": "compiled/status-effects/root.json",
+            "sha256": "sha256:be09afe3aed8ef1a2fcb01f1bffe569d536caa9f3a6bef035ae7ef83d247909c",
+            "bytes": 172
+          },
+          {
+            "path": "compiled/status-effects/slow30.json",
+            "sha256": "sha256:f99e76ea1ad92439f1f212b44ccb44fc52e9e8f1eaec8a101ac30247abc8f700",
+            "bytes": 208
+          },
+          {
+            "path": "compiled/status-effects/slow40.json",
+            "sha256": "sha256:d5cfebaef43af938abb8fc638a546aadc11a69f31c33189d0c63090ec5add54d",
+            "bytes": 208
+          },
+          {
+            "path": "compiled/status-effects/slow50.json",
+            "sha256": "sha256:b39142bbf3fef6cbe5da9fcbf6429d682603bc3f5d65322f0a5d78065c627e57",
+            "bytes": 208
+          },
+          {
+            "path": "compiled/status-effects/stun.json",
+            "sha256": "sha256:f7a864f72d313727e10082ea4d14fa8909a493eda13d73936666cfafaab3ff2b",
+            "bytes": 550
+          },
+          {
+            "path": "compiled/vfx-scripts/community-review-19-20260907.e.json",
+            "sha256": "sha256:b788c7f7933eca083ae65de8238835da5a689cce1254e05c4fa8977ad58ac0e3",
+            "bytes": 520
+          },
+          {
+            "path": "compiled/vfx-scripts/community-review-19-20260907.ex.json",
+            "sha256": "sha256:2ca164eae52ee42f87117ebf203b13459ed1dd0e30de42c134202b9e9fb8127c",
+            "bytes": 681
+          },
+          {
+            "path": "compiled/vfx-scripts/community-review-19-20260907.q.json",
+            "sha256": "sha256:19f024486abd5f09e0a5dcf9f603d1ff6e72e0ff1370a98d3b351c501845557a",
+            "bytes": 678
+          },
+          {
+            "path": "compiled/vfx-scripts/community-review-19-20260907.r.json",
+            "sha256": "sha256:9dc74dd1993e80f8a891dad7b7c61de633e0ec90e80eb0dcc77ec1559ad4f504",
+            "bytes": 679
+          },
+          {
+            "path": "compiled/vfx-scripts/community-review-19-20260907.w.json",
+            "sha256": "sha256:6919dafa79f28e70aa454f12e26c54907040f5f29ba17753eca43b736896bf07",
+            "bytes": 521
+          },
+          {
+            "path": "compiled/vfx/fx.prim.blood.spray-back.json",
+            "sha256": "sha256:bdf58a7bd5420a80b1789dd374ef46fad431b0cdb3606a468ab5c61d1c521d71",
+            "bytes": 638
+          },
+          {
+            "path": "manifest.json",
+            "sha256": "sha256:7f0906ad644c3552dd9f5ef606850123f4e74869f3c986dee2533e2b202a79cc",
+            "bytes": 134985
+          },
+          {
+            "path": "validation/hero-build-provenance.json",
+            "sha256": "sha256:629f8e567eb55cd81040291df8a4ec6e147f52d0e92823efeaf931a68cd7d1f8",
+            "bytes": 361
+          },
+          {
+            "path": "validation/hero-simulation.json",
+            "sha256": "sha256:d45348f3df7d981d0d0121618d4a9dc0c70f990db0046bbdd381f983ca591e66",
+            "bytes": 131544
+          }
+        ]
+      },
+      "decisionId": "hero-review-01M211K534XA22T969PKMWMTH1",
+      "publishedAt": "2026-09-08T17:38:35.635627Z",
+      "operationId": "0685b964-78ca-4dc7-87da-1766c670f602"
+    }
+  ]
+}

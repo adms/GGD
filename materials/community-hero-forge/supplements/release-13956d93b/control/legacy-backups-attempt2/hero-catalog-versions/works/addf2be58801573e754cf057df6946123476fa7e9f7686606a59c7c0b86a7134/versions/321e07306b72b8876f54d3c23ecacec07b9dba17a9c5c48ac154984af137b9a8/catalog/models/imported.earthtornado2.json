@@ -1,0 +1,67 @@
+{
+  "id": "imported.earthtornado2",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/earthtornado2.glb",
+  "scale": 0.1856,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Stand",
+    "attack": "Stand",
+    "cast": "Stand",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Foot Left": {
+      "x": -0.0707,
+      "y": 0.211,
+      "z": -0.8163
+    },
+    "Foot Right": {
+      "x": -0.0707,
+      "y": 0.2122,
+      "z": 0.6721
+    },
+    "Hand Right": {
+      "x": -0.565,
+      "y": 1.5017,
+      "z": 1.6943
+    },
+    "Weapon R": {
+      "x": 2.2374,
+      "y": 1.3082,
+      "z": 1.597
+    },
+    "Head": {
+      "x": 0.033,
+      "y": 3.7783,
+      "z": -0.0052
+    },
+    "Chest": {
+      "x": -0.0564,
+      "y": 2.8718,
+      "z": 0.0003
+    },
+    "Weapon L": {
+      "x": 2.2374,
+      "y": 1.3082,
+      "z": -1.6045
+    },
+    "Hand Left": {
+      "x": -0.3601,
+      "y": 1.4858,
+      "z": -1.8093
+    },
+    "Origin": {
+      "x": 0.0,
+      "y": 0.1416,
+      "z": 0.0001
+    },
+    "OverHead": {
+      "x": 0.0,
+      "y": 5.7177,
+      "z": 0.0001
+    }
+  }
+}

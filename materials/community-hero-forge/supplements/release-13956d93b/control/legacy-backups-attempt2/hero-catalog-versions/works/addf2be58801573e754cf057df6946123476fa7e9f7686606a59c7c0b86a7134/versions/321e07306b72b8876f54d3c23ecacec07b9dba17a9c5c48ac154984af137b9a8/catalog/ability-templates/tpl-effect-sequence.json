@@ -1,0 +1,67 @@
+{
+  "schema": "template@1",
+  "status": "enabled",
+  "requires": [
+    "hooks",
+    "conditions"
+  ],
+  "gapScore": 10,
+  "exemplar": {
+    "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+    "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+  },
+  "id": "tpl-effect-sequence",
+  "name": "自訂效果序列",
+  "family": "effect-sequence",
+  "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+  "params": {
+    "castType": {
+      "type": "enum",
+      "default": "targeted",
+      "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+      "values": [
+        "targeted",
+        "self",
+        "ground",
+        "skillshot"
+      ]
+    },
+    "castTimeSec": {
+      "type": "number",
+      "default": 0,
+      "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+      "min": 0,
+      "max": 10,
+      "unit": "s"
+    },
+    "radius": {
+      "type": "number",
+      "default": 2,
+      "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+      "min": 0,
+      "max": 40
+    },
+    "side": {
+      "type": "enum",
+      "default": "enemies",
+      "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+      "values": [
+        "enemies",
+        "allies"
+      ]
+    },
+    "effects": {
+      "type": "effects",
+      "default": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "極小"
+          }
+        }
+      ],
+      "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+    }
+  }
+}

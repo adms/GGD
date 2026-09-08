@@ -1,0 +1,94 @@
+{
+  "id": "fx.fam.resurrect.w3x-ff0000.s170",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.374,
+    "angleDeg": 8
+  },
+  "mode": "burst",
+  "burstCount": 38,
+  "lifetimeSec": {
+    "min": 0.476,
+    "max": 1.092
+  },
+  "size": {
+    "start": 0.428,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      1,
+      0.82,
+      0.82,
+      1
+    ],
+    "end": [
+      0.18,
+      0,
+      0,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.428
+    ],
+    [
+      0.12,
+      1.02
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        0.82,
+        0.82,
+        1
+      ]
+    ],
+    [
+      0.2,
+      [
+        1,
+        0,
+        0,
+        1
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.5,
+        0,
+        0,
+        0.42
+      ]
+    ],
+    [
+      1,
+      [
+        0.18,
+        0,
+        0,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 7.5,
+  "speed": {
+    "min": 6,
+    "max": 11
+  },
+  "texture": "assets/textures/particles/light_02.png",
+  "stretched": true,
+  "tailLength": 2.8
+}

@@ -1,0 +1,30 @@
+{
+  "id": "godie-i00w",
+  "schema": "item@1",
+  "name": "四魂之玉的碎片-和魂",
+  "icon": "assets/icons/items/godie-i00w.webp",
+  "description": "效能\n攻擊力+2\n生命+40\n魔力+24\n\n解說\n和魂的碎片可以讓持有者的各項能力都增加，當你收集到四種就可以合成為完整的四魂之玉。(只能合成一顆)",
+  "cost": 0,
+  "tier": 1,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "maxHealth",
+      "op": "flat",
+      "value": 40
+    },
+    {
+      "stat": "ad",
+      "op": "flat",
+      "value": 2
+    },
+    {
+      "stat": "maxMana",
+      "op": "flat",
+      "value": 24
+    }
+  ],
+  "craftRole": "component"
+}

@@ -1,0 +1,51 @@
+{
+  "id": "sela.r",
+  "schema": "ability@1",
+  "name": "Firestorm",
+  "icon": "assets/icons/abilities/sela.r.webp",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    110,
+    95,
+    80
+  ],
+  "manaCost": [
+    100,
+    100,
+    100
+  ],
+  "radius": 5,
+  "targetsEnemies": true,
+  "effects": [],
+  "template": {
+    "ref": "tpl-proxy-cast",
+    "params": {
+      "anchor": "point",
+      "radius": 272.73,
+      "damage": {
+        "perRank": [
+          200,
+          325,
+          450
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.9
+          }
+        ]
+      },
+      "damageType": "magic",
+      "statusId": "burnstun",
+      "statusDurationSec": 0.75,
+      "castTimeSec": 0.767
+    }
+  },
+  "vfxKey": "fx.firestorm",
+  "castTimeSec": 0.767,
+  "provenance": "w3x-import",
+  "rangeTier": "大",
+  "range": 8
+}

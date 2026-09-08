@@ -1,0 +1,1239 @@
+{
+  "acceptedPlan": {
+    "archetype": "tank",
+    "attackType": "melee",
+    "budget": {
+      "complexity": 60,
+      "power": 50
+    },
+    "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+    "origin": "硬輔",
+    "planId": "community-review-15-20260907.plan",
+    "schema": "ggd-hero-plan@2",
+    "slots": {
+      "E": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [
+          "leap",
+          "knockback"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "〔肩膀衝撞〕",
+        "products": [
+          {
+            "instanceId": "community-review-15-20260907-e-charge",
+            "template": {
+              "contentSha256": "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e",
+              "inheritDefaults": true,
+              "params": {
+                "apexHeight": 0,
+                "castTimeSec": 0.1,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "dashDistance": 350,
+                "dashDurationSec": 0.3,
+                "pushDistance": 200,
+                "pushFrom": "facing",
+                "pushLaunchHeight": 0,
+                "pushSpeed": 872,
+                "radius": 150
+              },
+              "ref": "tpl-charge-push"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】向指定方向突進 350 wc3u，抵達落點後結算極小級物理範圍傷害與推移；不再附帶原錯配的自身護盾。\n【目標設計】向前衝撞，命中第一名敵人後停止。\n【本次處理】已改用既有直線衝鋒推撞模板。命中第一名敵人即停止的專屬條件尚未實作，不宣稱已完成；原交接的友軍保護待補文字不改寫，另以本說明指出和 Owner 衝撞原文的差異。 當前服務編譯結果使用 onLand，實際在落點結算，不是沿路每次接觸命中。",
+        "slot": "E",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "EX": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "大",
+          "effects": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 100,
+                "ratios": []
+              },
+              "duration": 3,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "community-review-15-20260907.ex.guard"
+            }
+          ],
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔兄弟站起來〕",
+        "products": [
+          {
+            "instanceId": "community-review-15-20260907-ex-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": [
+                  {
+                    "op": "pctAdd",
+                    "stat": "as",
+                    "value": 0.2
+                  }
+                ]
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：as +20%；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":100,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-15-20260907.ex.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】為附近友軍提供護盾與短效韌性，以振奮及健美姿勢演出。\n【待補機制】需氣勢消耗及附近隊友；目前自身攻速與盾。",
+        "slot": "EX",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "PASSIVE": {
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔兄貴的氣勢〕",
+        "products": [
+          {
+            "instanceId": "community-review-15-20260907-passive-1",
+            "template": {
+              "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0",
+              "inheritDefaults": true,
+              "params": {
+                "bonusDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "condition": {
+                  "kind": "chance",
+                  "p": 1
+                },
+                "damageType": "physical",
+                "event": "onBasicAttack",
+                "internalCooldown": 3
+              },
+              "ref": "tpl-on-attack"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。\n【目標設計】成功抓取或保護友軍累積氣勢，上限三層。\n【待補機制】需抓取成功／有效保護事件的氣勢資源。",
+        "slot": "PASSIVE",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        }
+      },
+      "Q": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "〔正面擒抱〕",
+        "products": [
+          {
+            "instanceId": "community-review-15-20260907-q-grab",
+            "template": {
+              "contentSha256": "sha256:eed77432b653ea9503a4d1649ef677fe7641003db81eb04c88bfca47176804ad",
+              "inheritDefaults": true,
+              "params": {
+                "apexHeight": 1.2,
+                "castTimeSec": 0.2,
+                "damageType": "physical",
+                "durationSec": 0.45,
+                "grabMode": "dragToCaster",
+                "landApRatio": 0,
+                "landDamageTier": "小",
+                "landRadius": 2,
+                "mode": "toPoint",
+                "throwDistance": 200,
+                "throwMode": "distance"
+              },
+              "ref": "tpl-pull-throw"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】抓取拖拉指定敵人後向前投擲 200 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級物理傷害。\n【目標設計】抓取一名近身敵人，雙方短暫進入配對動作；抓取總時間有上限。\n【本次處理】已將原單體斬擊改為既有抓取投擲模板。採短抓取後釋放的 GGD 改編；雙人專屬配對動作仍待製。",
+        "slot": "Q",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "R": {
+        "abilityOverrides": {
+          "castTimeTier": "大",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 3,
+        "name": "〔兄貴背摔〕",
+        "products": [
+          {
+            "instanceId": "community-review-15-20260907-r-1",
+            "template": {
+              "contentSha256": "sha256:eed77432b653ea9503a4d1649ef677fe7641003db81eb04c88bfca47176804ad",
+              "inheritDefaults": true,
+              "params": {
+                "apexHeight": 1.2,
+                "castTimeSec": 0.2,
+                "damageType": "physical",
+                "durationSec": 0.45,
+                "grabMode": "dragToCaster",
+                "landApRatio": 0,
+                "landDamageTier": "小",
+                "landRadius": 2,
+                "mode": "toPoint",
+                "throwDistance": 400,
+                "throwMode": "distance"
+              },
+              "ref": "tpl-pull-throw"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】拖拉指定目標後向前投擲 400 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】對抓取中的目標進行背摔；未抓取時先做可被閃避的近身捕捉。\n【待補機制】目前單次投擲；需大摔技雙人動作同步與有限區域衝擊。",
+        "slot": "R",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "W": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "effects": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 120,
+                "ratios": []
+              },
+              "duration": 3,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "community-review-15-20260907.w.guard"
+            }
+          ],
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "〔肌肉防線〕",
+        "products": [
+          {
+            "instanceId": "community-review-15-20260907-w-guard",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": []
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身獲得基礎 120 點全傷害護盾，依既有等級規則成長，維持 3 秒；同來源取較大護盾，不再對敵人抓投。\n【目標設計】消耗氣勢提高短期防禦，無氣勢時仍有較弱效果。\n【本次處理】已修正 W 配錯摔技，改用原 E 的三秒自身護盾。氣勢資源與消耗增強仍保留為未完成差異。",
+        "slot": "W",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      }
+    },
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "statOverrides": {
+      "ad": "中",
+      "ap": "小",
+      "armor": "大",
+      "as": "小",
+      "healthRegen": "中",
+      "manaRegen": "中",
+      "maxHealth": "大",
+      "maxMana": "中",
+      "mr": "中",
+      "ms": "中",
+      "range": "小"
+    },
+    "summary": "比利海靈頓 社群英雄功能驗收稿。來源：摔角與網路迷因形象。  \n定位：抓取、雙人動作同步、近身支援。  \n註：本組招式名稱為 GGD 創編。\n\n視覺方向：藍白摔角衝擊線、落地塵環、夥伴鼓舞光；招式名均為 GGD 創編。\n以 GGD 硬輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "templateVersions": {
+      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
+        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
+        "exemplar": {
+          "jass": "A0Q6",
+          "skill": "82-04 闇之魔法"
+        },
+        "family": "buff-self",
+        "gapScore": 6,
+        "id": "tpl-buff-self",
+        "name": "變身強化-數值面",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "duration": {
+            "default": 15,
+            "max": 60,
+            "min": 1,
+            "type": "number",
+            "unit": "s"
+          },
+          "modifiers": {
+            "default": [
+              {
+                "op": "flat",
+                "stat": "ad",
+                "value": 50
+              }
+            ],
+            "type": "statModifiers"
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0": {
+        "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
+        "exemplar": {
+          "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效",
+          "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者"
+        },
+        "family": "on-attack",
+        "gapScore": 9,
+        "id": "tpl-on-attack",
+        "name": "攻擊觸發",
+        "params": {
+          "bonusDamage": {
+            "default": {
+              "perRank": [
+                100
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "chance": {
+            "max": 1,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "ratio"
+          },
+          "condition": {
+            "default": {
+              "any": [
+                {
+                  "all": [
+                    {
+                      "not": {
+                        "is": "champion",
+                        "kind": "kind",
+                        "subject": "target"
+                      }
+                    },
+                    {
+                      "kind": "stat",
+                      "mode": "percent",
+                      "op": "<",
+                      "stat": "hp",
+                      "subject": "target",
+                      "value": 0.35
+                    }
+                  ]
+                },
+                {
+                  "all": [
+                    {
+                      "is": "champion",
+                      "kind": "kind",
+                      "subject": "target"
+                    },
+                    {
+                      "kind": "chance",
+                      "p": 0.01
+                    }
+                  ]
+                }
+              ]
+            },
+            "optional": true,
+            "type": "condition"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "event": {
+            "default": "onBasicAttack",
+            "type": "enum",
+            "values": [
+              "onBasicAttack",
+              "onDamageDealt"
+            ]
+          },
+          "internalCooldown": {
+            "default": 0,
+            "max": 60,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e": {
+        "description": "朝目標點直線衝鋒，抵達後對落點周圍造成範圍傷害，並把該處的敵人推開。預設貼地衝刺（衝鋒弧高 0）；把弧高拉起來就變成 52-02 蹂躪編年史那種掄飛。「推開距離」清空 = 只衝鋒不推撞（52-04 巨神一擊）。傷害與推撞都在抵達點結算，不是在起跳點。",
+        "exemplar": {
+          "jass": "A0OG",
+          "skill": "38-01 邪王炎殺劍"
+        },
+        "family": "charge-push",
+        "gapScore": 5,
+        "id": "tpl-charge-push",
+        "name": "衝鋒推撞",
+        "params": {
+          "apexHeight": {
+            "default": 0,
+            "max": 600,
+            "min": 0,
+            "type": "number",
+            "unit": "wc3h"
+          },
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "physical",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "dashDistance": {
+            "default": 600,
+            "max": 1309,
+            "min": 100,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "dashDurationSec": {
+            "default": 0.4,
+            "max": 2,
+            "min": 0.05,
+            "type": "number",
+            "unit": "s"
+          },
+          "pushDistance": {
+            "default": 400,
+            "max": 1090,
+            "min": 50,
+            "optional": true,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "pushFrom": {
+            "default": "facing",
+            "type": "enum",
+            "values": [
+              "caster",
+              "facing",
+              "pull"
+            ]
+          },
+          "pushLaunchHeight": {
+            "default": 0,
+            "max": 600,
+            "min": 0,
+            "type": "number",
+            "unit": "wc3h"
+          },
+          "pushSpeed": {
+            "default": 872,
+            "max": 2181,
+            "min": 100,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "radius": {
+            "default": 300,
+            "max": 900,
+            "min": 50,
+            "type": "number",
+            "unit": "wc3u"
+          }
+        },
+        "requires": [
+          "leap",
+          "knockback"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:eed77432b653ea9503a4d1649ef677fe7641003db81eb04c88bfca47176804ad": {
+        "description": "P2 拉扯投擲 (需位移詞彙)。\n\n⭐ 契約（GH#1050）：這一族是 ground 施法 —— 玩家選的點是**抓取圈的中心 ＋ 拋投的方向**，⛔ 不是終點。落點＝起跳點（`grabMode: dragToCaster` 是施法者、`throwOnly` 是受害者自己）＋ 方向 × `throwDistance`（`throwMode: distance`，原作這一族每一支都是方向×定長：A0U1 沿施法者朝向、A0L6/A0SQ 沿施法者→受害者）。`throwMode: point` 是 2026-09-06 之前的行為（選點＝終點），留著當 rollback；那個模式下 `throwDistance` 不寫進節點。",
+        "exemplar": {
+          "jass": "war3map.j:4753-4759 / 4793（共用投擲引擎）· 50201 / 29712 / 52208 / 54322（逐支 throwDistance）",
+          "skill": "52-02 蹂躪編年史（`A0U1`，`content/abilities/godie-hapm.w.json`）"
+        },
+        "family": "pull-throw",
+        "gapScore": 3,
+        "id": "tpl-pull-throw",
+        "name": "拉扯投擲",
+        "params": {
+          "apexHeight": {
+            "default": 1.2,
+            "max": 8,
+            "min": 0,
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.apexHeight = 1.2`。⚠️ ⭐ `wc3h` 與 `wc3u` 是**兩把不同的尺**（`expand.ts` 的 `toApex` vs `toLen`）—— 這一格走 apex。",
+            "type": "number",
+            "unit": "wc3h"
+          },
+          "castTimeSec": {
+            "max": 10,
+            "min": 0,
+            "optional": true,
+            "origin": "taxonomy: ⛔ **刻意不給 default** —— 逐支不同（出貨那一支是 0.833）。",
+            "type": "number",
+            "unit": "s"
+          },
+          "damageType": {
+            "default": "magic",
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].damageType = \"magic\"`。",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "durationSec": {
+            "default": 0.42,
+            "max": 10,
+            "min": 0.05,
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.durationSec = 0.42`。⭐ 與 `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） 的 `throwStepIntervalSec` 0.04（j:4793 共用引擎）× 約 10 步同一個量級。",
+            "type": "number",
+            "unit": "s"
+          },
+          "grabInvulnSec": {
+            "max": 10,
+            "min": 0,
+            "optional": true,
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `effects[0]` 是 `invulnerable{durationSec:1.05, applyTo:\"self\", blocksControl:true}`。⛔ **刻意不給 default** —— 「抓取期間施法者是不是無敵」是逐支的設計選擇，⛔ 不是這一族的性質。",
+            "type": "number",
+            "unit": "s"
+          },
+          "grabMode": {
+            "default": "dragToCaster",
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.dragToCaster = true`（＝先拉到施法者身上再拋）。⚠️ `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） §2.3 的 `approach` 欄記載另外兩種（`casterToVictimTile`=A0L6 j:50113 · `casterToVictimFront`=A0SQ j:29646）—— ⛔ 那兩種今天 `zLeap` 表達不了。⭐ 這一格同時決定拋投**方向**（`sim/effects/leap.ts` 的 `throwDirection`）：`dragToCaster` ⇒ 施法者朝向（A0U1 j:51765）；`throwOnly` ⇒ 施法者→受害者（A0L6 j:50109 / A0SQ j:29634）。",
+            "type": "enum",
+            "values": [
+              "dragToCaster",
+              "throwOnly"
+            ]
+          },
+          "landApRatio": {
+            "default": 0.5,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].amount.ratios = [{stat:\"ap\",coeff:**0.5**}]`。",
+            "type": "number",
+            "unit": "ratio"
+          },
+          "landDamageTier": {
+            "default": "小",
+            "optional": true,
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].amount.damageTierPerRank = [\"極小\",\"極小\",\"小\",\"小\"] ` ⇒ 家族取中位的「小」。⛔ 走級距，⛔ 不烘數字。",
+            "type": "enum",
+            "values": [
+              "極小",
+              "小",
+              "中",
+              "大",
+              "極大"
+            ]
+          },
+          "landRadius": {
+            "default": 4.95,
+            "max": 30,
+            "min": 0,
+            "optional": true,
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.landRadius = 4.95`（已是 GGD 單位）。",
+            "type": "number",
+            "unit": "count"
+          },
+          "mode": {
+            "default": "toPoint",
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.mode = \"toPoint\"`；`docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） 的六個力學形狀裡有五個是「把被害者搬到另一個點」。",
+            "type": "enum",
+            "values": [
+              "toPoint",
+              "inPlace"
+            ]
+          },
+          "throwDistance": {
+            "default": 500,
+            "max": 2600,
+            "min": 0,
+            "origin": "⚠️ 只在 `throwMode: distance` 讀 —— `point` 模式下 expand 不把它寫進節點（GH#1050）。j:4757 共用投擲引擎 `10 × 50 = **500**`。⭐ 這一格是**多支**的：A0L6 `20×40=800`（j:50201，⚠️ tooltip 說 1000 而 **JASS 勝**）· A0SQ `12×50=600`（j:29712）· A0U5 200（j:52208）· A0Y7 `(4+4L)×50`=400…1000（j:54322）⇒ 家族取共用引擎值。",
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "throwMode": {
+            "default": "distance",
+            "origin": "j:51765 A0U1 `PolarProjectionBJ(casterLoc, 400.00, GetUnitFacing(caster))` · j:50109 A0L6 / j:29634 A0SQ `AngleBetweenPoints(caster, victim)` ⇒ 原作這一族**沒有任何一支**有「落點」，每一次拋投都是**方向 × 定長** ⇒ 預設 `distance`。`point`＝2026-09-06 之前的出貨行為（玩家選的點就是終點；expand 在這個模式下**不寫** `throwDistance` 進節點，所以那一格不是「可調卻無效」而是不進節點）—— 留著當 rollback 開關（owner 2026-08-23「沒做完以前別問我了自己判斷 但是留後台開關可以簡易 rollback」）。GH#1050。",
+            "type": "enum",
+            "values": [
+              "distance",
+              "point"
+            ]
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      }
+    },
+    "title": "比利海靈頓"
+  },
+  "brief": {
+    "concept": "比利海靈頓 社群英雄功能驗收稿。來源：摔角與網路迷因形象。  \n定位：抓取、雙人動作同步、近身支援。  \n註：本組招式名稱為 GGD 創編。\n\n視覺方向：藍白摔角衝擊線、落地塵環、夥伴鼓舞光；招式名均為 GGD 創編。\n以 GGD 硬輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "E": "〔肩膀衝撞〕",
+      "EX": "〔兄弟站起來〕",
+      "PASSIVE": "〔兄貴的氣勢〕",
+      "Q": "〔正面擒抱〕",
+      "R": "〔兄貴背摔〕",
+      "W": "〔肌肉防線〕"
+    },
+    "name": "比利海靈頓"
+  },
+  "presentation": {
+    "assetLocks": [
+      {
+        "byteSize": 881000,
+        "consumers": [
+          "champion:model"
+        ],
+        "kind": "model",
+        "mediaType": "model/gltf-binary",
+        "path": "assets/models/community/45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c.glb",
+        "registry": "normalized-upload",
+        "sha256": "45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c"
+      }
+    ],
+    "championIcon": "assets/icons/champions/thorne.webp",
+    "modelKey": "community.body.94c6d677a15c53a9fee369ccc79eb235ec766477b1dd7938",
+    "modelProvenance": {
+      "modelSha256": "45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c",
+      "notes": "肌肉男性／近身造型暫代比利，實際是赫拉克勒斯；未選斧劍，不是原人物寫實模型或雙人摔角動作。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。",
+      "relationship": "style-proxy",
+      "schema": "ggd-hero-model-provenance@1",
+      "sourceAssetId": "300heroes:cb2c63b8a72af4572f8e8550",
+      "sourceCharacter": "赫拉克勒斯",
+      "sourceWork": "Fate/stay night"
+    },
+    "schema": "ggd-hero-presentation@1",
+    "slots": {
+      "E": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "script": {
+          "abilityId": "community-review-15-20260907.e",
+          "id": "community-review-15-20260907.e",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                89,
+                153,
+                242
+              ],
+              "vfxId": "fx.prim.physical.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                89,
+                153,
+                242
+              ],
+              "vfxId": "fx.prim.physical.pulse",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "E",
+        "vfxLayers": []
+      },
+      "EX": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "script": {
+          "abilityId": "community-review-15-20260907.ex",
+          "id": "community-review-15-20260907.ex",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                89,
+                153,
+                242
+              ],
+              "vfxId": "fx.prim.physical.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                89,
+                153,
+                242
+              ],
+              "vfxId": "fx.prim.physical.pulse",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "EX",
+        "vfxLayers": []
+      },
+      "PASSIVE": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "script": null,
+        "sfxKey": null,
+        "slot": "PASSIVE",
+        "vfxLayers": []
+      },
+      "Q": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "script": {
+          "abilityId": "community-review-15-20260907.q",
+          "id": "community-review-15-20260907.q",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                89,
+                153,
+                242
+              ],
+              "vfxId": "fx.prim.physical.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                89,
+                153,
+                242
+              ],
+              "vfxId": "fx.prim.physical.slash",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "Q",
+        "vfxLayers": []
+      },
+      "R": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "script": {
+          "abilityId": "community-review-15-20260907.r",
+          "id": "community-review-15-20260907.r",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                89,
+                153,
+                242
+              ],
+              "vfxId": "fx.prim.physical.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                89,
+                153,
+                242
+              ],
+              "vfxId": "fx.prim.physical.arc",
+              "w3xScale": 1.25
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "R",
+        "vfxLayers": []
+      },
+      "W": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "script": {
+          "abilityId": "community-review-15-20260907.w",
+          "id": "community-review-15-20260907.w",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                89,
+                153,
+                242
+              ],
+              "vfxId": "fx.prim.physical.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                89,
+                153,
+                242
+              ],
+              "vfxId": "fx.prim.physical.arc",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "W",
+        "vfxLayers": []
+      }
+    },
+    "uploadedModel": {
+      "byteSize": 881000,
+      "clipMap": {
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "death": "dead",
+        "hurt": "bat_idle",
+        "idle": "bat_idle",
+        "run": "single_run"
+      },
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c",
+      "yawOffsetDeg": 0
+    }
+  },
+  "projectId": "community-review-15-20260907",
+  "receipts": [
+    {
+      "digest": "689c506a03afc38a7c8dae24f6cf0023dd40e3d28370b58f054080fd919e3dc6",
+      "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+      "kind": "generator-adopted",
+      "projectRevision": 17
+    }
+  ],
+  "refinementNotes": {
+    "E": "已改用既有直線衝鋒推撞模板。命中第一名敵人即停止的專屬條件尚未實作，不宣稱已完成；原交接的友軍保護待補文字不改寫，另以本說明指出和 Owner 衝撞原文的差異。",
+    "Q": "已將原單體斬擊改為既有抓取投擲模板。採短抓取後釋放的 GGD 改編；雙人專屬配對動作仍待製。",
+    "W": "已修正 W 配錯摔技，改用原 E 的三秒自身護盾。氣勢資源與消耗增強仍保留為未完成差異。 本次同步將 W 施放特效由 target 改為 self，護盾與提示都作用於自己。"
+  },
+  "revision": 23,
+  "schema": "ggd-hero-project@2",
+  "sections": {
+    "attributes": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    },
+    "identity": {
+      "fieldOwnership": {
+        "brief": "manual",
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      },
+      "revision": 13,
+      "state": "draft"
+    },
+    "mechanics": {
+      "fieldOwnership": {
+        "refinementNotes.E": "manual",
+        "refinementNotes.Q": "manual",
+        "refinementNotes.W": "manual"
+      },
+      "revision": 16,
+      "state": "stale"
+    },
+    "package": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "presentation": {
+      "fieldOwnership": {
+        "presentation": "manual"
+      },
+      "revision": 15,
+      "state": "stale"
+    },
+    "skills": {
+      "fieldOwnership": {
+        "acceptedPlan": "manual",
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      },
+      "revision": 23,
+      "state": "draft"
+    },
+    "validation": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    }
+  },
+  "sourceDesign": {
+    "identity": "來源：摔角與網路迷因形象。  \n定位：抓取、雙人動作同步、近身支援。  \n註：本組招式名稱為 GGD 創編。",
+    "name": "比利海靈頓",
+    "ownerText": "### 15｜比利海靈頓\n\n來源：摔角與網路迷因形象。  \n定位：抓取、雙人動作同步、近身支援。  \n註：本組招式名稱為 GGD 創編。\n\n- **PASSIVE｜〔兄貴的氣勢〕**：成功抓取或保護友軍累積氣勢，上限三層。\n- **Q｜〔正面擒抱〕**：抓取一名近身敵人，雙方短暫進入配對動作；抓取總時間有上限。\n- **W｜〔肌肉防線〕**：消耗氣勢提高短期防禦，無氣勢時仍有較弱效果。\n- **E｜〔肩膀衝撞〕**：向前衝撞，命中第一名敵人後停止。\n- **R｜〔兄貴背摔〕**：對抓取中的目標進行背摔；未抓取時先做可被閃避的近身捕捉。\n- **EX｜〔兄弟站起來〕**：為附近友軍提供護盾與短效韌性，以振奮及健美姿勢演出。\n\n**審查重點**：重點是兩個角色的動畫、位置與控制狀態同步；任一方死亡、淨化、斷線或回合結束時，配對關係均須正確解除。\n\n",
+    "reviewText": "重點是兩個角色的動畫、位置與控制狀態同步；任一方死亡、淨化、斷線或回合結束時，配對關係均須正確解除。",
+    "schema": "ggd-hero-source-design@1",
+    "slots": {
+      "E": {
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-15-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。",
+        "name": "〔肩膀衝撞〕",
+        "ownerDescription": "向前衝撞，命中第一名敵人後停止。",
+        "refinementContracts": [
+          "M01",
+          "M06",
+          "M12"
+        ],
+        "requiredRefinement": "需保護指定友軍與氣勢；目前自身。"
+      },
+      "EX": {
+        "baselineBehavior": "自身取得 3 秒增益：as +20%；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":100,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-15-20260907.ex.guard\",\"onExisting\":\"keepLarger\"}]。",
+        "name": "〔兄弟站起來〕",
+        "ownerDescription": "為附近友軍提供護盾與短效韌性，以振奮及健美姿勢演出。",
+        "refinementContracts": [
+          "M01",
+          "M06",
+          "M12"
+        ],
+        "requiredRefinement": "需氣勢消耗及附近隊友；目前自身攻速與盾。"
+      },
+      "PASSIVE": {
+        "baselineBehavior": "普攻追加極小級物理傷害，內置冷卻 3 秒。",
+        "name": "〔兄貴的氣勢〕",
+        "ownerDescription": "成功抓取或保護友軍累積氣勢，上限三層。",
+        "refinementContracts": [
+          "M01",
+          "M06",
+          "M12"
+        ],
+        "requiredRefinement": "需抓取成功／有效保護事件的氣勢資源。"
+      },
+      "Q": {
+        "baselineBehavior": "指定單一敵人造成小級物理傷害。",
+        "name": "〔正面擒抱〕",
+        "ownerDescription": "抓取一名近身敵人，雙方短暫進入配對動作；抓取總時間有上限。",
+        "refinementContracts": [
+          "M01",
+          "M06",
+          "M12"
+        ],
+        "requiredRefinement": "核對 Owner 原文與模擬／畫面後才可驗收。"
+      },
+      "R": {
+        "baselineBehavior": "拖拉指定目標後向前投擲 400 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。",
+        "name": "〔兄貴背摔〕",
+        "ownerDescription": "對抓取中的目標進行背摔；未抓取時先做可被閃避的近身捕捉。",
+        "refinementContracts": [
+          "M01",
+          "M06",
+          "M12"
+        ],
+        "requiredRefinement": "目前單次投擲；需大摔技雙人動作同步與有限區域衝擊。"
+      },
+      "W": {
+        "baselineBehavior": "拖拉指定目標後向前投擲 200 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。",
+        "name": "〔肌肉防線〕",
+        "ownerDescription": "消耗氣勢提高短期防禦，無氣勢時仍有較弱效果。",
+        "refinementContracts": [
+          "M01",
+          "M06",
+          "M12"
+        ],
+        "requiredRefinement": "雙人摔角動作、抓取免疫與同步挂點須驗收。"
+      }
+    },
+    "sourceSha256": "5751d0be06833700d3c2cc0c73eb23d71411c072fe5772226bedb294a3b003d3"
+  },
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "validationState": {
+    "attributes": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    },
+    "identity": {
+      "diagnosticCodes": [],
+      "revision": 13,
+      "status": "idle"
+    },
+    "mechanics": {
+      "diagnosticCodes": [],
+      "revision": 16,
+      "status": "stale"
+    },
+    "package": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "presentation": {
+      "diagnosticCodes": [],
+      "revision": 15,
+      "status": "stale"
+    },
+    "skills": {
+      "diagnosticCodes": [],
+      "revision": 23,
+      "status": "idle"
+    },
+    "validation": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    }
+  }
+}

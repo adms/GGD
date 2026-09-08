@@ -1,0 +1,62 @@
+{
+  "id": "imported.herofate",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/herofate.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Foot Right": {
+      "x": 0.0734,
+      "y": 0.212,
+      "z": 0.1897
+    },
+    "Foot Left": {
+      "x": 0.0651,
+      "y": 0.212,
+      "z": -0.1966
+    },
+    "Hand Right": {
+      "x": -0.0248,
+      "y": 1.1378,
+      "z": 0.291
+    },
+    "Hand Left": {
+      "x": -0.0248,
+      "y": 1.1806,
+      "z": -0.2773
+    },
+    "Head": {
+      "x": 0.0206,
+      "y": 2.1877,
+      "z": -0.003
+    },
+    "Chest": {
+      "x": 0.0185,
+      "y": 1.2777,
+      "z": -0.0018
+    },
+    "Origin": {
+      "x": -0.0138,
+      "y": 0.1358,
+      "z": 0.0058
+    },
+    "OverHead": {
+      "x": -0.0138,
+      "y": 2.698,
+      "z": 0.0058
+    },
+    "Weapon": {
+      "x": 1.0533,
+      "y": 1.1272,
+      "z": 0.2718
+    }
+  }
+}

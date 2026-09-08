@@ -1,0 +1,2005 @@
+{
+  "schema": "ggd-current-package-azazel-proof@1",
+  "status": "passed",
+  "archive": "/private/tmp/ggd-model-upload-acceptance/release-13956d93b/rebuilt-37-attempt2/32/package.zip",
+  "packageDigest": "sha256:504c2c2c3eb323a7247d335e5cac449581586140651c183d55d3b3f927c60927",
+  "contentVersion": "cv_720a022a110a",
+  "checks": [
+    {
+      "label": "curse-active",
+      "status": "accepted",
+      "reversed": true,
+      "ordinaryExDamageEvents": 0,
+      "events": [
+        {
+          "type": "exUnlock",
+          "tick": 1,
+          "data": {
+            "id": 1,
+            "abilityId": "community-review-32-20260907.ex"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -43,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "markChanged",
+          "tick": 1,
+          "data": {
+            "id": 1,
+            "markId": "community-review-32-20260907.negative-energy",
+            "count": 3
+          },
+          "actorPose": {
+            "caster": {
+              "x": -43,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "castRejected",
+          "tick": 1,
+          "data": {
+            "entity": 1,
+            "slot": "R",
+            "reason": "approaching"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -42.92888888888889,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "abilityCast",
+          "tick": 7,
+          "data": {
+            "caster": 1,
+            "slot": "R",
+            "abilityId": "community-review-32-20260907.r",
+            "point": {
+              "x": -37,
+              "z": 0
+            },
+            "direction": {
+              "x": 1,
+              "z": 0
+            }
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "castBegin",
+          "tick": 7,
+          "data": {
+            "caster": 1,
+            "slot": "R",
+            "abilityId": "community-review-32-20260907.r",
+            "ticks": 24,
+            "castTimeSec": 0.8
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "healthSpend",
+          "tick": 31,
+          "data": {
+            "source": 1,
+            "target": 1,
+            "amount": 300.35681632653086,
+            "remaining": 4709.9099183673525,
+            "origin": "ability:community-review-32-20260907.r"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "projectileSpawn",
+          "tick": 31,
+          "data": {
+            "id": 4,
+            "owner": 1,
+            "projectileId": "imported.bolt.void",
+            "origin": "ability:community-review-32-20260907.r"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "abilityHit",
+          "tick": 31,
+          "data": {
+            "caster": 1,
+            "target": 2,
+            "slot": "R"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "castEnd",
+          "tick": 31,
+          "data": {
+            "caster": 1,
+            "slot": "R",
+            "abilityId": "community-review-32-20260907.r"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "recoveryBegin",
+          "tick": 31,
+          "data": {
+            "caster": 1,
+            "slot": "R",
+            "abilityId": "community-review-32-20260907.r",
+            "ticks": 18,
+            "recoverySec": 0.6,
+            "rule": "damage"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "projectileHit",
+          "tick": 36,
+          "data": {
+            "id": 4,
+            "owner": 1,
+            "target": 2,
+            "projectileId": "imported.bolt.void",
+            "origin": "ability:community-review-32-20260907.r"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "buffApply",
+          "tick": 36,
+          "data": {
+            "source": 1,
+            "target": 2,
+            "origin": "ability:community-review-32-20260907.r"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "floatingText",
+          "tick": 36,
+          "data": {
+            "text": "萎靡 ↓",
+            "colorRgb": [
+              166,
+              102,
+              217
+            ],
+            "durationSec": 1.2,
+            "subjects": [
+              {
+                "id": 2,
+                "x": -37,
+                "z": 0
+              }
+            ],
+            "caster": 1,
+            "zone": 0,
+            "origin": "ability:community-review-32-20260907.r"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "projectileEnd",
+          "tick": 36,
+          "data": {
+            "id": 4,
+            "x": -38,
+            "z": 0,
+            "owner": 1,
+            "projectileId": "imported.bolt.void",
+            "origin": "ability:community-review-32-20260907.r",
+            "hit": true
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "damage",
+          "tick": 36,
+          "data": {
+            "x": -37,
+            "z": 0,
+            "source": 1,
+            "target": 2,
+            "amount": 1007.7230193197344,
+            "type": "magic",
+            "dmgType": "magic",
+            "blocked": false,
+            "crit": false,
+            "killingBlow": false,
+            "origin": "ability:community-review-32-20260907.r"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "recoveryEnd",
+          "tick": 36,
+          "data": {
+            "caster": 1,
+            "slot": "R",
+            "abilityId": "community-review-32-20260907.r",
+            "reason": "hit",
+            "ticksSaved": 13
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "hitImpact",
+          "tick": 36,
+          "data": {
+            "x": -37,
+            "z": 0,
+            "source": 1,
+            "target": 2,
+            "dmgType": "magic",
+            "amount": 1007.7230193197344,
+            "blocked": false,
+            "crit": false,
+            "killingBlow": false,
+            "profile": {
+              "tier": "heavy",
+              "hitstopTicks": 0,
+              "hitstunTicks": 0,
+              "knockbackDir": {
+                "x": 0,
+                "z": 0
+              },
+              "knockbackMag": 0,
+              "isEX": false,
+              "isBlock": false,
+              "isCounter": false,
+              "shakeMag": 0.85,
+              "shakeStyle": "directional",
+              "sparkKind": "magic",
+              "camKick": 0.5,
+              "exFreeze": 0
+            }
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "castRejected",
+          "tick": 46,
+          "data": {
+            "entity": 1,
+            "slot": "EX",
+            "reason": "approaching"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.648888888888905,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "markChanged",
+          "tick": 52,
+          "data": {
+            "id": 1,
+            "markId": "community-review-32-20260907.negative-energy",
+            "count": 0
+          },
+          "actorPose": {
+            "caster": {
+              "x": -40.440000000000026,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "abilityCast",
+          "tick": 52,
+          "data": {
+            "caster": 1,
+            "slot": "EX",
+            "abilityId": "community-review-32-20260907.ex",
+            "point": {
+              "x": -37,
+              "z": 0
+            },
+            "direction": {
+              "x": 1,
+              "z": 0
+            }
+          },
+          "actorPose": {
+            "caster": {
+              "x": -40.440000000000026,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "buffApply",
+          "tick": 52,
+          "data": {
+            "source": 1,
+            "target": 2,
+            "origin": "ability:community-review-32-20260907.ex"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -40.440000000000026,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "floatingText",
+          "tick": 52,
+          "data": {
+            "text": "反轉增益 ↑ AD/AP +10%",
+            "colorRgb": [
+              255,
+              204,
+              38
+            ],
+            "durationSec": 1.2,
+            "subjects": [
+              {
+                "id": 2,
+                "x": -37,
+                "z": 0
+              }
+            ],
+            "caster": 1,
+            "zone": 0,
+            "origin": "ability:community-review-32-20260907.ex"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -40.440000000000026,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "floatingText",
+          "tick": 52,
+          "data": {
+            "text": "怎麼反而變強了？！",
+            "colorRgb": [
+              255,
+              230,
+              128
+            ],
+            "durationSec": 1.2,
+            "subjects": [
+              {
+                "id": 1,
+                "x": -40.440000000000026,
+                "z": 0
+              }
+            ],
+            "caster": 1,
+            "zone": 0,
+            "origin": "ability:community-review-32-20260907.ex"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -40.440000000000026,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "abilityHit",
+          "tick": 52,
+          "data": {
+            "caster": 1,
+            "target": 2,
+            "slot": "EX"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -40.440000000000026,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        }
+      ],
+      "assertions": [
+        {
+          "id": "intent-accepted",
+          "status": "pass",
+          "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+        },
+        {
+          "id": "single-slot-resource-setup",
+          "status": "warning",
+          "summaryZh": "單槽試玩預先補入 3 層施放資源；只驗證支付與技能效果，不代表已驗證集氣。整套驗收不補資源。"
+        },
+        {
+          "id": "single-slot-prior-cast",
+          "status": "warning",
+          "summaryZh": "前置 R：已施放，經過 1.5 秒後嘗試本招；保留實際生命、魔力、位置與狀態。"
+        },
+        {
+          "id": "mana-spent",
+          "status": "pass",
+          "summaryZh": "施放後魔力已扣除。"
+        },
+        {
+          "id": "observable-result",
+          "status": "pass",
+          "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+        }
+      ]
+    },
+    {
+      "label": "curse-expired",
+      "status": "accepted",
+      "reversed": false,
+      "ordinaryExDamageEvents": 1,
+      "events": [
+        {
+          "type": "exUnlock",
+          "tick": 1,
+          "data": {
+            "id": 1,
+            "abilityId": "community-review-32-20260907.ex"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -43,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "markChanged",
+          "tick": 1,
+          "data": {
+            "id": 1,
+            "markId": "community-review-32-20260907.negative-energy",
+            "count": 3
+          },
+          "actorPose": {
+            "caster": {
+              "x": -43,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "castRejected",
+          "tick": 1,
+          "data": {
+            "entity": 1,
+            "slot": "R",
+            "reason": "approaching"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -42.92888888888889,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "abilityCast",
+          "tick": 7,
+          "data": {
+            "caster": 1,
+            "slot": "R",
+            "abilityId": "community-review-32-20260907.r",
+            "point": {
+              "x": -37,
+              "z": 0
+            },
+            "direction": {
+              "x": 1,
+              "z": 0
+            }
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "castBegin",
+          "tick": 7,
+          "data": {
+            "caster": 1,
+            "slot": "R",
+            "abilityId": "community-review-32-20260907.r",
+            "ticks": 24,
+            "castTimeSec": 0.8
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "healthSpend",
+          "tick": 31,
+          "data": {
+            "source": 1,
+            "target": 1,
+            "amount": 300.35681632653086,
+            "remaining": 4709.9099183673525,
+            "origin": "ability:community-review-32-20260907.r"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "projectileSpawn",
+          "tick": 31,
+          "data": {
+            "id": 4,
+            "owner": 1,
+            "projectileId": "imported.bolt.void",
+            "origin": "ability:community-review-32-20260907.r"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "abilityHit",
+          "tick": 31,
+          "data": {
+            "caster": 1,
+            "target": 2,
+            "slot": "R"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "castEnd",
+          "tick": 31,
+          "data": {
+            "caster": 1,
+            "slot": "R",
+            "abilityId": "community-review-32-20260907.r"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "recoveryBegin",
+          "tick": 31,
+          "data": {
+            "caster": 1,
+            "slot": "R",
+            "abilityId": "community-review-32-20260907.r",
+            "ticks": 18,
+            "recoverySec": 0.6,
+            "rule": "damage"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "projectileHit",
+          "tick": 36,
+          "data": {
+            "id": 4,
+            "owner": 1,
+            "target": 2,
+            "projectileId": "imported.bolt.void",
+            "origin": "ability:community-review-32-20260907.r"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "buffApply",
+          "tick": 36,
+          "data": {
+            "source": 1,
+            "target": 2,
+            "origin": "ability:community-review-32-20260907.r"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "floatingText",
+          "tick": 36,
+          "data": {
+            "text": "萎靡 ↓",
+            "colorRgb": [
+              166,
+              102,
+              217
+            ],
+            "durationSec": 1.2,
+            "subjects": [
+              {
+                "id": 2,
+                "x": -37,
+                "z": 0
+              }
+            ],
+            "caster": 1,
+            "zone": 0,
+            "origin": "ability:community-review-32-20260907.r"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "projectileEnd",
+          "tick": 36,
+          "data": {
+            "id": 4,
+            "x": -38,
+            "z": 0,
+            "owner": 1,
+            "projectileId": "imported.bolt.void",
+            "origin": "ability:community-review-32-20260907.r",
+            "hit": true
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "damage",
+          "tick": 36,
+          "data": {
+            "x": -37,
+            "z": 0,
+            "source": 1,
+            "target": 2,
+            "amount": 1007.7230193197344,
+            "type": "magic",
+            "dmgType": "magic",
+            "blocked": false,
+            "crit": false,
+            "killingBlow": false,
+            "origin": "ability:community-review-32-20260907.r"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "recoveryEnd",
+          "tick": 36,
+          "data": {
+            "caster": 1,
+            "slot": "R",
+            "abilityId": "community-review-32-20260907.r",
+            "reason": "hit",
+            "ticksSaved": 13
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "hitImpact",
+          "tick": 36,
+          "data": {
+            "x": -37,
+            "z": 0,
+            "source": 1,
+            "target": 2,
+            "dmgType": "magic",
+            "amount": 1007.7230193197344,
+            "blocked": false,
+            "crit": false,
+            "killingBlow": false,
+            "profile": {
+              "tier": "heavy",
+              "hitstopTicks": 0,
+              "hitstunTicks": 0,
+              "knockbackDir": {
+                "x": 0,
+                "z": 0
+              },
+              "knockbackMag": 0,
+              "isEX": false,
+              "isBlock": false,
+              "isCounter": false,
+              "shakeMag": 0.85,
+              "shakeStyle": "directional",
+              "sparkKind": "magic",
+              "camKick": 0.5,
+              "exFreeze": 0
+            }
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "castRejected",
+          "tick": 211,
+          "data": {
+            "entity": 1,
+            "slot": "EX",
+            "reason": "approaching"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.648888888888905,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "markChanged",
+          "tick": 217,
+          "data": {
+            "id": 1,
+            "markId": "community-review-32-20260907.negative-energy",
+            "count": 0
+          },
+          "actorPose": {
+            "caster": {
+              "x": -40.440000000000026,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "abilityCast",
+          "tick": 217,
+          "data": {
+            "caster": 1,
+            "slot": "EX",
+            "abilityId": "community-review-32-20260907.ex",
+            "point": {
+              "x": -37,
+              "z": 0
+            },
+            "direction": {
+              "x": 1,
+              "z": 0
+            }
+          },
+          "actorPose": {
+            "caster": {
+              "x": -40.440000000000026,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "buffApply",
+          "tick": 217,
+          "data": {
+            "source": 1,
+            "target": 2,
+            "origin": "ability:community-review-32-20260907.ex"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -40.440000000000026,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "floatingText",
+          "tick": 217,
+          "data": {
+            "text": "終章萎靡 ↓ AD/AP -20%",
+            "colorRgb": [
+              166,
+              77,
+              204
+            ],
+            "durationSec": 1.2,
+            "subjects": [
+              {
+                "id": 2,
+                "x": -37,
+                "z": 0
+              }
+            ],
+            "caster": 1,
+            "zone": 0,
+            "origin": "ability:community-review-32-20260907.ex"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -40.440000000000026,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "abilityHit",
+          "tick": 217,
+          "data": {
+            "caster": 1,
+            "target": 2,
+            "slot": "EX"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -40.440000000000026,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "damage",
+          "tick": 217,
+          "data": {
+            "x": -37,
+            "z": 0,
+            "source": 1,
+            "target": 2,
+            "amount": 1007.7230193197344,
+            "type": "magic",
+            "dmgType": "magic",
+            "blocked": false,
+            "crit": false,
+            "killingBlow": false,
+            "origin": "ability:community-review-32-20260907.ex"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -40.440000000000026,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "hitImpact",
+          "tick": 217,
+          "data": {
+            "x": -37,
+            "z": 0,
+            "source": 1,
+            "target": 2,
+            "dmgType": "magic",
+            "amount": 1007.7230193197344,
+            "blocked": false,
+            "crit": false,
+            "killingBlow": false,
+            "profile": {
+              "tier": "heavy",
+              "hitstopTicks": 0,
+              "hitstunTicks": 0,
+              "knockbackDir": {
+                "x": 0,
+                "z": 0
+              },
+              "knockbackMag": 0,
+              "isEX": true,
+              "isBlock": false,
+              "isCounter": false,
+              "shakeMag": 1.0625,
+              "shakeStyle": "omni",
+              "sparkKind": "magic",
+              "camKick": 0.7,
+              "exFreeze": 8
+            }
+          },
+          "actorPose": {
+            "caster": {
+              "x": -40.440000000000026,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "markChanged",
+          "tick": 217,
+          "data": {
+            "id": 1,
+            "markId": "community-review-32-20260907.negative-energy",
+            "count": 1
+          },
+          "actorPose": {
+            "caster": {
+              "x": -40.440000000000026,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        }
+      ],
+      "assertions": [
+        {
+          "id": "intent-accepted",
+          "status": "pass",
+          "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+        },
+        {
+          "id": "single-slot-resource-setup",
+          "status": "warning",
+          "summaryZh": "單槽試玩預先補入 3 層施放資源；只驗證支付與技能效果，不代表已驗證集氣。整套驗收不補資源。"
+        },
+        {
+          "id": "single-slot-prior-cast",
+          "status": "warning",
+          "summaryZh": "前置 R：已施放，經過 7 秒後嘗試本招；保留實際生命、魔力、位置與狀態。"
+        },
+        {
+          "id": "mana-spent",
+          "status": "pass",
+          "summaryZh": "施放後魔力已扣除。"
+        },
+        {
+          "id": "observable-result",
+          "status": "pass",
+          "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+        }
+      ]
+    },
+    {
+      "label": "no-resources",
+      "status": "rejected",
+      "rejectionReason": "no-resource",
+      "reversed": false,
+      "ordinaryExDamageEvents": 0,
+      "events": [
+        {
+          "type": "exUnlock",
+          "tick": 1,
+          "data": {
+            "id": 1,
+            "abilityId": "community-review-32-20260907.ex"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -43,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "castRejected",
+          "tick": 1,
+          "data": {
+            "entity": 1,
+            "slot": "R",
+            "reason": "approaching"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -42.92888888888889,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "abilityCast",
+          "tick": 7,
+          "data": {
+            "caster": 1,
+            "slot": "R",
+            "abilityId": "community-review-32-20260907.r",
+            "point": {
+              "x": -37,
+              "z": 0
+            },
+            "direction": {
+              "x": 1,
+              "z": 0
+            }
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "castBegin",
+          "tick": 7,
+          "data": {
+            "caster": 1,
+            "slot": "R",
+            "abilityId": "community-review-32-20260907.r",
+            "ticks": 24,
+            "castTimeSec": 0.8
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "healthSpend",
+          "tick": 31,
+          "data": {
+            "source": 1,
+            "target": 1,
+            "amount": 300.35681632653086,
+            "remaining": 4709.9099183673525,
+            "origin": "ability:community-review-32-20260907.r"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "projectileSpawn",
+          "tick": 31,
+          "data": {
+            "id": 4,
+            "owner": 1,
+            "projectileId": "imported.bolt.void",
+            "origin": "ability:community-review-32-20260907.r"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "abilityHit",
+          "tick": 31,
+          "data": {
+            "caster": 1,
+            "target": 2,
+            "slot": "R"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "castEnd",
+          "tick": 31,
+          "data": {
+            "caster": 1,
+            "slot": "R",
+            "abilityId": "community-review-32-20260907.r"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "recoveryBegin",
+          "tick": 31,
+          "data": {
+            "caster": 1,
+            "slot": "R",
+            "abilityId": "community-review-32-20260907.r",
+            "ticks": 18,
+            "recoverySec": 0.6,
+            "rule": "damage"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "projectileHit",
+          "tick": 36,
+          "data": {
+            "id": 4,
+            "owner": 1,
+            "target": 2,
+            "projectileId": "imported.bolt.void",
+            "origin": "ability:community-review-32-20260907.r"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "buffApply",
+          "tick": 36,
+          "data": {
+            "source": 1,
+            "target": 2,
+            "origin": "ability:community-review-32-20260907.r"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "floatingText",
+          "tick": 36,
+          "data": {
+            "text": "萎靡 ↓",
+            "colorRgb": [
+              166,
+              102,
+              217
+            ],
+            "durationSec": 1.2,
+            "subjects": [
+              {
+                "id": 2,
+                "x": -37,
+                "z": 0
+              }
+            ],
+            "caster": 1,
+            "zone": 0,
+            "origin": "ability:community-review-32-20260907.r"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "projectileEnd",
+          "tick": 36,
+          "data": {
+            "id": 4,
+            "x": -38,
+            "z": 0,
+            "owner": 1,
+            "projectileId": "imported.bolt.void",
+            "origin": "ability:community-review-32-20260907.r",
+            "hit": true
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "damage",
+          "tick": 36,
+          "data": {
+            "x": -37,
+            "z": 0,
+            "source": 1,
+            "target": 2,
+            "amount": 1007.7230193197344,
+            "type": "magic",
+            "dmgType": "magic",
+            "blocked": false,
+            "crit": false,
+            "killingBlow": false,
+            "origin": "ability:community-review-32-20260907.r"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "recoveryEnd",
+          "tick": 36,
+          "data": {
+            "caster": 1,
+            "slot": "R",
+            "abilityId": "community-review-32-20260907.r",
+            "reason": "hit",
+            "ticksSaved": 13
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "hitImpact",
+          "tick": 36,
+          "data": {
+            "x": -37,
+            "z": 0,
+            "source": 1,
+            "target": 2,
+            "dmgType": "magic",
+            "amount": 1007.7230193197344,
+            "blocked": false,
+            "crit": false,
+            "killingBlow": false,
+            "profile": {
+              "tier": "heavy",
+              "hitstopTicks": 0,
+              "hitstunTicks": 0,
+              "knockbackDir": {
+                "x": 0,
+                "z": 0
+              },
+              "knockbackMag": 0,
+              "isEX": false,
+              "isBlock": false,
+              "isCounter": false,
+              "shakeMag": 0.85,
+              "shakeStyle": "directional",
+              "sparkKind": "magic",
+              "camKick": 0.5,
+              "exFreeze": 0
+            }
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "markChanged",
+          "tick": 36,
+          "data": {
+            "id": 1,
+            "markId": "community-review-32-20260907.negative-energy",
+            "count": 1
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "castRejected",
+          "tick": 46,
+          "data": {
+            "entity": 1,
+            "slot": "EX",
+            "reason": "no-resource"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -41.72000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        }
+      ],
+      "assertions": [
+        {
+          "id": "intent-accepted",
+          "status": "fail",
+          "summaryZh": "未完成施放：no-resource"
+        },
+        {
+          "id": "single-slot-prior-cast",
+          "status": "warning",
+          "summaryZh": "前置 R：已施放，經過 1.5 秒後嘗試本招；保留實際生命、魔力、位置與狀態。"
+        }
+      ]
+    },
+    {
+      "label": "before-r-hit",
+      "status": "accepted",
+      "reversed": false,
+      "ordinaryExDamageEvents": 1,
+      "events": [
+        {
+          "type": "exUnlock",
+          "tick": 1,
+          "data": {
+            "id": 1,
+            "abilityId": "community-review-32-20260907.ex"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -43,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "markChanged",
+          "tick": 1,
+          "data": {
+            "id": 1,
+            "markId": "community-review-32-20260907.negative-energy",
+            "count": 3
+          },
+          "actorPose": {
+            "caster": {
+              "x": -43,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "castRejected",
+          "tick": 1,
+          "data": {
+            "entity": 1,
+            "slot": "R",
+            "reason": "approaching"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -42.92888888888889,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "castRejected",
+          "tick": 4,
+          "data": {
+            "entity": 1,
+            "slot": "EX",
+            "reason": "approaching"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -42.36000000000001,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "markChanged",
+          "tick": 13,
+          "data": {
+            "id": 1,
+            "markId": "community-review-32-20260907.negative-energy",
+            "count": 0
+          },
+          "actorPose": {
+            "caster": {
+              "x": -40.440000000000026,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "abilityCast",
+          "tick": 13,
+          "data": {
+            "caster": 1,
+            "slot": "EX",
+            "abilityId": "community-review-32-20260907.ex",
+            "point": {
+              "x": -37,
+              "z": 0
+            },
+            "direction": {
+              "x": 1,
+              "z": 0
+            }
+          },
+          "actorPose": {
+            "caster": {
+              "x": -40.440000000000026,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "buffApply",
+          "tick": 13,
+          "data": {
+            "source": 1,
+            "target": 2,
+            "origin": "ability:community-review-32-20260907.ex"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -40.440000000000026,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "floatingText",
+          "tick": 13,
+          "data": {
+            "text": "終章萎靡 ↓ AD/AP -20%",
+            "colorRgb": [
+              166,
+              77,
+              204
+            ],
+            "durationSec": 1.2,
+            "subjects": [
+              {
+                "id": 2,
+                "x": -37,
+                "z": 0
+              }
+            ],
+            "caster": 1,
+            "zone": 0,
+            "origin": "ability:community-review-32-20260907.ex"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -40.440000000000026,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "abilityHit",
+          "tick": 13,
+          "data": {
+            "caster": 1,
+            "target": 2,
+            "slot": "EX"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -40.440000000000026,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "damage",
+          "tick": 13,
+          "data": {
+            "x": -37,
+            "z": 0,
+            "source": 1,
+            "target": 2,
+            "amount": 1007.7230193197344,
+            "type": "magic",
+            "dmgType": "magic",
+            "blocked": false,
+            "crit": false,
+            "killingBlow": false,
+            "origin": "ability:community-review-32-20260907.ex"
+          },
+          "actorPose": {
+            "caster": {
+              "x": -40.440000000000026,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "hitImpact",
+          "tick": 13,
+          "data": {
+            "x": -37,
+            "z": 0,
+            "source": 1,
+            "target": 2,
+            "dmgType": "magic",
+            "amount": 1007.7230193197344,
+            "blocked": false,
+            "crit": false,
+            "killingBlow": false,
+            "profile": {
+              "tier": "heavy",
+              "hitstopTicks": 0,
+              "hitstunTicks": 0,
+              "knockbackDir": {
+                "x": 0,
+                "z": 0
+              },
+              "knockbackMag": 0,
+              "isEX": true,
+              "isBlock": false,
+              "isCounter": false,
+              "shakeMag": 1.0625,
+              "shakeStyle": "omni",
+              "sparkKind": "magic",
+              "camKick": 0.7,
+              "exFreeze": 8
+            }
+          },
+          "actorPose": {
+            "caster": {
+              "x": -40.440000000000026,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        },
+        {
+          "type": "markChanged",
+          "tick": 13,
+          "data": {
+            "id": 1,
+            "markId": "community-review-32-20260907.negative-energy",
+            "count": 1
+          },
+          "actorPose": {
+            "caster": {
+              "x": -40.440000000000026,
+              "z": 0
+            },
+            "target": {
+              "x": -37,
+              "z": 0
+            }
+          }
+        }
+      ],
+      "assertions": [
+        {
+          "id": "intent-accepted",
+          "status": "pass",
+          "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+        },
+        {
+          "id": "single-slot-resource-setup",
+          "status": "warning",
+          "summaryZh": "單槽試玩預先補入 3 層施放資源；只驗證支付與技能效果，不代表已驗證集氣。整套驗收不補資源。"
+        },
+        {
+          "id": "single-slot-prior-cast",
+          "status": "warning",
+          "summaryZh": "前置 R：未施放（no-cast-observed），經過 0.1 秒後嘗試本招；保留實際生命、魔力、位置與狀態。"
+        },
+        {
+          "id": "mana-spent",
+          "status": "pass",
+          "summaryZh": "施放後魔力已扣除。"
+        },
+        {
+          "id": "observable-result",
+          "status": "pass",
+          "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+        }
+      ]
+    }
+  ]
+}

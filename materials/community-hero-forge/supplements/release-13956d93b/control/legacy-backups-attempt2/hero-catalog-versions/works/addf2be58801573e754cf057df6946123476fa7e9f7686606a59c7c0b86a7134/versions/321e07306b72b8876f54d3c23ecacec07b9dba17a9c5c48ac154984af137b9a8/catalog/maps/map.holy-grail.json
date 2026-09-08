@@ -1,0 +1,593 @@
+{
+  "schema": "map@1",
+  "id": "map.holy-grail",
+  "name": "大聖杯洞窟",
+  "template": "CENTRAL_RING",
+  "groundStyle": "stone",
+  "scenery": {
+    "palette": {
+      "floor": "#b9a86a",
+      "wall": "#7c6f42",
+      "sky": "#d8ffe0",
+      "ground": "#1a2418",
+      "void": "#04080a"
+    },
+    "lighting": {
+      "keyColor": "#ffe9a8",
+      "keyIntensity": 0.65,
+      "keyYawDeg": 315,
+      "keyPitchDeg": 60,
+      "fillIntensity": 0.5,
+      "wave": "breathe",
+      "periodSec": 6.5,
+      "intensityAmp": 0.28,
+      "yawSweepDeg": 0,
+      "peakColor": "#b8ffcf"
+    },
+    "props": [
+      {
+        "model": "assets/models/scenery/icicle_cluster.glb",
+        "count": 8,
+        "bandFrom": 0.88,
+        "bandTo": 0.97,
+        "scaleMin": 1.1,
+        "scaleMax": 1.6,
+        "facing": "random",
+        "seed": 141
+      },
+      {
+        "model": "assets/models/scenery/ice_blocks.glb",
+        "count": 6,
+        "bandFrom": 0.85,
+        "bandTo": 0.93,
+        "scaleMin": 1.2,
+        "scaleMax": 1.8,
+        "facing": "random",
+        "seed": 142
+      },
+      {
+        "model": "assets/models/scenery/broken_pillar.glb",
+        "count": 4,
+        "bandFrom": 0.92,
+        "bandTo": 0.98,
+        "scaleMin": 1.1,
+        "scaleMax": 1.4,
+        "facing": "random",
+        "seed": 143
+      },
+      {
+        "model": "assets/models/hex/rock.glb",
+        "count": 10,
+        "bandFrom": 0.84,
+        "bandTo": 0.99,
+        "scaleMin": 1.2,
+        "scaleMax": 1.4,
+        "facing": "random",
+        "seed": 17
+      },
+      {
+        "model": "assets/models/props/torch.glb",
+        "count": 6,
+        "bandFrom": 0.94,
+        "bandTo": 0.97,
+        "scaleMin": 1.5,
+        "scaleMax": 1.8,
+        "facing": "faceIn",
+        "seed": 61
+      }
+    ]
+  },
+  "grid": {
+    "cols": 24,
+    "rows": 18,
+    "tileSize": 2
+  },
+  "tiles": [
+    "########################",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......###....###......#",
+    "#......#........#......#",
+    "#......#........#......#",
+    "#......................#",
+    "#......#........#......#",
+    "#......#........#......#",
+    "#......###....###......#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "########################"
+  ],
+  "regions": [
+    {
+      "id": "grail",
+      "label": "大聖杯",
+      "role": "landmark",
+      "rects": [
+        {
+          "col": 6,
+          "row": 6,
+          "w": 10,
+          "h": 7
+        }
+      ]
+    },
+    {
+      "id": "mana_pool",
+      "label": "魔力池",
+      "role": "court",
+      "rects": [
+        {
+          "col": 1,
+          "row": 1,
+          "w": 22,
+          "h": 5
+        }
+      ]
+    },
+    {
+      "id": "altar",
+      "label": "祭壇",
+      "role": "platform",
+      "rects": [
+        {
+          "col": 1,
+          "row": 6,
+          "w": 5,
+          "h": 7
+        }
+      ]
+    },
+    {
+      "id": "stone_bridge",
+      "label": "石橋",
+      "role": "corridor",
+      "rects": [
+        {
+          "col": 18,
+          "row": 6,
+          "w": 5,
+          "h": 7
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "label": "地下通道",
+      "role": "outer",
+      "rects": [
+        {
+          "col": 1,
+          "row": 13,
+          "w": 22,
+          "h": 4
+        }
+      ]
+    }
+  ],
+  "landmark": "grail",
+  "interactions": [
+    {
+      "id": "grail-core",
+      "kind": "capture",
+      "at": {
+        "col": 10,
+        "row": 9
+      },
+      "radius": 2,
+      "regionId": "grail",
+      "params": {}
+    },
+    {
+      "id": "grail-rim",
+      "kind": "pickup",
+      "at": {
+        "col": 13,
+        "row": 9
+      },
+      "radius": 2,
+      "regionId": "grail",
+      "params": {}
+    },
+    {
+      "id": "pool-w",
+      "kind": "pickup",
+      "at": {
+        "col": 3,
+        "row": 3
+      },
+      "radius": 2,
+      "regionId": "mana_pool",
+      "params": {}
+    },
+    {
+      "id": "pool-e",
+      "kind": "pickup",
+      "at": {
+        "col": 18,
+        "row": 3
+      },
+      "radius": 2,
+      "regionId": "mana_pool",
+      "params": {}
+    },
+    {
+      "id": "altar-mid",
+      "kind": "capture",
+      "at": {
+        "col": 3,
+        "row": 9
+      },
+      "radius": 2,
+      "regionId": "altar",
+      "params": {}
+    },
+    {
+      "id": "bridge-mid",
+      "kind": "capture",
+      "at": {
+        "col": 18,
+        "row": 9
+      },
+      "radius": 2,
+      "regionId": "stone_bridge",
+      "params": {}
+    },
+    {
+      "id": "tunnel-w",
+      "kind": "pickup",
+      "at": {
+        "col": 3,
+        "row": 15
+      },
+      "radius": 2,
+      "regionId": "tunnel",
+      "params": {}
+    },
+    {
+      "id": "tunnel-e",
+      "kind": "pickup",
+      "at": {
+        "col": 18,
+        "row": 15
+      },
+      "radius": 2,
+      "regionId": "tunnel",
+      "params": {}
+    }
+  ],
+  "gimmick": {
+    "kind": "routeSwap",
+    "gateGroups": [
+      {
+        "id": "mud_west",
+        "tiles": [
+          {
+            "col": 7,
+            "row": 9
+          }
+        ]
+      },
+      {
+        "id": "mud_east",
+        "tiles": [
+          {
+            "col": 16,
+            "row": 9
+          }
+        ]
+      }
+    ],
+    "schedule": {
+      "kind": "periodic",
+      "periodTicks": 900,
+      "telegraphTicks": 60,
+      "configurations": [
+        [
+          "mud_west"
+        ],
+        [
+          "mud_east"
+        ]
+      ]
+    }
+  },
+  "landmarkProps": [
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 11,
+        "row": 7
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 12,
+        "row": 7
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 11,
+        "row": 10
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 12,
+        "row": 10
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 3,
+        "row": 9
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 20,
+        "row": 9
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "at": {
+        "col": 11,
+        "row": 4
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "at": {
+        "col": 12,
+        "row": 13
+      },
+      "rotQuarter": 2,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/floor_tile_large.glb",
+      "at": {
+        "col": 11,
+        "row": 9
+      },
+      "rotQuarter": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/props/floor_tile_large.glb",
+      "at": {
+        "col": 12,
+        "row": 9
+      },
+      "rotQuarter": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Base.glb",
+      "at": {
+        "col": 1,
+        "row": 1
+      },
+      "rotQuarter": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Small_03.glb",
+      "at": {
+        "col": 22,
+        "row": 1
+      },
+      "rotQuarter": 1,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Small_04.glb",
+      "at": {
+        "col": 1,
+        "row": 16
+      },
+      "rotQuarter": 2,
+      "scale": 0.8
+    },
+    {
+      "model": "assets/models/scenery-cc0/christmas__SnowBall.glb",
+      "at": {
+        "col": 22,
+        "row": 16
+      },
+      "rotQuarter": 3,
+      "scale": 1.0
+    }
+  ],
+  "backgroundProps": [
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 8,
+        "row": 6
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 15,
+        "row": 6
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 8,
+        "row": 12
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 15,
+        "row": 12
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 7,
+        "row": 8
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 16,
+        "row": 8
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 7,
+        "row": 11
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 16,
+        "row": 11
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 0,
+        "row": 5
+      },
+      "rotQuarter": 0,
+      "scale": 1.3
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 23,
+        "row": 5
+      },
+      "rotQuarter": 2,
+      "scale": 1.3
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 0,
+        "row": 13
+      },
+      "rotQuarter": 0,
+      "scale": 1.3
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 23,
+        "row": 13
+      },
+      "rotQuarter": 2,
+      "scale": 1.3
+    }
+  ],
+  "backdrop": {
+    "layers": [
+      {
+        "fromRadius": 1.0,
+        "toRadius": 2.05,
+        "y": -4,
+        "color": "#2b3a63",
+        "alpha": 1,
+        "profile": "towers",
+        "jitter": 0.75,
+        "segments": 36,
+        "rim": {
+          "color": "#ffe27a",
+          "width": 2.0
+        }
+      },
+      {
+        "fromRadius": 1.8,
+        "toRadius": 3.4,
+        "y": -13,
+        "color": "#1e2a4c",
+        "alpha": 1,
+        "profile": "torii",
+        "jitter": 0.8,
+        "segments": 36,
+        "rim": {
+          "color": "#e0483c",
+          "width": 1.6
+        }
+      },
+      {
+        "fromRadius": 3.1,
+        "toRadius": 5.1,
+        "y": -30,
+        "color": "#141d33",
+        "alpha": 1,
+        "profile": "cloudSea",
+        "jitter": 0.45,
+        "segments": 36,
+        "rim": {
+          "color": "#4a6ba8",
+          "width": 1.2
+        }
+      },
+      {
+        "fromRadius": 4.7,
+        "toRadius": 6.0,
+        "y": -64,
+        "color": "#080c17",
+        "alpha": 1,
+        "profile": "flat",
+        "jitter": 0.0,
+        "segments": 20
+      }
+    ]
+  }
+}

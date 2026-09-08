@@ -1,0 +1,62 @@
+{
+  "id": "imported.heromiku",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/heromiku.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack - 2",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Weapon": {
+      "x": 0.5718,
+      "y": 0.8731,
+      "z": 0.3767
+    },
+    "Hand Right": {
+      "x": 0.0026,
+      "y": 0.8696,
+      "z": 0.3369
+    },
+    "Head": {
+      "x": 0.0323,
+      "y": 1.8437,
+      "z": -0.003
+    },
+    "Hand Left": {
+      "x": 0.0059,
+      "y": 0.87,
+      "z": -0.3453
+    },
+    "Chest": {
+      "x": 0.0966,
+      "y": 1.5098,
+      "z": -0.0075
+    },
+    "Foot Right": {
+      "x": 0.0644,
+      "y": 0.0153,
+      "z": 0.1374
+    },
+    "Foot Left": {
+      "x": 0.0693,
+      "y": 0.013,
+      "z": -0.1647
+    },
+    "Origin": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -0.0
+    },
+    "OverHead": {
+      "x": 0.0,
+      "y": 2.5249,
+      "z": 0.0
+    }
+  }
+}

@@ -1,0 +1,9 @@
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/packages/shared/src/content/heroForge/simulationBaseline.ts:34
+  for (const collection of HERO_SIMULATION_COLLECTIONS) if (!store.count(collection)) throw new Error(`模擬基線缺少 ${collection}，不能使用部分目錄驗收。`);
+                                                                                            ^
+
+Error: 模擬基線缺少 ability-templates，不能使用部分目錄驗收。
+    at createHeroSimulationBaseline (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/packages/shared/src/content/heroForge/simulationBaseline.ts:34:93)
+    at <anonymous> (/private/tmp/ggd-model-upload-acceptance/release-13956d93b/azazel-package-proof.mts:19:16)
+
+Node.js v25.9.0

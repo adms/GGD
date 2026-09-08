@@ -1,0 +1,16 @@
+{
+  "id": "magic-break",
+  "schema": "status-effect@1",
+  "name": "破魔",
+  "description": "護體的那層氣被打散了，法術照著沒有遮蔽的地方進來。破防的一種，對的是魔法那一側。79-01 瞬步與 92-02 消化液負責打散它，79-02 斬擊與 79-03 月牙天衝會回頭問一句「他還破著嗎」。魔抗掉多少、掉多久，寫在施加它的那張卡上。",
+  "polarity": "debuff",
+  "tags": [
+    "magic-break",
+    "shred",
+    "resist-down",
+    "magic-resist-down",
+    "stat-down",
+    "magical",
+    "debuff"
+  ]
+}

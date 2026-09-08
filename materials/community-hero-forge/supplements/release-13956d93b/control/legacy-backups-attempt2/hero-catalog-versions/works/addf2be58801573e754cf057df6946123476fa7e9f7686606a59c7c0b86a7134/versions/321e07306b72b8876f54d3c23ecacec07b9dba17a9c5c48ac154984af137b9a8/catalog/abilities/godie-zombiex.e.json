@@ -1,0 +1,52 @@
+{
+  "id": "godie-zombiex.e",
+  "schema": "ability@1",
+  "name": "100-03 咕咕嘎嘎",
+  "icon": "assets/icons/abilities/godie-zombiex.e.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n在地面攤開一片黑泥沼，踩進去的敵人受傷並被黏住定身。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    30.0,
+    30.0,
+    30.0,
+    30.0
+  ],
+  "cooldownTier": "極小",
+  "manaCost": [
+    72.0,
+    72.0,
+    72.0,
+    72.0
+  ],
+  "manaCostTier": "極小",
+  "radius": 3.0,
+  "effects": [],
+  "template": {
+    "ref": "tpl-proxy-cast",
+    "params": {
+      "anchor": "point",
+      "radius": 191,
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.5
+          }
+        ]
+      },
+      "damageType": "magic",
+      "statusId": "root",
+      "statusDurationSec": 1
+    }
+  },
+  "vfxKey": "fx.prim.void.shockwave",
+  "targetsEnemies": true,
+  "castTimeSec": 1,
+  "rangeTier": "大",
+  "range": 8,
+  "radiusTier": "極小"
+}

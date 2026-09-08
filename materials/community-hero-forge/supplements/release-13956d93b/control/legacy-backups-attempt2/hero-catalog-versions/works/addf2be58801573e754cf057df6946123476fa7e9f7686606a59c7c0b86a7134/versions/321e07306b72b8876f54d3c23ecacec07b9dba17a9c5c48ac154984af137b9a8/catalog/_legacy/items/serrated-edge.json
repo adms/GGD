@@ -1,0 +1,40 @@
+{
+  "id": "serrated-edge",
+  "schema": "item@1",
+  "name": "鋸齒之刃",
+  "icon": "assets/icons/items/serrated-edge.webp",
+  "cost": 1200,
+  "tier": 2,
+  "modifiers": [
+    {
+      "stat": "ad",
+      "op": "flat",
+      "value": 26
+    }
+  ],
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "flat": 8,
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.15
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "ad",
+    "onhit"
+  ],
+  "craftRole": "none"
+}

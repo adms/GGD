@@ -1,0 +1,99 @@
+{
+  "id": "godie-e00w.e",
+  "schema": "ability@1",
+  "name": "77-03 GLADIARIA ALAT",
+  "provenance": "owner-spec",
+  "description": "[主動][變身][加速][飛行]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n\n「GLADIARIA  ALAT 。翼之劍士」\n[加速][攻擊速度]60/90/120/150% ，並可以變換為[飛行]狀態無視碰撞，持續6/9/12/15秒。",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    120.0,
+    120.0,
+    120.0,
+    120.0
+  ],
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "championForm",
+      "to": "alternate",
+      "durationSec": [
+        6.0,
+        9.0,
+        12.0,
+        15.0
+      ]
+    },
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 0.6
+        }
+      ],
+      "duration": 6.0,
+      "perRank": [
+        {
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.6
+            }
+          ],
+          "duration": 6.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.9
+            }
+          ],
+          "duration": 9.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 1.2
+            }
+          ],
+          "duration": 12.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 1.5
+            }
+          ],
+          "duration": 15.0
+        }
+      ],
+      "flight": {
+        "hoverHeight": 0.45,
+        "ignoreUnits": true,
+        "ignoreObstacles": true,
+        "stayInsideBoundary": true
+      }
+    }
+  ],
+  "icon": "assets/icons/abilities/godie-e00w.e.webp",
+  "vfxKey": "fx.prim.lightning.nova",
+  "cooldownTier": "極大",
+  "castTimeSec": 0.267
+}

@@ -1,0 +1,84 @@
+{
+  "collection": "arenas",
+  "hash": "ee5870b2c76d",
+  "entries": [
+    {
+      "id": "arena.castle",
+      "path": "arenas/arena.castle.json",
+      "hash": "86281d11c129",
+      "size": 13438
+    },
+    {
+      "id": "arena.colosseum",
+      "path": "arenas/arena.colosseum.json",
+      "hash": "2959d6b901d1",
+      "size": 21081
+    },
+    {
+      "id": "arena.dota",
+      "path": "arenas/arena.dota.json",
+      "hash": "64edda3d00b9",
+      "size": 15408
+    },
+    {
+      "id": "arena.frieren",
+      "path": "arenas/arena.frieren.json",
+      "hash": "6d903f830180",
+      "size": 104642
+    },
+    {
+      "id": "arena.godie",
+      "path": "arenas/arena.godie.json",
+      "hash": "68327a80d94e",
+      "size": 15192
+    },
+    {
+      "id": "arena.heavens-arena",
+      "path": "arenas/arena.heavens-arena.json",
+      "hash": "df6fb396c706",
+      "size": 128435
+    },
+    {
+      "id": "arena.holy-grail",
+      "path": "arenas/arena.holy-grail.json",
+      "hash": "1a2fac4c5f0b",
+      "size": 118868
+    },
+    {
+      "id": "arena.infinity-castle",
+      "path": "arenas/arena.infinity-castle.json",
+      "hash": "13e615d613da",
+      "size": 122021
+    },
+    {
+      "id": "arena.nazarick",
+      "path": "arenas/arena.nazarick.json",
+      "hash": "cb6a3449bf41",
+      "size": 99196
+    },
+    {
+      "id": "arena.royale",
+      "path": "arenas/arena.royale.json",
+      "hash": "fe7efff742db",
+      "size": 4724
+    },
+    {
+      "id": "arena.shiganshina",
+      "path": "arenas/arena.shiganshina.json",
+      "hash": "c77fb0c1ed59",
+      "size": 107722
+    },
+    {
+      "id": "arena.skeleton",
+      "path": "arenas/arena.skeleton.json",
+      "hash": "317205c3489f",
+      "size": 6579
+    },
+    {
+      "id": "arena.world-tree",
+      "path": "arenas/arena.world-tree.json",
+      "hash": "ff26bbdcd15d",
+      "size": 119627
+    }
+  ]
+}

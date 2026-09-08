@@ -1,0 +1,67 @@
+{
+  "id": "godie-efur.e",
+  "schema": "ability@1",
+  "name": "13-03 龍頭戲畫。布陣",
+  "provenance": "owner-spec",
+  "description": "[主動][範圍][AP加成]\n{{cd}}秒冷卻\n消耗[MP] {{mp}}\n\n「其實還可以衝刺，但老了」\n將念形成龍形衝擊波包裹全身，造成[範圍]敵人 {{dmg}} + {{ap}}% [AP] 傷害。",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "range": 0.0,
+  "radiusTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damageArea",
+      "damageType": "magic",
+      "amount": {
+        "damageTierPerRank": [
+          "極小",
+          "極小",
+          "小",
+          "小"
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      },
+      "radius": 4.5,
+      "radiusTier": "小",
+      "includeOrigin": true
+    }
+  ],
+  "icon": "assets/icons/abilities/godie-efur.e.webp",
+  "vfxKey": "fx.prim.physical.shockwave-lg",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.physical.shockwave-lg",
+      "delayMs": 70,
+      "w3xScale": 1.2
+    },
+    {
+      "vfxKey": "fx.fam.ground-dust.ki.s120",
+      "delayMs": 260,
+      "attachTo": "point",
+      "w3xScale": 1.1,
+      "alpha": 0.7
+    }
+  ],
+  "cooldownTier": "中",
+  "manaCostTier": "小",
+  "castTimeSec": 0.667
+}

@@ -1,0 +1,56 @@
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/packages/shared
+
+ ❯ src/ops/everyTagAnnounced.test.ts (1 test | 1 failed) 74ms
+   × 每一個版號都要有 Discord 公告（owner 2026-09-01） > ★ ⭐ `FROM` 之後的每一個 tag 都在公告帳本裡（⛔ 手打繞過 bmpndd.sh 就會紅） 73ms
+     → ⛔⛔ 這幾個版號**沒有玩家公告紀錄**：
+  · v0.41.5
+
+⭐ 修法只有一個：**跑那個唯一入口**
+    bash scripts/bmpndd.sh "<這一版的一句話>"
+⛔ 不是手打 release.sh + gh release create + mini-deploy.sh —— 
+  那正是 2026-09-01 漏掉七版的做法（見本檔檔頭）。
+⚠️ 補發：set -a; . docker/.env; set +a; bash scripts/release-note-players.sh --post: expected [ 'v0.41.5' ] to deeply equal []
+ ✓ src/ops/noMacOnlyTmpPaths.test.ts (2 tests) 64ms
+ ✓ src/content/import/twoProfilesAgree.test.ts (5 tests) 17ms
+ ✓ src/ops/shippedEditorProfileIsCurrent.test.ts (2 tests) 716ms
+   ✓ 外部編輯器的遠端資料契約沒有過期 > ⭐ 出貨的那一份逐位元組等於現在重算的 —— ⛔ 手改會在這裡紅 709ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/ops/everyTagAnnounced.test.ts > 每一個版號都要有 Discord 公告（owner 2026-09-01） > ★ ⭐ `FROM` 之後的每一個 tag 都在公告帳本裡（⛔ 手打繞過 bmpndd.sh 就會紅）
+AssertionError: ⛔⛔ 這幾個版號**沒有玩家公告紀錄**：
+  · v0.41.5
+
+⭐ 修法只有一個：**跑那個唯一入口**
+    bash scripts/bmpndd.sh "<這一版的一句話>"
+⛔ 不是手打 release.sh + gh release create + mini-deploy.sh —— 
+  那正是 2026-09-01 漏掉七版的做法（見本檔檔頭）。
+⚠️ 補發：set -a; . docker/.env; set +a; bash scripts/release-note-players.sh --post: expected [ 'v0.41.5' ] to deeply equal []
+
+- Expected
++ Received
+
+- Array []
++ Array [
++   "v0.41.5",
++ ]
+
+ ❯ src/ops/everyTagAnnounced.test.ts:75:7
+     73|         "⚠️ 補發：set -a; . docker/.env; set +a; bash scripts/release-…
+     74|       ].join("\n"),
+     75|     ).toEqual([]);
+       |       ^
+     76|   });
+     77| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  1 failed | 9 passed (10)
+   Start at  01:56:01
+   Duration  4.01s (transform 2.00s, setup 0ms, collect 5.92s, tests 869ms, environment 1ms, prepare 440ms)
+
+undefined
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/packages/shared:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/ops/shippedEditorProfileIsCurrent.test.ts src/content/import/twoProfilesAgree.test.ts src/ops/noMacOnlyTmpPaths.test.ts src/ops/everyTagAnnounced.test.ts --maxWorkers=2 --minWorkers=1

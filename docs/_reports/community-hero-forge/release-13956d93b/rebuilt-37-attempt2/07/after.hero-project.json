@@ -1,0 +1,1275 @@
+{
+  "acceptedPlan": {
+    "archetype": "fighter",
+    "attackType": "melee",
+    "budget": {
+      "complexity": 60,
+      "power": 50
+    },
+    "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
+    "origin": "法刺",
+    "planId": "community-review-07-20260907.plan",
+    "schema": "ggd-hero-plan@2",
+    "slots": {
+      "E": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "〔收線〕",
+        "products": [
+          {
+            "instanceId": "community-review-07-20260907-e-1",
+            "template": {
+              "contentSha256": "sha256:eed77432b653ea9503a4d1649ef677fe7641003db81eb04c88bfca47176804ad",
+              "inheritDefaults": true,
+              "params": {
+                "apexHeight": 1.2,
+                "castTimeSec": 0.2,
+                "damageType": "physical",
+                "durationSec": 0.45,
+                "grabMode": "dragToCaster",
+                "landApRatio": 0,
+                "landDamageTier": "小",
+                "landRadius": 2,
+                "mode": "toPoint",
+                "throwDistance": 120,
+                "throwMode": "distance"
+              },
+              "ref": "tpl-pull-throw"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】拖拉指定目標後向前投擲 120 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】附著敵人時牽引敵人；附著錨點時拉動自己。兩種行為都受碰撞與最大位移限制。\n【待補機制】僅敵人抓投；需錨點拉動自己與敵人牽引的分支。",
+        "slot": "E",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "EX": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "輕薄的假象",
+        "products": [
+          {
+            "instanceId": "community-review-07-20260907-ex-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": [
+                  {
+                    "msBonusTier": "極小",
+                    "op": "pctAdd",
+                    "stat": "ms"
+                  }
+                ]
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】在地面製作一個假的陷阱外觀，或改變自身表面外觀。偽裝不改變真實陣營、碰撞與伺服器身分。\n【待補機制】僅短效移速；需假陷阱／表面偽裝及敵我顯示隔離。",
+        "slot": "EX",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "PASSIVE": {
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔魔術師的節奏〕",
+        "products": [
+          {
+            "instanceId": "community-review-07-20260907-passive-1",
+            "template": {
+              "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0",
+              "inheritDefaults": true,
+              "params": {
+                "bonusDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "condition": {
+                  "kind": "chance",
+                  "p": 1
+                },
+                "damageType": "physical",
+                "event": "onBasicAttack",
+                "internalCooldown": 3
+              },
+              "ref": "tpl-on-attack"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。\n【目標設計】以不同技能命中同一目標，強化下一次撲克牌攻擊；最多保存一次。\n【待補機制】需不同技能序列及下一次牌擊消耗。",
+        "slot": "PASSIVE",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        }
+      },
+      "Q": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [
+          "periodicDamage"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "〔撲克牌連射〕",
+        "products": [
+          {
+            "instanceId": "community-review-07-20260907-q-1",
+            "template": {
+              "contentSha256": "sha256:34fc1fc2579e395212180f244209347185c83466671e8b1d041e2f0933004424",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.5,
+                "count": 3,
+                "damageType": "physical",
+                "impactDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "impactRadius": 150,
+                "intervalSec": 0.12,
+                "payout": "perImpact",
+                "scatterRadius": 120
+              },
+              "ref": "tpl-random-barrage"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.12 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】扇形投出三張牌，同一目標的額外命中採遞減傷害。\n【待補機制】三發為落點散射；需扇形牌彈與同目標遞減。",
+        "slot": "Q",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "R": {
+        "abilityOverrides": {
+          "castTimeTier": "大",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 3,
+        "name": "〔彈性殺陣〕",
+        "products": [
+          {
+            "instanceId": "community-review-07-20260907-r-1",
+            "template": {
+              "contentSha256": "sha256:976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68b5c12bc9a25ee7e4",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.4,
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "radius": 300
+              },
+              "ref": "tpl-ground-nova"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】指定落點半徑 300 wc3u 的一次小級範圍傷害。\n【目標設計】短暫建立最多兩條額外念線，結束時向中心牽引一次。\n【待補機制】目前單次區域傷害；需最多兩條额外念線及一次中心牽引。",
+        "slot": "R",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "W": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "effects": [
+            {
+              "applyTo": "target",
+              "duration": 0.7,
+              "kind": "applyStatus",
+              "root": true,
+              "statusId": "root"
+            }
+          ],
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "伸縮自在的愛",
+        "products": [
+          {
+            "instanceId": "community-review-07-20260907-w-1",
+            "template": {
+              "contentSha256": "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.2,
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "magic"
+              },
+              "ref": "tpl-single-strike"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"root\",\"duration\":0.7,\"applyTo\":\"target\",\"root\":true}]。\n【目標設計】將念線附著於一個敵人或合法場景錨點；超距、死亡或期限到達時斷線。\n【待補機制】只有短暫鎖足；需有端點的彈性連線及斷線規則。",
+        "slot": "W",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      }
+    },
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "statOverrides": {
+      "ad": "中",
+      "ap": "大",
+      "armor": "小",
+      "as": "中",
+      "healthRegen": "小",
+      "manaRegen": "中",
+      "maxHealth": "小",
+      "maxMana": "中",
+      "mr": "小",
+      "ms": "大",
+      "range": "小"
+    },
+    "summary": "西索 社群英雄功能驗收稿。作品：《HUNTER×HUNTER》  \n定位：連線、牽引、表面偽裝。\n\n視覺方向：粉色彈性念線、撲克牌尖角、收線回彈；偽裝不能改變陣營。\n以 GGD 法刺 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "templateVersions": {
+      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
+        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
+        "exemplar": {
+          "jass": "A0Q6",
+          "skill": "82-04 闇之魔法"
+        },
+        "family": "buff-self",
+        "gapScore": 6,
+        "id": "tpl-buff-self",
+        "name": "變身強化-數值面",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "duration": {
+            "default": 15,
+            "max": 60,
+            "min": 1,
+            "type": "number",
+            "unit": "s"
+          },
+          "modifiers": {
+            "default": [
+              {
+                "op": "flat",
+                "stat": "ad",
+                "value": 50
+              }
+            ],
+            "type": "statModifiers"
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0": {
+        "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
+        "exemplar": {
+          "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效",
+          "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者"
+        },
+        "family": "on-attack",
+        "gapScore": 9,
+        "id": "tpl-on-attack",
+        "name": "攻擊觸發",
+        "params": {
+          "bonusDamage": {
+            "default": {
+              "perRank": [
+                100
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "chance": {
+            "max": 1,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "ratio"
+          },
+          "condition": {
+            "default": {
+              "any": [
+                {
+                  "all": [
+                    {
+                      "not": {
+                        "is": "champion",
+                        "kind": "kind",
+                        "subject": "target"
+                      }
+                    },
+                    {
+                      "kind": "stat",
+                      "mode": "percent",
+                      "op": "<",
+                      "stat": "hp",
+                      "subject": "target",
+                      "value": 0.35
+                    }
+                  ]
+                },
+                {
+                  "all": [
+                    {
+                      "is": "champion",
+                      "kind": "kind",
+                      "subject": "target"
+                    },
+                    {
+                      "kind": "chance",
+                      "p": 0.01
+                    }
+                  ]
+                }
+              ]
+            },
+            "optional": true,
+            "type": "condition"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "event": {
+            "default": "onBasicAttack",
+            "type": "enum",
+            "values": [
+              "onBasicAttack",
+              "onDamageDealt"
+            ]
+          },
+          "internalCooldown": {
+            "default": 0,
+            "max": 60,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:34fc1fc2579e395212180f244209347185c83466671e8b1d041e2f0933004424": {
+        "description": "在一個區域裡連續丟 N 發爆炸,每一發的落點都是隨機的。原作 8 支成員全部是同一個迴圈:`GetRandomLocInRect(RectFromCenterSizeBJ(中心, S, S))` → 生一隻 dummy → 叫它放一發 → 睡一下 → 再來。\n\n**總時長不是欄位,是算出來的**(發數 − 1) × 每發間隔 —— 原作的迴圈也是這樣,把它做成第三個可填的數字只會讓三個數字互相打架。\n\n決策點是「傷害怎麼付」:\n· 逐發結算(預設,5/8 支) —— 站在轟炸區裡的人每一發都會挨一下。\n· 施法瞬間一次付清(3/8 支) —— 23-03 雷牙一閃、81-02 Acxel Shooter、53-01 獸王牙操彈 的彈幕**完全是演出**,傷害在觸發裡只判一次矩形。把整片火光算成 N 段傷害會讓這三支變成原作的好幾倍。\n\n「開場直傷」清空 = 純轟炸;填了 = 先來一發大的再開始炸(42-04 世界終結 的 100% [AP] 起手)。\n\n⚠️ 已知落差:sim 的持續傷害綁在**施法當下解出來的目標**上,所以(a)開炸之後才走進區域的人不會挨,先走出去的人還是會繼續挨;(b)每一發的隨機落點沒有模擬 —— 區域內的人是**每一發都吃到**,而不是機率性地吃到其中幾發。原作 42-04 的雷震半徑(375)本來就大於它的散佈半徑(225),那一支剛好完全吻合;21-002 天破壤碎(散佈 600 / 半徑 320)則是這個模型最不準的一支。",
+        "exemplar": {
+          "jass": "A0F4 → dummy A011 ×8 (war3map.j:48501-48519)",
+          "skill": "74-03 闇之天使"
+        },
+        "family": "random-barrage",
+        "gapScore": 6,
+        "id": "tpl-random-barrage",
+        "name": "亂數彈幕轟炸",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "count": {
+            "default": 9,
+            "max": 100,
+            "min": 2,
+            "type": "number",
+            "unit": "count"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "impactDamage": {
+            "default": {
+              "perRank": [
+                150
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "impactRadius": {
+            "default": 320,
+            "max": 900,
+            "min": 50,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "intervalSec": {
+            "default": 0.1,
+            "max": 0.6,
+            "min": 0.04,
+            "type": "number",
+            "unit": "s"
+          },
+          "openingDamage": {
+            "optional": true,
+            "type": "scaling"
+          },
+          "payout": {
+            "default": "perImpact",
+            "type": "enum",
+            "values": [
+              "perImpact",
+              "onceAtCast"
+            ]
+          },
+          "scatterRadius": {
+            "default": 225,
+            "max": 1500,
+            "min": 0,
+            "type": "number",
+            "unit": "wc3u"
+          }
+        },
+        "requires": [
+          "periodicDamage"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68b5c12bc9a25ee7e4": {
+        "description": "以施法者為中心的環形震波。",
+        "exemplar": {
+          "jass": "A0N0",
+          "skill": "80-03 鬼神烈戟"
+        },
+        "family": "ground-nova",
+        "gapScore": 8,
+        "id": "tpl-ground-nova",
+        "name": "原地震波",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                150
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "radius": {
+            "default": 530,
+            "max": 900,
+            "min": 200,
+            "type": "number",
+            "unit": "wc3u"
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b": {
+        "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。",
+        "exemplar": {
+          "jass": "A0OD",
+          "skill": "23-04 雷焰聖劍"
+        },
+        "family": "single-strike",
+        "gapScore": 9,
+        "id": "tpl-single-strike",
+        "name": "單體斬擊",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:eed77432b653ea9503a4d1649ef677fe7641003db81eb04c88bfca47176804ad": {
+        "description": "P2 拉扯投擲 (需位移詞彙)。\n\n⭐ 契約（GH#1050）：這一族是 ground 施法 —— 玩家選的點是**抓取圈的中心 ＋ 拋投的方向**，⛔ 不是終點。落點＝起跳點（`grabMode: dragToCaster` 是施法者、`throwOnly` 是受害者自己）＋ 方向 × `throwDistance`（`throwMode: distance`，原作這一族每一支都是方向×定長：A0U1 沿施法者朝向、A0L6/A0SQ 沿施法者→受害者）。`throwMode: point` 是 2026-09-06 之前的行為（選點＝終點），留著當 rollback；那個模式下 `throwDistance` 不寫進節點。",
+        "exemplar": {
+          "jass": "war3map.j:4753-4759 / 4793（共用投擲引擎）· 50201 / 29712 / 52208 / 54322（逐支 throwDistance）",
+          "skill": "52-02 蹂躪編年史（`A0U1`，`content/abilities/godie-hapm.w.json`）"
+        },
+        "family": "pull-throw",
+        "gapScore": 3,
+        "id": "tpl-pull-throw",
+        "name": "拉扯投擲",
+        "params": {
+          "apexHeight": {
+            "default": 1.2,
+            "max": 8,
+            "min": 0,
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.apexHeight = 1.2`。⚠️ ⭐ `wc3h` 與 `wc3u` 是**兩把不同的尺**（`expand.ts` 的 `toApex` vs `toLen`）—— 這一格走 apex。",
+            "type": "number",
+            "unit": "wc3h"
+          },
+          "castTimeSec": {
+            "max": 10,
+            "min": 0,
+            "optional": true,
+            "origin": "taxonomy: ⛔ **刻意不給 default** —— 逐支不同（出貨那一支是 0.833）。",
+            "type": "number",
+            "unit": "s"
+          },
+          "damageType": {
+            "default": "magic",
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].damageType = \"magic\"`。",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "durationSec": {
+            "default": 0.42,
+            "max": 10,
+            "min": 0.05,
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.durationSec = 0.42`。⭐ 與 `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） 的 `throwStepIntervalSec` 0.04（j:4793 共用引擎）× 約 10 步同一個量級。",
+            "type": "number",
+            "unit": "s"
+          },
+          "grabInvulnSec": {
+            "max": 10,
+            "min": 0,
+            "optional": true,
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `effects[0]` 是 `invulnerable{durationSec:1.05, applyTo:\"self\", blocksControl:true}`。⛔ **刻意不給 default** —— 「抓取期間施法者是不是無敵」是逐支的設計選擇，⛔ 不是這一族的性質。",
+            "type": "number",
+            "unit": "s"
+          },
+          "grabMode": {
+            "default": "dragToCaster",
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.dragToCaster = true`（＝先拉到施法者身上再拋）。⚠️ `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） §2.3 的 `approach` 欄記載另外兩種（`casterToVictimTile`=A0L6 j:50113 · `casterToVictimFront`=A0SQ j:29646）—— ⛔ 那兩種今天 `zLeap` 表達不了。⭐ 這一格同時決定拋投**方向**（`sim/effects/leap.ts` 的 `throwDirection`）：`dragToCaster` ⇒ 施法者朝向（A0U1 j:51765）；`throwOnly` ⇒ 施法者→受害者（A0L6 j:50109 / A0SQ j:29634）。",
+            "type": "enum",
+            "values": [
+              "dragToCaster",
+              "throwOnly"
+            ]
+          },
+          "landApRatio": {
+            "default": 0.5,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].amount.ratios = [{stat:\"ap\",coeff:**0.5**}]`。",
+            "type": "number",
+            "unit": "ratio"
+          },
+          "landDamageTier": {
+            "default": "小",
+            "optional": true,
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].amount.damageTierPerRank = [\"極小\",\"極小\",\"小\",\"小\"] ` ⇒ 家族取中位的「小」。⛔ 走級距，⛔ 不烘數字。",
+            "type": "enum",
+            "values": [
+              "極小",
+              "小",
+              "中",
+              "大",
+              "極大"
+            ]
+          },
+          "landRadius": {
+            "default": 4.95,
+            "max": 30,
+            "min": 0,
+            "optional": true,
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.landRadius = 4.95`（已是 GGD 單位）。",
+            "type": "number",
+            "unit": "count"
+          },
+          "mode": {
+            "default": "toPoint",
+            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.mode = \"toPoint\"`；`docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） 的六個力學形狀裡有五個是「把被害者搬到另一個點」。",
+            "type": "enum",
+            "values": [
+              "toPoint",
+              "inPlace"
+            ]
+          },
+          "throwDistance": {
+            "default": 500,
+            "max": 2600,
+            "min": 0,
+            "origin": "⚠️ 只在 `throwMode: distance` 讀 —— `point` 模式下 expand 不把它寫進節點（GH#1050）。j:4757 共用投擲引擎 `10 × 50 = **500**`。⭐ 這一格是**多支**的：A0L6 `20×40=800`（j:50201，⚠️ tooltip 說 1000 而 **JASS 勝**）· A0SQ `12×50=600`（j:29712）· A0U5 200（j:52208）· A0Y7 `(4+4L)×50`=400…1000（j:54322）⇒ 家族取共用引擎值。",
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "throwMode": {
+            "default": "distance",
+            "origin": "j:51765 A0U1 `PolarProjectionBJ(casterLoc, 400.00, GetUnitFacing(caster))` · j:50109 A0L6 / j:29634 A0SQ `AngleBetweenPoints(caster, victim)` ⇒ 原作這一族**沒有任何一支**有「落點」，每一次拋投都是**方向 × 定長** ⇒ 預設 `distance`。`point`＝2026-09-06 之前的出貨行為（玩家選的點就是終點；expand 在這個模式下**不寫** `throwDistance` 進節點，所以那一格不是「可調卻無效」而是不進節點）—— 留著當 rollback 開關（owner 2026-08-23「沒做完以前別問我了自己判斷 但是留後台開關可以簡易 rollback」）。GH#1050。",
+            "type": "enum",
+            "values": [
+              "distance",
+              "point"
+            ]
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      }
+    },
+    "title": "西索"
+  },
+  "brief": {
+    "concept": "西索 社群英雄功能驗收稿。作品：《HUNTER×HUNTER》  \n定位：連線、牽引、表面偽裝。\n\n視覺方向：粉色彈性念線、撲克牌尖角、收線回彈；偽裝不能改變陣營。\n以 GGD 法刺 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "E": "〔收線〕",
+      "EX": "輕薄的假象",
+      "PASSIVE": "〔魔術師的節奏〕",
+      "Q": "〔撲克牌連射〕",
+      "R": "〔彈性殺陣〕",
+      "W": "伸縮自在的愛"
+    },
+    "name": "西索"
+  },
+  "presentation": {
+    "assetLocks": [
+      {
+        "byteSize": 742988,
+        "consumers": [
+          "champion:model"
+        ],
+        "kind": "model",
+        "mediaType": "model/gltf-binary",
+        "path": "assets/models/community/eeb903a85ee447a044d77d6bc058753bd714fe822eea335bd948fb2766c76789.glb",
+        "registry": "normalized-upload",
+        "sha256": "eeb903a85ee447a044d77d6bc058753bd714fe822eea335bd948fb2766c76789"
+      }
+    ],
+    "championIcon": "assets/icons/champions/thorne.webp",
+    "modelKey": "community.body.5266229eb0dbd3ef4d817116b31b26655eb15d256b411127",
+    "modelProvenance": {
+      "modelSha256": "eeb903a85ee447a044d77d6bc058753bd714fe822eea335bd948fb2766c76789",
+      "notes": "暫採披風魔術師及投牌姿態；本體為黑羽快斗，髮色、服裝與西索不同。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。",
+      "relationship": "style-proxy",
+      "schema": "ggd-hero-model-provenance@1",
+      "sourceAssetId": "300heroes:ff525e143d53b09dab32f9e0",
+      "sourceCharacter": "黑羽快斗",
+      "sourceWork": "神偷怪盜／魔術快斗；名偵探柯南"
+    },
+    "schema": "ggd-hero-presentation@1",
+    "slots": {
+      "E": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "script": {
+          "abilityId": "community-review-07-20260907.e",
+          "id": "community-review-07-20260907.e",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "vfxId": "fx.prim.arcane.arc",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "E",
+        "vfxLayers": []
+      },
+      "EX": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "script": {
+          "abilityId": "community-review-07-20260907.ex",
+          "id": "community-review-07-20260907.ex",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "vfxId": "fx.prim.arcane.pulse",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "EX",
+        "vfxLayers": []
+      },
+      "PASSIVE": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "script": null,
+        "sfxKey": null,
+        "slot": "PASSIVE",
+        "vfxLayers": []
+      },
+      "Q": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "script": {
+          "abilityId": "community-review-07-20260907.q",
+          "id": "community-review-07-20260907.q",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "point",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "vfxId": "fx.prim.arcane.nova",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "Q",
+        "vfxLayers": []
+      },
+      "R": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "script": {
+          "abilityId": "community-review-07-20260907.r",
+          "id": "community-review-07-20260907.r",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "point",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "vfxId": "fx.prim.arcane.nova",
+              "w3xScale": 1.25
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "R",
+        "vfxLayers": []
+      },
+      "W": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "script": {
+          "abilityId": "community-review-07-20260907.w",
+          "id": "community-review-07-20260907.w",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "vfxId": "fx.prim.arcane.slash",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "W",
+        "vfxLayers": []
+      }
+    },
+    "uploadedModel": {
+      "byteSize": 742988,
+      "clipMap": {
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "death": "dead",
+        "hurt": "bat_idle",
+        "idle": "bat_idle",
+        "run": "single_run"
+      },
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "eeb903a85ee447a044d77d6bc058753bd714fe822eea335bd948fb2766c76789",
+      "yawOffsetDeg": 0
+    }
+  },
+  "projectId": "community-review-07-20260907",
+  "receipts": [
+    {
+      "digest": "2334ac927635e51116d8ed9265fdf63ad4cd02a599fc1c3d782588017a10615b",
+      "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+      "kind": "generator-adopted",
+      "projectRevision": 5
+    },
+    {
+      "kind": "generator-adopted",
+      "projectRevision": 12,
+      "digest": "a7d4594be3c946674f10595c780fe20608f6f61e8811c94856bdd6e0f95bd0f8",
+      "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597"
+    }
+  ],
+  "revision": 12,
+  "schema": "ggd-hero-project@2",
+  "sections": {
+    "attributes": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "draft"
+    },
+    "identity": {
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      },
+      "revision": 1,
+      "state": "draft"
+    },
+    "mechanics": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    },
+    "package": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "presentation": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "skills": {
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      },
+      "revision": 12,
+      "state": "draft"
+    },
+    "validation": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    }
+  },
+  "sourceDesign": {
+    "identity": "作品：《HUNTER×HUNTER》  \n定位：連線、牽引、表面偽裝。",
+    "name": "西索",
+    "ownerText": "### 07｜西索\n\n作品：《HUNTER×HUNTER》  \n定位：連線、牽引、表面偽裝。\n\n- **PASSIVE｜〔魔術師的節奏〕**：以不同技能命中同一目標，強化下一次撲克牌攻擊；最多保存一次。\n- **Q｜〔撲克牌連射〕**：扇形投出三張牌，同一目標的額外命中採遞減傷害。\n- **W｜伸縮自在的愛**：將念線附著於一個敵人或合法場景錨點；超距、死亡或期限到達時斷線。\n- **E｜〔收線〕**：附著敵人時牽引敵人；附著錨點時拉動自己。兩種行為都受碰撞與最大位移限制。\n- **R｜〔彈性殺陣〕**：短暫建立最多兩條額外念線，結束時向中心牽引一次。\n- **EX｜輕薄的假象**：在地面製作一個假的陷阱外觀，或改變自身表面外觀。偽裝不改變真實陣營、碰撞與伺服器身分。\n\n**審查重點**：連線的來源、端點及斷線條件可追蹤；驗證雙向牽引、牆角、錨點消失，以及偽裝對敵我資訊的顯示範圍。\n\n",
+    "reviewText": "連線的來源、端點及斷線條件可追蹤；驗證雙向牽引、牆角、錨點消失，以及偽裝對敵我資訊的顯示範圍。",
+    "schema": "ggd-hero-source-design@1",
+    "slots": {
+      "E": {
+        "baselineBehavior": "拖拉指定目標後向前投擲 120 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。",
+        "name": "〔收線〕",
+        "ownerDescription": "附著敵人時牽引敵人；附著錨點時拉動自己。兩種行為都受碰撞與最大位移限制。",
+        "refinementContracts": [
+          "M01",
+          "M06"
+        ],
+        "requiredRefinement": "僅敵人抓投；需錨點拉動自己與敵人牽引的分支。"
+      },
+      "EX": {
+        "baselineBehavior": "自身取得 3 秒增益：極小級移速。",
+        "name": "輕薄的假象",
+        "ownerDescription": "在地面製作一個假的陷阱外觀，或改變自身表面外觀。偽裝不改變真實陣營、碰撞與伺服器身分。",
+        "refinementContracts": [
+          "M01",
+          "M06"
+        ],
+        "requiredRefinement": "僅短效移速；需假陷阱／表面偽裝及敵我顯示隔離。"
+      },
+      "PASSIVE": {
+        "baselineBehavior": "普攻追加極小級物理傷害，內置冷卻 3 秒。",
+        "name": "〔魔術師的節奏〕",
+        "ownerDescription": "以不同技能命中同一目標，強化下一次撲克牌攻擊；最多保存一次。",
+        "refinementContracts": [
+          "M01",
+          "M06"
+        ],
+        "requiredRefinement": "需不同技能序列及下一次牌擊消耗。"
+      },
+      "Q": {
+        "baselineBehavior": "在指定區域依序落下 3 發；每發間隔 0.12 秒、半徑 150 wc3u、極小級傷害，可多次命中。",
+        "name": "〔撲克牌連射〕",
+        "ownerDescription": "扇形投出三張牌，同一目標的額外命中採遞減傷害。",
+        "refinementContracts": [
+          "M01",
+          "M06"
+        ],
+        "requiredRefinement": "三發為落點散射；需扇形牌彈與同目標遞減。"
+      },
+      "R": {
+        "baselineBehavior": "指定落點半徑 300 wc3u 的一次小級範圍傷害。",
+        "name": "〔彈性殺陣〕",
+        "ownerDescription": "短暫建立最多兩條額外念線，結束時向中心牽引一次。",
+        "refinementContracts": [
+          "M01",
+          "M06"
+        ],
+        "requiredRefinement": "目前單次區域傷害；需最多兩條额外念線及一次中心牽引。"
+      },
+      "W": {
+        "baselineBehavior": "指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"root\",\"duration\":0.7,\"applyTo\":\"target\",\"root\":true}]。",
+        "name": "伸縮自在的愛",
+        "ownerDescription": "將念線附著於一個敵人或合法場景錨點；超距、死亡或期限到達時斷線。",
+        "refinementContracts": [
+          "M01",
+          "M06"
+        ],
+        "requiredRefinement": "只有短暫鎖足；需有端點的彈性連線及斷線規則。"
+      }
+    },
+    "sourceSha256": "b01c3704427d0f0c47a8574dc146fefbc1bec9e6ba239345479e9001c721e1be"
+  },
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "validationState": {
+    "attributes": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "identity": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "mechanics": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    },
+    "package": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "presentation": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "skills": {
+      "revision": 12,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    }
+  }
+}

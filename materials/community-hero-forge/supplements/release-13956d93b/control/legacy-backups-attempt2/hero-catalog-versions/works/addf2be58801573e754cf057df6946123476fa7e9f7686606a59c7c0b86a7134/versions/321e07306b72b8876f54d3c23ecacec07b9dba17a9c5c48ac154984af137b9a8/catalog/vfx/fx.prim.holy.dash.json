@@ -1,0 +1,94 @@
+{
+  "id": "fx.prim.holy.dash",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.22,
+    "angleDeg": 22
+  },
+  "mode": "burst",
+  "burstCount": 22,
+  "lifetimeSec": {
+    "min": 0.1,
+    "max": 0.28
+  },
+  "size": {
+    "start": 0.21,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      1,
+      0.9892,
+      0.9316,
+      1
+    ],
+    "end": [
+      0.18,
+      0.1692,
+      0.1116,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.21
+    ],
+    [
+      0.08,
+      0.5
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        0.9892,
+        0.9316,
+        1
+      ]
+    ],
+    [
+      0.2,
+      [
+        1,
+        0.94,
+        0.62,
+        1
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.5,
+        0.47,
+        0.31,
+        0.42
+      ]
+    ],
+    [
+      1,
+      [
+        0.18,
+        0.1692,
+        0.1116,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 0,
+  "speed": {
+    "min": 6,
+    "max": 12
+  },
+  "texture": "assets/textures/particles/trace_05.png",
+  "stretched": true,
+  "tailLength": 3
+}

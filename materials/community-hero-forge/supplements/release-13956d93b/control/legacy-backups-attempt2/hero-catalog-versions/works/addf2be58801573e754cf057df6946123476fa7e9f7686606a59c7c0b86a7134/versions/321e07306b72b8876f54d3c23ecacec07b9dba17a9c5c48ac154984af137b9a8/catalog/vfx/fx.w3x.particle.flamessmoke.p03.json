@@ -1,0 +1,82 @@
+{
+  "id": "fx.w3x.particle.flamessmoke.p03",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.851,
+    "angleDeg": 1
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 5,
+    "max": 5
+  },
+  "size": {
+    "start": 0.278,
+    "end": 0.556
+  },
+  "color": {
+    "start": [
+      0.875,
+      0.451,
+      0,
+      0.392
+    ],
+    "end": [
+      1,
+      1,
+      1,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        0.875,
+        0.451,
+        0,
+        0.392
+      ]
+    ],
+    [
+      0.5,
+      [
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    [
+      1,
+      [
+        1,
+        1,
+        1,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.278
+    ],
+    [
+      0.5,
+      1.389
+    ],
+    [
+      1,
+      0.556
+    ]
+  ],
+  "blendMode": "alpha",
+  "speed": {
+    "min": 2.2224,
+    "max": 6.6672
+  },
+  "rate": 50,
+  "texture": "assets/textures/particles/smoke_07.png"
+}

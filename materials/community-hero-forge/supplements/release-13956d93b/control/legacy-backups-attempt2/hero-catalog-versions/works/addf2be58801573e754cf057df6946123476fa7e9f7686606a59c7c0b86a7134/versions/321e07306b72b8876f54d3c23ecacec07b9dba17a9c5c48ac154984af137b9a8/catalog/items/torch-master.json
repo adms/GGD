@@ -1,0 +1,86 @@
+{
+  "id": "torch-master",
+  "schema": "item@1",
+  "name": "火把師父",
+  "description": "武器\n效能\n[熟練度解放] 每次命中敵方英雄累積 1 層熟練度，最多 20 層，整個回合不會衰退\n[熟練度解放] 每層使你造成的傷害／治療／護盾 +2%（20 層 = ×1.40）。普攻與技能共用同一份熟練度\n\n解說\n越打越熟。火把還是那根火把，手感是你自己刷出來的。",
+  "cost": 0,
+  "tier": 5,
+  "tags": [
+    "legendary",
+    "on-hit",
+    "stat-path"
+  ],
+  "passive": [
+    {
+      "key": "mastery-basic",
+      "on": "onBasicAttack",
+      "victim": "enemyChampion",
+      "target": "self",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "permanentScope": "round",
+          "stackKey": "torch-master.mastery",
+          "maxStacks": 20,
+          "statusId": "torch-master.mastery",
+          "modifiers": [
+            {
+              "stat": "outputDamagePct",
+              "op": "flat",
+              "value": 0.02
+            },
+            {
+              "stat": "outputHealingPct",
+              "op": "flat",
+              "value": 0.02
+            },
+            {
+              "stat": "outputShieldPct",
+              "op": "flat",
+              "value": 0.02
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "mastery-ability",
+      "on": "onAbilityHit",
+      "victim": "enemyChampion",
+      "target": "self",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "permanentScope": "round",
+          "stackKey": "torch-master.mastery",
+          "maxStacks": 20,
+          "statusId": "torch-master.mastery",
+          "modifiers": [
+            {
+              "stat": "outputDamagePct",
+              "op": "flat",
+              "value": 0.02
+            },
+            {
+              "stat": "outputHealingPct",
+              "op": "flat",
+              "value": 0.02
+            },
+            {
+              "stat": "outputShieldPct",
+              "op": "flat",
+              "value": 0.02
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "icon": "assets/icons/items/torch-master.webp",
+  "craftRole": "none",
+  "authoringNote": "[EX解放] owner 規格 #54（貓耳貓／火把）。逐句：\n「每次命中英雄」= 兩條 hook（onBasicAttack / onAbilityHit）+ victim:\"enemyChampion\"（隊友與小怪都不算）。\n「該攻擊來源效果 ×1.02」= 輸出倍率三兄弟 outputDamagePct / outputHealingPct / outputShieldPct 各 **flat 0.02**（0 = ×1）。「效果」讀成三軸而不是只有傷害，與 #58 安茲之杖 對「技能效果」的讀法一致。\n「最多 20 層」= maxStacks 20；「整個回合不會衰退」= permanent + **permanentScope:\"round\"**（⛔ 沒有猜秒數 —— 回合長度是相位機決定的，拆除點是 host 的回合開始）。\n\n⚠️ **降級①（owner 已裁決）**：「普攻與每個技能**各自**擁有獨立熟練度」需要 per-slot 的疊層桶，引擎沒有 —— `applyBuff` 的層數桶是 stackKey（全域）或 origin 前綴（逐道具槽），兩種都分不出 Q/W/E/R。⇒ 降級成**一份共用的熟練度**：兩條 hook 共用同一個 stackKey，普攻與技能一起把同一疊推到 20。要做原案得替每一槽各開一條 hook + 各自的桶（#58 安茲之杖 用的就是那個形狀），但那會讓上限變成 6×20。\n\n⚠️ **降級②（數值，不是機制）**：owner 寫「×1.02 … 20 層約 ×1.49」＝**複利**，而輸出倍率三兄弟**做不到複利** —— 它們的 base 是 0，而管線是 `(base+Σflat)×(1+ΣpctAdd)×Π(1+pctMult)`，所以 0 底的屬性上任何 `pctMult` 都會乘到 0（一條掛得上、永遠是 0 的 modifier ＝ 失敗形態②）。唯一會動的 op 是 `flat`，而 flat 恆為線性。⇒ 每層 +0.02 **線性**，20 層 = ×1.40 而不是 ×1.49。⛔ 沒有改成 0.0243 去湊 ×1.49：owner 給的規則是「每層 ×1.02」，總積是它的註解。description 印的是**真的會發生**的 ×1.40。\n\n⚠️ 輸出倍率沒有 scope（`scopeSlot` 只有冷卻讀得到），所以這 20 層同時放大普攻、技能、DoT、道具觸發與治療護盾。\n⚠️ statusId 只是讓 HUD／條件數得到層數，沒有任何 status-effect 文件（`applyBuff.statusId` 不是 ref，不會產生 dangling 警告）。"
+}

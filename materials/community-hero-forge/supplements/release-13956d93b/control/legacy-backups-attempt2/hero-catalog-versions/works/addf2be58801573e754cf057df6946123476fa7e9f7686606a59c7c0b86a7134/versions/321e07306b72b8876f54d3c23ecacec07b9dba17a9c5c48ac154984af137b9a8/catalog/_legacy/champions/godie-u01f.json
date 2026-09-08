@@ -1,0 +1,263 @@
+{
+  "id": "godie-u01f",
+  "schema": "champion@1",
+  "name": "萬夫莫敵 - 黑化張飛",
+  "icon": "assets/icons/champions/godie-u01f.webp",
+  "role": "marksman",
+  "attackType": "ranged",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 1500,
+    "healthRegen": 15,
+    "maxMana": 0,
+    "manaRegen": 12,
+    "ad": 7,
+    "ap": 0,
+    "armor": 0,
+    "mr": 28,
+    "as": 0.555556,
+    "ms": 10.1,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 6.0
+  },
+  "growth": {
+    "maxHealth": 100,
+    "healthRegen": 0.25,
+    "maxMana": 18,
+    "manaRegen": 0.06,
+    "ad": 1.5,
+    "armor": 0.9,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "attributes": {
+    "str": 35,
+    "agi": 25,
+    "int": 18,
+    "strGrowth": 5,
+    "agiGrowth": 3,
+    "intGrowth": 1.5,
+    "primary": "STR",
+    "source": "w3x"
+  },
+  "bodyScale": 2,
+  "hitFeel": {
+    "hitstopTicks": 3,
+    "shakeMag": 0.44,
+    "knockbackMag": 0.25
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-u01f.q",
+      "name": "none",
+      "icon": "assets/icons/abilities/godie-u01f.q.webp",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200,
+              240
+            ],
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.physical.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.3,
+      "provenance": "w3x-import",
+      "rangeTier": "極大",
+      "range": 12
+    },
+    "W": {
+      "id": "godie-u01f.w",
+      "name": "none",
+      "icon": "assets/icons/abilities/godie-u01f.w.webp",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200,
+              240
+            ],
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.physical.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.3,
+      "provenance": "w3x-import",
+      "rangeTier": "極大",
+      "range": 12
+    },
+    "E": {
+      "id": "godie-u01f.e",
+      "name": "none",
+      "icon": "assets/icons/abilities/godie-u01f.e.webp",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200,
+              240
+            ],
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.physical.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.3,
+      "provenance": "w3x-import",
+      "rangeTier": "極大",
+      "range": 12
+    },
+    "R": {
+      "id": "godie-u01f.r",
+      "name": "none",
+      "icon": "assets/icons/abilities/godie-u01f.r.webp",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160
+            ],
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.physical.nova-lg",
+      "targetsEnemies": true,
+      "castTimeSec": 0.3,
+      "provenance": "w3x-import",
+      "rangeTier": "極大",
+      "range": 12
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin",
+    "sword"
+  ],
+  "passiveAbility": "godie-u01f.passive",
+  "tint": [
+    0.3922,
+    0.2745,
+    0.2745
+  ]
+}

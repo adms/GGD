@@ -1,0 +1,71 @@
+{
+  "id": "godie-h02u.r",
+  "name": "92-04 馬勒戈壁",
+  "icon": "assets/icons/abilities/godie-h02u.r.webp",
+  "provenance": "w3x-import",
+  "description": "[投影]\n{{cd}}秒冷卻時間\n\n草泥馬將內心的風景投射到戰場上，改變了戰場，每秒額外獲得150黃金並對周圍敵人造成{{dmg}}傷害，持續6秒。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "cooldownTier": "中",
+  "manaCost": [
+    288.0,
+    288.0,
+    288.0
+  ],
+  "manaCostTier": "中",
+  "range": 0.0,
+  "radiusTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damageArea",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.3
+          }
+        ]
+      },
+      "radius": 8.0,
+      "radiusTier": "大",
+      "includeOrigin": true
+    },
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "flat",
+          "value": 0.25
+        }
+      ],
+      "duration": 3.0
+    },
+    {
+      "kind": "delayed",
+      "shape": "single",
+      "intervalSec": 1.0,
+      "count": 6,
+      "delaySec": 1.0,
+      "effects": [
+        {
+          "kind": "grantGold",
+          "flat": 150,
+          "to": "self"
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.prim.nature.explosion-lg",
+  "schema": "ability@1",
+  "castTimeSec": 1.433
+}

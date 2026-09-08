@@ -1,0 +1,91 @@
+{
+  "id": "fx.prim.ki.pulse-lg",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "sphere",
+    "radius": 0.9
+  },
+  "mode": "burst",
+  "burstCount": 32,
+  "lifetimeSec": {
+    "min": 0.3,
+    "max": 0.7
+  },
+  "size": {
+    "start": 0.315,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      1,
+      0.9748,
+      0.8956,
+      1
+    ],
+    "end": [
+      0.18,
+      0.1548,
+      0.0756,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.315
+    ],
+    [
+      0.2,
+      0.75
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        0.9748,
+        0.8956,
+        1
+      ]
+    ],
+    [
+      0.2,
+      [
+        1,
+        0.86,
+        0.42,
+        1
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.5,
+        0.43,
+        0.21,
+        0.42
+      ]
+    ],
+    [
+      1,
+      [
+        0.18,
+        0.1548,
+        0.0756,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 1,
+  "speed": {
+    "min": 1.5,
+    "max": 4
+  },
+  "texture": "assets/textures/particles/magic_02.png"
+}

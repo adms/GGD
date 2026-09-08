@@ -1,0 +1,48 @@
+{
+  "id": "godie-n00p.e",
+  "name": "18-03 妖狐變化",
+  "icon": "assets/icons/abilities/godie-n00p.e.webp",
+  "provenance": "w3x-import",
+  "description": "[變身]\n{{cd}}秒冷卻時間\n\n幻化為妖狐型態，能力將會大幅提升，隨著技能等級提升妖狐可以具備更多的能力，攻擊力和各方面的數值也會獲得成長，持續8秒。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "cooldownTier": "極大",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      },
+      "damageType": "magic",
+      "castTimeSec": 1.633
+    }
+  },
+  "vfxKey": "fx.prim.nature.pulse",
+  "sfxKey": "wc3.altarofelderswhat1",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "castTimeSec": 1.633,
+  "rangeTier": "極大",
+  "range": 12
+}

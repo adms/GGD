@@ -1,0 +1,1134 @@
+{
+  "acceptedPlan": {
+    "archetype": "mage",
+    "attackType": "melee",
+    "budget": {
+      "complexity": 60,
+      "power": 50
+    },
+    "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+    "origin": "法鬥",
+    "planId": "community-review-11-20260907.plan",
+    "schema": "ggd-hero-plan@2",
+    "slots": {
+      "E": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "擬態",
+        "products": [
+          {
+            "instanceId": "community-review-11-20260907-e-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": [
+                  {
+                    "msBonusTier": "極小",
+                    "op": "pctAdd",
+                    "stat": "ms"
+                  }
+                ]
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】在人形與史萊姆形態間切換，改變普攻及移動表現，保留生命、資源與冷卻。\n【待補機制】需人形／史萊姆形態、普攻替換與生命冷卻保留。",
+        "slot": "E",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "EX": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "小"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "〔解析完成・能力再現〕",
+        "products": [
+          {
+            "instanceId": "community-review-11-20260907-ex-1",
+            "template": {
+              "contentSha256": "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.2,
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "magic"
+              },
+              "ref": "tpl-single-strike"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】指定單一敵人造成小級魔法傷害。\n【目標設計】消耗 W 的樣本，以自己的屬性施放一次核准的技能副本；使用後清空樣本。\n【待補機制】固定攻擊不是能力副本；需樣本版本、消耗與禁止遞迴。",
+        "slot": "EX",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "PASSIVE": {
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "capabilityIds": [
+          "hooks"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 1,
+        "name": "大賢者",
+        "products": [
+          {
+            "instanceId": "community-review-11-20260907-passive-1",
+            "template": {
+              "contentSha256": "sha256:a0174c3324e732c421ab641d1e36cd2f49f758475f851ee428f1604b57c3d85f",
+              "inheritDefaults": true,
+              "params": {
+                "chance": 1,
+                "damageType": "magic",
+                "internalCooldown": 4,
+                "reflectDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "reflectRadius": 300
+              },
+              "ref": "tpl-on-hit-react"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】受傷時觸發有 4 秒冷卻的小範圍反擊；不是防禦成功或閃避成功事件。\n【目標設計】分析最近承受的技能類型，提供該類型的短效有限減傷；同時只保存一種分析結果。\n【待補機制】需最近受擊類型分析及同時只留一種減傷結果。",
+        "slot": "PASSIVE",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        }
+      },
+      "Q": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [
+          "travelingWave"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "水刃",
+        "products": [
+          {
+            "instanceId": "community-review-11-20260907-q-1",
+            "template": {
+              "contentSha256": "sha256:bd9d8342c4ff231d5c4eb94f3e87434981ccc5d4ba402b7e615b292317436add",
+              "inheritDefaults": true,
+              "params": {
+                "aoePerStep": 100,
+                "castTimeSec": 0.2,
+                "damage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "stepCount": 4,
+                "stepIntervalSec": 0.12,
+                "stepSize": 100
+              },
+              "ref": "tpl-traveling-wave"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。\n【目標設計】直線水刃，可穿過有限數量目標。\n【待補機制】需穿透人數上限及單彈命中去重。",
+        "slot": "Q",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      },
+      "R": {
+        "abilityOverrides": {
+          "castTimeTier": "大",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [
+          "periodicDamage"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 3,
+        "name": "黑炎",
+        "products": [
+          {
+            "instanceId": "community-review-11-20260907-r-1",
+            "template": {
+              "contentSha256": "sha256:8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806676b36f2bcfb9911",
+              "inheritDefaults": true,
+              "params": {
+                "anchor": "point",
+                "applyTo": "enemies",
+                "castTimeSec": 0.3,
+                "damageTier": "極小",
+                "damageType": "magic",
+                "durationSec": 3,
+                "intervalSec": 1,
+                "radiusTier": "小"
+              },
+              "ref": "tpl-periodic-field"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】指定落點維持 3 秒的小級半徑傷害區，每秒一跳極小級傷害。\n【目標設計】在指定區域產生有限脈衝的黑炎，結束後清理全部區域效果。\n【待補機制】固定 3 秒黑炎可作基本區域驗收；黑炎色覆寫。",
+        "slot": "R",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        }
+      },
+      "W": {
+        "abilityOverrides": {
+          "castTimeTier": "小",
+          "cooldownTier": "小",
+          "effects": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 120,
+                "ratios": []
+              },
+              "duration": 3,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "community-review-11-20260907.w.guard"
+            }
+          ],
+          "manaCostTier": "小",
+          "provenance": "editor-json",
+          "rangeTier": "中"
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": [],
+        "maxRank": 4,
+        "name": "捕食者",
+        "products": [
+          {
+            "instanceId": "community-review-11-20260907-w-1",
+            "template": {
+              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+              "inheritDefaults": true,
+              "params": {
+                "castTimeSec": 0.15,
+                "duration": 3,
+                "modifiers": []
+              },
+              "ref": "tpl-buff-self"
+            }
+          }
+        ],
+        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-11-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】短窗口吸收一個白名單敵方投射物，取消其後續命中並保存分析樣本。\n【待補機制】護盾不會吸收或刪除敵彈；需白名單投射物與樣本持有。",
+        "slot": "W",
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        }
+      }
+    },
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "statOverrides": {
+      "ad": "中",
+      "ap": "大",
+      "armor": "中",
+      "as": "中",
+      "healthRegen": "中",
+      "manaRegen": "中",
+      "maxHealth": "中",
+      "maxMana": "中",
+      "mr": "中",
+      "ms": "中",
+      "range": "小"
+    },
+    "summary": "利姆路 社群英雄功能驗收稿。作品：《關於我轉生變成史萊姆這檔事》  \n採用：以大賢者、捕食者、擬態為核心的版本。  \n定位：吸收分析、有限技能取得、變形。\n\n視覺方向：水藍水刃、黑紫黑炎、解析圓環；史萊姆與人形本體待製。\n以 GGD 法鬥 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "templateVersions": {
+      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
+        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
+        "exemplar": {
+          "jass": "A0Q6",
+          "skill": "82-04 闇之魔法"
+        },
+        "family": "buff-self",
+        "gapScore": 6,
+        "id": "tpl-buff-self",
+        "name": "變身強化-數值面",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "duration": {
+            "default": 15,
+            "max": 60,
+            "min": 1,
+            "type": "number",
+            "unit": "s"
+          },
+          "modifiers": {
+            "default": [
+              {
+                "op": "flat",
+                "stat": "ad",
+                "value": 50
+              }
+            ],
+            "type": "statModifiers"
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806676b36f2bcfb9911": {
+        "description": "一片每隔 intervalSec 就把圈內重算一次的傷害場。⭐ 它與【延遲序列】的差別只有一格 anchor：point = 放完就留在原地(04-02 炸彈陣的火柱、37-03 災難之牆)；caster = 圈跟著施法者走(90-01 飛葉快刀「每秒對附近的敵人造成傷害」、92-04 馬勒戈壁「每秒奪取周圍英雄」、99-04「初音週遭的部隊每秒受到傷害」)。⛔ 落幾發不是一格參數 —— 它是 durationSec / intervalSec 算出來的(第〇·四守則:算得出來的值不進文件)。⭐⭐【平衡決策的唯一住處】damageTier 名的是**整段**的預算,⛔ 不是逐發的量:每一發拿到 整段÷發數,而那個除法寫成 Scaling.mult(一個**運算子**,⛔ 不是算好的數字)。出處是 config/damage-tier-exemptions.json 的 dot-per-tick 逐字「五級距的錨點是『20 發打死中位英雄』,那把尺量的是**單發**」。⇒ 這個決策住在 expand.ts 的 FAMILIES['periodic-field'] **一列**,⛔ 不可以抄進 N 份技能 JSON。⚠️ applyTo 今天只選圈的 side(enemies/allies),⛔ 治療場還沒有參數 —— 要做的話是補一格 healTier,⛔ 不是拿 damageTier 去治療。⚠️ intervalSec 的下界在 2026-08-30 從 0.034(＝30Hz 的一個 tick)收到 0.2,兩個理由:①一片每一幀都跳的圈是**光環**,⛔ 不是週期領域 —— 這一族的卡面逐字都是「每秒」;②發數＝durationSec÷intervalSec,而模擬器一次施放排得出的段數上界是 DELAYED_MAX_COUNT=32(sim/effects/kindLimits.ts) ⇒ 下界太小會讓一組合法的表單值展開成一個排不出來的班表。超界時 expand.ts **大聲擲錯並指名要調哪一格**,⛔ 不靜默夾掉。⛔ 收緊的當下零支出貨技能引用這份模板,所以它改變不了任何一場比賽。",
+        "exemplar": {
+          "jass": "(P3 待查 —— 引擎面由 delayed.anchor 落地)",
+          "skill": "90-01 飛葉快刀（每秒對附近的敵人造成傷害，持續2秒）"
+        },
+        "family": "periodic-field",
+        "gapScore": 5,
+        "id": "tpl-periodic-field",
+        "name": "週期領域",
+        "params": {
+          "anchor": {
+            "default": "caster",
+            "type": "enum",
+            "values": [
+              "point",
+              "caster"
+            ]
+          },
+          "applyTo": {
+            "default": "enemies",
+            "type": "enum",
+            "values": [
+              "enemies",
+              "allies"
+            ]
+          },
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damageTier": {
+            "default": "極小",
+            "type": "enum",
+            "values": [
+              "極小",
+              "小",
+              "中",
+              "大",
+              "極大"
+            ]
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "durationSec": {
+            "default": 5,
+            "max": 60,
+            "min": 0.1,
+            "type": "number",
+            "unit": "s"
+          },
+          "hitVfx": {
+            "optional": true,
+            "type": "docRef"
+          },
+          "intervalSec": {
+            "default": 1,
+            "max": 10,
+            "min": 0.2,
+            "type": "number",
+            "unit": "s"
+          },
+          "radiusTier": {
+            "default": "中",
+            "type": "enum",
+            "values": [
+              "極小",
+              "小",
+              "中",
+              "大",
+              "極大"
+            ]
+          }
+        },
+        "requires": [
+          "periodicDamage"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:a0174c3324e732c421ab641d1e36cd2f49f758475f851ee428f1604b57c3d85f": {
+        "description": "受到傷害時的被動反制（反制窗/吸收轉化為紅色降級槽）。",
+        "exemplar": {
+          "jass": "A0CT",
+          "skill": "20-04 Avalon"
+        },
+        "family": "on-hit-react",
+        "gapScore": 7,
+        "id": "tpl-on-hit-react",
+        "name": "受擊反應",
+        "params": {
+          "chance": {
+            "default": 1,
+            "max": 1,
+            "min": 0,
+            "type": "number",
+            "unit": "ratio"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "internalCooldown": {
+            "default": 0,
+            "max": 60,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "reflectDamage": {
+            "default": {
+              "perRank": [
+                30
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "reflectRadius": {
+            "default": 900,
+            "inert": "hook 無範圍結算：反擊只打觸發者，半徑不生效",
+            "max": 1200,
+            "min": 100,
+            "optional": true,
+            "type": "number",
+            "unit": "wc3u"
+          }
+        },
+        "requires": [
+          "hooks"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:bd9d8342c4ff231d5c4eb94f3e87434981ccc5d4ba402b7e615b292317436add": {
+        "description": "傷害點沿一條線逐段推進，每一段各播一次特效並各結算一次傷害（同一個人整串只吃一次），可帶終點爆發。設計正典範例：龍破斬。",
+        "exemplar": {
+          "jass": "A04R",
+          "skill": "04-03 龍破斬"
+        },
+        "family": "traveling-wave",
+        "gapScore": 7,
+        "id": "tpl-traveling-wave",
+        "name": "行進波動",
+        "params": {
+          "aoePerStep": {
+            "default": 200,
+            "max": 900,
+            "min": 50,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                200
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "stepCount": {
+            "default": 20,
+            "max": 140,
+            "min": 3,
+            "type": "number"
+          },
+          "stepIntervalSec": {
+            "default": 0.03,
+            "max": 1,
+            "min": 0.01,
+            "type": "number",
+            "unit": "s"
+          },
+          "stepSize": {
+            "default": 45,
+            "max": 200,
+            "min": 20,
+            "type": "number",
+            "unit": "wc3u"
+          },
+          "stepVfx": {
+            "optional": true,
+            "type": "docRef"
+          },
+          "terminalBurst": {
+            "default": 450,
+            "max": 900,
+            "min": 100,
+            "optional": true,
+            "type": "number",
+            "unit": "wc3u"
+          }
+        },
+        "requires": [
+          "travelingWave"
+        ],
+        "schema": "template@1",
+        "status": "enabled"
+      },
+      "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b": {
+        "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。",
+        "exemplar": {
+          "jass": "A0OD",
+          "skill": "23-04 雷焰聖劍"
+        },
+        "family": "single-strike",
+        "gapScore": 9,
+        "id": "tpl-single-strike",
+        "name": "單體斬擊",
+        "params": {
+          "castTimeSec": {
+            "default": 0,
+            "max": 5,
+            "min": 0,
+            "optional": true,
+            "type": "number",
+            "unit": "s"
+          },
+          "damage": {
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            },
+            "type": "scaling"
+          },
+          "damageType": {
+            "default": "magic",
+            "type": "enum",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          }
+        },
+        "requires": [],
+        "schema": "template@1",
+        "status": "enabled"
+      }
+    },
+    "title": "利姆路"
+  },
+  "brief": {
+    "concept": "利姆路 社群英雄功能驗收稿。作品：《關於我轉生變成史萊姆這檔事》  \n採用：以大賢者、捕食者、擬態為核心的版本。  \n定位：吸收分析、有限技能取得、變形。\n\n視覺方向：水藍水刃、黑紫黑炎、解析圓環；史萊姆與人形本體待製。\n以 GGD 法鬥 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "E": "擬態",
+      "EX": "〔解析完成・能力再現〕",
+      "PASSIVE": "大賢者",
+      "Q": "水刃",
+      "R": "黑炎",
+      "W": "捕食者"
+    },
+    "name": "利姆路"
+  },
+  "presentation": {
+    "assetLocks": [
+      {
+        "byteSize": 792376,
+        "consumers": [
+          "champion:model"
+        ],
+        "kind": "model",
+        "mediaType": "model/gltf-binary",
+        "path": "assets/models/community/90d695d9ce758198bbc503100af86b443eb8008bdaf48d6a82aa23f3ace7023e.glb",
+        "registry": "normalized-upload",
+        "sha256": "90d695d9ce758198bbc503100af86b443eb8008bdaf48d6a82aa23f3ace7023e"
+      }
+    ],
+    "championIcon": "assets/icons/champions/sela.webp",
+    "modelKey": "community.body.290ca16dc6eb237c82da6902dc209703fb0c9f1b421a900a",
+    "modelProvenance": {
+      "modelSha256": "90d695d9ce758198bbc503100af86b443eb8008bdaf48d6a82aa23f3ace7023e",
+      "notes": "選藍色長髮人形暫代利姆路；實際為珂朵莉女性造型，移除獨立妖精翼網格。未宣稱史萊姆形態或原生利姆路模型。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。",
+      "relationship": "style-proxy",
+      "schema": "ggd-hero-model-provenance@1",
+      "sourceAssetId": "300heroes:69984f1ef03f84baa007b28d",
+      "sourceCharacter": "珂朵莉",
+      "sourceWork": "末日時在做什麼？有沒有空？可以來拯救嗎？"
+    },
+    "schema": "ggd-hero-presentation@1",
+    "slots": {
+      "E": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.e.webp",
+        "script": {
+          "abilityId": "community-review-11-20260907.e",
+          "id": "community-review-11-20260907.e",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                46,
+                189,
+                237
+              ],
+              "vfxId": "fx.prim.ice.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                46,
+                189,
+                237
+              ],
+              "vfxId": "fx.prim.ice.pulse-sm",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "E",
+        "vfxLayers": []
+      },
+      "EX": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.r.webp",
+        "script": {
+          "abilityId": "community-review-11-20260907.ex",
+          "id": "community-review-11-20260907.ex",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                46,
+                189,
+                237
+              ],
+              "vfxId": "fx.prim.ice.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                46,
+                189,
+                237
+              ],
+              "vfxId": "fx.prim.ice.pulse-sm",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "EX",
+        "vfxLayers": []
+      },
+      "PASSIVE": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.q.webp",
+        "script": null,
+        "sfxKey": null,
+        "slot": "PASSIVE",
+        "vfxLayers": []
+      },
+      "Q": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.q.webp",
+        "script": {
+          "abilityId": "community-review-11-20260907.q",
+          "id": "community-review-11-20260907.q",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                46,
+                189,
+                237
+              ],
+              "vfxId": "fx.prim.ice.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                46,
+                189,
+                237
+              ],
+              "vfxId": "fx.prim.ice.bolt",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "Q",
+        "vfxLayers": []
+      },
+      "R": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.r.webp",
+        "script": {
+          "abilityId": "community-review-11-20260907.r",
+          "id": "community-review-11-20260907.r",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                46,
+                189,
+                237
+              ],
+              "vfxId": "fx.prim.ice.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "point",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                46,
+                189,
+                237
+              ],
+              "vfxId": "fx.prim.ice.nova",
+              "w3xScale": 1.25
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "R",
+        "vfxLayers": []
+      },
+      "W": {
+        "fallback": {
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package",
+          "pointWithoutTarget": "caster"
+        },
+        "gameplayEvent": "abilityCast",
+        "icon": "assets/icons/abilities/sela.w.webp",
+        "script": {
+          "abilityId": "community-review-11-20260907.w",
+          "id": "community-review-11-20260907.w",
+          "schema": "vfx-script@1",
+          "segments": [
+            {
+              "at": "caster",
+              "kind": "anim",
+              "on": "castStart",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "alpha": 0.6,
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "tint": [
+                46,
+                189,
+                237
+              ],
+              "vfxId": "fx.prim.ice.pulse-sm",
+              "w3xScale": 0.7
+            },
+            {
+              "alpha": 0.85,
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                46,
+                189,
+                237
+              ],
+              "vfxId": "fx.prim.ice.pulse-sm",
+              "w3xScale": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "slot": "W",
+        "vfxLayers": []
+      }
+    },
+    "uploadedModel": {
+      "byteSize": 792376,
+      "clipMap": {
+        "attack": "single_attack_attcom_a",
+        "cast": "single_skill_01",
+        "death": "dead",
+        "hurt": "bat_idle",
+        "idle": "bat_idle",
+        "run": "single_run"
+      },
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "90d695d9ce758198bbc503100af86b443eb8008bdaf48d6a82aa23f3ace7023e",
+      "yawOffsetDeg": 0
+    }
+  },
+  "projectId": "community-review-11-20260907",
+  "receipts": [
+    {
+      "digest": "d42b36327f3b2b3a363239e82b0731a0959628eadbccbca1a15165b6c7b38428",
+      "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
+      "kind": "generator-adopted",
+      "projectRevision": 5
+    }
+  ],
+  "revision": 11,
+  "schema": "ggd-hero-project@2",
+  "sections": {
+    "attributes": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "draft"
+    },
+    "identity": {
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      },
+      "revision": 1,
+      "state": "draft"
+    },
+    "mechanics": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    },
+    "package": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "presentation": {
+      "fieldOwnership": {},
+      "revision": 3,
+      "state": "stale"
+    },
+    "skills": {
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      },
+      "revision": 11,
+      "state": "draft"
+    },
+    "validation": {
+      "fieldOwnership": {},
+      "revision": 1,
+      "state": "stale"
+    }
+  },
+  "sourceDesign": {
+    "identity": "作品：《關於我轉生變成史萊姆這檔事》  \n採用：以大賢者、捕食者、擬態為核心的版本。  \n定位：吸收分析、有限技能取得、變形。",
+    "name": "利姆路",
+    "ownerText": "### 11｜利姆路\n\n作品：《關於我轉生變成史萊姆這檔事》  \n採用：以大賢者、捕食者、擬態為核心的版本。  \n定位：吸收分析、有限技能取得、變形。\n\n- **PASSIVE｜大賢者**：分析最近承受的技能類型，提供該類型的短效有限減傷；同時只保存一種分析結果。\n- **Q｜水刃**：直線水刃，可穿過有限數量目標。\n- **W｜捕食者**：短窗口吸收一個白名單敵方投射物，取消其後續命中並保存分析樣本。\n- **E｜擬態**：在人形與史萊姆形態間切換，改變普攻及移動表現，保留生命、資源與冷卻。\n- **R｜黑炎**：在指定區域產生有限脈衝的黑炎，結束後清理全部區域效果。\n- **EX｜〔解析完成・能力再現〕**：消耗 W 的樣本，以自己的屬性施放一次核准的技能副本；使用後清空樣本。\n\n**審查重點**：吸收與複製必須經白名單；測試不可吸收物、同幀多彈、複製來源死亡，以及樣本內不得夾帶任意腳本或遞迴複製。\n\n",
+    "reviewText": "吸收與複製必須經白名單；測試不可吸收物、同幀多彈、複製來源死亡，以及樣本內不得夾帶任意腳本或遞迴複製。",
+    "schema": "ggd-hero-source-design@1",
+    "slots": {
+      "E": {
+        "baselineBehavior": "自身取得 3 秒增益：極小級移速。",
+        "name": "擬態",
+        "ownerDescription": "在人形與史萊姆形態間切換，改變普攻及移動表現，保留生命、資源與冷卻。",
+        "refinementContracts": [
+          "M05"
+        ],
+        "requiredRefinement": "需人形／史萊姆形態、普攻替換與生命冷卻保留。"
+      },
+      "EX": {
+        "baselineBehavior": "指定單一敵人造成小級魔法傷害。",
+        "name": "〔解析完成・能力再現〕",
+        "ownerDescription": "消耗 W 的樣本，以自己的屬性施放一次核准的技能副本；使用後清空樣本。",
+        "refinementContracts": [
+          "M05"
+        ],
+        "requiredRefinement": "固定攻擊不是能力副本；需樣本版本、消耗與禁止遞迴。"
+      },
+      "PASSIVE": {
+        "baselineBehavior": "受傷時觸發有 4 秒冷卻的小範圍反擊；不是防禦成功或閃避成功事件。",
+        "name": "大賢者",
+        "ownerDescription": "分析最近承受的技能類型，提供該類型的短效有限減傷；同時只保存一種分析結果。",
+        "refinementContracts": [
+          "M05"
+        ],
+        "requiredRefinement": "需最近受擊類型分析及同時只留一種減傷結果。"
+      },
+      "Q": {
+        "baselineBehavior": "四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。",
+        "name": "水刃",
+        "ownerDescription": "直線水刃，可穿過有限數量目標。",
+        "refinementContracts": [
+          "M05"
+        ],
+        "requiredRefinement": "需穿透人數上限及單彈命中去重。"
+      },
+      "R": {
+        "baselineBehavior": "指定落點維持 3 秒的小級半徑傷害區，每秒一跳極小級傷害。",
+        "name": "黑炎",
+        "ownerDescription": "在指定區域產生有限脈衝的黑炎，結束後清理全部區域效果。",
+        "refinementContracts": [
+          "M05"
+        ],
+        "requiredRefinement": "固定 3 秒黑炎可作基本區域驗收；黑炎色覆寫。"
+      },
+      "W": {
+        "baselineBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-11-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。",
+        "name": "捕食者",
+        "ownerDescription": "短窗口吸收一個白名單敵方投射物，取消其後續命中並保存分析樣本。",
+        "refinementContracts": [
+          "M05"
+        ],
+        "requiredRefinement": "護盾不會吸收或刪除敵彈；需白名單投射物與樣本持有。"
+      }
+    },
+    "sourceSha256": "17b2f1f05e8c6b757502b123a7d443c0d334c47077006e57cf0b2172fa755ee1"
+  },
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "validationState": {
+    "attributes": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "identity": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "idle"
+    },
+    "mechanics": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    },
+    "package": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "presentation": {
+      "diagnosticCodes": [],
+      "revision": 3,
+      "status": "stale"
+    },
+    "skills": {
+      "diagnosticCodes": [],
+      "revision": 11,
+      "status": "idle"
+    },
+    "validation": {
+      "diagnosticCodes": [],
+      "revision": 1,
+      "status": "stale"
+    }
+  }
+}

@@ -1,0 +1,178 @@
+{
+  "id": "godie-e00r.e",
+  "schema": "ability@1",
+  "name": "59-03 AT力場",
+  "provenance": "owner-spec",
+  "description": "[被動][週期][護盾][機率][格擋]\n\n「所謂的心之壁，就是我不想跟你講話的意思」\n每8秒生成一個可抵擋150/250/350/450點魔法([AP])傷害的[護盾]，[護盾]不會疊加。\nAT力場並有10/15/20/25%[機率][格擋]50%物理([AD])傷害（真實傷害無法格擋）。",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "targetsEnemies": false,
+  "effects": [],
+  "passive": {
+    "name": "59-03 AT力場",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onInterval",
+            "effects": [
+              {
+                "kind": "shield",
+                "amount": {
+                  "flat": 150.0
+                },
+                "duration": 8.0,
+                "absorbs": "magic"
+              }
+            ],
+            "internalCooldown": 8.0,
+            "target": "self"
+          }
+        ],
+        "block": {
+          "damageTypes": [
+            "physical"
+          ],
+          "chance": 0.1,
+          "fraction": 0.5,
+          "vfxId": "fx.fam.shockwave-ring.physical.s150",
+          "vfxScale": 2.6,
+          "vfxTint": [
+            255,
+            140,
+            40
+          ]
+        }
+      },
+      {
+        "hooks": [
+          {
+            "on": "onInterval",
+            "effects": [
+              {
+                "kind": "shield",
+                "amount": {
+                  "flat": 250.0
+                },
+                "duration": 8.0,
+                "absorbs": "magic"
+              }
+            ],
+            "internalCooldown": 8.0,
+            "target": "self"
+          }
+        ],
+        "block": {
+          "damageTypes": [
+            "physical"
+          ],
+          "chance": 0.15,
+          "fraction": 0.5,
+          "vfxId": "fx.fam.shockwave-ring.physical.s150",
+          "vfxScale": 2.6,
+          "vfxTint": [
+            255,
+            140,
+            40
+          ]
+        }
+      },
+      {
+        "hooks": [
+          {
+            "on": "onInterval",
+            "effects": [
+              {
+                "kind": "shield",
+                "amount": {
+                  "flat": 350.0
+                },
+                "duration": 8.0,
+                "absorbs": "magic"
+              }
+            ],
+            "internalCooldown": 8.0,
+            "target": "self"
+          }
+        ],
+        "block": {
+          "damageTypes": [
+            "physical"
+          ],
+          "chance": 0.2,
+          "fraction": 0.5,
+          "vfxId": "fx.fam.shockwave-ring.physical.s150",
+          "vfxScale": 2.6,
+          "vfxTint": [
+            255,
+            140,
+            40
+          ]
+        }
+      },
+      {
+        "hooks": [
+          {
+            "on": "onInterval",
+            "effects": [
+              {
+                "kind": "shield",
+                "amount": {
+                  "flat": 450.0
+                },
+                "duration": 8.0,
+                "absorbs": "magic"
+              }
+            ],
+            "internalCooldown": 8.0,
+            "target": "self"
+          }
+        ],
+        "block": {
+          "damageTypes": [
+            "physical"
+          ],
+          "chance": 0.25,
+          "fraction": 0.5,
+          "vfxId": "fx.fam.shockwave-ring.physical.s150",
+          "vfxScale": 2.6,
+          "vfxTint": [
+            255,
+            140,
+            40
+          ]
+        }
+      }
+    ]
+  },
+  "icon": "assets/icons/abilities/godie-e00r.e.webp",
+  "vfxKey": "fx.w3x.particle.heroeva01s2.p01",
+  "hitFeel": {
+    "hitstopTicks": 3,
+    "hitstunTicks": 5,
+    "shakeMag": 0.35,
+    "shakeStyle": "omni",
+    "sparkKind": "block",
+    "flashColor": [
+      0.7,
+      0.85,
+      1.0
+    ],
+    "flashMs": 120,
+    "camKick": 0.3
+  }
+}

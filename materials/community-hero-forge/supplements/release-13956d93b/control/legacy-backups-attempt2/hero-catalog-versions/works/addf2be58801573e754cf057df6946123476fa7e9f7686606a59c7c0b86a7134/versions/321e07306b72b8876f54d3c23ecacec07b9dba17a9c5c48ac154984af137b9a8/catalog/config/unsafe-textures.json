@@ -1,0 +1,166 @@
+{
+  "id": "unsafe-textures",
+  "schema": "config.unsafe-textures@1",
+  "note": "⭐ **Codex 阻塞清單 P0-6 的修復後收據**：五張貼圖已由資產修復器補上 4px 透明黑邊，現在完整 PNG 量測由 `unsafeTextureQuarantine.test.ts` 每次重算，不能只換 hash。\n\n⭐ 分母（2026-09-02 `content/` 出貨態）不變：共被 **41 份 `content/vfx/*.json`** 引用，其中 **26 份可達**、15 份孤兒；沿 `ability-vfx-bindings` 與 `ambient-vfx` 展開後，到得了 **19 支技能 · 23 位英雄**。\n\n⭐ 五張的外框有效加光量現在全部為 **0**，且出貨消費文件全部使用 `blendMode: additive`，所以目前 **0 張隔離、5 張安全**。安全仍是 `(貼圖, blendMode)` 配對：除了本來就具完整 alpha 形狀的 `babyface`，其餘四張只承諾目前驗過的 additive，不擴張未驗證模式。",
+  "quarantineRatchet": 0,
+  "textures": [
+    {
+      "file": "assets/textures/particles/wc3/heroeva01effect.png",
+      "sha256": "65715c577f7684a056d74ef2fe965e44a2467275138077235dcdd5f314a4a684",
+      "status": "safe",
+      "safeBlendModes": [
+        "additive"
+      ],
+      "measured": {
+        "size": "64x64",
+        "hasAlphaShape": true,
+        "opaquePct": 0.0,
+        "minAlpha": 0,
+        "maxAlpha": 253,
+        "alphaRange": 253,
+        "distinctAlphaValues": 5,
+        "borderEffAdditive": 0,
+        "edgeEffAdditive": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "usage": {
+        "vfxDocs": 2,
+        "reachableVfxDocs": 1,
+        "abilities": 1,
+        "champions": 1
+      },
+      "why": "⭐ **修復後在 additive 下安全**。4px 透明黑邊使四邊與外框有效加光量全部降為 0；alphaRange 253、5 個相異值也證明透明淡出已寫入目前 PNG。只承諾出貨實際使用的 additive。"
+    },
+    {
+      "file": "assets/textures/particles/wc3/ribbonblur1.png",
+      "sha256": "34366bee6f80e817c38c0c9012fbecae2c396cc7e5131978aed133559752225f",
+      "status": "safe",
+      "safeBlendModes": [
+        "additive"
+      ],
+      "measured": {
+        "size": "64x64",
+        "hasAlphaShape": true,
+        "opaquePct": 76.56,
+        "minAlpha": 0,
+        "maxAlpha": 255,
+        "alphaRange": 255,
+        "distinctAlphaValues": 5,
+        "borderEffAdditive": 0,
+        "edgeEffAdditive": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "usage": {
+        "vfxDocs": 32,
+        "reachableVfxDocs": 23,
+        "abilities": 0,
+        "champions": 22
+      },
+      "why": "⭐ **修復後在 additive 下安全**。原本左邊有效加光 208.3 的硬切亮線已由 4px 透明黑邊消除；現在四邊與外框皆為 0。它影響 22 位英雄，因此仍只開放已驗證的 additive。"
+    },
+    {
+      "file": "assets/textures/particles/wc3/zap1.png",
+      "sha256": "77a447552693bcae85fd9cbab827f35150601ab1645c235fd033cc17817bc05f",
+      "status": "safe",
+      "safeBlendModes": [
+        "additive"
+      ],
+      "measured": {
+        "size": "128x64",
+        "hasAlphaShape": true,
+        "opaquePct": 82.03,
+        "minAlpha": 0,
+        "maxAlpha": 255,
+        "alphaRange": 255,
+        "distinctAlphaValues": 5,
+        "borderEffAdditive": 0,
+        "edgeEffAdditive": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "usage": {
+        "vfxDocs": 4,
+        "reachableVfxDocs": 1,
+        "abilities": 18,
+        "champions": 1
+      },
+      "why": "⭐ **修復後在 additive 下安全**。4px 透明黑邊讓四邊與外框有效加光量全部為 0；alphaRange 255、5 個相異值。出貨的 4 份消費文件全是 additive，其他模式尚未驗證。"
+    },
+    {
+      "file": "assets/textures/particles/wc3/zap1b.png",
+      "sha256": "e8feccaed31e0253bc9bd3a36e8388d2c618f2d8ff151ecdeec2a140cd35cccd",
+      "status": "safe",
+      "safeBlendModes": [
+        "additive"
+      ],
+      "measured": {
+        "size": "128x64",
+        "hasAlphaShape": true,
+        "opaquePct": 82.03,
+        "minAlpha": 0,
+        "maxAlpha": 255,
+        "alphaRange": 255,
+        "distinctAlphaValues": 5,
+        "borderEffAdditive": 0,
+        "edgeEffAdditive": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "usage": {
+        "vfxDocs": 1,
+        "reachableVfxDocs": 0,
+        "abilities": 0,
+        "champions": 0
+      },
+      "why": "⭐ **修復後在 additive 下安全**。與 `zap1` 同族，4px 透明黑邊讓四邊與外框有效加光量全部為 0；alphaRange 255、5 個相異值。唯一消費文件仍是孤兒。"
+    },
+    {
+      "file": "assets/textures/particles/wc3/babyface.png",
+      "sha256": "b61928757711c443c8be9aa8f8ba3df2645aad48349a13c4ffdfe659401b4db9",
+      "status": "safe",
+      "safeBlendModes": [
+        "additive",
+        "alpha",
+        "alphaKey",
+        "modulate"
+      ],
+      "measured": {
+        "size": "128x128",
+        "hasAlphaShape": true,
+        "opaquePct": 61.51,
+        "minAlpha": 0,
+        "maxAlpha": 255,
+        "alphaRange": 255,
+        "distinctAlphaValues": 243,
+        "borderEffAdditive": 0,
+        "edgeEffAdditive": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "usage": {
+        "vfxDocs": 2,
+        "reachableVfxDocs": 1,
+        "abilities": 0,
+        "champions": 0
+      },
+      "why": "⭐ **安全**。原始 alpha 本來就有完整形狀；修復器再將 4px 外框歸零。現在 alphaRange 255、243 個相異值，四邊有效加光全為 0，因此保留原本驗證過的 additive、alpha、alphaKey、modulate。"
+    }
+  ]
+}

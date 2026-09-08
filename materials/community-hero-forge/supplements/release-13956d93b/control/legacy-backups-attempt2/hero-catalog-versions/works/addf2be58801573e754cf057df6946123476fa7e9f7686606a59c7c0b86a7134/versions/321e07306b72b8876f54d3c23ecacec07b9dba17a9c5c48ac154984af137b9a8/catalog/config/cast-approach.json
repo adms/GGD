@@ -1,0 +1,8 @@
+{
+  "id": "cast-approach",
+  "schema": "config.cast-approach@1",
+  "note": "超過施法距離時角色**走過去**再放技能（owner 2026-08-22:「超過施法距離人物不會走過去放技能（做成後台開關）」）。在這份文件之前,`castAbility` 對距離不足的指定型技能直接回 `\"out-of-range\"` —— 魔力不扣、冷卻不轉、角色**一步都不動**,玩家只看到一個沒反應的按鈕。現在距離不足會發一道**接近指令**（走到射程內的那一 tick 自動施放）,而三格全部可調:要不要走、走多遠就放棄、途中被別的指令打斷要不要取消。出貨 `maxApproachDistance: 24` = 決鬥區**半徑**（上界 48 是直徑）—— 走過半張場地已經是「這一發不值得」。⚠️ 只管 `castType: \"targeted\"`。地面指定（`ground`）**本來就不會拒絕** —— 它把落點夾回射程邊緣（LoL 行為,94 支技能靠著它）,所以它不在這份文件的管轄內；要不要改成「地面技也走過去」是另一個決策點,⛔ 不要在這裡偷偷加。語意與每一個上下界的理由寫在 `packages/shared/src/sim/abilities/abilitySystem.ts` 的 `CastApproachRules`。⚠️ 後台存過覆蓋層之後,改這個檔不會生效。",
+  "enabled": true,
+  "maxApproachDistance": 24,
+  "cancelOnNewOrder": true
+}

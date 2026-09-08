@@ -1,0 +1,45 @@
+{
+  "id": "godie-o02w.e",
+  "name": "96-03 吸星大法",
+  "icon": "assets/icons/abilities/godie-o02w.e.webp",
+  "description": "[主動攻擊]\n45秒冷卻時間\n\n令狐沖被困於西湖地牢時習得的絕世武功，強制吸取目標的內力200點，降低對方100%攻速及20%跑速，持續2秒，還能將吸來的內力化為己用，但使用上需與對方接觸一段時間才能生效。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    140.0,
+    210.0,
+    280.0,
+    350.0
+  ],
+  "range": 7.33,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctMult",
+          "value": -1.0
+        }
+      ],
+      "duration": 3.0
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 3.0,
+      "moveSpeedMult": 0.8
+    }
+  ],
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "castTimeSec": 0.4
+}

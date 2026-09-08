@@ -6,7 +6,7 @@
   "to": "main",
   "baseCommit": "117057a821aed67e7f60578f6ddb565b99ce5757",
   "contractFingerprint": "b91a0f59c31289ed",
-  "title": "#1120 鑄造器依實際變身效果生成獨立對應體，貫通預覽、ZIP 與房間名單",
+  "title": "#1120 補齊獨立變身對應體，完成 37 英雄同版流程與材料驗收",
   "claims": [
     {
       "kind": "confirmed",
@@ -40,19 +40,17 @@
     },
     {
       "kind": "confirmed",
-      "text": "本批三閘同時啟動，Editor 592 項、正式建置、全工作區型別與 coord 通過。skills 先因 15 列歷史帳本未對票失敗，已用官方工具補正並重生成；重跑帳本通過。其後 decor 的來源檔數因新 forms.ts 增一，已用產生器更新並從失敗處跑完剩餘檢查，所有步驟有成功收據，保留初次失敗紀錄。",
+      "text": "三閘同批完整執行通過：skills:check 全部步驟、Editor 592 項／型別／正式建置、coord 21 份 packet；先前帳本已用官方工具對票，CI 因新增 main 素材工具造成的 decor 差異已合入 main 並重生成。保留初次失敗與完整成功紀錄。",
       "repro": {
         "command": "pnpm skills:check",
         "expectedExit": 0
       },
-      "commit": "019f854dab2099e4fb2d8949f9d85bf5243cda7c",
+      "commit": "35df16f231861d7b22447c4aa29a6e7d68d77639",
       "evidence": [
         "docs/_reports/community-hero-forge/transform-counterpart/README.md",
-        "docs/_reports/community-hero-forge/transform-counterpart/editor-release.log",
-        "docs/_reports/community-hero-forge/transform-counterpart/workspace-typecheck.log",
-        "docs/_reports/community-hero-forge/transform-counterpart/ledger-map-receipt.json",
-        "docs/_reports/community-hero-forge/transform-counterpart/skills-check-final.log",
-        "docs/_reports/community-hero-forge/transform-counterpart/skills-tail-receipt.json"
+        "docs/_reports/community-hero-forge/transform-counterpart/skills-current.log",
+        "docs/_reports/community-hero-forge/transform-counterpart/editor-current.log",
+        "docs/_reports/community-hero-forge/transform-counterpart/coord-current.log"
       ]
     }
   ],
@@ -60,6 +58,6 @@
   "ownerQuotes": [],
   "asks": [
     "請 Main 依本 PR 審查並合併 #1120 修正，特別是 champion transform 的可選 WC3 provenance 與 sim 型別；不另行分派實作。Fixes #1120.",
-    "#1118 已合併至 ed3909de0；本分支從 117057a82 延續。37 名正式服務建包、投稿發布與同版完整對局驗收仍列於 editor-publication/README.md，不以本修正測試冒充完成。"
+    "37 名已在固定 13956d93b／cv_720a022a110a 的隔離服務重新建包、投稿、核准發布並通過普通對局、重連、結算、固定重播及未上架英雄獨立還原。完整收據與畫面沿用界線見 docs/_reports/community-hero-forge/release-13956d93b/README.md。正式部署後仍須依實際服務重建並正式發布；請依本 PR 審查，未另行轉派任務。 GitHub contract／平台／安全檢查通過；unit 的過期 profile 與 Mac 路徑已修正並定向通過，現僅重現 main 7778c10c5 同樣缺 v0.41.5 公告紀錄。完整 CI 尚非全綠，原始失敗與修正收據見 ci-status.json。未自行發公告或補造帳本。"
   ]
 }

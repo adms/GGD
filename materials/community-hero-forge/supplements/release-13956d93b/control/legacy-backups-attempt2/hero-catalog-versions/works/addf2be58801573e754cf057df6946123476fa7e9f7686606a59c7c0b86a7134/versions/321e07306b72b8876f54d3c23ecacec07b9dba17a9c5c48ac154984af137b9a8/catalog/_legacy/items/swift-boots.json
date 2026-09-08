@@ -1,0 +1,20 @@
+{
+  "id": "swift-boots",
+  "schema": "item@1",
+  "name": "疾風之靴",
+  "icon": "assets/icons/items/swift-boots.webp",
+  "cost": 300,
+  "tier": 1,
+  "unique": true,
+  "modifiers": [
+    {
+      "stat": "ms",
+      "op": "flat",
+      "value": 0.828
+    }
+  ],
+  "tags": [
+    "boots"
+  ],
+  "craftRole": "none"
+}
