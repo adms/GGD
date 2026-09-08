@@ -1,0 +1,76 @@
+{
+  "schema": "ggd-madoka-verification@1",
+  "issue": 1132,
+  "sourceCommit": "597db32918ad27262ca6e343217a9d12672d672d",
+  "refinementVersion": 2,
+  "refinementSha256": "9bfa5a527ca95c2c4412c0af01f2a7213ac33e67575e8c14cf7e1b096186e362",
+  "focusedTests": 19,
+  "regression": {
+    "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements packages/shared/src/sim/clearPools.test.ts packages/shared/src/sim/markInstall.test.ts packages/shared/src/sim/purity.test.ts packages/shared/src/sim/effects/shieldAbsorb.test.ts packages/shared/src/sim/effects/shieldBreak.test.ts packages/shared/src/sim/combat/lethalSave.test.ts packages/shared/src/sim/combat/restore.test.ts packages/shared/src/content/compat.test.ts packages/shared/src/content/schema/mark.test.ts packages/shared/src/content/templates/markStacks.test.ts packages/shared/src/content/schema/effects/effectShardWiring.test.ts apps/editor/src/forge/skillAcceptanceCatalog.test.ts apps/editor/src/form/fullCoverageMatchesContract.test.ts --pool=threads --minWorkers=1 --maxWorkers=2",
+    "exitCode": 0,
+    "testFiles": 20,
+    "tests": 207,
+    "logSha256": "000e0499c629d5801385acb8e5a781a3963afa70a48ca5f4e005a0e380ad2d16"
+  },
+  "typecheck": {
+    "command": "pnpm --filter @ggd/shared typecheck",
+    "exitCode": 0,
+    "logSha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+  },
+  "mutations": [
+    {
+      "mutation": "hope-on-grant",
+      "test": "W generation/refresh",
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "0ad82132a11edf384278e6e7b56adbb63b9af071dc00d5a663ce9631a5a326cf"
+    },
+    {
+      "mutation": "save-cap-disabled",
+      "test": "save limits survive",
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "8240d6b668bfd4fd901d8726defa04f4cbabd14863cfce6ca1e917f30db38916"
+    },
+    {
+      "mutation": "rain-follows-victim",
+      "test": "R lets enemies leave",
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "bd488abe36ddbf602b115e5e84db2221a00bcb055af8d45a3891ed1051a18b7a"
+    }
+  ],
+  "handoff": {
+    "heroes": 37,
+    "slots": 222,
+    "changedSlots": 21,
+    "onAttackPassivesRemaining": 26,
+    "originalRecipesUnchanged": 37,
+    "boundModelsUnchanged": 37,
+    "changedProjects": [
+      {
+        "hero": "21",
+        "previousRevision": 13,
+        "revision": 14
+      }
+    ],
+    "otherProjectsByteIdentical": 36,
+    "logSha256": "7fc9ba00c726a1c4bd38b668b4f7efd9c4877844fed95532f3ac6a4b12780ed0"
+  },
+  "testConditions": [
+    "Source recipe -> pinned effect-sequence/event-passive/mark-stacks templates -> generator/compiler -> actual casts and SimWorld.",
+    "Durable bodies, automatic attack range zero, HP regen zero, ordinary hitstop and knockback disabled; skill collision, area entry/exit, healing and damage still execute.",
+    "Base shield values use existing rank scaling: 120/200 at rank 1, 300/500 at rank 4. Lethal rescue returns 5% of actual derived max HP.",
+    "Three intentional regressions fail on behavior assertions, not compilation; modified sources restored."
+  ],
+  "limitations": [
+    "Q uses existing arcane projectile geometry; arrow model and original pink-white presentation remain pending.",
+    "Hope, rose shield, arrow-rain and salvation visuals have not been visually accepted.",
+    "R now uses delayed circle re-resolution rather than applying DOT to initial victims.",
+    "Per-round limit counts actual saves; an expired unused mark may be reapplied."
+  ],
+  "ui": "unverified",
+  "originalDesignAcceptance": "incomplete",
+  "currentServiceZip": "not-built",
+  "formalPublication": false
+}

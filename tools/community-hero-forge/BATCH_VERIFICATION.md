@@ -30,7 +30,7 @@ python3 tools/community-hero-forge/verify-authoring-batch.py \
 
 新批次可先不放 plan：腳本仍核對／編譯並列出全部未覆蓋槽。建立測試時，使用 `communityRecipeFixture`／`communityCombatFixture` 讀原始配方；批次執行器會設定 `GGD_HERO_BATCH_DIR`。只能在建立真實行為案例後，將对应 hero ID／slot 加進 plan。來源不同不得直接複製第一批的測試清單。發布閘仍測 repo 本身，不把批次環境變數誤傳給既有 Editor 回歸。
 
-第一批 plan 目前對應 16 個已修正／部分修正槽，其餘仍有缺口。每槽 `originalDesignAcceptance` 保持未驗證，直到逐項 requiredRefinement 有足夠行為及畫面證據；它不是自動上架清單。
+第一批 plan 目前對應 21 個已修正／部分修正槽，其餘仍有缺口。每槽 `originalDesignAcceptance` 保持未驗證，直到逐項 requiredRefinement 有足夠行為及畫面證據；它不是自動上架清單。
 
 輸出必須是來源以外的新目錄。執行中如有人更改來源，整次證據標為失效，不拿它續跑。腳本不生成英雄、不修改原稿、不投稿、不發布、不操作正式帳號。
 

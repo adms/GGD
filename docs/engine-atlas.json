@@ -1,12 +1,12 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "309a8d1c",
+  "capabilityFingerprint": "16de5508",
   "counts": {
     "effectKinds": 49,
-    "hookEvents": 33,
+    "hookEvents": 34,
     "conditionLeafKinds": 11,
     "templateFamilies": 43,
-    "effectFields": 276,
+    "effectFields": 277,
     "stats": 23,
     "combatEnvKeys": 39
   },
@@ -478,6 +478,7 @@
     ],
     "疊層與標記": [
       "exclusiveOnExisting",
+      "grantMark",
       "markStatusId",
       "maxStacks",
       "onExisting",
@@ -544,6 +545,7 @@
       "onAbilityHit",
       "onAllyDamaged",
       "onAllyDeath",
+      "onAllyProtected",
       "onBasicAttack",
       "onBossSpawn",
       "onBoundaryTouch",

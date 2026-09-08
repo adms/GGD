@@ -4,7 +4,7 @@
 
 ## 最新可共用作品（2026-09-09）
 
-[index.json](index.json)＋[projects/](projects/) 已保存 37 份實際 HeroProject，配對既有 [recipes/](recipes/)；包含 #1141 吉伊卡哇六槽機制與版本修正、#1140 御坂美琴電荷、EX 與單發／連鎖修正，#1139 風／樹 Q 切換及前批友軍盾、卡牌連結修正。逐檔版本與 SHA-256 在 [handoff-manifest.json](handoff-manifest.json)。**37 名／222 槽重新編譯通過；27 名仍有通用普攻被動，完整原設計、畫面與正式發布尚未完成**，詳見 [逐槽對照](refinements/design-audit.json) 及 #1132。
+[index.json](index.json)＋[projects/](projects/) 已保存 37 份實際 HeroProject，配對既有 [recipes/](recipes/)；包含鹿目圓希望／友軍保命與六槽修正、#1141 吉伊卡哇六槽機制與版本修正、#1140 御坂美琴電荷、EX 與單發／連鎖修正，#1139 風／樹 Q 切換及前批友軍盾、卡牌連結修正。逐檔版本與 SHA-256 在 [handoff-manifest.json](handoff-manifest.json)。**37 名／222 槽重新編譯通過；26 名仍有通用普攻被動，完整原設計、畫面與正式發布尚未完成**，詳見 [逐槽對照](refinements/design-audit.json) 及 #1132。
 
 #1140 的御坂美琴使用新增 `chainLightning.retargetOnLost` 欄位；執行／編譯這批作品的工作線，須包含機制提交 `db53e47e456e6230e782222dc5f63dcf9c685ebe`（PR #1135），或已具備同等欄位支援。只複製設定到舊引擎不能完成匯入。#1141 另需機制／生成修正提交 `63b81b0754a4d8b14720b93cc182fb4d852f414d`，提供 `nearbyCombat` 條件、`dispel.statusTag` 與微調版本對應作品 revision。吉伊卡哇 revision 13→14；庫洛魔法使補正既有微調 v3 的 revision 13→15，後者技能／原稿／模型皆未改。
 
@@ -84,3 +84,5 @@ python3 materials/community-hero-forge/restore.py --parts-dir /private/tmp/ggd-c
 `s3-upload-receipt.json` 記錄 S3 物件大小與伺服器 SHA-256；`s3-restoration-receipt.json` 記錄重新下載及完整還原結果。兩者只驗材料傳輸與還原，未改變模型／技能原有視覺驗收範圍。`s3-branch-proof.json` 列出原產品樹、43 份原文／配方／manifest／verify 的雜湊及排除的 34 個 Git blob；`s3-transport-tests.log` 是 6 項保護測試結果。整體 coord 仍有 8 份既有歷史指紋差異，原始 log 一併保存，待 Main 整合。
 
 封裝工具為 `tools/community-hero-forge/archive-materials.py`。原始材料保留在原處；重建封裝時必須另給本機密碼辨識檔以移除歷史腳本中的測試密碼，該辨識檔不進 Git。後續以現有 PR 的固定版本及部署服務重建正式 ZIP。
+
+鹿目圓 revision 13→14 需包含機制提交 `597db32918ad27262ca6e343217a9d12672d672d`：`onAllyProtected`、`applyStatus.grantMark`、`lethal.maxSavesPerRound`。19 項角色行為、207 項集中回歸與三項反例見 [鹿目圓驗證](refinements/madoka-verification.json)。其餘 36 份作品逐位元組不變；本次不代表畫面或正式發布驗收。

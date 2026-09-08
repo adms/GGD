@@ -1,6 +1,6 @@
 {
   "schema": "ggd-shared-authoring-handoff@1",
-  "sourceCommit": "63b81b0754a4d8b14720b93cc182fb4d852f414d",
+  "sourceCommit": "597db32918ad27262ca6e343217a9d12672d672d",
   "heroCount": 37,
   "slotCount": 222,
   "compilation": "passed",
@@ -24,7 +24,7 @@
     },
     {
       "path": "refinements/21.json",
-      "sha256": "0a981bb12969ac3c2332c944bc8e9ffe1715bf313258f755195fb264f970ef82"
+      "sha256": "9bfa5a527ca95c2c4412c0af01f2a7213ac33e67575e8c14cf7e1b096186e362"
     },
     {
       "path": "refinements/27.json",
@@ -243,8 +243,8 @@
     },
     {
       "path": "projects/21.hero-project.json",
-      "bytes": 41249,
-      "sha256": "7cceac56da95cae9be74773644c83e151fc9812ffdf35a5e8ef54c64d0e630c6"
+      "bytes": 43355,
+      "sha256": "cf96a3bea81b39250ac1dff66d4dd3d01a6f7ebb69890065e7c6b5ac321ef6ef"
     },
     {
       "path": "recipes/21.upload-recipe.json",
@@ -675,13 +675,21 @@
   ],
   "requiredRuntimeCommits": [
     "db53e47e456e6230e782222dc5f63dcf9c685ebe",
-    "63b81b0754a4d8b14720b93cc182fb4d852f414d"
+    "63b81b0754a4d8b14720b93cc182fb4d852f414d",
+    "597db32918ad27262ca6e343217a9d12672d672d"
   ],
   "requiredEffectFields": [
     "chainLightning.retargetOnLost",
-    "dispel.statusTag"
+    "dispel.statusTag",
+    "applyStatus.grantMark"
   ],
   "requiredConditionLeaves": [
     "nearbyCombat"
+  ],
+  "requiredMarkFields": [
+    "lethal.maxSavesPerRound"
+  ],
+  "requiredHooks": [
+    "onAllyProtected"
   ]
 }

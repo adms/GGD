@@ -6,7 +6,7 @@
   "to": "main",
   "baseCommit": "6efdd3bfb4df593a26fa2e94d4d65f8e572c3c64",
   "contractFingerprint": "b91a0f59c31289ed",
-  "title": "#1132 局部機制修正、#1141 吉伊卡哇六槽與 #1143 批次驗證；37 名整體未完成",
+  "title": "#1132 局部機制修正含鹿目圓六槽、版本化作品與批次驗證；37 名整體未完成",
   "claims": [
     {
       "kind": "confirmed",
@@ -24,7 +24,7 @@
     },
     {
       "kind": "confirmed",
-      "text": "型別檢查通過；37 名原稿與模型不變，222 槽保留全部 requiredRefinement。27 名仍使用通用普攻被動；布局／線索、希望、庫洛魔法使劍牌普攻／武器及動態牌面等仍未落地。本 PR 不代表完整原設計完成，不關閉 #1132；修正後 UI、目前服務 ZIP 與正式發布尚未驗證。",
+      "text": "型別檢查通過；37 名原稿與模型不變，222 槽保留全部 requiredRefinement。26 名仍使用通用普攻被動；布局／線索、庫洛魔法使劍牌普攻／武器及動態牌面等仍未落地。本 PR 不代表完整原設計完成，不關閉 #1132；修正後 UI、目前服務 ZIP 與正式發布尚未驗證。",
       "repro": {
         "command": "pnpm --filter @ggd/shared typecheck",
         "expectedExit": 0
@@ -198,6 +198,20 @@
         "materials/community-hero-forge/refinements/chiikawa-verification.json",
         "materials/community-hero-forge/refinements/batch-verifier-verification.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "#1132 鹿目圓 v2 實作有效友軍保護累積希望、消耗希望強化友軍盾、直線碰撞 Q、單項淨化 E、三波地面重判 R 及每目標每回合一次保命 EX。19 項角色行為、207 項集中回歸與三個承重反例通過。僅 21 號作品 revision 13→14，其餘 36 份逐位元組不變；原作箭／玫瑰盾／圓環畫面與目前服務 ZIP、正式發布尚未驗證，父票保持開啟。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements/madoka.test.ts",
+        "expectedExit": 0
+      },
+      "commit": "597db32918ad27262ca6e343217a9d12672d672d",
+      "evidence": [
+        "materials/community-hero-forge/refinements/madoka-verification.json",
+        "materials/community-hero-forge/refinements/21.json",
+        "packages/shared/src/content/heroForge/communityRefinements/madoka.test.ts"
+      ]
     }
   ],
   "unblocks": [],
@@ -208,6 +222,6 @@
     }
   ],
   "asks": [
-    "請 Main 一併審查 #1143 批次驗證入口、失敗集中回報、來源綁定續跑及批次測試治具。請 Main 審查 #1141 nearbyCombat 条件與表單、dispel.statusTag 過濾、微調 version 對應作品 revision 與吉伊卡哇六槽；以及 #1140 的共用 chainLightning.retargetOnLost schema／runtime 選项及對應配方、#1139 換牌、友軍盾、radius:0 生成器修正、官方契約與 AI 守則。最新 37 份可共用作品在 materials/community-hero-forge/projects；#1132 保持開啟，完整原設計、修正後畫面／服務 ZIP 及正式發布仍未完成，不據此發布 37 名。"
+    "請 Main 加入審查鹿目圓 onAllyProtected、盾吸收歸屬、applyStatus.grantMark 及每回合救援次數的 schema/runtime 與版本化配方。請 Main 一併審查 #1143 批次驗證入口、失敗集中回報、來源綁定續跑及批次測試治具。請 Main 審查 #1141 nearbyCombat 条件與表單、dispel.statusTag 過濾、微調 version 對應作品 revision 與吉伊卡哇六槽；以及 #1140 的共用 chainLightning.retargetOnLost schema／runtime 選项及對應配方、#1139 換牌、友軍盾、radius:0 生成器修正、官方契約與 AI 守則。最新 37 份可共用作品在 materials/community-hero-forge/projects；#1132 保持開啟，完整原設計、修正後畫面／服務 ZIP 及正式發布仍未完成，不據此發布 37 名。"
   ]
 }
