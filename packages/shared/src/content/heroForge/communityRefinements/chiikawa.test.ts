@@ -1,5 +1,6 @@
 /** GH#1141: original recipe -> versioned refinement -> compiler -> real casts. */
 import { beforeAll, describe, expect, it } from "vitest";
+import { applyCommunityDesignRefinement } from "./apply";
 import { communityCombatFixture } from "../../../../testkit/communityCombatFixture";
 import { registerSkeletonContent } from "../../../sim/content/skeleton";
 import { castAbility } from "../../../sim/abilities/abilitySystem";
@@ -218,6 +219,10 @@ describe("GH#1141 Chiikawa courage and six authored slots", () => {
   });
   it("preserves original source, identity, model and template isolation for all six slots", () => {
     const r = setup();
+    expect(r.project.revision).toBe(r.source.project.revision + r.source.refinement.version);
+    const next = applyCommunityDesignRefinement(r.source.project, { ...r.source.refinement, version: r.source.refinement.version + 1 }, r.templates);
+    expect(next.revision).toBe(r.project.revision + 1);
+    expect(next.acceptedPlan).toEqual(r.project.acceptedPlan);
     expect(r.project.sourceDesign).toEqual(r.source.project.sourceDesign);
     expect(r.project.brief).toEqual(r.source.project.brief);
     expect(r.project.presentation.modelKey).toBe(r.source.project.presentation.modelKey);

@@ -53,7 +53,10 @@ export function applyCommunityDesignRefinement(input: HeroProject, raw: unknown,
     }
   }
   project.acceptedPlan = pinHeroPlanTemplates(project.acceptedPlan, templates);
-  project.revision++;
+  // Refinements are rebuilt from the preserved base project. Incrementing only
+  // once reused the same revision for v1 and v2, hiding a content change from
+  // version selection. The refinement ordinal deterministically advances it.
+  project.revision += patch.version;
   project.receipts = [];
   for (const section of ["skills", "mechanics", "presentation", "validation", "package"] as const) {
     project.sections[section] = { ...project.sections[section], revision: project.revision, state: "stale" };
