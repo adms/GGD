@@ -1,0 +1,1 @@
+{"counts":{"train":{"tasks":110,"wholeHeroes":12,"slots":98,"groups":30},"dev":{"tasks":14,"wholeHeroes":2,"slots":12,"groups":2}},"trainTotalTokens":2813563,"trainOutputTokens":83711,"devTotalTokens":360876,"maxSequenceTokens":29957,"maxTrainOutputTokens":4799,"probeIds":["godie-h02k:HERO"],"gpuStarted":false,"sequenceTruncation":false}

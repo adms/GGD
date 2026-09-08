@@ -1,0 +1,61 @@
+{
+  "schema": "ggd-distillation-frozen-data@1",
+  "counts": {
+    "train": {
+      "tasks": 110,
+      "wholeHeroes": 12,
+      "slots": 98,
+      "groups": 30
+    },
+    "dev": {
+      "tasks": 14,
+      "wholeHeroes": 2,
+      "slots": 12,
+      "groups": 2
+    }
+  },
+  "devGroups": [
+    "godie-edem",
+    "godie-h02v"
+  ],
+  "inputs": {
+    "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/distillation-pairs-v1/manifest.json": "b66c607b5daf8755101b700471fa50becf89cbd42bfa1d7b7fadfbf05fb3b398",
+    "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/distillation-pairs-v1/examples.json": "9b83e1bb3cdf1c11880c4e5006c7b4b1eac5278398318872c238c63cb7efce1d",
+    "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/distillation-training-v1/quality-reviewed.json": "724664550894f77873d03e0726b6d89411677c0b0b56c9b468d1a56085c9fd24",
+    "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/distillation-indexed-v1/catalog-indexes.json": "77026c857c19a3aa75686bd3ad8140c0a2991fa7b1f7e01d2d469d76a6fa315a",
+    "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/distillation-indexed-v1/projection-verified/models.json": "bef55f2b77db09fa294e241a60c8d2b61b82ac82e4d673f4b02e4cc7ba46c7e7",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-hero-asset-integration/existing-catalog-baselines/works/addf2be58801573e754cf057df6946123476fa7e9f7686606a59c7c0b86a7134/versions/5c22a03d7420a2d225612d7ae76d22674b89a2f1e7d6c9d3e8adfc7db0b4be08/catalog-version.json": "e9f229ec203fb8a59eb3beb4236f4d0d61ab5150e26730890a1631292b94b6cd",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-hero-asset-integration/existing-catalog-baselines/works/addf2be58801573e754cf057df6946123476fa7e9f7686606a59c7c0b86a7134/versions/5c22a03d7420a2d225612d7ae76d22674b89a2f1e7d6c9d3e8adfc7db0b4be08/catalog/models/_index.json": "09e9d719890801a036a1de5ba0805696c6cc7717e7bd8615fa5b540a58debbed",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-hero-asset-integration/existing-catalog-baselines/works/addf2be58801573e754cf057df6946123476fa7e9f7686606a59c7c0b86a7134/versions/5c22a03d7420a2d225612d7ae76d22674b89a2f1e7d6c9d3e8adfc7db0b4be08/catalog/vfx/_index.json": "5c46dae50bb979f46e48a2cada16dce28f1a0ebce2e6b2e8900b59a017884dbc",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-hero-asset-integration/existing-catalog-baselines/works/addf2be58801573e754cf057df6946123476fa7e9f7686606a59c7c0b86a7134/versions/5c22a03d7420a2d225612d7ae76d22674b89a2f1e7d6c9d3e8adfc7db0b4be08/catalog/projectiles/_index.json": "d92a81e80bca1ba723abba8eaf35ab51d8daf93969f811973668ff7eadaddc54",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-hero-asset-integration/existing-catalog-baselines/works/addf2be58801573e754cf057df6946123476fa7e9f7686606a59c7c0b86a7134/versions/5c22a03d7420a2d225612d7ae76d22674b89a2f1e7d6c9d3e8adfc7db0b4be08/catalog/status-effects/_index.json": "19058b31125e34054991660bc3b119455984212be4c18a7154a9033166ebe7c9",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-hero-asset-integration/existing-catalog-baselines/works/addf2be58801573e754cf057df6946123476fa7e9f7686606a59c7c0b86a7134/versions/5c22a03d7420a2d225612d7ae76d22674b89a2f1e7d6c9d3e8adfc7db0b4be08/catalog/champions/_index.json": "31647fb8e4106efb4d3050be26d0147a6d7e8bc2ed8f09ac9a028b851507f452"
+  },
+  "outputs": {
+    "examples.json": "c088817192df9a18f423a3903e1c7613a9542323f3e824e89da70a8817beebba",
+    "contract.json": "226912a1db3ed8eaae942243f025beda77836342de586ed5748bb8e3b65e44a9",
+    "assets.json": "d90a047424442b24c00e03007087b22afbdd139ca4d7e17c3bdee68013dc7550",
+    "grouping.json": "f0e0f1d214af5f6bde2a0b0821c8110bf4eb49e2c72955846f6fece4a39170ce",
+    "train.jsonl": "3b62cca0b6208d6a7d95220afb31ed35a24a55fe85167ecdcbc436b388e0d9c8",
+    "dev.jsonl": "c6caba51e273d6ba7d7882aa60a9c46b82d21d7bf6653eefa2def3edc972da99"
+  },
+  "scriptSha256": "f439448a0c4b115a5694c41050b1218faaa2f050888db43aae83797c5709d6b4",
+  "trainingSelection": "one traversal of all train tasks, no replacement or automatic sweep",
+  "inferencePolicy": "fixed single-pass index+contract context for initial A/B. Full validators have complete engine contracts. No teacher-answer lookup or Codex repair.",
+  "qualityPolicy": "Source-paired, structurally verified existing teachers; conservative explicit-gap exclusion; no source repair, new heroes, or all-corpus human Gold requirement.",
+  "sourceQualityCounts": {
+    "candidateTasks": 756,
+    "sourcePaired": 358,
+    "communitySlotsReviewed": 222,
+    "communitySlotsRetained": 22,
+    "wholeHeroEligible": 14,
+    "slotEligible": 110,
+    "totalEligible": 124,
+    "additionalExcludedTasks": 234
+  },
+  "newBlindBatch": "not supplied; never inserted into this split",
+  "metricsPolicy": "primary source/mechanism/whole-hero outcomes; CE/exact match are diagnostics only",
+  "checkpointPolicy": "fixed end of one epoch, intermediate recovery checkpoints not selected on dev",
+  "frozenWeightsStarted": false,
+  "releaseQualified": false
+}

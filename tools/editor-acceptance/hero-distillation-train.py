@@ -1,0 +1,367 @@
+"""One bounded Mac-only full-generation LoRA epoch, preceded by a real-length probe.
+
+No data repair, truncation, dataset expansion, automatic retry, sweep, or promotion.
+Resource/lock semantics retained from the earlier gpu-smoke/lora-facts supervisor.
+"""
+import argparse
+import gc
+import hashlib
+import importlib.metadata as metadata
+import json
+import math
+import os
+from pathlib import Path
+import random
+import signal
+import subprocess
+import sys
+import time
+import uuid
+
+for key in ['HF_HUB_OFFLINE', 'TRANSFORMERS_OFFLINE', 'HF_HUB_DISABLE_TELEMETRY', 'HF_HUB_DISABLE_IMPLICIT_TOKEN']:
+    os.environ[key] = '1'
+os.environ['TOKENIZERS_PARALLELISM'] = 'false'
+os.environ['OMP_NUM_THREADS'] = '4'
+GIB = 1024 ** 3
+LOCK = Path('/private/tmp/ggd-forge-training-runtime/gpu.lock')
+SCRIPT = Path(__file__).resolve()
+
+
+def digest(path):
+    h = hashlib.sha256()
+    with Path(path).open('rb') as stream:
+        for chunk in iter(lambda: stream.read(4 * 1024 * 1024), b''):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def read(path):
+    return json.loads(Path(path).read_text())
+
+
+def atomic(path, value):
+    path = Path(path)
+    temporary = path.with_name(path.name + '.tmp')
+    temporary.write_text(json.dumps(value, ensure_ascii=False, separators=(',', ':')) + '\n')
+    temporary.replace(path)
+
+
+def resources():
+    import psutil
+    memory, swap, battery = psutil.virtual_memory(), psutil.swap_memory(), psutil.sensors_battery()
+    return {'sampledAt': time.time(), 'availableBytes': memory.available, 'totalBytes': memory.total,
+            'swapUsedBytes': swap.used, 'acPower': battery is not None and battery.power_plugged,
+            'batteryPercent': battery.percent if battery else None}
+
+
+def violation(start, now, guard):
+    if not now['acPower']:
+        return 'AC_POWER_REQUIRED'
+    if now['batteryPercent'] is None or start['batteryPercent'] - now['batteryPercent'] >= guard['maxBatteryDropPoints']:
+        return 'BATTERY_DROPPING'
+    if now['availableBytes'] < guard['minAvailableGiB'] * GIB:
+        return 'LOW_AVAILABLE_MEMORY'
+    if now['swapUsedBytes'] - start['swapUsedBytes'] > guard['maxSwapGrowthGiB'] * GIB:
+        return 'SWAP_GROWTH'
+    return None
+
+
+def encode(tokenizer, messages):
+    assert len(messages) == 3 and [m['role'] for m in messages] == ['system', 'user', 'assistant']
+    prompt = tokenizer.apply_chat_template(messages[:2], tokenize=False, add_generation_prompt=True, enable_thinking=False)
+    suffix = '<|channel>thought\n<channel|>'
+    assert prompt.endswith(suffix), 'NO_THINKING_TEMPLATE_DRIFT'
+    completed = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=False, enable_thinking=False)
+    assert completed == prompt[:-len(suffix)] + messages[2]['content'] + '<turn|>\n', 'CHAT_TEMPLATE_DRIFT'
+    prefix = tokenizer.encode(prompt, add_special_tokens=False)
+    ids = tokenizer.encode(prompt + messages[2]['content'] + '<turn|>\n', add_special_tokens=False)
+    assert ids[:len(prefix)] == prefix and len(ids) > len(prefix), 'COMPLETION_BOUNDARY_DRIFT'
+    return {'ids': ids, 'promptTokens': len(prefix), 'outputTokens': len(ids) - len(prefix), 'totalTokens': len(ids)}
+
+
+def prepare(args):
+    out, data = args.out.resolve(), args.data.resolve()
+    assert not out.exists(), 'OUTPUT_ALREADY_EXISTS'
+    manifest = read(data / 'manifest.json')
+    assert digest(data / 'examples.json') == manifest['outputs']['examples.json'], 'FROZEN_DATA_DRIFT'
+    receipt = read(args.base_receipt)
+    model_dir = Path(receipt['modelDirectory'])
+    assert receipt['modelRevision'] == '200bb6db075e137a4deb08838865ac4ddb86292e'
+    from transformers import AutoTokenizer
+    tokenizer = AutoTokenizer.from_pretrained(str(model_dir), local_files_only=True, trust_remote_code=False)
+    examples = read(data / 'examples.json')
+    tokens = [{**{key: e[key] for key in ['id', 'heroId', 'groupId', 'slot', 'split']}, **encode(tokenizer, e['messages'])} for e in examples]
+    train = [r for r in tokens if r['split'] == 'train']
+    dev = [r for r in tokens if r['split'] == 'dev']
+    assert len(train) == manifest['counts']['train']['tasks'] and len(dev) == manifest['counts']['dev']['tasks']
+    assert not {r['groupId'] for r in train} & {r['groupId'] for r in dev}, 'GROUP_LEAKAGE'
+    assert any(r['slot'] == 'HERO' for r in train) and any(r['slot'] == 'HERO' for r in dev), 'WHOLE_HERO_REQUIRED'
+    # Probe actual worst training sequence and actual longest answer. No source
+    # or answer truncation, and dev never supplies gradients.
+    probe_ids = sorted({max(train, key=lambda r: r[k])['id'] for k in ['totalTokens', 'outputTokens']})
+    out.mkdir(parents=True)
+    atomic(out / 'tokens.json', tokens)
+    config = {'schema': 'ggd-full-hero-lora-run@1', 'dataDirectory': str(data), 'frozenManifestSha256': digest(data / 'manifest.json'),
+              'tokenizedSha256': digest(out / 'tokens.json'), 'workerSha256': digest(SCRIPT),
+              'modelDirectory': str(model_dir), 'modelRevision': receipt['modelRevision'], 'baseFiles': receipt['files'],
+              'minimumAvailableBytes': receipt['minimumAvailableBytes'], 'seed': 20260909,
+              'epochs': 1, 'steps': len(train), 'batchSize': 1, 'learningRate': 2e-5,
+              'numLayers': 2, 'loraParameters': {'rank': 8, 'scale': 8.0, 'dropout': 0.0, 'keys': ['self_attn.q_proj', 'self_attn.o_proj']},
+              'maxSequenceTokens': max(r['totalTokens'] for r in tokens), 'sequenceTruncation': False,
+              'maxTrainSequenceTokens': max(r['totalTokens'] for r in train),
+              'maxTrainOutputTokens': max(r['outputTokens'] for r in train), 'probeIds': probe_ids,
+              'metalLimitGiB': 28, 'secondsMaximum': 7200, 'probeSecondsMaximum': 1200, 'stepSecondsMaximum': 120,
+              'guard': {'minAvailableGiB': 6, 'maxSwapGrowthGiB': 2, 'maxBatteryDropPoints': 2, 'acRequired': True, 'concurrentOwnGpuWorkers': 1},
+              'saveEvery': max(1, math.ceil(len(train) / 5)), 'selection': 'fixed final one-epoch adapter; no dev checkpoint selection',
+              'loss': 'completion-only exact causal teacher forcing; retain full prompt attention; only project completion hidden states into vocabulary',
+              'automaticRestart': False, 'promotionAllowed': False, 'cloudGpuUsd': 0}
+    atomic(out / 'manifest.json', config)
+    summary = {'counts': manifest['counts'], 'trainTotalTokens': sum(r['totalTokens'] for r in train),
+               'trainOutputTokens': sum(r['outputTokens'] for r in train), 'devTotalTokens': sum(r['totalTokens'] for r in dev),
+               'maxSequenceTokens': config['maxSequenceTokens'], 'maxTrainOutputTokens': config['maxTrainOutputTokens'],
+               'probeIds': probe_ids, 'gpuStarted': False, 'sequenceTruncation': False}
+    atomic(out / 'token-preflight.json', summary)
+    print(json.dumps(summary), flush=True)
+
+
+def worker(directory, phase, token):
+    p = read(directory / 'manifest.json')
+    work = directory / phase
+    assert read(LOCK)['token'] == token and read(LOCK)['task'] == str(work), 'OWNED_LOCK_REQUIRED'
+    assert digest(SCRIPT) == p['workerSha256'], 'WORKER_DRIFT'
+    assert digest(directory / 'tokens.json') == p['tokenizedSha256'], 'TOKEN_DATA_DRIFT'
+    assert digest(Path(p['dataDirectory']) / 'manifest.json') == p['frozenManifestSha256'], 'FROZEN_MANIFEST_DRIFT'
+    data = read(directory / 'tokens.json')
+    train, dev = ([r for r in data if r['split'] == split] for split in ['train', 'dev'])
+    start_resource = resources()
+    assert start_resource['acPower'] and start_resource['availableBytes'] >= p['minimumAvailableBytes'], 'RESOURCE_ADMISSION'
+
+    def progress(name, **fields):
+        atomic(work / 'worker-progress.json', {'pid': os.getpid(), 'phase': name, 'startedAt': time.time(), **fields})
+
+    progress('verify-model')
+    for f in p['baseFiles']:
+        file = Path(p['modelDirectory']) / f['name']
+        assert file.stat().st_size == f['bytes'] and digest(file) == f['sha256'], 'BASE_MODEL_DRIFT'
+    import mlx.core as mx
+    import mlx.nn as nn
+    import mlx.optimizers as optim
+    from mlx.utils import tree_flatten
+    from mlx_vlm import load
+    from mlx_vlm.trainer.adapter_utils import linear_to_lora_layers
+    mx.set_memory_limit(min(p['metalLimitGiB'] * GIB, mx.device_info()['max_recommended_working_set_size']))
+    mx.set_cache_limit(128 * 1024 ** 2)
+    mx.random.seed(p['seed'])
+    progress('load-model')
+    model, processor = load(p['modelDirectory'], lazy=True, strict=True, trust_remote_code=False)
+    mx.eval(model.parameters()); model.freeze()
+    assert model.model_type == 'gemma4_unified'
+    linear_to_lora_layers(model, p['numLayers'], p['loraParameters'])
+    params = dict(tree_flatten(model.trainable_parameters()))
+    assert len(params) == 8 and all(k.endswith(('lora_a', 'lora_b')) for k in params), 'TRAINABLE_SCOPE'
+    mx.eval(model.trainable_parameters())
+    initial = {k: mx.array(v) for k, v in params.items()}
+    model.eval()
+
+    def loss_fn(net, row, full=False):
+        ids = mx.array([row['ids']], dtype=mx.int32)
+        n = row['outputTokens']
+        if full:
+            logits = net(ids[:, :-1], pixel_values=None, mask=None, cache=None).logits[:, -n:, :]
+        else:
+            # Gemma4 LanguageModel implements logits_to_keep before the shared
+            # embedding output projection. All input hidden states still run.
+            logits = net.language_model(ids[:, :-1], cache=None, logits_to_keep=n).logits
+        targets = ids[:, row['promptTokens']:]
+        assert logits.shape[:2] == targets.shape and targets.size == n
+        return nn.losses.cross_entropy(logits.astype(mx.float32), targets, reduction='mean')
+
+    gradient_fn = nn.value_and_grad(model, loss_fn)
+    if phase == 'probe':
+        # This short kernel-equivalence control is not a training sample.
+        # Actual capacity probes below always use full frozen sequences.
+        small_ids = train[0]['ids'][:64]
+        small = {'ids': small_ids, 'promptTokens': 32, 'outputTokens': 32}
+        progress('kernel-equivalence')
+        full_loss, full_grads = gradient_fn(model, small, True)
+        opt_loss, opt_grads = gradient_fn(model, small, False)
+        mx.eval(full_loss, full_grads, opt_loss, opt_grads)
+        loss_delta = abs(full_loss.item() - opt_loss.item())
+        f, o = dict(tree_flatten(full_grads)), dict(tree_flatten(opt_grads))
+        delta = max(mx.max(mx.abs(f[k] - o[k])).item() for k in f)
+        assert loss_delta <= 1e-5 and delta <= 1e-5, 'COMPLETION_LOGITS_PATH_NOT_EQUIVALENT'
+        atomic(work / 'kernel-equivalence.json', {'lossDelta': loss_delta, 'maxGradientDelta': delta,
+              'comparedTrainableTensors': len(f), 'controlTokens': 64, 'trainingSampleTruncated': False})
+        del full_loss, full_grads, opt_loss, opt_grads, f, o
+        gc.collect(); mx.clear_cache()
+        probes = []
+        for row in train:
+            if row['id'] not in p['probeIds']:
+                continue
+            progress('gradient-probe', id=row['id'], tokens=row['totalTokens'])
+            mx.reset_peak_memory(); started = time.monotonic()
+            loss, grads = gradient_fn(model, row)
+            mx.eval(loss, grads)
+            flat = dict(tree_flatten(grads))
+            assert set(flat) == set(params) and all(mx.all(mx.isfinite(v)).item() for v in flat.values()), 'BAD_GRADIENT'
+            assert math.isfinite(loss.item()), 'NONFINITE_LOSS'
+            probes.append({'id': row['id'], 'totalTokens': row['totalTokens'], 'outputTokens': row['outputTokens'],
+                           'loss': loss.item(), 'seconds': time.monotonic() - started, 'peakMetalBytes': mx.get_peak_memory()})
+            del loss, grads, flat
+            gc.collect(); mx.clear_cache()
+        assert len(probes) == len(p['probeIds'])
+        assert all(mx.array_equal(dict(tree_flatten(model.trainable_parameters()))[k], v).item() for k, v in initial.items())
+        upper = max(r['seconds'] for r in probes) * (len(train) + 2 * len(dev)) * 1.5 + 300
+        atomic(work / 'result.json', {'phase': phase, 'probes': probes, 'optimizerSteps': 0,
+              'allActualSamplesUntruncated': True, 'estimatedUpperEpochSeconds': upper,
+              'fitsTimeBudget': upper <= p['secondsMaximum'], 'fitsStepBudget': max(r['seconds'] for r in probes) <= p['stepSecondsMaximum'],
+              'trainingQualityProven': False, 'versions': {k: metadata.version(k) for k in ['mlx', 'mlx-vlm', 'transformers', 'psutil']}})
+        return
+
+    probe = read(directory / 'probe/result.json')
+    assert probe['fitsTimeBudget'] and probe['fitsStepBudget'], 'PROBE_BUDGET_FAILED'
+    optimizer = optim.Adam(learning_rate=p['learningRate'])
+
+    def evaluate(name):
+        model.eval(); results = []
+        for row in dev:
+            progress(name, id=row['id'])
+            results.append({'id': row['id'], 'loss': loss_fn(model, row).item(), 'outputTokens': row['outputTokens']})
+            gc.collect(); mx.clear_cache()
+        atomic(work / (name + '.json'), results)
+        return results
+
+    before = evaluate('dev-before')
+    order = list(range(len(train))); random.Random(p['seed']).shuffle(order)
+    atomic(work / 'order.json', [train[i]['id'] for i in order])
+    trace = []; checkpoints = []
+    model.train()
+    for step, index in enumerate(order, 1):
+        if (work / 'STOP').exists():
+            raise InterruptedError('USER_STOP')
+        reason = violation(start_resource, resources(), p['guard'])
+        if reason:
+            raise RuntimeError(reason)
+        row = train[index]; progress('training', step=step, id=row['id'], tokens=row['totalTokens'])
+        started = time.monotonic(); mx.reset_peak_memory()
+        loss, grads = gradient_fn(model, row); mx.eval(loss, grads)
+        flat = dict(tree_flatten(grads))
+        assert set(flat) == set(params) and all(mx.all(mx.isfinite(v)).item() for v in flat.values()), 'BAD_GRADIENT'
+        assert math.isfinite(loss.item()), 'NONFINITE_LOSS'
+        optimizer.update(model, grads); mx.eval(model.trainable_parameters(), optimizer.state)
+        trace.append({'step': step, 'id': row['id'], 'loss': loss.item(), 'totalTokens': row['totalTokens'],
+                      'seconds': time.monotonic() - started, 'peakMetalBytes': mx.get_peak_memory()})
+        atomic(work / 'training-trace.json', trace)
+        if step % p['saveEvery'] == 0 or step == len(order):
+            checkpoint = work / f'checkpoint-{step:04d}'; checkpoint.mkdir()
+            atomic(checkpoint / 'adapter_config.json', {'fine_tune_type': 'lora', 'num_layers': p['numLayers'], 'lora_parameters': p['loraParameters']})
+            mx.save_safetensors(str(checkpoint / 'adapters.safetensors'), dict(tree_flatten(model.trainable_parameters())))
+            checkpoints.append({'step': step, 'path': checkpoint.name, 'sha256': digest(checkpoint / 'adapters.safetensors')})
+            atomic(work / 'checkpoints.json', checkpoints)
+        del grads, flat, loss
+        gc.collect(); mx.clear_cache()
+    assert len(trace) == p['steps'] and len({r['id'] for r in trace}) == len(train), 'INCOMPLETE_EPOCH'
+    after = evaluate('dev-after')
+    progress('adapter-roundtrip')
+    saved = mx.load(str(work / checkpoints[-1]['path'] / 'adapters.safetensors'))
+    final = dict(tree_flatten(model.trainable_parameters()))
+    assert set(saved) == set(final) and all(mx.array_equal(saved[k], final[k]).item() for k in saved)
+    model.load_weights(list(initial.items()), strict=False)
+    reset_loss = loss_fn(model, dev[0]).item()
+    assert abs(reset_loss - before[0]['loss']) < 1e-5, 'FROZEN_BASE_CHANGED'
+    model.load_weights(list(saved.items()), strict=False)
+    reload_loss = loss_fn(model, dev[0]).item()
+    assert abs(reload_loss - after[0]['loss']) < 1e-5, 'ADAPTER_RELOAD_FAILED'
+    atomic(work / 'adapter-roundtrip.json', {'tensorKeys': sorted(saved), 'resetLoss': reset_loss, 'reloadLoss': reload_loss, 'passed': True})
+    atomic(work / 'result.json', {'phase': phase, 'steps': len(trace), 'uniqueTrainingTasks': len(train),
+          'wholeHeroTrainingTasks': sum(r['slot'] == 'HERO' for r in train), 'checkpoint': checkpoints[-1],
+          'peakMetalBytes': max(r['peakMetalBytes'] for r in trace), 'trainingSeconds': sum(r['seconds'] for r in trace),
+          'beforeMeanDevCE': sum(r['loss'] * r['outputTokens'] for r in before) / sum(r['outputTokens'] for r in before),
+          'afterMeanDevCE': sum(r['loss'] * r['outputTokens'] for r in after) / sum(r['outputTokens'] for r in after),
+          'ceIsGenerationSuccessMetric': False, 'modelPromoted': False, 'fullHeroE2EProven': False})
+
+
+def supervise(directory, phase):
+    p = read(directory / 'manifest.json'); work = directory / phase
+    assert not work.exists(), 'REFUSE_RESTART_OR_OVERWRITE'
+    assert p['workerSha256'] == digest(SCRIPT), 'WORKER_DRIFT'
+    if phase == 'train':
+        probe = read(directory / 'probe/result.json')
+        assert probe['fitsTimeBudget'] and probe['fitsStepBudget'], 'PROBE_BUDGET_FAILED'
+        assert read(directory / 'probe/state.json')['status'] == 'completed', 'PROBE_SUPERVISOR_DID_NOT_FINISH'
+    start = resources()
+    assert start['acPower'] and start['availableBytes'] >= p['minimumAvailableBytes'], 'RESOURCE_ADMISSION'
+    assert not violation(start, start, p['guard']), 'RESOURCE_GUARD'
+    LOCK.parent.mkdir(parents=True, exist_ok=True)
+    token = uuid.uuid4().hex
+    state = {'status': 'starting', 'pid': os.getpid(), 'workerPid': None, 'startedAt': time.time(), 'phase': phase,
+             'manifestSha256': digest(directory / 'manifest.json'), 'preflight': start, 'samples': []}
+    child = None
+    lock_created = False
+    work_created = False
+
+    def interrupt(signum, frame):
+        raise InterruptedError('INTERRUPTED')
+
+    previous_handlers = {sig: signal.getsignal(sig) for sig in [signal.SIGTERM, signal.SIGINT]}
+    try:
+        with LOCK.open('x') as stream:
+            lock_created = True
+            json.dump({'pid': os.getpid(), 'task': str(work), 'token': token}, stream)
+        work.mkdir()
+        work_created = True
+        signal.signal(signal.SIGTERM, interrupt); signal.signal(signal.SIGINT, interrupt)
+        with (work / 'worker.log').open('x') as log:
+            child = subprocess.Popen([sys.executable, str(SCRIPT), 'worker', '--run', str(directory), '--phase', phase, '--token', token],
+                                     stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+            state.update(status='running', workerPid=child.pid); atomic(work / 'state.json', state)
+            while child.poll() is None:
+                time.sleep(2)
+                sample = resources(); state['samples'].append(sample); atomic(work / 'state.json', state)
+                reason = violation(start, sample, p['guard'])
+                if (work / 'STOP').exists(): reason = 'USER_STOP'
+                maximum = p['probeSecondsMaximum'] if phase == 'probe' else p['secondsMaximum']
+                if time.time() - state['startedAt'] > maximum: reason = 'RUN_TIME_LIMIT'
+                if (work / 'worker-progress.json').exists():
+                    progress = read(work / 'worker-progress.json'); assert progress['pid'] == child.pid
+                    limit = p['stepSecondsMaximum'] if progress['phase'] in ['training', 'gradient-probe'] else 610
+                    if time.time() - progress['startedAt'] > limit: reason = 'PHASE_TIME_LIMIT'
+                if reason: raise RuntimeError(reason)
+            assert child.returncode == 0, f'WORKER_EXIT:{child.returncode}'
+            assert read(work / 'result.json')['phase'] == phase
+            state['status'] = 'completed'
+    except BaseException as error:
+        state.update(status='stopped-or-failed', error=repr(error))
+    finally:
+        try:
+            if child is not None and child.poll() is None:
+                os.killpg(child.pid, signal.SIGTERM)
+                try: child.wait(timeout=5)
+                except subprocess.TimeoutExpired:
+                    os.killpg(child.pid, signal.SIGKILL); child.wait(timeout=5)
+            state.update(workerPid=None, finishedAt=time.time())
+            if work_created: atomic(work / 'state.json', state)
+        finally:
+            # Never remove a different worker's lock or overwrite its output.
+            # A mkdir/log/Popen failure must still release our own lock.
+            if lock_created and LOCK.exists() and read(LOCK).get('token') == token: LOCK.unlink()
+            for sig, handler in previous_handlers.items(): signal.signal(sig, handler)
+    print(json.dumps({k: v for k, v in state.items() if k != 'samples'}), flush=True)
+    if state['status'] != 'completed': raise SystemExit(1)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('action', choices=['prepare', 'probe', 'train', 'worker'])
+    parser.add_argument('--data', type=Path); parser.add_argument('--base-receipt', type=Path); parser.add_argument('--out', type=Path)
+    parser.add_argument('--run', type=Path); parser.add_argument('--phase', choices=['probe', 'train']); parser.add_argument('--token')
+    args = parser.parse_args()
+    if args.action == 'prepare':
+        assert args.data and args.base_receipt and args.out
+        prepare(args)
+    elif args.action == 'worker':
+        assert args.run and args.phase and args.token
+        worker(args.run.resolve(), args.phase, args.token)
+    else:
+        assert args.run
+        supervise(args.run.resolve(), args.action)
