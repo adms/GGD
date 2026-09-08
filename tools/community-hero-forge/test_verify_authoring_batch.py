@@ -101,6 +101,28 @@ class BatchVerifierTests(unittest.TestCase):
         errors, _ = v.preflight(self.a)
         self.assertEqual(sum('SHA-256 mismatch' in e for e in errors), 2)
 
+    def test_cross_app_suites_keep_path_and_test_file_guards(self):
+        (self.a/'handoff-manifest.json').write_text('{}')
+        plan = {'schema': 'ggd-batch-validation-plan@1', 'manifestSha256': v.digest(self.a/'handoff-manifest.json'),
+                'suites': [{'id': 'views', 'files': [], 'heroSlots': {'hero': ['E']}}]}
+        original_repo = v.REPO
+        try:
+            v.REPO = self.b
+            names = [prefix+'/src/real.test.ts' for prefix in ('packages/shared', 'apps/editor', 'apps/client', 'apps/game-server')]
+            for name in names + ['tools/real.test.ts', 'apps/client/src/not-a-test.ts']:
+                path = self.b/name; path.parent.mkdir(parents=True, exist_ok=True); path.write_text('// test fixture')
+            plan['suites'][0]['files'] = names
+            path = self.a/'validation-plan.json'; path.write_text(json.dumps(plan))
+            rows = [{'projectId': 'hero', 'slot': 'E'}]
+            self.assertEqual(v.load_plan(self.a, rows)[0]['files'], names)
+            for bad in ('tools/real.test.ts', 'apps/client/src/not-a-test.ts', 'apps/client/src/missing.test.ts',
+                        '../real.test.ts', '/tmp/real.test.ts', 'apps/client/src/../../../outside.test.ts'):
+                with self.subTest(path=bad):
+                    plan['suites'][0]['files'] = [bad]; path.write_text(json.dumps(plan))
+                    with self.assertRaises(ValueError): v.load_plan(self.a, rows)
+        finally:
+            v.REPO = original_repo
+
     def test_stale_plan_and_arbitrary_commands_rejected(self):
         (self.a/'handoff-manifest.json').write_text('{}')
         plan = {'schema': 'ggd-batch-validation-plan@1', 'manifestSha256': 'stale', 'suites': []}
