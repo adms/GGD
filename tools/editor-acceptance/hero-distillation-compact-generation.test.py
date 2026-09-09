@@ -25,7 +25,8 @@ class Item:
 class CompactGenerationTest(unittest.TestCase):
     def test_rejects_fences_and_uses_one_fixed_contract(self):
         self.assertEqual(M.decoding_contract()['max_tokens'], 4096)
-        self.assertRaisesRegex(AssertionError, 'COMPACT_JSON_REJECTED', M.strict_object, '```json\n{}\n```')
+        self.assertEqual(M.strict_object('```json\n{}\n```'), {})
+        self.assertRaisesRegex(AssertionError, 'COMPACT_JSON_REJECTED', M.strict_object, '說明\n{}')
 
     def test_generates_without_retry_and_keeps_raw_record(self):
         values = iter(['{}'])
@@ -35,6 +36,7 @@ class CompactGenerationTest(unittest.TestCase):
         result = M.generate_one('hero:HERO:select', 'select', [{'role': 'system', 'content': 's'}, {'role': 'user', 'content': 'u'}], Tokenizer(), factory, lambda *a, **k: None)
         self.assertTrue(result['complete'])
         self.assertEqual(result['json'], {})
+        self.assertTrue(result['jsonAccepted'])
         self.assertEqual(result['attempts'], 1)
 
     def test_seven_calls_use_own_selection_then_runtime_assembly(self):

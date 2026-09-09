@@ -44,7 +44,10 @@ def decoding_contract():
 
 def strict_object(raw):
     parsed = g.parse_output(raw)
-    assert parsed['parsed'] and parsed['wrapper'] == 'none', 'COMPACT_JSON_REJECTED:' + str(parsed['error'])
+    # JSON fences are transport wrapping, not a model semantic decision.  We
+    # accept exactly the parser's whole-response fence form; prose extraction,
+    # multiple JSON objects and repair remain prohibited.
+    assert parsed['parsed'] and parsed['wrapper'] in ['none', 'whole-response-json-fence'], 'COMPACT_JSON_REJECTED:' + str(parsed['error'])
     return parsed['value']
 
 
@@ -77,7 +80,8 @@ def generate_one(case_id, stage, messages, tokenizer, stream_factory, progress):
     raw = ''.join(chunks)
     finish, count = getattr(last, 'finish_reason', None), getattr(last, 'generation_tokens', None)
     complete = failure is None and finish == 'stop' and isinstance(count, int) and 0 < count <= decoding_contract()['max_tokens']
-    value = strict_object(raw) if complete else None
+    parsed = g.parse_output(raw) if complete else {'parsed': False, 'wrapper': 'none', 'error': repr(failure), 'value': None}
+    json_accepted = parsed['parsed'] and parsed['wrapper'] in ['none', 'whole-response-json-fence']
     return {'id': case_id, 'stage': stage, 'messagesSha256': sha(compact(messages)),
             'promptSha256': sha(prompt), 'promptTokens': len(ids), 'promptTokenIdsSha256': sha(compact(ids)),
             'decoding': decoding_contract(), 'raw': raw, 'rawSha256': sha(raw), 'seconds': time.monotonic() - started,
@@ -85,7 +89,8 @@ def generate_one(case_id, stage, messages, tokenizer, stream_factory, progress):
             'cachedPromptTokens': getattr(last, 'cached_tokens', None),
             'promptTokensPerSecond': getattr(last, 'prompt_tps', None),
             'generationTokensPerSecond': getattr(last, 'generation_tps', None),
-            'error': repr(failure) if failure else None, 'json': value,
+            'error': repr(failure) if failure else None, 'json': parsed['value'], 'jsonAccepted': json_accepted,
+            'jsonWrapper': parsed['wrapper'], 'jsonError': parsed['error'],
             'attempts': 1, 'humanRepairs': 0}
 
 
@@ -97,7 +102,7 @@ def generate_hero(case, dataset, cli, tokenizer, stream_factory, progress, emit)
     selection_record = generate_one(case['heroId'] + ':HERO:select', 'select', case['selectionMessages'],
                                     tokenizer, stream_factory, progress)
     emit(selection_record)
-    assert selection_record['complete'], 'COMPACT_SELECTION_INCOMPLETE'
+    assert selection_record['complete'] and selection_record['jsonAccepted'], 'COMPACT_SELECTION_INCOMPLETE_OR_INVALID_JSON'
     selection = selection_record['json']
     # Validation and config-contract construction live in the JS runtime, so
     # Python cannot accidentally broaden selected candidates.
@@ -110,7 +115,7 @@ def generate_hero(case, dataset, cli, tokenizer, stream_factory, progress, emit)
         record = generate_one(case['heroId'] + ':' + slot + ':configure', 'configure', messages,
                               tokenizer, stream_factory, progress)
         emit(record)
-        assert record['complete'], 'COMPACT_CONFIGURATION_INCOMPLETE:' + slot
+        assert record['complete'] and record['jsonAccepted'], 'COMPACT_CONFIGURATION_INCOMPLETE_OR_INVALID_JSON:' + slot
         # The full slot configuration is validated here, during final bridge
         # assembly; an unselected semantic ID fails closed there.
         configurations[slot] = record['json']
