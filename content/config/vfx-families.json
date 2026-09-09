@@ -304,7 +304,7 @@
     },
     "godie-e008.q": {
       "soundLaunch": "wc3.flaretarget3",
-      "pitchDeg": 15
+      "pitchDeg": 64
     },
     "godie-e008.r": {
       "family": "flamePillar",
@@ -522,7 +522,7 @@
         0,
         0
       ],
-      "pitchDeg": 45
+      "pitchDeg": 73
     },
     "godie-h01o.ex": {
       "family": "mark",
@@ -555,7 +555,7 @@
         0,
         0
       ],
-      "pitchDeg": 45
+      "pitchDeg": 73
     },
     "godie-h01u.e": {
       "family": "burst",
@@ -648,6 +648,9 @@
     "godie-h02v.w": {
       "soundLaunch": "wc3.taunt"
     },
+    "godie-hapm.e": {
+      "pitchDeg": 89
+    },
     "godie-hapm.ex": {
       "family": "shockwaveRing",
       "tint": [
@@ -693,7 +696,7 @@
         0,
         0
       ],
-      "pitchDeg": 90
+      "pitchDeg": 89
     },
     "godie-hjai.q": {
       "family": "dissipate",
@@ -705,7 +708,7 @@
     },
     "godie-hjai.r": {
       "family": "cloud",
-      "pitchDeg": 55
+      "pitchDeg": 89
     },
     "godie-hjai.w": {
       "family": "flamePillar",
@@ -1033,7 +1036,7 @@
       "family": "dissipate"
     },
     "godie-osam.q": {
-      "pitchDeg": 0
+      "pitchDeg": 56
     },
     "godie-osam.r": {
       "family": "shockwaveRing",
@@ -1043,6 +1046,9 @@
         255
       ],
       "soundLaunch": "wc3.blademasterwhirlwind"
+    },
+    "godie-osam.w": {
+      "pitchDeg": 56
     },
     "godie-u00h.e": {
       "soundLaunch": "wc3.flaretarget2"
@@ -1237,7 +1243,7 @@
     },
     "godie-u01u.e": {
       "family": "mirrorImage",
-      "pitchDeg": 0
+      "pitchDeg": 78
     },
     "godie-u01u.ex": {
       "family": "mark",
@@ -1249,11 +1255,12 @@
       "flyHeight": 150
     },
     "godie-u01u.r": {
-      "family": "mirrorImage"
+      "family": "mirrorImage",
+      "pitchDeg": 78
     },
     "godie-u01u.w": {
       "family": "shockwaveRing",
-      "pitchDeg": 0
+      "pitchDeg": 78
     },
     "godie-u034.e": {
       "soundLaunch": "wc3.mortarteampissed9"
@@ -1338,7 +1345,7 @@
     },
     "godie-udre.e": {
       "family": "mirrorImage",
-      "pitchDeg": 0
+      "pitchDeg": 78
     },
     "godie-udre.ex": {
       "family": "mark",

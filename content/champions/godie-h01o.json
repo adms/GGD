@@ -4,7 +4,7 @@
   "name": "外掛開很大的死神 - 黑崎一護",
   "role": "fighter",
   "attackType": "melee",
-  "modelKey": "version.body.8d7862441a426d48f6ffdd3f97e2d7c93c50af070486e31b",
+  "modelKey": "version.body.85f650c11313bfea545c366efd2f149854764731cf09e9d5",
   "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
@@ -417,5 +417,5 @@
       }
     }
   ],
-  "modelSelectionMode": "automatic"
+  "modelSelectionMode": "manual"
 }
