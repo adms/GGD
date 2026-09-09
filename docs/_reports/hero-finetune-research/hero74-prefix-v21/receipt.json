@@ -1,0 +1,196 @@
+{
+  "schema": "ggd-distillation-receipt@1",
+  "run": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/full-hero-distillation-v21",
+  "phases": {
+    "probe": {
+      "status": "completed",
+      "error": null,
+      "wallSeconds": 402.948123216629,
+      "optimizerStepsRecorded": 0,
+      "minAvailableBytes": 52359413760,
+      "maxObservedSwapGrowthBytes": 0,
+      "allSamplesOnAC": true,
+      "minBatteryPercent": 98
+    },
+    "train": {
+      "status": "completed",
+      "error": null,
+      "wallSeconds": 11414.237965106964,
+      "optimizerStepsRecorded": 500,
+      "minAvailableBytes": 47822520320,
+      "maxObservedSwapGrowthBytes": 0,
+      "allSamplesOnAC": true,
+      "minBatteryPercent": 86,
+      "epochVerified": true,
+      "finalAdapterSha256": "0bcf301082a78e6762a9c460a52323f75403a084b4e747155d82c745c578fc56",
+      "adapterRoundtripVerified": true
+    }
+  },
+  "files": {
+    "manifest.json": {
+      "sha256": "f54167a0bd8e6341d75d38f8a80ae25cd9813b1048453bf731000ec99b97c1e6",
+      "bytes": 250226
+    },
+    "source/hero-distillation-train.py": {
+      "sha256": "99a07649ae5fbe3d4b69e42e041cc2cf87e577ee5b5e0ebf256b122e82320f39",
+      "bytes": 37937
+    },
+    "source/hero-distillation-memory.py": {
+      "sha256": "51d023c128b1ed9ba1973e8d149eac0707f4fe2796b64cc252d5a9a584217d84",
+      "bytes": 16970
+    },
+    "source/hero-distillation-prefix-cache.py": {
+      "sha256": "6cac4438d0c63cdad952c716772f28362d8ba69608e7ac90bd13a43976604ea8",
+      "bytes": 8718
+    },
+    "probe/kernel-equivalence.json": {
+      "sha256": "0e96eb78b0a890abfa7c4dea962b94b60f45a34333d27363c9f5d1050e51d7db",
+      "bytes": 1983
+    },
+    "probe/memory-trace.jsonl": {
+      "sha256": "eecf29325d4742bb67ea79cfe7fc8ce5c2ed47c61647222ac297193a574f2da7",
+      "bytes": 419655
+    },
+    "probe/prefix-cache-builds.json": {
+      "sha256": "07d15a0387a26c6b57867b55bac44ab21bb32980d50265ec7c68d817b772ae94",
+      "bytes": 290
+    },
+    "probe/prefix-cache-parity.json": {
+      "sha256": "e60212aeee4c3dec27bedc2e05ddd8b3df80a09a8f3bafcd9834cd9a10fc7678",
+      "bytes": 2394
+    },
+    "probe/probe-trace.json": {
+      "sha256": "8ca0d4926a32c0762e7271e48fe43f460f3e0cadbb008f2e4074c083e6660c7c",
+      "bytes": 902
+    },
+    "probe/result.json": {
+      "sha256": "d2f380db667c7d7a4fc8dc19b96f5f701d3123f3c9ee64761bfce91add13d274",
+      "bytes": 1588
+    },
+    "probe/state.json": {
+      "sha256": "3823ddc8f2a71e320d301445c5e8709998b5f86580767d309d9c8717b348ac5c",
+      "bytes": 30562
+    },
+    "probe/worker-progress.json": {
+      "sha256": "1cf1a9644adb63ce3a0ce97490a7ba51ea9a3a6b7e21b5f0cc40ab6ca44f9a82",
+      "bytes": 148
+    },
+    "probe/worker.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "train/adapter-roundtrip.json": {
+      "sha256": "380c6552637002c482b1633000a2e3899a2f671edff5f41d6a82a9cfd8b628aa",
+      "bytes": 550
+    },
+    "train/checkpoint-0100/adapter_config.json": {
+      "sha256": "362c83af81dd6be7c6f44b17e14765bb4d9363685cc7bffe4c8f06e7d4065517",
+      "bytes": 143
+    },
+    "train/checkpoint-0200/adapter_config.json": {
+      "sha256": "362c83af81dd6be7c6f44b17e14765bb4d9363685cc7bffe4c8f06e7d4065517",
+      "bytes": 143
+    },
+    "train/checkpoint-0300/adapter_config.json": {
+      "sha256": "362c83af81dd6be7c6f44b17e14765bb4d9363685cc7bffe4c8f06e7d4065517",
+      "bytes": 143
+    },
+    "train/checkpoint-0400/adapter_config.json": {
+      "sha256": "362c83af81dd6be7c6f44b17e14765bb4d9363685cc7bffe4c8f06e7d4065517",
+      "bytes": 143
+    },
+    "train/checkpoint-0500/adapter_config.json": {
+      "sha256": "362c83af81dd6be7c6f44b17e14765bb4d9363685cc7bffe4c8f06e7d4065517",
+      "bytes": 143
+    },
+    "train/checkpoints.json": {
+      "sha256": "986e976b08b149b47849e44f8b2a6190a047228e1c0d920a077cac4bf2ce218f",
+      "bytes": 572
+    },
+    "train/dev-after.json": {
+      "sha256": "70f37911b1fe361ea403a908bfbee684eb46e8fea4ff954f566796e0f28e9936",
+      "bytes": 9462
+    },
+    "train/dev-before.json": {
+      "sha256": "02962ad07caf503f8e711b6a81cdb015bed352a19ad0232c2759a0caaf57d93d",
+      "bytes": 9437
+    },
+    "train/memory-trace.jsonl": {
+      "sha256": "b5b2534ebb902f0ddb5083878c4b80b6c2a2b1bec138213e8a9ea760b9925cd9",
+      "bytes": 9061067
+    },
+    "train/order.json": {
+      "sha256": "fc5d6b16576d006c22078fcb795d25b55b9df4d15eee241e5d5491cf7807caa7",
+      "bytes": 11163
+    },
+    "train/prefix-cache-builds.json": {
+      "sha256": "f45776b0a5e2abf3aa8b381e5e422c4e24dc065d5bab84a71e7f86243e0928d9",
+      "bytes": 288
+    },
+    "train/result.json": {
+      "sha256": "57499a2d0d65e128da5800680be0557e23a722c8f87efd0a3ed5febc04246016",
+      "bytes": 434
+    },
+    "train/state.json": {
+      "sha256": "6ecfbd4b0d01576270dfdacd2a081f093e172e305910b0911114602f6de64ce1",
+      "bytes": 853739
+    },
+    "train/training-trace.json": {
+      "sha256": "d1b3f5c5fe8733280de3b6bcad1f30d2c5f36bf66f08fd0fc73568401e8f5588",
+      "bytes": 71751
+    },
+    "train/worker-progress.json": {
+      "sha256": "95bf63bdb9b0f205682ec17c96bcffd2b68b9a49b2781f9da2414d34e2095fad",
+      "bytes": 72
+    },
+    "train/worker.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "token-preflight.json": {
+      "sha256": "a8e22358e6c35f893daee34a2b67f3b9e222541afa8d5a0793ce5d0fb2920174",
+      "bytes": 969
+    }
+  },
+  "omitted": [
+    {
+      "path": "tokens.json",
+      "bytes": 85371218,
+      "sha256": "29c12d9e5aacb9ddd4ebe174a975c083cf3e28520b8ec93bf97ada8291c070eb",
+      "reason": "not-a-receipt"
+    },
+    {
+      "path": "train/checkpoint-0100/adapters.safetensors",
+      "bytes": 1278949,
+      "sha256": "ffbcc124f43fa3389a1fd7ff729da76e3f39021ad2f2dae4f4a2a71b76e30ea6",
+      "reason": "weights-not-in-git"
+    },
+    {
+      "path": "train/checkpoint-0200/adapters.safetensors",
+      "bytes": 1278949,
+      "sha256": "9196ea375eb3a0f6cfc180e949ec8a2957addf6645ee860e4c1cd77ec4fb321b",
+      "reason": "weights-not-in-git"
+    },
+    {
+      "path": "train/checkpoint-0300/adapters.safetensors",
+      "bytes": 1278949,
+      "sha256": "3b07f4f6837ad4488c8921b64aeb5dd7e9f9ef713ea8ded0bcd01c4dd4baf5b8",
+      "reason": "weights-not-in-git"
+    },
+    {
+      "path": "train/checkpoint-0400/adapters.safetensors",
+      "bytes": 1278949,
+      "sha256": "dfa1e1990550108a069d8edd3eb1575e9559627ee80eb75d364578fbe2a5f692",
+      "reason": "weights-not-in-git"
+    },
+    {
+      "path": "train/checkpoint-0500/adapters.safetensors",
+      "bytes": 1278949,
+      "sha256": "0bcf301082a78e6762a9c460a52323f75403a084b4e747155d82c745c578fc56",
+      "reason": "weights-not-in-git"
+    }
+  ],
+  "fullHeroE2EProven": false,
+  "modelPromoted": false,
+  "note": "Terminal supervisor receipts, not a live process query or model quality assessment."
+}
