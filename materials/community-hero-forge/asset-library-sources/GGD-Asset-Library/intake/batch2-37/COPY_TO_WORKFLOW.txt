@@ -1,0 +1,31 @@
+請讀取 GGD 第二批 37 名素材配對。使用者允許按大視覺特徵配對相近模型，不要求每名都是本尊，也不要求每人使用不同模型。
+
+固定入口：/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/batch2-37/README.md
+外觀配對 JSON：同目錄 visual-pairs.json
+逐名外觀資料：同目錄 visual/characters/<b2-id>.json
+來源模型圖卡：同目錄 visual/gallery.html
+原本身分／完整六槽特效及音效：同目錄 pairs.json、characters/<b2-id>.json
+驗證結果：同目錄 visual-validation.json
+
+共 37 名：4 本尊候選、1 GGD 原創、30 外觀代理、2 部分零件。
+primary 是主要來源模型；additional_components 是組合所需零件；alternates 是備選。
+每個模型含本機路徑、工作區相對路徑、SHA-256、出處、預覽、原生動作清單。
+shared_visual_traits 是相似處，required_changes 是改造需求；高／中／低是人工判斷。
+阿箱＋拉蜜絲需 POD 與 Lux 組合；Ned 的妙蛙種子僅供頭型與配色參考，缺直立持劍身體。
+圖卡顯示來源模型原貌，並非完成改造後的目標角色。
+
+查詢全部外觀摘要：
+python3 "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/batch2-37/query.py" --summary
+
+查詢角色的外觀主選、動畫、特效索引：
+python3 "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/batch2-37/query.py" b2-shadow
+
+查詢仍只有部分零件的角色：
+python3 "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/batch2-37/query.py" --unmatched --summary
+
+查詢原始身分配對與完整音效／特效證據：
+python3 "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/batch2-37/query.py" --identity b2-rem
+
+此清單供素材轉換與人工審閱。已完成的是配對；尚未改造、播放驗收或重綁目標動畫。不得將外觀代理當作本尊，也不得把 intake／legacy 當成正式成品目錄供程序自動使用。正式消費仍以 current.json 指定的核准 release 為準。
+
+重建順序：match.py（身分／六槽來源），build_visual_matches.py（visual-choices.json 外觀決策）。本次無下載、S3 傳輸或其他工作流角色設定變更。

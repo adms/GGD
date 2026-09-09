@@ -1,0 +1,432 @@
+{
+  "number": 5,
+  "id": "b2-uncle",
+  "name": "異世界舅舅",
+  "work": "異世界舅舅",
+  "canonical_name": "おじさん",
+  "version_scope": "從異世界返回現代的舅舅",
+  "model_requirements": "中年眼鏡男性、異世界服裝；劍／魔法與精靈演出",
+  "pairing_status": "original_body_not_found_in_current_registry",
+  "identity_sources": [
+    {
+      "url": "https://www.kadokawa.co.jp/product/video1538/",
+      "title": "KADOKAWA 官方作品介紹",
+      "type": "official",
+      "supports": "昏迷十七年後醒來，自稱從異世界返回並展示魔法，喜愛 SEGA。"
+    }
+  ],
+  "search": {
+    "terms": [
+      "異世界舅舅",
+      "异世界舅舅",
+      "おじさん",
+      "isekai ojisan"
+    ],
+    "registry_characters_scanned": 341,
+    "name_hits": [],
+    "scope": "300heroes, MBA, LoL seven-character snapshot, community37 registry; existing batch2 models checked separately"
+  },
+  "original_model_candidates": [],
+  "original_tram": null,
+  "current_design_proxy": {
+    "key": "champ.sela",
+    "definition": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/models/champ.sela.json",
+      "exists_local": true,
+      "bytes": 485,
+      "sha256": "e437dff9cb11cbde8d887347bb769ac3c9bd4c647468e6d25706576812c62134"
+    },
+    "model": {
+      "declared_worktree_path": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/assets/models/champions/blocky-mage.glb",
+        "exists_local": false
+      },
+      "expected_manifest_entry": {
+        "path": "assets/models/champions/blocky-mage.glb",
+        "bytes": 52120,
+        "sha256": "2a1eac756b3b119d8618e5857649b1efafd235c20fbe1e401cf1062104efe5c7",
+        "contentType": "model/gltf-binary",
+        "kind": "models",
+        "refs": [
+          "bundle",
+          "champ.sela"
+        ]
+      },
+      "selected_local_copy": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/content/assets/models/champions/blocky-mage.glb",
+        "exists_local": true,
+        "bytes": 52120,
+        "sha256": "2a1eac756b3b119d8618e5857649b1efafd235c20fbe1e401cf1062104efe5c7"
+      },
+      "selection": "manifest_sha256_and_size"
+    },
+    "clip_map": {
+      "idle": "idle",
+      "run": "run",
+      "attack": "attack",
+      "cast": "cast",
+      "hurt": "hurt",
+      "death": "death"
+    },
+    "inspection": {
+      "meshes": 1,
+      "skins": 1,
+      "animations": [
+        "idle",
+        "run",
+        "attack",
+        "cast",
+        "hurt",
+        "death",
+        "cheer"
+      ],
+      "animation_channels": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    "relationship": "existing_design_proxy_only",
+    "character_identity_match": false,
+    "bindable_to_original_model_without_retarget": false
+  },
+  "slots": [
+    {
+      "slot": "PASSIVE",
+      "name": null,
+      "vfx": [],
+      "sfx_key": null,
+      "audio_fallback": "generic-cast",
+      "original_character_sfx_bound": false
+    },
+    {
+      "slot": "Q",
+      "name": "精靈把增益寄錯人",
+      "vfx": [
+        {
+          "id": "fx.prim.arcane.pulse-sm",
+          "attach_to": "caster",
+          "definition": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/vfx/fx.prim.arcane.pulse-sm.json",
+            "exists_local": true,
+            "bytes": 1071,
+            "sha256": "34e0b0808a53359baede9d9f6a11e0750db626753c12acdf96e972627db9b399"
+          },
+          "texture": {
+            "declared_worktree_path": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/assets/textures/particles/magic_02.png",
+              "exists_local": false
+            },
+            "expected_manifest_entry": {
+              "path": "assets/textures/particles/magic_02.png",
+              "bytes": 82611,
+              "sha256": "8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece",
+              "contentType": "image/png",
+              "kind": "textures",
+              "refs": [
+                "builtin-vfx",
+                "bundle",
+                "fx.fam.mirror-image.arcane.s100",
+                "fx.fam.mirror-image.physical.s100",
+                "fx.fam.mirror-image.physical.s150",
+                "fx.fam.mirror-image.void.s100",
+                "fx.prim.arcane.pulse",
+                "fx.prim.arcane.pulse-lg",
+                "fx.prim.arcane.pulse-sm",
+                "fx.prim.blood.pulse-lg",
+                "fx.prim.blood.pulse-sm",
+                "fx.prim.earth.pulse-sm"
+              ],
+              "moreRefs": 27
+            },
+            "selected_local_copy": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/content/assets/textures/particles/magic_02.png",
+              "exists_local": true,
+              "bytes": 82611,
+              "sha256": "8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece"
+            },
+            "selection": "manifest_sha256_and_size"
+          },
+          "standardized_library_copy": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.pulse-sm.json",
+            "exists_local": true,
+            "bytes": 1071,
+            "sha256": "34e0b0808a53359baede9d9f6a11e0750db626753c12acdf96e972627db9b399"
+          },
+          "readiness": "standardized_library_component",
+          "relationship": "GGD generic component; not original anime VFX"
+        }
+      ],
+      "sfx_key": null,
+      "audio_fallback": "generic-cast",
+      "original_character_sfx_bound": false
+    },
+    {
+      "slot": "W",
+      "name": "請按一撤回贈品",
+      "vfx": [
+        {
+          "id": "fx.prim.arcane.pulse-sm",
+          "attach_to": "caster",
+          "definition": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/vfx/fx.prim.arcane.pulse-sm.json",
+            "exists_local": true,
+            "bytes": 1071,
+            "sha256": "34e0b0808a53359baede9d9f6a11e0750db626753c12acdf96e972627db9b399"
+          },
+          "texture": {
+            "declared_worktree_path": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/assets/textures/particles/magic_02.png",
+              "exists_local": false
+            },
+            "expected_manifest_entry": {
+              "path": "assets/textures/particles/magic_02.png",
+              "bytes": 82611,
+              "sha256": "8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece",
+              "contentType": "image/png",
+              "kind": "textures",
+              "refs": [
+                "builtin-vfx",
+                "bundle",
+                "fx.fam.mirror-image.arcane.s100",
+                "fx.fam.mirror-image.physical.s100",
+                "fx.fam.mirror-image.physical.s150",
+                "fx.fam.mirror-image.void.s100",
+                "fx.prim.arcane.pulse",
+                "fx.prim.arcane.pulse-lg",
+                "fx.prim.arcane.pulse-sm",
+                "fx.prim.blood.pulse-lg",
+                "fx.prim.blood.pulse-sm",
+                "fx.prim.earth.pulse-sm"
+              ],
+              "moreRefs": 27
+            },
+            "selected_local_copy": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/content/assets/textures/particles/magic_02.png",
+              "exists_local": true,
+              "bytes": 82611,
+              "sha256": "8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece"
+            },
+            "selection": "manifest_sha256_and_size"
+          },
+          "standardized_library_copy": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.pulse-sm.json",
+            "exists_local": true,
+            "bytes": 1071,
+            "sha256": "34e0b0808a53359baede9d9f6a11e0750db626753c12acdf96e972627db9b399"
+          },
+          "readiness": "standardized_library_component",
+          "relationship": "GGD generic component; not original anime VFX"
+        }
+      ],
+      "sfx_key": null,
+      "audio_fallback": "generic-cast",
+      "original_character_sfx_bound": false
+    },
+    {
+      "slot": "E",
+      "name": "結界收據請保留",
+      "vfx": [
+        {
+          "id": "fx.prim.arcane.pulse-sm",
+          "attach_to": "caster",
+          "definition": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/vfx/fx.prim.arcane.pulse-sm.json",
+            "exists_local": true,
+            "bytes": 1071,
+            "sha256": "34e0b0808a53359baede9d9f6a11e0750db626753c12acdf96e972627db9b399"
+          },
+          "texture": {
+            "declared_worktree_path": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/assets/textures/particles/magic_02.png",
+              "exists_local": false
+            },
+            "expected_manifest_entry": {
+              "path": "assets/textures/particles/magic_02.png",
+              "bytes": 82611,
+              "sha256": "8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece",
+              "contentType": "image/png",
+              "kind": "textures",
+              "refs": [
+                "builtin-vfx",
+                "bundle",
+                "fx.fam.mirror-image.arcane.s100",
+                "fx.fam.mirror-image.physical.s100",
+                "fx.fam.mirror-image.physical.s150",
+                "fx.fam.mirror-image.void.s100",
+                "fx.prim.arcane.pulse",
+                "fx.prim.arcane.pulse-lg",
+                "fx.prim.arcane.pulse-sm",
+                "fx.prim.blood.pulse-lg",
+                "fx.prim.blood.pulse-sm",
+                "fx.prim.earth.pulse-sm"
+              ],
+              "moreRefs": 27
+            },
+            "selected_local_copy": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/content/assets/textures/particles/magic_02.png",
+              "exists_local": true,
+              "bytes": 82611,
+              "sha256": "8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece"
+            },
+            "selection": "manifest_sha256_and_size"
+          },
+          "standardized_library_copy": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.pulse-sm.json",
+            "exists_local": true,
+            "bytes": 1071,
+            "sha256": "34e0b0808a53359baede9d9f6a11e0750db626753c12acdf96e972627db9b399"
+          },
+          "readiness": "standardized_library_component",
+          "relationship": "GGD generic component; not original anime VFX"
+        }
+      ],
+      "sfx_key": null,
+      "audio_fallback": "generic-cast",
+      "original_character_sfx_bound": false
+    },
+    {
+      "slot": "R",
+      "name": "收據換一位代理客服",
+      "vfx": [
+        {
+          "id": "fx.prim.arcane.pulse-sm",
+          "attach_to": "caster",
+          "definition": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/vfx/fx.prim.arcane.pulse-sm.json",
+            "exists_local": true,
+            "bytes": 1071,
+            "sha256": "34e0b0808a53359baede9d9f6a11e0750db626753c12acdf96e972627db9b399"
+          },
+          "texture": {
+            "declared_worktree_path": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/assets/textures/particles/magic_02.png",
+              "exists_local": false
+            },
+            "expected_manifest_entry": {
+              "path": "assets/textures/particles/magic_02.png",
+              "bytes": 82611,
+              "sha256": "8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece",
+              "contentType": "image/png",
+              "kind": "textures",
+              "refs": [
+                "builtin-vfx",
+                "bundle",
+                "fx.fam.mirror-image.arcane.s100",
+                "fx.fam.mirror-image.physical.s100",
+                "fx.fam.mirror-image.physical.s150",
+                "fx.fam.mirror-image.void.s100",
+                "fx.prim.arcane.pulse",
+                "fx.prim.arcane.pulse-lg",
+                "fx.prim.arcane.pulse-sm",
+                "fx.prim.blood.pulse-lg",
+                "fx.prim.blood.pulse-sm",
+                "fx.prim.earth.pulse-sm"
+              ],
+              "moreRefs": 27
+            },
+            "selected_local_copy": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/content/assets/textures/particles/magic_02.png",
+              "exists_local": true,
+              "bytes": 82611,
+              "sha256": "8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece"
+            },
+            "selection": "manifest_sha256_and_size"
+          },
+          "standardized_library_copy": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.pulse-sm.json",
+            "exists_local": true,
+            "bytes": 1071,
+            "sha256": "34e0b0808a53359baede9d9f6a11e0750db626753c12acdf96e972627db9b399"
+          },
+          "readiness": "standardized_library_component",
+          "relationship": "GGD generic component; not original anime VFX"
+        }
+      ],
+      "sfx_key": null,
+      "audio_fallback": "generic-cast",
+      "original_character_sfx_bound": false
+    },
+    {
+      "slot": "EX",
+      "name": null,
+      "vfx": [
+        {
+          "id": "fx.prim.arcane.bolt",
+          "attach_to": "caster",
+          "definition": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/vfx/fx.prim.arcane.bolt.json",
+            "exists_local": true,
+            "bytes": 1123,
+            "sha256": "338d3d70e66fa61de62d2a5241392a78408e11b25e84094b3dfe1fbbcd933833"
+          },
+          "texture": {
+            "declared_worktree_path": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/assets/textures/particles/spark_04.png",
+              "exists_local": false
+            },
+            "expected_manifest_entry": {
+              "path": "assets/textures/particles/spark_04.png",
+              "bytes": 78726,
+              "sha256": "e3fac37e94127b3b5fcfaaf91eca8c157dc32d08a760e8c9df35dc5fcf017407",
+              "contentType": "image/png",
+              "kind": "textures",
+              "refs": [
+                "bundle",
+                "fx.grail.bolt",
+                "fx.prim.arcane.bolt",
+                "fx.prim.arcane.bolt-lg",
+                "fx.prim.earth.bolt",
+                "fx.prim.fire.bolt",
+                "fx.prim.ice.bolt",
+                "fx.prim.ice.bolt-lg",
+                "fx.prim.ki.bolt",
+                "fx.prim.ki.bolt-lg",
+                "fx.prim.lightning.bolt",
+                "fx.prim.nature.bolt"
+              ],
+              "moreRefs": 18
+            },
+            "selected_local_copy": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/content/assets/textures/particles/spark_04.png",
+              "exists_local": true,
+              "bytes": 78726,
+              "sha256": "e3fac37e94127b3b5fcfaaf91eca8c157dc32d08a760e8c9df35dc5fcf017407"
+            },
+            "selection": "manifest_sha256_and_size"
+          },
+          "standardized_library_copy": null,
+          "readiness": "existing_engine_vfx_definition",
+          "relationship": "GGD generic component; not original anime VFX"
+        }
+      ],
+      "sfx_key": null,
+      "audio_fallback": "generic-cast",
+      "original_character_sfx_bound": false
+    }
+  ],
+  "gaps": [
+    "本尊模型與角色專屬動作未找到",
+    "本尊音效未找到",
+    "原作特效需另找來源或重製",
+    "若換用本尊模型，需重新綁定動作／掛點與驗收"
+  ],
+  "production_ready": false,
+  "automatically_import": false,
+  "source_project": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-uncle.project.json",
+    "exists_local": true,
+    "bytes": 27118,
+    "sha256": "24fe134c722d9f21ad8f2027baacc4e312443fd4f6dcf27a1a51a4818d9cd378"
+  },
+  "source_compiled": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-uncle.json",
+    "exists_local": true,
+    "bytes": 39116,
+    "sha256": "c5fd4994205a1c17cd41c6f7a0f2cbc4ee228c6ee5ca3afaa2e8a50a8d0b7781"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "characters": 37,
+  "slots": 222,
+  "file_proofs_verified": 1225,
+  "missing_declared_worktree_paths": [
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/assets/textures/particles/slash_01.png",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/assets/textures/particles/magic_02.png",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/assets/textures/particles/trace_05.png",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/assets/textures/particles/spark_04.png",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/assets/models/champions/blocky-mage.glb",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/assets/models/champions/blocky-knight.glb",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/assets/textures/particles/light_01.png"
+  ],
+  "missing_path_note": "GGD binary assets omitted from this worktree; selected local copies separately match the current assets-manifest SHA-256 and size.",
+  "shared_catalog_admission_performed": false
+}
