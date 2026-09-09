@@ -1,6 +1,13 @@
 # Opt-in infrastructure; playerContent submit/discover remain separate config gates.
 # docker compose -f docker/compose.yaml -f docker/compose.community.yaml up -d
 services:
+  edge:
+    build:
+      args:
+        GGD_INCLUDE_EDITOR: "1"
+    volumes:
+      # Only the static Editor route. Never mount nginx/dev/ or content-api.
+      - ../nginx/community/editor.conf:/etc/nginx/ggd-community/editor.conf:ro
   platform:
     environment:
       GGD_CONTENT_API_URL: http://hero-import:8788

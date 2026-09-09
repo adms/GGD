@@ -42,6 +42,9 @@
 #
 # Both halves are required — the files without the nginx location, or the
 # location without the files, serves nothing. That is intentional.
+# The explicit compose.community.yaml overlay now supplies both halves for
+# community authoring. It mounts only nginx/community/editor.conf; production
+# content CRUD remains disabled and submissions use authenticated Platform APIs.
 
 FROM node:22-alpine AS build
 RUN corepack enable
@@ -178,7 +181,7 @@ RUN echo "edge build: VITE_GGD_FULL_ASSETS='${VITE_GGD_FULL_ASSETS}' GGD_BUILD_S
  && pnpm --filter "@ggd/client" build && pnpm --filter "@ggd/admin" build \
  && mkdir -p /dist-out/editor \
  && if [ "${GGD_INCLUDE_EDITOR}" = "1" ]; then \
-      echo "edge build: INCLUDING the content editor at /editor/ — this image must NOT be deployed publicly." >&2; \
+      echo "edge build: INCLUDING the static editor; use only the dev or explicit community route, never expose production content-api." >&2; \
       pnpm --filter "@ggd/editor" build && cp -a apps/editor/dist/. /dist-out/editor/; \
     else \
       echo "edge build: content editor OMITTED (task #241). Pass --build-arg GGD_INCLUDE_EDITOR=1 for a dev image." >&2; \
