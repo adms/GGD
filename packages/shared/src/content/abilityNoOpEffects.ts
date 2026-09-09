@@ -180,6 +180,7 @@ export function analyseAbility(
   }
 
   walk(effects, "effects", out, lookupProjectile);
+  def.recast?.stages.forEach((stage, i) => walk(stage.effects, `recast.stages[${i}].effects`, out, lookupProjectile));
   return out;
 }
 

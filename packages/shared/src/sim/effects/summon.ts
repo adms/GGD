@@ -26,6 +26,7 @@ import {
   summonSpawnPos,
   summonTeam,
   summonsInGroup,
+  orderSummon,
 } from "../summons";
 
 /**
@@ -41,6 +42,8 @@ import {
 export interface SummonComp {
   /** the entity that summoned it (kill credit, aggro, ownership caps) */
   ownerId: EntityId;
+  slot?: import("../intents").CastableSlot;
+  castInstance?: import("../content/castInstance").CastInstance;
   /** ABSOLUTE tick it despawns; `Number.POSITIVE_INFINITY` = permanent */
   expiresAtTick: number;
   /** ABSOLUTE tick it entered the world — the eviction order for `onCap` */
@@ -166,6 +169,11 @@ export const summonEffect: EffectKindSpec<"summon"> = {
       // iteration or the loop evicts the body it just made.
       const live = summonsInGroup(world, ctx.caster, capKey);
       if (live.length >= maxAlive) {
+        if (onCap === "retarget") {
+          const target = ctx.targets[0];
+          if (target !== undefined) for (const sid of live) orderSummon(world, sid, target);
+          break;
+        }
         if (onCap === "skip") break;
         // 「超過殺最舊」 (37-02 黑核晶). Oldest = lowest (spawnTick, then id) —
         // the id tiebreak is what makes two bodies summoned on the same tick
@@ -204,7 +212,9 @@ export const summonEffect: EffectKindSpec<"summon"> = {
         formation,
         spread,
       );
-      spawnSummon(world, {
+      const summoned = spawnSummon(world, {
+        slot: ctx.castInstance?.slot,
+        castInstance: ctx.castInstance,
         ownerId: ctx.caster,
         championId: wantedId,
         // WC3 summons scale off the ABILITY level, which is `ctx.rank` here —
@@ -233,6 +243,7 @@ export const summonEffect: EffectKindSpec<"summon"> = {
         burnsInFireRing: e.burnsInFireRing,
         bountyGold: e.bountyGold,
       });
+      if (e.targetOnSpawn === true && ctx.targets[0] !== undefined) orderSummon(world, summoned, ctx.targets[0]);
     }
   },
 };

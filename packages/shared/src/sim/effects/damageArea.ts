@@ -42,7 +42,7 @@ export const damageAreaEffect: EffectKindSpec<"damageArea"> = {
     // 擴散 (task #210). 圓心 = 這次事件的受害者 (`ctx.targets[0]`), 沒有受害者
     // 就退回施法點, 再退回施法者自己 —— 一個 hook 觸發的擴散永遠走第一條,
     // 一個技能觸發的走第二/三條。
-    const centre = areaCentre(ctx);
+    const centre = e.fromCaster ? world.transform.get(ctx.caster)?.pos : areaCentre(ctx);
     if (!centre) return;
     const radius = clampSpreadRadius(e.radius);
     if (radius <= 0) return;
@@ -57,7 +57,15 @@ export const damageAreaEffect: EffectKindSpec<"damageArea"> = {
       if (epicentre?.has(id)) continue;
       const vt = world.transform.get(id);
       if (!vt) continue;
-      victims.push({ id, d2: distSq(centre, vt.pos) });
+      const d2 = distSq(centre, vt.pos);
+      if (e.arcHalfAngleCos !== undefined) {
+        const dir = ctx.direction ?? world.transform.get(ctx.caster)?.facing;
+        if (!dir) continue;
+        const dot = (vt.pos.x - centre.x) * dir.x + (vt.pos.z - centre.z) * dir.z;
+        const length2 = dir.x * dir.x + dir.z * dir.z;
+        if (!(length2 > 0) || dot < 0 || dot * dot < e.arcHalfAngleCos * e.arcHalfAngleCos * d2 * length2) continue;
+      }
+      victims.push({ id, d2 });
     }
     // TOTAL ORDER: 近的先, 完全同距離時 id 小的先。`enemiesInCircle` 已經是
     // 遞增 id (queryOverlap 的保證), 但 sort 必須自己是全序 —— 少了 `a.id -

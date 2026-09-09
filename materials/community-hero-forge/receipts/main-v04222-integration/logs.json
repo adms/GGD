@@ -1,0 +1,42 @@
+[
+  {
+    "path": "editor-release.log",
+    "sha256": "735735af9239b5f4d86b84d41f3fe6521f721b52be119890791514ba4c26fe33",
+    "bytes": 914
+  },
+  {
+    "path": "mechanics.log",
+    "sha256": "b8133687309633751b271143d81f608f60f8ff4452266b43443efdb321b80951",
+    "bytes": 1391
+  },
+  {
+    "path": "room-pool-fixed.log",
+    "sha256": "09339d56387e3fbdd8804de981ed26824af3379fae61af0f07312c77cc5115b5",
+    "bytes": 1813
+  },
+  {
+    "path": "coord.log",
+    "sha256": "b28f3bb0d83cc04fbc78623e9130a9bfb678add386cf032e2930915001d12177",
+    "bytes": 5957
+  },
+  {
+    "path": "skills-prefix.log",
+    "sha256": "249f17bb249c0c170416e3b74f5a166ec09c8b9b8e2ae9fed7d047745e708430",
+    "bytes": 5839
+  },
+  {
+    "path": "iconplan-environment-failure.log",
+    "sha256": "5130039b5a15b4ce78fbe2b4a72ec5427ccae3b0ecde21cece57eb884d4a4498",
+    "bytes": 1113
+  },
+  {
+    "path": "skills-resume.log",
+    "sha256": "a9a59cd84d6e177b4565b20a3ff13f747e6c9ceb9d2d408854c3305638a61075",
+    "bytes": 51243
+  },
+  {
+    "path": "skills-resume.json",
+    "sha256": "361cf3104e9e487d9ae45e96e0433c3344b353cd06ccf51be2ec49d5deceb482",
+    "bytes": 3658
+  }
+]

@@ -29,6 +29,7 @@
  */
 import type { SimWorld } from "../SimWorld";
 import { releaseCarried } from "../carry";
+import { isTimeStopped } from "../timeStop";
 
 export function carrySystem(world: SimWorld): void {
   // 沒有人被背著的比賽（＝ [EX∅ 根源] 之前的每一場）在這裡就回去了 —— 零 sort、
@@ -62,6 +63,9 @@ export function carrySystem(world: SimWorld): void {
       continue;
     }
     // ⭐ 這一行就是「背負」：乘客的座標不是他自己算出來的，是載具的複本。
+    // Lifecycle and zone transfer remain authoritative, but a local frozen
+    // passenger must not be dragged out of the field by a moving carrier.
+    if (t.zone === ht.zone && isTimeStopped(world, id)) { t.vel = { x: 0, z: 0 }; continue; }
     t.pos = { x: ht.pos.x, z: ht.pos.z };
     // 跟著換場（火圈把整區推走時，箱子裡的人不可以被留在上一個 zone —— 那會讓
     // 每一條 zone-scoped 的機制對他失效，而畫面上他明明就在載具身上）。

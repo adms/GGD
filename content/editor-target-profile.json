@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_4c97c8704c86",
+    "contentVersion": "cv_d359633b3e9d",
     "collections": {
       "champions": {
         "hash": "74ea868e6821",
@@ -14,7 +14,7 @@
         "count": 421
       },
       "items": {
-        "hash": "1ee281a7f136",
+        "hash": "b199535ee141",
         "count": 142
       },
       "augments": {
@@ -58,7 +58,7 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "444e6cd5b4aa",
+        "hash": "7bafff281be0",
         "count": 58
       },
       "vfx-scripts": {
@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "daccedce",
+    "fingerprint": "abedce92",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -125,6 +125,7 @@
       "grantGold",
       "grantXp",
       "heal",
+      "interruptCast",
       "invulnerable",
       "knockback",
       "leap",
@@ -147,6 +148,8 @@
       "summon",
       "swapResource",
       "taunt",
+      "timeStop",
+      "trap",
       "weightedBranch"
     ],
     "hookEvents": [
@@ -154,7 +157,10 @@
       "onAbilityHit",
       "onAllyDamaged",
       "onAllyDeath",
+      "onAllyProtected",
+      "onAttackAttempt",
       "onBasicAttack",
+      "onBlock",
       "onBossSpawn",
       "onBoundaryTouch",
       "onCrowdControlApplied",
@@ -170,6 +176,7 @@
       "onInterval",
       "onKill",
       "onLethalDamage",
+      "onObservedCombat",
       "onOverheal",
       "onProjectileExpire",
       "onReflectSuccess",
@@ -181,6 +188,7 @@
       "onStatCapReached",
       "onStatusApplied",
       "onStunned",
+      "onSummonHit",
       "onUltimateCast",
       "onUltimateHit"
     ],
@@ -192,6 +200,7 @@
       "form",
       "kind",
       "learned",
+      "nearbyCombat",
       "recentCast",
       "stat",
       "status"
@@ -209,6 +218,7 @@
       "op",
       "other",
       "p",
+      "radius",
       "slot",
       "stat",
       "statusId",
@@ -219,25 +229,32 @@
     ],
     "hookFields": [
       "abilitySlot",
+      "blockSource",
       "chance",
       "chanceFrom",
       "condition",
       "consumeOn",
       "critSource",
+      "damageConnected",
       "damageCrit",
       "damageSource",
       "damageType",
       "effects",
+      "evadeChannel",
+      "evadeDuring",
+      "evadeSource",
       "internalCooldown",
       "internalCooldownScope",
       "key",
       "maxTriggers",
+      "observedEvent",
       "on",
       "onConsumed",
       "oncePerCast",
       "perTarget",
       "reflectedDamageSource",
       "reflectedDamageType",
+      "stationaryForSec",
       "target",
       "victim"
     ],
@@ -257,6 +274,8 @@
       "apexHeight",
       "appliedBy",
       "applyTo",
+      "arcHalfAngleCos",
+      "armDelaySec",
       "arriveSoundKey",
       "at",
       "attach",
@@ -278,9 +297,11 @@
       "branches",
       "breakOnDamage",
       "breakOnDamageMin",
+      "breakOnMove",
       "buff",
       "burnsInFireRing",
       "canCrit",
+      "cancelAttack",
       "capScope",
       "centre",
       "championId",
@@ -316,11 +337,13 @@
       "driftAngleStepDeg",
       "driftFrom",
       "driftSpeed",
+      "drive",
       "dropDeadTargets",
       "duration",
       "durationSec",
       "effects",
       "emitCastEvents",
+      "evasionScope",
       "everyNth",
       "exclusiveGroup",
       "exclusiveOnExisting",
@@ -340,7 +363,10 @@
       "formation",
       "from",
       "fromCaster",
+      "fromSummonSlot",
       "getupTicks",
+      "grantMark",
+      "grapple",
       "healPct",
       "healingTakenMult",
       "healthPct",
@@ -379,6 +405,7 @@
       "maxDepth",
       "maxDistance",
       "maxHeld",
+      "maxQueuedHits",
       "maxRemainingSec",
       "maxSourceTotal",
       "maxSources",
@@ -416,6 +443,7 @@
       "onMissing",
       "onOwnerDeath",
       "onTouch",
+      "onTrigger",
       "oncePerRoundPerVictim",
       "order",
       "path",
@@ -452,6 +480,7 @@
       "resourcePct",
       "resourcePctPhase",
       "respectCooldown",
+      "retargetOnLost",
       "revisit",
       "riseSpeed",
       "root",
@@ -479,9 +508,11 @@
       "stacks",
       "statusId",
       "statusImmunity",
+      "statusTag",
       "steps",
       "stopDistance",
       "stopOnCasterDeath",
+      "stopOnHit",
       "stopShortUnits",
       "store",
       "strikeReposition",
@@ -491,6 +522,7 @@
       "subtractGap",
       "target",
       "targetMode",
+      "targetOnSpawn",
       "targetPriority",
       "targetsAllies",
       "team",
@@ -504,7 +536,9 @@
       "to",
       "touchOncePerTarget",
       "touchRadius",
+      "touchScope",
       "touchSide",
+      "triggerAt",
       "typeStreakImmunity",
       "uncontrollable",
       "untargetable",
@@ -570,6 +604,8 @@
       "apexHeight",
       "appliedBy",
       "applyTo",
+      "arcHalfAngleCos",
+      "armDelaySec",
       "arriveSoundKey",
       "at",
       "attach",
@@ -592,6 +628,7 @@
       "block",
       "block.chance",
       "block.damageTypes",
+      "block.facingArcDegrees",
       "block.fraction",
       "block.internalCooldown",
       "block.lethalBasis",
@@ -614,12 +651,14 @@
       "branches.weightFrom.coeff",
       "breakOnDamage",
       "breakOnDamageMin",
+      "breakOnMove",
       "buff",
       "buff.durationSec",
       "buff.ratio",
       "buff.stat",
       "burnsInFireRing",
       "canCrit",
+      "cancelAttack",
       "capScope",
       "centre",
       "championId",
@@ -692,11 +731,20 @@
       "driftAngleStepDeg",
       "driftFrom",
       "driftSpeed",
+      "drive",
+      "drive.accelSec",
+      "drive.brakeSec",
+      "drive.sharpTurnDot",
+      "drive.sharpTurnSpeed",
+      "drive.turnFactor",
       "dropDeadTargets",
       "duration",
       "durationSec",
       "effects",
       "emitCastEvents",
+      "evasionScope",
+      "evasionScope.abilities",
+      "evasionScope.trueDamage",
       "everyNth",
       "exclusiveGroup",
       "exclusiveOnExisting",
@@ -720,7 +768,25 @@
       "formation",
       "from",
       "fromCaster",
+      "fromSummonSlot",
       "getupTicks",
+      "grantMark",
+      "grantMark.lethal",
+      "grantMark.lethal.aoeEffects",
+      "grantMark.lethal.aoeRadius",
+      "grantMark.lethal.consume",
+      "grantMark.lethal.damageTypes",
+      "grantMark.lethal.internalCooldown",
+      "grantMark.lethal.maxSavesPerRound",
+      "grantMark.lethal.restoreMode",
+      "grantMark.lethal.selfEffects",
+      "grantMark.lethal.surviveHpPct",
+      "grantMark.max",
+      "grantMark.resetOn",
+      "grapple",
+      "grapple.hitRadius",
+      "grapple.maxTravel",
+      "grapple.range",
       "healPct",
       "healingTakenMult",
       "healthPct",
@@ -767,6 +833,7 @@
       "maxDepth",
       "maxDistance",
       "maxHeld",
+      "maxQueuedHits",
       "maxRemainingSec",
       "maxSourceTotal",
       "maxSources",
@@ -815,6 +882,7 @@
       "onMissing",
       "onOwnerDeath",
       "onTouch",
+      "onTrigger",
       "oncePerRoundPerVictim",
       "order",
       "path",
@@ -878,6 +946,7 @@
       "resourcePct.subject",
       "resourcePctPhase",
       "respectCooldown",
+      "retargetOnLost",
       "revisit",
       "riseSpeed",
       "root",
@@ -907,6 +976,7 @@
       "statusImmunity",
       "statusImmunity.charges",
       "statusImmunity.tags",
+      "statusTag",
       "steps",
       "steps.duration",
       "steps.modifiers",
@@ -920,6 +990,7 @@
       "steps.modifiers.value",
       "stopDistance",
       "stopOnCasterDeath",
+      "stopOnHit",
       "stopShortUnits",
       "store",
       "strikeReposition",
@@ -933,6 +1004,7 @@
       "subtractGap",
       "target",
       "targetMode",
+      "targetOnSpawn",
       "targetPriority",
       "targetsAllies",
       "team",
@@ -946,7 +1018,9 @@
       "to",
       "touchOncePerTarget",
       "touchRadius",
+      "touchScope",
       "touchSide",
+      "triggerAt",
       "typeStreakImmunity",
       "typeStreakImmunity.damageTypes",
       "typeStreakImmunity.resetMode",
@@ -964,6 +1038,7 @@
       "victim",
       "victimCondition",
       "vision",
+      "vision.revealed",
       "vision.stealthFadeDelaySec",
       "vision.trueSightRadius",
       "who",
@@ -980,6 +1055,7 @@
       "scaleByNearby"
     ],
     "abilityFields": [
+      "allowApproach",
       "augment",
       "castTimeSec",
       "castTimeTier",
@@ -995,6 +1071,7 @@
       "innateActivePassive",
       "innateKind",
       "interruptOn",
+      "interruptible",
       "manaCost",
       "manaCostTier",
       "marks",
@@ -1008,8 +1085,11 @@
       "range",
       "rangeTier",
       "rangeUnlimited",
+      "recast",
       "recoveryRoots",
       "recoverySec",
+      "requiredSummonSlot",
+      "requiredTargetStatus",
       "rootWhileCasting",
       "sfxKey",
       "slot",
@@ -1161,6 +1241,7 @@
     },
     "docSurface": {
       "ability@1": [
+        "allowApproach",
         "augment",
         "castTimeSec",
         "castTimeTier",
@@ -1176,6 +1257,7 @@
         "innateActivePassive",
         "innateKind",
         "interruptOn",
+        "interruptible",
         "manaCost",
         "manaCostTier",
         "marks",
@@ -1189,8 +1271,11 @@
         "range",
         "rangeTier",
         "rangeUnlimited",
+        "recast",
         "recoveryRoots",
         "recoverySec",
+        "requiredSummonSlot",
+        "requiredTargetStatus",
         "rootWhileCasting",
         "sfxKey",
         "slot",
@@ -3178,6 +3263,11 @@
                 }
               ],
               "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+            },
+            "recast": {
+              "type": "recast",
+              "optional": true,
+              "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
             }
           }
         },
@@ -5908,12 +5998,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "daccedce",
+    "engineFingerprint": "abedce92",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 daccedce —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 abedce92 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -6781,15 +6871,15 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "617d5b5100ec",
+    "fingerprint": "abfcb97bb8ae",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "ecf582b860e5"
+        "digest": "2843baea202a"
       },
       {
         "surface": "ability-item-zod-schemas",
-        "digest": "5a894eaddf3c"
+        "digest": "2115230cea01"
       },
       {
         "surface": "exact-ref-collector",
@@ -6837,7 +6927,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "79d7bc384d11",
+  "migrationFingerprint": "c37d2130403e",
   "supportedModes": [
     "bootstrap"
   ],
@@ -6851,5 +6941,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "89ead587cdd3"
+  "profileDigest": "1daf215f5c23"
 }

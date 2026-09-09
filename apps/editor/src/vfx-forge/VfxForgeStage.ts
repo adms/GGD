@@ -1,3 +1,6 @@
+import { TimeStopReplay } from "./TimeStopReplay";
+import { AbilityMotionReplay } from "./AbilityMotionReplay";
+import { TrapReplay } from "./TrapReplay";
 import type { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
 import "@babylonjs/core/Shaders/postprocess.vertex";
@@ -88,6 +91,8 @@ const ACTOR_VISIBILITY_RETRIES = 6;
 const ACTOR_VISIBILITY_RETRY_FRAMES = 3;
 /** Keep the real GPU progressing while a paused Forge compiles imported PBR materials. */
 const ACTOR_SHADER_BUDGET_MS = 4_000;
+/** Cold image decoding and RGBD shader imports precede actor compilation. */
+const ENVIRONMENT_BRDF_BUDGET_MS = 30_000;
 // Main's model-audition proof advances imported Stand tracks to 600ms. Several
 // WC3 geoset-alpha clips are intentionally all-off at exact tick zero, which
 // is not representative of a living actor once the game loop has advanced.
@@ -129,6 +134,7 @@ function castFocusOf(
 export type VfxForgeStageMode = "script" | "runtime";
 
 export interface ForgeOverlay {
+  motion?: ReturnType<AbilityMotionReplay["snapshot"]>;
   flash: { color: readonly [number, number, number]; alpha: number } | null;
   texts: readonly { id: number; text: string; x: number; z: number; untilMs: number }[];
   runtimeTexts?: readonly ForgeFloatingText[];
@@ -245,6 +251,10 @@ export class VfxForgeStage {
   readonly scene: Scene;
   readonly cameraRig: CameraRig;
 
+  private readonly timeStopReplay: TimeStopReplay;
+  private timeStoppedActors = { caster: false, target: false };
+  private readonly trapReplay: TrapReplay;
+  private readonly motionReplay: AbilityMotionReplay;
   private script: VfxScriptDoc;
   private ability: ForgeAbility;
   private schedule: readonly ScheduledSimEvent[];
@@ -336,6 +346,9 @@ export class VfxForgeStage {
     this.renderer = new Renderer(canvas);
     this.engine = this.renderer.engine;
     this.scene = this.renderer.scene;
+    this.timeStopReplay = new TimeStopReplay(this.scene);
+    this.trapReplay = new TrapReplay(this.scene);
+    this.motionReplay = new AbilityMotionReplay(this.scene);
     // A near-black clear colour made black-haired/dark-armour heroes disappear
     // even when their GLB and textures were healthy.  The Forge is an
     // inspection lightbox, so use a neutral mid-charcoal behind the shipped
@@ -1547,6 +1560,9 @@ export class VfxForgeStage {
       }
     }
     for (const actor of this.allActors()) this.disposeActor(actor);
+    this.timeStopReplay.dispose();
+    this.trapReplay.dispose();
+    this.motionReplay.dispose();
     this.runtimeVfx?.dispose();
     this.modelRig.dispose();
     this.modelFxContainerPromises.clear();
@@ -1691,6 +1707,12 @@ export class VfxForgeStage {
         view.root.setEnabled(false);
         actor.fallback.setEnabled(true);
         const issue = `${champion.name} · ${appearance.modelKey} 未在 ${ACTOR_MODEL_LOAD_BUDGET_MS}ms 內採用遊戲 GLB`;
+        if (this.requestColdActorRetry(actor)) {
+          this.visualAssetIssues.add(`${issue}，正在執行有界冷載入重試`);
+          this.setActorStatus(actor, `↻ ${issue}，重建預覽場景…`);
+          this.emitOverlay("3D 模型冷載入重試中，暫停視覺驗收");
+          return;
+        }
         this.visualAssetIssues.add(issue);
         this.setActorStatus(actor, `⚠ ${issue}，已顯示替身並封鎖視覺驗收`);
         this.emitOverlay("3D 模型未就緒，候選不得送審");
@@ -1979,6 +2001,9 @@ export class VfxForgeStage {
     this.setActorPose(this.homePose);
     // Timeline replay keeps preloaded GLB containers and reuses pooled geometry;
     // clearing the container map here makes the first scrub frame an empty shell.
+    this.timeStopReplay.reset();
+    this.trapReplay.reset();
+    this.motionReplay.reset();
     this.modelRig.resetForRound();
     this.runtimeVfx?.resetForRound({ preserveOneShotPool: true });
     // The runtime player claims this same ledger before the default body
@@ -2053,9 +2078,11 @@ export class VfxForgeStage {
       const view = actor.view;
       if (!view) continue;
       view.setPose(x, z, actor.facing.x, actor.facing.z, offset?.y ?? 0);
+      view.setTimeStopped(actor.role !== "summon" && this.timeStoppedActors[actor.role], dtMs);
       const state = view.anim.update({ alive: true, moving: false }, this.nowMs);
       view.update(state, this.nowMs, dtMs);
     }
+    this.trapReplay.update(this.nowMs);
     this.reap();
     if (render) this.renderScene();
     if (notify) this.emitOverlay("播放中");
@@ -2069,6 +2096,9 @@ export class VfxForgeStage {
       const item = this.schedule[this.nextEvent++]!;
       if (item.actorPose) this.setActorPose(item.actorPose);
       this.applySummonLifecycleEvent(item.event);
+      this.timeStopReplay.onEvent(item.event);
+      this.trapReplay.onEvent(item.event, item.atMs);
+      this.motionReplay.onEvent(item.event);
       if (this.mode === "runtime") {
         this.recordRuntimePresentationEvent(item.event);
         this.runtimeVfx?.handleEvent(item.event, item.atMs);
@@ -2172,6 +2202,7 @@ export class VfxForgeStage {
   }
 
   private setActorPose(pose: PreviewActorPose): void {
+    this.timeStoppedActors = pose.timeStopped ?? { caster: false, target: false };
     const caster = this.actors.caster;
     const target = this.actors.target;
     this.moveActor(caster, pose.caster.x, pose.caster.z);
@@ -2235,8 +2266,11 @@ export class VfxForgeStage {
     // same decode once; retain normal lighting and reject a second failure.
     for (let attempt = 0; attempt < 2; attempt++) {
       const texture = GetEnvironmentBRDFTexture(this.scene);
-      const deadline = Date.now() + ACTOR_SHADER_BUDGET_MS;
+      const deadline = Date.now() + ENVIRONMENT_BRDF_BUDGET_MS;
       while (!texture.isReady() && !this.disposed && Date.now() < deadline) {
+        // The paused Forge has no continuous render loop. Its RGBD helper
+        // needs the same GPU frames as actor texture compilation below.
+        this.renderScene();
         await this.waitForBrowserFrame();
       }
       if (this.disposed) return;
@@ -2291,6 +2325,10 @@ export class VfxForgeStage {
       fallback: peer.fallback.isEnabled(),
     }));
     const body = actor.bodyRoot;
+    const camera = this.cameraRig.camera;
+    const cameraPosition = camera.position.clone();
+    const cameraRotation = camera.rotation.clone();
+    const cameraQuaternion = camera.rotationQuaternion?.clone() ?? null;
     const bodyX = body?.position.x ?? 0;
     const bodyZ = body?.position.z ?? 0;
     // Side-review intentionally looks along the combat lane. At some cast
@@ -2310,6 +2348,16 @@ export class VfxForgeStage {
       body.position.x = focus.x;
       body.position.z = focus.z;
     }
+    // Certify the model in a close, neutral view. A fixed pixel threshold in
+    // the author's wide combat camera rejected slim healthy bodies (218px)
+    // solely because the inspector was narrow. Keep the same 250px/colour
+    // gates; frame the actual body, then restore the author's exact camera.
+    root.computeWorldMatrix(true);
+    const bounds = root.getHierarchyBoundingVectors(true);
+    const center = bounds.min.add(bounds.max).scale(0.5);
+    const extent = Math.max(1, bounds.max.subtract(bounds.min).length());
+    camera.position.copyFrom(center.add(new Vector3(extent * 0.4, extent * 0.25, extent * 1.1)));
+    camera.setTarget(center);
     try {
       const shown = await read();
       root.setEnabled(false);
@@ -2346,6 +2394,9 @@ export class VfxForgeStage {
         body.position.x = bodyX;
         body.position.z = bodyZ;
       }
+      camera.position.copyFrom(cameraPosition);
+      camera.rotation.copyFrom(cameraRotation);
+      camera.rotationQuaternion = cameraQuaternion;
       this.renderScene();
     }
   }
@@ -2738,6 +2789,6 @@ export class VfxForgeStage {
       : status;
     const runtimeTexts = projectFloatingTexts(this.runtimeVfx?.floatingTextEntries ?? [],
       (x, y, z) => this.cameraRig.projectToScreen(x, y, z));
-    this.onOverlay({ flash: this.flash, texts: this.texts, runtimeTexts, status: view, actors: { ...this.actorStatus } });
+    this.onOverlay({ motion: this.motionReplay.snapshot(), flash: this.flash, texts: this.texts, runtimeTexts, status: view, actors: { ...this.actorStatus } });
   }
 }

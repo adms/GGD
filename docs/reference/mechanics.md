@@ -8,11 +8,11 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_4c97c8704c86`
+contentVersion `cv_d359633b3e9d`
 
 ---
 
-## 效果（effect kind） —— 49 種
+## 效果（effect kind） —— 52 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
@@ -42,6 +42,7 @@ contentVersion `cv_4c97c8704c86`
 | `grantGold` | 發錢 | 2 | `godie-h02u.r`、`godie-n00b.passive` |
 | `grantXp` | 發經驗值 | 1 | `godie-h02u.ex` |
 | `heal` | 治療（吃係數） | 2 | `godie-hvsh.e`、`godie-o02p.r` |
+| `interruptCast` | 中斷合法敵人的可打斷施法前搖 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `invulnerable` | 免疫／魔免／免控 | 13 | `godie-e00r.ex`、`godie-e00r.passive`、`godie-hapm.ex`、`godie-hapm.passive`、`godie-hapm.w`、`godie-hart.r`、`godie-u00j.q`、`grail-c-12`、`grail-a-06`、`grail-a-07`、`grail-a-15`、`grail-ex-09` …（共 13） |
 | `knockback` | 擊退／擊飛／拉扯／擊倒 | 17 | `godie-e007.ex`、`godie-e00w.q`、`godie-efur.w`、`godie-ewar.ex`、`godie-h00l.q`、`godie-h00l.r`、`godie-h01u.w`、`godie-h02k.r`、`godie-hapm.ex`、`godie-hapm.passive`、`godie-u00v.r`、`godie-u034.passive` …（共 17） |
 | `leap` | 跳躍（拋物線離地） | 5 | `godie-h00l.w`、`godie-hapm.w`、`godie-hart.q`、`godie-hpb1.e`、`godie-zombieking.passive` |
@@ -64,9 +65,11 @@ contentVersion `cv_4c97c8704c86`
 | `summon` | 召喚 | 2 | `godie-e00s.r`、`godie-e010.r` |
 | `swapResource` | 資源互換 | 1 | `godie-emns.ex` |
 | `taunt` | 嘲諷 | 2 | `godie-n00b.passive`、`godie-o00k.passive` |
+| `timeStop` | 局部時停 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `trap` | 定點單次普攻觸發陷阱 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `weightedBranch` | 加權分支（隨機挑一段） | 10 | `godie-e00s.ex`、`godie-h02k.ex`、`godie-h02v.ex`、`godie-n00b.passive`、`godie-o02p.ex`、`godie-u034.passive`、`godie-u034.r`、`godie-ucrl.passive`、`godie-ucrl.r`、`grail-ex-08` |
 
-## 觸發事件（hook event） —— 33 種
+## 觸發事件（hook event） —— 38 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
@@ -74,7 +77,10 @@ contentVersion `cv_4c97c8704c86`
 | `onAbilityHit` | 技能命中時 | 21 | `godie-edem.r`、`godie-edem.r`、`godie-edem.r`、`godie-efur.ex`、`godie-h01n.w`、`godie-h01n.w`、`godie-h01o.w`、`godie-h01o.w`、`grail-c-08`、`grail-c-09`、`grail-c-16`、`grail-c-18` …（共 21） |
 | `onAllyDamaged` | 隊友受傷時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onAllyDeath` | 隊友陣亡時 | 3 | `grail-c-15`、`grail-a-06`、`grail-ex-10` |
+| `onAllyProtected` | 自己實際治療其他友軍或所給護盾吸收敵對傷害時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onAttackAttempt` | 普攻提交時（含揮空、被閃避與後續前搖取消） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onBasicAttack` | 普攻時 | 106 | `godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e00l.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00s.w`、`godie-e00s.w`、`godie-e00s.w` …（共 106） |
+| `onBlock` | 實際格擋正值傷害時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onBossSpawn` | 殭屍王出現時 | 1 | `grail-c-13` |
 | `onBoundaryTouch` | 碰到場地邊界時（＝踏進火圈） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onCrowdControlApplied` | 對別人施加控場時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
@@ -90,6 +96,7 @@ contentVersion `cv_4c97c8704c86`
 | `onInterval` | 週期（每 N 秒） | 14 | `godie-e00r.e`、`godie-e00r.e`、`godie-e00r.e`、`godie-e00r.e`、`godie-e00r.ex`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.passive`、`godie-e00r.q`、`godie-e00r.q`、`godie-emfr.passive`、`godie-hvsh.e` …（共 14） |
 | `onKill` | 擊殺時 | 15 | `godie-h01u.passive`、`godie-hpb1.passive`、`godie-hvsh.e`、`godie-o00x.passive`、`godie-ogrh.passive`、`godie-zombieking.passive`、`godie-zombiex.passive`、`godie-zombiex.passive`、`grail-c-10`、`grail-c-14`、`grail-a-05`、`grail-ex-03` …（共 15） |
 | `onLethalDamage` | 受到致命傷害時（免死有沒有生效都會發） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onObservedCombat` | 觀察同區可見敵人的有效命中、治療或控制 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onOverheal` | 治療溢出時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onProjectileExpire` | 自己的投射物消失時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onReflectSuccess` | 反彈成功時 | 14 | `godie-e002.ex`、`godie-e002.r`、`godie-e00l.ex`、`godie-e00l.r`、`godie-emfr.ex`、`godie-h00l.ex`、`godie-h00l.r`、`godie-h00l.r`、`godie-h02k.w`、`grail-c-02`、`grail-c-03`、`grail-a-01` …（共 14） |
@@ -101,10 +108,11 @@ contentVersion `cv_4c97c8704c86`
 | `onStatCapReached` | 屬性首次到頂時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onStatusApplied` | 被掛上狀態時 | 3 | `grail-c-01`、`grail-c-11`、`grail-a-15` |
 | `onStunned` | 被暈眩時 | 2 | `godie-n01c.passive`、`godie-nbbc.passive` |
+| `onSummonHit` | 自己的召喚物實際普攻命中時（含護盾吸收） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onUltimateCast` | 大招（R）施放時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onUltimateHit` | 大招（R）命中時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 
-## 條件葉（condition leaf） —— 10 種
+## 條件葉（condition leaf） —— 11 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
@@ -115,6 +123,7 @@ contentVersion `cv_4c97c8704c86`
 | `form` | 主體現在是本體／變身態 —— ⭐ GH#1070 原作 `GetUnitTypeId(caster) == 'O00X'` 那一族（09-04 龜派／11-03 鬼氣九刀流／11-04 三千世界的「超級賽亞人／武裝色狀態可增加威力」）。讀的是與 `whileForm` 同一支 `inAlternateForm`；⛔ 不要用 `recentCast withinSec=變身秒數` 代替 —— 那是變身秒數的第二個住處。 | 9 | `godie-h01n.e`、`godie-h01n.w`、`godie-h01o.w`、`godie-o00x.r`、`godie-ogrh.r`、`godie-u01u.e`、`godie-u01u.r`、`godie-udre.e`、`godie-udre.r` |
 | `kind` | 對象是誰（小兵／英雄／BOSS） | 1 | `godie-h02k.ex` |
 | `learned` | 已學會某一格 —— ⭐ 「EX 已解鎖」那一族（原作 udg_EX_Mode 滿 30 級）：猜猜拳三分支各帶一段 learned:EX 的追加效果。 | 6 | `godie-hpb1.e`、`godie-hpb1.w`、`godie-u034.passive`、`godie-u034.r`、`godie-ucrl.passive`、`godie-ucrl.r` |
+| `nearbyCombat` | 附近友軍在指定時間內實際與敵方交戰 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `recentCast` | 最近施放過（連續技窗口）—— ⭐ 「這位施法者在最近 N 秒內按過某一格技能」。⚠️ 判準是**槽位**（Q/W/E/R/EX），⛔ 不是技能標籤 —— `ability@1` 今天**沒有** `tags` 欄位（421/421 零命中），做一個永遠比不中的 tag 分支會是一句說了不會發生的話（第一·五守則）。 | 5 | `godie-h020.e`、`godie-h020.r`、`godie-hjai.e`、`godie-hjai.r`、`godie-hpb1.w` |
 | `stat` | 屬性門檻（血量低於 X%…） | 9 | `godie-e002.w`、`godie-e00l.w`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-emfr.passive`、`godie-h00l.ex`、`godie-h02u.w`、`godie-h02v.w`、`grail-ex-13` |
 | `status` | 身上有某狀態時 | 37 | `godie-e007.ex`、`godie-e00r.q`、`godie-edem.r`、`godie-efur.ex`、`godie-emns.e`、`godie-emns.r`、`godie-ewar.e`、`godie-ewar.ex`、`godie-h00l.e`、`godie-h01n.e`、`godie-h01n.w`、`godie-h01o.w` …（共 37） |

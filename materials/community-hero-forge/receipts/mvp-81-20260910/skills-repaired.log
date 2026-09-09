@@ -1,0 +1,31 @@
+
+pnpm contract:numbers:check
+
+> ggd@0.0.0 contract:numbers:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> python3 tools/editor-contract/gen_contract_numbers.py --check
+
+✓ 2 份文件的 9 個產生區塊都是最新的
+
+pnpm docs:readme:check
+
+> ggd@0.0.0 docs:readme:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> python3 tools/reference/gen_readme_lists.py --check
+
+README.md + docs/reference/*.md up to date with contentVersion cv_b29206fd4d62
+
+pnpm msgledger:check
+
+> ggd@0.0.0 msgledger:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> bash scripts/message-ledger.sh --check
+
+⛔ 漏了 21:14 · 2026-09-09  補發完成 —— v0.41.0 → v0.42.17 共 24 個版本，每一版都發到 Discord 了。 逐版重讀 commit 挖真內容…
+⛔ 漏了 21:15 · 2026-09-09  補發完成 —— v0.41.0 → v0.42.17 共 24 個版本，每一版都發到 Discord 了。 逐版重讀 commit 挖真內容…
+⛔ 漏了 21:15 · 2026-09-09  請找根因 你是不是被什麼污染或缺少什麼案例引導 請修正…
+⛔ 漏了 23:53 · 2026-09-09  74 名一旦上架，下一次部署就會全部靜靜消失 => 開票修阿 其實還有七個LOL英雄也要跟著上架喔 round11快上線  gameVers…
+⛔ 未對票 docs/_daily/2026-09-09.md:26  03:21  4 ok…
+⛔ 未對票 docs/_daily/2026-09-09.md:27  17:00  你從 v0.41 開始就在打混 請你修正根因 後補每一板的內容出來…
+✓ 今天（2026-09-10）目前也全部有列、全部對到票
+→ 漏列：跑 `pnpm msgledger:build` 補上
+→ 未對票：`python3 scripts/ledger_table.py --map <帳本.md> <HH:MM> '<票號 或 — 理由>'`
+   （⛔ 不要手動 chmod、⛔ 不要直接編那份 444 的帳本；對不到票就寫 `— <為什麼不需要開票>`，⛔ 不要留空也不要留 ⏸ 未對票）
+ ELIFECYCLE  Command failed with exit code 1.

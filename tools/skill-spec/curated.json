@@ -61,12 +61,16 @@
     "summon": "召喚",
     "swapResource": "資源互換",
     "taunt": "嘲諷",
-    "weightedBranch": "加權分支（隨機挑一段）"
+    "timeStop": "局部時停",
+    "weightedBranch": "加權分支（隨機挑一段）",
+    "trap": "定點單次普攻觸發陷阱",
+    "interruptCast": "中斷合法敵人的可打斷施法前搖"
   },
   "hookEvents": {
     "onAbilityCast": "施法時",
     "onAbilityHit": "技能命中時",
     "onAllyDamaged": "隊友受傷時",
+    "onAllyProtected": "自己實際治療其他友軍或所給護盾吸收敵對傷害時",
     "onAllyDeath": "隊友陣亡時",
     "onBasicAttack": "普攻時",
     "onBossSpawn": "殭屍王出現時",
@@ -96,9 +100,14 @@
     "onStatusApplied": "被掛上狀態時",
     "onStunned": "被暈眩時",
     "onUltimateCast": "大招（R）施放時",
-    "onUltimateHit": "大招（R）命中時"
+    "onUltimateHit": "大招（R）命中時",
+    "onAttackAttempt": "普攻提交時（含揮空、被閃避與後續前搖取消）",
+    "onSummonHit": "自己的召喚物實際普攻命中時（含護盾吸收）",
+    "onObservedCombat": "觀察同區可見敵人的有效命中、治療或控制",
+    "onBlock": "實際格擋正值傷害時"
   },
   "conditionLeaves": {
+    "nearbyCombat": "附近友軍在指定時間內實際與敵方交戰",
     "facing": "正面方向：指定自己或目標，判斷對方是否位於其正面扇形內。完整角度 1–360°、含邊界，以當下位置與朝向計算；不同區、重疊中心或無有效朝向不成立。",
     "chance": "機率",
     "equipment": "裝備了某道具時",

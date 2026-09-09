@@ -196,9 +196,19 @@ export interface AbilityDef {
   /** per rank (index rank-1) */
   cooldown: number[]; // seconds
   manaCost: number[];
+  /** Additional stages require separate inputs. Base cooldown runs from the
+   * first press; cost selects first-only or each-press mana/status payment. */
+  recast?: { windowSec: number; minIntervalSec: number; cost: "first" | "each";
+    stages: { effects: EffectDef[] }[] };
+
   /** Debited once at cast-begin, after validation, alongside mana/cooldown.
    * Interrupts do not refund it. Missing leaves legacy casts unchanged. */
-  statusCost?: { statusId: StatusId; count: number; appliedBy?: "self" };
+  requiredSummonSlot?: import("../intents").CastableSlot;
+  /** Target prerequisite at cast-begin; checked before approach/payment, never consumed. */
+  requiredTargetStatus?: { statusId: StatusId; appliedBy?: "self"; minStacks?: number };
+  /** Optional per-ability opt-out of the normal out-of-range approach order. */
+  allowApproach?: boolean;
+  statusCost?: { statusId: StatusId; count: number | "all"; appliedBy?: "self"; subject?: "self" | "target" };
   /**
    * ⚠️ 可以是 `Number.POSITIVE_INFINITY` —— 「無上限施法距離」（GH#602）。
    * 文件寫的是 `rangeUnlimited: true` + `range: 0`，`content/rangeTiers.ts` 的
@@ -258,7 +268,9 @@ export interface AbilityDef {
    * caster's HP is below what it was at cast-begin — see `zAbilityDef` for the
    * full statement of what counts as 「被打」 and why it is a field.
    */
-  interruptOn?: "none" | "damage";
+  interruptOn?: "none" | "damage" | "damageOrMove";
+  /** False protects an active wind-up from interruption; death still cancels. */
+  interruptible?: boolean;
   /**
    * RECOVERY (後搖) — seconds of post-resolve commitment (no cast, no basic
    * attack). Absent = `DEFAULT_RECOVERY_SEC` (0.6 s), not 0. A landed hit on an
@@ -302,7 +314,8 @@ export interface AbilityDef {
 export interface AbilityToggle {
   upkeepCadence: "none" | "perAttack" | "perSecond";
   upkeepCost: readonly number[];
-  upkeepResource?: "mana" | "health";
+  upkeepResource?: "mana" | "health" | "status";
+  upkeepStatus?: { statusId: StatusId; appliedBy?: "self" };
   upkeepIntervalSec?: number;
   onExit: readonly EffectDef[];
   exitOnResourceEmpty?: boolean;

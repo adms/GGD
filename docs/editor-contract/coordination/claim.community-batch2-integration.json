@@ -5,7 +5,7 @@
   "from": "codex",
   "to": "main",
   "baseCommit": "25675874184bafc80010c49122f67fd44c212db7",
-  "contractFingerprint": "9f3ab477601fa13e",
+  "contractFingerprint": "e2850e24ab2e78a1",
   "title": "第二批37名隔離投稿發布完成，保留原稿與現有模型",
   "claims": [
     {
@@ -59,12 +59,9 @@
     }
   ],
   "asks": [
-    "沿GH#1147與GH#1150審查此整合；模型配對GH#1148依Owner指示後續處理，不阻止現有代理模型流程驗收。",
-    "原始生成器與配方保持PR#1144版本來源；第一批仍沿PR#1135審查合併。",
-    "正式部署必須核對當下target並重建ZIP；內建模型包約3MB，正式投稿政策maxBytes須至少涵蓋此大小（隔離驗收使用既有合法4MiB設定）。此PR未修改正式政策或啟用正式投稿。",
-    "本分支已無衝突合入main 1fdc84e4d；daily/release及board/legacy產生器與該版一致，仍缺版控中的docs/_daily/2026-09-09.md。Main本機來源已定位但尚未提交，請沿既有生成來源流程補齊；不要以重生刪掉Owner紀錄。證據：materials/community-batch2-integration/receipts/merged-main.json 與既有 baseline-board-gap.json。",
-    "完整skills檢查亦量到iconplan:check產物過期，並提示clean worktree缺data/curation/whitelist.json。本批未偽造白名單或修改正式資料，請Main提供既有驗證環境；保留Draft待CI與正式整合。",
-    "Editor release已通過592項測試、型別檢查及production build；coord通過。完整log與三項exit code：materials/community-batch2-integration/receipts/checks/。skills未全部通過，保留Draft，不跳過CI合併。",
-    "本輪新增兩批74名/444槽總表，第一批PR#1135與第二批本PR均保留原始材料與版本。第二批新版已對齊8099實際overlay，補上普通對局/結算/回放收據；Main整合部署時仍須按正式target重建。另修復合入main後CI的IdentityChampion nullable modelKey測試helper型別，shared typecheck與14項定向測試通過。"
+    "沿 GH#1147 與 GH#1150 審查；目前範圍為第一批37、第二批37及七名LoL，共81名／486槽。模型重新配對依Owner指示延後，先保留已接受綁定。",
+    "本分支預先整合 PR #1135 的 d9f1611ced70eaf9fc0eebd75a375d8563b9e00a，解決兩批依序合併的22個衝突。請先審查合併 #1135，再合併本PR；Main固定基準為bbc62a06df8eb7910e7a30304770f3fb03f01f2f。生成文件由既有產生器重建，81份專案保留各自父提交位元組。",
+    "上述claims保留隔離服務歷史證據及原始commit；本次對齊契約指紋不代表重新執行隔離發布、遊戲或回放。當前合併檢查及限制見 materials/community-batch2-integration/receipts/mvp-1159-20260910/cross-pr-integration.json。",
+    "仍待 #1159 的v0.42.26實際公告補正、CI、Main審查合併與正式部署。正式站https://ggd.adms.ai仍需既有帳號登入、讀取真正target與政策，依已授權100每日／50待審設定完成81名投稿、審查與正式發布；不以本機編譯或歷史隔離發布宣告完成。"
   ]
 }

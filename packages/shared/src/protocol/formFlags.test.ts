@@ -192,7 +192,9 @@ describe("ENTITY_FLAG bit budget — uint32, and the third collision must not be
     //（CARRIED · TEAM_OVERRIDE · TEAM_OVERRIDE_A · TEAM_OVERRIDE_B）——
     // 那正是加寬那一次逐字說明要給它的四顆，所以額度從 15 降到 11。
     // ⛔ 這個數字要跟 CLAUDE.md 一起動（下面那一條在守）。
-    expect(ENTITY_FLAG_FREE_BITS.length).toBe(11);
+    // Local time stop reserves the next bit; existing flags keep their values.
+    expect(ENTITY_FLAG.TIME_STOPPED).toBe(1048576);
+    expect(ENTITY_FLAG_FREE_BITS.length).toBe(10);
   });
 
   /**

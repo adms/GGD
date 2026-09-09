@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../timeStop";
 /**
  * OrderSystem — translates each seat's continuous `order` into concrete
  * navigation state (moveTarget / attackTarget). Runs before MovementSystem.
@@ -204,6 +205,7 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
     if (!frame.order && !frame.aim) continue;
 
     for (const [id, tc] of world.team) {
+      if (isTimeStopped(world, id)) continue;
       if (tc.seatId !== seatId) continue;
       const nav = world.nav.get(id);
       const t = world.transform.get(id);
@@ -404,6 +406,7 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
   {
     const ids: EntityId[] = [...world.champion.keys()].sort((a, b) => a - b);
     for (const id of ids) {
+    if (isTimeStopped(world, id)) continue;
       if (isBerserk(world, id)) berserkSeek(world, id);
     }
   }
@@ -425,6 +428,7 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
   // only fires on real overlap, so nothing ever restored it. Stopping at a
   // FRACTION of the reach puts the halt strictly inside the attack window.
   for (const [id, nav] of world.nav) {
+    if (isTimeStopped(world, id)) continue;
     if (!nav.attackTarget) continue;
     const self = world.transform.get(id);
     const tgt = world.transform.get(nav.attackTarget);
@@ -511,6 +515,7 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
 
   // Clear arrived move targets.
   for (const [id, nav] of world.nav) {
+    if (isTimeStopped(world, id)) continue;
     if (!nav.moveTarget) continue;
     const t = world.transform.get(id);
     if (!t) continue;
@@ -665,6 +670,7 @@ function autoAcquirePass(
   const ids: EntityId[] = [...world.champion.keys()].sort((a, b) => a - b);
 
   for (const id of ids) {
+    if (isTimeStopped(world, id)) continue;
     const nav = world.nav.get(id);
     const t = world.transform.get(id);
     const hp = world.health.get(id);

@@ -1,0 +1,19 @@
+{
+  "schema": "ggd-kirua-verification@2",
+  "issue": 1132,
+  "sourceCommit": "c699a9ef51922e6dff101cac83bfec80952159d5",
+  "refinementVersion": 2,
+  "refinementSha256": "7c7378ae9bfb8fddc714c674659dd4c1045e25ee8ac45aa6146129fc7f7901a8",
+  "focusedTests": 27,
+  "supersedes": {
+    "refinementVersion": 1,
+    "sourceCommit": "996fa4a45053c3831d3a820c03f342cda76de5b8",
+    "evidenceCommit": "9a7583e0ee79812c79befe3e992dc3d39909c9c7"
+  },
+  "correction": "Recharge lock now begins on actual attack commitment, including fumble, evade and subsequent canceled windup. The earlier v1 case manually fired onBasicAttack and did not prove missed-swing behavior.",
+  "evidence": "yugi-verification.json",
+  "originalDesignAcceptance": "incomplete",
+  "visualAcceptance": "unverified",
+  "currentServiceZip": "not-built",
+  "formalPublication": false
+}

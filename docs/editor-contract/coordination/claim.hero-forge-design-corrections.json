@@ -1,0 +1,120 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.hero-forge-design-corrections",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "0de629f9e8c68b508deda71b0614890f47da0157",
+  "contractFingerprint": "e2850e24ab2e78a1",
+  "title": "37 名／222 槽改編完成，37 名隔離投稿發布及 ZIP 還原通過",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "37 份版本化微調與 HeroProject 已重建。原名、222 槽 ownerDescription/requiredRefinement、英雄屬性與既有模型綁定保留；微調與成品由獨立模板實例釘選版本。沒有通用 tpl-on-attack 被動替代資源。原稿忠實還原不再作本輪完成宣稱，逐槽改編明列於 parody-review.json。",
+      "repro": {
+        "command": "pnpm exec node --import tsx tools/community-hero-forge/prepare-published-handoff.mts",
+        "expectedExit": 0
+      },
+      "commit": "219c413d8f9f264ef9549f907a0d39c662f726d2",
+      "evidence": [
+        "materials/community-hero-forge/handoff-manifest.json",
+        "materials/community-hero-forge/refinements/parody-review.json",
+        "materials/community-hero-forge/refinements/design-audit.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "新增可重跑的角色來源與因果驗證：21 名重組核心有四條匹配時間線，105 個主動槽有刪除實際效果的對照，被動由真實事件或致死攻擊觸發；局部代價與御坂 E、庫洛 E/R 另有回歸。阿薩謝爾新版測極大範圍、多目標先強化兩秒、再弱化三秒、實際零防禦、來源隔離、驅散、死亡與到期恢復；v1 回退測試保留。測試通過不代表原作美術、正式平衡或發布通過。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements/parodyBatch.test.ts packages/shared/src/content/heroForge/communityRefinements/parodyAdaptations.test.ts packages/shared/src/content/heroForge/communityRefinements/parodyAzazel.test.ts --maxWorkers=2 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "219c413d8f9f264ef9549f907a0d39c662f726d2",
+      "evidence": [
+        "tools/community-hero-forge/parody",
+        "packages/shared/src/content/heroForge/communityRefinements/parodyAzazel.test.ts",
+        "materials/community-hero-forge/refinements/parody-review.md"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "生成來源、微調輸出與數值配置可用 --check 逐位元核對；37 套正規化整體技能組无完全或近似重複。結構診斷不單獨裁決創意、樂趣或平衡。本輪不新增引擎功能、模板定義或全域標籤；基礎魔抗在 override 之後加回的問題，依現有配置反算輸入，沒有改引擎。",
+      "repro": {
+        "command": "pnpm exec node --import tsx tools/community-hero-forge/parody/build.mts --check",
+        "expectedExit": 0
+      },
+      "commit": "219c413d8f9f264ef9549f907a0d39c662f726d2",
+      "evidence": [
+        "tools/community-hero-forge/parody/build.mts",
+        "materials/community-hero-forge/design-policy.json",
+        "materials/community-hero-forge/refinements/parody-review.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "PR 前段已提供資源、指定友軍保護、觀察事件、召喚／陷阱、滑板／牽引、格擋／中斷、局部時停、獨立續段及模板歷史等共用支援；相應角色與 transport/Editor 回歸仍登記在 validation-plan.json，歷史證據保留在各角色驗證檔。Main 需一併審查並同步整合 client/game-server/content-api，不能只收新版 JSON 至舊執行器。本輪另保留投稿預設情境與隔離服務、發布、S3 往返收據；原稿忠實還原及正式部署仍待 Main 整合；畫面收據與限制見 parody-visual-review.json；依最新裁決不以鏡頭、遮擋或美術微調阻擋內容交付，仍不宣稱原作美術全數通過。",
+      "repro": {
+        "command": "pnpm exec tsc --noEmit -p packages/shared/tsconfig.json",
+        "expectedExit": 0
+      },
+      "commit": "219c413d8f9f264ef9549f907a0d39c662f726d2",
+      "evidence": [
+        "materials/community-hero-forge/validation-plan.json",
+        "materials/community-hero-forge/refinements/README.md",
+        "AI參考全自動鑄造守則.md",
+        "materials/community-hero-forge/refinements/parody-verification.json",
+        "materials/community-hero-forge/refinements/parody-admission-scenes.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "Editor、Importer 與離線預檢共用實際前置操作：先跑原情境，必要時透過真實召喚、自然恢復、迴避交鋒及普攻取得條件；不改生命／魔力、冷卻、資源或亂數結果。移除取得來源仍拒絕。37 名已通過服務 417abec9d904 的建包／檢查、隔離投稿、管理員發布及異帳號署名下載，全部 ZIP 逐位元一致；並已從 S3 重新下載還原 37 份 ZIP。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements/admissionPrerequisites.test.ts --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+      "evidence": [
+        "packages/shared/src/content/heroForge/scenarioAdmission.ts",
+        "materials/community-hero-forge/refinements/parody-admission-scenes.json",
+        "materials/community-hero-forge/refinements/parody-service-proof.json",
+        "materials/community-hero-forge/refinements/parody-publication-proof.json",
+        "materials/community-hero-forge/supplements/admission-37-20260909/s3-restoration-receipt.json",
+        "materials/community-hero-forge/refinements/parody-visual-review.json"
+      ]
+    }
+  ],
+  "unblocks": [],
+  "ownerQuotes": [
+    {
+      "date": "2026-09-09",
+      "text": "你遇到可以開票再修正 或是有看到已開票 完成後去備註後關票"
+    },
+    {
+      "date": "2026-09-09",
+      "text": "只用現有機制標籤、enabled 模板與合法參數，不新增引擎功能或模板。"
+    },
+    {
+      "date": "2026-09-09",
+      "text": "好 請你開始全部逐一更新"
+    },
+    {
+      "date": "2026-09-09",
+      "text": "而且還要附帶全地圖嘲諷"
+    },
+    {
+      "date": "2026-09-09",
+      "text": "阿薩謝爾 根據漫畫是全地球 所以極大就好了"
+    },
+    {
+      "date": "2026-09-09",
+      "text": "除非有重大問題 例如技能特效機制失效 不然你不需要介入微調"
+    }
+  ],
+  "asks": [
+    "Main 審查完整 37 名新版玩法、原稿差異、個別版本／rollback 與新增集中驗證。阿薩謝爾依最後裁決用既有極大 AoE，嘲諷沿用 GGD 自動索敵規則；目前配置下護甲／魔抗實際歸零，配置更動須重建並重驗。",
+    "一併審查 PR 前段的通用資源、觀察事件、盾保護／免死、召喚／陷阱、位移、格擋／中斷、局部時停、recast、獨立模板歷史與快照／Editor 介接；相關範圍由 validation-plan 的 suite 指向。整合時同步建置 client/game-server/content-api。",
+    "Main 審查 37 名依服務 417abec9d904 重建 ZIP、隔離投稿／管理員發布及異帳號下載還原。原本五名投稿情境阻擋已修。37 名內容改編完成；最後裁決只以技能、特效或機制失效作重大阻擋，鏡頭及美術微調只記錄。菜月昴 W 的預覽模型像素拒絕與部分遮擋已明列，不宣稱逐圖美術全數通過。正式站尚未部署，請沿既有 PR 審查／合併，不改派任務。",
+    "同步審查生成器明確採用與新增修訂、AI 守則 v1.4、批次投稿預檢、37 份服務 ZIP 的 S3 封存／重下載證據。材料入口為 materials/community-hero-forge；原始大型模擬與歷史畫面在 supplements/parody-37-20260909，最新全部 ZIP 在 supplements/admission-37-20260909 指向的授權 S3。Git 保存全部 37 名可維護來源及精簡收據。"
+  ]
+}

@@ -134,6 +134,16 @@ describe("[格擋] authoringNote ⇔ 出貨資料", () => {
   const AXES = Object.keys(zItemBlockGrant.shape);
   /** 出貨文件裡那一句列舉的**正規形**,直接從 schema 產生。 */
   const AXIS_LINE = `${AXES.join(" / ")} **${CN[AXES.length]}根軸**`;
+  // Recognise the enumeration itself: adding a schema key must not hide an old list.
+  const axisClaims = (note: string): string[] =>
+    note.match(/[A-Za-z]\w*(?: \/ [A-Za-z]\w*){2,} \*\*[零一二三四五六七八九十\d]+根軸\*\*/g) ?? [];
+
+  it("§3 新增 schema 軸之後仍能辨認舊列舉，不把它當成沒有宣稱", () => {
+    const old = "damageTypes / chance / fraction **三根軸**";
+    expect(axisClaims(`BlockGrant：${old}，不是四個分支。`)).toEqual([old]);
+    expect(old).not.toBe(AXIS_LINE);
+    expect(axisClaims("文案把三根軸都寫死了")).toEqual([]);
+  });
 
   it(`§3 列舉軸的那一句 = schema 的鍵(現在是「${AXIS_LINE}」)`, () => {
     // 兩份文件本來寫「damageTypes / chance / fraction / lethalOnly / lethalBasis
@@ -145,10 +155,11 @@ describe("[格擋] authoringNote ⇔ 出貨資料", () => {
     const broken: string[] = [];
     let claims = 0;
     for (const it of ITEMS) {
-      if (!it.note.includes(`${AXES[0]!} / ${AXES[1]!} / ${AXES[2]!}`)) continue;
-      claims++;
-      if (!it.note.includes(AXIS_LINE)) {
-        broken.push(`${it.doc.name} (${it.id}) 的軸列舉跟 zItemBlockGrant 對不上`);
+      for (const claim of axisClaims(it.note)) {
+        claims++;
+        if (claim !== AXIS_LINE) {
+          broken.push(`${it.doc.name} (${it.id}) 的軸列舉跟 zItemBlockGrant 對不上`);
+        }
       }
     }
     expect(broken, `每一份列舉軸的 authoringNote 都要寫成「${AXIS_LINE}」`).toEqual([]);

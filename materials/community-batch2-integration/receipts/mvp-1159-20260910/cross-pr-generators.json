@@ -1,0 +1,103 @@
+[
+  {
+    "command": [
+      "bash",
+      "scripts/genrun.sh",
+      "content:build",
+      "content:build:indexes-only"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 23.81,
+    "log": "/private/tmp/ggd-mvp-cross-pr-integration/01-content-build.log"
+  },
+  {
+    "command": [
+      "bash",
+      "scripts/genrun.sh",
+      "spec:build"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 10.8,
+    "log": "/private/tmp/ggd-mvp-cross-pr-integration/02-spec-build.log"
+  },
+  {
+    "command": [
+      "bash",
+      "scripts/genrun.sh",
+      "editorcov:build"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 8.01,
+    "log": "/private/tmp/ggd-mvp-cross-pr-integration/03-editorcov-build.log"
+  },
+  {
+    "command": [
+      "bash",
+      "scripts/genrun.sh",
+      "bricks:build"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 9.86,
+    "log": "/private/tmp/ggd-mvp-cross-pr-integration/04-bricks-build.log"
+  },
+  {
+    "command": [
+      "bash",
+      "scripts/genrun.sh",
+      "decor:build"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 14.58,
+    "log": "/private/tmp/ggd-mvp-cross-pr-integration/05-decor-build.log"
+  },
+  {
+    "command": [
+      "bash",
+      "scripts/genrun.sh",
+      "docs:readme"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 5.8,
+    "log": "/private/tmp/ggd-mvp-cross-pr-integration/06-docs-readme.log"
+  },
+  {
+    "command": [
+      "bash",
+      "scripts/genrun.sh",
+      "skillremake:docs"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 22.66,
+    "log": "/private/tmp/ggd-mvp-cross-pr-integration/07-skillremake-docs.log"
+  },
+  {
+    "command": [
+      "bash",
+      "scripts/genrun.sh",
+      "contract:numbers"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 5.12,
+    "log": "/private/tmp/ggd-mvp-cross-pr-integration/08-contract-numbers.log"
+  },
+  {
+    "command": [
+      "bash",
+      "scripts/genrun.sh",
+      "board:roll"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 6.12,
+    "log": "/private/tmp/ggd-mvp-cross-pr-integration/09-board-roll.log"
+  },
+  {
+    "command": [
+      "bash",
+      "scripts/genrun.sh",
+      "board:build"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 6.59,
+    "log": "/private/tmp/ggd-mvp-cross-pr-integration/10-board-build.log"
+  }
+]

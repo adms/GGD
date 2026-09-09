@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../timeStop";
 /**
  * RegenSystem — hp/mana regeneration **and percentage self-drain**
  * (per second → per tick).
@@ -38,6 +39,7 @@ export function regenSystem(world: SimWorld): void {
   // 回血維持不設閘(中場補血是既有行為,動它才是迴歸)。
   const drainArmed = world.combatActive;
   for (const [id, hp] of world.health) {
+    if (isTimeStopped(world, id)) continue;
     if (!hp.alive) continue;
     const sc = world.stats.get(id);
     if (!sc) continue;

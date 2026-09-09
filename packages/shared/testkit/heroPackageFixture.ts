@@ -1,3 +1,4 @@
+import { resolveShippedTemplateVersion } from "../src/content/templates/shippedHistory";
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { COLLECTION_NAMES, type TemplateDoc } from "../src/content/schema";
@@ -15,7 +16,7 @@ export function shippedHeroCatalog(): HeroPackageCatalog {
     const document = JSON.parse(readFileSync(resolve(root, collection, file), "utf8")) as Record<string, unknown>;
     documents.set(`${collection}/${document.id}`, document);
   }
-  return { documents, readAsset: (path) => existsSync(resolve(root, path)) ? new Uint8Array(readFileSync(resolve(root, path))) : undefined };
+  return { documents, resolveTemplateVersion: resolveShippedTemplateVersion, readAsset: (path) => existsSync(resolve(root, path)) ? new Uint8Array(readFileSync(resolve(root, path))) : undefined };
 }
 
 export function heroPackageProject(catalog: HeroPackageCatalog, projectId = "community-package-proof"): HeroProject {

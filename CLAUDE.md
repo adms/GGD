@@ -2084,8 +2084,8 @@ hosted 頁面**可以累積成歷史紀錄**，同一份計畫改版時重發同
   ⭐ **`ENTITY_FLAG` 在 2026-08-18 加寬了**（owner：「ENTITY_FLAG expand!」）：
   `EntityState.flags` 從 uint16 變成 **uint32**，低半部 16 顆維持原字面值不動。
   高半部原本開出 15 格，[EX∅ 根源] 當場用掉四顆（`CARRIED` · `TEAM_OVERRIDE` ·
-  `TEAM_OVERRIDE_A` · `TEAM_OVERRIDE_B`），所以**現在剩 11 格**
-  （`ENTITY_FLAG_FREE_BITS`，2^20 … 2^30）。
+  `TEAM_OVERRIDE_A` · `TEAM_OVERRIDE_B`），局部時停再使用 `TIME_STOPPED`（2^20），所以**現在剩 10 格**
+  （`ENTITY_FLAG_FREE_BITS`，2^21 … 2^30）。
   ⛔ 第 32 顆（2^31）**永遠不要用**：JS 的位元運算子轉 int32，`flags & 2**31` 會是
   **負數**，於是任何寫成 `> 0` 的讀端靜默回 false，而寫端看起來完全正確。
   ⛔ **不要「重用」看起來閒置的 bit**，也⛔ **不要順手重編號低半部** ——

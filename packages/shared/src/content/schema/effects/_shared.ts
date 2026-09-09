@@ -413,6 +413,7 @@ export function refineCueGeometry(
  */
 export const zBlockGrant = z
   .object({
+    facingArcDegrees: z.number().finite().min(1).max(360).optional().describe("僅格擋正面扇形內的來源；完整角度，120 為左右各 60 度。留空全方向。"),
     damageTypes: z
       .array(zDamageType)
       .min(1)
@@ -744,16 +745,17 @@ export const zFlightGrant = z
  */
 export const zVisionGrant = z
   .object({
+    revealed: z.boolean().optional().describe("此來源存續時揭示承受者本身，不改隱形冷卻；仍遵守對決分區。"),
     stealthFadeDelaySec: z.number().min(0).max(60).optional(),
     trueSightRadius: z.number().positive().max(40).optional(),
   })
   .strict()
   .refine(
     (v) =>
-      v.stealthFadeDelaySec !== undefined || v.trueSightRadius !== undefined,
+      v.revealed === true || v.stealthFadeDelaySec !== undefined || v.trueSightRadius !== undefined,
     {
       message:
-        "vision grant must carry at least one of stealthFadeDelaySec / trueSightRadius",
+        "vision grant must carry at least one of revealed:true / stealthFadeDelaySec / trueSightRadius",
     },
   );
 
@@ -818,6 +820,8 @@ export const zDeathWardGrant = z
   .strict();
 
 export const SOURCE_GRANT_SHAPE = {
+  evasionScope: z.object({ abilities: z.boolean().optional(), trueDamage: z.boolean().optional() }).strict().optional()
+    .describe("將本來源的迴避屬性擴充到技能／真實傷害通道；仍遵守既有迴避上限，不另外增加機率。"),
   block: zBlockGrant.optional(),
   /**
    * ⭐ 2026-08-19 —— 第九格，見 {@link zDeathWardGrant}。
@@ -840,6 +844,13 @@ export const SOURCE_GRANT_SHAPE = {
    * 只剩一個 `spawnVfx`（GH#373，第一·五守則的形狀）。
    */
   vision: zVisionGrant.optional(),
+  drive: z.object({
+    accelSec: z.number().min(0.05).max(3),
+    brakeSec: z.number().min(0.05).max(3),
+    turnFactor: z.number().min(0.01).max(1),
+    sharpTurnDot: z.number().min(-1).max(1),
+    sharpTurnSpeed: z.number().min(0).max(1),
+  }).strict().optional().describe("來源存續時採加減速駕駛；急轉降速，碰撞停止。速度仍讀移速屬性，參數不疊加；最後一份有效來源優先。"),
   /**
    * ⭐ 2026-08-09 —— G7 的第三、第四格。**引擎從第一天就不看 `kind`**（真的跑過
    * 模擬：把 `attributes` 掛在 `kind:"buff"/"augment"/"passive"` 的來源上，

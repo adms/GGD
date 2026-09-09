@@ -1,0 +1,1177 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "community-review-03-20260907",
+  "revision": 15,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "不知火舞",
+    "concept": "不知火舞 社群英雄功能驗收稿。作品：《THE KING OF FIGHTERS》  \n定位：飛行道具、近身範圍、突進。\n\n視覺方向：紅扇軌跡、橘焰弧、落點火星；殘像只作演出，不增加完整英雄。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "PASSIVE": "〔不知火流身法〕",
+      "Q": "花蝶扇",
+      "W": "龍炎舞",
+      "E": "必殺忍蜂",
+      "R": "超必殺忍蜂",
+      "EX": "陽炎之舞"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      }
+    },
+    "attributes": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 15,
+      "state": "draft",
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      }
+    },
+    "mechanics": {
+      "revision": 14,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 14,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 14,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 14,
+      "state": "stale",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "community-review-03-20260907.plan",
+    "title": "不知火舞",
+    "summary": "不知火舞 社群英雄功能驗收稿。作品：《THE KING OF FIGHTERS》  \n定位：飛行道具、近身範圍、突進。\n\n視覺方向：紅扇軌跡、橘焰弧、落點火星；殘像只作演出，不增加完整英雄。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "鬥士",
+    "archetype": "fighter",
+    "attackType": "melee",
+    "budget": {
+      "power": 50,
+      "complexity": 60
+    },
+    "statOverrides": {
+      "ms": "中",
+      "mr": "中",
+      "armor": "中",
+      "maxHealth": "中",
+      "maxMana": "中",
+      "ad": "大",
+      "ap": "小",
+      "as": "中",
+      "healthRegen": "中",
+      "manaRegen": "中",
+      "range": "小"
+    },
+    "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020",
+    "templateVersions": {
+      "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+        "id": "tpl-event-passive",
+        "schema": "template@1",
+        "name": "自訂事件被動",
+        "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+        "family": "event-passive",
+        "status": "enabled",
+        "params": {
+          "hooks": {
+            "type": "hooks",
+            "default": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ]
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+        "id": "tpl-effect-sequence",
+        "schema": "template@1",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
+        "status": "enabled",
+        "params": {
+          "castType": {
+            "type": "enum",
+            "default": "targeted",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 10,
+            "unit": "s",
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "radius": {
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "side": {
+            "type": "enum",
+            "default": "enemies",
+            "values": [
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "recast": {
+            "type": "recast",
+            "optional": true,
+            "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      }
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "〔不知火流身法〕",
+        "purpose": "【本次玩法】舞的加班費：實際突進接普攻，三次陽炎越忙越走不動\nE／R 實際移動後正常停在距離終點、地形或 R 敵人接觸點，取得三秒身法；下一次有效敵方普攻命中（含盾吸收）消耗並追加一次極小物理傷害。E／R 刷新共用同一層，不疊加；空方向、零移動、取代、死亡與對決結束不給。技能、零傷害與免疫不消耗。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "nimble-consumption",
+            "template": {
+              "ref": "tpl-event-passive",
+              "params": {
+                "hooks": [
+                  {
+                    "on": "onDamageDealt",
+                    "damageSource": "basic",
+                    "damageConnected": true,
+                    "victim": "enemy",
+                    "target": "event",
+                    "effects": [
+                      {
+                        "kind": "consumeStatus",
+                        "shape": "single",
+                        "subject": "self",
+                        "statusId": "community-review-03-20260907.nimble",
+                        "appliedBy": "self",
+                        "count": 1,
+                        "onConsumed": [
+                          {
+                            "kind": "damage",
+                            "damageType": "physical",
+                            "amount": {
+                              "damageTier": "極小"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "花蝶扇",
+        "purpose": "【本次玩法】舞的加班費：實際突進接普攻，三次陽炎越忙越走不動\n單一實體穿透彈沿方向飛行，每人每彈最多一次小級魔法傷害；友軍、死亡及其他對決不命中。依 GGD 技能不被地形遮擋規則可穿牆，至射程或邊界消失。現有火球為代理，扇子模型與旋轉演出仍待完成。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "cooldownTier": "中",
+          "manaCostTier": "小",
+          "rangeTier": "中"
+        },
+        "products": [
+          {
+            "instanceId": "q-authored",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "skillshot",
+                "castTimeSec": 0.2,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "spawnProjectile",
+                    "projectileId": "imported.wave.fire",
+                    "onHit": [
+                      {
+                        "kind": "damage",
+                        "damageType": "magic",
+                        "amount": {
+                          "damageTier": "小"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "travelingWave"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "龍炎舞",
+        "purpose": "【本次玩法】舞的加班費：實際突進接普攻，三次陽炎越忙越走不動\n以自身當下位置及施法方向揮出 120 度、2.5 格近身火焰弧，各敵人只結算一次；後方、弧外、遠處、友軍與其他對決排除。專用火焰弧畫面待驗。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "cooldownTier": "中",
+          "manaCostTier": "小",
+          "rangeTier": "中"
+        },
+        "products": [
+          {
+            "instanceId": "w-authored",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "skillshot",
+                "castTimeSec": 0.2,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "damageArea",
+                    "fromCaster": true,
+                    "includeOrigin": true,
+                    "radius": 2.5,
+                    "arcHalfAngleCos": 0.5,
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "小"
+                    }
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "projectile"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "必殺忍蜂",
+        "purpose": "【本次玩法】舞的加班費：實際突進接普攻，三次陽炎越忙越走不動\n身體沿直線突進五格，沿實際路徑每名合法敵人碰撞一次小級物理傷害，穿過敵人後繼續，遇牆或距離終點停止；不從起點或牆後結算假碰撞。完成实际位移後刷新身法。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "cooldownTier": "中",
+          "manaCostTier": "小",
+          "rangeTier": "中"
+        },
+        "products": [
+          {
+            "instanceId": "e-authored",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "skillshot",
+                "castTimeSec": 0.1,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "dash",
+                    "mode": "forward",
+                    "speed": 12,
+                    "maxDistance": 5,
+                    "onTouch": [
+                      {
+                        "kind": "damage",
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "小"
+                        }
+                      }
+                    ],
+                    "touchScope": "enemy",
+                    "onEndOn": "resolved",
+                    "onEnd": [
+                      {
+                        "kind": "applyBuff",
+                        "applyTo": "self",
+                        "statusId": "community-review-03-20260907.nimble",
+                        "stackKey": "community-review-03-20260907.nimble",
+                        "sourceScope": "caster",
+                        "maxStacks": 1,
+                        "duration": 3,
+                        "dispellable": false,
+                        "modifiers": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "leap",
+          "knockback"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "超必殺忍蜂",
+        "purpose": "【本次玩法】舞的加班費：實際突進接普攻，三次陽炎越忙越走不動\n0.65 秒可中斷起手後向前突進七格，在首名敵人或地形停止。接觸造成實際 HP／盾吸收後才啟動三次近身連擊，末段追加 1.8 格爆發；逐段重查三格距離，死亡／對決結束取消。空放、牆阻與免疫不接連段，沒有額外無敵或硬控。正常位移結束刷新同一層身法。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "rangeTier": "大"
+        },
+        "products": [
+          {
+            "instanceId": "r-authored",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "skillshot",
+                "castTimeSec": 0.65,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "applyTo": "self",
+                    "statusId": "community-review-03-20260907.r-followup",
+                    "stackKey": "community-review-03-20260907.r-followup",
+                    "sourceScope": "caster",
+                    "maxStacks": 1,
+                    "duration": 2.5,
+                    "dispellable": false,
+                    "modifiers": [],
+                    "hooks": [
+                      {
+                        "on": "onDamageDealt",
+                        "abilitySlot": "R",
+                        "oncePerCast": true,
+                        "damageSource": "ability",
+                        "damageConnected": true,
+                        "victim": "enemy",
+                        "target": "event",
+                        "maxTriggers": 1,
+                        "onConsumed": "detachSource",
+                        "effects": [
+                          {
+                            "kind": "delayed",
+                            "shape": "single",
+                            "delaySec": 0.15,
+                            "count": 3,
+                            "intervalSec": 0.18,
+                            "stopOnCasterDeath": true,
+                            "effects": [
+                              {
+                                "kind": "damage",
+                                "damageType": "physical",
+                                "amount": {
+                                  "damageTier": "極小"
+                                },
+                                "condition": {
+                                  "kind": "distance",
+                                  "op": "<=",
+                                  "value": 3
+                                }
+                              }
+                            ],
+                            "finalEffects": [
+                              {
+                                "kind": "damageArea",
+                                "radius": 1.8,
+                                "includeOrigin": true,
+                                "amount": {
+                                  "damageTier": "小"
+                                },
+                                "damageType": "magic",
+                                "condition": {
+                                  "kind": "distance",
+                                  "op": "<=",
+                                  "value": 3
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "dash",
+                    "mode": "forward",
+                    "speed": 14,
+                    "maxDistance": 7,
+                    "stopOnHit": "enemy",
+                    "onHit": [
+                      {
+                        "kind": "damage",
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "極小"
+                        }
+                      }
+                    ],
+                    "onEndOn": "resolved",
+                    "onEnd": [
+                      {
+                        "kind": "applyBuff",
+                        "applyTo": "self",
+                        "statusId": "community-review-03-20260907.nimble",
+                        "stackKey": "community-review-03-20260907.nimble",
+                        "sourceScope": "caster",
+                        "maxStacks": 1,
+                        "duration": 3,
+                        "dispellable": false,
+                        "modifiers": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        },
+        "capabilityIds": [
+          "periodicDamage",
+          "invulnerable",
+          "applyStatus",
+          "leap"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "陽炎之舞",
+        "purpose": "【本次玩法】舞的加班費：實際突進接普攻，三次陽炎越忙越走不動\n新增代價：陽炎出場三秒期間本體減速20%，換取既有最多三次殘像；突進仍可用。\n三秒陽炎窗口內，自己的有效技能命中後延遲 0.1 秒向同一目標追加極小魔法傷害；每次施法跨波次／目標最多一次，共三次，消耗後撤除。普攻、其他施法者、殘像及連段衍生傷害不觸發；原目標死亡、離開十二格或對決結束時取消，不重新尋敵。火焰殘像模型／動作／音效仍待實際畫面驗收。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "cooldownTier": "極大",
+          "manaCostTier": "中",
+          "rangeTier": "中"
+        },
+        "products": [
+          {
+            "instanceId": "ex-authored",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "self",
+                "castTimeSec": 0,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "applyTo": "self",
+                    "statusId": "community-review-03-20260907.afterimage",
+                    "stackKey": "community-review-03-20260907.afterimage",
+                    "sourceScope": "caster",
+                    "maxStacks": 1,
+                    "duration": 3,
+                    "dispellable": false,
+                    "modifiers": [],
+                    "hooks": [
+                      {
+                        "on": "onDamageDealt",
+                        "damageSource": "ability",
+                        "damageConnected": true,
+                        "victim": "enemy",
+                        "target": "event",
+                        "oncePerCast": true,
+                        "maxTriggers": 3,
+                        "onConsumed": "detachSource",
+                        "effects": [
+                          {
+                            "kind": "delayed",
+                            "shape": "single",
+                            "delaySec": 0.1,
+                            "stopOnCasterDeath": true,
+                            "effects": [
+                              {
+                                "kind": "damage",
+                                "damageType": "magic",
+                                "amount": {
+                                  "damageTier": "極小"
+                                },
+                                "condition": {
+                                  "kind": "distance",
+                                  "op": "<=",
+                                  "value": 12
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          },
+          {
+            "instanceId": "ex-parody",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "self",
+                "castTimeSec": 0,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "slow20",
+                    "duration": 3,
+                    "applyTo": "self",
+                    "sourceScope": "caster",
+                    "moveSpeedMult": 0.8
+                  },
+                  {
+                    "kind": "floatingText",
+                    "shape": "single",
+                    "text": "分身加班，本體腿痠",
+                    "applyTo": "self",
+                    "durationSec": 1
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "community.body.16a3490b238155c7c49fdea9fd35fe4d69b850df6916e8b9",
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a",
+      "byteSize": 1579724,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "modelProvenance": {
+      "schema": "ggd-hero-model-provenance@1",
+      "modelSha256": "296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a",
+      "sourceAssetId": "300heroes:1d306928d4f084b4b4a1a79a",
+      "sourceCharacter": "真田幸村",
+      "sourceWork": "百花繚亂 SAMURAI GIRLS",
+      "relationship": "style-proxy",
+      "notes": "以《百花繚亂》的真田幸村紅衣雙扇造型作風格替代；遊戲角色仍名為不知火舞。這不是不知火舞原角色模型。受傷用途暫共用待機。"
+    },
+    "championIcon": "assets/icons/champions/thorne.webp",
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-03-20260907.q",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-03-20260907.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.fire.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                255,
+                71,
+                41
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.fire.bolt",
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                255,
+                71,
+                41
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-03-20260907.w",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-03-20260907.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.fire.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                255,
+                71,
+                41
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.fire.beam",
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                255,
+                71,
+                41
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-03-20260907.e",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-03-20260907.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.fire.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                255,
+                71,
+                41
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.fire.slash",
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                255,
+                71,
+                41
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-03-20260907.r",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-03-20260907.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.fire.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                255,
+                71,
+                41
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.fire.slash",
+              "at": "target",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 1.25,
+              "tint": [
+                255,
+                71,
+                41
+              ],
+              "alpha": 0.85
+            },
+            {
+              "vfxId": "fx.prim.fire.slash",
+              "at": "target",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "strike",
+              "strikeIndex": 4,
+              "w3xScale": 1,
+              "tint": [
+                255,
+                71,
+                41
+              ],
+              "alpha": 0.9
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-03-20260907.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-03-20260907.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.fire.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                255,
+                71,
+                41
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.fire.pulse",
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                255,
+                71,
+                41
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a.glb",
+        "byteSize": 1579724,
+        "mediaType": "model/gltf-binary",
+        "sha256": "296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "sourceDesign": {
+    "schema": "ggd-hero-source-design@1",
+    "sourceSha256": "1fa00b89649191fec570f5d2f500416dd0eef5e8ba6cfbf55cc4383ba0041c42",
+    "name": "不知火舞",
+    "identity": "作品：《THE KING OF FIGHTERS》  \n定位：飛行道具、近身範圍、突進。",
+    "ownerText": "### 03｜不知火舞\n\n作品：《THE KING OF FIGHTERS》  \n定位：飛行道具、近身範圍、突進。\n\n- **PASSIVE｜〔不知火流身法〕**：完成位移後獲得一次短效普攻強化；刷新不疊加。\n- **Q｜花蝶扇**：投出扇子，對沿途合法目標造成傷害。\n- **W｜龍炎舞**：向前揮出近身火焰弧，適合迎擊貼身敵人。\n- **E｜必殺忍蜂**：直線突進撞擊；遇牆或到達最大距離停止。\n- **R｜超必殺忍蜂**：有明顯起手的強化突進連擊，末段小範圍爆發。\n- **EX｜陽炎之舞**：短時間產生跟隨施法的火焰殘像；追加傷害有次數上限，殘像不獨立尋敵。\n\n**審查重點**：扇子、身體與火焰弧各自有正確判定；驗證穿牆、同目標重複碰撞，以及殘像再觸發殘像的循環。\n\n",
+    "reviewText": "扇子、身體與火焰弧各自有正確判定；驗證穿牆、同目標重複碰撞，以及殘像再觸發殘像的循環。",
+    "slots": {
+      "PASSIVE": {
+        "name": "〔不知火流身法〕",
+        "ownerDescription": "完成位移後獲得一次短效普攻強化；刷新不疊加。",
+        "baselineBehavior": "普攻追加極小級物理傷害，內置冷卻 3 秒。",
+        "requiredRefinement": "需位移完成後一次普攻增益，刷新不疊加。",
+        "refinementContracts": [
+          "M01",
+          "M11"
+        ]
+      },
+      "Q": {
+        "name": "花蝶扇",
+        "ownerDescription": "投出扇子，對沿途合法目標造成傷害。",
+        "baselineBehavior": "四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。",
+        "requiredRefinement": "扇子模型及逐彈碰撞需補，模板是分段傷害波。",
+        "refinementContracts": [
+          "M01",
+          "M11"
+        ]
+      },
+      "W": {
+        "name": "龍炎舞",
+        "ownerDescription": "向前揮出近身火焰弧，適合迎擊貼身敵人。",
+        "baselineBehavior": "向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。",
+        "requiredRefinement": "目前為窄直線，需前方近身弧形判定。",
+        "refinementContracts": [
+          "M01",
+          "M11"
+        ]
+      },
+      "E": {
+        "name": "必殺忍蜂",
+        "ownerDescription": "直線突進撞擊；遇牆或到達最大距離停止。",
+        "baselineBehavior": "向指定方向突進 300 wc3u，造成極小級碰撞範圍傷害與推移。",
+        "requiredRefinement": "核對 Owner 原文與模擬／畫面後才可驗收。",
+        "refinementContracts": [
+          "M01",
+          "M11"
+        ]
+      },
+      "R": {
+        "name": "超必殺忍蜂",
+        "ownerDescription": "有明顯起手的強化突進連擊，末段小範圍爆發。",
+        "baselineBehavior": "4 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。",
+        "requiredRefinement": "缺突進命中後才接連擊條件。",
+        "refinementContracts": [
+          "M01",
+          "M11"
+        ]
+      },
+      "EX": {
+        "name": "陽炎之舞",
+        "ownerDescription": "短時間產生跟隨施法的火焰殘像；追加傷害有次數上限，殘像不獨立尋敵。",
+        "baselineBehavior": "自身取得 3 秒增益：ad +15%。",
+        "requiredRefinement": "目前為自身 3 秒 +15% AD；需限次跟隨施法殘像及去重。",
+        "refinementContracts": [
+          "M01",
+          "M11"
+        ]
+      }
+    }
+  },
+  "refinementNotes": {
+    "PASSIVE": "本次保留核心並核對定位、代價、反制。舞的加班費：實際突進接普攻，三次陽炎越忙越走不動\nE／R 實際移動後正常停在距離終點、地形或 R 敵人接觸點，取得三秒身法；下一次有效敵方普攻命中（含盾吸收）消耗並追加一次極小物理傷害。E／R 刷新共用同一層，不疊加；空方向、零移動、取代、死亡與對決結束不給。技能、零傷害與免疫不消耗。",
+    "Q": "本次保留核心並核對定位、代價、反制。舞的加班費：實際突進接普攻，三次陽炎越忙越走不動\n單一實體穿透彈沿方向飛行，每人每彈最多一次小級魔法傷害；友軍、死亡及其他對決不命中。依 GGD 技能不被地形遮擋規則可穿牆，至射程或邊界消失。現有火球為代理，扇子模型與旋轉演出仍待完成。",
+    "W": "本次保留核心並核對定位、代價、反制。舞的加班費：實際突進接普攻，三次陽炎越忙越走不動\n以自身當下位置及施法方向揮出 120 度、2.5 格近身火焰弧，各敵人只結算一次；後方、弧外、遠處、友軍與其他對決排除。專用火焰弧畫面待驗。",
+    "E": "本次保留核心並核對定位、代價、反制。舞的加班費：實際突進接普攻，三次陽炎越忙越走不動\n身體沿直線突進五格，沿實際路徑每名合法敵人碰撞一次小級物理傷害，穿過敵人後繼續，遇牆或距離終點停止；不從起點或牆後結算假碰撞。完成实际位移後刷新身法。",
+    "R": "本次保留核心並核對定位、代價、反制。舞的加班費：實際突進接普攻，三次陽炎越忙越走不動\n0.65 秒可中斷起手後向前突進七格，在首名敵人或地形停止。接觸造成實際 HP／盾吸收後才啟動三次近身連擊，末段追加 1.8 格爆發；逐段重查三格距離，死亡／對決結束取消。空放、牆阻與免疫不接連段，沒有額外無敵或硬控。正常位移結束刷新同一層身法。",
+    "EX": "本次保留核心並核對定位、代價、反制。舞的加班費：實際突進接普攻，三次陽炎越忙越走不動\n新增代價：陽炎出場三秒期間本體減速20%，換取既有最多三次殘像；突進仍可用。\n三秒陽炎窗口內，自己的有效技能命中後延遲 0.1 秒向同一目標追加極小魔法傷害；每次施法跨波次／目標最多一次，共三次，消耗後撤除。普攻、其他施法者、殘像及連段衍生傷害不觸發；原目標死亡、離開十二格或對決結束時取消，不重新尋敵。火焰殘像模型／動作／音效仍待實際畫面驗收。"
+  },
+  "validationState": {
+    "identity": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 15,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 14,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 14,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 14,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 14,
+      "status": "stale",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": [
+    {
+      "kind": "generator-adopted",
+      "projectRevision": 15,
+      "digest": "006bf2ec7ca2b643cdb728e790c3a8442948a2022fe0c3ab30300430e1c9ef15",
+      "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020"
+    }
+  ]
+}

@@ -174,6 +174,8 @@ export type HookEvent =
   | "onCrowdControlApplied"
   | "onCrowdControlReceived"
   | "onHeal"
+  /** Actual healing or hostile shield absorption credited to this owner for another ally. */
+  | "onAllyProtected"
   | "onOverheal"
   | "onAllyDamaged"
   | "onProjectileExpire"
@@ -186,6 +188,9 @@ export type HookEvent =
   | "onAbilityCast"
   | "onAbilityHit"
   | "onBasicAttack"
+  | "onAttackAttempt"
+  | "onSummonHit"
+  | "onObservedCombat"
   | "onDamageDealt"
   | "onDamageTaken"
   | "onKill"
@@ -306,6 +311,7 @@ export type HookEvent =
    *（與 `onStunned` / `onReflectSuccess` 同一個方向）。
    */
   | "onEvade"
+  | "onBlock"
   /**
    * ── 以下四個由**契約層**（2026-08-09，GH#300）加進詞彙，**發射點還沒接** ──
    *
@@ -354,7 +360,7 @@ export type HookEvent =
   | "onStatusApplied";
 
 export interface HookDef {
-  /** Once per accepted cast which actually damages another body. Damage-dealt only. */
+  /** Once per accepted damaging cast; damageConnected also admits shield absorption. */
   oncePerCast?: boolean;
   on: HookEvent;
   /**
@@ -495,6 +501,17 @@ export interface HookDef {
    * 這條在正常內容上碰不到:`zHookDef` 在載入時就擋掉把它掛到無傷害事件上的
    * 文件,所以「寫得出來但永遠不會觸發」不是一個能出貨的狀態。
    */
+  observedEvent?: "basicHit" | "abilityHit" | "heal" | "control";
+  evadeChannel?: "basic" | "ability";
+  /** Actual moving dash at the instant of the dodge, not a queued input. */
+  evadeDuring?: "dash";
+  /** Require positive HP loss or absorbed shield damage in the triggering packet. */
+  damageConnected?: true;
+  /** Continuous actual stillness before an interval hook may fire. */
+  stationaryForSec?: number;
+  evadeSource?: "defender" | "thisSource";
+  /** Require the positive block grant to be this modifier source. */
+  blockSource?: "thisSource";
   damageSource?: "any" | "basic" | "nonBasic" | "ability" | "other";
   /**
    * B2 (2026-08-05) —— 觸發這個 hook 的那一發傷害**是什麼型別**。
@@ -908,6 +925,7 @@ export interface ModifierSource {
   auras?: AuraDef[];
   /** runtime: last tick each hook fired (internal-cooldown bookkeeping) */
   hookLastFired?: number[];
+  hookStillness?: (import("../effects/intervalStillness").StillnessSample | undefined)[];
   /**
    * RUNTIME (never authored), **只有 `internalCooldownScope: "perAbilitySlot"`
    * 的 hook 會用到**:`hooks[hi]` ↔ 「這個槽位上一次觸發是第幾 tick」。
@@ -981,6 +999,7 @@ export interface ModifierSource {
    * and digest bit-identical.
    */
   vision?: VisionGrant;
+  drive?: import("../movement/abilityMotion").DriveGrant;
   /**
    * 飛行 (無視碰撞) this source grants — 04-00 翔封界. Rides the source for the
    * exact reason `vision` does: 「碰不碰得到」 is a property OF THE SOURCE, there

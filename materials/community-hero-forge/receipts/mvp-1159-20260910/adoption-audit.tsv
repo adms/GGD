@@ -1,0 +1,54 @@
+key	group	compiledDocs	witness	jsonPointer	value
+enum:abilities.effects[]#applyBuff.hooks[].on=onAllyProtected	A:accepted-community	1	/private/tmp/ggd-first37-current-service-07/21.zip!/compiled/abilities/community-review-21-20260907.passive.json	/passive/ranks/0/hooks/0/on	"onAllyProtected"
+enum:abilities.effects[]#applyBuff.hooks[].on=onAttackAttempt	A:accepted-community	2	/private/tmp/ggd-first37-current-service-07/23.zip!/compiled/abilities/community-review-23-20260907.passive.json	/passive/ranks/0/hooks/0/on	"onAttackAttempt"
+enum:abilities.effects[]#applyBuff.hooks[].on=onBlock	A:accepted-community	10	/private/tmp/ggd-first37-current-service-07/02.zip!/compiled/abilities/community-review-02-20260907.w.json	/effects/0/hooks/0/on	"onBlock"
+enum:abilities.effects[]#applyBuff.hooks[].on=onObservedCombat	A:accepted-community	1	/private/tmp/ggd-first37-current-service-07/26.zip!/compiled/abilities/community-review-26-20260907.passive.json	/passive/ranks/0/hooks/0/on	"onObservedCombat"
+enum:abilities.effects[]#applyBuff.hooks[].on=onSummonHit	A:accepted-community	1	/private/tmp/ggd-first37-current-service-07/01.zip!/compiled/abilities/community-review-01-20260907.passive.json	/passive/ranks/0/hooks/0/on	"onSummonHit"
+field:abilities.allowApproach	A:accepted-community	9	/private/tmp/ggd-first37-current-service-07/02.zip!/compiled/abilities/community-review-02-20260907.ex.json	/allowApproach	false
+field:abilities.effects[]#applyBuff.block.facingArcDegrees	A:accepted-community	2	/private/tmp/ggd-first37-current-service-07/04.zip!/compiled/abilities/community-review-04-20260907.e.json	/effects/0/block/facingArcDegrees	120
+field:abilities.effects[]#applyBuff.drive	A:accepted-community	2	/private/tmp/ggd-first37-current-service-07/26.zip!/compiled/abilities/community-review-26-20260907.e.json	/effects/0/drive	{"accelSec":0.3,"brakeSec":0.2,"sharpTurnDot":0.5,"sharpTurnSpeed":0.3,"turnFactor":0.2}
+field:abilities.effects[]#applyBuff.evasionScope	A:accepted-community	2	/private/tmp/ggd-first37-current-service-07/31.zip!/compiled/abilities/community-review-31-20260907.w.json	/effects/0/evasionScope	{"abilities":true}
+field:abilities.effects[]#applyBuff.hooks[].blockSource	A:accepted-community	8	/private/tmp/ggd-first37-current-service-07/02.zip!/compiled/abilities/community-review-02-20260907.w.json	/effects/0/hooks/0/blockSource	"thisSource"
+field:abilities.effects[]#applyBuff.hooks[].damageConnected	A:accepted-community	15	/private/tmp/ggd-first37-current-service-07/02.zip!/compiled/abilities/community-review-02-20260907.passive.json	/passive/ranks/0/hooks/0/damageConnected	true
+field:abilities.effects[]#applyBuff.hooks[].evadeChannel	A:accepted-community	2	/private/tmp/ggd-first37-current-service-07/24.zip!/compiled/abilities/community-review-24-20260907.r.json	/effects/1/hooks/1/evadeChannel	"basic"
+field:abilities.effects[]#applyBuff.hooks[].evadeDuring	A:accepted-community	2	/private/tmp/ggd-first37-current-service-07/31.zip!/compiled/abilities/community-review-31-20260907.w.json	/effects/0/hooks/0/evadeDuring	"dash"
+field:abilities.effects[]#applyBuff.hooks[].evadeSource	A:accepted-community	7	/private/tmp/ggd-first37-current-service-07/24.zip!/compiled/abilities/community-review-24-20260907.r.json	/effects/1/hooks/1/evadeSource	"defender"
+field:abilities.effects[]#applyBuff.hooks[].observedEvent	A:accepted-community	1	/private/tmp/ggd-first37-current-service-07/26.zip!/compiled/abilities/community-review-26-20260907.passive.json	/passive/ranks/0/hooks/0/observedEvent	"basicHit"
+field:abilities.effects[]#applyBuff.hooks[].stationaryForSec	A:accepted-community	3	/private/tmp/ggd-first37-current-service-07/30.zip!/compiled/abilities/community-review-30-20260907.passive.json	/passive/ranks/0/hooks/0/stationaryForSec	1
+field:abilities.effects[]#applyBuff.vision.revealed	A:accepted-community	3	/private/tmp/ggd-first37-current-service-07/26.zip!/compiled/abilities/community-review-26-20260907.r.json	/effects/0/vision/revealed	true
+field:abilities.effects[]#applyStatus.grantMark	A:accepted-community	6	/private/tmp/ggd-first37-current-service-07/21.zip!/compiled/abilities/community-review-21-20260907.ex.json	/effects/0/grantMark	{"lethal":{"aoeEffects":[],"aoeRadius":0,"consume":1,"damageTypes":["physical","magic","true"],"internalCooldown":0,"maxSavesPerRound":1,"restoreMode":"restore","selfEffects":[{"durationSec":0.5,"kind":"invulnerable"}],"surviveHpPct":0.05},"max":1,"resetOn":"round"}
+field:abilities.effects[]#applyStatus.grantMark.lethal.maxSavesPerRound	A:accepted-community	1	/private/tmp/ggd-first37-current-service-07/21.zip!/compiled/abilities/community-review-21-20260907.ex.json	/effects/0/grantMark/lethal/maxSavesPerRound	1
+field:abilities.effects[]#chainLightning.retargetOnLost	A:accepted-community	2	/private/tmp/ggd-first37-current-service-07/20.zip!/compiled/abilities/community-review-20-20260907.w.json	/effects/0/onConsumed/0/retargetOnLost	true
+field:abilities.effects[]#damageArea.arcHalfAngleCos	A:accepted-community	11	/private/tmp/ggd-first37-current-service-07/02.zip!/compiled/abilities/community-review-02-20260907.e.json	/effects/0/arcHalfAngleCos	0.5
+field:abilities.effects[]#damageArea.fromCaster	A:accepted-community	12	/private/tmp/ggd-first37-current-service-07/02.zip!/compiled/abilities/community-review-02-20260907.e.json	/effects/0/fromCaster	true
+field:abilities.effects[]#damageLine.fromSummonSlot	A:accepted-community	1	/private/tmp/ggd-first37-current-service-07/01.zip!/compiled/abilities/community-review-01-20260907.ex.json	/effects/0/fromSummonSlot	"Q"
+field:abilities.effects[]#dash.onHit	A:accepted-community	6	/private/tmp/ggd-first37-current-service-07/02.zip!/compiled/abilities/community-review-02-20260907.r.json	/effects/1/onHit	[{"amount":{"damageTier":"極小","flat":200,"perRank":[0,150,300]},"damageType":"physical","kind":"damage"}]
+field:abilities.effects[]#dash.onTouch	A:accepted-community	8	/private/tmp/ggd-first37-current-service-07/03.zip!/compiled/abilities/community-review-03-20260907.e.json	/effects/0/onTouch	[{"amount":{"damageTier":"小","flat":500,"perRank":[0,250,500,750]},"damageType":"physical","kind":"damage"}]
+field:abilities.effects[]#dash.stopOnHit	A:accepted-community	7	/private/tmp/ggd-first37-current-service-07/02.zip!/compiled/abilities/community-review-02-20260907.r.json	/effects/1/stopOnHit	"enemy"
+field:abilities.effects[]#dash.touchScope	A:accepted-community	4	/private/tmp/ggd-first37-current-service-07/03.zip!/compiled/abilities/community-review-03-20260907.e.json	/effects/0/touchScope	"enemy"
+field:abilities.effects[]#dispel.statusTag	A:accepted-community	1	/private/tmp/ggd-first37-current-service-07/37.zip!/compiled/abilities/community-review-37-20260907.ex.json	/effects/0/effects/0/statusTag	"fear"
+field:abilities.effects[]#shield.breakOnMove	A:accepted-community	1	/private/tmp/ggd-first37-current-service-07/30.zip!/compiled/abilities/community-review-30-20260907.ex.json	/effects/0/breakOnMove	true
+field:abilities.effects[]#summon.targetOnSpawn	A:accepted-community	3	/private/tmp/ggd-first37-current-service-07/01.zip!/compiled/abilities/community-review-01-20260907.q.json	/effects/0/targetOnSpawn	true
+field:abilities.interruptible	C:implicit-default	0			
+field:abilities.passive.ranks[].drive	B:shared-authoring-surface	0			
+field:abilities.passive.ranks[].evasionScope	B:shared-authoring-surface	0			
+field:abilities.recast	A:accepted-community	1	/private/tmp/ggd-first37-current-service-07/02.zip!/compiled/abilities/community-review-02-20260907.e.json	/recast	{"cost":"first","minIntervalSec":0.2,"stages":[{"effects":[{"amount":{"damageTier":"極小","flat":200,"perRank":[0,150,300,450]},"arcHalfAngleCos":0.5,"damageType":"physical","fromCaster":true,"includeOrigin":true,"kind":"damageArea","radius":2.75}]},{"effects":[{"amount":{"damageTier":"小","flat":500,"perRank":[0,375,750,1125]},"arcHalfAngleCos":0.5,"damageType":"physical","fromCaster":true,"includeOrigin":true,"kind":"damageArea","radius":2.75}]}],"windowSec":1.2}
+field:abilities.requiredSummonSlot	A:accepted-community	1	/private/tmp/ggd-first37-current-service-07/01.zip!/compiled/abilities/community-review-01-20260907.ex.json	/requiredSummonSlot	"Q"
+field:abilities.requiredTargetStatus	A:accepted-community	2	/private/tmp/ggd-first37-current-service-07/28.zip!/compiled/abilities/community-review-28-20260907.ex.json	/requiredTargetStatus	{"appliedBy":"self","statusId":"community-review-28-20260907.recent-hit"}
+field:augments.drive	B:shared-authoring-surface	0			
+field:augments.evasionScope	B:shared-authoring-surface	0			
+field:champions.abilities.*.allowApproach	A:accepted-community	2	/private/tmp/ggd-first37-current-service-07/04.zip!/compiled/champions/community-review-04-20260907.json	/abilities/Q/allowApproach	false
+field:champions.abilities.*.interruptible	C:implicit-default	0			
+field:champions.abilities.*.recast	A:accepted-community	1	/private/tmp/ggd-first37-current-service-07/02.zip!/compiled/champions/community-review-02-20260907.json	/abilities/E/recast	{"cost":"first","minIntervalSec":0.2,"stages":[{"effects":[{"amount":{"damageTier":"極小","flat":200,"perRank":[0,150,300,450]},"arcHalfAngleCos":0.5,"damageType":"physical","fromCaster":true,"includeOrigin":true,"kind":"damageArea","radius":2.75}]},{"effects":[{"amount":{"damageTier":"小","flat":500,"perRank":[0,375,750,1125]},"arcHalfAngleCos":0.5,"damageType":"physical","fromCaster":true,"includeOrigin":true,"kind":"damageArea","radius":2.75}]}],"windowSec":1.2}
+field:champions.abilities.*.requiredSummonSlot	B:shared-authoring-surface	0			
+field:champions.abilities.*.requiredTargetStatus	B:shared-authoring-surface	0			
+field:items.passive[].blockSource	B:shared-authoring-surface	0			
+field:items.passive[].damageConnected	B:shared-authoring-surface	0			
+field:items.passive[].evadeChannel	B:shared-authoring-surface	0			
+field:items.passive[].evadeDuring	B:shared-authoring-surface	0			
+field:items.passive[].evadeSource	B:shared-authoring-surface	0			
+field:items.passive[].observedEvent	B:shared-authoring-surface	0			
+field:items.passive[].stationaryForSec	B:shared-authoring-surface	0			
+variant:abilities.effects[]#interruptCast	A:accepted-community	1	/private/tmp/ggd-first37-current-service-07/23.zip!/compiled/abilities/community-review-23-20260907.ex.json	/effects/1/kind	"interruptCast"
+variant:abilities.effects[]#timeStop	A:accepted-community	2	/private/tmp/ggd-first37-current-service-07/04.zip!/compiled/abilities/community-review-04-20260907.r.json	/effects/0/kind	"timeStop"
+variant:abilities.effects[]#trap	A:accepted-community	2	/private/tmp/ggd-first37-current-service-07/01.zip!/compiled/abilities/community-review-01-20260907.e.json	/effects/0/kind	"trap"

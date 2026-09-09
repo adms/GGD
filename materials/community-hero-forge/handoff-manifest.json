@@ -1,0 +1,916 @@
+{
+  "schema": "ggd-shared-authoring-handoff@1",
+  "sourceCommit": "36ed5daa4465b784c7fb0401980c3eb7db642e2b",
+  "heroCount": 37,
+  "slotCount": 222,
+  "compilation": "passed",
+  "originalDesignAcceptance": "incomplete",
+  "visualAcceptance": "failed-PBR-preload",
+  "currentServiceZip": "partial-32-of-37",
+  "formalPublication": false,
+  "issues": [
+    1132,
+    1139,
+    1140,
+    1141
+  ],
+  "modelArchive": "supplements/release-13956d93b",
+  "modelArchiveManifestSha256": "abecb2b2cb9d47d981b7688903d22c6627cf7e8b84af9c1cc7c852159390dada",
+  "modelAvailability": "Existing models reused with verified SHA-256; current ZIP and raw acceptance artifacts are recorded in the separate delivery archive.",
+  "refinements": [
+    {
+      "path": "refinements/01.json",
+      "sha256": "809ff475f871bbc85431ce0102b15f56b3c04e100f3b53266b36c0475e373bc8"
+    },
+    {
+      "path": "refinements/02.json",
+      "sha256": "e7e3692a4625ecbc5107305a4fa09c45afb5a6347f50418e0c62e1657c0827a1"
+    },
+    {
+      "path": "refinements/03.json",
+      "sha256": "b3b1de4e01a6aa56bd7248fb0d047f01da813f27ecb939dc4bfd2b98d7ee75c5"
+    },
+    {
+      "path": "refinements/04.json",
+      "sha256": "eb53b99e481447cc2c72fd0f682f7d956e3659b8e5c7aee3026bdaa34e77f60e"
+    },
+    {
+      "path": "refinements/05.json",
+      "sha256": "e50ce76f1469d95705ee1137858f2dbc57ef11ace9d9a0e6f9766774d283ca40"
+    },
+    {
+      "path": "refinements/06.json",
+      "sha256": "119ed1f170a85d8ed83e39603411ca62af2ad4521bce6d97ab8ffb3599717203"
+    },
+    {
+      "path": "refinements/07.json",
+      "sha256": "0bdb3bf2a6bdcfb02a66aca9b5b11cb2ace6885eceadfc46503038412bc89740"
+    },
+    {
+      "path": "refinements/08.json",
+      "sha256": "daf6d7e2cd81030e42e05b7394dab3d1c2f8372bfe9cf5b4cd30e022ba48ca88"
+    },
+    {
+      "path": "refinements/09.json",
+      "sha256": "a26f5a91fbda02a5f10e11e16b9e1c8e4a429fd297919ebe58ce4f86b05523b3"
+    },
+    {
+      "path": "refinements/10.json",
+      "sha256": "4d26006de5d031135cd07508a4fd8dad1fe39d7b1b3d0f7b05d5135f99b102bb"
+    },
+    {
+      "path": "refinements/11.json",
+      "sha256": "4718e4c30955161936c160f5dd2b380564044861430745b6998da1d240611236"
+    },
+    {
+      "path": "refinements/12.json",
+      "sha256": "124f7c1a2fbeb3e48f1b1831307e942c45983a0589358406a4e9f5dce5859dd6"
+    },
+    {
+      "path": "refinements/13.json",
+      "sha256": "1a59c53bba4221b18fbaa4744f8f48ba83e5bb0900fab237158ff22102220932"
+    },
+    {
+      "path": "refinements/14.json",
+      "sha256": "9cd2f77229153d344ebd6d886feccb011e2e7152bfab57b01974926c3036ea7b"
+    },
+    {
+      "path": "refinements/15.json",
+      "sha256": "5c379c51a1594c70976d50b2b18cce478c55ec8c2a014673de9dbac871994220"
+    },
+    {
+      "path": "refinements/16.json",
+      "sha256": "76d21d7e79e4d11c8337ce78eeb6a9b9843c44c598acad6514a82ec348b6999c"
+    },
+    {
+      "path": "refinements/17.json",
+      "sha256": "c037860a2ca20026e50336e02ed54be8bf4c7a7f05bcdf02e6ef9f0f50c45aff"
+    },
+    {
+      "path": "refinements/18.json",
+      "sha256": "f9145f37ce31042c766afc45675d6561d90e5c69723c09d3d33489cd034fee8a"
+    },
+    {
+      "path": "refinements/19.json",
+      "sha256": "53e46427c5fe7759e660d5dbe44afedca97ef33aaf4c0bed8fe6023fd80ebb55"
+    },
+    {
+      "path": "refinements/20.json",
+      "sha256": "2b42591e6e9e6c7f5af42cbe7a85446d70d69a8d2cbd16540b8b3e386b3c3dd2"
+    },
+    {
+      "path": "refinements/21.json",
+      "sha256": "515a07cb1c7efca8219743e307193fdbeab81f672f8e420f0f0cca7c361e7991"
+    },
+    {
+      "path": "refinements/22.json",
+      "sha256": "92dafcacb2ba163041179483589e02507b8319c8525ccb56072ddb823c767535"
+    },
+    {
+      "path": "refinements/23.json",
+      "sha256": "bcadd5044ac716b74bd792c185cc445ca3cbacfc6ab3b2e06cd86e3393dfc5df"
+    },
+    {
+      "path": "refinements/24.json",
+      "sha256": "134d5b020fdc282ceca2a298bb1d6f97639575fb4b36d084a551e1e43e3fbb4f"
+    },
+    {
+      "path": "refinements/25.json",
+      "sha256": "cc0577ff192916c9cbde0a3fae5166bb6515696fd30b37e076297aa5178f8d81"
+    },
+    {
+      "path": "refinements/26.json",
+      "sha256": "3ab309389a2f5e72c98edf6342d07bc41dc7def0b66ea84812fbb5087188c46b"
+    },
+    {
+      "path": "refinements/27.json",
+      "sha256": "fd8169dd90e356a3c1db0691837205de96689064a5c7541dcb546cabb55b50e6"
+    },
+    {
+      "path": "refinements/28.json",
+      "sha256": "8e4e95c2151704b8d30786d141d54c909b9be40a7944d0e0962a409663e99bd9"
+    },
+    {
+      "path": "refinements/29.json",
+      "sha256": "d66d8a1a65a24ef9c6e03ffce2e40e08fcd642b1026ac790b44f3d10479f9c92"
+    },
+    {
+      "path": "refinements/30.json",
+      "sha256": "6d2d99fc10cdf7d19dd376409cb0b002d5b9699937cf7b63684b8554983413ef"
+    },
+    {
+      "path": "refinements/31.json",
+      "sha256": "e8fc23b5d5461717bb73825e6f0e5580448a2cb474743f5ee68b984b5bb04295"
+    },
+    {
+      "path": "refinements/32.json",
+      "sha256": "b5eba90325232734eb6956755322c656cebed9dbcf9169f5891e62d3e9ae8cac"
+    },
+    {
+      "path": "refinements/33.json",
+      "sha256": "4230c27927210102408059a89f87bb01de2f1bae25fb886831cc4f35de6c11e9"
+    },
+    {
+      "path": "refinements/34.json",
+      "sha256": "25f979ea6f827684912cbb57208b18e5b8586b69d08c1f2fea47ed7dda00416b"
+    },
+    {
+      "path": "refinements/35.json",
+      "sha256": "9edb8fadecd5e8877692e034206ce0734658352153eabf070c6df700ef177fb4"
+    },
+    {
+      "path": "refinements/36.json",
+      "sha256": "19ec571d393bb4960652267f59e5554609e4c76b1b6958ab4cf08c98e3138971"
+    },
+    {
+      "path": "refinements/37.json",
+      "sha256": "3f50ebf9ef97099f7bee630dbc25f7a5e2cca167d076f695491b87c318e7466f"
+    }
+  ],
+  "files": [
+    {
+      "path": "index.json",
+      "bytes": 7987,
+      "sha256": "b7cda5d0c63b6e64d27321316f52123af96e49a4c01b2df04eab29e378322aba"
+    },
+    {
+      "path": "projects/01.hero-project.json",
+      "bytes": 50425,
+      "sha256": "90c90f0d2c1fd4344b35f7825f12195eb71ea40c86dd6ccf94eb86edc9c3cbcb"
+    },
+    {
+      "path": "recipes/01.upload-recipe.json",
+      "bytes": 54588,
+      "sha256": "6b5927c053da8f108f3cf1595684c8d34465df0a36d7a077a65d78a98955a505"
+    },
+    {
+      "path": "projects/02.hero-project.json",
+      "bytes": 95303,
+      "sha256": "efafbd57d787cc814b8f377459e5df9ec90de6c81585070a49a4176051951f5d"
+    },
+    {
+      "path": "recipes/02.upload-recipe.json",
+      "bytes": 61567,
+      "sha256": "cc5732f3d513233d7dd106c63bb767ef94b59fb79fd213566130640e8ecf800d"
+    },
+    {
+      "path": "projects/03.hero-project.json",
+      "bytes": 43961,
+      "sha256": "91070583da76a21bd75c96432a9721610895a0d54d7e461563522a8c9f7395aa"
+    },
+    {
+      "path": "recipes/03.upload-recipe.json",
+      "bytes": 58855,
+      "sha256": "1fa00b89649191fec570f5d2f500416dd0eef5e8ba6cfbf55cc4383ba0041c42"
+    },
+    {
+      "path": "projects/04.hero-project.json",
+      "bytes": 56589,
+      "sha256": "3ee546606697c89613c1d80a9932b46eaa6e4d1768a70c5179cf39d5ff67987c"
+    },
+    {
+      "path": "recipes/04.upload-recipe.json",
+      "bytes": 58226,
+      "sha256": "efa6e215376a822eeb99001216c87c088f2f03e5875432f2d3d4c36f559cb66d"
+    },
+    {
+      "path": "projects/05.hero-project.json",
+      "bytes": 44452,
+      "sha256": "c7c0bb50a98195e726c492c0695ae67759b274c5886ec86294305accd76beae3"
+    },
+    {
+      "path": "recipes/05.upload-recipe.json",
+      "bytes": 56698,
+      "sha256": "801a6de40c5eaf8a97f0f3bba1156a9ed2548cb5914a3002de39b6eea80cef25"
+    },
+    {
+      "path": "projects/06.hero-project.json",
+      "bytes": 35033,
+      "sha256": "074bc704c1043940dc349e443e4e18a7d2aac928d50871dd2c6d01c93a0fd0c1"
+    },
+    {
+      "path": "recipes/06.upload-recipe.json",
+      "bytes": 56882,
+      "sha256": "37d111005a842f7c4219dd5bb9ff77fd8f357dd053b7aef4b3673df005b9092c"
+    },
+    {
+      "path": "projects/07.hero-project.json",
+      "bytes": 36399,
+      "sha256": "5f5dc30cd30caf5d0060187667ed157b89dbe2b206f28aa707a73c46d37e1860"
+    },
+    {
+      "path": "recipes/07.upload-recipe.json",
+      "bytes": 54693,
+      "sha256": "b01c3704427d0f0c47a8574dc146fefbc1bec9e6ba239345479e9001c721e1be"
+    },
+    {
+      "path": "projects/08.hero-project.json",
+      "bytes": 40720,
+      "sha256": "49bf4a8ac1e651c14626b47c251479b6e0e0fff5670b2a092a5aff52d7e935e4"
+    },
+    {
+      "path": "recipes/08.upload-recipe.json",
+      "bytes": 56389,
+      "sha256": "8127fa7c85a369611bf1ddae7ef03cb2c01e8f983e606c06e91ac238839a5210"
+    },
+    {
+      "path": "projects/09.hero-project.json",
+      "bytes": 33345,
+      "sha256": "510648f664c033803981a73f2e3ad20456ad4e1aebb90ac6de00c8a6e5a9ef19"
+    },
+    {
+      "path": "recipes/09.upload-recipe.json",
+      "bytes": 54173,
+      "sha256": "15667448b50c1276ed00e302de5abca78fbd41a6ab44c71756417bfd7fa48dd4"
+    },
+    {
+      "path": "projects/10.hero-project.json",
+      "bytes": 34188,
+      "sha256": "44a1da20b208628e48195f03d748b1f1733f976d47b432fcf79886f4cf61de90"
+    },
+    {
+      "path": "recipes/10.upload-recipe.json",
+      "bytes": 53300,
+      "sha256": "6f12f1c0c99da1f6841e901addc0e419b341f37fa61d73d452d91bf7d01dbd3c"
+    },
+    {
+      "path": "projects/11.hero-project.json",
+      "bytes": 35938,
+      "sha256": "8797011dbf5389ca70a6e7be759aec163611273f76a61cc258e5f2341360b129"
+    },
+    {
+      "path": "recipes/11.upload-recipe.json",
+      "bytes": 55584,
+      "sha256": "17b2f1f05e8c6b757502b123a7d443c0d334c47077006e57cf0b2172fa755ee1"
+    },
+    {
+      "path": "projects/12.hero-project.json",
+      "bytes": 38704,
+      "sha256": "1c19816680502ff7dbf9dc52bf6d81f8b6c4082e204f0fa3fde63efe95cbffea"
+    },
+    {
+      "path": "recipes/12.upload-recipe.json",
+      "bytes": 58235,
+      "sha256": "5dbb3b127c837110e23f3b8434750e3ac05f69c29fbc3911a2c7b268854865dc"
+    },
+    {
+      "path": "projects/13.hero-project.json",
+      "bytes": 34159,
+      "sha256": "d57fbeaf1e0429c97cfa56031f58e84136868611e1533d90f2bc7ccb3f07bb95"
+    },
+    {
+      "path": "recipes/13.upload-recipe.json",
+      "bytes": 54739,
+      "sha256": "fa2b0954e949cc025183f412aaecdeb7f9db15989bd0213a1abddb365ee66767"
+    },
+    {
+      "path": "projects/14.hero-project.json",
+      "bytes": 38303,
+      "sha256": "ebfd0ec30492266442f9363872f6884756ee73979a7912bbc4ed96a315d5d8f9"
+    },
+    {
+      "path": "recipes/14.upload-recipe.json",
+      "bytes": 57143,
+      "sha256": "6b1a3c8e65786d6ec92a7a2a2753416a2e86f96d168bbf4178e0f59cb27d6ee7"
+    },
+    {
+      "path": "projects/15.hero-project.json",
+      "bytes": 35732,
+      "sha256": "7448dac03bb119304083a2c052e092945ad16526ec5e9a8c777a7f1921e38872"
+    },
+    {
+      "path": "recipes/15.upload-recipe.json",
+      "bytes": 56167,
+      "sha256": "5751d0be06833700d3c2cc0c73eb23d71411c072fe5772226bedb294a3b003d3"
+    },
+    {
+      "path": "projects/16.hero-project.json",
+      "bytes": 37535,
+      "sha256": "d9fbc00840c73bb04e57381f2cfc7e13be54577ca49e8a2e511829484f39b178"
+    },
+    {
+      "path": "recipes/16.upload-recipe.json",
+      "bytes": 55322,
+      "sha256": "eedb4a55ff1a046044ef02e793e9f242529f89a2a1f6853f4eff5af73fe81ba8"
+    },
+    {
+      "path": "projects/17.hero-project.json",
+      "bytes": 42635,
+      "sha256": "8edb40e52f667f00b7f55699b5eb31d425030f1fbf269b964331e17915ffd271"
+    },
+    {
+      "path": "recipes/17.upload-recipe.json",
+      "bytes": 52722,
+      "sha256": "d76c6bdfe3d31db6183947e00aac69e6ad320088a1a7ddd51aa1f4a9c0b6c85d"
+    },
+    {
+      "path": "projects/18.hero-project.json",
+      "bytes": 33289,
+      "sha256": "7ccb64d9cbfc81309c0f895dfba07b167d8e46ed88786666fd8bf2a75b0b37cf"
+    },
+    {
+      "path": "recipes/18.upload-recipe.json",
+      "bytes": 55163,
+      "sha256": "01a071565fb9ebbfa398a8bda21b2f3dfa5e455487a760c0ba78429283f9a67d"
+    },
+    {
+      "path": "projects/19.hero-project.json",
+      "bytes": 38848,
+      "sha256": "ec2692703efa3726395cc394827d0c608fef41bf4f2196ae589406e2f92f1fbe"
+    },
+    {
+      "path": "recipes/19.upload-recipe.json",
+      "bytes": 59873,
+      "sha256": "9bc1841caa0f5777f8163ce3a83aa70c7ec4e64a620167dbf435323b80a532db"
+    },
+    {
+      "path": "projects/20.hero-project.json",
+      "bytes": 57776,
+      "sha256": "da0bce96857c028c9eb2b25ce1b0ba45a365769448a4622f154395cd7c83785a"
+    },
+    {
+      "path": "recipes/20.upload-recipe.json",
+      "bytes": 56742,
+      "sha256": "f6f564d27fb8c192755c725a27e9ae2e521c9b55be2322bbf7bd3344d0412399"
+    },
+    {
+      "path": "projects/21.hero-project.json",
+      "bytes": 46483,
+      "sha256": "bcdafe8837b4b308964cb54343b5e673200f56fbbbb94150ad9dd4d59af8e99b"
+    },
+    {
+      "path": "recipes/21.upload-recipe.json",
+      "bytes": 55643,
+      "sha256": "6ccfb13e2d7597eb783f35c908154c64b44c5a637ba668922c99163fa36aae5d"
+    },
+    {
+      "path": "projects/22.hero-project.json",
+      "bytes": 39948,
+      "sha256": "81d477713380038fa3bb876c55a9a443367228e747c9343db8331d76e565fe40"
+    },
+    {
+      "path": "recipes/22.upload-recipe.json",
+      "bytes": 56469,
+      "sha256": "09a5066e5650407ab61302b3432099c1feb6f97db8726e2eec31b246b0e638dc"
+    },
+    {
+      "path": "projects/23.hero-project.json",
+      "bytes": 53642,
+      "sha256": "68b3f4e0d9385d721d7ba8e8f65e375c43bbb0ad8cd028847ebf950f4b0337ec"
+    },
+    {
+      "path": "recipes/23.upload-recipe.json",
+      "bytes": 54422,
+      "sha256": "e5ef08a61c9b45d823be6c2f8956dcfc6818de3a297e889bacad62206b767843"
+    },
+    {
+      "path": "projects/24.hero-project.json",
+      "bytes": 59738,
+      "sha256": "cca9d6fc95a44203610fd4fa4b458e2dd7f7509b440a680405422737e06304fe"
+    },
+    {
+      "path": "recipes/24.upload-recipe.json",
+      "bytes": 52602,
+      "sha256": "be056be7a5e33d0f97f27dd29d8ddbeb066e5acf74d34dfcb824035667012e97"
+    },
+    {
+      "path": "projects/25.hero-project.json",
+      "bytes": 36009,
+      "sha256": "9f36392bec08225aefead4a04fecb3d2d8102dd726ccd769a6037db53e2f6a7a"
+    },
+    {
+      "path": "recipes/25.upload-recipe.json",
+      "bytes": 56974,
+      "sha256": "abcad4bd0109fab996039d46fe9b9aef79ce4386a5a04f85a79792cc6c1d1240"
+    },
+    {
+      "path": "projects/26.hero-project.json",
+      "bytes": 46119,
+      "sha256": "db85d47623a94228b5d3f764f81cca65f52775726831903715ed1666372eceb4"
+    },
+    {
+      "path": "recipes/26.upload-recipe.json",
+      "bytes": 56519,
+      "sha256": "e849a934129ef794a4306faa0dd2e1c0b9cad28277e153629aca3dc8f9f677d4"
+    },
+    {
+      "path": "projects/27.hero-project.json",
+      "bytes": 52747,
+      "sha256": "c9ad8227b66c4599db12378173095aea4da14875947cf7f9e60bd0e1d97da5d8"
+    },
+    {
+      "path": "recipes/27.upload-recipe.json",
+      "bytes": 53686,
+      "sha256": "3a105938fa54ec021b5701ecb97b0b90a52b7ac83035df99318d683ecfd1510b"
+    },
+    {
+      "path": "projects/28.hero-project.json",
+      "bytes": 49461,
+      "sha256": "276f658304bfb0928539f569bc0061c89e7b254f8d1d4bd00af6da2d32870062"
+    },
+    {
+      "path": "recipes/28.upload-recipe.json",
+      "bytes": 57136,
+      "sha256": "fa51eba24d608b6ee090706ecea4afd14f5ab0c88d79377ce70afcaf0dd922e0"
+    },
+    {
+      "path": "projects/29.hero-project.json",
+      "bytes": 39391,
+      "sha256": "47127e80070a6cbc237b642834295cb503292a1c821885f8c2a593793870766a"
+    },
+    {
+      "path": "recipes/29.upload-recipe.json",
+      "bytes": 55639,
+      "sha256": "541315ab12f52f3f0042eb9bfd98d3c58854cdf816a2cc1175d4445d161ac3a1"
+    },
+    {
+      "path": "projects/30.hero-project.json",
+      "bytes": 49304,
+      "sha256": "f778fc018b4f6a592a2001b1ba16c66aa41c4c087f3899bb074fe6f2176e13a3"
+    },
+    {
+      "path": "recipes/30.upload-recipe.json",
+      "bytes": 55866,
+      "sha256": "82c2538225564d97e4b00273bfc19181e67b9dd02a03316389aa0f6b51a3eb63"
+    },
+    {
+      "path": "projects/31.hero-project.json",
+      "bytes": 50794,
+      "sha256": "45d0f8e46a932a25c9b67c91f70ff3308f5038304b6c65d50d81937aca85a334"
+    },
+    {
+      "path": "recipes/31.upload-recipe.json",
+      "bytes": 53840,
+      "sha256": "e77ee996b85862140ac3b84fdc46af8c0c3582c0ac8dfef773bf51ab16f4529b"
+    },
+    {
+      "path": "projects/32.hero-project.json",
+      "bytes": 57851,
+      "sha256": "9d4593d450c9e1e7e2c39904058e31989331b376b12001a3ee72236604bd8b1d"
+    },
+    {
+      "path": "recipes/32.upload-recipe.json",
+      "bytes": 58693,
+      "sha256": "ed0e66a70e6e716451057ce449ebd3bfa3ac513153fa07414dd18bc8d002da59"
+    },
+    {
+      "path": "projects/33.hero-project.json",
+      "bytes": 38830,
+      "sha256": "548c51172f7dcf907a8611bb6a42e9111d58d758daefb2ef330d1705553e7d88"
+    },
+    {
+      "path": "recipes/33.upload-recipe.json",
+      "bytes": 55543,
+      "sha256": "30869e4829e4896cb117eeac7687c7866d3910595958fbfe4847d219ea99ef8c"
+    },
+    {
+      "path": "projects/34.hero-project.json",
+      "bytes": 34862,
+      "sha256": "92e22dadb5eecf8ee87e6f9012dfa76d733bb3fcf1c04936d2b2e2376834066d"
+    },
+    {
+      "path": "recipes/34.upload-recipe.json",
+      "bytes": 55448,
+      "sha256": "1992d2a65620e63219a53f44a52d450d11ee2de2b1e27bcd8b1ce3812ba35af9"
+    },
+    {
+      "path": "projects/35.hero-project.json",
+      "bytes": 60690,
+      "sha256": "a476f62574fe283749a876b58e83d90dc78c684daee42241ec93c4bf7ce0635c"
+    },
+    {
+      "path": "recipes/35.upload-recipe.json",
+      "bytes": 54956,
+      "sha256": "236e77e81e9f5354e89974a06035b65155caddbf81f15e8e9cbafcde52a6438c"
+    },
+    {
+      "path": "projects/36.hero-project.json",
+      "bytes": 35198,
+      "sha256": "c951e0c7370d50749c1cfdeca2e4490c86dd837c379da7b44450788740627635"
+    },
+    {
+      "path": "recipes/36.upload-recipe.json",
+      "bytes": 56798,
+      "sha256": "4963d02ce88f0f4a56b6093458b4c0f2a42cab8e010c7401b0a0137b83fb0faf"
+    },
+    {
+      "path": "projects/37.hero-project.json",
+      "bytes": 49335,
+      "sha256": "a9ec307b671e1d741d107c9de68ba4e50fbdc45b56571918ade57f0bb6de3686"
+    },
+    {
+      "path": "recipes/37.upload-recipe.json",
+      "bytes": 56810,
+      "sha256": "d6914597576ea4f3967a26e03b87190b41c306cd0006d8cc45aa5f9d2f57ac5e"
+    }
+  ],
+  "modelSources": [
+    {
+      "projectId": "community-review-01-20260907",
+      "sha256": "b63525363cc0739e8dd7e2dc80c59b4d9e292bb135bbab10350b5ea28b0538b0",
+      "bytes": 772664,
+      "zipMember": "rebuilt-37-attempt2/01/package.zip",
+      "archiveSha256": "7f94b11ca25a65b8c64bc52ffaeda473426f93eb7bcf2cdad0d07e58032e67c8"
+    },
+    {
+      "projectId": "community-review-02-20260907",
+      "sha256": "e55e9d2db49004f56d19091d4b7f6f74ffef19c8606b1b793650022f2924148c",
+      "bytes": 916264,
+      "zipMember": "rebuilt-37-attempt2/02/package.zip",
+      "archiveSha256": "955914b2f5bb46bf07352bf1cd7d38af36fedc4a00d1a17db86dc4a43cf9c5e6"
+    },
+    {
+      "projectId": "community-review-03-20260907",
+      "sha256": "296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a",
+      "bytes": 1579724,
+      "zipMember": "rebuilt-37-attempt2/03/package.zip",
+      "archiveSha256": "f0651aeaddb4423c9ce72a4c29c4a1191e7ada4a052db07987ee5e955754c5f9"
+    },
+    {
+      "projectId": "community-review-04-20260907",
+      "sha256": "e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a",
+      "bytes": 764552,
+      "zipMember": "rebuilt-37-attempt2/04/package.zip",
+      "archiveSha256": "854e7640fbae6b23b85631edeee93b31640f537cc318b172ade3af339c04b60f"
+    },
+    {
+      "projectId": "community-review-05-20260907",
+      "sha256": "9d0476bdc39349e9169dc99e5326496b7d5e1301e3ef660b49ba5b562bd53efd",
+      "bytes": 3139792,
+      "zipMember": "rebuilt-37-attempt2/05/package.zip",
+      "archiveSha256": "d97d64eb59eadd0a0b344cddd35e381fe08b11607cec9c9a1d3d156585738412"
+    },
+    {
+      "projectId": "community-review-06-20260907",
+      "sha256": "b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03",
+      "bytes": 199556,
+      "zipMember": "rebuilt-37-attempt2/06/package.zip",
+      "archiveSha256": "6a3a585dd49c6b5020862f31aac86ee4d2051e506e69badeea6823d49f7fdec5"
+    },
+    {
+      "projectId": "community-review-07-20260907",
+      "sha256": "eeb903a85ee447a044d77d6bc058753bd714fe822eea335bd948fb2766c76789",
+      "bytes": 742988,
+      "zipMember": "rebuilt-37-attempt2/07/package.zip",
+      "archiveSha256": "6cea2f7c4982c0c8fbc31149976f8a20e9855d6b85be39c76931fade51f3ceed"
+    },
+    {
+      "projectId": "community-review-08-20260907",
+      "sha256": "97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f",
+      "bytes": 1160176,
+      "zipMember": "rebuilt-37-attempt2/08/package.zip",
+      "archiveSha256": "dd26b1c1af1eeff68476fb7ce72b242db8390c6a4824cf4dd8721775d48f18bf"
+    },
+    {
+      "projectId": "community-review-09-20260907",
+      "sha256": "6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf",
+      "bytes": 1275656,
+      "zipMember": "rebuilt-37-attempt2/09/package.zip",
+      "archiveSha256": "2ecad22e39479e47e51a1fea373ca6ee7d59db27383a29b580b3cacc9a1c2307"
+    },
+    {
+      "projectId": "community-review-10-20260907",
+      "sha256": "a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8",
+      "bytes": 890368,
+      "zipMember": "rebuilt-37-attempt2/10/package.zip",
+      "archiveSha256": "f19ec1080ac2034ecaee4873a8a12200471f4096f7b7d1b0ade6248b155dc759"
+    },
+    {
+      "projectId": "community-review-11-20260907",
+      "sha256": "90d695d9ce758198bbc503100af86b443eb8008bdaf48d6a82aa23f3ace7023e",
+      "bytes": 792376,
+      "zipMember": "rebuilt-37-attempt2/11/package.zip",
+      "archiveSha256": "46b2d361ecf2231d6c793bafdf2a7f90b7cd77818dfd36b1b52170d03a335311"
+    },
+    {
+      "projectId": "community-review-12-20260907",
+      "sha256": "fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da",
+      "bytes": 1001788,
+      "zipMember": "rebuilt-37-attempt2/12/package.zip",
+      "archiveSha256": "fd3a7a9c485903b930bf2da9009d0f9548c0964033600108a21d636d13e3c850"
+    },
+    {
+      "projectId": "community-review-13-20260907",
+      "sha256": "9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870",
+      "bytes": 816876,
+      "zipMember": "rebuilt-37-attempt2/13/package.zip",
+      "archiveSha256": "ebcb8cc93ab7d2bcd0b0a44ad935d255e8aed6fdee5662f42349eb02043e4955"
+    },
+    {
+      "projectId": "community-review-14-20260907",
+      "sha256": "50b7fd3fbdb685b6640102ebcdfc8a6e1e02c65d8f122c40f4d83e4cbce8fc4a",
+      "bytes": 311956,
+      "zipMember": "rebuilt-37-attempt2/14/package.zip",
+      "archiveSha256": "77bde30e1e03bc40427d05b507c3481d3b56671ccd5ef9acd8ac5433226c3644"
+    },
+    {
+      "projectId": "community-review-15-20260907",
+      "sha256": "45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c",
+      "bytes": 881000,
+      "zipMember": "rebuilt-37-attempt2/15/package.zip",
+      "archiveSha256": "aa72876951ad9c8fd9b3d058b846b2f2b18466f66befc9e123b20f62fde7363f"
+    },
+    {
+      "projectId": "community-review-16-20260907",
+      "sha256": "913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd",
+      "bytes": 1053984,
+      "zipMember": "rebuilt-37-attempt2/16/package.zip",
+      "archiveSha256": "36554bfcebe60926adad6dbdbaa78ff8a6383c8f0afbfafb7cf89829f4f16edb"
+    },
+    {
+      "projectId": "community-review-17-20260907",
+      "sha256": "df7bc9e1b9fcda02b88ad164cad2a3ca2b0eb27b79a2bf5717c5ae6d2a25c285",
+      "bytes": 1281464,
+      "zipMember": "rebuilt-37-attempt2/17/package.zip",
+      "archiveSha256": "2ed3754b1ea51d0b7211b76b4028ce6b855debae29d88f7e25e8b0c994374711"
+    },
+    {
+      "projectId": "community-review-18-20260907",
+      "sha256": "cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937",
+      "bytes": 834460,
+      "zipMember": "rebuilt-37-attempt2/18/package.zip",
+      "archiveSha256": "be0d188b6d7c591c73b454a24a989de7c41a04fb6bcf718e394312bbf80e5892"
+    },
+    {
+      "projectId": "community-review-19-20260907",
+      "sha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+      "bytes": 1104488,
+      "zipMember": "rebuilt-37-attempt2/19/package.zip",
+      "archiveSha256": "b6a81e7640762693e9778159d1305d9a34cc93b0e2f1087735b858163748e03a"
+    },
+    {
+      "projectId": "community-review-20-20260907",
+      "sha256": "3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7",
+      "bytes": 1492264,
+      "zipMember": "rebuilt-37-attempt2/20/package.zip",
+      "archiveSha256": "05c06cd6f698166867d134c1362cff0aced64bc2e186448f5a27d2aefb61cbe2"
+    },
+    {
+      "projectId": "community-review-21-20260907",
+      "sha256": "b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032",
+      "bytes": 862984,
+      "zipMember": "rebuilt-37-attempt2/21/package.zip",
+      "archiveSha256": "ada32f7e1daba784ebbadb6dbe8f2f704509c84992a9ce4d69bc4abd1a54df6b"
+    },
+    {
+      "projectId": "community-review-22-20260907",
+      "sha256": "57ee177f0c20a31aaa7b729e5b5311f67c5a2427040060b5f317b70d633398a9",
+      "bytes": 691776,
+      "zipMember": "rebuilt-37-attempt2/22/package.zip",
+      "archiveSha256": "d0d34c393f2456c7f7caae9d0610493dc46d3cbe6c6128aeb7527871c83a2516"
+    },
+    {
+      "projectId": "community-review-23-20260907",
+      "sha256": "f9c77d0749ae3cb6c5341c9cd01bbf117d52b14158ddc06007b93b90875e7bd2",
+      "bytes": 2010288,
+      "zipMember": "rebuilt-37-attempt2/23/package.zip",
+      "archiveSha256": "29571ba6d78abf4a143e9d874d050b67d1d18f89a82808e361e8baed00697096"
+    },
+    {
+      "projectId": "community-review-24-20260907",
+      "sha256": "43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246",
+      "bytes": 663584,
+      "zipMember": "rebuilt-37-attempt2/24/package.zip",
+      "archiveSha256": "f1cb74e4dc990dc32861c786670b1a9cbc50817a2bb79c2bbea5362ba142dddc"
+    },
+    {
+      "projectId": "community-review-25-20260907",
+      "sha256": "90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637",
+      "bytes": 852356,
+      "zipMember": "rebuilt-37-attempt2/25/package.zip",
+      "archiveSha256": "598d88df216ffc1c5685199b6e21a56118eefc80bb51ba14f12f0aa1564ae1bf"
+    },
+    {
+      "projectId": "community-review-26-20260907",
+      "sha256": "ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08",
+      "bytes": 589076,
+      "zipMember": "rebuilt-37-attempt2/26/package.zip",
+      "archiveSha256": "aef0666f5668f94af7c9d279edd119c9910ec8e29644f5c61c9843def7352937"
+    },
+    {
+      "projectId": "community-review-27-20260907",
+      "sha256": "e9cd3994fc2c47af182ec454b7b7edde0822aca9176f2e72259145202e40f8d3",
+      "bytes": 985524,
+      "zipMember": "rebuilt-37-attempt2/27/package.zip",
+      "archiveSha256": "f210cd266a2b4938bff2070b6f97feb4a8675a75f043405a988376cba005147a"
+    },
+    {
+      "projectId": "community-review-28-20260907",
+      "sha256": "d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83",
+      "bytes": 2322448,
+      "zipMember": "rebuilt-37-attempt2/28/package.zip",
+      "archiveSha256": "f7431a1fed2c7bc905032d547cee7cf10a0c27d23de4a605a95d720152249c24"
+    },
+    {
+      "projectId": "community-review-29-20260907",
+      "sha256": "3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd",
+      "bytes": 2343924,
+      "zipMember": "rebuilt-37-attempt2/29/package.zip",
+      "archiveSha256": "17af219c56f27ad625d3e444a87ec990ab02d60bd2baca2567a18fbae2223e5b"
+    },
+    {
+      "projectId": "community-review-30-20260907",
+      "sha256": "6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf",
+      "bytes": 1275656,
+      "zipMember": "rebuilt-37-attempt2/30/package.zip",
+      "archiveSha256": "9c44d79af99be8118170def10f3ac8441415a9bdb2bc133997c68831de4caa5d"
+    },
+    {
+      "projectId": "community-review-31-20260907",
+      "sha256": "04af91b75e1e6e6d2dfab2d59cc5e008a18e71718f6774848810f9266043908d",
+      "bytes": 879100,
+      "zipMember": "rebuilt-37-attempt2/31/package.zip",
+      "archiveSha256": "ed96aa2e3af50ebd27af5b37fa37f88bd557098d47f1655d5a66936a37131bbc"
+    },
+    {
+      "projectId": "community-review-32-20260907",
+      "sha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c",
+      "bytes": 553876,
+      "zipMember": "rebuilt-37-attempt2/32/package.zip",
+      "archiveSha256": "69479462cf888bf2e084466d5b71420a28d8a183c394fe0d74cd6c439dc0cf9a"
+    },
+    {
+      "projectId": "community-review-33-20260907",
+      "sha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+      "bytes": 1104488,
+      "zipMember": "rebuilt-37-attempt2/33/package.zip",
+      "archiveSha256": "141edc7091144c69275b7186380b7d62c45abaef935b51f408e3a07ebd798290"
+    },
+    {
+      "projectId": "community-review-34-20260907",
+      "sha256": "dfb25661e3126984d719393d02721ee0c0ea0cd2f09f21626d29165ea1481084",
+      "bytes": 946740,
+      "zipMember": "rebuilt-37-attempt2/34/package.zip",
+      "archiveSha256": "4af290839002c73f0335f6effec1f28bb6540720bfba23ee2574205953d8da1e"
+    },
+    {
+      "projectId": "community-review-35-20260907",
+      "sha256": "ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de",
+      "bytes": 1249564,
+      "zipMember": "rebuilt-37-attempt2/35/package.zip",
+      "archiveSha256": "e22b4e3f683d4ee1257dfb3a6c22439e924c990d4bb59b76235173568ce1d47e"
+    },
+    {
+      "projectId": "community-review-36-20260907",
+      "sha256": "8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5",
+      "bytes": 896312,
+      "zipMember": "rebuilt-37-attempt2/36/package.zip",
+      "archiveSha256": "8fc40a9540c11edc2f2baa3ccfebda64d4ed8a3013992dbdd50af140159df2f5"
+    },
+    {
+      "projectId": "community-review-37-20260907",
+      "sha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c",
+      "bytes": 553876,
+      "zipMember": "rebuilt-37-attempt2/37/package.zip",
+      "archiveSha256": "db05c88f3f99b00041b9eb8147046bdcd4911ea73d7558e1602ff673361104a9"
+    }
+  ],
+  "requiredRuntimeCommits": [
+    "db53e47e456e6230e782222dc5f63dcf9c685ebe",
+    "63b81b0754a4d8b14720b93cc182fb4d852f414d",
+    "597db32918ad27262ca6e343217a9d12672d672d",
+    "996fa4a45053c3831d3a820c03f342cda76de5b8",
+    "c699a9ef51922e6dff101cac83bfec80952159d5",
+    "63badb5afef229c557574ded348b8f70b308d78b",
+    "50a821472197fe480deb09b4f37b6bbfbd205f13",
+    "1ede970a77514c967eb3df25412d6ea003fb0f06",
+    "4822d5ff5560ad6ba07f212d6b0715f7fdab9820",
+    "3a8daa1394392584653f969276c667d3cca13155",
+    "09dbc46d01a60a50bf41d76ed17bb78c92533e21",
+    "b9333a8b2098f46dfe40b5e18b07f439f7eec5e3",
+    "7586263e5f8197aadbd9d714f9fb7ffebcd0618a",
+    "3990c5c863e4dbcc3e4ca5ff81aabada33b8d897",
+    "925f1350438df0ebf0b3e260bf148a097821b558",
+    "5a2b7d3f90af0a93f242b9075c309047e298b72c",
+    "6d4d9c66897f3131b2572cca49bedfc904339608"
+  ],
+  "requiredEffectFields": [
+    "chainLightning.retargetOnLost",
+    "dispel.statusTag",
+    "applyStatus.grantMark",
+    "summon.onCap=retarget",
+    "summon.targetOnSpawn",
+    "damageLine.fromSummonSlot",
+    "applyBuff.vision.revealed",
+    "applyBuff.drive",
+    "pull.grapple",
+    "damageArea.fromCaster",
+    "damageArea.arcHalfAngleCos",
+    "applyBuff.evasionScope",
+    "dash.stopOnHit",
+    "dash.onHit",
+    "shield.breakOnMove",
+    "applyBuff.block.facingArcDegrees"
+  ],
+  "requiredConditionLeaves": [
+    "nearbyCombat"
+  ],
+  "requiredMarkFields": [
+    "lethal.maxSavesPerRound"
+  ],
+  "requiredHooks": [
+    "onAllyProtected",
+    "onSummonHit",
+    "onAttackAttempt",
+    "onObservedCombat",
+    "onBlock"
+  ],
+  "requiredAbilityFields": [
+    "statusCost.count=all",
+    "toggle.upkeepResource=status",
+    "toggle.upkeepStatus",
+    "requiredSummonSlot",
+    "statusCost.subject=target",
+    "interruptOn=damageOrMove",
+    "interruptible",
+    "requiredTargetStatus",
+    "allowApproach"
+  ],
+  "requiredHookFields": [
+    "evadeSource",
+    "evadeChannel",
+    "observedEvent",
+    "blockSource",
+    "evadeDuring",
+    "damageConnected",
+    "stationaryForSec"
+  ],
+  "requiredEffectKinds": [
+    "trap",
+    "interruptCast",
+    "timeStop"
+  ],
+  "requiredProtocolFields": [
+    "EntityState.motionState",
+    "EntityState.tetherX",
+    "EntityState.tetherZ",
+    "ENTITY_KIND.TIME_STOP=9",
+    "ENTITY_FLAG.TIME_STOPPED=1048576"
+  ],
+  "approvedAdaptation": "37 heroes / 222 slots use the approved parody policy; original source remains historical. Behavioral evidence and visual/publication evidence are separate.",
+  "authoringSource": "tools/community-hero-forge/parody/build.mts",
+  "generatorAdoption": {
+    "method": "Editor adoptHeroGenerator",
+    "previousRevisionRetained": true,
+    "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020",
+    "heroes": 37,
+    "unchanged": [
+      "sourceDesign",
+      "slots",
+      "presentation"
+    ]
+  },
+  "currentEvidence": {
+    "verification": "refinements/parody-verification.json",
+    "service": "refinements/parody-service-proof.json",
+    "admission": "refinements/parody-admission-scenes.json",
+    "artifactArchive": "supplements/admission-37-20260909",
+    "artifactManifestSha256": "396fa15327689702ce1a36a197292356b336f2888bf0c5b6cc63142a88d534e8"
+  },
+  "localPublication": {
+    "published": 37,
+    "blocked": 0,
+    "proof": "refinements/parody-publication-proof.json",
+    "formalDeployment": false
+  }
+}

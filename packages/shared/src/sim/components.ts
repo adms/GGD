@@ -59,6 +59,9 @@ export interface Health {
     sourceId: string;
     absorbs?: ShieldAbsorb;
     stackKey?: string;
+    moveBreakAnchor?: import("./movement/bodyPosition").BodyPosition;
+    /** Remaining absorb amount by contributor, in consumption order. Unknown legacy credit stays unowned. */
+    credits?: { source?: EntityId; amount: number }[];
   }[];
 }
 
@@ -73,6 +76,14 @@ export interface DashOverride {
   dir: Vec2;
   speed: number;
   remaining: number;
+  stopOnHit?: "enemy" | "enemyChampion";
+  /** Runtime-only contact captured by movement, consumed by this dash's callback. */
+  hitTarget?: EntityId;
+  /** Opt-in swept contacts which do not stop displacement. */
+  touchScope?: "enemy" | "enemyChampion";
+  touchedTargets?: EntityId[];
+  /** Natural termination, never set by cancellation or a replacement override. */
+  endReason?: "distance" | "terrain" | "contact";
   /**
    * PROVENANCE — was this displacement **authored by an ability**, or is it the
    * ambient shove every landed hit produces? ABSENT = false = damage-driven,
@@ -93,6 +104,7 @@ export interface DashOverride {
    * construction.
    */
   authored?: boolean;
+  grapple?: import("./movement/abilityMotion").GrappleLink;
 }
 
 /**
@@ -133,6 +145,7 @@ export interface LeapOverride {
 
 /** Navigation state driven by OrderSystem, consumed by MovementSystem. */
 export interface Navigation {
+  drive?: import("./movement/abilityMotion").DriveState;
   order: Order | null;
   /** resolved current move target (or null when idle/arrived) */
   moveTarget: Vec2 | null;

@@ -15,6 +15,7 @@ import type { DamageType, EffectDef, Scaling } from "../effect";
  */
 export interface DamageLineVariant {
   kind: "damageLine";
+  fromSummonSlot?: import("../../intents").CastableSlot;
   /**
    * ⭐ S2（GH#299）—— 資源百分比項。與 `damage.resourcePct` **同一份型別、
    * 同一個讀取器**（`dynamicTerms.ts::resourcePctAmount`），per-target 解算。

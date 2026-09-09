@@ -28,6 +28,7 @@ export const zHookEvent = z.enum([
   "onCrowdControlApplied",
   "onCrowdControlReceived",
   "onHeal",
+  "onAllyProtected",
   "onOverheal",
   "onAllyDamaged",
   "onProjectileExpire",
@@ -40,6 +41,9 @@ export const zHookEvent = z.enum([
   "onAbilityCast",
   "onAbilityHit",
   "onBasicAttack",
+  "onAttackAttempt",
+  "onSummonHit",
+  "onObservedCombat",
   "onDamageDealt",
   "onDamageTaken",
   "onKill",
@@ -105,6 +109,7 @@ export const zHookEvent = z.enum([
   "onRevive",
   /** 迴避時。⚠️ 持有者＝**閃掉的那個**，target＝攻擊者。 */
   "onEvade",
+  "onBlock",
 
   // ── 契約層 2026-08-09（GH#300）加的四個，⛔ **發射點由 lane B 接** ────────
   //
@@ -156,8 +161,10 @@ export const HOOK_INTERNAL_COOLDOWN_MAX_SEC = 300;
  * `pendingReflectHooks` → `ReflectHookSystem`，但帶的是同一個 `trigger` 物件）。
  */
 const DAMAGE_BEARING_EVENTS: readonly string[] = [
+  "onSummonHit",
   "onDamageTaken",
   "onDamageDealt",
+  "onBlock",
   // 2026-08-08 —— 第三個。`onReflectSuccess` 是在**反彈封包落地的那一格**發的
   //（`combat/damage.ts` 排空迴圈裡，`trigger` 就是那一發封包本身），所以它跟
   // 上面兩個一樣帶得到 `EffectContext.incoming`。
@@ -230,6 +237,13 @@ export function refineHookDamageContext(
     damageType?: string | undefined;
     damageCrit?: string | undefined;
     critSource?: string | undefined;
+    evadeDuring?: "dash" | undefined;
+    damageConnected?: true | undefined;
+    stationaryForSec?: number | undefined;
+    evadeSource?: string | undefined;
+    blockSource?: string | undefined;
+    evadeChannel?: string | undefined;
+    observedEvent?: string | undefined;
     reflectedDamageSource?: string | undefined;
     reflectedDamageType?: string | undefined;
     perTarget?: boolean | undefined;
@@ -397,6 +411,9 @@ export function refineHookDamageContext(
       e.kind === "damage" &&
       (e.incomingPct as { negateOriginal?: boolean } | undefined)?.negateOriginal === true,
   );
+  if (negates && hook.damageConnected) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["damageConnected"], message: "免傷在扣血前判定，不能同時要求已結算的有效傷害。" });
+  }
   if (negates && hook.on !== "onDamageTaken") {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
@@ -407,13 +424,28 @@ export function refineHookDamageContext(
         "不會生效。",
     });
   }
-  if (hook.oncePerCast === true && (hook.damageSource === "basic" || hook.damageSource === "other")) {
+  if (hook.observedEvent !== undefined && hook.on !== "onObservedCombat") {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["observedEvent"], message: "觀察事件種類只適用 onObservedCombat。" });
+  }
+  if (hook.blockSource !== undefined && hook.on !== "onBlock") {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["blockSource"], message: "格擋來源只適用 onBlock。" });
+  }
+  if (hook.stationaryForSec !== undefined && hook.on !== "onInterval") {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["stationaryForSec"], message: "連續靜止窗口只適用逐 tick 觀測的 onInterval。" });
+  }
+  if (hook.damageConnected && !["onDamageDealt", "onDamageTaken", "onSummonHit"].includes(hook.on)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["damageConnected"], message: "有效傷害只適用已結算的傷害／召喚命中事件。" });
+  }
+  if ((hook.evadeSource !== undefined || hook.evadeChannel !== undefined || hook.evadeDuring !== undefined) && hook.on !== "onEvade") {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["evadeSource"], message: "迴避來源只適用 onEvade。" });
+  }
+  if (hook.oncePerCast === true && hook.on !== "onSummonHit" && (hook.damageSource === "basic" || hook.damageSource === "other")) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["damageSource"],
       message: "每次施法一次只計入技能傷害，不能限定普通攻擊或其他傷害來源。" });
   }
-  if (hook.oncePerCast === true && hook.on !== "onDamageDealt") {
+  if (hook.oncePerCast === true && hook.on !== "onDamageDealt" && hook.on !== "onSummonHit") {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["oncePerCast"],
-      message: "每次施法一次只支援 onDamageDealt：需由同次施法實際扣除其他單位生命，不計自傷、反傷與衍生傷害。" });
+      message: "每次施法一次支援 onDamageDealt 的有效技能扣血，或 onSummonHit 的召喚物有效命中（含護盾）；每次召喚施法跨身體共用一次。" });
   }
   if (DAMAGE_BEARING_EVENTS.includes(hook.on)) return;
   if (hook.damageSource !== undefined && hook.damageSource !== "any") {
@@ -624,7 +656,14 @@ export const zHookDefBase = z
      * `HookDef.internalCooldownScope`。
      */
     internalCooldownScope: z.enum(["source", "perAbilitySlot"]).optional(),
-    oncePerCast: z.boolean().optional().describe("每次有效施法最多觸發一次；只計入實際扣血的技能命中，跨目標／延遲波次／持續傷害共用一次，不計自傷、反傷及衍生效果。"),
+    observedEvent: z.enum(["basicHit", "abilityHit", "heal", "control"]).optional().describe("觀察同區可見敵人的有效普攻命中、技能命中、治療或控制；target 是被觀察的敵人，不是受害者。"),
+    blockSource: z.enum(["thisSource"]).optional().describe("只在這份增益真正擋下正值傷害時觸發；護盾吸收、其他來源與空事件不算。"),
+    evadeDuring: z.enum(["dash"]).optional().describe("只計閃避當下仍在實際移動的衝刺；空按、原地、撞停及事後移動不算。"),
+    stationaryForSec: z.number().min(1 / 30).max(HOOK_INTERNAL_COOLDOWN_MAX_SEC).optional().describe("連續實際靜止幾秒才允許週期觸發；移動、換區、死亡或中場重開窗口。頻率仍由內部冷卻控制。"),
+    damageConnected: z.literal(true).optional().describe("觸發傷害必須實際扣血或消耗護盾；零值與完全免疫不觸發，省略保留既有事件判斷。"),
+    evadeChannel: z.enum(["basic", "ability"]).optional().describe("限定真正普攻或技能迴避；不包含攻擊者失手。"),
+    evadeSource: z.enum(["defender", "thisSource"]).optional().describe("只計真正防禦方迴避，排除攻擊者失手；thisSource 另要求實際抽中的迴避來源就是本增益。省略保留原事件行為。"),
+    oncePerCast: z.boolean().optional().describe("每次有效施法最多觸發一次；onDamageDealt 預設計實際扣血；搭配 damageConnected 時亦計護盾吸收。onSummonHit 計召喚物實際傷害／護盾命中。跨目標、波次及同次召喚身體共用一次，不計自傷或反傷。"),
     /**
      * [反彈] 觸發這個 hook 的那一發傷害**是不是普通攻擊** —— mirrors
      * `HookDef.damageSource` in sim/stats/modifiers.ts, where the naming

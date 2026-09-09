@@ -180,13 +180,13 @@ The branch does not use the old `required = 546` count as a constant. Current
 generated truth is:
 
 ```text
-editor coverage fingerprint     d0fea78fbf1d
-capability fingerprint          daccedce
-required cells                  5150
+editor coverage fingerprint     acaf3ce0dc89
+capability fingerprint          abedce92
+required cells                  5230
 ```
 
 The count includes `vfx-script@1`, the complete nested visual-document surface,
-and main's `effectFieldPath` axis: 430 nested effect paths such as
+and main's `effectFieldPath` axis: 489 nested effect paths such as
 `block.vfxId` and `amount.attrRatios.coeff`. The walker repair is tracked by
 [#888](https://github.com/adms/GGD/issues/888); do not hand-edit the generated
 coverage JSON.

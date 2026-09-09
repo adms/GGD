@@ -170,7 +170,7 @@ export function HeroPage() {
         {selected ? <><p>目標生命：{Math.round(selected.before.targetHp)} → {Math.round(selected.after.targetHp)}</p><p>事件：{Object.entries(selected.eventCounts).map(([name, count]) => `${name} × ${count}`).join("、")}</p></> : null}
         <details><summary>檢視執行結果</summary><pre>{JSON.stringify(compiled.abilityDrafts[slot], null, 2)}</pre></details>
       </> : null}
-      {validation.preview && uploaded.ready ? <HeroInteractivePreview key={project.projectId} project={project} slot={slot} catalog={catalog} frozenContent={uploaded.frozenContent} result={validation.preview} current={validation.result?.revision === project.revision && validation.result.errors.length === 0} editable={value.mode === "visual"} errors={rawErrors} onChange={commit} /> : null}
+      {validation.preview && uploaded.ready ? <HeroInteractivePreview key={project.projectId} project={project} slot={slot} catalog={catalog} frozenContent={uploaded.frozenContent} result={validation.preview} current={validation.result?.revision === project.revision && !!validation.result.compiled && !Object.keys(rawErrors).length && !value.rawInputs.advanced} editable={value.mode === "visual"} errors={rawErrors} onChange={commit} /> : null}
     </aside></div></RawInputContext.Provider>
     <HeroPackagePanel key={project.projectId} value={value} valid={!!project.acceptedPlan && uploaded.ready && (!value.modelDraft?.active || value.modelDraft.appliedFingerprint === modelDraftFingerprint(value.modelDraft)) && validation.result?.revision === project.revision && validation.result.errors.length === 0 && !Object.keys(rawErrors).length && !value.rawInputs.advanced} />
   </main>;

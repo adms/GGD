@@ -74,6 +74,7 @@
 import { useMemo } from "react";
 import {
   COMPARE_OPS,
+  COMBAT_RADIUS_MAX, COMBAT_WITHIN_MIN_SEC, COMBAT_WITHIN_MAX_SEC,
   CONDITION_ABSOLUTE_MAX,
   CONDITION_FACING_ARC_MIN,
   CONDITION_FACING_ARC_MAX,
@@ -151,6 +152,21 @@ const OP_LABEL: Record<CompareOp, string> = {
 // `const kind: ClauseKind = clause.leaf.kind` —— ⭐ 而那正是「積木做出來了，
 // 而編輯器看不到它」在型別層被擋下來的樣子（⛔ 不是執行期才發現）。
 type ClauseKind = ConditionLeaf["kind"];
+
+function NearbyCombatFields({ path, leaf, onChange }: {
+  path: string; leaf: Extract<ConditionLeaf, { kind: "nearbyCombat" }>; onChange(next: ConditionLeaf): void;
+}) {
+  return <span className="cond-fields">
+    <select data-field={`${path}.subject`} aria-label="交戰範圍主體" value={leaf.subject}
+      onChange={e => onChange({ ...leaf, subject: e.target.value as ConditionSubject })}>
+      {CONDITION_SUBJECTS.map(s => <option key={s} value={s}>{SUBJECT_LABEL[s]}附近友軍</option>)}
+    </select>
+    <input data-field={`${path}.radius`} aria-label="附近友軍範圍" type="number" min={0.1} max={COMBAT_RADIUS_MAX} step={0.1} value={leaf.radius}
+      onChange={e => onChange({ ...leaf, radius: Math.max(0.1, Math.min(COMBAT_RADIUS_MAX, Number(e.target.value))) })} />格
+    <input data-field={`${path}.withinSec`} aria-label="交戰持續窗口" type="number" min={COMBAT_WITHIN_MIN_SEC} max={COMBAT_WITHIN_MAX_SEC} step={0.1} value={leaf.withinSec}
+      onChange={e => onChange({ ...leaf, withinSec: Math.max(COMBAT_WITHIN_MIN_SEC, Math.min(COMBAT_WITHIN_MAX_SEC, Number(e.target.value))) })} />秒內實際敵對命中
+  </span>;
+}
 
 function FacingFields({ path, leaf, onChange }: {
   path: string;
@@ -375,6 +391,7 @@ const CLAUSE_LABEL: Record<ClauseKind, string> = {
   recentCast: "最近施放過（連續技窗口：前一招 N 秒內接上）",
   // ⭐ GH#1020 小傑猜猜拳（2026-09-06）：距離三段（近／中／遠）與「EX 已學會」兩個新條件葉。
   distance: "與目標的距離（≤ / > 幾格：近／中／遠三段）",
+  nearbyCombat: "附近友軍交戰（按實際敵對命中）",
   facing: "正面方向（對方位於指定主體的扇形內）",
   learned: "已學會某一格（EX ＝ EX 已解鎖）",
   // ⭐ GH#1070（2026-09-06）：主體現在是本體還是變身態 —— 變身增幅不再抄變身秒數當窗口。
@@ -405,6 +422,7 @@ export const CONDITION_EDITOR_LEAF_FIELDS = Object.freeze([
   "op",
   "other",
   "p",
+  "radius",
   "stat",
   "statusId",
   "slot",
@@ -474,6 +492,7 @@ const DEFAULT_LEAF: Record<ClauseKind, ConditionLeaf> = {
   //   ⚠️ 與上面 `status` 預填 `root` 是**同一個理由**。
   recentCast: { kind: "recentCast", subject: "self", slot: "Q", withinSec: 1 },
   distance: { kind: "distance", op: "<=", value: 4.58 },
+  nearbyCombat: { kind: "nearbyCombat", subject: "self", radius: 5, withinSec: 2 },
   facing: { kind: "facing", subject: "self", arcDegrees: 120 },
   learned: { kind: "learned", subject: "self", slot: "EX" },
   form: { kind: "form", subject: "self", form: "alternate" },
@@ -925,6 +944,8 @@ function ClauseRow({
           leaf={clause.leaf}
           onChange={(leaf) => onChange({ ...clause, leaf })}
         />
+      ) : clause.leaf.kind === "nearbyCombat" ? (
+        <NearbyCombatFields path={path} leaf={clause.leaf} onChange={leaf => onChange({ ...clause, leaf })} />
       ) : clause.leaf.kind === "facing" ? (
         <FacingFields path={path} leaf={clause.leaf} onChange={(leaf) => onChange({ ...clause, leaf })} />
       ) : clause.leaf.kind === "learned" ? (

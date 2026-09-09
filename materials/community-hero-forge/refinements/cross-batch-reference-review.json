@@ -1,0 +1,663 @@
+{
+  "schema": "ggd-cross-batch-design-review@1",
+  "policyVersion": 1,
+  "head": "f6ff9d7986ff1986f7d2fa571427fdddc66c640b",
+  "runtimeChanges": [],
+  "errors": [],
+  "compiledHeroes": 74,
+  "compiledSlots": 444,
+  "reference": {
+    "buildHash": "5117955476f4fd14832936836a3b1c1633905fd8d0cd1edb32cfe5bb731c308c",
+    "engineCommit": "ed547549fb453f6652f53bd7ed9548b0ccef3a36",
+    "previousBehaviorPassed": 37,
+    "currentRuntimeBehaviorRerun": false
+  },
+  "catalog": {
+    "enabledTemplates": 43,
+    "statuses": 51
+  },
+  "diversity": {
+    "schema": "ggd-batch2-diversity-diagnostic@1",
+    "heroCount": 74,
+    "exactDuplicateKitPairs": [],
+    "nearDuplicateKitPairs": [],
+    "distinctNormalizedKits": 74,
+    "distinctNormalizedAbilities": 299,
+    "mostSharedAbilityHeroCount": 15,
+    "signatureCreativityVerified": false,
+    "limitations": [
+      "Not graph-isomorphism complete; recentCast slot changes or alternate effect encodings can evade it.",
+      "Private binding names are alpha-normalized across each kit; builtin status semantics still need manual review.",
+      "Near-duplicate findings require semantic review; structurally distinct kits can still share the same signature loop.",
+      "No claim of gameplay correctness, balance, fun or asset readiness."
+    ]
+  },
+  "unresolvedSimilarLoops": [
+    {
+      "heroes": [
+        "b2-kumoko",
+        "b2-klaus"
+      ],
+      "classification": "accepted-similar-loop",
+      "shared": "E 都是 blink；R 都是 caster-anchor delayed circle reresolve，0.5秒共6跳、同半徑，E→R 的搬位因果相同。",
+      "fitAndJoke": "蜘蛛子以自身為租屋領地主人；克勞斯以自身為行動工作站。兩者都合理表現跟身活動區。 蜘蛛子躲房東後把客廳毒圈搬走；克勞斯搬辦公室後週期作業真的跟著跑。",
+      "difference": "蜘蛛子另一條 Q root→W額外獨立DOT；克勞斯另一條Q授權→W分三次檢查，EX可取消未執行工作。",
+      "residual": "搬位跟身傷害場仍是同一招牌子機制；physical/magic數字差不當作原創差異。"
+    },
+    {
+      "heroes": [
+        "b2-rin",
+        "b2-kaiji"
+      ],
+      "classification": "accepted-similar-loop",
+      "shared": "spendMana 真扣魔力，bankAs nen-banked，後招 bankedBonus 讀實付值並有180上限。",
+      "fitAndJoke": "凜寶石消耗與開司押注均有先支付再回收價值的原作辨識。 凜預付宝石刷卡後擊發清空；開司押當前午餐錢，選續押打擊或退桌換盾。",
+      "difference": "凜Q固定120、W擊發消耗銀行，另一鏈E記帳→R回魔；開司Q當前35%、W只讀不耗、E消耗換盾，R有限亂數。",
+      "residual": "兩者第一條都是支付資源換banked傷害，承認重複，不把固定/百分比視為完全不同引擎能力。"
+    },
+    {
+      "heroes": [
+        "b2-naofumi",
+        "b2-takopi"
+      ],
+      "classification": "accepted-similar-loop",
+      "shared": "指定友方 spell-shield 暫態，再consumeStatus換同一友方heal；標記本身未填免疫旗標。",
+      "fitAndJoke": "盾勇保護隊友的通行證；章魚嗶以友善貼紙作救援道具，均符合支援定位。 尚文盾牌通行證可兌換醫療；章魚嗶集貼紙換繃帶。回復確實要耗掉該友方持有物。",
+      "difference": "尚文Q先有實際盾240、標記3秒，E清門後R搬人；章魚嗶E單純貼紙4秒，另一條Q先搬近→W距離盾。",
+      "residual": "貼紙/通行證是同一友方標記換治療機制，數字190/200與笑話不洗成獨特。"
+    },
+    {
+      "heroes": [
+        "b2-bojji",
+        "b2-luckyman"
+      ],
+      "classification": "accepted-similar-loop",
+      "shared": "有限evasion提升，敵人真攻擊抽到evade事件後，被動給自身回復；同受正式機率上限約束。",
+      "fitAndJoke": "波吉靠靈巧近身迴避；幸運超人靠偶然落空，兩種來源都可合理落在相同機率原語。 波吉讓大個子揮空後喘口氣；幸運超人香蕉皮救場還撿到魔力零錢，失敗抽樣不退款。",
+      "difference": "波吉P回血，另一链繳械轉定身；幸運P回魔，E另開技能迴避通道並有亂數補給。",
+      "residual": "Q→被攻擊→onEvade恢復仍同族；HP/Mana指標差不能聲稱根本不同防禦機制。 幸運超人自己的Q與E也是同族迴避→P回魔，兩條只區分普攻／技能通道，不稱兩種新招牌。"
+    },
+    {
+      "heroes": [
+        "b2-guts",
+        "b2-elma"
+      ],
+      "classification": "accepted-similar-loop",
+      "shared": "主動spendHealth跨入低生命閾值，後招條件式給保護或回復；另外都有有限AD增益。",
+      "fitAndJoke": "凱茲以帶傷強行戰鬥；艾爾瑪照攻略壓血，兩者能承擔主動扣血的角色笑點。 凱茲先簽加班扣血才領工傷補助；艾爾瑪照攻略把血條壓低才拿厚盾。",
+      "difference": "凱茲18%扣血與AD90同槽，後招低血heal160且P低血追加普攻；艾爾瑪15%+小盾，後招低血300盾，另一鏈AD→有AD比率重擊。",
+      "residual": "支付生命→低血條件保護是共用核心，不把回復/盾或15/18差異說成無相似。"
+    },
+    {
+      "heroes": [
+        "b2-popp",
+        "b2-albus"
+      ],
+      "classification": "accepted-similar-loop",
+      "shared": "先施放位移技能，4秒 recentCast 窗口內給隊友追加治療；不因英雄名字或回復量而視為新機制。",
+      "fitAndJoke": "何布嘴上撤退卻轉身救隊友；阿爾巴斯抄捷徑速通才趕上急救。兩者都以實際位移施法記錄解鎖救援，缺前置與移除條件分支時少補血。",
+      "difference": "何布另一條是消火候換定身；阿爾巴斯則縮已使用Q的冷卻後重新操作。",
+      "residual": "這條移動後救援連動相同；接受角色契合的共用子玩法，不計為兩種原創救援。"
+    },
+    {
+      "heroes": [
+        "b2-albus",
+        "b2-orphen"
+      ],
+      "classification": "accepted-similar-loop",
+      "shared": "先施放Q進入冷卻，W才縮短Q剩餘冷卻；1.5與2秒不是新機制差異。",
+      "fitAndJoke": "阿爾巴斯跳過已跑的速通分段；歐菲把催收函冷卻縮短好重寄。真正的冷卻剩餘值下降，没先Q就沒有收益。",
+      "difference": "阿爾巴斯另一鏈位移解鎖友軍急救；歐菲R登門後以真普攻提早觸發P回魔，Q還有固定訂金自療與DOT。",
+      "residual": "兩者同一冷卻回收子循環，不能以文案、數值差異計作新創意。"
+    },
+    {
+      "heroes": [
+        "b2-touka",
+        "b2-shinchan"
+      ],
+      "classification": "accepted-similar-loop",
+      "shared": "對敵人主動施root，後招消耗root並推離4單位；換槽或附基礎傷不消除相似。",
+      "fitAndJoke": "托卡記錄入坑再把應徵者送出口；小新讓踩到玩具的敵人被彈簧玩具箱送走。缺root時搬人失敗是可操作笑點。",
+      "difference": "托卡另一鏈把人拋進延遲坑；小新給友軍真移速加成去參與追逐接力。",
+      "residual": "控制標記消耗搬人相同；視為角色合適的共享子玩法，非兩套新搬人機制。"
+    }
+  ],
+  "assets": {
+    "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/batch2-37",
+    "pairsSha256": "75ece7956b20bf7d346211d0046fbfed96ba4bb97a97559126d64f913bcd1172",
+    "validationSha256": "c61daffa4b3b23c05768664b9197cf84ff3d7abc6a2d8887bd1ccd4a2850a17b",
+    "characters": 37,
+    "productionReady": 0,
+    "automaticImportAllowed": false,
+    "declaredFileProofs": 1225,
+    "proofBytesRechecked": false,
+    "note": "Candidate index only. This diagnostic does not admit models, retarget skeletons or verify rendered assets."
+  },
+  "provenance": [
+    {
+      "id": "community-review-01-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/01.hero-project.json",
+      "sha256": "eff49a7b51fa0f18f8d7472ccf3d8d267d7a708e95f4f376d38e73ba571d66ba",
+      "revision": 15
+    },
+    {
+      "id": "community-review-02-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/02.hero-project.json",
+      "sha256": "ce347870d112f3c6c355b0c5fa68ca5a21d1d5479f1db265856a5941d9391524",
+      "revision": 14
+    },
+    {
+      "id": "community-review-03-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/03.hero-project.json",
+      "sha256": "fffa25deaf9d4e300321158d827d81c29921c99813392efa4cce3519c81ca8b2",
+      "revision": 13
+    },
+    {
+      "id": "community-review-04-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/04.hero-project.json",
+      "sha256": "f937e087b1d2b852fb5e4204b9a5305936bf57eb5a92dc3bda2ef2b6556b5beb",
+      "revision": 13
+    },
+    {
+      "id": "community-review-05-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/05.hero-project.json",
+      "sha256": "b2e9458dda1d700f90a03d4d97bf7dd1d7c39c875f306219a888a634e01a31c9",
+      "revision": 12
+    },
+    {
+      "id": "community-review-06-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/06.hero-project.json",
+      "sha256": "42a19b77fe611366d2b907360b708873968f1a61906e64eb99041f034364fdac",
+      "revision": 12
+    },
+    {
+      "id": "community-review-07-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/07.hero-project.json",
+      "sha256": "d976e0242e6169c5fa24628237928e1d48d705a37a8c4c210003ffc64b7d8226",
+      "revision": 12
+    },
+    {
+      "id": "community-review-08-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/08.hero-project.json",
+      "sha256": "d48e83e7a482c228daa6068c9d3fcf804d2bcfea5f428ca8fa75062295c31c9d",
+      "revision": 12
+    },
+    {
+      "id": "community-review-09-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/09.hero-project.json",
+      "sha256": "e15068eeab674e2d13b8133b4fc4c7e408f8c94aef516c7fc69c5d171e348b07",
+      "revision": 12
+    },
+    {
+      "id": "community-review-10-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/10.hero-project.json",
+      "sha256": "ba6db5c6843a94a051a55b1c26350ee1fd498210624c65a1def9f9d18475a467",
+      "revision": 12
+    },
+    {
+      "id": "community-review-11-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/11.hero-project.json",
+      "sha256": "f7961ba04d290738faf7b97a40bcacb7e3b2e0d2085faa4c15ff2b2fb23c12fd",
+      "revision": 12
+    },
+    {
+      "id": "community-review-12-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/12.hero-project.json",
+      "sha256": "95212dd86cb52ba04f264d8b8ed5c55cd1bf9576802680043fc26889ddab6611",
+      "revision": 12
+    },
+    {
+      "id": "community-review-13-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/13.hero-project.json",
+      "sha256": "4ddecf96da2d5122ee9ade3a24cf0524d3fa9ec08a61c152749afab7f71a5f4b",
+      "revision": 12
+    },
+    {
+      "id": "community-review-14-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/14.hero-project.json",
+      "sha256": "62e89ff2cc19353220d8d4eaf72f697aa452eeb3216281d6437e755e8cc7a7ac",
+      "revision": 12
+    },
+    {
+      "id": "community-review-15-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/15.hero-project.json",
+      "sha256": "a6513f3cfbb7294feb2fc567f14b75e948d714f82efa83c9814c3274fc8eb444",
+      "revision": 24
+    },
+    {
+      "id": "community-review-16-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/16.hero-project.json",
+      "sha256": "a275a7704c0983e1640adb0d63631f97f9c87b4dc80fa2919d4065a3bb06367c",
+      "revision": 12
+    },
+    {
+      "id": "community-review-17-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/17.hero-project.json",
+      "sha256": "dd07d7d57ef233721e864bafc4e826c32e867f953d9f25f6d310bdcaadb47de8",
+      "revision": 12
+    },
+    {
+      "id": "community-review-18-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/18.hero-project.json",
+      "sha256": "54f1f4227789b3e8de97fe720ac103ace25070de6b88a0b8615606c7996ed09b",
+      "revision": 12
+    },
+    {
+      "id": "community-review-19-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/19.hero-project.json",
+      "sha256": "55586281d5e6fd5ad14991bf09bbb222c1b5e18ba4dc9e9a8cd6072f836ab2dc",
+      "revision": 12
+    },
+    {
+      "id": "community-review-20-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/20.hero-project.json",
+      "sha256": "b00d20822a8284e2cceaa6c0f9b5f77b8513cd895d9d5388f02bd39d8c047b92",
+      "revision": 13
+    },
+    {
+      "id": "community-review-21-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/21.hero-project.json",
+      "sha256": "cf96a3bea81b39250ac1dff66d4dd3d01a6f7ebb69890065e7c6b5ac321ef6ef",
+      "revision": 14
+    },
+    {
+      "id": "community-review-22-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/22.hero-project.json",
+      "sha256": "460424023cb9a8058763a058a94fc014422c213e178523bcc549229007432003",
+      "revision": 12
+    },
+    {
+      "id": "community-review-23-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/23.hero-project.json",
+      "sha256": "c25c892280928361b3c27eb8854674456a5e0f865f0d6e70a6775b65da84daeb",
+      "revision": 13
+    },
+    {
+      "id": "community-review-24-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/24.hero-project.json",
+      "sha256": "3cbf31c07653b9bf1573ce02e1746299e477922272c67273e25e926b112075b9",
+      "revision": 14
+    },
+    {
+      "id": "community-review-25-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/25.hero-project.json",
+      "sha256": "4bf65dd98c7a1e38894a1148144bf03201fbfc783a4c4f6173de5dda46d3b490",
+      "revision": 12
+    },
+    {
+      "id": "community-review-26-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/26.hero-project.json",
+      "sha256": "530b7155e6ca8390861f8cf80e8511fc82ad3b8ee4c41ea7a8f4990b94f9d4c9",
+      "revision": 14
+    },
+    {
+      "id": "community-review-27-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/27.hero-project.json",
+      "sha256": "e8cc0beac95cd6247f83202c039f696fd73fb81a83c3905df56d9428b7eb41ce",
+      "revision": 15
+    },
+    {
+      "id": "community-review-28-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/28.hero-project.json",
+      "sha256": "3fec4f414936a986adc1e2e00aa17f2ef0c107a952952df6e8210ebbed0e6165",
+      "revision": 13
+    },
+    {
+      "id": "community-review-29-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/29.hero-project.json",
+      "sha256": "8813820d40e0b1a94cc17d1a01ad3aed4d84de52be6b13bba217da53056c9429",
+      "revision": 12
+    },
+    {
+      "id": "community-review-30-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/30.hero-project.json",
+      "sha256": "86e0279e6e690c222a4a9800e79d5376a2146c5470416091348de401c4f88883",
+      "revision": 13
+    },
+    {
+      "id": "community-review-31-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/31.hero-project.json",
+      "sha256": "7ff39ac0d918c4bd4d688cef6ed319d7642e6d79b9bb83fab9ab7af282805e4b",
+      "revision": 13
+    },
+    {
+      "id": "community-review-32-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/32.hero-project.json",
+      "sha256": "74b4a019bb34a45ed0bafb072cbe006f81913576b80bc33e3992a5748480d906",
+      "revision": 31
+    },
+    {
+      "id": "community-review-33-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/33.hero-project.json",
+      "sha256": "3080f45c537c17d6a71ec9fb950c00315ea2abd8e5bf57c1ab22ae7306855066",
+      "revision": 12
+    },
+    {
+      "id": "community-review-34-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/34.hero-project.json",
+      "sha256": "439ad3bec6038f0adef691b64ee40e23bdf6d1c7e82432bb13ce93a9cfa0228c",
+      "revision": 12
+    },
+    {
+      "id": "community-review-35-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/35.hero-project.json",
+      "sha256": "94ec5df377d1648a41835588f2cfd55fecb19b841329e5ccd52e31fdfb1e4202",
+      "revision": 14
+    },
+    {
+      "id": "community-review-36-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/36.hero-project.json",
+      "sha256": "98346af3947fb0678828c8fe2259945de1a70a8a934db448596acd09a7c11c60",
+      "revision": 12
+    },
+    {
+      "id": "community-review-37-20260907",
+      "batch": "first",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge/projects/37.hero-project.json",
+      "sha256": "fa35edc611b51bfe5dbefa3c639f3559984f7a25b3adab84b76c6df8377f044a",
+      "revision": 14
+    },
+    {
+      "id": "b2-popp",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-popp.project.json",
+      "sha256": "3360e704d25d6ecf45ac3f4656015fe6c7b6f371cd52667da9725a87bf6d6d91",
+      "revision": 2
+    },
+    {
+      "id": "b2-rem",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-rem.project.json",
+      "sha256": "cd7b460e44a3cb19ea320480c0035be8d817accd007b0418af42468491d40966",
+      "revision": 2
+    },
+    {
+      "id": "b2-zenitsu",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-zenitsu.project.json",
+      "sha256": "6138042e3725eef6b65bf46b0cd52fe8cefdd4ebf34765f65962fb51142d9614",
+      "revision": 2
+    },
+    {
+      "id": "b2-rin",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-rin.project.json",
+      "sha256": "5ec624045b4964390e5bb3fd8be3ac9aa65948cbd622018c13c1ddc04484eff3",
+      "revision": 2
+    },
+    {
+      "id": "b2-uncle",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-uncle.project.json",
+      "sha256": "10f3ee700b22bb1afcdf94c73ab7cd95e59ffbd773a6563cc9d206cfe47d2bf8",
+      "revision": 2
+    },
+    {
+      "id": "b2-boxxo",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-boxxo.project.json",
+      "sha256": "44eda2885d758657eb30b9605641a17d2850f78b5c54855d920fe0a13d5981a5",
+      "revision": 2
+    },
+    {
+      "id": "b2-shadow",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-shadow.project.json",
+      "sha256": "666ac8dcb9938dccdfad9ba1df8cf81b762aeebab1ed38dc278a41dd5e9d6975",
+      "revision": 2
+    },
+    {
+      "id": "b2-bojji",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-bojji.project.json",
+      "sha256": "2458acfb83b7d9709577225576bd78d3cc1a358a600949d5cc869cf090a4da1d",
+      "revision": 2
+    },
+    {
+      "id": "b2-maomao",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-maomao.project.json",
+      "sha256": "f4e3906077ffd59b2c0ef3bc70062cdfed259c7d431aed6389e5338450311483",
+      "revision": 2
+    },
+    {
+      "id": "b2-elma",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-elma.project.json",
+      "sha256": "1ae81c776d1e297178ab76c2e8b18a91ac97d14d370747d79f548ad6d4f08907",
+      "revision": 2
+    },
+    {
+      "id": "b2-albus",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-albus.project.json",
+      "sha256": "4c4af9a3a4a07dc0481cdd3de438f8be7b58028a1c4597ac24fc17bb56e3d2f7",
+      "revision": 2
+    },
+    {
+      "id": "b2-goblin",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-goblin.project.json",
+      "sha256": "f2dbefda3c6bef9d658382d9fffb44826496a0b08903b02574c6a017b4894ec6",
+      "revision": 2
+    },
+    {
+      "id": "b2-maple",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-maple.project.json",
+      "sha256": "6e50eecf4718b04986a39c0b34c155f32271fde971ed8a6f00a77f48cc3f27ec",
+      "revision": 2
+    },
+    {
+      "id": "b2-naofumi",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-naofumi.project.json",
+      "sha256": "2f2bdef3d8013974e37efa1727ade770b2010e609609ee6bd6a8b89eb7a89dc9",
+      "revision": 2
+    },
+    {
+      "id": "b2-makoto",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-makoto.project.json",
+      "sha256": "7bfe7ad38d6872f28253ac250cabcdf0d60c7448749f519572bc7d1594fce05b",
+      "revision": 2
+    },
+    {
+      "id": "b2-noor",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-noor.project.json",
+      "sha256": "e1dc48d1283ff74267370ec4f8f64cd218259ce63700dba49681fe5ceda8d95b",
+      "revision": 2
+    },
+    {
+      "id": "b2-touka",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-touka.project.json",
+      "sha256": "5d2d3e71d6689a0196693bef25a06161610b33f7eed02e544f52817c3da73f68",
+      "revision": 2
+    },
+    {
+      "id": "b2-haga",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-haga.project.json",
+      "sha256": "0fa3263b2beef67aa954e17a9b56576924dddc7ddbf79eee8b1eeff932f2695b",
+      "revision": 2
+    },
+    {
+      "id": "b2-guts",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-guts.project.json",
+      "sha256": "1fb7ee5c15f6f24942a25a8597e386b3089a065b8d073d14aa264d850f0e7995",
+      "revision": 2
+    },
+    {
+      "id": "b2-keyaru",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-keyaru.project.json",
+      "sha256": "3545f86f385310f43da9294b54d262f765673e112bd2fcc2305df4469c391de2",
+      "revision": 2
+    },
+    {
+      "id": "b2-kaede",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-kaede.project.json",
+      "sha256": "9fbd5fdf47fc0b362d24c7c1bd25856d403757d6cfb72ba6ead87a192a12b43d",
+      "revision": 2
+    },
+    {
+      "id": "b2-matthias",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-matthias.project.json",
+      "sha256": "d09950fdf56f79501f9f3a05f3399b96851099aadf6b42fcc2fda9a77e9e0a8f",
+      "revision": 2
+    },
+    {
+      "id": "b2-sinbad",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-sinbad.project.json",
+      "sha256": "fb92f5d05bc12cf18adafb2bea08111b4d693ecdf8713eb81bcccf5eaaebac22",
+      "revision": 2
+    },
+    {
+      "id": "b2-kumoko",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-kumoko.project.json",
+      "sha256": "a6f26785079d75c8efa44ea70da4cce4b2e8fa7e9b39810976530983460fb5c9",
+      "revision": 2
+    },
+    {
+      "id": "b2-yogiri",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-yogiri.project.json",
+      "sha256": "8e95c491552530f87f02c097a587a23038166c813423363a4668be7710294383",
+      "revision": 2
+    },
+    {
+      "id": "b2-kaiji",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-kaiji.project.json",
+      "sha256": "8e2a313cbe67cd66760b651799f739effdc457f441f7f3ff37f1293c03b2ec45",
+      "revision": 2
+    },
+    {
+      "id": "b2-fushi",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-fushi.project.json",
+      "sha256": "dabcd743c6ebd745c509c3a5091a8b7dea4af0603cc124527e5c303c6e732632",
+      "revision": 2
+    },
+    {
+      "id": "b2-orphen",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-orphen.project.json",
+      "sha256": "d89db45bb87d66208fb1b953294c2ebd16221c0085b3669ed7291fc6ff9c61cd",
+      "revision": 2
+    },
+    {
+      "id": "b2-klaus",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-klaus.project.json",
+      "sha256": "4d910f6040219cc9784241d33fc8ebf01b46d8cabd862cfa2529fed3732fffe9",
+      "revision": 2
+    },
+    {
+      "id": "b2-takopi",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-takopi.project.json",
+      "sha256": "83d659f572137a43a51bbdd9cb85355e95c207a6eb84abbd1dbb98ebc085131b",
+      "revision": 2
+    },
+    {
+      "id": "b2-luckyman",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-luckyman.project.json",
+      "sha256": "769d099cac943a6b5683d878c9bdc97d113569b1a522eb26ef531a498ffa82f8",
+      "revision": 2
+    },
+    {
+      "id": "b2-misery",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-misery.project.json",
+      "sha256": "8e9e1ce35942bdbb1693a4f5de8dd9cad9887e9b8968be9d4b176374c5c577b1",
+      "revision": 2
+    },
+    {
+      "id": "b2-nube",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-nube.project.json",
+      "sha256": "1e95e27e86acb513c02c17420156e3b1fe16782c698c14c4bf0a504bd39c128c",
+      "revision": 2
+    },
+    {
+      "id": "b2-shinchan",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-shinchan.project.json",
+      "sha256": "a86edee5fa8c85d73f902a9531b5bd724f610e768906ff42f4babe79d172c42c",
+      "revision": 2
+    },
+    {
+      "id": "b2-aladdin",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-aladdin.project.json",
+      "sha256": "309675b52b41ac3cf9eb0c5ae1490f183b89eb3c798f2641fae2e376de3f32c9",
+      "revision": 2
+    },
+    {
+      "id": "b2-ned",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-ned.project.json",
+      "sha256": "f4cfd2415bebab354baf2e7ef7959a23aafa9deb7010622b9a2a5c11347b052d",
+      "revision": 2
+    },
+    {
+      "id": "b2-kisaragi",
+      "batch": "second",
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-kisaragi.project.json",
+      "sha256": "72d30f5117fbb5a6c5c5790a01270f56009b89104281e68a0d1011db5890cc37",
+      "revision": 2
+    }
+  ],
+  "validationSetReady": false,
+  "publicationReady": false,
+  "limits": [
+    "Current compilation and structural comparison are not causal combo tests or creativity judgments.",
+    "Previously accepted similar loops remain unresolved under the new unique-signature policy.",
+    "First-batch unfinished designs remain candidates; no automatic admission to a verified evaluation set."
+  ]
+}

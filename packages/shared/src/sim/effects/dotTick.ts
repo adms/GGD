@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../timeStop";
 /**
  * dotTickSystem — the PAYOUT half of 持續傷害 (lane P1, GH#289).
  *
@@ -73,6 +74,7 @@ export function dotTickSystem(world: SimWorld): void {
   if (world.dot.size === 0) return; // the overwhelmingly common case
 
   for (const id of [...world.dot.keys()].sort((a, b) => a - b)) {
+    if (isTimeStopped(world, id)) continue;
     const list = world.dot.get(id);
     if (list === undefined || list.length === 0) {
       world.dot.delete(id);

@@ -1,0 +1,3906 @@
+{
+  "schema": "ggd-first37-approved-parody-review@1",
+  "issue": 1132,
+  "policyVersion": 2,
+  "sourceHashes": {
+    "designs.mjs": "0991a576fe749a3f98a5500596621486c84673f89c6a7d8ab507dd9385ec007d",
+    "adapt-existing.mjs": "de757b018faf249203cdb43c304b428c108278349b680f6298cd7ba6a26d2a62",
+    "kit.mjs": "89394f9b70d8f102de16f7c85cec96ca9dfab29474125ac7b1a6598355b4a1f9",
+    "baseline-refinements.json": "06b18f90dafbb8bbf2ac6dbd50e3cbded23e9873dea16fa7ce93c3365f228a49",
+    "build.mts": "7a61f047c6a7784c0e0853b3350338072dd34e8350202d10c66dad2a2acd84e6",
+    "../../../content/config/combat-env.json": "cc72865ad07b211c8426e7881d242e0df78de1bb6c44342d873513d760b33df1",
+    "../../../content/config/base-bonus.json": "0a1907f2f3ec2424602aed29269d21802df5e313dbf2b7249545b873ee86133f",
+    "../../../content/config/per-level-bonus.json": "b307419054b2d37bec8bcdb4ffa20e6fe5673895c854ddd128c030cf1c80c2b5"
+  },
+  "counts": {
+    "heroes": 37,
+    "combos": 42,
+    "passed": 42,
+    "failed": 0,
+    "slotProbes": 105,
+    "slotProbeFailures": 0,
+    "passives": 20,
+    "passiveFailures": 0,
+    "boundaries": 157,
+    "boundaryFailures": 0,
+    "expiryFailures": 0
+  },
+  "diversity": {
+    "schema": "ggd-batch2-diversity-diagnostic@1",
+    "heroCount": 37,
+    "exactDuplicateKitPairs": [],
+    "nearDuplicateKitPairs": [],
+    "distinctNormalizedKits": 37,
+    "distinctNormalizedAbilities": 187,
+    "mostSharedAbilityHeroCount": 13,
+    "signatureCreativityVerified": false,
+    "limitations": [
+      "Not graph-isomorphism complete; recentCast slot changes or alternate effect encodings can evade it.",
+      "Private binding names are alpha-normalized across each kit; builtin status semantics still need manual review.",
+      "Near-duplicate findings require semantic review; structurally distinct kits can still share the same signature loop.",
+      "No claim of gameplay correctness, balance, fun or asset readiness."
+    ]
+  },
+  "originalDesignCompletionClaimed": false,
+  "formalPublication": false,
+  "visualAcceptance": "pending",
+  "heroes": [
+    {
+      "number": "01",
+      "name": "武藤遊戲",
+      "signature": "決鬥者請員工打工：雙召喚賺布局，主人騰不出手只能慢慢走",
+      "closest": null,
+      "difference": "保留已驗證核心，改編代價及可讀提示詳見各槽。",
+      "version": 2,
+      "group": "local-adaptation",
+      "combos": [],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需補召喚／陷阱成功事件去重、三層布局及 EX 扣除。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔決鬥者的布局〕",
+          "description": "【本次玩法】決鬥者請員工打工：雙召喚賺布局，主人騰不出手只能慢慢走\n【修正行為】召喚物造成有效普攻傷害（含吸收護盾）才累積布局；一次召喚施法跨所有目標與後續攻擊最多一層，再次下令不刷新額度。E 陷阱成功抵消普攻另外增加一層；最多三層，回合重置。英雄自己的普攻、技能及協同追加傷害不計。",
+          "templates": [
+            "tpl-mark-stacks",
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "黑魔導專屬造型與再次下令換目標未提供；代理採 sela。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "黑魔導",
+          "description": "【本次玩法】決鬥者請員工打工：雙召喚賺布局，主人騰不出手只能慢慢走\n【修正行為】指定敵人後召喚可受擊的身體；同一英雄此槽最多一具。存活時再次施放只更新攻擊指令，不刷新生命、12 秒壽命或布局額度。兩槽獨立；主人死亡清除。施法冷卻採極小級，允許在存續期間再次下令。 黑魔導／女孩造型仍使用 sela 代理，專屬素材與畫面尚待驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "黑魔導女孩造型、與黑魔導協同事件未提供；目前同模板上限須驗證跨槽隔離。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "黑魔導女孩",
+          "description": "【本次玩法】決鬥者請員工打工：雙召喚賺布局，主人騰不出手只能慢慢走\n新增代價：召喚／指揮女孩時主人減速25%1.2秒，召喚物照常行動。\n【修正行為】指定敵人後召喚可受擊的身體；同一英雄此槽最多一具。存活時再次施放只更新攻擊指令，不刷新生命、12 秒壽命或布局額度。兩槽獨立；主人死亡清除。施法冷卻採極小級，允許在存續期間再次下令。 Q/W 在一秒窗口內實際命中同一敵人才觸發極小級魔法協同傷害；雙方向共用一秒鎖，跨主人隔離，不遞迴。 黑魔導／女孩造型仍使用 sela 代理，專屬素材與畫面尚待驗收。",
+          "templates": [
+            "tpl-effect-sequence",
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目標設計是一次觸發陷阱與反射；目前只有自身護盾，不能驗收陷阱。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "神聖彗星・反射力量",
+          "description": "【本次玩法】決鬥者請員工打工：雙召喚賺布局，主人騰不出手只能慢慢走\n【修正行為】落點放置半徑 2.5、8 秒定點陷阱，0.3 秒後啟動。範圍內敵人第一次對友軍普攻時取消該次攻擊，對來源反擊小級魔法傷害、增加一層布局，隨即消失。每英雄一個，新放置替換舊者；主人死亡移除。卡牌圖樣與實際畫面仍待驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "天空龍投影是待製資產；預覽以雷電區域脈衝表達。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "歐西里斯的天空龍",
+          "description": "【本次玩法】決鬥者請員工打工：雙召喚賺布局，主人騰不出手只能慢慢走\n【修正行為】落點預警後 0.7 秒對半徑 2.5 重新解算敵人並給一次大級雷擊，移出可躲避；不建立召喚物。主人死亡中止。現有雷光作預警參考，天空龍投影資產未完成。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需由存活黑魔導發射並消耗布局；目前是英雄本體施法。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "黑・魔・導",
+          "description": "【本次玩法】決鬥者請員工打工：雙召喚賺布局，主人騰不出手只能慢慢走\n【修正行為】需要自己同區存活的 Q 黑魔導且至少一層布局；施法開始消耗全部布局。0.35 秒後由當時存活的黑魔導位置沿瞄準方向發出長 8、寬 1 的大級直線魔法。缺黑魔導回報使用條件，不扣資源；吟唱中黑魔導被殺則打空、不退回英雄發射、不退已付資源。原稿未指定按布局層數放大，採固定強化級距。專屬光束畫面尚待验收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "e364d51b9814edf240e8bf4500fac5679780f72b27a3a78fb74c878d9fa9cbe6",
+      "patchSha256": "809ff475f871bbc85431ce0102b15f56b3c04e100f3b53266b36c0475e373bc8"
+    },
+    {
+      "number": "02",
+      "name": "八神庵",
+      "signature": "八神打拍子：同一招連按不集紫炎，鬼燒擺帥姿勢時腳步變慢",
+      "closest": null,
+      "difference": "保留已驗證核心，改編代價及可讀提示詳見各槽。",
+      "version": 3,
+      "group": "local-adaptation",
+      "combos": [],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需技能命中三層紫炎與終結技消耗。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔八神之炎〕",
+          "description": "【本次玩法】八神打拍子：同一招連按不集紫炎，鬼燒擺帥姿勢時腳步變慢\n不同主動技能對同一敵人的有效命中（HP 或盾吸收）交替累積四秒紫炎，上限三層；同次多段／多目標最多記一次，同一技能連續命中不加層。各敵人及施法者分開記錄，換目標不繼承層數；R 或 EX 最後一擊消耗該敵人身上自己的全部紫炎，每層追加一次極小魔法傷害。普攻、空招、免疫、反傷及衍生傷害不集氣，回合結束清除。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "推進波並非遇第一個單位即停的投射物。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "百八式・闇拂",
+          "description": "【本次玩法】八神打拍子：同一招連按不集紫炎，鬼燒擺帥姿勢時腳步變慢\n沿施法方向前進的一顆紫色投射物，在第一個合法敵人碰撞後消失，只結算一次小級魔法傷害；友军與其他對決排除。地形遵循 GGD 技能通行規則。現有紫色彈為代理，貼地火焰外觀與專用動作待驗。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "固定落點跳擊；需原地迎擊與受擊窗口。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "百式・鬼燒",
+          "description": "【本次玩法】八神打拍子：同一招連按不集紫炎，鬼燒擺帥姿勢時腳步變慢\n新增代價：鬼燒擺姿勢0.8秒自身減速25%；原格擋與推離不變。\n原地施放一次 2.5 格上升火焰打擊並有限推離一格，不跳向落點；0.45 秒內以本次來源格擋第一個物理／魔法攻擊，近身攻擊者被再推離一格。沒有長時間無敵；火焰柱與迎擊動作仍待實際畫面驗收。",
+          "templates": [
+            "tpl-effect-sequence",
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前一次施法完成三段；需三次輸入窗口及中斷狀態機。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "百二十七式・葵花",
+          "description": "【本次玩法】八神打拍子：同一招連按不集紫炎，鬼燒擺帥姿勢時腳步變慢\n葵花以三次獨立方向輸入執行三段近身打擊；每段解算後 0.2 秒至 1.2 秒內可接下一段。一次按鍵只打一段，連按不跳段；逾時、硬控制、沉默、恐懼、束縛、死亡或對決結束取消接續。只在第一段支付魔力與技能冷卻，冷卻在接續期間繼續流逝；末段結束回到剩餘冷卻。每段重新選方向、驗合法目標與施法資格；揮空仍占該段。專用三段動作與紫炎畫面尚未完成。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "缺命中突進接續與紫炎引爆。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "禁千二百十一式・八稚女",
+          "description": "【本次玩法】八神打拍子：同一招連按不集紫炎，鬼燒擺帥姿勢時腳步變慢\n0.4 秒起手後向前突進七格；第一個敵人承受實際 HP／盾命中才開始三次近身物理連擊及一次紫炎終結，每段隔 0.18 秒並重查三格距離，失去原目標即不再排下一段，不另尋敵。最後一擊消耗自身紫炎並開啟同一敵人 1.2 秒豺華窗口。死亡／對決結束停止；空放、牆阻及免疫不開始連擊。專用連擊／紫炎爆破畫面待驗。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "獨立三段追擊；需接八稚女成功事件的使用窗口。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "裏三百十六式・豺華",
+          "description": "【本次玩法】八神打拍子：同一招連按不集紫炎，鬼燒擺帥姿勢時腳步變慢\n可獨立指定三格內敵人，支付自身魔力與冷卻，進行三段近身追擊；若同一敵人持有自己八稚女完成後 1.2 秒窗口，原子消耗該窗口並改為四段接續。不是 recentCast 假窗口；R 未完成、逾時、別人完成或改打別人都只走獨立版。每段重查原目標與三格距離，不再追打離場者；最後一击消耗自己紫炎。兩分支只執行一個，不返還或重置 EX 冷卻。專用演出待驗。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "6cd511785d9286d4eae015457b69827200fe068a27677b6993cd6e44b99c8f2c",
+      "patchSha256": "e7e3692a4625ecbc5107305a4fa09c45afb5a6347f50418e0c62e1657c0827a1"
+    },
+    {
+      "number": "03",
+      "name": "不知火舞",
+      "signature": "舞的加班費：實際突進接普攻，三次陽炎越忙越走不動",
+      "closest": null,
+      "difference": "保留已驗證核心，改編代價及可讀提示詳見各槽。",
+      "version": 2,
+      "group": "local-adaptation",
+      "combos": [],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需位移完成後一次普攻增益，刷新不疊加。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔不知火流身法〕",
+          "description": "【本次玩法】舞的加班費：實際突進接普攻，三次陽炎越忙越走不動\nE／R 實際移動後正常停在距離終點、地形或 R 敵人接觸點，取得三秒身法；下一次有效敵方普攻命中（含盾吸收）消耗並追加一次極小物理傷害。E／R 刷新共用同一層，不疊加；空方向、零移動、取代、死亡與對決結束不給。技能、零傷害與免疫不消耗。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "扇子模型及逐彈碰撞需補，模板是分段傷害波。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "花蝶扇",
+          "description": "【本次玩法】舞的加班費：實際突進接普攻，三次陽炎越忙越走不動\n單一實體穿透彈沿方向飛行，每人每彈最多一次小級魔法傷害；友軍、死亡及其他對決不命中。依 GGD 技能不被地形遮擋規則可穿牆，至射程或邊界消失。現有火球為代理，扇子模型與旋轉演出仍待完成。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前為窄直線，需前方近身弧形判定。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "龍炎舞",
+          "description": "【本次玩法】舞的加班費：實際突進接普攻，三次陽炎越忙越走不動\n以自身當下位置及施法方向揮出 120 度、2.5 格近身火焰弧，各敵人只結算一次；後方、弧外、遠處、友軍與其他對決排除。專用火焰弧畫面待驗。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "核對 Owner 原文與模擬／畫面後才可驗收。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "必殺忍蜂",
+          "description": "【本次玩法】舞的加班費：實際突進接普攻，三次陽炎越忙越走不動\n身體沿直線突進五格，沿實際路徑每名合法敵人碰撞一次小級物理傷害，穿過敵人後繼續，遇牆或距離終點停止；不從起點或牆後結算假碰撞。完成实际位移後刷新身法。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "缺突進命中後才接連擊條件。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "超必殺忍蜂",
+          "description": "【本次玩法】舞的加班費：實際突進接普攻，三次陽炎越忙越走不動\n0.65 秒可中斷起手後向前突進七格，在首名敵人或地形停止。接觸造成實際 HP／盾吸收後才啟動三次近身連擊，末段追加 1.8 格爆發；逐段重查三格距離，死亡／對決結束取消。空放、牆阻與免疫不接連段，沒有額外無敵或硬控。正常位移結束刷新同一層身法。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前為自身 3 秒 +15% AD；需限次跟隨施法殘像及去重。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "陽炎之舞",
+          "description": "【本次玩法】舞的加班費：實際突進接普攻，三次陽炎越忙越走不動\n新增代價：陽炎出場三秒期間本體減速20%，換取既有最多三次殘像；突進仍可用。\n三秒陽炎窗口內，自己的有效技能命中後延遲 0.1 秒向同一目標追加極小魔法傷害；每次施法跨波次／目標最多一次，共三次，消耗後撤除。普攻、其他施法者、殘像及連段衍生傷害不觸發；原目標死亡、離開十二格或對決結束時取消，不重新尋敵。火焰殘像模型／動作／音效仍待實際畫面驗收。",
+          "templates": [
+            "tpl-effect-sequence",
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "895c4640326804ecad7173d884d8d569c7af71e708fafccf181ae3093f3b82cd",
+      "patchSha256": "b3b1de4e01a6aa56bd7248fb0d047f01da813f27ecb939dc4bfd2b98d7ee75c5"
+    },
+    {
+      "number": "04",
+      "name": "空條承太郎",
+      "signature": "承太郎拍團體照：全區暫停，攝影師自己也必須定點擺姿勢",
+      "closest": null,
+      "difference": "保留已驗證核心，改編代價及可讀提示詳見各槽。",
+      "version": 2,
+      "group": "local-adaptation",
+      "combos": [],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需精密層數與 Q 末擊消耗。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔白金之星・精密動作〕",
+          "description": "【本次玩法】承太郎拍團體照：全區暫停，攝影師自己也必須定點擺姿勢\n近距離（中心距離 ≤3）實際 HP／護盾命中累積精密，最多三層、八秒有效；每次技能施法最多一次，普攻依實際命中。滿三層後下一次 Q 在施法結算時消耗，強化該次末擊；技能中斷／末擊落空不退還。反彈、衍生傷害與無效命中不累積。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需逐段距離重新檢查、替身掛點及雙模型動作。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "歐拉連打",
+          "description": "【本次玩法】承太郎拍團體照：全區暫停，攝影師自己也必須定點擺姿勢\n指定前方近距離敵人，0.2 秒起手後四拳、間隔 0.16 秒。每拳及下一拳排程重新檢查同一存活目標、同區、三單位距離與正面 120 度；失去條件、死亡或對決結束立即停止且不重選。開始時滿三層精密會消耗並加強末拳；本次 Q 才累積的層數留給下一次。白金之星副模型及雙模型動作仍未驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需單條流星指刺與單目標去重。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "流星指刺",
+          "description": "【本次玩法】承太郎拍團體照：全區暫停，攝影師自己也必須定點擺姿勢\n0.15 秒起手後按瞄準方向打一條長六、寬 0.65 的直線，只命中第一名合法敵人一次；不是重複分段傷害波。流星指副模型及動作仍待驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需正面一次格擋與推開近敵，不能以一般護盾驗收。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔替身護衛〕",
+          "description": "【本次玩法】承太郎拍團體照：全區暫停，攝影師自己也必須定點擺姿勢\n原地開啟 0.6 秒防禦姿態，僅正面 120 度內物理／魔法攻擊減傷 80%，成功一次即消耗該來源；背後、真傷、零傷害不消耗。成功時推開三單位內攻擊者一單位，不增加護盾。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "此槽僅單體 0.8 秒暈眩作模板預覽；局部時停、投射物暫停、計時器分類及命中佇列尚未提供。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "白金之星・世界",
+          "description": "【本次玩法】承太郎拍團體照：全區暫停，攝影師自己也必須定點擺姿勢\n新增代價：時停成立時自己也定身1.2秒，只能原地打近身目標；時間佇列、施法與到期規則保留。\n0.35 秒起手，在施法者當前位置建立半徑六、持續 1.2 秒的固定局部時停。敵方移動／輸入／攻擊／施法進度、局部冷卻、狀態／盾／增益／持續傷害／排程與敌彈暫停；對決、火圈及時停期限繼續。施法者對區內敵人的命中最多排隊 64 發，滿額不洩漏即時傷害；到期依序結算，死亡／換區／換回合取消。重疊只停一次，双方時停期限仍前進。灰階環界、恢復裂紋和雙模型畫面未驗收。",
+          "templates": [
+            "tpl-effect-sequence",
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前立即结算；需與時停共用待結算佇列。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔歐拉終結拳〕",
+          "description": "【本次玩法】承太郎拍團體照：全區暫停，攝影師自己也必須定點擺姿勢\n0.4 秒起手的單次近距離重拳；結算時重驗同目標三單位與正面 120 度。時停內自動進入 R 的同一條有限命中佇列，獨立支付魔力及冷卻。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "e43a3e27d84685644d0501d009c5335eaed34523ede5b5aabff68f05a33b4fda",
+      "patchSha256": "eb53b99e481447cc2c72fd0f682f7d956e3659b8e5c7aee3026bdaa34e77f60e"
+    },
+    {
+      "number": "05",
+      "name": "洛克人",
+      "signature": "過熱機器人：砲擊把自己燒到跑不動，排氣拿敵人當散熱片",
+      "closest": "35",
+      "difference": "洛克人消耗過熱換排氣；炭治郎在水火間分配呼吸與短暫負擔。",
+      "version": 1,
+      "group": "rewrite",
+      "combos": [
+        {
+          "source": "Q",
+          "target": "W",
+          "metric": {
+            "actor": "foe",
+            "field": "hp"
+          },
+          "expect": "decrease",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "W",
+            "kind": "consumeStatus"
+          }
+        },
+        {
+          "source": "W",
+          "target": "E",
+          "metric": {
+            "actor": "caster",
+            "field": "shield",
+            "sample": "max"
+          },
+          "expect": "increase",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "PASSIVE",
+            "kind": "shield"
+          }
+        }
+      ],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需共用武器能源、恢復與切換保留；預覽沿用 GGD 魔力。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔武器能源管理〕",
+          "description": "【核准惡搞改編】Q 或 R 開火後散熱器卡住，自身減速40%四秒；排氣或冷卻才能解除。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前固定起手；需按住／放開與分段蓄力。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "洛克砲",
+          "description": "【核准惡搞改編】小鋼砲直線中級魔法傷害；開砲有過熱代價。",
+          "templates": [
+            "tpl-line-strike"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "Metal Blade 的方向與刀刃模型待補。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "Metal Blade",
+          "description": "【核准惡搞改編】散熱排氣：消耗自己的過熱，才對周圍三格敵人造成小級傷害並回復自身8%魔力；沒熱就吹冷氣。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "缺再次輸入射出剩餘葉片及護盾剩餘量換算。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "Leaf Shield",
+          "description": "【核准惡搞改編】滑行到指定點；排氣後四秒內再由被動給自己120護盾。",
+          "templates": [
+            "tpl-blink"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "彈種固定時序及整套共享總預算需補。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔全武裝齊射〕",
+          "description": "【核准惡搞改編】三發砲彈每0.35秒追著指定敵人結算極小傷害；可用排氣解過熱。",
+          "templates": [
+            "tpl-lock-combo"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "僅自身攻速增益；需 Q 技能版本切換、圖示與共用冷卻。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔特殊武器切換〕",
+          "description": "【核准惡搞改編】關機保固：180護盾三秒；有過熱時護盾仍不解除減速，請自己找W。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "2ce7e10457c93f6750e7953fc71ae1f91a10b3f82e45685e70cb9f95b27e0b22",
+      "patchSha256": "e50ce76f1469d95705ee1137858f2dbc57ef11ace9d9a0e6f9766774d283ca40"
+    },
+    {
+      "number": "06",
+      "name": "卡比",
+      "signature": "吃撐二選一：把對手當午餐，吐出去打人或吞下去補血",
+      "closest": "05",
+      "difference": "卡比一次吃飽同時鎖住兩種兌換；不是攻擊後自動附傷。",
+      "version": 1,
+      "group": "rewrite",
+      "combos": [
+        {
+          "source": "Q",
+          "target": "W",
+          "metric": {
+            "actor": "foe",
+            "field": "hp"
+          },
+          "expect": "decrease",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "W",
+            "kind": "consumeStatus"
+          }
+        },
+        {
+          "source": "Q",
+          "target": "EX",
+          "metric": {
+            "actor": "caster",
+            "field": "hp"
+          },
+          "expect": "increase",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "EX",
+            "kind": "consumeStatus"
+          }
+        }
+      ],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "免死只是驗收底稿；需脫戰漸進回血且受擊中斷。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔圓滾滾的韌性〕",
+          "description": "【核准惡搞改編】Q進食成功施法後取得一份食材四秒；刷新一份，不累積無限餐點。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "不是錐形吸入與含住；需吞入持有狀態、單目標釋放。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "吸入",
+          "description": "【核准惡搞改編】把指定敵人拉到身前1.5格，自己吃撐減速40%兩秒；不消滅敵方英雄。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前固定星光線；需持有物判斷與安全吐出。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "吐出",
+          "description": "【核准惡搞改編】吐星星：消耗自己食材，對指定敵人小級打擊並推開四格；消耗後不能立刻拿同一份補血。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需石頭形態、禁移動與禁施法，護盾不足以代表變石。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "石頭",
+          "description": "【核准惡搞改編】圓滾滾飄走，合法瞬移；不複製對手模型或技能。",
+          "templates": [
+            "tpl-blink"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "巨劍造型待補；目前四段直線物理波。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "超級巨劍",
+          "description": "【核准惡搞改編】鍋蓋落地：0.7秒後重選落點兩格敵人造成中級傷害；跑開即可躲。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "固定魔法攻擊供預覽；需三技能白名單、暫存副本、死亡還原。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "複製能力",
+          "description": "【核准惡搞改編】消化：消耗同一份食材回復240生命；這回合的星星就當午餐吃掉。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "d046bd8723e61ff047c88996822133438eb1c9b6f876452ac1771e95df07a74e",
+      "patchSha256": "119ed1f170a85d8ed83e39603411ca62af2ad4521bce6d97ab8ffb3599717203"
+    },
+    {
+      "number": "07",
+      "name": "西索",
+      "signature": "伸縮自在的口香糖：先黏、再推遠，拉長了才像在打人",
+      "closest": "08",
+      "difference": "西索操縱敵人距離；米卡莎花時間補氣後移動並斬擊。",
+      "version": 1,
+      "group": "rewrite",
+      "combos": [
+        {
+          "source": "Q",
+          "target": "W",
+          "metric": {
+            "actor": "foe",
+            "field": "distance:caster"
+          },
+          "expect": "decrease",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "W",
+            "kind": "consumeStatus"
+          },
+          "setup": {
+            "foe": {
+              "x": 5,
+              "z": 0
+            }
+          }
+        },
+        {
+          "source": "E",
+          "target": "W",
+          "metric": {
+            "actor": "foe",
+            "field": "hp"
+          },
+          "expect": "decrease",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "W",
+            "kind": "damage",
+            "conditionalOnly": true
+          },
+          "beforeSteps": [
+            {
+              "kind": "cast",
+              "slot": "Q",
+              "waitSec": 0.3
+            }
+          ]
+        }
+      ],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需不同技能序列及下一次牌擊消耗。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔魔術師的節奏〕",
+          "description": "【核准惡搞改編】自己真正施加控制後得到60護盾一秒，每三秒一次；表演翻車仍會掉血。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "三發為落點散射；需扇形牌彈與同目標遞減。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔撲克牌連射〕",
+          "description": "【核准惡搞改編】把自己的口香糖黏上敵人四秒，減速20%；別人的糖不算。",
+          "templates": [
+            "tpl-single-strike"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "只有短暫鎖足；需有端點的彈性連線及斷線規則。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "伸縮自在的愛",
+          "description": "【核准惡搞改編】收線：只有自己黏過的敵人才被拉至身前；起手距離超過四格還多一次小級傷害。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "僅敵人抓投；需錨點拉動自己與敵人牽引的分支。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔收線〕",
+          "description": "【核准惡搞改編】先將敵人推遠四格，替口香糖上弦；這招不自帶傷害。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前單次區域傷害；需最多兩條额外念線及一次中心牽引。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔彈性殺陣〕",
+          "description": "【核准惡搞改編】收表演費：中級打擊；仍黏著自己的糖時定身一秒，控制可以被淨化。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "僅短效移速；需假陷阱／表面偽裝及敵我顯示隔離。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "輕薄的假象",
+          "description": "【核准惡搞改編】魔術師換位離場，不留假的可攻擊分身。",
+          "templates": [
+            "tpl-blink"
+          ]
+        }
+      },
+      "compiledSha256": "80c4e0f4d1de3ab34101fe55682e64187f695af21fcc18201f47b39ddc43dfce",
+      "patchSha256": "0bdb3bf2a6bdcfb02a66aca9b5b11cb2ace6885eceadfc46503038412bc89740"
+    },
+    {
+      "number": "08",
+      "name": "米卡莎",
+      "signature": "瓦斯費先付：原地換罐挨打，補氣後的斬擊才有第二刀",
+      "closest": "34",
+      "difference": "補氣會把自己鎖在原地；高速婆婆是高速與煞停的攻防交換。",
+      "version": 1,
+      "group": "rewrite",
+      "combos": [
+        {
+          "source": "E",
+          "target": "Q",
+          "metric": {
+            "actor": "foe",
+            "field": "hp"
+          },
+          "expect": "decrease",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "Q",
+            "kind": "damage",
+            "conditionalOnly": true
+          }
+        },
+        {
+          "source": "W",
+          "target": "R",
+          "metric": {
+            "actor": "caster",
+            "field": "mana"
+          },
+          "expect": "increase",
+          "waitSec": 0.8,
+          "observeSec": 0.4,
+          "remove": {
+            "slot": "R",
+            "kind": "restore",
+            "conditionalOnly": true
+          },
+          "setup": {
+            "caster": {
+              "manaPct": 0.4
+            }
+          }
+        }
+      ],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需有效閃避事件、內置冷卻與下一刀增傷。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔阿卡曼戰鬥直覺〕",
+          "description": "【核准惡搞改編】成功位移後得到80護盾一秒，每三秒一次；這是安全繩保險，不是無敵。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "缺刀刃耐久。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔雙刃斬擊〕",
+          "description": "【核准惡搞改編】近身小級刀擊；四秒內換過E瓦斯罐才追加一刀極小物理傷害。",
+          "templates": [
+            "tpl-single-strike",
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需合法場景錨點、鉤索路径、氣體消耗；不是自由跳躍。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "立體機動裝置",
+          "description": "【核准惡搞改編】鋼索斜飛：沿指定方向前進三格，沿途敵人各吃一次極小刀擊。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需換刃及氣體資源／控制中斷。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔補給與換刃〕",
+          "description": "【核准惡搞改編】換瓦斯罐：自身定身0.7秒，回復15%魔力；敵人可以趁換罐進攻。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "兩發落點爆炸；需雷槍投射物、黏附與延遲引爆。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "雷槍",
+          "description": "【核准惡搞改編】報銷刀片：指定敵人四段極小斬擊；四秒內用過W再退回5%魔力。",
+          "templates": [
+            "tpl-lock-combo",
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前直線；需錨點弧線與路徑失效停止。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔立體機動・迴旋斬〕",
+          "description": "【核准惡搞改編】脫離危險到合法施法點，沒有免費補瓦斯。",
+          "templates": [
+            "tpl-blink"
+          ]
+        }
+      },
+      "compiledSha256": "962296fe3a7de3427a487022a87bfa0e7b50e1bf7304d6dc465337e3e65e5605",
+      "patchSha256": "daf6d7e2cd81030e42e05b7394dab3d1c2f8372bfe9cf5b4cd30e022ba48ca88"
+    },
+    {
+      "number": "09",
+      "name": "赫蘿",
+      "signature": "賢狼保險：拿自己的血當保費，快破產時才開出大額理賠",
+      "closest": "21",
+      "difference": "赫蘿以自己健康作保；小圓累積友軍有效保護後兌換希望。",
+      "version": 1,
+      "group": "rewrite",
+      "combos": [
+        {
+          "source": "W",
+          "target": "E",
+          "metric": {
+            "actor": "ally",
+            "field": "hp"
+          },
+          "expect": "increase",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "E",
+            "kind": "heal",
+            "conditionalOnly": true
+          },
+          "setup": {
+            "caster": {
+              "hpPct": 0.6
+            }
+          }
+        },
+        {
+          "source": "W",
+          "target": "R",
+          "metric": {
+            "actor": "caster",
+            "field": "hp"
+          },
+          "expect": "increase",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "R",
+            "kind": "heal"
+          },
+          "setup": {
+            "caster": {
+              "hpPct": 1
+            }
+          },
+          "note": "保費造成真實生命缺口，R治療只填實際缺口。"
+        }
+      ],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需助攻一次性籌碼，上限三枚。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔賢狼的眼光〕",
+          "description": "【核准惡搞改編】隊友實際受傷後，自己回復4%魔力，每三秒一次；不是鼓勵站著白挨打的回血光環。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "狼影造型待補。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔狼牙警告〕",
+          "description": "【核准惡搞改編】禁止退貨：敵方小級魔法傷害並受療減半三秒。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "預覽只回復 10% 魔力；需籌碼消耗與每回合三次戰鬥金幣交易。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔行商議價〕",
+          "description": "【核准惡搞改編】墊付保費：自己付最大生命15%但至少留1HP，指定隊友回復160。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前自身；需指定友軍盾與加速。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔麥穗庇護〕",
+          "description": "【核准惡搞改編】理賠審核：隊友得到120護盾；自己生命低於50%時再追加240治療。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前 4 秒 AD／移速；需狼形態、碰撞調整、Q 替換及 W 禁用。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "賢狼真身",
+          "description": "【核准惡搞改編】先救保險公司：自己回復220生命與20%魔力；不改隊友帳戶。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前自身固定盾；需扣除剩餘籌碼並擴展附近友軍。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔豐收的約定〕",
+          "description": "【核准惡搞改編】售後服務：淨化指定隊友最多三項負面；自己減速30%兩秒去跑腿。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "38ced51817a261ace6f004d3eecb9bc132a79b5e072c6dbcf6935883b3540037",
+      "patchSha256": "a26f5a91fbda02a5f10e11e16b9e1c8e4a429fd297919ebe58ce4f86b05523b3"
+    },
+    {
+      "number": "10",
+      "name": "魯路修",
+      "signature": "Zero遙控上班：敵人先點名，隊友加速幹活，自己慢半拍開會",
+      "closest": "01",
+      "difference": "魯路修把發令成本留給自己；遊戲用真召喚與陷阱佈局。",
+      "version": 1,
+      "group": "rewrite",
+      "combos": [
+        {
+          "source": "Q",
+          "target": "W",
+          "metric": {
+            "actor": "ally",
+            "field": "z"
+          },
+          "expect": "increase",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "W",
+            "kind": "applyStatus",
+            "conditionalOnly": true
+          },
+          "targetSteps": [
+            {
+              "kind": "cast",
+              "slot": "W",
+              "waitSec": 0.3
+            },
+            {
+              "kind": "move",
+              "actor": "ally",
+              "point": {
+                "x": 0,
+                "z": 6
+              },
+              "waitSec": 0.5
+            }
+          ]
+        },
+        {
+          "source": "W",
+          "target": "R",
+          "metric": {
+            "actor": "foe",
+            "field": "status:fear"
+          },
+          "expect": "increase",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "R",
+            "kind": "delayed",
+            "conditionalOnly": true
+          }
+        }
+      ],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需友軍命中戰術標記與施法去重指揮層數。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔戰局推演〕",
+          "description": "【核准惡搞改編】發出W命令後自己減速50%兩秒；隊友衝鋒，總指揮還在開會。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "缺戰術標記額外傷害。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔戰術射擊〕",
+          "description": "【核准惡搞改編】先點名：指定敵人減速25%三秒；並不永久控制對方。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "固定緩速；需標記與下一次友軍命中消耗。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔集中火力〕",
+          "description": "【核准惡搞改編】指定隊友攻擊力+20三秒；四秒內點名過Q再增加移速40%。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前只加速自身；需朝安全方向移動的友軍條件。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔撤退指令〕",
+          "description": "【核准惡搞改編】遠端加班保險，指定隊友180護盾三秒。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "單體 0.8 秒暈眩不能代替 Geass；需視線、強制合法移動與每目標每回合成功一次。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "絕對遵守的 Geass",
+          "description": "【核准惡搞改編】命令執行後才能喊撤退：最近四秒用過W，自己周圍三格敵人恐懼0.8秒。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "缺指揮層數消耗。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔Checkmate〕",
+          "description": "【核准惡搞改編】總指揮緊急離席，瞬移到合法指定點。",
+          "templates": [
+            "tpl-blink"
+          ]
+        }
+      },
+      "compiledSha256": "6dda559d2537255f6183a45b942c7508a3cc80032156c958f5113a636044d336",
+      "patchSha256": "4d26006de5d031135cd07508a4fd8dad1fe39d7b1b3d0f7b05d5135f99b102bb"
+    },
+    {
+      "number": "11",
+      "name": "利姆路",
+      "signature": "史萊姆試吃會：真的挨過物理或魔法，才能分別吐出不同口味",
+      "closest": "06",
+      "difference": "利姆路按來襲傷害型別取樣；卡比主動吃一份後選吐出或消化。",
+      "version": 1,
+      "group": "rewrite",
+      "combos": [
+        {
+          "source": "E",
+          "target": "Q",
+          "metric": {
+            "actor": "foe",
+            "field": "hp"
+          },
+          "expect": "decrease",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "Q",
+            "kind": "consumeStatus"
+          },
+          "sourceActor": "foe",
+          "sourceTarget": "caster"
+        },
+        {
+          "source": "W",
+          "target": "E",
+          "metric": {
+            "actor": "foe",
+            "field": "x"
+          },
+          "expect": "increase",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "E",
+            "kind": "consumeStatus"
+          },
+          "sourceActor": "foe",
+          "sourceTarget": "caster"
+        }
+      ],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需最近受擊類型分析及同時只留一種減傷結果。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "大賢者",
+          "description": "【核准惡搞改編】受到物理傷害留物理樣本、魔法傷害留魔法樣本四秒，兩口味分開；真伤不供樣本。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需穿透人數上限及單彈命中去重。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "水刃",
+          "description": "【核准惡搞改編】魔法口味：小級魔法打擊，消耗自己的魔法樣本才追加小級魔法傷害。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "護盾不會吸收或刪除敵彈；需白名單投射物與樣本持有。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "捕食者",
+          "description": "【核准惡搞改編】變果凍，120護盾三秒；樣本標記本身並非魔法免疫。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需人形／史萊姆形態、普攻替換與生命冷卻保留。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "擬態",
+          "description": "【核准惡搞改編】物理口味：小級物理打擊，消耗自己的物理樣本才把敵人推開三格。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "固定 3 秒黑炎可作基本區域驗收；黑炎色覆寫。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "黑炎",
+          "description": "【核准惡搞改編】綜合口味：兩份樣本各可換120生命，沒有的口味不出餐；每份只消耗一次。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "固定攻擊不是能力副本；需樣本版本、消耗與禁止遞迴。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔解析完成・能力再現〕",
+          "description": "【核准惡搞改編】縮成一坨跑掉；不複製敵人的技能。",
+          "templates": [
+            "tpl-blink"
+          ]
+        }
+      },
+      "compiledSha256": "b46d0887a0a530a3cc590ad7919a873fe1ec529b907f9cea8a2a321707e74c73",
+      "patchSha256": "4718e4c30955161936c160f5dd2b380564044861430745b6998da1d240611236"
+    },
+    {
+      "number": "12",
+      "name": "衛宮士郎",
+      "signature": "投影保固：山寨盾真的碎了，才能把退貨單投影成第二把劍",
+      "closest": "31",
+      "difference": "士郎要先損失真正護盾；SUN樂靠短窗格擋與實際移動閃避。",
+      "version": 1,
+      "group": "rewrite",
+      "combos": [
+        {
+          "source": "W",
+          "target": "Q",
+          "metric": {
+            "actor": "foe",
+            "field": "hp"
+          },
+          "expect": "decrease",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "Q",
+            "kind": "consumeStatus"
+          },
+          "sourceSteps": [
+            {
+              "kind": "cast",
+              "slot": "W",
+              "waitSec": 0.2
+            },
+            {
+              "kind": "cast",
+              "actor": "foe",
+              "slot": "Q",
+              "target": "caster",
+              "waitSec": 0.2
+            },
+            {
+              "kind": "cast",
+              "actor": "foe",
+              "slot": "Q",
+              "target": "caster",
+              "waitSec": 0.2
+            },
+            {
+              "kind": "cast",
+              "actor": "foe",
+              "slot": "Q",
+              "target": "caster",
+              "waitSec": 0.2
+            },
+            {
+              "kind": "cast",
+              "actor": "foe",
+              "slot": "Q",
+              "target": "caster",
+              "waitSec": 0.2
+            },
+            {
+              "kind": "cast",
+              "actor": "foe",
+              "slot": "Q",
+              "target": "caster",
+              "waitSec": 0.2
+            }
+          ],
+          "sourceIndexes": [
+            0
+          ],
+          "responseIndex": 6
+        },
+        {
+          "source": "W",
+          "target": "EX",
+          "metric": {
+            "actor": "caster",
+            "field": "hp"
+          },
+          "expect": "increase",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "EX",
+            "kind": "consumeStatus"
+          },
+          "sourceSteps": [
+            {
+              "kind": "cast",
+              "slot": "W",
+              "waitSec": 0.2
+            },
+            {
+              "kind": "cast",
+              "actor": "foe",
+              "slot": "Q",
+              "target": "caster",
+              "waitSec": 0.2
+            },
+            {
+              "kind": "cast",
+              "actor": "foe",
+              "slot": "Q",
+              "target": "caster",
+              "waitSec": 0.2
+            },
+            {
+              "kind": "cast",
+              "actor": "foe",
+              "slot": "Q",
+              "target": "caster",
+              "waitSec": 0.2
+            },
+            {
+              "kind": "cast",
+              "actor": "foe",
+              "slot": "Q",
+              "target": "caster",
+              "waitSec": 0.2
+            },
+            {
+              "kind": "cast",
+              "actor": "foe",
+              "slot": "Q",
+              "target": "caster",
+              "waitSec": 0.2
+            }
+          ],
+          "sourceIndexes": [
+            0
+          ],
+          "responseIndex": 6
+        }
+      ],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需近戰解析層與投影最低資源消耗。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔武器解析〕",
+          "description": "【核准惡搞改編】自己的護盾實際破裂後取得保固單四秒，每兩秒一次；空放護盾不給。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "雙劍掛點與交叉斬動畫待製。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "干將・莫邪",
+          "description": "【核准惡搞改編】投影小刀小級物理打擊；消耗保固單追加小級劍擊並回復5%魔力。",
+          "templates": [
+            "tpl-single-strike",
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前定點三發落劍；需按方向投影飛劍。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔投影・飛劍〕",
+          "description": "【核准惡搞改編】廉價投影盾：只有40吸收量、持續三秒。敵人不打破就拿不到退貨單。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "缺下一次近戰強化。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔強化・踏步〕",
+          "description": "【核准惡搞改編】把鍋鏟當劍丟：小級打擊並定身0.6秒。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前領域傷害；需領域内 W 強化、投影劍生成與退出還原。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "無限劍製",
+          "description": "【核准惡搞改編】廚房劍雨，三發小級物理傷害；不召喚永久武器庫。",
+          "templates": [
+            "tpl-random-barrage"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需一次正面迎擊成功後反擊窗口。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔投影・迎擊〕",
+          "description": "【核准惡搞改編】保固也能折現：消耗同一張保固單回復220生命，和Q只能選一邊。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "87f3c3ea343cc083163eed51fab9ad9b5cdabce22040b4db51d90390a3111f5a",
+      "patchSha256": "124f7c1a2fbeb3e48f1b1831307e942c45983a0589358406a4e9f5dce5859dd6"
+    },
+    {
+      "number": "13",
+      "name": "朝田詩乃",
+      "signature": "自拍狙擊：架好相機才有大頭照，嫌臉太大就把人推遠",
+      "closest": "18",
+      "difference": "詩乃讀射擊距離與完成架槍；金閃閃讀敵人魔力餘額。",
+      "version": 1,
+      "group": "rewrite",
+      "combos": [
+        {
+          "source": "W",
+          "target": "Q",
+          "metric": {
+            "actor": "foe",
+            "field": "hp"
+          },
+          "expect": "decrease",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "Q",
+            "kind": "consumeStatus"
+          }
+        },
+        {
+          "source": "E",
+          "target": "R",
+          "metric": {
+            "actor": "foe",
+            "field": "hp"
+          },
+          "expect": "decrease",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "R",
+            "kind": "damage",
+            "conditionalOnly": true
+          }
+        }
+      ],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需静止瞄準層與移動受傷衰退。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔狙擊專注〕",
+          "description": "【核准惡搞改編】W架槍後0.6秒才取得焦點四秒；沒有瞬間瞄準。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "固定起手分段線；需蓄力、射線掩體與瞄準層增傷。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔Hecate II・精準射擊〕",
+          "description": "【核准惡搞改編】證件照：小級射擊，消耗完成的焦點再追加中級物理傷害。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前攻速增益；需射界 UI、合法可見敵人的觀測標記。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔觀測射界〕",
+          "description": "【核准惡搞改編】架腳架：自己定身0.7秒並取得80護盾；P在架穩後給焦點。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "翻滾應為貼地移動且清空瞄準，目前是低弧跳躍。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔戰術翻滾〕",
+          "description": "【核准惡搞改編】鏡頭裝不下：將敌人推遠四格，不自帶傷害。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需單發高傷害射線、較長瞄準與移動取消。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔Hecate II・決定性一槍〕",
+          "description": "【核准惡搞改編】遠景照：小級物理傷害，起手距離超過四格追加中級傷害；貼臉不算遠景。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "缺小幅後退位移。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔副武器應急射擊〕",
+          "description": "【核准惡搞改編】背著腳架撤離合法落點，不洗掉Q冷卻。",
+          "templates": [
+            "tpl-blink"
+          ]
+        }
+      },
+      "compiledSha256": "d251741fec060b39049d3eeba6e54753b3563d14b1d760debc2acc2ddac49331",
+      "patchSha256": "1a59c53bba4221b18fbaa4744f8f48ba83e5bb0900fab237158ff22102220932"
+    },
+    {
+      "number": "14",
+      "name": "殺老師",
+      "signature": "改作業的殺老師：先讓學生看不清，再把錯題收回換全班補血",
+      "closest": "26",
+      "difference": "殺老師回收自己施加的致盲來補隊；柯南收集敵方事件後宣布真相。",
+      "version": 1,
+      "group": "rewrite",
+      "combos": [
+        {
+          "source": "Q",
+          "target": "W",
+          "metric": {
+            "actor": "ally",
+            "field": "hp"
+          },
+          "expect": "increase",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "W",
+            "kind": "consumeStatus"
+          }
+        },
+        {
+          "source": "Q",
+          "target": "E",
+          "metric": {
+            "actor": "caster",
+            "field": "distance:foe"
+          },
+          "expect": "increase",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "PASSIVE",
+            "kind": "applyStatus"
+          },
+          "targetSteps": [
+            {
+              "kind": "move",
+              "point": {
+                "x": -5,
+                "z": 0
+              },
+              "waitSec": 0.4
+            }
+          ]
+        }
+      ],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需按敵人技能 ID 適應，不是所有受擊反擊。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔教師的觀察〕",
+          "description": "【核准惡搞改編】自己施加控制後，移速增加20%兩秒，每三秒一次；趕著批下一份。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "觸手多掛點與整招觸發上限待補。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔觸手批改〕",
+          "description": "【核准惡搞改編】零分粉筆：敵人小級魔法傷害，普攻失手40%三秒。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "缺到達終點後的友軍加速。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔高速授課〕",
+          "description": "【核准惡搞改編】發還考卷：消耗自己給敵人的致盲，解除他的視力問題；自己周圍三格友軍各回復160。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前立即回血；需分段再生與受控中止。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔觸手再生〕",
+          "description": "【核准惡搞改編】高速巡堂移動到合法落點，沒有保證閃避。",
+          "templates": [
+            "tpl-blink"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需球體變形、禁移動禁施法與限時防禦；目前只有盾。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "完全防禦形態",
+          "description": "【核准惡搞改編】下課前小考：三次極小魔法打擊；同目標死亡即停止。",
+          "templates": [
+            "tpl-lock-combo"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "三個落點固定脈衝；需本體依序定位及殘像對齊。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔分身式教學〕",
+          "description": "【核准惡搞改編】補習班保護：給隊友180護盾；自己慢30%兩秒去擦黑板。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "d6590607e83929d19f9fb36630c0a33f077602efacc3cca189aed2876c0f9263",
+      "patchSha256": "9cd2f77229153d344ebd6d886feccb011e2e7152bfab57b01974926c3036ea7b"
+    },
+    {
+      "number": "15",
+      "name": "比利海靈頓",
+      "signature": "兄貴先護弟：保護队友再用摔角報銷醫藥費",
+      "closest": "36",
+      "difference": "比利保隊友後自己回血；蘭斯把仇恨拉向自己供隊友撤退。",
+      "version": 1,
+      "group": "rewrite",
+      "combos": [
+        {
+          "source": "W",
+          "target": "R",
+          "metric": {
+            "actor": "caster",
+            "field": "hp"
+          },
+          "expect": "increase",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "R",
+            "kind": "heal",
+            "conditionalOnly": true
+          }
+        },
+        {
+          "source": "Q",
+          "target": "EX",
+          "metric": {
+            "actor": "caster",
+            "field": "stat:armor"
+          },
+          "expect": "increase",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "EX",
+            "kind": "applyBuff",
+            "conditionalOnly": true
+          }
+        }
+      ],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需抓取成功／有效保護事件的氣勢資源。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔兄貴的氣勢〕",
+          "description": "【核准惡搞改編】隊友受傷時自己護甲魔抗各+15兩秒，每三秒一次。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "核對 Owner 原文與模擬／畫面後才可驗收。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔正面擒抱〕",
+          "description": "【核准惡搞改編】握手不要跑：敵人拉到身前1.5格。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "雙人摔角動作、抓取免疫與同步挂點須驗收。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔肌肉防線〕",
+          "description": "【核准惡搞改編】先罩小弟：指定隊友200護盾三秒；自己不偷領同一片盾。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需保護指定友軍與氣勢；目前自身。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔肩膀衝撞〕",
+          "description": "【核准惡搞改編】擠進人群：向前衝三格，沒有暗藏的衝撞傷害。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前單次投擲；需大摔技雙人動作同步與有限區域衝擊。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔兄貴背摔〕",
+          "description": "【核准惡搞改編】近身擂台重擊；四秒內先用過W保護隊友，自己回復240生命。",
+          "templates": [
+            "tpl-single-strike",
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需氣勢消耗及附近隊友；目前自身攻速與盾。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔兄弟站起來〕",
+          "description": "【核准惡搞改編】站在一起才壯：140護盾兩秒，最近四秒用過Q再加護甲魔抗各20。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "e4bc8eef24b0fbdf17bbab648f65650164061214a1e48d24c0569ff0e7f1310d",
+      "patchSha256": "5c379c51a1594c70976d50b2b18cce478c55ec8c2a014673de9dbac871994220"
+    },
+    {
+      "number": "16",
+      "name": "魔法少女☆伊莉雅",
+      "signature": "魔法少女換裝事故：穿近戰卡會丟掉魔攻，卸妝才退票",
+      "closest": "33",
+      "difference": "伊莉雅交換AD/AP；刀太交換移速與攻擊力並以重劍姿態回血。",
+      "version": 1,
+      "group": "rewrite",
+      "combos": [
+        {
+          "source": "W",
+          "target": "Q",
+          "metric": {
+            "actor": "foe",
+            "field": "hp"
+          },
+          "expect": "decrease",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "W",
+            "kind": "applyBuff"
+          }
+        },
+        {
+          "source": "W",
+          "target": "R",
+          "metric": {
+            "actor": "foe",
+            "field": "hp"
+          },
+          "expect": "increase",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "W",
+            "kind": "applyBuff"
+          }
+        }
+      ],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需不同魔法施放序列及一次强化消耗。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔紅寶石的支援〕",
+          "description": "【核准惡搞改編】施放EX準備卸妝時回復5%魔力，每三秒一次；並非普攻免費附傷。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "魔杖彈体待製；目前分段光路。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔魔力砲擊〕",
+          "description": "【核准惡搞改編】魔法拳：小級物理傷害加0.8AD；近戰服提供AD，仍遵守本遊戲的通用技能係數。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前全方向自身盾；需正面防壁。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔魔力防壁〕",
+          "description": "【核准惡搞改編】近戰職階裝填：三秒攻擊力+80、魔法攻擊力-20。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "有限落點跳躍，不是持續飛行。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔魔法少女飛行〕",
+          "description": "【核准惡搞改編】借你緞帶：指定隊友140護盾三秒，不假裝成換装。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前 AD／攻速；需 Saber 武裝、普攻与 Q 替換與還原。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "夢幻召喚・Saber",
+          "description": "【核准惡搞改編】魔法光束：中級魔法傷害加0.8AP；穿近戰服時這招會弱，選裝有取捨。",
+          "templates": [
+            "tpl-line-strike"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "限定展開為一次光束，可作基礎驗收；需寶具武器掛點。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "限定展開・Excalibur",
+          "description": "【核准惡搞改編】卸妝退票：消耗自己的職階增益還原攻擊力與魔法攻擊力，回復10%魔力；沒有衣服不退額外魔力。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "0ce9c3acba35ec93a16e0ccedaa37286d19bba8cca5afd93b10a571e93fb9033",
+      "patchSha256": "76d21d7e79e4d11c8337ce78eeb6a9b9843c44c598acad6514a82ec348b6999c"
+    },
+    {
+      "number": "17",
+      "name": "安茲·烏爾·恭",
+      "signature": "骨王年會：自己站住講幹話換魔攻，保鑣與提早散會救場",
+      "closest": "04",
+      "difference": "骨王限制的是自己的移動；承太郎會真實停止區域時間。",
+      "version": 1,
+      "group": "rewrite",
+      "combos": [
+        {
+          "source": "W",
+          "target": "R",
+          "metric": {
+            "actor": "foe",
+            "field": "hp"
+          },
+          "expect": "decrease",
+          "waitSec": 0.3,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "W",
+            "kind": "applyBuff"
+          }
+        },
+        {
+          "source": "W",
+          "target": "EX",
+          "metric": {
+            "actor": "caster",
+            "field": "hp"
+          },
+          "expect": "increase",
+          "waitSec": 0.3,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "EX",
+            "kind": "consumeStatus"
+          }
+        }
+      ],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需受控後控制抗性及冷卻；目前受傷反擊。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔情緒抑制〕",
+          "description": "【核准惡搞改編】R演說開始時獲得120護盾一秒，每五秒一次；護盾不等於免打斷。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "缺低生命有限追加與處決流程專測。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "心臟掌握",
+          "description": "【核准惡搞改編】例行業務魔法：小級魔法傷害加0.5AP。",
+          "templates": [
+            "tpl-line-strike"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "死亡騎士造型待製，代理採 thorne。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "死亡騎士",
+          "description": "【核准惡搞改編】會議室鎖門：自己定身兩秒，AP+70兩秒；可以施法，但不能逃跑。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "原設計只有傳送，模板帶抵達傷害，需審查這項改編。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "高階傳送",
+          "description": "【核准惡搞改編】請一名四秒保鑣，攻擊/生命倍率各0.3，最多兩名；死亡跟著散會。",
+          "templates": [
+            "tpl-summon-agent"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需長吟唱途中真正可中斷與落點預警。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "墜落天空",
+          "description": "【核准惡搞改編】0.8秒可中斷的魔法簡報，中級魔法傷害加0.8AP；趁會議加成放，敵人可控制打斷。",
+          "templates": [
+            "tpl-line-strike"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前立即範圍傷害；需倒數詛咒、標準處決、淨化與保命優先序。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "死亡是所有生命的終點",
+          "description": "【核准惡搞改編】提早散會：解除自己的會議定身才能取得240生命；若已坐完會，沒出席費。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "810b2dcc8ca4923ffbec3d7e1aab6b7fa89324efb6a78e30236335cc85d15099",
+      "patchSha256": "c037860a2ca20026e50336e02ed54be8bf4c7a7f05bcdf02e6ef9f0f50c45aff"
+    },
+    {
+      "number": "18",
+      "name": "吉爾伽美什",
+      "signature": "王之信用審查：先扣對手魔力，餘額不足才加收寶具手續費",
+      "closest": "13",
+      "difference": "金閃閃讀敵方魔力；詩乃讀距離與架槍焦點。",
+      "version": 1,
+      "group": "rewrite",
+      "combos": [
+        {
+          "source": "Q",
+          "target": "R",
+          "metric": {
+            "actor": "foe",
+            "field": "hp"
+          },
+          "expect": "decrease",
+          "waitSec": 0.2,
+          "observeSec": 0.3,
+          "remove": {
+            "slot": "R",
+            "kind": "damage",
+            "conditionalOnly": true
+          },
+          "setup": {
+            "foe": {
+              "manaPct": 0.51
+            }
+          }
+        },
+        {
+          "source": "Q",
+          "target": "W",
+          "metric": {
+            "actor": "caster",
+            "field": "shield",
+            "sample": "max"
+          },
+          "expect": "decrease",
+          "waitSec": 0.2,
+          "observeSec": 0.3,
+          "remove": {
+            "slot": "W",
+            "kind": "shield",
+            "conditionalOnly": true
+          },
+          "setup": {
+            "caster": {
+              "manaPct": 0.51
+            }
+          }
+        }
+      ],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需每次施法一次財庫能量與 EX 消耗。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔王的財庫〕",
+          "description": "【核准惡搞改編】R真正命中敵人後自己回復8%魔力，每次施法一次；空放不退款。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前三發落點打擊；需三門武器投射物及門的掛點。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "王之財寶",
+          "description": "【核准惡搞改編】刷卡驗資：指定敌人小級魔法傷害，另扣目標120魔力；不足只扣剩餘量。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "鎖足可作基礎控制；需超距解鎖、鎖鏈端點。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "天之鎖",
+          "description": "【核准惡搞改編】富人護盾：120護盾；自己魔力超過50%再加100護盾，同一來源採較大值不無限疊。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前全方向盾；缺正面條件。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔黃金甲冑〕",
+          "description": "【核准惡搞改編】排隊請後退：敵人推離三格，不再给一片無關的自己護盾。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "Ea 造型、蓄力層與單一總傷害預算需補。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "天地乖離開闢之星",
+          "description": "【核准惡搞改編】逾期手續費：中級魔法傷害，目標魔力低於50%再追加小級傷害。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "12 發已有限；需扣財庫能量及武器多樣外觀。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔王之財寶・齊射〕",
+          "description": "【核准惡搞改編】回收贈品：移除目標最近一項可驅散增益，魔法打擊小級。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "3e1c213a6455284dd86ffaae1a06636ef1fdfcd412f58dd9f354faa0185d9fbe",
+      "patchSha256": "f9145f37ce31042c766afc45675d6561d90e5c69723c09d3d33489cd034fee8a"
+    },
+    {
+      "number": "19",
+      "name": "桐谷和人",
+      "signature": "雙刀鍵盤鬼：Q後換W才退Q冷卻，無腦同鍵連點不報銷",
+      "closest": "02",
+      "difference": "桐人跨槽退冷卻；八神是同槽的三次獨立輸入窗口。",
+      "version": 1,
+      "group": "rewrite",
+      "combos": [
+        {
+          "source": "Q",
+          "target": "W",
+          "metric": {
+            "actor": "caster",
+            "field": "cooldown:Q"
+          },
+          "expect": "decrease",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "PASSIVE",
+            "kind": "modifyCooldown"
+          }
+        },
+        {
+          "source": "W",
+          "target": "EX",
+          "metric": {
+            "actor": "caster",
+            "field": "hp"
+          },
+          "expect": "increase",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "EX",
+            "kind": "heal",
+            "conditionalOnly": true
+          }
+        }
+      ],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需左右手交替命中、節奏衰退與攻速。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "二刀流",
+          "description": "【核准惡搞改編】W成功施法且四秒內用過Q，減少Q冷卻四秒；同按Q、隔太久W都不退。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需左右手掛點對應。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔雙劍交叉斬〕",
+          "description": "【核准惡搞改編】右手小級劍擊，實際冷卻留給W接續；仍支付自己的魔力。",
+          "templates": [
+            "tpl-single-strike"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需迎擊窗口與成功後下一刀加成。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔劍技招架〕",
+          "description": "【核准惡搞改編】左手小級劍擊；P只在Q→W時報銷Q冷卻，不直接給無敵。",
+          "templates": [
+            "tpl-single-strike"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需對目標的躍進斬、牆體與落點失效處理。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "Sonic Leap",
+          "description": "【核准惡搞改編】側步離場到合法落點，不自動重置雙刀。",
+          "templates": [
+            "tpl-blink"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "16 段已可配置；須證明每段重查距離、中斷後不再命中及總預算。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "Starburst Stream",
+          "description": "【核准惡搞改編】限量四連斬：四段極小傷害，最後不再乘一次段數。",
+          "templates": [
+            "tpl-lock-combo"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "模板 hitCount 上限 20，不能冒稱 27 連擊；需有序 27 段的共用模板擴充，不採兩個並行連擊拼接。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "The Eclipse",
+          "description": "【核准惡搞改編】左手忙完才包紮：回復100生命，四秒內用過W再回復120。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "1e76f167a725a5224cce0e06a2eb948107a688bf6aba77485f33bada41064665",
+      "patchSha256": "53e46427c5fe7759e660d5dbe44afedca97ef33aaf4c0bed8fe6023fd80ebb55"
+    },
+    {
+      "number": "20",
+      "name": "御坂美琴",
+      "signature": "御坂踢販賣機：交替電擊充電，連鎖後才掉出治療飲料",
+      "closest": null,
+      "difference": "保留已驗證核心，改編代價及可讀提示詳見各槽。",
+      "version": 2,
+      "group": "local-adaptation",
+      "combos": [
+        {
+          "source": "W",
+          "target": "E",
+          "metric": {
+            "actor": "caster",
+            "field": "hp"
+          },
+          "expect": "increase",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "E",
+            "kind": "heal",
+            "conditionalOnly": true
+          }
+        }
+      ],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需三層電荷及下一次強化技消耗。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔電荷累積〕",
+          "description": "【本次玩法】御坂踢販賣機：交替電擊充電，連鎖後才掉出治療飲料\n【修正行為】Q／W／R 實際扣除敵人生命時，與上一個成功技能不同才加一層電荷，上限三層；同次多目標／多跳只計一次。普攻、空招與只打掉盾不集氣。電荷與過載在回合重置。",
+          "templates": [
+            "tpl-mark-stacks",
+            "tpl-mark-stacks",
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需單道電擊與貫穿去重。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "電擊之槍",
+          "description": "【本次玩法】御坂踢販賣機：交替電擊充電，連鎖後才掉出治療飲料\n【修正行為】單一直線傷害，線內每位敵人一次。基礎長 6、寬 0.8 GGD 單位；過載每層增加長 0.5、寬 0.4，消耗全部已準備強化，實際使用時提示結果。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "模板主命中加鏈起點會對起點追加；需原設計整招同目標只命中一次。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔連鎖放電〕",
+          "description": "【本次玩法】御坂踢販賣機：交替電擊充電，連鎖後才掉出治療飲料\n【修正行為】只有一條連鎖，含起點共三名，起點不再多吃一筆單體傷害。過載每層多一名，最多六名；同一發不回訪，每跳間隔 0.12 秒。預選目標死亡／離場時從上一有效節點重選，無候選停止。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "鐵砂碎粒及破盾事件待補。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔鐵砂防壁〕",
+          "description": "【核准惡搞改編】販賣機不吐飲料就踢一下：120護盾三秒；最近四秒用過W連鎖放電，自己額外回復160生命。E不集電、不耗過載。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前四段線；需硬幣彈出、單發射線與整體傷害上限。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "超電磁砲",
+          "description": "【本次玩法】御坂踢販賣機：交替電擊充電，連鎖後才掉出治療飲料\n【修正行為】依 GGD 大級吟唱預警後，單一長 8、寬 1.2 的高傷害直線結算，每個敵人最多一筆；不消耗 Q／W 的過載準備。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "僅 AP 增益；需電荷扣除與 Q／W 指定版本強化。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔電磁過載〕",
+          "description": "【本次玩法】御坂踢販賣機：交替電擊充電，連鎖後才掉出治療飲料\n【修正行為】至少一層電荷才能啟動：提交先扣一層，瞬間結算消耗其餘並準備 1–3 層過載。只強化下一次 Q 或 W，按實際使用者消耗同一份強化；E／R 不消耗。重新充填會覆蓋舊準備，不疊加。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "d8f51213cb7386eaaf68dc7f1e815e2c68bd4acc4411812ffbc8d5a1c80363d7",
+      "patchSha256": "2b42591e6e9e6c7f5af42cbe7a85446d70d69a8d2cbd16540b8b3e386b3c3dd2"
+    },
+    {
+      "number": "21",
+      "name": "鹿目圓",
+      "signature": "小圓合約客服：有效救援才有希望，簽免死合約得短暫閉嘴",
+      "closest": null,
+      "difference": "保留已驗證核心，改編代價及可讀提示詳見各槽。",
+      "version": 3,
+      "group": "local-adaptation",
+      "combos": [],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需有效治療／吸收量計算希望，溢出不計。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔希望的連結〕",
+          "description": "【本次玩法】小圓合約客服：有效救援才有希望，簽免死合約得短暫閉嘴\n【修正行為】自己的治療實際恢復其他友軍生命、或自己給的護盾實際吸收敵對傷害時獲得一層希望，上限三層；同一傷害封包多片盾合計一次。滿血治療、零／過期盾、單純施放或刷新護盾及自我保護不計；希望回合清零。希望光效仍待畫面驗收。",
+          "templates": [
+            "tpl-mark-stacks",
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需魔法箭投射物。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔光之箭〕",
+          "description": "【本次玩法】小圓合約客服：有效救援才有希望，簽免死合約得短暫閉嘴\n【修正行為】發射一枚沿輸入方向直行、有限射程且首碰敵人即消失的魔法彈；只在實際碰撞時結算一次魔法傷害。箭形與粉白光效仍使用既有 arcane bolt 待製作／畫面驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前自身；需指定友軍及希望消耗。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔希望之弓〕",
+          "description": "【本次玩法】小圓合約客服：有效救援才有希望，簽免死合約得短暫閉嘴\n【修正行為】指定友軍（可含自身），結算時最多消耗一層希望，提供基礎 200 護盾；零層仍提供基礎 120 護盾（沿用全域階級倍率）。只給選中的目標，無效目標不扣希望。玫瑰花瓣盾仍待畫面驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前自身加速；需一項可淨化狀態移除。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔淨化之願〕",
+          "description": "【本次玩法】小圓合約客服：有效救援才有希望，簽免死合約得短暫閉嘴\n【修正行為】清除自身最新一項可淨化負面狀態，保留正面、不可驅散及其餘負面狀態；提供三秒 10% 移速。沒有可淨化狀態時仍可加速；沿用既有全域驅散開關。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "有限三波箭雨已對應；箭形資產待製。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔願望箭雨〕",
+          "description": "【本次玩法】小圓合約客服：有效救援才有希望，簽免死合約得短暫閉嘴\n【修正行為】指定地面區域共三波魔法傷害，每波相隔約 0.35 秒並重新判定區域內敵人；離開就不再受傷，稍後進入仍會被後續波次命中。箭形落點資產及連續畫面仍待驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "護盾不是友軍致死攔截；需限時保命印記與每目標每回合一次。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "圓環之理",
+          "description": "【本次玩法】小圓合約客服：有效救援才有希望，簽免死合約得短暫閉嘴\n新增代價：簽免死合約後自己沉默0.6秒；友軍的一次救命額度與原有效保護計數不變。\n【修正行為】為指定友軍（可含自身）掛五秒保命印記；護盾與減傷後首次致死傷害消耗印記，保留 5% 最大生命並短暫無敵 0.5 秒。同一目標／同名印記每回合最多救一次，不同施法者與重施都不能洗掉已用次數；過期未觸發可重施，回合重置。圓環原作演出仍待畫面驗收。",
+          "templates": [
+            "tpl-effect-sequence",
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "ae21792e18d64f3f17f2b7101e15f7c2e4ef370f915bae4af1b5400296cae166",
+      "patchSha256": "515a07cb1c7efca8219743e307193fdbeab81f672f8e420f0f0cca7c361e7991"
+    },
+    {
+      "number": "22",
+      "name": "菜月昴",
+      "signature": "昴的免死薪水：每回合只領一次，拿血幫隊友後自己哭著討拍",
+      "closest": "25",
+      "difference": "昴支付生命與一次免死；埼玉提購物袋使普攻不能用，再選收場或分菜。",
+      "version": 1,
+      "group": "rewrite",
+      "combos": [
+        {
+          "source": "W",
+          "target": "R",
+          "metric": {
+            "actor": "caster",
+            "field": "hp"
+          },
+          "expect": "increase",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "R",
+            "kind": "heal",
+            "conditionalOnly": true
+          },
+          "setup": {
+            "caster": {
+              "hpPct": 0.6
+            }
+          }
+        }
+      ],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "本場免死不是死亡回歸；需與 R／EX 共用存檔並合法顯示致死來源。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔記住這次失敗〕",
+          "description": "【核准惡搞改編】每回合一張免死卡，受致命傷消耗後保留15%生命並0.5秒免傷；無死亡回溯、無永久疊屬性。",
+          "templates": [
+            "tpl-mark-stacks"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "固定緩速不代表黑霧感官／命中干擾。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "Shamac",
+          "description": "【核准惡搞改編】我很有用：小級物理打擊，敵人減速20%兩秒。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "抓投是模板預覽；需鞭擊後小幅牽引，不應拋飛目標。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔鞭繩牽制〕",
+          "description": "【核准惡搞改編】逞強代班：自己付最大生命20%至少留1HP，队友拿220護盾三秒。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需自己及附近一名友軍。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔重新振作〕",
+          "description": "【核准惡搞改編】哭著找人：120護盾，自己減速20%兩秒，保護仍有代價。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前立即恢復 100 生命；需五秒位置生命快照、致死回溯與合法落點。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "死亡回歸",
+          "description": "【核准惡搞改編】討拍急救：回復100；生命低於50%再回復260。討拍時自己一秒不能普攻。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前立即恢復 80 生命；需主動消耗 R 同一快照且不得重置冷卻。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔重新選擇〕",
+          "description": "【核准惡搞改編】逃跑不算讀檔，瞬移到合法落點；不補回免死卡。",
+          "templates": [
+            "tpl-blink"
+          ]
+        }
+      },
+      "compiledSha256": "6b96e5943860fbe28e1f50c90353bd80a916aa200be214dd35c2dd72cc37575b",
+      "patchSha256": "92dafcacb2ba163041179483589e02507b8319c8525ccb56072ddb823c767535"
+    },
+    {
+      "number": "23",
+      "name": "坂田銀時",
+      "signature": "銀時偷喝草莓奶：偷閒存貨，喝奶怕被打斷，吐槽打斷別人",
+      "closest": null,
+      "difference": "保留已驗證核心，改編代價及可讀提示詳見各槽。",
+      "version": 2,
+      "group": "preserve-core",
+      "combos": [],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需脫戰保存一份補給給 W。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔糖分補給〕",
+          "description": "【本次玩法】銀時偷喝草莓奶：偷閒存貨，喝奶怕被打斷，吐槽打斷別人\n【修正行為】5 秒未攻擊、施法或參與敵對命中後保存一份補給，最多一份；W 提交消耗，回合重置。",
+          "templates": [
+            "tpl-mark-stacks",
+            "tpl-mark-stacks",
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需木刀近身弧形判定。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔洞爺湖・橫斬〕",
+          "description": "【本次玩法】銀時偷喝草莓奶：偷閒存貨，喝奶怕被打斷，吐槽打斷別人\n【修正行為】以輸入方向作半徑3的前方半圓木刀橫掃，每敵人一次；後方、友軍與範圍外不受傷。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需喝草莓牛奶動作、移動／受擊中斷。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔草莓牛奶休息時間〕",
+          "description": "【本次玩法】銀時偷喝草莓奶：偷閒存貨，喝奶怕被打斷，吐槽打斷別人\n【修正行為】消耗一份補給後飲用1秒，再恢復100/150/200/250生命；真正移動或受擊（含護盾／格擋命中）中斷，已付補給與冷卻不返還。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需招架成功後一次反擊窗口。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔萬事屋式反擊〕",
+          "description": "【本次玩法】銀時偷喝草莓奶：偷閒存貨，喝奶怕被打斷，吐槽打斷別人\n【修正行為】0.65秒內實際格擋一次物理或魔法命中，成功才取得2秒內下一次普攻的一次木刀追加反擊；其他護盾或格擋來源不授予，不自動尋敵。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "短期 AD＋移速對應基础强化；白夜叉動作待製。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔白夜叉〕",
+          "description": "【本次玩法】銀時偷喝草莓奶：偷閒存貨，喝奶怕被打斷，吐槽打斷別人\n【修正行為】白夜叉狀態維持4秒，近戰攻擊力+15%、移速極小級；到期還原來源，沒有永久變身。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "0.5 秒暈眩可測基本打斷；須限定可中斷施法與吐槽文字對齊。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔吐槽也是武器〕",
+          "description": "【本次玩法】銀時偷喝草莓奶：偷閒存貨，喝奶怕被打斷，吐槽打斷別人\n保留喝奶／打斷連動，以命中時吐槽提示辨識實際中斷嘗試。\n【修正行為】近身重擊後只取消存活目標仍在進行且可中斷的前搖；不附加暈眩、不重置冷卻、不撤銷已完成效果，同時顯示吐槽文字。",
+          "templates": [
+            "tpl-effect-sequence",
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "13fa86074e355490132e35b2dcd8fe5a987a4c9c799cc82736b14c1c8cff708d",
+      "patchSha256": "bcadd5044ac716b74bd792c185cc445ca3cbacfc6ab3b2e06cd86e3393dfc5df"
+    },
+    {
+      "number": "24",
+      "name": "奇犽",
+      "signature": "奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻",
+      "closest": null,
+      "difference": "保留已驗證核心，改編代價及可讀提示詳見各槽。",
+      "version": 3,
+      "group": "local-adaptation",
+      "combos": [],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需電力上限／脫戰充電；目前用標準魔力。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔電力儲備〕",
+          "description": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n【修正行為】具名電力初始／上限 10；三秒沒有普攻、施法、造成或受到敵對傷害後，每秒回一點。電光石火開啟期間及充電釋放後三秒不充電。回合重置；不再用普攻附傷冒充資源，魔力不支付此英雄技能。電量介面與電弧仍待畫面驗收。",
+          "templates": [
+            "tpl-mark-stacks",
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "短起手落點電擊對應基礎版。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "落雷",
+          "description": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n【修正行為】消耗兩點電力；指定半徑 1.5 的地面落點，約 0.4 秒後重新判定敵人並電擊一次。離開可躲過，後進入仍會命中。閃電專屬素材仍待畫面驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需貼地肢曲殘像與有效閃避事件。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "肢曲",
+          "description": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n【修正行為】消耗一點電力，向指向方向貼地側移 2.5；0.6 秒內提供 80% 普攻迴避（遵守 GGD 上限）。只有實際由此增益抽中的迴避補回兩點電力，單次肢曲限一次，供後續反擊使用。空放、敵人失手、其他迴避來源和無敵免傷不給電力；不再跳躍或落地傷害。殘像仍待畫面驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前固定 3 秒加速；需開關及持續扣電。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "電光石火",
+          "description": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n【修正行為】開啟消耗一點電力，每秒再消耗一點，開啟期間移速增加 30% 且停止充電；再次按下立即關閉。電力耗盡或被其他技能用光便卸下加速，關閉後重新等待充電。不是固定三秒增益。電流輪廓仍待畫面驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前攻速／移速；需受攻擊條件自動反應、限次扣電及循環防止。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "神速・疾風迅雷",
+          "description": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n【修正行為】開啟消耗一點電力，五秒內對距離四以內的敵人普攻命中或真正迴避事件自動反擊。共用三次額度與 0.5 秒間隔，每次須足額支付兩點電力。技能傷害、反擊衍生傷害、敵人失手、遠處攻擊均不觸發；雙方神速不會互相無限反擊。電擊動作仍待畫面驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "固定傷害；需消耗剩餘電力與低電力狀態。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔充電釋放〕",
+          "description": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n新增代價：放空電力後自己繳械一秒，不能普攻；原三秒充電封鎖保留。\n【修正行為】至少有一點電力才可施放，施法開始一次消耗全部剩餘電力，對自身半徑二內敌人造成中級魔法爆發；三秒低電力狀態禁止充電。既有加速在電力耗盡時解除。原文未指定傷害按電量倍率，此版傷害沿用全域中級倍率，電量是全額施法成本。近身電爆仍待畫面驗收。",
+          "templates": [
+            "tpl-effect-sequence",
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "1d6c30d299a4a7f9a7ad63099883a0820a7a581dce766ecfc922356a6722ad17",
+      "patchSha256": "134d5b020fdc282ceca2a298bb1d6f97639575fb4b36d084a551e1e43e3fbb4f"
+    },
+    {
+      "number": "25",
+      "name": "一拳超人",
+      "signature": "一拳特價日：提著菜不能普攻，放下購物袋才打得出認真拳",
+      "closest": "22",
+      "difference": "購物狀態有輸出或分菜兩種消費；不是失去一條命換固定補血。",
+      "version": 1,
+      "group": "rewrite",
+      "combos": [
+        {
+          "source": "W",
+          "target": "R",
+          "metric": {
+            "actor": "foe",
+            "field": "hp"
+          },
+          "expect": "decrease",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "R",
+            "kind": "consumeStatus"
+          }
+        },
+        {
+          "source": "W",
+          "target": "EX",
+          "metric": {
+            "actor": "ally",
+            "field": "hp"
+          },
+          "expect": "increase",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "EX",
+            "kind": "consumeStatus"
+          }
+        }
+      ],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需未攻擊時間與下一拳一次消耗。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔興趣使然的英雄〕",
+          "description": "【核准惡搞改編】用EX招呼隊友來分菜時回復8%魔力，每四秒一次；有沒有菜只決定EX能否治療。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "普通拳仍走標準傷害。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "普通拳",
+          "description": "【核准惡搞改編】普通拳小級物理傷害加0.8AD，不保證一拳秒殺。",
+          "templates": [
+            "tpl-single-strike"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需要整招總傷害預算；目前每段各自級距。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "連續普通拳",
+          "description": "【核准惡搞改編】超市衝刺：四秒自己移速+50%但不能普攻；雙手提菜的狀態只能消費一次。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "碰撞安全需場景驗收。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔趕上特賣〕",
+          "description": "【核准惡搞改編】抄近路買菜，瞬移到合法落點，仍遵守落點限制。",
+          "templates": [
+            "tpl-blink"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "四段衝擊波不等於單拳總結算；需高單擊預算與較長起手。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "認真系列・認真一拳",
+          "description": "【核准惡搞改編】放下菜再認真：普通小級打擊；消耗自己購物狀態才追加大級物理傷害，消耗後移速和繳械一起結束。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前移速增益；需左右連續側移與有限次有效迴避。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "認真系列・認真反覆橫跳",
+          "description": "【核准惡搞改編】分菜：消耗自己的購物狀態，指定隊友回復260；分完就不能拿同一袋打認真拳。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "938270bee3401700c49c67b0b46496df6ac14430518aee89657daa54b69ba17a",
+      "patchSha256": "cc0577ff192916c9cbde0a3fae5166bb6515696fd30b37e076297aa5178f8d81"
+    },
+    {
+      "number": "26",
+      "name": "名偵探柯南",
+      "signature": "柯南原地推理：觀察對方真實行為取證，說真相時自己站住",
+      "closest": null,
+      "difference": "保留已驗證核心，改編代價及可讀提示詳見各槽。",
+      "version": 3,
+      "group": "local-adaptation",
+      "combos": [],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需觀察線索、事件類型去重與三層上限。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔線索整理〕",
+          "description": "【本次玩法】柯南原地推理：觀察對方真實行為取證，說真相時自己站住\n【修正行為】觀察同對決、當前可見的敵方英雄：有效普攻命中、技能命中、實際治療、成功控制各為一種事件。每名敵人／每名觀察者各自記錄，同種事件每名敵人／回合只記一次，最多保存三條線索；只到回合結束，不因重複事件或不同命中目標再增加。R 消耗該敵人身上由自己蒐集的線索，已見種類仍保留到重置。護盾實際吸收計入有效命中；無敵、零傷、過量治療、免控、不可見、跨區及對決結束不計。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需足球單彈碰撞與腳踢動作。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "足球射擊",
+          "description": "【本次玩法】柯南原地推理：觀察對方真實行為取證，說真相時自己站住\n【修正行為】沿瞄準方向發射單枚實體彈，射程12、首個合法敵方碰撞一次物理傷害；偏離可閃避，到射程消失。暫用既有 bolt 的模型／特效，足球與踢球專用演出仍待替換及畫面驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "0.7 秒暈眩只是底稿；需受傷可喚醒的睡眠及針彈碰撞。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "手錶型麻醉槍",
+          "description": "【本次玩法】柯南原地推理：觀察對方真實行為取證，說真相時自己站住\n【修正行為】單枚直線麻醉彈首碰敵人後睡眠1.2秒，不額外造成傷害；受到後續實際HP傷害即提前醒來，只移除此睡眠，護盾吸收及零傷不喚醒。免控拒絕、未命中不睡眠；正常施法支付自己的魔力與冷卻。針與手錶演出仍使用代理彈待驗。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "僅 3 秒移速；需滑板加減速、急轉與碰撞狀態。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "渦輪引擎滑板",
+          "description": "【本次玩法】柯南原地推理：觀察對方真實行為取證，說真相時自己站住\n【修正行為】3秒滑行：移速提高50%，0.3秒加速、0.2秒煞車；急轉降到30%速度並漸進轉向。沿指令方向實際行進，碰撞地形／身體即停止，束縛或暈眩立即停下；到期回到普通移動，不把移速增益當作加減速狀態。專用滑板模型、尾跡與畫面仍待驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前緩速；需消耗線索、弱點標記及合法位置揭示。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔真相只有一個〕",
+          "description": "【本次玩法】柯南原地推理：觀察對方真實行為取證，說真相時自己站住\n新增代價：推理宣布時自己定身0.8秒；線索仍須觀察實際事件取得，不能自己造證據。\n【修正行為】指定同區敵人，至少需要一條由自己蒐集的線索；施法開始扣除該目標全部自己的線索，其他敵人／觀察者不變。4秒揭示該目標並降低15%護甲與魔抗，同一施法者重施只刷新、不疊加。到期或驅散後恢復原隱形規則，不延長／取消其隱形時鐘；只使用當前對決的伺服器戰鬥實體，沒有玩家私密資料。",
+          "templates": [
+            "tpl-effect-sequence",
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需吊帶錨點分支與有限拉動，不應預設摔投。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "伸縮吊帶",
+          "description": "【本次玩法】柯南原地推理：觀察對方真實行為取證，說真相時自己站住\n【修正行為】沿瞄準方向連接8格內首個合法可見敵人或地形錨點；敵人被拉向施法者，地形則拉動自己。最多移動4格一次，抵達前保留身體間距；碰撞、超距、死亡、跨區或對決結束中止，沒有摔投或落地傷害。空射、免控敵人與範圍外不拉動；空射仍支付本次施法消耗。專用吊帶／動作與畫面仍待驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "5c78ff41ec4adeb3b0933902b01c66d751ff09443a3f4ff42dfa903f1f657868",
+      "patchSha256": "3ab309389a2f5e72c98edf6342d07bc41dc7def0b66ea84812fbb5087188c46b"
+    },
+    {
+      "number": "27",
+      "name": "庫洛魔法使",
+      "signature": "庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾",
+      "closest": null,
+      "difference": "保留已驗證核心，改編代價及可讀提示詳見各槽。",
+      "version": 4,
+      "group": "local-adaptation",
+      "combos": [],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需不同牌序列三層與護盾消耗。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔卡牌連結〕",
+          "description": "【本次玩法】庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\n【修正行為】風 Q、樹 Q、W、E、R 完成施法後，與上一張卡不同即累積一層連結，上限三層；EX 只換牌不集氣。W 先消耗既有全部連結強化盾，再記入下一段牌序。回合開始重置連結與上一張牌。",
+          "templates": [
+            "tpl-mark-stacks",
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "風束推動缺 knockback；目前單體魔法。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "風牌",
+          "description": "【本次玩法】庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\n【修正行為】風牌對敵方造成小級魔法傷害並以 GGD 小級擊退推動；換成樹牌後 Q 改為 0.7 秒束縛。兩種模式使用同一個 Q 技能實例、冷卻與魔力。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前自身；需友軍選取。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "盾牌",
+          "description": "【本次玩法】庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\n【修正行為】為自己或指定友軍提供三秒護盾；結算時消耗既有全部連結（0–3），基礎盾量為 120 + 每層 20，再套用 GGD 等級成長。不同卡牌累積在此次結算後處理，不回頭強化同一片盾。敵方或超距施法不消耗連結。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "有限落點飛躍可預覽；翔牌武器姿態待補。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "翔牌",
+          "description": "【核准惡搞改編】翔牌改成短跳送工具：沿合法落點飛躍0.5秒，沒有傷害或無限飛行；用來追上風牌吹遠的敵人。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "AD／攻速强化不等於劍牌；需普攻替換、武器及還原。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "劍牌",
+          "description": "【核准惡搞改編】劍牌其實是短餐刀：四秒AD+15%、攻速+20%，普攻改為近身短距離；用樹牌留人再E接近，風牌可能把晚餐吹走。到期恢復原普攻距離，",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前固定樹牌鎖足；需風／樹 Q 版本切換，共享冷卻。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔換牌：風與樹〕",
+          "description": "【本次玩法】庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\n【修正行為】切換自身 Q 的風／樹模式，不直接攻擊或束縛敵人、不重置 Q 冷卻，也不重複收取 Q 魔力。換牌免費，採 GGD 極小冷卻；原施法未結束時不能插入切換。回合開始回復風牌。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "9f97a108c65159af1f21c8de3446957113b5f9aed8148e9ad5012ff8ea9a0ccf",
+      "patchSha256": "fd8169dd90e356a3c1db0691837205de96689064a5c7541dcb546cabb55b50e6"
+    },
+    {
+      "number": "28",
+      "name": "艾莉絲·伯雷亞斯·格雷拉特",
+      "signature": "艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊",
+      "closest": null,
+      "difference": "保留已驗證核心，改編代價及可讀提示詳見各槽。",
+      "version": 2,
+      "group": "local-adaptation",
+      "combos": [],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需對剛交鋒目標的首次命中及每目標冷卻。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔劍神流・先發制人〕",
+          "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n每個敵人分開記交鋒：有效普攻／技能扣血或護盾開始二秒先手窗口，首個三格內命中追加一次極小物理傷害；同目標八秒冷卻。交鋒四秒無有效互動才重新開始，持續纏鬥不重開窗口；自己命中另留二秒追擊標記。不同施法者互不借用標記；零值、免疫與普通觸發傷害不建立交鋒。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "短踏步可以預覽；需武器斬擊時點。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔猛進斬〕",
+          "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n向輸入方向踏進一格後，才從實際終點揮一次前方近身弧斬；貼地移動，敵人逐個單次傷害，牆前停止後從實際終點判定。專用劍擊動作仍待畫面驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "有限承傷對應基礎版。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔鬥氣護身〕",
+          "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n新增代價：硬化三秒自己減速30%；可以用E接近或R衝刺打破站樁僵局。\n三秒護甲與魔抗各加三十，使用固定堆疊鍵至多一層，到期還原；增加物理／魔法承傷能力，不是永久增益或無限護盾。",
+          "templates": [
+            "tpl-effect-sequence",
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "此模板附帶傷害推移，需審查逼近步是否保留這項改編。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔逼近步〕",
+          "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n向輸入方向短距離貼地接近；地形或第一個敵人攔截即停，不附帶原模板的傷害、擊飛或推移。保留 GGD 既有已開始衝刺的控制規則。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需較長起手、高速單段斬及命中停點。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "光之太刀",
+          "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n0.55 秒可被打斷的明確起手後，沿輸入方向最多八格高速直線衝刺（速度仍依 GGD 位移上限換算，當下為每秒十六格），第一個合法敵方身體接觸點停止並單次結算大級距傷害；地形優先，空放或只撞牆不產生命中傷害。光之太刀專用細亮線與動作仍待畫面驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需剛被自身命中的目標條件與追擊窗口。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔狂劍追擊〕",
+          "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n指定自己二秒內有效命中的近身敵人，消耗該次追擊標記追加一次小級距劍擊。超距直接拒絕，不自動接近，不扣魔力、冷卻或目標標記；別來源／過期／非法目標不能施放。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "ea93b972659a05f0606a810b72087c0986fd3873a8f88d6ea7cfce3f72c78f7c",
+      "patchSha256": "8e4e95c2151704b8d30786d141d54c909b9be40a7944d0e0962a409663e99bd9"
+    },
+    {
+      "number": "29",
+      "name": "芙莉蓮",
+      "signature": "芙莉蓮掛號處：治療約兩秒後，先給候診者盾；病人跑掉就白等",
+      "closest": "30",
+      "difference": "芙莉蓮保護等候指定落點的隊友；尼古貓把不移動本身兌成保命盾。",
+      "version": 1,
+      "group": "rewrite",
+      "combos": [
+        {
+          "source": "E",
+          "target": "W",
+          "metric": {
+            "actor": "ally",
+            "field": "shield",
+            "sample": "max"
+          },
+          "expect": "increase",
+          "waitSec": 0.3,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "W",
+            "kind": "shield",
+            "conditionalOnly": true
+          }
+        },
+        {
+          "source": "EX",
+          "target": "R",
+          "metric": {
+            "actor": "ally",
+            "field": "hp"
+          },
+          "expect": "increase",
+          "waitSec": 0.8,
+          "observeSec": 2,
+          "remove": {
+            "slot": "R",
+            "kind": "delayed"
+          },
+          "sourcePoint": {
+            "x": 0,
+            "z": 5
+          },
+          "setup": {
+            "ally": {
+              "x": 0,
+              "z": 5
+            }
+          }
+        }
+      ],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需魔力感知的資訊層抑制，不可用隱形或傷害被動冒充。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "魔力抑制",
+          "description": "【核准惡搞改編】自己真正接受治療後回復5%魔力，每三秒一次；不是持續白拿藍。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "Zoltraak 原型；需單束碰撞去重。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "一般攻擊魔法・Zoltraak",
+          "description": "【核准惡搞改編】普通攻擊魔法，中級直線魔法傷害；招式名普通不代表無限傷害。",
+          "templates": [
+            "tpl-line-strike"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前無方向盾；需六角防壁方向、耐久與持續消耗。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "防禦魔法",
+          "description": "【核准惡搞改編】候診保險：指定队友160護盾三秒；四秒內開過E掛號，再加100護盾。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "短期浮空可用落點跳躍預覽，不提供持續飛行。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "飛行魔法",
+          "description": "【核准惡搞改編】掛號排隊：以指定隊友當下落點約兩秒後重選兩格內友軍，各回復220；病人走掉可落空。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前定點六波；需各方向獨立射線及總傷害上限。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔葬送連射〕",
+          "description": "【核准惡搞改編】花園候診室：三次每秒重選自身三格友軍各回復60；原地站好，不是傷害友軍的魔法領域。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前自身盾；需花田區域、友軍首次進入解除恐懼及一次護盾。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "變出花田的魔法",
+          "description": "【核准惡搞改編】把診間搬到自己身邊，瞬移到合法落點；已約好的E地點不會跟著搬。",
+          "templates": [
+            "tpl-blink"
+          ]
+        }
+      },
+      "compiledSha256": "6530eaa984400a835bd80f8cb78d69dbbbff820a3dc5c10ba09da2a3c6aacd03",
+      "patchSha256": "d66d8a1a65a24ef9c6e03ffce2e40e08fcd642b1026ac790b44f3d10479f9c92"
+    },
+    {
+      "number": "30",
+      "name": "尼古貓貓",
+      "signature": "尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了",
+      "closest": null,
+      "difference": "保留已驗證核心，改編代價及可讀提示詳見各槽。",
+      "version": 2,
+      "group": "preserve-core",
+      "combos": [],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需靜止三層拖延、受擊清除與施法消耗。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔拖延症〕",
+          "description": "【本次玩法】尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n戰鬥中實際連續靜止一秒才獲得一層拖延，之後每秒一層、上限三層；移動只重開蓄力窗口，受有效傷害（含護盾吸收）清空三層。空走撞牆或轉向不算移動，零值／完全免疫不清空；回合開始重置。EX 每次消耗一層取得護盾。",
+          "templates": [
+            "tpl-mark-stacks",
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "菸灰缸道具拋物線未綁；落地一次傷害可測。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔菸灰缸飛過去〕",
+          "description": "【本次玩法】尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n指定落點投擲，起手後再等半秒落地；落地時重新取得半徑二格內敵人，每人只結算一次小級物理傷害，移出可躲避。菸灰缸本體及拋物線演出仍待專用素材／畫面驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "單體緩速不是煙霧區命中干擾；需區域及明示效果。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔煙霧瀰漫〕",
+          "description": "【本次玩法】尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n落點產生四秒、半徑二格的煙霧區，每 0.2 秒對區內敵人續上 30% 普攻失手，離區最多 0.24 秒消退；進入時有命中干擾文字提示。沒有傷害、緩速或完整隱形，友軍與跨區不受影響，免控仍依 GGD 規則。灰煙演出為現有煙粒子調整，待畫面驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "撤退应無碰撞輸出，模板帶推移傷害，須審查改編。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔先溜再說〕",
+          "description": "【本次玩法】尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n朝選定撤退方向貼地衝出三格，遇牆停止；移除舊模板傷害、擊飛和推移，沒有命中收益。狼狽撤退的雜物殘影只有演出用途，專用素材仍待補。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "三波落點可測；卡通雜物模型與逐波預警待補。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔房間大崩壞〕",
+          "description": "【本次玩法】尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n指定区域三波，每波先出四成秒落點預警，再對當時半徑二點五格內敵人結算一次小級物理傷害；每波相隔 0.8 秒，移出可躲、後進者可被後續波命中，死亡或回合結束清除。卡通雜物模型與完整逐波畫面尚待驗收，現有脈衝只作時間位置提示。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需拖延消耗與移動取消盾。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔今天真的不想動〕",
+          "description": "【本次玩法】尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n保留真正移動就消失的懶人盾，以施放提示說清反制。\n每次消耗一層拖延，原地得到四秒、四百五十基礎吸收量的護盾（仍吃 GGD 護盾倍率）。移動、位移、換區或死亡立即使這一片盾到期；轉向或撞牆未移動不取消，不影響隊友給的其他盾。缺拖延時拒絕且不扣魔力或冷卻。原稿未指定一次扣幾層，本配方採一層。",
+          "templates": [
+            "tpl-effect-sequence",
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "f1d128c31b33333a569a894aa7baa7472938b57ab6f86be977641651bc6c928d",
+      "patchSha256": "6d2d99fc10cdf7d19dd376409cb0b002d5b9699937cf7b63684b8554983413ef"
+    },
+    {
+      "number": "31",
+      "name": "SUN樂",
+      "signature": "SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注",
+      "closest": null,
+      "difference": "保留已驗證核心，改編代價及可讀提示詳見各槽。",
+      "version": 2,
+      "group": "local-adaptation",
+      "combos": [],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需真正閃避事件的三層讀招，空按不增加。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔糞作獵人的讀招〕",
+          "description": "【本次玩法】SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n三層具名讀招；W 自身閃避來源在實際衝刺移動中成功才加一層，空按／撞停／失手／其他來源不給。有效命中、受擊、真正迴避或格擋留下自己來源的四秒交鋒標記，僅供 EX 選目標，不等於讀招。",
+          "templates": [
+            "tpl-mark-stacks",
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需螺旋刃動畫與反擊後目標追加條件。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "Spiral Edge",
+          "description": "【本次玩法】SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n近身單次小級距短劍刺擊；只消耗自己 E 在該目標留下的二秒反擊標記，追加一次極小級距傷害。別名目標、另一施法者與過期標記無追加。螺旋刃武器動作仍待畫面驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "模板低跳不是精準迴避；需傷害來臨時間窗口。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "Slide Move",
+          "description": "【本次玩法】SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n向輸入方向貼地滑步 2.4 單位、速度 8；0.3 秒內以現行 GGD 迴避上限提供普攻及技能迴避。只有本技能來源實際抽中，且閃避當下仍在衝刺並已發生位移才累積讀招。沒有跳躍或位移傷害；羽毛／短劍動作仍待畫面验收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "護盾不是 Repel Counter；需格擋成功、擊退與 Q 窗口。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "Repel Counter",
+          "description": "【本次玩法】SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n0.45 秒迎擊窗口，擋下第一個物理或魔法命中；只由本來源成功格擋觸發一次，將攻擊者推離 1 單位並給該目標二秒 Q 接續標記。沒有護盾量或固定自動反傷；標記按施法者隔離。招架短劍演出仍待驗。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "Accel 基礎移速／攻速增益；持續 3 秒且保留冷卻。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "Accel",
+          "description": "【本次玩法】SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n新增代價：加速三秒護甲魔抗各降低25%；格擋／精準滑步失敗更危險，讀招來源與上限不變。\n三秒移速與攻速各增加 25%，使用同一堆疊鍵避免重複累加，到期恢復；不修改任何其他槽冷卻，也不創造新讀招。專用加速殘像仍待驗。",
+          "templates": [
+            "tpl-effect-sequence",
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需消耗三層讀招並限定近期交鋒目標。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔攻略完成〕",
+          "description": "【本次玩法】SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n至少三層讀招且指定敵人有自己四秒交鋒標記才可施放；資格先檢查，再在開始時扣三層、魔力及冷卻。0.35 秒明確起手朝該目標單次大級距物理短劍終結；非法／過期／其他來源標記不扣資源，也不自動追逐未具資格的目標。專用終結動作仍待驗。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "b059c875280b01702815ce4f601a1cf369f1d7db18cbe0f533cf4bab363f79e6",
+      "patchSha256": "e8fc23b5d5461717bb73825e6f0e5580448a2cb474743f5ee68b984b5bb04295"
+    },
+    {
+      "number": "32",
+      "name": "阿薩謝爾",
+      "signature": "THE END OF SON：極大範圍先變強追打我，再進賢者時間防禦歸零",
+      "closest": null,
+      "difference": "保留已驗證核心，改編代價及可讀提示詳見各槽。",
+      "version": 2,
+      "group": "owner-update",
+      "combos": [],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需每次有效施法一次負面能量，上限三；自傷反傷與每跳不得增加。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "淫奔",
+          "description": "【本次玩法】THE END OF SON：極大範圍先變強追打我，再進賢者時間防禦歸零\n有效技能扣除敵人生命時，每次施法最多一層負面能量，上限三、回合重置；同一次施法的不同敵人、波次及持續傷害共用一次，自傷、反傷與衍生 hook 不集氣。",
+          "templates": [
+            "tpl-mark-stacks",
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "肩膀拳需小幅擊退与一本正經起手，当前只是單擊。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "肩パンチ",
+          "description": "【本次玩法】THE END OF SON：極大範圍先變強追打我，再進賢者時間防禦歸零\n0.2 秒起手後近身普通肩膀拳，小級物理傷害與 0.4 格擊退。施法範圍兩格，沒有範圍濺射。一本正經起手的表情與專用動作仍待驗。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "三波白色雨可作時序預覽；每波同目標一次與白點落下造型須驗收。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "流精群（ホワイトレイン）",
+          "description": "【本次玩法】THE END OF SON：極大範圍先變強追打我，再進賢者時間防禦歸零\n固定落點三波白色魔力雨，半徑 2.75 格、每波間隔 0.45 秒；每波重查敵人，各人每波一次，整次施法至多一層能量。死亡或對決結束後取消後續波次。白點、速度線及漫畫表情仍待素材和畫面驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "護盾不代表闇人格反擊；需第一個近身受擊成功事件及一次出拳。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "闇ぱんち",
+          "description": "【本次玩法】THE END OF SON：極大範圍先變強追打我，再進賢者時間防禦歸零\n0.5 秒影子反擊窗口，第一個距離 2.5 格內敵人的有效普攻或技能傷害（含護盾吸收）觸發一次普通肩膀拳。原傷害照常結算，沒有額外免傷、方向限制或護盾；零值、完全免疫、環境／hook 反傷及不同對決不觸發。一次反擊後窗口移除，不產生負面能量。闇人格是 GGD 反擊改編，影子模型與一次出拳演出仍待验收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需四秒萎靡的輸出降低，以及不致死反噬；目前只有可預覽的單體魔法命中。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "THE END OF SON",
+          "description": "【核准惡搞改編】THE END OF SON 前奏：0.8秒可中斷起手；自己付3%最大生命且至少留1HP，自身極大範圍內敵人受小級魔法傷害及四秒輸出-15%萎靡。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需三層消耗及已萎靡目標反轉增益。R→EX 把敵人變強是必要驗收，不得刪成普通強化傷害。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "THE END OF SON〔終章〕",
+          "description": "【核准惡搞改編】THE END OF SON：消耗三層負面能量，嘲諷自身極大範圍內敵人兩秒，依既有規則優先吸引自動攻擊。每名有自己R萎靡的敵人解除該詛咒，先傷害輸出+10%兩秒，再賢者時間三秒：護甲及魔抗固定零，攻速與移速各-60%（仍受GGD最低值限制）；原盾/無敵不會憑空消失。沒有自己R的敵人只走原本單次傷害與輸出-20%分支。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "area": {
+        "tier": "極大",
+        "range": 0,
+        "boostSec": 2,
+        "weakSec": 3,
+        "tauntSec": 2,
+        "meaning": "Owner accepted the existing largest AoE tier. Only legal opposing bodies inside the caster-centered circle; scheduled weakness remains after caster death."
+      },
+      "compiledSha256": "454b44e0b3175771fe601022159a57c0886a05998b9a4d77655d83d907b4d5cf",
+      "patchSha256": "b5eba90325232734eb6956755322c656cebed9dbcf9169f5891e62d3e9ae8cac"
+    },
+    {
+      "number": "33",
+      "name": "近衛刀太",
+      "signature": "刀太的健身鐵片：背重劍變慢變強，丟掉鐵片才跑得動",
+      "closest": "16",
+      "difference": "刀太用移速負擔換攻擊與自療；伊莉雅是物理/魔法輸出的職階交換。",
+      "version": 1,
+      "group": "rewrite",
+      "combos": [
+        {
+          "source": "E",
+          "target": "Q",
+          "metric": {
+            "actor": "foe",
+            "field": "hp"
+          },
+          "expect": "decrease",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "E",
+            "kind": "applyBuff"
+          }
+        },
+        {
+          "source": "E",
+          "target": "W",
+          "metric": {
+            "actor": "caster",
+            "field": "hp"
+          },
+          "expect": "increase",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "W",
+            "kind": "heal",
+            "conditionalOnly": true
+          }
+        }
+      ],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "本場被動免死只是基底；需受傷延後再生与 R 短期再起资格，不能無條件常駐代替。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔不死者再生〕",
+          "description": "【核准惡搞改編】背著自己的slow40重劍增益受傷時回復60生命，每兩秒一次；空身不領健身補貼。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需重力劍扇形判定。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔重力劍・橫掃〕",
+          "description": "【核准惡搞改編】黑棒劍小級物理傷害加0.8AD，真實讀重量模式增加的AD。",
+          "templates": [
+            "tpl-single-strike"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "固定 AD 增益；需輕／重模式、攻速與動作時長同步。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔重量切換〕",
+          "description": "【核准惡搞改編】負重深蹲：回復100；仍背重劍時再回復180。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "近身突進可作基礎驗收。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔踏地突進〕",
+          "description": "【核准惡搞改編】掛上鐵片：四秒AD+45、移速-40%，同一份具名buff，卸下時一起還原。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前立即回復；需主動再起窗口、首次致死截取與每回合一次。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔不死者的再起〕",
+          "description": "【核准惡搞改編】健身成果展示，兩次小級物理傷害；不是永久吸血。",
+          "templates": [
+            "tpl-lock-combo"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需固定重劍模式蓄力与完成後緩速。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔重力劍・壓潰〕",
+          "description": "【核准惡搞改編】卸鐵片：消耗自己的重劍buff才回復8%魔力並得到25%移速兩秒；沒掛過不補貼。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "4144e847fdfa3bc6026cd462b04adf4dc0cc60933b6f5a97eb129141122b6715",
+      "patchSha256": "4230c27927210102408059a89f87bb01de2f1bae25fb886831cc4f35de6c11e9"
+    },
+    {
+      "number": "34",
+      "name": "高速婆婆",
+      "signature": "高速婆婆測速照：先違規加速再剎車，把罰單塞給追兵",
+      "closest": "08",
+      "difference": "婆婆主動降防加速，剎停以最近衝刺解鎖推敵；米卡莎需原地補氣。",
+      "version": 1,
+      "group": "rewrite",
+      "combos": [
+        {
+          "source": "Q",
+          "target": "W",
+          "metric": {
+            "actor": "foe",
+            "field": "x"
+          },
+          "expect": "increase",
+          "waitSec": 1,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "W",
+            "kind": "delayed",
+            "conditionalOnly": true
+          },
+          "setup": {
+            "foe": {
+              "x": 7,
+              "z": 0
+            }
+          }
+        },
+        {
+          "source": "W",
+          "target": "E",
+          "metric": {
+            "actor": "foe",
+            "field": "status:numbness"
+          },
+          "expect": "increase",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "E",
+            "kind": "applyStatus",
+            "conditionalOnly": true
+          }
+        }
+      ],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需同一可見目標追逐速度與轉目標衰退。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔追上你了〕",
+          "description": "【核准惡搞改編】R催油門後護甲和魔抗各降低30兩秒；跑很快不代表撞車不痛。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "爪擊模型待製。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔疾走爪擊〕",
+          "description": "【核准惡搞改編】直線違規：衝六格，沿途敌人各受一次小級物理傷害，不鎖住目標。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需急轉向與消耗加速層，不能單純低跳。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔急轉彎〕",
+          "description": "【核准惡搞改編】急剎：自己定身0.5秒；四秒內用過Q，周圍三格敌人被推開三格。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "緩速只是底稿；需追獵目標標記與朝向加速。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔妖怪的咒印〕",
+          "description": "【核准惡搞改編】收罰單：指定敵人減速40%兩秒；四秒內用過W再繳械一秒。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "3 秒移速增益；需上限与轉向能力独立参数。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔全速追獵〕",
+          "description": "【核准惡搞改編】破表油門：自身移速增加60%兩秒，P同步降防。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需命中第一英雄或牆即停止，不能穿越後繼續連撞。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔百公里衝撞〕",
+          "description": "【核准惡搞改編】下個路口再見：短距離合法瞬移，不取消既有罰單或冷卻。",
+          "templates": [
+            "tpl-blink"
+          ]
+        }
+      },
+      "compiledSha256": "4dff388fcce64d5b7d89f3a7a43684912c4d0d9f8b79f8f257c003a984bba87b",
+      "patchSha256": "25f979ea6f827684912cbb57208b18e5b8586b69d08c1f2fea47ed7dda00416b"
+    },
+    {
+      "number": "35",
+      "name": "炭治郎",
+      "signature": "炭治郎便當過辣：火刀較痛卻喘到走慢，吹涼調息比邊跑邊吃有效",
+      "closest": null,
+      "difference": "保留已驗證核心，改編代價及可讀提示詳見各槽。",
+      "version": 3,
+      "group": "preserve-core",
+      "combos": [],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需有效閃避後近身破綻標記與下一刀消耗。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔嗅覺・破綻辨識〕",
+          "description": "【本次玩法】炭治郎便當過辣：火刀較痛卻喘到走慢，吹涼調息比邊跑邊吃有效\n呼吸為独立六層資源，開局及回合還原為六層。真正防禦方迴避近身敵人攻擊後，對該敵人留下自己來源的兩秒破綻與可見狀態；Q/W/R 有效刀技命中（含盾吸收）才消耗自己的標記一次追加極小物理傷害。普攻、失手、空按位移、反傷不消耗。",
+          "templates": [
+            "tpl-mark-stacks",
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需水面斬前方橫弧，目前四段直線。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "水之呼吸・水面斬",
+          "description": "【本次玩法】炭治郎便當過辣：火刀較痛卻喘到走慢，吹涼調息比邊跑邊吃有效\n便當加熱刀：同一 Q 的水式是穩定横斬，火式改為較強横斬但越砍越喘，累積兩秒移速負擔每層8%、上限三層。兩式都耗一層呼吸、共用同一Q冷卻；切換不洗冷卻，調息回呼吸，敵人可趁負擔期拉開距離。依2026-09-09惡搞簡化原則，取消火式額外呼吸成本，不新增引擎欄位。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需水車旋轉斬与武器動作。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "水之呼吸・水車",
+          "description": "【本次玩法】炭治郎便當過辣：火刀較痛卻喘到走慢，吹涼調息比邊跑邊吃有效\n向瞄準方向推進最多三格，沿路每個敵人只結算一次水車刀擊，受牆與邊界約束，不直接傳送。耗一層呼吸；死亡或路徑停止後不再補發接觸。旋轉與武器演出仍另驗。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "標準魔力回復 15%；需呼吸資源、調息中移動受傷降效率。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔呼吸調整〕",
+          "description": "【本次玩法】炭治郎便當過辣：火刀較痛卻喘到走慢，吹涼調息比邊跑邊吃有效\n保留完整呼吸規則，調息提示對應真正靜止回得較快，火刀的負擔仍有代價。\n三秒調息：啟動立即基礎回復一層、之後每半秒回復一層；實際連續靜止半秒且最近1.1秒未有效受擊時，每半秒再回復一層，均受六層上限。移動或受擊降低效率而非免費回滿魔力，碰壁不等於實際移動。耗費一般魔力與自己的冷卻，不改姿態；回合開始與死亡清除舊調息，避免快速切回合沿用。",
+          "templates": [
+            "tpl-effect-sequence",
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需火之神單次高傷斬與呼吸高消耗。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "火之神神樂・圓舞",
+          "description": "【本次玩法】炭治郎便當過辣：火刀較痛卻喘到走慢，吹涼調息比邊跑邊吃有效\n0.65秒可受控制中斷的蓄勢後，以前方120度單次火之神刀斬；施法開始消耗三層呼吸及較高魔力，未足額不扣費。刀斬仍按施放方向與結算時距離判定，使用後增加負擔；不建立永久燃燒地形。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "固定 AD 增益不是切換；需水／火 Q 版本、共用冷卻与負擔。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔呼吸切換〕",
+          "description": "【本次玩法】炭治郎便當過辣：火刀較痛卻喘到走慢，吹涼調息比邊跑邊吃有效\n水／火便當模式切換：水式穩定，火式傷害更高但附加短暫負擔；兩式耗一層呼吸，共用原Q實例、冷卻與資源。換回水不消掉負擔，回合開始回水式。可用既有調息回復後再接刀技；不建立水域或燃燒地形。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "30f7ed48c9e4d8f15fd5fc0c4704487491a3ee7a1f53f5f2022bf7f1dd3c7b64",
+      "patchSha256": "9edb8fadecd5e8877692e034206ce0734658352153eabf070c6df700ef177fb4"
+    },
+    {
+      "number": "36",
+      "name": "鬼畜王蘭斯",
+      "signature": "蘭斯嘴砲隊長：全怪來打我，隊友趁我挨揍跑掉",
+      "closest": "15",
+      "difference": "蘭斯用真正嘲諷把攻擊引向自己；比利先給單體隊友盾再自療。",
+      "version": 1,
+      "group": "rewrite",
+      "combos": [
+        {
+          "source": "W",
+          "target": "Q",
+          "metric": {
+            "actor": "foe",
+            "field": "hp"
+          },
+          "expect": "decrease",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "Q",
+            "kind": "damage",
+            "conditionalOnly": true
+          }
+        },
+        {
+          "source": "W",
+          "target": "R",
+          "metric": {
+            "actor": "ally",
+            "field": "shield",
+            "sample": "max"
+          },
+          "expect": "increase",
+          "waitSec": 0.8,
+          "observeSec": 1.2,
+          "remove": {
+            "slot": "R",
+            "kind": "shield",
+            "conditionalOnly": true
+          }
+        }
+      ],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需擊殺／助攻一次戰意，上限五層、回合重置。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔自信過剩〕",
+          "description": "【核准惡搞改編】自己受傷時，三秒內用過W才回復80生命，每兩秒一次；嘴砲前被打沒有安慰獎。",
+          "templates": [
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需正面蠻力弧形斬。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔蠻力斬擊〕",
+          "description": "【核准惡搞改編】粗魯一刀小級物理傷害；三秒內用過W，再多極小物理傷害。",
+          "templates": [
+            "tpl-single-strike",
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需下一次主動攻擊消耗剩餘盾換取有限增傷。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔本大爺還沒認真〕",
+          "description": "【核准惡搞改編】嘴砲搶仇恨：三格內敵人嘲諷自己1.2秒，取得180護盾；依GGD規則優先自動索敵。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需命中第一人後停止。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔霸王突進〕",
+          "description": "【核准惡搞改編】勇者先衝：貼地前進三格，敵人仍可用地形攔截。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需大範圍重斬、長起手與總傷害預算。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "Rance Attack／蘭斯攻擊",
+          "description": "【核准惡搞改編】隊友先走：指定隊友移速+40%三秒；四秒內用過W再給240護盾。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前自身加速攻速；需戰意消耗及附近友軍一次普攻增益。",
+          "disposition": "owner-approved-simplification",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔跟著本大爺衝〕",
+          "description": "【核准惡搞改編】事後裝沒事：回復160生命，不把自己的嘲諷轉嫁隊友。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "82b7ec7922e009097012d5acca0d622d15181c0125827df62abdb65a29bf9656",
+      "patchSha256": "19ec571d393bb4960652267f59e5554609e4c76b1b6958ab4cf08c98e3138971"
+    },
+    {
+      "number": "37",
+      "name": "吉伊卡哇",
+      "signature": "吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉",
+      "closest": null,
+      "difference": "保留已驗證核心，改編代價及可讀提示詳見各槽。",
+      "version": 3,
+      "group": "preserve-core",
+      "combos": [],
+      "slots": {
+        "PASSIVE": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需附近友軍交战依時間累積勇氣，上限三層。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔雖然害怕還是努力〕",
+          "description": "【本次玩法】吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n【修正行為】5 格內其他存活友軍於最近 2 秒造成或承受敵對 HP／護盾命中，最多每 2 秒獲得 1 層勇氣，上限 3；不按命中次數累積。勇氣回合重置。成功施放瞬發 W 時扣 1 層給自身小盾；零層仍可撤退。",
+          "templates": [
+            "tpl-mark-stacks",
+            "tpl-event-passive"
+          ]
+        },
+        "Q": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "討伐叉造型與近身命中對齊待製。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔討伐叉刺擊〕",
+          "description": "【本次玩法】吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n【修正行為】前方長 2、寬 0.6 的短距叉刺，每名敵人最多一筆小級物理傷害；後方、側邊與範圍外可避開。討伐叉模型、專用刺擊動作與判定對齊仍待視覺驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "W": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需無傷害撤退並可扣勇氣換小盾；目前衝撞模板不等價。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔哇啊啊撤退〕",
+          "description": "【本次玩法】吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n保留借隊友勇氣逃跑和少打幾叉的資源取捨，逃跑時顯示同一笑點。\n【修正行為】沿輸入方向移動最多 3 格，受牆與場界阻擋，不造成衝撞傷害或擊退。勇氣扣除與小盾由被動的成功施法 W hook 執行一次；零層可施放。",
+          "templates": [
+            "tpl-effect-sequence",
+            "tpl-effect-sequence"
+          ]
+        },
+        "E": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "需停留吃點心及受擊中斷。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔點心時間〕",
+          "description": "【本次玩法】吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n【修正行為】原地停留 1 秒後恢復少量生命；吟唱期間 HP 受傷取消，護盾完全吸收不取消（沿用 GGD interruptOn=damage）；不先回血。点心道具與進食動作仍待視覺驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "R": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "固定三段；需勇氣消耗与有限強化幅度。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔鼓起勇氣討伐〕",
+          "description": "【本次玩法】吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n【修正行為】吟唱後消耗當時全部 0–3 層勇氣，進行 3–6 次短距叉擊，每 0.18 秒一擊，逐擊用當下位置與面向重新判定；離開範圍可躲避，施法者死亡／分區結算即停止。沒有遠距追蹤傷害或無限強化。叉擊武器與專用動作仍待視覺驗收。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        },
+        "EX": {
+          "originalDescriptionPreserved": true,
+          "requiredRefinement": "目前自身；需附近友軍盾與短效抗恐懼。",
+          "disposition": "preserved-core-with-explicit-adaptation",
+          "originalDesignCompletionClaimed": false,
+          "name": "〔一起加油〕",
+          "description": "【本次玩法】吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n【修正行為】以自身為中心給附近存活友軍及自己護盾與三秒抗恐懼，並清除可驅散的恐懼；敵方與範圍外不受益，不移除暈眩、緩速或其他負面狀態。遵守 GGD 淨化總開關、數量上限與不可驅散規則。",
+          "templates": [
+            "tpl-effect-sequence"
+          ]
+        }
+      },
+      "compiledSha256": "aab132b6b5e052f4cad60af699b83612e015602a76d96e68ae24bf2cc7b84b88",
+      "patchSha256": "3f50ebf9ef97099f7bee630dbc25f7a5e2cca167d076f695491b87c318e7466f"
+    }
+  ]
+}

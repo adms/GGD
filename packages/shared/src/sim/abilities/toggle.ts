@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../timeStop";
 /**
  * 【切換】—— 開／關兩態的按鈕，以及**資源耗盡自動關閉**。
  *
@@ -47,6 +48,7 @@
  * 明確排序過 —— 兩個人同一 tick 自動關閉時，他們排進傷害佇列的先後不可以
  * 取決於 `Map` 的迭代順序。
  */
+import { consumableStatusStacks, consumeStatusStacks } from "../statusConsumption";
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import type { CastableSlot } from "../intents";
@@ -222,6 +224,7 @@ export function toggleUpkeepSystem(world: SimWorld): void {
   owners.sort((a, b) => a - b);
 
   for (const id of owners) {
+    if (isTimeStopped(world, id)) continue;
     const ab = world.abilities.get(id);
     const hp = world.health.get(id);
     if (!ab?.toggles) continue;
@@ -233,6 +236,12 @@ export function toggleUpkeepSystem(world: SimWorld): void {
       if (!tg || tg.upkeepCadence === "none") continue;
 
       // ── 節奏閘 ────────────────────────────────────────────────────────
+      const upkeepStatus = tg.upkeepResource === "status" ? tg.upkeepStatus : undefined;
+      const applier = upkeepStatus?.appliedBy === "self" ? id : undefined;
+      if (upkeepStatus && consumableStatusStacks(world, id, upkeepStatus.statusId, applier) === 0 && tg.exitOnResourceEmpty !== false) {
+        exitToggle(world, id, st.slot, "resourceEmpty");
+        continue;
+      }
       if (tg.upkeepCadence === "perAttack") {
         if (!swung?.has(id)) continue;
       } else {
@@ -245,6 +254,13 @@ export function toggleUpkeepSystem(world: SimWorld): void {
       const cost = tg.upkeepCost[rank - 1] ?? 0;
       if (!(cost > 0)) continue;
 
+      if (upkeepStatus) {
+        const consumed = consumeStatusStacks(world, id, upkeepStatus.statusId, cost, applier);
+        if ((consumed === 0 || consumableStatusStacks(world, id, upkeepStatus.statusId, applier) === 0) && tg.exitOnResourceEmpty !== false) {
+          exitToggle(world, id, st.slot, "resourceEmpty");
+        }
+        continue;
+      }
       const onMana = (tg.upkeepResource ?? "mana") === "mana";
       const pool = onMana ? hp.mana : hp.hp;
       if (pool < cost) {

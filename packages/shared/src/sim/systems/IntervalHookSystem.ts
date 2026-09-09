@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../timeStop";
 /**
  * 週期觸發 —— `HookEvent: "onInterval"` 的發射器。
  *
@@ -78,6 +79,7 @@ export function intervalHookSystem(world: SimWorld): void {
   // 決策 3 —— Map 的插入順序不是規則,明確排序。
   const ids: EntityId[] = [...world.stats.keys()].sort((a, b) => a - b);
   for (const id of ids) {
+    if (isTimeStopped(world, id)) continue;
     const hp = world.health.get(id);
     // `hp === undefined` 的單位(沒有生命元件)照樣可以帶 hook,所以只擋
     // 「有生命而且已經死了」,不是「沒有生命」。

@@ -12,6 +12,7 @@ z
     ...EFFECT_COMMON_SHAPE,
     amount: zScaling,
     duration: z.number().min(0),
+    breakOnMove: z.literal(true).optional().describe("持有者實際移動、換區或死亡時只讓這片盾提前到期；轉向與撞牆空走不算移動。"),
     /**
      * 護盾吸收哪一種傷害 (owner 2026-07-30: 「護盾的確有分吸收所有傷害跟吸收
      * AP 傷害 only」). ABSENT = "all" = 現行行為, 所以既有文件一份都沒有改變
@@ -53,6 +54,9 @@ export const refine = (
   e: Extract<EffectDef, { kind: "shield" }>,
   ctx: z.RefinementCtx,
 ): void => {
+  if (e.breakOnMove && e.onExisting !== undefined && e.onExisting !== "replace") {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["onExisting"], message: "移動取消的護盾只支援整片替換，不能和其他位置的盾量混合。" });
+  }
   if (e.onExisting !== undefined && e.stackKey === undefined) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,

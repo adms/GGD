@@ -1,0 +1,28 @@
+{
+  "schema": "ggd-community-materials-s3-receipt@1",
+  "bucket": "ggd-390630837668-ap-east-2-an",
+  "region": "ap-east-2",
+  "profile": "vibe-coding",
+  "manifestSha256": "951ec5960bab5f736dbd3e149cde08ea100d04bbb269ead68c20d39b43edabe9",
+  "prefix": "community-hero-forge/951ec5960bab5f736dbd3e149cde08ea100d04bbb269ead68c20d39b43edabe9/",
+  "objects": [
+    {
+      "path": "payload.tar.gz.part000",
+      "bytes": 8099966,
+      "sha256": "a903c4be9e31876b2231909f93b8c0714018c964ad26cf90a7e900f56f95838e",
+      "key": "community-hero-forge/951ec5960bab5f736dbd3e149cde08ea100d04bbb269ead68c20d39b43edabe9/payload.tar.gz.part000",
+      "etag": "\"00a0defbbbbb3075b0cda0f24ff29128\"",
+      "checksumSHA256": "qQPEvp4xh2siMZCfk7jAcUAYyWStJs+Qp+kA9W+Vg44="
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 1199949,
+      "sha256": "951ec5960bab5f736dbd3e149cde08ea100d04bbb269ead68c20d39b43edabe9",
+      "key": "community-hero-forge/951ec5960bab5f736dbd3e149cde08ea100d04bbb269ead68c20d39b43edabe9/manifest.json",
+      "etag": "\"c101012bd37f4a2eddd1414759c783de\"",
+      "checksumSHA256": "lR7FlgurX3NtvT4UnN4I6hANBLuyaerWjCDTm0Ptq+k="
+    }
+  ],
+  "parts": 1,
+  "partBytes": 8099966
+}

@@ -61,6 +61,10 @@ export interface DamageAreaVariant {
    * 「顯示值 == 實際值」被打破。要調就調 item 文件裡的這個數字本身。
    */
   radius: number;
+  /** Use caster position instead of the resolved target as area origin. */
+  fromCaster?: boolean;
+  /** Front sector: cosine of half-angle, 0=180 degrees, 0.5=120 degrees. */
+  arcHalfAngleCos?: number;
   /**
    * 邊緣倍率 0..1: 圓心吃滿額, 半徑處吃 `falloff` 倍, 中間線性內插。
    * 省略 = 1 = 不衰減。月牙魔杖「距離越遠流星傷害越低」就是這個欄位。

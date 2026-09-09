@@ -1,9 +1,11 @@
+import { isTimeStopped } from "../timeStop";
 import { CAST_APPROACHES, approachesOf, type CastApproach } from "../content/castApproachState";
 /**
  * Ability casting + rank-up. Validation order: learned → alive → not stunned →
  * off cooldown → mana → range. Cast is instant in the skeleton (no windup);
  * effects run immediately with resolved targeting.
  */
+import { currentRecast, advanceRecast } from "./recast";
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import type { CastableSlot, CoreAbilitySlot, CastTarget, Order } from "../intents";
@@ -31,6 +33,7 @@ import { berserkCastBlock, berserkCooldownFactor } from "./berserkRules";
 import { armRecovery } from "./abilityRecovery";
 // ⭐ GH#1091 ——【法術護盾】整發攔截（07-01 臨、兵、鬥 / 原作 ANss Spell Shield）。
 import { spellWardRefusesCast } from "../spellWardCast";
+import { ownedSummonsForSlot } from "../summons";
 import { enterToggle, exitToggle, isToggleOn } from "./toggle";
 import { breakStealth, canSee } from "../stealth";
 // [反向嘲諷] 的「中立那一格」—— `bodiesInCircle` 用它認殭屍。
@@ -207,11 +210,14 @@ export type CastResult =
   | "ok"
   | "not-learned"
   | "dead"
+  | "time-stopped"
   | "stunned"
   | "silenced"
   | "cooldown"
   | "no-mana"
   | "no-resource"
+  | "no-summon"
+  | "target-condition"
   | "out-of-range"
   | "bad-target"
   /** the ability is a PERMANENT passive (WC3 Cool=0) — there is nothing to cast */
@@ -442,6 +448,7 @@ export function castApproachSystem(world: SimWorld): void {
   const rules = castApproachRules(world);
   const ids = [...pending.keys()].sort((a, b) => a - b);
   for (const id of ids) {
+    if (isTimeStopped(world, id)) continue;
     const p = pending.get(id);
     if (!p) continue;
     const t = world.transform.get(id);
@@ -525,6 +532,7 @@ export function castAbility(
   target: CastTarget,
   opts: CastOptions = {},
 ): CastResult {
+  if (isTimeStopped(world, caster)) return "time-stopped";
   const allowApproach = opts.allowApproach !== false;
   const ab = world.abilities.get(caster);
   const t = world.transform.get(caster);
@@ -562,6 +570,11 @@ export function castAbility(
     return "ok";
   }
 
+  const recast = currentRecast(world, caster, inst, def);
+  if (!recast) delete inst.recast;
+  const stage = recast?.nextStage ?? 0;
+  const castEffects = stage ? def.recast!.stages[stage - 1]!.effects : def.effects;
+  const freeRecast = !!recast && def.recast?.cost === "first";
   const st = world.status.get(caster);
   if (st?.effects.some((e) => e.stun && e.expiresAtTick > world.tick)) return "stunned";
   // 【沉默】C1（#278）。⛔ 位置是刻意的：**在扣魔力與進冷卻之前**。
@@ -572,7 +585,7 @@ export function castAbility(
   if ((world.knockdown.get(caster) ?? 0) > 0) return "stunned";
   // already mid-cast (another ability's cast time) — animation-locked
   if (ab.cast) return "cooldown";
-  if (inst.cooldownRemainingTicks > 0) return "cooldown";
+  if (recast ? recast.readyAt > world.tick : inst.cooldownRemainingTicks > 0) return "cooldown";
 
   // The SIXTH slot is castable only for `innateKind: "active"` — the ~60 real
   // WC3 D-slot innates. A permanent 天生技 (迴避/靈氣/on-hit proc) answers
@@ -594,11 +607,14 @@ export function castAbility(
   // 同一條規則 —— 見 abilities/berserkRules.ts。
   const berserkBlock = berserkCastBlock(world, def, caster);
   if (berserkBlock) return berserkBlock;
-  const mana = def.manaCost[inst.rank - 1] ?? 0;
+  const mana = freeRecast ? 0 : def.manaCost[inst.rank - 1] ?? 0;
   if (hp.mana < mana) return "no-mana";
-  const statusCost = def.statusCost;
+  if (def.requiredSummonSlot && ownedSummonsForSlot(world, caster, def.requiredSummonSlot).length === 0) return "no-summon";
+  if (def.requiredTargetStatus && def.castType !== "targeted") return "bad-target";
+  const statusCost = freeRecast ? undefined : def.statusCost;
   const costApplier = statusCost?.appliedBy === "self" ? caster : undefined;
-  if (statusCost && consumableStatusStacks(world, caster, statusCost.statusId, costApplier) < statusCost.count) {
+  if (statusCost?.subject === "target" && def.castType !== "targeted") return "bad-target";
+  if (statusCost && statusCost.subject !== "target" && consumableStatusStacks(world, caster, statusCost.statusId, costApplier) < (statusCost.count === "all" ? 1 : statusCost.count)) {
     return "no-resource";
   }
 
@@ -645,6 +661,8 @@ export function castAbility(
         const tgtTeam = world.team.get(target.entityId);
         if (tgtTeam && selfTeam && tgtTeam.teamId !== selfTeam.teamId) return "bad-target";
       }
+      const required = def.requiredTargetStatus;
+      if (required && consumableStatusStacks(world, target.entityId, required.statusId, required.appliedBy === "self" ? caster : undefined) < (required.minStacks ?? 1)) return "target-condition";
       // combat-env `abilityRange` (task #136) shrinks the effective cast range
       const range = resolveAbilityRange(world, def.range);
       if (distSq(t.pos, tgt.pos) > range * range) {
@@ -655,7 +673,7 @@ export function castAbility(
         // ⚠️ 位置是刻意的:**在付出任何成本之前**,和其他每一道閘同一段。
         // 接近期間魔力一點都不扣、冷卻一格都不轉 —— 成本在真的施放的那一 tick
         // 才付,由 castApproachSystem 再走一次這整條驗證階梯。
-        return allowApproach && armCastApproach(world, caster, slot, target.entityId, t, tgt, range, opts.suppressCastCredit)
+        return allowApproach && def.allowApproach !== false && armCastApproach(world, caster, slot, target.entityId, t, tgt, range, opts.suppressCastCredit)
           ? "approaching"
           : "out-of-range";
       }
@@ -699,10 +717,11 @@ export function castAbility(
     }
   }
 
+  const costSubject = statusCost?.subject === "target" ? targets[0]! : caster;
   // ---- pay costs (mana + cooldown paid up-front, at cast-begin) ----
   // Recheck and debit atomically after targeting. No rejected cast may spend
   // resources; no accepted cast may pay mana/cooldown without its full cost.
-  if (statusCost && consumeStatusStacks(world, caster, statusCost.statusId, statusCost.count, costApplier) === 0) {
+  if (statusCost && consumeStatusStacks(world, costSubject, statusCost.statusId, statusCost.count, costApplier) === 0) {
     return "no-resource";
   }
   // ⭐ GH#733 —— 地板。今天 `:594` 的 `hp.mana < mana` 讓這一行**在這條路上**
@@ -744,7 +763,7 @@ export function castAbility(
       world.combatEnv.cooldown *
       berserkCooldownFactor(world, caster),
   );
-  inst.cooldownRemainingTicks = Math.round(cdSecs / world.dt);
+  if (!recast) inst.cooldownRemainingTicks = Math.round(cdSecs / world.dt);
 
   // ── 【切換】打開 ───────────────────────────────────────────────────────
   //
@@ -826,7 +845,7 @@ export function castAbility(
     // 關掉（`"resolve"`）⇒ `effects` 不寫，解算端照舊在解算 tick 增幅＋烘焙，逐位元同 2026-09-06 前。
     const frozenEffects = comboWindowFrozenAtCommit(world.castTimeRules)
       ? bakeCastTimeConditionals(
-          applyAugmentToEffects(def.effects, collectAugmentOps(world, caster, inst.abilityId)),
+          applyAugmentToEffects(castEffects, collectAugmentOps(world, caster, inst.abilityId)),
           {
             world,
             caster,
@@ -842,6 +861,7 @@ export function castAbility(
         )
       : undefined;
     ab.cast = {
+      ...(def.recast ? { recastStage: stage, stageEffects: castEffects } : {}),
       castInstance,
       slot,
       abilityId: inst.abilityId,
@@ -854,6 +874,7 @@ export function castAbility(
       // Baseline for `interruptOn: "damage"` (CastResolveSystem). Written
       // unconditionally — see `CastState.hpAtStart`.
       hpAtStart: hp.hp,
+      ...(def.interruptOn === "damageOrMove" ? { posAtStart: { ...world.transform.get(caster)!.pos } } : {}),
       // ⭐ GH#1086 —— 按下的那一 tick（`recentCast` 的窗口基準）＋ 提交點烘焙好的效果清單。
       beganTick: world.tick,
       ...(frozenEffects !== undefined ? { effects: frozenEffects } : {}),
@@ -891,7 +912,7 @@ export function castAbility(
   // 除非那條測試讀的是「打出去的傷害」而不是「schema 收不收得下」。
   // ⚠️ 有吟唱的技能走的是 `systems/CastResolveSystem.ts`，那裡有同一行。
   const augmentedEffects = applyAugmentToEffects(
-    def.effects,
+    castEffects,
     collectAugmentOps(world, caster, inst.abilityId),
   );
   // ⭐ GH#1091 —— 【法術護盾】整發攔截（原作 ANss）。⚠️ 有吟唱的技能走的是
@@ -928,6 +949,7 @@ export function castAbility(
 
   // ⛔ `onAbilityCast` **不**受整發攔截影響：他確實放了一發（魔力也扣了）。
   // 被吃掉的是「命中」那一半，所以下面那個迴圈才是要跳過的。
+  advanceRecast(world, caster, inst, def, stage);
   fireHooks(world, caster, "onAbilityCast", targets[0], slot);
   if (!wardRefused) {
     for (const hitId of targets) {
@@ -1003,6 +1025,11 @@ export function cooldownDrainTicks(tick: number, rate: number): number {
 /** Tick down cooldowns (called by commandSystem each tick). */
 export function tickCooldowns(world: SimWorld): void {
   for (const [id, ab] of world.abilities) {
+    if (isTimeStopped(world, id)) continue;
+    // Recast deadlines/interrupts use simulation time even when cooldown drain is frozen.
+    for (const inst of [...Object.values(ab.slots), ab.exSlot, ab.passiveSlot]) {
+      if (inst?.recast && !currentRecast(world, id, inst, Abilities.get(inst.abilityId))) delete inst.recast;
+    }
     // ⭐ G17 —— 這個單位的流逝速度。0 = ×1 = 今天（同 `OutputDamagePct` 那一族：
     // 出貨 0，內容不開就是**嚴格 no-op**，而且下面走的是原本那條 `--`）。
     const bonus = world.stats.get(id)?.final[Stat.CooldownDrainRate] ?? 0;

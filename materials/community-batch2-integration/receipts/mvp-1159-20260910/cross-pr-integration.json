@@ -1,0 +1,264 @@
+{
+  "issue": 1159,
+  "firstParent": "14746985e7e1f7d70b31725bec54255336023d35",
+  "integratedPr": 1135,
+  "integratedHead": "d9f1611ced70eaf9fc0eebd75a375d8563b9e00a",
+  "fixedMain": "bbc62a06df8eb7910e7a30304770f3fb03f01f2f",
+  "mergeOrder": [
+    1135,
+    1153
+  ],
+  "originalConflicts": [
+    "README.md",
+    "apps/editor/README.md",
+    "content/bundle.json",
+    "content/editor-target-profile.json",
+    "content/manifest.json",
+    "docs/_release/戰情版-20260909.md",
+    "docs/_release/戰情版-20260910.md",
+    "docs/editor-contract/ggd-bricks.json",
+    "docs/editor-contract/ggd-bricks.md",
+    "docs/editor-contract/ggd-config-decoration-census.json",
+    "docs/editor-contract/ggd-config-decoration-census.md",
+    "docs/editor-contract/ggd-editor-coverage.json",
+    "docs/legacy/_overwrites/_ledger.tsv",
+    "docs/reference/abilities.md",
+    "docs/reference/grail-wishes.md",
+    "docs/reference/items.md",
+    "docs/reference/mechanics.md",
+    "docs/reference/roster.md",
+    "docs/全自動鑄造編輯器進度temp202609092304.md",
+    "docs/技能標記機制與效果規則.md",
+    "docs/技能編輯器引擎須知 20260811.md",
+    "packages/shared/src/content/schema/effects/damageLine.ts"
+  ],
+  "preservedProjects": 81,
+  "slots": 486,
+  "runtimeComparedWithFirstHead": "byte-identical Shared, Editor, Admin, platform, game-server sources and shipped config/champion/ability files",
+  "historicalRecords": "Both ledger parents retained including duplicate row counts. Historical daily board differences only append issue annotations; all original Owner text retained. Both 202609092304 progress snapshots retained.",
+  "generators": [
+    {
+      "command": [
+        "bash",
+        "scripts/genrun.sh",
+        "content:build",
+        "content:build:indexes-only"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 23.81,
+      "log": "cross-pr-01-content-build.log"
+    },
+    {
+      "command": [
+        "bash",
+        "scripts/genrun.sh",
+        "spec:build"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 10.8,
+      "log": "cross-pr-02-spec-build.log"
+    },
+    {
+      "command": [
+        "bash",
+        "scripts/genrun.sh",
+        "editorcov:build"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 8.01,
+      "log": "cross-pr-03-editorcov-build.log"
+    },
+    {
+      "command": [
+        "bash",
+        "scripts/genrun.sh",
+        "bricks:build"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 9.86,
+      "log": "cross-pr-04-bricks-build.log"
+    },
+    {
+      "command": [
+        "bash",
+        "scripts/genrun.sh",
+        "decor:build"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 14.58,
+      "log": "cross-pr-05-decor-build.log"
+    },
+    {
+      "command": [
+        "bash",
+        "scripts/genrun.sh",
+        "docs:readme"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 5.8,
+      "log": "cross-pr-06-docs-readme.log"
+    },
+    {
+      "command": [
+        "bash",
+        "scripts/genrun.sh",
+        "skillremake:docs"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 22.66,
+      "log": "cross-pr-07-skillremake-docs.log"
+    },
+    {
+      "command": [
+        "bash",
+        "scripts/genrun.sh",
+        "contract:numbers"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 5.12,
+      "log": "cross-pr-08-contract-numbers.log"
+    },
+    {
+      "command": [
+        "bash",
+        "scripts/genrun.sh",
+        "board:roll"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 6.12,
+      "log": "cross-pr-09-board-roll.log"
+    },
+    {
+      "command": [
+        "bash",
+        "scripts/genrun.sh",
+        "board:build"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 6.59,
+      "log": "cross-pr-10-board-build.log"
+    }
+  ],
+  "validation": {
+    "skills": {
+      "command": "GGD_GATE_CONCURRENCY=4 node tools/parallel-gates/run.mjs skills:check",
+      "initialPassed": 69,
+      "initialFailed": [
+        "coord:check"
+      ],
+      "fixedTargetedExit": 0,
+      "singleAggregatePass": false
+    },
+    "changedCoordinationRepros": {
+      "exitCode": 0,
+      "historicalReceiptChecks": 3,
+      "spreadTests": 89
+    },
+    "coord": {
+      "exitCode": 0,
+      "packets": 31
+    },
+    "editorRelease": {
+      "exitCode": 0,
+      "fullEditorTests": 604,
+      "typecheckExit": 0,
+      "productionBuildExit": 0,
+      "scope": "Existing release gate; no new visual or hero acceptance matrix."
+    }
+  },
+  "priorRemoteProof": {
+    "firstContract": "https://github.com/adms/GGD/actions/runs/34383112493/job/102572794896",
+    "secondContract": "https://github.com/adms/GGD/actions/runs/34383120376/job/102572828918",
+    "secondGoRetry": "https://github.com/adms/GGD/actions/runs/34383120376/job/102586038622",
+    "goRetryConclusion": "success",
+    "unit": "Previous full Shared suites only failed missing v0.42.26 announcement; latest jobs failed before tests at apt repository hash mismatch."
+  },
+  "formalPublication": "Pending Main review/merge/deployment, existing-account login and actual Editor import/submission/Admin publication of 81 existing projects. No new hero design or optional visual validation.",
+  "files": [
+    {
+      "path": "cross-pr-01-content-build.log",
+      "bytes": 1458,
+      "sha256": "442ec0aa58b1f0f7098fb71c612df584ef41c1beab8cb4af01979b522718617a"
+    },
+    {
+      "path": "cross-pr-02-spec-build.log",
+      "bytes": 821,
+      "sha256": "8f3d3b2328f1d0141b80cd982576c5eaf46bcf24fa79a952e48b67a418126b0d"
+    },
+    {
+      "path": "cross-pr-03-editorcov-build.log",
+      "bytes": 1110,
+      "sha256": "b2190d55581fdab4b8facd506e96f7dc54f518d5baab14cf956ef835cd17913d"
+    },
+    {
+      "path": "cross-pr-04-bricks-build.log",
+      "bytes": 1575,
+      "sha256": "47d152061ba3530bbeeb248ffa8cb43cf4f7a15b7a14534be9223cc074921597"
+    },
+    {
+      "path": "cross-pr-05-decor-build.log",
+      "bytes": 944,
+      "sha256": "07b729b356a233021bf6956f82722753883a91ddd31cfb7950236d9c7598fe6b"
+    },
+    {
+      "path": "cross-pr-06-docs-readme.log",
+      "bytes": 1321,
+      "sha256": "ed5f3b74bc9c795307348e17e16439baec745cdd44bb43fc78ba8542d5c668c3"
+    },
+    {
+      "path": "cross-pr-07-skillremake-docs.log",
+      "bytes": 962,
+      "sha256": "be80b503ec4c50af4d0ce41366c07f713bb43714005b0853a7790c040e36a71e"
+    },
+    {
+      "path": "cross-pr-08-contract-numbers.log",
+      "bytes": 683,
+      "sha256": "44b2e6560e702021aee064c612de8592dd812f17a97dc84bd7bc0c78084c64b0"
+    },
+    {
+      "path": "cross-pr-09-board-roll.log",
+      "bytes": 715,
+      "sha256": "4380a10c06bec4d82c1a3efe728e4124717a9a01a390c9bb3684e043023bb8fc"
+    },
+    {
+      "path": "cross-pr-10-board-build.log",
+      "bytes": 742,
+      "sha256": "cb1ce24bbe41de8ac839dec8338e4a744a8662e7e2c46751702176bfda6eb40c"
+    },
+    {
+      "path": "cross-pr-generators.json",
+      "bytes": 2221,
+      "sha256": "b52816d8be972e77ad5fe8e1816a1952fb6e4e7142224cab89a8d2311f1cf901"
+    },
+    {
+      "path": "cross-pr-preserved-projects.json",
+      "bytes": 18521,
+      "sha256": "efe66375c858d74ae65afba364935cc9cf23546fafd16b7dd4a800ff69cf6ebf"
+    },
+    {
+      "path": "cross-pr-skills.log",
+      "bytes": 2646,
+      "sha256": "9fc57005221ba810e90feef0c68f7898df6a49b6347d36a0783d8ce029a5d0e4"
+    },
+    {
+      "path": "cross-pr-coord.log",
+      "bytes": 6560,
+      "sha256": "4f3ada4422d5ed024d2469fc67b4cbfd1b18683b212df80a11022756317701e9"
+    },
+    {
+      "path": "cross-pr-coord-final.log",
+      "bytes": 6268,
+      "sha256": "ac0adef04e8408259902345d2712fe72285220869c41d5c0f77cfc7d4afd5c48"
+    },
+    {
+      "path": "cross-pr-changed-packet-repros.log",
+      "bytes": 3203,
+      "sha256": "9f241cbb8e2e02b8002b1a49e790b9d1b14ee06c7e3a1f0fbdfe7c85b8689b8e"
+    },
+    {
+      "path": "cross-pr-editor-release.log",
+      "bytes": 911,
+      "sha256": "39e2d9d86b4474e7b3f847d366c0135f53044c51163e464e3f180743c58ce3bd"
+    }
+  ]
+}

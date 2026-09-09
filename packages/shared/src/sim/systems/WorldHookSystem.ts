@@ -54,9 +54,14 @@
  * 不抽 rng、不看時鐘、沒有三角函式、沒有 `**`。事件流的順序由 emit 順序決定，
  * 而那是同一個 tick 內固定的系統順序；`"world"` 那一支的收件人明確排序。
  */
+import type { EvadeEvent } from "../combat/evasion";
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
-import type { HookEvent } from "../stats/modifiers";
+import { canSee } from "../stealth";
+import { visionRulesOf } from "../vision";
+import { activeObstacles } from "../map/gates";
+import { hasLineOfSight } from "../map/lineOfSight";
+import type { HookDef, HookEvent } from "../stats/modifiers";
 import { alliedChampions, fireHooks } from "../effects/hooks";
 import { StatusEffects } from "../../content/registries";
 
@@ -69,7 +74,8 @@ interface WorldHookRow {
    * `"world"` = 全場活人；`"actor"` = 事件裡指名的那一位；
    * `"allies"` = 那一位**活著的隊友**（他自己不收）。
    */
-  readonly scope: "world" | "actor" | "allies";
+  readonly scope: "world" | "actor" | "allies" | "observers";
+  readonly observedEvent?: HookDef["observedEvent"];
   /**
    * `scope:"actor"` 時，從 `ev.data` 的哪一格取「持有者」。
    * `scope:"allies"` 時，取的是**事件講的那個人**（收件人由他的隊伍推出來）。
@@ -142,6 +148,35 @@ function isControlStatus(data: Record<string, unknown>): boolean {
 function positiveAt(data: Record<string, unknown>, key: string): boolean {
   const v = data[key];
   return typeof v === "number" && v > 0;
+}
+
+function hostileCombatEvent(world: SimWorld, data: Record<string, unknown>): boolean {
+  const source = idAt(data, "source"), target = idAt(data, "target");
+  if (source === undefined || target === undefined || source === target) return false;
+  const a = world.team.get(source), b = world.team.get(target);
+  return a !== undefined && b !== undefined && a.teamId !== b.teamId &&
+    world.transform.get(source)?.zone === world.transform.get(target)?.zone;
+}
+
+/** The observation audience uses the same stealth and map-visibility rules as play. */
+function canObserve(world: SimWorld, observer: EntityId, actor: EntityId): boolean {
+  const a = world.transform.get(observer), b = world.transform.get(actor);
+  const ta = world.team.get(observer), tb = world.team.get(actor);
+  if (!a || !b || !ta || !tb || a.zone !== b.zone || ta.teamId === tb.teamId ||
+      world.settledZones.has(a.zone) || !world.champion.has(actor) ||
+      !world.health.get(actor)?.alive || !canSee(world, observer, actor)) return false;
+  if (visionRulesOf(world).fullVision) return true;
+  const zone = world.arena.zones[a.zone];
+  return zone !== undefined && hasLineOfSight(a.pos, b.pos, activeObstacles(zone.obstacles, world.gateSchedule, world.tick));
+}
+
+function effectiveAllyProtection(world: SimWorld, data: Record<string, unknown>): boolean {
+  const source = idAt(data, "source"), target = idAt(data, "target");
+  if (source === undefined || target === undefined || source === target || !positiveAt(data, "amount")) return false;
+  const team = world.team.get(source)?.teamId;
+  const zone = world.transform.get(source)?.zone;
+  return team !== undefined && team === world.team.get(target)?.teamId && zone !== undefined &&
+    zone === world.transform.get(target)?.zone && !world.settledZones.has(zone);
 }
 
 /**
@@ -275,6 +310,15 @@ const WORLD_HOOKS: readonly WorldHookRow[] = [
   // 治療。⚠️ `restore.ts` 在 `applied <= RESTORE_EPSILON` 時**提早 return**，
   // 所以這一則事件本身就代表「真的補到血了」，這裡不必再驗一次。
   { simEvent: "heal", hook: "onHeal", scope: "actor", actorKey: "target", targetKey: "source" },
+  { simEvent: "heal", hook: "onAllyProtected", scope: "actor", actorKey: "source", targetKey: "target",
+    when: effectiveAllyProtection },
+  { simEvent: "shieldAbsorbed", hook: "onAllyProtected", scope: "actor", actorKey: "source", targetKey: "target",
+    when: (world, data) => {
+      const attacker = idAt(data, "attacker"), target = idAt(data, "target");
+      const team = attacker === undefined ? undefined : world.team.get(attacker)?.teamId;
+      return effectiveAllyProtection(world, data) && team !== undefined && target !== undefined &&
+        team !== world.team.get(target)?.teamId && world.transform.get(attacker!)?.zone === world.transform.get(target)?.zone;
+    } },
   // 溢出治療 —— 同一則事件、多一格判斷。`overheal` 是發射端算好的
   //（`requested - applied`），⛔ 這裡不重算，重算就是第二份真相。
   {
@@ -336,6 +380,18 @@ const WORLD_HOOKS: readonly WorldHookRow[] = [
     actorKey: "entity",
     firesOutsideCombat: true,
   },
+  { simEvent: "damage", hook: "onObservedCombat", scope: "observers", actorKey: "source", observedEvent: "basicHit",
+    when: (world, data) => data.origin === "basic" && hostileCombatEvent(world, data) &&
+      (positiveAt(data, "amount") || positiveAt(data, "shieldAbsorbed")) },
+  { simEvent: "damage", hook: "onObservedCombat", scope: "observers", actorKey: "source", observedEvent: "abilityHit",
+    when: (world, data) => typeof data.origin === "string" && data.origin.startsWith("ability:") && hostileCombatEvent(world, data) &&
+      (positiveAt(data, "amount") || positiveAt(data, "shieldAbsorbed")) },
+  { simEvent: "heal", hook: "onObservedCombat", scope: "observers", actorKey: "source", observedEvent: "heal",
+    when: (world, data) => positiveAt(data, "amount") &&
+      world.team.get(idAt(data, "source")!)?.teamId === world.team.get(idAt(data, "target")!)?.teamId &&
+      world.transform.get(idAt(data, "source")!)?.zone === world.transform.get(idAt(data, "target")!)?.zone },
+  { simEvent: "controlApplied", hook: "onObservedCombat", scope: "observers", actorKey: "source", observedEvent: "control",
+    when: hostileCombatEvent },
   { simEvent: "roundStart", hook: "onRoundStart", scope: "world" },
   // ⚠️ `firesOutsideCombat` 非有不可 —— 見那個欄位的註解。
   { simEvent: "roundEnd", hook: "onRoundEnd", scope: "world", firesOutsideCombat: true },
@@ -414,7 +470,19 @@ export function worldHookSystem(world: SimWorld): void {
             undefined,
             undefined,
             row.firesWhenOwnerDead,
+            undefined,
+            ev.type === "evade" ? ev.data as unknown as EvadeEvent : undefined,
           );
+          continue;
+        }
+        if (row.scope === "observers") {
+          const actor = idAt(ev.data, row.actorKey);
+          if (actor === undefined) continue;
+          const observers = [...world.champion.keys()].sort((a, b) => a - b);
+          for (const observer of observers) {
+            if (!canObserve(world, observer, actor)) continue;
+            fireHooks(world, observer, row.hook, actor, undefined, undefined, undefined, undefined, undefined, row.observedEvent);
+          }
           continue;
         }
         if (row.scope === "allies") {

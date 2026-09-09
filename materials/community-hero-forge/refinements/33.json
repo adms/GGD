@@ -1,0 +1,746 @@
+{
+  "schema": "ggd-community-design-refinement@1",
+  "projectId": "community-review-33-20260907",
+  "sourceSha256": "30869e4829e4896cb117eeac7687c7866d3910595958fbfe4847d219ea99ef8c",
+  "slots": {
+    "PASSIVE": {
+      "products": [
+        {
+          "instanceId": "passive-parody-1",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onDamageTaken",
+                  "effects": [
+                    {
+                      "kind": "heal",
+                      "amount": {
+                        "flat": 60
+                      },
+                      "applyTo": "self",
+                      "condition": {
+                        "kind": "status",
+                        "statusId": "slow40",
+                        "subject": "self",
+                        "appliedBy": "self"
+                      }
+                    }
+                  ],
+                  "internalCooldown": 2,
+                  "target": "self"
+                }
+              ]
+            },
+            "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】背著自己的slow40重劍增益受傷時回復60生命，每兩秒一次；空身不領健身補貼。",
+      "note": "刀太的健身鐵片：背重劍變慢變強，丟掉鐵片才跑得動\n背著自己的slow40重劍增益受傷時回復60生命，每兩秒一次；空身不領健身補貼。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "effects",
+        "radiusTier",
+        "rangeTier",
+        "castTimeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json"
+      }
+    },
+    "Q": {
+      "products": [
+        {
+          "instanceId": "q-parody-1",
+          "template": {
+            "ref": "tpl-single-strike",
+            "params": {
+              "damage": {
+                "damageTier": "小",
+                "ratios": [
+                  {
+                    "stat": "ad",
+                    "coeff": 0.8
+                  }
+                ]
+              },
+              "damageType": "physical",
+              "castTimeSec": 0.1
+            },
+            "contentSha256": "sha256:00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a816b495516b465e80"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】黑棒劍小級物理傷害加0.8AD，真實讀重量模式增加的AD。",
+      "note": "刀太的健身鐵片：背重劍變慢變強，丟掉鐵片才跑得動\n黑棒劍小級物理傷害加0.8AD，真實讀重量模式增加的AD。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-33-20260907.q",
+        "abilityId": "community-review-33-20260907.q",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "target",
+            "vfxId": "fx.prim.arcane.slash",
+            "durationSec": 0.4,
+            "tint": [
+              214,
+              46,
+              64
+            ]
+          }
+        ]
+      }
+    },
+    "W": {
+      "products": [
+        {
+          "instanceId": "w-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 180
+                  },
+                  "applyTo": "self",
+                  "condition": {
+                    "kind": "status",
+                    "statusId": "slow40",
+                    "subject": "self",
+                    "appliedBy": "self"
+                  }
+                },
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 100
+                  },
+                  "applyTo": "self"
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】負重深蹲：回復100；仍背重劍時再回復180。",
+      "note": "刀太的健身鐵片：背重劍變慢變強，丟掉鐵片才跑得動\n負重深蹲：回復100；仍背重劍時再回復180。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-33-20260907.w",
+        "abilityId": "community-review-33-20260907.w",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "self",
+            "vfxId": "fx.prim.arcane.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              214,
+              46,
+              64
+            ]
+          }
+        ]
+      }
+    },
+    "E": {
+      "products": [
+        {
+          "instanceId": "e-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "statusId": "slow40",
+                  "sourceScope": "caster",
+                  "applyTo": "self",
+                  "duration": 4,
+                  "modifiers": [
+                    {
+                      "stat": "ad",
+                      "op": "flat",
+                      "value": 45
+                    },
+                    {
+                      "stat": "ms",
+                      "op": "pctAdd",
+                      "value": -0.4
+                    }
+                  ]
+                },
+                {
+                  "kind": "floatingText",
+                  "shape": "single",
+                  "text": "這支啞鈴有劍柄",
+                  "applyTo": "self",
+                  "durationSec": 1
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】掛上鐵片：四秒AD+45、移速-40%，同一份具名buff，卸下時一起還原。",
+      "note": "刀太的健身鐵片：背重劍變慢變強，丟掉鐵片才跑得動\n掛上鐵片：四秒AD+45、移速-40%，同一份具名buff，卸下時一起還原。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-33-20260907.e",
+        "abilityId": "community-review-33-20260907.e",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "self",
+            "vfxId": "fx.prim.arcane.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              214,
+              46,
+              64
+            ]
+          }
+        ]
+      }
+    },
+    "R": {
+      "products": [
+        {
+          "instanceId": "r-parody-1",
+          "template": {
+            "ref": "tpl-lock-combo",
+            "params": {
+              "hitCount": 2,
+              "hitIntervalSec": 0.3,
+              "perHitDamage": {
+                "damageTier": "小"
+              },
+              "finisherDamage": {
+                "perRank": [
+                  450
+                ],
+                "ratios": []
+              },
+              "finisherRadius": 150,
+              "damageType": "physical",
+              "lockTarget": "none",
+              "casterGuard": "none",
+              "trigger": "onCast"
+            },
+            "contentSha256": "sha256:e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771cd614a89d04e016c6"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】健身成果展示，兩次小級物理傷害；不是永久吸血。",
+      "note": "刀太的健身鐵片：背重劍變慢變強，丟掉鐵片才跑得動\n健身成果展示，兩次小級物理傷害；不是永久吸血。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          30
+        ],
+        "manaCost": [
+          60
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-33-20260907.r",
+        "abilityId": "community-review-33-20260907.r",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "target",
+            "vfxId": "fx.prim.arcane.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              214,
+              46,
+              64
+            ]
+          }
+        ]
+      }
+    },
+    "EX": {
+      "products": [
+        {
+          "instanceId": "ex-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "statusId": "slow40",
+                  "count": "all",
+                  "subject": "self",
+                  "appliedBy": "self",
+                  "onConsumed": [
+                    {
+                      "kind": "restore",
+                      "manaPct": 0.08,
+                      "applyTo": "self"
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "rage",
+                      "duration": 2,
+                      "applyTo": "self",
+                      "sourceScope": "caster",
+                      "moveSpeedMult": 1.25
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】卸鐵片：消耗自己的重劍buff才回復8%魔力並得到25%移速兩秒；沒掛過不補貼。",
+      "note": "刀太的健身鐵片：背重劍變慢變強，丟掉鐵片才跑得動\n卸鐵片：消耗自己的重劍buff才回復8%魔力並得到25%移速兩秒；沒掛過不補貼。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-33-20260907.ex",
+        "abilityId": "community-review-33-20260907.ex",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "self",
+            "vfxId": "fx.prim.arcane.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              214,
+              46,
+              64
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "version": 1,
+  "templateVersions": {
+    "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+      "schema": "template@1",
+      "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-event-passive",
+      "name": "自訂事件被動",
+      "family": "event-passive",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+      "params": {
+        "hooks": {
+          "type": "hooks",
+          "default": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      }
+    },
+    "sha256:00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a816b495516b465e80": {
+      "id": "tpl-single-strike",
+      "schema": "template@1",
+      "name": "單體斬擊",
+      "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。 另外兩格選填：`invulnerableSec` 是**起手的無敵幀**（護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`dot` 是**施法者自己**背上的持續傷害（界王拳那一族的代價；打在敵人身上的同型傷害請用「吸血／汲取」那一族）。三格全部清空 ⇒ 就是一發純傷害。",
+      "family": "single-strike",
+      "status": "enabled",
+      "params": {
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              350
+            ],
+            "ratios": []
+          }
+        },
+        "damageType": {
+          "type": "enum",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "default": "magic"
+        },
+        "invulnerableSec": {
+          "type": "number",
+          "optional": true,
+          "min": 0.05,
+          "max": 5,
+          "unit": "s"
+        },
+        "dot": {
+          "type": "dot",
+          "optional": true
+        },
+        "status": {
+          "type": "applyStatus",
+          "optional": true
+        },
+        "castTimeSec": {
+          "type": "number",
+          "optional": true,
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "unit": "s"
+        }
+      },
+      "requires": [
+        "applyStatus",
+        "invulnerable",
+        "periodicDamage"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "23-04 雷焰聖劍",
+        "jass": "A0OD"
+      }
+    },
+    "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+      "schema": "template@1",
+      "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-effect-sequence",
+      "name": "自訂效果序列",
+      "family": "effect-sequence",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ]
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 10,
+          "unit": "s"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 40
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "enemies",
+            "allies"
+          ]
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "recast": {
+          "type": "recast",
+          "optional": true,
+          "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+        }
+      }
+    },
+    "sha256:e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771cd614a89d04e016c6": {
+      "id": "tpl-lock-combo",
+      "schema": "template@1",
+      "name": "鎖定連段",
+      "description": "把一個人鎖住打完一整段。命中後目標被定住、施法者進入演出狀態（這段期間打不到他），連段一擊一擊落下，最後一記終結技在收招那一刻結算並掃過周圍。「連段次數 × 每段間隔」就是整段長度 —— 它是算出來的，所以沒有『持續時間』這個欄位可以填。⚠️ 原作的連段中施法者會一擊一擊瞬移到目標身邊，這裡沒有搬過來：那段期間雙方都被 pause + 無敵，施法者站哪裡不影響任何結算，只有終結技的圓心用得到，所以收成原地演出。想要遞減間隔（52-002 射殺百頭的 CD×0.75）也還做不到。 ⭐ owner 2026-08-13：終結技可以是**另一支具名技能**（finisherAbility，走 proxyCast 代放），⛔ 不是把那支技能的傷害抄一份進來 —— 抄一份之後那支技能改了，連段裡的版本不會跟著改。留空則沿用 finisherDamage 那個數字。發動條件也是一格（trigger）：預設 onCast，20-002 是 onReflectSuccess（反彈成功才發），所以整段連段可以掛在被動 hook 上而不是主動施放。",
+      "family": "lock-combo",
+      "status": "enabled",
+      "params": {
+        "hitCount": {
+          "type": "number",
+          "default": 5,
+          "min": 1,
+          "max": 20,
+          "unit": "count"
+        },
+        "hitIntervalSec": {
+          "type": "number",
+          "default": 0.4,
+          "min": 0.05,
+          "max": 3,
+          "unit": "s"
+        },
+        "perHitDamage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              100
+            ],
+            "ratios": []
+          }
+        },
+        "finisherDamage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              450
+            ],
+            "ratios": []
+          }
+        },
+        "finisherRadius": {
+          "type": "number",
+          "default": 150,
+          "min": 50,
+          "max": 1800,
+          "unit": "wc3u"
+        },
+        "damageType": {
+          "type": "enum",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "default": "magic"
+        },
+        "lockTarget": {
+          "type": "enum",
+          "values": [
+            "stun",
+            "root",
+            "none"
+          ],
+          "default": "stun"
+        },
+        "casterGuard": {
+          "type": "enum",
+          "values": [
+            "all",
+            "magic",
+            "none"
+          ],
+          "default": "all"
+        },
+        "finisherAbility": {
+          "type": "docRef",
+          "optional": true
+        },
+        "trigger": {
+          "type": "enum",
+          "values": [
+            "onCast",
+            "onReflectSuccess",
+            "onKill",
+            "onBasicAttack",
+            "onDamageTaken"
+          ],
+          "default": "onCast"
+        }
+      },
+      "requires": [
+        "periodicDamage",
+        "invulnerable",
+        "applyStatus",
+        "leap"
+      ],
+      "gapScore": 6,
+      "exemplar": {
+        "skill": "84-04 給我蜂蜜",
+        "jass": "A0CX"
+      }
+    }
+  }
+}

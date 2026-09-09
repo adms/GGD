@@ -88,12 +88,14 @@ function enforceExclusiveGroup(
   group: string,
   onExisting: "replace" | "reject" | undefined,
   keepId: string,
+  applierId?: EntityId,
 ): boolean {
   const sc = world.stats.get(target);
   if (!sc) return true;
   const held = sc.sources.filter(
     (s) =>
       s.exclusiveGroup === group &&
+      (applierId === undefined || s.applierId === applierId) &&
       s.id !== keepId &&
       (s.expiresAtTick === undefined || s.expiresAtTick > world.tick),
   );
@@ -199,6 +201,9 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
       ? `${scopePrefix}stack:${e.stackKey}`
       : `${compoundPrefix}${world.tick}`;
     for (const target of subjects) {
+      if (e.vision?.revealed === true && (!world.health.get(target)?.alive ||
+          world.transform.get(target)?.zone !== world.transform.get(ctx.caster)?.zone ||
+          world.settledZones.has(world.transform.get(target)!.zone))) continue;
       // A scoped source's expired stacks must not survive a same-tick reapply
       // before the expiry system gets its next turn.
       if (e.sourceScope === "caster") {
@@ -227,7 +232,8 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
       // `statRecomputeSystem` 在那個縫裡就會把兩份乘起來一次。
       if (
         e.exclusiveGroup !== undefined &&
-        !enforceExclusiveGroup(world, target, e.exclusiveGroup, e.exclusiveOnExisting, selfId)
+        !enforceExclusiveGroup(world, target, e.exclusiveGroup, e.exclusiveOnExisting, selfId,
+          e.sourceScope === "caster" ? ctx.caster : undefined)
       ) {
         continue; // `reject`：同組已經有一份，這一發整個不生效。
       }

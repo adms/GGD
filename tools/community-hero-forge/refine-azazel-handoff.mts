@@ -4,7 +4,8 @@ import { parseArgs } from "node:util";
 import assert from "node:assert/strict";
 import { shippedHeroCatalog } from "../../packages/shared/testkit/heroPackageFixture.js";
 import { zHeroProject } from "../../packages/shared/src/content/heroForge/schema.js";
-import { refineAzazelProject } from "../../packages/shared/src/content/heroForge/communityRefinements/azazel.js";
+import { applyCommunityDesignRefinement } from "../../packages/shared/src/content/heroForge/communityRefinements/apply.js";
+import type { TemplateDoc } from "../../packages/shared/src/content/schema/template.js";
 import { compileHeroPackageProject } from "../../packages/shared/src/content/import/heroPackage.js";
 import { contentSha256 } from "../../packages/shared/src/content/import/jcs.js";
 import { verifyUploadedHeroModel } from "../../packages/shared/src/content/modelUpload/heroModel.js";
@@ -29,10 +30,12 @@ const selected = rows.filter(({ row }) => row.name === "阿薩謝爾");
 if (selected.length !== 1) throw new Error("Expected one exact Azazel identity.");
 const entry = selected[0]!;
 const previous = zHeroProject.parse(JSON.parse(entry.original));
-const refined = refineAzazelProject(previous);
+const catalog = shippedHeroCatalog();
+const patch = JSON.parse(await fs.readFile(new URL("../../materials/community-hero-forge/refinements/32.json", import.meta.url), "utf8"));
+const templates = [...catalog.documents].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc as TemplateDoc);
+const refined = applyCommunityDesignRefinement(previous, patch, templates);
 assert.deepEqual(refined.sourceDesign, previous.sourceDesign);
 assert.deepEqual(refined.presentation, previous.presentation);
-const catalog = shippedHeroCatalog();
 const baseRead = catalog.readAsset;
 const assets = new Map<string, Uint8Array>();
 for (const lock of refined.presentation.assetLocks.filter(lock => lock.kind === "model" && lock.registry === "normalized-upload")) {
@@ -58,9 +61,10 @@ for (const item of rows) {
   if (item !== entry) assert.equal(await fs.readFile(path.join(output, item.row.project), "utf8"), item.original);
 }
 const report = { schema: "ggd-handoff-refinement-report@1", heroCount: 37, slotCount: 222, changedProject: refined.projectId,
+  refinementVersion: patch.version, refinementDigest: contentSha256(patch),
   previousDigest: contentSha256(previous), refinedDigest: contentSha256(refined), sourceDigest: refined.sourceDesign!.sourceSha256,
   runtimeDocuments: compiled.runtime.length, dependencies: compiled.dependencies.length, assets: compiled.assets.length,
-  published: false, visualAcceptance: "pending", fullMechanicsAcceptance: "pending-close-ability-defense-and-shadow-presentation",
+  published: false, visualAcceptance: "pending", fullMechanicsAcceptance: "pending-original-art-and-current-service-publication",
   notes: refined.refinementNotes,
 };
 await fs.writeFile(path.join(output, "refinement-report.json"), JSON.stringify(report, null, 2) + "\n");

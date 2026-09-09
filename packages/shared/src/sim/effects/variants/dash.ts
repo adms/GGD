@@ -11,6 +11,13 @@ export interface DashVariant {
   mode: "forward" | "toPoint";
   speed: number;
   maxDistance: number;
+  /** Stop at the first swept enemy-body contact; absent preserves ordinary dash. */
+  stopOnHit?: "enemy" | "enemyChampion";
+  /** Applied once to that contacted enemy, never on an empty or wall-only stop. */
+  onHit?: EffectDef[];
+  /** Sweep each enemy once while continuing the dash; mutually exclusive with stopOnHit. */
+  onTouch?: EffectDef[];
+  touchScope?: "enemy" | "enemyChampion";
   /**
    * ⭐ S7 —— **衝刺結束的那一刻**才跑的那一段（52-04「向前衝刺 400 距離後
    * 揮出」）。缺席 = 沒有回呼 = 今天的行為，一個 tick 都不差。
@@ -45,7 +52,7 @@ export interface DashVariant {
    * 合成**同一個**結束條件。預設選 `"always"`，因為卡面說「衝刺後揮出」，
    * 而一刀被場景取消是玩家看不見的失敗。
    */
-  onEndOn?: "always" | "completed";
+  onEndOn?: "always" | "completed" | "resolved";
   /**
    * ⭐ S7 —— 衝刺途中死掉還要不要揮。省略 = `false`。
    * 形狀與精神逐字沿用 `randomArea.stopOnCasterDeath`。

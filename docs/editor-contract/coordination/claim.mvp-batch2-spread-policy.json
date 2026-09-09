@@ -5,7 +5,7 @@
   "from": "codex",
   "to": "main",
   "baseCommit": "213916e393364d07ef059d84e4f77b5ff7fbb87f",
-  "contractFingerprint": "9f3ab477601fa13e",
+  "contractFingerprint": "e2850e24ab2e78a1",
   "title": "第二批 MVP 必要 unit 修正：與第一批共用散射政策",
   "claims": [
     {
@@ -27,6 +27,6 @@
     }
   ],
   "asks": [
-    "請 Main 在原 PR 審查這份可重現修正；保留 #1159 的 v0.42.26 真實公告缺口與合併條件。81名正式投稿／上架另依 #1147／#1150，不把來源或CI通過当成正式發布。"
+    "請 Main 先審查合併 #1135，再合併已預先整合第一批的本PR；原SPREAD程式兩側一致，fromSummonSlot接線完整保留。#1159仍保留v0.42.26真實公告與合併條件。81名正式投稿／上架依#1147／#1150，來源或CI通過不代表正式發布。"
   ]
 }

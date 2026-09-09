@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../timeStop";
 /**
  * MobSystem — the roguelite mob-wave lifecycle (task #215 肉鴿小怪波).
  *
@@ -54,6 +55,7 @@
  * only. See `mobs.ts` + `sim/purity.test.ts`.
  */
 import type { EntityId } from "../../ids";
+import { interceptTrapAttack } from "../traps";
 import type { SimWorld } from "../SimWorld";
 import { distSq } from "../math/vec2";
 import {
@@ -196,6 +198,7 @@ export function mobSystem(world: SimWorld): void {
   //    champion in its zone. Every champion is an enemy (team !== MONSTER), so
   //    this is champion-blind aggro with no per-team logic.
   for (const [mobId, mob] of world.mob) {
+    if (isTimeStopped(world, mobId)) continue;
     const mt2 = world.transform.get(mobId);
     const mhp = world.health.get(mobId);
     if (!mt2 || !mhp?.alive) continue;
@@ -330,7 +333,7 @@ export function mobSystem(world: SimWorld): void {
       target !== -1 &&
       standstillBlocks(ss, mt2.vel, mt2.pos, world.transform.get(target)?.pos ?? mt2.pos);
     if (target !== -1 && mob.attackCdTicks <= 0 && bestD2 <= prof.attackRangeSq && !ssBlocked) {
-      world.damageQueue.push({
+      if (!interceptTrapAttack(world, mobId, target)) world.damageQueue.push({
         source: mobId,
         target,
         amount: prof.attackDamage,

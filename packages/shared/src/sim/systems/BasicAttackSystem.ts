@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../timeStop";
 /**
  * BasicAttackSystem — champion-driven autos honoring per-champion attack data.
  *
@@ -27,6 +28,7 @@ import { distSq, normalize, sub, lenSq, type Vec2 } from "../math/vec2";
 import { hasLineOfSight } from "../map/lineOfSight";
 import { activeObstacles } from "../map/gates";
 import { visionRulesOf } from "../vision";
+import { interceptTrapAttack } from "../traps";
 import { fireHooks } from "../effects/hooks";
 import { rollEvade, rollFumble } from "../combat/evasion";
 import { rollCritStrike } from "../combat/critStrike";
@@ -206,6 +208,7 @@ function seesTarget(world: SimWorld, zone: number, from: Vec2, to: Vec2): boolea
 
 export function basicAttackSystem(world: SimWorld): void {
   for (const [id, ab] of world.abilities) {
+    if (isTimeStopped(world, id)) continue;
     // ⭐ GH#577 —— 殭屍王從 2026-08-23 起**有** AbilitiesComp 與 StatsComp
     // （`sim/mobs.ts::installKingKit`），於是它第一次落進這個迴圈。⛔ 但它的普攻
     // 不走這裡：`MobSystem` 有自己那條「射程 + 冷卻 + 打就站定 → 推一發封包」的
@@ -306,7 +309,8 @@ export function basicAttackSystem(world: SimWorld): void {
     const ss = world.combatFeel.standstill;
 
     const champ = world.champion.get(id);
-    const cdef = champ ? Champions.tryGet(champ.championId as ChampionId) : undefined;
+    const bodyId = champ?.championId ?? (world.summon.has(id) ? sc.championId : undefined);
+    const cdef = bodyId ? Champions.tryGet(bodyId as ChampionId) : undefined;
     // ⭐ M4(2026-08-23) —— **攻擊型態覆寫**是這一行，⛔ 不是英雄卡那一格獨大。
     // 一份掛在身上的來源（`applyBuff` 的限時 buff / 天生技 rank / 道具 / 增益卡）
     // 可以把這具身體從近戰翻成遠程，於是 `godie-n00p` 妖狐 melee→ranged 與
@@ -389,6 +393,7 @@ export function basicAttackSystem(world: SimWorld): void {
     // the attack cooldown, i.e. the hero has unambiguously attacked.
     // A no-op for the ~117 champions carrying no stealth grant.
     breakStealth(world, id, "attack");
+    fireHooks(world, id, "onAttackAttempt", nav.attackTarget);
 
     // commit the whole-interval cooldown now; the wind-up is part of it.
     const baseAttackTime = cdef?.baseAttackTime ?? 1.0;
@@ -469,6 +474,10 @@ function resolveAttack(
   // hit lands at projectile IMPACT (ProjectileSystem), and rolling in both
   // places would dodge a ranged auto twice. See combat/evasion.ts DECISION 2.
 
+  if (interceptTrapAttack(world, id, targetId)) {
+    world.emit("basicAttack", { source: id, target: targetId, crit: false, ranged: attackType === "ranged", weaponClass: weaponClassOf(cdef, attackType), negated: true });
+    return;
+  }
   const baseAmount = sc.final[Stat.AttackDamage];
   let crit = false;
   // 英雄自己那**一條**暴擊來源骰出來的倍率;沒暴擊 = 1(＝相乘的單位元)。

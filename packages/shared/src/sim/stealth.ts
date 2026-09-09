@@ -220,6 +220,8 @@ export interface TrueSightState {
  * sources cannot be confused for one aggregated number.
  */
 export interface VisionGrant {
+  /** The bearer is revealed while this source lives; does not restart its stealth clock. */
+  revealed?: boolean;
   /**
    * 永久隱形: seconds of no stealth-breaking action before the body fades.
    * The w3x number for 27-00 永久性的隱形術 (`Apiv`) is 4.0 — the `Dur`/`HeroDur`
@@ -328,6 +330,9 @@ export function breakStealth(
 export function isHidden(world: SimWorld, id: EntityId): boolean {
   const st = world.stealth.get(id);
   if (!st) return false;
+  if (world.stats.get(id)?.sources.some(s => s.vision?.revealed === true &&
+      (s.expiresAtTick === undefined || s.expiresAtTick > world.tick) &&
+      (s.applierId === undefined || world.transform.get(s.applierId)?.zone === world.transform.get(id)?.zone))) return false;
   if (world.tick < st.hiddenFromTick) return false;
   // A CORPSE IS NOT INVISIBLE. The revive circle, the gold drop and the #220
   // dissolve are all things the enemy must be able to see happen.

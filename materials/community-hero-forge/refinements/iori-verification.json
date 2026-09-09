@@ -1,0 +1,237 @@
+{
+  "schema": "ggd-iori-mechanism-verification@1",
+  "issue": 1132,
+  "sourceCommit": "5a2b7d3f90af0a93f242b9075c309047e298b72c",
+  "refinementVersion": 2,
+  "refinementSha256": "fa62272de57302f0290582f8233da1cb360c39f50fcc18ffb8e62122c8ffefb1",
+  "implementedSlots": [
+    "PASSIVE",
+    "Q",
+    "W",
+    "E",
+    "R",
+    "EX"
+  ],
+  "newlyChangedSlots": [
+    "PASSIVE",
+    "Q",
+    "W",
+    "R",
+    "EX"
+  ],
+  "priorRecastReceipt": "iori-recast-verification.json",
+  "mechanisms": {
+    "passive": "Caster-scoped target status records, alternating skill slot, one successful HP/shield contact per cast, at most three stacks, four-second duration, round reset; finisher consumes only its own target stacks.",
+    "Q": "One imported.bolt.void projectile, first legal enemy contact, no piercing; follows GGD skill-through-terrain rules.",
+    "W": "Stationary radius 2.5 hit and finite one-unit knockback; 0.45-second one-hit source-specific physical/magic counter.",
+    "E": "Prior three-input recast program is byte-identical.",
+    "R": "Actual HP/shield contact starts three delayed physical strikes and one magic finisher; each strike and next scheduling checks same-target range, cancels on loss/death/settlement; consumes zero to three flames and opens one 1.2-second target/caster-scoped EX window.",
+    "EX": "Three standalone or four continuation strikes, consumes completed R window once before branch; own mana/cooldown, wrong caster/target/expired/unfinished R stays standalone; final strike consumes only own flames."
+  },
+  "comparison": {
+    "changedProjects": [
+      "02.hero-project.json"
+    ],
+    "revisionBefore": 13,
+    "revisionAfter": 14,
+    "otherProjectsByteIdentical": 36,
+    "originalRecipesByteIdentical": 37,
+    "EPlanByteIdentical": true,
+    "sourceDesignBriefPresentationUnchanged": true,
+    "modelSha256": "e55e9d2db49004f56d19091d4b7f6f74ffef19c8606b1b793650022f2924148c"
+  },
+  "focused": {
+    "heroTests": 29,
+    "existingRecastTests": 22,
+    "newEditorImporterTests": 4,
+    "existingRecastAcceptanceTests": 6,
+    "casterScopeTests": 12,
+    "totalPassed": 73,
+    "logs": [
+      {
+        "name": "iori-final-focused.log",
+        "exitCode": 0,
+        "sha256": "98492e2922e0c9b3be2ac4fc1a074539db1f97d7ecb0eebfa842b8c4d0ce4555"
+      },
+      {
+        "name": "iori-shared-typecheck.log",
+        "exitCode": 0,
+        "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+      },
+      {
+        "name": "iori-editor-typecheck.log",
+        "exitCode": 0,
+        "sha256": "486eafd3c0debbbff5ae7dddb4aa8823f853e470eff3bacbda032617862caca2"
+      }
+    ]
+  },
+  "mutations": [
+    {
+      "name": "piercing-q",
+      "file": "materials/community-hero-forge/refinements/02.json",
+      "command": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "packages/shared/src/content/heroForge/communityRefinements/iori.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "shield absorption"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "4838a245d66bfb55b1bf878d69993ee27dfa7ba8c5126dbe8d149b47323fa860"
+    },
+    {
+      "name": "early-r-window",
+      "file": "materials/community-hero-forge/refinements/02.json",
+      "command": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "packages/shared/src/content/heroForge/communityRefinements/iori.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "R contact starts"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "6cb339b8220cfe6b6c417d95fb2a2ac7bbe7f88724f29cfd6430eb04b6404ba9"
+    },
+    {
+      "name": "free-ex-followup",
+      "file": "materials/community-hero-forge/refinements/02.json",
+      "command": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "packages/shared/src/content/heroForge/communityRefinements/iori.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "R completion consumes"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "4f936550d2d2a7863982d48c62854df003717441d767190f0bf0878ba69de0c4"
+    },
+    {
+      "name": "cross-caster-group",
+      "file": "packages/shared/src/sim/effects/applyBuff.ts",
+      "command": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "packages/shared/src/sim/effects/casterScopedStatus.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "caster-scoped exclusive"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "52c17aa840a84d65fc9b7f2b4587e6e1e09cd09183e4b5410395f1f754cdf6f5"
+    }
+  ],
+  "findingsFixed": [
+    "Continuation payload must test target distance again at execution, not only scheduling.",
+    "Use status records for transient target flames/history/window so real round restoration clears them.",
+    "Default no-approach melee smoke scenes use real cast range; explicit designer geometry and runtime rejection remain unchanged.",
+    "Caster-scoped exclusive buff groups no longer replace or reject another caster.",
+    "Shared batch combat fixture loads shipped projectiles from the catalog."
+  ],
+  "counts": {
+    "heroes": 37,
+    "slots": 222,
+    "mapped": 81,
+    "unmapped": 141,
+    "genericOnAttackPassives": 17
+  },
+  "limitations": [
+    "Behavioral evidence is not original-art visual acceptance. Existing Suoh Mikoto style proxy and all model bytes unchanged.",
+    "Ground purple flames, counter motion, combo animation and original sound are still unverified.",
+    "Default kit resets positions/costs for smoke coverage; the separate R-to-EX scenario uses real prior cast and no seeded completion status.",
+    "Current-service ZIP, corrected submission/publication and full 37-hero original design remain incomplete."
+  ],
+  "generator": {
+    "command": "bash scripts/genrun.sh decor:build decor:build:raw",
+    "exitCode": 0,
+    "logSha256": "30f38a8b028e7a4a4b35a00121072ff551e1dcb0a34aad94a23ec0469bc76032",
+    "initialFailure": "tsx local IPC was denied by the sandbox (EPERM); same official generator passed outside it."
+  },
+  "finalBatch": {
+    "head": "e12c0be14a55480a3d1b4ea3bb498a68daa7597c",
+    "clean": true,
+    "command": "python3 tools/community-hero-forge/verify-authoring-batch.py --output /private/tmp/ggd-community-mechanism-fixes/iori-release-01 --release-root /private/tmp/ggd-model-upload-acceptance/release-13956d93b --release --jobs 3",
+    "sourceFingerprint": "113e9cdf51b46fcc147d49c95665db25f0a5a194ab16002fa38ff05c36b03261",
+    "exitCode": 2,
+    "errors": [],
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 81,
+      "slotsWithoutBehaviorSuite": 141
+    },
+    "registeredTestCounts": {
+      "behavior-implemented-mechanisms": 857,
+      "behavior-trap-view-and-transport": 4,
+      "behavior-motion-view-and-transport": 9,
+      "behavior-target-resource-acceptance": 12
+    },
+    "registeredTestsPassed": 882,
+    "editorTestsPassed": 601,
+    "editorTypecheck": "passed",
+    "editorProductionBuild": "passed",
+    "modelBytes": "verified",
+    "reportSha256": "380028a567860733d66afe1dc0794cd1e2445b126bfa83ae74bd17ef720f68b2",
+    "jobs": [
+      {
+        "id": "skills",
+        "exitCode": 0,
+        "logSha256": "0c174ce52c16f20c56b7874e3f3212249057395563f1bd7542da35b75a0caf5e"
+      },
+      {
+        "id": "editor",
+        "exitCode": 0,
+        "logSha256": "cf3aa6364376f1b8ccae3698d969ab9d2d9531c533beb36b0bfcd66eb67c570c"
+      },
+      {
+        "id": "coord",
+        "exitCode": 0,
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271"
+      },
+      {
+        "id": "compile-and-models",
+        "exitCode": 0,
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c"
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "exitCode": 0,
+        "logSha256": "588df04424a771204524c7aaa24f69b3852bd7341ab203671c2775ca507feaa3"
+      },
+      {
+        "id": "behavior-trap-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "77821ddf4f226d15bf13eb07cf6dab9f3fc854914ef16c0df7d6c3ed73c40fd0"
+      },
+      {
+        "id": "behavior-motion-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "c97b389f961821afc27dc73477ab19294100d220000133f649e687a8fc5f0966"
+      },
+      {
+        "id": "behavior-target-resource-acceptance",
+        "exitCode": 0,
+        "logSha256": "7a3827eea862e90b5107122a55a49e16182320bbf84080d56cfb861e0dcbe8ca"
+      }
+    ],
+    "meaning": "All executed checks passed against a clean commit. Exit 2 preserves 141 unmapped slots; full original design, art, current-service ZIP and publication remain incomplete. Subsequent commit updates receipts and documentation only."
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "schema": "ggd-mvp-handoff-receipt@1",
+  "recordedAt": "2026-09-10T00:21:09.032462+08:00",
+  "sourceCommit": "a3a290fbc0e0af8fc2cceebb380d4e6be7280a8a",
+  "heroScope": {
+    "first": 37,
+    "second": 37,
+    "lol": 7,
+    "heroes": 81,
+    "slots": 486,
+    "uniqueProjectIds": 81
+  },
+  "progressFile": "docs/全自動鑄造編輯器進度temp202609100021.md",
+  "ciRuns": {
+    "first": 34371509009,
+    "second": 34371514707
+  },
+  "remainingBlockerIssue": 1159,
+  "complete": false,
+  "publishedToSharedFormalService": false,
+  "limits": [
+    "Full CI is not green.",
+    "Historical isolated publication and local compilation do not prove formal publication.",
+    "Second repo reuses byte-identical release-note fixture fixes; unadopted keys describe the first repo only.",
+    "skills-repaired.log retains an intermediate ledger failure; ledger-check-final.log is the later passing result.",
+    "No new artwork, model remapping, AWS transfers, recording or Phase2/3 work.",
+    "Raw log whitespace is preserved; source/document diff checks exclude raw .log files.",
+    "Scoped lint exits 0 with two existing unused-eslint-disable warnings; no lint errors."
+  ],
+  "files": [
+    {
+      "path": "player-note-fixtures.log",
+      "bytes": 1481,
+      "sha256": "cf103694c68b60dd2c27eefa0c043dd52a3e946cbd3228397db8618bf966216d"
+    },
+    {
+      "path": "derived-freshness.log",
+      "bytes": 423,
+      "sha256": "09bad276c3c5455d353e1866d117235cca1b36fcbce44fda0a1369de4fafa067"
+    },
+    {
+      "path": "ci-unit.log",
+      "bytes": 2112286,
+      "sha256": "38014979b591f56d3be96ed2dc8da9c135b1dd299041979ad83bdcb77def654f"
+    },
+    {
+      "path": "targeted-source-fixes.log",
+      "bytes": 391309,
+      "sha256": "5e3f5f8cff6b903ac601d03327cf0aecdc7cef913ae178812211979f36910e4c"
+    },
+    {
+      "path": "shared-typecheck-initial.log",
+      "bytes": 619,
+      "sha256": "14f476475f23ce5088ff9b308acb774c01410b431570b431ca623b4fe55dec81"
+    },
+    {
+      "path": "shared-typecheck-fixed.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "source-lint.log",
+      "bytes": 452,
+      "sha256": "814c9b69845af17652ce221b827b49e7494f77966c05d90631b671e476b68e7f"
+    },
+    {
+      "path": "editor-release.log",
+      "bytes": 915,
+      "sha256": "5a6d00ea6e0c1d9cad81516758c3d8bc377d09837a45a9520c326a25d369d454"
+    },
+    {
+      "path": "skills-prefix.log",
+      "bytes": 20910,
+      "sha256": "fabd7abec4444f6032604f7a2d02c1b1b567819411b7413c4c688b2c36907867"
+    },
+    {
+      "path": "skills-tail.log",
+      "bytes": 35309,
+      "sha256": "9e80ad00ed8cbfdc501d2ce5769b05a4eaec1e3e1ecd5f4975d66848500c01f1"
+    },
+    {
+      "path": "skills-repaired.log",
+      "bytes": 2016,
+      "sha256": "81e8fdef8b7f27b26f0cd128f3f25207f85c5597573976b08430ab92c894eab4"
+    },
+    {
+      "path": "ledger-final.log",
+      "bytes": 1668,
+      "sha256": "04c12d74e7ad82f1b4063ac33824396c054da284d493c0481e90b0dd02b60539"
+    },
+    {
+      "path": "ledger-check-final.log",
+      "bytes": 308,
+      "sha256": "ed4d1f0427f76a18980384191731c05d6118db2bcc017c7965e413b9fd3beb95"
+    },
+    {
+      "path": "coord.log",
+      "bytes": 6032,
+      "sha256": "6e0b6cfe199f679202eae8831ff5418011581998eb7b5c3c3254d18f8d51e0bf"
+    },
+    {
+      "path": "unadopted-keys.txt",
+      "bytes": 2392,
+      "sha256": "2736bc302be637eeadcd5abbd8135b20160514564eff43e19fd76c7493f2fc1a"
+    },
+    {
+      "path": "unadopted-sources.tsv",
+      "bytes": 5364,
+      "sha256": "93b25b42de5d2f2b92f6d4f37cb8da3f1ec75194de5b763db2ff7a15dad6a64a"
+    },
+    {
+      "path": "finish-ledger.py",
+      "bytes": 794,
+      "sha256": "3a6b01867610daffc35356a2979c8cbaaea6c20c3dc0861108b406d8d2721c46"
+    },
+    {
+      "path": "resume-skills.py",
+      "bytes": 955,
+      "sha256": "f16c2634117a414cc4da38313326f62791dde7b89a7b1b71f478c1b97ffe83e9"
+    },
+    {
+      "path": "skills-tail-results.json",
+      "bytes": 5134,
+      "sha256": "90a035df8158797da2c023f63c52cc32bf0c6d9559baeb770a49588aefdf8c6d"
+    }
+  ]
+}

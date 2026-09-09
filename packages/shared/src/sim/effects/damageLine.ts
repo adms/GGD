@@ -62,6 +62,7 @@
  * No trig (direction comes from `normalize`), no `**`, no Map iteration, no
  * clock.
  */
+import { ownedSummonsForSlot } from "../summons";
 import type { EntityId } from "../../ids";
 import type { EffectContext } from "./effect";
 import { resolveScaling } from "./effect";
@@ -70,7 +71,7 @@ import { Stat } from "../stats/statTypes";
 import { capsule } from "../collision/shapes";
 import { queryOverlap } from "../collision/queries";
 import { canSee } from "../stealth";
-import { distSq, type Vec2 } from "../math/vec2";
+import { distSq, normalize, sub, lenSq, type Vec2 } from "../math/vec2";
 import { aimDirection, casterAttrs, casterDamageStats, casterSlotRank } from "./effectCommon";
 import { resourcePctAmount } from "./dynamicTerms";
 import { unscaledFractionOf } from "../combat/apDamageScaling";
@@ -93,9 +94,14 @@ function lineDir(e: { aim?: "facing" | "target" }, ctx: EffectContext): Vec2 | u
 export const damageLineEffect: EffectKindSpec<"damageLine"> = {
   apply(e, ctx, _bakeList, runList) {
     const { world } = ctx;
-    const from = world.transform.get(ctx.caster);
+    const emitter = e.fromSummonSlot === undefined ? ctx.caster : ownedSummonsForSlot(world, ctx.caster, e.fromSummonSlot)[0];
+    if (emitter === undefined) return;
+    const from = world.transform.get(emitter);
     if (!from) return;
-    const dir = lineDir(e, ctx);
+    const aimPoint = e.fromSummonSlot !== undefined && e.aim !== "facing" && ctx.point ? sub(ctx.point, from.pos) : undefined;
+    const dir = e.fromSummonSlot === undefined ? lineDir(e, ctx)
+      : aimPoint && lenSq(aimPoint) > 1e-12 ? normalize(aimPoint)
+      : e.aim !== "facing" && ctx.direction ? normalize(ctx.direction) : lineDir(e, { ...ctx, caster: emitter });
     if (!dir) return;
 
     // Both bounded by the SAME ceiling a spread radius is (`SPREAD_MAX_RADIUS`,
@@ -112,7 +118,7 @@ export const damageLineEffect: EffectKindSpec<"damageLine"> = {
     // WHERE THE LINE STARTS. Default = the caster's own body ("面前"); the
     // victim-anchored form is the lash that carries on past what it caught.
     let start = from.pos;
-    if (e.fromCaster === false) {
+    if (e.fromSummonSlot === undefined && e.fromCaster === false) {
       const tid = ctx.targets[0];
       const tt = tid !== undefined ? world.transform.get(tid) : undefined;
       if (tt) start = tt.pos;
@@ -146,6 +152,9 @@ export const damageLineEffect: EffectKindSpec<"damageLine"> = {
     // ⛔ 不是第二份實作）。一定要在 `canCrit` 的擲骰之前，理由同 damageArea。
     const struck = selectVictims(victims, cap, e.victimCondition, e.maxTargetsCounts, ctx);
     if (struck.length === 0) {
+      // An emitted summon beam remains visible when aimed into empty ground.
+      if (e.fromSummonSlot !== undefined) world.emit("damageLine", { caster: ctx.caster, x: start.x, z: start.z,
+        x2: end.x, z2: end.z, width, hits: 0, origin: ctx.origin });
       // ⚠️ `emit` 的語意刻意不變:過濾到零 = 今天「一個人都沒打到」的那條路 = 不 emit。
       // 這樣「線畫出來了但沒人挨打」不會變成一個新的、沒有人要求過的視覺狀態。
       runOnHitChain(e, [], ctx, runList);

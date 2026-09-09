@@ -31,6 +31,9 @@ import { ProjectileView, type ProjectileMeshShape } from "./views/ProjectileView
 import { FlowerView } from "./views/FlowerView";
 import { GuardianView } from "./views/GuardianView";
 import { ReviveCircleView } from "./views/ReviveCircleView";
+import { AbilityMotionView } from "./views/AbilityMotionView";
+import { TimeStopView } from "./views/TimeStopView";
+import { TrapView } from "./views/TrapView";
 import { NightFlagView } from "./views/NightFlagView";
 import { CoinView } from "./views/CoinView";
 import { applyModelTint, releaseModelTint, type ModelTint } from "./views/modelTint";
@@ -87,6 +90,9 @@ const SPEED_SMOOTH = 0.25;
 
 /** Plain snapshot of one entity (adapter over the schema EntityState). */
 export interface EntityViewState {
+  motionState?: string;
+  tetherX?: number;
+  tetherZ?: number;
   id: number;
   kind: number; // 0 champion, 1 projectile, 2 flower, 3 revive circle
   seatId: number;
@@ -168,6 +174,8 @@ export interface EntityViewState {
    * at exactly this number so a player's read of "where does 黑夜靈氣 reach"
    * cannot disagree with the radius the sim tests.
    */
+  timeStop?: { radius: number; ticks: number; teamId: number };
+  trap?: { radius: number; teamId: number; armed: boolean };
   nightFlag?: {
     radius: number;
     /** owning team, for a future tint; presentation only, never a filter */
@@ -544,6 +552,11 @@ export class EntityViewRegistry {
   private readonly reviveCircles = new Map<number, ReviveCircleView>();
   private readonly revivePool: ReviveCircleView[] = [];
   /** 暗夜旗 (71-00 暗夜契約) — pooled exactly like the revive circles. */
+  private readonly motionViews = new Map<number, AbilityMotionView>();
+  private readonly timeStops = new Map<number, TimeStopView>();
+  private readonly timeStopPool: TimeStopView[] = [];
+  private readonly traps = new Map<number, TrapView>();
+  private readonly trapPool: TrapView[] = [];
   private readonly nightFlags = new Map<number, NightFlagView>();
   private readonly nightFlagPool: NightFlagView[] = [];
   private readonly coins = new Map<number, CoinView>();
@@ -596,6 +609,7 @@ export class EntityViewRegistry {
       guardians: this.guardians,
       revives: this.reviveCircles,
       nightFlags: this.nightFlags,
+      traps: this.traps, trapPool: this.trapPool,
       coins: this.coins,
       lastPos: this.lastPos,
       speedEma: this.speedEma,
@@ -1018,6 +1032,12 @@ export class EntityViewRegistry {
 
     for (const e of args.entities) {
       seen.add(e.id);
+      let motion = this.motionViews.get(e.id);
+      if (e.motionState && !motion) { motion = new AbilityMotionView(this.scene); this.motionViews.set(e.id, motion); }
+      if (motion) {
+        const visible = e.alive && !((e.flags ?? 0) & ENTITY_FLAG.INVISIBLE && e.friendly !== true);
+        motion.sync({ ...e, ...args.poseFor(e), motionState: visible ? e.motionState ?? "" : "" });
+      }
       if (e.kind === 1) {
         let view = this.projectiles.get(e.id);
         if (!view) {
@@ -1094,6 +1114,22 @@ export class EntityViewRegistry {
         continue;
       }
 
+      if (e.kind === ENTITY_KIND.TIME_STOP) {
+        let view = this.timeStops.get(e.id);
+        if (!view) { view = this.timeStopPool.pop() ?? new TimeStopView(this.scene); this.timeStops.set(e.id, view); }
+        view.activate(e.timeStop?.radius ?? 0);
+        const pose = args.poseFor(e); view.setPose(pose.x, pose.z);
+        this.lastPos.set(e.id, { x: pose.x, z: pose.z });
+        continue;
+      }
+      if (e.kind === ENTITY_KIND.TRAP) {
+        let view = this.traps.get(e.id);
+        if (!view) { view = this.trapPool.pop() ?? new TrapView(this.scene); this.traps.set(e.id, view); }
+        view.activate(e.trap?.radius ?? 1, e.trap?.teamId ?? -1, e.trap?.armed ?? false);
+        const pose = args.poseFor(e); view.setPose(pose.x, pose.z);
+        this.lastPos.set(e.id, { x: pose.x, z: pose.z });
+        continue;
+      }
       if (e.kind === ENTITY_KIND.NIGHT_FLAG) {
         // 暗夜旗 (71-00 暗夜契約) — pooled, fully procedural. The ring's SIZE is
         // the aura radius and comes off the wire (`nightFlag.radius`, packed by
@@ -1333,6 +1369,7 @@ export class EntityViewRegistry {
       const prevSpeed = this.speedEma.get(e.id) ?? instSpeed;
       const speed = prevSpeed + (instSpeed - prevSpeed) * SPEED_SMOOTH;
       this.speedEma.set(e.id, speed);
+      view.setTimeStopped(((e.flags ?? 0) & ENTITY_FLAG.TIME_STOPPED) !== 0, args.dtMs);
       const state = view.anim.update({ alive: e.alive, moving }, args.nowMs);
       // #220 revive exemption, re-evaluated EVERY frame (never latched): the
       // `death` event and the snapshot patch carrying the circle can land in
@@ -1388,6 +1425,13 @@ export class EntityViewRegistry {
     // so the entity simply stops being published and this sweep retires the
     // ring. Without the sweep a black circle would sit on the arena floor
     // through the shop and into the next round.
+    for (const [id, view] of this.motionViews) { if (!seen.has(id)) { view.dispose(); this.motionViews.delete(id); } }
+    for (const [id, view] of this.timeStops) {
+      if (!seen.has(id)) { view.deactivate(); this.timeStops.delete(id); this.lastPos.delete(id); this.timeStopPool.push(view); }
+    }
+    for (const [id, view] of this.traps) {
+      if (!seen.has(id)) { view.deactivate(); this.traps.delete(id); this.lastPos.delete(id); this.trapPool.push(view); }
+    }
     for (const [id, view] of this.nightFlags) {
       if (!seen.has(id)) {
         view.deactivate();
@@ -1429,6 +1473,11 @@ export class EntityViewRegistry {
     for (const v of this.revivePool) v.dispose();
     for (const v of this.coins.values()) v.dispose();
     for (const v of this.coinPool) v.dispose();
+    for (const v of this.motionViews.values()) v.dispose(); this.motionViews.clear();
+    for (const v of this.timeStops.values()) v.dispose();
+    for (const v of this.timeStopPool) v.dispose();
+    for (const v of this.traps.values()) v.dispose();
+    for (const v of this.trapPool) v.dispose();
     for (const v of this.nightFlags.values()) v.dispose();
     for (const v of this.nightFlagPool) v.dispose();
     this.champions.clear();
@@ -1442,6 +1491,8 @@ export class EntityViewRegistry {
     this.revivePool.length = 0;
     this.coins.clear();
     this.coinPool.length = 0;
+    this.timeStops.clear(); this.timeStopPool.length = 0;
+    this.traps.clear(); this.trapPool.length = 0;
     this.nightFlags.clear();
     this.nightFlagPool.length = 0;
   }

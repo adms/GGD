@@ -21,6 +21,8 @@
  */
 export interface DispelVariant {
   kind: "dispel";
+  /** Optional tag filter; explicitly status-only pools. Default unchanged. */
+  statusTag?: string;
   /**
    * ⭐ E1 硬約束（owner 核准）：**新 kind 一律帶 `shape`**。
    *

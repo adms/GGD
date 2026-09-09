@@ -1,0 +1,25 @@
+{
+  "schema": "ggd-visual-diagnostic-storage@1",
+  "bucket": "ggd-390630837668-ap-east-2-an",
+  "region": "ap-east-2",
+  "status": "failed-acceptance",
+  "note": "Failure screenshots only; not original art or successful visual evidence. No credentials, browser storage or account state uploaded.",
+  "files": [
+    {
+      "attempt": "04",
+      "kind": "failed-browser-diagnostic",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/community-hero-forge/evidence/conan-mobility/diagnostic/5c1dd9d8e8991df698d6edde2665819b595b6ec14cd65254ae558f3a36f9b4eb.png",
+      "sha256": "5c1dd9d8e8991df698d6edde2665819b595b6ec14cd65254ae558f3a36f9b4eb",
+      "bytes": 300595,
+      "readbackMatches": true
+    },
+    {
+      "attempt": "05",
+      "kind": "failed-browser-diagnostic",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/community-hero-forge/evidence/conan-mobility/diagnostic/5c1dd9d8e8991df698d6edde2665819b595b6ec14cd65254ae558f3a36f9b4eb.png",
+      "sha256": "5c1dd9d8e8991df698d6edde2665819b595b6ec14cd65254ae558f3a36f9b4eb",
+      "bytes": 300595,
+      "readbackMatches": true
+    }
+  ]
+}
