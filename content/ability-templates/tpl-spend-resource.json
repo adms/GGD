@@ -1,0 +1,64 @@
+{
+  "id": "tpl-spend-resource",
+  "schema": "template@1",
+  "name": "消耗資源施放",
+  "description": "**要求 N 層資源才放得出來，放了就扣掉**（`condition.status.minStacks` 要求 ＋ `consumeStatus.count` 扣除）。⭐ 與累積側的 `tpl-charge-resource` 是**一對**。⚠️ ⭐ 為什麼要求與扣除是**兩個**節點：`condition` 決定「這一發打不打得出來」,`consumeStatus` 決定「打出來之後扣幾層」—— ⛔ 合成一格就表達不了「消耗全部」與「消耗固定三層」的差別。⭐ GH#1132 AC④ 逐字要的「**合法消耗**」由 `consumeStatus` 本人保證：扣得到 ⇒ 跑 `onConsumed`；層數不足 ⇒ 跑 `onMissing`（省略 ＝ 什麼都不發生）。⚠️ ⭐ 而「要幾層」與「扣幾層」是**同一格**（`minStacks`）—— ⛔ 不開兩格表達一個事實。⚠️ ⭐ `missingText`：層數不足時冒一行字 —— ⭐ 那是 exemplar 逐字要求的「缺少黑魔導時**顯示使用條件**」，⛔ 而 `onMissing` 省略就是「按下去什麼都沒發生」。",
+  "family": "spend-resource",
+  "status": "enabled",
+  "requires": [],
+  "gapScore": 10,
+  "params": {
+    "statusId": {
+      "type": "docRef",
+      "origin": "census: ⭐ 出貨**真的存在**的標記型 status（`content/status-effects/aban-x-mark.json`,「阿邦式 X 印記」）——⛔ 預設**不是**一個編出來的 id：`docRef` 只驗格式⛔不驗存在,而一個不存在的預設會讓表單第一次打開就是壞的。⚠️ ⭐ 而它**只是預設** —— 每一支資源技能都要填自己的（布局／電力／線索）。⭐ 前例：`tpl-beam-roll.modelKey` / `tpl-blink-strike.arriveVfxId` 也都給真的存在的預設。",
+      "default": "aban-x-mark"
+    },
+    "minStacks": {
+      "type": "number",
+      "min": 1,
+      "max": 99,
+      "default": 3,
+      "origin": "census: 武藤遊戲逐字「上限**三層**，供 EX 消耗」⇒ 要求 3、扣 3。⭐ 而這一格**同時**是「要幾層」與「扣幾層」—— ⛔ 第〇·四守則：那是**同一個事實**。⚠️ 我第一版開了 `spend`(all/exact) ＋ `spendCount` 兩格,⭐ 而它們表達的是同一個數字 ——`paramsSchemaFor` 的閘當場抓到：擾動 `spend` **不會改變展開結果** ⇒ 那是一格死參數。⭐ 哪一天真的出現「要求 3 層但只扣 1 層」的設計,那時候才是把它拆開的理由。"
+    },
+    "effects": {
+      "type": "effects",
+      "origin": "census: 武藤遊戲 EX 逐字「射出強化**直線魔法**」⇒ 預設放一顆最小的魔法傷害,⭐ 讓這一族**展得開**（`templateStatusIsHonest` 要求宣告 enabled 的每一份都真的展得開）。⛔ 它只是預設 —— 每一支要填自己真正打的東西。",
+      "default": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小"
+          }
+        }
+      ]
+    },
+    "castType": {
+      "type": "enum",
+      "values": [
+        "self",
+        "ground",
+        "targeted"
+      ],
+      "default": "self",
+      "origin": "census: 出貨 `damageArea` 主體那一族的同名槽用同一組值（`tpl-area-strike`）—— ⛔ 不另立一份值域。"
+    },
+    "castTimeSec": {
+      "type": "number",
+      "optional": true,
+      "min": 0,
+      "max": 5,
+      "unit": "s",
+      "origin": "與其餘每一族同一格（`deriveCastTimes` 會覆蓋它）。"
+    },
+    "missingText": {
+      "type": "text",
+      "default": "資源不足",
+      "origin": "census: 武藤遊戲 EX 逐字「**缺少黑魔導時顯示使用條件**」⇒ ⭐ 層數不足時要**告訴玩家**，⛔ 不是按下去什麼都沒發生（第一·五守則：說了但不會發生）。⭐ 而 `consumeStatus.onMissing` 就是那個住處（schema 逐字：「層數不足時執行；省略則不產生後續效果」）。⭐ 預設用最短的一句 —— 每一支要填自己的（「缺少黑魔導」／「電力不足」／「線索不足」）。⚠️ ⭐ 型別是 `text` **⛔ 不是 `docRef`** —— 我第一版寫了 `docRef`,而它驗的是**文件編號**格式 ⇒「資源不足」四個中文字當場被拒。"
+    }
+  },
+  "exemplar": {
+    "skill": "GH#1132：武藤遊戲〔黑・魔・導〕—— 逐字「**消耗布局**，由存活的黑魔導射出強化直線魔法」",
+    "jass": "⛔ 無 JASS 對照 —— 社群英雄的原設計（第〇·六守則第 1 層）"
+  }
+}

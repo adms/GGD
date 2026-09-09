@@ -99,6 +99,9 @@ function slotSchema(slot: ParamSlot): z.ZodTypeAny {
     case "boolean":
       // ⭐ GH#1146 —— 是非。⚠️ 「不填」由 slot 的 `optional` 表達,⛔ 不是第三個值。
       return z.boolean();
+    case "text":
+      // ⭐ GH#1132 —— 一句給玩家看的字。⚠️ 長度由消費端的 schema 驗,⛔ 這裡不抄第二份。
+      return z.string().min(1);
     case "applyBuff":
       // ⭐ GH#1146 —— 整個 applyBuff 節點。⚠️ 與 `buffPerRank` 是**包含關係**,⛔ 不是二選一：
       //    那一格只是這個節點的 `perRank` 那一欄。

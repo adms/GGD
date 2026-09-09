@@ -143,6 +143,9 @@ function probesFor(slot: ParamSlot, current: unknown): unknown[] {
         { shape: "single", preset: "tpl-locust-orb", modelKey: "probe.model.one", clip: "idle", scale: 2, lifeSec: 1 },
         { shape: "single", preset: "tpl-locust-strike", modelKey: "probe.model.two", clip: "birth", scale: 5, lifeSec: 3 },
       ].filter(differs);
+    case "text":
+      // ⭐ GH#1132 —— 一句給玩家看的字。兩個候選**內容不同**,⛔ 不是長度不同。
+      return ["探針文字甲", "probe-text-b"].filter(differs);
     case "boolean":
       // ⭐ GH#1146 —— 是非只有一個「別的值」。
       return [current !== true].filter(differs);

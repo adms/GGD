@@ -59,7 +59,17 @@ const GATED = new Set(["effect", "hook", "template", "vfx-subtype", "vfx-call"])
 //     （範圍 7 · 指定 4 · 兩者/判不出 7），其中 **12 槽**綁著 `tpl-buff-self` ——
 //     那一族發 `applyTo:"self"`、⛔ 不設 `targetsEnemies` ⇒ ⭐「友軍盾」實際只罩施法者自己，
 //     而卡面說它保護隊友（第一·五守則）。⇒ 全庫在此之前**沒有任何模板發友方指向的護盾**。
-const BASELINE_GAPS = 53
+// · 2026-09-09 GH#1132 AC④：兩個新模板家族 `charge-resource`／`spend-resource`（事件累積資源
+//   ＋ 消耗資源施放，**成對**）進清冊 ⇒ 分母 +2。
+//   ⚠️ ⭐ 逐列比對過：**新增的缺口只有那兩列 `缺 後台表單`，⛔ 沒有任何一列消失**
+//   ⇒ 同上面那幾條例外，這是**分母變了**，⛔ 不是回歸。
+//   ⭐ 而它們缺的仍然是**整層**那一格（`adminOpensHome("template")` ⇒ 39 顆 template
+//     積木每一顆都 false）⇒ ⛔ 補不了「只補它們自己」，與前幾批一起在等 #992 的 schemaToForm。
+//   ⭐ 為什麼值得讓分母 +2：GH#1132 量到 37 名社群英雄裡提到資源／層／累積的 **72 槽**，
+//     其中 **26 槽**綁著 `tpl-on-attack` —— ⭐ 而那一族發的是**普攻追加傷害**，
+//     ⛔ 一層都不會累積，而票文逐字說「**普攻額外傷害不作替代**」。
+//     ⇒ 全庫在此之前**沒有任何模板做「事件累積 ＋ 有限容量 ＋ 去重 ＋ 合法消耗」**。
+const BASELINE_GAPS = 55
 
 interface Brick {
   id: string;

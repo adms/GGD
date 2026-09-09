@@ -1,0 +1,67 @@
+{
+  "id": "tpl-charge-resource",
+  "schema": "template@1",
+  "name": "事件累積資源",
+  "description": "**由一個真實事件累積的層數資源**（`applyStatus` 加層 ＋ hook 的 `internalCooldown` 去重 ＋ `maxStacks` 上限）。⭐ 與消耗側的 `tpl-spend-resource` 是**一對** —— 那一支用 `condition.status.minStacks` 要求、`consumeStatus.count` 扣除。⚠️ ⭐ GH#1132 逐字：「布局／電力／線索以**對應真實事件**取得、有限容量、去重、合法消耗及重置；**普攻額外傷害不作替代**」—— ⇒ ⭐ 這一族的 `event` 預設**不是** `onBasicAttack`。⭐ 引擎那一側早就支援：`condition.ts:1352` 的 `minStacks` 真的走 `statusStacks()`；`applyStatus.stacks` 拒絕 0（「一個不動任何層數的效果在卡片上看得到、在遊戲裡什麼都不會發生」）。",
+  "family": "charge-resource",
+  "status": "enabled",
+  "requires": [],
+  "gapScore": 10,
+  "params": {
+    "event": {
+      "type": "enum",
+      "values": [
+        "onAbilityHit",
+        "onAbilityCast",
+        "onDamageDealt",
+        "onDamageTaken",
+        "onKill",
+        "onBasicAttack",
+        "onUltimateHit",
+        "onStatusApplied"
+      ],
+      "default": "onAbilityHit",
+      "origin": "census: GH#1132 的 72 槽逐句分類 —— **命中 13** · 施法 7 · 觸發 4 · 普攻 3 · 受擊 3 · 時間 3 · 擊殺 1 ⇒ ⭐ 預設挑最多的「命中」（`onAbilityHit`）。⛔ **刻意不是 `onBasicAttack`**：票文逐字說「普攻額外傷害不作替代」,而今天 26 槽誤綁在 `tpl-on-attack` 上。"
+    },
+    "statusId": {
+      "type": "docRef",
+      "origin": "census: ⭐ 出貨**真的存在**的標記型 status（`content/status-effects/aban-x-mark.json`,「阿邦式 X 印記」）——⛔ 預設**不是**一個編出來的 id：`docRef` 只驗格式⛔不驗存在,而一個不存在的預設會讓表單第一次打開就是壞的。⚠️ ⭐ 而它**只是預設** —— 每一支資源技能都要填自己的（布局／電力／線索）。⭐ 前例：`tpl-beam-roll.modelKey` / `tpl-blink-strike.arriveVfxId` 也都給真的存在的預設。",
+      "default": "aban-x-mark"
+    },
+    "perEvent": {
+      "type": "number",
+      "min": 1,
+      "max": 9,
+      "default": 1,
+      "origin": "census: 那 3 槽「四件都要」的逐字都是「**每次…最多增加一層**」（武藤遊戲／八神庵／西索）⇒ 1。"
+    },
+    "maxStacks": {
+      "type": "number",
+      "min": 1,
+      "max": 99,
+      "default": 3,
+      "origin": "census: 武藤遊戲逐字「上限三層」。⚠️ ⭐ 而  **沒有** maxStacks 這一格（我第一版寫了,schema 回「Unrecognized key」）—— ⭐ 容量今天由  ＋ 窗口（durationSec）表達,而這一格是**卡面文案與後台可調的上限**。⛔ 留著它是因為 owner 之後要調的是這個數字,⛔ 不是 refresh 那個字。",
+      "inert": "⛔⛔ **引擎今天沒有逐狀態的層數上限** —— `zApplyStatus` 只有 `stacks`／`refresh`／`duration`，⛔ 沒有 `maxStacks`（我第一版寫了它，schema 逐字回「Unrecognized key(s): 'maxStacks'」）。⚠️ ⭐ 而 `dot` **有**（`sim/effects/dot.ts:128`）⇒ ⭐ 這不是「做不到」，是**那一格還沒長在 applyStatus 上**。⭐ 今天唯一的上界是全域的 `MARK_MAX_COUNT = 999`（`sim/markLimits.ts:54`），⛔ 而那是防「12 打成 120」的柵欄，⛔ 不是設計用的容量。⇒ ⭐ 這一格**留著**是因為 GH#1132 AC④ 逐字要求「**有限容量**」，而 owner 之後要調的是**這個數字**（⛔ 不是 `refresh` 那個字）—— 它是卡面文案與後台可調的上限。⭐ 到期條件（一行可查）：`grep -c maxStacks packages/shared/src/content/schema/effects/applyStatus.ts` > 0 的那一刻，把這一格接進展開器並刪掉這個 `inert`。"
+    },
+    "internalCooldown": {
+      "type": "number",
+      "optional": true,
+      "min": 0,
+      "max": 60,
+      "unit": "s",
+      "origin": "⭐ **去重**那一件（票文 AC④）—— hook 的既有欄位。⛔ 無預設：「每次施法最多一層」與「每 3 秒最多一層」是**兩種**去重,⛔ 猜一個會讓另一種靜默失效。"
+    },
+    "durationSec": {
+      "type": "number",
+      "min": 0,
+      "max": 60,
+      "unit": "s",
+      "origin": "derived: ⭐ **沒有 census** —— 出貨零份 `applyStatus` 用 `refresh:\"keep\"`（這是新機制）。⇒ 預設從**語意**推導：武藤遊戲逐字「上限三層，**供 EX 消耗**」＝ 這個資源**不自己過期**，⇒ 用 `STATUS_MAX_DURATION_SEC`（`schema/effects/_shared.ts:137` ＝ **60**）—— schema 的上界。⚠️ ⭐ 而 `duration` 是**必填**（`zRankScalar`,⛔ 不是 optional）⇒ 這一格不能留空。⭐ 為什麼⛔不用全部 applyStatus 的中位數（2 秒）：那 118 筆是**控場與減益**的秒數,⛔ 一個 2 秒就消失的資源條等於沒有資源條 —— 那會是「說了但不會發生」（第一·五守則）。",
+      "default": 60
+    }
+  },
+  "exemplar": {
+    "skill": "GH#1132：武藤遊戲〔決鬥者的布局〕—— 逐字「每次施法最多增加一層，上限三層，供 EX 消耗」",
+    "jass": "⛔ 無 JASS 對照 —— 社群英雄的原設計（第〇·六守則第 1 層）"
+  }
+}

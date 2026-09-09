@@ -1,25 +1,25 @@
 {
   "schema": "ggd-bricks@1",
   "note": "⭐ 積木清冊 —— 「有哪些積木、每一顆在哪個編輯器有表單、誰在用」的**唯一**一份答案（GH#989）。⛔ 產物：改 `tools/brick-census/bricks.ts` 再 `pnpm bricks:build`，⛔ 不要手改。⛔ 刻意沒有產生時間戳（隨時鐘變的欄位會讓 `--check` 永遠不相等）。",
-  "capabilityFingerprint": "3ce6f518",
+  "capabilityFingerprint": "daccedce",
   "adminFormSource": "apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（73 份）→ 後台自己的 readSchema()（1171 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。",
-  "editorFormSource": "⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 173 顆有收據；收據裡沒有的才退回代理值。",
+  "editorFormSource": "⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 175 顆有收據；收據裡沒有的才退回代理值。",
   "editorFormNeededFromCodex": "⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / vfx-call / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。",
   "counts": {
-    "total": 173,
+    "total": 175,
     "effect": 49,
     "hook": 33,
     "leaf": 10,
-    "template": 45,
+    "template": 47,
     "vfx-prim": 13,
     "vfx-subtype": 4,
     "vfx-call": 4,
     "model-preset": 15,
-    "gated": 135,
-    "gaps": 53,
-    "missingAdminForm": 53,
+    "gated": 137,
+    "gaps": 55,
+    "missingAdminForm": 55,
     "missingEditorForm": 4,
-    "zeroAdoption": 64
+    "zeroAdoption": 66
   },
   "gaps": [
     {
@@ -73,6 +73,13 @@
     },
     {
       "id": "charge-push",
+      "layer": "template",
+      "missing": [
+        "adminForm"
+      ]
+    },
+    {
+      "id": "charge-resource",
       "layer": "template",
       "missing": [
         "adminForm"
@@ -304,6 +311,13 @@
     },
     {
       "id": "single-strike",
+      "layer": "template",
+      "missing": [
+        "adminForm"
+      ]
+    },
+    {
+      "id": "spend-resource",
       "layer": "template",
       "missing": [
         "adminForm"
@@ -13358,6 +13372,71 @@
       "origin": "template@1:content/ability-templates/tpl-charge-push.json"
     },
     {
+      "id": "charge-resource",
+      "layer": "template",
+      "params": [
+        {
+          "name": "durationSec",
+          "type": "number",
+          "default": 60,
+          "min": 0,
+          "max": 60,
+          "origin": "derived: ⭐ **沒有 census** —— 出貨零份 `applyStatus` 用 `refresh:\"keep\"`（這是新機制）。⇒ 預設從**語意**推導：武藤遊戲逐字「上限三層，**供 EX 消耗**」＝ 這個資源**不自己過期**，⇒ 用 `STATUS_MAX_DURATION_SEC`（`schema/effects/_shared.ts:137` ＝ **60**）—— schema 的上界。⚠️ ⭐ 而 `duration` 是**必填**（`zRankScalar`,⛔ 不是 optional）⇒ 這一格不能留空。⭐ 為什麼⛔不用全部 applyStatus 的中位數（2 秒）：那 118 筆是**控場與減益**的秒數,⛔ 一個 2 秒就消失的資源條等於沒有資源條 —— 那會是「說了但不會發生」（第一·五守則）。"
+        },
+        {
+          "name": "event",
+          "type": "enum",
+          "values": [
+            "onAbilityHit",
+            "onAbilityCast",
+            "onDamageDealt",
+            "onDamageTaken",
+            "onKill",
+            "onBasicAttack",
+            "onUltimateHit",
+            "onStatusApplied"
+          ],
+          "default": "onAbilityHit",
+          "origin": "census: GH#1132 的 72 槽逐句分類 —— **命中 13** · 施法 7 · 觸發 4 · 普攻 3 · 受擊 3 · 時間 3 · 擊殺 1 ⇒ ⭐ 預設挑最多的「命中」（`onAbilityHit`）。⛔ **刻意不是 `onBasicAttack`**：票文逐字說「普攻額外傷害不作替代」,而今天 26 槽誤綁在 `tpl-on-attack` 上。"
+        },
+        {
+          "name": "internalCooldown",
+          "type": "number",
+          "optional": true,
+          "min": 0,
+          "max": 60,
+          "origin": "⭐ **去重**那一件（票文 AC④）—— hook 的既有欄位。⛔ 無預設：「每次施法最多一層」與「每 3 秒最多一層」是**兩種**去重,⛔ 猜一個會讓另一種靜默失效。"
+        },
+        {
+          "name": "maxStacks",
+          "type": "number",
+          "default": 3,
+          "min": 1,
+          "max": 99,
+          "origin": "census: 武藤遊戲逐字「上限三層」。⚠️ ⭐ 而  **沒有** maxStacks 這一格（我第一版寫了,schema 回「Unrecognized key」）—— ⭐ 容量今天由  ＋ 窗口（durationSec）表達,而這一格是**卡面文案與後台可調的上限**。⛔ 留著它是因為 owner 之後要調的是這個數字,⛔ 不是 refresh 那個字。",
+          "inert": "⛔⛔ **引擎今天沒有逐狀態的層數上限** —— `zApplyStatus` 只有 `stacks`／`refresh`／`duration`，⛔ 沒有 `maxStacks`（我第一版寫了它，schema 逐字回「Unrecognized key(s): 'maxStacks'」）。⚠️ ⭐ 而 `dot` **有**（`sim/effects/dot.ts:128`）⇒ ⭐ 這不是「做不到」，是**那一格還沒長在 applyStatus 上**。⭐ 今天唯一的上界是全域的 `MARK_MAX_COUNT = 999`（`sim/markLimits.ts:54`），⛔ 而那是防「12 打成 120」的柵欄，⛔ 不是設計用的容量。⇒ ⭐ 這一格**留著**是因為 GH#1132 AC④ 逐字要求「**有限容量**」，而 owner 之後要調的是**這個數字**（⛔ 不是 `refresh` 那個字）—— 它是卡面文案與後台可調的上限。⭐ 到期條件（一行可查）：`grep -c maxStacks packages/shared/src/content/schema/effects/applyStatus.ts` > 0 的那一刻，把這一格接進展開器並刪掉這個 `inert`。"
+        },
+        {
+          "name": "perEvent",
+          "type": "number",
+          "default": 1,
+          "min": 1,
+          "max": 9,
+          "origin": "census: 那 3 槽「四件都要」的逐字都是「**每次…最多增加一層**」（武藤遊戲／八神庵／西索）⇒ 1。"
+        },
+        {
+          "name": "statusId",
+          "type": "docRef",
+          "default": "aban-x-mark",
+          "origin": "census: ⭐ 出貨**真的存在**的標記型 status（`content/status-effects/aban-x-mark.json`,「阿邦式 X 印記」）——⛔ 預設**不是**一個編出來的 id：`docRef` 只驗格式⛔不驗存在,而一個不存在的預設會讓表單第一次打開就是壞的。⚠️ ⭐ 而它**只是預設** —— 每一支資源技能都要填自己的（布局／電力／線索）。⭐ 前例：`tpl-beam-roll.modelKey` / `tpl-blink-strike.arriveVfxId` 也都給真的存在的預設。"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "template@1:content/ability-templates/tpl-charge-resource.json"
+    },
+    {
       "id": "combo-finisher",
       "layer": "template",
       "params": [
@@ -16175,6 +16254,69 @@
       "editorForm": true,
       "usedBy": 54,
       "origin": "template@1:content/ability-templates/tpl-single-strike.json"
+    },
+    {
+      "id": "spend-resource",
+      "layer": "template",
+      "params": [
+        {
+          "name": "castTimeSec",
+          "type": "number",
+          "optional": true,
+          "min": 0,
+          "max": 5,
+          "origin": "與其餘每一族同一格（`deriveCastTimes` 會覆蓋它）。"
+        },
+        {
+          "name": "castType",
+          "type": "enum",
+          "values": [
+            "self",
+            "ground",
+            "targeted"
+          ],
+          "default": "self",
+          "origin": "census: 出貨 `damageArea` 主體那一族的同名槽用同一組值（`tpl-area-strike`）—— ⛔ 不另立一份值域。"
+        },
+        {
+          "name": "effects",
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              }
+            }
+          ],
+          "origin": "census: 武藤遊戲 EX 逐字「射出強化**直線魔法**」⇒ 預設放一顆最小的魔法傷害,⭐ 讓這一族**展得開**（`templateStatusIsHonest` 要求宣告 enabled 的每一份都真的展得開）。⛔ 它只是預設 —— 每一支要填自己真正打的東西。"
+        },
+        {
+          "name": "minStacks",
+          "type": "number",
+          "default": 3,
+          "min": 1,
+          "max": 99,
+          "origin": "census: 武藤遊戲逐字「上限**三層**，供 EX 消耗」⇒ 要求 3、扣 3。⭐ 而這一格**同時**是「要幾層」與「扣幾層」—— ⛔ 第〇·四守則：那是**同一個事實**。⚠️ 我第一版開了 `spend`(all/exact) ＋ `spendCount` 兩格,⭐ 而它們表達的是同一個數字 ——`paramsSchemaFor` 的閘當場抓到：擾動 `spend` **不會改變展開結果** ⇒ 那是一格死參數。⭐ 哪一天真的出現「要求 3 層但只扣 1 層」的設計,那時候才是把它拆開的理由。"
+        },
+        {
+          "name": "missingText",
+          "type": "text",
+          "default": "資源不足",
+          "origin": "census: 武藤遊戲 EX 逐字「**缺少黑魔導時顯示使用條件**」⇒ ⭐ 層數不足時要**告訴玩家**，⛔ 不是按下去什麼都沒發生（第一·五守則：說了但不會發生）。⭐ 而 `consumeStatus.onMissing` 就是那個住處（schema 逐字：「層數不足時執行；省略則不產生後續效果」）。⭐ 預設用最短的一句 —— 每一支要填自己的（「缺少黑魔導」／「電力不足」／「線索不足」）。⚠️ ⭐ 型別是 `text` **⛔ 不是 `docRef`** —— 我第一版寫了 `docRef`,而它驗的是**文件編號**格式 ⇒「資源不足」四個中文字當場被拒。"
+        },
+        {
+          "name": "statusId",
+          "type": "docRef",
+          "default": "aban-x-mark",
+          "origin": "census: ⭐ 出貨**真的存在**的標記型 status（`content/status-effects/aban-x-mark.json`,「阿邦式 X 印記」）——⛔ 預設**不是**一個編出來的 id：`docRef` 只驗格式⛔不驗存在,而一個不存在的預設會讓表單第一次打開就是壞的。⚠️ ⭐ 而它**只是預設** —— 每一支資源技能都要填自己的（布局／電力／線索）。⭐ 前例：`tpl-beam-roll.modelKey` / `tpl-blink-strike.arriveVfxId` 也都給真的存在的預設。"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "template@1:content/ability-templates/tpl-spend-resource.json"
     },
     {
       "id": "summon-agent",

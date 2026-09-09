@@ -75,6 +75,17 @@ export const zParamType = z.enum([
    * 正是 `z.boolean().optional()`（不存在 ≠ false）。
    */
   "boolean",
+  /**
+   * ⭐ GH#1132 —— **一句給玩家看的字**（`floatingText.text` 那一族）。
+   *
+   * ⛔ 它**不是** `docRef`：我第一版用了 `docRef`，而 `docRef` 驗的是**文件編號**格式
+   * （小寫 a-z0-9 與 `. _ -`）⇒ 「資源不足」四個中文字當場被拒。
+   * ⭐ 兩者的差別是決定性的：`docRef` 指向**另一份文件**，`text` **就是要顯示的內容**。
+   *
+   * ⚠️ 上界 {@link FLOATING_TEXT_MAX_LEN} 由消費端的 schema 自己驗（`zFloatingText.text`）——
+   * ⛔ 這裡不抄第二份長度限制（第〇·四守則）。
+   */
+  "text",
   "enum",
   "scaling",
   "statModifiers",

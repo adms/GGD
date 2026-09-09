@@ -1,11 +1,11 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "3ce6f518",
+  "capabilityFingerprint": "daccedce",
   "counts": {
     "effectKinds": 49,
     "hookEvents": 33,
     "conditionLeafKinds": 10,
-    "templateFamilies": 45,
+    "templateFamilies": 47,
     "effectFields": 274,
     "stats": 23,
     "combatEnvKeys": 39
@@ -595,6 +595,7 @@
       "blink-strike",
       "buff-self",
       "charge-push",
+      "charge-resource",
       "combo-finisher",
       "dragon-quake",
       "dragon-serpent",
@@ -628,6 +629,7 @@
       "radial-burst",
       "random-barrage",
       "single-strike",
+      "spend-resource",
       "summon-agent",
       "teleport",
       "transform",

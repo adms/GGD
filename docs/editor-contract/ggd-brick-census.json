@@ -2,12 +2,12 @@
   "schema": "ggd-brick-census@1",
   "note": "⭐ 積木普查（owner 2026-09-01：「編輯器是堆積木的角色，要充分了解有哪些積木；main 是做出積木的角色」）。⛔ 產物 —— 改 `tools/brick-census/gen.ts`，⛔ 不要手改。",
   "counts": {
-    "engineFamilies": 45,
-    "templateDocs": 56,
-    "usable": 45,
+    "engineFamilies": 47,
+    "templateDocs": 58,
+    "usable": 47,
     "engineMissing": 10,
     "shells": 10,
-    "zeroAdoption": 27,
+    "zeroAdoption": 29,
     "terminal": 1,
     "handWritten": 111,
     "distinctShapes": 76,
@@ -225,6 +225,7 @@
     "blink-strike",
     "buff-self",
     "charge-push",
+    "charge-resource",
     "combo-finisher",
     "dragon-quake",
     "dragon-serpent",
@@ -258,6 +259,7 @@
     "radial-burst",
     "random-barrage",
     "single-strike",
+    "spend-resource",
     "summon-agent",
     "teleport",
     "transform",
@@ -554,6 +556,15 @@
       "terminal": false
     },
     {
+      "id": "tpl-charge-resource",
+      "family": "charge-resource",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 6,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
       "id": "tpl-combo-finisher",
       "family": "combo-finisher",
       "engineKnows": true,
@@ -739,6 +750,15 @@
       "engineKnows": false,
       "status": "draft",
       "params": 0,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-spend-resource",
+      "family": "spend-resource",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 6,
       "abilities": 0,
       "terminal": false
     },

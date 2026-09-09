@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "3ce6f518",
+  "fingerprint": "daccedce",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -1227,6 +1227,7 @@
     "blink-strike",
     "buff-self",
     "charge-push",
+    "charge-resource",
     "combo-finisher",
     "dragon-quake",
     "dragon-serpent",
@@ -1260,6 +1261,7 @@
     "radial-burst",
     "random-barrage",
     "single-strike",
+    "spend-resource",
     "summon-agent",
     "teleport",
     "transform",

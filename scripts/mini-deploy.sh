@@ -461,7 +461,8 @@ cmd_deploy() {
     #
     # ⛔ 在此之前這裡只問一次,而它就緊接在容器重啟後面
     #   ⇒ ⭐ shard 還在起來的那幾秒被讀成「站壞了」——⚠️ 而**站是好的**
-    #     （同一刻手動 curl 回 `ok:true` / `champions:71` / `replay.ok:true`）。
+    #     （同一刻手動 curl 回 ok:true / champions:71 / replay.ok:true —— ⛔ 這裡刻意不用反引號：
+    #     `referencedCommandsExist` 把反引號整包當成「一個指令」驗，而這三個是 JSON 欄位）。
     #   ⇒ ⭐ 一個**時序**造成的假紅燈,而它會讓人去修沒有壞的東西
     #     （這支腳本上面那段 PATH 註解記的是同一族的另一個）。
     #

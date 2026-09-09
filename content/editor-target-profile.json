@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_763e0df7af50",
+    "contentVersion": "cv_3e888a5a4bcf",
     "collections": {
       "champions": {
         "hash": "74ea868e6821",
@@ -58,8 +58,8 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "04ab881d45bc",
-        "count": 56
+        "hash": "444e6cd5b4aa",
+        "count": 58
       },
       "vfx-scripts": {
         "hash": "3d945d196d0a",
@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "3ce6f518",
+    "fingerprint": "daccedce",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -1324,6 +1324,7 @@
       "blink-strike",
       "buff-self",
       "charge-push",
+      "charge-resource",
       "combo-finisher",
       "dragon-quake",
       "dragon-serpent",
@@ -1357,6 +1358,7 @@
       "radial-burst",
       "random-barrage",
       "single-strike",
+      "spend-resource",
       "summon-agent",
       "teleport",
       "transform",
@@ -2515,6 +2517,64 @@
               "min": 0,
               "max": 5,
               "unit": "s"
+            }
+          }
+        },
+        {
+          "id": "tpl-charge-resource",
+          "family": "charge-resource",
+          "status": "enabled",
+          "params": {
+            "event": {
+              "type": "enum",
+              "values": [
+                "onAbilityHit",
+                "onAbilityCast",
+                "onDamageDealt",
+                "onDamageTaken",
+                "onKill",
+                "onBasicAttack",
+                "onUltimateHit",
+                "onStatusApplied"
+              ],
+              "default": "onAbilityHit",
+              "origin": "census: GH#1132 的 72 槽逐句分類 —— **命中 13** · 施法 7 · 觸發 4 · 普攻 3 · 受擊 3 · 時間 3 · 擊殺 1 ⇒ ⭐ 預設挑最多的「命中」（`onAbilityHit`）。⛔ **刻意不是 `onBasicAttack`**：票文逐字說「普攻額外傷害不作替代」,而今天 26 槽誤綁在 `tpl-on-attack` 上。"
+            },
+            "statusId": {
+              "type": "docRef",
+              "origin": "census: ⭐ 出貨**真的存在**的標記型 status（`content/status-effects/aban-x-mark.json`,「阿邦式 X 印記」）——⛔ 預設**不是**一個編出來的 id：`docRef` 只驗格式⛔不驗存在,而一個不存在的預設會讓表單第一次打開就是壞的。⚠️ ⭐ 而它**只是預設** —— 每一支資源技能都要填自己的（布局／電力／線索）。⭐ 前例：`tpl-beam-roll.modelKey` / `tpl-blink-strike.arriveVfxId` 也都給真的存在的預設。",
+              "default": "aban-x-mark"
+            },
+            "perEvent": {
+              "type": "number",
+              "min": 1,
+              "max": 9,
+              "default": 1,
+              "origin": "census: 那 3 槽「四件都要」的逐字都是「**每次…最多增加一層**」（武藤遊戲／八神庵／西索）⇒ 1。"
+            },
+            "maxStacks": {
+              "type": "number",
+              "min": 1,
+              "max": 99,
+              "default": 3,
+              "origin": "census: 武藤遊戲逐字「上限三層」。⚠️ ⭐ 而  **沒有** maxStacks 這一格（我第一版寫了,schema 回「Unrecognized key」）—— ⭐ 容量今天由  ＋ 窗口（durationSec）表達,而這一格是**卡面文案與後台可調的上限**。⛔ 留著它是因為 owner 之後要調的是這個數字,⛔ 不是 refresh 那個字。",
+              "inert": "⛔⛔ **引擎今天沒有逐狀態的層數上限** —— `zApplyStatus` 只有 `stacks`／`refresh`／`duration`，⛔ 沒有 `maxStacks`（我第一版寫了它，schema 逐字回「Unrecognized key(s): 'maxStacks'」）。⚠️ ⭐ 而 `dot` **有**（`sim/effects/dot.ts:128`）⇒ ⭐ 這不是「做不到」，是**那一格還沒長在 applyStatus 上**。⭐ 今天唯一的上界是全域的 `MARK_MAX_COUNT = 999`（`sim/markLimits.ts:54`），⛔ 而那是防「12 打成 120」的柵欄，⛔ 不是設計用的容量。⇒ ⭐ 這一格**留著**是因為 GH#1132 AC④ 逐字要求「**有限容量**」，而 owner 之後要調的是**這個數字**（⛔ 不是 `refresh` 那個字）—— 它是卡面文案與後台可調的上限。⭐ 到期條件（一行可查）：`grep -c maxStacks packages/shared/src/content/schema/effects/applyStatus.ts` > 0 的那一刻，把這一格接進展開器並刪掉這個 `inert`。"
+            },
+            "internalCooldown": {
+              "type": "number",
+              "optional": true,
+              "min": 0,
+              "max": 60,
+              "unit": "s",
+              "origin": "⭐ **去重**那一件（票文 AC④）—— hook 的既有欄位。⛔ 無預設：「每次施法最多一層」與「每 3 秒最多一層」是**兩種**去重,⛔ 猜一個會讓另一種靜默失效。"
+            },
+            "durationSec": {
+              "type": "number",
+              "min": 0,
+              "max": 60,
+              "unit": "s",
+              "origin": "derived: ⭐ **沒有 census** —— 出貨零份 `applyStatus` 用 `refresh:\"keep\"`（這是新機制）。⇒ 預設從**語意**推導：武藤遊戲逐字「上限三層，**供 EX 消耗**」＝ 這個資源**不自己過期**，⇒ 用 `STATUS_MAX_DURATION_SEC`（`schema/effects/_shared.ts:137` ＝ **60**）—— schema 的上界。⚠️ ⭐ 而 `duration` 是**必填**（`zRankScalar`,⛔ 不是 optional）⇒ 這一格不能留空。⭐ 為什麼⛔不用全部 applyStatus 的中位數（2 秒）：那 118 筆是**控場與減益**的秒數,⛔ 一個 2 秒就消失的資源條等於沒有資源條 —— 那會是「說了但不會發生」（第一·五守則）。",
+              "default": 60
             }
           }
         },
@@ -5158,6 +5218,61 @@
           }
         },
         {
+          "id": "tpl-spend-resource",
+          "family": "spend-resource",
+          "status": "enabled",
+          "params": {
+            "statusId": {
+              "type": "docRef",
+              "origin": "census: ⭐ 出貨**真的存在**的標記型 status（`content/status-effects/aban-x-mark.json`,「阿邦式 X 印記」）——⛔ 預設**不是**一個編出來的 id：`docRef` 只驗格式⛔不驗存在,而一個不存在的預設會讓表單第一次打開就是壞的。⚠️ ⭐ 而它**只是預設** —— 每一支資源技能都要填自己的（布局／電力／線索）。⭐ 前例：`tpl-beam-roll.modelKey` / `tpl-blink-strike.arriveVfxId` 也都給真的存在的預設。",
+              "default": "aban-x-mark"
+            },
+            "minStacks": {
+              "type": "number",
+              "min": 1,
+              "max": 99,
+              "default": 3,
+              "origin": "census: 武藤遊戲逐字「上限**三層**，供 EX 消耗」⇒ 要求 3、扣 3。⭐ 而這一格**同時**是「要幾層」與「扣幾層」—— ⛔ 第〇·四守則：那是**同一個事實**。⚠️ 我第一版開了 `spend`(all/exact) ＋ `spendCount` 兩格,⭐ 而它們表達的是同一個數字 ——`paramsSchemaFor` 的閘當場抓到：擾動 `spend` **不會改變展開結果** ⇒ 那是一格死參數。⭐ 哪一天真的出現「要求 3 層但只扣 1 層」的設計,那時候才是把它拆開的理由。"
+            },
+            "effects": {
+              "type": "effects",
+              "origin": "census: 武藤遊戲 EX 逐字「射出強化**直線魔法**」⇒ 預設放一顆最小的魔法傷害,⭐ 讓這一族**展得開**（`templateStatusIsHonest` 要求宣告 enabled 的每一份都真的展得開）。⛔ 它只是預設 —— 每一支要填自己真正打的東西。",
+              "default": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "小"
+                  }
+                }
+              ]
+            },
+            "castType": {
+              "type": "enum",
+              "values": [
+                "self",
+                "ground",
+                "targeted"
+              ],
+              "default": "self",
+              "origin": "census: 出貨 `damageArea` 主體那一族的同名槽用同一組值（`tpl-area-strike`）—— ⛔ 不另立一份值域。"
+            },
+            "castTimeSec": {
+              "type": "number",
+              "optional": true,
+              "min": 0,
+              "max": 5,
+              "unit": "s",
+              "origin": "與其餘每一族同一格（`deriveCastTimes` 會覆蓋它）。"
+            },
+            "missingText": {
+              "type": "text",
+              "default": "資源不足",
+              "origin": "census: 武藤遊戲 EX 逐字「**缺少黑魔導時顯示使用條件**」⇒ ⭐ 層數不足時要**告訴玩家**，⛔ 不是按下去什麼都沒發生（第一·五守則：說了但不會發生）。⭐ 而 `consumeStatus.onMissing` 就是那個住處（schema 逐字：「層數不足時執行；省略則不產生後續效果」）。⭐ 預設用最短的一句 —— 每一支要填自己的（「缺少黑魔導」／「電力不足」／「線索不足」）。⚠️ ⭐ 型別是 `text` **⛔ 不是 `docRef`** —— 我第一版寫了 `docRef`,而它驗的是**文件編號**格式 ⇒「資源不足」四個中文字當場被拒。"
+            }
+          }
+        },
+        {
           "id": "tpl-strip-transform",
           "family": "strip-transform",
           "status": "draft",
@@ -5457,7 +5572,7 @@
         }
       ],
       "templateStatus": {
-        "enabled": 45,
+        "enabled": 47,
         "draft": 11
       },
       "innateKinds": [
@@ -5793,12 +5908,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "3ce6f518",
+    "engineFingerprint": "daccedce",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 3ce6f518 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 daccedce —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -6666,11 +6781,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "659598a89699",
+    "fingerprint": "7edad6aeb2dc",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "a15aaed96325"
+        "digest": "0997cf8d803b"
       },
       {
         "surface": "ability-item-zod-schemas",
@@ -6682,7 +6797,7 @@
       },
       {
         "surface": "capability-applicability",
-        "digest": "617b93faa0fb"
+        "digest": "24eeddbc7813"
       },
       {
         "surface": "authoring-rules",
@@ -6722,7 +6837,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "a282ee816210",
+  "migrationFingerprint": "79d7bc384d11",
   "supportedModes": [
     "bootstrap"
   ],
@@ -6736,5 +6851,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "6f1e218d04d5"
+  "profileDigest": "b149595670fa"
 }
