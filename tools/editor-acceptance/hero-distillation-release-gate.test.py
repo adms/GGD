@@ -1,6 +1,7 @@
 import hashlib
 import importlib.util
 import json
+import copy
 from pathlib import Path
 import tempfile
 import unittest
@@ -67,6 +68,28 @@ class GateTest(unittest.TestCase):
         put(blind_path, blind or self.result('new', True))
         return gate.evaluate(self.training, internal_path, blind_path)
 
+    def scaled_result(self, prefix, blind, count=20, failures=1):
+        result = self.result(prefix + '0', blind)
+        exemplar = result['arms']['lora']['rows'][0]
+        rows = [{**copy.deepcopy(exemplar), 'id': f'{prefix}{i}:HERO'} for i in range(count)]
+        for row in rows[:failures]:
+            row.update(semanticFidelity='failed', liveImport='failed', gameplay='failed', fullHeroSuccess=False)
+            row['structural']['structuralPassed'] = False
+            row['package']['passed'] = False
+            row['isolatedImport'].update(passed=False, runtimeMatchesAdmission=False)
+        passed = count - failures
+        result['counts'] = {'primaryWholeHeroes': count, 'tasks': count}
+        result['training']['devAfter']['cases'] = count
+        result['arms']['lora'].update(rows=rows, structuralPassed=passed, packageAdmissionPassed=passed,
+                                     isolatedImportPassed=passed, runtimeVerifiedImports=passed,
+                                     fullHeroSuccess=passed, unsafeAccepts=0)
+        result['arms']['lora']['generation']['wholeHeroes'].update(
+            plannedCases=count, recordedCases=count, completeOutputs=count, completeJsonOutputs=count)
+        result['arms']['base'] = {'rows': copy.deepcopy(rows),
+            'generation': {'wholeHeroes': {'plannedCases': count, 'recordedCases': count}}}
+        result['arms']['teacher'] = {'rows': copy.deepcopy(rows)}
+        return result
+
     def test_complete_disjoint_evidence_passes_without_promoting(self):
         result = self.run_gate()
         self.assertTrue(result['passed']); self.assertTrue(result['modelReady'])
@@ -100,6 +123,16 @@ class GateTest(unittest.TestCase):
         failed = {x['name'] for x in result['checks'] if not x['passed']}
         self.assertIn('final-adapter-hash', failed)
         self.assertIn('adapter-roundtrip', failed)
+
+    def test_nineteen_of_twenty_meets_95_percent_but_success_needs_e2e(self):
+        internal = self.scaled_result('dev-', False)
+        blind = self.scaled_result('new-', True)
+        self.assertTrue(self.run_gate(internal, blind)['passed'])
+        blind['arms']['lora']['rows'][1]['isolatedImport']['runtimeMatchesAdmission'] = False
+        result = self.run_gate(internal, blind)
+        self.assertFalse(result['passed'])
+        self.assertIn('blind-row-level-evidence',
+                      {x['name'] for x in result['checks'] if not x['passed']})
 
 
 if __name__ == '__main__': unittest.main()
