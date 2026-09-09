@@ -216,3 +216,25 @@ describe("第十一回合的王強度（GH#1151 D）", () => {
     expect(ctl.round11BossScaleForTest, "⛔ 前面幾回合的怪不算").toBe(1);
   });
 });
+
+describe("第十一回合的一次性獎勵帳本（GH#1151 C）", () => {
+  const WAVES = { eventIntervalSec: 0.2, difficultyBase: 1.15, events: [{ kind: "normal", weight: 100 }] };
+
+  it("⭐ 進場時**清空** —— ⛔ 上一回合的帳本不可以讓這一回合領不到", () => {
+    const ctl = new MatchController(
+      "r11-claims", 7, allBots(), FAST, undefined,
+      rules({ enabled: true, maxAliveZombies: 10, spawnRampSec: 0, waveTable: WAVES }),
+      undefined, undefined, undefined, RING,
+    );
+    recordBossKill(ctl.round11BossKillsForTest, 1);
+    recordBossKill(ctl.round11BossKillsForTest, 2);
+    // 在進第十一回合**之前**先把帳本弄髒
+    ctl.round11ClaimsForTest.claim("drop", "boss-7");
+    expect(ctl.round11ClaimsForTest.claimed("drop", "boss-7")).toBe(true);
+    let n = 0;
+    while (!(ctl.phase.round === 4 && ctl.phase.phase === "combat") && n++ < 40000) ctl.tick();
+    // ⭐ 進場之後那一筆不見了 ⇒ 這一回合領得到
+    expect(ctl.round11ClaimsForTest.claimed("drop", "boss-7"), "⛔ 帳本不可以跨回合").toBe(false);
+    expect(ctl.round11ClaimsForTest.claim("drop", "boss-7")).toBe(true);
+  });
+});

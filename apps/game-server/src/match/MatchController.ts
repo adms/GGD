@@ -23,6 +23,7 @@ import {
   round11BossScale,
   type Round11MobRulesPatch,
 } from "@ggd/shared/sim/round11Waves";
+import { Round11Claims } from "@ggd/shared/sim/round11Claims";
 import { retiredChampionIds } from "@ggd/shared/content/championRetirement";
 import { heroStartLevel } from "@ggd/shared/content/schema/config/match";
 import { asSeatId, asTeamId, type AugmentId, type ChampionId, type EntityId, type ItemId, type SeatId, type StatusId, type TeamId } from "@ggd/shared/ids";
@@ -916,6 +917,11 @@ export class MatchController {
    * ⚠️ ⭐ 暴露的是**算出來的結果**而不是計數器本身 —— ⛔ 測試不該有機會
    * 把計數器改成「目前存活數」，⭐ 而那正是票警告的那個坑。
    */
+  /** ⭐ **只給測試**：一次性帳本（⛔ 出貨路徑仍是唯一的寫入端）。 */
+  get round11ClaimsForTest(): Round11Claims {
+    return this.round11Claims;
+  }
+
   get round11BossScaleForTest(): number {
     return round11BossScale(
       this.round11MobsSpawned,
@@ -937,6 +943,18 @@ export class MatchController {
    * 與 `mob`（**當前**存活的表）⇒ ⛔ 沿用任何一個都正好踩進票警告的那個坑。
    */
   private round11MobsSpawned = 0;
+  /**
+   * ⭐⭐ 第十一回合的**一次性獎勵帳本**（GH#1151 C）——
+   * 掉落／領取／重抽／復活／寶具損壞全部走它。
+   *
+   * ⚠️ ⭐ 票逐字：「⋯皆有**服務端去重**；**斷線重連**、**重複請求**、
+   * 背包或選擇尚未完成**不造成複製獎勵**」——⭐ 三個危險是同一個形狀，
+   * ⇒ ⛔ 不為每一種各寫一次防護（三份會各自腐爛的程式），
+   *   ⭐ 一個共用帳本（機制一份、用法 N 份）。
+   *
+   * ⭐ 進場時清空（⛔ 帳本不可以跨回合 —— 那會讓下一場領不到）。
+   */
+  private readonly round11Claims = new Round11Claims();
 
   /** ⭐ 下一段中場是「第十一回合前的那一段」⇒ 關商店、立刻進 combat。 */
   private enteringRound11 = false;
@@ -2367,6 +2385,8 @@ export class MatchController {
       this.round11Round = this.phase.round;
       // ⭐ 這一回合的累計從 0 起算（⛔ 不是整場 —— 前十回合的怪不算王的成長）。
       this.round11MobsSpawned = 0;
+      // ⭐ 一次性獎勵帳本也歸零 —— ⛔ 跨回合的帳本會讓下一場領不到。
+      this.round11Claims.clear();
     }
   }
 
