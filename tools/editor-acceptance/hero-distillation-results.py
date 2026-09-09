@@ -96,6 +96,7 @@ def collect(training, evaluation, paired=None, teacher_compile=None, teacher_pac
     for name in ['plan.json', 'public-cases.jsonl']:
         assert hashlib.sha256(raw(evaluation / name)).hexdigest() == em['outputs'][name], 'EVAL_DRIFT'
     plan = read(evaluation / 'plan.json')
+    assert em.get('sourceManifestSha256') == plan.get('sourceManifestSha256'), 'EVAL_SOURCE_BINDING_DRIFT'
     cases = [json.loads(line) for line in raw(evaluation / 'public-cases.jsonl').decode().splitlines()]
     assert len(cases) == plan['counts']['tasks'], 'EVAL_COUNT_DRIFT'
     assert len({c['id'] for c in cases}) == len(cases), 'DUPLICATE_EVAL_ID'

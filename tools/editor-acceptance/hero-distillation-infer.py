@@ -68,6 +68,7 @@ def prepare(run, evaluation, out):
     for name in ['public-cases.jsonl', 'plan.json']:
         assert t.digest(evaluation / name) == em['outputs'][name], 'EVAL_INPUT_DRIFT'
     plan = t.read(evaluation / 'plan.json')
+    assert em.get('sourceManifestSha256') == plan.get('sourceManifestSha256'), 'EVAL_SOURCE_BINDING_DRIFT'
     rows = public_cases(evaluation / 'public-cases.jsonl')
     split = plan.get('split')
     assert split in ['internal-dev', 'blind-user-batch'], 'UNKNOWN_EVALUATION_SPLIT'

@@ -41,7 +41,7 @@ def fixture(root):
         'split': 'internal-dev', 'blindTest': False,
         'arms': {'base': {'modelRevision': 'revision'}}, 'primaryCaseIds': [row['id']],
         'secondaryCaseIds': [], 'counts': {'tasks': 1, 'primaryWholeHeroes': 1, 'secondarySlots': 0}})
-    i.t.atomic(evaluation/'manifest.json', {'outputs': {
+    i.t.atomic(evaluation/'manifest.json', {'sourceManifestSha256': 'dataset', 'outputs': {
         name: i.t.digest(evaluation/name) for name in ['public-cases.jsonl', 'plan.json']}})
     return run, evaluation, out
 
@@ -66,7 +66,7 @@ def make_blind(run, evaluation, overlap=False, leak=False):
     plan = i.t.read(evaluation/'plan.json'); plan.update(sourceManifestSha256='blind-source',
         trainingFrozenManifestSha256=frozen, split='blind-user-batch', blindTest=True, blindProtocol=protocol)
     i.t.atomic(evaluation/'plan.json', plan)
-    i.t.atomic(evaluation/'manifest.json', {'outputs': {
+    i.t.atomic(evaluation/'manifest.json', {'sourceManifestSha256': 'blind-source', 'outputs': {
         name: i.t.digest(evaluation/name) for name in ['public-cases.jsonl', 'plan.json']}})
 
 

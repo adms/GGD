@@ -48,7 +48,8 @@ class ResultsTest(unittest.TestCase):
                                                   'split': 'internal-dev', 'blindTest': False})
         public = self.eval / 'public-cases.jsonl'
         public.write_text('\n'.join(json.dumps(c) for c in self.cases))
-        self.eval_sha = put(self.eval / 'manifest.json', {'outputs': {'plan.json': plan_sha, 'public-cases.jsonl': sha(public)}})
+        self.eval_sha = put(self.eval / 'manifest.json', {'sourceManifestSha256': self.frozen_sha,
+            'outputs': {'plan.json': plan_sha, 'public-cases.jsonl': sha(public)}})
         manifest_sha = put(self.train / 'manifest.json', {'steps': 500, 'frozenManifestSha256': self.frozen_sha,
                                                            'dataDirectory': str(self.data)})
         put(self.train / 'train/state.json', {'status': 'running', 'manifestSha256': manifest_sha})
@@ -72,7 +73,8 @@ class ResultsTest(unittest.TestCase):
         plan_sha = put(self.eval / 'plan.json', {'counts': self.counts, 'sourceManifestSha256': 'blind-source',
             'trainingFrozenManifestSha256': self.frozen_sha, 'split': 'blind-user-batch', 'blindTest': True,
             'blindProtocol': protocol})
-        self.eval_sha = put(self.eval / 'manifest.json', {'outputs': {'plan.json': plan_sha,
+        self.eval_sha = put(self.eval / 'manifest.json', {'sourceManifestSha256': 'blind-source',
+            'outputs': {'plan.json': plan_sha,
             'public-cases.jsonl': sha(public)}})
         return protocol
 
@@ -152,7 +154,8 @@ class ResultsTest(unittest.TestCase):
         plan = json.loads((self.eval / 'plan.json').read_text())
         plan['sourceManifestSha256'] = self.frozen_sha
         plan_sha = put(self.eval / 'plan.json', plan)
-        put(self.eval / 'manifest.json', {'outputs': {'plan.json': plan_sha,
+        put(self.eval / 'manifest.json', {'sourceManifestSha256': self.frozen_sha,
+            'outputs': {'plan.json': plan_sha,
             'public-cases.jsonl': sha(self.eval / 'public-cases.jsonl')}})
         with self.assertRaisesRegex(AssertionError, 'BLIND_REUSES_TRAINING_DATASET'):
             self.collect()
@@ -160,7 +163,8 @@ class ResultsTest(unittest.TestCase):
         plan = json.loads((self.eval / 'plan.json').read_text())
         plan['blindProtocol']['teacherAnswersVisibleToCandidate'] = True
         plan_sha = put(self.eval / 'plan.json', plan)
-        put(self.eval / 'manifest.json', {'outputs': {'plan.json': plan_sha,
+        put(self.eval / 'manifest.json', {'sourceManifestSha256': 'blind-source',
+            'outputs': {'plan.json': plan_sha,
             'public-cases.jsonl': sha(self.eval / 'public-cases.jsonl')}})
         with self.assertRaisesRegex(AssertionError, 'INVALID_BLIND_PROTOCOL'):
             self.collect()
