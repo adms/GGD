@@ -124,6 +124,9 @@ export function runHeroAbilityScenario(
   return withRegistryContext(context, () => {
   const arena = opts.baseline?.arena ?? SKELETON_ARENA;
   const world = new SimWorld(arena, seed);
+  if (setup?.obstacle) world.setArena({ ...arena, zones: arena.zones.map((zone, index) => index === 0
+    ? { ...zone, obstacles: [...zone.obstacles, { kind: "box" as const, center: { x: zone.center.x + setup.obstacle!.x, z: zone.center.z + setup.obstacle!.z }, halfW: 0.15, halfD: 3 }] }
+    : zone) });
   if (opts.baseline) Object.assign(world, structuredClone(opts.baseline.rules));
   world.ultGateOverride = true;
   const center = arena.zones[0]!.center;
@@ -204,12 +207,16 @@ export function runHeroAbilityScenario(
   const first: IntentFrame = isPassiveSource
     ? { commands: [], order: { kind: "attackTarget", entity: foe } }
     : { commands: [{ kind: "castAbility", slot, target: castTarget }] };
+  const navigation = new Map((setup?.movementOrders ?? []).map(order => [Math.max(1, Math.round(order.atSec / world.dt)), order]));
   world.step(new Map([[asSeatId(0), first]]));
+  if (setup?.obstacle) world.emit("previewObstacle", { x: center.x + setup.obstacle.x, z: center.z + setup.obstacle.z, halfW: 0.15, halfD: 3 });
   recordEvents();
   digestTrail.push(world.digest());
   for (let index = 1; index < ticks; index += 1) {
     if (isPassiveSource) world.nav.get(caster)!.attackTarget = foe;
-    world.step(new Map());
+    const navigationOrder = navigation.get(index);
+    world.step(navigationOrder ? new Map([[asSeatId(0), { commands: [], order: navigationOrder.kind === "hold"
+      ? { kind: "hold" as const } : { kind: "move" as const, point: { x: center.x + navigationOrder.x, z: center.z + navigationOrder.z } } }]]) : new Map());
     recordEvents();
     digestTrail.push(world.digest());
   }

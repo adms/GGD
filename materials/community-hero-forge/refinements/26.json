@@ -1,6 +1,6 @@
 {
   "schema": "ggd-community-design-refinement@1",
-  "version": 1,
+  "version": 2,
   "projectId": "community-review-26-20260907",
   "sourceSha256": "e849a934129ef794a4306faa0dd2e1c0b9cad28277e153629aca3dc8f9f677d4",
   "slots": {
@@ -415,6 +415,125 @@
       },
       "visualTargets": {
         "castEffect": "target"
+      }
+    },
+    "E": {
+      "products": [
+        {
+          "instanceId": "e-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "applyTo": "self",
+                  "duration": 3,
+                  "stackKey": "community-review-26-20260907.ride",
+                  "maxStacks": 1,
+                  "modifiers": [
+                    {
+                      "stat": "ms",
+                      "op": "pctAdd",
+                      "value": 0.5
+                    }
+                  ],
+                  "drive": {
+                    "accelSec": 0.3,
+                    "brakeSec": 0.2,
+                    "turnFactor": 0.2,
+                    "sharpTurnDot": 0.5,
+                    "sharpTurnSpeed": 0.3
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】3秒滑行：移速提高50%，0.3秒加速、0.2秒煞車；急轉降到30%速度並漸進轉向。沿指令方向實際行進，碰撞地形／身體即停止，束縛或暈眩立即停下；到期回到普通移動，不把移速增益當作加減速狀態。專用滑板模型、尾跡與畫面仍待驗收。\n【原設計】短期提高移動能力，急轉、碰撞與停止均有清楚狀態。",
+      "note": "3秒滑行：移速提高50%，0.3秒加速、0.2秒煞車；急轉降到30%速度並漸進轉向。沿指令方向實際行進，碰撞地形／身體即停止，束縛或暈眩立即停下；到期回到普通移動，不把移速增益當作加減速狀態。專用滑板模型、尾跡與畫面仍待驗收。",
+      "removeOverrides": [
+        "effects",
+        "castTimeTier",
+        "rangeTier"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0.1
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-26-20260907.e",
+        "abilityId": "community-review-26-20260907.e",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast",
+            "replaces": "caster.action",
+            "replacesForMs": 100
+          }
+        ]
+      }
+    },
+    "EX": {
+      "products": [
+        {
+          "instanceId": "ex-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "pull",
+                  "shape": "single",
+                  "speed": 12,
+                  "stopDistance": 0.7,
+                  "grapple": {
+                    "range": 8,
+                    "maxTravel": 4,
+                    "hitRadius": 0.2
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】沿瞄準方向連接8格內首個合法可見敵人或地形錨點；敵人被拉向施法者，地形則拉動自己。最多移動4格一次，抵達前保留身體間距；碰撞、超距、死亡、跨區或對決結束中止，沒有摔投或落地傷害。空射、免控敵人與範圍外不拉動；空射仍支付本次施法消耗。專用吊帶／動作與畫面仍待驗收。\n【原設計】連接合法目標或錨點，完成一次有限拉動；超距與碰撞時中止。",
+      "note": "沿瞄準方向連接8格內首個合法可見敵人或地形錨點；敵人被拉向施法者，地形則拉動自己。最多移動4格一次，抵達前保留身體間距；碰撞、超距、死亡、跨區或對決結束中止，沒有摔投或落地傷害。空射、免控敵人與範圍外不拉動；空射仍支付本次施法消耗。專用吊帶／動作與畫面仍待驗收。",
+      "removeOverrides": [
+        "effects",
+        "castTimeTier",
+        "rangeTier"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0.1,
+        "range": 8
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-26-20260907.ex",
+        "abilityId": "community-review-26-20260907.ex",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast",
+            "replaces": "caster.action",
+            "replacesForMs": 100
+          }
+        ]
       }
     }
   }

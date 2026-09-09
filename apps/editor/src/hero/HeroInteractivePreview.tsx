@@ -40,7 +40,12 @@ export function HeroInteractivePreview(props: { project: HeroProject; slot: Hero
   const statuses = catalog.simulationDocuments.filter(([key]) => key.startsWith("status-effects/")).map(([, document]) => document);
   const statusCost = props.result.compiled?.abilityDrafts[slot].statusCost;
   const requiredSummon = props.result.compiled?.abilityDrafts[slot].requiredSummonSlot;
+  const motionEffects = props.result.compiled?.abilityDrafts[slot].effects;
+  const hasDrive = motionEffects?.some(e => e.kind === "applyBuff" && e.drive);
+  const hasGrapple = motionEffects?.some(e => e.kind === "pull" && e.grapple);
   return <section aria-label="可調整的試玩情境">
+    {hasDrive ? <p>滑板狀態：藍色加速、青色滑行、橙色急轉、黃色煞車、紅色碰撞停止、灰色停止。移動與煞車使用下方試玩情境設定；模型為程序示意。</p> : null}
+    {hasGrapple ? <p>吊帶沿瞄準方向連接第一個合法敵人或地形；白線顯示實際牽引，結束即消失。空射仍消耗本次施法資源。</p> : null}
     {requiredSummon ? <p>需要自己 {requiredSummon}「{project.acceptedPlan?.slots[requiredSummon].name}」的存活召喚物。可在前置施法選擇 {requiredSummon} 後試玩；只補足資源不會建立召喚物。</p> : null}
     {statusCost?.subject === "target" ? <p>本招消耗指定目標身上的資源，必須先由實際機制取得；單槽試玩不會建立線索等目標資源。</p> : statusCost ? <p>單槽試玩{setup.resourceSetup === "empty" ? "保留初始" : "預先補足已安裝的"}資源；本招消耗自身{statusCost.count === "all" ? "全部剩餘資源（至少一層）" : `${statusCost.count} 層`}。整套驗收不補資源。</p> : null}
     <details><summary>調整試玩情境</summary>
@@ -72,6 +77,13 @@ export function HeroInteractivePreview(props: { project: HeroProject; slot: Hero
           </select></label>
         </div><p>條件標記用來測試技能條件；暈眩、減速等控制效果由技能本身施加。</p></fieldset>;
       })}
+      <label>試玩移動路線<select aria-label="試玩移動路線" value={!setup.movementOrders?.length ? "none" : setup.movementOrders.length > 1 ? "turn-stop" : "forward"} onChange={event => {
+        const x = setup.caster.x, z = setup.caster.z;
+        setSetup({ ...setup, movementOrders: event.target.value === "none" ? undefined : event.target.value === "forward"
+          ? [{ atSec: 0.2, kind: "move", x: Math.min(20, x + 12), z }]
+          : [{ atSec: 0.2, kind: "move", x, z: Math.min(20, z + 10) }, { atSec: 1.3, kind: "move", x: Math.max(-20, x - 8), z: Math.max(-20, z - 6) }, { atSec: 2.2, kind: "hold" }] });
+      }}><option value="none">保持原試玩指令</option><option value="turn-stop">直行 → 急轉 → 煞車停止</option><option value="forward">沿 X 正向前進，測試碰撞</option></select></label>
+      <label><input type="checkbox" checked={!!setup.obstacle} onChange={event => setSetup({ ...setup, obstacle: event.target.checked ? { x: Math.min(20, setup.caster.x + 4), z: setup.caster.z } : undefined })} />加入實體牆面（施法者 X 正向 4 格，可測碰撞／錨點）</label>
       <button type="button" onClick={() => setSetup(structuredClone(DEFAULT_HERO_SCENARIO_SETUP))}>重設試玩情境</button>
     </details>
     {busy ? <p role="status">正在試算此情境…</p> : error ? <p role="alert">{error}</p> : scenario ? <p role="status">{scenario.status === "accepted" ? "完成施放" : scenario.status === "passive" ? "被動情境" : `未施放：${scenario.rejectionReason}`} · 實際技能階級 {scenario.rank} · 目標生命 {Math.round(scenario.before.targetHp)} → {Math.round(scenario.after.targetHp)}</p> : result?.errors.map((message) => <p role="alert" key={message}>{message}</p>)}

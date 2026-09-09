@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "7704c20a",
+    "fingerprint": "e37f411f",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -328,6 +328,7 @@
       "driftAngleStepDeg",
       "driftFrom",
       "driftSpeed",
+      "drive",
       "dropDeadTargets",
       "duration",
       "durationSec",
@@ -355,6 +356,7 @@
       "fromSummonSlot",
       "getupTicks",
       "grantMark",
+      "grapple",
       "healPct",
       "healingTakenMult",
       "healthPct",
@@ -713,6 +715,12 @@
       "driftAngleStepDeg",
       "driftFrom",
       "driftSpeed",
+      "drive",
+      "drive.accelSec",
+      "drive.brakeSec",
+      "drive.sharpTurnDot",
+      "drive.sharpTurnSpeed",
+      "drive.turnFactor",
       "dropDeadTargets",
       "duration",
       "durationSec",
@@ -756,6 +764,10 @@
       "grantMark.lethal.surviveHpPct",
       "grantMark.max",
       "grantMark.resetOn",
+      "grapple",
+      "grapple.hitRadius",
+      "grapple.maxTravel",
+      "grapple.range",
       "healPct",
       "healingTakenMult",
       "healthPct",
@@ -5672,12 +5684,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "7704c20a",
+    "engineFingerprint": "e37f411f",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 7704c20a —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 e37f411f —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -6545,11 +6557,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "2325d266bc5c",
+    "fingerprint": "63122a001591",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "9a3b57bec565"
+        "digest": "58110a9d9f3f"
       },
       {
         "surface": "ability-item-zod-schemas",
@@ -6615,5 +6627,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "c3061c29ccd4"
+  "profileDigest": "873ded29e45d"
 }

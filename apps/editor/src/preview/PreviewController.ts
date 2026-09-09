@@ -613,6 +613,7 @@ function effectLines(
             `${e.statusId !== undefined ? ` [標記 ${e.statusId}]` : ""}` +
             `${e.exclusiveGroup !== undefined ? ` [互斥組 ${e.exclusiveGroup}]` : ""}` +
             `${e.vision?.revealed ? " · 揭示承受者" : ""}` +
+            `${e.drive ? ` · 加速${e.drive.accelSec}s／煞車${e.drive.brakeSec}s，急轉與碰撞停止` : ""}` +
             `${e.sourceScope === "caster" ? " · 依施法者分開" : ""}` +
             `${e.maxStacks !== undefined ? ` · 最多 ${e.maxStacks} 層` : ""}`,
         });
@@ -713,6 +714,10 @@ function effectLines(
         out.push({ depth, kind: e.kind, summary: `特效文字「${e.text}」` });
         break;
       case "pull": {
+        if (e.grapple) {
+          out.push({ depth, kind: e.kind, summary: `牽引首個敵人或地形錨點，射程 ${e.grapple.range} · 最多拉動 ${e.grapple.maxTravel} · 速度 ${e.speed}；超距／碰撞中止` });
+          break;
+        }
         const dest =
           e.destination === "anchorRing"
             ? `等分錨點環（${e.anchorCount ?? "?"} 點 · 半徑 ${e.anchorRadius ?? "?"}）`

@@ -31,6 +31,7 @@ import { ProjectileView, type ProjectileMeshShape } from "./views/ProjectileView
 import { FlowerView } from "./views/FlowerView";
 import { GuardianView } from "./views/GuardianView";
 import { ReviveCircleView } from "./views/ReviveCircleView";
+import { AbilityMotionView } from "./views/AbilityMotionView";
 import { TrapView } from "./views/TrapView";
 import { NightFlagView } from "./views/NightFlagView";
 import { CoinView } from "./views/CoinView";
@@ -88,6 +89,9 @@ const SPEED_SMOOTH = 0.25;
 
 /** Plain snapshot of one entity (adapter over the schema EntityState). */
 export interface EntityViewState {
+  motionState?: string;
+  tetherX?: number;
+  tetherZ?: number;
   id: number;
   kind: number; // 0 champion, 1 projectile, 2 flower, 3 revive circle
   seatId: number;
@@ -546,6 +550,7 @@ export class EntityViewRegistry {
   private readonly reviveCircles = new Map<number, ReviveCircleView>();
   private readonly revivePool: ReviveCircleView[] = [];
   /** 暗夜旗 (71-00 暗夜契約) — pooled exactly like the revive circles. */
+  private readonly motionViews = new Map<number, AbilityMotionView>();
   private readonly traps = new Map<number, TrapView>();
   private readonly trapPool: TrapView[] = [];
   private readonly nightFlags = new Map<number, NightFlagView>();
@@ -1023,6 +1028,12 @@ export class EntityViewRegistry {
 
     for (const e of args.entities) {
       seen.add(e.id);
+      let motion = this.motionViews.get(e.id);
+      if (e.motionState && !motion) { motion = new AbilityMotionView(this.scene); this.motionViews.set(e.id, motion); }
+      if (motion) {
+        const visible = e.alive && !((e.flags ?? 0) & ENTITY_FLAG.INVISIBLE && e.friendly !== true);
+        motion.sync({ ...e, ...args.poseFor(e), motionState: visible ? e.motionState ?? "" : "" });
+      }
       if (e.kind === 1) {
         let view = this.projectiles.get(e.id);
         if (!view) {
@@ -1401,6 +1412,7 @@ export class EntityViewRegistry {
     // so the entity simply stops being published and this sweep retires the
     // ring. Without the sweep a black circle would sit on the arena floor
     // through the shop and into the next round.
+    for (const [id, view] of this.motionViews) { if (!seen.has(id)) { view.dispose(); this.motionViews.delete(id); } }
     for (const [id, view] of this.traps) {
       if (!seen.has(id)) { view.deactivate(); this.traps.delete(id); this.lastPos.delete(id); this.trapPool.push(view); }
     }
@@ -1445,6 +1457,7 @@ export class EntityViewRegistry {
     for (const v of this.revivePool) v.dispose();
     for (const v of this.coins.values()) v.dispose();
     for (const v of this.coinPool) v.dispose();
+    for (const v of this.motionViews.values()) v.dispose(); this.motionViews.clear();
     for (const v of this.traps.values()) v.dispose();
     for (const v of this.trapPool) v.dispose();
     for (const v of this.nightFlags.values()) v.dispose();

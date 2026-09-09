@@ -757,6 +757,9 @@ export class EntityState extends Schema {
    * of honest field beats a shield bar that flickers during a jump.
    */
   declare h: number;
+  declare motionState: string;
+  declare tetherX: number;
+  declare tetherZ: number;
   /*
    * NO `sc` (temporary model scale) FIELD — deliberately removed, #247
    * follow-up. #247 shipped a uint8 `sc` percent channel end to end (wire →
@@ -803,6 +806,7 @@ export class EntityState extends Schema {
     this.alive = true;
     this.flags = 0;
     this.h = 0;
+    this.motionState = ""; this.tetherX = 0; this.tetherZ = 0;
   }
 }
 defineTypes(EntityState, {
@@ -825,6 +829,7 @@ defineTypes(EntityState, {
   // ⚠️ 這是**改一個既有欄位的型別**，不是 append。理由與代價寫在下面的 BIT BUDGET。
   flags: "uint32",
   h: "float32",
+  motionState: "string", tetherX: "float32", tetherZ: "float32",
 });
 
 export class MatchState extends Schema {

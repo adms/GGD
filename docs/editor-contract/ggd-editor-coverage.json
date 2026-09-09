@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "2c61a2ae2aec",
-  "capabilityFingerprint": "7704c20a",
+  "fingerprint": "9e347e9fb657",
+  "capabilityFingerprint": "e37f411f",
   "required": [
     {
       "group": "abilityField",
@@ -20939,6 +20939,10 @@
     },
     {
       "group": "effectField",
+      "name": "drive"
+    },
+    {
+      "group": "effectField",
       "name": "dropDeadTargets"
     },
     {
@@ -21044,6 +21048,10 @@
     {
       "group": "effectField",
       "name": "grantMark"
+    },
+    {
+      "group": "effectField",
+      "name": "grapple"
     },
     {
       "group": "effectField",
@@ -22067,6 +22075,30 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "drive"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "drive.accelSec"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "drive.brakeSec"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "drive.sharpTurnDot"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "drive.sharpTurnSpeed"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "drive.turnFactor"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "dropDeadTargets"
     },
     {
@@ -22236,6 +22268,22 @@
     {
       "group": "effectFieldPath",
       "name": "grantMark.resetOn"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grapple"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grapple.hitRadius"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grapple.maxTravel"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grapple.range"
     },
     {
       "group": "effectFieldPath",
@@ -25183,7 +25231,7 @@
   ],
   "counts": {
     "effectKind": 50,
-    "effectField": 283,
+    "effectField": 285,
     "hookEvent": 37,
     "hookField": 25,
     "abilityField": 40,
@@ -25191,7 +25239,7 @@
     "templateFamily": 43,
     "conditionLeaf": 11,
     "conditionLeafField": 20,
-    "effectFieldPath": 472,
+    "effectFieldPath": 482,
     "vfxField": 91,
     "modelField": 46,
     "projectileField": 15,
@@ -25199,7 +25247,7 @@
     "vfxScriptField": 8,
     "configField": 4023,
     "_notRequired": 15,
-    "_total": 5181,
+    "_total": 5193,
     "_ownerOnly": 39
   }
 }

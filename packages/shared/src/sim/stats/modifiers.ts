@@ -989,6 +989,7 @@ export interface ModifierSource {
    * and digest bit-identical.
    */
   vision?: VisionGrant;
+  drive?: import("../movement/abilityMotion").DriveGrant;
   /**
    * 飛行 (無視碰撞) this source grants — 04-00 翔封界. Rides the source for the
    * exact reason `vision` does: 「碰不碰得到」 is a property OF THE SOURCE, there

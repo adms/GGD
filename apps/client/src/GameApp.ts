@@ -1434,11 +1434,12 @@ export class GameApp {
   private predictionHeldByServer(state: MatchState | null | undefined): boolean {
     const mask = predictionHoldFlagMask();
     if (mask === 0) return false;
+    // Source-owned driving and grapples follow authoritative motion until their snapshot clears.
     const lid = hudStore.getState().localEntityId;
     if (lid === null || !state?.entities) return false;
     const es = entitiesOf(state).get(String(lid));
     // ⚠️ `!== 0` 不是 `> 0` —— flags 是 uint32，高半部 `&` 出來是負數。
-    return es !== undefined && (es.flags & mask) !== 0;
+    return es !== undefined && ((es.motionState ?? "") !== "" || (es.flags & mask) !== 0);
   }
 
   /**
@@ -2450,6 +2451,7 @@ export class GameApp {
       e.fx = es.fx;
       e.fz = es.fz;
       e.alive = es.alive;
+      e.motionState = es.motionState; e.tetherX = es.tetherX; e.tetherZ = es.tetherZ;
       // #268 — 「自己角色更顯眼」. Champions only (kind 0): a projectile or a
       // dropped coin has no owner to BE, and a stale true on a pooled slot that
       // got reused by another kind would put a caret over a flying bolt.

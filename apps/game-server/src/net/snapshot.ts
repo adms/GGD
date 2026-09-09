@@ -1,3 +1,4 @@
+import { abilityMotionSnapshot } from "@ggd/shared/sim/movement/abilityMotion";
 /**
  * snapshot — projects the SimWorld + controller state into the Colyseus schema.
  * The ONE publish seam: a quantized binary channel can replace the entities map
@@ -449,6 +450,7 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
       state.entities.set(key, es);
     }
     es.id = id;
+    Object.assign(es, abilityMotionSnapshot(world, id));
     es.x = t.pos.x;
     es.z = t.pos.z;
     es.fx = t.facing.x;

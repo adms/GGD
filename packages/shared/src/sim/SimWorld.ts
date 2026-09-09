@@ -2024,6 +2024,11 @@ export class SimWorld {
         }
       }
       for (const s of this.stats.get(id)?.sources ?? []) {
+        if (s.drive && (s.expiresAtTick === undefined || s.expiresAtTick > this.tick)) {
+          mix(id); for (const c of s.id) mix(c.charCodeAt(0));
+          mix(s.expiresAtTick ?? -1); mix(s.drive.accelSec); mix(s.drive.brakeSec);
+          mix(s.drive.turnFactor); mix(s.drive.sharpTurnDot); mix(s.drive.sharpTurnSpeed);
+        }
         if (s.vision?.revealed === true && (s.expiresAtTick === undefined || s.expiresAtTick > this.tick)) {
           mixOwned(id, 3, s.applierId ?? id, s.id, "revealed", s.expiresAtTick, s.stacks);
         }
@@ -2041,6 +2046,17 @@ export class SimWorld {
       // pre-feature world and break the #191 disarmed-golden canary for no
       // information gain. `id` is re-mixed alongside so "entity 7 targets 9"
       // can never collide with "entity 9 targets 7".
+      const motionNav = this.nav.get(id), drive = motionNav?.drive;
+      if (drive) {
+        mix(id); for (const c of drive.sourceId + drive.phase) mix(c.charCodeAt(0));
+        mix(drive.zone); mix(drive.rate); mix(drive.dir.x); mix(drive.dir.z);
+      }
+      const motionOv = motionNav?.override;
+      if (motionOv && motionOv.kind !== "leap" && motionOv.grapple) {
+        const g = motionOv.grapple;
+        mix(id); mix(g.caster); mix(g.target ?? -1); mix(g.zone); mix(g.range); mix(g.stopDistance);
+        mix(g.anchor.x); mix(g.anchor.z); mix(motionOv.remaining); mix(motionOv.speed);
+      }
       const at = this.nav.get(id)?.attackTarget;
       if (at !== null && at !== undefined) {
         mix(id);

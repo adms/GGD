@@ -41,6 +41,7 @@
  *（與 `GGD_APEX_PER_WC3` 同一個立場）。⭐ 而「幾個錨點、環多大」是設計，
  * 那兩格在 JSON 上（`anchorCount` / `anchorRadius`）。
  */
+import { startGrapple } from "../movement/abilityMotion";
 import type { EffectKindSpec } from "./effectKind";
 import type { Vec2 } from "../math/vec2";
 import { dist, lenSq, normalize, sub } from "../math/vec2";
@@ -70,6 +71,7 @@ export const pullEffect: EffectKindSpec<"pull"> = {
     const { world } = ctx;
     const speed = clampKb(e.speed, PULL_MAX_SPEED);
     if (!(speed > 0)) return; // 速度 0 的吸引永遠走不完：⛔ 不要開始一個
+    if (e.grapple) { startGrapple(ctx, e.grapple, speed, e.stopDistance ?? 0); return; }
     const getup = Math.round(clampKb(e.getupTicks, KB_MAX_GETUP_TICKS));
     const stop = clampKb(e.stopDistance, PULL_MAX_TRAVEL);
 

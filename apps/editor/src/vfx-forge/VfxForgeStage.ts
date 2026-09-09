@@ -1,3 +1,4 @@
+import { AbilityMotionReplay } from "./AbilityMotionReplay";
 import { TrapReplay } from "./TrapReplay";
 import type { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
@@ -247,6 +248,7 @@ export class VfxForgeStage {
   readonly cameraRig: CameraRig;
 
   private readonly trapReplay: TrapReplay;
+  private readonly motionReplay: AbilityMotionReplay;
   private script: VfxScriptDoc;
   private ability: ForgeAbility;
   private schedule: readonly ScheduledSimEvent[];
@@ -339,6 +341,7 @@ export class VfxForgeStage {
     this.engine = this.renderer.engine;
     this.scene = this.renderer.scene;
     this.trapReplay = new TrapReplay(this.scene);
+    this.motionReplay = new AbilityMotionReplay(this.scene);
     // A near-black clear colour made black-haired/dark-armour heroes disappear
     // even when their GLB and textures were healthy.  The Forge is an
     // inspection lightbox, so use a neutral mid-charcoal behind the shipped
@@ -1551,6 +1554,7 @@ export class VfxForgeStage {
     }
     for (const actor of this.allActors()) this.disposeActor(actor);
     this.trapReplay.dispose();
+    this.motionReplay.dispose();
     this.runtimeVfx?.dispose();
     this.modelRig.dispose();
     this.modelFxContainerPromises.clear();
@@ -1984,6 +1988,7 @@ export class VfxForgeStage {
     // Timeline replay keeps preloaded GLB containers and reuses pooled geometry;
     // clearing the container map here makes the first scrub frame an empty shell.
     this.trapReplay.reset();
+    this.motionReplay.reset();
     this.modelRig.resetForRound();
     this.runtimeVfx?.resetForRound({ preserveOneShotPool: true });
     // The runtime player claims this same ledger before the default body
@@ -2076,6 +2081,7 @@ export class VfxForgeStage {
       if (item.actorPose) this.setActorPose(item.actorPose);
       this.applySummonLifecycleEvent(item.event);
       this.trapReplay.onEvent(item.event, item.atMs);
+      this.motionReplay.onEvent(item.event);
       if (this.mode === "runtime") {
         this.recordRuntimePresentationEvent(item.event);
         this.runtimeVfx?.handleEvent(item.event, item.atMs);

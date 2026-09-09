@@ -1,3 +1,4 @@
+import type { SimWorld } from "../SimWorld";
 /**
  * 可開關的幾何（GH#324 Phase 5 的機制，Phase 3 先落地）。
  *
@@ -123,4 +124,13 @@ export function activeObstacles(
   // ⚠️ 語意：`gateGroup` 在 closed 清單裡 = 這道門**關著** = 擋路。
   //    不在清單裡 = 開著 = 這一 tick 它不存在。
   return obstacles.filter((ob) => ob.gateGroup === undefined || closed.has(ob.gateGroup));
+}
+
+/** The same live geometry for navigation, collision and ability motion. */
+export function worldObstacles(world: SimWorld, zone: number): readonly Obstacle[] {
+  const def = world.arena.zones[zone];
+  const held = def?.gateHolds === undefined ? undefined : heldGates(def.gateHolds,
+    [...world.transform.keys()].sort((a, b) => a - b)
+      .filter(id => world.transform.get(id)?.zone === zone).map(id => world.transform.get(id)!.pos));
+  return activeObstacles(def?.obstacles ?? [], world.gateSchedule, world.tick, held);
 }

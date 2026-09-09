@@ -198,6 +198,7 @@ describe("格擋 / 暴擊的授權格 —— 四種來源同一條路", () => {
         //    與 `sourceGrants()`，但沒進這個夾具，於是兩個方向的比對逐鍵指名它。
         //    ⛔ 正解就是補這一行，不是放寬斷言。
         vision: { stealthFadeDelaySec: 3, trueSightRadius: 24 },
+        drive: { accelSec: 0.3, brakeSec: 0.2, turnFactor: 0.2, sharpTurnDot: 0.5, sharpTurnSpeed: 0.3 },
         // ⭐ 2026-08-24 (GH#656)：選擇性狀態免疫是第十三格（殭屍王免 CC 但可被
         //    吸血/暴擊/淨化）。同上，這一行是維護點 —— 這條守衛照它自己的設計
         //    又紅了一次（lane C 落了格、夾具沒餵），⛔ 正解是補這一行不是放寬。

@@ -841,6 +841,13 @@ export const SOURCE_GRANT_SHAPE = {
    * 只剩一個 `spawnVfx`（GH#373，第一·五守則的形狀）。
    */
   vision: zVisionGrant.optional(),
+  drive: z.object({
+    accelSec: z.number().min(0.05).max(3),
+    brakeSec: z.number().min(0.05).max(3),
+    turnFactor: z.number().min(0.01).max(1),
+    sharpTurnDot: z.number().min(-1).max(1),
+    sharpTurnSpeed: z.number().min(0).max(1),
+  }).strict().optional().describe("來源存續時採加減速駕駛；急轉降速，碰撞停止。速度仍讀移速屬性，參數不疊加；最後一份有效來源優先。"),
   /**
    * ⭐ 2026-08-09 —— G7 的第三、第四格。**引擎從第一天就不看 `kind`**（真的跑過
    * 模擬：把 `attributes` 掛在 `kind:"buff"/"augment"/"passive"` 的來源上，

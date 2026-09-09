@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-project@2",
   "projectId": "community-review-26-20260907",
-  "revision": 13,
+  "revision": 14,
   "sourceLock": {
     "canonicalId": null,
     "versionId": null
@@ -38,7 +38,7 @@
       "fieldOwnership": {}
     },
     "skills": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {
         "acceptedPlan.slots.E.name": "locked",
@@ -56,22 +56,22 @@
       }
     },
     "mechanics": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {}
     },
     "presentation": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {}
     },
     "validation": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {}
     },
     "package": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {}
     }
@@ -209,171 +209,6 @@
         "exemplar": {
           "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
           "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
-        }
-      },
-      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
-        "id": "tpl-buff-self",
-        "schema": "template@1",
-        "name": "變身強化-數值面",
-        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
-        "family": "buff-self",
-        "status": "enabled",
-        "params": {
-          "castTimeSec": {
-            "type": "number",
-            "default": 0,
-            "min": 0,
-            "max": 5,
-            "unit": "s",
-            "optional": true
-          },
-          "duration": {
-            "type": "number",
-            "default": 15,
-            "min": 1,
-            "max": 60,
-            "unit": "s"
-          },
-          "modifiers": {
-            "type": "statModifiers",
-            "default": [
-              {
-                "op": "flat",
-                "stat": "ad",
-                "value": 50
-              }
-            ]
-          }
-        },
-        "requires": [],
-        "gapScore": 6,
-        "exemplar": {
-          "skill": "82-04 闇之魔法",
-          "jass": "A0Q6"
-        }
-      },
-      "sha256:eed77432b653ea9503a4d1649ef677fe7641003db81eb04c88bfca47176804ad": {
-        "id": "tpl-pull-throw",
-        "schema": "template@1",
-        "name": "拉扯投擲",
-        "description": "P2 拉扯投擲 (需位移詞彙)。\n\n⭐ 契約（GH#1050）：這一族是 ground 施法 —— 玩家選的點是**抓取圈的中心 ＋ 拋投的方向**，⛔ 不是終點。落點＝起跳點（`grabMode: dragToCaster` 是施法者、`throwOnly` 是受害者自己）＋ 方向 × `throwDistance`（`throwMode: distance`，原作這一族每一支都是方向×定長：A0U1 沿施法者朝向、A0L6/A0SQ 沿施法者→受害者）。`throwMode: point` 是 2026-09-06 之前的行為（選點＝終點），留著當 rollback；那個模式下 `throwDistance` 不寫進節點。",
-        "family": "pull-throw",
-        "status": "enabled",
-        "params": {
-          "apexHeight": {
-            "type": "number",
-            "default": 1.2,
-            "min": 0,
-            "max": 8,
-            "unit": "wc3h",
-            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.apexHeight = 1.2`。⚠️ ⭐ `wc3h` 與 `wc3u` 是**兩把不同的尺**（`expand.ts` 的 `toApex` vs `toLen`）—— 這一格走 apex。"
-          },
-          "castTimeSec": {
-            "type": "number",
-            "min": 0,
-            "max": 10,
-            "unit": "s",
-            "optional": true,
-            "origin": "taxonomy: ⛔ **刻意不給 default** —— 逐支不同（出貨那一支是 0.833）。"
-          },
-          "damageType": {
-            "type": "enum",
-            "default": "magic",
-            "values": [
-              "magic",
-              "physical",
-              "true"
-            ],
-            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].damageType = \"magic\"`。"
-          },
-          "durationSec": {
-            "type": "number",
-            "default": 0.42,
-            "min": 0.05,
-            "max": 10,
-            "unit": "s",
-            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.durationSec = 0.42`。⭐ 與 `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） 的 `throwStepIntervalSec` 0.04（j:4793 共用引擎）× 約 10 步同一個量級。"
-          },
-          "grabInvulnSec": {
-            "type": "number",
-            "min": 0,
-            "max": 10,
-            "unit": "s",
-            "optional": true,
-            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `effects[0]` 是 `invulnerable{durationSec:1.05, applyTo:\"self\", blocksControl:true}`。⛔ **刻意不給 default** —— 「抓取期間施法者是不是無敵」是逐支的設計選擇，⛔ 不是這一族的性質。"
-          },
-          "grabMode": {
-            "type": "enum",
-            "default": "dragToCaster",
-            "values": [
-              "dragToCaster",
-              "throwOnly"
-            ],
-            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.dragToCaster = true`（＝先拉到施法者身上再拋）。⚠️ `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） §2.3 的 `approach` 欄記載另外兩種（`casterToVictimTile`=A0L6 j:50113 · `casterToVictimFront`=A0SQ j:29646）—— ⛔ 那兩種今天 `zLeap` 表達不了。⭐ 這一格同時決定拋投**方向**（`sim/effects/leap.ts` 的 `throwDirection`）：`dragToCaster` ⇒ 施法者朝向（A0U1 j:51765）；`throwOnly` ⇒ 施法者→受害者（A0L6 j:50109 / A0SQ j:29634）。"
-          },
-          "landApRatio": {
-            "type": "number",
-            "default": 0.5,
-            "min": 0,
-            "max": 5,
-            "unit": "ratio",
-            "optional": true,
-            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].amount.ratios = [{stat:\"ap\",coeff:**0.5**}]`。"
-          },
-          "landDamageTier": {
-            "type": "enum",
-            "default": "小",
-            "values": [
-              "極小",
-              "小",
-              "中",
-              "大",
-              "極大"
-            ],
-            "optional": true,
-            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].amount.damageTierPerRank = [\"極小\",\"極小\",\"小\",\"小\"] ` ⇒ 家族取中位的「小」。⛔ 走級距，⛔ 不烘數字。"
-          },
-          "landRadius": {
-            "type": "number",
-            "default": 4.95,
-            "min": 0,
-            "max": 30,
-            "unit": "count",
-            "optional": true,
-            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.landRadius = 4.95`（已是 GGD 單位）。"
-          },
-          "mode": {
-            "type": "enum",
-            "default": "toPoint",
-            "values": [
-              "toPoint",
-              "inPlace"
-            ],
-            "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.mode = \"toPoint\"`；`docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） 的六個力學形狀裡有五個是「把被害者搬到另一個點」。"
-          },
-          "throwDistance": {
-            "type": "number",
-            "default": 500,
-            "min": 0,
-            "max": 2600,
-            "unit": "wc3u",
-            "origin": "⚠️ 只在 `throwMode: distance` 讀 —— `point` 模式下 expand 不把它寫進節點（GH#1050）。j:4757 共用投擲引擎 `10 × 50 = **500**`。⭐ 這一格是**多支**的：A0L6 `20×40=800`（j:50201，⚠️ tooltip 說 1000 而 **JASS 勝**）· A0SQ `12×50=600`（j:29712）· A0U5 200（j:52208）· A0Y7 `(4+4L)×50`=400…1000（j:54322）⇒ 家族取共用引擎值。"
-          },
-          "throwMode": {
-            "type": "enum",
-            "default": "distance",
-            "values": [
-              "distance",
-              "point"
-            ],
-            "origin": "j:51765 A0U1 `PolarProjectionBJ(casterLoc, 400.00, GetUnitFacing(caster))` · j:50109 A0L6 / j:29634 A0SQ `AngleBetweenPoints(caster, victim)` ⇒ 原作這一族**沒有任何一支**有「落點」，每一次拋投都是**方向 × 定長** ⇒ 預設 `distance`。`point`＝2026-09-06 之前的出貨行為（玩家選的點就是終點；expand 在這個模式下**不寫** `throwDistance` 進節點，所以那一格不是「可調卻無效」而是不進節點）—— 留著當 rollback 開關（owner 2026-08-23「沒做完以前別問我了自己判斷 但是留後台開關可以簡易 rollback」）。GH#1050。"
-          }
-        },
-        "requires": [],
-        "gapScore": 3,
-        "exemplar": {
-          "skill": "52-02 蹂躪編年史（`A0U1`，`content/abilities/godie-hapm.w.json`）",
-          "jass": "war3map.j:4753-4759 / 4793（共用投擲引擎）· 50201 / 29712 / 52208 / 54322（逐支 throwDistance）"
         }
       }
     },
@@ -735,33 +570,49 @@
       "E": {
         "slot": "E",
         "name": "渦輪引擎滑板",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】短期提高移動能力，急轉、碰撞與停止均有清楚狀態。\n【待補機制】僅 3 秒移速；需滑板加減速、急轉與碰撞狀態。",
+        "purpose": "【修正行為】3秒滑行：移速提高50%，0.3秒加速、0.2秒煞車；急轉降到30%速度並漸進轉向。沿指令方向實際行進，碰撞地形／身體即停止，束縛或暈眩立即停下；到期回到普通移動，不把移速增益當作加減速狀態。專用滑板模型、尾跡與畫面仍待驗收。\n【原設計】短期提高移動能力，急轉、碰撞與停止均有清楚狀態。",
         "maxRank": 4,
         "abilityOverrides": {
-          "castTimeTier": "小",
           "cooldownTier": "小",
           "manaCostTier": "小",
           "provenance": "editor-json",
-          "rangeTier": "大"
+          "castTimeSec": 0.1
         },
         "products": [
           {
-            "instanceId": "community-review-26-20260907-e-1",
+            "instanceId": "e-authored",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "castTimeSec": 0.15,
-                "duration": 3,
-                "modifiers": [
+                "castType": "self",
+                "castTimeSec": 0.1,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
                   {
-                    "msBonusTier": "極小",
-                    "op": "pctAdd",
-                    "stat": "ms"
+                    "kind": "applyBuff",
+                    "applyTo": "self",
+                    "duration": 3,
+                    "stackKey": "community-review-26-20260907.ride",
+                    "maxStacks": 1,
+                    "modifiers": [
+                      {
+                        "stat": "ms",
+                        "op": "pctAdd",
+                        "value": 0.5
+                      }
+                    ],
+                    "drive": {
+                      "accelSec": 0.3,
+                      "brakeSec": 0.2,
+                      "turnFactor": 0.2,
+                      "sharpTurnDot": 0.5,
+                      "sharpTurnSpeed": 0.3
+                    }
                   }
                 ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -848,35 +699,40 @@
       "EX": {
         "slot": "EX",
         "name": "伸縮吊帶",
-        "purpose": "【目前模板可執行】拖拉指定目標後向前投擲 120 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】連接合法目標或錨點，完成一次有限拉動；超距與碰撞時中止。\n【待補機制】需吊帶錨點分支與有限拉動，不應預設摔投。",
+        "purpose": "【修正行為】沿瞄準方向連接8格內首個合法可見敵人或地形錨點；敵人被拉向施法者，地形則拉動自己。最多移動4格一次，抵達前保留身體間距；碰撞、超距、死亡、跨區或對決結束中止，沒有摔投或落地傷害。空射、免控敵人與範圍外不拉動；空射仍支付本次施法消耗。專用吊帶／動作與畫面仍待驗收。\n【原設計】連接合法目標或錨點，完成一次有限拉動；超距與碰撞時中止。",
         "maxRank": 1,
         "abilityOverrides": {
-          "castTimeTier": "小",
           "cooldownTier": "大",
           "manaCostTier": "大",
           "provenance": "editor-json",
-          "rangeTier": "小"
+          "castTimeSec": 0.1,
+          "range": 8
         },
         "products": [
           {
-            "instanceId": "community-review-26-20260907-ex-1",
+            "instanceId": "ex-authored",
             "template": {
-              "ref": "tpl-pull-throw",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "apexHeight": 1.2,
-                "castTimeSec": 0.2,
-                "damageType": "physical",
-                "durationSec": 0.45,
-                "grabMode": "dragToCaster",
-                "landApRatio": 0,
-                "landDamageTier": "小",
-                "landRadius": 2,
-                "mode": "toPoint",
-                "throwDistance": 120,
-                "throwMode": "distance"
+                "castType": "skillshot",
+                "castTimeSec": 0.1,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "pull",
+                    "shape": "single",
+                    "speed": 12,
+                    "stopDistance": 0.7,
+                    "grapple": {
+                      "range": 8,
+                      "maxTravel": 4,
+                      "hitRadius": 0.2
+                    }
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:eed77432b653ea9503a4d1649ef677fe7641003db81eb04c88bfca47176804ad"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -1000,37 +856,9 @@
               "kind": "anim",
               "on": "castStart",
               "replaces": "caster.action",
-              "replacesForMs": 350,
+              "replacesForMs": 100,
               "at": "caster",
               "pulse": "cast"
-            },
-            {
-              "vfxId": "fx.prim.physical.pulse-sm",
-              "at": "self",
-              "durationSec": 0.2,
-              "kind": "vfx",
-              "on": "castStart",
-              "w3xScale": 0.7,
-              "tint": [
-                77,
-                148,
-                237
-              ],
-              "alpha": 0.6
-            },
-            {
-              "vfxId": "fx.prim.physical.pulse",
-              "at": "self",
-              "durationSec": 0.35,
-              "kind": "vfx",
-              "on": "castEffect",
-              "w3xScale": 0.85,
-              "tint": [
-                77,
-                148,
-                237
-              ],
-              "alpha": 0.85
             }
           ]
         },
@@ -1110,37 +938,9 @@
               "kind": "anim",
               "on": "castStart",
               "replaces": "caster.action",
-              "replacesForMs": 350,
+              "replacesForMs": 100,
               "at": "caster",
               "pulse": "cast"
-            },
-            {
-              "vfxId": "fx.prim.physical.pulse-sm",
-              "at": "self",
-              "durationSec": 0.2,
-              "kind": "vfx",
-              "on": "castStart",
-              "w3xScale": 0.7,
-              "tint": [
-                77,
-                148,
-                237
-              ],
-              "alpha": 0.6
-            },
-            {
-              "vfxId": "fx.prim.physical.arc",
-              "at": "target",
-              "durationSec": 0.35,
-              "kind": "vfx",
-              "on": "castEffect",
-              "w3xScale": 0.85,
-              "tint": [
-                77,
-                148,
-                237
-              ],
-              "alpha": 0.85
             }
           ]
         },
@@ -1253,7 +1053,9 @@
     "PASSIVE": "觀察同對決、當前可見的敵方英雄：有效普攻命中、技能命中、實際治療、成功控制各為一種事件。每名敵人／每名觀察者各自記錄，同種事件每名敵人／回合只記一次，最多保存三條線索；只到回合結束，不因重複事件或不同命中目標再增加。R 消耗該敵人身上由自己蒐集的線索，已見種類仍保留到重置。護盾實際吸收計入有效命中；無敵、零傷、過量治療、免控、不可見、跨區及對決結束不計。",
     "Q": "沿瞄準方向發射單枚實體彈，射程12、首個合法敵方碰撞一次物理傷害；偏離可閃避，到射程消失。暫用既有 bolt 的模型／特效，足球與踢球專用演出仍待替換及畫面驗收。",
     "W": "單枚直線麻醉彈首碰敵人後睡眠1.2秒，不額外造成傷害；受到後續實際HP傷害即提前醒來，只移除此睡眠，護盾吸收及零傷不喚醒。免控拒絕、未命中不睡眠；正常施法支付自己的魔力與冷卻。針與手錶演出仍使用代理彈待驗。",
-    "R": "指定同區敵人，至少需要一條由自己蒐集的線索；施法開始扣除該目標全部自己的線索，其他敵人／觀察者不變。4秒揭示該目標並降低15%護甲與魔抗，同一施法者重施只刷新、不疊加。到期或驅散後恢復原隱形規則，不延長／取消其隱形時鐘；只使用當前對決的伺服器戰鬥實體，沒有玩家私密資料。"
+    "E": "3秒滑行：移速提高50%，0.3秒加速、0.2秒煞車；急轉降到30%速度並漸進轉向。沿指令方向實際行進，碰撞地形／身體即停止，束縛或暈眩立即停下；到期回到普通移動，不把移速增益當作加減速狀態。專用滑板模型、尾跡與畫面仍待驗收。",
+    "R": "指定同區敵人，至少需要一條由自己蒐集的線索；施法開始扣除該目標全部自己的線索，其他敵人／觀察者不變。4秒揭示該目標並降低15%護甲與魔抗，同一施法者重施只刷新、不疊加。到期或驅散後恢復原隱形規則，不延長／取消其隱形時鐘；只使用當前對決的伺服器戰鬥實體，沒有玩家私密資料。",
+    "EX": "沿瞄準方向連接8格內首個合法可見敵人或地形錨點；敵人被拉向施法者，地形則拉動自己。最多移動4格一次，抵達前保留身體間距；碰撞、超距、死亡、跨區或對決結束中止，沒有摔投或落地傷害。空射、免控敵人與範圍外不拉動；空射仍支付本次施法消耗。專用吊帶／動作與畫面仍待驗收。"
   },
   "validationState": {
     "identity": {
@@ -1267,27 +1069,27 @@
       "diagnosticCodes": []
     },
     "skills": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     },
     "mechanics": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     },
     "presentation": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     },
     "validation": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     },
     "package": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     }

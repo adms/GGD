@@ -58,6 +58,7 @@ import type { StatusImmunityGrant } from "../statusTagImmunity";
  * 畫得出來但引擎讀不到的欄位。
  */
 export interface SourceGrantFields {
+  drive?: import("../movement/abilityMotion").DriveGrant;
   block?: BlockGrant;
   critStrike?: CritStrikeGrant;
   /**
@@ -265,6 +266,7 @@ export function sourceGrants(from: SourceGrantFields): SourceGrantFields {
       ? { typeStreakImmunity: from.typeStreakImmunity }
       : {}),
     ...(from.vision !== undefined ? { vision: from.vision } : {}),
+    ...(from.drive !== undefined ? { drive: from.drive } : {}),
     ...(from.deathWard !== undefined ? { deathWard: from.deathWard } : {}),
     ...(from.immobile !== undefined ? { immobile: from.immobile } : {}),
     ...(from.primaryAttribute !== undefined
@@ -305,6 +307,7 @@ export function hasSourceGrant(from: SourceGrantFields): boolean {
     from.penetration !== undefined ||
     from.typeStreakImmunity !== undefined ||
     from.vision !== undefined ||
+    from.drive !== undefined ||
     from.deathWard !== undefined ||
     from.immobile !== undefined ||
     from.primaryAttribute !== undefined ||

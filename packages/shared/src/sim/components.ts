@@ -95,6 +95,7 @@ export interface DashOverride {
    * construction.
    */
   authored?: boolean;
+  grapple?: import("./movement/abilityMotion").GrappleLink;
 }
 
 /**
@@ -135,6 +136,7 @@ export interface LeapOverride {
 
 /** Navigation state driven by OrderSystem, consumed by MovementSystem. */
 export interface Navigation {
+  drive?: import("./movement/abilityMotion").DriveState;
   order: Order | null;
   /** resolved current move target (or null when idle/arrived) */
   moveTarget: Vec2 | null;
