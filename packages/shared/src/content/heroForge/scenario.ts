@@ -1,3 +1,4 @@
+import { resolveStatusCost } from "../../sim/abilities/statusCost";
 import { isTimeStopped } from "../../sim/timeStop";
 import {
   Abilities,
@@ -187,7 +188,7 @@ export function runHeroAbilityScenario(
   // complete kit below never does: earning the resource is tested in sequence.
   // Never manufacture a missing counter or override its declared capacity.
   let preparedResource = 0;
-  const cost = ability.statusCost;
+  const cost = resolveStatusCost(world, caster, ability.statusCost);
   if (cost && cost.subject !== "target" && cost.appliedBy === undefined && setup?.resourceSetup !== "empty") {
     const mark = world.marks.get(caster)?.get(cost.statusId);
     const required = cost.count === "all" ? 1 : cost.count;

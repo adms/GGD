@@ -20,7 +20,7 @@ export const zConsumeStatus = z.object({
     .describe("self 只扣自己一次並保留分支目標；省略或 target 對每位目標各自判斷。"),
   appliedBy: z.enum(["self"]).optional()
     .describe("self 只消耗自己施加的狀態；省略包含其他施法者。具名資源計數器沒有施法者歸屬。"),
-  onConsumed: z.array(zEffectDef).min(1).describe("扣除完成後執行；不再重判斷剛移除的狀態。"),
+  onConsumed: z.array(zEffectDef).describe("扣除完成後執行；空陣列只移除資源，不產生額外效果。不再重判斷剛移除的狀態。"),
   onMissing: z.array(zEffectDef).min(1).optional().describe("層數不足時執行；省略則不產生後續效果。"),
 }).strict();
 

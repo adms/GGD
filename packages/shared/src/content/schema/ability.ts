@@ -742,6 +742,11 @@ export const zAbilityDef = z
     statusCost: z.object({
       statusId: zRef<StatusId>("status-effects", { soft: true }),
       count: z.union([z.number().int().min(1).max(MARK_MAX_COUNT), z.literal("all")]),
+      countWhileStatus: z.object({
+        statusId: zRef<StatusId>("status-effects", { soft: true }),
+        count: z.union([z.number().int().min(1).max(MARK_MAX_COUNT), z.literal("all")]),
+        appliedBy: z.enum(["self"]).optional(),
+      }).strict().optional().describe("施法者持有此有效狀態時，改用指定層數成本；先驗足額再扣費，不更換技能或重置冷卻。"),
       appliedBy: z.enum(["self"]).optional(),
       subject: z.enum(["self", "target"]).optional().describe("資源持有人；target 只適用指定目標技能，省略為自身。"),
     }).strict().optional().describe(

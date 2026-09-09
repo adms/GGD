@@ -208,7 +208,8 @@ export interface AbilityDef {
   requiredTargetStatus?: { statusId: StatusId; appliedBy?: "self"; minStacks?: number };
   /** Optional per-ability opt-out of the normal out-of-range approach order. */
   allowApproach?: boolean;
-  statusCost?: { statusId: StatusId; count: number | "all"; appliedBy?: "self"; subject?: "self" | "target" };
+  statusCost?: { statusId: StatusId; count: number | "all"; appliedBy?: "self"; subject?: "self" | "target";
+    countWhileStatus?: { statusId: StatusId; count: number | "all"; appliedBy?: "self" } };
   /**
    * ⚠️ 可以是 `Number.POSITIVE_INFINITY` —— 「無上限施法距離」（GH#602）。
    * 文件寫的是 `rangeUnlimited: true` + `range: 0`，`content/rangeTiers.ts` 的
