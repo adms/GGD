@@ -64,5 +64,12 @@
     "boardCheckExit": 0,
     "sameBoardAndRuntimeAsFirst": true,
     "receipt": "materials/community-hero-forge/receipts/main-v0433-integration/post-merge-board.json"
+  },
+  "arenaRulesTypecheck": {
+    "sourceCommit": "6fa5372034e0c878e8170f05600f5b083cdfe20a",
+    "sameRuntimeAsTestedFirst": true,
+    "reuseGameServerTypecheckExit": 0,
+    "secondDecorCheckExit": 0,
+    "receipt": "materials/community-hero-forge/receipts/main-v0433-integration/arena-rules-typecheck.json"
   }
 }
