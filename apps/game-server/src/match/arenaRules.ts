@@ -92,6 +92,12 @@ export function legendaryShelfRules(cfg: LegendaryShelfConfig): LegendaryShelfRu
 }
 
 export interface ArenaRules {
+  /**
+   * ⭐ 第十一回合的**進場判定**那兩格（GH#1151）——
+   * 消費端 `sim/round11Gate.ts::shouldEnterRound11`。
+   * ⚠️ 出貨 `enabled` 是 `false`；⛔ 它是 owner 的一鍵 rollback，不要在程式裡覆寫。
+   */
+  round11: { readonly enabled: boolean; readonly triggerBossKills: number };
   /** round from which R is learnable at any level; null = classic 6/11/16 */
   ultUnlockRound: number | null;
   /** round from which champions with an exAbility unlock EX; null = never */
@@ -262,6 +268,10 @@ export interface ArenaRules {
 
 /** Legacy behavior: augment tiers per AUGMENT_TIER_SCHEDULE + round-2+ gacha. */
 export const DEFAULT_ARENA_RULES: ArenaRules = {
+  // ⭐ 沒有內容文件時的第十一回合：**關著**，而且門檻是 0（＝不設門檻 ⇒ 仍然不開）。
+  // ⛔ 兩個都不可以「保險起見」設成開 —— 一個 fallback 開著的模式，
+  //   在內容載入失敗那一刻就會變成「玩家進到一個沒有人測過的回合」。
+  round11: { enabled: false, triggerBossKills: 0 },
   ultUnlockRound: null,
   exUnlockRound: null,
   offerCount: 3,
@@ -417,6 +427,19 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
     // 同上：不是 `arena-rules@1` 的欄位。出貨預設在 `config.match@1`，房主的值
     // 在 `MatchRoom.onCreate` 合併進來。這裡放「不設限」＝今天的行為。
     maxRounds: MAX_ROUNDS_UNLIMITED,
+    // ⭐⭐ GH#1151 / GH#1165 —— 第十一回合的**進場判定**那兩格。
+    //
+    // ⛔⛔ 在此之前 `round11.*` **13 欄裡 10 欄零消費端**，而字串 `round11`
+    // 在 sim ／ game-server ／ client 三個執行環境裡都是 **0** ⇒ ⭐ 整組是裝飾。
+    // ⇒ 這一行是它的第一條真接線；判定住 `sim/round11Gate.ts`（純函式）。
+    //
+    // ⚠️ ⭐ 出貨 `enabled` 是 **false**，而這裡刻意**照抄**它 ——
+    // ⛔ 不在這一層改預設：一鍵 rollback 的那一格是後台的 `round11.enabled`，
+    //   ⛔ 不是這裡的一個 `?? true`。
+    round11: {
+      enabled: doc.round11?.enabled ?? false,
+      triggerBossKills: doc.round11?.triggerBossKills ?? 0,
+    },
   };
 }
 
