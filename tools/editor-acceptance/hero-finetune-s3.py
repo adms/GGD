@@ -64,12 +64,19 @@ def plan(root):
     manifests = sorted(p for p in files if p.name == 'manifest.json'
                        and json.loads(p.read_text()).get('schema') == 'ggd-hero-finetune-research-archive@1')
     require(bool(manifests), 'NO_BUNDLES')
+    payloads = set()
     for m in manifests:
         archive.verify(m.parent)
+        bundle = json.loads(m.read_text())
+        payloads.update(m.parent / item['path'] for item in bundle['archives'])
+        payloads.update(m.parent / item['modelBlob'] for item in bundle['entries'] if 'modelBlob' in item)
+    # Payloads named by a committed manifest deliberately need not be tracked:
+    # Git keeps the readable manifest/index while the opaque bytes go to S3.
+    # Retain support for explicitly tracked standalone payloads in older bundles.
+    payloads.update(path for path in files if path.suffix in {'.zip', '.safetensors'})
     objects = {}
-    for path in sorted(files):
-        if path.suffix not in {'.zip', '.safetensors'}:
-            continue
+    for path in sorted(payloads):
+        require(path.is_file() and path.resolve().is_relative_to(root), 'MANIFEST_PAYLOAD_MISSING_OR_OUTSIDE_ROOT')
         name = path.relative_to(root).as_posix()
         safe(root, name)
         sha = archive.digest(path)

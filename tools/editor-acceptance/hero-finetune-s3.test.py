@@ -47,11 +47,20 @@ class StorageTests(unittest.TestCase):
         with contextlib.redirect_stdout(io.StringIO()):
             s.archive.build(workspace, self.root / 'bundle', [Path('sample.py')], Path('state.json'))
         subprocess.run(['git', 'init', '-q', str(self.root)], check=True)
-        subprocess.run(['git', '-C', str(self.root), 'add', 'bundle'], check=True)
+        # The manifest and readable mirrors belong in Git; archive/model bytes
+        # remain untracked and are discovered through the committed manifest.
+        subprocess.run(['git', '-C', str(self.root), 'add', 'bundle/manifest.json', 'bundle/sources'], check=True)
         subprocess.run(['git', '-C', str(self.root), '-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid',
                         'commit', '-qm', 'fixture', '--no-verify'], check=True)
         with contextlib.redirect_stdout(io.StringIO()): s.plan(self.root)
         self.index = s.read_index(self.root)
+
+    def test_binary_payloads_are_not_tracked_but_are_fully_indexed(self):
+        tracked = subprocess.check_output(['git', '-C', str(self.root), 'ls-files'], text=True).splitlines()
+        self.assertFalse(any(path.endswith(('.zip', '.safetensors')) for path in tracked))
+        self.assertTrue(self.index['objects'])
+        self.assertTrue(all((self.root / path).is_file()
+                            for obj in self.index['objects'] for path in obj['paths']))
 
     def publish(self, aws):
         with contextlib.redirect_stdout(io.StringIO()):
