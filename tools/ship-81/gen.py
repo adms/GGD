@@ -368,6 +368,23 @@ def copy_model_docs(catalog_path: Path, needed: set[str]) -> list[str]:
     return copied
 
 
+# ⛔⛔ **執行順序** —— ⭐ 這支不是最後一步，它是**第一步**。
+#
+# 2026-09-10 量到：在正規化之後再跑一次 `--write`，會把 **519 個檔**
+# （8,099 行）打回未正規化的樣子 —— ⭐ 級距、卡面佔位、英雄卡內嵌鏡射
+# 全部重置，而 `content:build` 仍然 exit 0 ⇒ ⛔ **看不出來**。
+#
+# ⭐ 正確順序（缺一步下一支就紅）：
+#
+#     python3 tools/ship-81/gen.py … --write        ⭐ 先（從 recipe/ZIP 產出）
+#     python3 tools/skill-remake/apply_tiers.py     級距 ＋ 英雄卡內嵌鏡射
+#     bash scripts/genrun.sh prose:build            卡面數字換成佔位
+#     python3 tools/skill-remake/apply_tiers.py     ⭐ 再鏡射一次（佔位要進內嵌版）
+#     pnpm content:build
+#     pnpm skills:sync
+#
+# ⚠️ ⭐ 第二次 `apply_tiers` 不是多餘的：`prose:build` 只改**獨立檔**，
+#   而內嵌鏡射版還留著手打數字 ⇒ 下一輪 `prose:build` 會說「字面值找不到」。
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--inventory", type=Path, required=True, help="全角色模型盤點.md")
