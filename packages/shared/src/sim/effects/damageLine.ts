@@ -112,7 +112,7 @@ export const damageLineEffect: EffectKindSpec<"damageLine"> = {
     const length = clampSpreadRadius(e.length);
     const width = clampSpreadRadius(e.width);
     if (length <= 0 || width <= 0) return;
-    const cap = clampSpreadTargets(e.maxTargets);
+    const cap = clampSpreadTargets(e.maxTargets, world.damageRules.spreadMaxTargetsCap);
     if (cap <= 0) return;
 
     // WHERE THE LINE STARTS. Default = the caster's own body ("面前"); the

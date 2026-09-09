@@ -12,7 +12,8 @@
  * Both sides of the comparison are derived AT TEST TIME:
  *
  *   supply  ← `nameSchemas`/`register` walk the Zod schemas in ./schema
- *   demand  ← the real `content/` tree, loaded through the real loader
+ *   demand  ← the real `content/` tree, loaded through the real loader, plus
+ *             accepted community gameplay sources with matching service receipts
  *
  * Nothing below hard-codes what is currently wrong. A field is censused because
  * it EXISTS, on the commit that adds it — so the next S8, the one nobody has
@@ -70,6 +71,9 @@
  *  • CURATION. A field adopted only by docs outside the operator's whitelist
  *    still counts as adopted. Whether the whitelist reaches it is P0-2's
  *    question, not this one.
+ *  • PUBLICATION / RUNTIME. Accepted community samples are reported separately
+ *    from static shipped content. Matching receipts and successful compilation
+ *    establish source adoption, not formal deployment or live match coverage.
  *  • FREE-TEXT VOCABULARIES the code reads out of `string[]` fields are only
  *    censused when declared in `TAG_VOCABULARIES`. `weaponClass` is declared;
  *    a future `if (tags.includes("…"))` in some system is invisible until
@@ -98,16 +102,25 @@ import {
   TAG_VOCABULARIES,
   type Census,
 } from "./fieldAdoption";
-import type { ContentStore } from "./store";
+import { ContentStore } from "./store";
 import { expandVfxScriptDoc, registerVfxSubtypes, VfxSubtypes } from "./vfxSubtypes/expand";
 import type { VfxScriptAuthoredDoc } from "./schema/vfxScript";
 import { resolveTemplateExpansion } from "./templates/resolve";
 import type { TemplateDoc } from "./schema/template";
 import { ALL_STATS } from "../sim/stats/statTypes";
+import { compileGeneratedHeroDraft, generateHeroDraft } from "./heroForge/generator";
+import { zHeroProject } from "./heroForge/schema";
+import { HERO_SLOTS } from "./heroForge/constants";
+import { contentSha256 } from "./import/jcs";
+import type { VfxSubtypeDoc } from "./schema/vfxSubtype";
+import COMMUNITY_INDEX from "../../../../materials/community-hero-forge/index.json" with { type: "json" };
+import COMMUNITY_SERVICE from "../../../../materials/community-hero-forge/refinements/parody-service-proof.json" with { type: "json" };
+import COMMUNITY_ACCEPTANCE from "../../../../materials/community-hero-forge/refinements/parody-verification.json" with { type: "json" };
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = join(HERE, "../../../..");
 const CONTENT_DIR = join(REPO_ROOT, "content");
+const COMMUNITY_DIR = join(REPO_ROOT, "materials/community-hero-forge");
 
 /**
  * How long a `"landing"` exemption may suppress a failure. 30 days is roughly
@@ -214,6 +227,21 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = EXEMPTIONS_JSON as Reado
 
 let census: Census;
 let store: ContentStore;
+let communityCensus: Census;
+let communityStore: ContentStore;
+let communityByKey: Map<string, Census["rows"][number]>;
+
+/** Verify the raw source before parsing can apply defaults or strip anything. */
+function receiptProject(raw: unknown, receipt: (typeof COMMUNITY_SERVICE.results)[number]) {
+  if (receipt.status !== "passed" || contentSha256(raw) !== receipt.sourceDigest) {
+    throw new Error(`accepted-community source receipt mismatch: ${receipt.project}`);
+  }
+  const project = zHeroProject.parse(raw);
+  if (project.projectId !== receipt.projectId || project.acceptedPlan === null) {
+    throw new Error(`accepted-community project identity / accepted plan missing: ${receipt.project}`);
+  }
+  return project;
+}
 
 beforeAll(async () => {
   const result = await new ContentLoader(shippedContentSource(CONTENT_DIR)).load();
@@ -234,6 +262,46 @@ beforeAll(async () => {
     if (res.ok) store.add("abilities", String(d["id"]), res.merged);
   }
   census = censusAdoption(store);
+
+  // #1159: these Git-tracked sources have owner acceptance and passed service
+  // build / package inspection receipts. Reuse the compiler in memory; CI does
+  // not read the receipts' historical /private/tmp paths, download ZIPs, or
+  // publish anything. Keep gameplay samples out of the static shipped store.
+  expect(COMMUNITY_INDEX.schema).toBe("ggd-workflow-handoff-index@1");
+  expect(COMMUNITY_SERVICE.schema).toBe("ggd-handoff-service-proof@1");
+  expect(COMMUNITY_SERVICE.status).toBe("passed");
+  expect(COMMUNITY_ACCEPTANCE.deliveryAcceptance).toMatchObject({
+    status: "passed-owner-approved-functional-scope", heroes: 37, slots: 222,
+  });
+  expect(COMMUNITY_INDEX.heroCount).toBe(37);
+  expect(COMMUNITY_INDEX.slotCount).toBe(37 * HERO_SLOTS.length);
+  expect(COMMUNITY_INDEX.heroes).toHaveLength(COMMUNITY_INDEX.heroCount);
+  const receipts = new Map(COMMUNITY_SERVICE.results.map((r) => [r.project, r]));
+  expect(receipts.size).toBe(COMMUNITY_SERVICE.results.length);
+  expect([...receipts.keys()].sort()).toEqual(COMMUNITY_INDEX.heroes.map((h) => h.project).sort());
+  expect(new Set(COMMUNITY_INDEX.heroes.map((h) => h.projectId)).size).toBe(COMMUNITY_INDEX.heroCount);
+  communityStore = new ContentStore();
+  for (const hero of COMMUNITY_INDEX.heroes) {
+    const receipt = receipts.get(hero.project)!;
+    expect(receipt.projectId).toBe(hero.projectId);
+    expect(receipt.slots).toBe(HERO_SLOTS.length);
+    const project = receiptProject(JSON.parse(readFileSync(join(COMMUNITY_DIR, hero.project), "utf8")), receipt);
+    const compiled = compileGeneratedHeroDraft(generateHeroDraft(project.acceptedPlan!, {
+      heroId: project.projectId,
+      heroName: project.brief.name,
+      modelKey: project.presentation.modelKey,
+      presentation: project.presentation,
+    }), [...TEMPLATES.values()], store.all<{ schema?: string }>("config"), store.all<VfxSubtypeDoc>("vfx-subtypes"));
+    if (!compiled.ok) throw new Error(`${hero.project}: ${JSON.stringify(compiled.failures)}`);
+    for (const ability of Object.values(compiled.draft.abilityDrafts)) {
+      communityStore.add("abilities", ability.id, ability);
+    }
+    for (const champion of [compiled.draft.champion, ...compiled.draft.relatedChampions]) {
+      communityStore.add("champions", champion.id, champion);
+    }
+  }
+  communityCensus = censusAdoption(communityStore);
+  communityByKey = new Map(communityCensus.rows.map((r) => [r.key, r]));
 }, 60_000);
 
 /** Days between an ISO date and now, floored. */
@@ -253,12 +321,21 @@ describe("field adoption census (recipe S8: mechanism shipped, content 0)", () =
   it("prints the census — this is the owner-facing report", () => {
     // Always emitted, pass or fail. The numbers ARE the deliverable: which
     // mechanisms content actually reaches, and how hard.
-    // eslint-disable-next-line no-console
-    console.log("\n" + formatCensus(census) + "\n");
+    console.log("\nSTATIC SHIPPED CONTENT\n" + formatCensus(census) + "\n");
+    // Keep every static zero visible, even when a receipt-linked community
+    // sample uses it. These counts are source adoption, not production usage.
+    console.log([
+      `ACCEPTED-COMMUNITY GAMEPLAY SAMPLES — ${communityCensus.totalDocs} compiled docs; no formal-deployment claim`,
+      "static docs | accepted-community docs | key | community examples",
+      ...unadopted(census).map((r) => {
+        const sample = communityByKey.get(r.key);
+        return `${r.docs} | ${sample?.docs ?? 0} | ${r.key} | ${sample?.examples.join(", ") ?? ""}`;
+      }),
+      "",
+    ].join("\n"));
 
     const debts = Object.entries(EXEMPTIONS).filter(([, e]) => e.status === "debt");
     if (debts.length > 0) {
-      // eslint-disable-next-line no-console
       console.log(
         [
           `\n  ${"═".repeat(74)}`,
@@ -275,7 +352,7 @@ describe("field adoption census (recipe S8: mechanism shipped, content 0)", () =
 
   it("every registered field / Stat / enum member / effect kind is adopted, or exempted", () => {
     const zeroes = unadopted(census);
-    const unexplained = zeroes.filter((r) => EXEMPTIONS[r.key] === undefined);
+    const unexplained = zeroes.filter((r) => EXEMPTIONS[r.key] === undefined && (communityByKey.get(r.key)?.docs ?? 0) === 0);
 
     const message =
       unexplained.length === 0
@@ -285,22 +362,22 @@ describe("field adoption census (recipe S8: mechanism shipped, content 0)", () =
             "S8 — A REGISTERED MECHANISM WITH ZERO CONTENT ADOPTION.",
             "",
             "These keys are offered by the schemas (or by a code vocabulary) and NOT ONE",
-            "content document uses them. Nothing will error; the feature simply never",
-            "happens in a match. That is exactly the shape docs/_false-completions.md",
-            "catalogues as S8, and it is why this test exists.",
+            "static shipped or receipt-linked accepted-community gameplay document uses",
+            "them. This is a source-adoption finding; runtime and publication need",
+            "their own evidence. See docs/_false-completions.md recipe S8.",
             "",
             ...unexplained.map(
-              (r) => `  ${r.key}\n      0 of ${r.reach} docs that could have used it`,
+              (r) => `  ${r.key}\n      static: 0 of ${r.reach}; accepted-community: 0`,
             ),
             "",
             "THREE WAYS TO RESOLVE THIS — pick one deliberately:",
             "",
             "  1. AUTHOR THE CONTENT. Usually the right answer. Editing one doc in",
-            "     content/ is enough to turn the row green, and that one doc is proof the",
-            "     path works end to end.",
+            "     content/ or an accepted, receipt-linked community source establishes",
+            "     adoption. It does not prove the path works end to end.",
             "",
-            "  2. IT IS NEW — add it to EXEMPTIONS in this file with",
-            `     { status: "landing", since: "<today, ISO>", why: "…" }.`,
+            "  2. IT IS NEW — document it in fieldAdoption.exemptions.json with",
+            `     { status: "landing", since: "<schema introduction date, ISO>", why: "…" }.`,
             `     That suppresses the failure for ${GRACE_DAYS} days and then fails again,`,
             "     so the migration cannot be forgotten.",
             "",
@@ -327,15 +404,19 @@ describe("field adoption census (recipe S8: mechanism shipped, content 0)", () =
     // that is always true is a list nobody reads.
     const zeroKeys = new Set(unadopted(census).map((r) => r.key));
     const byKey = new Map(census.rows.map((r) => [r.key, r]));
-    const stale = Object.keys(EXEMPTIONS).filter((k) => !zeroKeys.has(k));
+    const stale = Object.keys(EXEMPTIONS).filter((k) => !zeroKeys.has(k) || (communityByKey.get(k)?.docs ?? 0) > 0);
 
     const message = [
       "",
       "STALE EXEMPTION(S) — these keys are no longer at zero, so their entries in",
-      "EXEMPTIONS (packages/shared/src/content/fieldAdoption.test.ts) are now lies.",
+      "EXEMPTIONS (packages/shared/src/content/fieldAdoption.exemptions.json) are now lies.",
       "DELETE the listed entries; that is the entire fix.",
       "",
       ...stale.map((k) => {
+        const sample = communityByKey.get(k);
+        if (sample && sample.docs > 0) {
+          return `  ${k}\n      accepted-community adoption: ${sample.docs} doc(s), e.g. ${sample.examples.join(", ")}; not a formal-deployment claim`;
+        }
         const r = byKey.get(k);
         if (r === undefined) {
           return `  ${k}\n      no longer a registered key at all — the schema changed under it`;
@@ -349,6 +430,19 @@ describe("field adoption census (recipe S8: mechanism shipped, content 0)", () =
     ].join("\n");
 
     expect(stale, message).toEqual([]);
+  });
+
+  it("accepted-community samples remain separate and cannot outlive their source receipts", () => {
+    expect(communityStore.count("champions")).toBeGreaterThanOrEqual(COMMUNITY_INDEX.heroCount);
+    expect(communityStore.count("abilities")).toBe(COMMUNITY_INDEX.slotCount);
+    for (const id of communityStore.ids("abilities")) expect(store.has("abilities", id)).toBe(false);
+    expect(store.totalCount()).toBe(census.totalDocs);
+
+    const receipt = COMMUNITY_SERVICE.results[0]!;
+    const raw = JSON.parse(readFileSync(join(COMMUNITY_DIR, receipt.project), "utf8"));
+    expect(() => receiptProject({ ...raw, revision: raw.revision + 1 }, receipt)).toThrow("source receipt mismatch");
+    expect(() => receiptProject(raw, { ...receipt, status: "failed" })).toThrow("source receipt mismatch");
+    expect(() => receiptProject(raw, { ...receipt, projectId: "wrong-project" })).toThrow("project identity");
   });
 
   it("no `landing` grace has expired — a new field cannot stay new forever", () => {

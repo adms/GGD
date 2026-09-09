@@ -70,7 +70,7 @@ export interface DamageAreaVariant {
    * 省略 = 1 = 不衰減。月牙魔杖「距離越遠流星傷害越低」就是這個欄位。
    */
   falloff?: number;
-  /** 這一次最多濺到幾個人 (預設 `SPREAD_MAX_TARGETS`, 由近到遠取) */
+  /** 由近到遠最多濺到幾人；省略值與全域上限均為 world.damageRules.spreadMaxTargetsCap。 */
   maxTargets?: number;
   canCrit?: boolean;
   /**

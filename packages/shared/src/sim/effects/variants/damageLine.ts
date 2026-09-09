@@ -38,6 +38,7 @@ export interface DamageLineVariant {
   aim?: "facing" | "target";
   /** start at the caster's body (default true = 「面前」) or at the victim */
   fromCaster?: boolean;
+  /** 省略值與全域上限均為 world.damageRules.spreadMaxTargetsCap，由近到遠取。 */
   maxTargets?: number;
   canCrit?: boolean;
   /** does the entity that TRIGGERED this eat it again? default false */

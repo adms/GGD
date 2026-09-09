@@ -160,6 +160,10 @@ const EXEMPT_BY_NAME: Readonly<Record<string, { file: string; why: string }>> = 
     file: "packages/shared/src/sim/effects/spreadLimits.ts",
     why: "⭐ 同族中性元：1 = **不衰減**。檔頭逐字：要衰減的武器（月牙魔杖「距離越遠流星傷害越低」）**自己寫**。⇒ 調這一格 = 讓每一支沒寫衰減的技能偷偷衰減。",
   },
+  SPREAD_MAX_FALLOFF: {
+    file: "packages/shared/src/sim/effects/spreadLimits.ts",
+    why: "⭐ falloff 是邊緣傷害倍率：1 = 不衰減，超過 1 會把衰減變成距離增傷，不能當平衡旋鈕。damageArea.test.ts 同時守明填 1 的等量傷害與 schema 拒絕大於 1；若語意改為允許距離增傷，這個豁免即不成立。",
+  },
   BOSS_SPAWN_WAVE: {
     file: "packages/shared/src/sim/mobs.ts",
     why: "⭐ **哨兵波次** 9001 —— 檔頭逐字：「clear of any real wave k, so a king can never land on the same rim point as the wave that summoned it」。⛔ 它不是第 9001 波，它是「不是任何一波」。",

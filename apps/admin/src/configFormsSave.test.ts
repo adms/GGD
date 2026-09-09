@@ -30,6 +30,8 @@ import { cover } from "@ggd/shared/testkit/cover";
 import { ConfigDocPage } from "./ui/ConfigDocPage";
 import { specForPage, type ConfigDocSpec } from "./configForms";
 import { mount, textOf, type Harness } from "./testkit/headlessUi";
+import { damageRulesFromDoc } from "@ggd/shared/sim/damageRules";
+import { clampSpreadTargets } from "@ggd/shared/sim/effects/spreadLimits";
 
 // ── 真的消費端。相對路徑 import 是刻意的：這些就是遊戲載入的那幾支模組本人。
 import {
@@ -122,6 +124,33 @@ function saveEnabled(h: Harness): boolean {
   if (!btn) throw new Error("頁面上沒有儲存鈕");
   return btn.props["disabled"] !== true;
 }
+
+describe("傷害規則：範圍傷害人數的設定可存入並由消費端讀取", () => {
+  it.each([2, 24])("存入 %s 後，缺欄與明填人數都讀同一份政策", async (cap) => {
+    const { h } = await open("damageRules");
+    h.type("spreadMaxTargetsCap", String(cap));
+    expect(saveEnabled(h)).toBe(true);
+    h.click(SAVE);
+    await h.flush();
+    expect(bus.puts).toHaveLength(1);
+    const { id, doc } = bus.puts[0]!;
+    expect(id).toBe("damage-rules");
+    expect(doc["spreadMaxTargetsCap"]).toBe(cap);
+    expect(doc["defaultAbilityDamageType"]).toBe("magic");
+    expect(doc["oneShotPctOfMaxHp"]).toBe(shippedDoc("damage-rules")["oneShotPctOfMaxHp"]);
+    const rules = damageRulesFromDoc(doc);
+    expect(clampSpreadTargets(undefined, rules.spreadMaxTargetsCap)).toBe(cap);
+    expect(clampSpreadTargets(30, rules.spreadMaxTargetsCap)).toBe(cap);
+    expect(clampSpreadTargets(1, rules.spreadMaxTargetsCap)).toBe(1);
+  });
+
+  it("超過整數表示界線不能從後台存出", async () => {
+    const { h } = await open("damageRules");
+    h.type("spreadMaxTargetsCap", String(Number.MAX_SAFE_INTEGER + 1));
+    expect(saveEnabled(h)).toBe(false);
+    expect(bus.puts).toHaveLength(0);
+  });
+});
 
 // ───────────────────────────────────────────────────── 畫質分級 (model-lod) ─
 
