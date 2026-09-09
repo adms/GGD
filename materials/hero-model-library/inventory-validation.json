@@ -1,5 +1,6 @@
 {
-  "time": "2026-09-10T02:32:05+08:00",
+  "time": "2026-09-10T03:15:44+08:00",
+  "inputs_sha256": "23574edc655397fb3b8dd11de67b10693925a0f942516f7cda3990e32c3834d5",
   "rows": 156,
   "missing_works": [],
   "source_options": 97,
@@ -7,5 +8,5 @@
   "live_selectable": 49,
   "pending": 5,
   "main_production_models_equal": true,
-  "sha256": "5c7a3f70794ce16f4bd07dec99d012a442cb2b46cae459ce2146cdff3245d828"
+  "sha256": "fc787b04c01046b52411c77083c416a1c3cce846f65f97dca38bb18ce777e299"
 }

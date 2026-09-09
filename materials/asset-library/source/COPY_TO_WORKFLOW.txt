@@ -1,24 +1,22 @@
-GGD 共享成品資源庫的固定入口：
-s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/
+GGD 素材庫：其他工作流從這裡開始
 
-最新版本與 ZIP：s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/current.json
-正式套件索引：s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/catalog.json
-個別資源索引：s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/resources.json
-下載說明：s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/README.md
-下載器：s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/DOWNLOAD.py
+唯一共編說明：https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/asset-library/README.md
+全角色模型盤點：https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/全角色模型盤點.md
+Repository：adms/GGD
+共編分支：codex/hero-model-library-options
+PR：https://github.com/adms/GGD/pull/1152
 
-AWS 固定使用 vibe-coding profile、ap-east-2 region，由 CLI 自動管理臨時身分。遇到 AccessDenied 停止並回報，不改 IAM 或切換 profile。
+在含此分支變更的 GGD checkout 根目錄：
+python3 tools/hero-model-library/query.py 莉娜
+python3 tools/hero-model-library/query.py b2-popp --json
+python3 tools/hero-model-library/query.py 拳四郎 --downloads
+python3 tools/hero-model-library/sync.py
 
-本機工作庫及副本：
-/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library
+已有可用 300英雄本尊模型就預設用 300、暫緩付費下載；相似加工替身僅限 default-policy.json 核准的 11 組。缺可用 300 才優先處理使用者指定來源。
+每批完成後重建全角色模型盤點.md，來源與產物同批 commit + push。查詢只讀 Git，不依赖這台 Mac 的 outputs 或 intake。
+來源網址／改造備註改 download-sources.json；第二批／舊英雄配對改 pairing-inputs.json；獨立副本改 derivatives.json。詳細來源表都在唯一共編說明。
 
-共享庫只含通過各類型標準化驗證的成品。模型／動作元件、VFX 元件與完整角色包分開標示；數量以 current.json 為準。
-角色選項與順位：hero-model-options.json，固定 300英雄 > MBA > 原版 > 借用 W3X。模型元件不表示專屬特效／音效齊全。
-下載以 current.json 指向的不可變版本為準，使用 DOWNLOAD.py 驗證 ZIP 與逐檔 SHA-256。
-原檔、341 筆角色／形態／設計候選及未完成轉換的資源保留本機，另存獨立備份區，不視為共享成品。
-後續新來源走抓取、轉換、動作與特效綁定、入庫驗證，再執行 tools/publish_s3.py --publish；成功讀回驗證後才更新共享索引。
-
-備份區（不得自動取用）：s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/
-僅供備份／完整性驗證；特殊使用須使用者對指定快照、素材及用途明確許可。禁止把備份納入正式 catalog/resources/current 或下載器，禁止遞迴下載整個 bucket。此為工作流規則，不是 IAM 讀取拒絕。
-
-固定存放分工（已確認）：原始模型、動畫、貼圖、音效、原生特效、半成品及大型解析 JSON 放 S3；解析／轉換程式、英雄與技能設定 JSON、版本清單、SHA-256 與文件放 Git。本機副本保留。規則見 STORAGE_POLICY.json。
+模型等二進位：s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/
+Git release.json 固定本版的精確 S3 位置及 SHA-256；不要用 S3 latest 覆蓋不同 Git 版本。
+原始／半成品備份在 legacy/，僅人工指定許可使用，不得自動取用或混入可用候選。
+AWS 只用 vibe-coding profile、ap-east-2 region；不讀憑證、不切換 profile、不改 IAM，AccessDenied 回報 action/resource。

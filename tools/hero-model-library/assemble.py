@@ -49,13 +49,14 @@ for b in bindings:
  add(key,dict(runtime=d,name=prov['sourceCharacter'],work=prov['sourceWork']))
  tier='300heroes' if prov['sourceAssetId'].startswith('300heroes:') else 'mba' if prov['sourceAssetId'].startswith('mba:') else 'original'
  option(hero(b['projectId'],b['name']),key,prov['relationship'],tier)
-for e in read(ws/'GGD-Asset-Library/intake/existing-hero-upgrades/upgrades.json')['entries']:
+pairing_inputs=read(repo/'materials/hero-model-library/pairing-inputs.json')
+for e in pairing_inputs['existing_upgrades']:
  targets=[b['id'] for b in e['old_bindings']]
  if e['hero']=='坂田銀時':targets+=['community-review-23-20260907']
  for target in targets:
   h=hero(target,e['hero'])
   for c in e['new_candidates']:option(h,c['character_id'],'exact','mba' if c['character_id'].startswith('mba:') else '300heroes')
-pairs=read(ws/'GGD-Asset-Library/intake/batch2-37/visual-pairs.json')['characters']
+pairs=pairing_inputs['batch2']
 for e in pairs:
  h=hero(e['id'],e['name'])
  for c in [e['primary'],*e.get('alternates',[]),*e.get('additional_components',[])]:

@@ -1,5 +1,7 @@
 # GGD 共享成品資源庫
 
+**共編、按角色查詢與下載排程：[統一素材庫入口](https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/asset-library/README.md)。** 本文件只負責整包下載；角色狀態統一看 Git 盤點。
+
 **固定共享位置：`s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/`**
 
 共享成品與發布索引以 S3 為固定下載入口。本機仍保留工作庫及每次發布的完整副本。使用具有此 bucket 讀取權限、已配置 `vibe-coding` profile 的環境下載；不需要把憑證放进程式或文件。
@@ -11,7 +13,7 @@
 | `current.json` | 最新已驗證版本、整包 ZIP 位址與 SHA-256；下載以這個指標為準 |
 | `catalog.json` | 正式成品套件清單，包含每個套件的 S3 URI |
 | `resources.json` | 個別特效／角色索引，包含文件、貼圖的 S3 URI |
-| `hero-model-options.json` | 角色模型選項、300 ＞ MBA ＞ 原版 ＞ W3X 順位及缺口 |
+| `hero-model-options.json` | 模型候選清單；包含未核准相似模型，不可直接用第一筆當預設。預設讀同 Git 版本的 `inventory.json`／`default-policy.json` |
 | `README.md` | 本說明 |
 | `COPY_TO_WORKFLOW.txt` | 可複製的工作流交接文字 |
 | `DOWNLOAD.py` | 使用固定 AWS profile 下載並驗證整包的工具 |

@@ -1,0 +1,72 @@
+# GGD 素材庫共編入口
+
+**其他工作流先讀這一份。** 共用 repo 是 `adms/GGD`；目前變更在 `codex/hero-model-library-options` 分支，[PR #1152](https://github.com/adms/GGD/pull/1152)。PR 未合併前，不要把 `main` 當成已有這批素材設定。
+
+## 先選你要做的事
+
+| 我要做什麼 | 直接入口 |
+|---|---|
+| 看全部角色、預設模型、候選來源 | [全角色模型盤點.md](../hero-model-library/全角色模型盤點.md) |
+| 看使用者給的付費下載清單與改造要求 | 同份盤點最前面的「指定下載來源與購買順位」 |
+| 查單一角色、取得 modelKey 與 S3 檔案位置 | 下方的 `query.py`；程序加 `--json` |
+| 把本版模型補進自己的 GGD checkout | 下方的 `sync.py` |
+| 修改角色配對、下載來源、獨立副本需求 | 下方「共編改哪個檔」 |
+| 查原生解析器、舊轉換流程 | [DEPENDENCIES.md](DEPENDENCIES.md) 與 `source/`；這些不是成品取用入口 |
+
+## 查詢：只要 Git 與 Python 3
+
+以下指令都在 **GGD repo 根目錄**執行。查詢不連 S3、不需要這台 Mac 的 `outputs/` 或 `GGD-Asset-Library/`。
+
+```sh
+git fetch origin codex/hero-model-library-options
+# 在含該分支變更的 checkout 執行：
+python3 tools/hero-model-library/query.py 莉娜
+python3 tools/hero-model-library/query.py b2-popp --json
+python3 tools/hero-model-library/query.py 拳四郎 --downloads
+```
+
+需要哪一個版本，就讓工作流使用同一 Git commit 的設定與 `release.json`。查詢輸出分開列出「素材庫預設」「本分支實際選擇」「正式機觀測快照」，避免把候選或 S3 上傳當成正式站已部署。
+
+## 模型怎麼拿
+
+```sh
+# 優先使用已在本機的正確檔案；缺檔才從 Git 固定的 S3 版本下載。
+python3 tools/hero-model-library/sync.py
+python3 tools/hero-model-library/sync.py --verify-only
+```
+
+成品位置：`s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/`。本版精確版本、每個模型路徑及 SHA-256 由 [release.json](../hero-model-library/release.json) 與 [manifest.json](../hero-model-library/manifest.json) 固定。共享 VFX／完整成品包的下載方法見 [共享下載說明](source/SHARED_README.md)。
+
+AWS 僅使用 `vibe-coding`、`ap-east-2`。不索取或讀取憑證，不換 profile；AccessDenied 回報原 action/resource。`legacy/` 是備份，不能自動取用。二進位放 S3，程式、設定、清單、SHA 與文件放 Git，本機副本保留。
+
+## 預設與付費下載規則
+
+- **已有可用 300英雄模型：預設選 300，付費來源暫緩。** 相似加工替身僅限使用者核准的 11 組（含原創 pink-round 卡比），詳見 `default-policy.json`；其他相似模型只留候選。
+- 缺可用 300 模型：使用者清單是最高優先下載來源；原「加購替換」分類與改造備註保留。
+- 可用模型順位仍為 **300 > MBA > 原版 > 借用 W3X**。未取得／未轉換來源不進預設。
+- 既有後台手動選擇另有記錄；切回依順位自動選用才套用素材庫預設。
+
+## 共編改哪個檔
+
+| 要改的內容 | 編輯來源 | 重建／生效方式 |
+|---|---|---|
+| 使用者提供的網址、角色對應、改造備註、取得狀態 | [download-sources.json](../hero-model-library/download-sources.json) | 重建盤點；是否暫緩付費由現有可用 300 模型自動判斷 |
+| 新預設可用範圍 | [default-policy.json](../hero-model-library/default-policy.json) | 只核准指定 11 組加工替身；角色 ID、modelKey 與 SHA-256 固定，其他相似模型不自動採用 |
+| 第二批 37 名與舊英雄的新模型配對 | [pairing-inputs.json](../hero-model-library/pairing-inputs.json) | `assemble.py` 與盤點讀同一份來源；新增成品仍須經轉換、入庫、發布 |
+| 11 個獨立副本的來源、改色與手持配件要求 | [derivatives.json](../hero-model-library/derivatives.json) | 轉換工作流重建副本、驗證、再發布；改 JSON 不等於模型已改好 |
+| 第一批 37 名角色的原稿設定 | [recipes](../community-hero-forge/recipes/) 與 [模型配對](../../tools/community-hero-forge/library-bodies/community37.bindings.json) | 同步原稿與模型產生流程 |
+| 正式機實際觀測結果 | [inventory-context.json](../hero-model-library/inventory-context.json) | 取得真實新快照才更新，不把文件生成時間當作部署時間 |
+
+`manifest.json`、`release.json`、`inventory.json`、`全角色模型盤點.md` 是發布或盤點產物。不要只改產物掩蓋來源差異；模型成品用既有 `assemble.py → register.mts → 入庫／S3 發布 → pin-release.py` 流程。轉換流程仍需要原始素材與本機轉換收據，並不宣稱 clone 即可重新製作所有模型。
+
+每批收尾必做：
+
+```sh
+python3 tools/hero-model-library/inventory.py
+python3 tools/hero-model-library/inventory.py --check
+python3 tools/hero-model-library/check-index.py
+# 指定這台 Mac 的工作區時，才同時更新兩份本機 Markdown 副本：
+python3 tools/hero-model-library/inventory.py --workspace ..
+```
+
+同批提交來源 JSON、盤點 JSON／Markdown、驗證與版本清單，commit＋push 到同一個 PR，保留別人的修改。其他工作流共編時先 fetch；遇到同檔衝突，合併來源後重建盤點，不覆蓋對方整份檔案。

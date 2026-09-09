@@ -1,48 +1,22 @@
-# GGD 角色模型選項
+# 角色模型資料
 
-Git 的 `manifest.json` 是角色對應與預設順位來源；`release.json` 固定 S3 成品版本及逐模型位置。本機固定副本位於上層 `GGD-Asset-Library/`。其他工作流查詢該庫的 `hero-model-options.json`，下載依 `current.json`。禁止從 `legacy/` 自動取用。
+**共編操作只看 [素材庫共編入口](../asset-library/README.md)。** 本目錄是它的角色模型資料，不是另一個資源庫。
 
-順位為 **300英雄 > MBA > 原版 > 借用 W3X**；同一來源順位內先本次 Owner 指定的獨立衍生副本，其餘依本尊、同角色其他形態、視覺代理。後台可手動切換，手動選擇不會被後續新增模型覆蓋；「恢復依順位自動選用」會回到來源順位。
-
-| 角色 | 本次結果 |
+| 檔案 | 用途 |
 |---|---|
-| 坂田銀時 | `300heroes:137` 本尊完成選擇性骨架修復；只將產生剪切的骨節 54 改接共同根，保留其餘關係、權重及反向綁定。123 動畫通道，240 個頂點／姿態比對最大誤差 0.000001668 公尺。移出轉換缺口，銀時預設使用本尊。 |
-| 蜘蛛子 | 原生寵物表 24034 的名稱「蜘蛛子」及欄位 10，連到怪物表 45029 的同名記錄與欄位 99 模型路徑 `27_zhizhuzi.x`。確認為本尊寵物／蜘蛛形態，證據與 SHA-256 見 `spider-identity.json`。保留寵物動作的用途限制。 |
-| 海克力斯 | `300heroes:41` 本尊模型已轉換，既有 `godie-hapm` 已登記為素材庫首選；分支保留手動原模型選擇。移出轉換缺口。 |
+| [全角色模型盤點.md](全角色模型盤點.md) | 人閱讀：81 名新角色與既有角色、預設、候選及下載安排 |
+| [inventory.json](inventory.json) | 程序讀取：同份盤點的角色 ID、modelKey、S3 路徑與取得狀態 |
+| [download-sources.json](download-sources.json) | 可共編：使用者指定的下載網址與改造備註 |
+| [pairing-inputs.json](pairing-inputs.json) | 可共編：第二批與舊英雄配對來源 |
+| [default-policy.json](default-policy.json) | 預設核准範圍：僅 11 組加工替身，其他相似模型留候選 |
+| [derivatives.json](derivatives.json) | 可共編：獨立模型副本的製作要求 |
+| [manifest.json](manifest.json) | 已發布的可用模型候選與順位；未完成來源不得加入可用選項 |
+| [release.json](release.json) | 此 Git 版本對應的 S3 成品版本與逐模型位置 |
+| [inventory-context.json](inventory-context.json) | 正式機與原始目錄的觀測快照 |
+| [derivative-validation.json](derivative-validation.json) | 11 個副本的獨立檔案、貼圖、骨架、動作與來源不變證據 |
+| [spider-identity.json](spider-identity.json) | 蜘蛛子原生表格與模型身分對應證據 |
+| [s3-publication-receipt.json](s3-publication-receipt.json) | S3 上傳後讀回驗證；不是網站部署收據 |
 
-本批有 97 筆來源選項、90 個不同模型文件／GLB、156 筆目標英雄記錄及 122 個可登記對應。這些是模型／動作元件，不能當作完整專屬特效、音效與技能驗收。成品庫另保留 60 個作者化 VFX 元件。
+本版包含 97 筆來源選項、90 個不同模型，以及成品庫中既有的 60 個 GGD 作者化 VFX 元件。模型／動作元件與完整英雄包分開計算；不得宣稱 156 筆盤點 ID 已全部上架。
 
-既有出貨目錄有 71 名英雄，本次實際新增選項的是 15 個英雄定義，包含莉娜兩個定義各自保留 300英雄與 MBA 選项。85 筆目標 ID 未存在於這個出貨目錄，保留於來源對應表；不能把索引有記錄當成這些英雄已上線。第一批交接產生器已改讀同一份預設模型來源。遠端更新的 15 名既有英雄保留手動原模型選擇；素材庫順位首選與角色實際採用分開記錄。
-
-梅普露本體已排除兩個獨立附屬生物網格，只保留角色、盾牌與身上配件；完整原生素材和先前版本仍保留。這不是將該角色所有附屬生物一起綁進主模型。
-
-揮砍特效仰角由既有 `pitch:build` 依新預設動畫重新推導；無法量測者依原契約回退，沒有沿用舊模型的量測值。
-
-仍未通過轉換的五項：賽菲洛斯 `300heroes:113` 加權關節超出原骨架；拉蜜絲候選 Lux 單段 237 動畫通道超過 160；LOL 李星 196、沃維克 188、犽宿 170 通道超出上限。章魚嗶已在獨立副本修復 Bone099–Bone102 的非有限 TRS，修復部分為重建動作，非原生取樣完全一致。阿箱的 POD 本體元件與拉蜜絲是分開的，不能宣稱複合角色已完成。
-
-## 查詢與同步
-
-```sh
-# 校驗／補齊 Git 版本指定的模型，先使用固定本機庫，缺少時才向指定 S3 版本下載。
-python3 tools/hero-model-library/sync.py
-python3 tools/hero-model-library/sync.py --verify-only
-
-# 已下載固定資源庫後，可直接查角色名稱。
-python3 ../GGD-Asset-Library/query.py 莉娜 --kind model
-```
-
-`sync.py` 僅使用 `vibe-coding` profile、`ap-east-2` 與指定 bucket，先核對 role，驗證 SHA-256，不讀 credentials、不刪物件、不改 IAM。舊版保留，錯誤同名檔會停止。部署入口 `scripts/mini-deploy.sh` 在 build 前同步列明的模型檔，並在正式機重新核對同一份清單。
-
-模型與動畫二進位放 S3，解析／轉換程式、英雄設定、索引、版本與 SHA-256 放 Git。每一份標準化模型仍需通過實際 GLB、動作、骨架／權重、材質及 runtime 檢查。OPAQUE 材質不使用透明度的貼圖會將被忽略的 alpha 寫為 255；RGB、原骨架及動畫資料保持不變。
-
-## 發布驗證
-
-`s3-publication-receipt.json` 記錄已完成的 S3 讀回驗證；它不是網站部署收據。正式站與測試站須在同一 Git 變更通過 CI／機制 review、合併後，經既有 Mac mini 部署入口發布並核對。不得以本機測試或 S3 上傳成功冒充所有站已一致。
-
-## 2026-09-10 獨立模型副本與完整名單
-
-[全角色模型盤點](全角色模型盤點.md) 包含新增 **37＋37＋7＝81 名**；LOL 追加名單為卡爾瑟斯、李星、拉克絲、好運姐、沃維克、齊勒斯、犽宿。原配方鍵 `example:*` 不冒充正式投稿 ID。
-
-`derivatives.json` 記錄 11 個 Owner 指定的完整副本與改色／配件要求；`derivative-validation.json` 逐一驗證來源未改動、實體獨立複製、貼圖內嵌、骨架和動作資料保留，哥布林殺手合併相同材質網格並新增左右手配件。其本尊／代理身分仍按原來源記錄。
-
-重建盤點：`python3 tools/hero-model-library/inventory.py --workspace ..`。角色設定與正式站狀態取自 `inventory-context.json` 標示的觀測快照，模型選項讀當前 Git manifest；不得把舊正式站快照當成剛完成部署。
+已有可用 300 模型就預設用 300，付費來源暫緩；缺可用 300 時才優先處理使用者來源。銀時、蜘蛛子、海克力斯與五個待轉換項目的細節統一放在盤點，不再在多個 README 重複維護。

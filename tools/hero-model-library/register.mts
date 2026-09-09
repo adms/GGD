@@ -1,3 +1,4 @@
+import { defaultEligible } from './default-policy.mts';
 import { spliceMembers } from "../../packages/shared/src/content/editModel";
 /** Apply validated library choices, preserving existing bytes, versions and manual overrides. */
 import { existsSync, readFileSync, writeFileSync, mkdirSync, copyFileSync, renameSync, realpathSync } from 'node:fs';
@@ -32,6 +33,7 @@ for(const hero of manifest.heroes){
  try{
   // Import lower tiers first; automatic mode still always chooses the highest available tier.
   for(const option of [...hero.options].reverse()){
+   if(!defaultEligible(hero.id,option)){(result.candidateOnly??=[]).push(option.sourceId);continue;}
    const state=service.state(hero.id);
    if(state.versions.some(v=>v.sourceModelKey===option.sourceModelKey&&v.source.tier===option.source.tier)){continue;}
    const command=zModelVersionCommand.parse({action:'register',expectedHash:state.expectedHash,sourceModelKey:option.sourceModelKey,label:option.label,source:option.source});

@@ -27,10 +27,17 @@ if (new Set(bindings.entries.map((entry) => entry.projectId)).size !== bindings.
 await fs.mkdir(output, { recursive: false }); // Refuse to overwrite earlier source or accepted versions.
 await fs.mkdir(path.join(output, "models"));
 const report: unknown[] = [];
+let importedModels = 0;
 for (const binding of bindings.entries) {
   const project = projects.find((entry) => entry.projectId === binding.projectId);
   if (!project || project.brief.name !== binding.name) throw new Error(`Hero binding identity mismatch: ${binding.name}`);
   const preferred = await loadPreferredLibraryModel(project.projectId);
+  if (!preferred && binding.provenance.relationship === "style-proxy") {
+    report.push({ projectId: project.projectId, name: project.brief.name,
+      status: "candidate-only-awaiting-approved-model", previousModelKey: project.presentation.modelKey,
+      reason: "Only the eleven owner-approved derivative copies may replace a hero with a proxy by default." });
+    continue;
+  }
   const directory = preferred ? null : safePath(assetRoot, binding.directory);
   const receipt = preferred ? null : JSON.parse(await read(path.join(directory!, "receipt.json")));
   if (receipt && receipt.preparation.asset !== binding.provenance.sourceAssetId) throw new Error(`Source asset mismatch: ${binding.name}`);
@@ -54,6 +61,7 @@ for (const binding of bindings.entries) {
   await fs.writeFile(path.join(output, "models", `${verified.model.sha256}.glb`), bytes);
   report.push({ projectId: project.projectId, name: project.brief.name, previousModelKey: previous, model: verified.model,
     provenance: project.presentation.modelProvenance, warnings: verified.warnings, originalMechanics: "pending-per-slot-refinement" });
+  importedModels++;
 }
 for (const entry of index.heroes) {
   const project = projects.find((item) => item.projectId === entry.projectId)!;
@@ -67,4 +75,5 @@ await fs.writeFile(path.join(output, "index.json"), JSON.stringify({ schema: ind
   heroes: index.heroes.map(({ index, name, projectId, project, recipe }: Record<string, string>) => ({ index, name, projectId, project, recipe })),
 }, null, 2) + "\n");
 await fs.writeFile(path.join(output, "model-bindings-report.json"), JSON.stringify(report, null, 2) + "\n");
-console.log(JSON.stringify({ output, heroes: projects.length, slots: projects.length * 6, models: bindings.entries.length, published: false }));
+console.log(JSON.stringify({ output, heroes: projects.length, slots: projects.length * 6, models: importedModels,
+  deferred: report.length - importedModels, published: false }));

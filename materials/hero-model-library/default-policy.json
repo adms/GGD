@@ -1,0 +1,113 @@
+{
+  "schema": "ggd-hero-model-default-policy@1",
+  "priority": [
+    "300heroes",
+    "mba",
+    "original",
+    "w3x"
+  ],
+  "unapprovedStyleProxy": "candidate-only",
+  "existingModelFallback": "preserve-existing-binding-without-claiming-new-approval",
+  "paidDownloadRule": "Use eligible ready 300 or an approved derivative first; otherwise prioritize owner download sources.",
+  "approvedDerivatives": [
+    {
+      "heroId": "community-review-03-20260907",
+      "sourceId": "derivative:mai",
+      "modelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
+      "sha256": "7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d",
+      "name": "不知火舞",
+      "source": "不知火舞（獨立副本／真田幸村）",
+      "changes": "白色衣料改紅色"
+    },
+    {
+      "heroId": "community-review-06-20260907",
+      "sourceId": "derivative:kirby",
+      "modelKey": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
+      "sha256": "7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963",
+      "name": "卡比",
+      "source": "卡比（獨立副本／GGD 圓滾滾粉紅替身）",
+      "changes": "完整複製 pink-round 程序化替身"
+    },
+    {
+      "heroId": "community-review-31-20260907",
+      "sourceId": "derivative:sunraku",
+      "modelKey": "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855",
+      "sha256": "ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0",
+      "name": "SUN樂",
+      "source": "SUN樂（獨立副本／哈桑）",
+      "changes": "褲子與頭改藍色，上半身改膚色"
+    },
+    {
+      "heroId": "community-review-32-20260907",
+      "sourceId": "derivative:azazel",
+      "modelKey": "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b",
+      "sha256": "7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2",
+      "name": "阿薩謝爾",
+      "source": "阿薩謝爾（獨立副本／喜羊羊）",
+      "changes": "上半身咖啡色、下半身深咖啡色"
+    },
+    {
+      "heroId": "b2-popp",
+      "sourceId": "derivative:popp",
+      "modelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
+      "sha256": "c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29",
+      "name": "何布",
+      "source": "何布（獨立副本／李小狼）",
+      "changes": "完整複製李小狼模型與貼圖"
+    },
+    {
+      "heroId": "b2-albus",
+      "sourceId": "derivative:albus",
+      "modelKey": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
+      "sha256": "eb9de32d14a7d5422295b1f1b0ea30becee83d8319df1586841ec0a89ef7a019",
+      "name": "阿爾巴斯",
+      "source": "阿爾巴斯（獨立副本／尤吉欧）",
+      "changes": "完整複製尤吉歐模型與貼圖"
+    },
+    {
+      "heroId": "b2-goblin",
+      "sourceId": "derivative:goblin",
+      "modelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
+      "sha256": "6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130",
+      "name": "哥布林殺手",
+      "source": "哥布林殺手（獨立副本／尤吉欧）",
+      "changes": "完整複製尤吉歐，右手小劍、左手小盾"
+    },
+    {
+      "heroId": "b2-yogiri",
+      "sourceId": "derivative:yogiri",
+      "modelKey": "community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82",
+      "sha256": "fe62599a460e7cecdfe5ac5726a09a4d6e4a44663576c8529b3c2be6841a984c",
+      "name": "高遠夜霧",
+      "source": "高遠夜霧（獨立副本／富樫勇太）",
+      "changes": "完整複製富樫勇太模型與貼圖"
+    },
+    {
+      "heroId": "b2-takopi",
+      "sourceId": "derivative:takopi",
+      "modelKey": "community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a",
+      "sha256": "2b52ec923450fa53fdef2cde4bae03ef56f99881222ab60333b733d21af5abbf",
+      "name": "章魚嗶",
+      "source": "章魚嗶（獨立副本／八爪魚寵物 11_bazhuayu）",
+      "changes": "八爪魚全身粉紅，修復原生損壞動畫"
+    },
+    {
+      "heroId": "b2-misery",
+      "sourceId": "derivative:misery",
+      "modelKey": "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee",
+      "sha256": "28fe31e942415e1a2b8f93963f31fb77d06a464d9fee7bf37db23df981dae48b",
+      "name": "米瑟利",
+      "source": "米瑟利（獨立副本／优克莉伍德）",
+      "changes": "完整複製優克莉伍德模型與貼圖"
+    },
+    {
+      "heroId": "b2-bojji",
+      "sourceId": "derivative:bojji",
+      "modelKey": "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a",
+      "sha256": "d637360355919ae5253a6467d4c9ef3bf110084b5a7bce3200db6578279d9329",
+      "name": "波吉",
+      "source": "波吉（獨立副本／小桐人寵物）",
+      "changes": "小桐人上半身藍色、下半身白色"
+    }
+  ]
+}
