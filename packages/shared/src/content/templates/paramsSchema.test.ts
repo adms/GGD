@@ -103,6 +103,8 @@ function probesFor(slot: ParamSlot, current: unknown): unknown[] {
         [0, 0, 0],
         [1, 1, 1],
       ].filter(differs);
+    case "recast":
+      return [{ windowSec: 1, minIntervalSec: .1, cost: "first", stages: [{ effects: [{ kind: "heal", amount: { flat: 7 } }] }] }].filter(differs);
     case "effects":
       return [[{ kind: "heal", amount: { flat: 7 } }], [{ kind: "damage", damageType: "true", amount: { flat: 11 } }]].filter(differs);
     case "hooks":

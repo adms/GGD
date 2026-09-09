@@ -4,7 +4,7 @@
 
 owner 2026-09-05：「[後台編輯器及codex編輯器] 是**堆積木**的角色 **要充分了解有哪些積木**, 而 main 遊戲主程式 是**做出積木**供使用的角色」
 
-capability 指紋：`2afadee4`
+capability 指紋：`f7762b90`
 
 ## 一眼看完
 
@@ -180,7 +180,7 @@ capability 指紋：`2afadee4`
 | `dragon-quake` | 15 | 0 | 8 | ⛔ | ✅ | 0 |
 | `dragon-serpent` | 17 | 0 | 5 | ⛔ | ✅ | 0 |
 | `drain-leech` | 8 | 1 | 0 | ⛔ | ✅ | 5 |
-| `effect-sequence` | 5 | 0 | 0 | ⛔ | ✅ | 0 |
+| `effect-sequence` | 6 | 0 | 0 | ⛔ | ✅ | 0 |
 | `event-passive` | 1 | 0 | 0 | ⛔ | ✅ | 0 |
 | `ground-nova` | 4 | 0 | 0 | ⛔ | ✅ | 0 |
 | `growth-charge` | 9 | 0 | 0 | ⛔ | ✅ | 0 |

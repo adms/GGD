@@ -3,7 +3,7 @@ import { HERO_SLOTS } from "../constants";
 import { zHeroTemplateProducts } from "../plan";
 import { zHeroProject, type HeroProject } from "../schema";
 import { pinHeroPlanTemplates } from "../templateVersions";
-import type { TemplateDoc } from "../../schema/template";
+import { zTemplateDoc, type TemplateDoc } from "../../schema/template";
 import { zVfxScriptDoc } from "../../schema/vfxScript";
 
 const zSlotRefinement = z.object({
@@ -21,6 +21,7 @@ export const zCommunityDesignRefinement = z.object({
   version: z.number().int().positive(),
   projectId: z.string(),
   sourceSha256: z.string().regex(/^[a-f0-9]{64}$/),
+  templateVersions: z.record(z.string(), zTemplateDoc).optional(),
   slots: z.object(Object.fromEntries(HERO_SLOTS.map(slot => [slot, zSlotRefinement.optional()])) as
     Record<typeof HERO_SLOTS[number], z.ZodOptional<typeof zSlotRefinement>>).strict(),
 }).strict();
@@ -33,6 +34,7 @@ export function applyCommunityDesignRefinement(input: HeroProject, raw: unknown,
     throw new Error("REFINEMENT_SOURCE_MISMATCH: 微調必須對應同一英雄與完整原稿版本");
   }
   if (!Object.values(patch.slots).some(Boolean)) throw new Error("EMPTY_REFINEMENT");
+  project.acceptedPlan.templateVersions = { ...project.acceptedPlan.templateVersions, ...structuredClone(patch.templateVersions ?? {}) };
   for (const slot of HERO_SLOTS) {
     const change = patch.slots[slot];
     if (!change) continue;

@@ -1,0 +1,173 @@
+{
+  "schema": "ggd-community-design-refinement@1",
+  "version": 1,
+  "projectId": "community-review-02-20260907",
+  "sourceSha256": "cc5732f3d513233d7dd106c63bb767ef94b59fb79fd213566130640e8ecf800d",
+  "slots": {
+    "E": {
+      "products": [
+        {
+          "instanceId": "rekka-three-inputs",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "damageArea",
+                  "fromCaster": true,
+                  "includeOrigin": true,
+                  "radius": 2.75,
+                  "arcHalfAngleCos": 0.5,
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ],
+              "recast": {
+                "windowSec": 1.2,
+                "minIntervalSec": 0.2,
+                "cost": "first",
+                "stages": [
+                  {
+                    "effects": [
+                      {
+                        "kind": "damageArea",
+                        "fromCaster": true,
+                        "includeOrigin": true,
+                        "radius": 2.75,
+                        "arcHalfAngleCos": 0.5,
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "極小"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "effects": [
+                      {
+                        "kind": "damageArea",
+                        "fromCaster": true,
+                        "includeOrigin": true,
+                        "radius": 2.75,
+                        "arcHalfAngleCos": 0.5,
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "小"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "葵花以三次獨立方向輸入執行三段近身打擊；每段解算後 0.2 秒至 1.2 秒內可接下一段。一次按鍵只打一段，連按不跳段；逾時、硬控制、沉默、恐懼、束縛、死亡或對決結束取消接續。只在第一段支付魔力與技能冷卻，冷卻在接續期間繼續流逝；末段結束回到剩餘冷卻。每段重新選方向、驗合法目標與施法資格；揮空仍占該段。專用三段動作與紫炎畫面尚未完成。\n【原設計】三段接續技；每段須在指定窗口再次輸入，逾時、受控或第三段完成後結束。",
+      "note": "葵花以三次獨立方向輸入執行三段近身打擊；每段解算後 0.2 秒至 1.2 秒內可接下一段。一次按鍵只打一段，連按不跳段；逾時、硬控制、沉默、恐懼、束縛、死亡或對決結束取消接續。只在第一段支付魔力與技能冷卻，冷卻在接續期間繼續流逝；末段結束回到剩餘冷卻。每段重新選方向、驗合法目標與施法資格；揮空仍占該段。專用三段動作與紫炎畫面尚未完成。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeSec",
+        "castTimeTier",
+        "radius",
+        "radiusTier",
+        "range",
+        "rangeTier",
+        "manaCost",
+        "manaCostTier",
+        "cooldown",
+        "cooldownTier",
+        "statusCost",
+        "recast"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "cooldownTier": "大",
+        "manaCostTier": "小",
+        "rangeTier": "小"
+      }
+    }
+  },
+  "templateVersions": {
+    "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+      "schema": "template@1",
+      "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-effect-sequence",
+      "name": "自訂效果序列",
+      "family": "effect-sequence",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ]
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 10,
+          "unit": "s"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 40
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "enemies",
+            "allies"
+          ]
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "recast": {
+          "type": "recast",
+          "optional": true,
+          "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+        }
+      }
+    }
+  }
+}

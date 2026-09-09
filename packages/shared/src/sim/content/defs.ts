@@ -196,6 +196,11 @@ export interface AbilityDef {
   /** per rank (index rank-1) */
   cooldown: number[]; // seconds
   manaCost: number[];
+  /** Additional stages require separate inputs. Base cooldown runs from the
+   * first press; cost selects first-only or each-press mana/status payment. */
+  recast?: { windowSec: number; minIntervalSec: number; cost: "first" | "each";
+    stages: { effects: EffectDef[] }[] };
+
   /** Debited once at cast-begin, after validation, alongside mana/cooldown.
    * Interrupts do not refund it. Missing leaves legacy casts unchanged. */
   requiredSummonSlot?: import("../intents").CastableSlot;

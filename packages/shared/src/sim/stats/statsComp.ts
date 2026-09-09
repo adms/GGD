@@ -51,6 +51,8 @@ export interface AbilityInstance {
   abilityId: AbilityId;
   rank: number; // 0 = not learned
   cooldownRemainingTicks: number;
+  recast?: { abilityId: AbilityId; rank: number; nextStage: number; readyAt: number; expiresAt: number };
+
 }
 
 /**
@@ -102,6 +104,10 @@ export interface CastState {
    * 解算端再問只會永遠得到 false。有它 ⇒ 解算端直接跑它，⛔ 不再增幅第二次。
    */
   effects?: EffectDef[];
+  /** Selected input stage before augment/commit baking; retained in resolve mode. */
+  recastStage?: number;
+  stageEffects?: EffectDef[];
+
 }
 
 /**

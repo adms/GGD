@@ -12,6 +12,7 @@ const actor = z.object({
 export const zHeroScenarioSetup = z.object({
   level: z.number().int().min(1).max(18),
   rank: z.number().int().min(1).max(4),
+  recastPresses: z.array(z.number().finite().min(0.01).max(10)).max(5).optional(),
   movementOrders: z.array(z.discriminatedUnion("kind", [
     z.object({ atSec: z.number().min(0).max(10), kind: z.literal("move"), x: z.number().min(-20).max(20), z: z.number().min(-20).max(20) }).strict(),
     z.object({ atSec: z.number().min(0).max(10), kind: z.literal("hold") }).strict(),

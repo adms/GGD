@@ -1,3 +1,6 @@
+import { Abilities } from "@ggd/shared/sim/content/registry";
+import { abilityInstanceFor } from "@ggd/shared/sim/abilities/innateActive";
+import { recastView } from "@ggd/shared/sim/abilities/recast";
 import { abilityMotionSnapshot } from "@ggd/shared/sim/movement/abilityMotion";
 /**
  * snapshot — projects the SimWorld + controller state into the Colyseus schema.
@@ -371,12 +374,15 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
       if (ab) {
         ss.unspentPoints = ab.unspentPoints;
         setArray(ss.abilityRanks, [ab.slots.Q.rank, ab.slots.W.rank, ab.slots.E.rank, ab.slots.R.rank]);
-        setArray(ss.cooldowns, [
-          ab.slots.Q.cooldownRemainingTicks,
-          ab.slots.W.cooldownRemainingTicks,
-          ab.slots.E.cooldownRemainingTicks,
-          ab.slots.R.cooldownRemainingTicks,
-        ]);
+        const recasts = CASTABLE_SLOTS.map(slot => {
+          const inst = abilityInstanceFor(ab, slot);
+          return inst ? recastView(world, ss.entityId as EntityId, inst, Abilities.get(inst.abilityId)) :
+            { stage: 0, windowTicks: 0, cooldownTicks: 0, free: false };
+        });
+        setArray(ss.cooldowns, recasts.slice(0, 4).map(r => r.cooldownTicks));
+        setArray(ss.recastStages, recasts.map(r => r.stage));
+        setArray(ss.recastWindows, recasts.map(r => Math.min(65535, r.windowTicks)));
+        ss.recastFreeMask = recasts.reduce((mask, r, i) => r.free ? mask | (1 << i) : mask, 0);
         // ⭐【開關型技能開著沒有】GH#546 —— 風王結界那一族。
         //
         // ⚠️ 在這一行存在之前，`SeatState.toggleMask` 的**寫端一個都沒有**：欄位在
@@ -398,7 +404,7 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         if (ab.exSlot) {
           ss.exAbilityId = ab.exSlot.abilityId;
           ss.exRank = ab.exSlot.rank;
-          ss.exCooldown = ab.exSlot.cooldownRemainingTicks;
+          ss.exCooldown = recasts[4]!.cooldownTicks;
         } else {
           ss.exAbilityId = "";
           ss.exRank = 0;
@@ -407,7 +413,7 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         // 天生技 (6th slot). Only the cooldown rides the wire — which innate the
         // hero owns follows from championId, and its rank is 1 from spawn. 0
         // both for a permanent 被動 innate and for the 3 heroes with no NN-00.
-        ss.passiveCooldown = ab.passiveSlot?.cooldownRemainingTicks ?? 0;
+        ss.passiveCooldown = recasts[5]!.cooldownTicks;
       }
     }
 

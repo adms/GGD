@@ -228,8 +228,13 @@ export function runHeroAbilityScenario(
   for (let index = 1; index < ticks; index += 1) {
     if (isPassiveSource) world.nav.get(caster)!.attackTarget = foe;
     const navigationOrder = navigation.get(index);
-    world.step(navigationOrder ? new Map([[asSeatId(0), { commands: [], order: navigationOrder.kind === "hold"
-      ? { kind: "hold" as const } : { kind: "move" as const, point: { x: center.x + navigationOrder.x, z: center.z + navigationOrder.z } } }]]) : new Map());
+    // Explicit preview inputs use the same command path as a player. Rejected
+    // rapid/late inputs remain in the report; no mana or cooldown is reset.
+    const presses = ability.recast && !isPassiveSource ? (setup?.recastPresses ?? []).filter(sec => Math.max(1, Math.round(sec / world.dt)) === index) : [];
+    const frame: IntentFrame = { commands: presses.map(() => ({ kind: "castAbility", slot, target: castTarget })),
+      ...(navigationOrder ? { order: navigationOrder.kind === "hold" ? { kind: "hold" as const } :
+        { kind: "move" as const, point: { x: center.x + navigationOrder.x, z: center.z + navigationOrder.z } } } : {}) };
+    world.step(navigationOrder || presses.length ? new Map([[asSeatId(0), frame]]) : new Map());
     recordEvents();
     digestTrail.push(world.digest());
   }

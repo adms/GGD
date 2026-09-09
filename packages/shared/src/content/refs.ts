@@ -93,6 +93,8 @@ function hookRefs(hooks: readonly HookDef[] | undefined, base: string, out: RefE
 
 function abilityRefs(a: Omit<AbilityDoc, "schema">, base: string, out: RefEdge[]): void {
   effectRefs(a.effects, base ? `${base}.effects` : "effects", out);
+  a.recast?.stages.forEach((stage, i) => effectRefs(stage.effects,
+    `${base ? `${base}.` : ""}recast.stages.${i}.effects`, out));
   if (a.statusCost) out.push({ field: base ? `${base}.statusCost.statusId` : "statusCost.statusId",
     targetCollection: "status-effects", targetId: a.statusCost.statusId, soft: true });
   // 【跨技能強化】的目標是 **HARD** ref —— 這就是計畫 §13 要的 fail closed:

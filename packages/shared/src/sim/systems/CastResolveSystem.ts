@@ -17,6 +17,9 @@ import { armRecovery } from "../abilities/abilityRecovery";
 // ⭐ GH#1091 ——【法術護盾】整發攔截（與 abilitySystem.ts 共用同一支，⛔ 不是第二份判準）。
 import { spellWardRefusesCast } from "../spellWardCast";
 
+import { advanceRecast, recastInterrupted } from "../abilities/recast";
+import { abilityInstanceFor } from "../abilities/innateActive";
+
 export function castResolveSystem(world: SimWorld): void {
   for (const [id, ab] of world.abilities) {
     const cast = ab.cast;
@@ -48,8 +51,10 @@ export function castResolveSystem(world: SimWorld): void {
       (pos.x !== cast.posAtStart.x || pos.z !== cast.posAtStart.z);
     const hit = def.interruptOn === "damageOrMove" && cast.hitSinceStart === true;
     // Death always cancels; protected wind-ups retain their normal clock.
-    if (!hp?.alive || (def.interruptible !== false && (stunned || damaged || moved || hit || (world.knockdown.get(id) ?? 0) > 0))) {
+    if ((def.recast && recastInterrupted(world, id)) || !hp?.alive || (def.interruptible !== false && (stunned || damaged || moved || hit || (world.knockdown.get(id) ?? 0) > 0))) {
       ab.cast = null;
+      const interruptedInst = abilityInstanceFor(ab, cast.slot);
+      if (interruptedInst) delete interruptedInst.recast;
       world.emit("castInterrupt", { caster: id, slot: cast.slot, abilityId: cast.abilityId });
       continue;
     }
@@ -97,7 +102,7 @@ export function castResolveSystem(world: SimWorld): void {
     const augmentedEffects =
       cast.effects ??
       applyAugmentToEffects(
-        def.effects,
+        cast.stageEffects ?? def.effects,
         collectAugmentOps(world, id, cast.abilityId),
       );
     // ⭐ GH#1091 ——【法術護盾】整發攔截。這一行是 `abilitySystem.ts::castAbility`
@@ -129,6 +134,8 @@ export function castResolveSystem(world: SimWorld): void {
       });
     }
     // ⛔ `onAbilityCast` 不受攔截影響（他確實放了一發）；被吃掉的是「命中」。
+    const inst = abilityInstanceFor(ab, cast.slot);
+    if (inst) advanceRecast(world, id, inst, def, cast.recastStage ?? 0);
     fireHooks(world, id, "onAbilityCast", targets[0], cast.slot);
     if (!wardRefused) {
       for (const hitId of targets) {

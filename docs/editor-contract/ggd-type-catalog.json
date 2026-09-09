@@ -1471,6 +1471,15 @@
             "doc": "template.ref → expand()"
           },
           "inert": null
+        },
+        "recast": {
+          "type": "recast",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
         }
       }
     },

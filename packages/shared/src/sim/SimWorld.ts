@@ -2025,7 +2025,17 @@ export class SimWorld {
       // divergence three ticks later. 0 when free, which is the overwhelmingly
       // common case, so a pre-feature world hashes identically.
       mix(this.abilities.get(id)?.recovery?.ticksLeft ?? 0);
+      const recastAbilities = this.abilities.get(id);
+      if (recastAbilities) {
+        for (const [i, inst] of [...Object.values(recastAbilities.slots), recastAbilities.exSlot, recastAbilities.passiveSlot].entries()) {
+          if (!inst?.recast) continue;
+          mix(4010); mix(i); mix(inst.recast.rank); mix(inst.recast.nextStage);
+          mix(inst.recast.readyAt); mix(inst.recast.expiresAt); mix(inst.cooldownRemainingTicks);
+          for (const c of inst.recast.abilityId) mix(c.charCodeAt(0));
+        }
+      }
       const sensitiveCast = this.abilities.get(id)?.cast;
+      if (sensitiveCast?.recastStage !== undefined) { mix(4011); mix(sensitiveCast.recastStage); }
       if (sensitiveCast?.posAtStart) {
         mix(4001); mix(id); mix(sensitiveCast.ticksLeft);
         mix(sensitiveCast.posAtStart.x); mix(sensitiveCast.posAtStart.z);

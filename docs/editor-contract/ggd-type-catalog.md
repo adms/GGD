@@ -28,7 +28,7 @@
 | `tpl-dragon-quake` | `both` | 15 | ⛔ ringRadius blastRadius shakeAmplitude shakeSec impactLifeSec scatterBox damage damageType | 0 | 0 | 8 | 38-03 邪王炎殺黑龍波 |
 | `tpl-dragon-serpent` | `both` | 17 | ⛔ serpentineDeg damageTiming touchRadius damage damageType | 0 | 0 | 6 | 38-002 究極暴走黑龍波 |
 | `tpl-drain-leech` | `doc` | 8 | — | 0 | 5 | 4 | 90-00 寄生種子（妙蛙種子／妙蛙花 `godie-hgam.passive` ＋ `godie-h02r.passive`） |
-| `tpl-effect-sequence` | `doc` | 5 | — | 0 | 0 | 10 | GGD 社群複合效果／阿薩謝爾、反擊與資源技能 |
+| `tpl-effect-sequence` | `doc` | 6 | — | 0 | 0 | 10 | GGD 社群複合效果／阿薩謝爾、反擊與資源技能 |
 | `tpl-event-passive` | `doc` | 1 | — | 0 | 0 | 10 | GGD 社群複合效果／阿薩謝爾、反擊與資源技能 |
 | `tpl-ground-nova` | `doc` | 4 | — | 0 | 0 | 8 | 80-03 鬼神烈戟 |
 | `tpl-growth-charge` | `doc` | 9 | — | 0 | 0 | 4 | 07-00 獸化心靈（蒼月潮 `godie-hpb1.passive`） |

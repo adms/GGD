@@ -1,3 +1,4 @@
+import { zAbilityRecast } from "./recast";
 /** ability@1 — mirrors `AbilityDef` in sim/content/defs.ts. */
 import { z } from "zod";
 import type { AbilityId, StatusId } from "../../ids";
@@ -730,6 +731,7 @@ export const zAbilityDef = z
     /** per rank (index rank-1), seconds */
     cooldown: z.array(z.number().min(0)).min(1),
     manaCost: z.array(z.number().min(0)).min(1),
+    recast: zAbilityRecast.optional().describe("每次獨立輸入執行下一段；首段使用 effects，後續依 stages 順序。窗口從每段解算後開始，逾時、死亡、控制或末段結束即關閉。首段冷卻照常流逝；成本可設只付首段或每段付。"),
     requiredSummonSlot: zCastableSlot.optional().describe("施法前必須有自己由指定槽召喚的存活同區身體；缺少時不支付資源或冷卻。"),
     allowApproach: z.boolean().optional().describe("是否允許超距時先自動接近；false 會立即拒絕且不扣費，省略沿用既有接近規則。"),
     requiredTargetStatus: z.object({
@@ -1090,6 +1092,9 @@ export const zAbilityDoc = zAbilityDef
   .superRefine(refineInnate)
   .superRefine(refineUnlimitedRange)
   .superRefine((ability, ctx) => {
+    if (ability.recast && (ability.toggle || ability.interruptible === false || ability.effects.length === 0 || (ability.slot === "PASSIVE" && ability.innateKind !== "active"))) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["recast"], message: "重施放需要可中斷的主動首段，不能與切換或純被動混用。" });
+    }
     if (ability.requiredTargetStatus && ability.castType !== "targeted") {
       ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["requiredTargetStatus"], message: "目標標記資格只適用 targeted 技能。" });
     }

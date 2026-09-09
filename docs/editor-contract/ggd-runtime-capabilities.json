@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "2afadee4",
+  "fingerprint": "f7762b90",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -984,6 +984,7 @@
     "range",
     "rangeTier",
     "rangeUnlimited",
+    "recast",
     "recoveryRoots",
     "recoverySec",
     "requiredSummonSlot",
@@ -1169,6 +1170,7 @@
       "range",
       "rangeTier",
       "rangeUnlimited",
+      "recast",
       "recoveryRoots",
       "recoverySec",
       "requiredSummonSlot",

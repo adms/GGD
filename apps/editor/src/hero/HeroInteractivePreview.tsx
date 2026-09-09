@@ -39,6 +39,7 @@ export function HeroInteractivePreview(props: { project: HeroProject; slot: Hero
   }} /></label>;
   const statuses = catalog.simulationDocuments.filter(([key]) => key.startsWith("status-effects/")).map(([, document]) => document);
   const statusCost = props.result.compiled?.abilityDrafts[slot].statusCost;
+  const recast = props.result.compiled?.abilityDrafts[slot].recast;
   const requiredSummon = props.result.compiled?.abilityDrafts[slot].requiredSummonSlot;
   const motionEffects = props.result.compiled?.abilityDrafts[slot].effects;
   const hasDrive = motionEffects?.some(e => e.kind === "applyBuff" && e.drive);
@@ -48,6 +49,12 @@ export function HeroInteractivePreview(props: { project: HeroProject; slot: Hero
     {hasGrapple ? <p>吊帶沿瞄準方向連接第一個合法敵人或地形；白線顯示實際牽引，結束即消失。空射仍消耗本次施法資源。</p> : null}
     {requiredSummon ? <p>需要自己 {requiredSummon}「{project.acceptedPlan?.slots[requiredSummon].name}」的存活召喚物。可在前置施法選擇 {requiredSummon} 後試玩；只補足資源不會建立召喚物。</p> : null}
     {statusCost?.subject === "target" ? <p>本招消耗指定目標身上的資源，必須先由實際機制取得；預設先讓敵人嘗試普攻 3 秒，不直接建立線索等目標資源。可改成靜止敵人測試資源不足。</p> : statusCost ? <p>單槽試玩{setup.resourceSetup === "empty" ? "保留初始" : "預先補足已安裝的"}資源；本招消耗自身{statusCost.count === "all" ? "全部剩餘資源（至少一層）" : `${statusCost.count} 層`}。整套驗收不補資源。</p> : null}
+    {recast ? <label>接續輸入測試<select aria-label="接續輸入測試" value={JSON.stringify(setup.recastPresses ?? [])} onChange={event => setSetup({ ...setup, recastPresses: JSON.parse(event.target.value) as number[] })}>
+      <option value="[]">只按一次，確認不自動接段</option>
+      <option value="[0.3,0.6]">再按兩次：0.3 秒、0.6 秒</option>
+      <option value="[0.01,0.02]">立即連按，確認不跳段</option>
+      <option value="[1.3]">1.3 秒晚按，檢查逾時</option>
+    </select><p>每次輸入仍須通過正式施法檢查；拒絕原因保留在結果中，不補魔力、不清冷卻。此技能最短間隔 {recast.minIntervalSec} 秒，接續窗口 {recast.windowSec} 秒。</p></label> : null}
     <details><summary>調整試玩情境</summary>
       <p>位置以場地中心為原點。這些設定只影響本次試玩；投稿仍執行固定的六槽驗收。</p>
       <label>敵方前置行動<select aria-label="敵方前置行動" value={setup.opponentPreparation ?? "auto"} onChange={event => {

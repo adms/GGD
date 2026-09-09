@@ -53,6 +53,9 @@ export class SeatState extends Schema {
   declare augments: ArraySchema<string>;
   declare offers: ArraySchema<OfferState>;
   declare abilityRanks: ArraySchema<number>; // Q W E R
+  declare recastStages: ArraySchema<number>; // six slots, next input stage or zero
+  declare recastWindows: ArraySchema<number>; // remaining window ticks, six slots
+  declare recastFreeMask: number;
   declare cooldowns: ArraySchema<number>; // remaining ticks Q W E R
   declare unspentPoints: number;
   // per-hero "EX 技能" (5th slot). exAbilityId "" = this hero has no EX skill;
@@ -453,6 +456,9 @@ export class SeatState extends Schema {
     this.offers = new ArraySchema<OfferState>();
     this.abilityRanks = new ArraySchema<number>();
     this.cooldowns = new ArraySchema<number>();
+    this.recastStages = new ArraySchema<number>();
+    this.recastWindows = new ArraySchema<number>();
+    this.recastFreeMask = 0;
     this.unspentPoints = 0;
     this.exAbilityId = "";
     this.exRank = 0;
@@ -561,6 +567,10 @@ defineTypes(SeatState, {
   apNow: "uint16",
   hpNow: "uint16",
   hpMaxNow: "uint16",
+  // APPEND-ONLY: independent input stages, preserving all existing wire indices.
+  recastStages: ["uint8"],
+  recastWindows: ["uint16"],
+  recastFreeMask: "uint8",
 });
 
 /**
