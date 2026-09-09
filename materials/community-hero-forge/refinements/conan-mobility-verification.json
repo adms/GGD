@@ -203,5 +203,164 @@
       "Recheck interactive Play after the current-compiled-preview eligibility change."
     ],
     "diagnosticStorage": "conan-mobility-visual-diagnostics.json"
+  },
+  "finalReleaseBatch": {
+    "reportSha256": "3d3eabdb26582e9205b7f8cf7477c4995dc955c1b2475b85d8b1c37f14113ab3",
+    "testedHead": "273db499896cf07c59b665addd27fc35819823ea",
+    "sourceFingerprint": "47e9fd5e7c54763cf53a600096088557a9399fc21795cfbbe6d3aef2e1d40d96",
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 39,
+      "slotsWithoutBehaviorSuite": 183
+    },
+    "exitCode": 2,
+    "errors": [],
+    "modelBytes": "verified",
+    "editorTests": 599,
+    "registeredTests": 195,
+    "jobs": [
+      {
+        "id": "skills",
+        "argv": [
+          "pnpm",
+          "skills:check"
+        ],
+        "exitCode": 0,
+        "fingerprint": "3695357bbf544385bf11bc45b40aaeba40bf5d44ff66ccec2764ceb69bdc1dc1",
+        "log": "skills.log",
+        "logSha256": "53914f966529a2895bbc4a85cc9b777e4925d3d0ceeb66e57d40b9ce2c53538d",
+        "seconds": 93.2,
+        "reused": false
+      },
+      {
+        "id": "editor",
+        "argv": [
+          "pnpm",
+          "editor:accept:release"
+        ],
+        "exitCode": 0,
+        "fingerprint": "477da2c6ec0afd2e17b08a22077c2a2db9bcaa4597e5e66bc7e173448863f81c",
+        "log": "editor.log",
+        "logSha256": "310c8385bd0365fab1a3fe77e44f0c7dfd00daa3d302c92d27908fae9d334ead",
+        "seconds": 214.03,
+        "reused": false
+      },
+      {
+        "id": "coord",
+        "argv": [
+          "pnpm",
+          "coord:check"
+        ],
+        "exitCode": 0,
+        "fingerprint": "dccfbf3837f4979823fb841e646a911c24e0dfc8704acf471770fafe1c7484f7",
+        "log": "coord.log",
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271",
+        "seconds": 3.07,
+        "reused": false
+      },
+      {
+        "id": "compile-and-models",
+        "argv": [
+          "pnpm",
+          "exec",
+          "node",
+          "--import",
+          "tsx",
+          "tools/community-hero-forge/prepare-published-handoff.mts",
+          "--batch-dir",
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge",
+          "--release-root",
+          "/private/tmp/ggd-model-upload-acceptance/release-13956d93b"
+        ],
+        "exitCode": 0,
+        "fingerprint": "f8052038145649b74807d57500a125c78e877f8d191004fce36052fe40d0ed76",
+        "log": "compile-and-models.log",
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c",
+        "seconds": 6.0,
+        "reused": false
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "argv": [
+          "pnpm",
+          "exec",
+          "vitest",
+          "run",
+          "packages/shared/src/content/heroForge/communityRefinements/electricCharge.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/cardLinks.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/cardVariants.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/friendlyProtection.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/madoka.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/kirua.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/yugi.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/conan.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/conanMobility.test.ts",
+          "--pool=threads",
+          "--minWorkers=1",
+          "--maxWorkers=1"
+        ],
+        "exitCode": 0,
+        "fingerprint": "b6918468d11a99ef5a6ff1b8edc831017878ae9f4850c22da37bfc1cf55c6e81",
+        "log": "behavior-implemented-mechanisms.log",
+        "logSha256": "d1c0391c58e2368ef965321d37fbe2e118e9411441bd250ab3accd64e9ec9c5c",
+        "seconds": 23.17,
+        "reused": false
+      },
+      {
+        "id": "behavior-trap-view-and-transport",
+        "argv": [
+          "pnpm",
+          "exec",
+          "vitest",
+          "run",
+          "apps/client/src/render/views/TrapView.test.ts",
+          "apps/editor/src/vfx-forge/TrapReplay.test.ts",
+          "apps/game-server/src/net/trapWire.test.ts",
+          "--pool=threads",
+          "--minWorkers=1",
+          "--maxWorkers=1"
+        ],
+        "exitCode": 0,
+        "fingerprint": "dca3012e7312fcc98d76a405e86da3e9f3018c2ad8b709a90e3c98701e4a215e",
+        "log": "behavior-trap-view-and-transport.log",
+        "logSha256": "993fe0edcce722fd100cddf9d2de1e59aa8170366da482bb4a6560cf2a5f3dcd",
+        "seconds": 4.99,
+        "reused": false
+      },
+      {
+        "id": "behavior-motion-view-and-transport",
+        "argv": [
+          "pnpm",
+          "exec",
+          "vitest",
+          "run",
+          "apps/client/src/render/views/AbilityMotionView.test.ts",
+          "apps/client/src/predict/predictionHoldWiring.test.ts",
+          "apps/editor/src/vfx-forge/AbilityMotionReplay.test.ts",
+          "apps/game-server/src/net/abilityMotionWire.test.ts",
+          "--pool=threads",
+          "--minWorkers=1",
+          "--maxWorkers=1"
+        ],
+        "exitCode": 0,
+        "fingerprint": "8456e7c98477ff8b3975a764aa40e497ef2bb2d73e9cc67872d1a41f3c89fd44",
+        "log": "behavior-motion-view-and-transport.log",
+        "logSha256": "babbbb54113e0a6bdd36684a2bc9abb7b1474e3bf497d97cc413ff98ce277cf8",
+        "seconds": 8.04,
+        "reused": false
+      }
+    ],
+    "originalDesignAcceptance": "unverified",
+    "visualAcceptance": "unverified",
+    "formalPublication": false,
+    "meaning": "All executed automated checks passed. Exit 2 preserves 183 slots without a registered behavior suite; neither compiler success nor 39 mapped slots certifies original design or rendered visuals."
+  },
+  "packetRepro": {
+    "tests": 7,
+    "files": 3,
+    "exitCode": 0,
+    "logSha256": "6dafcf7e9e6137b8a61524b449aa92ae5182b29d24abe4a74737b609bb301a77"
   }
 }

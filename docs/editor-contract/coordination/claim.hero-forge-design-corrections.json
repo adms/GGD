@@ -362,6 +362,19 @@
         "materials/community-hero-forge/refinements/conan-mobility-visual-diagnostics.json",
         "tools/community-hero-forge/BATCH_VERIFICATION.md"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "乾淨提交 273db499896c 的集中發布前檢查通過：skills（含訊息帳本與修正後 decor）、Editor release、coord 同批完成；Editor 599 項測試、型別與正式建置通過，37／222 編譯及模型位元組核對、195 項登記機制／跨端案例通過。39 槽有測試對應、183 槽未對應，故退出碼 2；九張真實畫面驗收、R 前置線索情境、完整原設計與當下服務 ZIP／發布仍未完成，#1132 原條件不變且保持開啟。",
+      "repro": {
+        "command": "pnpm editor:accept:release",
+        "expectedExit": 0
+      },
+      "commit": "273db499896cf07c59b665addd27fc35819823ea",
+      "evidence": [
+        "materials/community-hero-forge/refinements/conan-mobility-verification.json",
+        "materials/community-hero-forge/validation-plan.json"
+      ]
     }
   ],
   "unblocks": [],
