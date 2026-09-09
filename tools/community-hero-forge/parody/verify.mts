@@ -36,7 +36,7 @@ for(const hero of build.heroes){
    const evidence=path.join(out,'evidence',`${hero.number}-passive-${row.passives.length}.json`);fs.writeFileSync(evidence,JSON.stringify(probe)+'\n');
    console.log(`${hero.number}/P: ${probe.status} ${probe.event} ${probe.error??''}`);
   }
-  for(const [slot,a]:any of Object.entries(draft.abilityDrafts)){
+  for(const [slot,a] of Object.entries(draft.abilityDrafts) as [string,any][]){
    if(slot==='PASSIVE')continue;
    if(a.manaCost[0]>0){
     const r=runSequence(draft,{...options,recordFrames:false,setup:{caster:{manaPct:0}},steps:[cast(slot)]});

@@ -44,7 +44,7 @@ for(let i=1;i<=37;i++){
  const row:any={number:n,name:project.brief.name,signature:design?.signature??signatures[n],closest:design?.closest??null,difference:design?.difference??'保留已驗證核心，改編代價及可讀提示詳見各槽。',version:patch.version,group:design?'rewrite':n==='32'?'owner-update':['23','30','35','37'].includes(n)?'preserve-core':'local-adaptation',combos:design?.combos??adapt?.combos??[],slots:{},area:adapt?.area};report.heroes.push(row);
  try{
   const changed=design?Object.entries(design.moves).map(([slot,move])=>({slot,move})):adapt.additions.filter(a=>a.move);
-  for(const {slot,move}:any of changed){
+  for(const {slot,move} of changed as any[]){
    const original=recipe.slots.find((s:any)=>s.slot===slot);
    const overrides=slot==='PASSIVE'?{}:{range:6,cooldown:[slot==='R'?30:10],manaCost:[slot==='R'?60:40],...move.overrides};
    const visual=move.vfx??(slot==='PASSIVE'?null:'fx.prim.arcane.pulse-sm');

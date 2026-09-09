@@ -2,7 +2,7 @@
 import {dmg,heal,mana,shield,status,recent,low,distance,when,buff,cd,cleanse,push,blink,delayed,aoe,summon,hook,card,seq,move,passive,strike,self,ally,ground,healing,line,mobility,edge,kit} from './kit.mjs';
 const own=(id,flags={},duration=4,to='target')=>status(id,{sourceScope:'caster',...flags},duration,to);
 const has=(id,subject='target')=>({kind:'status',statusId:id,subject,appliedBy:'self'});
-const use=(id,effects,subject='target',extra={})=>({kind:'consumeStatus',shape:'single',statusId:id,count:'all',subject,appliedBy:'self',onConsumed:effects,...extra});
+const consumeOwnedStatus=(id,effects,subject='target',extra={})=>({kind:'consumeStatus',shape:'single',statusId:id,count:'all',subject,appliedBy:'self',onConsumed:effects,...extra});
 const say=(text,applyTo='self')=>({kind:'floatingText',shape:'single',text,applyTo,durationSec:1});
 const phys=(t='小',extra={})=>dmg(t,{damageType:'physical',...extra});
 const life=p=>({kind:'spendHealth',amount:{flat:0},pctMaxHealth:p,minimumHp:1});
@@ -15,7 +15,7 @@ export function redesign(n){switch(n){
 case '05':return kit('過熱機器人：砲擊把自己燒到跑不動，排氣拿敵人當散熱片','35','洛克人消耗過熱換排氣；炭治郎在水火間分配呼吸與短暫負擔。',{
  PASSIVE:passive('Q 或 R 開火後散熱器卡住，自身減速40%四秒；排氣或冷卻才能解除。',[...['Q','R'].map(abilitySlot=>hook('onAbilityCast',[own('slow40',{moveSpeedMult:.6},4,'self')],{abilitySlot,internalCooldown:0})),hook('onAbilityCast',[shield(120,2)],{abilitySlot:'E',condition:recent('W'),internalCooldown:0})]),
  Q:line('小鋼砲直線中級魔法傷害；開砲有過熱代價。'),
- W:self('散熱排氣：消耗自己的過熱，才對周圍三格敵人造成小級傷害並回復自身8%魔力；沒熱就吹冷氣。',[use('slow40',[aoe([],3,{amount:{damageTier:'小'}}),mana(.08),say('拿你當散熱片！')],'self')]),
+ W:self('散熱排氣：消耗自己的過熱，才對周圍三格敵人造成小級傷害並回復自身8%魔力；沒熱就吹冷氣。',[consumeOwnedStatus('slow40',[aoe([],3,{amount:{damageTier:'小'}}),mana(.08),say('拿你當散熱片！')],'self')]),
  E:mobility('滑行到指定點；排氣後四秒內再由被動給自己120護盾。'),
  R:move('三發砲彈每0.35秒追著指定敵人結算極小傷害；可用排氣解過熱。',card('tpl-lock-combo',{hitCount:3,hitIntervalSec:.35,perHitDamage:{damageTier:'極小'},damageType:'magic',lockTarget:'none',casterGuard:'none'})),
  EX:self('關機保固：180護盾三秒；有過熱時護盾仍不解除減速，請自己找W。',[shield(180),say('本產品不含散熱風扇')]),
@@ -23,15 +23,15 @@ case '05':return kit('過熱機器人：砲擊把自己燒到跑不動，排氣�
 case '06':return kit('吃撐二選一：把對手當午餐，吐出去打人或吞下去補血','05','卡比一次吃飽同時鎖住兩種兌換；不是攻擊後自動附傷。',{
  PASSIVE:passive('Q進食成功施法後取得一份食材四秒；刷新一份，不累積無限餐點。',[hook('onAbilityCast',[own('ingredient',{},4,'self')],{abilitySlot:'Q',internalCooldown:0})]),
  Q:move('把指定敵人拉到身前1.5格，自己吃撐減速40%兩秒；不消滅敵方英雄。',seq([{kind:'pull',shape:'single',destination:'caster',speed:12,stopDistance:1.5},own('slow40',{moveSpeedMult:.6},2,'self')])),
- W:move('吐星星：消耗自己食材，對指定敵人小級打擊並推開四格；消耗後不能立刻拿同一份補血。',seq([use('ingredient',[dmg(),push(4),say('不好吃！','victim')],'self')])),
+ W:move('吐星星：消耗自己食材，對指定敵人小級打擊並推開四格；消耗後不能立刻拿同一份補血。',seq([consumeOwnedStatus('ingredient',[dmg(),push(4),say('不好吃！','victim')],'self')])),
  E:mobility('圓滾滾飄走，合法瞬移；不複製對手模型或技能。'),
  R:ground('鍋蓋落地：0.7秒後重選落點兩格敵人造成中級傷害；跑開即可躲。',[delayed([dmg('中')],.7,{shape:'circle',radius:2,side:'enemies',targetMode:'reresolve',anchor:'point'})]),
- EX:self('消化：消耗同一份食材回復240生命；這回合的星星就當午餐吃掉。',[use('ingredient',[heal(240,'self'),say('下午茶取消戰鬥')],'self')]),
+ EX:self('消化：消耗同一份食材回復240生命；這回合的星星就當午餐吃掉。',[consumeOwnedStatus('ingredient',[heal(240,'self'),say('下午茶取消戰鬥')],'self')]),
 },[damageEdge('Q','W',{slot:'W',kind:'consumeStatus'}),b('Q','EX','caster','hp',{slot:'EX',kind:'consumeStatus'})]);
 case '07':return kit('伸縮自在的口香糖：先黏、再推遠，拉長了才像在打人','08','西索操縱敵人距離；米卡莎花時間補氣後移動並斬擊。',{
  PASSIVE:passive('自己真正施加控制後得到60護盾一秒，每三秒一次；表演翻車仍會掉血。',[hook('onCrowdControlApplied',[shield(60,1)],{internalCooldown:3})]),
  Q:strike('把自己的口香糖黏上敵人四秒，減速20%；別人的糖不算。',{status:own('slow20',{moveSpeedMult:.8})}),
- W:move('收線：只有自己黏過的敵人才被拉至身前；起手距離超過四格還多一次小級傷害。',seq([use('slow20',[when(phys(),distance('>',4)),{kind:'pull',shape:'single',destination:'caster',speed:14,stopDistance:1.5},say('拉太長會痛喔','victim')])])),
+ W:move('收線：只有自己黏過的敵人才被拉至身前；起手距離超過四格還多一次小級傷害。',seq([consumeOwnedStatus('slow20',[when(phys(),distance('>',4)),{kind:'pull',shape:'single',destination:'caster',speed:14,stopDistance:1.5},say('拉太長會痛喔','victim')])])),
  E:move('先將敵人推遠四格，替口香糖上弦；這招不自帶傷害。',seq([push(4)])),
  R:move('收表演費：中級打擊；仍黏著自己的糖時定身一秒，控制可以被淨化。',seq([phys('中'),when(own('root',{root:true},1),has('slow20'))])),
  EX:mobility('魔術師換位離場，不留假的可攻擊分身。'),
@@ -62,23 +62,23 @@ case '10':return kit('Zero遙控上班：敵人先點名，隊友加速幹活，
 },[b('Q','W','ally','z',{slot:'W',kind:'applyStatus',conditionalOnly:true},{targetSteps:[{kind:'cast',slot:'W',waitSec:.3},{kind:'move',actor:'ally',point:{x:0,z:6},waitSec:.5}]}),b('W','R','foe','status:fear',{slot:'R',kind:'delayed',conditionalOnly:true})]);
 case '11':return kit('史萊姆試吃會：真的挨過物理或魔法，才能分別吐出不同口味','06','利姆路按來襲傷害型別取樣；卡比主動吃一份後選吐出或消化。',{
  PASSIVE:passive('受到物理傷害留物理樣本、魔法傷害留魔法樣本四秒，兩口味分開；真伤不供樣本。',[hook('onDamageTaken',[own('rage',{},4,'self')],{damageType:'physical'}),hook('onDamageTaken',[own('spell-shield',{},4,'self')],{damageType:'magic'})]),
- Q:move('魔法口味：小級魔法打擊，消耗自己的魔法樣本才追加小級魔法傷害。',seq([dmg(),use('spell-shield',[dmg(),say('這口是魔法','victim')],'self')])),
+ Q:move('魔法口味：小級魔法打擊，消耗自己的魔法樣本才追加小級魔法傷害。',seq([dmg(),consumeOwnedStatus('spell-shield',[dmg(),say('這口是魔法','victim')],'self')])),
  W:self('變果凍，120護盾三秒；樣本標記本身並非魔法免疫。',[shield(120)]),
- E:move('物理口味：小級物理打擊，消耗自己的物理樣本才把敵人推開三格。',seq([phys(),use('rage',[push(3)],'self')])),
- R:self('綜合口味：兩份樣本各可換120生命，沒有的口味不出餐；每份只消耗一次。',[use('rage',[heal(120,'self')],'self'),use('spell-shield',[heal(120,'self')],'self')]),
+ E:move('物理口味：小級物理打擊，消耗自己的物理樣本才把敵人推開三格。',seq([phys(),consumeOwnedStatus('rage',[push(3)],'self')])),
+ R:self('綜合口味：兩份樣本各可換120生命，沒有的口味不出餐；每份只消耗一次。',[consumeOwnedStatus('rage',[heal(120,'self')],'self'),consumeOwnedStatus('spell-shield',[heal(120,'self')],'self')]),
  EX:mobility('縮成一坨跑掉；不複製敵人的技能。'),
 },[damageEdge('E','Q',{slot:'Q',kind:'consumeStatus'},{sourceActor:'foe',sourceTarget:'caster'}),b('W','E','foe','x',{slot:'E',kind:'consumeStatus'},{sourceActor:'foe',sourceTarget:'caster'})]);
 case '12':return kit('投影保固：山寨盾真的碎了，才能把退貨單投影成第二把劍','31','士郎要先損失真正護盾；SUN樂靠短窗格擋與實際移動閃避。',{
  PASSIVE:passive('自己的護盾實際破裂後取得保固單四秒，每兩秒一次；空放護盾不給。',[hook('onShieldBroken',[own('rage',{},4,'self')])]),
- Q:strike('投影小刀小級物理打擊；消耗保固單追加小級劍擊並回復5%魔力。',{},[use('rage',[phys(),mana(.05),say('保固換新！','victim')],'self')]),
+ Q:strike('投影小刀小級物理打擊；消耗保固單追加小級劍擊並回復5%魔力。',{},[consumeOwnedStatus('rage',[phys(),mana(.05),say('保固換新！','victim')],'self')]),
  W:self('廉價投影盾：只有40吸收量、持續三秒。敵人不打破就拿不到退貨單。',[shield(40,3)]),
  E:move('把鍋鏟當劍丟：小級打擊並定身0.6秒。',seq([phys(),own('root',{root:true},.6)])),
  R:move('廚房劍雨，三發小級物理傷害；不召喚永久武器庫。',card('tpl-random-barrage',{count:3,intervalSec:.3,impactDamage:{damageTier:'小'},damageType:'physical',impactRadius:100,scatterRadius:100})),
- EX:self('保固也能折現：消耗同一張保固單回復220生命，和Q只能選一邊。',[use('rage',[heal(220,'self')],'self')]),
+ EX:self('保固也能折現：消耗同一張保固單回復220生命，和Q只能選一邊。',[consumeOwnedStatus('rage',[heal(220,'self')],'self')]),
 },[damageEdge('W','Q',{slot:'Q',kind:'consumeStatus'},{sourceSteps:[{kind:'cast',slot:'W',waitSec:.2},...Array.from({length:5},()=>({kind:'cast',actor:'foe',slot:'Q',target:'caster',waitSec:.2}))],sourceIndexes:[0],responseIndex:6}),b('W','EX','caster','hp',{slot:'EX',kind:'consumeStatus'},{sourceSteps:[{kind:'cast',slot:'W',waitSec:.2},...Array.from({length:5},()=>({kind:'cast',actor:'foe',slot:'Q',target:'caster',waitSec:.2}))],sourceIndexes:[0],responseIndex:6})]);
 case '13':return kit('自拍狙擊：架好相機才有大頭照，嫌臉太大就把人推遠','18','詩乃讀射擊距離與完成架槍；金閃閃讀敵人魔力餘額。',{
  PASSIVE:passive('W架槍後0.6秒才取得焦點四秒；沒有瞬間瞄準。',[hook('onAbilityCast',[delayed([own('camera-mark',{},4,'self')],.6)],{abilitySlot:'W',internalCooldown:0})]),
- Q:move('證件照：小級射擊，消耗完成的焦點再追加中級物理傷害。',seq([phys(),use('camera-mark',[phys('中'),say('不要動，拍糊了','victim')],'self')])),
+ Q:move('證件照：小級射擊，消耗完成的焦點再追加中級物理傷害。',seq([phys(),consumeOwnedStatus('camera-mark',[phys('中'),say('不要動，拍糊了','victim')],'self')])),
  W:self('架腳架：自己定身0.7秒並取得80護盾；P在架穩後給焦點。',[own('root',{root:true},.7,'self'),shield(80,1)]),
  E:move('鏡頭裝不下：將敌人推遠四格，不自帶傷害。',seq([push(4)])),
  R:move('遠景照：小級物理傷害，起手距離超過四格追加中級傷害；貼臉不算遠景。',seq([phys(),when(phys('中'),distance('>',4))])),
@@ -87,7 +87,7 @@ case '13':return kit('自拍狙擊：架好相機才有大頭照，嫌臉太大�
 case '14':return kit('改作業的殺老師：先讓學生看不清，再把錯題收回換全班補血','26','殺老師回收自己施加的致盲來補隊；柯南收集敵方事件後宣布真相。',{
  PASSIVE:passive('自己施加控制後，移速增加20%兩秒，每三秒一次；趕著批下一份。',[hook('onCrowdControlApplied',[own('rage',{moveSpeedMult:1.2},2,'self')],{internalCooldown:3})]),
  Q:move('零分粉筆：敵人小級魔法傷害，普攻失手40%三秒。',seq([dmg(),own('blind',{missChance:.4},3)])),
- W:move('發還考卷：消耗自己給敵人的致盲，解除他的視力問題；自己周圍三格友軍各回復160。',seq([use('blind',[delayed([heal(160)],.1,{shape:'circle',radius:3,side:'allies',anchor:'caster',targetMode:'reresolve'}),say('訂正完可以睜眼','victim')])])),
+ W:move('發還考卷：消耗自己給敵人的致盲，解除他的視力問題；自己周圍三格友軍各回復160。',seq([consumeOwnedStatus('blind',[delayed([heal(160)],.1,{shape:'circle',radius:3,side:'allies',anchor:'caster',targetMode:'reresolve'}),say('訂正完可以睜眼','victim')])])),
  E:mobility('高速巡堂移動到合法落點，沒有保證閃避。'),
  R:move('下課前小考：三次極小魔法打擊；同目標死亡即停止。',card('tpl-lock-combo',{hitCount:3,hitIntervalSec:.25,perHitDamage:{damageTier:'極小'},damageType:'magic',lockTarget:'none',casterGuard:'none'})),
  EX:ally('補習班保護：給隊友180護盾；自己慢30%兩秒去擦黑板。',[shield(180),own('slow30',{moveSpeedMult:.7},2,'self')]),
@@ -106,7 +106,7 @@ case '16':return kit('魔法少女換裝事故：穿近戰卡會丟掉魔攻，�
  W:self('近戰職階裝填：三秒攻擊力+80、魔法攻擊力-20。',[{kind:'applyBuff',applyTo:'self',statusId:'rage',sourceScope:'caster',duration:3,modifiers:[{stat:'ad',op:'flat',value:80},{stat:'ap',op:'flat',value:-20}]},say('魔法少女用拳頭！')]),
  E:ally('借你緞帶：指定隊友140護盾三秒，不假裝成換装。',[shield(140)]),
  R:line('魔法光束：中級魔法傷害加0.8AP；穿近戰服時這招會弱，選裝有取捨。',{damage:{damageTier:'中',ratios:[{stat:'ap',coeff:.8}]}}),
- EX:self('卸妝退票：消耗自己的職階增益還原攻擊力與魔法攻擊力，回復10%魔力；沒有衣服不退額外魔力。',[use('rage',[mana(.1)],'self')]),
+ EX:self('卸妝退票：消耗自己的職階增益還原攻擊力與魔法攻擊力，回復10%魔力；沒有衣服不退額外魔力。',[consumeOwnedStatus('rage',[mana(.1)],'self')]),
 },[damageEdge('W','Q',{slot:'W',kind:'applyBuff'}),b('W','R','foe','hp',{slot:'W',kind:'applyBuff'},{expect:'increase'})]);
 case '17':return kit('骨王年會：自己站住講幹話換魔攻，保鑣與提早散會救場','04','骨王限制的是自己的移動；承太郎會真實停止區域時間。',{
  PASSIVE:passive('R演說開始時獲得120護盾一秒，每五秒一次；護盾不等於免打斷。',[hook('onUltimateCast',[shield(120,1)],{internalCooldown:5})]),
@@ -114,7 +114,7 @@ case '17':return kit('骨王年會：自己站住講幹話換魔攻，保鑣與�
  W:self('會議室鎖門：自己定身兩秒，AP+70兩秒；可以施法，但不能逃跑。',[own('root',{root:true},2,'self'),buff('ap',70,2),say('我其實也不知道在講什麼')]),
  E:move('請一名四秒保鑣，攻擊/生命倍率各0.3，最多兩名；死亡跟著散會。',card('tpl-summon-agent',{body:'self',count:1,durationSec:4,damageMult:.3,hpMult:.3,maxAlive:2,onOwnerDeath:'despawn'})),
  R:line('0.8秒可中斷的魔法簡報，中級魔法傷害加0.8AP；趁會議加成放，敵人可控制打斷。',{castTimeSec:.8,damage:{damageTier:'中',ratios:[{stat:'ap',coeff:.8}]}}),
- EX:self('提早散會：解除自己的會議定身才能取得240生命；若已坐完會，沒出席費。',[use('root',[heal(240,'self')],'self')]),
+ EX:self('提早散會：解除自己的會議定身才能取得240生命；若已坐完會，沒出席費。',[consumeOwnedStatus('root',[heal(240,'self')],'self')]),
 },[damageEdge('W','R',{slot:'W',kind:'applyBuff'},{waitSec:.3}),b('W','EX','caster','hp',{slot:'EX',kind:'consumeStatus'},{waitSec:.3})]);
 case '18':return kit('王之信用審查：先扣對手魔力，餘額不足才加收寶具手續費','13','金閃閃讀敵方魔力；詩乃讀距離與架槍焦點。',{
  PASSIVE:passive('R真正命中敵人後自己回復8%魔力，每次施法一次；空放不退款。',[hook('onDamageDealt',[mana(.08)],{abilitySlot:'R',damageSource:'ability',oncePerCast:true,internalCooldown:0})]),
@@ -145,8 +145,8 @@ case '25':return kit('一拳特價日：提著菜不能普攻，放下購物袋�
  Q:strike('普通拳小級物理傷害加0.8AD，不保證一拳秒殺。',{damage:{damageTier:'小',ratios:[{stat:'ad',coeff:.8}]}}),
  W:self('超市衝刺：四秒自己移速+50%但不能普攻；雙手提菜的狀態只能消費一次。',[own('numbness',{disarmed:true,moveSpeedMult:1.5},4,'self'),say('特價只到五點！')]),
  E:mobility('抄近路買菜，瞬移到合法落點，仍遵守落點限制。'),
- R:move('放下菜再認真：普通小級打擊；消耗自己購物狀態才追加大級物理傷害，消耗後移速和繳械一起結束。',seq([phys(),use('numbness',[phys('大'),say('菜壓壞了！','victim')],'self')])),
- EX:ally('分菜：消耗自己的購物狀態，指定隊友回復260；分完就不能拿同一袋打認真拳。',[use('numbness',[heal(260)],'self')]),
+ R:move('放下菜再認真：普通小級打擊；消耗自己購物狀態才追加大級物理傷害，消耗後移速和繳械一起結束。',seq([phys(),consumeOwnedStatus('numbness',[phys('大'),say('菜壓壞了！','victim')],'self')])),
+ EX:ally('分菜：消耗自己的購物狀態，指定隊友回復260；分完就不能拿同一袋打認真拳。',[consumeOwnedStatus('numbness',[heal(260)],'self')]),
 },[damageEdge('W','R',{slot:'R',kind:'consumeStatus'}),b('W','EX','ally','hp',{slot:'EX',kind:'consumeStatus'})]);
 case '29':return kit('芙莉蓮掛號處：治療約兩秒後，先給候診者盾；病人跑掉就白等','30','芙莉蓮保護等候指定落點的隊友；尼古貓把不移動本身兌成保命盾。',{
  PASSIVE:passive('自己真正接受治療後回復5%魔力，每三秒一次；不是持續白拿藍。',[hook('onHeal',[mana(.05)],{internalCooldown:3})]),
@@ -162,7 +162,7 @@ case '33':return kit('刀太的健身鐵片：背重劍變慢變強，丟掉鐵�
  W:self('負重深蹲：回復100；仍背重劍時再回復180。',[when(heal(180,'self'),has('slow40','self')),heal(100,'self')]),
  E:self('掛上鐵片：四秒AD+45、移速-40%，同一份具名buff，卸下時一起還原。',[{kind:'applyBuff',statusId:'slow40',sourceScope:'caster',applyTo:'self',duration:4,modifiers:[{stat:'ad',op:'flat',value:45},{stat:'ms',op:'pctAdd',value:-.4}]},say('這支啞鈴有劍柄')]),
  R:move('健身成果展示，兩次小級物理傷害；不是永久吸血。',card('tpl-lock-combo',{hitCount:2,hitIntervalSec:.3,perHitDamage:{damageTier:'小'},damageType:'physical',lockTarget:'none',casterGuard:'none'})),
- EX:self('卸鐵片：消耗自己的重劍buff才回復8%魔力並得到25%移速兩秒；沒掛過不補貼。',[use('slow40',[mana(.08),own('rage',{moveSpeedMult:1.25},2,'self')],'self')]),
+ EX:self('卸鐵片：消耗自己的重劍buff才回復8%魔力並得到25%移速兩秒；沒掛過不補貼。',[consumeOwnedStatus('slow40',[mana(.08),own('rage',{moveSpeedMult:1.25},2,'self')],'self')]),
 },[damageEdge('E','Q',{slot:'E',kind:'applyBuff'}),b('E','W','caster','hp',{slot:'W',kind:'heal',conditionalOnly:true})]);
 case '34':return kit('高速婆婆測速照：先違規加速再剎車，把罰單塞給追兵','08','婆婆主動降防加速，剎停以最近衝刺解鎖推敵；米卡莎需原地補氣。',{
  PASSIVE:passive('R催油門後護甲和魔抗各降低30兩秒；跑很快不代表撞車不痛。',[hook('onAbilityCast',[armor(-30,2)],{abilitySlot:'R',internalCooldown:0})]),
@@ -182,4 +182,4 @@ case '36':return kit('蘭斯嘴砲隊長：全怪來打我，隊友趁我挨揍�
 },[damageEdge('W','Q',{slot:'Q',kind:'damage',conditionalOnly:true}),b('W','R','ally','shield',{slot:'R',kind:'shield',conditionalOnly:true},{metric:{actor:'ally',field:'shield',sample:'max'}})]);
 default:return null;
 }}
-export {own,has,use,say,phys,life,dash,armor,b,damageEdge};
+export {own,has,consumeOwnedStatus,say,phys,life,dash,armor,b,damageEdge};

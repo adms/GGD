@@ -1,4 +1,4 @@
-import {own,has,use,say,armor,b,damageEdge} from './designs.mjs';
+import {own,has,consumeOwnedStatus,say,armor,b,damageEdge} from './designs.mjs';
 import {mana,shield,heal,buff,when,recent,delayed,dmg,card,seq,move,self,mobility} from './kit.mjs';
 export const signatures={
  '01':'決鬥者請員工打工：雙召喚賺布局，主人騰不出手只能慢慢走',
@@ -54,7 +54,7 @@ export function adaptExisting(number,patch,{zeroDefenses}={}){
   r.cards[0].params.castTimeSec=.8;r.overrides={range:0,radiusTier:'極大'};
   const boost={kind:'applyBuff',sourceScope:'caster',stackKey:id+'.ex.boon',statusId:id+'.ex.boon',maxStacks:1,duration:2,polarity:'buff',dispellable:true,modifiers:[{stat:'outputDamagePct',op:'flat',value:.1}]};
   const weak={kind:'applyBuff',sourceScope:'caster',stackKey:id+'.ex.sage',statusId:id+'.ex.sage',maxStacks:1,duration:3,polarity:'debuff',dispellable:true,modifiers:[...zeroDefenses,{stat:'as',op:'pctAdd',value:-.6},{stat:'ms',op:'pctAdd',value:-.6}]};
-  const ex=move('THE END OF SON：消耗三層負面能量，嘲諷自身極大範圍內敵人兩秒，依既有規則優先吸引自動攻擊。每名有自己R萎靡的敵人解除該詛咒，先傷害輸出+10%兩秒，再賢者時間三秒：護甲及魔抗固定零，攻速與移速各-60%（仍受GGD最低值限制）；原盾/無敵不會憑空消失。沒有自己R的敵人只走原本單次傷害與輸出-20%分支。',seq([{kind:'taunt',durationSec:2,maxTargets:20},use(id+'.r.curse',[boost,say('突然覺得自己超強！','victim'),delayed([weak,say('賢者時間：一切都空了','victim')],2,{stopOnCasterDeath:false})],'target',{onMissing:structuredClone(patch.slots.EX.products[0].template.params.effects[0].onMissing)})],'ground'));
+  const ex=move('THE END OF SON：消耗三層負面能量，嘲諷自身極大範圍內敵人兩秒，依既有規則優先吸引自動攻擊。每名有自己R萎靡的敵人解除該詛咒，先傷害輸出+10%兩秒，再賢者時間三秒：護甲及魔抗固定零，攻速與移速各-60%（仍受GGD最低值限制）；原盾/無敵不會憑空消失。沒有自己R的敵人只走原本單次傷害與輸出-20%分支。',seq([{kind:'taunt',durationSec:2,maxTargets:20},consumeOwnedStatus(id+'.r.curse',[boost,say('突然覺得自己超強！','victim'),delayed([weak,say('賢者時間：一切都空了','victim')],2,{stopOnCasterDeath:false})],'target',{onMissing:structuredClone(patch.slots.EX.products[0].template.params.effects[0].onMissing)})],'ground'));
   ex.overrides={range:0,radiusTier:'極大',statusCost:{statusId:id+'.negative-energy',count:3}};
   return {additions:[{slot:'R',move:r},{slot:'EX',move:ex}],combos:[],area:{tier:'極大',range:0,boostSec:2,weakSec:3,tauntSec:2,meaning:'Owner accepted the existing largest AoE tier. Only legal opposing bodies inside the caster-centered circle; scheduled weakness remains after caster death.'}};
  }

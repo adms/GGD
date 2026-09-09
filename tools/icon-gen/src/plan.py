@@ -252,9 +252,13 @@ def content_digest(all_docs: dict[str, dict[str, dict]]) -> str:
     return h.hexdigest()[:16]
 
 
-def build_plan() -> dict:
+def build_plan(*, missing_surface_files: list[str] | None = None) -> dict:
     all_docs = {family: load_family(family) for family in FAMILIES}
     veto, missing_surfaces = live_surface_ids()
+    # Missing runtime files describe this checkout, not the persisted art plan.
+    # Report the same scrape to the CLI without weakening --check's byte compare.
+    if missing_surface_files is not None:
+        missing_surface_files.extend(missing_surfaces)
     imap = icon_map()
 
     # champions first: their verdict feeds the ability kit rule
@@ -326,7 +330,6 @@ def build_plan() -> dict:
             for doc_id, (state, _) in states[family].items()
             if state == "generate" and doc_id in veto
         ),
-        "missingSurfaceFiles": missing_surfaces,
     }
 
 
@@ -340,7 +343,8 @@ def main() -> None:
                     help="⭐ 只驗不寫：磁碟上那一份與現在算出來的逐位元組相同嗎（過期 ⇒ 非零）")
     args = ap.parse_args()
 
-    plan = build_plan()
+    missing_surfaces: list[str] = []
+    plan = build_plan(missing_surface_files=missing_surfaces)
     t = plan["counts"]["total"]
     print(f"icon-gen plan  (content digest {plan['contentDigest']})")
     print(f"  {'family':<12} {'docs':>6} {'have':>6} {'drop':>6} {'blocked':>8} {'generate':>9}")
@@ -360,9 +364,9 @@ def main() -> None:
     print("\n  why the art is missing (importer's own resolution):")
     for key, n in plan["provenance"].items():
         print(f"    {key:<26} {n:>4}")
-    if plan["missingSurfaceFiles"]:
+    if missing_surfaces:
         print("\n  ⚠ live-surface files NOT found (veto may be too narrow):")
-        for rel in plan["missingSurfaceFiles"]:
+        for rel in missing_surfaces:
             print(f"    {rel}")
 
     text = json.dumps(plan, ensure_ascii=False, indent=2) + "\n"
