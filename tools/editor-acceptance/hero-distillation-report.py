@@ -19,7 +19,18 @@ def render(data):
         assert [r['id'] for r in arm['rows']] == [r['id'] for r in primary]
         assert arm['fullHeroSuccess'] is None and arm['unsafeAccepts'] is None, 'UNVERIFIED_QUALITY_CANNOT_BE_SCORED'
 
-    bars, quality = [], []
+    bars, quality, costs = [], [], []
+    for key, name in [('base', '未微調基底'), ('lora', '本次 LoRA')]:
+        generation = data['arms'][key].get('generation')
+        for group, label in [('wholeHeroes', '完整英雄'), ('auxiliarySlots', '輔助單槽')]:
+            stats = generation[group] if generation else None
+            recorded = f'{stats["recordedCases"]} / {stats["plannedCases"]}' if stats else '未測'
+            complete = f'{stats["completeOutputs"]} / {stats["completeJsonOutputs"]}' if stats else '未測'
+            peak = stats['recordedCasePeakMetalBytes'] if stats else None
+            memory = f'{peak / 1024**3:.2f}' if peak is not None else '未測'
+            costs.append(f'<tr><th scope="row">{name}<small>{label}</small></th><td>{recorded}</td><td>{complete}</td>'
+                f'<td>{number(stats["meanGenerationCallSeconds"] if stats else None)}</td>'
+                f'<td>{number(stats["p95GenerationCallSeconds"] if stats else None)}</td><td>{memory}</td></tr>')
     for key, name in [('teacher', '歷史 Codex 教師'), ('base', '未微調基底'), ('lora', '本次 LoRA')]:
         arm = data['arms'][key]
         value = arm['structuralPassed']
@@ -67,7 +78,9 @@ def render(data):
 <small>記憶體值不代表全流程峰值或系統 RAM。逐步訓練使用不同題目，不以其 loss 走勢判定前後品質。</small></section>
 <section><h2>同 {data['counts']['tasks']} 題的教師答案 CE</h2><div class="table-wrap"><table><thead><tr><th>階段</th><th>題數</th><th>每題平均 CE</th><th>答案 token 加權 CE</th></tr></thead><tbody>{''.join(ce_rows)}</tbody></table></div>
 <small>越低代表對既有教師答案的預測損失較低，不是自動生成成功率。前後皆完整完成且題目／答案長度一致才計算差異。</small></section>
-<section><h2>完整英雄結構檢查</h2>{''.join(bars)}<small>主分母固定 {count} 名；{data['counts']['secondarySlots']} 個輔助單槽不加入分母。歷史教師是控制組，並非預設 100% 正確。</small></section>
+<section><h2>完整英雄結構檢查</h2>{''.join(bars)}<small>主分母固定 {count} 名；{data['counts']['secondarySlots']} 個輔助單槽不加入分母。歷史教師是控制組，並非預設 100% 正確。</small>
+<h3>推論成本與輸出完成情形</h3><div class="table-wrap"><table><thead><tr><th>比較組／任務</th><th>已保存／計畫</th><th>完整輸出／其中有效 JSON</th><th>平均秒</th><th>P95 秒</th><th>已記錄 Metal 峰值 GiB</th></tr></thead><tbody>{''.join(costs)}</tbody></table></div>
+<small>耗時含 prefill、decode 與輸出解析，不含載入模型或輸入 tokenization；失敗輸出也納入。P95 採 nearest-rank，小樣本不代表穩定尾延遲。未保存的中斷呼叫不計成本，不冒稱完整批次耗時。有效 JSON 不等於英雄成功；TTFT／純 decode TPS 未量測。歷史 Codex 教師缺少同口徑成本紀錄。</small></section>
 <section><h2>不能省略的驗收</h2><div class="table-wrap"><table><thead><tr><th>比較組</th><th>封裝准入</th><th>隔離匯入／runtime 一致</th><th>機制忠實度</th><th>完整上場</th><th>危險錯誤接受</th></tr></thead><tbody>{''.join(quality)}</tbody></table></div>
 <small>隔離匯入通過不等於平台選角或實際對局通過。</small>
 <small>完整支援英雄目標至少 95%，本 dev 組須 {math.ceil(count * .95)}/{count}；仍需未見新批測試，不能據此保證泛化。</small></section>

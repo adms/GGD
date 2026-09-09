@@ -37,6 +37,44 @@ def structural_rows(report, cases):
             for r in report['rows'] if r['slot'] == 'HERO'}
 
 
+def generation_stats(records, cases):
+    """Observed generation-call cost, never decode-only TPS or hero quality."""
+    assert [r['id'] for r in records] == [c['id'] for c in cases[:len(records)]], 'GENERATION_CASE_ORDER_DRIFT'
+    assert len(records) <= len(cases), 'EXCESS_GENERATION_RECORDS'
+    for row, case in zip(records, cases):
+        assert row['slot'] == case['slot'], 'GENERATION_SLOT_DRIFT'
+        assert checked_number(row['seconds']) > 0, 'INVALID_GENERATION_SECONDS'
+        assert type(row['promptTokens']) is int and row['promptTokens'] > 0, 'INVALID_PROMPT_TOKENS'
+        tokens = row['generationTokens']
+        assert tokens is None or type(tokens) is int and tokens >= 0, 'INVALID_GENERATION_TOKENS'
+        assert checked_number(row['peakMetalBytes']) >= 0, 'INVALID_GENERATION_MEMORY'
+        assert type(row['attempts']) is int and row['attempts'] == 1 and type(row['humanRepairs']) is int and row['humanRepairs'] == 0, 'GENERATION_REPAIR_OR_RETRY'
+        assert type(row['complete']) is bool and type(row['json']['parsed']) is bool, 'INVALID_COMPLETION_FLAGS'
+
+    def summarize(selected, planned):
+        durations = sorted(r['seconds'] for r in selected)
+        known = [r['generationTokens'] for r in selected if r['generationTokens'] is not None]
+        seconds = sum(durations)
+        return {'plannedCases': planned, 'recordedCases': len(selected),
+            'completeOutputs': sum(r['complete'] for r in selected),
+            'completeJsonOutputs': sum(r['complete'] and r['json']['parsed'] for r in selected),
+            'generationCallSeconds': seconds if selected else None,
+            'meanGenerationCallSeconds': statistics.mean(durations) if selected else None,
+            'p50GenerationCallSeconds': durations[math.ceil(len(durations) * .5) - 1] if selected else None,
+            'p95GenerationCallSeconds': durations[math.ceil(len(durations) * .95) - 1] if selected else None,
+            'knownGenerationTokens': sum(known) if selected else None,
+            'missingGenerationTokenCounts': len(selected) - len(known),
+            'promptTokens': sum(r['promptTokens'] for r in selected) if selected else None,
+            'effectiveOutputTokensPerGenerationSecond': sum(known) / seconds if selected and len(known) == len(selected) else None,
+            'recordedCasePeakMetalBytes': max(r['peakMetalBytes'] for r in selected) if selected else None}
+
+    return {'all': summarize(records, len(cases)),
+        'wholeHeroes': summarize([r for r in records if r['slot'] == 'HERO'], sum(c['slot'] == 'HERO' for c in cases)),
+        'auxiliarySlots': summarize([r for r in records if r['slot'] != 'HERO'], sum(c['slot'] != 'HERO' for c in cases)),
+        'percentileMethod': 'nearest-rank', 'ttftSeconds': None, 'decodeOnlyTokensPerSecond': None,
+        'scope': 'Persisted generation-call durations include prefill/decode/output parsing, exclude model loading and prompt tokenization. Failed outputs are included; unfinished/unrecorded calls are not measured. Complete JSON is not semantic or playable-hero success.'}
+
+
 def collect(training, evaluation, paired=None, teacher_compile=None, teacher_package=None, teacher_import=None):
     pins = {}
 
@@ -80,8 +118,32 @@ def collect(training, evaluation, paired=None, teacher_compile=None, teacher_pac
         'macroCE': after_stats['macroCE'] - before_stats['macroCE'],
         'tokenWeightedCE': after_stats['tokenWeightedCE'] - before_stats['tokenWeightedCE']}
     primary = [c for c in cases if c['slot'] == 'HERO']
+    inference_dir = Path(paired) / 'inference' if paired else None
+    inference_manifest = read(inference_dir / 'manifest.json', True) if inference_dir else None
+    if inference_manifest:
+        assert inference_manifest['schema'] == 'ggd-distillation-protected-inference@1', 'WRONG_INFERENCE_MANIFEST'
+        assert inference_manifest['evaluationManifestSha256'] == pins[str((evaluation / 'manifest.json').resolve())]['sha256'], 'INFERENCE_EVAL_DRIFT'
+        assert inference_manifest['trainingManifestSha256'] == pins[str((training / 'manifest.json').resolve())]['sha256'], 'INFERENCE_TRAIN_DRIFT'
+        assert inference_manifest['caseIds'] == expected_ids, 'INFERENCE_CASE_ORDER_DRIFT'
     arms = {}
     for arm in ['teacher', 'base', 'lora']:
+        generation = None
+        if arm != 'teacher' and inference_manifest:
+            index = read(inference_dir / arm / 'index.json', True)
+            if index is not None:
+                records = []
+                assert len(index) <= len(cases), 'EXCESS_GENERATION_INDEX'
+                for n, entry in enumerate(index):
+                    record = read(inference_dir / arm / f'case-{n:04d}.json')
+                    assert {k: record[k] for k in ['id', 'complete', 'outputFormatMatches', 'seconds']} == entry, 'GENERATION_INDEX_DRIFT'
+                    assert record['arm'] == arm and record['decoding'] == inference_manifest['decoding'], 'GENERATION_ARM_OR_DECODING_DRIFT'
+                    assert record['messagesSha256'] == cases[n]['messagesSha256'], 'GENERATION_MESSAGE_DRIFT'
+                    assert hashlib.sha256(record['raw'].encode()).hexdigest() == record['rawSha256'], 'GENERATION_RAW_DRIFT'
+                    if record['complete']:
+                        assert record['finishReason'] == 'stop' and record['error'] is None, 'FALSE_COMPLETE_GENERATION'
+                        assert type(record['generationTokens']) is int and 0 < record['generationTokens'] <= inference_manifest['decoding']['max_tokens'], 'INVALID_COMPLETE_TOKEN_COUNT'
+                    records.append(record)
+                generation = generation_stats(records, cases)
         cr = Path(teacher_compile) / 'report.json' if arm == 'teacher' and teacher_compile else (
             Path(paired) / f'{arm}-compile/report.json' if arm != 'teacher' and paired else None)
         pr = Path(teacher_package) / 'report.json' if arm == 'teacher' and teacher_package else (
@@ -121,6 +183,7 @@ def collect(training, evaluation, paired=None, teacher_compile=None, teacher_pac
             assert value['passed'] is not True or packages[hero_id]['passed'] is True, 'IMPORT_PASSED_WITHOUT_ADMISSION'
             assert value['runtimeMatchesAdmission'] is not True or value['passed'] is True, 'RUNTIME_AUDIT_PASSED_WITHOUT_IMPORT'
         arms[arm] = {'wholeHeroes': len(primary), 'measuredStructural': compilation is not None,
+            'generation': generation,
             'structuralPassed': None if compilation is None else sum(r['structuralPassed'] for r in structural.values()),
             'packageAdmissionPassed': None if package is None else sum(r['passed'] is True for r in packages.values()),
             'isolatedImportPassed': None if imported is None else sum(r['passed'] is True for r in imports.values()),
