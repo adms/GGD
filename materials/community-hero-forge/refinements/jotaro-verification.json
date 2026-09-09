@@ -245,5 +245,15 @@
       "exitCode": 0,
       "logSha256": "8fd8bacfe1faa9ba8839d3e0629d4e189d465f9a6a482683e273f87dd6bf9c08"
     }
-  ]
+  ],
+  "firstBatchFailure": {
+    "head": "500d847047766270420254f4a34d3d672eabd75c",
+    "reportSha256": "2b451db8802ed111c10bbd35d4c573bf8d39a2d770aa4b918a3e69ed93abb450",
+    "exitCode": 1,
+    "causes": [
+      "timeStop fixed radius missing from intrinsic-geometry contract list",
+      "Editor README still contained the previous capability/coverage receipt"
+    ],
+    "fix": "Register actual intrinsic radius without a no-op shape field; refresh README from generated contract. No gameplay behavior or acceptance threshold changed."
+  }
 }

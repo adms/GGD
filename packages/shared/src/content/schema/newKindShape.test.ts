@@ -72,7 +72,9 @@ const PRE_A4_KINDS: ReadonlySet<string> = new Set([
  * 拿 `ctx.point` 解），所以那四格幾何欄位在 2026-08-10 被拿掉了 —— 一個必填卻
  * 沒有人讀的 `shape` 只滿足 E1 的字面，不滿足 E1 的意思。
  */
-const OWN_GEOMETRY_KINDS: ReadonlyMap<string, string> = new Map([["randomArea", "scatterRadius"], ["trap", "radius"]]);
+// timeStop owns a fixed circle; its radius is read by the runtime membership
+// and swept-projectile tests. A separate shape selector would be ignored.
+const OWN_GEOMETRY_KINDS: ReadonlyMap<string, string> = new Map([["randomArea", "scatterRadius"], ["trap", "radius"], ["timeStop", "radius"]]);
 
 /**
  * ⭐⭐ E1 的**第三類**：沒有幾何、只有**收款人**的 kind（2026-09-01）。
