@@ -1,0 +1,32 @@
+[
+  {
+    "path": "icon-gen-complete.log",
+    "sha256": "7292f133968c0df6a8b33774c5329d37932546bb37dcdfb6ee0c4dea41bec9cc",
+    "bytes": 609
+  },
+  {
+    "path": "common-fixes-lint.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "editor-release.log",
+    "sha256": "867f35c4b3dc474d06d5e454fbcb716dd5a9fa4b881ea1b442ccedf28b1cbd76",
+    "bytes": 910
+  },
+  {
+    "path": "skills-prefix.log",
+    "sha256": "27c0e99f8f923a66f1876d4022695e98fc5063cf8c174688963f98c2e283d8b0",
+    "bytes": 45450
+  },
+  {
+    "path": "skills-tail.log",
+    "sha256": "71714c0c0e6f3cdec766018e446887ecbd0de40ccc4af3be47d9f23078968473",
+    "bytes": 9420
+  },
+  {
+    "path": "coord.log",
+    "sha256": "dac0915569ca8d16e3bef05fd3f177e66cc1240523b770420ff2383c382b576b",
+    "bytes": 6094
+  }
+]

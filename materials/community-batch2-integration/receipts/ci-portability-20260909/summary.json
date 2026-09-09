@@ -1,0 +1,168 @@
+{
+  "schema": "ggd-mvp-ci-fix-receipt@1",
+  "observedAt": "2026-09-09T15:30:00Z",
+  "mainBaseline": "d078070252fd883fac0a1ff2b73adf19e8542be9",
+  "scope": "Fix existing PR integration gates only; no hero, model, VFX or release-service change.",
+  "failuresBefore": [
+    {
+      "pr": 1135,
+      "job": "https://github.com/adms/GGD/actions/runs/34368722936/job/102524329598",
+      "failure": "20 lint errors: helper named use and invalid for-of variable type annotations",
+      "issue": 1145
+    },
+    {
+      "pr": 1153,
+      "job": "https://github.com/adms/GGD/actions/runs/34368737141/job/102524402927",
+      "failure": "TS2741: legendaryShelfRules omitted swapWhenFull",
+      "issue": 1110,
+      "baseline": "resolver and relevant schema identical to Main"
+    },
+    {
+      "prs": [
+        1135,
+        1153
+      ],
+      "jobs": [
+        "https://github.com/adms/GGD/actions/runs/34368722936/job/102524329526",
+        "https://github.com/adms/GGD/actions/runs/34368737141/job/102524402767"
+      ],
+      "failure": "iconplan:check persisted checkout-specific missingSurfaceFiles",
+      "issue": 1131,
+      "baseline": "planner identical to Main"
+    }
+  ],
+  "checks": [
+    {
+      "name": "first-batch four affected files eslint",
+      "exitCode": 0,
+      "evidence": "same-task agent tool output; no separate log saved"
+    },
+    {
+      "name": "legendaryShelfWiring.test.ts",
+      "branches": [
+        "1135",
+        "1153"
+      ],
+      "passedPerBranch": 5,
+      "exitCode": 0,
+      "beforeFix": "3 new cases failed with undefined; existing 2 passed",
+      "evidence": "same-task agent tool output; no separate log saved"
+    },
+    {
+      "name": "game-server tsc --noEmit -p tsconfig.json --incremental false",
+      "branches": [
+        "1135",
+        "1153"
+      ],
+      "exitCode": 0,
+      "evidence": "same-task agent tool output; no separate log saved"
+    },
+    {
+      "name": "tools/icon-gen/test/icon-gen.test.ts",
+      "branch": "1135",
+      "passed": 10,
+      "exitCode": 0,
+      "log": "icon-gen-complete.log"
+    }
+  ],
+  "invariants": {
+    "firstBatchTrackedProjectsUnchanged": 37,
+    "secondBatchTrackedProjectsUnchanged": 37,
+    "iconPlanSemanticFieldsUnchanged": true,
+    "whitelistCreatedOrModified": false,
+    "fullPlanByteComparisonPreserved": true,
+    "deploymentPerformed": false,
+    "commonServicePublicationVerified": false
+  },
+  "issues": {
+    "1131": "reopened; fix in original PRs, pending Main merge",
+    "1110": "open; this fixes wiring, B UI remains outside this change",
+    "1145": "open; original PR review and integration still needed"
+  },
+  "limitations": [
+    "CI after this fix has not run yet.",
+    "No claim of 74 heroes on a common service.",
+    "Report-only pnpm audit warnings did not fail vuln jobs; dependency inputs equal Main."
+  ],
+  "sourceCommit": "a0be36105080a5eca9c6b07005a36e7161783fd1",
+  "pr": 1153,
+  "editorReleaseTests": 592,
+  "editorReleaseExitCode": 0,
+  "coordExitCode": 0,
+  "skills": {
+    "completedPrefixCommands": 56,
+    "results": [
+      {
+        "command": "pnpm decor:check",
+        "exitCode": 0,
+        "elapsedSeconds": 3.36
+      },
+      {
+        "command": "pnpm speedlists:check",
+        "exitCode": 0,
+        "elapsedSeconds": 2.477
+      },
+      {
+        "command": "pnpm locust:check",
+        "exitCode": 0,
+        "elapsedSeconds": 0.849
+      },
+      {
+        "command": "pnpm w3a:check",
+        "exitCode": 0,
+        "elapsedSeconds": 1.882
+      },
+      {
+        "command": "pnpm board:roll:check",
+        "exitCode": 0,
+        "elapsedSeconds": 0.707
+      },
+      {
+        "command": "pnpm ruleslip:check",
+        "exitCode": 0,
+        "elapsedSeconds": 0.585
+      },
+      {
+        "command": "pnpm receipt:check",
+        "exitCode": 0,
+        "elapsedSeconds": 1.429
+      },
+      {
+        "command": "pnpm handback:check",
+        "exitCode": 0,
+        "elapsedSeconds": 1.332
+      },
+      {
+        "command": "pnpm clipdeg:check",
+        "exitCode": 0,
+        "elapsedSeconds": 1.492
+      },
+      {
+        "command": "pnpm apcoeffdiff:check",
+        "exitCode": 0,
+        "elapsedSeconds": 1.598
+      },
+      {
+        "command": "pnpm decor:check",
+        "exitCode": 0,
+        "elapsedSeconds": 3.534
+      },
+      {
+        "command": "pnpm appearance:check",
+        "exitCode": 0,
+        "elapsedSeconds": 1.887
+      },
+      {
+        "command": "pnpm ptokens:check",
+        "exitCode": 0,
+        "elapsedSeconds": 1.889
+      },
+      {
+        "command": "pnpm coord:check",
+        "exitCode": 0,
+        "elapsedSeconds": 3.581
+      }
+    ]
+  },
+  "skillsStatus": "all commands passed across prefix and resumed tail; initial aggregate exit 1 on stale decoration census, repaired via generator"
+}
