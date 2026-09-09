@@ -54,6 +54,29 @@ node tools/editor-acceptance/hero-distillation-blind-teacher-seal.mjs \
 
 Each teacher row must record the actual model, effort, generation timestamp, tool-call count, input/output tokens and wall time. The seal rejects a teacher timestamp that is not later than the completed candidate batch, missing/reordered cases, output-format drift, incomplete candidate arms and any pre-existing teacher file in the candidate evaluation. It records hashes for both arms' raw outputs so later teacher work cannot silently change the candidate denominator.
 
+Run the sealed teacher through the same CPU-side controls, then recollect the three arms against the original blind evaluation. The controller creates a derived read-only teacher view; candidate inference continues to bind the original teacher-free manifest.
+
+```sh
+python3 tools/editor-acceptance/hero-distillation-blind-teacher-control.py \
+  --evaluation /absolute/new-blind-evaluation \
+  --seal /absolute/new-blind-teacher-seal \
+  --models /absolute/frozen-model-bindings \
+  --assets /absolute/frozen-assets \
+  --dependencies /absolute/pinned-dependencies \
+  --source-repo /absolute/GGD \
+  --asset-root /absolute/read-only-assets \
+  --out /absolute/new-blind-teacher-control
+
+python3 tools/editor-acceptance/hero-distillation-results.py \
+  --training /absolute/completed-training-run \
+  --evaluation /absolute/new-blind-evaluation \
+  --paired /absolute/completed-blind-candidate-batch \
+  --teacher-control /absolute/new-blind-teacher-control \
+  --out /absolute/new-blind-three-arm-results.json
+```
+
+The teacher controller performs no model call and zero repair. Its completed state means only that compile/package/import/runtime-control stages ran; semantic and match gameplay still require the bound quality-evidence step.
+
 The protected inference entry accepts both `internal-dev` and `blind-user-batch`, but validates different provenance rules. For a blind batch it rejects train/dev hero overlap, training-dataset reuse, teacher visibility, tuning reuse and checkpoint selection after generation. The final evidence-only gate is:
 
 ```sh
