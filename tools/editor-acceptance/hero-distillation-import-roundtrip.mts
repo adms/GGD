@@ -14,6 +14,48 @@ const hash=(bytes:any)=>createHash('sha256').update(bytes).digest('hex');
 const read=(file:string)=>JSON.parse(fs.readFileSync(file,'utf8'));
 const save=(file:string,value:any)=>fs.writeFileSync(file,JSON.stringify(value,null,2)+'\n',{flag:'wx'});
 
+export function verifyRuntime(compiled:any[],expected:any[]){
+  const actual=new Map(compiled.map(d=>[d.path,d.document]));
+  const wanted=new Map(expected.map(d=>[`compiled/${d.collection}/${d.id}.json`,d.document]));
+  assert.equal(actual.size,compiled.length,'DUPLICATE_IMPORTED_RUNTIME');
+  assert.equal(wanted.size,expected.length,'DUPLICATE_ADMITTED_RUNTIME');
+  assert.deepEqual(actual,wanted,'IMPORTED_RUNTIME_DIFFERS_FROM_ADMISSION');
+  return actual.size;
+}
+
+export async function verifySaved(options:any){
+  const admitted=path.resolve(options.admitted),imported=path.resolve(options['verify-saved-runtime']),out=path.resolve(options.out);
+  assert(!fs.existsSync(out),'REFUSE_OVERWRITE_OR_RETRY');
+  const aBytes=fs.readFileSync(path.join(admitted,'report.json')),iBytes=fs.readFileSync(path.join(imported,'report.json'));
+  const a=JSON.parse(aBytes.toString()),i=JSON.parse(iBytes.toString());
+  assert.equal(i.schema,'ggd-distillation-import-roundtrip@1');assert.equal(i.admittedReportSha256,hash(aBytes));
+  assert.deepEqual(i.rows.map((r:any)=>r.id),a.rows.map((r:any)=>r.id),'IMPORTED_CASE_ORDER_DRIFT');
+  const rows=[];
+  for(let n=0;n<i.rows.length;n++){
+    const item=i.rows[n],source=a.rows[n];
+    const row:any={id:item.id,runtimeMatchesAdmission:null};rows.push(row);
+    if(!item.liveImportPassed){row.status='not-measured';continue;}
+    try{
+      assert(/^[a-f0-9]{40}$/.test(item.engineRevision));assert(/^case-\d{4}\.json$/.test(source.artifact));
+      const modulePath='packages/shared/src/content/import/readPackageZip.ts';
+      const local=path.join(imported,'service-'+item.engineRevision,'source',modulePath);
+      const original=execFileSync('git',['show',item.engineRevision+':'+modulePath],{cwd:path.resolve(options['source-repo']),maxBuffer:16*1024*1024});
+      assert.equal(hash(fs.readFileSync(local)),hash(original),'ZIP_READER_SOURCE_DRIFT');
+      const reader=await import(pathToFileURL(local).href);
+      const archive=fs.readFileSync(path.join(imported,source.artifact.replace('.json',''),'hero.zip'));
+      assert.equal(hash(archive),item.archiveSha256,'SAVED_ARCHIVE_DRIFT');
+      const artifact=fs.readFileSync(path.join(admitted,source.artifact));assert.equal(hash(artifact),source.artifactSha256,'ADMISSION_ARTIFACT_DRIFT');
+      row.runtimeDocuments=verifyRuntime(reader.readPackageZip(new Uint8Array(archive)).compiled,JSON.parse(artifact.toString()).runtime);
+      Object.assign(row,{runtimeMatchesAdmission:true,status:'runtime-identical',archiveSha256:hash(archive)});
+    }catch(error){Object.assign(row,{runtimeMatchesAdmission:false,status:'runtime-verification-failed',error:String(error)});}
+  }
+  const report={schema:'ggd-distillation-import-runtime-audit@1',admittedReportSha256:hash(aBytes),importReportSha256:hash(iBytes),
+    scriptSha256:hash(fs.readFileSync(script)),rows,counts:{wholeHeroes:rows.length,identical:rows.filter(r=>r.runtimeMatchesAdmission===true).length,
+      failed:rows.filter(r=>r.runtimeMatchesAdmission===false).length,unmeasured:rows.filter(r=>r.runtimeMatchesAdmission===null).length},
+    fullHeroE2EProven:false,modelPromoted:false,scope:'Offline comparison of retained import ZIP runtime against pre-import package admission. No new HTTP calls or retries; not semantic or match proof.'};
+  fs.mkdirSync(out,{recursive:true});save(path.join(out,'report.json'),report);return report;
+}
+
 export function linkDependencies(root:string,apiDeps:string,sharedDeps:string){
   // Never resolve @ggd/shared into a different worktree's mutable source.
   const destination=path.join(root,'node_modules');fs.mkdirSync(destination);
@@ -73,9 +115,11 @@ export async function startService(repo:string,revision:string,out:string,apiDep
     async function request(route:string,body?:Uint8Array,identity?:Record<string,string>){
       assert(route.startsWith('/')&&!route.includes('?')&&!route.includes('..'),'UNSAFE_ROUTE');
       const target=auth.HERO_IMPORT_PREFIX+route,method=body?'POST':'GET';
-      const res=await fetch(origin+target,{method,redirect:'error',signal:AbortSignal.timeout(90000),
+      let res:Response;
+      try{res=await fetch(origin+target,{method,redirect:'error',signal:AbortSignal.timeout(90000),
         headers:{...auth.heroImportHeaders(secret,method,target,body,identity),...(body?{'content-type':'application/zip'}:{})},
-        body:body?Buffer.from(body):undefined});
+        body:body?Buffer.from(body):undefined});}
+      catch(error:any){throw new Error(`IMPORT_TRANSPORT_FAILURE:${method}:${route}:${error?.name}:${error?.cause?.code??'unknown'}`);}
       assert(res.ok,`IMPORT_HTTP_${res.status}:${route}:`+(res.ok?'':await res.text()));
       return res;
     }
@@ -161,7 +205,11 @@ export async function run(options:any){
 }
 
 if(process.argv[1]&&path.resolve(process.argv[1])===script){
-  const {values}=parseArgs({options:Object.fromEntries(['admitted','out','source-repo','api-dependencies','dependencies'].map(k=>[k,{type:'string'}]).concat([['asset-root',{type:'string',multiple:true}]])) as any});
-  for(const key of ['admitted','out','source-repo','api-dependencies','dependencies','asset-root'])assert(values[key],'MISSING:'+key);
-  console.log(JSON.stringify((await run(values)).counts));
+  const {values}=parseArgs({options:Object.fromEntries(['admitted','out','source-repo','api-dependencies','dependencies','verify-saved-runtime'].map(k=>[k,{type:'string'}]).concat([['asset-root',{type:'string',multiple:true}]])) as any});
+  for(const key of ['admitted','out','source-repo'])assert(values[key],'MISSING:'+key);
+  if(values['verify-saved-runtime'])console.log(JSON.stringify((await verifySaved(values)).counts));
+  else{
+    for(const key of ['api-dependencies','dependencies','asset-root'])assert(values[key],'MISSING:'+key);
+    console.log(JSON.stringify((await run(values)).counts));
+  }
 }

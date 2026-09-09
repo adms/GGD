@@ -1,0 +1,130 @@
+{
+  "schema": "ggd-distillation-import-runtime-audit@1",
+  "admittedReportSha256": "11c21c7d8d386377564b3b87e000412d0485af3906b6a077167a527738217f74",
+  "importReportSha256": "d4e3be741fd3f3bac5da441a655cc543567ec0081a8c9edafe2f7e78744c4ee8",
+  "scriptSha256": "c36fa305c47d37d69c9a8450fd1350600b2cff86cf88bb9bc1dac4062d1d6d70",
+  "rows": [
+    {
+      "id": "godie-edem:HERO",
+      "runtimeMatchesAdmission": null,
+      "status": "not-measured"
+    },
+    {
+      "id": "godie-h02v:HERO",
+      "runtimeMatchesAdmission": null,
+      "status": "not-measured"
+    },
+    {
+      "id": "community-review-09-20260907:HERO",
+      "runtimeMatchesAdmission": null,
+      "status": "not-measured"
+    },
+    {
+      "id": "community-review-16-20260907:HERO",
+      "runtimeMatchesAdmission": true,
+      "runtimeDocuments": 129,
+      "status": "runtime-identical",
+      "archiveSha256": "dc5fa9de07a18ef3a7b0d37ffbc7a42748f6a7a660f9f6b74d340f9661ba1240"
+    },
+    {
+      "id": "community-review-17-20260907:HERO",
+      "runtimeMatchesAdmission": true,
+      "runtimeDocuments": 128,
+      "status": "runtime-identical",
+      "archiveSha256": "2c0bb90dd86b488708624f7de285130d079b9c34bbdad25dd8fa0cc01bddd448"
+    },
+    {
+      "id": "community-review-19-20260907:HERO",
+      "runtimeMatchesAdmission": true,
+      "runtimeDocuments": 128,
+      "status": "runtime-identical",
+      "archiveSha256": "0e65f6f35a9bf88aa2d70566eedf25fc93e0d1fbe49ecac3e0119596f1bb10a0"
+    },
+    {
+      "id": "community-review-20-20260907:HERO",
+      "runtimeMatchesAdmission": true,
+      "runtimeDocuments": 128,
+      "status": "runtime-identical",
+      "archiveSha256": "6e90c4ffadcbe6073f0edbe6fb85365a800bca911af9f5d32a0d66a8293e867a"
+    },
+    {
+      "id": "community-review-23-20260907:HERO",
+      "runtimeMatchesAdmission": true,
+      "runtimeDocuments": 128,
+      "status": "runtime-identical",
+      "archiveSha256": "18f01334d971b83526469fcd57930311d17387860781039eb7319ac7f0a5fffc"
+    },
+    {
+      "id": "community-review-24-20260907:HERO",
+      "runtimeMatchesAdmission": true,
+      "runtimeDocuments": 128,
+      "status": "runtime-identical",
+      "archiveSha256": "e3c5330afd2b38138951d08c99b3d4bfaba641d6e536824e964690746b0ee7ea"
+    },
+    {
+      "id": "community-review-26-20260907:HERO",
+      "runtimeMatchesAdmission": true,
+      "runtimeDocuments": 130,
+      "status": "runtime-identical",
+      "archiveSha256": "1d5ebf1b824587806f3469a0ec171ae86cd304b143e4495f515ea66f266c4fc5"
+    },
+    {
+      "id": "community-review-28-20260907:HERO",
+      "runtimeMatchesAdmission": true,
+      "runtimeDocuments": 128,
+      "status": "runtime-identical",
+      "archiveSha256": "55e6a88a88de9d227a87110f19bfed3ea32e8c371798406e6aaf03930f21b1e1"
+    },
+    {
+      "id": "community-review-33-20260907:HERO",
+      "runtimeMatchesAdmission": true,
+      "runtimeDocuments": 129,
+      "status": "runtime-identical",
+      "archiveSha256": "85bc197ec3f8d7ed2b474622179361d2888f8ac27b7c4ad430b4fc8a42963473"
+    },
+    {
+      "id": "community-review-36-20260907:HERO",
+      "runtimeMatchesAdmission": true,
+      "runtimeDocuments": 129,
+      "status": "runtime-identical",
+      "archiveSha256": "13c71005190c177c3f67cd4690e3728b00146b24041c5901912a3d9a3c080fc2"
+    },
+    {
+      "id": "b2-uncle:HERO",
+      "runtimeMatchesAdmission": true,
+      "runtimeDocuments": 131,
+      "status": "runtime-identical",
+      "archiveSha256": "d3d9ad58ffccc52b802535ab0933ade9cd67269501faea1e8e203df0d7587931"
+    },
+    {
+      "id": "b2-haga:HERO",
+      "runtimeMatchesAdmission": true,
+      "runtimeDocuments": 131,
+      "status": "runtime-identical",
+      "archiveSha256": "15825d95d5ec4dfb701d5c815d86d094ae7fd6775232133ff9ef7e670d0f0ed2"
+    },
+    {
+      "id": "b2-fushi:HERO",
+      "runtimeMatchesAdmission": true,
+      "runtimeDocuments": 132,
+      "status": "runtime-identical",
+      "archiveSha256": "deb066a663ff4740e1d5834843a6b130e181496a2123e8b7bbdfb59731d056fd"
+    },
+    {
+      "id": "b2-nube:HERO",
+      "runtimeMatchesAdmission": true,
+      "runtimeDocuments": 131,
+      "status": "runtime-identical",
+      "archiveSha256": "6f12e81fbd066487918b2380fc39b687d69e8af84eca2e1bdc7baec89ae209e2"
+    }
+  ],
+  "counts": {
+    "wholeHeroes": 17,
+    "identical": 14,
+    "failed": 0,
+    "unmeasured": 3
+  },
+  "fullHeroE2EProven": false,
+  "modelPromoted": false,
+  "scope": "Offline comparison of retained import ZIP runtime against pre-import package admission. No new HTTP calls or retries; not semantic or match proof."
+}

@@ -1,0 +1,172 @@
+{
+  "schema": "ggd-distillation-import-roundtrip@1",
+  "admittedReportSha256": "11c21c7d8d386377564b3b87e000412d0485af3906b6a077167a527738217f74",
+  "sourceEvidence": {
+    "arm": "teacher-control",
+    "answersSha256": "66e5b12240df5730f9409f1f25ddd19b057136af8c69cfd9142ed472128d7f15",
+    "modelInferenceCalls": 0
+  },
+  "scriptSha256": "1ef9e3f1eae63f40b5253a523c68438fc82ca2da271f296704f7fbf2a62e434a",
+  "rows": [
+    {
+      "id": "godie-edem:HERO",
+      "heroId": "godie-edem",
+      "engineRevision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "liveImportPassed": false,
+      "fullHeroE2EProven": false,
+      "status": "native-import-bridge-pending"
+    },
+    {
+      "id": "godie-h02v:HERO",
+      "heroId": "godie-h02v",
+      "engineRevision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "liveImportPassed": false,
+      "fullHeroE2EProven": false,
+      "status": "native-import-bridge-pending"
+    },
+    {
+      "id": "community-review-09-20260907:HERO",
+      "heroId": "community-review-09-20260907",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": false,
+      "fullHeroE2EProven": false,
+      "status": "import-failed",
+      "error": "Error: listen EPERM: operation not permitted 127.0.0.1"
+    },
+    {
+      "id": "community-review-16-20260907:HERO",
+      "heroId": "community-review-16-20260907",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": false,
+      "fullHeroE2EProven": false,
+      "status": "import-failed",
+      "error": "AssertionError [ERR_ASSERTION]: SERVICE_START_PREVIOUSLY_FAILED:Error: listen EPERM: operation not permitted 127.0.0.1"
+    },
+    {
+      "id": "community-review-17-20260907:HERO",
+      "heroId": "community-review-17-20260907",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": false,
+      "fullHeroE2EProven": false,
+      "status": "import-failed",
+      "error": "AssertionError [ERR_ASSERTION]: SERVICE_START_PREVIOUSLY_FAILED:Error: listen EPERM: operation not permitted 127.0.0.1"
+    },
+    {
+      "id": "community-review-19-20260907:HERO",
+      "heroId": "community-review-19-20260907",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": false,
+      "fullHeroE2EProven": false,
+      "status": "import-failed",
+      "error": "AssertionError [ERR_ASSERTION]: SERVICE_START_PREVIOUSLY_FAILED:Error: listen EPERM: operation not permitted 127.0.0.1"
+    },
+    {
+      "id": "community-review-20-20260907:HERO",
+      "heroId": "community-review-20-20260907",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": false,
+      "fullHeroE2EProven": false,
+      "status": "import-failed",
+      "error": "AssertionError [ERR_ASSERTION]: SERVICE_START_PREVIOUSLY_FAILED:Error: listen EPERM: operation not permitted 127.0.0.1"
+    },
+    {
+      "id": "community-review-23-20260907:HERO",
+      "heroId": "community-review-23-20260907",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": false,
+      "fullHeroE2EProven": false,
+      "status": "import-failed",
+      "error": "AssertionError [ERR_ASSERTION]: SERVICE_START_PREVIOUSLY_FAILED:Error: listen EPERM: operation not permitted 127.0.0.1"
+    },
+    {
+      "id": "community-review-24-20260907:HERO",
+      "heroId": "community-review-24-20260907",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": false,
+      "fullHeroE2EProven": false,
+      "status": "import-failed",
+      "error": "AssertionError [ERR_ASSERTION]: SERVICE_START_PREVIOUSLY_FAILED:Error: listen EPERM: operation not permitted 127.0.0.1"
+    },
+    {
+      "id": "community-review-26-20260907:HERO",
+      "heroId": "community-review-26-20260907",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": false,
+      "fullHeroE2EProven": false,
+      "status": "import-failed",
+      "error": "AssertionError [ERR_ASSERTION]: SERVICE_START_PREVIOUSLY_FAILED:Error: listen EPERM: operation not permitted 127.0.0.1"
+    },
+    {
+      "id": "community-review-28-20260907:HERO",
+      "heroId": "community-review-28-20260907",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": false,
+      "fullHeroE2EProven": false,
+      "status": "import-failed",
+      "error": "AssertionError [ERR_ASSERTION]: SERVICE_START_PREVIOUSLY_FAILED:Error: listen EPERM: operation not permitted 127.0.0.1"
+    },
+    {
+      "id": "community-review-33-20260907:HERO",
+      "heroId": "community-review-33-20260907",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": false,
+      "fullHeroE2EProven": false,
+      "status": "import-failed",
+      "error": "AssertionError [ERR_ASSERTION]: SERVICE_START_PREVIOUSLY_FAILED:Error: listen EPERM: operation not permitted 127.0.0.1"
+    },
+    {
+      "id": "community-review-36-20260907:HERO",
+      "heroId": "community-review-36-20260907",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": false,
+      "fullHeroE2EProven": false,
+      "status": "import-failed",
+      "error": "AssertionError [ERR_ASSERTION]: SERVICE_START_PREVIOUSLY_FAILED:Error: listen EPERM: operation not permitted 127.0.0.1"
+    },
+    {
+      "id": "b2-uncle:HERO",
+      "heroId": "b2-uncle",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": false,
+      "fullHeroE2EProven": false,
+      "status": "import-failed",
+      "error": "AssertionError [ERR_ASSERTION]: SERVICE_START_PREVIOUSLY_FAILED:Error: listen EPERM: operation not permitted 127.0.0.1"
+    },
+    {
+      "id": "b2-haga:HERO",
+      "heroId": "b2-haga",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": false,
+      "fullHeroE2EProven": false,
+      "status": "import-failed",
+      "error": "AssertionError [ERR_ASSERTION]: SERVICE_START_PREVIOUSLY_FAILED:Error: listen EPERM: operation not permitted 127.0.0.1"
+    },
+    {
+      "id": "b2-fushi:HERO",
+      "heroId": "b2-fushi",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": false,
+      "fullHeroE2EProven": false,
+      "status": "import-failed",
+      "error": "AssertionError [ERR_ASSERTION]: SERVICE_START_PREVIOUSLY_FAILED:Error: listen EPERM: operation not permitted 127.0.0.1"
+    },
+    {
+      "id": "b2-nube:HERO",
+      "heroId": "b2-nube",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": false,
+      "fullHeroE2EProven": false,
+      "status": "import-failed",
+      "error": "AssertionError [ERR_ASSERTION]: SERVICE_START_PREVIOUSLY_FAILED:Error: listen EPERM: operation not permitted 127.0.0.1"
+    }
+  ],
+  "services": {},
+  "scope": "Pinned Main HTTP build, inspect, immutable isolated storage and download. No platform publication, hero selection, game behavior or model readiness.",
+  "fullHeroE2EProven": false,
+  "modelPromoted": false,
+  "counts": {
+    "wholeHeroes": 17,
+    "liveImportPassed": 0,
+    "failed": 15
+  }
+}

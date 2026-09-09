@@ -4,11 +4,19 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
-import {linkDependencies,roundtrip,run} from './hero-distillation-import-roundtrip.mts';
+import {linkDependencies,roundtrip,run,verifyRuntime} from './hero-distillation-import-roundtrip.mts';
 import {assetReader} from './hero-distillation-package-admission.mts';
 
 const temp=()=>fs.mkdtempSync(path.join(os.tmpdir(),'ggd-import-roundtrip-test-'));
 const put=(file:string,value:any)=>{fs.mkdirSync(path.dirname(file),{recursive:true});fs.writeFileSync(file,JSON.stringify(value));};
+
+test('runtime equality rejects dropped, changed, extra or duplicate documents',()=>{
+  const expected=[{collection:'abilities',id:'hero.q',document:{damage:10}}];
+  const compiled=[{path:'compiled/abilities/hero.q.json',document:{damage:10}}];
+  assert.equal(verifyRuntime(compiled,expected),1);
+  for(const bad of [[],[{...compiled[0],document:{damage:11}}],[...compiled,compiled[0]],
+    [...compiled,{path:'compiled/abilities/extra.json',document:{}}]])assert.throws(()=>verifyRuntime(bad,expected));
+});
 
 test('dependency aliases stay inside the pinned source, not the supplied workspace',()=>{
   const dir=temp();
