@@ -346,5 +346,65 @@
     "azazel-batch-typecheck-shared.log": {
       "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
     }
+  },
+  "finalBatch": {
+    "head": "f070566715b94a39cd9737f834914c9e712662dc",
+    "workingTreeClean": true,
+    "sourceFingerprint": "5b908cbd30f46c68a57e251abce4d5f11760f8cdfc0000133ce66b23237959da",
+    "exitCode": 2,
+    "errors": [],
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 69,
+      "slotsWithoutBehaviorSuite": 153
+    },
+    "modelBytes": "verified",
+    "reportSha256": "6218fd62b4057f05af36a4592e3da97ad1324db49d879d516707b2d050c056e5",
+    "editorTests": 601,
+    "registeredTests": 766,
+    "jobs": [
+      {
+        "id": "skills",
+        "exitCode": 0,
+        "logSha256": "17ef5932f89802fb75706fd2caae52a4eccce61b66129d31cea8cf9ac8e072c4"
+      },
+      {
+        "id": "editor",
+        "exitCode": 0,
+        "logSha256": "fcd9c2a551122f478bfb794224682014346d533c4500b35552d12718e877d5d9"
+      },
+      {
+        "id": "coord",
+        "exitCode": 0,
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271"
+      },
+      {
+        "id": "compile-and-models",
+        "exitCode": 0,
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c"
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "exitCode": 0,
+        "logSha256": "77e9e1cd3ad2f602d516a3f94dd7222e2bf7bd233ad159f60aa4a8aaae12439e"
+      },
+      {
+        "id": "behavior-trap-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "ff40f385280aaa3597ee16b4a448c18fb7df1d938a12c0a6e27a8024fc4c670b"
+      },
+      {
+        "id": "behavior-motion-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "05573cbba036d8c9617c871c7f0c2959cf2aa6b05cd7ea5ad790d162e1f04265"
+      },
+      {
+        "id": "behavior-target-resource-acceptance",
+        "exitCode": 0,
+        "logSha256": "ea419dd4d64568bc75b0bdf6e3ae8f0a2bc205f0f2d1577f0b434bb92da0c2b0"
+      }
+    ],
+    "meaning": "Every executed check passed on the clean commit. Exit 2 preserves 153 unmapped slots; no original-art, full-design or publication verdict. Receipt-only commit follows the tested source."
   }
 }
