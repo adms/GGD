@@ -62,7 +62,8 @@
     "swapResource": "資源互換",
     "taunt": "嘲諷",
     "weightedBranch": "加權分支（隨機挑一段）",
-    "trap": "定點單次普攻觸發陷阱"
+    "trap": "定點單次普攻觸發陷阱",
+    "interruptCast": "中斷合法敵人的可打斷施法前搖"
   },
   "hookEvents": {
     "onAbilityCast": "施法時",
@@ -101,7 +102,8 @@
     "onUltimateHit": "大招（R）命中時",
     "onAttackAttempt": "普攻提交時（含揮空、被閃避與後續前搖取消）",
     "onSummonHit": "自己的召喚物實際普攻命中時（含護盾吸收）",
-    "onObservedCombat": "觀察同區可見敵人的有效命中、治療或控制"
+    "onObservedCombat": "觀察同區可見敵人的有效命中、治療或控制",
+    "onBlock": "實際格擋正值傷害時"
   },
   "conditionLeaves": {
     "nearbyCombat": "附近友軍在指定時間內實際與敵方交戰",

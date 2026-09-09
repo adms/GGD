@@ -1,12 +1,12 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "e37f411f",
+  "capabilityFingerprint": "5debe6db",
   "counts": {
-    "effectKinds": 50,
-    "hookEvents": 37,
+    "effectKinds": 51,
+    "hookEvents": 38,
     "conditionLeafKinds": 11,
     "templateFamilies": 43,
-    "effectFields": 285,
+    "effectFields": 286,
     "stats": 23,
     "combatEnvKeys": 39
   },
@@ -517,6 +517,7 @@
       "grantGold",
       "grantXp",
       "heal",
+      "interruptCast",
       "invulnerable",
       "knockback",
       "leap",
@@ -550,6 +551,7 @@
       "onAllyProtected",
       "onAttackAttempt",
       "onBasicAttack",
+      "onBlock",
       "onBossSpawn",
       "onBoundaryTouch",
       "onCrowdControlApplied",

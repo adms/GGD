@@ -290,5 +290,119 @@
     "gintoki-typecheck-04.log": {
       "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
     }
-  }
+  },
+  "initialReleaseBatch": {
+    "head": "855adfcf9e9d49891b31fce0d7e92025646dda95",
+    "exitCode": 1,
+    "errors": [],
+    "reportSha256": "1f562b845a84a4438f8cdc58a2e162124150969d2a03065887257c03e1165239",
+    "failedJobs": [
+      {
+        "id": "skills",
+        "exitCode": 1,
+        "logSha256": "c71eed371603c4f590e8a747f99ad20157638488151bbbc0715eb0b29243eeaf"
+      },
+      {
+        "id": "editor",
+        "exitCode": 1,
+        "logSha256": "bb21322f345c4004def54dd2207f34a7eea2d944b4e447d59a1e19a1f19f7b67"
+      },
+      {
+        "id": "skills-spec-check",
+        "exitCode": 1,
+        "logSha256": "7ae83cfcc166a21f6937616026203ea14a84543bb2acf010b5541f2cfce3b57c"
+      },
+      {
+        "id": "skills-overview-check",
+        "exitCode": 1,
+        "logSha256": "3f36ece5de16138e62b6686bec7aafe90d5e6227b6eb4323c839a6c22d2dd968"
+      },
+      {
+        "id": "skills-skillforge-audit-check",
+        "exitCode": 1,
+        "logSha256": "50a624f5dee0370666517fd3953b50372db7e24e80ea1af5486e9798df973c9f"
+      },
+      {
+        "id": "skills-skillremake-docs-check",
+        "exitCode": 1,
+        "logSha256": "d0b7158b1ccf14af0aad8e6075934073eb35791b870762c5932ad6bca01acec1"
+      },
+      {
+        "id": "skills-atlas-check",
+        "exitCode": 1,
+        "logSha256": "33193844547619ab1ebd0af5bb3037c0ef4f5f8c09c34712861d117f34793bb9"
+      },
+      {
+        "id": "skills-docs-readme-check",
+        "exitCode": 1,
+        "logSha256": "1f977d10d44afaf5272025f465e195a129a27c603ab6142551399c8e4ef5a422"
+      }
+    ],
+    "mechanismTests": 346,
+    "registeredTests": 371,
+    "modelBytes": "verified",
+    "reason": "Six stale dependent outputs, including missing curated onBlock Chinese label; no behavior failures. Rebuilt from curated source using registered generators. This failed batch is not release approval."
+  },
+  "generatedDependencies": [
+    {
+      "step": "typecat:build",
+      "exitCode": 0,
+      "logSha256": "a51cfc10a35b2f99fe40a75b5c932dac5c521896ebd0f247308f14c7c016f7e9"
+    },
+    {
+      "step": "caps:export",
+      "exitCode": 0,
+      "logSha256": "48959f93cd32c11e7ac933c05a614e62e6b8b57fa6027b9d0c907f0a46744a24"
+    },
+    {
+      "step": "editorcov:build",
+      "exitCode": 0,
+      "logSha256": "ab1c9808d85b70a4979ffb539cf12a5c1a4f63c63904b442a92416b48be37b6e"
+    },
+    {
+      "step": "bricks:build",
+      "exitCode": 0,
+      "logSha256": "b2ddf01b4de85ebd52d0fd38707f9ea811eb5b7e50a23e24337fedce0bc6f02e"
+    },
+    {
+      "step": "contract:numbers",
+      "exitCode": 0,
+      "logSha256": "31f73e270f0b7e61eec6f0d6e7f0cb42b4aaf38b24733226f0b7d0478c9ba41e"
+    },
+    {
+      "step": "decor:build",
+      "exitCode": 0,
+      "logSha256": "30f38a8b028e7a4a4b35a00121072ff551e1dcb0a34aad94a23ec0469bc76032"
+    },
+    {
+      "step": "spec:build",
+      "exitCode": 0,
+      "logSha256": "651fde73db8086ae948ad642ca2ef9cd6a0ecd8a90faf433e6c2e01f98e5194b"
+    },
+    {
+      "step": "overview:build",
+      "exitCode": 0,
+      "logSha256": "dc71d50c4be5a38c3e063a263304685254162e186394f2e6e086ce2b89b6fc89"
+    },
+    {
+      "step": "skillforge:audit",
+      "exitCode": 0,
+      "logSha256": "62ed3ac16c55480a9a7c30f5ec0f64b9d80aa3dd5dfe67b97ee5ff52fd226498"
+    },
+    {
+      "step": "skillremake:docs",
+      "exitCode": 0,
+      "logSha256": "375dea34242c3392245cdefa4c4b78dad126b6dfcb63e6c913a5ddc3cdeca4af"
+    },
+    {
+      "step": "atlas:build",
+      "exitCode": 0,
+      "logSha256": "49f7e9503821ae6e8e56aa2c6b8fe93db31c45a9b819b6f538453aa5ec7bfd00"
+    },
+    {
+      "step": "docs:readme",
+      "exitCode": 0,
+      "logSha256": "c1376f0b9f50e5b20ae019511a075131234156c80d663753699b842f6a93184e"
+    }
+  ]
 }

@@ -67,3 +67,5 @@ node tools/community-hero-forge/capture-motion-browser.mjs \
 `target-resource-acceptance` suite 同批檢查真實敵方事件取得資源、未取得／不足拒絕，以及 Editor 和可信投稿編譯器的六槽與整套情境一致性。它不直接建立目標資源，也不把試玩選项寫回英雄版本。既有實作 suite 額外固定包含阿薩謝爾重複詛咒反轉回歸；增加回歸檔不會自動擴大已對應的原稿槽數。
 
 銀時六槽及共用格擋、施法中斷、hook 詞彙、形狀與純度回歸併入 `implemented-mechanisms` 同次執行。案例從版本化原稿／微調生成，包含自身招架來源、盾吸收命中、實際移動、受保護施法及跨區／免控反例。新增 effect kind 時，Editor 的完整表單回存、種類清單與預覽不可漏接；release 閘會一起檢查。
+
+本批實際新增 effect／hook 時，另需更新 `tools/skill-spec/curated.json` 的中文詞彙來源，並依失敗清單執行 `spec:build`、`overview:build`、`skillforge:audit`、`skillremake:docs`、`atlas:build`、`docs:readme`。全部走 `bash scripts/genrun.sh <step> <step>:raw`；只更新型別／能力清單不足以保持這些相依文件新鮮。先讓批次完整結束、核對集中失敗，再生成與提交，最後重跑三閘；不可執行中改來源或偽造視覺收據。
