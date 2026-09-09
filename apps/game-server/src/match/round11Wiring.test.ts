@@ -20,6 +20,7 @@ import {
   ROUND11_PRECEDING_ROUND,
 } from "@ggd/shared/sim/round11Gate";
 import { round11EventsDue, pickRound11Event } from "@ggd/shared/sim/round11Waves";
+import { bombardmentHits, bombardmentPhase } from "@ggd/shared/sim/round11Bombardment";
 
 const REPO = resolve(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const DOC = JSON.parse(readFileSync(join(REPO, "content/config/arena-rules.json"), "utf8"));
@@ -90,5 +91,34 @@ describe("第十一回合的生怪設定 → 排程 接線（GH#1151 B）", () =
     expect(bare.waveTable.events).toEqual([]);
     expect(round11EventsDue(999, bare.waveTable.eventIntervalSec)).toBe(0);
     expect(pickRound11Event(bare.waveTable.events, 0.5)).toBeNull();
+  });
+});
+
+describe("第十一回合的大轟炸設定 → 機制 接線（GH#1151 F）", () => {
+  it("⭐ 出貨的 `bombardment` 真的走得到機制", () => {
+    const b = rulesFromDoc(DOC).round11.bombardment;
+    expect(b.enabled).toBe(DOC.round11.bombardment.enabled);
+    expect(b.radius).toBe(DOC.round11.bombardment.radius);
+    expect(b.telegraphSec).toBe(DOC.round11.bombardment.telegraphSec);
+    // ⭐ 走一次真的判定：圈內／圈外
+    expect(bombardmentHits({ x: 0, z: 0 }, 0, 0, b.radius)).toBe(true);
+    expect(bombardmentHits({ x: b.radius + 1, z: 0 }, 0, 0, b.radius)).toBe(false);
+    // ⭐ 倒數前不傷害
+    expect(bombardmentPhase(0, 0, b.telegraphSec)).toBe("telegraph");
+  });
+
+  it("⛔⛔ **只有一個半徑** —— ⭐ 票逐字禁止「視覺一份、判定另一份」", () => {
+    // ⚠️ ⭐ 這條是**結構**斷言：`ArenaRules.round11.bombardment` 上
+    //   只有 `radius` 一格,⛔ 沒有 `visualRadius` / `damageRadius` 之類的第二格。
+    const b = rulesFromDoc(DOC).round11.bombardment as Record<string, unknown>;
+    const radiusKeys = Object.keys(b).filter((k) => /radius/i.test(k));
+    expect(radiusKeys, "⛔ 半徑欄位只能有一個").toEqual(["radius"]);
+  });
+
+  it("⛔ 缺欄 ⇒ 轟炸**關著**且半徑 0（打不到任何人）", () => {
+    const bare = rulesFromDoc({ ...DOC, round11: undefined }).round11;
+    expect(bare.bombardment.enabled).toBe(false);
+    expect(bombardmentHits({ x: 0, z: 0 }, 0, 0, bare.bombardment.radius)).toBe(false);
+    expect(bare.deadPlayersControlBoss).toBe(false);
   });
 });

@@ -116,6 +116,20 @@ export interface ArenaRules {
     readonly bossStrengthMult: number;
     readonly bossScaleFloor: number;
     readonly bossScaleCeil: number;
+    /**
+     * ⭐ 大轟炸（#1151 F）——消費端 `sim/round11Bombardment`。
+     * ⚠️⭐ **只有一個 `radius`**：票逐字「⛔ 不能有一份視覺半徑與另一份判定半徑」
+     * ⇒ ⛔ 這裡不開第二格（第〇·四守則：沒有那個欄位，就造不出那個缺陷）。
+     */
+    readonly bombardment: {
+      readonly enabled: boolean;
+      readonly telegraphSec: number;
+      readonly damagePctOfMaxHp: number;
+      readonly radius: number;
+      readonly crowdBias: number;
+    };
+    /** ⭐ 陣亡玩家改控自己的殭屍王（#1151 E）。 */
+    readonly deadPlayersControlBoss: boolean;
   };
   /** round from which R is learnable at any level; null = classic 6/11/16 */
   ultUnlockRound: number | null;
@@ -302,6 +316,8 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
     bossStrengthMult: 1,
     bossScaleFloor: 1,
     bossScaleCeil: 1,
+    bombardment: { enabled: false, telegraphSec: 0, damagePctOfMaxHp: 0, radius: 0, crowdBias: 0 },
+    deadPlayersControlBoss: false,
   },
   ultUnlockRound: null,
   exUnlockRound: null,
@@ -489,6 +505,15 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
       bossStrengthMult: doc.round11?.bossStrengthMult ?? 1,
       bossScaleFloor: doc.round11?.bossScaleFloor ?? 1,
       bossScaleCeil: doc.round11?.bossScaleCeil ?? 1,
+      // ⭐ 轟炸 —— fallback 是「⛔ 關著」：`enabled false` ＋ 半徑 0（打不到任何人）。
+      bombardment: {
+        enabled: doc.round11?.bombardment?.enabled ?? false,
+        telegraphSec: doc.round11?.bombardment?.telegraphSec ?? 0,
+        damagePctOfMaxHp: doc.round11?.bombardment?.damagePctOfMaxHp ?? 0,
+        radius: doc.round11?.bombardment?.radius ?? 0,
+        crowdBias: doc.round11?.bombardment?.crowdBias ?? 0,
+      },
+      deadPlayersControlBoss: doc.round11?.deadPlayersControlBoss ?? false,
     },
   };
 }

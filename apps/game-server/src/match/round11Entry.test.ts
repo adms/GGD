@@ -49,6 +49,8 @@ const rules = (round11: Partial<ArenaRules["round11"]>): ArenaRules => ({
     bossStrengthMult: 1,
     bossScaleFloor: 1,
     bossScaleCeil: 1,
+    bombardment: { enabled: false, telegraphSec: 0, damagePctOfMaxHp: 0, radius: 0, crowdBias: 0 },
+    deadPlayersControlBoss: false,
     ...round11,
   },
 });
