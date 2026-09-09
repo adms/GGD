@@ -348,6 +348,20 @@
         "materials/community-hero-forge/refinements/26.json",
         "materials/community-hero-forge/validation-plan.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "柯南位移補上實際網格狀態／座標提示、原配方到回放位置及煞車顏色案例；模型工作程序允許冷載入但保留 60 秒上限，GLB 採用逾時接入既有有界重試。單槽預覽不再被其他槽的資源拒絕連帶停用，完整 ZIP／投稿仍要求全部檢查通過。11 項跨端／工作程序與 3 項既有載入生命週期測試通過。新增指定英雄的瀏覽器收集腳本，但真實畫面仍因冷載入／PBR 就緒失敗，未完成九張驗收；兩張失敗診斷存 S3 並已下載核對 SHA。R 預設情境缺線索與 183 槽未對應仍未解決，#1132 不關閉。",
+      "repro": {
+        "command": "pnpm exec vitest run apps/editor/src/hero/modelUploadJob.test.ts apps/editor/src/vfx-forge/AbilityMotionReplay.test.ts apps/editor/src/vfx-forge/waitForActorModel.test.ts --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "f64c906aff8500bc087a2c2417a030e606d26d2f",
+      "evidence": [
+        "materials/community-hero-forge/refinements/conan-mobility-verification.json",
+        "materials/community-hero-forge/refinements/conan-mobility-visual-diagnostics.json",
+        "tools/community-hero-forge/BATCH_VERIFICATION.md"
+      ]
     }
   ],
   "unblocks": [],

@@ -161,7 +161,8 @@
     ],
     "existingAdoptionLifecycleTests": 3,
     "adoptionLifecycleExitCode": 0,
-    "adoptionLifecycleLogSha256": "1318e45c8db334b2af10676ff08362b0cdb69859118afc2d4ffe4f5bb472ef55"
+    "adoptionLifecycleLogSha256": "1318e45c8db334b2af10676ff08362b0cdb69859118afc2d4ffe4f5bb472ef55",
+    "sourceCommit": "f64c906aff8500bc087a2c2417a030e606d26d2f"
   },
   "browserCapture": {
     "status": "failed",
