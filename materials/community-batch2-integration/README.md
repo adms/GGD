@@ -40,3 +40,7 @@ GGD_LOCAL_COMMUNITY_PROOF=disposable-local-only node --import tsx tools/communit
 `receipts/` 記錄實際 target、來源摘要及環境；執行中的編譯服務為 `417abec9d90424b5ccbe7948331a60f98dd0f689`。本整合分支基於 main `256758741`。收據證明對該服務執行過操作，不宣稱已部署這個較新的 main，也不把收據核對當成重跑 SimWorld 或原作素材驗收。正式部署後仍以新服務的 target 重建 ZIP。
 
 第一批沿 [PR #1135](https://github.com/adms/GGD/pull/1135) 交付。本批沿 [#1147](https://github.com/adms/GGD/issues/1147) 記錄投稿流程、[#1150](https://github.com/adms/GGD/issues/1150) 記錄整體部署；[#1148](https://github.com/adms/GGD/issues/1148) 的模型配對留待 Owner 統整。所有二進位 ZIP／模型按既定分工保存到 S3；Git 保存專案、腳本、政策、收據與 SHA-256。
+
+## 提交檢查
+
+Editor release 通過（592 項測試、型別檢查及 production build），coord 通過。三項合併執行的原始 log 與 exit code 保存在 `receipts/checks/`。`skills:check` 尚未全部通過：main 的戰情板缺今天帳本來源，另外 icon 計畫過期並提示缺本機 `data/curation/whitelist.json`。保留既有戰情板，避免重建時抹除 Owner 紀錄；由 Main 補齊來源與驗證環境後重跑。此 PR 保持 Draft，不能把隔離發布或 Editor 通過寫成正式部署已完成。

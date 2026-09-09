@@ -1,0 +1,20 @@
+[
+  {
+    "command": "pnpm skills:check",
+    "exitCode": 1,
+    "seconds": 88.39,
+    "log": "/private/tmp/ggd-batch2-required-gates-delivery/skills-check.log"
+  },
+  {
+    "command": "pnpm editor:accept:release",
+    "exitCode": 0,
+    "seconds": 199.89,
+    "log": "/private/tmp/ggd-batch2-required-gates-delivery/editor-accept-release.log"
+  },
+  {
+    "command": "pnpm coord:check",
+    "exitCode": 0,
+    "seconds": 4.02,
+    "log": "/private/tmp/ggd-batch2-required-gates-delivery/coord-check.log"
+  }
+]

@@ -48,6 +48,7 @@
     "原始生成器與配方保持PR#1144版本來源；第一批仍沿PR#1135審查合併。",
     "正式部署必須核對當下target並重建ZIP；內建模型包約3MB，正式投稿政策maxBytes須至少涵蓋此大小（隔離驗收使用既有合法4MiB設定）。此PR未修改正式政策或啟用正式投稿。",
     "請Main補入main既有戰情板引用的docs/_daily/2026-09-09.md，再重建board；目前skills:check停在board:check。新分支與基線的daily/release/generator一致，直接重生會刪掉今天既有Owner紀錄，故保留原樣。證據：materials/community-batch2-integration/receipts/baseline-board-gap.json。不得把缺來源當成第二批英雄機制失敗。",
-    "完整skills檢查亦量到iconplan:check產物過期，並提示clean worktree缺data/curation/whitelist.json。本批未偽造白名單或修改正式資料，請Main提供既有驗證環境；保留Draft待CI與正式整合。"
+    "完整skills檢查亦量到iconplan:check產物過期，並提示clean worktree缺data/curation/whitelist.json。本批未偽造白名單或修改正式資料，請Main提供既有驗證環境；保留Draft待CI與正式整合。",
+    "Editor release已通過592項測試、型別檢查及production build；coord通過。完整log與三項exit code：materials/community-batch2-integration/receipts/checks/。skills未全部通過，保留Draft，不跳過CI合併。"
   ]
 }
