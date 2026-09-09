@@ -56,17 +56,40 @@ class GateTest(unittest.TestCase):
         teacher = {'rows': [dict(row)]}
         return {'schema': 'ggd-distillation-results@1',
                 'arms': {'teacher': teacher, 'base': base, 'lora': arm}, 'blindTest': blind, 'fullHeroE2EProven': True,
+                'modelPromoted': False,
                 'training': {'recordedStatus': 'completed', 'devAfter': {'cases': 1}},
                 'counts': {'primaryWholeHeroes': 1, 'tasks': 1},
                 'blindProtocol': {'teacherAnswersVisibleToCandidate': False, 'usedForTraining': False,
                     'usedForTuning': False, 'checkpointSelectedBeforeGeneration': True},
                 'sourceFiles': {self.manifest_key: {'sha256': self.manifest_sha}}}
 
+    def finalized(self, name, report):
+        root=self.root/name; report_path=root/'report-data.json'; put(report_path,report)
+        inputs=[]
+        for index in range(2):
+            path=root/f'inputs/input-{index}.json'; put(path,{'index':index})
+            inputs.append({'snapshot':str(path.relative_to(root)),'sha256':gate.digest(path),'bytes':path.stat().st_size})
+        artifacts=[]
+        expected=3*sum(len(report['arms'][arm]['rows']) for arm in ['teacher','base','lora'])
+        for index in range(expected):
+            path=root/f'inputs/evidence-artifacts/{index:04d}.json'; put(path,{'index':index})
+            artifacts.append({'snapshot':str(path.relative_to(root)),'sha256':gate.digest(path),'bytes':path.stat().st_size})
+        scripts={}
+        for index in range(3):
+            path=root/f'source/script-{index}.py'; put(path,f'# script {index}\n')
+            scripts[path.name]={'path':str(path.relative_to(root)),'sha256':gate.digest(path),'bytes':path.stat().st_size}
+        manifest={'schema':'ggd-distillation-finalized-evaluation@1','blindTest':report['blindTest'],
+            'fullHeroE2EProven':True,'modelPromoted':False,
+            'inputs':{f'input-{i}':entry for i,entry in enumerate(inputs)},
+            'evidenceArtifacts':artifacts,'scriptSnapshots':scripts,
+            'outputs':{'report-data.json':gate.digest(report_path)}}
+        put(root/'manifest.json',manifest)
+        return root
+
     def run_gate(self, internal=None, blind=None):
-        internal_path, blind_path = self.root / 'internal.json', self.root / 'blind.json'
-        put(internal_path, internal or self.result('dev', False))
-        put(blind_path, blind or self.result('new', True))
-        return gate.evaluate(self.training, internal_path, blind_path)
+        internal_path=self.finalized('internal-final',internal or self.result('dev',False))
+        blind_path=self.finalized('blind-final',blind or self.result('new',True))
+        return gate.evaluate(self.training,internal_path,blind_path)
 
     def scaled_result(self, prefix, blind, count=20, failures=1):
         result = self.result(prefix + '0', blind)
@@ -123,6 +146,16 @@ class GateTest(unittest.TestCase):
         failed = {x['name'] for x in result['checks'] if not x['passed']}
         self.assertIn('final-adapter-hash', failed)
         self.assertIn('adapter-roundtrip', failed)
+
+    def test_finalized_report_or_snapshot_drift_is_rejected(self):
+        internal=self.finalized('internal-final',self.result('dev',False))
+        blind=self.finalized('blind-final',self.result('new',True))
+        report=json.loads((internal/'report-data.json').read_text()); report['capturedAt']='changed'
+        put(internal/'report-data.json',report)
+        result=gate.evaluate(self.training,internal,blind)
+        self.assertFalse(result['passed'])
+        self.assertIn('internal-finalized-evidence-bundle',
+                      {item['name'] for item in result['checks'] if not item['passed']})
 
     def test_nineteen_of_twenty_meets_95_percent_but_success_needs_e2e(self):
         internal = self.scaled_result('dev-', False)

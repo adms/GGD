@@ -38,6 +38,45 @@ def hero_ids(path):
     return {row['heroId'] for row in rows}
 
 
+def finalized_results(path):
+    root = Path(path)
+    if root.is_file():
+        report_path, root = root, root.parent
+    else:
+        report_path = root / 'report-data.json'
+    report, manifest = read(report_path), read(root / 'manifest.json')
+
+    def snapshot(entry):
+        relative = Path(entry.get('snapshot') or entry.get('path') or '')
+        if not relative or relative.is_absolute() or '..' in relative.parts:
+            return False
+        file = (root / relative).resolve()
+        return file.is_relative_to(root.resolve()) and file.is_file() \
+            and digest(file) == entry.get('sha256') and file.stat().st_size == entry.get('bytes', file.stat().st_size)
+
+    input_entries = list((manifest.get('inputs') or {}).values())
+    artifact_entries = manifest.get('evidenceArtifacts') or []
+    script_entries = list((manifest.get('scriptSnapshots') or {}).values())
+    expected_artifacts = 3 * sum(len((report.get('arms', {}).get(arm, {}).get('rows') or []))
+                                 for arm in ['teacher', 'base', 'lora'])
+    checks = {
+        'schema': manifest.get('schema') == 'ggd-distillation-finalized-evaluation@1',
+        'reportHash': (manifest.get('outputs') or {}).get('report-data.json') == digest(report_path),
+        'scope': manifest.get('blindTest') is report.get('blindTest')
+                 and manifest.get('fullHeroE2EProven') is True
+                 and report.get('fullHeroE2EProven') is True
+                 and manifest.get('modelPromoted') is False
+                 and report.get('modelPromoted') is False,
+        'inputSnapshots': len(input_entries) == 2 and all(snapshot(entry) for entry in input_entries),
+        'evidenceSnapshots': len(artifact_entries) == expected_artifacts
+                             and all(snapshot(entry) for entry in artifact_entries),
+        'scriptSnapshots': len(script_entries) == 3 and all(snapshot(entry) for entry in script_entries),
+    }
+    return report, {'passed': all(checks.values()), 'checks': checks,
+                    'manifest': str((root / 'manifest.json').resolve()),
+                    'report': str(report_path.resolve())}
+
+
 def evaluate(training, internal_results, blind_results):
     training, internal_results, blind_results = map(Path, (training, internal_results, blind_results))
     checks = []
@@ -66,7 +105,10 @@ def evaluate(training, internal_results, blind_results):
     check('post-train-dev-complete', (training / 'train/dev-after.json').is_file(),
           str(training / 'train/dev-after.json'))
 
-    internal, blind = read(internal_results), read(blind_results)
+    internal, internal_bundle = finalized_results(internal_results)
+    blind, blind_bundle = finalized_results(blind_results)
+    check('internal-finalized-evidence-bundle', internal_bundle['passed'], internal_bundle)
+    check('blind-finalized-evidence-bundle', blind_bundle['passed'], blind_bundle)
     seen = hero_ids(Path(manifest['dataDirectory']) / 'train.jsonl') | hero_ids(Path(manifest['dataDirectory']) / 'dev.jsonl')
 
     def result_checks(label, report, must_be_blind):

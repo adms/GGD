@@ -82,12 +82,12 @@ The protected inference entry accepts both `internal-dev` and `blind-user-batch`
 ```sh
 python3 tools/editor-acceptance/hero-distillation-release-gate.py \
   --training /absolute/completed-training-run \
-  --internal-results /absolute/internal-results.json \
-  --blind-results /absolute/blind-results.json \
+  --internal-results /absolute/internal-finalized-evaluation \
+  --blind-results /absolute/blind-finalized-evaluation \
   --out /absolute/new-release-gate.json
 ```
 
-This gate cannot create missing quality evidence. A failed or unverified row remains failed or unverified, and correct rejection does not count as successful hero creation.
+Both result arguments are directories produced by `hero-distillation-finalize-evaluation.py`; the gate verifies their report, two input snapshots, every row receipt and the three scoring/rendering script snapshots before using the claimed verdicts. This gate cannot create missing quality evidence. A failed or unverified row remains failed or unverified, and correct rejection does not count as successful hero creation.
 
 ### Historical completed work
 
