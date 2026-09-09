@@ -15,6 +15,18 @@ GUARD = {'minAvailableGiB': 6, 'maxSwapGrowthGiB': 2, 'maxBatteryDropPoints': 2}
 
 
 class GuardTests(unittest.TestCase):
+    def test_prefix_alignment_preserves_the_global_attention_block_grid(self):
+        for length in [256,257,511,512,19137,20878]:
+            boundary=trainer.aligned_prefix_length(length,256)
+            self.assertEqual(boundary%256,0)
+            self.assertLessEqual(boundary,length)
+            self.assertLess(length-boundary,256)
+            ids=list(range(length+1000))
+            self.assertEqual(ids[:boundary]+ids[boundary:],ids)
+            self.assertTrue(all((boundary+offset)%256==0 for offset in range(0,1000,256)))
+        for length,block in [(0,256),(255,256),(256,0)]:
+            with self.assertRaises(AssertionError):trainer.aligned_prefix_length(length,block)
+
     def test_capacity_uses_real_format_extremes_without_dev_gradients(self):
         train = [{'id': 'hero-long', 'format': 'hero', 'totalTokens': 20, 'outputTokens': 4},
                  {'id': 'hero-answer', 'format': 'hero', 'totalTokens': 18, 'outputTokens': 6},
@@ -91,6 +103,16 @@ class GuardTests(unittest.TestCase):
             trainer.atomic(directory / 'probe/result.json', {'fitsTimeBudget': False, 'fitsStepBudget': True})
             with patch.object(trainer.subprocess, 'Popen') as popen:
                 with self.assertRaisesRegex(AssertionError, 'PROBE_BUDGET_FAILED'): trainer.supervise(directory, 'train')
+                popen.assert_not_called()
+
+    def test_diagnostic_manifest_cannot_start_training_even_if_result_is_changed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            directory=Path(tmp);self.fixture(directory)
+            config=trainer.read(directory/'manifest.json');config['cacheDiagnosticOnly']=True
+            trainer.atomic(directory/'manifest.json',config)
+            with patch.object(trainer.subprocess,'Popen') as popen:
+                with self.assertRaisesRegex(AssertionError,'DIAGNOSTIC_CANNOT_TRAIN'):
+                    trainer.supervise(directory,'train')
                 popen.assert_not_called()
 
 

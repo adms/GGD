@@ -24,6 +24,7 @@ for key in ['HF_HUB_OFFLINE', 'TRANSFORMERS_OFFLINE', 'HF_HUB_DISABLE_TELEMETRY'
 os.environ['TOKENIZERS_PARALLELISM'] = 'false'
 os.environ['OMP_NUM_THREADS'] = '4'
 GIB = 1024 ** 3
+QUERY_BLOCK_TOKENS = 256
 LOCK = Path('/private/tmp/ggd-forge-training-runtime/gpu.lock')
 SCRIPT = Path(__file__).resolve()
 MEMORY_SCRIPT = SCRIPT.with_name('hero-distillation-memory.py')
@@ -105,6 +106,12 @@ def epoch_estimate(probes, strata):
     return estimate * 1.5 + 300
 
 
+def aligned_prefix_length(length, block_size):
+    """Preserve the uncached query-block grid; leftover tokens stay in suffix."""
+    assert isinstance(length,int) and isinstance(block_size,int) and length>=block_size>0
+    return length//block_size*block_size
+
+
 def prepare(args):
     out, data = args.out.resolve(), args.data.resolve()
     assert not out.exists(), 'OUTPUT_ALREADY_EXISTS'
@@ -135,6 +142,8 @@ def prepare(args):
             public=tokenizer.encode(prompt[:prompt.index(content)]+shared,add_special_tokens=False)
             n=0
             while n<min(len(public),row['promptTokens']) and public[n]==row['ids'][n]:n+=1
+            if not getattr(args,'cache_diagnostic',False):
+                n=aligned_prefix_length(n,QUERY_BLOCK_TOKENS)
             assert n>1000,'NO_USEFUL_PUBLIC_PREFIX'
             prefixes[row['cacheGroup']]=public[:n]
         assert all(row['cacheGroup'] in prefixes and row['ids'][:len(prefixes[row['cacheGroup']])]==prefixes[row['cacheGroup']]
@@ -151,9 +160,11 @@ def prepare(args):
         assert digest(snapshot) == digest(file), 'SOURCE_SNAPSHOT_DRIFT'
     atomic(out / 'tokens.json', tokens)
     config = {'schema': 'ggd-full-hero-lora-run@1', 'dataDirectory': str(data), 'frozenManifestSha256': digest(data / 'manifest.json'),
+              'cacheDiagnosticOnly': bool(getattr(args,'cache_diagnostic',False)),
               'tokenizedSha256': digest(out / 'tokens.json'), 'workerSha256': digest(SCRIPT), 'memoryHelperSha256': digest(MEMORY_SCRIPT),
               'cacheHelperSha256':digest(CACHE_SCRIPT),
               'prefixCache':{'enabled':bool(prefixes),'prefixes':prefixes,'maxHiddenRelativeL2':0.01,
+                  'boundaryPolicy':'original-public-boundary' if getattr(args,'cache_diagnostic',False) else 'global-query-block-aligned',
                   'maxLossDelta':0.02,'maxGradientRelativeL2':0.02,'source':'Public catalog/system prefix from TRAIN rows only; all memberships verified, no answers.',
                   'policy':'Frozen layers only, immutable host cache, exact prefix match, fresh suffix KV views. Trainable tail always recomputed.'},
               'modelDirectory': str(model_dir), 'modelRevision': receipt['modelRevision'], 'baseFiles': receipt['files'],
@@ -168,7 +179,7 @@ def prepare(args):
               'guard': {'minAvailableGiB': 6, 'maxSwapGrowthGiB': 2, 'maxBatteryDropPoints': 2, 'acRequired': True, 'concurrentOwnGpuWorkers': 1},
               'saveEvery': max(1, math.ceil(len(train) / 5)), 'selection': 'fixed final one-epoch adapter; no dev checkpoint selection',
               'loss': 'completion-only exact causal teacher forcing; retain full prompt attention; only project completion hidden states into vocabulary',
-              'memoryPolicy': {'queryBlockTokens': 256, 'lossBlockTokens': 128, 'sourceOrAnswerTruncation': False,
+              'memoryPolicy': {'queryBlockTokens': QUERY_BLOCK_TOKENS, 'lossBlockTokens': 128, 'sourceOrAnswerTruncation': False,
                                'detachedCustomForward': True, 'evaluatedBlockLeaves': True, 'firstOrderOnly': True,
                                'frozenTailMlpBlocks': True,
                                'layerwiseTailVjp': True,
@@ -294,6 +305,19 @@ def worker(directory, phase, token):
         return memory.tail_value_and_grad(mx,nn,net,prefix,targets,tail_layers=p['numLayers'],
             block_size=p['memoryPolicy']['queryBlockTokens'],loss_block_size=p['memoryPolicy']['lossBlockTokens'],observer=memory_audit)
     if phase == 'probe':
+        if p.get('cacheDiagnosticOnly'):
+            assert p['prefixCache']['enabled'],'PUBLIC_PREFIX_REQUIRED'
+            row=min((r for r in train if r['id'] in p['probeIds']),key=lambda r:r['totalTokens'])
+            progress('gradient-probe',diagnosticOnly=True,id=row['id'],tokens=row['totalTokens'])
+            result=prefix_cache.diagnose_partition(mx,memory,model,row['ids'][:-1],
+                len(p['prefixCache']['prefixes'][row['cacheGroup']]),
+                block_size=p['memoryPolicy']['queryBlockTokens'],observer=memory_audit)
+            atomic(work/'prefix-partition-diagnostic.json',{'id':row['id'],**result})
+            assert all(mx.array_equal(dict(tree_flatten(model.trainable_parameters()))[k],v).item() for k,v in initial.items())
+            atomic(work/'result.json',{'phase':phase,'diagnosticOnly':True,'optimizerSteps':0,
+                'fitsTimeBudget':False,'fitsStepBudget':False,'prefixCacheParityPassed':False,
+                'modelPromoted':False,'note':'Forward-only diagnostic cannot authorize training.'})
+            return
         # This short kernel-equivalence control is not a training sample.
         # Actual capacity probes below always use full frozen sequences.
         policy = p['memoryPolicy']
@@ -437,6 +461,7 @@ def supervise(directory, phase):
     assert not work.exists(), 'REFUSE_RESTART_OR_OVERWRITE'
     assert p['workerSha256'] == digest(SCRIPT), 'WORKER_DRIFT'
     if phase == 'train':
+        assert not p.get('cacheDiagnosticOnly'),'DIAGNOSTIC_CANNOT_TRAIN'
         probe = read(directory / 'probe/result.json')
         assert probe['fitsTimeBudget'] and probe['fitsStepBudget'], 'PROBE_BUDGET_FAILED'
         assert read(directory / 'probe/state.json')['status'] == 'completed', 'PROBE_SUPERVISOR_DID_NOT_FINISH'
@@ -506,6 +531,7 @@ if __name__ == '__main__':
     parser.add_argument('action', choices=['prepare', 'probe', 'train', 'worker'])
     parser.add_argument('--data', type=Path); parser.add_argument('--base-receipt', type=Path); parser.add_argument('--out', type=Path)
     parser.add_argument('--run', type=Path); parser.add_argument('--phase', choices=['probe', 'train']); parser.add_argument('--token')
+    parser.add_argument('--cache-diagnostic', action='store_true', help='Prepare a bounded forward-only cache diagnostic, never a training admission.')
     args = parser.parse_args()
     if args.action == 'prepare':
         assert args.data and args.base_receipt and args.out

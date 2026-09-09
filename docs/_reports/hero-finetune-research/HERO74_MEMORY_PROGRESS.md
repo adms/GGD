@@ -2,7 +2,28 @@
 
 2026-09-09。承接 `hero74-training-v2` 的 500 train／119 internal-dev；不是重新選資料，不截斷，模型仍為固定 Gemma 4 12B IT 8-bit、末兩層 q/o LoRA、rank 8。未獲正式訓練通過證據前不產生 release。
 
-**最新結論：v15 的四種格式完整長度梯度探針 4/4 通過，最長 29,996 tokens。單步時限通過；全量單輪保守估時 58,221.86 秒（16.17 小時）超過 7,200 秒設定，`fitsTimeBudget=false`，所以沒有啟動正式 500 步，也沒有新 adapter。v16 公共前綴快取實機一致性失敗，已停止且不准入訓，見下節。** 此為容量進展，不是微調品質／可上場成果。
+**最新結論：v18 對齊公共前綴切點後，四種完整格式 4/4 通過，快取與未快取的 hidden、loss、8 個 trainable tensor 梯度差異全部 0。全量一輪保守估時降至 30,980.73 秒（8.61 小時），仍超過原 7,200 秒設定；未執行正式 500 步、沒有新 adapter。建議只將單輪總時限改為 36,000 秒（10 小時），但必須先取得使用者明確授權，其餘保護不改。** 不再繼續 runtime 加速實驗；目前待決是全量訓練時限，不是資料重新標記。
+
+## v18 完整快取一致性已通過，待核准全量單輪時限
+
+資料使用 `hero74-training-v3` 無損提示排序版本，仍 500 train／119 internal-dev；教師答案、完整輸入值及 split 均與 v2 相同。原生公共快取切點 18,944、社群 20,736，對齊 256-token query block。剩餘公共 tokens 跟隨 suffix 計算，不丟棄；末兩層每次重算，沒有跨 optimizer step 重用 trainable hidden。
+
+| 格式 | 完整 tokens | 答案 tokens | 快取前向＋反向秒數 | 同題 hidden／loss／全部梯度差異 | 探針 peak Metal（GB） |
+|---|---:|---:|---:|---|---:|
+| native-slot | 22,027 | 912 | 21.25 | 全部 0 | 29.45 |
+| hero-slot | 24,780 | 2,834 | 26.12 | 全部 0 | 31.50 |
+| native-content | 25,908 | 4,799 | 31.53 | 全部 0 | 32.39 |
+| hero-plan | 29,995 | 8,049 | 43.36 | 全部 0 | 35.49 |
+
+每行比較同一 v3 prompt／token 序列、同一初始化參數，非拿 v15 不同 JSON 排序的 loss 當對照。相對 L2 差異 0 是本次有限樣本／固定權重的實測，不是任意輸入與所有後續權重的數學保證；CPU 還覆蓋變動 suffix 與 tail 參數後的快取重用。快取階段時間不包含該行先做的未快取對照；表中 peak 則包含對照與快取兩路，不應誤標為快取單路 peak。
+
+兩組公共快取建立共 47.19 秒，host bytes 合計 3,054,534,656（另計於系統 RAM，不藏在 Metal 值外）。Supervisor completed／worker 已 join，整個包含對照的 probe 417.55 秒，最低可用系統 RAM 54.00 GB、觀察 swap 增量 0、接電／電量 100%。原 28 GiB block 邊界 active 檢查、6 GiB 可用 RAM、2 GiB swap 增量、2 點電量下降、單步 120 秒及 probe 1,200 秒等保護皆未放寬。allocator peak 不是 block 邊界 active 值，不能說總記憶體被硬鎖在 28 GiB。
+
+固定原估算方法：每格式最慢實测快取 gradient ×（train 筆數＋2×dev 筆數），加總乘 1.5，加 300 秒，再加 1.5×公共快取建立秒數，得 **30,980.725 秒／8.606 小時**。它把 dev forward 按 gradient 成本估算，是保守排程值、不是完成保證。相較 v15 的 16.173 小時估算降低約 46.8%；因 v15/v18 輸入排序不同，不把它冒稱為同題 runtime 嚴格 A/B 加速率。
+
+`fitsStepBudget=true`、`prefixCacheParityPassed=true`、`fitsTimeBudget=false`。**正式訓練尚未開始、optimizer 更新 0。** 建議待核准單輪 10 小時上限，只跑既定 500 筆一次、不自動續跑／sweep，119 筆 dev 用於前後比較。若保護先觸發即停止，不能以完成目標為由放寬。下一步必須取得新總時限授權，不再重跑已通過 probe 來代替開訓。
+
+原始資料、程式快照、probe 原始 log／memory trace、數值比較及終止收據見 `hero74-prefix-v18/`。資料相關 Node tests 6/6、cache CPU tests 5/5、supervisor tests 9/9、receipt tests 3/3。本機狀態仍不等於生成品質、完整上場、公開上架或模型 release；最终仍缺正式 adapter 與同題生成／對局結果、另一批未見測試需求。
 
 ## v16 快取實驗：不准入訓
 
@@ -14,9 +35,22 @@ v16 第一筆完整 `godie-h02k:R` 的實機比較：hidden 相對 L2 **4.751%**
 
 Supervisor 已終止並 join 自己的 worker；總 122.26 秒，最低可用 RAM 55.90 GB，接電／電量 100%、觀察 swap 增量 0，optimizer steps 0。詳見 `hero74-prefix-v16/receipt.json`、原始 log、parity JSON 與逐檔綁定的程式快照。沒有新 adapter 或生成品質提升證據。
 
-**目前可用的是 v15 未快取全長路徑，不是 v16。** 若要直接做全量一輪，需先由使用者明確核准新的有界執行時間；16.17 小時為保守估算而非保證，原 7,200 秒限制未改。不能以持續重寫 runtime 代替實際模型訓練，也不能偷偷提高時限或縮減 500 筆資料。
+**v16 結束時可用的是 v15 未快取全長路徑，不是 v16；後續 v18 狀態見頂部。** 當時 16.17 小時為保守估算而非保證，原 7,200 秒限制未改。不能以持續重寫 runtime 代替實際模型訓練，也不能偷偷提高時限或縮減 500 筆資料。
 
 ## 問題與實測進展
+
+### v17 定位：公共前綴切點與 query 區塊對齊
+
+以同一筆完整 22,026 個模型輸入 tokens（22,027-token 樣本扣最後 label）作有界前向診斷，只比較第 1 層及第一個 full-attention 所在的第 6 層，不作梯度或 optimizer 更新。原公共切點 19,137 改為向下對齊 256 的 18,944；剩餘 193 tokens 仍在 suffix 完整計算。診斷不是縮成六層訓練，正式模型仍 48 層、前 46 層 frozen、末兩層 LoRA。
+
+| 切點 | 第 1 層 hidden 相對 L2 | 第 6 層 hidden 相對 L2 | 第 1 層 q/k/v projection 相對 L2 |
+|---|---:|---:|---:|
+| 19,137，未對齊 | 0.02597% | 0.28438% | 全部 0 |
+| 18,944，對齊 | 0 | 0 | 全部 0 |
+
+差異只出現在 suffix，prefix 差異為 0。這個本機控制把問題定位到分段後改變的 query 區塊邊界，不支持「教師資料錯誤」或「quantized projection 改變」的解釋；不宣稱已分析每個底層數值運算。v17 20.09 秒完成，最低可用 RAM 60.80 GB、swap 增量 0、接電 100%，optimizer 0。診斷 manifest 和 result 均禁止 train；即使改結果 flags，supervisor 仍拒絕 diagnostic manifest。
+
+來源、原始 trace 與終止證據在 `hero74-prefix-v17/`。修正只改 runtime 公共切點計算，不變教師、資料分組、token 序列、區塊大小、誤差門檻或資源保護。v18 才檢查全部 46 層 frozen hidden、loss 及末兩層梯度，不能從本表直接推定完整快取准入。
 
 MLX 0.32.2 的 trace 保留計算圖；`eval` 與 `stop_gradient` 並不自動把已算區塊變成無父節點的數值。參照 [MLX custom_function 契約](https://ml-explore.github.io/mlx/build/html/python/_autosummary/mlx.core.custom_function.html) 與固定 [v0.32.2 transforms 原始碼](https://github.com/ml-explore/mlx/blob/v0.32.2/mlx/transforms_impl.h)。下列是本機實測，不是官方效能聲明。
 
@@ -62,7 +96,7 @@ v13 三筆完成的真實完整梯度：native-slot 22,028 tokens／40.05 秒／
 
 CPU memory tests 8/8，含 Q/K/V 導數、GQA、遮罩、不同 head width、BF16、全部答案、frozen MLP、兩層完整 completion-only 梯度及參數復原。Supervisor tests 7/7；receipt tests 2/2；prefix audit tests 2/2。實際 12B 1,153-token kernel 控制保留固定 2% 相對 L2 上限；v8–v10 最大約 0.732%，各版實際值見各自 receipt。小控制只證數值，不代替全長容量。
 
-## 當前狀態
+## v15 狀態（歷史）
 
 v15 改為只在當前 attention block 轉 FP32，原 BF16 Q/K/V 保留，不再常駐全段 FP32 副本。每個 token 的前向輸出 cast 後串接，等價於串接後 cast；反向 K/V 完整 FP32 累加後才單次 cast 回原 dtype，沒有改用較低精度 attention。
 

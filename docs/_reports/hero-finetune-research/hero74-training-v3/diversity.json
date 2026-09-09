@@ -1,0 +1,16 @@
+{
+  "schema": "ggd-batch2-diversity-diagnostic@1",
+  "heroCount": 74,
+  "exactDuplicateKitPairs": [],
+  "nearDuplicateKitPairs": [],
+  "distinctNormalizedKits": 74,
+  "distinctNormalizedAbilities": 345,
+  "mostSharedAbilityHeroCount": 27,
+  "signatureCreativityVerified": false,
+  "limitations": [
+    "Not graph-isomorphism complete; recentCast slot changes or alternate effect encodings can evade it.",
+    "Private binding names are alpha-normalized across each kit; builtin status semantics still need manual review.",
+    "Near-duplicate findings require semantic review; structurally distinct kits can still share the same signature loop.",
+    "No claim of gameplay correctness, balance, fun or asset readiness."
+  ]
+}

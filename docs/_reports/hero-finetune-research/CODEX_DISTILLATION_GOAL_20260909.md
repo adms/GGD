@@ -114,3 +114,11 @@ scripts／JSON／Markdown／設定／索引進本地 Git；模型二進位沿用
 `full-hero-distillation-v15/probe/state.json` 已 completed，四种格式的 train 極端長度樣本 4/4 完成完整前向／反向；最長 29,996 tokens／8,049 答案 tokens。單筆 42.31–66.97 秒；峰值 Metal 35.26 GB；無 swap 增量。所有原 RAM／active Metal／電量與 timeout 保護未放寬。這更新第 8 節的「梯度記憶體阻擋」狀態，但不等於全量訓練完成。
 
 `fitsStepBudget=true`、`fitsTimeBudget=false`：固定保守估時 58,221.86 秒超過原 7,200 秒單輪設定，因此 optimizer 更新仍為 0、沒有新 adapter。下一步先降低相同公共目錄的 frozen-prefix 重複計算，保留全部 500/119 任務、完整教師答案與 split；只讀 CPU 盤點確認重排 JSON 欄位可形成 19,143／20,884 tokens 共用前綴，但尚未實作 cache 或量得加速。不得拿此盤點當新凍結資料或已准入快取；須驗證因果 KV／hidden／梯度等價、維持原資源限制，再重跑全長容量與時程預檢。若仍不符時限，須明確取得新的時程授權，不自動延長或減少資料。
+
+## 10. 同日後續：v18 快取全長一致性通過，待新時限授權
+
+v16 未對齊公共前綴切點，實機梯度一致性失敗；v17 的有界診斷定位 query 區塊邊界差異。v18 僅將公共切點對齊原 256-token 區塊，完整四格式 4/4 通過：同題 cached／uncached 的完整 frozen hidden、loss、全部 8 個 LoRA 梯度差異均為 0。Supervisor completed，417.55 秒，無觀察 swap 增量，optimizer 更新仍 0；這不是已訓練或可上場證據。
+
+新的無損輸入布局 `hero74-training-v3` 保留 v2 的所有教師答案、資料值與 split：500 train／119 internal-dev，仍無未見盲測。腳本與所有原始收據見 `HERO74_MEMORY_PROGRESS.md`、`hero74-prefix-v17/`、`hero74-prefix-v18/`。沒有新增／修理英雄或縮小資料池。
+
+快取前向＋反向單筆 21.25–43.36 秒，固定全量單輪估時 **30,980.725 秒（8.606 小時）**，仍超過現有 7,200 秒。**停止進一步 runtime 加速實驗；下一個必要決定是由使用者明確核准單輪總時限，建議 36,000 秒（10 小時）。此為提案，尚未獲准，不得自動提高上限。** 其餘 RAM／swap／接電／單步等保護一律保持，正式單輪仍完整 500 筆一次，不自動加 epoch／候選。全目標保持不變，未有 adapter、生成品質與遊戲端 E2E 證據前不能標達成。

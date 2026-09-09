@@ -1,0 +1,419 @@
+{
+  "groupByHero": {
+    "b2-aladdin": "b2-aladdin",
+    "b2-albus": "b2-albus",
+    "b2-bojji": "b2-bojji",
+    "b2-boxxo": "b2-boxxo",
+    "b2-elma": "b2-elma",
+    "b2-fushi": "b2-fushi",
+    "b2-goblin": "b2-goblin",
+    "b2-guts": "b2-elma",
+    "b2-haga": "b2-haga",
+    "b2-kaede": "b2-kaede",
+    "b2-kaiji": "b2-kaiji",
+    "b2-keyaru": "b2-boxxo",
+    "b2-kisaragi": "b2-kisaragi",
+    "b2-klaus": "b2-klaus",
+    "b2-kumoko": "b2-klaus",
+    "b2-luckyman": "b2-bojji",
+    "b2-makoto": "b2-makoto",
+    "b2-maomao": "b2-maomao",
+    "b2-maple": "b2-maple",
+    "b2-matthias": "b2-matthias",
+    "b2-misery": "b2-misery",
+    "b2-naofumi": "b2-naofumi",
+    "b2-ned": "b2-ned",
+    "b2-noor": "b2-noor",
+    "b2-nube": "b2-nube",
+    "b2-orphen": "b2-albus",
+    "b2-popp": "b2-albus",
+    "b2-rem": "b2-elma",
+    "b2-rin": "b2-kaiji",
+    "b2-shadow": "b2-shadow",
+    "b2-shinchan": "b2-goblin",
+    "b2-sinbad": "b2-sinbad",
+    "b2-takopi": "b2-naofumi",
+    "b2-touka": "b2-goblin",
+    "b2-uncle": "b2-uncle",
+    "b2-yogiri": "b2-yogiri",
+    "b2-zenitsu": "b2-zenitsu",
+    "community-review-01-20260907": "community-review-01-20260907",
+    "community-review-02-20260907": "community-review-02-20260907",
+    "community-review-03-20260907": "community-review-03-20260907",
+    "community-review-04-20260907": "community-review-04-20260907",
+    "community-review-05-20260907": "community-review-05-20260907",
+    "community-review-06-20260907": "community-review-06-20260907",
+    "community-review-07-20260907": "community-review-07-20260907",
+    "community-review-08-20260907": "community-review-08-20260907",
+    "community-review-09-20260907": "community-review-09-20260907",
+    "community-review-10-20260907": "community-review-10-20260907",
+    "community-review-11-20260907": "community-review-11-20260907",
+    "community-review-12-20260907": "community-review-12-20260907",
+    "community-review-13-20260907": "community-review-13-20260907",
+    "community-review-14-20260907": "community-review-14-20260907",
+    "community-review-15-20260907": "community-review-15-20260907",
+    "community-review-16-20260907": "community-review-16-20260907",
+    "community-review-17-20260907": "community-review-17-20260907",
+    "community-review-18-20260907": "community-review-18-20260907",
+    "community-review-19-20260907": "community-review-19-20260907",
+    "community-review-20-20260907": "community-review-20-20260907",
+    "community-review-21-20260907": "community-review-21-20260907",
+    "community-review-22-20260907": "community-review-22-20260907",
+    "community-review-23-20260907": "community-review-23-20260907",
+    "community-review-24-20260907": "community-review-24-20260907",
+    "community-review-25-20260907": "community-review-25-20260907",
+    "community-review-26-20260907": "community-review-26-20260907",
+    "community-review-27-20260907": "community-review-27-20260907",
+    "community-review-28-20260907": "community-review-28-20260907",
+    "community-review-29-20260907": "community-review-29-20260907",
+    "community-review-30-20260907": "community-review-30-20260907",
+    "community-review-31-20260907": "community-review-31-20260907",
+    "community-review-32-20260907": "community-review-32-20260907",
+    "community-review-33-20260907": "community-review-33-20260907",
+    "community-review-34-20260907": "community-review-34-20260907",
+    "community-review-35-20260907": "community-review-35-20260907",
+    "community-review-36-20260907": "community-review-36-20260907",
+    "community-review-37-20260907": "community-review-37-20260907"
+  },
+  "splitByHero": {
+    "b2-aladdin": "train",
+    "b2-albus": "train",
+    "b2-bojji": "train",
+    "b2-boxxo": "train",
+    "b2-elma": "train",
+    "b2-fushi": "dev",
+    "b2-goblin": "train",
+    "b2-guts": "train",
+    "b2-haga": "dev",
+    "b2-kaede": "train",
+    "b2-kaiji": "train",
+    "b2-keyaru": "train",
+    "b2-kisaragi": "train",
+    "b2-klaus": "train",
+    "b2-kumoko": "train",
+    "b2-luckyman": "train",
+    "b2-makoto": "train",
+    "b2-maomao": "train",
+    "b2-maple": "train",
+    "b2-matthias": "train",
+    "b2-misery": "train",
+    "b2-naofumi": "train",
+    "b2-ned": "train",
+    "b2-noor": "train",
+    "b2-nube": "dev",
+    "b2-orphen": "train",
+    "b2-popp": "train",
+    "b2-rem": "train",
+    "b2-rin": "train",
+    "b2-shadow": "train",
+    "b2-shinchan": "train",
+    "b2-sinbad": "train",
+    "b2-takopi": "train",
+    "b2-touka": "train",
+    "b2-uncle": "dev",
+    "b2-yogiri": "train",
+    "b2-zenitsu": "train",
+    "community-review-01-20260907": "train",
+    "community-review-02-20260907": "train",
+    "community-review-03-20260907": "train",
+    "community-review-04-20260907": "train",
+    "community-review-05-20260907": "train",
+    "community-review-06-20260907": "train",
+    "community-review-07-20260907": "train",
+    "community-review-08-20260907": "train",
+    "community-review-09-20260907": "dev",
+    "community-review-10-20260907": "train",
+    "community-review-11-20260907": "train",
+    "community-review-12-20260907": "train",
+    "community-review-13-20260907": "train",
+    "community-review-14-20260907": "train",
+    "community-review-15-20260907": "train",
+    "community-review-16-20260907": "dev",
+    "community-review-17-20260907": "dev",
+    "community-review-18-20260907": "train",
+    "community-review-19-20260907": "dev",
+    "community-review-20-20260907": "dev",
+    "community-review-21-20260907": "train",
+    "community-review-22-20260907": "train",
+    "community-review-23-20260907": "dev",
+    "community-review-24-20260907": "dev",
+    "community-review-25-20260907": "train",
+    "community-review-26-20260907": "dev",
+    "community-review-27-20260907": "train",
+    "community-review-28-20260907": "dev",
+    "community-review-29-20260907": "train",
+    "community-review-30-20260907": "train",
+    "community-review-31-20260907": "train",
+    "community-review-32-20260907": "train",
+    "community-review-33-20260907": "dev",
+    "community-review-34-20260907": "train",
+    "community-review-35-20260907": "train",
+    "community-review-36-20260907": "dev",
+    "community-review-37-20260907": "train"
+  },
+  "groups": {
+    "b2-aladdin": [
+      "b2-aladdin"
+    ],
+    "b2-albus": [
+      "b2-albus",
+      "b2-orphen",
+      "b2-popp"
+    ],
+    "b2-bojji": [
+      "b2-bojji",
+      "b2-luckyman"
+    ],
+    "b2-boxxo": [
+      "b2-boxxo",
+      "b2-keyaru"
+    ],
+    "b2-elma": [
+      "b2-elma",
+      "b2-guts",
+      "b2-rem"
+    ],
+    "b2-fushi": [
+      "b2-fushi"
+    ],
+    "b2-goblin": [
+      "b2-goblin",
+      "b2-shinchan",
+      "b2-touka"
+    ],
+    "b2-haga": [
+      "b2-haga"
+    ],
+    "b2-kaede": [
+      "b2-kaede"
+    ],
+    "b2-kaiji": [
+      "b2-kaiji",
+      "b2-rin"
+    ],
+    "b2-kisaragi": [
+      "b2-kisaragi"
+    ],
+    "b2-klaus": [
+      "b2-klaus",
+      "b2-kumoko"
+    ],
+    "b2-makoto": [
+      "b2-makoto"
+    ],
+    "b2-maomao": [
+      "b2-maomao"
+    ],
+    "b2-maple": [
+      "b2-maple"
+    ],
+    "b2-matthias": [
+      "b2-matthias"
+    ],
+    "b2-misery": [
+      "b2-misery"
+    ],
+    "b2-naofumi": [
+      "b2-naofumi",
+      "b2-takopi"
+    ],
+    "b2-ned": [
+      "b2-ned"
+    ],
+    "b2-noor": [
+      "b2-noor"
+    ],
+    "b2-nube": [
+      "b2-nube"
+    ],
+    "b2-shadow": [
+      "b2-shadow"
+    ],
+    "b2-sinbad": [
+      "b2-sinbad"
+    ],
+    "b2-uncle": [
+      "b2-uncle"
+    ],
+    "b2-yogiri": [
+      "b2-yogiri"
+    ],
+    "b2-zenitsu": [
+      "b2-zenitsu"
+    ],
+    "community-review-01-20260907": [
+      "community-review-01-20260907"
+    ],
+    "community-review-02-20260907": [
+      "community-review-02-20260907"
+    ],
+    "community-review-03-20260907": [
+      "community-review-03-20260907"
+    ],
+    "community-review-04-20260907": [
+      "community-review-04-20260907"
+    ],
+    "community-review-05-20260907": [
+      "community-review-05-20260907"
+    ],
+    "community-review-06-20260907": [
+      "community-review-06-20260907"
+    ],
+    "community-review-07-20260907": [
+      "community-review-07-20260907"
+    ],
+    "community-review-08-20260907": [
+      "community-review-08-20260907"
+    ],
+    "community-review-09-20260907": [
+      "community-review-09-20260907"
+    ],
+    "community-review-10-20260907": [
+      "community-review-10-20260907"
+    ],
+    "community-review-11-20260907": [
+      "community-review-11-20260907"
+    ],
+    "community-review-12-20260907": [
+      "community-review-12-20260907"
+    ],
+    "community-review-13-20260907": [
+      "community-review-13-20260907"
+    ],
+    "community-review-14-20260907": [
+      "community-review-14-20260907"
+    ],
+    "community-review-15-20260907": [
+      "community-review-15-20260907"
+    ],
+    "community-review-16-20260907": [
+      "community-review-16-20260907"
+    ],
+    "community-review-17-20260907": [
+      "community-review-17-20260907"
+    ],
+    "community-review-18-20260907": [
+      "community-review-18-20260907"
+    ],
+    "community-review-19-20260907": [
+      "community-review-19-20260907"
+    ],
+    "community-review-20-20260907": [
+      "community-review-20-20260907"
+    ],
+    "community-review-21-20260907": [
+      "community-review-21-20260907"
+    ],
+    "community-review-22-20260907": [
+      "community-review-22-20260907"
+    ],
+    "community-review-23-20260907": [
+      "community-review-23-20260907"
+    ],
+    "community-review-24-20260907": [
+      "community-review-24-20260907"
+    ],
+    "community-review-25-20260907": [
+      "community-review-25-20260907"
+    ],
+    "community-review-26-20260907": [
+      "community-review-26-20260907"
+    ],
+    "community-review-27-20260907": [
+      "community-review-27-20260907"
+    ],
+    "community-review-28-20260907": [
+      "community-review-28-20260907"
+    ],
+    "community-review-29-20260907": [
+      "community-review-29-20260907"
+    ],
+    "community-review-30-20260907": [
+      "community-review-30-20260907"
+    ],
+    "community-review-31-20260907": [
+      "community-review-31-20260907"
+    ],
+    "community-review-32-20260907": [
+      "community-review-32-20260907"
+    ],
+    "community-review-33-20260907": [
+      "community-review-33-20260907"
+    ],
+    "community-review-34-20260907": [
+      "community-review-34-20260907"
+    ],
+    "community-review-35-20260907": [
+      "community-review-35-20260907"
+    ],
+    "community-review-36-20260907": [
+      "community-review-36-20260907"
+    ],
+    "community-review-37-20260907": [
+      "community-review-37-20260907"
+    ]
+  },
+  "devGroups": [
+    "b2-uncle",
+    "community-review-19-20260907",
+    "b2-haga",
+    "b2-fushi",
+    "b2-nube",
+    "community-review-23-20260907",
+    "community-review-17-20260907",
+    "community-review-28-20260907",
+    "community-review-33-20260907",
+    "community-review-36-20260907",
+    "community-review-20-20260907",
+    "community-review-16-20260907",
+    "community-review-24-20260907",
+    "community-review-26-20260907",
+    "community-review-09-20260907"
+  ],
+  "edges": [
+    [
+      "b2-kumoko",
+      "b2-klaus"
+    ],
+    [
+      "b2-rin",
+      "b2-kaiji"
+    ],
+    [
+      "b2-naofumi",
+      "b2-takopi"
+    ],
+    [
+      "b2-bojji",
+      "b2-luckyman"
+    ],
+    [
+      "b2-guts",
+      "b2-elma"
+    ],
+    [
+      "b2-popp",
+      "b2-albus"
+    ],
+    [
+      "b2-goblin",
+      "b2-touka"
+    ],
+    [
+      "b2-rem",
+      "b2-guts"
+    ],
+    [
+      "b2-albus",
+      "b2-orphen"
+    ],
+    [
+      "b2-touka",
+      "b2-shinchan"
+    ],
+    [
+      "b2-boxxo",
+      "b2-keyaru"
+    ]
+  ]
+}

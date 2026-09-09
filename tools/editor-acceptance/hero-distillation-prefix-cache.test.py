@@ -78,4 +78,14 @@ class PrefixTests(unittest.TestCase):
         kv=cache.PrefixKV(mx,host,host,4,0);kv.update_and_fetch(value,value)
         with self.assertRaisesRegex(AssertionError,'ONE_USE'):kv.update_and_fetch(value,value)
 
+    def test_partition_diagnostic_preserves_sequence_and_cannot_admit_cache(self):
+        mx.random.seed(29);model=self.model();ids=list(range(1,18))
+        result=cache.diagnose_partition(mx,memory,model,ids,8,block_size=3)
+        self.assertFalse(result['cacheAdmitted']);self.assertEqual(result['optimizerSteps'],0)
+        self.assertEqual({row['publicPrefixTokens'] for row in result['rows']},{6,8})
+        for row in result['rows']:
+            self.assertEqual(row['totalTokens'],len(ids))
+            self.assertLess(row['hiddenRelativeL2'],2e-5)
+            self.assertEqual(set(row['projectionRelativeL2']),{'q_proj','k_proj','v_proj'})
+
 if __name__=='__main__':unittest.main()

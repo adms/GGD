@@ -1,0 +1,19 @@
+{
+  "parentManifestSha256": "98e95b1f5010a60120b81ee215ab5b03ca989f41e7e36c8c9bb80e9f56b5355f",
+  "rows": 619,
+  "groups": {
+    "f7d2e2f67f764bbf93fe5fee9120d11c303feec1e8e11f2ff6d6e574638c4f54": {
+      "trainTasks": 87,
+      "devTasks": 14
+    },
+    "bea8fb7786781c9aeb61b11a31793bbfde123abbecd73512efd0565afa9a843a": {
+      "trainTasks": 413,
+      "devTasks": 105
+    }
+  },
+  "allSemanticInputsUnchanged": true,
+  "allTeacherAnswersByteIdentical": true,
+  "allSplitsUnchanged": true,
+  "trainingStarted": false,
+  "cacheAdmitted": false
+}

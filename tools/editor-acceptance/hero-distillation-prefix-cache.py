@@ -106,3 +106,52 @@ class FrozenPrefixCache:
                 del cache
         result=mx.concatenate([self.hidden.device(mx),h],axis=1);mx.eval(result)
         return mx.stop_gradient(result)
+
+
+def diagnose_partition(mx,memory,model,input_ids,prefix_tokens,*,block_size=256,observer=None):
+    """Bounded forward-only localization, NOT capacity or training admission.
+
+    Compare the original and block-aligned public-prefix boundary at the first
+    layer and first full-attention layer. Every comparison uses all input tokens.
+    No model parameter, training setting, or stored dataset is changed.
+    """
+    import gc
+    body=model.language_model.model
+    depths=sorted({1,next(i+1 for i,layer in enumerate(body.layers) if layer.layer_type=='full_attention')})
+    assert max(depths)<=6 and max(depths)<len(body.layers),'BOUNDED_DIAGNOSTIC_ONLY'
+    boundaries=sorted({prefix_tokens,prefix_tokens//block_size*block_size})
+    assert min(boundaries)>0 and max(boundaries)<len(input_ids),'INVALID_PUBLIC_PREFIX'
+    def relative(a,b):
+        a,b=a.astype(mx.float32),b.astype(mx.float32)
+        return (mx.sqrt(mx.sum((a-b)**2))/mx.maximum(mx.sqrt(mx.sum(a*a)),1e-12)).item()
+    rows=[]
+    for depth in depths:
+        tail=len(body.layers)-depth
+        native=memory.frozen_prefix(mx,model,mx.array([input_ids],dtype=mx.int32),
+            tail_layers=tail,block_size=block_size,observer=observer)
+        for boundary in boundaries:
+            saved=FrozenPrefixCache(mx,memory,model,input_ids[:boundary],tail_layers=tail,
+                block_size=block_size,observer=observer)
+            reused=saved.hidden_for(input_ids)
+            row={'frozenDepth':depth,'publicPrefixTokens':boundary,'totalTokens':len(input_ids),
+                'blockAligned':boundary%block_size==0,'hiddenRelativeL2':relative(native,reused),
+                'prefixRelativeL2':relative(native[:,:boundary],reused[:,:boundary]),
+                'suffixRelativeL2':relative(native[:,boundary:],reused[:,boundary:])}
+            # A full-vs-segmented GEMM control distinguishes projection shape
+            # differences from errors introduced only after attention masking.
+            if depth==1:
+                h=body.layers[0].input_layernorm(body.embed_tokens(mx.array([input_ids],dtype=mx.int32))*body.embed_scale)
+                row['projectionRelativeL2']={}
+                for name in ['q_proj','k_proj','v_proj']:
+                    project=getattr(body.layers[0].self_attn,name)
+                    whole=project(h);parts=mx.concatenate([project(h[:,:boundary]),project(h[:,boundary:])],axis=1)
+                    row['projectionRelativeL2'][name]=relative(whole,parts)
+                    del whole,parts
+                del h
+            rows.append(row)
+            del saved,reused
+            gc.collect();mx.clear_cache()
+        del native
+        gc.collect();mx.clear_cache()
+    return {'diagnosticOnly':True,'optimizerSteps':0,'allInputTokensPreserved':True,
+            'rows':rows,'fullFrozenStackVerified':False,'cacheAdmitted':False}
