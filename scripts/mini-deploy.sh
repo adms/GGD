@@ -457,10 +457,27 @@ cmd_deploy() {
     #   ⇒ 部署每一次都「跑過」這一段而**什麼都沒驗**，⛔ 而它看起來跟通過一模一樣。
     #   ⚠️ 這正是 CLAUDE.md 記的「fail-open 沒錯，**靜默**才是缺陷」。
     head_ "6. ⭐ 煙霧測試（content.ok / champions / replay.ok）"
-    local hz
-    hz=$(r 'curl -fsS -m 5 http://127.0.0.1:2567/healthz' 2>/dev/null || true)
+    # ⭐⭐ 2026-09-09 —— **有界的重試**（⛔ 不是放寬）。
+    #
+    # ⛔ 在此之前這裡只問一次,而它就緊接在容器重啟後面
+    #   ⇒ ⭐ shard 還在起來的那幾秒被讀成「站壞了」——⚠️ 而**站是好的**
+    #     （同一刻手動 curl 回 `ok:true` / `champions:71` / `replay.ok:true`）。
+    #   ⇒ ⭐ 一個**時序**造成的假紅燈,而它會讓人去修沒有壞的東西
+    #     （這支腳本上面那段 PATH 註解記的是同一族的另一個）。
+    #
+    # ⭐ 為什麼是「重試」而不是「sleep 一下」：sleep 是一個猜的數字,
+    #   ⛔ 而它在慢的那一天仍然會紅。重試問的是**條件**,⛔ 不是時間。
+    # ⚠️ ⭐ 而它**仍然會紅** —— 上限 10 次 × 3 秒；真的沒起來還是 bad。
+    local hz i
+    hz=""
+    for i in 1 2 3 4 5 6 7 8 9 10; do
+      hz=$(r 'curl -fsS -m 5 http://127.0.0.1:2567/healthz' 2>/dev/null || true)
+      [ -n "$hz" ] && break
+      [ "$i" = 1 ] && info "⏳ shard 還沒回應 —— 重試中（上限 10 次 × 3 秒）"
+      sleep 3
+    done
     if [ -z "$hz" ]; then
-      bad "⛔ /healthz 一個位元組都沒回 —— ⛔ 這一段在此之前是**靜默跳過**的"
+      bad "⛔ /healthz 30 秒內一個位元組都沒回 —— ⛔ 這一段在此之前是**靜默跳過**的"
     else
       # ⭐ 用 python 讀,⛔ 但**不吞錯誤** —— 讀不出來要出聲
       local hzsum
