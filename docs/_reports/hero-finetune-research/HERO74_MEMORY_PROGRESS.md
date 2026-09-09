@@ -2,7 +2,15 @@
 
 2026-09-09。承接 `hero74-training-v2` 的 500 train／119 internal-dev；不是重新選資料，不截斷，模型仍為固定 Gemma 4 12B IT 8-bit、末兩層 q/o LoRA、rank 8。未獲正式訓練通過證據前不產生 release。
 
-## 後續執行狀態：v20 預檢通過，正式流程正在 dev-before
+## 最新終止狀態：v20 被電力保護停止，optimizer 0
+
+v20 的 probe completed（411.015 秒，四種格式全通過），train 則在 360.982 秒後 `stopped-or-failed`：持續接電但電量由 100% 降到 98%，觸發既定 `BATTERY_DROPPING`。exec session 71240 已回 exit 1，supervisor 終止並 join worker，沒有自動重試。停止於 `community-review-24-20260907:PASSIVE` 的 dev-before；未產生 order／training-trace／checkpoint，optimizer 0，沒有新 adapter，也沒有完成的 119 筆 dev-before 數值可用來算訓練改善。
+
+train 最低可用 RAM 58,159,693,824 bytes，觀察 swap 增量 0；此次不是 RAM／swap／16 小時限制觸發。停機後 `pmset -g batt` 顯示 AC Power、98%、charging；單憑這些紀錄不能判定是供电不足或系統電池管理策略。原 2 點下降保護不放寬，待使用者確認供電及明確同意重新開始，不用恢復到充電中作為自動重啟授權。
+
+`hero74-prefix-v20/receipt.json` 與 19 份原始證據／執行來源均已保存並逐檔驗 hash，workspace outputs 亦保留同份副本。追蹤排程 16 已 PAUSED。推論接線另已提交 `935ad6ab7`、CPU tests 9/9，未執行 GPU 推論；模型品質與全英雄上場目標尚未達成。以下 dev-before 執行中敘述保留為停機前歷史。
+
+## 停機前進度：v20 預檢通過並接續 dev-before
 
 v20 probe 已 completed、worker 已 join，四種完整格式 4/4 通過；`fitsTimeBudget=true`、`fitsStepBudget=true`、`prefixCacheParityPassed=true`。快取前向／反向依序 20.119、26.732、32.821、45.027 秒；各自未快取對照 44.833、55.184、58.633、65.752 秒，皆小於每段 120 秒。固定估算公式得 31,555.717 秒（8.765 小時），低於核准的 16 小時；估時不是完成保證。
 

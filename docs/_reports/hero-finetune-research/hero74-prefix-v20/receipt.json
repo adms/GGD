@@ -1,0 +1,115 @@
+{
+  "schema": "ggd-distillation-receipt@1",
+  "run": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/full-hero-distillation-v20",
+  "phases": {
+    "probe": {
+      "status": "completed",
+      "error": null,
+      "wallSeconds": 411.0147409439087,
+      "optimizerStepsRecorded": 0,
+      "minAvailableBytes": 52307787776,
+      "maxObservedSwapGrowthBytes": 0,
+      "allSamplesOnAC": true,
+      "minBatteryPercent": 100
+    },
+    "train": {
+      "status": "stopped-or-failed",
+      "error": "RuntimeError('BATTERY_DROPPING')",
+      "wallSeconds": 360.98158621788025,
+      "optimizerStepsRecorded": 0,
+      "minAvailableBytes": 58159693824,
+      "maxObservedSwapGrowthBytes": 0,
+      "allSamplesOnAC": true,
+      "minBatteryPercent": 98
+    }
+  },
+  "files": {
+    "manifest.json": {
+      "sha256": "930dbc2e9295228e5221da5b9acf2762a54b25b7fec17806e118cb09452a62f7",
+      "bytes": 249530
+    },
+    "source/hero-distillation-train.py": {
+      "sha256": "fc9f7a86ab571b2277706fcb7467071529dfc99af3a9bd33afd7359c8ef9a518",
+      "bytes": 36796
+    },
+    "source/hero-distillation-memory.py": {
+      "sha256": "51d023c128b1ed9ba1973e8d149eac0707f4fe2796b64cc252d5a9a584217d84",
+      "bytes": 16970
+    },
+    "source/hero-distillation-prefix-cache.py": {
+      "sha256": "6cac4438d0c63cdad952c716772f28362d8ba69608e7ac90bd13a43976604ea8",
+      "bytes": 8718
+    },
+    "probe/kernel-equivalence.json": {
+      "sha256": "0e96eb78b0a890abfa7c4dea962b94b60f45a34333d27363c9f5d1050e51d7db",
+      "bytes": 1983
+    },
+    "probe/memory-trace.jsonl": {
+      "sha256": "441a9fbf591922276c81fe2eb083ed51a1d790f04f460e3fa46f593ad9814c4a",
+      "bytes": 419600
+    },
+    "probe/prefix-cache-builds.json": {
+      "sha256": "700da417877f1317e2b9903843ec34bb8f9ecfda87957c5837cd278168598495",
+      "bytes": 290
+    },
+    "probe/prefix-cache-parity.json": {
+      "sha256": "e60212aeee4c3dec27bedc2e05ddd8b3df80a09a8f3bafcd9834cd9a10fc7678",
+      "bytes": 2394
+    },
+    "probe/probe-trace.json": {
+      "sha256": "04dffb0b453924c8d4ad14c29630fb709977b2534f365138568284c0469e9683",
+      "bytes": 899
+    },
+    "probe/result.json": {
+      "sha256": "da92b46e5e07fe57769287d39b81625dd84b5bd9b8c87204b65c63b5c568cbd6",
+      "bytes": 1585
+    },
+    "probe/state.json": {
+      "sha256": "3e9118c23065695640c95e3d5bb984ab606c7909df42b75a44eb4fff1c63138b",
+      "bytes": 31383
+    },
+    "probe/worker-progress.json": {
+      "sha256": "7ec6dcd991193dd52d58496fab65887bfab52c4152e171ac5e1b79563605546a",
+      "bytes": 147
+    },
+    "probe/worker.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "train/memory-trace.jsonl": {
+      "sha256": "d89ac6fad9d8733621dce327aed4b3691e501bf9cd88650d0447f0abb9fc6c04",
+      "bytes": 527841
+    },
+    "train/prefix-cache-builds.json": {
+      "sha256": "59981d08f19e8aef4f15b541bb6a8fab90d38256291fe8656e1aa24bdf276086",
+      "bytes": 290
+    },
+    "train/state.json": {
+      "sha256": "b946fb59d27e1998267502913594e981e13a74f0bcdd6e470c9f979b672c5fc0",
+      "bytes": 27588
+    },
+    "train/worker-progress.json": {
+      "sha256": "3a01cfe6ce254416d6e2784585e9d4c538e997eb6c9d73c5989226608beded75",
+      "bytes": 110
+    },
+    "train/worker.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "token-preflight.json": {
+      "sha256": "a8e22358e6c35f893daee34a2b67f3b9e222541afa8d5a0793ce5d0fb2920174",
+      "bytes": 969
+    }
+  },
+  "omitted": [
+    {
+      "path": "tokens.json",
+      "bytes": 85371218,
+      "sha256": "29c12d9e5aacb9ddd4ebe174a975c083cf3e28520b8ec93bf97ada8291c070eb",
+      "reason": "not-a-receipt"
+    }
+  ],
+  "fullHeroE2EProven": false,
+  "modelPromoted": false,
+  "note": "Terminal supervisor receipts, not a live process query or model quality assessment."
+}
