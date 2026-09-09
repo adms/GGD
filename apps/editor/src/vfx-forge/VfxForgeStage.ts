@@ -91,6 +91,8 @@ const ACTOR_VISIBILITY_RETRIES = 6;
 const ACTOR_VISIBILITY_RETRY_FRAMES = 3;
 /** Keep the real GPU progressing while a paused Forge compiles imported PBR materials. */
 const ACTOR_SHADER_BUDGET_MS = 4_000;
+/** Cold image decoding and RGBD shader imports precede actor compilation. */
+const ENVIRONMENT_BRDF_BUDGET_MS = 30_000;
 // Main's model-audition proof advances imported Stand tracks to 600ms. Several
 // WC3 geoset-alpha clips are intentionally all-off at exact tick zero, which
 // is not representative of a living actor once the game loop has advanced.
@@ -2264,7 +2266,7 @@ export class VfxForgeStage {
     // same decode once; retain normal lighting and reject a second failure.
     for (let attempt = 0; attempt < 2; attempt++) {
       const texture = GetEnvironmentBRDFTexture(this.scene);
-      const deadline = Date.now() + ACTOR_SHADER_BUDGET_MS;
+      const deadline = Date.now() + ENVIRONMENT_BRDF_BUDGET_MS;
       while (!texture.isReady() && !this.disposed && Date.now() < deadline) {
         // The paused Forge has no continuous render loop. Its RGBD helper
         // needs the same GPU frames as actor texture compilation below.

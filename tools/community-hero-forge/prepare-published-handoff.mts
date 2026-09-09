@@ -70,8 +70,8 @@ for (const project of projects) {
     const failures = slots.flatMap(row => row.assertions.filter(a => a.status === "fail").map(a => `${row.slot}: ${a.summaryZh}`));
     if (kit.status === "rejected") failures.push(`整套技能未完成：${kit.rejectedSlots.join("、")}`);
     scenarioResults.push({ projectId: project.projectId, name: project.brief.name, sourceDigest: contentSha256(sourceProject), importedDraftDigest: contentSha256(project), status: failures.length ? "failed" : "passed", failures,
-      slots: slots.map(row => ({ slot: row.slot, status: row.status, rejectionReason: row.rejectionReason })),
-      kit: { status: kit.status, rejectedSlots: kit.rejectedSlots, rejectionReasonsBySlot: kit.rejectionReasonsBySlot } });
+      slots: slots.map(row => ({ slot: row.slot, status: row.status, rejectionReason: row.rejectionReason, prerequisiteActions: row.assertions.filter(a => a.id === "earned-prerequisites").map(a => a.summaryZh) })),
+      kit: { status: kit.status, rejectedSlots: kit.rejectedSlots, rejectionReasonsBySlot: kit.rejectionReasonsBySlot, prerequisiteActionsBySlot: kit.prerequisiteActionsBySlot } });
   }
   } catch (error) { compilationFailures.push(`${project.projectId}: ${String(error)}`); }
 }
@@ -79,7 +79,7 @@ assert.equal(compilationFailures.length, 0, compilationFailures.join("\n"));
 if (values["scenario-report"]) {
   const failed = scenarioResults.filter(row => row.status === "failed");
   await fs.writeFile(path.resolve(values["scenario-report"]), JSON.stringify({ schema: "ggd-handoff-admission-scenarios@1",
-    scope: "Offline default six-slot and fixed-order admission scenarios; no asset, service, visual or publication proof.",
+    scope: "Offline shared admission scenarios with real prerequisite actions when required; no asset, service, visual or publication proof.",
     baselineDigest: baseline!.digest, passed: scenarioResults.length - failed.length, failed: failed.length, results: scenarioResults }, null, 2) + "\n", { flag: "wx" });
   assert.equal(failed.length, 0, failed.map(row => `${row.name}: ${(row.failures as string[]).join("；")}`).join("\n"));
 }

@@ -130,6 +130,28 @@ describe("walkZod widget kinds (editor-01)", () => {
 });
 
 describe("discriminated EffectDef union (editor-02)", () => {
+  it("does not expand unselected recursive variants, retaining paths and default values when selected", () => {
+    let expanded = 0;
+    const schema = z.discriminatedUnion("kind", [
+      z.object({ kind: z.literal("simple"), amount: z.number().min(2) }),
+      z.object({ kind: z.literal("nested"), payload: z.lazy(() => {
+        expanded++; return z.object({ amount: z.number().min(3), note: z.string().optional() });
+      }) }),
+    ]);
+    const node = walkZod(schema, "effect") as UIDiscriminatedUnion;
+    expect(node.variants.map(variant => variant.tag)).toEqual(["simple", "nested"]);
+    expect(defaultForVariant(node, "simple")).toEqual({ kind: "simple", amount: 2 });
+    expect(expanded).toBe(0);
+    const nested = node.variants.find(variant => variant.tag === "nested")!;
+    expect(nested.fields[0]).toMatchObject({ path: "effect.payload", kind: "object" });
+    expect(defaultForVariant(node, "nested")).toEqual({ kind: "nested", payload: { amount: 3 } });
+    expect(nested.fields).toBe(nested.fields);
+    expect(expanded).toBe(1);
+    // A second form has its own tree, so editing/reordering one cannot affect it.
+    const second = walkZod(schema, "other") as UIDiscriminatedUnion;
+    expect(second.variants[1]!.fields[0]!.path).toBe("other.payload");
+    expect(second.variants[1]!.fields).not.toBe(nested.fields);
+  });
   it("renders variant cards keyed by kind, recursion depth-capped", () => {
     cover("editor-walker-union");
     const ability = walkZod(zAbilityDoc, "", "Ability");
