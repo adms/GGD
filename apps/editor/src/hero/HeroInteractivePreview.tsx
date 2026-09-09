@@ -47,9 +47,13 @@ export function HeroInteractivePreview(props: { project: HeroProject; slot: Hero
     {hasDrive ? <p>滑板狀態：藍色加速、青色滑行、橙色急轉、黃色煞車、紅色碰撞停止、灰色停止。移動與煞車使用下方試玩情境設定；模型為程序示意。</p> : null}
     {hasGrapple ? <p>吊帶沿瞄準方向連接第一個合法敵人或地形；白線顯示實際牽引，結束即消失。空射仍消耗本次施法資源。</p> : null}
     {requiredSummon ? <p>需要自己 {requiredSummon}「{project.acceptedPlan?.slots[requiredSummon].name}」的存活召喚物。可在前置施法選擇 {requiredSummon} 後試玩；只補足資源不會建立召喚物。</p> : null}
-    {statusCost?.subject === "target" ? <p>本招消耗指定目標身上的資源，必須先由實際機制取得；單槽試玩不會建立線索等目標資源。</p> : statusCost ? <p>單槽試玩{setup.resourceSetup === "empty" ? "保留初始" : "預先補足已安裝的"}資源；本招消耗自身{statusCost.count === "all" ? "全部剩餘資源（至少一層）" : `${statusCost.count} 層`}。整套驗收不補資源。</p> : null}
+    {statusCost?.subject === "target" ? <p>本招消耗指定目標身上的資源，必須先由實際機制取得；預設先讓敵人嘗試普攻 3 秒，不直接建立線索等目標資源。可改成靜止敵人測試資源不足。</p> : statusCost ? <p>單槽試玩{setup.resourceSetup === "empty" ? "保留初始" : "預先補足已安裝的"}資源；本招消耗自身{statusCost.count === "all" ? "全部剩餘資源（至少一層）" : `${statusCost.count} 層`}。整套驗收不補資源。</p> : null}
     <details><summary>調整試玩情境</summary>
       <p>位置以場地中心為原點。這些設定只影響本次試玩；投稿仍執行固定的六槽驗收。</p>
+      <label>敵方前置行動<select aria-label="敵方前置行動" value={setup.opponentPreparation ?? "auto"} onChange={event => {
+        const mode = event.target.value;
+        if (mode === "auto" || mode === "idle" || mode === "attack") setSetup({ ...setup, opponentPreparation: mode });
+      }}><option value="auto">依技能需要（目標資源先測試敵方普攻）</option><option value="idle">保持靜止，測試未取得資源</option><option value="attack">嘗試普攻施法者 3 秒，再停止指令</option></select></label>
       {statusCost && statusCost.subject !== "target" ? <label><input type="checkbox" checked={setup.resourceSetup !== "empty"} onChange={(event) => setSetup({ ...setup, resourceSetup: event.target.checked ? "ready" : "empty" })} />單槽試玩補足施放資源（不修改作品）</label> : null}
       <label>前置施法<select aria-label="前置施法" value={setup.priorCast?.slot ?? ""} onChange={(event) => {
         const priorSlot = event.target.value;
@@ -87,7 +91,8 @@ export function HeroInteractivePreview(props: { project: HeroProject; slot: Hero
       <button type="button" onClick={() => setSetup(structuredClone(DEFAULT_HERO_SCENARIO_SETUP))}>重設試玩情境</button>
     </details>
     {busy ? <p role="status">正在試算此情境…</p> : error ? <p role="alert">{error}</p> : scenario ? <p role="status">{scenario.status === "accepted" ? "完成施放" : scenario.status === "passive" ? "被動情境" : `未施放：${scenario.rejectionReason}`} · 實際技能階級 {scenario.rank} · 目標生命 {Math.round(scenario.before.targetHp)} → {Math.round(scenario.after.targetHp)}</p> : result?.errors.map((message) => <p role="alert" key={message}>{message}</p>)}
-    {!busy ? scenario?.assertions.filter(assertion => assertion.id === "single-slot-prior-cast").map(assertion => <p key={assertion.id}>{assertion.summaryZh}</p>) : null}
+    {!busy && scenario?.resourceCost ? <p>可消耗資源（{scenario.resourceCost.subject === "target" ? "指定目標" : "自身"}）：施放前 {scenario.resourceCost.before} → 情境結束 {scenario.resourceCost.after}</p> : null}
+    {!busy ? scenario?.assertions.filter(assertion => ["single-slot-prior-cast", "opponent-preparation"].includes(assertion.id)).map(assertion => <p key={assertion.id}>{assertion.summaryZh}</p>) : null}
     <HeroPreview {...props} vfxSubtypes={catalog.vfxSubtypes} result={result?.compiled && scenario ? result : props.result} current={current} />
   </section>;
 }

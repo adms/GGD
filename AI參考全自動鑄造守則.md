@@ -202,3 +202,11 @@ pnpm --filter @ggd/shared typecheck
 範例：[柯南 v2 配方](materials/community-hero-forge/refinements/26.json)、[移動行為案例](packages/shared/src/content/heroForge/communityRefinements/conanMobility.test.ts)、[跨端回放案例](apps/editor/src/vfx-forge/AbilityMotionReplay.test.ts)、[證據及剩餘缺口](materials/community-hero-forge/refinements/conan-mobility-verification.json)。
 
 位移畫面可依 [批次驗證的瀏覽器設定](tools/community-hero-forge/BATCH_VERIFICATION.md) 收集。先核對技能槽、時間、實際網格狀態與座標，再判斷畫面物件；不能把固定施法標記誤認為移動模型。單英雄畫面或 NullEngine 通過不代表整批畫面通過。預設情境資源不足的拒絕必須保留，另建立有真實前置事件的可施放情境，不能移除成本或偽造線索來取得全綠。
+
+### 前置條件也要走實際行為
+
+需要敵方事件才能取得的目標資源，驗收場景必須啟動實際戰鬥系統。共用情境現在依 `statusCost.subject=target`，先讓敵方以真正普攻指令嘗試攻擊三秒，再停止指令；用練習場既有的受控席位阻止空白幀自行索敵。傷害、位置、狀態及取得的資源全部保留，沒有直接加線索。若原機制不能從這個行為取得資源，就應繼續拒絕，另設適當案例。
+
+Editor 的「敵方前置行動」可切換自動、靜止或普攻，並显示資源在施放前及情境結束的數量。正例必須同時通過 Editor 與投稿端的同一情境；負例至少含靜止敵人、移除取得資源的被動，以及成本高於真實所得。柯南 R 的 `all` 成本只需至少一條自己的線索，不應誤寫成三條。前置事件也必須計入回放長度。
+
+參考 [前置行為測試](packages/shared/src/content/heroForge/communityRefinements/conanAcceptance.test.ts) 及 [Editor／投稿一致性測試](apps/editor/src/hero/validationBaseline.test.ts)。這些是測試場景的可施放證據，不能取代逐項原設計、實際模型畫面或正式發布驗收。

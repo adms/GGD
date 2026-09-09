@@ -2257,6 +2257,9 @@ export class VfxForgeStage {
       const texture = GetEnvironmentBRDFTexture(this.scene);
       const deadline = Date.now() + ACTOR_SHADER_BUDGET_MS;
       while (!texture.isReady() && !this.disposed && Date.now() < deadline) {
+        // The paused Forge has no continuous render loop. Its RGBD helper
+        // needs the same GPU frames as actor texture compilation below.
+        this.renderScene();
         await this.waitForBrowserFrame();
       }
       if (this.disposed) return;

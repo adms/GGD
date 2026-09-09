@@ -1,5 +1,7 @@
 # 37 英雄原設計修正（#1132）
 
+最新驗收修正：柯南 R 的前置線索改由實際敵方普攻取得；共用試玩啟動戰鬥並控制自動索敵，保留空資源拒絕。Editor 與投稿編譯器的六槽／整套情境一致性已通過；這不等於已完成當下服務 ZIP 或瀏覽器畫面。來源與收據見 `conan-acceptance-verification.json`。
+
 最新為柯南 v2，補上 E／EX，作品 revision 13→14。累計 39 槽登記行為測試，183 槽仍未對應，23 名仍使用通用普攻被動。專用素材、完整原設計／畫面／新服務 ZIP／發布尚未完成，#1132 保持開啟。見 [柯南移動證據](conan-mobility-verification.json)。後文數字與 v1 證據是各次提交的歷史收據。
 
 原始 `recipes/*.upload-recipe.json` 保持逐位元組不變。此處的逐英雄 JSON 是版本化的微調設定，必須與同一 projectId、sourceSha256 配對。既有模板由 `pinHeroPlanTemplates` 固定版本並實體化；套用器建立新作品 revision，不修改共用模板或舊英雄版本。

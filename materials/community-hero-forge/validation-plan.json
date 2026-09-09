@@ -14,7 +14,8 @@
         "packages/shared/src/content/heroForge/communityRefinements/kirua.test.ts",
         "packages/shared/src/content/heroForge/communityRefinements/yugi.test.ts",
         "packages/shared/src/content/heroForge/communityRefinements/conan.test.ts",
-        "packages/shared/src/content/heroForge/communityRefinements/conanMobility.test.ts"
+        "packages/shared/src/content/heroForge/communityRefinements/conanMobility.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts"
       ],
       "heroSlots": {
         "community-review-20-20260907": [
@@ -97,6 +98,18 @@
         "community-review-26-20260907": [
           "E",
           "EX"
+        ]
+      }
+    },
+    {
+      "id": "target-resource-acceptance",
+      "files": [
+        "packages/shared/src/content/heroForge/communityRefinements/conanAcceptance.test.ts",
+        "apps/editor/src/hero/validationBaseline.test.ts"
+      ],
+      "heroSlots": {
+        "community-review-26-20260907": [
+          "R"
         ]
       }
     }

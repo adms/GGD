@@ -18,6 +18,7 @@ export const zHeroScenarioSetup = z.object({
   ])).max(8).optional(),
   obstacle: z.object({ x: z.number().min(-20).max(20), z: z.number().min(-20).max(20) }).strict().optional(),
   resourceSetup: z.enum(["ready", "empty"]).optional(),
+  opponentPreparation: z.enum(["auto", "idle", "attack"]).optional(),
   priorCast: z.object({
     slot: z.enum(["Q", "W", "E", "R"]),
     waitSec: z.number().finite().min(0.1).max(10),
