@@ -107,10 +107,116 @@
     "genericOnAttackPassives": 23
   },
   "browser": {
-    "status": "pending",
-    "scope": "Shared scenario and fixture-model package parity do not attest to the running service, restored model, or rendered scene."
+    "status": "failed",
+    "origin": "http://127.0.0.1:5198",
+    "source": "production build after scenario and PBR render-pump edits; service revision not attested by browser",
+    "importedHeroes": 1,
+    "passedMotionFrames": 0,
+    "reason": "PBR lookup still not ready; both actor statuses remain fallback. Adding a render pump alone did not resolve it.",
+    "uiObserved": [
+      "Real one-hero folder import with attached model succeeded.",
+      "Editor displayed six-slot compile/simulation passed.",
+      "Opponent preparation selector visible; E completed and emitted actual abilityMotion events."
+    ],
+    "notChecked": [
+      "R selected interactive positive/idle toggle",
+      "interactive playback after material load",
+      "nine motion screenshots",
+      "full batch rendered acceptance",
+      "current-service ZIP and submission/publication"
+    ],
+    "localDraftRevisionObserved": 16,
+    "localDraftNote": "Screenshot only; imported source project14 is unchanged in Git, local import/generator adoption advanced browser draft.",
+    "diagnosticTextSha256": "612e45f5b782ded429bf4737851b8f4d6c095f5c30c75bc989cea694230f2025",
+    "logSha256": "5ab7c893088da34f0e4d6864cf90d011135648467bc17795905aa90f0d6d78cf",
+    "image": {
+      "uri": "s3://ggd-390630837668-ap-east-2-an/community-hero-forge/evidence/conan-acceptance/diagnostic/ff84ab8b98763944cbc0b40866731ae13b83c2e2a3f2386ec8ed02b43c43480b.png",
+      "sha256": "ff84ab8b98763944cbc0b40866731ae13b83c2e2a3f2386ec8ed02b43c43480b",
+      "bytes": 308898,
+      "downloadSha256Verified": true,
+      "classification": "failed-acceptance-diagnostic"
+    },
+    "environmentNote": "Headless Chrome SwiftShader; release checks overlapped this capture. Not a device performance result.",
+    "initialLaunchFailure": "First capture failed because sandbox prevented preview port listen; same localhost preview started with permitted escalation."
   },
   "originalDesignAcceptance": "incomplete",
   "currentServiceZip": "not-built",
-  "formalPublication": false
+  "formalPublication": false,
+  "sourceCommit": "00c50debe",
+  "finalBatch": {
+    "head": "c6f1fc737dbdfb6111cbee3ba3c533cc9ae1dc2e",
+    "sourceFingerprint": "5eda23b70837b98e1647f0cd06f135a538849340c78e06f9fc9045112bb28ad9",
+    "exitCode": 2,
+    "errors": [],
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 39,
+      "slotsWithoutBehaviorSuite": 183
+    },
+    "modelBytes": "verified",
+    "reportSha256": "c2a107cef7204557ec855b845d69fce1ae3aa21709e7e953392c2904c9545fe3",
+    "editorTests": 600,
+    "registeredTests": 234,
+    "jobs": [
+      {
+        "id": "skills",
+        "exitCode": 0,
+        "logSha256": "0abf862107f420060a7b87c139ea434ba773082718cfe5593e3cf3a25d55848f"
+      },
+      {
+        "id": "editor",
+        "exitCode": 0,
+        "logSha256": "0670ed085ded9dccfcc7ed6b10187d01f6532a9c012940f2401a820f449ee291"
+      },
+      {
+        "id": "coord",
+        "exitCode": 0,
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271"
+      },
+      {
+        "id": "compile-and-models",
+        "exitCode": 0,
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c"
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "exitCode": 0,
+        "logSha256": "7cb63d0337841d781457a64d5bfe29b59bd803e5545386d5d72f0a38d55e039b"
+      },
+      {
+        "id": "behavior-trap-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "dda307fa967b7354d16c98489331d76f7552526bad22c0b45cbb76874a920562"
+      },
+      {
+        "id": "behavior-motion-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "7e46670a094f68997014fa989689833864bc4b91e87181843bab5dc2d9b86de3"
+      },
+      {
+        "id": "behavior-target-resource-acceptance",
+        "exitCode": 0,
+        "logSha256": "68618a7593ebb236756490065e5d76d6965918469bdec020712027bc17f00af0"
+      }
+    ],
+    "meaning": "All executed checks passed; exit 2 retains 183 unmapped slots. No original-design, rendered-image or publication verdict."
+  },
+  "isolatedBrdfProbe": {
+    "ready": true,
+    "milliseconds": 551,
+    "frames": 3,
+    "size": [
+      256,
+      256
+    ],
+    "midpoint": [
+      0.0220184326171875,
+      0.85107421875,
+      0.23095703125,
+      1
+    ],
+    "logSha256": "6d7bc73675b94861e6cc014fd637ad47adf180a6f3c4cdb7300c2a8007471837",
+    "scope": "Same installed Babylon GetEnvironmentBRDFTexture, Engine/Scene and real render pump in a temporary localhost page with fresh Chrome SwiftShader. This proves only isolated lookup readiness; full Editor failure cause is not established."
+  }
 }

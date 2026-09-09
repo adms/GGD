@@ -390,6 +390,19 @@
         "apps/editor/src/hero/validationBaseline.test.ts",
         "materials/community-hero-forge/validation-plan.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "乾淨提交 c6f1fc737 同批通過 skills、Editor release、coord、37 名／222 槽編譯模型核對及四组登記案例。Editor 600 項、登記案例234 項均通過；退出碼2 保留183 槽缺口。真實瀏覽器匯入柯南後顯示六槽編譯模擬通過，但 PBR 預載仍失敗、九張位移畫面未取得；獨立 PBR 小場景551ms成功只縮小診斷範圍。診斷畫面已存授權 S3 並下載核對 SHA，未當成通過。#1132 原範圍保持開啟，無新服務 ZIP 或正式發布。",
+      "repro": {
+        "command": "pnpm editor:accept:release",
+        "expectedExit": 0
+      },
+      "commit": "c6f1fc737dbdfb6111cbee3ba3c533cc9ae1dc2e",
+      "evidence": [
+        "materials/community-hero-forge/refinements/conan-acceptance-verification.json",
+        "materials/community-hero-forge/validation-plan.json"
+      ]
     }
   ],
   "unblocks": [],
