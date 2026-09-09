@@ -5,12 +5,12 @@
   "from": "codex",
   "to": "main",
   "baseCommit": "0709f475fbbe966f0f1f009dc4b65ee67e24d5a9",
-  "contractFingerprint": "b91a0f59c31289ed",
-  "title": "Editor 171 顆積木的 React 操作與回讀：166 通過、5 不可用",
+  "contractFingerprint": "ed197415160df4f6",
+  "title": "Editor 173 顆積木的 React 操作與回讀：168 通過、5 不可用",
   "claims": [
     {
       "kind": "confirmed",
-      "text": "掛載實際 FormRenderer、ConditionEditor 或 HeroSlotEditor，操作選單／參數、序列化並重新掛載後，171 顆積木中 166 顆通過，5 顆由現有契約阻擋。每列分別記錄參數是否編輯；這是 headless React 證據，不是瀏覽器、IndexedDB、全部參數或 runtime 驗收。",
+      "text": "掛載實際 FormRenderer、ConditionEditor 或 HeroSlotEditor，操作選單／參數、序列化並重新掛載後，173 顆積木中 168 顆通過，5 顆由現有契約阻擋。每列分別記錄參數是否編輯；這是 headless React 證據，不是瀏覽器、IndexedDB、全部參數或 runtime 驗收。",
       "repro": {
         "command": "node tools/skill-forge/build-editor-form-receipts.mjs --check",
         "expectedExit": 0
@@ -26,16 +26,16 @@
   ],
   "source": {
     "bricks": "docs/editor-contract/ggd-bricks.json",
-    "brickInputSha256": "de95ca455fbea82d21a07fe1469b57cf5be9afe20f4b875ab3c94a0cd0d83215",
-    "capabilityFingerprint": "43cd2f44",
+    "brickInputSha256": "1576d73b01cfc8b8635bdc1f568ac5a245adbbaa9ac87641ee59cfa622b7ce89",
+    "capabilityFingerprint": "3ce6f518",
     "typeCatalog": "docs/editor-contract/ggd-type-catalog.json",
-    "typeCatalogSha256": "b91a0f59c31289ed57599c47e490cc174c7685f1fe3bb581419ce9f81bf16004"
+    "typeCatalogSha256": "ed197415160df4f66a1be98315187a9833da8680ec0a0f85ee301f80f7534125"
   },
   "summary": {
-    "total": 171,
-    "renderable": 166,
+    "total": 173,
+    "renderable": 168,
     "missing": 5,
-    "parameterEdited": 102,
+    "parameterEdited": 104,
     "byLayer": {
       "effect": {
         "total": 49,
@@ -58,8 +58,8 @@
         "missing": 1
       },
       "template": {
-        "total": 43,
-        "renderable": 43,
+        "total": 45,
+        "renderable": 45,
         "missing": 0
       },
       "vfx-call": {
@@ -270,7 +270,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 55,
+      "usedBy": 53,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=applyBuff",
@@ -418,7 +418,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 63,
+      "usedBy": 62,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=applyStatus",
@@ -1206,7 +1206,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 75,
+      "usedBy": 73,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=damage",
@@ -1319,7 +1319,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 50,
+      "usedBy": 48,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=damageArea",
@@ -13345,6 +13345,91 @@
       "browserVerified": false
     },
     {
+      "id": "ally-shield",
+      "layer": "template",
+      "params": [
+        {
+          "name": "absorbs",
+          "type": "enum",
+          "values": [
+            "all",
+            "physical",
+            "magic",
+            "true"
+          ],
+          "optional": true,
+          "origin": "`zShield.absorbs` 本人的值域，⛔ 不是另一份白名單。留空 ＝ 走 schema 的預設。"
+        },
+        {
+          "name": "amount",
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              50,
+              85,
+              120,
+              155
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.465
+              }
+            ]
+          },
+          "origin": "census: 出貨 **10 個** `shield` 節點裡 3 個帶 `perRank`。⭐ 這一格逐位元取自 `tpl-heal.amount` 的預設（`perRank [50,85,120,155]` ＋ `ap 0.465`）—— ⭐ 護盾與回血是**同一個量級**的友方數值,⛔ 而護盾**沒有級距表**（`damage-tiers` 只管傷害）⇒ ⛔ 這裡沒有第二個住處可抄。"
+        },
+        {
+          "name": "castTimeSec",
+          "type": "number",
+          "optional": true,
+          "min": 0,
+          "max": 5,
+          "origin": "與其餘每一族同一格（`deriveCastTimes` 會覆蓋它；留空 ＝ 由推導填）。"
+        },
+        {
+          "name": "duration",
+          "type": "number",
+          "default": 8,
+          "min": 0,
+          "max": 60,
+          "origin": "census: 出貨 10 個 `shield` 節點的 `duration` **中位數 ＝ 8 秒**（值域 1–15）。⛔ 不是我挑的好看數字。`zShield.duration` 是 `z.number().min(0)`；上界 60 取自值域外推的安全邊。"
+        },
+        {
+          "name": "radius",
+          "type": "number",
+          "default": 8,
+          "min": 0,
+          "max": 30,
+          "origin": "census: 出貨**唯一**一支「友方 ground」技能（`targetsEnemies:false` ＋ `radius`）的半徑是 **8**（53-03 破法對咒那一族）。⛔ 不是我挑的數字。⚠️ 只有 `target:\"area\"` 讀它。"
+        },
+        {
+          "name": "target",
+          "type": "enum",
+          "values": [
+            "self",
+            "ally",
+            "area"
+          ],
+          "default": "area",
+          "origin": "census: GH#1132 —— 37 名社群英雄裡**提到友軍的 18 槽**逐句分類：**範圍 7 · 指定 4 · 兩者或判不出 7** ⇒ ⭐ 預設挑 `area`（⛔ 不是我挑的，是多數）。⚠️ 而那 18 槽裡有 **12 槽**今天綁著 `tpl-buff-self` —— 那一族發 `applyTo:self`、⛔ 不設 `targetsEnemies` ⇒ ⭐「友軍盾」實際只罩施法者自己，而卡面說它保護隊友（第一·五守則）。⭐ `area` 逐字對到 AC③「範圍友軍盾實際保護範圍內友軍**及自己**」。"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "template@1:content/ability-templates/tpl-ally-shield.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-ally-shield",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 18,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
       "id": "apply-status",
       "layer": "template",
       "params": [
@@ -13386,6 +13471,123 @@
       "renderable": true,
       "reason": null,
       "controlCount": 36,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
+      "id": "area-strike",
+      "layer": "template",
+      "params": [
+        {
+          "name": "castTimeSec",
+          "type": "number",
+          "optional": true,
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "origin": "derived: 沿用出貨 71/79 位採用者的慣例（文件與 params 同一個值）—— 同 `tpl-instant-blast.castTimeSec`。⭐ 預設 0 ＝ 瞬發,⛔ 而真正的值由 `castTimeFormula.deriveCastTime()` 算（那是唯一來源）。"
+        },
+        {
+          "name": "castType",
+          "type": "enum",
+          "values": [
+            "self",
+            "ground",
+            "targeted"
+          ],
+          "default": "self",
+          "origin": "census: 出貨 10 支 damageArea 主體技能 —— self 6 · ground 3 · targeted 1（2026-09-09 逐份量）。"
+        },
+        {
+          "name": "condition",
+          "type": "condition",
+          "optional": true,
+          "origin": "census: 那 10 支裡 **1 支有**（`godie-emns.e`：`{kind:status, subject:target, statusId:curse}`）。⭐ 值是整個條件葉，由 zCondition 本人驗。"
+        },
+        {
+          "name": "damage",
+          "type": "scaling",
+          "default": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "origin": "census: 那 10 支的 amount 有三種形狀（damageTier / damageTierPerRank / flat）—— ⭐ 值是整個 Scaling 節點，由 zScaling 本人驗，⛔ 不在這裡拆成幾格。預設取最低級距（⭐ 作者一定會改它）。"
+        },
+        {
+          "name": "damageType",
+          "type": "enum",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "default": "magic",
+          "origin": "census: 同一批 10 支 —— magic 6 · physical 4。⭐ 與 owner 2026-08-05「技能傷害預設都改成 AP 傷害」一致。"
+        },
+        {
+          "name": "includeOrigin",
+          "type": "boolean",
+          "optional": true,
+          "origin": "census: 全樹 damageArea 的 includeOrigin 是 **20 true / 5 不存在**（⛔ 0 個 false）。⛔ 刻意無預設：`zDamageArea.includeOrigin` 是 `z.boolean().optional()` ⇒ **不存在 ≠ false**,一個預設值會把那 5 支的原點傷害無中生有。"
+        },
+        {
+          "name": "modelFx",
+          "type": "spawnModelFx",
+          "optional": true,
+          "origin": "census: 同一批裡 `spawnModelFx` 出現 **7** 次（最多的視覺）。⛔ 同上,無預設。"
+        },
+        {
+          "name": "onHitTargets",
+          "type": "effects",
+          "optional": true,
+          "origin": "census: 那 10 支裡 **5 支有這一格**（knockback ×2 · applyStatus ×1 · applyStatus+dot ×1 · applyBuff+applyStatus ×1）。⭐⭐ 這是這個模板的重點：那些追加效果**不是頂層的第二個節點**，是 damageArea 自己的一格 —— ⛔ 做成六格獨立參數就是把同一份知識拆成第二個住處。⛔ 刻意無預設：一個「我不知道你要追加什麼」的預設會讓作者以為它是必要的。"
+        },
+        {
+          "name": "radius",
+          "type": "number",
+          "default": 4.5,
+          "min": 0.5,
+          "max": 30,
+          "origin": "census: 出貨 10 支 damageArea 主體技能的 exemplar `godie-e00s.e` 逐位元（4.5）。⚠️ ⭐ `zDamageArea` 的**必填**格,⛔ 而它在載入時會被 `radiusTier` 蓋掉（`resolveRadiusTier`）—— 留著它是因為 AoE 級距表被關掉的那天,一個 0 半徑的爆炸與「這支技能沒有爆炸」長得一模一樣（同 tpl-traveling-wave 的 blastRadius）。⚠️ ⭐ 刻意**不填 `unit`**：那一格是封閉詞彙（wc3u/wc3h/s/count/ratio）,而這裡的半徑是 GGD 單位 —— ⛔ 硬填一個 wc3u 會讓後台的換算是錯的。"
+        },
+        {
+          "name": "radiusTier",
+          "type": "enum",
+          "tier": true,
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ],
+          "default": "中",
+          "origin": "census: 同一批 10 支 —— 中 5 · 小 4 · 極小 1。⚠️ ⭐ 真正說話的是這一格：`resolveRadiusTier` 在載入時把 `radius` 蓋掉（AoE 級距表）。"
+        },
+        {
+          "name": "selfBuff",
+          "type": "applyBuff",
+          "optional": true,
+          "origin": "census: 出貨 damageArea 單發技能裡,第二個頂層節點是 `applyBuff` 的有 **3 支**（`godie-e001.passive`／`godie-e00n.passive`／`godie-h02u.r`）,而三支的節點逐位元相同（`as pctAdd 4.0` / 4 秒）。⛔ 刻意無預設：一格看不見的增益比沒有增益更糟（第一·五守則）。"
+        },
+        {
+          "name": "vfx",
+          "type": "spawnVfx",
+          "optional": true,
+          "origin": "census: 出貨那 32 個被擋形狀裡 `spawnVfx` 出現 **5** 次。⭐ 它是**第二個頂層節點**（⛔ 不在 onHitTargets 裡）—— 語意是「這一發長什麼樣」,⛔ 不是「打中的人身上追加什麼」。⛔ 刻意無預設：一顆看不見的特效比沒有特效更糟（第一·五守則）。"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": true,
+      "usedBy": 11,
+      "origin": "template@1:content/ability-templates/tpl-area-strike.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-area-strike",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 159,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -15427,7 +15629,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 2,
       "origin": "template@1:content/ability-templates/tpl-locust-line.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
@@ -15528,7 +15730,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 25,
       "origin": "template@1:content/ability-templates/tpl-locust-orb.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
@@ -15627,7 +15829,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 12,
       "origin": "template@1:content/ability-templates/tpl-locust-strike.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
@@ -15725,7 +15927,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 2,
       "origin": "template@1:content/ability-templates/tpl-locust-swarm.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
@@ -15816,7 +16018,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 5,
       "origin": "template@1:content/ability-templates/tpl-locust-travel.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
@@ -16506,7 +16708,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 13,
+      "usedBy": 14,
       "origin": "template@1:content/ability-templates/tpl-proxy-cast.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-proxy-cast",
@@ -16976,7 +17178,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 53,
+      "usedBy": 54,
       "origin": "template@1:content/ability-templates/tpl-single-strike.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-single-strike",
