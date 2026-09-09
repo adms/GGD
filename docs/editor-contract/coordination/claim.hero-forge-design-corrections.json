@@ -444,6 +444,19 @@
         "materials/community-hero-forge/refinements/31.json",
         "materials/community-hero-forge/validation-plan.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "乾淨提交 682cf03597a4 同批通過 skills、Editor release、coord、37 名／222 槽編譯及模型位元組核對與 491 項登記案例；Editor 601 項測試、型別與正式建置通過。訊息帳本檢查通過。退出碼 2 保留 171 槽未對應，不是完整設計／畫面通過；本次僅 SUN樂 revision 12→13，其他 36 名作品與全部原稿／模型不變。#1132 完整原範圍及新服務 ZIP／投稿發布仍未完成。",
+      "repro": {
+        "command": "pnpm editor:accept:release",
+        "expectedExit": 0
+      },
+      "commit": "682cf03597a41ee12707f4934bf53c9d8056d428",
+      "evidence": [
+        "materials/community-hero-forge/refinements/sunraku-verification.json",
+        "materials/community-hero-forge/validation-plan.json"
+      ]
     }
   ],
   "unblocks": [],
