@@ -1,7 +1,7 @@
 {
   "file": "AI參考全自動鑄造守則.md",
-  "sha256": "c4a1b409f6e681dcfd914cef5a783d65337a71ec8c185cfa303135d0f3274b32",
-  "localLinksChecked": 77,
+  "sha256": "eabfdde3f9faf2960955399793e4a3d99b269fc6d49ccd5bd21544658efda138",
+  "localLinksChecked": 81,
   "missingLinks": [],
   "commandsAndReferencedTests": "checked against current repository",
   "semanticReview": [
@@ -72,7 +72,10 @@
     "target-owned transient flame lifecycle and real round restoration",
     "execution-time range gates for finite recursive chains",
     "actual R completion versus recent cast for EX branch and independent costs",
-    "default range-aware smoke geometry never changes explicit designer inputs"
+    "default range-aware smoke geometry never changes explicit designer inputs",
+    "explicit local and world clock policy",
+    "bounded damage queue and lethal thaw lifecycle",
+    "actual frontal block and separate visual acceptance"
   ],
   "runtimeClaims": "guide does not claim full hero acceptance",
   "batchVerificationReview": {

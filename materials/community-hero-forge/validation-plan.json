@@ -1,6 +1,6 @@
 {
   "schema": "ggd-batch-validation-plan@1",
-  "manifestSha256": "a3316517b901a7e69f9aabd1d55d6d47fcf070f32acc25ce3a5cd03fef6235b1",
+  "manifestSha256": "9a5eee18ff46e80866d8101c510236c33e54174a1065402c2e783aa9d8b77735",
   "suites": [
     {
       "id": "implemented-mechanisms",
@@ -62,7 +62,15 @@
         "apps/content-api/src/heroShippedTemplateHistory.test.ts",
         "packages/shared/src/content/heroForge/communityRefinements/iori.test.ts",
         "packages/shared/src/content/heroForge/communityRefinements/ioriAcceptance.test.ts",
-        "packages/shared/src/sim/effects/casterScopedStatus.test.ts"
+        "packages/shared/src/sim/effects/casterScopedStatus.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/jotaro.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/jotaroAcceptance.test.ts",
+        "packages/shared/src/sim/timeStop.test.ts",
+        "packages/shared/src/protocol/formFlags.test.ts",
+        "apps/game-server/src/net/timeStopWire.test.ts",
+        "apps/client/src/render/views/TimeStopView.test.ts",
+        "apps/client/src/predict/predictionHoldWiring.test.ts",
+        "apps/editor/src/vfx-forge/TimeStopReplay.test.ts"
       ],
       "heroSlots": {
         "community-review-20-20260907": [
@@ -167,6 +175,14 @@
           "EX"
         ],
         "community-review-02-20260907": [
+          "PASSIVE",
+          "Q",
+          "W",
+          "E",
+          "R",
+          "EX"
+        ],
+        "community-review-04-20260907": [
           "PASSIVE",
           "Q",
           "W",

@@ -1,12 +1,12 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "f7762b90",
+  "capabilityFingerprint": "15d59fc8",
   "counts": {
-    "effectKinds": 51,
+    "effectKinds": 52,
     "hookEvents": 38,
     "conditionLeafKinds": 11,
     "templateFamilies": 43,
-    "effectFields": 290,
+    "effectFields": 291,
     "stats": 23,
     "combatEnvKeys": 39
   },
@@ -540,6 +540,7 @@
       "summon",
       "swapResource",
       "taunt",
+      "timeStop",
       "trap",
       "weightedBranch"
     ],

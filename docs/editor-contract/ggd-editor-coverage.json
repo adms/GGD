@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "4696ed70ac56",
-  "capabilityFingerprint": "f7762b90",
+  "fingerprint": "54204fa893ac",
+  "capabilityFingerprint": "15d59fc8",
   "required": [
     {
       "group": "abilityField",
@@ -21235,6 +21235,10 @@
     },
     {
       "group": "effectField",
+      "name": "maxQueuedHits"
+    },
+    {
+      "group": "effectField",
       "name": "maxRemainingSec"
     },
     {
@@ -21700,6 +21704,10 @@
     {
       "group": "effectFieldPath",
       "name": "block.damageTypes"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "block.facingArcDegrees"
     },
     {
       "group": "effectFieldPath",
@@ -22516,6 +22524,10 @@
     {
       "group": "effectFieldPath",
       "name": "maxHeld"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "maxQueuedHits"
     },
     {
       "group": "effectFieldPath",
@@ -23963,6 +23975,10 @@
     },
     {
       "group": "effectKind",
+      "name": "timeStop"
+    },
+    {
+      "group": "effectKind",
       "name": "trap"
     },
     {
@@ -25318,8 +25334,8 @@
     }
   ],
   "counts": {
-    "effectKind": 51,
-    "effectField": 290,
+    "effectKind": 52,
+    "effectField": 291,
     "hookEvent": 38,
     "hookField": 29,
     "abilityField": 44,
@@ -25327,7 +25343,7 @@
     "templateFamily": 43,
     "conditionLeaf": 11,
     "conditionLeafField": 20,
-    "effectFieldPath": 489,
+    "effectFieldPath": 491,
     "vfxField": 91,
     "modelField": 46,
     "projectileField": 15,
@@ -25335,7 +25351,7 @@
     "vfxScriptField": 8,
     "configField": 4023,
     "_notRequired": 15,
-    "_total": 5215,
+    "_total": 5219,
     "_ownerOnly": 39
   }
 }

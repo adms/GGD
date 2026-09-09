@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-project@2",
   "projectId": "community-review-04-20260907",
-  "revision": 12,
+  "revision": 13,
   "sourceLock": {
     "canonicalId": null,
     "versionId": null
@@ -38,8 +38,8 @@
       "fieldOwnership": {}
     },
     "skills": {
-      "revision": 12,
-      "state": "draft",
+      "revision": 13,
+      "state": "stale",
       "fieldOwnership": {
         "acceptedPlan.slots.E.name": "locked",
         "acceptedPlan.slots.E.products.0.template": "manual",
@@ -56,22 +56,22 @@
       }
     },
     "mechanics": {
-      "revision": 1,
+      "revision": 13,
       "state": "stale",
       "fieldOwnership": {}
     },
     "presentation": {
-      "revision": 3,
+      "revision": 13,
       "state": "stale",
       "fieldOwnership": {}
     },
     "validation": {
-      "revision": 1,
+      "revision": 13,
       "state": "stale",
       "fieldOwnership": {}
     },
     "package": {
-      "revision": 3,
+      "revision": 13,
       "state": "stale",
       "fieldOwnership": {}
     }
@@ -107,357 +107,113 @@
     },
     "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
     "templateVersions": {
-      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
-        "id": "tpl-buff-self",
+      "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+        "id": "tpl-event-passive",
         "schema": "template@1",
-        "name": "變身強化-數值面",
-        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
-        "family": "buff-self",
+        "name": "自訂事件被動",
+        "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+        "family": "event-passive",
         "status": "enabled",
         "params": {
-          "castTimeSec": {
-            "type": "number",
-            "default": 0,
-            "min": 0,
-            "max": 5,
-            "unit": "s",
-            "optional": true
-          },
-          "duration": {
-            "type": "number",
-            "default": 15,
-            "min": 1,
-            "max": 60,
-            "unit": "s"
-          },
-          "modifiers": {
-            "type": "statModifiers",
+          "hooks": {
+            "type": "hooks",
             "default": [
               {
-                "op": "flat",
-                "stat": "ad",
-                "value": 50
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ]
               }
-            ]
-          }
-        },
-        "requires": [],
-        "gapScore": 6,
-        "exemplar": {
-          "skill": "82-04 闇之魔法",
-          "jass": "A0Q6"
-        }
-      },
-      "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0": {
-        "id": "tpl-on-attack",
-        "schema": "template@1",
-        "name": "攻擊觸發",
-        "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
-        "family": "on-attack",
-        "status": "enabled",
-        "params": {
-          "bonusDamage": {
-            "type": "scaling",
-            "default": {
-              "perRank": [
-                100
-              ],
-              "ratios": []
-            }
-          },
-          "chance": {
-            "type": "number",
-            "min": 0,
-            "max": 1,
-            "unit": "ratio",
-            "optional": true
-          },
-          "condition": {
-            "type": "condition",
-            "default": {
-              "any": [
-                {
-                  "all": [
-                    {
-                      "not": {
-                        "is": "champion",
-                        "kind": "kind",
-                        "subject": "target"
-                      }
-                    },
-                    {
-                      "kind": "stat",
-                      "mode": "percent",
-                      "op": "<",
-                      "stat": "hp",
-                      "subject": "target",
-                      "value": 0.35
-                    }
-                  ]
-                },
-                {
-                  "all": [
-                    {
-                      "is": "champion",
-                      "kind": "kind",
-                      "subject": "target"
-                    },
-                    {
-                      "kind": "chance",
-                      "p": 0.01
-                    }
-                  ]
-                }
-              ]
-            },
-            "optional": true
-          },
-          "damageType": {
-            "type": "enum",
-            "default": "magic",
-            "values": [
-              "magic",
-              "physical",
-              "true"
-            ]
-          },
-          "event": {
-            "type": "enum",
-            "default": "onBasicAttack",
-            "values": [
-              "onBasicAttack",
-              "onDamageDealt"
-            ]
-          },
-          "internalCooldown": {
-            "type": "number",
-            "default": 0,
-            "min": 0,
-            "max": 60,
-            "unit": "s",
-            "optional": true
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
           }
         },
         "requires": [
           "hooks",
           "conditions"
         ],
-        "gapScore": 9,
+        "gapScore": 10,
         "exemplar": {
-          "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者",
-          "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效"
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
         }
       },
-      "sha256:431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699006b55c40f5b54c7": {
-        "id": "tpl-line-sweep",
+      "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+        "id": "tpl-effect-sequence",
         "schema": "template@1",
-        "name": "直線分段掃擊",
-        "description": "沿直線分段的掃擊：每一段各自在自己的落點結算一次（`delayed` + `advance`，GH#393 的機制）。⭐ 同一個目標整串只被打一次（`hitOncePerTarget`）—— 那是原作的規則，卡片寫的是**一次**的數字。",
-        "family": "line-sweep",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
         "status": "enabled",
         "params": {
+          "castType": {
+            "type": "enum",
+            "default": "targeted",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
           "castTimeSec": {
             "type": "number",
             "default": 0,
             "min": 0,
-            "max": 5,
+            "max": 10,
             "unit": "s",
-            "optional": true
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
           },
-          "damage": {
-            "type": "scaling",
-            "default": {
-              "perRank": [
-                150
-              ],
-              "ratios": []
-            }
-          },
-          "damageType": {
-            "type": "enum",
-            "default": "magic",
-            "values": [
-              "magic",
-              "physical",
-              "true"
-            ]
-          },
-          "segmentAoe": {
+          "radius": {
             "type": "number",
-            "default": 400,
-            "min": 100,
-            "max": 900,
-            "unit": "wc3u",
-            "origin": "j:32337 —— `GetUnitsInRangeOfLocMatching(400.00, udg_LocPoint3, …)` ⇒ 每段半徑 **400 wc3u**"
-          },
-          "segmentCount": {
-            "type": "number",
-            "default": 6,
-            "min": 3,
-            "max": 20,
-            "unit": "count",
-            "origin": "j:32335 —— `exitwhen udg_WinSwordCounter > 6`，而 j:32333 是 `set udg_WinSwordCounter = 1` ⇒ 正好 **6 段**（⛔ 不是 7：它從 **1** 起算，⛔ 不是 0）"
-          },
-          "stepSize": {
-            "type": "number",
-            "default": 200,
-            "min": 100,
-            "max": 300,
-            "unit": "wc3u",
-            "origin": "j:32336 —— `PolarProjectionBJ(udg_LocPoint1, I2R(udg_WinSwordCounter) * 200.00, …)` ⇒ 每段 **200 wc3u**"
-          }
-        },
-        "requires": [
-          "projectile"
-        ],
-        "gapScore": 7,
-        "exemplar": {
-          "skill": "20-03 約束與勝利之劍",
-          "jass": "A0D5"
-        }
-      },
-      "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b": {
-        "id": "tpl-single-strike",
-        "schema": "template@1",
-        "name": "單體斬擊",
-        "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。",
-        "family": "single-strike",
-        "status": "enabled",
-        "params": {
-          "castTimeSec": {
-            "type": "number",
-            "default": 0,
+            "default": 2,
             "min": 0,
-            "max": 5,
-            "unit": "s",
-            "optional": true
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
           },
-          "damage": {
-            "type": "scaling",
-            "default": {
-              "perRank": [
-                350
-              ],
-              "ratios": []
-            }
-          },
-          "damageType": {
+          "side": {
             "type": "enum",
-            "default": "magic",
+            "default": "enemies",
             "values": [
-              "magic",
-              "physical",
-              "true"
-            ]
-          }
-        },
-        "requires": [],
-        "gapScore": 9,
-        "exemplar": {
-          "skill": "23-04 雷焰聖劍",
-          "jass": "A0OD"
-        }
-      },
-      "sha256:e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771cd614a89d04e016c6": {
-        "id": "tpl-lock-combo",
-        "schema": "template@1",
-        "name": "鎖定連段",
-        "description": "把一個人鎖住打完一整段。命中後目標被定住、施法者進入演出狀態（這段期間打不到他），連段一擊一擊落下，最後一記終結技在收招那一刻結算並掃過周圍。「連段次數 × 每段間隔」就是整段長度 —— 它是算出來的，所以沒有『持續時間』這個欄位可以填。⚠️ 原作的連段中施法者會一擊一擊瞬移到目標身邊，這裡沒有搬過來：那段期間雙方都被 pause + 無敵，施法者站哪裡不影響任何結算，只有終結技的圓心用得到，所以收成原地演出。想要遞減間隔（52-002 射殺百頭的 CD×0.75）也還做不到。 ⭐ owner 2026-08-13：終結技可以是**另一支具名技能**（finisherAbility，走 proxyCast 代放），⛔ 不是把那支技能的傷害抄一份進來 —— 抄一份之後那支技能改了，連段裡的版本不會跟著改。留空則沿用 finisherDamage 那個數字。發動條件也是一格（trigger）：預設 onCast，20-002 是 onReflectSuccess（反彈成功才發），所以整段連段可以掛在被動 hook 上而不是主動施放。",
-        "family": "lock-combo",
-        "status": "enabled",
-        "params": {
-          "casterGuard": {
-            "type": "enum",
-            "default": "all",
-            "values": [
-              "all",
-              "magic",
-              "none"
-            ]
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
           },
-          "damageType": {
-            "type": "enum",
-            "default": "magic",
-            "values": [
-              "magic",
-              "physical",
-              "true"
-            ]
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
           },
-          "finisherAbility": {
-            "type": "docRef",
-            "optional": true
-          },
-          "finisherDamage": {
-            "type": "scaling",
-            "default": {
-              "perRank": [
-                450
-              ],
-              "ratios": []
-            }
-          },
-          "finisherRadius": {
-            "type": "number",
-            "default": 150,
-            "min": 50,
-            "max": 1800,
-            "unit": "wc3u"
-          },
-          "hitCount": {
-            "type": "number",
-            "default": 5,
-            "min": 1,
-            "max": 20,
-            "unit": "count"
-          },
-          "hitIntervalSec": {
-            "type": "number",
-            "default": 0.4,
-            "min": 0.05,
-            "max": 3,
-            "unit": "s"
-          },
-          "lockTarget": {
-            "type": "enum",
-            "default": "stun",
-            "values": [
-              "stun",
-              "root",
-              "none"
-            ]
-          },
-          "perHitDamage": {
-            "type": "scaling",
-            "default": {
-              "perRank": [
-                100
-              ],
-              "ratios": []
-            }
-          },
-          "trigger": {
-            "type": "enum",
-            "default": "onCast",
-            "values": [
-              "onCast",
-              "onReflectSuccess",
-              "onKill",
-              "onBasicAttack",
-              "onDamageTaken"
-            ]
+          "recast": {
+            "type": "recast",
+            "optional": true,
+            "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
           }
         },
         "requires": [
-          "periodicDamage",
-          "invulnerable",
-          "applyStatus",
-          "leap"
+          "hooks",
+          "conditions"
         ],
-        "gapScore": 6,
+        "gapScore": 10,
         "exemplar": {
-          "skill": "84-04 給我蜂蜜",
-          "jass": "A0CX"
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
         }
       }
     },
@@ -465,31 +221,84 @@
       "PASSIVE": {
         "slot": "PASSIVE",
         "name": "〔白金之星・精密動作〕",
-        "purpose": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。\n【目標設計】近距離命中累積精密層數；滿層後強化下一次 Q 的末擊。\n【待補機制】需精密層數與 Q 末擊消耗。",
+        "purpose": "近距離（中心距離 ≤3）實際 HP／護盾命中累積精密，最多三層、八秒有效；每次技能施法最多一次，普攻依實際命中。滿三層後下一次 Q 在施法結算時消耗，強化該次末擊；技能中斷／末擊落空不退還。反彈、衍生傷害與無效命中不累積。\n【原設計】近距離命中累積精密層數；滿層後強化下一次 Q 的末擊。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json"
         },
         "products": [
           {
-            "instanceId": "community-review-04-20260907-passive-1",
+            "instanceId": "passive-authored",
             "template": {
-              "ref": "tpl-on-attack",
+              "ref": "tpl-event-passive",
               "params": {
-                "bonusDamage": {
-                  "damageTier": "極小",
-                  "ratios": []
-                },
-                "condition": {
-                  "kind": "chance",
-                  "p": 1
-                },
-                "damageType": "physical",
-                "event": "onBasicAttack",
-                "internalCooldown": 3
+                "hooks": [
+                  {
+                    "on": "onDamageDealt",
+                    "damageSource": "basic",
+                    "damageConnected": true,
+                    "victim": "enemy",
+                    "target": "event",
+                    "condition": {
+                      "kind": "distance",
+                      "op": "<=",
+                      "value": 3
+                    },
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "community-review-04-20260907.precision",
+                        "sourceScope": "caster",
+                        "applyTo": "self",
+                        "duration": 8,
+                        "stacks": 1,
+                        "condition": {
+                          "not": {
+                            "kind": "status",
+                            "subject": "self",
+                            "statusId": "community-review-04-20260907.precision",
+                            "appliedBy": "self",
+                            "minStacks": 3
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "on": "onDamageDealt",
+                    "damageSource": "ability",
+                    "damageConnected": true,
+                    "victim": "enemy",
+                    "target": "event",
+                    "condition": {
+                      "kind": "distance",
+                      "op": "<=",
+                      "value": 3
+                    },
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "community-review-04-20260907.precision",
+                        "sourceScope": "caster",
+                        "applyTo": "self",
+                        "duration": 8,
+                        "stacks": 1,
+                        "condition": {
+                          "not": {
+                            "kind": "status",
+                            "subject": "self",
+                            "statusId": "community-review-04-20260907.precision",
+                            "appliedBy": "self",
+                            "minStacks": 3
+                          }
+                        }
+                      }
+                    ],
+                    "oncePerCast": true
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0"
+              "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
             }
           }
         ],
@@ -509,39 +318,362 @@
       "Q": {
         "slot": "Q",
         "name": "歐拉連打",
-        "purpose": "【目前模板可執行】6 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】白金之星在前方進行多段拳擊，每段重新確認距離與目標。\n【待補機制】需逐段距離重新檢查、替身掛點及雙模型動作。",
+        "purpose": "指定前方近距離敵人，0.2 秒起手後四拳、間隔 0.16 秒。每拳及下一拳排程重新檢查同一存活目標、同區、三單位距離與正面 120 度；失去條件、死亡或對決結束立即停止且不重選。開始時滿三層精密會消耗並加強末拳；本次 Q 才累積的層數留給下一次。白金之星副模型及雙模型動作仍未驗收。\n【原設計】白金之星在前方進行多段拳擊，每段重新確認距離與目標。",
         "maxRank": 4,
         "abilityOverrides": {
-          "castTimeTier": "小",
           "cooldownTier": "小",
           "manaCostTier": "小",
           "provenance": "editor-json",
-          "rangeTier": "極小"
+          "range": 3,
+          "allowApproach": false
         },
         "products": [
           {
-            "instanceId": "community-review-04-20260907-q-1",
+            "instanceId": "q-authored",
             "template": {
-              "ref": "tpl-lock-combo",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "casterGuard": "none",
-                "damageType": "physical",
-                "finisherDamage": {
-                  "damageTier": "小",
-                  "ratios": []
-                },
-                "finisherRadius": 150,
-                "hitCount": 6,
-                "hitIntervalSec": 0.18,
-                "lockTarget": "none",
-                "perHitDamage": {
-                  "damageTier": "極小",
-                  "ratios": []
-                },
-                "trigger": "onCast"
+                "castType": "targeted",
+                "castTimeSec": 0.2,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "consumeStatus",
+                    "shape": "single",
+                    "subject": "self",
+                    "statusId": "community-review-04-20260907.precision",
+                    "appliedBy": "self",
+                    "count": 3,
+                    "onConsumed": [
+                      {
+                        "kind": "damage",
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "極小"
+                        },
+                        "condition": {
+                          "all": [
+                            {
+                              "kind": "distance",
+                              "op": "<=",
+                              "value": 3
+                            },
+                            {
+                              "kind": "facing",
+                              "subject": "self",
+                              "arcDegrees": 120
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "kind": "delayed",
+                        "shape": "single",
+                        "delaySec": 0.16,
+                        "stopOnCasterDeath": true,
+                        "condition": {
+                          "all": [
+                            {
+                              "kind": "distance",
+                              "op": "<=",
+                              "value": 3
+                            },
+                            {
+                              "kind": "facing",
+                              "subject": "self",
+                              "arcDegrees": 120
+                            }
+                          ]
+                        },
+                        "effects": [
+                          {
+                            "kind": "damage",
+                            "damageType": "physical",
+                            "amount": {
+                              "damageTier": "極小"
+                            },
+                            "condition": {
+                              "all": [
+                                {
+                                  "kind": "distance",
+                                  "op": "<=",
+                                  "value": 3
+                                },
+                                {
+                                  "kind": "facing",
+                                  "subject": "self",
+                                  "arcDegrees": 120
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "kind": "delayed",
+                            "shape": "single",
+                            "delaySec": 0.16,
+                            "stopOnCasterDeath": true,
+                            "condition": {
+                              "all": [
+                                {
+                                  "kind": "distance",
+                                  "op": "<=",
+                                  "value": 3
+                                },
+                                {
+                                  "kind": "facing",
+                                  "subject": "self",
+                                  "arcDegrees": 120
+                                }
+                              ]
+                            },
+                            "effects": [
+                              {
+                                "kind": "damage",
+                                "damageType": "physical",
+                                "amount": {
+                                  "damageTier": "極小"
+                                },
+                                "condition": {
+                                  "all": [
+                                    {
+                                      "kind": "distance",
+                                      "op": "<=",
+                                      "value": 3
+                                    },
+                                    {
+                                      "kind": "facing",
+                                      "subject": "self",
+                                      "arcDegrees": 120
+                                    }
+                                  ]
+                                }
+                              },
+                              {
+                                "kind": "delayed",
+                                "shape": "single",
+                                "delaySec": 0.16,
+                                "stopOnCasterDeath": true,
+                                "condition": {
+                                  "all": [
+                                    {
+                                      "kind": "distance",
+                                      "op": "<=",
+                                      "value": 3
+                                    },
+                                    {
+                                      "kind": "facing",
+                                      "subject": "self",
+                                      "arcDegrees": 120
+                                    }
+                                  ]
+                                },
+                                "effects": [
+                                  {
+                                    "kind": "damage",
+                                    "damageType": "physical",
+                                    "amount": {
+                                      "damageTier": "小"
+                                    },
+                                    "condition": {
+                                      "all": [
+                                        {
+                                          "kind": "distance",
+                                          "op": "<=",
+                                          "value": 3
+                                        },
+                                        {
+                                          "kind": "facing",
+                                          "subject": "self",
+                                          "arcDegrees": 120
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    "kind": "damage",
+                                    "damageType": "physical",
+                                    "amount": {
+                                      "damageTier": "極小"
+                                    },
+                                    "condition": {
+                                      "all": [
+                                        {
+                                          "kind": "distance",
+                                          "op": "<=",
+                                          "value": 3
+                                        },
+                                        {
+                                          "kind": "facing",
+                                          "subject": "self",
+                                          "arcDegrees": 120
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "onMissing": [
+                      {
+                        "kind": "damage",
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "極小"
+                        },
+                        "condition": {
+                          "all": [
+                            {
+                              "kind": "distance",
+                              "op": "<=",
+                              "value": 3
+                            },
+                            {
+                              "kind": "facing",
+                              "subject": "self",
+                              "arcDegrees": 120
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "kind": "delayed",
+                        "shape": "single",
+                        "delaySec": 0.16,
+                        "stopOnCasterDeath": true,
+                        "condition": {
+                          "all": [
+                            {
+                              "kind": "distance",
+                              "op": "<=",
+                              "value": 3
+                            },
+                            {
+                              "kind": "facing",
+                              "subject": "self",
+                              "arcDegrees": 120
+                            }
+                          ]
+                        },
+                        "effects": [
+                          {
+                            "kind": "damage",
+                            "damageType": "physical",
+                            "amount": {
+                              "damageTier": "極小"
+                            },
+                            "condition": {
+                              "all": [
+                                {
+                                  "kind": "distance",
+                                  "op": "<=",
+                                  "value": 3
+                                },
+                                {
+                                  "kind": "facing",
+                                  "subject": "self",
+                                  "arcDegrees": 120
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "kind": "delayed",
+                            "shape": "single",
+                            "delaySec": 0.16,
+                            "stopOnCasterDeath": true,
+                            "condition": {
+                              "all": [
+                                {
+                                  "kind": "distance",
+                                  "op": "<=",
+                                  "value": 3
+                                },
+                                {
+                                  "kind": "facing",
+                                  "subject": "self",
+                                  "arcDegrees": 120
+                                }
+                              ]
+                            },
+                            "effects": [
+                              {
+                                "kind": "damage",
+                                "damageType": "physical",
+                                "amount": {
+                                  "damageTier": "極小"
+                                },
+                                "condition": {
+                                  "all": [
+                                    {
+                                      "kind": "distance",
+                                      "op": "<=",
+                                      "value": 3
+                                    },
+                                    {
+                                      "kind": "facing",
+                                      "subject": "self",
+                                      "arcDegrees": 120
+                                    }
+                                  ]
+                                }
+                              },
+                              {
+                                "kind": "delayed",
+                                "shape": "single",
+                                "delaySec": 0.16,
+                                "stopOnCasterDeath": true,
+                                "condition": {
+                                  "all": [
+                                    {
+                                      "kind": "distance",
+                                      "op": "<=",
+                                      "value": 3
+                                    },
+                                    {
+                                      "kind": "facing",
+                                      "subject": "self",
+                                      "arcDegrees": 120
+                                    }
+                                  ]
+                                },
+                                "effects": [
+                                  {
+                                    "kind": "damage",
+                                    "damageType": "physical",
+                                    "amount": {
+                                      "damageTier": "小"
+                                    },
+                                    "condition": {
+                                      "all": [
+                                        {
+                                          "kind": "distance",
+                                          "op": "<=",
+                                          "value": 3
+                                        },
+                                        {
+                                          "kind": "facing",
+                                          "subject": "self",
+                                          "arcDegrees": 120
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771cd614a89d04e016c6"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -563,10 +695,9 @@
       "W": {
         "slot": "W",
         "name": "流星指刺",
-        "purpose": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】中短距離直線刺擊，用於追擊離開普攻範圍的敵人。\n【待補機制】需單條流星指刺與單目標去重。",
+        "purpose": "0.15 秒起手後按瞄準方向打一條長六、寬 0.65 的直線，只命中第一名合法敵人一次；不是重複分段傷害波。流星指副模型及動作仍待驗收。\n【原設計】中短距離直線刺擊，用於追擊離開普攻範圍的敵人。",
         "maxRank": 4,
         "abilityOverrides": {
-          "castTimeTier": "小",
           "cooldownTier": "小",
           "manaCostTier": "小",
           "provenance": "editor-json",
@@ -574,22 +705,31 @@
         },
         "products": [
           {
-            "instanceId": "community-review-04-20260907-w-1",
+            "instanceId": "w-authored",
             "template": {
-              "ref": "tpl-line-sweep",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "castTimeSec": 0.35,
-                "damage": {
-                  "damageTier": "極小",
-                  "ratios": []
-                },
-                "damageType": "physical",
-                "segmentAoe": 150,
-                "segmentCount": 4,
-                "stepSize": 100
+                "castType": "skillshot",
+                "castTimeSec": 0.15,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "damageLine",
+                    "fromCaster": true,
+                    "aim": "facing",
+                    "includeOrigin": true,
+                    "length": 6,
+                    "width": 0.65,
+                    "maxTargets": 1,
+                    "amount": {
+                      "damageTier": "小"
+                    },
+                    "damageType": "physical"
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699006b55c40f5b54c7"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -608,40 +748,70 @@
       "E": {
         "slot": "E",
         "name": "〔替身護衛〕",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-04-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】白金之星進入短暫防禦姿態，減免一次正面攻擊並推開近身敵人。\n【待補機制】需正面一次格擋與推開近敵，不能以一般護盾驗收。",
+        "purpose": "原地開啟 0.6 秒防禦姿態，僅正面 120 度內物理／魔法攻擊減傷 80%，成功一次即消耗該來源；背後、真傷、零傷害不消耗。成功時推開三單位內攻擊者一單位，不增加護盾。\n【原設計】白金之星進入短暫防禦姿態，減免一次正面攻擊並推開近身敵人。",
         "maxRank": 4,
         "abilityOverrides": {
-          "castTimeTier": "小",
-          "cooldownTier": "小",
-          "effects": [
-            {
-              "absorbs": "all",
-              "amount": {
-                "flat": 120,
-                "ratios": []
-              },
-              "duration": 3,
-              "kind": "shield",
-              "onExisting": "keepLarger",
-              "stackKey": "community-review-04-20260907.e.guard"
-            }
-          ],
+          "cooldownTier": "中",
           "manaCostTier": "小",
           "provenance": "editor-json",
-          "rangeTier": "中"
+          "rangeTier": "小"
         },
         "products": [
           {
-            "instanceId": "community-review-04-20260907-e-1",
+            "instanceId": "e-authored",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "castTimeSec": 0.15,
-                "duration": 3,
-                "modifiers": []
+                "castType": "self",
+                "castTimeSec": 0,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "applyTo": "self",
+                    "statusId": "community-review-04-20260907.guard",
+                    "stackKey": "community-review-04-20260907.guard",
+                    "sourceScope": "caster",
+                    "maxStacks": 1,
+                    "duration": 0.6,
+                    "modifiers": [],
+                    "block": {
+                      "chance": 1,
+                      "fraction": 0.8,
+                      "damageTypes": [
+                        "physical",
+                        "magic"
+                      ],
+                      "facingArcDegrees": 120
+                    },
+                    "hooks": [
+                      {
+                        "on": "onBlock",
+                        "blockSource": "thisSource",
+                        "victim": "enemy",
+                        "target": "event",
+                        "maxTriggers": 1,
+                        "onConsumed": "detachSource",
+                        "effects": [
+                          {
+                            "kind": "knockback",
+                            "distance": 1,
+                            "speed": 10,
+                            "subtractGap": false,
+                            "condition": {
+                              "kind": "distance",
+                              "op": "<=",
+                              "value": 3
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -658,39 +828,34 @@
       "R": {
         "slot": "R",
         "name": "白金之星・世界",
-        "purpose": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"stun\",\"duration\":0.8,\"applyTo\":\"target\",\"stun\":true}]。\n【目標設計】建立短暫局部時停區域。暫停範圍內敵方單位的動作與指定計時器，以及敵方投射物運動。對決倒數及時停自身的結束計時繼續。承太郎在期間造成的命中記入有限佇列，時停結束後依序結算。\n【待補機制】此槽僅單體 0.8 秒暈眩作模板預覽；局部時停、投射物暫停、計時器分類及命中佇列尚未提供。",
+        "purpose": "0.35 秒起手，在施法者當前位置建立半徑六、持續 1.2 秒的固定局部時停。敵方移動／輸入／攻擊／施法進度、局部冷卻、狀態／盾／增益／持續傷害／排程與敌彈暫停；對決、火圈及時停期限繼續。施法者對區內敵人的命中最多排隊 64 發，滿額不洩漏即時傷害；到期依序結算，死亡／換區／換回合取消。重疊只停一次，双方時停期限仍前進。灰階環界、恢復裂紋和雙模型畫面未驗收。\n【原設計】建立短暫局部時停區域。暫停範圍內敵方單位的動作與指定計時器，以及敵方投射物運動。對決倒數及時停自身的結束計時繼續。承太郎在期間造成的命中記入有限佇列，時停結束後依序結算。",
         "maxRank": 3,
         "abilityOverrides": {
-          "castTimeTier": "大",
-          "cooldownTier": "大",
-          "effects": [
-            {
-              "applyTo": "target",
-              "duration": 0.8,
-              "kind": "applyStatus",
-              "statusId": "stun",
-              "stun": true
-            }
-          ],
+          "cooldownTier": "極大",
           "manaCostTier": "大",
           "provenance": "editor-json",
           "rangeTier": "小"
         },
         "products": [
           {
-            "instanceId": "community-review-04-20260907-r-1",
+            "instanceId": "r-authored",
             "template": {
-              "ref": "tpl-single-strike",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "castTimeSec": 0.2,
-                "damage": {
-                  "damageTier": "小",
-                  "ratios": []
-                },
-                "damageType": "magic"
+                "castType": "self",
+                "castTimeSec": 0.35,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "timeStop",
+                    "radius": 6,
+                    "durationSec": 1.2,
+                    "maxQueuedHits": 64
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -707,30 +872,50 @@
       "EX": {
         "slot": "EX",
         "name": "〔歐拉終結拳〕",
-        "purpose": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】有起手動作的重拳；時停期間使用時，加入同一套待結算命中佇列。\n【待補機制】目前立即结算；需與時停共用待結算佇列。",
+        "purpose": "0.4 秒起手的單次近距離重拳；結算時重驗同目標三單位與正面 120 度。時停內自動進入 R 的同一條有限命中佇列，獨立支付魔力及冷卻。\n【原設計】有起手動作的重拳；時停期間使用時，加入同一套待結算命中佇列。",
         "maxRank": 1,
         "abilityOverrides": {
-          "castTimeTier": "小",
           "cooldownTier": "大",
           "manaCostTier": "大",
           "provenance": "editor-json",
-          "rangeTier": "小"
+          "range": 3,
+          "allowApproach": false
         },
         "products": [
           {
-            "instanceId": "community-review-04-20260907-ex-1",
+            "instanceId": "ex-authored",
             "template": {
-              "ref": "tpl-single-strike",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "castTimeSec": 0.2,
-                "damage": {
-                  "damageTier": "小",
-                  "ratios": []
-                },
-                "damageType": "physical"
+                "castType": "targeted",
+                "castTimeSec": 0.4,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "大"
+                    },
+                    "condition": {
+                      "all": [
+                        {
+                          "kind": "distance",
+                          "op": "<=",
+                          "value": 3
+                        },
+                        {
+                          "kind": "facing",
+                          "subject": "self",
+                          "arcDegrees": 120
+                        }
+                      ]
+                    }
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -1174,6 +1359,14 @@
       }
     }
   },
+  "refinementNotes": {
+    "PASSIVE": "近距離（中心距離 ≤3）實際 HP／護盾命中累積精密，最多三層、八秒有效；每次技能施法最多一次，普攻依實際命中。滿三層後下一次 Q 在施法結算時消耗，強化該次末擊；技能中斷／末擊落空不退還。反彈、衍生傷害與無效命中不累積。",
+    "Q": "指定前方近距離敵人，0.2 秒起手後四拳、間隔 0.16 秒。每拳及下一拳排程重新檢查同一存活目標、同區、三單位距離與正面 120 度；失去條件、死亡或對決結束立即停止且不重選。開始時滿三層精密會消耗並加強末拳；本次 Q 才累積的層數留給下一次。白金之星副模型及雙模型動作仍未驗收。",
+    "W": "0.15 秒起手後按瞄準方向打一條長六、寬 0.65 的直線，只命中第一名合法敵人一次；不是重複分段傷害波。流星指副模型及動作仍待驗收。",
+    "E": "原地開啟 0.6 秒防禦姿態，僅正面 120 度內物理／魔法攻擊減傷 80%，成功一次即消耗該來源；背後、真傷、零傷害不消耗。成功時推開三單位內攻擊者一單位，不增加護盾。",
+    "R": "0.35 秒起手，在施法者當前位置建立半徑六、持續 1.2 秒的固定局部時停。敵方移動／輸入／攻擊／施法進度、局部冷卻、狀態／盾／增益／持續傷害／排程與敌彈暫停；對決、火圈及時停期限繼續。施法者對區內敵人的命中最多排隊 64 發，滿額不洩漏即時傷害；到期依序結算，死亡／換區／換回合取消。重疊只停一次，双方時停期限仍前進。灰階環界、恢復裂紋和雙模型畫面未驗收。",
+    "EX": "0.4 秒起手的單次近距離重拳；結算時重驗同目標三單位與正面 120 度。時停內自動進入 R 的同一條有限命中佇列，獨立支付魔力及冷卻。"
+  },
   "validationState": {
     "identity": {
       "revision": 1,
@@ -1186,43 +1379,30 @@
       "diagnosticCodes": []
     },
     "skills": {
-      "revision": 12,
-      "status": "idle",
+      "revision": 13,
+      "status": "stale",
       "diagnosticCodes": []
     },
     "mechanics": {
-      "revision": 1,
+      "revision": 13,
       "status": "stale",
       "diagnosticCodes": []
     },
     "presentation": {
-      "revision": 3,
+      "revision": 13,
       "status": "stale",
       "diagnosticCodes": []
     },
     "validation": {
-      "revision": 1,
+      "revision": 13,
       "status": "stale",
       "diagnosticCodes": []
     },
     "package": {
-      "revision": 3,
+      "revision": 13,
       "status": "stale",
       "diagnosticCodes": []
     }
   },
-  "receipts": [
-    {
-      "kind": "generator-adopted",
-      "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
-      "projectRevision": 5,
-      "digest": "6e6372701110f6397bb6e260f0620c8acf0ca7374e23097d5f10b74372e00d88"
-    },
-    {
-      "kind": "generator-adopted",
-      "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
-      "projectRevision": 12,
-      "digest": "5c85138daab5bce8e4fa38134eeeb01a6d765a1a84b6c2ce93cabcbc41e8a404"
-    }
-  ]
+  "receipts": []
 }

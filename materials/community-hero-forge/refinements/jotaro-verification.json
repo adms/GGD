@@ -1,0 +1,249 @@
+{
+  "schema": "ggd-jotaro-mechanism-verification@1",
+  "issue": 1132,
+  "sourceCommit": "6d4d9c66897f3131b2572cca49bedfc904339608",
+  "refinementVersion": 1,
+  "refinementSha256": "1a524274df17673bd3e623f58a39200f043d7f20dd53e637a2e7bd6574461de9",
+  "behaviorCoveredSlots": [
+    "PASSIVE",
+    "Q",
+    "W",
+    "E",
+    "R",
+    "EX"
+  ],
+  "mechanisms": {
+    "PASSIVE": "Successful nearby HP/shield hits grant at most three precision stacks; full stacks select and reserve the next Q finisher at cast resolution. Interrupted or missed finisher does not refund reserved stacks.",
+    "Q": "Four finite frontal strikes against the original target; every execution and scheduling step rechecks distance, facing, life, zone and settlement.",
+    "W": "One forward line selects the first legal enemy once.",
+    "E": "One source-specific physical/magic frontal block, 120 degrees, short expiry, with one-unit push on a nearby attacker. True damage does not consume the guard.",
+    "R": "Fixed radius-six field lasts 1.2 world seconds; enemy local action and selected deadline clocks and projectiles hold, while match and field clocks continue. Only owner damage packets queue, at most 64. Ordered expiry release; death, body reset, zone or settlement discard.",
+    "EX": "Heavy punch with startup, independent costs and range/facing recheck, using the same pending damage queue."
+  },
+  "clockPolicy": {
+    "paused": "casts, recovery, basic windup/cooldowns, hitstop, regen, interval hooks, status and named-mark expiry, shields, buffs and hook ICD, recast, upkeep, timed attributes, DoTs, form/summon expiry, facing/stealth/immunity windows, carry/control expiry, caster delayed/random/chain schedules",
+    "continues": "match, round, fire-ring, revival, time-stop expiry and score clocks; lifecycle cleanup remains live",
+    "excluded": "Teamless neutral environmental entities are not enemies. Only damage packets are deferred; non-damage effects keep their existing semantics."
+  },
+  "comparison": {
+    "changedProjects": [
+      "04.hero-project.json"
+    ],
+    "revisionBefore": 12,
+    "revisionAfter": 13,
+    "otherProjectsByteIdentical": 36,
+    "originalRecipesByteIdentical": 37,
+    "sourceDesignBriefPresentationUnchanged": true,
+    "modelSha256": "e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a"
+  },
+  "focused": {
+    "acceptanceTests": 75,
+    "followupRegressionTests": 37,
+    "note": "Counts overlap; followup includes added carried-unit lifecycle case. Do not sum them as unique coverage.",
+    "logs": [
+      {
+        "name": "jotaro-acceptance-01.log",
+        "exitCode": 0,
+        "sha256": "317aeb0cc2b4c427cbbb1d432221ebf77c01d70da3e31a7a9ec7f5c1432e208a"
+      },
+      {
+        "name": "jotaro-regression-02.log",
+        "exitCode": 0,
+        "sha256": "77d86d13198f68a6a86c2f358bb3426b99dc7218aa954bcd9c603177bb815be7"
+      },
+      {
+        "name": "jotaro-typecheck-shared.log",
+        "exitCode": 0,
+        "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+      },
+      {
+        "name": "jotaro-typecheck-client.log",
+        "exitCode": 0,
+        "sha256": "39d946f6b36b6e4e7de7bfbe2267744c75dc2daf57912304bbcdcd88a0cc130d"
+      },
+      {
+        "name": "jotaro-typecheck-editor.log",
+        "exitCode": 0,
+        "sha256": "486eafd3c0debbbff5ae7dddb4aa8823f853e470eff3bacbda032617862caca2"
+      },
+      {
+        "name": "jotaro-typecheck-game-server.log",
+        "exitCode": 0,
+        "sha256": "b05c3d89729ac8d5380fe460caa7c9227683cd32eda0fd3fbdcddaedd946d715"
+      }
+    ]
+  },
+  "mutations": [
+    {
+      "name": "immediate-damage",
+      "file": "packages/shared/src/sim/timeStop.ts",
+      "command": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "packages/shared/src/sim/timeStop.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "queues ordered owner hits"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "f12d2c8e8a85a870ee4dab88e170bc2eff6691416aae158b9bee2d3b0bdd1234"
+    },
+    {
+      "name": "projectile-tunnel",
+      "file": "packages/shared/src/sim/timeStop.ts",
+      "command": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "packages/shared/src/sim/timeStop.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "fast missile stops"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "322ad92065aca622f7e2bf86770a8353bba5b83d00a0cdb4197516a86ae6321c"
+    },
+    {
+      "name": "duplicate-lethal",
+      "file": "packages/shared/src/sim/combat/damage.ts",
+      "command": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "packages/shared/src/sim/timeStop.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "first lethal thawed hit"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "6e63356e774d8a2eba7e936863f9615db13e7dd9f3132b5ff3b4595361057e9f"
+    },
+    {
+      "name": "rear-guard",
+      "file": "packages/shared/src/sim/combat/block.ts",
+      "command": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "packages/shared/src/content/heroForge/communityRefinements/jotaro.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "E uses live frontal geometry"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "4f6f8d9ee98728b7f89b1bd41537ac2bb0b91e2d5cf24ffcb2d7fb16b1278106"
+    }
+  ],
+  "counts": {
+    "heroes": 37,
+    "slots": 222,
+    "mapped": 87,
+    "unmapped": 135,
+    "genericOnAttackPassives": 16
+  },
+  "limitations": [
+    "Dedicated Star Platinum secondary model, dual-body animation, punch/finger effects, grayscale world treatment, recovery cracks and sound have not passed visual acceptance. The gray field marker is functional presentation only.",
+    "Fast body movement crossing the entire field between simulation samples has no swept-boundary acceptance; projectile crossing does.",
+    "Behavioral coverage is not original-design or original-art completion. No corrected current-service ZIP/submission/publication yet."
+  ],
+  "generators": [
+    {
+      "step": "spec:build",
+      "exitCode": 0,
+      "logSha256": "164926315105440c6bb84a8eba2134cf6242062911aaeb6ec79fa04d76b6ff94"
+    },
+    {
+      "step": "overview:build",
+      "exitCode": 0,
+      "logSha256": "27d8376ab8fe6d9f110aaad40885aef40e2726cf2ce8de9a15cf578f33102ea5"
+    },
+    {
+      "step": "typecat:build",
+      "exitCode": 0,
+      "logSha256": "00ceebdc827d3641e01acf82aae983900e17ae3cce9ca53094db57a5d906d73f"
+    },
+    {
+      "step": "caps:export",
+      "exitCode": 0,
+      "logSha256": "3d1772f1c049ea9713642b2341bde43744c60b0e192965d7ded1d070597de130"
+    },
+    {
+      "step": "editorcov:build",
+      "exitCode": 0,
+      "logSha256": "6db1e7f312384d181d7df6fb1fdcebb12f714ed0c9610871837072747889e2ec"
+    },
+    {
+      "step": "bricks:build",
+      "exitCode": 0,
+      "logSha256": "cc545e5a1e0618eb98270354d87b21dc3989927b76add9a4030b98b0cc601d71"
+    },
+    {
+      "step": "skillforge:audit",
+      "exitCode": 0,
+      "logSha256": "80296116c87d84e106a02dc7da10c1b272694ab256619f6fe408eb56a9f5aa61"
+    },
+    {
+      "step": "skillforge:visual-review:build",
+      "exitCode": 0,
+      "logSha256": "f761a55fa80149b429d6234ff9a7f145380783edd7b81168ffced52c7da12dee"
+    },
+    {
+      "step": "skillforge:visual-sheets:build",
+      "exitCode": 0,
+      "logSha256": "72e6ddda06756f85ce550e7fa69fedc851cb798f287e52a979d641013fee72a2"
+    },
+    {
+      "step": "skillforge:visual-advisory:build",
+      "exitCode": 0,
+      "logSha256": "c0959cedf09a1273236071efc31d9a0f8315909beaa3e4b95f6dd74164f10d01"
+    },
+    {
+      "step": "vfxforge:handback:build",
+      "exitCode": 0,
+      "logSha256": "955891b1a1bc7f6222c79a9ed90a4575249264df697b831e2b4d36812bb26800"
+    },
+    {
+      "step": "skillremake:docs",
+      "exitCode": 0,
+      "logSha256": "64ee0bf80d937e36b9e0b6bda42be2548078e7d83d8ebf2d06cb4973c0ce8330"
+    },
+    {
+      "step": "contract:numbers",
+      "exitCode": 0,
+      "logSha256": "864b694d697a885f736bcaaaf279f6bab2fa52c71aed3303172cd6518b37eb35"
+    },
+    {
+      "step": "shapes:build",
+      "exitCode": 0,
+      "logSha256": "2907764dbdcecb4b2ce6e1f85d8c4dece09da5d5aeb80adc5ceb7e141ed1ab04"
+    },
+    {
+      "step": "atlas:build",
+      "exitCode": 0,
+      "logSha256": "6258fe658a3c97b69304afbb429c24b7b959b97189b3929959c02b729484d125"
+    },
+    {
+      "step": "docs:readme",
+      "exitCode": 0,
+      "logSha256": "36ca97325acfe222f36d6dae60c10ee4147c0dc36ac951b58d105f64bdcd1068"
+    },
+    {
+      "step": "decor:build",
+      "exitCode": 0,
+      "logSha256": "8fd8bacfe1faa9ba8839d3e0629d4e189d465f9a6a482683e273f87dd6bf9c08"
+    }
+  ]
+}

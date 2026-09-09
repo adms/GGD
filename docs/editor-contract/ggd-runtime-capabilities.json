@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "f7762b90",
+  "fingerprint": "15d59fc8",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -51,6 +51,7 @@
     "summon",
     "swapResource",
     "taunt",
+    "timeStop",
     "trap",
     "weightedBranch"
   ],
@@ -307,6 +308,7 @@
     "maxDepth",
     "maxDistance",
     "maxHeld",
+    "maxQueuedHits",
     "maxRemainingSec",
     "maxSourceTotal",
     "maxSources",
@@ -529,6 +531,7 @@
     "block",
     "block.chance",
     "block.damageTypes",
+    "block.facingArcDegrees",
     "block.fraction",
     "block.internalCooldown",
     "block.lethalBasis",
@@ -733,6 +736,7 @@
     "maxDepth",
     "maxDistance",
     "maxHeld",
+    "maxQueuedHits",
     "maxRemainingSec",
     "maxSourceTotal",
     "maxSources",

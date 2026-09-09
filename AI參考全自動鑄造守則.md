@@ -276,3 +276,11 @@ Editor 的「敵方前置行動」可切換自動、靜止或普攻，並显示�
 - 接續 EX 保留獨立版，原子消耗自己的同目標完成窗口後選分支；兩分支不能都跑。驗早按、到期、別人完成、改打別人、無效目標及魔力不足，並確認 EX 自己的冷卻不重置 R。
 - 預設近戰煙霧场景可依正式施法射程擺位，設計者明確輸入的位置不得被悄悄改動；手動超距案例必須仍拒絕。真正連動案例另用前置施法，不補完成標記、不清冷卻。
 - 參考 [八神庵 v2 配方](materials/community-hero-forge/refinements/02.json)、[行為案例](packages/shared/src/content/heroForge/communityRefinements/iori.test.ts)、[Editor／匯入案例](packages/shared/src/content/heroForge/communityRefinements/ioriAcceptance.test.ts) 與 [收據](materials/community-hero-forge/refinements/iori-verification.json)。機制案例通過仍不代表原作素材與畫面完成。
+
+## 局部時停與一次正面格擋
+
+- 使用通用 `timeStop`，明列哪些局部計時暫停，哪些世界計時繼續。對決倒數、區域結束、復活與時停期限不可因凍結形成永久等待。敵方投射物要測跨整區的一幀移動；不能只測原本位於區內的靜止彈。
+- 傷害排隊必須有上限、原始施法歸屬與固定結算順序，滿額不得溢出成即時傷害；驗死亡／換區／換回合清除、雙時停重疊、第一擊致死後不再觸發屍體命中。非傷害效果不會自動被此佇列延後，生成者不可自行宣稱全部效果都暫存。
+- 正面格擋以實際傷害來源及受擊者面向判定，區分物理／魔法／真實傷害、距離、單次消耗、到期與兩種格擋疊加模式；不能改成一般護盾。
+- 同步驗伺服器快照、客戶端動畫與本機移動預測，以及 Editor 真實模擬重播。功能範圍標示不能當作替身副模型、灰階世界、恢復裂紋或音效驗收。
+- 可參考 [承太郎配方](materials/community-hero-forge/refinements/04.json)、[機制案例](packages/shared/src/content/heroForge/communityRefinements/jotaro.test.ts)、[跨層案例](packages/shared/src/content/heroForge/communityRefinements/jotaroAcceptance.test.ts) 與 [驗證紀錄](materials/community-hero-forge/refinements/jotaro-verification.json)。
