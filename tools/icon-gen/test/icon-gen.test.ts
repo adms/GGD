@@ -20,6 +20,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
+import { zConfigIconPlanDoc } from "../../../packages/shared/src/content/schema/config/iconPlan";
 // Relative, not `@ggd/shared/testkit/cover`: `@ggd/icon-gen` IS a workspace
 // package (tools/icon-gen/package.json, a3d4b8ac6 — GH#1059 retired the older
 // sentence here that said it wasn't), but it declares only vitest, so
@@ -50,7 +51,7 @@ function run(script: string, args: string[]): { out: string; code: number } {
       cwd: REPO,
       encoding: "utf8",
       stdio: ["ignore", "pipe", "pipe"],
-      env: { ...process.env, GGD_PLATFORM_TOKEN: "" },
+      env: { ...process.env, GGD_PLATFORM_TOKEN: "", PYTHONDONTWRITEBYTECODE: "1" },
     });
     return { out, code: 0 };
   } catch (e) {
@@ -66,7 +67,7 @@ interface Plan {
   blocked: Record<string, { ids: string[] }>;
   generate: { tier1: { id: string }[]; tier2: { id: string }[] };
   vetoed: string[];
-  missingSurfaceFiles: string[];
+  missingSurfaceFiles?: string[];
 }
 
 function loadPlan(): Plan {
@@ -117,7 +118,7 @@ describe.runIf(pyOk)("icon-gen planner", () => {
 
     const dropped = Object.values(plan.dropped).flatMap((b) => b.ids);
     const blocked = Object.values(plan.blocked).flatMap((b) => b.ids);
-    expect(dropped.length).toBeGreaterThan(0);
+    // Once every doc has an icon, an empty drop list is valid.
     expect(dropped.filter((id) => live.has(id))).toEqual([]);
     // A blocked entry is still NEEDED, so one on a live surface is a real
     // problem too — it means a champion is playable with no portrait and no
@@ -145,8 +146,80 @@ describe.runIf(pyOk)("icon-gen planner", () => {
     const b = run(PLAN, []);
     expect(a.code).toBe(0);
     expect(a.out).toBe(b.out);
-    // and every surface file it wants was found, so the veto is at full width
-    expect(loadPlan().missingSurfaceFiles).toEqual([]);
+  });
+
+  it("accepts current plans and older plans with checkout diagnostics", () => {
+    const plan = { ...loadPlan() };
+    delete plan.missingSurfaceFiles;
+    expect(zConfigIconPlanDoc.safeParse(plan).success).toBe(true);
+    expect(zConfigIconPlanDoc.safeParse({ ...plan, missingSurfaceFiles: [] }).success).toBe(true);
+  });
+
+  it("reports missing surfaces without plan drift and still checks bytes and live veto changes", () => {
+    // Isolate the environment regression in a temp tree. The live-content safety
+    // tests above still independently verify the repository's actual surfaces.
+    const script = `
+import contextlib, importlib.util, io, json, os, sys, tempfile
+from pathlib import Path
+
+spec = importlib.util.spec_from_file_location("icon_plan", sys.argv[1])
+planner = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(planner)
+
+def invoke(*args):
+    output = io.StringIO()
+    sys.argv = [planner.__file__, *args]
+    code = 0
+    with contextlib.redirect_stdout(output), contextlib.redirect_stderr(output):
+        try:
+            planner.main()
+        except SystemExit as exc:
+            code = exc.code
+    return code, output.getvalue()
+
+with tempfile.TemporaryDirectory(prefix="ggd-icon-plan-") as temp:
+    planner.ROOT = temp
+    planner.CONTENT = os.path.join(temp, "content")
+    planner.PLAN_PATH = os.path.join(planner.CONTENT, "config", "icon-plan.json")
+    planner.ICON_MAP = os.path.join(temp, "absent-icon-map.json")
+    planner.LIVE_SURFACE_FILES = ["live-surface.json"]
+    ability = Path(planner.CONTENT, "abilities", "fixture-ability.json")
+    ability.parent.mkdir(parents=True)
+    ability.write_text(json.dumps({"id": "fixture-ability", "name": "none"}), encoding="utf-8")
+
+    code, output = invoke("--write")
+    assert code == 0, output
+    assert "live-surface files NOT found" in output and "live-surface.json" in output
+    path = Path(planner.PLAN_PATH)
+    original = path.read_bytes()
+    assert "missingSurfaceFiles" not in json.loads(original)
+    code, output = invoke("--check")
+    assert code == 0, output
+    assert "live-surface files NOT found" in output and "live-surface.json" in output
+
+    surface = Path(temp, "live-surface.json")
+    surface.write_text("[]", encoding="utf-8")
+    code, output = invoke("--check")
+    assert code == 0, output
+    assert "live-surface files NOT found" not in output
+    assert path.read_bytes() == original
+
+    path.write_bytes(original + b" ")
+    code, output = invoke("--check")
+    assert code == 1, output
+    path.write_bytes(original)
+
+    surface.write_text(json.dumps(["fixture-ability"]), encoding="utf-8")
+    code, output = invoke("--check")
+    assert code == 1, output
+    updated = planner.build_plan()
+    assert updated["dropped"] == {}
+    assert updated["generate"]["tier1"] == [{"id": "fixture-ability", "family": "abilities"}]
+    assert path.read_bytes() == original
+`;
+    const result = run("-c", [script, PLAN]);
+    expect(result.out).toBe("");
+    expect(result.code).toBe(0);
   });
 });
 

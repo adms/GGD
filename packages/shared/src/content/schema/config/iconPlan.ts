@@ -63,8 +63,8 @@ export const zConfigIconPlanDoc = z
       .strict(),
     /** ids a live surface protects from ever being dropped */
     vetoed: z.array(z.string()),
-    /** live-surface files the planner could not find (a too-narrow veto) */
-    missingSurfaceFiles: z.array(z.string()),
+    /** @deprecated Checkout diagnostics now live in CLI output; accept older plans. */
+    missingSurfaceFiles: z.array(z.string()).optional(),
   })
   .strict();
 export type ConfigIconPlanDoc = z.infer<typeof zConfigIconPlanDoc>;
