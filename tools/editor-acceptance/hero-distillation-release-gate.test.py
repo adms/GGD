@@ -22,8 +22,8 @@ class GateTest(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory(); self.root = Path(self.tmp.name)
         self.training, self.data = self.root / 'training', self.root / 'data'
-        put(self.data / 'train.jsonl', json.dumps({'id': 'seen:HERO'}) + '\n')
-        put(self.data / 'dev.jsonl', json.dumps({'id': 'dev:HERO'}) + '\n')
+        put(self.data / 'train.jsonl', json.dumps({'id': 'seen:HERO', 'heroId': 'seen'}) + '\n')
+        put(self.data / 'dev.jsonl', json.dumps({'id': 'dev:HERO', 'heroId': 'dev'}) + '\n')
         put(self.data / 'manifest.json', {'schema': 'fixture'})
         data_sha = gate.digest(self.data / 'manifest.json')
         put(self.training / 'manifest.json', {'steps': 2, 'dataDirectory': str(self.data),
@@ -43,7 +43,7 @@ class GateTest(unittest.TestCase):
         self.tmp.cleanup()
 
     def result(self, hero, blind):
-        row = {'id': hero + ':HERO', 'semanticFidelity': 'passed', 'liveImport': 'passed',
+        row = {'id': hero + ':HERO', 'heroId': hero, 'semanticFidelity': 'passed', 'liveImport': 'passed',
                'gameplay': 'passed', 'fullHeroSuccess': True, 'unsafeAccept': False,
                'supported': True, 'humanRepairs': 0, 'structural': {'structuralPassed': True},
                'package': {'passed': True},
@@ -71,7 +71,7 @@ class GateTest(unittest.TestCase):
     def scaled_result(self, prefix, blind, count=20, failures=1):
         result = self.result(prefix + '0', blind)
         exemplar = result['arms']['lora']['rows'][0]
-        rows = [{**copy.deepcopy(exemplar), 'id': f'{prefix}{i}:HERO'} for i in range(count)]
+        rows = [{**copy.deepcopy(exemplar), 'id': f'{prefix}{i}:HERO', 'heroId': f'{prefix}{i}'} for i in range(count)]
         for row in rows[:failures]:
             row.update(semanticFidelity='failed', liveImport='failed', gameplay='failed', fullHeroSuccess=False)
             row['structural']['structuralPassed'] = False

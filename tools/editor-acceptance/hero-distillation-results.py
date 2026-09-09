@@ -99,6 +99,7 @@ def collect(training, evaluation, paired=None, teacher_compile=None, teacher_pac
     cases = [json.loads(line) for line in raw(evaluation / 'public-cases.jsonl').decode().splitlines()]
     assert len(cases) == plan['counts']['tasks'], 'EVAL_COUNT_DRIFT'
     assert len({c['id'] for c in cases}) == len(cases), 'DUPLICATE_EVAL_ID'
+    assert all(c['heroId'] == c['id'].split(':', 1)[0] for c in cases), 'EVAL_HERO_ID_DRIFT'
     assert sum(c['slot'] == 'HERO' for c in cases) == plan['counts']['primaryWholeHeroes'], 'PRIMARY_COUNT_DRIFT'
     assert sum(c['slot'] != 'HERO' for c in cases) == plan['counts']['secondarySlots'], 'SECONDARY_COUNT_DRIFT'
     assert plan['sourceManifestSha256'] == manifest['frozenManifestSha256'], 'TRAIN_EVAL_DATASET_MISMATCH'
@@ -189,7 +190,8 @@ def collect(training, evaluation, paired=None, teacher_compile=None, teacher_pac
             'isolatedImportPassed': None if imported is None else sum(r['passed'] is True for r in imports.values()),
             'runtimeVerifiedImports': None if audited is None else sum(r['passed'] is True and r['runtimeMatchesAdmission'] is True for r in imports.values()),
             'fullHeroSuccess': None, 'unsafeAccepts': None,
-            'rows': [{'id': c['id'], 'name': json.loads(c['messages'][1]['content'])['request']['heroName'],
+            'rows': [{'id': c['id'], 'heroId': c['heroId'],
+                      'name': json.loads(c['messages'][1]['content'])['request']['heroName'],
                       'structural': structural[c['id']], 'package': packages.get(c['id']), 'isolatedImport': imports.get(c['id']),
                       'semanticFidelity': 'unverified', 'liveImport': 'unverified', 'gameplay': 'unverified',
                       'fullHeroSuccess': None, 'unsafeAccept': None} for c in primary]}

@@ -15,7 +15,7 @@ def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def read(path):
+def loads(text):
     def unique(pairs):
         value = {}
         for key, item in pairs:
@@ -23,13 +23,19 @@ def read(path):
                 raise ValueError('DUPLICATE_JSON_KEY:' + key)
             value[key] = item
         return value
-    return json.loads(Path(path).read_text(), object_pairs_hook=unique,
+    return json.loads(text, object_pairs_hook=unique,
                       parse_constant=lambda value: (_ for _ in ()).throw(ValueError('NONFINITE_JSON:' + value)))
 
 
+def read(path):
+    return loads(Path(path).read_text())
+
+
 def hero_ids(path):
-    return {json.loads(line)['id'].split(':', 1)[0]
-            for line in Path(path).read_text().splitlines() if line.strip()}
+    rows = [loads(line) for line in Path(path).read_text().splitlines() if line.strip()]
+    assert all(type(row.get('heroId')) is str and row['heroId']
+               and row['id'].split(':', 1)[0] == row['heroId'] for row in rows), 'DATA_HERO_ID_DRIFT'
+    return {row['heroId'] for row in rows}
 
 
 def evaluate(training, internal_results, blind_results):
@@ -82,7 +88,11 @@ def evaluate(training, internal_results, blind_results):
         check(prefix + 'nonempty-fixed-denominator', type(count) is int and count > 0 and len(rows) == count,
               {'count': count, 'rows': len(rows)})
         ids = [row.get('id') for row in rows]
+        hero_ids_in_result = [row.get('heroId') for row in rows]
         check(prefix + 'unique-row-ids', len(ids) == len(set(ids)), ids)
+        check(prefix + 'canonical-hero-ids', all(type(hero_id) is str and hero_id
+              and case_id.split(':', 1)[0] == hero_id for case_id, hero_id in zip(ids, hero_ids_in_result)),
+              hero_ids_in_result)
         check(prefix + 'all-generations-recorded', whole.get('plannedCases') == count and whole.get('recordedCases') == count
               and whole.get('completeOutputs') == count and whole.get('completeJsonOutputs') == count,
               {k: whole.get(k) for k in ['plannedCases', 'recordedCases', 'completeOutputs', 'completeJsonOutputs']})
@@ -125,7 +135,7 @@ def evaluate(training, internal_results, blind_results):
               and base_whole.get('plannedCases') == count and base_whole.get('recordedCases') == count,
               {'sameIds': arm_ids[0] == arm_ids[1] == arm_ids[2],
                'basePlanned': base_whole.get('plannedCases'), 'baseRecorded': base_whole.get('recordedCases')})
-        return {row.get('id', '').split(':', 1)[0] for row in rows}
+        return set(hero_ids_in_result)
 
     result_checks('internal', internal, False)
     blind_ids = result_checks('blind', blind, True)

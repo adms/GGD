@@ -34,7 +34,8 @@ class ResultsTest(unittest.TestCase):
         self.root = Path(self.temp.name)
         self.train, self.eval, self.paired = [self.root / x for x in ['train', 'eval', 'paired']]
         self.counts = {'tasks': 119, 'primaryWholeHeroes': 17, 'secondarySlots': 102}
-        self.cases = [{'id': str(i), 'slot': 'HERO' if i < 17 else 'Q',
+        self.cases = [{'id': str(i) + ':HERO' if i < 17 else str(i) + ':Q',
+                       'heroId': str(i), 'slot': 'HERO' if i < 17 else 'Q',
                        'messagesSha256': 'message-' + str(i),
                        'messages': [{}, {'content': json.dumps({'request': {'heroName': '<script>alert(1)</script>'}})}]}
                       for i in range(119)]
@@ -66,12 +67,14 @@ class ResultsTest(unittest.TestCase):
         compiled, _ = self.compilation('base')
         package_sha = put(self.paired / 'base-package-admission/report.json', {
             'schema': 'ggd-distillation-package-admission@1', 'compiledReportSha256': sha(compiled),
-            'rows': [{'id': str(i), 'packageAdmissionPassed': True, 'status': 'passed'} for i in range(17)]})
+            'rows': [{'id': self.cases[i]['id'], 'packageAdmissionPassed': True, 'status': 'passed'} for i in range(17)]})
         imported = {'schema': 'ggd-distillation-import-roundtrip@1', 'admittedReportSha256': package_sha,
-            'rows': [{'id': str(i), 'liveImportPassed': i < 14, 'status': 'passed' if i < 14 else 'not-passed'} for i in range(17)]}
+            'rows': [{'id': self.cases[i]['id'], 'liveImportPassed': i < 14,
+                      'status': 'passed' if i < 14 else 'not-passed'} for i in range(17)]}
         import_sha = put(self.paired / 'base-import-roundtrip/report.json', imported)
         audit = {'schema': 'ggd-distillation-import-runtime-audit@1', 'admittedReportSha256': package_sha,
-            'importReportSha256': import_sha, 'rows': [{'id': str(i), 'runtimeMatchesAdmission': True if i < 14 else None} for i in range(17)]}
+            'importReportSha256': import_sha,
+            'rows': [{'id': self.cases[i]['id'], 'runtimeMatchesAdmission': True if i < 14 else None} for i in range(17)]}
         put(self.paired / 'base-import-runtime-audit/report.json', audit)
         return audit
 
@@ -137,7 +140,7 @@ class ResultsTest(unittest.TestCase):
         put(folder / 'manifest.json', {'schema': 'ggd-distillation-protected-inference@1',
             'evaluationManifestSha256': self.eval_sha, 'trainingManifestSha256': sha(self.train / 'manifest.json'),
             'caseIds': [c['id'] for c in self.cases], 'decoding': {'max_tokens': 100}})
-        record = {'id': '0', 'slot': 'HERO', 'arm': 'base', 'decoding': {'max_tokens': 100},
+        record = {'id': '0:HERO', 'slot': 'HERO', 'arm': 'base', 'decoding': {'max_tokens': 100},
             'messagesSha256': 'message-0', 'raw': '{}', 'rawSha256': hashlib.sha256(b'{}').hexdigest(),
             'seconds': 2, 'promptTokens': 100, 'generationTokens': 10, 'peakMetalBytes': 1000,
             'attempts': 1, 'humanRepairs': 0, 'complete': True, 'finishReason': 'stop', 'error': None,
