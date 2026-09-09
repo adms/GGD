@@ -20,7 +20,8 @@ REPO = SCRIPT.parents[2]
 FILES = [SCRIPT.name, 'hero-distillation-infer.py', 'hero-distillation-train.py',
          'hero-distillation-generation.py', 'hero-distillation-generation-compile.mts',
          'hero-distillation-adapter.mjs', 'hero-distillation-freeze.mjs',
-         'hero-distillation-package-admission.mts']
+         'hero-distillation-package-admission.mts', 'hero-distillation-results.py',
+         'hero-distillation-report.py']
 
 
 def read(file):
@@ -78,6 +79,9 @@ def run(options, inference=None, execute_cpu=cpu_command):
     training_manifest, adapter, keys = inference.final_checkpoint(training)
     sources = {name: digest(SCRIPT.with_name(name)) for name in FILES}
     inputs = {str(p / 'manifest.json'): digest(p / 'manifest.json') for p in [training, evaluation, models, assets]}
+    teacher_reports = {key: Path(options[key]).resolve() for key in ['teacher_compile', 'teacher_package'] if options.get(key)}
+    for directory in teacher_reports.values():
+        inputs[str(directory / 'report.json')] = digest(directory / 'report.json')
     out.mkdir(parents=True)
     (out / 'source').mkdir()
     for name in FILES:
@@ -90,7 +94,8 @@ def run(options, inference=None, execute_cpu=cpu_command):
         'dependenciesDirectory': str(dependencies), 'assetRoots': list(map(str, roots)),
         'node': node, 'python': sys.executable, 'sources': sources, 'inputManifests': inputs,
         'fixedArmOrder': ['base', 'lora'], 'attemptsPerArm': 1, 'automaticRetry': False,
-        'humanRepairs': 0, 'teacherFileAccess': False,
+        'humanRepairs': 0, 'teacherAnswerFileAccess': False,
+        'teacherControlReports': {key: str(value) for key, value in teacher_reports.items()},
         'scope': 'Full public internal-dev paired generation plus structural/package admission; not blind testing, semantic equivalence, live import or match certification.',
         'fullHeroE2EProven': False, 'modelPromoted': False}
     write(out / 'manifest.json', manifest)
@@ -147,7 +152,17 @@ def run(options, inference=None, execute_cpu=cpu_command):
             assert summaries[arm]['compile']['counts']['allCases'] == counts['tasks'], 'COMPILE_CASES_MISSING'
             assert summaries[arm]['compile']['counts']['primaryWholeHeroes'] == counts['primaryWholeHeroes'], 'COMPILE_HERO_DENOMINATOR_DRIFT'
             assert summaries[arm]['package-admission']['counts']['wholeHeroes'] == counts['primaryWholeHeroes'], 'PACKAGE_HERO_DENOMINATOR_DRIFT'
+        command = [sys.executable, str(SCRIPT.with_name('hero-distillation-results.py')),
+            '--training', str(training), '--evaluation', str(evaluation), '--paired', str(out),
+            '--out', str(out / 'report-data.json')]
+        for key, directory in teacher_reports.items():
+            command.extend(['--' + key.replace('_', '-'), str(directory)])
+        step('collect-results', lambda: execute_cpu(command, out / 'collect-results.log'))
+        command = [sys.executable, str(SCRIPT.with_name('hero-distillation-report.py')),
+            '--data', str(out / 'report-data.json'), '--out', str(out / 'report.html')]
+        step('render-report', lambda: execute_cpu(command, out / 'render-report.log'))
         result = {'schema': 'ggd-distillation-evaluation-batch-result@1', 'arms': summaries,
+                  'reportDataSha256': digest(out / 'report-data.json'), 'reportHtmlSha256': digest(out / 'report.html'),
                   'blindTest': False, 'semanticFidelityMeasured': False, 'liveImportMeasured': False,
                   'fullHeroE2EProven': False, 'modelPromoted': False,
                   'note': 'Completed means the scheduled evaluations ran, not that outputs passed or the model is ready.'}
@@ -170,4 +185,6 @@ if __name__ == '__main__':
     for name in ['training', 'evaluation', 'models', 'assets', 'dependencies', 'out']:
         parser.add_argument('--' + name, required=True)
     parser.add_argument('--asset-root', action='append', required=True, dest='asset_roots')
+    parser.add_argument('--teacher-compile', default=str(REPO / 'docs/_reports/hero-finetune-research/hero74-generation-compile-control-v2'))
+    parser.add_argument('--teacher-package', default=str(REPO / 'docs/_reports/hero-finetune-research/hero74-package-admission-control-v1'))
     print(json.dumps(run(vars(parser.parse_args())), ensure_ascii=False))

@@ -53,6 +53,12 @@ class BatchTest(unittest.TestCase):
     def execute(self, command, log):
         self.cpu.append(command)
         out = Path(command[command.index('--out') + 1])
+        if 'hero-distillation-results.py' in command[1]:
+            put(out, {'fixture': 'collected'})
+            return
+        if 'hero-distillation-report.py' in command[1]:
+            out.write_text('<html>fixture</html>')
+            return
         counts = {'allCases': 119, 'primaryWholeHeroes': 17} if '--arm' in command else {'wholeHeroes': 17}
         put(out / 'report.json', {'counts': counts})
 
@@ -68,8 +74,9 @@ class BatchTest(unittest.TestCase):
         state = b.run(self.options, fake, self.execute)
         self.assertEqual(fake.calls, ['checkpoint', 'prepare', 'base', 'lora'])
         self.assertEqual([s['name'] for s in state['steps']], ['prepare-inference', 'infer-base', 'infer-lora',
-            'compile-base', 'package-admission-base', 'compile-lora', 'package-admission-lora'])
-        self.assertEqual(len(self.cpu), 4)
+            'compile-base', 'package-admission-base', 'compile-lora', 'package-admission-lora',
+            'collect-results', 'render-report'])
+        self.assertEqual(len(self.cpu), 6)
         self.assertEqual(state['status'], 'completed')
         result = b.read(Path(self.options['out']) / 'result.json')
         for key in ['fullHeroE2EProven', 'modelPromoted', 'semanticFidelityMeasured', 'liveImportMeasured']:
@@ -104,6 +111,28 @@ class BatchTest(unittest.TestCase):
         with self.assertRaisesRegex(AssertionError, 'COMPILE_CASES_MISSING'):
             b.run(self.options, FakeInference(), shortened)
         self.assertEqual(b.read(Path(self.options['out']) / 'state.json')['status'], 'stopped-or-failed')
+
+    def test_report_failure_preserves_evaluations_without_success_receipt(self):
+        def fail_report(command, log):
+            if 'hero-distillation-report.py' in command[1]:
+                raise RuntimeError('REPORT_FAILED')
+            self.execute(command, log)
+        with self.assertRaisesRegex(RuntimeError, 'REPORT_FAILED'):
+            b.run(self.options, FakeInference(), fail_report)
+        out = Path(self.options['out'])
+        self.assertTrue((out / 'base-compile/report.json').exists())
+        self.assertTrue((out / 'report-data.json').exists())
+        self.assertFalse((out / 'result.json').exists())
+        self.assertEqual(b.read(out / 'state.json')['steps'][-1]['status'], 'stopped-or-failed')
+
+    def test_teacher_control_report_drift_cannot_change_comparison(self):
+        teacher = self.root / 'teacher'
+        put(teacher / 'report.json', {'fixture': True})
+        self.options['teacher_compile'] = str(teacher)
+        fake = FakeInference(drift=teacher / 'report.json')
+        with self.assertRaisesRegex(AssertionError, 'INPUT_MANIFEST_DRIFT'):
+            b.run(self.options, fake, self.execute)
+        self.assertEqual(fake.calls, ['checkpoint', 'prepare', 'base'])
 
 
 if __name__ == '__main__':
