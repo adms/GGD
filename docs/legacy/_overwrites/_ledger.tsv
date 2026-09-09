@@ -7943,3 +7943,6 @@ overwrite_temp_20260909-115836	Bash	repo 外	/tmp/tc.log	/Users/Takuro/.claude/p
 overwrite_temp_20260909-120145	Bash	repo 外	/tmp/bm2.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260909-120145/bm2.log
 20260909-120147	preserve.sh	SKIP(git 有)	docs/_execution-batches.md	
 20260909-120345	gen_board	產生器覆蓋前	/Users/Takuro/GGD/docs/_release/ggd-board.html	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260909-120345/docs/_release/ggd-board.html
+20260909-120510	preserve.sh	SKIP(git 有)	docs/_execution-batches.md	
+20260909-120510	preserve.sh	覆蓋前	docs/_execution-batches.md	docs/legacy/_overwrites/overwrite_temp_20260909-120510/docs/_execution-batches.md
+20260909-120704	gen_board	產生器覆蓋前	/Users/Takuro/GGD/docs/_release/ggd-board.html	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260909-120704/docs/_release/ggd-board.html
