@@ -234,6 +234,28 @@ The admin vite server proxies `/icon-api` → `127.0.0.1:8789`
 * **re-reads the list when a job finishes**, so the art actually appears instead
   of a success line sitting next to a letter tile.
 
+### ⭐ 兩條建立路徑，只有**一條**有產圖接縫 —— ⛔ 而那是刻意的（GH#1130）
+
+| 路徑 | 誰建立 | 圖示從哪來 | 接縫在哪 |
+|---|---|---|---|
+| **後台 console** | 內容管理「＋新增」 | ⭐ **daemon 當場畫** | `apps/admin/src/ui/ContentPage.tsx:409` 的 `gen.request(tab, id)`（守衛 `apps/admin/src/icons/iconApi.ts` 的 `iconApi.test.ts:106`：⭐ 它**不可以**被 await、且必須排在成功訊息**之後**） |
+| **投稿包匯入／發布** | 編輯器上傳的英雄包 | ⭐ **包裡帶進來** | ⛔ **刻意沒有產圖接縫** —— `apps/content-api/src/heroIconNormalization.ts:15` 的 `normalizeHeroSource()` 收「肖像＋六個技能圖示＋一份 GLB」，凍結後入庫 |
+
+⛔ **⛔ 不要替匯入路徑接上 daemon。** 三個各自獨立的理由：
+
+1. ⭐ **正式站結構上跑不了它** —— `content-api` 在 `docker/compose.yaml:337` 是 `profiles: ["dev"]`，
+   而 SD checkpoint 只住開發機。
+2. ⭐ **投稿包的契約就是「圖示是內容」** —— 它有 digest、有 sha256、有凍結，
+   在匯入時現畫等於**讓同一份包每次匯入長得不一樣**（⛔ 而 digest 會因此對不上）。
+3. ⭐ **owner 的工作流逐字是「做完補給編輯器上傳」**（2026-09-09）：
+   > 「有一個例外 37個新角色頭圖及技能產ICON 這個票是你曾經做過的 你來做比較有效率
+   >  **請你做完補給codex編輯器來上傳**」
+
+⚠️ ⭐ GH#1130 開票時量的是 `apps/content-api` ⇒ 得到「0 處呼叫」⇒ 讀成「daemon 沒有人叫」。
+⭐ 而 daemon **有**呼叫端（上表第一列），只是**不在那條路上** ——
+這正是 CLAUDE.md 記過的「『我查的那條路上沒有』≠『它不存在』」。
+⇒ ⭐ 下一輪要問的是「**哪一條路**沒有」，⛔ 不是「有沒有」。
+
 ### It reuses the batch, it does not reimplement it
 
 `daemon.py` imports `keywords.pass1_prompt` / `pass2_prompt`,

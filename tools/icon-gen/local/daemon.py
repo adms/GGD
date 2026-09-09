@@ -55,6 +55,14 @@ The admin vite server proxies /icon-api here and itself refuses a non-loopback
 --host, so a LAN device has no front door to knock on. This process does not run
 on the family host — there is no GPU and no checkpoint there — and that is why
 the console degrades to a 說明 rather than a spinner when it cannot be reached.
+
+
+⭐ **誰叫它**（GH#1130 —— ⛔ 不要再問一次）：
+  · ⭐ 後台 console 的「＋新增」：`apps/admin/src/ui/ContentPage.tsx:409` 的
+    `gen.request(tab, id)`（經 vite proxy `/icon-api` → 127.0.0.1:8789）。
+    守衛 `apps/admin/src/icons/iconApi.test.ts:106`。
+  · ⛔ **投稿包匯入路徑刻意沒有接縫** —— 圖示是**包的內容**（有 digest／sha256／凍結），
+    ⛔ 不是匯入時現畫。理由三條寫在 `tools/icon-gen/README.md` §7。
 """
 from __future__ import annotations
 
