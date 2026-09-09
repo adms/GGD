@@ -1,0 +1,13 @@
+🔓 隔離區:解鎖 462 份（追蹤 867,缺 0）
+
+> ggd@0.0.0 appearance:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> bash scripts/genrun.sh appearance:build appearance:build:raw
+
+
+> ggd@0.0.0 appearance:build:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> npx tsx tools/resolved-appearance/gen.ts
+
+✓ 寫入 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/docs/editor-contract/ggd-resolved-appearance.json
+  ⭐ 71 位解析成功 · 替身 13 · 失敗 0
+🔒 隔離區:上鎖 462 份（追蹤 867,缺 0,正規化器專屬 403 份不上鎖,部分產物 2 份不上鎖(GH#1097)）
+✓ genrun: appearance:build 完成（產物已重新上鎖）

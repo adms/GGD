@@ -1,0 +1,19 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+
+ ✓ packages/shared/src/content/communityRoom.test.ts (6 tests) 13243ms
+   ✓ admits a generated counterpart with its approved work without adding a second roster choice 1326ms
+   ✓ loads approved heroes into an immutable match snapshot without mutating the release base 548ms
+   ✓ loads different versions of the same template in one room without sharing mutable definitions 2387ms
+   ✓ rejects stale dependencies, stale engines, duplicate works, wrong approval hashes, and missing archives 792ms
+   ✓ rejects a corrupted archive and a forged room manifest before installing content 472ms
+   ✓ loads package-local uploaded model bindings and shares identical models across approved heroes 2743ms
+ ✓ packages/shared/src/ops/iconRedrawTargetsAreLive.test.ts (3 tests) 48ms
+ ✓ packages/shared/src/ops/heroTargetSemanticsAgree.test.ts (3 tests) 12ms
+
+ Test Files  3 passed (3)
+      Tests  12 passed (12)
+   Start at  02:50:34
+   Duration  26.42s (transform 5.26s, setup 0ms, collect 9.79s, tests 13.30s, environment 1ms, prepare 489ms)
+
