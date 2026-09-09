@@ -344,5 +344,65 @@
     "eris-typecheck-final-shared.log": {
       "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
     }
+  },
+  "finalBatch": {
+    "head": "a81602327909221c787e5a693fc74a9e7737dd27",
+    "workingTreeClean": true,
+    "sourceFingerprint": "5efdc095133d00440ed8ba371d1f6820995abead2eb2fa8ebdc17d4724600065",
+    "exitCode": 2,
+    "errors": [],
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 57,
+      "slotsWithoutBehaviorSuite": 165
+    },
+    "modelBytes": "verified",
+    "reportSha256": "08807f9569a9e55e5412a16bee78aec53106381fefef448e16e238cd837141fa",
+    "editorTests": 601,
+    "registeredTests": 557,
+    "jobs": [
+      {
+        "id": "skills",
+        "exitCode": 0,
+        "logSha256": "502e454dacf226a1b180a0565f9f0964e50e79d06602aee2167db0128f2d8c6a"
+      },
+      {
+        "id": "editor",
+        "exitCode": 0,
+        "logSha256": "e8654abf46c819ab720369b1000603682fcb5090498f9c5f030efdce11fd03b7"
+      },
+      {
+        "id": "coord",
+        "exitCode": 0,
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271"
+      },
+      {
+        "id": "compile-and-models",
+        "exitCode": 0,
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c"
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "exitCode": 0,
+        "logSha256": "490e78b69b6e952c85bd65d97a206e887d01ffba4ead53e4376364b12f92147b"
+      },
+      {
+        "id": "behavior-trap-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "b0d89a78be369d980647319159b0d32d5a6bc7872d83ccee7f35cf46981ab567"
+      },
+      {
+        "id": "behavior-motion-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "bfb9adca3053314d328846bd6d4c2f32e114fe1830d1d74b2cef95ff07c19daa"
+      },
+      {
+        "id": "behavior-target-resource-acceptance",
+        "exitCode": 0,
+        "logSha256": "1f73eb55e41aea5dc0292cd6ac1b9513d1118072570278a21c353a23a15fae50"
+      }
+    ],
+    "meaning": "Every executed check passed on the clean commit. Exit 2 preserves 165 unmapped slots; no original-art, full-design or publication verdict. Receipt-only commit follows the tested source."
   }
 }
