@@ -14,6 +14,8 @@ The separate user-provided unseen hero batch has not been supplied. It must be f
 
 The normal internal route is owned by `hero-distillation-evaluate-batch.py`: prepare the immutable inference bundle, run Base then LoRA once, compile all retained cases, run package admission and isolated HTTP import/runtime audit, collect a hash-bound JSON result and render the offline report. Existing output directories are never overwritten or renamed for a retry.
 
+After both training and that paired evaluation have terminated successfully, `hero-distillation-delivery.py` creates one reviewable handoff without manually selecting files. It validates both terminal chains, copies the 12 readable training/evaluation JSON or HTML receipts, and builds a verified archive containing raw outputs and the adapter. The generated `.gitignore` keeps `bundle/archives/` and `bundle/models/` out of Git; commit the readable delivery and `bundle/manifest.json`, then use `hero-finetune-s3.py plan` and `publish` on that delivery directory. Neither step runs a model or promotes it.
+
 After separately qualified teacher semantic/gameplay receipts exist, the conservative no-LLM scorer can produce row evidence automatically. It passes a candidate only when the complete compiled hero is byte-identical to that exact qualified teacher under the same pinned engine and the candidate's isolated import/runtime receipt passes. A different but potentially equivalent design fails closed; this avoids a fuzzy similarity score becoming a dangerous acceptance. The second command derives aggregate success and renders the immutable evidence-aware report:
 
 ```sh
