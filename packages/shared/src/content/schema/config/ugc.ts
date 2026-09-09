@@ -220,7 +220,11 @@ export const UGC_DOC_ID = "ugc";
 export const DEFAULT_UGC: ConfigUgcDoc = Object.freeze({
   id: UGC_DOC_ID,
   schema: "config.ugc@1",
-  enabled: false,
+  // ⭐⭐ owner 2026-09-09 逐字裁決：「**開**，我們總共新增兩批 37+37=74 個新英雄喔」
+  //   ⇒ 前置條件（檔頭那段）**已經滿足**：`ugcGateIsArmed.test.ts` 5/5 綠（含 calibrate）。
+  //   ⚠️ ⭐ 而 `communityRoomOnly` 也是 **false** —— owner 2026-09-09 逐字：
+  //     「⛔ **不會分什麼社群房複雜化**」⇒ 社群英雄與官方英雄**同一個池**。
+  enabled: true,
   requireAuth: true,
   maxPendingPerPlayer: 50,
   quotaPerPlayerPerDay: 100,
@@ -230,7 +234,10 @@ export const DEFAULT_UGC: ConfigUgcDoc = Object.freeze({
   // ⭐ GH#1025 —— 出貨 **immediate**（第〇·六守則：優先權大的更新後預設啟動）。
   publishMode: "immediate",
   // ⭐ GH#1025 Scope C —— 出貨 **on**（票文驗收：社群內容預設只進社群房）。
-  communityRoomOnly: true,
+  // ⭐⭐ owner 2026-09-09 逐字：「社群內容只出現在社群房 => 我之前也說過了
+  //   **不會分什麼社群房複雜化**，你又沒記錄下來了 對話開票超級重要！」
+  //   ⇒ ⛔ 不分房。⚠️ 這已經是他**第二次**講同一件事（第一次我沒記）。
+  communityRoomOnly: false,
   // ⭐ GH#1022 —— 出貨 **on**（第〇·六守則：優先權大的更新後預設啟動）。
   digestRecompute: true,
   heroModelUploadsEnabled: true,

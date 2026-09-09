@@ -39,6 +39,7 @@ const shipped = (
       priceMultiplier: number;
       sellRefundPct: number;
       randomOnlyTables: string[];
+      swapWhenFull: boolean;
     };
   }
 ).legendaryShelf;

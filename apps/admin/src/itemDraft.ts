@@ -474,6 +474,10 @@ export function readLegendaryShelf(doc: unknown): LegendaryShelfConfig {
       typeof b.sellRefundPct === "number" && Number.isFinite(b.sellRefundPct)
         ? b.sellRefundPct
         : SHIPPED_LEGENDARY_SHELF.sellRefundPct,
+    // ⭐ GH#1110 B —— 背包滿時可不可以賣掉一件換上新的。
+    //   ⚠️ 缺欄位 → 出貨值（false），⛔ 不退回 `undefined`（同下面那格的理由）。
+    swapWhenFull:
+      typeof b.swapWhenFull === "boolean" ? b.swapWhenFull : SHIPPED_LEGENDARY_SHELF.swapWhenFull,
     // 缺欄位 → 出貨值（空陣列）。⛔ 不要退回 `undefined`：畫面上那格輸入框
     // 會變成 uncontrolled，而操作者存檔時會不小心把整格刪掉。
     randomOnlyTables: Array.isArray(b.randomOnlyTables)

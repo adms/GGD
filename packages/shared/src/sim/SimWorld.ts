@@ -713,6 +713,8 @@ export class SimWorld {
     priceMultiplier: number;
     sellRefundPct: number;
     randomOnlyTables: string[];
+    /** ⭐ GH#1110 B —— 背包滿時可不可以賣掉一件換上新的（出貨 false）。 */
+    swapWhenFull: boolean;
   } = {
     open: LEGENDARY_SHELF_OPEN,
     priceMultiplier: LEGENDARY_PRICE_MULTIPLIER,
@@ -722,6 +724,8 @@ export class SimWorld {
     //   ⭐ 而 `itemAcquisition.test.ts` / `legendaryShelf.test.ts` 的漂移斷言
     //   在 2026-09-09 真的抓到我漏了它 —— ⛔ 沒有那兩條,沒有 host 接線的路會靜靜地用空表。
     randomOnlyTables: ["ex-release-weapons", "ex-origin-weapons"],
+    // ⭐ GH#1110 B —— 第四個住處。⛔ 出貨 false：換不換裝是 owner 的設計決定。
+    swapWhenFull: false,
   };
 
   /**
