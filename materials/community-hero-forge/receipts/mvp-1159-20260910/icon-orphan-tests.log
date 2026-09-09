@@ -1,0 +1,11 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+
+ ✓ packages/shared/src/ops/iconRedrawTargetsAreLive.test.ts (3 tests) 45ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  01:03:27
+   Duration  1.13s (transform 138ms, setup 0ms, collect 204ms, tests 45ms, environment 0ms, prepare 154ms)
+
