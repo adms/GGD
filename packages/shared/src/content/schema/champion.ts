@@ -122,9 +122,20 @@ export const zChampionDef = z
      */
     description: z.string().optional(),
     /**
-     * ⚠️ **退路原始值**（GH#1024 A4，2026-09-06）—— 匯入時的粗分類，⛔ 不是設計：
-     * 量到 71 份裡 **66 份**逐字是 `attackType` 的別名（melee→fighter / ranged→marksman），
-     * **36 份**與出身推導出的定位不一致。
+     * ⭐⭐ **owner 2026-09-09 逐字裁決：`role 標籤：留`**（GH#1138）——
+     * 「上次討論過了 你怎麼又問我」⇒ ⛔ **這一格不刪，也不要再拿它去問他**。
+     *   出處：`docs/_daily/2026-09-09.md`（`scripts/ruling.sh 1138` 寫的兩處之一）。
+     *   ⚠️ 要查他答過什麼：`bash scripts/asked-before.sh role 標籤`。
+     *
+     * ⚠️ **退路原始值**（GH#1024 A4，2026-09-06）—— 匯入時的粗分類，⛔ 不是設計。
+     *
+     * ⭐ 逐份量到（**2026-09-09 重量**，⛔ 不是 2026-09-06 那一次）：
+     *   · 71 份全部有 `role`
+     *   · 有出身可推導的 **49** 份：⭐ 一致 **24** · ⛔ 不一致 **25**
+     *   · ⛔ **22 份沒有出身** ⇒ 推導不出來（31%）
+     * ⚠️ ⭐ 那 22 份是「刪掉這一格」最貴的部分：⛔ 刪了它們就**沒有任何定位標籤**。
+     * ⛔ 舊註解寫的「36 份不一致」**已經過期**（內容動過了）——
+     *   ⭐ 要重量：逐份比 `role` 與 `ORIGIN_TO_ARCHETYPE[originOf(doc)]`。
      *
      * 出貨 `config.stat-normalization@1.roleFromOrigin = true` ⇒ 註冊表上的 `role`
      * 由**出身**推導（`ORIGIN_TO_ARCHETYPE[originOf(doc)]`，`resolveChampionRole`），
