@@ -25,17 +25,33 @@ import { zId } from "../common";
  * | 一份最大幾 byte | ⭐ **256 KiB** | ⭐ 量到的：出貨最大的一份 ability JSON 是 **57,748 byte**（champion 25,688）⇒ 4.5 倍餘裕 |
  * | 過了機器閘就上架嗎 | ⭐ **不** | 票文 Scope 1 逐字「上架一律過 HITL」 |
  *
- * ── ⛔⛔ 為什麼 `enabled` 出貨是 **false**（⚠️ 這是唯一一個要辯護的預設） ────
- * 第〇·六守則說「優先權大的更新後都是**預設啟動**」—— ⭐ 而那條講的是
- * **已經裁決過的取捨**（兩條路都能跑，開關是為了回頭）。
- * ⛔ 這一格不是那個形狀：UGC 流水線今天只有**第一段**（這份開關）落地，
- * 身分檢查、逐份機器閘、配額計數**一個都還沒有**。
- * ⇒ ⭐ 出貨開著＝**一條公開的、沒有任何守衛的寫入路**，
- * ⚠️ 而票文的 Known risks 自己逐字寫著「quota ＋ maxBytes ＋ 嚴格 Zod 是最低配，
- * **缺一個就不要打開**」。⇒ 這一格是那句話的機器版本。
+ * ── ⭐⭐ `enabled` 出貨是 **true**（2026-09-09 起）—— ⛔ 而它是被**條件**打開的 ────
  *
- * ⭐ 打開它的條件不是「時間到了」，是 `ugcGateIsArmed.test.ts` 從紅轉綠 ——
- * 也就是提交端點**真的**綁齊了身分與這一格。
+ * owner 2026-09-09 逐字：
+ *
+ * > 「ugc.enabled: false → true（UGC ＝ 玩家自製內容）=> **開**，
+ * >  我們總共新增兩批 **37+37=74** 個新英雄喔」
+ *
+ * ⚠️⚠️ ⭐ **這一段在 2026-09-09 之前逐字寫著「為什麼 `enabled` 出貨是 false」** ——
+ * ⛔ 而那句話在開關被翻開的那一刻就變成假話，⭐ 且**沒有任何東西會紅**
+ * （第三守則的形狀，發生在「大家先讀的那一格」上）。
+ * ⇒ ⭐ 這裡記下**當時那個 false 的理由**，因為它同時是**關回去的條件**：
+ *
+ * | 當年不開的理由 | 2026-09-09 的狀態 |
+ * |---|---|
+ * | 身分檢查沒有 | ✅ `requireAuth: true` |
+ * | 配額計數沒有 | ✅ `quotaPerPlayerPerDay: 20` · `maxPendingPerPlayer: 5` |
+ * | 大小上限沒有 | ✅ `maxBytes: 262144` |
+ * | 嚴格 Zod | ✅ 提交格式沿用 `ggd-ai-authoring-operation@1` |
+ * | ⭐ **前提閘從紅轉綠** | ✅ `internal/server/ugcgate_routes_test.go` 的 <br> `TestUgcEnabledGatesEveryRegisteredSubmissionWrite` **PASS** |
+ *
+ * ⚠️ ⭐ **那支閘的名字換過**（GH#1103）：在此之前這裡寫的是 `ugcGateIsArmed.test.ts`，
+ * ⛔ 而那條掃的是 `ugc/(proposals|submissions)` 這個**路徑形狀**、對真入口
+ * （`POST /api/v1/submissions`）**零命中就直接 return** ⇒ ⭐ 它永遠不會從紅轉綠，
+ * 那個條件寫著等於沒寫（失敗形態⑥＋⑨）。⇒ ⭐ **現在的前提是從 `chi.Walk` 推導真入口的那一支。**
+ *
+ * ⭐ 而「關回去」的語意仍然是**停收件**，⛔ 不是停發布 ——
+ * `promote` 是**所有**審核通過內容的出貨路徑（⛔ 不只 UGC），掛上這一格會連編輯器投稿一起擋死。
  */
 export const zConfigUgcDoc = z
   .object({
