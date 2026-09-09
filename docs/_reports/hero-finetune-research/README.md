@@ -135,7 +135,7 @@ To reconstruct the engine layout, use GGD commit `382fd664303a31ed56cb5a9d783277
 
 Engineering test success is not full-source hero accuracy. Identity prose, unsupported mechanisms, source-family generalization, visual quality and 16GB MacBook operation are not qualified. The synthetic controls share wording; their names indicate global cast timing. Correct rejection is not successful hero creation. Failed, stopped and superseded experiments remain in the archives instead of being silently removed.
 
-Tracking: [issue #1113](https://github.com/adms/GGD/issues/1113). Editor JSON-wrapper work remains separately tracked by #1108.
+Historical research delivery was tracked by [issue #1113](https://github.com/adms/GGD/issues/1113). The missing formal importer → exact version → hero selection → isolated match → six-slot runtime receipt is now tracked by [issue #1161](https://github.com/adms/GGD/issues/1161); this evidence is required before a row can honestly claim full gameplay success. Editor JSON-wrapper work remains separately tracked by #1108.
 
 ## Model licensing
 
