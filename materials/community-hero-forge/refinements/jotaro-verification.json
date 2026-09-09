@@ -255,5 +255,65 @@
       "Editor README still contained the previous capability/coverage receipt"
     ],
     "fix": "Register actual intrinsic radius without a no-op shape field; refresh README from generated contract. No gameplay behavior or acceptance threshold changed."
+  },
+  "finalBatch": {
+    "head": "b924c66bbf780dd9d9b64650311a7ef4726e8f14",
+    "workingTreeClean": true,
+    "sourceFingerprint": "0d08f3b9b4b617c526ee579359d520ac03ebef802df5321c6cbd23987e4b0f25",
+    "exitCode": 2,
+    "errors": [],
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 87,
+      "slotsWithoutBehaviorSuite": 135
+    },
+    "modelBytes": "verified",
+    "reportSha256": "a4ef1a5a7fae7fd3fd8cd05f4665f8856ecb74ad77fc43d73d7bb48c7146e74b",
+    "editorTests": 603,
+    "registeredTests": 947,
+    "jobs": [
+      {
+        "id": "skills",
+        "exitCode": 0,
+        "logSha256": "5c9dde309903e121eeb1a3fa47510377989cecec6d16dd0202f07cd4033b13cd"
+      },
+      {
+        "id": "editor",
+        "exitCode": 0,
+        "logSha256": "b0566eb32e6d795f4f29f09ae66c9167cf3388e13ec3199278916d74e9e1f8ae"
+      },
+      {
+        "id": "coord",
+        "exitCode": 0,
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271"
+      },
+      {
+        "id": "compile-and-models",
+        "exitCode": 0,
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c"
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "exitCode": 0,
+        "logSha256": "34f7a848410e81c9e2853bd1ccf6c64d476bf5604b59100b58fb15cf04429ade"
+      },
+      {
+        "id": "behavior-trap-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "2849fdc7f9e35b429e5c4d83ba90a592be7fff65880dce0c992e0d9d77772cd2"
+      },
+      {
+        "id": "behavior-motion-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "3d2b8b45795c523a9c6630799f3f0009f5fc2c30875cbcc8d9da407a32b4036e"
+      },
+      {
+        "id": "behavior-target-resource-acceptance",
+        "exitCode": 0,
+        "logSha256": "b4003afc077e632444499b72a3fd9bb995f6fd4348a1eb037efaa3037a5a6fc1"
+      }
+    ],
+    "meaning": "All executed checks passed on a clean commit. Exit 2 preserves 135 unmapped slots. Original art, complete design and publication remain unaccepted. A receipt-only commit follows."
   }
 }
