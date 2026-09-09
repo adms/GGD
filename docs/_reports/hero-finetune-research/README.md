@@ -42,6 +42,18 @@ node tools/editor-acceptance/hero-distillation-blind-eval-plan.mjs \
   /absolute/new-blind-evaluation
 ```
 
+Run `hero-distillation-evaluate-batch.py` on that plan without any teacher arguments. It derives the split from the frozen plan, labels the batch as blind and refuses a private-teacher file or teacher control report before Base/LoRA generation. Only after both candidate arms have terminated successfully and every raw output is immutable may the separately generated Codex references be sealed:
+
+```sh
+node tools/editor-acceptance/hero-distillation-blind-teacher-seal.mjs \
+  /absolute/new-blind-evaluation \
+  /absolute/completed-blind-candidate-batch \
+  /absolute/codex-teacher-answers-with-budget.jsonl \
+  /absolute/new-blind-teacher-seal
+```
+
+Each teacher row must record the actual model, effort, generation timestamp, tool-call count, input/output tokens and wall time. The seal rejects a teacher timestamp that is not later than the completed candidate batch, missing/reordered cases, output-format drift, incomplete candidate arms and any pre-existing teacher file in the candidate evaluation. It records hashes for both arms' raw outputs so later teacher work cannot silently change the candidate denominator.
+
 The protected inference entry accepts both `internal-dev` and `blind-user-batch`, but validates different provenance rules. For a blind batch it rejects train/dev hero overlap, training-dataset reuse, teacher visibility, tuning reuse and checkpoint selection after generation. The final evidence-only gate is:
 
 ```sh
