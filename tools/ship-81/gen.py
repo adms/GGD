@@ -159,6 +159,21 @@ def ability_docs(hero: dict, slots: list[dict]) -> list[dict]:
         docs.append(doc)
     for d in docs:
         drop_baked_values(d)
+    # ── ⭐ 圖示：**六格一起接**，⛔ 不是在 Q/W/E/R 那條路上順手接 ────────────
+    #
+    # ⛔⛔ 2026-09-10 抓到的（GH#1165）：EX 與 PASSIVE 走的是**另一條**組裝路徑
+    #   （從 `slots[].effectiveRuntime` 來，⛔ 不是 `effectiveHero.abilities.*`）
+    #   ⇒ 圖示只接在前一條路上 ⇒ ⭐ **222 個圖檔全部產好了，而 74 格沒有人指向它們**
+    #     （37 名 × EX/PASSIVE 兩格）。
+    #
+    # ⚠️ ⭐ 玩家的症狀是**技能欄兩格空白**，⛔ 而檔案在、`content:build` 綠、
+    #   測試綠 —— 失敗形態②（做了、出貨了，⛔ 而玩家拿不到）。
+    #
+    # ⇒ ⭐ 接線放在**六格都會經過**的這一段（第〇·五守則：⛔ 不要為某一格寫一個 if）。
+    for d in docs:
+        src = ICONS / "abilities" / f"{d['id']}.webp"
+        if src.is_file():
+            d["icon"] = f"assets/icons/abilities/{d['id']}.webp"
     if len(docs) != 6:
         raise ValueError(f"⛔ {hero['id']} 只組出 {len(docs)} 份技能 —— 六格要齊")
     return docs

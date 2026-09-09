@@ -167,6 +167,40 @@ redis_snapshot_before_shutdown() {
   rm -f "$snaplog"
 }
 
+roster_coverage_check() {
+head_ "4.5 ⭐ 名單覆蓋（映像宣告的官方英雄 ↔ 這台機器真的啟用的）"
+local sj wj n_star n_white n_short
+sj=$(r 'curl -fsS -m 10 http://127.0.0.1:8088/api/v1/curation/whitelist/starter' 2>/dev/null || true)
+wj=$(r 'curl -fsS -m 10 http://127.0.0.1:8088/api/v1/curation/whitelist' 2>/dev/null || true)
+if [ -z "$sj" ] || [ -z "$wj" ]; then
+  warn "兩個名單端點讀不到 —— ⛔ 這一段**沒有驗到**（⛔ 不是通過）"
+else
+  # ⭐ 差集算在**這裡**，⛔ 不是比兩個數字：兩邊數量相等也可能是各自缺不同的人。
+  read -r n_star n_white n_short <<<"$(
+    python3 - "$sj" "$wj" <<'PY'
+import json, sys
+star = set(json.loads(sys.argv[1]).get("champions") or [])
+white = set((json.loads(sys.argv[2]).get("whitelist") or json.loads(sys.argv[2])).get("champions") or [])
+print(len(star), len(white), len(star - white))
+PY
+  )"
+  if [ "${n_short:-1}" = "0" ]; then
+    ok "白名單涵蓋映像宣告的全部 $n_star 名官方英雄（這台啟用 $n_white）"
+  else
+    warn "⛔ **這台機器少啟用 $n_short 名官方英雄**（映像 $n_star / 啟用 $n_white）"
+    info "⇒ 玩家的症狀是**選人畫面少人**，⛔ 而每一個既有檢查都會是綠的。"
+    info "⇒ 補它（union-only，⛔ 一個都不會被移除，有稽核）："
+    info "   cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env run --rm platform /seed -starter-union"
+    # ⚠️ ⭐ 刻意**不自動跑** —— 它寫的是玩家資料，而「營運方把某位停用了」
+    #   必須贏過「部署腳本覺得應該啟用」。⇒ 這裡的責任是**讓它不可能被忽略**。
+    [ "${GGD_DEPLOY_APPLY_STARTER:-0}" = "1" ] && {
+      info "GGD_DEPLOY_APPLY_STARTER=1 ⇒ 現在就補"
+      r "cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env run --rm platform /seed -starter-union" 2>&1 | tail -3 | sed 's/^/    /'
+    }
+  fi
+fi
+}
+
 # ═══════════════════════════════════════ check
 cmd_check() {
   head_ "1. 走得到嗎（⭐ 以及走的是哪一條）"
@@ -424,6 +458,19 @@ cmd_deploy() {
   done
   if [ "$up" -eq 1 ]; then
     ok "edge 回應了"
+
+  # ⭐⭐ 4.5 名單覆蓋 —— ⛔ 「白名單 HTTP 200」是**名詞**，這一段驗的是**關係**。
+  #
+  # ⛔⛔ 量到的缺口（2026-09-10，GH#1165）：映像出貨 **86** 名官方英雄，
+  #   而這台機器的白名單啟用 **49** ⇒ ⭐ **37 名英雄在選人畫面上不存在**，
+  #   而 content bundle 正確、全套測試綠、`/healthz` ok、白名單端點回 200。
+  #   ⇒ 那是失敗形態②（做了、出貨了，⛔ 而玩家拿不到）。
+  #
+  # ⭐ 兩個名詞都讀得到，⛔ 而在此之前沒有人把它們**對起來**：
+  #   · `/curation/whitelist/starter` ＝ **映像**宣告哪些是官方（跟著 build 走）
+  #   · `/curation/whitelist`         ＝ **這台機器**真的啟用了哪些（跟著 data/ 走）
+  #   ⇒ ⭐ 部署正是這兩個各自版本化的東西相遇的那一刻。
+  roster_coverage_check
 
   # ⛔⛔ 2026-08-29 的停機教訓：`edge 回應了` **不代表站活著**。
   #   那次 caddy 因為 Caddyfile 的巢狀變數起不來 ⇒ 80/443 沒有人聽
