@@ -8170,3 +8170,6 @@ overwrite_temp_20260909-204244	Bash	未追蹤	/Users/Takuro/GGD/content/champion
 overwrite_temp_20260909-204418	Bash	有未提交改動	/Users/Takuro/GGD/docs/_reports/batch2-37-boundaries.md	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260909-204418/docs/_reports/batch2-37-boundaries.md
 20260909-204542	preserve.sh	SKIP(git 有)	docs/_execution-batches.md	
 20260909-204745	gen_board	產生器覆蓋前	/Users/Takuro/GGD/docs/_release/ggd-board.html	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260909-204745/docs/_release/ggd-board.html
+overwrite_temp_20260909-211811	Bash	有未提交改動	/Users/Takuro/GGD/scripts/release-note-players.sh	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260909-211811/scripts/release-note-players.sh
+20260909-212345	preserve.sh	SKIP(git 有)	docs/_execution-batches.md	
+20260909-212558	gen_board	產生器覆蓋前	/Users/Takuro/GGD/docs/_release/ggd-board.html	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260909-212558/docs/_release/ggd-board.html
