@@ -1,7 +1,7 @@
 {
   "id": "community-review-12-20260907.e",
   "name": "〔強化・踏步〕",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "【目前模板可執行】向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】短距離移動並強化下一次近戰命中。\n【待補機制】缺下一次近戰強化。",
   "slot": "E",
   "castType": "ground",

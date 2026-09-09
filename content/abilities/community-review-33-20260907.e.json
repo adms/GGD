@@ -1,7 +1,7 @@
 {
   "id": "community-review-33-20260907.e",
   "name": "〔踏地突進〕",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "【目前模板可執行】向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】短距離接近並揮劍。\n【待補機制】近身突進可作基礎驗收。",
   "slot": "E",
   "castType": "ground",

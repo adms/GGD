@@ -1,8 +1,8 @@
 {
   "id": "community-review-07-20260907.r",
   "name": "〔彈性殺陣〕",
-  "provenance": "editor-json",
-  "description": "【目前模板可執行】指定落點半徑 300 wc3u 的一次小級範圍傷害。\n【目標設計】短暫建立最多兩條額外念線，結束時向中心牽引一次。\n【待補機制】目前單次區域傷害；需最多兩條额外念線及一次中心牽引。",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】指定落點半徑{{radius}} wc3u 的一次小級範圍傷害。\n【目標設計】短暫建立最多兩條額外念線，結束時向中心牽引一次。\n【待補機制】目前單次區域傷害；需最多兩條额外念線及一次中心牽引。",
   "slot": "R",
   "castType": "ground",
   "maxRank": 3,
@@ -27,16 +27,12 @@
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "damageTierPerRank": [
-          "極小",
-          "極小",
-          "小"
-        ],
+        "damageTier": "小",
         "ratios": []
       }
     }
   ],
-  "castTimeSec": 2.033,
+  "castTimeSec": 2.233,
   "castTimeTier": "大",
   "icon": "assets/icons/abilities/community-review-07-20260907.r.webp",
   "template": {
@@ -44,15 +40,11 @@
     "params": {
       "radius": 300,
       "damage": {
-        "damageTierPerRank": [
-          "極小",
-          "極小",
-          "小"
-        ],
+        "damageTier": "小",
         "ratios": []
       },
       "damageType": "magic",
-      "castTimeSec": 2.033
+      "castTimeSec": 2.233
     },
     "inheritDefaults": true
   },

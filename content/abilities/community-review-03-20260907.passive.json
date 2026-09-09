@@ -2,9 +2,9 @@
   "id": "community-review-03-20260907.passive",
   "schema": "ability@1",
   "name": "〔不知火流身法〕",
+  "provenance": "w3x-import",
   "description": "完成位移後獲得一次短效普攻強化；刷新不疊加。",
   "slot": "PASSIVE",
-  "provenance": "editor-json",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [

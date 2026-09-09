@@ -2,9 +2,9 @@
   "id": "community-review-11-20260907.passive",
   "schema": "ability@1",
   "name": "大賢者",
+  "provenance": "w3x-import",
   "description": "分析最近承受的技能類型，提供該類型的短效有限減傷；同時只保存一種分析結果。",
   "slot": "PASSIVE",
-  "provenance": "editor-json",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [

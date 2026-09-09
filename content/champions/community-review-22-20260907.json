@@ -49,7 +49,7 @@
     "Q": {
       "id": "community-review-22-20260907.q",
       "name": "Shamac",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"slow30\",\"duration\":1.5,\"applyTo\":\"target\",\"moveSpeedMult\":0.7}]。\n【目標設計】製造短暫黑霧干擾，效果限定於 GGD 核准的視覺／命中干擾範圍。\n【待補機制】固定緩速不代表黑霧感官／命中干擾。",
       "slot": "Q",
       "castType": "targeted",
@@ -76,12 +76,7 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "極小",
-              "小"
-            ],
+            "damageTier": "小",
             "ratios": []
           }
         },
@@ -100,12 +95,7 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "極小",
-              "小"
-            ],
+            "damageTier": "小",
             "ratios": []
           },
           "damageType": "magic",
@@ -117,7 +107,7 @@
     "W": {
       "id": "community-review-22-20260907.w",
       "name": "〔鞭繩牽制〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】拖拉指定目標後向前投擲 100 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】中短距離鞭擊，命中後小幅牽引。\n【待補機制】抓投是模板預覽；需鞭擊後小幅牽引，不應拋飛目標。",
       "slot": "W",
       "castType": "ground",
@@ -154,12 +144,7 @@
               "kind": "damage",
               "damageType": "physical",
               "amount": {
-                "damageTierPerRank": [
-                  "極小",
-                  "極小",
-                  "極小",
-                  "小"
-                ],
+                "damageTier": "小",
                 "ratios": [
                   {
                     "stat": "ap",
@@ -195,7 +180,7 @@
     "E": {
       "id": "community-review-22-20260907.e",
       "name": "〔重新振作〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-22-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】提供自己與附近一名友軍小額護盾，協助重新進入戰鬥。\n【待補機制】需自己及附近一名友軍。",
       "slot": "E",
       "castType": "self",
@@ -254,7 +239,7 @@
     "R": {
       "id": "community-review-22-20260907.r",
       "name": "死亡回歸",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":100,\"ratios\":[]},\"applyTo\":\"self\"}]。\n【目標設計】施放時保存自己的位置與生命，存檔有效五秒。期間首次致死傷害被攔截，返回合法存檔位置，恢復到存檔生命但不超過既定上限。每回合最多成功一次。其他角色、世界時間、傷害紀錄、金幣、經驗與冷卻均繼續。\n【待補機制】目前立即恢復 100 生命；需五秒位置生命快照、致死回溯與合法落點。",
       "slot": "R",
       "castType": "self",

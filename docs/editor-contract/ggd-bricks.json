@@ -2,11 +2,11 @@
   "schema": "ggd-bricks@1",
   "note": "⭐ 積木清冊 —— 「有哪些積木、每一顆在哪個編輯器有表單、誰在用」的**唯一**一份答案（GH#989）。⛔ 產物：改 `tools/brick-census/bricks.ts` 再 `pnpm bricks:build`，⛔ 不要手改。⛔ 刻意沒有產生時間戳（隨時鐘變的欄位會讓 `--check` 永遠不相等）。",
   "capabilityFingerprint": "daccedce",
-  "adminFormSource": "apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（73 份）→ 後台自己的 readSchema()（1172 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。",
+  "adminFormSource": "apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（73 份）→ 後台自己的 readSchema()（1175 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。",
   "editorFormSource": "⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 175 顆有收據；收據裡沒有的才退回代理值。",
   "editorFormNeededFromCodex": "⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / vfx-call / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。",
   "counts": {
-    "total": 175,
+    "total": 177,
     "effect": 49,
     "hook": 33,
     "leaf": 10,
@@ -14,12 +14,12 @@
     "vfx-prim": 13,
     "vfx-subtype": 4,
     "vfx-call": 4,
-    "model-preset": 15,
+    "model-preset": 17,
     "gated": 137,
     "gaps": 55,
     "missingAdminForm": 55,
     "missingEditorForm": 4,
-    "zeroAdoption": 66
+    "zeroAdoption": 45
   },
   "gaps": [
     {
@@ -602,7 +602,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 53,
+      "usedBy": 124,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -741,7 +741,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 62,
+      "usedBy": 127,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -835,7 +835,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 12,
+      "usedBy": 33,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1039,7 +1039,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 2,
+      "usedBy": 3,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1068,7 +1068,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 12,
+      "usedBy": 13,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1267,7 +1267,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 28,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1448,7 +1448,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 73,
+      "usedBy": 269,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1552,7 +1552,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 48,
+      "usedBy": 59,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1656,7 +1656,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 19,
+      "usedBy": 27,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1840,7 +1840,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 24,
+      "usedBy": 66,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -2016,7 +2016,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 7,
+      "usedBy": 17,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -2110,7 +2110,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 8,
+      "usedBy": 37,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -2152,7 +2152,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 3,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -2632,7 +2632,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 2,
+      "usedBy": 45,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -2681,7 +2681,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 7,
+      "usedBy": 10,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -2781,7 +2781,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 15,
+      "usedBy": 38,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -2841,7 +2841,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 5,
+      "usedBy": 57,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -2923,7 +2923,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 1,
+      "usedBy": 4,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -3051,7 +3051,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 2,
+      "usedBy": 4,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -3225,6 +3225,19 @@
           "optional": true
         },
         {
+          "name": "radiusTier",
+          "type": "enum",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ],
+          "tier": true,
+          "optional": true
+        },
+        {
           "name": "shape",
           "type": "enum",
           "values": [
@@ -3258,7 +3271,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 5,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -3342,7 +3355,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 14,
+      "usedBy": 43,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -3564,7 +3577,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 7,
+      "usedBy": 74,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -3904,7 +3917,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 54,
+      "usedBy": 56,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -3938,7 +3951,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 4,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -3981,7 +3994,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 4,
+      "usedBy": 6,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -4144,7 +4157,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 2,
+      "usedBy": 8,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -4346,7 +4359,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 9,
+      "usedBy": 12,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -4566,7 +4579,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 6,
+      "usedBy": 7,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
     },
     {
@@ -5006,7 +5019,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 3,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
     },
     {
@@ -5446,7 +5459,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 38,
+      "usedBy": 74,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
     },
     {
@@ -6106,7 +6119,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 4,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
     },
     {
@@ -6326,7 +6339,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 2,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
     },
     {
@@ -6766,7 +6779,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 17,
+      "usedBy": 27,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
     },
     {
@@ -6986,7 +6999,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 5,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
     },
     {
@@ -7426,7 +7439,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 2,
+      "usedBy": 4,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
     },
     {
@@ -8086,7 +8099,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 2,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
     },
     {
@@ -8306,7 +8319,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 6,
+      "usedBy": 7,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
     },
     {
@@ -9406,7 +9419,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 8,
+      "usedBy": 9,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
     },
     {
@@ -10506,7 +10519,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 1,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
     },
     {
@@ -11386,7 +11399,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 3,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
     },
     {
@@ -11606,7 +11619,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 1,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
     },
     {
@@ -11620,7 +11633,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 31,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
     },
     {
@@ -11646,7 +11659,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 2,
+      "usedBy": 5,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
     },
     {
@@ -11703,7 +11716,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 3,
+      "usedBy": 4,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
     },
     {
@@ -11772,7 +11785,7 @@
       "params": [],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 5,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
     },
     {
@@ -11781,7 +11794,7 @@
       "params": [],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 8,
+      "usedBy": 13,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
     },
     {
@@ -11790,8 +11803,45 @@
       "params": [],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 30,
+      "usedBy": 39,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
+    },
+    {
+      "id": "hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804",
+      "layer": "model-preset",
+      "params": [
+        {
+          "name": "count",
+          "type": "number",
+          "default": 1,
+          "min": 1,
+          "max": 20,
+          "origin": "taxonomy:一具是召喚的**最小**單位 —— ⛔ 0 具不是召喚。逐支的具數由卡面決定（普屋 E 逐字「創造出 **2** 個普烏的實體」）。"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": false,
+      "usedBy": 0,
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804.json.params"
+    },
+    {
+      "id": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+      "layer": "model-preset",
+      "params": [
+        {
+          "name": "anchor",
+          "type": "enum",
+          "values": [
+            "point",
+            "caster"
+          ],
+          "default": "caster"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": false,
+      "usedBy": 0,
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806.json.params"
     },
     {
       "id": "tpl-beam-roll",
@@ -12815,17 +12865,17 @@
           "name": "status",
           "type": "applyStatus",
           "default": {
-            "statusId": "root",
             "duration": 1.5,
-            "root": true
+            "root": true,
+            "statusId": "root"
           },
           "origin": "census: 出貨 7 支 applyStatus-only 裡 root 4 支最多（70-03 · 30-01 ×2 · 02-00）；時長取 exemplar 70-03（content/abilities/godie-e010.e.json effects[0] 逐位元）。"
         }
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 6,
-      "origin": "template@1:content/ability-templates/tpl-apply-status.json"
+      "usedBy": 11,
+      "origin": "template@1:content/ability-templates/hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b.json content/ability-templates/tpl-apply-status.json"
     },
     {
       "id": "area-strike",
@@ -13153,8 +13203,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 7,
-      "origin": "template@1:content/ability-templates/tpl-blink.json"
+      "usedBy": 21,
+      "origin": "template@1:content/ability-templates/hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4.json content/ability-templates/tpl-blink.json"
     },
     {
       "id": "blink-strike",
@@ -13182,8 +13232,8 @@
             "damageTier": "小",
             "ratios": [
               {
-                "stat": "ad",
-                "coeff": 0.5
+                "coeff": 0.5,
+                "stat": "ad"
               }
             ]
           },
@@ -13219,8 +13269,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 1,
-      "origin": "template@1:content/ability-templates/tpl-blink-strike.json"
+      "usedBy": 3,
+      "origin": "template@1:content/ability-templates/hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16.json content/ability-templates/tpl-blink-strike.json"
     },
     {
       "id": "buff-self",
@@ -13246,8 +13296,8 @@
           "type": "statModifiers",
           "default": [
             {
-              "stat": "ad",
               "op": "flat",
+              "stat": "ad",
               "value": 50
             }
           ]
@@ -13270,8 +13320,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 55,
-      "origin": "template@1:content/ability-templates/tpl-buff-self.json"
+      "usedBy": 102,
+      "origin": "template@1:content/ability-templates/hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692.json content/ability-templates/tpl-buff-self.json"
     },
     {
       "id": "charge-push",
@@ -13368,8 +13418,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-charge-push.json"
+      "usedBy": 14,
+      "origin": "template@1:content/ability-templates/hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368.json content/ability-templates/tpl-charge-push.json"
     },
     {
       "id": "charge-resource",
@@ -13933,8 +13983,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 5,
-      "origin": "template@1:content/ability-templates/tpl-drain-leech.json"
+      "usedBy": 6,
+      "origin": "template@1:content/ability-templates/hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990.json content/ability-templates/tpl-drain-leech.json"
     },
     {
       "id": "effect-sequence",
@@ -13965,11 +14015,11 @@
           "type": "effects",
           "default": [
             {
-              "kind": "damage",
-              "damageType": "magic",
               "amount": {
                 "damageTier": "極小"
-              }
+              },
+              "damageType": "magic",
+              "kind": "damage"
             }
           ],
           "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
@@ -13995,8 +14045,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-effect-sequence.json"
+      "usedBy": 113,
+      "origin": "template@1:content/ability-templates/hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550.json content/ability-templates/tpl-effect-sequence.json"
     },
     {
       "id": "event-passive",
@@ -14007,16 +14057,16 @@
           "type": "hooks",
           "default": [
             {
-              "on": "onBasicAttack",
               "effects": [
                 {
-                  "kind": "damage",
-                  "damageType": "magic",
                   "amount": {
                     "damageTier": "極小"
-                  }
+                  },
+                  "damageType": "magic",
+                  "kind": "damage"
                 }
-              ]
+              ],
+              "on": "onBasicAttack"
             }
           ],
           "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
@@ -14024,8 +14074,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-event-passive.json"
+      "usedBy": 35,
+      "origin": "template@1:content/ability-templates/hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77.json content/ability-templates/tpl-event-passive.json"
     },
     {
       "id": "ground-nova",
@@ -14069,7 +14119,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 5,
       "origin": "template@1:content/ability-templates/tpl-ground-nova.json"
     },
     {
@@ -14182,8 +14232,8 @@
             ],
             "ratios": [
               {
-                "stat": "ap",
-                "coeff": 0.465
+                "coeff": 0.465,
+                "stat": "ap"
               }
             ]
           },
@@ -14220,8 +14270,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 6,
-      "origin": "template@1:content/ability-templates/tpl-heal.json"
+      "usedBy": 12,
+      "origin": "template@1:content/ability-templates/hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6.json content/ability-templates/tpl-heal.json"
     },
     {
       "id": "instant-blast",
@@ -14354,8 +14404,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 3,
-      "origin": "template@1:content/ability-templates/tpl-leap-strike.json"
+      "usedBy": 15,
+      "origin": "template@1:content/ability-templates/hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52.json content/ability-templates/tpl-leap-strike.json"
     },
     {
       "id": "life-manipulate",
@@ -14606,8 +14656,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 4,
-      "origin": "template@1:content/ability-templates/tpl-line-strike.json"
+      "usedBy": 12,
+      "origin": "template@1:content/ability-templates/hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71.json content/ability-templates/tpl-line-strike.json"
     },
     {
       "id": "line-sweep",
@@ -14668,7 +14718,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 1,
+      "usedBy": 20,
       "origin": "template@1:content/ability-templates/tpl-line-sweep.json"
     },
     {
@@ -14766,8 +14816,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-lock-combo.json"
+      "usedBy": 12,
+      "origin": "template@1:content/ability-templates/hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c.json content/ability-templates/tpl-lock-combo.json"
     },
     {
       "id": "locust-line",
@@ -15524,8 +15574,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-on-hit-react.json"
+      "usedBy": 2,
+      "origin": "template@1:content/ability-templates/hero-template.a0174c3324e732c421ab641d1e36cd2f49f758475f851ee4.json content/ability-templates/tpl-on-hit-react.json"
     },
     {
       "id": "orbit-array",
@@ -15685,8 +15735,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 5,
-      "origin": "template@1:content/ability-templates/tpl-periodic-field.json"
+      "usedBy": 10,
+      "origin": "template@1:content/ability-templates/hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806.json content/ability-templates/tpl-periodic-field.json"
     },
     {
       "id": "projectile-strike",
@@ -16007,8 +16057,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-pull-throw.json"
+      "usedBy": 6,
+      "origin": "template@1:content/ability-templates/hero-template.231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd6.json content/ability-templates/tpl-pull-throw.json"
     },
     {
       "id": "radial-burst",
@@ -16197,7 +16247,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 9,
       "origin": "template@1:content/ability-templates/tpl-random-barrage.json"
     },
     {
@@ -16252,8 +16302,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 54,
-      "origin": "template@1:content/ability-templates/tpl-single-strike.json"
+      "usedBy": 85,
+      "origin": "template@1:content/ability-templates/hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8.json content/ability-templates/tpl-single-strike.json"
     },
     {
       "id": "spend-resource",
@@ -16440,8 +16490,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 3,
-      "origin": "template@1:content/ability-templates/tpl-summon-agent.json"
+      "usedBy": 6,
+      "origin": "template@1:content/ability-templates/hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804.json content/ability-templates/tpl-summon-agent.json"
     },
     {
       "id": "teleport",
@@ -16496,8 +16546,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-teleport.json"
+      "usedBy": 3,
+      "origin": "template@1:content/ability-templates/hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b.json content/ability-templates/tpl-teleport.json"
     },
     {
       "id": "transform",
@@ -16554,8 +16604,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 12,
-      "origin": "template@1:content/ability-templates/tpl-transform.json"
+      "usedBy": 13,
+      "origin": "template@1:content/ability-templates/hero-template.c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f55010.json content/ability-templates/tpl-transform.json"
     },
     {
       "id": "traveling-wave",
@@ -16633,7 +16683,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 1,
+      "usedBy": 7,
       "origin": "template@1:content/ability-templates/tpl-traveling-wave.json"
     },
     {

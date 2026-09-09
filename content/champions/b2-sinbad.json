@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.1,
       "castType": "ground",
       "cooldown": [
         15.0,
@@ -35,7 +35,7 @@
       "template": {
         "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
         "params": {
-          "castTimeSec": 0.467
+          "castTimeSec": 0.1
         },
         "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
       },
@@ -48,7 +48,7 @@
       ]
     },
     "Q": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -91,7 +91,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.1,
           "castType": "targeted",
           "effects": [
             {
@@ -123,7 +123,7 @@
       "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 0.1,
       "castType": "ground",
       "cooldown": [
         45.0,
@@ -136,11 +136,7 @@
         {
           "aim": "target",
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "小",
-              "中"
-            ]
+            "damageTier": "中"
           },
           "damageType": "magic",
           "fromCaster": true,
@@ -167,13 +163,9 @@
         "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
         "params": {
           "aim": "target",
-          "castTimeSec": 0.833,
+          "castTimeSec": 0.1,
           "damage": {
-            "damageTierPerRank": [
-              "極小",
-              "小",
-              "中"
-            ]
+            "damageTier": "中"
           },
           "damageType": "magic",
           "length": 11,
@@ -190,7 +182,7 @@
       ]
     },
     "W": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.1,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -231,7 +223,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.1,
           "castType": "self",
           "effects": [
             {

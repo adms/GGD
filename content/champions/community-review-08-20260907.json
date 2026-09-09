@@ -49,7 +49,7 @@
     "Q": {
       "id": "community-review-08-20260907.q",
       "name": "〔雙刃斬擊〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】2 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】近身雙段斬擊，消耗刀刃耐久。\n【待補機制】缺刀刃耐久。",
       "slot": "Q",
       "castType": "targeted",
@@ -78,13 +78,7 @@
           "damageType": "physical",
           "amountPerTick": {
             "damageTier": "極小",
-            "ratios": [],
-            "perRank": [
-              0,
-              100,
-              200,
-              300
-            ]
+            "ratios": []
           },
           "intervalSec": 0.18,
           "durationSec": 0.36
@@ -101,12 +95,7 @@
               "kind": "damage",
               "damageType": "physical",
               "amount": {
-                "damageTierPerRank": [
-                  "極小",
-                  "極小",
-                  "極小",
-                  "小"
-                ],
+                "damageTier": "小",
                 "ratios": []
               }
             }
@@ -122,23 +111,11 @@
           "hitIntervalSec": 0.18,
           "perHitDamage": {
             "damageTier": "極小",
-            "ratios": [],
-            "perRank": [
-              0,
-              100,
-              200,
-              300
-            ]
+            "ratios": []
           },
           "finisherDamage": {
             "damageTier": "小",
-            "ratios": [],
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
+            "ratios": []
           },
           "finisherRadius": 150,
           "damageType": "physical",
@@ -153,7 +130,7 @@
     "W": {
       "id": "community-review-08-20260907.w",
       "name": "立體機動裝置",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】射出鉤索連接合法錨點，消耗氣體沿路徑移動。\n【待補機制】需合法場景錨點、鉤索路径、氣體消耗；不是自由跳躍。",
       "slot": "W",
       "castType": "ground",
@@ -220,7 +197,7 @@
     "E": {
       "id": "community-review-08-20260907.e",
       "name": "〔補給與換刃〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"restore\",\"manaPct\":0.15,\"applyTo\":\"self\"}]。\n【目標設計】短暫停留更換刀刃並補充部分氣體；受到控制會中斷。\n【待補機制】需換刃及氣體資源／控制中斷。",
       "slot": "E",
       "castType": "self",
@@ -267,8 +244,8 @@
     "R": {
       "id": "community-review-08-20260907.r",
       "name": "雷槍",
-      "provenance": "editor-json",
-      "description": "【目前模板可執行】在指定區域依序落下 2 發；每發間隔 0.4 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】發射兩支可辨識的雷槍，命中或落地後延遲爆炸。\n【待補機制】兩發落點爆炸；需雷槍投射物、黏附與延遲引爆。",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】在指定區域依序落下 2 發；每發間隔 0.4 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】發射兩支可辨識的雷槍，命中或落地後延遲爆炸。\n【待補機制】兩發落點爆炸；需雷槍投射物、黏附與延遲引爆。",
       "slot": "R",
       "castType": "ground",
       "maxRank": 3,
@@ -294,12 +271,7 @@
           "damageType": "physical",
           "amountPerTick": {
             "damageTier": "極小",
-            "ratios": [],
-            "perRank": [
-              0,
-              150,
-              300
-            ]
+            "ratios": []
           },
           "intervalSec": 0.4,
           "durationSec": 0.4,
@@ -316,12 +288,7 @@
           "intervalSec": 0.4,
           "impactDamage": {
             "damageTier": "極小",
-            "ratios": [],
-            "perRank": [
-              0,
-              150,
-              300
-            ]
+            "ratios": []
           },
           "damageType": "physical",
           "impactRadius": 150,

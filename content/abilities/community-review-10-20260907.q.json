@@ -1,7 +1,7 @@
 {
   "id": "community-review-10-20260907.q",
   "name": "〔戰術射擊〕",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】中距離單發射擊，對帶標記目標造成額外傷害。\n【待補機制】缺戰術標記額外傷害。",
   "slot": "Q",
   "castType": "targeted",
@@ -28,12 +28,7 @@
       "kind": "damage",
       "damageType": "physical",
       "amount": {
-        "damageTierPerRank": [
-          "極小",
-          "極小",
-          "極小",
-          "小"
-        ],
+        "damageTier": "小",
         "ratios": []
       }
     }
@@ -45,12 +40,7 @@
     "ref": "tpl-single-strike",
     "params": {
       "damage": {
-        "damageTierPerRank": [
-          "極小",
-          "極小",
-          "極小",
-          "小"
-        ],
+        "damageTier": "小",
         "ratios": []
       },
       "damageType": "physical",

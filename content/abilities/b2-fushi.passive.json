@@ -22,7 +22,8 @@
                 "applyTo": "self",
                 "duration": 4,
                 "kind": "applyStatus",
-                "statusId": "berserk"
+                "statusId": "berserk",
+                "berserk": true
               }
             ],
             "internalCooldown": 2,
@@ -47,7 +48,8 @@
               "applyTo": "self",
               "duration": 4,
               "kind": "applyStatus",
-              "statusId": "berserk"
+              "statusId": "berserk",
+              "berserk": true
             }
           ],
           "internalCooldown": 2,

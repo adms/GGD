@@ -1,7 +1,7 @@
 {
   "id": "community-review-15-20260907.r",
   "name": "〔兄貴背摔〕",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "【目前模板可執行】拖拉指定目標後向前投擲 400 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】對抓取中的目標進行背摔；未抓取時先做可被閃避的近身捕捉。\n【待補機制】目前單次投擲；需大摔技雙人動作同步與有限區域衝擊。",
   "slot": "R",
   "castType": "ground",
@@ -36,11 +36,7 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "小"
-            ],
+            "damageTier": "小",
             "ratios": [
               {
                 "stat": "ap",

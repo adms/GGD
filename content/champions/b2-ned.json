@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 0.1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -47,19 +47,12 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.833,
+          "castTimeSec": 0.1,
           "castType": "targeted",
           "effects": [
             {
               "amount": {
-                "damageTier": "極小",
-                "flat": 200,
-                "perRank": [
-                  0,
-                  100,
-                  200,
-                  300
-                ]
+                "damageTier": "極小"
               },
               "damageType": "physical",
               "kind": "damage"
@@ -88,7 +81,7 @@
       "radiusTier": "極小"
     },
     "Q": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 0.1,
       "castType": "ground",
       "cooldown": [
         45.0,
@@ -138,7 +131,7 @@
         "params": {
           "apexHeight": 250,
           "applyTo": "self",
-          "castTimeSec": 0.833,
+          "castTimeSec": 0.1,
           "damage": {
             "damageTier": "極小"
           },
@@ -158,7 +151,7 @@
       ]
     },
     "R": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 0.1,
       "castType": "ground",
       "cooldown": [
         45.0,
@@ -171,11 +164,7 @@
         {
           "aim": "target",
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "小",
-              "中"
-            ]
+            "damageTier": "中"
           },
           "damageType": "physical",
           "fromCaster": true,
@@ -202,13 +191,9 @@
         "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
         "params": {
           "aim": "target",
-          "castTimeSec": 0.833,
+          "castTimeSec": 0.1,
           "damage": {
-            "damageTierPerRank": [
-              "極小",
-              "小",
-              "中"
-            ]
+            "damageTier": "中"
           },
           "damageType": "physical",
           "length": 9,
@@ -225,7 +210,7 @@
       ]
     },
     "W": {
-      "castTimeSec": 1.7,
+      "castTimeSec": 0.1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -238,12 +223,7 @@
       "effects": [
         {
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "小",
-              "中"
-            ]
+            "damageTier": "中"
           },
           "condition": {
             "kind": "distance",
@@ -273,19 +253,12 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.7,
+          "castTimeSec": 0.1,
           "castType": "targeted",
           "effects": [
             {
               "amount": {
-                "damageTier": "中",
-                "flat": 1000,
-                "perRank": [
-                  0,
-                  500,
-                  1000,
-                  1500
-                ]
+                "damageTier": "中"
               },
               "condition": {
                 "kind": "distance",

@@ -49,7 +49,7 @@
     "Q": {
       "id": "community-review-23-20260907.q",
       "name": "〔洞爺湖・橫斬〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】木刀橫掃前方。\n【待補機制】需木刀近身弧形判定。",
       "slot": "Q",
       "castType": "skillshot",
@@ -121,7 +121,7 @@
     "W": {
       "id": "community-review-23-20260907.w",
       "name": "〔草莓牛奶休息時間〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":100,\"ratios\":[]},\"applyTo\":\"self\"}]。\n【目標設計】短暫飲用補給恢復生命，受擊或移動會中斷。\n【待補機制】需喝草莓牛奶動作、移動／受擊中斷。",
       "slot": "W",
       "castType": "self",
@@ -177,7 +177,7 @@
     "E": {
       "id": "community-review-23-20260907.e",
       "name": "〔萬事屋式反擊〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-23-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】短時間招架，成功後可接一次木刀反擊。\n【待補機制】需招架成功後一次反擊窗口。",
       "slot": "E",
       "castType": "self",
@@ -236,7 +236,7 @@
     "R": {
       "id": "community-review-23-20260907.r",
       "name": "〔白夜叉〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】自身取得 4 秒增益：ad +15%、極小級移速。\n【目標設計】限時強化近戰動作與追擊能力，不提供永久變形。\n【待補機制】短期 AD＋移速對應基础强化；白夜叉動作待製。",
       "slot": "R",
       "castType": "self",

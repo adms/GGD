@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.667,
+  "castTimeSec": 0.1,
   "castType": "targeted",
   "cooldown": [
     45.0,
@@ -20,11 +20,7 @@
         },
         {
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "小",
-              "中"
-            ]
+            "damageTier": "中"
           },
           "damageType": "magic",
           "kind": "damage"
@@ -53,13 +49,9 @@
   "template": {
     "contentSha256": "sha256:3bbc417d5c5a3bd9a34f58eec190ecff85b9d8f07a967a022763fe51c86d3be0",
     "params": {
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.1,
       "damage": {
-        "damageTierPerRank": [
-          "極小",
-          "小",
-          "中"
-        ]
+        "damageTier": "中"
       },
       "damageType": "magic",
       "range": 6,

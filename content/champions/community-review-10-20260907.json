@@ -49,7 +49,7 @@
     "Q": {
       "id": "community-review-10-20260907.q",
       "name": "〔戰術射擊〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】中距離單發射擊，對帶標記目標造成額外傷害。\n【待補機制】缺戰術標記額外傷害。",
       "slot": "Q",
       "castType": "targeted",
@@ -76,12 +76,7 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "極小",
-              "小"
-            ],
+            "damageTier": "小",
             "ratios": []
           }
         }
@@ -93,12 +88,7 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "極小",
-              "小"
-            ],
+            "damageTier": "小",
             "ratios": []
           },
           "damageType": "physical",
@@ -110,7 +100,7 @@
     "W": {
       "id": "community-review-10-20260907.w",
       "name": "〔集中火力〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"slow30\",\"duration\":1.5,\"applyTo\":\"target\",\"moveSpeedMult\":0.7}]。\n【目標設計】標記一個可見敵人，讓下一次友軍有效命中獲得追加效果。\n【待補機制】固定緩速；需標記與下一次友軍命中消耗。",
       "slot": "W",
       "castType": "targeted",
@@ -137,12 +127,7 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "極小",
-              "小"
-            ],
+            "damageTier": "小",
             "ratios": []
           }
         },
@@ -161,12 +146,7 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "極小",
-              "小"
-            ],
+            "damageTier": "小",
             "ratios": []
           },
           "damageType": "magic",
@@ -178,7 +158,7 @@
     "E": {
       "id": "community-review-10-20260907.e",
       "name": "〔撤退指令〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】為附近友軍提供朝安全方向移動時的短效加速。\n【待補機制】目前只加速自身；需朝安全方向移動的友軍條件。",
       "slot": "E",
       "castType": "self",
@@ -232,7 +212,7 @@
     "R": {
       "id": "community-review-10-20260907.r",
       "name": "絕對遵守的 Geass",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"stun\",\"duration\":0.8,\"applyTo\":\"target\",\"stun\":true}]。\n【目標設計】在視線成立後，命令一名敵人沿合法路徑朝指定位置移動，持續約 1 秒。每名目標每回合只能成功受此命令一次；控制免疫或視線失敗時不記為成功。\n【待補機制】單體 0.8 秒暈眩不能代替 Geass；需視線、強制合法移動與每目標每回合成功一次。",
       "slot": "R",
       "castType": "targeted",
@@ -257,11 +237,7 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "小"
-            ],
+            "damageTier": "小",
             "ratios": []
           }
         },
@@ -280,11 +256,7 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "小"
-            ],
+            "damageTier": "小",
             "ratios": []
           },
           "damageType": "magic",

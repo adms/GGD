@@ -49,7 +49,7 @@
     "Q": {
       "id": "community-review-34-20260907.q",
       "name": "〔疾走爪擊〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】短距離突進爪擊。\n【待補機制】爪擊模型待製。",
       "slot": "Q",
       "castType": "ground",
@@ -127,7 +127,7 @@
     "W": {
       "id": "community-review-34-20260907.w",
       "name": "〔急轉彎〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】快速改變方向，降低當前加速層數以換取操作能力。\n【待補機制】需急轉向與消耗加速層，不能單純低跳。",
       "slot": "W",
       "castType": "ground",
@@ -194,7 +194,7 @@
     "E": {
       "id": "community-review-34-20260907.e",
       "name": "〔妖怪的咒印〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"slow30\",\"duration\":1.5,\"applyTo\":\"target\",\"moveSpeedMult\":0.7}]。\n【目標設計】標記一個可見敵人，使自己朝其移動時獲得有限加速。\n【待補機制】緩速只是底稿；需追獵目標標記與朝向加速。",
       "slot": "E",
       "castType": "targeted",
@@ -221,12 +221,7 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "極小",
-              "小"
-            ],
+            "damageTier": "小",
             "ratios": []
           }
         },
@@ -245,12 +240,7 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "極小",
-              "小"
-            ],
+            "damageTier": "小",
             "ratios": []
           },
           "damageType": "magic",
@@ -262,7 +252,7 @@
     "R": {
       "id": "community-review-34-20260907.r",
       "name": "〔全速追獵〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】短期提升速度上限與轉向能力，期間仍須通過碰撞檢查。\n【待補機制】3 秒移速增益；需上限与轉向能力独立参数。",
       "slot": "R",
       "castType": "self",

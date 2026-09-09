@@ -49,7 +49,7 @@
     "Q": {
       "id": "community-review-02-20260907.q",
       "name": "百八式・闇拂",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。\n【目標設計】沿地面前進的紫炎投射物，遇到有效碰撞結算。\n【待補機制】推進波並非遇第一個單位即停的投射物。",
       "slot": "Q",
       "castType": "skillshot",
@@ -134,7 +134,7 @@
     "W": {
       "id": "community-review-02-20260907.w",
       "name": "百式・鬼燒",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】原地上升火焰打擊，提供短暫迎擊窗口與有限擊退。\n【待補機制】固定落點跳擊；需原地迎擊與受擊窗口。",
       "slot": "W",
       "castType": "ground",
@@ -201,7 +201,7 @@
     "E": {
       "id": "community-review-02-20260907.e",
       "name": "百二十七式・葵花",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】3 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】三段接續技；每段須在指定窗口再次輸入，逾時、受控或第三段完成後結束。\n【待補機制】目前一次施法完成三段；需三次輸入窗口及中斷狀態機。",
       "slot": "E",
       "castType": "targeted",
@@ -230,13 +230,7 @@
           "damageType": "physical",
           "amountPerTick": {
             "damageTier": "極小",
-            "ratios": [],
-            "perRank": [
-              0,
-              100,
-              200,
-              300
-            ]
+            "ratios": []
           },
           "intervalSec": 0.18,
           "durationSec": 0.54
@@ -253,12 +247,7 @@
               "kind": "damage",
               "damageType": "physical",
               "amount": {
-                "damageTierPerRank": [
-                  "極小",
-                  "極小",
-                  "極小",
-                  "小"
-                ],
+                "damageTier": "小",
                 "ratios": []
               }
             }
@@ -274,23 +263,11 @@
           "hitIntervalSec": 0.18,
           "perHitDamage": {
             "damageTier": "極小",
-            "ratios": [],
-            "perRank": [
-              0,
-              100,
-              200,
-              300
-            ]
+            "ratios": []
           },
           "finisherDamage": {
             "damageTier": "小",
-            "ratios": [],
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
+            "ratios": []
           },
           "finisherRadius": 150,
           "damageType": "physical",
@@ -305,7 +282,7 @@
     "R": {
       "id": "community-review-02-20260907.r",
       "name": "禁千二百十一式・八稚女",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】8 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】突進命中後進入有限連擊，最後一擊引爆紫炎層數。\n【待補機制】缺命中突進接續與紫炎引爆。",
       "slot": "R",
       "castType": "targeted",
@@ -332,12 +309,7 @@
           "damageType": "physical",
           "amountPerTick": {
             "damageTier": "極小",
-            "ratios": [],
-            "perRank": [
-              0,
-              150,
-              300
-            ]
+            "ratios": []
           },
           "intervalSec": 0.18,
           "durationSec": 1.44
@@ -354,11 +326,7 @@
               "kind": "damage",
               "damageType": "physical",
               "amount": {
-                "damageTierPerRank": [
-                  "極小",
-                  "極小",
-                  "小"
-                ],
+                "damageTier": "小",
                 "ratios": []
               }
             }
@@ -374,21 +342,11 @@
           "hitIntervalSec": 0.18,
           "perHitDamage": {
             "damageTier": "極小",
-            "ratios": [],
-            "perRank": [
-              0,
-              150,
-              300
-            ]
+            "ratios": []
           },
           "finisherDamage": {
             "damageTier": "小",
-            "ratios": [],
-            "perRank": [
-              0,
-              375,
-              750
-            ]
+            "ratios": []
           },
           "finisherRadius": 150,
           "damageType": "physical",

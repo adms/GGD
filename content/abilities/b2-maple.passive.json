@@ -21,8 +21,7 @@
             "effects": [
               {
                 "amount": {
-                  "damageTier": "極小",
-                  "flat": 200
+                  "damageTier": "極小"
                 },
                 "damageType": "magic",
                 "kind": "damage"
@@ -46,8 +45,7 @@
       "damageType": "magic",
       "internalCooldown": 3,
       "reflectDamage": {
-        "damageTier": "極小",
-        "flat": 200
+        "damageTier": "極小"
       }
     },
     "ref": "hero-template.a0174c3324e732c421ab641d1e36cd2f49f758475f851ee4"

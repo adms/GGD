@@ -1,8 +1,8 @@
 {
   "id": "community-review-08-20260907.r",
   "name": "雷槍",
-  "provenance": "editor-json",
-  "description": "【目前模板可執行】在指定區域依序落下 2 發；每發間隔 0.4 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】發射兩支可辨識的雷槍，命中或落地後延遲爆炸。\n【待補機制】兩發落點爆炸；需雷槍投射物、黏附與延遲引爆。",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】在指定區域依序落下 2 發；每發間隔 0.4 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】發射兩支可辨識的雷槍，命中或落地後延遲爆炸。\n【待補機制】兩發落點爆炸；需雷槍投射物、黏附與延遲引爆。",
   "slot": "R",
   "castType": "ground",
   "maxRank": 3,
@@ -28,12 +28,7 @@
       "damageType": "physical",
       "amountPerTick": {
         "damageTier": "極小",
-        "ratios": [],
-        "perRank": [
-          0,
-          150,
-          300
-        ]
+        "ratios": []
       },
       "intervalSec": 0.4,
       "durationSec": 0.4,
@@ -50,12 +45,7 @@
       "intervalSec": 0.4,
       "impactDamage": {
         "damageTier": "極小",
-        "ratios": [],
-        "perRank": [
-          0,
-          150,
-          300
-        ]
+        "ratios": []
       },
       "damageType": "physical",
       "impactRadius": 150,

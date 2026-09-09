@@ -2,9 +2,9 @@
   "id": "community-review-04-20260907.ex",
   "schema": "ability@1",
   "name": "〔歐拉終結拳〕",
+  "provenance": "w3x-import",
   "description": "有起手動作的重拳；時停期間使用時，加入同一套待結算命中佇列。",
   "slot": "EX",
-  "provenance": "editor-json",
   "castType": "targeted",
   "maxRank": 1,
   "cooldown": [

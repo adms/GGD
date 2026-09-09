@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.1,
       "castType": "ground",
       "cooldown": [
         15.0,
@@ -35,7 +35,7 @@
       "template": {
         "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
         "params": {
-          "castTimeSec": 0.467
+          "castTimeSec": 0.1
         },
         "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
       },
@@ -48,7 +48,7 @@
       ]
     },
     "Q": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -63,7 +63,8 @@
           "applyTo": "target",
           "duration": 4,
           "kind": "applyStatus",
-          "statusId": "curse"
+          "statusId": "curse",
+          "missChance": 0.5
         }
       ],
       "id": "b2-yogiri.q",
@@ -84,14 +85,15 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.1,
           "castType": "targeted",
           "effects": [
             {
               "applyTo": "target",
               "duration": 4,
               "kind": "applyStatus",
-              "statusId": "curse"
+              "statusId": "curse",
+              "missChance": 0.5
             }
           ],
           "radius": 3,
@@ -109,7 +111,7 @@
       "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 1.233,
+      "castTimeSec": 0.1,
       "castType": "ground",
       "cooldown": [
         90.0,
@@ -159,18 +161,12 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.233,
+          "castTimeSec": 0.1,
           "castType": "ground",
           "effects": [
             {
               "amount": {
-                "damageTier": "極小",
-                "flat": 200,
-                "perRank": [
-                  0,
-                  150,
-                  300
-                ]
+                "damageTier": "極小"
               },
               "damageType": "magic",
               "includeOrigin": true,
@@ -204,7 +200,7 @@
       "radiusTier": "極小"
     },
     "W": {
-      "castTimeSec": 1.7,
+      "castTimeSec": 0.1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -224,12 +220,7 @@
         },
         {
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "小",
-              "中"
-            ]
+            "damageTier": "中"
           },
           "condition": {
             "all": [
@@ -287,33 +278,19 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.7,
+          "castTimeSec": 0.1,
           "castType": "targeted",
           "effects": [
             {
               "amount": {
-                "damageTier": "極小",
-                "flat": 200,
-                "perRank": [
-                  0,
-                  100,
-                  200,
-                  300
-                ]
+                "damageTier": "極小"
               },
               "damageType": "magic",
               "kind": "damage"
             },
             {
               "amount": {
-                "damageTier": "中",
-                "flat": 1000,
-                "perRank": [
-                  0,
-                  500,
-                  1000,
-                  1500
-                ]
+                "damageTier": "中"
               },
               "condition": {
                 "all": [

@@ -49,7 +49,7 @@
     "Q": {
       "id": "community-review-31-20260907.q",
       "name": "Spiral Edge",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】短劍螺旋刺擊；對剛被自己反擊的目標有有限追加效果。\n【待補機制】需螺旋刃動畫與反擊後目標追加條件。",
       "slot": "Q",
       "castType": "targeted",
@@ -76,12 +76,7 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "極小",
-              "小"
-            ],
+            "damageTier": "小",
             "ratios": []
           }
         }
@@ -93,12 +88,7 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "極小",
-              "小"
-            ],
+            "damageTier": "小",
             "ratios": []
           },
           "damageType": "physical",
@@ -110,7 +100,7 @@
     "W": {
       "id": "community-review-31-20260907.w",
       "name": "Slide Move",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】滑步位移，提供很短的精準迴避窗口。\n【待補機制】模板低跳不是精準迴避；需傷害來臨時間窗口。",
       "slot": "W",
       "castType": "ground",
@@ -177,7 +167,7 @@
     "E": {
       "id": "community-review-31-20260907.e",
       "name": "Repel Counter",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-31-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】短窗口迎擊攻擊，成功時擊退攻擊者，並提供一次 Q 接續機會。\n【待補機制】護盾不是 Repel Counter；需格擋成功、擊退與 Q 窗口。",
       "slot": "E",
       "castType": "self",
@@ -236,7 +226,7 @@
     "R": {
       "id": "community-review-31-20260907.r",
       "name": "Accel",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】自身取得 3 秒增益：極小級移速、as +20%。\n【目標設計】短期提高移速與近戰輸出能力，保留原本技能冷卻。\n【待補機制】Accel 基礎移速／攻速增益；持續 3 秒且保留冷卻。",
       "slot": "R",
       "castType": "self",

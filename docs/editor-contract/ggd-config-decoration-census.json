@@ -1,21 +1,21 @@
 {
   "population": {
     "configFiles": 103,
-    "knobs": 1983,
-    "corpusFiles": 2533,
+    "knobs": 1986,
+    "corpusFiles": 2537,
     "levelWindow": {
       "min": 9,
       "max": 99
     }
   },
   "counts": {
-    "A": 45,
+    "A": 46,
     "B": 9,
     "dominated": 2,
     "schema-locks-engine-zero": 9,
-    "no-read-end": 43,
+    "no-read-end": 44,
     "notAssessable": 308,
-    "C": 1621
+    "C": 1623
   },
   "findings": [
     {
@@ -291,6 +291,14 @@
       "why": "`worldW` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
     },
     {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "model-lod.json",
+      "path": "championChannelWarn",
+      "value": 300,
+      "why": "`championChannelWarn` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
       "klass": "B",
       "kind": "schema-locks-engine-zero",
       "file": "model-lod.json",
@@ -490,8 +498,8 @@
     },
     {
       "file": "model-lod.json",
-      "knobs": 12,
-      "a": 0,
+      "knobs": 14,
+      "a": 1,
       "b": 1
     },
     {

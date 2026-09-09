@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 1.233,
+  "castTimeSec": 0.1,
   "castType": "targeted",
   "cooldown": [
     45.0,
@@ -12,12 +12,7 @@
   "effects": [
     {
       "amount": {
-        "damageTierPerRank": [
-          "極小",
-          "極小",
-          "極小",
-          "小"
-        ]
+        "damageTier": "小"
       },
       "damageType": "physical",
       "kind": "damage"
@@ -69,14 +64,7 @@
         "params": {
           "castTimeSec": 0.1,
           "damage": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
+            "damageTier": "小"
           },
           "damageType": "physical"
         },

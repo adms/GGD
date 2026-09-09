@@ -8,8 +8,7 @@
   "effects": [
     {
       "amountPerTick": {
-        "damageTier": "極小",
-        "flat": 200
+        "damageTier": "極小"
       },
       "damageType": "physical",
       "durationSec": 0.8999999999999999,
@@ -54,16 +53,14 @@
       "casterGuard": "none",
       "damageType": "physical",
       "finisherDamage": {
-        "damageTier": "小",
-        "flat": 500
+        "damageTier": "小"
       },
       "finisherRadius": 100,
       "hitCount": 3,
       "hitIntervalSec": 0.3,
       "lockTarget": "none",
       "perHitDamage": {
-        "damageTier": "極小",
-        "flat": 200
+        "damageTier": "極小"
       },
       "trigger": "onCast"
     },
@@ -75,6 +72,5 @@
       "attachTo": "caster",
       "vfxKey": "fx.prim.arcane.pulse-sm"
     }
-  ],
-  "castTimeSec": 0.9
+  ]
 }

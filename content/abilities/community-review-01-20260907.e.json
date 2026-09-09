@@ -1,7 +1,7 @@
 {
   "id": "community-review-01-20260907.e",
   "name": "神聖彗星・反射力量",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-01-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】設置一個可辨識的陷阱；範圍內首次敵方普攻觸發時，抵消該次攻擊並反擊來源，隨後消失。\n【待補機制】目標設計是一次觸發陷阱與反射；目前只有自身護盾，不能驗收陷阱。",
   "slot": "E",
   "castType": "self",

@@ -2,9 +2,9 @@
   "id": "community-review-28-20260907.passive",
   "schema": "ability@1",
   "name": "〔劍神流・先發制人〕",
+  "provenance": "w3x-import",
   "description": "對剛進入交鋒的目標，首次近戰命中獲得有限強化；同一目標有冷卻。",
   "slot": "PASSIVE",
-  "provenance": "editor-json",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [

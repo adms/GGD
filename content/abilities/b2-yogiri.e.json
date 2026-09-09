@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.467,
+  "castTimeSec": 0.1,
   "castType": "ground",
   "cooldown": [
     15.0,
@@ -34,7 +34,7 @@
   "template": {
     "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
     "params": {
-      "castTimeSec": 0.467
+      "castTimeSec": 0.1
     },
     "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
   },

@@ -1,8 +1,8 @@
 {
   "id": "community-review-21-20260907.r",
   "name": "〔願望箭雨〕",
-  "provenance": "editor-json",
-  "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.35 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】對指定區域發射有限波次的箭雨。\n【待補機制】有限三波箭雨已對應；箭形資產待製。",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.35 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】對指定區域發射有限波次的箭雨。\n【待補機制】有限三波箭雨已對應；箭形資產待製。",
   "slot": "R",
   "castType": "ground",
   "maxRank": 3,
@@ -28,12 +28,7 @@
       "damageType": "magic",
       "amountPerTick": {
         "damageTier": "極小",
-        "ratios": [],
-        "perRank": [
-          0,
-          150,
-          300
-        ]
+        "ratios": []
       },
       "intervalSec": 0.35,
       "durationSec": 0.7,
@@ -50,12 +45,7 @@
       "intervalSec": 0.35,
       "impactDamage": {
         "damageTier": "極小",
-        "ratios": [],
-        "perRank": [
-          0,
-          150,
-          300
-        ]
+        "ratios": []
       },
       "damageType": "magic",
       "impactRadius": 150,

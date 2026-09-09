@@ -94,6 +94,55 @@ def load_batch2(root: Path) -> list[dict]:
 #    「msBonusTier 與 value 不可同時存在（第〇·四守則：value 是第二個住處）」
 UNEXPRESSIBLE: list[dict] = []
 
+
+def shipped_status_mechanics() -> dict:
+    """
+    ⭐ 每個 `statusId` 在**出貨內容**裡實際帶的機制欄位（取眾數）。
+
+    ⛔⛔ 2026-09-10 抓到（GH#1165）：`b2-yogiri.q` 的 `applyStatus` **只有名字**
+    （`{kind, statusId:"curse", applyTo, duration}`）⇒ ⭐ 狀態列會畫圖示、HUD 會倒數，
+    而 `sim/effects/applyStatus.ts` 讀的那幾格一個都沒填 ⇒ **對方完全自由**。
+    ⚠️ 那比「沒有效果」更糟 —— 玩家看到圖示就當對方被控住 ⇒ 它**主動誤導決策**。
+
+    ⭐ 而補什麼值**不是我發明的**：出貨的 `godie-*` 裡每一次 `curse` 都是
+    `missChance: 0.5`（2/2），⭐ 連第二批自己的 `b2-kisaragi.r` 也是 0.5。
+    ⇒ ⭐ 這裡**從出貨內容推導**那張表，⛔ 不寫死任何數字
+    （表一改，下一次產生就跟著改 —— 第〇·四守則）。
+    """
+    import collections
+    by = collections.defaultdict(collections.Counter)
+    SKIP = {"kind", "statusId", "applyTo", "duration", "stacks", "onExisting", "stackKey"}
+    for f in (REPO / "content/abilities").glob("godie-*.json"):
+        def walk(o):
+            if isinstance(o, dict):
+                if o.get("kind") == "applyStatus" and o.get("statusId"):
+                    extra = {k: v for k, v in o.items() if k not in SKIP}
+                    if extra:
+                        by[o["statusId"]][json.dumps(extra, sort_keys=True, ensure_ascii=False)] += 1
+                for v in o.values():
+                    walk(v)
+            elif isinstance(o, list):
+                for v in o:
+                    walk(v)
+        walk(json.loads(f.read_text(encoding="utf-8")))
+    return {sid: json.loads(c.most_common(1)[0][0]) for sid, c in by.items() if c}
+
+
+def backfill_status_mechanics(node, table: dict) -> None:
+    """⭐ 只補**完全沒有機制**的那一種，⛔ 不覆蓋作者已經填的任何一格。"""
+    SKIP = {"kind", "statusId", "applyTo", "duration", "stacks", "onExisting", "stackKey"}
+    if isinstance(node, dict):
+        if node.get("kind") == "applyStatus":
+            sid = node.get("statusId")
+            if sid and not any(k not in SKIP for k in node) and sid in table:
+                node.update(table[sid])
+        for v in node.values():
+            backfill_status_mechanics(v, table)
+    elif isinstance(node, list):
+        for v in node:
+            backfill_status_mechanics(v, table)
+
+
 TIER_FIELDS = ("msBonusTier", "damageTier", "cooldownTier", "rangeTier", "manaCostTier",
                "radiusTier", "castTimeTier", "healTier", "shieldTier")
 
@@ -110,6 +159,17 @@ def drop_baked_values(node):
         if any(t in node for t in TIER_FIELDS):
             node.pop("value", None)
             node.pop("flat", None)
+            # ⭐⭐ `perRank` 也是**算好的值** —— ⛔ 我第一版漏了它。
+            #
+            # ⛔⛔ 2026-09-10 抓到（GH#1165）：`skillnorm:build` 逐字說
+            #   「級別『小』＝ 625，**原始值卻是 750**」—— ⭐ 那個 750 就是
+            #   `perRank[3]`，而級距表裡 **750 不是任何一級**（250/625/1250/1875/2500）。
+            #   ⇒ ⭐ 兩份數字對同一個節點**說兩句話**，而閘只能報一句。
+            #
+            # ⭐ 而母體給了答案，⛔ 不是我的判斷：出貨的 `godie-*` 裡帶
+            #   `damageTier` 的節點有 **212 個，而同時帶 `perRank` 的是 0 個**。
+            #   ⇒ ⭐ 出貨慣例就是**級距獨佔**。
+            node.pop("perRank", None)
         for v in node.values():
             drop_baked_values(v)
     elif isinstance(node, list):
@@ -312,6 +372,8 @@ def main() -> None:
     ap.add_argument("--write", action="store_true", help="⛔ 不給就是 dry-run")
     args = ap.parse_args()
 
+    STATUS_MECH_LOCAL = shipped_status_mechanics()
+    globals()["STATUS_MECH"] = STATUS_MECH_LOCAL
     inv = {r["heroId"]: r for r in parse_inventory(args.inventory)}
     # ⭐ 出貨的通道上限**從 config 讀**，⛔ 不抄字面值（第〇·四守則：值只有一個住處）。
     lod = json.loads((REPO / "content/config/model-lod.json").read_text(encoding="utf-8"))
@@ -357,7 +419,12 @@ def main() -> None:
                      # ⚠️ ⭐ 判準是「**有沒有給**」，⛔ 不是「給的是不是空的」——
                      #   變身態**照設計**零份技能（它用本體的 `b2-maple.ex`），
                      #   ⇒ 寫 `or` 會讓它掉進組裝路徑然後死在「缺 EX」。
-                     "abilities": h["abilities"] if "abilities" in h else ability_docs(c, h["slots"])})
+                     # ⚠️ ⭐ `drop_baked_values` 要在**兩條路上都跑** ——
+                     #   ⛔ 我第一版只在 `ability_docs()` 裡跑,而第二批**不經過它**
+                     #   ⇒ 116 個節點同時留著級距與 `perRank`,`skillnorm` 當場紅。
+                     "abilities": [drop_baked_values(backfill_status_mechanics(a, STATUS_MECH) or a)
+                                   for a in h["abilities"]]
+                                  if "abilities" in h else ability_docs(c, h["slots"])})
 
     if args.write:
         # ⭐ 技能引用到的模板 —— ⛔ 沒有它們,載入器會 fail-open 把每一支技能降級。

@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.1,
       "castType": "ground",
       "cooldown": [
         15.0,
@@ -35,7 +35,7 @@
       "template": {
         "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
         "params": {
-          "castTimeSec": 0.467
+          "castTimeSec": 0.1
         },
         "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
       },
@@ -48,7 +48,7 @@
       ]
     },
     "Q": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -85,7 +85,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.1,
           "castType": "targeted",
           "effects": [
             {
@@ -111,7 +111,7 @@
       "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 0.1,
       "castType": "self",
       "cooldown": [
         90.0,
@@ -160,18 +160,12 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.833,
+          "castTimeSec": 0.1,
           "castType": "self",
           "effects": [
             {
               "amount": {
-                "damageTier": "極小",
-                "flat": 200,
-                "perRank": [
-                  0,
-                  150,
-                  300
-                ]
+                "damageTier": "極小"
               },
               "damageType": "magic",
               "includeOrigin": true,
@@ -205,7 +199,7 @@
       "radiusTier": "極小"
     },
     "W": {
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -240,7 +234,7 @@
       "template": {
         "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539",
         "params": {
-          "castTimeSec": 0.567,
+          "castTimeSec": 0.1,
           "status": {
             "duration": 2.5,
             "root": true,

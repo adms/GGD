@@ -1,8 +1,8 @@
 {
   "id": "community-review-07-20260907.q",
   "name": "〔撲克牌連射〕",
-  "provenance": "editor-json",
-  "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.12 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】扇形投出三張牌，同一目標的額外命中採遞減傷害。\n【待補機制】三發為落點散射；需扇形牌彈與同目標遞減。",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.12 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】扇形投出三張牌，同一目標的額外命中採遞減傷害。\n【待補機制】三發為落點散射；需扇形牌彈與同目標遞減。",
   "slot": "Q",
   "castType": "ground",
   "maxRank": 4,
@@ -30,13 +30,7 @@
       "damageType": "physical",
       "amountPerTick": {
         "damageTier": "極小",
-        "ratios": [],
-        "perRank": [
-          0,
-          100,
-          200,
-          300
-        ]
+        "ratios": []
       },
       "intervalSec": 0.12,
       "durationSec": 0.24,
@@ -53,13 +47,7 @@
       "intervalSec": 0.12,
       "impactDamage": {
         "damageTier": "極小",
-        "ratios": [],
-        "perRank": [
-          0,
-          100,
-          200,
-          300
-        ]
+        "ratios": []
       },
       "damageType": "physical",
       "impactRadius": 150,

@@ -1,7 +1,7 @@
 {
   "id": "community-review-22-20260907.q",
   "name": "Shamac",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"slow30\",\"duration\":1.5,\"applyTo\":\"target\",\"moveSpeedMult\":0.7}]。\n【目標設計】製造短暫黑霧干擾，效果限定於 GGD 核准的視覺／命中干擾範圍。\n【待補機制】固定緩速不代表黑霧感官／命中干擾。",
   "slot": "Q",
   "castType": "targeted",
@@ -28,12 +28,7 @@
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "damageTierPerRank": [
-          "極小",
-          "極小",
-          "極小",
-          "小"
-        ],
+        "damageTier": "小",
         "ratios": []
       }
     },
@@ -52,12 +47,7 @@
     "ref": "tpl-single-strike",
     "params": {
       "damage": {
-        "damageTierPerRank": [
-          "極小",
-          "極小",
-          "極小",
-          "小"
-        ],
+        "damageTier": "小",
         "ratios": []
       },
       "damageType": "magic",

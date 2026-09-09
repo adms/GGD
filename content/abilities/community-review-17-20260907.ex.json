@@ -2,9 +2,9 @@
   "id": "community-review-17-20260907.ex",
   "schema": "ability@1",
   "name": "死亡是所有生命的終點",
+  "provenance": "w3x-import",
   "description": "對範圍內敵人施加倒數詛咒。到期後，低於生命門檻者進入標準處決結算，其餘受到有限傷害。可依 GGD 規則以離開有效條件、淨化或保命能力反制。",
   "slot": "EX",
-  "provenance": "editor-json",
   "castType": "ground",
   "maxRank": 1,
   "cooldown": [

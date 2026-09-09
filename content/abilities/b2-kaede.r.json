@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 1.433,
+  "castTimeSec": 0.1,
   "castType": "ground",
   "cooldown": [
     90.0,
@@ -15,11 +15,7 @@
       "effects": [
         {
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "小",
-              "中"
-            ],
+            "damageTier": "中",
             "mult": 0.3333333333333333
           },
           "damageType": "magic",
@@ -56,17 +52,11 @@
     "params": {
       "anchor": "point",
       "applyTo": "enemies",
-      "castTimeSec": 1.433,
+      "castTimeSec": 0.1,
       "damageTier": "中",
       "damageType": "magic",
       "durationSec": 3,
-      "flat": 1000,
       "intervalSec": 1,
-      "perRank": [
-        0,
-        750,
-        1500
-      ],
       "radius": 4.5,
       "radiusTier": "小"
     },

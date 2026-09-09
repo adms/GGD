@@ -1,7 +1,7 @@
 {
   "id": "community-review-02-20260907.e",
   "name": "百二十七式・葵花",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "【目前模板可執行】3 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】三段接續技；每段須在指定窗口再次輸入，逾時、受控或第三段完成後結束。\n【待補機制】目前一次施法完成三段；需三次輸入窗口及中斷狀態機。",
   "slot": "E",
   "castType": "targeted",
@@ -30,13 +30,7 @@
       "damageType": "physical",
       "amountPerTick": {
         "damageTier": "極小",
-        "ratios": [],
-        "perRank": [
-          0,
-          100,
-          200,
-          300
-        ]
+        "ratios": []
       },
       "intervalSec": 0.18,
       "durationSec": 0.54
@@ -53,12 +47,7 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "極小",
-              "小"
-            ],
+            "damageTier": "小",
             "ratios": []
           }
         }
@@ -74,23 +63,11 @@
       "hitIntervalSec": 0.18,
       "perHitDamage": {
         "damageTier": "極小",
-        "ratios": [],
-        "perRank": [
-          0,
-          100,
-          200,
-          300
-        ]
+        "ratios": []
       },
       "finisherDamage": {
         "damageTier": "小",
-        "ratios": [],
-        "perRank": [
-          0,
-          250,
-          500,
-          750
-        ]
+        "ratios": []
       },
       "finisherRadius": 150,
       "damageType": "physical",

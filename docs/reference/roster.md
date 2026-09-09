@@ -2,14 +2,14 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_3d882b313f07`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
-> 資料列：**71**　·　開放名單來源：快照 `docs/reference/_curation-snapshot.json`（whitelist updatedAt `2026-08-20T16:58:56.072938Z`；英雄 49 · 道具 101 · 技能 245）；即時名單 `GET /api/v1/curation/whitelist`
+> 產生自 contentVersion **`cv_f53f50806723`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 資料列：**146**　·　開放名單來源：快照 `docs/reference/_curation-snapshot.json`（whitelist updatedAt `2026-09-09T20:42:53.697491Z`；英雄 123 · 道具 116 · 技能 615）；即時名單 `GET /api/v1/curation/whitelist`
 
-`content/champions/*.json` 共 **71** 名英雄，其中 **49** 名在開放名單（OPEN roster）內。開放名單是營運策展狀態，不是程式常數：真相是 `data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` 提供，由 game-server 在建房時執行；本檔印的是它進版控的快照（表頭有 updatedAt）。
+`content/champions/*.json` 共 **146** 名英雄，其中 **123** 名在開放名單（OPEN roster）內。開放名單是營運策展狀態，不是程式常數：真相是 `data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` 提供，由 game-server 在建房時執行；本檔印的是它進版控的快照（表頭有 updatedAt）。
 
 > 本檔的數值是 `content/` 的**原始值**，未套用 `combat-env` 全域倍率（`content/config/combat-env.json`）。遊戲內顯示的一律是乘算後的最終值，所以畫面上的冷卻／傷害／生命與這裡不會相同 —— 那是預期行為，不是資料錯誤。
 >
-> **每名英雄有六個 slot：天生技（PASSIVE）＋ Q／W／E／R／EX。** 天生技是 w3x 的 `NN-00`，**等級 1 就擁有**，doc 是 `champion.passiveAbility` 指到的 `<id>.passive`（`exAbility` 的同款寫法）。68 名有天生技；3 名沒有 `passiveAbility` —— `godie-ogld`（有 `72-01..04` 與 `72-002`，但地圖裡不存在 `72-00`）、`sela`（非 w3x 原創英雄，沒有 `NN` 編號）、`thorne`（非 w3x 原創英雄，沒有 `NN` 編號） —— **那是還原出來的事實，不是待辦**。
+> **每名英雄有六個 slot：天生技（PASSIVE）＋ Q／W／E／R／EX。** 天生技是 w3x 的 `NN-00`，**等級 1 就擁有**，doc 是 `champion.passiveAbility` 指到的 `<id>.passive`（`exAbility` 的同款寫法）。143 名有天生技；3 名沒有 `passiveAbility` —— `godie-ogld`（有 `72-01..04` 與 `72-002`，但地圖裡不存在 `72-00`）、`sela`（非 w3x 原創英雄，沒有 `NN` 編號）、`thorne`（非 w3x 原創英雄，沒有 `NN` 編號） —— **那是還原出來的事實，不是待辦**。
 >
 > `稱號` / `全名` 是從 `name` 欄位拆出來的（慣例 `稱號 - 全名`），champion doc 上**沒有**獨立的稱號欄位；不符慣例的會顯示 `—`。
 >
@@ -17,10 +17,84 @@
 
 ---
 
-## 1. 開放名單 OPEN roster（49）
+## 1. 開放名單 OPEN roster（123）
 
 | id | 全名 | 稱號 | role | 攻擊 | 開放 | 一句話說明 | 技能 id（天生 Q W E R EX） |
 |---|---|---|---|---|---|---|---|
+| `b2-aladdin` | 阿拉丁 | — | mage | 遠程 | ✅ | 魔笛MAGI｜魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，角色辨識元素… | `b2-aladdin.passive` `b2-aladdin.q` `b2-aladdin.w` `b2-aladdin.e` `b2-aladdin.r` `b2-aladdin.ex` |
+| `b2-albus` | 阿爾巴斯 | — | fighter | 近戰 | ✅ | 勇者再次啟程｜勇者速通，NPC台詞一律跳過。GGD 惡搞改編，角色辨識元素與招式創編分開。 | `b2-albus.passive` `b2-albus.q` `b2-albus.w` `b2-albus.e` `b2-albus.r` `b2-albus.ex` |
+| `b2-bojji` | 波吉 | — | fighter | 近戰 | ✅ | 國王排名｜你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，角色辨識元素與招式創編分開。 | `b2-bojji.passive` `b2-bojji.q` `b2-bojji.w` `b2-bojji.e` `b2-bojji.r` `b2-bojji.ex` |
+| `b2-boxxo` | 阿箱＋拉蜜絲 | — | tank | 近戰 | ✅ | 轉生成自動販賣機｜拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，角色辨識元素與… | `b2-boxxo.passive` `b2-boxxo.q` `b2-boxxo.w` `b2-boxxo.e` `b2-boxxo.r` `b2-boxxo.ex` |
+| `b2-elma` | 艾爾瑪 | — | tank | 近戰 | ✅ | 轉生重騎士無雙｜攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，角色辨識元素與招式創編分… | `b2-elma.passive` `b2-elma.q` `b2-elma.w` `b2-elma.e` `b2-elma.r` `b2-elma.ex` |
+| `b2-fushi` | 不死 | — | tank | 近戰 | ✅ | 致不滅的你｜學會新形態前先學會別把隊友認錯。GGD 惡搞改編，角色辨識元素與招式創編分開。 | `b2-fushi.passive` `b2-fushi.q` `b2-fushi.w` `b2-fushi.e` `b2-fushi.r` `b2-fushi.ex` |
+| `b2-goblin` | 哥布林殺手 | — | fighter | 近戰 | ✅ | 哥布林殺手｜所有敵人都先填哥布林風險評估表。GGD 惡搞改編，角色辨識元素與招式創編分開。 | `b2-goblin.passive` `b2-goblin.q` `b2-goblin.w` `b2-goblin.e` `b2-goblin.r` `b2-goblin.ex` |
+| `b2-guts` | 凱茲 | — | fighter | 近戰 | ✅ | 烙印勇士｜武器是大劍，實際職稱是大型垃圾清運。GGD 惡搞改編，角色辨識元素與招式創編分開。 | `b2-guts.passive` `b2-guts.q` `b2-guts.w` `b2-guts.e` `b2-guts.r` `b2-guts.ex` |
+| `b2-haga` | 羽賀 | — | fighter | 遠程 | ✅ | 這個世界漏洞百出｜把敵人當重現步驟，把隊友當測試同事。GGD 惡搞改編，角色辨識元素與招式… | `b2-haga.passive` `b2-haga.q` `b2-haga.w` `b2-haga.e` `b2-haga.r` `b2-haga.ex` |
+| `b2-kaede` | 楓 | — | mage | 近戰 | ✅ | 異世界轉移魔法劍士｜附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，角色辨識元素與招… | `b2-kaede.passive` `b2-kaede.q` `b2-kaede.w` `b2-kaede.e` `b2-kaede.r` `b2-kaede.ex` |
+| `b2-kaiji` | 伊藤開司 | — | fighter | 遠程 | ✅ | 賭博默示錄｜局內籌碼賭運氣，贏了就喊最後一把。GGD 惡搞改編，角色辨識元素與招式創編分開。 | `b2-kaiji.passive` `b2-kaiji.q` `b2-kaiji.w` `b2-kaiji.e` `b2-kaiji.r` `b2-kaiji.ex` |
+| `b2-keyaru` | 凱亞爾 | — | mage | 近戰 | ✅ | 回復術士的重來人生｜只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，角色… | `b2-keyaru.passive` `b2-keyaru.q` `b2-keyaru.w` `b2-keyaru.e` `b2-keyaru.r` `b2-keyaru.ex` |
+| `b2-kisaragi` | 如月電車 | — | tank | 近戰 | ✅ | 如月車站・GGD原創｜一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，角色辨識元素… | `b2-kisaragi.passive` `b2-kisaragi.q` `b2-kisaragi.w` `b2-kisaragi.e` `b2-kisaragi.r` `b2-kisaragi.ex` |
+| `b2-klaus` | 克勞斯 | — | marksman | 遠程 | ✅ | 覺醒了自動機能｜把工作交給自動功能，自己只負責按錯確認。GGD 惡搞改編，角色辨識元素與招… | `b2-klaus.passive` `b2-klaus.q` `b2-klaus.w` `b2-klaus.e` `b2-klaus.r` `b2-klaus.ex` |
+| `b2-kumoko` | 蜘蛛子 | — | fighter | 近戰 | ✅ | 轉生成蜘蛛又怎樣｜宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，角色辨識元素與招式創編分… | `b2-kumoko.passive` `b2-kumoko.q` `b2-kumoko.w` `b2-kumoko.e` `b2-kumoko.r` `b2-kumoko.ex` |
+| `b2-luckyman` | 幸運超人 | — | tank | 近戰 | ✅ | 幸運超人｜對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，角色辨識元素與招式創編分開。 | `b2-luckyman.passive` `b2-luckyman.q` `b2-luckyman.w` `b2-luckyman.e` `b2-luckyman.r` `b2-luckyman.ex` |
+| `b2-makoto` | 深澄真 | — | mage | 遠程 | ✅ | 月光下的異世界之旅｜商人試射新商品，順便把店面拆了。GGD 惡搞改編，角色辨識元素與招式創… | `b2-makoto.passive` `b2-makoto.q` `b2-makoto.w` `b2-makoto.e` `b2-makoto.r` `b2-makoto.ex` |
+| `b2-maomao` | 貓貓 | — | fighter | 遠程 | ✅ | 藥師少女的獨語｜把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，角色辨識元素與招式創… | `b2-maomao.passive` `b2-maomao.q` `b2-maomao.w` `b2-maomao.e` `b2-maomao.r` `b2-maomao.ex` |
+| `b2-maple` | 梅普露 | — | tank | 近戰 | ✅ | 怕痛的我把防禦力點滿｜不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，角色辨識元素… | `b2-maple.passive` `b2-maple.q` `b2-maple.w` `b2-maple.e` `b2-maple.r` `b2-maple.ex` |
+| `b2-matthias` | 馬提亞斯 | — | mage | 近戰 | ✅ | 失格紋的最強賢者｜拿舊課本批改敵人，分數直接扣血。GGD 惡搞改編，角色辨識元素與招式創編… | `b2-matthias.passive` `b2-matthias.q` `b2-matthias.w` `b2-matthias.e` `b2-matthias.r` `b2-matthias.ex` |
+| `b2-misery` | 米瑟利 | — | mage | 遠程 | ✅ | 來自魔界｜免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，角色辨識元素與招式創編… | `b2-misery.passive` `b2-misery.q` `b2-misery.w` `b2-misery.e` `b2-misery.r` `b2-misery.ex` |
+| `b2-naofumi` | 岩谷尚文 | — | tank | 近戰 | ✅ | 盾之勇者｜盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，角色辨識元素與招式創編分開。 | `b2-naofumi.passive` `b2-naofumi.q` `b2-naofumi.w` `b2-naofumi.e` `b2-naofumi.r` `b2-naofumi.ex` |
+| `b2-ned` | 青蛙劍士 Ned | — | fighter | 近戰 | ✅ | AVARTH｜青蛙劍士認真揮劍，旁人只注意他到底會不會呱。GGD 惡搞改編，角色辨識元素與… | `b2-ned.passive` `b2-ned.q` `b2-ned.w` `b2-ned.e` `b2-ned.r` `b2-ned.ex` |
+| `b2-noor` | 諾爾 | — | tank | 近戰 | ✅ | 我要招架一切｜能擋的擋掉，不能擋的假裝也是擋掉。GGD 惡搞改編，角色辨識元素與招式創編分… | `b2-noor.passive` `b2-noor.q` `b2-noor.w` `b2-noor.e` `b2-noor.r` `b2-noor.ex` |
+| `b2-nube` | 鵺野鳴介 | — | tank | 近戰 | ✅ | 靈異教師神眉｜抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，角色辨識元素與招式創編分開。 | `b2-nube.passive` `b2-nube.q` `b2-nube.w` `b2-nube.e` `b2-nube.r` `b2-nube.ex` |
+| `b2-orphen` | 歐菲 | — | mage | 近戰 | ✅ | 魔術士歐菲｜咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，角色辨識元素與招式創編分開。 | `b2-orphen.passive` `b2-orphen.q` `b2-orphen.w` `b2-orphen.e` `b2-orphen.r` `b2-orphen.ex` |
+| `b2-popp` | 何布 | — | mage | 遠程 | ✅ | 神龍之謎｜撤退也是施法距離管理。GGD 惡搞改編，角色辨識元素與招式創編分開。 | `b2-popp.passive` `b2-popp.q` `b2-popp.w` `b2-popp.e` `b2-popp.r` `b2-popp.ex` |
+| `b2-rem` | 蕾姆 | — | fighter | 近戰 | ✅ | Re:從零開始｜女僕服務包含拖地與拖走客人。GGD 惡搞改編，角色辨識元素與招式創編分開。 | `b2-rem.passive` `b2-rem.q` `b2-rem.w` `b2-rem.e` `b2-rem.r` `b2-rem.ex` |
+| `b2-rin` | 遠坂凜 | — | mage | 遠程 | ✅ | Fate｜把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，角色辨識元素與招式創… | `b2-rin.passive` `b2-rin.q` `b2-rin.w` `b2-rin.e` `b2-rin.r` `b2-rin.ex` |
+| `b2-shadow` | 闇影 | — | fighter | 近戰 | ✅ | 我想成為影之強者｜先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，角色辨識元素與招式… | `b2-shadow.passive` `b2-shadow.q` `b2-shadow.w` `b2-shadow.e` `b2-shadow.r` `b2-shadow.ex` |
+| `b2-shinchan` | 野原新之助 | — | fighter | 遠程 | ✅ | 蠟筆小新｜把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，角色辨識元素與招式創編分開。 | `b2-shinchan.passive` `b2-shinchan.q` `b2-shinchan.w` `b2-shinchan.e` `b2-shinchan.r` `b2-shinchan.ex` |
+| `b2-sinbad` | 辛巴達 | — | fighter | 近戰 | ✅ | 辛巴達的冒險｜用宴會與推銷開局，最後變成強制商業合作。GGD 惡搞改編，角色辨識元素與招式… | `b2-sinbad.passive` `b2-sinbad.q` `b2-sinbad.w` `b2-sinbad.e` `b2-sinbad.r` `b2-sinbad.ex` |
+| `b2-takopi` | 章魚嗶 | — | fighter | 遠程 | ✅ | 章魚嗶的原罪｜開心道具全部誤用，但認真把隊友救回來。GGD 惡搞改編，角色辨識元素與招式創… | `b2-takopi.passive` `b2-takopi.q` `b2-takopi.w` `b2-takopi.e` `b2-takopi.r` `b2-takopi.ex` |
+| `b2-touka` | 托卡・史考特 | — | fighter | 近戰 | ✅ | 勇者死了｜挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，角色辨識元素與招式創編分開。 | `b2-touka.passive` `b2-touka.q` `b2-touka.w` `b2-touka.e` `b2-touka.r` `b2-touka.ex` |
+| `b2-uncle` | 異世界舅舅 | — | mage | 遠程 | ✅ | 異世界舅舅｜精靈客服與遊戲攻略，戰鬥全程社交事故。GGD 惡搞改編，角色辨識元素與招式創編… | `b2-uncle.passive` `b2-uncle.q` `b2-uncle.w` `b2-uncle.e` `b2-uncle.r` `b2-uncle.ex` |
+| `b2-yogiri` | 高遠夜霧 | — | mage | 遠程 | ✅ | 秒殺外掛太強了｜秒殺外掛改成催眠式下班通知，不按通知的人更倒楣。GGD 惡搞改編，角色辨識… | `b2-yogiri.passive` `b2-yogiri.q` `b2-yogiri.w` `b2-yogiri.e` `b2-yogiri.r` `b2-yogiri.ex` |
+| `b2-zenitsu` | 我妻善逸 | — | fighter | 近戰 | ✅ | 鬼滅之刃｜清醒時申請離職，睡著後開始加班。GGD 惡搞改編，角色辨識元素與招式創編分開。 | `b2-zenitsu.passive` `b2-zenitsu.q` `b2-zenitsu.w` `b2-zenitsu.e` `b2-zenitsu.r` `b2-zenitsu.ex` |
+| `community-review-01-20260907` | 武藤遊戲 | — | mage | 遠程 | ✅ | 武藤遊戲 社群英雄功能驗收稿。作品：《遊戲王》 | `community-review-01-20260907.passive` `community-review-01-20260907.q` `community-review-01-20260907.w` `community-review-01-20260907.e` `community-review-01-20260907.r` `community-review-01-20260907.ex` |
+| `community-review-02-20260907` | 八神庵 | — | fighter | 近戰 | ✅ | 八神庵 社群英雄功能驗收稿。作品：《THE KING OF FIGHTERS》 | `community-review-02-20260907.passive` `community-review-02-20260907.q` `community-review-02-20260907.w` `community-review-02-20260907.e` `community-review-02-20260907.r` `community-review-02-20260907.ex` |
+| `community-review-03-20260907` | 不知火舞 | — | fighter | 近戰 | ✅ | 不知火舞 社群英雄功能驗收稿。作品：《THE KING OF FIGHTERS》 | `community-review-03-20260907.passive` `community-review-03-20260907.q` `community-review-03-20260907.w` `community-review-03-20260907.e` `community-review-03-20260907.r` `community-review-03-20260907.ex` |
+| `community-review-04-20260907` | 空條承太郎 | — | fighter | 近戰 | ✅ | 空條承太郎 社群英雄功能驗收稿。作品：《JoJo 的奇妙冒險》 | `community-review-04-20260907.passive` `community-review-04-20260907.q` `community-review-04-20260907.w` `community-review-04-20260907.e` `community-review-04-20260907.r` `community-review-04-20260907.ex` |
+| `community-review-05-20260907` | 洛克人 | — | marksman | 遠程 | ✅ | 洛克人 社群英雄功能驗收稿。作品：《Mega Man》 | `community-review-05-20260907.passive` `community-review-05-20260907.q` `community-review-05-20260907.w` `community-review-05-20260907.e` `community-review-05-20260907.r` `community-review-05-20260907.ex` |
+| `community-review-06-20260907` | 卡比 | — | tank | 近戰 | ✅ | 卡比 社群英雄功能驗收稿。作品：《星之卡比》 | `community-review-06-20260907.passive` `community-review-06-20260907.q` `community-review-06-20260907.w` `community-review-06-20260907.e` `community-review-06-20260907.r` `community-review-06-20260907.ex` |
+| `community-review-07-20260907` | 西索 | — | fighter | 近戰 | ✅ | 西索 社群英雄功能驗收稿。作品：《HUNTER×HUNTER》 | `community-review-07-20260907.passive` `community-review-07-20260907.q` `community-review-07-20260907.w` `community-review-07-20260907.e` `community-review-07-20260907.r` `community-review-07-20260907.ex` |
+| `community-review-08-20260907` | 米卡莎 | — | fighter | 近戰 | ✅ | 米卡莎 社群英雄功能驗收稿。作品：《進擊的巨人》 | `community-review-08-20260907.passive` `community-review-08-20260907.q` `community-review-08-20260907.w` `community-review-08-20260907.e` `community-review-08-20260907.r` `community-review-08-20260907.ex` |
+| `community-review-09-20260907` | 赫蘿 | — | fighter | 遠程 | ✅ | 赫蘿 社群英雄功能驗收稿。作品：《狼與辛香料》 | `community-review-09-20260907.passive` `community-review-09-20260907.q` `community-review-09-20260907.w` `community-review-09-20260907.e` `community-review-09-20260907.r` `community-review-09-20260907.ex` |
+| `community-review-10-20260907` | 魯路修 | — | fighter | 遠程 | ✅ | 魯路修 社群英雄功能驗收稿。作品：《Code Geass 反叛的魯路修》 | `community-review-10-20260907.passive` `community-review-10-20260907.q` `community-review-10-20260907.w` `community-review-10-20260907.e` `community-review-10-20260907.r` `community-review-10-20260907.ex` |
+| `community-review-11-20260907` | 利姆路 | — | mage | 近戰 | ✅ | 利姆路 社群英雄功能驗收稿。作品：《關於我轉生變成史萊姆這檔事》 | `community-review-11-20260907.passive` `community-review-11-20260907.q` `community-review-11-20260907.w` `community-review-11-20260907.e` `community-review-11-20260907.r` `community-review-11-20260907.ex` |
+| `community-review-12-20260907` | 衛宮士郎 | — | mage | 近戰 | ✅ | 衛宮士郎 社群英雄功能驗收稿。作品：《Fate/stay night》 | `community-review-12-20260907.passive` `community-review-12-20260907.q` `community-review-12-20260907.w` `community-review-12-20260907.e` `community-review-12-20260907.r` `community-review-12-20260907.ex` |
+| `community-review-13-20260907` | 朝田詩乃 | — | marksman | 遠程 | ✅ | 朝田詩乃 社群英雄功能驗收稿。作品：《刀劍神域》 | `community-review-13-20260907.passive` `community-review-13-20260907.q` `community-review-13-20260907.w` `community-review-13-20260907.e` `community-review-13-20260907.r` `community-review-13-20260907.ex` |
+| `community-review-14-20260907` | 殺老師 | — | fighter | 近戰 | ✅ | 殺老師 社群英雄功能驗收稿。作品：《暗殺教室》 | `community-review-14-20260907.passive` `community-review-14-20260907.q` `community-review-14-20260907.w` `community-review-14-20260907.e` `community-review-14-20260907.r` `community-review-14-20260907.ex` |
+| `community-review-15-20260907` | 比利海靈頓 | — | tank | 近戰 | ✅ | 比利海靈頓 社群英雄功能驗收稿。來源：摔角與網路迷因形象。 | `community-review-15-20260907.passive` `community-review-15-20260907.q` `community-review-15-20260907.w` `community-review-15-20260907.e` `community-review-15-20260907.r` `community-review-15-20260907.ex` |
+| `community-review-16-20260907` | 魔法少女☆伊莉雅 | — | mage | 遠程 | ✅ | 魔法少女☆伊莉雅 社群英雄功能驗收稿。作品：《Fate/kaleid liner 魔法少女… | `community-review-16-20260907.passive` `community-review-16-20260907.q` `community-review-16-20260907.w` `community-review-16-20260907.e` `community-review-16-20260907.r` `community-review-16-20260907.ex` |
+| `community-review-17-20260907` | 安茲·烏爾·恭 | — | mage | 遠程 | ✅ | 安茲·烏爾·恭 社群英雄功能驗收稿。作品：《OVERLORD》 | `community-review-17-20260907.passive` `community-review-17-20260907.q` `community-review-17-20260907.w` `community-review-17-20260907.e` `community-review-17-20260907.r` `community-review-17-20260907.ex` |
+| `community-review-18-20260907` | 吉爾伽美什 | — | marksman | 遠程 | ✅ | 吉爾伽美什 社群英雄功能驗收稿。作品：《Fate》 | `community-review-18-20260907.passive` `community-review-18-20260907.q` `community-review-18-20260907.w` `community-review-18-20260907.e` `community-review-18-20260907.r` `community-review-18-20260907.ex` |
+| `community-review-19-20260907` | 桐谷和人 | — | fighter | 近戰 | ✅ | 桐谷和人 社群英雄功能驗收稿。作品：《刀劍神域》 | `community-review-19-20260907.passive` `community-review-19-20260907.q` `community-review-19-20260907.w` `community-review-19-20260907.e` `community-review-19-20260907.r` `community-review-19-20260907.ex` |
+| `community-review-20-20260907` | 御坂美琴 | — | mage | 遠程 | ✅ | 御坂美琴 社群英雄功能驗收稿。作品：《科學超電磁砲》 | `community-review-20-20260907.passive` `community-review-20-20260907.q` `community-review-20-20260907.w` `community-review-20-20260907.e` `community-review-20-20260907.r` `community-review-20-20260907.ex` |
+| `community-review-21-20260907` | 鹿目圓 | — | fighter | 遠程 | ✅ | 鹿目圓 社群英雄功能驗收稿。作品：《魔法少女小圓》 | `community-review-21-20260907.passive` `community-review-21-20260907.q` `community-review-21-20260907.w` `community-review-21-20260907.e` `community-review-21-20260907.r` `community-review-21-20260907.ex` |
+| `community-review-22-20260907` | 菜月昴 | — | tank | 近戰 | ✅ | 菜月昴 社群英雄功能驗收稿。作品：《Re:從零開始的異世界生活》 | `community-review-22-20260907.passive` `community-review-22-20260907.q` `community-review-22-20260907.w` `community-review-22-20260907.e` `community-review-22-20260907.r` `community-review-22-20260907.ex` |
+| `community-review-23-20260907` | 坂田銀時 | — | fighter | 近戰 | ✅ | 坂田銀時 社群英雄功能驗收稿。作品：《銀魂》 | `community-review-23-20260907.passive` `community-review-23-20260907.q` `community-review-23-20260907.w` `community-review-23-20260907.e` `community-review-23-20260907.r` `community-review-23-20260907.ex` |
+| `community-review-24-20260907` | 奇犽 | — | fighter | 近戰 | ✅ | 奇犽 社群英雄功能驗收稿。作品：《HUNTER×HUNTER》 | `community-review-24-20260907.passive` `community-review-24-20260907.q` `community-review-24-20260907.w` `community-review-24-20260907.e` `community-review-24-20260907.r` `community-review-24-20260907.ex` |
+| `community-review-25-20260907` | 一拳超人 | — | fighter | 近戰 | ✅ | 一拳超人 社群英雄功能驗收稿。作品：《一拳超人》 | `community-review-25-20260907.passive` `community-review-25-20260907.q` `community-review-25-20260907.w` `community-review-25-20260907.e` `community-review-25-20260907.r` `community-review-25-20260907.ex` |
+| `community-review-26-20260907` | 名偵探柯南 | — | marksman | 遠程 | ✅ | 名偵探柯南 社群英雄功能驗收稿。作品：《名偵探柯南》 | `community-review-26-20260907.passive` `community-review-26-20260907.q` `community-review-26-20260907.w` `community-review-26-20260907.e` `community-review-26-20260907.r` `community-review-26-20260907.ex` |
+| `community-review-27-20260907` | 庫洛魔法使 | — | fighter | 遠程 | ✅ | 庫洛魔法使 社群英雄功能驗收稿。作品：《庫洛魔法使》 | `community-review-27-20260907.passive` `community-review-27-20260907.q` `community-review-27-20260907.w` `community-review-27-20260907.e` `community-review-27-20260907.r` `community-review-27-20260907.ex` |
+| `community-review-28-20260907` | 艾莉絲·伯雷亞斯·格雷拉特 | — | fighter | 近戰 | ✅ | 艾莉絲·伯雷亞斯·格雷拉特 社群英雄功能驗收稿。作品：《無職轉生》 | `community-review-28-20260907.passive` `community-review-28-20260907.q` `community-review-28-20260907.w` `community-review-28-20260907.e` `community-review-28-20260907.r` `community-review-28-20260907.ex` |
+| `community-review-29-20260907` | 芙莉蓮 | — | mage | 遠程 | ✅ | 芙莉蓮 社群英雄功能驗收稿。作品：《葬送的芙莉蓮》 | `community-review-29-20260907.passive` `community-review-29-20260907.q` `community-review-29-20260907.w` `community-review-29-20260907.e` `community-review-29-20260907.r` `community-review-29-20260907.ex` |
+| `community-review-30-20260907` | 尼古貓貓 | — | mage | 遠程 | ✅ | 尼古貓貓 社群英雄功能驗收稿。作品識別：《ヤニねこ／尼古喵喵》 | `community-review-30-20260907.passive` `community-review-30-20260907.q` `community-review-30-20260907.w` `community-review-30-20260907.e` `community-review-30-20260907.r` `community-review-30-20260907.ex` |
+| `community-review-31-20260907` | SUN樂 | — | fighter | 近戰 | ✅ | SUN樂 社群英雄功能驗收稿。作品：《香格里拉・開拓異境》 | `community-review-31-20260907.passive` `community-review-31-20260907.q` `community-review-31-20260907.w` `community-review-31-20260907.e` `community-review-31-20260907.r` `community-review-31-20260907.ex` |
+| `community-review-32-20260907` | 阿薩謝爾 | — | mage | 近戰 | ✅ | 阿薩謝爾 社群英雄功能驗收稿。作品：《召喚惡魔／よんでますよ、アザゼルさん。》 | `community-review-32-20260907.passive` `community-review-32-20260907.q` `community-review-32-20260907.w` `community-review-32-20260907.e` `community-review-32-20260907.r` `community-review-32-20260907.ex` |
+| `community-review-33-20260907` | 近衛刀太 | — | fighter | 近戰 | ✅ | 近衛刀太 社群英雄功能驗收稿。作品：《UQ HOLDER!》 | `community-review-33-20260907.passive` `community-review-33-20260907.q` `community-review-33-20260907.w` `community-review-33-20260907.e` `community-review-33-20260907.r` `community-review-33-20260907.ex` |
+| `community-review-34-20260907` | 高速婆婆 | — | fighter | 近戰 | ✅ | 高速婆婆 社群英雄功能驗收稿。作品：《膽大黨》 | `community-review-34-20260907.passive` `community-review-34-20260907.q` `community-review-34-20260907.w` `community-review-34-20260907.e` `community-review-34-20260907.r` `community-review-34-20260907.ex` |
+| `community-review-35-20260907` | 炭治郎 | — | fighter | 近戰 | ✅ | 炭治郎 社群英雄功能驗收稿。作品：《鬼滅之刃》 | `community-review-35-20260907.passive` `community-review-35-20260907.q` `community-review-35-20260907.w` `community-review-35-20260907.e` `community-review-35-20260907.r` `community-review-35-20260907.ex` |
+| `community-review-36-20260907` | 鬼畜王蘭斯 | — | fighter | 近戰 | ✅ | 鬼畜王蘭斯 社群英雄功能驗收稿。作品：《鬼畜王蘭斯／Rance》 | `community-review-36-20260907.passive` `community-review-36-20260907.q` `community-review-36-20260907.w` `community-review-36-20260907.e` `community-review-36-20260907.r` `community-review-36-20260907.ex` |
+| `community-review-37-20260907` | 吉伊卡哇 | — | tank | 近戰 | ✅ | 吉伊卡哇 社群英雄功能驗收稿。作品：《吉伊卡哇》 | `community-review-37-20260907.passive` `community-review-37-20260907.q` `community-review-37-20260907.w` `community-review-37-20260907.e` `community-review-37-20260907.r` `community-review-37-20260907.ex` |
 | `godie-e001` | 龍宮禮奈 | 蟬在叫人壞掉 | fighter | 近戰 | ✅ | 來自雛見澤的小女孩，喜歡把"好可愛"的東西帶回家。 | `godie-e001.passive` `godie-e001.q` `godie-e001.w` `godie-e001.e` `godie-e001.r` `godie-e001.ex` |
 | `godie-e002` | Saber | 亞瑟王 | fighter | 近戰 | ✅ | 在偶然的情況下與衛宮士郎定下契約的 、外觀嬌小的女性SERVANT，就是被認為能力最高的聖… | `godie-e002.passive` `godie-e002.q` `godie-e002.w` `godie-e002.e` `godie-e002.r` `godie-e002.ex` |
 | `godie-e008` | 夏娜 | 火霧戰士 | fighter | 近戰 | ✅ | 身分為火霧戰士，為了存在感稀薄的人而戰。 | `godie-e008.passive` `godie-e008.q` `godie-e008.w` `godie-e008.e` `godie-e008.r` `godie-e008.ex` |
@@ -71,12 +145,13 @@
 | `godie-uvng` | 飛影 | 邪眼師 | fighter | 近戰 | ✅ | 在魔界中有名的盜賊妖怪，除了是一位邪王炎殺拳的高手之外，也是一位用劍的高手。為了尋找妹妹雪… | `godie-uvng.passive` `godie-uvng.q` `godie-uvng.w` `godie-uvng.e` `godie-uvng.r` `godie-uvng.ex` |
 | `godie-zombiex` | 喪標麥可 | 聖杯黑泥醬 | tank | 近戰 | ✅ | 黑化聖杯溢出的惡意黑泥受肉凝聚，本來在美國重生，但不小心被印度工程師當成咖喱帶回家鄉，成了… | `godie-zombiex.passive` `godie-zombiex.q` `godie-zombiex.w` `godie-zombiex.e` `godie-zombiex.r` `godie-zombiex.ex` |
 
-## 2. 未開放 not in the open roster（22）
+## 2. 未開放 not in the open roster（23）
 
 文件存在、資料完整，但白名單沒放行，所以選角畫面看不到、bot 也不會抽到。
 
 | id | 全名 | 稱號 | role | 攻擊 | 開放 | 一句話說明 | 技能 id（天生 Q W E R EX） |
 |---|---|---|---|---|---|---|---|
+| `b2-maple-alt-9769eb88b85b` | 梅普露（變身） | — | tank | 近戰 | — | 怕痛的我把防禦力點滿｜不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，角色辨識元素… | `b2-maple.passive` `b2-maple.q` `b2-maple.w` `b2-maple.e` `b2-maple.r` `b2-maple.ex` |
 | `godie-e007` | 天地志狼 | 龍之子 | marksman | 遠程 | — | 本是平凡的國中二年級學生，因為母親項鍊的神奇力量來到三國時代，而被當做龍之子，跟仙人學習仙… | `godie-e007.passive` `godie-e007.q` `godie-e007.w` `godie-e007.e` `godie-e007.r` `godie-e007.ex` |
 | `godie-e00l` | Saber | 亞瑟王 | fighter | 近戰 | — | — | `godie-e00l.passive` `godie-e00l.q` `godie-e00l.w` `godie-e00l.e` `godie-e00l.r` `godie-e00l.ex` |
 | `godie-e00n` | 龍宮禮奈 | 蟬在叫人壞掉 | fighter | 近戰 | — | — | `godie-e00n.passive` `godie-e00n.q` `godie-e00n.w` `godie-e00n.e` `godie-e00n.r` `godie-e00n.ex` |

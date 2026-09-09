@@ -2,9 +2,9 @@
   "id": "community-review-09-20260907.passive",
   "schema": "ability@1",
   "name": "〔賢狼的眼光〕",
+  "provenance": "w3x-import",
   "description": "參與有效助攻獲得交易籌碼，上限三枚；同一擊殺事件只結算一次。",
   "slot": "PASSIVE",
-  "provenance": "editor-json",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [

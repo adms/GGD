@@ -1,7 +1,7 @@
 {
   "id": "community-review-24-20260907.e",
   "name": "電光石火",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】持續消耗電力提高移動速度，關閉或電力耗盡時停止。\n【待補機制】目前固定 3 秒加速；需開關及持續扣電。",
   "slot": "E",
   "castType": "self",

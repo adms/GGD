@@ -49,7 +49,7 @@
     "Q": {
       "id": "community-review-20-20260907.q",
       "name": "電擊之槍",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】直線電擊，主要作為穩定消耗。\n【待補機制】需單道電擊與貫穿去重。",
       "slot": "Q",
       "castType": "skillshot",
@@ -121,7 +121,7 @@
     "W": {
       "id": "community-review-20-20260907.w",
       "name": "〔連鎖放電〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"chainLightning\",\"shape\":\"single\",\"amount\":{\"damageTier\":\"極小\",\"ratios\":[]},\"damageType\":\"magic\",\"jumps\":3,\"jumpRange\":3,\"decay\":0.8,\"revisit\":false,\"maxTotalJumps\":3,\"jumpIntervalSec\":0.12}]。\n【目標設計】在附近不同敵人間跳躍，同一施法不重複命中同一目標。\n【待補機制】模板主命中加鏈起點會對起點追加；需原設計整招同目標只命中一次。",
       "slot": "W",
       "castType": "targeted",
@@ -148,12 +148,7 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "極小",
-              "小"
-            ],
+            "damageTier": "小",
             "ratios": []
           }
         },
@@ -180,12 +175,7 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "極小",
-              "小"
-            ],
+            "damageTier": "小",
             "ratios": []
           },
           "damageType": "magic",
@@ -197,7 +187,7 @@
     "E": {
       "id": "community-review-20-20260907.e",
       "name": "〔鐵砂防壁〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-20-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】用鐵砂建立短效護盾，破盾時散開為純視覺碎粒。\n【待補機制】鐵砂碎粒及破盾事件待補。",
       "slot": "E",
       "castType": "self",
@@ -256,7 +246,7 @@
     "R": {
       "id": "community-review-20-20260907.r",
       "name": "超電磁砲",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】彈出硬幣後發射有預警的高傷害直線攻擊。\n【待補機制】目前四段線；需硬幣彈出、單發射線與整體傷害上限。",
       "slot": "R",
       "castType": "skillshot",

@@ -49,7 +49,7 @@
     "Q": {
       "id": "community-review-21-20260907.q",
       "name": "〔光之箭〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。\n【目標設計】發射直線魔法箭。\n【待補機制】需魔法箭投射物。",
       "slot": "Q",
       "castType": "skillshot",
@@ -134,7 +134,7 @@
     "W": {
       "id": "community-review-21-20260907.w",
       "name": "〔希望之弓〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-21-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】為指定友軍提供護盾；消耗一層希望可加強。\n【待補機制】目前自身；需指定友軍及希望消耗。",
       "slot": "W",
       "castType": "self",
@@ -193,7 +193,7 @@
     "E": {
       "id": "community-review-21-20260907.e",
       "name": "〔淨化之願〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】解除一項可淨化的負面狀態，並提供短效移速。\n【待補機制】目前自身加速；需一項可淨化狀態移除。",
       "slot": "E",
       "castType": "self",
@@ -247,8 +247,8 @@
     "R": {
       "id": "community-review-21-20260907.r",
       "name": "〔願望箭雨〕",
-      "provenance": "editor-json",
-      "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.35 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】對指定區域發射有限波次的箭雨。\n【待補機制】有限三波箭雨已對應；箭形資產待製。",
+      "provenance": "w3x-import",
+      "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.35 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】對指定區域發射有限波次的箭雨。\n【待補機制】有限三波箭雨已對應；箭形資產待製。",
       "slot": "R",
       "castType": "ground",
       "maxRank": 3,
@@ -274,12 +274,7 @@
           "damageType": "magic",
           "amountPerTick": {
             "damageTier": "極小",
-            "ratios": [],
-            "perRank": [
-              0,
-              150,
-              300
-            ]
+            "ratios": []
           },
           "intervalSec": 0.35,
           "durationSec": 0.7,
@@ -296,12 +291,7 @@
           "intervalSec": 0.35,
           "impactDamage": {
             "damageTier": "極小",
-            "ratios": [],
-            "perRank": [
-              0,
-              150,
-              300
-            ]
+            "ratios": []
           },
           "damageType": "magic",
           "impactRadius": 150,

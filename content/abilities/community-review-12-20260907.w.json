@@ -1,8 +1,8 @@
 {
   "id": "community-review-12-20260907.w",
   "name": "〔投影・飛劍〕",
-  "provenance": "editor-json",
-  "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.15 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】將有限數量的投影劍射向指定方向。\n【待補機制】目前定點三發落劍；需按方向投影飛劍。",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.15 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】將有限數量的投影劍射向指定方向。\n【待補機制】目前定點三發落劍；需按方向投影飛劍。",
   "slot": "W",
   "castType": "ground",
   "maxRank": 4,
@@ -30,13 +30,7 @@
       "damageType": "physical",
       "amountPerTick": {
         "damageTier": "極小",
-        "ratios": [],
-        "perRank": [
-          0,
-          100,
-          200,
-          300
-        ]
+        "ratios": []
       },
       "intervalSec": 0.15,
       "durationSec": 0.3,
@@ -53,13 +47,7 @@
       "intervalSec": 0.15,
       "impactDamage": {
         "damageTier": "極小",
-        "ratios": [],
-        "perRank": [
-          0,
-          100,
-          200,
-          300
-        ]
+        "ratios": []
       },
       "damageType": "physical",
       "impactRadius": 150,

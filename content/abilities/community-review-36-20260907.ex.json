@@ -2,9 +2,9 @@
   "id": "community-review-36-20260907.ex",
   "schema": "ability@1",
   "name": "〔跟著本大爺衝〕",
+  "provenance": "w3x-import",
   "description": "消耗戰意，為附近友軍提供短效移速與一次普攻強化。",
   "slot": "EX",
-  "provenance": "editor-json",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [

@@ -2,9 +2,9 @@
   "id": "community-review-35-20260907.passive",
   "schema": "ability@1",
   "name": "〔嗅覺・破綻辨識〕",
+  "provenance": "w3x-import",
   "description": "成功閃過敵人攻擊後，短暫顯示該敵人的近身破綻；下一次刀技命中消耗。",
   "slot": "PASSIVE",
-  "provenance": "editor-json",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [

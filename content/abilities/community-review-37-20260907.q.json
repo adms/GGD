@@ -1,7 +1,7 @@
 {
   "id": "community-review-37-20260907.q",
   "name": "〔討伐叉刺擊〕",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】短距離刺擊，武器判定與外觀一致。\n【待補機制】討伐叉造型與近身命中對齊待製。",
   "slot": "Q",
   "castType": "targeted",
@@ -28,12 +28,7 @@
       "kind": "damage",
       "damageType": "physical",
       "amount": {
-        "damageTierPerRank": [
-          "極小",
-          "極小",
-          "極小",
-          "小"
-        ],
+        "damageTier": "小",
         "ratios": []
       }
     }
@@ -45,12 +40,7 @@
     "ref": "tpl-single-strike",
     "params": {
       "damage": {
-        "damageTierPerRank": [
-          "極小",
-          "極小",
-          "極小",
-          "小"
-        ],
+        "damageTier": "小",
         "ratios": []
       },
       "damageType": "physical",

@@ -49,7 +49,7 @@
     "Q": {
       "id": "community-review-13-20260907.q",
       "name": "〔Hecate II・精準射擊〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】短蓄力直線射擊，依瞄準層數提高傷害。\n【待補機制】固定起手分段線；需蓄力、射線掩體與瞄準層增傷。",
       "slot": "Q",
       "castType": "skillshot",
@@ -121,7 +121,7 @@
     "W": {
       "id": "community-review-13-20260907.w",
       "name": "〔觀測射界〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】自身取得 3 秒增益：as +20%。\n【目標設計】顯示有效射線與遮蔽物，短暫標記一名已可見敵人。\n【待補機制】目前攻速增益；需射界 UI、合法可見敵人的觀測標記。",
       "slot": "W",
       "castType": "self",
@@ -175,7 +175,7 @@
     "E": {
       "id": "community-review-13-20260907.e",
       "name": "〔戰術翻滾〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】短距離翻滾，打斷自己的瞄準並重新定位。\n【待補機制】翻滾應為貼地移動且清空瞄準，目前是低弧跳躍。",
       "slot": "E",
       "castType": "ground",
@@ -242,7 +242,7 @@
     "R": {
       "id": "community-review-13-20260907.r",
       "name": "〔Hecate II・決定性一槍〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】較長瞄準後射出高傷害子彈，敵人可見射線預警。\n【待補機制】需單發高傷害射線、較長瞄準與移動取消。",
       "slot": "R",
       "castType": "skillshot",

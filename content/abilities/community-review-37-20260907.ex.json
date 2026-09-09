@@ -2,9 +2,9 @@
   "id": "community-review-37-20260907.ex",
   "schema": "ability@1",
   "name": "〔一起加油〕",
+  "provenance": "w3x-import",
   "description": "為附近友軍提供護盾與短效抗恐懼，自己也獲得相同效果。",
   "slot": "EX",
-  "provenance": "editor-json",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [

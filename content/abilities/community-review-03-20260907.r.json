@@ -1,7 +1,7 @@
 {
   "id": "community-review-03-20260907.r",
   "name": "超必殺忍蜂",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "【目前模板可執行】4 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】有明顯起手的強化突進連擊，末段小範圍爆發。\n【待補機制】缺突進命中後才接連擊條件。",
   "slot": "R",
   "castType": "targeted",
@@ -28,12 +28,7 @@
       "damageType": "physical",
       "amountPerTick": {
         "damageTier": "極小",
-        "ratios": [],
-        "perRank": [
-          0,
-          150,
-          300
-        ]
+        "ratios": []
       },
       "intervalSec": 0.18,
       "durationSec": 0.72
@@ -50,11 +45,7 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "小"
-            ],
+            "damageTier": "小",
             "ratios": []
           }
         }
@@ -70,21 +61,11 @@
       "hitIntervalSec": 0.18,
       "perHitDamage": {
         "damageTier": "極小",
-        "ratios": [],
-        "perRank": [
-          0,
-          150,
-          300
-        ]
+        "ratios": []
       },
       "finisherDamage": {
         "damageTier": "小",
-        "ratios": [],
-        "perRank": [
-          0,
-          375,
-          750
-        ]
+        "ratios": []
       },
       "finisherRadius": 150,
       "damageType": "physical",

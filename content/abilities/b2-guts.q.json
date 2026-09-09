@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.467,
+  "castTimeSec": 0.1,
   "castType": "ground",
   "cooldown": [
     15.0,
@@ -13,12 +13,7 @@
     {
       "aim": "target",
       "amount": {
-        "damageTierPerRank": [
-          "極小",
-          "極小",
-          "小",
-          "中"
-        ]
+        "damageTier": "中"
       },
       "damageType": "physical",
       "fromCaster": true,
@@ -47,14 +42,9 @@
     "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
     "params": {
       "aim": "target",
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.1,
       "damage": {
-        "damageTierPerRank": [
-          "極小",
-          "極小",
-          "小",
-          "中"
-        ]
+        "damageTier": "中"
       },
       "damageType": "physical",
       "length": 9,

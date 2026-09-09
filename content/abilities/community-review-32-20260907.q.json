@@ -1,7 +1,7 @@
 {
   "id": "community-review-32-20260907.q",
   "name": "肩パンチ",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】近距離肩膀拳，造成小幅擊退。演出重點是一本正經地使出很普通的一拳，保留喜劇落差。\n【待補機制】肩膀拳需小幅擊退与一本正經起手，当前只是單擊。",
   "slot": "Q",
   "castType": "targeted",
@@ -28,12 +28,7 @@
       "kind": "damage",
       "damageType": "physical",
       "amount": {
-        "damageTierPerRank": [
-          "極小",
-          "極小",
-          "極小",
-          "小"
-        ],
+        "damageTier": "小",
         "ratios": []
       }
     }
@@ -45,12 +40,7 @@
     "ref": "tpl-single-strike",
     "params": {
       "damage": {
-        "damageTierPerRank": [
-          "極小",
-          "極小",
-          "極小",
-          "小"
-        ],
+        "damageTier": "小",
         "ratios": []
       },
       "damageType": "physical",

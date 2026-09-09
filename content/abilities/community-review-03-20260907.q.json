@@ -1,7 +1,7 @@
 {
   "id": "community-review-03-20260907.q",
   "name": "花蝶扇",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。\n【目標設計】投出扇子，對沿途合法目標造成傷害。\n【待補機制】扇子模型及逐彈碰撞需補，模板是分段傷害波。",
   "slot": "Q",
   "castType": "skillshot",

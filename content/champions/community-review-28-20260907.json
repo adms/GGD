@@ -49,7 +49,7 @@
     "Q": {
       "id": "community-review-28-20260907.q",
       "name": "〔猛進斬〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】向指定方向突進 180 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】向前踏步斬擊。\n【待補機制】短踏步可以預覽；需武器斬擊時點。",
       "slot": "Q",
       "castType": "ground",
@@ -127,7 +127,7 @@
     "W": {
       "id": "community-review-28-20260907.w",
       "name": "〔鬥氣護身〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-28-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】短時間提高承傷能力，無法無限疊加。\n【待補機制】有限承傷對應基礎版。",
       "slot": "W",
       "castType": "self",
@@ -186,7 +186,7 @@
     "E": {
       "id": "community-review-28-20260907.e",
       "name": "〔逼近步〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】短距離接近，保留可被攔截的路徑。\n【待補機制】此模板附帶傷害推移，需審查逼近步是否保留這項改編。",
       "slot": "E",
       "castType": "ground",
@@ -264,7 +264,7 @@
     "R": {
       "id": "community-review-28-20260907.r",
       "name": "光之太刀",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】向指定方向突進 450 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】有明確起手的高速直線斬擊，命中後停在合法位置。\n【待補機制】需較長起手、高速單段斬及命中停點。",
       "slot": "R",
       "castType": "ground",

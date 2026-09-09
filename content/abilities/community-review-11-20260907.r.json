@@ -1,7 +1,7 @@
 {
   "id": "community-review-11-20260907.r",
   "name": "黑炎",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "【目前模板可執行】指定落點維持 3 秒的小級半徑傷害區，每秒一跳極小級傷害。\n【目標設計】在指定區域產生有限脈衝的黑炎，結束後清理全部區域效果。\n【待補機制】固定 3 秒黑炎可作基本區域驗收；黑炎色覆寫。",
   "slot": "R",
   "castType": "ground",
@@ -59,12 +59,7 @@
       "damageTier": "極小",
       "damageType": "magic",
       "castTimeSec": 1.433,
-      "radius": 4.5,
-      "perRank": [
-        0,
-        150,
-        300
-      ]
+      "radius": 4.5
     },
     "inheritDefaults": true
   },

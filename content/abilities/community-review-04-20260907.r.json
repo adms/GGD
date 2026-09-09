@@ -1,7 +1,7 @@
 {
   "id": "community-review-04-20260907.r",
   "name": "白金之星・世界",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"stun\",\"duration\":0.8,\"applyTo\":\"target\",\"stun\":true}]。\n【目標設計】建立短暫局部時停區域。暫停範圍內敵方單位的動作與指定計時器，以及敵方投射物運動。對決倒數及時停自身的結束計時繼續。承太郎在期間造成的命中記入有限佇列，時停結束後依序結算。\n【待補機制】此槽僅單體 0.8 秒暈眩作模板預覽；局部時停、投射物暫停、計時器分類及命中佇列尚未提供。",
   "slot": "R",
   "castType": "targeted",
@@ -26,11 +26,7 @@
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "damageTierPerRank": [
-          "極小",
-          "極小",
-          "小"
-        ],
+        "damageTier": "小",
         "ratios": []
       }
     },
@@ -49,11 +45,7 @@
     "ref": "tpl-single-strike",
     "params": {
       "damage": {
-        "damageTierPerRank": [
-          "極小",
-          "極小",
-          "小"
-        ],
+        "damageTier": "小",
         "ratios": []
       },
       "damageType": "magic",

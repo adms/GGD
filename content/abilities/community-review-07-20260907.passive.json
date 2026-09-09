@@ -2,9 +2,9 @@
   "id": "community-review-07-20260907.passive",
   "schema": "ability@1",
   "name": "〔魔術師的節奏〕",
+  "provenance": "w3x-import",
   "description": "以不同技能命中同一目標，強化下一次撲克牌攻擊；最多保存一次。",
   "slot": "PASSIVE",
-  "provenance": "editor-json",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [

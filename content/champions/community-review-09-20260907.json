@@ -49,7 +49,7 @@
     "Q": {
       "id": "community-review-09-20260907.q",
       "name": "〔狼牙警告〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】指定單一敵人造成小級物理傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"slow30\",\"duration\":1,\"applyTo\":\"target\",\"moveSpeedMult\":0.7}]。\n【目標設計】短距離狼影撲咬，造成傷害與短暫緩速。\n【待補機制】狼影造型待補。",
       "slot": "Q",
       "castType": "targeted",
@@ -76,12 +76,7 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "極小",
-              "小"
-            ],
+            "damageTier": "小",
             "ratios": []
           }
         },
@@ -100,12 +95,7 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "極小",
-              "小"
-            ],
+            "damageTier": "小",
             "ratios": []
           },
           "damageType": "physical",
@@ -117,7 +107,7 @@
     "W": {
       "id": "community-review-09-20260907.w",
       "name": "〔行商議價〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"restore\",\"manaPct\":0.1,\"applyTo\":\"self\"}]。\n【目標設計】消耗一枚籌碼，取得少量當局戰鬥金幣；每回合最多三次。\n【待補機制】預覽只回復 10% 魔力；需籌碼消耗與每回合三次戰鬥金幣交易。",
       "slot": "W",
       "castType": "self",
@@ -164,7 +154,7 @@
     "E": {
       "id": "community-review-09-20260907.e",
       "name": "〔麥穗庇護〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-09-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】為指定友軍提供小額護盾及短效移速。\n【待補機制】目前自身；需指定友軍盾與加速。",
       "slot": "E",
       "castType": "self",
@@ -223,7 +213,7 @@
     "R": {
       "id": "community-review-09-20260907.r",
       "name": "賢狼真身",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】自身取得 4 秒增益：ad +15%、極小級移速。\n【目標設計】變為有限體型的大狼，強化普攻與 Q，暫時失去 W 的交易功能。\n【待補機制】目前 4 秒 AD／移速；需狼形態、碰撞調整、Q 替換及 W 禁用。",
       "slot": "R",
       "castType": "self",

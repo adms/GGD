@@ -2,9 +2,9 @@
   "id": "community-review-04-20260907.passive",
   "schema": "ability@1",
   "name": "〔白金之星・精密動作〕",
+  "provenance": "w3x-import",
   "description": "近距離命中累積精密層數；滿層後強化下一次 Q 的末擊。",
   "slot": "PASSIVE",
-  "provenance": "editor-json",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [

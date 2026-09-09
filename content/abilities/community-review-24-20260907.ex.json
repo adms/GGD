@@ -2,9 +2,9 @@
   "id": "community-review-24-20260907.ex",
   "schema": "ability@1",
   "name": "〔充電釋放〕",
+  "provenance": "w3x-import",
   "description": "消耗剩餘電力進行近身爆發，之後進入低電力狀態。",
   "slot": "EX",
-  "provenance": "editor-json",
   "castType": "ground",
   "maxRank": 1,
   "cooldown": [

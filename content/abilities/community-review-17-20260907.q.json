@@ -1,7 +1,7 @@
 {
   "id": "community-review-17-20260907.q",
   "name": "心臟掌握",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。\n【目標設計】對單一目標造成魔法傷害；低生命時追加有限傷害，仍經正常致死與保命流程。\n【待補機制】缺低生命有限追加與處決流程專測。",
   "slot": "Q",
   "castType": "targeted",
@@ -28,12 +28,7 @@
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "damageTierPerRank": [
-          "極小",
-          "極小",
-          "極小",
-          "小"
-        ],
+        "damageTier": "小",
         "ratios": []
       }
     }
@@ -45,12 +40,7 @@
     "ref": "tpl-single-strike",
     "params": {
       "damage": {
-        "damageTierPerRank": [
-          "極小",
-          "極小",
-          "極小",
-          "小"
-        ],
+        "damageTier": "小",
         "ratios": []
       },
       "damageType": "magic",

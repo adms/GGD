@@ -2,9 +2,9 @@
   "id": "community-review-32-20260907.passive",
   "schema": "ability@1",
   "name": "淫奔",
+  "provenance": "w3x-import",
   "description": "轉譯為「負面能量」資源。對敵人造成有效技能傷害時累積，最多三層，每次施法最多一層。自傷、反傷及持續傷害的每跳不重複增加。",
   "slot": "PASSIVE",
-  "provenance": "editor-json",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [

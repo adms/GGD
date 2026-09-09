@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.667,
+  "castTimeSec": 0.1,
   "castType": "self",
   "cooldown": [
     45.0,
@@ -41,7 +41,7 @@
   "template": {
     "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997",
     "params": {
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.1,
       "duration": 4,
       "modifiers": [
         {

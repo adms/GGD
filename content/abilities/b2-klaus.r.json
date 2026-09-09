@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.667,
+  "castTimeSec": 0.1,
   "castType": "self",
   "cooldown": [
     90.0,
@@ -16,11 +16,7 @@
       "effects": [
         {
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "小",
-              "中"
-            ],
+            "damageTier": "中",
             "mult": 0.16666666666666666
           },
           "damageType": "physical",
@@ -55,17 +51,11 @@
     "params": {
       "anchor": "caster",
       "applyTo": "enemies",
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.1,
       "damageTier": "中",
       "damageType": "physical",
       "durationSec": 3,
-      "flat": 1000,
       "intervalSec": 0.5,
-      "perRank": [
-        0,
-        750,
-        1500
-      ],
       "radius": 4.5,
       "radiusTier": "小"
     },

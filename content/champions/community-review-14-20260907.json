@@ -49,7 +49,7 @@
     "Q": {
       "id": "community-review-14-20260907.q",
       "name": "〔觸手批改〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】4 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】前方多段觸手打擊，整招共享觸發次數上限。\n【待補機制】觸手多掛點與整招觸發上限待補。",
       "slot": "Q",
       "castType": "targeted",
@@ -78,13 +78,7 @@
           "damageType": "physical",
           "amountPerTick": {
             "damageTier": "極小",
-            "ratios": [],
-            "perRank": [
-              0,
-              100,
-              200,
-              300
-            ]
+            "ratios": []
           },
           "intervalSec": 0.18,
           "durationSec": 0.72
@@ -101,12 +95,7 @@
               "kind": "damage",
               "damageType": "physical",
               "amount": {
-                "damageTierPerRank": [
-                  "極小",
-                  "極小",
-                  "極小",
-                  "小"
-                ],
+                "damageTier": "小",
                 "ratios": []
               }
             }
@@ -122,23 +111,11 @@
           "hitIntervalSec": 0.18,
           "perHitDamage": {
             "damageTier": "極小",
-            "ratios": [],
-            "perRank": [
-              0,
-              100,
-              200,
-              300
-            ]
+            "ratios": []
           },
           "finisherDamage": {
             "damageTier": "小",
-            "ratios": [],
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
+            "ratios": []
           },
           "finisherRadius": 150,
           "damageType": "physical",
@@ -153,7 +130,7 @@
     "W": {
       "id": "community-review-14-20260907.w",
       "name": "〔高速授課〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】向指定方向突進 450 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】沿指定路線快速移動，到達終點時給附近友軍短效加速。\n【待補機制】缺到達終點後的友軍加速。",
       "slot": "W",
       "castType": "ground",
@@ -231,7 +208,7 @@
     "E": {
       "id": "community-review-14-20260907.e",
       "name": "〔觸手再生〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":100,\"ratios\":[]},\"applyTo\":\"self\"}]。\n【目標設計】消耗資源分段恢復生命，受控制時停止。\n【待補機制】目前立即回血；需分段再生與受控中止。",
       "slot": "E",
       "castType": "self",
@@ -287,7 +264,7 @@
     "R": {
       "id": "community-review-14-20260907.r",
       "name": "完全防禦形態",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":180,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-14-20260907.r.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】進入短暫球體防禦，期間無法移動及施法；結束後有明顯恢復動作。\n【待補機制】需球體變形、禁移動禁施法與限時防禦；目前只有盾。",
       "slot": "R",
       "castType": "self",

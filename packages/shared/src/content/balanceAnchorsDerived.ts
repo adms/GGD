@@ -2,7 +2,7 @@
  * ⚙️ **產生檔 —— ⛔ 不要手改。** `pnpm anchors:build` 重量，`pnpm anchors:check` 逐位元組驗。
  *
  * 三個錨點（LV30 / LV50 / LV99）在**兩個空間**的中位數，母體＝
- * **86 位對戰可選英雄**（apps/platform/internal/curation/starter.go 的 starterChampions（對戰可選名單）− content/config/roster.json 的 retiredChampions − 變身態（英雄卡的 transform.role === "alternate"）），量法走出貨管線
+ * **123 位對戰可選英雄**（apps/platform/internal/curation/starter.go 的 starterChampions（對戰可選名單）− content/config/roster.json 的 retiredChampions − 變身態（英雄卡的 transform.role === "alternate"）），量法走出貨管線
  * （`championStatBase(卡, 屬性, 等級, 出貨 combat-env)`）。
  * ⛔ 母體**不是** `readdirSync(content/champions)` —— 那是 71 張卡，含 20 個變身態
  * （同一位英雄的第二張卡 ⇒ 重複計數）與 2 張 fail-open 骨架佔位（owner 2026-08-21
@@ -19,8 +19,8 @@
 
 /** 純基礎空間的中位**最大生命** —— ⛔ 無系統倍率、⛔ 無初始加成、⛔ 無魔抗。 */
 export const MEDIAN_BASE_HP: Readonly<Record<number, number>> = Object.freeze({
-  30: 2808.6,
-  50: 4356.6,
+  30: 2905.8,
+  50: 4425.6,
   99: 8149.2,
 });
 

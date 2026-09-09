@@ -2,9 +2,9 @@
   "id": "community-review-34-20260907.ex",
   "schema": "ability@1",
   "name": "〔百公里衝撞〕",
+  "provenance": "w3x-import",
   "description": "蓄勢後沿長直線衝撞，命中第一名英雄或障礙物時停止。",
   "slot": "EX",
-  "provenance": "editor-json",
   "castType": "ground",
   "maxRank": 1,
   "cooldown": [

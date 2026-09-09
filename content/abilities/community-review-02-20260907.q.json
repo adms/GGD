@@ -1,7 +1,7 @@
 {
   "id": "community-review-02-20260907.q",
   "name": "百八式・闇拂",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。\n【目標設計】沿地面前進的紫炎投射物，遇到有效碰撞結算。\n【待補機制】推進波並非遇第一個單位即停的投射物。",
   "slot": "Q",
   "castType": "skillshot",

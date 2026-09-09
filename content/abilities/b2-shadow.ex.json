@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 1.033,
+  "castTimeSec": 0.1,
   "castType": "targeted",
   "cooldown": [
     45.0
@@ -45,7 +45,7 @@
   "template": {
     "contentSha256": "sha256:3bbc417d5c5a3bd9a34f58eec190ecff85b9d8f07a967a022763fe51c86d3be0",
     "params": {
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "damage": {
         "damageTier": "小"
       },

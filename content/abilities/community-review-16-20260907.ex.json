@@ -2,9 +2,9 @@
   "id": "community-review-16-20260907.ex",
   "schema": "ability@1",
   "name": "限定展開・Excalibur",
+  "provenance": "w3x-import",
   "description": "展開寶具進行一次有起手的直線光束攻擊。",
   "slot": "EX",
-  "provenance": "editor-json",
   "castType": "skillshot",
   "maxRank": 1,
   "cooldown": [

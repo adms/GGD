@@ -2,9 +2,9 @@
   "id": "community-review-20-20260907.ex",
   "schema": "ability@1",
   "name": "〔電磁過載〕",
+  "provenance": "w3x-import",
   "description": "消耗電荷，強化下一次 Q 的範圍或 W 的跳躍數；使用時明示強化結果。",
   "slot": "EX",
-  "provenance": "editor-json",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [

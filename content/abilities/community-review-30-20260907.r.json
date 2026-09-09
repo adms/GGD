@@ -1,8 +1,8 @@
 {
   "id": "community-review-30-20260907.r",
   "name": "〔房間大崩壞〕",
-  "provenance": "editor-json",
-  "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.5 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】在指定區域分三波掉落卡通雜物，具有清楚落點預警。\n【待補機制】三波落點可測；卡通雜物模型與逐波預警待補。",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.5 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】在指定區域分三波掉落卡通雜物，具有清楚落點預警。\n【待補機制】三波落點可測；卡通雜物模型與逐波預警待補。",
   "slot": "R",
   "castType": "ground",
   "maxRank": 3,
@@ -28,12 +28,7 @@
       "damageType": "physical",
       "amountPerTick": {
         "damageTier": "極小",
-        "ratios": [],
-        "perRank": [
-          0,
-          150,
-          300
-        ]
+        "ratios": []
       },
       "intervalSec": 0.5,
       "durationSec": 1,
@@ -50,12 +45,7 @@
       "intervalSec": 0.5,
       "impactDamage": {
         "damageTier": "極小",
-        "ratios": [],
-        "perRank": [
-          0,
-          150,
-          300
-        ]
+        "ratios": []
       },
       "damageType": "physical",
       "impactRadius": 150,

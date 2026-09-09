@@ -1,7 +1,7 @@
 {
   "id": "community-review-37-20260907.e",
   "name": "〔點心時間〕",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":70,\"ratios\":[]},\"applyTo\":\"self\"}]。\n【目標設計】短暫停留恢復少量生命，受擊中斷。\n【待補機制】需停留吃點心及受擊中斷。",
   "slot": "E",
   "castType": "self",

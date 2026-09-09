@@ -1,8 +1,8 @@
 {
   "id": "community-review-29-20260907.r",
   "name": "〔葬送連射〕",
-  "provenance": "editor-json",
-  "description": "【目前模板可執行】在指定區域依序落下 6 發；每發間隔 0.35 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】依序射出多方向魔法束，每束有獨立射線及整招總傷害上限。\n【待補機制】目前定點六波；需各方向獨立射線及總傷害上限。",
+  "provenance": "w3x-import",
+  "description": "【目前模板可執行】在指定區域依序落下 6 發；每發間隔 0.35 秒、半徑{{radius}} wc3u、極小級傷害，可多次命中。\n【目標設計】依序射出多方向魔法束，每束有獨立射線及整招總傷害上限。\n【待補機制】目前定點六波；需各方向獨立射線及總傷害上限。",
   "slot": "R",
   "castType": "ground",
   "maxRank": 3,
@@ -28,12 +28,7 @@
       "damageType": "magic",
       "amountPerTick": {
         "damageTier": "極小",
-        "ratios": [],
-        "perRank": [
-          0,
-          150,
-          300
-        ]
+        "ratios": []
       },
       "intervalSec": 0.35,
       "durationSec": 1.75,
@@ -50,12 +45,7 @@
       "intervalSec": 0.35,
       "impactDamage": {
         "damageTier": "極小",
-        "ratios": [],
-        "perRank": [
-          0,
-          150,
-          300
-        ]
+        "ratios": []
       },
       "damageType": "magic",
       "impactRadius": 150,

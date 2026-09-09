@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -65,7 +65,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.067,
+          "castTimeSec": 0.1,
           "castType": "targeted",
           "effects": [
             {
@@ -118,7 +118,7 @@
       "radiusTier": "極小"
     },
     "Q": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -171,7 +171,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.067,
+          "castTimeSec": 0.1,
           "castType": "self",
           "effects": [
             {
@@ -214,7 +214,7 @@
       "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.1,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -255,7 +255,7 @@
       "template": {
         "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997",
         "params": {
-          "castTimeSec": 0.667,
+          "castTimeSec": 0.1,
           "duration": 4,
           "modifiers": [
             {
@@ -281,7 +281,7 @@
       ]
     },
     "W": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.1,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -332,7 +332,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.1,
           "castType": "self",
           "effects": [
             {

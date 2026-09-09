@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.1,
       "castType": "ground",
       "cooldown": [
         15.0,
@@ -35,7 +35,7 @@
       "template": {
         "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
         "params": {
-          "castTimeSec": 0.467
+          "castTimeSec": 0.1
         },
         "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
       },
@@ -48,7 +48,7 @@
       ]
     },
     "Q": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.1,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -84,7 +84,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.1,
           "castType": "self",
           "effects": [
             {
@@ -110,7 +110,7 @@
       "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.1,
       "castType": "self",
       "cooldown": [
         90.0,
@@ -127,11 +127,7 @@
           "effects": [
             {
               "amount": {
-                "damageTierPerRank": [
-                  "極小",
-                  "小",
-                  "中"
-                ],
+                "damageTier": "中",
                 "mult": 0.16666666666666666
               },
               "damageType": "physical",
@@ -165,17 +161,11 @@
         "params": {
           "anchor": "caster",
           "applyTo": "enemies",
-          "castTimeSec": 0.667,
+          "castTimeSec": 0.1,
           "damageTier": "中",
           "damageType": "physical",
           "durationSec": 3,
-          "flat": 1000,
           "intervalSec": 0.5,
-          "perRank": [
-            0,
-            750,
-            1500
-          ],
           "radius": 4.5,
           "radiusTier": "小"
         },
@@ -190,7 +180,7 @@
       ]
     },
     "W": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -243,7 +233,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.1,
           "castType": "targeted",
           "effects": [
             {
@@ -252,14 +242,7 @@
               "effects": [
                 {
                   "amount": {
-                    "damageTier": "極小",
-                    "flat": 200,
-                    "perRank": [
-                      0,
-                      100,
-                      200,
-                      300
-                    ]
+                    "damageTier": "極小"
                   },
                   "condition": {
                     "kind": "status",

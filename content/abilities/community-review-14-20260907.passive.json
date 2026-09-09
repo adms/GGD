@@ -2,9 +2,9 @@
   "id": "community-review-14-20260907.passive",
   "schema": "ability@1",
   "name": "〔教師的觀察〕",
+  "provenance": "w3x-import",
   "description": "同一敵人反覆以相同招式攻擊時，短暫提高對該招的有限防禦；不同技能可打破適應。",
   "slot": "PASSIVE",
-  "provenance": "editor-json",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [

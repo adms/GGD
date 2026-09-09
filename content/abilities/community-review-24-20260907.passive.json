@@ -2,9 +2,9 @@
   "id": "community-review-24-20260907.passive",
   "schema": "ability@1",
   "name": "〔電力儲備〕",
+  "provenance": "w3x-import",
   "description": "技能消耗電力；停止攻擊一段時間後逐步充電，設上限。",
   "slot": "PASSIVE",
-  "provenance": "editor-json",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [

@@ -2,8 +2,8 @@
   "schema": "ggd-assets-manifest@1",
   "note": "⭐ 被 content/**/*.json 或共用 VFX 材質引用到的**每一顆**二進位資產。⛔ 產物 —— 改 `tools/asset-manifest/gen.ts`，⛔ 不要手改。⚠️ 只收**被引用到的**：content/assets/ 底下有一萬多個檔，而清單的用途是驗證引用得到的東西。",
   "counts": {
-    "entries": 1654,
-    "totalBytes": 108918316
+    "entries": 1989,
+    "totalBytes": 156470096
   },
   "entries": [
     {
@@ -7194,6 +7194,2448 @@
       ]
     },
     {
+      "path": "assets/icons/abilities/community-review-01-20260907.e.webp",
+      "bytes": 11378,
+      "sha256": "1e4a8de7a8ea8f2a7cbc134d9ee8715d64633d8fa7829446d8527e1717d4fe1d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-01-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-01-20260907.ex.webp",
+      "bytes": 8908,
+      "sha256": "cee318c10a5eca3dba0520d7a822342b764a6dd6f934fd500d7c1a133d4754ba",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-01-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-01-20260907.passive.webp",
+      "bytes": 5828,
+      "sha256": "1ed388010f981d203ca17eb3a53c953d462b2ab35491ea4a41a860018459ed97",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-01-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-01-20260907.q.webp",
+      "bytes": 9566,
+      "sha256": "b74b128dc6370b1e20ac4a8dc39ab9ebac4a2996ee504226fba9f1b6292c6855",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-01-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-01-20260907.r.webp",
+      "bytes": 5884,
+      "sha256": "a4bf2ab80759d7cbcbe3782449b4995533daa16bba37e849f0023e20afe98b54",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-01-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-01-20260907.w.webp",
+      "bytes": 11648,
+      "sha256": "7994ab0f36aa987e7409d50bd62fdc7bc9fed9ed41dc4cccee17bccddda2ac38",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-01-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-02-20260907.e.webp",
+      "bytes": 9154,
+      "sha256": "8a9c6feb2ccd59863f40e92cd4a86893da0da6aaf98e356c9785b1db561ab88d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-02-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-02-20260907.ex.webp",
+      "bytes": 10628,
+      "sha256": "77c149f1cd668bfa3770bc91c72b9b84a0fe9dcb6a0d09d116eb5697e115347e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-02-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-02-20260907.passive.webp",
+      "bytes": 7164,
+      "sha256": "29e6db544311828e32afcf1bd34a439db9fac8241a40d1e1971249f75e2513eb",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-02-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-02-20260907.q.webp",
+      "bytes": 6388,
+      "sha256": "9102c5edac691ec812e5773858a8098e8d7df8925126030f462862872d60b0c0",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-02-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-02-20260907.r.webp",
+      "bytes": 10056,
+      "sha256": "6984a7f8b89755f35c1e3217846cf848238a60259a221128fe0a4b4be511acbb",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-02-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-02-20260907.w.webp",
+      "bytes": 7458,
+      "sha256": "4103ec4bdf328c7d32931e2917cbc1ec4c86c366805fe57c5024c6c8cee77291",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-02-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-03-20260907.e.webp",
+      "bytes": 10248,
+      "sha256": "641721db7ea24c8c6186aa6ac1071ef0dc5c8d0dbdb1eea9609feb1a402afbd2",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-03-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-03-20260907.ex.webp",
+      "bytes": 11698,
+      "sha256": "06c538c6c277cf8845b18e09646c113ebc9c9ee394dddee87b017f6bca204e51",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-03-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-03-20260907.passive.webp",
+      "bytes": 8520,
+      "sha256": "d3bb3cd223c4a8ee82454d0137637cc374522a5e4618d886a1c317eae701561c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-03-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-03-20260907.q.webp",
+      "bytes": 8946,
+      "sha256": "1c32207cdd58fd7089eba609db85df55778768f6ea243d508f9c8acc4268c946",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-03-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-03-20260907.r.webp",
+      "bytes": 10422,
+      "sha256": "0084a9e0c25517350bb188dafefab507fd002db488a87f6aa382d692a62a5a0f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-03-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-03-20260907.w.webp",
+      "bytes": 11098,
+      "sha256": "deb8a867a680b5a7bddbda99ca3ae7b833610b08566dfed58b38395f16fa7893",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-03-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-04-20260907.e.webp",
+      "bytes": 5932,
+      "sha256": "93bacae9d55e843eaf5cadfd518327083d0f1e9b8fcece337c14220ac012a977",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-04-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-04-20260907.ex.webp",
+      "bytes": 2998,
+      "sha256": "ed6cd1fd4828c8b8c2b28f527cac5bc6f9b0a26af0a323504b20c45273441f87",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-04-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-04-20260907.passive.webp",
+      "bytes": 7544,
+      "sha256": "1d5cf1ac0abf3e336f12a9ca2b81588f67295d38c560a16e5fc9c6720c5e769d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-04-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-04-20260907.q.webp",
+      "bytes": 12074,
+      "sha256": "2398d21f7b9d0fe6b00345d741e4bf63644c90e76cf2da695a0f4f48bf73b922",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-04-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-04-20260907.r.webp",
+      "bytes": 5126,
+      "sha256": "de42ebd30d1e0a15f4396f195362cb7bd90199fa53236977c13e79f2c64dba9e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-04-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-04-20260907.w.webp",
+      "bytes": 6138,
+      "sha256": "0cb3c785adc76a03d9f2fa494e3af3d9458e32faecb15246faf9855b23cde134",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-04-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-05-20260907.e.webp",
+      "bytes": 8386,
+      "sha256": "f9f12c3d858f0508f60c3f1f12dadc9c3e589ec1a81fe945d47e023bc7dfc104",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-05-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-05-20260907.ex.webp",
+      "bytes": 6124,
+      "sha256": "1925ef59d85a19455c3c43a33cc660cbbcd926baa878eebd60a699f216250365",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-05-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-05-20260907.passive.webp",
+      "bytes": 7774,
+      "sha256": "b144da360edbafb5d00c340a4ce930451a39368ce766e7e882edeba1b2e2ab22",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-05-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-05-20260907.q.webp",
+      "bytes": 6042,
+      "sha256": "5c7cab0fdc4290aa342f6fbcc5dcb7b182fe9ea8f6472a57c91041fac56501aa",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-05-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-05-20260907.r.webp",
+      "bytes": 5690,
+      "sha256": "d4cac7ae6723b67fdd34caacfa8b522b5bf28d205881f58d78338cc7c4ee363a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-05-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-05-20260907.w.webp",
+      "bytes": 7092,
+      "sha256": "a87cb7caa1311857e69e6d68229616ee76f2856d506dfe64439fc14fda7c315c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-05-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-06-20260907.e.webp",
+      "bytes": 6338,
+      "sha256": "02234a7c15d117d8f7366d751803b3e7c148c00b2c2ee7369eda05c7018784b0",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-06-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-06-20260907.ex.webp",
+      "bytes": 13030,
+      "sha256": "642f7c5ca332ab7306ce0571c77036315bc21f0c5aeda455dba6d3a07acbcf5a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-06-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-06-20260907.passive.webp",
+      "bytes": 3238,
+      "sha256": "fdbbef5a240f0ee413098c119b741ca92aa14a1fa431a5c0ae043bf074005bb7",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-06-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-06-20260907.q.webp",
+      "bytes": 10080,
+      "sha256": "315cc5fa1f3e06c1b1572679066a748a432feecc9a42ed82854be437010fa29a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-06-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-06-20260907.r.webp",
+      "bytes": 9406,
+      "sha256": "972243cc5a39d846fd1cf5b3586ac911a254749bbccf7a6aa22bd6b502c2648d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-06-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-06-20260907.w.webp",
+      "bytes": 11732,
+      "sha256": "726db544097d5555174aa741e6898b440ff727cc7596159b2f5cc18fb1080f79",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-06-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-07-20260907.e.webp",
+      "bytes": 8242,
+      "sha256": "0168d1c5ed910bb7665713bb211a46dc1638ebb1ea813ca1e8da3490bb20d2ec",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-07-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-07-20260907.ex.webp",
+      "bytes": 7476,
+      "sha256": "83924a0571ce212ac66fa50fc10ae6db17fdd285c29a44d62591f9b17fda4f73",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-07-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-07-20260907.passive.webp",
+      "bytes": 6624,
+      "sha256": "b7c5b00d0862bab53aadcc286b4177fe428d3b1f71fb031f7680a67b5a171f8a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-07-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-07-20260907.q.webp",
+      "bytes": 7578,
+      "sha256": "17ad0d5a24523c311df2aa98dbf17152076099a64bc12b4525e484ad48b4a291",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-07-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-07-20260907.r.webp",
+      "bytes": 12606,
+      "sha256": "e7a0ad595428a6ecf9a2d9b9e8bea11dacda1063e0d9211b484ad823a47661ec",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-07-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-07-20260907.w.webp",
+      "bytes": 9644,
+      "sha256": "28e11737912eeebea503ebb748d8962835f63e168ec8423628e3fd79b907064b",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-07-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-08-20260907.e.webp",
+      "bytes": 8168,
+      "sha256": "955a354e668e04a0227ec2e007e341e269a3446cdc1c7f77911e4428bae811fc",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-08-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-08-20260907.ex.webp",
+      "bytes": 10440,
+      "sha256": "722073dbee242e385dcf66757d242c8a07e49db070ac8ca3f9f337e8a7a364b3",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-08-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-08-20260907.passive.webp",
+      "bytes": 7462,
+      "sha256": "2ba7f0eba1f639297fd3514191f34f562165d8b7d8d24ef64120fd08bc63d560",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-08-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-08-20260907.q.webp",
+      "bytes": 7692,
+      "sha256": "a3f53fb3da8f88a774e1de4f171d49a5ed4b1d0d13c2d462d0b4b0a358979d90",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-08-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-08-20260907.r.webp",
+      "bytes": 10944,
+      "sha256": "a80c366b2a26ad4c1f541a58662293f2b860e2a6eaaea7d91fd0986d179d8fad",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-08-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-08-20260907.w.webp",
+      "bytes": 7980,
+      "sha256": "e560f921c36c0834a26e6038f9e057cb6b4c0ecb15fc0aac4025edee94bf3e64",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-08-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-09-20260907.e.webp",
+      "bytes": 10512,
+      "sha256": "e959944aff077929797651cd014edea9732a771d9c39dab51fc3757d530c9e44",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-09-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-09-20260907.ex.webp",
+      "bytes": 11494,
+      "sha256": "ffb81b7a4684d41fff1e6025fba084a6f42c6c3a1963de5b60af97e40d75be76",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-09-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-09-20260907.passive.webp",
+      "bytes": 8006,
+      "sha256": "9d1d5a4e36b6a479eec829e328100dc9784b8fde33a58da448392b62a335bc74",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-09-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-09-20260907.q.webp",
+      "bytes": 6832,
+      "sha256": "5f4e674810ed4edbf4ecc7b86f49c7670d1c72cf946a15ac4a7a88854e0c3bf1",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-09-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-09-20260907.r.webp",
+      "bytes": 7968,
+      "sha256": "5972c04a1e72a366179e6fb16ca17815a283938e12cc6e4b39c00d3a2336eb36",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-09-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-09-20260907.w.webp",
+      "bytes": 10696,
+      "sha256": "9d9d693d86d88ddca85f576d1363df50de9c1e7305397f99f41f67e4848895cf",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-09-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-10-20260907.e.webp",
+      "bytes": 6044,
+      "sha256": "85de832f86dd22ba133e67e5b6c81fc787a286a27992e1836ea59a46f00d2567",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-10-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-10-20260907.ex.webp",
+      "bytes": 5828,
+      "sha256": "b6f35f9e1b251c402db6500ddd849a9b306f70df5fd26f657363ba89a59f29d6",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-10-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-10-20260907.passive.webp",
+      "bytes": 8454,
+      "sha256": "9c42f4be299e923f8c3822104ecc412a8acc52135cd8266beec2f09d6937cd50",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-10-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-10-20260907.q.webp",
+      "bytes": 9578,
+      "sha256": "2cd4ffb3fd6835bdf0acc1ff6dad51bd4d9df872c9f77a0efabe394757c6a9d2",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-10-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-10-20260907.r.webp",
+      "bytes": 5676,
+      "sha256": "e2c7afce247119ace424563a0f39c4bfa1fa0688c7f283f2b96a9f149e0459ee",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-10-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-10-20260907.w.webp",
+      "bytes": 5286,
+      "sha256": "0cef81716ad19f2c6be9b49ac94fb8db98b8310458e4ae54205ffc38fab42576",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-10-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-11-20260907.e.webp",
+      "bytes": 6564,
+      "sha256": "4bdd73e3a07b7869f819b15fb0dfa806a1f1a3542082d9157ae3b89e48608aca",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-11-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-11-20260907.ex.webp",
+      "bytes": 12302,
+      "sha256": "8ef4430dcdea8c02bd2b7dadb7e0935156af3ec9732683da0e1793588d376b13",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-11-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-11-20260907.passive.webp",
+      "bytes": 10244,
+      "sha256": "724084289a1d2d61b881fce3a4dd23c9b45619c211aa388bb6dc7ae6c85bae4e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-11-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-11-20260907.q.webp",
+      "bytes": 7432,
+      "sha256": "07d2c70eb1d350ae0f228d4344ae8a9987295fbdaf4c00112a1d5cb672d6fb92",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-11-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-11-20260907.r.webp",
+      "bytes": 8406,
+      "sha256": "00e39520486ee8340095838add62ca6b09b065e3060ed8dbe88db7f8ba21ac47",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-11-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-11-20260907.w.webp",
+      "bytes": 7062,
+      "sha256": "93fe3309e85d9a608aca3984bd0b2e153ff60a0897153848ef0d379862b3ffc4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-11-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-12-20260907.e.webp",
+      "bytes": 10382,
+      "sha256": "46c6cbd2f3432252153041f643578fbb00c6056dc9174daf97f2c17ffb4815f1",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-12-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-12-20260907.ex.webp",
+      "bytes": 8942,
+      "sha256": "88c15c376f57c2fa0615b8118d35a97da5be42a5aad3c7408e7f7d3126d5c6a4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-12-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-12-20260907.passive.webp",
+      "bytes": 5030,
+      "sha256": "76736dfe391415e542aafeb6eb2e9969c09afa5f0bd801eb4af5f7e7cbb9fb9c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-12-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-12-20260907.q.webp",
+      "bytes": 8342,
+      "sha256": "f68d27c9be99fc11cfce433a61ced2a8dc19faed0ae027d6f99f61a1042fcd74",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-12-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-12-20260907.r.webp",
+      "bytes": 4870,
+      "sha256": "28a43d45065eda205149ad4c0ca1e74e502b556dbceb2ed24fb1ec23e7fbfcff",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-12-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-12-20260907.w.webp",
+      "bytes": 7452,
+      "sha256": "fb676f0162aa7e3b2aa7b691ed8194da5755180ed376cfa2627c02e9fabf97c9",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-12-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-13-20260907.e.webp",
+      "bytes": 3532,
+      "sha256": "f6144e4accfa28a20e4d77534e7c4432cbe92a12def70e519e84442eac30a7cd",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-13-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-13-20260907.ex.webp",
+      "bytes": 8072,
+      "sha256": "1825a13fc0813474c23229edb52ad946ec9c6b78a2bf949d6e2ec63105e89069",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-13-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-13-20260907.passive.webp",
+      "bytes": 8604,
+      "sha256": "423d0d907b2af80f5ddff966a373c868fa79111e387f5fdcc9d3a25ecd72cca1",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-13-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-13-20260907.q.webp",
+      "bytes": 11862,
+      "sha256": "e83d8c8fa35d791b48502aa0f6df0720e42f76242ffdb8e099c55f06031a39c9",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-13-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-13-20260907.r.webp",
+      "bytes": 11476,
+      "sha256": "5f37a6567a179fed2144466c1d12c3dd013c9a7d244fcfbff5dac49a41cd5065",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-13-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-13-20260907.w.webp",
+      "bytes": 2792,
+      "sha256": "e48cb853b68767c9707385b869acbd499ba806ff1559f22b9c7a5c3830db86bd",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-13-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-14-20260907.e.webp",
+      "bytes": 9066,
+      "sha256": "9af5096fd9f3dca5064dc783861a5ac33a81b60fbbd027e03f529b675255d177",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-14-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-14-20260907.ex.webp",
+      "bytes": 8102,
+      "sha256": "22b430f1a457ae46710034c8a518f3d619ec94db12c5dd422cf9406dc23c4d97",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-14-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-14-20260907.passive.webp",
+      "bytes": 10978,
+      "sha256": "4ece11b3cf779241ba1c85a9921b4759f6c1e1be83845c5de66e55cd6dcf7020",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-14-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-14-20260907.q.webp",
+      "bytes": 8690,
+      "sha256": "f86a1cbdc1d71985978638bca473e85d1798b76d98c370b836f6c7326316ee0c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-14-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-14-20260907.r.webp",
+      "bytes": 8564,
+      "sha256": "2ce567413ee81575fa1fa21b2f93fad4fbec12acfdf672e884f2aea878a0783d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-14-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-14-20260907.w.webp",
+      "bytes": 11048,
+      "sha256": "a25a62deaf04e1ac6311730c9cef98827b0dacdd08a88f0e0e6cdd36999c1a33",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-14-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-15-20260907.e.webp",
+      "bytes": 8170,
+      "sha256": "df1eb9ab71535f04582f8233c160390cbddf4bb907776c939c900ba33765dd16",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-15-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-15-20260907.ex.webp",
+      "bytes": 8832,
+      "sha256": "78d6f8f9980bd3461991b29c04095af551739477e372068956d2ab95d7879363",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-15-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-15-20260907.passive.webp",
+      "bytes": 11390,
+      "sha256": "5c0a464570a9bc62a3cd46220f4a8df4ebd75562ee40d173bbb2fae8a3e30857",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-15-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-15-20260907.q.webp",
+      "bytes": 5326,
+      "sha256": "d220658793de588205a33c1405079070dab5a15cc93e09d1a566b037047e8032",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-15-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-15-20260907.r.webp",
+      "bytes": 7884,
+      "sha256": "7f71babc407354fc00dad8018d6aac6898fb8376566e8bec23fd2514446df910",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-15-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-15-20260907.w.webp",
+      "bytes": 9822,
+      "sha256": "1482cd36d04f16a927dc6094cbe991271e5dae9d77597c8996d3922b8781aba7",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-15-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-16-20260907.e.webp",
+      "bytes": 8080,
+      "sha256": "5dd59fd86b42098311bde5c0fce475fbdb2b29df832f6ad42e80a7e9457a118d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-16-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-16-20260907.ex.webp",
+      "bytes": 8112,
+      "sha256": "af27377ff1bffb3cd5873ddc645bd575f76c495a94647171b0d473ecfbd61703",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-16-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-16-20260907.passive.webp",
+      "bytes": 2350,
+      "sha256": "83f7b9aff3213d7a3573d48def2250c465b68eea97b3eb49a38ab397f8c41690",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-16-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-16-20260907.q.webp",
+      "bytes": 5550,
+      "sha256": "2e5d07a03c4221990009565c0fea2c91c176c1715b3990cb31e12c1e61ff032d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-16-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-16-20260907.r.webp",
+      "bytes": 7252,
+      "sha256": "65c765a32e31fcf96aba2b85a7653b50d697a281b2bb4f3a01ec259f3e38d246",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-16-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-16-20260907.w.webp",
+      "bytes": 7920,
+      "sha256": "8d42674ea14a38dc854364a1ad199fee2621366e8be7c6fd39701c7cbd4075c2",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-16-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-17-20260907.e.webp",
+      "bytes": 7218,
+      "sha256": "a815dccf3415c3fc45e42b5ce67d905b734e14a90dc04c26137bbe171b864b31",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-17-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-17-20260907.ex.webp",
+      "bytes": 4966,
+      "sha256": "4956f928478eb253c3d90404ab3a2f4a1e1592f419abc637df1c184c3b97dfc6",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-17-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-17-20260907.passive.webp",
+      "bytes": 6440,
+      "sha256": "8548ad9f2a1338875a2d37f5f74e8a40430e3f66ebf455c23ce86760ba9ef641",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-17-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-17-20260907.q.webp",
+      "bytes": 7650,
+      "sha256": "cc50744a8a385888679bf3f1853e7a17243fa200ef0a1a33887b5ac03d2e8782",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-17-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-17-20260907.r.webp",
+      "bytes": 6556,
+      "sha256": "67193a0e721c5beaadc671e92d1db1260bacd1410de52f48aca642987ad38a59",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-17-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-17-20260907.w.webp",
+      "bytes": 4316,
+      "sha256": "abe4ff3e71b10718227e32f15e8b2563f9d1e9db8980a56c7e3972ef7f7678ba",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-17-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-18-20260907.e.webp",
+      "bytes": 11056,
+      "sha256": "68864342e397d8be28ff5f2b536669c398f37684561479d0b3b617cd9be244bf",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-18-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-18-20260907.ex.webp",
+      "bytes": 8466,
+      "sha256": "99dfba923ab01a9f4e9acd659c72bb76e1a6283bf268d68eb0fecfb156b03283",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-18-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-18-20260907.passive.webp",
+      "bytes": 5648,
+      "sha256": "873e0b261c4fbd499453a41ad28691b96dd1766a7dae491cfba43c28c6655154",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-18-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-18-20260907.q.webp",
+      "bytes": 11516,
+      "sha256": "399781144541e277b1e7f3474ee2133a8710ad5f1f026d38b538f7d6d8b1e25e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-18-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-18-20260907.r.webp",
+      "bytes": 7904,
+      "sha256": "f2de5e17259b84b47b6692aeebd771b0c50f306893ddaacc9cb93ece443f82e6",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-18-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-18-20260907.w.webp",
+      "bytes": 11154,
+      "sha256": "eae362542559307c171f31e79840eb3ffce8f2650df71fed19e0bfa41b3d6dfa",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-18-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-19-20260907.e.webp",
+      "bytes": 7418,
+      "sha256": "0e66de971de7fa23d5000bb27827b3f3a42059bab700952512ff244c530294f4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-19-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-19-20260907.ex.webp",
+      "bytes": 6554,
+      "sha256": "b92ee6a1e88437b27e96ef2e52248c8285c9e28d9e2caaaf97e423ced0bdfe7b",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-19-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-19-20260907.passive.webp",
+      "bytes": 8070,
+      "sha256": "e5b1c6dd8b678e6ef92d5a3b246959cc9e83880c56ed633074ff8e8b92732bb7",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-19-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-19-20260907.q.webp",
+      "bytes": 7578,
+      "sha256": "fed671ac35b5ab04112c1e554361e943bbe58de6699bf9f46d9b03013ea99019",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-19-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-19-20260907.r.webp",
+      "bytes": 10904,
+      "sha256": "fc0423af64865581f88aed8ad4b7afa0128381bfddd8962bc383a814dff660c6",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-19-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-19-20260907.w.webp",
+      "bytes": 10524,
+      "sha256": "fc9fd0a279299cf7dcb6992fa571c549b0b1fe6a7318afc0cbafe54c778b74c0",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-19-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-20-20260907.e.webp",
+      "bytes": 4164,
+      "sha256": "a74e8de2c586b7f374b470b7072e20b37a1ecc3b2422dd52b6d07c1e32608af9",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-20-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-20-20260907.ex.webp",
+      "bytes": 10094,
+      "sha256": "36c807cfd2fda3319fd8cdc764f24ebf06deca48cf9de581b3c779fafbcad907",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-20-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-20-20260907.passive.webp",
+      "bytes": 5256,
+      "sha256": "37671e892ce06f7a33fca8385152f57e470e00acb60624547517eef545ca7c19",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-20-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-20-20260907.q.webp",
+      "bytes": 8106,
+      "sha256": "35c01b500bdf6d56d40449377a96672d50588f8a0e85d7aa99b9cca561319143",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-20-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-20-20260907.r.webp",
+      "bytes": 10074,
+      "sha256": "fae7c9b75fa1f67c8b4e672d7838fc8a3358bcdd06ff49511dedb102ec88301e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-20-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-20-20260907.w.webp",
+      "bytes": 10126,
+      "sha256": "ffa86e180c07668a71b663aeb5a92c7cba2b0ba0047fbaf8ac2652b0f027d466",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-20-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-21-20260907.e.webp",
+      "bytes": 9582,
+      "sha256": "1e0dd2ed898a13b2886c2c39a8cc154d462e084e648702229a2f8c890d40d485",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-21-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-21-20260907.ex.webp",
+      "bytes": 9838,
+      "sha256": "90ec1d0278e777dfc0c39787fb91fea68f4d49de7afa4f01456d2167670c0c21",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-21-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-21-20260907.passive.webp",
+      "bytes": 8136,
+      "sha256": "58121ae43ab4a3b1d0fa3d770015a0191ffa548a937b17d3621401fe8625f484",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-21-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-21-20260907.q.webp",
+      "bytes": 5638,
+      "sha256": "b1f0a7314c97abfd699fea45203e4ea9b4ba52f6edaf41fb0caa9b8320444c58",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-21-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-21-20260907.r.webp",
+      "bytes": 10392,
+      "sha256": "68d1668494d2fec5175a0901e8ca992a2bdc3359f1fc64580d2c6f4be44c4def",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-21-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-21-20260907.w.webp",
+      "bytes": 7290,
+      "sha256": "758ff952a54fe0547e9d98dd17ef0444b398615f826a73d277855f0aab8ed54c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-21-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-22-20260907.e.webp",
+      "bytes": 8960,
+      "sha256": "aeb2f31862f4451f6cc4824fb76ff5ca7c082c66f84bbeb3d1a231af81b8432b",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-22-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-22-20260907.ex.webp",
+      "bytes": 6742,
+      "sha256": "1622eccfd429dcd64f36dede32c72b28ecf241ebb2a41380b9f057be0b8f3e98",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-22-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-22-20260907.passive.webp",
+      "bytes": 7078,
+      "sha256": "6fc0374c74ba78ec07078a207ef3dc3d4e97d9140b9a67238c4fe4108c1e6c16",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-22-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-22-20260907.q.webp",
+      "bytes": 6680,
+      "sha256": "6879923577670034efb513847cb87c88078aeb0dc74d85ad0820ea2aa32d05b4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-22-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-22-20260907.r.webp",
+      "bytes": 5560,
+      "sha256": "43cd47b6a04261769b786046bb5b8b3cc34c1f67457d1603d9060cfdd025b093",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-22-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-22-20260907.w.webp",
+      "bytes": 9208,
+      "sha256": "6e5d8de6d3c987538d7bedd0b53dbffdf8ff56a80c13ace0e5573f6932f149e6",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-22-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-23-20260907.e.webp",
+      "bytes": 9666,
+      "sha256": "3bf99ad92c9f0c604492351e2aa1cd7cd9888109568177757d5a1589fd8a7eaa",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-23-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-23-20260907.ex.webp",
+      "bytes": 9910,
+      "sha256": "b29e9abdd7f89458231427460693a9e1647e501f96bf709cf13b250a7ccbb2f8",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-23-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-23-20260907.passive.webp",
+      "bytes": 4692,
+      "sha256": "d7d1a4bf00885365aeb4ed00ec1b9dabf96183c414bae15434618855071d8b09",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-23-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-23-20260907.q.webp",
+      "bytes": 8140,
+      "sha256": "3c3597f197064734c6c4b03eb896cc86365eb3d57feb2e1dd7665207069fd28d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-23-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-23-20260907.r.webp",
+      "bytes": 8686,
+      "sha256": "2dafc0f430f5d69b7f7f8cd056feea49a72894012b542ace59ce0103a3ae4529",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-23-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-23-20260907.w.webp",
+      "bytes": 5784,
+      "sha256": "507940420d59db266bae9b66d5bcf6c1fc5213e2ba704ed15de7fa601408ac86",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-23-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-24-20260907.e.webp",
+      "bytes": 6490,
+      "sha256": "37d2773198f8c995e251b55e20d48536fb3373b715985dda994b0cac0275895a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-24-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-24-20260907.ex.webp",
+      "bytes": 9834,
+      "sha256": "cac187c6d5d18584b4ecda16244d546c4e87464ff974075100e8bb2f3698c6ac",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-24-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-24-20260907.passive.webp",
+      "bytes": 10004,
+      "sha256": "34127f911b50137a973472fe18bdabdc5a1191a153a4fd56e4c0da9292bcb8c3",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-24-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-24-20260907.q.webp",
+      "bytes": 11282,
+      "sha256": "c9ab3727e896a45022dbd6bf23327e0905ca68a8c91bd98be8ec49cd830f6bfe",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-24-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-24-20260907.r.webp",
+      "bytes": 9812,
+      "sha256": "f9de4975b496ab1784afc64605038237f364b8eafbaccd2ec355f52b2ba21738",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-24-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-24-20260907.w.webp",
+      "bytes": 8370,
+      "sha256": "6607915617763dd1e886f2c0fa5f4bebe16ea41374490d75582e3aac1d44655f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-24-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-25-20260907.e.webp",
+      "bytes": 6484,
+      "sha256": "106f475727f8bbd0235527571b908c01a72bb796de7b0365adfee522ca5d87af",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-25-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-25-20260907.ex.webp",
+      "bytes": 8862,
+      "sha256": "d0f3bcacc28a5a57260aef1b8bfedd8de0bdeca3e87799ee61fad2665a3b1ceb",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-25-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-25-20260907.passive.webp",
+      "bytes": 8742,
+      "sha256": "c13d2650202b846f256bdbad9985a8912bfa4baefa066d201c1801a7bd5ce8ff",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-25-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-25-20260907.q.webp",
+      "bytes": 6960,
+      "sha256": "dd43db3a8bd422283e0ab3be2af20d9b361606e03f2f2537eec22dee0e6c0663",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-25-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-25-20260907.r.webp",
+      "bytes": 8186,
+      "sha256": "a4b40ee55ddb289bb4da4e84f60a26590ad3506d798a7c3e5647b7364a912180",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-25-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-25-20260907.w.webp",
+      "bytes": 8248,
+      "sha256": "44b9c4a149b4b13a94575b697fdc772679c26555de76a1f34b0df9b6f07bd9bf",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-25-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-26-20260907.e.webp",
+      "bytes": 6970,
+      "sha256": "af97e16c8a32a27872299fb0bd95961f2c3103e56ed0fa2e8338acf7d92a6de0",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-26-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-26-20260907.ex.webp",
+      "bytes": 7522,
+      "sha256": "65b3f38c586f88db0cbfc89e01840253c913fb37eee869996912fd82dcfc5e69",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-26-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-26-20260907.passive.webp",
+      "bytes": 5986,
+      "sha256": "61ed12c88a225aa8c431da10458d1462df351b5166be058efa1aecbf2f542c53",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-26-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-26-20260907.q.webp",
+      "bytes": 7164,
+      "sha256": "0ce475aa9ea211cf679fbf55aa3cda0fefeef623c2cad14f5f1b3d07ba75b6f4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-26-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-26-20260907.r.webp",
+      "bytes": 9832,
+      "sha256": "d7208ea6327b41161d6e615d4a2e87981468bc11cae3e94eebc31cb11557b388",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-26-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-26-20260907.w.webp",
+      "bytes": 7716,
+      "sha256": "4169376ab7af18278d2849ec7c238042f204cd7b6a194d01e365e8540d84bad9",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-26-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-27-20260907.e.webp",
+      "bytes": 5874,
+      "sha256": "cdc800872e591ce976dec05bfc521ccee97acc97776e9934fc38c1bcd778bc68",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-27-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-27-20260907.ex.webp",
+      "bytes": 9110,
+      "sha256": "9bbe21c0d5856e5544e994afbdff271e56b06bc7d412202627c404ac41a5930a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-27-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-27-20260907.passive.webp",
+      "bytes": 10476,
+      "sha256": "8291a93443f2e008a06750ca071f52b2c9eb6ab85c54806a7416e8bee25bfc73",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-27-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-27-20260907.q.webp",
+      "bytes": 9098,
+      "sha256": "e697f2d208362a70635d3fe029bad2aa661495ff6b52a530c88fd06c2f8d7a4c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-27-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-27-20260907.r.webp",
+      "bytes": 11086,
+      "sha256": "cefd2b765314e2daf9ab09aa66e57a7f9ab33f67c290be09f13b0e8dd6c6152f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-27-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-27-20260907.w.webp",
+      "bytes": 11250,
+      "sha256": "9fa8e7aa1256d306e85bc2703285a7cbc8fab481d83ea5eb9f20a76ec484136e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-27-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-28-20260907.e.webp",
+      "bytes": 3556,
+      "sha256": "1580f704943f5bc7bc98ea78da502e310d1165775e597e654309f0b4f2e35ea9",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-28-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-28-20260907.ex.webp",
+      "bytes": 7866,
+      "sha256": "9a31d8e3d38c97fdeab1afbe79fbc390a473b48f1d43fe83014f2603f9ed81c6",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-28-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-28-20260907.passive.webp",
+      "bytes": 6398,
+      "sha256": "5dca9801d5424616525953895473c3ae6458b2b218b0f34becc9fe7b89a4ee39",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-28-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-28-20260907.q.webp",
+      "bytes": 6430,
+      "sha256": "3563d0c3e171ace46f740c4b0761d8e228791be505241b1791e422c9c156cb10",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-28-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-28-20260907.r.webp",
+      "bytes": 9504,
+      "sha256": "8a67f4caa339e7fae699fca5d2547db62d8612bde00cabdadb2e5ae029117d50",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-28-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-28-20260907.w.webp",
+      "bytes": 5020,
+      "sha256": "888d6894023d5956811f96728454601f540cd22ff958faf082b6ff242de775fa",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-28-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-29-20260907.e.webp",
+      "bytes": 7704,
+      "sha256": "f7364fb3878ec894dda7001156112ba0a0f7557c02cfec2f4c6f02ccc03c7e65",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-29-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-29-20260907.ex.webp",
+      "bytes": 7336,
+      "sha256": "ca05b257e1946790c80c28adfe55a40a9e7bf5bf0b1eaf738be6dfccc77c9ab1",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-29-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-29-20260907.passive.webp",
+      "bytes": 4950,
+      "sha256": "7a3a3f6d00ab78f365ed6bd498782a289f189d62b6236c6a4e88192dc1d0fe07",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-29-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-29-20260907.q.webp",
+      "bytes": 10014,
+      "sha256": "50af1242e7702f378a407feb3310171f51331c05d5881cb6bc27bbae3595206e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-29-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-29-20260907.r.webp",
+      "bytes": 7392,
+      "sha256": "5221e760556d84da265db25e84151301059676fee7b0e3fc8f097b3801821cdf",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-29-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-29-20260907.w.webp",
+      "bytes": 10152,
+      "sha256": "7c7cb3b1b731f50bf675a398b12b68335402a618685862e79cff9d61e1d74004",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-29-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-30-20260907.e.webp",
+      "bytes": 6784,
+      "sha256": "151d0315806f539ebd1cddc28ab341e040c4b7a4346ad3b227adc2ac49bbf313",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-30-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-30-20260907.ex.webp",
+      "bytes": 6488,
+      "sha256": "519028ec518e97ad7579a21345926889ba8cae81d2c7dd1887161000402d5a82",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-30-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-30-20260907.passive.webp",
+      "bytes": 5588,
+      "sha256": "7e96a2515d0d7e23a567fef1d0e14cd0e0d50a2e98911eae0ebed6eb52e44836",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-30-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-30-20260907.q.webp",
+      "bytes": 5170,
+      "sha256": "808e294fbdb4775471387e21c49c3f8bc4d1632d0dfb1bd3f940a0e04d58593c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-30-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-30-20260907.r.webp",
+      "bytes": 8198,
+      "sha256": "2d17e26dcfac9ea3890fa2238fbb6f334c0d61bde2d3741d756c4e8e63ebf8bc",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-30-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-30-20260907.w.webp",
+      "bytes": 2706,
+      "sha256": "d7b9cca33ccfad040b616682d165edf8b8ae423dfd5f24fc325bbb86d0972a39",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-30-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-31-20260907.e.webp",
+      "bytes": 5972,
+      "sha256": "62b4c07ab6eea99a923e0f797bdb1bca555db9f49fce04e4a43ec3843f761dcc",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-31-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-31-20260907.ex.webp",
+      "bytes": 8200,
+      "sha256": "d6f7b9556d7c4031b0f8791b6b92954704dab54fd0aa9c68f681951068fb453b",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-31-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-31-20260907.passive.webp",
+      "bytes": 8634,
+      "sha256": "c767f10bd156e6e7802049af3406507635f57975c16c64a46a85423c7f75bc43",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-31-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-31-20260907.q.webp",
+      "bytes": 7530,
+      "sha256": "d5c061b1d196acaf12fa0d34cbf26c93b66fb557f91f852cccff2fe2e91f0cc3",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-31-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-31-20260907.r.webp",
+      "bytes": 9436,
+      "sha256": "b33aeddd6a859a2ab738730c15c62a4d5512daa87ec4ecaf8e7dd72dab04066c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-31-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-31-20260907.w.webp",
+      "bytes": 8594,
+      "sha256": "39fbaa6253f022e24879591d903095ccd5a9f7aa9ed8fc31ae518d531f488149",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-31-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-32-20260907.e.webp",
+      "bytes": 6078,
+      "sha256": "6de2be81cd5c41ddc1c5d2a595c51798d599497f35536035082d5278b92fbec4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-32-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-32-20260907.ex.webp",
+      "bytes": 14100,
+      "sha256": "a42dac3bd4cf4e7ec3b56e0b5045e8d7fef66e4dbc119266139bf84cd4f2a679",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-32-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-32-20260907.passive.webp",
+      "bytes": 6712,
+      "sha256": "c5b961dd2b9072d83b4197602c9890fd6d30bd6999e3faf786d1a9cb071516e6",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-32-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-32-20260907.q.webp",
+      "bytes": 8020,
+      "sha256": "4077f9de5d5c693c5a4ed9e50c747038aeaac957e9e196112c47fc2525e65e25",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-32-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-32-20260907.r.webp",
+      "bytes": 8424,
+      "sha256": "f8a29e778e81e3465351bae8692f4802730b62621137c24dd92acd4e671a077d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-32-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-32-20260907.w.webp",
+      "bytes": 5402,
+      "sha256": "9ed81568a9da33066c609dfd15e2edb0c7e21775a1ef68bdda00f094c4f6c66d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-32-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-33-20260907.e.webp",
+      "bytes": 7046,
+      "sha256": "3997d9ffca20432a3825090baab1994add3461c4579c90fec0f97537b8f63f01",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-33-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-33-20260907.ex.webp",
+      "bytes": 8522,
+      "sha256": "2e4767a56b1a82a390f2908ab2b53d962cfee17d541790c46eafbcc31ce1f546",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-33-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-33-20260907.passive.webp",
+      "bytes": 7950,
+      "sha256": "d8905e02c3ca6a7f8cd81d1719aa2526d1992dc67f99dffe5a5599658f7b48d2",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-33-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-33-20260907.q.webp",
+      "bytes": 5226,
+      "sha256": "3976377905f2b2eb8e3d6a8d3d4502f2419f04b2b4324b0b5b87866a0ad91060",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-33-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-33-20260907.r.webp",
+      "bytes": 5142,
+      "sha256": "843d8ffcc812a6adc8aa25a0ec4d24fb9dece7e04f17ffa92ea46c7d075fc7e7",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-33-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-33-20260907.w.webp",
+      "bytes": 8586,
+      "sha256": "387e832444e05addaa538b78f92ff285b2ea241bf5c928376c13b2c5fd54f3bc",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-33-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-34-20260907.e.webp",
+      "bytes": 9202,
+      "sha256": "5dcfcf53f77f22f7755c5da5ac838cee0b1fc53c32e8bb0710b9e53af60b85a3",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-34-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-34-20260907.ex.webp",
+      "bytes": 10194,
+      "sha256": "d7d0fc22a720c571d977f62595d4ff5509cb4c82c179469cedb83600907eb34d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-34-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-34-20260907.passive.webp",
+      "bytes": 10048,
+      "sha256": "22e395923ed3a8c69b5dbe63d05b4a9793ec7db69d39c007f63eab8fce983834",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-34-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-34-20260907.q.webp",
+      "bytes": 7616,
+      "sha256": "badaeb0a81f4434d39bd5e05c7e2e05cc1c382ec74bd30df072a88c190be6cfa",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-34-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-34-20260907.r.webp",
+      "bytes": 9586,
+      "sha256": "a9ecf02927b77d3facb455973ce7cddd0011137b39d42fa28e0a7351d1c9199b",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-34-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-34-20260907.w.webp",
+      "bytes": 7340,
+      "sha256": "63ff863641fe2e43524be4af2be04c1680140b92c4c1ca842f45a253cfe96997",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-34-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-35-20260907.e.webp",
+      "bytes": 2922,
+      "sha256": "f148d578f8b6c3cd2fc9fa32f4d49394c42766ee5befe68aa43452e0ab49690c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-35-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-35-20260907.ex.webp",
+      "bytes": 9508,
+      "sha256": "3214539660dd55d037c4da8e2aa3ce59f29f897f836c18b03c892901d7141eab",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-35-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-35-20260907.passive.webp",
+      "bytes": 7756,
+      "sha256": "9687680774c89c38cda322b993b06074f3056683bb305a1f0f0b88168eab8d19",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-35-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-35-20260907.q.webp",
+      "bytes": 7456,
+      "sha256": "1bc492d0384aa10a895bf2553e0a51aba93569b363e0eeb9395cc6a9341714bc",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-35-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-35-20260907.r.webp",
+      "bytes": 8068,
+      "sha256": "3ddb7b091b7260003dcc5fa646875c466304b73620ae3bdd72fefd13103c7eb0",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-35-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-35-20260907.w.webp",
+      "bytes": 10408,
+      "sha256": "c3a5d3adb7e2c2f13640376662c60bbef7d7ce61b57e7cd62ad85d37dc08fb28",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-35-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-36-20260907.e.webp",
+      "bytes": 6672,
+      "sha256": "00c70a2055af9ae004ff569287f548ada2409633c3cff1c2112e52914ac190e1",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-36-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-36-20260907.ex.webp",
+      "bytes": 7148,
+      "sha256": "ed868c06bf29d47471f51f52d1e9497122bf96f4a3734ab314076d1adab587a2",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-36-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-36-20260907.passive.webp",
+      "bytes": 9378,
+      "sha256": "03b5090f22490829b65751ecf3c4ba2b488d3e4902569f6c4c4e320e007f2fd5",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-36-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-36-20260907.q.webp",
+      "bytes": 4524,
+      "sha256": "aaa1419f974ef563e49b8865e22bcb8588cf335023c0d448839cbe361463498b",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-36-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-36-20260907.r.webp",
+      "bytes": 11870,
+      "sha256": "752a971c4e021ae2a52dac23add09922eb501970452c434896a95a712fddabe6",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-36-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-36-20260907.w.webp",
+      "bytes": 5340,
+      "sha256": "da9858c8a0bc8beb5728fadd6aef2a3f81a6e2c70bf694fcf59d8f17b8521a51",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-36-20260907.w"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-37-20260907.e.webp",
+      "bytes": 5966,
+      "sha256": "0dbe38a68f136c3fde9ab3b072af077ac8fee19820aef86cd85fd3a268d86117",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-37-20260907.e"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-37-20260907.ex.webp",
+      "bytes": 6594,
+      "sha256": "55dd0e2a324bc6488f23cb8f9adbf24dbe1976f7c210fda307561e496cdf5134",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-37-20260907.ex"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-37-20260907.passive.webp",
+      "bytes": 5192,
+      "sha256": "e2e6f5e710544670c0e9d7b5140e23dad320346c6d06be2580c0e63f2b0df8e0",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-37-20260907.passive"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-37-20260907.q.webp",
+      "bytes": 8212,
+      "sha256": "94a2d72d2875da9fbd8ff9b84747cdf8094f68a47e253ba2f808cd9be48b0b62",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-37-20260907.q"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-37-20260907.r.webp",
+      "bytes": 6340,
+      "sha256": "b320ec9e1768f9a5bb03dd870a87bcb9ff3aa391a25fd059b03cca27f685c43a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-37-20260907.r"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/community-review-37-20260907.w.webp",
+      "bytes": 3328,
+      "sha256": "82dcf9173bcae4d0172017cb1484d325807387fd5bb1683b96a0816336cb12e4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-37-20260907.w"
+      ]
+    },
+    {
       "path": "assets/icons/abilities/godie-e001.e.webp",
       "bytes": 4434,
       "sha256": "f81128a70f862bfa923c0bffc709b1cd9da3cdff4b93cb03e581613ff8c45703",
@@ -12010,9 +14452,19 @@
       "kind": "icons",
       "refs": [
         "bundle",
-        "sela",
-        "sela.e"
-      ]
+        "community-review-01-20260907",
+        "community-review-09-20260907",
+        "community-review-10-20260907",
+        "community-review-11-20260907",
+        "community-review-12-20260907",
+        "community-review-16-20260907",
+        "community-review-17-20260907",
+        "community-review-20-20260907",
+        "community-review-21-20260907",
+        "community-review-27-20260907",
+        "community-review-29-20260907"
+      ],
+      "moreRefs": 4
     },
     {
       "path": "assets/icons/abilities/sela.q.webp",
@@ -12022,9 +14474,19 @@
       "kind": "icons",
       "refs": [
         "bundle",
-        "sela",
-        "sela.q"
-      ]
+        "community-review-01-20260907",
+        "community-review-09-20260907",
+        "community-review-10-20260907",
+        "community-review-11-20260907",
+        "community-review-12-20260907",
+        "community-review-16-20260907",
+        "community-review-17-20260907",
+        "community-review-20-20260907",
+        "community-review-21-20260907",
+        "community-review-27-20260907",
+        "community-review-29-20260907"
+      ],
+      "moreRefs": 4
     },
     {
       "path": "assets/icons/abilities/sela.r.webp",
@@ -12034,9 +14496,19 @@
       "kind": "icons",
       "refs": [
         "bundle",
-        "sela",
-        "sela.r"
-      ]
+        "community-review-01-20260907",
+        "community-review-09-20260907",
+        "community-review-10-20260907",
+        "community-review-11-20260907",
+        "community-review-12-20260907",
+        "community-review-16-20260907",
+        "community-review-17-20260907",
+        "community-review-20-20260907",
+        "community-review-21-20260907",
+        "community-review-27-20260907",
+        "community-review-29-20260907"
+      ],
+      "moreRefs": 4
     },
     {
       "path": "assets/icons/abilities/sela.w.webp",
@@ -12046,9 +14518,19 @@
       "kind": "icons",
       "refs": [
         "bundle",
-        "sela",
-        "sela.w"
-      ]
+        "community-review-01-20260907",
+        "community-review-09-20260907",
+        "community-review-10-20260907",
+        "community-review-11-20260907",
+        "community-review-12-20260907",
+        "community-review-16-20260907",
+        "community-review-17-20260907",
+        "community-review-20-20260907",
+        "community-review-21-20260907",
+        "community-review-27-20260907",
+        "community-review-29-20260907"
+      ],
+      "moreRefs": 4
     },
     {
       "path": "assets/icons/abilities/thorne.e.webp",
@@ -12058,9 +14540,19 @@
       "kind": "icons",
       "refs": [
         "bundle",
-        "thorne",
-        "thorne.e"
-      ]
+        "community-review-02-20260907",
+        "community-review-03-20260907",
+        "community-review-04-20260907",
+        "community-review-05-20260907",
+        "community-review-06-20260907",
+        "community-review-07-20260907",
+        "community-review-08-20260907",
+        "community-review-13-20260907",
+        "community-review-14-20260907",
+        "community-review-15-20260907",
+        "community-review-18-20260907"
+      ],
+      "moreRefs": 15
     },
     {
       "path": "assets/icons/abilities/thorne.q.webp",
@@ -12070,9 +14562,19 @@
       "kind": "icons",
       "refs": [
         "bundle",
-        "thorne",
-        "thorne.q"
-      ]
+        "community-review-02-20260907",
+        "community-review-03-20260907",
+        "community-review-04-20260907",
+        "community-review-05-20260907",
+        "community-review-06-20260907",
+        "community-review-07-20260907",
+        "community-review-08-20260907",
+        "community-review-13-20260907",
+        "community-review-14-20260907",
+        "community-review-15-20260907",
+        "community-review-18-20260907"
+      ],
+      "moreRefs": 15
     },
     {
       "path": "assets/icons/abilities/thorne.r.webp",
@@ -12082,9 +14584,19 @@
       "kind": "icons",
       "refs": [
         "bundle",
-        "thorne",
-        "thorne.r"
-      ]
+        "community-review-02-20260907",
+        "community-review-03-20260907",
+        "community-review-04-20260907",
+        "community-review-05-20260907",
+        "community-review-06-20260907",
+        "community-review-07-20260907",
+        "community-review-08-20260907",
+        "community-review-13-20260907",
+        "community-review-14-20260907",
+        "community-review-15-20260907",
+        "community-review-18-20260907"
+      ],
+      "moreRefs": 15
     },
     {
       "path": "assets/icons/abilities/thorne.w.webp",
@@ -12094,9 +14606,19 @@
       "kind": "icons",
       "refs": [
         "bundle",
-        "thorne",
-        "thorne.w"
-      ]
+        "community-review-02-20260907",
+        "community-review-03-20260907",
+        "community-review-04-20260907",
+        "community-review-05-20260907",
+        "community-review-06-20260907",
+        "community-review-07-20260907",
+        "community-review-08-20260907",
+        "community-review-13-20260907",
+        "community-review-14-20260907",
+        "community-review-15-20260907",
+        "community-review-18-20260907"
+      ],
+      "moreRefs": 15
     },
     {
       "path": "assets/icons/augments/aegis-surge.webp",
@@ -13097,6 +15619,831 @@
       "refs": [
         "bundle",
         "void-hunger"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-aladdin.webp",
+      "bytes": 6024,
+      "sha256": "dc58f555ff1d528cc0b158b476e44ad95dbe4e75eb062a8fafc2c4be997b60f1",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-aladdin",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-albus.webp",
+      "bytes": 6478,
+      "sha256": "3a53787b9fd20d0d8ce51f1b08ba8b88cdf583820d12a29ba114bc4c8a5a69f7",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-albus",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-bojji.webp",
+      "bytes": 5834,
+      "sha256": "8e66f8eb515ece56220c19c357163b5f34bda36d22beb950b2fa2911a265d658",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-bojji",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-boxxo.webp",
+      "bytes": 5380,
+      "sha256": "5f9f4a7ebdc6839623c8934bc4c4981f650f2e444310eaf806cbebd4a848eef9",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-boxxo",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-elma.webp",
+      "bytes": 6054,
+      "sha256": "9e6fd7299b83a2fee0a285ffab79dfc48fd8ce0cbfbdac70b940d76f94663a87",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-elma",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-fushi.webp",
+      "bytes": 6762,
+      "sha256": "d656b7fba3a1044ce16ef6df798b3518ddde25bcfda7ffe436b3cf9742d66aff",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-fushi",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-goblin.webp",
+      "bytes": 6264,
+      "sha256": "ab12399f9e3dff5bb9f2cd201368918fab29c3c277d7e5dd155892382d5d9d22",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-goblin",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-guts.webp",
+      "bytes": 5728,
+      "sha256": "c7631f5a7d50272d2933cd79d94cbd2346a2ab56b8e67c53380b4d834d4a5406",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-guts",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-haga.webp",
+      "bytes": 5216,
+      "sha256": "bd08fea785845ce75643a06c6a84cb53e43e60beb2a6963d25eca94e858372af",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-haga",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-kaede.webp",
+      "bytes": 5698,
+      "sha256": "fd0b506af5a47d08c17061f0044186c58087c292aef9dc74c894833d24bb4614",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kaede",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-kaiji.webp",
+      "bytes": 4942,
+      "sha256": "aec735b343bd376bf8bfedf96782b2ae8b70acb5c9fd46beeb7dc67613d1ea13",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kaiji",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-keyaru.webp",
+      "bytes": 6410,
+      "sha256": "452c891b47a4f12a96abe702e05d1b476cae76dd9a25766a45e8efc8958155b8",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-keyaru",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-kisaragi.webp",
+      "bytes": 6496,
+      "sha256": "2c608701734aad644826b606ca84e8ca597831c064f7f1fe2c89e1e1e2ed45dd",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kisaragi",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-klaus.webp",
+      "bytes": 8778,
+      "sha256": "2d100a0b568f3af3e2bbaa59ca5abc818d13e6f5d8d68044c0297885a5840cce",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-klaus",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-kumoko.webp",
+      "bytes": 3728,
+      "sha256": "3b262644a95c92326d230e72add3056b4659d1260580ea3fa1a326ce0e249cf0",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kumoko",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-luckyman.webp",
+      "bytes": 5056,
+      "sha256": "a001fba6d7649cd57586e9def7958ae0f0ddd9d963fa55dd65c959a1e8bcb5ba",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-luckyman",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-makoto.webp",
+      "bytes": 5940,
+      "sha256": "bde58d49ca12cabbb62093728c60e883d5578738689693777270162091a4f772",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-makoto",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-maomao.webp",
+      "bytes": 5146,
+      "sha256": "af482c9ee259724fcd78adc69e40e9c71081b3ce04b2574653f2f658955054e9",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-maomao",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-maple-alt-9769eb88b85b.webp",
+      "bytes": 5306,
+      "sha256": "d1a1b28605483424d0e2a3c457a2ee8111912295f4fd0390d494819482245acb",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-maple-alt-9769eb88b85b",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-maple.webp",
+      "bytes": 4852,
+      "sha256": "5ee6633cf0115504e6ea348678a7c5153d3fc0fcf32eb8f2d14e5e9b7112c2d2",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-maple",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-matthias.webp",
+      "bytes": 7378,
+      "sha256": "b74c53e3a2486010c1a6b3897526bcc3488743e1ffa40ac620a8cbe8558deb6b",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-matthias",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-misery.webp",
+      "bytes": 7022,
+      "sha256": "1bcb1ae98eb522eddd99780ada0af2d560ebf7c02e07c0a20f0740fd9beef87b",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-misery",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-naofumi.webp",
+      "bytes": 5748,
+      "sha256": "d20cb58923edc3294be1e2d113b9d8c9a994722341897014a80003413d84dc6d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-naofumi",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-ned.webp",
+      "bytes": 6328,
+      "sha256": "4b32499235733f2be6b5bf45073ef99a68674080bba160982925887de0883a31",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-ned",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-noor.webp",
+      "bytes": 4862,
+      "sha256": "eced57d253af8fe512cfbcb4aaf1edb6d0d5e858d1d64abb8c10ae7fba1f2532",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-noor",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-nube.webp",
+      "bytes": 4208,
+      "sha256": "e3ad8a715f1bf3cbceaef2daaf43ef787e61dd8b10cc50cccd6197474d5dc84d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-nube",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-orphen.webp",
+      "bytes": 4552,
+      "sha256": "fd93b427056d933ca53b5149c2f10905e7c964ef5dd343b290f21693d55ddba1",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-orphen",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-popp.webp",
+      "bytes": 4500,
+      "sha256": "5652775f8cc0a8e624933593b36e93833e16c159717314ad391bc0fe6b7e9e6a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-popp",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-rem.webp",
+      "bytes": 5896,
+      "sha256": "22d2158980d04b04da563bbe5c9df30cd7648fd0ee34cb9e604af0119230a218",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-rem",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-rin.webp",
+      "bytes": 7662,
+      "sha256": "6adaf0fc904ac8ed2b79a170a5cde332dcaf0065bd7bbe13eeaace29593ecc6a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-rin",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-shadow.webp",
+      "bytes": 4442,
+      "sha256": "97eff7ed422eaee43b2a0aa2a9b0d87e716bcdf305583ce3839f7b2d3f54be2d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-shadow",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-shinchan.webp",
+      "bytes": 5264,
+      "sha256": "d1cdd2f47669be2aa7330ee3eaf8869ca90864699ded33ee502f190db28e5dbd",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-shinchan",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-sinbad.webp",
+      "bytes": 5080,
+      "sha256": "f553db2f2b466b0124acc9c8521e802c57d4fab2ffc4664cab099678fb0c72a6",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-sinbad",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-takopi.webp",
+      "bytes": 4510,
+      "sha256": "284c8482b0f8be0fc75d43feed4fa0796e7f448c4b6b3ad41891e2a8f6f76b96",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-takopi",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-touka.webp",
+      "bytes": 5152,
+      "sha256": "f43c84e496b27272d3ea2ebb127f68b7df872661a543754f150a6441e197e42b",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-touka",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-uncle.webp",
+      "bytes": 4880,
+      "sha256": "eb3c0f88bfbc1bd60e65c0d92839f4bf2cdb868ac00b490ea4188966cb4021d6",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-uncle",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-yogiri.webp",
+      "bytes": 5430,
+      "sha256": "1ca3b9194e69c863777648d612bbda8302bb5ea428c9b0f9a8a946a92fe60b09",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-yogiri",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/b2-zenitsu.webp",
+      "bytes": 5258,
+      "sha256": "d588c434cf27007ef7f59450dbffad197e6bcc03b9d9da486732598414d923c0",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-zenitsu",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-01-20260907.webp",
+      "bytes": 9580,
+      "sha256": "212aeda95ac7eb1598f8328d41587aedf72e215c52b219a620a36e60b81f33dc",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-01-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-02-20260907.webp",
+      "bytes": 9140,
+      "sha256": "750d2816bde6d0c9a3becb70ae40153c63df1457744e81a1129b3b77ff21654d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-02-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-03-20260907.webp",
+      "bytes": 6292,
+      "sha256": "72bb476569360e378ebfe39a38feffa03dd204319589016b63ff3ce063471f8c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-03-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-04-20260907.webp",
+      "bytes": 6246,
+      "sha256": "3609c7aa94c90ed30fb2c967346fff50cd14bbbc04c893bf1d7552746a726707",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-04-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-05-20260907.webp",
+      "bytes": 7138,
+      "sha256": "f265f3b1868e598f7d1f90fb3607191b4a0292e8dd8cc3fd5a8302050f615d19",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-05-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-06-20260907.webp",
+      "bytes": 4568,
+      "sha256": "fc4ab70b3c0897207045e316e812dec62bb1954e16a59fbffcca139a540432b6",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-06-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-07-20260907.webp",
+      "bytes": 9536,
+      "sha256": "da95c9193a51d95cae4754c85e4d3bafb1a8e454aad96c0ef472343b8dfecc3f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-07-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-08-20260907.webp",
+      "bytes": 5510,
+      "sha256": "83ec6750fe474d0f20745b6c064789d81692171664abc1e986bf0d6da92ca317",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-08-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-09-20260907.webp",
+      "bytes": 6014,
+      "sha256": "4f1d969f870565c9ddec939228bc90a3be90a8834792b143948cefe13436c980",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-09-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-10-20260907.webp",
+      "bytes": 6656,
+      "sha256": "3fb3c81ed439dcadf55f6e4020400f6775e2af99a304c93f5a46aa1653fdabff",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-10-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-11-20260907.webp",
+      "bytes": 3198,
+      "sha256": "a9725a292fa9589a69abd8eef9b7fbe51c7c2a084b792f5a3b32e17b73ac5fdd",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-11-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-12-20260907.webp",
+      "bytes": 6664,
+      "sha256": "4ab3812f296efae135e56071d882cee0224b966c8cdcbd6f537dbe596cd7f7a4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-12-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-13-20260907.webp",
+      "bytes": 6308,
+      "sha256": "55964d1c5ede9f008413ba2ca55df29117ff923debb793bf89ddfeba98c2e700",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-13-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-14-20260907.webp",
+      "bytes": 8078,
+      "sha256": "06a1ede6366e5daef34aa162c1a52dc4d945ba2d71332ffa6e2a7e31e1494bfb",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-14-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-15-20260907.webp",
+      "bytes": 5594,
+      "sha256": "bc550e7f5b079c6821a6c394498003ab62914ba4d6f90348e51bd3bbc1de997c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-15-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-16-20260907.webp",
+      "bytes": 8208,
+      "sha256": "0b730b3348e415a47f52c3224d8902778a36ac758eb296ed01a8adf7d76cfa66",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-16-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-17-20260907.webp",
+      "bytes": 7908,
+      "sha256": "87a750b0a52a72500f2a8f5d64231a1812993db4fa381e66b1e162ddd22ffb74",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-17-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-18-20260907.webp",
+      "bytes": 7008,
+      "sha256": "fda7c31dcd7a61fdeecc7a8d9ac3f1749aba4bcf1b226c51ca591ba5f0b03ea7",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-18-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-19-20260907.webp",
+      "bytes": 6700,
+      "sha256": "fabee6dbcd0faa94b8727f4dc736fdb0ce90e51ccfbd644751a0d1977abd450f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-19-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-20-20260907.webp",
+      "bytes": 10184,
+      "sha256": "7731ffb97699a5c1636d724294d7422ef01684434ca4abddfc9c06084f53412c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-20-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-21-20260907.webp",
+      "bytes": 7846,
+      "sha256": "c1a691489abf33a88175b331c955b665df2fdb02cdcbbf02f64cfdfcd40cfb0c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-21-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-22-20260907.webp",
+      "bytes": 5770,
+      "sha256": "9b8093abe5e37f6c9dba34eac3ccb3f405fee2213f0458f483b3249a338094e6",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-22-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-23-20260907.webp",
+      "bytes": 8144,
+      "sha256": "064d0967b218c05850926b019a61f565143b381ccba7f48ec13acb6382b6d941",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-23-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-24-20260907.webp",
+      "bytes": 9392,
+      "sha256": "479c325f293b468969120b9f9c562875b545aef3d5a40dfbae8b8097628a5f62",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-24-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-25-20260907.webp",
+      "bytes": 5148,
+      "sha256": "8de3ac2b7b047fcd148c4337e60071a6e15c165745a32033c589c30e0243b86c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-25-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-26-20260907.webp",
+      "bytes": 5772,
+      "sha256": "189a96bef5de36dc7bd830bcdca24da1d6783b7a3dfdb4ae0415c1a108486bce",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-26-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-27-20260907.webp",
+      "bytes": 6552,
+      "sha256": "effa5a3aaf32f83941a2bbf61427561e1dca8bce9bdb7aa5f78990c3a58ab5a0",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-27-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-28-20260907.webp",
+      "bytes": 5616,
+      "sha256": "5cafed2477396fb8dc2b291b92cc7d6b46a9663a3c17397bedf47516ac9203e4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-28-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-29-20260907.webp",
+      "bytes": 6390,
+      "sha256": "12c3ba8e392640d88952f892c979a5bad80a795fc2ae5692270f950f6b21f2fd",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-29-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-30-20260907.webp",
+      "bytes": 5884,
+      "sha256": "eb694fb1c9b994dd884386e5af36f83d8c17ab333edab336be3ee3282726094e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-30-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-31-20260907.webp",
+      "bytes": 5348,
+      "sha256": "011badd7033700f469aa1d83e6a7f99ac1c199fb0552579ecaf8dbded1472b45",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-31-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-32-20260907.webp",
+      "bytes": 6090,
+      "sha256": "cbba7081e3122319c2e095e2c5e021217634c128eefdeb232a88ec14586657ca",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-32-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-33-20260907.webp",
+      "bytes": 7356,
+      "sha256": "43d337866483e3895f4dd1aa39644dcdcfe5a5d0449dfee4c18951d7da3231f4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-33-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-34-20260907.webp",
+      "bytes": 4336,
+      "sha256": "d5fecb185ac0783a8357be05715298c49de73f0d19774ed04e8ecd30c5abd916",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-34-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-35-20260907.webp",
+      "bytes": 4822,
+      "sha256": "861acda5f968affe21d07fdfe1b3ecbbb86039b3c9e6b723b4ba4941ab747dcb",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-35-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-36-20260907.webp",
+      "bytes": 7648,
+      "sha256": "58be559a6c115ca4cd183b311b3a6fe4314734f6f96cc85587b93d96d1c1b231",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-36-20260907"
+      ]
+    },
+    {
+      "path": "assets/icons/champions/community-review-37-20260907.webp",
+      "bytes": 4468,
+      "sha256": "89bccb97b372c4f9450a678ae19df980ee740ae917b11d41c6d0413034214c20",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "bundle",
+        "community-review-37-20260907"
       ]
     },
     {
@@ -15513,6 +18860,28 @@
       ]
     },
     {
+      "path": "assets/models/community/076f91b23c8c5cdceb812ed08ac7aa0b2fa141c78723d42ca6c9fc0f78d4d889.glb",
+      "bytes": 992984,
+      "sha256": "076f91b23c8c5cdceb812ed08ac7aa0b2fa141c78723d42ca6c9fc0f78d4d889",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345"
+      ]
+    },
+    {
+      "path": "assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb",
+      "bytes": 920828,
+      "sha256": "0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea"
+      ]
+    },
+    {
       "path": "assets/models/community/212742ce3f4270d9cdb8dc8a2a1940d032da026dea2f5df475b705281eb10e1c.glb",
       "bytes": 993232,
       "sha256": "212742ce3f4270d9cdb8dc8a2a1940d032da026dea2f5df475b705281eb10e1c",
@@ -15521,6 +18890,61 @@
       "refs": [
         "bundle",
         "community.body.212742ce3f4270d9cdb8dc8a2a1940d032da026dea2f5df4"
+      ]
+    },
+    {
+      "path": "assets/models/community/2766406116640635dc332f44b45449d7119a87a1da2aa3ce1799de1e003a198e.glb",
+      "bytes": 1230780,
+      "sha256": "2766406116640635dc332f44b45449d7119a87a1da2aa3ce1799de1e003a198e",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905"
+      ]
+    },
+    {
+      "path": "assets/models/community/28fe31e942415e1a2b8f93963f31fb77d06a464d9fee7bf37db23df981dae48b.glb",
+      "bytes": 1281100,
+      "sha256": "28fe31e942415e1a2b8f93963f31fb77d06a464d9fee7bf37db23df981dae48b",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee"
+      ]
+    },
+    {
+      "path": "assets/models/community/2b52ec923450fa53fdef2cde4bae03ef56f99881222ab60333b733d21af5abbf.glb",
+      "bytes": 856548,
+      "sha256": "2b52ec923450fa53fdef2cde4bae03ef56f99881222ab60333b733d21af5abbf",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a"
+      ]
+    },
+    {
+      "path": "assets/models/community/3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7.glb",
+      "bytes": 1492264,
+      "sha256": "3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1"
+      ]
+    },
+    {
+      "path": "assets/models/community/3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd.glb",
+      "bytes": 2343924,
+      "sha256": "3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.e2b3a504b3c20d18a41d2d5aa4fbde63a79c15faa4005bb6"
       ]
     },
     {
@@ -15543,6 +18967,336 @@
       "refs": [
         "bundle",
         "community.body.42b8b816b13fcbd3faf4d7fe31a3120b4101dbc8fb163259"
+      ]
+    },
+    {
+      "path": "assets/models/community/43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246.glb",
+      "bytes": 663584,
+      "sha256": "43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df"
+      ]
+    },
+    {
+      "path": "assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
+      "bytes": 78876,
+      "sha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c"
+      ]
+    },
+    {
+      "path": "assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
+      "bytes": 2361292,
+      "sha256": "6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c"
+      ]
+    },
+    {
+      "path": "assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb",
+      "bytes": 1736188,
+      "sha256": "7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c"
+      ]
+    },
+    {
+      "path": "assets/models/community/7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2.glb",
+      "bytes": 679728,
+      "sha256": "7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b"
+      ]
+    },
+    {
+      "path": "assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb",
+      "bytes": 199860,
+      "sha256": "7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b"
+      ]
+    },
+    {
+      "path": "assets/models/community/7f1b4ceac21c09818ba23adde6c76fb43425dc9c39ec60162880a60d60a4a892.glb",
+      "bytes": 1436500,
+      "sha256": "7f1b4ceac21c09818ba23adde6c76fb43425dc9c39ec60162880a60d60a4a892",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.767145fe5fc4dc658f12221900b295b4f29a1cc388619786"
+      ]
+    },
+    {
+      "path": "assets/models/community/8b90c8e0f3afdab7d1887840332f13e63caea700d75ddf23d14f669390b249c2.glb",
+      "bytes": 958364,
+      "sha256": "8b90c8e0f3afdab7d1887840332f13e63caea700d75ddf23d14f669390b249c2",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916"
+      ]
+    },
+    {
+      "path": "assets/models/community/90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637.glb",
+      "bytes": 852356,
+      "sha256": "90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58"
+      ]
+    },
+    {
+      "path": "assets/models/community/913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd.glb",
+      "bytes": 1053984,
+      "sha256": "913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81"
+      ]
+    },
+    {
+      "path": "assets/models/community/97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f.glb",
+      "bytes": 1160176,
+      "sha256": "97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.7357fd2ccda99ddc2e468602ec75aedcad1caeed8b48dd1c"
+      ]
+    },
+    {
+      "path": "assets/models/community/9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870.glb",
+      "bytes": 816876,
+      "sha256": "9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782"
+      ]
+    },
+    {
+      "path": "assets/models/community/a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8.glb",
+      "bytes": 890368,
+      "sha256": "a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840"
+      ]
+    },
+    {
+      "path": "assets/models/community/b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032.glb",
+      "bytes": 862984,
+      "sha256": "b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5"
+      ]
+    },
+    {
+      "path": "assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
+      "bytes": 1104488,
+      "sha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3"
+      ]
+    },
+    {
+      "path": "assets/models/community/b63525363cc0739e8dd7e2dc80c59b4d9e292bb135bbab10350b5ea28b0538b0.glb",
+      "bytes": 772664,
+      "sha256": "b63525363cc0739e8dd7e2dc80c59b4d9e292bb135bbab10350b5ea28b0538b0",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270"
+      ]
+    },
+    {
+      "path": "assets/models/community/c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29.glb",
+      "bytes": 762900,
+      "sha256": "c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878"
+      ]
+    },
+    {
+      "path": "assets/models/community/ceab40377e1df17ec9dc831230df59546c19d04556c712ffd485768cd26b8fe2.glb",
+      "bytes": 981000,
+      "sha256": "ceab40377e1df17ec9dc831230df59546c19d04556c712ffd485768cd26b8fe2",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a"
+      ]
+    },
+    {
+      "path": "assets/models/community/cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937.glb",
+      "bytes": 834460,
+      "sha256": "cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c"
+      ]
+    },
+    {
+      "path": "assets/models/community/d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83.glb",
+      "bytes": 2322448,
+      "sha256": "d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.44221ab16b078a550562a74cda12fd753fbd236c5c8b1c47"
+      ]
+    },
+    {
+      "path": "assets/models/community/d637360355919ae5253a6467d4c9ef3bf110084b5a7bce3200db6578279d9329.glb",
+      "bytes": 1519620,
+      "sha256": "d637360355919ae5253a6467d4c9ef3bf110084b5a7bce3200db6578279d9329",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a"
+      ]
+    },
+    {
+      "path": "assets/models/community/ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08.glb",
+      "bytes": 589076,
+      "sha256": "ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df"
+      ]
+    },
+    {
+      "path": "assets/models/community/df7bc9e1b9fcda02b88ad164cad2a3ca2b0eb27b79a2bf5717c5ae6d2a25c285.glb",
+      "bytes": 1281464,
+      "sha256": "df7bc9e1b9fcda02b88ad164cad2a3ca2b0eb27b79a2bf5717c5ae6d2a25c285",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.35b594f1e2bf1c54a0b88ae44eb40c87a809715cd04e808e"
+      ]
+    },
+    {
+      "path": "assets/models/community/e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a.glb",
+      "bytes": 764552,
+      "sha256": "e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c"
+      ]
+    },
+    {
+      "path": "assets/models/community/eb9de32d14a7d5422295b1f1b0ea30becee83d8319df1586841ec0a89ef7a019.glb",
+      "bytes": 2355552,
+      "sha256": "eb9de32d14a7d5422295b1f1b0ea30becee83d8319df1586841ec0a89ef7a019",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216"
+      ]
+    },
+    {
+      "path": "assets/models/community/ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de.glb",
+      "bytes": 1249564,
+      "sha256": "ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.a1d55fe4f3667d7c3eb73ed75e1da853fadffd701c2737d2"
+      ]
+    },
+    {
+      "path": "assets/models/community/ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0.glb",
+      "bytes": 1058392,
+      "sha256": "ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855"
+      ]
+    },
+    {
+      "path": "assets/models/community/f4704423926d8cfb7d8e272f96d0bb240c865afa62d75a936b387049d969f01b.glb",
+      "bytes": 799056,
+      "sha256": "f4704423926d8cfb7d8e272f96d0bb240c865afa62d75a936b387049d969f01b",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.7138bd8e788b1b90c87ac4bb7e42d0141eadd1769f98d1f5"
+      ]
+    },
+    {
+      "path": "assets/models/community/fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da.glb",
+      "bytes": 1001788,
+      "sha256": "fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef"
+      ]
+    },
+    {
+      "path": "assets/models/community/fe62599a460e7cecdfe5ac5726a09a4d6e4a44663576c8529b3c2be6841a984c.glb",
+      "bytes": 683364,
+      "sha256": "fe62599a460e7cecdfe5ac5726a09a4d6e4a44663576c8529b3c2be6841a984c",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82"
       ]
     },
     {
@@ -15956,6 +19710,17 @@
       "refs": [
         "bundle",
         "imported.doom"
+      ]
+    },
+    {
+      "path": "assets/models/imported/doraemon-cat.glb",
+      "bytes": 4368388,
+      "sha256": "f44122f995cf7cd9a0f707d3a8951aae32f0f028f2769091b9dcf391eb233b16",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "imported.doraemon-cat"
       ]
     },
     {

@@ -1,7 +1,7 @@
 {
   "id": "community-review-35-20260907.e",
   "name": "〔呼吸調整〕",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"restore\",\"manaPct\":0.15,\"applyTo\":\"self\"}]。\n【目標設計】短暫調息恢復呼吸資源，移動或受擊會降低恢復效率。\n【待補機制】標準魔力回復 15%；需呼吸資源、調息中移動受傷降效率。",
   "slot": "E",
   "castType": "self",

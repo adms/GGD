@@ -2,9 +2,9 @@
   "id": "community-review-19-20260907.passive",
   "schema": "ability@1",
   "name": "二刀流",
+  "provenance": "w3x-import",
   "description": "交替命中累積連擊節奏，停止交鋒後衰退；提供有限攻速加成。",
   "slot": "PASSIVE",
-  "provenance": "editor-json",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [

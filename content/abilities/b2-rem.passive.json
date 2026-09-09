@@ -21,8 +21,7 @@
             "effects": [
               {
                 "amount": {
-                  "damageTier": "小",
-                  "flat": 500
+                  "damageTier": "小"
                 },
                 "damageType": "physical",
                 "kind": "damage"
@@ -46,8 +45,7 @@
       "damageType": "physical",
       "internalCooldown": 3,
       "reflectDamage": {
-        "damageTier": "小",
-        "flat": 500
+        "damageTier": "小"
       }
     },
     "ref": "hero-template.a0174c3324e732c421ab641d1e36cd2f49f758475f851ee4"

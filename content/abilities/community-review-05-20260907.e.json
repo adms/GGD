@@ -1,7 +1,7 @@
 {
   "id": "community-review-05-20260907.e",
   "name": "Leaf Shield",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-05-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】形成有限耐久的葉片護盾；再次使用可將剩餘葉片射出。\n【待補機制】缺再次輸入射出剩餘葉片及護盾剩餘量換算。",
   "slot": "E",
   "castType": "self",

@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.567,
+  "castTimeSec": 0.1,
   "castType": "ground",
   "cooldown": [
     15.0,
@@ -21,12 +21,7 @@
       "onLand": [
         {
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "極小",
-              "小"
-            ]
+            "damageTier": "小"
           },
           "damageType": "magic",
           "kind": "damage"
@@ -55,7 +50,7 @@
     "contentSha256": "sha256:b61b2a1c1ffc981faabdd966f3aeeb6676a6acb846f52b43941474cb27ce883d",
     "params": {
       "apexHeight": 100,
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "durationSec": 0.4,
       "grabMode": "dragToCaster",
       "landDamageTier": "小",

@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.567,
+  "castTimeSec": 0.1,
   "castType": "targeted",
   "cooldown": [
     15.0,
@@ -39,13 +39,6 @@
     {
       "amountPerTick": {
         "damageTier": "極小",
-        "flat": 200,
-        "perRank": [
-          0,
-          100,
-          200,
-          300
-        ],
         "ratios": [
           {
             "coeff": 0.2289,
@@ -80,19 +73,12 @@
     "contentSha256": "sha256:c76d7faa4f0ae1fc83b9f46576247f99fe4dfb785449517a122082a8d9c648cc",
     "params": {
       "apRatio": 0.2,
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "damageTier": "極小",
       "damageType": "magic",
       "durationSec": 3,
-      "flat": 200,
       "intervalSec": 1,
       "leechFlat": 100,
-      "perRank": [
-        0,
-        100,
-        200,
-        300
-      ],
       "stacking": "refresh"
     },
     "ref": "hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990"

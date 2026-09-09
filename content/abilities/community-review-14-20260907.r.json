@@ -1,7 +1,7 @@
 {
   "id": "community-review-14-20260907.r",
   "name": "完全防禦形態",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":180,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-14-20260907.r.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】進入短暫球體防禦，期間無法移動及施法；結束後有明顯恢復動作。\n【待補機制】需球體變形、禁移動禁施法與限時防禦；目前只有盾。",
   "slot": "R",
   "castType": "self",

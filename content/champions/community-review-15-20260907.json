@@ -49,7 +49,7 @@
     "Q": {
       "id": "community-review-15-20260907.q",
       "name": "〔正面擒抱〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】抓取一名近身敵人，雙方短暫進入配對動作；抓取總時間有上限。",
       "slot": "Q",
       "castType": "targeted",
@@ -76,12 +76,7 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "極小",
-              "小"
-            ],
+            "damageTier": "小",
             "ratios": []
           }
         }
@@ -93,12 +88,7 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "極小",
-              "小"
-            ],
+            "damageTier": "小",
             "ratios": []
           },
           "damageType": "physical",
@@ -110,7 +100,7 @@
     "W": {
       "id": "community-review-15-20260907.w",
       "name": "〔肌肉防線〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】拖拉指定目標後向前投擲 200 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】消耗氣勢提高短期防禦，無氣勢時仍有較弱效果。\n【待補機制】雙人摔角動作、抓取免疫與同步挂點須驗收。",
       "slot": "W",
       "castType": "ground",
@@ -147,12 +137,7 @@
               "kind": "damage",
               "damageType": "physical",
               "amount": {
-                "damageTierPerRank": [
-                  "極小",
-                  "極小",
-                  "極小",
-                  "小"
-                ],
+                "damageTier": "小",
                 "ratios": [
                   {
                     "stat": "ap",
@@ -188,7 +173,7 @@
     "E": {
       "id": "community-review-15-20260907.e",
       "name": "〔肩膀衝撞〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-15-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】向前衝撞，命中第一名敵人後停止。\n【待補機制】需保護指定友軍與氣勢；目前自身。",
       "slot": "E",
       "castType": "self",
@@ -247,7 +232,7 @@
     "R": {
       "id": "community-review-15-20260907.r",
       "name": "〔兄貴背摔〕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "【目前模板可執行】拖拉指定目標後向前投擲 400 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】對抓取中的目標進行背摔；未抓取時先做可被閃避的近身捕捉。\n【待補機制】目前單次投擲；需大摔技雙人動作同步與有限區域衝擊。",
       "slot": "R",
       "castType": "ground",
@@ -282,11 +267,7 @@
               "kind": "damage",
               "damageType": "physical",
               "amount": {
-                "damageTierPerRank": [
-                  "極小",
-                  "極小",
-                  "小"
-                ],
+                "damageTier": "小",
                 "ratios": [
                   {
                     "stat": "ap",
