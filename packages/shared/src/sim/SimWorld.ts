@@ -1,3 +1,4 @@
+import { expireMovedShields } from "./combat/movementShield";
 import { digestCastCredits } from "./content/castLedger";
 /**
  * SimWorld — the deterministic authoritative world. A pure function of
@@ -1833,6 +1834,7 @@ export class SimWorld {
     //                             the SAME tick it came due. Queued after the
     //                             drain it would land one tick late, every tick,
     //                             for the whole burn. See effects/dotTick.ts.
+    expireMovedShields(this); // Actual movement ends only opted-in stationary shields.
     intervalHookSystem(this); // 7d. 週期觸發 (`onInterval` hooks): 43-00 觀音大士
     //                             每 10 秒的護盾、03-00 相轉移裝甲的常駐魔免、
     //                             52-00 十二道試煉每秒的生命流失。
@@ -1959,6 +1961,7 @@ export class SimWorld {
     //                             the same shape stealthSystem/flightSystem
     //                             already pay (sim/stats/resourceStats.ts ②).
     statRecomputeSystem(this); // 11. late recompute for same-tick attaches
+    expireMovedShields(this); // Also capture late hook teleports before snapshots.
     accumulateTimeAlive(this); // 12. match-stat time-alive (combat-gated)
 
     this.tick++;
@@ -2002,6 +2005,10 @@ export class SimWorld {
         mix(hp.hp);
         mix(hp.mana);
         for (const shield of hp.shields) {
+          if (shield.moveBreakAnchor && shield.expiresAtTick > this.tick) {
+            const a = shield.moveBreakAnchor; mix(4003); mix(a.x); mix(a.z); mix(a.y); mix(a.zone);
+            mix(shield.amount); mix(shield.expiresAtTick);
+          }
           if (!shield.credits?.length || shield.expiresAtTick <= this.tick) continue;
           mix(shield.expiresAtTick);
           for (const credit of shield.credits) { mix(credit.source ?? -1); mix(credit.amount); }
@@ -2030,6 +2037,11 @@ export class SimWorld {
         }
       }
       for (const s of this.stats.get(id)?.sources ?? []) {
+        s.hookStillness?.forEach((sample, hi) => {
+          if (!sample) return;
+          mix(4002); mix(id); for (const c of s.id) mix(c.charCodeAt(0)); mix(hi);
+          mix(sample.x); mix(sample.z); mix(sample.y); mix(sample.zone); mix(sample.tick); mix(sample.since); mix(sample.round);
+        });
         if (s.drive && (s.expiresAtTick === undefined || s.expiresAtTick > this.tick)) {
           mix(id); for (const c of s.id) mix(c.charCodeAt(0));
           mix(s.expiresAtTick ?? -1); mix(s.drive.accelSec); mix(s.drive.brakeSec);

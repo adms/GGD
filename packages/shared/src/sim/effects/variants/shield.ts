@@ -10,6 +10,7 @@ export interface ShieldVariant {
   kind: "shield";
   amount: Scaling;
   duration: number;
+  breakOnMove?: true;
   /** ⭐ S1（GH#299）—— 不疊加政策的身分。缺席 = 每次都是新的一片。 */
   stackKey?: string;
   /** ⭐ S1 —— 身上已經有同 key 那一片時怎麼辦。`stackKey` 有值而這格沒填 = replace。 */

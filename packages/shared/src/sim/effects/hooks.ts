@@ -1,3 +1,4 @@
+import { intervalStillness } from "./intervalStillness";
 /**
  * Hook dispatch — event-driven effects from ModifierSources (champion passives,
  * item passives, augments). Hooks run inline at emit time; any damage they
@@ -289,6 +290,7 @@ export function fireHooks(
     for (let hi = 0; hi < src.hooks.length; hi++) {
       const hook = src.hooks[hi]!;
       if (hook.on !== event) continue;
+      if (hook.stationaryForSec !== undefined && !intervalStillness(world, owner, src, hi, hook.stationaryForSec)) continue;
       if (event === "onBlock" && (!incoming?.blockSourceIds?.length ||
           (hook.blockSource === "thisSource" && !incoming.blockSourceIds.includes(src.id)))) continue;
       if (hook.observedEvent !== undefined && observedEvent !== hook.observedEvent) continue;

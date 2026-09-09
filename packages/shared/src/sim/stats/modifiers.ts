@@ -507,6 +507,8 @@ export interface HookDef {
   evadeDuring?: "dash";
   /** Require positive HP loss or absorbed shield damage in the triggering packet. */
   damageConnected?: true;
+  /** Continuous actual stillness before an interval hook may fire. */
+  stationaryForSec?: number;
   evadeSource?: "defender" | "thisSource";
   /** Require the positive block grant to be this modifier source. */
   blockSource?: "thisSource";
@@ -923,6 +925,7 @@ export interface ModifierSource {
   auras?: AuraDef[];
   /** runtime: last tick each hook fired (internal-cooldown bookkeeping) */
   hookLastFired?: number[];
+  hookStillness?: (import("../effects/intervalStillness").StillnessSample | undefined)[];
   /**
    * RUNTIME (never authored), **只有 `internalCooldownScope: "perAbilitySlot"`
    * 的 hook 會用到**:`hooks[hi]` ↔ 「這個槽位上一次觸發是第幾 tick」。

@@ -239,6 +239,7 @@ export function refineHookDamageContext(
     critSource?: string | undefined;
     evadeDuring?: "dash" | undefined;
     damageConnected?: true | undefined;
+    stationaryForSec?: number | undefined;
     evadeSource?: string | undefined;
     blockSource?: string | undefined;
     evadeChannel?: string | undefined;
@@ -428,6 +429,9 @@ export function refineHookDamageContext(
   }
   if (hook.blockSource !== undefined && hook.on !== "onBlock") {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["blockSource"], message: "格擋來源只適用 onBlock。" });
+  }
+  if (hook.stationaryForSec !== undefined && hook.on !== "onInterval") {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["stationaryForSec"], message: "連續靜止窗口只適用逐 tick 觀測的 onInterval。" });
   }
   if (hook.damageConnected && !["onDamageDealt", "onDamageTaken", "onSummonHit"].includes(hook.on)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["damageConnected"], message: "有效傷害只適用已結算的傷害／召喚命中事件。" });
@@ -655,6 +659,7 @@ export const zHookDefBase = z
     observedEvent: z.enum(["basicHit", "abilityHit", "heal", "control"]).optional().describe("觀察同區可見敵人的有效普攻命中、技能命中、治療或控制；target 是被觀察的敵人，不是受害者。"),
     blockSource: z.enum(["thisSource"]).optional().describe("只在這份增益真正擋下正值傷害時觸發；護盾吸收、其他來源與空事件不算。"),
     evadeDuring: z.enum(["dash"]).optional().describe("只計閃避當下仍在實際移動的衝刺；空按、原地、撞停及事後移動不算。"),
+    stationaryForSec: z.number().min(1 / 30).max(HOOK_INTERNAL_COOLDOWN_MAX_SEC).optional().describe("連續實際靜止幾秒才允許週期觸發；移動、換區、死亡或中場重開窗口。頻率仍由內部冷卻控制。"),
     damageConnected: z.literal(true).optional().describe("觸發傷害必須實際扣血或消耗護盾；零值與完全免疫不觸發，省略保留既有事件判斷。"),
     evadeChannel: z.enum(["basic", "ability"]).optional().describe("限定真正普攻或技能迴避；不包含攻擊者失手。"),
     evadeSource: z.enum(["defender", "thisSource"]).optional().describe("只計真正防禦方迴避，排除攻擊者失手；thisSource 另要求實際抽中的迴避來源就是本增益。省略保留原事件行為。"),

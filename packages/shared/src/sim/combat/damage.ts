@@ -1,3 +1,5 @@
+import { bodyPosition } from "../movement/bodyPosition";
+import { expireMovedShields } from "./movementShield";
 /**
  * Damage queue + resolution. Effects QUEUE damage; this system drains the queue
  * in one ordered pass per tick (mitigation → shields → hp → hooks), so results
@@ -903,6 +905,7 @@ export function combatResolveSystem(world: SimWorld): void {
     for (const pkt of batch) {
       const hp = world.health.get(pkt.target);
       if (!hp || !hp.alive) continue;
+      expireMovedShields(world, pkt.target);
 
       // ---- 傷害型別轉換 · "beforeGates" 相位 (無視防禦 / 真實傷害家族) -------
       // 這一相位的來源在**免疫與閃避之前**就把封包蓋掉,所以那兩道閘看到的是
@@ -1578,6 +1581,7 @@ export function addShield(
    * （`"item:xxx"` / `"ability:yyy#3"`），不是實體 id，反推就是在猜。
    */
   grantedBy?: EntityId,
+  breakOnMove?: true,
 ): void {
   const hp = world.health.get(target);
   if (!hp) return;
@@ -1586,6 +1590,7 @@ export function addShield(
   amount *= outputMult(world, grantedBy, Stat.OutputShieldPct);
   const expiresAtTick = world.tick + Math.round(durationSecs / world.dt);
   const absorbsPart = absorbs !== undefined && absorbs !== "all" ? { absorbs } : {};
+  const anchor = breakOnMove ? bodyPosition(world, target) : undefined;
   if (stack !== undefined) {
     // ⚠️ 找**還沒過期**的那一片：一片到期的盾還躺在陣列裡（清掃是消費端的事），
     // 而「跟一片已經失效的盾合併」會讓新盾繼承一個過去的到期 tick = 掛上去就沒了。
@@ -1602,6 +1607,10 @@ export function addShield(
       live.expiresAtTick =
         stack.onExisting === "replace" ? expiresAtTick : Math.max(live.expiresAtTick, expiresAtTick);
       live.sourceId = sourceId;
+      if (stack.onExisting === "replace") {
+        if (anchor) live.moveBreakAnchor = anchor;
+        else delete live.moveBreakAnchor;
+      }
       return;
     }
   }
@@ -1611,6 +1620,7 @@ export function addShield(
     sourceId,
     ...(grantedBy !== undefined && amount > 0 ? { credits: [{ source: grantedBy, amount }] } : {}),
     ...absorbsPart,
+    ...(anchor ? { moveBreakAnchor: anchor } : {}),
     ...(stack !== undefined ? { stackKey: stack.stackKey } : {}),
   });
 }

@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "0f734afd",
+  "fingerprint": "d3505634",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -156,6 +156,7 @@
     "perTarget",
     "reflectedDamageSource",
     "reflectedDamageType",
+    "stationaryForSec",
     "target",
     "victim"
   ],
@@ -198,6 +199,7 @@
     "branches",
     "breakOnDamage",
     "breakOnDamageMin",
+    "breakOnMove",
     "buff",
     "burnsInFireRing",
     "canCrit",
@@ -548,6 +550,7 @@
     "branches.weightFrom.coeff",
     "breakOnDamage",
     "breakOnDamageMin",
+    "breakOnMove",
     "buff",
     "buff.durationSec",
     "buff.ratio",
