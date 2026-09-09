@@ -259,3 +259,12 @@ Editor 的「敵方前置行動」可切換自動、靜止或普攻，並显示�
 - `oncePerCast` 預設只認實際扣血；若原稿的命中包含盾吸收，再明填 `damageConnected: true`。多目標、波次、殘像／反傷、他人施法都要有去重反例。
 - 技能彈可否穿地形與角色能否穿牆分開核對 GGD 規則；目前技能穿地形，角色突進仍碰撞。不要把 ProjectileSystem 的歷史檔頭誤當目前規則。
 - Editor 前置施法可選 EX，需使用實際 EX 解鎖與施法路徑，保留消耗及狀態。參考 [不知火舞配方](materials/community-hero-forge/refinements/03.json)、[行為](packages/shared/src/content/heroForge/communityRefinements/mai.test.ts)、[匯入與試玩](packages/shared/src/content/heroForge/communityRefinements/maiAcceptance.test.ts) 與 [收據](materials/community-hero-forge/refinements/mai-verification.json)。火球或現有角色代理不能當作扇彈、火焰弧與殘像畫面已完成。
+
+## 接續輸入與模板歷史
+
+- 原稿要求再次按鍵時，使用 `recast` 狀態。首段為 `effects`，第二段起放在 `recast.stages[].effects`；每段須另一次正式施法輸入。`delayed` 或一次按鍵自動三連擊不能替代。
+- 在 `tpl-effect-sequence` 的 `recast` 參數調整接續窗口、最短輸入間隔及 `cost: first/each`。首段冷卻在窗口下持續流逝，不因第二次按鍵重置或退費；揮空仍受原技能後搖限制。
+- 同時測一次輸入、三次合法輸入、同 tick 連按、窗口最後合法 tick、到期 tick、控制中斷、魔力／資源不足、改方向、不同英雄及斷線重送。真實技能列也要顯示下一段、剩餘窗口與本段成本資格。Editor 的「接續輸入測試」會送正式命令，不補資源或清冷卻。
+- 微調配方需保存 `template.contentSha256` 與 `templateVersions` 原文。更新共享模板時，其他英雄不能自動升版。已生成的作品也要逐位元比對；只測模板函式無法證明整批重建仍獨立。
+- 作品帶的模板快照不等於伺服器核准。舊版本須由伺服器歷史庫或版本控制中的明確歷史來源解析，核对 id 與 SHA；未知或竄改來源仍拒絕。
+- 參考 [葵花配方](materials/community-hero-forge/refinements/02.json)、[實際輸入測試](packages/shared/src/content/heroForge/communityRefinements/ioriRecast.test.ts)、[Editor／匯入案例](packages/shared/src/content/heroForge/communityRefinements/ioriRecastAcceptance.test.ts) 與 [本輪收據](materials/community-hero-forge/refinements/iori-recast-verification.json)。此版只修八神庵 E，不代表其餘五槽或紫炎與三段原作動作已完成。

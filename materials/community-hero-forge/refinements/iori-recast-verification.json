@@ -1,0 +1,447 @@
+{
+  "schema": "ggd-iori-recast-verification@1",
+  "issue": 1132,
+  "sourceCommit": "925f1350438df0ebf0b3e260bf148a097821b558",
+  "implementedSlots": [
+    "E"
+  ],
+  "pendingSlots": [
+    "PASSIVE",
+    "Q",
+    "W",
+    "R",
+    "EX"
+  ],
+  "refinementVersion": 1,
+  "refinementSha256": "e62419390ee02bf31b6fca2733d71a3e99919cf66acb84969de8d49d029fc9be",
+  "behavior": {
+    "inputCount": 3,
+    "minIntervalSec": 0.2,
+    "windowSec": 1.2,
+    "boundary": "ready inclusive, expiry exclusive, measured after each stage resolves",
+    "cost": "mana and status paid on first stage; normal cooldown starts once and continues underneath",
+    "miss": "Consumes one stage; normal 0.6s whiff recovery still applies before the next input",
+    "interrupts": [
+      "stun",
+      "silence",
+      "root",
+      "fear",
+      "knockdown",
+      "death",
+      "settled duel",
+      "rank or ability replacement"
+    ],
+    "autoContinuation": false,
+    "inputReplay": "existing InputMailbox seq rejects duplicate or stale messages, including clear on reconnect"
+  },
+  "wiring": {
+    "template": "tpl-effect-sequence optional recast param -> shared params schema -> expand/stack/merge -> compiled ability",
+    "editor": "explicit single / three / rapid / late input scenarios go through real world.step without cost/cooldown reset",
+    "game": "server snapshot -> append-only wire fields -> RoomStore -> desktop and tablet stage/window badge and mana eligibility",
+    "historicalTemplates": "server-shipped retained template list, independent from submitted project snapshots; fresh server rejects unknown digest/id"
+  },
+  "comparison": {
+    "changedProjects": [
+      "02.hero-project.json"
+    ],
+    "otherProjectsByteIdentical": 36,
+    "originalRecipesByteIdentical": 37,
+    "otherFiveSlotsUnchanged": true,
+    "sourceDesignBriefPresentationUnchanged": true,
+    "revisionBefore": 12,
+    "revisionAfter": 13,
+    "modelSha256": "e55e9d2db49004f56d19091d4b7f6f74ffef19c8606b1b793650022f2924148c"
+  },
+  "templatePinMetadata": [
+    {
+      "path": "materials/community-hero-forge/refinements/01.json",
+      "previousSha256": "8efc410950413671519d74f3985b5ae7088421cde24e572134c6ef4ccc9395fc",
+      "currentSha256": "be1a3cfc2f6e95f04827e6e7ee1d0ced88743935c3d9b6d94f94d7e0f210c8c6"
+    },
+    {
+      "path": "materials/community-hero-forge/refinements/02.json",
+      "previousSha256": null,
+      "currentSha256": "e62419390ee02bf31b6fca2733d71a3e99919cf66acb84969de8d49d029fc9be"
+    },
+    {
+      "path": "materials/community-hero-forge/refinements/03.json",
+      "previousSha256": "1affae1eef12032265892da1140f0af9ca63bd21890bda9c6bfdf257c451c1e3",
+      "currentSha256": "e86507fc7b101531c4da01975f1207b498f6b018541a716e290613d5a51c8f26"
+    },
+    {
+      "path": "materials/community-hero-forge/refinements/20.json",
+      "previousSha256": "cf0c474581ace5b58305990bee0eb5a0f3f78411c07040ceef5f21bbcbee6bfc",
+      "currentSha256": "c3a37326f31955d48150cc9abb207cdcb65c35f1663e914f0bae59babeb4c2f0"
+    },
+    {
+      "path": "materials/community-hero-forge/refinements/21.json",
+      "previousSha256": "9bfa5a527ca95c2c4412c0af01f2a7213ac33e67575e8c14cf7e1b096186e362",
+      "currentSha256": "d598df4e5977d9aa153153f4b110b974f11130b300e4866587d0c25055c7c244"
+    },
+    {
+      "path": "materials/community-hero-forge/refinements/23.json",
+      "previousSha256": "092abbe0c8946cd80c97db58b38db8bb7f09fb497e2c85e51c386548b6f82629",
+      "currentSha256": "c219229e4fc8a5234934169ae0af939e1bfa1da1c825f243c10ef38d3f80be63"
+    },
+    {
+      "path": "materials/community-hero-forge/refinements/24.json",
+      "previousSha256": "7c7378ae9bfb8fddc714c674659dd4c1045e25ee8ac45aa6146129fc7f7901a8",
+      "currentSha256": "d3a1eaf122215674e60151912c8ec8a2cc2060ec5fe0eee2ddc91fb880758379"
+    },
+    {
+      "path": "materials/community-hero-forge/refinements/26.json",
+      "previousSha256": "f8a0eb36e78916df72de680ac8538d167e9086d8bcdb84bbd3d1c942dfe930b1",
+      "currentSha256": "e3fc2c638a3a7836547864601459ba7a2fa815aa712318ff5908a05a16bb517f"
+    },
+    {
+      "path": "materials/community-hero-forge/refinements/27.json",
+      "previousSha256": "3466f8ac3fc55d29536730633e5cb9107519a7327b79b1a90823ebaa92f1bfb9",
+      "currentSha256": "804f6abf7204957a228bd34224114dade39eef0e0b384ab63c0f819dd6d53e4e"
+    },
+    {
+      "path": "materials/community-hero-forge/refinements/28.json",
+      "previousSha256": "63c26b49561261516db07d01fd31944c572628ef6a4b79e2aea2816991955f0d",
+      "currentSha256": "aaccb9a4ddd95df8869d7021efafca1b293386b2ee25e26e5df89be94fdf76b9"
+    },
+    {
+      "path": "materials/community-hero-forge/refinements/30.json",
+      "previousSha256": "10102301df53f689b14a07d111bc9987944ca8eae980b9cec9e58d6c3dea0af0",
+      "currentSha256": "5fd6e5e5654adedf6e9aff3463d2ef9efe1f657614fd0ee06d51d2f53f3dfb9d"
+    },
+    {
+      "path": "materials/community-hero-forge/refinements/31.json",
+      "previousSha256": "1a2e02876595ca624503d0ff9cae1dd0d0973953639172f8439eef4012dfeb12",
+      "currentSha256": "dcf469bda88a08e3542a25fbbaae39f0eaa46da9153eaf63bee784490ac3b9ab"
+    },
+    {
+      "path": "materials/community-hero-forge/refinements/32.json",
+      "previousSha256": "f15c6f52001a3814b169698b014de3c5411dce0737dc639a1e3c89d6577e89b8",
+      "currentSha256": "ff494b584e9be496c509a839ac4270484ef9b2324cdced2424de66ed291df2b2"
+    },
+    {
+      "path": "materials/community-hero-forge/refinements/37.json",
+      "previousSha256": "88f2f05f40e9025ac2df62c390c7d537298e8439962325e530570d129cae95c8",
+      "currentSha256": "9aeb3974f986ed2db35d6ab304bb8a20a3e57777cbb25367795b76bbad2f7744"
+    }
+  ],
+  "priorReceipts": "Previous per-hero receipts remain tied to their original source commits; this batch adds explicit source snapshots and preserves generated project bytes for the other 36 heroes.",
+  "focused": {
+    "behaviorTests": 22,
+    "importerAndEditorScenarioTests": 6,
+    "nestedContractTests": 1,
+    "wireAndResendTests": 2,
+    "clientRenderTests": 2,
+    "freshServiceHistoryTests": 1,
+    "initialRegressionTests": 507,
+    "initialRegressionNote": "Before two additional cost/isolation tests; the final registered batch supersedes this run.",
+    "checks": [
+      {
+        "name": "api-history",
+        "exitCode": 0,
+        "command": [
+          "pnpm",
+          "--filter",
+          "@ggd/content-api",
+          "exec",
+          "vitest",
+          "run",
+          "src/heroShippedTemplateHistory.test.ts",
+          "--minWorkers=1",
+          "--maxWorkers=1"
+        ],
+        "log": "/private/tmp/ggd-community-mechanism-fixes/recast-check-api-history.log",
+        "sha256": "d8455e5b5f9974773cf5fa50840e193848d600f2548dae3e01f22219e5a44e94"
+      },
+      {
+        "name": "wire",
+        "exitCode": 0,
+        "command": [
+          "pnpm",
+          "--filter",
+          "@ggd/game-server",
+          "exec",
+          "vitest",
+          "run",
+          "src/net/recastSnapshot.test.ts",
+          "--minWorkers=1",
+          "--maxWorkers=1"
+        ],
+        "log": "/private/tmp/ggd-community-mechanism-fixes/recast-check-wire.log",
+        "sha256": "ab82d10c7ad067f4cabf06481b94da2705e5e59028c13ba8f5c79f5d90c3c019"
+      },
+      {
+        "name": "client-ui",
+        "exitCode": 0,
+        "command": [
+          "pnpm",
+          "--filter",
+          "@ggd/client",
+          "exec",
+          "vitest",
+          "run",
+          "src/ui/recastWiring.test.ts",
+          "src/ui/castAnnounce.test.ts",
+          "src/ui/abilityToggleWiring.test.ts",
+          "--minWorkers=1",
+          "--maxWorkers=1"
+        ],
+        "log": "/private/tmp/ggd-community-mechanism-fixes/recast-check-client-ui.log",
+        "sha256": "77a10c3573dd1f94a022bc7684bedfcbbfc04a38c7cdf5dcce099006412305c5"
+      },
+      {
+        "name": "shared",
+        "exitCode": 0,
+        "command": [
+          "pnpm",
+          "--filter",
+          "@ggd/shared",
+          "typecheck"
+        ],
+        "log": "/private/tmp/ggd-community-mechanism-fixes/recast-check-shared.log",
+        "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+      },
+      {
+        "name": "editor",
+        "exitCode": 0,
+        "command": [
+          "pnpm",
+          "--filter",
+          "@ggd/editor",
+          "typecheck"
+        ],
+        "log": "/private/tmp/ggd-community-mechanism-fixes/recast-check-editor.log",
+        "sha256": "486eafd3c0debbbff5ae7dddb4aa8823f853e470eff3bacbda032617862caca2"
+      },
+      {
+        "name": "client",
+        "exitCode": 0,
+        "command": [
+          "pnpm",
+          "--filter",
+          "@ggd/client",
+          "typecheck"
+        ],
+        "log": "/private/tmp/ggd-community-mechanism-fixes/recast-check-client.log",
+        "sha256": "39d946f6b36b6e4e7de7bfbe2267744c75dc2daf57912304bbcdcd88a0cc130d"
+      },
+      {
+        "name": "game-server",
+        "exitCode": 0,
+        "command": [
+          "pnpm",
+          "--filter",
+          "@ggd/game-server",
+          "typecheck"
+        ],
+        "log": "/private/tmp/ggd-community-mechanism-fixes/recast-check-game-server.log",
+        "sha256": "b05c3d89729ac8d5380fe460caa7c9227683cd32eda0fd3fbdcddaedd946d715"
+      },
+      {
+        "name": "regression",
+        "exitCode": 0,
+        "command": [
+          "pnpm",
+          "--filter",
+          "@ggd/shared",
+          "exec",
+          "vitest",
+          "run",
+          "src/content/heroForge/communityRefinements",
+          "src/sim/effects/oncePerCast.test.ts",
+          "src/sim/effects/lane3Kinds.test.ts",
+          "src/sim/effects/effectChildChains.test.ts",
+          "src/sim/purity.test.ts",
+          "src/content/compat.test.ts",
+          "src/content/recastContract.test.ts",
+          "src/content/heroForge/templateVersions.test.ts",
+          "src/content/templates/paramsSchema.test.ts",
+          "src/content/templates/stack.test.ts",
+          "--minWorkers=1",
+          "--maxWorkers=1"
+        ],
+        "log": "/private/tmp/ggd-community-mechanism-fixes/recast-check-regression.log",
+        "sha256": "c773d2e83c1296ef666fc7eafce548884f4bb8234d218d382e049a48fab8ccc9"
+      }
+    ],
+    "extraLogs": [
+      {
+        "path": "/private/tmp/ggd-community-mechanism-fixes/recast-focused-final.log",
+        "sha256": "5905b1c09fc54b51e858b9e484eaa60ffa0de63c25f9cc9f58a31715f4a6a0ad"
+      },
+      {
+        "path": "/private/tmp/ggd-community-mechanism-fixes/recast-wire-final.log",
+        "sha256": "b5ef4bd73ea007da4e0bca187e9bba696b09ed7e8025e84b98419ba4fb04c007"
+      },
+      {
+        "path": "/private/tmp/ggd-community-mechanism-fixes/recast-content-api-typecheck.log",
+        "sha256": "c42b80bfd273c24fb083e6e59dc949ff77adb8763e0f54f8ac9162ee7e791613"
+      }
+    ]
+  },
+  "mutations": [
+    {
+      "mutation": "input-gap",
+      "file": "packages/shared/src/sim/abilities/abilitySystem.ts",
+      "from": "recast ? recast.readyAt > world.tick : inst.cooldownRemainingTicks > 0",
+      "to": "recast ? false : inst.cooldownRemainingTicks > 0",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/ioriRecast.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "rapid presses"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "b0fe7026f5a99298c2a760c9cfa2d822968dbe24df5886b949bfbe3a5aac2bbc"
+    },
+    {
+      "mutation": "stage-selection",
+      "file": "packages/shared/src/sim/abilities/abilitySystem.ts",
+      "from": "const castEffects = stage ? def.recast!.stages[stage - 1]!.effects : def.effects;",
+      "to": "const castEffects = def.effects;",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/ioriRecast.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "three distinct inputs"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "51465d6a13a6d5ebcb715d0b822cf4cdd5ad6299d206f4bb022bc2e3adbe9c4a"
+    },
+    {
+      "mutation": "first-cooldown",
+      "file": "packages/shared/src/sim/abilities/abilitySystem.ts",
+      "from": "if (!recast) inst.cooldownRemainingTicks =",
+      "to": "inst.cooldownRemainingTicks =",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/ioriRecast.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "three distinct inputs"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "4efc582d921e30fa305fe6ea91199c59028e712e6cdb6b2aa28798d28372b777"
+    },
+    {
+      "mutation": "expiry",
+      "file": "packages/shared/src/sim/abilities/recast.ts",
+      "from": "state.expiresAt <= world.tick ||",
+      "to": "false ||",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/ioriRecast.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "deadline is exclusive"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "b999bb6ef998aab8373481544492c6b6a085d96dace4ecf443b132167b4ac2a0"
+    }
+  ],
+  "generators": [
+    {
+      "step": "typecat:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/recast-gen-typecat-build.log"
+    },
+    {
+      "step": "caps:export",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/recast-gen-caps-export.log"
+    },
+    {
+      "step": "editorcov:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/recast-gen-editorcov-build.log"
+    },
+    {
+      "step": "bricks:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/recast-gen-bricks-build.log"
+    },
+    {
+      "step": "contract:numbers",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/recast-gen-contract-numbers.log"
+    },
+    {
+      "step": "spec:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/recast-gen-spec-build.log"
+    },
+    {
+      "step": "overview:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/recast-gen-overview-build.log"
+    },
+    {
+      "step": "skillforge:audit",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/recast-gen-skillforge-audit.log"
+    },
+    {
+      "step": "skillremake:docs",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/recast-gen-skillremake-docs.log"
+    },
+    {
+      "step": "atlas:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/recast-gen-atlas-build.log"
+    },
+    {
+      "step": "docs:readme",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/recast-gen-docs-readme.log"
+    },
+    {
+      "step": "decor:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/recast-gen-decor-build.log"
+    }
+  ],
+  "counts": {
+    "heroes": 37,
+    "slots": 222,
+    "mapped": 76,
+    "unmapped": 146,
+    "genericOnAttackPassives": 18
+  },
+  "limitations": [
+    "Only Iori E is repaired in this revision; other five Iori slots remain pending original design.",
+    "Existing Suoh Mikoto model is an approved style proxy. No original Iori model, Rekka animation or purple-flame visual acceptance is claimed.",
+    "DOM render and replay tests are not browser pixel or complete game acceptance.",
+    "Current-service ZIP, corrected submission/publication and full 37-hero original design remain incomplete.",
+    "Ship client, game-server and content-api from this source together before enabling recast content; old clients do not display recast state."
+  ]
+}

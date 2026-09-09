@@ -1,6 +1,6 @@
 {
   "schema": "ggd-shared-authoring-handoff@1",
-  "sourceCommit": "3990c5c863e4dbcc3e4ca5ff81aabada33b8d897",
+  "sourceCommit": "925f1350438df0ebf0b3e260bf148a097821b558",
   "heroCount": 37,
   "slotCount": 222,
   "compilation": "passed",
@@ -20,55 +20,59 @@
   "refinements": [
     {
       "path": "refinements/01.json",
-      "sha256": "8efc410950413671519d74f3985b5ae7088421cde24e572134c6ef4ccc9395fc"
+      "sha256": "be1a3cfc2f6e95f04827e6e7ee1d0ced88743935c3d9b6d94f94d7e0f210c8c6"
+    },
+    {
+      "path": "refinements/02.json",
+      "sha256": "e62419390ee02bf31b6fca2733d71a3e99919cf66acb84969de8d49d029fc9be"
     },
     {
       "path": "refinements/03.json",
-      "sha256": "1affae1eef12032265892da1140f0af9ca63bd21890bda9c6bfdf257c451c1e3"
+      "sha256": "e86507fc7b101531c4da01975f1207b498f6b018541a716e290613d5a51c8f26"
     },
     {
       "path": "refinements/20.json",
-      "sha256": "cf0c474581ace5b58305990bee0eb5a0f3f78411c07040ceef5f21bbcbee6bfc"
+      "sha256": "c3a37326f31955d48150cc9abb207cdcb65c35f1663e914f0bae59babeb4c2f0"
     },
     {
       "path": "refinements/21.json",
-      "sha256": "9bfa5a527ca95c2c4412c0af01f2a7213ac33e67575e8c14cf7e1b096186e362"
+      "sha256": "d598df4e5977d9aa153153f4b110b974f11130b300e4866587d0c25055c7c244"
     },
     {
       "path": "refinements/23.json",
-      "sha256": "092abbe0c8946cd80c97db58b38db8bb7f09fb497e2c85e51c386548b6f82629"
+      "sha256": "c219229e4fc8a5234934169ae0af939e1bfa1da1c825f243c10ef38d3f80be63"
     },
     {
       "path": "refinements/24.json",
-      "sha256": "7c7378ae9bfb8fddc714c674659dd4c1045e25ee8ac45aa6146129fc7f7901a8"
+      "sha256": "d3a1eaf122215674e60151912c8ec8a2cc2060ec5fe0eee2ddc91fb880758379"
     },
     {
       "path": "refinements/26.json",
-      "sha256": "f8a0eb36e78916df72de680ac8538d167e9086d8bcdb84bbd3d1c942dfe930b1"
+      "sha256": "e3fc2c638a3a7836547864601459ba7a2fa815aa712318ff5908a05a16bb517f"
     },
     {
       "path": "refinements/27.json",
-      "sha256": "3466f8ac3fc55d29536730633e5cb9107519a7327b79b1a90823ebaa92f1bfb9"
+      "sha256": "804f6abf7204957a228bd34224114dade39eef0e0b384ab63c0f819dd6d53e4e"
     },
     {
       "path": "refinements/28.json",
-      "sha256": "63c26b49561261516db07d01fd31944c572628ef6a4b79e2aea2816991955f0d"
+      "sha256": "aaccb9a4ddd95df8869d7021efafca1b293386b2ee25e26e5df89be94fdf76b9"
     },
     {
       "path": "refinements/30.json",
-      "sha256": "10102301df53f689b14a07d111bc9987944ca8eae980b9cec9e58d6c3dea0af0"
+      "sha256": "5fd6e5e5654adedf6e9aff3463d2ef9efe1f657614fd0ee06d51d2f53f3dfb9d"
     },
     {
       "path": "refinements/31.json",
-      "sha256": "1a2e02876595ca624503d0ff9cae1dd0d0973953639172f8439eef4012dfeb12"
+      "sha256": "dcf469bda88a08e3542a25fbbaae39f0eaa46da9153eaf63bee784490ac3b9ab"
     },
     {
       "path": "refinements/32.json",
-      "sha256": "f15c6f52001a3814b169698b014de3c5411dce0737dc639a1e3c89d6577e89b8"
+      "sha256": "ff494b584e9be496c509a839ac4270484ef9b2324cdced2424de66ed291df2b2"
     },
     {
       "path": "refinements/37.json",
-      "sha256": "88f2f05f40e9025ac2df62c390c7d537298e8439962325e530570d129cae95c8"
+      "sha256": "9aeb3974f986ed2db35d6ab304bb8a20a3e57777cbb25367795b76bbad2f7744"
     }
   ],
   "files": [
@@ -89,8 +93,8 @@
     },
     {
       "path": "projects/02.hero-project.json",
-      "bytes": 42420,
-      "sha256": "22accbb13842498fbec5d2d44d0d651171f15907b21d180fc1356508e4b1e5b9"
+      "bytes": 46630,
+      "sha256": "4668b3b6f110682bafdcaa5a55630991c87f8251b513d4e93674fdc59ccb3fc6"
     },
     {
       "path": "recipes/02.upload-recipe.json",
@@ -723,7 +727,8 @@
     "09dbc46d01a60a50bf41d76ed17bb78c92533e21",
     "b9333a8b2098f46dfe40b5e18b07f439f7eec5e3",
     "7586263e5f8197aadbd9d714f9fb7ffebcd0618a",
-    "3990c5c863e4dbcc3e4ca5ff81aabada33b8d897"
+    "3990c5c863e4dbcc3e4ca5ff81aabada33b8d897",
+    "925f1350438df0ebf0b3e260bf148a097821b558"
   ],
   "requiredEffectFields": [
     "chainLightning.retargetOnLost",

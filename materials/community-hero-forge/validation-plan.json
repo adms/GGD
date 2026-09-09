@@ -1,6 +1,6 @@
 {
   "schema": "ggd-batch-validation-plan@1",
-  "manifestSha256": "3397a910b824faed64b8277e42964da01f25b96c213f37b2d36868d7c8794c8e",
+  "manifestSha256": "00ad7954533eb2c6526888ce2f0535603bbc7df3ac4800f75c9d9d30d98fd5ac",
   "suites": [
     {
       "id": "implemented-mechanisms",
@@ -52,7 +52,14 @@
         "packages/shared/src/sim/stats/outputMult.test.ts",
         "packages/shared/src/sim/effects/incomingReflect.test.ts",
         "packages/shared/src/content/heroForge/communityRefinements/mai.test.ts",
-        "packages/shared/src/content/heroForge/communityRefinements/maiAcceptance.test.ts"
+        "packages/shared/src/content/heroForge/communityRefinements/maiAcceptance.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/ioriRecast.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/ioriRecastAcceptance.test.ts",
+        "packages/shared/src/content/recastContract.test.ts",
+        "packages/shared/src/content/heroForge/templateVersions.test.ts",
+        "apps/game-server/src/net/recastSnapshot.test.ts",
+        "apps/client/src/ui/recastWiring.test.ts",
+        "apps/content-api/src/heroShippedTemplateHistory.test.ts"
       ],
       "heroSlots": {
         "community-review-20-20260907": [
@@ -155,6 +162,9 @@
           "E",
           "R",
           "EX"
+        ],
+        "community-review-02-20260907": [
+          "E"
         ]
       }
     },

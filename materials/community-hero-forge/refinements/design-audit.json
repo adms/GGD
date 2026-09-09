@@ -4,7 +4,7 @@
   "scope": "Original requirements versus compiled authoring; compilation is not design acceptance",
   "heroes": 37,
   "slots": 222,
-  "changedSlots": 75,
+  "changedSlots": 76,
   "passiveOnAttackTemplates": 18,
   "originalDesignAcceptance": "incomplete",
   "published": false,
@@ -210,18 +210,17 @@
       "ownerDescription": "三段接續技；每段須在指定窗口再次輸入，逾時、受控或第三段完成後結束。",
       "requiredRefinement": "目前一次施法完成三段；需三次輸入窗口及中斷狀態機。",
       "products": [
-        "tpl-lock-combo"
+        "tpl-effect-sequence"
       ],
-      "castType": "targeted",
+      "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "dot",
-        "leap"
+        "damageArea"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "葵花以三次獨立方向輸入執行三段近身打擊；每段解算後 0.2 秒至 1.2 秒內可接下一段。一次按鍵只打一段，連按不跳段；逾時、硬控制、沉默、恐懼、束縛、死亡或對決結束取消接續。只在第一段支付魔力與技能冷卻，冷卻在接續期間繼續流逝；末段結束回到剩餘冷卻。每段重新選方向、驗合法目標與施法資格；揮空仍占該段。專用三段動作與紫炎畫面尚未完成。"
     },
     {
       "hero": "02",

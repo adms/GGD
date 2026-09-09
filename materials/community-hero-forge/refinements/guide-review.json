@@ -1,7 +1,7 @@
 {
   "file": "AI參考全自動鑄造守則.md",
-  "sha256": "2c0b51f707d38dcaa98a8709bc7cb999c3e8b999991a622123ed16a717bc0e17",
-  "localLinksChecked": 69,
+  "sha256": "a0dc132c40dd251c7782aec4764f5d28e849241d36ed680d0de04c2164fd2c14",
+  "localLinksChecked": 73,
   "missingLinks": [],
   "commandsAndReferencedTests": "checked against current repository",
   "semanticReview": [
@@ -65,7 +65,10 @@
     "swept dash contacts versus stop contact and natural completion",
     "explicit shield-connected per-cast credit without proc recursion",
     "actual prior EX slot unlock and cast",
-    "GGD skill terrain policy versus body displacement"
+    "GGD skill terrain policy versus body displacement",
+    "independent recast inputs and normal cooldown semantics",
+    "pinned refinement template snapshots and independently trusted server history",
+    "explicitly partial Iori E delivery"
   ],
   "runtimeClaims": "guide does not claim full hero acceptance",
   "batchVerificationReview": {

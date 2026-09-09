@@ -5,8 +5,8 @@
   "from": "codex",
   "to": "main",
   "baseCommit": "6efdd3bfb4df593a26fa2e94d4d65f8e572c3c64",
-  "contractFingerprint": "b91a0f59c31289ed",
-  "title": "#1132 原設計逐槽修正含不知火舞六槽與版本化作品；37 名整體未完成",
+  "contractFingerprint": "2b7596f9946625ab",
+  "title": "#1132 八神庵葵花獨立接續輸入、舊模板來源與版本化作品；整批仍待完成",
   "claims": [
     {
       "kind": "confirmed",
@@ -565,6 +565,21 @@
         "materials/community-hero-forge/refinements/mai-verification.json",
         "materials/community-hero-forge/validation-plan.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "八神庵 E 以共用 recast 狀態實作三次獨立輸入，最短0.2秒、窗口1.2秒；逾時或控制中斷，首段支付成本且冷卻持續流逝。模板、生成器、Editor試玩、快照與桌面／平板技能列已接線，22項行為、6項Editor／匯入、2項線路／重送與4項突變通過。歷史模板獨立保留於伺服器出貨來源；微調釘选原文，未知hash不核准。整批重建只改八神庵E，revision12→13；其他36份作品、其餘五槽、37原稿與模型不變。76槽有案例、146槽未對應，18名通用普攻被動。八神庵P/Q/W/R/EX、專用動作／紫炎、當下服務ZIP與投稿發布尚未完成；#1132原始AC保持開啟。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements/ioriRecast.test.ts packages/shared/src/content/heroForge/communityRefinements/ioriRecastAcceptance.test.ts apps/game-server/src/net/recastSnapshot.test.ts apps/client/src/ui/recastWiring.test.ts apps/content-api/src/heroShippedTemplateHistory.test.ts --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "925f1350438df0ebf0b3e260bf148a097821b558",
+      "evidence": [
+        "materials/community-hero-forge/refinements/iori-recast-verification.json",
+        "materials/community-hero-forge/refinements/02.json",
+        "materials/community-hero-forge/validation-plan.json",
+        "packages/shared/src/content/templates/shippedHistory.ts"
+      ]
     }
   ],
   "unblocks": [],
@@ -575,6 +590,6 @@
     }
   ],
   "asks": [
-    "請 Main 審查共用 dash 沿途接觸／自然結束、明示盾吸收的施法去重及 Editor 前置 EX。請 Main 一併審查阿薩謝爾目前配方的傷害输出／有效受擊語意，以及共用距離葉的同對決限制；舊版回放測試保留。請 Main 一併審查尼古貓貓需要的通用 stationaryForSec 與 shield.breakOnMove：實際位置取樣、逐來源窗口、獨立盾池到期及回放摘要。請 Main 一併審查艾莉絲需要的通用 allowApproach、damageConnected、dash 首次接觸與回呼生命週期。請 Main 一併審查 SUN樂需要的通用 requiredTargetStatus、evadeDuring、evasionScope 與試玩前置交鋒路徑。請 Main 一併審查銀時需要的通用 onBlock/blockSource、damageOrMove/interruptible、interruptCast 與前方弧形來源欄位及版本化配方。請 Main 一併審查 drive／pull.grapple 共用移動、動態閘門碰撞一致性、EntityState motion/tether 欄位與 Client 預測暫停及回放。請 Main 一併審查柯南的 onObservedCombat／observedEvent、statusCost.subject、vision.revealed 與零實際傷害不喚醒睡眠的共用修正。請 Main 審查本批武藤遊戲與奇犽修正：onSummonHit／onAttackAttempt、trap 與 onTrigger 子鏈、召喚換目標與槽位來源、requiredSummonSlot、黑魔導發射位置、Client／Server 傳輸與 Forge 回放。請 Main 加入審查奇犽的通用具名資源維持費、全量施法成本、迴避來源／通道過濾與六槽配方。請 Main 加入審查鹿目圓 onAllyProtected、盾吸收歸屬、applyStatus.grantMark 及每回合救援次數的 schema/runtime 與版本化配方。請 Main 一併審查 #1143 批次驗證入口、失敗集中回報、來源綁定續跑及批次測試治具。請 Main 審查 #1141 nearbyCombat 条件與表單、dispel.statusTag 過濾、微調 version 對應作品 revision 與吉伊卡哇六槽；以及 #1140 的共用 chainLightning.retargetOnLost schema／runtime 選项及對應配方、#1139 換牌、友軍盾、radius:0 生成器修正、官方契約與 AI 守則。最新 37 份可共用作品在 materials/community-hero-forge/projects；#1132 保持開啟，完整原設計、修正後畫面／服務 ZIP 及正式發布仍未完成，不據此發布 37 名。"
+    "請 Main 審查共用 recast、模板歷史來源與新增快照欄位；啟用新內容前同步建置 client/game-server/content-api。請 Main 審查共用 dash 沿途接觸／自然結束、明示盾吸收的施法去重及 Editor 前置 EX。請 Main 一併審查阿薩謝爾目前配方的傷害输出／有效受擊語意，以及共用距離葉的同對決限制；舊版回放測試保留。請 Main 一併審查尼古貓貓需要的通用 stationaryForSec 與 shield.breakOnMove：實際位置取樣、逐來源窗口、獨立盾池到期及回放摘要。請 Main 一併審查艾莉絲需要的通用 allowApproach、damageConnected、dash 首次接觸與回呼生命週期。請 Main 一併審查 SUN樂需要的通用 requiredTargetStatus、evadeDuring、evasionScope 與試玩前置交鋒路徑。請 Main 一併審查銀時需要的通用 onBlock/blockSource、damageOrMove/interruptible、interruptCast 與前方弧形來源欄位及版本化配方。請 Main 一併審查 drive／pull.grapple 共用移動、動態閘門碰撞一致性、EntityState motion/tether 欄位與 Client 預測暫停及回放。請 Main 一併審查柯南的 onObservedCombat／observedEvent、statusCost.subject、vision.revealed 與零實際傷害不喚醒睡眠的共用修正。請 Main 審查本批武藤遊戲與奇犽修正：onSummonHit／onAttackAttempt、trap 與 onTrigger 子鏈、召喚換目標與槽位來源、requiredSummonSlot、黑魔導發射位置、Client／Server 傳輸與 Forge 回放。請 Main 加入審查奇犽的通用具名資源維持費、全量施法成本、迴避來源／通道過濾與六槽配方。請 Main 加入審查鹿目圓 onAllyProtected、盾吸收歸屬、applyStatus.grantMark 及每回合救援次數的 schema/runtime 與版本化配方。請 Main 一併審查 #1143 批次驗證入口、失敗集中回報、來源綁定續跑及批次測試治具。請 Main 審查 #1141 nearbyCombat 条件與表單、dispel.statusTag 過濾、微調 version 對應作品 revision 與吉伊卡哇六槽；以及 #1140 的共用 chainLightning.retargetOnLost schema／runtime 選项及對應配方、#1139 換牌、友軍盾、radius:0 生成器修正、官方契約與 AI 守則。最新 37 份可共用作品在 materials/community-hero-forge/projects；#1132 保持開啟，完整原設計、修正後畫面／服務 ZIP 及正式發布仍未完成，不據此發布 37 名。"
   ]
 }
