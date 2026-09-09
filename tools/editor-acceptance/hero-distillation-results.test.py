@@ -169,6 +169,33 @@ class ResultsTest(unittest.TestCase):
         with self.assertRaisesRegex(AssertionError, 'INVALID_BLIND_PROTOCOL'):
             self.collect()
 
+    def test_blind_teacher_control_must_be_completed_and_bound_to_derived_view(self):
+        self.make_blind(); root = self.root / 'teacher-control'; derived = root / 'evaluation'
+        put(derived / 'manifest.json', {'originalEvaluationManifestSha256': self.eval_sha})
+        derived_sha = sha(derived / 'manifest.json')
+        put(root / 'manifest.json', {'schema': 'ggd-distillation-blind-teacher-control@1', 'blindTest': True,
+            'originalEvaluationManifestSha256': self.eval_sha, 'derivedEvaluationManifestSha256': derived_sha})
+        put(root / 'state.json', {'status': 'completed'})
+        teacher_compile = {'schema': 'ggd-distillation-generation-compile@1',
+            'evaluationManifestSha256': derived_sha, 'sourceEvidence': {'arm': 'teacher-control'},
+            'rows': [dict(id=c['id'], slot=c['slot'], schemaCompilePassed=True,
+                          diskReloadCompileIdentical=True, status='passed') for c in self.cases]}
+        compile_sha = put(root / 'compile/report.json', teacher_compile)
+        outputs = {'compile/report.json': compile_sha}
+        put(root / 'result.json', {'schema': 'ggd-distillation-blind-teacher-control-result@1',
+                                   'outputs': outputs})
+        data = r.collect(self.train, self.eval, self.paired, teacher_control=root)
+        self.assertEqual(data['arms']['teacher']['structuralPassed'], 17)
+        self.assertEqual(data['blindTeacherControl']['path'], str(root.resolve()))
+        manifest = json.loads((root / 'manifest.json').read_text()); manifest['originalEvaluationManifestSha256'] = 'bad'; put(root / 'manifest.json', manifest)
+        with self.assertRaisesRegex(AssertionError, 'BLIND_TEACHER_ORIGINAL_EVAL_DRIFT'):
+            r.collect(self.train, self.eval, self.paired, teacher_control=root)
+
+    def test_blind_teacher_reports_cannot_bypass_sealed_control(self):
+        self.make_blind(); teacher = self.root / 'teacher'; put(teacher / 'report.json', {})
+        with self.assertRaisesRegex(AssertionError, 'BLIND_TEACHER_REQUIRES_SEALED_CONTROL'):
+            r.collect(self.train, self.eval, self.paired, teacher_compile=teacher)
+
     def test_generation_cost_keeps_partial_outputs_and_missing_tokens(self):
         cases = [{'id': str(i), 'slot': 'HERO' if i < 2 else 'Q'} for i in range(3)]
         records = [dict(c, seconds=s, promptTokens=100, generationTokens=t, peakMetalBytes=1000,

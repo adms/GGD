@@ -75,7 +75,8 @@ def generation_stats(records, cases):
         'scope': 'Persisted generation-call durations include prefill/decode/output parsing, exclude model loading and prompt tokenization. Failed outputs are included; unfinished/unrecorded calls are not measured. Complete JSON is not semantic or playable-hero success.'}
 
 
-def collect(training, evaluation, paired=None, teacher_compile=None, teacher_package=None, teacher_import=None):
+def collect(training, evaluation, paired=None, teacher_compile=None, teacher_package=None, teacher_import=None,
+            teacher_control=None):
     pins = {}
 
     def raw(file):
@@ -125,6 +126,30 @@ def collect(training, evaluation, paired=None, teacher_compile=None, teacher_pac
             seen.update(row['heroId'] for row in rows)
         overlap = sorted(seen & {case['heroId'] for case in cases})
         assert not overlap, 'BLIND_HERO_OVERLAP:' + ','.join(overlap)
+    teacher_evaluation_sha = pins[str((evaluation / 'manifest.json').resolve())]['sha256']
+    teacher_control_summary = None
+    if teacher_control:
+        assert split == 'blind-user-batch', 'BLIND_TEACHER_CONTROL_ONLY'
+        assert not any([teacher_compile, teacher_package, teacher_import]), 'DUPLICATE_TEACHER_CONTROL_INPUTS'
+        root = Path(teacher_control)
+        control_manifest = read(root / 'manifest.json'); control_state = read(root / 'state.json'); control_result = read(root / 'result.json')
+        assert control_manifest['schema'] == 'ggd-distillation-blind-teacher-control@1' and control_manifest['blindTest'] is True, 'WRONG_BLIND_TEACHER_CONTROL'
+        assert control_state['status'] == 'completed' and control_result['schema'] == 'ggd-distillation-blind-teacher-control-result@1', 'BLIND_TEACHER_CONTROL_INCOMPLETE'
+        assert control_manifest['originalEvaluationManifestSha256'] == teacher_evaluation_sha, 'BLIND_TEACHER_ORIGINAL_EVAL_DRIFT'
+        derived_manifest = root / 'evaluation/manifest.json'
+        teacher_evaluation_sha = hashlib.sha256(raw(derived_manifest)).hexdigest()
+        assert control_manifest['derivedEvaluationManifestSha256'] == teacher_evaluation_sha, 'BLIND_TEACHER_DERIVED_EVAL_DRIFT'
+        derived = json.loads((derived_manifest).read_text())
+        assert derived['originalEvaluationManifestSha256'] == pins[str((evaluation / 'manifest.json').resolve())]['sha256'], 'BLIND_TEACHER_DERIVED_ORIGINAL_DRIFT'
+        for relative, sha in control_result['outputs'].items():
+            assert hashlib.sha256(raw(root / relative)).hexdigest() == sha, 'BLIND_TEACHER_OUTPUT_DRIFT:' + relative
+        teacher_compile, teacher_package = root / 'compile', root / 'package-admission'
+        teacher_import = root / 'import-roundtrip'
+        teacher_control_summary = {'path': str(root.resolve()),
+            'manifestSha256': pins[str((root / 'manifest.json').resolve())]['sha256'],
+            'resultSha256': pins[str((root / 'result.json').resolve())]['sha256']}
+    elif split == 'blind-user-batch':
+        assert not any([teacher_compile, teacher_package, teacher_import]), 'BLIND_TEACHER_REQUIRES_SEALED_CONTROL'
     state = read(training / 'train/state.json', True)
     if state:
         assert state['manifestSha256'] == pins[str((training / 'manifest.json').resolve())]['sha256'], 'TRAIN_STATE_DRIFT'
@@ -175,7 +200,8 @@ def collect(training, evaluation, paired=None, teacher_compile=None, teacher_pac
             Path(paired) / f'{arm}-package-admission/report.json' if arm != 'teacher' and paired else None)
         compilation = read(cr, True) if cr else None
         if compilation:
-            assert compilation['evaluationManifestSha256'] == pins[str((evaluation / 'manifest.json').resolve())]['sha256'], 'COMPILE_EVAL_DRIFT'
+            expected_compile_evaluation = teacher_evaluation_sha if arm == 'teacher' else pins[str((evaluation / 'manifest.json').resolve())]['sha256']
+            assert compilation['evaluationManifestSha256'] == expected_compile_evaluation, 'COMPILE_EVAL_DRIFT'
             assert compilation['sourceEvidence']['arm'] == ('teacher-control' if arm == 'teacher' else arm), 'ARM_MISMATCH'
         structural = structural_rows(compilation, cases)
         package = read(pr, True) if pr else None
@@ -187,7 +213,8 @@ def collect(training, evaluation, paired=None, teacher_compile=None, teacher_pac
                     for r in package['rows']} if package else {}
         ir = Path(teacher_import) / 'report.json' if arm == 'teacher' and teacher_import else (
             Path(paired) / f'{arm}-import-roundtrip/report.json' if arm != 'teacher' and paired else None)
-        ar = Path(teacher_import) / 'runtime-audit.json' if arm == 'teacher' and teacher_import else (
+        ar = (Path(teacher_control) / 'import-runtime-audit/report.json' if arm == 'teacher' and teacher_control else
+            Path(teacher_import) / 'runtime-audit.json') if arm == 'teacher' and teacher_import else (
             Path(paired) / f'{arm}-import-runtime-audit/report.json' if arm != 'teacher' and paired else None)
         imported = read(ir, True) if ir else None
         audited = read(ar, True) if ar else None
@@ -234,7 +261,7 @@ def collect(training, evaluation, paired=None, teacher_compile=None, teacher_pac
         'counts': plan['counts'], 'arms': arms,
         'pairedStructural': {'improved': improvements, 'regressed': regressions},
         'fullHeroE2EProven': False, 'modelPromoted': False, 'blindTest': split == 'blind-user-batch',
-        'blindProtocol': blind_protocol,
+        'blindProtocol': blind_protocol, 'blindTeacherControl': teacher_control_summary,
         'limits': ['File snapshot, not an OS process-liveness check.',
                    'Teacher-forced CE is not generated hero quality; per-step losses concern different tasks.',
                    'Package admission is not live import or match verification.',
@@ -247,11 +274,12 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ['training', 'evaluation', 'out']:
         parser.add_argument('--' + name, type=Path, required=True)
-    for name in ['paired', 'teacher-compile', 'teacher-package', 'teacher-import']:
+    for name in ['paired', 'teacher-compile', 'teacher-package', 'teacher-import', 'teacher-control']:
         parser.add_argument('--' + name, type=Path)
     args = parser.parse_args()
     assert not args.out.exists(), 'REFUSE_OVERWRITE'
-    report = collect(args.training, args.evaluation, args.paired, args.teacher_compile, args.teacher_package, args.teacher_import)
+    report = collect(args.training, args.evaluation, args.paired, args.teacher_compile, args.teacher_package,
+                     args.teacher_import, args.teacher_control)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     with args.out.open('x') as stream:
         json.dump(report, stream, ensure_ascii=False, indent=2)
