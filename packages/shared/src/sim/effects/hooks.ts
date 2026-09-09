@@ -312,7 +312,7 @@ export function fireHooks(
         if (hook.oncePerCast === true) {
           const summonHit = event === "onSummonHit";
           if ((!summonHit && event !== "onDamageDealt") || creditCast === undefined || creditCast.caster !== owner ||
-              incoming === undefined || !(incoming.hpLost + (summonHit ? incoming.shieldAbsorbed ?? 0 : 0) > 0) ||
+              incoming === undefined || !(incoming.hpLost + (summonHit || hook.damageConnected ? incoming.shieldAbsorbed ?? 0 : 0) > 0) ||
               target === undefined || target === owner || incoming.reflectDepth !== 0 ||
               (!summonHit && !originInScope(incoming.origin ?? "", "ability")) ||
               creditCast.creditedHooks.includes(creditKey!)) continue;

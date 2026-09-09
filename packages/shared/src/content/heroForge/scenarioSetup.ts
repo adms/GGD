@@ -20,7 +20,7 @@ export const zHeroScenarioSetup = z.object({
   resourceSetup: z.enum(["ready", "empty"]).optional(),
   opponentPreparation: z.enum(["auto", "idle", "attack"]).optional(),
   priorCast: z.object({
-    slot: z.enum(["Q", "W", "E", "R"]),
+    slot: z.enum(["Q", "W", "E", "R", "EX"]),
     waitSec: z.number().finite().min(0.1).max(10),
   }).strict().optional(),
   caster: actor,

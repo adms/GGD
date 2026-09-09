@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "d3505634",
+  "fingerprint": "2afadee4",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -437,6 +437,7 @@
     "to",
     "touchOncePerTarget",
     "touchRadius",
+    "touchScope",
     "touchSide",
     "triggerAt",
     "typeStreakImmunity",
@@ -916,6 +917,7 @@
     "to",
     "touchOncePerTarget",
     "touchRadius",
+    "touchScope",
     "touchSide",
     "triggerAt",
     "typeStreakImmunity",

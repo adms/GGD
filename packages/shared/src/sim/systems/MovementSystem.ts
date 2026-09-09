@@ -21,7 +21,7 @@
  * clamp while turning.
  */
 import { advanceDrive, advanceGrapple, publishAbilityMotion } from "../movement/abilityMotion";
-import { dashContact } from "../movement/dashContact";
+import { dashContact, dashContacts } from "../movement/dashContact";
 import { moveFeelRules } from "../moveFeel";
 import type { SimWorld } from "../SimWorld";
 import type { Vec2 } from "../math/vec2";
@@ -94,7 +94,7 @@ export function movementSystem(world: SimWorld): void {
     if (!nav) continue;
     const hp = world.health.get(id);
     if (hp && !hp.alive) {
-      if (nav.override?.kind === "dash" && nav.override.stopOnHit) nav.override = null;
+      if (nav.override?.kind === "dash" && (nav.override.stopOnHit || nav.override.touchScope)) nav.override = null;
       const hadMotion = nav.drive || (nav.override?.kind !== "leap" && nav.override?.grapple);
       delete nav.drive;
       if (nav.override?.kind !== "leap" && nav.override?.grapple) nav.override = null;
@@ -196,11 +196,20 @@ export function movementSystem(world: SimWorld): void {
         const contact = dashContact(world, id, before, body.pos, ov.stopOnHit);
         if (contact) { body.pos = contact.point; ov.hitTarget = contact.target; }
       }
+      if (ov.kind === "dash" && ov.touchScope) {
+        const touched = ov.touchedTargets ??= [];
+        for (const contact of dashContacts(world, id, before, body.pos, ov.touchScope)) {
+          if (!touched.includes(contact.target)) touched.push(contact.target);
+        }
+      }
       t.pos = body.pos;
       ov.remaining -= stepLen;
       const moved = len(sub(t.pos, before));
       // Dash stopped early by a wall → end the dash.
-      if (ov.hitTarget !== undefined || moved + 1e-6 < stepLen || ov.remaining <= 1e-6) nav.override = null;
+      if (ov.hitTarget !== undefined || moved + 1e-6 < stepLen || ov.remaining <= 1e-6) {
+        if (ov.kind === "dash") ov.endReason = ov.hitTarget !== undefined ? "contact" : moved + 1e-6 < stepLen ? "terrain" : "distance";
+        nav.override = null;
+      }
       // Velocity is what the body ACTUALLY did (see the note in step 2).
       t.vel = scale(sub(t.pos, before), 1 / dt);
       continue;
@@ -432,6 +441,10 @@ export function movementSystem(world: SimWorld): void {
       //   的場界一格都沒動 —— 保險絲只解單位互卡,不發穿牆逃課券。
       //   (放這一行、⛔ 不學 flight 在外圈 continue,正是為了讓 static 照舊。)
       if (stuckEscapePhasing(world, id) || stuckEscapePhasing(world, otherId)) continue;
+      // A continuing contact dash sweeps enemies instead of stopping against
+      // their soft bodies. Terrain and static props retain their earlier gates.
+      const aDash = world.nav.get(id)?.override, bDash = world.nav.get(otherId)?.override;
+      if ((aDash?.kind === "dash" && aDash.touchScope) || (bDash?.kind === "dash" && bDash.touchScope)) continue;
       const a = { pos: t.pos, radius: t.radius };
       const b = { pos: o.pos, radius: o.radius };
       separatePair(a, b, 0.6);

@@ -10,11 +10,11 @@ import { worldObstacles } from "../map/gates";
 /** Sweep only the displacement already permitted by wall collision. Earliest
  * contact wins, ties by entity id; iteration order cannot choose the victim.
  */
-export function dashContact(world: SimWorld, caster: EntityId, from: Vec2, to: Vec2,
-  scope: NonNullable<DashOverride["stopOnHit"]>): { target: EntityId; point: Vec2 } | null {
+export function dashContacts(world: SimWorld, caster: EntityId, from: Vec2, to: Vec2,
+  scope: NonNullable<DashOverride["stopOnHit"]>): { target: EntityId; point: Vec2; at: number }[] {
   const actor = world.transform.get(caster), team = world.team.get(caster);
-  if (!actor || !team || world.settledZones.has(actor.zone)) return null;
-  const delta = sub(to, from); let best = Infinity; let target: EntityId | undefined;
+  if (!actor || !team || world.settledZones.has(actor.zone)) return [];
+  const delta = sub(to, from); const contacts: { target: EntityId; point: Vec2; at: number }[] = [];
   for (const [id, body] of world.transform) {
     if (id === caster || world.projectile.has(id) || body.zone !== actor.zone || !world.health.get(id)?.alive) continue;
     const other = world.team.get(id);
@@ -22,7 +22,14 @@ export function dashContact(world: SimWorld, caster: EntityId, from: Vec2, to: V
     if (dot(sub(body.pos, from), delta) < 0) continue;
     const at = sweptCircleVsCircle(from, delta, actor.radius, { kind: "circle", center: body.pos, radius: body.radius });
     if (at === null || !hasLineOfSight(from, body.pos, worldObstacles(world, actor.zone))) continue;
-    if (at < best || (at === best && (target === undefined || id < target))) { best = at; target = id; }
+    contacts.push({ target: id, point: addScaled(from, delta, at), at });
   }
-  return target === undefined ? null : { target, point: addScaled(from, delta, best) };
+  return contacts.sort((a, b) => a.at - b.at || a.target - b.target);
+}
+
+/** Stop-mode retains the same earliest-contact and entity-id tie break. */
+export function dashContact(world: SimWorld, caster: EntityId, from: Vec2, to: Vec2,
+  scope: NonNullable<DashOverride["stopOnHit"]>): { target: EntityId; point: Vec2 } | null {
+  const contact = dashContacts(world, caster, from, to, scope)[0];
+  return contact ? { target: contact.target, point: contact.point } : null;
 }

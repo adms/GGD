@@ -57,9 +57,9 @@ export function HeroInteractivePreview(props: { project: HeroProject; slot: Hero
       {statusCost && statusCost.subject !== "target" ? <label><input type="checkbox" checked={setup.resourceSetup !== "empty"} onChange={(event) => setSetup({ ...setup, resourceSetup: event.target.checked ? "ready" : "empty" })} />單槽試玩補足施放資源（不修改作品）</label> : null}
       <label>前置施法<select aria-label="前置施法" value={setup.priorCast?.slot ?? ""} onChange={(event) => {
         const priorSlot = event.target.value;
-        setSetup({ ...setup, priorCast: priorSlot === "Q" || priorSlot === "W" || priorSlot === "E" || priorSlot === "R"
+        setSetup({ ...setup, priorCast: priorSlot === "Q" || priorSlot === "W" || priorSlot === "E" || priorSlot === "R" || priorSlot === "EX"
           ? { slot: priorSlot, waitSec: setup.priorCast?.waitSec ?? 1.5 } : undefined });
-      }}><option value="">無，直接試玩本招</option>{(["Q", "W", "E", "R"] as const).filter(candidate => candidate !== slot).map(candidate => <option key={candidate} value={candidate}>{candidate} · {project.acceptedPlan?.slots[candidate].name}</option>)}</select></label>
+      }}><option value="">無，直接試玩本招</option>{(["Q", "W", "E", "R", "EX"] as const).filter(candidate => candidate !== slot).map(candidate => <option key={candidate} value={candidate}>{candidate} · {project.acceptedPlan?.slots[candidate].name}</option>)}</select></label>
       {setup.priorCast ? <>
         {number("前置施法後經過秒數", setup.priorCast.waitSec, 0.1, 10, (waitSec) => setSetup({ ...setup, priorCast: { ...setup.priorCast!, waitSec } }), 0.1)}
         <p>先實際施放所選技能，保留造成的傷害、詛咒與增益，再嘗試本招。</p>

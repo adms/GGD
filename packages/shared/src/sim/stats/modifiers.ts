@@ -360,7 +360,7 @@ export type HookEvent =
   | "onStatusApplied";
 
 export interface HookDef {
-  /** Once per accepted cast which actually damages another body. Damage-dealt only. */
+  /** Once per accepted damaging cast; damageConnected also admits shield absorption. */
   oncePerCast?: boolean;
   on: HookEvent;
   /**

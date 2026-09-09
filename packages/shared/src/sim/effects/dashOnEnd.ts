@@ -59,6 +59,8 @@ export interface DashOnEndPending {
   /** Callback belongs to this exact dash, even if another dash replaces it. */
   override?: DashOverride;
   onHit?: EffectDef[];
+  onTouch?: EffectDef[];
+  touchesPaid?: number;
   /** 起跳座標 —— 用來量「真的走了多遠」（`onEndOn: "completed"`）。 */
   from: Vec2;
   /** 這一次衝刺**授權**的距離。 */
@@ -68,7 +70,7 @@ export interface DashOnEndPending {
   origin: string;
   abilitySlot?: CastableSlot;
   /** 撞牆停下來的衝刺算不算「衝完」。 */
-  onEndOn: "always" | "completed";
+  onEndOn: "always" | "completed" | "resolved";
   /** 衝刺途中死掉還要不要揮。 */
   onEndWhenDead: boolean;
   zone: number;
@@ -101,6 +103,18 @@ export function dashOnEndSystem(world: SimWorld): void {
 
   let anyDone = false;
   for (const p of q) {
+    if (p.onTouch && !world.settledZones.has(p.zone) && world.health.get(p.caster)?.alive === true &&
+        world.transform.get(p.caster)?.zone === p.zone) {
+      const contacts = p.override?.touchedTargets ?? [];
+      for (let i = p.touchesPaid ?? 0; i < contacts.length; i++) {
+        const target = contacts[i]!;
+        if (!world.health.get(target)?.alive || world.transform.get(target)?.zone !== p.zone) continue;
+        runEffects(p.onTouch, { castInstance: p.castInstance, world, caster: p.caster, rank: p.rank,
+          targets: [target], direction: { ...p.override!.dir }, origin: p.origin,
+          ...(p.abilitySlot !== undefined ? { abilitySlot: p.abilitySlot } : {}), rng: world.rng });
+      }
+      p.touchesPaid = contacts.length;
+    }
     if (stillDashing(world, p)) continue;
     anyDone = true;
 
@@ -117,6 +131,8 @@ export function dashOnEndSystem(world: SimWorld): void {
         targets: [hit], point: { ...t.pos }, direction: { ...p.override!.dir }, origin: p.origin,
         ...(p.abilitySlot !== undefined ? { abilitySlot: p.abilitySlot } : {}), rng: world.rng });
     }
+
+    if (p.onEndOn === "resolved" && (!p.override?.endReason || len(sub(t.pos, p.from)) <= 1e-6)) continue;
 
     if (p.onEndOn === "completed") {
       // 走了多遠 —— 撞牆停下來的衝刺走得比較短（檔頭②）。

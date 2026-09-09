@@ -1,0 +1,464 @@
+{
+  "schema": "ggd-community-design-refinement@1",
+  "version": 1,
+  "projectId": "community-review-03-20260907",
+  "sourceSha256": "1fa00b89649191fec570f5d2f500416dd0eef5e8ba6cfbf55cc4383ba0041c42",
+  "slots": {
+    "PASSIVE": {
+      "products": [
+        {
+          "instanceId": "nimble-consumption",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onDamageDealt",
+                  "damageSource": "basic",
+                  "damageConnected": true,
+                  "victim": "enemy",
+                  "target": "event",
+                  "effects": [
+                    {
+                      "kind": "consumeStatus",
+                      "shape": "single",
+                      "subject": "self",
+                      "statusId": "community-review-03-20260907.nimble",
+                      "appliedBy": "self",
+                      "count": 1,
+                      "onConsumed": [
+                        {
+                          "kind": "damage",
+                          "damageType": "physical",
+                          "amount": {
+                            "damageTier": "極小"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "E／R 實際移動後正常停在距離終點、地形或 R 敵人接觸點，取得三秒身法；下一次有效敵方普攻命中（含盾吸收）消耗並追加一次極小物理傷害。E／R 刷新共用同一層，不疊加；空方向、零移動、取代、死亡與對決結束不給。技能、零傷害與免疫不消耗。\n【原設計】完成位移後獲得一次短效普攻強化；刷新不疊加。",
+      "note": "E／R 實際移動後正常停在距離終點、地形或 R 敵人接觸點，取得三秒身法；下一次有效敵方普攻命中（含盾吸收）消耗並追加一次極小物理傷害。E／R 刷新共用同一層，不疊加；空方向、零移動、取代、死亡與對決結束不給。技能、零傷害與免疫不消耗。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeSec",
+        "castTimeTier",
+        "radius",
+        "radiusTier",
+        "range",
+        "rangeTier",
+        "manaCost",
+        "manaCostTier",
+        "cooldown",
+        "cooldownTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {}
+    },
+    "Q": {
+      "products": [
+        {
+          "instanceId": "q-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0.2,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "spawnProjectile",
+                  "projectileId": "imported.wave.fire",
+                  "onHit": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "小"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "單一實體穿透彈沿方向飛行，每人每彈最多一次小級魔法傷害；友軍、死亡及其他對決不命中。依 GGD 技能不被地形遮擋規則可穿牆，至射程或邊界消失。現有火球為代理，扇子模型與旋轉演出仍待完成。\n【原設計】投出扇子，對沿途合法目標造成傷害。",
+      "note": "單一實體穿透彈沿方向飛行，每人每彈最多一次小級魔法傷害；友軍、死亡及其他對決不命中。依 GGD 技能不被地形遮擋規則可穿牆，至射程或邊界消失。現有火球為代理，扇子模型與旋轉演出仍待完成。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeSec",
+        "castTimeTier",
+        "radius",
+        "radiusTier",
+        "range",
+        "rangeTier",
+        "manaCost",
+        "manaCostTier",
+        "cooldown",
+        "cooldownTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "cooldownTier": "中",
+        "manaCostTier": "小",
+        "rangeTier": "中"
+      }
+    },
+    "W": {
+      "products": [
+        {
+          "instanceId": "w-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0.2,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "damageArea",
+                  "fromCaster": true,
+                  "includeOrigin": true,
+                  "radius": 2.5,
+                  "arcHalfAngleCos": 0.5,
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "小"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "以自身當下位置及施法方向揮出 120 度、2.5 格近身火焰弧，各敵人只結算一次；後方、弧外、遠處、友軍與其他對決排除。專用火焰弧畫面待驗。\n【原設計】向前揮出近身火焰弧，適合迎擊貼身敵人。",
+      "note": "以自身當下位置及施法方向揮出 120 度、2.5 格近身火焰弧，各敵人只結算一次；後方、弧外、遠處、友軍與其他對決排除。專用火焰弧畫面待驗。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeSec",
+        "castTimeTier",
+        "radius",
+        "radiusTier",
+        "range",
+        "rangeTier",
+        "manaCost",
+        "manaCostTier",
+        "cooldown",
+        "cooldownTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "cooldownTier": "中",
+        "manaCostTier": "小",
+        "rangeTier": "中"
+      }
+    },
+    "E": {
+      "products": [
+        {
+          "instanceId": "e-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "dash",
+                  "mode": "forward",
+                  "speed": 12,
+                  "maxDistance": 5,
+                  "onTouch": [
+                    {
+                      "kind": "damage",
+                      "damageType": "physical",
+                      "amount": {
+                        "damageTier": "小"
+                      }
+                    }
+                  ],
+                  "touchScope": "enemy",
+                  "onEndOn": "resolved",
+                  "onEnd": [
+                    {
+                      "kind": "applyBuff",
+                      "applyTo": "self",
+                      "statusId": "community-review-03-20260907.nimble",
+                      "stackKey": "community-review-03-20260907.nimble",
+                      "sourceScope": "caster",
+                      "maxStacks": 1,
+                      "duration": 3,
+                      "dispellable": false,
+                      "modifiers": []
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "身體沿直線突進五格，沿實際路徑每名合法敵人碰撞一次小級物理傷害，穿過敵人後繼續，遇牆或距離終點停止；不從起點或牆後結算假碰撞。完成实际位移後刷新身法。\n【原設計】直線突進撞擊；遇牆或到達最大距離停止。",
+      "note": "身體沿直線突進五格，沿實際路徑每名合法敵人碰撞一次小級物理傷害，穿過敵人後繼續，遇牆或距離終點停止；不從起點或牆後結算假碰撞。完成实际位移後刷新身法。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeSec",
+        "castTimeTier",
+        "radius",
+        "radiusTier",
+        "range",
+        "rangeTier",
+        "manaCost",
+        "manaCostTier",
+        "cooldown",
+        "cooldownTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "cooldownTier": "中",
+        "manaCostTier": "小",
+        "rangeTier": "中"
+      }
+    },
+    "R": {
+      "products": [
+        {
+          "instanceId": "r-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0.65,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "applyTo": "self",
+                  "statusId": "community-review-03-20260907.r-followup",
+                  "stackKey": "community-review-03-20260907.r-followup",
+                  "sourceScope": "caster",
+                  "maxStacks": 1,
+                  "duration": 2.5,
+                  "dispellable": false,
+                  "modifiers": [],
+                  "hooks": [
+                    {
+                      "on": "onDamageDealt",
+                      "abilitySlot": "R",
+                      "oncePerCast": true,
+                      "damageSource": "ability",
+                      "damageConnected": true,
+                      "victim": "enemy",
+                      "target": "event",
+                      "maxTriggers": 1,
+                      "onConsumed": "detachSource",
+                      "effects": [
+                        {
+                          "kind": "delayed",
+                          "shape": "single",
+                          "delaySec": 0.15,
+                          "count": 3,
+                          "intervalSec": 0.18,
+                          "stopOnCasterDeath": true,
+                          "effects": [
+                            {
+                              "kind": "damage",
+                              "damageType": "physical",
+                              "amount": {
+                                "damageTier": "極小"
+                              },
+                              "condition": {
+                                "kind": "distance",
+                                "op": "<=",
+                                "value": 3
+                              }
+                            }
+                          ],
+                          "finalEffects": [
+                            {
+                              "kind": "damageArea",
+                              "radius": 1.8,
+                              "includeOrigin": true,
+                              "amount": {
+                                "damageTier": "小"
+                              },
+                              "damageType": "magic",
+                              "condition": {
+                                "kind": "distance",
+                                "op": "<=",
+                                "value": 3
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "kind": "dash",
+                  "mode": "forward",
+                  "speed": 14,
+                  "maxDistance": 7,
+                  "stopOnHit": "enemy",
+                  "onHit": [
+                    {
+                      "kind": "damage",
+                      "damageType": "physical",
+                      "amount": {
+                        "damageTier": "極小"
+                      }
+                    }
+                  ],
+                  "onEndOn": "resolved",
+                  "onEnd": [
+                    {
+                      "kind": "applyBuff",
+                      "applyTo": "self",
+                      "statusId": "community-review-03-20260907.nimble",
+                      "stackKey": "community-review-03-20260907.nimble",
+                      "sourceScope": "caster",
+                      "maxStacks": 1,
+                      "duration": 3,
+                      "dispellable": false,
+                      "modifiers": []
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "0.65 秒可中斷起手後向前突進七格，在首名敵人或地形停止。接觸造成實際 HP／盾吸收後才啟動三次近身連擊，末段追加 1.8 格爆發；逐段重查三格距離，死亡／對決結束取消。空放、牆阻與免疫不接連段，沒有額外無敵或硬控。正常位移結束刷新同一層身法。\n【原設計】有明顯起手的強化突進連擊，末段小範圍爆發。",
+      "note": "0.65 秒可中斷起手後向前突進七格，在首名敵人或地形停止。接觸造成實際 HP／盾吸收後才啟動三次近身連擊，末段追加 1.8 格爆發；逐段重查三格距離，死亡／對決結束取消。空放、牆阻與免疫不接連段，沒有額外無敵或硬控。正常位移結束刷新同一層身法。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeSec",
+        "castTimeTier",
+        "radius",
+        "radiusTier",
+        "range",
+        "rangeTier",
+        "manaCost",
+        "manaCostTier",
+        "cooldown",
+        "cooldownTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "cooldownTier": "大",
+        "manaCostTier": "大",
+        "rangeTier": "大"
+      }
+    },
+    "EX": {
+      "products": [
+        {
+          "instanceId": "ex-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "applyTo": "self",
+                  "statusId": "community-review-03-20260907.afterimage",
+                  "stackKey": "community-review-03-20260907.afterimage",
+                  "sourceScope": "caster",
+                  "maxStacks": 1,
+                  "duration": 3,
+                  "dispellable": false,
+                  "modifiers": [],
+                  "hooks": [
+                    {
+                      "on": "onDamageDealt",
+                      "damageSource": "ability",
+                      "damageConnected": true,
+                      "victim": "enemy",
+                      "target": "event",
+                      "oncePerCast": true,
+                      "maxTriggers": 3,
+                      "onConsumed": "detachSource",
+                      "effects": [
+                        {
+                          "kind": "delayed",
+                          "shape": "single",
+                          "delaySec": 0.1,
+                          "stopOnCasterDeath": true,
+                          "effects": [
+                            {
+                              "kind": "damage",
+                              "damageType": "magic",
+                              "amount": {
+                                "damageTier": "極小"
+                              },
+                              "condition": {
+                                "kind": "distance",
+                                "op": "<=",
+                                "value": 12
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "三秒陽炎窗口內，自己的有效技能命中後延遲 0.1 秒向同一目標追加極小魔法傷害；每次施法跨波次／目標最多一次，共三次，消耗後撤除。普攻、其他施法者、殘像及連段衍生傷害不觸發；原目標死亡、離開十二格或對決結束時取消，不重新尋敵。火焰殘像模型／動作／音效仍待實際畫面驗收。\n【原設計】短時間產生跟隨施法的火焰殘像；追加傷害有次數上限，殘像不獨立尋敵。",
+      "note": "三秒陽炎窗口內，自己的有效技能命中後延遲 0.1 秒向同一目標追加極小魔法傷害；每次施法跨波次／目標最多一次，共三次，消耗後撤除。普攻、其他施法者、殘像及連段衍生傷害不觸發；原目標死亡、離開十二格或對決結束時取消，不重新尋敵。火焰殘像模型／動作／音效仍待實際畫面驗收。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeSec",
+        "castTimeTier",
+        "radius",
+        "radiusTier",
+        "range",
+        "rangeTier",
+        "manaCost",
+        "manaCostTier",
+        "cooldown",
+        "cooldownTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "cooldownTier": "極大",
+        "manaCostTier": "中",
+        "rangeTier": "中"
+      }
+    }
+  }
+}

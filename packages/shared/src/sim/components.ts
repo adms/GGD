@@ -79,6 +79,11 @@ export interface DashOverride {
   stopOnHit?: "enemy" | "enemyChampion";
   /** Runtime-only contact captured by movement, consumed by this dash's callback. */
   hitTarget?: EntityId;
+  /** Opt-in swept contacts which do not stop displacement. */
+  touchScope?: "enemy" | "enemyChampion";
+  touchedTargets?: EntityId[];
+  /** Natural termination, never set by cancellation or a replacement override. */
+  endReason?: "distance" | "terrain" | "contact";
   /**
    * PROVENANCE — was this displacement **authored by an ability**, or is it the
    * ambient shove every landed hit produces? ABSENT = false = damage-driven,

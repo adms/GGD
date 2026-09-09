@@ -13,6 +13,7 @@ import {
   type ProjectileDef,
   type SimEvent,
 } from "../../sim";
+import { abilityInstanceFor } from "../../sim/abilities/innateActive";
 import { learnEx } from "../../sim/abilities/abilitySystem";
 import { isPassiveOnly } from "../../sim/abilities/abilityPassives";
 import { asSeatId, asTeamId, type EntityId, type StatusId } from "../../ids";
@@ -191,10 +192,13 @@ export function runHeroAbilityScenario(
   let priorCastSummary: string | undefined;
   if (setup?.priorCast) {
     const prior = setup.priorCast;
-    const priorAbility = Abilities.get(component.slots[prior.slot].abilityId);
+    const priorInstance = abilityInstanceFor(component, prior.slot);
+    if (!priorInstance) throw new Error(`前置技能不存在：${prior.slot}`);
+    const priorAbility = Abilities.get(priorInstance.abilityId);
     component.unspentPoints = 20;
     const priorRank = Math.min(rank, priorAbility.maxRank);
-    while (component.slots[prior.slot].rank < priorRank && rankUpAbility(world, caster, prior.slot)) { /* real learning path */ }
+    if (prior.slot === "EX") learnEx(world, caster);
+    else while (priorInstance.rank < priorRank && rankUpAbility(world, caster, prior.slot)) { /* real learning path */ }
     // Establish conditions by executing the author's actual ability. Do not
     // fabricate target statuses, refill mana, clear cooldowns or erase damage.
     const priorIntent: IntentFrame = { commands: [{ kind: "castAbility", slot: prior.slot,
