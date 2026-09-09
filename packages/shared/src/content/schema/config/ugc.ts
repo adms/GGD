@@ -163,6 +163,25 @@ export const zConfigUgcDoc = z
      * 「按下通過之後，那隻英雄在**下一場**社群房裡選得到」，而 `next-match`
      * 在一台**沒有人開房**的 shard 上會讓那句話變成「永遠不會」。
      */
+    /**
+     * ⭐⭐ GH#1157 —— **已發布的社群英雄，收據要對哪幾欄。**
+     *
+     * ⛔ 在此之前是**四欄結構相等**（`hero_resolver.go`），而四欄裡有三欄每天轉幾十次。
+     * ⭐ 實測（2026-09-10）：只改這一份 JSON 的一個 `note` **字串**、跑一次
+     * `pnpm content:build` ⇒ `contentVersion` 與 `processorFingerprint` **兩欄同時轉**
+     * ⇒ ⛔ 已上架的英雄全部對不上 ⇒ **玩家那邊消失，而且沒有訊息**。
+     *
+     * > owner 2026-09-09：「74 名一旦上架，下一次部署就會全部靜靜消失 => 開票修阿」
+     *
+     * ⭐ 逐欄問「它變的時候，那名英雄真的壞了嗎」——四欄裡**只有一欄**答得出「會」。
+     */
+    heroTargetMatch: z.enum(["migration", "game-and-migration", "strict"]).optional().describe(
+      "@zh 已發布英雄的相容性比對\n" +
+      "@note 出貨 **{{出貨值}}**。⭐ 這一格決定「一名已上架的社群英雄，什麼時候會被判定成**不能再用**」。⛔ 在此之前是四欄全等，而四欄裡有三欄**每天轉幾十次** —— 實測：只改一句**說明文字**再跑一次內容建置，就有兩欄同時變 ⇒ ⛔ **已上架的英雄當場從玩家眼前消失，而且沒有任何訊息**。⭐ `migration` ＝ 只在**資料真的需要轉換**時才擋（schema 遷移變了）。⚠️ `strict` 是**一鍵回到舊行為**的逃生口 —— ⛔ 選它等於接受「改一個錯字就下架」。\n" +
+      "@opt migration 只看資料遷移（預設・改內容不會讓英雄消失）\n" +
+      "@opt game-and-migration 再加上遊戲版本（每次部署重新驗一次）\n" +
+      "@opt strict 四欄全等（⛔ 舊行為，一鍵 rollback 用）",
+    ),
     publishMode: z.enum(["immediate", "next-match"]).describe(
       "@zh 發布之後多久到玩家眼前\n" +
       "@note 出貨 **{{出貨值}}**（GH#1025）。⭐ `immediate` ＝ 平台一公告，這一台 shard 就把**新增的**內容文件註冊進登錄表 ⇒ **幾秒後**開的房就選得到；`next-match` ＝ 延到**下一次開房**那一刻才套用。⚠️ ⭐ **兩條路都不會動到進行中的對局** —— 白名單與內容都在開房那一刻取快照，而熱套用**只加新文件**：已經註冊過的 id 一律原封退回開機時那一份。⛔ 所以一份「**改掉**既有技能／設定」的覆蓋**不會**被熱套用 —— 它會被指名列在 `/healthz` 上並且仍然需要重啟（⭐ 那是誠實：改掉一支正在被使用的技能就是「對局中途換版」）。⚠️ 在這一格出現之前，答案是「**到重啟為止都不會用**」，而畫面上沒有任何地方說得出來。\n" +
@@ -249,6 +268,11 @@ export const DEFAULT_UGC: ConfigUgcDoc = Object.freeze({
   autoPromote: false,
   // ⭐ GH#1025 —— 出貨 **immediate**（第〇·六守則：優先權大的更新後預設啟動）。
   publishMode: "immediate",
+  // ⭐⭐ GH#1157 —— owner 2026-09-09 逐字：「74 名一旦上架，下一次部署就會全部靜靜消失 => 開票修阿」
+  //   ⇒ 出貨 `migration`：⭐ 四欄裡**只有 `migrationFingerprint`** 在回答
+  //     「這名英雄的資料需不需要被轉換」，其餘三欄變的時候他一點事都沒有。
+  //   ⚠️ `strict`（四欄全等）是**一鍵 rollback**，逐位元組等於 2026-09-10 之前的行為。
+  heroTargetMatch: "migration",
   // ⭐ GH#1025 Scope C —— 出貨 **on**（票文驗收：社群內容預設只進社群房）。
   // ⭐⭐ owner 2026-09-09 逐字：「社群內容只出現在社群房 => 我之前也說過了
   //   **不會分什麼社群房複雜化**，你又沒記錄下來了 對話開票超級重要！」
@@ -293,6 +317,9 @@ export function resolveUgc(doc: unknown): UgcPolicyResolved {
     maxBytes: d.maxBytes,
     autoPromote: d.autoPromote,
     publishMode: d.publishMode,
+    // ⭐ GH#1157 —— ⛔ 留空的舊 override 一律回出貨值（⛔ 不是 undefined：
+    //   一個 `undefined` 會讓 Go 端那條 fail-closed 的 enum 檢查判 503）。
+    heroTargetMatch: d.heroTargetMatch ?? "migration",
     communityRoomOnly: d.communityRoomOnly,
     digestRecompute: d.digestRecompute,
   });

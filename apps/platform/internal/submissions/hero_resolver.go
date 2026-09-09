@@ -65,14 +65,30 @@ func (s *HeroService) ResolveRoster(ctx context.Context) ([]community.HeroPin, e
 		return nil, httpx.Err(503, "hero_target_unavailable", "已發布英雄的目標版本資料不完整。")
 	}
 	target := heroListTarget{profile.GameVersion, profile.Base.ContentVersion, profile.MigrationFingerprint, profile.AuthoringProcessor.Fingerprint}
+	// ⭐⭐ GH#1157 —— 比對哪幾欄由**一格後台開關**決定,出貨 `migration`。
+	// ⛔ 讀不到政策**不擋名單**（fail-open）:那會讓一個設定問題變成「社群英雄全消失」,
+	//    ⭐ 而那正是這一票要修的病。⇒ 退回出貨值,並在下面的空清單那一段說出來。
+	matchMode := HeroTargetMatchMigration
+	policyErr := error(nil)
+	if policy, err := s.IntakePolicy(); err == nil {
+		if policy.HeroTargetMatch != "" {
+			matchMode = policy.HeroTargetMatch
+		}
+	} else {
+		policyErr = err
+	}
 	selected := []string{}
+	// ⭐ 被擋下來的逐欄計數 —— ⛔ 「一個都沒配上」在此之前說不出**為什麼**。
+	dropped := map[string]int{}
 	for _, view := range active {
 		row := heroListRow(view)
 		if row.Target == nil {
 			return nil, httpx.Err(503, "hero_publication_corrupt", "已發布英雄缺少版本相容性資料。")
 		}
-		if *row.Target == target {
+		if ok, field := matchMode.Matches(*row.Target, target); ok {
 			selected = append(selected, row.WorkID)
+		} else {
+			dropped[field]++
 		}
 	}
 	if len(selected) == 0 {
@@ -96,7 +112,11 @@ func (s *HeroService) ResolveRoster(ctx context.Context) ([]community.HeroPin, e
 				"target.contentVersion", target.ContentVersion,
 				"target.migrationFingerprint", target.MigrationFingerprint,
 				"target.processorFingerprint", target.ProcessorFingerprint,
-				"hint", "GameRevision 來自 GGD_BUILD_STAMP —— 一次部署就會讓它們全部掉出名單（GH#1147）")
+				// ⭐ GH#1157 —— 現在說得出**哪一欄**擋下它們,⛔ 不再只是「都沒配上」。
+				"matchMode", string(matchMode),
+				"droppedBy", dropped,
+				"policyReadErr", policyErr,
+				"hint", "⭐ matchMode=migration 時只有 migrationFingerprint 會擋；被 gameRevision／contentVersion 擋住代表這一格被設成 strict（GH#1157）")
 		}
 		return []community.HeroPin{}, nil
 	}
