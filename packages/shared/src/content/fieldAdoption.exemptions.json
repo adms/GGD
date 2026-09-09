@@ -345,19 +345,19 @@
     "why": "同上，三選一增益卡那一面。「這一場你的普攻變成遠程」是一張顯而易見的卡而且零程式；今天沒有任何一張三選一卡用它，與上面兩格同進退。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|2.is=guardian": {
+  "enum:abilities.effects[]#applyBuff.condition|0|3.is=guardian": {
     "status": "landing",
     "since": "2026-08-22",
     "why": "條件葉的實體類別剛落地，出貨內容還沒有一支技能用它。⚠️ 30 天後要嘛有內容採用、要嘛承認它是死機制 —— ⛔ 不可以靜靜留著。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|2.is=mob": {
+  "enum:abilities.effects[]#applyBuff.condition|0|3.is=mob": {
     "status": "landing",
     "since": "2026-08-22",
     "why": "條件葉的實體類別剛落地，出貨內容還沒有一支技能用它。⚠️ 30 天後要嘛有內容採用、要嘛承認它是死機制 —— ⛔ 不可以靜靜留著。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|2.is=summon": {
+  "enum:abilities.effects[]#applyBuff.condition|0|3.is=summon": {
     "status": "landing",
     "since": "2026-08-22",
     "why": "條件葉的實體類別剛落地，出貨內容還沒有一支技能用它。⚠️ 30 天後要嘛有內容採用、要嘛承認它是死機制 —— ⛔ 不可以靜靜留著。",
@@ -1294,47 +1294,47 @@
     "why": "#147 落地的是**機制**（sim/effects/pull.ts：destination 三檔 caster / point / anchorRing，等分錨點環用單位旋轉常數表因為 sim/** 禁三角函式），內容那一半由主 session 接。⛔ NOT 「沒有人需要」：A091 05-03 及喀爾度（godie-h021.e / godie-hblm.e）的 JASS 白紙黑字是 `2×等級` 個錨點 + `250+100×等級` 半徑（war3map.j:28224-28233），而它今天寫不出來 —— `knockback` 的 from:\"pull\" 只推得動一段長度而且會走 GH#193 的距離減法（對拉是反過來的）。`content/ability-templates/tpl-pull-throw.json` 也還掛著 status:\"draft\" 等這一格。接內容的做法寫在報告的『需要主 session 接線』。機制由 sim/effects/comboAndPull.test.ts 釘住（兩具身體真的被搬到環上、而且去的是不同的錨點）。",
     "group": "靈氣 (auras) — the container FELL BACK UNDER MIN_REACH on 2026-07-30 ---"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|1|0.op=!=": {
+  "enum:abilities.effects[]#applyBuff.condition|0|2|0.op=!=": {
     "status": "debt",
     "why": "比較運算子,鑄技工坊 ConditionEditor 的下拉選單成員之一(apps/editor/src/forge/ConditionEditor.tsx)。出貨的條件卡都是門檻式(`<=` / `>`),沒有一張需要相等比較。第一個自然的採用者是「等級剛好 N」或「層數 == 上限」這種整數比較 —— 目前沒有這種卡。若 30 天後仍是 0,誠實的結論是這兩個成員該從 zCondition 拿掉,而不是硬編一張卡去餵它。",
     "group": "觸發條件的比較運算子"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|1|0.op===": {
+  "enum:abilities.effects[]#applyBuff.condition|0|2|0.op===": {
     "status": "debt",
     "why": "同上。相等比較在整數軸(level / 層數)才有意義,而條件目前唯一被授權的整數軸是 level,還沒有卡用它。",
     "group": "觸發條件的比較運算子"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=agi": {
+  "enum:abilities.effects[]#applyBuff.condition|0|2|1.stat=agi": {
     "status": "debt",
     "why": "同 stat=ad。三圍軸(str/agi/int)在 #248 之後才真的活起來(三圍→AD/攻速/AP),條件讀它是下一步而不是這一步。",
     "group": "觸發條件的屬性軸"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=armor": {
+  "enum:abilities.effects[]#applyBuff.condition|0|2|1.stat=armor": {
     "status": "debt",
     "why": "條件的防禦軸。同一條 `stat` 分支,已由 hp 證明會動。防禦門檻的自然客戶是穿透類:「對防禦高於 N 的目標改走真實傷害」—— 這正是 owner 2026-07-30 講的「>=< 某個常數或某個數值條件」在坦克向上的讀法,所以是 landing 不是 debt。",
     "group": "觸發條件的屬性軸"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=attackSpeed": {
+  "enum:abilities.effects[]#applyBuff.condition|0|2|1.stat=attackSpeed": {
     "status": "debt",
     "why": "條件的攻速軸。同一條 `stat` 分支。自然客戶是攻速流的「攻速達上限後把溢出換成傷害」—— 要等 #286(攻速解鎖上限 10.0)落地才有意義,所以它排在那張票後面。",
     "group": "觸發條件的屬性軸"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=int": {
+  "enum:abilities.effects[]#applyBuff.condition|0|2|1.stat=int": {
     "status": "debt",
     "why": "條件的智力軸。三圍(str/agi/int)在 #248 之後才真的活起來(三圍→AD/攻速/AP),而條件讀三圍是再下一步:今天所有「智力達 X」的敘述都寫在描述文字裡,沒有一支變成可判定的門檻。",
     "group": "觸發條件的屬性軸"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=magicResist": {
+  "enum:abilities.effects[]#applyBuff.condition|0|2|1.stat=magicResist": {
     "status": "debt",
     "why": "條件的魔抗軸。同 armor,兩者在 w3x 的敘述裡幾乎總是成對出現(「防禦或魔抗高於 N」),所以它們會同時被採用或同時留在 0。",
     "group": "觸發條件的屬性軸"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=moveSpeed": {
+  "enum:abilities.effects[]#applyBuff.condition|0|2|1.stat=moveSpeed": {
     "status": "debt",
     "why": "條件的移速軸。同一條 `stat` 分支。自然客戶是追擊類的「目標移速低於 N 時追加傷害」(配合減速),w3x 有這個家族但今天都只做了減速那一半。",
     "group": "觸發條件的屬性軸"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=str": {
+  "enum:abilities.effects[]#applyBuff.condition|0|2|1.stat=str": {
     "status": "debt",
     "why": "條件的力量軸。同 int:三圍在 #248 之後才活,而條件讀三圍還沒有任何一張卡。力量門檻的自然客戶是「力量高於 N 時擊退距離加倍」這種近戰卡。",
     "group": "觸發條件的屬性軸"
@@ -2095,12 +2095,12 @@
     "why": "⭐ 同上（`replaces` 的接管時長）。⚠️ ⭐ 省略＝**320ms** —— ⛔ 刻意不是「永遠」:一個沒有到期的接管會讓那個人**再也不會有任何反應**,而那看起來就像動畫壞了。⇒ 只有需要**比一塊動作積木更長**的接管才會填它。",
     "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=R": {
+  "enum:abilities.effects[]#applyBuff.condition|0|6|1.slot=R": {
     "status": "landing",
     "since": "2026-09-03",
     "why": "⭐ `ratios[].when` / `hooks[].when` 的 `recentCast.slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有內容（GH#936/#944 的變身增幅：「最近放過 EX 才吃這條係數」）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**，⛔ 不是四個各自要接線的功能：它們與 EX 走**完全相同**的那一行 `resolveScaling`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「最近放過 Q 才吃這條」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=W": {
+  "enum:abilities.effects[]#applyBuff.condition|0|6|1.slot=W": {
     "status": "landing",
     "since": "2026-09-03",
     "why": "⭐ `ratios[].when` / `hooks[].when` 的 `recentCast.slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有內容（GH#936/#944 的變身增幅：「最近放過 EX 才吃這條係數」）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**，⛔ 不是四個各自要接線的功能：它們與 EX 走**完全相同**的那一行 `resolveScaling`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「最近放過 Q 才吃這條」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
@@ -2141,13 +2141,13 @@
     "why": "⛔⛔ **這個零是我 2026-09-05 自己造成的**：`radial` 原本只有兩個採用者（`godie-u010.ex` ＋ `godie-uvng.ex`，38-002 的三條黑龍），⭐ 而逐行讀 war3map.j 之後確認原作是**並排往前衝**（j:44070 `CreateNUnitsAtLoc(…, GetUnitFacing(施法者))` 說三具 facing 同一個）⇒ 兩支都改走新的 `path:\"fan\"`。⇒ `radial` 從 2 掉到 0。⭐ 而它**不該被刪掉**：兩個獨立的理由 —— ① **10 份模板**的 `path` enum 仍列著它，其中 `tpl-radial-burst` 與 `tpl-locust-swarm` 的 **default 就是 radial**（⇒ 編輯器用那兩份模板開一張新卡，出來的就是 radial）② 它是唯一「整圈等分、起始相位固定」的路徑，⛔ 而 `fan` 是「以面向為中心的一段弧」—— 兩者語意不同，⛔ 不可互相取代。⚠️ 30 天到期時要問的是「有沒有一支技能真的需要整圈星爆」，⛔ 不是把這一條續期，⛔ 更不是為了讓它變綠而把某支技能改回 radial。",
     "group": "2026-09-05 因為內容遷移而歸零的（landing，30 天到期）"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|8.slot=R": {
+  "enum:abilities.effects[]#applyBuff.condition|0|9.slot=R": {
     "status": "landing",
     "since": "2026-09-06",
     "why": "⭐ GH#1020 `learned` 葉（「主體已學會某一格」＝原作 `udg_EX_Mode` 旗標的翻譯）的 `slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有客戶（小傑 06-00 猜猜拳三個變體的殺意追加段：解鎖 EX 才掛減速／出血／追擊暈眩，`gonGuessPunch.test.ts` ③ 兩個方向驗過）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**：五格全走同一行 `effects/slotRank.ts::slotRankOf`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「學了 W 才⋯」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。",
     "note": "⚠️ ⭐ 2026-09-08（合併 PR 1118）：鍵從 `condition|0|7`／`|0|8` 位移到 `|0|8`／`|0|9` —— ⛔ 內容一個字都沒變,是**條件 union 插入了 `facing` 葉**讓每個位置索引往後移一格。⭐ 這暴露了一件事：這張表用**位置索引**當鍵 ⇒ 任何人在 union 中間插一顆葉子,整批豁免會一起變成「指向空氣」。"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|8.slot=W": {
+  "enum:abilities.effects[]#applyBuff.condition|0|9.slot=W": {
     "status": "landing",
     "since": "2026-09-06",
     "why": "⭐ GH#1020 `learned` 葉（「主體已學會某一格」＝原作 `udg_EX_Mode` 旗標的翻譯）的 `slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有客戶（小傑 06-00 猜猜拳三個變體的殺意追加段：解鎖 EX 才掛減速／出血／追擊暈眩，`gonGuessPunch.test.ts` ③ 兩個方向驗過）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**：五格全走同一行 `effects/slotRank.ts::slotRankOf`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「學了 W 才⋯」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。",
@@ -2173,33 +2173,33 @@
     "since": "2026-09-06",
     "why": "⭐ GH#1024 A2 的**覆寫層** —— 十一屬性逐格選填級別名，值在載入時由 `bandFor`（覆寫 > 出身 > 定位）解析，守衛 `championTemplateOverrides.test.ts`（突變①驗過：拿掉合併那一段 ⇒ 紅）。⛔ 出貨零採用是**設計**：出貨 71 位的級距全部由出身那一列決定（owner 2026-08-16 逐隻指派），今天沒有任何一位需要偏離模板。第一份採用者會是外部編輯器投稿的英雄（#1024 PR-2：匯出＝模板 ref＋覆寫）或 owner 在後台對某一位的微調。30 天後仍是零 ⇒ 沒有人採用它 —— ⭐ 那正是這條閘該喊的時候。"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=E": {
+  "enum:abilities.effects[]#applyBuff.condition|0|6|1.slot=E": {
     "status": "landing",
     "since": "2026-09-07",
     "why": "GH#1070（2026-09-07）把 09-04／11-03／11-04 變身增幅的 `recentCast E` 換成 `form` 葉之後，`recentCast` 的 slot=E 今天 0 個採用者。enum 是 CastableSlot 全集推導的，⛔ 不砍；等下一支「E 之後 N 秒內」的連段內容。",
     "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=PASSIVE": {
+  "enum:abilities.effects[]#applyBuff.condition|0|6|1.slot=PASSIVE": {
     "status": "landing",
     "since": "2026-09-07",
     "why": "GH#1082（2026-09-07）把 11-03／11-04 的 `recentCast PASSIVE 15` 換成 `status` 葉（三刀流有 statusId 了）⇒ slot=PASSIVE 今天 0 個採用者。同上，⛔ 不砍 enum。",
     "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|8.slot=E": {
+  "enum:abilities.effects[]#applyBuff.condition|0|9.slot=E": {
     "status": "landing",
     "since": "2026-09-07",
     "why": "同 |0|5|1.slot=E（learned 葉的 slot 值域）：今天沒有「E 學了才…」的內容；EX 那一格有（#1020 小傑）。",
     "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件",
     "note": "⚠️ ⭐ 2026-09-08（合併 PR 1118）：鍵從 `condition|0|7`／`|0|8` 位移到 `|0|8`／`|0|9` —— ⛔ 內容一個字都沒變,是**條件 union 插入了 `facing` 葉**讓每個位置索引往後移一格。⭐ 這暴露了一件事：這張表用**位置索引**當鍵 ⇒ 任何人在 union 中間插一顆葉子,整批豁免會一起變成「指向空氣」。"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|8.slot=PASSIVE": {
+  "enum:abilities.effects[]#applyBuff.condition|0|9.slot=PASSIVE": {
     "status": "landing",
     "since": "2026-09-07",
     "why": "同上：learned PASSIVE 沒有內容意義（天生技 rank 1 就有）—— 可反駁：哪天天生技可以未學，這一列就該有採用者或該砍 enum。",
     "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件",
     "note": "⚠️ ⭐ 2026-09-08（合併 PR 1118）：鍵從 `condition|0|7`／`|0|8` 位移到 `|0|8`／`|0|9` —— ⛔ 內容一個字都沒變,是**條件 union 插入了 `facing` 葉**讓每個位置索引往後移一格。⭐ 這暴露了一件事：這張表用**位置索引**當鍵 ⇒ 任何人在 union 中間插一顆葉子,整批豁免會一起變成「指向空氣」。"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|9.form=base": {
+  "enum:abilities.effects[]#applyBuff.condition|0|10.form=base": {
     "status": "landing",
     "since": "2026-09-07",
     "why": "GH#1070 的 `form` 葉兩個值裡，出貨內容只用 `alternate`（變身增幅）；`base` 是對稱值 —— 第一個「本體限定」的技能出現前它是 0。⛔ 不砍：求值端 CONDITION_FORMS 兩個值同一份。",
@@ -2218,7 +2218,7 @@
     "why": "GH#1076／#993 第三批之後普查改讀展開後的文件，`summon.formation` 才第一次被看見；出貨三支召喚都是 circle。scatter 是模板槽的合法值（隨機散佈），等第一支散佈型召喚（原作：亡靈狂潮那一族）。",
     "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件"
   },
-  "field:abilities.effects[]#applyBuff.condition|0|3|0.appliedBy": {
+  "field:abilities.effects[]#applyBuff.condition|0|4|0.appliedBy": {
     "status": "landing",
     "since": "2026-09-08",
     "why": "⭐ PR 1118 —— 狀態條件的**來源過濾**（「這個狀態是**我**掛的嗎」）。⛔ 出貨 107 份可以用它的技能今天零採用,而那個零是誠實的：既有 421 支是逐支從 JASS 翻過來的,原作的狀態判定**不分來源**（`GetUnitAbilityLevel(u,'Axxx')>0`）⇒ 沒有一支翻譯得出這一格。⭐ 它的第一份採用者會是**編輯器產出的內容**（社群英雄要區分「我的中毒」與「隊友的中毒」才疊得對）。⛔ 我不先填它 —— 替既有技能加一個原作沒有的來源條件,就是改設計。",

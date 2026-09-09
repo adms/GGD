@@ -2,12 +2,14 @@ import { communityCombatFixture } from "./communityCombatFixture";
 import { castAbility } from "../src/sim/abilities/abilitySystem";
 import { abilityInstanceFor } from "../src/sim/abilities/innateActive";
 import { attachSource, recomputeStats } from "../src/sim/stats/statPipeline";
+import { itemModifierSource } from "../src/sim/economy/itemSource";
+import type { ItemDef } from "../src/sim/content/defs";
 import { Stat } from "../src/sim/stats/statTypes";
 import { ModOp } from "../src/sim/stats/modifiers";
 import { DEFAULT_HITSTOP } from "../src/sim/combat/hitstopHold";
 import { mobRulesFromConfig, type MobWavesConfigLike } from "../src/sim/mobs";
 import { markCount } from "../src/sim/marks";
-import { asSeatId, type EntityId, type StatusId } from "../src/ids";
+import { asSeatId, type EntityId, type ItemId, type StatusId } from "../src/ids";
 import type { CastableSlot, CastTarget } from "../src/sim/intents";
 
 /** Real compiled batch hero, deterministic live combat, no incidental auto-acquire. */
@@ -23,12 +25,16 @@ export function communityActionFixture(number: string, rank = 1, refinementOverr
   world.mobRules = { ...mobRulesFromConfig(arena.mobWaves, world.dt), autoWaves: false,
     inertSeats: new Set([0, 1, 2, 3].map(asSeatId)) };
   const origin = { ...world.transform.get(r.caster)!.pos };
-  for (const id of [r.caster, r.ally, r.enemy, r.distant]) {
-    attachSource(world, id, { id: "test:stable-combat", kind: "item", modifiers: [
+  const stableCombatItem: ItemDef = {
+    id: "test:stable-combat" as ItemId, name: "Stable combat fixture", cost: 0, tier: 1, tags: [],
+    modifiers: [
       { stat: Stat.MaxHealth, op: ModOp.Override, value: 100000 },
       { stat: Stat.HealthRegen, op: ModOp.Override, value: 0 },
       { stat: Stat.ManaRegen, op: ModOp.Override, value: 0 },
-    ] });
+    ],
+  };
+  for (const id of [r.caster, r.ally, r.enemy, r.distant]) {
+    attachSource(world, id, itemModifierSource(world, id, stableCombatItem.id, 0, stableCombatItem));
     recomputeStats(world, id); world.health.get(id)!.hp = 50000;
   }
   const place = (id: EntityId, x: number, z = 0) => {

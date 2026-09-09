@@ -513,9 +513,12 @@ describe("field adoption census (recipe S8: mechanism shipped, content 0)", () =
     expect(suppressed.length).toBeGreaterThan(0);
     // Suppressed rows appear in neither the report nor the failure set.
     const report = formatCensus(census);
+    // Compare complete row keys: a reported child may contain its suppressed
+    // parent's path when shared schema instances aggregate different sites.
+    const reportedKeys = new Set(report.split("\n").map((line) => line.trim().split(/\s+/).at(-1)));
     const zeroKeys = new Set(unadopted(census).map((r) => r.key));
     for (const r of suppressed) {
-      expect(report, `${r.key} should be cascade-suppressed`).not.toContain(r.key);
+      expect(reportedKeys.has(r.key), `${r.key} should be cascade-suppressed`).toBe(false);
       expect(zeroKeys.has(r.key), `${r.key} must not be a reported failure`).toBe(false);
     }
   });
