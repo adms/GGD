@@ -1,0 +1,55 @@
+{
+  "castTimeSec": 0.1,
+  "castType": "targeted",
+  "cooldown": [
+    15,
+    15,
+    15,
+    15
+  ],
+  "cooldownTier": "小",
+  "description": "「麻醉單請勿填錯！」\n指定敵人被施加 magic-break，明確帶 silenced 旗標 2.5 秒；不造成麻醉傷害。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "duration": 2.5,
+      "kind": "applyStatus",
+      "silenced": true,
+      "statusId": "magic-break"
+    }
+  ],
+  "id": "b2-keyaru.e",
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "maxRank": 4,
+  "name": "麻醉單請勿填錯",
+  "provenance": "editor-json",
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "E",
+  "targetsEnemies": true,
+  "template": {
+    "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539",
+    "params": {
+      "castTimeSec": 0.1,
+      "status": {
+        "duration": 2.5,
+        "silenced": true,
+        "statusId": "magic-break"
+      }
+    },
+    "ref": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b"
+  },
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.pulse-sm"
+    }
+  ]
+}

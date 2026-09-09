@@ -1,0 +1,63 @@
+{
+  "castType": "self",
+  "cooldown": [
+    0
+  ],
+  "description": "「工頭撤退有體力補貼！」\n位移成功後回復自己 50 生命，每 3 秒一次；沒有死亡換身。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [],
+  "id": "b2-touka.passive",
+  "innateKind": "passive",
+  "manaCost": [
+    0
+  ],
+  "maxRank": 1,
+  "name": "工頭撤退有體力補貼",
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "effects": [
+              {
+                "amount": {
+                  "flat": 50
+                },
+                "applyTo": "self",
+                "kind": "heal"
+              }
+            ],
+            "internalCooldown": 3,
+            "on": "onDashOrBlink",
+            "target": "self"
+          }
+        ]
+      }
+    ]
+  },
+  "provenance": "editor-json",
+  "range": 0,
+  "schema": "ability@1",
+  "slot": "PASSIVE",
+  "template": {
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26",
+    "params": {
+      "hooks": [
+        {
+          "effects": [
+            {
+              "amount": {
+                "flat": 50
+              },
+              "applyTo": "self",
+              "kind": "heal"
+            }
+          ],
+          "internalCooldown": 3,
+          "on": "onDashOrBlink",
+          "target": "self"
+        }
+      ]
+    },
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+  }
+}

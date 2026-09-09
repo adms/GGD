@@ -1,0 +1,72 @@
+{
+  "castTimeSec": 0.1,
+  "castType": "ground",
+  "cooldown": [
+    45,
+    45,
+    45
+  ],
+  "cooldownTier": "大",
+  "description": "「魔法音樂課吹整排！」\n發出直線魔法波動，打擊沿線敵人；演出是吹笛，幾何以編譯能力為準。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "aim": "target",
+      "amount": {
+        "damageTier": "中",
+        "flat": 1000,
+        "perRank": [
+          0,
+          750,
+          1500
+        ]
+      },
+      "damageType": "magic",
+      "fromCaster": true,
+      "includeOrigin": true,
+      "kind": "damageLine",
+      "length": 10,
+      "width": 1.8
+    }
+  ],
+  "id": "b2-aladdin.r",
+  "manaCost": [
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "maxRank": 3,
+  "name": "魔法音樂課吹整排",
+  "provenance": "editor-json",
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "R",
+  "template": {
+    "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
+    "params": {
+      "aim": "target",
+      "castTimeSec": 0.1,
+      "damage": {
+        "damageTier": "中",
+        "flat": 1000,
+        "perRank": [
+          0,
+          750,
+          1500
+        ]
+      },
+      "damageType": "magic",
+      "length": 10,
+      "width": 1.8
+    },
+    "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71"
+  },
+  "vfxKey": "fx.prim.arcane.bolt",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.bolt"
+    }
+  ]
+}

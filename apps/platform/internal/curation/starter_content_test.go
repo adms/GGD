@@ -214,7 +214,7 @@ func TestStarterSetMatchesContentTree(t *testing.T) {
 	}
 
 	set := curation.StarterSet()
-	require.GreaterOrEqual(t, len(set.Champions), 40, "the first open roster is 86 champions")
+	require.GreaterOrEqual(t, len(set.Champions), 40, "the first open roster is 123 champions")
 	require.GreaterOrEqual(t, len(set.Items), 24, "starter set must enable at least 24 items")
 	require.GreaterOrEqual(t, len(set.Abilities), len(set.Champions)*5,
 		"every starter champion contributes its full Q/W/E/R/EX kit")
@@ -684,10 +684,47 @@ var firstOpenRoster = []string{
 	"community-review-35-20260907",
 	"community-review-36-20260907",
 	"community-review-37-20260907",
+	"b2-aladdin",
+	"b2-albus",
+	"b2-bojji",
+	"b2-boxxo",
+	"b2-elma",
+	"b2-fushi",
+	"b2-goblin",
+	"b2-guts",
+	"b2-haga",
+	"b2-kaede",
+	"b2-kaiji",
+	"b2-keyaru",
+	"b2-kisaragi",
+	"b2-klaus",
+	"b2-kumoko",
+	"b2-luckyman",
+	"b2-makoto",
+	"b2-maomao",
+	"b2-maple",
+	"b2-matthias",
+	"b2-misery",
+	"b2-naofumi",
+	"b2-ned",
+	"b2-noor",
+	"b2-nube",
+	"b2-orphen",
+	"b2-popp",
+	"b2-rem",
+	"b2-rin",
+	"b2-shadow",
+	"b2-shinchan",
+	"b2-sinbad",
+	"b2-takopi",
+	"b2-touka",
+	"b2-uncle",
+	"b2-yogiri",
+	"b2-zenitsu",
 }
 
 // whitelist-first-open-roster: the enabled champion set the starter bundle
-// seeds is EXACTLY the 86 canonical first-open-roster ids — no more, no fewer,
+// seeds is EXACTLY the 123 canonical first-open-roster ids — no more, no fewer,
 // none swapped. This is the guard the task asks for; it needs no content tree,
 // so it runs in any environment.
 func TestFirstOpenRoster(t *testing.T) {
@@ -696,7 +733,7 @@ func TestFirstOpenRoster(t *testing.T) {
 	// ⭐ 86 = 49 原本手挑的 ＋ 37 名 2026-09-10 owner 裁定為官方的社群英雄。
 	// ⚠️ 這個字面值是**刻意**的:它擋的是「有人不小心動了名單」——
 	//   ⇒ 真的要改名單就把它一起改,⛔ 而不是讓它自己跟著 len() 走(那等於沒有閘)。
-	require.Len(t, firstOpenRoster, 86, "the first open roster is 86 champions")
+	require.Len(t, firstOpenRoster, 123, "the first open roster is 123 champions")
 	seen := map[string]struct{}{}
 	for _, id := range firstOpenRoster {
 		_, dup := seen[id]
@@ -707,7 +744,7 @@ func TestFirstOpenRoster(t *testing.T) {
 	want := append([]string(nil), firstOpenRoster...)
 	sort.Strings(want)
 	assert.Equal(t, want, curation.StarterSet().Champions,
-		"the starter bundle's enabled champion set must be EXACTLY the 86 canonical first-open-roster ids")
+		"the starter bundle's enabled champion set must be EXACTLY the 123 canonical first-open-roster ids")
 }
 
 // storeDoc is the FLAT-PRICE half of content/config/store.json — the same two
@@ -734,7 +771,7 @@ const (
 	starterFreeChampions = 12
 	// ⭐ GH#1165：+37（第一批社群英雄）—— ⚠️ **免費那 12 位一位都沒動**，
 	//   那才是這條斷言真正在守的東西（「免費的比例不可以偷偷變」）。
-	starterPricedChampions = 74
+	starterPricedChampions = 111 // ⭐ 2026-09-10 GH#1165：第二批 37 名（免費那 12 位一位都沒動）
 )
 
 // clientWalletMetaPath is the champ-select module that carries the client's

@@ -1,0 +1,90 @@
+{
+  "castTimeSec": 0.1,
+  "castType": "ground",
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "cooldownTier": "小",
+  "description": "「英雄招募延時坑！」\n以起手命中中心（沒有命中則施法點）定坑，0.6 秒後重選半徑 2.5 的敌人，各定身 2 秒；坑是一次排程區域，沒有永久地形洞。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "anchor": "point",
+      "delaySec": 0.6,
+      "effects": [
+        {
+          "applyTo": "target",
+          "duration": 2,
+          "kind": "applyStatus",
+          "root": true,
+          "statusId": "root"
+        }
+      ],
+      "kind": "delayed",
+      "maxTargets": 4,
+      "radius": 2.5,
+      "shape": "circle",
+      "side": "enemies",
+      "stopOnCasterDeath": true,
+      "targetMode": "reresolve"
+    }
+  ],
+  "id": "b2-touka.q",
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "maxRank": 4,
+  "name": "英雄招募延時坑",
+  "provenance": "editor-json",
+  "radius": 3,
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "Q",
+  "targetsEnemies": true,
+  "template": {
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+    "params": {
+      "castTimeSec": 0.1,
+      "castType": "ground",
+      "effects": [
+        {
+          "anchor": "point",
+          "delaySec": 0.6,
+          "effects": [
+            {
+              "applyTo": "target",
+              "duration": 2,
+              "kind": "applyStatus",
+              "root": true,
+              "statusId": "root"
+            }
+          ],
+          "kind": "delayed",
+          "maxTargets": 4,
+          "radius": 2.5,
+          "shape": "circle",
+          "side": "enemies",
+          "stopOnCasterDeath": true,
+          "targetMode": "reresolve"
+        }
+      ],
+      "radius": 3,
+      "side": "enemies"
+    },
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+  },
+  "vfxKey": "fx.prim.arcane.nova",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.nova"
+    }
+  ]
+}

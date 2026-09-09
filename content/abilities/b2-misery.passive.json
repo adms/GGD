@@ -1,0 +1,59 @@
+{
+  "castType": "self",
+  "cooldown": [
+    0
+  ],
+  "description": "「異界店主不包售後！」\n自己受到控制時回復最大魔力 8%，每 4 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [],
+  "id": "b2-misery.passive",
+  "innateKind": "passive",
+  "manaCost": [
+    0
+  ],
+  "maxRank": 1,
+  "name": "異界店主不包售後",
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "effects": [
+              {
+                "applyTo": "self",
+                "kind": "restore",
+                "manaPct": 0.08
+              }
+            ],
+            "internalCooldown": 4,
+            "on": "onCrowdControlReceived",
+            "target": "self"
+          }
+        ]
+      }
+    ]
+  },
+  "provenance": "editor-json",
+  "range": 0,
+  "schema": "ability@1",
+  "slot": "PASSIVE",
+  "template": {
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26",
+    "params": {
+      "hooks": [
+        {
+          "effects": [
+            {
+              "applyTo": "self",
+              "kind": "restore",
+              "manaPct": 0.08
+            }
+          ],
+          "internalCooldown": 4,
+          "on": "onCrowdControlReceived",
+          "target": "self"
+        }
+      ]
+    },
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+  }
+}

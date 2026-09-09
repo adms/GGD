@@ -55,6 +55,39 @@ def load_batch1() -> list[dict]:
     return out
 
 
+def load_batch2(root: Path) -> list[dict]:
+    """
+    ⭐ 第二批 37 —— 來源形狀**不一樣**，⛔ 而下游一模一樣。
+
+    第一批的 `*.upload-recipe.json` 要**組裝**（`effectiveHero` ＋ 六格 `slots`）；
+    第二批的 ZIP 裡是**已經編譯好**的 `champion@1` ＋ 六份 `ability@1`
+    （而且比第一批更完整：`effects` / `vfxKey` / `vfxLayers` / `provenance` 都在）。
+
+    ⇒ ⭐ 所以這裡只做「讀進來」，⛔ 不是第二支產生器：
+      模型對應、級距清洗、圖示、報告、寫檔**全部共用**下面那一段
+      （第〇·五守則：⛔ 看到「為這一批寫一份自己的流程」就是越線）。
+
+    ⚠️ ⭐ 變身態（`b2-maple-alt-…`）**自己沒有六格技能** —— 它靠
+    `transform.counterpartId` 與本體配對。⇒ 六格斷言只對**本體**成立。
+    """
+    out = []
+    for d in sorted(root.iterdir()):
+        chdir, abdir = d / "compiled/champions", d / "compiled/abilities"
+        if not chdir.is_dir():
+            continue
+        abilities = [json.loads(f.read_text(encoding="utf-8")) for f in sorted(abdir.glob("*.json"))]
+        for f in sorted(chdir.glob("*.json")):
+            hero = json.loads(f.read_text(encoding="utf-8"))
+            if hero.get("schema") != "champion@1":
+                continue
+            alt = (hero.get("transform") or {}).get("role") == "alternate"
+            mine = [a for a in abilities if str(a.get("id", "")).startswith(hero["id"] + ".")]
+            if not alt and len(mine) != 6:
+                raise ValueError(f"⛔ {hero['id']} 只有 {len(mine)} 份技能 —— 本體六格要齊")
+            out.append({"champion": hero, "slots": [], "abilities": mine, "recipe": f"{d.name}/{f.name}"})
+    return out
+
+
 # ⭐ 級距欄位（值在載入時從共用表解析）—— 第〇·四守則。
 # ⛔ 同一個節點同時有級距與算好的值 ⇒ schema 直接拒絕：
 #    「msBonusTier 與 value 不可同時存在（第〇·四守則：value 是第二個住處）」
@@ -172,7 +205,7 @@ def ability_docs(hero: dict, slots: list[dict]) -> list[dict]:
     # ⇒ ⭐ 接線放在**六格都會經過**的這一段（第〇·五守則：⛔ 不要為某一格寫一個 if）。
     for d in docs:
         src = ICONS / "abilities" / f"{d['id']}.webp"
-        if src.is_file():
+        if src.is_file() or (ICON_AB / f"{d['id']}.webp").is_file():
             d["icon"] = f"assets/icons/abilities/{d['id']}.webp"
     if len(docs) != 6:
         raise ValueError(f"⛔ {hero['id']} 只組出 {len(docs)} 份技能 —— 六格要齊")
@@ -215,12 +248,14 @@ def main() -> None:
     ap.add_argument("--inventory", type=Path, required=True, help="全角色模型盤點.md")
     ap.add_argument("--catalog", type=Path, required=True, help="素材庫 catalog.json")
     ap.add_argument("--report", type=Path, help="逐名報告（⭐ 暫用的都列出來）")
+    ap.add_argument("--batch2-dir", type=Path,
+                    help="第二批的 staging 根目錄（每名一個 compiled/{champions,abilities}）")
     ap.add_argument("--write", action="store_true", help="⛔ 不給就是 dry-run")
     args = ap.parse_args()
 
     inv = {r["heroId"]: r for r in parse_inventory(args.inventory)}
     titles = catalog_titles(args.catalog)
-    heroes = load_batch1()
+    heroes = load_batch2(args.batch2_dir) if args.batch2_dir else load_batch1()
     if not heroes:
         raise SystemExit("⛔ 一份英雄資料都沒讀到 —— 母體塌了（⛔ 0 份「處理過」讀起來跟全過一樣）")
 
@@ -240,8 +275,12 @@ def main() -> None:
             m = {"state": "not-in-inventory", "why": "⛔ 盤點表裡找不到這一名"}
             placeholders.append({"field": "modelKey", "state": m["state"], "why": m["why"]})
         # ── ② 圖示 ────────────────────────────────────────────────
+        # ⭐ 兩個住處都認：`ICONS`（第一批那次的產出）與**已經出貨的那一份**
+        #   （`content/assets/icons/`，icon-gen 的 local batch 直接寫在那裡）。
+        # ⚠️ ⭐ 這是為了讓**誰先跑都一樣**：⛔ 沒有這一段，先跑 icon-gen 再跑這一支
+        #   就會把剛畫好的圖示清掉（兩個寫入端搶同一格 —— 第〇·四守則）。
         src = ICONS / "champions" / f"{hid}.webp"
-        if src.is_file():
+        if src.is_file() or (ICON_CH / f"{hid}.webp").is_file():
             c["icon"] = f"assets/icons/champions/{hid}.webp"
         else:
             placeholders.append({"field": "icon", "state": "no-generated-icon",
@@ -249,7 +288,12 @@ def main() -> None:
         drop_baked_values(c)
         rows.append({"id": hid, "name": c.get("name"), "modelKey": c.get("modelKey"),
                      "icon": c.get("icon"), "modelState": m["state"], "why": m["why"],
-                     "placeholders": placeholders, "doc": c, "abilities": ability_docs(c, h["slots"])})
+                     "placeholders": placeholders, "doc": c,
+                     # ⭐ 已經編譯好的就直接用（第二批），⛔ 否則從六格 slots 組（第一批）。
+                     # ⚠️ ⭐ 判準是「**有沒有給**」，⛔ 不是「給的是不是空的」——
+                     #   變身態**照設計**零份技能（它用本體的 `b2-maple.ex`），
+                     #   ⇒ 寫 `or` 會讓它掉進組裝路徑然後死在「缺 EX」。
+                     "abilities": h["abilities"] if "abilities" in h else ability_docs(c, h["slots"])})
 
     if args.write:
         needed = {r["doc"].get("modelKey") for r in rows if str(r["doc"].get("modelKey", "")).startswith("community.body.")}

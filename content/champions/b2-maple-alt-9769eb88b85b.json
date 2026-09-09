@@ -1,0 +1,446 @@
+{
+  "abilities": {
+    "E": {
+      "castTimeSec": 0.1,
+      "castType": "self",
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "cooldownTier": "小",
+      "description": "「這個形狀看起來很耐打！」\n進入 4 秒的 alternate 怪物戰鬥模式；產生正式 counterpart，外觀沿用代理，不能稱美術變怪物完成。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "durationSec": 4,
+          "kind": "championForm",
+          "to": "alternate"
+        },
+        {
+          "duration": 4,
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "op": "flat",
+              "stat": "armor",
+              "value": 25
+            }
+          ]
+        }
+      ],
+      "id": "b2-maple.e",
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "這個形狀看起來很耐打",
+      "provenance": "editor-json",
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "E",
+      "template": {
+        "contentSha256": "sha256:8d2edc181c1550ef0212a29fa019c2e48a7ebb0772087e683c174456e7d01705",
+        "params": {
+          "buffDurationSec": 4,
+          "castTimeSec": 0.1,
+          "durationSec": 4,
+          "modifiers": [
+            {
+              "op": "flat",
+              "stat": "armor",
+              "value": 25
+            }
+          ],
+          "to": "alternate"
+        },
+        "ref": "hero-template.c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f55010"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ]
+    },
+    "Q": {
+      "castTimeSec": 0.1,
+      "castType": "self",
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "cooldownTier": "小",
+      "description": "「防禦力輸入多一個零！」\n自己得到 260 全傷害護盾 3 秒，保護自己不等於保護隊友。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "absorbs": "all",
+          "amount": {
+            "flat": 260,
+            "perRank": [
+              0,
+              130,
+              260,
+              390
+            ]
+          },
+          "duration": 3,
+          "kind": "shield",
+          "onExisting": "keepLarger",
+          "stackKey": "b2-protection"
+        }
+      ],
+      "id": "b2-maple.q",
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "防禦力輸入多一個零",
+      "provenance": "editor-json",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "Q",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.1,
+          "castType": "self",
+          "effects": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 260,
+                "perRank": [
+                  0,
+                  130,
+                  260,
+                  390
+                ]
+              },
+              "duration": 3,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "b2-protection"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ]
+    },
+    "R": {
+      "castTimeSec": 0.1,
+      "castType": "targeted",
+      "cooldown": [
+        90,
+        90,
+        90
+      ],
+      "cooldownTier": "大",
+      "description": "「怪物模式限定毒龍包！」\n怪物模式才給敵人 3 秒 poison 與每秒極小魔法 DOT；本體模式只有小級咬擊。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "damageTier": "小",
+            "perRank": [
+              0,
+              375,
+              750
+            ]
+          },
+          "damageType": "magic",
+          "kind": "damage"
+        },
+        {
+          "amountPerTick": {
+            "damageTier": "極小",
+            "perRank": [
+              0,
+              150,
+              300
+            ]
+          },
+          "condition": {
+            "form": "alternate",
+            "kind": "form",
+            "subject": "self"
+          },
+          "damageType": "magic",
+          "durationSec": 3,
+          "intervalSec": 1,
+          "kind": "dot",
+          "onCasterDeath": "stop",
+          "stacking": "refresh"
+        },
+        {
+          "applyTo": "target",
+          "condition": {
+            "form": "alternate",
+            "kind": "form",
+            "subject": "self"
+          },
+          "duration": 3,
+          "kind": "applyStatus",
+          "statusId": "poison"
+        }
+      ],
+      "id": "b2-maple.r",
+      "manaCost": [
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "maxRank": 3,
+      "name": "怪物模式限定毒龍包",
+      "provenance": "editor-json",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "R",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.1,
+          "castType": "targeted",
+          "effects": [
+            {
+              "amount": {
+                "damageTier": "小",
+                "perRank": [
+                  0,
+                  375,
+                  750
+                ]
+              },
+              "damageType": "magic",
+              "kind": "damage"
+            },
+            {
+              "amountPerTick": {
+                "damageTier": "極小",
+                "perRank": [
+                  0,
+                  150,
+                  300
+                ]
+              },
+              "condition": {
+                "form": "alternate",
+                "kind": "form",
+                "subject": "self"
+              },
+              "damageType": "magic",
+              "durationSec": 3,
+              "intervalSec": 1,
+              "kind": "dot",
+              "onCasterDeath": "stop",
+              "stacking": "refresh"
+            },
+            {
+              "applyTo": "target",
+              "condition": {
+                "form": "alternate",
+                "kind": "form",
+                "subject": "self"
+              },
+              "duration": 3,
+              "kind": "applyStatus",
+              "statusId": "poison"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ]
+    },
+    "W": {
+      "castTimeSec": 0.1,
+      "castType": "self",
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "cooldownTier": "小",
+      "description": "「盾後補餐退魔力！」\n保護料理：回復自己 120，若最近 4 秒用過 Q，另外回復最大魔力 10%。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "flat": 120,
+            "perRank": [
+              0,
+              60,
+              120,
+              180
+            ]
+          },
+          "applyTo": "self",
+          "kind": "heal"
+        },
+        {
+          "applyTo": "self",
+          "condition": {
+            "kind": "recentCast",
+            "slot": "Q",
+            "subject": "self",
+            "withinSec": 4
+          },
+          "kind": "restore",
+          "manaPct": 0.1
+        }
+      ],
+      "id": "b2-maple.w",
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "盾後補餐退魔力",
+      "provenance": "editor-json",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "W",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.1,
+          "castType": "self",
+          "effects": [
+            {
+              "amount": {
+                "flat": 120,
+                "perRank": [
+                  0,
+                  60,
+                  120,
+                  180
+                ]
+              },
+              "applyTo": "self",
+              "kind": "heal"
+            },
+            {
+              "applyTo": "self",
+              "condition": {
+                "kind": "recentCast",
+                "slot": "Q",
+                "subject": "self",
+                "withinSec": 4
+              },
+              "kind": "restore",
+              "manaPct": 0.1
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ]
+    }
+  },
+  "archetype": "tank",
+  "attackType": "melee",
+  "attributes": {
+    "agi": 18,
+    "agiGrowth": 1.67,
+    "int": 13,
+    "intGrowth": 1.25,
+    "primary": "STR",
+    "source": "authored",
+    "str": 29,
+    "strGrowth": 2.78
+  },
+  "baseStats": {
+    "ad": 32,
+    "ap": 18,
+    "armor": 0,
+    "as": 0.7,
+    "cdr": 0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "healthRegen": 0.97,
+    "lifesteal": 0,
+    "manaRegen": 1.41,
+    "maxHealth": 541,
+    "maxMana": 370,
+    "mr": 0,
+    "ms": 6,
+    "range": 1.4
+  },
+  "buildPriority": [],
+  "description": "怕痛的我把防禦力點滿｜不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+  "exAbility": "b2-maple.ex",
+  "growth": {
+    "ad": 1.8716734693877548,
+    "ap": 0,
+    "armor": 1.5605204081632653,
+    "as": 0,
+    "healthRegen": 0.08196326530612243,
+    "manaRegen": 0,
+    "maxHealth": 27.67734693877551,
+    "maxMana": 0.9209183673469388,
+    "mr": 5.279591836734694
+  },
+  "id": "b2-maple-alt-9769eb88b85b",
+  "modelKey": "champ.thorne",
+  "name": "梅普露（變身）",
+  "origin": "坦克",
+  "passiveAbility": "b2-maple.passive",
+  "role": "tank",
+  "schema": "champion@1",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "tags": [],
+  "transform": {
+    "counterpartId": "b2-maple",
+    "role": "alternate"
+  }
+}

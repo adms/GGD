@@ -3,15 +3,15 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_32dbe7552d60",
+    "contentVersion": "cv_84be34f70bbd",
     "collections": {
       "champions": {
-        "hash": "f3b12e49d91c",
-        "count": 108
+        "hash": "77051074f3d9",
+        "count": 146
       },
       "abilities": {
-        "hash": "e2d78de923c2",
-        "count": 643
+        "hash": "bd6cbceb3335",
+        "count": 865
       },
       "items": {
         "hash": "1ee281a7f136",
@@ -42,12 +42,12 @@
         "count": 7
       },
       "config": {
-        "hash": "66cb760c9979",
+        "hash": "1b29bf102661",
         "count": 103
       },
       "models": {
-        "hash": "0329d2aa649f",
-        "count": 181
+        "hash": "264c4e50992c",
+        "count": 194
       },
       "vfx": {
         "hash": "7df129081586",
@@ -1918,8 +1918,8 @@
   "contentVocabulary": {
     "note": "出貨內容**實際用了**哪些值。⚠️ 與 runtimeCapabilities 不同：那一份說引擎做得到什麼，這一份說內容裡有哪些合法的 id。⛔ 填一個不在這裡的 vfxKey，技能照放但畫面上什麼都不會出現。",
     "ability": {
-      "count": 643,
-      "fromTemplate": 373,
+      "count": 865,
+      "fromTemplate": 584,
       "templates": [
         {
           "id": "tpl-ally-shield",
@@ -5635,6 +5635,7 @@
         "fx.prim.ice.bolt",
         "fx.prim.ice.nova",
         "fx.prim.ice.pulse-lg",
+        "fx.prim.ice.pulse-sm",
         "fx.prim.ice.shockwave",
         "fx.prim.ki.beam",
         "fx.prim.ki.beam-lg",
@@ -5670,6 +5671,7 @@
         "fx.prim.nature.swarm",
         "fx.prim.nature.swarm-lg",
         "fx.prim.physical.beam",
+        "fx.prim.physical.bolt",
         "fx.prim.physical.explosion-lg",
         "fx.prim.physical.nova",
         "fx.prim.physical.pulse",
@@ -5701,6 +5703,7 @@
         "fx.prim.wind.nova",
         "fx.prim.wind.pulse",
         "fx.prim.wind.pulse-lg",
+        "fx.prim.wind.pulse-sm",
         "fx.prim.wind.slash",
         "fx.prim.wind.tornado",
         "fx.prim.wind.tornado-lg",
@@ -5765,7 +5768,7 @@
         "wc3.trollwoodworkswhat1",
         "wc3.waygatewhat1"
       ],
-      "boundAbilities": 385,
+      "boundAbilities": 570,
       "danglingKeys": []
     },
     "item": {
@@ -6440,8 +6443,8 @@
             "unlocked": 500000
           },
           "maxHealth": {
-            "base": 561720,
-            "unlocked": 561720
+            "base": 581152,
+            "unlocked": 581152
           },
           "maxMana": {
             "base": 351387,
@@ -6452,20 +6455,20 @@
             "unlocked": 1235
           },
           "manaRegen": {
-            "base": 2042,
-            "unlocked": 2042
+            "base": 2351,
+            "unlocked": 2351
           },
           "ad": {
-            "base": 21532,
-            "unlocked": 21532
+            "base": 23056,
+            "unlocked": 23056
           },
           "armor": {
             "base": 6638,
             "unlocked": 6638
           },
           "mr": {
-            "base": 16191,
-            "unlocked": 16191
+            "base": 15311,
+            "unlocked": 15311
           },
           "range": {
             "base": 16,
@@ -6781,11 +6784,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "00ba089a8c71",
+    "fingerprint": "cce2dd494567",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "b2b1d3a46530"
+        "digest": "67f2e3214a5b"
       },
       {
         "surface": "ability-item-zod-schemas",
@@ -6851,5 +6854,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "30f0540a638b"
+  "profileDigest": "c0f3284a6d35"
 }

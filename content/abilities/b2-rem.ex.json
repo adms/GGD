@@ -1,0 +1,74 @@
+{
+  "castTimeSec": 0.1,
+  "castType": "ground",
+  "cooldown": [
+    90
+  ],
+  "cooldownTier": "大",
+  "description": "「姊姊今天不在家！」\n向前衝鋒，落地打擊並推離人群；不是真實家務清潔。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：女僕服務包含拖地與拖走客人。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "apexHeight": 0,
+      "applyTo": "self",
+      "durationSec": 0.4,
+      "kind": "leap",
+      "landRadius": 2.75,
+      "mode": "toPoint",
+      "onLand": [
+        {
+          "amount": {
+            "damageTier": "小",
+            "flat": 500
+          },
+          "damageType": "physical",
+          "kind": "damage"
+        },
+        {
+          "distance": 1.83,
+          "from": "facing",
+          "kind": "knockback",
+          "launchHeight": 0,
+          "speed": 11
+        }
+      ],
+      "throwDistance": 3.67
+    }
+  ],
+  "id": "b2-rem.ex",
+  "manaCost": [
+    144
+  ],
+  "manaCostTier": "小",
+  "maxRank": 1,
+  "name": "姊姊今天不在家",
+  "provenance": "editor-json",
+  "radius": 2.75,
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "EX",
+  "targetsEnemies": true,
+  "template": {
+    "contentSha256": "sha256:3f80978b955a7744a0e86651ddce738ec5f483e55ecfaa7213a23d6d735803e2",
+    "params": {
+      "castTimeSec": 0.1,
+      "damage": {
+        "damageTier": "小",
+        "flat": 500
+      },
+      "dashDistance": 200,
+      "dashDurationSec": 0.4,
+      "pushDistance": 100,
+      "pushSpeed": 600,
+      "radius": 150
+    },
+    "ref": "hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368"
+  },
+  "vfxKey": "fx.prim.arcane.dash",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.dash"
+    }
+  ]
+}

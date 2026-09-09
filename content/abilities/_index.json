@@ -1,7 +1,1339 @@
 {
   "collection": "abilities",
-  "hash": "e2d78de923c2",
+  "hash": "bd6cbceb3335",
   "entries": [
+    {
+      "id": "b2-aladdin.e",
+      "path": "abilities/b2-aladdin.e.json",
+      "hash": "a439df8a8817",
+      "size": 1865
+    },
+    {
+      "id": "b2-aladdin.ex",
+      "path": "abilities/b2-aladdin.ex.json",
+      "hash": "98d0b8dd67c0",
+      "size": 2231
+    },
+    {
+      "id": "b2-aladdin.passive",
+      "path": "abilities/b2-aladdin.passive.json",
+      "hash": "c1c0e4d91a22",
+      "size": 1531
+    },
+    {
+      "id": "b2-aladdin.q",
+      "path": "abilities/b2-aladdin.q.json",
+      "hash": "b0be9bd74d12",
+      "size": 2571
+    },
+    {
+      "id": "b2-aladdin.r",
+      "path": "abilities/b2-aladdin.r.json",
+      "hash": "2d43b4888797",
+      "size": 1720
+    },
+    {
+      "id": "b2-aladdin.w",
+      "path": "abilities/b2-aladdin.w.json",
+      "hash": "034fe039bfb6",
+      "size": 2350
+    },
+    {
+      "id": "b2-albus.e",
+      "path": "abilities/b2-albus.e.json",
+      "hash": "c6a6bcd1b3c5",
+      "size": 1192
+    },
+    {
+      "id": "b2-albus.ex",
+      "path": "abilities/b2-albus.ex.json",
+      "hash": "9275cbc09de5",
+      "size": 2134
+    },
+    {
+      "id": "b2-albus.passive",
+      "path": "abilities/b2-albus.passive.json",
+      "hash": "a6ea1246e1f1",
+      "size": 1595
+    },
+    {
+      "id": "b2-albus.q",
+      "path": "abilities/b2-albus.q.json",
+      "hash": "1dfacab37d05",
+      "size": 1537
+    },
+    {
+      "id": "b2-albus.r",
+      "path": "abilities/b2-albus.r.json",
+      "hash": "fefaebeab5c9",
+      "size": 2577
+    },
+    {
+      "id": "b2-albus.w",
+      "path": "abilities/b2-albus.w.json",
+      "hash": "e4ccaddfad5c",
+      "size": 1631
+    },
+    {
+      "id": "b2-bojji.e",
+      "path": "abilities/b2-bojji.e.json",
+      "hash": "ef12ed5a9abc",
+      "size": 1234
+    },
+    {
+      "id": "b2-bojji.ex",
+      "path": "abilities/b2-bojji.ex.json",
+      "hash": "b2a04fc18e63",
+      "size": 1632
+    },
+    {
+      "id": "b2-bojji.passive",
+      "path": "abilities/b2-bojji.passive.json",
+      "hash": "e5bbeb45e28d",
+      "size": 1601
+    },
+    {
+      "id": "b2-bojji.q",
+      "path": "abilities/b2-bojji.q.json",
+      "hash": "25bd4a721baf",
+      "size": 1613
+    },
+    {
+      "id": "b2-bojji.r",
+      "path": "abilities/b2-bojji.r.json",
+      "hash": "8a4a1e35bb51",
+      "size": 2504
+    },
+    {
+      "id": "b2-bojji.w",
+      "path": "abilities/b2-bojji.w.json",
+      "hash": "72bd9f19e4d4",
+      "size": 1838
+    },
+    {
+      "id": "b2-boxxo.e",
+      "path": "abilities/b2-boxxo.e.json",
+      "hash": "213384ba18db",
+      "size": 1438
+    },
+    {
+      "id": "b2-boxxo.ex",
+      "path": "abilities/b2-boxxo.ex.json",
+      "hash": "4e2bd0d36259",
+      "size": 1964
+    },
+    {
+      "id": "b2-boxxo.passive",
+      "path": "abilities/b2-boxxo.passive.json",
+      "hash": "e0f4f9570b05",
+      "size": 1900
+    },
+    {
+      "id": "b2-boxxo.q",
+      "path": "abilities/b2-boxxo.q.json",
+      "hash": "847ff6448aed",
+      "size": 2305
+    },
+    {
+      "id": "b2-boxxo.r",
+      "path": "abilities/b2-boxxo.r.json",
+      "hash": "f277d7fb015b",
+      "size": 2831
+    },
+    {
+      "id": "b2-boxxo.w",
+      "path": "abilities/b2-boxxo.w.json",
+      "hash": "8ba849896809",
+      "size": 2453
+    },
+    {
+      "id": "b2-elma.e",
+      "path": "abilities/b2-elma.e.json",
+      "hash": "94d14ba1c332",
+      "size": 1458
+    },
+    {
+      "id": "b2-elma.ex",
+      "path": "abilities/b2-elma.ex.json",
+      "hash": "575169fa642f",
+      "size": 1185
+    },
+    {
+      "id": "b2-elma.passive",
+      "path": "abilities/b2-elma.passive.json",
+      "hash": "709f84d5a18a",
+      "size": 1618
+    },
+    {
+      "id": "b2-elma.q",
+      "path": "abilities/b2-elma.q.json",
+      "hash": "0a3ba1c3a263",
+      "size": 2222
+    },
+    {
+      "id": "b2-elma.r",
+      "path": "abilities/b2-elma.r.json",
+      "hash": "7e5962074240",
+      "size": 1712
+    },
+    {
+      "id": "b2-elma.w",
+      "path": "abilities/b2-elma.w.json",
+      "hash": "ea810ca0a451",
+      "size": 2482
+    },
+    {
+      "id": "b2-fushi.e",
+      "path": "abilities/b2-fushi.e.json",
+      "hash": "ef1b0fd9b6c8",
+      "size": 2619
+    },
+    {
+      "id": "b2-fushi.ex",
+      "path": "abilities/b2-fushi.ex.json",
+      "hash": "0ee8ca10ae25",
+      "size": 1152
+    },
+    {
+      "id": "b2-fushi.passive",
+      "path": "abilities/b2-fushi.passive.json",
+      "hash": "fb8600c645d0",
+      "size": 1610
+    },
+    {
+      "id": "b2-fushi.q",
+      "path": "abilities/b2-fushi.q.json",
+      "hash": "5a00c957024c",
+      "size": 2228
+    },
+    {
+      "id": "b2-fushi.r",
+      "path": "abilities/b2-fushi.r.json",
+      "hash": "e1a69cdf09ef",
+      "size": 1631
+    },
+    {
+      "id": "b2-fushi.w",
+      "path": "abilities/b2-fushi.w.json",
+      "hash": "e94bee3fa506",
+      "size": 2212
+    },
+    {
+      "id": "b2-goblin.e",
+      "path": "abilities/b2-goblin.e.json",
+      "hash": "e932d25c03d8",
+      "size": 1799
+    },
+    {
+      "id": "b2-goblin.ex",
+      "path": "abilities/b2-goblin.ex.json",
+      "hash": "9cb548c93862",
+      "size": 1624
+    },
+    {
+      "id": "b2-goblin.passive",
+      "path": "abilities/b2-goblin.passive.json",
+      "hash": "d03d2dea77dd",
+      "size": 1830
+    },
+    {
+      "id": "b2-goblin.q",
+      "path": "abilities/b2-goblin.q.json",
+      "hash": "1adf434974cd",
+      "size": 2706
+    },
+    {
+      "id": "b2-goblin.r",
+      "path": "abilities/b2-goblin.r.json",
+      "hash": "b54b8b323905",
+      "size": 2390
+    },
+    {
+      "id": "b2-goblin.w",
+      "path": "abilities/b2-goblin.w.json",
+      "hash": "a77dbef32d39",
+      "size": 1562
+    },
+    {
+      "id": "b2-guts.e",
+      "path": "abilities/b2-guts.e.json",
+      "hash": "c12d865bc865",
+      "size": 2066
+    },
+    {
+      "id": "b2-guts.ex",
+      "path": "abilities/b2-guts.ex.json",
+      "hash": "8df592fab9a3",
+      "size": 1637
+    },
+    {
+      "id": "b2-guts.passive",
+      "path": "abilities/b2-guts.passive.json",
+      "hash": "d926e1511d12",
+      "size": 2199
+    },
+    {
+      "id": "b2-guts.q",
+      "path": "abilities/b2-guts.q.json",
+      "hash": "f3a7c2bea86c",
+      "size": 1722
+    },
+    {
+      "id": "b2-guts.r",
+      "path": "abilities/b2-guts.r.json",
+      "hash": "8a42bd001816",
+      "size": 2112
+    },
+    {
+      "id": "b2-guts.w",
+      "path": "abilities/b2-guts.w.json",
+      "hash": "7eaf8d2a7e85",
+      "size": 2024
+    },
+    {
+      "id": "b2-haga.e",
+      "path": "abilities/b2-haga.e.json",
+      "hash": "8ff300d9e2c9",
+      "size": 1611
+    },
+    {
+      "id": "b2-haga.ex",
+      "path": "abilities/b2-haga.ex.json",
+      "hash": "c488ca3f03b4",
+      "size": 2160
+    },
+    {
+      "id": "b2-haga.passive",
+      "path": "abilities/b2-haga.passive.json",
+      "hash": "e7d0526adc51",
+      "size": 1667
+    },
+    {
+      "id": "b2-haga.q",
+      "path": "abilities/b2-haga.q.json",
+      "hash": "b650e186bef5",
+      "size": 1630
+    },
+    {
+      "id": "b2-haga.r",
+      "path": "abilities/b2-haga.r.json",
+      "hash": "90f3b868fd28",
+      "size": 2374
+    },
+    {
+      "id": "b2-haga.w",
+      "path": "abilities/b2-haga.w.json",
+      "hash": "36d5cc377a72",
+      "size": 1990
+    },
+    {
+      "id": "b2-kaede.e",
+      "path": "abilities/b2-kaede.e.json",
+      "hash": "a1bfba74bc5d",
+      "size": 1799
+    },
+    {
+      "id": "b2-kaede.ex",
+      "path": "abilities/b2-kaede.ex.json",
+      "hash": "4b493b47a8c9",
+      "size": 1911
+    },
+    {
+      "id": "b2-kaede.passive",
+      "path": "abilities/b2-kaede.passive.json",
+      "hash": "ad3954addacc",
+      "size": 2077
+    },
+    {
+      "id": "b2-kaede.q",
+      "path": "abilities/b2-kaede.q.json",
+      "hash": "32ac9f971203",
+      "size": 1669
+    },
+    {
+      "id": "b2-kaede.r",
+      "path": "abilities/b2-kaede.r.json",
+      "hash": "6a28cc494330",
+      "size": 2074
+    },
+    {
+      "id": "b2-kaede.w",
+      "path": "abilities/b2-kaede.w.json",
+      "hash": "84bed7b9875a",
+      "size": 1702
+    },
+    {
+      "id": "b2-kaiji.e",
+      "path": "abilities/b2-kaiji.e.json",
+      "hash": "041da0db529a",
+      "size": 2452
+    },
+    {
+      "id": "b2-kaiji.ex",
+      "path": "abilities/b2-kaiji.ex.json",
+      "hash": "2273bdb7eecf",
+      "size": 1248
+    },
+    {
+      "id": "b2-kaiji.passive",
+      "path": "abilities/b2-kaiji.passive.json",
+      "hash": "0447b262759d",
+      "size": 1508
+    },
+    {
+      "id": "b2-kaiji.q",
+      "path": "abilities/b2-kaiji.q.json",
+      "hash": "9a785baccbfb",
+      "size": 1801
+    },
+    {
+      "id": "b2-kaiji.r",
+      "path": "abilities/b2-kaiji.r.json",
+      "hash": "8fd208235c0c",
+      "size": 2979
+    },
+    {
+      "id": "b2-kaiji.w",
+      "path": "abilities/b2-kaiji.w.json",
+      "hash": "7f280dc06a85",
+      "size": 2078
+    },
+    {
+      "id": "b2-keyaru.e",
+      "path": "abilities/b2-keyaru.e.json",
+      "hash": "28d176dc41f7",
+      "size": 1419
+    },
+    {
+      "id": "b2-keyaru.ex",
+      "path": "abilities/b2-keyaru.ex.json",
+      "hash": "db2344d2167b",
+      "size": 1867
+    },
+    {
+      "id": "b2-keyaru.passive",
+      "path": "abilities/b2-keyaru.passive.json",
+      "hash": "ae7529b6fa47",
+      "size": 1646
+    },
+    {
+      "id": "b2-keyaru.q",
+      "path": "abilities/b2-keyaru.q.json",
+      "hash": "787330f7d7f9",
+      "size": 1461
+    },
+    {
+      "id": "b2-keyaru.r",
+      "path": "abilities/b2-keyaru.r.json",
+      "hash": "698dfe873a95",
+      "size": 2526
+    },
+    {
+      "id": "b2-keyaru.w",
+      "path": "abilities/b2-keyaru.w.json",
+      "hash": "a79a9736606a",
+      "size": 2452
+    },
+    {
+      "id": "b2-kisaragi.e",
+      "path": "abilities/b2-kisaragi.e.json",
+      "hash": "f48732035640",
+      "size": 2999
+    },
+    {
+      "id": "b2-kisaragi.ex",
+      "path": "abilities/b2-kisaragi.ex.json",
+      "hash": "e7626d9b8d00",
+      "size": 1883
+    },
+    {
+      "id": "b2-kisaragi.passive",
+      "path": "abilities/b2-kisaragi.passive.json",
+      "hash": "554156510e0b",
+      "size": 1878
+    },
+    {
+      "id": "b2-kisaragi.q",
+      "path": "abilities/b2-kisaragi.q.json",
+      "hash": "e84e847c8066",
+      "size": 1732
+    },
+    {
+      "id": "b2-kisaragi.r",
+      "path": "abilities/b2-kisaragi.r.json",
+      "hash": "975f8eb6f280",
+      "size": 9229
+    },
+    {
+      "id": "b2-kisaragi.w",
+      "path": "abilities/b2-kisaragi.w.json",
+      "hash": "06e5fee8f6ad",
+      "size": 2228
+    },
+    {
+      "id": "b2-klaus.e",
+      "path": "abilities/b2-klaus.e.json",
+      "hash": "07211db028c3",
+      "size": 1222
+    },
+    {
+      "id": "b2-klaus.ex",
+      "path": "abilities/b2-klaus.ex.json",
+      "hash": "ed3e183bcbae",
+      "size": 2138
+    },
+    {
+      "id": "b2-klaus.passive",
+      "path": "abilities/b2-klaus.passive.json",
+      "hash": "c5e2b794737e",
+      "size": 1536
+    },
+    {
+      "id": "b2-klaus.q",
+      "path": "abilities/b2-klaus.q.json",
+      "hash": "ac1ad2e36a68",
+      "size": 1598
+    },
+    {
+      "id": "b2-klaus.r",
+      "path": "abilities/b2-klaus.r.json",
+      "hash": "db4d4cf0fa62",
+      "size": 2046
+    },
+    {
+      "id": "b2-klaus.w",
+      "path": "abilities/b2-klaus.w.json",
+      "hash": "876291cd50bc",
+      "size": 2662
+    },
+    {
+      "id": "b2-kumoko.e",
+      "path": "abilities/b2-kumoko.e.json",
+      "hash": "81baadae0d33",
+      "size": 1220
+    },
+    {
+      "id": "b2-kumoko.ex",
+      "path": "abilities/b2-kumoko.ex.json",
+      "hash": "c6a73b52bc24",
+      "size": 1875
+    },
+    {
+      "id": "b2-kumoko.passive",
+      "path": "abilities/b2-kumoko.passive.json",
+      "hash": "ec5d8eb5a2f5",
+      "size": 1836
+    },
+    {
+      "id": "b2-kumoko.q",
+      "path": "abilities/b2-kumoko.q.json",
+      "hash": "54d045ba80fb",
+      "size": 1360
+    },
+    {
+      "id": "b2-kumoko.r",
+      "path": "abilities/b2-kumoko.r.json",
+      "hash": "11b6e6b02dcb",
+      "size": 2053
+    },
+    {
+      "id": "b2-kumoko.w",
+      "path": "abilities/b2-kumoko.w.json",
+      "hash": "65263edd46cf",
+      "size": 3058
+    },
+    {
+      "id": "b2-luckyman.e",
+      "path": "abilities/b2-luckyman.e.json",
+      "hash": "b991df159217",
+      "size": 1575
+    },
+    {
+      "id": "b2-luckyman.ex",
+      "path": "abilities/b2-luckyman.ex.json",
+      "hash": "5d853048f46f",
+      "size": 1170
+    },
+    {
+      "id": "b2-luckyman.passive",
+      "path": "abilities/b2-luckyman.passive.json",
+      "hash": "a651bfcd0667",
+      "size": 1514
+    },
+    {
+      "id": "b2-luckyman.q",
+      "path": "abilities/b2-luckyman.q.json",
+      "hash": "f3052f55481b",
+      "size": 1604
+    },
+    {
+      "id": "b2-luckyman.r",
+      "path": "abilities/b2-luckyman.r.json",
+      "hash": "9427e64c6198",
+      "size": 3290
+    },
+    {
+      "id": "b2-luckyman.w",
+      "path": "abilities/b2-luckyman.w.json",
+      "hash": "0c950084bb65",
+      "size": 1552
+    },
+    {
+      "id": "b2-makoto.e",
+      "path": "abilities/b2-makoto.e.json",
+      "hash": "cfa7fc43f6e4",
+      "size": 2354
+    },
+    {
+      "id": "b2-makoto.ex",
+      "path": "abilities/b2-makoto.ex.json",
+      "hash": "b277d316eefc",
+      "size": 1233
+    },
+    {
+      "id": "b2-makoto.passive",
+      "path": "abilities/b2-makoto.passive.json",
+      "hash": "10ee4fb523fe",
+      "size": 1617
+    },
+    {
+      "id": "b2-makoto.q",
+      "path": "abilities/b2-makoto.q.json",
+      "hash": "8dcb1354bd30",
+      "size": 1625
+    },
+    {
+      "id": "b2-makoto.r",
+      "path": "abilities/b2-makoto.r.json",
+      "hash": "e8e1052a69d0",
+      "size": 2505
+    },
+    {
+      "id": "b2-makoto.w",
+      "path": "abilities/b2-makoto.w.json",
+      "hash": "4787cd60fb64",
+      "size": 2063
+    },
+    {
+      "id": "b2-maomao.e",
+      "path": "abilities/b2-maomao.e.json",
+      "hash": "3dc0cb7b9e99",
+      "size": 2172
+    },
+    {
+      "id": "b2-maomao.ex",
+      "path": "abilities/b2-maomao.ex.json",
+      "hash": "a2ace72fef10",
+      "size": 1697
+    },
+    {
+      "id": "b2-maomao.passive",
+      "path": "abilities/b2-maomao.passive.json",
+      "hash": "f8d832dd5e4f",
+      "size": 1559
+    },
+    {
+      "id": "b2-maomao.q",
+      "path": "abilities/b2-maomao.q.json",
+      "hash": "b6d22820389a",
+      "size": 2456
+    },
+    {
+      "id": "b2-maomao.r",
+      "path": "abilities/b2-maomao.r.json",
+      "hash": "bbfd41a3d5cc",
+      "size": 2785
+    },
+    {
+      "id": "b2-maomao.w",
+      "path": "abilities/b2-maomao.w.json",
+      "hash": "93b5d7c0ddb6",
+      "size": 2564
+    },
+    {
+      "id": "b2-maple.e",
+      "path": "abilities/b2-maple.e.json",
+      "hash": "fff532083187",
+      "size": 1664
+    },
+    {
+      "id": "b2-maple.ex",
+      "path": "abilities/b2-maple.ex.json",
+      "hash": "5506a096a056",
+      "size": 1891
+    },
+    {
+      "id": "b2-maple.passive",
+      "path": "abilities/b2-maple.passive.json",
+      "hash": "e4c767d0551d",
+      "size": 1529
+    },
+    {
+      "id": "b2-maple.q",
+      "path": "abilities/b2-maple.q.json",
+      "hash": "db3e79c6badc",
+      "size": 1907
+    },
+    {
+      "id": "b2-maple.r",
+      "path": "abilities/b2-maple.r.json",
+      "hash": "e610bd17facf",
+      "size": 3228
+    },
+    {
+      "id": "b2-maple.w",
+      "path": "abilities/b2-maple.w.json",
+      "hash": "102c7e73109d",
+      "size": 2187
+    },
+    {
+      "id": "b2-matthias.e",
+      "path": "abilities/b2-matthias.e.json",
+      "hash": "6814aa4d0d32",
+      "size": 1848
+    },
+    {
+      "id": "b2-matthias.ex",
+      "path": "abilities/b2-matthias.ex.json",
+      "hash": "49a8e7536095",
+      "size": 1940
+    },
+    {
+      "id": "b2-matthias.passive",
+      "path": "abilities/b2-matthias.passive.json",
+      "hash": "584927a8dd35",
+      "size": 1629
+    },
+    {
+      "id": "b2-matthias.q",
+      "path": "abilities/b2-matthias.q.json",
+      "hash": "6931eb17f85e",
+      "size": 1888
+    },
+    {
+      "id": "b2-matthias.r",
+      "path": "abilities/b2-matthias.r.json",
+      "hash": "b415a89c4ed5",
+      "size": 1582
+    },
+    {
+      "id": "b2-matthias.w",
+      "path": "abilities/b2-matthias.w.json",
+      "hash": "0b59d29de84d",
+      "size": 1582
+    },
+    {
+      "id": "b2-misery.e",
+      "path": "abilities/b2-misery.e.json",
+      "hash": "bfedfc14a87b",
+      "size": 1208
+    },
+    {
+      "id": "b2-misery.ex",
+      "path": "abilities/b2-misery.ex.json",
+      "hash": "506459272b69",
+      "size": 2273
+    },
+    {
+      "id": "b2-misery.passive",
+      "path": "abilities/b2-misery.passive.json",
+      "hash": "d1b5e9478327",
+      "size": 1543
+    },
+    {
+      "id": "b2-misery.q",
+      "path": "abilities/b2-misery.q.json",
+      "hash": "077877c37f5e",
+      "size": 1637
+    },
+    {
+      "id": "b2-misery.r",
+      "path": "abilities/b2-misery.r.json",
+      "hash": "d75925d23a13",
+      "size": 1776
+    },
+    {
+      "id": "b2-misery.w",
+      "path": "abilities/b2-misery.w.json",
+      "hash": "ec342277dbc2",
+      "size": 1985
+    },
+    {
+      "id": "b2-naofumi.e",
+      "path": "abilities/b2-naofumi.e.json",
+      "hash": "d5f3737cd5ee",
+      "size": 2157
+    },
+    {
+      "id": "b2-naofumi.ex",
+      "path": "abilities/b2-naofumi.ex.json",
+      "hash": "e236f02a6e29",
+      "size": 1631
+    },
+    {
+      "id": "b2-naofumi.passive",
+      "path": "abilities/b2-naofumi.passive.json",
+      "hash": "ec16ccd3a052",
+      "size": 1556
+    },
+    {
+      "id": "b2-naofumi.q",
+      "path": "abilities/b2-naofumi.q.json",
+      "hash": "71693ee78adf",
+      "size": 2212
+    },
+    {
+      "id": "b2-naofumi.r",
+      "path": "abilities/b2-naofumi.r.json",
+      "hash": "2ee01c7dabbd",
+      "size": 3025
+    },
+    {
+      "id": "b2-naofumi.w",
+      "path": "abilities/b2-naofumi.w.json",
+      "hash": "a6a217d16c46",
+      "size": 2258
+    },
+    {
+      "id": "b2-ned.e",
+      "path": "abilities/b2-ned.e.json",
+      "hash": "846ad2b9817f",
+      "size": 2189
+    },
+    {
+      "id": "b2-ned.ex",
+      "path": "abilities/b2-ned.ex.json",
+      "hash": "2ffcd6fc6279",
+      "size": 1183
+    },
+    {
+      "id": "b2-ned.passive",
+      "path": "abilities/b2-ned.passive.json",
+      "hash": "b0cbf0cf0652",
+      "size": 1988
+    },
+    {
+      "id": "b2-ned.q",
+      "path": "abilities/b2-ned.q.json",
+      "hash": "e9e207c726a1",
+      "size": 2006
+    },
+    {
+      "id": "b2-ned.r",
+      "path": "abilities/b2-ned.r.json",
+      "hash": "f7b94e11ed5d",
+      "size": 1714
+    },
+    {
+      "id": "b2-ned.w",
+      "path": "abilities/b2-ned.w.json",
+      "hash": "d109fd6b77d9",
+      "size": 2050
+    },
+    {
+      "id": "b2-noor.e",
+      "path": "abilities/b2-noor.e.json",
+      "hash": "1d42e79cea3b",
+      "size": 2135
+    },
+    {
+      "id": "b2-noor.ex",
+      "path": "abilities/b2-noor.ex.json",
+      "hash": "2c9724a17656",
+      "size": 1515
+    },
+    {
+      "id": "b2-noor.passive",
+      "path": "abilities/b2-noor.passive.json",
+      "hash": "f75a7280e139",
+      "size": 1621
+    },
+    {
+      "id": "b2-noor.q",
+      "path": "abilities/b2-noor.q.json",
+      "hash": "818422a1f1f5",
+      "size": 3616
+    },
+    {
+      "id": "b2-noor.r",
+      "path": "abilities/b2-noor.r.json",
+      "hash": "996c63392384",
+      "size": 2378
+    },
+    {
+      "id": "b2-noor.w",
+      "path": "abilities/b2-noor.w.json",
+      "hash": "89f1c3e7ce76",
+      "size": 3117
+    },
+    {
+      "id": "b2-nube.e",
+      "path": "abilities/b2-nube.e.json",
+      "hash": "8fb4cdd9436f",
+      "size": 1364
+    },
+    {
+      "id": "b2-nube.ex",
+      "path": "abilities/b2-nube.ex.json",
+      "hash": "09000ca02e8e",
+      "size": 2301
+    },
+    {
+      "id": "b2-nube.passive",
+      "path": "abilities/b2-nube.passive.json",
+      "hash": "dee99a652fa6",
+      "size": 1514
+    },
+    {
+      "id": "b2-nube.q",
+      "path": "abilities/b2-nube.q.json",
+      "hash": "81c85113b35f",
+      "size": 2176
+    },
+    {
+      "id": "b2-nube.r",
+      "path": "abilities/b2-nube.r.json",
+      "hash": "ebe24382ffff",
+      "size": 2431
+    },
+    {
+      "id": "b2-nube.w",
+      "path": "abilities/b2-nube.w.json",
+      "hash": "a97b4d799bc4",
+      "size": 1892
+    },
+    {
+      "id": "b2-orphen.e",
+      "path": "abilities/b2-orphen.e.json",
+      "hash": "037956db6063",
+      "size": 1375
+    },
+    {
+      "id": "b2-orphen.ex",
+      "path": "abilities/b2-orphen.ex.json",
+      "hash": "76d58ebbdda9",
+      "size": 1237
+    },
+    {
+      "id": "b2-orphen.passive",
+      "path": "abilities/b2-orphen.passive.json",
+      "hash": "5f54c7fb8f5d",
+      "size": 1513
+    },
+    {
+      "id": "b2-orphen.q",
+      "path": "abilities/b2-orphen.q.json",
+      "hash": "799be30dd9c3",
+      "size": 2418
+    },
+    {
+      "id": "b2-orphen.r",
+      "path": "abilities/b2-orphen.r.json",
+      "hash": "a8425f9afbeb",
+      "size": 1890
+    },
+    {
+      "id": "b2-orphen.w",
+      "path": "abilities/b2-orphen.w.json",
+      "hash": "e88369d81aad",
+      "size": 1592
+    },
+    {
+      "id": "b2-popp.e",
+      "path": "abilities/b2-popp.e.json",
+      "hash": "d8787f35737a",
+      "size": 1197
+    },
+    {
+      "id": "b2-popp.ex",
+      "path": "abilities/b2-popp.ex.json",
+      "hash": "a1270e45e573",
+      "size": 2313
+    },
+    {
+      "id": "b2-popp.passive",
+      "path": "abilities/b2-popp.passive.json",
+      "hash": "9f24f81425e9",
+      "size": 1538
+    },
+    {
+      "id": "b2-popp.q",
+      "path": "abilities/b2-popp.q.json",
+      "hash": "21db0018098e",
+      "size": 1759
+    },
+    {
+      "id": "b2-popp.r",
+      "path": "abilities/b2-popp.r.json",
+      "hash": "f34ccad0db25",
+      "size": 1671
+    },
+    {
+      "id": "b2-popp.w",
+      "path": "abilities/b2-popp.w.json",
+      "hash": "a0c746975670",
+      "size": 2507
+    },
+    {
+      "id": "b2-rem.e",
+      "path": "abilities/b2-rem.e.json",
+      "hash": "fdacbc0c0b68",
+      "size": 2037
+    },
+    {
+      "id": "b2-rem.ex",
+      "path": "abilities/b2-rem.ex.json",
+      "hash": "28f724ae063a",
+      "size": 1842
+    },
+    {
+      "id": "b2-rem.passive",
+      "path": "abilities/b2-rem.passive.json",
+      "hash": "771f37d84ca7",
+      "size": 1506
+    },
+    {
+      "id": "b2-rem.q",
+      "path": "abilities/b2-rem.q.json",
+      "hash": "f6c4422caae0",
+      "size": 1554
+    },
+    {
+      "id": "b2-rem.r",
+      "path": "abilities/b2-rem.r.json",
+      "hash": "08f0a7da8999",
+      "size": 2638
+    },
+    {
+      "id": "b2-rem.w",
+      "path": "abilities/b2-rem.w.json",
+      "hash": "1c64db11dd54",
+      "size": 2714
+    },
+    {
+      "id": "b2-rin.e",
+      "path": "abilities/b2-rin.e.json",
+      "hash": "e80961f123b5",
+      "size": 1857
+    },
+    {
+      "id": "b2-rin.ex",
+      "path": "abilities/b2-rin.ex.json",
+      "hash": "039034b62ac1",
+      "size": 1245
+    },
+    {
+      "id": "b2-rin.passive",
+      "path": "abilities/b2-rin.passive.json",
+      "hash": "d898dd95fc40",
+      "size": 1519
+    },
+    {
+      "id": "b2-rin.q",
+      "path": "abilities/b2-rin.q.json",
+      "hash": "aa1c9e2c6848",
+      "size": 1960
+    },
+    {
+      "id": "b2-rin.r",
+      "path": "abilities/b2-rin.r.json",
+      "hash": "f1fee636b668",
+      "size": 2775
+    },
+    {
+      "id": "b2-rin.w",
+      "path": "abilities/b2-rin.w.json",
+      "hash": "4ccf20a4299f",
+      "size": 2722
+    },
+    {
+      "id": "b2-shadow.e",
+      "path": "abilities/b2-shadow.e.json",
+      "hash": "ea8a9efdf932",
+      "size": 1424
+    },
+    {
+      "id": "b2-shadow.ex",
+      "path": "abilities/b2-shadow.ex.json",
+      "hash": "cc2fe3834f1a",
+      "size": 1700
+    },
+    {
+      "id": "b2-shadow.passive",
+      "path": "abilities/b2-shadow.passive.json",
+      "hash": "5f59a5d85764",
+      "size": 1864
+    },
+    {
+      "id": "b2-shadow.q",
+      "path": "abilities/b2-shadow.q.json",
+      "hash": "d9340f75055f",
+      "size": 1718
+    },
+    {
+      "id": "b2-shadow.r",
+      "path": "abilities/b2-shadow.r.json",
+      "hash": "7ce602efb8d3",
+      "size": 1946
+    },
+    {
+      "id": "b2-shadow.w",
+      "path": "abilities/b2-shadow.w.json",
+      "hash": "cbdb7674319d",
+      "size": 2536
+    },
+    {
+      "id": "b2-shinchan.e",
+      "path": "abilities/b2-shinchan.e.json",
+      "hash": "edd5b94f9b1d",
+      "size": 1209
+    },
+    {
+      "id": "b2-shinchan.ex",
+      "path": "abilities/b2-shinchan.ex.json",
+      "hash": "f2503d757c49",
+      "size": 2045
+    },
+    {
+      "id": "b2-shinchan.passive",
+      "path": "abilities/b2-shinchan.passive.json",
+      "hash": "e8c2fe6a025e",
+      "size": 1608
+    },
+    {
+      "id": "b2-shinchan.q",
+      "path": "abilities/b2-shinchan.q.json",
+      "hash": "29b80f978284",
+      "size": 1612
+    },
+    {
+      "id": "b2-shinchan.r",
+      "path": "abilities/b2-shinchan.r.json",
+      "hash": "dc86b5a27cfe",
+      "size": 2448
+    },
+    {
+      "id": "b2-shinchan.w",
+      "path": "abilities/b2-shinchan.w.json",
+      "hash": "fac6e47c13b8",
+      "size": 1392
+    },
+    {
+      "id": "b2-sinbad.e",
+      "path": "abilities/b2-sinbad.e.json",
+      "hash": "1481a5b8d667",
+      "size": 1220
+    },
+    {
+      "id": "b2-sinbad.ex",
+      "path": "abilities/b2-sinbad.ex.json",
+      "hash": "fc072189a401",
+      "size": 2288
+    },
+    {
+      "id": "b2-sinbad.passive",
+      "path": "abilities/b2-sinbad.passive.json",
+      "hash": "c881300cb62a",
+      "size": 1605
+    },
+    {
+      "id": "b2-sinbad.q",
+      "path": "abilities/b2-sinbad.q.json",
+      "hash": "d36b5e3c5337",
+      "size": 1798
+    },
+    {
+      "id": "b2-sinbad.r",
+      "path": "abilities/b2-sinbad.r.json",
+      "hash": "ccbf5be3420e",
+      "size": 1698
+    },
+    {
+      "id": "b2-sinbad.w",
+      "path": "abilities/b2-sinbad.w.json",
+      "hash": "2c1e8d3ce3a9",
+      "size": 1791
+    },
+    {
+      "id": "b2-takopi.e",
+      "path": "abilities/b2-takopi.e.json",
+      "hash": "c8ddd8c03135",
+      "size": 1573
+    },
+    {
+      "id": "b2-takopi.ex",
+      "path": "abilities/b2-takopi.ex.json",
+      "hash": "cb31856bb464",
+      "size": 1933
+    },
+    {
+      "id": "b2-takopi.passive",
+      "path": "abilities/b2-takopi.passive.json",
+      "hash": "819b6e815d4f",
+      "size": 1835
+    },
+    {
+      "id": "b2-takopi.q",
+      "path": "abilities/b2-takopi.q.json",
+      "hash": "7bee21fe34c8",
+      "size": 1454
+    },
+    {
+      "id": "b2-takopi.r",
+      "path": "abilities/b2-takopi.r.json",
+      "hash": "3260687b1e8e",
+      "size": 2492
+    },
+    {
+      "id": "b2-takopi.w",
+      "path": "abilities/b2-takopi.w.json",
+      "hash": "9e1e41ea8cf6",
+      "size": 2150
+    },
+    {
+      "id": "b2-touka.e",
+      "path": "abilities/b2-touka.e.json",
+      "hash": "b996378b162f",
+      "size": 1830
+    },
+    {
+      "id": "b2-touka.ex",
+      "path": "abilities/b2-touka.ex.json",
+      "hash": "5a9ac356c9e9",
+      "size": 1146
+    },
+    {
+      "id": "b2-touka.passive",
+      "path": "abilities/b2-touka.passive.json",
+      "hash": "cb0ccc7c0d7b",
+      "size": 1604
+    },
+    {
+      "id": "b2-touka.q",
+      "path": "abilities/b2-touka.q.json",
+      "hash": "a2d14d70a105",
+      "size": 2287
+    },
+    {
+      "id": "b2-touka.r",
+      "path": "abilities/b2-touka.r.json",
+      "hash": "19d6e0b62f7e",
+      "size": 2562
+    },
+    {
+      "id": "b2-touka.w",
+      "path": "abilities/b2-touka.w.json",
+      "hash": "db4ae9b69e2c",
+      "size": 1988
+    },
+    {
+      "id": "b2-uncle.e",
+      "path": "abilities/b2-uncle.e.json",
+      "hash": "b24e4ee5887a",
+      "size": 2186
+    },
+    {
+      "id": "b2-uncle.ex",
+      "path": "abilities/b2-uncle.ex.json",
+      "hash": "ca4e1a14e189",
+      "size": 1509
+    },
+    {
+      "id": "b2-uncle.passive",
+      "path": "abilities/b2-uncle.passive.json",
+      "hash": "7a582af91f95",
+      "size": 1553
+    },
+    {
+      "id": "b2-uncle.q",
+      "path": "abilities/b2-uncle.q.json",
+      "hash": "6d63ab5c0974",
+      "size": 1878
+    },
+    {
+      "id": "b2-uncle.r",
+      "path": "abilities/b2-uncle.r.json",
+      "hash": "15cb1be57333",
+      "size": 2409
+    },
+    {
+      "id": "b2-uncle.w",
+      "path": "abilities/b2-uncle.w.json",
+      "hash": "d64b05b1b109",
+      "size": 2010
+    },
+    {
+      "id": "b2-yogiri.e",
+      "path": "abilities/b2-yogiri.e.json",
+      "hash": "35c001d92f36",
+      "size": 1223
+    },
+    {
+      "id": "b2-yogiri.ex",
+      "path": "abilities/b2-yogiri.ex.json",
+      "hash": "6f59cb9bb058",
+      "size": 2027
+    },
+    {
+      "id": "b2-yogiri.passive",
+      "path": "abilities/b2-yogiri.passive.json",
+      "hash": "75837e28dfa4",
+      "size": 1889
+    },
+    {
+      "id": "b2-yogiri.q",
+      "path": "abilities/b2-yogiri.q.json",
+      "hash": "4b3843236224",
+      "size": 1559
+    },
+    {
+      "id": "b2-yogiri.r",
+      "path": "abilities/b2-yogiri.r.json",
+      "hash": "bb3f2f414917",
+      "size": 2449
+    },
+    {
+      "id": "b2-yogiri.w",
+      "path": "abilities/b2-yogiri.w.json",
+      "hash": "85ed572769f4",
+      "size": 4024
+    },
+    {
+      "id": "b2-zenitsu.e",
+      "path": "abilities/b2-zenitsu.e.json",
+      "hash": "465b2d3f947f",
+      "size": 1858
+    },
+    {
+      "id": "b2-zenitsu.ex",
+      "path": "abilities/b2-zenitsu.ex.json",
+      "hash": "97ee4e441201",
+      "size": 1178
+    },
+    {
+      "id": "b2-zenitsu.passive",
+      "path": "abilities/b2-zenitsu.passive.json",
+      "hash": "2948606091c3",
+      "size": 1833
+    },
+    {
+      "id": "b2-zenitsu.q",
+      "path": "abilities/b2-zenitsu.q.json",
+      "hash": "2ea4f7876f44",
+      "size": 2260
+    },
+    {
+      "id": "b2-zenitsu.r",
+      "path": "abilities/b2-zenitsu.r.json",
+      "hash": "5c0d6bfd7f28",
+      "size": 2861
+    },
+    {
+      "id": "b2-zenitsu.w",
+      "path": "abilities/b2-zenitsu.w.json",
+      "hash": "a8de07aa1002",
+      "size": 3433
+    },
     {
       "id": "community-review-01-20260907.e",
       "path": "abilities/community-review-01-20260907.e.json",

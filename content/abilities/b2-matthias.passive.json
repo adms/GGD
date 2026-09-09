@@ -1,0 +1,59 @@
+{
+  "castType": "self",
+  "cooldown": [
+    0
+  ],
+  "description": "「老師題目真的過期了！」\n施加帶正式 cc 標籤的控制時回復自身最大魔力 5%，內置冷卻 3 秒；本套由 EX 致盲觸發，R 的 magic-break 沉默不派發此事件。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拿舊課本批改敵人，分數直接扣血。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [],
+  "id": "b2-matthias.passive",
+  "innateKind": "passive",
+  "manaCost": [
+    0
+  ],
+  "maxRank": 1,
+  "name": "老師題目真的過期了",
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "effects": [
+              {
+                "applyTo": "self",
+                "kind": "restore",
+                "manaPct": 0.05
+              }
+            ],
+            "internalCooldown": 3,
+            "on": "onCrowdControlApplied",
+            "target": "self"
+          }
+        ]
+      }
+    ]
+  },
+  "provenance": "editor-json",
+  "range": 0,
+  "schema": "ability@1",
+  "slot": "PASSIVE",
+  "template": {
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26",
+    "params": {
+      "hooks": [
+        {
+          "effects": [
+            {
+              "applyTo": "self",
+              "kind": "restore",
+              "manaPct": 0.05
+            }
+          ],
+          "internalCooldown": 3,
+          "on": "onCrowdControlApplied",
+          "target": "self"
+        }
+      ]
+    },
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+  }
+}

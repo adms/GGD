@@ -1,0 +1,69 @@
+{
+  "castType": "self",
+  "cooldown": [
+    0
+  ],
+  "description": "「大家不要哭嗶！」\n同隊友軍受傷時，自己取得 90 點護盾 2 秒，每 3 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：開心道具全部誤用，但認真把隊友救回來。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [],
+  "id": "b2-takopi.passive",
+  "innateKind": "passive",
+  "manaCost": [
+    0
+  ],
+  "maxRank": 1,
+  "name": "大家不要哭嗶",
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "effects": [
+              {
+                "absorbs": "all",
+                "amount": {
+                  "flat": 90
+                },
+                "duration": 2,
+                "kind": "shield",
+                "onExisting": "keepLarger",
+                "stackKey": "b2-protection"
+              }
+            ],
+            "internalCooldown": 3,
+            "on": "onAllyDamaged",
+            "target": "self"
+          }
+        ]
+      }
+    ]
+  },
+  "provenance": "editor-json",
+  "range": 0,
+  "schema": "ability@1",
+  "slot": "PASSIVE",
+  "template": {
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26",
+    "params": {
+      "hooks": [
+        {
+          "effects": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 90
+              },
+              "duration": 2,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "b2-protection"
+            }
+          ],
+          "internalCooldown": 3,
+          "on": "onAllyDamaged",
+          "target": "self"
+        }
+      ]
+    },
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+  }
+}

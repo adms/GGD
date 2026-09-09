@@ -118,7 +118,17 @@ const EXPECTED: Readonly<Record<string, readonly string[]>> = {
   // ⇒ 他們**照設計**借替身：**2 名在這一格，11 名在 champ.thorne**。
   // ⛔ 這**不是**缺陷、⛔ 也不是退步 —— 那 13 名的模型取得是另一條線；
   // ⭐ 而把他們寫進這份普查，正是為了讓「他們拿到自己的模型了沒」**看得見**。
+  // ⭐ 2026-09-10（GH#1165）第二批 37 名：24 名的模型在 `全角色模型盤點.md` 上是
+  // **`pending-approval`** ⇒ ⛔ **不自動採用**（owner 2026-09-09 逐字：「其他相似模型
+  // 只保留候選，不自動採用」）⇒ ⭐ 他們照設計借替身：7 名 champ.sela · 17 名 champ.thorne。
   "champ.sela": [
+    "b2-aladdin",
+    "b2-kaede",
+    "b2-keyaru",
+    "b2-makoto",
+    "b2-matthias",
+    "b2-orphen",
+    "b2-uncle",
     "community-review-11-20260907",
     "community-review-30-20260907",
     "godie-e00s",
@@ -135,6 +145,27 @@ const EXPECTED: Readonly<Record<string, readonly string[]>> = {
   // blocky-knight.glb
   // ⭐ 2026-09-10（GH#1165）：11 名社群英雄借這一格（見 champ.sela 上面的說明）。
   "champ.thorne": [
+    "b2-boxxo",
+    "b2-elma",
+    "b2-fushi",
+    "b2-guts",
+    "b2-haga",
+    "b2-kaiji",
+    "b2-klaus",
+    "b2-luckyman",
+    "b2-maomao",
+    // ⭐ 變身態（梅普露）—— ⛔ 它**不在營運白名單上**（本體變身過去，不是一張可選的卡），
+    //   ⭐ 而這份普查的母體**含變身態** ⇒ 它借的替身也要算。
+    //   ⚠️ 我第一版用白名單去算，於是漏掉它 —— ⭐ 兩個母體不一樣，⛔ 別混用。
+    "b2-maple-alt-9769eb88b85b",
+    "b2-naofumi",
+    "b2-ned",
+    "b2-noor",
+    "b2-nube",
+    "b2-shadow",
+    "b2-shinchan",
+    "b2-sinbad",
+    "b2-touka",
     "community-review-02-20260907",
     "community-review-05-20260907",
     "community-review-07-20260907",

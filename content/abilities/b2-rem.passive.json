@@ -1,0 +1,55 @@
+{
+  "castType": "self",
+  "cooldown": [
+    0
+  ],
+  "description": "「負評客人我來回覆！」\n每 3 秒受傷可對攻擊者反擊一次小級物理傷害；固定反擊，不按來襲傷害比例返還。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：女僕服務包含拖地與拖走客人。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [],
+  "id": "b2-rem.passive",
+  "innateKind": "passive",
+  "manaCost": [
+    0
+  ],
+  "maxRank": 1,
+  "name": "負評客人我來回覆",
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "chance": 1,
+            "effects": [
+              {
+                "amount": {
+                  "damageTier": "小",
+                  "flat": 500
+                },
+                "damageType": "physical",
+                "kind": "damage"
+              }
+            ],
+            "internalCooldown": 3,
+            "on": "onDamageTaken",
+            "target": "event"
+          }
+        ]
+      }
+    ]
+  },
+  "provenance": "editor-json",
+  "range": 0,
+  "schema": "ability@1",
+  "slot": "PASSIVE",
+  "template": {
+    "contentSha256": "sha256:1829800740ba6b386211343e39ac2c92885cb19ca7566d76842580a3409be0f5",
+    "params": {
+      "damageType": "physical",
+      "internalCooldown": 3,
+      "reflectDamage": {
+        "damageTier": "小",
+        "flat": 500
+      }
+    },
+    "ref": "hero-template.a0174c3324e732c421ab641d1e36cd2f49f758475f851ee4"
+  }
+}

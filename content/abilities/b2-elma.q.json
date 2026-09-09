@@ -1,0 +1,98 @@
+{
+  "castTimeSec": 0.1,
+  "castType": "self",
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "cooldownTier": "小",
+  "description": "「攻略說先扣自己血！」\n照攻略支付最大生命 15%，底線 1 HP；先得到 60 護盾 2 秒，代價不被自己的護盾抵銷。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "amount": {
+        "flat": 0
+      },
+      "kind": "spendHealth",
+      "minimumHp": 1,
+      "pctMaxHealth": 0.15
+    },
+    {
+      "absorbs": "all",
+      "amount": {
+        "flat": 60,
+        "perRank": [
+          0,
+          30,
+          60,
+          90
+        ]
+      },
+      "duration": 2,
+      "kind": "shield",
+      "onExisting": "keepLarger",
+      "stackKey": "b2-protection"
+    }
+  ],
+  "id": "b2-elma.q",
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "maxRank": 4,
+  "name": "攻略說先扣自己血",
+  "provenance": "editor-json",
+  "radius": 3,
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "Q",
+  "targetsEnemies": true,
+  "template": {
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+    "params": {
+      "castTimeSec": 0.1,
+      "castType": "self",
+      "effects": [
+        {
+          "amount": {
+            "flat": 0
+          },
+          "kind": "spendHealth",
+          "minimumHp": 1,
+          "pctMaxHealth": 0.15
+        },
+        {
+          "absorbs": "all",
+          "amount": {
+            "flat": 60,
+            "perRank": [
+              0,
+              30,
+              60,
+              90
+            ]
+          },
+          "duration": 2,
+          "kind": "shield",
+          "onExisting": "keepLarger",
+          "stackKey": "b2-protection"
+        }
+      ],
+      "radius": 3,
+      "side": "enemies"
+    },
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+  },
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.pulse-sm"
+    }
+  ]
+}

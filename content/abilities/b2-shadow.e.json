@@ -1,0 +1,62 @@
+{
+  "castTimeSec": 0.1,
+  "castType": "self",
+  "cooldown": [
+    15,
+    15,
+    15,
+    15
+  ],
+  "cooldownTier": "小",
+  "description": "「對鏡練習我是路人！」\n對鏡練台詞，AP +80 持續 3 秒；沒有無敵。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "duration": 3,
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "op": "flat",
+          "stat": "ap",
+          "value": 80
+        }
+      ]
+    }
+  ],
+  "id": "b2-shadow.e",
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "maxRank": 4,
+  "name": "對鏡練習我是路人",
+  "provenance": "editor-json",
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "E",
+  "template": {
+    "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997",
+    "params": {
+      "castTimeSec": 0.1,
+      "duration": 3,
+      "modifiers": [
+        {
+          "op": "flat",
+          "stat": "ap",
+          "value": 80
+        }
+      ]
+    },
+    "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692"
+  },
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.pulse-sm"
+    }
+  ]
+}

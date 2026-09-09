@@ -2,8 +2,8 @@
   "schema": "ggd-assets-offdisk@1",
   "note": "⭐ **不在 git 裡**的資產：位元組住 S3 ggd-390630837668-ap-east-2-an，⭐ 而驗得起來的那半（bytes + sha256）住這裡（owner 2026-09-08 的歸屬表）。⛔ 沒有宣告的缺席資產仍然 fail-loud —— 這**不是**一張放行清單。⚠️ 內容定址的路徑（檔名 = 64 hex），sha256 必須等於檔名，⭐ 產生器會當場擋下自我矛盾的宣告。",
   "counts": {
-    "entries": 104,
-    "totalBytes": 97629468
+    "entries": 111,
+    "totalBytes": 107449844
   },
   "entries": {
     "assets/models/champions/versions/b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810.glb": {
@@ -54,9 +54,17 @@
       "bytes": 1230780,
       "sha256": "2766406116640635dc332f44b45449d7119a87a1da2aa3ce1799de1e003a198e"
     },
+    "assets/models/community/28fe31e942415e1a2b8f93963f31fb77d06a464d9fee7bf37db23df981dae48b.glb": {
+      "bytes": 1281100,
+      "sha256": "28fe31e942415e1a2b8f93963f31fb77d06a464d9fee7bf37db23df981dae48b"
+    },
     "assets/models/community/296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a.glb": {
       "bytes": 1579724,
       "sha256": "296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a"
+    },
+    "assets/models/community/2b52ec923450fa53fdef2cde4bae03ef56f99881222ab60333b733d21af5abbf.glb": {
+      "bytes": 856548,
+      "sha256": "2b52ec923450fa53fdef2cde4bae03ef56f99881222ab60333b733d21af5abbf"
     },
     "assets/models/community/32ee7ed7d6490ce94a919dc94acebaa06d7f79b4c26626e929a9a166ddae6811.glb": {
       "bytes": 576712,
@@ -125,6 +133,10 @@
     "assets/models/community/697882f891704d14de157f487eb25976764401c1dd04300c1c95c73364aa02cb.glb": {
       "bytes": 2355292,
       "sha256": "697882f891704d14de157f487eb25976764401c1dd04300c1c95c73364aa02cb"
+    },
+    "assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb": {
+      "bytes": 2361292,
+      "sha256": "6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130"
     },
     "assets/models/community/6c378a151d80e5a705ca31acabcb7fc5dff5352059957642614606f383767467.glb": {
       "bytes": 1088600,
@@ -230,6 +242,10 @@
       "bytes": 158960,
       "sha256": "bb5a2e8a52c30ecd4b0917bdcaa8d22ff2a847d05f5a11fc5febb444a9deac2f"
     },
+    "assets/models/community/c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29.glb": {
+      "bytes": 762900,
+      "sha256": "c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29"
+    },
     "assets/models/community/cc746a618bff25e360aa9637d84b55f80812184f3e1eae26ab9f200895869047.glb": {
       "bytes": 1030392,
       "sha256": "cc746a618bff25e360aa9637d84b55f80812184f3e1eae26ab9f200895869047"
@@ -253,6 +269,10 @@
     "assets/models/community/d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83.glb": {
       "bytes": 2322448,
       "sha256": "d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83"
+    },
+    "assets/models/community/d637360355919ae5253a6467d4c9ef3bf110084b5a7bce3200db6578279d9329.glb": {
+      "bytes": 1519620,
+      "sha256": "d637360355919ae5253a6467d4c9ef3bf110084b5a7bce3200db6578279d9329"
     },
     "assets/models/community/dcc78b1e4c4b630460efa3e947417a3bb5858fb653035f6bdad079db32fa91c7.glb": {
       "bytes": 683104,
@@ -294,6 +314,10 @@
       "bytes": 764552,
       "sha256": "e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a"
     },
+    "assets/models/community/eb9de32d14a7d5422295b1f1b0ea30becee83d8319df1586841ec0a89ef7a019.glb": {
+      "bytes": 2355552,
+      "sha256": "eb9de32d14a7d5422295b1f1b0ea30becee83d8319df1586841ec0a89ef7a019"
+    },
     "assets/models/community/ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de.glb": {
       "bytes": 1249564,
       "sha256": "ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de"
@@ -333,6 +357,10 @@
     "assets/models/community/fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da.glb": {
       "bytes": 1001788,
       "sha256": "fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da"
+    },
+    "assets/models/community/fe62599a460e7cecdfe5ac5726a09a4d6e4a44663576c8529b3c2be6841a984c.glb": {
+      "bytes": 683364,
+      "sha256": "fe62599a460e7cecdfe5ac5726a09a4d6e4a44663576c8529b3c2be6841a984c"
     },
     "assets/models/community/ff2786fae7185f2c5faf884eddb72963000fd2329c5a72b15b9dd6f158e08090.glb": {
       "bytes": 909064,

@@ -1,0 +1,84 @@
+{
+  "castTimeSec": 0.1,
+  "castType": "targeted",
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "cooldownTier": "小",
+  "description": "「請按一撤回贈品！」\n撤回最近一份敵方增益（buff pool）；然後定身 1 秒。沒有訂單只剩定身，不會憑空偷取攻擊力。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：精靈客服與遊戲攻略，戰鬥全程社交事故。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "count": 1,
+      "kind": "dispel",
+      "order": "newest",
+      "polarity": "buff",
+      "pools": {
+        "buffs": true
+      },
+      "shape": "single"
+    },
+    {
+      "applyTo": "target",
+      "duration": 1,
+      "kind": "applyStatus",
+      "root": true,
+      "statusId": "root"
+    }
+  ],
+  "id": "b2-uncle.w",
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "maxRank": 4,
+  "name": "請按一撤回贈品",
+  "provenance": "editor-json",
+  "radius": 3,
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "W",
+  "targetsEnemies": true,
+  "template": {
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+    "params": {
+      "castTimeSec": 0.1,
+      "castType": "targeted",
+      "effects": [
+        {
+          "count": 1,
+          "kind": "dispel",
+          "order": "newest",
+          "polarity": "buff",
+          "pools": {
+            "buffs": true
+          },
+          "shape": "single"
+        },
+        {
+          "applyTo": "target",
+          "duration": 1,
+          "kind": "applyStatus",
+          "root": true,
+          "statusId": "root"
+        }
+      ],
+      "radius": 3,
+      "side": "enemies"
+    },
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+  },
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.pulse-sm"
+    }
+  ]
+}

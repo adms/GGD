@@ -1,0 +1,368 @@
+{
+  "abilities": {
+    "E": {
+      "castTimeSec": 0.1,
+      "castType": "targeted",
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "cooldownTier": "小",
+      "description": "「債務人請勿插話！」\n指定敵人獲得 magic-break 與 silenced 旗標 2.5 秒，期間不能施法。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "duration": 2.5,
+          "kind": "applyStatus",
+          "silenced": true,
+          "statusId": "magic-break"
+        }
+      ],
+      "id": "b2-orphen.e",
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "債務人請勿插話",
+      "provenance": "editor-json",
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "E",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539",
+        "params": {
+          "castTimeSec": 0.1,
+          "status": {
+            "duration": 2.5,
+            "silenced": true,
+            "statusId": "magic-break"
+          }
+        },
+        "ref": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ]
+    },
+    "Q": {
+      "castTimeSec": 0.1,
+      "castType": "targeted",
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "cooldownTier": "小",
+      "description": "「我放出的光之催繳函！」\n打擊敵人並施加 3 秒 DOT，每秒一跳；施法當下只回復自己一次 100 生命，不是每跳吸血。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "damageTier": "極小",
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ],
+            "ratios": [
+              {
+                "coeff": 0.6867,
+                "stat": "ap"
+              }
+            ]
+          },
+          "damageType": "magic",
+          "kind": "damage"
+        },
+        {
+          "amount": {
+            "flat": 100,
+            "perRank": [
+              0,
+              50,
+              100,
+              150
+            ]
+          },
+          "applyTo": "self",
+          "kind": "heal"
+        },
+        {
+          "amountPerTick": {
+            "damageTier": "極小",
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ],
+            "ratios": [
+              {
+                "coeff": 0.2289,
+                "stat": "ap"
+              }
+            ]
+          },
+          "damageType": "magic",
+          "durationSec": 3,
+          "intervalSec": 1,
+          "kind": "dot",
+          "stacking": "refresh"
+        }
+      ],
+      "id": "b2-orphen.q",
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "我放出的光之催繳函",
+      "provenance": "editor-json",
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "Q",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:c76d7faa4f0ae1fc83b9f46576247f99fe4dfb785449517a122082a8d9c648cc",
+        "params": {
+          "apRatio": 0.2,
+          "castTimeSec": 0.1,
+          "damageTier": "極小",
+          "damageType": "magic",
+          "durationSec": 3,
+          "intervalSec": 1,
+          "leechFlat": 100,
+          "perRank": [
+            0,
+            100,
+            200,
+            300
+          ],
+          "stacking": "refresh"
+        },
+        "ref": "hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990"
+      },
+      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.bolt"
+        }
+      ]
+    },
+    "R": {
+      "castTimeSec": 0.1,
+      "castType": "targeted",
+      "cooldown": [
+        45,
+        45,
+        45
+      ],
+      "cooldownTier": "大",
+      "description": "「債主不用敲門！」\n瞬移接近指定敵人後斬擊，落點保持現有模板安全間距。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "applyTo": "self",
+          "kind": "blink",
+          "onArrive": [
+            {
+              "at": "point",
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.lightning.slash"
+            },
+            {
+              "amount": {
+                "damageTier": "中",
+                "perRank": [
+                  0,
+                  750,
+                  1500
+                ]
+              },
+              "damageType": "magic",
+              "kind": "damage"
+            }
+          ],
+          "shape": "single",
+          "stopShortUnits": 1.2,
+          "to": "targetUnit"
+        }
+      ],
+      "id": "b2-orphen.r",
+      "manaCost": [
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "maxRank": 3,
+      "name": "債主不用敲門",
+      "provenance": "editor-json",
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "R",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:3bbc417d5c5a3bd9a34f58eec190ecff85b9d8f07a967a022763fe51c86d3be0",
+        "params": {
+          "castTimeSec": 0.1,
+          "damage": {
+            "damageTier": "中",
+            "perRank": [
+              0,
+              750,
+              1500
+            ]
+          },
+          "damageType": "magic",
+          "range": 6,
+          "stopShortUnits": 1.2
+        },
+        "ref": "hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16"
+      },
+      "vfxKey": "fx.prim.arcane.dash",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.dash"
+        }
+      ]
+    },
+    "W": {
+      "castTimeSec": 0.1,
+      "castType": "self",
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "cooldownTier": "小",
+      "description": "「利息可以再寄一次！」\n縮短 Q 尚未結束的冷卻 2 秒。Q 未進冷卻時不預存折扣。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": 2,
+          "kind": "modifyCooldown",
+          "mode": "reduceFlat",
+          "shape": "single",
+          "slot": "Q",
+          "who": "self"
+        }
+      ],
+      "id": "b2-orphen.w",
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "利息可以再寄一次",
+      "provenance": "editor-json",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "W",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.1,
+          "castType": "self",
+          "effects": [
+            {
+              "amount": 2,
+              "kind": "modifyCooldown",
+              "mode": "reduceFlat",
+              "shape": "single",
+              "slot": "Q",
+              "who": "self"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ]
+    }
+  },
+  "archetype": "mage",
+  "attackType": "melee",
+  "attributes": {
+    "agi": 13,
+    "agiGrowth": 1.25,
+    "int": 29,
+    "intGrowth": 2.78,
+    "primary": "INT",
+    "source": "authored",
+    "str": 18,
+    "strGrowth": 1.67
+  },
+  "baseStats": {
+    "ad": 32,
+    "ap": 18,
+    "armor": 0,
+    "as": 0.7,
+    "cdr": 0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "healthRegen": 0.97,
+    "lifesteal": 0,
+    "manaRegen": 1.41,
+    "maxHealth": 541,
+    "maxMana": 370,
+    "mr": 0,
+    "ms": 6,
+    "range": 1.6
+  },
+  "buildPriority": [],
+  "description": "魔術士歐菲｜咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+  "exAbility": "b2-orphen.ex",
+  "growth": {
+    "ad": 4.289142857142858,
+    "ap": 0,
+    "armor": 0.5280102040816326,
+    "as": 0,
+    "healthRegen": 0.08789387755102042,
+    "manaRegen": 0,
+    "maxHealth": 35.000204081632646,
+    "maxMana": 0.9581632653061187,
+    "mr": 2.1118367346938776
+  },
+  "id": "b2-orphen",
+  "modelKey": "champ.sela",
+  "name": "歐菲",
+  "origin": "法鬥",
+  "passiveAbility": "b2-orphen.passive",
+  "role": "mage",
+  "schema": "champion@1",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "tags": []
+}

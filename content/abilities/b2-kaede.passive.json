@@ -1,0 +1,75 @@
+{
+  "castType": "self",
+  "cooldown": [
+    0
+  ],
+  "description": "「劍上又跳出更新通知！」\n自己有 three-sword-style 附魔時，普攻對敵人追加極小魔法傷害，每 0.7 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [],
+  "id": "b2-kaede.passive",
+  "innateKind": "passive",
+  "manaCost": [
+    0
+  ],
+  "maxRank": 1,
+  "name": "劍上又跳出更新通知",
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "effects": [
+              {
+                "amount": {
+                  "damageTier": "極小",
+                  "flat": 200
+                },
+                "condition": {
+                  "kind": "status",
+                  "statusId": "three-sword-style",
+                  "subject": "self"
+                },
+                "damageType": "magic",
+                "kind": "damage"
+              }
+            ],
+            "internalCooldown": 0.7,
+            "on": "onBasicAttack",
+            "target": "event"
+          }
+        ]
+      }
+    ]
+  },
+  "provenance": "editor-json",
+  "range": 0,
+  "schema": "ability@1",
+  "slot": "PASSIVE",
+  "template": {
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26",
+    "params": {
+      "hooks": [
+        {
+          "effects": [
+            {
+              "amount": {
+                "damageTier": "極小",
+                "flat": 200
+              },
+              "condition": {
+                "kind": "status",
+                "statusId": "three-sword-style",
+                "subject": "self"
+              },
+              "damageType": "magic",
+              "kind": "damage"
+            }
+          ],
+          "internalCooldown": 0.7,
+          "on": "onBasicAttack",
+          "target": "event"
+        }
+      ]
+    },
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "castTimeSec": 0.1,
+  "castType": "ground",
+  "cooldown": [
+    45,
+    45,
+    45
+  ],
+  "cooldownTier": "大",
+  "description": "「I AM 加班到 ATOMIC！」\n中級直線魔法加 0.7725 AP（正式出身縮放後）；只有實際 AP 增益能提高這段，沒有偽裝成原作核爆。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "aim": "target",
+      "amount": {
+        "damageTier": "中",
+        "flat": 1000,
+        "perRank": [
+          0,
+          750,
+          1500
+        ],
+        "ratios": [
+          {
+            "coeff": 0.7725,
+            "stat": "ap"
+          }
+        ]
+      },
+      "damageType": "magic",
+      "fromCaster": true,
+      "includeOrigin": true,
+      "kind": "damageLine",
+      "length": 9,
+      "width": 1.5
+    }
+  ],
+  "id": "b2-shadow.r",
+  "manaCost": [
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "maxRank": 3,
+  "name": "I AM 加班到 ATOMIC",
+  "provenance": "editor-json",
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "R",
+  "template": {
+    "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
+    "params": {
+      "aim": "target",
+      "castTimeSec": 0.1,
+      "damage": {
+        "damageTier": "中",
+        "flat": 1000,
+        "perRank": [
+          0,
+          750,
+          1500
+        ],
+        "ratios": [
+          {
+            "coeff": 0.8,
+            "stat": "ap"
+          }
+        ]
+      },
+      "damageType": "magic",
+      "length": 9,
+      "width": 1.5
+    },
+    "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71"
+  },
+  "vfxKey": "fx.prim.arcane.bolt",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.bolt"
+    }
+  ]
+}

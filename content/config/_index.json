@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "66cb760c9979",
+  "hash": "1b29bf102661",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -221,8 +221,8 @@
     {
       "id": "damage-tiers",
       "path": "config/damage-tiers.json",
-      "hash": "6edaf0093bc8",
-      "size": 3351
+      "hash": "bb79da2d2f98",
+      "size": 3352
     },
     {
       "id": "dispel",
@@ -461,7 +461,7 @@
     {
       "id": "stat-caps",
       "path": "config/stat-caps.json",
-      "hash": "d59e3a0b7bee",
+      "hash": "6a13a8e3541a",
       "size": 920
     },
     {

@@ -1,0 +1,81 @@
+{
+  "castTimeSec": 0.1,
+  "castType": "targeted",
+  "cooldown": [
+    45,
+    45,
+    45
+  ],
+  "cooldownTier": "大",
+  "description": "「債主不用敲門！」\n瞬移接近指定敵人後斬擊，落點保持現有模板安全間距。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "applyTo": "self",
+      "kind": "blink",
+      "onArrive": [
+        {
+          "at": "point",
+          "kind": "spawnVfx",
+          "vfxId": "fx.prim.lightning.slash"
+        },
+        {
+          "amount": {
+            "damageTier": "中",
+            "flat": 1000,
+            "perRank": [
+              0,
+              750,
+              1500
+            ]
+          },
+          "damageType": "magic",
+          "kind": "damage"
+        }
+      ],
+      "shape": "single",
+      "stopShortUnits": 1.2,
+      "to": "targetUnit"
+    }
+  ],
+  "id": "b2-orphen.r",
+  "manaCost": [
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "maxRank": 3,
+  "name": "債主不用敲門",
+  "provenance": "editor-json",
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "R",
+  "targetsEnemies": true,
+  "template": {
+    "contentSha256": "sha256:3bbc417d5c5a3bd9a34f58eec190ecff85b9d8f07a967a022763fe51c86d3be0",
+    "params": {
+      "castTimeSec": 0.1,
+      "damage": {
+        "damageTier": "中",
+        "flat": 1000,
+        "perRank": [
+          0,
+          750,
+          1500
+        ]
+      },
+      "damageType": "magic",
+      "range": 6,
+      "stopShortUnits": 1.2
+    },
+    "ref": "hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16"
+  },
+  "vfxKey": "fx.prim.arcane.dash",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.dash"
+    }
+  ]
+}

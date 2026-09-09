@@ -1,0 +1,61 @@
+{
+  "castType": "self",
+  "cooldown": [
+    0
+  ],
+  "description": "「反彈成功才發收據！」\n真正反彈成功才給自己 rage 收據 3 秒；每 2 秒一次，不是受到傷害就給。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [],
+  "id": "b2-noor.passive",
+  "innateKind": "passive",
+  "manaCost": [
+    0
+  ],
+  "maxRank": 1,
+  "name": "反彈成功才發收據",
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "effects": [
+              {
+                "applyTo": "self",
+                "duration": 3,
+                "kind": "applyStatus",
+                "statusId": "rage"
+              }
+            ],
+            "internalCooldown": 2,
+            "on": "onReflectSuccess",
+            "target": "self"
+          }
+        ]
+      }
+    ]
+  },
+  "provenance": "editor-json",
+  "range": 0,
+  "schema": "ability@1",
+  "slot": "PASSIVE",
+  "template": {
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26",
+    "params": {
+      "hooks": [
+        {
+          "effects": [
+            {
+              "applyTo": "self",
+              "duration": 3,
+              "kind": "applyStatus",
+              "statusId": "rage"
+            }
+          ],
+          "internalCooldown": 2,
+          "on": "onReflectSuccess",
+          "target": "self"
+        }
+      ]
+    },
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+  }
+}

@@ -1,0 +1,404 @@
+{
+  "abilities": {
+    "E": {
+      "castTimeSec": 0.1,
+      "castType": "targeted",
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "cooldownTier": "小",
+      "description": "「工具箱灰塵遮眼！」\n小級工具打擊，沿用出貨 blind 失手率 50% 配方；不使玩家螢幕全黑。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "damageTier": "小",
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          },
+          "damageType": "physical",
+          "kind": "damage"
+        },
+        {
+          "duration": 1,
+          "kind": "applyStatus",
+          "missChance": 0.5,
+          "statusId": "blind"
+        }
+      ],
+      "id": "b2-goblin.e",
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "工具箱灰塵遮眼",
+      "provenance": "editor-json",
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "E",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
+        "params": {
+          "castTimeSec": 0.1,
+          "damage": {
+            "damageTier": "小",
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          },
+          "damageType": "physical",
+          "status": {
+            "duration": 1,
+            "missChance": 0.5,
+            "statusId": "blind"
+          }
+        },
+        "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8"
+      },
+      "vfxKey": "fx.prim.arcane.slash",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.slash"
+        }
+      ]
+    },
+    "Q": {
+      "castTimeSec": 0.1,
+      "castType": "ground",
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "cooldownTier": "小",
+      "description": "「工地開工三次點名！」\n以起手命中者位置（沒有命中則施法點）固定半徑 2.5，建立三次每 0.5 秒重選敵人的施工傷害區，每次極小物理傷害；離開可躲，沒有隱形陷阱實體。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "anchor": "point",
+          "count": 3,
+          "delaySec": 0.5,
+          "effects": [
+            {
+              "amount": {
+                "damageTier": "極小",
+                "perRank": [
+                  0,
+                  100,
+                  200,
+                  300
+                ]
+              },
+              "damageType": "physical",
+              "kind": "damage"
+            }
+          ],
+          "intervalSec": 0.5,
+          "kind": "delayed",
+          "maxTargets": 4,
+          "radius": 2.5,
+          "shape": "circle",
+          "side": "enemies",
+          "stopOnCasterDeath": true,
+          "targetMode": "reresolve"
+        }
+      ],
+      "id": "b2-goblin.q",
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "工地開工三次點名",
+      "provenance": "editor-json",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "Q",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.1,
+          "castType": "ground",
+          "effects": [
+            {
+              "anchor": "point",
+              "count": 3,
+              "delaySec": 0.5,
+              "effects": [
+                {
+                  "amount": {
+                    "damageTier": "極小",
+                    "perRank": [
+                      0,
+                      100,
+                      200,
+                      300
+                    ]
+                  },
+                  "damageType": "physical",
+                  "kind": "damage"
+                }
+              ],
+              "intervalSec": 0.5,
+              "kind": "delayed",
+              "maxTargets": 4,
+              "radius": 2.5,
+              "shape": "circle",
+              "side": "enemies",
+              "stopOnCasterDeath": true,
+              "targetMode": "reresolve"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.nova",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.nova"
+        }
+      ]
+    },
+    "R": {
+      "castTimeSec": 0.1,
+      "castType": "targeted",
+      "cooldown": [
+        90,
+        90,
+        90
+      ],
+      "cooldownTier": "大",
+      "description": "「盲目亂闖請走緊急出口！」\n敵人被致盲時才追加推離 4 單位；一般情況只有小級打擊，施工流程可被對方淨化打斷。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "damageTier": "小",
+            "perRank": [
+              0,
+              375,
+              750
+            ]
+          },
+          "damageType": "physical",
+          "kind": "damage"
+        },
+        {
+          "condition": {
+            "kind": "status",
+            "statusId": "blind",
+            "subject": "target"
+          },
+          "distance": 4,
+          "from": "caster",
+          "kind": "knockback",
+          "speed": 12,
+          "subtractGap": false,
+          "uncontrollable": false
+        }
+      ],
+      "id": "b2-goblin.r",
+      "manaCost": [
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "maxRank": 3,
+      "name": "盲目亂闖請走緊急出口",
+      "provenance": "editor-json",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "R",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.1,
+          "castType": "targeted",
+          "effects": [
+            {
+              "amount": {
+                "damageTier": "小",
+                "perRank": [
+                  0,
+                  375,
+                  750
+                ]
+              },
+              "damageType": "physical",
+              "kind": "damage"
+            },
+            {
+              "condition": {
+                "kind": "status",
+                "statusId": "blind",
+                "subject": "target"
+              },
+              "distance": 4,
+              "from": "caster",
+              "kind": "knockback",
+              "speed": 12,
+              "subtractGap": false,
+              "uncontrollable": false
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ]
+    },
+    "W": {
+      "castTimeSec": 0.1,
+      "castType": "targeted",
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "cooldownTier": "小",
+      "description": "「把客人拉進施工區！」\n先把指定敵人拉到自己前 1 單位，便於把他帶到預定工地。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "destination": "caster",
+          "kind": "pull",
+          "shape": "single",
+          "speed": 20,
+          "stopDistance": 1
+        }
+      ],
+      "id": "b2-goblin.w",
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "把客人拉進施工區",
+      "provenance": "editor-json",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "W",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.1,
+          "castType": "targeted",
+          "effects": [
+            {
+              "destination": "caster",
+              "kind": "pull",
+              "shape": "single",
+              "speed": 20,
+              "stopDistance": 1
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ]
+    }
+  },
+  "archetype": "fighter",
+  "attackType": "melee",
+  "attributes": {
+    "agi": 29,
+    "agiGrowth": 2.78,
+    "int": 13,
+    "intGrowth": 1.25,
+    "primary": "AGI",
+    "source": "authored",
+    "str": 18,
+    "strGrowth": 1.67
+  },
+  "baseStats": {
+    "ad": 32,
+    "ap": 18,
+    "armor": 0,
+    "as": 0.7,
+    "cdr": 0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "healthRegen": 0.97,
+    "lifesteal": 0,
+    "manaRegen": 1.41,
+    "maxHealth": 541,
+    "maxMana": 370,
+    "mr": 0,
+    "ms": 8,
+    "range": 1.6
+  },
+  "buildPriority": [],
+  "description": "哥布林殺手｜所有敵人都先填哥布林風險評估表。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+  "exAbility": "b2-goblin.ex",
+  "growth": {
+    "ad": 4.289142857142858,
+    "ap": 0,
+    "armor": 0.4578979591836735,
+    "as": 0,
+    "healthRegen": 0.13085306122448978,
+    "manaRegen": 0,
+    "maxHealth": 35.000204081632646,
+    "maxMana": 26.357142857142858,
+    "mr": 2.639795918367347
+  },
+  "id": "b2-goblin",
+  "modelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
+  "name": "哥布林殺手",
+  "icon": "assets/icons/champions/b2-goblin.webp",
+  "origin": "鬥士",
+  "passiveAbility": "b2-goblin.passive",
+  "role": "fighter",
+  "schema": "champion@1",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "tags": []
+}

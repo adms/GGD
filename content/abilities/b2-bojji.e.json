@@ -1,0 +1,49 @@
+{
+  "castTimeSec": 0.1,
+  "castType": "ground",
+  "cooldown": [
+    15,
+    15,
+    15,
+    15
+  ],
+  "cooldownTier": "小",
+  "description": "「太高了我先繞過去！」\n短距合法瞬移換站位；被動只在真正閃避時回血，位移本身不算閃避。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "applyTo": "self",
+      "kind": "blink",
+      "shape": "single",
+      "to": "point"
+    }
+  ],
+  "id": "b2-bojji.e",
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "maxRank": 4,
+  "name": "太高了我先繞過去",
+  "provenance": "editor-json",
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "E",
+  "template": {
+    "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
+    "params": {
+      "castTimeSec": 0.1
+    },
+    "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
+  },
+  "vfxKey": "fx.prim.arcane.dash",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.dash"
+    }
+  ]
+}

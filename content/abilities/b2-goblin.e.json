@@ -1,0 +1,80 @@
+{
+  "castTimeSec": 0.1,
+  "castType": "targeted",
+  "cooldown": [
+    15,
+    15,
+    15,
+    15
+  ],
+  "cooldownTier": "小",
+  "description": "「工具箱灰塵遮眼！」\n小級工具打擊，沿用出貨 blind 失手率 50% 配方；不使玩家螢幕全黑。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "amount": {
+        "damageTier": "小",
+        "flat": 500,
+        "perRank": [
+          0,
+          250,
+          500,
+          750
+        ]
+      },
+      "damageType": "physical",
+      "kind": "damage"
+    },
+    {
+      "duration": 1,
+      "kind": "applyStatus",
+      "missChance": 0.5,
+      "statusId": "blind"
+    }
+  ],
+  "id": "b2-goblin.e",
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "maxRank": 4,
+  "name": "工具箱灰塵遮眼",
+  "provenance": "editor-json",
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "E",
+  "targetsEnemies": true,
+  "template": {
+    "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
+    "params": {
+      "castTimeSec": 0.1,
+      "damage": {
+        "damageTier": "小",
+        "flat": 500,
+        "perRank": [
+          0,
+          250,
+          500,
+          750
+        ]
+      },
+      "damageType": "physical",
+      "status": {
+        "duration": 1,
+        "missChance": 0.5,
+        "statusId": "blind"
+      }
+    },
+    "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8"
+  },
+  "vfxKey": "fx.prim.arcane.slash",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.slash"
+    }
+  ]
+}

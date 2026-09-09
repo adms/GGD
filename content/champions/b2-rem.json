@@ -1,0 +1,438 @@
+{
+  "abilities": {
+    "E": {
+      "castTimeSec": 0.1,
+      "castType": "self",
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "cooldownTier": "小",
+      "description": "「鬼化加班先扣血！」\n鬼化加班：支付最大生命 12%，至少保留 1 HP；攻擊力 +35 持續 3 秒，沒有免費回血。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：女僕服務包含拖地與拖走客人。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "flat": 0
+          },
+          "kind": "spendHealth",
+          "minimumHp": 1,
+          "pctMaxHealth": 0.12
+        },
+        {
+          "applyTo": "self",
+          "duration": 3,
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "op": "flat",
+              "stat": "ad",
+              "value": 35
+            }
+          ]
+        }
+      ],
+      "id": "b2-rem.e",
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "鬼化加班先扣血",
+      "provenance": "editor-json",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "E",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.1,
+          "castType": "self",
+          "effects": [
+            {
+              "amount": {
+                "flat": 0
+              },
+              "kind": "spendHealth",
+              "minimumHp": 1,
+              "pctMaxHealth": 0.12
+            },
+            {
+              "applyTo": "self",
+              "duration": 3,
+              "kind": "applyBuff",
+              "modifiers": [
+                {
+                  "op": "flat",
+                  "stat": "ad",
+                  "value": 35
+                }
+              ]
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ]
+    },
+    "Q": {
+      "castTimeSec": 0.1,
+      "castType": "targeted",
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "cooldownTier": "小",
+      "description": "「這位客人請留步！」\n拖把鉤拉指定敵人到身邊 1 單位外，不傷害；受地形與位移規則限制。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：女僕服務包含拖地與拖走客人。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "destination": "caster",
+          "kind": "pull",
+          "shape": "single",
+          "speed": 18,
+          "stopDistance": 1
+        }
+      ],
+      "id": "b2-rem.q",
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "這位客人請留步",
+      "provenance": "editor-json",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "Q",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.1,
+          "castType": "targeted",
+          "effects": [
+            {
+              "destination": "caster",
+              "kind": "pull",
+              "shape": "single",
+              "speed": 18,
+              "stopDistance": 1
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.bolt"
+        }
+      ]
+    },
+    "R": {
+      "castTimeSec": 0.1,
+      "castType": "self",
+      "cooldown": [
+        90,
+        90,
+        90
+      ],
+      "cooldownTier": "大",
+      "description": "「半條命換急救包！」\n任何情況都得到 100 護盾 2 秒；生命低於 50% 時額外回復 240，不要求一定先用鬼化。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：女僕服務包含拖地與拖走客人。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "absorbs": "all",
+          "amount": {
+            "flat": 100,
+            "perRank": [
+              0,
+              75,
+              150
+            ]
+          },
+          "duration": 2,
+          "kind": "shield",
+          "onExisting": "keepLarger",
+          "stackKey": "b2-protection"
+        },
+        {
+          "amount": {
+            "flat": 240,
+            "perRank": [
+              0,
+              180,
+              360
+            ]
+          },
+          "applyTo": "self",
+          "condition": {
+            "kind": "stat",
+            "mode": "percent",
+            "op": "<",
+            "stat": "hp",
+            "subject": "self",
+            "value": 0.5
+          },
+          "kind": "heal"
+        }
+      ],
+      "id": "b2-rem.r",
+      "manaCost": [
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "maxRank": 3,
+      "name": "半條命換急救包",
+      "provenance": "editor-json",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "R",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.1,
+          "castType": "self",
+          "effects": [
+            {
+              "absorbs": "all",
+              "amount": {
+                "flat": 100,
+                "perRank": [
+                  0,
+                  75,
+                  150
+                ]
+              },
+              "duration": 2,
+              "kind": "shield",
+              "onExisting": "keepLarger",
+              "stackKey": "b2-protection"
+            },
+            {
+              "amount": {
+                "flat": 240,
+                "perRank": [
+                  0,
+                  180,
+                  360
+                ]
+              },
+              "applyTo": "self",
+              "condition": {
+                "kind": "stat",
+                "mode": "percent",
+                "op": "<",
+                "stat": "hp",
+                "subject": "self",
+                "value": 0.5
+              },
+              "kind": "heal"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ]
+    },
+    "W": {
+      "castTimeSec": 0.1,
+      "castType": "targeted",
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "cooldownTier": "小",
+      "description": "「鐵球拖把暫停你的普攻！」\n小級鐵球打擊；距離不超過 2.5 才繳械 1.5 秒（numbness 旗標），遠客人不列入清場。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：女僕服務包含拖地與拖走客人。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "damageTier": "小",
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          },
+          "damageType": "physical",
+          "kind": "damage"
+        },
+        {
+          "applyTo": "target",
+          "condition": {
+            "kind": "distance",
+            "op": "<=",
+            "value": 2.5
+          },
+          "disarmed": true,
+          "duration": 1.5,
+          "kind": "applyStatus",
+          "statusId": "numbness"
+        }
+      ],
+      "id": "b2-rem.w",
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "鐵球拖把暫停你的普攻",
+      "provenance": "editor-json",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "W",
+      "targetsEnemies": true,
+      "template": {
+        "cards": [
+          {
+            "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
+            "params": {
+              "castTimeSec": 0.1,
+              "damage": {
+                "damageTier": "小",
+                "perRank": [
+                  0,
+                  250,
+                  500,
+                  750
+                ]
+              },
+              "damageType": "physical"
+            },
+            "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8"
+          },
+          {
+            "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+            "params": {
+              "castTimeSec": 0.1,
+              "castType": "targeted",
+              "effects": [
+                {
+                  "applyTo": "target",
+                  "condition": {
+                    "kind": "distance",
+                    "op": "<=",
+                    "value": 2.5
+                  },
+                  "disarmed": true,
+                  "duration": 1.5,
+                  "kind": "applyStatus",
+                  "statusId": "numbness"
+                }
+              ],
+              "radius": 3,
+              "side": "enemies"
+            },
+            "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+          }
+        ],
+        "onConflict": "reject"
+      },
+      "vfxKey": "fx.prim.arcane.slash",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.slash"
+        }
+      ]
+    }
+  },
+  "archetype": "fighter",
+  "attackType": "melee",
+  "attributes": {
+    "agi": 23,
+    "agiGrowth": 2.17,
+    "int": 12,
+    "intGrowth": 1.18,
+    "primary": "STR",
+    "source": "authored",
+    "str": 25,
+    "strGrowth": 2.36
+  },
+  "baseStats": {
+    "ad": 32,
+    "ap": 18,
+    "armor": 0,
+    "as": 0.7,
+    "cdr": 0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "healthRegen": 0.97,
+    "lifesteal": 0,
+    "manaRegen": 1.41,
+    "maxHealth": 541,
+    "maxMana": 370,
+    "mr": 0,
+    "ms": 10,
+    "range": 1.4
+  },
+  "buildPriority": [],
+  "description": "Re:從零開始｜女僕服務包含拖地與拖走客人。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+  "exAbility": "b2-rem.ex",
+  "growth": {
+    "ad": 3.9845714285714284,
+    "ap": 0,
+    "armor": 0.374704081632653,
+    "as": 0.005017163869659167,
+    "healthRegen": 0.22937551020408167,
+    "manaRegen": 0,
+    "maxHealth": 0.8563265306122456,
+    "maxMana": 2.1239795918367355,
+    "mr": 2.1118367346938776
+  },
+  "id": "b2-rem",
+  "modelKey": "community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905",
+  "name": "蕾姆",
+  "origin": "狂戰",
+  "passiveAbility": "b2-rem.passive",
+  "role": "fighter",
+  "schema": "champion@1",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "tags": []
+}

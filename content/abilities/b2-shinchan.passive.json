@@ -1,0 +1,63 @@
+{
+  "castType": "self",
+  "cooldown": [
+    0
+  ],
+  "description": "「動感超人不用補習！」\n自己施加控制後回復 60 生命，每 3 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [],
+  "id": "b2-shinchan.passive",
+  "innateKind": "passive",
+  "manaCost": [
+    0
+  ],
+  "maxRank": 1,
+  "name": "動感超人不用補習",
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "effects": [
+              {
+                "amount": {
+                  "flat": 60
+                },
+                "applyTo": "self",
+                "kind": "heal"
+              }
+            ],
+            "internalCooldown": 3,
+            "on": "onCrowdControlApplied",
+            "target": "self"
+          }
+        ]
+      }
+    ]
+  },
+  "provenance": "editor-json",
+  "range": 0,
+  "schema": "ability@1",
+  "slot": "PASSIVE",
+  "template": {
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26",
+    "params": {
+      "hooks": [
+        {
+          "effects": [
+            {
+              "amount": {
+                "flat": 60
+              },
+              "applyTo": "self",
+              "kind": "heal"
+            }
+          ],
+          "internalCooldown": 3,
+          "on": "onCrowdControlApplied",
+          "target": "self"
+        }
+      ]
+    },
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+  }
+}

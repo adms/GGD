@@ -1,0 +1,80 @@
+{
+  "castType": "targeted",
+  "cooldown": [
+    90
+  ],
+  "cooldownTier": "大",
+  "description": "「跳過劇情三段打王！」\n指定敵人承受三跳極小物理 DOT，間隔 0.3 秒；自己原地低弧落地再造成半徑 1.83 的小級物理收尾，敵人離遠就只中 DOT。不鎖敵、不給施法者無敵。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "amountPerTick": {
+        "damageTier": "極小",
+        "flat": 200
+      },
+      "damageType": "physical",
+      "durationSec": 0.8999999999999999,
+      "intervalSec": 0.3,
+      "kind": "dot"
+    },
+    {
+      "apexHeight": 0,
+      "applyTo": "self",
+      "durationSec": 0.8999999999999999,
+      "kind": "leap",
+      "landRadius": 1.83,
+      "mode": "inPlace",
+      "onLand": [
+        {
+          "amount": {
+            "damageTier": "小",
+            "flat": 500
+          },
+          "damageType": "physical",
+          "kind": "damage"
+        }
+      ]
+    }
+  ],
+  "id": "b2-albus.ex",
+  "manaCost": [
+    144
+  ],
+  "manaCostTier": "小",
+  "maxRank": 1,
+  "name": "跳過劇情三段打王",
+  "provenance": "editor-json",
+  "radius": 1.83,
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "EX",
+  "targetsEnemies": true,
+  "template": {
+    "contentSha256": "sha256:3564b6a4aa6e8ba56515a3e021d366443236e05e20c89a4267a82774cd521c26",
+    "params": {
+      "casterGuard": "none",
+      "damageType": "physical",
+      "finisherDamage": {
+        "damageTier": "小",
+        "flat": 500
+      },
+      "finisherRadius": 100,
+      "hitCount": 3,
+      "hitIntervalSec": 0.3,
+      "lockTarget": "none",
+      "perHitDamage": {
+        "damageTier": "極小",
+        "flat": 200
+      },
+      "trigger": "onCast"
+    },
+    "ref": "hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c"
+  },
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.pulse-sm"
+    }
+  ]
+}

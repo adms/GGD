@@ -392,6 +392,46 @@ var (
 		"community-review-35-20260907", // 炭治郎｜鬥士｜fighter
 		"community-review-36-20260907", // 鬼畜王蘭斯｜狂戰｜fighter
 		"community-review-37-20260907", // 吉伊卡哇｜硬輔｜tank
+		// ⭐ 第二批 37 名（GH#1165，2026-09-10）——「被認定為預設官方角色」。
+		// ⛔ 變身態 `b2-maple-alt-…` **不在這裡**:它靠 `transform.counterpartId`
+		//   從本體變身過去,⛔ 不是一張可以直接選的卡。
+		"b2-aladdin",
+		"b2-albus",
+		"b2-bojji",
+		"b2-boxxo",
+		"b2-elma",
+		"b2-fushi",
+		"b2-goblin",
+		"b2-guts",
+		"b2-haga",
+		"b2-kaede",
+		"b2-kaiji",
+		"b2-keyaru",
+		"b2-kisaragi",
+		"b2-klaus",
+		"b2-kumoko",
+		"b2-luckyman",
+		"b2-makoto",
+		"b2-maomao",
+		"b2-maple",
+		"b2-matthias",
+		"b2-misery",
+		"b2-naofumi",
+		"b2-ned",
+		"b2-noor",
+		"b2-nube",
+		"b2-orphen",
+		"b2-popp",
+		"b2-rem",
+		"b2-rin",
+		"b2-shadow",
+		"b2-shinchan",
+		"b2-sinbad",
+		"b2-takopi",
+		"b2-touka",
+		"b2-uncle",
+		"b2-yogiri",
+		"b2-zenitsu",
 	}
 
 	// SHOP items — the FINAL CRAFTED WEAPONS, and nothing else (owner rule 1,

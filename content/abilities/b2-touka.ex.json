@@ -1,0 +1,43 @@
+{
+  "castTimeSec": 0.1,
+  "castType": "ground",
+  "cooldown": [
+    45
+  ],
+  "cooldownTier": "大",
+  "description": "「工頭先下班！」\n工頭先撤離至合法指定點，不改寫地形也不復活勇者。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "applyTo": "self",
+      "kind": "blink",
+      "shape": "single",
+      "to": "point"
+    }
+  ],
+  "id": "b2-touka.ex",
+  "manaCost": [
+    144
+  ],
+  "manaCostTier": "小",
+  "maxRank": 1,
+  "name": "工頭先下班",
+  "provenance": "editor-json",
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "EX",
+  "template": {
+    "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
+    "params": {
+      "castTimeSec": 0.1
+    },
+    "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
+  },
+  "vfxKey": "fx.prim.arcane.dash",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.dash"
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "castTimeSec": 0.1,
+  "castType": "self",
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "cooldownTier": "小",
+  "description": "「烏戈代班先派一位！」\n召喚 1 具可獨立攻擊的自身代理 4 秒，攻擊與生命倍率欄位均為 30%，本招最多 3 具；同時取得 rage 演奏暫態 4 秒。代理不是烏戈原作模型。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "body": "self",
+      "championId": "self",
+      "count": 1,
+      "damageMult": 0.3,
+      "durationSec": 4,
+      "formation": "ring",
+      "hpMult": 0.3,
+      "kind": "summon",
+      "maxAlive": 3,
+      "onOwnerDeath": "despawn",
+      "spread": 1
+    },
+    {
+      "applyTo": "self",
+      "duration": 4,
+      "kind": "applyStatus",
+      "statusId": "rage"
+    }
+  ],
+  "id": "b2-aladdin.q",
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "maxRank": 4,
+  "name": "烏戈代班先派一位",
+  "provenance": "editor-json",
+  "radius": 3,
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "Q",
+  "targetsEnemies": false,
+  "template": {
+    "cards": [
+      {
+        "contentSha256": "sha256:d08ea1add026b0548f07c7d9d7362263b0e38701f3bb9b6237e963a5f78d1f6f",
+        "params": {
+          "body": "self",
+          "castTimeSec": 0.1,
+          "cleanse": "none",
+          "count": 1,
+          "damageMult": 0.3,
+          "durationSec": 4,
+          "formation": "ring",
+          "hpMult": 0.3,
+          "maxAlive": 3,
+          "onOwnerDeath": "despawn",
+          "spread": 1
+        },
+        "ref": "hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804"
+      },
+      {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.1,
+          "castType": "self",
+          "effects": [
+            {
+              "applyTo": "self",
+              "duration": 4,
+              "kind": "applyStatus",
+              "statusId": "rage"
+            }
+          ],
+          "radius": 3,
+          "side": "allies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      }
+    ],
+    "onConflict": "reject"
+  },
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.pulse-sm"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "castTimeSec": 0.1,
+  "castType": "targeted",
+  "cooldown": [
+    15,
+    15,
+    15,
+    15
+  ],
+  "cooldownTier": "小",
+  "description": "「八極拳催款專線！」\n八極拳小級物理打擊並給 magic-break 3 秒標記；此標記不自帶減魔抗，重點是記錄催款對象。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "amount": {
+        "damageTier": "小",
+        "flat": 500,
+        "perRank": [
+          0,
+          250,
+          500,
+          750
+        ]
+      },
+      "damageType": "physical",
+      "kind": "damage"
+    },
+    {
+      "applyTo": "target",
+      "duration": 3,
+      "kind": "applyStatus",
+      "statusId": "magic-break"
+    }
+  ],
+  "id": "b2-rin.e",
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "maxRank": 4,
+  "name": "八極拳催款專線",
+  "provenance": "editor-json",
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "E",
+  "targetsEnemies": true,
+  "template": {
+    "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
+    "params": {
+      "castTimeSec": 0.1,
+      "damage": {
+        "damageTier": "小",
+        "flat": 500,
+        "perRank": [
+          0,
+          250,
+          500,
+          750
+        ]
+      },
+      "damageType": "physical",
+      "status": {
+        "applyTo": "target",
+        "duration": 3,
+        "statusId": "magic-break"
+      }
+    },
+    "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8"
+  },
+  "vfxKey": "fx.prim.arcane.slash",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.slash"
+    }
+  ]
+}

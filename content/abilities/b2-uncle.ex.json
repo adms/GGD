@@ -1,0 +1,58 @@
+{
+  "castTimeSec": 0.1,
+  "castType": "ground",
+  "cooldown": [
+    45
+  ],
+  "cooldownTier": "大",
+  "description": "「SEGA神諭直線超載！」\n攻略正確的直線魔法，中級單次傷害；不沿用不生效的蛇行參數。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：精靈客服與遊戲攻略，戰鬥全程社交事故。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "aim": "target",
+      "amount": {
+        "damageTier": "中",
+        "flat": 1000
+      },
+      "damageType": "magic",
+      "fromCaster": true,
+      "includeOrigin": true,
+      "kind": "damageLine",
+      "length": 9,
+      "width": 1.5
+    }
+  ],
+  "id": "b2-uncle.ex",
+  "manaCost": [
+    144
+  ],
+  "manaCostTier": "小",
+  "maxRank": 1,
+  "name": "SEGA神諭直線超載",
+  "provenance": "editor-json",
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "EX",
+  "template": {
+    "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
+    "params": {
+      "aim": "target",
+      "castTimeSec": 0.1,
+      "damage": {
+        "damageTier": "中",
+        "flat": 1000
+      },
+      "damageType": "magic",
+      "length": 9,
+      "width": 1.5
+    },
+    "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71"
+  },
+  "vfxKey": "fx.prim.arcane.bolt",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.bolt"
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "castType": "self",
+  "cooldown": [
+    0
+  ],
+  "description": "「工傷先別打卡！」\n自身生命低於一半時，普通攻擊額外造成極小物理傷害；每 2 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [],
+  "id": "b2-guts.passive",
+  "innateKind": "passive",
+  "manaCost": [
+    0
+  ],
+  "maxRank": 1,
+  "name": "工傷先別打卡",
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "effects": [
+              {
+                "amount": {
+                  "damageTier": "極小",
+                  "flat": 200
+                },
+                "condition": {
+                  "kind": "stat",
+                  "mode": "percent",
+                  "op": "<",
+                  "stat": "hp",
+                  "subject": "self",
+                  "value": 0.5
+                },
+                "damageType": "physical",
+                "kind": "damage"
+              }
+            ],
+            "internalCooldown": 2,
+            "on": "onBasicAttack",
+            "target": "event"
+          }
+        ]
+      }
+    ]
+  },
+  "provenance": "editor-json",
+  "range": 0,
+  "schema": "ability@1",
+  "slot": "PASSIVE",
+  "template": {
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26",
+    "params": {
+      "hooks": [
+        {
+          "effects": [
+            {
+              "amount": {
+                "damageTier": "極小",
+                "flat": 200
+              },
+              "condition": {
+                "kind": "stat",
+                "mode": "percent",
+                "op": "<",
+                "stat": "hp",
+                "subject": "self",
+                "value": 0.5
+              },
+              "damageType": "physical",
+              "kind": "damage"
+            }
+          ],
+          "internalCooldown": 2,
+          "on": "onBasicAttack",
+          "target": "event"
+        }
+      ]
+    },
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77"
+  }
+}

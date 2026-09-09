@@ -1,0 +1,47 @@
+{
+  "castTimeSec": 0.1,
+  "castType": "self",
+  "cooldown": [
+    45
+  ],
+  "cooldownTier": "大",
+  "description": "「攻略漏寫帶補包！」\n攻略漏寫的補包：自療 120，不是復活。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "amount": {
+        "flat": 120
+      },
+      "kind": "heal"
+    }
+  ],
+  "id": "b2-elma.ex",
+  "manaCost": [
+    144
+  ],
+  "manaCostTier": "小",
+  "maxRank": 1,
+  "name": "攻略漏寫帶補包",
+  "provenance": "editor-json",
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "EX",
+  "template": {
+    "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b",
+    "params": {
+      "amount": {
+        "flat": 120
+      },
+      "castTimeSec": 0.1,
+      "target": "self"
+    },
+    "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6"
+  },
+  "vfxKey": "fx.prim.wind.pulse-sm",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.wind.pulse-sm"
+    }
+  ]
+}

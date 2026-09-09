@@ -1,0 +1,85 @@
+{
+  "castTimeSec": 0.1,
+  "castType": "ground",
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "cooldownTier": "小",
+  "description": "「蛙跳出差交通費！」\n跳向指定合法落點，空中弧線與落地傷害由現有 leap-strike 執行；落地半徑約 1.8 單位。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：青蛙劍士認真揮劍，旁人只注意他到底會不會呱。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "apexHeight": 1,
+      "applyTo": "self",
+      "durationSec": 0.4,
+      "kind": "leap",
+      "landRadius": 1.83,
+      "mode": "toPoint",
+      "onLand": [
+        {
+          "amount": {
+            "damageTier": "極小",
+            "flat": 200,
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          },
+          "damageType": "physical",
+          "kind": "damage"
+        }
+      ]
+    }
+  ],
+  "id": "b2-ned.q",
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "maxRank": 4,
+  "name": "蛙跳出差交通費",
+  "provenance": "editor-json",
+  "radius": 1.83,
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "Q",
+  "targetsEnemies": true,
+  "template": {
+    "contentSha256": "sha256:71dee08ad6f5383f956a3685e45b6cc874d0dbd0d4b70d909422d0b56ea70685",
+    "params": {
+      "apexHeight": 250,
+      "applyTo": "self",
+      "castTimeSec": 0.1,
+      "damage": {
+        "damageTier": "極小",
+        "flat": 200,
+        "perRank": [
+          0,
+          100,
+          200,
+          300
+        ]
+      },
+      "damageType": "physical",
+      "durationSec": 0.4,
+      "landRadius": 100,
+      "mode": "toPoint"
+    },
+    "ref": "hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52"
+  },
+  "vfxKey": "fx.prim.arcane.dash",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.dash"
+    }
+  ]
+}

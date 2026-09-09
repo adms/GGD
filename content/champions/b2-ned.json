@@ -1,0 +1,388 @@
+{
+  "abilities": {
+    "E": {
+      "castTimeSec": 0.1,
+      "castType": "targeted",
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "cooldownTier": "小",
+      "description": "「請退後不要問會不會呱！」\n對敵人造成極小物理傷害並推離 3 單位；改變後续近身與線斬位置。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：青蛙劍士認真揮劍，旁人只注意他到底會不會呱。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "damageTier": "極小",
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          },
+          "damageType": "physical",
+          "kind": "damage"
+        },
+        {
+          "distance": 3,
+          "from": "caster",
+          "kind": "knockback",
+          "speed": 12,
+          "subtractGap": false,
+          "uncontrollable": false
+        }
+      ],
+      "id": "b2-ned.e",
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "請退後不要問會不會呱",
+      "provenance": "editor-json",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "E",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.1,
+          "castType": "targeted",
+          "effects": [
+            {
+              "amount": {
+                "damageTier": "極小",
+                "perRank": [
+                  0,
+                  100,
+                  200,
+                  300
+                ]
+              },
+              "damageType": "physical",
+              "kind": "damage"
+            },
+            {
+              "distance": 3,
+              "from": "caster",
+              "kind": "knockback",
+              "speed": 12,
+              "subtractGap": false,
+              "uncontrollable": false
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.pulse-sm"
+        }
+      ]
+    },
+    "Q": {
+      "castTimeSec": 0.1,
+      "castType": "ground",
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "cooldownTier": "小",
+      "description": "「蛙跳出差交通費！」\n跳向指定合法落點，空中弧線與落地傷害由現有 leap-strike 執行；落地半徑約 1.8 單位。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：青蛙劍士認真揮劍，旁人只注意他到底會不會呱。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "apexHeight": 1,
+          "applyTo": "self",
+          "durationSec": 0.4,
+          "kind": "leap",
+          "landRadius": 1.83,
+          "mode": "toPoint",
+          "onLand": [
+            {
+              "amount": {
+                "damageTier": "極小",
+                "perRank": [
+                  0,
+                  100,
+                  200,
+                  300
+                ]
+              },
+              "damageType": "physical",
+              "kind": "damage"
+            }
+          ]
+        }
+      ],
+      "id": "b2-ned.q",
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "蛙跳出差交通費",
+      "provenance": "editor-json",
+      "radius": 1.83,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "Q",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:71dee08ad6f5383f956a3685e45b6cc874d0dbd0d4b70d909422d0b56ea70685",
+        "params": {
+          "apexHeight": 250,
+          "applyTo": "self",
+          "castTimeSec": 0.1,
+          "damage": {
+            "damageTier": "極小",
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          },
+          "damageType": "physical",
+          "durationSec": 0.4,
+          "landRadius": 100,
+          "mode": "toPoint"
+        },
+        "ref": "hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52"
+      },
+      "vfxKey": "fx.prim.arcane.dash",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.dash"
+        }
+      ]
+    },
+    "R": {
+      "castTimeSec": 0.1,
+      "castType": "ground",
+      "cooldown": [
+        45,
+        45,
+        45
+      ],
+      "cooldownTier": "大",
+      "description": "「青蛙劍術會議沿線開！」\n沿直線打出物理劍波；用方向和線寬決定命中，不是假分身攻擊。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：青蛙劍士認真揮劍，旁人只注意他到底會不會呱。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "aim": "target",
+          "amount": {
+            "damageTier": "中",
+            "perRank": [
+              0,
+              750,
+              1500
+            ]
+          },
+          "damageType": "physical",
+          "fromCaster": true,
+          "includeOrigin": true,
+          "kind": "damageLine",
+          "length": 9,
+          "width": 1.3
+        }
+      ],
+      "id": "b2-ned.r",
+      "manaCost": [
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "maxRank": 3,
+      "name": "青蛙劍術會議沿線開",
+      "provenance": "editor-json",
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "R",
+      "template": {
+        "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
+        "params": {
+          "aim": "target",
+          "castTimeSec": 0.1,
+          "damage": {
+            "damageTier": "中",
+            "perRank": [
+              0,
+              750,
+              1500
+            ]
+          },
+          "damageType": "physical",
+          "length": 9,
+          "width": 1.3
+        },
+        "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71"
+      },
+      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.bolt"
+        }
+      ]
+    },
+    "W": {
+      "castTimeSec": 0.1,
+      "castType": "targeted",
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "cooldownTier": "小",
+      "description": "「不是舌頭是近身劍！」\n只在自己與敵人距離不大於 2.5 時造成中級物理斬擊；站太遠揮空，不另補位移。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：青蛙劍士認真揮劍，旁人只注意他到底會不會呱。GGD 惡搞改編，非原作招式與數值聲明。",
+      "effects": [
+        {
+          "amount": {
+            "damageTier": "中",
+            "perRank": [
+              0,
+              500,
+              1000,
+              1500
+            ]
+          },
+          "condition": {
+            "kind": "distance",
+            "op": "<=",
+            "value": 2.5
+          },
+          "damageType": "physical",
+          "kind": "damage"
+        }
+      ],
+      "id": "b2-ned.w",
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "maxRank": 4,
+      "name": "不是舌頭是近身劍",
+      "provenance": "editor-json",
+      "radius": 3,
+      "range": 6,
+      "rangeTier": "中",
+      "slot": "W",
+      "targetsEnemies": true,
+      "template": {
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
+        "params": {
+          "castTimeSec": 0.1,
+          "castType": "targeted",
+          "effects": [
+            {
+              "amount": {
+                "damageTier": "中",
+                "perRank": [
+                  0,
+                  500,
+                  1000,
+                  1500
+                ]
+              },
+              "condition": {
+                "kind": "distance",
+                "op": "<=",
+                "value": 2.5
+              },
+              "damageType": "physical",
+              "kind": "damage"
+            }
+          ],
+          "radius": 3,
+          "side": "enemies"
+        },
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550"
+      },
+      "vfxKey": "fx.prim.arcane.slash",
+      "vfxLayers": [
+        {
+          "attachTo": "caster",
+          "vfxKey": "fx.prim.arcane.slash"
+        }
+      ]
+    }
+  },
+  "archetype": "fighter",
+  "attackType": "melee",
+  "attributes": {
+    "agi": 29,
+    "agiGrowth": 2.78,
+    "int": 13,
+    "intGrowth": 1.25,
+    "primary": "AGI",
+    "source": "authored",
+    "str": 18,
+    "strGrowth": 1.67
+  },
+  "baseStats": {
+    "ad": 32,
+    "ap": 18,
+    "armor": 0,
+    "as": 0.7,
+    "cdr": 0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "healthRegen": 0.97,
+    "lifesteal": 0,
+    "manaRegen": 1.41,
+    "maxHealth": 541,
+    "maxMana": 370,
+    "mr": 0,
+    "ms": 8,
+    "range": 1.6
+  },
+  "buildPriority": [],
+  "description": "AVARTH｜青蛙劍士認真揮劍，旁人只注意他到底會不會呱。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+  "exAbility": "b2-ned.ex",
+  "growth": {
+    "ad": 4.289142857142858,
+    "ap": 0,
+    "armor": 0.4578979591836735,
+    "as": 0,
+    "healthRegen": 0.13085306122448978,
+    "manaRegen": 0,
+    "maxHealth": 35.000204081632646,
+    "maxMana": 26.357142857142858,
+    "mr": 2.639795918367347
+  },
+  "id": "b2-ned",
+  "modelKey": "champ.thorne",
+  "name": "青蛙劍士 Ned",
+  "origin": "鬥士",
+  "passiveAbility": "b2-ned.passive",
+  "role": "fighter",
+  "schema": "champion@1",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "tags": []
+}

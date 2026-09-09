@@ -1,0 +1,56 @@
+{
+  "castTimeSec": 0.1,
+  "castType": "targeted",
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "cooldownTier": "小",
+  "description": "「和好緞帶先接回來！」\n把指定友軍搬到自己腳邊，使用現有 rallyToCaster 低弧位移；落點遵守既有合法地形。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：開心道具全部誤用，但認真把隊友救回來。GGD 惡搞改編，非原作招式與數值聲明。",
+  "effects": [
+    {
+      "apexHeight": 0,
+      "applyTo": "target",
+      "dragToCaster": true,
+      "durationSec": 0.1,
+      "kind": "leap",
+      "landRadius": 2.75,
+      "mode": "inPlace"
+    }
+  ],
+  "id": "b2-takopi.q",
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "maxRank": 4,
+  "name": "和好緞帶先接回來",
+  "provenance": "editor-json",
+  "radius": 2.75,
+  "range": 6,
+  "rangeTier": "中",
+  "schema": "ability@1",
+  "slot": "Q",
+  "targetsEnemies": false,
+  "template": {
+    "contentSha256": "sha256:7687b75d1bb1945a3dc0ca45c1015ad419c38757ac6e22cbc4d740088ce70761",
+    "params": {
+      "castTimeSec": 0.1,
+      "destination": "rallyToCaster",
+      "travelSec": 0.1
+    },
+    "ref": "hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b"
+  },
+  "vfxKey": "fx.prim.arcane.dash",
+  "vfxLayers": [
+    {
+      "attachTo": "caster",
+      "vfxKey": "fx.prim.arcane.dash"
+    }
+  ]
+}
