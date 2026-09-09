@@ -19,6 +19,7 @@ import {
   round11SetupFrom,
   ROUND11_PRECEDING_ROUND,
 } from "@ggd/shared/sim/round11Gate";
+import { round11EventsDue, pickRound11Event } from "@ggd/shared/sim/round11Waves";
 
 const REPO = resolve(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const DOC = JSON.parse(readFileSync(join(REPO, "content/config/arena-rules.json"), "utf8"));
@@ -65,5 +66,29 @@ describe("第十一回合的設定 → 判定 接線（GH#1151）", () => {
     expect(bare.durationSec).toBe(0);
     expect(bare.arenaId).toBe("");
     expect(bare.enabled).toBe(false);
+  });
+});
+
+describe("第十一回合的生怪設定 → 排程 接線（GH#1151 B）", () => {
+  it("⭐ 出貨的 `waveTable` 真的走得到排程器", () => {
+    const r = rulesFromDoc(DOC).round11;
+    expect(r.waveTable.eventIntervalSec).toBe(DOC.round11.waveTable.eventIntervalSec);
+    expect(r.waveTable.difficultyBase).toBe(DOC.round11.waveTable.difficultyBase);
+    expect(r.waveTable.events.length).toBe(DOC.round11.waveTable.events.length);
+    expect(r.maxAliveZombies).toBe(DOC.round11.maxAliveZombies);
+    expect(r.spawnRampSec).toBe(DOC.round11.spawnRampSec);
+    // ⭐ 走一次真的排程：一個回合（durationSec）內會發幾個事件
+    const n = round11EventsDue(r.durationSec, r.waveTable.eventIntervalSec);
+    expect(n, "出貨設定一回合要發得出事件").toBeGreaterThan(0);
+    // ⭐ 而它挑得出出貨表上的 kind
+    expect(r.waveTable.events.map((e) => e.kind)).toContain(pickRound11Event(r.waveTable.events, 0.5));
+  });
+
+  it("⛔ 缺欄 ⇒ fallback 是**不會動**的值（0 隻上限、空事件表）", () => {
+    const bare = rulesFromDoc({ ...DOC, round11: undefined }).round11;
+    expect(bare.maxAliveZombies).toBe(0);
+    expect(bare.waveTable.events).toEqual([]);
+    expect(round11EventsDue(999, bare.waveTable.eventIntervalSec)).toBe(0);
+    expect(pickRound11Event(bare.waveTable.events, 0.5)).toBeNull();
   });
 });

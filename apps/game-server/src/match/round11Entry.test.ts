@@ -40,6 +40,9 @@ const rules = (round11: Partial<ArenaRules["round11"]>): ArenaRules => ({
     arenaId: "arena.royale",
     durationSec: 7,
     bannerText: "第十一回合",
+    maxAliveZombies: 0,
+    spawnRampSec: 0,
+    waveTable: { eventIntervalSec: 0, difficultyBase: 1, events: [] },
     ...round11,
   },
 });

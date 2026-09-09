@@ -104,6 +104,14 @@ export interface ArenaRules {
     readonly arenaId: string;
     readonly durationSec: number;
     readonly bannerText: string;
+    /** ⭐ 生怪時序那三格（#1151 B）——消費端 `sim/round11Waves`。 */
+    readonly maxAliveZombies: number;
+    readonly spawnRampSec: number;
+    readonly waveTable: {
+      readonly eventIntervalSec: number;
+      readonly difficultyBase: number;
+      readonly events: readonly { readonly kind: string; readonly weight: number }[];
+    };
   };
   /** round from which R is learnable at any level; null = classic 6/11/16 */
   ultUnlockRound: number | null;
@@ -278,7 +286,16 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
   // ⭐ 沒有內容文件時的第十一回合：**關著**，而且門檻是 0（＝不設門檻 ⇒ 仍然不開）。
   // ⛔ 兩個都不可以「保險起見」設成開 —— 一個 fallback 開著的模式，
   //   在內容載入失敗那一刻就會變成「玩家進到一個沒有人測過的回合」。
-  round11: { enabled: false, triggerBossKills: 0, arenaId: "", durationSec: 0, bannerText: "" },
+  round11: {
+    enabled: false,
+    triggerBossKills: 0,
+    arenaId: "",
+    durationSec: 0,
+    bannerText: "",
+    maxAliveZombies: 0,
+    spawnRampSec: 0,
+    waveTable: { eventIntervalSec: 0, difficultyBase: 1, events: [] },
+  },
   ultUnlockRound: null,
   exUnlockRound: null,
   offerCount: 3,
@@ -452,6 +469,15 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
       arenaId: doc.round11?.arenaId ?? "",
       durationSec: doc.round11?.durationSec ?? 0,
       bannerText: doc.round11?.bannerText ?? "",
+      // ⭐ 生怪那三格 —— fallback 一樣是「**不會動**」的值：
+      //   0 隻上限 ＝ 這個機制關著、空事件表 ＝ 這一波不發（見 `pickRound11Event`）。
+      maxAliveZombies: doc.round11?.maxAliveZombies ?? 0,
+      spawnRampSec: doc.round11?.spawnRampSec ?? 0,
+      waveTable: {
+        eventIntervalSec: doc.round11?.waveTable?.eventIntervalSec ?? 0,
+        difficultyBase: doc.round11?.waveTable?.difficultyBase ?? 1,
+        events: doc.round11?.waveTable?.events ?? [],
+      },
     },
   };
 }
