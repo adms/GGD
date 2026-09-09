@@ -2,7 +2,28 @@
 
 2026-09-09。承接 `hero74-training-v2` 的 500 train／119 internal-dev；不是重新選資料，不截斷，模型仍為固定 Gemma 4 12B IT 8-bit、末兩層 q/o LoRA、rank 8。未獲正式訓練通過證據前不產生 release。
 
-## 最新授權：電量低於 40% 才停，重新開始 v21
+## 最新進度：v21 已有正式更新；接上實際素材與封裝准入
+
+v21 的 `train/dev-before.json` 已完成，`train/training-trace.json` 已持續記錄正式 optimizer 更新；不是仍停在 probe。500 train 單輪仍執行中，119 internal-dev 切分與訓練來源不改；終止前不宣告新 adapter 或收斂結論。使用者要求不再反覆手動查看或例行回報電量；交給既有背景保護，低於 40% 等確實需要介入時才通知。
+
+`hero-distillation-package-admission.mts` 已接上固定 revision 的 Main `compileHeroPackageProject`、`verifyUploadedHeroModel` 和內建 SimWorld admission。直接消費生成後 authoring，不讀取教師答案、不補參數／機制；檢查真實 GLB bytes／六用途動作／模型預算、完整文件與素材依賴及素材鎖，不用 placeholder bytes。只讀指定資產根目錄，路徑穿越、越界 symlink、同路徑不同 bytes、模型 hash／綁定錯誤都拒絕。
+
+控制組 `hero74-package-admission-control-v1/`：主分母保留 **17 名**，**15 名 hero-project 通過**封裝准入及基礎模擬，**2 名 native-content 的獨立匯入介接 pending**，failure 0；pending 不是通過，不改小分母。15 份 artifact 留存固定依賴、完整 runtime、SimWorld 原始投影、素材大小／SHA256 與實際來源。7/7 tests 通過，包含不借修補／fallback 及全部 artifact hash。這不是 12B 成績、ZIP／live importer／對局選取或需求機制忠實度證據，不宣告模型或完整英雄 E2E 通過。
+
+可重跑命令（`PUB` 為本研究 Git root，`WORKSPACE` 為 ABxVFX_EDIT；輸出目錄必須不存在）：
+
+```sh
+node --import tsx tools/editor-acceptance/hero-distillation-package-admission.mts \
+  --compiled docs/_reports/hero-finetune-research/hero74-generation-compile-control-v2 \
+  --out <new-output-directory> --source-repo . \
+  --dependencies "$WORKSPACE/GGD-community-hero-forge-s3/packages/shared/node_modules" \
+  --asset-root "$WORKSPACE/outputs/hero-model-options-20260909/release-v7" \
+  --asset-root "$WORKSPACE/GGD-community-hero-forge-s3/content"
+```
+
+執行只讀各個來源、使用固定 Git revision 的內容；即使本機 source checkout HEAD 已前進也不改教師或編譯器。報告綁定 input compile report SHA、程式 SHA、engine archive／module SHA、zod／gltf-validator 版本與逐檔 bytes SHA。無 live service 連線或素材上傳。
+
+## 先前啟動記錄：電量低於 40% 才停，重新開始 v21
 
 後續單槽接線已完成：`hero74-generation-compile-control-v2/` 保留全部 119 題，教師 control 結果為完整英雄 **17/17**、輔助單槽 **102/102** schema／compiler／磁碟重讀再編譯通過，pending 0。8/8 tests 通過，其中逐一比較 102 槽編譯结果與其教師完整英雄的對應 ability 一致；測試亦確認獨立槽的輸出確實取代該槽，沒有只重複使用完整英雄答案。
 
