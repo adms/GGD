@@ -197,7 +197,21 @@ if (hit.length) console.log('HIT\t' + hit.join(',') + '\t' + fieldNote);
     # ⭐ 2026-08-26（owner:「追誤會的多個源頭」）——「無主」有兩種，⛔ 不可以長一樣:
     #    檔案是唯讀(444) = 隔離區鎖過它 = **它是產物,只是戶籍表漏登**（量測洞:
     #    條件寫入端在已同步的樹上量到 0 寫）。對它印 ✓ 就是「改產生物」的邀請函。
-    BANNER=$(head -c 4000 "$p" 2>/dev/null | grep -cE '由程式產生|請勿手動編輯|不要手改|這份文件是產生的|這一份由|@generated|DO NOT EDIT|自動產生' || true)
+    # ⛔⛔ **`.json` ⛔ 不吃這個啟發式**（2026-09-09 量到的誤報）：
+    #   JSON **沒有註解**,所以它沒有「檔頭」—— 前 4000 個位元組全部是**資料**。
+    #   ⭐ 實例：`claim.community37-icons.json` 的內容裡有一句寫給 Codex 的
+    #     「⛔ 不要手改 .webp」⇒ 這一行把**封包自己**判成了產物。
+    #   ⚠️ 而它的形狀正是本 repo 一再記錄的那個：**只配到名詞,⛔ 沒問關係** ——
+    #     「這個字出現在檔案裡」⛔ 不等於「這個檔宣告自己是產生的」。
+    #   ⇒ ⭐ JSON 要宣告自己是產物,用**一個頂層欄位**（`generatedBy` / `@generated` /
+    #     `_generated`）—— 那是宣告,⛔ 不是碰巧出現的字串。
+    case "$p" in
+      *.json)
+        BANNER=$(head -c 4000 "$p" 2>/dev/null \
+          | grep -cE '^[[:space:]]*"(generatedBy|@generated|_generated|_generatedBy)"[[:space:]]*:' || true) ;;
+      *)
+        BANNER=$(head -c 4000 "$p" 2>/dev/null | grep -cE '由程式產生|請勿手動編輯|不要手改|這份文件是產生的|這一份由|@generated|DO NOT EDIT|自動產生' || true) ;;
+    esac
     if [ -e "$p" ] && [ "${BANNER:-0}" -gt 0 ]; then
       echo "🚫 $p 戶籍無主,⛔ 但**它自己的檔頭寫著它是產生的** —— 相信檔案,⛔ 不要手改。"
       echo "   ⇒ 找產生器: grep -rl --exclude-dir=node_modules \"\$(basename \"$p\")\" tools/ scripts/ | head"
