@@ -28,13 +28,13 @@ export function configureScenarioCombat(world: SimWorld): void {
   ]) };
 }
 
-/** Exercise a target resource's earning path, never install or credit a status.
+/** Exercise a target resource or prerequisite's earning path, never install or credit a status.
  * Three seconds of actual hostile orders is a bounded fixture, not a promise
  * that every kind of target resource can be earned through a basic attack.
  */
 export function prepareScenarioOpponent(world: SimWorld, caster: EntityId, ability: AbilityDef,
   mode: OpponentPreparation = "auto", record: () => void): number {
-  if (mode === "idle" || (mode === "auto" && ability.statusCost?.subject !== "target")) return 0;
+  if (mode === "idle" || (mode === "auto" && ability.statusCost?.subject !== "target" && !ability.requiredTargetStatus)) return 0;
   const ticks = Math.ceil(3 / world.dt);
   for (let tick = 0; tick < ticks; tick++) {
     world.step(tick === 0 ? new Map([[asSeatId(1), { commands: [], order: { kind: "attackTarget" as const, entity: caster } }]]) : new Map());

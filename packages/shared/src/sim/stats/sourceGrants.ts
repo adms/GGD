@@ -58,6 +58,8 @@ import type { StatusImmunityGrant } from "../statusTagImmunity";
  * 畫得出來但引擎讀不到的欄位。
  */
 export interface SourceGrantFields {
+  /** Extend this source's evasion stat to the selected damage channels. */
+  evasionScope?: import("./modifiers").EvasionScope;
   drive?: import("../movement/abilityMotion").DriveGrant;
   block?: BlockGrant;
   critStrike?: CritStrikeGrant;
@@ -254,6 +256,7 @@ export function sourceAttackType(
  */
 export function sourceGrants(from: SourceGrantFields): SourceGrantFields {
   return {
+    ...(from.evasionScope !== undefined ? { evasionScope: from.evasionScope } : {}),
     ...(from.block !== undefined ? { block: from.block } : {}),
     ...(from.critStrike !== undefined ? { critStrike: from.critStrike } : {}),
     ...(from.attributes !== undefined ? { attributes: from.attributes } : {}),
@@ -299,6 +302,7 @@ export function sourceGrants(from: SourceGrantFields): SourceGrantFields {
  */
 export function hasSourceGrant(from: SourceGrantFields): boolean {
   return (
+    from.evasionScope !== undefined ||
     from.block !== undefined ||
     from.critStrike !== undefined ||
     from.attributes !== undefined ||

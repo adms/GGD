@@ -199,6 +199,8 @@ export interface AbilityDef {
   /** Debited once at cast-begin, after validation, alongside mana/cooldown.
    * Interrupts do not refund it. Missing leaves legacy casts unchanged. */
   requiredSummonSlot?: import("../intents").CastableSlot;
+  /** Target prerequisite at cast-begin; checked before approach/payment, never consumed. */
+  requiredTargetStatus?: { statusId: StatusId; appliedBy?: "self"; minStacks?: number };
   statusCost?: { statusId: StatusId; count: number | "all"; appliedBy?: "self"; subject?: "self" | "target" };
   /**
    * ⚠️ 可以是 `Number.POSITIVE_INFINITY` —— 「無上限施法距離」（GH#602）。

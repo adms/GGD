@@ -214,6 +214,7 @@ export type CastResult =
   | "no-mana"
   | "no-resource"
   | "no-summon"
+  | "target-condition"
   | "out-of-range"
   | "bad-target"
   /** the ability is a PERMANENT passive (WC3 Cool=0) — there is nothing to cast */
@@ -599,6 +600,7 @@ export function castAbility(
   const mana = def.manaCost[inst.rank - 1] ?? 0;
   if (hp.mana < mana) return "no-mana";
   if (def.requiredSummonSlot && ownedSummonsForSlot(world, caster, def.requiredSummonSlot).length === 0) return "no-summon";
+  if (def.requiredTargetStatus && def.castType !== "targeted") return "bad-target";
   const statusCost = def.statusCost;
   const costApplier = statusCost?.appliedBy === "self" ? caster : undefined;
   if (statusCost?.subject === "target" && def.castType !== "targeted") return "bad-target";
@@ -649,6 +651,8 @@ export function castAbility(
         const tgtTeam = world.team.get(target.entityId);
         if (tgtTeam && selfTeam && tgtTeam.teamId !== selfTeam.teamId) return "bad-target";
       }
+      const required = def.requiredTargetStatus;
+      if (required && consumableStatusStacks(world, target.entityId, required.statusId, required.appliedBy === "self" ? caster : undefined) < (required.minStacks ?? 1)) return "target-condition";
       // combat-env `abilityRange` (task #136) shrinks the effective cast range
       const range = resolveAbilityRange(world, def.range);
       if (distSq(t.pos, tgt.pos) > range * range) {

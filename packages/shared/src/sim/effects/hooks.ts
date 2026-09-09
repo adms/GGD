@@ -292,6 +292,7 @@ export function fireHooks(
       if (event === "onBlock" && (!incoming?.blockSourceIds?.length ||
           (hook.blockSource === "thisSource" && !incoming.blockSourceIds.includes(src.id)))) continue;
       if (hook.observedEvent !== undefined && observedEvent !== hook.observedEvent) continue;
+      if (hook.evadeDuring === "dash" && evade?.duringDash !== true) continue;
       if (hook.evadeChannel !== undefined && evade?.channel !== hook.evadeChannel) continue;
       if (hook.evadeSource !== undefined && (evade === undefined ||
           (evade.channel !== "basic" && evade.channel !== "ability") ||

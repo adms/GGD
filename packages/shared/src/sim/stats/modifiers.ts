@@ -503,6 +503,8 @@ export interface HookDef {
    */
   observedEvent?: "basicHit" | "abilityHit" | "heal" | "control";
   evadeChannel?: "basic" | "ability";
+  /** Actual moving dash at the instant of the dodge, not a queued input. */
+  evadeDuring?: "dash";
   evadeSource?: "defender" | "thisSource";
   /** Require the positive block grant to be this modifier source. */
   blockSource?: "thisSource";

@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "16d1d121f735",
-  "capabilityFingerprint": "5debe6db",
+  "fingerprint": "d089ad3a7edf",
+  "capabilityFingerprint": "85f44454",
   "required": [
     {
       "group": "abilityField",
@@ -329,6 +329,10 @@
     {
       "group": "abilityField",
       "name": "requiredSummonSlot"
+    },
+    {
+      "group": "abilityField",
+      "name": "requiredTargetStatus"
     },
     {
       "group": "abilityField",
@@ -20971,6 +20975,10 @@
     },
     {
       "group": "effectField",
+      "name": "evasionScope"
+    },
+    {
+      "group": "effectField",
       "name": "everyNth"
     },
     {
@@ -22128,6 +22136,18 @@
     {
       "group": "effectFieldPath",
       "name": "emitCastEvents"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "evasionScope"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "evasionScope.abilities"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "evasionScope.trueDamage"
     },
     {
       "group": "effectFieldPath",
@@ -24119,6 +24139,10 @@
     },
     {
       "group": "hookField",
+      "name": "evadeDuring"
+    },
+    {
+      "group": "hookField",
       "name": "evadeSource"
     },
     {
@@ -25255,15 +25279,15 @@
   ],
   "counts": {
     "effectKind": 51,
-    "effectField": 286,
+    "effectField": 287,
     "hookEvent": 38,
-    "hookField": 26,
-    "abilityField": 41,
+    "hookField": 27,
+    "abilityField": 42,
     "auraField": 8,
     "templateFamily": 43,
     "conditionLeaf": 11,
     "conditionLeafField": 20,
-    "effectFieldPath": 483,
+    "effectFieldPath": 486,
     "vfxField": 91,
     "modelField": 46,
     "projectileField": 15,
@@ -25271,7 +25295,7 @@
     "vfxScriptField": 8,
     "configField": 4023,
     "_notRequired": 15,
-    "_total": 5199,
+    "_total": 5205,
     "_ownerOnly": 39
   }
 }

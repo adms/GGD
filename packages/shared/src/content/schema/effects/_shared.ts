@@ -819,6 +819,8 @@ export const zDeathWardGrant = z
   .strict();
 
 export const SOURCE_GRANT_SHAPE = {
+  evasionScope: z.object({ abilities: z.boolean().optional(), trueDamage: z.boolean().optional() }).strict().optional()
+    .describe("將本來源的迴避屬性擴充到技能／真實傷害通道；仍遵守既有迴避上限，不另外增加機率。"),
   block: zBlockGrant.optional(),
   /**
    * ⭐ 2026-08-19 —— 第九格，見 {@link zDeathWardGrant}。

@@ -196,6 +196,8 @@ export interface EvadeEvent {
   readonly z: number;
   readonly channel: EvadeChannel;
   readonly by: EvadeSourceRef | null;
+  /** Snapshot of actual dash displacement at emit time. */
+  readonly duringDash?: true;
   /** 這一次**實際擲的**機率（已含 G13 `unavoidable` 折扣與上限夾取）。 */
   readonly chance: number;
 }
@@ -516,6 +518,8 @@ function emitEvade(
     channel,
     by,
     chance,
+    ...(tt && world.nav.get(target)?.override?.kind === "dash" &&
+      tt.vel.x * tt.vel.x + tt.vel.z * tt.vel.z > 1e-12 ? { duringDash: true as const } : {}),
   } satisfies EvadeEvent;
   world.emit("evade", payload);
 }

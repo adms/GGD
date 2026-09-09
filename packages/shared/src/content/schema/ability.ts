@@ -731,6 +731,11 @@ export const zAbilityDef = z
     cooldown: z.array(z.number().min(0)).min(1),
     manaCost: z.array(z.number().min(0)).min(1),
     requiredSummonSlot: zCastableSlot.optional().describe("施法前必須有自己由指定槽召喚的存活同區身體；缺少時不支付資源或冷卻。"),
+    requiredTargetStatus: z.object({
+      statusId: zRef<StatusId>("status-effects", { soft: true }),
+      appliedBy: z.enum(["self"]).optional(),
+      minStacks: z.number().int().min(1).max(MARK_MAX_COUNT).optional(),
+    }).strict().optional().describe("指定目標須持有有效標記才可接近／開始施法；可限定自己施加，不消耗標記。魔力、冷卻及資源仍在所有資格通過後支付。"),
     statusCost: z.object({
       statusId: zRef<StatusId>("status-effects", { soft: true }),
       count: z.union([z.number().int().min(1).max(MARK_MAX_COUNT), z.literal("all")]),
@@ -1084,6 +1089,9 @@ export const zAbilityDoc = zAbilityDef
   .superRefine(refineInnate)
   .superRefine(refineUnlimitedRange)
   .superRefine((ability, ctx) => {
+    if (ability.requiredTargetStatus && ability.castType !== "targeted") {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["requiredTargetStatus"], message: "目標標記資格只適用 targeted 技能。" });
+    }
     if (ability.statusCost?.subject === "target" && ability.castType !== "targeted") {
       ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["statusCost", "subject"], message: "目標資源成本只適用 targeted 技能。" });
     }
