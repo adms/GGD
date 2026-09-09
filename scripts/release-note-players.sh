@@ -92,6 +92,26 @@ trace() { [ "${GGD_PLAYERNOTE_TRACE:-0}" = 1 ] && echo "🔎 #$1 sha=${2:--} →
 in_range() { git cat-file -e "$1" 2>/dev/null && git merge-base --is-ancestor "$1" "$NOW" 2>/dev/null && ! git merge-base --is-ancestor "$1" "$SINCE" 2>/dev/null; }
 
 LINES=""; MISSING=""; UNSCOPED=""; DECLARED=""; DUP=""
+
+# ⛔⛔ **第二個資料來源：這一版的 commit 真的動了什麼**（owner 2026-09-09 揪到）
+#
+# ⭐ 根因鏈（三環，量到的）：
+#   ① 這支腳本**只讀票的進度標記** —— 它的整個宇宙是「票說了什麼」，
+#      ⛔ 不是「這一版出貨了什麼」。沒有人寫 ⇒ 它就以為沒事發生。
+#   ② 被擋住時它給兩個出口（寫一句／答「無」）⇒ ⭐ 最便宜的是「無」，
+#      而我一次答了 13 張。**這道閘把人訓練成發罐頭。**
+#   ③ ⭐ 而帳本本身是**窄的**：117 列裡 63 列罐頭；54 句真內容中
+#      介面 14 · 戰鬥 13，⛔ 而「角色上架／造型」只有 **1** 句、編輯器 3、效能 3。
+#      ⇒ 讀著它長大的人（我）就把「玩家看得到」學成了「戰鬥或按鈕」。
+#
+# ⭐ 量到的代價：**v0.41.5 有 26 顆玩家面向的 commit，而它發出去的是「系統優化更新」。**
+#
+# ⇒ 這一段問 commit：出貨程式碼動了而沒有人寫一句 ⇒ ⛔ 擋下，並**把那幾行印出來**。
+#   ⚠️ ⭐ 它刻意**印出 commit 標題**：⛔ 答「無」之前你得先看見這一版做了什麼。
+PLAYER_SCOPES='client|render|ui|sim|economy|hero|community|editor|icons|forge|game|ugc|draft|templates|assets'
+SHIPPED=$(git log --format='%s' "${SINCE}..${NOW}" 2>/dev/null \
+  | grep -E "^(feat|fix)\((${PLAYER_SCOPES})\)" || true)
+SHIPPED_N=$(printf '%s' "$SHIPPED" | grep -c . || true)
 for N in $CLOSED; do
   # ⭐ title＋comments **一次**撈完（在此之前每張票打 2–3 次 gh：50 張 58 秒）
   # ⭐ `GGD_PLAYERNOTE_CACHE=<dir>` —— **補發專用**的唯讀快取（GH#1152）。
@@ -294,6 +314,25 @@ if [ -z "$LINES" ]; then
   # ⛔ 而對「**一句都沒有**」只印一行警告然後照發 —— ⭐ 兩個失敗，相反的待遇，
   #   而被放過的那一個產出的是**假話**（第一·五守則：⛔ 不放任何無效說明）。
   # ⇒ 對齊成同一個待遇。⛔ 它擋的是**發公告**，⛔ 不是部署（BMPNDD 的 D 是另一步）。
+  # ⛔⛔ **出貨程式碼動了，而沒有人寫一句** —— ⭐ 這一條問的是 commit，⛔ 不是票。
+  if [ "${SHIPPED_N:-0}" -gt 0 ]; then
+    echo
+    echo "⛔⛔ 這一版有 **${SHIPPED_N} 顆玩家面向的 commit**，⛔ 而沒有一句玩家公告 ——"
+    echo "   ⇒ ⭐ 這時候發「系統優化更新」是**假話**，⛔ 不發。"
+    printf '%s\n' "$SHIPPED" | sed 's/^/  · /' | head -30
+    echo
+    echo "  ⭐ 玩家想知道的**不只是戰鬥**（owner 2026-09-09 逐字舉的例）："
+    echo "     · 動畫更順了嗎        · 網路更快響應了嗎"
+    echo "     · 編輯器多支援什麼    · 哪些角色**設計好了正在審查**"
+    echo "     · 哪些角色**上架成功**  · 哪些角色**換了造型**"
+    echo "  ⚠️ ⛔ 不要只挑「戰鬥／按鈕」那一類 —— 帳本上歷史句子就是這樣偏的"
+    echo "     （117 列裡「角色上架／造型」只有 1 句），⭐ 而那份偏見會傳染給下一個人。"
+    echo
+    echo "  ⇒ 補：bash scripts/ticket-progress.sh write <票號> … --player \"<一句玩家看得懂的話>\""
+    echo "  ⇒ 真的一顆都不影響玩家 ⇒ 答一聲：--player \"無（<為什麼>）\"（⭐ 要看過上面那幾行再答）"
+    exit 1
+  fi
+
   if [ -n "$MISSING" ]; then
     echo
     echo "⛔⛔ 這一版有**玩家看得到**的票，⛔ 而沒有一張寫了玩家那一句 ——"
