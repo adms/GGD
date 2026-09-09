@@ -9,9 +9,9 @@
     "shells": 10,
     "zeroAdoption": 26,
     "terminal": 1,
-    "handWritten": 112,
-    "distinctShapes": 77,
-    "singletonShapes": 52,
+    "handWritten": 111,
+    "distinctShapes": 76,
+    "singletonShapes": 51,
     "top8Coverage": 26
   },
   "demand": [
@@ -342,7 +342,7 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 12,
-      "abilities": 10,
+      "abilities": 11,
       "terminal": false
     },
     {

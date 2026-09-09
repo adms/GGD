@@ -93,7 +93,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 10
+        "ref": 11
       },
       "inertParams": [],
       "params": {
@@ -3354,7 +3354,7 @@
       },
       "wiring": "both",
       "usedVia": {
-        "preset": 5,
+        "preset": 6,
         "ref": 0
       },
       "inertParams": [],

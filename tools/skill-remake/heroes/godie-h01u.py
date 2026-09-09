@@ -96,7 +96,9 @@ A("80-02", "80-02 弒鬼神", "self", [60, 60, 60, 60], [90, 180, 270, 360], 0,
                        #    數值（第一守則：可調），要 30% 就把 -1.0 改成 -0.3，
                        #    不用動任何程式。持續 1 秒逐字照規格。
                        buff([M("armor", "pctAdd", -1.0)], 1.0,
-                            dispellable=True, polarity="debuff")])])
+                            dispellable=True, polarity="debuff")])],
+  # ⭐ GH#1146 —— 綁 `tpl-area-strike`。⚠️ params 由 `templatize.py::m_area_strike()` 算,⛔ 不是手打。
+  template={'ref': 'tpl-area-strike', 'params': {'castType': 'self', 'damageType': 'physical', 'damage': {'damageTierPerRank': ['極小', '極小', '小', '小']}, 'radius': 4.5, 'radiusTier': '小', 'includeOrigin': True, 'onHitTargets': [{'kind': 'knockback', 'distance': 2.5, 'speed': 15.0, 'from': 'caster'}, {'kind': 'applyStatus', 'statusId': 'armor-break', 'duration': 1.0}, {'kind': 'applyBuff', 'modifiers': [{'stat': 'armor', 'op': 'pctAdd', 'value': -1.0}], 'duration': 1.0, 'dispellable': True, 'polarity': 'debuff'}], 'vfx': {'vfxId': 'fx.wave.physical', 'at': 'self'}, 'modelFx': {'shape': 'single', 'preset': 'tpl-locust-travel', 'modelKey': 'imported.crescent', 'clip': 'idle', 'scale': 2.0, 'distance': 4.5}, 'castTimeSec': 0.667}})
 
 A("80-03", "80-03 鬼神烈戟", "ground", [60, 60, 60, 60], [150, 200, 250, 300], 10,
   "[主動][指向][範圍][衝刺][AP加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n有效半徑：{{radius}}\n\n「方天畫戟是中國最早的圓規」\n[衝刺] 一段距離並造成一[直線][範圍] {{dmg}} + {{ap}}% [AP] 傷害。\n(若對方在 [破甲] 狀態，則額外造成 {{ap2}}% [AP] 傷害)",

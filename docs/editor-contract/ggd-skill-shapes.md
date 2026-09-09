@@ -28,8 +28,8 @@ owner 技能模板群組 **⑨** 逐字：
 |---|---:|
 | 掃到的技能 | **421** |
 | 不同的形狀（群） | **41** |
-| 已經接上模板的技能 | **224**（53%） |
-| ⛔ 還沒接模板的技能 | **197** |
+| 已經接上模板的技能 | **225**（53%） |
+| ⛔ 還沒接模板的技能 | **196** |
 | 模板文件總數 | **55** |
 | ⛔ 一支技能都沒引用的模板 | **35** |
 
@@ -44,7 +44,7 @@ owner 技能模板群組 **⑨** 逐字：
 | 3 | 續效特效 | **34** | 28 | tpl-apply-status・tpl-area-strike・tpl-proxy-fanout・tpl-single-strike | 沿用（6 支還沒接） |
 | 4 | 持續＋續效特效 | **25** | 9 | tpl-apply-status・tpl-buff-self・tpl-instant-blast・tpl-proxy-cast・tpl-single-strike・tpl-transform | 沿用（16 支還沒接） |
 | 5 | 持續＋續效特效＋路徑 | **17** | 10 | tpl-buff-self・tpl-leap-strike・tpl-line-strike・tpl-single-strike | 沿用（7 支還沒接） |
-| 6 | 等待＋持續＋續效特效＋多段＋路徑 | **13** | 4 | tpl-instant-blast・tpl-single-strike | 沿用（9 支還沒接） |
+| 6 | 等待＋持續＋續效特效＋多段＋路徑 | **13** | 5 | tpl-area-strike・tpl-instant-blast・tpl-single-strike | 沿用（8 支還沒接） |
 | 7 | 路徑 | **12** | 7 | tpl-projectile-strike | 沿用（5 支還沒接） |
 | 8 | 續效特效＋路徑 | **10** | 8 | tpl-line-strike・tpl-projectile-strike・tpl-single-strike | 沿用（2 支還沒接） |
 | 9 | 持續＋多段 | **9** | 6 | tpl-area-strike・tpl-summon-agent | 沿用（3 支還沒接） |
@@ -232,7 +232,7 @@ owner 技能模板群組 **⑨** 逐字：
 | `tpl-instant-blast` | 瞬發點爆 | enabled | 4 | 16 | — | （無時序形狀）×13・等待＋持續＋續效特效＋多段＋路徑×2・持續＋續效特效×1 |
 | `tpl-proxy-cast` | 代理錨點施法 | enabled | 8 | 14 | 持續＋多段 | 持續×11・持續＋續效特效×2・持續＋續效特效＋多段＋路徑×1 |
 | `tpl-transform` | 變身 | enabled | 6 | 12 | 持續＋續效特效 | 持續×11・持續＋續效特效×1 |
-| `tpl-area-strike` | 範圍打擊 | enabled | 12 | 10 | 持續＋續效特效＋多段 | 持續＋多段×3・等待＋續效特效＋多段＋路徑×1・續效特效×1・迴圈＋持續＋續效特效＋多段×1・迴圈＋持續＋多段×1・等待＋續效特效×1・（無時序形狀）×1・等待＋多段＋路徑×1 |
+| `tpl-area-strike` | 範圍打擊 | enabled | 12 | 11 | 持續＋續效特效＋多段 | 持續＋多段×3・等待＋續效特效＋多段＋路徑×1・續效特效×1・迴圈＋持續＋續效特效＋多段×1・迴圈＋持續＋多段×1・等待＋續效特效×1・（無時序形狀）×1・等待＋多段＋路徑×1・等待＋持續＋續效特效＋多段＋路徑×1 |
 | `tpl-blink` | 純位移瞬移 | enabled | 1 | 7 | — | （無時序形狀）×7 |
 | `tpl-apply-status` | 只上狀態 | enabled | 3 | 6 | 續效特效 | 續效特效×5・持續＋續效特效×1 |
 | `tpl-heal` | 回血 | enabled | 4 | 6 | — | （無時序形狀）×5・續效特效＋多段＋路徑×1 |

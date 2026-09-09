@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_027416f4eeee",
+    "contentVersion": "cv_da71f1b5a88f",
     "collections": {
       "champions": {
-        "hash": "89b7db52137a",
+        "hash": "74ea868e6821",
         "count": 71
       },
       "abilities": {
-        "hash": "3bcf0a9c8d2c",
+        "hash": "35a6502b6cc8",
         "count": 421
       },
       "items": {
@@ -1916,7 +1916,7 @@
     "note": "出貨內容**實際用了**哪些值。⚠️ 與 runtimeCapabilities 不同：那一份說引擎做得到什麼，這一份說內容裡有哪些合法的 id。⛔ 填一個不在這裡的 vfxKey，技能照放但畫面上什麼都不會出現。",
     "ability": {
       "count": 421,
-      "fromTemplate": 224,
+      "fromTemplate": 225,
       "templates": [
         {
           "id": "tpl-apply-status",
@@ -6666,5 +6666,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "806594d297ed"
+  "profileDigest": "782efd369d49"
 }

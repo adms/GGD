@@ -19,7 +19,7 @@
 | id | 佈線 | 參數 | ⛔ inert | preset 用量 | ref 用量 | gap | exemplar |
 |---|---|---:|---|---:|---:|---:|---|
 | `tpl-apply-status` | `doc` | 3 | — | 0 | 6 | 9 | 70-03 木束縛之術（content/abilities/godie-e010.e.json） |
-| `tpl-area-strike` | `doc` | 12 | — | 0 | 10 | 10 | 77-01（godie-e00w.q） |
+| `tpl-area-strike` | `doc` | 12 | — | 0 | 11 | 10 | 77-01（godie-e00w.q） |
 | `tpl-beam-roll` | `both` | 21 | ⛔ speed distance | 13 | 0 | 8 | 20-03 約束與勝利之劍 |
 | `tpl-blink` | `doc` | 1 | — | 0 | 7 | 9 | 57-02 任意門（content/abilities/godie-n00b.e.json） |
 | `tpl-blink-strike` | `doc` | 6 | — | 0 | 1 | 5 | godie-n01c.w（出貨最接近預設的那一支） |
@@ -45,7 +45,7 @@
 | `tpl-locust-orb` | `both` | 12 | — | 31 | 0 | 8 | 11-04 三千世界（o018 HeroMusashiMiyamoto，census static-single） |
 | `tpl-locust-strike` | `both` | 11 | — | 13 | 0 | 8 | 65-002 永恆的愚蠢鄉 / 77-04 打雷（o00E MonsoonBoltTarget，census static-single） |
 | `tpl-locust-swarm` | `both` | 12 | — | 2 | 0 | 8 | 38-002 究極暴走黑龍波 三向黑洞（o011 RockChunks0 同族，census travel-line） |
-| `tpl-locust-travel` | `both` | 11 | — | 5 | 0 | 8 | 38-03 邪王炎殺黑龍波 黑洞層（h02E BlackHole，census travel-single） |
+| `tpl-locust-travel` | `both` | 11 | — | 6 | 0 | 8 | 38-03 邪王炎殺黑龍波 黑洞層（h02E BlackHole，census travel-single） |
 | `tpl-mark-stacks` | `doc` | 20 | — | 0 | 0 | 8 | 52-00 十二道試煉（海克力斯 Berserker 天生技） |
 | `tpl-on-attack` | `doc` | 6 | — | 0 | 0 | 9 | 獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者 |
 | `tpl-on-hit-react` | `doc` | 5 | ⛔ reflectRadius | 0 | 0 | 7 | 20-04 Avalon |
