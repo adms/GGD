@@ -1,6 +1,6 @@
 {
   "schema": "ggd-shared-authoring-handoff@1",
-  "sourceCommit": "6d4d9c66897f3131b2572cca49bedfc904339608",
+  "sourceCommit": "f6ff9d7986ff1986f7d2fa571427fdddc66c640b",
   "heroCount": 37,
   "slotCount": 222,
   "compilation": "passed",
@@ -73,6 +73,10 @@
     {
       "path": "refinements/32.json",
       "sha256": "ff494b584e9be496c509a839ac4270484ef9b2324cdced2424de66ed291df2b2"
+    },
+    {
+      "path": "refinements/35.json",
+      "sha256": "e3687072176825576555ba63885f535a20274e1d7c86bd3318e889555b421900"
     },
     {
       "path": "refinements/37.json",
@@ -427,8 +431,8 @@
     },
     {
       "path": "projects/35.hero-project.json",
-      "bytes": 37525,
-      "sha256": "877c5b367012738c3530d9b0a03f68da5921ca54a883e7ee3dcd3c2c11dfdb71"
+      "bytes": 58001,
+      "sha256": "94ec5df377d1648a41835588f2cfd55fecb19b841329e5ccd52e31fdfb1e4202"
     },
     {
       "path": "recipes/35.upload-recipe.json",

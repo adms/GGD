@@ -1,6 +1,6 @@
 {
   "schema": "ggd-batch-validation-plan@1",
-  "manifestSha256": "9a5eee18ff46e80866d8101c510236c33e54174a1065402c2e783aa9d8b77735",
+  "manifestSha256": "a76e1652dba8ffabcd7966f4ebe36747eaae2688045a2825f442ac6cd3859d6b",
   "suites": [
     {
       "id": "implemented-mechanisms",
@@ -70,7 +70,9 @@
         "apps/game-server/src/net/timeStopWire.test.ts",
         "apps/client/src/render/views/TimeStopView.test.ts",
         "apps/client/src/predict/predictionHoldWiring.test.ts",
-        "apps/editor/src/vfx-forge/TimeStopReplay.test.ts"
+        "apps/editor/src/vfx-forge/TimeStopReplay.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/tanjiro.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/tanjiroAcceptance.test.ts"
       ],
       "heroSlots": {
         "community-review-20-20260907": [
@@ -183,6 +185,14 @@
           "EX"
         ],
         "community-review-04-20260907": [
+          "PASSIVE",
+          "Q",
+          "W",
+          "E",
+          "R",
+          "EX"
+        ],
+        "community-review-35-20260907": [
           "PASSIVE",
           "Q",
           "W",

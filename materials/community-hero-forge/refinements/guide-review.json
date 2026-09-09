@@ -1,7 +1,7 @@
 {
   "file": "AI參考全自動鑄造守則.md",
-  "sha256": "eabfdde3f9faf2960955399793e4a3d99b269fc6d49ccd5bd21544658efda138",
-  "localLinksChecked": 81,
+  "sha256": "c5977365cece731ccbe97b1949a8a38e8e8cc334914169012521eaa0dba8406f",
+  "localLinksChecked": 85,
   "missingLinks": [],
   "commandsAndReferencedTests": "checked against current repository",
   "semanticReview": [
@@ -75,7 +75,10 @@
     "default range-aware smoke geometry never changes explicit designer inputs",
     "explicit local and world clock policy",
     "bounded damage queue and lethal thaw lifecycle",
-    "actual frontal block and separate visual acceptance"
+    "actual frontal block and separate visual acceptance",
+    "Owner-approved simplified parody takes precedence over historical fidelity scope",
+    "Tanjiro uses existing runtime and independently pinned products",
+    "Cross-batch fingerprints do not prove creativity or acceptance"
   ],
   "runtimeClaims": "guide does not claim full hero acceptance",
   "batchVerificationReview": {

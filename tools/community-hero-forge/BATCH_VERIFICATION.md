@@ -30,7 +30,7 @@ python3 tools/community-hero-forge/verify-authoring-batch.py \
 
 新批次可先不放 plan：腳本仍核對／編譯並列出全部未覆蓋槽。建立測試時，使用 `communityRecipeFixture`／`communityCombatFixture` 讀原始配方；批次執行器會設定 `GGD_HERO_BATCH_DIR`。只能在建立真實行為案例後，將对应 hero ID／slot 加進 plan。來源不同不得直接複製第一批的測試清單。發布閘仍測 repo 本身，不把批次環境變數誤傳給既有 Editor 回歸。
 
-第一批 plan 目前對應 87 個已修正／部分修正槽，其餘仍有缺口。每槽 `originalDesignAcceptance` 保持未驗證，直到逐項 requiredRefinement 有足夠行為及畫面證據；它不是自動上架清單。
+第一批 plan 目前對應 93 個已修正／部分修正槽，其餘仍有缺口。每槽 `originalDesignAcceptance` 保持未驗證，直到逐項 requiredRefinement 有足夠行為及畫面證據；它不是自動上架清單。
 
 輸出必須是來源以外的新目錄。執行中如有人更改來源，整次證據標為失效，不拿它續跑。腳本不生成英雄、不修改原稿、不投稿、不發布、不操作正式帳號。
 
@@ -85,3 +85,7 @@ SUN樂驗證使用共用 `communityActionFixture(number, rank)`：讀該批版�
 八神庵 v2 的其餘五槽沿用同一批次：測試治具從目前目錄自動登錄出貨投射物，避免下一批漏載依賴。R 後接 EX 有獨立真實前置施法案例，與會重設擺位／魔力的六槽煙霧測試分開；手動設定超距仍應拒絕。有限連段要同時驗「排下一段時」和「本段落地時」的目標與距離，並驗提早 EX、窗口過期、他人／其他目標、盾吸收、回合清除及單一分支扣费。
 
 承太郎 v1 已加入同一批次驗證：時停需分別檢查施法／冷卻／DoT 等局部計時、投射物跨界、期限與對決倒數繼續、命中排隊、溢出、死亡／回合清除、重疊及解除時單次致死。伺服器快照、客戶端動畫／預測、Editor 真實前置施法與重播各有案例。畫面中的灰色邊界僅驗證範圍，不能替代副模型與原作演出驗收。
+
+炭治郎 v2 納入同一批次驗證：呼吸是具名資源；實際防禦迴避與刀技命中形成破綻連動；Q 水火同成本且共用冷卻，火式以負擔交換傷害；調息需比較靜止／移動／HP或盾受擊；死亡、回合、到期及蓄勢中斷不可留下舊效果。18 項角色／匯入／Editor 案例對應六槽，無新增引擎機制。
+
+跨批次結構比對工具 `compare-hero-batches.mts` 可讀第二批現有作品、編譯及行為報告，核對來源 hash，再以目前目錄重新編譯 74 名。`kit-diversity.mjs` 會將私有資源名稱正規化，避免改名假裝新組合；其四項測試以 `pnpm exec vitest run tools/community-hero-forge/kit-diversity.test.mjs --maxWorkers=1 --minWorkers=1` 獨立執行，不加入只接受產品測試路徑的 validation-plan。工具只診斷結構，**不宣稱已完成玩法因果、惡搞品質、素材畫面或正式驗證集准入**。本輪先完成炭治郎，跨批次剩餘工作待整理現況。

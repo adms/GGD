@@ -1,0 +1,165 @@
+{
+  "schema": "ggd-tanjiro-mechanism-verification@1",
+  "issue": 1132,
+  "sourceCommit": "f6ff9d7986ff1986f7d2fa571427fdddc66c640b",
+  "refinementVersion": 2,
+  "refinementSha256": "e3687072176825576555ba63885f535a20274e1d7c86bd3318e889555b421900",
+  "behaviorCoveredSlots": [
+    "PASSIVE",
+    "Q",
+    "W",
+    "E",
+    "R",
+    "EX"
+  ],
+  "designPolicy": "../design-policy.json",
+  "scope": "Tanjiro six-slot behavior and versioned authoring; original presentation and publication remain unverified",
+  "mechanisms": {
+    "PASSIVE": "Independent six-stack breath resets each round. A real nearby defender evasion gives an owned two-second opening that reveals that enemy. Only a connected Q/W/R knife hit consumes that caster opening, at most once per cast; basic and derived damage do not consume it.",
+    "Q": "One frontal 120-degree radius-three arc after 0.2s startup. Both water and fire cost one breath. Fire deals higher physical damage but gives two-second movement burden, -8% per stack up to three. Actual stance selects ice/wind or fire VFX.",
+    "W": "Forward collision-safe movement up to three units after 0.15s startup, damaging each encountered enemy once. Costs one breath.",
+    "E": "Three-second breathing restores at a base half-second rate, with an additional payout after real continuous stillness and no recent connected damage. Movement, HP damage and shield damage lower recovery. Six-stack cap, expiry, death and round reset are tested; no extra mana restoration.",
+    "R": "One frontal slash after interruptible 0.65s startup. Three breath and ordinary mana/cooldown are reserved on cast; interruption does not refund. Resolved slash adds burden.",
+    "EX": "Free water/fire toggle preserves the actual Q instance, cooldown, mana, breath and old burden. Round reset returns to water."
+  },
+  "adaptation": {
+    "originalTextPreserved": true,
+    "reason": "Owner explicitly permits funny simplified kits using existing templates and mechanics, with no new engine features.",
+    "difference": "Original higher fire breath cost becomes the same one-breath cost; higher fire damage instead trades movement speed.",
+    "withdrawn": "The unpushed v1 conditional-cost helper/schema and empty consumeStatus extension are removed in the final source tree. Revision 13 was not published; v2 produces revision 14.",
+    "engineBaseline": "3d90145b7bc51d5bd3cf2d501e347d3bb600235d",
+    "netProductionEngineSchemaTemplateChanges": []
+  },
+  "comparison": {
+    "changedProjects": [
+      "35.hero-project.json"
+    ],
+    "revisionBefore": 12,
+    "revisionAfter": 14,
+    "otherProjectsByteIdentical": 36,
+    "originalRecipesByteIdentical": 37,
+    "sourceDesignBriefUnchanged": true,
+    "modelBindingAndProvenanceUnchanged": true,
+    "modelSha256": "ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de",
+    "presentationChanges": [
+      "Q uses actual stance-conditioned existing ice/wind or fire VFX instead of a fixed target beam.",
+      "W pulse follows the caster rather than an unrelated point.",
+      "R uses orange fire slash/pulse instead of a blue-tinted beam.",
+      "EX removes its unconditional ice overlay; its real stance toggle supplies ice/fire cues."
+    ]
+  },
+  "focused": {
+    "heroBehaviorAndAcceptanceTests": 18,
+    "existingResourceRegressionTests": 9,
+    "logs": [
+      {
+        "name": "tanjiro-final-focused.log",
+        "exitCode": 0,
+        "sha256": "62f4328f0ea95837814d5b62273ed40a3990e9a9051b415efadea1cae209db5b"
+      },
+      {
+        "name": "tanjiro-rebuild-v2.log",
+        "exitCode": 0,
+        "sha256": "76562192f4a46731be3384a6c0adc2a8db8ac8493c5586f8557bb378227778c9"
+      }
+    ]
+  },
+  "mutations": [
+    {
+      "name": "missing-breath-cost",
+      "file": "materials/community-hero-forge/refinements/35.json",
+      "command": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "packages/shared/src/content/heroForge/communityRefinements/tanjiro.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "Q cannot spend insufficient"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "26747da05dc32c8281c7394239e72bc70171b0c6b28bd32a719f58994b88c93a"
+    },
+    {
+      "name": "rear-arc",
+      "file": "materials/community-hero-forge/refinements/35.json",
+      "command": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "packages/shared/src/content/heroForge/communityRefinements/tanjiro.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "Q is one front arc"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "42fd2fe9d24e97e6c59be1b1efa640b9111dd7a2c23379a8b2cd2150f66551e9"
+    },
+    {
+      "name": "no-stillness-gate",
+      "file": "materials/community-hero-forge/refinements/35.json",
+      "command": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "packages/shared/src/content/heroForge/communityRefinements/tanjiro.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "moving lowers breath"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "4dc8ab2569358c6766023a8f3e7ceb6e11ba1240c3906f817fc7737bf9d45e69"
+    },
+    {
+      "name": "no-round-cleanup",
+      "file": "materials/community-hero-forge/refinements/35.json",
+      "command": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "packages/shared/src/content/heroForge/communityRefinements/tanjiro.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "a new round restores"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "4bbbdbb5be4698c7cdbdbc8ded4608d7247761299ea3df9e6fd55f36af1bf40a"
+    }
+  ],
+  "counts": {
+    "heroes": 37,
+    "slots": 222,
+    "mapped": 93,
+    "unmapped": 129,
+    "genericOnAttackPassives": 15
+  },
+  "limitations": [
+    "Existing bound Tanjiro model is retained, with hurt using idle as previously recorded. Dedicated waterwheel pose, sword trails and sound have not passed a new visual review.",
+    "VFX event and stance selection are tested; this is not a rendered-frame or visual-quality verdict.",
+    "Current-service ZIP, submission, admin review and formal publication for the corrected kit are not yet completed.",
+    "Batch-wide creative redesign, causal diversity review and the remaining 129 unmapped slots remain unfinished."
+  ],
+  "crossBatchDiagnostic": {
+    "report": "cross-batch-reference-review.json",
+    "compiledHeroes": 74,
+    "compiledSlots": 444,
+    "exitCode": 2,
+    "unresolvedSimilarLoops": 8,
+    "validationSetReady": false,
+    "diversityDiagnosticTests": 4,
+    "testLogSha256": "080e472c18e61e35f053b70c70d8270d9a62b269749ffae686afbf8b9c32fee9",
+    "meaning": "Reference compilation only; second batch causal behavior was not rerun. New strict signature review remains pending."
+  }
+}

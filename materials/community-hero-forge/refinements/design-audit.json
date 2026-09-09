@@ -4,8 +4,8 @@
   "scope": "Original requirements versus compiled authoring; compilation is not design acceptance",
   "heroes": 37,
   "slots": 222,
-  "changedSlots": 87,
-  "passiveOnAttackTemplates": 16,
+  "changedSlots": 93,
+  "passiveOnAttackTemplates": 15,
   "originalDesignAcceptance": "incomplete",
   "published": false,
   "rows": [
@@ -4328,16 +4328,22 @@
       "ownerDescription": "成功閃過敵人攻擊後，短暫顯示該敵人的近身破綻；下一次刀技命中消耗。",
       "requiredRefinement": "需有效閃避後近身破綻標記與下一刀消耗。",
       "products": [
-        "tpl-on-attack"
+        "tpl-mark-stacks",
+        "tpl-event-passive"
       ],
       "castType": "self",
       "effects": [],
       "hooks": [
-        "onBasicAttack"
+        "onEvade",
+        "onDamageDealt",
+        "onDamageDealt",
+        "onDamageDealt",
+        "onRoundStart",
+        "onDeath"
       ],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "呼吸為独立六層資源，開局及回合還原為六層。真正防禦方迴避近身敵人攻擊後，對該敵人留下自己來源的兩秒破綻與可見狀態；Q/W/R 有效刀技命中（含盾吸收）才消耗自己的標記一次追加極小物理傷害。普攻、失手、空按位移、反傷不消耗。"
     },
     {
       "hero": "35",
@@ -4348,17 +4354,22 @@
       "ownerDescription": "前方橫斬，適合穩定輸出。",
       "requiredRefinement": "需水面斬前方橫弧，目前四段直線。",
       "products": [
-        "tpl-line-sweep"
+        "tpl-effect-sequence"
       ],
       "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "delayed"
+        "damageArea",
+        "damageArea",
+        "applyBuff",
+        "spawnVfx",
+        "spawnVfx",
+        "spawnVfx"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "便當加熱刀：同一 Q 的水式是穩定横斬，火式改為較強横斬但越砍越喘，累積兩秒移速負擔每層8%、上限三層。兩式都耗一層呼吸、共用同一Q冷卻；切換不洗冷卻，調息回呼吸，敵人可趁負擔期拉開距離。依2026-09-09惡搞簡化原則，取消火式額外呼吸成本，不新增引擎欄位。 水式沿用冰色脈衝及風斬，火式沿用火斬，跟隨實際姿態條件；屬既有素材改編。"
     },
     {
       "hero": "35",
@@ -4369,17 +4380,17 @@
       "ownerDescription": "旋轉斬擊並進行短距離位移。",
       "requiredRefinement": "需水車旋轉斬与武器動作。",
       "products": [
-        "tpl-leap-strike"
+        "tpl-effect-sequence"
       ],
-      "castType": "ground",
+      "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "leap"
+        "dash"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "向瞄準方向推進最多三格，沿路每個敵人只結算一次水車刀擊，受牆與邊界約束，不直接傳送。耗一層呼吸；死亡或路徑停止後不再補發接觸。旋轉與武器演出仍另驗。"
     },
     {
       "hero": "35",
@@ -4390,17 +4401,17 @@
       "ownerDescription": "短暫調息恢復呼吸資源，移動或受擊會降低恢復效率。",
       "requiredRefinement": "標準魔力回復 15%；需呼吸資源、調息中移動受傷降效率。",
       "products": [
-        "tpl-buff-self"
+        "tpl-effect-sequence"
       ],
       "castType": "self",
+      "targetsEnemies": true,
       "effects": [
-        "applyBuff",
-        "restore"
+        "applyBuff"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "三秒調息：啟動立即基礎回復一層、之後每半秒回復一層；實際連續靜止半秒且最近1.1秒未有效受擊時，每半秒再回復一層，均受六層上限。移動或受擊降低效率而非免費回滿魔力，碰壁不等於實際移動。耗費一般魔力與自己的冷卻，不改姿態；回合開始與死亡清除舊調息，避免快速切回合沿用。"
     },
     {
       "hero": "35",
@@ -4411,17 +4422,18 @@
       "ownerDescription": "明顯蓄勢後的高傷害斬擊，消耗較多呼吸資源。",
       "requiredRefinement": "需火之神單次高傷斬與呼吸高消耗。",
       "products": [
-        "tpl-line-sweep"
+        "tpl-effect-sequence"
       ],
       "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "delayed"
+        "damageArea",
+        "applyBuff"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "0.65秒可受控制中斷的蓄勢後，以前方120度單次火之神刀斬；施法開始消耗三層呼吸及較高魔力，未足額不扣費。刀斬仍按施放方向與結算時距離判定，使用後增加負擔；不建立永久燃燒地形。"
     },
     {
       "hero": "35",
@@ -4432,16 +4444,17 @@
       "ownerDescription": "讓 Q 在水面斬與火之神神樂的強化斬版本間切換。共用 Q 冷卻；火之神版本消耗較高並增加自身負擔。",
       "requiredRefinement": "固定 AD 增益不是切換；需水／火 Q 版本、共用冷卻与負擔。",
       "products": [
-        "tpl-buff-self"
+        "tpl-effect-sequence"
       ],
       "castType": "self",
+      "targetsEnemies": true,
       "effects": [
-        "applyBuff"
+        "consumeStatus"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "水／火便當模式切換：水式穩定，火式傷害更高但附加短暫負擔；兩式耗一層呼吸，共用原Q實例、冷卻與資源。換回水不消掉負擔，回合開始回水式。可用既有調息回復後再接刀技；不建立水域或燃燒地形。"
     },
     {
       "hero": "36",
