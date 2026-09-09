@@ -1,0 +1,12 @@
+{
+  "schema": "ggd-distillation-time-authorization@1",
+  "date": "2026-09-09",
+  "userQuote": "延長到16小時",
+  "maximumSeconds": 57600,
+  "epochs": 1,
+  "otherGuardsUnchanged": true,
+  "trainingTasks": 500,
+  "internalDevTasks": 119,
+  "scope": "One full Mac-local Gemma 4 12B IT epoch, including before/after internal-dev evaluation and adapter roundtrip. No automatic extra epoch, sweep, data expansion, or restart.",
+  "note": "Record of explicit authorization in this conversation, not a cryptographic signature. Original 7200-second runs and receipts remain immutable."
+}

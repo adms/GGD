@@ -15,6 +15,18 @@ GUARD = {'minAvailableGiB': 6, 'maxSwapGrowthGiB': 2, 'maxBatteryDropPoints': 2}
 
 
 class GuardTests(unittest.TestCase):
+    def test_sixteen_hour_authorization_is_explicit_and_does_not_change_defaults(self):
+        self.assertEqual(trainer.time_authorization(None),(7200,None))
+        valid={'schema':'ggd-distillation-time-authorization@1','maximumSeconds':57600,'epochs':1,
+               'userQuote':'延長到16小時','otherGuardsUnchanged':True}
+        with tempfile.TemporaryDirectory() as tmp:
+            target=Path(tmp)/'authorization.json';trainer.atomic(target,valid)
+            seconds,receipt=trainer.time_authorization(target)
+            self.assertEqual(seconds,57600);self.assertEqual(receipt['sha256'],trainer.digest(target))
+            for changes in [{'maximumSeconds':57601},{'epochs':2},{'userQuote':''},{'otherGuardsUnchanged':False}]:
+                trainer.atomic(target,{**valid,**changes})
+                with self.assertRaises(AssertionError):trainer.time_authorization(target)
+
     def test_prefix_alignment_preserves_the_global_attention_block_grid(self):
         for length in [256,257,511,512,19137,20878]:
             boundary=trainer.aligned_prefix_length(length,256)

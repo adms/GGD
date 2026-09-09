@@ -112,9 +112,20 @@ def aligned_prefix_length(length, block_size):
     return length//block_size*block_size
 
 
+def time_authorization(path):
+    if path is None:return 7200,None
+    approval=read(path)
+    assert approval.get('schema')=='ggd-distillation-time-authorization@1','TIME_AUTHORIZATION_SCHEMA'
+    assert approval.get('maximumSeconds')==57600 and approval.get('epochs')==1,'UNAUTHORIZED_TIME_OR_EPOCHS'
+    assert approval.get('userQuote')=='延長到16小時','TIME_AUTHORIZATION_QUOTE'
+    assert approval.get('otherGuardsUnchanged') is True,'OTHER_GUARDS_MUST_REMAIN'
+    return approval['maximumSeconds'],{'sha256':digest(path),'record':approval}
+
+
 def prepare(args):
     out, data = args.out.resolve(), args.data.resolve()
     assert not out.exists(), 'OUTPUT_ALREADY_EXISTS'
+    maximum_seconds,authorization=time_authorization(getattr(args,'time_authorization',None))
     manifest = read(data / 'manifest.json')
     assert digest(data / 'examples.json') == manifest['outputs']['examples.json'], 'FROZEN_DATA_DRIFT'
     receipt = read(args.base_receipt)
@@ -175,7 +186,8 @@ def prepare(args):
               'maxTrainSequenceTokens': max(r['totalTokens'] for r in train),
               'maxTrainOutputTokens': max(r['outputTokens'] for r in train), 'probeIds': probe_ids, 'capacityStrata': strata,
               'capacityEstimatePolicy': 'Per-format observed gradient max * (train tasks + 2 * dev tasks), sum * 1.5 + 300s; heuristic admission estimate, not a timing guarantee. No dev gradients.',
-              'metalLimitGiB': 28, 'secondsMaximum': 7200, 'probeSecondsMaximum': 1200, 'stepSecondsMaximum': 120,
+              'metalLimitGiB': 28, 'secondsMaximum': maximum_seconds, 'probeSecondsMaximum': 1200, 'stepSecondsMaximum': 120,
+              'timeAuthorization':authorization,
               'guard': {'minAvailableGiB': 6, 'maxSwapGrowthGiB': 2, 'maxBatteryDropPoints': 2, 'acRequired': True, 'concurrentOwnGpuWorkers': 1},
               'saveEvery': max(1, math.ceil(len(train) / 5)), 'selection': 'fixed final one-epoch adapter; no dev checkpoint selection',
               'loss': 'completion-only exact causal teacher forcing; retain full prompt attention; only project completion hidden states into vocabulary',
@@ -532,6 +544,7 @@ if __name__ == '__main__':
     parser.add_argument('--data', type=Path); parser.add_argument('--base-receipt', type=Path); parser.add_argument('--out', type=Path)
     parser.add_argument('--run', type=Path); parser.add_argument('--phase', choices=['probe', 'train']); parser.add_argument('--token')
     parser.add_argument('--cache-diagnostic', action='store_true', help='Prepare a bounded forward-only cache diagnostic, never a training admission.')
+    parser.add_argument('--time-authorization', type=Path, help='Explicit user authorization record for this single epoch; default remains 7200s.')
     args = parser.parse_args()
     if args.action == 'prepare':
         assert args.data and args.base_receipt and args.out
