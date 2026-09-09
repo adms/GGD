@@ -31,7 +31,7 @@ python3 tools/editor-acceptance/hero-distillation-finalize-evaluation.py \
   --out /absolute/new-finalized-evaluation
 ```
 
-Neither command creates teacher qualification, repairs a result, retries inference or promotes the model. All compile reports, compiled heroes, qualification receipts and final receipts are hash-bound. The HTML renderer accepts both explicitly unverified snapshots and fully adjudicated snapshots; it refuses partial or aggregate-drifting quality claims.
+Neither command creates teacher qualification, repairs a result, retries inference or promotes the model. All compile reports, compiled heroes, qualification receipts and final receipts are hash-bound. Each teacher receipt must also name the same hero, engine revision and compiled-artifact hash, use the expected receipt schema, and agree with the qualification verdict; updating a hash cannot turn an unrelated JSON file into valid quality evidence. The HTML renderer accepts both explicitly unverified snapshots and fully adjudicated snapshots; it refuses partial or aggregate-drifting quality claims.
 
 When the user supplies the unseen batch, first convert it to the same public-case contract, with no assistant/teacher message, then freeze it against the already completed run:
 
