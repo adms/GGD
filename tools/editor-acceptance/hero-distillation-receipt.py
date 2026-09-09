@@ -45,6 +45,20 @@ def export(run, out):
             'allSamplesOnAC': all(x['acPower'] for x in samples),
             'minBatteryPercent': min((x['batteryPercent'] for x in samples if x['batteryPercent'] is not None), default=None),
         }
+        if phase == 'train' and state['status'] == 'completed':
+            result = read(directory / 'result.json')
+            roundtrip = read(directory / 'adapter-roundtrip.json')
+            checkpoint = directory / result['checkpoint']['path'] / 'adapters.safetensors'
+            assert result.get('phase') == 'train' and result.get('steps') == manifest.get('steps') \
+                and result.get('uniqueTrainingTasks') == manifest.get('steps') \
+                and len(trace) == manifest.get('steps'), 'COMPLETED_TRAINING_EPOCH_INVALID'
+            assert result['checkpoint'].get('step') == manifest.get('steps') \
+                and checkpoint.is_file() and digest(checkpoint.read_bytes()) == result['checkpoint'].get('sha256'), \
+                'COMPLETED_TRAINING_ADAPTER_INVALID'
+            assert roundtrip.get('passed') is True and len(roundtrip.get('tensorKeys') or []) == 8, \
+                'COMPLETED_TRAINING_ROUNDTRIP_INVALID'
+            phases[phase].update(epochVerified=True, finalAdapterSha256=result['checkpoint']['sha256'],
+                                 adapterRoundtripVerified=True)
         for file in sorted(directory.rglob('*')):
             assert not file.is_symlink(), 'NO_SYMLINK_EVIDENCE'
             if file.is_file() and file.suffix in ['.json', '.jsonl', '.log']:

@@ -71,5 +71,35 @@ class ReceiptTests(unittest.TestCase):
                     result = receipt.export(run, root / 'out')
                     self.assertEqual(result['files']['source/hero-distillation-prefix-cache.py']['sha256'], receipt.digest(data))
 
+    def test_completed_training_requires_full_epoch_final_adapter_and_roundtrip(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory); run = self.fixture(root); train = run / 'train'; train.mkdir()
+            manifest = receipt.read(run / 'manifest.json'); manifest['steps'] = 2
+            (run / 'manifest.json').write_text(json.dumps(manifest))
+            probe_state = receipt.read(run / 'probe/state.json')
+            probe_state['manifestSha256'] = receipt.digest((run / 'manifest.json').read_bytes())
+            (run / 'probe/state.json').write_text(json.dumps(probe_state))
+            resource = {'availableBytes': 100, 'swapUsedBytes': 20, 'acPower': True, 'batteryPercent': 100}
+            state = {'status': 'completed', 'finishedAt': 20, 'startedAt': 10, 'workerPid': None,
+                     'manifestSha256': receipt.digest((run / 'manifest.json').read_bytes()),
+                     'preflight': resource, 'samples': [resource], 'phase': 'train'}
+            (train / 'state.json').write_text(json.dumps(state))
+            (train / 'training-trace.json').write_text(json.dumps([
+                {'step': 1, 'id': 'a'}, {'step': 2, 'id': 'b'}]))
+            adapter = train / 'checkpoint-0002/adapters.safetensors'; adapter.parent.mkdir()
+            adapter.write_bytes(b'final-adapter')
+            (train / 'result.json').write_text(json.dumps({'phase': 'train', 'steps': 2,
+                'uniqueTrainingTasks': 2, 'checkpoint': {'step': 2, 'path': 'checkpoint-0002',
+                                                         'sha256': receipt.digest(adapter.read_bytes())}}))
+            (train / 'adapter-roundtrip.json').write_text(json.dumps({'passed': True,
+                'tensorKeys': [f'layer-{n}' for n in range(8)]}))
+            result = receipt.export(run, root / 'out')
+            self.assertTrue(result['phases']['train']['epochVerified'])
+            self.assertTrue(result['phases']['train']['adapterRoundtripVerified'])
+            self.assertEqual(result['phases']['train']['optimizerStepsRecorded'], 2)
+            adapter.write_bytes(b'tampered')
+            with self.assertRaisesRegex(AssertionError, 'COMPLETED_TRAINING_ADAPTER_INVALID'):
+                receipt.export(run, root / 'out2')
+
 
 if __name__ == '__main__': unittest.main()
