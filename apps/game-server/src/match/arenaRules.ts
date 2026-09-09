@@ -79,7 +79,6 @@ export function legendaryShelfRules(cfg: LegendaryShelfConfig): LegendaryShelfRu
     open: cfg.open,
     priceMultiplier: cfg.priceMultiplier,
     sellRefundPct: cfg.sellRefundPct ?? DEFAULT_SELL_REFUND_PCT,
-    swapWhenFull: cfg.swapWhenFull ?? false,
     // 複製一份：`world.legendaryShelf` 是整塊指派的，共用同一個陣列會讓一場比賽
     // 有辦法動到 DEFAULT_ARENA_RULES（模組層常數，每一場都在讀它）。
     randomOnlyTables: [...(cfg.randomOnlyTables ?? [])],
