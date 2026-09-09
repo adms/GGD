@@ -4,6 +4,24 @@
 
 ## 最新進度：v21 已有正式更新；接上實際素材與封裝准入
 
+訓練後單次批次入口已完成：`hero-distillation-evaluate-batch.py` 先要求整輪 completed／worker joined／固定 final checkpoint／8-tensor reload 證据通過，才建立新的輸出目錄。之後依序 prepare → base 119 題 → LoRA 119 題 → 各自 schema/compiler/存檔重讀 → 各自封裝准入。沿用受保護 inference supervisor，不另寫 GPU 執行或改 guard；每 arm 上限仍 7,200 秒，單題／階段 610 秒，不自動延長或重試。controller 未在 live train 期間啟動，不把準備好脚本當成已推論。
+
+腳本保留來源快照、輸入 manifest pin、每階段狀態、子程序 log 及兩組統計；任一失敗立刻停止，保留舊輸出、不重新建立另一個目錄續跑。過程不讀 teacher，不做補答案、live import、遊戲修改或發布。即使所有批次階段完成，`fullHeroE2EProven`／`modelPromoted` 仍 false；完整語意／對局驗收另需證據。5/5 CPU controller tests（假 inference，無模型載入）驗證時序、live train 拒絕、guard 停止、輸入漂移及不能縮分母。
+
+終止成功後，在本研究 Git root 執行以下單一命令；`WORKSPACE` 指 ABxVFX_EDIT 的絕對路徑，目的目錄必須不存在：
+
+```sh
+/private/tmp/ggd-qwen38-eval-20260907-venv/bin/python tools/editor-acceptance/hero-distillation-evaluate-batch.py \
+  --training "$WORKSPACE/outputs/hero-forge-12b-restart-20260908/full-hero-distillation-v21" \
+  --evaluation docs/_reports/hero-finetune-research/hero74-eval-plan-v1 \
+  --models docs/_reports/hero-finetune-research/hero74-model-bindings-v1 \
+  --assets docs/_reports/hero-finetune-research/hero74-training-v3 \
+  --dependencies "$WORKSPACE/GGD-community-hero-forge-s3/packages/shared/node_modules" \
+  --asset-root "$WORKSPACE/outputs/hero-model-options-20260909/release-v7" \
+  --asset-root "$WORKSPACE/GGD-community-hero-forge-s3/content" \
+  --out "$WORKSPACE/outputs/hero-forge-12b-restart-20260908/hero74-paired-evaluation-v1"
+```
+
 原生匯入相容性診斷已具體化：`hero74-native-compatibility-control-v2/` 固定候選為本次只讀看到的 `origin/main` commit `1fdc84e4d18a14136287cf17c32fa9ad3fee64a4`（不是將移動 ref 當版本）。舊 native engine `6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92` 的 `zAuthoringKind` 不收 champion，新版接受；不重做 Main 已加入的功能。但兩名 native control 在新版重編後，AP ratio coefficient 分別出現 **5／12** 個欄位差異；另用「新版程式＋不變的舊模板／config／subtype」作診斷，仍分別 **3／12** 個差異。兩者 schema/compile 都過，runtime identical **0/2**，因此不能把升版包裝冒稱無損遷移或上場通過。
 
 差異皆有 JSON pointer、原／候選編譯 hash、精確引擎與 schema/registry/module hash，未修改教師、資料切分、訓練器或引擎。此檢查不是判定新版公式有 bug；上游 AP 規則／校準更新可能是有意修改。亦未把 `zAuthoringKind` 能接受當成完整 importer 支援，report 分開記 registry 宣告與 enum 測量。完整 native 匯入仍 pending，需要保留來源規則的正式相容路徑或明示跨版本驗收，不能默默改答案。3/3 tests 包含重新執行兩題跨版本診斷並重現完整收據。

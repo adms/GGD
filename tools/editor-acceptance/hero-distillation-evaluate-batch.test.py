@@ -1,0 +1,110 @@
+"""Controller tests use fake inference; never load MLX/model weights."""
+import importlib.util
+import json
+from pathlib import Path
+import tempfile
+import unittest
+
+spec = importlib.util.spec_from_file_location('batch', Path(__file__).with_name('hero-distillation-evaluate-batch.py'))
+b = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(b)
+
+
+def put(file, obj):
+    file.parent.mkdir(parents=True, exist_ok=True)
+    file.write_text(json.dumps(obj))
+
+
+class FakeInference:
+    def __init__(self, fail=None, ready=True, drift=None):
+        self.fail, self.ready, self.drift, self.calls = fail, ready, drift, []
+
+    def final_checkpoint(self, run):
+        self.calls.append('checkpoint')
+        assert self.ready, 'TRAIN_NOT_TERMINAL_SUCCESS'
+        return {}, run / 'adapter', []
+
+    def prepare(self, run, evaluation, out):
+        self.calls.append('prepare')
+        put(out / 'manifest.json', {'counts': {'tasks': 119, 'primaryWholeHeroes': 17}})
+
+    def supervise(self, out, arm):
+        self.calls.append(arm)
+        if arm == self.fail:
+            raise RuntimeError('GUARD_STOP')
+        put(out / arm / 'state.json', {'status': 'completed', 'workerPid': None})
+        if self.drift:
+            put(self.drift, {'changed': True})
+
+
+class BatchTest(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.root = Path(self.temp.name)
+        self.options = {k: str(self.root / k) for k in ['training', 'evaluation', 'models', 'assets', 'dependencies', 'out']}
+        for k in ['training', 'evaluation', 'models', 'assets', 'dependencies']:
+            put(Path(self.options[k]) / 'manifest.json', {'fixture': k})
+        self.options['asset_roots'] = [self.options['assets']]
+        self.cpu = []
+
+    def tearDown(self):
+        self.temp.cleanup()
+
+    def execute(self, command, log):
+        self.cpu.append(command)
+        out = Path(command[command.index('--out') + 1])
+        counts = {'allCases': 119, 'primaryWholeHeroes': 17} if '--arm' in command else {'wholeHeroes': 17}
+        put(out / 'report.json', {'counts': counts})
+
+    def test_reject_live_training_without_output_or_commands(self):
+        fake = FakeInference(ready=False)
+        with self.assertRaisesRegex(AssertionError, 'TRAIN_NOT_TERMINAL_SUCCESS'):
+            b.run(self.options, fake, self.execute)
+        self.assertFalse(Path(self.options['out']).exists())
+        self.assertEqual(self.cpu, [])
+
+    def test_success_is_sequential_all_cases_and_never_model_promotion(self):
+        fake = FakeInference()
+        state = b.run(self.options, fake, self.execute)
+        self.assertEqual(fake.calls, ['checkpoint', 'prepare', 'base', 'lora'])
+        self.assertEqual([s['name'] for s in state['steps']], ['prepare-inference', 'infer-base', 'infer-lora',
+            'compile-base', 'package-admission-base', 'compile-lora', 'package-admission-lora'])
+        self.assertEqual(len(self.cpu), 4)
+        self.assertEqual(state['status'], 'completed')
+        result = b.read(Path(self.options['out']) / 'result.json')
+        for key in ['fullHeroE2EProven', 'modelPromoted', 'semanticFidelityMeasured', 'liveImportMeasured']:
+            self.assertIs(result[key], False)
+        self.assertNotIn('--teacher-control', [x for command in self.cpu for x in command])
+        with self.assertRaisesRegex(AssertionError, 'REFUSE_OVERWRITE_OR_RETRY'):
+            b.run(self.options, FakeInference(), self.execute)
+
+    def test_guard_failure_stops_without_second_arm_or_cpu_stage(self):
+        fake = FakeInference(fail='base')
+        with self.assertRaisesRegex(RuntimeError, 'GUARD_STOP'):
+            b.run(self.options, fake, self.execute)
+        self.assertEqual(fake.calls, ['checkpoint', 'prepare', 'base'])
+        self.assertEqual(self.cpu, [])
+        state = b.read(Path(self.options['out']) / 'state.json')
+        self.assertEqual(state['status'], 'stopped-or-failed')
+        self.assertEqual(state['steps'][-1]['status'], 'stopped-or-failed')
+        self.assertFalse((Path(self.options['out']) / 'result.json').exists())
+
+    def test_manifest_drift_stops_before_second_arm(self):
+        fake = FakeInference(drift=Path(self.options['models']) / 'manifest.json')
+        with self.assertRaisesRegex(AssertionError, 'INPUT_MANIFEST_DRIFT'):
+            b.run(self.options, fake, self.execute)
+        self.assertEqual(fake.calls, ['checkpoint', 'prepare', 'base'])
+
+    def test_missing_case_denominator_cannot_complete(self):
+        def shortened(command, log):
+            self.execute(command, log)
+            if '--arm' in command:
+                out = Path(command[command.index('--out') + 1])
+                put(out / 'report.json', {'counts': {'allCases': 12, 'primaryWholeHeroes': 2}})
+        with self.assertRaisesRegex(AssertionError, 'COMPILE_CASES_MISSING'):
+            b.run(self.options, FakeInference(), shortened)
+        self.assertEqual(b.read(Path(self.options['out']) / 'state.json')['status'], 'stopped-or-failed')
+
+
+if __name__ == '__main__':
+    unittest.main()
