@@ -38,11 +38,36 @@ def fixture(root):
            'inputSha256': i.g.sha(content), 'messagesSha256': i.g.sha(i.g.compact(messages))}
     (evaluation/'public-cases.jsonl').write_text(i.g.compact(row)+'\n')
     i.t.atomic(evaluation/'plan.json', {'sourceManifestSha256': 'dataset',
+        'split': 'internal-dev', 'blindTest': False,
         'arms': {'base': {'modelRevision': 'revision'}}, 'primaryCaseIds': [row['id']],
         'secondaryCaseIds': [], 'counts': {'tasks': 1, 'primaryWholeHeroes': 1, 'secondarySlots': 0}})
     i.t.atomic(evaluation/'manifest.json', {'outputs': {
         name: i.t.digest(evaluation/name) for name in ['public-cases.jsonl', 'plan.json']}})
     return run, evaluation, out
+
+
+def make_blind(run, evaluation, overlap=False, leak=False):
+    data = run.parent/'data'; data.mkdir()
+    i.t.atomic(data/'manifest.json', {'schema': 'fixture-dataset'})
+    frozen = i.t.digest(data/'manifest.json')
+    content = i.g.compact({'outputContract': {'heroId': 'test', 'slot': 'HERO', 'format': 'hero-plan'}})
+    messages = [{'role': 'system', 'content': '系統'}, {'role': 'user', 'content': content}]
+    training_row = {'id': ('test' if overlap else 'seen') + ':HERO', 'heroId': 'test' if overlap else 'seen',
+        'groupId': 'training', 'slot': 'HERO', 'format': 'hero-plan', 'engineRevision': 'fixed',
+        'messages': messages, 'inputSha256': i.g.sha(content), 'messagesSha256': i.g.sha(i.g.compact(messages))}
+    for name in ['train.jsonl', 'dev.jsonl']:
+        (data/name).write_text(i.g.compact(training_row)+'\n')
+    manifest = i.t.read(run/'manifest.json'); manifest.update(frozenManifestSha256=frozen, dataDirectory=str(data))
+    i.t.atomic(run/'manifest.json', manifest)
+    state = i.t.read(run/'train/state.json'); state['manifestSha256'] = i.t.digest(run/'manifest.json')
+    i.t.atomic(run/'train/state.json', state)
+    protocol = {'teacherAnswersVisibleToCandidate': leak, 'usedForTraining': False,
+                'usedForTuning': False, 'checkpointSelectedBeforeGeneration': True}
+    plan = i.t.read(evaluation/'plan.json'); plan.update(sourceManifestSha256='blind-source',
+        trainingFrozenManifestSha256=frozen, split='blind-user-batch', blindTest=True, blindProtocol=protocol)
+    i.t.atomic(evaluation/'plan.json', plan)
+    i.t.atomic(evaluation/'manifest.json', {'outputs': {
+        name: i.t.digest(evaluation/name) for name in ['public-cases.jsonl', 'plan.json']}})
 
 
 class InferenceTests(unittest.TestCase):
@@ -57,6 +82,22 @@ class InferenceTests(unittest.TestCase):
             self.assertEqual(i.verify_bundle(out)[0], p)
             self.assertNotIn('mlx.core', sys.modules)
             with self.assertRaisesRegex(AssertionError, 'REFUSE_OVERWRITE'): i.prepare(run, evaluation, out)
+
+    def test_blind_prepare_binds_checkpoint_and_rejects_overlap_or_teacher_leak(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run, evaluation, out = fixture(Path(tmp)); make_blind(run, evaluation)
+            manifest = i.prepare(run, evaluation, out)
+            self.assertTrue(manifest['blindTest'])
+            self.assertFalse(manifest['blindProtocol']['teacherAnswersVisibleToCandidate'])
+            self.assertFalse((out/'private-teachers.jsonl').exists())
+        with tempfile.TemporaryDirectory() as tmp:
+            run, evaluation, out = fixture(Path(tmp)); make_blind(run, evaluation, overlap=True)
+            with self.assertRaisesRegex(AssertionError, 'BLIND_HERO_OVERLAP:test'):
+                i.prepare(run, evaluation, out)
+        with tempfile.TemporaryDirectory() as tmp:
+            run, evaluation, out = fixture(Path(tmp)); make_blind(run, evaluation, leak=True)
+            with self.assertRaisesRegex(AssertionError, 'INVALID_BLIND_PROTOCOL'):
+                i.prepare(run, evaluation, out)
 
     def test_running_training_or_nonfinal_checkpoint_cannot_prepare(self):
         for changes, file, message in [({'status': 'running', 'workerPid': 123}, 'state.json', 'TRAIN_NOT_TERMINAL_SUCCESS'),

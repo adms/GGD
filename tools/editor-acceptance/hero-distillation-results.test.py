@@ -188,7 +188,8 @@ class ResultsTest(unittest.TestCase):
         folder = self.paired / 'inference'
         put(folder / 'manifest.json', {'schema': 'ggd-distillation-protected-inference@1',
             'evaluationManifestSha256': self.eval_sha, 'trainingManifestSha256': sha(self.train / 'manifest.json'),
-            'caseIds': [c['id'] for c in self.cases], 'decoding': {'max_tokens': 100}})
+            'caseIds': [c['id'] for c in self.cases], 'decoding': {'max_tokens': 100},
+            'blindTest': False, 'blindProtocol': None})
         record = {'id': '0:HERO', 'slot': 'HERO', 'arm': 'base', 'decoding': {'max_tokens': 100},
             'messagesSha256': 'message-0', 'raw': '{}', 'rawSha256': hashlib.sha256(b'{}').hexdigest(),
             'seconds': 2, 'promptTokens': 100, 'generationTokens': 10, 'peakMetalBytes': 1000,

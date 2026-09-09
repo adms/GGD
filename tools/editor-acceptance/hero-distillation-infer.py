@@ -7,6 +7,7 @@ import argparse
 from contextlib import contextmanager
 import gc
 import importlib.util
+import json
 import os
 from pathlib import Path
 import shutil
@@ -67,9 +68,30 @@ def prepare(run, evaluation, out):
     for name in ['public-cases.jsonl', 'plan.json']:
         assert t.digest(evaluation / name) == em['outputs'][name], 'EVAL_INPUT_DRIFT'
     plan = t.read(evaluation / 'plan.json')
-    assert plan['sourceManifestSha256'] == p['frozenManifestSha256'], 'DATASET_MISMATCH'
-    assert plan['arms']['base']['modelRevision'] == p['modelRevision'], 'MODEL_REVISION_MISMATCH'
     rows = public_cases(evaluation / 'public-cases.jsonl')
+    split = plan.get('split')
+    assert split in ['internal-dev', 'blind-user-batch'], 'UNKNOWN_EVALUATION_SPLIT'
+    if split == 'internal-dev':
+        assert plan.get('blindTest') is False, 'INTERNAL_MARKED_BLIND'
+        assert plan['sourceManifestSha256'] == p['frozenManifestSha256'], 'DATASET_MISMATCH'
+        blind_protocol = None
+    else:
+        assert plan.get('blindTest') is True, 'BLIND_NOT_MARKED_BLIND'
+        assert plan.get('trainingFrozenManifestSha256') == p['frozenManifestSha256'], 'BLIND_TRAINING_BINDING_MISMATCH'
+        assert plan.get('sourceManifestSha256') != p['frozenManifestSha256'], 'BLIND_REUSES_TRAINING_DATASET'
+        blind_protocol = plan.get('blindProtocol') or {}
+        assert blind_protocol == {'teacherAnswersVisibleToCandidate': False, 'usedForTraining': False,
+                                  'usedForTuning': False, 'checkpointSelectedBeforeGeneration': True}, 'INVALID_BLIND_PROTOCOL'
+        data = Path(p['dataDirectory'])
+        assert t.digest(data / 'manifest.json') == p['frozenManifestSha256'], 'TRAINING_DATASET_DRIFT'
+        seen = set()
+        for name in ['train.jsonl', 'dev.jsonl']:
+            training_rows = [json.loads(line) for line in (data / name).read_text().splitlines() if line]
+            assert all(row['heroId'] == row['id'].split(':', 1)[0] for row in training_rows), 'TRAINING_HERO_ID_DRIFT'
+            seen.update(row['heroId'] for row in training_rows)
+        overlap = sorted(seen & {row['heroId'] for row in rows})
+        assert not overlap, 'BLIND_HERO_OVERLAP:' + ','.join(overlap)
+    assert plan['arms']['base']['modelRevision'] == p['modelRevision'], 'MODEL_REVISION_MISMATCH'
     assert [r['id'] for r in rows if r['slot'] == 'HERO'] == plan['primaryCaseIds'], 'PRIMARY_CASE_DRIFT'
     assert [r['id'] for r in rows if r['slot'] != 'HERO'] == plan['secondaryCaseIds'], 'SECONDARY_CASE_DRIFT'
     assert len(rows) == plan['counts']['tasks'], 'CASE_COUNT_DRIFT'
@@ -90,7 +112,8 @@ def prepare(run, evaluation, out):
         'guard': p['guard'], 'minimumAvailableBytes': p['minimumAvailableBytes'],
         'metalLimitGiB': p['metalLimitGiB'], 'secondsMaximumPerArm': 7200,
         'phaseSecondsMaximum': 610, 'automaticRestart': False, 'attemptsPerCase': 1,
-        'blindTest': False, 'teacherAccess': 'No teacher file copied or opened by generation code; not an OS sandbox claim.',
+        'blindTest': split == 'blind-user-batch', 'blindProtocol': blind_protocol,
+        'teacherAccess': 'No teacher file copied or opened by generation code; not an OS sandbox claim.',
         'scoring': 'Raw generation only. Schema/compiler/behavior/game checks are separate and still required.',
         'modelPromoted': False, 'fullHeroE2EProven': False}
     out.mkdir(parents=True)

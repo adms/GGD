@@ -144,6 +144,8 @@ def collect(training, evaluation, paired=None, teacher_compile=None, teacher_pac
     inference_manifest = read(inference_dir / 'manifest.json', True) if inference_dir else None
     if inference_manifest:
         assert inference_manifest['schema'] == 'ggd-distillation-protected-inference@1', 'WRONG_INFERENCE_MANIFEST'
+        assert inference_manifest.get('blindTest') is (split == 'blind-user-batch'), 'INFERENCE_BLIND_STATUS_DRIFT'
+        assert inference_manifest.get('blindProtocol') == blind_protocol, 'INFERENCE_BLIND_PROTOCOL_DRIFT'
         assert inference_manifest['evaluationManifestSha256'] == pins[str((evaluation / 'manifest.json').resolve())]['sha256'], 'INFERENCE_EVAL_DRIFT'
         assert inference_manifest['trainingManifestSha256'] == pins[str((training / 'manifest.json').resolve())]['sha256'], 'INFERENCE_TRAIN_DRIFT'
         assert inference_manifest['caseIds'] == expected_ids, 'INFERENCE_CASE_ORDER_DRIFT'
