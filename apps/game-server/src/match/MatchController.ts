@@ -3017,6 +3017,16 @@ export class MatchController {
    * make round 10 retroactively rewrite what rounds 1-9 recorded.
    */
   private fireRingForRound(round: number): FireRingConfig | null {
+    // ⭐⭐ GH#1151 A —— **第十一回合沒有火圈**（逐字：「無商店、無火圈」）。
+    //
+    // ⭐ 放在**這一支**是刻意的：它是全專案唯一回答「這一回合有沒有火圈、
+    // 什麼時候開始收」的地方（⭐ 與 `combatMaxTicksForRound` 同一個形狀）——
+    // ⛔ 而我上一個 commit 才因為把長度塞進 `enterCombat` 被它自己的註解打臉
+    //   （「兩份『決賽有多長』會差 5,700 ticks」）。⇒ ⛔ 不再造第二個住處。
+    //
+    // ⚠️ ⭐ 火圈是**生存模式的反面**：第十一回合的壓力來自殭屍潮與大轟炸（B / F），
+    // ⛔ 而一個會把場地收小的圈會把「撐滿時限」變成「被圈推到中間互相打」。
+    if (this.round11Round === round) return null;
     if (!this.fireRing) return null;
     if (!isRoyaleRound(round, this.rules.finalRound)) return this.fireRing;
     return { ...this.fireRing, startSec: ROYALE_FIRE_RING_START_SEC };

@@ -12,6 +12,20 @@ import { TICK_HZ } from "@ggd/shared/constants";
 import { MatchController, type SeatSpec } from "./MatchController";
 import { DEFAULT_ARENA_RULES, type ArenaRules } from "./arenaRules";
 import { recordBossKill } from "@ggd/shared/sim/round11Gate";
+import { DEFAULT_BURN_CURVE } from "@ggd/shared/sim/fireRing";
+import { type FireRingConfig } from "@ggd/shared/content";
+
+/** ⭐ 出貨形狀的火圈 —— 這支測試要問「哪一回合有圈」,⛔ 沒有圈就問不了。 */
+const RING: FireRingConfig = {
+  startSec: 1,
+  shrinkSec: 20,
+  minRadius: 0.5,
+  burnCurve: [...DEFAULT_BURN_CURVE],
+  maxPctPerSec: 1,
+  lethalSaveApplies: false,
+  roundHardCapSec: 300,
+  boss: { extendCombatSec: 180, delayFireRingSec: 180 },
+};
 
 const FAST = { champSelectTicks: 2, intermissionTicks: 3, combatMaxTicks: 20, resolutionTicks: 2 };
 const allBots = (): SeatSpec[] =>
@@ -73,5 +87,30 @@ describe("第十一回合的進場（GH#1151 A）", () => {
     // ⭐ 長度來自設定,⛔ 不是賽制的 combatMaxTicks(20)
     expect(ctl.phase.ticksLeft).toBeGreaterThan(FAST.combatMaxTicks);
     expect(ctl.phase.ticksLeft).toBeLessThanOrEqual(7 * TICK_HZ);
+  });
+});
+
+describe("第十一回合的世界（GH#1151 A 第 2 條）", () => {
+  it("⭐ **沒有火圈** —— ⛔ 而第十回合（同樣是 royale）**有**", () => {
+    const ctl = new MatchController(
+      "r11-ring", 7, allBots(), FAST, undefined, rules({ enabled: true }),
+      undefined, undefined, undefined, RING,
+    );
+    recordBossKill(ctl.round11BossKillsForTest, 1);
+    recordBossKill(ctl.round11BossKillsForTest, 2);
+    let n = 0;
+    const ringByRound = new Map<number, boolean>();
+    let prev = "";
+    while (ctl.phase.phase !== "matchEnd" && n++ < 40000) {
+      ctl.tick();
+      const k = `${ctl.phase.round}/${ctl.phase.phase}`;
+      if (k !== prev && ctl.phase.phase === "combat") {
+        ringByRound.set(ctl.phase.round, (ctl.world as { fireRingRules?: unknown }).fireRingRules != null);
+      }
+      prev = k;
+    }
+    // ⭐ 兩個方向：finalRound（3）有圈、⛔ 第十一回合（4）沒有。
+    expect(ringByRound.get(3), "第十回合(royale)⭐有火圈").toBe(true);
+    expect(ringByRound.get(4), "第十一回合⛔沒有火圈").toBe(false);
   });
 });
