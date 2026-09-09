@@ -1,0 +1,385 @@
+{
+  "schema": "ggd-distillation-import-roundtrip@1",
+  "admittedReportSha256": "11c21c7d8d386377564b3b87e000412d0485af3906b6a077167a527738217f74",
+  "sourceEvidence": {
+    "arm": "teacher-control",
+    "answersSha256": "66e5b12240df5730f9409f1f25ddd19b057136af8c69cfd9142ed472128d7f15",
+    "modelInferenceCalls": 0
+  },
+  "scriptSha256": "fda2d54123f3930a7bac40df6427bfecc72b2cc8ddcf9eeb3c842d75947229ad",
+  "rows": [
+    {
+      "id": "godie-edem:HERO",
+      "heroId": "godie-edem",
+      "engineRevision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "liveImportPassed": false,
+      "fullHeroE2EProven": false,
+      "status": "native-import-bridge-pending"
+    },
+    {
+      "id": "godie-h02v:HERO",
+      "heroId": "godie-h02v",
+      "engineRevision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "liveImportPassed": false,
+      "fullHeroE2EProven": false,
+      "status": "native-import-bridge-pending"
+    },
+    {
+      "id": "community-review-09-20260907:HERO",
+      "heroId": "community-review-09-20260907",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": false,
+      "fullHeroE2EProven": false,
+      "status": "import-failed",
+      "error": "TypeError: fetch failed"
+    },
+    {
+      "id": "community-review-16-20260907:HERO",
+      "heroId": "community-review-16-20260907",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": true,
+      "fullHeroE2EProven": false,
+      "packageDigest": "sha256:d789752f696cb491baf96dcc31923e39d94ac21d565589c49a6852cba2580d37",
+      "archiveSha256": "dc5fa9de07a18ef3a7b0d37ffbc7a42748f6a7a660f9f6b74d340f9661ba1240",
+      "archiveBytes": 3969967,
+      "compiledDocuments": 129,
+      "validationDocuments": 2,
+      "sourceUnchanged": true,
+      "downloadIdentical": true,
+      "modelBytesUnchanged": true,
+      "status": "isolated-import-roundtrip-pass",
+      "assets": {
+        "assets/models/community/913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd.glb": {
+          "exists": true,
+          "sha256": "913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd",
+          "bytes": 1053984,
+          "sources": [
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-model-options-20260909/release-v7/assets/models/community/913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd.glb"
+          ]
+        }
+      }
+    },
+    {
+      "id": "community-review-17-20260907:HERO",
+      "heroId": "community-review-17-20260907",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": true,
+      "fullHeroE2EProven": false,
+      "packageDigest": "sha256:777ff990e5f100f3acf37a72d84da14bfe5bd7b3d20ceb6ca2425181432c6f0c",
+      "archiveSha256": "2c0bb90dd86b488708624f7de285130d079b9c34bbdad25dd8fa0cc01bddd448",
+      "archiveBytes": 4219276,
+      "compiledDocuments": 128,
+      "validationDocuments": 2,
+      "sourceUnchanged": true,
+      "downloadIdentical": true,
+      "modelBytesUnchanged": true,
+      "status": "isolated-import-roundtrip-pass",
+      "assets": {
+        "assets/models/community/df7bc9e1b9fcda02b88ad164cad2a3ca2b0eb27b79a2bf5717c5ae6d2a25c285.glb": {
+          "exists": true,
+          "sha256": "df7bc9e1b9fcda02b88ad164cad2a3ca2b0eb27b79a2bf5717c5ae6d2a25c285",
+          "bytes": 1281464,
+          "sources": [
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-model-options-20260909/release-v7/assets/models/community/df7bc9e1b9fcda02b88ad164cad2a3ca2b0eb27b79a2bf5717c5ae6d2a25c285.glb"
+          ]
+        }
+      }
+    },
+    {
+      "id": "community-review-19-20260907:HERO",
+      "heroId": "community-review-19-20260907",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": true,
+      "fullHeroE2EProven": false,
+      "packageDigest": "sha256:0981ae6e1098735d8f757b3b0e47e75693f18e9f8039c91e9b5507be4bfe8d64",
+      "archiveSha256": "0e65f6f35a9bf88aa2d70566eedf25fc93e0d1fbe49ecac3e0119596f1bb10a0",
+      "archiveBytes": 4022696,
+      "compiledDocuments": 128,
+      "validationDocuments": 2,
+      "sourceUnchanged": true,
+      "downloadIdentical": true,
+      "modelBytesUnchanged": true,
+      "status": "isolated-import-roundtrip-pass",
+      "assets": {
+        "assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb": {
+          "exists": true,
+          "sha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+          "bytes": 1104488,
+          "sources": [
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-model-options-20260909/release-v7/assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb"
+          ]
+        }
+      }
+    },
+    {
+      "id": "community-review-20-20260907:HERO",
+      "heroId": "community-review-20-20260907",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": true,
+      "fullHeroE2EProven": false,
+      "packageDigest": "sha256:6f409958dd6c6f80b5c0d9c58b390da022d731d3e8b6ea66f36aa854217ebbac",
+      "archiveSha256": "6e90c4ffadcbe6073f0edbe6fb85365a800bca911af9f5d32a0d66a8293e867a",
+      "archiveBytes": 4484486,
+      "compiledDocuments": 128,
+      "validationDocuments": 2,
+      "sourceUnchanged": true,
+      "downloadIdentical": true,
+      "modelBytesUnchanged": true,
+      "status": "isolated-import-roundtrip-pass",
+      "assets": {
+        "assets/models/community/3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7.glb": {
+          "exists": true,
+          "sha256": "3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7",
+          "bytes": 1492264,
+          "sources": [
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-model-options-20260909/release-v7/assets/models/community/3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7.glb"
+          ]
+        }
+      }
+    },
+    {
+      "id": "community-review-23-20260907:HERO",
+      "heroId": "community-review-23-20260907",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": true,
+      "fullHeroE2EProven": false,
+      "packageDigest": "sha256:74884055ffdc452cfdd2b4ae27b02d539e1c68a04092f7bd0d37a911b49ecb8e",
+      "archiveSha256": "18f01334d971b83526469fcd57930311d17387860781039eb7319ac7f0a5fffc",
+      "archiveBytes": 4965178,
+      "compiledDocuments": 128,
+      "validationDocuments": 2,
+      "sourceUnchanged": true,
+      "downloadIdentical": true,
+      "modelBytesUnchanged": true,
+      "status": "isolated-import-roundtrip-pass",
+      "assets": {
+        "assets/models/community/f9c77d0749ae3cb6c5341c9cd01bbf117d52b14158ddc06007b93b90875e7bd2.glb": {
+          "exists": true,
+          "sha256": "f9c77d0749ae3cb6c5341c9cd01bbf117d52b14158ddc06007b93b90875e7bd2",
+          "bytes": 2010288,
+          "sources": [
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-model-options-20260909/release-v7/assets/models/community/f9c77d0749ae3cb6c5341c9cd01bbf117d52b14158ddc06007b93b90875e7bd2.glb"
+          ]
+        }
+      }
+    },
+    {
+      "id": "community-review-24-20260907:HERO",
+      "heroId": "community-review-24-20260907",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": true,
+      "fullHeroE2EProven": false,
+      "packageDigest": "sha256:747c2d1036fec7e50ea00366d9fe2bd8fe1af73fd2005e20c1a706eed3d0894a",
+      "archiveSha256": "e3c5330afd2b38138951d08c99b3d4bfaba641d6e536824e964690746b0ee7ea",
+      "archiveBytes": 3669398,
+      "compiledDocuments": 128,
+      "validationDocuments": 2,
+      "sourceUnchanged": true,
+      "downloadIdentical": true,
+      "modelBytesUnchanged": true,
+      "status": "isolated-import-roundtrip-pass",
+      "assets": {
+        "assets/models/community/43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246.glb": {
+          "exists": true,
+          "sha256": "43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246",
+          "bytes": 663584,
+          "sources": [
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-model-options-20260909/release-v7/assets/models/community/43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246.glb"
+          ]
+        }
+      }
+    },
+    {
+      "id": "community-review-26-20260907:HERO",
+      "heroId": "community-review-26-20260907",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": true,
+      "fullHeroE2EProven": false,
+      "packageDigest": "sha256:77e5742cd8391f1e09e2d67ade2185d23a79e1448a8c9994044e05e662f781ea",
+      "archiveSha256": "1d5ebf1b824587806f3469a0ec171ae86cd304b143e4495f515ea66f266c4fc5",
+      "archiveBytes": 3665650,
+      "compiledDocuments": 130,
+      "validationDocuments": 2,
+      "sourceUnchanged": true,
+      "downloadIdentical": true,
+      "modelBytesUnchanged": true,
+      "status": "isolated-import-roundtrip-pass",
+      "assets": {
+        "assets/models/community/ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08.glb": {
+          "exists": true,
+          "sha256": "ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08",
+          "bytes": 589076,
+          "sources": [
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-model-options-20260909/release-v7/assets/models/community/ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08.glb"
+          ]
+        }
+      }
+    },
+    {
+      "id": "community-review-28-20260907:HERO",
+      "heroId": "community-review-28-20260907",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": true,
+      "fullHeroE2EProven": false,
+      "packageDigest": "sha256:61a54ecb1dbbb1b4827b1ed6334b34bf900a9e7c4585f85caf4d6d65a501943f",
+      "archiveSha256": "55e6a88a88de9d227a87110f19bfed3ea32e8c371798406e6aaf03930f21b1e1",
+      "archiveBytes": 5297051,
+      "compiledDocuments": 128,
+      "validationDocuments": 2,
+      "sourceUnchanged": true,
+      "downloadIdentical": true,
+      "modelBytesUnchanged": true,
+      "status": "isolated-import-roundtrip-pass",
+      "assets": {
+        "assets/models/community/d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83.glb": {
+          "exists": true,
+          "sha256": "d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83",
+          "bytes": 2322448,
+          "sources": [
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-model-options-20260909/release-v7/assets/models/community/d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83.glb"
+          ]
+        }
+      }
+    },
+    {
+      "id": "community-review-33-20260907:HERO",
+      "heroId": "community-review-33-20260907",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": true,
+      "fullHeroE2EProven": false,
+      "packageDigest": "sha256:ea3366667dd964fa5262fbbeeffd3bd236f8af14a979f0b72ed7f05704e93a5d",
+      "archiveSha256": "85bc197ec3f8d7ed2b474622179361d2888f8ac27b7c4ad430b4fc8a42963473",
+      "archiveBytes": 4017401,
+      "compiledDocuments": 129,
+      "validationDocuments": 2,
+      "sourceUnchanged": true,
+      "downloadIdentical": true,
+      "modelBytesUnchanged": true,
+      "status": "isolated-import-roundtrip-pass",
+      "assets": {
+        "assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb": {
+          "exists": true,
+          "sha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+          "bytes": 1104488,
+          "sources": [
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-model-options-20260909/release-v7/assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb"
+          ]
+        }
+      }
+    },
+    {
+      "id": "community-review-36-20260907:HERO",
+      "heroId": "community-review-36-20260907",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": true,
+      "fullHeroE2EProven": false,
+      "packageDigest": "sha256:92dc2be062951c16d5a05ac58cd9b2beb5e8a1da6d25823591d0c3c197193237",
+      "archiveSha256": "13c71005190c177c3f67cd4690e3728b00146b24041c5901912a3d9a3c080fc2",
+      "archiveBytes": 3799359,
+      "compiledDocuments": 129,
+      "validationDocuments": 2,
+      "sourceUnchanged": true,
+      "downloadIdentical": true,
+      "modelBytesUnchanged": true,
+      "status": "isolated-import-roundtrip-pass",
+      "assets": {
+        "assets/models/community/8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5.glb": {
+          "exists": true,
+          "sha256": "8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5",
+          "bytes": 896312,
+          "sources": [
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-model-options-20260909/release-v7/assets/models/community/8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5.glb"
+          ]
+        }
+      }
+    },
+    {
+      "id": "b2-uncle:HERO",
+      "heroId": "b2-uncle",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": true,
+      "fullHeroE2EProven": false,
+      "packageDigest": "sha256:47238c3c0bf9993e66f522800c65545fd08530e39e30fe81d594f8213718c0bf",
+      "archiveSha256": "d3d9ad58ffccc52b802535ab0933ade9cd67269501faea1e8e203df0d7587931",
+      "archiveBytes": 3019808,
+      "compiledDocuments": 131,
+      "validationDocuments": 2,
+      "sourceUnchanged": true,
+      "downloadIdentical": true,
+      "modelBytesUnchanged": null,
+      "status": "isolated-import-roundtrip-pass",
+      "assets": {}
+    },
+    {
+      "id": "b2-haga:HERO",
+      "heroId": "b2-haga",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": true,
+      "fullHeroE2EProven": false,
+      "packageDigest": "sha256:1a10962888bbd373530f37fee81317c24a6e54612cd662afc76c71d044a3bc43",
+      "archiveSha256": "15825d95d5ec4dfb701d5c815d86d094ae7fd6775232133ff9ef7e670d0f0ed2",
+      "archiveBytes": 2920401,
+      "compiledDocuments": 131,
+      "validationDocuments": 2,
+      "sourceUnchanged": true,
+      "downloadIdentical": true,
+      "modelBytesUnchanged": null,
+      "status": "isolated-import-roundtrip-pass",
+      "assets": {}
+    },
+    {
+      "id": "b2-fushi:HERO",
+      "heroId": "b2-fushi",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": true,
+      "fullHeroE2EProven": false,
+      "packageDigest": "sha256:7b7eef747112cacb831651ee0ec6595a1eddb8f1cb7668c58c40335a31b406b1",
+      "archiveSha256": "deb066a663ff4740e1d5834843a6b130e181496a2123e8b7bbdfb59731d056fd",
+      "archiveBytes": 2967844,
+      "compiledDocuments": 132,
+      "validationDocuments": 2,
+      "sourceUnchanged": true,
+      "downloadIdentical": true,
+      "modelBytesUnchanged": null,
+      "status": "isolated-import-roundtrip-pass",
+      "assets": {}
+    },
+    {
+      "id": "b2-nube:HERO",
+      "heroId": "b2-nube",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "liveImportPassed": true,
+      "fullHeroE2EProven": false,
+      "packageDigest": "sha256:d4cb5f775b5bee808e8dc31e74a88d22ef35ad9b57ae32258a31355b6acbf0c5",
+      "archiveSha256": "6f12e81fbd066487918b2380fc39b687d69e8af84eca2e1bdc7baec89ae209e2",
+      "archiveBytes": 2933715,
+      "compiledDocuments": 131,
+      "validationDocuments": 2,
+      "sourceUnchanged": true,
+      "downloadIdentical": true,
+      "modelBytesUnchanged": null,
+      "status": "isolated-import-roundtrip-pass",
+      "assets": {}
+    }
+  ],
+  "services": {
+    "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b": {
+      "target": {
+        "gameRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+        "contentVersion": "cv_6c2412e2eca3",
+        "migrationFingerprint": "17d1f388d5c0",
+        "processorFingerprint": "adf109dc5ba1"
+      },
+      "origin": "http://127.0.0.1:57770"
+    }
+  },
+  "scope": "Pinned Main HTTP build, inspect, immutable isolated storage and download. No platform publication, hero selection, game behavior or model readiness.",
+  "fullHeroE2EProven": false,
+  "modelPromoted": false,
+  "counts": {
+    "wholeHeroes": 17,
+    "liveImportPassed": 14,
+    "failed": 1,
+    "serviceUnavailable": 0
+  }
+}

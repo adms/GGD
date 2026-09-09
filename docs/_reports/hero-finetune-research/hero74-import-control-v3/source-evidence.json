@@ -1,0 +1,55 @@
+{
+  "revision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+  "sourceArchiveSha256": "09e03f0a027c15db436c8e0971611a5922115f38a8d2d62dd40805dbbb50d00b",
+  "sourceArchiveBytes": 286720000,
+  "dependencies": {
+    "@types/node": {
+      "version": "22.20.1",
+      "packageJsonSha256": "1e6d3bbbc5082745123d236b38dce0eacdab987d4ac9e57e299e55f780c170de"
+    },
+    "chokidar": {
+      "version": "4.0.3",
+      "packageJsonSha256": "4764fed21a281c69d98e06b4c3e7c22a8936069ed2d320330d9831d8a8bddd5a"
+    },
+    "fastify": {
+      "version": "5.10.0",
+      "packageJsonSha256": "b273320af1bb4cfc0f9334457c8e3b1d035fde0da14f9db65e8ef97d361d0be3"
+    },
+    "tsx": {
+      "version": "4.23.1",
+      "packageJsonSha256": "116662201c06041c63de8837cf7bf6743f79a10187d0a210b377476071550a40"
+    },
+    "typescript": {
+      "version": "5.9.3",
+      "packageJsonSha256": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6"
+    },
+    "vitest": {
+      "version": "2.1.9",
+      "packageJsonSha256": "6ea35e567829660d9832744086c18526b9ddebd5358c4a0cadfb0a355925f917"
+    },
+    "zod": {
+      "version": "3.25.76",
+      "packageJsonSha256": "70eedbe34fd52385a4ae2f3e5759b19682189f0118ea73a6e7c32c677f61668e"
+    },
+    "@colyseus/schema": {
+      "version": "3.0.76",
+      "packageJsonSha256": "21f9756e5bc0af17706bc5767815642bb261037621d22fb5606e50e73167f5e6"
+    },
+    "gltf-validator": {
+      "version": "2.0.0-dev.3.10",
+      "packageJsonSha256": "3578d16153fa237c72784588da2e8fcccc9cd3c1c58ef34c7912f0732d2f5fa6"
+    },
+    "safe-stable-stringify": {
+      "version": "2.5.0",
+      "packageJsonSha256": "797e552ecb0f8ffe8ffb714e6c4888b28a8ca39eb9c0040836b2b6f640037798"
+    }
+  },
+  "contentManifestSha256": "02f17f610c8e2de32d210996dedf6eb817b0772824421842ac47eaec7af262fd",
+  "storage": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/hero74-import-control-v3/service-2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b/work-storage",
+  "overlay": "none: isolated pinned base catalog, not a live platform snapshot",
+  "buildSources": {
+    "generatorVersionId": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020",
+    "processorVersionId": "sha256:8e5a92af460b8a11e12993dabe1381746e72b2fe9e36895c3afad0455b7c25ea",
+    "processorFingerprint": "adf109dc5ba1"
+  }
+}
