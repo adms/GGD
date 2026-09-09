@@ -30,18 +30,23 @@ describe("第二批 37 名的五道界線矩陣（GH#1150 AC①）", () => {
     expect(md.split("\n")[0]).toContain("tools/batch2-boundaries/gen.mjs");
   });
 
-  it("⭐⭐ 「正式發布」那一欄由 `content/champions/` 決定 —— ⛔ 不是由「打包過」決定", () => {
-    // ⭐ 這是「一件成立不蘊含下一件」的**可檢查**版本：
-    //   ③標準化入庫 37 ✅，⛔ 而⑤正式發布**不可以**因此變成 ✅。
+  // ⛔⛔ **2026-09-09 更正：這一欄在此之前量的是另一件事。**
+  //   舊版斷言「⑤ ＝ content/champions/ 裡有幾張 b2-*」。⭐ 而實測落過一名之後
+  //   名單閘說：「上架就把 id 加進 starter.go 的 starterChampions」——
+  //   ⇒ ⭐ 那是**全體玩家的起始名單**，⛔ 不是社群房。
+  //   社群英雄真正的發布路是投稿發布流程（`publishsubmission.go` ＋ `communityRoomOnly`
+  //   ＋ `applyContentPool()`），它落在**平台 overlay**，⛔ 不在 git 裡。
+  // ⇒ 這一欄現在誠實地是 `?`，⭐ 而這條守衛守的是**它不可以假裝知道**。
+  it("⭐⭐ 「正式發布」欄 ⛔ 不可以假裝知道 —— 它要問平台 overlay，而產生器讀不到", () => {
     const tally = /\| ⑤正式發布 \| (\d+) \| (\d+) \| (\d+) \|/.exec(md);
     expect(tally, "⛔ 合計那一列不見了").not.toBeNull();
-    const shippedYes = Number(tally![1]);
-    const onDisk = execFileSync(
-      "bash",
-      ["-c", `ls ${JSON.stringify(join(REPO, "content/champions"))}/b2-*.json 2>/dev/null | wc -l`],
-      { encoding: "utf8" },
-    ).trim();
-    expect(shippedYes, "⛔ 表上的『正式發布』與出貨樹對不上 ⇒ 那張表在說謊").toBe(Number(onDisk));
+    const [yes, no, unknown] = [Number(tally![1]), Number(tally![2]), Number(tally![3])];
+    expect(
+      { yes, no },
+      "⛔ 這一欄宣稱知道答案 —— 而它讀不到平台 overlay（⭐ ✅ 是說謊，⛔ 是誣告）",
+    ).toEqual({ yes: 0, no: 0 });
+    expect(unknown, "⛔ 37 列都要有這一格").toBe(37);
+    expect(md, "⛔ 表上要寫得出**為什麼**是 `?`").toContain("平台 overlay");
   });
 
   // ⭐⭐ ④「畫面驗收」那一欄要對得上**逐條驗過**的收據 —— ⛔ 不是一個手填的勾。

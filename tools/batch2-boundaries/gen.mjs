@@ -103,8 +103,24 @@ const rows = (pkg.heroes ?? []).map((h) => {
     : typeof h.model?.liveGameVerified === "boolean"
       ? (h.model.liveGameVerified ? YES : NO)
       : UNKNOWN;
-  // ⭐ 「正式發布」＝ 這隻在**出貨的** content/champions/ 裡嗎（⛔ 不是「打包過」）
-  const shipped = existsSync(join(REPO, "content/champions", `${h.id}.json`)) ? YES : NO;
+  // ⭐⭐ 「正式發布」對**社群英雄**⛔ 不是「進 content/champions/」（2026-09-09 實測到的）。
+  //
+  // ⛔ 我照那個定義真的落過一名（b2-rem ＋ 它的 6 支技能）：
+  //   `content:build` 的名單閘當場說
+  //   「content/champions/ 裡有 1 張卡既不在名單上、也不是變身態、也不是骨架 ⇒
+  //     上架就把 id 加進 starter.go 的 starterChampions」
+  //   ⇒ ⭐ 而那是**全體玩家的起始名單**，⛔ 不是社群房。
+  //
+  // ⭐ 社群英雄真正的發布路是**投稿發布流程**：
+  //   `apps/platform/internal/server/publishsubmission.go`（`Origin == OriginPlayer`）
+  //   ＋ `hero_policy.go` 的 `communityRoomOnly` ＋ `game-server` 的 `applyContentPool()`。
+  //   ⇒ 它落在**平台 overlay**，⛔ 不在 git 的 `content/champions/`。
+  //
+  // ⚠️ ⭐ 所以這一欄在此之前量的是**另一件事** —— 它會把「社群英雄上線了沒」
+  //   讀成「有沒有被塞進官方名單」，⛔ 而那兩件事的答案可以相反。
+  //   ⇒ 誠實的答案是 `?`：**這一欄要問平台 overlay，而這支產生器讀不到它。**
+  //   ⛔ 不留 NO —— 那是誣告；⛔ 也不留 YES —— 那是說謊。
+  const shipped = UNKNOWN;
   const r = byId.get(h.id);
   return {
     id: h.id,
@@ -144,8 +160,11 @@ const md = [
       ["④畫面驗收", "screen"], ["⑤正式發布", "shipped"]].map(([label, k]) =>
     `| ${label} | ${tally(k, YES)} | ${tally(k, NO)} | ${tally(k, UNKNOWN)} |`),
   "",
-  `⇒ ⭐ **正式發布 ${tally("shipped", YES)}／${rows.length}** —— ⛔ 這一格由 \`content/champions/\` 決定，`,
-  "⛔ 不是由「打包過」決定（⭐ 一件成立不蘊含下一件）。",
+  "⇒ ⭐ **正式發布這一欄是 `?`** —— ⛔ 它問的不是 `content/champions/`：",
+  "社群英雄走**投稿發布流程**（`publishsubmission.go` ＋ `communityRoomOnly` ＋ `applyContentPool()`），",
+  "落在**平台 overlay**，⛔ 不在 git 裡 ⇒ ⭐ 這支產生器讀不到它，所以誠實回 `?`。",
+  "⚠️ 2026-09-09 實測：照舊定義落過一名 ⇒ 名單閘要求把 id 加進 `starterChampions`，",
+  "⭐ 而那是**全體玩家的起始名單**，⛔ 不是社群房。",
   "",
 ].join("\n") + "\n";
 
