@@ -1,0 +1,16 @@
+{
+  "run": 34388438365,
+  "job": 102590701460,
+  "head": "1474fc28847bb17d057e7dbb0964a0841329685a",
+  "lines": [
+    "unit\tWorkspace tests (vitest, coverage beacons on)\t2026-09-09T18:29:59.8173997Z  Test Files  1 passed (1)",
+    "unit\tWorkspace tests (vitest, coverage beacons on)\t2026-09-09T18:29:59.8180354Z       Tests  7 passed (7)",
+    "unit\tWorkspace tests (vitest, coverage beacons on)\t2026-09-09T18:41:04.4173162Z ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯",
+    "unit\tWorkspace tests (vitest, coverage beacons on)\t2026-09-09T18:41:04.4314487Z  Test Files  1 failed | 963 passed | 2 skipped (966)",
+    "unit\tWorkspace tests (vitest, coverage beacons on)\t2026-09-09T18:41:04.4352543Z       Tests  1 failed | 6261 passed | 4 skipped (6266)",
+    "unit\tVitest verdict ledger (decided + skipped == total, GH#1014)\t2026-09-09T18:41:04.6711008Z 🧾 vitest 裁決帳：2 份 `Test Files` 摘要 · 0 行 RPC 逾時",
+    "unit\tVitest verdict ledger (decided + skipped == total, GH#1014)\t2026-09-09T18:41:04.6711898Z    ✅ (這一次執行)  Test Files 1 passed (1)",
+    "unit\tVitest verdict ledger (decided + skipped == total, GH#1014)\t2026-09-09T18:41:04.6712700Z    ✅ (這一次執行)  Test Files 1 failed | 963 passed | 2 skipped (966)"
+  ],
+  "sha256": "54e094fb4414e8c823319345129e3b31e982f7a72bc38361b1e5171dc759dd31"
+}

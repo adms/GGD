@@ -387,6 +387,16 @@ export const SELL_REFUND_PCT_LABEL: FieldLabel & { group: "shelf" } = Object.fre
   group: "shelf",
 });
 
+export const SWAP_WHEN_FULL_LABEL: FieldLabel & { group: "shelf" } = Object.freeze({
+  zh: "背包滿時可以換掉一件",
+  note:
+    "三選一發到手而**背包已經滿**的時候：關著＝那張卡點了沒反應（GH#1110 的原缺陷）；" +
+    "⭐ 開著＝玩家可以**指定丟掉哪一件**換上新的，被丟掉的那件依「賣出退款率」退錢。" +
+    "⚠️ ⭐ 它**只管三選一**那條路 —— ⛔ 買寶玉那條**行為不變**（仍然是背包滿就拒絕、不扣錢）。" +
+    "⛔ 出貨**關著**：這是一個玩家看得到的行為改變，⭐ 開它之前要先確認換裝的 UI 真的送得出「要丟哪一件」。",
+  group: "shelf",
+});
+
 export const RANDOM_ONLY_TABLES_LABEL: FieldLabel & { group: "shelf" } = Object.freeze({
   zh: "隨機限定抽獎表",
   note:

@@ -36,10 +36,22 @@ refresh_cache() { # -> 0 抓到了 / 1 沒抓到（離線、沒有 gh、沒有�
   command -v gh >/dev/null 2>&1 || return 1
   mkdir -p "$(dirname "$CACHE")"
   local tmp; tmp="$(mktemp)"
-  if gh issue list --state all --limit 2000 --json number \
-       --jq '.[].number' > "$tmp" 2>/dev/null && [ -s "$tmp" ]; then
-    sort -n "$tmp" > "$CACHE"; rm -f "$tmp"; return 0
+  # ⭐⭐ **issue ＋ PR 兩種都收。**
+  #
+  # ⚠️ 2026-09-10 抓到:在此之前只收 `gh issue list` ⇒ ⛔ 一個**真的 PR 號碼**
+  #   （commit 訊息寫「解 PR #1152 的 contract」）在結構上**一定紅** ——
+  #   而它不是打錯的票號,它指得到一個真的東西。
+  # ⭐ 這條閘的用途是抓「**指不到任何東西**的號碼」(打錯字／lane 代號冒充),
+  #   ⛔ 不是「這個號碼是不是 issue 而不是 PR」—— ⭐ 後者不是缺陷。
+  # ⚠️ 一支會在**正確的引用**上紅的閘,下一步就是被人用 `--no-verify` 繞過去
+  #   （⭐ 而那正是這個檔上面那段註解自己在防的東西）。
+  local tmp2; tmp2="$(mktemp)"
+  gh issue list --state all --limit 2000 --json number --jq '.[].number' > "$tmp" 2>/dev/null
+  gh pr list   --state all --limit 2000 --json number --jq '.[].number' > "$tmp2" 2>/dev/null
+  if { [ -s "$tmp" ] || [ -s "$tmp2" ]; }; then
+    sort -un "$tmp" "$tmp2" > "$CACHE"; rm -f "$tmp" "$tmp2"; return 0
   fi
+  rm -f "$tmp2"
   rm -f "$tmp"; return 1
 }
 
@@ -97,7 +109,7 @@ lint_one() { # $1=一行標籤（顯示用） $2=訊息全文
       [ "$HAVE_CACHE" = 1 ] && grep -qx "$n" "$CACHE" && continue
     fi
     if [ "$HAVE_CACHE" = 1 ]; then
-      echo "✗ $label: (#$n) 對不到任何一張 issue" >&2; rc=1
+      echo "✗ $label: (#$n) 對不到任何一張 issue 或 PR" >&2; rc=1
     else
       echo "⚠️ $label: (#$n) **沒驗到** —— 沒有票號快取也連不上 GitHub（⛔ 不擋你）" >&2
       warned=1

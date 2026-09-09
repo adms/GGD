@@ -69,6 +69,11 @@ func parseHeroIntakePolicy(raw []byte) (submissions.HeroIntakePolicy, error) {
 		//   ⭐ 而「宣告」本身就是它們存在的意義：嚴格解析要嚴格得**有名有姓**。
 		CommunityRoomOnly *bool   `json:"communityRoomOnly"`
 		PublishMode       *string `json:"publishMode"`
+		// ⭐⭐ GH#1157 —— 已發布英雄的收據要對哪幾欄。⛔ 留空 ⇒ `migration`（出貨值）。
+		// ⚠️ 這一格**必須**宣告:下面是 `DisallowUnknownFields()` ⇒ ⛔ 少一格,
+		//   **整份政策讀不進來**,而玩家收到的是 503「投稿政策無法驗證」——
+		//   ⭐ 一個看起來像伺服器壞了的錯誤（這個檔上面那段註解記過同一次事故）。
+		HeroTargetMatch *string `json:"heroTargetMatch"`
 	}
 	decoder := json.NewDecoder(bytes.NewReader(raw))
 	decoder.DisallowUnknownFields()
@@ -95,7 +100,19 @@ func parseHeroIntakePolicy(raw []byte) (submissions.HeroIntakePolicy, error) {
 		}
 		modelMaxBytes = *doc.ModelMaxBytes
 	}
-	return submissions.HeroIntakePolicy{PowerUserQuotaPerDay: powerUserQuota, Enabled: *doc.Enabled, MaxPendingPerPlayer: *doc.MaxPending, QuotaPerPlayerPerDay: *doc.DailyQuota, MaxBytes: *doc.MaxBytes, ModelUploadsEnabled: modelUploads, ModelMaxBytes: modelMaxBytes}, nil
+	// ⭐ GH#1157 —— 三檔之一;留空 ⇒ 出貨值 `migration`。
+	// ⛔ **不認得的值一律 503**（fail-closed）—— ⭐ 靜靜退回預設會讓一個打錯的
+	//   後台設定看起來像「生效了」,而那正是這一票要修的病的另一半。
+	targetMatch := submissions.HeroTargetMatchMigration
+	if doc.HeroTargetMatch != nil {
+		switch submissions.HeroTargetMatch(*doc.HeroTargetMatch) {
+		case submissions.HeroTargetMatchMigration, submissions.HeroTargetMatchGameAndMigration, submissions.HeroTargetMatchStrict:
+			targetMatch = submissions.HeroTargetMatch(*doc.HeroTargetMatch)
+		default:
+			return submissions.HeroIntakePolicy{}, heroPolicyUnavailable()
+		}
+	}
+	return submissions.HeroIntakePolicy{HeroTargetMatch: targetMatch, PowerUserQuotaPerDay: powerUserQuota, Enabled: *doc.Enabled, MaxPendingPerPlayer: *doc.MaxPending, QuotaPerPlayerPerDay: *doc.DailyQuota, MaxBytes: *doc.MaxBytes, ModelUploadsEnabled: modelUploads, ModelMaxBytes: modelMaxBytes}, nil
 }
 
 // Re-read durable certification on every check, including after package preparation.

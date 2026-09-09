@@ -1,0 +1,217 @@
+#!/usr/bin/env bash
+# 🚫 **「這個檔是產生器的產物嗎」—— 改之前先問** 。
+# owner 2026-08-24：「你已經犯過**數十次**一樣的錯，請你一定要**寫成script擋住先檢查**，
+# 並且寫到開發守則」—— 錯的形狀：直接改產生器的產物，下一次 skills:sync 把它打回來，
+# 而那個「又紅了」看起來像新的錯（同一晚在 godie-e002.r 上發生兩次、49 個檔一次）。
+#
+# 用法：bash scripts/genguard.sh <path...>
+#   擁有者查 tools/parallel-gates/sync-io.json 的 writes（⭐ 量出來的表，⛔ 不是手寫）。
+#   **作者**擁有 ⇒ exit 1 並指名「改 <來源> 然後跑 <指令>」；
+#   只有**正規化器**（tiers:apply 那一族，就地改欄位⛔不產生檔案）⇒ exit 0 + 提醒；
+#   沒有擁有者 ⇒ exit 0。⭐ 與 PreToolUse hook 同一套裁決。
+set -o pipefail
+cd "$(dirname "$0")/.."
+RC=0
+for p in "$@"; do
+  OWNER=$(node --input-type=module -e "
+import { readFileSync } from 'node:fs';
+// ⭐ 2026-08-24 —— 這一段必須與 PreToolUse hook（scripts/preserve-before-overwrite.py）
+//    的裁決**逐字一致**:hook 放行而這支說「擋」，就是散文在說謊（第三守則）。
+//    **正規化器 ≠ 作者**:tiers:apply 讀 530 寫 401，它是就地改欄位，⛔ 不產生那些檔。
+//    ⛔ 清單只准放 sync-io 真的有的步驟名（normalizerListIsReal.test.ts 在守）——
+//    2026-08-25 拿掉幽靈名 'prose:apply'（真名 prose:build，且不在 sync-io 的步驟裡）。
+//    ⛔⛔ 2026-08-26 拿掉 'apdmg:build' —— 量到它的 2 份 writes **共有 0 份**
+//    （content/config/ap-damage-scaling.json 它是唯一寫入者）⇒ 它是**作者**不是正規化器，
+//    而 CLAUDE.md:1440 明文把那一份列在「⛔ 不可手改」的 7 份 config 產物裡。
+//    留在這裡＝這支腳本對一份禁改產物說「不擋你」還教人手改（誤導源 T0）。
+//    ⭐⭐ 2026-08-27 加入 skillremake:provenance —— 它的 writes 是兩條 glob
+//    (content/abilities 與 content/champions 底下的 *.json = **494 份**),
+//    於是 genguard 對那 494 份一律回 AUTHOR ⇒「改產物被擋／改來源沒有來源」的**死路**。
+//    ⛔ 而它不是作者:逐行讀 tools/skill-remake/stamp_provenance.py,它只寫
+//    out 的 provenance 那一格(⛔ 不是信檔頭,是看程式) ⇒ 純就地改欄位。
+//    ⭐ 加進來之後,真的有作者的那些檔(skillremake:json 也認領的 91+16 份)**仍然被擋**
+//    —— authors 濾掉正規化器之後還剩下它。這一格只放行「**只有** provenance 認領」的。
+//    ⚠️⚠️ 這段註解**不可以有反引號** —— 這段 JS 活在 shell 雙引號裡,反引號會被
+//    當成命令替換(2026-08-27 我就是這樣把這支腳本弄壞的,見上面那條同型警告)。
+//    ⭐⭐ 2026-08-27 第二筆:speedtiers:build —— 與上面**同一個形狀**,而我第一次只修了一半。
+//    它的 writes 是一條 glob(content/champions 的 *.json = 71 份),而逐行讀
+//    tools/speed-growth/gen.ts 的 withTierLines():它只在**原始字串**上刪/插
+//    tier 欄位那幾行,⛔ 其餘位元組一個都不碰 ⇒ 正規化器。
+//    ⚠️ 漏掉它的後果:71 份英雄卡裡 55 份被判 AUTHOR 而訊息叫人「改來源」——
+//    **英雄卡自己就是來源**,那是一條死路(另一條 lane 實測撞到,GH#805)。
+//    ⭐⭐ 2026-08-27（GH#707）清單**搬進 tools/parallel-gates/normalizers.json** ——
+//    在此之前它有兩份手寫副本(這裡 + hook),而**第三個消費端**(產物隔離區)
+//    根本不認得這個概念 ⇒ genguard 說「不擋你」而檔案是 444 ⇒ 387 份合法手編吃 EACCES。
+//    ⇒ 唯一住處 + 三個消費端一起讀(第〇·四守則)。每一格的理由住在那份 JSON 裡。
+//    ⚠️ 讀不到那份 JSON ⇒ 印 ERROR 並讓這支回非零,⛔ 不可以靜默當成「沒有正規化器」
+//    (那會讓 387 份手編檔全部被判 AUTHOR,而輸出看起來完全正常)。
+// ⭐⭐ 2026-08-29（GH#815 複驗）—— 分類是**逐檔**的,⛔ 不是逐步驟。
+//    normalizers.json 的每一格可以帶選填的 only:[路徑 glob] ——「只有這些路徑算正規化器」。
+//    ⚠️ 為什麼要有:apconv:build 就地改 content/abilities/*.json(正規化器),
+//    ⛔ 而 docs/_data/ap-conversion-applied.json 是它自己整份 emit 的清單(作者)。
+//    在此之前這一支對那份**真產物**回 NORMALIZER ＝「不擋你」,而隔離區還主動放行成 644。
+// ⭐⭐ 2026-09-07（GH#1099）—— 「正規化器 vs 作者」的**分類**搬進
+//    tools/parallel-gates/normalizer_rules.py（唯一住處），這裡只算「誰認領」。
+//    ⚠️ 為什麼:那一格 `onlyOutsideOwnWrites`（skillremake:json）在此之前
+//    **只有 editorSource.ts 讀得到** ⇒ 這一支對它逐檔列名產生的 127 份真產物
+//    一律回 NORMALIZER＝「不擋你」,而隔離區還主動放行成 644。失敗形態⑧,症狀沉默。
+//    ⇒ 分類不可以再有第二份手抄的實作（第〇·四守則）。
+let io;
+try {
+  io = JSON.parse(readFileSync('tools/parallel-gates/sync-io.json','utf8'));
+} catch (e) {
+  console.log('ERROR\t' + String((e && e.message) || e).split('\n')[0]);
+  process.exit(0);
+}
+const p=process.argv[1];
+const hit=[];
+// ⭐ GH#771:戶籍表裡的日期戳家族是 glob（merge-io 正規化）⇒ 用 glob→regex 比對。
+// ⚠️ 這段 JS 活在 shell 雙引號裡 —— ⛔ 註解與程式都不可以出現「錢字元+左括號」
+//    或反斜線轉義:2026-08-26 第一版用 replace 做轉義,被 shell 當命令替換吃掉,
+//    regex 靜默壞掉而輸出像正常。⇒ 逐字元組 regex:特殊字元用字元類包住,零反斜線。
+const g2re=(g)=>new RegExp('^'+g.split('').map((c)=>c==='*'?'[^/]*':c==='?'?'[^/]':/[a-zA-Z0-9_/.\u0080-\uffff-]/.test(c)?c:'['+c+']').join('')+'$');
+for (const s of io.steps ?? []) {
+  for (const w of s.writes ?? []) {
+    const m = /[*?\[]/.test(w) ? g2re(w).test(p) : (p===w || (w.endsWith('/') && p.startsWith(w)));
+    if (m) { if(!hit.includes(s.name)) hit.push(s.name); break; }
+  }
+}
+// ⭐ GH#827 —— **欄位級**:這一份裡有哪幾欄不是它的擁有者算得出來的。
+//    量出來的(field-io.mts 呼叫產生器自己的推導函式),⛔ 這裡沒有一張手抄的欄位表。
+//    ⚠️ 只對 field-io 真的量到的節做宣稱 —— 沒量到的節**不當成「全部自由」**。
+let fieldNote='';
+try {
+  const fio=JSON.parse(readFileSync('tools/parallel-gates/field-io.json','utf8'));
+  const ent=(fio.files ?? []).find((f) => f.path === p);
+  if (ent) {
+    const doc=JSON.parse(readFileSync(p,'utf8'));
+    const parts=[];
+    for (const [sect, own] of Object.entries(ent.owned ?? {})) {
+      const rows = sect === '$top' ? null : doc[sect.slice(0, -3)];
+      const present = rows === null ? Object.keys(doc) : [...new Set(Object.values(rows ?? {}).flatMap((r) => Object.keys(r ?? {})))];
+      const un = present.filter((k) => !own.includes(k)).sort();
+      if (un.length) parts.push(sect + ': ' + un.join(' '));
+    }
+    if (parts.length) fieldNote = parts.join(' / ');
+  }
+} catch (e) { fieldNote=''; }
+// ⭐ 只回報**誰認領**（＝誰的 writes 比中這條路徑）。分類交給 normalizer_rules.py。
+if (hit.length) console.log('HIT\t' + hit.join(',') + '\t' + fieldNote);
+" "$p" 2>/dev/null)
+  KIND=$(printf '%s' "$OWNER" | cut -f1)
+  HITS=$(printf '%s' "$OWNER" | cut -f2)
+  FNOTE=$(printf '%s' "$OWNER" | cut -f3)
+  NAME=""
+  AUTHORS=""
+  if [ "$KIND" = "HIT" ]; then
+    # ⭐⭐ GH#1099 —— **分類讀同一支判準**（⛔ 不抄一份 if）。
+    #    讀不到 ⇒ exit 2 ⇒ 這裡 fail-closed **而且大聲**（⛔ 不是靜默當成沒有作者:
+    #    那會把 127 份真產物講成「不擋你」,而輸出跟正常放行長得一模一樣）。
+    AUTHORS_RAW=$(python3 tools/parallel-gates/normalizer_rules.py "$p" "$HITS")
+    PRC=$?
+    if [ "$PRC" -ne 0 ]; then
+      echo "🚫 genguard 自己壞了 —— 正規化器判準跑不起來"
+      echo "   ⇒ python3 tools/parallel-gates/normalizer_rules.py（exit $PRC，訊息在上面）"
+      echo "   ⛔ 在修好之前**不要**把「沒有輸出」當成「可以改」。"
+      RC=1
+      continue
+    fi
+    AUTHORS=$(printf '%s' "$AUTHORS_RAW" | tr '\n' ',' | sed 's/,$//')
+    if [ -n "$AUTHORS" ]; then
+      KIND="AUTHOR"; NAME="${AUTHORS%%,*}"
+    else
+      KIND="NORMALIZER"; NAME="${HITS%%,*}"
+    fi
+  fi
+  if [ "$KIND" = "ERROR" ]; then
+    # ⚠️ 表讀不到 ⇒ **大聲**,⛔ 不是靜默放行。這支腳本的整個裁決都建立在那兩份表上。
+    echo "🚫 genguard 自己壞了 —— 讀不到擁有者表:$HITS"
+    echo "   ⇒ 需要 tools/parallel-gates/{sync-io,normalizers}.json 兩份都在"
+    echo "     （前者這一支自己讀,後者由 tools/parallel-gates/normalizer_rules.py 讀）。"
+    echo "   ⛔ 在修好之前**不要**把「沒有輸出」當成「可以改」。"
+    RC=1
+    continue
+  fi
+  if [ "$KIND" = "AUTHOR" ]; then
+    # ⭐⭐ GH#1096 —— **部分擁有**:產生器只擁有 `<!-- BEGIN GENERATED:… -->` 之間的行。
+    #    量到的:README.md 2,075 行裡只有 9 段是 docs:readme 寫的,而在此之前這一支
+    #    對**整份**回「這是產物」並 exit 1 ⇒ 另外約一千行人寫的散文改不動(GH#1089)。
+    #    ⛔ 判準不是一張「哪些檔是部分產物」的名單(那是第二個住處,而且會過期)——
+    #    區段從**檔案自己的 marker** 讀,「這一支是不是 marker 拼接器」從 package.json
+    #    追到它跑的那支程式再 grep。兩件事都住 tools/parallel-gates/marker_regions.py。
+    REGIONS=$(python3 tools/parallel-gates/marker_regions.py "$p" $(printf '%s' "$AUTHORS" | tr ',' ' ') 2>/dev/null)
+    if [ -n "$REGIONS" ]; then
+      echo "⚠️ $p **只有某幾段是產物** —— **$NAME** 只擁有 marker 區段,其餘的行是人寫的。"
+      echo "   ⛔ 這幾段別手改(改了下一次 \`pnpm $NAME\` 會打回來):"
+      printf '%s\n' "$REGIONS" | while IFS="$(printf '\t')" read -r rn ra rb; do
+        echo "      · $rn  L$ra–L$rb"
+      done
+      echo "   ⭐ 區段**外**的行可以直接用 Edit 改 —— PreToolUse hook 逐位元組判斷:"
+      echo "      落在區段內 ⇒ 擋(exit 2);落在區段外 ⇒ 放行。"
+      echo "   ⛔ 但**整份覆蓋**(Write / \`>\` 重導)仍然擋 —— 它會把產生區段一起蓋掉。"
+      # ⭐ 第二把量尺(與 NORMALIZER 那一支同一個形狀,GH#707):genguard 說「可以改」
+      #    而隔離區把整份 chmod 444 ⇒ 合法的散文編輯吃 EACCES,而訊息裡零指引。
+      if [ -e "$p" ] && [ ! -w "$p" ]; then
+        echo "   🚫🚫 ⚠️ **但這個檔現在是唯讀的(444)** —— 隔離區仍然把它當成**整份**產物。"
+        echo "      ⇒ 區段外的散文今天寫不進去(EACCES)。正解是讓 scripts/product-quarantine.sh"
+        echo "        也認得部分擁有(讀同一支 tools/parallel-gates/marker_regions.py),"
+        echo "        ⛔ 不要手動 chmod 這一份(那只治好眼前這一個,下一次 lock 又是全部)。"
+      fi
+      continue
+    fi
+    echo "🚫 $p 是產生器 **$NAME** 的產物 —— ⛔ 直接改它,下一次 sync 就打回來。"
+    echo "   ⇒ 改它的**來源**,然後 \`bash scripts/genrun.sh $NAME\` 重生成"
+    echo "     (genrun = 解鎖該支的產物→跑→重新上鎖;⚠️ 看它**最後一行**判成敗,⛔ 不要接管道)。"
+    echo "   ⇒ 找來源: grep -rl --exclude-dir=node_modules \"\$(basename \"$p\")\" tools/ scripts/ | head"
+    # ⭐⭐ GH#827 —— 上面那一行對**一部分欄位是謊話**:擁有者**逐格保留**它們,
+    #    重跑它不會把那幾欄「重生成」回來,而那幾欄也沒有來源可以改。
+    #    ⇒ 欄位級的量測結果在這裡說出來(⛔ 不然使用者會照著一條走不通的路走)。
+    if [ -n "$FNOTE" ]; then
+      echo "   ⚠️⚠️ **但這幾欄不是 $NAME 的**（量出來的,見 tools/parallel-gates/field-io.json）:"
+      echo "        $FNOTE"
+      echo "      ⇒ 重跑 $NAME **不會**動它們,也沒有「來源」可以改 —— 它們的寫入端寫在"
+      echo "        tools/parallel-gates/field-probes.json 的 fieldAuthors（有些是後台,有些是不在鏈上的腳本）。"
+      echo "      ⚠️ 而整份現在是一個產物 ⇒ 那幾欄今天**沒有任何合法寫入端**（GH#827）。"
+    fi
+    RC=1
+  elif [ "$KIND" = "NORMALIZER" ]; then
+    echo "⚠️ $p 會被**正規化器** $NAME 就地改欄位,⛔ 但它不是那支的產物 ⇒ 這一支不擋你。"
+    echo "   ⚠️⚠️ **「不擋」≠「這個檔是手編的」** —— 它可能是**別的**產生器的產物,"
+    echo "      也可能有一份**上游來源**(例:content/abilities/*.json 有些來自"
+    echo "      tools/skill-remake/heroes/*.py 的 model_fx= 表格出口)。"
+    echo "      ⇒ 改之前再問一次: grep -rl \"\$(basename \"$p\" .json)\" tools/ | head"
+    echo "      找得到來源就改來源＋genrun,⛔ 不要直接編這一份。"
+    echo "   ⚠️ 真的手改了,請跑一次 \`pnpm $NAME\`,讓級距/換算欄位跟著新內容重算。"
+    # ⭐ GH#707:在此之前這一支說「不擋你」而**產物隔離區把它 chmod 444**（388 份,100%）
+    #    ⇒ 合法手編吃 EACCES 而訊息裡零指引。現在隔離區認得正規化器了,
+    #    ⛔ 但這一行仍然要在 —— 它是第二把量尺:兩個閘再度分家時,**這裡會說出來**。
+    if [ -e "$p" ] && [ ! -w "$p" ]; then
+      echo "   🚫🚫 ⚠️ **但這個檔現在是唯讀的(444)** —— 隔離區與這一支又意見相左了(GH#707)。"
+      echo "      ⇒ 修法: bash scripts/product-quarantine.sh lock   （它會放行正規化器專屬檔）"
+      echo "      ⛔ 不要手動 chmod 這一份 —— 那只治好眼前這一個,下一次 sync 又是全部。"
+      RC=1
+    fi
+  else
+    # ⭐ 2026-08-26（owner:「追誤會的多個源頭」）——「無主」有兩種，⛔ 不可以長一樣:
+    #    檔案是唯讀(444) = 隔離區鎖過它 = **它是產物,只是戶籍表漏登**（量測洞:
+    #    條件寫入端在已同步的樹上量到 0 寫）。對它印 ✓ 就是「改產生物」的邀請函。
+    BANNER=$(head -c 4000 "$p" 2>/dev/null | grep -cE '由程式產生|請勿手動編輯|不要手改|這份文件是產生的|這一份由|@generated|DO NOT EDIT|自動產生' || true)
+    if [ -e "$p" ] && [ "${BANNER:-0}" -gt 0 ]; then
+      echo "🚫 $p 戶籍無主,⛔ 但**它自己的檔頭寫著它是產生的** —— 相信檔案,⛔ 不要手改。"
+      echo "   ⇒ 找產生器: grep -rl --exclude-dir=node_modules \"\$(basename \"$p\")\" tools/ scripts/ | head"
+      echo "   （戶籍洞見 GH#771 —— 重量測 sync-io 會補上這一筆。）"
+      RC=1
+    elif [ -e "$p" ] && [ ! -w "$p" ]; then
+      echo "🚫 $p **鎖著(444)但戶籍無主** —— 它是產物,只是 sync-io 的量測漏了它。"
+      echo "   ⛔ 不要手改。找它的產生器: grep -rl \"\$(basename \"$p\")\" tools/ scripts/ | head"
+      echo "   ⇒ 改**來源**,跑 bash scripts/genrun.sh <該步驟> 重生成。"
+      echo "   （戶籍洞本身見 GH#771 —— 重量測 sync-io 會補上這一筆。）"
+      RC=1
+    else
+      echo "✓ $p 沒有**產生器**擁有者,而且沒有被隔離區鎖過。"
+      echo "   ⚠️ 這只表示 sync-io 的 writes 沒有它 —— **上游來源**仍然可能存在"
+      echo "      (grep -rl 到 tools/ 就是)。⛔ 「沒有擁有者」≠「隨便改」。"
+    fi
+  fi
+done
+exit $RC

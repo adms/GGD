@@ -1,0 +1,220 @@
+{
+  "recordedAt": "2026-09-10T02:56:58.199888+08:00",
+  "issue": 1159,
+  "pr": 1135,
+  "firstParent": "d9f1611ced70eaf9fc0eebd75a375d8563b9e00a",
+  "incomingMain": "eac078afb4f52e0e3e79765bc15d5df034dafb21",
+  "scope": "Merge current Main and retain accepted hero projects; no hero design or VFX tuning.",
+  "conflictsResolved": 25,
+  "acceptedProjectsPreserved": 44,
+  "other37Projects": "Verified after merging this result into PR #1153.",
+  "coverageFingerprint": "7210afdca2af",
+  "capabilityFingerprint": "abedce92",
+  "requiredCells": 5234,
+  "validation": {
+    "skillsCheck": "67 original commands passed, appearance stale output rebuilt by original generator, remaining 3 commands passed; segmented validation, not a single aggregate exit 0.",
+    "editorRelease": "exit 0; 604 full Editor tests, typecheck and production build",
+    "coord": "29 packets, exit 0",
+    "targeted": "12 tests passed",
+    "goTargeted": "exit 0"
+  },
+  "priorRemoteCI": {
+    "head": "1474fc28847bb17d057e7dbb0964a0841329685a",
+    "run": 34388438365,
+    "contract": "success",
+    "goPlatform": "success",
+    "vuln": "success",
+    "unit": "failure: Shared 6261 passed, 1 failed, 4 skipped; only everyTagAnnounced missing v0.42.26; subsequent workspaces not run",
+    "verdictLedger": "success; no RPC timeouts"
+  },
+  "announcementLedger": {
+    "sourceCommit": "eac078afb4f52e0e3e79765bc15d5df034dafb21",
+    "path": "docs/_release/_announced.tsv",
+    "absentTags": [
+      "v0.42.26",
+      "v0.43.3"
+    ],
+    "action": "No forged row, exclusion or Discord send; Main handoff remains required."
+  },
+  "formalPublication": "pending; not performed by these merge checks",
+  "archivedParents": [
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/parents/first/2026-09-09.md",
+      "sourceCommit": "d9f1611ced70eaf9fc0eebd75a375d8563b9e00a",
+      "sourcePath": "docs/_daily/2026-09-09.md",
+      "sha256": "f1113ef02e2eb30897202e5a96bf0995f60922a5ef89fd9f8aaffaa2a9bd57a2"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/parents/main/2026-09-09.md",
+      "sourceCommit": "eac078afb4f52e0e3e79765bc15d5df034dafb21",
+      "sourcePath": "docs/_daily/2026-09-09.md",
+      "sha256": "46245dc424c66282cfdd69ea6e75a117ee392f101b9a0e6e6cb71a8565df3e2f"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/parents/first/戰情版-20260909.md",
+      "sourceCommit": "d9f1611ced70eaf9fc0eebd75a375d8563b9e00a",
+      "sourcePath": "docs/_release/戰情版-20260909.md",
+      "sha256": "859c47254f94d372a37e00d48c4bb371aa2be2d9d0014488ba314f581e87e91b"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/parents/main/戰情版-20260909.md",
+      "sourceCommit": "eac078afb4f52e0e3e79765bc15d5df034dafb21",
+      "sourcePath": "docs/_release/戰情版-20260909.md",
+      "sha256": "9dbefca7bdc0d4b5e4b1f1e786d40fec1dc3dfaaac448bb4553e566063169455"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/parents/first/戰情版-20260910.md",
+      "sourceCommit": "d9f1611ced70eaf9fc0eebd75a375d8563b9e00a",
+      "sourcePath": "docs/_release/戰情版-20260910.md",
+      "sha256": "c4811521821f192c1ab6ba48d212c5b4a928bc834929175c7e73ce70c0bc1512"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/parents/main/戰情版-20260910.md",
+      "sourceCommit": "eac078afb4f52e0e3e79765bc15d5df034dafb21",
+      "sourcePath": "docs/_release/戰情版-20260910.md",
+      "sha256": "d1d700921b243cc75d80c660dc6a9b566c751833f920df5739564acb798578ca"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/generators.json",
+      "bytes": 2269,
+      "sha256": "075eee2cdee35c686dc23ac4208e137ef6345dff976ebc112156ae80c4a98b1e"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/archived-parents.json",
+      "bytes": 1914,
+      "sha256": "c458b28356eec8c17de21a11f34e9bcd3c8ab6698dcc57058bde72bc2d9481ed"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/ledger-counts.json",
+      "bytes": 46,
+      "sha256": "2983366f795d0f5f9f1bdfd10c22f55914e01735b5ce5c0f42a7bb65a864d913"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/resolved-conflicts.json",
+      "bytes": 987,
+      "sha256": "dfafd32500b9c62c7d7430883776ec0ab6a492fc570a960f249567a7e94284b9"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/preserved-projects.json",
+      "bytes": 9883,
+      "sha256": "fd23f706dfc04d5279220956c3e718b4abd7fc4c74e4451e0bb2ea4599847fba"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/index-review.json",
+      "bytes": 1008,
+      "sha256": "e16b74b8b05055462e2d6c82503db51ec15f6b51a9a4b37517fd9bb874eb2ac8"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/skills-split.json",
+      "bytes": 2064,
+      "sha256": "59baacdb283606d00a07677373044051a6d13feeb615f4d8587d211af23f1d6b"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/skills-tail.json",
+      "bytes": 454,
+      "sha256": "ac5055e60821ec6ee6f438174f337dd18adbdb4f00cd992a8d6052f029935504"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/01-content-build.log",
+      "bytes": 1448,
+      "sha256": "7463aedf3e92ced7b4fd053fce97987b05cee0f5c5b15089ace4fd6a6f7b5202"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/02-spec-build.log",
+      "bytes": 806,
+      "sha256": "c32a8c6c318c77d4b4677708bf872e28e80002c9a10720f0995902cde966baa8"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/03-skillforge-audit.log",
+      "bytes": 832,
+      "sha256": "30b3438583100f35c270b44a8e608fca30caa278c216c5c3796f0aaaffff60fa"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/04-editorcov-build.log",
+      "bytes": 1095,
+      "sha256": "cc29a1a5c42b4dfb27b241854ecdd2490d4f016703cf6a45f6965d90fd93cf2d"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/05-bricks-build.log",
+      "bytes": 1550,
+      "sha256": "4627953aeaab4d216710646619c8d078ba3993b26c903552291e51cd151c4c36"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/06-decor-build.log",
+      "bytes": 924,
+      "sha256": "bbc68020b5b70bff8da8dda0c520dc2a1a3ad868f9456386c91284384d0f8835"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/07-docs-readme.log",
+      "bytes": 1287,
+      "sha256": "c4ca5e37e7e24397559f90957fe92ecf01e2364f628782d7b373c5bee3346add"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/08-skillremake-docs.log",
+      "bytes": 947,
+      "sha256": "1627b8526955e69be1d8c51dded82342f3a4ecc597fa3c237918e8fdeee15352"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/09-contract-numbers.log",
+      "bytes": 896,
+      "sha256": "f9e7be428cdc33778cc0894e26fec80907daa63632ba41fb9872ecef32af9418"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/10-board-roll.log",
+      "bytes": 730,
+      "sha256": "348a0fb2f72618cd5dff6a67bd2d893a46a9e74cf19cf56d4e5ddcebdb8bc153"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/11-board-build.log",
+      "bytes": 838,
+      "sha256": "5a38a913fdb377e421261fad8c459bce1d928570f9114a2e28459c63105e5398"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/appearance-build.log",
+      "bytes": 817,
+      "sha256": "a1e3a30bce3037a04329235151560e212930bdf841e06d062a87dd436b62f913"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/appearance-check.log",
+      "bytes": 226,
+      "sha256": "703b7b86c745b98d539642ed67400e39367f90063ca1bd7995e20e1a2a972429"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/coord-check.log",
+      "bytes": 6111,
+      "sha256": "308ecb32603d0faa2759cecb35b20e29c0673e21f5da2272cbde583b0d6509ae"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/coord.log",
+      "bytes": 6111,
+      "sha256": "308ecb32603d0faa2759cecb35b20e29c0673e21f5da2272cbde583b0d6509ae"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/editor-release.log",
+      "bytes": 917,
+      "sha256": "9c2870eee09d02568c5caabafaf43a95432e8932f388dbae40dfa7bfc94d94ec"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/go-targeted.log",
+      "bytes": 57,
+      "sha256": "dba13e404b2575c893afceb81a90e3a661ad2d27cc1ec9a79d15853de2c751fa"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/ptokens-check.log",
+      "bytes": 231,
+      "sha256": "0f77cc98828c455596a2aed4c2372d53094b6c86ec1cca07bad9b278e3d44931"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/skills.log",
+      "bytes": 47919,
+      "sha256": "60878ba81b0ada7b1c07559c6165675356eb26753d90a090280916806f23d730"
+    },
+    {
+      "path": "materials/community-hero-forge/receipts/main-v0433-integration/targeted.log",
+      "bytes": 1317,
+      "sha256": "4437bb1b6ca450eda1da442e98267e5f8f06f71fae745b48649d9dd9058d3348"
+    }
+  ]
+}

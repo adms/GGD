@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { classify } from "./run.mjs";
 import { TIERS, gateArgs, gatePlan, shipPlan } from "./shipPlan.mjs";
+import { packagesWithVitest } from "../parallel-gates/packages.mjs";
 
 const ROOT = new URL("../../", import.meta.url).pathname;
 /** ⭐ **真的歷史路徑集合**,⛔ 不是我編的夾具（失敗形態⑤:被測的不是出貨的那個）。 */
@@ -10,7 +11,20 @@ const diff = (range) =>
   execFileSync("git", ["-c", "core.quotepath=false", "diff", "--name-only", range], { cwd: ROOT, encoding: "utf8" })
     .split("\n")
     .filter(Boolean);
-const ALL = ["apps/admin", "apps/client", "apps/content-api", "apps/editor", "apps/game-server", "apps/test-dashboard", "packages/shared"];
+/**
+ * ⭐⭐ **從出貨的那一支推導,⛔ 不是手寫一份。**
+ *
+ * ⚠️ 2026-09-10 抓到:這一行原本是**寫死的 7 個包**,而 `packagesWithVitest()` 回 **8**
+ * —— 多的是 `apps/editor-desktop`（它後來長出了測試）。
+ * ⇒ ⛔ 兩條斷言紅了,而它們紅的**不是**被測的行為,是這份清單過期。
+ *
+ * ⭐ 那正是第二守則逐字禁止的形狀:「⛔ **數字不可以住在測試裡** ——
+ *   測試裡再抄一份就是**第四個住處,而它沒有守衛** ⇒ 它一定會過期,
+ *   而且**用錯誤的訊息紅**」。⚠️ 而這一支的檔頭自稱是
+ *   「一支決定『哪些閘可以不跑』的程式自己沒有閘 —— 這整條路上最不能接受的洞」
+ *   ⇒ ⭐ 它自己的夾具**更不可以**是一份抄來的清單。
+ */
+const ALL = packagesWithVitest(ROOT);
 
 describe("分級 → 要不要重建映像（餵真實的 commit）", () => {
   it("v0.25.6..v0.25.7（142 檔,含 client/schema）⇒ T3 且**必須**重建映像", () => {
