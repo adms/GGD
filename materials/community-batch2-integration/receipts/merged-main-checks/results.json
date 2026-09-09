@@ -1,0 +1,51 @@
+[
+  {
+    "command": [
+      "pnpm",
+      "skills:check"
+    ],
+    "exitCode": 1,
+    "seconds": 48.08,
+    "log": "/private/tmp/ggd-batch2-merged-main-gates-01/check-1.log"
+  },
+  {
+    "command": [
+      "pnpm",
+      "editor:accept:release"
+    ],
+    "exitCode": 0,
+    "seconds": 178.28,
+    "log": "/private/tmp/ggd-batch2-merged-main-gates-01/check-2.log"
+  },
+  {
+    "command": [
+      "pnpm",
+      "coord:check"
+    ],
+    "exitCode": 0,
+    "seconds": 3.52,
+    "log": "/private/tmp/ggd-batch2-merged-main-gates-01/check-3.log"
+  },
+  {
+    "command": [
+      "pnpm",
+      "--filter",
+      "@ggd/shared",
+      "exec",
+      "vitest",
+      "run",
+      "src/content/assetsOffDiskDeclaration.test.ts",
+      "src/content/championIdentity.test.ts",
+      "src/content/shippedIconsAreCurrentStyle.test.ts",
+      "src/ops/announceLedgerUpdatesOnForce.test.ts",
+      "src/ops/batch2BoundaryMatrix.test.ts",
+      "src/ops/playerNoteNoRepeat.test.ts",
+      "--pool=forks",
+      "--poolOptions.forks.maxForks=2",
+      "--poolOptions.forks.minForks=1"
+    ],
+    "exitCode": 0,
+    "seconds": 8.21,
+    "log": "/private/tmp/ggd-batch2-merged-main-gates-01/check-4.log"
+  }
+]

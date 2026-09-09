@@ -91,7 +91,7 @@ trace() { [ "${GGD_PLAYERNOTE_TRACE:-0}" = 1 ] && echo "🔎 #$1 sha=${2:--} →
 # ⭐ 一顆 commit 在 SINCE..NOW 裡 ⇔ 是 NOW 的祖先 **且** 不是 SINCE 的祖先
 in_range() { git cat-file -e "$1" 2>/dev/null && git merge-base --is-ancestor "$1" "$NOW" 2>/dev/null && ! git merge-base --is-ancestor "$1" "$SINCE" 2>/dev/null; }
 
-LINES=""; MISSING=""; UNSCOPED=""; DECLARED=""
+LINES=""; MISSING=""; UNSCOPED=""; DECLARED=""; DUP=""
 for N in $CLOSED; do
   # ⭐ title＋comments **一次**撈完（在此之前每張票打 2–3 次 gh：50 張 58 秒）
   # ⭐ `GGD_PLAYERNOTE_CACHE=<dir>` —— **補發專用**的唯讀快取（GH#1152）。
@@ -184,6 +184,33 @@ for N in $CLOSED; do
     fi
   fi
   T=$(printf '%s' "$RAW_T" | sed 's/\[[^]]*\]//g' | sed 's/^ *//')
+  # ⛔⛔ **這一句已經公告過了嗎？**（2026-09-09 量到，⭐ 同一天發生兩次）
+  #
+  # ⚠️ 玩家那一句住在**票**上，⛔ 而票會被再次動到（補標記、改 commit、關票）
+  #   ⇒ ⭐ 它會落進**下一版**的區間，於是同一句話被發第二次。
+  #   實例：#1129 的「107 張舊畫風的圖示重畫了」在 v0.42.13 發過，
+  #   而我把它的進度標記 commit 更新成本輪的稽核 commit ⇒ v0.42.17 **又發了一次**。
+  #
+  # ⭐ 而分辨它**不需要新資訊**：帳本 `_announced.tsv` 第三欄就記著「哪一版發過哪一句」。
+  #   ⇒ 這支腳本一直**答得出來**，⛔ 只是沒有人問它。
+  #
+  # ⚠️ ⭐ 比對的是**前 60 個字元**（帳本第三欄就是那樣切的，見下面記帳那一段）——
+  #   ⛔ 不是整句：帳本存的本來就是截短的。
+  if [ -n "$P" ]; then
+    _LG0="${GGD_ANNOUNCE_LEDGER:-docs/_release/_announced.tsv}"
+    _HEAD=$(printf '%s' "$P" | python3 -c 'import sys;print(sys.stdin.read().replace("\t"," ")[:60].strip())' 2>/dev/null || true)
+    # ⛔⛔ **⛔ 不可以把「這一版自己那一列」算成重複**（2026-09-09 當場踩到）：
+    #   一次刻意的補發（`--until v0.42.13` 而帳本第 v0.42.13 列就是那一句）
+    #   會被自己擋掉 ⇒ ⭐ **真內容退化成罐頭**，而且帳本被罐頭覆寫回去。
+    #   ⇒ 只比對**別的版號**那幾列。
+    _PREVROWS=$(awk -F'\t' -v now="$NOW" '$1!=now{print $3}' "$_LG0" 2>/dev/null || true)
+    if [ -n "$_HEAD" ] && [ -f "$_LG0" ] && printf '%s\n' "$_PREVROWS" | grep -qxF "$_HEAD"; then
+      DUP="${DUP}  · #$N ${P}
+"
+      trace "$N" "$SHA" "dup（這一句帳本上已經發過）"
+      P=""; WHY="dup"
+    fi
+  fi
   if [ -n "$P" ]; then
     LINES="${LINES}- ${P}
 "
@@ -217,6 +244,9 @@ for N in $CLOSED; do
         #   而我先前**只在 `commits` scope 測過** —— ⛔ 一把只驗過單邊的尺。
         if [ "${IN:-}" = named ] && [ -n "$SHA" ] && ! in_range "$SHA"; then
           trace "$N" "$SHA" "skip（只是被 commit 提到,這一版沒有改它 —— GH#1109）"
+        elif [ "${WHY:-}" = dup ]; then
+          # ⭐ 它**發過了** —— ⛔ 那不是「沒寫玩家句」,⛔ 不可以擋住這一版的公告。
+          trace "$N" "$SHA" "dup ⇒ ⛔ 不進 MISSING"
         elif [ "$ANS" = declared ]; then
           # ⭐ 人**答過了**：這張票玩家看不到 ⇒ ⛔ 不進 MISSING（它不擋公告）,
           #   ⭐ 但仍然印出來 —— 一個被靜默吞掉的答案與沒有答案長得一樣。
@@ -284,6 +314,13 @@ if [ -z "$LINES" ]; then
   printf '%s' "$LINES"
 else
   printf '%s' "$LINES"
+fi
+
+# ⚠️ ⭐ fail-loud（負一）：**這一句帳本上已經發過** —— ⛔ 不重複發，⭐ 但要說出來
+if [ -n "$DUP" ]; then
+  echo
+  echo "ℹ️ 這幾句**已經在更早的版本公告過** ⇒ ⛔ 不重複發（⭐ 票被再次動到才落進這一版）："
+  printf '%s' "$DUP"
 fi
 
 # ⚠️ ⭐ fail-loud（〇）：**人答過「這張票玩家看不到」**的那幾張 —— ⛔ 它們不擋公告
@@ -388,11 +425,19 @@ case "$CODE" in
       #   ⇒ 用 python3 切**字元**（這支腳本本來就依賴 python3 做 JSON）。
       FIRSTLINE=$(printf '%s' "$LINES" | sed -n '1s/^[[:space:]·*-]*//p' \
         | python3 -c 'import sys;print(sys.stdin.read().replace("\t"," ")[:60].strip())')
-      for T in $(git tag --sort=v:refname | awk -v a="$SINCE" -v b="$NOW" '
-            $0==a{seen=1; next} seen{print} $0==b{exit}'); do
-        grep -q "^${T}	" "$LEDGER" || printf '%s\t%s\t%s\n' "$T" "$TODAY" "${FIRSTLINE:-玩家公告}" >> "$LEDGER"
-      done
-      grep -q "^${NOW}	" "$LEDGER" || printf '%s\t%s\t%s\n' "$NOW" "$TODAY" "${FIRSTLINE:-玩家公告}" >> "$LEDGER"
+      # ⛔⛔ **補發時要更新那一列，⛔ 不是跳過**（2026-09-09 量到）：
+      #   在此之前這裡一律是 `grep -q … || printf … >>` ⇒ ⭐ **已經在帳本上的版號永遠不會被改**。
+      #   ⇒ 一次 `GGD_ANNOUNCE_FORCE=1` 的補發把**真的內容**發了出去，
+      #     ⛔ 而帳本第三欄還留著那句被取代掉的罐頭 ——
+      #   ⭐ 於是下一個讀帳本的人（含我自己）會得出「那一版本來就沒有玩家可見的改動」。
+      #   ⚠️ 那正是本 repo 一再記錄的形狀：**一個看起來已經量過的東西，量的不是你以為的那個。**
+      # ⇒ ⭐ 只有 `GGD_ANNOUNCE_FORCE=1`（＝明確的補發）才覆寫既有列；平常照舊只追加。
+      TAGS_IN_RANGE=$(git tag --sort=v:refname | awk -v a="$SINCE" -v b="$NOW" '
+            $0==a{seen=1; next} seen{print} $0==b{exit}')
+      # ⭐ 邏輯住 `tools/release/ledger_merge.py`（⛔ 不是這裡的一段 heredoc）——
+      #   一段沒有辦法被單獨呼叫的邏輯，只能靠「真的發一次」來驗。
+      python3 tools/release/ledger_merge.py "$LEDGER" "$TODAY" "${FIRSTLINE:-玩家公告}" \
+        "${GGD_ANNOUNCE_FORCE:-0}" $TAGS_IN_RANGE "$NOW"
       echo "  ✓ 已記進 $LEDGER"
     fi
     ;;

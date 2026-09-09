@@ -1,0 +1,21 @@
+{
+  "schema": "ggd-batch-integration-upstream@1",
+  "previousHead": "f61d5f5a18fe47b306c626f11e959c9259cc4398",
+  "mergedMain": "1fdc84e4d18a14136287cf17c32fa9ad3fee64a4",
+  "mergeConflicts": [],
+  "upstreamSourcesEqualToMain": [
+    "docs/_daily",
+    "docs/_release",
+    "tools/board/gen_board.py",
+    "tools/legacy-index/build_index.py"
+  ],
+  "rawHeroProjectsChanged": false,
+  "decisionsChanged": false,
+  "modelBindingsChanged": false,
+  "executionServiceRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+  "serviceRebuiltForMergedMain": false,
+  "dailySourceTracked": false,
+  "publicationEvidence": "materials/community-batch2-integration/receipts/publication-proof.json",
+  "socketProofStatus": "blocked-before-login-see-live-match-preflight",
+  "formalDeploymentVerified": false
+}
