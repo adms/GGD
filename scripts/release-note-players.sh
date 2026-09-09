@@ -388,11 +388,19 @@ case "$CODE" in
       #   ⇒ 用 python3 切**字元**（這支腳本本來就依賴 python3 做 JSON）。
       FIRSTLINE=$(printf '%s' "$LINES" | sed -n '1s/^[[:space:]·*-]*//p' \
         | python3 -c 'import sys;print(sys.stdin.read().replace("\t"," ")[:60].strip())')
-      for T in $(git tag --sort=v:refname | awk -v a="$SINCE" -v b="$NOW" '
-            $0==a{seen=1; next} seen{print} $0==b{exit}'); do
-        grep -q "^${T}	" "$LEDGER" || printf '%s\t%s\t%s\n' "$T" "$TODAY" "${FIRSTLINE:-玩家公告}" >> "$LEDGER"
-      done
-      grep -q "^${NOW}	" "$LEDGER" || printf '%s\t%s\t%s\n' "$NOW" "$TODAY" "${FIRSTLINE:-玩家公告}" >> "$LEDGER"
+      # ⛔⛔ **補發時要更新那一列，⛔ 不是跳過**（2026-09-09 量到）：
+      #   在此之前這裡一律是 `grep -q … || printf … >>` ⇒ ⭐ **已經在帳本上的版號永遠不會被改**。
+      #   ⇒ 一次 `GGD_ANNOUNCE_FORCE=1` 的補發把**真的內容**發了出去，
+      #     ⛔ 而帳本第三欄還留著那句被取代掉的罐頭 ——
+      #   ⭐ 於是下一個讀帳本的人（含我自己）會得出「那一版本來就沒有玩家可見的改動」。
+      #   ⚠️ 那正是本 repo 一再記錄的形狀：**一個看起來已經量過的東西，量的不是你以為的那個。**
+      # ⇒ ⭐ 只有 `GGD_ANNOUNCE_FORCE=1`（＝明確的補發）才覆寫既有列；平常照舊只追加。
+      TAGS_IN_RANGE=$(git tag --sort=v:refname | awk -v a="$SINCE" -v b="$NOW" '
+            $0==a{seen=1; next} seen{print} $0==b{exit}')
+      # ⭐ 邏輯住 `tools/release/ledger_merge.py`（⛔ 不是這裡的一段 heredoc）——
+      #   一段沒有辦法被單獨呼叫的邏輯，只能靠「真的發一次」來驗。
+      python3 tools/release/ledger_merge.py "$LEDGER" "$TODAY" "${FIRSTLINE:-玩家公告}" \
+        "${GGD_ANNOUNCE_FORCE:-0}" $TAGS_IN_RANGE "$NOW"
       echo "  ✓ 已記進 $LEDGER"
     fi
     ;;
