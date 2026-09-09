@@ -1,0 +1,46 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.hero-model-library-options",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "ec4e0a48ed8a90b997a794a4fb861ac1c9c87bf4",
+  "contractFingerprint": "23d3e78f6ec4d047",
+  "title": "素材庫模型選項：300 > MBA > 原版 > 借用 W3X，保留手動選擇",
+  "claims": [
+    {
+      "kind": "owner-decision",
+      "commit": "ec4e0a48ed8a90b997a794a4fb861ac1c9c87bf4",
+      "text": "認領 shared 模型版本 schema、開發與正式後台模型選擇、固定成品資源索引及 Mac mini 部署前模型同步；依來源排序保留手動選擇，機制變更請 Main review。",
+      "ownerQuote": {
+        "date": "2026-09-09",
+        "text": "請你全部都上架照這個順序設定 並且在後台每個角色都有下拉式選單 可以替換多個選項 但預設是我上面給你的順序"
+      },
+      "evidence": [
+        "apps/content-api/src/modelVersions.ts",
+        "apps/admin/src/ui/ChampionModelVersions.tsx",
+        "apps/platform/internal/contentoverlay/model_selection.go",
+        "materials/hero-model-library/README.md",
+        "scripts/mini-deploy.sh"
+      ],
+      "repro": {
+        "command": "pnpm exec vitest run apps/content-api/src/modelVersions.test.ts --maxWorkers=2 --minWorkers=1",
+        "expectedExit": 0
+      }
+    },
+    {
+      "kind": "confirmed",
+      "commit": "ec4e0a48ed8a90b997a794a4fb861ac1c9c87bf4",
+      "text": "來源索引將銀時、蜘蛛子寵物形態、海克力斯列為本尊首選；S3 發布與逐檔讀回收據留在 Git，並未宣稱網站已部署。",
+      "evidence": [
+        "materials/hero-model-library/manifest.json",
+        "materials/hero-model-library/spider-identity.json",
+        "materials/hero-model-library/s3-publication-receipt.json"
+      ],
+      "repro": {
+        "command": "python3 tools/hero-model-library/check-index.py",
+        "expectedExit": 0
+      }
+    }
+  ]
+}

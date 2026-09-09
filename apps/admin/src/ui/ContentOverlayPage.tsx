@@ -1,3 +1,4 @@
+import { ChampionModelVersions } from "./ChampionModelVersions";
 /**
  * 內容覆蓋層 — the page that makes #189 real on the deployed host.
  *
@@ -19,7 +20,7 @@
  * different authorisation models, so two different pages.
  */
 import { useCallback, useEffect, useRef, useState } from "react";
-import { api, platformHeroCatalogApi, getOverlayDoc } from "../api";
+import { api, platformHeroCatalogApi, platformModelVersionsApi, getOverlayDoc } from "../api";
 import { ChampionDataVersions } from "./ChampionDataVersions";
 import {
   deleteOverlayDoc,
@@ -668,6 +669,14 @@ export function ContentOverlayPage(): React.JSX.Element {
           每一筆寫入同時也會留在 Audit log（<code>content-overlay.put / delete / revert</code>）。
         </div>
       </Panel>
+
+      {collection.trim() === "champions" && docId.trim() !== "" && <ChampionModelVersions
+        key={`models-${docId.trim()}`} api={platformModelVersionsApi} championId={docId.trim()}
+        document={status.generation} allowRegister={false} disabled={busy} dirty={draftDirty} onBusy={setBusy}
+        onSaved={() => {
+          void getOverlayDoc("champions", docId.trim()).then(doc => { if (doc) setDraft(formatDoc(doc)); setDraftDirty(false); }).catch(err => setError(errText(err)));
+          void refresh();
+        }} />}
 
       {/* ── 5. 版本回滾（GH#326）────────────────────────────────────────── */}
       {collection.trim()==="champions" && docId.trim()!=="" && <ChampionDataVersions key={`catalog-${docId.trim()}`} api={platformHeroCatalogApi} championId={docId.trim()} document={status.generation} disabled={busy} dirty={draftDirty} onBusy={setBusy} onSaved={()=>{

@@ -1,3 +1,4 @@
+import { loadPreferredLibraryModel } from "../hero-model-library/load-option.mjs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { parseArgs } from "node:util";
@@ -29,14 +30,16 @@ const report: unknown[] = [];
 for (const binding of bindings.entries) {
   const project = projects.find((entry) => entry.projectId === binding.projectId);
   if (!project || project.brief.name !== binding.name) throw new Error(`Hero binding identity mismatch: ${binding.name}`);
-  const directory = safePath(assetRoot, binding.directory);
-  const receipt = JSON.parse(await read(path.join(directory, "receipt.json")));
-  if (receipt.preparation.asset !== binding.provenance.sourceAssetId) throw new Error(`Source asset mismatch: ${binding.name}`);
-  const bytes = new Uint8Array(await fs.readFile(path.join(directory, "body.glb")));
-  const verified = await verifyUploadedHeroModel(receipt.model, bytes);
+  const preferred = await loadPreferredLibraryModel(project.projectId);
+  const directory = preferred ? null : safePath(assetRoot, binding.directory);
+  const receipt = preferred ? null : JSON.parse(await read(path.join(directory!, "receipt.json")));
+  if (receipt && receipt.preparation.asset !== binding.provenance.sourceAssetId) throw new Error(`Source asset mismatch: ${binding.name}`);
+  const bytes = preferred?.bytes ?? new Uint8Array(await fs.readFile(path.join(directory!, "body.glb")));
+  const verified = preferred ?? await verifyUploadedHeroModel(receipt.model, bytes);
+  const provenance = preferred?.provenance ?? zHeroModelProvenance.parse({ schema: "ggd-hero-model-provenance@1", modelSha256: verified.model.sha256, ...binding.provenance });
   const previous = project.presentation.modelKey;
   project.presentation = { ...project.presentation, modelKey: verified.document.id, uploadedModel: verified.model,
-    modelProvenance: zHeroModelProvenance.parse({ schema: "ggd-hero-model-provenance@1", modelSha256: verified.model.sha256, ...binding.provenance }),
+    modelProvenance: provenance,
     assetLocks: [...project.presentation.assetLocks.map((lock) => ({ ...lock, consumers: lock.consumers.filter((consumer) => consumer !== "champion:model") })).filter((lock) => lock.consumers.length), {
       path: uploadedHeroModelPath(verified.model), sha256: verified.model.sha256, byteSize: bytes.length,
       mediaType: "model/gltf-binary", kind: "model", registry: "normalized-upload", consumers: ["champion:model"],

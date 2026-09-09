@@ -379,6 +379,18 @@ cmd_deploy() {
     && ok "mini 對到 $(echo "$head_local" | cut -c1-8)（⭐ git,有 .git ⇒ 版本戳自己算得出來）" \
     || die "⛔ 同步後版本對不上（mini=$remote_head 本機=${head_local}）"
 
+  # Git carries bindings and the pinned release; approved model bytes travel separately.
+  # Fetch only missing bytes with the configured local AWS profile, then verify both hosts.
+  if [ -f "$REPO/materials/hero-model-library/release.json" ]; then
+    local model_files; model_files=$(mktemp "${TMPDIR:-/tmp}/ggd-model-files.XXXXXX") || die "建不了模型清單"
+    python3 "$REPO/tools/hero-model-library/sync.py" --content "$REPO/content" --write-file-list "$model_files" \
+      || die "模型資源與 Git 固定版本不符，停止部署"
+    rsync -a --ignore-existing -e "ssh -o BatchMode=yes -o ConnectTimeout=10" --files-from="$model_files" \
+      "$REPO/content/" "$USER_@$HOST:$REMOTE_REPO/content/" || die "模型素材同步失敗"
+    rm -f "$model_files"
+    run_step "核對正式機模型 SHA-256" "cd $REMOTE_REPO && python3 tools/hero-model-library/sync.py --verify-only"
+  fi
+
   head_ "2. build（arm64）"
   # ⛔⛔ **裸的 `docker compose build` 會掉版本戳**。
   #   `GGD_BUILD_STAMP` 是 Makefile 算好再插進 compose 的 build arg,

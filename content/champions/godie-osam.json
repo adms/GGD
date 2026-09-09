@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "鬥士",
-  "modelKey": "imported.sesshomaru",
+  "modelKey": "version.body.f6f12733d6fe2dfdc5ae3977a724f0526c465a9c29ba6b93",
   "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
@@ -254,5 +254,40 @@
     "持續壓制",
     "正面纏鬥"
   ],
-  "pitch": "用穩定普攻與劍技持續施壓，適合喜歡直接正面作戰的玩家。"
+  "pitch": "用穩定普攻與劍技持續施壓，適合喜歡直接正面作戰的玩家。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.c462be5cabf1c6528b2023539dfaaae6504b7cb3af483702",
+      "label": "原上線模型",
+      "sourceModelKey": "imported.sesshomaru",
+      "modelSha256": "51c4b75a456bb1d7677d0b716c83e965ae5b2e733d66d45943f8a8a617878b48",
+      "binarySha256": "52454f8d34e1c6c367de9d1cc82e73b91871c9d47a0970d0076ac466965d14d6",
+      "registeredAt": "2026-09-09T07:13:26.913Z",
+      "source": {
+        "kind": "previous",
+        "character": "犬妖 - 殺生丸",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.sesshomaru.json",
+        "tier": "w3x"
+      }
+    },
+    {
+      "modelKey": "version.body.f6f12733d6fe2dfdc5ae3977a724f0526c465a9c29ba6b93",
+      "label": "贵公子",
+      "sourceModelKey": "community.body.f45b0ee2b6cbfaa6928f2cb914bb46e7cc8fc5d498616841",
+      "modelSha256": "c6a4eb7ad612d4999567215508150c57d8f6979dac60bfdcbac81d61a4db3e55",
+      "binarySha256": "cc746a618bff25e360aa9637d84b55f80812184f3e1eae26ab9f200895869047",
+      "registeredAt": "2026-09-09T07:13:26.917Z",
+      "source": {
+        "kind": "exact",
+        "character": "贵公子",
+        "work": "犬夜叉",
+        "library": "300heroes",
+        "reference": "300heroes:8959786d1611f717e24c5321",
+        "tier": "300heroes"
+      }
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

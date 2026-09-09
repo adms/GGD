@@ -4,7 +4,7 @@
   "name": "外掛開很大的死神 - 黑崎一護",
   "role": "fighter",
   "attackType": "melee",
-  "modelKey": "imported.heroichigo-bankai",
+  "modelKey": "version.body.8d7862441a426d48f6ffdd3f97e2d7c93c50af070486e31b",
   "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
@@ -382,5 +382,40 @@
         "4": 30.0
       }
     }
-  }
+  },
+  "modelVersions": [
+    {
+      "modelKey": "version.body.85f650c11313bfea545c366efd2f149854764731cf09e9d5",
+      "label": "原上線模型",
+      "sourceModelKey": "imported.heroichigo-bankai",
+      "modelSha256": "f7063394bef01f2026d4c34afc2185e97cd1fdd028738edfa3c5cf5c2d7ade79",
+      "binarySha256": "b8bb808bd8728b0d6cd80e9933d95b5fffe4c15e317728fe59a69e372abef21a",
+      "registeredAt": "2026-09-09T07:13:26.548Z",
+      "source": {
+        "kind": "previous",
+        "character": "外掛開很大的死神 - 黑崎一護",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.heroichigo-bankai.json",
+        "tier": "w3x"
+      }
+    },
+    {
+      "modelKey": "version.body.8d7862441a426d48f6ffdd3f97e2d7c93c50af070486e31b",
+      "label": "小一",
+      "sourceModelKey": "community.body.64dc1015923537534452de098ac7209081039b5fae0e2169",
+      "modelSha256": "926f1b9835b1b08526793b4465dfdce7dd6cad1dfeaaa06e69a1381149bcccff",
+      "binarySha256": "efc5d5ca21d1b525faa8b35720f3e5528a5720ea31b220c42b3bd47685050509",
+      "registeredAt": "2026-09-09T07:13:26.554Z",
+      "source": {
+        "kind": "exact",
+        "character": "小一",
+        "work": "BLEACH 死神",
+        "library": "300heroes",
+        "reference": "300heroes:0583f874944e93106f8f0f97",
+        "tier": "300heroes"
+      }
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

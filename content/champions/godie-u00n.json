@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "法鬥",
-  "modelKey": "imported.luffe",
+  "modelKey": "version.body.5f4ddabc134289f295a29834bd0b06041e7fad3284685e84",
   "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
@@ -295,5 +295,40 @@
     "位移",
     "持續纏鬥"
   ],
-  "pitch": "用連續招式黏住敵人，不斷調整位置，在技能循環中一路壓制對手。"
+  "pitch": "用連續招式黏住敵人，不斷調整位置，在技能循環中一路壓制對手。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.5c472ca70369050fa42ba784d7bbcaaa0dd5b23e00cdb047",
+      "label": "原上線模型",
+      "sourceModelKey": "imported.luffe",
+      "modelSha256": "4bfd7fe3b8aaae2e8ab55040db52a6f3a34aef131a772f922acd75c4be4decb9",
+      "binarySha256": "42995b064505d5d69ac3725e54a6ddb7256d16b9a3450460bd627ed4b294e532",
+      "registeredAt": "2026-09-09T07:13:26.956Z",
+      "source": {
+        "kind": "previous",
+        "character": "草帽小子 - 蒙其.D.魯夫",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.luffe.json",
+        "tier": "w3x"
+      }
+    },
+    {
+      "modelKey": "version.body.5f4ddabc134289f295a29834bd0b06041e7fad3284685e84",
+      "label": "草帽小子",
+      "sourceModelKey": "community.body.8db1ff20165f108b20c94e940493e6d06944afb44e98c9ef",
+      "modelSha256": "20e11962ccff5f46557afa950be4167f55f24040a52df6d9fa7d0c284bfdb29b",
+      "binarySha256": "5a3e6085538174519370e5348ff199a60cd2d4637da9edf6a61f498d6e714a68",
+      "registeredAt": "2026-09-09T07:13:26.962Z",
+      "source": {
+        "kind": "exact",
+        "character": "草帽小子",
+        "work": "ONE PIECE 航海王",
+        "library": "300heroes",
+        "reference": "300heroes:6831f37192755a6d7bcce1f8",
+        "tier": "300heroes"
+      }
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

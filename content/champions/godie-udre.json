@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "鬥士",
-  "modelKey": "imported.heromusashimiyamoto",
+  "modelKey": "version.body.965b027d52481be1d8dffc44dafccb4176fd460326ebc0b8",
   "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
@@ -372,5 +372,40 @@
     "劍技",
     "正面爆發"
   ],
-  "pitch": "用普攻建立壓力，再以高傷劍技完成斬殺，適合喜歡正面對砍的玩家。"
+  "pitch": "用普攻建立壓力，再以高傷劍技完成斬殺，適合喜歡正面對砍的玩家。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.d1644694e19fa5def52e06c32343585380f3bd7b569b9920",
+      "label": "原上線模型",
+      "sourceModelKey": "imported.heromusashimiyamoto",
+      "modelSha256": "4e5e7dc36da7eefc12f3ac77b0c468f1f59484f5ef1285eb4a1312401f5db4e3",
+      "binarySha256": "76bdec797f1c7c41004b2d0c6516d8c63a7d54f2c71133505b04d54d1d478c48",
+      "registeredAt": "2026-09-09T07:13:27.097Z",
+      "source": {
+        "kind": "previous",
+        "character": "三刀流劍士 - 索隆",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.heromusashimiyamoto.json",
+        "tier": "w3x"
+      }
+    },
+    {
+      "modelKey": "version.body.965b027d52481be1d8dffc44dafccb4176fd460326ebc0b8",
+      "label": "佐罗",
+      "sourceModelKey": "community.body.e69a0c8e9b49032709aa22dbf1ab17597d1cb145e849a8c4",
+      "modelSha256": "4bf5fd04531a535e5a5684a0eaa64f51b3cc325f8a2246947f395703d9b94fd4",
+      "binarySha256": "8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5",
+      "registeredAt": "2026-09-09T07:13:27.101Z",
+      "source": {
+        "kind": "exact",
+        "character": "佐罗",
+        "work": "ONE PIECE 航海王",
+        "library": "300heroes",
+        "reference": "300heroes:5666df594cba229f74ce4ed9",
+        "tier": "300heroes"
+      }
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

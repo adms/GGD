@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "法鬥",
-  "modelKey": "imported.herorider",
+  "modelKey": "version.body.a806e2beb9b0683d6b0437a4b4e7b761e3b2ee4d234579f8",
   "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
@@ -397,5 +397,40 @@
     "突進",
     "續戰"
   ],
-  "pitch": "把敵人拉進自己的戰鬥距離，再靠控制與持續技能纏住目標。"
+  "pitch": "把敵人拉進自己的戰鬥距離，再靠控制與持續技能纏住目標。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.db39bed40d040d70cd4adc7a340aef4c682b34b51b89d60a",
+      "label": "原上線模型",
+      "sourceModelKey": "imported.herorider",
+      "modelSha256": "05206b8f6215d89b43356567e783b09780268c360fe44e54c737c29b1cfd2441",
+      "binarySha256": "94ab322e48f8680113c83a55c36935b4ac711c6a9341b093da168dae797908c1",
+      "registeredAt": "2026-09-09T07:13:26.864Z",
+      "source": {
+        "kind": "previous",
+        "character": "梅杜莎 - Rider",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.herorider.json",
+        "tier": "w3x"
+      }
+    },
+    {
+      "modelKey": "version.body.a806e2beb9b0683d6b0437a4b4e7b761e3b2ee4d234579f8",
+      "label": "美杜莎",
+      "sourceModelKey": "community.body.d62b41cb1072b7fa36a4598d48668437b0c22b1548b3cbb0",
+      "modelSha256": "678f6b917a31cbc2a60d11d1de47dfb98e42a253c0f796d7b1c8ed6bb29227ab",
+      "binarySha256": "572134b9f8460e95c4fbdd797c32cf597c61a06b7fdc5f81785f9053cacc4910",
+      "registeredAt": "2026-09-09T07:13:26.869Z",
+      "source": {
+        "kind": "exact",
+        "character": "美杜莎",
+        "work": "Fate/stay night",
+        "library": "300heroes",
+        "reference": "300heroes:2bfb288f7feb077d82852876",
+        "tier": "300heroes"
+      }
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

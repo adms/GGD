@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "法鬥",
-  "modelKey": "imported.heroshana",
+  "modelKey": "version.body.a82e311f9bf0c92137a65cb53209ff7b0851fcd21b40e0bc",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.25,
@@ -321,5 +321,40 @@
     "普攻強化",
     "近戰循環"
   ],
-  "pitch": "先用技能強化戰鬥狀態，再貼住敵人以火焰普攻與劍技持續輸出。"
+  "pitch": "先用技能強化戰鬥狀態，再貼住敵人以火焰普攻與劍技持續輸出。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.363e237043c1c1498e71a9dec8dc4323dac314f74bcf124f",
+      "label": "原上線模型",
+      "sourceModelKey": "imported.heroshana",
+      "modelSha256": "edd09ee683fbf51433cb732d0060dad1373d0800c3c922f6fae80433b4402901",
+      "binarySha256": "aa8e2036d1dadcd424e4954e166cd5e8aff8332f77eb33dd2e0d4f74abe703e7",
+      "registeredAt": "2026-09-09T07:13:26.197Z",
+      "source": {
+        "kind": "previous",
+        "character": "火霧戰士 - 夏娜",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.heroshana.json",
+        "tier": "w3x"
+      }
+    },
+    {
+      "modelKey": "version.body.a82e311f9bf0c92137a65cb53209ff7b0851fcd21b40e0bc",
+      "label": "夏娜",
+      "sourceModelKey": "community.body.4877f63ee5fd7ea6494c427aab0f69348b9845a849d444b6",
+      "modelSha256": "d90921f96e154295affef8cc57d435c3fec174432298da37c1a82e16bd91065d",
+      "binarySha256": "ae0e8a8f48d38d72348da0e28c43014e1e64c0e56c0d5d6c904f6f6471dd6849",
+      "registeredAt": "2026-09-09T07:13:26.213Z",
+      "source": {
+        "kind": "exact",
+        "character": "夏娜",
+        "work": "灼眼的夏娜",
+        "library": "300heroes",
+        "reference": "300heroes:bf3e026ad02df6899219c6a6",
+        "tier": "300heroes"
+      }
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

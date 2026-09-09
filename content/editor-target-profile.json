@@ -3,10 +3,10 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_642b85582856",
+    "contentVersion": "cv_04098d608ce9",
     "collections": {
       "champions": {
-        "hash": "74ea868e6821",
+        "hash": "f7a54ebc54ad",
         "count": 71
       },
       "abilities": {
@@ -46,8 +46,8 @@
         "count": 103
       },
       "models": {
-        "hash": "657ea888006b",
-        "count": 152
+        "hash": "a625b83ddcd7",
+        "count": 249
       },
       "vfx": {
         "hash": "7df129081586",
@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "d9164615",
+    "fingerprint": "aeca4e4d",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -1286,6 +1286,7 @@
         "immobile",
         "missileSpeed",
         "modelKey",
+        "modelSelectionMode",
         "modelVersions",
         "msGrowthTier",
         "name",
@@ -5723,12 +5724,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "d9164615",
+    "engineFingerprint": "aeca4e4d",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 d9164615 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 aeca4e4d —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -6596,11 +6597,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "7b6264207c91",
+    "fingerprint": "a2e6d4dd8cf8",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "40452a8d9d31"
+        "digest": "94b473178ece"
       },
       {
         "surface": "ability-item-zod-schemas",
@@ -6652,7 +6653,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "bf2ca3e58a0a",
+  "migrationFingerprint": "e68d2999002b",
   "supportedModes": [
     "bootstrap"
   ],
@@ -6666,5 +6667,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "76b7eb2cc610"
+  "profileDigest": "402a6ef0ebfb"
 }

@@ -59,7 +59,7 @@ describe("retained hero model versions", () => {
     expect(saved.activeModelKey).toBe(next!.modelKey);
     expect(saved.expectedHash).not.toBe(contentSha256(before));
     const after = read("champions", heroId);
-    const { modelKey: _key, modelVersions: _versions, ...unchanged } = after;
+    const { modelKey: _key, modelVersions: _versions, modelSelectionMode: _mode, ...unchanged } = after;
     const { modelKey: _beforeKey, ...original } = before;
     expect(unchanged).toEqual(original);
     expect(readFileSync(join(root, "models/old-body.json"))).toEqual(beforeBytes);
@@ -76,6 +76,31 @@ describe("retained hero model versions", () => {
       expect(read("champions", heroId).modelKey).toBe(version.modelKey);
       expect(response.json().versions).toEqual(saved.versions);
     }
+  });
+
+  it("prioritizes 300 > MBA > original > W3X and preserves manual choices across imports", async () => {
+    const add = async (id: string, tier: "300heroes" | "mba" | "original" | "w3x") => {
+      writeDocAtomic(root, "models", model(id, "assets/models/new.glb"));
+      const response = await update({ action: "register", expectedHash: (await state()).expectedHash, sourceModelKey: id, label: id, source: { ...source, tier } });
+      expect(response.statusCode, response.body).toBe(200);
+      return response.json<ChampionModelVersionState>();
+    };
+    const borrowed = await add("borrowed", "w3x");
+    expect(borrowed.activeModelKey).toBe(borrowed.versions[0]!.modelKey);
+    const mba = await add("mba", "mba");
+    expect(mba.activeModelKey).toBe(mba.versions.at(-1)!.modelKey);
+    const high = await add("300", "300heroes");
+    expect(high.activeModelKey).toBe(high.versions.at(-1)!.modelKey);
+    expect((await add("lower", "mba")).activeModelKey).toBe(high.activeModelKey);
+    const manual = await update({ action: "activate", expectedHash: (await state()).expectedHash, modelKey: borrowed.versions[0]!.modelKey });
+    expect(manual.json().selectionMode).toBe("manual");
+    const newer = await add("300-new", "300heroes");
+    expect(newer.activeModelKey).toBe(borrowed.versions[0]!.modelKey);
+    expect(newer.preferredModelKey).toBe(newer.versions.at(-1)!.modelKey);
+    const restored = await update({ action: "automatic", expectedHash: newer.expectedHash });
+    expect(restored.json()).toMatchObject({ selectionMode: "automatic", activeModelKey: newer.preferredModelKey });
+    const doc = read("champions", heroId);
+    expect((await app.inject({ method: "PUT", url: `/content-api/champions/${heroId}`, payload: { ...doc, modelSelectionMode: "manual" } })).statusCode).toBe(409);
   });
 
   it("rejects stale and simultaneous selections without losing a version", async () => {

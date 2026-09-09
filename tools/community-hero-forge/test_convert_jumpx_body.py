@@ -10,7 +10,7 @@ from PIL import Image
 from convert_jumpx_body import convert, decompose, native, rotation_matrix, optimize_static_channels, normalize_palette, model_identity, BIAS
 
 
-def fixture():
+def fixture(shear=False):
     head, binary = bytearray(b"fixture\0"), bytearray()
 
     def h(data):
@@ -41,8 +41,8 @@ def fixture():
         keys = [0] * 14
         keys[6] = keys[9] = keys[12] = 3
         keys[7] = d("<9f", [0, i, 0, 1, i*2, 0, 2, i, 0])
-        keys[10] = d("<12f", [0, 0, 0, 1] * 3)
-        keys[13] = d("<9f", [1, 1, 1] * 3)
+        keys[10] = d("<12f", ([0, 0, 0.382683432365, 0.923879532511] if shear and i else [0, 0, 0, 1]) * 3)
+        keys[13] = d("<9f", ([2, 1, 1] if shear and not i else [1, 1, 1]) * 3)
         bone_headers.append(struct.pack("<3I2iI", 0, 0, name, i-1, 3, 1)
                             + struct.pack("<16f", *inverse.T.reshape(-1))
                             + bytes(28) + struct.pack("<14I", *keys))
@@ -60,6 +60,21 @@ def values(doc, binary, index, width):
 
 
 class NativeBodyTest(unittest.TestCase):
+    def test_selective_repair_detaches_only_joint_with_local_shear(self):
+        with tempfile.TemporaryDirectory() as temp:
+            image = Path(temp)/"body.png"
+            Image.new("RGBA", (4, 4), (100, 20, 200, 255)).save(image)
+            row = {"id": "fixture", "path": str(image), "exists_local": True, "kind": "texture", "readiness": "native"}
+            with self.assertRaisesRegex(ValueError, "shear|TRS"):
+                convert(fixture(shear=True), [0], ["idle"], {"0": row}, 32)
+            doc, binary, report = convert(fixture(shear=True), [0], ["idle"], {"0": row}, 32, "repair")
+        self.assertEqual(report["detachedNativeBones"], [1])
+        self.assertEqual(report["hierarchyMode"], "selective-shear-repair")
+        self.assertEqual(len(doc["skins"][0]["joints"]), 2)
+        self.assertNotIn(1, doc["nodes"][0].get("children", []))
+        self.assertEqual(doc["nodes"][1]["extras"]["nativeParent"], 0)
+
+
     def test_character_base_path_resolves_non_numeric_identity_without_guessing(self):
         row = {"library": "300heroes", "kind": "model", "format": "x", "exists_local": True, "readiness": "native", "path": "/library/099.x", "character_links": []}
         config = {"characterId": "300heroes:104", "sourceName": "Gilgamesh", "sourceOrigin": "Fate"}

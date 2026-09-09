@@ -1,0 +1,42 @@
+{
+  "schema": "ggd-source-identity-proof@1",
+  "sourceId": "pet:spider",
+  "character": "蜘蛛子",
+  "work": "轉生成蜘蛛又怎樣！",
+  "relationship": "exact",
+  "form": "300英雄寵物版／蜘蛛魔物形態",
+  "conclusion": "原生寵物表名稱與怪物表名稱一致，24034 的欄位 10 連到 45029，再由欄位 99 指定模型。",
+  "boundary": "確認角色與來源模型對應；不表示完整戰鬥動畫、人形或專屬特效音效已就緒。",
+  "evidence": [
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/raw/excel/pokemon_pet_c.dat",
+      "sha256": "a2d5d6c99a185e3081ad33e33b96d12728b37d28127db2dbf1017aa157a9d243",
+      "recordId": 24034,
+      "recordOffset": 2618,
+      "recordSha256": "92af66572ad3f016efd58259cf64a999d899ba0e203958a32d229070cf8cb9e4",
+      "fields": {
+        "1": 24034,
+        "2": "蜘蛛子",
+        "5": "UI\\pokemon\\27_zhizhuzi\\27_zhizhuzi_01.bmp",
+        "10": 45029
+      }
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/raw/excel/monster_c.dat",
+      "sha256": "44d8d1f8e427806f868c7b0f4017733deb084fc56a7cd5f9f484028c7a3cd002",
+      "recordId": 45029,
+      "recordOffset": 1067251,
+      "recordSha256": "69f7ffca589d74dbc1e9c7bc7935dbe83b133941a8bbb4c8f57055beaae435f3",
+      "fields": {
+        "1": 45029,
+        "2": "蜘蛛子",
+        "96": "..\\UI\\Icon\\pokemon\\27_zhizhuzi\\zhizhuzi_01.dds",
+        "99": "..\\Data\\Character\\Monster\\pokemen\\27_zhizhuzi\\27_zhizhuzi.x"
+      }
+    }
+  ],
+  "model": {
+    "path": "outputs/game-asset-library-20260907/300heroes/raw/data/character/monster/pokemen/27_zhizhuzi/27_zhizhuzi.x",
+    "sha256": "018e12f5dc7ca40a7bdbe92d190132f8b3f00b4e7d320a9ecdfb1b321d77cd00"
+  }
+}

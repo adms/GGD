@@ -855,7 +855,7 @@ function DocEditor(props: {
 
   const issueFor = (path: string): string[] =>
     issues.filter((i) => i.path === path).map((i) => i.message);
-  const extras = uncoveredKeys(collection, doc).filter((key) => collection !== "champions" || key !== "modelVersions");
+  const extras = uncoveredKeys(collection, doc).filter((key) => collection !== "champions" || !["modelVersions", "modelSelectionMode"].includes(key));
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>

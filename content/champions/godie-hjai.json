@@ -1,19 +1,74 @@
 {
   "id": "godie-hjai",
-  "schema": "champion@1",
   "name": "黑魔導士 - 莉娜因巴斯",
   "description": "故事：\n自稱天才美少女魔導士的莉娜，加入愛與和平純粹只是為了可以獲得賞金，正如同她的綽號\"盜賊殺手\"一樣，惡徒是沒有人權的。\n(出自:秀逗魔導士)\n\n推薦玩家 : 團戰殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.60\n敏捷 + 1.70\n智慧 + 3.00\n基礎跑速 290\n\n可學習的技能：\n火球術、炸彈陣、龍破斬、神滅斬、重破斬",
   "role": "marksman",
   "attackType": "ranged",
   "origin": "法師",
-  "modelKey": "imported.linainvers",
-  "missileSpeed": 18.3,
+  "playstyle": [
+    "技能輪轉",
+    "範圍爆發",
+    "大招"
+  ],
+  "pitch": "保持距離反覆施放攻擊法術，等待敵人聚集或露出破綻後用大招解決。",
+  "modelKey": "version.body.0a75adabf453db16048f0b8763c24cd03fb64707c0cc95b3",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.3532abc61c3a2aaeb94ff49668026e6e6bd9061dd722bffb",
+      "label": "原上線模型",
+      "sourceModelKey": "imported.linainvers",
+      "modelSha256": "8615c4f74e282b51d6fc95afa6e9faaa550e0c53a8a443bcb745e827d641610c",
+      "binarySha256": "1d499008481edd3d4520219970e18cb4a05bc03a52094af5129bf7cc9c06ac31",
+      "registeredAt": "2026-09-09T07:13:26.792Z",
+      "source": {
+        "kind": "previous",
+        "character": "黑魔導士 - 莉娜因巴斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.linainvers.json",
+        "tier": "w3x"
+      }
+    },
+    {
+      "modelKey": "version.body.0a75adabf453db16048f0b8763c24cd03fb64707c0cc95b3",
+      "label": "莉娜·因巴斯",
+      "sourceModelKey": "community.body.08f7a7de95c4beb47b77a27b49e04db9eefd8192f6e5952b",
+      "modelSha256": "746e742b81e038bed8e4156b7c1fbc768042f7cf12dcf6bce0cf6deeef3f67f7",
+      "binarySha256": "df07ee9d9baf46a88033329bcba43d814580521de3d8b4b9a5deb161bd1f0628",
+      "registeredAt": "2026-09-09T07:13:26.824Z",
+      "source": {
+        "kind": "exact",
+        "character": "莉娜·因巴斯",
+        "work": "秀逗魔導士 Slayers",
+        "library": "300heroes",
+        "reference": "300heroes:e88ba3ef348e0f9bb9e7774d",
+        "tier": "300heroes"
+      }
+    },
+    {
+      "modelKey": "version.body.0caddb8f0afb4e1927224744b9b961ad853b8e954de3079a",
+      "label": "莉娜·因巴斯",
+      "sourceModelKey": "community.body.af43a6c7cc5f5a9d24de9bbff14e35867296d5e0d37063b8",
+      "modelSha256": "c311a4d3f458e2a9d8de040cd46ef7e857cff52786d5e04d5f01dbd84bde2f9a",
+      "binarySha256": "f482e093ef36bed9c840288a9a1de9649d4445d5452909f1f494f47c3fe54e54",
+      "registeredAt": "2026-09-09T07:23:46.626Z",
+      "source": {
+        "kind": "exact",
+        "character": "莉娜·因巴斯",
+        "work": "秀逗魔導士",
+        "library": "mba",
+        "reference": "mba:90e2e3fdffbbb5b1251958c6",
+        "tier": "mba"
+      }
+    }
+  ],
+  "modelSelectionMode": "automatic",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.25,
     "maxMana": 100,
     "manaRegen": 0.1,
-    "ad": 6.0,
+    "ad": 6,
     "ap": 0,
     "armor": 0,
     "mr": 28,
@@ -47,41 +102,42 @@
     "primary": "INT",
     "source": "w3x"
   },
+  "missileSpeed": 18.3,
   "hitFeel": {
     "hitstopTicks": 1,
-    "shakeMag": 0.24,
-    "knockbackMag": 0
+    "knockbackMag": 0,
+    "shakeMag": 0.24
   },
   "abilities": {
     "Q": {
       "id": "godie-hjai.q",
       "name": "04-01 火球術",
-      "icon": "assets/icons/abilities/godie-hjai.q.webp",
       "provenance": "w3x-import",
       "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n使用火球來攻擊敵人造成{{dmg}}點傷害，並附帶暈眩1.50秒的效果。",
       "slot": "Q",
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        15.0,
-        15.0,
-        15.0,
-        15.0
+        15,
+        15,
+        15,
+        15
       ],
       "manaCost": [
-        72.0,
-        72.0,
-        72.0,
-        72.0
+        72,
+        72,
+        72,
+        72
       ],
+      "manaCostTier": "極小",
+      "range": 12,
+      "rangeTier": "極大",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
       "effects": [],
       "vfxKey": "fx.firestorm",
-      "targetsEnemies": true,
       "castTimeSec": 0.567,
-      "rangeTier": "極大",
-      "range": 12,
-      "cooldownTier": "小",
-      "manaCostTier": "極小",
+      "icon": "assets/icons/abilities/godie-hjai.q.webp",
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -107,25 +163,34 @@
     "W": {
       "id": "godie-hjai.w",
       "name": "04-02 炸彈陣",
-      "icon": "assets/icons/abilities/godie-hjai.w.webp",
       "provenance": "w3x-import",
       "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n施展火焰爆裂魔法傷害敵方部隊，每秒可以燒傷55點並持續5秒的時間。在火柱消散之後，在火焰中的部隊仍然會持續受到10點的傷害，持續5秒。",
       "slot": "W",
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        30.0,
-        30.0,
-        30.0,
-        30.0
+        30,
+        30,
+        30,
+        30
       ],
       "manaCost": [
-        72.0,
-        72.0,
-        72.0,
-        72.0
+        72,
+        72,
+        72,
+        72
       ],
+      "manaCostTier": "極小",
+      "range": 12,
+      "radius": 6,
+      "radiusTier": "中",
+      "rangeTier": "極大",
+      "cooldownTier": "極小",
+      "targetsEnemies": true,
       "effects": [],
+      "vfxKey": "fx.prim.fire.bolt",
+      "castTimeSec": 1.033,
+      "icon": "assets/icons/abilities/godie-hjai.w.webp",
       "template": {
         "ref": "tpl-periodic-field",
         "params": {
@@ -138,38 +203,35 @@
           "damageType": "magic",
           "castTimeSec": 1.033
         }
-      },
-      "vfxKey": "fx.prim.fire.bolt",
-      "targetsEnemies": true,
-      "radius": 6.0,
-      "castTimeSec": 1.033,
-      "rangeTier": "極大",
-      "range": 12,
-      "cooldownTier": "極小",
-      "radiusTier": "中",
-      "manaCostTier": "極小"
+      }
     },
     "E": {
       "id": "godie-hjai.e",
       "name": "04-03 龍破斬",
-      "icon": "assets/icons/abilities/godie-hjai.e.webp",
       "provenance": "w3x-import",
       "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n藉由赤眼魔王沙布蘭尼古之力使用的咒文，以範圍廣和強大的破壞力自誇，具有一擊可殺死巨龍及毀滅一個小鎮的威力。給予範圍內的敵人最多{{dmg}}點傷害。\n\n(對建築傷害*50%)\n\n點選惡夢魔王碎片增幅後，可增加威力({{ap}}% [AP])",
       "slot": "E",
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        288.0,
-        288.0,
-        288.0,
-        288.0
+        288,
+        288,
+        288,
+        288
       ],
+      "manaCostTier": "中",
+      "range": 12,
+      "radius": 8,
+      "radiusTier": "大",
+      "rangeTier": "極大",
+      "cooldownTier": "中",
+      "targetsEnemies": true,
       "effects": [
         {
           "kind": "floatingText",
@@ -301,9 +363,16 @@
                   }
                 ]
               },
-              "radius": 8.0,
+              "radius": 8,
               "radiusTier": "大",
               "includeOrigin": true,
+              "victimCondition": {
+                "not": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "dragon-slave-swept"
+                }
+              },
               "onHitTargets": [
                 {
                   "kind": "applyStatus",
@@ -311,14 +380,7 @@
                   "duration": 1.5,
                   "moveSpeedMult": 0.6
                 }
-              ],
-              "victimCondition": {
-                "not": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "dragon-slave-swept"
-                }
-              }
+              ]
             },
             {
               "kind": "screenShake",
@@ -369,53 +431,47 @@
         }
       ],
       "vfxKey": "fx.prim.void.slash",
-      "targetsEnemies": true,
-      "radius": 8.0,
       "castTimeSec": 1.233,
-      "rangeTier": "極大",
-      "range": 12,
-      "cooldownTier": "中",
-      "manaCostTier": "中",
-      "radiusTier": "大"
+      "icon": "assets/icons/abilities/godie-hjai.e.webp"
     },
     "R": {
       "id": "godie-hjai.r",
       "name": "04-04 神滅斬",
-      "icon": "assets/icons/abilities/godie-hjai.r.webp",
       "provenance": "w3x-import",
       "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n是藉金色魔王之力使出的強力咒文。將魔力化為黑色的光刀，力量強勁到似乎可以斬斷一切。造成敵方單體{{dmg}}+{{ap}}% [AP]點傷害並暈眩2秒。\n\n點選惡夢魔王碎片增幅後，可增加威力({{ap2}}% [AP])",
       "slot": "R",
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0
+        144,
+        144,
+        144
       ],
+      "manaCostTier": "小",
+      "range": 4.5,
+      "rangeTier": "小",
+      "cooldownTier": "極大",
+      "targetsEnemies": true,
       "effects": [
         {
           "kind": "spawnModelFx",
           "shape": "single",
           "modelKey": "imported.herocloudcyd",
           "path": "orbit",
-          "count": 1,
+          "speed": 1,
           "distance": 0.1,
-          "speed": 1.0,
+          "count": 1,
           "lifeSec": 2.5
         }
       ],
       "vfxKey": "fx.prim.holy.slash-lg",
-      "targetsEnemies": true,
       "castTimeSec": 2,
-      "rangeTier": "小",
-      "range": 4.5,
-      "cooldownTier": "極大",
-      "manaCostTier": "小",
+      "icon": "assets/icons/abilities/godie-hjai.r.webp",
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -441,7 +497,7 @@
           "damageType": "magic",
           "status": {
             "statusId": "slow40",
-            "duration": 2.0,
+            "duration": 2,
             "moveSpeedMult": 0.6
           },
           "castTimeSec": 2
@@ -449,18 +505,6 @@
       }
     }
   },
-  "skillOrder": [
-    "Q",
-    "W",
-    "E",
-    "R"
-  ],
-  "buildPriority": [],
-  "tags": [
-    "wc3-import",
-    "godie",
-    "magic"
-  ],
   "exAbility": "godie-hjai.ex",
   "passiveAbility": "godie-hjai.passive",
   "icon": "assets/icons/champions/godie-hjai.png",
@@ -486,10 +530,17 @@
       }
     }
   },
-  "playstyle": [
-    "技能輪轉",
-    "範圍爆發",
-    "大招"
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
   ],
-  "pitch": "保持距離反覆施放攻擊法術，等待敵人聚集或露出破綻後用大招解決。"
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "magic"
+  ],
+  "schema": "champion@1"
 }

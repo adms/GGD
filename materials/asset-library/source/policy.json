@@ -1,0 +1,53 @@
+{
+  "schema": "ggd-resource-library-policy@1",
+  "contract_repo": "../GGD",
+  "catalog": "catalog.json",
+  "admission_tool": "tools/admit.py",
+  "default_query_scope": "standardized_only",
+  "profiles": {
+    "vfx-library": {
+      "requires": [
+        "GGD vfx@1 or ribbon@1 schema",
+        "all texture dependencies copied locally",
+        "PNG/WebP textures",
+        "provenance",
+        "content hashes"
+      ]
+    },
+    "character": {
+      "requires": [
+        "GLB 2.0 with embedded textures and skin",
+        "GGD model@1",
+        "idle/run/attack/cast/hurt/death bound to actual distinct animation clips",
+        "finite geometry and animation data",
+        "normalized skin weights and valid joint indices",
+        "GGD vfx definitions and event scripts",
+        "resolved animation pulses, anchors and VFX references",
+        "source provenance",
+        "content hashes"
+      ],
+      "excludes": [
+        "placeholder movement or hurt mapped to idle",
+        "partial character packages"
+      ]
+    },
+    "model-body": {
+      "requires": [
+        "GLB 2.0 with embedded resources",
+        "GGD model@1",
+        "six runtime states bound to actual animation clips; aliases explicitly reported",
+        "finite geometry and animation data; valid skin when present",
+        "source provenance and hashes"
+      ],
+      "scope": "Reusable model and motion component only; not a complete character/VFX/SFX package."
+    }
+  },
+  "excluded_from_standardized_catalog": [
+    "raw JUMPX/EG3D/DirectX files",
+    "static OBJ for character bodies",
+    "native EFC/FX/BANK",
+    "unbound animation data",
+    "unconverted or unresolved VFX"
+  ],
+  "note": "Standardization is a reusable resource format check. It is not production publication, game balancing, complete visual fidelity, or GGD multiplayer acceptance. A standalone VFX library is not a complete character package. model-body is a standalone component profile; aliases are disclosed and cannot qualify for the stricter character profile."
+}

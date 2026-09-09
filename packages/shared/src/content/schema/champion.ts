@@ -19,7 +19,7 @@ import {
 import { zHookDef } from "./effect";
 import { zAbilityDef, zHitFeel } from "./ability";
 import { zChampionStatOverrides } from "./championStats";
-import { zChampionModelVersions } from "./championModelVersions";
+import { zChampionModelVersions, zModelSelectionMode } from "./championModelVersions";
 
 /**
  * Per-level numbers off a WC3 ability, keyed by the LEVEL as a string ("1".."4").
@@ -237,6 +237,7 @@ export const zChampionDef = z
     modelKey: zRef("models"),
     /** Immutable retained bodies; modelKey is the sole active runtime selection. */
     modelVersions: zChampionModelVersions.optional(),
+    modelSelectionMode: zModelSelectionMode.optional(),
     /**
      * The RAW stat card. Since #248 the eight attribute-derived rows hold the
      * source map's own numbers, WITHOUT the 三圍 term — `maxHealth` on

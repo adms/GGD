@@ -3,6 +3,9 @@ import { zId, zRef } from "./ref";
 
 export const MODEL_VERSION_PREFIX = "version.body.";
 const zDigest = z.string().regex(/^[a-f0-9]{64}$/);
+export const MODEL_SOURCE_ORDER = ["300heroes", "mba", "original", "w3x"] as const;
+export const MODEL_SOURCE_LABELS = { "300heroes": "300英雄", mba: "MBA", original: "原版", w3x: "借用 W3X" } as const;
+export const zModelSelectionMode = z.enum(["automatic", "manual"]);
 
 export const zModelVersionSource = z.object({
   kind: z.enum(["exact", "alternate", "style-proxy", "previous"]),
@@ -10,6 +13,7 @@ export const zModelVersionSource = z.object({
   work: z.string().trim().min(1).max(160),
   library: z.string().trim().min(1).max(120),
   reference: z.string().trim().min(1).max(1000),
+  tier: z.enum(MODEL_SOURCE_ORDER).optional(),
 }).strict();
 
 /** A retained model document pins the GLB AND the complete animation/appearance binding. */
@@ -26,6 +30,20 @@ export const zChampionModelVersions = z.array(zChampionModelVersion).min(1).max(
 export type ChampionModelVersion = z.infer<typeof zChampionModelVersion>;
 export type ModelVersionSource = z.infer<typeof zModelVersionSource>;
 
+/** Explicit provenance wins; retain compatibility with versions saved before tiers. */
+export function modelSourceTier(source: ModelVersionSource): typeof MODEL_SOURCE_ORDER[number] {
+  if (source.tier) return source.tier;
+  if (/300heroes|300英雄/i.test(source.library)) return "300heroes";
+  if (/\bmba\b|magical[-_ ]battle[-_ ]arena|魔法少女武鬥祭/i.test(source.library)) return "mba";
+  if (/w3x|warcraft/i.test(source.library)) return "w3x";
+  return "original";
+}
+
+/** Newest within a tier, but a lower-priority import never displaces a higher tier. */
+export function sortModelVersions(versions: readonly ChampionModelVersion[]): ChampionModelVersion[] {
+  return [...versions].reverse().sort((a, b) => MODEL_SOURCE_ORDER.indexOf(modelSourceTier(a.source)) - MODEL_SOURCE_ORDER.indexOf(modelSourceTier(b.source)));
+}
+
 export const zModelVersionCommand = z.discriminatedUnion("action", [
   z.object({
     action: z.literal("register"), expectedHash: z.string().regex(/^sha256:[a-f0-9]{64}$/),
@@ -34,11 +52,15 @@ export const zModelVersionCommand = z.discriminatedUnion("action", [
   z.object({
     action: z.literal("activate"), expectedHash: z.string().regex(/^sha256:[a-f0-9]{64}$/), modelKey: zId,
   }).strict(),
+  z.object({ action: z.literal("automatic"), expectedHash: z.string().regex(/^sha256:[a-f0-9]{64}$/) }).strict(),
 ]);
 export type ModelVersionCommand = z.infer<typeof zModelVersionCommand>;
-export interface ChampionModelVersionState {
-  championId: string;
-  expectedHash: string;
-  activeModelKey: string;
-  versions: ChampionModelVersion[];
-}
+export const zChampionModelVersionState = z.object({
+  championId: zId,
+  expectedHash: z.string().regex(/^sha256:[a-f0-9]{64}$/),
+  activeModelKey: zId,
+  selectionMode: zModelSelectionMode,
+  preferredModelKey: zId,
+  versions: z.array(zChampionModelVersion).max(64),
+});
+export type ChampionModelVersionState = z.infer<typeof zChampionModelVersionState>;

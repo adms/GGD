@@ -1,0 +1,24 @@
+GGD 共享成品資源庫的固定入口：
+s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/
+
+最新版本與 ZIP：s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/current.json
+正式套件索引：s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/catalog.json
+個別資源索引：s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/resources.json
+下載說明：s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/README.md
+下載器：s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/DOWNLOAD.py
+
+AWS 固定使用 vibe-coding profile、ap-east-2 region，由 CLI 自動管理臨時身分。遇到 AccessDenied 停止並回報，不改 IAM 或切換 profile。
+
+本機工作庫及副本：
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library
+
+共享庫只含通過各類型標準化驗證的成品。模型／動作元件、VFX 元件與完整角色包分開標示；數量以 current.json 為準。
+角色選項與順位：hero-model-options.json，固定 300英雄 > MBA > 原版 > 借用 W3X。模型元件不表示專屬特效／音效齊全。
+下載以 current.json 指向的不可變版本為準，使用 DOWNLOAD.py 驗證 ZIP 與逐檔 SHA-256。
+原檔、341 筆角色／形態／設計候選及未完成轉換的資源保留本機，另存獨立備份區，不視為共享成品。
+後續新來源走抓取、轉換、動作與特效綁定、入庫驗證，再執行 tools/publish_s3.py --publish；成功讀回驗證後才更新共享索引。
+
+備份區（不得自動取用）：s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/
+僅供備份／完整性驗證；特殊使用須使用者對指定快照、素材及用途明確許可。禁止把備份納入正式 catalog/resources/current 或下載器，禁止遞迴下載整個 bucket。此為工作流規則，不是 IAM 讀取拒絕。
+
+固定存放分工（已確認）：原始模型、動畫、貼圖、音效、原生特效、半成品及大型解析 JSON 放 S3；解析／轉換程式、英雄與技能設定 JSON、版本清單、SHA-256 與文件放 Git。本機副本保留。規則見 STORAGE_POLICY.json。

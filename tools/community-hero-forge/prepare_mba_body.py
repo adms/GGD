@@ -88,6 +88,16 @@ def prepare(doc: dict, source_bin: bytes) -> tuple[dict, bytes, dict]:
             raise ValueError("Accessor outside buffer")
         return [struct.unpack_from("<" + fmt * width, raw, start + i * stride) for i in range(count)]
 
+    uv_domains = {}
+    for material_id in material_ids:
+        uv = [row for primitive in primitives if primitive["material"] == material_id for row in values(primitive["attributes"]["TEXCOORD_0"], 2)]
+        if any(not math.isfinite(value) for row in uv for value in row):
+            raise ValueError("Non-finite UV")
+        lo = [math.floor(min(row[k] for row in uv)) for k in range(2)]
+        hi = [max(lo[k]+1, math.ceil(max(row[k] for row in uv))) for k in range(2)]
+        if any(hi[k]-lo[k] > 4 for k in range(2)):
+            raise ValueError("UV repeat domain exceeds four tiles")
+        uv_domains[material_id] = (lo, hi)
     images = []
     for material_id in material_ids:
         material = doc["materials"][material_id]
@@ -107,7 +117,19 @@ def prepare(doc: dict, source_bin: bytes) -> tuple[dict, bytes, dict]:
         with Image.open(io.BytesIO(view_bytes(image_doc["bufferView"]))) as source:
             if max(source.size) > 2048:
                 raise ValueError("Texture exceeds tablet budget")
-            images.append(source.convert("RGBA"))
+            image = source.convert("RGBA")
+            image.putalpha(255)  # Source material is OPAQUE; alpha is ignored by its renderer.
+            lo, hi = uv_domains[material_id]
+            texture = doc["textures"][tex["index"]]
+            sampler = doc.get("samplers", [])[texture["sampler"]] if "sampler" in texture else {}
+            for k, axis in enumerate(("wrapS", "wrapT")):
+                if (lo[k] != 0 or hi[k] != 1) and sampler.get(axis, 10497) != 10497:
+                    raise ValueError("Only REPEAT UVs support tiled atlas baking")
+            tiled = Image.new("RGBA", (image.width*(hi[0]-lo[0]), image.height*(hi[1]-lo[1])))
+            for u in range(hi[0]-lo[0]):
+                for v in range(hi[1]-lo[1]):
+                    tiled.paste(image, (u*image.width, v*image.height))
+            images.append(tiled)
 
     gutter = 8
     columns = math.ceil(math.sqrt(len(images)))
@@ -115,9 +137,9 @@ def prepare(doc: dict, source_bin: bytes) -> tuple[dict, bytes, dict]:
     cell_w = max(i.width for i in images) + 2 * gutter
     cell_h = max(i.height for i in images) + 2 * gutter
     edge = 2 ** math.ceil(math.log2(max(columns * cell_w, rows * cell_h)))
-    if edge > 2048:
-        raise ValueError("Atlas would exceed 2048 pixels")
-    atlas = Image.new("RGBA", (edge, edge))
+    if edge > 4096:
+        raise ValueError("Atlas would exceed 4096 pixels")
+    atlas = Image.new("RGBA", (edge, edge), (0, 0, 0, 255))
     placements = {}
     for i, (material_id, image) in enumerate(zip(material_ids, images)):
         x, y = (i % columns) * cell_w + gutter, (i // columns) * cell_h + gutter
@@ -148,9 +170,8 @@ def prepare(doc: dict, source_bin: bytes) -> tuple[dict, bytes, dict]:
         indices.extend((offset + i,) for i in source_indices)
         x, y, w, h = placements[primitive["material"]]
         for uv in source_attributes["TEXCOORD_0"]:
-            if any(not math.isfinite(v) or v < 0 or v > 1 for v in uv):
-                raise ValueError("Repeating UVs require separate baking")
-            attributes["TEXCOORD_0"].append(((x + uv[0] * w) / edge, (y + uv[1] * h) / edge))
+            lo, hi = uv_domains[primitive["material"]]
+            attributes["TEXCOORD_0"].append(((x + (uv[0]-lo[0])/(hi[0]-lo[0]) * w) / edge, (y + (uv[1]-lo[1])/(hi[1]-lo[1]) * h) / edge))
         for joints, weights in zip(source_attributes["JOINTS_0"], source_attributes["WEIGHTS_0"]):
             total = sum(weights)
             if any(not math.isfinite(v) or v < 0 for v in weights) or total <= 0:
@@ -185,14 +206,45 @@ def prepare(doc: dict, source_bin: bytes) -> tuple[dict, bytes, dict]:
     index_accessor = append_accessor(indices, "I", "SCALAR", 34963)
     doc["meshes"][0]["primitives"] = [{"attributes": output_attributes, "indices": index_accessor, "material": 0, "mode": 4}]
     encoded = io.BytesIO()
+    source_edge = edge
+    if edge > 1024:
+        atlas = atlas.resize((1024, 1024), Image.Resampling.LANCZOS)
+        edge = 1024
     atlas.save(encoded, format="PNG")
     doc["images"] = [{"bufferView": append_view(encoded.getvalue()), "mimeType": "image/png"}]
     doc["textures"] = [{"source": 0, "sampler": 0}]
     doc["samplers"] = [{"magFilter": 9729, "minFilter": 9987, "wrapS": 33071, "wrapT": 33071}]
     doc["materials"] = [{"name": "MBA diffuse atlas", "pbrMetallicRoughness": {"baseColorTexture": {"index": 0}, "metallicFactor": 0, "roughnessFactor": 1}, "extensions": {"KHR_materials_unlit": {}}, "doubleSided": any(doc["materials"][i].get("doubleSided", False) for i in material_ids)}]
+    normalized_rotations = {}
+    for clip in doc.get("animations", []):
+        for channel in clip.get("channels", []):
+            if channel["target"]["path"] != "rotation":
+                continue
+            sampler = clip["samplers"][channel["sampler"]]
+            if sampler.get("interpolation", "LINEAR") not in ("LINEAR", "STEP"):
+                raise ValueError("Rotation normalization requires LINEAR or STEP")
+            old = sampler["output"]
+            if old not in normalized_rotations:
+                rotations = values(old, 4)
+                norms = [math.sqrt(sum(x*x for x in row)) for row in rotations]
+                if any(not math.isfinite(n) or n < 1e-8 for n in norms):
+                    raise ValueError("Invalid animation quaternion")
+                normalized_rotations[old] = append_accessor([tuple(x/n for x in row) for row,n in zip(rotations,norms)], "f", "VEC4", None)
+            sampler["output"] = normalized_rotations[old]
+    renamed = []
+    used = set()
+    for index, clip in enumerate(doc.get("animations", [])):
+        name = clip.get("name", "")
+        if name in used:
+            replacement = f"{name}__source_{index}"
+            while replacement in used:
+                replacement += "_"
+            clip["name"] = replacement
+            renamed.append({"index": index, "source": name, "output": replacement})
+        used.add(clip.get("name", ""))
     doc["extensionsUsed"] = ["KHR_materials_unlit"]
     doc.pop("extensionsRequired", None)
-    return doc, bytes(binary), {"sourceDrawPrimitives": len(primitives), "outputDrawPrimitives": 1, "vertices": len(attributes["POSITION"]), "triangles": len(indices) // 3, "atlasEdge": edge, "weightNormalization": {"vertices": corrected, "maxSumDelta": max_delta}, "adaptations": ["Diffuse textures packed without resizing; UV coordinates remapped to atlas", "Existing joint indices retained and weights normalized", "Unlit textured material replaces Assimp specular material", "Original rig, clip transforms and timing retained"]}
+    return doc, bytes(binary), {"sourceDrawPrimitives": len(primitives), "outputDrawPrimitives": 1, "vertices": len(attributes["POSITION"]), "triangles": len(indices) // 3, "atlasEdge": edge, "sourceAtlasEdge": source_edge, "renamedDuplicateClips": renamed, "normalizedRotationAccessors": len(normalized_rotations), "tiledUvDomains": uv_domains, "weightNormalization": {"vertices": corrected, "maxSumDelta": max_delta}, "adaptations": ["Diffuse textures packed; final atlas downsampled to at most 1024px, normalized UV coordinates retained", "Existing joint indices retained and weights normalized", "Unlit textured material replaces Assimp specular material", "Original rig and clip timing retained; quaternion orientation normalized"]}
 
 
 def main() -> None:
