@@ -16,7 +16,7 @@ import {
   TICK_HZ,
 } from "@ggd/shared/constants";
 import { visionRulesFromDoc } from "@ggd/shared/sim/vision";
-import { recordBossKill } from "@ggd/shared/sim/round11Gate";
+import { recordBossKill, shouldEnterRound11 } from "@ggd/shared/sim/round11Gate";
 import { retiredChampionIds } from "@ggd/shared/content/championRetirement";
 import { heroStartLevel } from "@ggd/shared/content/schema/config/match";
 import { asSeatId, asTeamId, type AugmentId, type ChampionId, type EntityId, type ItemId, type SeatId, type StatusId, type TeamId } from "@ggd/shared/ids";
@@ -896,6 +896,24 @@ export class MatchController {
    * 同一 tick 多來源致命時會重覆抵達 —— 去重靠 Set，⛔ 不靠「應該不會重覆」。
    */
   private readonly round11BossKills = new Set<number>();
+  /**
+   * ⭐ **只給測試**：把王擊殺累計器餵滿，⛔ 不必真的打死三隻王。
+   * ⚠️ 刻意是一個 getter 而不是「把欄位改成 public」——
+   * ⭐ 讀得到、⛔ 而換不掉那個 Set（出貨路徑仍然是唯一的寫入端）。
+   */
+  get round11BossKillsForTest(): Set<number> {
+    return this.round11BossKills;
+  }
+
+  /** ⭐ 下一段中場是「第十一回合前的那一段」⇒ 關商店、立刻進 combat。 */
+  private enteringRound11 = false;
+  /**
+   * ⭐ **哪一個回合是第十一回合**（`null` ＝ 這一場沒有第十一回合）。
+   * ⚠️ ⭐ 存「回合編號」而不是「還沒用掉的 tick 數」是刻意的：長度由
+   * `combatMaxTicksForRound()` **推導**（⭐ 全專案唯一回答「這一回合多長」的那一支），
+   * ⛔ 而不是在 `enterCombat` 裡塞一個會被它覆蓋掉的第二個住處。
+   */
+  private round11Round: number | null = null;
   /** 一個座位手動鎖定英雄的絕對 tick;沒有 = 從未鎖定(系統代選)。 */
   private readonly pickLockTick = new Map<SeatId, number>();
   /**
@@ -2299,6 +2317,22 @@ export class MatchController {
         this.grantGachaReward(entity, table);
       }
     }
+
+    // ⭐⭐ GH#1151 A —— **第十一回合沒有商店。**
+    //
+    // ⚠️ ⭐ 這裡刻意**不繞過** `enterIntermission`，而是跑完它再把商店關掉：
+    // ⛔ 繞過它會一起丟掉「回商店的那一刻把身體還原」那四行（GH#455）——
+    // ⭐ 而 A 第 2 條逐字要的正是**全員滿血**。⇒ 重用，⛔ 不另寫一條進場路徑。
+    //
+    // ⭐ `ticksLeft = 0` ＝ 這一段中場**下一 tick 就結束** ⇒ 直接進 combat。
+    //   ⛔ 不是「把 intermissionTicks 設成 0」：那會影響**每一個**回合。
+    if (this.enteringRound11) {
+      this.enteringRound11 = false;
+      this.world.economyOpen = false;
+      this.phase.ticksLeft = 0;
+      // ⭐ 記下「哪一個回合是第十一回合」—— 長度由 `combatMaxTicksForRound()` 推導。
+      this.round11Round = this.phase.round;
+    }
   }
 
   /**
@@ -3009,6 +3043,16 @@ export class MatchController {
    */
   private combatMaxTicksForRound(round: number): number {
     const authored = this.phase.cfg.combatMaxTicks;
+    // ⭐⭐ GH#1151 —— 第十一回合的長度來自設定（`round11.durationSec`）。
+    //
+    // ⚠️ ⭐ 放在**這一支**是刻意的：這個檔頭自己寫著「Two copies of
+    // 「決賽有多長」 is precisely how the phase clock and the sim deadline would
+    // end up 5,700 ticks apart」——⛔ 我第一版把它塞進 `enterCombat`，
+    // 而下面那一行 `ticksLeft = combatMaxTicksForRound(...)` 當場把它蓋掉。
+    // ⇒ ⭐ 「這一回合多長」只有這一個住處（第〇·四守則）。
+    if (this.round11Round === round) {
+      return Math.max(1, Math.round(this.rules.round11.durationSec * TICK_HZ));
+    }
     // The finale needs long enough for the 180 s ring to actually arrive; see
     // ROYALE_COMBAT_SEC. Gated on a configured ring exactly as the old inline
     // `if (this.fireRing)` was: a ringless match (unit tests, skeleton boot) has
@@ -4054,8 +4098,32 @@ export class MatchController {
    * 怎麼結束」的邏輯，那正是這個檔在 2026-07-27 花一整段註解拆掉的東西。
    */
   private isLastRound(): boolean {
+    // ⭐⭐ GH#1151 —— **第十一回合還沒打 ⇒ 這一回合就不是最後一回合。**
+    //
+    // ⭐ 這是第十一回合唯一需要的進場鉤子。原因是量出來的，⛔ 不是設計：
+    //   · `isRoyaleRound(r, final) === r >= final` ⇒ ⭐ **第 11 回合本來就是 royale 回合**
+    //     （`selectRoundArena` 已經會給它 `arena.royale`、十二人一區、放大的邊界，
+    //      而 client 的 `applyArena` 也已經會照著重建地面與火圈帶）
+    //   · ⇒ ⛔ 擋住第十一回合的**只有這一行**：round 10 已經是 royale ⇒ 比賽在這裡結束
+    //
+    // ⭐ 而它**自己會停**：`shouldEnterRound11` 只在「剛打完的是 finalRound」時成立
+    //   ⇒ 第十一回合打完後這裡回 true ⇒ ⛔ 不會有第十二回合。
+    if (this.round11Due()) return false;
     return (
       isRoyaleRound(this.phase.round, this.rules.finalRound) || roundCapReached(this.phase.round, this.rules.maxRounds)
+    );
+  }
+
+  /**
+   * ⭐ 第十一回合現在該開了嗎？—— ⛔ 判定住 `sim/round11Gate`（純函式），
+   * 這裡只把**這一場的三個輸入**餵給它。
+   */
+  private round11Due(): boolean {
+    return shouldEnterRound11(
+      this.rules.round11,
+      this.phase.round,
+      this.round11BossKills.size,
+      this.rules.finalRound,
     );
   }
 
@@ -4757,7 +4825,12 @@ export class MatchController {
         break;
       case "resolution":
         if (expired) {
+          // ⭐ GH#1151 —— 先問「第十一回合該開了嗎」，⭐ 因為 `maybeFinish()`
+          //   會讀 `isLastRound()`，⛔ 而那一問**會把旗標的機會用掉**
+          //   （`round11Due()` 只在「剛打完 finalRound」那一刻成立）。
+          const round11 = this.round11Due();
           if (!this.maybeFinish()) {
+            this.enteringRound11 = round11;
             this.phase.advance(); // -> next intermission
             this.enterIntermission();
           }
