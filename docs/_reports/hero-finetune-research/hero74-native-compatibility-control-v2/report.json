@@ -1,0 +1,164 @@
+{
+  "schema": "ggd-distillation-native-compatibility@1",
+  "scriptSha256": "3c057656648f91f6b68739c5a72c3a826982df6f9c6a4e0d18ed1a414a697552",
+  "compileHelperSha256": "dfc1240120a6449703c7343359acb141e955dbd15a614efd1afb9733b2a02a49",
+  "inputReportSha256": "897c8f712ae6f59cbd5eab80f900c314f0407294d00f1281ba3484ce42c0ac67",
+  "sourceEvidence": {
+    "arm": "teacher-control",
+    "answersSha256": "66e5b12240df5730f9409f1f25ddd19b057136af8c69cfd9142ed472128d7f15",
+    "modelInferenceCalls": 0
+  },
+  "candidateRevision": "1fdc84e4d18a14136287cf17c32fa9ad3fee64a4",
+  "contracts": {
+    "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92": {
+      "revision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "archiveSha256": "23273ca04e5cb1c31ecc53ba366bd35dddd1a4b3dadd78630cc380349729bd54",
+      "schemaSha256": "abeb548380ebc2e65c7d6c606baa7d809fc5a5dcc074d463640a5f825046cec1",
+      "indexSha256": "2d84581f6566e22bf027d81f2779307be5defa97f498bf740e7d8e7da27ecf02",
+      "runtimeResolverSha256": "06a4709bc9ea04c36dae17f32a39d76e072c0720896485e4ee2115c34c281b6c",
+      "championAuthoringKindAccepted": false,
+      "heroAuthoringKindAccepted": true,
+      "rawRuntimeSchemas": [
+        "ability@1",
+        "item@1"
+      ],
+      "championRepresentation": null,
+      "note": "Schema enum acceptance only; not full package validation, live import or gameplay."
+    },
+    "1fdc84e4d18a14136287cf17c32fa9ad3fee64a4": {
+      "revision": "1fdc84e4d18a14136287cf17c32fa9ad3fee64a4",
+      "archiveSha256": "9427dfb5f4dc01670c40152b42d062cf20983efedcaf04903a3dedfbfc294961",
+      "schemaSha256": "6f11cecb73c0cfe35527918a4068c56af72b37856a64ca5d0ca0611ba03febd7",
+      "indexSha256": "2d84581f6566e22bf027d81f2779307be5defa97f498bf740e7d8e7da27ecf02",
+      "runtimeResolverSha256": "06a4709bc9ea04c36dae17f32a39d76e072c0720896485e4ee2115c34c281b6c",
+      "championAuthoringKindAccepted": true,
+      "heroAuthoringKindAccepted": true,
+      "rawRuntimeSchemas": [
+        "ability@1",
+        "item@1"
+      ],
+      "championRepresentation": null,
+      "note": "Schema enum acceptance only; not full package validation, live import or gameplay."
+    }
+  },
+  "engines": {
+    "1fdc84e4d18a14136287cf17c32fa9ad3fee64a4": {
+      "revision": "1fdc84e4d18a14136287cf17c32fa9ad3fee64a4",
+      "archiveSha256": "dc3f1e2f14f58af21271df16832b699da57b557891c4c3472a3cc9e2d60ee304",
+      "archiveBytes": 20193280,
+      "zodVersion": "3.25.76",
+      "sourceFiles": {
+        "heroForge/schema.ts": "3954f52625d309e950eb9fdfe638248e1399a1c3bd230e3f3593d6e5b50f164e",
+        "schema/ability.ts": "2200cd2587bcfbc9b27115611afd657a4641cd55bf0b9af9c6dbefa1ac9bc3eb",
+        "schema/champion.ts": "c02f4c1f4476c757ecd316684d34246943b6aaf0f583c95927d3997b9c8782d3",
+        "heroForge/generator.ts": "ab36e7bee2e8638a9542f4a3b381f877d35e415d4b47bfc1bcc3698e43275b77",
+        "runtimeResolver.ts": "06a4709bc9ea04c36dae17f32a39d76e072c0720896485e4ee2115c34c281b6c",
+        "templates/resolve.ts": "2f5517ceeba4d5a7bac6534870de1c81ba3e32a5e094711d37eaf4c18130fe57",
+        "heroForge/presentation.ts": "ebe52db9a5d3e3e4416a9112c7c85c1b6da86f265be67a2003dab2882e77a49b",
+        "heroForge/templateVersions.ts": "f2c64a67262db9f5ccdf397fd222a7565f3b7f79cd439b1e6e4d1f571a818d9b"
+      }
+    },
+    "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92": {
+      "revision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "archiveSha256": "8c2b0a1ecafc03b18bd206629fd4c4218371548f9de6e575586823258c0832c5",
+      "archiveBytes": 19302400,
+      "zodVersion": "3.25.76",
+      "sourceFiles": {
+        "heroForge/schema.ts": "5646135ec6e04a705403d8032c05169c684d3247a328c458d20df97cc3388f1d",
+        "schema/ability.ts": "3e8b8b2535feae5d932d8cbae149136334c49eeaab72ed4e3fa13b581c277c2e",
+        "schema/champion.ts": "7fbdb2ad519609d7ec464c6f49867f8ab3c25b65b4e413edded2cab70b3af7b3",
+        "heroForge/generator.ts": "2df5ad73425482dab395bcd2eb8cf54d71e7cf44b6141e840f4384fb1c2d8064",
+        "runtimeResolver.ts": "06a4709bc9ea04c36dae17f32a39d76e072c0720896485e4ee2115c34c281b6c",
+        "templates/resolve.ts": "2f5517ceeba4d5a7bac6534870de1c81ba3e32a5e094711d37eaf4c18130fe57",
+        "heroForge/presentation.ts": "ebe52db9a5d3e3e4416a9112c7c85c1b6da86f265be67a2003dab2882e77a49b"
+      }
+    }
+  },
+  "counts": {
+    "nativeWholeHeroes": 2,
+    "candidateCompilePassed": 2,
+    "runtimeIdentical": 0,
+    "sourceCatalogRuntimeIdentical": 0
+  },
+  "scope": "Read-only compatibility diagnostic, not migration approval. Exact current JSON recompiled on both revisions and separately with candidate code plus source catalog; schema package kind checked independently. No source repair, model inference, target-profile claims, package apply or game behavior evidence.",
+  "fullHeroE2EProven": false,
+  "modelPromoted": false,
+  "rows": [
+    {
+      "id": "godie-edem:HERO",
+      "sourceRevision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "candidateRevision": "1fdc84e4d18a14136287cf17c32fa9ad3fee64a4",
+      "candidateCompilePassed": true,
+      "runtimeIdentical": false,
+      "fullHeroE2EProven": false,
+      "differenceCount": 5,
+      "differencePaths": [
+        "/abilityDrafts/E/effects/1/amount/ratios/0/coeff",
+        "/abilityDrafts/R/passive/ranks/0/hooks/0/effects/0/amount/ratios/0/coeff",
+        "/abilityDrafts/R/passive/ranks/1/hooks/0/effects/0/amount/ratios/0/coeff",
+        "/abilityDrafts/R/passive/ranks/2/hooks/0/effects/0/amount/ratios/0/coeff",
+        "/abilityDrafts/W/effects/0/amount/ratios/0/coeff"
+      ],
+      "sourceCompiledSha256": "d95f8b060a6c2f65a359047c948fcded3750b66c0c687c842016a2dd3c8b4fd1",
+      "candidateCompiledSha256": "417b04fd57fae645471f069ffdf253ab825dbd974547b622843620a9b31f1bd2",
+      "candidateWithSourceCatalog": {
+        "compilePassed": true,
+        "runtimeIdentical": false,
+        "differenceCount": 3,
+        "differencePaths": [
+          "/abilityDrafts/R/passive/ranks/0/hooks/0/effects/0/amount/ratios/0/coeff",
+          "/abilityDrafts/R/passive/ranks/1/hooks/0/effects/0/amount/ratios/0/coeff",
+          "/abilityDrafts/R/passive/ranks/2/hooks/0/effects/0/amount/ratios/0/coeff"
+        ],
+        "compiledSha256": "5d46368309573bf74b38b9fda1a1387e9ab98e4b7627eabd54aa61003debdb6d",
+        "policy": "Candidate schema/template expansion/runtime resolver with unchanged source templates/configs/subtypes."
+      }
+    },
+    {
+      "id": "godie-h02v:HERO",
+      "sourceRevision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "candidateRevision": "1fdc84e4d18a14136287cf17c32fa9ad3fee64a4",
+      "candidateCompilePassed": true,
+      "runtimeIdentical": false,
+      "fullHeroE2EProven": false,
+      "differenceCount": 12,
+      "differencePaths": [
+        "/abilityDrafts/E/passive/ranks/0/hooks/0/effects/0/amount/ratios/0/coeff",
+        "/abilityDrafts/E/passive/ranks/0/hooks/0/effects/0/onHitTargets/0/amountPerTick/ratios/0/coeff",
+        "/abilityDrafts/E/passive/ranks/1/hooks/0/effects/0/amount/ratios/0/coeff",
+        "/abilityDrafts/E/passive/ranks/1/hooks/0/effects/0/onHitTargets/0/amountPerTick/ratios/0/coeff",
+        "/abilityDrafts/E/passive/ranks/2/hooks/0/effects/0/amount/ratios/0/coeff",
+        "/abilityDrafts/E/passive/ranks/2/hooks/0/effects/0/onHitTargets/0/amountPerTick/ratios/0/coeff",
+        "/abilityDrafts/E/passive/ranks/3/hooks/0/effects/0/amount/ratios/0/coeff",
+        "/abilityDrafts/E/passive/ranks/3/hooks/0/effects/0/onHitTargets/0/amountPerTick/ratios/0/coeff",
+        "/abilityDrafts/EX/passive/ranks/0/hooks/0/effects/0/effects/0/amount/ratios/0/coeff",
+        "/abilityDrafts/R/passive/ranks/0/hooks/0/effects/0/amount/ratios/0/coeff",
+        "/abilityDrafts/R/passive/ranks/1/hooks/0/effects/0/amount/ratios/0/coeff",
+        "/abilityDrafts/R/passive/ranks/2/hooks/0/effects/0/amount/ratios/0/coeff"
+      ],
+      "sourceCompiledSha256": "42038a5b9ebfeb1a337463ca621a8601e7fc8e797cc657cfcce272f9ec5926bf",
+      "candidateCompiledSha256": "b5d7cf9ea7723f101cfc3971c8e89916d3598115656031d21405acbf7bcaacce",
+      "candidateWithSourceCatalog": {
+        "compilePassed": true,
+        "runtimeIdentical": false,
+        "differenceCount": 12,
+        "differencePaths": [
+          "/abilityDrafts/E/passive/ranks/0/hooks/0/effects/0/amount/ratios/0/coeff",
+          "/abilityDrafts/E/passive/ranks/0/hooks/0/effects/0/onHitTargets/0/amountPerTick/ratios/0/coeff",
+          "/abilityDrafts/E/passive/ranks/1/hooks/0/effects/0/amount/ratios/0/coeff",
+          "/abilityDrafts/E/passive/ranks/1/hooks/0/effects/0/onHitTargets/0/amountPerTick/ratios/0/coeff",
+          "/abilityDrafts/E/passive/ranks/2/hooks/0/effects/0/amount/ratios/0/coeff",
+          "/abilityDrafts/E/passive/ranks/2/hooks/0/effects/0/onHitTargets/0/amountPerTick/ratios/0/coeff",
+          "/abilityDrafts/E/passive/ranks/3/hooks/0/effects/0/amount/ratios/0/coeff",
+          "/abilityDrafts/E/passive/ranks/3/hooks/0/effects/0/onHitTargets/0/amountPerTick/ratios/0/coeff",
+          "/abilityDrafts/EX/passive/ranks/0/hooks/0/effects/0/effects/0/amount/ratios/0/coeff",
+          "/abilityDrafts/R/passive/ranks/0/hooks/0/effects/0/amount/ratios/0/coeff",
+          "/abilityDrafts/R/passive/ranks/1/hooks/0/effects/0/amount/ratios/0/coeff",
+          "/abilityDrafts/R/passive/ranks/2/hooks/0/effects/0/amount/ratios/0/coeff"
+        ],
+        "compiledSha256": "a75a32c2b7bf56732cc95d2d98448ed99b145cb3c3edac5050335d656a3c3619",
+        "policy": "Candidate schema/template expansion/runtime resolver with unchanged source templates/configs/subtypes."
+      }
+    }
+  ]
+}

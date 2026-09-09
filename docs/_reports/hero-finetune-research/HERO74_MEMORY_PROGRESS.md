@@ -4,6 +4,12 @@
 
 ## 最新進度：v21 已有正式更新；接上實際素材與封裝准入
 
+原生匯入相容性診斷已具體化：`hero74-native-compatibility-control-v2/` 固定候選為本次只讀看到的 `origin/main` commit `1fdc84e4d18a14136287cf17c32fa9ad3fee64a4`（不是將移動 ref 當版本）。舊 native engine `6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92` 的 `zAuthoringKind` 不收 champion，新版接受；不重做 Main 已加入的功能。但兩名 native control 在新版重編後，AP ratio coefficient 分別出現 **5／12** 個欄位差異；另用「新版程式＋不變的舊模板／config／subtype」作診斷，仍分別 **3／12** 個差異。兩者 schema/compile 都過，runtime identical **0/2**，因此不能把升版包裝冒稱無損遷移或上場通過。
+
+差異皆有 JSON pointer、原／候選編譯 hash、精確引擎與 schema/registry/module hash，未修改教師、資料切分、訓練器或引擎。此檢查不是判定新版公式有 bug；上游 AP 規則／校準更新可能是有意修改。亦未把 `zAuthoringKind` 能接受當成完整 importer 支援，report 分開記 registry 宣告與 enum 測量。完整 native 匯入仍 pending，需要保留來源規則的正式相容路徑或明示跨版本驗收，不能默默改答案。3/3 tests 包含重新執行兩題跨版本診斷並重現完整收據。
+
+只讀查到既有本機隔離 Docker importer/game 容器；公開 GET target-profile 回 401，未讀取或猜測其 secret、未改容器／作品／服務，也未將這個 auth boundary 冒稱訓練 blocker。後續真實匯入需獨立受控測試實例或正式憑證供應方式；不能把歷史 service-target-profile 當成目前 live target。
+
 v21 的 `train/dev-before.json` 已完成，`train/training-trace.json` 已持續記錄正式 optimizer 更新；不是仍停在 probe。500 train 單輪仍執行中，119 internal-dev 切分與訓練來源不改；終止前不宣告新 adapter 或收斂結論。使用者要求不再反覆手動查看或例行回報電量；交給既有背景保護，低於 40% 等確實需要介入時才通知。
 
 `hero-distillation-package-admission.mts` 已接上固定 revision 的 Main `compileHeroPackageProject`、`verifyUploadedHeroModel` 和內建 SimWorld admission。直接消費生成後 authoring，不讀取教師答案、不補參數／機制；檢查真實 GLB bytes／六用途動作／模型預算、完整文件與素材依賴及素材鎖，不用 placeholder bytes。只讀指定資產根目錄，路徑穿越、越界 symlink、同路徑不同 bytes、模型 hash／綁定錯誤都拒絕。
