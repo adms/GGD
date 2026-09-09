@@ -91,10 +91,21 @@ trace() { [ "${GGD_PLAYERNOTE_TRACE:-0}" = 1 ] && echo "🔎 #$1 sha=${2:--} →
 # ⭐ 一顆 commit 在 SINCE..NOW 裡 ⇔ 是 NOW 的祖先 **且** 不是 SINCE 的祖先
 in_range() { git cat-file -e "$1" 2>/dev/null && git merge-base --is-ancestor "$1" "$NOW" 2>/dev/null && ! git merge-base --is-ancestor "$1" "$SINCE" 2>/dev/null; }
 
-LINES=""; MISSING=""; UNSCOPED=""
+LINES=""; MISSING=""; UNSCOPED=""; DECLARED=""
 for N in $CLOSED; do
   # ⭐ title＋comments **一次**撈完（在此之前每張票打 2–3 次 gh：50 張 58 秒）
-  J=$(gh issue view "$N" --json title,comments 2>/dev/null) || continue
+  # ⭐ `GGD_PLAYERNOTE_CACHE=<dir>` —— **補發專用**的唯讀快取（GH#1152）。
+  #   ⚠️ 為什麼需要它：這一段對**每一張候選票**打一次 `gh issue view`（約 1–2 秒）。
+  #     一次 21 版的補發 ＝ 21 × 約 50 張 ⇒ ⭐ 實測**單一版本就跑不完 600 秒**。
+  #   ⛔ 它**不是**預設 —— 平時一版一發時票是活的，快取會讓一則剛寫好的進度標記讀不到。
+  #   ⭐ 補發時票是**靜止**的（那幾版早就出貨了），所以快取在那個情境下是等價的。
+  _CJ="${GGD_PLAYERNOTE_CACHE:+${GGD_PLAYERNOTE_CACHE}/${N}.json}"
+  if [ -n "$_CJ" ] && [ -s "$_CJ" ]; then
+    J=$(cat "$_CJ")
+  else
+    J=$(gh issue view "$N" --json title,comments 2>/dev/null) || continue
+    [ -n "$_CJ" ] && { mkdir -p "${GGD_PLAYERNOTE_CACHE}"; printf '%s' "$J" > "$_CJ"; }
+  fi
   RAW_T=$(printf '%s' "$J" | jq -r '.title // ""')
   # ⚠️ ⭐ 只讀**最新一則進度標記**，⛔ 不是「所有留言裡第一個命中的」：
   #   2026-08-30 量到 —— 我把 #866 的玩家那一句**清空**（它是後台的事，玩家無感），
@@ -102,10 +113,40 @@ for N in $CLOSED; do
   #   ⇒ ⭐ 一句已經被撤回的話又被發出去。**撤回要真的撤得掉。**
   B=$(printf '%s' "$J" | jq -r '[.comments[].body] | reverse | .[]' \
         | awk '/🧭 進度標記/{f=1} f{print} f&&/^---$/{exit}')
-  [ -n "$B" ] || continue
-  P=$(printf '%s' "$B" | grep -m1 '🎮 玩家看得到的' | sed 's/.*）\*\*：//')
-  # ⭐ 標記寫「無（…）」／「—」＝這張票玩家看不到 ⇒ 當成沒寫（⛔ 不要把「無（後台的事）」發成一行公告；2026-09-06 第一波 13 張這樣寫）
-  case "$P" in 無*|—*|-|"") P="";; esac
+  # ⛔⛔ **這一行在此之前是 `[ -n "$B" ] || continue`**（2026-09-09 owner 揪到）：
+  #   沒有進度標記的票**整個消失** ⇒ ⭐ 它既不進 `LINES`，也**不進 `MISSING`**
+  #   ⇒ 那道「有玩家可見的票卻沒寫玩家句 ⇒ ⛔ 不發」的閘**看不到它**
+  #   ⇒ fallback 誠實地印「這一版**真的**沒有玩家可見的票」——⛔ **而那是假的**。
+  #
+  # ⚠️ ⭐ 代價量到了：**v0.41.0–v0.42.15 共 21 版，Discord 收到的全是罐頭**，
+  #   其中至少 3 版真的有玩家看得到的東西（v0.41.5 的新減益「連段拘束」·
+  #   v0.42.9 的三選一背包滿標示 · v0.42.13 的 107 張圖示重畫）。
+  #
+  # ⭐ 而這支腳本**自己的註解**（下面那段）逐字寫著相反的意圖：
+  #   「⚠️ ⭐『沒有標記』的那一種**仍然要求** —— 那可能是一次真的落地而沒人寫標記,
+  #     ⛔ 正是這條閘的用途。」
+  #   ⇒ ⭐ **意圖與實作對不上，而中間隔著這一行 `continue`。**
+  #
+  # ⇒ 沒有標記 ⇒ `P` 與 `SHA` 都空，⭐ 而它**繼續往下走**：
+  #   `named`（commit 提到它）就有資格被要求一句玩家的話。
+  if [ -z "$B" ]; then P=""; SHA=""; fi
+  [ -n "$B" ] && P=$(printf '%s' "$B" | grep -m1 '🎮 玩家看得到的' | sed 's/.*）\*\*：//') || P=""
+  # ⭐ 標記寫「無（…）」／「—」＝這張票玩家看不到 ⇒ ⛔ 不發那一行
+  #   （⛔ 不要把「無（後台的事）」發成一行公告；2026-09-06 第一波 13 張這樣寫）
+  #
+  # ⛔⛔ **而在此之前它與「根本沒寫」被判成同一件事**（2026-09-09 owner 揪到的第二層）：
+  #   下面那道閘的訊息**自己**逐字寫著「兩種都要人回答，⛔ 不可以預設成後者」——
+  #   ⭐ 而寫了「無（後台的事）」的人**已經回答了**。把他的答案當成沒回答 ⇒
+  #   ⭐ 這道閘變成**答不出來的**：唯一的出路是去改票的**類型標籤**（把 [fix] 拿掉），
+  #     ⛔ 而那是為了讓閘閉嘴去竄改一張票 —— 一次比沉默更糟的失真。
+  #
+  # ⚠️ ⭐ 量到的代價：v0.41.0–v0.42.15 之間 **14/22 版**被這道閘擋住，
+  #   而擋住它們的 18 張票裡**絕大多數是 infra／編輯器／測試** ——
+  #   ⇒ 正確答案是「人說一聲：這張玩家看不到」，⛔ 不是改標籤、也⛔ 不是編一句假話。
+  #
+  # ⇒ ⭐ 拆成兩個變數：`P`（要發的那一句）與 `ANS`（**人答過了沒**）。
+  ANS=""
+  case "$P" in 無*|—*|-) ANS=declared; P="";; "") ANS="";; esac
   # ⛔⛔ **寫入端與消費端的格式對不上**（2026-08-30 量到，⭐ 同一天第二次）：
   #   `ticket-progress.sh:70` 寫的是 `| **commit** | fe252e8aa |`（⛔ **沒有**反引號），
   #   而這裡在此之前找的是 `` | **commit** | `fe252e8aa` | ``（要反引號）
@@ -116,7 +157,7 @@ for N in $CLOSED; do
   #   （第一次是進度欄：寫入端是**表格** `| **狀態** | \`完成\` |`，而我找 `狀態:`。）
   #
   # ⇒ ⭐ 反引號改成**可有可無**，⛔ 而 sha 本身仍然嚴格（7–40 個 hex）。
-  SHA=$(printf '%s' "$B" | grep -m1 -oE '\| \*\*commit\*\* \| `?[0-9a-f]{7,40}`?' | grep -oE '[0-9a-f]{7,40}' || true)
+  [ -n "$B" ] && SHA=$(printf '%s' "$B" | grep -m1 -oE '\| \*\*commit\*\* \| `?[0-9a-f]{7,40}`?' | grep -oE '[0-9a-f]{7,40}' || true) || SHA=""
   # ⭐ 這張票在這一版嗎？（兩個證據任一；⛔ 都沒有 ⇒ 它是別的版本的，⛔ 不進任何一欄）
   if [ "$SCOPE" = commits ]; then
     case " $NAMED " in *" #$N "*) IN=named;; *) IN="";; esac
@@ -176,6 +217,12 @@ for N in $CLOSED; do
         #   而我先前**只在 `commits` scope 測過** —— ⛔ 一把只驗過單邊的尺。
         if [ "${IN:-}" = named ] && [ -n "$SHA" ] && ! in_range "$SHA"; then
           trace "$N" "$SHA" "skip（只是被 commit 提到,這一版沒有改它 —— GH#1109）"
+        elif [ "$ANS" = declared ]; then
+          # ⭐ 人**答過了**：這張票玩家看不到 ⇒ ⛔ 不進 MISSING（它不擋公告）,
+          #   ⭐ 但仍然印出來 —— 一個被靜默吞掉的答案與沒有答案長得一樣。
+          DECLARED="${DECLARED}  · #$N $T
+"
+          trace "$N" "$SHA" "declared-none（人答過：這張票玩家看不到）"
         else
         MISSING="${MISSING}  · #$N $T
 "
@@ -225,8 +272,10 @@ if [ -z "$LINES" ]; then
     echo "  ⇒ 補（一張就夠，⛔ 不必每一張都補）："
     echo "     bash scripts/ticket-progress.sh write <票號> --state 完成 \\"
     echo "       --baseline … --next … --commit <sha> --player \"<一句玩家看得懂的話>\""
-    echo "  ⚠️ ⭐ 真的只是例行維護 ⇒ 那幾張票**不該**帶 feature/fix/improve 標籤，"
-    echo "     ⛔ 或者它們確實有玩家影響而只是沒寫 —— 兩種都要人回答，⛔ 不可以預設成後者。"
+    echo "  ⚠️ ⭐ 真的玩家看不到（infra／編輯器／測試／文件）⇒ ⭐ **答一聲**就好："
+    echo "     bash scripts/ticket-progress.sh write <票號> … --player \"無（<為什麼玩家看不到>）\""
+    echo "     ⭐ 那算**回答過**，⛔ 不擋公告 —— ⛔ 不必為了讓這道閘閉嘴去改票的類型標籤。"
+    echo "  ⇒ 兩種都要人回答，⛔ 不可以預設成後者。"
     exit 1
   fi
   LINES="- 系統優化更新：穩定性與速度的例行維護。
@@ -235,6 +284,14 @@ if [ -z "$LINES" ]; then
   printf '%s' "$LINES"
 else
   printf '%s' "$LINES"
+fi
+
+# ⚠️ ⭐ fail-loud（〇）：**人答過「這張票玩家看不到」**的那幾張 —— ⛔ 它們不擋公告
+#   ⭐ 但要印出來：一個被靜默吞掉的答案，與**沒有答案**長得一模一樣。
+if [ -n "$DECLARED" ]; then
+  echo
+  echo "ℹ️ 這幾張**人答過了**「玩家看不到」（進度標記寫「無（…）」）——⛔ 不擋公告："
+  printf '%s' "$DECLARED"
 fi
 
 # ⚠️ ⭐ fail-loud（一）：**定位不到版本**的那幾句 —— ⛔ 它們不會進公告
