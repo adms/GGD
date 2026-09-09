@@ -1,19 +1,19 @@
 {
   "population": {
     "configFiles": 103,
-    "knobs": 1985,
-    "corpusFiles": 2594,
+    "knobs": 1987,
+    "corpusFiles": 2595,
     "levelWindow": {
       "min": 9,
       "max": 99
     }
   },
   "counts": {
-    "A": 45,
+    "A": 47,
     "B": 9,
     "dominated": 2,
     "schema-locks-engine-zero": 9,
-    "no-read-end": 43,
+    "no-read-end": 45,
     "notAssessable": 308,
     "C": 1623
   },
@@ -291,6 +291,22 @@
       "why": "`worldW` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
     },
     {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "model-lod.json",
+      "path": "championChannelLimit",
+      "value": 500,
+      "why": "`championChannelLimit` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "model-lod.json",
+      "path": "championChannelWarn",
+      "value": 300,
+      "why": "`championChannelWarn` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
       "klass": "B",
       "kind": "schema-locks-engine-zero",
       "file": "model-lod.json",
@@ -490,8 +506,8 @@
     },
     {
       "file": "model-lod.json",
-      "knobs": 12,
-      "a": 0,
+      "knobs": 14,
+      "a": 2,
       "b": 1
     },
     {
