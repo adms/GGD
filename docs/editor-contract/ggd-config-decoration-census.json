@@ -1,7 +1,7 @@
 {
   "population": {
     "configFiles": 103,
-    "knobs": 1983,
+    "knobs": 1984,
     "corpusFiles": 2537,
     "levelWindow": {
       "min": 9,
@@ -15,7 +15,7 @@
     "schema-locks-engine-zero": 9,
     "no-read-end": 43,
     "notAssessable": 308,
-    "C": 1621
+    "C": 1622
   },
   "findings": [
     {
@@ -478,7 +478,7 @@
     },
     {
       "file": "damage-rules.json",
-      "knobs": 3,
+      "knobs": 4,
       "a": 1,
       "b": 0
     },

@@ -1,0 +1,20 @@
+  1/70  2/70  3/70  4/70  5/70  6/70  7/70  8/70  9/70  10/70  11/70  12/70  13/70  14/70  15/70  16/70  17/70  18/70  19/70  20/70  21/70  22/70  23/70  24/70  25/70  26/70  27/70  28/70  29/70  30/70  31/70  32/70  33/70  34/70  35/70  36/70  37/70  38/70  39/70  40/70  41/70  42/70  43/70  44/70  45/70  46/70  47/70  48/70  49/70  50/70  51/70  52/70  53/70  54/70  55/70  56/70  57/70  58/70  59/70  60/70  61/70  62/70  63/70  64/70  65/70  66/70  67/70  68/70  69/70  70/70
+⚡ skills:check —— 70 支 · 並行度 4 · 排程 宣告順序（⚠️ 首跑無帳本）
+   wall 60.8s · 累計 CPU 208.3s ⇒ **3.4× 平行度** · 閒置 35.0s（理論下界 = 最慢那一支 34.495s）
+   最慢五支: formreceipts:check 34.5s · msgledger:check 24.4s · skillremake:docs:check 6.6s · skillremake:json:check 6.5s · decor:check 5.7s
+   ⭐ 時間帳本: docs/_data/gate-timings.json
+
+⛔ 2 支紅了 —— ⭐ 一次列完（⛔ 不是修一個再跑一次，第零守則）:
+
+═══ decor:check（exit 1）
+> ggd@0.0.0 decor:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/config-decor/gen.ts --check
+⛔ ggd-config-decoration-census.json · ggd-config-decoration-census.md 過期了 —— 跑 `pnpm decor:build` 然後 git add
+ ELIFECYCLE  Command failed with exit code 1.
+
+═══ decor:check（exit 1）
+> ggd@0.0.0 decor:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/config-decor/gen.ts --check
+⛔ ggd-config-decoration-census.json · ggd-config-decoration-census.md 過期了 —— 跑 `pnpm decor:build` 然後 git add
+ ELIFECYCLE  Command failed with exit code 1.
+

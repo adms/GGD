@@ -1,0 +1,32 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.mvp-batch2-spread-policy",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "213916e393364d07ef059d84e4f77b5ff7fbb87f",
+  "contractFingerprint": "9f3ab477601fa13e",
+  "title": "第二批 MVP 必要 unit 修正：與第一批共用散射政策",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "範圍傷害人數政策接入既有 config.damage-rules.spreadMaxTargetsCap、Admin 與兩個 runtime handler。出貨仍20、舊overlay省略仍20；較低及高於20的設定可生效。falloff=1保留語意界線；codeOnlyKnobs RATCHET仍59。schema接收正safe integer，实际政策由config夾限；不宣稱驗證上界仍固定20。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/ops/codeOnlyKnobs.test.ts packages/shared/src/sim/damageRules.test.ts packages/shared/src/sim/effects/damageArea.test.ts packages/shared/src/sim/effects/damageLine.test.ts apps/admin/src/configForms.test.ts apps/admin/src/configFormsSave.test.ts apps/admin/src/configFormsShippedProse.test.ts --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "ae99bc288bb042c552b5dea8167752bf5767a877",
+      "evidence": [
+        "content/config/damage-rules.json",
+        "packages/shared/src/content/schema/config/damageRules.ts",
+        "packages/shared/src/sim/effects/spreadLimits.ts",
+        "packages/shared/src/sim/effects/damageArea.ts",
+        "packages/shared/src/sim/effects/damageLine.ts",
+        "materials/community-batch2-integration/receipts/mvp-1159-20260910/spread-tests.log"
+      ]
+    }
+  ],
+  "asks": [
+    "請 Main 在原 PR 審查這份可重現修正；保留 #1159 的 v0.42.26 真實公告缺口與合併條件。81名正式投稿／上架另依 #1147／#1150，不把來源或CI通過当成正式發布。"
+  ]
+}

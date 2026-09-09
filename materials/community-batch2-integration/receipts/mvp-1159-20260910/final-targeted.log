@@ -1,0 +1,74 @@
+CHECK board:check
+
+> ggd@0.0.0 board:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> python3 tools/board/gen_board.py --check
+
+ggd-board.html is current
+CHECK decor:check
+
+> ggd@0.0.0 decor:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> tsx tools/config-decor/gen.ts --check
+
+decor:check OK（1984 格旋鈕 · A 45 · B 9）
+CHECK coord:check
+
+> ggd@0.0.0 coord:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+> node tools/coord/check.mjs
+
+✅ docs/editor-contract/coordination/brick-request.solid-beam.json
+✅ docs/editor-contract/coordination/claim.20260907-open-tickets-handoff.json
+✅ docs/editor-contract/coordination/claim.20260908-codex-blockers-cleared.json
+✅ docs/editor-contract/coordination/claim.20260908-s3-asset-library-split.json
+✅ docs/editor-contract/coordination/claim.20260909-community37-icons.json
+✅ docs/editor-contract/coordination/claim.codex-lane-visual-advisory-and-brick-ids.json
+✅ docs/editor-contract/coordination/claim.community-batch2-integration.json
+✅ docs/editor-contract/coordination/claim.community-hero-forge-integration.json
+✅ docs/editor-contract/coordination/claim.community-hero-forge-plan.json
+✅ docs/editor-contract/coordination/claim.community-teacher-mechanism-corrections.json
+✅ docs/editor-contract/coordination/claim.community37-icons.json
+✅ docs/editor-contract/coordination/claim.editor-form-receipts.json
+✅ docs/editor-contract/coordination/claim.editor-write-gate-zod.json
+✅ docs/editor-contract/coordination/claim.export-champion-package-landed.json
+✅ docs/editor-contract/coordination/claim.export-champion-package.json
+✅ docs/editor-contract/coordination/claim.hero-finetune-research.json
+✅ docs/editor-contract/coordination/claim.hero-forge-plan-main-response.json
+✅ docs/editor-contract/coordination/claim.hero-status-inventory.json
+✅ docs/editor-contract/coordination/claim.main-night-20260905-what-is-already-done.json
+✅ docs/editor-contract/coordination/claim.model-fx-emitter-remaining-four-fields.json
+✅ docs/editor-contract/coordination/claim.mvp-batch2-spread-policy.json
+✅ docs/editor-contract/coordination/claim.vfx-subtype-picker.json
+✅ docs/editor-contract/coordination/owner-decision.20260906-main-tickets-codex-implements.json
+✅ docs/editor-contract/coordination/owner-decision.20260908-assets-to-s3-not-git.json
+✅ docs/editor-contract/coordination/owner-decision.20260908-s3-prefix-split-and-legacy-private.json
+✅ docs/editor-contract/coordination/owner-decision.20260908-upload-everything-and-legacy-rename.json
+✅ docs/editor-contract/coordination/question.effect-graph-bridge.json
+✅ docs/editor-contract/coordination/question.ground-barrage-anchor.json
+⚠️  brick-request.solid-beam 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.20260907-open-tickets-handoff 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.20260908-codex-blockers-cleared 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.20260908-s3-asset-library-split 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.20260909-community37-icons 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.codex-lane-visual-advisory-and-brick-ids 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.community-hero-forge-integration 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.community-hero-forge-plan 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.community-teacher-mechanism-corrections 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.community37-icons 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.editor-form-receipts 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.editor-write-gate-zod 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.export-champion-package-landed 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.export-champion-package 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.hero-finetune-research 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.hero-forge-plan-main-response 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.hero-status-inventory 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.main-night-20260905-what-is-already-done 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.model-fx-emitter-remaining-four-fields 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.vfx-subtype-picker 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  owner-decision.20260906-main-tickets-codex-implements 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  owner-decision.20260908-assets-to-s3-not-git 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  owner-decision.20260908-s3-prefix-split-and-legacy-private 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  owner-decision.20260908-upload-everything-and-legacy-rename 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  question.effect-graph-bridge 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  question.ground-barrage-anchor 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+
+coord:check —— 28 份 packet，0 份有缺
+[{"step": "board:check", "exitCode": 0}, {"step": "decor:check", "exitCode": 0}, {"step": "coord:check", "exitCode": 0}]
