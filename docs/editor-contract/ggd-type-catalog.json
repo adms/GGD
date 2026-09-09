@@ -10,8 +10,8 @@
     "⚠️ ⭐ 挑一個 `modelKey` 之前查 `modelFxEmitters.modelsWithEmitters`：那顆模型若自帶粒子，`modelFxEmitters.lostByEmitters` 的每一格**寫了也只作用在網格那一半** ⇒ ⛔ 同一顆模型會顯示兩種顏色／兩種大小，而沒有任何東西紅。"
   ],
   "counts": {
-    "templates": 54,
-    "pickable": 43,
+    "templates": 55,
+    "pickable": 44,
     "analysedButUnwired": 1,
     "shells": 9,
     "sentinels": 1,
@@ -68,6 +68,121 @@
         "castTimeSec": {
           "type": "number",
           "default": 0.833,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "tpl-area-strike",
+      "name": "範圍打擊",
+      "family": "area-strike",
+      "description": "一發 `damageArea`：以施法者自己（castType self）、指定地面點（ground）或指定目標（targeted）為圓心，半徑內每一個敵人吃一次傷害。⭐ 命中之後要追加的東西（擊退／狀態／持續傷害／減益）住在 `onHitTargets` —— ⛔ 它們不是第二個效果節點，是 damageArea 自己的一格（10 支出貨技能逐位元量到的形狀）。 ⭐ gapScore 取上界 10：它解鎖的形狀數（15/32）是全庫最高的一格。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 10,
+      "requires": [],
+      "exemplar": {
+        "skill": "77-01（godie-e00w.q）",
+        "jass": "—"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "self",
+          "values": [
+            "self",
+            "ground",
+            "targeted"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "radiusTier": {
+          "type": "enum",
+          "default": "中",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "radius": {
+          "type": "number",
+          "default": 4.5,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "onHitTargets": {
+          "type": "effects",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "condition": {
+          "type": "condition",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
           "fillsVia": "template.ref → expand()",
           "fillsViaByContext": {
             "doc": "template.ref → expand()"

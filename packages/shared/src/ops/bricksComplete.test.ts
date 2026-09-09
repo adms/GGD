@@ -42,7 +42,14 @@ const GATED = new Set(["effect", "hook", "template", "vfx-subtype", "vfx-call"])
 //   ⇒ 同上一條例外，這是**分母變了**，⛔ 不是回歸。
 //   ⭐ 而它們缺的是**整層**那一格（`adminOpensHome("template")` ⇒ 35 顆 template 積木
 //     每一顆都 false）⇒ ⛔ 補不了「只補這兩顆」，它們與前幾批一起在等 #992 的 schemaToForm。
-const BASELINE_GAPS = 51
+// · 2026-09-09 GH#1146：新模板家族 `area-strike`（`damageArea` 主體）進清冊 ⇒ 分母 +1。
+//   ⚠️ ⭐ 逐列比對過：**新增的缺口只有 `template/area-strike 缺 後台表單` 一列，
+//     ⛔ 沒有任何一列消失** ⇒ 同上面那幾條例外，這是**分母變了**，⛔ 不是回歸。
+//   ⭐ 而它缺的仍然是**整層**那一格（`adminOpensHome("template")` ⇒ 36 顆 template
+//     積木每一顆都 false）⇒ ⛔ 補不了「只補它自己」，它與前幾批一起在等 #992 的 schemaToForm。
+//   ⭐ 為什麼值得讓分母 +1：這一族**配得上 12 支**出貨技能（`templatize.py` 逐支印出），
+//     而全庫在此之前**沒有任何模板以 `damageArea` 為主體**。
+const BASELINE_GAPS = 52
 
 interface Brick {
   id: string;

@@ -1,29 +1,36 @@
 {
   "schema": "ggd-bricks@1",
   "note": "⭐ 積木清冊 —— 「有哪些積木、每一顆在哪個編輯器有表單、誰在用」的**唯一**一份答案（GH#989）。⛔ 產物：改 `tools/brick-census/bricks.ts` 再 `pnpm bricks:build`，⛔ 不要手改。⛔ 刻意沒有產生時間戳（隨時鐘變的欄位會讓 `--check` 永遠不相等）。",
-  "capabilityFingerprint": "43cd2f44",
+  "capabilityFingerprint": "d9164615",
   "adminFormSource": "apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（73 份）→ 後台自己的 readSchema()（1171 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。",
   "editorFormSource": "⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 171 顆有收據；收據裡沒有的才退回代理值。",
   "editorFormNeededFromCodex": "⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / vfx-call / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。",
   "counts": {
-    "total": 171,
+    "total": 172,
     "effect": 49,
     "hook": 33,
     "leaf": 10,
-    "template": 43,
+    "template": 44,
     "vfx-prim": 13,
     "vfx-subtype": 4,
     "vfx-call": 4,
     "model-preset": 15,
-    "gated": 133,
-    "gaps": 51,
-    "missingAdminForm": 51,
+    "gated": 134,
+    "gaps": 52,
+    "missingAdminForm": 52,
     "missingEditorForm": 4,
-    "zeroAdoption": 63
+    "zeroAdoption": 64
   },
   "gaps": [
     {
       "id": "apply-status",
+      "layer": "template",
+      "missing": [
+        "adminForm"
+      ]
+    },
+    {
+      "id": "area-strike",
       "layer": "template",
       "missing": [
         "adminForm"
@@ -12722,6 +12729,90 @@
       "editorForm": true,
       "usedBy": 6,
       "origin": "template@1:content/ability-templates/tpl-apply-status.json"
+    },
+    {
+      "id": "area-strike",
+      "layer": "template",
+      "params": [
+        {
+          "name": "castTimeSec",
+          "type": "number",
+          "optional": true,
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "origin": "derived: 沿用出貨 71/79 位採用者的慣例（文件與 params 同一個值）—— 同 `tpl-instant-blast.castTimeSec`。⭐ 預設 0 ＝ 瞬發,⛔ 而真正的值由 `castTimeFormula.deriveCastTime()` 算（那是唯一來源）。"
+        },
+        {
+          "name": "castType",
+          "type": "enum",
+          "values": [
+            "self",
+            "ground",
+            "targeted"
+          ],
+          "default": "self",
+          "origin": "census: 出貨 10 支 damageArea 主體技能 —— self 6 · ground 3 · targeted 1（2026-09-09 逐份量）。"
+        },
+        {
+          "name": "condition",
+          "type": "condition",
+          "optional": true,
+          "origin": "census: 那 10 支裡 **1 支有**（`godie-emns.e`：`{kind:status, subject:target, statusId:curse}`）。⭐ 值是整個條件葉，由 zCondition 本人驗。"
+        },
+        {
+          "name": "damage",
+          "type": "scaling",
+          "default": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "origin": "census: 那 10 支的 amount 有三種形狀（damageTier / damageTierPerRank / flat）—— ⭐ 值是整個 Scaling 節點，由 zScaling 本人驗，⛔ 不在這裡拆成幾格。預設取最低級距（⭐ 作者一定會改它）。"
+        },
+        {
+          "name": "damageType",
+          "type": "enum",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "default": "magic",
+          "origin": "census: 同一批 10 支 —— magic 6 · physical 4。⭐ 與 owner 2026-08-05「技能傷害預設都改成 AP 傷害」一致。"
+        },
+        {
+          "name": "onHitTargets",
+          "type": "effects",
+          "optional": true,
+          "origin": "census: 那 10 支裡 **5 支有這一格**（knockback ×2 · applyStatus ×1 · applyStatus+dot ×1 · applyBuff+applyStatus ×1）。⭐⭐ 這是這個模板的重點：那些追加效果**不是頂層的第二個節點**，是 damageArea 自己的一格 —— ⛔ 做成六格獨立參數就是把同一份知識拆成第二個住處。⛔ 刻意無預設：一個「我不知道你要追加什麼」的預設會讓作者以為它是必要的。"
+        },
+        {
+          "name": "radius",
+          "type": "number",
+          "default": 4.5,
+          "min": 0.5,
+          "max": 30,
+          "origin": "census: 出貨 10 支 damageArea 主體技能的 exemplar `godie-e00s.e` 逐位元（4.5）。⚠️ ⭐ `zDamageArea` 的**必填**格,⛔ 而它在載入時會被 `radiusTier` 蓋掉（`resolveRadiusTier`）—— 留著它是因為 AoE 級距表被關掉的那天,一個 0 半徑的爆炸與「這支技能沒有爆炸」長得一模一樣（同 tpl-traveling-wave 的 blastRadius）。⚠️ ⭐ 刻意**不填 `unit`**：那一格是封閉詞彙（wc3u/wc3h/s/count/ratio）,而這裡的半徑是 GGD 單位 —— ⛔ 硬填一個 wc3u 會讓後台的換算是錯的。"
+        },
+        {
+          "name": "radiusTier",
+          "type": "enum",
+          "tier": true,
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ],
+          "default": "中",
+          "origin": "census: 同一批 10 支 —— 中 5 · 小 4 · 極小 1。⚠️ ⭐ 真正說話的是這一格：`resolveRadiusTier` 在載入時把 `radius` 蓋掉（AoE 級距表）。"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "template@1:content/ability-templates/tpl-area-strike.json"
     },
     {
       "id": "beam-roll",

@@ -3,7 +3,7 @@
 > ⛔ **這份是產生的** —— `pnpm typecat:build`。改它請改 `content/ability-templates/`。
 > ⭐ 交付格式與止損協定見 `CODEX_TYPE_HANDOFF.md`；機器可讀版在 `ggd-type-catalog.json`。
 
-**43 個可挑 type** · ⭐ 1 個「分析做完但引擎沒接線」 · ⛔ 9 個空殼 · 1 個哨兵 · 矩陣 154/325 格
+**44 個可挑 type** · ⭐ 1 個「分析做完但引擎沒接線」 · ⛔ 9 個空殼 · 1 個哨兵 · 矩陣 154/325 格
 
 ## ⭐⭐ 怎麼 fail-closed
 
@@ -19,6 +19,7 @@
 | id | 佈線 | 參數 | ⛔ inert | preset 用量 | ref 用量 | gap | exemplar |
 |---|---|---:|---|---:|---:|---:|---|
 | `tpl-apply-status` | `doc` | 3 | — | 0 | 6 | 9 | 70-03 木束縛之術（content/abilities/godie-e010.e.json） |
+| `tpl-area-strike` | `doc` | 8 | — | 0 | 0 | 10 | 77-01（godie-e00w.q） |
 | `tpl-beam-roll` | `both` | 21 | ⛔ speed distance | 13 | 0 | 8 | 20-03 約束與勝利之劍 |
 | `tpl-blink` | `doc` | 1 | — | 0 | 7 | 9 | 57-02 任意門（content/abilities/godie-n00b.e.json） |
 | `tpl-blink-strike` | `doc` | 6 | — | 0 | 1 | 5 | godie-n01c.w（出貨最接近預設的那一支） |

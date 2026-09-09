@@ -1,11 +1,11 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "43cd2f44",
+  "capabilityFingerprint": "d9164615",
   "counts": {
     "effectKinds": 49,
     "hookEvents": 33,
     "conditionLeafKinds": 10,
-    "templateFamilies": 43,
+    "templateFamilies": 44,
     "effectFields": 274,
     "stats": 23,
     "combatEnvKeys": 39
@@ -588,6 +588,7 @@
     ],
     "templateFamilies": [
       "apply-status",
+      "area-strike",
       "beam-roll",
       "blink",
       "blink-strike",

@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "43cd2f44",
+  "fingerprint": "d9164615",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -1220,6 +1220,7 @@
   },
   "templateFamilies": [
     "apply-status",
+    "area-strike",
     "beam-roll",
     "blink",
     "blink-strike",

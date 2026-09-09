@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_622db00268e3",
+    "contentVersion": "cv_8ffa0d689c8e",
     "collections": {
       "champions": {
         "hash": "fc7a594de0e4",
@@ -58,8 +58,8 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "6534b2a0b44a",
-        "count": 54
+        "hash": "051f9ad7abfc",
+        "count": 55
       },
       "vfx-scripts": {
         "hash": "3d945d196d0a",
@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "43cd2f44",
+    "fingerprint": "d9164615",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -1317,6 +1317,7 @@
     },
     "templateFamilies": [
       "apply-status",
+      "area-strike",
       "beam-roll",
       "blink",
       "blink-strike",
@@ -1948,6 +1949,79 @@
               "max": 5,
               "unit": "s",
               "origin": "derived: exemplar 70-03（godie-e010.e）`castTimeSec` 0.833；castderive:build:raw 推導欄位，文件與 params 同值。"
+            }
+          }
+        },
+        {
+          "id": "tpl-area-strike",
+          "family": "area-strike",
+          "status": "enabled",
+          "params": {
+            "castType": {
+              "type": "enum",
+              "values": [
+                "self",
+                "ground",
+                "targeted"
+              ],
+              "default": "self",
+              "origin": "census: 出貨 10 支 damageArea 主體技能 —— self 6 · ground 3 · targeted 1（2026-09-09 逐份量）。"
+            },
+            "damageType": {
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ],
+              "default": "magic",
+              "origin": "census: 同一批 10 支 —— magic 6 · physical 4。⭐ 與 owner 2026-08-05「技能傷害預設都改成 AP 傷害」一致。"
+            },
+            "damage": {
+              "type": "scaling",
+              "default": {
+                "damageTier": "極小",
+                "ratios": []
+              },
+              "origin": "census: 那 10 支的 amount 有三種形狀（damageTier / damageTierPerRank / flat）—— ⭐ 值是整個 Scaling 節點，由 zScaling 本人驗，⛔ 不在這裡拆成幾格。預設取最低級距（⭐ 作者一定會改它）。"
+            },
+            "radiusTier": {
+              "type": "enum",
+              "values": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ],
+              "default": "中",
+              "origin": "census: 同一批 10 支 —— 中 5 · 小 4 · 極小 1。⚠️ ⭐ 真正說話的是這一格：`resolveRadiusTier` 在載入時把 `radius` 蓋掉（AoE 級距表）。"
+            },
+            "radius": {
+              "type": "number",
+              "default": 4.5,
+              "min": 0.5,
+              "max": 30,
+              "origin": "census: 出貨 10 支 damageArea 主體技能的 exemplar `godie-e00s.e` 逐位元（4.5）。⚠️ ⭐ `zDamageArea` 的**必填**格,⛔ 而它在載入時會被 `radiusTier` 蓋掉（`resolveRadiusTier`）—— 留著它是因為 AoE 級距表被關掉的那天,一個 0 半徑的爆炸與「這支技能沒有爆炸」長得一模一樣（同 tpl-traveling-wave 的 blastRadius）。⚠️ ⭐ 刻意**不填 `unit`**：那一格是封閉詞彙（wc3u/wc3h/s/count/ratio）,而這裡的半徑是 GGD 單位 —— ⛔ 硬填一個 wc3u 會讓後台的換算是錯的。"
+            },
+            "onHitTargets": {
+              "type": "effects",
+              "optional": true,
+              "origin": "census: 那 10 支裡 **5 支有這一格**（knockback ×2 · applyStatus ×1 · applyStatus+dot ×1 · applyBuff+applyStatus ×1）。⭐⭐ 這是這個模板的重點：那些追加效果**不是頂層的第二個節點**，是 damageArea 自己的一格 —— ⛔ 做成六格獨立參數就是把同一份知識拆成第二個住處。⛔ 刻意無預設：一個「我不知道你要追加什麼」的預設會讓作者以為它是必要的。"
+            },
+            "condition": {
+              "type": "condition",
+              "optional": true,
+              "origin": "census: 那 10 支裡 **1 支有**（`godie-emns.e`：`{kind:status, subject:target, statusId:curse}`）。⭐ 值是整個條件葉，由 zCondition 本人驗。"
+            },
+            "castTimeSec": {
+              "type": "number",
+              "optional": true,
+              "default": 0,
+              "min": 0,
+              "max": 5,
+              "unit": "s",
+              "origin": "derived: 沿用出貨 71/79 位採用者的慣例（文件與 params 同一個值）—— 同 `tpl-instant-blast.castTimeSec`。⭐ 預設 0 ＝ 瞬發,⛔ 而真正的值由 `castTimeFormula.deriveCastTime()` 算（那是唯一來源）。"
             }
           }
         },
@@ -5293,7 +5367,7 @@
         }
       ],
       "templateStatus": {
-        "enabled": 43,
+        "enabled": 44,
         "draft": 11
       },
       "innateKinds": [
@@ -5629,12 +5703,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "43cd2f44",
+    "engineFingerprint": "d9164615",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 43cd2f44 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 d9164615 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -6502,11 +6576,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "ce37d6412d87",
+    "fingerprint": "f187ca111e09",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "31a0587c75d3"
+        "digest": "749ff26907cf"
       },
       {
         "surface": "ability-item-zod-schemas",
@@ -6518,7 +6592,7 @@
       },
       {
         "surface": "capability-applicability",
-        "digest": "9b05758ffb11"
+        "digest": "9b4bd5744e84"
       },
       {
         "surface": "authoring-rules",
@@ -6558,7 +6632,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "4d3fea0bcc0d",
+  "migrationFingerprint": "bf2ca3e58a0a",
   "supportedModes": [
     "bootstrap"
   ],
@@ -6572,5 +6646,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "79517e856109"
+  "profileDigest": "f48dc63c0381"
 }

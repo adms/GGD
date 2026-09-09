@@ -1169,6 +1169,57 @@ const FAMILIES: Readonly<Record<string, Family>> = {
     };
   },
 
+  /**
+   * ⭐⭐ GH#1146 範圍打擊 —— 一發 `damageArea` 節點（⛔ **不是** `instant-blast` 那種
+   * 「文件層 radius ＋ damage 節點」）。
+   *
+   * ## ⭐ 為什麼要它（量到的，⛔ 不是估的）
+   *
+   * `templatize.py` 的擋點逐條分箱（2026-09-09，母體 32 個形狀）：
+   * `damageArea` 出現在 **21/32** 個形狀裡 —— ⭐ 而全庫**沒有任何模板以它為主體**
+   * （`expand.ts` 只有兩處發它，⛔ 兩處都是別的家族裡的一格：落點大爆炸 `:772`、
+   * 行進波的終點爆發 `:1355`）。
+   *
+   * ## ⭐⭐ 而最關鍵的一件事：追加效果**在節點裡面**
+   *
+   * ⛔ 我第一版以為要六格獨立參數（knockback／status／dot／dispel／vfx／modelFx）。
+   * ⭐ 逐份讀那 10 支之後：那些東西全部住在 **`damageArea.onHitTargets`**：
+   *
+   * ```
+   * onHitTargets: null                      ×5
+   *             : [knockback]               ×2
+   *             : [applyStatus]             ×1
+   *             : [applyStatus, dot]        ×1
+   *             : [applyBuff, applyStatus]  ×1
+   * ```
+   *
+   * ⇒ ⭐ **一格 `effects` 型別的參數**就夠了 —— ⛔ 六格獨立參數是把同一份知識
+   * 拆成第二個住處（第〇·四守則）。
+   *
+   * ## ⭐ `includeOrigin` 是常數，⛔ 不是參數
+   *
+   * 那 10 支**全部**是 `true`（10/10）⇒ 做成參數只會多一格永遠不變的欄位。
+   */
+  "area-strike": (t, p) => ({
+    castType: str(t, p, "castType") as "self" | "ground" | "targeted",
+    targetsEnemies: true,
+    ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+    effects: [
+      {
+        kind: "damageArea",
+        damageType: damageType(t, p, "damageType"),
+        amount: scaling(t, p, "damage"),
+        radius: num(t, p, "radius"),
+        radiusTier: str(t, p, "radiusTier"),
+        // ⭐ 10/10 都是 true —— 常數，⛔ 不是參數。
+        includeOrigin: true,
+        ...(has(t, p, "condition") ? { condition: raw(t, p, "condition") } : {}),
+        // ⭐ 追加效果住這裡（見上面那段）。⛔ 不是第二個頂層節點。
+        ...(has(t, p, "onHitTargets") ? { onHitTargets: raw(t, p, "onHitTargets") } : {}),
+      } as unknown as EffectDef,
+    ],
+  }),
+
   // 3. 原地震波 — nova around the caster. 呂布 80-03 鬼神烈戟.
   //
   // ⚠️ castType WAS `"self"`, AND THAT MADE THIS TEMPLATE HIT THE WRONG BODY.

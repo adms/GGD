@@ -1,12 +1,18 @@
 {
   "collection": "ability-templates",
-  "hash": "6534b2a0b44a",
+  "hash": "051f9ad7abfc",
   "entries": [
     {
       "id": "tpl-apply-status",
       "path": "ability-templates/tpl-apply-status.json",
       "hash": "981b52af12fc",
       "size": 2459
+    },
+    {
+      "id": "tpl-area-strike",
+      "path": "ability-templates/tpl-area-strike.json",
+      "hash": "169566c254ee",
+      "size": 4037
     },
     {
       "id": "tpl-barrier-domain",
