@@ -5,7 +5,7 @@
   "description": "故事：\n魯夫小時候崇拜海賊「紅髮傑克」而夢想將來做個海賊，某一天，魯夫因為誤食惡魔果實成了橡膠人，卻也因此一輩子成為不能落水的旱鴨子！另魯夫崇拜的海賊傑克曾經為了拯救落海的魯夫免於海怪的襲擊，替魯夫擋下一次危難，卻也因此遭海怪咬斷了左手臂，而後，在紅髮傑克即將離開村莊之際，將自己的象徵物「草帽」寄給了魯夫，從此開啟了一位小男孩的海賊冒險之旅...\n(出自:航海王)\n\n角色成長：\n力量 + 2.95\n敏捷 + 1.60\n智慧 + 1.50\n基礎跑速 315\n\n可學習的技能：\n伸縮自如的橡膠戰斧、伸縮自如的橡膠火箭炮、伸縮自如的槍亂打、三檔",
   "role": "fighter",
   "attackType": "melee",
-  "modelKey": "version.body.5f4ddabc134289f295a29834bd0b06041e7fad3284685e84",
+  "modelKey": "version.body.5c472ca70369050fa42ba784d7bbcaaa0dd5b23e00cdb047",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.25,
@@ -314,5 +314,5 @@
       }
     }
   ],
-  "modelSelectionMode": "automatic"
+  "modelSelectionMode": "manual"
 }

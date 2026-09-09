@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "坦克",
-  "modelKey": "version.body.726a54d30297338f0d7405091514d2be37bcf10df0f57649",
+  "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
   "baseStats": {
     "maxHealth": 100,
     "healthRegen": 0.25,
@@ -570,5 +570,5 @@
       }
     }
   ],
-  "modelSelectionMode": "automatic"
+  "modelSelectionMode": "manual"
 }

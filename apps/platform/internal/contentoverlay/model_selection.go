@@ -215,6 +215,8 @@ func (s *Service) SelectModel(ctx context.Context, id string, command ModelSelec
 	if !info.Mode().IsRegular() || info.Size() > 32*1024*1024 {
 		return state, httpx.BadRequest("模型超過大小上限。")
 	}
+	// #nosec G304 -- path 已經過 filepath.Rel(root, realPath) 限制在素材根目錄內
+	// （`..` 逃逸在上面回 BadRequest），並驗過 IsRegular() 與 32 MiB 上限。
 	binary, err := os.ReadFile(path)
 	if err != nil {
 		return state, err

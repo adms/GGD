@@ -11,7 +11,7 @@
     "大招"
   ],
   "pitch": "保持距離反覆施放攻擊法術，等待敵人聚集或露出破綻後用大招解決。",
-  "modelKey": "version.body.0a75adabf453db16048f0b8763c24cd03fb64707c0cc95b3",
+  "modelKey": "version.body.3532abc61c3a2aaeb94ff49668026e6e6bd9061dd722bffb",
   "modelVersions": [
     {
       "modelKey": "version.body.3532abc61c3a2aaeb94ff49668026e6e6bd9061dd722bffb",
@@ -62,7 +62,7 @@
       }
     }
   ],
-  "modelSelectionMode": "automatic",
+  "modelSelectionMode": "manual",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.25,

@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "鬥士",
-  "modelKey": "version.body.8d7862441a426d48f6ffdd3f97e2d7c93c50af070486e31b",
+  "modelKey": "version.body.0758526c616aafc9ef5aee24fa58e959ceacaea8b646f986",
   "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
@@ -499,5 +499,5 @@
       }
     }
   ],
-  "modelSelectionMode": "automatic"
+  "modelSelectionMode": "manual"
 }
