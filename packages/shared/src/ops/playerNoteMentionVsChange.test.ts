@@ -40,7 +40,10 @@ describe("玩家公告：提到 ≠ 改了（GH#1109）", () => {
 
   it("② `named` ＋ 標記不在這一段 ⇒ 跳過（⭐ 這是這張票的修法）", () => {
     // ⭐ 三個條件缺一不可：是 named · 有 sha · 而 sha 不在範圍。
-    expect(SH, '缺「IN = named」那一半').toMatch(/\[ "\$IN" = named \]/);
+    // ⚠️ ⭐ `${IN:-}` 而不是 `$IN` —— 這支腳本是 `set -u`，而 `IN` 只在 `SCOPE=commits`
+    //   那一段被賦值。裸的 `$IN` 會讓 `SCOPE=updated`（舊行為）在第一張票就死。
+    expect(SH, '缺「IN = named」那一半').toMatch(/\[ "\$\{IN:-\}" = named \]/);
+    expect(SH, "⛔ 用了裸的 `$IN` —— set -u 會讓 updated scope 整支死掉").not.toMatch(/\[ "\$IN" = named \]/);
     expect(SH, "缺「有 sha」那一半 —— 沒有它會把「完全沒有標記」的票也跳過").toMatch(/\[ -n "\$SHA" \]/);
     expect(SH, "缺「不在這一段」那一半 —— 沒有它就退回原本的缺陷").toMatch(/! in_range "\$SHA"/);
   });
@@ -49,7 +52,7 @@ describe("玩家公告：提到 ≠ 改了（GH#1109）", () => {
     // ⛔ 如果條件寫成 `[ -z "$SHA" ]`（第一版我就寫錯了），一次沒寫標記的真落地
     //   會被靜靜跳過 —— ⭐ 而那正是這條閘存在的理由。
     expect(SH, "⛔ 條件寫成「沒有 sha 就跳過」——那會放掉真正的漏寫").not.toMatch(
-      /\[ "\$IN" = named \] && \[ -z "\$SHA" \]/,
+      /= named \] && \[ -z "\$SHA" \]/,
     );
   });
 

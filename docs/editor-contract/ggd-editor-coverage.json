@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "54204fa893ac",
-  "capabilityFingerprint": "15d59fc8",
+  "fingerprint": "fcfa096b14cc",
+  "capabilityFingerprint": "abedce92",
   "required": [
     {
       "group": "abilityField",
@@ -9567,6 +9567,11 @@
     {
       "group": "configField",
       "name": "enabled",
+      "owner": "config.asset-downloads@1"
+    },
+    {
+      "group": "configField",
+      "name": "enabled",
       "owner": "config.aoe-tiers@1"
     },
     {
@@ -11538,6 +11543,11 @@
       "group": "configField",
       "name": "id",
       "owner": "config.asset-cdn@1"
+    },
+    {
+      "group": "configField",
+      "name": "id",
+      "owner": "config.asset-downloads@1"
     },
     {
       "group": "configField",
@@ -14298,6 +14308,11 @@
       "group": "configField",
       "name": "note",
       "owner": "config.asset-cdn@1"
+    },
+    {
+      "group": "configField",
+      "name": "note",
+      "owner": "config.asset-downloads@1"
     },
     {
       "group": "configField",
@@ -17822,6 +17837,11 @@
     {
       "group": "configField",
       "name": "schema",
+      "owner": "config.asset-downloads@1"
+    },
+    {
+      "group": "configField",
+      "name": "schema",
       "owner": "config.aoe-tiers@1"
     },
     {
@@ -19258,6 +19278,11 @@
       "group": "configField",
       "name": "showRosterInSettlement",
       "owner": "config.lobby-rally@1"
+    },
+    {
+      "group": "configField",
+      "name": "signedUrlTtlSec",
+      "owner": "config.asset-downloads@1"
     },
     {
       "group": "configField",
@@ -24605,7 +24630,15 @@
     },
     {
       "group": "templateFamily",
+      "name": "ally-shield"
+    },
+    {
+      "group": "templateFamily",
       "name": "apply-status"
+    },
+    {
+      "group": "templateFamily",
+      "name": "area-strike"
     },
     {
       "group": "templateFamily",
@@ -24626,6 +24659,10 @@
     {
       "group": "templateFamily",
       "name": "charge-push"
+    },
+    {
+      "group": "templateFamily",
+      "name": "charge-resource"
     },
     {
       "group": "templateFamily",
@@ -24758,6 +24795,10 @@
     {
       "group": "templateFamily",
       "name": "single-strike"
+    },
+    {
+      "group": "templateFamily",
+      "name": "spend-resource"
     },
     {
       "group": "templateFamily",
@@ -25340,7 +25381,7 @@
     "hookField": 29,
     "abilityField": 44,
     "auraField": 8,
-    "templateFamily": 43,
+    "templateFamily": 47,
     "conditionLeaf": 11,
     "conditionLeafField": 20,
     "effectFieldPath": 491,
@@ -25349,9 +25390,9 @@
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 8,
-    "configField": 4023,
+    "configField": 4028,
     "_notRequired": 15,
-    "_total": 5219,
+    "_total": 5228,
     "_ownerOnly": 39
   }
 }

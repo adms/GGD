@@ -1368,6 +1368,18 @@ def build(e):
     #      在這裡接回來。⛔ 這一行要緊貼在 effects 指派之後 —— 後面任何一步再動
     #      `doc["effects"]` 都會被 main() 的閘抓到（它比對最終寫出去的那份）。
     doc["effects"] = carry_mechanisms(aid, prev, e.get("effects", []), e)
+    # ⭐⭐ GH#1146 —— **來源列**明寫的模板綁定。
+    #
+    # ⚠️ ⭐ 它與 `RETIRED["template"]` **不衝突**：那一格擋的是
+    #   「從**舊文件**（`prev`）救回一個模板」（:1481 那個迴圈），而那會
+    #   **靜默回滾 36 支重製稿**。⇒ ⭐ 這裡是**規格自己說**要綁哪一份模板,
+    #   ⛔ 不是把舊值撈回來 —— 兩件事的方向相反。
+    #
+    # ⭐ `effects` 仍然照常產生：`mergeExpansion()` 會用模板的展開結果蓋掉它,
+    #   而**兩者相不相同**由 `templatizeEquivalence.test.ts` 逐位元判 ——
+    #   ⇒ ⛔ 不相同就會紅,而那正是「這一支不該綁這份模板」的訊號。
+    if e.get("template"):
+        doc["template"] = e["template"]
     # ── A-1：[變身]/[切換] → championForm ────────────────────────────────
     # ⛔ 表格裡不可以再手打 championForm。79-04 就是這樣活下來的 ——
     #    一格手打讓另外四支的缺口整整沒有人發現。

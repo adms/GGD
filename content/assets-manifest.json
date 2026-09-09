@@ -3,7 +3,7 @@
   "note": "⭐ 被 content/**/*.json 或共用 VFX 材質引用到的**每一顆**二進位資產。⛔ 產物 —— 改 `tools/asset-manifest/gen.ts`，⛔ 不要手改。⚠️ 只收**被引用到的**：content/assets/ 底下有一萬多個檔，而清單的用途是驗證引用得到的東西。",
   "counts": {
     "entries": 1650,
-    "totalBytes": 103970638
+    "totalBytes": 104112032
   },
   "entries": [
     {
@@ -13178,8 +13178,8 @@
     },
     {
       "path": "assets/icons/champions/godie-e00s.webp",
-      "bytes": 5312,
-      "sha256": "7842f084d501a4a8ffa429d933fa59378b12fcf58b25366d64bf4fa0c0b7c9f7",
+      "bytes": 4780,
+      "sha256": "3d27acdd5ea638e4c1aa626af05eec680f8f673af3db78853c05f7f281c142a6",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -13233,8 +13233,8 @@
     },
     {
       "path": "assets/icons/champions/godie-efur.webp",
-      "bytes": 5352,
-      "sha256": "9a1f6bbe3b9ee76551eea9a5c1ff1f42c17b76c4c9467c155dc59f3f593027dc",
+      "bytes": 5344,
+      "sha256": "e1936c00a0609e88a4d5204a31cb90ebe2a11a863838ba60e306de7b2a25f051",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -13343,8 +13343,8 @@
     },
     {
       "path": "assets/icons/champions/godie-h02k.webp",
-      "bytes": 3336,
-      "sha256": "7b4887d78411c4b301c27c50ef1d0d59cf0deed43cced998616040faf0cff1b0",
+      "bytes": 3242,
+      "sha256": "6f1e1da40a8cd5cbed58db1f06260cf88b421ca9aa0bef5055e29f88a9960018",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -13354,8 +13354,8 @@
     },
     {
       "path": "assets/icons/champions/godie-h02r.webp",
-      "bytes": 7782,
-      "sha256": "c8e4d105a42fb4b5022c4b4cb7ba7b272e03ce734e67ef91e166b6e142dfe0ee",
+      "bytes": 6540,
+      "sha256": "1bca9ebeef81a355670d8849cb2c24f247c8ab4b225ad944a506ffc2be4c23fd",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -13365,8 +13365,8 @@
     },
     {
       "path": "assets/icons/champions/godie-h02u.webp",
-      "bytes": 3626,
-      "sha256": "0bbbc8fcae397b7cca1d1fdd28dfc8a7099e536bb56777ff62552d09695cca04",
+      "bytes": 3308,
+      "sha256": "f8767d74e94e9dd8719c0590e3046c4fdfe5bacc418f4570b7d32cff3b25fc6d",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -13376,8 +13376,8 @@
     },
     {
       "path": "assets/icons/champions/godie-h02v.webp",
-      "bytes": 4498,
-      "sha256": "3bcba825676ff9ea9f673b753ac0d25cb9f32c3352fb8ebcb0b4042741686916",
+      "bytes": 4304,
+      "sha256": "61f1f9a9cd75ef4118f6c1ceb3d3d4cf860578b795d71f09bc302d6c4be5817d",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -13409,8 +13409,8 @@
     },
     {
       "path": "assets/icons/champions/godie-hgam.webp",
-      "bytes": 4652,
-      "sha256": "f799713a3696c79aad7eabd4ab5513796f2e297b18304687d3120d5d1719baac",
+      "bytes": 4436,
+      "sha256": "56c48c095b59f1c90d28190f686c6e647d85b0eb27a9b88ce88da4c3205134dc",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -13486,8 +13486,8 @@
     },
     {
       "path": "assets/icons/champions/godie-n00b.webp",
-      "bytes": 5554,
-      "sha256": "bd0b45cdbb1fd41a0debbae0daaeea7157f84c0ced648bf9cad6a4fd834e0358",
+      "bytes": 5542,
+      "sha256": "af709b3835cd16b869ec485753262f1f3d44478bb464dc1be673cf4bb715749c",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -13629,8 +13629,8 @@
     },
     {
       "path": "assets/icons/champions/godie-ogld.webp",
-      "bytes": 6542,
-      "sha256": "325286b91116879bdbcf8917d4e8d478c8bcbcb08f3cd8e7afd154427d35f839",
+      "bytes": 6122,
+      "sha256": "02b43c1b09a63ba61ce40b189838bd5b6ca017f4e5a12c88f9c30ccb431b7349",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -13695,8 +13695,8 @@
     },
     {
       "path": "assets/icons/champions/godie-u00k.webp",
-      "bytes": 8270,
-      "sha256": "cf8f196507b2f425024089dd4e1f88fdb166b18c93cc99bd27895e101f60a00e",
+      "bytes": 7812,
+      "sha256": "761ebe2e97954098fbd3dd4109bcea177f2daa0f18699565d595b1dcf27d6a2b",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -13805,8 +13805,8 @@
     },
     {
       "path": "assets/icons/champions/godie-udea.webp",
-      "bytes": 4762,
-      "sha256": "0200eb9db34b1d810fca5880921b89331f777cd0785e37e1ad5a172425f2dc4b",
+      "bytes": 4266,
+      "sha256": "0710a9d893df5f9d967c20e6ebfb801bd222e593c6fafb461ea49ca51d1b8e64",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -13860,8 +13860,8 @@
     },
     {
       "path": "assets/icons/champions/sela.webp",
-      "bytes": 5998,
-      "sha256": "61c2849a9ca67d7eed50a9c35f55d8b884d3b04c6af48ea5e2702edff346abc1",
+      "bytes": 5272,
+      "sha256": "d37407c1c1e28419429cf40aeba09b64ea21852d4467d54f4681538881da04e7",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -13871,8 +13871,8 @@
     },
     {
       "path": "assets/icons/champions/thorne.webp",
-      "bytes": 8308,
-      "sha256": "7675c079fda2ad5e9a3e02252f139a1e88ec28165280e4ca0a517cb58c6474cf",
+      "bytes": 7314,
+      "sha256": "3ad6dc06a2244ee96f50fc65fdbe0669a6d88e9e4e446b60d24f992bc4715c34",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -13981,8 +13981,8 @@
     },
     {
       "path": "assets/icons/items/godie-i000.webp",
-      "bytes": 4218,
-      "sha256": "f0773b6e3967b64b4f60f883996ab4ef710baf3c8b181e2595e68271d5f4c646",
+      "bytes": 11428,
+      "sha256": "23164bafb8b96779de8465457196fd9cc9e7af0a946b0dae906c6cd3239a8f16",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -13992,8 +13992,8 @@
     },
     {
       "path": "assets/icons/items/godie-i001.webp",
-      "bytes": 5160,
-      "sha256": "3b29a9b515f0946d547126940c9cce324d0636d95d29e3cf44e8248faceab83a",
+      "bytes": 4810,
+      "sha256": "e35865a65cf6504bbe40da0877503aaefe6f8c8a6765a8c2f4ae54af2a236281",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14003,8 +14003,8 @@
     },
     {
       "path": "assets/icons/items/godie-i002.webp",
-      "bytes": 6474,
-      "sha256": "05a046426508202d13b634f057211ae1d74d0b3fb9b903619277f680130e518c",
+      "bytes": 7056,
+      "sha256": "28c0f95e3de79ed6db2400286e01e7e54f01167d756d81cdcda21125f0dcd069",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14014,8 +14014,8 @@
     },
     {
       "path": "assets/icons/items/godie-i003.webp",
-      "bytes": 3608,
-      "sha256": "9c4814a32578c96c3c34207b6c445bab77143717373ac4a2a30160f8dd0126b3",
+      "bytes": 4846,
+      "sha256": "55c557fbfcae4784f6cdafabdb311522077292e1cdca9c864596ee9778a1abe2",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14025,8 +14025,8 @@
     },
     {
       "path": "assets/icons/items/godie-i004.webp",
-      "bytes": 4172,
-      "sha256": "1b841781ddfa7f9c8d77aeb212c44ba7a4f4e137042fa632111b9395a873b8b0",
+      "bytes": 8290,
+      "sha256": "f4820c7dca541866c107403c88969ba51c06cea1e3ea7f8716ef4acd309c24c5",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14036,8 +14036,8 @@
     },
     {
       "path": "assets/icons/items/godie-i006.webp",
-      "bytes": 3854,
-      "sha256": "12c4585858f276f647d77ebba7de630a9ac1b30b893613ff1efcf8a1404a0ecf",
+      "bytes": 6356,
+      "sha256": "0e98aa1d177e5f87ed7b5ee8e1f36c7d3a94a66654f425eb21faad7306daaef5",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14047,8 +14047,8 @@
     },
     {
       "path": "assets/icons/items/godie-i007.webp",
-      "bytes": 4902,
-      "sha256": "53c768516aec56f0e332ac733a4eb39929c0a946a39f6f950ab25878e83ff84e",
+      "bytes": 2442,
+      "sha256": "fc0f34367c2e4ed088d29011924d4e506164f1f577e321a1029c5b6db993d1a4",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14058,8 +14058,8 @@
     },
     {
       "path": "assets/icons/items/godie-i008.webp",
-      "bytes": 4758,
-      "sha256": "fa2254a5075ac19174889593eea3125225831ba999af3f00c0262e7c0fccdee9",
+      "bytes": 5176,
+      "sha256": "13c73a6e025691cdef15a55d4ed051cb54afdc4d29199cd9677c4d61ce563ff2",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14069,8 +14069,8 @@
     },
     {
       "path": "assets/icons/items/godie-i00c.webp",
-      "bytes": 4548,
-      "sha256": "e1744e321f59d463f4bb6f82b03f219a405f089b3530f7269b301ee7469a9564",
+      "bytes": 3858,
+      "sha256": "5d8ce6fb93ac02f50dbc6dde524210f5f2cb26a2a5c4f39d20baae0f61cd17ec",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14080,8 +14080,8 @@
     },
     {
       "path": "assets/icons/items/godie-i00d.webp",
-      "bytes": 6320,
-      "sha256": "7ed2ff3bbc9ab3b97ebc446faa07fbd640026b169f7f7938acf68e0a9a36b185",
+      "bytes": 7040,
+      "sha256": "bec571fd130b97b5b6b19567bb68569c87d7fb1c397be02d3d6edbb55beb1472",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14091,8 +14091,8 @@
     },
     {
       "path": "assets/icons/items/godie-i00e.webp",
-      "bytes": 5338,
-      "sha256": "8d29abf9404861c935b050f3d766902ba175258453a8cb5b47d2736943e2e3d8",
+      "bytes": 6286,
+      "sha256": "2f4fae90e803e394c9fa3451375e63f1fa0fbdbbf93562a7a4b767d6f94a16b5",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14102,8 +14102,8 @@
     },
     {
       "path": "assets/icons/items/godie-i00f.webp",
-      "bytes": 3462,
-      "sha256": "ddcb459d5c3bf0d9ae0bfa2f649bdc25c0aad86a5789ef764b29851b6f85b76d",
+      "bytes": 6208,
+      "sha256": "227dc3f8469d9e8b207064641e543cad9741e0b7efb5456f07864017a0179af9",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14113,8 +14113,8 @@
     },
     {
       "path": "assets/icons/items/godie-i00i.webp",
-      "bytes": 7134,
-      "sha256": "346c251d293a11a4111693472dba451a7ff040c43f0a364f4778a4bb873824ac",
+      "bytes": 9766,
+      "sha256": "a520717af13722e059dfe4fff90ae9c6c9f71d3f7f93198e4c7cb4f4d7075096",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14124,8 +14124,8 @@
     },
     {
       "path": "assets/icons/items/godie-i00j.webp",
-      "bytes": 3176,
-      "sha256": "ab3d6ae11a64fdba3163addf8d9fef41c5fb4f3e43a237cf30c275f83bb1b0bd",
+      "bytes": 5634,
+      "sha256": "c608663f41eef2ad7e6568435f98bddb32f60a5a826e979ae601a590ce7b3743",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14135,8 +14135,8 @@
     },
     {
       "path": "assets/icons/items/godie-i00l.webp",
-      "bytes": 4388,
-      "sha256": "0dc0278ba2120211245c02a7162b3a59279f355b82634ffc722ff331cdd35ef9",
+      "bytes": 4112,
+      "sha256": "92ee6e18567d69ea2f8f647181dfb3786a0417f50d6360b456643071c488008f",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14146,8 +14146,8 @@
     },
     {
       "path": "assets/icons/items/godie-i00m.webp",
-      "bytes": 4784,
-      "sha256": "938c259cef4b986d346f51bff3b93890bdff07b2a0d7e94be7b87a9661b128fc",
+      "bytes": 7288,
+      "sha256": "1a478e238eddcfa9d07addc695f9bf8bd1c7f969d2a2fa22ef977c7c8b921078",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14157,8 +14157,8 @@
     },
     {
       "path": "assets/icons/items/godie-i00o.webp",
-      "bytes": 2386,
-      "sha256": "0b1638b6ab73739217acb975b3841f1fcb49d0b5b7fdbed1d7c83eb5cc2787e5",
+      "bytes": 5486,
+      "sha256": "ba2a23276a6c652ba202d8e12a567b7827bbeee5c47a073a0ce9b57152610c86",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14168,8 +14168,8 @@
     },
     {
       "path": "assets/icons/items/godie-i00s.webp",
-      "bytes": 5138,
-      "sha256": "39480ff2d9708b34d00381e246887af967f7518a4f7552638711b8d86df5435e",
+      "bytes": 5148,
+      "sha256": "322db29c0f92feeb4a643e4dcdb5b671242d4b842c049d3c1be7919cf358b9b0",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14179,8 +14179,8 @@
     },
     {
       "path": "assets/icons/items/godie-i00u.webp",
-      "bytes": 2782,
-      "sha256": "2cc0a56d17b5568575d184de1b5c353d5a38dcbcf729b50877d8991d804b40dd",
+      "bytes": 2454,
+      "sha256": "2b677679e4b519e5bf7dee8475a7dcac9fdf24f3c6a2bc7c1d49ae36cd40ae9c",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14190,8 +14190,8 @@
     },
     {
       "path": "assets/icons/items/godie-i00z.webp",
-      "bytes": 3404,
-      "sha256": "c8da6ebec3594422284b60f9d2129f81837833e447fe6bf55875d9d85553b497",
+      "bytes": 5490,
+      "sha256": "ca5450b3e0017fc10dad00db152a55f6db13ce9d61b26a88534bbe3c9efb128f",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14201,8 +14201,8 @@
     },
     {
       "path": "assets/icons/items/godie-i010.webp",
-      "bytes": 6432,
-      "sha256": "fbebde200facd01592682bdf41a41130571b5ac633e2585c9ee17beb72be5920",
+      "bytes": 5906,
+      "sha256": "963dcb5709fd6aa654e44187587048bf7d8a727f957dc4a3c90e1e7b8ad6ff3f",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14212,8 +14212,8 @@
     },
     {
       "path": "assets/icons/items/godie-i012.webp",
-      "bytes": 2062,
-      "sha256": "68bf6eba629564f8e5f34d967d8b64be1c12ed295641344e689e919978fd6b65",
+      "bytes": 6470,
+      "sha256": "785b274cab6aca35384177ff9530b2496cffd95dcd89e3a8b0b45bb8ff4ff3bd",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14223,8 +14223,8 @@
     },
     {
       "path": "assets/icons/items/godie-i013.webp",
-      "bytes": 5426,
-      "sha256": "37ed2f675f9da5b09e75c25fd41353a40742f9d50c803a31bae638eeb057f225",
+      "bytes": 4534,
+      "sha256": "99d541108bbfbeafd4982eb7d8ed193bac37120b6e7425924399a2c53f743053",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14234,8 +14234,8 @@
     },
     {
       "path": "assets/icons/items/godie-i014.webp",
-      "bytes": 4196,
-      "sha256": "203e44c8ffe3a5d1fab9e3740842dc98e08c3dc0f78064675c14b9f67beced9b",
+      "bytes": 4790,
+      "sha256": "07d562c866503f5b6501ef2ce5aa1c433dc2daedbd0c04ce1fd76b2b7a69c3f9",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14245,8 +14245,8 @@
     },
     {
       "path": "assets/icons/items/godie-i016.webp",
-      "bytes": 2510,
-      "sha256": "d54ce7ba4e203003c05aa080b795cac78723144570fe642ff917c8a5835e0679",
+      "bytes": 4306,
+      "sha256": "e8302845f3e84894b8ba312f60252f311805f0642e6fd4d1d5c998ee7a39274c",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14256,8 +14256,8 @@
     },
     {
       "path": "assets/icons/items/godie-i018.webp",
-      "bytes": 3540,
-      "sha256": "af43efcb4e9ab7497fe1f708057bfc753e81519ee659634ca26a881b853ffb28",
+      "bytes": 7642,
+      "sha256": "32868cbd9d426448722443d30c347418a6571fdfa2529161cac3faaacc17c9cf",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14267,8 +14267,8 @@
     },
     {
       "path": "assets/icons/items/godie-i01a.webp",
-      "bytes": 6826,
-      "sha256": "11f677fb75ab15372d4a4cfcdcb4f2a9c211d5a46f6134ccc92554be9333b7e4",
+      "bytes": 6470,
+      "sha256": "1e6306fcd0bebec987134c66254f42b17784dffdb1ffa858106449887dff226e",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14278,8 +14278,8 @@
     },
     {
       "path": "assets/icons/items/godie-i01d.webp",
-      "bytes": 5298,
-      "sha256": "e0f5d9b2a16c71b37b657d2566f21be44844ec8b020e14a7b5c5bfbb84fb9c8e",
+      "bytes": 4214,
+      "sha256": "aa7890b738dc33f514a344b2d41c80ad483537148135635a6b453ed32838701c",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14289,8 +14289,8 @@
     },
     {
       "path": "assets/icons/items/godie-i01g.webp",
-      "bytes": 1760,
-      "sha256": "01dbff9ffa20fc27f3623bb0932153492183393da003b0bb98294d8e7ff47326",
+      "bytes": 5176,
+      "sha256": "a55f4a6bc5be2bea2b531f50684439c041c4fd0569ddc01ea0fe544b74497309",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14300,8 +14300,8 @@
     },
     {
       "path": "assets/icons/items/godie-i01i.webp",
-      "bytes": 5234,
-      "sha256": "23db843cc1a563cd5cb7e7ddbb37ec5e8efe0ede985cb1cd72f067cb72724632",
+      "bytes": 7792,
+      "sha256": "68714923282ad17b4157e941cf29828eb6e793ff295ae6ea30534a1075ac0ee9",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14311,8 +14311,8 @@
     },
     {
       "path": "assets/icons/items/godie-i01j.webp",
-      "bytes": 5572,
-      "sha256": "87d8d88b67de273fa9e558f3aa530a6638cba0e43031b1331b8f81e2f8e1c2b9",
+      "bytes": 8478,
+      "sha256": "5ed91d99d4d3888182456383cc4df50761ca6d2a3e7439ee7ecf0d00221c1453",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14322,8 +14322,8 @@
     },
     {
       "path": "assets/icons/items/godie-i01n.webp",
-      "bytes": 2696,
-      "sha256": "6d960d49f869d0fb57d077a54b78eead3164c620f91a98fa45b377933fb43556",
+      "bytes": 4090,
+      "sha256": "9792c6193b58a118a42d90c99e769d05f57d39198bda4e651968478c2ca1d74e",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14333,8 +14333,8 @@
     },
     {
       "path": "assets/icons/items/godie-i01o.webp",
-      "bytes": 5292,
-      "sha256": "1ef4b53d9271d750babc6eb273a6fefc796a140e8344f72f8467d6bdc5043df8",
+      "bytes": 6996,
+      "sha256": "8b2798d06378669a981754677f1ded9b4ce9a2e42b165e302114549415f71740",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14344,8 +14344,8 @@
     },
     {
       "path": "assets/icons/items/godie-i01s.webp",
-      "bytes": 4764,
-      "sha256": "269a48ffd8353d0088086d77258f37ef58982868b6054d642e43e051716c8ec0",
+      "bytes": 7862,
+      "sha256": "c5b39d625d858528b7e2b39b1ab36fe35ca450deb8b7fc409e95c8855938daa6",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14355,8 +14355,8 @@
     },
     {
       "path": "assets/icons/items/godie-i01v.webp",
-      "bytes": 3960,
-      "sha256": "ea4e2f5f9bddccf956751561a2453186f913b50884ee56c458605421f7f21841",
+      "bytes": 2854,
+      "sha256": "20bee920e6ca973ae68e42f05a14fe94b111df186665dfea1fafa802b1994720",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14366,8 +14366,8 @@
     },
     {
       "path": "assets/icons/items/godie-i01w.webp",
-      "bytes": 3154,
-      "sha256": "e102833c4119f31323964ed1d12520c70e19481ee1d1b1884c4339e916f4355c",
+      "bytes": 5188,
+      "sha256": "50925b415a4c496f90740797b2d9eb27359e15af7954359c96d80890b570609e",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14377,8 +14377,8 @@
     },
     {
       "path": "assets/icons/items/godie-i020.webp",
-      "bytes": 3288,
-      "sha256": "dc2a04305cc7d0d5c1653b8f3947cee91220221528fcdf0eef9a5606a8cf387f",
+      "bytes": 6644,
+      "sha256": "537ddf5f3d7e537a473ab58d50704a2ecdbdb8dfe1e6a8091d1acfa33401e3b7",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14388,8 +14388,8 @@
     },
     {
       "path": "assets/icons/items/godie-i027.webp",
-      "bytes": 1858,
-      "sha256": "d79fdec35e398c828d1fb678cd53deef3c4e650ef17be24ec95bdc0a85210d51",
+      "bytes": 8738,
+      "sha256": "234e0158052016abb76b43938d12fc16ff99178cdaaa6a9d59b96870de8e8a20",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14410,8 +14410,8 @@
     },
     {
       "path": "assets/icons/items/godie-i02e.webp",
-      "bytes": 2970,
-      "sha256": "6487e6134c8a99ca5315fbd2e22ea6e12aeb5808b580357b8008db4c4b2a73e3",
+      "bytes": 2694,
+      "sha256": "ce9382ab8c7776491cf2f0db76dbc9de0d4d616280351f666bc8c85adb99ab71",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14421,8 +14421,8 @@
     },
     {
       "path": "assets/icons/items/godie-i02g.webp",
-      "bytes": 3306,
-      "sha256": "a5bb26c20e494963d03b03544657d79a1deed6a90fddbc81c20c96d02d47e59c",
+      "bytes": 4514,
+      "sha256": "97923fac69a546aea110a323bce8b00a369edb526ca26f4a618146465ba11cfa",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14432,8 +14432,8 @@
     },
     {
       "path": "assets/icons/items/godie-i02r.webp",
-      "bytes": 3706,
-      "sha256": "42933934a233aa5af3018f9d3c0827df273ce227c016ce57456cfe2bb904b96e",
+      "bytes": 4758,
+      "sha256": "4253fab34c245aef7764c1d4d88b6e34d5c4d800d4c5413d101dbbe00930bb5f",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14443,8 +14443,8 @@
     },
     {
       "path": "assets/icons/items/godie-i02t.webp",
-      "bytes": 5478,
-      "sha256": "38467b691cb895386ec433bec140f8ee6d18d5c183be9a9db328365d7af95430",
+      "bytes": 5836,
+      "sha256": "86c36afa4c3ee6bb9a5353d33283ac163fff9ac3f54e3bcd6bd534917d82b264",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14454,8 +14454,8 @@
     },
     {
       "path": "assets/icons/items/godie-i02x.webp",
-      "bytes": 3892,
-      "sha256": "0bf249a309bfc0f9d42badf2942b7ad3b645c5f1eb944ac253182ac1ec02fb7d",
+      "bytes": 6074,
+      "sha256": "5a74f3d38e9baea17c5998cf37f62ba53be4712ed8f963e73ce890a86a39230f",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14465,8 +14465,8 @@
     },
     {
       "path": "assets/icons/items/godie-i030.webp",
-      "bytes": 7478,
-      "sha256": "bf36d342e1d0692855863c137a0018605a1768c98bab78a5e11add32ad9a013d",
+      "bytes": 6598,
+      "sha256": "47ca90ab26e3252abd8bb508465dae5236f25ebb5fe82cf4361e3e4966d5f16f",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14476,8 +14476,8 @@
     },
     {
       "path": "assets/icons/items/godie-i031.webp",
-      "bytes": 3170,
-      "sha256": "ce05fba120c0b30fa0f03bacc56c94ab463e6a4d38fc1c61c5d5388ae5591fdc",
+      "bytes": 5258,
+      "sha256": "3d7cd88fc872023932e87a313e4cd11c1bb502ac3f172b13be0a1bb17aba7d17",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14487,8 +14487,8 @@
     },
     {
       "path": "assets/icons/items/godie-i033.webp",
-      "bytes": 3320,
-      "sha256": "cfab1f039ede1c951b6fef1b4d6f261c480de9699981a1efb5f837b10e67d17f",
+      "bytes": 4766,
+      "sha256": "ea3c8a114725fa810c989949ed27240e37e0da5aa396f200559fedaba0a26a4f",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14498,8 +14498,8 @@
     },
     {
       "path": "assets/icons/items/godie-i038.webp",
-      "bytes": 9634,
-      "sha256": "58f38101dd911b3b40e231ba747ca20cf4f3e1d9c8f0bc3887800ae8034b8d38",
+      "bytes": 6606,
+      "sha256": "d9e4010143bb09e0a3538c29a1e0e4115c988eb90d29ca7bad4eef234fd47a4a",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14509,8 +14509,8 @@
     },
     {
       "path": "assets/icons/items/godie-i039.webp",
-      "bytes": 5766,
-      "sha256": "116812a1276ffe2847edfbb81541d2c8cb0bcee97ab48b0bac1fe62c84155f48",
+      "bytes": 9384,
+      "sha256": "ffde9bed61760cffbf6dc4240718c24190f36c6f714d59f501127ea2ab9a6b4c",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14520,8 +14520,8 @@
     },
     {
       "path": "assets/icons/items/godie-i03b.webp",
-      "bytes": 5508,
-      "sha256": "69f612928b7ecb5ae591e7a0055a2cd33a49a568590c696fb2703c5d31bfd5f8",
+      "bytes": 4314,
+      "sha256": "19dd9e20c7e0d79e9d43a20dbc846238e321c8058a75149f5de9415c6a5e9639",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14531,8 +14531,8 @@
     },
     {
       "path": "assets/icons/items/godie-i03d.webp",
-      "bytes": 2996,
-      "sha256": "6e29c4f5f202da697564c0b1cc333eddd240c0363eaa61f1a95b44f2e541a714",
+      "bytes": 3376,
+      "sha256": "5840d6cd9ff6d3927f403ed011863d38b256d13ef87db0020d67d651636b9295",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14542,8 +14542,8 @@
     },
     {
       "path": "assets/icons/items/godie-i03f.webp",
-      "bytes": 2714,
-      "sha256": "90471b88fe5f21a9a1c88a2c17b795380545f162950dee9813cd0c286effde19",
+      "bytes": 11202,
+      "sha256": "ea3ab0e6c5ff93e9293ad088fab0d47291b821450433c925fd2620eb3811d7e4",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14553,8 +14553,8 @@
     },
     {
       "path": "assets/icons/items/godie-i03h.webp",
-      "bytes": 3246,
-      "sha256": "0ae9046599028c5a77352411407115f87c2f1dc17ec7d8a1af8aa6538caa3d9b",
+      "bytes": 9786,
+      "sha256": "31816be97a48ec97567ed4f2cf7eaa9716194a6e7c3a76f2950a008e8bcfc847",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14564,8 +14564,8 @@
     },
     {
       "path": "assets/icons/items/godie-i03j.webp",
-      "bytes": 5348,
-      "sha256": "cbd5ba1d0b0cfb285eb6a49818951f2333fd23a63a5c1a2fa275021113828186",
+      "bytes": 7682,
+      "sha256": "24edef361af64a3801a6cd5f9219169dc71dd653936c8b4f97e6cba0f94986fc",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14575,8 +14575,8 @@
     },
     {
       "path": "assets/icons/items/godie-i03l.webp",
-      "bytes": 5176,
-      "sha256": "35da0c86053188ac69652a090a508f9feaedc080ee725cdc74973172b94fa24b",
+      "bytes": 5836,
+      "sha256": "01021c79346010b3e55f881bf61a30529dd505383229ab5a139a2cf930d03ad6",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14586,8 +14586,8 @@
     },
     {
       "path": "assets/icons/items/godie-i03m.webp",
-      "bytes": 3496,
-      "sha256": "5ba081492cca917e42c2e4e0e7d4dca413f0e77cbb1ac268fe827e39b97f9858",
+      "bytes": 4596,
+      "sha256": "6e21a636e0ef1fbd6e3258faeb538d4c264fda14b5ec534f327e882157837fd7",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14597,8 +14597,8 @@
     },
     {
       "path": "assets/icons/items/godie-i03n.webp",
-      "bytes": 5786,
-      "sha256": "37d8b3eb36b034852ce028ad4713c01c5cd8bd976f774841eafec3b3dc4ad946",
+      "bytes": 5692,
+      "sha256": "3fb5279a2ba26bbec87cb4e1fb9a276388191cbbdfab39db812d4947f41fb474",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14608,8 +14608,8 @@
     },
     {
       "path": "assets/icons/items/godie-i040.webp",
-      "bytes": 3554,
-      "sha256": "840298c257f54c3db26675bc8c3918696b6ce773a0f278ce52b1f77fe78e7b1c",
+      "bytes": 4448,
+      "sha256": "ad56b910c8571b2b4e293c966f5019bcf3e653a78314f2f30126103f59fbe06f",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14619,8 +14619,8 @@
     },
     {
       "path": "assets/icons/items/godie-i041.webp",
-      "bytes": 3548,
-      "sha256": "4064699875fc8cfa2cca8d7aa2352cb452c39fad58a3aab74cb523a92496e609",
+      "bytes": 3388,
+      "sha256": "cdff805d6ab934fad298bc4e4eb17ef0e22dec8ab5a477d47ea458595b259dd6",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14641,8 +14641,8 @@
     },
     {
       "path": "assets/icons/items/godie-i049.webp",
-      "bytes": 3910,
-      "sha256": "3ae3ad88bea047f05ae0c6a2742166e1163810057341f3f98fc3ab065b905375",
+      "bytes": 7702,
+      "sha256": "a3e03fe4d36f806d476a6c371f114fff9abcd7499d252fbef545aba99cae70db",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14674,8 +14674,8 @@
     },
     {
       "path": "assets/icons/items/godie-i04i.webp",
-      "bytes": 6432,
-      "sha256": "57e1b528b4e643d9188759c69dc9bcef704ebfdcc9c2d3386840df906f5c4b9d",
+      "bytes": 3030,
+      "sha256": "d1d3865c7ef69a842f1da21d3e57dd9fcd743df629af2b34572f5ac295d5d07d",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14685,8 +14685,8 @@
     },
     {
       "path": "assets/icons/items/godie-i04j.webp",
-      "bytes": 4984,
-      "sha256": "2cfefe61251656c1c4cad047fa87fadc387ad1378fd961c4d2bdfa82c25d929b",
+      "bytes": 3552,
+      "sha256": "364b2575543f81cd1337fe0e7746593f44a3059f35e80fe0c0b8559bcf15f59c",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14696,8 +14696,8 @@
     },
     {
       "path": "assets/icons/items/godie-i04v.webp",
-      "bytes": 3642,
-      "sha256": "3629cf1bd37a35d8af8586c3cc3ccc009a3a56cdf3a30568b607787ec3047852",
+      "bytes": 6090,
+      "sha256": "63fdc8552bf553f799d2d8ea40921ee8fa6e80ee3ff82ba06e2cb0ca4be24f89",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14707,8 +14707,8 @@
     },
     {
       "path": "assets/icons/items/godie-i05h.webp",
-      "bytes": 9670,
-      "sha256": "922ee38d46e7d5091a1293baf4dd0a612d50dc37584753dae06469671e1be889",
+      "bytes": 8880,
+      "sha256": "a74ecd62a3aa318c53100ba2cd5ede8cc8f12759f5091995faccde7efb2edfce",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14718,8 +14718,8 @@
     },
     {
       "path": "assets/icons/items/godie-i05k.webp",
-      "bytes": 1818,
-      "sha256": "916cdbc648898baba5cadfd73c7b87561a3a3c410fcedbb2327453cca65dc13b",
+      "bytes": 4410,
+      "sha256": "d9316accf81f7930b2c561e3ab54b57db287fa351517d501a07ec370ce272303",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14729,8 +14729,8 @@
     },
     {
       "path": "assets/icons/items/godie-i05l.webp",
-      "bytes": 4422,
-      "sha256": "f152b188b11e6c1ed1a10a940e05362603e6eef26755f3836c280bcae5a063f3",
+      "bytes": 4356,
+      "sha256": "a0c2bdf6bfdc051d4a0b77aa556de35bd2c90e0214ddfcfb57a843bf45cbae8c",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14740,8 +14740,8 @@
     },
     {
       "path": "assets/icons/items/godie-i05m.webp",
-      "bytes": 3068,
-      "sha256": "7f3dccc9013ed1e0bdb010e0f946795a3f2338852f04cf444dc77310873078f0",
+      "bytes": 5252,
+      "sha256": "6a7f1e607481b9517468e79fc623c8fee6a1a7be8079aeb9623ff2ffd0ae43b0",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14751,8 +14751,8 @@
     },
     {
       "path": "assets/icons/items/godie-i05n.webp",
-      "bytes": 2494,
-      "sha256": "883c93423c1e2c0ec244fd03d94cd1badd8ae03aea7d3d1922a4e0c0cfc1632c",
+      "bytes": 6426,
+      "sha256": "e27044dd99cad16a255621e31916c1d1e8aa1b3d374c06e1a94b4a0811e789c8",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14762,8 +14762,8 @@
     },
     {
       "path": "assets/icons/items/godie-i05o.webp",
-      "bytes": 3462,
-      "sha256": "2046fb53b5d90a3d287bb1407b40ed4587df166f3f64e89481787a9c2addc596",
+      "bytes": 8590,
+      "sha256": "768873bd235e93fb4719912c1d572c3292b7b1c48522c410c1dc7d93c89245bb",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14773,8 +14773,8 @@
     },
     {
       "path": "assets/icons/items/godie-i05q.webp",
-      "bytes": 3682,
-      "sha256": "2485332f55b8269aa3bf153e696147b5beab31ff7b5e9a82d45e60dbea2a489b",
+      "bytes": 5718,
+      "sha256": "b5c41f74d08dd94960a751f61f4abc8bc8b112c56a98198c6f69dfbb317b262c",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14784,8 +14784,8 @@
     },
     {
       "path": "assets/icons/items/godie-i05r.webp",
-      "bytes": 2934,
-      "sha256": "97bbdac64a33b428c4d4672d5e75f0623f7f4882a4dd7c4830d3205e1e2d2fce",
+      "bytes": 5178,
+      "sha256": "2b0b7b3d4a53b5cbc6b1d44b3d6abf2b955293361886b435225a3b1c473c6b2d",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14795,8 +14795,8 @@
     },
     {
       "path": "assets/icons/items/godie-i05t.webp",
-      "bytes": 2934,
-      "sha256": "f1a5344688d3fd5a35361d0b2964b5cc9bfab04a0a167dca1288e733dc85b027",
+      "bytes": 2726,
+      "sha256": "ebc6d470b42856ecf89d1c6d58debb06d3827a32ec1ae2c4c3c6886e3669a875",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14806,8 +14806,8 @@
     },
     {
       "path": "assets/icons/items/godie-i05u.webp",
-      "bytes": 4772,
-      "sha256": "12d2d31ab7f4db47a9b46f81bfc5f4ebaf0d10eac05186111c944b2ad70eacf6",
+      "bytes": 3234,
+      "sha256": "e19fd46e4161606ca6a3402a1099e390eaf799127a0ba452c17500a2d44d939f",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14817,8 +14817,8 @@
     },
     {
       "path": "assets/icons/items/godie-i05v.webp",
-      "bytes": 5562,
-      "sha256": "3c066e6b2cbd6c253598f1e969cdd17daa343db374b992d8e201efdd1607d79e",
+      "bytes": 5932,
+      "sha256": "18b88bf2eda10c031ffb41a9605a79e089a9545f73ef4721c2dc1155d5a1e308",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14828,8 +14828,8 @@
     },
     {
       "path": "assets/icons/items/godie-i05x.webp",
-      "bytes": 6566,
-      "sha256": "257f484372e85c3400508f90764597875c81f0518d83727b1bcef90a067836c9",
+      "bytes": 6044,
+      "sha256": "7478ded6245e4a29833fb4abc2ca849bf25b670a7b91811f443f7446079005c0",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14839,8 +14839,8 @@
     },
     {
       "path": "assets/icons/items/godie-i05z.webp",
-      "bytes": 4954,
-      "sha256": "daf359b35108f206d90c3c87d8924a43b23e4e1b7c401f4c295a6c0d2f58a533",
+      "bytes": 3846,
+      "sha256": "b86019e3d940e95f127d0d4aac8eb18f8c348d8655d18d99a7817478bba18301",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14850,8 +14850,8 @@
     },
     {
       "path": "assets/icons/items/godie-i060.webp",
-      "bytes": 9346,
-      "sha256": "e65065e6c233a2bbb657de66056fc6c56730faf8b5bc6b08339a1136ac55306a",
+      "bytes": 10786,
+      "sha256": "c339557dd58cc770c3e6cec7c39dcfed3006b6da9957b3c83b381a7220c0c693",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14861,8 +14861,8 @@
     },
     {
       "path": "assets/icons/items/godie-i061.webp",
-      "bytes": 3540,
-      "sha256": "fbc29a4a2e65af85b8cfcbddffd486ac73f289d93b165df06721eac1a3ccbbb4",
+      "bytes": 6866,
+      "sha256": "31f8f77e98195e730164bded66529c99fe0df332cc15c7b6c52767c51b13772f",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14872,8 +14872,8 @@
     },
     {
       "path": "assets/icons/items/godie-i062.webp",
-      "bytes": 2806,
-      "sha256": "506880a60177dfad5a97ec371a64e74442ea441b98f449af46a4484d19a69ec0",
+      "bytes": 4344,
+      "sha256": "7ca499f2adcaced53c65c6a993bd38119c40828bf3de0db04fbdadfdecd3fbd6",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14883,8 +14883,8 @@
     },
     {
       "path": "assets/icons/items/godie-i063.webp",
-      "bytes": 4028,
-      "sha256": "b8594183401612df4e0d7dc478c0ad1f772c5dde75eb01e3b8d1e16b115f28cd",
+      "bytes": 4038,
+      "sha256": "2677db448b6d6c2c8409a4b500346651840957e6a0b6c164bc3436a380896ea6",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14894,8 +14894,8 @@
     },
     {
       "path": "assets/icons/items/godie-i067.webp",
-      "bytes": 7876,
-      "sha256": "cfc51854331eafeb76c506a947a47ef6fc2b23f0d31f26ceab651629ab4b2afe",
+      "bytes": 11022,
+      "sha256": "f05520f4373e8f8814946aefc0c62a5eea113bd39ce35ebc9896a4b03b4db7b8",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14905,8 +14905,8 @@
     },
     {
       "path": "assets/icons/items/godie-i068.webp",
-      "bytes": 2262,
-      "sha256": "a99be3906b0b915ed3794c80e2864cf1d47d7fdd4e62b5fc8752d4cef30af4fc",
+      "bytes": 7790,
+      "sha256": "03f76cebdb60459d4b96177ee274952716e5c3800c4f3582f7274c045cc0cd22",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14916,8 +14916,8 @@
     },
     {
       "path": "assets/icons/items/godie-i06a.webp",
-      "bytes": 3092,
-      "sha256": "527fe87f44cf7a8006f6fa7c27a4167afb1569d1bb4662f97fcea87568ec537d",
+      "bytes": 4024,
+      "sha256": "f4f245376918b30279047cf0d78aa322db3b8de2e0a0add68ef1cb78cff823ca",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14927,8 +14927,8 @@
     },
     {
       "path": "assets/icons/items/godie-i06c.webp",
-      "bytes": 3778,
-      "sha256": "013204066ddb8d728c0312ab1a8dcafa6265c6a76c2f07aeb78ba4063f4879d9",
+      "bytes": 4528,
+      "sha256": "9e9b0813730d55811652fc306574ea9d4ab75a1c5347464601e10e3cd2dff3c9",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14949,8 +14949,8 @@
     },
     {
       "path": "assets/icons/items/godie-i06e.webp",
-      "bytes": 5374,
-      "sha256": "d49c66dc1fe178dd7f900e0061b5241ebf5b9123fb796dc4ee99bbdffb4dbe62",
+      "bytes": 10194,
+      "sha256": "bb415a2bf56ffa1a03d3ca09d221dae5684ac106627b593fff4a42419cb1a529",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14960,8 +14960,8 @@
     },
     {
       "path": "assets/icons/items/godie-i06f.webp",
-      "bytes": 2442,
-      "sha256": "4ef7f431a50a4cfeffbbe73523c190168d4d1bd57183bfdfea4f473fe56bd98e",
+      "bytes": 5778,
+      "sha256": "bca2d10b0c251472661f15409be3fb80aa2e280808d6e4431495ce95b71b2f04",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14971,8 +14971,8 @@
     },
     {
       "path": "assets/icons/items/godie-i06g.webp",
-      "bytes": 3890,
-      "sha256": "4bd3ac7266632c8661827f57bc2969765d8ce64200d98523c6800100bb3930ec",
+      "bytes": 3520,
+      "sha256": "38639b0bda71e86aacf7577d5324a6c6d3387b9045189addeeb3af82a23d07cb",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14982,8 +14982,8 @@
     },
     {
       "path": "assets/icons/items/godie-i06h.webp",
-      "bytes": 4076,
-      "sha256": "8246c7e497debe309c88942e9fe54754522412efdad368054ee77e4617cca088",
+      "bytes": 4872,
+      "sha256": "7cef4d8d5173d69c85e5fd931e74dae26efdc7c587db3418d45c645563601f5d",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -14993,8 +14993,8 @@
     },
     {
       "path": "assets/icons/items/godie-i06i.webp",
-      "bytes": 4890,
-      "sha256": "ff7127b8b243a6074404ca55c9ff7a93f0d6c2f221000e77b0390e1ad441d3e2",
+      "bytes": 8990,
+      "sha256": "4d53a8a643360db1046c12d3bb2c6d6d11390cf4ea5f93568886f8b5efc00fc3",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -15004,8 +15004,8 @@
     },
     {
       "path": "assets/icons/items/godie-i06j.webp",
-      "bytes": 2110,
-      "sha256": "9633f3e4c44cc7ed591a34825cf8692052f65f8f8f0e0bb48c5bd118ef48e302",
+      "bytes": 5802,
+      "sha256": "081be51af2b95b3f18581d7bc0acd022a86e026592c7e9d13bc55dedb6d3a977",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -15026,8 +15026,8 @@
     },
     {
       "path": "assets/icons/items/godie-i06l.webp",
-      "bytes": 5578,
-      "sha256": "6c7b8ebd62f72d4093ff6db9e650279c59fe8b1c4b51e9cf883ff24937c3966f",
+      "bytes": 5348,
+      "sha256": "b95ec742e507605155d032994ce165bdf2983d385aedd2a2f57cc612bbe1baf1",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -15037,8 +15037,8 @@
     },
     {
       "path": "assets/icons/items/godie-i06n.webp",
-      "bytes": 5478,
-      "sha256": "69747ca10e37bb0e7696a5204030ceb54a829b06cfa1dc94ead8e51d7656da11",
+      "bytes": 5556,
+      "sha256": "5660fd24559fad28fb300d9ca3faceb6a934f2905ac2f19848a6e5bb0d4517e0",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -15048,8 +15048,8 @@
     },
     {
       "path": "assets/icons/items/godie-i06o.webp",
-      "bytes": 4138,
-      "sha256": "2d5891053cc338cd27e3139a42446b01e11d3e0314139f7e429a7c840366536e",
+      "bytes": 5522,
+      "sha256": "db79b7c956ceaf41a737556af27c7fd6157584326ad0e7062fa585412a00520a",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -15059,8 +15059,8 @@
     },
     {
       "path": "assets/icons/items/godie-i06q.webp",
-      "bytes": 3042,
-      "sha256": "0df2085f09bcf3668b0d934da9b9b1648a30a492035d9ac047e1ed4012e3219c",
+      "bytes": 6126,
+      "sha256": "c8cb9bb4b46f3cfe35410a2cb8cb5744a8b22418a5ef2f26254c6ef1b78a5218",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -15125,8 +15125,8 @@
     },
     {
       "path": "assets/icons/items/legendary-orb.webp",
-      "bytes": 4864,
-      "sha256": "dee8d7a391498572f8d51b30c16ef579ca849040b68c6249bc910d083b24502d",
+      "bytes": 5192,
+      "sha256": "ef1f18c8622dd02aabf47bac1879fc7f9e3d9e5dab84a292a38430395078e912",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [
@@ -15367,8 +15367,8 @@
     },
     {
       "path": "assets/icons/items/stat-attunement.webp",
-      "bytes": 3938,
-      "sha256": "2e85fe6ab4c3722c1394281892fb793275d402ced319b29e259de72aecf7b2ca",
+      "bytes": 7528,
+      "sha256": "88d4d49f5af3e9757c2af2c26ab69576c7cfb9d76cb52a82cf1f8544635406f5",
       "contentType": "image/webp",
       "kind": "icons",
       "refs": [

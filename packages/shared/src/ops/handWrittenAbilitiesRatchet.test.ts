@@ -68,7 +68,19 @@ const CENSUS = JSON.parse(
 //   `tpl-line-strike`（4：o00x.r／ogrh.r／h02r.r／hgam.r）與 `tpl-projectile-strike`
 //   （2：42-04 世界終結的 n003.r／n01g.r —— `delayed{只排程演出}` 也算演出之後才收得進來）。
 //   ⛔ 棘輪只准往下：不把這一行跟著降，之後它會靜靜地允許爬回 130。
-const HAND_WRITTEN_BASELINE = 124;
+// ⭐ 2026-09-09（GH#1146 試點）：124 → 123（−1）。降的那一支是 `godie-efur.e`
+//   （13-03 龍頭戲畫。布陣）—— ⭐ 第一支綁 `tpl-area-strike` 的技能。
+//   ⭐ 它證明了**產生器發得出模板綁定**：來源列加一格 `template=`，
+//   `templatizeEquivalence.test.ts` 逐位元判等價（158 條綠）。
+//   ⇒ 同一份模板今天還配得上**另外 11 支**（`templatize.py` 逐支印出），
+//     每一支都是「來源列加一格」⇒ ⭐ 124 → 112 是做得完的。
+// ⭐ 2026-09-09（GH#1146 第二批）：123 → 119（−4）。四支綁 `tpl-area-strike`：
+//   `godie-edem.q`（45-01）· `godie-edem.w`（45-02）· `godie-emns.e`（44-03）· `godie-h00l.q`（60-01）。
+//   ⚠️ ⭐ 而**兩支被撤回**：`godie-e00s.e`（70-03）與 `godie-h02v.r`（92-04）——
+//   它們的另一半是**手編的變身態**（變身態沒有產生器），一邊轉一邊沒轉
+//   ⇒ `abilityCodeParityForms` 紅，⭐ 而那條閘是對的：玩家變身之後會用到舊的那一份。
+//   ⇒ ⭐ 那兩支要等變身態那一邊也能綁（另一件事）。
+const HAND_WRITTEN_BASELINE = 111;
 
 /**
  * ⭐ 判定寫成**純函式**，這樣 sentinel 餵得進去 ——

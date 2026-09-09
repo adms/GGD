@@ -4,39 +4,39 @@
 
 owner 2026-09-05：「[後台編輯器及codex編輯器] 是**堆積木**的角色 **要充分了解有哪些積木**, 而 main 遊戲主程式 是**做出積木**供使用的角色」
 
-capability 指紋：`15d59fc8`
+capability 指紋：`abedce92`
 
 ## 一眼看完
 
 | | |
 |---|---:|
-| total | 180 |
+| total | 184 |
 | effect | 52 |
 | hook | 38 |
 | leaf | 11 |
-| template | 43 |
+| template | 47 |
 | vfx-prim | 13 |
 | vfx-subtype | 4 |
 | vfx-call | 4 |
 | model-preset | 15 |
-| gated | 141 |
-| gaps | 51 |
-| missingAdminForm | 51 |
+| gated | 145 |
+| gaps | 55 |
+| missingAdminForm | 55 |
 | missingEditorForm | 4 |
-| zeroAdoption | 72 |
+| zeroAdoption | 75 |
 
 ## 兩個編輯器的表單怎麼量的
 
-- **adminForm**：apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（72 份）→ 後台自己的 readSchema()（1169 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。
-- **editorForm**：⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 180 顆有收據；收據裡沒有的才退回代理值。
+- **adminForm**：apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（73 份）→ 後台自己的 readSchema()（1171 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。
+- **editorForm**：⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 184 顆有收據；收據裡沒有的才退回代理值。
 - **要 Codex 給的收據**：⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / vfx-call / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。
 
 ## `effect`（52）
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
-| `applyBuff` | 33 | 0 | 0 | ✅ | ✅ | 55 |
-| `applyStatus` | 25 | 0 | 0 | ✅ | ✅ | 63 |
+| `applyBuff` | 33 | 0 | 0 | ✅ | ✅ | 53 |
+| `applyStatus` | 25 | 0 | 0 | ✅ | ✅ | 62 |
 | `blink` | 12 | 1 | 0 | ✅ | ✅ | 12 |
 | `carry` | 11 | 1 | 0 | ✅ | ✅ | 0 |
 | `chainLightning` | 19 | 1 | 0 | ✅ | ✅ | 2 |
@@ -45,8 +45,8 @@ capability 指紋：`15d59fc8`
 | `consumeStatus` | 12 | 1 | 0 | ✅ | ✅ | 0 |
 | `convertTeam` | 9 | 1 | 0 | ✅ | ✅ | 0 |
 | `cycleBuff` | 4 | 0 | 0 | ✅ | ✅ | 1 |
-| `damage` | 12 | 0 | 0 | ✅ | ✅ | 75 |
-| `damageArea` | 17 | 1 | 0 | ✅ | ✅ | 50 |
+| `damage` | 12 | 0 | 0 | ✅ | ✅ | 73 |
+| `damageArea` | 17 | 1 | 0 | ✅ | ✅ | 48 |
 | `damageLine` | 17 | 0 | 0 | ✅ | ✅ | 19 |
 | `dash` | 12 | 1 | 0 | ✅ | ✅ | 8 |
 | `delayed` | 18 | 1 | 0 | ✅ | ✅ | 24 |
@@ -167,16 +167,19 @@ capability 指紋：`15d59fc8`
 | `tpl-random-barrage` | 1 | 0 | 0 | ⛔ | ✅ | 0 |
 | `tpl-summon-agent` | 1 | 0 | 0 | ⛔ | ✅ | 0 |
 
-## `template`（43）
+## `template`（47）
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
+| `ally-shield` | 6 | 0 | 0 | ⛔ | ✅ | 0 |
 | `apply-status` | 3 | 0 | 0 | ⛔ | ✅ | 6 |
+| `area-strike` | 12 | 1 | 0 | ⛔ | ✅ | 11 |
 | `beam-roll` | 21 | 1 | 2 | ⛔ | ✅ | 9 |
 | `blink` | 1 | 0 | 0 | ⛔ | ✅ | 7 |
 | `blink-strike` | 6 | 0 | 0 | ⛔ | ✅ | 1 |
 | `buff-self` | 6 | 0 | 0 | ⛔ | ✅ | 55 |
 | `charge-push` | 11 | 0 | 0 | ⛔ | ✅ | 0 |
+| `charge-resource` | 6 | 0 | 1 | ⛔ | ✅ | 0 |
 | `combo-finisher` | 13 | 0 | 0 | ⛔ | ✅ | 0 |
 | `dragon-quake` | 15 | 0 | 8 | ⛔ | ✅ | 0 |
 | `dragon-serpent` | 17 | 0 | 5 | ⛔ | ✅ | 0 |
@@ -204,12 +207,13 @@ capability 指紋：`15d59fc8`
 | `orbit-array` | 7 | 0 | 1 | ⛔ | ✅ | 2 |
 | `periodic-field` | 9 | 2 | 0 | ⛔ | ✅ | 5 |
 | `projectile-strike` | 7 | 0 | 0 | ⛔ | ✅ | 18 |
-| `proxy-cast` | 8 | 0 | 1 | ⛔ | ✅ | 13 |
+| `proxy-cast` | 8 | 0 | 1 | ⛔ | ✅ | 14 |
 | `proxy-fanout` | 5 | 0 | 0 | ⛔ | ✅ | 1 |
 | `pull-throw` | 12 | 1 | 0 | ⛔ | ✅ | 0 |
 | `radial-burst` | 12 | 1 | 0 | ⛔ | ✅ | 2 |
 | `random-barrage` | 9 | 0 | 0 | ⛔ | ✅ | 0 |
-| `single-strike` | 6 | 0 | 0 | ⛔ | ✅ | 53 |
+| `single-strike` | 6 | 0 | 0 | ⛔ | ✅ | 54 |
+| `spend-resource` | 6 | 0 | 0 | ⛔ | ✅ | 0 |
 | `summon-agent` | 12 | 0 | 1 | ⛔ | ✅ | 3 |
 | `teleport` | 6 | 0 | 0 | ⛔ | ✅ | 0 |
 | `transform` | 6 | 0 | 0 | ⛔ | ✅ | 12 |
@@ -255,12 +259,15 @@ capability 指紋：`15d59fc8`
 
 | 積木 | 層 | 缺什麼 |
 |---|---|---|
+| `ally-shield` | template | adminForm |
 | `apply-status` | template | adminForm |
+| `area-strike` | template | adminForm |
 | `beam-roll` | template | adminForm |
 | `blink` | template | adminForm |
 | `blink-strike` | template | adminForm |
 | `buff-self` | template | adminForm |
 | `charge-push` | template | adminForm |
+| `charge-resource` | template | adminForm |
 | `combo-finisher` | template | adminForm |
 | `dragon-quake` | template | adminForm |
 | `dragon-serpent` | template | adminForm |
@@ -294,6 +301,7 @@ capability 指紋：`15d59fc8`
 | `radial-burst` | template | adminForm |
 | `random-barrage` | template | adminForm |
 | `single-strike` | template | adminForm |
+| `spend-resource` | template | adminForm |
 | `summon-agent` | template | adminForm |
 | `teleport` | template | adminForm |
 | `transform` | template | adminForm |

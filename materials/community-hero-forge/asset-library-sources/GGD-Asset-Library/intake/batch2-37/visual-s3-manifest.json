@@ -1,0 +1,433 @@
+{
+  "schema": "ggd-batch2-visual-manifest@1",
+  "ticket": "GH#1149",
+  "prefix": "community-hero-forge/batch2-37/visual/20260909",
+  "note": "⭐ 45 張視覺配對圖 ＋ gallery.html。⛔ 位元組不進 git（owner 2026-09-08）；⭐ 可由 build_visual_matches.py 重生。",
+  "files": [
+    {
+      "path": "102.png",
+      "bytes": 33904,
+      "sha256": "8db448e5e2dc6e5912c6e4b82c14ea488800556a69c265634296747337b4a11b"
+    },
+    {
+      "path": "112.png",
+      "bytes": 32917,
+      "sha256": "d913a7aa922ad2fde18c497ad564864e1f163a2292835bc5525965d85262e830"
+    },
+    {
+      "path": "118.png",
+      "bytes": 25565,
+      "sha256": "ed30489819827b1835879f0ff0e11ff6d3d1f65a3b43b6323905b1c2ddd8711b"
+    },
+    {
+      "path": "119.png",
+      "bytes": 34979,
+      "sha256": "da9886c98875915354b913f0002ff3e46beb4587fab0631d0b5ddd941142313b"
+    },
+    {
+      "path": "121.png",
+      "bytes": 33493,
+      "sha256": "1718ce4cebfee4ce56e36d757cf6cda742725724a3ef65e6b486845f7c910fe8"
+    },
+    {
+      "path": "137.png",
+      "bytes": 34511,
+      "sha256": "582c5fbe592500166e8e81f298afb55da546b71c07979136e0a0d982189ab508"
+    },
+    {
+      "path": "139.png",
+      "bytes": 2631,
+      "sha256": "7a0664b4437f7f7ea546fa1127a0db37bbb4ed50aedd2638b29fe5ffd0134dfd"
+    },
+    {
+      "path": "156.png",
+      "bytes": 16363,
+      "sha256": "9c43c29d696c44843d833d52f4860b1b1a554cf2570e0d67820dba9f91680c66"
+    },
+    {
+      "path": "160.png",
+      "bytes": 22993,
+      "sha256": "9a8a1c784b005f8920b4bdf7aaad5ce5179fd98a99dee5fbc4be9626f1cf3ad4"
+    },
+    {
+      "path": "189.png",
+      "bytes": 32894,
+      "sha256": "e76f0a27a3d273ab4e74d3e81adcff3ca12e98800e480a3c1035a51c729e52c9"
+    },
+    {
+      "path": "199.png",
+      "bytes": 38597,
+      "sha256": "0d34829435249a8da81b8f369fd83e69aa1af7c63981ee0bdc18cdd8fc3f7192"
+    },
+    {
+      "path": "20.png",
+      "bytes": 41041,
+      "sha256": "a313f15b258c022c22330cdece0665002ce2fe31348459522ce692c48cb9d82f"
+    },
+    {
+      "path": "200.png",
+      "bytes": 29768,
+      "sha256": "178b561379a783f7a890106303821f859892d019ab58d58ab208233c4fa46bf5"
+    },
+    {
+      "path": "209.png",
+      "bytes": 20586,
+      "sha256": "9a0c63d0bd33d3f853c0c1b9f4780a2c62123f605c2fb1caae288ab13446ebaa"
+    },
+    {
+      "path": "215.png",
+      "bytes": 40132,
+      "sha256": "9bfa79fc9815fac29be704b3d206581b1bfecc05002d88fdb070575d6a5246ca"
+    },
+    {
+      "path": "246.png",
+      "bytes": 32462,
+      "sha256": "72697531bf15b99192b7d692dda952dcd6bc66ed317ad078d11e20b0ee4ae380"
+    },
+    {
+      "path": "256.png",
+      "bytes": 31921,
+      "sha256": "732db019b09e348cf91a331507bc7b6045d6cf777caad49ba539bd693d8f7330"
+    },
+    {
+      "path": "269.png",
+      "bytes": 27187,
+      "sha256": "4ba05cd0e4456fa0ebccf648268a17f41edaccb423f6cc7ebebdf4f952615b71"
+    },
+    {
+      "path": "272.png",
+      "bytes": 24379,
+      "sha256": "a746661459f454c0376097fa1c85a9aaf903fb24392f14abc198e7483f7df82f"
+    },
+    {
+      "path": "305.png",
+      "bytes": 25410,
+      "sha256": "30cc02c67292461890a96dddfd4c1e9a7c6834c5075a50750d5188b7dc79bae8"
+    },
+    {
+      "path": "310.png",
+      "bytes": 29751,
+      "sha256": "f6050b026937cf5da27eae034aa6db26d9c6f544b9b9336e4317de994bbc4a15"
+    },
+    {
+      "path": "319.png",
+      "bytes": 21570,
+      "sha256": "25b5663f02be7b72e86aad4cf5a77b48e61747e175d2b13df61f454b92ebf908"
+    },
+    {
+      "path": "332.png",
+      "bytes": 31419,
+      "sha256": "41bb0507f57a46125f71d814a38b3f3c08a8eeb08ea7eb199fc33ba0eee443d9"
+    },
+    {
+      "path": "36.png",
+      "bytes": 18963,
+      "sha256": "fdf5608fe31d83dbee2064cfa876a57718a06aba06463c1bae78dd5e9526ade2"
+    },
+    {
+      "path": "41.png",
+      "bytes": 32562,
+      "sha256": "6701efc16945037aa828d9e683494c7ea0b866d348ee9c94434d4c0ec4a82293"
+    },
+    {
+      "path": "42.png",
+      "bytes": 34705,
+      "sha256": "fc356c0f7f9b8527563209da7a19ff346f141510f7f50e2f5791a1f4c3418871"
+    },
+    {
+      "path": "64.png",
+      "bytes": 21162,
+      "sha256": "825e9fe20c39bbc89d469c8866c0525b0be958d716db2daf14abb4fd45874cf0"
+    },
+    {
+      "path": "69.png",
+      "bytes": 27652,
+      "sha256": "c854b408fcb63696cf06ffcfa446f3657d21f388d36c25351a0334f7551372fe"
+    },
+    {
+      "path": "81.png",
+      "bytes": 61645,
+      "sha256": "e0ef9932a0aae91079d08100ebd2bf8ef8135d8fda322742a27e71cce090c7d7"
+    },
+    {
+      "path": "83.png",
+      "bytes": 57711,
+      "sha256": "3ff058f53f01554b75db93db20ee39f82b677694c36c82e5420a921ace94a194"
+    },
+    {
+      "path": "90.png",
+      "bytes": 38098,
+      "sha256": "5171c881e1abae7b7dc324c10be820f229a2fa1e783fe258ed461ea074e0b5e2"
+    },
+    {
+      "path": "__pycache__/render_candidates.cpython-310.pyc",
+      "bytes": 7241,
+      "sha256": "30fe7191a81d634dee0199757109b6eae7f0a3ad46d19bdc432fa78c74b3e92c"
+    },
+    {
+      "path": "bulbasaur.png",
+      "bytes": 44893,
+      "sha256": "f0295ba36d7ab484b372364c30e3e24f0b4ad58d7c6a7d85208cf0a21096d68c"
+    },
+    {
+      "path": "candidates-1.jpg",
+      "bytes": 154059,
+      "sha256": "369fcb712cdf6c66d65ac3d017d0cbcada877d9685f6f84c657134ea715194a3"
+    },
+    {
+      "path": "candidates-2.jpg",
+      "bytes": 138832,
+      "sha256": "4c33bc27afb397607e630c1180c53ca13d9df5419c284321706f90e95ca07319"
+    },
+    {
+      "path": "characters/b2-aladdin.json",
+      "bytes": 9979,
+      "sha256": "399549d33ee1a941b252c30f779c42f0c9e7188bda109da5d0acd193798606d0"
+    },
+    {
+      "path": "characters/b2-albus.json",
+      "bytes": 7644,
+      "sha256": "3a88df85f3c2a43cf0586aba074c7b3b16b340d1d7f92e9d1a665a24d88995e9"
+    },
+    {
+      "path": "characters/b2-bojji.json",
+      "bytes": 6630,
+      "sha256": "b9e2403e3fda9643520c57adacec258c062fc100ae13c271df5d4ba789b70f52"
+    },
+    {
+      "path": "characters/b2-boxxo.json",
+      "bytes": 7730,
+      "sha256": "fbeff4ecce5d77072f6a8f66517493e3b1a3e5e7bae433f18488f47adb39a477"
+    },
+    {
+      "path": "characters/b2-elma.json",
+      "bytes": 8505,
+      "sha256": "3f8204b23160ccb9231e5fc6ccbc5729e522441ec8ca4a74ba96acd4da68ac66"
+    },
+    {
+      "path": "characters/b2-fushi.json",
+      "bytes": 9395,
+      "sha256": "af9cd7770da2afc5b75a0c053dd4b9f8a1c55752a9df869535ee5b7566fb4e5e"
+    },
+    {
+      "path": "characters/b2-goblin.json",
+      "bytes": 8476,
+      "sha256": "3cf1302b62dc3a150dfff87385eb271db8575564f1ec50cb936a31d0714e1b1d"
+    },
+    {
+      "path": "characters/b2-guts.json",
+      "bytes": 10008,
+      "sha256": "58cbac0be70eef67d6f0f5956f1ebca5853c34e0d1911ce14e4dc5d3ae1ab629"
+    },
+    {
+      "path": "characters/b2-haga.json",
+      "bytes": 8312,
+      "sha256": "a9f1a1ad164ce0e9f2e262ba6bf7bc668c9bd8758670891aa9d7697410d7690b"
+    },
+    {
+      "path": "characters/b2-kaede.json",
+      "bytes": 10162,
+      "sha256": "1c58a30ed9bbdc34cecf4dfe60918e7fab038176281cf1f8012e866ac466d1b0"
+    },
+    {
+      "path": "characters/b2-kaiji.json",
+      "bytes": 16164,
+      "sha256": "520a5fa11f9cde97b5a01bdc191cad576f83095725389d591564c56fc4176f82"
+    },
+    {
+      "path": "characters/b2-keyaru.json",
+      "bytes": 8296,
+      "sha256": "cd7e6dfa01274b8e02e2c074cb18d50cfe97e19a982748d9fe045cba959f3962"
+    },
+    {
+      "path": "characters/b2-kisaragi.json",
+      "bytes": 3144,
+      "sha256": "25e22f5308d19cfc973a7895789fd559a921739d1264c816351a4bc68e4b7939"
+    },
+    {
+      "path": "characters/b2-klaus.json",
+      "bytes": 7943,
+      "sha256": "9c7ae8a07535f14a98feb7945a00ecfcd1addb3db91de19aa371d6350d7e2d25"
+    },
+    {
+      "path": "characters/b2-kumoko.json",
+      "bytes": 5985,
+      "sha256": "5ecf955dad9fe2b838a868d8217d4dc2d16125a83a2b3c90c78b75fea621852b"
+    },
+    {
+      "path": "characters/b2-luckyman.json",
+      "bytes": 9183,
+      "sha256": "9a81aa8115e92e9a28fa72ac0e67553ce0db0edb3037b1ff104f92a0577eace4"
+    },
+    {
+      "path": "characters/b2-makoto.json",
+      "bytes": 7886,
+      "sha256": "6dcef80948775052eeebbd6227deca2f02462ffea8482474574e674a83e90970"
+    },
+    {
+      "path": "characters/b2-maomao.json",
+      "bytes": 7838,
+      "sha256": "3ef89b8a12c4354b3fcbfca913d927c79af12e3ed911cd7ca0f138817d69719f"
+    },
+    {
+      "path": "characters/b2-maple.json",
+      "bytes": 10465,
+      "sha256": "6672a228636ad2abbe2d23a3dfc10b95965ae8e23f772b3ff24b1eabd7b9c84f"
+    },
+    {
+      "path": "characters/b2-matthias.json",
+      "bytes": 7886,
+      "sha256": "56571978bd2f3ecd6d918f54971aecc364090ef829218dffdacd3afc92fdc94a"
+    },
+    {
+      "path": "characters/b2-misery.json",
+      "bytes": 9865,
+      "sha256": "5c113dd31be79401d22c97b18d83f5f54947fc072c2a7fee6a336d88bb89f598"
+    },
+    {
+      "path": "characters/b2-naofumi.json",
+      "bytes": 14879,
+      "sha256": "0936d613313af8267fa2df047ad981371d6ffa4dae023c7e9993c2ed7414106f"
+    },
+    {
+      "path": "characters/b2-ned.json",
+      "bytes": 3216,
+      "sha256": "4f61c2d6cceb5530d2b2f19e5a6fa06e291542f558fbe0fdd7fe9f59b3a753fe"
+    },
+    {
+      "path": "characters/b2-noor.json",
+      "bytes": 10012,
+      "sha256": "a4688462abbb17782a78dbbfe5775e8213a91e72e08e22c8e61f4db7c412ab92"
+    },
+    {
+      "path": "characters/b2-nube.json",
+      "bytes": 8315,
+      "sha256": "005891586e032e7b9d6c652bbff9044e1211528703ed4e7192846235c0311a51"
+    },
+    {
+      "path": "characters/b2-orphen.json",
+      "bytes": 9132,
+      "sha256": "11de1528176e2d3665ca075791e0e728ecd9c02acf04b856aa0461eede71c47f"
+    },
+    {
+      "path": "characters/b2-popp.json",
+      "bytes": 8280,
+      "sha256": "37766df4b1efde4f0dae35fb592b1843d02003558383544faa563e8f15826495"
+    },
+    {
+      "path": "characters/b2-rem.json",
+      "bytes": 11073,
+      "sha256": "b307182b36eb8826c06f06baec00d392c84ae50f02ad198865e52ba1a526d680"
+    },
+    {
+      "path": "characters/b2-rin.json",
+      "bytes": 8234,
+      "sha256": "e0aebe72cf8f03be775a2796da7620dbf5d269af57f4a41bdb9c3da4f4572620"
+    },
+    {
+      "path": "characters/b2-shadow.json",
+      "bytes": 10078,
+      "sha256": "b36c31f9ba90ad220681aebe954f4f34205b49124131cbbd4c2660ff379e32e4"
+    },
+    {
+      "path": "characters/b2-shinchan.json",
+      "bytes": 6684,
+      "sha256": "afb39b11a81ad6625984ee8c13366520d183b88df1b6dc38f7c10014209f9ea0"
+    },
+    {
+      "path": "characters/b2-sinbad.json",
+      "bytes": 7853,
+      "sha256": "e76018f053a579d2e8227bbd62e323a472b6594b81bc610d499aa9efebbc3837"
+    },
+    {
+      "path": "characters/b2-takopi.json",
+      "bytes": 6083,
+      "sha256": "7e16c797a626e40ff7ee651355c040c15f1e93ab1994114bff9ae8b9ccd280eb"
+    },
+    {
+      "path": "characters/b2-touka.json",
+      "bytes": 13652,
+      "sha256": "6aed232ccabee44f7bc1506b3deb348a23584d5d681720dbdbb29648a7fabe40"
+    },
+    {
+      "path": "characters/b2-uncle.json",
+      "bytes": 8315,
+      "sha256": "4327b1f8873b11856191c27219a69398af56bfdf446ab0bf2839ebf72745ee89"
+    },
+    {
+      "path": "characters/b2-yogiri.json",
+      "bytes": 7246,
+      "sha256": "fc1e70551108d3f10d5d8587bbe4015e6cf04b78077e6f793902cc26510ba8c3"
+    },
+    {
+      "path": "characters/b2-zenitsu.json",
+      "bytes": 9514,
+      "sha256": "fdb3feed2da3b36e2f7b274e04efd6df160280d3146d3761e9e55d4341a73489"
+    },
+    {
+      "path": "cloud.png",
+      "bytes": 27664,
+      "sha256": "f586e5054f44451f1cb168800200f97b7856e0703678739b839278de054273a0"
+    },
+    {
+      "path": "extra-proof.json",
+      "bytes": 3395,
+      "sha256": "6a28fece582a4e9f55392478e71d072472d593d341f4010cba7cf66b7378bef0"
+    },
+    {
+      "path": "gallery.html",
+      "bytes": 29889,
+      "sha256": "1c1ace17c323d5e92e8c32623512779c16934b16688e22151673ee2f493a09f1"
+    },
+    {
+      "path": "lux.png",
+      "bytes": 29469,
+      "sha256": "85954ff9a081254bebf921715ceec4a10c1117287e26fd01e40e00cf124aeafa"
+    },
+    {
+      "path": "matches-1.jpg",
+      "bytes": 357740,
+      "sha256": "5d67b99eda56a78f0867684823f363b535ced9041cd05b8df437295477617e86"
+    },
+    {
+      "path": "matches-2.jpg",
+      "bytes": 314781,
+      "sha256": "30c0f10964ada3f62f838ed41623ff2bc12cdee11a7c09a364174854056f5ad9"
+    },
+    {
+      "path": "octopus.png",
+      "bytes": 27232,
+      "sha256": "34a836d47db0d66cfae72f1519088df68a9577523772276a91dbc373c4565b7f"
+    },
+    {
+      "path": "pod.png",
+      "bytes": 20753,
+      "sha256": "dd3f08e63bd565b5a957fc3d3ca77d20ab6839f28cd84c2b8f61450fa2efa8e7"
+    },
+    {
+      "path": "render-proof.json",
+      "bytes": 27284,
+      "sha256": "3ca98168b1dfd83bde74eec21803834a3fbcf3abf80dcd980a11003d5541dc42"
+    },
+    {
+      "path": "render_candidates.py",
+      "bytes": 5652,
+      "sha256": "0900bff545c512f31cd91252727eb8f1fa9db221428473946753bf7fc0eeb601"
+    },
+    {
+      "path": "render_extra.py",
+      "bytes": 2987,
+      "sha256": "41d0a4d7cd3222de21c87b52f398e7572a80265b9daf9fc26b3dc294a7ad95d3"
+    },
+    {
+      "path": "spider.png",
+      "bytes": 46420,
+      "sha256": "cc8d70133b19a3c6e213ac7bb81e54af8a128907df0496e774cbe57755b6c9f4"
+    },
+    {
+      "path": "tiny-kirito.png",
+      "bytes": 46515,
+      "sha256": "140171a40cd22bc0b15051a3b12e9d6104e2f9dca0120cefbcf78a7807c9ec6e"
+    }
+  ]
+}

@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_6c2412e2eca3",
+    "contentVersion": "cv_c0134d7dd7ba",
     "collections": {
       "champions": {
-        "hash": "fc7a594de0e4",
+        "hash": "74ea868e6821",
         "count": 71
       },
       "abilities": {
-        "hash": "4dc185ff936e",
+        "hash": "35a6502b6cc8",
         "count": 421
       },
       "items": {
@@ -42,12 +42,12 @@
         "count": 7
       },
       "config": {
-        "hash": "f4648881cd86",
-        "count": 102
+        "hash": "c0a4eaffb157",
+        "count": 103
       },
       "models": {
-        "hash": "657ea888006b",
-        "count": 152
+        "hash": "a385fd978ca5",
+        "count": 156
       },
       "vfx": {
         "hash": "7df129081586",
@@ -58,8 +58,8 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "6534b2a0b44a",
-        "count": 54
+        "hash": "7bafff281be0",
+        "count": 58
       },
       "vfx-scripts": {
         "hash": "3d945d196d0a",
@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "e37f411f",
+    "fingerprint": "abedce92",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -125,6 +125,7 @@
       "grantGold",
       "grantXp",
       "heal",
+      "interruptCast",
       "invulnerable",
       "knockback",
       "leap",
@@ -147,6 +148,7 @@
       "summon",
       "swapResource",
       "taunt",
+      "timeStop",
       "trap",
       "weightedBranch"
     ],
@@ -158,6 +160,7 @@
       "onAllyProtected",
       "onAttackAttempt",
       "onBasicAttack",
+      "onBlock",
       "onBossSpawn",
       "onBoundaryTouch",
       "onCrowdControlApplied",
@@ -226,16 +229,19 @@
     ],
     "hookFields": [
       "abilitySlot",
+      "blockSource",
       "chance",
       "chanceFrom",
       "condition",
       "consumeOn",
       "critSource",
+      "damageConnected",
       "damageCrit",
       "damageSource",
       "damageType",
       "effects",
       "evadeChannel",
+      "evadeDuring",
       "evadeSource",
       "internalCooldown",
       "internalCooldownScope",
@@ -248,6 +254,7 @@
       "perTarget",
       "reflectedDamageSource",
       "reflectedDamageType",
+      "stationaryForSec",
       "target",
       "victim"
     ],
@@ -267,6 +274,7 @@
       "apexHeight",
       "appliedBy",
       "applyTo",
+      "arcHalfAngleCos",
       "armDelaySec",
       "arriveSoundKey",
       "at",
@@ -289,6 +297,7 @@
       "branches",
       "breakOnDamage",
       "breakOnDamageMin",
+      "breakOnMove",
       "buff",
       "burnsInFireRing",
       "canCrit",
@@ -334,6 +343,7 @@
       "durationSec",
       "effects",
       "emitCastEvents",
+      "evasionScope",
       "everyNth",
       "exclusiveGroup",
       "exclusiveOnExisting",
@@ -395,6 +405,7 @@
       "maxDepth",
       "maxDistance",
       "maxHeld",
+      "maxQueuedHits",
       "maxRemainingSec",
       "maxSourceTotal",
       "maxSources",
@@ -501,6 +512,7 @@
       "steps",
       "stopDistance",
       "stopOnCasterDeath",
+      "stopOnHit",
       "stopShortUnits",
       "store",
       "strikeReposition",
@@ -524,6 +536,7 @@
       "to",
       "touchOncePerTarget",
       "touchRadius",
+      "touchScope",
       "touchSide",
       "triggerAt",
       "typeStreakImmunity",
@@ -591,6 +604,7 @@
       "apexHeight",
       "appliedBy",
       "applyTo",
+      "arcHalfAngleCos",
       "armDelaySec",
       "arriveSoundKey",
       "at",
@@ -614,6 +628,7 @@
       "block",
       "block.chance",
       "block.damageTypes",
+      "block.facingArcDegrees",
       "block.fraction",
       "block.internalCooldown",
       "block.lethalBasis",
@@ -636,6 +651,7 @@
       "branches.weightFrom.coeff",
       "breakOnDamage",
       "breakOnDamageMin",
+      "breakOnMove",
       "buff",
       "buff.durationSec",
       "buff.ratio",
@@ -726,6 +742,9 @@
       "durationSec",
       "effects",
       "emitCastEvents",
+      "evasionScope",
+      "evasionScope.abilities",
+      "evasionScope.trueDamage",
       "everyNth",
       "exclusiveGroup",
       "exclusiveOnExisting",
@@ -814,6 +833,7 @@
       "maxDepth",
       "maxDistance",
       "maxHeld",
+      "maxQueuedHits",
       "maxRemainingSec",
       "maxSourceTotal",
       "maxSources",
@@ -970,6 +990,7 @@
       "steps.modifiers.value",
       "stopDistance",
       "stopOnCasterDeath",
+      "stopOnHit",
       "stopShortUnits",
       "store",
       "strikeReposition",
@@ -997,6 +1018,7 @@
       "to",
       "touchOncePerTarget",
       "touchRadius",
+      "touchScope",
       "touchSide",
       "triggerAt",
       "typeStreakImmunity",
@@ -1033,6 +1055,7 @@
       "scaleByNearby"
     ],
     "abilityFields": [
+      "allowApproach",
       "augment",
       "castTimeSec",
       "castTimeTier",
@@ -1048,6 +1071,7 @@
       "innateActivePassive",
       "innateKind",
       "interruptOn",
+      "interruptible",
       "manaCost",
       "manaCostTier",
       "marks",
@@ -1061,9 +1085,11 @@
       "range",
       "rangeTier",
       "rangeUnlimited",
+      "recast",
       "recoveryRoots",
       "recoverySec",
       "requiredSummonSlot",
+      "requiredTargetStatus",
       "rootWhileCasting",
       "sfxKey",
       "slot",
@@ -1215,6 +1241,7 @@
     },
     "docSurface": {
       "ability@1": [
+        "allowApproach",
         "augment",
         "castTimeSec",
         "castTimeTier",
@@ -1230,6 +1257,7 @@
         "innateActivePassive",
         "innateKind",
         "interruptOn",
+        "interruptible",
         "manaCost",
         "manaCostTier",
         "marks",
@@ -1243,9 +1271,11 @@
         "range",
         "rangeTier",
         "rangeUnlimited",
+        "recast",
         "recoveryRoots",
         "recoverySec",
         "requiredSummonSlot",
+        "requiredTargetStatus",
         "rootWhileCasting",
         "sfxKey",
         "slot",
@@ -1371,12 +1401,15 @@
       ]
     },
     "templateFamilies": [
+      "ally-shield",
       "apply-status",
+      "area-strike",
       "beam-roll",
       "blink",
       "blink-strike",
       "buff-self",
       "charge-push",
+      "charge-resource",
       "combo-finisher",
       "dragon-quake",
       "dragon-serpent",
@@ -1410,6 +1443,7 @@
       "radial-burst",
       "random-barrage",
       "single-strike",
+      "spend-resource",
       "summon-agent",
       "teleport",
       "transform",
@@ -1970,8 +2004,77 @@
     "note": "出貨內容**實際用了**哪些值。⚠️ 與 runtimeCapabilities 不同：那一份說引擎做得到什麼，這一份說內容裡有哪些合法的 id。⛔ 填一個不在這裡的 vfxKey，技能照放但畫面上什麼都不會出現。",
     "ability": {
       "count": 421,
-      "fromTemplate": 212,
+      "fromTemplate": 225,
       "templates": [
+        {
+          "id": "tpl-ally-shield",
+          "family": "ally-shield",
+          "status": "enabled",
+          "params": {
+            "target": {
+              "type": "enum",
+              "values": [
+                "self",
+                "ally",
+                "area"
+              ],
+              "default": "area",
+              "origin": "census: GH#1132 —— 37 名社群英雄裡**提到友軍的 18 槽**逐句分類：**範圍 7 · 指定 4 · 兩者或判不出 7** ⇒ ⭐ 預設挑 `area`（⛔ 不是我挑的，是多數）。⚠️ 而那 18 槽裡有 **12 槽**今天綁著 `tpl-buff-self` —— 那一族發 `applyTo:self`、⛔ 不設 `targetsEnemies` ⇒ ⭐「友軍盾」實際只罩施法者自己，而卡面說它保護隊友（第一·五守則）。⭐ `area` 逐字對到 AC③「範圍友軍盾實際保護範圍內友軍**及自己**」。"
+            },
+            "amount": {
+              "type": "scaling",
+              "origin": "census: 出貨 **10 個** `shield` 節點裡 3 個帶 `perRank`。⭐ 這一格逐位元取自 `tpl-heal.amount` 的預設（`perRank [50,85,120,155]` ＋ `ap 0.465`）—— ⭐ 護盾與回血是**同一個量級**的友方數值,⛔ 而護盾**沒有級距表**（`damage-tiers` 只管傷害）⇒ ⛔ 這裡沒有第二個住處可抄。",
+              "default": {
+                "perRank": [
+                  50,
+                  85,
+                  120,
+                  155
+                ],
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.465
+                  }
+                ]
+              }
+            },
+            "duration": {
+              "type": "number",
+              "min": 0,
+              "max": 60,
+              "unit": "s",
+              "origin": "census: 出貨 10 個 `shield` 節點的 `duration` **中位數 ＝ 8 秒**（值域 1–15）。⛔ 不是我挑的好看數字。`zShield.duration` 是 `z.number().min(0)`；上界 60 取自值域外推的安全邊。",
+              "default": 8
+            },
+            "radius": {
+              "type": "number",
+              "min": 0,
+              "max": 30,
+              "origin": "census: 出貨**唯一**一支「友方 ground」技能（`targetsEnemies:false` ＋ `radius`）的半徑是 **8**（53-03 破法對咒那一族）。⛔ 不是我挑的數字。⚠️ 只有 `target:\"area\"` 讀它。",
+              "default": 8
+            },
+            "absorbs": {
+              "type": "enum",
+              "values": [
+                "all",
+                "physical",
+                "magic",
+                "true"
+              ],
+              "optional": true,
+              "origin": "`zShield.absorbs` 本人的值域，⛔ 不是另一份白名單。留空 ＝ 走 schema 的預設。"
+            },
+            "castTimeSec": {
+              "type": "number",
+              "optional": true,
+              "min": 0,
+              "max": 5,
+              "unit": "s",
+              "origin": "與其餘每一族同一格（`deriveCastTimes` 會覆蓋它；留空 ＝ 由推導填）。"
+            }
+          }
+        },
         {
           "id": "tpl-apply-status",
           "family": "apply-status",
@@ -2003,6 +2106,99 @@
               "max": 5,
               "unit": "s",
               "origin": "derived: exemplar 70-03（godie-e010.e）`castTimeSec` 0.833；castderive:build:raw 推導欄位，文件與 params 同值。"
+            }
+          }
+        },
+        {
+          "id": "tpl-area-strike",
+          "family": "area-strike",
+          "status": "enabled",
+          "params": {
+            "castType": {
+              "type": "enum",
+              "values": [
+                "self",
+                "ground",
+                "targeted"
+              ],
+              "default": "self",
+              "origin": "census: 出貨 10 支 damageArea 主體技能 —— self 6 · ground 3 · targeted 1（2026-09-09 逐份量）。"
+            },
+            "damageType": {
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ],
+              "default": "magic",
+              "origin": "census: 同一批 10 支 —— magic 6 · physical 4。⭐ 與 owner 2026-08-05「技能傷害預設都改成 AP 傷害」一致。"
+            },
+            "damage": {
+              "type": "scaling",
+              "default": {
+                "damageTier": "極小",
+                "ratios": []
+              },
+              "origin": "census: 那 10 支的 amount 有三種形狀（damageTier / damageTierPerRank / flat）—— ⭐ 值是整個 Scaling 節點，由 zScaling 本人驗，⛔ 不在這裡拆成幾格。預設取最低級距（⭐ 作者一定會改它）。"
+            },
+            "radiusTier": {
+              "type": "enum",
+              "values": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ],
+              "default": "中",
+              "origin": "census: 同一批 10 支 —— 中 5 · 小 4 · 極小 1。⚠️ ⭐ 真正說話的是這一格：`resolveRadiusTier` 在載入時把 `radius` 蓋掉（AoE 級距表）。"
+            },
+            "includeOrigin": {
+              "type": "boolean",
+              "optional": true,
+              "origin": "census: 全樹 damageArea 的 includeOrigin 是 **20 true / 5 不存在**（⛔ 0 個 false）。⛔ 刻意無預設：`zDamageArea.includeOrigin` 是 `z.boolean().optional()` ⇒ **不存在 ≠ false**,一個預設值會把那 5 支的原點傷害無中生有。"
+            },
+            "radius": {
+              "type": "number",
+              "default": 4.5,
+              "min": 0.5,
+              "max": 30,
+              "origin": "census: 出貨 10 支 damageArea 主體技能的 exemplar `godie-e00s.e` 逐位元（4.5）。⚠️ ⭐ `zDamageArea` 的**必填**格,⛔ 而它在載入時會被 `radiusTier` 蓋掉（`resolveRadiusTier`）—— 留著它是因為 AoE 級距表被關掉的那天,一個 0 半徑的爆炸與「這支技能沒有爆炸」長得一模一樣（同 tpl-traveling-wave 的 blastRadius）。⚠️ ⭐ 刻意**不填 `unit`**：那一格是封閉詞彙（wc3u/wc3h/s/count/ratio）,而這裡的半徑是 GGD 單位 —— ⛔ 硬填一個 wc3u 會讓後台的換算是錯的。"
+            },
+            "onHitTargets": {
+              "type": "effects",
+              "optional": true,
+              "origin": "census: 那 10 支裡 **5 支有這一格**（knockback ×2 · applyStatus ×1 · applyStatus+dot ×1 · applyBuff+applyStatus ×1）。⭐⭐ 這是這個模板的重點：那些追加效果**不是頂層的第二個節點**，是 damageArea 自己的一格 —— ⛔ 做成六格獨立參數就是把同一份知識拆成第二個住處。⛔ 刻意無預設：一個「我不知道你要追加什麼」的預設會讓作者以為它是必要的。"
+            },
+            "condition": {
+              "type": "condition",
+              "optional": true,
+              "origin": "census: 那 10 支裡 **1 支有**（`godie-emns.e`：`{kind:status, subject:target, statusId:curse}`）。⭐ 值是整個條件葉，由 zCondition 本人驗。"
+            },
+            "castTimeSec": {
+              "type": "number",
+              "optional": true,
+              "default": 0,
+              "min": 0,
+              "max": 5,
+              "unit": "s",
+              "origin": "derived: 沿用出貨 71/79 位採用者的慣例（文件與 params 同一個值）—— 同 `tpl-instant-blast.castTimeSec`。⭐ 預設 0 ＝ 瞬發,⛔ 而真正的值由 `castTimeFormula.deriveCastTime()` 算（那是唯一來源）。"
+            },
+            "vfx": {
+              "type": "spawnVfx",
+              "optional": true,
+              "origin": "census: 出貨那 32 個被擋形狀裡 `spawnVfx` 出現 **5** 次。⭐ 它是**第二個頂層節點**（⛔ 不在 onHitTargets 裡）—— 語意是「這一發長什麼樣」,⛔ 不是「打中的人身上追加什麼」。⛔ 刻意無預設：一顆看不見的特效比沒有特效更糟（第一·五守則）。"
+            },
+            "modelFx": {
+              "type": "spawnModelFx",
+              "optional": true,
+              "origin": "census: 同一批裡 `spawnModelFx` 出現 **7** 次（最多的視覺）。⛔ 同上,無預設。"
+            },
+            "selfBuff": {
+              "type": "applyBuff",
+              "optional": true,
+              "origin": "census: 出貨 damageArea 單發技能裡,第二個頂層節點是 `applyBuff` 的有 **3 支**（`godie-e001.passive`／`godie-e00n.passive`／`godie-h02u.r`）,而三支的節點逐位元相同（`as pctAdd 4.0` / 4 秒）。⛔ 刻意無預設：一格看不見的增益比沒有增益更糟（第一·五守則）。"
             }
           }
         },
@@ -2406,6 +2602,64 @@
               "min": 0,
               "max": 5,
               "unit": "s"
+            }
+          }
+        },
+        {
+          "id": "tpl-charge-resource",
+          "family": "charge-resource",
+          "status": "enabled",
+          "params": {
+            "event": {
+              "type": "enum",
+              "values": [
+                "onAbilityHit",
+                "onAbilityCast",
+                "onDamageDealt",
+                "onDamageTaken",
+                "onKill",
+                "onBasicAttack",
+                "onUltimateHit",
+                "onStatusApplied"
+              ],
+              "default": "onAbilityHit",
+              "origin": "census: GH#1132 的 72 槽逐句分類 —— **命中 13** · 施法 7 · 觸發 4 · 普攻 3 · 受擊 3 · 時間 3 · 擊殺 1 ⇒ ⭐ 預設挑最多的「命中」（`onAbilityHit`）。⛔ **刻意不是 `onBasicAttack`**：票文逐字說「普攻額外傷害不作替代」,而今天 26 槽誤綁在 `tpl-on-attack` 上。"
+            },
+            "statusId": {
+              "type": "docRef",
+              "origin": "census: ⭐ 出貨**真的存在**的標記型 status（`content/status-effects/aban-x-mark.json`,「阿邦式 X 印記」）——⛔ 預設**不是**一個編出來的 id：`docRef` 只驗格式⛔不驗存在,而一個不存在的預設會讓表單第一次打開就是壞的。⚠️ ⭐ 而它**只是預設** —— 每一支資源技能都要填自己的（布局／電力／線索）。⭐ 前例：`tpl-beam-roll.modelKey` / `tpl-blink-strike.arriveVfxId` 也都給真的存在的預設。",
+              "default": "aban-x-mark"
+            },
+            "perEvent": {
+              "type": "number",
+              "min": 1,
+              "max": 9,
+              "default": 1,
+              "origin": "census: 那 3 槽「四件都要」的逐字都是「**每次…最多增加一層**」（武藤遊戲／八神庵／西索）⇒ 1。"
+            },
+            "maxStacks": {
+              "type": "number",
+              "min": 1,
+              "max": 99,
+              "default": 3,
+              "origin": "census: 武藤遊戲逐字「上限三層」。⚠️ ⭐ 而  **沒有** maxStacks 這一格（我第一版寫了,schema 回「Unrecognized key」）—— ⭐ 容量今天由  ＋ 窗口（durationSec）表達,而這一格是**卡面文案與後台可調的上限**。⛔ 留著它是因為 owner 之後要調的是這個數字,⛔ 不是 refresh 那個字。",
+              "inert": "⛔⛔ **引擎今天沒有逐狀態的層數上限** —— `zApplyStatus` 只有 `stacks`／`refresh`／`duration`，⛔ 沒有 `maxStacks`（我第一版寫了它，schema 逐字回「Unrecognized key(s): 'maxStacks'」）。⚠️ ⭐ 而 `dot` **有**（`sim/effects/dot.ts:128`）⇒ ⭐ 這不是「做不到」，是**那一格還沒長在 applyStatus 上**。⭐ 今天唯一的上界是全域的 `MARK_MAX_COUNT = 999`（`sim/markLimits.ts:54`），⛔ 而那是防「12 打成 120」的柵欄，⛔ 不是設計用的容量。⇒ ⭐ 這一格**留著**是因為 GH#1132 AC④ 逐字要求「**有限容量**」，而 owner 之後要調的是**這個數字**（⛔ 不是 `refresh` 那個字）—— 它是卡面文案與後台可調的上限。⭐ 到期條件（一行可查）：`grep -c maxStacks packages/shared/src/content/schema/effects/applyStatus.ts` > 0 的那一刻，把這一格接進展開器並刪掉這個 `inert`。"
+            },
+            "internalCooldown": {
+              "type": "number",
+              "optional": true,
+              "min": 0,
+              "max": 60,
+              "unit": "s",
+              "origin": "⭐ **去重**那一件（票文 AC④）—— hook 的既有欄位。⛔ 無預設：「每次施法最多一層」與「每 3 秒最多一層」是**兩種**去重,⛔ 猜一個會讓另一種靜默失效。"
+            },
+            "durationSec": {
+              "type": "number",
+              "min": 0,
+              "max": 60,
+              "unit": "s",
+              "origin": "derived: ⭐ **沒有 census** —— 出貨零份 `applyStatus` 用 `refresh:\"keep\"`（這是新機制）。⇒ 預設從**語意**推導：武藤遊戲逐字「上限三層，**供 EX 消耗**」＝ 這個資源**不自己過期**，⇒ 用 `STATUS_MAX_DURATION_SEC`（`schema/effects/_shared.ts:137` ＝ **60**）—— schema 的上界。⚠️ ⭐ 而 `duration` 是**必填**（`zRankScalar`,⛔ 不是 optional）⇒ 這一格不能留空。⭐ 為什麼⛔不用全部 applyStatus 的中位數（2 秒）：那 118 筆是**控場與減益**的秒數,⛔ 一個 2 秒就消失的資源條等於沒有資源條 —— 那會是「說了但不會發生」（第一·五守則）。",
+              "default": 60
             }
           }
         },
@@ -3009,6 +3263,11 @@
                 }
               ],
               "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+            },
+            "recast": {
+              "type": "recast",
+              "optional": true,
+              "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
             }
           }
         },
@@ -5049,6 +5308,61 @@
           }
         },
         {
+          "id": "tpl-spend-resource",
+          "family": "spend-resource",
+          "status": "enabled",
+          "params": {
+            "statusId": {
+              "type": "docRef",
+              "origin": "census: ⭐ 出貨**真的存在**的標記型 status（`content/status-effects/aban-x-mark.json`,「阿邦式 X 印記」）——⛔ 預設**不是**一個編出來的 id：`docRef` 只驗格式⛔不驗存在,而一個不存在的預設會讓表單第一次打開就是壞的。⚠️ ⭐ 而它**只是預設** —— 每一支資源技能都要填自己的（布局／電力／線索）。⭐ 前例：`tpl-beam-roll.modelKey` / `tpl-blink-strike.arriveVfxId` 也都給真的存在的預設。",
+              "default": "aban-x-mark"
+            },
+            "minStacks": {
+              "type": "number",
+              "min": 1,
+              "max": 99,
+              "default": 3,
+              "origin": "census: 武藤遊戲逐字「上限**三層**，供 EX 消耗」⇒ 要求 3、扣 3。⭐ 而這一格**同時**是「要幾層」與「扣幾層」—— ⛔ 第〇·四守則：那是**同一個事實**。⚠️ 我第一版開了 `spend`(all/exact) ＋ `spendCount` 兩格,⭐ 而它們表達的是同一個數字 ——`paramsSchemaFor` 的閘當場抓到：擾動 `spend` **不會改變展開結果** ⇒ 那是一格死參數。⭐ 哪一天真的出現「要求 3 層但只扣 1 層」的設計,那時候才是把它拆開的理由。"
+            },
+            "effects": {
+              "type": "effects",
+              "origin": "census: 武藤遊戲 EX 逐字「射出強化**直線魔法**」⇒ 預設放一顆最小的魔法傷害,⭐ 讓這一族**展得開**（`templateStatusIsHonest` 要求宣告 enabled 的每一份都真的展得開）。⛔ 它只是預設 —— 每一支要填自己真正打的東西。",
+              "default": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "小"
+                  }
+                }
+              ]
+            },
+            "castType": {
+              "type": "enum",
+              "values": [
+                "self",
+                "ground",
+                "targeted"
+              ],
+              "default": "self",
+              "origin": "census: 出貨 `damageArea` 主體那一族的同名槽用同一組值（`tpl-area-strike`）—— ⛔ 不另立一份值域。"
+            },
+            "castTimeSec": {
+              "type": "number",
+              "optional": true,
+              "min": 0,
+              "max": 5,
+              "unit": "s",
+              "origin": "與其餘每一族同一格（`deriveCastTimes` 會覆蓋它）。"
+            },
+            "missingText": {
+              "type": "text",
+              "default": "資源不足",
+              "origin": "census: 武藤遊戲 EX 逐字「**缺少黑魔導時顯示使用條件**」⇒ ⭐ 層數不足時要**告訴玩家**，⛔ 不是按下去什麼都沒發生（第一·五守則：說了但不會發生）。⭐ 而 `consumeStatus.onMissing` 就是那個住處（schema 逐字：「層數不足時執行；省略則不產生後續效果」）。⭐ 預設用最短的一句 —— 每一支要填自己的（「缺少黑魔導」／「電力不足」／「線索不足」）。⚠️ ⭐ 型別是 `text` **⛔ 不是 `docRef`** —— 我第一版寫了 `docRef`,而它驗的是**文件編號**格式 ⇒「資源不足」四個中文字當場被拒。"
+            }
+          }
+        },
+        {
           "id": "tpl-strip-transform",
           "family": "strip-transform",
           "status": "draft",
@@ -5348,7 +5662,7 @@
         }
       ],
       "templateStatus": {
-        "enabled": 43,
+        "enabled": 47,
         "draft": 11
       },
       "innateKinds": [
@@ -5684,12 +5998,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "e37f411f",
+    "engineFingerprint": "abedce92",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 e37f411f —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 abedce92 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -6535,11 +6849,11 @@
       }
     ]
   },
-  "assetManifestDigest": "c72e67a72494",
+  "assetManifestDigest": "91530fee98ab",
   "assetManifest": {
     "path": "assets-manifest.json",
     "entries": 1650,
-    "totalBytes": 103970638
+    "totalBytes": 104112032
   },
   "effectiveVfxLimits": {
     "schema": "ggd-effective-vfx-limits@1",
@@ -6557,15 +6871,15 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "63122a001591",
+    "fingerprint": "00789e59a5e4",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "58110a9d9f3f"
+        "digest": "aef1e44f7bab"
       },
       {
         "surface": "ability-item-zod-schemas",
-        "digest": "9412ee018f33"
+        "digest": "2115230cea01"
       },
       {
         "surface": "exact-ref-collector",
@@ -6573,7 +6887,7 @@
       },
       {
         "surface": "capability-applicability",
-        "digest": "9b05758ffb11"
+        "digest": "24eeddbc7813"
       },
       {
         "surface": "authoring-rules",
@@ -6613,7 +6927,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "6aa1570f567d",
+  "migrationFingerprint": "c37d2130403e",
   "supportedModes": [
     "bootstrap"
   ],
@@ -6627,5 +6941,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "873ded29e45d"
+  "profileDigest": "ceb1802480e4"
 }

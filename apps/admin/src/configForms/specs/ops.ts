@@ -22,6 +22,7 @@ import {
 } from "@ggd/shared/content";
 // ⭐ GH#1116 —— 深路徑：`schema/index.ts` 還沒 re-export 它（新加的那一份）。
 import { zConfigAssetCdnDoc } from "@ggd/shared/content/schema/config/assetCdn";
+import { zConfigAssetDownloadsDoc } from "@ggd/shared/content/schema/config/assetDownloads";
 import type { ConfigDocSpec } from "../engine";
 import { derivedFields } from "../schemaToForm";
 // ────────────────────────────────────────────────── 混音 (config/audio-mix) ─
@@ -182,5 +183,34 @@ export const ASSET_CDN_SPEC: ConfigDocSpec<"assetDelivery"> = {
   consumer: "apps/client/src/content/assetVersion.ts 的 `cdnAssetUrl()` ← `withContentVersion()`（每一個素材網址都經過它）",
   effect: "**下一次載入就生效**（⛔ 不必重啟 shard —— 它是客戶端組網址的那一層）。",
   fields: derivedFields(zConfigAssetCdnDoc, []),
+  preserved: [],
+};
+
+// ──────────────────── 素材簽署網址 (config/asset-downloads) ─
+
+/**
+ * ⭐ GH#1124 —— 玩家端向後端要一個**短效簽署網址**再去 S3 拿素材。
+ *
+ * ⛔ 出貨關著,而理由是**量到的**（2026-09-09 在正式站 mini 上實跑）：
+ *   · `aws` 指令**不存在**、`~/.aws` **不存在** ⇒ 後端簽不出任何網址
+ *   · bucket **沒有任何 CORS**（`OPTIONS` 預檢回 403）⇒ 瀏覽器 fetch 會被擋
+ * ⇒ ⭐ 兩個都是 **owner 的動作**（憑證是安全決策;CORS 他明說「目前授權未包含修改」）。
+ */
+export const ASSET_DOWNLOADS_SPEC: ConfigDocSpec<"assetDownloads"> = {
+  page: "assetDownloads",
+  collection: "config",
+  docId: "asset-downloads",
+  schemaTag: "config.asset-downloads@1",
+  zod: zConfigAssetDownloadsDoc,
+  title: "素材簽署網址",
+  intro: [
+    "⭐ 打開之後，玩家要一顆素材時先向後端要一個**短效網址**，再直接跟 S3 拿 —— ⛔ 不再經過站台自己的頻寬。",
+    "⚠️ ⭐ **兩個擋點都要先解，⛔ 否則打開等於每一顆素材都拿不到**：① 正式站要有 AWS 憑證（2026-09-09 實測完全沒有）② bucket 要設 CORS（實測預檢 403）。",
+    "⭐ 存活秒數出貨 **900（15 分鐘）** —— 調短＝中途換頁要重簽（多一次往返）；調長＝那個網址被轉貼出去的可用時間也變長。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/asset-downloads.json`**。",
+  ],
+  consumer: "apps/client/src/content/assetVersion.ts 的 `needsSignedUrl()` / `signedUrlTtlSec()`；注入點 `bootContent.ts`",
+  effect: "**下一次載入就生效**（⛔ 不必重啟 shard）。",
+  fields: derivedFields(zConfigAssetDownloadsDoc, []),
   preserved: [],
 };

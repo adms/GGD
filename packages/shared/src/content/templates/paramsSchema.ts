@@ -23,6 +23,7 @@ import { zApplyBuff } from "../schema/effects/applyBuff";
 import { zApplyStatus } from "../schema/effects/applyStatus";
 import { zDot } from "../schema/effects/dot";
 import { zSpawnVfx } from "../schema/effects/spawnVfx";
+import { zSpawnModelFx } from "../schema/effects/spawnModelFx";
 import type { ParamSlot, TemplateDoc } from "../schema/template";
 
 /** The Zod shape for ONE slot, before the `.optional()` wrapper. */
@@ -92,6 +93,21 @@ function slotSchema(slot: ParamSlot): z.ZodTypeAny {
     case "spawnVfx":
       // ⭐ GH#1068 —— 同上。`at:"bone"` ⇔ `attach` 的跨欄位 refine 也住在 `zEffectDef`。
       return zSpawnVfx.omit({ kind: true });
+    case "spawnModelFx":
+      // ⭐ GH#1146 —— 同上。⚠️ `zSpawnModelFx` 的路徑欄位（12 格 MODEL_FX_PATH_FIELDS）
+      //    彼此的成對 refine 也住在 `zEffectDef` 上 —— 表單收得下的節點,
+      //    展開之後仍然要過 `zAbilityDoc` 那一關。
+      return zSpawnModelFx.omit({ kind: true });
+    case "boolean":
+      // ⭐ GH#1146 —— 是非。⚠️ 「不填」由 slot 的 `optional` 表達,⛔ 不是第三個值。
+      return z.boolean();
+    case "text":
+      // ⭐ GH#1132 —— 一句給玩家看的字。⚠️ 長度由消費端的 schema 驗,⛔ 這裡不抄第二份。
+      return z.string().min(1);
+    case "applyBuff":
+      // ⭐ GH#1146 —— 整個 applyBuff 節點。⚠️ 與 `buffPerRank` 是**包含關係**,⛔ 不是二選一：
+      //    那一格只是這個節點的 `perRank` 那一欄。
+      return zApplyBuff.omit({ kind: true });
     case "buffPerRank":
       // ⭐ GH#993 —— 逐階欄位表。讀的是 `zApplyBuff` **本人**那一格（`.unwrap()` 掉 optional：
       //    「這一支要不要逐階」由 slot 的 `optional` 決定，⛔ 不是由 schema 再選填一次）。

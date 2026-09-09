@@ -253,6 +253,7 @@ const HAND_NAV: NavItem[] = [
   { page: "ai", label: "AI 生成設定", emoji: "🤖", section: SEC_ASSETS },
   // ⭐ GH#1116 —— 素材從哪裡載（S3／CloudFront）。⛔ 不是五級距,是**資產產線**。
   { page: "assetDelivery", label: "素材加速", emoji: "🪣", section: SEC_ASSETS },
+  { page: "assetDownloads", label: "素材簽署網址", emoji: "🔑", section: SEC_ASSETS },
   { page: "modelBudget", label: "模型預算", emoji: "📐", section: SEC_ASSETS },
   { page: "iconTracking", label: "ICON 生成追蹤", emoji: "🖼️", section: SEC_ASSETS },
   // task #231 — the 驗收 contact sheet for the generated per-champion voxel

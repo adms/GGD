@@ -79,6 +79,63 @@
       "distance": 4.5
     }
   ],
+  "template": {
+    "ref": "tpl-area-strike",
+    "params": {
+      "castType": "self",
+      "damageType": "physical",
+      "damage": {
+        "damageTierPerRank": [
+          "極小",
+          "極小",
+          "小",
+          "小"
+        ]
+      },
+      "radius": 4.5,
+      "radiusTier": "小",
+      "includeOrigin": true,
+      "onHitTargets": [
+        {
+          "kind": "knockback",
+          "distance": 2.5,
+          "speed": 15.0,
+          "from": "caster"
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "armor-break",
+          "duration": 1.0
+        },
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "pctAdd",
+              "value": -1.0
+            }
+          ],
+          "duration": 1.0,
+          "dispellable": true,
+          "polarity": "debuff"
+        }
+      ],
+      "vfx": {
+        "vfxId": "fx.wave.physical",
+        "at": "self"
+      },
+      "modelFx": {
+        "shape": "single",
+        "preset": "tpl-locust-travel",
+        "modelKey": "imported.crescent",
+        "clip": "idle",
+        "scale": 2.0,
+        "distance": 4.5
+      },
+      "castTimeSec": 0.667
+    }
+  },
   "icon": "assets/icons/abilities/godie-h01u.w.webp",
   "vfxKey": "fx.prim.physical.slash",
   "sfxKey": "wc3.defendcaster",

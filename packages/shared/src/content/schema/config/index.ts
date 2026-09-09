@@ -128,6 +128,8 @@ import { zConfigIconUploadDoc } from "./iconUpload";
 import { zConfigApCoefficientDoc } from "./apCoefficient";
 // ⭐ GH#1116 —— 素材走 CDN 還是站台自己。
 import { zConfigAssetCdnDoc } from "./assetCdn";
+// ⭐ GH#1124 —— 素材的短效簽署網址。
+import { zConfigAssetDownloadsDoc } from "./assetDownloads";
 import { zConfigAoeTiersDoc } from "./aoeTiers";
 import { zConfigRangeTiersDoc } from "./rangeTiers";
 import { zConfigCooldownTiersDoc } from "./cooldownTiers";
@@ -335,6 +337,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigIconUploadDoc,
   zConfigApCoefficientDoc,
   zConfigAssetCdnDoc,
+  zConfigAssetDownloadsDoc,
   // AoE 五級距（owner 2026-08-11 立、2026-08-19 擴成五級）。⚠️ 漏掉這一行 =
   // 一份 aoe-tiers.json 進了 content/ 之後整份內容驗證失敗 → 骨架英雄，理由見下面那一段。
   zConfigAoeTiersDoc,

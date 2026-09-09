@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_6c2412e2eca3`
+contentVersion `cv_3e888a5a4bcf`
 
 ---
 
@@ -16,8 +16,8 @@ contentVersion `cv_6c2412e2eca3`
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
-| `applyBuff` | 增益／減益（改屬性） | 63 | `godie-e001.passive`、`godie-e002.r`、`godie-e00l.r`、`godie-e00n.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.w`、`godie-e00w.e`、`godie-e00x.e`、`godie-e00x.ex`、`godie-edem.ex`、`godie-edem.w` …（共 63） |
-| `applyStatus` | 掛狀態 | 66 | `godie-e001.passive`、`godie-e007.q`、`godie-e00n.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.q`、`godie-e00s.e`、`godie-e00w.passive`、`godie-e00x.q`、`godie-e010.e`、`godie-edem.ex`、`godie-edem.q` …（共 66） |
+| `applyBuff` | 增益／減益（改屬性） | 61 | `godie-e002.r`、`godie-e00l.r`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.w`、`godie-e00w.e`、`godie-e00x.e`、`godie-e00x.ex`、`godie-edem.ex`、`godie-edem.w`、`godie-emfr.e`、`godie-emfr.ex` …（共 61） |
+| `applyStatus` | 掛狀態 | 65 | `godie-e001.passive`、`godie-e007.q`、`godie-e00n.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.q`、`godie-e00s.e`、`godie-e00w.passive`、`godie-e010.e`、`godie-edem.ex`、`godie-edem.q`、`godie-edem.w` …（共 65） |
 | `blink` | 瞬移 | 13 | `godie-efur.q`、`godie-h01o.q`、`godie-n01c.r`、`godie-nbbc.r`、`godie-nbbc.w`、`godie-o030.passive`、`godie-orkn.passive`、`godie-u00v.r`、`godie-u034.passive`、`godie-u034.r`、`godie-ucrl.passive`、`godie-ucrl.r` …（共 13） |
 | `carry` | 背負（帶著隊友移動 + 不可被選取） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `chainLightning` | 連鎖閃電 | 2 | `godie-o00k.r`、`godie-udea.r` |
@@ -26,8 +26,8 @@ contentVersion `cv_6c2412e2eca3`
 | `consumeStatus` | 足額消耗狀態並分支 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `convertTeam` | 陣營轉換（把一個既有單位借到自己這一隊） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `cycleBuff` | 輪替增益 | 1 | `godie-efur.passive` |
-| `damage` | 傷害 | 87 | `godie-e002.ex`、`godie-e002.r`、`godie-e002.w`、`godie-e007.e`、`godie-e007.ex`、`godie-e007.q`、`godie-e008.ex`、`godie-e00l.ex`、`godie-e00l.r`、`godie-e00l.w`、`godie-e00x.e`、`godie-e00x.q` …（共 87） |
-| `damageArea` | 範圍傷害 | 52 | `godie-e001.passive`、`godie-e002.w`、`godie-e007.r`、`godie-e008.ex`、`godie-e00n.passive`、`godie-e00s.e`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00s.w`、`godie-e00w.ex`、`godie-e00w.passive`、`godie-e00w.q` …（共 52） |
+| `damage` | 傷害 | 85 | `godie-e002.ex`、`godie-e002.r`、`godie-e002.w`、`godie-e007.e`、`godie-e007.ex`、`godie-e007.q`、`godie-e008.ex`、`godie-e00l.ex`、`godie-e00l.r`、`godie-e00l.w`、`godie-e00x.e`、`godie-e010.q` …（共 85） |
+| `damageArea` | 範圍傷害 | 50 | `godie-e002.w`、`godie-e007.r`、`godie-e008.ex`、`godie-e00s.e`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00s.w`、`godie-e00w.ex`、`godie-e00w.passive`、`godie-e00w.q`、`godie-e00w.r`、`godie-e00w.w` …（共 50） |
 | `damageLine` | 直線傷害 | 19 | `godie-e002.e`、`godie-e002.ex`、`godie-e00l.e`、`godie-e00l.ex`、`godie-e00r.r`、`godie-edem.e`、`godie-emfr.q`、`godie-h01n.e`、`godie-h01u.e`、`godie-h02u.e`、`godie-h02v.e`、`godie-n00p.passive` …（共 19） |
 | `dash` | 衝刺（腳不離地） | 8 | `godie-edem.e`、`godie-h01n.q`、`godie-h01u.e`、`godie-hapm.r`、`godie-u00j.w`、`godie-udea.w`、`godie-zombiex.w`、`thorne.q` |
 | `delayed` | 延遲落地／排程 | 27 | `godie-e002.ex`、`godie-e00l.ex`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-h020.e`、`godie-h02u.ex`、`godie-h02u.q`、`godie-h02u.r`、`godie-h02v.ex`、`godie-h02v.q`、`godie-hapm.ex`、`godie-hapm.passive` …（共 27） |

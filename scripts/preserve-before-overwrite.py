@@ -994,6 +994,34 @@ def main() -> int:
                         return 2
         except Exception as _e:
             print(f"🧾 ⚠️ 產生器輸入閘**沒驗到**(GH#1026 ③,⛔ 不擋)—— hook 自身故障 {_e.__class__.__name__}。", file=sys.stderr)
+    # ── 🔁 **問 owner 之前先查他答過沒**（owner 2026-09-09）────────────────
+    #
+    # ⛔⛔ 他逐字：「英雄的 role 標籤：留 => **上次討論過了 你怎麼又問我**
+    #   你有在詳實做對話記錄開票再整合到戰情版嗎？**我真的很懷疑**」
+    #
+    # ⭐ 而查下去他是對的：`asked-before.sh role 標籤` 只找得到**當天**那一筆，
+    #   ⇒ 他上一次的裁決**從來沒被記進帳本** ⇒ 所以我又問了一次。
+    #
+    # ⚠️ ⭐ 工具早就在（`ruling.sh` 寫票＋帳本 · `asked-before.sh` 查），
+    #   ⛔ 而**沒有任何東西逼我用它** —— CLAUDE.md 記著這條散文失效過四次。
+    #   ⇒ 第五次之後把它變成閘：**在 issue 留言裡問 owner 之前，
+    #     這一段會提醒你先查**（⛔ 警告不擋 —— 擋掉會變成「算了不問了」，那更糟）。
+    if tool == "Bash":
+        _c = (ev.get("tool_input") or {}).get("command", "") or ""
+        _asking = ("gh issue comment" in _c or "gh pr comment" in _c) and any(
+            k in _c for k in ("要 owner", "等你", "請 owner", "由 owner", "owner 勾",
+                              "要你", "跟我說", "說一聲", "選 A", "A／B／C", "A/B/C")
+        )
+        if _asking:
+            print(
+                "🔁 ⚠️ **這則留言在問 owner 一個決定** —— ⭐ 先查他答過沒:\n"
+                "     bash scripts/asked-before.sh <關鍵字…>\n"
+                "   ⛔ owner 2026-09-09:「上次討論過了 你怎麼又問我」——\n"
+                "     ⭐ 而根因不是他沒說,是**我沒把他的話記進帳本**。\n"
+                "   ⇒ 收到裁決的當下就跑:bash scripts/ruling.sh <票號>（票＋帳本兩處）",
+                file=sys.stderr,
+            )
+
     # 🎫 開票規格(owner 2026-08-24):「開票要把 [acceptance criteria,] 及
     # [緊急][重要][優先] 的tag, 採用的 [思考策略] 與 [解決模板] 寫清楚」。
     # ⭐ 警告⛔ 不擋(exit 0):一張缺欄的票仍然比沒有票好,而被擋掉的開票

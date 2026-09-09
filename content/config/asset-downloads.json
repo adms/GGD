@@ -1,0 +1,7 @@
+{
+  "id": "asset-downloads",
+  "schema": "config.asset-downloads@1",
+  "note": "⭐ GH#1124 —— 玩家端向後端要一個「短效簽署網址」去 S3 拿素材。⛔ 出貨 enabled=false：正式站那台今天**沒有 AWS 憑證與工具**（2026-09-09 實測 `aws` 指令不存在、`~/.aws` 不存在）⇒ 後端簽不出任何網址。⭐ 這一格是先把線接好。",
+  "enabled": false,
+  "signedUrlTtlSec": 900
+}

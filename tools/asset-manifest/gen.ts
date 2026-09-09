@@ -108,6 +108,53 @@ interface Entry {
 /** 一顆資產最多列幾個引用者（⭐ 回應大小的柵欄，⛔ 不是玩法決策）。 */
 const MAX_REFS = 12;
 
+/**
+ * ⭐⭐ **不在 git 裡的資產** —— owner 2026-09-08 逐字：
+ *
+ * > 「資源庫 我覺得**不要進 git** 但可以**存到 S3** ggd-390630837668-ap-east-2-an」
+ * > 「原始模型、動畫、這批大型解析 JSON ⇒ S3 ／ 解析轉換程式、英雄與技能設定 JSON、
+ * >   版本清單、**SHA-256**、文件 ⇒ Git」
+ *
+ * ⇒ ⭐ 這一份就是他說的「進 git 的 SHA-256」：`{ path: { bytes, sha256 } }`。
+ *   ⛔ 位元組住 S3，⭐ 而**驗得起來的那半**住 git。
+ *
+ * ⚠️ ⭐ 它**不是**一張放行清單：
+ *   · 沒有宣告的缺席資產 ⇒ ⛔ 照舊 fail-loud（一個打錯的路徑仍然要紅）
+ *   · 路徑是**內容定址**（檔名 = 64 個 hex）時，`sha256` **必須等於檔名** ——
+ *     ⭐ 一句自我矛盾的宣告會被當場擋下，⛔ 而不是被寫進出貨清單。
+ */
+// ⭐ 路徑可注入 —— ⛔ 只為了讓守衛跑得起來（它要驗**這一支**的行為，
+//   ⛔ 而不可以動到出貨的那一份宣告）。出貨時它就是預設那一份。
+const OFFDISK = process.env.GGD_ASSETS_OFFDISK
+  ? resolve(process.env.GGD_ASSETS_OFFDISK)
+  : join(CONTENT, "assets-offdisk.json");
+const CONTENT_ADDRESSED = /^([0-9a-f]{64})\.[a-z0-9]+$/;
+
+function loadOffDisk(): Map<string, { bytes: number; sha256: string }> {
+  const out = new Map<string, { bytes: number; sha256: string }>();
+  let raw: string;
+  try {
+    raw = readFileSync(OFFDISK, "utf8");
+  } catch {
+    return out; // ⭐ 沒有這份宣告是合法的（＝全部資產都在磁碟上）
+  }
+  const doc = JSON.parse(raw) as { entries?: Record<string, { bytes: number; sha256: string }> };
+  for (const [path, d] of Object.entries(doc.entries ?? {})) {
+    if (typeof d?.bytes !== "number" || !/^[0-9a-f]{64}$/.test(d?.sha256 ?? "")) {
+      throw new Error(`⛔ assets-offdisk.json 的 "${path}" 缺 bytes 或 sha256 不是 64 個 hex`);
+    }
+    const m = CONTENT_ADDRESSED.exec(basename(path));
+    if (m && m[1] !== d.sha256) {
+      throw new Error(
+        `⛔ assets-offdisk.json 的 "${path}" **自我矛盾**：檔名說 ${m[1]}，欄位說 ${d.sha256}。\n` +
+          `   ⭐ 內容定址的路徑，檔名就是它的 sha —— 兩者不合表示這份宣告是編的。`,
+      );
+    }
+    out.set(path, { bytes: d.bytes, sha256: d.sha256 });
+  }
+  return out;
+}
+
 function build(): { manifest: unknown; missing: string[] } {
   const refs = new Set<string>();
   /** ⭐ 反向索引：資產路徑 → 引用它的文件 id。 */
@@ -133,21 +180,36 @@ function build(): { manifest: unknown; missing: string[] } {
       /* 壞掉的 JSON 由 content:build 的 Zod 管，⛔ 不是這裡 */
     }
   }
+  const offDisk = loadOffDisk();
   const entries: Entry[] = [];
   const missing: string[] = [];
   for (const rel of [...refs].sort()) {
     const abs = join(CONTENT, rel);
-    let buf: Buffer;
+    let bytes: number;
+    let sha256: string;
     try {
-      buf = readFileSync(abs);
+      const buf = readFileSync(abs);
+      bytes = buf.byteLength;
+      sha256 = createHash("sha256").update(buf).digest("hex");
     } catch {
-      missing.push(rel);
-      continue;
+      // ⭐⭐ **不在磁碟上 ⇒ 去問宣告**（owner 2026-09-08：「資源庫 不要進 git 但可以存到 S3」）。
+      //
+      // ⛔ 在此之前這裡一律 `missing.push(rel)` ⇒ ⭐ **PR 越守規矩，這條閘越紅**：
+      //   素材照裁決住 S3 ⇒ CI 的磁碟上沒有它 ⇒ 96 個「被引用的資產不存在」。
+      // ⚠️ 而閘本身沒有錯 —— 它問的是**一個名詞**（檔案在不在），
+      //   ⭐ 而該問的是**關係**：這個引用**解析得到一顆有 sha 的資產**嗎。
+      const d = offDisk.get(rel);
+      if (!d) {
+        missing.push(rel);
+        continue;
+      }
+      bytes = d.bytes;
+      sha256 = d.sha256;
     }
     entries.push({
       path: rel,
-      bytes: buf.byteLength,
-      sha256: createHash("sha256").update(buf).digest("hex"),
+      bytes,
+      sha256,
       contentType: BINARY_EXT[extname(rel).toLowerCase()]!,
       kind: assetKind(rel),
       ...(() => {

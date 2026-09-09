@@ -1,0 +1,4100 @@
+{
+  "number": 13,
+  "id": "b2-maple",
+  "name": "梅普露",
+  "work": "怕痛的我把防禦力點滿就對了",
+  "canonical_name": "メイプル／本条楓",
+  "version_scope": "遊戲角色梅普露的防禦大盾特徵",
+  "model_requirements": "大盾少女本體；機械神可另列形態，不能代替所有變身",
+  "pairing_status": "native_identity_candidate",
+  "identity_sources": [
+    {
+      "url": "https://bofuri.jp/season1/character/",
+      "title": "動畫第一季官方角色頁",
+      "type": "official",
+      "supports": "本條楓的遊戲角色，將防禦特化並使用大盾。"
+    }
+  ],
+  "search": {
+    "terms": [
+      "梅普露",
+      "メイプル",
+      "meipulu",
+      "maple"
+    ],
+    "registry_characters_scanned": 341,
+    "name_hits": [
+      {
+        "id": "300heroes:272",
+        "name": "梅普露",
+        "origin": "怕痛的我，把防禦力點滿就對了",
+        "matched_terms": [
+          "梅普露",
+          "meipulu"
+        ],
+        "accepted": true
+      },
+      {
+        "id": "300heroes:273",
+        "name": "机械神梅普露",
+        "origin": "怕痛的我，把防禦力點滿就對了",
+        "matched_terms": [
+          "梅普露",
+          "meipulu"
+        ],
+        "accepted": true
+      },
+      {
+        "id": "300heroes:276",
+        "name": "梅普露",
+        "origin": "怕痛的我，把防禦力點滿就對了",
+        "matched_terms": [
+          "梅普露",
+          "meipulu"
+        ],
+        "accepted": true
+      }
+    ],
+    "scope": "300heroes, MBA, LoL seven-character snapshot, community37 registry; existing batch2 models checked separately"
+  },
+  "original_model_candidates": [
+    {
+      "source_character_id": "300heroes:272",
+      "source_character": "梅普露",
+      "source_work": "怕痛的我，把防禦力點滿就對了",
+      "identity_status": "existing_registry_identity_cross_reference",
+      "version_verified": false,
+      "origin_evidence": [
+        "https://300data.com/hero/272.html",
+        "https://300data.com/data/api/hero_info/id/272"
+      ],
+      "model": {
+        "native": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/272.x",
+          "exists_local": true,
+          "bytes": 2752689,
+          "sha256": "98fc92bf763811f4e95b12a848d38d6b7aeadc42c789ad5bac3324b2f05e6e59"
+        },
+        "static_preview": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/models/data/character/roleaction/272/mesh.obj",
+          "exists_local": true,
+          "bytes": 673713,
+          "sha256": "39395923962dcfc01d697702b0e9f4d09333950bd06392f2b51903d5d60ac909"
+        },
+        "metadata": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/models/data/character/roleaction/272/model.json",
+          "exists_local": true,
+          "bytes": 246294,
+          "sha256": "c79b179317e244e13cf0c5eaba3eba5e0ec850b4e62f1b6b76d1e5a9002b7e9a"
+        },
+        "materials": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/models/data/character/roleaction/272/materials.json",
+          "exists_local": true,
+          "bytes": 1079,
+          "sha256": "19cf63854703041159cb06434234b51ce9cf66a99a91d7d95384b23974d4177a"
+        },
+        "format": "JUMPX",
+        "bones": 152,
+        "meshes": 6,
+        "rigged_gltf_available": false
+      },
+      "textures": [
+        {
+          "original": "272.tga",
+          "resolution_method": "same_directory_extension_fallback",
+          "file": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/272.dds",
+            "exists_local": true,
+            "bytes": 349672,
+            "sha256": "2dfeaf12f8703ee09475849e758150410ec4204ee287421b4e6314015d075fd3"
+          },
+          "unresolved_name_candidates": []
+        },
+        {
+          "original": "272_a.tga",
+          "resolution_method": "same_directory_extension_fallback",
+          "file": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/272_a.dds",
+            "exists_local": true,
+            "bytes": 174904,
+            "sha256": "e66e67230a807d723412322efb6f98882b80c8f9296d6adc067d35a743d71104"
+          },
+          "unresolved_name_candidates": []
+        }
+      ],
+      "animations": {
+        "count": 28,
+        "clips": [
+          {
+            "name": "bat_idle",
+            "start_frame": 0,
+            "end_frame": 30,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "bat_idle_2",
+            "start_frame": 1132,
+            "end_frame": 1162,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "bat_specialidle",
+            "start_frame": 288,
+            "end_frame": 512,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "bat_run",
+            "start_frame": 1032,
+            "end_frame": 1056,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_run",
+            "start_frame": 1061,
+            "end_frame": 1081,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "dead",
+            "start_frame": 1086,
+            "end_frame": 1129,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "relive",
+            "start_frame": 252,
+            "end_frame": 281,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "dance",
+            "start_frame": 35,
+            "end_frame": 281,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_chuansong",
+            "start_frame": 1007,
+            "end_frame": 1027,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_touzhi_1",
+            "start_frame": 982,
+            "end_frame": 1002,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_touzhi_2",
+            "start_frame": 953,
+            "end_frame": 977,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_attack_attcom_1",
+            "start_frame": 519,
+            "end_frame": 564,
+            "hit_frame": 525,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_attack_attcom_2",
+            "start_frame": 569,
+            "end_frame": 614,
+            "hit_frame": 575,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_skill_01_a",
+            "start_frame": 619,
+            "end_frame": 649,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_skill_01_b",
+            "start_frame": 654,
+            "end_frame": 684,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "bat_run_f",
+            "start_frame": 689,
+            "end_frame": 713,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_run_f",
+            "start_frame": 689,
+            "end_frame": 713,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "bat_run_l",
+            "start_frame": 718,
+            "end_frame": 742,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_run_l",
+            "start_frame": 718,
+            "end_frame": 742,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "bat_run_r",
+            "start_frame": 747,
+            "end_frame": 771,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_run_r",
+            "start_frame": 747,
+            "end_frame": 771,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "bat_run_b",
+            "start_frame": 776,
+            "end_frame": 800,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_run_b",
+            "start_frame": 776,
+            "end_frame": 800,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_skill_01_g",
+            "start_frame": 805,
+            "end_frame": 835,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_skill_02",
+            "start_frame": 843,
+            "end_frame": 843,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_skill_02_end",
+            "start_frame": 848,
+            "end_frame": 878,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_skill_03",
+            "start_frame": 883,
+            "end_frame": 913,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_skill_04",
+            "start_frame": 918,
+            "end_frame": 948,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          }
+        ],
+        "key_data": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/models/data/character/roleaction/272/animation-data.bin",
+          "exists_local": true,
+          "bytes": 4981540,
+          "sha256": "f7c5643bf03695cd35e468acbad32cfe9643e633d92517edac814c624377214a"
+        },
+        "state_candidates": {
+          "idle": [
+            "bat_idle"
+          ],
+          "run": [
+            "bat_run",
+            "single_run"
+          ],
+          "attack": [
+            "single_attack_attcom_1",
+            "single_attack_attcom_2"
+          ],
+          "cast": [
+            "single_skill_01_a",
+            "single_skill_01_b",
+            "single_skill_01_g",
+            "single_skill_02",
+            "single_skill_02_end",
+            "single_skill_03",
+            "single_skill_04"
+          ],
+          "hurt": [],
+          "death": [
+            "dead"
+          ]
+        },
+        "missing_states": [
+          "hurt"
+        ],
+        "timing": "Native frames; FPS unverified",
+        "retargeted": false
+      },
+      "native_vfx": {
+        "embedded_particles": 0,
+        "embedded_ribbons": 0,
+        "unique_skill_files": 26,
+        "files": [
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s05_e/keep/tx_272_s05_5_01.x",
+              "exists_local": true,
+              "bytes": 34166,
+              "sha256": "c40fa7e05f87b3c034bbef5835ee9efbea61ca30c83394e01909293d020a245a"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s05_e/keep/tx_272_s05_5_01_skin2.x",
+              "exists_local": true,
+              "bytes": 34270,
+              "sha256": "175affcfb3574dced729be41b4c092c41614726059f725d54dd12af4886698be"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s01_putonggongji/hit/tx_272_s01_4_01.x",
+              "exists_local": true,
+              "bytes": 1227,
+              "sha256": "153d95bdc127110590c7579e765d944fee01316577b32e1b64941c550dae42c2"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s01_putonggongji/hit/tx_272_s01_4_01_skin2.x",
+              "exists_local": true,
+              "bytes": 1304,
+              "sha256": "46d18aaf1ed1f9cae297adfdf95f1266ad48976e69862dbfed083b90455969e4"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s03_q/fire/tx_272_s03_2_01.x",
+              "exists_local": true,
+              "bytes": 19628,
+              "sha256": "fd29042af56f3f0fca8a848512d654e03ecfcbf3545fb108e0067e4e8c1462b5"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s03_q/fire/tx_272_s03_2_01_skin2.x",
+              "exists_local": true,
+              "bytes": 233984,
+              "sha256": "ad70cad778a51a3ba30ba4cf138bf65f434811580ee94a3a7a55ff66a41b98f6"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s03_q/fire/tx_272_s03_2_02.x",
+              "exists_local": true,
+              "bytes": 23248,
+              "sha256": "3a3ed233c19751d628dfced207aff9efc9b010d9c67193982192b912300c114e"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s03_q/fire/tx_272_s03_2_02_skin2.x",
+              "exists_local": true,
+              "bytes": 129905,
+              "sha256": "ba945a9a41ba5b9c1a84e8f129a56ae6a74a651eaa1a239605693e1af1a7bac0"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s03_q/fire/tx_272_s03_2_03.x",
+              "exists_local": true,
+              "bytes": 24928,
+              "sha256": "2233b9350f0bf9a7b16726be8090a560db730cdb67f0c897a84a18169cc346e1"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s03_q/fire/tx_272_s03_2_03_skin2.x",
+              "exists_local": true,
+              "bytes": 25036,
+              "sha256": "c8040640cf60fe006d0350b2a4fa9b668ed57ce881c074e03764094080fd1ff1"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s03_q/fire/tx_272_s03_2_04.x",
+              "exists_local": true,
+              "bytes": 29858,
+              "sha256": "4048cb0dbad0abdcff9e09d606fe1fd045ff15052c57ca98bb18d1358bf116d6"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s03_q/fire/tx_272_s03_2_04_skin2.x",
+              "exists_local": true,
+              "bytes": 28300,
+              "sha256": "9ca57cb843e80e51c42ed8154f0b3a01c1955845eafb63a71e169c8233846c9d"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s03_q/keep/tx_272_s03_5_01.x",
+              "exists_local": true,
+              "bytes": 3655,
+              "sha256": "17f11e5dedc8771e50e883831eef69d55cb56c83f90ed48b75badb530ce5fe28"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s03_q/keep/tx_272_s03_5_01_skin2.x",
+              "exists_local": true,
+              "bytes": 3649,
+              "sha256": "4288c8bd0979e020b298eace7ffd00464e5a3e96219595bde2497792fd4f108b"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s04_w/fire/tx_272_s04_2_01.x",
+              "exists_local": true,
+              "bytes": 8413,
+              "sha256": "75b7f5f4709f18133e256f63b28eb950282c801c4c4a53f53f457790e59b2a22"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s04_w/fire/tx_272_s04_2_01_skin2.x",
+              "exists_local": true,
+              "bytes": 6423,
+              "sha256": "aada0580ea97a72bddfd912d0eb5a3e05ff8cc3196dd4a844f12331596006989"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s05_e/fire/tx_272_s05_2_01.x",
+              "exists_local": true,
+              "bytes": 298791,
+              "sha256": "e225a8c57caad70397d028a675b952eae6c3a023a560fc0d7d30bb3ca192e9b7"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s05_e/fire/tx_272_s05_2_01_skin2.x",
+              "exists_local": true,
+              "bytes": 157734,
+              "sha256": "4cfc556bf8913449b34bc72ab4f3c33b0c680594c8c07c43c35a281acff7024d"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s05_e/keep/tx_272_s05_5_02.x",
+              "exists_local": true,
+              "bytes": 1723,
+              "sha256": "22c2ccfa9210ea1de9dc6aa0f09816d55b75805476e210d7ca5d7f46c44bc7c4"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s05_e/keep/tx_272_s05_5_02_skin2.x",
+              "exists_local": true,
+              "bytes": 1779,
+              "sha256": "9c125852ceada158e1263f8f16341bceb067cac27a575a8d0342dfe23a7d6198"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s05_e/trace/tx_272_s05_3_01.x",
+              "exists_local": true,
+              "bytes": 21149,
+              "sha256": "fba10b14891f9b59dd0329d2c36b0e67c081b6395c9af6438ec201d41a9d0b66"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s05_e/trace/tx_272_s05_3_01_skin2.x",
+              "exists_local": true,
+              "bytes": 19611,
+              "sha256": "2ebb92ef30d314edb0ad9e41474c171685dd21e204d7365200438f3b358e0f17"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s06_r/fire/tx_272_s06_2_01.x",
+              "exists_local": true,
+              "bytes": 173046,
+              "sha256": "a41edb42b7a24ff227dd89dc79154e188c72ae5a268ba493a9cbaf4fafec7c8d"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s06_r/fire/tx_272_s06_2_01_skin2.x",
+              "exists_local": true,
+              "bytes": 94072,
+              "sha256": "a6c63af814adad59a4c635e222e09ef3c97aeaecc52aad12ef3d4fee37be8b78"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s07_beidong/hit/tx_272_s07_4_01.x",
+              "exists_local": true,
+              "bytes": 1483,
+              "sha256": "1a676aae7356a9b17a8778a9ba3d6282beea4006f93d5d46df5a4bab27fe2506"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/272_meipulu/s07_beidong/hit/tx_272_s07_4_01_skin2.x",
+              "exists_local": true,
+              "bytes": 1475,
+              "sha256": "3e0db0416593007c45cc126c16d1c70ade9ec82047137bc1767633453785c8c4"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          }
+        ],
+        "converted_to_ggd": false
+      },
+      "audio": {
+        "unique_files": 107,
+        "base_bank_files": 37,
+        "files": [
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0045-272_voice_death_skin2_4.ogg",
+              "exists_local": true,
+              "bytes": 26876,
+              "sha256": "b3f7fe259521bfb5486ea29bffdac6ee449b488df8aa7fbb3c748c7f49be744c"
+            },
+            "name": "272_voice_death_skin2_4",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/00-0000-272_skill_a_hit_2.wav",
+              "exists_local": true,
+              "bytes": 93228,
+              "sha256": "22890fbcd19bf661ad94a729437144dc8529e7868e1be3e995c2f4f6b7400571"
+            },
+            "name": "272_skill_a_hit_2",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/01-0010-272_skill_w_hit_skin2_1.wav",
+              "exists_local": true,
+              "bytes": 152620,
+              "sha256": "807d9e556e62acba1dad4f887664d7a322945f64c7e3242c7bea80f815f267de"
+            },
+            "name": "272_skill_w_hit_skin2_1",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0011-272_act_idle_1.ogg",
+              "exists_local": true,
+              "bytes": 89973,
+              "sha256": "4f3a7ea590850e79957c15f53d97e36111d85fa091f02c71c37799ec773db735"
+            },
+            "name": "272_act_idle_1",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0037-272_voice_death_skin2_3.ogg",
+              "exists_local": true,
+              "bytes": 26341,
+              "sha256": "c91c346fe1e0c3170aa8ca0367ec5be8f785b5fc88bcb0107f32c6bc36fbf475"
+            },
+            "name": "272_voice_death_skin2_3",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0001-272_voice_move_skin2_3.ogg",
+              "exists_local": true,
+              "bytes": 33659,
+              "sha256": "985b8a6e2a4294799f97457835297bc687c26ec378a3b88576170156a20d0c3a"
+            },
+            "name": "272_voice_move_skin2_3",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0034-272_voice_attack_skin2_1.ogg",
+              "exists_local": true,
+              "bytes": 45414,
+              "sha256": "80acf28c596de361677e1ad5c4b1ad8e167b52379c130c513b449cf8c10068b3"
+            },
+            "name": "272_voice_attack_skin2_1",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0026-272_skill_e_fire_skin2_1.ogg",
+              "exists_local": true,
+              "bytes": 27895,
+              "sha256": "e703142f34c0583e668c058a8e8485ed4b4abd522817c4bab00be0337085dd29"
+            },
+            "name": "272_skill_e_fire_skin2_1",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0013-272_voice_e_skin2_2.ogg",
+              "exists_local": true,
+              "bytes": 10004,
+              "sha256": "d3f904f51b3340b82af1f2739043b2b5296293739514e8b93cd123c6797ea473"
+            },
+            "name": "272_voice_e_skin2_2",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0047-272_voice_move_skin2_4.ogg",
+              "exists_local": true,
+              "bytes": 55568,
+              "sha256": "95fbc433c3ddcf26af28d7f1b6e7be472ae3ddfe7c1d62ef18defb2e8746226f"
+            },
+            "name": "272_voice_move_skin2_4",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/00-0009-272_skill_a_fire_2.wav",
+              "exists_local": true,
+              "bytes": 87084,
+              "sha256": "381bd249bf122069706706be440cbf2d7ed0aedd2779fe7da30df05a543475c7"
+            },
+            "name": "272_skill_a_fire_2",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0009-272_voice_joke_3.ogg",
+              "exists_local": true,
+              "bytes": 18930,
+              "sha256": "be4a948a05d386d937d3ea45eb547b4f71e3a0e143fd47f2fb2b29110a04ee7f"
+            },
+            "name": "272_voice_joke_3",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0032-272_voice_joke_skin2_5.ogg",
+              "exists_local": true,
+              "bytes": 98842,
+              "sha256": "67ff0da255227a8d848ff8f9f61bb9573239f541ae81e766107b826fae42b833"
+            },
+            "name": "272_voice_joke_skin2_5",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0018-272_skill_r_hit_1.ogg",
+              "exists_local": true,
+              "bytes": 67396,
+              "sha256": "6be85cf50f093d9a69bba6e8b81b034463b34208e299cf900c58872263dab8e5"
+            },
+            "name": "272_skill_r_hit_1",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0000-272_act_dance_1.ogg",
+              "exists_local": true,
+              "bytes": 102772,
+              "sha256": "87ba85d4a0dea60cfe6d835de1b028d5eb8088988d7b1ad18a2baf3cc5ff4055"
+            },
+            "name": "272_act_dance_1",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/00-0006-272_skill_a_hit_1.wav",
+              "exists_local": true,
+              "bytes": 82988,
+              "sha256": "6aee8575abfe4ebf892c403147b41133be4526714d8ca97fc9a0072455891285"
+            },
+            "name": "272_skill_a_hit_1",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0022-272_voice_joke_4.ogg",
+              "exists_local": true,
+              "bytes": 29681,
+              "sha256": "d06d2efc7d7decfe9c761bef6e429be6e4f3cbda2594b7b810710799a758e776"
+            },
+            "name": "272_voice_joke_4",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0003-272_skill_e_hit_1.ogg",
+              "exists_local": true,
+              "bytes": 61267,
+              "sha256": "17207a64657b5cb7ba2730b10ba905042dbe3948b01ffb0d5d6e3884bb0637a6"
+            },
+            "name": "272_skill_e_hit_1",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/01-0013-272_act_dead_skin2_1.wav",
+              "exists_local": true,
+              "bytes": 298028,
+              "sha256": "cc550358e89909f3bbfc80bc09035d8cb6eeb573686335e0a3c0db488a91bdc8"
+            },
+            "name": "272_act_dead_skin2_1",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0023-272_voice_joke_2.ogg",
+              "exists_local": true,
+              "bytes": 27133,
+              "sha256": "d6fcaa3e61f8c2c3c2b006f76ae76a38936a56e27de6096c170a2ba7c1c56dd7"
+            },
+            "name": "272_voice_joke_2",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0046-272_voice_death_skin2_1.ogg",
+              "exists_local": true,
+              "bytes": 33393,
+              "sha256": "312191e6f36b3ff42bda0fdd92ae1e8eb3e632227e8f67e1fddc251222828ab3"
+            },
+            "name": "272_voice_death_skin2_1",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0025-272_voice_attack_skin2_5.ogg",
+              "exists_local": true,
+              "bytes": 45084,
+              "sha256": "ef2a3c241e661a81ddb0fcc1ec5a824e9f8315631c18d8b516ec8765a0814bc9"
+            },
+            "name": "272_voice_attack_skin2_5",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/01-0008-272_skill_q1_fire_skin2_1.wav",
+              "exists_local": true,
+              "bytes": 162860,
+              "sha256": "18494f3047c9afbe06ad82412c21f600c1b63ec779b137f1e44fe33b9b171165"
+            },
+            "name": "272_skill_q1_fire_skin2_1",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/01-0011-272_skill_a_foley_skin2_1.wav",
+              "exists_local": true,
+              "bytes": 127020,
+              "sha256": "c68c402ff8961cbfe4e54b786754f0c6d9a6a475cc15b87d97969c50fd0f0638"
+            },
+            "name": "272_skill_a_foley_skin2_1",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0016-272_voice_e_skin2_5.ogg",
+              "exists_local": true,
+              "bytes": 16181,
+              "sha256": "4b4d8c6edb82609cfb56f9c1189d131dd43ee69e041a359bc13df9e4bebfb47e"
+            },
+            "name": "272_voice_e_skin2_5",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0002-272_skill_r_fire_2.ogg",
+              "exists_local": true,
+              "bytes": 70700,
+              "sha256": "5c9ec40f4708cebc4e20359ee1677ff54417639546573fce1db5182670eee3db"
+            },
+            "name": "272_skill_r_fire_2",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0023-272_voice_attack_skin2_3.ogg",
+              "exists_local": true,
+              "bytes": 38039,
+              "sha256": "3d4fe38810d95dca6a4954d5007a06ed685ff9b80539438cf60dcfac93736a94"
+            },
+            "name": "272_voice_attack_skin2_3",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/00-0001-272_skill_a_foley_2.wav",
+              "exists_local": true,
+              "bytes": 116780,
+              "sha256": "359bbba30ea595bafa80bce1e4fb8e177191f634babaadec6315fe9893e842aa"
+            },
+            "name": "272_skill_a_foley_2",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0001-272_voice_e_1.ogg",
+              "exists_local": true,
+              "bytes": 10791,
+              "sha256": "9708037227189267a600e3e25b9dc6375dcfe41cc36a8807973cf61a7272eceb"
+            },
+            "name": "272_voice_e_1",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0015-272_voice_attack_2.ogg",
+              "exists_local": true,
+              "bytes": 30705,
+              "sha256": "6e4281b509b0dc22eea31916e0befb155c8c81cba558f714ca7772019d80d096"
+            },
+            "name": "272_voice_attack_2",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/01-0009-272_skill_e_hit_skin2_1.wav",
+              "exists_local": true,
+              "bytes": 57388,
+              "sha256": "891f118bf9d0ffe6540aa9a91c14dfe1a898699ff849e04ee2ac45b23210c795"
+            },
+            "name": "272_skill_e_hit_skin2_1",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/00-0007-272_skill_a_fire_3.wav",
+              "exists_local": true,
+              "bytes": 82988,
+              "sha256": "c57205e1a0340b40e4b2d97132387c425a4f39a514b8a8e861d5fb83eec5e975"
+            },
+            "name": "272_skill_a_fire_3",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0038-272_voice_joke_skin2_8.ogg",
+              "exists_local": true,
+              "bytes": 89717,
+              "sha256": "bd350ccfbf3a188dbce611f26a6f36955297144a77140213de79e504c32b08dd"
+            },
+            "name": "272_voice_joke_skin2_8",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_1/00-0000-272_act_dance_skin1_1.ogg",
+              "exists_local": true,
+              "bytes": 63478,
+              "sha256": "9c08a9879940068f934fe0645fce8093282083264e429ad821e886b3a0dcfb00"
+            },
+            "name": "272_act_dance_skin1_1",
+            "bank": "data/audio/hero/272_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/01-0004-272_skill_a_hit_skin2_1.wav",
+              "exists_local": true,
+              "bytes": 145452,
+              "sha256": "719d1471ef2d6655a4b706a8330a90eb3d8f3404232b212a38673b43405523bc"
+            },
+            "name": "272_skill_a_hit_skin2_1",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0039-272_voice_joke_skin2_1.ogg",
+              "exists_local": true,
+              "bytes": 62138,
+              "sha256": "ea370897ca3f38e00c82df58f8bc7e0a09b5e3e80827524150b3da6f265afb0f"
+            },
+            "name": "272_voice_joke_skin2_1",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0016-272_voice_death_1.ogg",
+              "exists_local": true,
+              "bytes": 34057,
+              "sha256": "31542387c84fade6c2aae76e17179ff05ed10539e8415907a8423bad71524975"
+            },
+            "name": "272_voice_death_1",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0002-272_voice_dazhao_skin2_1.ogg",
+              "exists_local": true,
+              "bytes": 44872,
+              "sha256": "bfdf425bd4a41c33ef5359b703b0fc09aa561fc2b83adcab167de18d9cc68d32"
+            },
+            "name": "272_voice_dazhao_skin2_1",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0048-272_act_dance_skin2_1.ogg",
+              "exists_local": true,
+              "bytes": 73208,
+              "sha256": "46c9ce2eda3566ee86ed6d17afa1fcebecf1c84beac5e7561595c299bcc1cd8c"
+            },
+            "name": "272_act_dance_skin2_1",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0019-272_skill_e_fire_1.ogg",
+              "exists_local": true,
+              "bytes": 38052,
+              "sha256": "9c92b630213fdf61c1728f1b26eec2f3fdab6c1d2cbb32627dd83121771a28f9"
+            },
+            "name": "272_skill_e_fire_1",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0010-272_skill_w_hit_1.ogg",
+              "exists_local": true,
+              "bytes": 38368,
+              "sha256": "6795aca2145fd653b3c89e048ccae434490ab191543d53076c655b43ef32e827"
+            },
+            "name": "272_skill_w_hit_1",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0014-272_skill_r_fire_1.ogg",
+              "exists_local": true,
+              "bytes": 67396,
+              "sha256": "6be85cf50f093d9a69bba6e8b81b034463b34208e299cf900c58872263dab8e5"
+            },
+            "name": "272_skill_r_fire_1",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/01-0003-272_skill_a_hit_skin2_2.wav",
+              "exists_local": true,
+              "bytes": 137260,
+              "sha256": "684409ec677fe77cf7b7970894f034cd0267235c79fe3a7421d91d2c49464339"
+            },
+            "name": "272_skill_a_hit_skin2_2",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0014-272_voice_move_skin2_6.ogg",
+              "exists_local": true,
+              "bytes": 21557,
+              "sha256": "9ccfcf389c99eb48cf547d2cef6787779e5d99744ef9eccbe29921493db06f23"
+            },
+            "name": "272_voice_move_skin2_6",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0005-272_voice_e_skin2_3.ogg",
+              "exists_local": true,
+              "bytes": 12741,
+              "sha256": "00a9dcf573b8ff04b2e4873c983906623da738feb833c1f00a1c8b32cc0696dd"
+            },
+            "name": "272_voice_e_skin2_3",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0000-272_voice_move_skin2_11.ogg",
+              "exists_local": true,
+              "bytes": 20565,
+              "sha256": "66009cb0ec928b5b74102b1812bde28a37c3d7546c08d5684e1fa6bfe70c85a3"
+            },
+            "name": "272_voice_move_skin2_11",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/01-0005-272_skill_a_hit_skin2_3.wav",
+              "exists_local": true,
+              "bytes": 121900,
+              "sha256": "3ca148a2a3cc4743867c07ed35e0c29c9c8f1c499e81b478d46d4cdbe395b2d8"
+            },
+            "name": "272_skill_a_hit_skin2_3",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/01-0001-272_skill_a_foley_skin2_2.wav",
+              "exists_local": true,
+              "bytes": 119852,
+              "sha256": "9cf426c370f0fad3fe8baabf3a096a1d10f7457644e76dcfbcd5127e476e4a08"
+            },
+            "name": "272_skill_a_foley_skin2_2",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0012-272_voice_joke_1.ogg",
+              "exists_local": true,
+              "bytes": 61802,
+              "sha256": "32a887f066358224cf52df5c290c66938a97321093fbc72d47b1ba6a65b55114"
+            },
+            "name": "272_voice_joke_1",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_1/01-0000-272_act_dead_skin1_1.wav",
+              "exists_local": true,
+              "bytes": 348204,
+              "sha256": "09e9d969c6d43e5481a20a8b8ddfd36237a96eaaacd595b24d66018af2089463"
+            },
+            "name": "272_act_dead_skin1_1",
+            "bank": "data/audio/hero/272_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0036-272_voice_e_skin2_1.ogg",
+              "exists_local": true,
+              "bytes": 13367,
+              "sha256": "c19e802e46c37abdeeec52ebf36947fddf04966c729f874ada3a618d8108b355"
+            },
+            "name": "272_voice_e_skin2_1",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0021-272_skill_q2_fire_1.ogg",
+              "exists_local": true,
+              "bytes": 38560,
+              "sha256": "27eedbc7dd4b204407e6bbf31a2a4e87fa50897466d6478a9f0ba69b626a7a10"
+            },
+            "name": "272_skill_q2_fire_1",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0004-272_voice_joke_skin2_2.ogg",
+              "exists_local": true,
+              "bytes": 115302,
+              "sha256": "40b2d928db4f87f4a0dacaea4caf818d814a5dd369ce2b91a86800195bcb6f16"
+            },
+            "name": "272_voice_joke_skin2_2",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0044-272_voice_e_skin2_4.ogg",
+              "exists_local": true,
+              "bytes": 13080,
+              "sha256": "99196a6608859df5557c28919e722861a4e2f732cf18dd0997a403bf083958ef"
+            },
+            "name": "272_voice_e_skin2_4",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0041-272_voice_dazhao_skin2_3.ogg",
+              "exists_local": true,
+              "bytes": 43184,
+              "sha256": "20b1114a8984a091141871685354b262beaa1bd9b571b047d8004efddd439b45"
+            },
+            "name": "272_voice_dazhao_skin2_3",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0042-272_skill_r_loop_skin2_1.ogg",
+              "exists_local": true,
+              "bytes": 104518,
+              "sha256": "1b768ea45533c57232d517734c75cb505ea112dfe3b200d4ec8f1d90d536f08c"
+            },
+            "name": "272_skill_r_loop_skin2_1",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/01-0006-272_skill_a_fire_skin2_2.wav",
+              "exists_local": true,
+              "bytes": 87084,
+              "sha256": "5e4290696a7488fb9943fa749303648eda66b515c54786995ca068782f7dd59f"
+            },
+            "name": "272_skill_a_fire_skin2_2",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0035-272_skill_r_fire_skin2_3.ogg",
+              "exists_local": true,
+              "bytes": 104518,
+              "sha256": "1b768ea45533c57232d517734c75cb505ea112dfe3b200d4ec8f1d90d536f08c"
+            },
+            "name": "272_skill_r_fire_skin2_3",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/01-0014-272_skill_q2_fire_skin2_1.wav",
+              "exists_local": true,
+              "bytes": 237612,
+              "sha256": "2c8baa01b5284effe4d366d63a44ca63e5a48fb25244b14f3205dd9c369e3af0"
+            },
+            "name": "272_skill_q2_fire_skin2_1",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0025-272_voice_attack_1.ogg",
+              "exists_local": true,
+              "bytes": 25372,
+              "sha256": "649a5e75ca5cf4d1863e827f62a7d3826eaac909d133aeff10cad26f7d1f39bd"
+            },
+            "name": "272_voice_attack_1",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0027-272_voice_move_skin2_14.ogg",
+              "exists_local": true,
+              "bytes": 30507,
+              "sha256": "3cffdb47e3915192029789bb578056b0ac29c0f81c4874fc0954fa56fa4b477a"
+            },
+            "name": "272_voice_move_skin2_14",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0030-272_skill_r_fire_skin2_2.ogg",
+              "exists_local": true,
+              "bytes": 70700,
+              "sha256": "5c9ec40f4708cebc4e20359ee1677ff54417639546573fce1db5182670eee3db"
+            },
+            "name": "272_skill_r_fire_skin2_2",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0043-272_voice_e_skin2_8.ogg",
+              "exists_local": true,
+              "bytes": 10566,
+              "sha256": "b46307047ed72d72181749f897ebccd6c1d46f8392ac06f12eda2030a116daf7"
+            },
+            "name": "272_voice_e_skin2_8",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/00-0002-272_skill_a_foley_1.wav",
+              "exists_local": true,
+              "bytes": 127020,
+              "sha256": "2de3ea4d00135df69740e959f6e9596790208c14ed63a82b19f092b6dfa080a4"
+            },
+            "name": "272_skill_a_foley_1",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0033-272_voice_death_skin2_2.ogg",
+              "exists_local": true,
+              "bytes": 31791,
+              "sha256": "716be5ac1d65321d5891667e3dba256681b21e1d513eef51eba1c4924cf2dbe3"
+            },
+            "name": "272_voice_death_skin2_2",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/01-0016-272_skill_a_foley_skin2_3.wav",
+              "exists_local": true,
+              "bytes": 99372,
+              "sha256": "99cb6447ae1497f043dba60477837a9041767db6c104e93bf1ff527816ec1f96"
+            },
+            "name": "272_skill_a_foley_skin2_3",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/01-0012-272_skill_w_fire_skin2_1.wav",
+              "exists_local": true,
+              "bytes": 128044,
+              "sha256": "f169111a42c2eec1405e31adced4b74456dd3f4724b093619bf1771564c3b210"
+            },
+            "name": "272_skill_w_fire_skin2_1",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/01-0007-272_act_relive_skin2_1.wav",
+              "exists_local": true,
+              "bytes": 350252,
+              "sha256": "1ffff06a26845d68cb72a1d10c2a39c0b38b5082d202609ce06b2d0889bc4eab"
+            },
+            "name": "272_act_relive_skin2_1",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0008-272_voice_attack_skin2_2.ogg",
+              "exists_local": true,
+              "bytes": 41191,
+              "sha256": "8d08da1b7df954bf10b2e11be55f35de5193544a9cab2c39c3be47776e60bd17"
+            },
+            "name": "272_voice_attack_skin2_2",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0024-272_skill_q1_fire_1.ogg",
+              "exists_local": true,
+              "bytes": 43931,
+              "sha256": "517f6e519fdc04eb41f9c30b022d5fc6b8ad406f755654b3005af69f54a24842"
+            },
+            "name": "272_skill_q1_fire_1",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0010-272_voice_e_skin2_6.ogg",
+              "exists_local": true,
+              "bytes": 12316,
+              "sha256": "e64e88b0bbd4f5cca36afa48b744666172d35ba31cb5694292f14d42b75ce376"
+            },
+            "name": "272_voice_e_skin2_6",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/00-0005-272_skill_a_foley_3.wav",
+              "exists_local": true,
+              "bytes": 159788,
+              "sha256": "45dc3e6feff736af0a7e90c9f0b263e0d3089a9e0d966b0d6f84199cd0f0790a"
+            },
+            "name": "272_skill_a_foley_3",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_1/00-0001-272_act_relive_skin1_1.ogg",
+              "exists_local": true,
+              "bytes": 44763,
+              "sha256": "cacf327536635d5233aec687bf0162bb1b180482fefe899949eda8f7e5224b89"
+            },
+            "name": "272_act_relive_skin1_1",
+            "bank": "data/audio/hero/272_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0004-272_voice_dazhao_1.ogg",
+              "exists_local": true,
+              "bytes": 16289,
+              "sha256": "285f087f60b92ffdcb425073056a4a89ebbc958e104bfcf32be10e9f3b9b49e5"
+            },
+            "name": "272_voice_dazhao_1",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_1/00-0002-272_act_idle_skin1_1.ogg",
+              "exists_local": true,
+              "bytes": 66430,
+              "sha256": "46e382b3ef8960f703dd3ad72c48ac2c33fe455f82915a5955a99eff4b2e6c13"
+            },
+            "name": "272_act_idle_skin1_1",
+            "bank": "data/audio/hero/272_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0024-272_voice_move_skin2_2.ogg",
+              "exists_local": true,
+              "bytes": 22735,
+              "sha256": "4bf566acc89e598f8520687f5f2fb9b7064cb2b293a1d94710f90721978a3378"
+            },
+            "name": "272_voice_move_skin2_2",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/00-0003-272_skill_a_hit_3.wav",
+              "exists_local": true,
+              "bytes": 81964,
+              "sha256": "fff16f9bbce16a3f99a27c38fcae773062e4da356fcef3331f57e0ecb86871c0"
+            },
+            "name": "272_skill_a_hit_3",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0012-272_voice_move_skin2_5.ogg",
+              "exists_local": true,
+              "bytes": 21361,
+              "sha256": "037cad7a02c0e4bbb5fcb23fb9a59c6b93b2b409d6afb92787175d454e2e5c12"
+            },
+            "name": "272_voice_move_skin2_5",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/00-0004-272_act_dead_1.wav",
+              "exists_local": true,
+              "bytes": 291884,
+              "sha256": "6a30aa9dde466b91558253aa2d7ee3a12dd1441efa6516e2740dee460f5a25e4"
+            },
+            "name": "272_act_dead_1",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0029-272_voice_joke_skin2_3.ogg",
+              "exists_local": true,
+              "bytes": 78318,
+              "sha256": "1374fe396395cc6f519a708e3fbdfdd7febf290833ea02432594f0002af132b8"
+            },
+            "name": "272_voice_joke_skin2_3",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0005-272_skill_r_loop_1.ogg",
+              "exists_local": true,
+              "bytes": 70700,
+              "sha256": "5c9ec40f4708cebc4e20359ee1677ff54417639546573fce1db5182670eee3db"
+            },
+            "name": "272_skill_r_loop_1",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0031-272_voice_move_skin2_8.ogg",
+              "exists_local": true,
+              "bytes": 24562,
+              "sha256": "cf025a72fa102ecb443e22a1cd33bddd0f16a52fc84feeee63334600d72a4725"
+            },
+            "name": "272_voice_move_skin2_8",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/01-0000-272_skill_r_hit_skin2_1.wav",
+              "exists_local": true,
+              "bytes": 165932,
+              "sha256": "ba1a3604e978b24d7373086c08652cdce9d68c8a38e01e06f43fd92eb69df859"
+            },
+            "name": "272_skill_r_hit_skin2_1",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0018-272_voice_dazhao_skin2_2.ogg",
+              "exists_local": true,
+              "bytes": 44703,
+              "sha256": "afda0da7dda449562b10ecc8f3a6b1af21ec110f46f0e8669a049456162462fd"
+            },
+            "name": "272_voice_dazhao_skin2_2",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/00-0008-272_skill_w_fire_1.wav",
+              "exists_local": true,
+              "bytes": 297004,
+              "sha256": "e081dbacc9d90d15326158cd4e4efb828ae396571ffb3c572a4ad9d910b9450b"
+            },
+            "name": "272_skill_w_fire_1",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0017-272_voice_joke_skin2_7.ogg",
+              "exists_local": true,
+              "bytes": 113182,
+              "sha256": "2257aa0c3d38af6742cd6a8ea004ecd425b3bda17363dd71678f059c83c0b617"
+            },
+            "name": "272_voice_joke_skin2_7",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0021-272_voice_move_skin2_1.ogg",
+              "exists_local": true,
+              "bytes": 38749,
+              "sha256": "6648fb972344f8b4d47d3c82b00e9987ea915fe1f86b8990b103252bd46afbd1"
+            },
+            "name": "272_voice_move_skin2_1",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0019-272_voice_move_skin2_10.ogg",
+              "exists_local": true,
+              "bytes": 20906,
+              "sha256": "0d1441cca0e91af6d882aac5c5abffee69506eda04659672ada3f7c122b47da3"
+            },
+            "name": "272_voice_move_skin2_10",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/01-0015-272_skill_a_fire_skin2_3.wav",
+              "exists_local": true,
+              "bytes": 123948,
+              "sha256": "78f74295387eb3cac20194e0fde608b755009bf2a4aaa0e04e59dc0a448a365b"
+            },
+            "name": "272_skill_a_fire_skin2_3",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0020-272_voice_move_3.ogg",
+              "exists_local": true,
+              "bytes": 18722,
+              "sha256": "00cdd77bd6105ab324be34177676866911c4cb0d0749dd7d3b397e54f200a070"
+            },
+            "name": "272_voice_move_3",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0009-272_voice_e_skin2_7.ogg",
+              "exists_local": true,
+              "bytes": 11054,
+              "sha256": "ca95925da3bf03077c40a96e1ba9484f8a72e239f84556403dcd527944be3489"
+            },
+            "name": "272_voice_e_skin2_7",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0028-272_voice_move_skin2_7.ogg",
+              "exists_local": true,
+              "bytes": 31525,
+              "sha256": "10c4ef6e567648c3be935c1968e0401c2d697f9096c1b9234918d7d29ad0dda2"
+            },
+            "name": "272_voice_move_skin2_7",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0020-272_voice_move_skin2_12.ogg",
+              "exists_local": true,
+              "bytes": 17927,
+              "sha256": "422214a6ce7890c300d18d33d2653eb08363fcd62df6e9c961ceb6dbdf30405e"
+            },
+            "name": "272_voice_move_skin2_12",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0040-272_voice_joke_skin2_4.ogg",
+              "exists_local": true,
+              "bytes": 89783,
+              "sha256": "7cd1994b0f152c8290f84139522fdaa3b02ea32ba7c4aa9603585a0ea3c9569d"
+            },
+            "name": "272_voice_joke_skin2_4",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0022-272_voice_attack_skin2_4.ogg",
+              "exists_local": true,
+              "bytes": 42522,
+              "sha256": "983d0b9d716e164f02460b70c9ea9d033af840ed73e003b392bcfad2ebb2a758"
+            },
+            "name": "272_voice_attack_skin2_4",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0007-272_voice_death_2.ogg",
+              "exists_local": true,
+              "bytes": 29166,
+              "sha256": "f48f34485babc460e9ee1e4e307fc2dbf59c6756409bb945affc970142034e0a"
+            },
+            "name": "272_voice_death_2",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0008-272_voice_attack_3.ogg",
+              "exists_local": true,
+              "bytes": 32489,
+              "sha256": "6393bf46418b06f88caf9086421d2c594aed4ad0d51bafb562053412ea0cce8a"
+            },
+            "name": "272_voice_attack_3",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/01-0002-272_skill_a_fire_skin2_1.wav",
+              "exists_local": true,
+              "bytes": 91180,
+              "sha256": "8bedb4e181f3f18a3665cb5d4bc5f461a6414fe56af3d7e0dfb6e71de8b73cff"
+            },
+            "name": "272_skill_a_fire_skin2_1",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0017-272_voice_move_1.ogg",
+              "exists_local": true,
+              "bytes": 70797,
+              "sha256": "2f63f0fa55dd941d5e3d5eaf8f497743d1b953751a9aac9bd6b405c668eaaa77"
+            },
+            "name": "272_voice_move_1",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/00-0010-272_skill_a_fire_1.wav",
+              "exists_local": true,
+              "bytes": 82988,
+              "sha256": "39d548748fb11c293a9ae1f0dcaedc6df80191978ac66fd2639cd13098e21aac"
+            },
+            "name": "272_skill_a_fire_1",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0006-272_skill_r_fire_skin2_1.ogg",
+              "exists_local": true,
+              "bytes": 47079,
+              "sha256": "de695df67e116c998b57c05f3d7ce9f042fb3cb59aa15d998fb3319be0b24c84"
+            },
+            "name": "272_skill_r_fire_skin2_1",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0007-272_act_idle_skin2_1.ogg",
+              "exists_local": true,
+              "bytes": 35128,
+              "sha256": "2026cca2fa51b44cc435b5475ca2dcbbea608aff30b5906988ca05ff4196b335"
+            },
+            "name": "272_act_idle_skin2_1",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0011-272_voice_joke_skin2_6.ogg",
+              "exists_local": true,
+              "bytes": 77861,
+              "sha256": "12b7d5273e4ed9605ab115e4a5cf4cb27fb1e4a4f130ac64d2ad1525f2ebe0e5"
+            },
+            "name": "272_voice_joke_skin2_6",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0006-272_voice_move_2.ogg",
+              "exists_local": true,
+              "bytes": 38709,
+              "sha256": "403ad2a19520a8f1857a3f49d52789e7b1df05f6953e29609f8c7997584b7d07"
+            },
+            "name": "272_voice_move_2",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0003-272_voice_move_skin2_13.ogg",
+              "exists_local": true,
+              "bytes": 25854,
+              "sha256": "9d21368b42992fcba097916917265da9d28d03bf43b8db974af3339b1f9f8e57"
+            },
+            "name": "272_voice_move_skin2_13",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272_2/00-0015-272_voice_move_skin2_9.ogg",
+              "exists_local": true,
+              "bytes": 30716,
+              "sha256": "58b64fa55b809c06fa1147e55d1ad724efd2b2cc57c4c6e159d12c6650826751"
+            },
+            "name": "272_voice_move_skin2_9",
+            "bank": "data/audio/hero/272_2.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/01-0013-272_voice_q2_1.ogg",
+              "exists_local": true,
+              "bytes": 11269,
+              "sha256": "0962151be9dfab3ef345c6b3f77ce4bca79937bf7d89fd88a9713bfd98bbff6b"
+            },
+            "name": "272_voice_q2_1",
+            "bank": "data/audio/hero/272.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          }
+        ]
+      },
+      "variants": {
+        "model_candidates": 2,
+        "basis": "numeric prefix; not approved as base body",
+        "files": [
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/272_skin1.x",
+              "exists_local": true,
+              "bytes": 2559610,
+              "sha256": "bb66976007a50b569b19528b32462d5ee568e21ec33da4d0a13678c72d8449e0"
+            },
+            "relationship": "numeric_prefix_candidate"
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/272_skin2.x",
+              "exists_local": true,
+              "bytes": 2383723,
+              "sha256": "b3a4f68b747b0d0bc7da7ef914327b073df90ddce4f7db114325ecea234efc31"
+            },
+            "relationship": "numeric_prefix_candidate"
+          }
+        ]
+      },
+      "status": "native_candidate_requires_conversion"
+    },
+    {
+      "source_character_id": "300heroes:273",
+      "source_character": "机械神梅普露",
+      "source_work": "怕痛的我，把防禦力點滿就對了",
+      "identity_status": "existing_registry_identity_cross_reference",
+      "version_verified": false,
+      "origin_evidence": [
+        "https://300data.com/hero/273.html",
+        "https://300data.com/data/api/hero_info/id/273"
+      ],
+      "model": {
+        "native": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/273.x",
+          "exists_local": true,
+          "bytes": 1925713,
+          "sha256": "174c0e427a32ae1dc96a27bca7283c672924c410e94e85721808a09f0311070d"
+        },
+        "static_preview": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/models/data/character/roleaction/273/mesh.obj",
+          "exists_local": true,
+          "bytes": 1218016,
+          "sha256": "2c1f339dc381c3771931f1ed76328d0df8ad3aef4c041dd3b93b6638c6407c50"
+        },
+        "metadata": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/models/data/character/roleaction/273/model.json",
+          "exists_local": true,
+          "bytes": 131282,
+          "sha256": "98e434a7d63fdc1da8075a950fc0fe0aed3d8365c1b87d15324effa14aee48a7"
+        },
+        "materials": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/models/data/character/roleaction/273/materials.json",
+          "exists_local": true,
+          "bytes": 1006,
+          "sha256": "461060066e748bfcee16389533df0a505dc11241210fb2fbdb84fcb37ee7f7b0"
+        },
+        "format": "JUMPX",
+        "bones": 81,
+        "meshes": 2,
+        "rigged_gltf_available": false
+      },
+      "textures": [
+        {
+          "original": "273_a.tga",
+          "resolution_method": "same_directory_extension_fallback",
+          "file": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/273_a.dds",
+            "exists_local": true,
+            "bytes": 349672,
+            "sha256": "6c952a9d89b967b646f845395858478fbd8dfed2f35e666fb59585f07a48edac"
+          },
+          "unresolved_name_candidates": []
+        },
+        {
+          "original": "273_a_s.tga",
+          "resolution_method": "same_directory_extension_fallback",
+          "file": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/273_a_s.dds",
+            "exists_local": true,
+            "bytes": 87528,
+            "sha256": "3ec0317523fd988065d0b0ee4db587fb20ed232598a9aa55c0bd161c32121432"
+          },
+          "unresolved_name_candidates": []
+        },
+        {
+          "original": "273.tga",
+          "resolution_method": "same_directory_extension_fallback",
+          "file": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/273.dds",
+            "exists_local": true,
+            "bytes": 349680,
+            "sha256": "2de8857d23b1b213c9f23f093b52d8233277f6a4b37fbfa8589b709c531fe8ef"
+          },
+          "unresolved_name_candidates": []
+        }
+      ],
+      "animations": {
+        "count": 20,
+        "clips": [
+          {
+            "name": "bat_idle",
+            "start_frame": 0,
+            "end_frame": 60,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "bat_specialidle",
+            "start_frame": 271,
+            "end_frame": 402,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "bat_run",
+            "start_frame": 405,
+            "end_frame": 437,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_run",
+            "start_frame": 440,
+            "end_frame": 470,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "dead",
+            "start_frame": 940,
+            "end_frame": 1003,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "relive",
+            "start_frame": 216,
+            "end_frame": 268,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "dance",
+            "start_frame": 63,
+            "end_frame": 268,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_chuansong",
+            "start_frame": 473,
+            "end_frame": 497,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_touzhi_1",
+            "start_frame": 527,
+            "end_frame": 547,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_touzhi_2",
+            "start_frame": 500,
+            "end_frame": 524,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_attack_attcom_a",
+            "start_frame": 550,
+            "end_frame": 595,
+            "hit_frame": 556,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_attack_attcom_b",
+            "start_frame": 598,
+            "end_frame": 643,
+            "hit_frame": 604,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_attack_attcom_c",
+            "start_frame": 646,
+            "end_frame": 691,
+            "hit_frame": 652,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_skill_01_a",
+            "start_frame": 694,
+            "end_frame": 724,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_skill_01_b",
+            "start_frame": 727,
+            "end_frame": 757,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_skill_02",
+            "start_frame": 760,
+            "end_frame": 805,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_skill_03_a",
+            "start_frame": 808,
+            "end_frame": 838,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_skill_03_b",
+            "start_frame": 841,
+            "end_frame": 871,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_skill_03_c",
+            "start_frame": 874,
+            "end_frame": 904,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          },
+          {
+            "name": "single_skill_04",
+            "start_frame": 907,
+            "end_frame": 937,
+            "hit_frame": -1,
+            "ribbon_start_frame": -1,
+            "ribbon_end_frame": -1
+          }
+        ],
+        "key_data": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/models/data/character/roleaction/273/animation-data.bin",
+          "exists_local": true,
+          "bytes": 2281608,
+          "sha256": "c3759828d26aceefd5faa6df39a1fbd1b0fbc5418a4379c860223a6a909cf146"
+        },
+        "state_candidates": {
+          "idle": [
+            "bat_idle"
+          ],
+          "run": [
+            "bat_run",
+            "single_run"
+          ],
+          "attack": [
+            "single_attack_attcom_a",
+            "single_attack_attcom_b",
+            "single_attack_attcom_c"
+          ],
+          "cast": [
+            "single_skill_01_a",
+            "single_skill_01_b",
+            "single_skill_02",
+            "single_skill_03_a",
+            "single_skill_03_b",
+            "single_skill_03_c",
+            "single_skill_04"
+          ],
+          "hurt": [],
+          "death": [
+            "dead"
+          ]
+        },
+        "missing_states": [
+          "hurt"
+        ],
+        "timing": "Native frames; FPS unverified",
+        "retargeted": false
+      },
+      "native_vfx": {
+        "embedded_particles": 0,
+        "embedded_ribbons": 0,
+        "unique_skill_files": 28,
+        "files": [
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s04_w/fire/tx_273_s04_2_01.x",
+              "exists_local": true,
+              "bytes": 377873,
+              "sha256": "d0b96557899456492b98389f6d8fc27ee127e256a03b9136f929b102cbb1c650"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s04_w/fire/tx_273_s04_2_01_skin1.x",
+              "exists_local": true,
+              "bytes": 94366,
+              "sha256": "73218279fbabd5426d274a178d86d0394596bd750d1ee9b04be04d8ec2ce0ab9"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s01_putonggongji/fire/tx_273_s01_2_01.x",
+              "exists_local": true,
+              "bytes": 1417,
+              "sha256": "4e7d154bb99fa0880df990f8f80afed83fb1bd36f36f82924cdee11616370caa"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s01_putonggongji/fire/tx_273_s01_2_01_skin1.x",
+              "exists_local": true,
+              "bytes": 1325,
+              "sha256": "8f6b8be57973945d8abdfa861b7162abdf3055d1e6053eb7abad10d902552125"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s01_putonggongji/hit/tx_273_s01_4_01.x",
+              "exists_local": true,
+              "bytes": 1299,
+              "sha256": "77153300af438ba2dfb3f1f2d84d7b2219bc7abb9e248f836f94772e6d27a817"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s01_putonggongji/hit/tx_273_s01_4_01_skin1.x",
+              "exists_local": true,
+              "bytes": 1349,
+              "sha256": "5a0d87823d54f64bc88bb6787b0bc5027c4dfc0a3b3e395c99f8ef25eee3e716"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s01_putonggongji/trace/tx_273_s01_3_01.x",
+              "exists_local": true,
+              "bytes": 1836,
+              "sha256": "94ee66c1855e20ebe448ad3ea700dbefa4d5b3aa42a98b6cccb958610d369b8c"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s01_putonggongji/trace/tx_273_s01_3_01_skin1.x",
+              "exists_local": true,
+              "bytes": 8517,
+              "sha256": "2070702e29fc99539431fcaca1ef54634e3cd257971ffcf201949ee43ad8da13"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s03_q/fire/tx_273_s03_2_01.x",
+              "exists_local": true,
+              "bytes": 1698,
+              "sha256": "29fc2980275365f92299424666b15a01c6be294846746904d9436cfcf43c5c7c"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s03_q/fire/tx_273_s03_2_01_skin1.x",
+              "exists_local": true,
+              "bytes": 1751,
+              "sha256": "164f88bba65432f934e97b2c5551796247eb41e788bac6e8865574572ce31968"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s03_q/hit/tx_273_s03_4_01.x",
+              "exists_local": true,
+              "bytes": 31775,
+              "sha256": "966b41a1490721afecbabef63f8029e54fc01df94dc9879dded29906df73e920"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s03_q/hit/tx_273_s03_4_01_skin1.x",
+              "exists_local": true,
+              "bytes": 27272,
+              "sha256": "bb53f306612371d06319674c6d15824a62fc482e5d59b919d14ddaf590aaa0d1"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s03_q/trace/tx_273_s03_3_01.x",
+              "exists_local": true,
+              "bytes": 9810,
+              "sha256": "cd7a6339a8eed38fe6f02e6001ed4029acde92e038a4de259c741f6c65ed1e2f"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s03_q/trace/tx_273_s03_3_01_skin1.x",
+              "exists_local": true,
+              "bytes": 10411,
+              "sha256": "c3e6f1735dc53708dd0c82b3c57972bfa7885eee02972ce0101299fb6e5a142e"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s04_w/keep/tx_273_s04_5_01.x",
+              "exists_local": true,
+              "bytes": 1723,
+              "sha256": "22c2ccfa9210ea1de9dc6aa0f09816d55b75805476e210d7ca5d7f46c44bc7c4"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s04_w/keep/tx_273_s04_5_01_skin1.x",
+              "exists_local": true,
+              "bytes": 1669,
+              "sha256": "0a5d130a7080cacd94580c96a46f789ca7828e2de76f650e9657f560030d0719"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s05_e/fire/tx_273_s05_2_01.x",
+              "exists_local": true,
+              "bytes": 41193,
+              "sha256": "db3521d50e79921af85a76447738bd0bf56bd56127d978d52b1681bf3e8a706e"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s05_e/fire/tx_273_s05_2_01_skin1.x",
+              "exists_local": true,
+              "bytes": 85501,
+              "sha256": "8c39c5fa9e2d466dbcaca91d4f0d062fd8f7b07abc8413a55ccfc5970cf42caf"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s05_e/fire/tx_273_s05_2_02.x",
+              "exists_local": true,
+              "bytes": 41351,
+              "sha256": "a47d5274659429c696cd5ef87b0867334c2cb9d17fdda48ac0506b5b82fe11b0"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s05_e/fire/tx_273_s05_2_02_skin1.x",
+              "exists_local": true,
+              "bytes": 85974,
+              "sha256": "ef0abcecbba896d718a74e69227c06db647bd89a273f43dfdacc1e9f8878e3a9"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s05_e/fire/tx_273_s05_2_03.x",
+              "exists_local": true,
+              "bytes": 40918,
+              "sha256": "e51f38f2897e88d78593cb4f1f4ae0bd470a844cb0702e9f6c2bdd361055737e"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s05_e/fire/tx_273_s05_2_04.x",
+              "exists_local": true,
+              "bytes": 41326,
+              "sha256": "1657c0f6673e89f5bb0a53d9f156c5cce98f92ddb81b48ade8d73c3b8f6ffe9f"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s05_e/fire/tx_273_s05_2_05.x",
+              "exists_local": true,
+              "bytes": 41656,
+              "sha256": "c3c2b71de5c8af5e630d79fd1ea61bc505f1c39e87a6be983737e93a7befd70f"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s05_e/fire/tx_273_s05_2_06.x",
+              "exists_local": true,
+              "bytes": 41083,
+              "sha256": "8d88a95408e8da1881f38ca192b69385bc6b5e46907f4db94522b33345a487ce"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s06_r/keep/tx_273_s06_5_01.x",
+              "exists_local": true,
+              "bytes": 8452,
+              "sha256": "3bb41fa8c91b183d67b24d4ae8b1525091728db0c2ceb6f662b26fdc3cb28fcc"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s06_r/keep/tx_273_s06_5_01_skin1.x",
+              "exists_local": true,
+              "bytes": 50761,
+              "sha256": "19a5766f229aaf7a5f14374b74d58747c785ddf2aa62f45babb513c48cfb23cc"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s07_beidong/hit/tx_273_s07_4_01.x",
+              "exists_local": true,
+              "bytes": 1404,
+              "sha256": "66865ea0cd42914a010d8ab758ba668bc94b8c4d5c409f0fc311a08e96a3e413"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/skill/273_meipulujijiamoshi/s07_beidong/hit/tx_273_s07_4_01_skin1.x",
+              "exists_local": true,
+              "bytes": 1360,
+              "sha256": "f4918b3bf6ca036f9b7c22e63fc8fd69b4c624d24349f027a7197f0bfb07eef0"
+            },
+            "relationship": "character_id_skill_directory_candidate",
+            "requires_effect_graph_and_timing_review": true
+          }
+        ],
+        "converted_to_ggd": false
+      },
+      "audio": {
+        "unique_files": 78,
+        "base_bank_files": 30,
+        "files": [
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/01-0000-273_skill_e_fire_1.wav",
+              "exists_local": true,
+              "bytes": 306220,
+              "sha256": "23fb2de1805b5a8a27246b13f2dba7e71cd6451a2bfaba75ef98e918d9dbb75a"
+            },
+            "name": "273_skill_e_fire_1",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/01-0003-273_skill_a_hit_skin1_2.wav",
+              "exists_local": true,
+              "bytes": 162860,
+              "sha256": "a1b826ef7ba9d4355ef7fbe88e390515d76f6fd21283ed44d260649902627a8a"
+            },
+            "name": "273_skill_a_hit_skin1_2",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/01-0010-273_skill_a_fire_skin1_1.wav",
+              "exists_local": true,
+              "bytes": 198700,
+              "sha256": "c5e3abbb2d09b300072d891ee280240774851257825c8fa044a748c61c26be52"
+            },
+            "name": "273_skill_a_fire_skin1_1",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0027-273_voice_joke_skin1_5.ogg",
+              "exists_local": true,
+              "bytes": 93700,
+              "sha256": "1f9e6d2365659d72cad8e12e854b5562bf94b1914b1e65e8222c1330dc1fc46b"
+            },
+            "name": "273_voice_joke_skin1_5",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0022-273_voice_joke_skin1_2.ogg",
+              "exists_local": true,
+              "bytes": 110683,
+              "sha256": "81b919e1f4cd3293f102c2e8919843b04d46c8114ed1d2702a0a08ba4cf16341"
+            },
+            "name": "273_voice_joke_skin1_2",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/01-0004-273_skill_e_fire_skin1_1.wav",
+              "exists_local": true,
+              "bytes": 239660,
+              "sha256": "2aad9119d1dabac8a7f03ed3aa4ed77766d2773142801495bc161db6ce7ffc60"
+            },
+            "name": "273_skill_e_fire_skin1_1",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0026-273_voice_move_skin1_6.ogg",
+              "exists_local": true,
+              "bytes": 47817,
+              "sha256": "5914ad9fb87fb3024d250f9d33c7e7ef7d8c2561ac6a856b8f722c81b462b85d"
+            },
+            "name": "273_voice_move_skin1_6",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/01-0005-273_skill_a_fire_2.wav",
+              "exists_local": true,
+              "bytes": 304172,
+              "sha256": "dc77eb0aff807768c58fb724a80bdfe2c76259c7e17dceb70157dacc66cdf4d8"
+            },
+            "name": "273_skill_a_fire_2",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/00-0012-273_act_dance_1.ogg",
+              "exists_local": true,
+              "bytes": 92962,
+              "sha256": "e5409102beae6da4a4c346016d3502d4c98b4b7f6c523450bcacccd741bfb042"
+            },
+            "name": "273_act_dance_1",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0024-273_voice_death_skin1_3.ogg",
+              "exists_local": true,
+              "bytes": 53268,
+              "sha256": "5a3955e1c415c7274a44fc33380eeeca1489b222f9f3341f1f8ed7a29c85f04a"
+            },
+            "name": "273_voice_death_skin1_3",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/00-0008-273_voice_death_2.ogg",
+              "exists_local": true,
+              "bytes": 29166,
+              "sha256": "f48f34485babc460e9ee1e4e307fc2dbf59c6756409bb945affc970142034e0a"
+            },
+            "name": "273_voice_death_2",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/01-0000-273_skill_a_hit_skin1_1.wav",
+              "exists_local": true,
+              "bytes": 178220,
+              "sha256": "e2bd435d01b95fe7d16fad75dd32022dd144a3a6717f0a16d62253ef17cd1fc7"
+            },
+            "name": "273_skill_a_hit_skin1_1",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0031-273_voice_w_skin1_1.ogg",
+              "exists_local": true,
+              "bytes": 31523,
+              "sha256": "adf9b407ee2920c3c1dc97eecab54a80db5df146f4caf8ce1ddd2cf94c92b0c5"
+            },
+            "name": "273_voice_w_skin1_1",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0009-273_act_dance_skin1_1.ogg",
+              "exists_local": true,
+              "bytes": 91052,
+              "sha256": "a1d1dab4595c28f1377c26b58ad5de51ea1cf42e9126d22833866c89d2f5a0b5"
+            },
+            "name": "273_act_dance_skin1_1",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/01-0013-273_skill_a_fire_skin1_2.wav",
+              "exists_local": true,
+              "bytes": 221228,
+              "sha256": "77f39f5dad4e25f4e31b7020c5522dc6527ef38fabc4e3fdf19b3d89fc39d72c"
+            },
+            "name": "273_skill_a_fire_skin1_2",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0033-273_voice_move_skin1_7.ogg",
+              "exists_local": true,
+              "bytes": 36497,
+              "sha256": "f14f09f53de47511d87b2e1182f77c6dc4ae1be5be9e9ce090c909c9283cbff5"
+            },
+            "name": "273_voice_move_skin1_7",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/01-0011-273_skill_e_hit_skin1_1.wav",
+              "exists_local": true,
+              "bytes": 147500,
+              "sha256": "704c26028b86c7f6b301a97e84542e3871c581cb25646969421c665460bcc989"
+            },
+            "name": "273_skill_e_hit_skin1_1",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/00-0000-273_skill_q_fire_1.ogg",
+              "exists_local": true,
+              "bytes": 29617,
+              "sha256": "9b61d36f2b077566f670efbe6f75ef8216880a7279b84e85d5ac63359c5ae9c2"
+            },
+            "name": "273_skill_q_fire_1",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/01-0003-273_skill_a_hit_2.wav",
+              "exists_local": true,
+              "bytes": 111660,
+              "sha256": "6bfb5ecbeba94bf06e6fd636e1d6f79d7fbf5b82408471d5e73026cbe02f1124"
+            },
+            "name": "273_skill_a_hit_2",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0016-273_skill_w_hit_skin1_1.ogg",
+              "exists_local": true,
+              "bytes": 28218,
+              "sha256": "c3d8a94c977b9da6a930b5aee049c93e68c84ec63f48c0fa672d032b4a962406"
+            },
+            "name": "273_skill_w_hit_skin1_1",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/00-0007-273_voice_death_1.ogg",
+              "exists_local": true,
+              "bytes": 34057,
+              "sha256": "31542387c84fade6c2aae76e17179ff05ed10539e8415907a8423bad71524975"
+            },
+            "name": "273_voice_death_1",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0014-273_act_idle_skin1_1.ogg",
+              "exists_local": true,
+              "bytes": 54539,
+              "sha256": "dbdfc3d6499a0c4eac58d1aa1ee0e35a10c30bf84130f800363092c08499a8db"
+            },
+            "name": "273_act_idle_skin1_1",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/00-0002-273_skill_w_fire_1.ogg",
+              "exists_local": true,
+              "bytes": 28632,
+              "sha256": "b1195f31dcdfbab1b8c5b9d8ac6c5f05d4984241c5dabd57260d00e8ae4de484"
+            },
+            "name": "273_skill_w_fire_1",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0018-273_voice_dazhao_skin1_2.ogg",
+              "exists_local": true,
+              "bytes": 59727,
+              "sha256": "6bbc7feacf812d3bf146886dea304f5eee19c661edf586c7825a642d3e2516ac"
+            },
+            "name": "273_voice_dazhao_skin1_2",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/00-0014-273_voice_joke_3.ogg",
+              "exists_local": true,
+              "bytes": 18930,
+              "sha256": "be4a948a05d386d937d3ea45eb547b4f71e3a0e143fd47f2fb2b29110a04ee7f"
+            },
+            "name": "273_voice_joke_3",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/00-0010-273_skill_r_fire_1.ogg",
+              "exists_local": true,
+              "bytes": 41755,
+              "sha256": "96ff1695c500b621c04037ddca6a08b846a4481c25413f571a93e665c05ad3e7"
+            },
+            "name": "273_skill_r_fire_1",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0025-273_voice_dazhao_skin1_1.ogg",
+              "exists_local": true,
+              "bytes": 61766,
+              "sha256": "a3d22ca6e90837d036caeb4f684737c346f5a71bfcb498e04ad259d473f9c7f4"
+            },
+            "name": "273_voice_dazhao_skin1_1",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/01-0002-273_skill_a_foley_skin1_1.wav",
+              "exists_local": true,
+              "bytes": 203820,
+              "sha256": "14cf5d4c6be9841d7611a1358c3d46ee04a824c6e5aa8777f79bd6a0261e4b24"
+            },
+            "name": "273_skill_a_foley_skin1_1",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0010-273_voice_move_skin1_5.ogg",
+              "exists_local": true,
+              "bytes": 33907,
+              "sha256": "5a8a731c514617f7227748ca17945e893f8b851c533089a3c774187cdb627e22"
+            },
+            "name": "273_voice_move_skin1_5",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/00-0011-273_voice_joke_2.ogg",
+              "exists_local": true,
+              "bytes": 27133,
+              "sha256": "d6fcaa3e61f8c2c3c2b006f76ae76a38936a56e27de6096c170a2ba7c1c56dd7"
+            },
+            "name": "273_voice_joke_2",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/01-0005-273_skill_a_foley_skin1_2.wav",
+              "exists_local": true,
+              "bytes": 235564,
+              "sha256": "4f3b114e83e9a513fe2af45817ba8b5e46319b9d09a94fc405f1108f354b8e56"
+            },
+            "name": "273_skill_a_foley_skin1_2",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/01-0002-273_skill_a_fire_1.wav",
+              "exists_local": true,
+              "bytes": 337964,
+              "sha256": "925e202de4d95b6e8bd3cb5b3be97e5e6c0659b1150b027fca9e10f7caab9a97"
+            },
+            "name": "273_skill_a_fire_1",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0030-273_voice_move_skin1_2.ogg",
+              "exists_local": true,
+              "bytes": 58082,
+              "sha256": "ca51673debb229b23fea80549f37b7e85ca220e8eaaae09ff0ac0aa07a4f64fb"
+            },
+            "name": "273_voice_move_skin1_2",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/00-0013-273_act_idle_1.ogg",
+              "exists_local": true,
+              "bytes": 71338,
+              "sha256": "724a58ecc5c0d2fcd0ebe9ee6c83860bb8a100ccc055cdf32ed9301187d15f9a"
+            },
+            "name": "273_act_idle_1",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/00-0005-273_voice_attack_1.ogg",
+              "exists_local": true,
+              "bytes": 25372,
+              "sha256": "649a5e75ca5cf4d1863e827f62a7d3826eaac909d133aeff10cad26f7d1f39bd"
+            },
+            "name": "273_voice_attack_1",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0021-273_voice_attack_skin1_1.ogg",
+              "exists_local": true,
+              "bytes": 41382,
+              "sha256": "1ec258f176b65043686603cf17664526bf693d0ab64e6e26e6ead2c83fe16459"
+            },
+            "name": "273_voice_attack_skin1_1",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0004-273_skill_r_fire_skin1_1.ogg",
+              "exists_local": true,
+              "bytes": 37431,
+              "sha256": "f7e22e901d6ae35bc61a1e41fbc84d692fc67d66487ff3f0520a71d8a8154d81"
+            },
+            "name": "273_skill_r_fire_skin1_1",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0013-273_voice_move_skin1_10.ogg",
+              "exists_local": true,
+              "bytes": 27207,
+              "sha256": "c8ff90a206daa60e6e674f3de6172d3a6205ebed3af7c3bf33cb2dbcbecb1444"
+            },
+            "name": "273_voice_move_skin1_10",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0002-273_voice_w_skin1_4.ogg",
+              "exists_local": true,
+              "bytes": 29308,
+              "sha256": "59fc7e5eb0b0693b4cc227cd49ab51ef116e0660dc022a1f0affe24ef759c1ec"
+            },
+            "name": "273_voice_w_skin1_4",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0001-273_voice_move_skin1_3.ogg",
+              "exists_local": true,
+              "bytes": 20199,
+              "sha256": "73fa219588fb4ddb8ef38db7d3757616183ffb5d501327f7317e2c21a9e193e8"
+            },
+            "name": "273_voice_move_skin1_3",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/00-0017-273_skill_r_loop_1.ogg",
+              "exists_local": true,
+              "bytes": 143795,
+              "sha256": "e4638b1cf1f7a2cddf751ff6ae9a43f1578cc30f524471fec158a568209dab69"
+            },
+            "name": "273_skill_r_loop_1",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0029-273_voice_joke_skin1_3.ogg",
+              "exists_local": true,
+              "bytes": 136561,
+              "sha256": "49f3a85e2d270e6c99073663459b400114df8c41bd50c65aa153fbf2ba296b0f"
+            },
+            "name": "273_voice_joke_skin1_3",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/01-0007-273_skill_a_hit_3.wav",
+              "exists_local": true,
+              "bytes": 96300,
+              "sha256": "114fbbecaf04d05b6eeb6785f3fc73bb080df9e2b4616e435032535d188a9a30"
+            },
+            "name": "273_skill_a_hit_3",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0005-273_voice_move_skin1_8.ogg",
+              "exists_local": true,
+              "bytes": 98651,
+              "sha256": "d83d7bc19ae02152e4831988fb8d73a97ab786540dae7737644048df471aa84f"
+            },
+            "name": "273_voice_move_skin1_8",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0032-273_voice_w_skin1_3.ogg",
+              "exists_local": true,
+              "bytes": 18952,
+              "sha256": "ce44bee57c6de47c6f7910bbce1917ea02afd21c938f67b5b02924d64457351b"
+            },
+            "name": "273_voice_w_skin1_3",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/01-0007-273_skill_a_foley_skin1_3.wav",
+              "exists_local": true,
+              "bytes": 220204,
+              "sha256": "fce219fa557f7e61d2badda3d4d05da449c6e6b75e29897895d5df67a1cfa380"
+            },
+            "name": "273_skill_a_foley_skin1_3",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/01-0001-273_act_relive_skin1_1.wav",
+              "exists_local": true,
+              "bytes": 293932,
+              "sha256": "232021a62ecc796ad2348c56fbf8fdfdbb1db7ba0140b069dd1f986cb5dbd30c"
+            },
+            "name": "273_act_relive_skin1_1",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/01-0004-273_skill_a_hit_1.wav",
+              "exists_local": true,
+              "bytes": 108588,
+              "sha256": "0d85148c9899595d37708efc4e4b2008e3992510e073efb3f35ebca3dcb4b6c2"
+            },
+            "name": "273_skill_a_hit_1",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/01-0009-273_skill_a_hit_skin1_3.wav",
+              "exists_local": true,
+              "bytes": 176172,
+              "sha256": "f1d0d0d9ae0ed9d1e67bad9a6600b80b7904ec1e8c34795fe2c0acaf48d07ad1"
+            },
+            "name": "273_skill_a_hit_skin1_3",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/01-0008-273_skill_a_fire_skin1_3.wav",
+              "exists_local": true,
+              "bytes": 221228,
+              "sha256": "0d6a050818d5881dff13c6881564bdb736e287854463e8aa1d076c35708dc3ea"
+            },
+            "name": "273_skill_a_fire_skin1_3",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0023-273_skill_r_loop_skin1_1.ogg",
+              "exists_local": true,
+              "bytes": 176309,
+              "sha256": "4425adf757941d78ec628ecf41b71fd2f6f83036a2d33f122c229de630cf1900"
+            },
+            "name": "273_skill_r_loop_skin1_1",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/00-0001-273_voice_w_1.ogg",
+              "exists_local": true,
+              "bytes": 10791,
+              "sha256": "9708037227189267a600e3e25b9dc6375dcfe41cc36a8807973cf61a7272eceb"
+            },
+            "name": "273_voice_w_1",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/00-0003-273_voice_move_3.ogg",
+              "exists_local": true,
+              "bytes": 18722,
+              "sha256": "00cdd77bd6105ab324be34177676866911c4cb0d0749dd7d3b397e54f200a070"
+            },
+            "name": "273_voice_move_3",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0007-273_voice_joke_skin1_1.ogg",
+              "exists_local": true,
+              "bytes": 125004,
+              "sha256": "a6b871c3ab8cba2dada0154e3811eff16dfc0eacb516e13df8d48fa4a31f16c3"
+            },
+            "name": "273_voice_joke_skin1_1",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0019-273_voice_death_skin1_1.ogg",
+              "exists_local": true,
+              "bytes": 49888,
+              "sha256": "5c926595efd3347b71f9b4b82e1899ccce41f36f1d2912d373f8a9a4b0bb5a4b"
+            },
+            "name": "273_voice_death_skin1_1",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/00-0009-273_skill_w_hit_1.ogg",
+              "exists_local": true,
+              "bytes": 77116,
+              "sha256": "ab265a96444b65684909c94d61b3bf1e2b2e1138ca41df55de50fce982562069"
+            },
+            "name": "273_skill_w_hit_1",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0012-273_voice_joke_skin1_4.ogg",
+              "exists_local": true,
+              "bytes": 100847,
+              "sha256": "761295c57ecd144cf1ddbf2bedba1d4e499bb0ff9c7f779751ced4b5fb85c401"
+            },
+            "name": "273_voice_joke_skin1_4",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/00-0018-273_voice_attack_2.ogg",
+              "exists_local": true,
+              "bytes": 30705,
+              "sha256": "6e4281b509b0dc22eea31916e0befb155c8c81cba558f714ca7772019d80d096"
+            },
+            "name": "273_voice_attack_2",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/00-0006-273_voice_dazhao_1.ogg",
+              "exists_local": true,
+              "bytes": 11269,
+              "sha256": "0962151be9dfab3ef345c6b3f77ce4bca79937bf7d89fd88a9713bfd98bbff6b"
+            },
+            "name": "273_voice_dazhao_1",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/00-0019-273_voice_move_1.ogg",
+              "exists_local": true,
+              "bytes": 70797,
+              "sha256": "2f63f0fa55dd941d5e3d5eaf8f497743d1b953751a9aac9bd6b405c668eaaa77"
+            },
+            "name": "273_voice_move_1",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0003-273_voice_move_skin1_4.ogg",
+              "exists_local": true,
+              "bytes": 24031,
+              "sha256": "aaf485eafef687e6b2ea2b09eaad7e5f4833010bea29bc58bfd9035c39a3ffaa"
+            },
+            "name": "273_voice_move_skin1_4",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/01-0006-273_skill_q_fire_skin1_1.wav",
+              "exists_local": true,
+              "bytes": 290860,
+              "sha256": "2184f1d81d6cd64c53f9f191176ca9a54849ad3d21bdf0011ee7009743c74859"
+            },
+            "name": "273_skill_q_fire_skin1_1",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0011-273_voice_move_skin1_1.ogg",
+              "exists_local": true,
+              "bytes": 19460,
+              "sha256": "34c8021ee1a17d68b487d609ff4fc2e8d90eef9402079f2db02b23e47ebbe04d"
+            },
+            "name": "273_voice_move_skin1_1",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/00-0020-273_voice_move_2.ogg",
+              "exists_local": true,
+              "bytes": 38709,
+              "sha256": "403ad2a19520a8f1857a3f49d52789e7b1df05f6953e29609f8c7997584b7d07"
+            },
+            "name": "273_voice_move_2",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0008-273_voice_w_skin1_2.ogg",
+              "exists_local": true,
+              "bytes": 22992,
+              "sha256": "315f5f3c6dd31f21df704ff917c6c4167fc01afd14ac068a0c28eecab51fccb0"
+            },
+            "name": "273_voice_w_skin1_2",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0015-273_skill_w_fire_skin1_1.ogg",
+              "exists_local": true,
+              "bytes": 40611,
+              "sha256": "a28e09bc867d2d1fc047f190afe1befa0d3f7e6e0907d8018c8ec61166224339"
+            },
+            "name": "273_skill_w_fire_skin1_1",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0020-273_voice_move_skin1_9.ogg",
+              "exists_local": true,
+              "bytes": 88048,
+              "sha256": "7a943f6ac46d99c6a3fec71e51ebcf21311b480dd77ba94a5c8c8ccb36fbf304"
+            },
+            "name": "273_voice_move_skin1_9",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/01-0001-273_skill_a_fire_3.wav",
+              "exists_local": true,
+              "bytes": 259116,
+              "sha256": "1e9f5c684116a4b5804dd9fc648bf02145b539c56900cd8acb97b13419ad7cb6"
+            },
+            "name": "273_skill_a_fire_3",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/00-0004-273_voice_attack_3.ogg",
+              "exists_local": true,
+              "bytes": 32489,
+              "sha256": "6393bf46418b06f88caf9086421d2c594aed4ad0d51bafb562053412ea0cce8a"
+            },
+            "name": "273_voice_attack_3",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/01-0006-273_skill_q_hit_1.wav",
+              "exists_local": true,
+              "bytes": 343084,
+              "sha256": "a52c194bd0afd7082bbe367d5ae1d922e7c7e24d45e45395af71616645f560ac"
+            },
+            "name": "273_skill_q_hit_1",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0028-273_act_dead_skin1_1.ogg",
+              "exists_local": true,
+              "bytes": 36762,
+              "sha256": "0e205595090fbd897bf294ab0c8f9bd1861d213c5c4012f71334d2e2d4ca87ec"
+            },
+            "name": "273_act_dead_skin1_1",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/00-0021-273_voice_joke_1.ogg",
+              "exists_local": true,
+              "bytes": 61802,
+              "sha256": "32a887f066358224cf52df5c290c66938a97321093fbc72d47b1ba6a65b55114"
+            },
+            "name": "273_voice_joke_1",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0006-273_skill_w_hit_skin1_2.ogg",
+              "exists_local": true,
+              "bytes": 254867,
+              "sha256": "9fd25a2b788868f0dc5a3c58e9eb9f8f01bc68634d382ee6169f29e9ee093695"
+            },
+            "name": "273_skill_w_hit_skin1_2",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0000-273_voice_attack_skin1_2.ogg",
+              "exists_local": true,
+              "bytes": 67026,
+              "sha256": "4fcd1c37e3275e854a32dbc791e20bc0ff817754d2cb21da9f995538a44c3925"
+            },
+            "name": "273_voice_attack_skin1_2",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/00-0017-273_voice_death_skin1_2.ogg",
+              "exists_local": true,
+              "bytes": 49402,
+              "sha256": "8a7c79379b14f8253eac78472fae2561a0da0920ebc4e1457456570dd3f10695"
+            },
+            "name": "273_voice_death_skin1_2",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/00-0016-273_voice_joke_4.ogg",
+              "exists_local": true,
+              "bytes": 29681,
+              "sha256": "d06d2efc7d7decfe9c761bef6e429be6e4f3cbda2594b7b810710799a758e776"
+            },
+            "name": "273_voice_joke_4",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273/00-0015-273_act_dead_1.ogg",
+              "exists_local": true,
+              "bytes": 37664,
+              "sha256": "aa68d6c0211808f5859e32529d3137a484b54331722089721c01ed382438bcb5"
+            },
+            "name": "273_act_dead_1",
+            "bank": "data/audio/hero/273.bank",
+            "scope": "base_bank",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          },
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/273_1/01-0012-273_skill_q_hit_skin1_1.wav",
+              "exists_local": true,
+              "bytes": 265260,
+              "sha256": "13c06310717ce09c4bd2e150341986a3d54519060955b6646f1a81ec51af92dc"
+            },
+            "name": "273_skill_q_hit_skin1_1",
+            "bank": "data/audio/hero/273_1.bank",
+            "scope": "variant_bank_candidate",
+            "confidence": "numeric_prefix_candidate",
+            "auditioned": false
+          }
+        ]
+      },
+      "variants": {
+        "model_candidates": 1,
+        "basis": "numeric prefix; not approved as base body",
+        "files": [
+          {
+            "file": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/273_skin1.x",
+              "exists_local": true,
+              "bytes": 4099215,
+              "sha256": "681ee206bf83c899a22c050a31aa892fd88ff50d6fdb4d22732c8fa80c250248"
+            },
+            "relationship": "numeric_prefix_candidate"
+          }
+        ]
+      },
+      "status": "native_candidate_requires_conversion"
+    },
+    {
+      "source_character_id": "300heroes:276",
+      "status": "catalog_entry_no_local_body",
+      "model": null
+    }
+  ],
+  "original_tram": null,
+  "current_design_proxy": {
+    "key": "champ.thorne",
+    "definition": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/models/champ.thorne.json",
+      "exists_local": true,
+      "bytes": 489,
+      "sha256": "972c4de79cd1afeeabc062d8c7d43165f11d9cc87b665dd7eff629229e257836"
+    },
+    "model": {
+      "declared_worktree_path": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/assets/models/champions/blocky-knight.glb",
+        "exists_local": false
+      },
+      "expected_manifest_entry": {
+        "path": "assets/models/champions/blocky-knight.glb",
+        "bytes": 52088,
+        "sha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+        "contentType": "model/gltf-binary",
+        "kind": "models",
+        "refs": [
+          "bundle",
+          "champ.thorne"
+        ]
+      },
+      "selected_local_copy": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/content/assets/models/champions/blocky-knight.glb",
+        "exists_local": true,
+        "bytes": 52088,
+        "sha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810"
+      },
+      "selection": "manifest_sha256_and_size"
+    },
+    "clip_map": {
+      "idle": "idle",
+      "run": "run",
+      "attack": "attack",
+      "cast": "cast",
+      "hurt": "hurt",
+      "death": "death"
+    },
+    "inspection": {
+      "meshes": 1,
+      "skins": 1,
+      "animations": [
+        "idle",
+        "run",
+        "attack",
+        "cast",
+        "hurt",
+        "death",
+        "cheer"
+      ],
+      "animation_channels": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    "relationship": "existing_design_proxy_only",
+    "character_identity_match": false,
+    "bindable_to_original_model_without_retarget": false
+  },
+  "slots": [
+    {
+      "slot": "PASSIVE",
+      "name": null,
+      "vfx": [],
+      "sfx_key": null,
+      "audio_fallback": "generic-cast",
+      "original_character_sfx_bound": false
+    },
+    {
+      "slot": "Q",
+      "name": "防禦力輸入多一個零",
+      "vfx": [
+        {
+          "id": "fx.prim.arcane.pulse-sm",
+          "attach_to": "caster",
+          "definition": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/vfx/fx.prim.arcane.pulse-sm.json",
+            "exists_local": true,
+            "bytes": 1071,
+            "sha256": "34e0b0808a53359baede9d9f6a11e0750db626753c12acdf96e972627db9b399"
+          },
+          "texture": {
+            "declared_worktree_path": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/assets/textures/particles/magic_02.png",
+              "exists_local": false
+            },
+            "expected_manifest_entry": {
+              "path": "assets/textures/particles/magic_02.png",
+              "bytes": 82611,
+              "sha256": "8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece",
+              "contentType": "image/png",
+              "kind": "textures",
+              "refs": [
+                "builtin-vfx",
+                "bundle",
+                "fx.fam.mirror-image.arcane.s100",
+                "fx.fam.mirror-image.physical.s100",
+                "fx.fam.mirror-image.physical.s150",
+                "fx.fam.mirror-image.void.s100",
+                "fx.prim.arcane.pulse",
+                "fx.prim.arcane.pulse-lg",
+                "fx.prim.arcane.pulse-sm",
+                "fx.prim.blood.pulse-lg",
+                "fx.prim.blood.pulse-sm",
+                "fx.prim.earth.pulse-sm"
+              ],
+              "moreRefs": 27
+            },
+            "selected_local_copy": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/content/assets/textures/particles/magic_02.png",
+              "exists_local": true,
+              "bytes": 82611,
+              "sha256": "8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece"
+            },
+            "selection": "manifest_sha256_and_size"
+          },
+          "standardized_library_copy": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.pulse-sm.json",
+            "exists_local": true,
+            "bytes": 1071,
+            "sha256": "34e0b0808a53359baede9d9f6a11e0750db626753c12acdf96e972627db9b399"
+          },
+          "readiness": "standardized_library_component",
+          "relationship": "GGD generic component; not original anime VFX"
+        }
+      ],
+      "sfx_key": null,
+      "audio_fallback": "generic-cast",
+      "original_character_sfx_bound": false
+    },
+    {
+      "slot": "W",
+      "name": "盾後補餐退魔力",
+      "vfx": [
+        {
+          "id": "fx.prim.arcane.pulse-sm",
+          "attach_to": "caster",
+          "definition": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/vfx/fx.prim.arcane.pulse-sm.json",
+            "exists_local": true,
+            "bytes": 1071,
+            "sha256": "34e0b0808a53359baede9d9f6a11e0750db626753c12acdf96e972627db9b399"
+          },
+          "texture": {
+            "declared_worktree_path": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/assets/textures/particles/magic_02.png",
+              "exists_local": false
+            },
+            "expected_manifest_entry": {
+              "path": "assets/textures/particles/magic_02.png",
+              "bytes": 82611,
+              "sha256": "8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece",
+              "contentType": "image/png",
+              "kind": "textures",
+              "refs": [
+                "builtin-vfx",
+                "bundle",
+                "fx.fam.mirror-image.arcane.s100",
+                "fx.fam.mirror-image.physical.s100",
+                "fx.fam.mirror-image.physical.s150",
+                "fx.fam.mirror-image.void.s100",
+                "fx.prim.arcane.pulse",
+                "fx.prim.arcane.pulse-lg",
+                "fx.prim.arcane.pulse-sm",
+                "fx.prim.blood.pulse-lg",
+                "fx.prim.blood.pulse-sm",
+                "fx.prim.earth.pulse-sm"
+              ],
+              "moreRefs": 27
+            },
+            "selected_local_copy": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/content/assets/textures/particles/magic_02.png",
+              "exists_local": true,
+              "bytes": 82611,
+              "sha256": "8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece"
+            },
+            "selection": "manifest_sha256_and_size"
+          },
+          "standardized_library_copy": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.pulse-sm.json",
+            "exists_local": true,
+            "bytes": 1071,
+            "sha256": "34e0b0808a53359baede9d9f6a11e0750db626753c12acdf96e972627db9b399"
+          },
+          "readiness": "standardized_library_component",
+          "relationship": "GGD generic component; not original anime VFX"
+        }
+      ],
+      "sfx_key": null,
+      "audio_fallback": "generic-cast",
+      "original_character_sfx_bound": false
+    },
+    {
+      "slot": "E",
+      "name": "這個形狀看起來很耐打",
+      "vfx": [
+        {
+          "id": "fx.prim.arcane.pulse-sm",
+          "attach_to": "caster",
+          "definition": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/vfx/fx.prim.arcane.pulse-sm.json",
+            "exists_local": true,
+            "bytes": 1071,
+            "sha256": "34e0b0808a53359baede9d9f6a11e0750db626753c12acdf96e972627db9b399"
+          },
+          "texture": {
+            "declared_worktree_path": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/assets/textures/particles/magic_02.png",
+              "exists_local": false
+            },
+            "expected_manifest_entry": {
+              "path": "assets/textures/particles/magic_02.png",
+              "bytes": 82611,
+              "sha256": "8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece",
+              "contentType": "image/png",
+              "kind": "textures",
+              "refs": [
+                "builtin-vfx",
+                "bundle",
+                "fx.fam.mirror-image.arcane.s100",
+                "fx.fam.mirror-image.physical.s100",
+                "fx.fam.mirror-image.physical.s150",
+                "fx.fam.mirror-image.void.s100",
+                "fx.prim.arcane.pulse",
+                "fx.prim.arcane.pulse-lg",
+                "fx.prim.arcane.pulse-sm",
+                "fx.prim.blood.pulse-lg",
+                "fx.prim.blood.pulse-sm",
+                "fx.prim.earth.pulse-sm"
+              ],
+              "moreRefs": 27
+            },
+            "selected_local_copy": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/content/assets/textures/particles/magic_02.png",
+              "exists_local": true,
+              "bytes": 82611,
+              "sha256": "8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece"
+            },
+            "selection": "manifest_sha256_and_size"
+          },
+          "standardized_library_copy": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.pulse-sm.json",
+            "exists_local": true,
+            "bytes": 1071,
+            "sha256": "34e0b0808a53359baede9d9f6a11e0750db626753c12acdf96e972627db9b399"
+          },
+          "readiness": "standardized_library_component",
+          "relationship": "GGD generic component; not original anime VFX"
+        }
+      ],
+      "sfx_key": null,
+      "audio_fallback": "generic-cast",
+      "original_character_sfx_bound": false
+    },
+    {
+      "slot": "R",
+      "name": "怪物模式限定毒龍包",
+      "vfx": [
+        {
+          "id": "fx.prim.arcane.pulse-sm",
+          "attach_to": "caster",
+          "definition": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/vfx/fx.prim.arcane.pulse-sm.json",
+            "exists_local": true,
+            "bytes": 1071,
+            "sha256": "34e0b0808a53359baede9d9f6a11e0750db626753c12acdf96e972627db9b399"
+          },
+          "texture": {
+            "declared_worktree_path": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/assets/textures/particles/magic_02.png",
+              "exists_local": false
+            },
+            "expected_manifest_entry": {
+              "path": "assets/textures/particles/magic_02.png",
+              "bytes": 82611,
+              "sha256": "8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece",
+              "contentType": "image/png",
+              "kind": "textures",
+              "refs": [
+                "builtin-vfx",
+                "bundle",
+                "fx.fam.mirror-image.arcane.s100",
+                "fx.fam.mirror-image.physical.s100",
+                "fx.fam.mirror-image.physical.s150",
+                "fx.fam.mirror-image.void.s100",
+                "fx.prim.arcane.pulse",
+                "fx.prim.arcane.pulse-lg",
+                "fx.prim.arcane.pulse-sm",
+                "fx.prim.blood.pulse-lg",
+                "fx.prim.blood.pulse-sm",
+                "fx.prim.earth.pulse-sm"
+              ],
+              "moreRefs": 27
+            },
+            "selected_local_copy": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/content/assets/textures/particles/magic_02.png",
+              "exists_local": true,
+              "bytes": 82611,
+              "sha256": "8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece"
+            },
+            "selection": "manifest_sha256_and_size"
+          },
+          "standardized_library_copy": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.pulse-sm.json",
+            "exists_local": true,
+            "bytes": 1071,
+            "sha256": "34e0b0808a53359baede9d9f6a11e0750db626753c12acdf96e972627db9b399"
+          },
+          "readiness": "standardized_library_component",
+          "relationship": "GGD generic component; not original anime VFX"
+        }
+      ],
+      "sfx_key": null,
+      "audio_fallback": "generic-cast",
+      "original_character_sfx_bound": false
+    },
+    {
+      "slot": "EX",
+      "name": null,
+      "vfx": [
+        {
+          "id": "fx.prim.wind.pulse-sm",
+          "attach_to": "caster",
+          "definition": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/vfx/fx.prim.wind.pulse-sm.json",
+            "exists_local": true,
+            "bytes": 1090,
+            "sha256": "2e55e2b72cb4d229131776ceb01fda5d6594f843848388fe182531919c00a022"
+          },
+          "texture": {
+            "declared_worktree_path": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/content/assets/textures/particles/magic_02.png",
+              "exists_local": false
+            },
+            "expected_manifest_entry": {
+              "path": "assets/textures/particles/magic_02.png",
+              "bytes": 82611,
+              "sha256": "8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece",
+              "contentType": "image/png",
+              "kind": "textures",
+              "refs": [
+                "builtin-vfx",
+                "bundle",
+                "fx.fam.mirror-image.arcane.s100",
+                "fx.fam.mirror-image.physical.s100",
+                "fx.fam.mirror-image.physical.s150",
+                "fx.fam.mirror-image.void.s100",
+                "fx.prim.arcane.pulse",
+                "fx.prim.arcane.pulse-lg",
+                "fx.prim.arcane.pulse-sm",
+                "fx.prim.blood.pulse-lg",
+                "fx.prim.blood.pulse-sm",
+                "fx.prim.earth.pulse-sm"
+              ],
+              "moreRefs": 27
+            },
+            "selected_local_copy": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/content/assets/textures/particles/magic_02.png",
+              "exists_local": true,
+              "bytes": 82611,
+              "sha256": "8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece"
+            },
+            "selection": "manifest_sha256_and_size"
+          },
+          "standardized_library_copy": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.wind.pulse-sm.json",
+            "exists_local": true,
+            "bytes": 1090,
+            "sha256": "2e55e2b72cb4d229131776ceb01fda5d6594f843848388fe182531919c00a022"
+          },
+          "readiness": "standardized_library_component",
+          "relationship": "GGD generic component; not original anime VFX"
+        }
+      ],
+      "sfx_key": null,
+      "audio_fallback": "generic-cast",
+      "original_character_sfx_bound": false
+    }
+  ],
+  "gaps": [
+    "原生 JUMPX 骨架／權重與動畫轉換、材質修復",
+    "hurt 動作未找到可確認對應",
+    "原生 VFX 事件／貼圖／時序轉為 GGD 定義",
+    "音效尚未試聽與綁定六槽",
+    "來源版本、外觀與遊戲驗收"
+  ],
+  "production_ready": false,
+  "automatically_import": false,
+  "source_project": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/teachers/b2-maple.project.json",
+    "exists_local": true,
+    "bytes": 26241,
+    "sha256": "6e50eecf4718b04986a39c0b34c155f32271fde971ed8a6f00a77f48cc3f27ec"
+  },
+  "source_compiled": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-validation-batch2/docs/_reports/hero-validation-batch2-37/data/private/compiled/b2-maple.json",
+    "exists_local": true,
+    "bytes": 54270,
+    "sha256": "e048cf5367ea4098220bcb7d31f967e15daa36dc6187a35ef30552a2b552d61b"
+  },
+  "form_note": "272 base; 273 mechanical-god form only; 276 catalog entry has no local body."
+}

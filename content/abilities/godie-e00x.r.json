@@ -21,23 +21,6 @@
   "manaCostTier": "小",
   "effects": [
     {
-      "kind": "damage",
-      "damageType": "physical",
-      "amount": {
-        "ratios": [
-          {
-            "stat": "ad",
-            "coeff": 0.6
-          }
-        ],
-        "damageTierPerRank": [
-          "極小",
-          "小",
-          "小"
-        ]
-      }
-    },
-    {
       "kind": "spawnVfx",
       "vfxId": "godie-lightningtornado-p0",
       "at": "target"
@@ -50,6 +33,26 @@
       "anchor": "target"
     }
   ],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
+        "ratios": [
+          {
+            "stat": "ad",
+            "coeff": 0.6
+          }
+        ],
+        "damageTierPerRank": [
+          "極小",
+          "小",
+          "小"
+        ]
+      },
+      "damageType": "physical",
+      "castTimeSec": 1.233
+    }
+  },
   "vfxKey": "fx.prim.lightning.beam-lg",
   "targetsEnemies": true,
   "schema": "ability@1",

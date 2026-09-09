@@ -1,0 +1,102 @@
+{
+  "id": "tpl-area-strike",
+  "schema": "template@1",
+  "name": "範圍打擊",
+  "description": "一發 `damageArea`：以施法者自己（castType self）、指定地面點（ground）或指定目標（targeted）為圓心，半徑內每一個敵人吃一次傷害。⭐ 命中之後要追加的東西（擊退／狀態／持續傷害／減益）住在 `onHitTargets` —— ⛔ 它們不是第二個效果節點，是 damageArea 自己的一格（10 支出貨技能逐位元量到的形狀）。 ⭐ gapScore 取上界 10：它解鎖的形狀數（15/32）是全庫最高的一格。",
+  "family": "area-strike",
+  "status": "enabled",
+  "params": {
+    "castType": {
+      "type": "enum",
+      "values": [
+        "self",
+        "ground",
+        "targeted"
+      ],
+      "default": "self",
+      "origin": "census: 出貨 10 支 damageArea 主體技能 —— self 6 · ground 3 · targeted 1（2026-09-09 逐份量）。"
+    },
+    "damageType": {
+      "type": "enum",
+      "values": [
+        "magic",
+        "physical",
+        "true"
+      ],
+      "default": "magic",
+      "origin": "census: 同一批 10 支 —— magic 6 · physical 4。⭐ 與 owner 2026-08-05「技能傷害預設都改成 AP 傷害」一致。"
+    },
+    "damage": {
+      "type": "scaling",
+      "default": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "origin": "census: 那 10 支的 amount 有三種形狀（damageTier / damageTierPerRank / flat）—— ⭐ 值是整個 Scaling 節點，由 zScaling 本人驗，⛔ 不在這裡拆成幾格。預設取最低級距（⭐ 作者一定會改它）。"
+    },
+    "radiusTier": {
+      "type": "enum",
+      "values": [
+        "極小",
+        "小",
+        "中",
+        "大",
+        "極大"
+      ],
+      "default": "中",
+      "origin": "census: 同一批 10 支 —— 中 5 · 小 4 · 極小 1。⚠️ ⭐ 真正說話的是這一格：`resolveRadiusTier` 在載入時把 `radius` 蓋掉（AoE 級距表）。"
+    },
+    "includeOrigin": {
+      "type": "boolean",
+      "optional": true,
+      "origin": "census: 全樹 damageArea 的 includeOrigin 是 **20 true / 5 不存在**（⛔ 0 個 false）。⛔ 刻意無預設：`zDamageArea.includeOrigin` 是 `z.boolean().optional()` ⇒ **不存在 ≠ false**,一個預設值會把那 5 支的原點傷害無中生有。"
+    },
+    "radius": {
+      "type": "number",
+      "default": 4.5,
+      "min": 0.5,
+      "max": 30,
+      "origin": "census: 出貨 10 支 damageArea 主體技能的 exemplar `godie-e00s.e` 逐位元（4.5）。⚠️ ⭐ `zDamageArea` 的**必填**格,⛔ 而它在載入時會被 `radiusTier` 蓋掉（`resolveRadiusTier`）—— 留著它是因為 AoE 級距表被關掉的那天,一個 0 半徑的爆炸與「這支技能沒有爆炸」長得一模一樣（同 tpl-traveling-wave 的 blastRadius）。⚠️ ⭐ 刻意**不填 `unit`**：那一格是封閉詞彙（wc3u/wc3h/s/count/ratio）,而這裡的半徑是 GGD 單位 —— ⛔ 硬填一個 wc3u 會讓後台的換算是錯的。"
+    },
+    "onHitTargets": {
+      "type": "effects",
+      "optional": true,
+      "origin": "census: 那 10 支裡 **5 支有這一格**（knockback ×2 · applyStatus ×1 · applyStatus+dot ×1 · applyBuff+applyStatus ×1）。⭐⭐ 這是這個模板的重點：那些追加效果**不是頂層的第二個節點**，是 damageArea 自己的一格 —— ⛔ 做成六格獨立參數就是把同一份知識拆成第二個住處。⛔ 刻意無預設：一個「我不知道你要追加什麼」的預設會讓作者以為它是必要的。"
+    },
+    "condition": {
+      "type": "condition",
+      "optional": true,
+      "origin": "census: 那 10 支裡 **1 支有**（`godie-emns.e`：`{kind:status, subject:target, statusId:curse}`）。⭐ 值是整個條件葉，由 zCondition 本人驗。"
+    },
+    "castTimeSec": {
+      "type": "number",
+      "optional": true,
+      "default": 0,
+      "min": 0,
+      "max": 5,
+      "unit": "s",
+      "origin": "derived: 沿用出貨 71/79 位採用者的慣例（文件與 params 同一個值）—— 同 `tpl-instant-blast.castTimeSec`。⭐ 預設 0 ＝ 瞬發,⛔ 而真正的值由 `castTimeFormula.deriveCastTime()` 算（那是唯一來源）。"
+    },
+    "vfx": {
+      "type": "spawnVfx",
+      "optional": true,
+      "origin": "census: 出貨那 32 個被擋形狀裡 `spawnVfx` 出現 **5** 次。⭐ 它是**第二個頂層節點**（⛔ 不在 onHitTargets 裡）—— 語意是「這一發長什麼樣」,⛔ 不是「打中的人身上追加什麼」。⛔ 刻意無預設：一顆看不見的特效比沒有特效更糟（第一·五守則）。"
+    },
+    "modelFx": {
+      "type": "spawnModelFx",
+      "optional": true,
+      "origin": "census: 同一批裡 `spawnModelFx` 出現 **7** 次（最多的視覺）。⛔ 同上,無預設。"
+    },
+    "selfBuff": {
+      "type": "applyBuff",
+      "optional": true,
+      "origin": "census: 出貨 damageArea 單發技能裡,第二個頂層節點是 `applyBuff` 的有 **3 支**（`godie-e001.passive`／`godie-e00n.passive`／`godie-h02u.r`）,而三支的節點逐位元相同（`as pctAdd 4.0` / 4 秒）。⛔ 刻意無預設：一格看不見的增益比沒有增益更糟（第一·五守則）。"
+    }
+  },
+  "requires": [],
+  "gapScore": 10,
+  "exemplar": {
+    "skill": "77-01（godie-e00w.q）",
+    "jass": "—"
+  }
+}

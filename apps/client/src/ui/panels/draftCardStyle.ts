@@ -65,6 +65,17 @@ export function itemCardDescription(choice: string): string | null {
   return authored ? authored : null;
 }
 
+/**
+ * ⭐ GH#1110 A3 —— 這一張卡**吃不吃背包格**。
+ *
+ * 只有**道具**卡吃（增益卡／技能卡⛔ 不吃）。⭐ 判準是「它在道具註冊表裡嗎」，
+ * ⛔ 不是看 `offer.tier` 的字串特徵 —— tier 有 `weapon` / `weapon:ex-release` /
+ * `silver` / `gold` / `prismatic` … 而那張表會長，⭐ 註冊表不會說謊。
+ */
+export function isItemChoice(choice: string): boolean {
+  return Items.tryGet(choice as ItemId) !== undefined;
+}
+
 /** Rarity/kind → accent colour. Mirrors LoL-Arena's silver/gold/prismatic. */
 export const DRAFT_TIER_COLOR: Record<string, string> = {
   silver: "#b8c4d6",

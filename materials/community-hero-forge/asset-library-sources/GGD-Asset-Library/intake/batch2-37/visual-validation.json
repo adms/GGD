@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "characters": 37,
+  "unique_primary_models": 27,
+  "unique_all_donor_models": 29,
+  "file_hashes_verified": 122,
+  "summary": {
+    "visual_proxy": 30,
+    "identity_candidate": 4,
+    "partial_components": 2,
+    "original": 1
+  },
+  "visual_choice_source_sha256": "35a08f6442513772739aa760489c75484b3aaa30eaa1b959cbce56273c19ff69",
+  "source_animation_playback_or_target_binding_tested": false,
+  "production_admission_performed": false
+}

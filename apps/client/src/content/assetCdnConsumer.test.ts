@@ -22,7 +22,14 @@
  *   · 拿掉 `withContentVersion` 裡呼叫 `cdnAssetUrl` 的那兩行 → 第 2 條紅
  */
 import { describe, expect, it, beforeEach } from "vitest";
-import { cdnAssetUrl, setAssetCdn, withContentVersion } from "./assetVersion";
+import {
+  cdnAssetUrl,
+  needsSignedUrl,
+  setAssetCdn,
+  setAssetDownloads,
+  signedUrlTtlSec,
+  withContentVersion,
+} from "./assetVersion";
 
 const OFF = { enabled: false, baseUrl: "", fallbackToLocal: true };
 const ON = { enabled: true, baseUrl: "https://d123.cloudfront.net", fallbackToLocal: true };
@@ -55,5 +62,28 @@ describe("素材 CDN 開關的消費端（GH#1116）", () => {
     expect(cdnAssetUrl("/api/v1/rooms")).toBeNull();
     expect(cdnAssetUrl("/content/champions/_index.json")).toBeNull();
     expect(cdnAssetUrl("blob:abc")).toBeNull();
+  });
+});
+
+describe("素材簽署網址的消費端（GH#1124 第 4 項）", () => {
+  it("① 關著 ⇒ ⛔ 不走簽署網址（⭐ 出貨預設，⛔ 這一邊也要驗）", () => {
+    setAssetDownloads({ enabled: false, signedUrlTtlSec: 900 });
+    expect(needsSignedUrl(ASSET), "關著卻說要簽 —— 而正式站今天簽不出來").toBe(false);
+  });
+
+  it("② 打開 ⇒ 素材真的要簽（⭐ 這是「那一格開關不是裝飾」的證據）", () => {
+    setAssetDownloads({ enabled: true, signedUrlTtlSec: 900 });
+    expect(needsSignedUrl(ASSET), "打開了卻不簽 —— 消費端沒有讀那一格").toBe(true);
+  });
+
+  it("③ 非素材路徑不簽（⛔ API 與 JSON 走站台自己）", () => {
+    setAssetDownloads({ enabled: true, signedUrlTtlSec: 900 });
+    expect(needsSignedUrl("/api/v1/rooms")).toBe(false);
+    expect(needsSignedUrl("/content/champions/_index.json")).toBe(false);
+  });
+
+  it("④ TTL 讀得到，⭐ 而缺席時有出貨預設（⛔ 不是 NaN）", () => {
+    setAssetDownloads({ enabled: true, signedUrlTtlSec: 300 });
+    expect(signedUrlTtlSec()).toBe(300);
   });
 });

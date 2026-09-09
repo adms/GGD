@@ -74,7 +74,11 @@ A("44-03", "44-03 火車輾過", "targeted", [60, 50, 40, 30], [150, 250, 350, 4
   # ⚠️ 要用 `dict(area(...), condition=...)` 包 —— 直接當 kw 傳進 area() 會被
   #    `amt()` 的 `o.update(kw)` 倒進 amount，而 zScaling 是 .strict()（同 52-04）。
   effects=[dict(area("magic", tier="中", per=[650, 750, 850, 950], ap=0.6),
-                condition={"kind": "status", "subject": "target", "statusId": "curse"})])
+                condition={"kind": "status", "subject": "target", "statusId": "curse"})],
+  # ⭐ GH#1146 —— 綁 `tpl-area-strike`。⚠️ params 由 `templatize.py::m_area_strike()`
+  #   從出貨文件算出來,⛔ 不是手打;等價由 `templatizeEquivalence.test.ts` 逐位元判。
+  template={'ref': 'tpl-area-strike', 'params': {'castType': 'targeted', 'damageType': 'magic', 'damage': {'damageTierPerRank': ['小', '中', '中', '中'], 'ratios': [{'stat': 'ap', 'coeff': 0.6}]}, 'radius': 6.0, 'radiusTier': '中', 'includeOrigin': True, 'condition': {'kind': 'status', 'subject': 'target', 'statusId': 'curse'}, 'castTimeSec': 0.833}},
+  )
 
 A("44-04", "44-04 心臟麻痺", "targeted", [35, 35, 35], [150, 250, 350], 12,
   "[主動][AP加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n\n「不，還不能笑，我一定要忍住……在35秒後宣布勝利吧。」\n造成敵方[詛咒]標記的[現存生命] 30/40/50% + {{ap}}% [AP] 傷害，並使動作[緩慢]持續5秒。",

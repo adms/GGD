@@ -47,6 +47,24 @@ if (LOG && ROOT) {
         return orig.call(this, p, ...rest);
       };
       Object.defineProperty(wrapped, "name", { value: n });
+      // ⭐⭐ GH#1107 B —— **把原函式自己的屬性搬過來**。
+      //
+      // ⛔ 在此之前這裡只換函式本體 ⇒ ⭐ `fs.realpathSync.**native**` 這一類
+      //   「掛在函式上的函式」**整個不見了**。而 vite 的解析器（`PluginContainer.resolveId`）
+      //   正是讀它 ⇒ ⭐ 任何**內部會跑 vitest 的產生器**在探針底下必死
+      //   （量到「讀 1296 **寫 0** ⛔ exit 1」）⇒ 那一支就進不了戶籍
+      //   ⇒ ⛔ 它的產物永遠是「鎖著但無主」（GH#1107 B 的擋點）。
+      //
+      // ⚠️ ⭐ 而它**不會**讓探針漏記：`.native` 那一層是原函式的屬性,
+      //   我們攔的是**外層呼叫**,⛔ 不是它的屬性。
+      for (const k of Object.getOwnPropertyNames(orig)) {
+        if (k === "length" || k === "name" || k === "prototype") continue;
+        try {
+          Object.defineProperty(wrapped, k, Object.getOwnPropertyDescriptor(orig, k));
+        } catch {
+          /* 不可設定的屬性 —— 跳過,⛔ 不要因為一個屬性弄壞整支探針 */
+        }
+      }
       try {
         obj[n] = wrapped;
       } catch {

@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "f4648881cd86",
+  "hash": "c0a4eaffb157",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -55,6 +55,12 @@
       "path": "config/asset-cdn.json",
       "hash": "0ccc9fd36c70",
       "size": 413
+    },
+    {
+      "id": "asset-downloads",
+      "path": "config/asset-downloads.json",
+      "hash": "63f283b1f496",
+      "size": 431
     },
     {
       "id": "audio-map",
@@ -263,8 +269,8 @@
     {
       "id": "icon-plan",
       "path": "config/icon-plan.json",
-      "hash": "2ae649af96ee",
-      "size": 1542
+      "hash": "7cd8dffc660a",
+      "size": 879
     },
     {
       "id": "icon-style",

@@ -61,6 +61,47 @@
       ]
     }
   ],
+  "template": {
+    "ref": "tpl-area-strike",
+    "params": {
+      "castType": "self",
+      "damageType": "magic",
+      "damage": {
+        "damageTier": "極小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.2
+          }
+        ]
+      },
+      "radius": 6.0,
+      "radiusTier": "中",
+      "includeOrigin": true,
+      "onHitTargets": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": -0.5
+            }
+          ],
+          "duration": 3.0,
+          "dispellable": true,
+          "polarity": "debuff"
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow50",
+          "duration": 3.0,
+          "moveSpeedMult": 0.5
+        }
+      ],
+      "castTimeSec": 0.833
+    }
+  },
   "icon": "assets/icons/abilities/godie-edem.w.webp",
   "vfxKey": "fx.prim.lightning.beam",
   "cooldownTier": "小",

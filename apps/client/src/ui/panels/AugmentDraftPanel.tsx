@@ -60,9 +60,10 @@ import { SfxButton } from "../SfxButton";
 import { resolveChoice } from "./resolveChoice";
 import { statPathReadout } from "./statPathReadout";
 import { uiCues } from "../uiCuesConfig";
-import { DRAFT_CONFIRM_SFX, tierColor, tierLabel, weaponEffectDescription } from "./draftCardStyle";
+import { DRAFT_CONFIRM_SFX, isItemChoice, tierColor, tierLabel, weaponEffectDescription } from "./draftCardStyle";
 // owner 2026-08-02 的卡片排版,四個渲染點之一(三選一抽卡)。
 import { ItemCardBody } from "../components/ItemCardBody";
+import { REJECT_TEXT } from "./shopFeedback";
 import { itemCardDescription } from "./draftCardStyle";
 import {
   draftChoiceSuffix,
@@ -334,6 +335,26 @@ export function AugmentDraftPanel(): React.JSX.Element | null {
  * exercises exactly the markup a player's AT would meet.
  */
 export function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
+  /**
+   * ⭐⭐ GH#1110 A3 —— **卡片事先標出「背包已滿」**（⛔ 不是點下去才知道）。
+   *
+   * owner 2026-09-06 逐字：「隨機選寶具的時候 **道具欄已滿 怎麼辦**」→「**A ＋ B 開票**」。
+   * ⭐ A1／A2 已經做完（sim 發 `itemPickRejected` → `RoomStore` 映成 `buyRejected`
+   * → 「道具欄已滿（先賣掉一件）」）—— ⛔ 而那是**點下去之後**才看到的。
+   *
+   * ⭐ 為什麼純客戶端做得到、⛔ 不必動 append-only 協定：
+   * `SeatState.items` 本來就是 6 格字串陣列（`""` ＝ 空），⇒ 空格數是**推導**得出來的。
+   *
+   * ⚠️ ⭐ 回**一個數字**（⛔ 不是陣列、⛔ 不是物件）—— GH#618 的閘
+   * `augmentDraftNoReconcile` 量到 `seats` 的快取鍵含 `cooldowns`/`mana`
+   * ⇒ 每一張快照都是新物件 ⇒ 回物件的選擇器會讓這棵子樹每 tick 重跑 React。
+   */
+  const freeItemSlots = useHud((s) => {
+    if (s.localSeatId === null) return -1;
+    const items = s.seats.find((v) => v.seatId === s.localSeatId)?.items;
+    if (!items) return -1;
+    return items.reduce((n, it) => (it ? n : n + 1), 0);
+  });
   const accent = tierColor(offer.tier);
   const [revealed, setRevealed] = useState(0);
 
@@ -382,6 +403,11 @@ export function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
           // 增益/技能卡沒有 `效能` 結構,維持原本那一段純文字。
           const cardDoc = itemCardDescription(choice);
           const faceUp = idx < revealed;
+          // ⭐ GH#1110 A3 —— 只有**道具**卡吃背包格（增益／技能卡⛔ 不吃）。
+          //   ⚠️ `freeItemSlots < 0` ＝ 還沒有座位狀態 ⇒ ⛔ 不宣稱滿（fail-open，
+          //   ⭐ 而它不靜默：真的滿了伺服器仍會回 `itemPickRejected`）。
+          const isItemCard = isItemChoice(choice);
+          const noSlot = isItemCard && freeItemSlots === 0;
           return (
             <Tooltip
               key={choice}
@@ -413,6 +439,10 @@ export function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
                 // encode the chosen index so the server applies THIS card
                 // (host accepts "offerId#idx"; plain id falls back to choice 0)
                 onClick={() => {
+                  // ⭐ GH#1110 A —— 背包滿就**不送**（⛔ 不消耗那次機會）。
+                  //   ⚠️ 伺服器那一側仍然會拒（`draft.ts` 的 `no-slot`）——
+                  //   ⭐ 這裡只是讓玩家**在點之前**就看得到，⛔ 不是唯一的防線。
+                  if (noSlot) return;
                   audioSystem.playSfx(DRAFT_CONFIRM_SFX);
                   hudActions.sendCommand({ kind: "pickOffer", offerId: `${offer.offerId}#${idx}` });
                 }}
@@ -428,7 +458,8 @@ export function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
                     gap: 8,
                     padding: "14px 8px 12px",
                     borderRadius: 12,
-                    cursor: "pointer",
+                    // ⭐ GH#1110 A3 —— 背包滿時卡片**看得出來不能點**（⛔ 不是點了沒反應）。
+                    cursor: noSlot ? "not-allowed" : "pointer",
                     background: "linear-gradient(180deg, #1b2233 0%, #12172a 100%)",
                     border: `1px solid ${accent}44`,
                     color: TEXT_MAIN,
@@ -437,7 +468,10 @@ export function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
                     // settles opaque the instant its draftCardReveal sparkle fires.
                     // pointer-events off while hidden so a card cannot be hovered
                     // or picked before the player can actually see it.
-                    opacity: faceUp ? 1 : 0,
+                    // ⭐ GH#1110 A3 —— 已滿的卡壓暗（⛔ 而**不是**隱藏：玩家仍要看得到
+                    //   那張卡是什麼，才知道值不值得先賣一件去換）。
+                    opacity: faceUp ? (noSlot ? 0.45 : 1) : 0,
+                    filter: faceUp && noSlot ? "grayscale(0.6)" : undefined,
                     pointerEvents: faceUp ? "auto" : "none",
                     transform: faceUp ? "translateY(0)" : "translateY(8px)",
                     transition:
@@ -477,6 +511,13 @@ export function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
                     cardDesc
                   )}
                 </div>
+                {noSlot ? (
+                  // ⭐ GH#1110 A3 —— 沿用**既有**的那一句（`shopFeedback.REJECT_TEXT["no-slot"]`），
+                  //   ⛔ 不寫第二份文案：兩份文案會漂，而漂掉時沒有東西會紅。
+                  <span style={{ fontSize: 10, color: "#ff9a6b", fontWeight: 700 }}>
+                    {REJECT_TEXT["no-slot"]}
+                  </span>
+                ) : null}
               </SfxButton>
             </Tooltip>
           );

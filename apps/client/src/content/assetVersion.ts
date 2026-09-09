@@ -74,6 +74,39 @@ export function setAssetCdn(cfg: { enabled: boolean; baseUrl: string; fallbackTo
   cdn = cfg;
 }
 
+/**
+ * ⭐ GH#1124 —— 簽署網址那條路的**消費端**（第四個住處）。
+ *
+ * ⛔ 出貨 `enabled: false`（正式站沒有 AWS 憑證、bucket 沒有 CORS —— 兩個都是 owner 的動作），
+ * ⇒ 這條路今天回 `null`，⭐ 而它不是死碼：兩個擋點解掉、開關打開，下一次載入就走它。
+ *
+ * ⚠️ ⭐ 這裡**只回報「要不要走簽署網址」** —— ⛔ 實際去要網址是 #1125 的三層快取
+ * （記憶體 → Cache Storage → 簽署網址）。⭐ 分開是刻意的：這個模組跑在**首次繪製之前**，
+ * ⛔ 不可以在這裡做任何非同步的事。
+ */
+let downloads: { enabled: boolean; signedUrlTtlSec: number } | null = null;
+
+/** 由內容載入時注入（同 {@link setAssetCdn}）。 */
+export function setAssetDownloads(cfg: { enabled: boolean; signedUrlTtlSec: number }): void {
+  downloads = cfg;
+}
+
+/**
+ * ⭐ 這一顆素材要不要走「後端簽署網址」？⛔ 回 false ＝ 走站台自己。
+ *
+ * ⚠️ 兩個方向都要驗（#1116 的教訓）：關著時**必須**回 false，
+ * ⛔ 而不是「反正沒有人呼叫它」。
+ */
+export function needsSignedUrl(url: string): boolean {
+  if (!downloads?.enabled) return false;
+  return url.startsWith("/content/assets/");
+}
+
+/** 簽署網址的存活秒數（⭐ 給 #1125 的快取層決定何時重簽）。 */
+export function signedUrlTtlSec(): number {
+  return downloads?.signedUrlTtlSec ?? 900;
+}
+
 /** 素材網址 → CDN 網址。⭐ 關著、沒網址、或不是 `/content/assets/` 底下 ⇒ 原樣回傳。 */
 export function cdnAssetUrl(url: string): string | null {
   if (!cdn?.enabled || cdn.baseUrl === "") return null;

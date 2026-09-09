@@ -1,0 +1,78 @@
+{
+  "id": "tpl-ally-shield",
+  "schema": "template@1",
+  "name": "友軍護盾",
+  "description": "給**友軍**一層護盾（`kind:\"shield\"`）。⭐ `target` 三種：`self` ＝ 只罩自己（castType self）；`ally` ＝ **指定一位隊友**（castType targeted ＋ `targetsEnemies:false` ⇒ 點不到敵人）；`area` ＝ **範圍內的友軍與自己**（castType ground ＋ `targetsEnemies:false` ＋ `radius`）。⭐ 引擎那一側早就支援：`abilitySystem.ts` 的地面 AoE 在 `targetsEnemies:false` 時走 `bodiesInCircle` 的友方路徑，⭐ 而且**施法者自己算在圈內**（GH#458 的註解逐字寫著理由：一個以自己為圓心的結界把自己排除在外，就會退化成另一種「說了但不會發生」）。⇒ ⭐ 這一族補的是**模板**，⛔ 不是機制。⚠️ GH#1132 量到 37 名社群英雄裡**提到友軍的 18 槽**有 **12 槽綁著 `tpl-buff-self`** —— 那個家族發 `applyTo:self`、⛔ 不設 `targetsEnemies` ⇒ 「友軍盾」實際只罩施法者自己。",
+  "family": "ally-shield",
+  "status": "enabled",
+  "requires": [],
+  "gapScore": 10,
+  "params": {
+    "target": {
+      "type": "enum",
+      "values": [
+        "self",
+        "ally",
+        "area"
+      ],
+      "default": "area",
+      "origin": "census: GH#1132 —— 37 名社群英雄裡**提到友軍的 18 槽**逐句分類：**範圍 7 · 指定 4 · 兩者或判不出 7** ⇒ ⭐ 預設挑 `area`（⛔ 不是我挑的，是多數）。⚠️ 而那 18 槽裡有 **12 槽**今天綁著 `tpl-buff-self` —— 那一族發 `applyTo:self`、⛔ 不設 `targetsEnemies` ⇒ ⭐「友軍盾」實際只罩施法者自己，而卡面說它保護隊友（第一·五守則）。⭐ `area` 逐字對到 AC③「範圍友軍盾實際保護範圍內友軍**及自己**」。"
+    },
+    "amount": {
+      "type": "scaling",
+      "origin": "census: 出貨 **10 個** `shield` 節點裡 3 個帶 `perRank`。⭐ 這一格逐位元取自 `tpl-heal.amount` 的預設（`perRank [50,85,120,155]` ＋ `ap 0.465`）—— ⭐ 護盾與回血是**同一個量級**的友方數值,⛔ 而護盾**沒有級距表**（`damage-tiers` 只管傷害）⇒ ⛔ 這裡沒有第二個住處可抄。",
+      "default": {
+        "perRank": [
+          50,
+          85,
+          120,
+          155
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.465
+          }
+        ]
+      }
+    },
+    "duration": {
+      "type": "number",
+      "min": 0,
+      "max": 60,
+      "unit": "s",
+      "origin": "census: 出貨 10 個 `shield` 節點的 `duration` **中位數 ＝ 8 秒**（值域 1–15）。⛔ 不是我挑的好看數字。`zShield.duration` 是 `z.number().min(0)`；上界 60 取自值域外推的安全邊。",
+      "default": 8
+    },
+    "radius": {
+      "type": "number",
+      "min": 0,
+      "max": 30,
+      "origin": "census: 出貨**唯一**一支「友方 ground」技能（`targetsEnemies:false` ＋ `radius`）的半徑是 **8**（53-03 破法對咒那一族）。⛔ 不是我挑的數字。⚠️ 只有 `target:\"area\"` 讀它。",
+      "default": 8
+    },
+    "absorbs": {
+      "type": "enum",
+      "values": [
+        "all",
+        "physical",
+        "magic",
+        "true"
+      ],
+      "optional": true,
+      "origin": "`zShield.absorbs` 本人的值域，⛔ 不是另一份白名單。留空 ＝ 走 schema 的預設。"
+    },
+    "castTimeSec": {
+      "type": "number",
+      "optional": true,
+      "min": 0,
+      "max": 5,
+      "unit": "s",
+      "origin": "與其餘每一族同一格（`deriveCastTimes` 會覆蓋它；留空 ＝ 由推導填）。"
+    }
+  },
+  "exemplar": {
+    "skill": "GH#1132：37 名社群英雄裡提到友軍的 18 槽（12 槽今天誤綁 tpl-buff-self）",
+    "jass": "⛔ 無 JASS 對照 —— 這一族是社群英雄的原設計（第〇·六守則第 1 層：owner／作者的新版說明贏過考古）"
+  }
+}

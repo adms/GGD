@@ -1,0 +1,52 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.20260909-community37-icons",
+  "kind": "claim",
+  "from": "main",
+  "to": "codex",
+  "baseCommit": "46af5db5a4ce8aa9e46ef1bfdc854b703c572318",
+  "contractFingerprint": "23d3e78f6ec4d047",
+  "title": "第二批 37 名社群英雄的圖示已產出（259 張，本地 SD）——⭐ 位元組在 S3，⛔ 不在 git，請編輯器取用上傳",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "259 張圖示已產出：37 名英雄 × (頭圖 ＋ PASSIVE/Q/W/E/R/EX)。⭐ 走的是**出貨那 1,010 張同一條**兩段式管線與同一份 icon-style —— method 戳記 twopass-v3+style:9b5032ee7e91（community_batch.py 重用 keywords.py 與 pipeline.py，⛔ 不是第二條路）。渲染 256 張／失敗 0／32.5 分（另 3 張先跑的樣本，合計 259）。⚠️ ⭐ 主體與配色**逐字取自交接資料的 brief.concept 視覺方向**，⛔ 不是內建 deriver 推的：量到內建 deriver 會讓 34/37 英雄落到 role 退路（22 隻長成同一張）、222 支技能只推出 68 個相異主體。repro 驗的正是「37/37 與 222/222 全部相異」。",
+      "repro": {
+        "command": "python3 tools/icon-gen/local/verify_subjects.py",
+        "expectedExit": 0
+      },
+      "commit": "46af5db5a4ce8aa9e46ef1bfdc854b703c572318",
+      "evidence": [
+        "tools/icon-gen/local/community_batch.py",
+        "tools/icon-gen/local/data/community37-subjects.json",
+        "tools/icon-gen/local/verify_subjects.py"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "⭐ 工作清單逐格可重現：259 格（英雄 37 · 技能 222），每一格都對得到一個**策劃過的**主體（repro 印「有策劃主體 259/259」）。⛔ 一格都沒有落到內建 deriver 的退路。⭐ 位元組在 S3（owner 2026-09-08：「資源庫 我覺得不要進 git 但可以存到 S3」）：bucket ggd-390630837668-ap-east-2-an（ap-east-2 台北）· prefix community-hero-icons/batch2-37/20260909/ ；同一個 prefix 下的 s3-manifest.json 逐檔記 path／bytes／sha256。⭐ 抽驗 8 個物件**下載回來重算 sha256**，8/8 逐位元組相同（⛔ 不是看 ListObjects 就宣稱）。⭐ 另有 contact-sheet.png（1370×1448，37 列 × 7 格，0 缺格）供一頁 HITL。",
+      "repro": {
+        "command": "python3 tools/icon-gen/local/community_batch.py --out /private/tmp/ggd-icon-dryrun --dry-run",
+        "expectedExit": 0
+      },
+      "commit": "46af5db5a4ce8aa9e46ef1bfdc854b703c572318",
+      "evidence": [
+        "tools/icon-gen/local/community_batch.py",
+        "docs/editor-contract/coordination/claim.20260909-community37-icons.json"
+      ]
+    },
+    {
+      "kind": "inferred",
+      "text": "⭐ **要編輯器做的**：把這 259 張接進 37 名英雄的投稿包（肖像 1 ＋ 技能 6，路徑照 heroIconNormalization.ts 的 normalizeHeroSource 契約）。⛔ 不要改成「匯入時現畫」—— ⭐ 匯入路徑**刻意**沒有產圖接縫（正式站 content-api 是 dev profile；投稿包的 digest 要求同一份包每次都一樣。理由三條寫在 tools/icon-gen/README.md 第 7 節，GH#1130）。⚠️ 檔名對應：champions/<英雄id>.webp 與 abilities/<英雄id>.<slot>.webp，<英雄id> 就是交接資料的 id（例 community-review-01-20260907），slot 是 passive/q/w/e/r/ex。⭐ 標成 inferred 是因為：檔名對應是我從產出目錄的結構讀出來的，⛔ 而「編輯器那一側怎麼接」我沒有跑過 —— 那一半在你們手上。",
+      "repro": {
+        "command": "python3 tools/icon-gen/src/plan.py --check",
+        "expectedExit": 0
+      },
+      "commit": "46af5db5a4ce8aa9e46ef1bfdc854b703c572318",
+      "evidence": [
+        "apps/content-api/src/heroIconNormalization.ts",
+        "tools/icon-gen/README.md"
+      ]
+    }
+  ]
+}

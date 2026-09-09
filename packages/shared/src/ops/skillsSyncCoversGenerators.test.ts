@@ -186,30 +186,6 @@ const CHECK_STEP_NO_SYNC: Record<string, string> = {
     "⇒ ⭐ 沒有產物就沒有「過期」這回事,接進 `skills:sync` 只是把同一個分析跑第二次。" +
     "⚠️ 它守的是**平衡公式自洽**（每一格倍率 ×0.5／×2 重算,兩邊一起動而佔血條不動 = 回音迴圈）," +
     "⛔ 不是某份文件的新鮮度。反駁法:如果哪天它開始寫檔,這一列就要刪掉。",
-  "collections:check":
-    "⭐ GH#998 —— 這一列是**暫時**的（帶票號）。`tools/collections-gen/gen.ts` 從 " +
-    "`packages/shared/src/content/schema/index.ts` 的 `COLLECTIONS` 推導 Go 的 " +
-    "`apps/platform/internal/contentoverlay/collections_gen.go`；它**不讀** content/ 或 docs/ 的" +
-    "任何一個位元組 ⇒ 聚合重生成（為**內容**改動而存在）碰不到它的輸入 —— 它只在" +
-    "「改 schema 的那一次 PR」會過期，而那一次 `collections:check`（skills:check）＋ Go 的 " +
-    "`TestKnownCollectionsMatchTheSharedSchemaTable`（CI go-platform）**兩條**都會紅並指名 " +
-    "`pnpm collections:build`。⭐ 為什麼今天沒接進 `skills:sync`：`sync.mjs` 閘① —— chain 字串" +
-    "改了就**拒跑**（exit 2），而 `sync-io.json` 在這條 lane 的柵欄外 ⇒ 兩件事必須同一個 commit 落地" +
-    "（`7e6153c3e` 的形狀：`node tools/parallel-gates/trace.mjs --script collections:build --out <tmp>` " +
-    "單步量進戶籍 ＋ `skills:sync` 加 `&& pnpm collections:build`）。" +
-    "⭐ 到期條件（一行可查）：`grep -c 'pnpm collections:build' package.json` ≥ 2 的那一刻，這一列刪掉。",
-  "skillforge:visual-advisory:check":
-    "⭐ GH#986 —— 這一列是**暫時**的（帶票號）。2026-09-07 這一支從 `EXEMPT` 搬進 `skills:check`：" +
-    "它的產物（`docs/_reports/editor-skill-codex-advisory/review.{json,md}`）**會過期**，所以它該被驗，" +
-    "而 `--check` 今天回 0（`node tools/skill-forge/build-codex-visual-advisory.mjs --check`）。" +
-    "⭐ 為什麼 `skillforge:visual-advisory:build` 今天還沒進 `skills:sync`：與 `collections:check` **同一個原因** —— " +
-    "`sync.mjs` 閘① 拿 `sync-io.json` 記的 chain 字串跟 package.json 逐字比，改了就**拒跑**（exit 2），" +
-    "而 `tools/parallel-gates/sync-io.json` 在這條 lane 的柵欄外 ⇒ 兩件事必須同一個 commit 落地" +
-    "（`node tools/parallel-gates/trace.mjs --script skillforge:visual-advisory:build --out <tmp>` 單步量進戶籍 " +
-    "＋ `skills:sync` 在 `pnpm skillforge:visual-review:build` **之後**加 `&& pnpm skillforge:visual-advisory:build`" +
-    "—— ⚠️ 順序是硬的：advisory 讀的是 visual-review 產出的審查包）。" +
-    "⭐ 到期條件（一行可查）：`grep -c 'pnpm skillforge:visual-advisory:build' package.json` ≥ 1 的那一刻" +
-    "（今天量到 **0**），這一列刪掉。",
 };
 
 const EXEMPT: Record<string, string> = {

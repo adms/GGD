@@ -27,6 +27,8 @@ subject — every icon came back an unrecognisable abstract blob. So:
 
 ────────────────────────────────────────────────────────────────────────────
 SCOPE (the #72 rescope) — read from the committed content/config/icon-plan.json
+  ⭐ 那份是產生器 **iconplan:build** 的產物（`tools/icon-gen/src/plan.py --write`）——
+  ⛔ 手改沒有用，跑 `bash scripts/genrun.sh iconplan:build`（GH#1131）。
 ────────────────────────────────────────────────────────────────────────────
   champions  the plan's `generate` (sela, thorne) + `third-party-ip` blocked
              bucket = 24 portraits. (The committed plan is the stable source of

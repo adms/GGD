@@ -1,11 +1,11 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "15d59fc8",
+  "capabilityFingerprint": "abedce92",
   "counts": {
     "effectKinds": 52,
     "hookEvents": 38,
     "conditionLeafKinds": 11,
-    "templateFamilies": 43,
+    "templateFamilies": 47,
     "effectFields": 291,
     "stats": 23,
     "combatEnvKeys": 39
@@ -400,7 +400,7 @@
     "rows": [
       {
         "key": "AoE 半徑樣本（技能＋道具）",
-        "value": "200 個　最小 3 / 中位 6 / 最大 513.5",
+        "value": "210 個　最小 3 / 中位 6 / 最大 513.5",
         "from": "shipped"
       },
       {
@@ -414,25 +414,25 @@
       {
         "label": "小",
         "range": "< 4.5",
-        "count": 41
+        "count": 42
       },
       {
         "label": "中",
         "range": "4.5 – 8",
-        "count": 84
+        "count": 92
       },
       {
         "label": "大",
         "range": "≥ 8",
-        "count": 75
+        "count": 76
       }
     ]
   },
   "oversizedAoe": {
     "zoneRadius": 24,
-    "total": 33,
+    "total": 45,
     "over": [],
-    "note": "33 支模板技能的 AoE 半徑全部在 zone 半徑 24 之內 —— WC3 單位換算（GGD_PER_WC3 = 11/600）由 expand() 正確套用。"
+    "note": "45 支模板技能的 AoE 半徑全部在 zone 半徑 24 之內 —— WC3 單位換算（GGD_PER_WC3 = 11/600）由 expand() 正確套用。"
   },
   "geometryFields": {
     "範圍與形狀": [
@@ -598,12 +598,15 @@
       "status"
     ],
     "templateFamilies": [
+      "ally-shield",
       "apply-status",
+      "area-strike",
       "beam-roll",
       "blink",
       "blink-strike",
       "buff-self",
       "charge-push",
+      "charge-resource",
       "combo-finisher",
       "dragon-quake",
       "dragon-serpent",
@@ -637,6 +640,7 @@
       "radial-burst",
       "random-barrage",
       "single-strike",
+      "spend-resource",
       "summon-agent",
       "teleport",
       "transform",

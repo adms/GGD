@@ -48,6 +48,35 @@
       "modelKey": "w3x.stock.monsoonbolttarget"
     }
   ],
+  "template": {
+    "ref": "tpl-area-strike",
+    "params": {
+      "castType": "ground",
+      "damageType": "physical",
+      "damage": {
+        "damageTierPerRank": [
+          "小",
+          "中",
+          "中"
+        ],
+        "ratios": [
+          {
+            "stat": "ad",
+            "coeff": 0.6
+          }
+        ]
+      },
+      "radius": 3.0,
+      "radiusTier": "極小",
+      "includeOrigin": true,
+      "modelFx": {
+        "shape": "single",
+        "preset": "tpl-locust-strike",
+        "modelKey": "w3x.stock.monsoonbolttarget"
+      },
+      "castTimeSec": 2
+    }
+  },
   "icon": "assets/icons/abilities/godie-e00w.r.webp",
   "vfxKey": "fx.prim.lightning.beam-lg",
   "cooldownTier": "中",

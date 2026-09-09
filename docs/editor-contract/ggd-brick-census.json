@@ -2,17 +2,17 @@
   "schema": "ggd-brick-census@1",
   "note": "⭐ 積木普查（owner 2026-09-01：「編輯器是堆積木的角色，要充分了解有哪些積木；main 是做出積木的角色」）。⛔ 產物 —— 改 `tools/brick-census/gen.ts`，⛔ 不要手改。",
   "counts": {
-    "engineFamilies": 43,
-    "templateDocs": 54,
-    "usable": 43,
+    "engineFamilies": 47,
+    "templateDocs": 58,
+    "usable": 47,
     "engineMissing": 10,
     "shells": 10,
-    "zeroAdoption": 26,
+    "zeroAdoption": 29,
     "terminal": 1,
-    "handWritten": 124,
-    "distinctShapes": 85,
-    "singletonShapes": 58,
-    "top8Coverage": 28
+    "handWritten": 111,
+    "distinctShapes": 76,
+    "singletonShapes": 51,
+    "top8Coverage": 26
   },
   "demand": [
     {
@@ -46,15 +46,6 @@
       ]
     },
     {
-      "shape": "applyBuff + applyStatus + damageArea",
-      "count": 3,
-      "examples": [
-        "godie-e001.passive",
-        "godie-e00n.passive",
-        "godie-edem.w"
-      ]
-    },
-    {
       "shape": "applyBuff + damage",
       "count": 3,
       "examples": [
@@ -70,15 +61,6 @@
         "godie-e007.ex",
         "godie-efur.w",
         "godie-ewar.ex"
-      ]
-    },
-    {
-      "shape": "damageArea",
-      "count": 3,
-      "examples": [
-        "godie-e00x.passive",
-        "godie-efur.e",
-        "godie-emns.e"
       ]
     },
     {
@@ -216,15 +198,34 @@
         "godie-efur.r",
         "godie-ogld.ex"
       ]
+    },
+    {
+      "shape": "damageArea×2 + randomArea + spawnVfx + summon",
+      "count": 2,
+      "examples": [
+        "godie-e00s.r",
+        "godie-e010.r"
+      ]
+    },
+    {
+      "shape": "damageLine + floatingText + screenShake + spawnModelFx×2 + spawnVfx×2",
+      "count": 2,
+      "examples": [
+        "godie-e002.e",
+        "godie-e00l.e"
+      ]
     }
   ],
   "engineFamilies": [
+    "ally-shield",
     "apply-status",
+    "area-strike",
     "beam-roll",
     "blink",
     "blink-strike",
     "buff-self",
     "charge-push",
+    "charge-resource",
     "combo-finisher",
     "dragon-quake",
     "dragon-serpent",
@@ -258,6 +259,7 @@
     "radial-burst",
     "random-barrage",
     "single-strike",
+    "spend-resource",
     "summon-agent",
     "teleport",
     "transform",
@@ -280,7 +282,7 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 6,
-      "abilities": 53,
+      "abilities": 54,
       "terminal": false
     },
     {
@@ -316,7 +318,7 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 8,
-      "abilities": 13,
+      "abilities": 14,
       "terminal": false
     },
     {
@@ -335,6 +337,15 @@
       "status": "enabled",
       "params": 6,
       "abilities": 12,
+      "terminal": false
+    },
+    {
+      "id": "tpl-area-strike",
+      "family": "area-strike",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 12,
+      "abilities": 11,
       "terminal": false
     },
     {
@@ -509,6 +520,15 @@
       "terminal": false
     },
     {
+      "id": "tpl-ally-shield",
+      "family": "ally-shield",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 6,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
       "id": "tpl-barrier-domain",
       "family": "barrier-domain",
       "engineKnows": false,
@@ -532,6 +552,15 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 11,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-charge-resource",
+      "family": "charge-resource",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 6,
       "abilities": 0,
       "terminal": false
     },
@@ -721,6 +750,15 @@
       "engineKnows": false,
       "status": "draft",
       "params": 0,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-spend-resource",
+      "family": "spend-resource",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 6,
       "abilities": 0,
       "terminal": false
     },

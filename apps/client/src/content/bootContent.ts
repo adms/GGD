@@ -27,8 +27,9 @@ import {
 } from "@ggd/shared/content";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import { Champions } from "@ggd/shared/sim/content/registry";
-import { setAssetCdn, setContentAssetVersion } from "./assetVersion";
+import { setAssetCdn, setAssetDownloads, setContentAssetVersion } from "./assetVersion";
 import { assetCdnFromDoc } from "@ggd/shared/content/schema/config/assetCdn";
+import { assetDownloadsFromDoc } from "@ggd/shared/content/schema/config/assetDownloads";
 import { Configs } from "@ggd/shared/content";
 import { fetchOverlayBundle } from "./clientOverlay";
 import { captureClientCommunityBase } from "./communityMatch";
@@ -214,6 +215,8 @@ export async function loadAllContent(opts: ContentBootOptions = {}): Promise<Con
     //   —— ⭐ 這正是 `enabledSwitchesHaveConsumers.test.ts` 在 2026-09-09 抓到的。
     //   ⛔ 出貨 enabled=false ⇒ 這條路今天不改變任何一個網址。
     setAssetCdn(assetCdnFromDoc(Configs.tryGet("asset-cdn") as never));
+    // ⭐ GH#1124 —— 同一個注入點。⛔ 出貨 enabled=false（正式站沒有 AWS 憑證）。
+    setAssetDownloads(assetDownloadsFromDoc(Configs.tryGet("asset-downloads") as never));
     if (fallback) transport = fallback.didFallback ? "per-doc" : "bundle";
     return {
       ok: true,

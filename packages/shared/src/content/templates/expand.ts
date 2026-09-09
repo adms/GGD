@@ -471,6 +471,24 @@ function str(t: TemplateDoc, params: Record<string, unknown>, name: string): str
  * 用的是 `zId` 本人 —— 和編輯器表單那一側（`paramsSchema.ts` 的 `docRef` 分支）
  * 同一個 schema，這樣「表單收得下的」與「展開收得下的」不可能分岔。
  */
+/** ⭐ GH#1132 —— 一句給玩家看的字（`zParamType` 的 `text`）。⛔ 與 `docRef` 不同：這是**內容**。 */
+function text(t: TemplateDoc, params: Record<string, unknown>, name: string): string {
+  const v = raw(t, params, name);
+  if (typeof v !== "string" || v.length === 0) {
+    throw new ExpandError(`template ${t.id}: param "${name}" must be a non-empty string`);
+  }
+  return v;
+}
+
+/** ⭐ GH#1146 —— 是非槽的讀取器（`zParamType` 的 `boolean`）。 */
+function bool(t: TemplateDoc, params: Record<string, unknown>, name: string): boolean {
+  const v = raw(t, params, name);
+  if (typeof v !== "boolean") {
+    throw new ExpandError(`template ${t.id}: param "${name}" must be a boolean`);
+  }
+  return v;
+}
+
 function docRef(t: TemplateDoc, params: Record<string, unknown>, name: string): string {
   const v = str(t, params, name);
   const parsed = zId.safeParse(v);
@@ -1169,6 +1187,72 @@ const FAMILIES: Readonly<Record<string, Family>> = {
       effects: [damageEffect(damageType(t, p, "damageType"), scaling(t, p, "damage"))],
     };
   },
+
+  /**
+   * ⭐⭐ GH#1146 範圍打擊 —— 一發 `damageArea` 節點（⛔ **不是** `instant-blast` 那種
+   * 「文件層 radius ＋ damage 節點」）。
+   *
+   * ## ⭐ 為什麼要它（量到的，⛔ 不是估的）
+   *
+   * `templatize.py` 的擋點逐條分箱（2026-09-09，母體 32 個形狀）：
+   * `damageArea` 出現在 **21/32** 個形狀裡 —— ⭐ 而全庫**沒有任何模板以它為主體**
+   * （`expand.ts` 只有兩處發它，⛔ 兩處都是別的家族裡的一格：落點大爆炸 `:772`、
+   * 行進波的終點爆發 `:1355`）。
+   *
+   * ## ⭐⭐ 而最關鍵的一件事：追加效果**在節點裡面**
+   *
+   * ⛔ 我第一版以為要六格獨立參數（knockback／status／dot／dispel／vfx／modelFx）。
+   * ⭐ 逐份讀那 10 支之後：那些東西全部住在 **`damageArea.onHitTargets`**：
+   *
+   * ```
+   * onHitTargets: null                      ×5
+   *             : [knockback]               ×2
+   *             : [applyStatus]             ×1
+   *             : [applyStatus, dot]        ×1
+   *             : [applyBuff, applyStatus]  ×1
+   * ```
+   *
+   * ⇒ ⭐ **一格 `effects` 型別的參數**就夠了 —— ⛔ 六格獨立參數是把同一份知識
+   * 拆成第二個住處（第〇·四守則）。
+   *
+   * ## ⭐ `includeOrigin` 是常數，⛔ 不是參數
+   *
+   * 那 10 支**全部**是 `true`（10/10）⇒ 做成參數只會多一格永遠不變的欄位。
+   */
+  "area-strike": (t, p) => ({
+    castType: str(t, p, "castType") as "self" | "ground" | "targeted",
+    targetsEnemies: true,
+    ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+    effects: [
+      {
+        kind: "damageArea",
+        damageType: damageType(t, p, "damageType"),
+        amount: scaling(t, p, "damage"),
+        radius: num(t, p, "radius"),
+        radiusTier: str(t, p, "radiusTier"),
+        // ⭐⭐ GH#1146 —— ⛔ 這裡曾經寫著「10/10 都是 true —— 常數，⛔ 不是參數」,
+        //   ⚠️ 而全樹量到的是 **20 true / 5 不存在** ⇒ 那句話是一句活過保存期限的散文
+        //   （第三守則）,而它擋住 5 支技能。⭐ 三態:填 true / 填 false / **不填**
+        //   （`zDamageArea.includeOrigin` 是 `z.boolean().optional()`,不存在 ≠ false）。
+        ...(has(t, p, "includeOrigin") ? { includeOrigin: bool(t, p, "includeOrigin") } : {}),
+        ...(has(t, p, "condition") ? { condition: raw(t, p, "condition") } : {}),
+        // ⭐ 追加效果住這裡（見上面那段）。⛔ 不是第二個頂層節點。
+        ...(has(t, p, "onHitTargets") ? { onHitTargets: raw(t, p, "onHitTargets") } : {}),
+      } as unknown as EffectDef,
+      // ⭐ GH#1146 —— **視覺是第二個頂層節點**，⛔ 不在 `onHitTargets` 裡。
+      //   ⚠️ 那兩件事的語意不同：`onHitTargets` 是「打中的每一個人身上追加什麼」，
+      //   而視覺是「這一發長什麼樣」——⭐ 出貨那 12 支逐位元就是這個結構
+      //   （`[damageArea, spawnModelFx]` / `[damageArea, spawnVfx]`）。
+      //   ⭐ 兩格分開（⛔ 不是一格二選一）：`spawnVfx` 是粒子腳本、`spawnModelFx` 是模型，
+      //   參數集合完全不同，硬併會變成一個後台畫不出來的欄位。
+      // ⭐ GH#1146 —— 施法者身上的增益（出貨 3 支：AoE 傷害 ＋ 自己加速）。
+      //   ⚠️ 它排在視覺**前面** —— 出貨那 3 支的節點次序就是 `[damageArea, applyBuff]`,
+      //   ⭐ 而次序是逐位元等價的一部分（`templatizeEquivalence` 會指名它）。
+      ...(has(t, p, "selfBuff") ? [effectNode(t, p, "selfBuff", "applyBuff", zApplyBuff)] : []),
+      ...(has(t, p, "vfx") ? [effectNode(t, p, "vfx", "spawnVfx", zSpawnVfx)] : []),
+      ...(has(t, p, "modelFx") ? [effectNode(t, p, "modelFx", "spawnModelFx", zSpawnModelFx)] : []),
+    ],
+  }),
 
   // 3. 原地震波 — nova around the caster. 呂布 80-03 鬼神烈戟.
   //
@@ -2917,6 +3001,155 @@ const FAMILIES: Readonly<Record<string, Family>> = {
    * 對回血族正是要的人）；填 self ＝ 不管點誰都回自己。
    * ⚠️ 回血**沒有級距表**（damage-tiers 是傷害的）⇒ `amount` 走 perRank；出貨 5 支本來就是字面 perRank。
    */
+  /**
+   * ⭐⭐【友軍護盾】GH#1132 —— ⭐ 補的是**模板**，⛔ 不是機制。
+   *
+   * 引擎那一側**早就支援**：`abilitySystem.ts` 的地面 AoE 在 `targetsEnemies: false` 時
+   * 走 `bodiesInCircle` 的**友方**路徑，⭐ 而且**施法者自己算在圈內** —— 那一段的註解
+   * 逐字寫著理由（GH#458）：「一個以自己為圓心展開的結界把自己排除在外，就會退化成
+   * 另一種**說了但不會發生**」。
+   *
+   * ⚠️ ⭐ 而 GH#1132 量到：37 名社群英雄裡**提到友軍的 18 槽**，有 **12 槽綁著
+   * `tpl-buff-self`** —— 那個家族發 `applyTo: "self"`、⛔ 不設 `targetsEnemies`
+   * ⇒ ⭐ 「友軍盾」實際上**只罩施法者自己**，而卡面說它保護隊友（第一·五守則）。
+   *
+   * ⭐ 三種 `target`，逐一對到 AC②／AC③：
+   * · `self`  → `castType: "self"`（⛔ 不設 targetsEnemies —— 自己不是「友方目標」）
+   * · `ally`  → `castType: "targeted"` ＋ `targetsEnemies: false` ⇒ ⭐ **點不到敵人**
+   * · `area`  → `castType: "ground"`   ＋ `targetsEnemies: false` ＋ `radius`
+   *            ⇒ ⭐ 圈內友軍**與自己**，⛔ 不含敵方／圈外
+   *
+   * ⭐ 與 `tpl-heal` 是**同一個做法**（那一族的 self/ally 分岔就在下面幾行）——
+   * ⛔ 不發明第二種寫法。
+   */
+  "ally-shield": (t, p) => {
+    const target = str(t, p, "target");
+    if (target !== "self" && target !== "ally" && target !== "area") {
+      throw new ExpandError(`template ${t.id}: param "target"="${target}" 不是 self/ally/area`);
+    }
+    return {
+      castType: (target === "self" ? "self" : target === "ally" ? "targeted" : "ground") as CastType,
+      ...(target === "self" ? {} : { targetsEnemies: false }),
+      ...(target === "area" ? { radius: num(t, p, "radius") } : {}),
+      ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+      effects: [
+        {
+          kind: "shield",
+          amount: scaling(t, p, "amount"),
+          duration: num(t, p, "duration"),
+          // ⛔ ⭐ **⛔ 不發 `radiusTier`** —— `zShield` 只有 kind/amount/duration/
+          //   absorbs/stackKey/onExisting 六格（半徑住**技能層**的 `radius`,
+          //   ⛔ 不在效果節點上）。第一版我發了它,而那是一個 schema 會拒絕的欄位。
+          ...(has(t, p, "absorbs") ? { absorbs: str(t, p, "absorbs") } : {}),
+        } as unknown as EffectDef,
+      ],
+    };
+  },
+
+  /**
+   * ⭐⭐【事件累積資源】GH#1132 AC④ —— ⭐ 補的是**模板**，⛔ 不是機制。
+   *
+   * 四件引擎**早就有**：
+   * · **事件** —— 33 個 hook（`onAbilityHit` / `onAbilityCast` / …）
+   * · **容量** —— `applyStatus.maxStacks`
+   * · **去重** —— hook 的 `internalCooldown`
+   * · **重置** —— `applyStatus.duration`（缺席 ＝ 不自己過期，由消耗側扣掉）
+   *
+   * ⚠️ ⭐ 票文逐字：「布局／電力／線索以**對應真實事件**取得…**普攻額外傷害不作替代**」
+   * ⇒ ⭐ 而 GH#1132 量到那 72 槽裡 **26 槽誤綁在 `tpl-on-attack`** 上
+   *   —— 那一族發的是「普攻追加傷害」，⛔ 一層都不會累積。
+   *
+   * ⭐ 預設 `onAbilityHit` 的出處是 census（命中 13 · 施法 7 · 普攻 3），
+   * ⛔ 不是我挑的。
+   */
+  "charge-resource": (t, p) => {
+    const hook: HookDef = {
+      on: str(t, p, "event") as HookEvent,
+      target: "self",
+      effects: [
+        {
+          kind: "applyStatus",
+          statusId: docRef(t, p, "statusId") as StatusId,
+          stacks: num(t, p, "perEvent"),
+          // ⭐⭐ **容量不是 `applyStatus` 的欄位** —— 我第一版寫了 `maxStacks`,
+          //   而 schema 逐字回「Unrecognized key(s): 'maxStacks'」。
+          //   ⭐ 真正的形狀是 `refresh: "keep"` ＋ 一個窗口（`duration`）：
+          //   `applyStatus.ts` 的註解逐字說明為什麼 ——
+          //   「一個掛在 onInterval 上、每 3 秒 +1 層的計數器如果**每次都續期**,
+          //     那筆狀態就**永遠不會到期** ⇒『20 秒內疊到 5 層』會變成『永久 5 層』,
+          //     而畫面上完全看不出差別（失敗形態②）」。
+          //   ⇒ ⭐ `"keep"` 讓**層數**與**窗口**變成兩件獨立的事。
+          refresh: "keep",
+          // ⭐ `duration` 在 `zApplyStatus` 是**必填**（`zRankScalar`）—— ⛔ 不能留空。
+          //   ⭐ 預設 60（`STATUS_MAX_DURATION_SEC`）＝「不自己過期，由消耗側扣掉」。
+          duration: num(t, p, "durationSec"),
+        } as unknown as EffectDef,
+      ],
+      // ⭐ **去重**那一件（票文 AC④）。⛔ 缺席時**不**補一個猜的值：
+      //   「每次施法最多一層」與「每 3 秒最多一層」是兩種去重。
+      ...(has(t, p, "internalCooldown") ? { internalCooldown: num(t, p, "internalCooldown") } : {}),
+    };
+    return { castType: "self", innateKind: "passive", effects: [], passive: procPassive(hook) };
+  },
+
+  /**
+   * ⭐⭐【消耗資源施放】GH#1132 AC④ 的另一半 —— ⭐ 與 `charge-resource` 成對。
+   *
+   * ⭐ 為什麼**要求**與**扣除**是兩個節點：
+   * · `condition.status.minStacks` 決定「這一發**打不打得出來**」
+   *   （`sim/content/condition.ts:1352` 真的走 `statusStacks()`）
+   * · `consumeStatus.count` 決定「打出來之後**扣幾層**」
+   * ⇒ ⛔ 合成一格就表達不了「消耗全部」與「消耗固定三層」的差別。
+   *
+   * ⚠️ ⭐ 而**扣除排在最前面**：先扣再打，⛔ 否則一發打死自己的技能會留著層數。
+   */
+  "spend-resource": (t, p) => {
+    const statusId = docRef(t, p, "statusId") as StatusId;
+    // ⭐⭐ 「要幾層」與「扣幾層」是**同一格** —— ⛔ 第〇·四守則。
+    //   ⚠️ 我第一版開了 `spend`(all/exact) ＋ `spendCount` 兩格，⭐ 而 `paramsSchemaFor`
+    //   的閘當場抓到：**擾動 `spend` 不會改變展開結果** ⇒ 那是一格死參數
+    //   （因為兩條分支算出來的 `count` 是同一個數字）。
+    //   ⭐ 哪一天真的出現「要求 3 層但只扣 1 層」的設計，那時候才是把它拆開的理由。
+    const min = num(t, p, "minStacks");
+    return {
+      castType: str(t, p, "castType") as "self" | "ground" | "targeted",
+      ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+      effects: [
+        {
+          kind: "consumeStatus",
+          shape: "single",
+          subject: "self",
+          statusId,
+          // ⭐⭐ `minStacks` 真的進展開結果：它**就是** `count` ——
+          //   ⭐ 「扣光」在引擎裡是 `"all"`，⛔ 而那讓「**要求 3 層**」變成一句沒有人讀的話。
+          //   ⇒ ⭐ 用 `count: minStacks` 表達「**要 3 層，而且扣 3 層**」：
+          //   `consumeStatus` 扣不到就走 `onMissing`（省略 ＝ 什麼都不發生）
+          //   ⇒ ⭐ 那正是票文 AC④ 的「**合法消耗**」，⛔ 而且它是引擎保證的。
+          //   ⚠️ `spend:"exact"` 保留給「要求 3 層但只扣 1 層」那一種（有閘擋反向）。
+          count: min,
+          // ⭐⭐ **酬載住 `onConsumed` 裡** —— ⛔ 我第一版把它們平鋪在 `effects` 上
+          //   再逐顆掛一道 `condition`,⭐ 而 `consumeStatus` 的 schema 本人就有
+          //   `onConsumed`（必填,`.min(1)`）與 `onMissing`。
+          //   ⇒ ⭐ 那才是「**合法消耗**」的唯一住處（票文 AC④）：
+          //   · 扣得到 ⇒ 跑 `onConsumed` · 層數不足 ⇒ 跑 `onMissing`（或什麼都不做）
+          //   ⇒ ⛔ 不必自己發明一道 condition,⛔ 也不會有「少掛一顆」的漏洞。
+          onConsumed: raw(t, p, "effects") as EffectDef[],
+          // ⭐⭐ 層數不足 ⇒ **告訴玩家**（票文 exemplar 逐字：「缺少黑魔導時**顯示使用條件**」）。
+          //   ⛔ `onMissing` 省略 ＝「按下去什麼都沒發生」—— 那正是第一·五守則說的
+          //   「說了但不會發生」：卡面寫著消耗資源，而玩家不知道自己為什麼放不出來。
+          onMissing: [
+            {
+              kind: "floatingText",
+              shape: "single",
+              applyTo: "self",
+              text: text(t, p, "missingText"),
+            } as unknown as EffectDef,
+          ],
+        } as unknown as EffectDef,
+      ],
+    };
+  },
+
   "heal": (t, p) => {
     const target = str(t, p, "target");
     if (target !== "self" && target !== "ally") {

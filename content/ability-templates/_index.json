@@ -1,12 +1,24 @@
 {
   "collection": "ability-templates",
-  "hash": "6534b2a0b44a",
+  "hash": "7bafff281be0",
   "entries": [
+    {
+      "id": "tpl-ally-shield",
+      "path": "ability-templates/tpl-ally-shield.json",
+      "hash": "cd1a55b463af",
+      "size": 3973
+    },
     {
       "id": "tpl-apply-status",
       "path": "ability-templates/tpl-apply-status.json",
       "hash": "981b52af12fc",
       "size": 2459
+    },
+    {
+      "id": "tpl-area-strike",
+      "path": "ability-templates/tpl-area-strike.json",
+      "hash": "dbd6165ec40c",
+      "size": 5423
     },
     {
       "id": "tpl-barrier-domain",
@@ -49,6 +61,12 @@
       "path": "ability-templates/tpl-charge-push.json",
       "hash": "ee4e26d179d0",
       "size": 2182
+    },
+    {
+      "id": "tpl-charge-resource",
+      "path": "ability-templates/tpl-charge-resource.json",
+      "hash": "0be1bfa8b234",
+      "size": 5382
     },
     {
       "id": "tpl-combo-finisher",
@@ -95,8 +113,8 @@
     {
       "id": "tpl-effect-sequence",
       "path": "ability-templates/tpl-effect-sequence.json",
-      "hash": "7737c132c322",
-      "size": 1932
+      "hash": "c85b652bcce6",
+      "size": 2133
     },
     {
       "id": "tpl-event-passive",
@@ -289,6 +307,12 @@
       "path": "ability-templates/tpl-single-strike.json",
       "hash": "00f870cec154",
       "size": 1750
+    },
+    {
+      "id": "tpl-spend-resource",
+      "path": "ability-templates/tpl-spend-resource.json",
+      "hash": "3b9c31df23e1",
+      "size": 4514
     },
     {
       "id": "tpl-strip-transform",

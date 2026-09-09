@@ -59,6 +59,14 @@ A("13-02", "13-02 龍頭戲畫。牙突", "targeted", [45, 45, 45, 45], [60, 90,
 A("13-03", "13-03 龍頭戲畫。布陣", "self", [60, 60, 60, 60], [120, 180, 240, 300], 0,
   "[主動][範圍][AP加成]\n{{cd}}秒冷卻\n消耗[MP] {{mp}}\n\n「其實還可以衝刺，但老了」\n將念形成龍形衝擊波包裹全身，造成[範圍]敵人 {{dmg}} + {{ap}}% [AP] 傷害。",
   radiusTier="小",
+  # ⭐⭐ GH#1146 試點 —— 第一支綁 `tpl-area-strike` 的技能。
+  #   ⚠️ ⭐ 這幾格 params **不是我打的**：`templatize.py::m_area_strike()` 拿
+  #   出貨文件算出來的（`damageTierPerRank` 與 `castTimeSec` 都是它從
+  #   `apply_tiers` / `deriveCastTime` 的結果讀回來的）。
+  #   ⭐ 而 `effects=` **保留不動**：`mergeExpansion()` 會用模板的展開結果蓋掉它,
+  #   ⇒ 兩者相不相同由 `templatizeEquivalence.test.ts` **逐位元**判 ——
+  #   ⛔ 不同就會紅,而那正是「這一支不該綁這份模板」的訊號。
+  template={'ref': 'tpl-area-strike', 'params': {'castType': 'self', 'damageType': 'magic', 'damage': {'damageTierPerRank': ['極小', '極小', '小', '小'], 'ratios': [{'stat': 'ap', 'coeff': 0.6}]}, 'radius': 4.5, 'radiusTier': '小', 'includeOrigin': True, 'castTimeSec': 0.667}},
   effects=[area("magic", tier="小", per=[150, 250, 350, 450], ap=0.6)])
 
 # ⭐ GH#405 —— castType `ground` → `self`（第〇·六守則細則①：**內文 > 標籤**）。

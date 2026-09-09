@@ -53,6 +53,39 @@
       ]
     }
   ],
+  "template": {
+    "ref": "tpl-area-strike",
+    "params": {
+      "castType": "self",
+      "damageType": "physical",
+      "damage": {
+        "damageTierPerRank": [
+          "極小",
+          "極小",
+          "小",
+          "小"
+        ],
+        "ratios": [
+          {
+            "stat": "ad",
+            "coeff": 0.5
+          }
+        ]
+      },
+      "radius": 4.5,
+      "radiusTier": "小",
+      "includeOrigin": true,
+      "onHitTargets": [
+        {
+          "kind": "knockback",
+          "distance": 3.0,
+          "speed": 15.0,
+          "from": "caster"
+        }
+      ],
+      "castTimeSec": 0.667
+    }
+  },
   "icon": "assets/icons/abilities/godie-h00l.q.webp",
   "vfxKey": "fx.prim.wind.slash",
   "sfxKey": "wc3.druidofthetalonmissilelaunch2",

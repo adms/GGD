@@ -1,6 +1,6 @@
 # Editor 技能自我驗收：43 個主題／47 份實際技能
 
-產生時間（至分鐘）：2026-09-09T14:23+08:00
+產生時間（至分鐘）：2026-09-09T22:29+08:00
 
 > JSON/schema/單元測試通過不等於視覺通過。每列必須有真 framebuffer 關鍵格與人工裁決；八招另做逐階段嚴格比對。
 
@@ -55,7 +55,7 @@
 | `godie-e00s.r` 70-04 千年練成 | `ability:godie-e00s.r` | advanced-no-code-effect-form | not-applicable | captured／8 格／pending | — | **needs-frame-review** |
 | `godie-h02k.ex` 89-002 俄羅斯輪盤 | `ability:godie-h02k.ex` | advanced-no-code-effect-form | not-applicable | captured／2 格／pending | — | **needs-frame-review** |
 | `godie-edem.e` 45-03 千鳥 | `ability:godie-edem.e` | advanced-no-code-effect-form | not-applicable | captured／2 格／pending | — | **needs-frame-review** |
-| `godie-edem.ex` 45-002 天照 | `ability:godie-edem.ex` | advanced-no-code-effect-form | not-applicable | captured／8 格／pending | — | **needs-frame-review** |
+| `godie-edem.ex` 45-002 天照 | `ability:godie-edem.ex` | template-product | not-applicable | captured／8 格／pending | — | **needs-frame-review** |
 | `godie-efur.passive` 13-00 念。攻防轉換 | `ability:godie-efur.passive` | advanced-no-code-effect-form | skill-forge-effect-graph；script 時間軸：onBasicAttack | captured／2 格／pending | — | **needs-frame-review** |
 | `godie-emfr.ex` 15-002 敵彈吸收陣。太陰道 | `ability:godie-emfr.ex` | advanced-no-code-effect-form | skill-forge-effect-graph；script 時間軸：onDamageTaken | captured／3 格／pending | — | **needs-frame-review** |
 | `godie-emns.ex` 44-002 交換筆記本 | `ability:godie-emns.ex` | advanced-no-code-effect-form | not-applicable | captured／2 格／pending | — | **needs-frame-review** |

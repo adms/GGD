@@ -62,6 +62,30 @@ export const zParamUnit = z.enum(["wc3u", "wc3h", "s", "count", "ratio"]);
  */
 export const zParamType = z.enum([
   "number",
+  /**
+   * ⭐ GH#1146 —— **是非**。⛔ 在此之前這個詞彙表沒有布林，於是每一個布林行為都只能
+   * **寫死在展開器裡**（第一守則：寫死才需要理由）。
+   *
+   * ⭐ 觸發它的量測：`tpl-area-strike` 的 `includeOrigin` 被家族註解宣告成「10/10 都是
+   * 常數 true」——⭐ 而全樹是 **20 true / 5 不存在**。⇒ 那句註解是一句活過保存期限的散文
+   * （第三守則），而它擋住了 5 支技能。
+   *
+   * ⚠️ ⭐ 語意是**三態**，⛔ 不是兩態：「填 true」「填 false」「**不填**（那一格不出現在
+   * 展開結果裡）」——⭐ 最後一個由 slot 的 `optional` 表達，而 `zDamageArea.includeOrigin`
+   * 正是 `z.boolean().optional()`（不存在 ≠ false）。
+   */
+  "boolean",
+  /**
+   * ⭐ GH#1132 —— **一句給玩家看的字**（`floatingText.text` 那一族）。
+   *
+   * ⛔ 它**不是** `docRef`：我第一版用了 `docRef`，而 `docRef` 驗的是**文件編號**格式
+   * （小寫 a-z0-9 與 `. _ -`）⇒ 「資源不足」四個中文字當場被拒。
+   * ⭐ 兩者的差別是決定性的：`docRef` 指向**另一份文件**，`text` **就是要顯示的內容**。
+   *
+   * ⚠️ 上界 {@link FLOATING_TEXT_MAX_LEN} 由消費端的 schema 自己驗（`zFloatingText.text`）——
+   * ⛔ 這裡不抄第二份長度限制（第〇·四守則）。
+   */
+  "text",
   "enum",
   "scaling",
   "statModifiers",
@@ -93,6 +117,35 @@ export const zParamType = z.enum([
    */
   "dot",
   "spawnVfx",
+  /**
+   * ⭐ GH#1146 —— 同一個做法的第五格：**一整個 `spawnModelFx` 節點**（去掉 `kind`）。
+   *
+   * ⭐ 為什麼它不能併進 `spawnVfx` 那一格：兩者的**參數集合完全不相交** ——
+   * `spawnVfx` 是粒子腳本（`vfxId`＋`at`／`attach`／`boneOn`），
+   * `spawnModelFx` 是**模型**（`modelKey`／`scale`／`scaleAxis`／`clipTimeScale`／`count`／
+   * `spacing`／12 格 `MODEL_FX_PATH_FIELDS` 的路徑動畫）。硬併成一格二選一，
+   * 後台就要畫一個**兩套欄位互斥**的表單 —— 而 `walkZod` 畫不出那個東西。
+   *
+   * ⭐ 出處（⛔ 不是我挑的）：出貨 `damageArea` 單發技能裡，第二個頂層節點是
+   * `spawnModelFx` 的有 **3 支**（`godie-e00w.q`／`godie-e00w.r`／`godie-edem.ex`）、
+   * 是 `spawnVfx` 的 **1 支**（`godie-e00s.q`）。⇒ 多的那一種反而是模型。
+   */
+  "spawnModelFx",
+  /**
+   * ⭐ GH#1146 —— **一整個 `applyBuff` 節點**（去掉 `kind`）。
+   *
+   * ⭐ 為什麼是節點而不是幾格散裝欄位：`zApplyBuff` 有 `modifiers`／`duration`／
+   * `permanent`／`applyTo`／`stackKey`／`maxStacks`／`perRank`／`dispellable`／`polarity`
+   * 九格，而它們**彼此成對成立**（`permanent` ⇔ `perRank[].duration` 的 refine 就在
+   * `zEffectDef` 上）。拆成散裝就是把 `zApplyBuff` 抄第二份（第〇·四守則）。
+   *
+   * ⚠️ ⛔ 它**不是** `buffPerRank`：那一格是「`applyBuff` 裡的 `perRank` **那一欄**」，
+   * 這一格是「一整個 `applyBuff` **節點**」——⭐ 前者是後者的一個欄位。
+   *
+   * ⭐ 出處：出貨 `damageArea` 單發技能裡，第二個頂層節點是 `applyBuff` 的有 **3 支**
+   * （`godie-e001.passive`／`godie-e00n.passive`／`godie-h02u.r`）。
+   */
+  "applyBuff",
   /**
    * ⭐ GH#993 —— **逐階欄位表**（`applyBuff.perRank`：WC3 的 buff 一階一欄）。
    * 值是 `zApplyBuff.shape.perRank` 那一份**同一個** schema（`{modifiers, duration?}[]`），

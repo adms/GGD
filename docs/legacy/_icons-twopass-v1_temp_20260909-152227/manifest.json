@@ -1,0 +1,1134 @@
+{
+  "schema": "ggd-icon-backup@1",
+  "ticket": "GH#1129 B",
+  "note": "⭐ owner 2026-08-20 裁決：**備份後**重畫舊風格（twopass-v1）。⛔ 覆蓋前先留一份。",
+  "method": "twopass-v1",
+  "count": 225,
+  "files": [
+    {
+      "path": "content/assets/icons/champions/godie-e00s.webp",
+      "bytes": 5312,
+      "sha256": "7842f084d501a4a8ffa429d933fa59378b12fcf58b25366d64bf4fa0c0b7c9f7"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-e00t.webp",
+      "bytes": 5158,
+      "sha256": "653375f3be9e2d974c02a6a46fc416177123c9aa529b8c8e2e9dac3dc52e2d93"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-e00u.webp",
+      "bytes": 6498,
+      "sha256": "0f0941104143cd37c6517980f64c592587d0e39a8f0c6619c6cbb60646b512b9"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-e00v.webp",
+      "bytes": 5356,
+      "sha256": "8552f8cfb73b3ddb2722b3dcecdf3329468a25b1da7a36d0bcce8652faefcb3c"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-ecen.webp",
+      "bytes": 6090,
+      "sha256": "ce87d312d23ecec0ca658a59cef6b627bc2f98ad831b972bb0383ee334463c0d"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-efur.webp",
+      "bytes": 5352,
+      "sha256": "9a1f6bbe3b9ee76551eea9a5c1ff1f42c17b76c4c9467c155dc59f3f593027dc"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-ekee.webp",
+      "bytes": 6308,
+      "sha256": "4a10675898a01087c88fe1ec26fbe5e335b898028e13813389eb96041f0a2b1c"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-h02k.webp",
+      "bytes": 3336,
+      "sha256": "7b4887d78411c4b301c27c50ef1d0d59cf0deed43cced998616040faf0cff1b0"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-h02n.webp",
+      "bytes": 6336,
+      "sha256": "0ae37516e3d68aef97e645c130ec320cfb4c46d7d334b815935b278e6fa77a20"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-h02r.webp",
+      "bytes": 7782,
+      "sha256": "c8e4d105a42fb4b5022c4b4cb7ba7b272e03ce734e67ef91e166b6e142dfe0ee"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-h02s.webp",
+      "bytes": 7742,
+      "sha256": "dd7d48ea823ad961bb9361bff3bf4a4217870c2ce69d62ad938fc8235a0901fe"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-h02u.webp",
+      "bytes": 3626,
+      "sha256": "0bbbc8fcae397b7cca1d1fdd28dfc8a7099e536bb56777ff62552d09695cca04"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-h02v.webp",
+      "bytes": 4498,
+      "sha256": "3bcba825676ff9ea9f673b753ac0d25cb9f32c3352fb8ebcb0b4042741686916"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-h02z.webp",
+      "bytes": 5968,
+      "sha256": "c186211d5233034f4b5e62ed519db491b00a5990566e8e6aae9ab7ce4f9ff343"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-hgam.webp",
+      "bytes": 4652,
+      "sha256": "f799713a3696c79aad7eabd4ab5513796f2e297b18304687d3120d5d1719baac"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-n00b.webp",
+      "bytes": 5554,
+      "sha256": "bd0b45cdbb1fd41a0debbae0daaeea7157f84c0ced648bf9cad6a4fd834e0358"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-n01l.webp",
+      "bytes": 5802,
+      "sha256": "89d8785d026b6ff66056df9ddb25b5bd6a00a9f55ac59a0fee09bcc8e697fdb5"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-o02w.webp",
+      "bytes": 8396,
+      "sha256": "d85de07bbf7a43b649eef3bff5cd546892bad9aac72868852895a54ab63d69b6"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-obla.webp",
+      "bytes": 7476,
+      "sha256": "bfef0d785c4f20ee750c23d7494712cde1c584f7f3644d17df8b774f006bf4b4"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-ogld.webp",
+      "bytes": 6542,
+      "sha256": "325286b91116879bdbcf8917d4e8d478c8bcbcb08f3cd8e7afd154427d35f839"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-u00b.webp",
+      "bytes": 6550,
+      "sha256": "46885769b29cbab47a1c6ec93c6a83a6b19719a7cad411a0dad8717257e0a7fe"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-u00k.webp",
+      "bytes": 8270,
+      "sha256": "cf8f196507b2f425024089dd4e1f88fdb166b18c93cc99bd27895e101f60a00e"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-u01f.webp",
+      "bytes": 4566,
+      "sha256": "47017933af5cdf321125d1bbfa41b9a99d7db31929e8ba805a76767dbc4c39b1"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-udea.webp",
+      "bytes": 4762,
+      "sha256": "0200eb9db34b1d810fca5880921b89331f777cd0785e37e1ad5a172425f2dc4b"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-usyl.webp",
+      "bytes": 5284,
+      "sha256": "ee6de2bc735f39b3b8fd2c683e28277d700284cec10d7946b2de8a49083a3f40"
+    },
+    {
+      "path": "content/assets/icons/champions/godie-uwar.webp",
+      "bytes": 5956,
+      "sha256": "3ba761478a80744a58ed47b2592cfc4daf498f21df2f615c8d0e87c49233b35a"
+    },
+    {
+      "path": "content/assets/icons/champions/sela.webp",
+      "bytes": 5998,
+      "sha256": "61c2849a9ca67d7eed50a9c35f55d8b884d3b04c6af48ea5e2702edff346abc1"
+    },
+    {
+      "path": "content/assets/icons/champions/thorne.webp",
+      "bytes": 8308,
+      "sha256": "7675c079fda2ad5e9a3e02252f139a1e88ec28165280e4ca0a517cb58c6474cf"
+    },
+    {
+      "path": "content/assets/icons/items/ember-rod.webp",
+      "bytes": 3698,
+      "sha256": "f9f27bedaa42e0a128670dfd15f4fb9df2ed95f7697ee426361d75ccc73290e7"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i000.webp",
+      "bytes": 4218,
+      "sha256": "f0773b6e3967b64b4f60f883996ab4ef710baf3c8b181e2595e68271d5f4c646"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i001.webp",
+      "bytes": 5160,
+      "sha256": "3b29a9b515f0946d547126940c9cce324d0636d95d29e3cf44e8248faceab83a"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i002.webp",
+      "bytes": 6474,
+      "sha256": "05a046426508202d13b634f057211ae1d74d0b3fb9b903619277f680130e518c"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i003.webp",
+      "bytes": 3608,
+      "sha256": "9c4814a32578c96c3c34207b6c445bab77143717373ac4a2a30160f8dd0126b3"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i004.webp",
+      "bytes": 4172,
+      "sha256": "1b841781ddfa7f9c8d77aeb212c44ba7a4f4e137042fa632111b9395a873b8b0"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i005.webp",
+      "bytes": 6016,
+      "sha256": "09ecf38f48e8bfb51db838505f01323b293f788cd9e9d1260c156799e7ba4903"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i006.webp",
+      "bytes": 3854,
+      "sha256": "12c4585858f276f647d77ebba7de630a9ac1b30b893613ff1efcf8a1404a0ecf"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i007.webp",
+      "bytes": 4902,
+      "sha256": "53c768516aec56f0e332ac733a4eb39929c0a946a39f6f950ab25878e83ff84e"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i008.webp",
+      "bytes": 4758,
+      "sha256": "fa2254a5075ac19174889593eea3125225831ba999af3f00c0262e7c0fccdee9"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i009.webp",
+      "bytes": 5908,
+      "sha256": "7ad9b1cfd7606f9c035d71daa84c73abdd80a6b58f80eee2f5e553af26ca79dc"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00a.webp",
+      "bytes": 7734,
+      "sha256": "1c57f0199b03cf4f8189698159de61460589e85d86a0f27ee6b0d87a568842c4"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00b.webp",
+      "bytes": 7128,
+      "sha256": "85bcb735200de77c69054372b8d5da3582d952ed88c367c1a4214d2174a780f8"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00c.webp",
+      "bytes": 4548,
+      "sha256": "e1744e321f59d463f4bb6f82b03f219a405f089b3530f7269b301ee7469a9564"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00d.webp",
+      "bytes": 6320,
+      "sha256": "7ed2ff3bbc9ab3b97ebc446faa07fbd640026b169f7f7938acf68e0a9a36b185"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00e.webp",
+      "bytes": 5338,
+      "sha256": "8d29abf9404861c935b050f3d766902ba175258453a8cb5b47d2736943e2e3d8"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00f.webp",
+      "bytes": 3462,
+      "sha256": "ddcb459d5c3bf0d9ae0bfa2f649bdc25c0aad86a5789ef764b29851b6f85b76d"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00g.webp",
+      "bytes": 3506,
+      "sha256": "545c523b7757fbff577c3371ec8440668b2d3801f95f85af764d88a9434288f4"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00h.webp",
+      "bytes": 5402,
+      "sha256": "43ff390a415fab5bf9094431e2bb00ac65f22391f8674197892ed271c9af0c0f"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00i.webp",
+      "bytes": 7134,
+      "sha256": "346c251d293a11a4111693472dba451a7ff040c43f0a364f4778a4bb873824ac"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00j.webp",
+      "bytes": 3176,
+      "sha256": "ab3d6ae11a64fdba3163addf8d9fef41c5fb4f3e43a237cf30c275f83bb1b0bd"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00k.webp",
+      "bytes": 2656,
+      "sha256": "300778037b373635d36f89a2627bea085d6d1bc6dfa1f73e1b298eadb98c0775"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00l.webp",
+      "bytes": 4388,
+      "sha256": "0dc0278ba2120211245c02a7162b3a59279f355b82634ffc722ff331cdd35ef9"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00m.webp",
+      "bytes": 4784,
+      "sha256": "938c259cef4b986d346f51bff3b93890bdff07b2a0d7e94be7b87a9661b128fc"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00n.webp",
+      "bytes": 4778,
+      "sha256": "a57adce9f956b721c3e419046ba7a56d341df30fc523f7304312e43b5275b134"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00o.webp",
+      "bytes": 2386,
+      "sha256": "0b1638b6ab73739217acb975b3841f1fcb49d0b5b7fdbed1d7c83eb5cc2787e5"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00p.webp",
+      "bytes": 4312,
+      "sha256": "6ae42ea41b04503c13100c57b693681f3b91939817ea16b24daf544f37ff1914"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00q.webp",
+      "bytes": 3458,
+      "sha256": "779398444663ace4ff9a41bc17e503302d2a325a01af1304619eba82c66022fc"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00r.webp",
+      "bytes": 6154,
+      "sha256": "12c28fe9273d3c9544ff2462ccdfb16279f221280b4ad09d21c963a6dad8b9cb"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00s.webp",
+      "bytes": 5138,
+      "sha256": "39480ff2d9708b34d00381e246887af967f7518a4f7552638711b8d86df5435e"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00t.webp",
+      "bytes": 7720,
+      "sha256": "e8d29ff277b8041f618cd23b1e1c5d9ca7d79dc5cea1931375f348763c1167e3"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00u.webp",
+      "bytes": 2782,
+      "sha256": "2cc0a56d17b5568575d184de1b5c353d5a38dcbcf729b50877d8991d804b40dd"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00v.webp",
+      "bytes": 1692,
+      "sha256": "020b468ef2d9a6a7d975180d1e74cf1b91de5fea9ac2b55478b0250353d13475"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00w.webp",
+      "bytes": 2644,
+      "sha256": "b365aef5e38eef576c6354723f907617ecd0828651c62839ac32d99f3753efa9"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00x.webp",
+      "bytes": 3292,
+      "sha256": "844e6bab0944837ffad2a651c390a5c18e998456c36facc7fc8e25a14d779ab2"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00y.webp",
+      "bytes": 3518,
+      "sha256": "a1e240ecc31ae143c740bda855334f0204dd453e1dc1aaead8384c4ff8c4b108"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i00z.webp",
+      "bytes": 3404,
+      "sha256": "c8da6ebec3594422284b60f9d2129f81837833e447fe6bf55875d9d85553b497"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i010.webp",
+      "bytes": 6432,
+      "sha256": "fbebde200facd01592682bdf41a41130571b5ac633e2585c9ee17beb72be5920"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i011.webp",
+      "bytes": 3558,
+      "sha256": "9fb812d6dd2dfe817a9b5b65ddbeeb15d9cbd575bd0c892d75c61bad774cd970"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i012.webp",
+      "bytes": 2062,
+      "sha256": "68bf6eba629564f8e5f34d967d8b64be1c12ed295641344e689e919978fd6b65"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i013.webp",
+      "bytes": 5426,
+      "sha256": "37ed2f675f9da5b09e75c25fd41353a40742f9d50c803a31bae638eeb057f225"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i014.webp",
+      "bytes": 4196,
+      "sha256": "203e44c8ffe3a5d1fab9e3740842dc98e08c3dc0f78064675c14b9f67beced9b"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i015.webp",
+      "bytes": 2336,
+      "sha256": "103054adb723e41fd3f66590659f451a9f5ae2df01a9a8f66ac596416b986006"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i016.webp",
+      "bytes": 2510,
+      "sha256": "d54ce7ba4e203003c05aa080b795cac78723144570fe642ff917c8a5835e0679"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i017.webp",
+      "bytes": 5784,
+      "sha256": "15795c92334acb9fd3eea20ddef1801111592558ab21e66552b17197362f4cb6"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i018.webp",
+      "bytes": 3540,
+      "sha256": "af43efcb4e9ab7497fe1f708057bfc753e81519ee659634ca26a881b853ffb28"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i019.webp",
+      "bytes": 5476,
+      "sha256": "7ec865a0e36ae172935c196e666f08b7244ed105964f6ec9bf98ce8000944240"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01a.webp",
+      "bytes": 6826,
+      "sha256": "11f677fb75ab15372d4a4cfcdcb4f2a9c211d5a46f6134ccc92554be9333b7e4"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01b.webp",
+      "bytes": 8180,
+      "sha256": "636573494215a1c9ef9d53eb8443d23f85a7de2c0068b0b9926eddf1caa6b616"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01c.webp",
+      "bytes": 6190,
+      "sha256": "d75e9a40397ca1c68252cfab6e7fa62190c67409a5717d4a84d3c2c215ecdd2a"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01d.webp",
+      "bytes": 5298,
+      "sha256": "e0f5d9b2a16c71b37b657d2566f21be44844ec8b020e14a7b5c5bfbb84fb9c8e"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01g.webp",
+      "bytes": 1760,
+      "sha256": "01dbff9ffa20fc27f3623bb0932153492183393da003b0bb98294d8e7ff47326"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01h.webp",
+      "bytes": 3278,
+      "sha256": "4e6372f1bde48dea0602bd1c30f75fd3baa2c34286e2523b42d02d2011ac7a62"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01i.webp",
+      "bytes": 5234,
+      "sha256": "23db843cc1a563cd5cb7e7ddbb37ec5e8efe0ede985cb1cd72f067cb72724632"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01j.webp",
+      "bytes": 5572,
+      "sha256": "87d8d88b67de273fa9e558f3aa530a6638cba0e43031b1331b8f81e2f8e1c2b9"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01k.webp",
+      "bytes": 4050,
+      "sha256": "5ac158d32f16ac05eaa9e83abbd87ca2f881888b4d29a0e96a028224ad83b4c7"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01l.webp",
+      "bytes": 7642,
+      "sha256": "8e109e26be61f00d13eed7ed6e35a8c324d059cbb48379557c79b210c57df121"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01m.webp",
+      "bytes": 3910,
+      "sha256": "618a224752245d47ed1d081b049ae59949664ba5f6d816569005b7b8b5411d76"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01n.webp",
+      "bytes": 2696,
+      "sha256": "6d960d49f869d0fb57d077a54b78eead3164c620f91a98fa45b377933fb43556"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01o.webp",
+      "bytes": 5292,
+      "sha256": "1ef4b53d9271d750babc6eb273a6fefc796a140e8344f72f8467d6bdc5043df8"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01p.webp",
+      "bytes": 3188,
+      "sha256": "7fd2493ceb36eb81232fd38d6e37e3c0d043669263a89d5dd06e3416529c327f"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01q.webp",
+      "bytes": 2520,
+      "sha256": "dbc17aa43179427e6fc351bb88b5ed7f3491b4062eb3fe7f45129d42ff3e7025"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01r.webp",
+      "bytes": 1374,
+      "sha256": "9952df94b0e75477dc9005b201bb1b91aea9c717f1e0b29897f2ce38e6ef5385"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01s.webp",
+      "bytes": 4764,
+      "sha256": "269a48ffd8353d0088086d77258f37ef58982868b6054d642e43e051716c8ec0"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01t.webp",
+      "bytes": 5030,
+      "sha256": "39a23258d8c451777c8457608e817a0b9cae04fcc2f921d61c3371d82126de9f"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01u.webp",
+      "bytes": 4700,
+      "sha256": "a3d7048eb19e759194446eb8b1ee04d3595b556c462e913f97be2d3ce08e5f69"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01v.webp",
+      "bytes": 3960,
+      "sha256": "ea4e2f5f9bddccf956751561a2453186f913b50884ee56c458605421f7f21841"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01w.webp",
+      "bytes": 3154,
+      "sha256": "e102833c4119f31323964ed1d12520c70e19481ee1d1b1884c4339e916f4355c"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01x.webp",
+      "bytes": 7288,
+      "sha256": "a0de1af7f1ce3de3ccec1914f4f371da04839a840831fb3354cca007994bf1eb"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01y.webp",
+      "bytes": 3104,
+      "sha256": "b7948309bf69bf1a66659ba991e770a3b46dfc3a69a8d16422df6d30cfad3380"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i01z.webp",
+      "bytes": 6872,
+      "sha256": "fe8e1b276d660e266026f0b4f41d77001eb22f94590bcc462de744dac028b207"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i020.webp",
+      "bytes": 3288,
+      "sha256": "dc2a04305cc7d0d5c1653b8f3947cee91220221528fcdf0eef9a5606a8cf387f"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i021.webp",
+      "bytes": 5058,
+      "sha256": "df2a6598124cebee1a7bd64071332e4c50d8a67d346b89adb75e6f6a77cdd99c"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i023.webp",
+      "bytes": 5792,
+      "sha256": "c72e40ddb0adfc7138050c6d608fbc59945f4ccd84b9cb90305e00b3746807c8"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i024.webp",
+      "bytes": 2008,
+      "sha256": "7c858d6ef530b28d31edbb24c6f152cbf2dfd10dfb4f586a7556a3d4d64a5493"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i025.webp",
+      "bytes": 5940,
+      "sha256": "1514975b249a11c80a24bdee1079a4bc51bf2799a793183e006160cfa132981f"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i026.webp",
+      "bytes": 7430,
+      "sha256": "4dac70bdfb8cf267583345290654a8d99aa391fac4cfce1f92d8f2d82bd34522"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i027.webp",
+      "bytes": 1858,
+      "sha256": "d79fdec35e398c828d1fb678cd53deef3c4e650ef17be24ec95bdc0a85210d51"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i028.webp",
+      "bytes": 2984,
+      "sha256": "9d788342711754b02bd5f324e6fc676e460ff0820d6c9e2fd596cfa8f5b0d212"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02a.webp",
+      "bytes": 4684,
+      "sha256": "159535ca72801ec78272ac2e128dca8f2e1c6b87fdc4db2eee149cd0c2115a87"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02b.webp",
+      "bytes": 6948,
+      "sha256": "efbb9b3e756cd7065a08d0766c36aa7da0cc32f97fce3ceb0df8cdb794f31bd2"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02c.webp",
+      "bytes": 2752,
+      "sha256": "5d47ece71322a8088924ec8908693cf78056ee7b6251c8337ca95f8a16fa391e"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02e.webp",
+      "bytes": 2970,
+      "sha256": "6487e6134c8a99ca5315fbd2e22ea6e12aeb5808b580357b8008db4c4b2a73e3"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02f.webp",
+      "bytes": 5952,
+      "sha256": "770ddbc40fcb2128715921d6531350fab2a518db808403c1f9cc3e7865631fb0"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02g.webp",
+      "bytes": 3306,
+      "sha256": "a5bb26c20e494963d03b03544657d79a1deed6a90fddbc81c20c96d02d47e59c"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02h.webp",
+      "bytes": 2612,
+      "sha256": "1294f38f08201ad37dfe0ebcca87ae77924bacb9eccbbf99b431190e72f461b5"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02i.webp",
+      "bytes": 3684,
+      "sha256": "3802ff20a9fa6f42be45bc0e0d59e0199f3c7094019e3b56e1a73d0c857ef2c5"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02j.webp",
+      "bytes": 6004,
+      "sha256": "f353c78133c009dfc34c1e2136e5fc8e9c8d83470fecea037d0d3bc0460c93ed"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02k.webp",
+      "bytes": 5728,
+      "sha256": "882c9e8e2aab744e9efdd6b4ea8bcec30afb42328ec602f53d926e22a0e5779e"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02l.webp",
+      "bytes": 6478,
+      "sha256": "8e15e3fb566e6e52e523acfb48274a844471dd73ee4813d9dfa4dddfccbd79fb"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02m.webp",
+      "bytes": 4846,
+      "sha256": "509af147ebb7eb264380a1c6bbd4a47ae50c103e8a8ba33aa44c6afd73c2c05f"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02n.webp",
+      "bytes": 4912,
+      "sha256": "84faeea712f290add630454ca9c3bda8af33145b9df56b72f3d6ca356733cec3"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02o.webp",
+      "bytes": 4604,
+      "sha256": "35c5c41850d1c500698c46cbb9e91696024b8d78b88e52372a3f17e34708033c"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02p.webp",
+      "bytes": 2948,
+      "sha256": "2166571136c7f59b4643ce68d7734326a02addcfd118c03aa728d6c47c093e34"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02q.webp",
+      "bytes": 7012,
+      "sha256": "ba0e911397fd7eebaaea32f790f7d3ac8b9407538610f044e0f11e5333d9da68"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02r.webp",
+      "bytes": 3706,
+      "sha256": "42933934a233aa5af3018f9d3c0827df273ce227c016ce57456cfe2bb904b96e"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02s.webp",
+      "bytes": 7048,
+      "sha256": "0f7a42889d62ca8bfbb0cc198415c16f8196959cc9c915ac0cc2fbd747a4535a"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02t.webp",
+      "bytes": 5478,
+      "sha256": "38467b691cb895386ec433bec140f8ee6d18d5c183be9a9db328365d7af95430"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02u.webp",
+      "bytes": 8430,
+      "sha256": "bca066e0c68070804063b6be92672dadfa95ae1f5bd008d2b3467a1750d3670f"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02v.webp",
+      "bytes": 6918,
+      "sha256": "48a6e3bb0c510de54e725e0f66a8fcb6ee561335afc5710be5b9ade1d84d417e"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02w.webp",
+      "bytes": 3840,
+      "sha256": "c5e0c8655afccd32732d99aa275878d8c980d08129193a3184e85304c5fa4ad5"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02x.webp",
+      "bytes": 3892,
+      "sha256": "0bf249a309bfc0f9d42badf2942b7ad3b645c5f1eb944ac253182ac1ec02fb7d"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02y.webp",
+      "bytes": 5102,
+      "sha256": "99ceec816e8fe860e9b20724418110295d3082f7e79c46581131404d812986e5"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i02z.webp",
+      "bytes": 6306,
+      "sha256": "762c4190d369416685305ea4f2de80447c07358c356d3d0d7d26a570648e8d72"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i030.webp",
+      "bytes": 7478,
+      "sha256": "bf36d342e1d0692855863c137a0018605a1768c98bab78a5e11add32ad9a013d"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i031.webp",
+      "bytes": 3170,
+      "sha256": "ce05fba120c0b30fa0f03bacc56c94ab463e6a4d38fc1c61c5d5388ae5591fdc"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i032.webp",
+      "bytes": 4886,
+      "sha256": "39be4f143fe85b03c9e564b173bbd41811d1c654be528193ff39e2fb88a570ca"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i033.webp",
+      "bytes": 3320,
+      "sha256": "cfab1f039ede1c951b6fef1b4d6f261c480de9699981a1efb5f837b10e67d17f"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i034.webp",
+      "bytes": 3572,
+      "sha256": "e412c17b0927edeb1d17c231ebde971a0fbb6524474c1f81369699c9ef8ef72c"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i036.webp",
+      "bytes": 6582,
+      "sha256": "dad80ae6f367dd821fc1b9772d439768561fce415fed924e607a70390c331d73"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i038.webp",
+      "bytes": 9634,
+      "sha256": "58f38101dd911b3b40e231ba747ca20cf4f3e1d9c8f0bc3887800ae8034b8d38"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i039.webp",
+      "bytes": 5766,
+      "sha256": "116812a1276ffe2847edfbb81541d2c8cb0bcee97ab48b0bac1fe62c84155f48"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i03a.webp",
+      "bytes": 6882,
+      "sha256": "ddabfd680870de37c584e2bfc4f4d95a5922785c47f226e8839ff8287703d03a"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i03b.webp",
+      "bytes": 5508,
+      "sha256": "69f612928b7ecb5ae591e7a0055a2cd33a49a568590c696fb2703c5d31bfd5f8"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i03c.webp",
+      "bytes": 5484,
+      "sha256": "b131c37c8ebbb0b60791fd3f99135c171262676791d03537ab17536acc445980"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i03d.webp",
+      "bytes": 2996,
+      "sha256": "6e29c4f5f202da697564c0b1cc333eddd240c0363eaa61f1a95b44f2e541a714"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i03e.webp",
+      "bytes": 8336,
+      "sha256": "cb9bd61bb1a2c50cfd5716c47f735984b3dbc223a4ff6832f604f0302439de60"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i03f.webp",
+      "bytes": 2714,
+      "sha256": "90471b88fe5f21a9a1c88a2c17b795380545f162950dee9813cd0c286effde19"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i03g.webp",
+      "bytes": 3574,
+      "sha256": "37eb3a232b3e4b64140fd1c49fb1f0b30124c95012ab7eec0e7c2d5b0c2f35e1"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i03h.webp",
+      "bytes": 3246,
+      "sha256": "0ae9046599028c5a77352411407115f87c2f1dc17ec7d8a1af8aa6538caa3d9b"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i03i.webp",
+      "bytes": 7410,
+      "sha256": "bd7f920d11b2dde5e2987811d1aef4ea376318cd6396b2412223e903ec44df1f"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i03j.webp",
+      "bytes": 5348,
+      "sha256": "cbd5ba1d0b0cfb285eb6a49818951f2333fd23a63a5c1a2fa275021113828186"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i03l.webp",
+      "bytes": 5176,
+      "sha256": "35da0c86053188ac69652a090a508f9feaedc080ee725cdc74973172b94fa24b"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i03m.webp",
+      "bytes": 3496,
+      "sha256": "5ba081492cca917e42c2e4e0e7d4dca413f0e77cbb1ac268fe827e39b97f9858"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i03n.webp",
+      "bytes": 5786,
+      "sha256": "37d8b3eb36b034852ce028ad4713c01c5cd8bd976f774841eafec3b3dc4ad946"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i03o.webp",
+      "bytes": 2648,
+      "sha256": "70663e980930fa037a132077d90af14b77644af2039eb87b107a023324c4ac5e"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i03p.webp",
+      "bytes": 5750,
+      "sha256": "728ed702821610a4e1a03eb5ec34679afac539556c31bdb7eb991ef9b1495b66"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i03q.webp",
+      "bytes": 4486,
+      "sha256": "3d52e95a69c417cf8435c9c82f5a68f91a0a4e90dfb7254d4dc1a2b701d65aec"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i03x.webp",
+      "bytes": 4542,
+      "sha256": "a36af05647f7ec32c5343ebe5428e9dc9a97794112addd07559d6cf7f9f76589"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i03z.webp",
+      "bytes": 3054,
+      "sha256": "d787701da8ae4abb079ba0d32e584959042ff62d9b17459392488d11342e2188"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i040.webp",
+      "bytes": 3554,
+      "sha256": "840298c257f54c3db26675bc8c3918696b6ce773a0f278ce52b1f77fe78e7b1c"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i041.webp",
+      "bytes": 3548,
+      "sha256": "4064699875fc8cfa2cca8d7aa2352cb452c39fad58a3aab74cb523a92496e609"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i042.webp",
+      "bytes": 7392,
+      "sha256": "f5b11bb7172ab3af705e5fddcd5347c7b6887ed9963fbad46358056123b0f3ee"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i049.webp",
+      "bytes": 3910,
+      "sha256": "3ae3ad88bea047f05ae0c6a2742166e1163810057341f3f98fc3ab065b905375"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i04a.webp",
+      "bytes": 4142,
+      "sha256": "68f4c124a43f70b4821f304ac9ea0c14e8109aa7dc139cb43f44ad732b6caa9f"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i04e.webp",
+      "bytes": 6730,
+      "sha256": "49cdf585159d556e08dfae116065b9b7f222606e6de1f474dda1d65701fe6bbb"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i04g.webp",
+      "bytes": 4804,
+      "sha256": "5524a18db83094f94ba7ff929c379c8679672a36447a64dc48d4a90a502cc2ad"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i04h.webp",
+      "bytes": 7036,
+      "sha256": "5f2cd48427075bf881c471f014bb21d7f5cf94351f74cc2394e12e20e77d7e1f"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i04i.webp",
+      "bytes": 6432,
+      "sha256": "57e1b528b4e643d9188759c69dc9bcef704ebfdcc9c2d3386840df906f5c4b9d"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i04j.webp",
+      "bytes": 4984,
+      "sha256": "2cfefe61251656c1c4cad047fa87fadc387ad1378fd961c4d2bdfa82c25d929b"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i04k.webp",
+      "bytes": 2862,
+      "sha256": "04222c7569a4e0ffe129062f461af1f5669e128f6d6c74ab2f093b878d49a9cd"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i04m.webp",
+      "bytes": 2670,
+      "sha256": "c4db8297ce99aac88f4c1ea5409a741d949e1b515425f0150af83de80717e5b4"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i04v.webp",
+      "bytes": 3642,
+      "sha256": "3629cf1bd37a35d8af8586c3cc3ccc009a3a56cdf3a30568b607787ec3047852"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i04y.webp",
+      "bytes": 4188,
+      "sha256": "bf41a25c6d7ba789dd460d7b45dff2903dfd3ac318ac74dcd2e64339c977c7b0"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i051.webp",
+      "bytes": 4362,
+      "sha256": "151bbdc10e362ae39d3ae813f594a9e909e0ad438cb2f213bd23f8afc35d86c9"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i053.webp",
+      "bytes": 5460,
+      "sha256": "0a4eb7d6971562205f15fdd46a005b532c672775e43e2f7a6d911e1a67afae44"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i054.webp",
+      "bytes": 5870,
+      "sha256": "f668563d175178706464ba60deb40ec9088ea4e67edcc6eb66b2ea966d1ae16f"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i055.webp",
+      "bytes": 6150,
+      "sha256": "6e4f5709fc39f268b60de7808fdd7fb99a16b5af0d1c2143ad13009d2a3a2a1c"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i056.webp",
+      "bytes": 6376,
+      "sha256": "e68ef81120fc9f7beaaac687fb6ba6932ab4f7d08a9782e84b58679db4143d46"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i059.webp",
+      "bytes": 5612,
+      "sha256": "be1a5cb3e509d5817103869d5ee9b24a9920912b7baf261ddf4de9533f7ab1ba"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i05a.webp",
+      "bytes": 5454,
+      "sha256": "eebad829702be6c67991bfd55d6e28c58240bc12c9a32fcf60dc1fb369396764"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i05e.webp",
+      "bytes": 5066,
+      "sha256": "6567eb47f48eff06279fa408d02edefb983420b09d54df81da802c091ba47987"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i05g.webp",
+      "bytes": 6006,
+      "sha256": "c910330e6590066d384ae6c706c153e0e2beb5976d4c935784cc15e0999d0164"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i05h.webp",
+      "bytes": 9670,
+      "sha256": "922ee38d46e7d5091a1293baf4dd0a612d50dc37584753dae06469671e1be889"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i05k.webp",
+      "bytes": 1818,
+      "sha256": "916cdbc648898baba5cadfd73c7b87561a3a3c410fcedbb2327453cca65dc13b"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i05l.webp",
+      "bytes": 4422,
+      "sha256": "f152b188b11e6c1ed1a10a940e05362603e6eef26755f3836c280bcae5a063f3"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i05m.webp",
+      "bytes": 3068,
+      "sha256": "7f3dccc9013ed1e0bdb010e0f946795a3f2338852f04cf444dc77310873078f0"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i05n.webp",
+      "bytes": 2494,
+      "sha256": "883c93423c1e2c0ec244fd03d94cd1badd8ae03aea7d3d1922a4e0c0cfc1632c"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i05o.webp",
+      "bytes": 3462,
+      "sha256": "2046fb53b5d90a3d287bb1407b40ed4587df166f3f64e89481787a9c2addc596"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i05q.webp",
+      "bytes": 3682,
+      "sha256": "2485332f55b8269aa3bf153e696147b5beab31ff7b5e9a82d45e60dbea2a489b"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i05r.webp",
+      "bytes": 2934,
+      "sha256": "97bbdac64a33b428c4d4672d5e75f0623f7f4882a4dd7c4830d3205e1e2d2fce"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i05s.webp",
+      "bytes": 4802,
+      "sha256": "d5cadc02fc4cdbbba3d7912a99ff2f75e02bfea28248d79f0ba7af229c96cdc7"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i05t.webp",
+      "bytes": 2934,
+      "sha256": "f1a5344688d3fd5a35361d0b2964b5cc9bfab04a0a167dca1288e733dc85b027"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i05u.webp",
+      "bytes": 4772,
+      "sha256": "12d2d31ab7f4db47a9b46f81bfc5f4ebaf0d10eac05186111c944b2ad70eacf6"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i05v.webp",
+      "bytes": 5562,
+      "sha256": "3c066e6b2cbd6c253598f1e969cdd17daa343db374b992d8e201efdd1607d79e"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i05w.webp",
+      "bytes": 4546,
+      "sha256": "8af49d34219e3efc090ef7225c6212969bd6c562691e11253afbdf90b439eb40"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i05x.webp",
+      "bytes": 6566,
+      "sha256": "257f484372e85c3400508f90764597875c81f0518d83727b1bcef90a067836c9"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i05y.webp",
+      "bytes": 6322,
+      "sha256": "0150f5bad65078560f3962653509b6df26d669ba7e271cd4dad36e9a915f473f"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i05z.webp",
+      "bytes": 4954,
+      "sha256": "daf359b35108f206d90c3c87d8924a43b23e4e1b7c401f4c295a6c0d2f58a533"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i060.webp",
+      "bytes": 9346,
+      "sha256": "e65065e6c233a2bbb657de66056fc6c56730faf8b5bc6b08339a1136ac55306a"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i061.webp",
+      "bytes": 3540,
+      "sha256": "fbc29a4a2e65af85b8cfcbddffd486ac73f289d93b165df06721eac1a3ccbbb4"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i062.webp",
+      "bytes": 2806,
+      "sha256": "506880a60177dfad5a97ec371a64e74442ea441b98f449af46a4484d19a69ec0"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i063.webp",
+      "bytes": 4028,
+      "sha256": "b8594183401612df4e0d7dc478c0ad1f772c5dde75eb01e3b8d1e16b115f28cd"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i066.webp",
+      "bytes": 6354,
+      "sha256": "6e4e189747fd78b491350f1ec11c4349a4f914224d3dda7ea25f959eb0bd35e9"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i067.webp",
+      "bytes": 7876,
+      "sha256": "cfc51854331eafeb76c506a947a47ef6fc2b23f0d31f26ceab651629ab4b2afe"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i068.webp",
+      "bytes": 2262,
+      "sha256": "a99be3906b0b915ed3794c80e2864cf1d47d7fdd4e62b5fc8752d4cef30af4fc"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i069.webp",
+      "bytes": 7316,
+      "sha256": "067a4979de4654b66812b911c5a0a648de7c722567da87aaf49a2d1d3d353a00"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i06a.webp",
+      "bytes": 3092,
+      "sha256": "527fe87f44cf7a8006f6fa7c27a4167afb1569d1bb4662f97fcea87568ec537d"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i06b.webp",
+      "bytes": 3880,
+      "sha256": "3f99bcb82572450519f5f721231946512b24cd901f63cc0899d3eae33101e0a7"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i06c.webp",
+      "bytes": 3778,
+      "sha256": "013204066ddb8d728c0312ab1a8dcafa6265c6a76c2f07aeb78ba4063f4879d9"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i06e.webp",
+      "bytes": 5374,
+      "sha256": "d49c66dc1fe178dd7f900e0061b5241ebf5b9123fb796dc4ee99bbdffb4dbe62"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i06f.webp",
+      "bytes": 2442,
+      "sha256": "4ef7f431a50a4cfeffbbe73523c190168d4d1bd57183bfdfea4f473fe56bd98e"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i06g.webp",
+      "bytes": 3890,
+      "sha256": "4bd3ac7266632c8661827f57bc2969765d8ce64200d98523c6800100bb3930ec"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i06h.webp",
+      "bytes": 4076,
+      "sha256": "8246c7e497debe309c88942e9fe54754522412efdad368054ee77e4617cca088"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i06i.webp",
+      "bytes": 4890,
+      "sha256": "ff7127b8b243a6074404ca55c9ff7a93f0d6c2f221000e77b0390e1ad441d3e2"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i06j.webp",
+      "bytes": 2110,
+      "sha256": "9633f3e4c44cc7ed591a34825cf8692052f65f8f8f0e0bb48c5bd118ef48e302"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i06l.webp",
+      "bytes": 5578,
+      "sha256": "6c7b8ebd62f72d4093ff6db9e650279c59fe8b1c4b51e9cf883ff24937c3966f"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i06m.webp",
+      "bytes": 4286,
+      "sha256": "c196189e1f5f23a4d333530fbfe97b752ed7e2b84c48de7c8c2169e89f134def"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i06n.webp",
+      "bytes": 5478,
+      "sha256": "69747ca10e37bb0e7696a5204030ceb54a829b06cfa1dc94ead8e51d7656da11"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i06o.webp",
+      "bytes": 4138,
+      "sha256": "2d5891053cc338cd27e3139a42446b01e11d3e0314139f7e429a7c840366536e"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i06q.webp",
+      "bytes": 3042,
+      "sha256": "0df2085f09bcf3668b0d934da9b9b1648a30a492035d9ac047e1ed4012e3219c"
+    },
+    {
+      "path": "content/assets/icons/items/godie-i06r.webp",
+      "bytes": 1990,
+      "sha256": "ffbbec15633acf88a68aee5ca1f77c711ec6b6c24457c090ad64b5bc110054e8"
+    },
+    {
+      "path": "content/assets/icons/items/ironhide-vest.webp",
+      "bytes": 5794,
+      "sha256": "1ca9893063e87bd2b8d687bd5ff0fcdc918d0f67b828e5fbd62ccfee985941f8"
+    },
+    {
+      "path": "content/assets/icons/items/legendary-orb.webp",
+      "bytes": 4864,
+      "sha256": "dee8d7a391498572f8d51b30c16ef579ca849040b68c6249bc910d083b24502d"
+    },
+    {
+      "path": "content/assets/icons/items/serrated-edge.webp",
+      "bytes": 3354,
+      "sha256": "72495db672a8d06f8c5dd7005f3192b0e0146e8dfab4962b8dc890d2d37dded0"
+    },
+    {
+      "path": "content/assets/icons/items/stat-attunement.webp",
+      "bytes": 3938,
+      "sha256": "2e85fe6ab4c3722c1394281892fb793275d402ced319b29e259de72aecf7b2ca"
+    },
+    {
+      "path": "content/assets/icons/items/swift-boots.webp",
+      "bytes": 4358,
+      "sha256": "232fde092c92ad711b144e5a19615c4a52943fbf5d8bba9b40554a4bd172f04e"
+    }
+  ]
+}

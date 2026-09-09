@@ -1,6 +1,6 @@
 {
   "schema": "ggd-editor-skill-acceptance@1",
-  "generatedAt": "2026-09-09T14:23+08:00",
+  "generatedAt": "2026-09-09T22:29+08:00",
   "scope": "43 skill themes / 47 shipped ability documents",
   "policy": {
     "visualPassRequiresFramebufferAndHumanVerdict": true,
@@ -16,7 +16,7 @@
       "projectileHit",
       "reflectSuccess"
     ],
-    "capabilityFingerprint": "15d59fc8"
+    "capabilityFingerprint": "abedce92"
   },
   "summary": {
     "themes": 43,
@@ -3700,9 +3700,11 @@
       "strictVisual": false,
       "acceptance": "大範圍持續十秒逐秒燃燒，沉默與攻擊力降低40%同時存在並準時結束。",
       "activation": "active",
-      "designerPath": "advanced-no-code-effect-form",
+      "designerPath": "template-product",
       "presetId": null,
-      "templateRefs": [],
+      "templateRefs": [
+        "tpl-area-strike"
+      ],
       "effectKinds": [
         "applyBuff",
         "applyStatus",
