@@ -123,5 +123,19 @@
     "ownerAcceptedDailyLimit": 100,
     "ownerAcceptedPendingLimit": 50,
     "note": "Read effective service overlays before publishing; no production policy changed by this work."
+  },
+  "mainFollowUp": {
+    "mergedMain": "d078070252fd883fac0a1ff2b73adf19e8542be9",
+    "tag": "v0.42.25",
+    "reason": "Resolve observed PR conflicts and retain Main equivalent #1155 fix",
+    "issue1155": {
+      "state": "CLOSED",
+      "closedAt": "2026-09-09T15:01:25Z",
+      "mainFix": "a6041c941758d23b7f434710b32f12a00b2599cc"
+    },
+    "priorRuntimeEvidenceReused": true,
+    "fullSuiteRerun": false,
+    "normalRoomTestSource": "Exact Main version",
+    "boardCheck": 0
   }
 }
