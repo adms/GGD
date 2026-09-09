@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-project@2",
   "projectId": "community-review-31-20260907",
-  "revision": 12,
+  "revision": 13,
   "sourceLock": {
     "canonicalId": null,
     "versionId": null
@@ -38,8 +38,8 @@
       "fieldOwnership": {}
     },
     "skills": {
-      "revision": 12,
-      "state": "draft",
+      "revision": 13,
+      "state": "stale",
       "fieldOwnership": {
         "acceptedPlan.slots.E.name": "locked",
         "acceptedPlan.slots.E.products.0.template": "manual",
@@ -56,22 +56,22 @@
       }
     },
     "mechanics": {
-      "revision": 1,
+      "revision": 13,
       "state": "stale",
       "fieldOwnership": {}
     },
     "presentation": {
-      "revision": 3,
+      "revision": 13,
       "state": "stale",
       "fieldOwnership": {}
     },
     "validation": {
-      "revision": 1,
+      "revision": 13,
       "state": "stale",
       "fieldOwnership": {}
     },
     "package": {
-      "revision": 3,
+      "revision": 13,
       "state": "stale",
       "fieldOwnership": {}
     }
@@ -107,267 +107,282 @@
     },
     "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
     "templateVersions": {
-      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
-        "id": "tpl-buff-self",
+      "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39": {
+        "id": "tpl-mark-stacks",
         "schema": "template@1",
-        "name": "變身強化-數值面",
-        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
-        "family": "buff-self",
+        "name": "具名標記-層數與免死",
+        "description": "在持有者身上裝一個有層數的具名標記（【試煉】【風王結界】【縮地】），可跨回合、可永久，並可選擇讓它變成一張免死牌：受致命傷害時消耗一層 → 無敵 → 回復 → 擊退暈眩周圍敵人；每失去一層永久獲得一組加成。⚠️ 落差：無敵/回復/擊退是救活的同一格一起發生，文案上的「隨後」看不出來 —— ⛔ 那是**這張模板**尚未把回復／擊退接上延後排程，⛔ 不是引擎沒有：引擎**有** `kind:\"delayed\"`（`delaySec`／`count`／`intervalSec`／`effects`，出貨例：初號機 `godie-e00r` 的 berserk_smoke），⭐ 但 lethalSave 的 `selfEffects`／`aoeEffects` 是同格跑的；要接延後得另驗死亡／重觸發／施法者狀態／排程取消的時序，⛔ 不是改說明就算做了（GH#1044）；火圈燒傷不走傷害佇列，這張免死牌擋不到它。",
+        "family": "mark-stacks",
         "status": "enabled",
         "params": {
-          "castTimeSec": {
-            "type": "number",
-            "default": 0,
-            "min": 0,
-            "max": 5,
-            "unit": "s",
-            "optional": true
+          "markId": {
+            "type": "docRef",
+            "default": "godie-hapm.passive"
           },
-          "duration": {
+          "initial": {
             "type": "number",
-            "default": 15,
+            "default": 12,
+            "min": 0,
+            "max": 999,
+            "unit": "count"
+          },
+          "max": {
+            "type": "number",
+            "default": 12,
             "min": 1,
-            "max": 60,
+            "max": 999,
+            "unit": "count"
+          },
+          "durationSec": {
+            "type": "number",
+            "default": -1,
+            "min": -1,
+            "max": 600,
             "unit": "s"
           },
-          "modifiers": {
+          "resetOn": {
+            "type": "enum",
+            "default": "match",
+            "values": [
+              "match",
+              "round",
+              "never"
+            ]
+          },
+          "perStackLost": {
             "type": "statModifiers",
             "default": [
               {
-                "op": "flat",
                 "stat": "ad",
-                "value": 50
+                "op": "pctAdd",
+                "value": 0.1
+              },
+              {
+                "stat": "maxHealth",
+                "op": "pctAdd",
+                "value": 0.1
               }
-            ]
-          }
-        },
-        "requires": [],
-        "gapScore": 6,
-        "exemplar": {
-          "skill": "82-04 闇之魔法",
-          "jass": "A0Q6"
-        }
-      },
-      "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0": {
-        "id": "tpl-on-attack",
-        "schema": "template@1",
-        "name": "攻擊觸發",
-        "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
-        "family": "on-attack",
-        "status": "enabled",
-        "params": {
-          "bonusDamage": {
-            "type": "scaling",
-            "default": {
-              "perRank": [
-                100
-              ],
-              "ratios": []
-            }
+            ],
+            "optional": true
           },
-          "chance": {
+          "lethalMode": {
+            "type": "enum",
+            "default": "save",
+            "values": [
+              "save",
+              "none"
+            ]
+          },
+          "lethalConsume": {
             "type": "number",
+            "default": 1,
+            "min": 1,
+            "max": 999,
+            "unit": "count"
+          },
+          "surviveHpPct": {
+            "type": "number",
+            "default": 0.01,
+            "min": 0.01,
+            "max": 1,
+            "unit": "ratio"
+          },
+          "lethalDamageTypes": {
+            "type": "enum",
+            "default": "all",
+            "values": [
+              "all",
+              "physicalMagic",
+              "physical",
+              "magic",
+              "true"
+            ]
+          },
+          "internalCooldown": {
+            "type": "number",
+            "default": 0.5,
+            "min": 0,
+            "max": 30,
+            "unit": "s"
+          },
+          "invulnerableSec": {
+            "type": "number",
+            "default": 1.5,
+            "min": 0.1,
+            "max": 30,
+            "unit": "s"
+          },
+          "invulnerableScope": {
+            "type": "enum",
+            "default": "damageAndControl",
+            "values": [
+              "damageAndControl",
+              "damageOnly"
+            ]
+          },
+          "restoreHealthPct": {
+            "type": "number",
+            "default": 0.5,
             "min": 0,
             "max": 1,
             "unit": "ratio",
             "optional": true
           },
-          "condition": {
-            "type": "condition",
-            "default": {
-              "any": [
-                {
-                  "all": [
-                    {
-                      "not": {
-                        "is": "champion",
-                        "kind": "kind",
-                        "subject": "target"
-                      }
-                    },
-                    {
-                      "kind": "stat",
-                      "mode": "percent",
-                      "op": "<",
-                      "stat": "hp",
-                      "subject": "target",
-                      "value": 0.35
-                    }
-                  ]
-                },
-                {
-                  "all": [
-                    {
-                      "is": "champion",
-                      "kind": "kind",
-                      "subject": "target"
-                    },
-                    {
-                      "kind": "chance",
-                      "p": 0.01
-                    }
-                  ]
-                }
-              ]
-            },
+          "aoeRadius": {
+            "type": "number",
+            "default": 6,
+            "min": 0,
+            "max": 12
+          },
+          "knockbackDistance": {
+            "type": "number",
+            "default": 4,
+            "min": 0.1,
+            "max": 20,
             "optional": true
           },
-          "damageType": {
-            "type": "enum",
-            "default": "magic",
-            "values": [
-              "magic",
-              "physical",
-              "true"
-            ]
-          },
-          "event": {
-            "type": "enum",
-            "default": "onBasicAttack",
-            "values": [
-              "onBasicAttack",
-              "onDamageDealt"
-            ]
-          },
-          "internalCooldown": {
+          "knockbackSpeed": {
             "type": "number",
-            "default": 0,
-            "min": 0,
-            "max": 60,
+            "default": 16,
+            "min": 1,
+            "max": 40
+          },
+          "knockbackFrom": {
+            "type": "enum",
+            "default": "caster",
+            "values": [
+              "caster",
+              "facing",
+              "pull"
+            ]
+          },
+          "stunSec": {
+            "type": "number",
+            "default": 0.5,
+            "min": 0.034,
+            "max": 20,
             "unit": "s",
             "optional": true
+          },
+          "stunStatusId": {
+            "type": "docRef",
+            "default": "trial-stun"
+          }
+        },
+        "requires": [
+          "marks",
+          "invulnerable",
+          "knockback",
+          "applyStatus"
+        ],
+        "gapScore": 8,
+        "exemplar": {
+          "skill": "52-00 十二道試煉（海克力斯 Berserker 天生技）",
+          "jass": "無 JASS 出處 —— owner 2026-08-08 口述規格，不是從 war3map.j 復原的家族"
+        }
+      },
+      "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+        "id": "tpl-event-passive",
+        "schema": "template@1",
+        "name": "自訂事件被動",
+        "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+        "family": "event-passive",
+        "status": "enabled",
+        "params": {
+          "hooks": {
+            "type": "hooks",
+            "default": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ]
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
           }
         },
         "requires": [
           "hooks",
           "conditions"
         ],
-        "gapScore": 9,
+        "gapScore": 10,
         "exemplar": {
-          "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者",
-          "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效"
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
         }
       },
-      "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b": {
-        "id": "tpl-single-strike",
+      "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+        "id": "tpl-effect-sequence",
         "schema": "template@1",
-        "name": "單體斬擊",
-        "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。",
-        "family": "single-strike",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
         "status": "enabled",
         "params": {
+          "castType": {
+            "type": "enum",
+            "default": "targeted",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
           "castTimeSec": {
             "type": "number",
             "default": 0,
             "min": 0,
-            "max": 5,
+            "max": 10,
             "unit": "s",
-            "optional": true
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
           },
-          "damage": {
-            "type": "scaling",
-            "default": {
-              "perRank": [
-                350
-              ],
-              "ratios": []
-            }
-          },
-          "damageType": {
-            "type": "enum",
-            "default": "magic",
-            "values": [
-              "magic",
-              "physical",
-              "true"
-            ]
-          }
-        },
-        "requires": [],
-        "gapScore": 9,
-        "exemplar": {
-          "skill": "23-04 雷焰聖劍",
-          "jass": "A0OD"
-        }
-      },
-      "sha256:fc256a57c55a0705dbb6660316bfeb64402f80fa154f09336fb1a8d393eeb5e5": {
-        "id": "tpl-leap-strike",
-        "schema": "template@1",
-        "name": "跳躍落地",
-        "description": "拋物線跳躍到指定點（或原地垂直跳），落地造成範圍傷害。飛行中無視地形；落點被障礙物（牆）或場地邊界擋住時，起跳當下就改瞄最近的合法落點（`world.wallBlock` 出貨 leap:\"clamp\"，落點截在牆前；只有 `flightExempt` 且被搬的那具身體本來就 `flightIgnoresObstacles` 的飛行狀態才豁免牆體，邊界照樣截斷），弧線隨之重算，你看到的落地位置就是實際位置。",
-        "family": "leap-strike",
-        "status": "enabled",
-        "params": {
-          "apexHeight": {
+          "radius": {
             "type": "number",
-            "default": 600,
+            "default": 2,
             "min": 0,
-            "max": 2000,
-            "unit": "wc3h"
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
           },
-          "applyTo": {
+          "side": {
             "type": "enum",
-            "default": "self",
+            "default": "enemies",
             "values": [
-              "self",
-              "target"
-            ]
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
           },
-          "castTimeSec": {
-            "type": "number",
-            "default": 0.5,
-            "min": 0,
-            "max": 5,
-            "unit": "s"
-          },
-          "damage": {
-            "type": "scaling",
-            "default": {
-              "perRank": [
-                450
-              ],
-              "ratios": []
-            }
-          },
-          "damageType": {
-            "type": "enum",
-            "default": "physical",
-            "values": [
-              "magic",
-              "physical",
-              "true"
-            ]
-          },
-          "durationSec": {
-            "type": "number",
-            "default": 0.82,
-            "min": 0.1,
-            "max": 3,
-            "unit": "s"
-          },
-          "landRadius": {
-            "type": "number",
-            "default": 330,
-            "min": 0,
-            "max": 900,
-            "unit": "wc3u"
-          },
-          "mode": {
-            "type": "enum",
-            "default": "toPoint",
-            "values": [
-              "toPoint",
-              "inPlace"
-            ]
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
           }
         },
         "requires": [
-          "leap"
+          "hooks",
+          "conditions"
         ],
-        "gapScore": 5,
+        "gapScore": 10,
         "exemplar": {
-          "skill": "07-03 列、在、前",
-          "jass": "A0G3"
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
         }
       }
     },
@@ -375,31 +390,106 @@
       "PASSIVE": {
         "slot": "PASSIVE",
         "name": "〔糞作獵人的讀招〕",
-        "purpose": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。\n【目標設計】成功以位移避開有效攻擊後，獲得一層讀招，上限三層。單純空按移動不增加。\n【待補機制】需真正閃避事件的三層讀招，空按不增加。",
+        "purpose": "三層具名讀招；W 自身閃避來源在實際衝刺移動中成功才加一層，空按／撞停／失手／其他來源不給。有效命中、受擊、真正迴避或格擋留下自己來源的四秒交鋒標記，僅供 EX 選目標，不等於讀招。\n【原設計】成功以位移避開有效攻擊後，獲得一層讀招，上限三層。單純空按移動不增加。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json"
         },
         "products": [
           {
-            "instanceId": "community-review-31-20260907-passive-1",
+            "instanceId": "read",
             "template": {
-              "ref": "tpl-on-attack",
+              "ref": "tpl-mark-stacks",
               "params": {
-                "bonusDamage": {
-                  "damageTier": "極小",
-                  "ratios": []
-                },
-                "condition": {
-                  "kind": "chance",
-                  "p": 1
-                },
-                "damageType": "physical",
-                "event": "onBasicAttack",
-                "internalCooldown": 3
+                "markId": "community-review-31-20260907.read",
+                "initial": 0,
+                "max": 3,
+                "durationSec": -1,
+                "resetOn": "round",
+                "lethalMode": "none",
+                "perStackLost": []
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0"
+              "contentSha256": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39"
+            }
+          },
+          {
+            "instanceId": "engagement",
+            "template": {
+              "ref": "tpl-event-passive",
+              "params": {
+                "hooks": [
+                  {
+                    "on": "onDamageDealt",
+                    "victim": "enemy",
+                    "target": "event",
+                    "effects": [
+                      {
+                        "kind": "applyBuff",
+                        "statusId": "community-review-31-20260907.engaged",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-31-20260907.engaged",
+                        "maxStacks": 1,
+                        "duration": 4,
+                        "modifiers": [],
+                        "dispellable": false
+                      }
+                    ]
+                  },
+                  {
+                    "on": "onDamageTaken",
+                    "victim": "enemy",
+                    "target": "event",
+                    "effects": [
+                      {
+                        "kind": "applyBuff",
+                        "statusId": "community-review-31-20260907.engaged",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-31-20260907.engaged",
+                        "maxStacks": 1,
+                        "duration": 4,
+                        "modifiers": [],
+                        "dispellable": false
+                      }
+                    ]
+                  },
+                  {
+                    "on": "onEvade",
+                    "victim": "enemy",
+                    "target": "event",
+                    "evadeSource": "defender",
+                    "effects": [
+                      {
+                        "kind": "applyBuff",
+                        "statusId": "community-review-31-20260907.engaged",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-31-20260907.engaged",
+                        "maxStacks": 1,
+                        "duration": 4,
+                        "modifiers": [],
+                        "dispellable": false
+                      }
+                    ]
+                  },
+                  {
+                    "on": "onBlock",
+                    "victim": "enemy",
+                    "target": "event",
+                    "effects": [
+                      {
+                        "kind": "applyBuff",
+                        "statusId": "community-review-31-20260907.engaged",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-31-20260907.engaged",
+                        "maxStacks": 1,
+                        "duration": 4,
+                        "modifiers": [],
+                        "dispellable": false
+                      }
+                    ]
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
             }
           }
         ],
@@ -419,30 +509,64 @@
       "Q": {
         "slot": "Q",
         "name": "Spiral Edge",
-        "purpose": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】短劍螺旋刺擊；對剛被自己反擊的目標有有限追加效果。\n【待補機制】需螺旋刃動畫與反擊後目標追加條件。",
+        "purpose": "近身單次小級距短劍刺擊；只消耗自己 E 在該目標留下的二秒反擊標記，追加一次極小級距傷害。別名目標、另一施法者與過期標記無追加。螺旋刃武器動作仍待畫面驗收。\n【原設計】短劍螺旋刺擊；對剛被自己反擊的目標有有限追加效果。",
         "maxRank": 4,
         "abilityOverrides": {
-          "castTimeTier": "小",
-          "cooldownTier": "小",
-          "manaCostTier": "小",
           "provenance": "editor-json",
-          "rangeTier": "小"
+          "castTimeSec": 0.1,
+          "cooldown": [
+            5,
+            5,
+            5,
+            5
+          ],
+          "manaCost": [
+            40,
+            40,
+            40,
+            40
+          ],
+          "range": 3
         },
         "products": [
           {
-            "instanceId": "community-review-31-20260907-q-1",
+            "instanceId": "q-authored",
             "template": {
-              "ref": "tpl-single-strike",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "castTimeSec": 0.2,
-                "damage": {
-                  "damageTier": "小",
-                  "ratios": []
-                },
-                "damageType": "physical"
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "小",
+                      "ratios": []
+                    }
+                  },
+                  {
+                    "kind": "consumeStatus",
+                    "shape": "single",
+                    "statusId": "community-review-31-20260907.countered",
+                    "appliedBy": "self",
+                    "count": 1,
+                    "onConsumed": [
+                      {
+                        "kind": "damage",
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "極小",
+                          "ratios": []
+                        }
+                      }
+                    ]
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -459,35 +583,79 @@
       "W": {
         "slot": "W",
         "name": "Slide Move",
-        "purpose": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】滑步位移，提供很短的精準迴避窗口。\n【待補機制】模板低跳不是精準迴避；需傷害來臨時間窗口。",
+        "purpose": "向輸入方向貼地滑步 2.4 單位、速度 8；0.3 秒內以現行 GGD 迴避上限提供普攻及技能迴避。只有本技能來源實際抽中，且閃避當下仍在衝刺並已發生位移才累積讀招。沒有跳躍或位移傷害；羽毛／短劍動作仍待畫面验收。\n【原設計】滑步位移，提供很短的精準迴避窗口。",
         "maxRank": 4,
         "abilityOverrides": {
-          "castTimeTier": "小",
-          "cooldownTier": "小",
-          "manaCostTier": "小",
           "provenance": "editor-json",
-          "rangeTier": "中"
+          "castTimeSec": 0,
+          "cooldown": [
+            6,
+            6,
+            6,
+            6
+          ],
+          "manaCost": [
+            45,
+            45,
+            45,
+            45
+          ],
+          "range": 3
         },
         "products": [
           {
-            "instanceId": "community-review-31-20260907-w-1",
+            "instanceId": "w-authored",
             "template": {
-              "ref": "tpl-leap-strike",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "apexHeight": 40,
-                "applyTo": "self",
-                "castTimeSec": 0.15,
-                "damage": {
-                  "damageTier": "極小",
-                  "ratios": []
-                },
-                "damageType": "physical",
-                "durationSec": 0.5,
-                "landRadius": 150,
-                "mode": "toPoint"
+                "castType": "skillshot",
+                "castTimeSec": 0,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "applyTo": "self",
+                    "stackKey": "community-review-31-20260907.slide",
+                    "maxStacks": 1,
+                    "duration": 0.3,
+                    "modifiers": [
+                      {
+                        "stat": "evasion",
+                        "op": "flat",
+                        "value": 0.8
+                      }
+                    ],
+                    "evasionScope": {
+                      "abilities": true
+                    },
+                    "hooks": [
+                      {
+                        "on": "onEvade",
+                        "evadeSource": "thisSource",
+                        "evadeDuring": "dash",
+                        "target": "self",
+                        "effects": [
+                          {
+                            "kind": "applyStatus",
+                            "statusId": "community-review-31-20260907.read",
+                            "applyTo": "self",
+                            "stacks": 1,
+                            "duration": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "dash",
+                    "mode": "forward",
+                    "speed": 8,
+                    "maxDistance": 2.4
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:fc256a57c55a0705dbb6660316bfeb64402f80fa154f09336fb1a8d393eeb5e5"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -506,40 +674,84 @@
       "E": {
         "slot": "E",
         "name": "Repel Counter",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-31-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】短窗口迎擊攻擊，成功時擊退攻擊者，並提供一次 Q 接續機會。\n【待補機制】護盾不是 Repel Counter；需格擋成功、擊退與 Q 窗口。",
+        "purpose": "0.45 秒迎擊窗口，擋下第一個物理或魔法命中；只由本來源成功格擋觸發一次，將攻擊者推離 1 單位並給該目標二秒 Q 接續標記。沒有護盾量或固定自動反傷；標記按施法者隔離。招架短劍演出仍待驗。\n【原設計】短窗口迎擊攻擊，成功時擊退攻擊者，並提供一次 Q 接續機會。",
         "maxRank": 4,
         "abilityOverrides": {
-          "castTimeTier": "小",
-          "cooldownTier": "小",
-          "effects": [
-            {
-              "absorbs": "all",
-              "amount": {
-                "flat": 120,
-                "ratios": []
-              },
-              "duration": 3,
-              "kind": "shield",
-              "onExisting": "keepLarger",
-              "stackKey": "community-review-31-20260907.e.guard"
-            }
-          ],
-          "manaCostTier": "小",
           "provenance": "editor-json",
-          "rangeTier": "中"
+          "castTimeSec": 0,
+          "cooldown": [
+            8,
+            8,
+            8,
+            8
+          ],
+          "manaCost": [
+            50,
+            50,
+            50,
+            50
+          ],
+          "range": 0
         },
         "products": [
           {
-            "instanceId": "community-review-31-20260907-e-1",
+            "instanceId": "e-authored",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "castTimeSec": 0.15,
-                "duration": 3,
-                "modifiers": []
+                "castType": "self",
+                "castTimeSec": 0,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "applyTo": "self",
+                    "stackKey": "community-review-31-20260907.parry",
+                    "maxStacks": 1,
+                    "duration": 0.45,
+                    "modifiers": [],
+                    "block": {
+                      "chance": 1,
+                      "fraction": 1,
+                      "damageTypes": [
+                        "physical",
+                        "magic"
+                      ],
+                      "internalCooldown": 1
+                    },
+                    "hooks": [
+                      {
+                        "on": "onBlock",
+                        "victim": "enemy",
+                        "target": "event",
+                        "blockSource": "thisSource",
+                        "maxTriggers": 1,
+                        "onConsumed": "detachSource",
+                        "effects": [
+                          {
+                            "kind": "applyBuff",
+                            "statusId": "community-review-31-20260907.countered",
+                            "sourceScope": "caster",
+                            "stackKey": "community-review-31-20260907.countered",
+                            "maxStacks": 1,
+                            "duration": 2,
+                            "modifiers": [],
+                            "dispellable": false
+                          },
+                          {
+                            "kind": "knockback",
+                            "distance": 1,
+                            "speed": 10,
+                            "subtractGap": false
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -556,38 +768,58 @@
       "R": {
         "slot": "R",
         "name": "Accel",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：極小級移速、as +20%。\n【目標設計】短期提高移速與近戰輸出能力，保留原本技能冷卻。\n【待補機制】Accel 基礎移速／攻速增益；持續 3 秒且保留冷卻。",
+        "purpose": "三秒移速與攻速各增加 25%，使用同一堆疊鍵避免重複累加，到期恢復；不修改任何其他槽冷卻，也不創造新讀招。專用加速殘像仍待驗。\n【原設計】短期提高移速與近戰輸出能力，保留原本技能冷卻。",
         "maxRank": 3,
         "abilityOverrides": {
-          "castTimeTier": "大",
-          "cooldownTier": "大",
-          "manaCostTier": "大",
           "provenance": "editor-json",
-          "rangeTier": "中"
+          "castTimeSec": 0.2,
+          "cooldown": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "manaCost": [
+            90,
+            90,
+            90,
+            90
+          ],
+          "range": 0
         },
         "products": [
           {
-            "instanceId": "community-review-31-20260907-r-1",
+            "instanceId": "r-authored",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "castTimeSec": 0.15,
-                "duration": 3,
-                "modifiers": [
+                "castType": "self",
+                "castTimeSec": 0.2,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
                   {
-                    "msBonusTier": "極小",
-                    "op": "pctAdd",
-                    "stat": "ms"
-                  },
-                  {
-                    "op": "pctAdd",
-                    "stat": "as",
-                    "value": 0.2
+                    "kind": "applyBuff",
+                    "applyTo": "self",
+                    "stackKey": "community-review-31-20260907.accel",
+                    "maxStacks": 1,
+                    "duration": 3,
+                    "modifiers": [
+                      {
+                        "stat": "ms",
+                        "op": "pctAdd",
+                        "value": 0.25
+                      },
+                      {
+                        "stat": "as",
+                        "op": "pctAdd",
+                        "value": 0.25
+                      }
+                    ]
                   }
                 ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -604,30 +836,56 @@
       "EX": {
         "slot": "EX",
         "name": "〔攻略完成〕",
-        "purpose": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】消耗三層讀招，對近期交鋒目標進行一次有方向的高傷害短劍終結。\n【待補機制】需消耗三層讀招並限定近期交鋒目標。",
+        "purpose": "至少三層讀招且指定敵人有自己四秒交鋒標記才可施放；資格先檢查，再在開始時扣三層、魔力及冷卻。0.35 秒明確起手朝該目標單次大級距物理短劍終結；非法／過期／其他來源標記不扣資源，也不自動追逐未具資格的目標。專用終結動作仍待驗。\n【原設計】消耗三層讀招，對近期交鋒目標進行一次有方向的高傷害短劍終結。",
         "maxRank": 1,
         "abilityOverrides": {
-          "castTimeTier": "小",
-          "cooldownTier": "大",
-          "manaCostTier": "大",
           "provenance": "editor-json",
-          "rangeTier": "小"
+          "castTimeSec": 0.35,
+          "cooldown": [
+            15,
+            15,
+            15,
+            15
+          ],
+          "manaCost": [
+            100,
+            100,
+            100,
+            100
+          ],
+          "range": 3,
+          "statusCost": {
+            "statusId": "community-review-31-20260907.read",
+            "count": 3
+          },
+          "requiredTargetStatus": {
+            "statusId": "community-review-31-20260907.engaged",
+            "appliedBy": "self",
+            "minStacks": 1
+          }
         },
         "products": [
           {
-            "instanceId": "community-review-31-20260907-ex-1",
+            "instanceId": "ex-authored",
             "template": {
-              "ref": "tpl-single-strike",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "castTimeSec": 0.2,
-                "damage": {
-                  "damageTier": "小",
-                  "ratios": []
-                },
-                "damageType": "physical"
+                "castType": "targeted",
+                "castTimeSec": 0.35,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "大",
+                      "ratios": []
+                    }
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -1044,6 +1302,14 @@
       }
     }
   },
+  "refinementNotes": {
+    "PASSIVE": "三層具名讀招；W 自身閃避來源在實際衝刺移動中成功才加一層，空按／撞停／失手／其他來源不給。有效命中、受擊、真正迴避或格擋留下自己來源的四秒交鋒標記，僅供 EX 選目標，不等於讀招。",
+    "Q": "近身單次小級距短劍刺擊；只消耗自己 E 在該目標留下的二秒反擊標記，追加一次極小級距傷害。別名目標、另一施法者與過期標記無追加。螺旋刃武器動作仍待畫面驗收。",
+    "W": "向輸入方向貼地滑步 2.4 單位、速度 8；0.3 秒內以現行 GGD 迴避上限提供普攻及技能迴避。只有本技能來源實際抽中，且閃避當下仍在衝刺並已發生位移才累積讀招。沒有跳躍或位移傷害；羽毛／短劍動作仍待畫面验收。",
+    "E": "0.45 秒迎擊窗口，擋下第一個物理或魔法命中；只由本來源成功格擋觸發一次，將攻擊者推離 1 單位並給該目標二秒 Q 接續標記。沒有護盾量或固定自動反傷；標記按施法者隔離。招架短劍演出仍待驗。",
+    "R": "三秒移速與攻速各增加 25%，使用同一堆疊鍵避免重複累加，到期恢復；不修改任何其他槽冷卻，也不創造新讀招。專用加速殘像仍待驗。",
+    "EX": "至少三層讀招且指定敵人有自己四秒交鋒標記才可施放；資格先檢查，再在開始時扣三層、魔力及冷卻。0.35 秒明確起手朝該目標單次大級距物理短劍終結；非法／過期／其他來源標記不扣資源，也不自動追逐未具資格的目標。專用終結動作仍待驗。"
+  },
   "validationState": {
     "identity": {
       "revision": 1,
@@ -1056,43 +1322,30 @@
       "diagnosticCodes": []
     },
     "skills": {
-      "revision": 12,
-      "status": "idle",
+      "revision": 13,
+      "status": "stale",
       "diagnosticCodes": []
     },
     "mechanics": {
-      "revision": 1,
+      "revision": 13,
       "status": "stale",
       "diagnosticCodes": []
     },
     "presentation": {
-      "revision": 3,
+      "revision": 13,
       "status": "stale",
       "diagnosticCodes": []
     },
     "validation": {
-      "revision": 1,
+      "revision": 13,
       "status": "stale",
       "diagnosticCodes": []
     },
     "package": {
-      "revision": 3,
+      "revision": 13,
       "status": "stale",
       "diagnosticCodes": []
     }
   },
-  "receipts": [
-    {
-      "kind": "generator-adopted",
-      "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
-      "projectRevision": 5,
-      "digest": "92b14012ef3ed6ca815951edb1124402fab30eecb1e2e2edde8b9765099c857d"
-    },
-    {
-      "kind": "generator-adopted",
-      "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
-      "projectRevision": 12,
-      "digest": "d9ca2942159bd6713256d991ee379366fcbe632f4e44f1063321a279d22f3834"
-    }
-  ]
+  "receipts": []
 }

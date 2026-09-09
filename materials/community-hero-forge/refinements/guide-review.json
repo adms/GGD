@@ -1,7 +1,7 @@
 {
   "file": "AI參考全自動鑄造守則.md",
-  "sha256": "c2f6b75596091ec18cdf6ddaa318df727690dd307e4695dfadce87fe808d4c65",
-  "localLinksChecked": 48,
+  "sha256": "277e3799062f613527a3f2b2f0d1f95487baf459d485b86a89b063f52657756c",
+  "localLinksChecked": 53,
   "missingLinks": [],
   "commandsAndReferencedTests": "checked against current repository",
   "semanticReview": [
@@ -45,7 +45,11 @@
     "movement and shield-absorbed hits interrupt optional rest",
     "protected windups and legal enemy-only interrupt without stun",
     "forward arc uses actual origin and direction",
-    "new effect must wire complete Editor forms and preview"
+    "new effect must wire complete Editor forms and preview",
+    "event-time actual displacement and evasion-source identity",
+    "source-scoped non-consuming target prerequisite before approach/payment",
+    "target conditions rechecked after approach",
+    "single-slot seeded resource is separate from real earned combo"
   ],
   "runtimeClaims": "guide does not claim full hero acceptance",
   "batchVerificationReview": {

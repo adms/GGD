@@ -1,0 +1,353 @@
+{
+  "schema": "ggd-sunraku-verification@1",
+  "issue": 1132,
+  "sourceCommit": "3a8daa1394392584653f969276c667d3cca13155",
+  "refinementVersion": 1,
+  "refinementSha256": "1a2e02876595ca624503d0ff9cae1dd0d0973953639172f8439eef4012dfeb12",
+  "changes": [
+    "PASSIVE is a capped three-read counter. Only a real W-source defender dodge recorded during actual dash movement earns a read; empty input, walls, fumble and other sources do not. Round reset clears reads.",
+    "Q is a short single-target sword strike with one extra hit when it consumes its own two-second E counter mark. Other casters and expired marks cannot qualify.",
+    "W is a 2.4-unit grounded directional slide with a 0.3-second capped evasion window for basic and ability damage. It has no jump or damage. Event-time displacement is immutable when hooks run later.",
+    "E blocks one physical/magic hit within 0.45 seconds through its own source, pushes the attacker one unit and opens one Q follow-up. Shields, other block sources, true damage and expired windows do not qualify.",
+    "R grants move and attack speed for three seconds while preserving existing skill cooldowns.",
+    "EX requires three reads plus its own recent enemy engagement; target eligibility is checked before approach/payment and rechecked on arrival. It spends reads at acceptance and delivers one delayed high-damage strike.",
+    "Shared sourceGrants exposes the existing ability-evasion channel. A reusable communityActionFixture drives real compiled heroes and deterministic combat for subsequent batches.",
+    "Single-slot preview honestly prepares the installed self-resource and earns engagement through real enemy combat. The ordinary whole-kit smoke rejects EX when no slide dodges earned reads; a separate actual W/E/Q/R/EX combo passes at ranks 1 and 4 without seeding reads."
+  ],
+  "checks": {
+    "sunrakuBehavior": {
+      "tests": 26,
+      "exitCode": 0
+    },
+    "sunrakuScenario": {
+      "tests": 3,
+      "exitCode": 0
+    },
+    "communityAndRuntimeRegression": {
+      "tests": 333,
+      "files": 20,
+      "exitCode": 0,
+      "includesAzazelReversal": true
+    },
+    "castApproachRegression": {
+      "tests": 1,
+      "exitCode": 0
+    },
+    "clientFeedback": {
+      "tests": 29,
+      "exitCode": 0
+    },
+    "typechecks": {
+      "shared": 0,
+      "editor": 0,
+      "client": 0,
+      "gameServer": 0
+    }
+  },
+  "initialFailures": [
+    "The authoring recipe incorrectly put castType in abilityOverrides; moved it to the template parameters supported by the authoring contract.",
+    "applyBuff could not author the existing ability evasion scope; added it to the shared schema/type/forwarding/presence contract instead of dropping ability dodges.",
+    "The source-grant exact-key guard caught the new field missing from its roundtrip fixture; included both channel flags and retained the full equality check.",
+    "Tests used the wrong approach-registry/boundary/type paths, read stats before recomputation and compared mana across regeneration; fixed fixtures and checked at the rejection instant.",
+    "Genuine post-slide whiff recovery initially prevented the combo; waited for recovery rather than bypassing it. The correct castApproach regression path was separately run."
+  ],
+  "mutations": [
+    {
+      "mutation": "moving-dodge",
+      "file": "packages/shared/src/sim/effects/hooks.ts",
+      "from": "if (hook.evadeDuring === \"dash\" && evade?.duringDash !== true) continue;",
+      "to": "",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/sunraku.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "movement after a stationary dodge"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "628414b3e48a45164d70f2bd80be952b21b1bd94426933e825ce6bb58b7ab139"
+    },
+    {
+      "mutation": "own-engagement",
+      "file": "packages/shared/src/sim/abilities/abilitySystem.ts",
+      "from": "required.appliedBy === \"self\" ? caster : undefined",
+      "to": "undefined",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/sunraku.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "cannot borrow another"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "9f2624241c86a43854893d9b5205fe5612e17a0110804ef7baf05c3896a88ad9"
+    },
+    {
+      "mutation": "engagement-prerequisite",
+      "file": "packages/shared/src/sim/abilities/abilitySystem.ts",
+      "from": "if (required && consumableStatusStacks",
+      "to": "if (false && required && consumableStatusStacks",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/sunraku.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "different or expired engagement"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "19ba928ae37be0eb798c782ffdd09eb500f1b544559f08624aec2aac6f823ed0"
+    },
+    {
+      "mutation": "spell-evasion",
+      "file": "packages/shared/src/sim/stats/sourceGrants.ts",
+      "from": "...(from.evasionScope !== undefined ? { evasionScope: from.evasionScope } : {}),",
+      "to": "",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/sunraku.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "actual enemy ability attack"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "4b8ca49a26245414d8e70fbddfee5d45f4d248c4e9f25d8c8d83f59ab75f8391"
+    }
+  ],
+  "generators": [
+    {
+      "step": "typecat:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/sunraku-gen-typecat-build.log"
+    },
+    {
+      "step": "caps:export",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/sunraku-gen-caps-export.log"
+    },
+    {
+      "step": "editorcov:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/sunraku-gen-editorcov-build.log"
+    },
+    {
+      "step": "bricks:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/sunraku-gen-bricks-build.log"
+    },
+    {
+      "step": "contract:numbers",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/sunraku-gen-contract-numbers.log"
+    },
+    {
+      "step": "spec:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/sunraku-gen-spec-build.log"
+    },
+    {
+      "step": "overview:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/sunraku-gen-overview-build.log"
+    },
+    {
+      "step": "skillforge:audit",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/sunraku-gen-skillforge-audit.log"
+    },
+    {
+      "step": "skillremake:docs",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/sunraku-gen-skillremake-docs.log"
+    },
+    {
+      "step": "atlas:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/sunraku-gen-atlas-build.log"
+    },
+    {
+      "step": "docs:readme",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/sunraku-gen-docs-readme.log"
+    },
+    {
+      "step": "decor:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/sunraku-gen-decor-build.log"
+    }
+  ],
+  "handoff": {
+    "changedProjects": [
+      "31.hero-project.json"
+    ],
+    "otherProjectsByteIdentical": 36,
+    "originalRecipesByteIdentical": 37,
+    "indexByteIdentical": true,
+    "sourceDesignBriefPresentationUnchanged": true,
+    "revisionBefore": 12,
+    "revisionAfter": 13,
+    "modelSha256": "04af91b75e1e6e6d2dfab2d59cc5e008a18e71718f6774848810f9266043908d",
+    "generatedAudit": 51
+  },
+  "coverage": {
+    "mappedSlots": 51,
+    "unmappedSlots": 171,
+    "genericOnAttackPassives": 21
+  },
+  "assetReview": {
+    "entry": "../ASSET_LIBRARIES.md",
+    "queries": [
+      "sunraku --pending",
+      "SUN樂 --pending",
+      "香格里拉 --pending"
+    ],
+    "result": "Only community37:31 design_with_proxy_assets; no matched native character package found by these queries.",
+    "currentModelCharacter": "哈桑",
+    "currentModelSourceWork": "Fate/stay night",
+    "currentModelRelationship": "style-proxy",
+    "currentModelSha256": "04af91b75e1e6e6d2dfab2d59cc5e008a18e71718f6774848810f9266043908d",
+    "modelChanged": false,
+    "limitations": [
+      "Bird mask, original costume, spiral dagger, slide/counter/finisher animations and dedicated sounds remain unverified.",
+      "Existing cast uses one shared native clip and hurt aliases idle; byte integrity is not original-motion acceptance."
+    ]
+  },
+  "originalDesignAcceptance": "incomplete",
+  "visualAcceptance": "unverified",
+  "currentServiceZip": "not-built",
+  "formalPublication": false,
+  "logs": {
+    "sunraku-approach-regression.log": {
+      "sha256": "baefa5841e9c0db1b85b45339650a90bf3510db21c8183b2b93c69d41d707dda"
+    },
+    "sunraku-client-feedback.log": {
+      "sha256": "a102a3aac575dfa2f00255467bd64704c785fc35e831ff232281864222652b88"
+    },
+    "sunraku-gen-atlas-build.log": {
+      "sha256": "49f7e9503821ae6e8e56aa2c6b8fe93db31c45a9b819b6f538453aa5ec7bfd00"
+    },
+    "sunraku-gen-bricks-build.log": {
+      "sha256": "a0e3a67d8c0013750d5c2683722309128bd3111f67262c3b8aa2535146e39a92"
+    },
+    "sunraku-gen-caps-export.log": {
+      "sha256": "521b2cd5f605f6e54a42eb6fa8eeae71c004a22136ace941d9f4fe8b65b6e0d2"
+    },
+    "sunraku-gen-contract-numbers.log": {
+      "sha256": "74f669584cf58ba3a694b30363ee0f306cdde4f18495005ec05ed8cc70fe5965"
+    },
+    "sunraku-gen-decor-build.log": {
+      "sha256": "30f38a8b028e7a4a4b35a00121072ff551e1dcb0a34aad94a23ec0469bc76032"
+    },
+    "sunraku-gen-docs-readme.log": {
+      "sha256": "c1376f0b9f50e5b20ae019511a075131234156c80d663753699b842f6a93184e"
+    },
+    "sunraku-gen-editorcov-build.log": {
+      "sha256": "dc506ede474c24cb71c8e2ccad1ceab6d7dd232fae1e0d99976f978ca3a6ff39"
+    },
+    "sunraku-gen-overview-build.log": {
+      "sha256": "dc71d50c4be5a38c3e063a263304685254162e186394f2e6e086ce2b89b6fc89"
+    },
+    "sunraku-gen-skillforge-audit.log": {
+      "sha256": "62b5171815634ed0e417abd055dbabed1c6a4da9df88d35456767979481a0757"
+    },
+    "sunraku-gen-skillremake-docs.log": {
+      "sha256": "375dea34242c3392245cdefa4c4b78dad126b6dfcb63e6c913a5ddc3cdeca4af"
+    },
+    "sunraku-gen-spec-build.log": {
+      "sha256": "99b9d2dc2052c494c1ec053fb9e9e847271056c833a34bb869383921a00a2a54"
+    },
+    "sunraku-gen-typecat-build.log": {
+      "sha256": "a51cfc10a35b2f99fe40a75b5c932dac5c521896ebd0f247308f14c7c016f7e9"
+    },
+    "sunraku-handoff.log": {
+      "sha256": "4fe74dbf11b0f3b1307eac8e06fd389e1e4d2e00851071c674c47743dba98a49"
+    },
+    "sunraku-mutation-engagement-prerequisite.log": {
+      "sha256": "19ba928ae37be0eb798c782ffdd09eb500f1b544559f08624aec2aac6f823ed0"
+    },
+    "sunraku-mutation-moving-dodge.log": {
+      "sha256": "628414b3e48a45164d70f2bd80be952b21b1bd94426933e825ce6bb58b7ab139"
+    },
+    "sunraku-mutation-own-engagement.log": {
+      "sha256": "9f2624241c86a43854893d9b5205fe5612e17a0110804ef7baf05c3896a88ad9"
+    },
+    "sunraku-mutation-spell-evasion.log": {
+      "sha256": "4b8ca49a26245414d8e70fbddfee5d45f4d248c4e9f25d8c8d83f59ab75f8391"
+    },
+    "sunraku-mutations.log": {
+      "sha256": "5a04078e6cae43f8afaef5cdec509d3666fbcf54edbd8331b00082a16846408b"
+    },
+    "sunraku-regression.log": {
+      "sha256": "64906b3498a2e0139481ca366637dff44ee6493da609845a14986934904f569c"
+    },
+    "sunraku-tests-01.log": {
+      "sha256": "d8ee5783c989cc1bc9c5e8d60435d5aefa2bff93406a09c14cbfad44c45ccd7e"
+    },
+    "sunraku-tests-02.log": {
+      "sha256": "d80f8775ca81e80e219be509996b0205063b1cc8e59f0763d30a0573397ac1ec"
+    },
+    "sunraku-tests-03.log": {
+      "sha256": "660b5da18172bfa8facdec8f89da8cc6c3fb35114c04d84bf318f32e71d4d950"
+    },
+    "sunraku-tests-04.log": {
+      "sha256": "0b892b3b5ca5bb63364f3f8656fdc10eb749485c960260e8106d136cb1ccd31e"
+    },
+    "sunraku-tests-05.log": {
+      "sha256": "a27d79bb0db12c0df5c550017678bda437619596bb30ecdbb3f8462ee2264fc7"
+    },
+    "sunraku-tests-06.log": {
+      "sha256": "be3eef0cae08d874b95b31d02a92a277ed95e432b90f49140101972ab7975b51"
+    },
+    "sunraku-typecheck-01.log": {
+      "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    },
+    "sunraku-typecheck-02.log": {
+      "sha256": "dd285bffae82bb5b2a3d2ec34ee01d65335979fddfac5ad61397d56f9c816b38"
+    },
+    "sunraku-typecheck-03.log": {
+      "sha256": "ec52b284718bcd187e0a10c76cf81d9016a6f453940b3889d107e8950dddbea8"
+    },
+    "sunraku-typecheck-04.log": {
+      "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    },
+    "sunraku-typecheck-final-client.log": {
+      "sha256": "39d946f6b36b6e4e7de7bfbe2267744c75dc2daf57912304bbcdcd88a0cc130d"
+    },
+    "sunraku-typecheck-final-editor.log": {
+      "sha256": "486eafd3c0debbbff5ae7dddb4aa8823f853e470eff3bacbda032617862caca2"
+    },
+    "sunraku-typecheck-final-game-server.log": {
+      "sha256": "b05c3d89729ac8d5380fe460caa7c9227683cd32eda0fd3fbdcddaedd946d715"
+    },
+    "sunraku-typecheck-final-shared.log": {
+      "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    }
+  }
+}

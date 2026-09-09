@@ -218,3 +218,11 @@ Editor 的「敵方前置行動」可切換自動、靜止或普攻，並显示�
 - `interruptOn="damageOrMove"` 比對實際移動與連接成功的正值傷害封包，盾／格擋吸收仍算受擊；零值或免疫不算。舊 `damage` 仍以 HP 下降判定。`interruptible=false` 保護前搖，死亡仍取消。消耗於接受時支付，中斷不自行退款。
 - `interruptCast` 只終止合法敵方尚在執行的可打斷前搖，沿用免控及區域邊界；不等於暈眩、不能倒轉已結算效果。前方弧形使用 `damageArea.fromCaster` 與 `arcHalfAngleCos`，須驗證後方、友軍、距離及實際輸入方向。
 - 新增效果必須同步接上 Editor 的預覽與 schema 表單，保留完整種類的窮盡檢查。參考 [銀時微調](materials/community-hero-forge/refinements/23.json)、[實際行為案例](packages/shared/src/content/heroForge/communityRefinements/gintoki.test.ts) 與 [驗證收據](materials/community-hero-forge/refinements/gintoki-verification.json)。六槽機制通過不代表木刀、牛奶或專用動作演出通過。
+
+## 位移閃避與目標交鋒資格
+
+- 位移成功、閃避成功與資源獲得是三件事。`onEvade` 搭配 `evadeSource="thisSource"`、`evadeDuring="dash"`，以實際閃避事件當下的衝刺和位移快照判斷；空按、撞停、失手、別來源與事件後才移動都不能加讀招。`applyBuff.evasionScope.abilities` 可開啟既有技能迴避通道，仍受 GGD 上限約束，不是必中閃避。
+- `requiredTargetStatus` 是施放資格，與 `statusCost` 消耗分開。可要求目標上自己的標記及最低層數；先判斷合法對象、有效來源／期限，再接近或扣費，抵達後重查。其他玩家標記、已過期／非法目標不可借用，也不能不小心消耗資格標記。
+- 招架接續使用短效、自己來源的目標標記；一次追加以實際消耗觸發。驗證第一次有追加、第二次沒有、他人及過期標記無效。
+- 單槽試玩準備具名資源必須明列，不能聲稱它證明實際取得資源。整套煙霧情境沒有完成成功閃避時應保留 EX 拒絕；另用真實 W／E／Q／R／EX 行動驗證同一世界連段，不得灌層數掩蓋缺口。
+- 參考 [SUN樂微調](materials/community-hero-forge/refinements/31.json)、[共用戰鬥治具](packages/shared/testkit/communityActionFixture.ts)、[行為測試](packages/shared/src/content/heroForge/communityRefinements/sunraku.test.ts)、[试玩反例](packages/shared/src/content/heroForge/communityRefinements/sunrakuAcceptance.test.ts) 及 [收據](materials/community-hero-forge/refinements/sunraku-verification.json)。哈桑風格代理未證明鳥頭、短劍或原角色演出。

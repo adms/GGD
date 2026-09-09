@@ -4,8 +4,8 @@
   "scope": "Original requirements versus compiled authoring; compilation is not design acceptance",
   "heroes": 37,
   "slots": 222,
-  "changedSlots": 45,
-  "passiveOnAttackTemplates": 22,
+  "changedSlots": 51,
+  "passiveOnAttackTemplates": 21,
   "originalDesignAcceptance": "incomplete",
   "published": false,
   "rows": [
@@ -3815,16 +3815,20 @@
       "ownerDescription": "成功以位移避開有效攻擊後，獲得一層讀招，上限三層。單純空按移動不增加。",
       "requiredRefinement": "需真正閃避事件的三層讀招，空按不增加。",
       "products": [
-        "tpl-on-attack"
+        "tpl-mark-stacks",
+        "tpl-event-passive"
       ],
       "castType": "self",
       "effects": [],
       "hooks": [
-        "onBasicAttack"
+        "onDamageDealt",
+        "onDamageTaken",
+        "onEvade",
+        "onBlock"
       ],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "三層具名讀招；W 自身閃避來源在實際衝刺移動中成功才加一層，空按／撞停／失手／其他來源不給。有效命中、受擊、真正迴避或格擋留下自己來源的四秒交鋒標記，僅供 EX 選目標，不等於讀招。"
     },
     {
       "hero": "31",
@@ -3835,17 +3839,18 @@
       "ownerDescription": "短劍螺旋刺擊；對剛被自己反擊的目標有有限追加效果。",
       "requiredRefinement": "需螺旋刃動畫與反擊後目標追加條件。",
       "products": [
-        "tpl-single-strike"
+        "tpl-effect-sequence"
       ],
       "castType": "targeted",
       "targetsEnemies": true,
       "effects": [
-        "damage"
+        "damage",
+        "consumeStatus"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "近身單次小級距短劍刺擊；只消耗自己 E 在該目標留下的二秒反擊標記，追加一次極小級距傷害。別名目標、另一施法者與過期標記無追加。螺旋刃武器動作仍待畫面驗收。"
     },
     {
       "hero": "31",
@@ -3856,17 +3861,18 @@
       "ownerDescription": "滑步位移，提供很短的精準迴避窗口。",
       "requiredRefinement": "模板低跳不是精準迴避；需傷害來臨時間窗口。",
       "products": [
-        "tpl-leap-strike"
+        "tpl-effect-sequence"
       ],
-      "castType": "ground",
+      "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "leap"
+        "applyBuff",
+        "dash"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "向輸入方向貼地滑步 2.4 單位、速度 8；0.3 秒內以現行 GGD 迴避上限提供普攻及技能迴避。只有本技能來源實際抽中，且閃避當下仍在衝刺並已發生位移才累積讀招。沒有跳躍或位移傷害；羽毛／短劍動作仍待畫面验收。"
     },
     {
       "hero": "31",
@@ -3877,17 +3883,17 @@
       "ownerDescription": "短窗口迎擊攻擊，成功時擊退攻擊者，並提供一次 Q 接續機會。",
       "requiredRefinement": "護盾不是 Repel Counter；需格擋成功、擊退與 Q 窗口。",
       "products": [
-        "tpl-buff-self"
+        "tpl-effect-sequence"
       ],
       "castType": "self",
+      "targetsEnemies": true,
       "effects": [
-        "applyBuff",
-        "shield"
+        "applyBuff"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "0.45 秒迎擊窗口，擋下第一個物理或魔法命中；只由本來源成功格擋觸發一次，將攻擊者推離 1 單位並給該目標二秒 Q 接續標記。沒有護盾量或固定自動反傷；標記按施法者隔離。招架短劍演出仍待驗。"
     },
     {
       "hero": "31",
@@ -3898,16 +3904,17 @@
       "ownerDescription": "短期提高移速與近戰輸出能力，保留原本技能冷卻。",
       "requiredRefinement": "Accel 基礎移速／攻速增益；持續 3 秒且保留冷卻。",
       "products": [
-        "tpl-buff-self"
+        "tpl-effect-sequence"
       ],
       "castType": "self",
+      "targetsEnemies": true,
       "effects": [
         "applyBuff"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "三秒移速與攻速各增加 25%，使用同一堆疊鍵避免重複累加，到期恢復；不修改任何其他槽冷卻，也不創造新讀招。專用加速殘像仍待驗。"
     },
     {
       "hero": "31",
@@ -3918,7 +3925,7 @@
       "ownerDescription": "消耗三層讀招，對近期交鋒目標進行一次有方向的高傷害短劍終結。",
       "requiredRefinement": "需消耗三層讀招並限定近期交鋒目標。",
       "products": [
-        "tpl-single-strike"
+        "tpl-effect-sequence"
       ],
       "castType": "targeted",
       "targetsEnemies": true,
@@ -3926,9 +3933,9 @@
         "damage"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "至少三層讀招且指定敵人有自己四秒交鋒標記才可施放；資格先檢查，再在開始時扣三層、魔力及冷卻。0.35 秒明確起手朝該目標單次大級距物理短劍終結；非法／過期／其他來源標記不扣資源，也不自動追逐未具資格的目標。專用終結動作仍待驗。"
     },
     {
       "hero": "32",

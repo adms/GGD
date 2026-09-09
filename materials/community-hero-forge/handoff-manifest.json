@@ -1,6 +1,6 @@
 {
   "schema": "ggd-shared-authoring-handoff@1",
-  "sourceCommit": "4822d5ff5560ad6ba07f212d6b0715f7fdab9820",
+  "sourceCommit": "3a8daa1394392584653f969276c667d3cca13155",
   "heroCount": 37,
   "slotCount": 222,
   "compilation": "passed",
@@ -45,6 +45,10 @@
     {
       "path": "refinements/27.json",
       "sha256": "3466f8ac3fc55d29536730633e5cb9107519a7327b79b1a90823ebaa92f1bfb9"
+    },
+    {
+      "path": "refinements/31.json",
+      "sha256": "1a2e02876595ca624503d0ff9cae1dd0d0973953639172f8439eef4012dfeb12"
     },
     {
       "path": "refinements/37.json",
@@ -359,8 +363,8 @@
     },
     {
       "path": "projects/31.hero-project.json",
-      "bytes": 36705,
-      "sha256": "cc269d356f6a82a8a4a15bc4efc37f59999fe8de6ce31903944ba823c3880fa5"
+      "bytes": 47394,
+      "sha256": "7ff39ac0d918c4bd4d688cef6ed319d7642e6d79b9bb83fab9ab7af282805e4b"
     },
     {
       "path": "recipes/31.upload-recipe.json",
@@ -698,7 +702,8 @@
     "63badb5afef229c557574ded348b8f70b308d78b",
     "50a821472197fe480deb09b4f37b6bbfbd205f13",
     "1ede970a77514c967eb3df25412d6ea003fb0f06",
-    "4822d5ff5560ad6ba07f212d6b0715f7fdab9820"
+    "4822d5ff5560ad6ba07f212d6b0715f7fdab9820",
+    "3a8daa1394392584653f969276c667d3cca13155"
   ],
   "requiredEffectFields": [
     "chainLightning.retargetOnLost",
@@ -711,7 +716,8 @@
     "applyBuff.drive",
     "pull.grapple",
     "damageArea.fromCaster",
-    "damageArea.arcHalfAngleCos"
+    "damageArea.arcHalfAngleCos",
+    "applyBuff.evasionScope"
   ],
   "requiredConditionLeaves": [
     "nearbyCombat"
@@ -733,13 +739,15 @@
     "requiredSummonSlot",
     "statusCost.subject=target",
     "interruptOn=damageOrMove",
-    "interruptible"
+    "interruptible",
+    "requiredTargetStatus"
   ],
   "requiredHookFields": [
     "evadeSource",
     "evadeChannel",
     "observedEvent",
-    "blockSource"
+    "blockSource",
+    "evadeDuring"
   ],
   "requiredEffectKinds": [
     "trap",

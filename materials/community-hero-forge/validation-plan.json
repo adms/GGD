@@ -1,6 +1,6 @@
 {
   "schema": "ggd-batch-validation-plan@1",
-  "manifestSha256": "c4b431f68289963040fa56dcdf3b183a207a85be1c7e3a841d5231fecd3a94e5",
+  "manifestSha256": "ebf5f5533d9efe79ab82f078600b844850c050bcfa703ea6d1108f42f06adfff",
   "suites": [
     {
       "id": "implemented-mechanisms",
@@ -25,7 +25,15 @@
         "packages/shared/src/sim/effects/hookVocabulary.test.ts",
         "packages/shared/src/content/schema/hookAuthoringVocabulary.test.ts",
         "packages/shared/src/content/schema/newKindShape.test.ts",
-        "packages/shared/src/content/compat.test.ts"
+        "packages/shared/src/content/compat.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/sunraku.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/sunrakuAcceptance.test.ts",
+        "packages/shared/src/sim/stats/sourceGrants.test.ts",
+        "packages/shared/src/sim/combat/evasion.test.ts",
+        "packages/shared/src/sim/effects/evasion.test.ts",
+        "packages/shared/src/sim/abilities/statusCost.test.ts",
+        "packages/shared/src/sim/abilities/castApproach.test.ts",
+        "apps/client/src/ui/castFeedback.test.ts"
       ],
       "heroSlots": {
         "community-review-20-20260907": [
@@ -82,6 +90,14 @@
           "EX"
         ],
         "community-review-23-20260907": [
+          "PASSIVE",
+          "Q",
+          "W",
+          "E",
+          "R",
+          "EX"
+        ],
+        "community-review-31-20260907": [
           "PASSIVE",
           "Q",
           "W",

@@ -30,7 +30,7 @@ python3 tools/community-hero-forge/verify-authoring-batch.py \
 
 新批次可先不放 plan：腳本仍核對／編譯並列出全部未覆蓋槽。建立測試時，使用 `communityRecipeFixture`／`communityCombatFixture` 讀原始配方；批次執行器會設定 `GGD_HERO_BATCH_DIR`。只能在建立真實行為案例後，將对应 hero ID／slot 加進 plan。來源不同不得直接複製第一批的測試清單。發布閘仍測 repo 本身，不把批次環境變數誤傳給既有 Editor 回歸。
 
-第一批 plan 目前對應 45 個已修正／部分修正槽，其餘仍有缺口。每槽 `originalDesignAcceptance` 保持未驗證，直到逐項 requiredRefinement 有足夠行為及畫面證據；它不是自動上架清單。
+第一批 plan 目前對應 51 個已修正／部分修正槽，其餘仍有缺口。每槽 `originalDesignAcceptance` 保持未驗證，直到逐項 requiredRefinement 有足夠行為及畫面證據；它不是自動上架清單。
 
 輸出必須是來源以外的新目錄。執行中如有人更改來源，整次證據標為失效，不拿它續跑。腳本不生成英雄、不修改原稿、不投稿、不發布、不操作正式帳號。
 
@@ -69,3 +69,5 @@ node tools/community-hero-forge/capture-motion-browser.mjs \
 銀時六槽及共用格擋、施法中斷、hook 詞彙、形狀與純度回歸併入 `implemented-mechanisms` 同次執行。案例從版本化原稿／微調生成，包含自身招架來源、盾吸收命中、實際移動、受保護施法及跨區／免控反例。新增 effect kind 時，Editor 的完整表單回存、種類清單與預覽不可漏接；release 閘會一起檢查。
 
 本批實際新增 effect／hook 時，另需更新 `tools/skill-spec/curated.json` 的中文詞彙來源，並依失敗清單執行 `spec:build`、`overview:build`、`skillforge:audit`、`skillremake:docs`、`atlas:build`、`docs:readme`。全部走 `bash scripts/genrun.sh <step> <step>:raw`；只更新型別／能力清單不足以保持這些相依文件新鮮。先讓批次完整結束、核對集中失敗，再生成與提交，最後重跑三閘；不可執行中改來源或偽造視覺收據。
+
+SUN樂驗證使用共用 `communityActionFixture(number, rank)`：讀該批版本化原稿、產生編譯後在真正戰鬥世界操作，集中提供事件收集、擺位與有效資源讀取。`ready` 只供明確測試下一次施法，不可用來冒充正常冷卻連段。26 項實際行為、3 項試玩及來源授予／迴避／接近／前端拒絕回歸合併進同一 suite。單槽準備資源、全套未取得資源的拒絕及真實連段正例須分別保留，不能調高層數使煙霧測試看起來全過。
