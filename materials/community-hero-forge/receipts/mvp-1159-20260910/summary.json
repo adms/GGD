@@ -87,6 +87,11 @@
       "path": "spread-tests.log",
       "bytes": 1068,
       "sha256": "cf19bddb7563ce87f629b276ff02b72f5264c29cae6a88e8c234b87563bbf5c1"
+    },
+    {
+      "path": "main-doc-update-checks.log",
+      "bytes": 1063,
+      "sha256": "67e31349b52afa659a8f49763d9fc26bba93caa7c48c35dddbacf8167748eece"
     }
   ],
   "skills": {
@@ -126,5 +131,13 @@
     "mainRef": "213916e393364d07ef059d84e4f77b5ff7fbb87f",
     "actualFailedDeliveryLogSha256": "aa7f4d08d56e99099c48f648d73a99e024c574246aa7b2a52cb8526ca37b7a53",
     "mainComment": "https://github.com/adms/GGD/pull/1135#issuecomment-5605319136"
+  },
+  "latestMergedMain": "bbc62a06df8eb7910e7a30304770f3fb03f01f2f",
+  "mainDocUpdate": {
+    "filesChanged": 7,
+    "runtimeOrHeroChanges": false,
+    "newGuardsExit": 0,
+    "boardCheckExit": 0,
+    "reason": "Remote PR still conflicted after Main published v0.43.1 and v0.43.2; no rerun of passed hero/Editor suites."
   }
 }
