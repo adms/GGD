@@ -21,6 +21,7 @@ import {
 } from "@ggd/shared/sim/round11Gate";
 import { round11EventsDue, pickRound11Event } from "@ggd/shared/sim/round11Waves";
 import { bombardmentHits, bombardmentPhase } from "@ggd/shared/sim/round11Bombardment";
+import { round11Score } from "@ggd/shared/sim/round11Scoring";
 
 const REPO = resolve(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const DOC = JSON.parse(readFileSync(join(REPO, "content/config/arena-rules.json"), "utf8"));
@@ -120,5 +121,28 @@ describe("第十一回合的大轟炸設定 → 機制 接線（GH#1151 F）", (
     expect(bare.bombardment.enabled).toBe(false);
     expect(bombardmentHits({ x: 0, z: 0 }, 0, 0, bare.bombardment.radius)).toBe(false);
     expect(bare.deadPlayersControlBoss).toBe(false);
+  });
+});
+
+describe("第十一回合的計分設定 → 機制 接線（GH#1151 G）", () => {
+  it("⭐ 出貨的 `scoring` 真的走得到機制", () => {
+    const sc = rulesFromDoc(DOC).round11.scoring;
+    expect(sc.survivalWeight).toBe(DOC.round11.scoring.survivalWeight);
+    expect(sc.scoreMultiplier).toBe(DOC.round11.scoring.scoreMultiplier);
+    expect(sc.minContributionForFullSurvival).toBe(DOC.round11.scoring.minContributionForFullSurvival);
+    // ⭐ 走一次真的計分：滿額 = 倍率
+    expect(round11Score({ survivalFrac: 1, contributionFrac: 1 }, sc)).toBeCloseTo(sc.scoreMultiplier, 10);
+  });
+
+  it("⛔⛔ `round11Score` **不吃總分** —— ⭐ 重複乘算在型別上寫不出來", () => {
+    // ⚠️ 票逐字：「⛔ 不能把總分與本回合分數混用而**重複乘算**」。
+    //   ⭐ 這條是**結構**斷言：那支函式只有兩個參數（表現、設定）。
+    expect(round11Score.length, "⛔ 多一個參數就是多一個出錯的入口").toBe(2);
+  });
+
+  it("⛔ 缺欄 ⇒ 計分**不影響勝負**（倍率 1、不折扣）", () => {
+    const bare = rulesFromDoc({ ...DOC, round11: undefined }).round11.scoring;
+    expect(bare.scoreMultiplier).toBe(1);
+    expect(bare.survivalWeight).toBe(0);
   });
 });

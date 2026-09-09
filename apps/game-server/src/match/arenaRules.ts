@@ -130,6 +130,17 @@ export interface ArenaRules {
     };
     /** ⭐ 陣亡玩家改控自己的殭屍王（#1151 E）。 */
     readonly deadPlayersControlBoss: boolean;
+    /**
+     * ⭐ 計分（#1151 G）——消費端 `sim/round11Scoring.round11Score`。
+     * ⚠️⭐ `scoreMultiplier` 在 `round11Score()` **裡面**就乘完了 ——
+     * ⛔ 呼叫端只要「加進總分」，⭐ 於是票警告的「總分與本回合分數混用而
+     * **重複乘算**」在型別上就寫不出來（那支函式不吃總分）。
+     */
+    readonly scoring: {
+      readonly survivalWeight: number;
+      readonly scoreMultiplier: number;
+      readonly minContributionForFullSurvival: number;
+    };
   };
   /** round from which R is learnable at any level; null = classic 6/11/16 */
   ultUnlockRound: number | null;
@@ -318,6 +329,7 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
     bossScaleCeil: 1,
     bombardment: { enabled: false, telegraphSec: 0, damagePctOfMaxHp: 0, radius: 0, crowdBias: 0 },
     deadPlayersControlBoss: false,
+    scoring: { survivalWeight: 0, scoreMultiplier: 1, minContributionForFullSurvival: 0 },
   },
   ultUnlockRound: null,
   exUnlockRound: null,
@@ -514,6 +526,12 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
         crowdBias: doc.round11?.bombardment?.crowdBias ?? 0,
       },
       deadPlayersControlBoss: doc.round11?.deadPlayersControlBoss ?? false,
+      // ⭐ 計分 —— fallback 是「⛔ 不影響勝負」：倍率 1、全看戰鬥貢獻、不折扣。
+      scoring: {
+        survivalWeight: doc.round11?.scoring?.survivalWeight ?? 0,
+        scoreMultiplier: doc.round11?.scoring?.scoreMultiplier ?? 1,
+        minContributionForFullSurvival: doc.round11?.scoring?.minContributionForFullSurvival ?? 0,
+      },
     },
   };
 }
