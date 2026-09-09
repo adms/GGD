@@ -107,6 +107,21 @@
       "path": "roster-check.log",
       "bytes": 159,
       "sha256": "71996c022510cef9977589c743c786db12653edcca0544a1f957c4bfb083ad55"
+    },
+    {
+      "path": "ci-contract-before-tags.log",
+      "bytes": 83489,
+      "sha256": "30588e3ed6c1a9ede082d384e34edf1f443466064e7d8736ddab9ab7cfa9f289"
+    },
+    {
+      "path": "board-tag-aligned.log",
+      "bytes": 1039,
+      "sha256": "87384d3088e91e5b966524e4a08757827b2d148f4f4410e126deb9dd93963b65"
+    },
+    {
+      "path": "skills-tag-aligned.log",
+      "bytes": 944,
+      "sha256": "2d5c7594e09ba440fd9afee21ed25687e1e6def4d59ec920b194ea965b78f294"
     }
   ],
   "skills": {
@@ -170,5 +185,20 @@
       "packages/shared/src/ops/iconRedrawTargetsAreLive.test.ts": "dbbd1afa831326e8f89b33503e5b1b7dcffa169fbdb600e94ce22e37d55baf0d",
       "tools/roster-guard/check.ts": "2adc82729be07c7effb33559a03042c9e5af6f66017ff6ebbe6a30678504e0c3"
     }
+  },
+  "tagAlignedContracts": {
+    "ciRunBeforeFix": 34380843572,
+    "cause": "Local v0.43.1 and v0.43.2 tags missing; prior board check used v0.43.0. GitHub full tag fetch correctly rejected stale board.",
+    "fetchedTags": {
+      "v0.43.1": "6d09d45afbf47ffe996d5464955c9b9ecd5a1093",
+      "v0.43.2": "c577f8985cfd6c6bc54ad8952b6ca97eba023733"
+    },
+    "tagsAreAncestorsOfFixedMain": true,
+    "boardGenerator": "bash scripts/genrun.sh board:build",
+    "boardCheckExit": 0,
+    "skillsSteps": 70,
+    "skillsExit": 0,
+    "singleAggregatePass": true,
+    "unitResult": "pending; keep current CI running before next push"
   }
 }
