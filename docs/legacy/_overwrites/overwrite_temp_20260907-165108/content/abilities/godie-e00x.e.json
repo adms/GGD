@@ -1,0 +1,62 @@
+{
+  "id": "godie-e00x.e",
+  "name": "77-03 GLADIARIA ALAT",
+  "icon": "assets/icons/abilities/godie-e00x.e.webp",
+  "provenance": "w3x-import",
+  "description": "[被動][普攻時][AP加成]\n\nGLADIARIA  ALAT意指有翼的劍士，剎那不輕易展露烏鴉族的身分。翅膀展開的期間，剎那發揮100%的實力：每一次[普通攻擊]都會對被打中的那個目標追加 {{ap}}% [AP] 魔法傷害，副作用是裝甲下降3點。\n\n（攻擊與移動速度的提升來自變身態本身的數值；變身、持續時間與冷卻住在本體那一格 77-03。）",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "effects": [],
+  "passive": {
+    "name": "77-03 GLADIARIA ALAT",
+    "ranks": [
+      {
+        "modifiers": [
+          {
+            "stat": "armor",
+            "op": "flat",
+            "value": -3.0
+          }
+        ],
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "target": "event",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "小",
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.3
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "vfxKey": "fx.prim.physical.pulse-sm",
+  "targetsEnemies": false,
+  "schema": "ability@1",
+  "range": 0.0
+}

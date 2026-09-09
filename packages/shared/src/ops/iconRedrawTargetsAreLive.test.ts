@@ -22,10 +22,20 @@
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { shippedItemIds } from "../../testkit/shippedSurface";
 
 const ROOT = join(__dirname, "../../../..");
 const ICONS = join(ROOT, "content/assets/icons");
-const REFDIRS = ["content/champions", "content/abilities", "content/items", "content/augments"];
+/**
+ * ⭐⭐ **分母是「玩家今天拿得到的」，⛔ 不是「`content/` 底下有的」。**
+ *
+ * ⚠️ ⭐ 這一行是**本 repo 的閘當場改出來的**：第一版掃 `content/items` 全部，
+ * 而 `content:build` 的稽核逐字說「這 1 支掃了 `content/items` 卻**沒說自己掃的是全部還是上架中**
+ * ——出貨樹 142 件裡玩家今天只拿得到 **89** 件」。
+ * ⇒ ⭐ 一個「48 張活的」如果分母是 142，它回答的是**另一個問題**。
+ * ⚠️ 而我寫這條測試的同一天，才剛在文件裡寫過「⭐ 讀一張表之前先問這一欄的分母是什麼」。
+ */
+const REFDIRS = ["content/champions", "content/abilities", "content/augments"];
 
 function walk(dir: string, suffix: string, hits: string[] = []): string[] {
   let entries: string[];
@@ -55,6 +65,47 @@ const idOf = (p: string): string =>
 /** 出貨內容裡出現過的每一個帶引號的字串（⭐ 一次讀完，⛔ 不逐張 grep）。 */
 function referencedIds(): Set<string> {
   const out = new Set<string>();
+  /**
+   * ⭐⭐ **道具那一半的分母 ＝ 上架件 ∪ 它們的配方材料（遞移）。**
+   *
+   * ⚠️ ⭐ 這一段被**改過兩次**，兩次都是分母錯：
+   *   ① 第一版掃整棵 `content/items`（142 件）⇒ `content:build` 的稽核當場擋下：
+   *      「⛔ 沒說自己掃的是全部還是上架中 —— 玩家今天只拿得到 89 件」
+   *   ② 改成純 `shippedItemIds()`（89 件）⇒ ⛔ **活的變成 0 張** ——
+   *      ⭐ 因為那 48 張全部是**配方材料**（`recipe.components`），
+   *      ⛔ 它們不在上架面，⭐ 而玩家**在合成介面看得到它們的圖示**。
+   *
+   * ⇒ ⭐ 兩個分母都是錯的，⛔ 而它們錯的方向相反（一個太寬、一個太窄）。
+   * ⭐ 對的那個是**聯集**：能拿到的 ＋ 拿得到的東西**要用到的**。
+   * ⚠️ 同族前科：本 repo 記過「出貨管道聯集 ≠ 任何單一來源（寶具 30 件 → 84 件）」。
+   */
+  const shipped = shippedItemIds(ROOT);
+  const seen = new Set<string>();
+  const frontier = [...shipped];
+  while (frontier.length) {
+    const id = frontier.pop()!;
+    if (seen.has(id)) continue;
+    seen.add(id);
+    out.add(id);
+    let doc: string;
+    try {
+      doc = readFileSync(join(ROOT, `content/items/${id}.json`), "utf8");
+    } catch {
+      continue;
+    }
+    // ⭐ 圖示欄位（一件道具可以指一個與自己 id 不同的圖示）
+    for (const m of doc.matchAll(/"icon"\s*:\s*"([^"]+)"/g)) out.add(m[1]!.replace(/\.(webp|png|jpg)$/, ""));
+    // ⭐ 配方材料 ＋ 配方書 —— ⭐ 遞移展開（材料自己也可能有配方）
+    let parsed: { recipe?: { components?: unknown; book?: unknown } };
+    try {
+      parsed = JSON.parse(doc) as typeof parsed;
+    } catch {
+      continue;
+    }
+    const comps = parsed.recipe?.components;
+    if (Array.isArray(comps)) for (const c of comps) if (typeof c === "string") frontier.push(c);
+    if (typeof parsed.recipe?.book === "string") frontier.push(parsed.recipe.book);
+  }
   for (const d of REFDIRS) {
     for (const p of walk(join(ROOT, d), ".json")) {
       let body: string;
@@ -103,7 +154,21 @@ describe("圖示重畫的工作清單只含玩家看得到的", () => {
      *   · ⛔ 有人**新增**一張沒有人引用的舊版圖示 ⇒ **紅**
      *   · ⭐ 而訊息永遠印出今天的比例,⛔ 讓「59% 花在沒人看的圖上」這件事不會被忘記
      */
-    const ORPHAN_BASELINE = 69; // ⭐ 2026-09-10 量到（48 活 / 69 孤兒）。⛔ 只能往下改。
+    /**
+     * ⭐ 2026-09-10 量到 **29 活 / 88 孤兒**。⛔ 只能往下改。
+     *
+     * ⚠️⚠️ ⭐ **這個數字在同一天被改過三次，⛔ 三次都是分母錯：**
+     *   | 分母 | 結果 | 錯在哪 |
+     *   |---|---|---|
+     *   | 整棵 `content/items`（142 件） | 48 活 / 69 孤兒 | ⛔ **太寬** —— 玩家今天只拿得到 89 件 |
+     *   | 純 `shippedItemIds()`（89 件） | **0** 活 / 117 孤兒 | ⛔ **太窄** —— 那 48 張全是**配方材料** |
+     *   | ⭐ 上架件 ∪ 配方材料（遞移） | ⭐ **29 活 / 88 孤兒** | ⭐ 對 |
+     *
+     * ⇒ ⭐ 兩個錯的分母**錯的方向相反**，⛔ 而兩個都給得出一個看起來合理的數字。
+     * ⚠️ 抓到第一個的是 `content:build` 的稽核（⛔ 不是我），抓到第二個的是這條測試自己
+     * （「活的 0 張」⭐ 是一個**不可能為真**的數字 —— 而它正是量尺自證的用途）。
+     */
+    const ORPHAN_BASELINE = 88;
     expect(
       orphan.length,
       `⛔ 孤兒 ${orphan.length} 張（基準線 ${ORPHAN_BASELINE}）vs 活的 ${live.length} 張。\n` +

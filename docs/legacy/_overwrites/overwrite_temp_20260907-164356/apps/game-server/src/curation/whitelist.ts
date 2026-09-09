@@ -1,0 +1,464 @@
+/**
+ * Content whitelist — the game-server's authoritative enforcement of the
+ * operator-curated content set.
+ *
+ * The imported roster is far larger than what should ship enabled, so the
+ * platform keeps a DEFAULT-EMPTY whitelist of champion / item / ability ids
+ * (data/curation/whitelist.json, served at GET /api/v1/curation/whitelist).
+ * The game-server is the authority that actually enforces it: at match
+ * creation it fetches the whitelist (short-TTL process cache) and filters the
+ * playable champion pool, the RANDOM/bot pool, the shop catalogue and the
+ * draft/loot offers, and rejects a SELECT_CHAMPION for a non-whitelisted
+ * champion.
+ *
+ * FAIL-SAFE POLICY (deliberate, documented): if the platform is unreachable or
+ * returns junk, we DO NOT brick live matches — the fetch falls back to a
+ * permissive "allow-all" whitelist (identical to the dev bypass) and logs
+ * loudly. A whitelist-service outage must never take the game down; an
+ * operator misconfiguration is visible in the logs and via the empty-state UX
+ * on the client, not as an unplayable match. Set GGD_WHITELIST_BYPASS=1 to
+ * force allow-all for local testing.
+ */
+import { isRetiredChampionId } from "@ggd/shared/content/championRetirement";
+import { isTransformedBody } from "@ggd/shared/content/championForms";
+import { Abilities, Champions, Items } from "@ggd/shared/sim/content/registry";
+import type { ItemId } from "@ggd/shared/ids";
+import { PLATFORM_URL, warnOnce, clearDegradation, BOOT_PROBE_KEY } from "../config/platformUrl";
+
+/** Degradation-registry keys this module can raise (see config/platformUrl.ts). */
+const DEGRADE_KEYS = ["whitelist-status", "whitelist-malformed", "whitelist-unreachable"];
+
+/**
+ * ⭐ GH#471 —— 白名單指到**已經不存在的內容**時的那一聲。
+ *
+ * owner 2026-08-18：「本機 whitelist.json 仍列著 17 個已退場 id > which 17? **fix!**」
+ *
+ * ⚠️ 這條**不在** {@link DEGRADE_KEYS} 裡，那是刻意的：那三個是「平台答不出來」，
+ * 一次成功的抓取就該把它們收回；這一條是「平台答出來了，但它指的東西這個映像裡
+ * 沒有」—— 它要在**下一份乾淨的白名單**送到時才收回，⛔ 不是在下一次成功抓取時。
+ */
+const STALE_IDS_KEY = "whitelist-stale-ids";
+
+/**
+ * 白名單裡指不到出貨註冊表的 id。
+ *
+ * ⛔ **為什麼不是「手刪那幾個 id」**：每一次把內容搬進 `content/` 的 `_legacy` 都會
+ * 再長出一批（2026-08-20 量到 9 筆，其中 4 筆是那一週才搬的），而 `data/` 在
+ * `.gitignore` 裡 —— 手刪只清掉這一台，線上那一份照舊。要的是一道**會喊**的閘。
+ *
+ * ⚠️ 它**不會**改變任何過濾行為（白名單只收窄，指不到的 id 本來就是 no-op），
+ * 所以這是純粹的 fail-loud：CLAUDE.md「fail-open 沒錯，**靜默**才是缺陷」。
+ *
+ * ⚠️ 註冊表是空的（內容還沒載入 / 單元測試）就**整條跳過** —— 那時候「每一個 id
+ * 都指不到」是真的但毫無資訊，而一則假警報會讓真的那一則失去意義。
+ */
+function danglingWhitelistIds(doc: WhitelistDoc): string[] {
+  if (Champions.ids().length === 0 || Items.ids().length === 0) return [];
+  const out: string[] = [];
+  for (const id of doc.champions) {
+    if (!Champions.tryGet(id as never)) out.push(`champion:${id}`);
+  }
+  for (const id of doc.items) if (!Items.tryGet(id as never)) out.push(`item:${id}`);
+  for (const id of doc.abilities) if (!Abilities.tryGet(id as never)) out.push(`ability:${id}`);
+  return out;
+}
+
+// Re-exported for existing importers (combat-env, MatchController); the actual
+// env resolution + localhost dev fallback lives in config/platformUrl.ts.
+export { PLATFORM_URL };
+
+/** The wire shape served by GET /api/v1/curation/whitelist. */
+export interface WhitelistDoc {
+  version: number;
+  updatedAt?: string;
+  champions: string[];
+  items: string[];
+  abilities: string[];
+}
+
+/** Process-wide bypass: disables all filtering (local dev/testing). */
+export const WHITELIST_BYPASS = process.env.GGD_WHITELIST_BYPASS === "1";
+
+/** Short cache TTL so a burst of match creations shares one fetch. */
+const DEFAULT_TTL_MS = 5_000;
+
+/**
+ * An immutable whitelist snapshot with membership tests. When `bypass` is true
+ * every id is allowed and the filter helpers are pass-through, so the default
+ * (no-whitelist) code path is byte-for-byte identical to the pre-whitelist
+ * behavior.
+ */
+export class Whitelist {
+  readonly bypass: boolean;
+  private readonly champions: ReadonlySet<string>;
+  private readonly items: ReadonlySet<string>;
+  private readonly abilities: ReadonlySet<string>;
+  /**
+   * ⭐⭐ GH#1025 Scope C —— ids this SNAPSHOT refuses regardless of `bypass`.
+   *
+   * ⚠️ ⭐ 為什麼它擋在 `bypass` **之前**（與 `isRetiredChampionId` /
+   * `isTransformedBody` 同一個位置）：`bypass` 是 fail-open —— 平台連不上時整份
+   * 白名單消失、全部放行。⛔ 而「這一場是官方房」是**房間的事實**，
+   * ⛔ 不是營運狀態：一次平台抖動不可以讓社群英雄漏進官方房。
+   * ⇒ 三個 `allows*` 與 `filterItems` 的兩條分支都先問它。
+   */
+  private readonly denied: ReadonlySet<string>;
+
+  constructor(doc: Partial<WhitelistDoc> | null, bypass: boolean, denied: Iterable<string> = []) {
+    this.bypass = bypass;
+    this.champions = new Set(doc?.champions ?? []);
+    this.items = new Set(doc?.items ?? []);
+    this.abilities = new Set(doc?.abilities ?? []);
+    this.denied = new Set(denied);
+  }
+
+  /** A permissive whitelist: everything allowed (bypass / fail-safe). */
+  static allowAll(): Whitelist {
+    return new Whitelist(null, true);
+  }
+
+  /**
+   * ⭐⭐ GH#1025 Scope C —— **這一場**額外不放行的 id（社群內容進官方房那一刀）。
+   *
+   * 回傳一份**新的**快照，⛔ 原本那一份一個位元組都沒有動 —— 呼叫端是
+   * `MatchRoom.buildMatch`，而它握的是**共用 TTL 快取**裡的那個物件：
+   * 就地改它會讓「已經開的房」跟著變（＝對局中途換版，`liveRefresh.test.ts`
+   * 釘住的正是那件事）。
+   *
+   * ⭐ 被減掉的 id 是**真的從三個集合裡拿掉**的，⛔ 不是只記在 `denied` 裡：
+   * `snapshotChampions()` 那一族餵的是**回放檔頭**，而回放必須重建
+   * 「這一場真的用了哪些」——⛔ 一份多報了社群英雄的檔頭會讓回放與現場不同。
+   * `denied` 是為了讓同一刀在 `bypass` 那條路上也成立。
+   */
+  excluding(ids: readonly string[]): Whitelist {
+    if (ids.length === 0) return this;
+    const deny = new Set(ids);
+    const keep = (id: string): boolean => !deny.has(id);
+    return new Whitelist(
+      {
+        version: 1,
+        champions: [...this.champions].filter(keep),
+        items: [...this.items].filter(keep),
+        abilities: [...this.abilities].filter(keep),
+      },
+      this.bypass,
+      // ⭐ 連同**原本就被減掉的**一起帶走：連續兩次 `excluding` 不可以讓第一刀
+      //   悄悄失效（今天只有一個呼叫端，⛔ 但一把只在單一呼叫下正確的刀不算刀）。
+      [...this.denied, ...deny],
+    );
+  }
+
+  /**
+   * ⚠️ 下架檢查在 `bypass` **之前**,那是重點。`bypass` 是 fail-open —— 平台連不上
+   * 時整份白名單消失、119 隻全開。下架不是營運狀態是內容事實(QWER 全空的半成品),
+   * 所以它必須在 fail-open 那條路上也擋得住。同理它也擋在
+   * `filterChampions` / `hasAnyChampion` 的 bypass 之前。
+   */
+  allowsChampion(id: string): boolean {
+    // ⭐ GH#1025 Scope C —— 這一場的內容池把它減掉了（見 {@link excluding}）。
+    //    ⚠️ 與下面兩條一樣擋在 `bypass` 之前。
+    if (this.denied.has(id)) return false;
+    if (isRetiredChampionId(id)) return false;
+    // ⬇⬇ 變身態的身體**永遠**不是一個可以被選的英雄（owner 2026-07-26／07-30
+    //     兩次裁定：「換成本體，變身態改由技能觸發」「不要出現讓人解鎖變身後的
+    //     英雄」）。它和下架一樣是**內容事實**不是營運狀態,所以同樣擋在
+    //     `bypass` 之前 —— 平台連不上時整份白名單消失,這一條照樣要成立。
+    //
+    // ⚠️ 為什麼放在這裡而不是 `MatchController.selectChampion`：
+    //     `randomChampionPool()` 走的是 `filterChampions` → `allowsChampion`,
+    //     **不經過** selectChampion。只在 selectChampion 加一個 if,bot 與
+    //     隨機英雄那條路會整條漏掉 —— 而那正是最可能真的抽到變身態的地方。
+    //     一個 seam 蓋住兩條路。
+    //
+    // ⛔ 這是一個真的缺口,不是理論：`ApplyStarterSet` 是 union-only 永不移除,
+    //     所以 #249 換掉的那 10 個舊 alternate id（含超級賽亞人 godie-o00x）
+    //     可能還留在線上白名單裡。客戶端的 `resolveToPickable` 擋得住玩家,
+    //     但擋不住 bot／隨機英雄／偽造或重放的 SELECT_CHAMPION。
+    if (isTransformedBody(id)) return false;
+    return this.bypass || this.champions.has(id);
+  }
+  allowsItem(id: string): boolean {
+    if (this.denied.has(id)) return false;
+    return this.bypass || this.items.has(id);
+  }
+  allowsAbility(id: string): boolean {
+    if (this.denied.has(id)) return false;
+    return this.bypass || this.abilities.has(id);
+  }
+
+  /** Keep only whitelisted champion ids (identity when bypassing). */
+  filterChampions(ids: readonly string[]): string[] {
+    return ids.filter((id) => this.allowsChampion(id));
+  }
+  /** Keep only whitelisted item ids (identity when bypassing). */
+  filterItems(ids: readonly ItemId[]): ItemId[] {
+    return this.bypass ? [...ids] : ids.filter((id) => this.items.has(id));
+  }
+
+  /**
+   * Does the whitelist enable at least one of the given champion ids? Used by
+   * the server to detect the "zero playable champions" state (bots then fall
+   * back so a botted match still runs; the human empty-state is a client
+   * concern surfaced via champ-select).
+   */
+  hasAnyChampion(candidateIds: readonly string[]): boolean {
+    return candidateIds.some((id) => this.allowsChampion(id));
+  }
+
+  get championCount(): number {
+    return this.champions.size;
+  }
+  get itemCount(): number {
+    return this.items.size;
+  }
+
+  /**
+   * The enabled id sets, for the MATCH REPLAY header (task #175).
+   *
+   * The whitelist is a first-class sim input, not just a UI filter: it reaches
+   * the sim as `world.itemEligible` and is consulted BEFORE an rng roll
+   * (economy/legendaryOrb.ts), so a different whitelist shifts the random stream
+   * and desyncs everything after it. It is also fail-safe — an unreachable
+   * platform yields allow-all — so "same server, same seed" does NOT determine a
+   * match on its own. A recording therefore stores the resolved sets verbatim
+   * and playback rebuilds this exact object from them.
+   */
+  snapshotChampions(): string[] {
+    return [...this.champions];
+  }
+  snapshotItems(): string[] {
+    return [...this.items];
+  }
+  snapshotAbilities(): string[] {
+    return [...this.abilities];
+  }
+}
+
+/** Parse an unknown JSON body into a WhitelistDoc, tolerating missing lists. */
+function parseDoc(body: unknown): WhitelistDoc | null {
+  if (typeof body !== "object" || body === null) return null;
+  const b = body as Record<string, unknown>;
+  const asStrings = (v: unknown): string[] =>
+    Array.isArray(v) ? v.filter((x): x is string => typeof x === "string") : [];
+  return {
+    version: typeof b.version === "number" ? b.version : 1,
+    updatedAt: typeof b.updatedAt === "string" ? b.updatedAt : undefined,
+    champions: asStrings(b.champions),
+    items: asStrings(b.items),
+    abilities: asStrings(b.abilities),
+  };
+}
+
+export interface FetchOpts {
+  /** injectable fetch (tests) — defaults to global fetch */
+  fetchImpl?: typeof fetch;
+  /** override the process bypass flag (tests) */
+  bypass?: boolean;
+  /** per-request timeout */
+  timeoutMs?: number;
+}
+
+/** A fetch outcome plus WHETHER THE PLATFORM ACTUALLY ANSWERED. */
+export interface WhitelistResult {
+  readonly whitelist: Whitelist;
+  /**
+   * true  — the platform served a usable document (or bypass is configured,
+   *         which is a deliberate answer, not a failure).
+   * false — this is the fail-safe allow-all, i.e. NOTHING is being filtered.
+   *
+   * `Whitelist.bypass` cannot carry this: it is true for both the deliberate
+   * GGD_WHITELIST_BYPASS and the fail-safe fallback, and the refresh path has
+   * to tell those apart (see WhitelistCache.refresh).
+   */
+  readonly ok: boolean;
+  /** `updatedAt` from the served document, when there was one. */
+  readonly updatedAt?: string;
+}
+
+/**
+ * Fetch the whitelist once from the platform. Never throws: on ANY failure it
+ * fails safe to allow-all and logs loudly (see the fail-safe policy above).
+ * When bypass is on it does not even hit the network.
+ */
+export async function fetchWhitelistResult(
+  baseUrl: string,
+  opts: FetchOpts = {},
+): Promise<WhitelistResult> {
+  const bypass = opts.bypass ?? WHITELIST_BYPASS;
+  if (bypass) return { whitelist: Whitelist.allowAll(), ok: true };
+
+  const doFetch = opts.fetchImpl ?? fetch;
+  const url = `${baseUrl.replace(/\/$/, "")}/api/v1/curation/whitelist`;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), opts.timeoutMs ?? 3_000);
+  try {
+    const res = await doFetch(url, { signal: controller.signal });
+    if (!res.ok) {
+      warnOnce(
+        "whitelist-status",
+        `[whitelist] platform returned ${res.status} for ${url} — FAILING SAFE to allow-all ` +
+          `(content filtering DISABLED for this match). Fix the platform or set GGD_WHITELIST_BYPASS=1.`,
+      );
+      return { whitelist: Whitelist.allowAll(), ok: false };
+    }
+    const doc = parseDoc(await res.json());
+    if (!doc) {
+      warnOnce(
+        "whitelist-malformed",
+        `[whitelist] malformed whitelist body from ${url} — FAILING SAFE to allow-all.`,
+      );
+      return { whitelist: Whitelist.allowAll(), ok: false };
+    }
+    if (doc.champions.length === 0) {
+      console.warn(
+        `[whitelist] platform whitelist is EMPTY (no champions enabled). Human champ-select will ` +
+          `show the empty-state; bots fall back to the full pool so the match still runs. ` +
+          `Enable content in the admin console (or apply the starter set).`,
+      );
+    }
+    // The platform answered with a usable document: retract any earlier
+    // degradation so /healthz stops reporting an outage that has ended (and so
+    // a LATER outage warns loudly again instead of being deduped away).
+    clearDegradation(...DEGRADE_KEYS, BOOT_PROBE_KEY);
+    // ⭐ GH#471 —— 這一份白名單指到的東西，這個映像裡還在不在。
+    const dangling = danglingWhitelistIds(doc);
+    if (dangling.length > 0) {
+      warnOnce(
+        STALE_IDS_KEY,
+        `[whitelist] ${dangling.length} whitelisted id(s) resolve to NOTHING in this image's ` +
+          `content registry — they are silently inert (the whitelist only narrows). ` +
+          `Almost always content that moved into _legacy without the curation list following it. ` +
+          `Fix via the admin curation page / the #243 export-import, NOT by editing the repo ` +
+          `(data/ is gitignored, so the live copy is a different file). Stale: ${dangling.join(", ")}`,
+      );
+    } else {
+      clearDegradation(STALE_IDS_KEY);
+    }
+    return { whitelist: new Whitelist(doc, false), ok: true, updatedAt: doc.updatedAt };
+  } catch (err) {
+    warnOnce(
+      "whitelist-unreachable",
+      `[whitelist] could not reach the platform at ${url} — FAILING SAFE to allow-all ` +
+        `(content filtering DISABLED for this match).`,
+      err,
+    );
+    return { whitelist: Whitelist.allowAll(), ok: false };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+/** `fetchWhitelistResult` without the outcome flag (unchanged behaviour). */
+export async function fetchWhitelist(baseUrl: string, opts: FetchOpts = {}): Promise<Whitelist> {
+  return (await fetchWhitelistResult(baseUrl, opts)).whitelist;
+}
+
+/**
+ * A tiny TTL cache so a burst of match creations shares a single fetch. Each
+ * match still resolves its own snapshot via get(); within the TTL window that
+ * snapshot is reused. Never throws (fetchWhitelist fails safe).
+ */
+export class WhitelistCache {
+  private cached: Whitelist | null = null;
+  private expiresAt = 0;
+  private inflight: Promise<Whitelist> | null = null;
+  /** The last whitelist the platform actually SERVED (never a fail-safe). */
+  private lastGood: Whitelist | null = null;
+  private refreshing: Promise<WhitelistResult> | null = null;
+
+  constructor(
+    private readonly baseUrl: string = PLATFORM_URL,
+    private readonly ttlMs: number = DEFAULT_TTL_MS,
+    private readonly opts: FetchOpts = {},
+  ) {}
+
+  async get(now: number = Date.now()): Promise<Whitelist> {
+    if (this.cached && now < this.expiresAt) return this.cached;
+    if (this.inflight) return this.inflight;
+    // Expiry is measured off the same clock reading passed to get(), so an
+    // injected test clock and the real Date.now() default both behave.
+    const expiresAt = now + this.ttlMs;
+    this.inflight = fetchWhitelistResult(this.baseUrl, this.opts)
+      .then(({ whitelist, ok }) => {
+        if (ok) this.lastGood = whitelist;
+        this.cached = whitelist;
+        this.expiresAt = expiresAt;
+        return whitelist;
+      })
+      .finally(() => {
+        this.inflight = null;
+      });
+    return this.inflight;
+  }
+
+  /**
+   * Re-run the fetch NOW because the platform announced a change.
+   *
+   * TWO THINGS MAKE THIS DIFFERENT FROM get():
+   *
+   *  1. It is EAGER. get() is lazy by design — the value is resolved when a
+   *     match needs it. An invalidation has no match waiting on it, so if the
+   *     refresh merely dropped the cache, a FAILED refresh would stay invisible
+   *     until the next match creation, at which point it would look like a
+   *     fresh failure. Fetching now is what lets /healthz answer "your change
+   *     landed at 09:31:04" or "your change did NOT land, here is why".
+   *
+   *  2. A FAILED REFRESH KEEPS THE LAST KNOWN GOOD. get() fails safe to
+   *     allow-all because a match is waiting and must not be bricked. Here
+   *     nothing is waiting, and adopting allow-all would mean an INVALIDATION
+   *     MESSAGE — arriving while the platform happens to be down — silently
+   *     switching content filtering off for every subsequent match. A refresh
+   *     that cannot reach the platform therefore changes nothing except the
+   *     recorded failure. (A process that has never had a good answer has no
+   *     last-known-good to keep, so it still fails safe, which is the real
+   *     fail-safe case.) Mirrors ServerOpsCache's outage policy.
+   *
+   * Single-flight: concurrent invalidations share one in-flight fetch, so a
+   * burst of admin clicks cannot fan out into a burst of HTTP requests.
+   */
+  async refresh(now: number = Date.now()): Promise<WhitelistResult> {
+    if (this.refreshing) return this.refreshing;
+    this.refreshing = fetchWhitelistResult(this.baseUrl, this.opts)
+      .then((result) => {
+        if (result.ok) {
+          this.lastGood = result.whitelist;
+          this.cached = result.whitelist;
+          this.expiresAt = now + this.ttlMs;
+          return result;
+        }
+        if (this.lastGood) {
+          // Hold the line: keep serving what the platform last really said.
+          this.cached = this.lastGood;
+          this.expiresAt = now + this.ttlMs;
+          return { ...result, whitelist: this.lastGood };
+        }
+        return result;
+      })
+      .finally(() => {
+        this.refreshing = null;
+      });
+    return this.refreshing;
+  }
+
+  /** Drop the cache (tests / forced refresh). Keeps the last known good. */
+  invalidate(): void {
+    this.cached = null;
+    this.expiresAt = 0;
+  }
+
+  /** Forget everything, including the last known good (tests). */
+  reset(): void {
+    this.invalidate();
+    this.lastGood = null;
+  }
+}
+
+/**
+ * The process-wide cache used by MatchRoom. Constructed lazily so tests can
+ * import the module without a platform running.
+ */
+let sharedCache: WhitelistCache | null = null;
+export function sharedWhitelistCache(): WhitelistCache {
+  if (!sharedCache) sharedCache = new WhitelistCache();
+  return sharedCache;
+}
