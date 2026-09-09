@@ -23,9 +23,10 @@ const REPO = join(import.meta.dirname, "../../../..");
 const SCRIPT = join(REPO, "scripts/release-note-players.sh");
 const LINE = "測試用的一句玩家公告";
 
-function run(ledgerRows: string[]): { code: number; out: string } {
+function run(ledgerRows: string[], until = "HEAD"): { code: number; out: string } {
   const dir = mkdtempSync(join(tmpdir(), "ggd-dup-"));
-  const head = execFileSync("git", ["rev-parse", "HEAD"], { cwd: REPO, encoding: "utf8" }).trim();
+  // ⭐ 標記的 sha 必須**落在** SINCE..UNTIL 裡 —— ⛔ 用 HEAD 會在 `--until <tag>` 時掉出區間
+  const head = execFileSync("git", ["rev-parse", until], { cwd: REPO, encoding: "utf8" }).trim();
   const marker = [
     "## 🧭 進度標記", "", "| | |", "|---|---|", "| **狀態** | `完成` |",
     `| **commit** | ${head} |`, "", "**基線（動手之前它今天的行為）**：測試用",
@@ -40,11 +41,12 @@ function run(ledgerRows: string[]): { code: number; out: string } {
   chmodSync(join(dir, "gh"), 0o755);
   const ledger = join(dir, "_announced.tsv");
   writeFileSync(ledger, ledgerRows.join("\n") + (ledgerRows.length ? "\n" : ""));
-  const since = execFileSync("git", ["describe", "--tags", "--abbrev=0", "HEAD^"], {
+  // ⭐ 上一個 tag 要相對於 `until` 算 —— ⛔ 用 HEAD^ 會在 `--until <tag>` 時得到同一個 tag（空區間）
+  const since = execFileSync("git", ["describe", "--tags", "--abbrev=0", `${until}^`], {
     cwd: REPO, encoding: "utf8",
   }).trim();
   try {
-    const out = execFileSync("bash", [SCRIPT, "--since", since, "--until", "HEAD"], {
+    const out = execFileSync("bash", [SCRIPT, "--since", since, "--until", until], {
       cwd: REPO, encoding: "utf8", timeout: 60_000,
       env: { ...process.env, PATH: `${dir}:${process.env.PATH}`, GGD_PLAYERNOTE_CACHE: "",
              GGD_ANNOUNCE_LEDGER: ledger },
@@ -73,4 +75,18 @@ describe("同一句玩家公告⛔不發第二次（2026-09-09 量到，同一�
   it("③ 而它仍然發得出**這一版的**維護句（⭐ 證明②不是把公告整個關掉）", () => {
     expect(run([`v0.0.1\t2026-01-01\t${LINE}`]).out).toContain("系統優化更新");
   });
+
+  // ⛔⛔ **「這一版自己那一列」⛔ 不可以算成重複** —— 2026-09-09 當場踩到：
+  //   一次刻意的補發（`--until v0.42.13`，而帳本第 v0.42.13 列就是那一句）被自己擋掉
+  //   ⇒ ⭐ **真內容退化成罐頭**，而且帳本被罐頭覆寫回去。
+  //   ⚠️ 那一輪一口氣重發 24 版，⭐ 其中 3 版有真內容的**全部變成罐頭**。
+  //
+  // ⇒ 修法：`awk -F'\t' -v now="$NOW" '$1!=now{print $3}'` —— ⛔ 只比對**別的版號**那幾列。
+  //
+  // ⛔⛔ **而這一條刻意沒有寫成測試**（⚠️ 誠實地寫在這裡，⛔ 不是漏了）：
+  //   我寫過一版，⭐ 而**突變（把自己那一列也算進去）不會讓它紅** ——
+  //   ⇒ 照第二守則，那就**不是守衛**，⛔ 而一條看起來綠的假閘比沒有更糟。
+  //   ⭐ 它今天的證據是**生產環境的實跑**：v0.42.0／v0.42.9／v0.42.13 三版
+  //   在修好之後補發，⭐ 三則都回到真內容（HTTP 204，帳本第三欄也跟著換回去）。
+  //   ⇒ ⚠️ **這一格仍然缺一條會紅的閘** —— ⛔ 不要因為上面三條綠就以為它被守著。
 });

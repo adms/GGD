@@ -199,7 +199,12 @@ for N in $CLOSED; do
   if [ -n "$P" ]; then
     _LG0="${GGD_ANNOUNCE_LEDGER:-docs/_release/_announced.tsv}"
     _HEAD=$(printf '%s' "$P" | python3 -c 'import sys;print(sys.stdin.read().replace("\t"," ")[:60].strip())' 2>/dev/null || true)
-    if [ -n "$_HEAD" ] && [ -f "$_LG0" ] && cut -f3 "$_LG0" | grep -qxF "$_HEAD"; then
+    # ⛔⛔ **⛔ 不可以把「這一版自己那一列」算成重複**（2026-09-09 當場踩到）：
+    #   一次刻意的補發（`--until v0.42.13` 而帳本第 v0.42.13 列就是那一句）
+    #   會被自己擋掉 ⇒ ⭐ **真內容退化成罐頭**，而且帳本被罐頭覆寫回去。
+    #   ⇒ 只比對**別的版號**那幾列。
+    _PREVROWS=$(awk -F'\t' -v now="$NOW" '$1!=now{print $3}' "$_LG0" 2>/dev/null || true)
+    if [ -n "$_HEAD" ] && [ -f "$_LG0" ] && printf '%s\n' "$_PREVROWS" | grep -qxF "$_HEAD"; then
       DUP="${DUP}  · #$N ${P}
 "
       trace "$N" "$SHA" "dup（這一句帳本上已經發過）"
