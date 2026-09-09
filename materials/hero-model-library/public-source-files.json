@@ -67546,6 +67546,160 @@
         }
       ],
       "readbackVerified": true
+    },
+    {
+      "id": "steam-billy-herrington",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-billy-herrington/d7abaa73a83e01bc61bbd2310c518621c9a0fe177acf340878a209506f7d121f.zip",
+      "bytes": 1914304,
+      "sha256": "d7abaa73a83e01bc61bbd2310c518621c9a0fe177acf340878a209506f7d121f",
+      "files": [
+        {
+          "path": "acquisition.json",
+          "bytes": 785,
+          "sha256": "2cbeaebe230a09d0cba3ba4c32f82f90c122e94e890c7d6f6e44a6f58f5ef0aa"
+        },
+        {
+          "path": "extracted/gma-manifest.json",
+          "bytes": 5368,
+          "sha256": "94485baf59ef4ad90205e969be9595e8643417858aced86ae150f6dadf3efb95"
+        },
+        {
+          "path": "extracted/lua/autorun/billy_herrington_npc.lua",
+          "bytes": 539,
+          "sha256": "a86b3042b09c4682fa4337a0111490ec3079edc9db0d556c249f92680e917b52"
+        },
+        {
+          "path": "extracted/lua/autorun/billy_herrington_player.lua",
+          "bytes": 196,
+          "sha256": "fca11b00afa5b0b2146bb5f6477d3e89d37479e7563b205833f80a60d5e03364"
+        },
+        {
+          "path": "extracted/materials/models/vinrax/billy_herrington/aniki_body3.vmt",
+          "bytes": 88,
+          "sha256": "2d2ac743ae4e32470e03e20fab88907fdeb9adc192b50db9117c946c6c67b441"
+        },
+        {
+          "path": "extracted/materials/models/vinrax/billy_herrington/aniki_body3.vtf",
+          "bytes": 699272,
+          "sha256": "d71fbc5d007d15be23e4aac52f0677f9f068afa0fe5f9267a0c360e2706be972"
+        },
+        {
+          "path": "extracted/materials/models/vinrax/billy_herrington/aniki_head3.vmt",
+          "bytes": 88,
+          "sha256": "8a90f65c8698fbe37b9aa614bb06952a884b90849820c4d59c72ff709c4c32d8"
+        },
+        {
+          "path": "extracted/materials/models/vinrax/billy_herrington/aniki_head3.vtf",
+          "bytes": 699272,
+          "sha256": "b75df9f2361a9deca41fc1c192012357bd82a8faba949c9880d7ab93fc83243e"
+        },
+        {
+          "path": "extracted/materials/models/vinrax/billy_herrington/eyeball_l.vmt",
+          "bytes": 159,
+          "sha256": "0fc3c53c39ae5055a1d972b3270f4722d52eff30e547936157f6f024748e3feb"
+        },
+        {
+          "path": "extracted/materials/models/vinrax/billy_herrington/eyeball_l.vtf",
+          "bytes": 11144,
+          "sha256": "341245bf44611964db4864ba65bea0d3bae60a26c9634c9f29b5be0ce26dd5e7"
+        },
+        {
+          "path": "extracted/materials/models/vinrax/billy_herrington/eyeball_r.vmt",
+          "bytes": 161,
+          "sha256": "b72ded7b7f499e1bddab022008adf90770dfc45b93df22cd297ba4437391348c"
+        },
+        {
+          "path": "extracted/materials/models/vinrax/billy_herrington/eyeball_r.vtf",
+          "bytes": 11144,
+          "sha256": "b1b986e6aa2284221cdf6941e4100e0d85c81d169bba8fd8ab6b6da727f88fd7"
+        },
+        {
+          "path": "extracted/materials/models/vinrax/billy_herrington/pupil_l.vmt",
+          "bytes": 77,
+          "sha256": "277537c2dc2050d8bc51a2d9dcd5d569fb307c9c3dd06b6e33cea7d4e12b0d02"
+        },
+        {
+          "path": "extracted/materials/models/vinrax/billy_herrington/pupil_l.vtf",
+          "bytes": 5696,
+          "sha256": "9e68d090c2ecf5da19fc7d3d1629d2d041457b4e8e5e9a626f1e603038697492"
+        },
+        {
+          "path": "extracted/materials/models/vinrax/billy_herrington/pupil_r.vmt",
+          "bytes": 75,
+          "sha256": "e603dd35bf9f744e9324dcedd8550a7a00c4f0338a65c52cc1b3dfcb5729d16b"
+        },
+        {
+          "path": "extracted/materials/models/vinrax/billy_herrington/pupil_r.vtf",
+          "bytes": 5696,
+          "sha256": "991c89ad6eb3bcad05ab70be33964f06c9b2a9336810bddd0022c17fcf91e84b"
+        },
+        {
+          "path": "extracted/materials/vgui/entities/npc_billy_friend.vmt",
+          "bytes": 129,
+          "sha256": "ba4557171c5b67ced0549854d92f0ac2afb71e6bf6b2f29c69acca9b0da35677"
+        },
+        {
+          "path": "extracted/materials/vgui/entities/npc_billy_friend.vtf",
+          "bytes": 87616,
+          "sha256": "4c958fa37739ee508da41b0eec0b51d14195690e862e80bfd395f506dcb035ca"
+        },
+        {
+          "path": "extracted/materials/vgui/entities/npc_billy_hostile.vmt",
+          "bytes": 130,
+          "sha256": "801b77ca44f0924a368615cd1a9cf74145912cb434e15881933d711a5b2458c2"
+        },
+        {
+          "path": "extracted/materials/vgui/entities/npc_billy_hostile.vtf",
+          "bytes": 87616,
+          "sha256": "f6d1d425d1e232d2453370c182c8a10ba7dc5f6b45b722ed56dfc5b473f5483f"
+        },
+        {
+          "path": "extracted/models/vinrax/player/billy_herrington.dx80.vtx",
+          "bytes": 101827,
+          "sha256": "9c542911660c1c9e60776dbd74f424bcf0dc8ddf705e87eb9930147d759d0bb8"
+        },
+        {
+          "path": "extracted/models/vinrax/player/billy_herrington.dx90.vtx",
+          "bytes": 99568,
+          "sha256": "b6b210e3fa47df4f04104eaaca32b31574eec82c3585550166a6c60d97d65cf2"
+        },
+        {
+          "path": "extracted/models/vinrax/player/billy_herrington.mdl",
+          "bytes": 104312,
+          "sha256": "89ffed0a4bcf82ad80a70acfa81f61aa1dc5b4cd8526455ec9e488b523458b10"
+        },
+        {
+          "path": "extracted/models/vinrax/player/billy_herrington.phy",
+          "bytes": 23152,
+          "sha256": "79350f412ab2be2f4cfc2322ed7746dedfc4e48fac63975413131df662cf00f0"
+        },
+        {
+          "path": "extracted/models/vinrax/player/billy_herrington.sw.vtx",
+          "bytes": 99080,
+          "sha256": "4a9e2b81bd788053392f334e61a30ec6814655cfc236a2f6ba400c75fe428d89"
+        },
+        {
+          "path": "extracted/models/vinrax/player/billy_herrington.vvd",
+          "bytes": 331264,
+          "sha256": "494c6a4b4ae70274fc0ae14ab98282ceb499499f2688b509fcc69e86b1689c3a"
+        },
+        {
+          "path": "extraction.json",
+          "bytes": 5521,
+          "sha256": "b06dcaf6d1ca1b5ff8dba7b37c80407d66bcf363556637e2bb73984ce7820093"
+        },
+        {
+          "path": "raw/workshop-1422933575.gma.lzma",
+          "bytes": 826691,
+          "sha256": "546f5ebe04cc282375c9e070aeee2f132aae2163bb38950118e792310a0cce3f"
+        },
+        {
+          "path": "steam-metadata.json",
+          "bytes": 2997,
+          "sha256": "ae38928ae2d555c4ebbee23294e1efa81c9a1c201a35c0be76f18fae44c43fe1"
+        }
+      ],
+      "readbackVerified": true
     }
   ]
 }

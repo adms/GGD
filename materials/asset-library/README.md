@@ -2,12 +2,14 @@
 
 **其他工作流先讀這一份。** 共用 repo 是 `adms/GGD`；目前變更在 `codex/hero-model-library-options` 分支，[PR #1152](https://github.com/adms/GGD/pull/1152)。PR 未合併前，不要把 `main` 當成已有這批素材設定。
 
+**本輪清單的付費模型購買全部暫緩。** 先查《全角色模型盤點.md》與公開來源紀錄；「優先下載」不代表可以付款。機器讀 `download-sources.json → purchasePolicy.paidPurchaseAllowed=false`，購買另需使用者明確同意。
+
 ## 先選你要做的事
 
 | 我要做什麼 | 直接入口 |
 |---|---|
 | 看全部角色、預設模型、候選來源 | [全角色模型盤點.md](../hero-model-library/全角色模型盤點.md) |
-| 避免重複購買已取得免費模型的角色 | 先看同份盤點最前面的「已取得免費來源：先暫緩購買」；機器讀 `download-sources.json → publicSources` 與盤點 `purchaseHold` |
+| 避免重複購買模型 | 先看盤點開頭的「購買暫緩」；`purchasePolicy` 是整批付費暫緩，`publicSources` 是已取得檔案，`publicSourceLeads` 是未取得線索 |
 | 看使用者給的付費下載清單與改造要求 | 同份盤點最前面的「指定下載來源與購買順位」 |
 | 查單一角色、取得 modelKey 與 S3 檔案位置 | 下方的 `query.py`；程序加 `--json` |
 | 把本版模型補進自己的 GGD checkout | 下方的 `sync.py` |
@@ -51,7 +53,7 @@ AWS 僅使用 `vibe-coding`、`ap-east-2`。不索取或讀取憑證，不換 pr
 
 | 要改的內容 | 編輯來源 | 重建／生效方式 |
 |---|---|---|
-| 使用者提供的網址、角色對應、改造備註、取得狀態 | [download-sources.json](../hero-model-library/download-sources.json) | 重建盤點；是否暫緩付費由現有可用 300 模型自動判斷 |
+| 使用者提供的網址、角色對應、改造備註、取得狀態 | [download-sources.json](../hero-model-library/download-sources.json) | 重建盤點；付費先看 `purchasePolicy`，取得狀態與下載順位另行判斷 |
 | 新預設可用範圍 | [default-policy.json](../hero-model-library/default-policy.json) | 只核准指定 11 組加工替身；角色 ID、modelKey 與 SHA-256 固定，其他相似模型不自動採用 |
 | 第二批 37 名與舊英雄的新模型配對 | [pairing-inputs.json](../hero-model-library/pairing-inputs.json) | `assemble.py` 與盤點讀同一份來源；新增成品仍須經轉換、入庫、發布 |
 | 11 個獨立副本的來源、改色與手持配件要求 | [derivatives.json](../hero-model-library/derivatives.json) | 轉換工作流重建副本、驗證、再發布；改 JSON 不等於模型已改好 |
@@ -66,7 +68,9 @@ AWS 僅使用 `vibe-coding`、`ap-east-2`。不索取或讀取憑證，不換 pr
 
 清單角色尚未對應 GGD ID、但已取得模型時，用來源的 `ownerEntryIds` 明確連結原清單組；盤點的 `purchaseHoldWithoutHeroId=true` 與 `purchaseHold=true` 表示該組也先暫緩購買，不因缺少 ID 而重買。地圖來源的 `characters` 記模型路徑、單位參照、骨架與動畫數，避免把整張地圖當作每個角色都已取得。地圖解析器沿單位／技能、腳本及 MDX 貼圖／附加模型的實際引用讀檔；`map-reference-extraction.json` 保留未解出的引用，不宣稱已取得未被引用的全部封包成員。
 
-Steam 來源僅在 [Valve 官方公開 API](https://partner.steamgames.com/doc/webapi/ISteamRemoteStorage#GetPublishedFileDetails) 回傳可用公開 `file_url` 時直接取得；沒有回傳就保留未取得狀態。GMA／Steam LZMA 包使用同一解析器，檢查路徑、解壓大小及每個成員的 CRC32，不執行附帶的 Lua。Source MDL、VVD、VTX 與材質仍須另行轉換，不把解包成功當成成品可用。
+Steam 來源僅在 [Valve 官方公開 API](https://partner.steamgames.com/doc/webapi/ISteamRemoteStorage#GetPublishedFileDetails) 回傳可用公開 `file_url` 時直接取得；可用 `acquire_steam.py <工坊 ID> <intake 目錄>` 保留中繼資料與下載收據。沒有回傳就保留未取得狀態。GMA／Steam LZMA 包使用同一解析器，檢查路徑、解壓大小及每個成員的 CRC32，不執行附帶的 Lua。Source MDL、VVD、VTX 與材質仍須另行轉換，不把解包成功當成成品可用。
+
+只找到來源頁時記在 `publicSourceLeads`，含角色／形態 ID、網址與未取得原因；盤點會列在「已找到來源頁，尚未取得檔案」，`query.py <角色> --downloads --json` 同時回傳整批 `purchasePolicy` 與該角色的線索。線索不得列入 `publicSources`、`publicCandidates` 或已取得的 `purchaseHoldFor`。
 
 每批收尾必做：
 

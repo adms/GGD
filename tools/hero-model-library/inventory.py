@@ -139,6 +139,8 @@ for section in ['既有角色／形態','第一批 37 名','第二批 37 名','L
   download='已有 300，暫緩付費下載' if requests and all(e['downloadPriority']=='defer-existing-300' for e in requests) else '使用者來源優先下載' if requests else '未列新增下載來源'
   acquired=[s for s in download_plan.get('publicSources',[]) if r['id'] in s['heroIds']]
   if any(r['id'] in e.get('purchaseHoldFor',[]) for e in requests):download='**免費來源已取得，暫緩購買**；先完成轉換／動作驗收'
+  leads=[s for s in download_plan.get('publicSourceLeads',[]) if r['id'] in s['heroIds']]
+  if leads:download+='；已找到工坊頁，尚未取得檔案：'+'、'.join(f'[{s["id"]}]({s["url"]})' for s in leads)
   options='<br>'.join(f"{i+1}. {text(o['name'])}／{source_label(o)}（{kinds.get(o['kind'],'待轉換')}{'；未核准預設' if not o.get('defaultEligible',False) and o['kind']=='style-proxy' else ''}）" for i,o in enumerate(r['options']+r['pending'])) or '尚無可用候選'
   for s in acquired:
    bindings=[c for c in s.get('characters',[]) if r['id'] in c['heroIds']]

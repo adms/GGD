@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-10T04:03:24+08:00",
-  "inputsSha256": "f1d400438383907f11b70ec6fc21fe10e1179be892838d2cf2ff4e1668a748a9",
+  "generatedAt": "2026-09-10T04:15:44+08:00",
+  "inputsSha256": "e35a967025cee0e0b511114ed5820a280f5bea5cea0b112bcbdbab612f98019d",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "productionSnapshot": {
     "observedAt": "2026-09-10 01:59 Asia/Taipei",
@@ -6330,7 +6330,44 @@
       "downloadSources": [
         "owner-model-010"
       ],
-      "publicCandidates": []
+      "publicCandidates": [
+        {
+          "id": "steam-billy-herrington",
+          "target": "比利海靈頓",
+          "heroIds": [
+            "community-review-15-20260907"
+          ],
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1422933575",
+          "downloadUrl": "https://cdn.steamusercontent.com/ugc/946201924931510670/F73AA852DDCB4F5EB83077DBADF0554E4818E4A8/",
+          "uploader": "工坊重上傳；來源頁署名 VINRAX",
+          "format": "LZMA / GMA → Source MDL + VVD/VTX + VMT/VTF",
+          "accessStatus": "public-steam-file-url",
+          "checkedAt": "2026-09-09T20:09:46+00:00",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "pending-standardization",
+          "purchaseDecision": "hold-purchase-review-free-source",
+          "defaultEligible": false,
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/steam-billy-herrington",
+          "files": [
+            {
+              "path": "raw/workshop-1422933575.gma.lzma",
+              "bytes": 826691,
+              "sha256": "546f5ebe04cc282375c9e070aeee2f132aae2163bb38950118e792310a0cce3f",
+              "archiveMember": "raw/workshop-1422933575.gma.lzma"
+            }
+          ],
+          "verification": "Valve 官方公開 API 回傳下載網址，實檔 826,691 bytes 與 SHA-256 已核對；GMA 解出 24 個檔案，逐檔 CRC32 通過。含 billy_herrington.mdl、VVD、3 種 VTX、PHY、8 VMT、8 VTF；待骨架 GLB、貼圖與動作轉換，尚未視覺驗收；未執行附帶 Lua。",
+          "reuseTerms": "頁面署名 VINRAX；公開下載不等於已核實跨遊戲轉換或再散布授權。",
+          "usage": "intake-only; no automatic runtime selection",
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-billy-herrington/d7abaa73a83e01bc61bbd2310c518621c9a0fe177acf340878a209506f7d121f.zip",
+            "bytes": 1914304,
+            "sha256": "d7abaa73a83e01bc61bbd2310c518621c9a0fe177acf340878a209506f7d121f",
+            "readbackVerified": true,
+            "usage": "legacy; human permission required; not runtime-ready"
+          }
+        }
+      ]
     },
     {
       "id": "community-review-16-20260907",
@@ -10558,6 +10595,8 @@
             "submittedUrl": "https://www.ou99.com/thread-498341-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [
           "thunderstore-eva01"
         ],
@@ -10589,6 +10628,8 @@
             "submittedUrl": "https://www.ou99.com/thread-496905-1-2.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [
           "itch-kmiliz-doraemon"
         ],
@@ -10618,6 +10659,8 @@
             "submittedUrl": "https://www.ou99.com/thread-480489-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -10641,6 +10684,8 @@
             "submittedUrl": "https://www.ou99.com/thread-485012-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -10672,6 +10717,8 @@
           "heroId": "godie-u00l",
           "instruction": "變身保持放大皮卡丘；此下载來源只對應拳四郎人型本體"
         },
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [
           "thunderstore-kenshiro",
           "thunderstore-hokuto-lr"
@@ -10704,6 +10751,8 @@
             "submittedUrl": "https://www.ou99.com/thread-497211-1-3.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [
           "thunderstore-hisoka"
         ],
@@ -10735,6 +10784,8 @@
             "submittedUrl": "https://www.ou99.com/thread-468771-1-49.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [
           "thunderstore-holo",
           "hive-anime-team-survival"
@@ -10767,6 +10818,8 @@
             "submittedUrl": "https://www.ou99.com/forum.php?mod=viewthread&tid=457280"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [
           "thunderstore-rimuru-ror2"
         ],
@@ -10798,6 +10851,8 @@
             "submittedUrl": "https://www.ou99.com/thread-472112-1-41.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [
           "steam-korosensei"
         ],
@@ -10829,17 +10884,23 @@
             "submittedUrl": "https://www.ou99.com/thread-457123-1-139.html"
           }
         ],
-        "acquiredPublicSources": [],
-        "purchaseHoldFor": [],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
+        "acquiredPublicSources": [
+          "steam-billy-herrington"
+        ],
+        "purchaseHoldFor": [
+          "community-review-15-20260907"
+        ],
         "purchaseHoldWithoutHeroId": false,
-        "purchaseHold": false,
+        "purchaseHold": true,
         "partialPurchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
           "community-review-15-20260907"
         ],
-        "downloadPriority": "owner-highest"
+        "downloadPriority": "defer-acquired-public"
       },
       {
         "id": "owner-model-011",
@@ -10856,6 +10917,8 @@
             "submittedUrl": "https://www.ou99.com/thread-467165-1-56.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [
           "thunderstore-maomao"
         ],
@@ -10887,6 +10950,8 @@
             "submittedUrl": "https://www.ou99.com/thread-459087-1-34.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -10912,6 +10977,8 @@
             "submittedUrl": "https://www.ou99.com/thread-496746-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -10937,6 +11004,8 @@
             "submittedUrl": "https://www.ou99.com/thread-478121-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -10969,6 +11038,8 @@
             "submittedUrl": "https://www.ou99.com/thread-454069-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11001,6 +11072,8 @@
             "submittedUrl": "https://www.ou99.com/thread-466002-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11033,6 +11106,8 @@
             "submittedUrl": "https://www.ou99.com/thread-463344-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11058,6 +11133,8 @@
             "submittedUrl": "https://www.ou99.com/thread-476060-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11083,6 +11160,8 @@
             "submittedUrl": "https://www.ou99.com/thread-478642-1-71.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11110,6 +11189,8 @@
             "submittedUrl": "https://www.ou99.com/thread-459617-1-199.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11137,6 +11218,8 @@
             "submittedUrl": "https://www.ou99.com/thread-460977-1-184.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [
           "thunderstore-guts"
         ],
@@ -11166,6 +11249,8 @@
             "submittedUrl": "https://www.ou99.com/thread-470467-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [
           "hive-anime-team-survival"
         ],
@@ -11194,6 +11279,8 @@
             "submittedUrl": "https://www.ou99.com/thread-458241-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [
           "thunderstore-gon"
         ],
@@ -11225,6 +11312,8 @@
           }
         ],
         "mappingNote": "清單寫「揍敵客阿福」；現有角色為揍敵客桀諾，尚未認定為同一角色。",
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11253,6 +11342,8 @@
           }
         ],
         "mappingNote": "同一巴恩角色的不同外觀候選；目前沒有分離的變身角色 ID。",
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11283,6 +11374,8 @@
           }
         ],
         "mappingNote": "同一巴恩角色的不同外觀候選；目前沒有分離的變身角色 ID。",
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11310,6 +11403,8 @@
             "submittedUrl": "https://www.ou99.com/thread-453949-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11337,6 +11432,8 @@
             "submittedUrl": "https://www.ou99.com/thread-459257-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11362,6 +11459,8 @@
             "submittedUrl": "https://www.ou99.com/thread-498407-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11385,6 +11484,8 @@
             "submittedUrl": "https://www.ou99.com/thread-452782-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [
           "hive-anime-team-survival"
         ],
@@ -11412,6 +11513,8 @@
             "submittedUrl": "https://www.ou99.com/thread-457780-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11444,6 +11547,8 @@
             "submittedUrl": "https://www.ou99.com/thread-497213-1-13.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11476,6 +11581,8 @@
             "submittedUrl": "https://www.ou99.com/thread-473324-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11504,6 +11611,8 @@
             "submittedUrl": "https://www.ou99.com/thread-470225-1-107.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11534,6 +11643,10 @@
             "submittedUrl": "https://www.ou99.com/thread-470782-1-104.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [
+          "steam-naofumi"
+        ],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11563,6 +11676,8 @@
             "submittedUrl": "https://www.ou99.com/thread-491448-1-32.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11590,6 +11705,8 @@
             "submittedUrl": "https://www.ou99.com/thread-491497-1-32.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11617,6 +11734,8 @@
             "submittedUrl": "https://www.ou99.com/thread-496452-1-16.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11644,6 +11763,8 @@
             "submittedUrl": "https://www.ou99.com/thread-487487-1-46.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11671,6 +11792,8 @@
             "submittedUrl": "https://www.ou99.com/thread-487484-1-47.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11698,6 +11821,8 @@
             "submittedUrl": "https://www.ou99.com/thread-495978-1-18.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11726,6 +11851,8 @@
             "submittedUrl": "https://www.ou99.com/thread-456546-1-240.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11754,6 +11881,8 @@
             "submittedUrl": "https://www.ou99.com/thread-454482-1-265.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11781,6 +11910,8 @@
             "submittedUrl": "https://www.ou99.com/thread-287871-1-716.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [
           "hive-megaman-x"
         ],
@@ -11812,6 +11943,8 @@
             "submittedUrl": "https://www.ou99.com/thread-313646-1-624.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [
           "thunderstore-iori"
         ],
@@ -11843,6 +11976,8 @@
             "submittedUrl": "https://www.ou99.com/thread-481732-1-62.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11870,6 +12005,8 @@
             "submittedUrl": "https://www.ou99.com/thread-498214-1-7.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11897,6 +12034,8 @@
             "submittedUrl": "https://www.ou99.com/thread-472038-1-98.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11924,6 +12063,8 @@
             "submittedUrl": "https://www.ou99.com/thread-469191-1-111.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -11951,6 +12092,8 @@
             "submittedUrl": "https://www.ou99.com/thread-311294-1-694.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [
           "thunderstore-rezero"
         ],
@@ -11982,6 +12125,8 @@
             "submittedUrl": "https://www.ou99.com/thread-470087-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12009,6 +12154,8 @@
             "submittedUrl": "https://www.ou99.com/thread-458013-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12036,6 +12183,8 @@
             "submittedUrl": "https://www.ou99.com/thread-493578-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12063,6 +12212,8 @@
             "submittedUrl": "https://www.ou99.com/thread-495015-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12092,6 +12243,8 @@
             "submittedUrl": "https://www.ou99.com/thread-458777-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12119,6 +12272,8 @@
             "submittedUrl": "https://www.ou99.com/thread-474258-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12146,6 +12301,8 @@
             "submittedUrl": "https://www.ou99.com/thread-465884-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12173,6 +12330,8 @@
             "submittedUrl": "https://www.ou99.com/thread-457710-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12200,6 +12359,8 @@
             "submittedUrl": "https://www.ou99.com/thread-467227-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12227,6 +12388,8 @@
             "submittedUrl": "https://www.ou99.com/thread-457874-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12254,6 +12417,8 @@
             "submittedUrl": "https://www.ou99.com/thread-456917-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12283,6 +12448,8 @@
             "submittedUrl": "https://www.ou99.com/thread-457594-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12310,6 +12477,8 @@
             "submittedUrl": "https://www.ou99.com/thread-283718-1-718.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12340,6 +12509,8 @@
             "submittedUrl": "https://www.ou99.com/thread-312479-1-687.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12365,6 +12536,8 @@
             "submittedUrl": "https://www.ou99.com/thread-310996-1-697.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12397,6 +12570,8 @@
             "submittedUrl": "https://www.ou99.com/thread-328403-1-516.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12429,6 +12604,8 @@
             "submittedUrl": "https://www.ou99.com/thread-413694-1-376.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12459,6 +12636,8 @@
             "submittedUrl": "https://www.ou99.com/thread-455144-1-258.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12484,6 +12663,8 @@
             "submittedUrl": "https://www.ou99.com/thread-497400-1-12.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12516,6 +12697,8 @@
             "submittedUrl": "https://www.ou99.com/thread-497746-1-10.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12556,6 +12739,8 @@
             "submittedUrl": "https://www.ou99.com/thread-467258-1-123.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12593,6 +12778,8 @@
             "submittedUrl": "https://www.ou99.com/thread-455488-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12635,6 +12822,10 @@
             "submittedUrl": "https://www.ou99.com/thread-433442-1-335.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [
+          "steam-light-yagami"
+        ],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12668,6 +12859,8 @@
             "submittedUrl": "https://www.ou99.com/thread-493659-1-24.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12698,6 +12891,8 @@
             "submittedUrl": "https://www.ou99.com/thread-497483-1-12.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12740,6 +12935,8 @@
             "submittedUrl": "https://www.ou99.com/thread-453337-1-280.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [
           "hive-sephiroth"
         ],
@@ -12771,6 +12968,8 @@
             "submittedUrl": "https://www.ou99.com/thread-478203-1-1.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12805,6 +13004,8 @@
             "submittedUrl": "https://www.ou99.com/thread-470351-1-106.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12838,6 +13039,8 @@
             "submittedUrl": "https://www.ou99.com/thread-498472-1-6.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12865,6 +13068,8 @@
             "submittedUrl": "https://www.ou99.com/thread-406299-1-388.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12897,6 +13102,8 @@
             "submittedUrl": "https://www.ou99.com/thread-478915-1-70.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12930,6 +13137,8 @@
             "submittedUrl": "https://www.ou99.com/thread-497131-1-14.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -12959,6 +13168,8 @@
             "submittedUrl": "https://www.ou99.com/thread-497434-1-12.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -13066,6 +13277,8 @@
             "submittedUrl": "https://www.ou99.com/thread-468447-1-115.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -13111,6 +13324,10 @@
           }
         ],
         "mappingNote": "現有 Saber 的 alternate 是風王結界形態，不能直接當作黑化 Saber。",
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [
+          "steam-saber-alter"
+        ],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -13149,6 +13366,8 @@
             "submittedUrl": "https://www.ou99.com/thread-470426-1-106.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -13189,6 +13408,8 @@
             "submittedUrl": "https://www.ou99.com/thread-491161-1-34.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [
           "hive-anime-team-survival"
         ],
@@ -13230,6 +13451,8 @@
             "submittedUrl": "https://www.ou99.com/thread-495084-1-20.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -13265,6 +13488,8 @@
             "submittedUrl": "https://www.ou99.com/thread-479248-1-69.html"
           }
         ],
+        "paidPurchaseAllowed": false,
+        "publicSourceLeadIds": [],
         "acquiredPublicSources": [],
         "purchaseHoldFor": [],
         "purchaseHoldWithoutHeroId": false,
@@ -15375,8 +15600,125 @@
           "readbackVerified": true,
           "usage": "legacy; human permission required; not runtime-ready"
         }
+      },
+      {
+        "id": "steam-billy-herrington",
+        "target": "比利海靈頓",
+        "heroIds": [
+          "community-review-15-20260907"
+        ],
+        "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1422933575",
+        "downloadUrl": "https://cdn.steamusercontent.com/ugc/946201924931510670/F73AA852DDCB4F5EB83077DBADF0554E4818E4A8/",
+        "uploader": "工坊重上傳；來源頁署名 VINRAX",
+        "format": "LZMA / GMA → Source MDL + VVD/VTX + VMT/VTF",
+        "accessStatus": "public-steam-file-url",
+        "checkedAt": "2026-09-09T20:09:46+00:00",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-standardization",
+        "purchaseDecision": "hold-purchase-review-free-source",
+        "defaultEligible": false,
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/steam-billy-herrington",
+        "files": [
+          {
+            "path": "raw/workshop-1422933575.gma.lzma",
+            "bytes": 826691,
+            "sha256": "546f5ebe04cc282375c9e070aeee2f132aae2163bb38950118e792310a0cce3f",
+            "archiveMember": "raw/workshop-1422933575.gma.lzma"
+          }
+        ],
+        "verification": "Valve 官方公開 API 回傳下載網址，實檔 826,691 bytes 與 SHA-256 已核對；GMA 解出 24 個檔案，逐檔 CRC32 通過。含 billy_herrington.mdl、VVD、3 種 VTX、PHY、8 VMT、8 VTF；待骨架 GLB、貼圖與動作轉換，尚未視覺驗收；未執行附帶 Lua。",
+        "reuseTerms": "頁面署名 VINRAX；公開下載不等於已核實跨遊戲轉換或再散布授權。",
+        "usage": "intake-only; no automatic runtime selection",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-billy-herrington/d7abaa73a83e01bc61bbd2310c518621c9a0fe177acf340878a209506f7d121f.zip",
+          "bytes": 1914304,
+          "sha256": "d7abaa73a83e01bc61bbd2310c518621c9a0fe177acf340878a209506f7d121f",
+          "readbackVerified": true,
+          "usage": "legacy; human permission required; not runtime-ready"
+        }
       }
     ],
-    "publicSourcePolicy": "免費來源已取得的角色先暫緩購買；待檔案、角色身分、骨架、動畫與使用條件檢查完成，再决定是否需要付費來源。這不改變已有可用 300 優先與僅 11 組加工副本可預設的規則。"
+    "publicSourcePolicy": "免費來源已取得的角色先暫緩購買；待檔案、角色身分、骨架、動畫與使用條件檢查完成，再决定是否需要付費來源。這不改變已有可用 300 優先與僅 11 組加工副本可預設的規則。",
+    "purchasePolicy": {
+      "paidPurchaseAllowed": false,
+      "scope": "all owner download-list entries",
+      "status": "paused-pending-public-source-review",
+      "reason": "使用者要求先登記公開來源，避免其他工作流花錢購買模型。",
+      "resumeCondition": "使用者另行明確同意購買；來源順位不等於付款授權。"
+    },
+    "publicSourceLeads": [
+      {
+        "id": "steam-light-yagami",
+        "target": "夜神月",
+        "heroIds": [
+          "godie-emns"
+        ],
+        "ownerEntryIds": [],
+        "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3589588791",
+        "pageTitle": "Light Yagami (DEATH NOTE Killer Within) [PM/NPC]",
+        "checkedAt": "2026-09-09T20:09:46+00:00",
+        "accessStatus": "public-page-no-api-file-url",
+        "acquisitionStatus": "not-downloaded",
+        "defaultEligible": false,
+        "purchaseDecision": "hold-purchase-investigate-public-source",
+        "verification": "Valve 官方 API 確認公開項目，但 file_url 為空；僅取得公開中繼資料，尚未下載模型，繼續查找正常取得管道。",
+        "metadataEvidence": {
+          "publishedfileid": "3589588791",
+          "result": 1,
+          "visibility": 0,
+          "banned": 0,
+          "file_url": "",
+          "file_size": "14324701"
+        }
+      },
+      {
+        "id": "steam-naofumi",
+        "target": "岩谷尚文",
+        "heroIds": [
+          "b2-naofumi"
+        ],
+        "ownerEntryIds": [],
+        "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2011699795",
+        "pageTitle": "[PM] Naofumi Iwatani | The Rising of the Shield Hero Playermodel",
+        "checkedAt": "2026-09-09T20:09:46+00:00",
+        "accessStatus": "public-page-no-api-file-url",
+        "acquisitionStatus": "not-downloaded",
+        "defaultEligible": false,
+        "purchaseDecision": "hold-purchase-investigate-public-source",
+        "verification": "Valve 官方 API 確認公開項目，但 file_url 為空；僅取得公開中繼資料，尚未下載模型，繼續查找正常取得管道。",
+        "metadataEvidence": {
+          "publishedfileid": "2011699795",
+          "result": 1,
+          "visibility": 0,
+          "banned": 0,
+          "file_url": "",
+          "file_size": "49061805"
+        }
+      },
+      {
+        "id": "steam-saber-alter",
+        "target": "黑化 Saber",
+        "heroIds": [],
+        "ownerEntryIds": [
+          "owner-model-085"
+        ],
+        "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2031993447",
+        "pageTitle": "Saber Alter PM/NPC - Fate Grand Order (FGO)",
+        "checkedAt": "2026-09-09T20:09:46+00:00",
+        "accessStatus": "public-page-no-api-file-url",
+        "acquisitionStatus": "not-downloaded",
+        "defaultEligible": false,
+        "purchaseDecision": "hold-purchase-investigate-public-source",
+        "verification": "Valve 官方 API 確認公開項目，但 file_url 為空；僅取得公開中繼資料，尚未下載模型，繼續查找正常取得管道。",
+        "metadataEvidence": {
+          "publishedfileid": "2031993447",
+          "result": 1,
+          "visibility": 0,
+          "banned": 0,
+          "file_url": "",
+          "file_size": "43538903"
+        }
+      }
+    ]
   }
 }

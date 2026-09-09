@@ -3699,7 +3699,124 @@
         "readbackVerified": true,
         "usage": "legacy; human permission required; not runtime-ready"
       }
+    },
+    {
+      "id": "steam-billy-herrington",
+      "target": "比利海靈頓",
+      "heroIds": [
+        "community-review-15-20260907"
+      ],
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1422933575",
+      "downloadUrl": "https://cdn.steamusercontent.com/ugc/946201924931510670/F73AA852DDCB4F5EB83077DBADF0554E4818E4A8/",
+      "uploader": "工坊重上傳；來源頁署名 VINRAX",
+      "format": "LZMA / GMA → Source MDL + VVD/VTX + VMT/VTF",
+      "accessStatus": "public-steam-file-url",
+      "checkedAt": "2026-09-09T20:09:46+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/steam-billy-herrington",
+      "files": [
+        {
+          "path": "raw/workshop-1422933575.gma.lzma",
+          "bytes": 826691,
+          "sha256": "546f5ebe04cc282375c9e070aeee2f132aae2163bb38950118e792310a0cce3f",
+          "archiveMember": "raw/workshop-1422933575.gma.lzma"
+        }
+      ],
+      "verification": "Valve 官方公開 API 回傳下載網址，實檔 826,691 bytes 與 SHA-256 已核對；GMA 解出 24 個檔案，逐檔 CRC32 通過。含 billy_herrington.mdl、VVD、3 種 VTX、PHY、8 VMT、8 VTF；待骨架 GLB、貼圖與動作轉換，尚未視覺驗收；未執行附帶 Lua。",
+      "reuseTerms": "頁面署名 VINRAX；公開下載不等於已核實跨遊戲轉換或再散布授權。",
+      "usage": "intake-only; no automatic runtime selection",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-billy-herrington/d7abaa73a83e01bc61bbd2310c518621c9a0fe177acf340878a209506f7d121f.zip",
+        "bytes": 1914304,
+        "sha256": "d7abaa73a83e01bc61bbd2310c518621c9a0fe177acf340878a209506f7d121f",
+        "readbackVerified": true,
+        "usage": "legacy; human permission required; not runtime-ready"
+      }
     }
   ],
-  "publicSourcePolicy": "免費來源已取得的角色先暫緩購買；待檔案、角色身分、骨架、動畫與使用條件檢查完成，再决定是否需要付費來源。這不改變已有可用 300 優先與僅 11 組加工副本可預設的規則。"
+  "publicSourcePolicy": "免費來源已取得的角色先暫緩購買；待檔案、角色身分、骨架、動畫與使用條件檢查完成，再决定是否需要付費來源。這不改變已有可用 300 優先與僅 11 組加工副本可預設的規則。",
+  "purchasePolicy": {
+    "paidPurchaseAllowed": false,
+    "scope": "all owner download-list entries",
+    "status": "paused-pending-public-source-review",
+    "reason": "使用者要求先登記公開來源，避免其他工作流花錢購買模型。",
+    "resumeCondition": "使用者另行明確同意購買；來源順位不等於付款授權。"
+  },
+  "publicSourceLeads": [
+    {
+      "id": "steam-light-yagami",
+      "target": "夜神月",
+      "heroIds": [
+        "godie-emns"
+      ],
+      "ownerEntryIds": [],
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3589588791",
+      "pageTitle": "Light Yagami (DEATH NOTE Killer Within) [PM/NPC]",
+      "checkedAt": "2026-09-09T20:09:46+00:00",
+      "accessStatus": "public-page-no-api-file-url",
+      "acquisitionStatus": "not-downloaded",
+      "defaultEligible": false,
+      "purchaseDecision": "hold-purchase-investigate-public-source",
+      "verification": "Valve 官方 API 確認公開項目，但 file_url 為空；僅取得公開中繼資料，尚未下載模型，繼續查找正常取得管道。",
+      "metadataEvidence": {
+        "publishedfileid": "3589588791",
+        "result": 1,
+        "visibility": 0,
+        "banned": 0,
+        "file_url": "",
+        "file_size": "14324701"
+      }
+    },
+    {
+      "id": "steam-naofumi",
+      "target": "岩谷尚文",
+      "heroIds": [
+        "b2-naofumi"
+      ],
+      "ownerEntryIds": [],
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2011699795",
+      "pageTitle": "[PM] Naofumi Iwatani | The Rising of the Shield Hero Playermodel",
+      "checkedAt": "2026-09-09T20:09:46+00:00",
+      "accessStatus": "public-page-no-api-file-url",
+      "acquisitionStatus": "not-downloaded",
+      "defaultEligible": false,
+      "purchaseDecision": "hold-purchase-investigate-public-source",
+      "verification": "Valve 官方 API 確認公開項目，但 file_url 為空；僅取得公開中繼資料，尚未下載模型，繼續查找正常取得管道。",
+      "metadataEvidence": {
+        "publishedfileid": "2011699795",
+        "result": 1,
+        "visibility": 0,
+        "banned": 0,
+        "file_url": "",
+        "file_size": "49061805"
+      }
+    },
+    {
+      "id": "steam-saber-alter",
+      "target": "黑化 Saber",
+      "heroIds": [],
+      "ownerEntryIds": [
+        "owner-model-085"
+      ],
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2031993447",
+      "pageTitle": "Saber Alter PM/NPC - Fate Grand Order (FGO)",
+      "checkedAt": "2026-09-09T20:09:46+00:00",
+      "accessStatus": "public-page-no-api-file-url",
+      "acquisitionStatus": "not-downloaded",
+      "defaultEligible": false,
+      "purchaseDecision": "hold-purchase-investigate-public-source",
+      "verification": "Valve 官方 API 確認公開項目，但 file_url 為空；僅取得公開中繼資料，尚未下載模型，繼續查找正常取得管道。",
+      "metadataEvidence": {
+        "publishedfileid": "2031993447",
+        "result": 1,
+        "visibility": 0,
+        "banned": 0,
+        "file_url": "",
+        "file_size": "43538903"
+      }
+    }
+  ]
 }

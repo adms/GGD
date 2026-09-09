@@ -31,13 +31,17 @@ def main():
     query = args.query.casefold()
     if args.downloads:
         direct = [e for e in data['downloadPlan']['entries'] if not query or query in json.dumps(e, ensure_ascii=False).casefold()]
-        hero_ids, entry_ids = public_match_scope(data['downloadPlan'].get('publicSources',[]),query)
+        hero_ids, entry_ids = public_match_scope(data['downloadPlan'].get('publicSources',[]) + data['downloadPlan'].get('publicSourceLeads',[]),query)
         records = direct or [e for e in data['downloadPlan']['entries'] if e['id'] in entry_ids or hero_ids.intersection(e['heroIds'])]
         if args.json:
             source_ids={sid for e in records for sid in e.get('acquiredPublicSources',[])}
-            print(json.dumps({'release':data['release'], 'entries':records,
+            lead_ids={sid for e in records for sid in e.get('publicSourceLeadIds',[])}
+            print(json.dumps({'release':data['release'], 'purchasePolicy':data['downloadPlan'].get('purchasePolicy',{}), 'entries':records,
+                'publicSourceLeads':[s for s in data['downloadPlan'].get('publicSourceLeads',[]) if s['id'] in lead_ids],
                 'publicSources':[s for s in data['downloadPlan'].get('publicSources',[]) if s['id'] in source_ids]}, ensure_ascii=False, indent=2))
         else:
+            if data['downloadPlan'].get('purchasePolicy',{}).get('paidPurchaseAllowed') is False:
+                print('付費模型購買暫緩；優先下載不是付款授權。')
             labels = {'defer-acquired-public':'免費來源已取得，暫緩購買','defer-approved-derivative':'已有核准加工副本，暫緩付費下載','defer-existing-300':'已有 300，暫緩付費下載','owner-highest':'優先下載','needs-roster-mapping':'待對應角色 ID'}
             for e in records:
                 print(f"{e['target']} | {labels[e['downloadPriority']]} | {', '.join(e['heroIds']) or '未對應'}")
@@ -51,6 +55,8 @@ def main():
                     for s in data['downloadPlan'].get('publicSources',[]):
                         if s['id'] in e['acquiredPublicSources']: print('    '+s['url']+' | '+s['verification'])
                 for s in e['sources']: print('  '+s['submittedUrl'])
+                for s in data['downloadPlan'].get('publicSourceLeads',[]):
+                    if s['id'] in e.get('publicSourceLeadIds',[]):print('  來源線索（未取得）：'+s['url']+' | '+s['verification'])
                 for note in e['ownerNotes']: print('  指定處理：'+note)
         return 0 if records else 1
     exact = [h for h in data['heroes'] if h['id'].casefold() == query]

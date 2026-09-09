@@ -34,7 +34,9 @@ class InventoryHandoff(unittest.TestCase):
         self.assertNotIn('godie-u00l', kenshiro['heroIds'])
         self.assertEqual(kenshiro['preserve']['heroId'], 'godie-u00l')
         public = {s['id']:s for s in inventory['downloadPlan'].get('publicSources',[])}
+        self.assertFalse(inventory['downloadPlan']['purchasePolicy']['paidPurchaseAllowed'])
         for entry in inventory['downloadPlan']['entries']:
+            self.assertFalse(entry['paidPurchaseAllowed'])
             if entry.get('purchaseHold'):
                 self.assertTrue(entry['downloadPriority'].startswith('defer-'))
                 for sid in entry['acquiredPublicSources']:
@@ -57,6 +59,14 @@ class InventoryHandoff(unittest.TestCase):
         self.assertEqual(gon['downloadPriority'], 'owner-highest')
         self.assertEqual([s['id'] for s in heroes['godie-ucrl']['publicCandidates']], ['thunderstore-gon'])
         self.assertEqual(heroes['godie-u034']['publicCandidates'], [])
+        # A publicly visible Workshop page is not a downloaded model.
+        naofumi = next(e for e in inventory['downloadPlan']['entries'] if 'b2-naofumi' in e['heroIds'])
+        self.assertEqual(naofumi['publicSourceLeadIds'], ['steam-naofumi'])
+        self.assertFalse(naofumi['purchaseHold'])
+        self.assertEqual(heroes['b2-naofumi']['publicCandidates'], [])
+        billy = next(e for e in inventory['downloadPlan']['entries'] if 'community-review-15-20260907' in e['heroIds'])
+        self.assertTrue(billy['purchaseHold'])
+        self.assertEqual(billy['acquiredPublicSources'], ['steam-billy-herrington'])
         for hero_id, held in [('godie-ucrl', True), ('godie-u034', False)]:
             row = next(line for line in report.splitlines() if f'<br>`{hero_id}`' in line and '職業獵人' in line)
             self.assertEqual('免費來源已取得，暫緩購買' in row, held)
@@ -76,6 +86,12 @@ class InventoryHandoff(unittest.TestCase):
             self.assertEqual(json.loads(result)['heroes'][0]['default']['id'],'derivative:popp')
             result=subprocess.check_output([sys.executable,str(script.with_name('query.py')),'小傑','--downloads','--json'],text=True)
             self.assertEqual(json.loads(result)['entries'][0]['purchaseHoldFor'],['godie-ucrl'])
+            result=subprocess.check_output([sys.executable,str(script.with_name('query.py')),'岩谷尚文','--downloads','--json'],text=True)
+            record=json.loads(result)
+            self.assertFalse(record['purchasePolicy']['paidPurchaseAllowed'])
+            self.assertFalse(record['entries'][0]['paidPurchaseAllowed'])
+            self.assertEqual(record['publicSources'], [])
+            self.assertEqual(record['publicSourceLeads'][0]['id'], 'steam-naofumi')
             for query, expected_target in [('犬夜叉','犬夜叉'),('亞絲娜','刀劍神域 阿絲娜')]:
                 result=subprocess.check_output([sys.executable,str(script.with_name('query.py')),query,'--downloads','--json'],text=True)
                 self.assertEqual([e['target'] for e in json.loads(result)['entries']],[expected_target])
