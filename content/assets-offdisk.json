@@ -2,13 +2,17 @@
   "schema": "ggd-assets-offdisk@1",
   "note": "⭐ **不在 git 裡**的資產：位元組住 S3 ggd-390630837668-ap-east-2-an，⭐ 而驗得起來的那半（bytes + sha256）住這裡（owner 2026-09-08 的歸屬表）。⛔ 沒有宣告的缺席資產仍然 fail-loud —— 這**不是**一張放行清單。⚠️ 內容定址的路徑（檔名 = 64 hex），sha256 必須等於檔名，⭐ 產生器會當場擋下自我矛盾的宣告。",
   "counts": {
-    "entries": 96,
-    "totalBytes": 89149016
+    "entries": 100,
+    "totalBytes": 93955300
   },
   "entries": {
     "assets/models/champions/versions/b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810.glb": {
       "bytes": 52088,
       "sha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810"
+    },
+    "assets/models/community/01a0040e5b7b5a4053ca8431ffb00ca2b70baad9a9cfc4134681b46f3c4ace72.glb": {
+      "bytes": 1165520,
+      "sha256": "01a0040e5b7b5a4053ca8431ffb00ca2b70baad9a9cfc4134681b46f3c4ace72"
     },
     "assets/models/community/04af91b75e1e6e6d2dfab2d59cc5e008a18e71718f6774848810f9266043908d.glb": {
       "bytes": 879100,
@@ -25,6 +29,10 @@
     "assets/models/community/20fc46c2468b3d9d79677763ac34cebbff9f3fd9d4672454691308a743054175.glb": {
       "bytes": 951004,
       "sha256": "20fc46c2468b3d9d79677763ac34cebbff9f3fd9d4672454691308a743054175"
+    },
+    "assets/models/community/212742ce3f4270d9cdb8dc8a2a1940d032da026dea2f5df475b705281eb10e1c.glb": {
+      "bytes": 993232,
+      "sha256": "212742ce3f4270d9cdb8dc8a2a1940d032da026dea2f5df475b705281eb10e1c"
     },
     "assets/models/community/229c2dce4a639b861c7b55084a2f9f5bae41e4225646d028c05899992aa2f607.glb": {
       "bytes": 851152,
@@ -69,6 +77,14 @@
     "assets/models/community/3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd.glb": {
       "bytes": 2343924,
       "sha256": "3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd"
+    },
+    "assets/models/community/40532a1478491e4f8fd0b05c3598e215da3a323c2af901f847d889d9d903f46f.glb": {
+      "bytes": 1416448,
+      "sha256": "40532a1478491e4f8fd0b05c3598e215da3a323c2af901f847d889d9d903f46f"
+    },
+    "assets/models/community/42b8b816b13fcbd3faf4d7fe31a3120b4101dbc8fb163259ee0ec0c101149e39.glb": {
+      "bytes": 1231084,
+      "sha256": "42b8b816b13fcbd3faf4d7fe31a3120b4101dbc8fb163259ee0ec0c101149e39"
     },
     "assets/models/community/43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246.glb": {
       "bytes": 663584,

@@ -37,6 +37,14 @@ const read = (n) => {
   return existsSync(p) ? JSON.parse(readFileSync(p, "utf8")) : null;
 };
 
+/** ⭐ 真的轉出來的本尊 GLB（⛔ 不是收據上的宣告）—— 五道界線②的實據。 */
+const bodiesIndex = join(REPO, "docs/_reports/batch2-37-bodies/index.json");
+const nativeBodies = new Set(
+  existsSync(bodiesIndex)
+    ? Object.keys(JSON.parse(readFileSync(bodiesIndex, "utf8")).bodies ?? {})
+    : [],
+);
+
 const pkg = read("package-report");
 const pipe = read("pipeline-report");
 const review = read("author-review");
@@ -57,8 +65,19 @@ const rows = (pkg.heroes ?? []).map((h) => {
   // ⭐ 收據**自己**回答得了這一道：`model.kind`。
   //   ⚠️ `explicit-proxy` ＝ 這隻用的是**核准過的代理本體**，⛔ 不是它本尊的 GLB
   //   ⇒ 「GLB 轉換成功」對它是 ⛔（⭐ 而那不是缺陷，是**這一道還沒走到**）。
+  // ⭐⭐ ② 有**兩個**證據來源，⛔ 而收據那一個會過期：
+  //   · 收據的 `model.kind`（Codex 打包當下的狀態）
+  //   · ⭐ `docs/_reports/batch2-37-bodies/index.json`（**真的轉出來的那幾顆**）
+  //   ⇒ 後者贏 —— 一顆已經轉出來、上了 S3、驗過雜湊的 GLB，
+  //     ⛔ 不會因為舊收據還寫著 `explicit-proxy` 就變回沒有。
   const kind = h.model?.kind ?? "";
-  const glb = kind === "native" || kind === "own" ? YES : kind ? NO : UNKNOWN;
+  const glb = nativeBodies.has(h.id)
+    ? YES
+    : kind === "native" || kind === "own"
+      ? YES
+      : kind
+        ? NO
+        : UNKNOWN;
   // ⭐ 「已標準化入庫」＝ 這一包被打包器判 passed **且**有 zip 的 sha
   const intake = h.status === "passed" && typeof h.zipSha256 === "string" ? YES : NO;
   // ⭐ 「遊戲畫面驗收」—— 收據有一格 `liveGameVerified`（⚠️ ⭐ 而它今天全是 false）

@@ -1,0 +1,66 @@
+{
+  "schema": "ggd-batch2-native-bodies@1",
+  "note": "⭐ 第二批 37 名裡**4 名本尊**的 JUMPX→GLB 轉換收據。⛔ 位元組不進 git（owner 2026-09-08）—— 在 S3 `ggd-390630837668-ap-east-2-an`，⭐ 每顆都下載回來驗過雜湊。⭐ 這一份就是五道界線②的證據。",
+  "bodies": {
+    "b2-rem": {
+      "sha256": "42b8b816b13fcbd3faf4d7fe31a3120b4101dbc8fb163259ee0ec0c101149e39",
+      "bytes": 1231084,
+      "assetPath": "assets/models/community/42b8b816b13fcbd3faf4d7fe31a3120b4101dbc8fb163259ee0ec0c101149e39.glb",
+      "s3Key": "community-hero-forge/batch2-37/bodies/42b8b816b13fcbd3faf4d7fe31a3120b4101dbc8fb163259ee0ec0c101149e39.glb",
+      "modelDoc": "content/models/community.body.42b8b816b13fcbd3faf4d7fe31a3120b4101dbc8fb163259.json",
+      "sourceSha256": "eb3fa119d05497d5e3b4c973812af81a57bf1a667173ae9e699e3e6cab88e04c",
+      "characterLinks": [
+        {
+          "character_id": "300heroes:310",
+          "confidence": "official_base_model"
+        }
+      ],
+      "nativeInverseAffineMaxError": null
+    },
+    "b2-zenitsu": {
+      "sha256": "40532a1478491e4f8fd0b05c3598e215da3a323c2af901f847d889d9d903f46f",
+      "bytes": 1416448,
+      "assetPath": "assets/models/community/40532a1478491e4f8fd0b05c3598e215da3a323c2af901f847d889d9d903f46f.glb",
+      "s3Key": "community-hero-forge/batch2-37/bodies/40532a1478491e4f8fd0b05c3598e215da3a323c2af901f847d889d9d903f46f.glb",
+      "modelDoc": "content/models/community.body.40532a1478491e4f8fd0b05c3598e215da3a323c2af901f8.json",
+      "sourceSha256": "f1fcedbb51437fd20f597ecb3d0b43cf5f0c106372e0b45e86c9ca3c5c0a0758",
+      "characterLinks": [
+        {
+          "character_id": "300heroes:332",
+          "confidence": "official_base_model"
+        }
+      ],
+      "nativeInverseAffineMaxError": null
+    },
+    "b2-rin": {
+      "sha256": "212742ce3f4270d9cdb8dc8a2a1940d032da026dea2f5df475b705281eb10e1c",
+      "bytes": 993232,
+      "assetPath": "assets/models/community/212742ce3f4270d9cdb8dc8a2a1940d032da026dea2f5df475b705281eb10e1c.glb",
+      "s3Key": "community-hero-forge/batch2-37/bodies/212742ce3f4270d9cdb8dc8a2a1940d032da026dea2f5df475b705281eb10e1c.glb",
+      "modelDoc": "content/models/community.body.212742ce3f4270d9cdb8dc8a2a1940d032da026dea2f5df4.json",
+      "sourceSha256": "84c296c9da96b75ed698c0bbe62891bb3a9c39f3450f45474f85abe28d7d430f",
+      "characterLinks": [
+        {
+          "character_id": "300heroes:160",
+          "confidence": "official_base_model"
+        }
+      ],
+      "nativeInverseAffineMaxError": null
+    },
+    "b2-maple": {
+      "sha256": "01a0040e5b7b5a4053ca8431ffb00ca2b70baad9a9cfc4134681b46f3c4ace72",
+      "bytes": 1165520,
+      "assetPath": "assets/models/community/01a0040e5b7b5a4053ca8431ffb00ca2b70baad9a9cfc4134681b46f3c4ace72.glb",
+      "s3Key": "community-hero-forge/batch2-37/bodies/01a0040e5b7b5a4053ca8431ffb00ca2b70baad9a9cfc4134681b46f3c4ace72.glb",
+      "modelDoc": "content/models/community.body.01a0040e5b7b5a4053ca8431ffb00ca2b70baad9a9cfc413.json",
+      "sourceSha256": "98fc92bf763811f4e95b12a848d38d6b7aeadc42c789ad5bac3324b2f05e6e59",
+      "characterLinks": [
+        {
+          "character_id": "300heroes:272",
+          "confidence": "official_base_model"
+        }
+      ],
+      "nativeInverseAffineMaxError": null
+    }
+  }
+}
