@@ -19,6 +19,8 @@ Only the current tree loses ZIP/weight payloads. Existing commits still contain 
 
 The script pins AWS profile `vibe-coding`, region `ap-east-2`, and bucket `ggd-390630837668-ap-east-2-an`. Keys are `hero-finetune-research/sha256/<sha256>.zip` or `.safetensors`; no public ACL is set. Access follows the existing bucket policy, which this task does not inspect or modify.
 
+For new bundles, commit the readable bundle manifest and source mirrors before running `plan`; leave the declared ZIP and `.safetensors` payloads outside Git. `plan` resolves those local bytes only through the committed manifest, verifies the complete archive, and creates their content-addressed index. This keeps new model payloads out of Git history without letting an untracked, undeclared binary enter the S3 receipt.
+
 Every network invocation checks STS caller identity first and requires account `390630837668` and `assumed-role/vibe-coding-s3-role/`. The AWS CLI uses the existing profile's credential provider chain. The script does not open credential files or obtain/inject temporary credential values.
 
 Publication uses only ListBucket, conditional PutObject (no overwrite), and GetObject. Existing content-addressed objects are downloaded and checked, not overwritten. AccessDenied ends the invocation with the action and resource; there is no alternate profile, permission expansion or automatic bypass. A failed run writes no completion receipt. After the cause is resolved with appropriate authorization, a new invocation can reuse already-uploaded objects by hash.
