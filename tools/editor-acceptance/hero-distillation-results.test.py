@@ -33,17 +33,24 @@ class ResultsTest(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.root = Path(self.temp.name)
         self.train, self.eval, self.paired = [self.root / x for x in ['train', 'eval', 'paired']]
+        self.data = self.root / 'data'
+        put(self.data / 'manifest.json', {'schema': 'fixture-dataset'})
+        self.frozen_sha = sha(self.data / 'manifest.json')
+        (self.data / 'train.jsonl').write_text(json.dumps({'id': 'seen:HERO', 'heroId': 'seen'}) + '\n')
+        (self.data / 'dev.jsonl').write_text(json.dumps({'id': 'dev:HERO', 'heroId': 'dev'}) + '\n')
         self.counts = {'tasks': 119, 'primaryWholeHeroes': 17, 'secondarySlots': 102}
         self.cases = [{'id': str(i) + ':HERO' if i < 17 else str(i) + ':Q',
                        'heroId': str(i), 'slot': 'HERO' if i < 17 else 'Q',
                        'messagesSha256': 'message-' + str(i),
                        'messages': [{}, {'content': json.dumps({'request': {'heroName': '<script>alert(1)</script>'}})}]}
                       for i in range(119)]
-        plan_sha = put(self.eval / 'plan.json', {'counts': self.counts, 'sourceManifestSha256': 'frozen'})
+        plan_sha = put(self.eval / 'plan.json', {'counts': self.counts, 'sourceManifestSha256': self.frozen_sha,
+                                                  'split': 'internal-dev', 'blindTest': False})
         public = self.eval / 'public-cases.jsonl'
         public.write_text('\n'.join(json.dumps(c) for c in self.cases))
         self.eval_sha = put(self.eval / 'manifest.json', {'outputs': {'plan.json': plan_sha, 'public-cases.jsonl': sha(public)}})
-        manifest_sha = put(self.train / 'manifest.json', {'steps': 500, 'frozenManifestSha256': 'frozen'})
+        manifest_sha = put(self.train / 'manifest.json', {'steps': 500, 'frozenManifestSha256': self.frozen_sha,
+                                                           'dataDirectory': str(self.data)})
         put(self.train / 'train/state.json', {'status': 'running', 'manifestSha256': manifest_sha})
         self.before = [{'id': c['id'], 'loss': 2.0, 'outputTokens': i + 1} for i, c in enumerate(self.cases)]
         put(self.train / 'train/dev-before.json', self.before)
@@ -53,6 +60,21 @@ class ResultsTest(unittest.TestCase):
 
     def collect(self):
         return r.collect(self.train, self.eval, self.paired)
+
+    def make_blind(self, overlap=None):
+        cases = copy.deepcopy(self.cases)
+        if overlap:
+            cases[0]['id'] = overlap + ':HERO'; cases[0]['heroId'] = overlap
+        public = self.eval / 'public-cases.jsonl'
+        public.write_text('\n'.join(json.dumps(c) for c in cases))
+        protocol = {'teacherAnswersVisibleToCandidate': False, 'usedForTraining': False,
+                    'usedForTuning': False, 'checkpointSelectedBeforeGeneration': True}
+        plan_sha = put(self.eval / 'plan.json', {'counts': self.counts, 'sourceManifestSha256': 'blind-source',
+            'trainingFrozenManifestSha256': self.frozen_sha, 'split': 'blind-user-batch', 'blindTest': True,
+            'blindProtocol': protocol})
+        self.eval_sha = put(self.eval / 'manifest.json', {'outputs': {'plan.json': plan_sha,
+            'public-cases.jsonl': sha(public)}})
+        return protocol
 
     def compilation(self, arm, failed=()):
         value = {'schema': 'ggd-distillation-generation-compile@1', 'evaluationManifestSha256': self.eval_sha,
@@ -115,6 +137,33 @@ class ResultsTest(unittest.TestCase):
         self.assertNotIn('<script>', html)
         self.assertIn('未測，不能當 0', html)
         self.assertIn('本 dev 組須 17/17', html)
+
+    def test_blind_batch_is_separate_disjoint_and_preserves_protocol(self):
+        protocol = self.make_blind()
+        data = self.collect()
+        self.assertTrue(data['blindTest'])
+        self.assertEqual(data['blindProtocol'], protocol)
+        self.make_blind('seen')
+        with self.assertRaisesRegex(AssertionError, 'BLIND_HERO_OVERLAP:seen'):
+            self.collect()
+
+    def test_blind_batch_cannot_reuse_training_manifest_or_leak_teacher(self):
+        self.make_blind()
+        plan = json.loads((self.eval / 'plan.json').read_text())
+        plan['sourceManifestSha256'] = self.frozen_sha
+        plan_sha = put(self.eval / 'plan.json', plan)
+        put(self.eval / 'manifest.json', {'outputs': {'plan.json': plan_sha,
+            'public-cases.jsonl': sha(self.eval / 'public-cases.jsonl')}})
+        with self.assertRaisesRegex(AssertionError, 'BLIND_REUSES_TRAINING_DATASET'):
+            self.collect()
+        self.make_blind()
+        plan = json.loads((self.eval / 'plan.json').read_text())
+        plan['blindProtocol']['teacherAnswersVisibleToCandidate'] = True
+        plan_sha = put(self.eval / 'plan.json', plan)
+        put(self.eval / 'manifest.json', {'outputs': {'plan.json': plan_sha,
+            'public-cases.jsonl': sha(self.eval / 'public-cases.jsonl')}})
+        with self.assertRaisesRegex(AssertionError, 'INVALID_BLIND_PROTOCOL'):
+            self.collect()
 
     def test_generation_cost_keeps_partial_outputs_and_missing_tokens(self):
         cases = [{'id': str(i), 'slot': 'HERO' if i < 2 else 'Q'} for i in range(3)]

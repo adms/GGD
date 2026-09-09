@@ -102,7 +102,28 @@ def collect(training, evaluation, paired=None, teacher_compile=None, teacher_pac
     assert all(c['heroId'] == c['id'].split(':', 1)[0] for c in cases), 'EVAL_HERO_ID_DRIFT'
     assert sum(c['slot'] == 'HERO' for c in cases) == plan['counts']['primaryWholeHeroes'], 'PRIMARY_COUNT_DRIFT'
     assert sum(c['slot'] != 'HERO' for c in cases) == plan['counts']['secondarySlots'], 'SECONDARY_COUNT_DRIFT'
-    assert plan['sourceManifestSha256'] == manifest['frozenManifestSha256'], 'TRAIN_EVAL_DATASET_MISMATCH'
+    split = plan.get('split')
+    assert split in ['internal-dev', 'blind-user-batch'], 'UNKNOWN_EVALUATION_SPLIT'
+    if split == 'internal-dev':
+        assert plan.get('blindTest') is False, 'INTERNAL_MARKED_BLIND'
+        assert plan['sourceManifestSha256'] == manifest['frozenManifestSha256'], 'TRAIN_EVAL_DATASET_MISMATCH'
+        blind_protocol = None
+    else:
+        assert plan.get('blindTest') is True, 'BLIND_NOT_MARKED_BLIND'
+        assert plan.get('trainingFrozenManifestSha256') == manifest['frozenManifestSha256'], 'BLIND_TRAINING_BINDING_MISMATCH'
+        assert plan.get('sourceManifestSha256') != manifest['frozenManifestSha256'], 'BLIND_REUSES_TRAINING_DATASET'
+        blind_protocol = plan.get('blindProtocol') or {}
+        assert blind_protocol == {'teacherAnswersVisibleToCandidate': False, 'usedForTraining': False,
+                                  'usedForTuning': False, 'checkpointSelectedBeforeGeneration': True}, 'INVALID_BLIND_PROTOCOL'
+        data = Path(manifest['dataDirectory'])
+        assert hashlib.sha256(raw(data / 'manifest.json')).hexdigest() == manifest['frozenManifestSha256'], 'TRAINING_DATASET_DRIFT'
+        seen = set()
+        for name in ['train.jsonl', 'dev.jsonl']:
+            rows = [json.loads(line) for line in raw(data / name).decode().splitlines() if line]
+            assert all(row['heroId'] == row['id'].split(':', 1)[0] for row in rows), 'TRAINING_HERO_ID_DRIFT'
+            seen.update(row['heroId'] for row in rows)
+        overlap = sorted(seen & {case['heroId'] for case in cases})
+        assert not overlap, 'BLIND_HERO_OVERLAP:' + ','.join(overlap)
     state = read(training / 'train/state.json', True)
     if state:
         assert state['manifestSha256'] == pins[str((training / 'manifest.json').resolve())]['sha256'], 'TRAIN_STATE_DRIFT'
@@ -209,7 +230,8 @@ def collect(training, evaluation, paired=None, teacher_compile=None, teacher_pac
             'devBefore': before_stats, 'devAfter': after_stats, 'devAfterMinusBefore': delta},
         'counts': plan['counts'], 'arms': arms,
         'pairedStructural': {'improved': improvements, 'regressed': regressions},
-        'fullHeroE2EProven': False, 'modelPromoted': False, 'blindTest': False,
+        'fullHeroE2EProven': False, 'modelPromoted': False, 'blindTest': split == 'blind-user-batch',
+        'blindProtocol': blind_protocol,
         'limits': ['File snapshot, not an OS process-liveness check.',
                    'Teacher-forced CE is not generated hero quality; per-step losses concern different tasks.',
                    'Package admission is not live import or match verification.',
