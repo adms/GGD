@@ -21,6 +21,7 @@
  * clamp while turning.
  */
 import { advanceDrive, advanceGrapple, publishAbilityMotion } from "../movement/abilityMotion";
+import { dashContact } from "../movement/dashContact";
 import { moveFeelRules } from "../moveFeel";
 import type { SimWorld } from "../SimWorld";
 import type { Vec2 } from "../math/vec2";
@@ -93,6 +94,7 @@ export function movementSystem(world: SimWorld): void {
     if (!nav) continue;
     const hp = world.health.get(id);
     if (hp && !hp.alive) {
+      if (nav.override?.kind === "dash" && nav.override.stopOnHit) nav.override = null;
       const hadMotion = nav.drive || (nav.override?.kind !== "leap" && nav.override?.grapple);
       delete nav.drive;
       if (nav.override?.kind !== "leap" && nav.override?.grapple) nav.override = null;
@@ -190,11 +192,15 @@ export function movementSystem(world: SimWorld): void {
       const before = { x: t.pos.x, z: t.pos.z };
       const body = { pos: t.pos, radius: t.radius };
       moveWithCollision(body, delta, zone, worldObstacles(world, t.zone));
+      if (ov.kind === "dash" && ov.stopOnHit) {
+        const contact = dashContact(world, id, before, body.pos, ov.stopOnHit);
+        if (contact) { body.pos = contact.point; ov.hitTarget = contact.target; }
+      }
       t.pos = body.pos;
       ov.remaining -= stepLen;
       const moved = len(sub(t.pos, before));
       // Dash stopped early by a wall → end the dash.
-      if (moved + 1e-6 < stepLen || ov.remaining <= 1e-6) nav.override = null;
+      if (ov.hitTarget !== undefined || moved + 1e-6 < stepLen || ov.remaining <= 1e-6) nav.override = null;
       // Velocity is what the body ACTUALLY did (see the note in step 2).
       t.vel = scale(sub(t.pos, before), 1 / dt);
       continue;

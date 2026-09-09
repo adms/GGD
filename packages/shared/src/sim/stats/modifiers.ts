@@ -505,6 +505,8 @@ export interface HookDef {
   evadeChannel?: "basic" | "ability";
   /** Actual moving dash at the instant of the dodge, not a queued input. */
   evadeDuring?: "dash";
+  /** Require positive HP loss or absorbed shield damage in the triggering packet. */
+  damageConnected?: true;
   evadeSource?: "defender" | "thisSource";
   /** Require the positive block grant to be this modifier source. */
   blockSource?: "thisSource";

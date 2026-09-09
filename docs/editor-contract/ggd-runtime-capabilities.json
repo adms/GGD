@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "85f44454",
+  "fingerprint": "0f734afd",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -137,6 +137,7 @@
     "condition",
     "consumeOn",
     "critSource",
+    "damageConnected",
     "damageCrit",
     "damageSource",
     "damageType",
@@ -410,6 +411,7 @@
     "steps",
     "stopDistance",
     "stopOnCasterDeath",
+    "stopOnHit",
     "stopShortUnits",
     "store",
     "strikeReposition",
@@ -883,6 +885,7 @@
     "steps.modifiers.value",
     "stopDistance",
     "stopOnCasterDeath",
+    "stopOnHit",
     "stopShortUnits",
     "store",
     "strikeReposition",
@@ -946,6 +949,7 @@
     "scaleByNearby"
   ],
   "abilityFields": [
+    "allowApproach",
     "augment",
     "castTimeSec",
     "castTimeTier",
@@ -1130,6 +1134,7 @@
   },
   "docSurface": {
     "ability@1": [
+      "allowApproach",
       "augment",
       "castTimeSec",
       "castTimeTier",

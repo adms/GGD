@@ -38,7 +38,7 @@ import { zRestore } from "./restore";
 import { zSpendHealth } from "./spendHealth";
 import { zSpendMana } from "./spendMana";
 import { zInterruptCast } from "./interruptCast";
-import { zDash } from "./dash";
+import { zDash, refine as refine_dash } from "./dash";
 import { zLeap } from "./leap";
 import { zBlink, refine as refine_blink } from "./blink";
 import { zChampionForm } from "./championForm";
@@ -156,6 +156,7 @@ export const EFFECT_REFINERS: Partial<Record<EffectDef["kind"], (e: never, ctx: 
   damage: refine_damage,
   damageLine: refine_damageLine,
   delayed: refine_delayed,
+  dash: refine_dash,
   devour: refine_devour,
   dispel: refine_dispel,
   dot: refine_dot,

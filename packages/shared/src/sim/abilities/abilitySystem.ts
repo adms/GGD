@@ -663,7 +663,7 @@ export function castAbility(
         // ⚠️ 位置是刻意的:**在付出任何成本之前**,和其他每一道閘同一段。
         // 接近期間魔力一點都不扣、冷卻一格都不轉 —— 成本在真的施放的那一 tick
         // 才付,由 castApproachSystem 再走一次這整條驗證階梯。
-        return allowApproach && armCastApproach(world, caster, slot, target.entityId, t, tgt, range, opts.suppressCastCredit)
+        return allowApproach && def.allowApproach !== false && armCastApproach(world, caster, slot, target.entityId, t, tgt, range, opts.suppressCastCredit)
           ? "approaching"
           : "out-of-range";
       }

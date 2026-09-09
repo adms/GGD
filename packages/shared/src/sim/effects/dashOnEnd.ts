@@ -23,9 +23,9 @@
  *
  *   「這個人有一筆待付的 onEnd，而他的 `nav.override` 已經不是**那一次**衝刺了」
  *
- * ⭐ 這讓 S7 **不需要新的 step slot、不動 `DashOverride` 的形狀、不改
- * `MovementSystem` 一行** —— 而它排出來的傷害仍然在**同一 tick** 被減傷、被
- * 護盾吃、被 `recordDamage` 記分、被 `deathSystem` 結算。
+ * S7 原本以終點觀察完成回呼。接觸停止擴充由 `MovementSystem` 在那次
+ * `DashOverride` 記下碰撞目標，這裡再付掉 `onHit`；兩種回呼共用原有 step slot，
+ * 排出的傷害仍在同一 tick 經過減傷、護盾、記分與死亡結算。
  *
  * ⚠️ `onEndOn: "completed"`（只有真的跑完距離才揮）的判準是**走了多遠**，
  * 不是「override 怎麼消失的」：`travelled >= maxDistance − ε`。撞牆停下來的
@@ -50,11 +50,15 @@ import type { Vec2 } from "../math/vec2";
 import type { EffectDef } from "./effect";
 import { runEffects } from "./effectRunner";
 import { len, sub } from "../math/vec2";
+import type { DashOverride } from "../components";
 
 /** 一筆「等這一次衝刺結束就跑」的待付回呼。 */
 export interface DashOnEndPending {
   castInstance?: import("../content/castInstance").CastInstance;
   caster: EntityId;
+  /** Callback belongs to this exact dash, even if another dash replaces it. */
+  override?: DashOverride;
+  onHit?: EffectDef[];
   /** 起跳座標 —— 用來量「真的走了多遠」（`onEndOn: "completed"`）。 */
   from: Vec2;
   /** 這一次衝刺**授權**的距離。 */
@@ -77,11 +81,12 @@ export function dashOnEndQueue(world: SimWorld): DashOnEndPending[] {
 
 /** 「這一刻，那一次衝刺還在跑嗎？」—— 這支系統唯一的判斷。 */
 function stillDashing(world: SimWorld, p: DashOnEndPending): boolean {
+  if (world.health.get(p.caster)?.alive !== true || world.transform.get(p.caster)?.zone !== p.zone) return false;
   const ov = world.nav.get(p.caster)?.override;
   // ⚠️ `kind !== "dash"` 也算結束：被擊退／被拋飛接管的那一刻，那一次衝刺就
   // 不再是它自己了。⛔ 不可以只看 `override != null`，否則一次擊退會讓回呼
   // 永遠掛在佇列裡等一個不會再結束的東西。
-  return ov !== null && ov !== undefined && ov.kind === "dash";
+  return ov !== null && ov !== undefined && ov.kind === "dash" && (p.override === undefined || p.override === ov);
 }
 
 /**
@@ -104,7 +109,14 @@ export function dashOnEndSystem(world: SimWorld): void {
     if (!p.onEndWhenDead && world.health.get(p.caster)?.alive !== true) continue;
 
     const t = world.transform.get(p.caster);
-    if (!t) continue;
+    if (!t || t.zone !== p.zone) continue;
+
+    const hit = p.override?.hitTarget;
+    if (hit !== undefined && p.onHit && t.zone === p.zone && world.health.get(hit)?.alive === true && world.transform.get(hit)?.zone === p.zone) {
+      runEffects(p.onHit, { castInstance: p.castInstance, world, caster: p.caster, rank: p.rank,
+        targets: [hit], point: { ...t.pos }, direction: { ...p.override!.dir }, origin: p.origin,
+        ...(p.abilitySlot !== undefined ? { abilitySlot: p.abilitySlot } : {}), rng: world.rng });
+    }
 
     if (p.onEndOn === "completed") {
       // 走了多遠 —— 撞牆停下來的衝刺走得比較短（檔頭②）。

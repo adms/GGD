@@ -731,6 +731,7 @@ export const zAbilityDef = z
     cooldown: z.array(z.number().min(0)).min(1),
     manaCost: z.array(z.number().min(0)).min(1),
     requiredSummonSlot: zCastableSlot.optional().describe("施法前必須有自己由指定槽召喚的存活同區身體；缺少時不支付資源或冷卻。"),
+    allowApproach: z.boolean().optional().describe("是否允許超距時先自動接近；false 會立即拒絕且不扣費，省略沿用既有接近規則。"),
     requiredTargetStatus: z.object({
       statusId: zRef<StatusId>("status-effects", { soft: true }),
       appliedBy: z.enum(["self"]).optional(),

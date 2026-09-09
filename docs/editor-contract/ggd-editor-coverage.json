@@ -199,9 +199,13 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "d089ad3a7edf",
-  "capabilityFingerprint": "85f44454",
+  "fingerprint": "4ea0387fa1b4",
+  "capabilityFingerprint": "0f734afd",
   "required": [
+    {
+      "group": "abilityField",
+      "name": "allowApproach"
+    },
     {
       "group": "abilityField",
       "name": "augment"
@@ -23127,6 +23131,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "stopOnHit"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "stopShortUnits"
     },
     {
@@ -23588,6 +23596,10 @@
     {
       "group": "effectField",
       "name": "stopOnCasterDeath"
+    },
+    {
+      "group": "effectField",
+      "name": "stopOnHit"
     },
     {
       "group": "effectField",
@@ -24116,6 +24128,10 @@
     {
       "group": "hookField",
       "name": "critSource"
+    },
+    {
+      "group": "hookField",
+      "name": "damageConnected"
     },
     {
       "group": "hookField",
@@ -25279,15 +25295,15 @@
   ],
   "counts": {
     "effectKind": 51,
-    "effectField": 287,
+    "effectField": 288,
     "hookEvent": 38,
-    "hookField": 27,
-    "abilityField": 42,
+    "hookField": 28,
+    "abilityField": 43,
     "auraField": 8,
     "templateFamily": 43,
     "conditionLeaf": 11,
     "conditionLeafField": 20,
-    "effectFieldPath": 486,
+    "effectFieldPath": 487,
     "vfxField": 91,
     "modelField": 46,
     "projectileField": 15,
@@ -25295,7 +25311,7 @@
     "vfxScriptField": 8,
     "configField": 4023,
     "_notRequired": 15,
-    "_total": 5205,
+    "_total": 5209,
     "_ownerOnly": 39
   }
 }

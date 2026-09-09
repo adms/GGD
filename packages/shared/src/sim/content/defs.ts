@@ -201,6 +201,8 @@ export interface AbilityDef {
   requiredSummonSlot?: import("../intents").CastableSlot;
   /** Target prerequisite at cast-begin; checked before approach/payment, never consumed. */
   requiredTargetStatus?: { statusId: StatusId; appliedBy?: "self"; minStacks?: number };
+  /** Optional per-ability opt-out of the normal out-of-range approach order. */
+  allowApproach?: boolean;
   statusCost?: { statusId: StatusId; count: number | "all"; appliedBy?: "self"; subject?: "self" | "target" };
   /**
    * ⚠️ 可以是 `Number.POSITIVE_INFINITY` —— 「無上限施法距離」（GH#602）。

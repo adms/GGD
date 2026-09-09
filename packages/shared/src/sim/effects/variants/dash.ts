@@ -11,6 +11,10 @@ export interface DashVariant {
   mode: "forward" | "toPoint";
   speed: number;
   maxDistance: number;
+  /** Stop at the first swept enemy-body contact; absent preserves ordinary dash. */
+  stopOnHit?: "enemy" | "enemyChampion";
+  /** Applied once to that contacted enemy, never on an empty or wall-only stop. */
+  onHit?: EffectDef[];
   /**
    * ⭐ S7 —— **衝刺結束的那一刻**才跑的那一段（52-04「向前衝刺 400 距離後
    * 揮出」）。缺席 = 沒有回呼 = 今天的行為，一個 tick 都不差。

@@ -13,6 +13,9 @@ z
     kind: z.literal("dash"),
     ...EFFECT_COMMON_SHAPE,
     mode: z.enum(["forward", "toPoint"]),
+    stopOnHit: z.enum(["enemy", "enemyChampion"]).optional().describe("掃過第一個合法敵方身體即停；可限英雄。先受地形阻擋，不穿牆取目標。省略維持一般衝刺。"),
+    onHit: z.array(z.lazy(() => zEffectDef)).min(1).max(DASH_ON_END_MAX_EFFECTS).optional()
+      .describe("只對衝刺實際接觸的第一個敵人結算一次；空放或只撞牆不執行。須搭配 stopOnHit。"),
     /**
      * u/s。⚠️ 這個上界是 **MIS-PARSE 護欄**（w3x 的 1000 貼進來），⛔ 不是安全上限 ——
      * 真正的天花板是註冊期推導的 `maxSpeed`（`content/displacementTiers.ts`），
@@ -86,3 +89,7 @@ z
       .describe("衝刺途中陣亡還要不要跑結束效果。留空＝不跑。"),
   })
   .strict();
+
+export const refine = (dash: z.infer<typeof zDash>, ctx: z.RefinementCtx): void => {
+  if (dash.onHit && !dash.stopOnHit) ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["onHit"], message: "衝刺 onHit 必須指定 stopOnHit。" });
+};

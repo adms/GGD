@@ -1,0 +1,626 @@
+{
+  "schema": "ggd-community-design-refinement@1",
+  "version": 1,
+  "projectId": "community-review-28-20260907",
+  "sourceSha256": "fa51eba24d608b6ee090706ecea4afd14f5ab0c88d79377ce70afcaf0dd922e0",
+  "slots": {
+    "PASSIVE": {
+      "products": [
+        {
+          "instanceId": "engagement",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onDamageDealt",
+                  "victim": "enemy",
+                  "damageSource": "basic",
+                  "damageConnected": true,
+                  "target": "event",
+                  "effects": [
+                    {
+                      "kind": "applyBuff",
+                      "statusId": "community-review-28-20260907.opening",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-28-20260907.opening",
+                      "maxStacks": 1,
+                      "duration": 2,
+                      "modifiers": [],
+                      "dispellable": false,
+                      "condition": {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-28-20260907.combat",
+                          "appliedBy": "self"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "consumeStatus",
+                      "shape": "single",
+                      "statusId": "community-review-28-20260907.opening",
+                      "appliedBy": "self",
+                      "count": 1,
+                      "condition": {
+                        "all": [
+                          {
+                            "kind": "distance",
+                            "op": "<=",
+                            "value": 3
+                          },
+                          {
+                            "not": {
+                              "kind": "status",
+                              "subject": "target",
+                              "statusId": "community-review-28-20260907.opener-lock",
+                              "appliedBy": "self"
+                            }
+                          }
+                        ]
+                      },
+                      "onConsumed": [
+                        {
+                          "kind": "applyBuff",
+                          "statusId": "community-review-28-20260907.opener-lock",
+                          "sourceScope": "caster",
+                          "stackKey": "community-review-28-20260907.opener-lock",
+                          "maxStacks": 1,
+                          "duration": 8,
+                          "modifiers": [],
+                          "dispellable": false
+                        },
+                        {
+                          "kind": "damage",
+                          "damageType": "physical",
+                          "amount": {
+                            "damageTier": "極小",
+                            "ratios": []
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "statusId": "community-review-28-20260907.combat",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-28-20260907.combat",
+                      "maxStacks": 1,
+                      "duration": 4,
+                      "modifiers": [],
+                      "dispellable": false
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "statusId": "community-review-28-20260907.recent-hit",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-28-20260907.recent-hit",
+                      "maxStacks": 1,
+                      "duration": 2,
+                      "modifiers": [],
+                      "dispellable": false
+                    }
+                  ]
+                },
+                {
+                  "on": "onDamageTaken",
+                  "victim": "enemy",
+                  "damageSource": "basic",
+                  "damageConnected": true,
+                  "target": "event",
+                  "effects": [
+                    {
+                      "kind": "applyBuff",
+                      "statusId": "community-review-28-20260907.opening",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-28-20260907.opening",
+                      "maxStacks": 1,
+                      "duration": 2,
+                      "modifiers": [],
+                      "dispellable": false,
+                      "condition": {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-28-20260907.combat",
+                          "appliedBy": "self"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "statusId": "community-review-28-20260907.combat",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-28-20260907.combat",
+                      "maxStacks": 1,
+                      "duration": 4,
+                      "modifiers": [],
+                      "dispellable": false
+                    }
+                  ]
+                },
+                {
+                  "on": "onDamageDealt",
+                  "victim": "enemy",
+                  "damageSource": "ability",
+                  "damageConnected": true,
+                  "target": "event",
+                  "effects": [
+                    {
+                      "kind": "applyBuff",
+                      "statusId": "community-review-28-20260907.opening",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-28-20260907.opening",
+                      "maxStacks": 1,
+                      "duration": 2,
+                      "modifiers": [],
+                      "dispellable": false,
+                      "condition": {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-28-20260907.combat",
+                          "appliedBy": "self"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "consumeStatus",
+                      "shape": "single",
+                      "statusId": "community-review-28-20260907.opening",
+                      "appliedBy": "self",
+                      "count": 1,
+                      "condition": {
+                        "all": [
+                          {
+                            "kind": "distance",
+                            "op": "<=",
+                            "value": 3
+                          },
+                          {
+                            "not": {
+                              "kind": "status",
+                              "subject": "target",
+                              "statusId": "community-review-28-20260907.opener-lock",
+                              "appliedBy": "self"
+                            }
+                          }
+                        ]
+                      },
+                      "onConsumed": [
+                        {
+                          "kind": "applyBuff",
+                          "statusId": "community-review-28-20260907.opener-lock",
+                          "sourceScope": "caster",
+                          "stackKey": "community-review-28-20260907.opener-lock",
+                          "maxStacks": 1,
+                          "duration": 8,
+                          "modifiers": [],
+                          "dispellable": false
+                        },
+                        {
+                          "kind": "damage",
+                          "damageType": "physical",
+                          "amount": {
+                            "damageTier": "極小",
+                            "ratios": []
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "statusId": "community-review-28-20260907.combat",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-28-20260907.combat",
+                      "maxStacks": 1,
+                      "duration": 4,
+                      "modifiers": [],
+                      "dispellable": false
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "statusId": "community-review-28-20260907.recent-hit",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-28-20260907.recent-hit",
+                      "maxStacks": 1,
+                      "duration": 2,
+                      "modifiers": [],
+                      "dispellable": false
+                    }
+                  ]
+                },
+                {
+                  "on": "onDamageTaken",
+                  "victim": "enemy",
+                  "damageSource": "ability",
+                  "damageConnected": true,
+                  "target": "event",
+                  "effects": [
+                    {
+                      "kind": "applyBuff",
+                      "statusId": "community-review-28-20260907.opening",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-28-20260907.opening",
+                      "maxStacks": 1,
+                      "duration": 2,
+                      "modifiers": [],
+                      "dispellable": false,
+                      "condition": {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-28-20260907.combat",
+                          "appliedBy": "self"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "statusId": "community-review-28-20260907.combat",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-28-20260907.combat",
+                      "maxStacks": 1,
+                      "duration": 4,
+                      "modifiers": [],
+                      "dispellable": false
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "每個敵人分開記交鋒：有效普攻／技能扣血或護盾開始二秒先手窗口，首個三格內命中追加一次極小物理傷害；同目標八秒冷卻。交鋒四秒無有效互動才重新開始，持續纏鬥不重開窗口；自己命中另留二秒追擊標記。不同施法者互不借用標記；零值、免疫與普通觸發傷害不建立交鋒。\n【原設計】對剛進入交鋒的目標，首次近戰命中獲得有限強化；同一目標有冷卻。",
+      "note": "每個敵人分開記交鋒：有效普攻／技能扣血或護盾開始二秒先手窗口，首個三格內命中追加一次極小物理傷害；同目標八秒冷卻。交鋒四秒無有效互動才重新開始，持續纏鬥不重開窗口；自己命中另留二秒追擊標記。不同施法者互不借用標記；零值、免疫與普通觸發傷害不建立交鋒。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeTier",
+        "castTimeSec",
+        "radiusTier",
+        "radius",
+        "rangeTier",
+        "range",
+        "manaCostTier",
+        "manaCost",
+        "cooldownTier",
+        "cooldown"
+      ],
+      "abilityOverrides": {}
+    },
+    "Q": {
+      "products": [
+        {
+          "instanceId": "q-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0.15,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "dash",
+                  "mode": "forward",
+                  "speed": 8,
+                  "maxDistance": 1,
+                  "onEnd": [
+                    {
+                      "kind": "damageArea",
+                      "fromCaster": true,
+                      "radius": 2,
+                      "arcHalfAngleCos": 0.3,
+                      "amount": {
+                        "damageTier": "小",
+                        "ratios": []
+                      },
+                      "damageType": "physical"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "向輸入方向踏進一格後，才從實際終點揮一次前方近身弧斬；貼地移動，敵人逐個單次傷害，牆前停止後從實際終點判定。專用劍擊動作仍待畫面驗收。\n【原設計】向前踏步斬擊。",
+      "note": "向輸入方向踏進一格後，才從實際終點揮一次前方近身弧斬；貼地移動，敵人逐個單次傷害，牆前停止後從實際終點判定。專用劍擊動作仍待畫面驗收。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeTier",
+        "castTimeSec",
+        "radiusTier",
+        "radius",
+        "rangeTier",
+        "range",
+        "manaCostTier",
+        "manaCost",
+        "cooldownTier",
+        "cooldown"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0.15,
+        "cooldown": [
+          5,
+          5,
+          5,
+          5
+        ],
+        "manaCost": [
+          40,
+          40,
+          40,
+          40
+        ],
+        "range": 3
+      }
+    },
+    "W": {
+      "products": [
+        {
+          "instanceId": "w-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "applyTo": "self",
+                  "stackKey": "community-review-28-20260907.guard",
+                  "maxStacks": 1,
+                  "duration": 3,
+                  "modifiers": [
+                    {
+                      "stat": "armor",
+                      "op": "flat",
+                      "value": 30
+                    },
+                    {
+                      "stat": "mr",
+                      "op": "flat",
+                      "value": 30
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "三秒護甲與魔抗各加三十，使用固定堆疊鍵至多一層，到期還原；增加物理／魔法承傷能力，不是永久增益或無限護盾。\n【原設計】短時間提高承傷能力，無法無限疊加。",
+      "note": "三秒護甲與魔抗各加三十，使用固定堆疊鍵至多一層，到期還原；增加物理／魔法承傷能力，不是永久增益或無限護盾。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeTier",
+        "castTimeSec",
+        "radiusTier",
+        "radius",
+        "rangeTier",
+        "range",
+        "manaCostTier",
+        "manaCost",
+        "cooldownTier",
+        "cooldown"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0,
+        "cooldown": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "manaCost": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "range": 0
+      }
+    },
+    "E": {
+      "products": [
+        {
+          "instanceId": "e-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "dash",
+                  "mode": "forward",
+                  "speed": 10,
+                  "maxDistance": 3,
+                  "stopOnHit": "enemy"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "向輸入方向短距離貼地接近；地形或第一個敵人攔截即停，不附帶原模板的傷害、擊飛或推移。保留 GGD 既有已開始衝刺的控制規則。\n【原設計】短距離接近，保留可被攔截的路徑。",
+      "note": "向輸入方向短距離貼地接近；地形或第一個敵人攔截即停，不附帶原模板的傷害、擊飛或推移。保留 GGD 既有已開始衝刺的控制規則。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeTier",
+        "castTimeSec",
+        "radiusTier",
+        "radius",
+        "rangeTier",
+        "range",
+        "manaCostTier",
+        "manaCost",
+        "cooldownTier",
+        "cooldown"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0,
+        "cooldown": [
+          6,
+          6,
+          6,
+          6
+        ],
+        "manaCost": [
+          40,
+          40,
+          40,
+          40
+        ],
+        "range": 3
+      }
+    },
+    "R": {
+      "products": [
+        {
+          "instanceId": "r-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0.55,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "dash",
+                  "mode": "forward",
+                  "speed": 22,
+                  "maxDistance": 8,
+                  "stopOnHit": "enemy",
+                  "onHit": [
+                    {
+                      "kind": "damage",
+                      "damageType": "physical",
+                      "amount": {
+                        "damageTier": "大",
+                        "ratios": []
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "0.55 秒可被打斷的明確起手後，沿輸入方向最多八格高速直線衝刺（速度仍依 GGD 位移上限換算，當下為每秒十六格），第一個合法敵方身體接觸點停止並單次結算大級距傷害；地形優先，空放或只撞牆不產生命中傷害。光之太刀專用細亮線與動作仍待畫面驗收。\n【原設計】有明確起手的高速直線斬擊，命中後停在合法位置。",
+      "note": "0.55 秒可被打斷的明確起手後，沿輸入方向最多八格高速直線衝刺（速度仍依 GGD 位移上限換算，當下為每秒十六格），第一個合法敵方身體接觸點停止並單次結算大級距傷害；地形優先，空放或只撞牆不產生命中傷害。光之太刀專用細亮線與動作仍待畫面驗收。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeTier",
+        "castTimeSec",
+        "radiusTier",
+        "radius",
+        "rangeTier",
+        "range",
+        "manaCostTier",
+        "manaCost",
+        "cooldownTier",
+        "cooldown"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0.55,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          95,
+          95,
+          95,
+          95
+        ],
+        "range": 8
+      }
+    },
+    "EX": {
+      "products": [
+        {
+          "instanceId": "ex-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.12,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "小",
+                    "ratios": []
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "指定自己二秒內有效命中的近身敵人，消耗該次追擊標記追加一次小級距劍擊。超距直接拒絕，不自動接近，不扣魔力、冷卻或目標標記；別來源／過期／非法目標不能施放。\n【原設計】對剛被自己擊中的近身目標進行一次額外追擊，超距時不能使用。",
+      "note": "指定自己二秒內有效命中的近身敵人，消耗該次追擊標記追加一次小級距劍擊。超距直接拒絕，不自動接近，不扣魔力、冷卻或目標標記；別來源／過期／非法目標不能施放。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeTier",
+        "castTimeSec",
+        "radiusTier",
+        "radius",
+        "rangeTier",
+        "range",
+        "manaCostTier",
+        "manaCost",
+        "cooldownTier",
+        "cooldown"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0.12,
+        "cooldown": [
+          7,
+          7,
+          7,
+          7
+        ],
+        "manaCost": [
+          50,
+          50,
+          50,
+          50
+        ],
+        "range": 3,
+        "allowApproach": false,
+        "requiredTargetStatus": {
+          "statusId": "community-review-28-20260907.recent-hit",
+          "appliedBy": "self"
+        },
+        "statusCost": {
+          "subject": "target",
+          "statusId": "community-review-28-20260907.recent-hit",
+          "count": 1,
+          "appliedBy": "self"
+        }
+      }
+    }
+  }
+}

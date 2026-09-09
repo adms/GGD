@@ -75,6 +75,9 @@ export interface DashOverride {
   dir: Vec2;
   speed: number;
   remaining: number;
+  stopOnHit?: "enemy" | "enemyChampion";
+  /** Runtime-only contact captured by movement, consumed by this dash's callback. */
+  hitTarget?: EntityId;
   /**
    * PROVENANCE — was this displacement **authored by an ability**, or is it the
    * ambient shove every landed hit produces? ABSENT = false = damage-driven,
