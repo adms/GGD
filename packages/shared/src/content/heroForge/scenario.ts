@@ -14,7 +14,7 @@ import {
   type SimEvent,
 } from "../../sim";
 import { abilityInstanceFor } from "../../sim/abilities/innateActive";
-import { learnEx } from "../../sim/abilities/abilitySystem";
+import { learnEx, resolveAbilityRange } from "../../sim/abilities/abilitySystem";
 import { isPassiveOnly } from "../../sim/abilities/abilityPassives";
 import { asSeatId, asTeamId, type EntityId, type StatusId } from "../../ids";
 import { activeRegistryContext, captureRegistryContext, extendRegistryContext, withRegistryContext } from "../../sim/content/registryContext";
@@ -99,6 +99,21 @@ function target(ability: AbilityDef, foe: EntityId, ally: EntityId, point: { x: 
   }
 }
 
+/** Default smoke scenes put a non-approaching targeted skill within its real
+ * cast range. Explicit designer positions are never changed. This only sets
+ * initial geometry; the game still validates targets, costs and every input. */
+function placeDefaultCastTarget(world: SimWorld, caster: EntityId, victim: EntityId, ability: AbilityDef): void {
+  if (ability.castType !== "targeted" || ability.allowApproach !== false || ability.range <= 0) return;
+  const a = world.transform.get(caster)!, b = world.transform.get(victim)!;
+  const dx = b.pos.x - a.pos.x, dz = b.pos.z - a.pos.z;
+  const length = Math.sqrt(dx * dx + dz * dz), range = resolveAbilityRange(world, ability.range);
+  if (length > range && range > 0) {
+    const scale = range * .8 / length;
+    b.pos = { x: a.pos.x + dx * scale, z: a.pos.z + dz * scale };
+    world.rebuildGrid();
+  }
+}
+
 /**
  * One deterministic scenario seam shared by Editor preview and the main
  * importer. A package receipt is evidence only; import acceptance reruns this
@@ -166,6 +181,7 @@ export function runHeroAbilityScenario(
       runEffects([{ kind: "applyStatus", statusId: statusId as StatusId, duration: ticks * world.dt }], { world, rng: world.rng, caster: entity, targets: [entity], rank: 1, origin: "hero-scenario-setup" });
     }
   }
+  if (!setup) placeDefaultCastTarget(world, caster, targetEntity, ability);
   // A single-slot scene may seed an already installed resource counter. The
   // complete kit below never does: earning the resource is tested in sequence.
   // Never manufacture a missing counter or override its declared capacity.
@@ -375,6 +391,8 @@ export function runHeroKitScenario(
       hp.hp = hp.maxHp;
       hp.mana = hp.maxMana;
     }
+    const initialTarget = abilities[slot].targetsEnemies === false ? ally : foe;
+    placeDefaultCastTarget(world, caster, initialTarget, abilities[slot]);
     const counts: Record<string, number> = {};
     let acceptedCast = false;
     let terminalRejection = false;

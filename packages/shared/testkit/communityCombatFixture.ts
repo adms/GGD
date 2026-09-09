@@ -3,8 +3,8 @@ import { applyCommunityDesignRefinement } from "../src/content/heroForge/communi
 import { compileGeneratedHeroDraft, generateHeroDraft } from "../src/content/heroForge/generator";
 import type { TemplateDoc } from "../src/content/schema/template";
 import { SimWorld } from "../src/sim/SimWorld";
-import { Abilities, registerChampion } from "../src/sim/content/registry";
-import type { AbilityDef, ChampionDef } from "../src/sim/content/defs";
+import { Abilities, Projectiles, registerChampion } from "../src/sim/content/registry";
+import type { AbilityDef, ChampionDef, ProjectileDef } from "../src/sim/content/defs";
 import { spawnChampion } from "../src/sim/spawnChampion";
 import { SKELETON_ARENA } from "../src/sim/world/ArenaDef";
 import { learnEx } from "../src/sim/abilities/abilitySystem";
@@ -20,6 +20,13 @@ export function communityCombatFixture(number: string, rank = 1) {
     templates, [...source.catalog.documents].filter(([key]) => key.startsWith("config/")).map(([, doc]) => doc));
   if (!result.ok) throw new Error(JSON.stringify(result.failures));
   const compiled = result.draft;
+  // Batch fixtures use the same shipped projectile documents as Editor/import.
+  for (const [key, doc] of source.catalog.documents) {
+    if (key.startsWith("projectiles/")) {
+      const projectile = doc as unknown as ProjectileDef;
+      Projectiles.register(projectile.id, projectile);
+    }
+  }
   for (const ability of Object.values(compiled.abilityDrafts)) Abilities.register(ability.id, ability as unknown as AbilityDef);
   const champion = compiled.champion as unknown as ChampionDef;
   registerChampion(champion, { overrideAbilities: true });

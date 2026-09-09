@@ -88,12 +88,14 @@ function enforceExclusiveGroup(
   group: string,
   onExisting: "replace" | "reject" | undefined,
   keepId: string,
+  applierId?: EntityId,
 ): boolean {
   const sc = world.stats.get(target);
   if (!sc) return true;
   const held = sc.sources.filter(
     (s) =>
       s.exclusiveGroup === group &&
+      (applierId === undefined || s.applierId === applierId) &&
       s.id !== keepId &&
       (s.expiresAtTick === undefined || s.expiresAtTick > world.tick),
   );
@@ -230,7 +232,8 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
       // `statRecomputeSystem` 在那個縫裡就會把兩份乘起來一次。
       if (
         e.exclusiveGroup !== undefined &&
-        !enforceExclusiveGroup(world, target, e.exclusiveGroup, e.exclusiveOnExisting, selfId)
+        !enforceExclusiveGroup(world, target, e.exclusiveGroup, e.exclusiveOnExisting, selfId,
+          e.sourceScope === "caster" ? ctx.caster : undefined)
       ) {
         continue; // `reject`：同組已經有一份，這一發整個不生效。
       }
