@@ -15,6 +15,17 @@ GUARD = {'minAvailableGiB': 6, 'maxSwapGrowthGiB': 2, 'maxBatteryDropPoints': 2}
 
 
 class GuardTests(unittest.TestCase):
+    def test_each_full_probe_leg_starts_the_same_gradient_phase_guard(self):
+        events=[];row={'id':'whole:HERO','totalTokens':29995}
+        def progress(name,**fields):events.append({'phase':name,**fields})
+        with patch.object(trainer.time,'monotonic',side_effect=[0,78]):
+            self.assertEqual(trainer.begin_gradient_probe(progress,row,'uncached-reference'),0)
+            self.assertEqual(trainer.begin_gradient_probe(progress,row,'cached'),78)
+        self.assertEqual([r['comparison'] for r in events],['uncached-reference','cached'])
+        self.assertTrue(all(r['phase']=='gradient-probe' and r['tokens']==29995 for r in events))
+        with self.assertRaisesRegex(AssertionError,'UNKNOWN_PROBE_LEG'):
+            trainer.begin_gradient_probe(progress,row,'unbounded')
+
     def test_sixteen_hour_authorization_is_explicit_and_does_not_change_defaults(self):
         self.assertEqual(trainer.time_authorization(None),(7200,None))
         valid={'schema':'ggd-distillation-time-authorization@1','maximumSeconds':57600,'epochs':1,

@@ -122,12 +122,6 @@ def time_authorization(path):
     return approval['maximumSeconds'],{'sha256':digest(path),'record':approval}
 
 
-def begin_gradient_probe(progress,row,comparison):
-    assert comparison in ['uncached-reference','cached','uncached'],'UNKNOWN_PROBE_LEG'
-    progress('gradient-probe',id=row['id'],tokens=row['totalTokens'],comparison=comparison)
-    return time.monotonic()
-
-
 def prepare(args):
     out, data = args.out.resolve(), args.data.resolve()
     assert not out.exists(), 'OUTPUT_ALREADY_EXISTS'
@@ -366,16 +360,13 @@ def worker(directory, phase, token):
         for row in sorted(train, key=lambda row: row['totalTokens']):
             if row['id'] not in p['probeIds']:
                 continue
-            reference_started=begin_gradient_probe(progress,row,'uncached-reference' if caches else 'uncached')
+            progress('gradient-probe', id=row['id'], tokens=row['totalTokens'])
             mx.reset_peak_memory()
             if caches:
                 reference_prefix=prefix_for(row,uncached=True)
                 reference_loss,reference_grads=gradient_fn(model,row,False,reference_prefix)
                 mx.eval(reference_loss,reference_grads)
-            # Each comparison leg is one full forward/backward operation.
-            # Apply the unchanged 120s limit separately, not to their sum.
-            started = begin_gradient_probe(progress,row,'cached') if caches else reference_started
-            reference_seconds=started-reference_started if caches else None
+            started = time.monotonic()
             prefix = prefix_for(row)
             loss, grads = gradient_fn(model, row, False, prefix)
             mx.eval(loss, grads)
@@ -395,8 +386,7 @@ def worker(directory, phase, token):
                 assert item['passed'],'PREFIX_CACHE_PARITY_FAILED'
                 del reference_prefix,reference_loss,reference_grads,ref,a,b
             probes.append({'id': row['id'], 'format': row['format'], 'totalTokens': row['totalTokens'], 'outputTokens': row['outputTokens'],
-                           'loss': loss.item(), 'seconds': elapsed, 'uncachedReferenceSeconds':reference_seconds,
-                           'peakMetalBytes': mx.get_peak_memory()})
+                           'loss': loss.item(), 'seconds': elapsed, 'peakMetalBytes': mx.get_peak_memory()})
             atomic(work / 'probe-trace.json', probes)
             del loss, grads, flat, prefix
             gc.collect(); mx.clear_cache()
