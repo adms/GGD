@@ -1,0 +1,294 @@
+{
+  "schema": "ggd-gintoki-verification@1",
+  "issue": 1132,
+  "sourceCommit": "4822d5ff5560ad6ba07f212d6b0715f7fdab9820",
+  "refinementVersion": 1,
+  "refinementSha256": "092abbe0c8946cd80c97db58b38db8bb7f09fb497e2c85e51c386548b6f82629",
+  "changes": [
+    "Out-of-combat supply is a capped named resource; W pays at accepted cast start. Real attack attempts, combat and accepted casts delay recharge, including missed or canceled attempts.",
+    "Q damages one forward arc centered on the caster, with actual direction and enemy geometry.",
+    "W heals after one second only if no movement or connected hit; shields and blocks do not hide a hit. Interrupted casts retain spent supply.",
+    "E only awards a two-second one-use counter after its own successful physical/magic parry; other shields/blocks cannot award it. The next real basic consumes it.",
+    "R grants temporary melee damage and chase speed and restores them after four seconds; no permanent form.",
+    "EX interrupts a legal enemy active interruptible wind-up without stun, refund or undoing resolved effects. Control immunity, protected casts and zone/target boundaries remain effective.",
+    "Editor descriptions, schema-driven forms and capability lists include the new generic fields and interrupt kind. Existing trap uses its real radius in the shape taxonomy guard."
+  ],
+  "checks": {
+    "gintoki": {
+      "tests": 28,
+      "exitCode": 0
+    },
+    "interruptionRegression": {
+      "tests": 37,
+      "files": 4,
+      "exitCode": 0
+    },
+    "blockAndContractsRegression": {
+      "tests": 125,
+      "files": 8,
+      "exitCode": 0,
+      "note": "Contained 24 Gintoki cases before four additional interrupt target boundary cases."
+    },
+    "communityRegression": {
+      "tests": 245,
+      "files": 16,
+      "exitCode": 0,
+      "note": "All community refinement cases at that stage, including Azazel reversal. Final immutable batch is recorded separately."
+    },
+    "editorFormsAndPreview": {
+      "tests": 37,
+      "files": 6,
+      "exitCode": 0
+    },
+    "typechecks": {
+      "shared": 0,
+      "editor": 0,
+      "client": 0,
+      "gameServer": 0
+    }
+  },
+  "initialFailures": [
+    "Fixture combat was disabled; enabled real arena combat with inert practice seats, corrected test entityId/teamId fields and expired mark reads.",
+    "Interrupted W could regain supply immediately because onAbilityCast only occurs after completion; fixed passive using the actual accepted recentCast ledger.",
+    "Existing trap shape guard omitted its real radius geometry; added it to the validated own-geometry map, not the legacy exemption.",
+    "Far EX correctly enters approaching without spending; corrected the test expectation.",
+    "Editor exhaustive preview rejected the newly added effect; implemented its live summary and capability/form registration, then typecheck and 37 UI tests passed."
+  ],
+  "mutations": [
+    {
+      "mutation": "own-block",
+      "file": "packages/shared/src/sim/effects/hooks.ts",
+      "from": "(hook.blockSource === \"thisSource\" && !incoming.blockSourceIds.includes(src.id))",
+      "to": "(false)",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/gintoki.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "shield absorption, absent block context"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "0192f31ef2bbb0162e2100baeb771209ec3cb258634ffd3b4a411e27339e7aa3"
+    },
+    {
+      "mutation": "drink-hit",
+      "file": "packages/shared/src/sim/systems/CastResolveSystem.ts",
+      "from": "const hit = def.interruptOn === \"damageOrMove\" && cast.hitSinceStart === true;",
+      "to": "const hit = false;",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/gintoki.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "shield-absorbed hit"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "8a876b4486d3965d7f0bebddc5dbb3f2f9061a00ae0f1dea4a0fba48ccef46eb"
+    },
+    {
+      "mutation": "drink-move",
+      "file": "packages/shared/src/sim/systems/CastResolveSystem.ts",
+      "from": "(pos.x !== cast.posAtStart.x || pos.z !== cast.posAtStart.z);",
+      "to": "false;",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/gintoki.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "real movement"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "72251e051d4e70ede87df2ff52cbe6b32567625a56aa82df4d097f60b86fd3d4"
+    },
+    {
+      "mutation": "front-arc",
+      "file": "packages/shared/src/sim/effects/damageArea.ts",
+      "from": "if (e.arcHalfAngleCos !== undefined) {",
+      "to": "if (false && e.arcHalfAngleCos !== undefined) {",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/gintoki.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "single forward arc"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "73c5a93031aa2bb6742678bad328be7e3434e3f2bc86c3ef18cc7edbd9878993"
+    },
+    {
+      "mutation": "protected-cast",
+      "file": "packages/shared/src/sim/effects/interruptCast.ts",
+      "from": " || Abilities.get(cast.abilityId).interruptible === false",
+      "to": "",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/gintoki.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "protected casts"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "d5e58c0fda119d99190871720f0fde734e7a6d13f004e9b093b05be08d011fb0"
+    }
+  ],
+  "handoff": {
+    "changedProjects": [
+      "23.hero-project.json"
+    ],
+    "otherProjectsByteIdentical": 36,
+    "originalRecipesByteIdentical": 37,
+    "indexByteIdentical": true,
+    "sourceDesignBriefPresentationUnchanged": true,
+    "revisionBefore": 12,
+    "revisionAfter": 13,
+    "modelSha256": "f9c77d0749ae3cb6c5341c9cd01bbf117d52b14158ddc06007b93b90875e7bd2",
+    "generatedAudit": 45
+  },
+  "coverage": {
+    "mappedSlots": 45,
+    "unmappedSlots": 177,
+    "genericOnAttackPassives": 22
+  },
+  "assetReview": {
+    "entry": "../ASSET_LIBRARIES.md",
+    "query": "python3 ../GGD-Asset-Library/query.py 坂田 --pending",
+    "nativeCandidate": "300heroes:137",
+    "nativeCandidateIdentity": "坂田银时 / 銀魂 / Name_gin",
+    "nativeCandidateReadiness": "native_and_static_preview; pending standardization; rigged GLB and six-state bindings not verified",
+    "nativeCandidateImported": false,
+    "currentModelCharacter": "奴良陸生",
+    "currentModelSourceWork": "妖怪少爺／滑頭鬼之孫",
+    "currentModelRelationship": "style-proxy",
+    "modelChanged": false,
+    "limitations": [
+      "White hair, kimono and sword only provide an authorized style proxy; long hair, colors and metal blade differ.",
+      "Wooden sword, strawberry milk, White Yaksha presentation, expression/comic art and dedicated sounds remain unverified.",
+      "Standard authored slash primitives are candidates, not proof of original art adoption."
+    ]
+  },
+  "originalDesignAcceptance": "incomplete",
+  "visualAcceptance": "unverified",
+  "currentServiceZip": "not-built",
+  "formalPublication": false,
+  "logs": {
+    "gintoki-client-typecheck.log": {
+      "sha256": "39d946f6b36b6e4e7de7bfbe2267744c75dc2daf57912304bbcdcd88a0cc130d"
+    },
+    "gintoki-community-regression.log": {
+      "sha256": "6b97374253316adb945e1f2826bcea0c232ec2d287f692e466d0768ea9092977"
+    },
+    "gintoki-editor-contract.log": {
+      "sha256": "0dc5b7f55402118e3c864034d7cb4c6a01057bc7b49156daea05dae017a6d099"
+    },
+    "gintoki-editor-typecheck-02.log": {
+      "sha256": "486eafd3c0debbbff5ae7dddb4aa8823f853e470eff3bacbda032617862caca2"
+    },
+    "gintoki-editor-typecheck.log": {
+      "sha256": "f321dc469b2733d0b36abd2641c00574ec1e7fcb8f1a53323a41d8a806fb918d"
+    },
+    "gintoki-game-server-typecheck.log": {
+      "sha256": "b05c3d89729ac8d5380fe460caa7c9227683cd32eda0fd3fbdcddaedd946d715"
+    },
+    "gintoki-gen-bricks-build.log": {
+      "sha256": "b2ddf01b4de85ebd52d0fd38707f9ea811eb5b7e50a23e24337fedce0bc6f02e"
+    },
+    "gintoki-gen-caps-export.log": {
+      "sha256": "48959f93cd32c11e7ac933c05a614e62e6b8b57fa6027b9d0c907f0a46744a24"
+    },
+    "gintoki-gen-contract-numbers.log": {
+      "sha256": "31f73e270f0b7e61eec6f0d6e7f0cb42b4aaf38b24733226f0b7d0478c9ba41e"
+    },
+    "gintoki-gen-decor-build.log": {
+      "sha256": "30f38a8b028e7a4a4b35a00121072ff551e1dcb0a34aad94a23ec0469bc76032"
+    },
+    "gintoki-gen-editorcov-build.log": {
+      "sha256": "ab1c9808d85b70a4979ffb539cf12a5c1a4f63c63904b442a92416b48be37b6e"
+    },
+    "gintoki-gen-typecat-build.log": {
+      "sha256": "a51cfc10a35b2f99fe40a75b5c932dac5c521896ebd0f247308f14c7c016f7e9"
+    },
+    "gintoki-handoff.log": {
+      "sha256": "bbd6e99eb6eacab622cec4722ae6cf139a2f3600322b5b9d6b0a9588fdffe979"
+    },
+    "gintoki-interruption-regression.log": {
+      "sha256": "966bd75da62e4a61efa062d0d0baa4534379fc94510f897f44e2e6a647a604c9"
+    },
+    "gintoki-mutation-drink-hit.log": {
+      "sha256": "8a876b4486d3965d7f0bebddc5dbb3f2f9061a00ae0f1dea4a0fba48ccef46eb"
+    },
+    "gintoki-mutation-drink-move.log": {
+      "sha256": "72251e051d4e70ede87df2ff52cbe6b32567625a56aa82df4d097f60b86fd3d4"
+    },
+    "gintoki-mutation-front-arc.log": {
+      "sha256": "73c5a93031aa2bb6742678bad328be7e3434e3f2bc86c3ef18cc7edbd9878993"
+    },
+    "gintoki-mutation-own-block.log": {
+      "sha256": "0192f31ef2bbb0162e2100baeb771209ec3cb258634ffd3b4a411e27339e7aa3"
+    },
+    "gintoki-mutation-protected-cast.log": {
+      "sha256": "d5e58c0fda119d99190871720f0fde734e7a6d13f004e9b093b05be08d011fb0"
+    },
+    "gintoki-regression-01.log": {
+      "sha256": "5d27f3c6440fa437b775c61c4e90366c416f156a0b1616c5fcdf22145a06dc04"
+    },
+    "gintoki-regression-02.log": {
+      "sha256": "bbb90e0105f3ea13fdb68beb94207021c894875f6eaf7640738f6a0c2a77b278"
+    },
+    "gintoki-regression-03.log": {
+      "sha256": "ec88020ad25c7cc703d483fd34abfeb1c90dd66d6abf3b8920b8e225b63068e9"
+    },
+    "gintoki-tests-01.log": {
+      "sha256": "1fb83c10847ce8b6ac21c1eb3fb55a490f3f96de04d0f1c0ab2b48694cd769ce"
+    },
+    "gintoki-tests-02.log": {
+      "sha256": "67dccf1148cb2f3b16acbe45b18fe784e583a718ea4154f28df6c48fb958ec4d"
+    },
+    "gintoki-typecheck-01.log": {
+      "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    },
+    "gintoki-typecheck-02.log": {
+      "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    },
+    "gintoki-typecheck-03.log": {
+      "sha256": "b58e7c59960cecf820e9bc6e4d2767f2fe3caa66c72438ecf05b0fbc6a61fbff"
+    },
+    "gintoki-typecheck-04.log": {
+      "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    }
+  }
+}

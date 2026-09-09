@@ -1,6 +1,6 @@
 {
   "schema": "ggd-shared-authoring-handoff@1",
-  "sourceCommit": "1ede970a77514c967eb3df25412d6ea003fb0f06",
+  "sourceCommit": "4822d5ff5560ad6ba07f212d6b0715f7fdab9820",
   "heroCount": 37,
   "slotCount": 222,
   "compilation": "passed",
@@ -29,6 +29,10 @@
     {
       "path": "refinements/21.json",
       "sha256": "9bfa5a527ca95c2c4412c0af01f2a7213ac33e67575e8c14cf7e1b096186e362"
+    },
+    {
+      "path": "refinements/23.json",
+      "sha256": "092abbe0c8946cd80c97db58b38db8bb7f09fb497e2c85e51c386548b6f82629"
     },
     {
       "path": "refinements/24.json",
@@ -275,8 +279,8 @@
     },
     {
       "path": "projects/23.hero-project.json",
-      "bytes": 36919,
-      "sha256": "a0e1d1092beb96485a031363432ddde6081c72fd2b1d3d719ffac51b0cb99b69"
+      "bytes": 50251,
+      "sha256": "c25c892280928361b3c27eb8854674456a5e0f865f0d6e70a6775b65da84daeb"
     },
     {
       "path": "recipes/23.upload-recipe.json",
@@ -693,7 +697,8 @@
     "c699a9ef51922e6dff101cac83bfec80952159d5",
     "63badb5afef229c557574ded348b8f70b308d78b",
     "50a821472197fe480deb09b4f37b6bbfbd205f13",
-    "1ede970a77514c967eb3df25412d6ea003fb0f06"
+    "1ede970a77514c967eb3df25412d6ea003fb0f06",
+    "4822d5ff5560ad6ba07f212d6b0715f7fdab9820"
   ],
   "requiredEffectFields": [
     "chainLightning.retargetOnLost",
@@ -704,7 +709,9 @@
     "damageLine.fromSummonSlot",
     "applyBuff.vision.revealed",
     "applyBuff.drive",
-    "pull.grapple"
+    "pull.grapple",
+    "damageArea.fromCaster",
+    "damageArea.arcHalfAngleCos"
   ],
   "requiredConditionLeaves": [
     "nearbyCombat"
@@ -716,22 +723,27 @@
     "onAllyProtected",
     "onSummonHit",
     "onAttackAttempt",
-    "onObservedCombat"
+    "onObservedCombat",
+    "onBlock"
   ],
   "requiredAbilityFields": [
     "statusCost.count=all",
     "toggle.upkeepResource=status",
     "toggle.upkeepStatus",
     "requiredSummonSlot",
-    "statusCost.subject=target"
+    "statusCost.subject=target",
+    "interruptOn=damageOrMove",
+    "interruptible"
   ],
   "requiredHookFields": [
     "evadeSource",
     "evadeChannel",
-    "observedEvent"
+    "observedEvent",
+    "blockSource"
   ],
   "requiredEffectKinds": [
-    "trap"
+    "trap",
+    "interruptCast"
   ],
   "requiredProtocolFields": [
     "EntityState.motionState",

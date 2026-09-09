@@ -30,7 +30,7 @@ python3 tools/community-hero-forge/verify-authoring-batch.py \
 
 新批次可先不放 plan：腳本仍核對／編譯並列出全部未覆蓋槽。建立測試時，使用 `communityRecipeFixture`／`communityCombatFixture` 讀原始配方；批次執行器會設定 `GGD_HERO_BATCH_DIR`。只能在建立真實行為案例後，將对应 hero ID／slot 加進 plan。來源不同不得直接複製第一批的測試清單。發布閘仍測 repo 本身，不把批次環境變數誤傳給既有 Editor 回歸。
 
-第一批 plan 目前對應 39 個已修正／部分修正槽，其餘仍有缺口。每槽 `originalDesignAcceptance` 保持未驗證，直到逐項 requiredRefinement 有足夠行為及畫面證據；它不是自動上架清單。
+第一批 plan 目前對應 45 個已修正／部分修正槽，其餘仍有缺口。每槽 `originalDesignAcceptance` 保持未驗證，直到逐項 requiredRefinement 有足夠行為及畫面證據；它不是自動上架清單。
 
 輸出必須是來源以外的新目錄。執行中如有人更改來源，整次證據標為失效，不拿它續跑。腳本不生成英雄、不修改原稿、不投稿、不發布、不操作正式帳號。
 
@@ -65,3 +65,5 @@ node tools/community-hero-forge/capture-motion-browser.mjs \
 這個瀏覽器設定目前仍未完成九張通過證據；冷載入與 PBR 光照就緒失敗見 [柯南修正紀錄](../../materials/community-hero-forge/refinements/conan-mobility-verification.json)。背景六槽初始驗證最多等三分鐘，模型就緒最多一分鐘；逾時仍失敗，不以替身通過。收據中的 checkout HEAD／dirty 狀態只識別執行腳本的程式樹，不能冒充本機服務部署版本證明。
 
 `target-resource-acceptance` suite 同批檢查真實敵方事件取得資源、未取得／不足拒絕，以及 Editor 和可信投稿編譯器的六槽與整套情境一致性。它不直接建立目標資源，也不把試玩選项寫回英雄版本。既有實作 suite 額外固定包含阿薩謝爾重複詛咒反轉回歸；增加回歸檔不會自動擴大已對應的原稿槽數。
+
+銀時六槽及共用格擋、施法中斷、hook 詞彙、形狀與純度回歸併入 `implemented-mechanisms` 同次執行。案例從版本化原稿／微調生成，包含自身招架來源、盾吸收命中、實際移動、受保護施法及跨區／免控反例。新增 effect kind 時，Editor 的完整表單回存、種類清單與預覽不可漏接；release 閘會一起檢查。

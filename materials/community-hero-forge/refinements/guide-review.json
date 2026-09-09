@@ -1,7 +1,7 @@
 {
   "file": "AI參考全自動鑄造守則.md",
-  "sha256": "a8d8470408ca5b65dad9f32e53f9ab5a331fd3aa4add937e525f869c72b095b9",
-  "localLinksChecked": 45,
+  "sha256": "c2f6b75596091ec18cdf6ddaa318df727690dd307e4695dfadce87fe808d4c65",
+  "localLinksChecked": 48,
   "missingLinks": [],
   "commandsAndReferencedTests": "checked against current repository",
   "semanticReview": [
@@ -39,7 +39,13 @@
     "controlled seats prevent incidental auto-acquire clues",
     "idle missing-passive and insufficient-cost negative cases",
     "editor and trusted importer scenario parity",
-    "preparation frames included in replay duration"
+    "preparation frames included in replay duration",
+    "accepted casts prevent interrupted-rest supply refunds",
+    "actual own-source block versus shields and other grants",
+    "movement and shield-absorbed hits interrupt optional rest",
+    "protected windups and legal enemy-only interrupt without stun",
+    "forward arc uses actual origin and direction",
+    "new effect must wire complete Editor forms and preview"
   ],
   "runtimeClaims": "guide does not claim full hero acceptance",
   "batchVerificationReview": {

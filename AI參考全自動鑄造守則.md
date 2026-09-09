@@ -210,3 +210,11 @@ pnpm --filter @ggd/shared typecheck
 Editor 的「敵方前置行動」可切換自動、靜止或普攻，並显示資源在施放前及情境結束的數量。正例必須同時通過 Editor 與投稿端的同一情境；負例至少含靜止敵人、移除取得資源的被動，以及成本高於真實所得。柯南 R 的 `all` 成本只需至少一條自己的線索，不應誤寫成三條。前置事件也必須計入回放長度。
 
 參考 [前置行為測試](packages/shared/src/content/heroForge/communityRefinements/conanAcceptance.test.ts) 及 [Editor／投稿一致性測試](apps/editor/src/hero/validationBaseline.test.ts)。這些是測試場景的可施放證據，不能取代逐項原設計、實際模型畫面或正式發布驗收。
+
+## 補給、招架與可中斷施法的實作規則
+
+- 脫戰補給必須使用真正的接受施法／攻擊嘗試和交戰資料。`onAbilityCast` 是完成施法的事件，不能單靠它阻止「開始休息、移動取消、立刻補回」；以 `recentCast` 的接受紀錄補足。mark 到期後讀有效層數，不讀殘留物件的原 count。
+- `onBlock` 只由正值的實際格擋觸發；`blockSource="thisSource"` 只接受該技能增益的來源。普通盾吸收、別件裝備格擋、真實傷害、過期招架及空事件資料都不能獎勵同一反擊。反擊另需一次性資源、有效期限及真正普攻消耗。
+- `interruptOn="damageOrMove"` 比對實際移動與連接成功的正值傷害封包，盾／格擋吸收仍算受擊；零值或免疫不算。舊 `damage` 仍以 HP 下降判定。`interruptible=false` 保護前搖，死亡仍取消。消耗於接受時支付，中斷不自行退款。
+- `interruptCast` 只終止合法敵方尚在執行的可打斷前搖，沿用免控及區域邊界；不等於暈眩、不能倒轉已結算效果。前方弧形使用 `damageArea.fromCaster` 與 `arcHalfAngleCos`，須驗證後方、友軍、距離及實際輸入方向。
+- 新增效果必須同步接上 Editor 的預覽與 schema 表單，保留完整種類的窮盡檢查。參考 [銀時微調](materials/community-hero-forge/refinements/23.json)、[實際行為案例](packages/shared/src/content/heroForge/communityRefinements/gintoki.test.ts) 與 [驗證收據](materials/community-hero-forge/refinements/gintoki-verification.json)。六槽機制通過不代表木刀、牛奶或專用動作演出通過。

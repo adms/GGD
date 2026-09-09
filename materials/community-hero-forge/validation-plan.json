@@ -1,6 +1,6 @@
 {
   "schema": "ggd-batch-validation-plan@1",
-  "manifestSha256": "d97e53c6ff0f9fd3d4579f162118602cf66bf23d6acbf70de117d3e8d29e2a9a",
+  "manifestSha256": "c4b431f68289963040fa56dcdf3b183a207a85be1c7e3a841d5231fecd3a94e5",
   "suites": [
     {
       "id": "implemented-mechanisms",
@@ -15,7 +15,17 @@
         "packages/shared/src/content/heroForge/communityRefinements/yugi.test.ts",
         "packages/shared/src/content/heroForge/communityRefinements/conan.test.ts",
         "packages/shared/src/content/heroForge/communityRefinements/conanMobility.test.ts",
-        "packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts"
+        "packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/gintoki.test.ts",
+        "packages/shared/src/sim/combat/block.test.ts",
+        "packages/shared/src/sim/combat/block.shipped.test.ts",
+        "packages/shared/src/sim/castTimeRules.test.ts",
+        "packages/shared/src/sim/spellShieldWholeCast.test.ts",
+        "packages/shared/src/sim/purity.test.ts",
+        "packages/shared/src/sim/effects/hookVocabulary.test.ts",
+        "packages/shared/src/content/schema/hookAuthoringVocabulary.test.ts",
+        "packages/shared/src/content/schema/newKindShape.test.ts",
+        "packages/shared/src/content/compat.test.ts"
       ],
       "heroSlots": {
         "community-review-20-20260907": [
@@ -64,6 +74,14 @@
           "EX"
         ],
         "community-review-26-20260907": [
+          "PASSIVE",
+          "Q",
+          "W",
+          "E",
+          "R",
+          "EX"
+        ],
+        "community-review-23-20260907": [
           "PASSIVE",
           "Q",
           "W",

@@ -4,8 +4,8 @@
   "scope": "Original requirements versus compiled authoring; compilation is not design acceptance",
   "heroes": 37,
   "slots": 222,
-  "changedSlots": 39,
-  "passiveOnAttackTemplates": 23,
+  "changedSlots": 45,
+  "passiveOnAttackTemplates": 22,
   "originalDesignAcceptance": "incomplete",
   "published": false,
   "rows": [
@@ -2785,16 +2785,23 @@
       "ownerDescription": "脫戰後累積一份補給，供 W 消耗；最多保存一份。",
       "requiredRefinement": "需脫戰保存一份補給給 W。",
       "products": [
-        "tpl-on-attack"
+        "tpl-mark-stacks",
+        "tpl-mark-stacks",
+        "tpl-event-passive"
       ],
       "castType": "self",
       "effects": [],
       "hooks": [
-        "onBasicAttack"
+        "onAttackAttempt",
+        "onAbilityCast",
+        "onDamageTaken",
+        "onDamageDealt",
+        "onBlock",
+        "onInterval"
       ],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "5 秒未攻擊、施法或參與敵對命中後保存一份補給，最多一份；W 提交消耗，回合重置。 專用木刀／牛奶／白夜叉動作與表情畫面仍待素材及視覺驗收；不以代理素材宣稱完成。"
     },
     {
       "hero": "23",
@@ -2805,17 +2812,17 @@
       "ownerDescription": "木刀橫掃前方。",
       "requiredRefinement": "需木刀近身弧形判定。",
       "products": [
-        "tpl-line-sweep"
+        "tpl-effect-sequence"
       ],
       "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "delayed"
+        "damageArea"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "以輸入方向作半徑3的前方半圓木刀橫掃，每敵人一次；後方、友軍與範圍外不受傷。 專用木刀／牛奶／白夜叉動作與表情畫面仍待素材及視覺驗收；不以代理素材宣稱完成。"
     },
     {
       "hero": "23",
@@ -2826,17 +2833,17 @@
       "ownerDescription": "短暫飲用補給恢復生命，受擊或移動會中斷。",
       "requiredRefinement": "需喝草莓牛奶動作、移動／受擊中斷。",
       "products": [
-        "tpl-buff-self"
+        "tpl-effect-sequence"
       ],
       "castType": "self",
+      "targetsEnemies": true,
       "effects": [
-        "applyBuff",
         "heal"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "消耗一份補給後飲用1秒，再恢復100/150/200/250生命；真正移動或受擊（含護盾／格擋命中）中斷，已付補給與冷卻不返還。 專用木刀／牛奶／白夜叉動作與表情畫面仍待素材及視覺驗收；不以代理素材宣稱完成。"
     },
     {
       "hero": "23",
@@ -2847,17 +2854,18 @@
       "ownerDescription": "短時間招架，成功後可接一次木刀反擊。",
       "requiredRefinement": "需招架成功後一次反擊窗口。",
       "products": [
-        "tpl-buff-self"
+        "tpl-effect-sequence"
       ],
       "castType": "self",
+      "targetsEnemies": true,
       "effects": [
         "applyBuff",
-        "shield"
+        "applyBuff"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "0.65秒內實際格擋一次物理或魔法命中，成功才取得2秒內下一次普攻的一次木刀追加反擊；其他護盾或格擋來源不授予，不自動尋敵。 專用木刀／牛奶／白夜叉動作與表情畫面仍待素材及視覺驗收；不以代理素材宣稱完成。"
     },
     {
       "hero": "23",
@@ -2868,16 +2876,17 @@
       "ownerDescription": "限時強化近戰動作與追擊能力，不提供永久變形。",
       "requiredRefinement": "短期 AD＋移速對應基础强化；白夜叉動作待製。",
       "products": [
-        "tpl-buff-self"
+        "tpl-effect-sequence"
       ],
       "castType": "self",
+      "targetsEnemies": true,
       "effects": [
         "applyBuff"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "白夜叉狀態維持4秒，近戰攻擊力+15%、移速極小級；到期還原來源，沒有永久變身。 專用木刀／牛奶／白夜叉動作與表情畫面仍待素材及視覺驗收；不以代理素材宣稱完成。"
     },
     {
       "hero": "23",
@@ -2888,18 +2897,19 @@
       "ownerDescription": "近身重擊打斷一個可中斷的施法，以吐槽文字及誇張表情演出。",
       "requiredRefinement": "0.5 秒暈眩可測基本打斷；須限定可中斷施法與吐槽文字對齊。",
       "products": [
-        "tpl-single-strike"
+        "tpl-effect-sequence"
       ],
       "castType": "targeted",
       "targetsEnemies": true,
       "effects": [
         "damage",
-        "applyStatus"
+        "interruptCast",
+        "floatingText"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "近身重擊後只取消存活目標仍在進行且可中斷的前搖；不附加暈眩、不重置冷卻、不撤銷已完成效果，同時顯示吐槽文字。 專用木刀／牛奶／白夜叉動作與表情畫面仍待素材及視覺驗收；不以代理素材宣稱完成。"
     },
     {
       "hero": "24",

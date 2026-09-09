@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-project@2",
   "projectId": "community-review-23-20260907",
-  "revision": 12,
+  "revision": 13,
   "sourceLock": {
     "canonicalId": null,
     "versionId": null
@@ -38,8 +38,8 @@
       "fieldOwnership": {}
     },
     "skills": {
-      "revision": 12,
-      "state": "draft",
+      "revision": 13,
+      "state": "stale",
       "fieldOwnership": {
         "acceptedPlan.slots.E.name": "locked",
         "acceptedPlan.slots.E.products.0.template": "manual",
@@ -56,22 +56,22 @@
       }
     },
     "mechanics": {
-      "revision": 1,
+      "revision": 13,
       "state": "stale",
       "fieldOwnership": {}
     },
     "presentation": {
-      "revision": 3,
+      "revision": 13,
       "state": "stale",
       "fieldOwnership": {}
     },
     "validation": {
-      "revision": 1,
+      "revision": 13,
       "state": "stale",
       "fieldOwnership": {}
     },
     "package": {
-      "revision": 3,
+      "revision": 13,
       "state": "stale",
       "fieldOwnership": {}
     }
@@ -107,255 +107,282 @@
     },
     "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
     "templateVersions": {
-      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
-        "id": "tpl-buff-self",
+      "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39": {
+        "id": "tpl-mark-stacks",
         "schema": "template@1",
-        "name": "變身強化-數值面",
-        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
-        "family": "buff-self",
+        "name": "具名標記-層數與免死",
+        "description": "在持有者身上裝一個有層數的具名標記（【試煉】【風王結界】【縮地】），可跨回合、可永久，並可選擇讓它變成一張免死牌：受致命傷害時消耗一層 → 無敵 → 回復 → 擊退暈眩周圍敵人；每失去一層永久獲得一組加成。⚠️ 落差：無敵/回復/擊退是救活的同一格一起發生，文案上的「隨後」看不出來 —— ⛔ 那是**這張模板**尚未把回復／擊退接上延後排程，⛔ 不是引擎沒有：引擎**有** `kind:\"delayed\"`（`delaySec`／`count`／`intervalSec`／`effects`，出貨例：初號機 `godie-e00r` 的 berserk_smoke），⭐ 但 lethalSave 的 `selfEffects`／`aoeEffects` 是同格跑的；要接延後得另驗死亡／重觸發／施法者狀態／排程取消的時序，⛔ 不是改說明就算做了（GH#1044）；火圈燒傷不走傷害佇列，這張免死牌擋不到它。",
+        "family": "mark-stacks",
         "status": "enabled",
         "params": {
-          "castTimeSec": {
-            "type": "number",
-            "default": 0,
-            "min": 0,
-            "max": 5,
-            "unit": "s",
-            "optional": true
+          "markId": {
+            "type": "docRef",
+            "default": "godie-hapm.passive"
           },
-          "duration": {
+          "initial": {
             "type": "number",
-            "default": 15,
+            "default": 12,
+            "min": 0,
+            "max": 999,
+            "unit": "count"
+          },
+          "max": {
+            "type": "number",
+            "default": 12,
             "min": 1,
-            "max": 60,
+            "max": 999,
+            "unit": "count"
+          },
+          "durationSec": {
+            "type": "number",
+            "default": -1,
+            "min": -1,
+            "max": 600,
             "unit": "s"
           },
-          "modifiers": {
+          "resetOn": {
+            "type": "enum",
+            "default": "match",
+            "values": [
+              "match",
+              "round",
+              "never"
+            ]
+          },
+          "perStackLost": {
             "type": "statModifiers",
             "default": [
               {
-                "op": "flat",
                 "stat": "ad",
-                "value": 50
+                "op": "pctAdd",
+                "value": 0.1
+              },
+              {
+                "stat": "maxHealth",
+                "op": "pctAdd",
+                "value": 0.1
               }
-            ]
-          }
-        },
-        "requires": [],
-        "gapScore": 6,
-        "exemplar": {
-          "skill": "82-04 闇之魔法",
-          "jass": "A0Q6"
-        }
-      },
-      "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0": {
-        "id": "tpl-on-attack",
-        "schema": "template@1",
-        "name": "攻擊觸發",
-        "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
-        "family": "on-attack",
-        "status": "enabled",
-        "params": {
-          "bonusDamage": {
-            "type": "scaling",
-            "default": {
-              "perRank": [
-                100
-              ],
-              "ratios": []
-            }
+            ],
+            "optional": true
           },
-          "chance": {
+          "lethalMode": {
+            "type": "enum",
+            "default": "save",
+            "values": [
+              "save",
+              "none"
+            ]
+          },
+          "lethalConsume": {
             "type": "number",
+            "default": 1,
+            "min": 1,
+            "max": 999,
+            "unit": "count"
+          },
+          "surviveHpPct": {
+            "type": "number",
+            "default": 0.01,
+            "min": 0.01,
+            "max": 1,
+            "unit": "ratio"
+          },
+          "lethalDamageTypes": {
+            "type": "enum",
+            "default": "all",
+            "values": [
+              "all",
+              "physicalMagic",
+              "physical",
+              "magic",
+              "true"
+            ]
+          },
+          "internalCooldown": {
+            "type": "number",
+            "default": 0.5,
+            "min": 0,
+            "max": 30,
+            "unit": "s"
+          },
+          "invulnerableSec": {
+            "type": "number",
+            "default": 1.5,
+            "min": 0.1,
+            "max": 30,
+            "unit": "s"
+          },
+          "invulnerableScope": {
+            "type": "enum",
+            "default": "damageAndControl",
+            "values": [
+              "damageAndControl",
+              "damageOnly"
+            ]
+          },
+          "restoreHealthPct": {
+            "type": "number",
+            "default": 0.5,
             "min": 0,
             "max": 1,
             "unit": "ratio",
             "optional": true
           },
-          "condition": {
-            "type": "condition",
-            "default": {
-              "any": [
-                {
-                  "all": [
-                    {
-                      "not": {
-                        "is": "champion",
-                        "kind": "kind",
-                        "subject": "target"
-                      }
-                    },
-                    {
-                      "kind": "stat",
-                      "mode": "percent",
-                      "op": "<",
-                      "stat": "hp",
-                      "subject": "target",
-                      "value": 0.35
-                    }
-                  ]
-                },
-                {
-                  "all": [
-                    {
-                      "is": "champion",
-                      "kind": "kind",
-                      "subject": "target"
-                    },
-                    {
-                      "kind": "chance",
-                      "p": 0.01
-                    }
-                  ]
-                }
-              ]
-            },
+          "aoeRadius": {
+            "type": "number",
+            "default": 6,
+            "min": 0,
+            "max": 12
+          },
+          "knockbackDistance": {
+            "type": "number",
+            "default": 4,
+            "min": 0.1,
+            "max": 20,
             "optional": true
           },
-          "damageType": {
-            "type": "enum",
-            "default": "magic",
-            "values": [
-              "magic",
-              "physical",
-              "true"
-            ]
-          },
-          "event": {
-            "type": "enum",
-            "default": "onBasicAttack",
-            "values": [
-              "onBasicAttack",
-              "onDamageDealt"
-            ]
-          },
-          "internalCooldown": {
+          "knockbackSpeed": {
             "type": "number",
-            "default": 0,
-            "min": 0,
-            "max": 60,
+            "default": 16,
+            "min": 1,
+            "max": 40
+          },
+          "knockbackFrom": {
+            "type": "enum",
+            "default": "caster",
+            "values": [
+              "caster",
+              "facing",
+              "pull"
+            ]
+          },
+          "stunSec": {
+            "type": "number",
+            "default": 0.5,
+            "min": 0.034,
+            "max": 20,
             "unit": "s",
             "optional": true
+          },
+          "stunStatusId": {
+            "type": "docRef",
+            "default": "trial-stun"
+          }
+        },
+        "requires": [
+          "marks",
+          "invulnerable",
+          "knockback",
+          "applyStatus"
+        ],
+        "gapScore": 8,
+        "exemplar": {
+          "skill": "52-00 十二道試煉（海克力斯 Berserker 天生技）",
+          "jass": "無 JASS 出處 —— owner 2026-08-08 口述規格，不是從 war3map.j 復原的家族"
+        }
+      },
+      "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+        "id": "tpl-event-passive",
+        "schema": "template@1",
+        "name": "自訂事件被動",
+        "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+        "family": "event-passive",
+        "status": "enabled",
+        "params": {
+          "hooks": {
+            "type": "hooks",
+            "default": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ]
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
           }
         },
         "requires": [
           "hooks",
           "conditions"
         ],
-        "gapScore": 9,
+        "gapScore": 10,
         "exemplar": {
-          "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者",
-          "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效"
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
         }
       },
-      "sha256:431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699006b55c40f5b54c7": {
-        "id": "tpl-line-sweep",
+      "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+        "id": "tpl-effect-sequence",
         "schema": "template@1",
-        "name": "直線分段掃擊",
-        "description": "沿直線分段的掃擊：每一段各自在自己的落點結算一次（`delayed` + `advance`，GH#393 的機制）。⭐ 同一個目標整串只被打一次（`hitOncePerTarget`）—— 那是原作的規則，卡片寫的是**一次**的數字。",
-        "family": "line-sweep",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
         "status": "enabled",
         "params": {
+          "castType": {
+            "type": "enum",
+            "default": "targeted",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
           "castTimeSec": {
             "type": "number",
             "default": 0,
             "min": 0,
-            "max": 5,
+            "max": 10,
             "unit": "s",
-            "optional": true
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
           },
-          "damage": {
-            "type": "scaling",
-            "default": {
-              "perRank": [
-                150
-              ],
-              "ratios": []
-            }
+          "radius": {
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
           },
-          "damageType": {
+          "side": {
             "type": "enum",
-            "default": "magic",
+            "default": "enemies",
             "values": [
-              "magic",
-              "physical",
-              "true"
-            ]
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
           },
-          "segmentAoe": {
-            "type": "number",
-            "default": 400,
-            "min": 100,
-            "max": 900,
-            "unit": "wc3u",
-            "origin": "j:32337 —— `GetUnitsInRangeOfLocMatching(400.00, udg_LocPoint3, …)` ⇒ 每段半徑 **400 wc3u**"
-          },
-          "segmentCount": {
-            "type": "number",
-            "default": 6,
-            "min": 3,
-            "max": 20,
-            "unit": "count",
-            "origin": "j:32335 —— `exitwhen udg_WinSwordCounter > 6`，而 j:32333 是 `set udg_WinSwordCounter = 1` ⇒ 正好 **6 段**（⛔ 不是 7：它從 **1** 起算，⛔ 不是 0）"
-          },
-          "stepSize": {
-            "type": "number",
-            "default": 200,
-            "min": 100,
-            "max": 300,
-            "unit": "wc3u",
-            "origin": "j:32336 —— `PolarProjectionBJ(udg_LocPoint1, I2R(udg_WinSwordCounter) * 200.00, …)` ⇒ 每段 **200 wc3u**"
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
           }
         },
         "requires": [
-          "projectile"
+          "hooks",
+          "conditions"
         ],
-        "gapScore": 7,
+        "gapScore": 10,
         "exemplar": {
-          "skill": "20-03 約束與勝利之劍",
-          "jass": "A0D5"
-        }
-      },
-      "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b": {
-        "id": "tpl-single-strike",
-        "schema": "template@1",
-        "name": "單體斬擊",
-        "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。",
-        "family": "single-strike",
-        "status": "enabled",
-        "params": {
-          "castTimeSec": {
-            "type": "number",
-            "default": 0,
-            "min": 0,
-            "max": 5,
-            "unit": "s",
-            "optional": true
-          },
-          "damage": {
-            "type": "scaling",
-            "default": {
-              "perRank": [
-                350
-              ],
-              "ratios": []
-            }
-          },
-          "damageType": {
-            "type": "enum",
-            "default": "magic",
-            "values": [
-              "magic",
-              "physical",
-              "true"
-            ]
-          }
-        },
-        "requires": [],
-        "gapScore": 9,
-        "exemplar": {
-          "skill": "23-04 雷焰聖劍",
-          "jass": "A0OD"
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
         }
       }
     },
@@ -363,31 +390,201 @@
       "PASSIVE": {
         "slot": "PASSIVE",
         "name": "〔糖分補給〕",
-        "purpose": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。\n【目標設計】脫戰後累積一份補給，供 W 消耗；最多保存一份。\n【待補機制】需脫戰保存一份補給給 W。",
+        "purpose": "【修正行為】5 秒未攻擊、施法或參與敵對命中後保存一份補給，最多一份；W 提交消耗，回合重置。\n【原設計】脫戰後累積一份補給，供 W 消耗；最多保存一份。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json"
         },
         "products": [
           {
-            "instanceId": "community-review-23-20260907-passive-1",
+            "instanceId": "supply",
             "template": {
-              "ref": "tpl-on-attack",
+              "ref": "tpl-mark-stacks",
               "params": {
-                "bonusDamage": {
-                  "damageTier": "極小",
-                  "ratios": []
-                },
-                "condition": {
-                  "kind": "chance",
-                  "p": 1
-                },
-                "damageType": "physical",
-                "event": "onBasicAttack",
-                "internalCooldown": 3
+                "markId": "community-review-23-20260907.supply",
+                "initial": 0,
+                "max": 1,
+                "durationSec": -1,
+                "resetOn": "round",
+                "lethalMode": "none",
+                "perStackLost": []
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0"
+              "contentSha256": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39"
+            }
+          },
+          {
+            "instanceId": "initial-rest",
+            "template": {
+              "ref": "tpl-mark-stacks",
+              "params": {
+                "markId": "community-review-23-20260907.combat-busy",
+                "initial": 1,
+                "max": 1,
+                "durationSec": 5,
+                "resetOn": "round",
+                "lethalMode": "none",
+                "perStackLost": []
+              },
+              "contentSha256": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39"
+            }
+          },
+          {
+            "instanceId": "supply-events",
+            "template": {
+              "ref": "tpl-event-passive",
+              "params": {
+                "hooks": [
+                  {
+                    "on": "onAttackAttempt",
+                    "target": "self",
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "community-review-23-20260907.combat-busy",
+                        "applyTo": "self",
+                        "duration": 5,
+                        "stacks": 1,
+                        "grantMark": {
+                          "max": 1,
+                          "resetOn": "round"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "on": "onAbilityCast",
+                    "target": "self",
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "community-review-23-20260907.combat-busy",
+                        "applyTo": "self",
+                        "duration": 5,
+                        "stacks": 1,
+                        "grantMark": {
+                          "max": 1,
+                          "resetOn": "round"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "on": "onDamageTaken",
+                    "target": "self",
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "community-review-23-20260907.combat-busy",
+                        "applyTo": "self",
+                        "duration": 5,
+                        "stacks": 1,
+                        "grantMark": {
+                          "max": 1,
+                          "resetOn": "round"
+                        }
+                      }
+                    ],
+                    "victim": "enemy"
+                  },
+                  {
+                    "on": "onDamageDealt",
+                    "target": "self",
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "community-review-23-20260907.combat-busy",
+                        "applyTo": "self",
+                        "duration": 5,
+                        "stacks": 1,
+                        "grantMark": {
+                          "max": 1,
+                          "resetOn": "round"
+                        }
+                      }
+                    ],
+                    "victim": "enemy"
+                  },
+                  {
+                    "on": "onBlock",
+                    "target": "self",
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "community-review-23-20260907.combat-busy",
+                        "applyTo": "self",
+                        "duration": 5,
+                        "stacks": 1,
+                        "grantMark": {
+                          "max": 1,
+                          "resetOn": "round"
+                        }
+                      }
+                    ],
+                    "victim": "enemy"
+                  },
+                  {
+                    "on": "onInterval",
+                    "internalCooldown": 1,
+                    "target": "self",
+                    "condition": {
+                      "all": [
+                        {
+                          "not": {
+                            "kind": "status",
+                            "subject": "self",
+                            "statusId": "community-review-23-20260907.combat-busy"
+                          }
+                        },
+                        {
+                          "not": {
+                            "any": [
+                              {
+                                "kind": "recentCast",
+                                "subject": "self",
+                                "slot": "Q",
+                                "withinSec": 5
+                              },
+                              {
+                                "kind": "recentCast",
+                                "subject": "self",
+                                "slot": "W",
+                                "withinSec": 5
+                              },
+                              {
+                                "kind": "recentCast",
+                                "subject": "self",
+                                "slot": "E",
+                                "withinSec": 5
+                              },
+                              {
+                                "kind": "recentCast",
+                                "subject": "self",
+                                "slot": "R",
+                                "withinSec": 5
+                              },
+                              {
+                                "kind": "recentCast",
+                                "subject": "self",
+                                "slot": "EX",
+                                "withinSec": 5
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    },
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "community-review-23-20260907.supply",
+                        "stacks": 1,
+                        "duration": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
             }
           }
         ],
@@ -407,33 +604,53 @@
       "Q": {
         "slot": "Q",
         "name": "〔洞爺湖・橫斬〕",
-        "purpose": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】木刀橫掃前方。\n【待補機制】需木刀近身弧形判定。",
+        "purpose": "【修正行為】以輸入方向作半徑3的前方半圓木刀橫掃，每敵人一次；後方、友軍與範圍外不受傷。\n【原設計】木刀橫掃前方。",
         "maxRank": 4,
         "abilityOverrides": {
-          "castTimeTier": "小",
-          "cooldownTier": "小",
-          "manaCostTier": "小",
           "provenance": "editor-json",
-          "rangeTier": "中"
+          "range": 3,
+          "cooldown": [
+            5,
+            5,
+            5,
+            5
+          ],
+          "manaCost": [
+            45,
+            45,
+            45,
+            45
+          ],
+          "castTimeSec": 0.1
         },
         "products": [
           {
-            "instanceId": "community-review-23-20260907-q-1",
+            "instanceId": "wood-sweep",
             "template": {
-              "ref": "tpl-line-sweep",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "castTimeSec": 0.35,
-                "damage": {
-                  "damageTier": "極小",
-                  "ratios": []
-                },
-                "damageType": "physical",
-                "segmentAoe": 150,
-                "segmentCount": 4,
-                "stepSize": 100
+                "castType": "skillshot",
+                "castTimeSec": 0.1,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "damageArea",
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "小",
+                      "ratios": []
+                    },
+                    "radius": 3,
+                    "maxTargets": 12,
+                    "falloff": 1,
+                    "fromCaster": true,
+                    "arcHalfAngleCos": 0,
+                    "includeOrigin": true
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699006b55c40f5b54c7"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -452,37 +669,59 @@
       "W": {
         "slot": "W",
         "name": "〔草莓牛奶休息時間〕",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":100,\"ratios\":[]},\"applyTo\":\"self\"}]。\n【目標設計】短暫飲用補給恢復生命，受擊或移動會中斷。\n【待補機制】需喝草莓牛奶動作、移動／受擊中斷。",
+        "purpose": "【修正行為】消耗一份補給後飲用1秒，再恢復100/150/200/250生命；真正移動或受擊（含護盾／格擋命中）中斷，已付補給與冷卻不返還。\n【原設計】短暫飲用補給恢復生命，受擊或移動會中斷。",
         "maxRank": 4,
         "abilityOverrides": {
-          "castTimeTier": "小",
-          "cooldownTier": "小",
-          "effects": [
-            {
-              "amount": {
-                "flat": 100,
-                "ratios": []
-              },
-              "applyTo": "self",
-              "kind": "heal"
-            }
-          ],
-          "manaCostTier": "小",
           "provenance": "editor-json",
-          "rangeTier": "中"
+          "range": 0,
+          "cooldown": [
+            8,
+            8,
+            8,
+            8
+          ],
+          "manaCost": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "castTimeSec": 1,
+          "rootWhileCasting": false,
+          "interruptOn": "damageOrMove",
+          "statusCost": {
+            "statusId": "community-review-23-20260907.supply",
+            "count": 1
+          }
         },
         "products": [
           {
-            "instanceId": "community-review-23-20260907-w-1",
+            "instanceId": "drink",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "castTimeSec": 0.15,
-                "duration": 3,
-                "modifiers": []
+                "castType": "self",
+                "castTimeSec": 1,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 100,
+                      "perRank": [
+                        0,
+                        50,
+                        100,
+                        150
+                      ],
+                      "ratios": []
+                    },
+                    "applyTo": "self"
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -499,40 +738,121 @@
       "E": {
         "slot": "E",
         "name": "〔萬事屋式反擊〕",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-23-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】短時間招架，成功後可接一次木刀反擊。\n【待補機制】需招架成功後一次反擊窗口。",
+        "purpose": "【修正行為】0.65秒內實際格擋一次物理或魔法命中，成功才取得2秒內下一次普攻的一次木刀追加反擊；其他護盾或格擋來源不授予，不自動尋敵。\n【原設計】短時間招架，成功後可接一次木刀反擊。",
         "maxRank": 4,
         "abilityOverrides": {
-          "castTimeTier": "小",
-          "cooldownTier": "小",
-          "effects": [
-            {
-              "absorbs": "all",
-              "amount": {
-                "flat": 120,
-                "ratios": []
-              },
-              "duration": 3,
-              "kind": "shield",
-              "onExisting": "keepLarger",
-              "stackKey": "community-review-23-20260907.e.guard"
-            }
-          ],
-          "manaCostTier": "小",
           "provenance": "editor-json",
-          "rangeTier": "中"
+          "range": 0,
+          "cooldown": [
+            9,
+            9,
+            9,
+            9
+          ],
+          "manaCost": [
+            45,
+            45,
+            45,
+            45
+          ],
+          "castTimeSec": 0
         },
         "products": [
           {
-            "instanceId": "community-review-23-20260907-e-1",
+            "instanceId": "parry-counter",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "castTimeSec": 0.15,
-                "duration": 3,
-                "modifiers": []
+                "castType": "self",
+                "castTimeSec": 0,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "duration": 0.65,
+                    "modifiers": [],
+                    "stackKey": "community-review-23-20260907.parry",
+                    "maxStacks": 1,
+                    "block": {
+                      "chance": 1,
+                      "fraction": 1,
+                      "damageTypes": [
+                        "physical",
+                        "magic"
+                      ],
+                      "internalCooldown": 1
+                    },
+                    "hooks": [
+                      {
+                        "on": "onBlock",
+                        "victim": "enemy",
+                        "blockSource": "thisSource",
+                        "target": "self",
+                        "internalCooldown": 1,
+                        "effects": [
+                          {
+                            "kind": "applyStatus",
+                            "statusId": "community-review-23-20260907.counter",
+                            "stacks": 1,
+                            "duration": 2,
+                            "grantMark": {
+                              "max": 1,
+                              "resetOn": "round"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "duration": 2.65,
+                    "modifiers": [],
+                    "stackKey": "community-review-23-20260907.counter-listener",
+                    "maxStacks": 1,
+                    "hooks": [
+                      {
+                        "on": "onBasicAttack",
+                        "victim": "enemy",
+                        "target": "event",
+                        "effects": [
+                          {
+                            "kind": "consumeStatus",
+                            "shape": "single",
+                            "subject": "self",
+                            "statusId": "community-review-23-20260907.counter",
+                            "count": 1,
+                            "onConsumed": [
+                              {
+                                "kind": "damage",
+                                "damageType": "physical",
+                                "amount": {
+                                  "damageTier": "小",
+                                  "ratios": []
+                                }
+                              },
+                              {
+                                "kind": "floatingText",
+                                "shape": "single",
+                                "applyTo": "self",
+                                "text": "木刀反擊！",
+                                "durationSec": 1,
+                                "colorRgb": [
+                                  245,
+                                  220,
+                                  160
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -549,38 +869,57 @@
       "R": {
         "slot": "R",
         "name": "〔白夜叉〕",
-        "purpose": "【目前模板可執行】自身取得 4 秒增益：ad +15%、極小級移速。\n【目標設計】限時強化近戰動作與追擊能力，不提供永久變形。\n【待補機制】短期 AD＋移速對應基础强化；白夜叉動作待製。",
+        "purpose": "【修正行為】白夜叉狀態維持4秒，近戰攻擊力+15%、移速極小級；到期還原來源，沒有永久變身。\n【原設計】限時強化近戰動作與追擊能力，不提供永久變形。",
         "maxRank": 3,
         "abilityOverrides": {
-          "castTimeTier": "大",
-          "cooldownTier": "大",
-          "manaCostTier": "大",
           "provenance": "editor-json",
-          "rangeTier": "中"
+          "range": 0,
+          "cooldown": [
+            18,
+            18,
+            18,
+            18
+          ],
+          "manaCost": [
+            100,
+            100,
+            100,
+            100
+          ],
+          "castTimeSec": 0.35
         },
         "products": [
           {
-            "instanceId": "community-review-23-20260907-r-1",
+            "instanceId": "white-yaksha",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "castTimeSec": 0.15,
-                "duration": 4,
-                "modifiers": [
+                "castType": "self",
+                "castTimeSec": 0.35,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
                   {
-                    "op": "pctAdd",
-                    "stat": "ad",
-                    "value": 0.15
-                  },
-                  {
-                    "msBonusTier": "極小",
-                    "op": "pctAdd",
-                    "stat": "ms"
+                    "kind": "applyBuff",
+                    "duration": 4,
+                    "modifiers": [
+                      {
+                        "stat": "ad",
+                        "op": "pctAdd",
+                        "value": 0.15
+                      },
+                      {
+                        "stat": "ms",
+                        "op": "pctAdd",
+                        "msBonusTier": "極小"
+                      }
+                    ],
+                    "stackKey": "community-review-23-20260907.white-yaksha",
+                    "maxStacks": 1
                   }
                 ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -597,39 +936,57 @@
       "EX": {
         "slot": "EX",
         "name": "〔吐槽也是武器〕",
-        "purpose": "【目前模板可執行】指定單一敵人造成小級物理傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"stun\",\"duration\":0.5,\"applyTo\":\"target\",\"stun\":true}]。\n【目標設計】近身重擊打斷一個可中斷的施法，以吐槽文字及誇張表情演出。\n【待補機制】0.5 秒暈眩可測基本打斷；須限定可中斷施法與吐槽文字對齊。",
+        "purpose": "【修正行為】近身重擊後只取消存活目標仍在進行且可中斷的前搖；不附加暈眩、不重置冷卻、不撤銷已完成效果，同時顯示吐槽文字。\n【原設計】近身重擊打斷一個可中斷的施法，以吐槽文字及誇張表情演出。",
         "maxRank": 1,
         "abilityOverrides": {
-          "castTimeTier": "小",
-          "cooldownTier": "大",
-          "effects": [
-            {
-              "applyTo": "target",
-              "duration": 0.5,
-              "kind": "applyStatus",
-              "statusId": "stun",
-              "stun": true
-            }
-          ],
-          "manaCostTier": "大",
           "provenance": "editor-json",
-          "rangeTier": "小"
+          "range": 2,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ],
+          "castTimeSec": 0.1
         },
         "products": [
           {
-            "instanceId": "community-review-23-20260907-ex-1",
+            "instanceId": "retort",
             "template": {
-              "ref": "tpl-single-strike",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "castTimeSec": 0.2,
-                "damage": {
-                  "damageTier": "小",
-                  "ratios": []
-                },
-                "damageType": "physical"
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "小",
+                      "ratios": []
+                    }
+                  },
+                  {
+                    "kind": "interruptCast",
+                    "shape": "single"
+                  },
+                  {
+                    "kind": "floatingText",
+                    "shape": "single",
+                    "applyTo": "self",
+                    "text": "吐槽也是武器啊！",
+                    "durationSec": 1.2,
+                    "colorRgb": [
+                      255,
+                      235,
+                      180
+                    ]
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -1046,6 +1403,14 @@
       }
     }
   },
+  "refinementNotes": {
+    "PASSIVE": "5 秒未攻擊、施法或參與敵對命中後保存一份補給，最多一份；W 提交消耗，回合重置。 專用木刀／牛奶／白夜叉動作與表情畫面仍待素材及視覺驗收；不以代理素材宣稱完成。",
+    "Q": "以輸入方向作半徑3的前方半圓木刀橫掃，每敵人一次；後方、友軍與範圍外不受傷。 專用木刀／牛奶／白夜叉動作與表情畫面仍待素材及視覺驗收；不以代理素材宣稱完成。",
+    "W": "消耗一份補給後飲用1秒，再恢復100/150/200/250生命；真正移動或受擊（含護盾／格擋命中）中斷，已付補給與冷卻不返還。 專用木刀／牛奶／白夜叉動作與表情畫面仍待素材及視覺驗收；不以代理素材宣稱完成。",
+    "E": "0.65秒內實際格擋一次物理或魔法命中，成功才取得2秒內下一次普攻的一次木刀追加反擊；其他護盾或格擋來源不授予，不自動尋敵。 專用木刀／牛奶／白夜叉動作與表情畫面仍待素材及視覺驗收；不以代理素材宣稱完成。",
+    "R": "白夜叉狀態維持4秒，近戰攻擊力+15%、移速極小級；到期還原來源，沒有永久變身。 專用木刀／牛奶／白夜叉動作與表情畫面仍待素材及視覺驗收；不以代理素材宣稱完成。",
+    "EX": "近身重擊後只取消存活目標仍在進行且可中斷的前搖；不附加暈眩、不重置冷卻、不撤銷已完成效果，同時顯示吐槽文字。 專用木刀／牛奶／白夜叉動作與表情畫面仍待素材及視覺驗收；不以代理素材宣稱完成。"
+  },
   "validationState": {
     "identity": {
       "revision": 1,
@@ -1058,43 +1423,30 @@
       "diagnosticCodes": []
     },
     "skills": {
-      "revision": 12,
-      "status": "idle",
+      "revision": 13,
+      "status": "stale",
       "diagnosticCodes": []
     },
     "mechanics": {
-      "revision": 1,
+      "revision": 13,
       "status": "stale",
       "diagnosticCodes": []
     },
     "presentation": {
-      "revision": 3,
+      "revision": 13,
       "status": "stale",
       "diagnosticCodes": []
     },
     "validation": {
-      "revision": 1,
+      "revision": 13,
       "status": "stale",
       "diagnosticCodes": []
     },
     "package": {
-      "revision": 3,
+      "revision": 13,
       "status": "stale",
       "diagnosticCodes": []
     }
   },
-  "receipts": [
-    {
-      "kind": "generator-adopted",
-      "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
-      "projectRevision": 5,
-      "digest": "c829a453ac460ce3e35416074b7c4ba5523e7141c20c433b548c2da38432d94c"
-    },
-    {
-      "kind": "generator-adopted",
-      "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
-      "projectRevision": 12,
-      "digest": "332aef35e1033e582a543eba797b55ddf4afbb5abe2b6c9bb74eeb5b41a7f3c6"
-    }
-  ]
+  "receipts": []
 }
