@@ -32,7 +32,7 @@ python3 tools/community-hero-forge/verify-authoring-batch.py \
 
 退出碼：`1` 有輸入／測試／工具失敗；`2` 自動檢查通過但仍有技能槽未配行為測試；`0` 已登記自動檢查及逐槽測試覆蓋通過。**任何退出碼都不代表原設計、模型外觀／動作或正式發布完成。** 模型未提供 `--release-root` 時明列未核對位元組；有檔案、SHA 或編譯通過都不是視覺驗收。模型封存每次重新讀取，不用過期快取。
 
-2026-09-09 新版預設投稿情境實測 32 名通過、5 名拒絕：武藤遊戲缺召喚物、銀時／奇犽／SUN樂在固定次序缺資源、艾莉絲 EX 缺自己的前置命中。離線 `--scenario-report` 與真實服務回傳的失敗名單一致。這不是 37 名全數可投稿；保留真實機制與拒絕證據，#1132 留開。新增的離線步驟是早期診斷，不取代完整模型檢查與服務 ZIP。
+2026-09-09 修正後，37 名已全數通過離線預檢、當前服務 ZIP 建立／檢查，以及隔離投稿、管理員發布、異帳號署名下載逐位元還原。Editor、投稿器與離線入口共用 `runHeroAdmissionScenarios`：先跑原情境，遇到必要條件才用真實召喚施法、自然恢復、迴避交鋒或普攻取得前置；不修改生命／魔力、冷卻、資源、亂數或迴避結果。原始煙霧與明確手動設定仍可重跑拒絕反例。逐槽及整套報告保留實際前置操作；移除資源來源仍拒絕。這些證據與畫面、正式部署分開記錄。
 
 需要更新生成器時，`refine-design-handoff.mts --adopt-current-generator` 使用 Editor 的 `adoptHeroGenerator`，保留舊 receipt、追加作品修訂，不修改六槽或原文。省略此旗標維持原生成器；建包器仍拒絕過期版本。
 
@@ -114,3 +114,14 @@ SUN樂驗證使用共用 `communityActionFixture(number, rank)`：讀該批版�
 `parody/capture-browser.mjs` 透過真正 Editor 匯入介面和技能槽導覽收集 37 名的 Q/W/E/R/EX。須提供含模型的還原目錄、Playwright 路徑及新的輸出目錄；可用 `--focus 32` 聚焦。每張記錄槽、回放時間、模型材質狀態及 SHA，並需人工看圖。它不登入、不投稿、不發布，SwiftShader 截圖也不是平板效能測試。阿薩謝爾的兩段機制另由真實戰鬥測試檢查，不以單槽 EX 預覽冒充先 R 再 EX。
 
 阿薩謝爾「防禦歸零」要經過環境倍率與基礎加成：生成器依出貨配置反算既有 modifier 輸入，並拒絕無法用固定輸入表示的每級防禦配置。範圍採既有極大級距，不新增全地圖選擇器；嘲諷沿用現有自動索敵規則。兩秒強化、三秒弱化、範圍／敵我、跨來源、死亡、驅散、到期還原及舊版回退均各有案例。
+
+
+畫面批次需服務凍結的 Editor 建置，另存建置來源 commit 與每個 bundle SHA；不要讓 `editor:accept:release` 重建正在使用的 `dist`。`capture-browser.mjs` 在真正匯入後從「我的作品」逐名開啟，選 Q/W/E/R/EX、設定必要的前置施法、確認完成施放與雙方實際模型材質就緒。採 Editor 建議的演出關鍵格，記錄要求時間及 1/60 秒時間軸量化後的實際時間。瀏覽器可分組但應限制並行，模型檢查逾時視為驗收失敗，不能跳過檢查。
+
+分組完成後用 `parody/collect-captures.mjs --input <同一份交接> --output <新目錄> --run <畫面目錄> --run <另一目錄>` 集中核對：英雄和作品 SHA、五個主動槽、實際施放、雙方材質、每張 PNG 大小／SHA 必須一致；缺項及重複成功版本直接失敗。工具產生逐圖索引，狀態仍為待人工判讀。逐圖看過並記錄結論後才可給視覺判定；已有檔案或模型狀態文字不能代替畫面驗收。
+
+Apple Silicon 上先確認 Playwright 的 Node 為 `arm64`；從 Intel Node 啟動通用 Chrome 可能連帶走 Rosetta，造成冷載入與模擬嚴重變慢。使用已安裝的原生 Node 執行同一支腳本，不變更 timeout 或略過驗證來偽裝通過；畫面收據會記錄 Node 版本、架構及實際路徑。這只是驗收環境選擇，不是 iPad 效能結果。
+
+畫面服務必須同時供應 `/editor/` 與 `/content/assets/`。單獨 `vite preview` 不包含 nginx 的素材掛載；用 `node tools/community-hero-forge/parody/serve-preview.mjs --build <凍結建置> --assets <repo>/content/assets --port 5202 --content-api http://127.0.0.1:8823 --platform http://127.0.0.1:8098` 啟動唯讀回環服務（埠號依隔離服務調整）。腳本記錄 HTTP 錯誤，任何 `/content/assets/` 失敗都不得列為成功；隔離服務不提供 desktop 專用路由時的 `/content-api/desktop-source` 404 只代表離線來源探測，作品仍從已驗證的資料夾匯入。
+
+Playwright 的 ARM Node 選擇不適用於已安裝 x64 原生套件的 Vitest／Vite 工作樹；建置和測試保持依賴安裝時的架構，無須為畫面驗收重裝套件。每招另收集 500／1000ms，避免只看施法起手而漏掉命中效果；阿薩謝爾 EX 保留強化、賢者時間及恢復的後續格。

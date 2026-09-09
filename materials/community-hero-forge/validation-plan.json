@@ -1,6 +1,6 @@
 {
   "schema": "ggd-batch-validation-plan@1",
-  "manifestSha256": "2623b809098b13a76beb1531767298c4d55f41a63aa75d98f008e4b2a047a14c",
+  "manifestSha256": "69cc10c9ea9ec79dbef6d1c7460427c55ec71f181bdc58979b7eb7dd3489bf33",
   "suites": [
     {
       "id": "implemented-mechanisms",
@@ -75,7 +75,8 @@
         "packages/shared/src/content/heroForge/communityRefinements/tanjiroAcceptance.test.ts",
         "packages/shared/src/content/heroForge/communityRefinements/parodyBatch.test.ts",
         "packages/shared/src/content/heroForge/communityRefinements/parodyAdaptations.test.ts",
-        "packages/shared/src/content/heroForge/communityRefinements/parodyAzazel.test.ts"
+        "packages/shared/src/content/heroForge/communityRefinements/parodyAzazel.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/admissionPrerequisites.test.ts"
       ],
       "heroSlots": {
         "community-review-01-20260907": [

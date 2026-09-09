@@ -4,7 +4,7 @@
 
 逐名玩法見 [37 名對照](refinements/parody-review.md) 與 [222 槽機器清單](refinements/parody-review.json)。42 組四條件連动、105 個主動槽效果、20 項被動事件探針與 157 項邊界檢查通過；其他保留核心與新增代價由產品回歸檢查。37 套正規化技能組沒有完全或近似重複，但這個數字不單獨证明創意、平衡或視覺品質。
 
-**行為測試、畫面、當下服務 ZIP 與發布分開記錄。** 原稿忠實還原已依核准方向簡化，不能把這批改編叫作原作設計全數完成。目前新版預設投稿情境只有 32 名通過；武藤遊戲、坂田銀時、奇犽、艾莉絲、SUN樂等 5 名仍被前置召喚／命中／資源條件擋住，詳見 [投稿情境報告](refinements/parody-admission-scenes.json)。阿薩謝爾新版可通過服務建包，但瀏覽器 PBR 光照預載仍失敗，不能宣稱畫面已通過。32 名已完成隔離投稿、管理員發布及異帳號下載逐位元還原，見 [發布收據](refinements/parody-publication-proof.json)。這不是正式站上線；#1132 保持開啟。
+**行為測試、畫面、當下服務 ZIP 與發布分開記錄。** 原稿忠實還原已依核准方向簡化，不能把這批改編叫作原作設計全數完成。目前 37 名皆通過當前服務 ZIP 建立／檢查，以及隔離投稿、管理員發布和異帳號下載逐位元還原，見 [投稿情境](refinements/parody-admission-scenes.json) 與 [發布收據](refinements/parody-publication-proof.json)。前置召喚、命中和資源改由實際操作取得；移除取得來源仍會拒絕。3D 畫面尚未全數通過：菜月昴 W 的模型像素檢查失敗，八神庵 EX／空條承太郎 Q 有遮擋畫面待處理；其餘截圖不可未經判讀就列為通過。依最後裁決，鏡頭／遮擋／美術微調只記錄，不阻擋 37 名功能交付；只有技能、特效或機制失效才屬重大問題。這不是正式站部署。
 
 阿薩謝爾 R→EX 使用既有「極大」範圍：先反轉自己 R 的詛咒，使敵人輸出 +10% 並受嘲諷兩秒，再進入三秒賢者時間，護甲／魔抗歸零、攻速／移速降低60%，到期還原。現有 GGD 嘲諷、可驅散規則及最低數值仍適用。防禦歸零的輸入由當下 combat-env/base-bonus 換算；更改這兩份配置必須重建並驗證，不能沿用舊結果。
 
@@ -26,7 +26,7 @@ pnpm exec node --import tsx tools/community-hero-forge/prepare-published-handoff
   --output /private/tmp/ggd-current-authoring-handoff
 ```
 
-首次需要模型時，先依固定 profile/bucket 使用 restore.py 還原 supplements/release-13956d93b；下節保留封存流程。本輪沒有新增或替換模型；32 份當前服務 ZIP、原始大型模擬證據及失敗截圖已另行 [S3 封存並還原](supplements/parody-37-20260909/README.md)。圖片、模型等大型材料留在 S3，Git 留生成程式、英雄設定、版本／SHA 及驗證紀錄。正式整合由 [PR #1135](https://github.com/adms/GGD/pull/1135) 交 Main 審查與合併。
+首次需要模型時，先依固定 profile/bucket 使用 restore.py 還原 supplements/release-13956d93b；下節保留封存流程。本輪沒有新增或替換模型；修正後全部 37 份當前服務 ZIP 已另行 [S3 封存並重新下載還原](supplements/admission-37-20260909/README.md)。前次 32 份 ZIP、原始大型模擬證據及失敗截圖仍保留在 [歷史封存](supplements/parody-37-20260909/README.md)。圖片、模型等大型材料留在 S3，Git 留生成程式、英雄設定、版本／SHA 及驗證紀錄。正式整合由 [PR #1135](https://github.com/adms/GGD/pull/1135) 交 Main 審查與合併。
 
 ## 歷史驗收
 
@@ -94,3 +94,5 @@ python3 materials/community-hero-forge/restore.py --parts-dir /private/tmp/ggd-c
 鹿目圓 revision 13→14 需包含機制提交 `597db32918ad27262ca6e343217a9d12672d672d`：`onAllyProtected`、`applyStatus.grantMark`、`lethal.maxSavesPerRound`。19 項角色行為、207 項集中回歸與三項反例見 [鹿目圓驗證](refinements/madoka-verification.json)。其餘 36 份作品逐位元組不變；本次不代表畫面或正式發布驗收。
 
 奇犽 revision 12→13 需包含機制提交 `996fa4a45053c3831d3a820c03f342cda76de5b8`：具名資源 toggle 維持費、`statusCost.count=all`、`onEvade` 的來源／通道過濾。24 項角色測試與 213 項回歸見 [奇犽驗證](refinements/kirua-verification.json)。所有 37 名重編譯可用，整體原設計與畫面仍有缺口；新版不能套用舊服務收據。
+
+本輪實際畫面與預览失敗圖另存 [畫面 S3 封存](supplements/visual-37-20260909/README.md)，Git 保存 [逐名收據](refinements/parody-visual-review.json)。

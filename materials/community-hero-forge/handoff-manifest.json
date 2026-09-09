@@ -904,12 +904,12 @@
     "verification": "refinements/parody-verification.json",
     "service": "refinements/parody-service-proof.json",
     "admission": "refinements/parody-admission-scenes.json",
-    "artifactArchive": "supplements/parody-37-20260909",
-    "artifactManifestSha256": "6df04c35100841044bf2aef0dc7b5c31da47ac6264d55c6993c2741a680ae915"
+    "artifactArchive": "supplements/admission-37-20260909",
+    "artifactManifestSha256": "396fa15327689702ce1a36a197292356b336f2888bf0c5b6cc63142a88d534e8"
   },
   "localPublication": {
-    "published": 32,
-    "blocked": 5,
+    "published": 37,
+    "blocked": 0,
     "proof": "refinements/parody-publication-proof.json",
     "formalDeployment": false
   }

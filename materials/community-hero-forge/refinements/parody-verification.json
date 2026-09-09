@@ -2,7 +2,7 @@
   "schema": "ggd-first37-parody-verification@1",
   "issue": 1132,
   "scope": "Owner-approved adaptation, not full original-design recreation. Runtime source and project hashes are recorded separately.",
-  "runtimeSourceCommit": "1385c2f83008bf1114301ce80ffd256040a3a2e5",
+  "runtimeSourceCommit": "417abec9d90424b5ccbe7948331a60f98dd0f689",
   "authoring": {
     "heroes": 37,
     "slots": 222,
@@ -21,6 +21,134 @@
     "normalizedDistinctKits": 37
   },
   "regression": {
+    "head": "4bb15e18c6acc2c236932d1f914e74c38a1bd8c6",
+    "implementedMechanismsTests": 1053,
+    "editorTests": 604,
+    "jobs": [
+      {
+        "id": "skills",
+        "exitCode": 0,
+        "logSha256": "d096f4f399e653a3d9ab864a6357808137413ec4e3669d48167ad51929c863fd"
+      },
+      {
+        "id": "editor",
+        "exitCode": 0,
+        "logSha256": "2b3d4db72addafac3a01c44e7b2cd204b8a055dac1ba61eb70f76d7ddf409018"
+      },
+      {
+        "id": "coord",
+        "exitCode": 0,
+        "logSha256": "f0d0d8361cc626f77b45cde6855146b86f77bb363a53a6f7d4376896f8246ec0"
+      }
+    ],
+    "coordAfterEvidenceSha256": "f0d0d8361cc626f77b45cde6855146b86f77bb363a53a6f7d4376896f8246ec0"
+  },
+  "currentServiceZip": {
+    "report": "parody-service-proof.json",
+    "passed": 37,
+    "failed": 0,
+    "target": {
+      "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+      "contentVersion": "cv_b9b47052d2e3",
+      "migrationFingerprint": "17d1f388d5c0",
+      "processorFingerprint": "adf109dc5ba1"
+    }
+  },
+  "admissionPreflight": {
+    "report": "parody-admission-scenes.json",
+    "matchesServiceFailedHeroes": true,
+    "nonzeroExitExpectedUntilFixed": false,
+    "passed": 37,
+    "failed": 0,
+    "prerequisites": "Actual summon casts, natural resource recovery, real evasion exchanges and basic attacks. No synthetic resource, cooldown, HP or RNG edits."
+  },
+  "visual": {
+    "status": "capture-evidence-art-polish-out-of-scope",
+    "runs": [
+      {
+        "gpu": "swiftshader",
+        "origin": "http://127.0.0.1:5198",
+        "inputProjectSha256": "2506d96ee4702ae35e5bc4712cdafd97472ed8e1dd83c9d2dbb75ff7455021d3",
+        "adoptedInBrowser": true,
+        "errors": [
+          "3D 場景的 PBR 光照貼圖尚未就緒"
+        ],
+        "heroErrors": [
+          "TimeoutError: page.waitForFunction: Timeout 60000ms exceeded."
+        ],
+        "completedCaptures": 0,
+        "failureImage": {
+          "path": "ggd-first37-browser-32-05/32/failure.png",
+          "bytes": 265671,
+          "sha256": "71554c1646bdf9ef678df68b34bca3feee6ece98dd07829723213f00ffe5b656"
+        }
+      },
+      {
+        "gpu": "native",
+        "origin": "http://127.0.0.1:5198",
+        "inputProjectSha256": "9d4593d450c9e1e7e2c39904058e31989331b376b12001a3ee72236604bd8b1d",
+        "adoptedInBrowser": false,
+        "errors": [
+          "3D 場景的 PBR 光照貼圖尚未就緒"
+        ],
+        "heroErrors": [
+          "TimeoutError: page.waitForFunction: Timeout 60000ms exceeded."
+        ],
+        "completedCaptures": 0,
+        "failureImage": {
+          "path": "ggd-first37-browser-32-06/32/failure.png",
+          "bytes": 265745,
+          "sha256": "e537ffb673f2cfe00e9fde17ff802beb42edb735c4fc58ba1aa50a447eb6334c"
+        }
+      }
+    ],
+    "diagnosis": "Actual mounted particle textures and isolated content catalog are used. Subaru W rejects in the preview framebuffer gate; Iori EX and Jotaro Q have obscured captured frames. These remain explicit observations, with no further micro-tuning under the final Owner decision.",
+    "note": "Capture coverage and art observations remain explicit limitations, not proof of all artwork passing. No further camera or art tuning is part of this delivery.",
+    "report": "parody-visual-review.json",
+    "heroesCapturedAllFiveActiveSlots": 36,
+    "activeSlotsCaptured": 181,
+    "capturedImages": 688,
+    "archive": "../supplements/visual-37-20260909",
+    "artifactManifestSha256": "ba828ecedbea87e43f4cc20845d0d1161f3326ca187e5bffb7229627a585522e",
+    "restoredEvidenceImages": 689
+  },
+  "localPublication": {
+    "status": "passed",
+    "published": 37,
+    "blocked": 0,
+    "report": "parody-publication-proof.json",
+    "attributedDownloadsByteIdentical": 37,
+    "environment": "127.0.0.1:8098 isolated test data",
+    "formalDeployment": false
+  },
+  "formalPublication": false,
+  "originalDesignAcceptance": "incomplete",
+  "remaining": [
+    "Main review/merge and integrated formal deployment."
+  ],
+  "artifactArchive": {
+    "path": "../supplements/admission-37-20260909",
+    "manifestSha256": "396fa15327689702ce1a36a197292356b336f2888bf0c5b6cc63142a88d534e8",
+    "uploadedObjects": 5,
+    "restoredFiles": 37,
+    "parts": 4
+  },
+  "localIntakePolicy": {
+    "pending": 50,
+    "daily": 100,
+    "powerUserDaily": 200,
+    "modelZipMaxBytes": 33554432,
+    "note": "Authenticated admin overlay in new isolated test dataset only; not shipped or production policy."
+  },
+  "previousRuntimeSourceCommit": "1385c2f83008bf1114301ce80ffd256040a3a2e5",
+  "previousArtifactArchive": {
+    "path": "../supplements/parody-37-20260909",
+    "manifestSha256": "6df04c35100841044bf2aef0dc7b5c31da47ac6264d55c6993c2741a680ae915",
+    "uploadedObjects": 4,
+    "restoredFiles": 201,
+    "parts": 3
+  },
+  "previousRegression": {
     "head": "1385c2f83008bf1114301ce80ffd256040a3a2e5",
     "implementedMechanismsTests": 1046,
     "editorTests": 603,
@@ -75,92 +203,11 @@
       }
     ]
   },
-  "currentServiceZip": {
-    "report": "parody-service-proof.json",
-    "passed": 32,
-    "failed": 5,
-    "target": {
-      "gameRevision": "1385c2f83008bf1114301ce80ffd256040a3a2e5",
-      "contentVersion": "cv_b9b47052d2e3",
-      "migrationFingerprint": "17d1f388d5c0",
-      "processorFingerprint": "2b794477f42d"
-    }
-  },
-  "admissionPreflight": {
-    "report": "parody-admission-scenes.json",
-    "matchesServiceFailedHeroes": true,
-    "nonzeroExitExpectedUntilFixed": true
-  },
-  "visual": {
-    "status": "failed",
-    "runs": [
-      {
-        "gpu": "swiftshader",
-        "origin": "http://127.0.0.1:5198",
-        "inputProjectSha256": "2506d96ee4702ae35e5bc4712cdafd97472ed8e1dd83c9d2dbb75ff7455021d3",
-        "adoptedInBrowser": true,
-        "errors": [
-          "3D 場景的 PBR 光照貼圖尚未就緒"
-        ],
-        "heroErrors": [
-          "TimeoutError: page.waitForFunction: Timeout 60000ms exceeded."
-        ],
-        "completedCaptures": 0,
-        "failureImage": {
-          "path": "ggd-first37-browser-32-05/32/failure.png",
-          "bytes": 265671,
-          "sha256": "71554c1646bdf9ef678df68b34bca3feee6ece98dd07829723213f00ffe5b656"
-        }
-      },
-      {
-        "gpu": "native",
-        "origin": "http://127.0.0.1:5198",
-        "inputProjectSha256": "9d4593d450c9e1e7e2c39904058e31989331b376b12001a3ee72236604bd8b1d",
-        "adoptedInBrowser": false,
-        "errors": [
-          "3D 場景的 PBR 光照貼圖尚未就緒"
-        ],
-        "heroErrors": [
-          "TimeoutError: page.waitForFunction: Timeout 60000ms exceeded."
-        ],
-        "completedCaptures": 0,
-        "failureImage": {
-          "path": "ggd-first37-browser-32-06/32/failure.png",
-          "bytes": 265745,
-          "sha256": "e537ffb673f2cfe00e9fde17ff802beb42edb735c4fc58ba1aa50a447eb6334c"
-        }
-      }
-    ],
-    "diagnosis": "PBR environment BRDF readiness failure under both software and native-configured browser launches; no successful model/skill image proof."
-  },
-  "localPublication": {
-    "status": "partial",
-    "published": 32,
-    "blocked": 5,
-    "report": "parody-publication-proof.json",
-    "attributedDownloadsByteIdentical": 32,
-    "environment": "127.0.0.1:8098 isolated test data",
+  "deliveryAcceptance": {
+    "status": "passed-owner-approved-functional-scope",
+    "rule": "Only significant skill, effect or mechanic failures block this delivery; camera/art micro-tuning is not required by the final Owner decision.",
+    "heroes": 37,
+    "slots": 222,
     "formalDeployment": false
-  },
-  "formalPublication": false,
-  "originalDesignAcceptance": "incomplete",
-  "remaining": [
-    "Resolve 5 default admission scenario failures without fabricating prerequisites or removing kit mechanics.",
-    "Resolve PBR readiness failure and complete actual model/skill visual review.",
-    "Complete formal adaptation review and integrated deployment through Main review/merge."
-  ],
-  "artifactArchive": {
-    "path": "../supplements/parody-37-20260909",
-    "manifestSha256": "6df04c35100841044bf2aef0dc7b5c31da47ac6264d55c6993c2741a680ae915",
-    "uploadedObjects": 4,
-    "restoredFiles": 201,
-    "parts": 3
-  },
-  "localIntakePolicy": {
-    "pending": 50,
-    "daily": 100,
-    "powerUserDaily": 200,
-    "modelZipMaxBytes": 33554432,
-    "note": "Authenticated admin overlay in new isolated test dataset only; not shipped or production policy."
   }
 }

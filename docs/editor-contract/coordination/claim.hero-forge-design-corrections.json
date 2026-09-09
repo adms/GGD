@@ -6,7 +6,7 @@
   "to": "main",
   "baseCommit": "6efdd3bfb4df593a26fa2e94d4d65f8e572c3c64",
   "contractFingerprint": "2b7596f9946625ab",
-  "title": "37 名惡搞改編與獨立版本；32 名隔離發布，5 名投稿情境及 PBR 畫面待修",
+  "title": "37 名／222 槽改編完成，37 名隔離投稿發布及 ZIP 還原通過",
   "claims": [
     {
       "kind": "confirmed",
@@ -52,7 +52,7 @@
     },
     {
       "kind": "confirmed",
-      "text": "PR 前段已提供資源、指定友軍保護、觀察事件、召喚／陷阱、滑板／牽引、格擋／中斷、局部時停、獨立續段及模板歷史等共用支援；相應角色與 transport/Editor 回歸仍登記在 validation-plan.json，歷史證據保留在各角色驗證檔。Main 需一併審查並同步整合 client/game-server/content-api，不能只收新版 JSON 至舊執行器。本輪另保留投稿預設情境與隔離服務、發布、S3 往返收據；原稿忠實還原及整批正式交付仍未完成，#1132 保持開啟。",
+      "text": "PR 前段已提供資源、指定友軍保護、觀察事件、召喚／陷阱、滑板／牽引、格擋／中斷、局部時停、獨立續段及模板歷史等共用支援；相應角色與 transport/Editor 回歸仍登記在 validation-plan.json，歷史證據保留在各角色驗證檔。Main 需一併審查並同步整合 client/game-server/content-api，不能只收新版 JSON 至舊執行器。本輪另保留投稿預設情境與隔離服務、發布、S3 往返收據；原稿忠實還原及正式部署仍待 Main 整合；畫面收據與限制見 parody-visual-review.json；依最新裁決不以鏡頭、遮擋或美術微調阻擋內容交付，仍不宣稱原作美術全數通過。",
       "repro": {
         "command": "pnpm exec tsc --noEmit -p packages/shared/tsconfig.json",
         "expectedExit": 0
@@ -64,6 +64,23 @@
         "AI參考全自動鑄造守則.md",
         "materials/community-hero-forge/refinements/parody-verification.json",
         "materials/community-hero-forge/refinements/parody-admission-scenes.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "Editor、Importer 與離線預檢共用實際前置操作：先跑原情境，必要時透過真實召喚、自然恢復、迴避交鋒及普攻取得條件；不改生命／魔力、冷卻、資源或亂數結果。移除取得來源仍拒絕。37 名已通過服務 417abec9d904 的建包／檢查、隔離投稿、管理員發布及異帳號署名下載，全部 ZIP 逐位元一致；並已從 S3 重新下載還原 37 份 ZIP。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements/admissionPrerequisites.test.ts --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+      "evidence": [
+        "packages/shared/src/content/heroForge/scenarioAdmission.ts",
+        "materials/community-hero-forge/refinements/parody-admission-scenes.json",
+        "materials/community-hero-forge/refinements/parody-service-proof.json",
+        "materials/community-hero-forge/refinements/parody-publication-proof.json",
+        "materials/community-hero-forge/supplements/admission-37-20260909/s3-restoration-receipt.json",
+        "materials/community-hero-forge/refinements/parody-visual-review.json"
       ]
     }
   ],
@@ -88,12 +105,16 @@
     {
       "date": "2026-09-09",
       "text": "阿薩謝爾 根據漫畫是全地球 所以極大就好了"
+    },
+    {
+      "date": "2026-09-09",
+      "text": "除非有重大問題 例如技能特效機制失效 不然你不需要介入微調"
     }
   ],
   "asks": [
     "Main 審查完整 37 名新版玩法、原稿差異、個別版本／rollback 與新增集中驗證。阿薩謝爾依最後裁決用既有極大 AoE，嘲諷沿用 GGD 自動索敵規則；目前配置下護甲／魔抗實際歸零，配置更動須重建並重驗。",
     "一併審查 PR 前段的通用資源、觀察事件、盾保護／免死、召喚／陷阱、位移、格擋／中斷、局部時停、recast、獨立模板歷史與快照／Editor 介接；相關範圍由 validation-plan 的 suite 指向。整合時同步建置 client/game-server/content-api。",
-    "Main 審查目前實測狀態：32 名已依服務 1385c2f83008 重建 ZIP、隔離投稿／管理員發布及異帳號下載還原；武藤遊戲、銀時、奇犽、艾莉絲、SUN樂仍被預設投稿情境擋住。離線 --scenario-report 可在上傳前重現相同 5 名失敗，不能刪使用條件或假造資源放行。PBR 光照預載兩種渲染設定均失敗，畫面未通過。#1132 留開；這些是本 task 待完成項，不派給其他任務。正式站尚未部署或發布。",
-    "同步審查生成器明確採用與新增修訂、AI 守則 v1.3、批次投稿預檢、32 份服務 ZIP 和 201 份 S3 封存／重下載證據。材料入口為 materials/community-hero-forge；大型 ZIP／模擬原始資料／PNG 在 supplements/parody-37-20260909 指向的授權 S3，Git 保存全部 37 名可維護來源和精簡收據。"
+    "Main 審查 37 名依服務 417abec9d904 重建 ZIP、隔離投稿／管理員發布及異帳號下載還原。原本五名投稿情境阻擋已修。37 名內容改編完成；最後裁決只以技能、特效或機制失效作重大阻擋，鏡頭及美術微調只記錄。菜月昴 W 的預覽模型像素拒絕與部分遮擋已明列，不宣稱逐圖美術全數通過。正式站尚未部署，請沿既有 PR 審查／合併，不改派任務。",
+    "同步審查生成器明確採用與新增修訂、AI 守則 v1.4、批次投稿預檢、37 份服務 ZIP 的 S3 封存／重下載證據。材料入口為 materials/community-hero-forge；原始大型模擬與歷史畫面在 supplements/parody-37-20260909，最新全部 ZIP 在 supplements/admission-37-20260909 指向的授權 S3。Git 保存全部 37 名可維護來源及精簡收據。"
   ]
 }

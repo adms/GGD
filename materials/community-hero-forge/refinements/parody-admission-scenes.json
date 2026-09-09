@@ -1,54 +1,82 @@
 {
   "schema": "ggd-handoff-admission-scenarios@1",
-  "scope": "Offline default six-slot and fixed-order admission scenarios; no asset, service, visual or publication proof.",
+  "scope": "Offline shared admission scenarios with real prerequisite actions when required; no asset, service, visual or publication proof.",
   "baselineDigest": "sha256:15757511cd97199ade972abd5e75e7b159b4274bbeaf256a33fa377038ad5358",
-  "passed": 32,
-  "failed": 5,
+  "passed": 37,
+  "failed": 0,
   "results": [
     {
       "projectId": "community-review-01-20260907",
       "name": "武藤遊戲",
       "sourceDigest": "sha256:3834b3fba5214d45b41240122eb06119d938705b5f20f91c96863c35cc649e36",
       "importedDraftDigest": "sha256:0c9c7a29c9455a1c9c5028e33470ddd3648e482a0ff1461eba59977002c926f9",
-      "status": "failed",
-      "failures": [
-        "EX: 未完成施放：no-summon",
-        "整套技能未完成：EX"
-      ],
+      "status": "passed",
+      "failures": [],
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "rejected",
-          "rejectionReason": "no-summon"
+          "status": "accepted",
+          "prerequisiteActions": [
+            "前置操作由真實輸入取得：cast:Q:required-summon"
+          ]
         }
       ],
       "kit": {
-        "status": "rejected",
-        "rejectedSlots": [
-          "EX"
-        ],
-        "rejectionReasonsBySlot": {
-          "EX": "no-summon (preflightCast=none)"
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {},
+        "prerequisiteActionsBySlot": {
+          "PASSIVE": {
+            "ticks": 0,
+            "actions": []
+          },
+          "Q": {
+            "ticks": 0,
+            "actions": []
+          },
+          "W": {
+            "ticks": 0,
+            "actions": []
+          },
+          "E": {
+            "ticks": 0,
+            "actions": []
+          },
+          "R": {
+            "ticks": 0,
+            "actions": []
+          },
+          "EX": {
+            "ticks": 47,
+            "actions": [
+              "cast:Q:required-summon"
+            ]
+          }
         }
       }
     },
@@ -62,27 +90,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -101,27 +135,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -140,27 +180,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -179,27 +225,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -218,27 +270,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -257,27 +315,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -296,27 +360,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -335,27 +405,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -374,27 +450,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -413,27 +495,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -452,27 +540,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -491,27 +585,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -530,27 +630,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -569,27 +675,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -608,27 +720,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -647,27 +765,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -686,27 +810,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -725,27 +855,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -764,27 +900,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -803,27 +945,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -842,27 +990,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -876,43 +1030,71 @@
       "name": "坂田銀時",
       "sourceDigest": "sha256:9b0565275cfca53cf5c39e1ea1c8e8940b21650aefff42eb1a4b4fcf84da13d1",
       "importedDraftDigest": "sha256:1b33ada4b2430b3ef9eedb140c5f979162853e09a35bee9b62aaeb61ff823ce6",
-      "status": "failed",
-      "failures": [
-        "整套技能未完成：W"
-      ],
+      "status": "passed",
+      "failures": [],
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
-        "status": "rejected",
-        "rejectedSlots": [
-          "W"
-        ],
-        "rejectionReasonsBySlot": {
-          "W": "no-resource (preflightCast=none)"
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {},
+        "prerequisiteActionsBySlot": {
+          "PASSIVE": {
+            "ticks": 0,
+            "actions": []
+          },
+          "Q": {
+            "ticks": 0,
+            "actions": []
+          },
+          "W": {
+            "ticks": 211,
+            "actions": [
+              "hold:7s:resource-recovery"
+            ]
+          },
+          "E": {
+            "ticks": 0,
+            "actions": []
+          },
+          "R": {
+            "ticks": 0,
+            "actions": []
+          },
+          "EX": {
+            "ticks": 0,
+            "actions": []
+          }
         }
       }
     },
@@ -921,43 +1103,71 @@
       "name": "奇犽",
       "sourceDigest": "sha256:b053a177540e713a3a322c5b8a97100e592a80bef5dcba232d39876dc5e801a1",
       "importedDraftDigest": "sha256:f2c3471296d06ecd1c67686d96f436e04de987f37c0732ac15f10c9dc5744d43",
-      "status": "failed",
-      "failures": [
-        "整套技能未完成：EX"
-      ],
+      "status": "passed",
+      "failures": [],
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
-        "status": "rejected",
-        "rejectedSlots": [
-          "EX"
-        ],
-        "rejectionReasonsBySlot": {
-          "EX": "no-resource (preflightCast=none)"
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {},
+        "prerequisiteActionsBySlot": {
+          "PASSIVE": {
+            "ticks": 0,
+            "actions": []
+          },
+          "Q": {
+            "ticks": 0,
+            "actions": []
+          },
+          "W": {
+            "ticks": 0,
+            "actions": []
+          },
+          "E": {
+            "ticks": 0,
+            "actions": []
+          },
+          "R": {
+            "ticks": 0,
+            "actions": []
+          },
+          "EX": {
+            "ticks": 211,
+            "actions": [
+              "hold:7s:resource-recovery"
+            ]
+          }
         }
       }
     },
@@ -971,27 +1181,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -1010,27 +1226,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -1049,27 +1271,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -1083,35 +1311,40 @@
       "name": "艾莉絲·伯雷亞斯·格雷拉特",
       "sourceDigest": "sha256:8dfa07aae7fa41d19a6886df280c36c0730c2f7d9fb3eee1639b42a66147bee0",
       "importedDraftDigest": "sha256:160f69e7428dc043ed0553bac98350c82296f29dfb758fc4c421bae56d28a891",
-      "status": "failed",
-      "failures": [
-        "EX: 未完成施放：target-condition"
-      ],
+      "status": "passed",
+      "failures": [],
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "rejected",
-          "rejectionReason": "target-condition"
+          "status": "accepted",
+          "prerequisiteActions": [
+            "前置操作由真實輸入取得：attack-target:earn-own-hit"
+          ]
         }
       ],
       "kit": {
@@ -1130,27 +1363,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -1169,27 +1408,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -1203,43 +1448,75 @@
       "name": "SUN樂",
       "sourceDigest": "sha256:3cafe25192a5dbe32add15c54046acaad86a61b5d980f885d7603fca692850e7",
       "importedDraftDigest": "sha256:8c4a2ddeeea595371a787836397fea21207a72fa5aa90d7c6bbccc419164672b",
-      "status": "failed",
-      "failures": [
-        "整套技能未完成：EX"
-      ],
+      "status": "passed",
+      "failures": [],
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
-        "status": "rejected",
-        "rejectedSlots": [
-          "EX"
-        ],
-        "rejectionReasonsBySlot": {
-          "EX": "no-resource (preflightCast=none)"
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {},
+        "prerequisiteActionsBySlot": {
+          "PASSIVE": {
+            "ticks": 0,
+            "actions": []
+          },
+          "Q": {
+            "ticks": 0,
+            "actions": []
+          },
+          "W": {
+            "ticks": 0,
+            "actions": []
+          },
+          "E": {
+            "ticks": 0,
+            "actions": []
+          },
+          "R": {
+            "ticks": 0,
+            "actions": []
+          },
+          "EX": {
+            "ticks": 407,
+            "actions": [
+              "hold:7s:resource-recovery",
+              "cast:W:evade-exchange:1",
+              "cast:W:evade-exchange:2",
+              "cast:W:evade-exchange:3",
+              "cast:W:evade-exchange:4"
+            ]
+          }
         }
       }
     },
@@ -1253,27 +1530,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -1292,27 +1575,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -1331,27 +1620,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -1370,27 +1665,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -1409,27 +1710,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
@@ -1448,27 +1755,33 @@
       "slots": [
         {
           "slot": "PASSIVE",
-          "status": "passive"
+          "status": "passive",
+          "prerequisiteActions": []
         },
         {
           "slot": "Q",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "W",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "E",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "R",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         },
         {
           "slot": "EX",
-          "status": "accepted"
+          "status": "accepted",
+          "prerequisiteActions": []
         }
       ],
       "kit": {
