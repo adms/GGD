@@ -147,6 +147,14 @@ TIER_FIELDS = ("msBonusTier", "damageTier", "cooldownTier", "rangeTier", "manaCo
                "radiusTier", "castTimeTier", "healTier", "shieldTier")
 
 
+def attach_ability_icon(d: dict) -> dict:
+    """⭐ 兩個住處都認：產出目錄與**已經出貨的那一份** —— ⛔ 誰先跑都一樣。"""
+    src = ICONS / "abilities" / f"{d['id']}.webp"
+    if src.is_file() or (ICON_AB / f"{d['id']}.webp").is_file():
+        d["icon"] = f"assets/icons/abilities/{d['id']}.webp"
+    return d
+
+
 def drop_baked_values(node):
     """⭐ 遞迴：帶級距的節點把**算好的值**拿掉。
 
@@ -298,9 +306,7 @@ def ability_docs(hero: dict, slots: list[dict]) -> list[dict]:
                 UNEXPRESSIBLE.append({"ability": d["id"], "anchor": v.get("anchor")})
             d["vfxLayers"] = [layer]
     for d in docs:
-        src = ICONS / "abilities" / f"{d['id']}.webp"
-        if src.is_file() or (ICON_AB / f"{d['id']}.webp").is_file():
-            d["icon"] = f"assets/icons/abilities/{d['id']}.webp"
+        attach_ability_icon(d)
     if len(docs) != 6:
         raise ValueError(f"⛔ {hero['id']} 只組出 {len(docs)} 份技能 —— 六格要齊")
     return docs
@@ -422,7 +428,11 @@ def main() -> None:
                      # ⚠️ ⭐ `drop_baked_values` 要在**兩條路上都跑** ——
                      #   ⛔ 我第一版只在 `ability_docs()` 裡跑,而第二批**不經過它**
                      #   ⇒ 116 個節點同時留著級距與 `perRank`,`skillnorm` 當場紅。
-                     "abilities": [drop_baked_values(backfill_status_mechanics(a, STATUS_MECH) or a)
+                     # ⚠️ ⭐ 圖示接線也要在**兩條路上都跑** —— ⛔ 它原本只住在
+                     #   `ability_docs()` 裡,而第二批不經過它 ⇒ 222 張圖檔全在,
+                     #   而 222 份文件**沒有一份指向它們**（同一個形狀犯第二次）。
+                     "abilities": [attach_ability_icon(
+                                       drop_baked_values(backfill_status_mechanics(a, STATUS_MECH) or a))
                                    for a in h["abilities"]]
                                   if "abilities" in h else ability_docs(c, h["slots"])})
 

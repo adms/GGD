@@ -1,1338 +1,1338 @@
 {
   "collection": "abilities",
-  "hash": "d7f4187e2ffd",
+  "hash": "14ce2d177c5b",
   "entries": [
     {
       "id": "b2-aladdin.e",
       "path": "abilities/b2-aladdin.e.json",
-      "hash": "648ae50766bb",
-      "size": 1874
+      "hash": "cb2fecb5340e",
+      "size": 1928
     },
     {
       "id": "b2-aladdin.ex",
       "path": "abilities/b2-aladdin.ex.json",
-      "hash": "87249a4d2d42",
-      "size": 2234
+      "hash": "f156e177e478",
+      "size": 2289
     },
     {
       "id": "b2-aladdin.passive",
       "path": "abilities/b2-aladdin.passive.json",
-      "hash": "c1c0e4d91a22",
-      "size": 1533
+      "hash": "9da35bfaae43",
+      "size": 1593
     },
     {
       "id": "b2-aladdin.q",
       "path": "abilities/b2-aladdin.q.json",
-      "hash": "2ee3c0d25ce8",
-      "size": 2560
+      "hash": "4267d93b7318",
+      "size": 2614
     },
     {
       "id": "b2-aladdin.r",
       "path": "abilities/b2-aladdin.r.json",
-      "hash": "c70835fa19fe",
-      "size": 1538
+      "hash": "eebab935e5dc",
+      "size": 1592
     },
     {
       "id": "b2-aladdin.w",
       "path": "abilities/b2-aladdin.w.json",
-      "hash": "78f7ba436d9f",
-      "size": 2339
+      "hash": "f9e073b9432b",
+      "size": 2393
     },
     {
       "id": "b2-albus.e",
       "path": "abilities/b2-albus.e.json",
-      "hash": "e3d688f7be24",
-      "size": 1175
+      "hash": "99e40862cd12",
+      "size": 1227
     },
     {
       "id": "b2-albus.ex",
       "path": "abilities/b2-albus.ex.json",
-      "hash": "6aef04392fe0",
-      "size": 2050
+      "hash": "bbbe39603720",
+      "size": 2103
     },
     {
       "id": "b2-albus.passive",
       "path": "abilities/b2-albus.passive.json",
-      "hash": "a6ea1246e1f1",
-      "size": 1597
+      "hash": "e9d1accdb000",
+      "size": 1655
     },
     {
       "id": "b2-albus.q",
       "path": "abilities/b2-albus.q.json",
-      "hash": "fe5953b18ca7",
-      "size": 1333
+      "hash": "d3595cacb46f",
+      "size": 1385
     },
     {
       "id": "b2-albus.r",
       "path": "abilities/b2-albus.r.json",
-      "hash": "a125746b13b0",
-      "size": 2584
+      "hash": "2cb16745eafb",
+      "size": 2636
     },
     {
       "id": "b2-albus.w",
       "path": "abilities/b2-albus.w.json",
-      "hash": "bf1f39c0598e",
-      "size": 1620
+      "hash": "851370242f72",
+      "size": 1672
     },
     {
       "id": "b2-bojji.e",
       "path": "abilities/b2-bojji.e.json",
-      "hash": "6350fb51b70f",
-      "size": 1217
+      "hash": "b33a204d7167",
+      "size": 1269
     },
     {
       "id": "b2-bojji.ex",
       "path": "abilities/b2-bojji.ex.json",
-      "hash": "20973589bf41",
-      "size": 1635
+      "hash": "d7776c805235",
+      "size": 1688
     },
     {
       "id": "b2-bojji.passive",
       "path": "abilities/b2-bojji.passive.json",
-      "hash": "e5bbeb45e28d",
-      "size": 1603
+      "hash": "f9c02c178e7e",
+      "size": 1661
     },
     {
       "id": "b2-bojji.q",
       "path": "abilities/b2-bojji.q.json",
-      "hash": "c3b2ddaa1c22",
-      "size": 1602
+      "hash": "21ec2465bb2e",
+      "size": 1654
     },
     {
       "id": "b2-bojji.r",
       "path": "abilities/b2-bojji.r.json",
-      "hash": "e65327a2a207",
-      "size": 2328
+      "hash": "b9c2032cff94",
+      "size": 2380
     },
     {
       "id": "b2-bojji.w",
       "path": "abilities/b2-bojji.w.json",
-      "hash": "bec45489c68a",
-      "size": 1634
+      "hash": "94f3ee651f39",
+      "size": 1686
     },
     {
       "id": "b2-boxxo.e",
       "path": "abilities/b2-boxxo.e.json",
-      "hash": "213384ba18db",
-      "size": 1454
+      "hash": "2ec1c43c8b49",
+      "size": 1506
     },
     {
       "id": "b2-boxxo.ex",
       "path": "abilities/b2-boxxo.ex.json",
-      "hash": "aa3d9f94ca63",
-      "size": 1967
+      "hash": "94f332807568",
+      "size": 2020
     },
     {
       "id": "b2-boxxo.passive",
       "path": "abilities/b2-boxxo.passive.json",
-      "hash": "e0f4f9570b05",
-      "size": 1902
+      "hash": "8ed3de07f195",
+      "size": 1960
     },
     {
       "id": "b2-boxxo.q",
       "path": "abilities/b2-boxxo.q.json",
-      "hash": "6810dc1ddc35",
-      "size": 2314
+      "hash": "e3e22e43e57d",
+      "size": 2366
     },
     {
       "id": "b2-boxxo.r",
       "path": "abilities/b2-boxxo.r.json",
-      "hash": "d673a9ffe8d7",
-      "size": 2848
+      "hash": "060efee94fc2",
+      "size": 2900
     },
     {
       "id": "b2-boxxo.w",
       "path": "abilities/b2-boxxo.w.json",
-      "hash": "7f9a3d3d1415",
-      "size": 2462
+      "hash": "f4a1adaffc1d",
+      "size": 2514
     },
     {
       "id": "b2-elma.e",
       "path": "abilities/b2-elma.e.json",
-      "hash": "a6b1b3ec6355",
-      "size": 1421
+      "hash": "5d52955364e0",
+      "size": 1472
     },
     {
       "id": "b2-elma.ex",
       "path": "abilities/b2-elma.ex.json",
-      "hash": "c00dff901520",
-      "size": 1142
+      "hash": "d88155292d91",
+      "size": 1194
     },
     {
       "id": "b2-elma.passive",
       "path": "abilities/b2-elma.passive.json",
-      "hash": "709f84d5a18a",
-      "size": 1620
+      "hash": "2205510f6de6",
+      "size": 1677
     },
     {
       "id": "b2-elma.q",
       "path": "abilities/b2-elma.q.json",
-      "hash": "b964f6e43cb9",
-      "size": 2211
+      "hash": "386338d5246e",
+      "size": 2262
     },
     {
       "id": "b2-elma.r",
       "path": "abilities/b2-elma.r.json",
-      "hash": "004897cb87f8",
-      "size": 1530
+      "hash": "5c5a148709bd",
+      "size": 1581
     },
     {
       "id": "b2-elma.w",
       "path": "abilities/b2-elma.w.json",
-      "hash": "ad93c496075a",
-      "size": 2471
+      "hash": "e2970ee61cf5",
+      "size": 2522
     },
     {
       "id": "b2-fushi.e",
       "path": "abilities/b2-fushi.e.json",
-      "hash": "28894d050837",
-      "size": 2628
+      "hash": "e1c248b8407e",
+      "size": 2680
     },
     {
       "id": "b2-fushi.ex",
       "path": "abilities/b2-fushi.ex.json",
-      "hash": "923afa6f0f1a",
-      "size": 1129
+      "hash": "635a1f82202b",
+      "size": 1182
     },
     {
       "id": "b2-fushi.passive",
       "path": "abilities/b2-fushi.passive.json",
-      "hash": "03ef4d2fd7ec",
-      "size": 1676
+      "hash": "4f85217370ae",
+      "size": 1734
     },
     {
       "id": "b2-fushi.q",
       "path": "abilities/b2-fushi.q.json",
-      "hash": "57db3a5726ae",
-      "size": 2217
+      "hash": "5345049b22eb",
+      "size": 2269
     },
     {
       "id": "b2-fushi.r",
       "path": "abilities/b2-fushi.r.json",
-      "hash": "ddb369433afa",
-      "size": 1592
+      "hash": "66887e9a2174",
+      "size": 1644
     },
     {
       "id": "b2-fushi.w",
       "path": "abilities/b2-fushi.w.json",
-      "hash": "1819f561ebd2",
-      "size": 2201
+      "hash": "160a295c0cc6",
+      "size": 2253
     },
     {
       "id": "b2-goblin.e",
       "path": "abilities/b2-goblin.e.json",
-      "hash": "83d5122cbfa6",
-      "size": 1595
+      "hash": "d34fb2efbff3",
+      "size": 1648
     },
     {
       "id": "b2-goblin.ex",
       "path": "abilities/b2-goblin.ex.json",
-      "hash": "87cec668cc7e",
-      "size": 1607
+      "hash": "2e94856d49d9",
+      "size": 1661
     },
     {
       "id": "b2-goblin.passive",
       "path": "abilities/b2-goblin.passive.json",
-      "hash": "d03d2dea77dd",
-      "size": 1832
+      "hash": "e4799739f6dd",
+      "size": 1891
     },
     {
       "id": "b2-goblin.q",
       "path": "abilities/b2-goblin.q.json",
-      "hash": "b55f0015cb7e",
-      "size": 2474
+      "hash": "3655d79b1568",
+      "size": 2527
     },
     {
       "id": "b2-goblin.r",
       "path": "abilities/b2-goblin.r.json",
-      "hash": "3579e54ea1fe",
-      "size": 2214
+      "hash": "06bcee8a0abe",
+      "size": 2267
     },
     {
       "id": "b2-goblin.w",
       "path": "abilities/b2-goblin.w.json",
-      "hash": "2fe9547f4274",
-      "size": 1571
+      "hash": "bec51c78bf8e",
+      "size": 1624
     },
     {
       "id": "b2-guts.e",
       "path": "abilities/b2-guts.e.json",
-      "hash": "6c9ba19eebdd",
-      "size": 2055
+      "hash": "53e8da26045a",
+      "size": 2106
     },
     {
       "id": "b2-guts.ex",
       "path": "abilities/b2-guts.ex.json",
-      "hash": "88f5cc971852",
-      "size": 1620
+      "hash": "9ccc47e4fcc4",
+      "size": 1672
     },
     {
       "id": "b2-guts.passive",
       "path": "abilities/b2-guts.passive.json",
-      "hash": "d4f975618e60",
-      "size": 2141
+      "hash": "dac7bd0177bd",
+      "size": 2198
     },
     {
       "id": "b2-guts.q",
       "path": "abilities/b2-guts.q.json",
-      "hash": "c6e516541011",
-      "size": 1512
+      "hash": "d729fdb12ae7",
+      "size": 1563
     },
     {
       "id": "b2-guts.r",
       "path": "abilities/b2-guts.r.json",
-      "hash": "01cf279e4838",
-      "size": 1906
+      "hash": "c981ee6fa087",
+      "size": 1957
     },
     {
       "id": "b2-guts.w",
       "path": "abilities/b2-guts.w.json",
-      "hash": "7891da80e005",
-      "size": 2013
+      "hash": "c7ab6cecc3a0",
+      "size": 2064
     },
     {
       "id": "b2-haga.e",
       "path": "abilities/b2-haga.e.json",
-      "hash": "40f1b89662a5",
-      "size": 1620
+      "hash": "36a88bd610ee",
+      "size": 1671
     },
     {
       "id": "b2-haga.ex",
       "path": "abilities/b2-haga.ex.json",
-      "hash": "943ca6fa87e9",
-      "size": 2163
+      "hash": "c440750d4c11",
+      "size": 2215
     },
     {
       "id": "b2-haga.passive",
       "path": "abilities/b2-haga.passive.json",
-      "hash": "e7d0526adc51",
-      "size": 1669
+      "hash": "f908a3367fa1",
+      "size": 1726
     },
     {
       "id": "b2-haga.q",
       "path": "abilities/b2-haga.q.json",
-      "hash": "5d43d805c99a",
-      "size": 1639
+      "hash": "b83813a16b43",
+      "size": 1690
     },
     {
       "id": "b2-haga.r",
       "path": "abilities/b2-haga.r.json",
-      "hash": "069f9ac54ff8",
-      "size": 2381
+      "hash": "3ad456f9847a",
+      "size": 2432
     },
     {
       "id": "b2-haga.w",
       "path": "abilities/b2-haga.w.json",
-      "hash": "fdcac65f73b7",
-      "size": 1999
+      "hash": "03fd763b42da",
+      "size": 2050
     },
     {
       "id": "b2-kaede.e",
       "path": "abilities/b2-kaede.e.json",
-      "hash": "743510733f2c",
-      "size": 1788
+      "hash": "495bf98488b5",
+      "size": 1840
     },
     {
       "id": "b2-kaede.ex",
       "path": "abilities/b2-kaede.ex.json",
-      "hash": "d73a66ec2b4b",
-      "size": 1894
+      "hash": "86d8a6ccd717",
+      "size": 1947
     },
     {
       "id": "b2-kaede.passive",
       "path": "abilities/b2-kaede.passive.json",
-      "hash": "143da359894f",
-      "size": 2019
+      "hash": "c9eb7df71cea",
+      "size": 2077
     },
     {
       "id": "b2-kaede.q",
       "path": "abilities/b2-kaede.q.json",
-      "hash": "f29d78c77aac",
-      "size": 1632
+      "hash": "bcf0a84301e7",
+      "size": 1684
     },
     {
       "id": "b2-kaede.r",
       "path": "abilities/b2-kaede.r.json",
-      "hash": "973845aac743",
-      "size": 1903
+      "hash": "ade82902c98d",
+      "size": 1955
     },
     {
       "id": "b2-kaede.w",
       "path": "abilities/b2-kaede.w.json",
-      "hash": "6e2e037d28f9",
-      "size": 1492
+      "hash": "829037552ba2",
+      "size": 1544
     },
     {
       "id": "b2-kaiji.e",
       "path": "abilities/b2-kaiji.e.json",
-      "hash": "46d3c2b1e4eb",
-      "size": 2441
+      "hash": "e01f898880b8",
+      "size": 2493
     },
     {
       "id": "b2-kaiji.ex",
       "path": "abilities/b2-kaiji.ex.json",
-      "hash": "132206c409af",
-      "size": 1225
+      "hash": "02c441e3e772",
+      "size": 1278
     },
     {
       "id": "b2-kaiji.passive",
       "path": "abilities/b2-kaiji.passive.json",
-      "hash": "0447b262759d",
-      "size": 1510
+      "hash": "3218cfd58048",
+      "size": 1568
     },
     {
       "id": "b2-kaiji.q",
       "path": "abilities/b2-kaiji.q.json",
-      "hash": "919aa0bd730c",
-      "size": 1790
+      "hash": "73fd5a38ca90",
+      "size": 1842
     },
     {
       "id": "b2-kaiji.r",
       "path": "abilities/b2-kaiji.r.json",
-      "hash": "29a194b5a07c",
-      "size": 2966
+      "hash": "fb82fc2bfd4b",
+      "size": 3018
     },
     {
       "id": "b2-kaiji.w",
       "path": "abilities/b2-kaiji.w.json",
-      "hash": "5581e314f77c",
-      "size": 1872
+      "hash": "33d37a8fd99a",
+      "size": 1924
     },
     {
       "id": "b2-keyaru.e",
       "path": "abilities/b2-keyaru.e.json",
-      "hash": "0dab3cef88a9",
-      "size": 1402
+      "hash": "8c3b200827e4",
+      "size": 1455
     },
     {
       "id": "b2-keyaru.ex",
       "path": "abilities/b2-keyaru.ex.json",
-      "hash": "6c6b88460f4a",
-      "size": 1850
+      "hash": "30fdf4c618c1",
+      "size": 1904
     },
     {
       "id": "b2-keyaru.passive",
       "path": "abilities/b2-keyaru.passive.json",
-      "hash": "ae7529b6fa47",
-      "size": 1648
+      "hash": "859899269de2",
+      "size": 1707
     },
     {
       "id": "b2-keyaru.q",
       "path": "abilities/b2-keyaru.q.json",
-      "hash": "c49cb6e18988",
-      "size": 1424
+      "hash": "14822d557903",
+      "size": 1477
     },
     {
       "id": "b2-keyaru.r",
       "path": "abilities/b2-keyaru.r.json",
-      "hash": "41fc04285091",
-      "size": 2533
+      "hash": "d9f8bd5ed3ad",
+      "size": 2586
     },
     {
       "id": "b2-keyaru.w",
       "path": "abilities/b2-keyaru.w.json",
-      "hash": "8640554fdff6",
-      "size": 2461
+      "hash": "d463b1f7eaff",
+      "size": 2514
     },
     {
       "id": "b2-kisaragi.e",
       "path": "abilities/b2-kisaragi.e.json",
-      "hash": "9d44ac82ffe0",
-      "size": 2719
+      "hash": "265da0372d0a",
+      "size": 2774
     },
     {
       "id": "b2-kisaragi.ex",
       "path": "abilities/b2-kisaragi.ex.json",
-      "hash": "c0358de48882",
-      "size": 1867
+      "hash": "fec3b007f3da",
+      "size": 1923
     },
     {
       "id": "b2-kisaragi.passive",
       "path": "abilities/b2-kisaragi.passive.json",
-      "hash": "554156510e0b",
-      "size": 1880
+      "hash": "0b9ebb1decbb",
+      "size": 1941
     },
     {
       "id": "b2-kisaragi.q",
       "path": "abilities/b2-kisaragi.q.json",
-      "hash": "6a6013de26cb",
-      "size": 1750
+      "hash": "63fdf8a1d8f7",
+      "size": 1805
     },
     {
       "id": "b2-kisaragi.r",
       "path": "abilities/b2-kisaragi.r.json",
-      "hash": "536e317a9c08",
-      "size": 9062
+      "hash": "3a9df55e8764",
+      "size": 9117
     },
     {
       "id": "b2-kisaragi.w",
       "path": "abilities/b2-kisaragi.w.json",
-      "hash": "0e6edaa7a4d1",
-      "size": 2217
+      "hash": "573f018eadb5",
+      "size": 2272
     },
     {
       "id": "b2-klaus.e",
       "path": "abilities/b2-klaus.e.json",
-      "hash": "c4de64654af4",
-      "size": 1205
+      "hash": "34cb2f81bf66",
+      "size": 1257
     },
     {
       "id": "b2-klaus.ex",
       "path": "abilities/b2-klaus.ex.json",
-      "hash": "1a6bbdfafc98",
-      "size": 2121
+      "hash": "65fdf1b09a02",
+      "size": 2174
     },
     {
       "id": "b2-klaus.passive",
       "path": "abilities/b2-klaus.passive.json",
-      "hash": "c5e2b794737e",
-      "size": 1538
+      "hash": "f7f62f74bd0a",
+      "size": 1596
     },
     {
       "id": "b2-klaus.q",
       "path": "abilities/b2-klaus.q.json",
-      "hash": "fe43694c4a14",
-      "size": 1587
+      "hash": "66afae7b9507",
+      "size": 1639
     },
     {
       "id": "b2-klaus.r",
       "path": "abilities/b2-klaus.r.json",
-      "hash": "01d001c39a6c",
-      "size": 1832
+      "hash": "7afb67db8240",
+      "size": 1884
     },
     {
       "id": "b2-klaus.w",
       "path": "abilities/b2-klaus.w.json",
-      "hash": "a3529c5f045d",
-      "size": 2400
+      "hash": "60c1b456cf4c",
+      "size": 2452
     },
     {
       "id": "b2-kumoko.e",
       "path": "abilities/b2-kumoko.e.json",
-      "hash": "291db8a11cd2",
-      "size": 1203
+      "hash": "84b3f07b59ba",
+      "size": 1256
     },
     {
       "id": "b2-kumoko.ex",
       "path": "abilities/b2-kumoko.ex.json",
-      "hash": "8cca69970e59",
-      "size": 1858
+      "hash": "f05f8d676bbe",
+      "size": 1912
     },
     {
       "id": "b2-kumoko.passive",
       "path": "abilities/b2-kumoko.passive.json",
-      "hash": "ec5d8eb5a2f5",
-      "size": 1838
+      "hash": "3d95c6879047",
+      "size": 1897
     },
     {
       "id": "b2-kumoko.q",
       "path": "abilities/b2-kumoko.q.json",
-      "hash": "12afa2be55e7",
-      "size": 1343
+      "hash": "48126b3a4f3b",
+      "size": 1396
     },
     {
       "id": "b2-kumoko.r",
       "path": "abilities/b2-kumoko.r.json",
-      "hash": "979d7802459c",
-      "size": 1839
+      "hash": "6154a6fc4343",
+      "size": 1892
     },
     {
       "id": "b2-kumoko.w",
       "path": "abilities/b2-kumoko.w.json",
-      "hash": "5f6281388e8e",
-      "size": 2604
+      "hash": "0931b664817d",
+      "size": 2657
     },
     {
       "id": "b2-luckyman.e",
       "path": "abilities/b2-luckyman.e.json",
-      "hash": "aa47225f371f",
-      "size": 1564
+      "hash": "4391175b7e98",
+      "size": 1619
     },
     {
       "id": "b2-luckyman.ex",
       "path": "abilities/b2-luckyman.ex.json",
-      "hash": "2418a8704129",
-      "size": 1147
+      "hash": "793e7b334b78",
+      "size": 1203
     },
     {
       "id": "b2-luckyman.passive",
       "path": "abilities/b2-luckyman.passive.json",
-      "hash": "a651bfcd0667",
-      "size": 1516
+      "hash": "e2d30bfa1c08",
+      "size": 1577
     },
     {
       "id": "b2-luckyman.q",
       "path": "abilities/b2-luckyman.q.json",
-      "hash": "fbc7a5f3d748",
-      "size": 1593
+      "hash": "6e93d55d36e8",
+      "size": 1648
     },
     {
       "id": "b2-luckyman.r",
       "path": "abilities/b2-luckyman.r.json",
-      "hash": "c5cb0482482b",
-      "size": 3277
+      "hash": "784867cbb07d",
+      "size": 3332
     },
     {
       "id": "b2-luckyman.w",
       "path": "abilities/b2-luckyman.w.json",
-      "hash": "996f6875d4fe",
-      "size": 1348
+      "hash": "e10f1b8be833",
+      "size": 1403
     },
     {
       "id": "b2-makoto.e",
       "path": "abilities/b2-makoto.e.json",
-      "hash": "6dff30377fc4",
-      "size": 2393
+      "hash": "fa1ea596ee49",
+      "size": 2446
     },
     {
       "id": "b2-makoto.ex",
       "path": "abilities/b2-makoto.ex.json",
-      "hash": "d6749f3ffec5",
-      "size": 1210
+      "hash": "4f21af50449e",
+      "size": 1264
     },
     {
       "id": "b2-makoto.passive",
       "path": "abilities/b2-makoto.passive.json",
-      "hash": "10ee4fb523fe",
-      "size": 1619
+      "hash": "3ceeae03f3cc",
+      "size": 1678
     },
     {
       "id": "b2-makoto.q",
       "path": "abilities/b2-makoto.q.json",
-      "hash": "5ea6d6c2d036",
-      "size": 1634
+      "hash": "1ce6aa71d0bb",
+      "size": 1687
     },
     {
       "id": "b2-makoto.r",
       "path": "abilities/b2-makoto.r.json",
-      "hash": "a66dd091dd37",
-      "size": 2325
+      "hash": "d86846d9c93b",
+      "size": 2378
     },
     {
       "id": "b2-makoto.w",
       "path": "abilities/b2-makoto.w.json",
-      "hash": "bea4f3864b29",
-      "size": 1857
+      "hash": "b0108c1f855d",
+      "size": 1910
     },
     {
       "id": "b2-maomao.e",
       "path": "abilities/b2-maomao.e.json",
-      "hash": "b20cc406f889",
-      "size": 2161
+      "hash": "1335615e177f",
+      "size": 2214
     },
     {
       "id": "b2-maomao.ex",
       "path": "abilities/b2-maomao.ex.json",
-      "hash": "dbe080654cc4",
-      "size": 1700
+      "hash": "d9d6df723599",
+      "size": 1754
     },
     {
       "id": "b2-maomao.passive",
       "path": "abilities/b2-maomao.passive.json",
-      "hash": "f8d832dd5e4f",
-      "size": 1561
+      "hash": "dd3922cafec4",
+      "size": 1620
     },
     {
       "id": "b2-maomao.q",
       "path": "abilities/b2-maomao.q.json",
-      "hash": "502fc8f46b20",
-      "size": 2230
+      "hash": "4485ab008084",
+      "size": 2283
     },
     {
       "id": "b2-maomao.r",
       "path": "abilities/b2-maomao.r.json",
-      "hash": "8a59fecbccc3",
-      "size": 2792
+      "hash": "f0b1db72ad3d",
+      "size": 2845
     },
     {
       "id": "b2-maomao.w",
       "path": "abilities/b2-maomao.w.json",
-      "hash": "ede41ad009f3",
-      "size": 2553
+      "hash": "42468398a7fd",
+      "size": 2606
     },
     {
       "id": "b2-maple.e",
       "path": "abilities/b2-maple.e.json",
-      "hash": "df97856d7cae",
-      "size": 1627
+      "hash": "e65843c36f5f",
+      "size": 1679
     },
     {
       "id": "b2-maple.ex",
       "path": "abilities/b2-maple.ex.json",
-      "hash": "609310a3e2da",
-      "size": 1894
+      "hash": "2bdbd60d7844",
+      "size": 1947
     },
     {
       "id": "b2-maple.passive",
       "path": "abilities/b2-maple.passive.json",
-      "hash": "26f11b067dcf",
-      "size": 1479
+      "hash": "b28ce8dd13b6",
+      "size": 1537
     },
     {
       "id": "b2-maple.q",
       "path": "abilities/b2-maple.q.json",
-      "hash": "1724dd149937",
-      "size": 1896
+      "hash": "db9d1a0e2b3e",
+      "size": 1948
     },
     {
       "id": "b2-maple.r",
       "path": "abilities/b2-maple.r.json",
-      "hash": "00697c88d300",
-      "size": 2838
+      "hash": "69363004d16e",
+      "size": 2890
     },
     {
       "id": "b2-maple.w",
       "path": "abilities/b2-maple.w.json",
-      "hash": "16518cbab837",
-      "size": 2176
+      "hash": "4435a39efc3a",
+      "size": 2228
     },
     {
       "id": "b2-matthias.e",
       "path": "abilities/b2-matthias.e.json",
-      "hash": "d9160390b43d",
-      "size": 1837
+      "hash": "9c43da5955a1",
+      "size": 1892
     },
     {
       "id": "b2-matthias.ex",
       "path": "abilities/b2-matthias.ex.json",
-      "hash": "bb639fb84188",
-      "size": 1943
+      "hash": "7fd241339db2",
+      "size": 1999
     },
     {
       "id": "b2-matthias.passive",
       "path": "abilities/b2-matthias.passive.json",
-      "hash": "584927a8dd35",
-      "size": 1631
+      "hash": "4fb0e699bf52",
+      "size": 1692
     },
     {
       "id": "b2-matthias.q",
       "path": "abilities/b2-matthias.q.json",
-      "hash": "b376ed017f1c",
-      "size": 1897
+      "hash": "0012b3be3559",
+      "size": 1952
     },
     {
       "id": "b2-matthias.r",
       "path": "abilities/b2-matthias.r.json",
-      "hash": "17213248daff",
-      "size": 1589
+      "hash": "7efb01684db9",
+      "size": 1644
     },
     {
       "id": "b2-matthias.w",
       "path": "abilities/b2-matthias.w.json",
-      "hash": "5801decad049",
-      "size": 1378
+      "hash": "5891bb1d5803",
+      "size": 1433
     },
     {
       "id": "b2-misery.e",
       "path": "abilities/b2-misery.e.json",
-      "hash": "66be5f7e7948",
-      "size": 1191
+      "hash": "91ed73704672",
+      "size": 1244
     },
     {
       "id": "b2-misery.ex",
       "path": "abilities/b2-misery.ex.json",
-      "hash": "7916f4a6d86c",
-      "size": 2276
+      "hash": "f52f741ff534",
+      "size": 2330
     },
     {
       "id": "b2-misery.passive",
       "path": "abilities/b2-misery.passive.json",
-      "hash": "d1b5e9478327",
-      "size": 1545
+      "hash": "7792465bba3d",
+      "size": 1604
     },
     {
       "id": "b2-misery.q",
       "path": "abilities/b2-misery.q.json",
-      "hash": "33e7ec526406",
-      "size": 1646
+      "hash": "f18f2477e1e1",
+      "size": 1699
     },
     {
       "id": "b2-misery.r",
       "path": "abilities/b2-misery.r.json",
-      "hash": "0886aceaa582",
-      "size": 1763
+      "hash": "3db28645d9b5",
+      "size": 1816
     },
     {
       "id": "b2-misery.w",
       "path": "abilities/b2-misery.w.json",
-      "hash": "90342d25af68",
-      "size": 1994
+      "hash": "4fa3792e494d",
+      "size": 2047
     },
     {
       "id": "b2-naofumi.e",
       "path": "abilities/b2-naofumi.e.json",
-      "hash": "cc5cf519bbf2",
-      "size": 1951
+      "hash": "8495f06890cb",
+      "size": 2005
     },
     {
       "id": "b2-naofumi.ex",
       "path": "abilities/b2-naofumi.ex.json",
-      "hash": "02481e2ff1e2",
-      "size": 1614
+      "hash": "1524947654f4",
+      "size": 1669
     },
     {
       "id": "b2-naofumi.passive",
       "path": "abilities/b2-naofumi.passive.json",
-      "hash": "ec16ccd3a052",
-      "size": 1558
+      "hash": "2748550f60d8",
+      "size": 1618
     },
     {
       "id": "b2-naofumi.q",
       "path": "abilities/b2-naofumi.q.json",
-      "hash": "20f6b5ed6929",
-      "size": 2221
+      "hash": "7da9ab49b48c",
+      "size": 2275
     },
     {
       "id": "b2-naofumi.r",
       "path": "abilities/b2-naofumi.r.json",
-      "hash": "e3e6d7a982e6",
-      "size": 3032
+      "hash": "a548bd9a9207",
+      "size": 3086
     },
     {
       "id": "b2-naofumi.w",
       "path": "abilities/b2-naofumi.w.json",
-      "hash": "aa3991f50d66",
-      "size": 2267
+      "hash": "1ae5c879c973",
+      "size": 2321
     },
     {
       "id": "b2-ned.e",
       "path": "abilities/b2-ned.e.json",
-      "hash": "c63e644273c7",
-      "size": 1983
+      "hash": "b4c81d59d007",
+      "size": 2033
     },
     {
       "id": "b2-ned.ex",
       "path": "abilities/b2-ned.ex.json",
-      "hash": "6218419d5d9d",
-      "size": 1160
+      "hash": "3a642620405d",
+      "size": 1211
     },
     {
       "id": "b2-ned.passive",
       "path": "abilities/b2-ned.passive.json",
-      "hash": "b0cbf0cf0652",
-      "size": 1990
+      "hash": "f27bcdcb33cf",
+      "size": 2046
     },
     {
       "id": "b2-ned.q",
       "path": "abilities/b2-ned.q.json",
-      "hash": "46be521c1797",
-      "size": 1774
+      "hash": "6f1283769084",
+      "size": 1824
     },
     {
       "id": "b2-ned.r",
       "path": "abilities/b2-ned.r.json",
-      "hash": "107b4f908222",
-      "size": 1532
+      "hash": "b799a6c3a8e3",
+      "size": 1582
     },
     {
       "id": "b2-ned.w",
       "path": "abilities/b2-ned.w.json",
-      "hash": "043e1a09d27b",
-      "size": 1838
+      "hash": "a8e457ef60ba",
+      "size": 1888
     },
     {
       "id": "b2-noor.e",
       "path": "abilities/b2-noor.e.json",
-      "hash": "d59fdea01b43",
-      "size": 2124
+      "hash": "815417fa94f8",
+      "size": 2175
     },
     {
       "id": "b2-noor.ex",
       "path": "abilities/b2-noor.ex.json",
-      "hash": "10b16e841b67",
-      "size": 1518
+      "hash": "ca3d29fcb56f",
+      "size": 1570
     },
     {
       "id": "b2-noor.passive",
       "path": "abilities/b2-noor.passive.json",
-      "hash": "f75a7280e139",
-      "size": 1623
+      "hash": "47e9a5c5ab25",
+      "size": 1680
     },
     {
       "id": "b2-noor.q",
       "path": "abilities/b2-noor.q.json",
-      "hash": "4f135ba87dbe",
-      "size": 3605
+      "hash": "9b5403758c16",
+      "size": 3656
     },
     {
       "id": "b2-noor.r",
       "path": "abilities/b2-noor.r.json",
-      "hash": "46b29be63356",
-      "size": 2365
+      "hash": "feda24f36208",
+      "size": 2416
     },
     {
       "id": "b2-noor.w",
       "path": "abilities/b2-noor.w.json",
-      "hash": "8f9ce7240303",
-      "size": 2911
+      "hash": "0bea20635f05",
+      "size": 2962
     },
     {
       "id": "b2-nube.e",
       "path": "abilities/b2-nube.e.json",
-      "hash": "989f061a4141",
-      "size": 1347
+      "hash": "84b8f85efec2",
+      "size": 1398
     },
     {
       "id": "b2-nube.ex",
       "path": "abilities/b2-nube.ex.json",
-      "hash": "c14a4f2a6349",
-      "size": 2304
+      "hash": "ee4e8b7bce08",
+      "size": 2356
     },
     {
       "id": "b2-nube.passive",
       "path": "abilities/b2-nube.passive.json",
-      "hash": "dee99a652fa6",
-      "size": 1516
+      "hash": "14904820e5b1",
+      "size": 1573
     },
     {
       "id": "b2-nube.q",
       "path": "abilities/b2-nube.q.json",
-      "hash": "75d568886f2c",
-      "size": 1970
+      "hash": "63860860a2cc",
+      "size": 2021
     },
     {
       "id": "b2-nube.r",
       "path": "abilities/b2-nube.r.json",
-      "hash": "ad863bd39a3a",
-      "size": 2265
+      "hash": "506a63d01894",
+      "size": 2316
     },
     {
       "id": "b2-nube.w",
       "path": "abilities/b2-nube.w.json",
-      "hash": "5de69ec29c3f",
-      "size": 1901
+      "hash": "ea7f91b56833",
+      "size": 1952
     },
     {
       "id": "b2-orphen.e",
       "path": "abilities/b2-orphen.e.json",
-      "hash": "2e5c469e1bc6",
-      "size": 1358
+      "hash": "97bdc7497fa1",
+      "size": 1411
     },
     {
       "id": "b2-orphen.ex",
       "path": "abilities/b2-orphen.ex.json",
-      "hash": "02aa72cd3bd6",
-      "size": 1214
+      "hash": "fa243cab67d2",
+      "size": 1268
     },
     {
       "id": "b2-orphen.passive",
       "path": "abilities/b2-orphen.passive.json",
-      "hash": "5f54c7fb8f5d",
-      "size": 1515
+      "hash": "524c3d825d15",
+      "size": 1574
     },
     {
       "id": "b2-orphen.q",
       "path": "abilities/b2-orphen.q.json",
-      "hash": "ffba78f6620c",
-      "size": 2118
+      "hash": "282050e69e9e",
+      "size": 2171
     },
     {
       "id": "b2-orphen.r",
       "path": "abilities/b2-orphen.r.json",
-      "hash": "b2e404bfc578",
-      "size": 1684
+      "hash": "4538b3b2ceeb",
+      "size": 1737
     },
     {
       "id": "b2-orphen.w",
       "path": "abilities/b2-orphen.w.json",
-      "hash": "52ecdae0ee8a",
-      "size": 1581
+      "hash": "05567e6e7e4b",
+      "size": 1634
     },
     {
       "id": "b2-popp.e",
       "path": "abilities/b2-popp.e.json",
-      "hash": "1fcc17ad97d1",
-      "size": 1180
+      "hash": "f69dcf462803",
+      "size": 1231
     },
     {
       "id": "b2-popp.ex",
       "path": "abilities/b2-popp.ex.json",
-      "hash": "79e67851ee3e",
-      "size": 2316
+      "hash": "97371ff884ae",
+      "size": 2368
     },
     {
       "id": "b2-popp.passive",
       "path": "abilities/b2-popp.passive.json",
-      "hash": "9f24f81425e9",
-      "size": 1540
+      "hash": "5b5bc7766e89",
+      "size": 1597
     },
     {
       "id": "b2-popp.q",
       "path": "abilities/b2-popp.q.json",
-      "hash": "431cc0ce8fb0",
-      "size": 1555
+      "hash": "06375a35c813",
+      "size": 1606
     },
     {
       "id": "b2-popp.r",
       "path": "abilities/b2-popp.r.json",
-      "hash": "43796d6b0532",
-      "size": 1489
+      "hash": "01b4c518f4f2",
+      "size": 1540
     },
     {
       "id": "b2-popp.w",
       "path": "abilities/b2-popp.w.json",
-      "hash": "d07d65aa9595",
-      "size": 2301
+      "hash": "b16ad2f1fc8e",
+      "size": 2352
     },
     {
       "id": "b2-rem.e",
       "path": "abilities/b2-rem.e.json",
-      "hash": "2cdc402f9a20",
-      "size": 2026
+      "hash": "28aec6f27bf5",
+      "size": 2076
     },
     {
       "id": "b2-rem.ex",
       "path": "abilities/b2-rem.ex.json",
-      "hash": "c6303c3ba98d",
-      "size": 1800
+      "hash": "5011c8604ca4",
+      "size": 1851
     },
     {
       "id": "b2-rem.passive",
       "path": "abilities/b2-rem.passive.json",
-      "hash": "44fc842db56b",
-      "size": 1456
+      "hash": "39dff8922570",
+      "size": 1512
     },
     {
       "id": "b2-rem.q",
       "path": "abilities/b2-rem.q.json",
-      "hash": "12b744d4acdf",
-      "size": 1563
+      "hash": "352cdff40ba9",
+      "size": 1613
     },
     {
       "id": "b2-rem.r",
       "path": "abilities/b2-rem.r.json",
-      "hash": "12c05f2cf76b",
-      "size": 2625
+      "hash": "ecc9d63336ea",
+      "size": 2675
     },
     {
       "id": "b2-rem.w",
       "path": "abilities/b2-rem.w.json",
-      "hash": "e12b4abe367c",
-      "size": 2508
+      "hash": "ba5434df0ba5",
+      "size": 2558
     },
     {
       "id": "b2-rin.e",
       "path": "abilities/b2-rin.e.json",
-      "hash": "1e69d4bdf4f0",
-      "size": 1653
+      "hash": "26e1f68c9115",
+      "size": 1703
     },
     {
       "id": "b2-rin.ex",
       "path": "abilities/b2-rin.ex.json",
-      "hash": "0fdc5504b385",
-      "size": 1222
+      "hash": "d0ceb38abfad",
+      "size": 1273
     },
     {
       "id": "b2-rin.passive",
       "path": "abilities/b2-rin.passive.json",
-      "hash": "d898dd95fc40",
-      "size": 1521
+      "hash": "a6b3249e3d61",
+      "size": 1577
     },
     {
       "id": "b2-rin.q",
       "path": "abilities/b2-rin.q.json",
-      "hash": "84e7b6cd8426",
-      "size": 1949
+      "hash": "0c52623910f5",
+      "size": 1999
     },
     {
       "id": "b2-rin.r",
       "path": "abilities/b2-rin.r.json",
-      "hash": "4c1508cbd110",
-      "size": 2595
+      "hash": "a95bc19871a7",
+      "size": 2645
     },
     {
       "id": "b2-rin.w",
       "path": "abilities/b2-rin.w.json",
-      "hash": "f0f34803c31e",
-      "size": 2516
+      "hash": "924495dc4f85",
+      "size": 2566
     },
     {
       "id": "b2-shadow.e",
       "path": "abilities/b2-shadow.e.json",
-      "hash": "430cf973653e",
-      "size": 1387
+      "hash": "0e634083b3d0",
+      "size": 1440
     },
     {
       "id": "b2-shadow.ex",
       "path": "abilities/b2-shadow.ex.json",
-      "hash": "9780f8509f84",
-      "size": 1658
+      "hash": "de023ba6c521",
+      "size": 1712
     },
     {
       "id": "b2-shadow.passive",
       "path": "abilities/b2-shadow.passive.json",
-      "hash": "5f59a5d85764",
-      "size": 1866
+      "hash": "cc538bb41690",
+      "size": 1925
     },
     {
       "id": "b2-shadow.q",
       "path": "abilities/b2-shadow.q.json",
-      "hash": "ad0631f4c74d",
-      "size": 1734
+      "hash": "68d4f57dbf85",
+      "size": 1787
     },
     {
       "id": "b2-shadow.r",
       "path": "abilities/b2-shadow.r.json",
-      "hash": "d570a8658c40",
-      "size": 1764
+      "hash": "69d43930a3c6",
+      "size": 1817
     },
     {
       "id": "b2-shadow.w",
       "path": "abilities/b2-shadow.w.json",
-      "hash": "79a05fdcf5bd",
-      "size": 2278
+      "hash": "d989dfcac89f",
+      "size": 2331
     },
     {
       "id": "b2-shinchan.e",
       "path": "abilities/b2-shinchan.e.json",
-      "hash": "83482c3994f3",
-      "size": 1192
+      "hash": "69667b12b5fe",
+      "size": 1247
     },
     {
       "id": "b2-shinchan.ex",
       "path": "abilities/b2-shinchan.ex.json",
-      "hash": "435d19ab4758",
-      "size": 2048
+      "hash": "a5d91d95fb27",
+      "size": 2104
     },
     {
       "id": "b2-shinchan.passive",
       "path": "abilities/b2-shinchan.passive.json",
-      "hash": "e8c2fe6a025e",
-      "size": 1610
+      "hash": "33360f7814a1",
+      "size": 1671
     },
     {
       "id": "b2-shinchan.q",
       "path": "abilities/b2-shinchan.q.json",
-      "hash": "368ae10870db",
-      "size": 1621
+      "hash": "dec88daa9f14",
+      "size": 1676
     },
     {
       "id": "b2-shinchan.r",
       "path": "abilities/b2-shinchan.r.json",
-      "hash": "304161a47e64",
-      "size": 2282
+      "hash": "a280c682e68e",
+      "size": 2337
     },
     {
       "id": "b2-shinchan.w",
       "path": "abilities/b2-shinchan.w.json",
-      "hash": "22c507127c09",
-      "size": 1375
+      "hash": "65354d1670b7",
+      "size": 1430
     },
     {
       "id": "b2-sinbad.e",
       "path": "abilities/b2-sinbad.e.json",
-      "hash": "41b07dfe3664",
-      "size": 1203
+      "hash": "c909a2e8af95",
+      "size": 1256
     },
     {
       "id": "b2-sinbad.ex",
       "path": "abilities/b2-sinbad.ex.json",
-      "hash": "f2cb5f4cf43a",
-      "size": 2291
+      "hash": "64be84361622",
+      "size": 2345
     },
     {
       "id": "b2-sinbad.passive",
       "path": "abilities/b2-sinbad.passive.json",
-      "hash": "c881300cb62a",
-      "size": 1607
+      "hash": "9a2b6430e896",
+      "size": 1666
     },
     {
       "id": "b2-sinbad.q",
       "path": "abilities/b2-sinbad.q.json",
-      "hash": "a2018880643d",
-      "size": 1807
+      "hash": "44cc7a3c9438",
+      "size": 1860
     },
     {
       "id": "b2-sinbad.r",
       "path": "abilities/b2-sinbad.r.json",
-      "hash": "4897c2390bbf",
-      "size": 1516
+      "hash": "139ef4ee0f90",
+      "size": 1569
     },
     {
       "id": "b2-sinbad.w",
       "path": "abilities/b2-sinbad.w.json",
-      "hash": "03f45e9799d7",
-      "size": 1780
+      "hash": "4c88b218d024",
+      "size": 1833
     },
     {
       "id": "b2-takopi.e",
       "path": "abilities/b2-takopi.e.json",
-      "hash": "ad2aff3c2449",
-      "size": 1582
+      "hash": "f82a0cfa1f40",
+      "size": 1635
     },
     {
       "id": "b2-takopi.ex",
       "path": "abilities/b2-takopi.ex.json",
-      "hash": "612862fec091",
-      "size": 1936
+      "hash": "2e36facd69b9",
+      "size": 1990
     },
     {
       "id": "b2-takopi.passive",
       "path": "abilities/b2-takopi.passive.json",
-      "hash": "819b6e815d4f",
-      "size": 1837
+      "hash": "b936a6d333b1",
+      "size": 1896
     },
     {
       "id": "b2-takopi.q",
       "path": "abilities/b2-takopi.q.json",
-      "hash": "7bee21fe34c8",
-      "size": 1470
+      "hash": "ae6f51629395",
+      "size": 1523
     },
     {
       "id": "b2-takopi.r",
       "path": "abilities/b2-takopi.r.json",
-      "hash": "50906da319ea",
-      "size": 2499
+      "hash": "f49291512abf",
+      "size": 2552
     },
     {
       "id": "b2-takopi.w",
       "path": "abilities/b2-takopi.w.json",
-      "hash": "29018ffc90aa",
-      "size": 2159
+      "hash": "61e1f439d39f",
+      "size": 2212
     },
     {
       "id": "b2-touka.e",
       "path": "abilities/b2-touka.e.json",
-      "hash": "6a7a9b7df986",
-      "size": 1626
+      "hash": "313228b3f37a",
+      "size": 1678
     },
     {
       "id": "b2-touka.ex",
       "path": "abilities/b2-touka.ex.json",
-      "hash": "0700661b15b1",
-      "size": 1123
+      "hash": "4259628619f8",
+      "size": 1176
     },
     {
       "id": "b2-touka.passive",
       "path": "abilities/b2-touka.passive.json",
-      "hash": "cb0ccc7c0d7b",
-      "size": 1606
+      "hash": "b01025bd6c7c",
+      "size": 1664
     },
     {
       "id": "b2-touka.q",
       "path": "abilities/b2-touka.q.json",
-      "hash": "61d331b98d52",
-      "size": 2326
+      "hash": "3b9bedad1d96",
+      "size": 2378
     },
     {
       "id": "b2-touka.r",
       "path": "abilities/b2-touka.r.json",
-      "hash": "46e975bdf670",
-      "size": 2386
+      "hash": "cfc90f737c3e",
+      "size": 2438
     },
     {
       "id": "b2-touka.w",
       "path": "abilities/b2-touka.w.json",
-      "hash": "ecd5aee7bb92",
-      "size": 1866
+      "hash": "c1cea1855bec",
+      "size": 1918
     },
     {
       "id": "b2-uncle.e",
       "path": "abilities/b2-uncle.e.json",
-      "hash": "cea509be20d1",
-      "size": 2175
+      "hash": "9e4b1443c880",
+      "size": 2227
     },
     {
       "id": "b2-uncle.ex",
       "path": "abilities/b2-uncle.ex.json",
-      "hash": "2213f194a4a7",
-      "size": 1469
+      "hash": "4b81272f2d8e",
+      "size": 1522
     },
     {
       "id": "b2-uncle.passive",
       "path": "abilities/b2-uncle.passive.json",
-      "hash": "7a582af91f95",
-      "size": 1555
+      "hash": "439109858f0e",
+      "size": 1613
     },
     {
       "id": "b2-uncle.q",
       "path": "abilities/b2-uncle.q.json",
-      "hash": "b1f74878bbed",
-      "size": 1887
+      "hash": "b7fbfeda10b2",
+      "size": 1939
     },
     {
       "id": "b2-uncle.r",
       "path": "abilities/b2-uncle.r.json",
-      "hash": "5f03b707c82f",
-      "size": 2396
+      "hash": "11ae648b6e6b",
+      "size": 2448
     },
     {
       "id": "b2-uncle.w",
       "path": "abilities/b2-uncle.w.json",
-      "hash": "4913fe1fc0a6",
-      "size": 2019
+      "hash": "61e4088a01c6",
+      "size": 2071
     },
     {
       "id": "b2-yogiri.e",
       "path": "abilities/b2-yogiri.e.json",
-      "hash": "cb0e27d4b6f1",
-      "size": 1206
+      "hash": "92eb2fd904db",
+      "size": 1259
     },
     {
       "id": "b2-yogiri.ex",
       "path": "abilities/b2-yogiri.ex.json",
-      "hash": "5cbb1081e9e6",
-      "size": 2030
+      "hash": "434e67ae459e",
+      "size": 2084
     },
     {
       "id": "b2-yogiri.passive",
       "path": "abilities/b2-yogiri.passive.json",
-      "hash": "75837e28dfa4",
-      "size": 1891
+      "hash": "adcf734ddf76",
+      "size": 1950
     },
     {
       "id": "b2-yogiri.q",
       "path": "abilities/b2-yogiri.q.json",
-      "hash": "50eba2e1d7fa",
-      "size": 1622
+      "hash": "ff46d890ec71",
+      "size": 1675
     },
     {
       "id": "b2-yogiri.r",
       "path": "abilities/b2-yogiri.r.json",
-      "hash": "a7bd052ff2a8",
-      "size": 2303
+      "hash": "9b3cc803a4de",
+      "size": 2356
     },
     {
       "id": "b2-yogiri.w",
       "path": "abilities/b2-yogiri.w.json",
-      "hash": "2853ecaa8089",
-      "size": 3564
+      "hash": "7bfb4b27fa76",
+      "size": 3617
     },
     {
       "id": "b2-zenitsu.e",
       "path": "abilities/b2-zenitsu.e.json",
-      "hash": "06ce67c6b2f3",
-      "size": 1654
+      "hash": "fa53ba947148",
+      "size": 1708
     },
     {
       "id": "b2-zenitsu.ex",
       "path": "abilities/b2-zenitsu.ex.json",
-      "hash": "61fe1bdfa399",
-      "size": 1155
+      "hash": "41a3a978fb3d",
+      "size": 1210
     },
     {
       "id": "b2-zenitsu.passive",
       "path": "abilities/b2-zenitsu.passive.json",
-      "hash": "2948606091c3",
-      "size": 1835
+      "hash": "c0106cfdbcb0",
+      "size": 1895
     },
     {
       "id": "b2-zenitsu.q",
       "path": "abilities/b2-zenitsu.q.json",
-      "hash": "867c41134aa6",
-      "size": 2249
+      "hash": "ee042e1ccbf8",
+      "size": 2303
     },
     {
       "id": "b2-zenitsu.r",
       "path": "abilities/b2-zenitsu.r.json",
-      "hash": "d891c6f096ac",
-      "size": 2637
+      "hash": "fd1909d3d344",
+      "size": 2691
     },
     {
       "id": "b2-zenitsu.w",
       "path": "abilities/b2-zenitsu.w.json",
-      "hash": "80ee5bf16e0e",
-      "size": 2867
+      "hash": "5dc207d07433",
+      "size": 2921
     },
     {
       "id": "community-review-01-20260907.e",
