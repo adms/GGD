@@ -67,6 +67,15 @@ def adjudicate(results_path, evidence_path):
                 file = (evidence_root / relative).resolve()
                 assert file.is_relative_to(evidence_root) and file.is_file(), 'MISSING_EVIDENCE_FILE'
                 assert digest(file) == item['sha256'], 'QUALITY_EVIDENCE_DRIFT:' + item['path']
+                artifact = read(file)
+                assert artifact.get('schema') == 'ggd-distillation-exact-reference-receipt@1', \
+                    'WRONG_QUALITY_RECEIPT_SCHEMA:' + item['kind']
+                assert (artifact.get('arm'), artifact.get('id'), artifact.get('heroId')) == \
+                    (arm, receipt['id'], receipt['heroId']), 'QUALITY_RECEIPT_IDENTITY_DRIFT:' + item['kind']
+                verdict_key = {'semantic': 'semanticFidelity', 'live-import': 'liveImport',
+                               'gameplay': 'gameplay'}[item['kind']]
+                assert artifact.get('verdict') == receipt[verdict_key], \
+                    'QUALITY_RECEIPT_VERDICT_DRIFT:' + item['kind']
                 results['sourceFiles'][str(file)] = {'sha256': item['sha256'], 'bytes': file.stat().st_size}
             structural = (row.get('structural') or {}).get('structuralPassed') is True
             package = (row.get('package') or {}).get('passed') is True

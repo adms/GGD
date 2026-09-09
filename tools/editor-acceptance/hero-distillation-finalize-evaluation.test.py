@@ -44,7 +44,9 @@ class FinalizeTest(unittest.TestCase):
         for arm_name in ['teacher', 'base', 'lora']:
             artifacts = []
             for kind in ['semantic', 'live-import', 'gameplay']:
-                path = self.root / 'evidence-files' / f'{arm_name}-{kind}.json'; save(path, {'passed': True})
+                path = self.root / 'evidence-files' / f'{arm_name}-{kind}.json'; save(path, {
+                    'schema': 'ggd-distillation-exact-reference-receipt@1', 'arm': arm_name,
+                    'id': 'hero:HERO', 'heroId': 'hero', 'verdict': 'passed'})
                 artifacts.append({'kind': kind, 'path': str(path.relative_to(self.root)), 'sha256': sha(path)})
             rows.append({'arm': arm_name, 'id': 'hero:HERO', 'heroId': 'hero', 'supported': True,
                 'humanRepairs': 0, 'reviewerInterventions': 0, 'semanticFidelity': 'passed',

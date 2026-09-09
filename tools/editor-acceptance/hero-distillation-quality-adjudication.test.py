@@ -34,7 +34,9 @@ class QualityTest(unittest.TestCase):
         for arm in q.ARMS:
             artifacts=[]
             for kind in q.EVIDENCE_KINDS:
-                relative=f'artifacts/{arm}-{kind}.json'; put(self.root/relative, {'passed': True})
+                relative=f'artifacts/{arm}-{kind}.json'; put(self.root/relative, {
+                    'schema':'ggd-distillation-exact-reference-receipt@1','arm':arm,
+                    'id':'hero:HERO','heroId':'hero','verdict':'passed'})
                 artifacts.append({'kind': kind, 'path': relative,
                                   'sha256': q.digest(self.root/relative)})
             self.rows.append({'arm': arm, 'id': 'hero:HERO', 'heroId': 'hero', 'supported': True,
@@ -77,6 +79,17 @@ class QualityTest(unittest.TestCase):
         self.rows[-1]['semanticFidelity']='passed'; self.write_evidence()
         put(self.root/self.rows[-1]['evidence'][0]['path'],{'passed':False})
         with self.assertRaisesRegex(AssertionError,'QUALITY_EVIDENCE_DRIFT'):
+            q.adjudicate(self.results_path,self.evidence_path)
+
+    def test_rejects_wrong_receipt_identity_or_verdict_even_with_updated_hash(self):
+        item=self.rows[0]['evidence'][0]; path=self.root/item['path']
+        artifact=json.loads(path.read_text()); artifact['heroId']='other'; put(path,artifact)
+        item['sha256']=q.digest(path); self.write_evidence()
+        with self.assertRaisesRegex(AssertionError,'QUALITY_RECEIPT_IDENTITY_DRIFT'):
+            q.adjudicate(self.results_path,self.evidence_path)
+        artifact['heroId']='hero'; artifact['verdict']='failed'; put(path,artifact)
+        item['sha256']=q.digest(path); self.write_evidence()
+        with self.assertRaisesRegex(AssertionError,'QUALITY_RECEIPT_VERDICT_DRIFT'):
             q.adjudicate(self.results_path,self.evidence_path)
 
 
