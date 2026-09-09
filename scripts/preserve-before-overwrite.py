@@ -25,6 +25,8 @@ repo 外的檔（scratchpad 等）落在 `~/.claude/projects/-Users-Takuro-GGD/o
 from __future__ import annotations
 import json
 import re, os, re, shlex, shutil, subprocess, sys, time
+import datetime as _dt
+import pathlib
 from pathlib import Path
 
 # ⛔⛔ 這一行的 fallback 以前寫死 `"/Users/Takuro/GGD"` —— **owner 那一台的路徑**。
@@ -994,6 +996,44 @@ def main() -> int:
                         return 2
         except Exception as _e:
             print(f"🧾 ⚠️ 產生器輸入閘**沒驗到**(GH#1026 ③,⛔ 不擋)—— hook 自身故障 {_e.__class__.__name__}。", file=sys.stderr)
+    # ── 🧾 **改一格出貨值時：他的哪一句？記了沒？**（owner 2026-09-09）────────
+    #
+    # ⛔⛔ 他逐字（**同一天第三次**講同一件事）：
+    #   「社群內容只出現在社群房 => 我之前也說過了 不會分什麼社群房複雜化
+    #     **你又沒記錄下來了 對話開票超級重要！**」
+    #
+    # ⭐ 上面那條（問之前先查）只擋「重複問」，⛔ **擋不住「他講了而我沒記」**。
+    #   ⚠️ 而 hook 看不到對話 —— ⭐ 它看得到的是**我照著裁決去動手的那一刻**：
+    #     改一格 `content/config/*.json` 就是第一守則說的「出貨值改動」。
+    #   ⇒ 在那一刻問兩件事：**引用得到他的哪一句？記進帳本了沒？**
+    #
+    # ⚠️ ⭐ 警告不擋：出貨值也有純技術修（欄位改名、產物重生成），
+    #   ⛔ 擋掉會讓人繞過整個 hook —— 而被繞過的閘等於沒有閘。
+    if tool in ("Write", "Edit", "Bash"):
+        _ti = ev.get("tool_input") or {}
+        _paths = [str(_ti.get("file_path") or "")] if tool != "Bash" else []
+        if tool == "Bash":
+            _paths = re.findall(r"content/config/[A-Za-z0-9_.-]+\.json", str(_ti.get("command", "")))
+        _cfg = [p for p in _paths if "content/config/" in p and p.endswith(".json")]
+        if _cfg:
+            try:
+                _today = _dt.date.today().isoformat()
+                _led = pathlib.Path(os.environ.get("CLAUDE_PROJECT_DIR", ".")) / "docs/_daily" / f"{_today}.md"
+                _n = sum(1 for ln in _led.read_text(encoding="utf-8").splitlines()
+                         if ln.startswith("|")) if _led.is_file() else 0
+            except Exception:
+                _n = -1
+            print(
+                f"🧾 ⚠️ **你在改一格出貨值**（{_cfg[0]}）—— ⭐ 第一守則:\n"
+                "     「出貨數值的每一次改動,要能逐項**引用到他的一句原話**。\n"
+                "       引用不到 ⇒ 它是我加的 ⇒ ⛔ 不可以。」\n"
+                f"   ⭐ 今天的帳本 `docs/_daily/{_today}.md` 有 {_n} 則紀錄。\n"
+                "   ⇒ 他剛說過而**還沒記** ⇒ 現在就跑:bash scripts/ruling.sh <票號>\n"
+                "   ⇒ 他沒說過 ⇒ ⛔ 不要改這一格,把選項列給他。\n"
+                "   ⚠️ owner 2026-09-09:「你又沒記錄下來了 **對話開票超級重要！**」",
+                file=sys.stderr,
+            )
+
     # ── 🔁 **問 owner 之前先查他答過沒**（owner 2026-09-09）────────────────
     #
     # ⛔⛔ 他逐字：「英雄的 role 標籤：留 => **上次討論過了 你怎麼又問我**
