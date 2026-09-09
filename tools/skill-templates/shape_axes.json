@@ -594,6 +594,7 @@
       ]
     },
     "ignored": {
+      "absorbs": "⭐ 護盾**擋哪一種傷害**（all／physical／magic／true）—— ⛔ 它不排任何時序、⛔ 不改形狀的輪廓,只改「這一層擋不擋得住那一發」。",
       "amount": "純數值 —— 每次給幾點",
       "anchor": "錨點選擇（幾何）",
       "aoePerStep": "幾何",

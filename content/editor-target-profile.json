@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_642b85582856",
+    "contentVersion": "cv_d31da66e0f3b",
     "collections": {
       "champions": {
         "hash": "74ea868e6821",
@@ -58,8 +58,8 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "ca2dc9cba026",
-        "count": 55
+        "hash": "04ab881d45bc",
+        "count": 56
       },
       "vfx-scripts": {
         "hash": "3d945d196d0a",
@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "d9164615",
+    "fingerprint": "3ce6f518",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -1316,6 +1316,7 @@
       ]
     },
     "templateFamilies": [
+      "ally-shield",
       "apply-status",
       "area-strike",
       "beam-roll",
@@ -1918,6 +1919,75 @@
       "count": 421,
       "fromTemplate": 225,
       "templates": [
+        {
+          "id": "tpl-ally-shield",
+          "family": "ally-shield",
+          "status": "enabled",
+          "params": {
+            "target": {
+              "type": "enum",
+              "values": [
+                "self",
+                "ally",
+                "area"
+              ],
+              "default": "area",
+              "origin": "census: GH#1132 —— 37 名社群英雄裡**提到友軍的 18 槽**逐句分類：**範圍 7 · 指定 4 · 兩者或判不出 7** ⇒ ⭐ 預設挑 `area`（⛔ 不是我挑的，是多數）。⚠️ 而那 18 槽裡有 **12 槽**今天綁著 `tpl-buff-self` —— 那一族發 `applyTo:self`、⛔ 不設 `targetsEnemies` ⇒ ⭐「友軍盾」實際只罩施法者自己，而卡面說它保護隊友（第一·五守則）。⭐ `area` 逐字對到 AC③「範圍友軍盾實際保護範圍內友軍**及自己**」。"
+            },
+            "amount": {
+              "type": "scaling",
+              "origin": "census: 出貨 **10 個** `shield` 節點裡 3 個帶 `perRank`。⭐ 這一格逐位元取自 `tpl-heal.amount` 的預設（`perRank [50,85,120,155]` ＋ `ap 0.465`）—— ⭐ 護盾與回血是**同一個量級**的友方數值,⛔ 而護盾**沒有級距表**（`damage-tiers` 只管傷害）⇒ ⛔ 這裡沒有第二個住處可抄。",
+              "default": {
+                "perRank": [
+                  50,
+                  85,
+                  120,
+                  155
+                ],
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.465
+                  }
+                ]
+              }
+            },
+            "duration": {
+              "type": "number",
+              "min": 0,
+              "max": 60,
+              "unit": "s",
+              "origin": "census: 出貨 10 個 `shield` 節點的 `duration` **中位數 ＝ 8 秒**（值域 1–15）。⛔ 不是我挑的好看數字。`zShield.duration` 是 `z.number().min(0)`；上界 60 取自值域外推的安全邊。",
+              "default": 8
+            },
+            "radius": {
+              "type": "number",
+              "min": 0,
+              "max": 30,
+              "origin": "census: 出貨**唯一**一支「友方 ground」技能（`targetsEnemies:false` ＋ `radius`）的半徑是 **8**（53-03 破法對咒那一族）。⛔ 不是我挑的數字。⚠️ 只有 `target:\"area\"` 讀它。",
+              "default": 8
+            },
+            "absorbs": {
+              "type": "enum",
+              "values": [
+                "all",
+                "physical",
+                "magic",
+                "true"
+              ],
+              "optional": true,
+              "origin": "`zShield.absorbs` 本人的值域，⛔ 不是另一份白名單。留空 ＝ 走 schema 的預設。"
+            },
+            "castTimeSec": {
+              "type": "number",
+              "optional": true,
+              "min": 0,
+              "max": 5,
+              "unit": "s",
+              "origin": "與其餘每一族同一格（`deriveCastTimes` 會覆蓋它；留空 ＝ 由推導填）。"
+            }
+          }
+        },
         {
           "id": "tpl-apply-status",
           "family": "apply-status",
@@ -5387,7 +5457,7 @@
         }
       ],
       "templateStatus": {
-        "enabled": 44,
+        "enabled": 45,
         "draft": 11
       },
       "innateKinds": [
@@ -5723,12 +5793,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "d9164615",
+    "engineFingerprint": "3ce6f518",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 d9164615 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 3ce6f518 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -6596,11 +6666,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "7b6264207c91",
+    "fingerprint": "659598a89699",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "40452a8d9d31"
+        "digest": "a15aaed96325"
       },
       {
         "surface": "ability-item-zod-schemas",
@@ -6612,7 +6682,7 @@
       },
       {
         "surface": "capability-applicability",
-        "digest": "9b4bd5744e84"
+        "digest": "617b93faa0fb"
       },
       {
         "surface": "authoring-rules",
@@ -6652,7 +6722,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "bf2ca3e58a0a",
+  "migrationFingerprint": "a282ee816210",
   "supportedModes": [
     "bootstrap"
   ],
@@ -6666,5 +6736,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "76b7eb2cc610"
+  "profileDigest": "28f8efd5333c"
 }

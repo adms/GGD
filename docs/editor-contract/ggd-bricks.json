@@ -1,27 +1,34 @@
 {
   "schema": "ggd-bricks@1",
   "note": "⭐ 積木清冊 —— 「有哪些積木、每一顆在哪個編輯器有表單、誰在用」的**唯一**一份答案（GH#989）。⛔ 產物：改 `tools/brick-census/bricks.ts` 再 `pnpm bricks:build`，⛔ 不要手改。⛔ 刻意沒有產生時間戳（隨時鐘變的欄位會讓 `--check` 永遠不相等）。",
-  "capabilityFingerprint": "d9164615",
+  "capabilityFingerprint": "3ce6f518",
   "adminFormSource": "apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（73 份）→ 後台自己的 readSchema()（1171 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。",
   "editorFormSource": "⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 171 顆有收據；收據裡沒有的才退回代理值。",
   "editorFormNeededFromCodex": "⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / vfx-call / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。",
   "counts": {
-    "total": 172,
+    "total": 173,
     "effect": 49,
     "hook": 33,
     "leaf": 10,
-    "template": 44,
+    "template": 45,
     "vfx-prim": 13,
     "vfx-subtype": 4,
     "vfx-call": 4,
     "model-preset": 15,
-    "gated": 134,
-    "gaps": 52,
-    "missingAdminForm": 52,
+    "gated": 135,
+    "gaps": 53,
+    "missingAdminForm": 53,
     "missingEditorForm": 4,
-    "zeroAdoption": 63
+    "zeroAdoption": 64
   },
   "gaps": [
+    {
+      "id": "ally-shield",
+      "layer": "template",
+      "missing": [
+        "adminForm"
+      ]
+    },
     {
       "id": "apply-status",
       "layer": "template",
@@ -12691,6 +12698,82 @@
       "editorForm": true,
       "usedBy": 0,
       "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-summon-agent.json.params"
+    },
+    {
+      "id": "ally-shield",
+      "layer": "template",
+      "params": [
+        {
+          "name": "absorbs",
+          "type": "enum",
+          "values": [
+            "all",
+            "physical",
+            "magic",
+            "true"
+          ],
+          "optional": true,
+          "origin": "`zShield.absorbs` 本人的值域，⛔ 不是另一份白名單。留空 ＝ 走 schema 的預設。"
+        },
+        {
+          "name": "amount",
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              50,
+              85,
+              120,
+              155
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.465
+              }
+            ]
+          },
+          "origin": "census: 出貨 **10 個** `shield` 節點裡 3 個帶 `perRank`。⭐ 這一格逐位元取自 `tpl-heal.amount` 的預設（`perRank [50,85,120,155]` ＋ `ap 0.465`）—— ⭐ 護盾與回血是**同一個量級**的友方數值,⛔ 而護盾**沒有級距表**（`damage-tiers` 只管傷害）⇒ ⛔ 這裡沒有第二個住處可抄。"
+        },
+        {
+          "name": "castTimeSec",
+          "type": "number",
+          "optional": true,
+          "min": 0,
+          "max": 5,
+          "origin": "與其餘每一族同一格（`deriveCastTimes` 會覆蓋它；留空 ＝ 由推導填）。"
+        },
+        {
+          "name": "duration",
+          "type": "number",
+          "default": 8,
+          "min": 0,
+          "max": 60,
+          "origin": "census: 出貨 10 個 `shield` 節點的 `duration` **中位數 ＝ 8 秒**（值域 1–15）。⛔ 不是我挑的好看數字。`zShield.duration` 是 `z.number().min(0)`；上界 60 取自值域外推的安全邊。"
+        },
+        {
+          "name": "radius",
+          "type": "number",
+          "default": 8,
+          "min": 0,
+          "max": 30,
+          "origin": "census: 出貨**唯一**一支「友方 ground」技能（`targetsEnemies:false` ＋ `radius`）的半徑是 **8**（53-03 破法對咒那一族）。⛔ 不是我挑的數字。⚠️ 只有 `target:\"area\"` 讀它。"
+        },
+        {
+          "name": "target",
+          "type": "enum",
+          "values": [
+            "self",
+            "ally",
+            "area"
+          ],
+          "default": "area",
+          "origin": "census: GH#1132 —— 37 名社群英雄裡**提到友軍的 18 槽**逐句分類：**範圍 7 · 指定 4 · 兩者或判不出 7** ⇒ ⭐ 預設挑 `area`（⛔ 不是我挑的，是多數）。⚠️ 而那 18 槽裡有 **12 槽**今天綁著 `tpl-buff-self` —— 那一族發 `applyTo:self`、⛔ 不設 `targetsEnemies` ⇒ ⭐「友軍盾」實際只罩施法者自己，而卡面說它保護隊友（第一·五守則）。⭐ `area` 逐字對到 AC③「範圍友軍盾實際保護範圍內友軍**及自己**」。"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "template@1:content/ability-templates/tpl-ally-shield.json"
     },
     {
       "id": "apply-status",

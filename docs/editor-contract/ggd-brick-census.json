@@ -2,12 +2,12 @@
   "schema": "ggd-brick-census@1",
   "note": "⭐ 積木普查（owner 2026-09-01：「編輯器是堆積木的角色，要充分了解有哪些積木；main 是做出積木的角色」）。⛔ 產物 —— 改 `tools/brick-census/gen.ts`，⛔ 不要手改。",
   "counts": {
-    "engineFamilies": 44,
-    "templateDocs": 55,
-    "usable": 44,
+    "engineFamilies": 45,
+    "templateDocs": 56,
+    "usable": 45,
     "engineMissing": 10,
     "shells": 10,
-    "zeroAdoption": 26,
+    "zeroAdoption": 27,
     "terminal": 1,
     "handWritten": 111,
     "distinctShapes": 76,
@@ -217,6 +217,7 @@
     }
   ],
   "engineFamilies": [
+    "ally-shield",
     "apply-status",
     "area-strike",
     "beam-roll",
@@ -514,6 +515,15 @@
       "status": "enabled",
       "params": 9,
       "abilities": 1,
+      "terminal": false
+    },
+    {
+      "id": "tpl-ally-shield",
+      "family": "ally-shield",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 6,
+      "abilities": 0,
       "terminal": false
     },
     {

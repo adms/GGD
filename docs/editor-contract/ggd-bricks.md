@@ -4,26 +4,26 @@
 
 owner 2026-09-05：「[後台編輯器及codex編輯器] 是**堆積木**的角色 **要充分了解有哪些積木**, 而 main 遊戲主程式 是**做出積木**供使用的角色」
 
-capability 指紋：`d9164615`
+capability 指紋：`3ce6f518`
 
 ## 一眼看完
 
 | | |
 |---|---:|
-| total | 172 |
+| total | 173 |
 | effect | 49 |
 | hook | 33 |
 | leaf | 10 |
-| template | 44 |
+| template | 45 |
 | vfx-prim | 13 |
 | vfx-subtype | 4 |
 | vfx-call | 4 |
 | model-preset | 15 |
-| gated | 134 |
-| gaps | 52 |
-| missingAdminForm | 52 |
+| gated | 135 |
+| gaps | 53 |
+| missingAdminForm | 53 |
 | missingEditorForm | 4 |
-| zeroAdoption | 63 |
+| zeroAdoption | 64 |
 
 ## 兩個編輯器的表單怎麼量的
 
@@ -158,10 +158,11 @@ capability 指紋：`d9164615`
 | `tpl-random-barrage` | 1 | 0 | 0 | ⛔ | ✅ | 0 |
 | `tpl-summon-agent` | 1 | 0 | 0 | ⛔ | ✅ | 0 |
 
-## `template`（44）
+## `template`（45）
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
+| `ally-shield` | 6 | 0 | 0 | ⛔ | ✅ | 0 |
 | `apply-status` | 3 | 0 | 0 | ⛔ | ✅ | 6 |
 | `area-strike` | 12 | 1 | 0 | ⛔ | ✅ | 11 |
 | `beam-roll` | 21 | 1 | 2 | ⛔ | ✅ | 9 |
@@ -247,6 +248,7 @@ capability 指紋：`d9164615`
 
 | 積木 | 層 | 缺什麼 |
 |---|---|---|
+| `ally-shield` | template | adminForm |
 | `apply-status` | template | adminForm |
 | `area-strike` | template | adminForm |
 | `beam-roll` | template | adminForm |

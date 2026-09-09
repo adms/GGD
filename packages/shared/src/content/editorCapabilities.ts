@@ -2231,6 +2231,11 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
  * `content/ability-templates/` 的實際家族名比對，漏了就紅。
  */
 const FAMILY_PROBE_LIST: readonly string[] = [
+  // ⭐ GH#1132 —— 友軍護盾（指定一位隊友／範圍內友軍與自己）。
+  //   ⛔ 採用數今天是 0：那 18 槽住 `materials/community-hero-forge/recipes/`，
+  //   ⛔ **不在 `content/`**（37 名尚未發布）。⭐ 而「採用數 0」⛔ 不是不宣告的理由 ——
+  //   外部編輯器看不到一塊**已經做好**的積木。
+  "ally-shield",
   // ⭐ GH#1146 —— `damageArea` 主體的家族。⛔ 採用數今天是 0（那 12 支是
   //   `skillremake:json` 的產物,而 `template` 在它的 RETIRED 表上）——
   //   ⭐ 而「採用數 0」⛔ 不是不宣告的理由：外部編輯器看不到一塊**已經做好**的積木。

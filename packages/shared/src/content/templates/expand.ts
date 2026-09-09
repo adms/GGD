@@ -2989,6 +2989,51 @@ const FAMILIES: Readonly<Record<string, Family>> = {
    * 對回血族正是要的人）；填 self ＝ 不管點誰都回自己。
    * ⚠️ 回血**沒有級距表**（damage-tiers 是傷害的）⇒ `amount` 走 perRank；出貨 5 支本來就是字面 perRank。
    */
+  /**
+   * ⭐⭐【友軍護盾】GH#1132 —— ⭐ 補的是**模板**，⛔ 不是機制。
+   *
+   * 引擎那一側**早就支援**：`abilitySystem.ts` 的地面 AoE 在 `targetsEnemies: false` 時
+   * 走 `bodiesInCircle` 的**友方**路徑，⭐ 而且**施法者自己算在圈內** —— 那一段的註解
+   * 逐字寫著理由（GH#458）：「一個以自己為圓心展開的結界把自己排除在外，就會退化成
+   * 另一種**說了但不會發生**」。
+   *
+   * ⚠️ ⭐ 而 GH#1132 量到：37 名社群英雄裡**提到友軍的 18 槽**，有 **12 槽綁著
+   * `tpl-buff-self`** —— 那個家族發 `applyTo: "self"`、⛔ 不設 `targetsEnemies`
+   * ⇒ ⭐ 「友軍盾」實際上**只罩施法者自己**，而卡面說它保護隊友（第一·五守則）。
+   *
+   * ⭐ 三種 `target`，逐一對到 AC②／AC③：
+   * · `self`  → `castType: "self"`（⛔ 不設 targetsEnemies —— 自己不是「友方目標」）
+   * · `ally`  → `castType: "targeted"` ＋ `targetsEnemies: false` ⇒ ⭐ **點不到敵人**
+   * · `area`  → `castType: "ground"`   ＋ `targetsEnemies: false` ＋ `radius`
+   *            ⇒ ⭐ 圈內友軍**與自己**，⛔ 不含敵方／圈外
+   *
+   * ⭐ 與 `tpl-heal` 是**同一個做法**（那一族的 self/ally 分岔就在下面幾行）——
+   * ⛔ 不發明第二種寫法。
+   */
+  "ally-shield": (t, p) => {
+    const target = str(t, p, "target");
+    if (target !== "self" && target !== "ally" && target !== "area") {
+      throw new ExpandError(`template ${t.id}: param "target"="${target}" 不是 self/ally/area`);
+    }
+    return {
+      castType: (target === "self" ? "self" : target === "ally" ? "targeted" : "ground") as CastType,
+      ...(target === "self" ? {} : { targetsEnemies: false }),
+      ...(target === "area" ? { radius: num(t, p, "radius") } : {}),
+      ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+      effects: [
+        {
+          kind: "shield",
+          amount: scaling(t, p, "amount"),
+          duration: num(t, p, "duration"),
+          // ⛔ ⭐ **⛔ 不發 `radiusTier`** —— `zShield` 只有 kind/amount/duration/
+          //   absorbs/stackKey/onExisting 六格（半徑住**技能層**的 `radius`,
+          //   ⛔ 不在效果節點上）。第一版我發了它,而那是一個 schema 會拒絕的欄位。
+          ...(has(t, p, "absorbs") ? { absorbs: str(t, p, "absorbs") } : {}),
+        } as unknown as EffectDef,
+      ],
+    };
+  },
+
   "heal": (t, p) => {
     const target = str(t, p, "target");
     if (target !== "self" && target !== "ally") {

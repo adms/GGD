@@ -3,7 +3,7 @@
 > ⛔ **這份是產生的** —— `pnpm typecat:build`。改它請改 `content/ability-templates/`。
 > ⭐ 交付格式與止損協定見 `CODEX_TYPE_HANDOFF.md`；機器可讀版在 `ggd-type-catalog.json`。
 
-**44 個可挑 type** · ⭐ 1 個「分析做完但引擎沒接線」 · ⛔ 9 個空殼 · 1 個哨兵 · 矩陣 154/325 格
+**45 個可挑 type** · ⭐ 1 個「分析做完但引擎沒接線」 · ⛔ 9 個空殼 · 1 個哨兵 · 矩陣 154/325 格
 
 ## ⭐⭐ 怎麼 fail-closed
 
@@ -18,6 +18,7 @@
 
 | id | 佈線 | 參數 | ⛔ inert | preset 用量 | ref 用量 | gap | exemplar |
 |---|---|---:|---|---:|---:|---:|---|
+| `tpl-ally-shield` | `doc` | 6 | — | 0 | 0 | 10 | GH#1132：37 名社群英雄裡提到友軍的 18 槽（12 槽今天誤綁 tpl-buff-self） |
 | `tpl-apply-status` | `doc` | 3 | — | 0 | 6 | 9 | 70-03 木束縛之術（content/abilities/godie-e010.e.json） |
 | `tpl-area-strike` | `doc` | 12 | — | 0 | 11 | 10 | 77-01（godie-e00w.q） |
 | `tpl-beam-roll` | `both` | 21 | ⛔ speed distance | 13 | 0 | 8 | 20-03 約束與勝利之劍 |
