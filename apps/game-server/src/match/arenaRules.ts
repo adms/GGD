@@ -112,6 +112,10 @@ export interface ArenaRules {
       readonly difficultyBase: number;
       readonly events: readonly { readonly kind: string; readonly weight: number }[];
     };
+    /** ⭐ 王強度那三格（#1151 D）——消費端 `sim/round11Waves.round11BossScale`。 */
+    readonly bossStrengthMult: number;
+    readonly bossScaleFloor: number;
+    readonly bossScaleCeil: number;
   };
   /** round from which R is learnable at any level; null = classic 6/11/16 */
   ultUnlockRound: number | null;
@@ -295,6 +299,9 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
     maxAliveZombies: 0,
     spawnRampSec: 0,
     waveTable: { eventIntervalSec: 0, difficultyBase: 1, events: [] },
+    bossStrengthMult: 1,
+    bossScaleFloor: 1,
+    bossScaleCeil: 1,
   },
   ultUnlockRound: null,
   exUnlockRound: null,
@@ -478,6 +485,10 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
         difficultyBase: doc.round11?.waveTable?.difficultyBase ?? 1,
         events: doc.round11?.waveTable?.events ?? [],
       },
+      // ⭐ 王強度 —— fallback 是「⛔ 不成長」：`mult 1` ＋ `floor/ceil 1`。
+      bossStrengthMult: doc.round11?.bossStrengthMult ?? 1,
+      bossScaleFloor: doc.round11?.bossScaleFloor ?? 1,
+      bossScaleCeil: doc.round11?.bossScaleCeil ?? 1,
     },
   };
 }

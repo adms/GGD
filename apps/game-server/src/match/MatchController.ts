@@ -20,6 +20,7 @@ import { recordBossKill, shouldEnterRound11 } from "@ggd/shared/sim/round11Gate"
 import {
   round11MobRulesPatch,
   round11AliveCap,
+  round11BossScale,
   type Round11MobRulesPatch,
 } from "@ggd/shared/sim/round11Waves";
 import { retiredChampionIds } from "@ggd/shared/content/championRetirement";
@@ -909,6 +910,33 @@ export class MatchController {
   get round11BossKillsForTest(): Set<number> {
     return this.round11BossKills;
   }
+
+  /**
+   * ⭐ **只給測試**：第十一回合的王倍率（`round11BossScale` 吃累計已生成）。
+   * ⚠️ ⭐ 暴露的是**算出來的結果**而不是計數器本身 —— ⛔ 測試不該有機會
+   * 把計數器改成「目前存活數」，⭐ 而那正是票警告的那個坑。
+   */
+  get round11BossScaleForTest(): number {
+    return round11BossScale(
+      this.round11MobsSpawned,
+      this.rules.round11.bossStrengthMult,
+      this.rules.round11.bossScaleFloor,
+      this.rules.round11.bossScaleCeil,
+    );
+  }
+
+  /**
+   * ⭐⭐ 第十一回合**累計已生成**的殭屍數（GH#1151 D）—— ⛔ 這一回合內不歸零。
+   *
+   * ⚠️⚠️ ⭐ 票逐字警告過：「依**累計已生成殭屍數**⋯**⛔ 不誤用目前存活數**」。
+   * ⭐ 而那個警告是有理由的（`round11Waves.round11BossScale` 的說明寫了全部）：
+   *   · 「目前存活數」被 `maxAliveZombies` **夾著** ⇒ ⭐ 它會**停止成長**
+   *   · 而且玩家**清場**會讓王變弱 ⇒ ⛔ 打得越好、王越軟
+   *
+   * ⭐ 而這個計數器**在此之前不存在** —— `SimWorld` 只有 `mobKills`（擊殺）
+   * 與 `mob`（**當前**存活的表）⇒ ⛔ 沿用任何一個都正好踩進票警告的那個坑。
+   */
+  private round11MobsSpawned = 0;
 
   /** ⭐ 下一段中場是「第十一回合前的那一段」⇒ 關商店、立刻進 combat。 */
   private enteringRound11 = false;
@@ -2337,6 +2365,8 @@ export class MatchController {
       this.phase.ticksLeft = 0;
       // ⭐ 記下「哪一個回合是第十一回合」—— 長度由 `combatMaxTicksForRound()` 推導。
       this.round11Round = this.phase.round;
+      // ⭐ 這一回合的累計從 0 起算（⛔ 不是整場 —— 前十回合的怪不算王的成長）。
+      this.round11MobsSpawned = 0;
     }
   }
 
@@ -4555,6 +4585,12 @@ export class MatchController {
           itemId: String(data.itemId ?? ""),
           goldDelta: 0,
         });
+        return;
+      }
+      case "mobSpawn": {
+        // ⭐ GH#1151 D —— 第十一回合的王強度依**累計已生成**成長。
+        //   ⛔ 只在第十一回合數（其他回合這個欄位一直是 0）。
+        if (this.round11Round === this.phase.round) this.round11MobsSpawned++;
         return;
       }
       case "mobBossSlain": {

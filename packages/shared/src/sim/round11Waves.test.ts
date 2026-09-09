@@ -10,6 +10,7 @@ import {
   pickRound11Event,
   round11AliveCap,
   round11MobRulesPatch,
+  round11BossScale,
   type Round11WaveEvent,
 } from "./round11Waves";
 
@@ -158,5 +159,47 @@ describe("⑤ 翻譯成出貨的 `MobRules` —— ⛔ 不寫第二個生怪器"
     const p = round11MobRulesPatch(11, TABLE, 500, 30);
     expect(p.maxAlivePerZone, "翻譯層回的是滿載").toBe(500);
     expect(round11AliveCap(1, 120, 500), "⭐ 漸進是另一支的事").toBeLessThan(10);
+  });
+});
+
+describe("⑥ 殭屍王強度（GH#1151 D）", () => {
+  it("⭐ 依**累計已生成**成長，⭐ 而且夾在上下界之間", () => {
+    expect(round11BossScale(0, 2, 1, 8)).toBe(1);
+    expect(round11BossScale(100, 2, 1, 8)).toBeCloseTo(2, 10);
+    expect(round11BossScale(300, 2, 1, 8)).toBeCloseTo(4, 10);
+    expect(round11BossScale(700, 2, 1, 8)).toBeCloseTo(8, 10);
+  });
+
+  it("⛔ 到頂就是頂 —— ⭐ 上界是**上界**，不是建議", () => {
+    expect(round11BossScale(99999, 2, 1, 8)).toBe(8);
+  });
+
+  it("⛔ 下界是**下界** —— ⭐ 王永遠不會比它弱", () => {
+    expect(round11BossScale(0, 2, 3, 8)).toBe(3);
+    expect(round11BossScale(10, 2, 3, 8)).toBe(3);
+  });
+
+  it("⛔ 上下界顛倒 ⇒ 以 `floor` 為準（⛔ 不靜靜回中間值）", () => {
+    expect(round11BossScale(9999, 2, 5, 2)).toBe(5);
+  });
+
+  it("⛔ `mult <= 1` ⇒ 不成長（⭐ ＝ 這個機制關著）", () => {
+    expect(round11BossScale(9999, 1, 1, 8)).toBe(1);
+    expect(round11BossScale(9999, 0, 1, 8)).toBe(1);
+  });
+
+  it("⭐⭐ 尺度是刻意的：⛔ **不可以第一波就撞到天花板**", () => {
+    // ⚠️ 直接 `spawned × mult` 的話,第一波(比如 20 隻)就是 40 倍 ⇒ 上下界變裝飾。
+    expect(round11BossScale(20, 2, 1, 8)).toBeLessThan(2);
+    expect(round11BossScale(20, 2, 1, 8)).toBeGreaterThan(1);
+  });
+
+  it("⭐ 單調不遞減 —— ⛔ 生得越多王不可以變弱", () => {
+    let prev = 0;
+    for (let n = 0; n <= 1000; n += 25) {
+      const v = round11BossScale(n, 2, 1, 8);
+      expect(v).toBeGreaterThanOrEqual(prev);
+      prev = v;
+    }
   });
 });

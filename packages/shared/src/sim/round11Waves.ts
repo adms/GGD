@@ -148,3 +148,41 @@ export function round11MobRulesPatch(
     autoWaves: true,
   };
 }
+
+// ─────────────────────────────────────────────────────────────────────────
+// ⭐ D 項：殭屍王強度（GH#1151 D）
+// ─────────────────────────────────────────────────────────────────────────
+
+/**
+ * ⭐ 第十一回合的殭屍王倍率 —— 依**累計已生成的殭屍數**成長，夾在上下界之間。
+ *
+ * ⚠️⚠️ ⭐ #1151 D 逐字：「依**累計已生成殭屍數**、配置係數及上下界計算實際王屬性，
+ * **⛔ 不誤用目前存活數**」。⭐ 而那個警告是有理由的：
+ *
+ *   · 「目前存活數」被**上限**夾著（`maxAliveZombies`）⇒ ⭐ 它會**停止成長**，
+ *     ⛔ 於是第 10 分鐘的王和第 1 分鐘的王一樣弱
+ *   · 而且玩家**清場**就會讓王變弱 ⇒ ⛔ 打得越好、王越軟，⭐ 那是反向的難度曲線
+ *
+ * ⭐ 公式：`1 + spawned × (mult − 1) / 100`，再夾進 `[floor, ceil]`。
+ * ⚠️ ⭐ 除以 100 是刻意的**尺度**：`bossStrengthMult` 出貨是 **2**，
+ *   ⇒ 每 100 隻生成讓王多一倍，⭐ 而 `ceil`（出貨 8）在 700 隻時到頂。
+ *   ⛔ 直接 `spawned × mult` 會在第一波就撞到天花板 ⇒ 上下界變成裝飾。
+ *
+ * ⛔ 沒有 `Math.pow` / `**`（`sim/**` 禁）—— ⭐ 線性，而且線性在這裡是**對的**：
+ *   指數成長會讓「撐久一點」在幾十秒內從可玩變成不可能。
+ */
+export function round11BossScale(
+  cumulativeSpawned: number,
+  mult: number,
+  floor: number,
+  ceil: number,
+): number {
+  // ⭐ 上下界自己顛倒時以 `floor` 為準 —— ⛔ 不靜靜回一個介於兩者之間的數。
+  const lo = floor > 0 ? floor : 1;
+  const hi = ceil > lo ? ceil : lo;
+  if (!(cumulativeSpawned > 0) || !(mult > 1)) return lo;
+  const raw = 1 + (cumulativeSpawned * (mult - 1)) / 100;
+  if (raw < lo) return lo;
+  if (raw > hi) return hi;
+  return raw;
+}

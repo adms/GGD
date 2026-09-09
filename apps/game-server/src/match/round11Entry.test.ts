@@ -46,6 +46,9 @@ const rules = (round11: Partial<ArenaRules["round11"]>): ArenaRules => ({
     maxAliveZombies: 0,
     spawnRampSec: 0,
     waveTable: { eventIntervalSec: 0, difficultyBase: 1, events: [] },
+    bossStrengthMult: 1,
+    bossScaleFloor: 1,
+    bossScaleCeil: 1,
     ...round11,
   },
 });
@@ -165,5 +168,48 @@ describe("第十一回合的生怪（GH#1151 B）", () => {
     // ⛔ 開場遠低於上限、⭐ 而 rampSec 之後到頂 —— 兩個方向都量。
     expect(early, "⛔ 開場不可以滿載").toBeLessThan(20);
     expect(late, "⭐ ramp 之後到頂").toBe(100);
+  });
+});
+
+describe("第十一回合的王強度（GH#1151 D）", () => {
+  const WAVES = { eventIntervalSec: 0.2, difficultyBase: 1.15, events: [{ kind: "normal", weight: 100 }] };
+
+  it("⭐⭐ 依**累計已生成**成長 —— ⛔ 而清場**不會**讓它變回去", () => {
+    const ctl = new MatchController(
+      "r11-boss", 7, allBots(), FAST, undefined,
+      rules({
+        enabled: true, maxAliveZombies: 30, spawnRampSec: 0, waveTable: WAVES,
+        bossStrengthMult: 2, bossScaleFloor: 1, bossScaleCeil: 8,
+      }),
+      undefined, undefined, undefined, RING,
+    );
+    recordBossKill(ctl.round11BossKillsForTest, 1);
+    recordBossKill(ctl.round11BossKillsForTest, 2);
+    let n = 0;
+    while (!(ctl.phase.round === 4 && ctl.phase.phase === "combat") && n++ < 40000) ctl.tick();
+    expect(ctl.round11BossScaleForTest, "⭐ 開場是下界").toBe(1);
+    for (let i = 0; i < 600; i++) ctl.tick();
+    const grown = ctl.round11BossScaleForTest;
+    expect(grown, "⭐ 生了怪之後王變強").toBeGreaterThan(1);
+    // ⭐⭐ 現在把場上清空 —— ⛔ 王**不可以**跟著變弱。
+    for (const id of [...ctl.world.mob.keys()]) ctl.world.destroy(id);
+    expect(ctl.round11BossScaleForTest, "⛔ 清場不會讓王變弱").toBe(grown);
+  });
+
+  it("⛔ 其他回合的怪**不算** —— 第十一回合的累計從 0 起算", () => {
+    const ctl = new MatchController(
+      "r11-boss0", 7, allBots(), FAST, undefined,
+      rules({
+        enabled: true, maxAliveZombies: 30, spawnRampSec: 0, waveTable: WAVES,
+        bossStrengthMult: 2, bossScaleFloor: 1, bossScaleCeil: 8,
+      }),
+      undefined, undefined, undefined, RING,
+    );
+    recordBossKill(ctl.round11BossKillsForTest, 1);
+    recordBossKill(ctl.round11BossKillsForTest, 2);
+    let n = 0;
+    // 先跑完第 1–3 回合（那幾回合也在生怪）
+    while (!(ctl.phase.round === 4 && ctl.phase.phase === "combat") && n++ < 40000) ctl.tick();
+    expect(ctl.round11BossScaleForTest, "⛔ 前面幾回合的怪不算").toBe(1);
   });
 });
