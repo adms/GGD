@@ -1,0 +1,8 @@
+{
+  "enabled": true,
+  "maxPendingPerPlayer": 50,
+  "quotaPerPlayerPerDay": 100,
+  "maxBytes": 4194304,
+  "modelUploadsEnabled": true,
+  "modelMaxBytes": 33554432
+}

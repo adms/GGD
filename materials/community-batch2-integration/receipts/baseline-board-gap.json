@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-unmodified-baseline-gate@1",
+  "baseCommit": "25675874184b",
+  "command": "python3 tools/board/gen_board.py --check",
+  "exitCode": 1,
+  "output": "ggd-board.html is STALE —— 來源文件（docs/_daily · docs/_release）變了。\n   ⇒ 重生成：bash scripts/genrun.sh board:build\n",
+  "unchangedFromBase": [
+    "docs/_daily",
+    "docs/_release",
+    "tools/board/gen_board.py"
+  ],
+  "cause": "Committed board contains 2026-09-09 ledger rows, but docs/_daily/2026-09-09.md is absent from this main checkout. Regeneration would remove existing Owner history, so the original board is preserved.",
+  "dailySourcePresent": false,
+  "action": "Main must commit or restore the missing ledger source and regenerate the board. This branch does not erase existing history to pass the check."
+}

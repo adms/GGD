@@ -1,0 +1,26 @@
+{
+  "schema": "ggd-handoff-publication-proof@1",
+  "origin": "http://127.0.0.1:8099/api/v1",
+  "startedAt": "2026-09-09T11:14:56.007Z",
+  "buildOrigin": "http://127.0.0.1:8098/api/v1",
+  "serviceProofSha256": "458da251658e6cf0e69fd0679fb689b56d4272a1489c5a84eeba388f90f9e23d",
+  "target": {
+    "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+    "contentVersion": "cv_b9b47052d2e3",
+    "migrationFingerprint": "17d1f388d5c0",
+    "processorFingerprint": "adf109dc5ba1"
+  },
+  "status": "failed",
+  "results": [
+    {
+      "name": "阿拉丁",
+      "workId": "b2-aladdin",
+      "status": "running",
+      "draftSaved": true
+    }
+  ],
+  "blocked": [],
+  "scope": "Disposable local author draft, submission, authenticated admin publication and attributed source download. Not formal deployment, visual or original-design approval.",
+  "error": "/hero-submissions: HTTP 400 {\"error\":{\"code\":\"bad_request\",\"message\":\"英雄 ZIP 超過目前投稿政策的大小上限。\"}}\n",
+  "finishedAt": "2026-09-09T11:14:59.682Z"
+}
