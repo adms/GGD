@@ -10,6 +10,12 @@ v20 probe 已 completed、worker 已 join，四種完整格式 4/4 通過；`fit
 
 新增 CPU-only 推論核心 `tools/editor-acceptance/hero-distillation-generation.py`：119 個 public cases 均通過輸入 hash／契約邊界檢查，6 項單元測試通過。固定所有題目及 base/LoRA 的無思考、greedy、16,384 output-token 上限、256-token prefill；不讀 teacher、不截斷 prompt、不按教師答案長度設輸出限制、不自動重試。保留原始輸出及中途錯誤；即使截斷輸出能解析 JSON 也不能當完整輸出。研究包裝只接受純 JSON 或完整單一 JSON fence，拒絕重複鍵／非有限數字，不代替 Editor #1108。這支是受保護 worker 的待接核心，尚未啟動 GPU 推論，尚缺 final adapter 綁定、數值策略與 supervisor 接線、編譯及對局驗收；CPU 測試不算生成品質。
 
+後續接線：新增 `hero-distillation-infer.py`，`prepare` 僅接受 supervisor 已 completed、worker 已 join、整輪 task 數吻合、固定 final checkpoint hash 與 adapter-roundtrip 全通過的 run，綁定資料／模型／adapter／程式快照，只複製 public cases，不開啟 private teachers。`run --arm base` 或 `run --arm lora` 各用全新 process／model／KV cache，同一 GPU lock 和接電／RAM／swap 保護；已有 run 不重跑、已有 lock 不刪除。每 arm 保守硬上限 7,200 秒、每題／階段 610 秒；這是停機保護，不是已量測可完成 119 題的工期，若達限則保留未完成狀態，不能改小分母或自动續跑。訓練 57,600 秒上限不變。
+
+兩 arm 使用相同 native autoregressive KV + FP32 SDPA forward policy，不套用訓練 custom-VJP／PrefixKV。9/9 測試通過，涵蓋未結束訓練拒絕、輸入／權重／快照漂移、foreign lock、不接電、spawn error 清理、逾時終止與 join、以及小張量的實際 MLX **CPU** GQA／causal mask／BF16 output dtype。首次 sandbox 無法匯入 MLX（No Metal device available），在允許裝置可見後重跑，測試明確設定 CPU 且不載入模型，9/9 通過；這不是 12B GPU 推論通過。尚未對目前 live train 執行 prepare/run；正式 GPU 推論、語意／編譯／對局評分仍待訓練完成。
+
+訓練完成後的命令順序（目前不啟動）：`python tools/editor-acceptance/hero-distillation-infer.py prepare --run <completed-training-run> --evaluation <hero74-eval-plan-v1> --out <new-inference-run>`；再分別 `python tools/editor-acceptance/hero-distillation-infer.py run --run <new-inference-run> --arm base`、`--arm lora`。同題原始輸出與每筆 index 保存，不執行上架、部署、teacher 修補或自動選 checkpoint。
+
 使用者已明確核准「延長到16小時」，見 `time-authorization-16h.json`；下面 v18 的待授權敘述是當時狀態，不再是目前阻擋。
 
 v19 已終止：前 3 種格式通過，最後完整 HERO 觸發 `PHASE_TIME_LIMIT`，optimizer 0。原因是 probe 將一次未快取基準及一次快取梯度合併放在同一個 120 秒階段；不是已證明單次正式 train 超時。原始時間顯示從階段開始到第一個 cached event 為 78.056 秒，之後觀察到 cached 部分又執行 42.140 秒即被停止。這不是精確分段完整耗時，因 trace 抽樣且最後一筆尚未結束；不能把未完成結果當通過。總 417.43 秒、最低可用 RAM 52.51 GB、接電 100%、觀察 swap 增量 0。原始證據與實際來源快照已存 `hero74-prefix-v19/`。
