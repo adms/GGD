@@ -16,6 +16,7 @@ import {
   TICK_HZ,
 } from "@ggd/shared/constants";
 import { visionRulesFromDoc } from "@ggd/shared/sim/vision";
+import { recordBossKill } from "@ggd/shared/sim/round11Gate";
 import { retiredChampionIds } from "@ggd/shared/content/championRetirement";
 import { heroStartLevel } from "@ggd/shared/content/schema/config/match";
 import { asSeatId, asTeamId, type AugmentId, type ChampionId, type EntityId, type ItemId, type SeatId, type StatusId, type TeamId } from "@ggd/shared/ids";
@@ -879,6 +880,22 @@ export class MatchController {
   private readonly lastLedgerMobKills = new Map<SeatId, number>();
   /** 這一回合每個座位打死的王 / 特殊怪(`mobBossSlain`),每回合開打時歸零。 */
   private readonly roundBossKills = new Map<SeatId, number>();
+  /**
+   * ⭐⭐ 第十一回合的進場門檻用的**累計**王擊殺（GH#1151 A：「第 1–10 回合
+   * **累計**王擊殺達門檻⋯**去重計數**」）—— ⛔ 這一場**不歸零**。
+   *
+   * ⚠️⭐ 與上面那一個是**兩個不同的量**，⛔ 不要合併：
+   *   · `roundBossKills` —— **每回合歸零**、**按座位**、⭐ 而且**王與特殊殭屍都算**
+   *     （它餵的是 `RoundPerformance.bossKills` 評分）
+   *   · 這一個       —— **整場累計**、**不分座位**、⭐ 而且**只算 `kind === "boss"`**
+   *
+   * ⭐ 第十一回合的門檻問的是「打倒了幾隻**殭屍王**」——
+   * ⛔ 把特殊殭屍算進去，門檻 3 會在第二三回合就被一批特殊怪湊滿。
+   *
+   * ⭐ 存的是**王的實體 id**（⛔ 不是次數）：`mobBossSlain` 在重連／重播／
+   * 同一 tick 多來源致命時會重覆抵達 —— 去重靠 Set，⛔ 不靠「應該不會重覆」。
+   */
+  private readonly round11BossKills = new Set<number>();
   /** 一個座位手動鎖定英雄的絕對 tick;沒有 = 從未鎖定(系統代選)。 */
   private readonly pickLockTick = new Map<SeatId, number>();
   /**
@@ -4423,6 +4440,11 @@ export class MatchController {
         if (typeof seatId !== "number" || seatId < 0 || !this.seats.has(asSeatId(seatId))) return;
         const key = asSeatId(seatId);
         this.roundBossKills.set(key, (this.roundBossKills.get(key) ?? 0) + 1);
+        // ⭐ 第十一回合的門檻：**只算殭屍王**、整場累計、⭐ 按王的實體 id 去重。
+        //   （見 `round11BossKills` 的說明：它與上面那一行是兩個不同的量。）
+        if (data.kind === "boss" && typeof data.id === "number") {
+          recordBossKill(this.round11BossKills, data.id);
+        }
         return;
       }
       default:
