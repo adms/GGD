@@ -6,7 +6,7 @@
   "to": "main",
   "baseCommit": "ec4e0a48ed8a90b997a794a4fb861ac1c9c87bf4",
   "contractFingerprint": "ed197415160df4f6",
-  "title": "素材庫模型選項：300 > MBA > 原版 > 借用 W3X，保留手動選擇",
+  "title": "模型選項與完整盤點：81 名新角色、11 個獨立副本及來源順位",
   "claims": [
     {
       "kind": "owner-decision",
@@ -44,8 +44,8 @@
     },
     {
       "kind": "confirmed",
-      "commit": "30d4cbf26",
-      "text": "本機先前 Editor 發布驗收為 592 項完整測試及 production build；本次固定 S3 版本 7b6ec0c8c5bd75fc173c5f2d 已逐檔讀回驗證，詳見新版發布收據。正式／本機原始 checkout 尚待 PR 合併後同步。",
+      "commit": "9b20aa481",
+      "text": "本機 Editor 發布驗收通過 592 項完整測試與 production build；固定 S3 版本 7b6ec0c8c5bd75fc173c5f2d 已讀回驗證 443 個版本檔及 11 個控制檔。正式／本機原始 checkout 尚待 PR 合併後同步。",
       "evidence": [
         "materials/hero-model-library/s3-publication-receipt.json",
         "materials/hero-model-library/README.md"
@@ -57,7 +57,7 @@
     },
     {
       "kind": "confirmed",
-      "commit": "c5a9fb9d7",
+      "commit": "9b20aa481",
       "text": "11 個 Owner 指定模型均以完整獨立副本保留貼圖、骨架和動作，5 個改色貼圖及哥布林殺手左右手配件已在本機 Babylon 畫面核對；來源未改動證據與逐檔 SHA 留在 derivative-validation.json。新增 7 名 LOL 配方角色納入盤點，其中 3 名仍受 160 動畫通道上限阻擋。",
       "evidence": [
         "materials/hero-model-library/derivatives.json",
@@ -72,6 +72,7 @@
   ],
   "asks": [
     "Main review shared schema 與正式後台／部署接線；CI 綠且 review 通過後合併，再用 mini-deploy.sh 部署同一 Git 與固定 S3 版本。",
-    "此 PR 僅改素材選項與管理流程。新增角色名單涵蓋 37＋37＋7＝81；共 156 筆角色／形態 ID，85 筆未在目前靜態出貨目錄。11 個指定代理使用獨立模型／貼圖／骨架／動作副本，不能以素材索引存在宣稱完整英雄已上架。"
+    "此 PR 僅改素材選項與管理流程。新增角色名單涵蓋 37＋37＋7＝81；共 156 筆角色／形態 ID，85 筆未在目前靜態出貨目錄。11 個指定代理使用獨立模型／貼圖／骨架／動作副本，不能以素材索引存在宣稱完整英雄已上架。",
+    "保留遠端 88ac699fd 的 15 名既有英雄手動原模型選擇及所有候選。本次未修改戰情版；本機 board:check 顯示既有產物有 22 份帳本、分支來源僅 21 份，msgledger:check 也回報 2026-09-09 訊息漏列。待 Main 補齊來源後重生，不藉此覆蓋現有紀錄。"
   ]
 }
