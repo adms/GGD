@@ -1,0 +1,20 @@
+[
+  {
+    "command": "pnpm appearance:check",
+    "exitCode": 0,
+    "seconds": 1.8,
+    "log": "/private/tmp/ggd-mvp-v0433-first/appearance-check.log"
+  },
+  {
+    "command": "pnpm ptokens:check",
+    "exitCode": 0,
+    "seconds": 1.87,
+    "log": "/private/tmp/ggd-mvp-v0433-first/ptokens-check.log"
+  },
+  {
+    "command": "pnpm coord:check",
+    "exitCode": 0,
+    "seconds": 4.07,
+    "log": "/private/tmp/ggd-mvp-v0433-first/coord-check.log"
+  }
+]

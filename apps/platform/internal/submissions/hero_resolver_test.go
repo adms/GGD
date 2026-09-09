@@ -106,9 +106,25 @@ func TestOfficialRosterIncludes37AndPinsOnlyCurrentCompatiblePublications(t *tes
 	if pins[0].WorkID != "hero-00" {
 		t.Fatal("previous match pin changed")
 	}
+	// ⭐⭐ GH#1157（owner 2026-09-09：「74 名一旦上架，下一次部署就會全部靜靜消失 => 開票修阿」）
+	//
+	// ⚠️ 這一段在 2026-09-10 之前斷言的是「**只改 gameVersion** ⇒ 37 名全部掉出名單」——
+	// ⛔ 而 `gameVersion` 來自 `GGD_BUILD_STAMP`，也就是說那條斷言逐字描述的是
+	//   **每一次部署都讓已上架的英雄消失**。⭐ 那不是相容性，那是這張票要修的缺陷。
+	//
+	// ⇒ ⭐ 出貨預設 `migration` 之後，這裡改成問**兩個方向**（第〇·六守則：預設改了就測新的預設）。
+
+	// ① ⭐ 只有 gameVersion 變（＝一次部署）⇒ **一名都不可以掉**
 	s.bridge.(*rosterBridge).target = json.RawMessage(`{"schema":"ggd-content-target-profile@1","gameVersion":"next-game","base":{"contentVersion":"content"},"migrationFingerprint":"migration","authoringProcessor":{"fingerprint":"processor"}}`)
+	if next, err = s.ResolveRoster(context.Background()); err != nil || len(next) != 36 {
+		t.Fatalf("⛔ 一次部署（只有 gameVersion 變）讓已上架英雄掉出名單：剩 %d，期望 36 —— GH#1157", len(next))
+	}
+
+	// ② ⭐ 反方向：`migrationFingerprint` 真的變了（資料需要轉換）⇒ **必須全部擋下**
+	//    ⛔ 少了這一列，這一票就變成「把閘關掉」而不是「把它問對問題」。
+	s.bridge.(*rosterBridge).target = json.RawMessage(`{"schema":"ggd-content-target-profile@1","gameVersion":"next-game","base":{"contentVersion":"content"},"migrationFingerprint":"migration-v2","authoringProcessor":{"fingerprint":"processor"}}`)
 	if next, err = s.ResolveRoster(context.Background()); err != nil || len(next) != 0 {
-		t.Fatal("incompatible release entered match", err)
+		t.Fatalf("⛔ 遷移指紋變了卻仍然進場：%d 名 —— 那不是放寬，那是沒有閘", len(next))
 	}
 	s.bridge.(*rosterBridge).target = json.RawMessage(`{}`)
 	if _, err = s.ResolveRoster(context.Background()); err == nil {

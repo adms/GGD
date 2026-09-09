@@ -94,7 +94,19 @@ it("loads different versions of the same template in one room without sharing mu
 
 it("rejects stale dependencies, stale engines, duplicate works, wrong approval hashes, and missing archives", () => {
   const build = (overrides: Partial<Parameters<typeof buildCommunityRoomContent>[0]>) => buildCommunityRoomContent({ base, target, pins, archives, ...overrides });
-  expect(() => build({ target: { ...target, gameRevision: "next-build" } })).toThrow("不相容");
+  // ⭐⭐ GH#1157（owner 2026-09-09：「74 名一旦上架，下一次部署就會全部靜靜消失 => 開票修阿」）
+  //
+  // ⚠️ 這一行在 2026-09-10 之前斷言「**只改 gameRevision** ⇒ 整間房 throw 不相容」——
+  // ⛔ 而 `gameRevision` 來自 `GGD_BUILD_STAMP`，也就是說它逐字描述的是
+  //   **每一次部署都讓社群房開不起來**。⭐ 那不是相容性，那是缺陷。
+  // ⇒ 出貨預設 `migration` 之後改成問兩個方向（第〇·六守則：預設改了就測新的預設）。
+
+  // ① ⭐ 只有 gameRevision 變（＝一次部署）⇒ ⛔ **不可以** throw
+  expect(() => build({ target: { ...target, gameRevision: "next-build" } })).not.toThrow();
+  // ② ⭐ 反方向：遷移指紋真的變了 ⇒ **必須** throw（⛔ 否則這就不是放寬，是沒有閘）
+  expect(() => build({ target: { ...target, migrationFingerprint: "next-migration" } })).toThrow("不相容");
+  // ③ ⭐ 一鍵 rollback：`strict` 下，一次部署仍然擋（⛔ 舊行為要逐位元組還原得回來）
+  expect(() => build({ target: { ...target, gameRevision: "next-build" }, targetMatch: "strict" })).toThrow("不相容");
   expect(() => build({ base: { ...base, documents: { ...base.documents, "config/damage-tiers": contentSha256("changed") } } })).toThrow("固定依賴");
   expect(() => build({ pins: [pins[0]!, pins[0]!] })).toThrow("兩個版本");
   expect(() => build({ pins: [{ ...pins[0]!, packageDigest: contentSha256("different") }] })).toThrow("固定版本");

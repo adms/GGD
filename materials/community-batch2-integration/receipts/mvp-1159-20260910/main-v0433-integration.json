@@ -1,0 +1,62 @@
+{
+  "recordedAt": "2026-09-10T03:01:24.861039+08:00",
+  "pr": 1153,
+  "issue": 1159,
+  "firstParent": "1474fc28847bb17d057e7dbb0964a0841329685a",
+  "incomingFirst": "d4278e5dd9681ededbf234c9840ac5bff844bd0e",
+  "fixedMain": "eac078afb4f52e0e3e79765bc15d5df034dafb21",
+  "conflictsResolved": [
+    "docs/editor-contract/ggd-config-decoration-census.json",
+    "docs/editor-contract/ggd-config-decoration-census.md",
+    "docs/legacy/_overwrites/_ledger.tsv",
+    "docs/全自動鑄造編輯器進度temp202609100021.md"
+  ],
+  "sourceIdentity": {
+    "directories": [
+      "apps",
+      "packages",
+      "content"
+    ],
+    "matchesIncomingFirst": true,
+    "acceptedProjectsUnchanged": 81
+  },
+  "validation": {
+    "decor": "exit 0",
+    "coord": "31 packets; exit 0",
+    "editorAndCore": "Reuse tested first-branch byte-identical source, 604 Editor tests + typecheck + production build, targeted 12 tests and Go test pass. No duplicate full test run.",
+    "skills": "First-branch 67 + 3 segmented validation; second-specific decor and coord verified."
+  },
+  "firstReceipt": "materials/community-hero-forge/receipts/main-v0433-integration/integration.json",
+  "ledger": {
+    "second": 8272,
+    "first": 8300,
+    "merged": 8309
+  },
+  "formalPublication": "pending",
+  "evidence": [
+    {
+      "path": "materials/community-batch2-integration/receipts/mvp-1159-20260910/main-v0433-decor-build.txt",
+      "sha256": "0589ff9262baac9e1a4c277606dbd4b0e65800f400180e815c5532f55531b0d5",
+      "bytes": 944,
+      "credentialPatternScan": "0 findings; full file scanned"
+    },
+    {
+      "path": "materials/community-batch2-integration/receipts/mvp-1159-20260910/main-v0433-decor-check.txt",
+      "sha256": "2c6faca3fddd563d61be526f385469f55ff62d5eef7c855e04e41f8ba24c34bc",
+      "bytes": 219,
+      "credentialPatternScan": "0 findings; full file scanned"
+    },
+    {
+      "path": "materials/community-batch2-integration/receipts/mvp-1159-20260910/main-v0433-coord-check.txt",
+      "sha256": "ac0adef04e8408259902345d2712fe72285220869c41d5c0f77cfc7d4afd5c48",
+      "bytes": 6268,
+      "credentialPatternScan": "0 findings; full file scanned"
+    },
+    {
+      "path": "materials/community-batch2-integration/receipts/mvp-1159-20260910/main-v0433-preserved-projects.json",
+      "sha256": "efe66375c858d74ae65afba364935cc9cf23546fafd16b7dd4a800ff69cf6ebf",
+      "bytes": 18521,
+      "credentialPatternScan": "0 findings; full file scanned"
+    }
+  ]
+}

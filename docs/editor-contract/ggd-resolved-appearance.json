@@ -4,7 +4,7 @@
   "resolverFingerprint": "21a5483cdc47",
   "totals": {
     "champions": 71,
-    "standIns": 14,
+    "standIns": 13,
     "failures": 0
   },
   "appearances": [
@@ -4328,36 +4328,66 @@
     {
       "championId": "godie-ucrl",
       "schema": "resolved-appearance@1",
-      "modelKey": "champ.thorne",
-      "glbPath": "assets/models/champions/blocky-knight.glb",
-      "modelDocDigest": "082b1a16e49d",
-      "scale": 1,
-      "collisionRadius": 0.6,
+      "modelKey": "imported.herobiggon",
+      "glbPath": "assets/models/imported/herobiggon.glb",
+      "modelDocDigest": "ae99c49997a5",
+      "scale": 0.0468,
+      "collisionRadius": 0.55,
       "authoredYawOffsetDeg": null,
-      "effectiveYawOffsetDeg": 0,
-      "yawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 90,
+      "yawOffsetDeg": 90,
       "clipMap": {
-        "idle": "idle",
-        "run": "run",
-        "attack": "attack",
-        "cast": "cast",
-        "hurt": "hurt",
-        "death": "death"
+        "idle": "Stand - 1",
+        "run": "Walk",
+        "attack": "Attack - 2",
+        "cast": "Spell",
+        "hurt": "Stand - 1",
+        "death": "Death"
       },
       "attachPoints": {
-        "rightHand": {
-          "x": 0.34,
-          "y": 0.73,
-          "z": 0.11
+        "Hand Right": {
+          "x": 0.2635,
+          "y": 1.9603,
+          "z": 1.2007
         },
-        "overhead": {
+        "Head": {
+          "x": 0.0204,
+          "y": 3.9851,
+          "z": 0
+        },
+        "Hand Left": {
+          "x": 0.2635,
+          "y": 1.9624,
+          "z": -1.2007
+        },
+        "Chest": {
+          "x": 0.0699,
+          "y": 2.8796,
+          "z": 0.0022
+        },
+        "Foot Left": {
+          "x": 0.1333,
+          "y": 0.1173,
+          "z": -0.4634
+        },
+        "Foot Right": {
+          "x": 0.1337,
+          "y": 0.1156,
+          "z": 0.4634
+        },
+        "OverHead": {
           "x": 0,
-          "y": 1.95,
+          "y": 4.4444,
+          "z": 0
+        },
+        "Origin": {
+          "x": 0,
+          "y": 0,
           "z": 0
         }
       },
       "teamTintMaterials": [],
-      "isStandIn": true,
+      "isStandIn": false,
       "axesNotCovered": [
         "skin",
         "form",

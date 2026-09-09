@@ -9,6 +9,7 @@
   "maxBytes": 262144,
   "autoPromote": false,
   "publishMode": "immediate",
+  "heroTargetMatch": "migration",
   "communityRoomOnly": false,
   "digestRecompute": true
 }

@@ -131,7 +131,17 @@ VISUAL_RE='^apps/client/src/(vfx|render)/'
 #    而且它抓到過一個 readPixels 抓不到的形狀 —— GH#700 的第一版守衛是綠的,
 #    因為 `scene.particleSystems.push(this)` 在平台檢查**之前**,一顆建構失敗的
 #    **殘骸**同名躺在場上;量 isStarted()/emitRate 才分得出來。
-VOCAB_RE='readPixels|opacityTexture|getVerticesData|emissive|alpha|isEnabled|bright|emitRate|isStarted'
+# ⭐ 2026-09-10 追加 DOM 那一族（`textContent|innerText|toBeVisible|getByText|toHaveTextContent`）:
+#    ⚠️ 這一條在此之前紅在 `apps/client/src/render/platformPolicy.test.ts` 上,
+#    ⛔ 而那支測試**真的在斷言可見性** —— 它斷言的是「畫面上有『不支援手機』那幾個字」
+#    (`expect(text).toContain("不支援手機")`),而字是從**出貨的 config** 讀來的,
+#    ⭐ 它的檔頭甚至誠實寫著「jsdom ⛔ 不 raster ⇒ 這裡證明的是**墨水存在**」
+#    ⭐ 並且附了突變紀錄(把 classifyDevice 改成永遠回 tablet ⇒ 紅)。
+#    ⇒ ⛔ **它不是空殼標記,是這張詞彙表只認得 3D 渲染器的動詞。**
+# ⚠️ ⭐ 而詞彙表放寬有代價:`textContent` 太鬆會讓一個「取到節點但什麼都沒斷言」的
+#    空殼過關。⇒ 只收**帶斷言語意**的那幾個(`toContain`/`toBeVisible`/`getByText`/
+#    `toHaveTextContent`),⛔ 不收裸的 `textContent`/`innerHTML`。
+VOCAB_RE='readPixels|opacityTexture|getVerticesData|emissive|alpha|isEnabled|bright|emitRate|isStarted|toBeVisible|getByText|toHaveTextContent|toContain'
 MARKED_TESTS=$(git ls-files -z --cached --others --exclude-standard -- '*.test.ts' '*.test.tsx' ':(exclude)docs/legacy' 2>/dev/null \
   | xargs -0 -r grep -l '@visual-proof' -- 2>/dev/null || true)
 LIARS=""

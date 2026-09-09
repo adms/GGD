@@ -1,0 +1,104 @@
+{
+  "$schema-note": "⭐ 正規化器清單的**唯一住處**（第〇·四守則：同一份知識不可以有第二個住處）。",
+  "$why": [
+    "sync-io.json 是**量出來的**寫入表 ⇒ 它只知道「誰寫過這個檔」，⛔ 不知道「誰**擁有**它」。",
+    "有一族步驟是**就地改欄位**的正規化器：它們讀既有檔、只覆寫其中幾格、⛔ 不產生那個檔。",
+    "把正規化器當成作者的後果是**封死唯一的合法路** —— 訊息叫人「改來源」，而那些檔自己就是來源。",
+    "⛔ 每一格都要寫得出**能被反駁的理由**（逐行讀過那支程式），⛔ 不是「看起來像」。",
+    "⛔ 名字只准放 sync-io.json 真的有的步驟名 —— 幽靈名永遠比不中，掛在這裡只是一句看起來有防的散文。",
+    "⭐ 2026-08-29（GH#815 複驗）：分類是**逐檔**的，⛔ 不是逐步驟 —— 一支可以對 A 檔是正規化器、",
+    "對 B 檔是作者（apconv:build 就是：它就地改 content/abilities/*.json，而 docs/_data/",
+    "ap-conversion-applied.json 是它自己整份 emit 的清單）。⇒ 選填 `only`（路徑 glob 陣列）：",
+    "有 `only` 時**只有**比中的路徑算正規化器，其餘路徑照樣是作者。⛔ 沒有 `only` = 全部路徑。"
+  ],
+  "$consumers": [
+    "scripts/genguard.sh —— 查詢用（AUTHOR ⇒ exit 1；NORMALIZER ⇒ exit 0 + 提醒）",
+    "scripts/preserve-before-overwrite.py —— PreToolUse hook 的同一套裁決",
+    "scripts/product-quarantine.sh —— ⭐ GH#707：只被正規化器認領的檔**不上鎖**（它們是手編檔）",
+    "tools/parallel-gates/reconcile.mjs —— ⭐ GH#771 執行期對帳：正規化器的**就地改欄位**⛔ 不算越界寫入。量到的（2026-08-29）：apconv:build 戶籍只有 1 份而它就地重算 422 份 content/abilities/*.json ⇒ 少了這一格，`pnpm apconv:build` 單獨跑會紅在一次**完全合法**的執行上，而一條會誤報的閘會被人放寬。⛔ 零認領（🔴）那一堆不受影響。"
+  ],
+  "$gate": "packages/shared/src/ops/normalizerListIsReal.test.ts（名字要真）+ laneYQuarantineAgreesWithGenguard.test.ts（三個消費端不可以各自硬寫一份）+ ⭐ quarantineOrphansAndEntrypoints.test.ts（GH#815 ③：`product-quarantine.sh --doctor` 的兩個訊號命中而**兩張表都沒有**它 ⇒ 紅）",
+  "$rejected-note": [
+    "⭐ GH#815 ③ —— 這一節**不是註腳,是閘的一半**。`--doctor` 的**三個**推導訊號",
+    "（A「glob 灌大」:一條 glob 認領 N 份 · B「讀寫重疊」:它讀的正是它寫的那些 ·",
+    "⭐ C「共寫」:它寫的每一份**別的步驟也寫**,而且不只一份）",
+    "命中的每一支,要嘛在上面的 normalizers 裡,要嘛在這裡帶著**能被反駁的理由**（≥20 字）。",
+    "⛔ 兩張表都沒有它 ⇒ 紅。與 skillsSyncCoversGenerators 的豁免表同一個形狀。",
+    "⚠️ C 是 2026-08-29 對抗性複驗逼出來的:A 與 B 對 `tiers:apply` **結構上失明**",
+    "（它的 writes 是 402 條**明確路徑**⇒ A=0;而 merge-io.mjs:108 把「自己也寫過的」從",
+    " reads 濾掉 ⇒ B=0）—— 而拿掉它會讓下一次 lock 把 387 份手編技能檔 chmod 444。",
+    "⭐ C 問的是**關係**(誰跟誰共寫同一份),⛔ 不是名詞,所以 glob 與明確路徑都看得見。"
+  ],
+  "normalizers": [
+    {
+      "step": "tiers:apply",
+      "reason": "讀 530 個檔、寫 401 個檔 —— 它把五級距重新解析回每一份技能文件，檔案裡 99% 的位元組不是它寫的。出貨的 401 支技能文件裡有 39 支是直接編 JSON 的（沒有 tools/skill-remake/heroes/*.py 來源）⇒「改來源再重生成」對它們不存在（GH#648）。"
+    },
+    {
+      "step": "apconv:build",
+      "only": [
+        "content/abilities/*.json"
+      ],
+      "reason": "AP 換算欄位的就地重算 —— 與 tiers:apply 同型：它只覆寫換算那幾格，⛔ 不產生那些技能文件（tools/ap-conversion/apply.py:449-476 逐行讀過：讀 raw → 只改 description 與係數那幾格 → 寫回原路徑）。⭐ 2026-08-29 加 `only`：它在 sync-io 裡**唯一量到的 write 是 docs/_data/ap-conversion-applied.json**（apply.py:478-487 的 manifest，它整份 emit、而且是唯一寫入者）⇒ 那一份是它的**產物**，在此之前這一格讓 genguard 對一份真產物說「不擋你」、隔離區還主動把它放行成 644（＝ apdmg:build 當初被踢出去的同一個誤導）。技能檔那一半沒被量到是 GH#771 的量測洞（條件寫入端在已同步的樹上寫 0 個檔），⛔ 不是它不寫。"
+    },
+    {
+      "step": "skillremake:provenance",
+      "reason": "逐行讀 tools/skill-remake/stamp_provenance.py（⛔ 不是信檔頭，是看程式）：它只寫 out 的 provenance 那一格。它的 writes 是兩條 glob（content/{abilities,champions}/*.json ＝ 494 份）⇒ 判成作者的話那 494 份全部走進「改產物被擋／改來源沒有來源」的死路。2026-08-27 加入。"
+    },
+    {
+      "step": "speedtiers:build",
+      "reason": "逐行讀 tools/speed-growth/gen.ts 的 withTierLines()：它只在**原始字串**上刪/插 tier 欄位那幾行，⛔ 其餘位元組一個都不碰。writes 是一條 glob（content/champions/*.json ＝ 71 份），漏掉它的話 55 份英雄卡被判 AUTHOR 而訊息叫人「改來源」——**英雄卡自己就是來源**（GH#805 實測撞到）。2026-08-27 加入。"
+    },
+    {
+      "step": "castderive:build:raw",
+      "reason": "逐行讀過 packages/shared/scripts/deriveCastTimes.ts：它載入既有內容、對每一份算 deriveCastTime()、**只覆寫 castTimeSec 一格**（含英雄卡的內嵌鏡像），其餘位元組一個都不碰。⛔ 把它當作者會讓 492 份技能/英雄檔全部落進「改產物被擋／改來源沒有來源」的死路 —— 那正是 GH#707 記錄過的、一天內擋掉三條 lane 的形狀。"
+    },
+    {
+      "step": "skillremake:json",
+      "reason": "⭐ 2026-09-02 —— 它**內部呼叫** `deriveCastTimes`（`castderive:build:raw`，上一列已登記的正規化器）兩趟，所以它的執行窗口裡會出現「只改 `castTimeSec` 一格」的寫入，落在它**沒有產生**的那幾份手編檔上。⚠️ 實測觸發（本輪）：`godie-etyr.r` / `godie-udea.w` 與它們的英雄卡 —— 那兩支的效果樹修好之後（模板展開不再吃掉自己寫的 `damageArea`/`dash`），`deriveCastTime()` 算出不同的秒數（0.667 → 0.067）並寫回去。⛔ 不可以把那幾份加進 `skillremake:json` 的 `writes`：隔離區會把 492 份技能／英雄檔鎖成 444 ＝ GH#707 一天內擋掉三條 lane 的那個形狀。⭐ 它**同時**是 91 份技能的作者 —— 這一列宣告的是「它也會做正規化」，⛔ 不是「它不是作者」（`sync-io.json` 的 writes 仍然逐檔列著那 126 份）。 ⭐⭐ `onlyOutsideOwnWrites: true` —— 它與其餘四支**不同**：那四支對它們碰到的每一份都只是正規化器，⛔ 而這一支對自己 `writes` 裡逐檔列名的那 126 份**是作者**。⇒ 這一格讓「擁有權」問對問題：**在它自己的 writes 裡 ⇒ 作者；在外面 ⇒ 正規化器**。⚠️ 少了它，`editorSource` 會把 421 份技能全部判成 `normalizer-only`⇒ 編輯器會直接寫那 91 份產物，⛔ 而下一次 sync 打回來。",
+      "onlyOutsideOwnWrites": true
+    },
+    {
+      "step": "prose:build",
+      "step": "board:build",
+      "only": [
+        "docs/legacy/_overwrites/_ledger.tsv"
+      ],
+      "reason": "⭐ 2026-09-07（GH#1097）—— 它對這一個路徑是**追加者**，⛔ 不是作者：逐行讀 tools/board/gen_board.py::_preserve_previous()（⛔ 不是信檔頭）—— 它在覆蓋 ggd-board.html 之前 `log.open(\"a\")` **追加一列**（時間戳／gen_board／why／來源／落點），⛔ 零讀取、⛔ 不產生那個檔、⛔ 也不擁有任何一格。那本帳的其他寫入端是 scripts/preserve.sh 與 scripts/preserve-before-overwrite.py（PreToolUse hook）—— ⭐ 三個寫入端都只追加，**沒有一個是作者**。⚠️ 而 sync-io 是**量出來的**（它只知道「誰寫過這個檔」）⇒ board:build 被記成它的作者 ⇒ 隔離區 chmod 444 ⇒ 2026-09-07 量到：hook 的留底帳本吃 EACCES、`scripts/preserve.sh` 的 `>>` 靜靜失敗而結尾照樣印「✓ 留底 N 份」（壞掉跟正常長得一模一樣）。⭐ `only` 把範圍夾在這一個路徑：docs/_release/ggd-board.html 仍然是它**整份重算**的產物，照樣鎖。⇒ 可被反駁的方式：若哪天 gen_board.py 改成**產生**這本帳（整份重寫、或擁有其中某幾欄），這一列就要刪掉。"
+    },
+    {
+      "step": "prose:build",
+      "reason": "⭐ 2026-09-03 —— GH#960 批收尾把它接上 skills:sync 之後才第一次被量到寫。它是逐字元的外科手術（自己的檔頭逐字：「只換 `description` 那一段字面值，⛔ 不是 JSON.parse → JSON.stringify 重寫整份」），三個住處（content/abilities/*.json · content/champions/*.json · tools/skill-remake/heroes/*.py）裡沒有一份是它創造的檔案 —— 它只在已存在的檔案裡換一段字面值，其餘位元組不碰。⛔ 不可以判 AUTHOR：那會讓 331 份合法手編 ability/champion JSON 全部吃 EACCES（同 apconv:build 的前科，GH#815）。"
+    }
+  ],
+  "$rejected": [
+    {
+      "step": "content:build",
+      "why-not": "⭐ 新訊號 C「共寫」命中它（21 份 writes 全部也被別人寫）—— ⛔ 但它是**作者**：它寫的是 bundle.json / manifest.json ＋ 每個集合的 _index.json，⭐ 每一份都是**整份重算**（打包器把 content/ 掃一遍再 emit），⛔ 不是讀既有檔只覆寫幾格。C=21/21 的原因是**索引檔被共寫**：每一支集合產生器（skillremake:json 那一族）跑完也會重寫自己那一份 _index.json ⇒ 同一份檔兩個整份重算的作者，⛔ 不是「它在改別人的欄位」。⇒ 可被反駁的方式：若 build_indexes 改成從磁碟讀回 _index.json 再逐格 merge，這一格就要搬到 normalizers。2026-08-29 加入。"
+    },
+    {
+      "step": "skillremake:json",
+      "why-not": "⭐ 新訊號 C「共寫」命中它（126 份 writes **全部**也被別人寫）—— ⛔ 但它是**作者**：CLAUDE.md 逐字「skillremake:json 擁有的是 91 份完整的 ability JSON ＋ 16 份完整的 champion JSON，**每一個欄位**都是產物（effects / vfxKey / flat / statusId 全部）」，來源是 tools/skill-remake/batch1.py 的那張表，⛔ 不是就地改欄位。⭐ 它 C=100% 的**原因**正好相反：三支正規化器（skillremake:provenance / castderive:build:raw / tiers:apply）的 glob 蓋過同一批檔 ⇒ 是**別人來改它的產物**，⛔ 不是它去改別人的。⇒ 可被反駁的方式：若哪天 batch1.py 改成讀既有 JSON 再只覆寫幾格（而不是從規格表整份 emit），這一格就要搬到 normalizers。2026-08-29 加入。"
+    },
+    {
+      "step": "msgledger:build",
+      "why-not": "⭐ GH#815 ③ 的訊號 A 命中它（一條 glob `docs/_daily/????-??-??.md` 認領 11 份當日帳本，而它每一趟只寫「今天」那一份）—— ⛔ 但它是**作者**，⛔ 不是就地改欄位：逐行讀 scripts/message-ledger.sh:19「輸出路徑是日期相依的」＝ 它整份產生今天那一頁。glob 是 merge-io.mjs 的 DATE_FAMILIES 刻意放寬的（⛔ 不然昨天那一份隔天就變成「無主又鎖著」的孤兒）。⭐ 而它沒有造成 GH#707 的死路，因為**寫入點自解鎖**：scripts/ledger_table.py:129-144 的 _unlock() 在 append 前 chmod 0o644（我逐行讀過那支，⛔ 不是信檔頭）。⇒ 可被反駁的方式：若哪天 message-ledger.sh 改成只覆寫帳本裡的幾格、或 _unlock() 被拿掉，這一格就要搬到 normalizers。2026-08-29 加入。"
+    },
+    {
+      "step": "apdmg:build",
+      "why-not": "2026-08-26 量到它的 2 份 writes **共有 0 份**（content/config/ap-damage-scaling.json 它是唯一寫入者）⇒ 它是**作者**。CLAUDE.md 明文把那一份列在「⛔ 不可手改」的 7 份 config 產物裡；留在清單裡＝這支腳本對一份禁改產物說「不擋你」還教人手改（誤導源 T0）。"
+    },
+    {
+      "step": "prose:apply",
+      "why-not": "2026-08-25：幽靈名。真名是 prose:build，而它**不在** sync-io 的步驟裡 ⇒ 永遠比不中。"
+    },
+    {
+      "step": "vfxfam:build",
+      "why-not": "⭐ 新訊號 A「glob 認領」命中它（68 份）—— ⛔ 但那個 glob 是 2026-09-01 **刻意**加的，而它是**作者**不是正規化器：`generateFamilyContent.ts` 的第一行檔頭逐字寫著它是 `content/vfx/fx.fam.*.json` 的產生器，每一份都是**整份重算**（從 `w3xArtFamilies.ts` 的 21 個原型 ＋ `w3xFamilyArt.ts` 的證據表 ＋ `bindings.ts` 的顏色分類算出來），⛔ 不是讀既有檔只覆寫幾格。⚠️ 在此之前 `steps[].writes` 是一張**逐檔列名**的量測結果 ⇒ 每新增一個家族就多一份「跑完了但戶籍對不上」的孤兒（`fx.fam.ground-dust.arcane.s120.json` 就是那樣來的：被它寫出來、沒有人認領、⇒ 隔離區不鎖它 ⇒ 任何通道都寫得進去而沒有東西會紅）。⇒ 可被反駁的方式：若這支改成讀回既有的 `fx.fam.*.json` 再逐格 merge（例如保留手改的顏色），這一格就要搬到 normalizers。2026-09-01 加入。"
+    },
+    {
+      "step": "board:roll",
+      "why-not": "⭐ 2026-09-04 —— 訊號 A（glob 認領 9 份）命中它,⛔ 而它是**作者**,⛔ 不是正規化器。它每天**整份重算**戰情版（`gen_board.py` 讀票與帳本再 emit 一份新的 md）,⛔ 不是讀既有檔只覆寫幾格 —— B=0（讀寫零重疊）與 C=0/17（沒有跟別人共寫）兩個訊號都指向這一點。⭐ A 之所以會命中,是因為那個檔**每天換名**（`戰情版-<YYYYMMDD>.md`）⇒ 戶籍只能用 glob 宣告（同 `msgledger:build` 的 `ledger-source_temp_*.md`）,而 glob 認領數自然會隨天數累積。⚠️ ⭐ 反駁法:如果哪天 `gen_board.py` 改成**就地改欄位**（例如只更新七天窗那幾行）,這一列就要刪掉並改進 normalizers —— 判準是「它重算整份還是只改幾格」,⛔ 不是「它認領了幾個檔」。"
+    }
+  ]
+}

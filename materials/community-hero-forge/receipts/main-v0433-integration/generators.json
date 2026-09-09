@@ -1,0 +1,113 @@
+[
+  {
+    "command": [
+      "bash",
+      "scripts/genrun.sh",
+      "content:build",
+      "content:build:indexes-only"
+    ],
+    "exitCode": 0,
+    "seconds": 13.97,
+    "log": "/private/tmp/ggd-mvp-v0433-first/01-content-build.log"
+  },
+  {
+    "command": [
+      "bash",
+      "scripts/genrun.sh",
+      "spec:build"
+    ],
+    "exitCode": 0,
+    "seconds": 7.11,
+    "log": "/private/tmp/ggd-mvp-v0433-first/02-spec-build.log"
+  },
+  {
+    "command": [
+      "bash",
+      "scripts/genrun.sh",
+      "skillforge:audit"
+    ],
+    "exitCode": 0,
+    "seconds": 5.38,
+    "log": "/private/tmp/ggd-mvp-v0433-first/03-skillforge-audit.log"
+  },
+  {
+    "command": [
+      "bash",
+      "scripts/genrun.sh",
+      "editorcov:build"
+    ],
+    "exitCode": 0,
+    "seconds": 4.35,
+    "log": "/private/tmp/ggd-mvp-v0433-first/04-editorcov-build.log"
+  },
+  {
+    "command": [
+      "bash",
+      "scripts/genrun.sh",
+      "bricks:build"
+    ],
+    "exitCode": 0,
+    "seconds": 3.4,
+    "log": "/private/tmp/ggd-mvp-v0433-first/05-bricks-build.log"
+  },
+  {
+    "command": [
+      "bash",
+      "scripts/genrun.sh",
+      "decor:build"
+    ],
+    "exitCode": 0,
+    "seconds": 4.79,
+    "log": "/private/tmp/ggd-mvp-v0433-first/06-decor-build.log"
+  },
+  {
+    "command": [
+      "bash",
+      "scripts/genrun.sh",
+      "docs:readme"
+    ],
+    "exitCode": 0,
+    "seconds": 2.54,
+    "log": "/private/tmp/ggd-mvp-v0433-first/07-docs-readme.log"
+  },
+  {
+    "command": [
+      "bash",
+      "scripts/genrun.sh",
+      "skillremake:docs"
+    ],
+    "exitCode": 0,
+    "seconds": 15.83,
+    "log": "/private/tmp/ggd-mvp-v0433-first/08-skillremake-docs.log"
+  },
+  {
+    "command": [
+      "bash",
+      "scripts/genrun.sh",
+      "contract:numbers"
+    ],
+    "exitCode": 0,
+    "seconds": 3.93,
+    "log": "/private/tmp/ggd-mvp-v0433-first/09-contract-numbers.log"
+  },
+  {
+    "command": [
+      "bash",
+      "scripts/genrun.sh",
+      "board:roll"
+    ],
+    "exitCode": 0,
+    "seconds": 4.18,
+    "log": "/private/tmp/ggd-mvp-v0433-first/10-board-roll.log"
+  },
+  {
+    "command": [
+      "bash",
+      "scripts/genrun.sh",
+      "board:build"
+    ],
+    "exitCode": 0,
+    "seconds": 4.37,
+    "log": "/private/tmp/ggd-mvp-v0433-first/11-board-build.log"
+  }
+]
