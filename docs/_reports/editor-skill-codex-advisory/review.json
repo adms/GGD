@@ -1,7 +1,7 @@
 {
   "schema": "ggd-editor-skill-codex-advisory@2",
   "reviewedAt": "2026-09-04T06:19:27+08:00",
-  "packetDigest": "0b9163729e4f643f7d19b0c1e65d56ab4ca4d690d550a8b5a5be9734f547e0af",
+  "packetDigest": "4e2f1e4734ed83a2ee766cfdd076d5f902bc87292e8ebf84c1bbe176d34378dc",
   "authority": "advisory-only",
   "scope": {
     "themes": 43,
@@ -1716,7 +1716,7 @@
       "name": "45-002 天照",
       "themeId": "ability:godie-edem.ex",
       "sourceDigest": "df77927cd78c14abec30d76b76cd983e8b11306ff11f27bf42fa70f45c529730",
-      "currentDigest": "43b29ea939c5b5ba377e66f7296d10657bb7bfe77a27291e40a2770a9a3280c1",
+      "currentDigest": "e302cc6a2b6817c115c2345435f609af2cb1c273ad96a3f8fb3b0d24a48ecc54",
       "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
@@ -1757,7 +1757,7 @@
       ],
       "noCode": {
         "status": "ready",
-        "designerPath": "advanced-no-code-effect-form",
+        "designerPath": "template-product",
         "presetId": null,
         "eventAuthoring": "not-applicable",
         "scriptTimelineGaps": [],

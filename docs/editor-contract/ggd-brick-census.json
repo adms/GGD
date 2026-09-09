@@ -9,9 +9,9 @@
     "shells": 10,
     "zeroAdoption": 26,
     "terminal": 1,
-    "handWritten": 119,
-    "distinctShapes": 83,
-    "singletonShapes": 57,
+    "handWritten": 114,
+    "distinctShapes": 78,
+    "singletonShapes": 52,
     "top8Coverage": 26
   },
   "demand": [
@@ -279,7 +279,7 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 6,
-      "abilities": 53,
+      "abilities": 54,
       "terminal": false
     },
     {
@@ -315,7 +315,7 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 8,
-      "abilities": 13,
+      "abilities": 14,
       "terminal": false
     },
     {
@@ -346,6 +346,15 @@
       "terminal": false
     },
     {
+      "id": "tpl-area-strike",
+      "family": "area-strike",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 10,
+      "abilities": 8,
+      "terminal": false
+    },
+    {
       "id": "tpl-blink",
       "family": "blink",
       "engineKnows": true,
@@ -370,15 +379,6 @@
       "status": "enabled",
       "params": 4,
       "abilities": 6,
-      "terminal": false
-    },
-    {
-      "id": "tpl-area-strike",
-      "family": "area-strike",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 8,
-      "abilities": 5,
       "terminal": false
     },
     {

@@ -19,7 +19,7 @@
 | id | 佈線 | 參數 | ⛔ inert | preset 用量 | ref 用量 | gap | exemplar |
 |---|---|---:|---|---:|---:|---:|---|
 | `tpl-apply-status` | `doc` | 3 | — | 0 | 6 | 9 | 70-03 木束縛之術（content/abilities/godie-e010.e.json） |
-| `tpl-area-strike` | `doc` | 8 | — | 0 | 5 | 10 | 77-01（godie-e00w.q） |
+| `tpl-area-strike` | `doc` | 10 | — | 0 | 8 | 10 | 77-01（godie-e00w.q） |
 | `tpl-beam-roll` | `both` | 21 | ⛔ speed distance | 13 | 0 | 8 | 20-03 約束與勝利之劍 |
 | `tpl-blink` | `doc` | 1 | — | 0 | 7 | 9 | 57-02 任意門（content/abilities/godie-n00b.e.json） |
 | `tpl-blink-strike` | `doc` | 6 | — | 0 | 1 | 5 | godie-n01c.w（出貨最接近預設的那一支） |
@@ -42,8 +42,8 @@
 | `tpl-line-sweep` | `doc` | 6 | — | 0 | 1 | 7 | 20-03 約束與勝利之劍 |
 | `tpl-lock-combo` | `doc` | 10 | — | 0 | 0 | 6 | 84-04 給我蜂蜜 |
 | `tpl-locust-line` | `both` | 11 | — | 2 | 0 | 8 | 09-04 龜派氣功 沿線火柱（h006 FlameStrike1，census static-line） |
-| `tpl-locust-orb` | `both` | 12 | — | 29 | 0 | 8 | 11-04 三千世界（o018 HeroMusashiMiyamoto，census static-single） |
-| `tpl-locust-strike` | `both` | 11 | — | 12 | 0 | 8 | 65-002 永恆的愚蠢鄉 / 77-04 打雷（o00E MonsoonBoltTarget，census static-single） |
+| `tpl-locust-orb` | `both` | 12 | — | 31 | 0 | 8 | 11-04 三千世界（o018 HeroMusashiMiyamoto，census static-single） |
+| `tpl-locust-strike` | `both` | 11 | — | 13 | 0 | 8 | 65-002 永恆的愚蠢鄉 / 77-04 打雷（o00E MonsoonBoltTarget，census static-single） |
 | `tpl-locust-swarm` | `both` | 12 | — | 2 | 0 | 8 | 38-002 究極暴走黑龍波 三向黑洞（o011 RockChunks0 同族，census travel-line） |
 | `tpl-locust-travel` | `both` | 11 | — | 5 | 0 | 8 | 38-03 邪王炎殺黑龍波 黑洞層（h02E BlackHole，census travel-single） |
 | `tpl-mark-stacks` | `doc` | 20 | — | 0 | 0 | 8 | 52-00 十二道試煉（海克力斯 Berserker 天生技） |
@@ -52,12 +52,12 @@
 | `tpl-orbit-array` | `doc` | 7 | ⛔ aim | 0 | 2 | 6 | 57-04 竹蜻蜓 |
 | `tpl-periodic-field` | `both` | 9 | — | 0 | 5 | 5 | 90-01 飛葉快刀（每秒對附近的敵人造成傷害，持續2秒） |
 | `tpl-projectile-strike` | `doc` | 7 | — | 0 | 18 | 9 | 42-03 暗夜吹雪（content/abilities/godie-n01g.e.json） |
-| `tpl-proxy-cast` | `both` | 8 | ⛔ proxyCount | 0 | 13 | 6 | 71-01 死亡隕落 |
+| `tpl-proxy-cast` | `both` | 8 | ⛔ proxyCount | 0 | 14 | 6 | 71-01 死亡隕落 |
 | `tpl-proxy-fanout` | `doc` | 5 | — | 0 | 1 | 8 | 45-02 千鳥流 |
 | `tpl-pull-throw` | `doc` | 12 | — | 0 | 0 | 3 | 52-02 蹂躪編年史（`A0U1`，`content/abilities/godie-hapm.w.json`） |
 | `tpl-radial-burst` | `both` | 12 | — | 2 | 0 | 8 | 42-04 世界終結 |
 | `tpl-random-barrage` | `both` | 9 | — | 0 | 0 | 6 | 74-03 闇之天使 |
-| `tpl-single-strike` | `doc` | 6 | — | 0 | 53 | 9 | 23-04 雷焰聖劍 |
+| `tpl-single-strike` | `doc` | 6 | — | 0 | 54 | 9 | 23-04 雷焰聖劍 |
 | `tpl-summon-agent` | `both` | 12 | ⛔ championId | 0 | 3 | 4 | 28-02 分身（普屋） |
 | `tpl-teleport` | `doc` | 6 | — | 0 | 0 | 7 | 17-03 空破圓斬 |
 | `tpl-transform` | `doc` | 6 | — | 0 | 12 | 9 | 58-04 神騎寶貝（content/abilities/godie-ofar.r.json）—— 出貨最單純的一支：只換身體、6 秒、沒有伴隨增益 |

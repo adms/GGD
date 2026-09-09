@@ -93,7 +93,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 5
+        "ref": 8
       },
       "inertParams": [],
       "params": {
@@ -183,6 +183,24 @@
         "castTimeSec": {
           "type": "number",
           "default": 0,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "vfx": {
+          "type": "spawnVfx",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "modelFx": {
+          "type": "spawnModelFx",
+          "default": null,
           "fillsVia": "template.ref → expand()",
           "fillsViaByContext": {
             "doc": "template.ref → expand()"
@@ -2866,7 +2884,7 @@
       },
       "wiring": "both",
       "usedVia": {
-        "preset": 29,
+        "preset": 31,
         "ref": 0
       },
       "inertParams": [],
@@ -3017,7 +3035,7 @@
       },
       "wiring": "both",
       "usedVia": {
-        "preset": 12,
+        "preset": 13,
         "ref": 0
       },
       "inertParams": [],
@@ -4248,7 +4266,7 @@
       "wiring": "both",
       "usedVia": {
         "preset": 0,
-        "ref": 13
+        "ref": 14
       },
       "inertParams": [
         "proxyCount"
@@ -4895,7 +4913,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 53
+        "ref": 54
       },
       "inertParams": [],
       "params": {

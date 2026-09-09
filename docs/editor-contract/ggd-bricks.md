@@ -36,7 +36,7 @@ capability 指紋：`d9164615`
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
 | `applyBuff` | 31 | 0 | 0 | ✅ | ✅ | 55 |
-| `applyStatus` | 24 | 0 | 0 | ✅ | ✅ | 63 |
+| `applyStatus` | 24 | 0 | 0 | ✅ | ✅ | 62 |
 | `blink` | 12 | 1 | 0 | ✅ | ✅ | 12 |
 | `carry` | 11 | 1 | 0 | ✅ | ✅ | 0 |
 | `chainLightning` | 18 | 1 | 0 | ✅ | ✅ | 2 |
@@ -45,7 +45,7 @@ capability 指紋：`d9164615`
 | `consumeStatus` | 12 | 1 | 0 | ✅ | ✅ | 0 |
 | `convertTeam` | 9 | 1 | 0 | ✅ | ✅ | 0 |
 | `cycleBuff` | 4 | 0 | 0 | ✅ | ✅ | 1 |
-| `damage` | 12 | 0 | 0 | ✅ | ✅ | 75 |
+| `damage` | 12 | 0 | 0 | ✅ | ✅ | 73 |
 | `damageArea` | 15 | 1 | 0 | ✅ | ✅ | 50 |
 | `damageLine` | 16 | 0 | 0 | ✅ | ✅ | 19 |
 | `dash` | 8 | 1 | 0 | ✅ | ✅ | 8 |
@@ -163,7 +163,7 @@ capability 指紋：`d9164615`
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
 | `apply-status` | 3 | 0 | 0 | ⛔ | ✅ | 6 |
-| `area-strike` | 8 | 1 | 0 | ⛔ | ✅ | 5 |
+| `area-strike` | 10 | 1 | 0 | ⛔ | ✅ | 8 |
 | `beam-roll` | 21 | 1 | 2 | ⛔ | ✅ | 9 |
 | `blink` | 1 | 0 | 0 | ⛔ | ✅ | 7 |
 | `blink-strike` | 6 | 0 | 0 | ⛔ | ✅ | 1 |
@@ -196,12 +196,12 @@ capability 指紋：`d9164615`
 | `orbit-array` | 7 | 0 | 1 | ⛔ | ✅ | 2 |
 | `periodic-field` | 9 | 2 | 0 | ⛔ | ✅ | 5 |
 | `projectile-strike` | 7 | 0 | 0 | ⛔ | ✅ | 18 |
-| `proxy-cast` | 8 | 0 | 1 | ⛔ | ✅ | 13 |
+| `proxy-cast` | 8 | 0 | 1 | ⛔ | ✅ | 14 |
 | `proxy-fanout` | 5 | 0 | 0 | ⛔ | ✅ | 1 |
 | `pull-throw` | 12 | 1 | 0 | ⛔ | ✅ | 0 |
 | `radial-burst` | 12 | 1 | 0 | ⛔ | ✅ | 2 |
 | `random-barrage` | 9 | 0 | 0 | ⛔ | ✅ | 0 |
-| `single-strike` | 6 | 0 | 0 | ⛔ | ✅ | 53 |
+| `single-strike` | 6 | 0 | 0 | ⛔ | ✅ | 54 |
 | `summon-agent` | 12 | 0 | 1 | ⛔ | ✅ | 3 |
 | `teleport` | 6 | 0 | 0 | ⛔ | ✅ | 0 |
 | `transform` | 6 | 0 | 0 | ⛔ | ✅ | 12 |
