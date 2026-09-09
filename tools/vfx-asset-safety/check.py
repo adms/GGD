@@ -15,6 +15,7 @@ emissive materials because emission can reveal the matte in Babylon.
 from __future__ import annotations
 
 import argparse
+import functools
 import io
 import json
 import struct
@@ -301,6 +302,23 @@ def material_requires_backdrop_decode(
     return alpha_mode == "OPAQUE" or emissive > 0 or effect_model or planar_card
 
 
+@functools.lru_cache(maxsize=1)
+def offdisk_declared() -> frozenset[str]:
+    """⭐ `content/assets-offdisk.json` 宣告過的路徑（位元組住 S3）。
+
+    ⚠️ ⭐ 它**不是**放行清單：沒有宣告的缺席資產照舊 fail-loud。
+    ⭐ 自洽性（內容定址的檔名 = sha256）由 `tools/asset-manifest/gen.ts` 驗，
+    ⛔ 這裡不重複驗 —— 同一條規則兩個住處會各自漂（第〇·四守則）。
+    """
+    p = CONTENT / "assets-offdisk.json"
+    if not p.is_file():
+        return frozenset()
+    try:
+        return frozenset((json.loads(p.read_text()).get("entries") or {}).keys())
+    except Exception:
+        return frozenset()
+
+
 def check_model_doc(path: Path, seen: set[Path]) -> list[str]:
     doc = json.loads(path.read_text())
     asset_id = doc.get("id", path.stem)
@@ -312,6 +330,18 @@ def check_model_doc(path: Path, seen: set[Path]) -> list[str]:
         return []
     seen.add(glb)
     if not glb.is_file():
+        # ⭐⭐ 不在磁碟上 ⇒ 去問宣告（owner 2026-09-08：「資源庫 不要進 git 但可以存到 S3」）。
+        #
+        # ⛔ 在此之前這裡一律回 missing ⇒ ⭐ **PR 越守規矩，這條閘越紅**：
+        #   素材照裁決住 S3 ⇒ CI 的磁碟上沒有它 ⇒ 96 個 blocker。
+        # ⚠️ 而閘本身沒有錯 —— 它問的是**一個名詞**（檔案在不在），
+        #   ⭐ 而該問的是**關係**：這個引用**解析得到一顆有 sha 的資產**嗎。
+        #
+        # ⚠️ ⭐ 宣告過的**跳過位元組層的檢查**，⛔ 而那是誠實的：
+        #   位元組不在這台機器上，⭐ 所以這條閘對它**沒有意見**（⛔ 不是「它通過了」）。
+        #   ⇒ 位元組層的驗收發生在素材入庫那一關（sha256 比對），⛔ 不是這裡。
+        if glb_rel in offdisk_declared():
+            return []
         return [f"model:{asset_id}: missing {glb_rel}"]
     try:
         gltf, binary = glb_chunks(glb.read_bytes())

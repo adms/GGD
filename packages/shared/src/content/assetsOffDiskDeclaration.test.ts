@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -81,5 +81,22 @@ describe("不在 git 裡的資產：宣告驗得起來（owner 2026-09-08 「不
     const p = join(dir, "assets-offdisk.json");
     writeFileSync(p, JSON.stringify({ entries: {} }));
     expect(run(p).code, "⛔ main 上有資產靠宣告才解析得到 —— 那不該發生").toBe(0);
+  });
+
+  // ⭐⭐ **這一條才是重點**：宣告⛔不可以變成「不在磁碟上就放過」。
+  //   ⚠️ 一個沒有這一條的修法，就是把 fail-loud 換成 fail-open ——
+  //   而那比原本那條「問錯問題」的閘更糟（它至少會說話）。
+  it("④ **沒有宣告**的缺席資產 ⇒ ⛔ 仍然 fail-loud 並指名它", () => {
+    const id = `zz-offdisk-probe-${process.pid}`;
+    const doc = join(REPO, "content/models", `${id}.json`);
+    const ghost = `assets/models/community/${"f".repeat(64)}.glb`;
+    writeFileSync(doc, JSON.stringify({ id, schema: "model@1", glbPath: ghost, scale: 1 }, null, 2) + "\n");
+    try {
+      const { code, err } = run(DECL); // ⭐ 出貨那份宣告 —— 而它裡面**沒有**這個幽靈
+      expect(code, "⛔ 一個誰都沒宣告過的缺席資產被放過了 ⇒ 這就是放行清單").not.toBe(0);
+      expect(err).toContain(ghost);
+    } finally {
+      rmSync(doc, { force: true });
+    }
   });
 });
