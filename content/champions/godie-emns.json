@@ -196,6 +196,35 @@
           "includeOrigin": true
         }
       ],
+      "template": {
+        "ref": "tpl-area-strike",
+        "params": {
+          "castType": "targeted",
+          "damageType": "magic",
+          "damage": {
+            "damageTierPerRank": [
+              "小",
+              "中",
+              "中",
+              "中"
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "radius": 6.0,
+          "radiusTier": "中",
+          "condition": {
+            "kind": "status",
+            "subject": "target",
+            "statusId": "curse"
+          },
+          "castTimeSec": 0.833
+        }
+      },
       "icon": "assets/icons/abilities/godie-emns.e.webp",
       "vfxKey": "fx.prim.physical.shockwave",
       "sfxKey": "wc3.rokhanwhat2",

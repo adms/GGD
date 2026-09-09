@@ -47,7 +47,11 @@ A("45-01", "45-01 火遁-豪火龍之術", "ground", [45, 45, 45, 45], [150, 190
             #    standalone 與英雄卡內嵌的兩份 ⇒ **鍵序不同就是假的 desync**。
             #    （同一條規則寫在 `stamp_provenance.py`：provenance 插在 description 前面。）
             "resourcePctPhase": "onTick",
-            "intervalSec": 1.0, "durationSec": 3.0, "stacking": "refresh"}])
+            "intervalSec": 1.0, "durationSec": 3.0, "stacking": "refresh"}],
+  # ⭐ GH#1146 —— 綁 `tpl-area-strike`。⚠️ params 由 `templatize.py::m_area_strike()`
+  #   從出貨文件算出來,⛔ 不是手打;等價由 `templatizeEquivalence.test.ts` 逐位元判。
+  template={'ref': 'tpl-area-strike', 'params': {'castType': 'ground', 'damageType': 'magic', 'damage': {'damageTierPerRank': ['極小', '極小', '小', '小']}, 'radius': 6.0, 'radiusTier': '中', 'onHitTargets': [{'kind': 'applyStatus', 'statusId': 'burn', 'duration': 3.0}, {'kind': 'dot', 'damageType': 'magic', 'amountPerTick': {'flat': 1.0}, 'resourcePct': {'subject': 'target', 'resource': 'health', 'basis': 'current', 'scale': 'ratio', 'perRank': [0.01]}, 'resourcePctPhase': 'onTick', 'intervalSec': 1.0, 'durationSec': 3.0, 'stacking': 'refresh'}], 'castTimeSec': 1.033}},
+  )
 
 A("45-02", "45-02 千鳥流", "self", [45, 45, 45, 45], [70, 120, 170, 220], 0,
   "[主動][範圍][減速][AP加成]\n{{cd}}秒冷卻\n消耗[MP] {{mp}}\n有效半徑：{{radius}}\n\n「千鳥流。奔流」\n讓全身充滿千鳥的雷電，對[周圍][大範圍]敵人造成{{dmg}}+{{ap}}% [AP]點傷害，並使其[攻擊與移動速度][降低]50%，持續3秒。",
@@ -59,7 +63,11 @@ A("45-02", "45-02 千鳥流", "self", [45, 45, 45, 45], [70, 120, 170, 220], 0,
   effects=[area("magic", tier="中", per=[75, 150, 225, 300], ap=0.2,
                 onhit=[buff([M("as", "pctAdd", -0.5)], 3.0,
                             polarity="debuff", dispellable=True)]),
-           status("slow50", 3.0, moveSpeedMult=0.5)])
+           status("slow50", 3.0, moveSpeedMult=0.5)],
+  # ⭐ GH#1146 —— 綁 `tpl-area-strike`。⚠️ params 由 `templatize.py::m_area_strike()`
+  #   從出貨文件算出來,⛔ 不是手打;等價由 `templatizeEquivalence.test.ts` 逐位元判。
+  template={'ref': 'tpl-area-strike', 'params': {'castType': 'self', 'damageType': 'magic', 'damage': {'damageTier': '極小', 'ratios': [{'stat': 'ap', 'coeff': 0.2}]}, 'radius': 6.0, 'radiusTier': '中', 'onHitTargets': [{'kind': 'applyBuff', 'modifiers': [{'stat': 'as', 'op': 'pctAdd', 'value': -0.5}], 'duration': 3.0, 'dispellable': True, 'polarity': 'debuff'}, {'kind': 'applyStatus', 'statusId': 'slow50', 'duration': 3.0, 'moveSpeedMult': 0.5}], 'castTimeSec': 0.833}},
+  )
 
 A("45-03", "45-03 千鳥", "ground", [45, 45, 45, 45], [120, 185, 250, 315], 12.83,
   "[主動][指向][範圍][衝刺][AP加成]\n{{cd}}秒冷卻，吟唱{{cast}}秒\n消耗MP{{mp}}\n施法距離：{{range}}\n有效半徑：{{radius}}\n\n「千鳥・雷切」\n將查克拉集中在手上，以高速[直線][衝刺]，對沿途[周圍]敵人造成{{dmg}}+{{ap}}% [AP]點傷害。",

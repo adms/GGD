@@ -74,7 +74,13 @@ const CENSUS = JSON.parse(
 //   `templatizeEquivalence.test.ts` 逐位元判等價（158 條綠）。
 //   ⇒ 同一份模板今天還配得上**另外 11 支**（`templatize.py` 逐支印出），
 //     每一支都是「來源列加一格」⇒ ⭐ 124 → 112 是做得完的。
-const HAND_WRITTEN_BASELINE = 123;
+// ⭐ 2026-09-09（GH#1146 第二批）：123 → 119（−4）。四支綁 `tpl-area-strike`：
+//   `godie-edem.q`（45-01）· `godie-edem.w`（45-02）· `godie-emns.e`（44-03）· `godie-h00l.q`（60-01）。
+//   ⚠️ ⭐ 而**兩支被撤回**：`godie-e00s.e`（70-03）與 `godie-h02v.r`（92-04）——
+//   它們的另一半是**手編的變身態**（變身態沒有產生器），一邊轉一邊沒轉
+//   ⇒ `abilityCodeParityForms` 紅，⭐ 而那條閘是對的：玩家變身之後會用到舊的那一份。
+//   ⇒ ⭐ 那兩支要等變身態那一邊也能綁（另一件事）。
+const HAND_WRITTEN_BASELINE = 119;
 
 /**
  * ⭐ 判定寫成**純函式**，這樣 sentinel 餵得進去 ——

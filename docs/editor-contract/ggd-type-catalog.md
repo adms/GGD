@@ -19,7 +19,7 @@
 | id | 佈線 | 參數 | ⛔ inert | preset 用量 | ref 用量 | gap | exemplar |
 |---|---|---:|---|---:|---:|---:|---|
 | `tpl-apply-status` | `doc` | 3 | — | 0 | 6 | 9 | 70-03 木束縛之術（content/abilities/godie-e010.e.json） |
-| `tpl-area-strike` | `doc` | 8 | — | 0 | 1 | 10 | 77-01（godie-e00w.q） |
+| `tpl-area-strike` | `doc` | 8 | — | 0 | 5 | 10 | 77-01（godie-e00w.q） |
 | `tpl-beam-roll` | `both` | 21 | ⛔ speed distance | 13 | 0 | 8 | 20-03 約束與勝利之劍 |
 | `tpl-blink` | `doc` | 1 | — | 0 | 7 | 9 | 57-02 任意門（content/abilities/godie-n00b.e.json） |
 | `tpl-blink-strike` | `doc` | 6 | — | 0 | 1 | 5 | godie-n01c.w（出貨最接近預設的那一支） |

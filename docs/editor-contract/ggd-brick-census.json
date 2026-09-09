@@ -9,10 +9,10 @@
     "shells": 10,
     "zeroAdoption": 26,
     "terminal": 1,
-    "handWritten": 123,
-    "distinctShapes": 85,
-    "singletonShapes": 58,
-    "top8Coverage": 27
+    "handWritten": 119,
+    "distinctShapes": 83,
+    "singletonShapes": 57,
+    "top8Coverage": 26
   },
   "demand": [
     {
@@ -43,15 +43,6 @@
         "godie-emns.r",
         "godie-ewar.q",
         "godie-n01g.q"
-      ]
-    },
-    {
-      "shape": "applyBuff + applyStatus + damageArea",
-      "count": 3,
-      "examples": [
-        "godie-e001.passive",
-        "godie-e00n.passive",
-        "godie-edem.w"
       ]
     },
     {
@@ -86,6 +77,14 @@
       "examples": [
         "godie-o030.passive",
         "godie-orkn.passive"
+      ]
+    },
+    {
+      "shape": "applyBuff + applyStatus + damageArea",
+      "count": 2,
+      "examples": [
+        "godie-e001.passive",
+        "godie-e00n.passive"
       ]
     },
     {
@@ -193,14 +192,6 @@
       ]
     },
     {
-      "shape": "damageArea",
-      "count": 2,
-      "examples": [
-        "godie-e00x.passive",
-        "godie-emns.e"
-      ]
-    },
-    {
       "shape": "damageArea + dispel",
       "count": 2,
       "examples": [
@@ -214,6 +205,14 @@
       "examples": [
         "godie-efur.r",
         "godie-ogld.ex"
+      ]
+    },
+    {
+      "shape": "damageArea×2 + randomArea + spawnVfx + summon",
+      "count": 2,
+      "examples": [
+        "godie-e00s.r",
+        "godie-e010.r"
       ]
     }
   ],
@@ -374,6 +373,15 @@
       "terminal": false
     },
     {
+      "id": "tpl-area-strike",
+      "family": "area-strike",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 8,
+      "abilities": 5,
+      "terminal": false
+    },
+    {
       "id": "tpl-drain-leech",
       "family": "drain-leech",
       "engineKnows": true,
@@ -470,15 +478,6 @@
       "status": "enabled",
       "params": 12,
       "abilities": 2,
-      "terminal": false
-    },
-    {
-      "id": "tpl-area-strike",
-      "family": "area-strike",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 8,
-      "abilities": 1,
       "terminal": false
     },
     {
