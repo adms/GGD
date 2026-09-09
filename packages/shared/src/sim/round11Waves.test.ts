@@ -9,6 +9,7 @@ import {
   round11Difficulty,
   pickRound11Event,
   round11AliveCap,
+  round11MobRulesPatch,
   type Round11WaveEvent,
 } from "./round11Waves";
 
@@ -122,5 +123,40 @@ describe("④ 同時存活上限 —— ⭐ 漸進生成", () => {
 
   it("⛔ maxAlive <= 0 ⇒ 0（⭐ ＝ 這個機制關著）", () => {
     expect(round11AliveCap(999, 120, 0)).toBe(0);
+  });
+});
+
+describe("⑤ 翻譯成出貨的 `MobRules` —— ⛔ 不寫第二個生怪器", () => {
+  const TABLE = { eventIntervalSec: 20, difficultyBase: 1.15, events: SHIPPED };
+
+  it("⭐ 間隔／上限／回合都翻過去了", () => {
+    const p = round11MobRulesPatch(11, TABLE, 500, 30);
+    expect(p.fromRound).toBe(11);
+    expect(p.waveIntervalTicks).toBe(600); // 20s × 30Hz
+    expect(p.firstWaveTicks).toBe(600);
+    expect(p.maxAlivePerZone).toBe(500);
+    expect(p.autoWaves).toBe(true);
+  });
+
+  it("⛔ 第一波**不在第 0 tick** —— 開場那一刻同時進場又爆怪", () => {
+    expect(round11MobRulesPatch(11, TABLE, 500, 30).firstWaveTicks).toBeGreaterThan(0);
+  });
+
+  it("⛔ 間隔 0 ⇒ 至少 1 tick（⭐ 不是每 tick 生一波）", () => {
+    const p = round11MobRulesPatch(11, { ...TABLE, eventIntervalSec: 0 }, 500, 30);
+    expect(p.waveIntervalTicks).toBe(1);
+  });
+
+  it("⛔ `maxAliveZombies` 0 或負 ⇒ 0（機制關著）", () => {
+    expect(round11MobRulesPatch(11, TABLE, 0, 30).maxAlivePerZone).toBe(0);
+    expect(round11MobRulesPatch(11, TABLE, -5, 30).maxAlivePerZone).toBe(0);
+  });
+
+  it("⚠️⭐ `spawnRampSec` **翻不過去** —— 這一支回滿載，⛔ 不假裝漸進", () => {
+    // ⭐ 出貨的 `MobRules.maxAlivePerZone` 是**靜態**的 ⇒ 漸進要靠呼叫端每 tick
+    //   用 `round11AliveCap()` 夾一次。這一條把那個界線寫成斷言。
+    const p = round11MobRulesPatch(11, TABLE, 500, 30);
+    expect(p.maxAlivePerZone, "翻譯層回的是滿載").toBe(500);
+    expect(round11AliveCap(1, 120, 500), "⭐ 漸進是另一支的事").toBeLessThan(10);
   });
 });

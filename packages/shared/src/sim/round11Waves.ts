@@ -103,3 +103,48 @@ export function round11AliveCap(elapsedSec: number, rampSec: number, maxAlive: n
   if (elapsedSec <= 0) return 0;
   return Math.floor((maxAlive * elapsedSec) / rampSec);
 }
+
+// ─────────────────────────────────────────────────────────────────────────
+// ⭐ 接到**出貨的生怪管線** —— ⛔ 不寫第二個生怪器
+// ─────────────────────────────────────────────────────────────────────────
+
+/**
+ * ⭐ `round11.waveTable` → 出貨的 `MobRules` 的那幾格。
+ *
+ * ⚠️⭐ 這是**翻譯**，⛔ 不是新機制（第〇·五守則：看到「為這一批寫一份自己的
+ * 流程」就是越線）。出貨的 `MobSystem` 已經會照 `waveIntervalTicks` /
+ * `maxAlivePerZone` / `autoWaves` 生怪 ⇒ ⭐ 第十一回合只要把設定**翻過去**。
+ *
+ * ⭐ `maxAlivePerZone` 直接吃 `maxAliveZombies` 是對的：第十一回合是 royale
+ * （**一個區**），⇒ 「每區上限」與「全場上限」是同一個數。
+ *
+ * ⚠️⚠️ ⭐ **翻不過去的那一格要說出來**：`spawnRampSec`（漸進生成）在出貨的
+ * `MobRules` 裡**沒有對應欄位** —— 它是一個**靜態**的 `maxAlivePerZone`。
+ * ⇒ ⛔ 這一支**不假裝**翻得過去：它回傳「滿載」的上限，
+ *   ⭐ 而漸進要靠呼叫端每 tick 用 `round11AliveCap()` 夾一次
+ *   （＝ #1151 B 的「漸進生成⋯實際生效」還缺的那一個掛載點）。
+ */
+export interface Round11MobRulesPatch {
+  readonly fromRound: number;
+  readonly firstWaveTicks: number;
+  readonly waveIntervalTicks: number;
+  readonly maxAlivePerZone: number;
+  readonly autoWaves: true;
+}
+
+export function round11MobRulesPatch(
+  round: number,
+  table: Round11WaveTable,
+  maxAliveZombies: number,
+  tickHz: number,
+): Round11MobRulesPatch {
+  // ⭐ 第一波就在第一個間隔 —— ⛔ 不是 0（開場那一刻同時進場又爆怪）。
+  const interval = Math.max(1, Math.round(table.eventIntervalSec * tickHz));
+  return {
+    fromRound: round,
+    firstWaveTicks: interval,
+    waveIntervalTicks: interval,
+    maxAlivePerZone: maxAliveZombies > 0 ? maxAliveZombies : 0,
+    autoWaves: true,
+  };
+}
