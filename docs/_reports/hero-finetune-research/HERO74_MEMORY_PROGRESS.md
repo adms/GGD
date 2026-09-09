@@ -10,6 +10,14 @@
 
 品質、finalization、release、delivery、archive、S3、batch evaluation、results 與 HTML report 相關 **72 項 CPU tests** 已在同一 checkout 通過。這些是流程證據，不是 v21 模型品質或對局成功證據；後者仍必須等實際訓練、推論、收據與未見新批完成。
 
+## 2026-09-10：v21 單輪訓練完成，配對生成評測執行中
+
+受保護 worker 已正常完成固定的 **500／500 個唯一訓練任務**（其中 70 個完整英雄任務），沒有重啟、sweep、縮短序列或加入額外資料。實際 optimizer 計算共 10,067.81 秒，supervisor 全程 11,414.24 秒；觀察到的 Metal 峰值為 35,263,849,898 bytes，最低可用記憶體為 47,822,520,320 bytes，觀察 swap 增量為 0，全部樣本均接電。final checkpoint 為 `checkpoint-0500`，adapter SHA-256 為 `0bcf301082a78e6762a9c460a52323f75403a084b4e747155d82c745c578fc56`；8 個 LoRA tensor 的保存／重載往返已通過。
+
+119 題固定 internal-dev 的 token-weighted CE 由 **1.719384 降至 0.930675（改善 45.87%）**；若每題等權，平均 CE 由 **2.258403 降至 0.966930（改善 57.19%）**。訓練前 50 步平均 loss 1.579595、最後 50 步 0.891180。這是領域分布學習與收斂證據，不是完整英雄生成成功率；`train/result.json` 仍明示 `ceIsGenerationSuccessMetric=false`、`modelPromoted=false`、`fullHeroE2EProven=false`。
+
+完整終止證據已以 `hero-distillation-receipt.py` 驗證並保存於 `hero74-prefix-v21/`；其中包含執行來源、manifest、500 步唯一順序、前後 dev、資源 trace 與 adapter roundtrip，權重只記 hash、不放入 Git。固定 Base→LoRA、各 119 題的單次配對評測已由 `hero-distillation-evaluate-batch.py` 啟動；在它產生完整 schema/compiler/重讀/封裝/HTTP 匯入結果以前，不宣告實際生成品質改善、模型 ready 或可上場。
+
 ## 最新進度：v21 已有正式更新；接上實際素材與封裝准入
 
 訓練後單次批次入口已完成：`hero-distillation-evaluate-batch.py` 先要求整輪 completed／worker joined／固定 final checkpoint／8-tensor reload 證据通過，才建立新的輸出目錄。之後依序 prepare → base 119 題 → LoRA 119 題 → 各自 schema/compiler/存檔重讀 → 各自封裝准入。沿用受保護 inference supervisor，不另寫 GPU 執行或改 guard；每 arm 上限仍 7,200 秒，單題／階段 610 秒，不自動延長或重試。controller 未在 live train 期間啟動，不把準備好脚本當成已推論。
