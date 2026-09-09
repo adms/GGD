@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_14c41f6f6cb6",
+    "contentVersion": "cv_32dbe7552d60",
     "collections": {
       "champions": {
         "hash": "f3b12e49d91c",
         "count": 108
       },
       "abilities": {
-        "hash": "754e5b84a49e",
+        "hash": "e2d78de923c2",
         "count": 643
       },
       "items": {
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "9a37cee6ef0b",
+        "hash": "66cb760c9979",
         "count": 103
       },
       "models": {
@@ -6440,28 +6440,28 @@
             "unlocked": 500000
           },
           "maxHealth": {
-            "base": 555243,
-            "unlocked": 555243
+            "base": 561720,
+            "unlocked": 561720
           },
           "maxMana": {
-            "base": 338713,
-            "unlocked": 338713
+            "base": 351387,
+            "unlocked": 351387
           },
           "healthRegen": {
-            "base": 1366,
-            "unlocked": 1366
+            "base": 1235,
+            "unlocked": 1235
           },
           "manaRegen": {
-            "base": 1711,
-            "unlocked": 1711
+            "base": 2042,
+            "unlocked": 2042
           },
           "ad": {
-            "base": 20096,
-            "unlocked": 20096
+            "base": 21532,
+            "unlocked": 21532
           },
           "armor": {
-            "base": 5237,
-            "unlocked": 5237
+            "base": 6638,
+            "unlocked": 6638
           },
           "mr": {
             "base": 16191,
@@ -6781,11 +6781,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "4ecf72081652",
+    "fingerprint": "00ba089a8c71",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "391b2a146b9e"
+        "digest": "b2b1d3a46530"
       },
       {
         "surface": "ability-item-zod-schemas",
@@ -6851,5 +6851,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "a2ae5b38996a"
+  "profileDigest": "30f0540a638b"
 }
