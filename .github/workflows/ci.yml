@@ -253,6 +253,9 @@ jobs:
           context: .
           file: docker/edge.Dockerfile
           target: build
+          # Validate the opt-in Editor bundle too; the default-off deployment
+          # boundary remains covered by the infrastructure tests.
+          build-args: GGD_INCLUDE_EDITOR=1
           push: false
           cache-from: type=gha
           cache-to: type=gha,mode=max

@@ -134,6 +134,27 @@ Before changing a content path, use `bash scripts/genguard.sh <path>`.
 Upstream source-adapter work is tracked by
 [#887](https://github.com/adms/GGD/issues/887).
 
+## Community deployment
+
+The default edge image and routing still omit the Editor. Include
+`docker/compose.community.yaml` last in the deployment's existing Compose files
+and rebuild `edge` to opt in. The overlay sets `GGD_INCLUDE_EDITOR=1` and mounts
+only `nginx/community/editor.conf`, making `/editor/hero-forge` and
+`/editor/works` available on the same origin as Platform. Keep the existing
+private import secret and matching build stamp required by that overlay.
+Main reviews and deploys the change through the normal release process.
+
+Sign in through the Editor's account bar before building or submitting a hero.
+The signed-in flow uses Platform's authenticated target/build/inspect, model,
+draft and submission APIs. Admin approval and the configured submission policy
+remain required. Production content CRUD stays disabled: do not mount
+`nginx/dev/` or expose `/content-api/` to make community authoring work.
+
+Deployment routing proof covers default-off and explicit-community layouts;
+it does not claim that any hero has been submitted or published on the live
+service. Removing the community fragment and rebuilding the default edge
+removes the Editor entry point without deleting published heroes or versions.
+
 ## Published target profile
 
 The Export Center defaults to
