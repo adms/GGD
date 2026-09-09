@@ -417,6 +417,19 @@
         "materials/community-hero-forge/refinements/23.json",
         "materials/community-hero-forge/validation-plan.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "乾淨提交 50543be8e467 同批通過 skills、Editor release、coord、37 名／222 槽編譯與模型位元組核對及371 項登記案例；Editor 601 項測試、型別與正式建置通過。首次發布閘的六項相依文件／詞彙失敗已由正式來源與產生器修正並保留收據；訊息帳本检查通過。退出碼2 保留177 槽未對應，原稿及36 名其他作品不變；專用素材畫面、整體原設計與新服務 ZIP／發布未完成，#1132 保持原範圍開啟。",
+      "repro": {
+        "command": "pnpm editor:accept:release",
+        "expectedExit": 0
+      },
+      "commit": "50543be8e467eb4d1de9e9941d577ff7d7dea00a",
+      "evidence": [
+        "materials/community-hero-forge/refinements/gintoki-verification.json",
+        "materials/community-hero-forge/validation-plan.json"
+      ]
     }
   ],
   "unblocks": [],
