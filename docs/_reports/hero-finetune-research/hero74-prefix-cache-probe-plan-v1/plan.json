@@ -1,0 +1,50 @@
+{
+  "schema": "ggd-distillation-paired-evaluation-plan@1",
+  "sourceManifestSha256": "b80ca65f68ede20e18781995f3d983a2e7f0b79e4ee1f0d3bd1b43c4c57a5d94",
+  "status": "frozen-prefix-cache-performance-probe",
+  "blindTest": false,
+  "split": "internal-dev",
+  "counts": {
+    "tasks": 2,
+    "primaryWholeHeroes": 1,
+    "secondarySlots": 1
+  },
+  "primaryCaseIds": [
+    "godie-edem:HERO"
+  ],
+  "secondaryCaseIds": [
+    "godie-edem:PASSIVE"
+  ],
+  "arms": {
+    "base": {
+      "modelRevision": "200bb6db075e137a4deb08838865ac4ddb86292e",
+      "adapter": null
+    },
+    "lora": {
+      "sameBaseAs": "base",
+      "adapter": "fixed-final-one-epoch-checkpoint",
+      "adapterSha256": null
+    },
+    "teacher": {
+      "source": "private-teachers.jsonl",
+      "model": "unknown",
+      "effort": "unknown",
+      "freshCodexRun": false
+    }
+  },
+  "execution": {
+    "enabled": false,
+    "performanceProbeOnly": true,
+    "sourceEvaluationManifestSha256": "ac297f754978c4542d632a7e49df5dc7af7e6e79ab63237b2919f733dbe8e260",
+    "sourcePublicCasesSha256": "7e615ae78fab7927022d1cc815986c5b6f41c6d83af2e468a0607f0e509211f3",
+    "comparisonReference": "same-case cold outputs from the terminal v1 Base run",
+    "noQualityDenominatorChange": true
+  },
+  "scoring": {
+    "qualityScoringEnabled": false,
+    "reason": "Two-case cache equivalence and timing only."
+  },
+  "limitations": [
+    "Never use this two-case probe as model quality, selection, promotion, or a reduced denominator."
+  ]
+}

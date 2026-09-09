@@ -2,6 +2,24 @@
 
 2026-09-09。承接 `hero74-training-v2` 的 500 train／119 internal-dev；不是重新選資料，不截斷，模型仍為固定 Gemma 4 12B IT 8-bit、末兩層 q/o LoRA、rank 8。未獲正式訓練通過證據前不產生 release。
 
+## 2026-09-10：修正責任邊界，compact v7 才是下一輪候選
+
+上一輪 119 題配對生成失敗的根因不是資料筆數，也不是 12B 無法學習，而是介面設計錯誤：每一題反覆把完整 catalog、資產索引、全域限制和原生 JSON 骨架交給模型，單題約 20k–30k tokens；Base 在固定 7,200 秒內只完成 65 題，LoRA 尚未開始。兩種 prefix-cache 嘗試均未採用：一般 PromptCacheState 因 Gemma 4 的 sliding attention 無有效命中；exact APC 雖命中 16,674／20,778 prompt tokens 並把一題由 24.83 秒降至 13.09 秒，但輸出與 cold reference 不同，未通過 greedy parity。因此不以 cache 掩蓋錯誤介面。
+
+`hero74-compact-v7/` 把流程改成每名英雄固定 **7 次有界 LLM 決策**：一次全英雄語意選型，六次可平行的單槽「非預設機制 delta」。LLM 僅負責英雄定位／屬性分類、模板／effect／hook／condition 選擇、跨槽語意關係、非預設機制值和 VFX style。Script 負責候選與 schema 查找、strict JSON、全部 ID／路徑／素材、product instance ID、rank／provenance／conflict 預設、capability／direction／fallback metadata、模板預設展開、VFX ID／事件／掛點、編譯、封裝、匯入及行為閘。
+
+固定資料仍是兩批 37 名、共 74 名／518 個教師任務，不擴充英雄：train **413**（59 名／59 個全英雄選型＋354 槽），dev **105**（15 名／15 個全英雄選型＋90 槽），hero/group 不跨 split。實測 ownership report 的七項洩漏計數全為 0：prompt 無完整資產庫，輸出無原生路徑、instance ID、provenance、capability/direction/fallback metadata，configure prompt 無全域 constraint blob，configure output 無 raw VFX style。產品內 VFX 只引用 `$vfx#N`，實際 `fx.prim.*` 由 script 從第一階段選型展開。
+
+| 候選 | selection p50／p95 total tokens | configure p50／p95 total tokens | 主要問題 |
+|---|---:|---:|---|
+| full-output v21 | 約 22k–30k 完整序列 | 同一巨型輸出介面 | 大量 script-owned 重複內容；生成評測超時 |
+| compact v4 | 2,119／2,463 | 2,767／4,055 | configure 仍帶全域限制、metadata、instance ID 與完整預設 |
+| **compact v7** | **1,523／1,794** | **1,267／2,493** | 下一步需實際 12B probe／train／Base-vs-LoRA E2E |
+
+相較原 518 筆輸入的 25,873,447 chars，v7 的兩階段輸入合計 2,049,917 chars，下降 **92.08%**；教師輸出由 1,086,466 降至 350,759 chars，下降 **67.72%**。全部 **518／518** 可由 compact decision 加 script 重建機制欄位（catalog default normalization）及 VFX style 選擇；這證明資料投影沒有丟掉列入評分的機制語意，不代表尚未訓練的新 adapter 已改善，也不等於編譯／對局 E2E 已通過。v21 adapter 保留為「舊 full-output 介面確實學得動」的收斂證據，不直接當成 v7 可部署模型。
+
+v7 的四題 12B 實機梯度 probe 已完成，optimizer 更新 **0**：selection 最長兩題為 1,802／1,999 tokens、2.79／3.09 秒、Metal peak 約 14.39／14.40 GB；configure 兩個極端為 3,722／5,411 tokens、6.66／8.27 秒、peak 15.51／16.80 GB。全程 32.06 秒、接電、電量 100%、最低 available RAM 53.21 GB、觀察 swap 增量 0。以每格式最慢梯度時間套用原本刻意保守的 `train + 2*dev`、再乘 1.5 加 300 秒公式，單輪上界為 **7,339 秒（2.04 小時）**；僅比預設 7,200 秒多 139 秒，所以目前 guard 正確標記 `fitsTimeBudget=false`，未偷偷開訓。這是容量／排程證據，不是品質結果；新的 compact epoch 需要新的明示時限授權，不能挪用已由 v21 消耗的一輪授權。
+
 ## 2026-09-10：終止後品質與交付鏈已自動化
 
 訓練仍只由既有 v21 worker 執行；CPU 端已補齊後續不可竄改鏈。`hero-distillation-exact-reference-evidence.py` 現在不只核對檔案 hash，也要求教師語意／玩法收據與候選品質收據逐一對上同一 arm、英雄、引擎、編譯 artifact 與 verdict。`hero-distillation-finalize-evaluation.py` 會保存兩份輸入、所有逐英雄收據及三支裁決／報告程式的獨立快照；release gate 只接受這種 finalized directory，不接受可事後改寫的裸 results JSON。

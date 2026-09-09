@@ -125,6 +125,9 @@ def generate_cases(cases, tokenizer, stream_factory, emit, progress):
             'promptTokenIdsSha256': sha(compact(ids)), 'decoding': decoding_contract(),
             'raw': raw, 'rawSha256': sha(raw), 'seconds': time.monotonic()-started,
             'generationTokens': count, 'finishReason': finish, 'complete': complete,
+            'cachedPromptTokens': getattr(last, 'cached_tokens', None),
+            'promptTokensPerSecond': getattr(last, 'prompt_tps', None),
+            'generationTokensPerSecond': getattr(last, 'generation_tps', None),
             'error': repr(failure) if failure else None, 'json': parsed,
             'outputFormatMatches': parsed['parsed'] and parsed['value'].get('format') == row['format'],
             'fullHeroE2EProven': False, 'humanRepairs': 0, 'attempts': 1}

@@ -50,7 +50,8 @@ class GenerationTests(unittest.TestCase):
         records, calls = [], []
         def stream(prompt, ids, settings):
             calls.append((prompt, ids, copy.deepcopy(settings)))
-            yield SimpleNamespace(text=raw, finish_reason=finish, generation_tokens=10)
+            yield SimpleNamespace(text=raw, finish_reason=finish, generation_tokens=10,
+                                  cached_tokens=7, prompt_tps=11.5, generation_tps=4.25)
         g.generate_cases([case()], Tokenizer(), stream, records.append, lambda *a, **k: None)
         return records[0], calls[0]
 
@@ -62,6 +63,9 @@ class GenerationTests(unittest.TestCase):
         self.assertTrue(record['complete'] and record['outputFormatMatches'])
         self.assertFalse(record['fullHeroE2EProven'])
         self.assertEqual(record['humanRepairs'], 0)
+        self.assertEqual(record['cachedPromptTokens'], 7)
+        self.assertEqual(record['promptTokensPerSecond'], 11.5)
+        self.assertEqual(record['generationTokensPerSecond'], 4.25)
 
     def test_truncated_valid_json_and_unknown_stop_fail(self):
         for reason in ['length', None, 'error']:

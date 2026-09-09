@@ -1,0 +1,143 @@
+{
+  "schema": "ggd-compact-architecture-comparison@1",
+  "inputs": {
+    "earlierManifestSha256": "676853e498f733744158c5e2904374a1d8090bf28c0374b4dcf58219164c4520",
+    "finalManifestSha256": "b7de8ed1c733e6444b0bb979818355a4b79e9619e36c3a2cf165920bd164f675",
+    "probeReceiptSha256": "bda232a11ee0b4b2847c395fb2f3c79992fb2aff4457bc0cd012aef4617a1ea0"
+  },
+  "sameTeacherSource": true,
+  "counts": {
+    "train": {
+      "tasks": 413,
+      "wholeHeroes": 59,
+      "slots": 354,
+      "groups": 48,
+      "uniqueHeroes": 59
+    },
+    "dev": {
+      "tasks": 105,
+      "wholeHeroes": 15,
+      "slots": 90,
+      "groups": 15,
+      "uniqueHeroes": 15
+    }
+  },
+  "semanticRoundtrip": {
+    "passed": 518,
+    "total": 518
+  },
+  "compactEvolution": {
+    "inputCharacters": {
+      "earlier": 3969005,
+      "final": 2049917,
+      "reductionPercent": 48.35
+    },
+    "outputCharacters": {
+      "earlier": 435434,
+      "final": 350759,
+      "reductionPercent": 19.45
+    },
+    "selectionTotalTokens": {
+      "earlierP50": 2119,
+      "finalP50": 1523,
+      "earlierP95": 2463,
+      "finalP95": 1794
+    },
+    "configureTotalTokens": {
+      "earlierP50": 2767,
+      "finalP50": 1267,
+      "earlierP95": 4055,
+      "finalP95": 2493
+    }
+  },
+  "ownership": {
+    "schema": "ggd-compact-llm-ownership-report@1",
+    "tasks": 518,
+    "checks": {
+      "fullAssetInventoryInPrompt": 0,
+      "nativeIdsOrPathsInOutput": 0,
+      "productInstanceIdsInOutput": 0,
+      "provenanceInOutput": 0,
+      "capabilityDirectionFallbackMetadataInOutput": 0,
+      "globalConstraintBlobInConfigurePrompt": 0,
+      "rawVfxStyleInConfigureOutput": 0
+    },
+    "llmCallsPerHero": {
+      "semanticSelection": 1,
+      "slotMechanismDelta": 6,
+      "total": 7
+    },
+    "llmOwns": [
+      "identity/archetype/stat classification",
+      "template/effect/hook/condition choice",
+      "cross-slot semantic design",
+      "non-default mechanism values",
+      "VFX style choice"
+    ],
+    "scriptOwns": [
+      "candidate and schema lookup",
+      "strict JSON decoding and validation",
+      "default expansion",
+      "all identifiers and asset paths",
+      "VFX event/attachment and ID expansion",
+      "capability metadata derivation",
+      "compile/package/import/behavior gates"
+    ]
+  },
+  "gpuProbe": {
+    "optimizerSteps": 0,
+    "wallSeconds": 32.06046795845032,
+    "estimatedUpperEpochSeconds": 7339.096296846634,
+    "fitsDefault7200Seconds": false,
+    "maxPeakMetalBytes": 16800250264,
+    "maxSequenceTokens": 5411,
+    "probes": [
+      {
+        "id": "community-review-35-20260907:HERO:select",
+        "format": "forge-selection@1",
+        "totalTokens": 1802,
+        "outputTokens": 373,
+        "loss": 1.843902349472046,
+        "seconds": 2.7878675829852,
+        "uncachedReferenceSeconds": null,
+        "peakMetalBytes": 14394666902
+      },
+      {
+        "id": "community-review-32-20260907:HERO:select",
+        "format": "forge-selection@1",
+        "totalTokens": 1999,
+        "outputTokens": 345,
+        "loss": 1.9201250076293945,
+        "seconds": 3.085288333008066,
+        "uncachedReferenceSeconds": null,
+        "peakMetalBytes": 14400695546
+      },
+      {
+        "id": "community-review-02-20260907:PASSIVE:configure",
+        "format": "forge-slot-config-delta@1",
+        "totalTokens": 3722,
+        "outputTokens": 1961,
+        "loss": 0.3484742045402527,
+        "seconds": 6.661698334035464,
+        "uncachedReferenceSeconds": null,
+        "peakMetalBytes": 15509322816
+      },
+      {
+        "id": "community-review-35-20260907:PASSIVE:configure",
+        "format": "forge-slot-config-delta@1",
+        "totalTokens": 5411,
+        "outputTokens": 945,
+        "loss": 1.0792906284332275,
+        "seconds": 8.273670791997574,
+        "uncachedReferenceSeconds": null,
+        "peakMetalBytes": 16800250264
+      }
+    ]
+  },
+  "claims": {
+    "trainingQualityProven": false,
+    "fullHeroE2EProven": false,
+    "modelPromoted": false
+  },
+  "scriptSha256": "7441ecbcd6a953c7d2b604172e654bd288aff79b8f149f55f112097744615c87"
+}

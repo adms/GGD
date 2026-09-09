@@ -1,0 +1,157 @@
+{
+  "schema": "ggd-prefix-cache-probe-report@1",
+  "scriptSha256": "7dba41eb707281b67aa6f7aea0987947c3a3fa14f7c3c178e8e2efbce42373a4",
+  "publicCasesSha256": "fb08ecea401f4a2a9e7e3038f0df1e3961958b8d98f5a474c4a1b4fe5729d523",
+  "caseIds": [
+    "godie-edem:HERO",
+    "godie-edem:PASSIVE"
+  ],
+  "promptCharacters": {
+    "system": 106,
+    "user": 47781,
+    "allowedCatalog": 9847,
+    "assets": 33826,
+    "request": 1364,
+    "outputContract": 2686
+  },
+  "runs": {
+    "coldReference": {
+      "directory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/hero74-paired-evaluation-v1/inference/base",
+      "manifestSha256": "21c77410f105d772e53f01085095a292b7beef548ff2e29e01c6582e91c65884",
+      "caseFileSha256": {
+        "case-0000.json": "7c23d206cdc6f0f363a84bfd0ecda8bbfa7db92d275f1d13f9ca74b879de0af9",
+        "case-0001.json": "6a4d25e73649aaac2eeb4ff37a2abec9400b305776d68eb15bd8c16b45ed3219"
+      },
+      "ids": [
+        "godie-edem:HERO",
+        "godie-edem:PASSIVE"
+      ],
+      "totalSeconds": 113.54850341612473,
+      "rows": [
+        {
+          "id": "godie-edem:HERO",
+          "seconds": 88.71995466609951,
+          "promptTokens": 20770,
+          "cachedPromptTokens": null,
+          "promptTokensPerSecond": null,
+          "generationTokens": 2015,
+          "generationTokensPerSecond": null,
+          "rawSha256": "c38a01fcf939dac3d8db60c140b2313a4abaf5e15b89a1012840597afe2f6f27",
+          "complete": true,
+          "outputFormatMatches": false,
+          "peakMetalBytes": 14572431974
+        },
+        {
+          "id": "godie-edem:PASSIVE",
+          "seconds": 24.82854875002522,
+          "promptTokens": 20778,
+          "cachedPromptTokens": null,
+          "promptTokensPerSecond": null,
+          "generationTokens": 225,
+          "generationTokensPerSecond": null,
+          "rawSha256": "2d142c1fb5c31c1053fad61c0a8eb0dd8ce4bf6b9baa6e648f296047966d5775",
+          "complete": true,
+          "outputFormatMatches": true,
+          "peakMetalBytes": 14573021710
+        }
+      ]
+    },
+    "postTurnCache": {
+      "directory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/hero74-prefix-cache-probe-v1/base",
+      "manifestSha256": "49a30e4b6ee3f0765be4bf0ed2f3a9f3bee530d766aed780cfbe06b554ce9699",
+      "caseFileSha256": {
+        "case-0000.json": "c803d8d030694d049def6af2080303114c64a20d6f545dd967b03a793b1f412e",
+        "case-0001.json": "be8618feaddeb7591043ed3a30169f5a15f777713cb967629549154210da25f8"
+      },
+      "ids": [
+        "godie-edem:HERO",
+        "godie-edem:PASSIVE"
+      ],
+      "totalSeconds": 121.6268554169219,
+      "rows": [
+        {
+          "id": "godie-edem:HERO",
+          "seconds": 93.68885704199784,
+          "promptTokens": 20770,
+          "cachedPromptTokens": 0,
+          "promptTokensPerSecond": 1281.0668179530383,
+          "generationTokens": 2015,
+          "generationTokensPerSecond": 26.027221773210385,
+          "rawSha256": "c38a01fcf939dac3d8db60c140b2313a4abaf5e15b89a1012840597afe2f6f27",
+          "complete": true,
+          "outputFormatMatches": false,
+          "peakMetalBytes": 14572956174
+        },
+        {
+          "id": "godie-edem:PASSIVE",
+          "seconds": 27.937998374924064,
+          "promptTokens": 20778,
+          "cachedPromptTokens": 0,
+          "promptTokensPerSecond": 1046.8334271268136,
+          "generationTokens": 225,
+          "generationTokensPerSecond": 27.861391620032034,
+          "rawSha256": "2d142c1fb5c31c1053fad61c0a8eb0dd8ce4bf6b9baa6e648f296047966d5775",
+          "complete": true,
+          "outputFormatMatches": true,
+          "peakMetalBytes": 15286069774
+        }
+      ],
+      "rawParity": [
+        true,
+        true
+      ]
+    },
+    "exactApc": {
+      "directory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/hero74-prefix-cache-probe-v2/base",
+      "manifestSha256": "8d2c7975a0ff336b9da11f32c33a3b0e1e38846f6ae7550724a7d8733604289a",
+      "caseFileSha256": {
+        "case-0000.json": "ec44d61dfb29ba0246dcae3bb80f99f0e94250a3d8618755a22d9a9a157ddb78",
+        "case-0001.json": "b8ff90d76eac96076e8fe1e66cf48a2608d82bb64965409416afd07ac3437e77"
+      },
+      "ids": [
+        "godie-edem:HERO",
+        "godie-edem:PASSIVE"
+      ],
+      "totalSeconds": 111.74654083303176,
+      "rows": [
+        {
+          "id": "godie-edem:HERO",
+          "seconds": 98.65774616703857,
+          "promptTokens": 20770,
+          "cachedPromptTokens": 0,
+          "promptTokensPerSecond": 1243.4486677692698,
+          "generationTokens": 2109,
+          "generationTokensPerSecond": 25.753413515064363,
+          "rawSha256": "fde8d1432b96a2cacf1709a72e3791adc7b8e3e16c05cfd0837b955e42f17a27",
+          "complete": true,
+          "outputFormatMatches": true,
+          "peakMetalBytes": 15263351348
+        },
+        {
+          "id": "godie-edem:PASSIVE",
+          "seconds": 13.088794665993191,
+          "promptTokens": 20778,
+          "cachedPromptTokens": 16674,
+          "promptTokensPerSecond": 4183.970352447817,
+          "generationTokens": 210,
+          "generationTokensPerSecond": 25.987566187026925,
+          "rawSha256": "7213e008018a704bd122a7500bcc7f55071352c7d2c5b87861239cb8957b1c05",
+          "complete": true,
+          "outputFormatMatches": true,
+          "peakMetalBytes": 15747247022
+        }
+      ],
+      "rawParity": [
+        false,
+        false
+      ]
+    }
+  },
+  "conclusion": {
+    "postTurnCacheAdopted": false,
+    "postTurnReason": "Gemma 4 sliding-attention cache could not roll back across the generated suffix; zero cached prompt tokens.",
+    "exactApcAdopted": false,
+    "exactApcReason": "The second case reused an exact prefix, but both raw outputs differed from the cold reference; strict arithmetic/output parity failed.",
+    "architectureDecision": "Replace the full-catalog/full-native-output interface with compact semantic selection plus per-slot configuration and deterministic materialization."
+  }
+}

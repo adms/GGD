@@ -1,0 +1,77 @@
+{
+  "schema": "ggd-distillation-receipt@1",
+  "run": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/hero74-compact-lora-v1",
+  "phases": {
+    "probe": {
+      "status": "completed",
+      "error": null,
+      "wallSeconds": 32.06046795845032,
+      "optimizerStepsRecorded": 0,
+      "minAvailableBytes": 53206286336,
+      "maxObservedSwapGrowthBytes": 0,
+      "allSamplesOnAC": true,
+      "minBatteryPercent": 100
+    }
+  },
+  "files": {
+    "manifest.json": {
+      "sha256": "1a1352a05a1164080c1309e3bbb292d362163258402e68b4b4f7a9f7fd249674",
+      "bytes": 6137
+    },
+    "source/hero-distillation-train.py": {
+      "sha256": "99a07649ae5fbe3d4b69e42e041cc2cf87e577ee5b5e0ebf256b122e82320f39",
+      "bytes": 37937
+    },
+    "source/hero-distillation-memory.py": {
+      "sha256": "51d023c128b1ed9ba1973e8d149eac0707f4fe2796b64cc252d5a9a584217d84",
+      "bytes": 16970
+    },
+    "source/hero-distillation-prefix-cache.py": {
+      "sha256": "6cac4438d0c63cdad952c716772f28362d8ba69608e7ac90bd13a43976604ea8",
+      "bytes": 8718
+    },
+    "probe/kernel-equivalence.json": {
+      "sha256": "dbd1d63d36543b26484b4330b085df63ce34abf4ec48b10b7ef54f53fc570467",
+      "bytes": 1981
+    },
+    "probe/memory-trace.jsonl": {
+      "sha256": "86d111f893c257024229d8d2bd4b528ebe11d0cf95ee70b5ab1f9ecd4dbc5ba8",
+      "bytes": 62432
+    },
+    "probe/probe-trace.json": {
+      "sha256": "44275285aa94b1ca6ad74633ac4813a1bd38e453981390fa9c3ee15f203cc04a",
+      "bytes": 956
+    },
+    "probe/result.json": {
+      "sha256": "9437b8bf11cda8e0b392dbcf0b3b998e71da7796075ff59584f4cf088ca6b11c",
+      "bytes": 1347
+    },
+    "probe/state.json": {
+      "sha256": "6e8c1214212b3ced51857e905139461f7715bc9b13483a8dc63be2291313e5bb",
+      "bytes": 2812
+    },
+    "probe/worker-progress.json": {
+      "sha256": "75d041e07a1ffdd8a55cc0223cf1e9249303ed18b27b76afed1f2bdee86a5c7d",
+      "bytes": 161
+    },
+    "probe/worker.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "token-preflight.json": {
+      "sha256": "65ae9b2918b9bff3bc06327ea0e93e1baab31b4dd7714777eb477ee2591b82b2",
+      "bytes": 910
+    }
+  },
+  "omitted": [
+    {
+      "path": "tokens.json",
+      "bytes": 4601556,
+      "sha256": "48e5acefe19a148ad846cc57fd3c0eb3e777101797ec1a5bf85763c1fdf5130e",
+      "reason": "not-a-receipt"
+    }
+  ],
+  "fullHeroE2EProven": false,
+  "modelPromoted": false,
+  "note": "Terminal supervisor receipts, not a live process query or model quality assessment."
+}

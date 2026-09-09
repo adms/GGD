@@ -1,0 +1,4681 @@
+{
+  "schema": "ggd-compact-forge-projection-report@1",
+  "sourceExamples": 518,
+  "heroes": 74,
+  "semanticRoundtripPassed": 518,
+  "characters": {
+    "oldInputTotal": 25873447,
+    "oldOutputTotal": 1086466,
+    "selectInputTotal": 316341,
+    "selectOutputTotal": 76415,
+    "configureInputTotal": 1733576,
+    "configureOutputTotal": 274344,
+    "maxSelectInput": 5191,
+    "maxConfigureInput": 18468,
+    "maxConfigureOutput": 6773
+  },
+  "metrics": [
+    {
+      "id": "community-review-01-20260907:HERO",
+      "oldInputChars": 50571,
+      "oldOutputChars": 10272,
+      "selectInputChars": 4866,
+      "selectOutputChars": 1164,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-01-20260907:PASSIVE",
+      "oldInputChars": 50574,
+      "oldOutputChars": 2820,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 7744,
+      "configureOutputChars": 1788
+    },
+    {
+      "id": "community-review-01-20260907:Q",
+      "oldInputChars": 50568,
+      "oldOutputChars": 1303,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4310,
+      "configureOutputChars": 540
+    },
+    {
+      "id": "community-review-01-20260907:W",
+      "oldInputChars": 50568,
+      "oldOutputChars": 1760,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5860,
+      "configureOutputChars": 848
+    },
+    {
+      "id": "community-review-01-20260907:E",
+      "oldInputChars": 50568,
+      "oldOutputChars": 1426,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5000,
+      "configureOutputChars": 686
+    },
+    {
+      "id": "community-review-01-20260907:R",
+      "oldInputChars": 50568,
+      "oldOutputChars": 1192,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4464,
+      "configureOutputChars": 581
+    },
+    {
+      "id": "community-review-01-20260907:EX",
+      "oldInputChars": 50569,
+      "oldOutputChars": 1226,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4003,
+      "configureOutputChars": 588
+    },
+    {
+      "id": "community-review-02-20260907:HERO",
+      "oldInputChars": 50580,
+      "oldOutputChars": 24213,
+      "selectInputChars": 4876,
+      "selectOutputChars": 1317,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-02-20260907:PASSIVE",
+      "oldInputChars": 50583,
+      "oldOutputChars": 8442,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 6308,
+      "configureOutputChars": 6773
+    },
+    {
+      "id": "community-review-02-20260907:Q",
+      "oldInputChars": 50577,
+      "oldOutputChars": 1185,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4023,
+      "configureOutputChars": 482
+    },
+    {
+      "id": "community-review-02-20260907:W",
+      "oldInputChars": 50577,
+      "oldOutputChars": 2251,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 9878,
+      "configureOutputChars": 1404
+    },
+    {
+      "id": "community-review-02-20260907:E",
+      "oldInputChars": 50577,
+      "oldOutputChars": 1790,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4140,
+      "configureOutputChars": 876
+    },
+    {
+      "id": "community-review-02-20260907:R",
+      "oldInputChars": 50577,
+      "oldOutputChars": 4382,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 10194,
+      "configureOutputChars": 3370
+    },
+    {
+      "id": "community-review-02-20260907:EX",
+      "oldInputChars": 50578,
+      "oldOutputChars": 5606,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5278,
+      "configureOutputChars": 4511
+    },
+    {
+      "id": "community-review-03-20260907:HERO",
+      "oldInputChars": 50566,
+      "oldOutputChars": 9924,
+      "selectInputChars": 4861,
+      "selectOutputChars": 1287,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-03-20260907:PASSIVE",
+      "oldInputChars": 50569,
+      "oldOutputChars": 1059,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 6305,
+      "configureOutputChars": 553
+    },
+    {
+      "id": "community-review-03-20260907:Q",
+      "oldInputChars": 50563,
+      "oldOutputChars": 1180,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3978,
+      "configureOutputChars": 478
+    },
+    {
+      "id": "community-review-03-20260907:W",
+      "oldInputChars": 50563,
+      "oldOutputChars": 1159,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4095,
+      "configureOutputChars": 483
+    },
+    {
+      "id": "community-review-03-20260907:E",
+      "oldInputChars": 50563,
+      "oldOutputChars": 1440,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5656,
+      "configureOutputChars": 708
+    },
+    {
+      "id": "community-review-03-20260907:R",
+      "oldInputChars": 50563,
+      "oldOutputChars": 2451,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 9455,
+      "configureOutputChars": 1517
+    },
+    {
+      "id": "community-review-03-20260907:EX",
+      "oldInputChars": 50564,
+      "oldOutputChars": 2093,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 9723,
+      "configureOutputChars": 1205
+    },
+    {
+      "id": "community-review-04-20260907:HERO",
+      "oldInputChars": 50575,
+      "oldOutputChars": 12052,
+      "selectInputChars": 4869,
+      "selectOutputChars": 1285,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-04-20260907:PASSIVE",
+      "oldInputChars": 50578,
+      "oldOutputChars": 1630,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 6399,
+      "configureOutputChars": 1062
+    },
+    {
+      "id": "community-review-04-20260907:Q",
+      "oldInputChars": 50572,
+      "oldOutputChars": 4278,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5363,
+      "configureOutputChars": 3359
+    },
+    {
+      "id": "community-review-04-20260907:W",
+      "oldInputChars": 50572,
+      "oldOutputChars": 1191,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4125,
+      "configureOutputChars": 507
+    },
+    {
+      "id": "community-review-04-20260907:E",
+      "oldInputChars": 50572,
+      "oldOutputChars": 1578,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 7561,
+      "configureOutputChars": 828
+    },
+    {
+      "id": "community-review-04-20260907:R",
+      "oldInputChars": 50572,
+      "oldOutputChars": 1597,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5094,
+      "configureOutputChars": 724
+    },
+    {
+      "id": "community-review-04-20260907:EX",
+      "oldInputChars": 50573,
+      "oldOutputChars": 1217,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4100,
+      "configureOutputChars": 521
+    },
+    {
+      "id": "community-review-05-20260907:HERO",
+      "oldInputChars": 50577,
+      "oldOutputChars": 6803,
+      "selectInputChars": 4873,
+      "selectOutputChars": 1071,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-05-20260907:PASSIVE",
+      "oldInputChars": 50580,
+      "oldOutputChars": 1338,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 6396,
+      "configureOutputChars": 941
+    },
+    {
+      "id": "community-review-05-20260907:Q",
+      "oldInputChars": 50574,
+      "oldOutputChars": 847,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3164,
+      "configureOutputChars": 342
+    },
+    {
+      "id": "community-review-05-20260907:W",
+      "oldInputChars": 50574,
+      "oldOutputChars": 1246,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5241,
+      "configureOutputChars": 716
+    },
+    {
+      "id": "community-review-05-20260907:E",
+      "oldInputChars": 50574,
+      "oldOutputChars": 756,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2921,
+      "configureOutputChars": 278
+    },
+    {
+      "id": "community-review-05-20260907:R",
+      "oldInputChars": 50574,
+      "oldOutputChars": 984,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3435,
+      "configureOutputChars": 373
+    },
+    {
+      "id": "community-review-05-20260907:EX",
+      "oldInputChars": 50575,
+      "oldOutputChars": 1073,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4145,
+      "configureOutputChars": 546
+    },
+    {
+      "id": "community-review-06-20260907:HERO",
+      "oldInputChars": 50546,
+      "oldOutputChars": 6527,
+      "selectInputChars": 4843,
+      "selectOutputChars": 1104,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-06-20260907:PASSIVE",
+      "oldInputChars": 50549,
+      "oldOutputChars": 825,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 6019,
+      "configureOutputChars": 428
+    },
+    {
+      "id": "community-review-06-20260907:Q",
+      "oldInputChars": 50543,
+      "oldOutputChars": 1033,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4600,
+      "configureOutputChars": 504
+    },
+    {
+      "id": "community-review-06-20260907:W",
+      "oldInputChars": 50543,
+      "oldOutputChars": 1241,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5406,
+      "configureOutputChars": 694
+    },
+    {
+      "id": "community-review-06-20260907:E",
+      "oldInputChars": 50543,
+      "oldOutputChars": 743,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2924,
+      "configureOutputChars": 269
+    },
+    {
+      "id": "community-review-06-20260907:R",
+      "oldInputChars": 50543,
+      "oldOutputChars": 1062,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4381,
+      "configureOutputChars": 550
+    },
+    {
+      "id": "community-review-06-20260907:EX",
+      "oldInputChars": 50544,
+      "oldOutputChars": 1104,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4485,
+      "configureOutputChars": 601
+    },
+    {
+      "id": "community-review-07-20260907:HERO",
+      "oldInputChars": 50553,
+      "oldOutputChars": 6336,
+      "selectInputChars": 4850,
+      "selectOutputChars": 1080,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-07-20260907:PASSIVE",
+      "oldInputChars": 50556,
+      "oldOutputChars": 837,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5440,
+      "configureOutputChars": 442
+    },
+    {
+      "id": "community-review-07-20260907:Q",
+      "oldInputChars": 50550,
+      "oldOutputChars": 936,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3120,
+      "configureOutputChars": 440
+    },
+    {
+      "id": "community-review-07-20260907:W",
+      "oldInputChars": 50550,
+      "oldOutputChars": 1265,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5445,
+      "configureOutputChars": 734
+    },
+    {
+      "id": "community-review-07-20260907:E",
+      "oldInputChars": 50550,
+      "oldOutputChars": 927,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3754,
+      "configureOutputChars": 408
+    },
+    {
+      "id": "community-review-07-20260907:R",
+      "oldInputChars": 50550,
+      "oldOutputChars": 1099,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4564,
+      "configureOutputChars": 573
+    },
+    {
+      "id": "community-review-07-20260907:EX",
+      "oldInputChars": 50551,
+      "oldOutputChars": 745,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2909,
+      "configureOutputChars": 274
+    },
+    {
+      "id": "community-review-08-20260907:HERO",
+      "oldInputChars": 50572,
+      "oldOutputChars": 6635,
+      "selectInputChars": 4868,
+      "selectOutputChars": 1103,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-08-20260907:PASSIVE",
+      "oldInputChars": 50575,
+      "oldOutputChars": 830,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5473,
+      "configureOutputChars": 435
+    },
+    {
+      "id": "community-review-08-20260907:Q",
+      "oldInputChars": 50569,
+      "oldOutputChars": 1173,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4017,
+      "configureOutputChars": 575
+    },
+    {
+      "id": "community-review-08-20260907:W",
+      "oldInputChars": 50569,
+      "oldOutputChars": 973,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4215,
+      "configureOutputChars": 471
+    },
+    {
+      "id": "community-review-08-20260907:E",
+      "oldInputChars": 50569,
+      "oldOutputChars": 1077,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4924,
+      "configureOutputChars": 574
+    },
+    {
+      "id": "community-review-08-20260907:R",
+      "oldInputChars": 50569,
+      "oldOutputChars": 1268,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4033,
+      "configureOutputChars": 598
+    },
+    {
+      "id": "community-review-08-20260907:EX",
+      "oldInputChars": 50570,
+      "oldOutputChars": 769,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2950,
+      "configureOutputChars": 279
+    },
+    {
+      "id": "community-review-09-20260907:HERO",
+      "oldInputChars": 50570,
+      "oldOutputChars": 6486,
+      "selectInputChars": 4867,
+      "selectOutputChars": 1106,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-09-20260907:PASSIVE",
+      "oldInputChars": 50573,
+      "oldOutputChars": 735,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5326,
+      "configureOutputChars": 360
+    },
+    {
+      "id": "community-review-09-20260907:Q",
+      "oldInputChars": 50567,
+      "oldOutputChars": 1017,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4564,
+      "configureOutputChars": 503
+    },
+    {
+      "id": "community-review-09-20260907:W",
+      "oldInputChars": 50567,
+      "oldOutputChars": 1053,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4197,
+      "configureOutputChars": 546
+    },
+    {
+      "id": "community-review-09-20260907:E",
+      "oldInputChars": 50567,
+      "oldOutputChars": 1130,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3717,
+      "configureOutputChars": 599
+    },
+    {
+      "id": "community-review-09-20260907:R",
+      "oldInputChars": 50567,
+      "oldOutputChars": 927,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3527,
+      "configureOutputChars": 428
+    },
+    {
+      "id": "community-review-09-20260907:EX",
+      "oldInputChars": 50568,
+      "oldOutputChars": 1077,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4591,
+      "configureOutputChars": 571
+    },
+    {
+      "id": "community-review-10-20260907:HERO",
+      "oldInputChars": 50563,
+      "oldOutputChars": 6402,
+      "selectInputChars": 4859,
+      "selectOutputChars": 1090,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-10-20260907:PASSIVE",
+      "oldInputChars": 50566,
+      "oldOutputChars": 808,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 6021,
+      "configureOutputChars": 442
+    },
+    {
+      "id": "community-review-10-20260907:Q",
+      "oldInputChars": 50560,
+      "oldOutputChars": 943,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4071,
+      "configureOutputChars": 425
+    },
+    {
+      "id": "community-review-10-20260907:W",
+      "oldInputChars": 50560,
+      "oldOutputChars": 1213,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 6029,
+      "configureOutputChars": 710
+    },
+    {
+      "id": "community-review-10-20260907:E",
+      "oldInputChars": 50560,
+      "oldOutputChars": 963,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3501,
+      "configureOutputChars": 447
+    },
+    {
+      "id": "community-review-10-20260907:R",
+      "oldInputChars": 50560,
+      "oldOutputChars": 1180,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4864,
+      "configureOutputChars": 677
+    },
+    {
+      "id": "community-review-10-20260907:EX",
+      "oldInputChars": 50561,
+      "oldOutputChars": 748,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2928,
+      "configureOutputChars": 280
+    },
+    {
+      "id": "community-review-11-20260907:HERO",
+      "oldInputChars": 50584,
+      "oldOutputChars": 6773,
+      "selectInputChars": 4880,
+      "selectOutputChars": 1087,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-11-20260907:PASSIVE",
+      "oldInputChars": 50587,
+      "oldOutputChars": 979,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 6039,
+      "configureOutputChars": 618
+    },
+    {
+      "id": "community-review-11-20260907:Q",
+      "oldInputChars": 50581,
+      "oldOutputChars": 1199,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4821,
+      "configureOutputChars": 660
+    },
+    {
+      "id": "community-review-11-20260907:W",
+      "oldInputChars": 50581,
+      "oldOutputChars": 963,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3519,
+      "configureOutputChars": 446
+    },
+    {
+      "id": "community-review-11-20260907:E",
+      "oldInputChars": 50581,
+      "oldOutputChars": 1124,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4779,
+      "configureOutputChars": 601
+    },
+    {
+      "id": "community-review-11-20260907:R",
+      "oldInputChars": 50581,
+      "oldOutputChars": 1209,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3856,
+      "configureOutputChars": 689
+    },
+    {
+      "id": "community-review-11-20260907:EX",
+      "oldInputChars": 50582,
+      "oldOutputChars": 747,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2946,
+      "configureOutputChars": 280
+    },
+    {
+      "id": "community-review-12-20260907:HERO",
+      "oldInputChars": 50595,
+      "oldOutputChars": 6630,
+      "selectInputChars": 4890,
+      "selectOutputChars": 1114,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-12-20260907:PASSIVE",
+      "oldInputChars": 50598,
+      "oldOutputChars": 771,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 6077,
+      "configureOutputChars": 403
+    },
+    {
+      "id": "community-review-12-20260907:Q",
+      "oldInputChars": 50592,
+      "oldOutputChars": 1362,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5353,
+      "configureOutputChars": 764
+    },
+    {
+      "id": "community-review-12-20260907:W",
+      "oldInputChars": 50592,
+      "oldOutputChars": 989,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3556,
+      "configureOutputChars": 449
+    },
+    {
+      "id": "community-review-12-20260907:E",
+      "oldInputChars": 50592,
+      "oldOutputChars": 1017,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4595,
+      "configureOutputChars": 487
+    },
+    {
+      "id": "community-review-12-20260907:R",
+      "oldInputChars": 50592,
+      "oldOutputChars": 918,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3392,
+      "configureOutputChars": 388
+    },
+    {
+      "id": "community-review-12-20260907:EX",
+      "oldInputChars": 50593,
+      "oldOutputChars": 1008,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3895,
+      "configureOutputChars": 507
+    },
+    {
+      "id": "community-review-13-20260907:HERO",
+      "oldInputChars": 50577,
+      "oldOutputChars": 6454,
+      "selectInputChars": 4872,
+      "selectOutputChars": 1087,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-13-20260907:PASSIVE",
+      "oldInputChars": 50580,
+      "oldOutputChars": 877,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 6777,
+      "configureOutputChars": 515
+    },
+    {
+      "id": "community-review-13-20260907:Q",
+      "oldInputChars": 50574,
+      "oldOutputChars": 1214,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4813,
+      "configureOutputChars": 681
+    },
+    {
+      "id": "community-review-13-20260907:W",
+      "oldInputChars": 50574,
+      "oldOutputChars": 1079,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4414,
+      "configureOutputChars": 556
+    },
+    {
+      "id": "community-review-13-20260907:E",
+      "oldInputChars": 50574,
+      "oldOutputChars": 931,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3783,
+      "configureOutputChars": 410
+    },
+    {
+      "id": "community-review-13-20260907:R",
+      "oldInputChars": 50574,
+      "oldOutputChars": 1049,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3777,
+      "configureOutputChars": 509
+    },
+    {
+      "id": "community-review-13-20260907:EX",
+      "oldInputChars": 50575,
+      "oldOutputChars": 749,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2938,
+      "configureOutputChars": 278
+    },
+    {
+      "id": "community-review-14-20260907:HERO",
+      "oldInputChars": 50550,
+      "oldOutputChars": 6481,
+      "selectInputChars": 4846,
+      "selectOutputChars": 1077,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-14-20260907:PASSIVE",
+      "oldInputChars": 50553,
+      "oldOutputChars": 788,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 6003,
+      "configureOutputChars": 431
+    },
+    {
+      "id": "community-review-14-20260907:Q",
+      "oldInputChars": 50547,
+      "oldOutputChars": 1058,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4514,
+      "configureOutputChars": 487
+    },
+    {
+      "id": "community-review-14-20260907:W",
+      "oldInputChars": 50547,
+      "oldOutputChars": 1295,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5205,
+      "configureOutputChars": 742
+    },
+    {
+      "id": "community-review-14-20260907:E",
+      "oldInputChars": 50547,
+      "oldOutputChars": 744,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2900,
+      "configureOutputChars": 273
+    },
+    {
+      "id": "community-review-14-20260907:R",
+      "oldInputChars": 50547,
+      "oldOutputChars": 960,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3414,
+      "configureOutputChars": 372
+    },
+    {
+      "id": "community-review-14-20260907:EX",
+      "oldInputChars": 50548,
+      "oldOutputChars": 1110,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4380,
+      "configureOutputChars": 566
+    },
+    {
+      "id": "community-review-15-20260907:HERO",
+      "oldInputChars": 50579,
+      "oldOutputChars": 6537,
+      "selectInputChars": 4873,
+      "selectOutputChars": 1090,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-15-20260907:PASSIVE",
+      "oldInputChars": 50582,
+      "oldOutputChars": 814,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 6396,
+      "configureOutputChars": 451
+    },
+    {
+      "id": "community-review-15-20260907:Q",
+      "oldInputChars": 50576,
+      "oldOutputChars": 904,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3713,
+      "configureOutputChars": 392
+    },
+    {
+      "id": "community-review-15-20260907:W",
+      "oldInputChars": 50576,
+      "oldOutputChars": 1064,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4162,
+      "configureOutputChars": 538
+    },
+    {
+      "id": "community-review-15-20260907:E",
+      "oldInputChars": 50576,
+      "oldOutputChars": 896,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3738,
+      "configureOutputChars": 388
+    },
+    {
+      "id": "community-review-15-20260907:R",
+      "oldInputChars": 50576,
+      "oldOutputChars": 1107,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3691,
+      "configureOutputChars": 560
+    },
+    {
+      "id": "community-review-15-20260907:EX",
+      "oldInputChars": 50577,
+      "oldOutputChars": 1197,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4828,
+      "configureOutputChars": 670
+    },
+    {
+      "id": "community-review-16-20260907:HERO",
+      "oldInputChars": 50581,
+      "oldOutputChars": 6252,
+      "selectInputChars": 4872,
+      "selectOutputChars": 1050,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-16-20260907:PASSIVE",
+      "oldInputChars": 50584,
+      "oldOutputChars": 748,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5275,
+      "configureOutputChars": 380
+    },
+    {
+      "id": "community-review-16-20260907:Q",
+      "oldInputChars": 50578,
+      "oldOutputChars": 957,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3610,
+      "configureOutputChars": 413
+    },
+    {
+      "id": "community-review-16-20260907:W",
+      "oldInputChars": 50578,
+      "oldOutputChars": 1091,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5052,
+      "configureOutputChars": 597
+    },
+    {
+      "id": "community-review-16-20260907:E",
+      "oldInputChars": 50578,
+      "oldOutputChars": 976,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3474,
+      "configureOutputChars": 449
+    },
+    {
+      "id": "community-review-16-20260907:R",
+      "oldInputChars": 50578,
+      "oldOutputChars": 892,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3142,
+      "configureOutputChars": 387
+    },
+    {
+      "id": "community-review-16-20260907:EX",
+      "oldInputChars": 50579,
+      "oldOutputChars": 1036,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3846,
+      "configureOutputChars": 509
+    },
+    {
+      "id": "community-review-17-20260907:HERO",
+      "oldInputChars": 50560,
+      "oldOutputChars": 6187,
+      "selectInputChars": 4852,
+      "selectOutputChars": 1036,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-17-20260907:PASSIVE",
+      "oldInputChars": 50563,
+      "oldOutputChars": 812,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5391,
+      "configureOutputChars": 434
+    },
+    {
+      "id": "community-review-17-20260907:Q",
+      "oldInputChars": 50557,
+      "oldOutputChars": 871,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3108,
+      "configureOutputChars": 380
+    },
+    {
+      "id": "community-review-17-20260907:W",
+      "oldInputChars": 50557,
+      "oldOutputChars": 1134,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5921,
+      "configureOutputChars": 625
+    },
+    {
+      "id": "community-review-17-20260907:E",
+      "oldInputChars": 50557,
+      "oldOutputChars": 923,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3427,
+      "configureOutputChars": 319
+    },
+    {
+      "id": "community-review-17-20260907:R",
+      "oldInputChars": 50557,
+      "oldOutputChars": 893,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3108,
+      "configureOutputChars": 381
+    },
+    {
+      "id": "community-review-17-20260907:EX",
+      "oldInputChars": 50558,
+      "oldOutputChars": 1015,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3779,
+      "configureOutputChars": 510
+    },
+    {
+      "id": "community-review-18-20260907:HERO",
+      "oldInputChars": 50572,
+      "oldOutputChars": 6661,
+      "selectInputChars": 4866,
+      "selectOutputChars": 1088,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-18-20260907:PASSIVE",
+      "oldInputChars": 50575,
+      "oldOutputChars": 790,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5307,
+      "configureOutputChars": 421
+    },
+    {
+      "id": "community-review-18-20260907:Q",
+      "oldInputChars": 50569,
+      "oldOutputChars": 1073,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4541,
+      "configureOutputChars": 528
+    },
+    {
+      "id": "community-review-18-20260907:W",
+      "oldInputChars": 50569,
+      "oldOutputChars": 1224,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3547,
+      "configureOutputChars": 666
+    },
+    {
+      "id": "community-review-18-20260907:E",
+      "oldInputChars": 50569,
+      "oldOutputChars": 931,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3778,
+      "configureOutputChars": 410
+    },
+    {
+      "id": "community-review-18-20260907:R",
+      "oldInputChars": 50569,
+      "oldOutputChars": 1077,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3683,
+      "configureOutputChars": 540
+    },
+    {
+      "id": "community-review-18-20260907:EX",
+      "oldInputChars": 50570,
+      "oldOutputChars": 1019,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4138,
+      "configureOutputChars": 481
+    },
+    {
+      "id": "community-review-19-20260907:HERO",
+      "oldInputChars": 50570,
+      "oldOutputChars": 6028,
+      "selectInputChars": 4865,
+      "selectOutputChars": 1018,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-19-20260907:PASSIVE",
+      "oldInputChars": 50573,
+      "oldOutputChars": 961,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 6506,
+      "configureOutputChars": 589
+    },
+    {
+      "id": "community-review-19-20260907:Q",
+      "oldInputChars": 50567,
+      "oldOutputChars": 865,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3073,
+      "configureOutputChars": 334
+    },
+    {
+      "id": "community-review-19-20260907:W",
+      "oldInputChars": 50567,
+      "oldOutputChars": 813,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3073,
+      "configureOutputChars": 333
+    },
+    {
+      "id": "community-review-19-20260907:E",
+      "oldInputChars": 50567,
+      "oldOutputChars": 753,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2860,
+      "configureOutputChars": 277
+    },
+    {
+      "id": "community-review-19-20260907:R",
+      "oldInputChars": 50567,
+      "oldOutputChars": 1023,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3374,
+      "configureOutputChars": 405
+    },
+    {
+      "id": "community-review-19-20260907:EX",
+      "oldInputChars": 50568,
+      "oldOutputChars": 1070,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3302,
+      "configureOutputChars": 517
+    },
+    {
+      "id": "community-review-20-20260907:HERO",
+      "oldInputChars": 50554,
+      "oldOutputChars": 13698,
+      "selectInputChars": 4849,
+      "selectOutputChars": 1175,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-20-20260907:PASSIVE",
+      "oldInputChars": 50557,
+      "oldOutputChars": 3548,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 8535,
+      "configureOutputChars": 2026
+    },
+    {
+      "id": "community-review-20-20260907:Q",
+      "oldInputChars": 50551,
+      "oldOutputChars": 2427,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5161,
+      "configureOutputChars": 1819
+    },
+    {
+      "id": "community-review-20-20260907:W",
+      "oldInputChars": 50551,
+      "oldOutputChars": 2587,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5205,
+      "configureOutputChars": 1957
+    },
+    {
+      "id": "community-review-20-20260907:E",
+      "oldInputChars": 50551,
+      "oldOutputChars": 1217,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4421,
+      "configureOutputChars": 671
+    },
+    {
+      "id": "community-review-20-20260907:R",
+      "oldInputChars": 50551,
+      "oldOutputChars": 1140,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3995,
+      "configureOutputChars": 535
+    },
+    {
+      "id": "community-review-20-20260907:EX",
+      "oldInputChars": 50552,
+      "oldOutputChars": 2251,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5314,
+      "configureOutputChars": 1485
+    },
+    {
+      "id": "community-review-21-20260907:HERO",
+      "oldInputChars": 50575,
+      "oldOutputChars": 9047,
+      "selectInputChars": 4871,
+      "selectOutputChars": 1207,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-21-20260907:PASSIVE",
+      "oldInputChars": 50578,
+      "oldOutputChars": 1376,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 7284,
+      "configureOutputChars": 509
+    },
+    {
+      "id": "community-review-21-20260907:Q",
+      "oldInputChars": 50572,
+      "oldOutputChars": 1203,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3908,
+      "configureOutputChars": 508
+    },
+    {
+      "id": "community-review-21-20260907:W",
+      "oldInputChars": 50572,
+      "oldOutputChars": 1507,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4149,
+      "configureOutputChars": 743
+    },
+    {
+      "id": "community-review-21-20260907:E",
+      "oldInputChars": 50572,
+      "oldOutputChars": 1240,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4694,
+      "configureOutputChars": 566
+    },
+    {
+      "id": "community-review-21-20260907:R",
+      "oldInputChars": 50572,
+      "oldOutputChars": 1308,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4512,
+      "configureOutputChars": 616
+    },
+    {
+      "id": "community-review-21-20260907:EX",
+      "oldInputChars": 50573,
+      "oldOutputChars": 1870,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5161,
+      "configureOutputChars": 1030
+    },
+    {
+      "id": "community-review-22-20260907:HERO",
+      "oldInputChars": 50563,
+      "oldOutputChars": 6765,
+      "selectInputChars": 4859,
+      "selectOutputChars": 1057,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-22-20260907:PASSIVE",
+      "oldInputChars": 50566,
+      "oldOutputChars": 1076,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3939,
+      "configureOutputChars": 390
+    },
+    {
+      "id": "community-review-22-20260907:Q",
+      "oldInputChars": 50560,
+      "oldOutputChars": 1011,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4507,
+      "configureOutputChars": 494
+    },
+    {
+      "id": "community-review-22-20260907:W",
+      "oldInputChars": 50560,
+      "oldOutputChars": 1144,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4322,
+      "configureOutputChars": 612
+    },
+    {
+      "id": "community-review-22-20260907:E",
+      "oldInputChars": 50560,
+      "oldOutputChars": 1087,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4371,
+      "configureOutputChars": 565
+    },
+    {
+      "id": "community-review-22-20260907:R",
+      "oldInputChars": 50560,
+      "oldOutputChars": 1150,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4230,
+      "configureOutputChars": 642
+    },
+    {
+      "id": "community-review-22-20260907:EX",
+      "oldInputChars": 50561,
+      "oldOutputChars": 750,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2895,
+      "configureOutputChars": 275
+    },
+    {
+      "id": "community-review-23-20260907:HERO",
+      "oldInputChars": 50548,
+      "oldOutputChars": 11137,
+      "selectInputChars": 4843,
+      "selectOutputChars": 1363,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-23-20260907:PASSIVE",
+      "oldInputChars": 50551,
+      "oldOutputChars": 3382,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 18468,
+      "configureOutputChars": 2111
+    },
+    {
+      "id": "community-review-23-20260907:Q",
+      "oldInputChars": 50545,
+      "oldOutputChars": 1207,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4153,
+      "configureOutputChars": 547
+    },
+    {
+      "id": "community-review-23-20260907:W",
+      "oldInputChars": 50545,
+      "oldOutputChars": 1240,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3576,
+      "configureOutputChars": 549
+    },
+    {
+      "id": "community-review-23-20260907:E",
+      "oldInputChars": 50545,
+      "oldOutputChars": 2023,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 11611,
+      "configureOutputChars": 1241
+    },
+    {
+      "id": "community-review-23-20260907:R",
+      "oldInputChars": 50545,
+      "oldOutputChars": 1222,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4689,
+      "configureOutputChars": 548
+    },
+    {
+      "id": "community-review-23-20260907:EX",
+      "oldInputChars": 50546,
+      "oldOutputChars": 1535,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4651,
+      "configureOutputChars": 759
+    },
+    {
+      "id": "community-review-24-20260907:HERO",
+      "oldInputChars": 50557,
+      "oldOutputChars": 13426,
+      "selectInputChars": 4854,
+      "selectOutputChars": 1402,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-24-20260907:PASSIVE",
+      "oldInputChars": 50560,
+      "oldOutputChars": 2252,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 16282,
+      "configureOutputChars": 1259
+    },
+    {
+      "id": "community-review-24-20260907:Q",
+      "oldInputChars": 50554,
+      "oldOutputChars": 1335,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4690,
+      "configureOutputChars": 632
+    },
+    {
+      "id": "community-review-24-20260907:W",
+      "oldInputChars": 50554,
+      "oldOutputChars": 1609,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 8387,
+      "configureOutputChars": 795
+    },
+    {
+      "id": "community-review-24-20260907:E",
+      "oldInputChars": 50554,
+      "oldOutputChars": 2467,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4378,
+      "configureOutputChars": 1579
+    },
+    {
+      "id": "community-review-24-20260907:R",
+      "oldInputChars": 50554,
+      "oldOutputChars": 3310,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 11187,
+      "configureOutputChars": 2239
+    },
+    {
+      "id": "community-review-24-20260907:EX",
+      "oldInputChars": 50555,
+      "oldOutputChars": 1917,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 6242,
+      "configureOutputChars": 1066
+    },
+    {
+      "id": "community-review-25-20260907:HERO",
+      "oldInputChars": 50577,
+      "oldOutputChars": 6275,
+      "selectInputChars": 4872,
+      "selectOutputChars": 1063,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-25-20260907:PASSIVE",
+      "oldInputChars": 50580,
+      "oldOutputChars": 758,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5288,
+      "configureOutputChars": 381
+    },
+    {
+      "id": "community-review-25-20260907:Q",
+      "oldInputChars": 50574,
+      "oldOutputChars": 844,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3125,
+      "configureOutputChars": 367
+    },
+    {
+      "id": "community-review-25-20260907:W",
+      "oldInputChars": 50574,
+      "oldOutputChars": 1106,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4704,
+      "configureOutputChars": 548
+    },
+    {
+      "id": "community-review-25-20260907:E",
+      "oldInputChars": 50574,
+      "oldOutputChars": 765,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2912,
+      "configureOutputChars": 273
+    },
+    {
+      "id": "community-review-25-20260907:R",
+      "oldInputChars": 50574,
+      "oldOutputChars": 1222,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4789,
+      "configureOutputChars": 670
+    },
+    {
+      "id": "community-review-25-20260907:EX",
+      "oldInputChars": 50575,
+      "oldOutputChars": 1029,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3826,
+      "configureOutputChars": 515
+    },
+    {
+      "id": "community-review-26-20260907:HERO",
+      "oldInputChars": 50580,
+      "oldOutputChars": 11248,
+      "selectInputChars": 4874,
+      "selectOutputChars": 1075,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-26-20260907:PASSIVE",
+      "oldInputChars": 50583,
+      "oldOutputChars": 4331,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 6428,
+      "configureOutputChars": 3232
+    },
+    {
+      "id": "community-review-26-20260907:Q",
+      "oldInputChars": 50577,
+      "oldOutputChars": 1056,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3779,
+      "configureOutputChars": 509
+    },
+    {
+      "id": "community-review-26-20260907:W",
+      "oldInputChars": 50577,
+      "oldOutputChars": 1121,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4213,
+      "configureOutputChars": 544
+    },
+    {
+      "id": "community-review-26-20260907:E",
+      "oldInputChars": 50577,
+      "oldOutputChars": 1165,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4432,
+      "configureOutputChars": 578
+    },
+    {
+      "id": "community-review-26-20260907:R",
+      "oldInputChars": 50577,
+      "oldOutputChars": 1961,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5982,
+      "configureOutputChars": 1019
+    },
+    {
+      "id": "community-review-26-20260907:EX",
+      "oldInputChars": 50578,
+      "oldOutputChars": 1051,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3701,
+      "configureOutputChars": 468
+    },
+    {
+      "id": "community-review-27-20260907:HERO",
+      "oldInputChars": 50579,
+      "oldOutputChars": 12520,
+      "selectInputChars": 4873,
+      "selectOutputChars": 1224,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-27-20260907:PASSIVE",
+      "oldInputChars": 50582,
+      "oldOutputChars": 4359,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 8608,
+      "configureOutputChars": 2903
+    },
+    {
+      "id": "community-review-27-20260907:Q",
+      "oldInputChars": 50576,
+      "oldOutputChars": 1892,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5614,
+      "configureOutputChars": 1174
+    },
+    {
+      "id": "community-review-27-20260907:W",
+      "oldInputChars": 50576,
+      "oldOutputChars": 2150,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4168,
+      "configureOutputChars": 1266
+    },
+    {
+      "id": "community-review-27-20260907:E",
+      "oldInputChars": 50576,
+      "oldOutputChars": 955,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3686,
+      "configureOutputChars": 438
+    },
+    {
+      "id": "community-review-27-20260907:R",
+      "oldInputChars": 50576,
+      "oldOutputChars": 1201,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5227,
+      "configureOutputChars": 644
+    },
+    {
+      "id": "community-review-27-20260907:EX",
+      "oldInputChars": 50577,
+      "oldOutputChars": 1407,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5379,
+      "configureOutputChars": 763
+    },
+    {
+      "id": "community-review-28-20260907:HERO",
+      "oldInputChars": 50588,
+      "oldOutputChars": 12184,
+      "selectInputChars": 4874,
+      "selectOutputChars": 1240,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-28-20260907:PASSIVE",
+      "oldInputChars": 50591,
+      "oldOutputChars": 4980,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 9903,
+      "configureOutputChars": 3758
+    },
+    {
+      "id": "community-review-28-20260907:Q",
+      "oldInputChars": 50585,
+      "oldOutputChars": 1258,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4617,
+      "configureOutputChars": 568
+    },
+    {
+      "id": "community-review-28-20260907:W",
+      "oldInputChars": 50585,
+      "oldOutputChars": 1613,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 6147,
+      "configureOutputChars": 823
+    },
+    {
+      "id": "community-review-28-20260907:E",
+      "oldInputChars": 50585,
+      "oldOutputChars": 1121,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3889,
+      "configureOutputChars": 420
+    },
+    {
+      "id": "community-review-28-20260907:R",
+      "oldInputChars": 50585,
+      "oldOutputChars": 1283,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4358,
+      "configureOutputChars": 538
+    },
+    {
+      "id": "community-review-28-20260907:EX",
+      "oldInputChars": 50586,
+      "oldOutputChars": 1366,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3804,
+      "configureOutputChars": 613
+    },
+    {
+      "id": "community-review-29-20260907:HERO",
+      "oldInputChars": 50557,
+      "oldOutputChars": 6220,
+      "selectInputChars": 4853,
+      "selectOutputChars": 1010,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-29-20260907:PASSIVE",
+      "oldInputChars": 50560,
+      "oldOutputChars": 717,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5209,
+      "configureOutputChars": 350
+    },
+    {
+      "id": "community-review-29-20260907:Q",
+      "oldInputChars": 50554,
+      "oldOutputChars": 866,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3083,
+      "configureOutputChars": 354
+    },
+    {
+      "id": "community-review-29-20260907:W",
+      "oldInputChars": 50554,
+      "oldOutputChars": 1200,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3462,
+      "configureOutputChars": 646
+    },
+    {
+      "id": "community-review-29-20260907:E",
+      "oldInputChars": 50554,
+      "oldOutputChars": 1053,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3979,
+      "configureOutputChars": 532
+    },
+    {
+      "id": "community-review-29-20260907:R",
+      "oldInputChars": 50554,
+      "oldOutputChars": 1089,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3979,
+      "configureOutputChars": 565
+    },
+    {
+      "id": "community-review-29-20260907:EX",
+      "oldInputChars": 50555,
+      "oldOutputChars": 758,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2842,
+      "configureOutputChars": 276
+    },
+    {
+      "id": "community-review-30-20260907:HERO",
+      "oldInputChars": 50609,
+      "oldOutputChars": 9743,
+      "selectInputChars": 4904,
+      "selectOutputChars": 1235,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-30-20260907:PASSIVE",
+      "oldInputChars": 50612,
+      "oldOutputChars": 1624,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 9535,
+      "configureOutputChars": 757
+    },
+    {
+      "id": "community-review-30-20260907:Q",
+      "oldInputChars": 50606,
+      "oldOutputChars": 1377,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4851,
+      "configureOutputChars": 696
+    },
+    {
+      "id": "community-review-30-20260907:W",
+      "oldInputChars": 50606,
+      "oldOutputChars": 1765,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 6961,
+      "configureOutputChars": 1050
+    },
+    {
+      "id": "community-review-30-20260907:E",
+      "oldInputChars": 50606,
+      "oldOutputChars": 1091,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3914,
+      "configureOutputChars": 400
+    },
+    {
+      "id": "community-review-30-20260907:R",
+      "oldInputChars": 50606,
+      "oldOutputChars": 1722,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4851,
+      "configureOutputChars": 974
+    },
+    {
+      "id": "community-review-30-20260907:EX",
+      "oldInputChars": 50607,
+      "oldOutputChars": 1575,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4340,
+      "configureOutputChars": 716
+    },
+    {
+      "id": "community-review-31-20260907:HERO",
+      "oldInputChars": 50596,
+      "oldOutputChars": 10488,
+      "selectInputChars": 4891,
+      "selectOutputChars": 1235,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-31-20260907:PASSIVE",
+      "oldInputChars": 50599,
+      "oldOutputChars": 2307,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 14264,
+      "configureOutputChars": 1316
+    },
+    {
+      "id": "community-review-31-20260907:Q",
+      "oldInputChars": 50593,
+      "oldOutputChars": 1346,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4333,
+      "configureOutputChars": 623
+    },
+    {
+      "id": "community-review-31-20260907:W",
+      "oldInputChars": 50593,
+      "oldOutputChars": 1552,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 8257,
+      "configureOutputChars": 780
+    },
+    {
+      "id": "community-review-31-20260907:E",
+      "oldInputChars": 50593,
+      "oldOutputChars": 1693,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 7403,
+      "configureOutputChars": 914
+    },
+    {
+      "id": "community-review-31-20260907:R",
+      "oldInputChars": 50593,
+      "oldOutputChars": 1672,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5256,
+      "configureOutputChars": 902
+    },
+    {
+      "id": "community-review-31-20260907:EX",
+      "oldInputChars": 50594,
+      "oldOutputChars": 1348,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3816,
+      "configureOutputChars": 566
+    },
+    {
+      "id": "community-review-32-20260907:HERO",
+      "oldInputChars": 50896,
+      "oldOutputChars": 11080,
+      "selectInputChars": 5191,
+      "selectOutputChars": 1277,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-32-20260907:PASSIVE",
+      "oldInputChars": 50899,
+      "oldOutputChars": 1401,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 7672,
+      "configureOutputChars": 560
+    },
+    {
+      "id": "community-review-32-20260907:Q",
+      "oldInputChars": 50893,
+      "oldOutputChars": 1140,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4761,
+      "configureOutputChars": 449
+    },
+    {
+      "id": "community-review-32-20260907:W",
+      "oldInputChars": 50893,
+      "oldOutputChars": 1427,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5549,
+      "configureOutputChars": 713
+    },
+    {
+      "id": "community-review-32-20260907:E",
+      "oldInputChars": 50893,
+      "oldOutputChars": 2103,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 8392,
+      "configureOutputChars": 1287
+    },
+    {
+      "id": "community-review-32-20260907:R",
+      "oldInputChars": 50893,
+      "oldOutputChars": 1414,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 6274,
+      "configureOutputChars": 824
+    },
+    {
+      "id": "community-review-32-20260907:EX",
+      "oldInputChars": 50894,
+      "oldOutputChars": 2710,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 7709,
+      "configureOutputChars": 1895
+    },
+    {
+      "id": "community-review-33-20260907:HERO",
+      "oldInputChars": 50579,
+      "oldOutputChars": 6528,
+      "selectInputChars": 4874,
+      "selectOutputChars": 1069,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-33-20260907:PASSIVE",
+      "oldInputChars": 50582,
+      "oldOutputChars": 856,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5306,
+      "configureOutputChars": 449
+    },
+    {
+      "id": "community-review-33-20260907:Q",
+      "oldInputChars": 50576,
+      "oldOutputChars": 866,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3133,
+      "configureOutputChars": 372
+    },
+    {
+      "id": "community-review-33-20260907:W",
+      "oldInputChars": 50576,
+      "oldOutputChars": 1014,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3356,
+      "configureOutputChars": 520
+    },
+    {
+      "id": "community-review-33-20260907:E",
+      "oldInputChars": 50576,
+      "oldOutputChars": 1128,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5073,
+      "configureOutputChars": 601
+    },
+    {
+      "id": "community-review-33-20260907:R",
+      "oldInputChars": 50576,
+      "oldOutputChars": 962,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3434,
+      "configureOutputChars": 396
+    },
+    {
+      "id": "community-review-33-20260907:EX",
+      "oldInputChars": 50577,
+      "oldOutputChars": 1145,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4770,
+      "configureOutputChars": 621
+    },
+    {
+      "id": "community-review-34-20260907:HERO",
+      "oldInputChars": 50570,
+      "oldOutputChars": 6593,
+      "selectInputChars": 4865,
+      "selectOutputChars": 1094,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-34-20260907:PASSIVE",
+      "oldInputChars": 50573,
+      "oldOutputChars": 838,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 6392,
+      "configureOutputChars": 470
+    },
+    {
+      "id": "community-review-34-20260907:Q",
+      "oldInputChars": 50567,
+      "oldOutputChars": 987,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4203,
+      "configureOutputChars": 470
+    },
+    {
+      "id": "community-review-34-20260907:W",
+      "oldInputChars": 50567,
+      "oldOutputChars": 1372,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 6126,
+      "configureOutputChars": 864
+    },
+    {
+      "id": "community-review-34-20260907:E",
+      "oldInputChars": 50567,
+      "oldOutputChars": 1140,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4128,
+      "configureOutputChars": 617
+    },
+    {
+      "id": "community-review-34-20260907:R",
+      "oldInputChars": 50567,
+      "oldOutputChars": 933,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4081,
+      "configureOutputChars": 439
+    },
+    {
+      "id": "community-review-34-20260907:EX",
+      "oldInputChars": 50568,
+      "oldOutputChars": 773,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2938,
+      "configureOutputChars": 276
+    },
+    {
+      "id": "community-review-35-20260907:HERO",
+      "oldInputChars": 50574,
+      "oldOutputChars": 14287,
+      "selectInputChars": 4870,
+      "selectOutputChars": 1356,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-35-20260907:PASSIVE",
+      "oldInputChars": 50577,
+      "oldOutputChars": 4552,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 15802,
+      "configureOutputChars": 3359
+    },
+    {
+      "id": "community-review-35-20260907:Q",
+      "oldInputChars": 50571,
+      "oldOutputChars": 2621,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5758,
+      "configureOutputChars": 1794
+    },
+    {
+      "id": "community-review-35-20260907:W",
+      "oldInputChars": 50571,
+      "oldOutputChars": 1277,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4470,
+      "configureOutputChars": 584
+    },
+    {
+      "id": "community-review-35-20260907:E",
+      "oldInputChars": 50571,
+      "oldOutputChars": 2288,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 10689,
+      "configureOutputChars": 1318
+    },
+    {
+      "id": "community-review-35-20260907:R",
+      "oldInputChars": 50571,
+      "oldOutputChars": 1545,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5437,
+      "configureOutputChars": 786
+    },
+    {
+      "id": "community-review-35-20260907:EX",
+      "oldInputChars": 50572,
+      "oldOutputChars": 1458,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5508,
+      "configureOutputChars": 812
+    },
+    {
+      "id": "community-review-36-20260907:HERO",
+      "oldInputChars": 50586,
+      "oldOutputChars": 6621,
+      "selectInputChars": 4880,
+      "selectOutputChars": 1112,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-36-20260907:PASSIVE",
+      "oldInputChars": 50589,
+      "oldOutputChars": 814,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5359,
+      "configureOutputChars": 438
+    },
+    {
+      "id": "community-review-36-20260907:Q",
+      "oldInputChars": 50583,
+      "oldOutputChars": 1132,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4038,
+      "configureOutputChars": 575
+    },
+    {
+      "id": "community-review-36-20260907:W",
+      "oldInputChars": 50583,
+      "oldOutputChars": 1139,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4566,
+      "configureOutputChars": 604
+    },
+    {
+      "id": "community-review-36-20260907:E",
+      "oldInputChars": 50583,
+      "oldOutputChars": 897,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3767,
+      "configureOutputChars": 388
+    },
+    {
+      "id": "community-review-36-20260907:R",
+      "oldInputChars": 50583,
+      "oldOutputChars": 1194,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4494,
+      "configureOutputChars": 651
+    },
+    {
+      "id": "community-review-36-20260907:EX",
+      "oldInputChars": 50584,
+      "oldOutputChars": 881,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3364,
+      "configureOutputChars": 383
+    },
+    {
+      "id": "community-review-37-20260907:HERO",
+      "oldInputChars": 50593,
+      "oldOutputChars": 10131,
+      "selectInputChars": 4888,
+      "selectOutputChars": 1125,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "community-review-37-20260907:PASSIVE",
+      "oldInputChars": 50596,
+      "oldOutputChars": 1835,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 10420,
+      "configureOutputChars": 925
+    },
+    {
+      "id": "community-review-37-20260907:Q",
+      "oldInputChars": 50590,
+      "oldOutputChars": 1053,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3984,
+      "configureOutputChars": 516
+    },
+    {
+      "id": "community-review-37-20260907:W",
+      "oldInputChars": 50590,
+      "oldOutputChars": 1231,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4435,
+      "configureOutputChars": 590
+    },
+    {
+      "id": "community-review-37-20260907:E",
+      "oldInputChars": 50590,
+      "oldOutputChars": 999,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3383,
+      "configureOutputChars": 445
+    },
+    {
+      "id": "community-review-37-20260907:R",
+      "oldInputChars": 50590,
+      "oldOutputChars": 2827,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5249,
+      "configureOutputChars": 2130
+    },
+    {
+      "id": "community-review-37-20260907:EX",
+      "oldInputChars": 50591,
+      "oldOutputChars": 1623,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 6071,
+      "configureOutputChars": 893
+    },
+    {
+      "id": "b2-popp:HERO",
+      "oldInputChars": 49291,
+      "oldOutputChars": 5742,
+      "selectInputChars": 3651,
+      "selectOutputChars": 896,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-popp:PASSIVE",
+      "oldInputChars": 49294,
+      "oldOutputChars": 764,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3900,
+      "configureOutputChars": 363
+    },
+    {
+      "id": "b2-popp:Q",
+      "oldInputChars": 49288,
+      "oldOutputChars": 904,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1737,
+      "configureOutputChars": 382
+    },
+    {
+      "id": "b2-popp:W",
+      "oldInputChars": 49288,
+      "oldOutputChars": 1129,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3657,
+      "configureOutputChars": 582
+    },
+    {
+      "id": "b2-popp:E",
+      "oldInputChars": 49288,
+      "oldOutputChars": 784,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1524,
+      "configureOutputChars": 288
+    },
+    {
+      "id": "b2-popp:R",
+      "oldInputChars": 49288,
+      "oldOutputChars": 883,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1767,
+      "configureOutputChars": 361
+    },
+    {
+      "id": "b2-popp:EX",
+      "oldInputChars": 49289,
+      "oldOutputChars": 1134,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2193,
+      "configureOutputChars": 556
+    },
+    {
+      "id": "b2-rem:HERO",
+      "oldInputChars": 49293,
+      "oldOutputChars": 6111,
+      "selectInputChars": 3656,
+      "selectOutputChars": 918,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-rem:PASSIVE",
+      "oldInputChars": 49296,
+      "oldOutputChars": 710,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1777,
+      "configureOutputChars": 307
+    },
+    {
+      "id": "b2-rem:Q",
+      "oldInputChars": 49290,
+      "oldOutputChars": 947,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2324,
+      "configureOutputChars": 404
+    },
+    {
+      "id": "b2-rem:W",
+      "oldInputChars": 49290,
+      "oldOutputChars": 1187,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3137,
+      "configureOutputChars": 594
+    },
+    {
+      "id": "b2-rem:E",
+      "oldInputChars": 49290,
+      "oldOutputChars": 1057,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3264,
+      "configureOutputChars": 517
+    },
+    {
+      "id": "b2-rem:R",
+      "oldInputChars": 49290,
+      "oldOutputChars": 1150,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2318,
+      "configureOutputChars": 610
+    },
+    {
+      "id": "b2-rem:EX",
+      "oldInputChars": 49291,
+      "oldOutputChars": 907,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2085,
+      "configureOutputChars": 389
+    },
+    {
+      "id": "b2-zenitsu:HERO",
+      "oldInputChars": 49314,
+      "oldOutputChars": 6377,
+      "selectInputChars": 3663,
+      "selectOutputChars": 923,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-zenitsu:PASSIVE",
+      "oldInputChars": 49317,
+      "oldOutputChars": 833,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4088,
+      "configureOutputChars": 429
+    },
+    {
+      "id": "b2-zenitsu:Q",
+      "oldInputChars": 49311,
+      "oldOutputChars": 1164,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3454,
+      "configureOutputChars": 597
+    },
+    {
+      "id": "b2-zenitsu:W",
+      "oldInputChars": 49311,
+      "oldOutputChars": 1249,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3350,
+      "configureOutputChars": 686
+    },
+    {
+      "id": "b2-zenitsu:E",
+      "oldInputChars": 49311,
+      "oldOutputChars": 946,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1776,
+      "configureOutputChars": 432
+    },
+    {
+      "id": "b2-zenitsu:R",
+      "oldInputChars": 49311,
+      "oldOutputChars": 1229,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3063,
+      "configureOutputChars": 655
+    },
+    {
+      "id": "b2-zenitsu:EX",
+      "oldInputChars": 49312,
+      "oldOutputChars": 798,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1565,
+      "configureOutputChars": 288
+    },
+    {
+      "id": "b2-rin:HERO",
+      "oldInputChars": 49300,
+      "oldOutputChars": 6101,
+      "selectInputChars": 3662,
+      "selectOutputChars": 928,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-rin:PASSIVE",
+      "oldInputChars": 49303,
+      "oldOutputChars": 757,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3943,
+      "configureOutputChars": 360
+    },
+    {
+      "id": "b2-rin:Q",
+      "oldInputChars": 49297,
+      "oldOutputChars": 1006,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2061,
+      "configureOutputChars": 450
+    },
+    {
+      "id": "b2-rin:W",
+      "oldInputChars": 49297,
+      "oldOutputChars": 1199,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2981,
+      "configureOutputChars": 610
+    },
+    {
+      "id": "b2-rin:E",
+      "oldInputChars": 49297,
+      "oldOutputChars": 944,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1780,
+      "configureOutputChars": 415
+    },
+    {
+      "id": "b2-rin:R",
+      "oldInputChars": 49297,
+      "oldOutputChars": 1210,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3884,
+      "configureOutputChars": 649
+    },
+    {
+      "id": "b2-rin:EX",
+      "oldInputChars": 49298,
+      "oldOutputChars": 831,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1698,
+      "configureOutputChars": 309
+    },
+    {
+      "id": "b2-uncle:HERO",
+      "oldInputChars": 49313,
+      "oldOutputChars": 6198,
+      "selectInputChars": 3667,
+      "selectOutputChars": 933,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-uncle:PASSIVE",
+      "oldInputChars": 49316,
+      "oldOutputChars": 770,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3954,
+      "configureOutputChars": 362
+    },
+    {
+      "id": "b2-uncle:Q",
+      "oldInputChars": 49310,
+      "oldOutputChars": 1024,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3083,
+      "configureOutputChars": 462
+    },
+    {
+      "id": "b2-uncle:W",
+      "oldInputChars": 49310,
+      "oldOutputChars": 1079,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3216,
+      "configureOutputChars": 508
+    },
+    {
+      "id": "b2-uncle:E",
+      "oldInputChars": 49310,
+      "oldOutputChars": 1088,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3055,
+      "configureOutputChars": 539
+    },
+    {
+      "id": "b2-uncle:R",
+      "oldInputChars": 49310,
+      "oldOutputChars": 1185,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3399,
+      "configureOutputChars": 610
+    },
+    {
+      "id": "b2-uncle:EX",
+      "oldInputChars": 49311,
+      "oldOutputChars": 895,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1822,
+      "configureOutputChars": 363
+    },
+    {
+      "id": "b2-boxxo:HERO",
+      "oldInputChars": 49320,
+      "oldOutputChars": 6407,
+      "selectInputChars": 3673,
+      "selectOutputChars": 933,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-boxxo:PASSIVE",
+      "oldInputChars": 49323,
+      "oldOutputChars": 854,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4108,
+      "configureOutputChars": 431
+    },
+    {
+      "id": "b2-boxxo:Q",
+      "oldInputChars": 49317,
+      "oldOutputChars": 1093,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2955,
+      "configureOutputChars": 498
+    },
+    {
+      "id": "b2-boxxo:W",
+      "oldInputChars": 49317,
+      "oldOutputChars": 1115,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2677,
+      "configureOutputChars": 571
+    },
+    {
+      "id": "b2-boxxo:E",
+      "oldInputChars": 49317,
+      "oldOutputChars": 870,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1865,
+      "configureOutputChars": 334
+    },
+    {
+      "id": "b2-boxxo:R",
+      "oldInputChars": 49317,
+      "oldOutputChars": 1250,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2769,
+      "configureOutputChars": 671
+    },
+    {
+      "id": "b2-boxxo:EX",
+      "oldInputChars": 49318,
+      "oldOutputChars": 1062,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2472,
+      "configureOutputChars": 523
+    },
+    {
+      "id": "b2-shadow:HERO",
+      "oldInputChars": 49310,
+      "oldOutputChars": 5835,
+      "selectInputChars": 3664,
+      "selectOutputChars": 870,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-shadow:PASSIVE",
+      "oldInputChars": 49313,
+      "oldOutputChars": 844,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4037,
+      "configureOutputChars": 434
+    },
+    {
+      "id": "b2-shadow:Q",
+      "oldInputChars": 49307,
+      "oldOutputChars": 1004,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2284,
+      "configureOutputChars": 468
+    },
+    {
+      "id": "b2-shadow:W",
+      "oldInputChars": 49307,
+      "oldOutputChars": 1128,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2968,
+      "configureOutputChars": 580
+    },
+    {
+      "id": "b2-shadow:E",
+      "oldInputChars": 49307,
+      "oldOutputChars": 864,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1697,
+      "configureOutputChars": 356
+    },
+    {
+      "id": "b2-shadow:R",
+      "oldInputChars": 49307,
+      "oldOutputChars": 964,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1754,
+      "configureOutputChars": 404
+    },
+    {
+      "id": "b2-shadow:EX",
+      "oldInputChars": 49308,
+      "oldOutputChars": 870,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1743,
+      "configureOutputChars": 324
+    },
+    {
+      "id": "b2-bojji:HERO",
+      "oldInputChars": 49300,
+      "oldOutputChars": 5760,
+      "selectInputChars": 3657,
+      "selectOutputChars": 888,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-bojji:PASSIVE",
+      "oldInputChars": 49303,
+      "oldOutputChars": 762,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3859,
+      "configureOutputChars": 358
+    },
+    {
+      "id": "b2-bojji:Q",
+      "oldInputChars": 49297,
+      "oldOutputChars": 971,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2028,
+      "configureOutputChars": 428
+    },
+    {
+      "id": "b2-bojji:W",
+      "oldInputChars": 49297,
+      "oldOutputChars": 936,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1735,
+      "configureOutputChars": 429
+    },
+    {
+      "id": "b2-bojji:E",
+      "oldInputChars": 49297,
+      "oldOutputChars": 795,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1522,
+      "configureOutputChars": 288
+    },
+    {
+      "id": "b2-bojji:R",
+      "oldInputChars": 49297,
+      "oldOutputChars": 1155,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3655,
+      "configureOutputChars": 590
+    },
+    {
+      "id": "b2-bojji:EX",
+      "oldInputChars": 49298,
+      "oldOutputChars": 987,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2099,
+      "configureOutputChars": 459
+    },
+    {
+      "id": "b2-maomao:HERO",
+      "oldInputChars": 49309,
+      "oldOutputChars": 6535,
+      "selectInputChars": 3663,
+      "selectOutputChars": 957,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-maomao:PASSIVE",
+      "oldInputChars": 49312,
+      "oldOutputChars": 770,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3966,
+      "configureOutputChars": 355
+    },
+    {
+      "id": "b2-maomao:Q",
+      "oldInputChars": 49306,
+      "oldOutputChars": 1157,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3355,
+      "configureOutputChars": 599
+    },
+    {
+      "id": "b2-maomao:W",
+      "oldInputChars": 49306,
+      "oldOutputChars": 1141,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2560,
+      "configureOutputChars": 568
+    },
+    {
+      "id": "b2-maomao:E",
+      "oldInputChars": 49306,
+      "oldOutputChars": 1083,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3075,
+      "configureOutputChars": 537
+    },
+    {
+      "id": "b2-maomao:R",
+      "oldInputChars": 49306,
+      "oldOutputChars": 1189,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3003,
+      "configureOutputChars": 636
+    },
+    {
+      "id": "b2-maomao:EX",
+      "oldInputChars": 49307,
+      "oldOutputChars": 1036,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2744,
+      "configureOutputChars": 464
+    },
+    {
+      "id": "b2-elma:HERO",
+      "oldInputChars": 49302,
+      "oldOutputChars": 5752,
+      "selectInputChars": 3661,
+      "selectOutputChars": 882,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-elma:PASSIVE",
+      "oldInputChars": 49305,
+      "oldOutputChars": 790,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3896,
+      "configureOutputChars": 386
+    },
+    {
+      "id": "b2-elma:Q",
+      "oldInputChars": 49299,
+      "oldOutputChars": 1081,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2302,
+      "configureOutputChars": 537
+    },
+    {
+      "id": "b2-elma:W",
+      "oldInputChars": 49299,
+      "oldOutputChars": 1149,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2320,
+      "configureOutputChars": 607
+    },
+    {
+      "id": "b2-elma:E",
+      "oldInputChars": 49299,
+      "oldOutputChars": 872,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1706,
+      "configureOutputChars": 357
+    },
+    {
+      "id": "b2-elma:R",
+      "oldInputChars": 49299,
+      "oldOutputChars": 884,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1733,
+      "configureOutputChars": 384
+    },
+    {
+      "id": "b2-elma:EX",
+      "oldInputChars": 49300,
+      "oldOutputChars": 822,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1651,
+      "configureOutputChars": 325
+    },
+    {
+      "id": "b2-albus:HERO",
+      "oldInputChars": 49307,
+      "oldOutputChars": 5715,
+      "selectInputChars": 3662,
+      "selectOutputChars": 877,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-albus:PASSIVE",
+      "oldInputChars": 49310,
+      "oldOutputChars": 764,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3859,
+      "configureOutputChars": 364
+    },
+    {
+      "id": "b2-albus:Q",
+      "oldInputChars": 49304,
+      "oldOutputChars": 841,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1729,
+      "configureOutputChars": 347
+    },
+    {
+      "id": "b2-albus:W",
+      "oldInputChars": 49304,
+      "oldOutputChars": 980,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2518,
+      "configureOutputChars": 439
+    },
+    {
+      "id": "b2-albus:E",
+      "oldInputChars": 49304,
+      "oldOutputChars": 787,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1516,
+      "configureOutputChars": 285
+    },
+    {
+      "id": "b2-albus:R",
+      "oldInputChars": 49304,
+      "oldOutputChars": 1143,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2289,
+      "configureOutputChars": 593
+    },
+    {
+      "id": "b2-albus:EX",
+      "oldInputChars": 49305,
+      "oldOutputChars": 1043,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2032,
+      "configureOutputChars": 467
+    },
+    {
+      "id": "b2-goblin:HERO",
+      "oldInputChars": 49314,
+      "oldOutputChars": 6163,
+      "selectInputChars": 3665,
+      "selectOutputChars": 921,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-goblin:PASSIVE",
+      "oldInputChars": 49317,
+      "oldOutputChars": 834,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4096,
+      "configureOutputChars": 439
+    },
+    {
+      "id": "b2-goblin:Q",
+      "oldInputChars": 49311,
+      "oldOutputChars": 1181,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3020,
+      "configureOutputChars": 615
+    },
+    {
+      "id": "b2-goblin:W",
+      "oldInputChars": 49311,
+      "oldOutputChars": 953,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2336,
+      "configureOutputChars": 405
+    },
+    {
+      "id": "b2-goblin:E",
+      "oldInputChars": 49311,
+      "oldOutputChars": 922,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1776,
+      "configureOutputChars": 407
+    },
+    {
+      "id": "b2-goblin:R",
+      "oldInputChars": 49311,
+      "oldOutputChars": 1128,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2922,
+      "configureOutputChars": 565
+    },
+    {
+      "id": "b2-goblin:EX",
+      "oldInputChars": 49312,
+      "oldOutputChars": 986,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2140,
+      "configureOutputChars": 462
+    },
+    {
+      "id": "b2-maple:HERO",
+      "oldInputChars": 49312,
+      "oldOutputChars": 6234,
+      "selectInputChars": 3668,
+      "selectOutputChars": 912,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-maple:PASSIVE",
+      "oldInputChars": 49315,
+      "oldOutputChars": 717,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1783,
+      "configureOutputChars": 284
+    },
+    {
+      "id": "b2-maple:Q",
+      "oldInputChars": 49309,
+      "oldOutputChars": 994,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2132,
+      "configureOutputChars": 462
+    },
+    {
+      "id": "b2-maple:W",
+      "oldInputChars": 49309,
+      "oldOutputChars": 1057,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2181,
+      "configureOutputChars": 519
+    },
+    {
+      "id": "b2-maple:E",
+      "oldInputChars": 49309,
+      "oldOutputChars": 946,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1801,
+      "configureOutputChars": 384
+    },
+    {
+      "id": "b2-maple:R",
+      "oldInputChars": 49309,
+      "oldOutputChars": 1306,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3928,
+      "configureOutputChars": 740
+    },
+    {
+      "id": "b2-maple:EX",
+      "oldInputChars": 49310,
+      "oldOutputChars": 1053,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2285,
+      "configureOutputChars": 518
+    },
+    {
+      "id": "b2-naofumi:HERO",
+      "oldInputChars": 49315,
+      "oldOutputChars": 6349,
+      "selectInputChars": 3664,
+      "selectOutputChars": 961,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-naofumi:PASSIVE",
+      "oldInputChars": 49318,
+      "oldOutputChars": 772,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3978,
+      "configureOutputChars": 361
+    },
+    {
+      "id": "b2-naofumi:Q",
+      "oldInputChars": 49312,
+      "oldOutputChars": 1097,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3080,
+      "configureOutputChars": 541
+    },
+    {
+      "id": "b2-naofumi:W",
+      "oldInputChars": 49312,
+      "oldOutputChars": 1057,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2514,
+      "configureOutputChars": 510
+    },
+    {
+      "id": "b2-naofumi:E",
+      "oldInputChars": 49312,
+      "oldOutputChars": 1048,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2918,
+      "configureOutputChars": 495
+    },
+    {
+      "id": "b2-naofumi:R",
+      "oldInputChars": 49312,
+      "oldOutputChars": 1228,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2932,
+      "configureOutputChars": 672
+    },
+    {
+      "id": "b2-naofumi:EX",
+      "oldInputChars": 49313,
+      "oldOutputChars": 991,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2179,
+      "configureOutputChars": 462
+    },
+    {
+      "id": "b2-makoto:HERO",
+      "oldInputChars": 49312,
+      "oldOutputChars": 6087,
+      "selectInputChars": 3665,
+      "selectOutputChars": 915,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-makoto:PASSIVE",
+      "oldInputChars": 49315,
+      "oldOutputChars": 770,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3900,
+      "configureOutputChars": 364
+    },
+    {
+      "id": "b2-makoto:Q",
+      "oldInputChars": 49309,
+      "oldOutputChars": 974,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2404,
+      "configureOutputChars": 425
+    },
+    {
+      "id": "b2-makoto:W",
+      "oldInputChars": 49309,
+      "oldOutputChars": 1019,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2268,
+      "configureOutputChars": 443
+    },
+    {
+      "id": "b2-makoto:E",
+      "oldInputChars": 49309,
+      "oldOutputChars": 1188,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3448,
+      "configureOutputChars": 620
+    },
+    {
+      "id": "b2-makoto:R",
+      "oldInputChars": 49309,
+      "oldOutputChars": 1150,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3690,
+      "configureOutputChars": 596
+    },
+    {
+      "id": "b2-makoto:EX",
+      "oldInputChars": 49310,
+      "oldOutputChars": 829,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1688,
+      "configureOutputChars": 309
+    },
+    {
+      "id": "b2-noor:HERO",
+      "oldInputChars": 49299,
+      "oldOutputChars": 6649,
+      "selectInputChars": 3659,
+      "selectOutputChars": 993,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-noor:PASSIVE",
+      "oldInputChars": 49302,
+      "oldOutputChars": 792,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4727,
+      "configureOutputChars": 384
+    },
+    {
+      "id": "b2-noor:Q",
+      "oldInputChars": 49296,
+      "oldOutputChars": 1389,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 5799,
+      "configureOutputChars": 766
+    },
+    {
+      "id": "b2-noor:W",
+      "oldInputChars": 49296,
+      "oldOutputChars": 1183,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2852,
+      "configureOutputChars": 604
+    },
+    {
+      "id": "b2-noor:E",
+      "oldInputChars": 49296,
+      "oldOutputChars": 1069,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3107,
+      "configureOutputChars": 539
+    },
+    {
+      "id": "b2-noor:R",
+      "oldInputChars": 49296,
+      "oldOutputChars": 1110,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2723,
+      "configureOutputChars": 575
+    },
+    {
+      "id": "b2-noor:EX",
+      "oldInputChars": 49297,
+      "oldOutputChars": 953,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2404,
+      "configureOutputChars": 408
+    },
+    {
+      "id": "b2-touka:HERO",
+      "oldInputChars": 49312,
+      "oldOutputChars": 5942,
+      "selectInputChars": 3665,
+      "selectOutputChars": 887,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-touka:PASSIVE",
+      "oldInputChars": 49315,
+      "oldOutputChars": 765,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3872,
+      "configureOutputChars": 365
+    },
+    {
+      "id": "b2-touka:Q",
+      "oldInputChars": 49309,
+      "oldOutputChars": 1156,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3420,
+      "configureOutputChars": 600
+    },
+    {
+      "id": "b2-touka:W",
+      "oldInputChars": 49309,
+      "oldOutputChars": 993,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2147,
+      "configureOutputChars": 361
+    },
+    {
+      "id": "b2-touka:E",
+      "oldInputChars": 49309,
+      "oldOutputChars": 928,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1742,
+      "configureOutputChars": 420
+    },
+    {
+      "id": "b2-touka:R",
+      "oldInputChars": 49309,
+      "oldOutputChars": 1158,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3364,
+      "configureOutputChars": 604
+    },
+    {
+      "id": "b2-touka:EX",
+      "oldInputChars": 49310,
+      "oldOutputChars": 784,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1531,
+      "configureOutputChars": 286
+    },
+    {
+      "id": "b2-haga:HERO",
+      "oldInputChars": 49302,
+      "oldOutputChars": 6365,
+      "selectInputChars": 3662,
+      "selectOutputChars": 954,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-haga:PASSIVE",
+      "oldInputChars": 49305,
+      "oldOutputChars": 817,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3969,
+      "configureOutputChars": 380
+    },
+    {
+      "id": "b2-haga:Q",
+      "oldInputChars": 49299,
+      "oldOutputChars": 998,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2738,
+      "configureOutputChars": 427
+    },
+    {
+      "id": "b2-haga:W",
+      "oldInputChars": 49299,
+      "oldOutputChars": 1100,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2435,
+      "configureOutputChars": 506
+    },
+    {
+      "id": "b2-haga:E",
+      "oldInputChars": 49299,
+      "oldOutputChars": 984,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2738,
+      "configureOutputChars": 418
+    },
+    {
+      "id": "b2-haga:R",
+      "oldInputChars": 49299,
+      "oldOutputChars": 1179,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3032,
+      "configureOutputChars": 607
+    },
+    {
+      "id": "b2-haga:EX",
+      "oldInputChars": 49300,
+      "oldOutputChars": 1129,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2664,
+      "configureOutputChars": 589
+    },
+    {
+      "id": "b2-guts:HERO",
+      "oldInputChars": 49298,
+      "oldOutputChars": 5900,
+      "selectInputChars": 3658,
+      "selectOutputChars": 895,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-guts:PASSIVE",
+      "oldInputChars": 49301,
+      "oldOutputChars": 877,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4232,
+      "configureOutputChars": 475
+    },
+    {
+      "id": "b2-guts:Q",
+      "oldInputChars": 49295,
+      "oldOutputChars": 882,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1773,
+      "configureOutputChars": 384
+    },
+    {
+      "id": "b2-guts:W",
+      "oldInputChars": 49295,
+      "oldOutputChars": 1052,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3243,
+      "configureOutputChars": 517
+    },
+    {
+      "id": "b2-guts:E",
+      "oldInputChars": 49295,
+      "oldOutputChars": 1013,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1964,
+      "configureOutputChars": 488
+    },
+    {
+      "id": "b2-guts:R",
+      "oldInputChars": 49295,
+      "oldOutputChars": 932,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2062,
+      "configureOutputChars": 373
+    },
+    {
+      "id": "b2-guts:EX",
+      "oldInputChars": 49296,
+      "oldOutputChars": 989,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2107,
+      "configureOutputChars": 462
+    },
+    {
+      "id": "b2-keyaru:HERO",
+      "oldInputChars": 49320,
+      "oldOutputChars": 6015,
+      "selectInputChars": 3673,
+      "selectOutputChars": 905,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-keyaru:PASSIVE",
+      "oldInputChars": 49323,
+      "oldOutputChars": 803,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4643,
+      "configureOutputChars": 375
+    },
+    {
+      "id": "b2-keyaru:Q",
+      "oldInputChars": 49317,
+      "oldOutputChars": 839,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1684,
+      "configureOutputChars": 325
+    },
+    {
+      "id": "b2-keyaru:W",
+      "oldInputChars": 49317,
+      "oldOutputChars": 1118,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2649,
+      "configureOutputChars": 564
+    },
+    {
+      "id": "b2-keyaru:E",
+      "oldInputChars": 49317,
+      "oldOutputChars": 899,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1643,
+      "configureOutputChars": 361
+    },
+    {
+      "id": "b2-keyaru:R",
+      "oldInputChars": 49317,
+      "oldOutputChars": 1147,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2518,
+      "configureOutputChars": 549
+    },
+    {
+      "id": "b2-keyaru:EX",
+      "oldInputChars": 49318,
+      "oldOutputChars": 1045,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2502,
+      "configureOutputChars": 496
+    },
+    {
+      "id": "b2-kaede:HERO",
+      "oldInputChars": 49304,
+      "oldOutputChars": 5904,
+      "selectInputChars": 3662,
+      "selectOutputChars": 886,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-kaede:PASSIVE",
+      "oldInputChars": 49307,
+      "oldOutputChars": 883,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4229,
+      "configureOutputChars": 460
+    },
+    {
+      "id": "b2-kaede:Q",
+      "oldInputChars": 49301,
+      "oldOutputChars": 947,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1711,
+      "configureOutputChars": 409
+    },
+    {
+      "id": "b2-kaede:W",
+      "oldInputChars": 49301,
+      "oldOutputChars": 875,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1768,
+      "configureOutputChars": 360
+    },
+    {
+      "id": "b2-kaede:E",
+      "oldInputChars": 49301,
+      "oldOutputChars": 1020,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2248,
+      "configureOutputChars": 474
+    },
+    {
+      "id": "b2-kaede:R",
+      "oldInputChars": 49301,
+      "oldOutputChars": 951,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1960,
+      "configureOutputChars": 363
+    },
+    {
+      "id": "b2-kaede:EX",
+      "oldInputChars": 49302,
+      "oldOutputChars": 1073,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2472,
+      "configureOutputChars": 509
+    },
+    {
+      "id": "b2-matthias:HERO",
+      "oldInputChars": 49322,
+      "oldOutputChars": 5912,
+      "selectInputChars": 3668,
+      "selectOutputChars": 924,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-matthias:PASSIVE",
+      "oldInputChars": 49325,
+      "oldOutputChars": 815,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3953,
+      "configureOutputChars": 370
+    },
+    {
+      "id": "b2-matthias:Q",
+      "oldInputChars": 49319,
+      "oldOutputChars": 1041,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3075,
+      "configureOutputChars": 473
+    },
+    {
+      "id": "b2-matthias:W",
+      "oldInputChars": 49319,
+      "oldOutputChars": 856,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1782,
+      "configureOutputChars": 349
+    },
+    {
+      "id": "b2-matthias:E",
+      "oldInputChars": 49319,
+      "oldOutputChars": 977,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2144,
+      "configureOutputChars": 460
+    },
+    {
+      "id": "b2-matthias:R",
+      "oldInputChars": 49319,
+      "oldOutputChars": 986,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2714,
+      "configureOutputChars": 418
+    },
+    {
+      "id": "b2-matthias:EX",
+      "oldInputChars": 49320,
+      "oldOutputChars": 1079,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3235,
+      "configureOutputChars": 508
+    },
+    {
+      "id": "b2-sinbad:HERO",
+      "oldInputChars": 49313,
+      "oldOutputChars": 5757,
+      "selectInputChars": 3666,
+      "selectOutputChars": 877,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-sinbad:PASSIVE",
+      "oldInputChars": 49316,
+      "oldOutputChars": 766,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3863,
+      "configureOutputChars": 364
+    },
+    {
+      "id": "b2-sinbad:Q",
+      "oldInputChars": 49310,
+      "oldOutputChars": 997,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3026,
+      "configureOutputChars": 459
+    },
+    {
+      "id": "b2-sinbad:W",
+      "oldInputChars": 49310,
+      "oldOutputChars": 1018,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2243,
+      "configureOutputChars": 475
+    },
+    {
+      "id": "b2-sinbad:E",
+      "oldInputChars": 49310,
+      "oldOutputChars": 791,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1520,
+      "configureOutputChars": 287
+    },
+    {
+      "id": "b2-sinbad:R",
+      "oldInputChars": 49310,
+      "oldOutputChars": 891,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1763,
+      "configureOutputChars": 361
+    },
+    {
+      "id": "b2-sinbad:EX",
+      "oldInputChars": 49311,
+      "oldOutputChars": 1132,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2485,
+      "configureOutputChars": 551
+    },
+    {
+      "id": "b2-kumoko:HERO",
+      "oldInputChars": 49310,
+      "oldOutputChars": 5893,
+      "selectInputChars": 3663,
+      "selectOutputChars": 876,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-kumoko:PASSIVE",
+      "oldInputChars": 49313,
+      "oldOutputChars": 837,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4049,
+      "configureOutputChars": 439
+    },
+    {
+      "id": "b2-kumoko:Q",
+      "oldInputChars": 49307,
+      "oldOutputChars": 863,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1604,
+      "configureOutputChars": 348
+    },
+    {
+      "id": "b2-kumoko:W",
+      "oldInputChars": 49307,
+      "oldOutputChars": 1250,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2414,
+      "configureOutputChars": 686
+    },
+    {
+      "id": "b2-kumoko:E",
+      "oldInputChars": 49307,
+      "oldOutputChars": 791,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1516,
+      "configureOutputChars": 287
+    },
+    {
+      "id": "b2-kumoko:R",
+      "oldInputChars": 49307,
+      "oldOutputChars": 946,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1951,
+      "configureOutputChars": 366
+    },
+    {
+      "id": "b2-kumoko:EX",
+      "oldInputChars": 49308,
+      "oldOutputChars": 1047,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2244,
+      "configureOutputChars": 515
+    },
+    {
+      "id": "b2-yogiri:HERO",
+      "oldInputChars": 49321,
+      "oldOutputChars": 6454,
+      "selectInputChars": 3673,
+      "selectOutputChars": 976,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-yogiri:PASSIVE",
+      "oldInputChars": 49324,
+      "oldOutputChars": 855,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4160,
+      "configureOutputChars": 440
+    },
+    {
+      "id": "b2-yogiri:Q",
+      "oldInputChars": 49318,
+      "oldOutputChars": 960,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2771,
+      "configureOutputChars": 395
+    },
+    {
+      "id": "b2-yogiri:W",
+      "oldInputChars": 49318,
+      "oldOutputChars": 1435,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3843,
+      "configureOutputChars": 825
+    },
+    {
+      "id": "b2-yogiri:E",
+      "oldInputChars": 49318,
+      "oldOutputChars": 792,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1626,
+      "configureOutputChars": 288
+    },
+    {
+      "id": "b2-yogiri:R",
+      "oldInputChars": 49318,
+      "oldOutputChars": 1140,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3499,
+      "configureOutputChars": 604
+    },
+    {
+      "id": "b2-yogiri:EX",
+      "oldInputChars": 49319,
+      "oldOutputChars": 1108,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3292,
+      "configureOutputChars": 529
+    },
+    {
+      "id": "b2-kaiji:HERO",
+      "oldInputChars": 49308,
+      "oldOutputChars": 6081,
+      "selectInputChars": 3663,
+      "selectOutputChars": 930,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-kaiji:PASSIVE",
+      "oldInputChars": 49311,
+      "oldOutputChars": 755,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3947,
+      "configureOutputChars": 361
+    },
+    {
+      "id": "b2-kaiji:Q",
+      "oldInputChars": 49305,
+      "oldOutputChars": 1021,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2064,
+      "configureOutputChars": 469
+    },
+    {
+      "id": "b2-kaiji:W",
+      "oldInputChars": 49305,
+      "oldOutputChars": 1025,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2281,
+      "configureOutputChars": 449
+    },
+    {
+      "id": "b2-kaiji:E",
+      "oldInputChars": 49305,
+      "oldOutputChars": 1123,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2664,
+      "configureOutputChars": 571
+    },
+    {
+      "id": "b2-kaiji:R",
+      "oldInputChars": 49305,
+      "oldOutputChars": 1166,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2664,
+      "configureOutputChars": 617
+    },
+    {
+      "id": "b2-kaiji:EX",
+      "oldInputChars": 49306,
+      "oldOutputChars": 834,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1701,
+      "configureOutputChars": 309
+    },
+    {
+      "id": "b2-fushi:HERO",
+      "oldInputChars": 49301,
+      "oldOutputChars": 5904,
+      "selectInputChars": 3658,
+      "selectOutputChars": 907,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-fushi:PASSIVE",
+      "oldInputChars": 49304,
+      "oldOutputChars": 791,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4637,
+      "configureOutputChars": 383
+    },
+    {
+      "id": "b2-fushi:Q",
+      "oldInputChars": 49298,
+      "oldOutputChars": 1080,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2324,
+      "configureOutputChars": 537
+    },
+    {
+      "id": "b2-fushi:W",
+      "oldInputChars": 49298,
+      "oldOutputChars": 1043,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2454,
+      "configureOutputChars": 504
+    },
+    {
+      "id": "b2-fushi:E",
+      "oldInputChars": 49298,
+      "oldOutputChars": 1136,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2311,
+      "configureOutputChars": 584
+    },
+    {
+      "id": "b2-fushi:R",
+      "oldInputChars": 49298,
+      "oldOutputChars": 916,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1728,
+      "configureOutputChars": 396
+    },
+    {
+      "id": "b2-fushi:EX",
+      "oldInputChars": 49299,
+      "oldOutputChars": 786,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1544,
+      "configureOutputChars": 288
+    },
+    {
+      "id": "b2-orphen:HERO",
+      "oldInputChars": 49303,
+      "oldOutputChars": 5396,
+      "selectInputChars": 3657,
+      "selectOutputChars": 845,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-orphen:PASSIVE",
+      "oldInputChars": 49306,
+      "oldOutputChars": 757,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3855,
+      "configureOutputChars": 361
+    },
+    {
+      "id": "b2-orphen:Q",
+      "oldInputChars": 49300,
+      "oldOutputChars": 940,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1880,
+      "configureOutputChars": 359
+    },
+    {
+      "id": "b2-orphen:W",
+      "oldInputChars": 49300,
+      "oldOutputChars": 963,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2481,
+      "configureOutputChars": 437
+    },
+    {
+      "id": "b2-orphen:E",
+      "oldInputChars": 49300,
+      "oldOutputChars": 885,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1567,
+      "configureOutputChars": 361
+    },
+    {
+      "id": "b2-orphen:R",
+      "oldInputChars": 49300,
+      "oldOutputChars": 871,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1709,
+      "configureOutputChars": 363
+    },
+    {
+      "id": "b2-orphen:EX",
+      "oldInputChars": 49301,
+      "oldOutputChars": 831,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1610,
+      "configureOutputChars": 310
+    },
+    {
+      "id": "b2-klaus:HERO",
+      "oldInputChars": 49310,
+      "oldOutputChars": 5909,
+      "selectInputChars": 3666,
+      "selectOutputChars": 902,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-klaus:PASSIVE",
+      "oldInputChars": 49313,
+      "oldOutputChars": 763,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3918,
+      "configureOutputChars": 358
+    },
+    {
+      "id": "b2-klaus:Q",
+      "oldInputChars": 49307,
+      "oldOutputChars": 977,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2690,
+      "configureOutputChars": 434
+    },
+    {
+      "id": "b2-klaus:W",
+      "oldInputChars": 49307,
+      "oldOutputChars": 1149,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3045,
+      "configureOutputChars": 575
+    },
+    {
+      "id": "b2-klaus:E",
+      "oldInputChars": 49307,
+      "oldOutputChars": 791,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1545,
+      "configureOutputChars": 287
+    },
+    {
+      "id": "b2-klaus:R",
+      "oldInputChars": 49307,
+      "oldOutputChars": 944,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1980,
+      "configureOutputChars": 388
+    },
+    {
+      "id": "b2-klaus:EX",
+      "oldInputChars": 49308,
+      "oldOutputChars": 1121,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2641,
+      "configureOutputChars": 573
+    },
+    {
+      "id": "b2-takopi:HERO",
+      "oldInputChars": 49312,
+      "oldOutputChars": 6079,
+      "selectInputChars": 3665,
+      "selectOutputChars": 916,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-takopi:PASSIVE",
+      "oldInputChars": 49315,
+      "oldOutputChars": 833,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4083,
+      "configureOutputChars": 429
+    },
+    {
+      "id": "b2-takopi:Q",
+      "oldInputChars": 49309,
+      "oldOutputChars": 864,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1840,
+      "configureOutputChars": 337
+    },
+    {
+      "id": "b2-takopi:W",
+      "oldInputChars": 49309,
+      "oldOutputChars": 1060,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2263,
+      "configureOutputChars": 513
+    },
+    {
+      "id": "b2-takopi:E",
+      "oldInputChars": 49309,
+      "oldOutputChars": 970,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2703,
+      "configureOutputChars": 418
+    },
+    {
+      "id": "b2-takopi:R",
+      "oldInputChars": 49309,
+      "oldOutputChars": 1133,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2521,
+      "configureOutputChars": 550
+    },
+    {
+      "id": "b2-takopi:EX",
+      "oldInputChars": 49310,
+      "oldOutputChars": 1059,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2472,
+      "configureOutputChars": 510
+    },
+    {
+      "id": "b2-luckyman:HERO",
+      "oldInputChars": 49317,
+      "oldOutputChars": 5655,
+      "selectInputChars": 3663,
+      "selectOutputChars": 885,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-luckyman:PASSIVE",
+      "oldInputChars": 49320,
+      "oldOutputChars": 759,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3895,
+      "configureOutputChars": 354
+    },
+    {
+      "id": "b2-luckyman:Q",
+      "oldInputChars": 49314,
+      "oldOutputChars": 976,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2031,
+      "configureOutputChars": 427
+    },
+    {
+      "id": "b2-luckyman:W",
+      "oldInputChars": 49314,
+      "oldOutputChars": 846,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1738,
+      "configureOutputChars": 347
+    },
+    {
+      "id": "b2-luckyman:E",
+      "oldInputChars": 49314,
+      "oldOutputChars": 958,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2031,
+      "configureOutputChars": 425
+    },
+    {
+      "id": "b2-luckyman:R",
+      "oldInputChars": 49314,
+      "oldOutputChars": 1167,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2586,
+      "configureOutputChars": 621
+    },
+    {
+      "id": "b2-luckyman:EX",
+      "oldInputChars": 49315,
+      "oldOutputChars": 794,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1527,
+      "configureOutputChars": 290
+    },
+    {
+      "id": "b2-misery:HERO",
+      "oldInputChars": 49311,
+      "oldOutputChars": 5945,
+      "selectInputChars": 3664,
+      "selectOutputChars": 942,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-misery:PASSIVE",
+      "oldInputChars": 49314,
+      "oldOutputChars": 770,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3968,
+      "configureOutputChars": 370
+    },
+    {
+      "id": "b2-misery:Q",
+      "oldInputChars": 49308,
+      "oldOutputChars": 988,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2728,
+      "configureOutputChars": 415
+    },
+    {
+      "id": "b2-misery:W",
+      "oldInputChars": 49308,
+      "oldOutputChars": 1068,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3247,
+      "configureOutputChars": 502
+    },
+    {
+      "id": "b2-misery:E",
+      "oldInputChars": 49308,
+      "oldOutputChars": 787,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1583,
+      "configureOutputChars": 287
+    },
+    {
+      "id": "b2-misery:R",
+      "oldInputChars": 49308,
+      "oldOutputChars": 1012,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2306,
+      "configureOutputChars": 475
+    },
+    {
+      "id": "b2-misery:EX",
+      "oldInputChars": 49309,
+      "oldOutputChars": 1164,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3519,
+      "configureOutputChars": 575
+    },
+    {
+      "id": "b2-nube:HERO",
+      "oldInputChars": 49304,
+      "oldOutputChars": 6104,
+      "selectInputChars": 3662,
+      "selectOutputChars": 922,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-nube:PASSIVE",
+      "oldInputChars": 49307,
+      "oldOutputChars": 756,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3937,
+      "configureOutputChars": 360
+    },
+    {
+      "id": "b2-nube:Q",
+      "oldInputChars": 49301,
+      "oldOutputChars": 1057,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2877,
+      "configureOutputChars": 490
+    },
+    {
+      "id": "b2-nube:W",
+      "oldInputChars": 49301,
+      "oldOutputChars": 988,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2136,
+      "configureOutputChars": 458
+    },
+    {
+      "id": "b2-nube:E",
+      "oldInputChars": 49301,
+      "oldOutputChars": 880,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1649,
+      "configureOutputChars": 362
+    },
+    {
+      "id": "b2-nube:R",
+      "oldInputChars": 49301,
+      "oldOutputChars": 1136,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3434,
+      "configureOutputChars": 593
+    },
+    {
+      "id": "b2-nube:EX",
+      "oldInputChars": 49302,
+      "oldOutputChars": 1133,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2526,
+      "configureOutputChars": 551
+    },
+    {
+      "id": "b2-shinchan:HERO",
+      "oldInputChars": 49323,
+      "oldOutputChars": 5829,
+      "selectInputChars": 3668,
+      "selectOutputChars": 912,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-shinchan:PASSIVE",
+      "oldInputChars": 49326,
+      "oldOutputChars": 771,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3908,
+      "configureOutputChars": 372
+    },
+    {
+      "id": "b2-shinchan:Q",
+      "oldInputChars": 49320,
+      "oldOutputChars": 985,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2702,
+      "configureOutputChars": 436
+    },
+    {
+      "id": "b2-shinchan:W",
+      "oldInputChars": 49320,
+      "oldOutputChars": 877,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1645,
+      "configureOutputChars": 351
+    },
+    {
+      "id": "b2-shinchan:E",
+      "oldInputChars": 49320,
+      "oldOutputChars": 792,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1557,
+      "configureOutputChars": 287
+    },
+    {
+      "id": "b2-shinchan:R",
+      "oldInputChars": 49320,
+      "oldOutputChars": 1142,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3430,
+      "configureOutputChars": 601
+    },
+    {
+      "id": "b2-shinchan:EX",
+      "oldInputChars": 49321,
+      "oldOutputChars": 1101,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2925,
+      "configureOutputChars": 533
+    },
+    {
+      "id": "b2-aladdin:HERO",
+      "oldInputChars": 49320,
+      "oldOutputChars": 6395,
+      "selectInputChars": 3670,
+      "selectOutputChars": 938,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-aladdin:PASSIVE",
+      "oldInputChars": 49323,
+      "oldOutputChars": 764,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3962,
+      "configureOutputChars": 361
+    },
+    {
+      "id": "b2-aladdin:Q",
+      "oldInputChars": 49317,
+      "oldOutputChars": 1249,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3390,
+      "configureOutputChars": 565
+    },
+    {
+      "id": "b2-aladdin:W",
+      "oldInputChars": 49317,
+      "oldOutputChars": 1163,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3407,
+      "configureOutputChars": 601
+    },
+    {
+      "id": "b2-aladdin:E",
+      "oldInputChars": 49317,
+      "oldOutputChars": 1022,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3091,
+      "configureOutputChars": 480
+    },
+    {
+      "id": "b2-aladdin:R",
+      "oldInputChars": 49317,
+      "oldOutputChars": 899,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1828,
+      "configureOutputChars": 361
+    },
+    {
+      "id": "b2-aladdin:EX",
+      "oldInputChars": 49318,
+      "oldOutputChars": 1136,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2389,
+      "configureOutputChars": 544
+    },
+    {
+      "id": "b2-ned:HERO",
+      "oldInputChars": 49318,
+      "oldOutputChars": 5730,
+      "selectInputChars": 3675,
+      "selectOutputChars": 870,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-ned:PASSIVE",
+      "oldInputChars": 49321,
+      "oldOutputChars": 854,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4978,
+      "configureOutputChars": 417
+    },
+    {
+      "id": "b2-ned:Q",
+      "oldInputChars": 49315,
+      "oldOutputChars": 961,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1968,
+      "configureOutputChars": 374
+    },
+    {
+      "id": "b2-ned:W",
+      "oldInputChars": 49315,
+      "oldOutputChars": 1004,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2363,
+      "configureOutputChars": 445
+    },
+    {
+      "id": "b2-ned:E",
+      "oldInputChars": 49315,
+      "oldOutputChars": 1055,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2838,
+      "configureOutputChars": 498
+    },
+    {
+      "id": "b2-ned:R",
+      "oldInputChars": 49315,
+      "oldOutputChars": 895,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1765,
+      "configureOutputChars": 385
+    },
+    {
+      "id": "b2-ned:EX",
+      "oldInputChars": 49316,
+      "oldOutputChars": 795,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 1524,
+      "configureOutputChars": 289
+    },
+    {
+      "id": "b2-kisaragi:HERO",
+      "oldInputChars": 49661,
+      "oldOutputChars": 7677,
+      "selectInputChars": 4007,
+      "selectOutputChars": 986,
+      "configureInputChars": 0,
+      "configureOutputChars": 0
+    },
+    {
+      "id": "b2-kisaragi:PASSIVE",
+      "oldInputChars": 49664,
+      "oldOutputChars": 853,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4495,
+      "configureOutputChars": 433
+    },
+    {
+      "id": "b2-kisaragi:Q",
+      "oldInputChars": 49658,
+      "oldOutputChars": 1008,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 2743,
+      "configureOutputChars": 466
+    },
+    {
+      "id": "b2-kisaragi:W",
+      "oldInputChars": 49658,
+      "oldOutputChars": 1094,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3448,
+      "configureOutputChars": 544
+    },
+    {
+      "id": "b2-kisaragi:E",
+      "oldInputChars": 49658,
+      "oldOutputChars": 1184,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4016,
+      "configureOutputChars": 644
+    },
+    {
+      "id": "b2-kisaragi:R",
+      "oldInputChars": 49658,
+      "oldOutputChars": 2276,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 4735,
+      "configureOutputChars": 1654
+    },
+    {
+      "id": "b2-kisaragi:EX",
+      "oldInputChars": 49659,
+      "oldOutputChars": 1046,
+      "selectInputChars": 0,
+      "selectOutputChars": 0,
+      "configureInputChars": 3586,
+      "configureOutputChars": 487
+    }
+  ]
+}

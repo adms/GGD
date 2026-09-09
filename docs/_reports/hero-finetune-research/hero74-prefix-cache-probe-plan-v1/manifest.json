@@ -1,0 +1,12 @@
+{
+  "schema": "ggd-distillation-prefix-cache-probe-inputs@1",
+  "builderSha256": "753e560d4f3af1f3bf12a5770facefe3b6dea4ba5a43ba259a455942608f442b",
+  "sourceEvaluationManifestSha256": "ac297f754978c4542d632a7e49df5dc7af7e6e79ab63237b2919f733dbe8e260",
+  "sourceManifestSha256": "b80ca65f68ede20e18781995f3d983a2e7f0b79e4ee1f0d3bd1b43c4c57a5d94",
+  "outputs": {
+    "public-cases.jsonl": "fb08ecea401f4a2a9e7e3038f0df1e3961958b8d98f5a474c4a1b4fe5729d523",
+    "plan.json": "dad59b871252d40c90f2cfcb8d173fe840fc900e9e6b47afbe938195933c3c94"
+  },
+  "qualityScoringEnabled": false,
+  "inferenceStarted": false
+}
