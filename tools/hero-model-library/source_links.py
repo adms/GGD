@@ -8,9 +8,13 @@ def plan_sources(data, manifest, policy):
     data = deepcopy(data)
     heroes = {h['id']: h for h in manifest['heroes']}
     for entry in data['entries']:
-        entry['acquiredPublicSources'] = [s['id'] for s in data.get('publicSources', [])
+        acquired = [s for s in data.get('publicSources', [])
             if set(s['heroIds']) & set(entry['heroIds']) and s['acquisitionStatus'] == 'downloaded-verified']
-        entry['purchaseHold'] = bool(entry['acquiredPublicSources'])
+        entry['acquiredPublicSources'] = [s['id'] for s in acquired]
+        held_ids = {i for s in acquired if s.get('purchaseDecision') == 'hold-purchase-review-free-source' for i in s['heroIds']}
+        entry['purchaseHoldFor'] = [i for i in entry['heroIds'] if i in held_ids]
+        entry['purchaseHold'] = bool(entry['heroIds']) and all(i in held_ids for i in entry['heroIds'])
+        entry['partialPurchaseHold'] = bool(entry['purchaseHoldFor']) and not entry['purchaseHold']
         available = []
         for hero_id in entry['heroIds']:
             ids = [o['sourceId'] for o in heroes.get(hero_id, {}).get('options', []) if o['source']['tier'] == '300heroes' and eligible(policy,hero_id,o['sourceId'],o['sourceModelKey'],o['source']['kind'])]
@@ -33,16 +37,19 @@ def render_sources(data):
     if public:
         lines += ['## 已取得免費來源：先暫緩購買', '',
             '**以下角色已取得免費來源的實際檔案，其他工作流先不要重複付費購買。** 這是購買暫緩記錄，並非全部已完成標準化或可直接作預設。沿用 300 優先與 11 組核准加工副本規則。', '',
+            '購買暫緩只適用表內明列的角色 ID／形態。同名的其他形態仍須各自核對；機器讀 `purchaseHoldFor`，不可只按角色名稱略過整組。', '',
             '| 角色／資源 | 已下載來源與署名 | 目前驗證結果 | 購買安排 |', '|---|---|---|---|']
         for s in public:
             decision = '**暫緩購買，先處理已取得免費檔**' if s['heroIds'] else '地圖素材池；尚未認列角色'
-            lines.append(f'| {s["target"]} | [{s["id"]}]({s["url"]})<br>{s["uploader"]}；{s["format"]} | {s["verification"]} | {decision} |')
+            ids = '<br>' + '、'.join(f'`{i}`' for i in s['heroIds']) if s['heroIds'] else ''
+            lines.append(f'| {s["target"]}{ids} | [{s["id"]}]({s["url"]})<br>{s["uploader"]}；{s["format"]} | {s["verification"]} | {decision} |')
         lines += ['', '逐檔大小、SHA-256、本機與 S3 位置記於 `download-sources.json → publicSources`。`readiness` 尚未通過的來源只供人工處理，不进入成品自動取用；來源使用條件另行保留，不把免費下載當成已確認可再散布。', '']
     lines += [
         '## 指定下載來源與購買順位', '',
         '**已有可用 300英雄模型 → 預設使用 300英雄，付費來源暫緩；指定的 11 個核准加工副本也可預設。缺可用 300英雄模型 → 下列使用者來源為最高優先下載。**', '',
         f'清單共有 {len(entries)} 組角色／形態、{count} 個原始網址；去除同帖不同頁後為 {len(sources)} 個資源帖。', '',
         f'這 {len(entries)} 組來源中：**{sum(e["downloadPriority"] == "defer-existing-300" for e in entries)} 組已有 300、暫緩付費下載；{sum(e["downloadPriority"] == "defer-acquired-public" for e in entries)} 組免費來源已取得、暫緩購買；{sum(e["downloadPriority"] == "owner-highest" for e in entries)} 組優先下載；{sum(e["downloadPriority"] == "needs-roster-mapping" for e in entries)} 組待對應角色 ID。** 數量按來源組計算，巴恩兩種形態各佔一組。', '',
+        f'其中 **{sum(e["partialPurchaseHold"] for e in entries)} 組只有部分形態取得免費來源**：只暫緩 `purchaseHoldFor` 所列 ID；其他形態保留原下載安排。', '',
         f'「待整合」{sum(e["category"] == "primary" for e in entries)} 組與「加購替換」{sum(e["category"] == "optional" for e in entries)} 組保留原分類；實際下載順位依上面的 300 優先規則。未取得並驗證的模型不會直接取代遊戲預設。', '',
         '來源狀態與後續共編欄位：[download-sources.json](https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/download-sources.json)。網站登入、回覆或付費要求須逐帖核對；上方免費來源與原清單資源帖分開記錄，取得替代來源不代表已下載原帖附件。', '',
     ]
@@ -58,6 +65,10 @@ def render_sources(data):
                 state += '；頁面要求回覆解鎖，模型身分待核'
             if entry.get('purchaseHold'):
                 state = '**免費來源已取得，暫緩購買**；' + '、'.join(entry['acquiredPublicSources']) + '；待完成標準化'
+            elif entry.get('partialPurchaseHold'):
+                held = '、'.join(f'`{i}`' for i in entry['purchaseHoldFor'])
+                remaining = '、'.join(f'`{i}`' for i in entry['heroIds'] if i not in entry['purchaseHoldFor'])
+                state = f'**部分形態免費來源已取得**；{held} 暫緩購買；{remaining} 未取得、保留原下載安排；' + '、'.join(entry['acquiredPublicSources'])
             if entry.get('mappingNote'): notes += '；' + entry['mappingNote']
             lines.append(f'| {entry["target"]} | {links} | {notes} | {ids}<br>{state} |')
         lines.append('')

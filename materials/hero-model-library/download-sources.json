@@ -3341,6 +3341,114 @@
         "readbackVerified": true,
         "usage": "legacy; human permission required; not runtime-ready"
       }
+    },
+    {
+      "id": "thunderstore-rezero",
+      "target": "菜月昴（Re:Zero 六角色包）",
+      "heroIds": [
+        "community-review-22-20260907"
+      ],
+      "url": "https://thunderstore.io/c/lethal-company/p/Tacocat12/ReZero_Playermodels/v/0.1.1/",
+      "downloadUrl": "https://thunderstore.io/package/download/Tacocat12/ReZero_Playermodels/0.1.1/",
+      "uploader": "Tacocat12 / Ryan-Brosius",
+      "format": "Unity AssetBundle in DLL",
+      "accessStatus": "public-mod-download",
+      "checkedAt": "2026-09-09T19:47:03+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-rezero",
+      "files": [
+        {
+          "path": "raw/thunderstore-rezero.zip",
+          "bytes": 4895449,
+          "sha256": "e846f2bf183ae9234c9ab675debfe62025e08e3aa2d8fa6871573185f9164a27",
+          "archiveMember": "raw/thunderstore-rezero.zip"
+        }
+      ],
+      "verification": "已靜態擷取 1 個 Unity bundle：8 Mesh、7 SkinnedMeshRenderer、6 Avatar、6 貼圖；含 Subaru 模型 ZHS002_Natsuki_Subaru，包內 0 AnimationClip。另含 Emilia、Rem、Ram、Felix、Beatrice，尚未各自認列 GGD 角色。作者列出 Emilia 骨架問題；待標準化與逐角外觀驗收。",
+      "reuseTerms": "來源署名與包內 README 已保留；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+      "usage": "intake-only; no automatic runtime selection",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-rezero/ec763b598598a0f3cc3cde1f3d21231b0071aab635fefdbf772af0d5a34f229c.zip",
+        "bytes": 26646590,
+        "sha256": "ec763b598598a0f3cc3cde1f3d21231b0071aab635fefdbf772af0d5a34f229c",
+        "readbackVerified": true,
+        "usage": "legacy; human permission required; not runtime-ready"
+      }
+    },
+    {
+      "id": "thunderstore-gon",
+      "target": "小傑（一般形態候選）",
+      "heroIds": [
+        "godie-ucrl"
+      ],
+      "url": "https://thunderstore.io/c/lethal-company/p/theasianone/gonHXH/",
+      "downloadUrl": "https://thunderstore.io/package/download/theasianone/gonHXH/0.1.0/",
+      "uploader": "theasianone",
+      "format": "Unity AssetBundle in DLL",
+      "accessStatus": "public-mod-download",
+      "checkedAt": "2026-09-09T19:47:03+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-gon",
+      "files": [
+        {
+          "path": "raw/thunderstore-gon.zip",
+          "bytes": 1156429,
+          "sha256": "42ced36c85d46cc64fe1db07180b71e3def34bdc574742a32186210e10f2bf39",
+          "archiveMember": "raw/thunderstore-gon.zip"
+        }
+      ],
+      "verification": "已靜態擷取 1 個 Unity bundle：1 Mesh、1 SkinnedMeshRenderer、75 Transform、5 貼圖、1 Avatar；包內 0 AnimationClip。來源標為 Gon；模型外觀與品質尚待驗收。僅暫緩一般形態 godie-ucrl，未認列變身後大傑 godie-u034。",
+      "reuseTerms": "來源署名與包內 README 已保留；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+      "usage": "intake-only; no automatic runtime selection",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-gon/73d98838696ad5fd53523f67fe1024a474529c47deaa8cabc9dbb4ad4f862378.zip",
+        "bytes": 5410975,
+        "sha256": "73d98838696ad5fd53523f67fe1024a474529c47deaa8cabc9dbb4ad4f862378",
+        "readbackVerified": true,
+        "usage": "legacy; human permission required; not runtime-ready"
+      }
+    },
+    {
+      "id": "thunderstore-rimuru-ror2",
+      "target": "利姆路（人形／史萊姆候選）",
+      "heroIds": [
+        "community-review-11-20260907"
+      ],
+      "url": "https://thunderstore.io/c/riskofrain2/p/PopcornFactory/Rimuru_Tempest_Mod/",
+      "downloadUrl": "https://thunderstore.io/package/download/PopcornFactory/Rimuru_Tempest_Mod/1.1.3/",
+      "uploader": "PopcornFactory / Ethanol10",
+      "format": "Unity AssetBundle in DLL",
+      "accessStatus": "public-mod-download",
+      "checkedAt": "2026-09-09T19:47:03+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-rimuru-ror2",
+      "files": [
+        {
+          "path": "raw/thunderstore-rimuru-ror2.zip",
+          "bytes": 4574218,
+          "sha256": "184feb4badfbdd365723a57f7312221fc5f9f4a41086a2fc54b26a7da196b020",
+          "archiveMember": "raw/thunderstore-rimuru-ror2.zip"
+        }
+      ],
+      "verification": "已靜態擷取 1 個 Unity bundle：6 Mesh、10 SkinnedMeshRenderer、29 貼圖、3 Avatar、37 AnimationClip、62 ParticleSystem；含 RimuruHumanMesh、RimuruSlimeMesh。骨架／動畫／粒子原生解析資料已保留；尚待 GLB、特效標準化與視覺驗收，未確認音效可獨立使用。",
+      "reuseTerms": "來源署名與包內 README 已保留；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+      "usage": "intake-only; no automatic runtime selection",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-rimuru-ror2/eac46f5895b43dbc53468d25ad2675f313f4140451c5110513bae61894cdc8a5.zip",
+        "bytes": 37851215,
+        "sha256": "eac46f5895b43dbc53468d25ad2675f313f4140451c5110513bae61894cdc8a5",
+        "readbackVerified": true,
+        "usage": "legacy; human permission required; not runtime-ready"
+      }
     }
   ],
   "publicSourcePolicy": "免費來源已取得的角色先暫緩購買；待檔案、角色身分、骨架、動畫與使用條件檢查完成，再决定是否需要付費來源。這不改變已有可用 300 優先與僅 11 組加工副本可預設的規則。"

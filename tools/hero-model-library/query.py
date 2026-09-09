@@ -20,7 +20,8 @@ def main():
     data = json.loads((REPO/'materials/hero-model-library/inventory.json').read_text())
     query = args.query.casefold()
     if args.downloads:
-        records = [e for e in data['downloadPlan']['entries'] if not query or query in json.dumps(e, ensure_ascii=False).casefold()]
+        matching_sources = {s['id'] for s in data['downloadPlan'].get('publicSources',[]) if query in json.dumps(s,ensure_ascii=False).casefold()}
+        records = [e for e in data['downloadPlan']['entries'] if not query or query in json.dumps(e, ensure_ascii=False).casefold() or matching_sources.intersection(e.get('acquiredPublicSources',[]))]
         if args.json:
             source_ids={sid for e in records for sid in e.get('acquiredPublicSources',[])}
             print(json.dumps({'release':data['release'], 'entries':records,
@@ -29,15 +30,17 @@ def main():
             labels = {'defer-acquired-public':'免費來源已取得，暫緩購買','defer-approved-derivative':'已有核准加工副本，暫緩付費下載','defer-existing-300':'已有 300，暫緩付費下載','owner-highest':'優先下載','needs-roster-mapping':'待對應角色 ID'}
             for e in records:
                 print(f"{e['target']} | {labels[e['downloadPriority']]} | {', '.join(e['heroIds']) or '未對應'}")
-                if e.get('purchaseHold'):
-                    print('  免費來源已取得：暫緩購買，先完成轉換／動作驗收')
+                if e.get('purchaseHoldFor'):
+                    print('  免費來源已取得，暫緩購買：'+', '.join(e['purchaseHoldFor'])+'；先完成轉換／動作驗收')
+                    if e.get('partialPurchaseHold'):
+                        print('  其他形態尚未取得，保留原下載安排：'+', '.join(i for i in e['heroIds'] if i not in e['purchaseHoldFor']))
                     for s in data['downloadPlan'].get('publicSources',[]):
                         if s['id'] in e['acquiredPublicSources']: print('    '+s['url']+' | '+s['verification'])
                 for s in e['sources']: print('  '+s['submittedUrl'])
                 for note in e['ownerNotes']: print('  指定處理：'+note)
         return 0 if records else 1
     exact = [h for h in data['heroes'] if h['id'].casefold() == query]
-    records = exact or [h for h in data['heroes'] if not query or query in json.dumps([h['id'],h['name'],h['work'],h['options']],ensure_ascii=False).casefold()]
+    records = exact or [h for h in data['heroes'] if not query or query in json.dumps([h['id'],h['name'],h['work'],h['options'],h.get('publicCandidates',[])],ensure_ascii=False).casefold()]
     if args.json:
         print(json.dumps({'release':data['release'],'productionSnapshot':data['productionSnapshot'],'heroes':records},ensure_ascii=False,indent=2))
         return 0 if records else 1
