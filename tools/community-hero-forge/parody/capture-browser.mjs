@@ -24,10 +24,11 @@ const sha=file=>createHash('sha256').update(fs.readFileSync(file)).digest('hex')
 if(!['native','swiftshader'].includes(v.gpu))throw Error('--gpu must be native or swiftshader');
 const {chromium}=await import(pathToFileURL(path.resolve(v['playwright-module'])).href);
 fs.mkdirSync(output,{recursive:true});
-const report={schema:'ggd-first37-browser-capture@1',origin:origin.origin,gpu:v.gpu,serviceRevision:'not-attested',indexSha256:sha(path.join(input,'index.json')),scriptSha256:sha(new URL(import.meta.url)),heroes:[],errors:[],consoleErrors:[],publicationVerified:false};
+const report={schema:'ggd-first37-browser-capture@1',origin:origin.origin,gpu:v.gpu,nodeVersion:process.version,nodeArchitecture:process.arch,nodeExecutable:process.execPath,serviceRevision:'not-attested',indexSha256:sha(path.join(input,'index.json')),scriptSha256:sha(new URL(import.meta.url)),heroes:[],errors:[],consoleErrors:[],publicationVerified:false};
 const browser=await chromium.launch({channel:'chrome',headless:true,args:v.gpu==='swiftshader'?['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']:[]});
-const page=await browser.newPage({viewport:{width:1440,height:1100}});page.setDefaultTimeout(30000);
+const page=await browser.newPage({viewport:{width:1920,height:1440}});page.setDefaultTimeout(30000);
 page.on('pageerror',e=>report.errors.push(e.message));
+report.httpFailures=[];page.on('response',r=>{if(r.status()>=400){const u=new URL(r.url());report.httpFailures.push({status:r.status(),path:u.origin+u.pathname});}});
 page.on('console',e=>{if(e.type()==='error')report.consoleErrors.push(e.text().slice(0,2000));});
 const flush=()=>fs.writeFileSync(path.join(output,'captures.json'),JSON.stringify(report,null,2)+'\n');
 try{
@@ -51,7 +52,8 @@ try{
   const row={index:hero.index,name:hero.name,projectSha256:sha(path.join(input,hero.project)),captures:[],errors:[]};report.heroes.push(row);
   const dir=path.join(output,hero.index);fs.mkdirSync(dir);
   try{
-   await panel.getByRole('button',{name:hero.name,exact:true}).click();
+   await page.getByRole('button',{name:'我的作品',exact:true}).click();
+   await page.locator('.draft-cards > li').filter({has:page.getByRole('heading',{name:hero.name,exact:true})}).getByRole('button',{name:'繼續編輯',exact:true}).click();
    await page.locator('.hero-header h1').filter({hasText:hero.name}).waitFor({timeout:60000});
    const adopt=page.getByRole('button',{name:'採用目前生成器並重新檢查',exact:true});if(await adopt.count()){await adopt.click();row.adopted=true;}
    const source=JSON.parse(fs.readFileSync(path.join(input,hero.project),'utf8'));
@@ -61,25 +63,38 @@ try{
     console.log(`${hero.index}/${slot}: opening preview`);
     const nav=page.getByRole('navigation',{name:'技能槽',exact:true});await nav.getByRole('button',{name:slot,exact:true}).click();
     const region=page.getByRole('region',{name:'可調整的試玩情境'});await region.waitFor({timeout:180000});
-    if(hero.index==='32'&&slot==='EX'){
+    if(hero.index==='04'){
      await region.locator('summary').filter({hasText:'調整試玩情境'}).click();
-     await region.getByLabel('前置施法',{exact:true}).selectOption('R');
-     await region.getByLabel('前置施法後經過秒數',{exact:true}).fill('1');
+     await region.getByLabel('施放者 X',{exact:true}).fill('-1');await region.getByLabel('目標 X',{exact:true}).fill('1');
+    }
+    if(['01','28','32'].includes(hero.index)&&slot==='EX'){
+     await region.locator('summary').filter({hasText:'調整試玩情境'}).click();
+     await region.getByLabel('前置施法',{exact:true}).selectOption(hero.index==='32'?'R':'Q');
+     await region.getByLabel('前置施法後經過秒數',{exact:true}).fill(hero.index==='01'?'1.5':'1');
+     if(hero.index==='28'){await region.getByLabel('施放者 X',{exact:true}).fill('-1');await region.getByLabel('目標 X',{exact:true}).fill('1.3');}
     }
     await region.getByText('正在試算此情境…',{exact:true}).waitFor({state:'hidden',timeout:180000});
-    const status=region.getByRole('status');await status.waitFor({timeout:180000});
+    const status=region.locator(':scope > [role=status]');await status.waitFor({timeout:180000});
+    if(!(await status.innerText()).startsWith('完成施放'))throw Error('Selected skill did not actually cast: '+await status.innerText());
+    console.log(`${hero.index}/${slot}: actual cast accepted; waiting for models`);
     const stage=region.locator('.vfx-stage');await stage.locator('canvas').waitFor({timeout:60000});
+    await stage.scrollIntoViewIfNeeded();
     await page.waitForFunction(()=>{const s=document.querySelector('.vfx-actor-status')?.textContent??'';return (s.match(/材質正常/g)??[]).length===2&&!s.includes('載入');},null,{timeout:60000});
     const slider=region.getByLabel('Sim 與 3D 播放位置');
-    const times=hero.index==='32'&&slot==='EX'?[300,2500,5500]:[slot==='R'?1000:500];
+    const keyframes=await region.locator('.vfx-keyframes button').allTextContents();
+    const suggested=[...new Set(keyframes.map(text=>Math.round(Number.parseFloat(text)*1000)).filter(Number.isFinite))];
+    const timesBase=hero.index==='32'&&slot==='EX'?[...suggested.slice(0,1),2500,4500,6500]:suggested.length?[suggested[0],...suggested.length>1?[suggested.at(-1)]:[]]:[slot==='R'?1000:500];
+    const times=[...new Set([...timesBase,500,1000])];
+    row.previewSetups??={};row.previewSetups[slot]={status:await status.innerText(),sampleSource:suggested.length?'Editor recommended event keyframes':'bounded fallback'};
     for(const wanted of times){
-     const ms=Math.min(wanted,Number(await slider.getAttribute('max')));
-     await slider.evaluate((input,value)=>{Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(input,String(value));input.dispatchEvent(new Event('input',{bubbles:true}));input.dispatchEvent(new Event('change',{bubbles:true}));},ms);
+     const requestedMs=Math.min(wanted,Number(await slider.getAttribute('max')));
+     const ms=await slider.evaluate((input,value)=>{Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(input,String(value));input.dispatchEvent(new Event('input',{bubbles:true}));input.dispatchEvent(new Event('change',{bubbles:true}));return Math.round(input.valueAsNumber);},requestedMs);
      await region.locator('.forge-sim-timeline strong').filter({hasText:String(ms)+'ms'}).waitFor({timeout:10000});
      if(await nav.getByRole('button',{name:slot,exact:true}).getAttribute('aria-pressed')!=='true')throw Error('Stale selected slot');
      await stage.getByRole('button',{name:'全螢幕預覽',exact:true}).click();await page.waitForTimeout(180);
+     if((await stage.locator('.vfx-actor-status').innerText()).match(/材質正常/g)?.length!==2)throw Error('Actor state changed before capture');
      const file=path.join(dir,`${slot}-${ms}.png`);await stage.screenshot({path:file});
-     row.captures.push({slot,ms,file:path.relative(output,file),sha256:sha(file),bytes:fs.statSync(file).size,actors:await stage.locator('.vfx-actor-status').innerText(),status:await status.innerText()});
+     row.captures.push({slot,requestedMs,ms,file:path.relative(output,file),sha256:sha(file),bytes:fs.statSync(file).size,actors:await stage.locator('.vfx-actor-status').innerText(),status:await status.innerText()});
      await stage.getByRole('button',{name:'返回編輯',exact:true}).click();
     }
    }

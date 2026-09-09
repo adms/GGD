@@ -2325,6 +2325,10 @@ export class VfxForgeStage {
       fallback: peer.fallback.isEnabled(),
     }));
     const body = actor.bodyRoot;
+    const camera = this.cameraRig.camera;
+    const cameraPosition = camera.position.clone();
+    const cameraRotation = camera.rotation.clone();
+    const cameraQuaternion = camera.rotationQuaternion?.clone() ?? null;
     const bodyX = body?.position.x ?? 0;
     const bodyZ = body?.position.z ?? 0;
     // Side-review intentionally looks along the combat lane. At some cast
@@ -2344,6 +2348,16 @@ export class VfxForgeStage {
       body.position.x = focus.x;
       body.position.z = focus.z;
     }
+    // Certify the model in a close, neutral view. A fixed pixel threshold in
+    // the author's wide combat camera rejected slim healthy bodies (218px)
+    // solely because the inspector was narrow. Keep the same 250px/colour
+    // gates; frame the actual body, then restore the author's exact camera.
+    root.computeWorldMatrix(true);
+    const bounds = root.getHierarchyBoundingVectors(true);
+    const center = bounds.min.add(bounds.max).scale(0.5);
+    const extent = Math.max(1, bounds.max.subtract(bounds.min).length());
+    camera.position.copyFrom(center.add(new Vector3(extent * 0.6, extent * 0.4, extent * 1.8)));
+    camera.setTarget(center);
     try {
       const shown = await read();
       root.setEnabled(false);
@@ -2380,6 +2394,9 @@ export class VfxForgeStage {
         body.position.x = bodyX;
         body.position.z = bodyZ;
       }
+      camera.position.copyFrom(cameraPosition);
+      camera.rotation.copyFrom(cameraRotation);
+      camera.rotationQuaternion = cameraQuaternion;
       this.renderScene();
     }
   }
