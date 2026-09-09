@@ -1,0 +1,76 @@
+{
+  "schema": "ggd-mvp-handoff-receipt@1",
+  "recordedAt": "2026-09-10T00:21:09.032462+08:00",
+  "sourceCommit": "fafc9f17e2dcf5842e07a91c7709ef3b0a33d701",
+  "heroScope": {
+    "first": 37,
+    "second": 37,
+    "lol": 7,
+    "heroes": 81,
+    "slots": 486,
+    "uniqueProjectIds": 81
+  },
+  "progressFile": "docs/全自動鑄造編輯器進度temp202609100021.md",
+  "ciRuns": {
+    "first": 34371509009,
+    "second": 34371514707
+  },
+  "remainingBlockerIssue": 1159,
+  "complete": false,
+  "publishedToSharedFormalService": false,
+  "limits": [
+    "Full CI is not green.",
+    "Historical isolated publication and local compilation do not prove formal publication.",
+    "Second repo reuses byte-identical release-note fixture fixes; unadopted keys describe the first repo only.",
+    "skills-repaired.log retains an intermediate ledger failure; ledger-check-final.log is the later passing result.",
+    "No new artwork, model remapping, AWS transfers, recording or Phase2/3 work.",
+    "Raw log whitespace is preserved; source/document diff checks exclude raw .log files."
+  ],
+  "files": [
+    {
+      "path": "player-note-fixtures.log",
+      "bytes": 1481,
+      "sha256": "cf103694c68b60dd2c27eefa0c043dd52a3e946cbd3228397db8618bf966216d"
+    },
+    {
+      "path": "derived-freshness.log",
+      "bytes": 423,
+      "sha256": "09bad276c3c5455d353e1866d117235cca1b36fcbce44fda0a1369de4fafa067"
+    },
+    {
+      "path": "ci-unit.log",
+      "bytes": 1225018,
+      "sha256": "c18638772a58d0497562567208ebb586ce12478be3184178373ae369e06b7227"
+    },
+    {
+      "path": "ledger-final.log",
+      "bytes": 1668,
+      "sha256": "864577faed745479c9b30d315973667fab979e3cecced3c2f0afdab8e1b5beff"
+    },
+    {
+      "path": "unadopted-keys.txt",
+      "bytes": 2392,
+      "sha256": "2736bc302be637eeadcd5abbd8135b20160514564eff43e19fd76c7493f2fc1a"
+    },
+    {
+      "path": "unadopted-sources.tsv",
+      "bytes": 5364,
+      "sha256": "93b25b42de5d2f2b92f6d4f37cb8da3f1ec75194de5b763db2ff7a15dad6a64a"
+    },
+    {
+      "path": "finish-ledger.py",
+      "bytes": 794,
+      "sha256": "3a6b01867610daffc35356a2979c8cbaaea6c20c3dc0861108b406d8d2721c46"
+    },
+    {
+      "path": "resume-skills.py",
+      "bytes": 955,
+      "sha256": "f16c2634117a414cc4da38313326f62791dde7b89a7b1b71f478c1b97ffe83e9"
+    },
+    {
+      "path": "skills-tail-results.json",
+      "bytes": 5134,
+      "sha256": "90a035df8158797da2c023f63c52cc32bf0c6d9559baeb770a49588aefdf8c6d"
+    }
+  ]
+}

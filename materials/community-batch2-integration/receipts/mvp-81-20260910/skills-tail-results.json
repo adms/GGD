@@ -1,0 +1,250 @@
+{
+  "completedPrefixCommands": 21,
+  "results": [
+    {
+      "command": "pnpm contract:numbers:check",
+      "exitCode": 1,
+      "elapsedSeconds": 0.796
+    },
+    {
+      "command": "pnpm atlas:check",
+      "exitCode": 0,
+      "elapsedSeconds": 3.073
+    },
+    {
+      "command": "pnpm treasure:csv:check",
+      "exitCode": 0,
+      "elapsedSeconds": 0.632
+    },
+    {
+      "command": "pnpm docs:readme:check",
+      "exitCode": 1,
+      "elapsedSeconds": 0.808
+    },
+    {
+      "command": "pnpm docs:status:check",
+      "exitCode": 0,
+      "elapsedSeconds": 0.713
+    },
+    {
+      "command": "pnpm roster:check",
+      "exitCode": 0,
+      "elapsedSeconds": 1.406
+    },
+    {
+      "command": "pnpm pitch:check",
+      "exitCode": 0,
+      "elapsedSeconds": 1.556
+    },
+    {
+      "command": "pnpm newhero:check",
+      "exitCode": 0,
+      "elapsedSeconds": 1.808
+    },
+    {
+      "command": "pnpm lowdmg:check",
+      "exitCode": 0,
+      "elapsedSeconds": 1.554
+    },
+    {
+      "command": "pnpm anchors:check",
+      "exitCode": 0,
+      "elapsedSeconds": 1.457
+    },
+    {
+      "command": "pnpm statcaps:check",
+      "exitCode": 0,
+      "elapsedSeconds": 1.442
+    },
+    {
+      "command": "pnpm apconv:plan:check",
+      "exitCode": 0,
+      "elapsedSeconds": 0.824
+    },
+    {
+      "command": "pnpm apconv:check",
+      "exitCode": 0,
+      "elapsedSeconds": 0.692
+    },
+    {
+      "command": "pnpm apdmg:check",
+      "exitCode": 0,
+      "elapsedSeconds": 2.031
+    },
+    {
+      "command": "pnpm board:check",
+      "exitCode": 0,
+      "elapsedSeconds": 0.738
+    },
+    {
+      "command": "pnpm msgledger:check",
+      "exitCode": 1,
+      "elapsedSeconds": 13.647
+    },
+    {
+      "command": "pnpm skillnorm:check",
+      "exitCode": 0,
+      "elapsedSeconds": 3.269
+    },
+    {
+      "command": "pnpm speedtiers:check",
+      "exitCode": 0,
+      "elapsedSeconds": 1.513
+    },
+    {
+      "command": "pnpm jasscombo:check",
+      "exitCode": 0,
+      "elapsedSeconds": 0.734
+    },
+    {
+      "command": "pnpm vfxbind:check",
+      "exitCode": 0,
+      "elapsedSeconds": 0.76
+    },
+    {
+      "command": "pnpm models:check",
+      "exitCode": 0,
+      "elapsedSeconds": 1.432
+    },
+    {
+      "command": "pnpm lod:check",
+      "exitCode": 0,
+      "elapsedSeconds": 1.09
+    },
+    {
+      "command": "pnpm audit:check",
+      "exitCode": 0,
+      "elapsedSeconds": 1.661
+    },
+    {
+      "command": "pnpm echoloop:check",
+      "exitCode": 0,
+      "elapsedSeconds": 2.194
+    },
+    {
+      "command": "pnpm templates:check",
+      "exitCode": 0,
+      "elapsedSeconds": 0.987
+    },
+    {
+      "command": "pnpm prose:check",
+      "exitCode": 0,
+      "elapsedSeconds": 3.046
+    },
+    {
+      "command": "pnpm sfxbind:check",
+      "exitCode": 0,
+      "elapsedSeconds": 0.595
+    },
+    {
+      "command": "pnpm shapes:check",
+      "exitCode": 0,
+      "elapsedSeconds": 0.594
+    },
+    {
+      "command": "pnpm iconplan:check",
+      "exitCode": 0,
+      "elapsedSeconds": 0.624
+    },
+    {
+      "command": "pnpm formreceipts:check",
+      "exitCode": 0,
+      "elapsedSeconds": 10.18
+    },
+    {
+      "command": "pnpm beam:check",
+      "exitCode": 0,
+      "elapsedSeconds": 0.789
+    },
+    {
+      "command": "pnpm archetypes:check",
+      "exitCode": 0,
+      "elapsedSeconds": 1.613
+    },
+    {
+      "command": "pnpm enableaudit:check",
+      "exitCode": 0,
+      "elapsedSeconds": 0.836
+    },
+    {
+      "command": "pnpm review:check",
+      "exitCode": 0,
+      "elapsedSeconds": 2.978
+    },
+    {
+      "command": "pnpm declshape:check",
+      "exitCode": 0,
+      "elapsedSeconds": 1.423
+    },
+    {
+      "command": "pnpm decor:check",
+      "exitCode": 0,
+      "elapsedSeconds": 3.561
+    },
+    {
+      "command": "pnpm speedlists:check",
+      "exitCode": 0,
+      "elapsedSeconds": 2.624
+    },
+    {
+      "command": "pnpm locust:check",
+      "exitCode": 0,
+      "elapsedSeconds": 0.912
+    },
+    {
+      "command": "pnpm w3a:check",
+      "exitCode": 0,
+      "elapsedSeconds": 1.944
+    },
+    {
+      "command": "pnpm board:roll:check",
+      "exitCode": 0,
+      "elapsedSeconds": 0.812
+    },
+    {
+      "command": "pnpm ruleslip:check",
+      "exitCode": 0,
+      "elapsedSeconds": 0.616
+    },
+    {
+      "command": "pnpm receipt:check",
+      "exitCode": 0,
+      "elapsedSeconds": 1.464
+    },
+    {
+      "command": "pnpm handback:check",
+      "exitCode": 0,
+      "elapsedSeconds": 1.356
+    },
+    {
+      "command": "pnpm clipdeg:check",
+      "exitCode": 0,
+      "elapsedSeconds": 1.657
+    },
+    {
+      "command": "pnpm apcoeffdiff:check",
+      "exitCode": 0,
+      "elapsedSeconds": 1.823
+    },
+    {
+      "command": "pnpm decor:check",
+      "exitCode": 0,
+      "elapsedSeconds": 3.875
+    },
+    {
+      "command": "pnpm appearance:check",
+      "exitCode": 0,
+      "elapsedSeconds": 2.089
+    },
+    {
+      "command": "pnpm ptokens:check",
+      "exitCode": 0,
+      "elapsedSeconds": 1.965
+    },
+    {
+      "command": "pnpm coord:check",
+      "exitCode": 0,
+      "elapsedSeconds": 4.031
+    }
+  ]
+}
