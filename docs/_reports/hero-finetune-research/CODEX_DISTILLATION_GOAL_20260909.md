@@ -100,3 +100,17 @@ Codex 生成不自動等於正確，但不要求全庫重新取得獨立人工 G
 scripts／JSON／Markdown／設定／索引進本地 Git；模型二進位沿用已授權 S3 與回讀 hash 校驗。AWS 僅 vibe-coding、ap-east-2、指定 bucket；不讀 credentials、不改 IAM、不刪除、不換 profile。不重新購買雲端服務或備份平台。
 
 本文件取代分類優先的 REVISED_SCOPE_REVIEW_20260909.md 作當前方向；PLAN.md、FINETUNE_ONLY_SCOPE.md、舊資料、模型與分數保留歷史。當前資料淨數、完整教師輸出契約、正式超參數與使用者新批名單尚未凍結；不能把文件寫完當成已訓練／已達標。
+
+## 8. 2026-09-09 兩批 37 名入訓授權與新凍結版
+
+使用者追加：「好 這兩批37英雄及技能等都經過驗證了 請你重新審查加入訓練及驗證集」。僅對新版資料，這項明確授權取代第 3 節對第二批的 evaluation-only 使用限制；不改原來源標記、原 run／split／分數。
+
+目前採用 `hero74-training-v2/manifest.json`：兩批共 74 名，59 名 train／15 名 internal dev，六槽跟隨同英雄與已知近似群組；保留原生資料後合計 500 筆 train／119 筆 dev（含完整英雄與單槽，不是 619 名英雄）。舊 23 筆社群樣本替換而非重複加入。全 74 名重新編譯及 444 槽投影還原一致性通過，完整證據與限制见新版 README。
+
+這些英雄不再是獨立盲測，最終泛化比較仍需要另一批未見需求。CPU 預檢不截斷，最長 29,996 tokens；新一輪 GPU 訓練仍未開始。先前長序列梯度記憶體阻擋尚未解除，不能把資料入庫或 prepare 成功當成 optimizer／模型成果。後續不得回到舊小筆數資料或原樣重試已失敗的 GPU 流程。
+
+## 9. 同日後續：v15 完整長度梯度已通過，單輪時程仍未放行
+
+`full-hero-distillation-v15/probe/state.json` 已 completed，四种格式的 train 極端長度樣本 4/4 完成完整前向／反向；最長 29,996 tokens／8,049 答案 tokens。單筆 42.31–66.97 秒；峰值 Metal 35.26 GB；無 swap 增量。所有原 RAM／active Metal／電量與 timeout 保護未放寬。這更新第 8 節的「梯度記憶體阻擋」狀態，但不等於全量訓練完成。
+
+`fitsStepBudget=true`、`fitsTimeBudget=false`：固定保守估時 58,221.86 秒超過原 7,200 秒單輪設定，因此 optimizer 更新仍為 0、沒有新 adapter。下一步先降低相同公共目錄的 frozen-prefix 重複計算，保留全部 500/119 任務、完整教師答案與 split；只讀 CPU 盤點確認重排 JSON 欄位可形成 19,143／20,884 tokens 共用前綴，但尚未實作 cache 或量得加速。不得拿此盤點當新凍結資料或已准入快取；須驗證因果 KV／hidden／梯度等價、維持原資源限制，再重跑全長容量與時程預檢。若仍不符時限，須明確取得新的時程授權，不自動延長或減少資料。

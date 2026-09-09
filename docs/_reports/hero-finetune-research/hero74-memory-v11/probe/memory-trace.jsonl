@@ -1,0 +1,1220 @@
+{"at": 1788953249.127552, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 12955760506, "layer": 0}
+{"at": 1788953249.150578, "event": "frozen-layer", "activeMetalBytes": 12728678266, "peakMetalBytes": 12955760506, "layer": 1}
+{"at": 1788953249.155798, "event": "attention-forward-block", "activeMetalBytes": 12810925946, "peakMetalBytes": 12955760506, "begin": 768, "end": 1024}
+{"at": 1788953249.1677032, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 12955760506, "layer": 2}
+{"at": 1788953249.18488, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 12955760506, "layer": 3}
+{"at": 1788953249.203199, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 12955760506, "layer": 4}
+{"at": 1788953249.211363, "event": "attention-forward-block", "activeMetalBytes": 12818003834, "peakMetalBytes": 12955760506, "begin": 256, "end": 512}
+{"at": 1788953249.227663, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 5}
+{"at": 1788953249.2471821, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 6}
+{"at": 1788953249.265387, "event": "frozen-layer", "activeMetalBytes": 12728678266, "peakMetalBytes": 13017102202, "layer": 7}
+{"at": 1788953249.283378, "event": "frozen-layer", "activeMetalBytes": 12728678266, "peakMetalBytes": 13017102202, "layer": 8}
+{"at": 1788953249.3007529, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 9}
+{"at": 1788953249.30596, "event": "attention-forward-block", "activeMetalBytes": 12810925946, "peakMetalBytes": 13017102202, "begin": 768, "end": 1024}
+{"at": 1788953249.31809, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 10}
+{"at": 1788953249.3418581, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 11}
+{"at": 1788953249.3674262, "event": "frozen-layer", "activeMetalBytes": 12728678266, "peakMetalBytes": 13017102202, "layer": 12}
+{"at": 1788953249.37202, "event": "attention-forward-block", "activeMetalBytes": 12802537338, "peakMetalBytes": 13017102202, "begin": 256, "end": 512}
+{"at": 1788953249.38581, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 13}
+{"at": 1788953249.4039218, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 14}
+{"at": 1788953249.421885, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 15}
+{"at": 1788953249.4399, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 16}
+{"at": 1788953249.463979, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 17}
+{"at": 1788953249.470815, "event": "attention-forward-block", "activeMetalBytes": 12810925946, "peakMetalBytes": 13017102202, "begin": 768, "end": 1024}
+{"at": 1788953249.4841301, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 18}
+{"at": 1788953249.50243, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 19}
+{"at": 1788953249.521008, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 20}
+{"at": 1788953249.525866, "event": "attention-forward-block", "activeMetalBytes": 12802537338, "peakMetalBytes": 13017102202, "begin": 256, "end": 512}
+{"at": 1788953249.538901, "event": "frozen-layer", "activeMetalBytes": 12808304506, "peakMetalBytes": 13017102202, "layer": 21}
+{"at": 1788953249.5567749, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 22}
+{"at": 1788953249.579919, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 23}
+{"at": 1788953249.5999732, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 24}
+{"at": 1788953249.6179168, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 25}
+{"at": 1788953249.623586, "event": "attention-forward-block", "activeMetalBytes": 12810925946, "peakMetalBytes": 13017102202, "begin": 768, "end": 1024}
+{"at": 1788953249.636374, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 26}
+{"at": 1788953249.653894, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 27}
+{"at": 1788953249.671885, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 28}
+{"at": 1788953249.6794298, "event": "attention-forward-block", "activeMetalBytes": 12818003834, "peakMetalBytes": 13017102202, "begin": 256, "end": 512}
+{"at": 1788953249.697027, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 29}
+{"at": 1788953249.7166028, "event": "frozen-layer", "activeMetalBytes": 12728678266, "peakMetalBytes": 13017102202, "layer": 30}
+{"at": 1788953249.734543, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 31}
+{"at": 1788953249.752699, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 32}
+{"at": 1788953249.771104, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 33}
+{"at": 1788953249.7772532, "event": "attention-forward-block", "activeMetalBytes": 12810925946, "peakMetalBytes": 13017102202, "begin": 768, "end": 1024}
+{"at": 1788953249.791039, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 34}
+{"at": 1788953249.817159, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 35}
+{"at": 1788953249.8392022, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 36}
+{"at": 1788953249.844237, "event": "attention-forward-block", "activeMetalBytes": 12802537338, "peakMetalBytes": 13017102202, "begin": 256, "end": 512}
+{"at": 1788953249.8599198, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 37}
+{"at": 1788953249.8806322, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 38}
+{"at": 1788953249.9006689, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 39}
+{"at": 1788953249.9203331, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 40}
+{"at": 1788953249.9471848, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 41}
+{"at": 1788953249.954607, "event": "attention-forward-block", "activeMetalBytes": 12810925946, "peakMetalBytes": 13017102202, "begin": 768, "end": 1024}
+{"at": 1788953249.969517, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 42}
+{"at": 1788953249.991881, "event": "frozen-layer", "activeMetalBytes": 12728678266, "peakMetalBytes": 13017102202, "layer": 43}
+{"at": 1788953250.012664, "event": "frozen-layer", "activeMetalBytes": 12737525626, "peakMetalBytes": 13017102202, "layer": 44}
+{"at": 1788953250.018083, "event": "attention-forward-block", "activeMetalBytes": 12802537338, "peakMetalBytes": 13017102202, "begin": 256, "end": 512}
+{"at": 1788953250.0346172, "event": "frozen-layer", "activeMetalBytes": 12728678266, "peakMetalBytes": 13017102202, "layer": 45}
+{"at": 1788953250.079139, "event": "attention-forward-block", "activeMetalBytes": 12826853344, "peakMetalBytes": 13017102202, "begin": 256, "end": 512}
+{"at": 1788953250.375628, "event": "loss-backward-block", "activeMetalBytes": 12776683520, "peakMetalBytes": 14377632252, "begin": 384, "end": 385}
+{"at": 1788953250.5120509, "event": "attention-backward-block", "activeMetalBytes": 13469860854, "peakMetalBytes": 14377632252, "begin": 0, "end": 256}
+{"at": 1788953250.609461, "event": "mlp-backward-block", "activeMetalBytes": 13325688324, "peakMetalBytes": 14377632252, "begin": 0, "end": 256}
+{"at": 1788953251.179779, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 14424387984, "begin": 1280, "end": 1536}
+{"at": 1788953251.199859, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 14424387984, "begin": 5376, "end": 5632}
+{"at": 1788953251.216137, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 14424387984, "begin": 9472, "end": 9728}
+{"at": 1788953251.2325902, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 14424387984, "begin": 13568, "end": 13824}
+{"at": 1788953251.2495098, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 14460404098, "begin": 17664, "end": 17920}
+{"at": 1788953251.2656488, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 14527512962, "begin": 21760, "end": 22016}
+{"at": 1788953251.5262988, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 17061995898, "layer": 0}
+{"at": 1788953251.5977652, "event": "attention-forward-block", "activeMetalBytes": 14199711098, "peakMetalBytes": 17061995898, "begin": 3328, "end": 3584}
+{"at": 1788953251.616823, "event": "attention-forward-block", "activeMetalBytes": 14266819962, "peakMetalBytes": 17061995898, "begin": 7424, "end": 7680}
+{"at": 1788953251.6351612, "event": "attention-forward-block", "activeMetalBytes": 14333928826, "peakMetalBytes": 17061995898, "begin": 11520, "end": 11776}
+{"at": 1788953251.652708, "event": "attention-forward-block", "activeMetalBytes": 14401037690, "peakMetalBytes": 17061995898, "begin": 15616, "end": 15872}
+{"at": 1788953251.6695418, "event": "attention-forward-block", "activeMetalBytes": 14468146554, "peakMetalBytes": 17061995898, "begin": 19712, "end": 19968}
+{"at": 1788953251.959203, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 17061995898, "layer": 1}
+{"at": 1788953252.03323, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 17061995898, "begin": 1280, "end": 1536}
+{"at": 1788953252.05172, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 17061995898, "begin": 5376, "end": 5632}
+{"at": 1788953252.0714529, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 17061995898, "begin": 9472, "end": 9728}
+{"at": 1788953252.090847, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 17061995898, "begin": 13568, "end": 13824}
+{"at": 1788953252.1090822, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 17061995898, "begin": 17664, "end": 17920}
+{"at": 1788953252.126715, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 17061995898, "begin": 21760, "end": 22016}
+{"at": 1788953252.413431, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 17061995898, "layer": 2}
+{"at": 1788953252.491018, "event": "attention-forward-block", "activeMetalBytes": 14199711098, "peakMetalBytes": 17061995898, "begin": 3328, "end": 3584}
+{"at": 1788953252.50999, "event": "attention-forward-block", "activeMetalBytes": 14266819962, "peakMetalBytes": 17061995898, "begin": 7424, "end": 7680}
+{"at": 1788953252.528176, "event": "attention-forward-block", "activeMetalBytes": 14333928826, "peakMetalBytes": 17061995898, "begin": 11520, "end": 11776}
+{"at": 1788953252.5448902, "event": "attention-forward-block", "activeMetalBytes": 14401037690, "peakMetalBytes": 17061995898, "begin": 15616, "end": 15872}
+{"at": 1788953252.562075, "event": "attention-forward-block", "activeMetalBytes": 14468146554, "peakMetalBytes": 17061995898, "begin": 19712, "end": 19968}
+{"at": 1788953252.8520849, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 17067599226, "layer": 3}
+{"at": 1788953252.917192, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 17067599226, "begin": 1280, "end": 1536}
+{"at": 1788953252.937361, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 17067599226, "begin": 5376, "end": 5632}
+{"at": 1788953252.9572349, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 17067599226, "begin": 9472, "end": 9728}
+{"at": 1788953252.977101, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 17067599226, "begin": 13568, "end": 13824}
+{"at": 1788953252.994097, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 17067599226, "begin": 17664, "end": 17920}
+{"at": 1788953253.011986, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 17067599226, "begin": 21760, "end": 22016}
+{"at": 1788953253.293243, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 17067599226, "layer": 4}
+{"at": 1788953253.3999171, "event": "attention-forward-block", "activeMetalBytes": 14393763194, "peakMetalBytes": 17067599226, "begin": 3328, "end": 3584}
+{"at": 1788953253.511852, "event": "attention-forward-block", "activeMetalBytes": 14527980922, "peakMetalBytes": 17067599226, "begin": 7424, "end": 7680}
+{"at": 1788953253.675675, "event": "attention-forward-block", "activeMetalBytes": 14662198650, "peakMetalBytes": 17067599226, "begin": 11520, "end": 11776}
+{"at": 1788953253.8867269, "event": "attention-forward-block", "activeMetalBytes": 14796416378, "peakMetalBytes": 17067599226, "begin": 15616, "end": 15872}
+{"at": 1788953254.147558, "event": "attention-forward-block", "activeMetalBytes": 14930634106, "peakMetalBytes": 17067599226, "begin": 19712, "end": 19968}
+{"at": 1788953254.593933, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18236269946, "layer": 5}
+{"at": 1788953254.6537259, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 18236269946, "begin": 1280, "end": 1536}
+{"at": 1788953254.681603, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 18236269946, "begin": 5376, "end": 5632}
+{"at": 1788953254.710978, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 18236269946, "begin": 9472, "end": 9728}
+{"at": 1788953254.738537, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 18236269946, "begin": 13568, "end": 13824}
+{"at": 1788953254.7658849, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 18236269946, "begin": 17664, "end": 17920}
+{"at": 1788953254.7918332, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 18236269946, "begin": 21760, "end": 22016}
+{"at": 1788953255.058903, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18236269946, "layer": 6}
+{"at": 1788953255.137894, "event": "attention-forward-block", "activeMetalBytes": 14199711098, "peakMetalBytes": 18236269946, "begin": 3328, "end": 3584}
+{"at": 1788953255.167437, "event": "attention-forward-block", "activeMetalBytes": 14266819962, "peakMetalBytes": 18236269946, "begin": 7424, "end": 7680}
+{"at": 1788953255.195138, "event": "attention-forward-block", "activeMetalBytes": 14333928826, "peakMetalBytes": 18236269946, "begin": 11520, "end": 11776}
+{"at": 1788953255.221716, "event": "attention-forward-block", "activeMetalBytes": 14401037690, "peakMetalBytes": 18236269946, "begin": 15616, "end": 15872}
+{"at": 1788953255.248342, "event": "attention-forward-block", "activeMetalBytes": 14468146554, "peakMetalBytes": 18236269946, "begin": 19712, "end": 19968}
+{"at": 1788953255.537183, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18236269946, "layer": 7}
+{"at": 1788953255.600705, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 18236269946, "begin": 1280, "end": 1536}
+{"at": 1788953255.630733, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 18236269946, "begin": 5376, "end": 5632}
+{"at": 1788953255.6608331, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 18236269946, "begin": 9472, "end": 9728}
+{"at": 1788953255.6921542, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 18236269946, "begin": 13568, "end": 13824}
+{"at": 1788953255.719319, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 18236269946, "begin": 17664, "end": 17920}
+{"at": 1788953255.745075, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 18236269946, "begin": 21760, "end": 22016}
+{"at": 1788953256.013057, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18236269946, "layer": 8}
+{"at": 1788953256.092026, "event": "attention-forward-block", "activeMetalBytes": 14199711098, "peakMetalBytes": 18236269946, "begin": 3328, "end": 3584}
+{"at": 1788953256.1232378, "event": "attention-forward-block", "activeMetalBytes": 14266819962, "peakMetalBytes": 18236269946, "begin": 7424, "end": 7680}
+{"at": 1788953256.154845, "event": "attention-forward-block", "activeMetalBytes": 14333928826, "peakMetalBytes": 18236269946, "begin": 11520, "end": 11776}
+{"at": 1788953256.183779, "event": "attention-forward-block", "activeMetalBytes": 14401037690, "peakMetalBytes": 18236269946, "begin": 15616, "end": 15872}
+{"at": 1788953256.211761, "event": "attention-forward-block", "activeMetalBytes": 14468146554, "peakMetalBytes": 18236269946, "begin": 19712, "end": 19968}
+{"at": 1788953256.494121, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18236269946, "layer": 9}
+{"at": 1788953256.5564532, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 18236269946, "begin": 1280, "end": 1536}
+{"at": 1788953256.587133, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 18236269946, "begin": 5376, "end": 5632}
+{"at": 1788953256.61798, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 18236269946, "begin": 9472, "end": 9728}
+{"at": 1788953256.648549, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 18236269946, "begin": 13568, "end": 13824}
+{"at": 1788953256.6768901, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 18236269946, "begin": 17664, "end": 17920}
+{"at": 1788953256.703274, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 18236269946, "begin": 21760, "end": 22016}
+{"at": 1788953256.96816, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18236269946, "layer": 10}
+{"at": 1788953257.076124, "event": "attention-forward-block", "activeMetalBytes": 14393763194, "peakMetalBytes": 18236269946, "begin": 3328, "end": 3584}
+{"at": 1788953257.178329, "event": "attention-forward-block", "activeMetalBytes": 14527980922, "peakMetalBytes": 18236269946, "begin": 7424, "end": 7680}
+{"at": 1788953257.332049, "event": "attention-forward-block", "activeMetalBytes": 14662198650, "peakMetalBytes": 18236269946, "begin": 11520, "end": 11776}
+{"at": 1788953257.5316858, "event": "attention-forward-block", "activeMetalBytes": 14796416378, "peakMetalBytes": 18236269946, "begin": 15616, "end": 15872}
+{"at": 1788953257.7751749, "event": "attention-forward-block", "activeMetalBytes": 14930634106, "peakMetalBytes": 18236269946, "begin": 19712, "end": 19968}
+{"at": 1788953258.186365, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 11}
+{"at": 1788953258.255117, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 18345321850, "begin": 1280, "end": 1536}
+{"at": 1788953258.2891462, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 18345321850, "begin": 5376, "end": 5632}
+{"at": 1788953258.3207731, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 18345321850, "begin": 9472, "end": 9728}
+{"at": 1788953258.3488362, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 18345321850, "begin": 13568, "end": 13824}
+{"at": 1788953258.37674, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 18345321850, "begin": 17664, "end": 17920}
+{"at": 1788953258.403968, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 18345321850, "begin": 21760, "end": 22016}
+{"at": 1788953258.664581, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 12}
+{"at": 1788953258.743994, "event": "attention-forward-block", "activeMetalBytes": 14199711098, "peakMetalBytes": 18345321850, "begin": 3328, "end": 3584}
+{"at": 1788953258.772557, "event": "attention-forward-block", "activeMetalBytes": 14266819962, "peakMetalBytes": 18345321850, "begin": 7424, "end": 7680}
+{"at": 1788953258.799659, "event": "attention-forward-block", "activeMetalBytes": 14333928826, "peakMetalBytes": 18345321850, "begin": 11520, "end": 11776}
+{"at": 1788953258.826874, "event": "attention-forward-block", "activeMetalBytes": 14401037690, "peakMetalBytes": 18345321850, "begin": 15616, "end": 15872}
+{"at": 1788953258.852986, "event": "attention-forward-block", "activeMetalBytes": 14468146554, "peakMetalBytes": 18345321850, "begin": 19712, "end": 19968}
+{"at": 1788953259.136319, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 13}
+{"at": 1788953259.201752, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 18345321850, "begin": 1280, "end": 1536}
+{"at": 1788953259.233202, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 18345321850, "begin": 5376, "end": 5632}
+{"at": 1788953259.263099, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 18345321850, "begin": 9472, "end": 9728}
+{"at": 1788953259.290776, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 18345321850, "begin": 13568, "end": 13824}
+{"at": 1788953259.316902, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 18345321850, "begin": 17664, "end": 17920}
+{"at": 1788953259.342846, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 18345321850, "begin": 21760, "end": 22016}
+{"at": 1788953259.61108, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 14}
+{"at": 1788953259.6896682, "event": "attention-forward-block", "activeMetalBytes": 14199711098, "peakMetalBytes": 18345321850, "begin": 3328, "end": 3584}
+{"at": 1788953259.717369, "event": "attention-forward-block", "activeMetalBytes": 14266819962, "peakMetalBytes": 18345321850, "begin": 7424, "end": 7680}
+{"at": 1788953259.74336, "event": "attention-forward-block", "activeMetalBytes": 14333928826, "peakMetalBytes": 18345321850, "begin": 11520, "end": 11776}
+{"at": 1788953259.769747, "event": "attention-forward-block", "activeMetalBytes": 14401037690, "peakMetalBytes": 18345321850, "begin": 15616, "end": 15872}
+{"at": 1788953259.796624, "event": "attention-forward-block", "activeMetalBytes": 14468146554, "peakMetalBytes": 18345321850, "begin": 19712, "end": 19968}
+{"at": 1788953260.077431, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 15}
+{"at": 1788953260.139765, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 18345321850, "begin": 1280, "end": 1536}
+{"at": 1788953260.171328, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 18345321850, "begin": 5376, "end": 5632}
+{"at": 1788953260.201171, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 18345321850, "begin": 9472, "end": 9728}
+{"at": 1788953260.230706, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 18345321850, "begin": 13568, "end": 13824}
+{"at": 1788953260.257389, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 18345321850, "begin": 17664, "end": 17920}
+{"at": 1788953260.2834718, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 18345321850, "begin": 21760, "end": 22016}
+{"at": 1788953260.544569, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 16}
+{"at": 1788953260.648772, "event": "attention-forward-block", "activeMetalBytes": 14393763194, "peakMetalBytes": 18345321850, "begin": 3328, "end": 3584}
+{"at": 1788953260.760915, "event": "attention-forward-block", "activeMetalBytes": 14527980922, "peakMetalBytes": 18345321850, "begin": 7424, "end": 7680}
+{"at": 1788953260.918574, "event": "attention-forward-block", "activeMetalBytes": 14662198650, "peakMetalBytes": 18345321850, "begin": 11520, "end": 11776}
+{"at": 1788953261.1295161, "event": "attention-forward-block", "activeMetalBytes": 14796416378, "peakMetalBytes": 18345321850, "begin": 15616, "end": 15872}
+{"at": 1788953261.3833752, "event": "attention-forward-block", "activeMetalBytes": 14930634106, "peakMetalBytes": 18345321850, "begin": 19712, "end": 19968}
+{"at": 1788953261.7967172, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 17}
+{"at": 1788953261.854733, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 18345321850, "begin": 1280, "end": 1536}
+{"at": 1788953261.8811321, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 18345321850, "begin": 5376, "end": 5632}
+{"at": 1788953261.9103732, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 18345321850, "begin": 9472, "end": 9728}
+{"at": 1788953261.939439, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 18345321850, "begin": 13568, "end": 13824}
+{"at": 1788953261.965601, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 18345321850, "begin": 17664, "end": 17920}
+{"at": 1788953261.9929101, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 18345321850, "begin": 21760, "end": 22016}
+{"at": 1788953262.251909, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 18}
+{"at": 1788953262.329858, "event": "attention-forward-block", "activeMetalBytes": 14199711098, "peakMetalBytes": 18345321850, "begin": 3328, "end": 3584}
+{"at": 1788953262.360189, "event": "attention-forward-block", "activeMetalBytes": 14266819962, "peakMetalBytes": 18345321850, "begin": 7424, "end": 7680}
+{"at": 1788953262.390526, "event": "attention-forward-block", "activeMetalBytes": 14333928826, "peakMetalBytes": 18345321850, "begin": 11520, "end": 11776}
+{"at": 1788953262.417563, "event": "attention-forward-block", "activeMetalBytes": 14401037690, "peakMetalBytes": 18345321850, "begin": 15616, "end": 15872}
+{"at": 1788953262.4445078, "event": "attention-forward-block", "activeMetalBytes": 14468146554, "peakMetalBytes": 18345321850, "begin": 19712, "end": 19968}
+{"at": 1788953262.720513, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 19}
+{"at": 1788953262.783134, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 18345321850, "begin": 1280, "end": 1536}
+{"at": 1788953262.8113122, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 18345321850, "begin": 5376, "end": 5632}
+{"at": 1788953262.838002, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 18345321850, "begin": 9472, "end": 9728}
+{"at": 1788953262.8646588, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 18345321850, "begin": 13568, "end": 13824}
+{"at": 1788953262.89103, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 18345321850, "begin": 17664, "end": 17920}
+{"at": 1788953262.916811, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 18345321850, "begin": 21760, "end": 22016}
+{"at": 1788953263.181094, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 20}
+{"at": 1788953263.2592242, "event": "attention-forward-block", "activeMetalBytes": 14199711098, "peakMetalBytes": 18345321850, "begin": 3328, "end": 3584}
+{"at": 1788953263.286901, "event": "attention-forward-block", "activeMetalBytes": 14266819962, "peakMetalBytes": 18345321850, "begin": 7424, "end": 7680}
+{"at": 1788953263.314854, "event": "attention-forward-block", "activeMetalBytes": 14333928826, "peakMetalBytes": 18345321850, "begin": 11520, "end": 11776}
+{"at": 1788953263.3412118, "event": "attention-forward-block", "activeMetalBytes": 14401037690, "peakMetalBytes": 18345321850, "begin": 15616, "end": 15872}
+{"at": 1788953263.367095, "event": "attention-forward-block", "activeMetalBytes": 14468146554, "peakMetalBytes": 18345321850, "begin": 19712, "end": 19968}
+{"at": 1788953263.642, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 21}
+{"at": 1788953263.705277, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 18345321850, "begin": 1280, "end": 1536}
+{"at": 1788953263.7352262, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 18345321850, "begin": 5376, "end": 5632}
+{"at": 1788953263.765374, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 18345321850, "begin": 9472, "end": 9728}
+{"at": 1788953263.797654, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 18345321850, "begin": 13568, "end": 13824}
+{"at": 1788953263.8342772, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 18345321850, "begin": 17664, "end": 17920}
+{"at": 1788953263.8659132, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 18345321850, "begin": 21760, "end": 22016}
+{"at": 1788953264.128813, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 22}
+{"at": 1788953264.237041, "event": "attention-forward-block", "activeMetalBytes": 14393763194, "peakMetalBytes": 18345321850, "begin": 3328, "end": 3584}
+{"at": 1788953264.349159, "event": "attention-forward-block", "activeMetalBytes": 14527980922, "peakMetalBytes": 18345321850, "begin": 7424, "end": 7680}
+{"at": 1788953264.508013, "event": "attention-forward-block", "activeMetalBytes": 14662198650, "peakMetalBytes": 18345321850, "begin": 11520, "end": 11776}
+{"at": 1788953264.707731, "event": "attention-forward-block", "activeMetalBytes": 14796416378, "peakMetalBytes": 18345321850, "begin": 15616, "end": 15872}
+{"at": 1788953264.9487538, "event": "attention-forward-block", "activeMetalBytes": 14930634106, "peakMetalBytes": 18345321850, "begin": 19712, "end": 19968}
+{"at": 1788953265.366156, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 23}
+{"at": 1788953265.423813, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 18345321850, "begin": 1280, "end": 1536}
+{"at": 1788953265.45246, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 18345321850, "begin": 5376, "end": 5632}
+{"at": 1788953265.4804091, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 18345321850, "begin": 9472, "end": 9728}
+{"at": 1788953265.510989, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 18345321850, "begin": 13568, "end": 13824}
+{"at": 1788953265.538404, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 18345321850, "begin": 17664, "end": 17920}
+{"at": 1788953265.566456, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 18345321850, "begin": 21760, "end": 22016}
+{"at": 1788953265.8223581, "event": "frozen-layer", "activeMetalBytes": 13058286970, "peakMetalBytes": 18345321850, "layer": 24}
+{"at": 1788953265.898388, "event": "attention-forward-block", "activeMetalBytes": 14199711098, "peakMetalBytes": 18345321850, "begin": 3328, "end": 3584}
+{"at": 1788953265.92973, "event": "attention-forward-block", "activeMetalBytes": 14266819962, "peakMetalBytes": 18345321850, "begin": 7424, "end": 7680}
+{"at": 1788953265.959692, "event": "attention-forward-block", "activeMetalBytes": 14333928826, "peakMetalBytes": 18345321850, "begin": 11520, "end": 11776}
+{"at": 1788953265.986895, "event": "attention-forward-block", "activeMetalBytes": 14401037690, "peakMetalBytes": 18345321850, "begin": 15616, "end": 15872}
+{"at": 1788953266.012779, "event": "attention-forward-block", "activeMetalBytes": 14468146554, "peakMetalBytes": 18345321850, "begin": 19712, "end": 19968}
+{"at": 1788953266.2905788, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 25}
+{"at": 1788953266.356846, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 18345321850, "begin": 1280, "end": 1536}
+{"at": 1788953266.3920808, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 18345321850, "begin": 5376, "end": 5632}
+{"at": 1788953266.425893, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 18345321850, "begin": 9472, "end": 9728}
+{"at": 1788953266.4570749, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 18345321850, "begin": 13568, "end": 13824}
+{"at": 1788953266.4884841, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 18345321850, "begin": 17664, "end": 17920}
+{"at": 1788953266.518201, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 18345321850, "begin": 21760, "end": 22016}
+{"at": 1788953266.778485, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 26}
+{"at": 1788953266.85659, "event": "attention-forward-block", "activeMetalBytes": 14199711098, "peakMetalBytes": 18345321850, "begin": 3328, "end": 3584}
+{"at": 1788953266.883266, "event": "attention-forward-block", "activeMetalBytes": 14266819962, "peakMetalBytes": 18345321850, "begin": 7424, "end": 7680}
+{"at": 1788953266.910497, "event": "attention-forward-block", "activeMetalBytes": 14333928826, "peakMetalBytes": 18345321850, "begin": 11520, "end": 11776}
+{"at": 1788953266.939641, "event": "attention-forward-block", "activeMetalBytes": 14401037690, "peakMetalBytes": 18345321850, "begin": 15616, "end": 15872}
+{"at": 1788953266.9684238, "event": "attention-forward-block", "activeMetalBytes": 14468146554, "peakMetalBytes": 18345321850, "begin": 19712, "end": 19968}
+{"at": 1788953267.248496, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 27}
+{"at": 1788953267.3121228, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 18345321850, "begin": 1280, "end": 1536}
+{"at": 1788953267.342326, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 18345321850, "begin": 5376, "end": 5632}
+{"at": 1788953267.370067, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 18345321850, "begin": 9472, "end": 9728}
+{"at": 1788953267.396317, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 18345321850, "begin": 13568, "end": 13824}
+{"at": 1788953267.421789, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 18345321850, "begin": 17664, "end": 17920}
+{"at": 1788953267.4477482, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 18345321850, "begin": 21760, "end": 22016}
+{"at": 1788953267.709687, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 28}
+{"at": 1788953267.81759, "event": "attention-forward-block", "activeMetalBytes": 14393763194, "peakMetalBytes": 18345321850, "begin": 3328, "end": 3584}
+{"at": 1788953267.9331279, "event": "attention-forward-block", "activeMetalBytes": 14527980922, "peakMetalBytes": 18345321850, "begin": 7424, "end": 7680}
+{"at": 1788953268.0954251, "event": "attention-forward-block", "activeMetalBytes": 14662198650, "peakMetalBytes": 18345321850, "begin": 11520, "end": 11776}
+{"at": 1788953268.305038, "event": "attention-forward-block", "activeMetalBytes": 14796416378, "peakMetalBytes": 18345321850, "begin": 15616, "end": 15872}
+{"at": 1788953268.5542872, "event": "attention-forward-block", "activeMetalBytes": 14930634106, "peakMetalBytes": 18345321850, "begin": 19712, "end": 19968}
+{"at": 1788953268.971901, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 29}
+{"at": 1788953269.035477, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 18345321850, "begin": 1280, "end": 1536}
+{"at": 1788953269.064897, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 18345321850, "begin": 5376, "end": 5632}
+{"at": 1788953269.091393, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 18345321850, "begin": 9472, "end": 9728}
+{"at": 1788953269.117971, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 18345321850, "begin": 13568, "end": 13824}
+{"at": 1788953269.144597, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 18345321850, "begin": 17664, "end": 17920}
+{"at": 1788953269.170936, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 18345321850, "begin": 21760, "end": 22016}
+{"at": 1788953269.434932, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 30}
+{"at": 1788953269.514621, "event": "attention-forward-block", "activeMetalBytes": 14199711098, "peakMetalBytes": 18345321850, "begin": 3328, "end": 3584}
+{"at": 1788953269.5432918, "event": "attention-forward-block", "activeMetalBytes": 14266819962, "peakMetalBytes": 18345321850, "begin": 7424, "end": 7680}
+{"at": 1788953269.570935, "event": "attention-forward-block", "activeMetalBytes": 14333928826, "peakMetalBytes": 18345321850, "begin": 11520, "end": 11776}
+{"at": 1788953269.598332, "event": "attention-forward-block", "activeMetalBytes": 14401037690, "peakMetalBytes": 18345321850, "begin": 15616, "end": 15872}
+{"at": 1788953269.6244218, "event": "attention-forward-block", "activeMetalBytes": 14468146554, "peakMetalBytes": 18345321850, "begin": 19712, "end": 19968}
+{"at": 1788953269.901077, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 31}
+{"at": 1788953269.9634318, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 18345321850, "begin": 1280, "end": 1536}
+{"at": 1788953269.9939919, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 18345321850, "begin": 5376, "end": 5632}
+{"at": 1788953270.0287402, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 18345321850, "begin": 9472, "end": 9728}
+{"at": 1788953270.063703, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 18345321850, "begin": 13568, "end": 13824}
+{"at": 1788953270.098455, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 18345321850, "begin": 17664, "end": 17920}
+{"at": 1788953270.13009, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 18345321850, "begin": 21760, "end": 22016}
+{"at": 1788953270.401073, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 32}
+{"at": 1788953270.479813, "event": "attention-forward-block", "activeMetalBytes": 14199711098, "peakMetalBytes": 18345321850, "begin": 3328, "end": 3584}
+{"at": 1788953270.5111911, "event": "attention-forward-block", "activeMetalBytes": 14266819962, "peakMetalBytes": 18345321850, "begin": 7424, "end": 7680}
+{"at": 1788953270.542621, "event": "attention-forward-block", "activeMetalBytes": 14333928826, "peakMetalBytes": 18345321850, "begin": 11520, "end": 11776}
+{"at": 1788953270.571841, "event": "attention-forward-block", "activeMetalBytes": 14401037690, "peakMetalBytes": 18345321850, "begin": 15616, "end": 15872}
+{"at": 1788953270.5996459, "event": "attention-forward-block", "activeMetalBytes": 14468146554, "peakMetalBytes": 18345321850, "begin": 19712, "end": 19968}
+{"at": 1788953270.878498, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 33}
+{"at": 1788953270.941793, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 18345321850, "begin": 1280, "end": 1536}
+{"at": 1788953270.968192, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 18345321850, "begin": 5376, "end": 5632}
+{"at": 1788953270.998234, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 18345321850, "begin": 9472, "end": 9728}
+{"at": 1788953271.0281699, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 18345321850, "begin": 13568, "end": 13824}
+{"at": 1788953271.056145, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 18345321850, "begin": 17664, "end": 17920}
+{"at": 1788953271.0849652, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 18345321850, "begin": 21760, "end": 22016}
+{"at": 1788953271.356877, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 34}
+{"at": 1788953271.471563, "event": "attention-forward-block", "activeMetalBytes": 14393763194, "peakMetalBytes": 18345321850, "begin": 3328, "end": 3584}
+{"at": 1788953271.582596, "event": "attention-forward-block", "activeMetalBytes": 14527980922, "peakMetalBytes": 18345321850, "begin": 7424, "end": 7680}
+{"at": 1788953271.744392, "event": "attention-forward-block", "activeMetalBytes": 14662198650, "peakMetalBytes": 18345321850, "begin": 11520, "end": 11776}
+{"at": 1788953271.9539149, "event": "attention-forward-block", "activeMetalBytes": 14796416378, "peakMetalBytes": 18345321850, "begin": 15616, "end": 15872}
+{"at": 1788953272.21639, "event": "attention-forward-block", "activeMetalBytes": 14930634106, "peakMetalBytes": 18345321850, "begin": 19712, "end": 19968}
+{"at": 1788953272.644088, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 35}
+{"at": 1788953272.711335, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 18345321850, "begin": 1280, "end": 1536}
+{"at": 1788953272.739983, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 18345321850, "begin": 5376, "end": 5632}
+{"at": 1788953272.768239, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 18345321850, "begin": 9472, "end": 9728}
+{"at": 1788953272.79926, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 18345321850, "begin": 13568, "end": 13824}
+{"at": 1788953272.829777, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 18345321850, "begin": 17664, "end": 17920}
+{"at": 1788953272.86039, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 18345321850, "begin": 21760, "end": 22016}
+{"at": 1788953273.1265762, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 36}
+{"at": 1788953273.210277, "event": "attention-forward-block", "activeMetalBytes": 14199711098, "peakMetalBytes": 18345321850, "begin": 3328, "end": 3584}
+{"at": 1788953273.2402072, "event": "attention-forward-block", "activeMetalBytes": 14266819962, "peakMetalBytes": 18345321850, "begin": 7424, "end": 7680}
+{"at": 1788953273.271961, "event": "attention-forward-block", "activeMetalBytes": 14333928826, "peakMetalBytes": 18345321850, "begin": 11520, "end": 11776}
+{"at": 1788953273.3020182, "event": "attention-forward-block", "activeMetalBytes": 14401037690, "peakMetalBytes": 18345321850, "begin": 15616, "end": 15872}
+{"at": 1788953273.331745, "event": "attention-forward-block", "activeMetalBytes": 14468146554, "peakMetalBytes": 18345321850, "begin": 19712, "end": 19968}
+{"at": 1788953273.623383, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 37}
+{"at": 1788953273.6906822, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 18345321850, "begin": 1280, "end": 1536}
+{"at": 1788953273.720285, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 18345321850, "begin": 5376, "end": 5632}
+{"at": 1788953273.752074, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 18345321850, "begin": 9472, "end": 9728}
+{"at": 1788953273.7852979, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 18345321850, "begin": 13568, "end": 13824}
+{"at": 1788953273.817514, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 18345321850, "begin": 17664, "end": 17920}
+{"at": 1788953273.8452768, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 18345321850, "begin": 21760, "end": 22016}
+{"at": 1788953274.117673, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 38}
+{"at": 1788953274.200705, "event": "attention-forward-block", "activeMetalBytes": 14199711098, "peakMetalBytes": 18345321850, "begin": 3328, "end": 3584}
+{"at": 1788953274.230392, "event": "attention-forward-block", "activeMetalBytes": 14266819962, "peakMetalBytes": 18345321850, "begin": 7424, "end": 7680}
+{"at": 1788953274.261672, "event": "attention-forward-block", "activeMetalBytes": 14333928826, "peakMetalBytes": 18345321850, "begin": 11520, "end": 11776}
+{"at": 1788953274.291432, "event": "attention-forward-block", "activeMetalBytes": 14401037690, "peakMetalBytes": 18345321850, "begin": 15616, "end": 15872}
+{"at": 1788953274.317783, "event": "attention-forward-block", "activeMetalBytes": 14468146554, "peakMetalBytes": 18345321850, "begin": 19712, "end": 19968}
+{"at": 1788953274.608802, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 39}
+{"at": 1788953274.677033, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 18345321850, "begin": 1280, "end": 1536}
+{"at": 1788953274.710198, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 18345321850, "begin": 5376, "end": 5632}
+{"at": 1788953274.7408981, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 18345321850, "begin": 9472, "end": 9728}
+{"at": 1788953274.771373, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 18345321850, "begin": 13568, "end": 13824}
+{"at": 1788953274.7997582, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 18345321850, "begin": 17664, "end": 17920}
+{"at": 1788953274.826455, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 18345321850, "begin": 21760, "end": 22016}
+{"at": 1788953275.099383, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 40}
+{"at": 1788953275.2122471, "event": "attention-forward-block", "activeMetalBytes": 14393763194, "peakMetalBytes": 18345321850, "begin": 3328, "end": 3584}
+{"at": 1788953275.324458, "event": "attention-forward-block", "activeMetalBytes": 14527980922, "peakMetalBytes": 18345321850, "begin": 7424, "end": 7680}
+{"at": 1788953275.4853492, "event": "attention-forward-block", "activeMetalBytes": 14662198650, "peakMetalBytes": 18345321850, "begin": 11520, "end": 11776}
+{"at": 1788953275.690284, "event": "attention-forward-block", "activeMetalBytes": 14796416378, "peakMetalBytes": 18345321850, "begin": 15616, "end": 15872}
+{"at": 1788953275.944052, "event": "attention-forward-block", "activeMetalBytes": 14930634106, "peakMetalBytes": 18345321850, "begin": 19712, "end": 19968}
+{"at": 1788953276.3684092, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 41}
+{"at": 1788953276.444353, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 18345321850, "begin": 1280, "end": 1536}
+{"at": 1788953276.481718, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 18345321850, "begin": 5376, "end": 5632}
+{"at": 1788953276.520001, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 18345321850, "begin": 9472, "end": 9728}
+{"at": 1788953276.557374, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 18345321850, "begin": 13568, "end": 13824}
+{"at": 1788953276.590192, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 18345321850, "begin": 17664, "end": 17920}
+{"at": 1788953276.620745, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 18345321850, "begin": 21760, "end": 22016}
+{"at": 1788953276.89307, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 42}
+{"at": 1788953276.984329, "event": "attention-forward-block", "activeMetalBytes": 14199711098, "peakMetalBytes": 18345321850, "begin": 3328, "end": 3584}
+{"at": 1788953277.017706, "event": "attention-forward-block", "activeMetalBytes": 14266819962, "peakMetalBytes": 18345321850, "begin": 7424, "end": 7680}
+{"at": 1788953277.05135, "event": "attention-forward-block", "activeMetalBytes": 14333928826, "peakMetalBytes": 18345321850, "begin": 11520, "end": 11776}
+{"at": 1788953277.082685, "event": "attention-forward-block", "activeMetalBytes": 14401037690, "peakMetalBytes": 18345321850, "begin": 15616, "end": 15872}
+{"at": 1788953277.111062, "event": "attention-forward-block", "activeMetalBytes": 14468146554, "peakMetalBytes": 18345321850, "begin": 19712, "end": 19968}
+{"at": 1788953277.4079192, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 43}
+{"at": 1788953277.48116, "event": "attention-forward-block", "activeMetalBytes": 14166156666, "peakMetalBytes": 18345321850, "begin": 1280, "end": 1536}
+{"at": 1788953277.516072, "event": "attention-forward-block", "activeMetalBytes": 14233265530, "peakMetalBytes": 18345321850, "begin": 5376, "end": 5632}
+{"at": 1788953277.5489259, "event": "attention-forward-block", "activeMetalBytes": 14300374394, "peakMetalBytes": 18345321850, "begin": 9472, "end": 9728}
+{"at": 1788953277.582381, "event": "attention-forward-block", "activeMetalBytes": 14367483258, "peakMetalBytes": 18345321850, "begin": 13568, "end": 13824}
+{"at": 1788953277.616508, "event": "attention-forward-block", "activeMetalBytes": 14434592122, "peakMetalBytes": 18345321850, "begin": 17664, "end": 17920}
+{"at": 1788953277.650697, "event": "attention-forward-block", "activeMetalBytes": 14501700986, "peakMetalBytes": 18345321850, "begin": 21760, "end": 22016}
+{"at": 1788953277.92711, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 44}
+{"at": 1788953278.016261, "event": "attention-forward-block", "activeMetalBytes": 14199711098, "peakMetalBytes": 18345321850, "begin": 3328, "end": 3584}
+{"at": 1788953278.048895, "event": "attention-forward-block", "activeMetalBytes": 14266819962, "peakMetalBytes": 18345321850, "begin": 7424, "end": 7680}
+{"at": 1788953278.081833, "event": "attention-forward-block", "activeMetalBytes": 14333928826, "peakMetalBytes": 18345321850, "begin": 11520, "end": 11776}
+{"at": 1788953278.110902, "event": "attention-forward-block", "activeMetalBytes": 14401037690, "peakMetalBytes": 18345321850, "begin": 15616, "end": 15872}
+{"at": 1788953278.140338, "event": "attention-forward-block", "activeMetalBytes": 14468146554, "peakMetalBytes": 18345321850, "begin": 19712, "end": 19968}
+{"at": 1788953278.431411, "event": "frozen-layer", "activeMetalBytes": 12889105786, "peakMetalBytes": 18345321850, "layer": 45}
+{"at": 1788953278.5339892, "event": "attention-forward-block", "activeMetalBytes": 14166062010, "peakMetalBytes": 18345321850, "begin": 1280, "end": 1536}
+{"at": 1788953278.5647318, "event": "attention-forward-block", "activeMetalBytes": 14233170874, "peakMetalBytes": 18345321850, "begin": 5376, "end": 5632}
+{"at": 1788953278.595912, "event": "attention-forward-block", "activeMetalBytes": 14300279738, "peakMetalBytes": 18345321850, "begin": 9472, "end": 9728}
+{"at": 1788953278.6261702, "event": "attention-forward-block", "activeMetalBytes": 14367388602, "peakMetalBytes": 18345321850, "begin": 13568, "end": 13824}
+{"at": 1788953278.6571, "event": "attention-forward-block", "activeMetalBytes": 14434497466, "peakMetalBytes": 18345321850, "begin": 17664, "end": 17920}
+{"at": 1788953278.690515, "event": "attention-forward-block", "activeMetalBytes": 14501606330, "peakMetalBytes": 18345321850, "begin": 21760, "end": 22016}
+{"at": 1788953278.840551, "event": "mlp-forward-block", "activeMetalBytes": 13437318074, "peakMetalBytes": 18345321850, "begin": 3584, "end": 3840}
+{"at": 1788953278.9074109, "event": "mlp-forward-block", "activeMetalBytes": 13472707514, "peakMetalBytes": 18345321850, "begin": 7680, "end": 7936}
+{"at": 1788953278.97459, "event": "mlp-forward-block", "activeMetalBytes": 13500232634, "peakMetalBytes": 18345321850, "begin": 11776, "end": 12032}
+{"at": 1788953279.044213, "event": "mlp-forward-block", "activeMetalBytes": 13531689914, "peakMetalBytes": 18345321850, "begin": 15872, "end": 16128}
+{"at": 1788953279.1129541, "event": "mlp-forward-block", "activeMetalBytes": 13563147194, "peakMetalBytes": 18345321850, "begin": 19968, "end": 20224}
+{"at": 1788953279.282502, "event": "attention-forward-block", "activeMetalBytes": 14512518074, "peakMetalBytes": 18345321850, "begin": 1792, "end": 2048}
+{"at": 1788953279.377007, "event": "attention-forward-block", "activeMetalBytes": 14646735802, "peakMetalBytes": 18345321850, "begin": 5888, "end": 6144}
+{"at": 1788953279.526498, "event": "attention-forward-block", "activeMetalBytes": 14780953530, "peakMetalBytes": 18345321850, "begin": 9984, "end": 10240}
+{"at": 1788953279.7211242, "event": "attention-forward-block", "activeMetalBytes": 14915171258, "peakMetalBytes": 18345321850, "begin": 14080, "end": 14336}
+{"at": 1788953279.9620538, "event": "attention-forward-block", "activeMetalBytes": 15049388986, "peakMetalBytes": 18345321850, "begin": 18176, "end": 18432}
+{"at": 1788953280.360095, "event": "mlp-forward-block", "activeMetalBytes": 13443642298, "peakMetalBytes": 18345321850, "begin": 0, "end": 256}
+{"at": 1788953280.428443, "event": "mlp-forward-block", "activeMetalBytes": 13475099578, "peakMetalBytes": 18345321850, "begin": 4096, "end": 4352}
+{"at": 1788953280.4953449, "event": "mlp-forward-block", "activeMetalBytes": 13506556858, "peakMetalBytes": 18345321850, "begin": 8192, "end": 8448}
+{"at": 1788953280.562437, "event": "mlp-forward-block", "activeMetalBytes": 13538014138, "peakMetalBytes": 18345321850, "begin": 12288, "end": 12544}
+{"at": 1788953280.6323252, "event": "mlp-forward-block", "activeMetalBytes": 13569471418, "peakMetalBytes": 18345321850, "begin": 16384, "end": 16640}
+{"at": 1788953280.701659, "event": "mlp-forward-block", "activeMetalBytes": 13600928698, "peakMetalBytes": 18345321850, "begin": 20480, "end": 20736}
+{"at": 1788953281.0084841, "event": "loss-backward-block", "activeMetalBytes": 15014049238, "peakMetalBytes": 18345321850, "begin": 128, "end": 256}
+{"at": 1788953281.638303, "event": "attention-forward-block", "activeMetalBytes": 18138969036, "peakMetalBytes": 18345321850, "begin": 2304, "end": 2560}
+{"at": 1788953281.816077, "event": "attention-forward-block", "activeMetalBytes": 18273186764, "peakMetalBytes": 18618823636, "begin": 6400, "end": 6656}
+{"at": 1788953282.1301289, "event": "attention-forward-block", "activeMetalBytes": 18407404492, "peakMetalBytes": 18955416532, "begin": 10496, "end": 10752}
+{"at": 1788953282.581383, "event": "attention-forward-block", "activeMetalBytes": 18541622220, "peakMetalBytes": 19317241812, "begin": 14592, "end": 14848}
+{"at": 1788953283.17491, "event": "attention-forward-block", "activeMetalBytes": 18675839948, "peakMetalBytes": 19662239700, "begin": 18688, "end": 18944}
+{"at": 1788953283.850341, "event": "mlp-forward-block", "activeMetalBytes": 21918823376, "peakMetalBytes": 22381638618, "begin": 512, "end": 768}
+{"at": 1788953283.9417999, "event": "mlp-forward-block", "activeMetalBytes": 21950280656, "peakMetalBytes": 22381638618, "begin": 4608, "end": 4864}
+{"at": 1788953284.036017, "event": "mlp-forward-block", "activeMetalBytes": 21981737936, "peakMetalBytes": 22381638618, "begin": 8704, "end": 8960}
+{"at": 1788953284.1308002, "event": "mlp-forward-block", "activeMetalBytes": 22013195216, "peakMetalBytes": 22381638618, "begin": 12800, "end": 13056}
+{"at": 1788953284.226422, "event": "mlp-forward-block", "activeMetalBytes": 22044652496, "peakMetalBytes": 22381638618, "begin": 16896, "end": 17152}
+{"at": 1788953284.322625, "event": "mlp-forward-block", "activeMetalBytes": 22076109776, "peakMetalBytes": 22381638618, "begin": 20992, "end": 21248}
+{"at": 1788953284.523885, "event": "mlp-backward-block", "activeMetalBytes": 22870807006, "peakMetalBytes": 22874739166, "begin": 2816, "end": 3072}
+{"at": 1788953284.7371252, "event": "mlp-backward-block", "activeMetalBytes": 22965178846, "peakMetalBytes": 22969111006, "begin": 6912, "end": 7168}
+{"at": 1788953284.9545898, "event": "mlp-backward-block", "activeMetalBytes": 23059550686, "peakMetalBytes": 23063482846, "begin": 11008, "end": 11264}
+{"at": 1788953285.1817658, "event": "mlp-backward-block", "activeMetalBytes": 23153922526, "peakMetalBytes": 23157854686, "begin": 15104, "end": 15360}
+{"at": 1788953285.3994539, "event": "mlp-backward-block", "activeMetalBytes": 23248294366, "peakMetalBytes": 23252226526, "begin": 19200, "end": 19456}
+{"at": 1788953285.866153, "event": "attention-backward-block", "activeMetalBytes": 26940901328, "peakMetalBytes": 27412907996, "begin": 1024, "end": 1280}
+{"at": 1788953286.479511, "event": "attention-backward-block", "activeMetalBytes": 27076195280, "peakMetalBytes": 28454171612, "begin": 5120, "end": 5376}
+{"at": 1788953287.601086, "event": "attention-backward-block", "activeMetalBytes": 27211477968, "peakMetalBytes": 29495423964, "begin": 9216, "end": 9472}
+{"at": 1788953289.2191901, "event": "attention-backward-block", "activeMetalBytes": 27346760656, "peakMetalBytes": 30536676316, "begin": 13312, "end": 13568}
+{"at": 1788953291.6332722, "event": "attention-backward-block", "activeMetalBytes": 27482043344, "peakMetalBytes": 31577928668, "begin": 17408, "end": 17664}
+{"at": 1788953294.75194, "event": "attention-backward-block", "activeMetalBytes": 27617326032, "peakMetalBytes": 32619181020, "begin": 21504, "end": 21760}
+{"at": 1788953296.274893, "event": "attention-forward-block", "activeMetalBytes": 16757093324, "peakMetalBytes": 32684258268, "begin": 3072, "end": 3328}
+{"at": 1788953296.289171, "event": "attention-forward-block", "activeMetalBytes": 16824202188, "peakMetalBytes": 32684258268, "begin": 7168, "end": 7424}
+{"at": 1788953296.3043451, "event": "attention-forward-block", "activeMetalBytes": 16891311052, "peakMetalBytes": 32684258268, "begin": 11264, "end": 11520}
+{"at": 1788953296.319251, "event": "attention-forward-block", "activeMetalBytes": 16958419916, "peakMetalBytes": 32684258268, "begin": 15360, "end": 15616}
+{"at": 1788953296.334176, "event": "attention-forward-block", "activeMetalBytes": 17025528780, "peakMetalBytes": 32684258268, "begin": 19456, "end": 19712}
+{"at": 1788953296.449116, "event": "mlp-forward-block", "activeMetalBytes": 19493499856, "peakMetalBytes": 32684258268, "begin": 1280, "end": 1536}
+{"at": 1788953296.502775, "event": "mlp-forward-block", "activeMetalBytes": 19521024976, "peakMetalBytes": 32684258268, "begin": 5376, "end": 5632}
+{"at": 1788953296.555032, "event": "mlp-forward-block", "activeMetalBytes": 19556414416, "peakMetalBytes": 32684258268, "begin": 9472, "end": 9728}
+{"at": 1788953296.607279, "event": "mlp-forward-block", "activeMetalBytes": 19583939536, "peakMetalBytes": 32684258268, "begin": 13568, "end": 13824}
+{"at": 1788953296.660206, "event": "mlp-forward-block", "activeMetalBytes": 19615396816, "peakMetalBytes": 32684258268, "begin": 17664, "end": 17920}
+{"at": 1788953296.7122738, "event": "mlp-forward-block", "activeMetalBytes": 19646854096, "peakMetalBytes": 32684258268, "begin": 21760, "end": 22016}
+{"at": 1788953296.8958259, "event": "mlp-backward-block", "activeMetalBytes": 20453351500, "peakMetalBytes": 32684258268, "begin": 3584, "end": 3840}
+{"at": 1788953297.079479, "event": "mlp-backward-block", "activeMetalBytes": 20547723340, "peakMetalBytes": 32684258268, "begin": 7680, "end": 7936}
+{"at": 1788953297.261587, "event": "mlp-backward-block", "activeMetalBytes": 20642095180, "peakMetalBytes": 32684258268, "begin": 11776, "end": 12032}
+{"at": 1788953297.466549, "event": "mlp-backward-block", "activeMetalBytes": 20736467020, "peakMetalBytes": 32684258268, "begin": 15872, "end": 16128}
+{"at": 1788953297.646133, "event": "mlp-backward-block", "activeMetalBytes": 20830838860, "peakMetalBytes": 32684258268, "begin": 19968, "end": 20224}
+{"at": 1788953298.498535, "event": "attention-backward-block", "activeMetalBytes": 23505587152, "peakMetalBytes": 32684258268, "begin": 1792, "end": 2048}
+{"at": 1788953299.776565, "event": "attention-backward-block", "activeMetalBytes": 23572696016, "peakMetalBytes": 32684258268, "begin": 5888, "end": 6144}
+{"at": 1788953301.101521, "event": "attention-backward-block", "activeMetalBytes": 23639804880, "peakMetalBytes": 32684258268, "begin": 9984, "end": 10240}
+{"at": 1788953302.3988621, "event": "attention-backward-block", "activeMetalBytes": 23706913744, "peakMetalBytes": 32684258268, "begin": 14080, "end": 14336}
+{"at": 1788953303.706295, "event": "attention-backward-block", "activeMetalBytes": 23774022608, "peakMetalBytes": 32684258268, "begin": 18176, "end": 18432}
+{"at": 1788953305.159494, "event": "tail-layer-backward", "activeMetalBytes": 13397865406, "peakMetalBytes": 32684258268, "layer": 46}
+{"at": 1788953305.299625, "event": "attention-forward-block", "activeMetalBytes": 14385669498, "peakMetalBytes": 14635774352, "begin": 3840, "end": 4096}
+{"at": 1788953305.3153229, "event": "attention-forward-block", "activeMetalBytes": 14452778362, "peakMetalBytes": 14635774352, "begin": 7936, "end": 8192}
+{"at": 1788953305.3310232, "event": "attention-forward-block", "activeMetalBytes": 14519887226, "peakMetalBytes": 14635774352, "begin": 12032, "end": 12288}
+{"at": 1788953305.347981, "event": "attention-forward-block", "activeMetalBytes": 14586996090, "peakMetalBytes": 14635774352, "begin": 16128, "end": 16384}
+{"at": 1788953305.3652952, "event": "attention-forward-block", "activeMetalBytes": 14654104954, "peakMetalBytes": 14679916930, "begin": 20224, "end": 20480}
+{"at": 1788953305.3819149, "event": "attention-forward-block", "activeMetalBytes": 14721213818, "peakMetalBytes": 14747025794, "begin": 24320, "end": 24576}
+{"at": 1788953305.642254, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 17631356282, "layer": 0}
+{"at": 1788953305.7206469, "event": "attention-forward-block", "activeMetalBytes": 14377280890, "peakMetalBytes": 17631356282, "begin": 3328, "end": 3584}
+{"at": 1788953305.735805, "event": "attention-forward-block", "activeMetalBytes": 14444389754, "peakMetalBytes": 17631356282, "begin": 7424, "end": 7680}
+{"at": 1788953305.752811, "event": "attention-forward-block", "activeMetalBytes": 14511498618, "peakMetalBytes": 17631356282, "begin": 11520, "end": 11776}
+{"at": 1788953305.76915, "event": "attention-forward-block", "activeMetalBytes": 14578607482, "peakMetalBytes": 17631356282, "begin": 15616, "end": 15872}
+{"at": 1788953305.784872, "event": "attention-forward-block", "activeMetalBytes": 14645716346, "peakMetalBytes": 17631356282, "begin": 19712, "end": 19968}
+{"at": 1788953305.800521, "event": "attention-forward-block", "activeMetalBytes": 14712825210, "peakMetalBytes": 17631356282, "begin": 23808, "end": 24064}
+{"at": 1788953306.087117, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 17631356282, "layer": 1}
+{"at": 1788953306.175006, "event": "attention-forward-block", "activeMetalBytes": 14368892282, "peakMetalBytes": 17631356282, "begin": 2816, "end": 3072}
+{"at": 1788953306.193835, "event": "attention-forward-block", "activeMetalBytes": 14436001146, "peakMetalBytes": 17631356282, "begin": 6912, "end": 7168}
+{"at": 1788953306.214893, "event": "attention-forward-block", "activeMetalBytes": 14503110010, "peakMetalBytes": 17631356282, "begin": 11008, "end": 11264}
+{"at": 1788953306.234535, "event": "attention-forward-block", "activeMetalBytes": 14570218874, "peakMetalBytes": 17631356282, "begin": 15104, "end": 15360}
+{"at": 1788953306.257472, "event": "attention-forward-block", "activeMetalBytes": 14637327738, "peakMetalBytes": 17631356282, "begin": 19200, "end": 19456}
+{"at": 1788953306.276244, "event": "attention-forward-block", "activeMetalBytes": 14704436602, "peakMetalBytes": 17631356282, "begin": 23296, "end": 23552}
+{"at": 1788953306.618755, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 17631356282, "layer": 2}
+{"at": 1788953306.709877, "event": "attention-forward-block", "activeMetalBytes": 14360503674, "peakMetalBytes": 17631356282, "begin": 2304, "end": 2560}
+{"at": 1788953306.731539, "event": "attention-forward-block", "activeMetalBytes": 14427612538, "peakMetalBytes": 17631356282, "begin": 6400, "end": 6656}
+{"at": 1788953306.7542021, "event": "attention-forward-block", "activeMetalBytes": 14494721402, "peakMetalBytes": 17631356282, "begin": 10496, "end": 10752}
+{"at": 1788953306.777708, "event": "attention-forward-block", "activeMetalBytes": 14561830266, "peakMetalBytes": 17631356282, "begin": 14592, "end": 14848}
+{"at": 1788953306.799695, "event": "attention-forward-block", "activeMetalBytes": 14628939130, "peakMetalBytes": 17631356282, "begin": 18688, "end": 18944}
+{"at": 1788953306.821407, "event": "attention-forward-block", "activeMetalBytes": 14696047994, "peakMetalBytes": 17631356282, "begin": 22784, "end": 23040}
+{"at": 1788953307.1636438, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 17631356282, "layer": 3}
+{"at": 1788953307.261429, "event": "attention-forward-block", "activeMetalBytes": 14352115066, "peakMetalBytes": 17631356282, "begin": 1792, "end": 2048}
+{"at": 1788953307.284828, "event": "attention-forward-block", "activeMetalBytes": 14419223930, "peakMetalBytes": 17631356282, "begin": 5888, "end": 6144}
+{"at": 1788953307.3071449, "event": "attention-forward-block", "activeMetalBytes": 14486332794, "peakMetalBytes": 17631356282, "begin": 9984, "end": 10240}
+{"at": 1788953307.329619, "event": "attention-forward-block", "activeMetalBytes": 14553441658, "peakMetalBytes": 17631356282, "begin": 14080, "end": 14336}
+{"at": 1788953307.352017, "event": "attention-forward-block", "activeMetalBytes": 14620550522, "peakMetalBytes": 17631356282, "begin": 18176, "end": 18432}
+{"at": 1788953307.375037, "event": "attention-forward-block", "activeMetalBytes": 14687659386, "peakMetalBytes": 17631356282, "begin": 22272, "end": 22528}
+{"at": 1788953307.6936471, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 17631356282, "layer": 4}
+{"at": 1788953307.792167, "event": "attention-forward-block", "activeMetalBytes": 14521165178, "peakMetalBytes": 17631356282, "begin": 1280, "end": 1536}
+{"at": 1788953307.8819468, "event": "attention-forward-block", "activeMetalBytes": 14655382906, "peakMetalBytes": 17631356282, "begin": 5376, "end": 5632}
+{"at": 1788953308.042382, "event": "attention-forward-block", "activeMetalBytes": 14789600634, "peakMetalBytes": 17631356282, "begin": 9472, "end": 9728}
+{"at": 1788953308.272822, "event": "attention-forward-block", "activeMetalBytes": 14923818362, "peakMetalBytes": 17631356282, "begin": 13568, "end": 13824}
+{"at": 1788953308.548409, "event": "attention-forward-block", "activeMetalBytes": 15058036090, "peakMetalBytes": 17631356282, "begin": 17664, "end": 17920}
+{"at": 1788953308.854272, "event": "attention-forward-block", "activeMetalBytes": 15192253818, "peakMetalBytes": 17631356282, "begin": 21760, "end": 22016}
+{"at": 1788953309.627411, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19005384058, "layer": 5}
+{"at": 1788953309.7017941, "event": "attention-forward-block", "activeMetalBytes": 14335337850, "peakMetalBytes": 19005384058, "begin": 768, "end": 1024}
+{"at": 1788953309.728815, "event": "attention-forward-block", "activeMetalBytes": 14402446714, "peakMetalBytes": 19005384058, "begin": 4864, "end": 5120}
+{"at": 1788953309.757015, "event": "attention-forward-block", "activeMetalBytes": 14469555578, "peakMetalBytes": 19005384058, "begin": 8960, "end": 9216}
+{"at": 1788953309.784933, "event": "attention-forward-block", "activeMetalBytes": 14536664442, "peakMetalBytes": 19005384058, "begin": 13056, "end": 13312}
+{"at": 1788953309.813337, "event": "attention-forward-block", "activeMetalBytes": 14603773306, "peakMetalBytes": 19005384058, "begin": 17152, "end": 17408}
+{"at": 1788953309.840631, "event": "attention-forward-block", "activeMetalBytes": 14670882170, "peakMetalBytes": 19005384058, "begin": 21248, "end": 21504}
+{"at": 1788953310.134099, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19005384058, "layer": 6}
+{"at": 1788953310.20158, "event": "attention-forward-block", "activeMetalBytes": 14326949242, "peakMetalBytes": 19005384058, "begin": 256, "end": 512}
+{"at": 1788953310.2277849, "event": "attention-forward-block", "activeMetalBytes": 14394058106, "peakMetalBytes": 19005384058, "begin": 4352, "end": 4608}
+{"at": 1788953310.252784, "event": "attention-forward-block", "activeMetalBytes": 14461166970, "peakMetalBytes": 19005384058, "begin": 8448, "end": 8704}
+{"at": 1788953310.2791731, "event": "attention-forward-block", "activeMetalBytes": 14528275834, "peakMetalBytes": 19005384058, "begin": 12544, "end": 12800}
+{"at": 1788953310.3052511, "event": "attention-forward-block", "activeMetalBytes": 14595384698, "peakMetalBytes": 19005384058, "begin": 16640, "end": 16896}
+{"at": 1788953310.3328378, "event": "attention-forward-block", "activeMetalBytes": 14662493562, "peakMetalBytes": 19005384058, "begin": 20736, "end": 20992}
+{"at": 1788953310.633445, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19005384058, "layer": 7}
+{"at": 1788953310.7289321, "event": "attention-forward-block", "activeMetalBytes": 14385669498, "peakMetalBytes": 19005384058, "begin": 3840, "end": 4096}
+{"at": 1788953310.755358, "event": "attention-forward-block", "activeMetalBytes": 14452778362, "peakMetalBytes": 19005384058, "begin": 7936, "end": 8192}
+{"at": 1788953310.782212, "event": "attention-forward-block", "activeMetalBytes": 14519887226, "peakMetalBytes": 19005384058, "begin": 12032, "end": 12288}
+{"at": 1788953310.81142, "event": "attention-forward-block", "activeMetalBytes": 14586996090, "peakMetalBytes": 19005384058, "begin": 16128, "end": 16384}
+{"at": 1788953310.839082, "event": "attention-forward-block", "activeMetalBytes": 14654104954, "peakMetalBytes": 19005384058, "begin": 20224, "end": 20480}
+{"at": 1788953310.866712, "event": "attention-forward-block", "activeMetalBytes": 14721213818, "peakMetalBytes": 19005384058, "begin": 24320, "end": 24576}
+{"at": 1788953311.1498518, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19005384058, "layer": 8}
+{"at": 1788953311.234698, "event": "attention-forward-block", "activeMetalBytes": 14377280890, "peakMetalBytes": 19005384058, "begin": 3328, "end": 3584}
+{"at": 1788953311.259952, "event": "attention-forward-block", "activeMetalBytes": 14444389754, "peakMetalBytes": 19005384058, "begin": 7424, "end": 7680}
+{"at": 1788953311.286653, "event": "attention-forward-block", "activeMetalBytes": 14511498618, "peakMetalBytes": 19005384058, "begin": 11520, "end": 11776}
+{"at": 1788953311.314105, "event": "attention-forward-block", "activeMetalBytes": 14578607482, "peakMetalBytes": 19005384058, "begin": 15616, "end": 15872}
+{"at": 1788953311.342688, "event": "attention-forward-block", "activeMetalBytes": 14645716346, "peakMetalBytes": 19005384058, "begin": 19712, "end": 19968}
+{"at": 1788953311.369772, "event": "attention-forward-block", "activeMetalBytes": 14712825210, "peakMetalBytes": 19005384058, "begin": 23808, "end": 24064}
+{"at": 1788953311.6583, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19005384058, "layer": 9}
+{"at": 1788953311.744297, "event": "attention-forward-block", "activeMetalBytes": 14368892282, "peakMetalBytes": 19005384058, "begin": 2816, "end": 3072}
+{"at": 1788953311.7697148, "event": "attention-forward-block", "activeMetalBytes": 14436001146, "peakMetalBytes": 19005384058, "begin": 6912, "end": 7168}
+{"at": 1788953311.7968159, "event": "attention-forward-block", "activeMetalBytes": 14503110010, "peakMetalBytes": 19005384058, "begin": 11008, "end": 11264}
+{"at": 1788953311.823843, "event": "attention-forward-block", "activeMetalBytes": 14570218874, "peakMetalBytes": 19005384058, "begin": 15104, "end": 15360}
+{"at": 1788953311.851766, "event": "attention-forward-block", "activeMetalBytes": 14637327738, "peakMetalBytes": 19005384058, "begin": 19200, "end": 19456}
+{"at": 1788953311.879936, "event": "attention-forward-block", "activeMetalBytes": 14704436602, "peakMetalBytes": 19005384058, "begin": 23296, "end": 23552}
+{"at": 1788953312.177863, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19005384058, "layer": 10}
+{"at": 1788953312.278635, "event": "attention-forward-block", "activeMetalBytes": 14554719610, "peakMetalBytes": 19005384058, "begin": 2304, "end": 2560}
+{"at": 1788953312.370663, "event": "attention-forward-block", "activeMetalBytes": 14688937338, "peakMetalBytes": 19005384058, "begin": 6400, "end": 6656}
+{"at": 1788953312.5331368, "event": "attention-forward-block", "activeMetalBytes": 14823155066, "peakMetalBytes": 19005384058, "begin": 10496, "end": 10752}
+{"at": 1788953312.73496, "event": "attention-forward-block", "activeMetalBytes": 14957372794, "peakMetalBytes": 19005384058, "begin": 14592, "end": 14848}
+{"at": 1788953312.9988081, "event": "attention-forward-block", "activeMetalBytes": 15091590522, "peakMetalBytes": 19005384058, "begin": 18688, "end": 18944}
+{"at": 1788953313.3196669, "event": "attention-forward-block", "activeMetalBytes": 15225808250, "peakMetalBytes": 19005384058, "begin": 22784, "end": 23040}
+{"at": 1788953313.778795, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19013772666, "layer": 11}
+{"at": 1788953313.854999, "event": "attention-forward-block", "activeMetalBytes": 14352115066, "peakMetalBytes": 19013772666, "begin": 1792, "end": 2048}
+{"at": 1788953313.881161, "event": "attention-forward-block", "activeMetalBytes": 14419223930, "peakMetalBytes": 19013772666, "begin": 5888, "end": 6144}
+{"at": 1788953313.906832, "event": "attention-forward-block", "activeMetalBytes": 14486332794, "peakMetalBytes": 19013772666, "begin": 9984, "end": 10240}
+{"at": 1788953313.933333, "event": "attention-forward-block", "activeMetalBytes": 14553441658, "peakMetalBytes": 19013772666, "begin": 14080, "end": 14336}
+{"at": 1788953313.9599512, "event": "attention-forward-block", "activeMetalBytes": 14620550522, "peakMetalBytes": 19013772666, "begin": 18176, "end": 18432}
+{"at": 1788953313.9874518, "event": "attention-forward-block", "activeMetalBytes": 14687659386, "peakMetalBytes": 19013772666, "begin": 22272, "end": 22528}
+{"at": 1788953314.2929149, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19013772666, "layer": 12}
+{"at": 1788953314.3677068, "event": "attention-forward-block", "activeMetalBytes": 14343726458, "peakMetalBytes": 19013772666, "begin": 1280, "end": 1536}
+{"at": 1788953314.39467, "event": "attention-forward-block", "activeMetalBytes": 14410835322, "peakMetalBytes": 19013772666, "begin": 5376, "end": 5632}
+{"at": 1788953314.420623, "event": "attention-forward-block", "activeMetalBytes": 14477944186, "peakMetalBytes": 19013772666, "begin": 9472, "end": 9728}
+{"at": 1788953314.447217, "event": "attention-forward-block", "activeMetalBytes": 14545053050, "peakMetalBytes": 19013772666, "begin": 13568, "end": 13824}
+{"at": 1788953314.476654, "event": "attention-forward-block", "activeMetalBytes": 14612161914, "peakMetalBytes": 19013772666, "begin": 17664, "end": 17920}
+{"at": 1788953314.5056388, "event": "attention-forward-block", "activeMetalBytes": 14679270778, "peakMetalBytes": 19013772666, "begin": 21760, "end": 22016}
+{"at": 1788953314.8182132, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19013772666, "layer": 13}
+{"at": 1788953314.902699, "event": "attention-forward-block", "activeMetalBytes": 14335337850, "peakMetalBytes": 19013772666, "begin": 768, "end": 1024}
+{"at": 1788953314.9302452, "event": "attention-forward-block", "activeMetalBytes": 14402446714, "peakMetalBytes": 19013772666, "begin": 4864, "end": 5120}
+{"at": 1788953314.956466, "event": "attention-forward-block", "activeMetalBytes": 14469555578, "peakMetalBytes": 19013772666, "begin": 8960, "end": 9216}
+{"at": 1788953314.9836092, "event": "attention-forward-block", "activeMetalBytes": 14536664442, "peakMetalBytes": 19013772666, "begin": 13056, "end": 13312}
+{"at": 1788953315.010408, "event": "attention-forward-block", "activeMetalBytes": 14603773306, "peakMetalBytes": 19013772666, "begin": 17152, "end": 17408}
+{"at": 1788953315.038572, "event": "attention-forward-block", "activeMetalBytes": 14670882170, "peakMetalBytes": 19013772666, "begin": 21248, "end": 21504}
+{"at": 1788953315.3572748, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19013772666, "layer": 14}
+{"at": 1788953315.4189749, "event": "attention-forward-block", "activeMetalBytes": 14326949242, "peakMetalBytes": 19013772666, "begin": 256, "end": 512}
+{"at": 1788953315.4466949, "event": "attention-forward-block", "activeMetalBytes": 14394058106, "peakMetalBytes": 19013772666, "begin": 4352, "end": 4608}
+{"at": 1788953315.47385, "event": "attention-forward-block", "activeMetalBytes": 14461166970, "peakMetalBytes": 19013772666, "begin": 8448, "end": 8704}
+{"at": 1788953315.5009658, "event": "attention-forward-block", "activeMetalBytes": 14528275834, "peakMetalBytes": 19013772666, "begin": 12544, "end": 12800}
+{"at": 1788953315.531509, "event": "attention-forward-block", "activeMetalBytes": 14595384698, "peakMetalBytes": 19013772666, "begin": 16640, "end": 16896}
+{"at": 1788953315.56052, "event": "attention-forward-block", "activeMetalBytes": 14662493562, "peakMetalBytes": 19013772666, "begin": 20736, "end": 20992}
+{"at": 1788953315.876101, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19013772666, "layer": 15}
+{"at": 1788953315.960254, "event": "attention-forward-block", "activeMetalBytes": 14385669498, "peakMetalBytes": 19013772666, "begin": 3840, "end": 4096}
+{"at": 1788953315.9865458, "event": "attention-forward-block", "activeMetalBytes": 14452778362, "peakMetalBytes": 19013772666, "begin": 7936, "end": 8192}
+{"at": 1788953316.015272, "event": "attention-forward-block", "activeMetalBytes": 14519887226, "peakMetalBytes": 19013772666, "begin": 12032, "end": 12288}
+{"at": 1788953316.0439801, "event": "attention-forward-block", "activeMetalBytes": 14586996090, "peakMetalBytes": 19013772666, "begin": 16128, "end": 16384}
+{"at": 1788953316.07184, "event": "attention-forward-block", "activeMetalBytes": 14654104954, "peakMetalBytes": 19013772666, "begin": 20224, "end": 20480}
+{"at": 1788953316.098835, "event": "attention-forward-block", "activeMetalBytes": 14721213818, "peakMetalBytes": 19013772666, "begin": 24320, "end": 24576}
+{"at": 1788953316.394141, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19013772666, "layer": 16}
+{"at": 1788953316.506583, "event": "attention-forward-block", "activeMetalBytes": 14588274042, "peakMetalBytes": 19013772666, "begin": 3328, "end": 3584}
+{"at": 1788953316.616787, "event": "attention-forward-block", "activeMetalBytes": 14722491770, "peakMetalBytes": 19013772666, "begin": 7424, "end": 7680}
+{"at": 1788953316.78623, "event": "attention-forward-block", "activeMetalBytes": 14856709498, "peakMetalBytes": 19013772666, "begin": 11520, "end": 11776}
+{"at": 1788953317.006759, "event": "attention-forward-block", "activeMetalBytes": 14990927226, "peakMetalBytes": 19013772666, "begin": 15616, "end": 15872}
+{"at": 1788953317.281694, "event": "attention-forward-block", "activeMetalBytes": 15125144954, "peakMetalBytes": 19013772666, "begin": 19712, "end": 19968}
+{"at": 1788953317.605555, "event": "attention-forward-block", "activeMetalBytes": 15259362682, "peakMetalBytes": 19013772666, "begin": 23808, "end": 24064}
+{"at": 1788953317.9766579, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19047327098, "layer": 17}
+{"at": 1788953318.063298, "event": "attention-forward-block", "activeMetalBytes": 14368892282, "peakMetalBytes": 19047327098, "begin": 2816, "end": 3072}
+{"at": 1788953318.089443, "event": "attention-forward-block", "activeMetalBytes": 14436001146, "peakMetalBytes": 19047327098, "begin": 6912, "end": 7168}
+{"at": 1788953318.1149719, "event": "attention-forward-block", "activeMetalBytes": 14503110010, "peakMetalBytes": 19047327098, "begin": 11008, "end": 11264}
+{"at": 1788953318.141407, "event": "attention-forward-block", "activeMetalBytes": 14570218874, "peakMetalBytes": 19047327098, "begin": 15104, "end": 15360}
+{"at": 1788953318.176404, "event": "attention-forward-block", "activeMetalBytes": 14637327738, "peakMetalBytes": 19047327098, "begin": 19200, "end": 19456}
+{"at": 1788953318.214206, "event": "attention-forward-block", "activeMetalBytes": 14704436602, "peakMetalBytes": 19047327098, "begin": 23296, "end": 23552}
+{"at": 1788953318.54446, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19047327098, "layer": 18}
+{"at": 1788953318.625918, "event": "attention-forward-block", "activeMetalBytes": 14360503674, "peakMetalBytes": 19047327098, "begin": 2304, "end": 2560}
+{"at": 1788953318.6535602, "event": "attention-forward-block", "activeMetalBytes": 14427612538, "peakMetalBytes": 19047327098, "begin": 6400, "end": 6656}
+{"at": 1788953318.68028, "event": "attention-forward-block", "activeMetalBytes": 14494721402, "peakMetalBytes": 19047327098, "begin": 10496, "end": 10752}
+{"at": 1788953318.707284, "event": "attention-forward-block", "activeMetalBytes": 14561830266, "peakMetalBytes": 19047327098, "begin": 14592, "end": 14848}
+{"at": 1788953318.7326632, "event": "attention-forward-block", "activeMetalBytes": 14628939130, "peakMetalBytes": 19047327098, "begin": 18688, "end": 18944}
+{"at": 1788953318.760053, "event": "attention-forward-block", "activeMetalBytes": 14696047994, "peakMetalBytes": 19047327098, "begin": 22784, "end": 23040}
+{"at": 1788953319.063853, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19047327098, "layer": 19}
+{"at": 1788953319.138728, "event": "attention-forward-block", "activeMetalBytes": 14352115066, "peakMetalBytes": 19047327098, "begin": 1792, "end": 2048}
+{"at": 1788953319.1649861, "event": "attention-forward-block", "activeMetalBytes": 14419223930, "peakMetalBytes": 19047327098, "begin": 5888, "end": 6144}
+{"at": 1788953319.192307, "event": "attention-forward-block", "activeMetalBytes": 14486332794, "peakMetalBytes": 19047327098, "begin": 9984, "end": 10240}
+{"at": 1788953319.2193651, "event": "attention-forward-block", "activeMetalBytes": 14553441658, "peakMetalBytes": 19047327098, "begin": 14080, "end": 14336}
+{"at": 1788953319.246644, "event": "attention-forward-block", "activeMetalBytes": 14620550522, "peakMetalBytes": 19047327098, "begin": 18176, "end": 18432}
+{"at": 1788953319.2739258, "event": "attention-forward-block", "activeMetalBytes": 14687659386, "peakMetalBytes": 19047327098, "begin": 22272, "end": 22528}
+{"at": 1788953319.5886688, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19047327098, "layer": 20}
+{"at": 1788953319.6681569, "event": "attention-forward-block", "activeMetalBytes": 14343726458, "peakMetalBytes": 19047327098, "begin": 1280, "end": 1536}
+{"at": 1788953319.694648, "event": "attention-forward-block", "activeMetalBytes": 14410835322, "peakMetalBytes": 19047327098, "begin": 5376, "end": 5632}
+{"at": 1788953319.72174, "event": "attention-forward-block", "activeMetalBytes": 14477944186, "peakMetalBytes": 19047327098, "begin": 9472, "end": 9728}
+{"at": 1788953319.7484422, "event": "attention-forward-block", "activeMetalBytes": 14545053050, "peakMetalBytes": 19047327098, "begin": 13568, "end": 13824}
+{"at": 1788953319.7756631, "event": "attention-forward-block", "activeMetalBytes": 14612161914, "peakMetalBytes": 19047327098, "begin": 17664, "end": 17920}
+{"at": 1788953319.8032398, "event": "attention-forward-block", "activeMetalBytes": 14679270778, "peakMetalBytes": 19047327098, "begin": 21760, "end": 22016}
+{"at": 1788953320.118486, "event": "frozen-layer", "activeMetalBytes": 13100574074, "peakMetalBytes": 19047327098, "layer": 21}
+{"at": 1788953320.181403, "event": "attention-forward-block", "activeMetalBytes": 14335337850, "peakMetalBytes": 19047327098, "begin": 768, "end": 1024}
+{"at": 1788953320.2089448, "event": "attention-forward-block", "activeMetalBytes": 14402446714, "peakMetalBytes": 19047327098, "begin": 4864, "end": 5120}
+{"at": 1788953320.235282, "event": "attention-forward-block", "activeMetalBytes": 14469555578, "peakMetalBytes": 19047327098, "begin": 8960, "end": 9216}
+{"at": 1788953320.2612329, "event": "attention-forward-block", "activeMetalBytes": 14536664442, "peakMetalBytes": 19047327098, "begin": 13056, "end": 13312}
+{"at": 1788953320.2876, "event": "attention-forward-block", "activeMetalBytes": 14603773306, "peakMetalBytes": 19047327098, "begin": 17152, "end": 17408}
+{"at": 1788953320.314492, "event": "attention-forward-block", "activeMetalBytes": 14670882170, "peakMetalBytes": 19047327098, "begin": 21248, "end": 21504}
+{"at": 1788953320.634288, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19047327098, "layer": 22}
+{"at": 1788953320.710849, "event": "attention-forward-block", "activeMetalBytes": 14487610746, "peakMetalBytes": 19047327098, "begin": 256, "end": 512}
+{"at": 1788953320.770667, "event": "attention-forward-block", "activeMetalBytes": 14621828474, "peakMetalBytes": 19047327098, "begin": 4352, "end": 4608}
+{"at": 1788953320.896136, "event": "attention-forward-block", "activeMetalBytes": 14756046202, "peakMetalBytes": 19047327098, "begin": 8448, "end": 8704}
+{"at": 1788953321.079815, "event": "attention-forward-block", "activeMetalBytes": 14890263930, "peakMetalBytes": 19047327098, "begin": 12544, "end": 12800}
+{"at": 1788953321.320707, "event": "attention-forward-block", "activeMetalBytes": 15024481658, "peakMetalBytes": 19047327098, "begin": 16640, "end": 16896}
+{"at": 1788953321.606478, "event": "attention-forward-block", "activeMetalBytes": 15158699386, "peakMetalBytes": 19047327098, "begin": 20736, "end": 20992}
+{"at": 1788953322.234423, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19047327098, "layer": 23}
+{"at": 1788953322.327925, "event": "attention-forward-block", "activeMetalBytes": 14385669498, "peakMetalBytes": 19047327098, "begin": 3840, "end": 4096}
+{"at": 1788953322.3551831, "event": "attention-forward-block", "activeMetalBytes": 14452778362, "peakMetalBytes": 19047327098, "begin": 7936, "end": 8192}
+{"at": 1788953322.381369, "event": "attention-forward-block", "activeMetalBytes": 14519887226, "peakMetalBytes": 19047327098, "begin": 12032, "end": 12288}
+{"at": 1788953322.40763, "event": "attention-forward-block", "activeMetalBytes": 14586996090, "peakMetalBytes": 19047327098, "begin": 16128, "end": 16384}
+{"at": 1788953322.435414, "event": "attention-forward-block", "activeMetalBytes": 14654104954, "peakMetalBytes": 19047327098, "begin": 20224, "end": 20480}
+{"at": 1788953322.463527, "event": "attention-forward-block", "activeMetalBytes": 14721213818, "peakMetalBytes": 19047327098, "begin": 24320, "end": 24576}
+{"at": 1788953322.753227, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19047327098, "layer": 24}
+{"at": 1788953322.8387232, "event": "attention-forward-block", "activeMetalBytes": 14377280890, "peakMetalBytes": 19047327098, "begin": 3328, "end": 3584}
+{"at": 1788953322.86518, "event": "attention-forward-block", "activeMetalBytes": 14444389754, "peakMetalBytes": 19047327098, "begin": 7424, "end": 7680}
+{"at": 1788953322.892171, "event": "attention-forward-block", "activeMetalBytes": 14511498618, "peakMetalBytes": 19047327098, "begin": 11520, "end": 11776}
+{"at": 1788953322.918698, "event": "attention-forward-block", "activeMetalBytes": 14578607482, "peakMetalBytes": 19047327098, "begin": 15616, "end": 15872}
+{"at": 1788953322.9478788, "event": "attention-forward-block", "activeMetalBytes": 14645716346, "peakMetalBytes": 19047327098, "begin": 19712, "end": 19968}
+{"at": 1788953322.97528, "event": "attention-forward-block", "activeMetalBytes": 14712825210, "peakMetalBytes": 19047327098, "begin": 23808, "end": 24064}
+{"at": 1788953323.2777998, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19047327098, "layer": 25}
+{"at": 1788953323.3588228, "event": "attention-forward-block", "activeMetalBytes": 14368892282, "peakMetalBytes": 19047327098, "begin": 2816, "end": 3072}
+{"at": 1788953323.385034, "event": "attention-forward-block", "activeMetalBytes": 14436001146, "peakMetalBytes": 19047327098, "begin": 6912, "end": 7168}
+{"at": 1788953323.411699, "event": "attention-forward-block", "activeMetalBytes": 14503110010, "peakMetalBytes": 19047327098, "begin": 11008, "end": 11264}
+{"at": 1788953323.439845, "event": "attention-forward-block", "activeMetalBytes": 14570218874, "peakMetalBytes": 19047327098, "begin": 15104, "end": 15360}
+{"at": 1788953323.466892, "event": "attention-forward-block", "activeMetalBytes": 14637327738, "peakMetalBytes": 19047327098, "begin": 19200, "end": 19456}
+{"at": 1788953323.4936588, "event": "attention-forward-block", "activeMetalBytes": 14704436602, "peakMetalBytes": 19047327098, "begin": 23296, "end": 23552}
+{"at": 1788953323.797339, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19047327098, "layer": 26}
+{"at": 1788953323.8801699, "event": "attention-forward-block", "activeMetalBytes": 14360503674, "peakMetalBytes": 19047327098, "begin": 2304, "end": 2560}
+{"at": 1788953323.906782, "event": "attention-forward-block", "activeMetalBytes": 14427612538, "peakMetalBytes": 19047327098, "begin": 6400, "end": 6656}
+{"at": 1788953323.9333918, "event": "attention-forward-block", "activeMetalBytes": 14494721402, "peakMetalBytes": 19047327098, "begin": 10496, "end": 10752}
+{"at": 1788953323.9622269, "event": "attention-forward-block", "activeMetalBytes": 14561830266, "peakMetalBytes": 19047327098, "begin": 14592, "end": 14848}
+{"at": 1788953323.990885, "event": "attention-forward-block", "activeMetalBytes": 14628939130, "peakMetalBytes": 19047327098, "begin": 18688, "end": 18944}
+{"at": 1788953324.019159, "event": "attention-forward-block", "activeMetalBytes": 14696047994, "peakMetalBytes": 19047327098, "begin": 22784, "end": 23040}
+{"at": 1788953324.3404381, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19047327098, "layer": 27}
+{"at": 1788953324.4259741, "event": "attention-forward-block", "activeMetalBytes": 14352115066, "peakMetalBytes": 19047327098, "begin": 1792, "end": 2048}
+{"at": 1788953324.453791, "event": "attention-forward-block", "activeMetalBytes": 14419223930, "peakMetalBytes": 19047327098, "begin": 5888, "end": 6144}
+{"at": 1788953324.4824371, "event": "attention-forward-block", "activeMetalBytes": 14486332794, "peakMetalBytes": 19047327098, "begin": 9984, "end": 10240}
+{"at": 1788953324.513907, "event": "attention-forward-block", "activeMetalBytes": 14553441658, "peakMetalBytes": 19047327098, "begin": 14080, "end": 14336}
+{"at": 1788953324.543692, "event": "attention-forward-block", "activeMetalBytes": 14620550522, "peakMetalBytes": 19047327098, "begin": 18176, "end": 18432}
+{"at": 1788953324.5745769, "event": "attention-forward-block", "activeMetalBytes": 14687659386, "peakMetalBytes": 19047327098, "begin": 22272, "end": 22528}
+{"at": 1788953324.906484, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19047327098, "layer": 28}
+{"at": 1788953324.9957278, "event": "attention-forward-block", "activeMetalBytes": 14521165178, "peakMetalBytes": 19047327098, "begin": 1280, "end": 1536}
+{"at": 1788953325.077739, "event": "attention-forward-block", "activeMetalBytes": 14655382906, "peakMetalBytes": 19047327098, "begin": 5376, "end": 5632}
+{"at": 1788953325.2282581, "event": "attention-forward-block", "activeMetalBytes": 14789600634, "peakMetalBytes": 19047327098, "begin": 9472, "end": 9728}
+{"at": 1788953325.436529, "event": "attention-forward-block", "activeMetalBytes": 14923818362, "peakMetalBytes": 19047327098, "begin": 13568, "end": 13824}
+{"at": 1788953325.695186, "event": "attention-forward-block", "activeMetalBytes": 15058036090, "peakMetalBytes": 19047327098, "begin": 17664, "end": 17920}
+{"at": 1788953326.010172, "event": "attention-forward-block", "activeMetalBytes": 15192253818, "peakMetalBytes": 19047327098, "begin": 21760, "end": 22016}
+{"at": 1788953326.59535, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19064104314, "layer": 29}
+{"at": 1788953326.668593, "event": "attention-forward-block", "activeMetalBytes": 14335337850, "peakMetalBytes": 19064104314, "begin": 768, "end": 1024}
+{"at": 1788953326.697324, "event": "attention-forward-block", "activeMetalBytes": 14402446714, "peakMetalBytes": 19064104314, "begin": 4864, "end": 5120}
+{"at": 1788953326.7259068, "event": "attention-forward-block", "activeMetalBytes": 14469555578, "peakMetalBytes": 19064104314, "begin": 8960, "end": 9216}
+{"at": 1788953326.753299, "event": "attention-forward-block", "activeMetalBytes": 14536664442, "peakMetalBytes": 19064104314, "begin": 13056, "end": 13312}
+{"at": 1788953326.781031, "event": "attention-forward-block", "activeMetalBytes": 14603773306, "peakMetalBytes": 19064104314, "begin": 17152, "end": 17408}
+{"at": 1788953326.80948, "event": "attention-forward-block", "activeMetalBytes": 14670882170, "peakMetalBytes": 19064104314, "begin": 21248, "end": 21504}
+{"at": 1788953327.159292, "event": "frozen-layer", "activeMetalBytes": 13100574074, "peakMetalBytes": 19064104314, "layer": 30}
+{"at": 1788953327.236203, "event": "attention-forward-block", "activeMetalBytes": 14326949242, "peakMetalBytes": 19064104314, "begin": 256, "end": 512}
+{"at": 1788953327.2691112, "event": "attention-forward-block", "activeMetalBytes": 14394058106, "peakMetalBytes": 19064104314, "begin": 4352, "end": 4608}
+{"at": 1788953327.297529, "event": "attention-forward-block", "activeMetalBytes": 14461166970, "peakMetalBytes": 19064104314, "begin": 8448, "end": 8704}
+{"at": 1788953327.326327, "event": "attention-forward-block", "activeMetalBytes": 14528275834, "peakMetalBytes": 19064104314, "begin": 12544, "end": 12800}
+{"at": 1788953327.357384, "event": "attention-forward-block", "activeMetalBytes": 14595384698, "peakMetalBytes": 19064104314, "begin": 16640, "end": 16896}
+{"at": 1788953327.387419, "event": "attention-forward-block", "activeMetalBytes": 14662493562, "peakMetalBytes": 19064104314, "begin": 20736, "end": 20992}
+{"at": 1788953327.768842, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19064104314, "layer": 31}
+{"at": 1788953327.873661, "event": "attention-forward-block", "activeMetalBytes": 14385669498, "peakMetalBytes": 19064104314, "begin": 3840, "end": 4096}
+{"at": 1788953327.9007921, "event": "attention-forward-block", "activeMetalBytes": 14452778362, "peakMetalBytes": 19064104314, "begin": 7936, "end": 8192}
+{"at": 1788953327.928937, "event": "attention-forward-block", "activeMetalBytes": 14519887226, "peakMetalBytes": 19064104314, "begin": 12032, "end": 12288}
+{"at": 1788953327.961208, "event": "attention-forward-block", "activeMetalBytes": 14586996090, "peakMetalBytes": 19064104314, "begin": 16128, "end": 16384}
+{"at": 1788953327.992617, "event": "attention-forward-block", "activeMetalBytes": 14654104954, "peakMetalBytes": 19064104314, "begin": 20224, "end": 20480}
+{"at": 1788953328.0228322, "event": "attention-forward-block", "activeMetalBytes": 14721213818, "peakMetalBytes": 19064104314, "begin": 24320, "end": 24576}
+{"at": 1788953328.371179, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19064104314, "layer": 32}
+{"at": 1788953328.4689448, "event": "attention-forward-block", "activeMetalBytes": 14377280890, "peakMetalBytes": 19064104314, "begin": 3328, "end": 3584}
+{"at": 1788953328.496136, "event": "attention-forward-block", "activeMetalBytes": 14444389754, "peakMetalBytes": 19064104314, "begin": 7424, "end": 7680}
+{"at": 1788953328.523573, "event": "attention-forward-block", "activeMetalBytes": 14511498618, "peakMetalBytes": 19064104314, "begin": 11520, "end": 11776}
+{"at": 1788953328.552543, "event": "attention-forward-block", "activeMetalBytes": 14578607482, "peakMetalBytes": 19064104314, "begin": 15616, "end": 15872}
+{"at": 1788953328.584039, "event": "attention-forward-block", "activeMetalBytes": 14645716346, "peakMetalBytes": 19064104314, "begin": 19712, "end": 19968}
+{"at": 1788953328.614053, "event": "attention-forward-block", "activeMetalBytes": 14712825210, "peakMetalBytes": 19064104314, "begin": 23808, "end": 24064}
+{"at": 1788953328.9521558, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19064104314, "layer": 33}
+{"at": 1788953329.039011, "event": "attention-forward-block", "activeMetalBytes": 14368892282, "peakMetalBytes": 19064104314, "begin": 2816, "end": 3072}
+{"at": 1788953329.067449, "event": "attention-forward-block", "activeMetalBytes": 14436001146, "peakMetalBytes": 19064104314, "begin": 6912, "end": 7168}
+{"at": 1788953329.095923, "event": "attention-forward-block", "activeMetalBytes": 14503110010, "peakMetalBytes": 19064104314, "begin": 11008, "end": 11264}
+{"at": 1788953329.1289248, "event": "attention-forward-block", "activeMetalBytes": 14570218874, "peakMetalBytes": 19064104314, "begin": 15104, "end": 15360}
+{"at": 1788953329.159948, "event": "attention-forward-block", "activeMetalBytes": 14637327738, "peakMetalBytes": 19064104314, "begin": 19200, "end": 19456}
+{"at": 1788953329.190537, "event": "attention-forward-block", "activeMetalBytes": 14704436602, "peakMetalBytes": 19064104314, "begin": 23296, "end": 23552}
+{"at": 1788953329.531275, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19064104314, "layer": 34}
+{"at": 1788953329.639887, "event": "attention-forward-block", "activeMetalBytes": 14554719610, "peakMetalBytes": 19064104314, "begin": 2304, "end": 2560}
+{"at": 1788953329.734817, "event": "attention-forward-block", "activeMetalBytes": 14688937338, "peakMetalBytes": 19064104314, "begin": 6400, "end": 6656}
+{"at": 1788953329.8983412, "event": "attention-forward-block", "activeMetalBytes": 14823155066, "peakMetalBytes": 19064104314, "begin": 10496, "end": 10752}
+{"at": 1788953330.111833, "event": "attention-forward-block", "activeMetalBytes": 14957372794, "peakMetalBytes": 19064104314, "begin": 14592, "end": 14848}
+{"at": 1788953330.3884869, "event": "attention-forward-block", "activeMetalBytes": 15091590522, "peakMetalBytes": 19064104314, "begin": 18688, "end": 18944}
+{"at": 1788953330.717957, "event": "attention-forward-block", "activeMetalBytes": 15225808250, "peakMetalBytes": 19064104314, "begin": 22784, "end": 23040}
+{"at": 1788953331.193511, "event": "frozen-layer", "activeMetalBytes": 13100574074, "peakMetalBytes": 19064104314, "layer": 35}
+{"at": 1788953331.2646558, "event": "attention-forward-block", "activeMetalBytes": 14352115066, "peakMetalBytes": 19064104314, "begin": 1792, "end": 2048}
+{"at": 1788953331.294414, "event": "attention-forward-block", "activeMetalBytes": 14419223930, "peakMetalBytes": 19064104314, "begin": 5888, "end": 6144}
+{"at": 1788953331.3256729, "event": "attention-forward-block", "activeMetalBytes": 14486332794, "peakMetalBytes": 19064104314, "begin": 9984, "end": 10240}
+{"at": 1788953331.3554409, "event": "attention-forward-block", "activeMetalBytes": 14553441658, "peakMetalBytes": 19064104314, "begin": 14080, "end": 14336}
+{"at": 1788953331.385667, "event": "attention-forward-block", "activeMetalBytes": 14620550522, "peakMetalBytes": 19064104314, "begin": 18176, "end": 18432}
+{"at": 1788953331.415545, "event": "attention-forward-block", "activeMetalBytes": 14687659386, "peakMetalBytes": 19064104314, "begin": 22272, "end": 22528}
+{"at": 1788953331.743957, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19064104314, "layer": 36}
+{"at": 1788953331.8202019, "event": "attention-forward-block", "activeMetalBytes": 14343726458, "peakMetalBytes": 19064104314, "begin": 1280, "end": 1536}
+{"at": 1788953331.849656, "event": "attention-forward-block", "activeMetalBytes": 14410835322, "peakMetalBytes": 19064104314, "begin": 5376, "end": 5632}
+{"at": 1788953331.879661, "event": "attention-forward-block", "activeMetalBytes": 14477944186, "peakMetalBytes": 19064104314, "begin": 9472, "end": 9728}
+{"at": 1788953331.911034, "event": "attention-forward-block", "activeMetalBytes": 14545053050, "peakMetalBytes": 19064104314, "begin": 13568, "end": 13824}
+{"at": 1788953331.941819, "event": "attention-forward-block", "activeMetalBytes": 14612161914, "peakMetalBytes": 19064104314, "begin": 17664, "end": 17920}
+{"at": 1788953331.9735522, "event": "attention-forward-block", "activeMetalBytes": 14679270778, "peakMetalBytes": 19064104314, "begin": 21760, "end": 22016}
+{"at": 1788953332.3295722, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19064104314, "layer": 37}
+{"at": 1788953332.410815, "event": "attention-forward-block", "activeMetalBytes": 14335337850, "peakMetalBytes": 19064104314, "begin": 768, "end": 1024}
+{"at": 1788953332.4388769, "event": "attention-forward-block", "activeMetalBytes": 14402446714, "peakMetalBytes": 19064104314, "begin": 4864, "end": 5120}
+{"at": 1788953332.465, "event": "attention-forward-block", "activeMetalBytes": 14469555578, "peakMetalBytes": 19064104314, "begin": 8960, "end": 9216}
+{"at": 1788953332.494348, "event": "attention-forward-block", "activeMetalBytes": 14536664442, "peakMetalBytes": 19064104314, "begin": 13056, "end": 13312}
+{"at": 1788953332.5260532, "event": "attention-forward-block", "activeMetalBytes": 14603773306, "peakMetalBytes": 19064104314, "begin": 17152, "end": 17408}
+{"at": 1788953332.557684, "event": "attention-forward-block", "activeMetalBytes": 14670882170, "peakMetalBytes": 19064104314, "begin": 21248, "end": 21504}
+{"at": 1788953332.927881, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19064104314, "layer": 38}
+{"at": 1788953333.006322, "event": "attention-forward-block", "activeMetalBytes": 14326949242, "peakMetalBytes": 19064104314, "begin": 256, "end": 512}
+{"at": 1788953333.036406, "event": "attention-forward-block", "activeMetalBytes": 14394058106, "peakMetalBytes": 19064104314, "begin": 4352, "end": 4608}
+{"at": 1788953333.066824, "event": "attention-forward-block", "activeMetalBytes": 14461166970, "peakMetalBytes": 19064104314, "begin": 8448, "end": 8704}
+{"at": 1788953333.0990112, "event": "attention-forward-block", "activeMetalBytes": 14528275834, "peakMetalBytes": 19064104314, "begin": 12544, "end": 12800}
+{"at": 1788953333.130743, "event": "attention-forward-block", "activeMetalBytes": 14595384698, "peakMetalBytes": 19064104314, "begin": 16640, "end": 16896}
+{"at": 1788953333.163813, "event": "attention-forward-block", "activeMetalBytes": 14662493562, "peakMetalBytes": 19064104314, "begin": 20736, "end": 20992}
+{"at": 1788953333.528799, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19064104314, "layer": 39}
+{"at": 1788953333.6261609, "event": "attention-forward-block", "activeMetalBytes": 14385669498, "peakMetalBytes": 19064104314, "begin": 3840, "end": 4096}
+{"at": 1788953333.659776, "event": "attention-forward-block", "activeMetalBytes": 14452778362, "peakMetalBytes": 19064104314, "begin": 7936, "end": 8192}
+{"at": 1788953333.693225, "event": "attention-forward-block", "activeMetalBytes": 14519887226, "peakMetalBytes": 19064104314, "begin": 12032, "end": 12288}
+{"at": 1788953333.7251992, "event": "attention-forward-block", "activeMetalBytes": 14586996090, "peakMetalBytes": 19064104314, "begin": 16128, "end": 16384}
+{"at": 1788953333.7572758, "event": "attention-forward-block", "activeMetalBytes": 14654104954, "peakMetalBytes": 19064104314, "begin": 20224, "end": 20480}
+{"at": 1788953333.788939, "event": "attention-forward-block", "activeMetalBytes": 14721213818, "peakMetalBytes": 19064104314, "begin": 24320, "end": 24576}
+{"at": 1788953334.115516, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19064104314, "layer": 40}
+{"at": 1788953334.245909, "event": "attention-forward-block", "activeMetalBytes": 14588274042, "peakMetalBytes": 19064104314, "begin": 3328, "end": 3584}
+{"at": 1788953334.361879, "event": "attention-forward-block", "activeMetalBytes": 14722491770, "peakMetalBytes": 19064104314, "begin": 7424, "end": 7680}
+{"at": 1788953334.54771, "event": "attention-forward-block", "activeMetalBytes": 14856709498, "peakMetalBytes": 19064104314, "begin": 11520, "end": 11776}
+{"at": 1788953334.7784162, "event": "attention-forward-block", "activeMetalBytes": 14990927226, "peakMetalBytes": 19064104314, "begin": 15616, "end": 15872}
+{"at": 1788953335.072063, "event": "attention-forward-block", "activeMetalBytes": 15125144954, "peakMetalBytes": 19064104314, "begin": 19712, "end": 19968}
+{"at": 1788953335.418106, "event": "attention-forward-block", "activeMetalBytes": 15259362682, "peakMetalBytes": 19064104314, "begin": 23808, "end": 24064}
+{"at": 1788953335.808015, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19064104314, "layer": 41}
+{"at": 1788953335.8936682, "event": "attention-forward-block", "activeMetalBytes": 14368892282, "peakMetalBytes": 19064104314, "begin": 2816, "end": 3072}
+{"at": 1788953335.922092, "event": "attention-forward-block", "activeMetalBytes": 14436001146, "peakMetalBytes": 19064104314, "begin": 6912, "end": 7168}
+{"at": 1788953335.950505, "event": "attention-forward-block", "activeMetalBytes": 14503110010, "peakMetalBytes": 19064104314, "begin": 11008, "end": 11264}
+{"at": 1788953335.9779, "event": "attention-forward-block", "activeMetalBytes": 14570218874, "peakMetalBytes": 19064104314, "begin": 15104, "end": 15360}
+{"at": 1788953336.006352, "event": "attention-forward-block", "activeMetalBytes": 14637327738, "peakMetalBytes": 19064104314, "begin": 19200, "end": 19456}
+{"at": 1788953336.0407228, "event": "attention-forward-block", "activeMetalBytes": 14704436602, "peakMetalBytes": 19064104314, "begin": 23296, "end": 23552}
+{"at": 1788953336.348866, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19064104314, "layer": 42}
+{"at": 1788953336.430557, "event": "attention-forward-block", "activeMetalBytes": 14360503674, "peakMetalBytes": 19064104314, "begin": 2304, "end": 2560}
+{"at": 1788953336.456866, "event": "attention-forward-block", "activeMetalBytes": 14427612538, "peakMetalBytes": 19064104314, "begin": 6400, "end": 6656}
+{"at": 1788953336.4847412, "event": "attention-forward-block", "activeMetalBytes": 14494721402, "peakMetalBytes": 19064104314, "begin": 10496, "end": 10752}
+{"at": 1788953336.512245, "event": "attention-forward-block", "activeMetalBytes": 14561830266, "peakMetalBytes": 19064104314, "begin": 14592, "end": 14848}
+{"at": 1788953336.542071, "event": "attention-forward-block", "activeMetalBytes": 14628939130, "peakMetalBytes": 19064104314, "begin": 18688, "end": 18944}
+{"at": 1788953336.569535, "event": "attention-forward-block", "activeMetalBytes": 14696047994, "peakMetalBytes": 19064104314, "begin": 22784, "end": 23040}
+{"at": 1788953336.8847659, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19064104314, "layer": 43}
+{"at": 1788953336.9683158, "event": "attention-forward-block", "activeMetalBytes": 14352115066, "peakMetalBytes": 19064104314, "begin": 1792, "end": 2048}
+{"at": 1788953337.0016088, "event": "attention-forward-block", "activeMetalBytes": 14419223930, "peakMetalBytes": 19064104314, "begin": 5888, "end": 6144}
+{"at": 1788953337.034637, "event": "attention-forward-block", "activeMetalBytes": 14486332794, "peakMetalBytes": 19064104314, "begin": 9984, "end": 10240}
+{"at": 1788953337.06799, "event": "attention-forward-block", "activeMetalBytes": 14553441658, "peakMetalBytes": 19064104314, "begin": 14080, "end": 14336}
+{"at": 1788953337.09993, "event": "attention-forward-block", "activeMetalBytes": 14620550522, "peakMetalBytes": 19064104314, "begin": 18176, "end": 18432}
+{"at": 1788953337.1274729, "event": "attention-forward-block", "activeMetalBytes": 14687659386, "peakMetalBytes": 19064104314, "begin": 22272, "end": 22528}
+{"at": 1788953337.451614, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19064104314, "layer": 44}
+{"at": 1788953337.528862, "event": "attention-forward-block", "activeMetalBytes": 14343726458, "peakMetalBytes": 19064104314, "begin": 1280, "end": 1536}
+{"at": 1788953337.554803, "event": "attention-forward-block", "activeMetalBytes": 14410835322, "peakMetalBytes": 19064104314, "begin": 5376, "end": 5632}
+{"at": 1788953337.5823529, "event": "attention-forward-block", "activeMetalBytes": 14477944186, "peakMetalBytes": 19064104314, "begin": 9472, "end": 9728}
+{"at": 1788953337.620033, "event": "attention-forward-block", "activeMetalBytes": 14545053050, "peakMetalBytes": 19064104314, "begin": 13568, "end": 13824}
+{"at": 1788953337.657218, "event": "attention-forward-block", "activeMetalBytes": 14612161914, "peakMetalBytes": 19064104314, "begin": 17664, "end": 17920}
+{"at": 1788953337.693874, "event": "attention-forward-block", "activeMetalBytes": 14679270778, "peakMetalBytes": 19064104314, "begin": 21760, "end": 22016}
+{"at": 1788953338.017333, "event": "frozen-layer", "activeMetalBytes": 12910257530, "peakMetalBytes": 19064104314, "layer": 45}
+{"at": 1788953338.114689, "event": "attention-forward-block", "activeMetalBytes": 14335234498, "peakMetalBytes": 19064104314, "begin": 768, "end": 1024}
+{"at": 1788953338.140476, "event": "attention-forward-block", "activeMetalBytes": 14402343362, "peakMetalBytes": 19064104314, "begin": 4864, "end": 5120}
+{"at": 1788953338.167752, "event": "attention-forward-block", "activeMetalBytes": 14469452226, "peakMetalBytes": 19064104314, "begin": 8960, "end": 9216}
+{"at": 1788953338.194221, "event": "attention-forward-block", "activeMetalBytes": 14536561090, "peakMetalBytes": 19064104314, "begin": 13056, "end": 13312}
+{"at": 1788953338.22119, "event": "attention-forward-block", "activeMetalBytes": 14603669954, "peakMetalBytes": 19064104314, "begin": 17152, "end": 17408}
+{"at": 1788953338.249239, "event": "attention-forward-block", "activeMetalBytes": 14670778818, "peakMetalBytes": 19064104314, "begin": 21248, "end": 21504}
+{"at": 1788953338.37441, "event": "mlp-forward-block", "activeMetalBytes": 13499683266, "peakMetalBytes": 19064104314, "begin": 512, "end": 768}
+{"at": 1788953338.438046, "event": "mlp-forward-block", "activeMetalBytes": 13531140546, "peakMetalBytes": 19064104314, "begin": 4608, "end": 4864}
+{"at": 1788953338.500347, "event": "mlp-forward-block", "activeMetalBytes": 13562597826, "peakMetalBytes": 19064104314, "begin": 8704, "end": 8960}
+{"at": 1788953338.56407, "event": "mlp-forward-block", "activeMetalBytes": 13597987266, "peakMetalBytes": 19064104314, "begin": 12800, "end": 13056}
+{"at": 1788953338.627266, "event": "mlp-forward-block", "activeMetalBytes": 13629444546, "peakMetalBytes": 19064104314, "begin": 16896, "end": 17152}
+{"at": 1788953338.690964, "event": "mlp-forward-block", "activeMetalBytes": 13660901826, "peakMetalBytes": 19064104314, "begin": 20992, "end": 21248}
+{"at": 1788953338.872074, "event": "attention-forward-block", "activeMetalBytes": 14677823938, "peakMetalBytes": 19064104314, "begin": 256, "end": 512}
+{"at": 1788953338.931228, "event": "attention-forward-block", "activeMetalBytes": 14812041666, "peakMetalBytes": 19064104314, "begin": 4352, "end": 4608}
+{"at": 1788953339.057761, "event": "attention-forward-block", "activeMetalBytes": 14946259394, "peakMetalBytes": 19064104314, "begin": 8448, "end": 8704}
+{"at": 1788953339.242644, "event": "attention-forward-block", "activeMetalBytes": 15080477122, "peakMetalBytes": 19064104314, "begin": 12544, "end": 12800}
+{"at": 1788953339.475302, "event": "attention-forward-block", "activeMetalBytes": 15214694850, "peakMetalBytes": 19064104314, "begin": 16640, "end": 16896}
+{"at": 1788953339.757382, "event": "attention-forward-block", "activeMetalBytes": 15348912578, "peakMetalBytes": 19064104314, "begin": 20736, "end": 20992}
+{"at": 1788953340.242302, "event": "mlp-forward-block", "activeMetalBytes": 13533827522, "peakMetalBytes": 19064104314, "begin": 0, "end": 256}
+{"at": 1788953340.3045828, "event": "mlp-forward-block", "activeMetalBytes": 13565284802, "peakMetalBytes": 19064104314, "begin": 4096, "end": 4352}
+{"at": 1788953340.366316, "event": "mlp-forward-block", "activeMetalBytes": 13596742082, "peakMetalBytes": 19064104314, "begin": 8192, "end": 8448}
+{"at": 1788953340.428467, "event": "mlp-forward-block", "activeMetalBytes": 13628199362, "peakMetalBytes": 19064104314, "begin": 12288, "end": 12544}
+{"at": 1788953340.489608, "event": "mlp-forward-block", "activeMetalBytes": 13659656642, "peakMetalBytes": 19064104314, "begin": 16384, "end": 16640}
+{"at": 1788953340.555943, "event": "mlp-forward-block", "activeMetalBytes": 13691113922, "peakMetalBytes": 19064104314, "begin": 20480, "end": 20736}
+{"at": 1788953340.6198049, "event": "mlp-forward-block", "activeMetalBytes": 13722177986, "peakMetalBytes": 19064104314, "begin": 24576, "end": 24780}
+{"at": 1788953340.8529768, "event": "loss-forward-block", "activeMetalBytes": 13481103818, "peakMetalBytes": 19064104314, "begin": 1920, "end": 2048}
+{"at": 1788953341.6573708, "event": "loss-backward-block", "activeMetalBytes": 15119242206, "peakMetalBytes": 19064104314, "begin": 1024, "end": 1152}
+{"at": 1788953342.866961, "event": "attention-forward-block", "activeMetalBytes": 18738614740, "peakMetalBytes": 19064104314, "begin": 256, "end": 512}
+{"at": 1788953342.954785, "event": "attention-forward-block", "activeMetalBytes": 18872832468, "peakMetalBytes": 19117281756, "begin": 4352, "end": 4608}
+{"at": 1788953343.167642, "event": "attention-forward-block", "activeMetalBytes": 19007050196, "peakMetalBytes": 19453874652, "begin": 8448, "end": 8704}
+{"at": 1788953343.478972, "event": "attention-forward-block", "activeMetalBytes": 19141267924, "peakMetalBytes": 19815699932, "begin": 12544, "end": 12800}
+{"at": 1788953343.909493, "event": "attention-forward-block", "activeMetalBytes": 19275485652, "peakMetalBytes": 20160697820, "begin": 16640, "end": 16896}
+{"at": 1788953344.457713, "event": "attention-forward-block", "activeMetalBytes": 19409703380, "peakMetalBytes": 20505695708, "begin": 20736, "end": 20992}
+{"at": 1788953345.233205, "event": "mlp-forward-block", "activeMetalBytes": 23063744984, "peakMetalBytes": 23599567330, "begin": 0, "end": 256}
+{"at": 1788953345.3170009, "event": "mlp-forward-block", "activeMetalBytes": 23095202264, "peakMetalBytes": 23599567330, "begin": 4096, "end": 4352}
+{"at": 1788953345.4013472, "event": "mlp-forward-block", "activeMetalBytes": 23126659544, "peakMetalBytes": 23599567330, "begin": 8192, "end": 8448}
+{"at": 1788953345.4864051, "event": "mlp-forward-block", "activeMetalBytes": 23158116824, "peakMetalBytes": 23599567330, "begin": 12288, "end": 12544}
+{"at": 1788953345.572072, "event": "mlp-forward-block", "activeMetalBytes": 23189574104, "peakMetalBytes": 23599567330, "begin": 16384, "end": 16640}
+{"at": 1788953345.657024, "event": "mlp-forward-block", "activeMetalBytes": 23221031384, "peakMetalBytes": 23599567330, "begin": 20480, "end": 20736}
+{"at": 1788953345.741368, "event": "mlp-forward-block", "activeMetalBytes": 23252095448, "peakMetalBytes": 23599567330, "begin": 24576, "end": 24780}
+{"at": 1788953345.965546, "event": "mlp-backward-block", "activeMetalBytes": 24127795174, "peakMetalBytes": 24131727334, "begin": 3840, "end": 4096}
+{"at": 1788953346.175369, "event": "mlp-backward-block", "activeMetalBytes": 24222167014, "peakMetalBytes": 24226099174, "begin": 7936, "end": 8192}
+{"at": 1788953346.401325, "event": "mlp-backward-block", "activeMetalBytes": 24316538854, "peakMetalBytes": 24320471014, "begin": 12032, "end": 12288}
+{"at": 1788953346.6130052, "event": "mlp-backward-block", "activeMetalBytes": 24410910694, "peakMetalBytes": 24414842854, "begin": 16128, "end": 16384}
+{"at": 1788953346.8256059, "event": "mlp-backward-block", "activeMetalBytes": 24505282534, "peakMetalBytes": 24509214694, "begin": 20224, "end": 20480}
+{"at": 1788953347.041589, "event": "mlp-backward-block", "activeMetalBytes": 24599654374, "peakMetalBytes": 24603586534, "begin": 24320, "end": 24576}
+{"at": 1788953347.6904562, "event": "attention-backward-block", "activeMetalBytes": 28797341144, "peakMetalBytes": 29858123236, "begin": 3584, "end": 3840}
+{"at": 1788953348.553012, "event": "attention-backward-block", "activeMetalBytes": 28932624856, "peakMetalBytes": 30899376612, "begin": 7680, "end": 7936}
+{"at": 1788953349.892138, "event": "attention-backward-block", "activeMetalBytes": 29067907544, "peakMetalBytes": 31940628964, "begin": 11776, "end": 12032}
+{"at": 1788953351.838809, "event": "attention-backward-block", "activeMetalBytes": 29203190232, "peakMetalBytes": 32981881316, "begin": 15872, "end": 16128}
+{"at": 1788953354.305639, "event": "attention-backward-block", "activeMetalBytes": 29338472920, "peakMetalBytes": 34023133668, "begin": 19968, "end": 20224}
+{"at": 1788953357.594487, "event": "attention-backward-block", "activeMetalBytes": 29473755608, "peakMetalBytes": 35064386020, "begin": 24064, "end": 24320}
+{"at": 1788953358.58569, "event": "attention-forward-block", "activeMetalBytes": 17254633940, "peakMetalBytes": 35129463268, "begin": 3072, "end": 3328}
+{"at": 1788953358.599985, "event": "attention-forward-block", "activeMetalBytes": 17321742804, "peakMetalBytes": 35129463268, "begin": 7168, "end": 7424}
+{"at": 1788953358.6153972, "event": "attention-forward-block", "activeMetalBytes": 17388851668, "peakMetalBytes": 35129463268, "begin": 11264, "end": 11520}
+{"at": 1788953358.630741, "event": "attention-forward-block", "activeMetalBytes": 17455960532, "peakMetalBytes": 35129463268, "begin": 15360, "end": 15616}
+{"at": 1788953358.64578, "event": "attention-forward-block", "activeMetalBytes": 17523069396, "peakMetalBytes": 35129463268, "begin": 19456, "end": 19712}
+{"at": 1788953358.6607401, "event": "attention-forward-block", "activeMetalBytes": 17590178260, "peakMetalBytes": 35129463268, "begin": 23552, "end": 23808}
+{"at": 1788953358.809657, "event": "mlp-forward-block", "activeMetalBytes": 20345655768, "peakMetalBytes": 35129463268, "begin": 2816, "end": 3072}
+{"at": 1788953358.865536, "event": "mlp-forward-block", "activeMetalBytes": 20381045208, "peakMetalBytes": 35129463268, "begin": 6912, "end": 7168}
+{"at": 1788953358.922448, "event": "mlp-forward-block", "activeMetalBytes": 20408570328, "peakMetalBytes": 35129463268, "begin": 11008, "end": 11264}
+{"at": 1788953358.981499, "event": "mlp-forward-block", "activeMetalBytes": 20440027608, "peakMetalBytes": 35129463268, "begin": 15104, "end": 15360}
+{"at": 1788953359.043676, "event": "mlp-forward-block", "activeMetalBytes": 20471484888, "peakMetalBytes": 35129463268, "begin": 19200, "end": 19456}
+{"at": 1788953359.107454, "event": "mlp-forward-block", "activeMetalBytes": 20502942168, "peakMetalBytes": 35129463268, "begin": 23296, "end": 23552}
+{"at": 1788953359.3146439, "event": "mlp-backward-block", "activeMetalBytes": 21358587878, "peakMetalBytes": 35129463268, "begin": 2560, "end": 2816}
+{"at": 1788953359.5932958, "event": "mlp-backward-block", "activeMetalBytes": 21452959718, "peakMetalBytes": 35129463268, "begin": 6656, "end": 6912}
+{"at": 1788953359.894214, "event": "mlp-backward-block", "activeMetalBytes": 21547331558, "peakMetalBytes": 35129463268, "begin": 10752, "end": 11008}
+{"at": 1788953360.175854, "event": "mlp-backward-block", "activeMetalBytes": 21641703398, "peakMetalBytes": 35129463268, "begin": 14848, "end": 15104}
+{"at": 1788953360.449651, "event": "mlp-backward-block", "activeMetalBytes": 21736075238, "peakMetalBytes": 35129463268, "begin": 18944, "end": 19200}
+{"at": 1788953360.7147362, "event": "mlp-backward-block", "activeMetalBytes": 21830447078, "peakMetalBytes": 35129463268, "begin": 23040, "end": 23296}
+{"at": 1788953361.9219332, "event": "attention-backward-block", "activeMetalBytes": 24857225688, "peakMetalBytes": 35129463268, "begin": 2304, "end": 2560}
+{"at": 1788953363.413517, "event": "attention-backward-block", "activeMetalBytes": 24924334552, "peakMetalBytes": 35129463268, "begin": 6400, "end": 6656}
+{"at": 1788953364.888337, "event": "attention-backward-block", "activeMetalBytes": 24991443416, "peakMetalBytes": 35129463268, "begin": 10496, "end": 10752}
+{"at": 1788953366.3823419, "event": "attention-backward-block", "activeMetalBytes": 25058552280, "peakMetalBytes": 35129463268, "begin": 14592, "end": 14848}
+{"at": 1788953367.876768, "event": "attention-backward-block", "activeMetalBytes": 25125661144, "peakMetalBytes": 35129463268, "begin": 18688, "end": 18944}
+{"at": 1788953369.35602, "event": "attention-backward-block", "activeMetalBytes": 25192770008, "peakMetalBytes": 35129463268, "begin": 22784, "end": 23040}
+{"at": 1788953370.4382641, "event": "attention-forward-block", "activeMetalBytes": 14424892794, "peakMetalBytes": 14722412944, "begin": 1792, "end": 2048}
+{"at": 1788953370.4552162, "event": "attention-forward-block", "activeMetalBytes": 14492001658, "peakMetalBytes": 14722412944, "begin": 5888, "end": 6144}
+{"at": 1788953370.4723141, "event": "attention-forward-block", "activeMetalBytes": 14559110522, "peakMetalBytes": 14722412944, "begin": 9984, "end": 10240}
+{"at": 1788953370.4890711, "event": "attention-forward-block", "activeMetalBytes": 14626219386, "peakMetalBytes": 14722412944, "begin": 14080, "end": 14336}
+{"at": 1788953370.506387, "event": "attention-forward-block", "activeMetalBytes": 14693328250, "peakMetalBytes": 14722412944, "begin": 18176, "end": 18432}
+{"at": 1788953370.5230432, "event": "attention-forward-block", "activeMetalBytes": 14760437114, "peakMetalBytes": 14786249090, "begin": 22272, "end": 22528}
+{"at": 1788953370.809073, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 17826981242, "layer": 0}
+{"at": 1788953370.8795478, "event": "attention-forward-block", "activeMetalBytes": 14395532666, "peakMetalBytes": 17826981242, "begin": 0, "end": 256}
+{"at": 1788953370.8972008, "event": "attention-forward-block", "activeMetalBytes": 14462641530, "peakMetalBytes": 17826981242, "begin": 4096, "end": 4352}
+{"at": 1788953370.9140348, "event": "attention-forward-block", "activeMetalBytes": 14529750394, "peakMetalBytes": 17826981242, "begin": 8192, "end": 8448}
+{"at": 1788953370.930497, "event": "attention-forward-block", "activeMetalBytes": 14596859258, "peakMetalBytes": 17826981242, "begin": 12288, "end": 12544}
+{"at": 1788953370.947225, "event": "attention-forward-block", "activeMetalBytes": 14663968122, "peakMetalBytes": 17826981242, "begin": 16384, "end": 16640}
+{"at": 1788953370.96363, "event": "attention-forward-block", "activeMetalBytes": 14731076986, "peakMetalBytes": 17826981242, "begin": 20480, "end": 20736}
+{"at": 1788953370.9807081, "event": "attention-forward-block", "activeMetalBytes": 14798185850, "peakMetalBytes": 17826981242, "begin": 24576, "end": 24832}
+{"at": 1788953371.262639, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 17853998458, "layer": 1}
+{"at": 1788953371.342399, "event": "attention-forward-block", "activeMetalBytes": 14433281402, "peakMetalBytes": 17853998458, "begin": 2304, "end": 2560}
+{"at": 1788953371.3602471, "event": "attention-forward-block", "activeMetalBytes": 14500390266, "peakMetalBytes": 17853998458, "begin": 6400, "end": 6656}
+{"at": 1788953371.375822, "event": "attention-forward-block", "activeMetalBytes": 14567499130, "peakMetalBytes": 17853998458, "begin": 10496, "end": 10752}
+{"at": 1788953371.391507, "event": "attention-forward-block", "activeMetalBytes": 14634607994, "peakMetalBytes": 17853998458, "begin": 14592, "end": 14848}
+{"at": 1788953371.408354, "event": "attention-forward-block", "activeMetalBytes": 14701716858, "peakMetalBytes": 17853998458, "begin": 18688, "end": 18944}
+{"at": 1788953371.4242408, "event": "attention-forward-block", "activeMetalBytes": 14768825722, "peakMetalBytes": 17853998458, "begin": 22784, "end": 23040}
+{"at": 1788953371.707149, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 17853998458, "layer": 2}
+{"at": 1788953371.7820349, "event": "attention-forward-block", "activeMetalBytes": 14403921274, "peakMetalBytes": 17853998458, "begin": 512, "end": 768}
+{"at": 1788953371.801427, "event": "attention-forward-block", "activeMetalBytes": 14471030138, "peakMetalBytes": 17853998458, "begin": 4608, "end": 4864}
+{"at": 1788953371.818578, "event": "attention-forward-block", "activeMetalBytes": 14538139002, "peakMetalBytes": 17853998458, "begin": 8704, "end": 8960}
+{"at": 1788953371.8357859, "event": "attention-forward-block", "activeMetalBytes": 14605247866, "peakMetalBytes": 17853998458, "begin": 12800, "end": 13056}
+{"at": 1788953371.852767, "event": "attention-forward-block", "activeMetalBytes": 14672356730, "peakMetalBytes": 17853998458, "begin": 16896, "end": 17152}
+{"at": 1788953371.870141, "event": "attention-forward-block", "activeMetalBytes": 14739465594, "peakMetalBytes": 17853998458, "begin": 20992, "end": 21248}
+{"at": 1788953371.888543, "event": "attention-forward-block", "activeMetalBytes": 14806574458, "peakMetalBytes": 17853998458, "begin": 25088, "end": 25344}
+{"at": 1788953372.16255, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 17866581370, "layer": 3}
+{"at": 1788953372.24326, "event": "attention-forward-block", "activeMetalBytes": 14441670010, "peakMetalBytes": 17866581370, "begin": 2816, "end": 3072}
+{"at": 1788953372.260424, "event": "attention-forward-block", "activeMetalBytes": 14508778874, "peakMetalBytes": 17866581370, "begin": 6912, "end": 7168}
+{"at": 1788953372.277476, "event": "attention-forward-block", "activeMetalBytes": 14575887738, "peakMetalBytes": 17866581370, "begin": 11008, "end": 11264}
+{"at": 1788953372.2943869, "event": "attention-forward-block", "activeMetalBytes": 14642996602, "peakMetalBytes": 17866581370, "begin": 15104, "end": 15360}
+{"at": 1788953372.311146, "event": "attention-forward-block", "activeMetalBytes": 14710105466, "peakMetalBytes": 17866581370, "begin": 19200, "end": 19456}
+{"at": 1788953372.327564, "event": "attention-forward-block", "activeMetalBytes": 14777214330, "peakMetalBytes": 17866581370, "begin": 23296, "end": 23552}
+{"at": 1788953372.613079, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 17866581370, "layer": 4}
+{"at": 1788953372.6965902, "event": "attention-forward-block", "activeMetalBytes": 14592501114, "peakMetalBytes": 17866581370, "begin": 1024, "end": 1280}
+{"at": 1788953372.763883, "event": "attention-forward-block", "activeMetalBytes": 14726718842, "peakMetalBytes": 17866581370, "begin": 5120, "end": 5376}
+{"at": 1788953372.910371, "event": "attention-forward-block", "activeMetalBytes": 14860936570, "peakMetalBytes": 17866581370, "begin": 9216, "end": 9472}
+{"at": 1788953373.110881, "event": "attention-forward-block", "activeMetalBytes": 14995154298, "peakMetalBytes": 17866581370, "begin": 13312, "end": 13568}
+{"at": 1788953373.374091, "event": "attention-forward-block", "activeMetalBytes": 15129372026, "peakMetalBytes": 17866581370, "begin": 17408, "end": 17664}
+{"at": 1788953373.6873229, "event": "attention-forward-block", "activeMetalBytes": 15263589754, "peakMetalBytes": 17866581370, "begin": 21504, "end": 21760}
+{"at": 1788953374.058698, "event": "attention-forward-block", "activeMetalBytes": 15397807482, "peakMetalBytes": 17866581370, "begin": 25600, "end": 25856}
+{"at": 1788953374.38917, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 5}
+{"at": 1788953374.476715, "event": "attention-forward-block", "activeMetalBytes": 14450058618, "peakMetalBytes": 19330033018, "begin": 3328, "end": 3584}
+{"at": 1788953374.505086, "event": "attention-forward-block", "activeMetalBytes": 14517167482, "peakMetalBytes": 19330033018, "begin": 7424, "end": 7680}
+{"at": 1788953374.53175, "event": "attention-forward-block", "activeMetalBytes": 14584276346, "peakMetalBytes": 19330033018, "begin": 11520, "end": 11776}
+{"at": 1788953374.564569, "event": "attention-forward-block", "activeMetalBytes": 14651385210, "peakMetalBytes": 19330033018, "begin": 15616, "end": 15872}
+{"at": 1788953374.59503, "event": "attention-forward-block", "activeMetalBytes": 14718494074, "peakMetalBytes": 19330033018, "begin": 19712, "end": 19968}
+{"at": 1788953374.623809, "event": "attention-forward-block", "activeMetalBytes": 14785602938, "peakMetalBytes": 19330033018, "begin": 23808, "end": 24064}
+{"at": 1788953374.9160929, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 6}
+{"at": 1788953374.988665, "event": "attention-forward-block", "activeMetalBytes": 14420698490, "peakMetalBytes": 19330033018, "begin": 1536, "end": 1792}
+{"at": 1788953375.0172029, "event": "attention-forward-block", "activeMetalBytes": 14487807354, "peakMetalBytes": 19330033018, "begin": 5632, "end": 5888}
+{"at": 1788953375.04606, "event": "attention-forward-block", "activeMetalBytes": 14554916218, "peakMetalBytes": 19330033018, "begin": 9728, "end": 9984}
+{"at": 1788953375.0753322, "event": "attention-forward-block", "activeMetalBytes": 14622025082, "peakMetalBytes": 19330033018, "begin": 13824, "end": 14080}
+{"at": 1788953375.105431, "event": "attention-forward-block", "activeMetalBytes": 14689133946, "peakMetalBytes": 19330033018, "begin": 17920, "end": 18176}
+{"at": 1788953375.13423, "event": "attention-forward-block", "activeMetalBytes": 14756242810, "peakMetalBytes": 19330033018, "begin": 22016, "end": 22272}
+{"at": 1788953375.445559, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 7}
+{"at": 1788953375.548574, "event": "attention-forward-block", "activeMetalBytes": 14458447226, "peakMetalBytes": 19330033018, "begin": 3840, "end": 4096}
+{"at": 1788953375.5755572, "event": "attention-forward-block", "activeMetalBytes": 14525556090, "peakMetalBytes": 19330033018, "begin": 7936, "end": 8192}
+{"at": 1788953375.603981, "event": "attention-forward-block", "activeMetalBytes": 14592664954, "peakMetalBytes": 19330033018, "begin": 12032, "end": 12288}
+{"at": 1788953375.631405, "event": "attention-forward-block", "activeMetalBytes": 14659773818, "peakMetalBytes": 19330033018, "begin": 16128, "end": 16384}
+{"at": 1788953375.6621451, "event": "attention-forward-block", "activeMetalBytes": 14726882682, "peakMetalBytes": 19330033018, "begin": 20224, "end": 20480}
+{"at": 1788953375.691488, "event": "attention-forward-block", "activeMetalBytes": 14793991546, "peakMetalBytes": 19330033018, "begin": 24320, "end": 24576}
+{"at": 1788953375.987211, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 8}
+{"at": 1788953376.077805, "event": "attention-forward-block", "activeMetalBytes": 14429087098, "peakMetalBytes": 19330033018, "begin": 2048, "end": 2304}
+{"at": 1788953376.105912, "event": "attention-forward-block", "activeMetalBytes": 14496195962, "peakMetalBytes": 19330033018, "begin": 6144, "end": 6400}
+{"at": 1788953376.1351402, "event": "attention-forward-block", "activeMetalBytes": 14563304826, "peakMetalBytes": 19330033018, "begin": 10240, "end": 10496}
+{"at": 1788953376.164269, "event": "attention-forward-block", "activeMetalBytes": 14630413690, "peakMetalBytes": 19330033018, "begin": 14336, "end": 14592}
+{"at": 1788953376.193619, "event": "attention-forward-block", "activeMetalBytes": 14697522554, "peakMetalBytes": 19330033018, "begin": 18432, "end": 18688}
+{"at": 1788953376.223354, "event": "attention-forward-block", "activeMetalBytes": 14764631418, "peakMetalBytes": 19330033018, "begin": 22528, "end": 22784}
+{"at": 1788953376.548715, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 9}
+{"at": 1788953376.624855, "event": "attention-forward-block", "activeMetalBytes": 14399726970, "peakMetalBytes": 19330033018, "begin": 256, "end": 512}
+{"at": 1788953376.652253, "event": "attention-forward-block", "activeMetalBytes": 14466835834, "peakMetalBytes": 19330033018, "begin": 4352, "end": 4608}
+{"at": 1788953376.681359, "event": "attention-forward-block", "activeMetalBytes": 14533944698, "peakMetalBytes": 19330033018, "begin": 8448, "end": 8704}
+{"at": 1788953376.7125812, "event": "attention-forward-block", "activeMetalBytes": 14601053562, "peakMetalBytes": 19330033018, "begin": 12544, "end": 12800}
+{"at": 1788953376.744117, "event": "attention-forward-block", "activeMetalBytes": 14668162426, "peakMetalBytes": 19330033018, "begin": 16640, "end": 16896}
+{"at": 1788953376.781497, "event": "attention-forward-block", "activeMetalBytes": 14735271290, "peakMetalBytes": 19330033018, "begin": 20736, "end": 20992}
+{"at": 1788953376.815215, "event": "attention-forward-block", "activeMetalBytes": 14802380154, "peakMetalBytes": 19330033018, "begin": 24832, "end": 25088}
+{"at": 1788953377.1416981, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 10}
+{"at": 1788953377.253344, "event": "attention-forward-block", "activeMetalBytes": 14642832762, "peakMetalBytes": 19330033018, "begin": 2560, "end": 2816}
+{"at": 1788953377.357975, "event": "attention-forward-block", "activeMetalBytes": 14777050490, "peakMetalBytes": 19330033018, "begin": 6656, "end": 6912}
+{"at": 1788953377.536577, "event": "attention-forward-block", "activeMetalBytes": 14911268218, "peakMetalBytes": 19330033018, "begin": 10752, "end": 11008}
+{"at": 1788953377.772108, "event": "attention-forward-block", "activeMetalBytes": 15045485946, "peakMetalBytes": 19330033018, "begin": 14848, "end": 15104}
+{"at": 1788953378.069976, "event": "attention-forward-block", "activeMetalBytes": 15179703674, "peakMetalBytes": 19330033018, "begin": 18944, "end": 19200}
+{"at": 1788953378.440741, "event": "attention-forward-block", "activeMetalBytes": 15313921402, "peakMetalBytes": 19330033018, "begin": 23040, "end": 23296}
+{"at": 1788953379.054132, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 11}
+{"at": 1788953379.137717, "event": "attention-forward-block", "activeMetalBytes": 14408115578, "peakMetalBytes": 19330033018, "begin": 768, "end": 1024}
+{"at": 1788953379.171235, "event": "attention-forward-block", "activeMetalBytes": 14475224442, "peakMetalBytes": 19330033018, "begin": 4864, "end": 5120}
+{"at": 1788953379.204297, "event": "attention-forward-block", "activeMetalBytes": 14542333306, "peakMetalBytes": 19330033018, "begin": 8960, "end": 9216}
+{"at": 1788953379.234772, "event": "attention-forward-block", "activeMetalBytes": 14609442170, "peakMetalBytes": 19330033018, "begin": 13056, "end": 13312}
+{"at": 1788953379.268883, "event": "attention-forward-block", "activeMetalBytes": 14676551034, "peakMetalBytes": 19330033018, "begin": 17152, "end": 17408}
+{"at": 1788953379.302356, "event": "attention-forward-block", "activeMetalBytes": 14743659898, "peakMetalBytes": 19330033018, "begin": 21248, "end": 21504}
+{"at": 1788953379.335437, "event": "attention-forward-block", "activeMetalBytes": 14810768762, "peakMetalBytes": 19330033018, "begin": 25344, "end": 25600}
+{"at": 1788953379.730876, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 12}
+{"at": 1788953379.8370821, "event": "attention-forward-block", "activeMetalBytes": 14445864314, "peakMetalBytes": 19330033018, "begin": 3072, "end": 3328}
+{"at": 1788953379.8715541, "event": "attention-forward-block", "activeMetalBytes": 14512973178, "peakMetalBytes": 19330033018, "begin": 7168, "end": 7424}
+{"at": 1788953379.904047, "event": "attention-forward-block", "activeMetalBytes": 14580082042, "peakMetalBytes": 19330033018, "begin": 11264, "end": 11520}
+{"at": 1788953379.937075, "event": "attention-forward-block", "activeMetalBytes": 14647190906, "peakMetalBytes": 19330033018, "begin": 15360, "end": 15616}
+{"at": 1788953379.9713678, "event": "attention-forward-block", "activeMetalBytes": 14714299770, "peakMetalBytes": 19330033018, "begin": 19456, "end": 19712}
+{"at": 1788953380.003764, "event": "attention-forward-block", "activeMetalBytes": 14781408634, "peakMetalBytes": 19330033018, "begin": 23552, "end": 23808}
+{"at": 1788953380.427009, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 13}
+{"at": 1788953380.520843, "event": "attention-forward-block", "activeMetalBytes": 14416504186, "peakMetalBytes": 19330033018, "begin": 1280, "end": 1536}
+{"at": 1788953380.555226, "event": "attention-forward-block", "activeMetalBytes": 14483613050, "peakMetalBytes": 19330033018, "begin": 5376, "end": 5632}
+{"at": 1788953380.5870578, "event": "attention-forward-block", "activeMetalBytes": 14550721914, "peakMetalBytes": 19330033018, "begin": 9472, "end": 9728}
+{"at": 1788953380.621058, "event": "attention-forward-block", "activeMetalBytes": 14617830778, "peakMetalBytes": 19330033018, "begin": 13568, "end": 13824}
+{"at": 1788953380.654658, "event": "attention-forward-block", "activeMetalBytes": 14684939642, "peakMetalBytes": 19330033018, "begin": 17664, "end": 17920}
+{"at": 1788953380.69506, "event": "attention-forward-block", "activeMetalBytes": 14752048506, "peakMetalBytes": 19330033018, "begin": 21760, "end": 22016}
+{"at": 1788953380.735691, "event": "attention-forward-block", "activeMetalBytes": 14821172606, "peakMetalBytes": 19330033018, "begin": 25856, "end": 25908}
+{"at": 1788953381.142946, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 14}
+{"at": 1788953381.2610161, "event": "attention-forward-block", "activeMetalBytes": 14454252922, "peakMetalBytes": 19330033018, "begin": 3584, "end": 3840}
+{"at": 1788953381.293767, "event": "attention-forward-block", "activeMetalBytes": 14521361786, "peakMetalBytes": 19330033018, "begin": 7680, "end": 7936}
+{"at": 1788953381.327162, "event": "attention-forward-block", "activeMetalBytes": 14588470650, "peakMetalBytes": 19330033018, "begin": 11776, "end": 12032}
+{"at": 1788953381.361349, "event": "attention-forward-block", "activeMetalBytes": 14655579514, "peakMetalBytes": 19330033018, "begin": 15872, "end": 16128}
+{"at": 1788953381.3983219, "event": "attention-forward-block", "activeMetalBytes": 14722688378, "peakMetalBytes": 19330033018, "begin": 19968, "end": 20224}
+{"at": 1788953381.434183, "event": "attention-forward-block", "activeMetalBytes": 14789797242, "peakMetalBytes": 19330033018, "begin": 24064, "end": 24320}
+{"at": 1788953381.842813, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 15}
+{"at": 1788953381.937531, "event": "attention-forward-block", "activeMetalBytes": 14424892794, "peakMetalBytes": 19330033018, "begin": 1792, "end": 2048}
+{"at": 1788953381.97107, "event": "attention-forward-block", "activeMetalBytes": 14492001658, "peakMetalBytes": 19330033018, "begin": 5888, "end": 6144}
+{"at": 1788953382.004682, "event": "attention-forward-block", "activeMetalBytes": 14559110522, "peakMetalBytes": 19330033018, "begin": 9984, "end": 10240}
+{"at": 1788953382.037544, "event": "attention-forward-block", "activeMetalBytes": 14626219386, "peakMetalBytes": 19330033018, "begin": 14080, "end": 14336}
+{"at": 1788953382.071104, "event": "attention-forward-block", "activeMetalBytes": 14693328250, "peakMetalBytes": 19330033018, "begin": 18176, "end": 18432}
+{"at": 1788953382.104425, "event": "attention-forward-block", "activeMetalBytes": 14760437114, "peakMetalBytes": 19330033018, "begin": 22272, "end": 22528}
+{"at": 1788953382.5285602, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 16}
+{"at": 1788953382.628865, "event": "attention-forward-block", "activeMetalBytes": 14558946682, "peakMetalBytes": 19330033018, "begin": 0, "end": 256}
+{"at": 1788953382.6997812, "event": "attention-forward-block", "activeMetalBytes": 14693164410, "peakMetalBytes": 19330033018, "begin": 4096, "end": 4352}
+{"at": 1788953382.843374, "event": "attention-forward-block", "activeMetalBytes": 14827382138, "peakMetalBytes": 19330033018, "begin": 8192, "end": 8448}
+{"at": 1788953383.053967, "event": "attention-forward-block", "activeMetalBytes": 14961599866, "peakMetalBytes": 19330033018, "begin": 12288, "end": 12544}
+{"at": 1788953383.330175, "event": "attention-forward-block", "activeMetalBytes": 15095817594, "peakMetalBytes": 19330033018, "begin": 16384, "end": 16640}
+{"at": 1788953383.649647, "event": "attention-forward-block", "activeMetalBytes": 15230035322, "peakMetalBytes": 19330033018, "begin": 20480, "end": 20736}
+{"at": 1788953384.028416, "event": "attention-forward-block", "activeMetalBytes": 15364253050, "peakMetalBytes": 19330033018, "begin": 24576, "end": 24832}
+{"at": 1788953384.5283809, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 17}
+{"at": 1788953384.62306, "event": "attention-forward-block", "activeMetalBytes": 14433281402, "peakMetalBytes": 19330033018, "begin": 2304, "end": 2560}
+{"at": 1788953384.653901, "event": "attention-forward-block", "activeMetalBytes": 14500390266, "peakMetalBytes": 19330033018, "begin": 6400, "end": 6656}
+{"at": 1788953384.6849961, "event": "attention-forward-block", "activeMetalBytes": 14567499130, "peakMetalBytes": 19330033018, "begin": 10496, "end": 10752}
+{"at": 1788953384.718187, "event": "attention-forward-block", "activeMetalBytes": 14634607994, "peakMetalBytes": 19330033018, "begin": 14592, "end": 14848}
+{"at": 1788953384.75202, "event": "attention-forward-block", "activeMetalBytes": 14701716858, "peakMetalBytes": 19330033018, "begin": 18688, "end": 18944}
+{"at": 1788953384.785457, "event": "attention-forward-block", "activeMetalBytes": 14768825722, "peakMetalBytes": 19330033018, "begin": 22784, "end": 23040}
+{"at": 1788953385.217225, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 18}
+{"at": 1788953385.306139, "event": "attention-forward-block", "activeMetalBytes": 14403921274, "peakMetalBytes": 19330033018, "begin": 512, "end": 768}
+{"at": 1788953385.339665, "event": "attention-forward-block", "activeMetalBytes": 14471030138, "peakMetalBytes": 19330033018, "begin": 4608, "end": 4864}
+{"at": 1788953385.3731048, "event": "attention-forward-block", "activeMetalBytes": 14538139002, "peakMetalBytes": 19330033018, "begin": 8704, "end": 8960}
+{"at": 1788953385.406564, "event": "attention-forward-block", "activeMetalBytes": 14605247866, "peakMetalBytes": 19330033018, "begin": 12800, "end": 13056}
+{"at": 1788953385.4381518, "event": "attention-forward-block", "activeMetalBytes": 14672356730, "peakMetalBytes": 19330033018, "begin": 16896, "end": 17152}
+{"at": 1788953385.471176, "event": "attention-forward-block", "activeMetalBytes": 14739465594, "peakMetalBytes": 19330033018, "begin": 20992, "end": 21248}
+{"at": 1788953385.504321, "event": "attention-forward-block", "activeMetalBytes": 14806574458, "peakMetalBytes": 19330033018, "begin": 25088, "end": 25344}
+{"at": 1788953385.9194481, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 19}
+{"at": 1788953386.030389, "event": "attention-forward-block", "activeMetalBytes": 14441670010, "peakMetalBytes": 19330033018, "begin": 2816, "end": 3072}
+{"at": 1788953386.065494, "event": "attention-forward-block", "activeMetalBytes": 14508778874, "peakMetalBytes": 19330033018, "begin": 6912, "end": 7168}
+{"at": 1788953386.1024551, "event": "attention-forward-block", "activeMetalBytes": 14575887738, "peakMetalBytes": 19330033018, "begin": 11008, "end": 11264}
+{"at": 1788953386.1357381, "event": "attention-forward-block", "activeMetalBytes": 14642996602, "peakMetalBytes": 19330033018, "begin": 15104, "end": 15360}
+{"at": 1788953386.1698, "event": "attention-forward-block", "activeMetalBytes": 14710105466, "peakMetalBytes": 19330033018, "begin": 19200, "end": 19456}
+{"at": 1788953386.205525, "event": "attention-forward-block", "activeMetalBytes": 14777214330, "peakMetalBytes": 19330033018, "begin": 23296, "end": 23552}
+{"at": 1788953386.636001, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 20}
+{"at": 1788953386.732141, "event": "attention-forward-block", "activeMetalBytes": 14412309882, "peakMetalBytes": 19330033018, "begin": 1024, "end": 1280}
+{"at": 1788953386.764776, "event": "attention-forward-block", "activeMetalBytes": 14479418746, "peakMetalBytes": 19330033018, "begin": 5120, "end": 5376}
+{"at": 1788953386.798095, "event": "attention-forward-block", "activeMetalBytes": 14546527610, "peakMetalBytes": 19330033018, "begin": 9216, "end": 9472}
+{"at": 1788953386.831498, "event": "attention-forward-block", "activeMetalBytes": 14613636474, "peakMetalBytes": 19330033018, "begin": 13312, "end": 13568}
+{"at": 1788953386.864761, "event": "attention-forward-block", "activeMetalBytes": 14680745338, "peakMetalBytes": 19330033018, "begin": 17408, "end": 17664}
+{"at": 1788953386.89852, "event": "attention-forward-block", "activeMetalBytes": 14747854202, "peakMetalBytes": 19330033018, "begin": 21504, "end": 21760}
+{"at": 1788953386.933579, "event": "attention-forward-block", "activeMetalBytes": 14814963066, "peakMetalBytes": 19330033018, "begin": 25600, "end": 25856}
+{"at": 1788953387.341506, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 21}
+{"at": 1788953387.463233, "event": "attention-forward-block", "activeMetalBytes": 14450058618, "peakMetalBytes": 19330033018, "begin": 3328, "end": 3584}
+{"at": 1788953387.505497, "event": "attention-forward-block", "activeMetalBytes": 14517167482, "peakMetalBytes": 19330033018, "begin": 7424, "end": 7680}
+{"at": 1788953387.544676, "event": "attention-forward-block", "activeMetalBytes": 14584276346, "peakMetalBytes": 19330033018, "begin": 11520, "end": 11776}
+{"at": 1788953387.582005, "event": "attention-forward-block", "activeMetalBytes": 14651385210, "peakMetalBytes": 19330033018, "begin": 15616, "end": 15872}
+{"at": 1788953387.6166599, "event": "attention-forward-block", "activeMetalBytes": 14718494074, "peakMetalBytes": 19330033018, "begin": 19712, "end": 19968}
+{"at": 1788953387.649378, "event": "attention-forward-block", "activeMetalBytes": 14785602938, "peakMetalBytes": 19330033018, "begin": 23808, "end": 24064}
+{"at": 1788953388.062471, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 22}
+{"at": 1788953388.178334, "event": "attention-forward-block", "activeMetalBytes": 14609278330, "peakMetalBytes": 19330033018, "begin": 1536, "end": 1792}
+{"at": 1788953388.2731662, "event": "attention-forward-block", "activeMetalBytes": 14743496058, "peakMetalBytes": 19330033018, "begin": 5632, "end": 5888}
+{"at": 1788953388.444957, "event": "attention-forward-block", "activeMetalBytes": 14877713786, "peakMetalBytes": 19330033018, "begin": 9728, "end": 9984}
+{"at": 1788953388.684994, "event": "attention-forward-block", "activeMetalBytes": 15011931514, "peakMetalBytes": 19330033018, "begin": 13824, "end": 14080}
+{"at": 1788953388.970498, "event": "attention-forward-block", "activeMetalBytes": 15146149242, "peakMetalBytes": 19330033018, "begin": 17920, "end": 18176}
+{"at": 1788953389.317023, "event": "attention-forward-block", "activeMetalBytes": 15280366970, "peakMetalBytes": 19330033018, "begin": 22016, "end": 22272}
+{"at": 1788953390.038744, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 23}
+{"at": 1788953390.137023, "event": "attention-forward-block", "activeMetalBytes": 14458447226, "peakMetalBytes": 19330033018, "begin": 3840, "end": 4096}
+{"at": 1788953390.164403, "event": "attention-forward-block", "activeMetalBytes": 14525556090, "peakMetalBytes": 19330033018, "begin": 7936, "end": 8192}
+{"at": 1788953390.195449, "event": "attention-forward-block", "activeMetalBytes": 14592664954, "peakMetalBytes": 19330033018, "begin": 12032, "end": 12288}
+{"at": 1788953390.2256598, "event": "attention-forward-block", "activeMetalBytes": 14659773818, "peakMetalBytes": 19330033018, "begin": 16128, "end": 16384}
+{"at": 1788953390.255659, "event": "attention-forward-block", "activeMetalBytes": 14726882682, "peakMetalBytes": 19330033018, "begin": 20224, "end": 20480}
+{"at": 1788953390.282228, "event": "attention-forward-block", "activeMetalBytes": 14793991546, "peakMetalBytes": 19330033018, "begin": 24320, "end": 24576}
+{"at": 1788953390.6896808, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 24}
+{"at": 1788953390.7879648, "event": "attention-forward-block", "activeMetalBytes": 14429087098, "peakMetalBytes": 19330033018, "begin": 2048, "end": 2304}
+{"at": 1788953390.817486, "event": "attention-forward-block", "activeMetalBytes": 14496195962, "peakMetalBytes": 19330033018, "begin": 6144, "end": 6400}
+{"at": 1788953390.847496, "event": "attention-forward-block", "activeMetalBytes": 14563304826, "peakMetalBytes": 19330033018, "begin": 10240, "end": 10496}
+{"at": 1788953390.878688, "event": "attention-forward-block", "activeMetalBytes": 14630413690, "peakMetalBytes": 19330033018, "begin": 14336, "end": 14592}
+{"at": 1788953390.910282, "event": "attention-forward-block", "activeMetalBytes": 14697522554, "peakMetalBytes": 19330033018, "begin": 18432, "end": 18688}
+{"at": 1788953390.940748, "event": "attention-forward-block", "activeMetalBytes": 14764631418, "peakMetalBytes": 19330033018, "begin": 22528, "end": 22784}
+{"at": 1788953391.349271, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 25}
+{"at": 1788953391.432232, "event": "attention-forward-block", "activeMetalBytes": 14399726970, "peakMetalBytes": 19330033018, "begin": 256, "end": 512}
+{"at": 1788953391.4644659, "event": "attention-forward-block", "activeMetalBytes": 14466835834, "peakMetalBytes": 19330033018, "begin": 4352, "end": 4608}
+{"at": 1788953391.4971719, "event": "attention-forward-block", "activeMetalBytes": 14533944698, "peakMetalBytes": 19330033018, "begin": 8448, "end": 8704}
+{"at": 1788953391.528053, "event": "attention-forward-block", "activeMetalBytes": 14601053562, "peakMetalBytes": 19330033018, "begin": 12544, "end": 12800}
+{"at": 1788953391.5569038, "event": "attention-forward-block", "activeMetalBytes": 14668162426, "peakMetalBytes": 19330033018, "begin": 16640, "end": 16896}
+{"at": 1788953391.5870342, "event": "attention-forward-block", "activeMetalBytes": 14735271290, "peakMetalBytes": 19330033018, "begin": 20736, "end": 20992}
+{"at": 1788953391.6158972, "event": "attention-forward-block", "activeMetalBytes": 14802380154, "peakMetalBytes": 19330033018, "begin": 24832, "end": 25088}
+{"at": 1788953391.991887, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 26}
+{"at": 1788953392.099257, "event": "attention-forward-block", "activeMetalBytes": 14437475706, "peakMetalBytes": 19330033018, "begin": 2560, "end": 2816}
+{"at": 1788953392.130713, "event": "attention-forward-block", "activeMetalBytes": 14504584570, "peakMetalBytes": 19330033018, "begin": 6656, "end": 6912}
+{"at": 1788953392.15919, "event": "attention-forward-block", "activeMetalBytes": 14571693434, "peakMetalBytes": 19330033018, "begin": 10752, "end": 11008}
+{"at": 1788953392.190096, "event": "attention-forward-block", "activeMetalBytes": 14638802298, "peakMetalBytes": 19330033018, "begin": 14848, "end": 15104}
+{"at": 1788953392.222798, "event": "attention-forward-block", "activeMetalBytes": 14705911162, "peakMetalBytes": 19330033018, "begin": 18944, "end": 19200}
+{"at": 1788953392.254068, "event": "attention-forward-block", "activeMetalBytes": 14773020026, "peakMetalBytes": 19330033018, "begin": 23040, "end": 23296}
+{"at": 1788953392.638363, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 27}
+{"at": 1788953392.728881, "event": "attention-forward-block", "activeMetalBytes": 14408115578, "peakMetalBytes": 19330033018, "begin": 768, "end": 1024}
+{"at": 1788953392.7593448, "event": "attention-forward-block", "activeMetalBytes": 14475224442, "peakMetalBytes": 19330033018, "begin": 4864, "end": 5120}
+{"at": 1788953392.7902641, "event": "attention-forward-block", "activeMetalBytes": 14542333306, "peakMetalBytes": 19330033018, "begin": 8960, "end": 9216}
+{"at": 1788953392.8193998, "event": "attention-forward-block", "activeMetalBytes": 14609442170, "peakMetalBytes": 19330033018, "begin": 13056, "end": 13312}
+{"at": 1788953392.849271, "event": "attention-forward-block", "activeMetalBytes": 14676551034, "peakMetalBytes": 19330033018, "begin": 17152, "end": 17408}
+{"at": 1788953392.880733, "event": "attention-forward-block", "activeMetalBytes": 14743659898, "peakMetalBytes": 19330033018, "begin": 21248, "end": 21504}
+{"at": 1788953392.9105191, "event": "attention-forward-block", "activeMetalBytes": 14810768762, "peakMetalBytes": 19330033018, "begin": 25344, "end": 25600}
+{"at": 1788953393.276769, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 28}
+{"at": 1788953393.410569, "event": "attention-forward-block", "activeMetalBytes": 14659609978, "peakMetalBytes": 19330033018, "begin": 3072, "end": 3328}
+{"at": 1788953393.526588, "event": "attention-forward-block", "activeMetalBytes": 14793827706, "peakMetalBytes": 19330033018, "begin": 7168, "end": 7424}
+{"at": 1788953393.710314, "event": "attention-forward-block", "activeMetalBytes": 14928045434, "peakMetalBytes": 19330033018, "begin": 11264, "end": 11520}
+{"at": 1788953393.954632, "event": "attention-forward-block", "activeMetalBytes": 15062263162, "peakMetalBytes": 19330033018, "begin": 15360, "end": 15616}
+{"at": 1788953394.254972, "event": "attention-forward-block", "activeMetalBytes": 15196480890, "peakMetalBytes": 19330033018, "begin": 19456, "end": 19712}
+{"at": 1788953394.605645, "event": "attention-forward-block", "activeMetalBytes": 15330698618, "peakMetalBytes": 19330033018, "begin": 23552, "end": 23808}
+{"at": 1788953395.177359, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 29}
+{"at": 1788953395.262589, "event": "attention-forward-block", "activeMetalBytes": 14416504186, "peakMetalBytes": 19330033018, "begin": 1280, "end": 1536}
+{"at": 1788953395.292166, "event": "attention-forward-block", "activeMetalBytes": 14483613050, "peakMetalBytes": 19330033018, "begin": 5376, "end": 5632}
+{"at": 1788953395.3252811, "event": "attention-forward-block", "activeMetalBytes": 14550721914, "peakMetalBytes": 19330033018, "begin": 9472, "end": 9728}
+{"at": 1788953395.3580759, "event": "attention-forward-block", "activeMetalBytes": 14617830778, "peakMetalBytes": 19330033018, "begin": 13568, "end": 13824}
+{"at": 1788953395.386753, "event": "attention-forward-block", "activeMetalBytes": 14684939642, "peakMetalBytes": 19330033018, "begin": 17664, "end": 17920}
+{"at": 1788953395.414936, "event": "attention-forward-block", "activeMetalBytes": 14752048506, "peakMetalBytes": 19330033018, "begin": 21760, "end": 22016}
+{"at": 1788953395.444216, "event": "attention-forward-block", "activeMetalBytes": 14815815034, "peakMetalBytes": 19330033018, "begin": 25856, "end": 25908}
+{"at": 1788953395.8306, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 30}
+{"at": 1788953395.938655, "event": "attention-forward-block", "activeMetalBytes": 14454252922, "peakMetalBytes": 19330033018, "begin": 3584, "end": 3840}
+{"at": 1788953395.9700758, "event": "attention-forward-block", "activeMetalBytes": 14521361786, "peakMetalBytes": 19330033018, "begin": 7680, "end": 7936}
+{"at": 1788953396.003849, "event": "attention-forward-block", "activeMetalBytes": 14588470650, "peakMetalBytes": 19330033018, "begin": 11776, "end": 12032}
+{"at": 1788953396.037249, "event": "attention-forward-block", "activeMetalBytes": 14655579514, "peakMetalBytes": 19330033018, "begin": 15872, "end": 16128}
+{"at": 1788953396.069675, "event": "attention-forward-block", "activeMetalBytes": 14722688378, "peakMetalBytes": 19330033018, "begin": 19968, "end": 20224}
+{"at": 1788953396.0996869, "event": "attention-forward-block", "activeMetalBytes": 14789797242, "peakMetalBytes": 19330033018, "begin": 24064, "end": 24320}
+{"at": 1788953396.496904, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 31}
+{"at": 1788953396.59645, "event": "attention-forward-block", "activeMetalBytes": 14424892794, "peakMetalBytes": 19330033018, "begin": 1792, "end": 2048}
+{"at": 1788953396.627351, "event": "attention-forward-block", "activeMetalBytes": 14492001658, "peakMetalBytes": 19330033018, "begin": 5888, "end": 6144}
+{"at": 1788953396.658276, "event": "attention-forward-block", "activeMetalBytes": 14559110522, "peakMetalBytes": 19330033018, "begin": 9984, "end": 10240}
+{"at": 1788953396.689739, "event": "attention-forward-block", "activeMetalBytes": 14626219386, "peakMetalBytes": 19330033018, "begin": 14080, "end": 14336}
+{"at": 1788953396.719222, "event": "attention-forward-block", "activeMetalBytes": 14693328250, "peakMetalBytes": 19330033018, "begin": 18176, "end": 18432}
+{"at": 1788953396.752453, "event": "attention-forward-block", "activeMetalBytes": 14760437114, "peakMetalBytes": 19330033018, "begin": 22272, "end": 22528}
+{"at": 1788953397.148822, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 32}
+{"at": 1788953397.2313228, "event": "attention-forward-block", "activeMetalBytes": 14395532666, "peakMetalBytes": 19330033018, "begin": 0, "end": 256}
+{"at": 1788953397.262561, "event": "attention-forward-block", "activeMetalBytes": 14462641530, "peakMetalBytes": 19330033018, "begin": 4096, "end": 4352}
+{"at": 1788953397.292471, "event": "attention-forward-block", "activeMetalBytes": 14529750394, "peakMetalBytes": 19330033018, "begin": 8192, "end": 8448}
+{"at": 1788953397.321655, "event": "attention-forward-block", "activeMetalBytes": 14596859258, "peakMetalBytes": 19330033018, "begin": 12288, "end": 12544}
+{"at": 1788953397.3534021, "event": "attention-forward-block", "activeMetalBytes": 14663968122, "peakMetalBytes": 19330033018, "begin": 16384, "end": 16640}
+{"at": 1788953397.388535, "event": "attention-forward-block", "activeMetalBytes": 14731076986, "peakMetalBytes": 19330033018, "begin": 20480, "end": 20736}
+{"at": 1788953397.4222999, "event": "attention-forward-block", "activeMetalBytes": 14798185850, "peakMetalBytes": 19330033018, "begin": 24576, "end": 24832}
+{"at": 1788953397.796086, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 33}
+{"at": 1788953397.889753, "event": "attention-forward-block", "activeMetalBytes": 14433281402, "peakMetalBytes": 19330033018, "begin": 2304, "end": 2560}
+{"at": 1788953397.9232771, "event": "attention-forward-block", "activeMetalBytes": 14500390266, "peakMetalBytes": 19330033018, "begin": 6400, "end": 6656}
+{"at": 1788953397.956594, "event": "attention-forward-block", "activeMetalBytes": 14567499130, "peakMetalBytes": 19330033018, "begin": 10496, "end": 10752}
+{"at": 1788953397.986971, "event": "attention-forward-block", "activeMetalBytes": 14634607994, "peakMetalBytes": 19330033018, "begin": 14592, "end": 14848}
+{"at": 1788953398.01726, "event": "attention-forward-block", "activeMetalBytes": 14701716858, "peakMetalBytes": 19330033018, "begin": 18688, "end": 18944}
+{"at": 1788953398.047544, "event": "attention-forward-block", "activeMetalBytes": 14768825722, "peakMetalBytes": 19330033018, "begin": 22784, "end": 23040}
+{"at": 1788953398.4268851, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 34}
+{"at": 1788953398.525759, "event": "attention-forward-block", "activeMetalBytes": 14575723898, "peakMetalBytes": 19330033018, "begin": 512, "end": 768}
+{"at": 1788953398.597974, "event": "attention-forward-block", "activeMetalBytes": 14709941626, "peakMetalBytes": 19330033018, "begin": 4608, "end": 4864}
+{"at": 1788953398.745159, "event": "attention-forward-block", "activeMetalBytes": 14844159354, "peakMetalBytes": 19330033018, "begin": 8704, "end": 8960}
+{"at": 1788953398.94634, "event": "attention-forward-block", "activeMetalBytes": 14978377082, "peakMetalBytes": 19330033018, "begin": 12800, "end": 13056}
+{"at": 1788953399.209745, "event": "attention-forward-block", "activeMetalBytes": 15112594810, "peakMetalBytes": 19330033018, "begin": 16896, "end": 17152}
+{"at": 1788953399.522613, "event": "attention-forward-block", "activeMetalBytes": 15246812538, "peakMetalBytes": 19330033018, "begin": 20992, "end": 21248}
+{"at": 1788953399.901831, "event": "attention-forward-block", "activeMetalBytes": 15381030266, "peakMetalBytes": 19330033018, "begin": 25088, "end": 25344}
+{"at": 1788953400.334243, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 35}
+{"at": 1788953400.422601, "event": "attention-forward-block", "activeMetalBytes": 14441670010, "peakMetalBytes": 19330033018, "begin": 2816, "end": 3072}
+{"at": 1788953400.452818, "event": "attention-forward-block", "activeMetalBytes": 14508778874, "peakMetalBytes": 19330033018, "begin": 6912, "end": 7168}
+{"at": 1788953400.485921, "event": "attention-forward-block", "activeMetalBytes": 14575887738, "peakMetalBytes": 19330033018, "begin": 11008, "end": 11264}
+{"at": 1788953400.5193028, "event": "attention-forward-block", "activeMetalBytes": 14642996602, "peakMetalBytes": 19330033018, "begin": 15104, "end": 15360}
+{"at": 1788953400.552207, "event": "attention-forward-block", "activeMetalBytes": 14710105466, "peakMetalBytes": 19330033018, "begin": 19200, "end": 19456}
+{"at": 1788953400.582378, "event": "attention-forward-block", "activeMetalBytes": 14777214330, "peakMetalBytes": 19330033018, "begin": 23296, "end": 23552}
+{"at": 1788953400.969085, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 36}
+{"at": 1788953401.06075, "event": "attention-forward-block", "activeMetalBytes": 14412309882, "peakMetalBytes": 19330033018, "begin": 1024, "end": 1280}
+{"at": 1788953401.096132, "event": "attention-forward-block", "activeMetalBytes": 14479418746, "peakMetalBytes": 19330033018, "begin": 5120, "end": 5376}
+{"at": 1788953401.129819, "event": "attention-forward-block", "activeMetalBytes": 14546527610, "peakMetalBytes": 19330033018, "begin": 9216, "end": 9472}
+{"at": 1788953401.1631942, "event": "attention-forward-block", "activeMetalBytes": 14613636474, "peakMetalBytes": 19330033018, "begin": 13312, "end": 13568}
+{"at": 1788953401.194869, "event": "attention-forward-block", "activeMetalBytes": 14680745338, "peakMetalBytes": 19330033018, "begin": 17408, "end": 17664}
+{"at": 1788953401.226968, "event": "attention-forward-block", "activeMetalBytes": 14747854202, "peakMetalBytes": 19330033018, "begin": 21504, "end": 21760}
+{"at": 1788953401.25997, "event": "attention-forward-block", "activeMetalBytes": 14814963066, "peakMetalBytes": 19330033018, "begin": 25600, "end": 25856}
+{"at": 1788953401.6321778, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 37}
+{"at": 1788953401.7332501, "event": "attention-forward-block", "activeMetalBytes": 14450058618, "peakMetalBytes": 19330033018, "begin": 3328, "end": 3584}
+{"at": 1788953401.766454, "event": "attention-forward-block", "activeMetalBytes": 14517167482, "peakMetalBytes": 19330033018, "begin": 7424, "end": 7680}
+{"at": 1788953401.799953, "event": "attention-forward-block", "activeMetalBytes": 14584276346, "peakMetalBytes": 19330033018, "begin": 11520, "end": 11776}
+{"at": 1788953401.833136, "event": "attention-forward-block", "activeMetalBytes": 14651385210, "peakMetalBytes": 19330033018, "begin": 15616, "end": 15872}
+{"at": 1788953401.8674078, "event": "attention-forward-block", "activeMetalBytes": 14718494074, "peakMetalBytes": 19330033018, "begin": 19712, "end": 19968}
+{"at": 1788953401.897426, "event": "attention-forward-block", "activeMetalBytes": 14785602938, "peakMetalBytes": 19330033018, "begin": 23808, "end": 24064}
+{"at": 1788953402.2767942, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 38}
+{"at": 1788953402.3691058, "event": "attention-forward-block", "activeMetalBytes": 14420698490, "peakMetalBytes": 19330033018, "begin": 1536, "end": 1792}
+{"at": 1788953402.4025002, "event": "attention-forward-block", "activeMetalBytes": 14487807354, "peakMetalBytes": 19330033018, "begin": 5632, "end": 5888}
+{"at": 1788953402.435719, "event": "attention-forward-block", "activeMetalBytes": 14554916218, "peakMetalBytes": 19330033018, "begin": 9728, "end": 9984}
+{"at": 1788953402.469295, "event": "attention-forward-block", "activeMetalBytes": 14622025082, "peakMetalBytes": 19330033018, "begin": 13824, "end": 14080}
+{"at": 1788953402.5033731, "event": "attention-forward-block", "activeMetalBytes": 14689133946, "peakMetalBytes": 19330033018, "begin": 17920, "end": 18176}
+{"at": 1788953402.538037, "event": "attention-forward-block", "activeMetalBytes": 14756242810, "peakMetalBytes": 19330033018, "begin": 22016, "end": 22272}
+{"at": 1788953402.9150422, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19330033018, "layer": 39}
+{"at": 1788953403.033309, "event": "attention-forward-block", "activeMetalBytes": 14458447226, "peakMetalBytes": 19330033018, "begin": 3840, "end": 4096}
+{"at": 1788953403.069387, "event": "attention-forward-block", "activeMetalBytes": 14525556090, "peakMetalBytes": 19330033018, "begin": 7936, "end": 8192}
+{"at": 1788953403.102818, "event": "attention-forward-block", "activeMetalBytes": 14592664954, "peakMetalBytes": 19330033018, "begin": 12032, "end": 12288}
+{"at": 1788953403.140497, "event": "attention-forward-block", "activeMetalBytes": 14659773818, "peakMetalBytes": 19330033018, "begin": 16128, "end": 16384}
+{"at": 1788953403.177475, "event": "attention-forward-block", "activeMetalBytes": 14726882682, "peakMetalBytes": 19330033018, "begin": 20224, "end": 20480}
+{"at": 1788953403.211215, "event": "attention-forward-block", "activeMetalBytes": 14793991546, "peakMetalBytes": 19330033018, "begin": 24320, "end": 24576}
+{"at": 1788953403.579995, "event": "frozen-layer", "activeMetalBytes": 13117908346, "peakMetalBytes": 19330033018, "layer": 40}
+{"at": 1788953403.6956642, "event": "attention-forward-block", "activeMetalBytes": 14626055546, "peakMetalBytes": 19330033018, "begin": 2048, "end": 2304}
+{"at": 1788953403.8017669, "event": "attention-forward-block", "activeMetalBytes": 14760273274, "peakMetalBytes": 19330033018, "begin": 6144, "end": 6400}
+{"at": 1788953403.982326, "event": "attention-forward-block", "activeMetalBytes": 14894491002, "peakMetalBytes": 19330033018, "begin": 10240, "end": 10496}
+{"at": 1788953404.2241879, "event": "attention-forward-block", "activeMetalBytes": 15028708730, "peakMetalBytes": 19330033018, "begin": 14336, "end": 14592}
+{"at": 1788953404.521321, "event": "attention-forward-block", "activeMetalBytes": 15162926458, "peakMetalBytes": 19330033018, "begin": 18432, "end": 18688}
+{"at": 1788953404.881678, "event": "attention-forward-block", "activeMetalBytes": 15297144186, "peakMetalBytes": 19330033018, "begin": 22528, "end": 22784}
+{"at": 1788953405.5619168, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19363587450, "layer": 41}
+{"at": 1788953405.655875, "event": "attention-forward-block", "activeMetalBytes": 14399726970, "peakMetalBytes": 19363587450, "begin": 256, "end": 512}
+{"at": 1788953405.699541, "event": "attention-forward-block", "activeMetalBytes": 14466835834, "peakMetalBytes": 19363587450, "begin": 4352, "end": 4608}
+{"at": 1788953405.739142, "event": "attention-forward-block", "activeMetalBytes": 14533944698, "peakMetalBytes": 19363587450, "begin": 8448, "end": 8704}
+{"at": 1788953405.7782762, "event": "attention-forward-block", "activeMetalBytes": 14601053562, "peakMetalBytes": 19363587450, "begin": 12544, "end": 12800}
+{"at": 1788953405.816177, "event": "attention-forward-block", "activeMetalBytes": 14668162426, "peakMetalBytes": 19363587450, "begin": 16640, "end": 16896}
+{"at": 1788953405.855402, "event": "attention-forward-block", "activeMetalBytes": 14735271290, "peakMetalBytes": 19363587450, "begin": 20736, "end": 20992}
+{"at": 1788953405.8933382, "event": "attention-forward-block", "activeMetalBytes": 14802380154, "peakMetalBytes": 19363587450, "begin": 24832, "end": 25088}
+{"at": 1788953406.264069, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19363587450, "layer": 42}
+{"at": 1788953406.372224, "event": "attention-forward-block", "activeMetalBytes": 14437475706, "peakMetalBytes": 19363587450, "begin": 2560, "end": 2816}
+{"at": 1788953406.407485, "event": "attention-forward-block", "activeMetalBytes": 14504584570, "peakMetalBytes": 19363587450, "begin": 6656, "end": 6912}
+{"at": 1788953406.4455192, "event": "attention-forward-block", "activeMetalBytes": 14571693434, "peakMetalBytes": 19363587450, "begin": 10752, "end": 11008}
+{"at": 1788953406.482317, "event": "attention-forward-block", "activeMetalBytes": 14638802298, "peakMetalBytes": 19363587450, "begin": 14848, "end": 15104}
+{"at": 1788953406.519692, "event": "attention-forward-block", "activeMetalBytes": 14705911162, "peakMetalBytes": 19363587450, "begin": 18944, "end": 19200}
+{"at": 1788953406.557346, "event": "attention-forward-block", "activeMetalBytes": 14773020026, "peakMetalBytes": 19363587450, "begin": 23040, "end": 23296}
+{"at": 1788953406.940876, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19363587450, "layer": 43}
+{"at": 1788953407.029855, "event": "attention-forward-block", "activeMetalBytes": 14408115578, "peakMetalBytes": 19363587450, "begin": 768, "end": 1024}
+{"at": 1788953407.064327, "event": "attention-forward-block", "activeMetalBytes": 14475224442, "peakMetalBytes": 19363587450, "begin": 4864, "end": 5120}
+{"at": 1788953407.104581, "event": "attention-forward-block", "activeMetalBytes": 14542333306, "peakMetalBytes": 19363587450, "begin": 8960, "end": 9216}
+{"at": 1788953407.141653, "event": "attention-forward-block", "activeMetalBytes": 14609442170, "peakMetalBytes": 19363587450, "begin": 13056, "end": 13312}
+{"at": 1788953407.177015, "event": "attention-forward-block", "activeMetalBytes": 14676551034, "peakMetalBytes": 19363587450, "begin": 17152, "end": 17408}
+{"at": 1788953407.214741, "event": "attention-forward-block", "activeMetalBytes": 14743659898, "peakMetalBytes": 19363587450, "begin": 21248, "end": 21504}
+{"at": 1788953407.250091, "event": "attention-forward-block", "activeMetalBytes": 14810768762, "peakMetalBytes": 19363587450, "begin": 25344, "end": 25600}
+{"at": 1788953407.607797, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19363587450, "layer": 44}
+{"at": 1788953407.707007, "event": "attention-forward-block", "activeMetalBytes": 14445864314, "peakMetalBytes": 19363587450, "begin": 3072, "end": 3328}
+{"at": 1788953407.740212, "event": "attention-forward-block", "activeMetalBytes": 14512973178, "peakMetalBytes": 19363587450, "begin": 7168, "end": 7424}
+{"at": 1788953407.77391, "event": "attention-forward-block", "activeMetalBytes": 14580082042, "peakMetalBytes": 19363587450, "begin": 11264, "end": 11520}
+{"at": 1788953407.809309, "event": "attention-forward-block", "activeMetalBytes": 14647190906, "peakMetalBytes": 19363587450, "begin": 15360, "end": 15616}
+{"at": 1788953407.845994, "event": "attention-forward-block", "activeMetalBytes": 14714299770, "peakMetalBytes": 19363587450, "begin": 19456, "end": 19712}
+{"at": 1788953407.8833752, "event": "attention-forward-block", "activeMetalBytes": 14781408634, "peakMetalBytes": 19363587450, "begin": 23552, "end": 23808}
+{"at": 1788953408.2515872, "event": "frozen-layer", "activeMetalBytes": 12918924666, "peakMetalBytes": 19363587450, "layer": 45}
+{"at": 1788953408.3892858, "event": "attention-forward-block", "activeMetalBytes": 14416422266, "peakMetalBytes": 19363587450, "begin": 1280, "end": 1536}
+{"at": 1788953408.424553, "event": "attention-forward-block", "activeMetalBytes": 14483531130, "peakMetalBytes": 19363587450, "begin": 5376, "end": 5632}
+{"at": 1788953408.459589, "event": "attention-forward-block", "activeMetalBytes": 14550639994, "peakMetalBytes": 19363587450, "begin": 9472, "end": 9728}
+{"at": 1788953408.497487, "event": "attention-forward-block", "activeMetalBytes": 14617748858, "peakMetalBytes": 19363587450, "begin": 13568, "end": 13824}
+{"at": 1788953408.534015, "event": "attention-forward-block", "activeMetalBytes": 14684857722, "peakMetalBytes": 19363587450, "begin": 17664, "end": 17920}
+{"at": 1788953408.5696151, "event": "attention-forward-block", "activeMetalBytes": 14751966586, "peakMetalBytes": 19363587450, "begin": 21760, "end": 22016}
+{"at": 1788953408.6056142, "event": "attention-forward-block", "activeMetalBytes": 14815733114, "peakMetalBytes": 19363587450, "begin": 25856, "end": 25908}
+{"at": 1788953408.788804, "event": "mlp-forward-block", "activeMetalBytes": 13560505722, "peakMetalBytes": 19363587450, "begin": 3840, "end": 4096}
+{"at": 1788953408.862754, "event": "mlp-forward-block", "activeMetalBytes": 13591963002, "peakMetalBytes": 19363587450, "begin": 7936, "end": 8192}
+{"at": 1788953408.938911, "event": "mlp-forward-block", "activeMetalBytes": 13623420282, "peakMetalBytes": 19363587450, "begin": 12032, "end": 12288}
+{"at": 1788953409.014664, "event": "mlp-forward-block", "activeMetalBytes": 13654877562, "peakMetalBytes": 19363587450, "begin": 16128, "end": 16384}
+{"at": 1788953409.093011, "event": "mlp-forward-block", "activeMetalBytes": 13690267002, "peakMetalBytes": 19363587450, "begin": 20224, "end": 20480}
+{"at": 1788953409.170478, "event": "mlp-forward-block", "activeMetalBytes": 13721724282, "peakMetalBytes": 19363587450, "begin": 24320, "end": 24576}
+{"at": 1788953409.379086, "event": "attention-forward-block", "activeMetalBytes": 14833345914, "peakMetalBytes": 19363587450, "begin": 2304, "end": 2560}
+{"at": 1788953409.491176, "event": "attention-forward-block", "activeMetalBytes": 14967563642, "peakMetalBytes": 19363587450, "begin": 6400, "end": 6656}
+{"at": 1788953409.674603, "event": "attention-forward-block", "activeMetalBytes": 15101781370, "peakMetalBytes": 19363587450, "begin": 10496, "end": 10752}
+{"at": 1788953409.917603, "event": "attention-forward-block", "activeMetalBytes": 15235999098, "peakMetalBytes": 19363587450, "begin": 14592, "end": 14848}
+{"at": 1788953410.2262242, "event": "attention-forward-block", "activeMetalBytes": 15370216826, "peakMetalBytes": 19363587450, "begin": 18688, "end": 18944}
+{"at": 1788953410.588504, "event": "attention-forward-block", "activeMetalBytes": 15504434554, "peakMetalBytes": 19363587450, "begin": 22784, "end": 23040}
+{"at": 1788953411.084865, "event": "mlp-forward-block", "activeMetalBytes": 13576742266, "peakMetalBytes": 19363587450, "begin": 768, "end": 1024}
+{"at": 1788953411.155367, "event": "mlp-forward-block", "activeMetalBytes": 13608199546, "peakMetalBytes": 19363587450, "begin": 4864, "end": 5120}
+{"at": 1788953411.224063, "event": "mlp-forward-block", "activeMetalBytes": 13639656826, "peakMetalBytes": 19363587450, "begin": 8960, "end": 9216}
+{"at": 1788953411.294589, "event": "mlp-forward-block", "activeMetalBytes": 13675046266, "peakMetalBytes": 19363587450, "begin": 13056, "end": 13312}
+{"at": 1788953411.3680708, "event": "mlp-forward-block", "activeMetalBytes": 13702571386, "peakMetalBytes": 19363587450, "begin": 17152, "end": 17408}
+{"at": 1788953411.442629, "event": "mlp-forward-block", "activeMetalBytes": 13734028666, "peakMetalBytes": 19363587450, "begin": 21248, "end": 21504}
+{"at": 1788953411.5166872, "event": "mlp-forward-block", "activeMetalBytes": 13765485946, "peakMetalBytes": 19363587450, "begin": 25344, "end": 25600}
+{"at": 1788953411.766774, "event": "loss-forward-block", "activeMetalBytes": 13515793794, "peakMetalBytes": 19363587450, "begin": 1664, "end": 1792}
+{"at": 1788953412.0116422, "event": "loss-forward-block", "activeMetalBytes": 13515793794, "peakMetalBytes": 19363587450, "begin": 3712, "end": 3840}
+{"at": 1788953412.834218, "event": "loss-backward-block", "activeMetalBytes": 15150983062, "peakMetalBytes": 19363587450, "begin": 896, "end": 1024}
+{"at": 1788953414.301939, "event": "loss-backward-block", "activeMetalBytes": 15198168982, "peakMetalBytes": 19363587450, "begin": 2944, "end": 3072}
+{"at": 1788953415.7646239, "event": "attention-forward-block", "activeMetalBytes": 19011888524, "peakMetalBytes": 19363587450, "begin": 256, "end": 512}
+{"at": 1788953415.879592, "event": "attention-forward-block", "activeMetalBytes": 19146106252, "peakMetalBytes": 19390555540, "begin": 4352, "end": 4608}
+{"at": 1788953416.144673, "event": "attention-forward-block", "activeMetalBytes": 19280323980, "peakMetalBytes": 19727148436, "begin": 8448, "end": 8704}
+{"at": 1788953416.534806, "event": "attention-forward-block", "activeMetalBytes": 19414541708, "peakMetalBytes": 20088973716, "begin": 12544, "end": 12800}
+{"at": 1788953417.0819101, "event": "attention-forward-block", "activeMetalBytes": 19548759436, "peakMetalBytes": 20433971604, "begin": 16640, "end": 16896}
+{"at": 1788953417.712686, "event": "attention-forward-block", "activeMetalBytes": 19682977164, "peakMetalBytes": 20778969492, "begin": 20736, "end": 20992}
+{"at": 1788953418.451138, "event": "attention-forward-block", "activeMetalBytes": 19817194892, "peakMetalBytes": 21123967380, "begin": 24832, "end": 25088}
+{"at": 1788953418.8409228, "event": "mlp-forward-block", "activeMetalBytes": 23556203920, "peakMetalBytes": 24090305946, "begin": 2816, "end": 3072}
+{"at": 1788953418.9285178, "event": "mlp-forward-block", "activeMetalBytes": 23587661200, "peakMetalBytes": 24090305946, "begin": 6912, "end": 7168}
+{"at": 1788953419.016015, "event": "mlp-forward-block", "activeMetalBytes": 23619118480, "peakMetalBytes": 24090305946, "begin": 11008, "end": 11264}
+{"at": 1788953419.106345, "event": "mlp-forward-block", "activeMetalBytes": 23650575760, "peakMetalBytes": 24090305946, "begin": 15104, "end": 15360}
+{"at": 1788953419.1975172, "event": "mlp-forward-block", "activeMetalBytes": 23682033040, "peakMetalBytes": 24090305946, "begin": 19200, "end": 19456}
+{"at": 1788953419.287366, "event": "mlp-forward-block", "activeMetalBytes": 23713490320, "peakMetalBytes": 24090305946, "begin": 23296, "end": 23552}
+{"at": 1788953419.437516, "event": "mlp-backward-block", "activeMetalBytes": 24574313374, "peakMetalBytes": 24578245534, "begin": 1280, "end": 1536}
+{"at": 1788953419.649173, "event": "mlp-backward-block", "activeMetalBytes": 24668685214, "peakMetalBytes": 24672617374, "begin": 5376, "end": 5632}
+{"at": 1788953419.864119, "event": "mlp-backward-block", "activeMetalBytes": 24763057054, "peakMetalBytes": 24766989214, "begin": 9472, "end": 9728}
+{"at": 1788953420.0927, "event": "mlp-backward-block", "activeMetalBytes": 24857428894, "peakMetalBytes": 24861361054, "begin": 13568, "end": 13824}
+{"at": 1788953420.313217, "event": "mlp-backward-block", "activeMetalBytes": 24951800734, "peakMetalBytes": 24955732894, "begin": 17664, "end": 17920}
+{"at": 1788953420.534213, "event": "mlp-backward-block", "activeMetalBytes": 25046172574, "peakMetalBytes": 25050104734, "begin": 21760, "end": 22016}
+{"at": 1788953420.746482, "event": "mlp-backward-block", "activeMetalBytes": 24968463262, "peakMetalBytes": 25138578334, "begin": 25856, "end": 25908}
+{"at": 1788953421.585856, "event": "attention-backward-block", "activeMetalBytes": 29531940240, "peakMetalBytes": 30658586012, "begin": 3840, "end": 4096}
+{"at": 1788953423.146488, "event": "attention-backward-block", "activeMetalBytes": 29667222928, "peakMetalBytes": 31699838364, "begin": 7936, "end": 8192}
+{"at": 1788953426.734378, "event": "attention-backward-block", "activeMetalBytes": 29802505616, "peakMetalBytes": 32741090716, "begin": 12032, "end": 12288}
+{"at": 1788953429.5432682, "event": "attention-backward-block", "activeMetalBytes": 29937788304, "peakMetalBytes": 33782343068, "begin": 16128, "end": 16384}
+{"at": 1788953432.852541, "event": "attention-backward-block", "activeMetalBytes": 30073070992, "peakMetalBytes": 34823595420, "begin": 20224, "end": 20480}

@@ -2,6 +2,24 @@
 
 2026-09-09。本報告不是生成品質或上場認證。
 
+**最新入口：** [兩批 74 名凍結資料](hero74-training-v2/README.md)（500 train／119 internal dev）與 [完整長度記憶體修正進度](HERO74_MEMORY_PROGRESS.md)。以下 124／110 筆資料、舊 exclusion 與 v2–v7 失敗描述均保留為歷史，不得當作現行訓練選樣或最新探針狀態。
+
+## 追加：目錄無損壓縮與 Metal 記憶體路徑修正
+
+`frozen-factorized/` 用完全相同後綴集合做 Cartesian factoring，並逐筆展開比對原目錄：124 筆需求／契約／答案／分組不變，全部 2,146 個 public catalog／icon IDs 與 34 個 uploaded model metadata 不變，不加入不存在的副檔名或技能槽。train 完整 tokens 降至 2,368,283（答案仍 83,711），dev 304,204；最長由 29,957 降至 25,909。
+
+新預檢依四種格式事先選取最大輸入與最大答案的既有 train 樣本，不使用 dev 梯度：native-content（11 train／2 dev）、native-slot（76／12）、hero-plan（1／0）、hero-slot（22／0）。單輪估算為各格式實測最慢 gradient ×（train 數＋2×dev 數），加總後乘 1.5、再加 300 秒；這是准入估算而非時間保證，所有原有硬保護不變。
+
+這個僅壓縮目錄的 v3 probe 仍然失敗：96.333 秒後 supervisor 偵測到 `SWAP_GROWTH`，最後監測增量 2.966 GiB（2 秒取樣可超越 2 GiB 門檻才停止），最低可用 RAM 18.26 GiB；接電與電池 100% 維持。沒有完成第一個全英雄 gradient，沒有 optimizer 更新。worker／supervisor 已確認不存在，鎖已釋放。完整證據在 `probe-factorized/`；`worker.py.txt` 重建後 SHA-256 與實際執行的 worker hash 完全相等。
+
+確定環境是 MLX 0.32.2、mlx-vlm 0.6.17。MLX 同版本 Metal SDPA 在 training trace 預設選 unfused；其 Metal VJP 也固定 fallback（非融合），forward fallback 會顯式計算 Q×Kᵀ。[Metal SDPA 固定版本](https://github.com/ml-explore/mlx/blob/v0.32.2/mlx/backend/metal/scaled_dot_product_attention.cpp#L670)、[fallback 固定版本](https://github.com/ml-explore/mlx/blob/v0.32.2/mlx/fast.cpp#L766)。本模型最後兩層為 sliding/full attention，head dim 256／512、16 query heads。25,908 個輸入 token 的單個 float32 scores 理論體積約 40.008 GiB；這是形狀計算，不是假裝量到的 peak Metal。不能只用模型權重大小估完整序列訓練 RAM。
+
+因此停止用目錄縮短反覆碰運氣，改為 `hero-distillation-memory.py` 的受限文字訓練路徑：query 分塊、完整因果／1024 滑動視窗不變、反向逐塊調用 MLX 自己的 VJP，K/V 梯度以 float32 累加；frozen vocabulary head 的 CE 也逐塊計算與重算梯度。全部來源與答案 token 保留，不更新 installed library、不改模型架構、不改資料答案。禁止把此 uncached/text-only 路徑套用到視覺、音訊、cache 或 attention sinks。
+
+CPU primitive equivalence 3 項測試（含 5 組 attention 子案例）通過，float32 forward／Q/K/V／hidden-loss gradients 使用 2e-5 絕對容許差，涵蓋 GQA、非整除 block、長度 1、滑動視窗、256／512 head dimension 與最後一個答案 token。真實 12B control 另在新 manifest 事先固定 1,153 tokens，跨 256 query-block、128 CE-block 和 1024 滑動邊界；BF16 loss 差須 ≤0.02、每個 adapter tensor 梯度 relative L2 ≤0.02，非 bitwise 宣稱，不於看結果後放寬。該 control 通過才進完整序列預檢，目前不得據此宣稱單輪训练已完成。
+
+以下保留首版完整上下文 probe 的歷史證據。
+
 ## 已完成與實際結果
 
 首個完整序列 GPU 預檢在 120 秒 gradient-probe 單步上限停止，worker／supervisor 均已退出、全域鎖已釋放。沒有 optimizer update、没有產出新 adapter。保留完整失敗證據，不把 kernel control 或資料凍結當成已訓練。

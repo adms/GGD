@@ -1,0 +1,65 @@
+{
+  "schema": "ggd-distillation-receipt@1",
+  "run": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/full-hero-distillation-v9",
+  "phases": {
+    "probe": {
+      "status": "stopped-or-failed",
+      "error": "AssertionError('WORKER_EXIT:1')",
+      "wallSeconds": 44.10816287994385,
+      "optimizerStepsRecorded": 0,
+      "minAvailableBytes": 56805572608,
+      "maxObservedSwapGrowthBytes": 0,
+      "allSamplesOnAC": true,
+      "minBatteryPercent": 100
+    }
+  },
+  "files": {
+    "manifest.json": {
+      "sha256": "8c1c88c4c1b322814bcdb1813e824c38b1b0cbeb63fad3cc2352485332984da9",
+      "bytes": 4654
+    },
+    "source/hero-distillation-train.py": {
+      "sha256": "5afb725853cd7b5ca5f90c9d50d918f0bffd45f6d816e2de235e4830797c942b",
+      "bytes": 27736
+    },
+    "source/hero-distillation-memory.py": {
+      "sha256": "0a7c9699382571a726b6ed7c41b189f857c039f7fdd991725d1b4c6b37fd0c21",
+      "bytes": 12064
+    },
+    "probe/kernel-equivalence.json": {
+      "sha256": "e7ada21b383b46c0f43540a5fde2e53538308318ec881c83c15afd2d718c2a89",
+      "bytes": 1791
+    },
+    "probe/memory-trace.jsonl": {
+      "sha256": "f8aa3189703c4cd40ac4df38362c99f978b57c8aab9411d09d3245e969a6fec9",
+      "bytes": 56816
+    },
+    "probe/state.json": {
+      "sha256": "a3180b22091022e4fa256aea5a8cd4e08569a2df674eb8d0aae328bb02ce3d07",
+      "bytes": 3761
+    },
+    "probe/worker-progress.json": {
+      "sha256": "85f4c1ce152172a3e704a47ceac0a8a3b30d409c424798ba66073307aecc9450",
+      "bytes": 104
+    },
+    "probe/worker.log": {
+      "sha256": "421cb095c36ba5658529b781793ace16d2999c74919be8083b1c776f3d25b802",
+      "bytes": 1244
+    },
+    "token-preflight.json": {
+      "sha256": "0231d2b6466fb584a0170983a7e628c3caeb023016290c70bf7173a8fe11a061",
+      "bytes": 800
+    }
+  },
+  "omitted": [
+    {
+      "path": "tokens.json",
+      "bytes": 85324174,
+      "sha256": "5df904d2a36cdea55f51cb5c7dec2f64facd8fc6e0584e0f4e1ecfcebad77d00",
+      "reason": "not-a-receipt"
+    }
+  ],
+  "fullHeroE2EProven": false,
+  "modelPromoted": false,
+  "note": "Terminal supervisor receipts, not a live process query or model quality assessment."
+}

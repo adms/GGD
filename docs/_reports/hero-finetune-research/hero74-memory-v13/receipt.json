@@ -1,0 +1,69 @@
+{
+  "schema": "ggd-distillation-receipt@1",
+  "run": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/full-hero-distillation-v13",
+  "phases": {
+    "probe": {
+      "status": "stopped-or-failed",
+      "error": "AssertionError('WORKER_EXIT:1')",
+      "wallSeconds": 212.79365992546082,
+      "optimizerStepsRecorded": 0,
+      "minAvailableBytes": 53797093376,
+      "maxObservedSwapGrowthBytes": 0,
+      "allSamplesOnAC": true,
+      "minBatteryPercent": 100
+    }
+  },
+  "files": {
+    "manifest.json": {
+      "sha256": "8d2e9af984490363e04e6107ae7e4911f5dfbad5045cfbb5b75a854899f39503",
+      "bytes": 4775
+    },
+    "source/hero-distillation-train.py": {
+      "sha256": "de24eb2e4073af2f55a2ec3931f20f6bbc8077454883baad39907ab6079458e5",
+      "bytes": 28377
+    },
+    "source/hero-distillation-memory.py": {
+      "sha256": "ef7437b465bb38fd530b71d8e34287848ef306986a391e8bb2d84bbc5cfb6984",
+      "bytes": 16481
+    },
+    "probe/kernel-equivalence.json": {
+      "sha256": "96af9ed9797e9a76c007d860510e8b4c68e52a35ee67606f1b09bd679d401f89",
+      "bytes": 1912
+    },
+    "probe/memory-trace.jsonl": {
+      "sha256": "50f22d377568d2b0df6e967ed5d79acec7ac9825f37e678c1775fd21c416f55c",
+      "bytes": 255704
+    },
+    "probe/probe-trace.json": {
+      "sha256": "ec4bce98211aeb2d6f141fee918fde1f43ee072afedd083ba3ed4450a887f371",
+      "bytes": 535
+    },
+    "probe/state.json": {
+      "sha256": "0b692d5c74c26f0acf922cc380070759f8c77e614c297e11d960bcd7f3040b56",
+      "bytes": 16467
+    },
+    "probe/worker-progress.json": {
+      "sha256": "cb289f26ce52713c1d14fec61ed8f89cb5a5397d160697e962ae95ed193f9154",
+      "bytes": 125
+    },
+    "probe/worker.log": {
+      "sha256": "666d6cc90de9c5f3e64dc0d1c2663b8c45a767cdc7ecf425eaaf292a160b0aa7",
+      "bytes": 1596
+    },
+    "token-preflight.json": {
+      "sha256": "0231d2b6466fb584a0170983a7e628c3caeb023016290c70bf7173a8fe11a061",
+      "bytes": 800
+    }
+  },
+  "omitted": [
+    {
+      "path": "tokens.json",
+      "bytes": 85324174,
+      "sha256": "5df904d2a36cdea55f51cb5c7dec2f64facd8fc6e0584e0f4e1ecfcebad77d00",
+      "reason": "not-a-receipt"
+    }
+  ],
+  "fullHeroE2EProven": false,
+  "modelPromoted": false,
+  "note": "Terminal supervisor receipts, not a live process query or model quality assessment."
+}

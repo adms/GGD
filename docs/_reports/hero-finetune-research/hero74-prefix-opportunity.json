@@ -1,0 +1,47 @@
+{
+  "schema": "ggd-shared-prefix-opportunity@1",
+  "scriptSha256": "1d1eba6380c891d601e78f7e952ab4817a6704aba6b55c64f324cecc16cb0e9d",
+  "sourceExamplesSha256": "432adffe53598e4a76fe6dd7f6e6c0f79ddd447e7453c09408cede2ddbb535c2",
+  "counts": {
+    "train": {
+      "tasks": 500,
+      "wholeHeroes": 70,
+      "slots": 430,
+      "groups": 61
+    },
+    "dev": {
+      "tasks": 119,
+      "wholeHeroes": 17,
+      "slots": 102,
+      "groups": 17
+    }
+  },
+  "groups": [
+    {
+      "trainTasks": 87,
+      "devTasks": 14,
+      "catalogAndSystemSha256": "f7d2e2f67f764bbf93fe5fee9120d11c303feec1e8e11f2ff6d6e574638c4f54",
+      "oldCommonPrefixTokens": 78,
+      "reorderedCommonPrefixTokens": 19143
+    },
+    {
+      "trainTasks": 413,
+      "devTasks": 105,
+      "catalogAndSystemSha256": "bea8fb7786781c9aeb61b11a31793bbfde123abbecd73512efd0565afa9a843a",
+      "oldCommonPrefixTokens": 78,
+      "reorderedCommonPrefixTokens": 20884
+    }
+  ],
+  "oldPromptTokens": 13420544,
+  "reorderedPromptTokens": 13419925,
+  "datasetModified": false,
+  "gpuStarted": false,
+  "speedupMeasured": false,
+  "limitations": [
+    "Only JSON member order changes in this hypothetical measurement; all information and target answers remain intact.",
+    "Cache is NOT implemented or admitted. Must verify causal suffix KV positions, exact frozen hidden states, and gradient equivalence.",
+    "Only frozen prefix layers may share cache; trainable tail states must never be reused across optimizer steps.",
+    "Use public catalog/system only; no teacher-specific prefix or dev-answer cache; host RAM and GPU guards still apply.",
+    "Do not convert reusable token counts into speedup or silently replace the current frozen version."
+  ]
+}

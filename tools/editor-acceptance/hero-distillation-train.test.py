@@ -15,6 +15,20 @@ GUARD = {'minAvailableGiB': 6, 'maxSwapGrowthGiB': 2, 'maxBatteryDropPoints': 2}
 
 
 class GuardTests(unittest.TestCase):
+    def test_capacity_uses_real_format_extremes_without_dev_gradients(self):
+        train = [{'id': 'hero-long', 'format': 'hero', 'totalTokens': 20, 'outputTokens': 4},
+                 {'id': 'hero-answer', 'format': 'hero', 'totalTokens': 18, 'outputTokens': 6},
+                 {'id': 'slot', 'format': 'slot', 'totalTokens': 10, 'outputTokens': 1}]
+        dev = [{'id': 'dev-not-a-probe', 'format': 'hero', 'totalTokens': 100, 'outputTokens': 50}]
+        strata = trainer.capacity_plan(train, dev)
+        self.assertEqual(strata['hero']['probeIds'], ['hero-answer', 'hero-long'])
+        self.assertEqual(strata['slot']['probeIds'], ['slot'])
+        self.assertEqual(strata['hero']['devTasks'], 1)
+        probes = [{'id': row['id'], 'format': row['format'], 'seconds': seconds} for row, seconds in zip(train, [10, 12, 2])]
+        self.assertEqual(trainer.epoch_estimate(probes, strata), (12 * 4 + 2) * 1.5 + 300)
+        with self.assertRaisesRegex(AssertionError, 'INCOMPLETE_CAPACITY_STRATUM'):
+            trainer.epoch_estimate(probes[:-1], strata)
+
     def test_every_resource_boundary(self):
         self.assertIsNone(trainer.violation(START, START, GUARD))
         for changes, reason in [({'acPower': False}, 'AC_POWER_REQUIRED'),

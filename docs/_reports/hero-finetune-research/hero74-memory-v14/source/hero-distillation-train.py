@@ -154,7 +154,6 @@ def prepare(args):
                                'analyticAttentionVjp': True,
                                'frozenTailNormBlocks': False, 'hostFloat32AttentionAccumulation': True,
                                'materializedVjpBoundaries': True,
-                               'blockLocalFloat32Attention': True,
                                'observeEveryBlockAndLayer': True,
                                'activeMetalLimitGiB': 28,
                                'frozenPrefix': 'Compute all frozen layers outside value_and_grad; dense/bounded tail parity uses the exact same frozen hidden input. No prefix parameter is trainable.',

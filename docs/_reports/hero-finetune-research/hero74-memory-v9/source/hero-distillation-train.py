@@ -150,11 +150,6 @@ def prepare(args):
               'memoryPolicy': {'queryBlockTokens': 256, 'lossBlockTokens': 128, 'sourceOrAnswerTruncation': False,
                                'detachedCustomForward': True, 'evaluatedBlockLeaves': True, 'firstOrderOnly': True,
                                'frozenTailMlpBlocks': True,
-                               'layerwiseTailVjp': True,
-                               'analyticAttentionVjp': True,
-                               'frozenTailNormBlocks': False, 'hostFloat32AttentionAccumulation': True,
-                               'materializedVjpBoundaries': True,
-                               'blockLocalFloat32Attention': True,
                                'observeEveryBlockAndLayer': True,
                                'activeMetalLimitGiB': 28,
                                'frozenPrefix': 'Compute all frozen layers outside value_and_grad; dense/bounded tail parity uses the exact same frozen hidden input. No prefix parameter is trainable.',
@@ -252,12 +247,7 @@ def worker(directory, phase, token):
 
     def scalar_loss(row): return loss_fn(model, row, prefix=prefix_for(row)).item()
 
-    dense_gradient_fn = nn.value_and_grad(model, loss_fn)
-    def gradient_fn(net,row,full,prefix):
-        if full: return dense_gradient_fn(net,row,True,prefix)
-        targets=mx.array([row['ids'][row['promptTokens']:]],dtype=mx.int32)
-        return memory.tail_value_and_grad(mx,nn,net,prefix,targets,tail_layers=p['numLayers'],
-            block_size=p['memoryPolicy']['queryBlockTokens'],loss_block_size=p['memoryPolicy']['lossBlockTokens'],observer=memory_audit)
+    gradient_fn = nn.value_and_grad(model, loss_fn)
     if phase == 'probe':
         # This short kernel-equivalence control is not a training sample.
         # Actual capacity probes below always use full frozen sequences.
