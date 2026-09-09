@@ -136,6 +136,7 @@ export const DAMAGE_RULES_SPEC: ConfigDocSpec<"damageRules"> = {
   zod: zConfigDamageRulesDoc,
   title: "傷害規則",
   intro: [
+    "範圍傷害人數上限同時控制圓形擴散與直線傷害：技能沒寫人數時用它，明填更多時也受它限制；技能寫得更少仍照技能。",
     "一份傷害效果**沒有寫**傷害型別時，遊戲要當它是哪一種。owner 2026-08-05：「技能傷害預設都改成 AP 傷害」。",
     "⚠️ **在這之前沒有預設** —— 傷害型別是必填的，忘了寫會在載入時被擋下來。現在忘了寫會**安靜地變成魔法傷害**，所以這一頁存在的意義就是讓那個「安靜」變成看得到、改得到的一格。",
     "⚠️ 這一格**只影響沒寫的那些**。已經明寫型別的技能（出貨的絕大多數都寫了）一支都不會被改到，所以在這裡改成物理不會把全樹翻過來。",
@@ -143,7 +144,7 @@ export const DAMAGE_RULES_SPEC: ConfigDocSpec<"damageRules"> = {
     "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/damage-rules.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
   ],
   consumer:
-    "packages/shared/src/sim/effects/damage.ts（以及 damageArea.ts / damageLine.ts / dot.ts，共五個 `e.damageType ?? world.damageRules.defaultAbilityDamageType` 讀取點）；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.damageRules",
+    "packages/shared/src/sim/effects/damage.ts（以及 damageArea.ts / damageLine.ts / dot.ts，共五個預設型別讀取點）；damageArea.ts / damageLine.ts 也讀 spreadMaxTargetsCap；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.damageRules",
   effect:
     "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 淨化規則／重創規則／格擋規則 同一個形態(#278)。",
   fields: derivedFields(zConfigDamageRulesDoc, []),

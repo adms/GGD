@@ -1,12 +1,12 @@
 /**
- * 擴散 (damageArea) 的硬上界 —— 一份表，兩個消費端 (#210).
+ * 範圍傷害的語意界線與出貨預設 —— damageArea / damageLine 共用 (#210).
  *
  * ---------------------------------------------------------------------------
  * 這張表是幹嘛的
  * ---------------------------------------------------------------------------
  * `damageArea` 的三個旋鈕 (`radius` / `falloff` / `maxTargets`) 是**內容欄位**,
  * 出貨值寫在 `content/items/*.json` 裡, owner 在 後台「內容管理」改一件武器的
- * 擴散半徑不用重新 build —— 那才是第一守則要的可調。這張表只負責**上界**:
+ * 擴散半徑不用重新 build。半徑與衰減的靜態上界負責擋錯誤輸入：
  * 一個 500 的半徑一定不是設計, 是有人把 WC3 的原始長度直接貼進來了
  * (WC3 的 300 ≈ GGD 的 5.5), 而 24 就已經是整個決鬥區的 `boundaryRadius`。
  *
@@ -40,11 +40,12 @@
  *   （已經蓋滿全場），所以它同時是語意邊界，不只是保險絲。
  * `MIN_FALLOFF = 0` / `MAX_FALLOFF = 1` —— `falloff` 是**邊緣倍率**, 1 = 不衰減
  *   (平均分配), 0 = 邊緣歸零。超過 1 會變成「越遠打越痛」, 那不是衰減。
- * `MAX_TARGETS = 20` —— 一場 3v3 加上小怪波上限 30 隻; 20 是「一發普攻不該
- *   清掉整波殭屍」的界線, 而不是任何一件現行武器碰得到的數字 (最大是 6)。
+ * `SPREAD_MAX_TARGETS = 20` —— 保留既有匯出名稱，現在只作為出貨政策的預設。
+ *   原理由「一發普攻不該清掉整波殭屍」是可調政策，不是 immutable 結構限制。
+ *   實際上限住 config.damage-rules@1.spreadMaxTargetsCap：缺欄用它，明填也受它限制。
  *
- * 三個都是**硬上界**, 不是預設值。缺欄位時的預設寫在 `DEFAULT_*` 底下, 語意是
- * 「作者沒指定 → 最保守的那個」而不是「最大的那個」。
+ * 人數的靜態 schema 只守正 safe integer；Number.MAX_SAFE_INTEGER 是整數表示界線，
+ * 不是平衡政策或一般誤植保證。出貨的實際政策上限仍是 20，後台可調。
  */
 
 /** 擴散半徑的硬上界 (GGD 單位)。見檔頭：MIS-PARSE 護欄, 不是平衡數字。 */
@@ -54,7 +55,7 @@ export const SPREAD_MAX_RADIUS = 24;
 export const SPREAD_MIN_FALLOFF = 0;
 export const SPREAD_MAX_FALLOFF = 1;
 
-/** 一次擴散最多能濺到幾個人 (不含震央本人)。 */
+/** 人數政策的出貨預設；實際上限讀 world.damageRules.spreadMaxTargetsCap。 */
 export const SPREAD_MAX_TARGETS = 20;
 
 /**
@@ -66,7 +67,7 @@ export const SPREAD_MAX_TARGETS = 20;
  */
 export const DEFAULT_SPREAD_FALLOFF = 1;
 
-/** 作者沒寫 `maxTargets` 時的預設 —— 上界本身 (只受半徑限制)。 */
+/** 缺少有效全域設定時的預設；作者省略 maxTargets 時使用當場的全域上限。 */
 export const DEFAULT_SPREAD_MAX_TARGETS = SPREAD_MAX_TARGETS;
 
 /** 夾一個半徑。負數/NaN → 0 (什麼都打不到), 超界 → `SPREAD_MAX_RADIUS`。 */
@@ -83,14 +84,16 @@ export function clampSpreadFalloff(falloff: number | undefined): number {
 }
 
 /**
- * 夾一個目標上限。缺/NaN → `DEFAULT_SPREAD_MAX_TARGETS`; 0 或負 → 0 (不擴散,
+ * 夾一個目標上限。缺/NaN → 當場的全域上限；0 或負 → 0 (不擴散,
  * 這是合法的「暫時關掉」寫法); 非整數無條件捨去。
  */
-export function clampSpreadTargets(maxTargets: number | undefined): number {
+export function clampSpreadTargets(maxTargets: number | undefined, operatorCap: number): number {
+  const cap = Number.isSafeInteger(operatorCap) && operatorCap >= 1
+    ? operatorCap : DEFAULT_SPREAD_MAX_TARGETS;
   if (maxTargets === undefined || !Number.isFinite(maxTargets)) {
-    return DEFAULT_SPREAD_MAX_TARGETS;
+    return cap;
   }
   const n = Math.floor(maxTargets);
   if (n <= 0) return 0;
-  return n > SPREAD_MAX_TARGETS ? SPREAD_MAX_TARGETS : n;
+  return n > cap ? cap : n;
 }

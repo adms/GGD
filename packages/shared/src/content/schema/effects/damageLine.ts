@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { SPREAD_MAX_RADIUS, SPREAD_MAX_TARGETS } from "../../../sim/effects/spreadLimits";
+import { SPREAD_MAX_RADIUS } from "../../../sim/effects/spreadLimits";
 import { zScaling } from "../common";
 import {
   EFFECT_COMMON_SHAPE,
@@ -39,7 +39,8 @@ z
     aim: z.enum(["facing", "target"]).optional(),
     /** 從施法者自己身上出發 (預設 true =「面前」) 還是從受害者身上延伸 */
     fromCaster: z.boolean().optional(),
-    maxTargets: z.number().int().min(1).max(SPREAD_MAX_TARGETS).optional(),
+    /** 人數的表示界線；省略與明填值都受 world.damageRules.spreadMaxTargetsCap 限制。 */
+    maxTargets: z.number().int().min(1).max(Number.MAX_SAFE_INTEGER).optional(),
     canCrit: z.boolean().optional(),
     /** 觸發這一次的那個人要不要再吃一次 (預設 false —— 他已經吃過普攻了) */
     includeOrigin: z.boolean().optional(),

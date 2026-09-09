@@ -21,6 +21,8 @@ import { SKELETON_ARENA } from "../world/ArenaDef";
 import { runEffects } from "./effectRunner";
 import type { EffectContext, EffectDef } from "./effect";
 import { asTeamId, asSeatId, type EntityId } from "../../ids";
+import { damageRulesFromDoc } from "../damageRules";
+import { zEffectDef } from "../../content/schema/effect";
 
 const C = SKELETON_ARENA.zones[0]!.center;
 
@@ -79,6 +81,32 @@ const hits = (w: SimWorld): Map<EntityId, number> =>
   new Map(w.damageQueue.map((p) => [p.target, p.amount]));
 
 describe("damageLine — 前方直線上的敵人真的掉血 (do-damage-line)", () => {
+  it.each([
+    [undefined, undefined, 20],
+    [undefined, 24, 20],
+    [2, undefined, 2],
+    [2, 24, 2],
+    [24, undefined, 24],
+    [24, 24, 24],
+    [24, 2, 2],
+    [24, 2.9, 2],
+    [24, 0, 0],
+  ])("共用全域設定 %s，技能 %s → 實際命中 %s 人", (cap, authored, expected) => {
+    const r = rig(Array.from({ length: 25 }, (_, i): [number, number] => [1 + i / 4, 0]));
+    r.world.damageRules = damageRulesFromDoc({ schema: "config.damage-rules@1", spreadMaxTargetsCap: cap });
+    runEffects([line(authored === undefined ? {} : { maxTargets: authored })], ctxOf(r));
+    expect([...hits(r.world).keys()]).toEqual(r.marks.slice(0, expected));
+  });
+
+  it("schema 接受超過出貨政策的正整數，仍拒絕不可表示的人數", () => {
+    for (const maxTargets of [24, Number.MAX_SAFE_INTEGER]) {
+      expect(zEffectDef.safeParse(line({ maxTargets })).success).toBe(true);
+    }
+    for (const maxTargets of [0, -1, 2.5, NaN, Infinity, Number.MAX_SAFE_INTEGER + 1]) {
+      expect(zEffectDef.safeParse(line({ maxTargets })).success).toBe(false);
+    }
+  });
+
   it("⭐ 線上的敵人掉血；⛔ 側面 2 格外與射程外的都沒有（兩個方向一起驗）", () => {
     // 0: 正前方 5（線上）· 1: 前方 5 但側偏 3（寬 2 ⇒ 半寬 1，⛔ 打不到）
     // 2: 正前方 14（length 10，⛔ 超出）

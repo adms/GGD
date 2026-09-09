@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "5663b7deecd7",
+  "hash": "a326bd04a859",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -209,8 +209,8 @@
     {
       "id": "damage-rules",
       "path": "config/damage-rules.json",
-      "hash": "03e9dd42bdb2",
-      "size": 679
+      "hash": "19aad8977765",
+      "size": 708
     },
     {
       "id": "damage-tier-exemptions",
@@ -497,8 +497,8 @@
     {
       "id": "ugc",
       "path": "config/ugc.json",
-      "hash": "9a82b3404bdc",
-      "size": 1986
+      "hash": "9f401dbd02a9",
+      "size": 2221
     },
     {
       "id": "ui-cues",

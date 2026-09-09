@@ -46,7 +46,7 @@ export const damageAreaEffect: EffectKindSpec<"damageArea"> = {
     if (!centre) return;
     const radius = clampSpreadRadius(e.radius);
     if (radius <= 0) return;
-    const cap = clampSpreadTargets(e.maxTargets);
+    const cap = clampSpreadTargets(e.maxTargets, world.damageRules.spreadMaxTargetsCap);
     if (cap <= 0) return;
     const falloff = clampSpreadFalloff(e.falloff);
 
