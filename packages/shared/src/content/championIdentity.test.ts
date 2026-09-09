@@ -92,7 +92,7 @@ function exAbilityName(id: string | undefined): string | undefined {
  *   ⚠️ 而它比字串比對**更嚴**：兩個不同的鍵指到同一顆會被認出來，
  *     同一個鍵指到不同位元組也會（⛔ 字串比對兩種都看不出來）。
  */
-function meshOf(c: Pick<IdentityChampion, "modelKey">): string {
+function meshOf(c: { readonly modelKey?: string | null | undefined }): string {
   const key = c.modelKey ?? "";
   const doc = join(CONTENT_DIR, "models", `${key}.json`);
   if (!existsSync(doc)) return `key:${key}`; // ⭐ 沒有模型文件 ⇒ 誠實回鍵本身

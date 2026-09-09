@@ -76,11 +76,22 @@ describe("不在 git 裡的資產：宣告驗得起來（owner 2026-09-08 「不
     expect(err).toContain("自我矛盾");
   });
 
-  it("③ 換成**空**宣告 ⇒ main 仍然綠（⭐ 證明①不是靠這份宣告撐著）", () => {
+  it("③ 換成**空**宣告 ⇒ ⭐ 缺的**只能是**宣告裡那幾顆（⛔ 不可以牽連別的）", () => {
+    // ⛔⛔ 這一條原本斷言「main 仍然綠」——⭐ 而 2026-09-09 起 main **真的**有
+    //   靠宣告才解析得到的資產（第二批 4 顆本尊 GLB，位元組在 S3）。
+    //   ⇒ 舊的問法從此永遠紅，⛔ 而它紅的理由不是缺陷。
+    // ⭐ 改問更嚴的那一題：**拿掉宣告之後壞掉的，只能是宣告自己列的那幾顆** ——
+    //   ⛔ 如果牽連到別的路徑，那表示這份宣告在**遮蓋**一個真的缺口。
     const dir = mkdtempSync(join(tmpdir(), "ggd-off-"));
     const p = join(dir, "assets-offdisk.json");
     writeFileSync(p, JSON.stringify({ entries: {} }));
-    expect(run(p).code, "⛔ main 上有資產靠宣告才解析得到 —— 那不該發生").toBe(0);
+    const { code, err } = run(p);
+    if (code === 0) return; // ⭐ main 上沒有 off-disk 依賴時,綠是對的
+    const declared = new Set(Object.keys(decl.entries));
+    const leaked = [...err.matchAll(/assets\/[^\s"]+/g)]
+      .map((m) => m[0])
+      .filter((x) => !declared.has(x));
+    expect([...new Set(leaked)], "⛔ 宣告在遮蓋一個**不在它清單裡**的缺口").toEqual([]);
   });
 
   // ⭐⭐ **這一條才是重點**：宣告⛔不可以變成「不在磁碟上就放過」。

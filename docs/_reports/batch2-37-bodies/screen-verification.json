@@ -1,0 +1,72 @@
+{
+  "schema": "ggd-batch2-body-screen-verification@1",
+  "note": "⭐ 五道界線④的**可判版本** —— ⛔ 不渲染也判得出「它會不會在畫面上動起來」。產生器 tools/batch2-boundaries/verify_bodies.mjs，⛔ 不要手改。",
+  "purposes": [
+    "idle",
+    "run",
+    "attack",
+    "cast",
+    "hurt",
+    "death"
+  ],
+  "passed": 4,
+  "total": 4,
+  "bodies": {
+    "b2-rem": {
+      "ok": true,
+      "verts": 4099,
+      "joints": 106,
+      "height": 0.8914,
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_a",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      }
+    },
+    "b2-zenitsu": {
+      "ok": true,
+      "verts": 11663,
+      "joints": 78,
+      "height": 0.9734,
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      }
+    },
+    "b2-rin": {
+      "ok": true,
+      "verts": 3703,
+      "joints": 65,
+      "height": 0.895,
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      }
+    },
+    "b2-maple": {
+      "ok": true,
+      "verts": 4815,
+      "joints": 91,
+      "height": 0.9211,
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01_a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      }
+    }
+  }
+}
