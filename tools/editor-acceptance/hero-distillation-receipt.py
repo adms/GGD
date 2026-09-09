@@ -49,9 +49,12 @@ def export(run, out):
             result = read(directory / 'result.json')
             roundtrip = read(directory / 'adapter-roundtrip.json')
             checkpoint = directory / result['checkpoint']['path'] / 'adapters.safetensors'
+            expected_steps = list(range(1, manifest.get('steps', 0) + 1))
             assert result.get('phase') == 'train' and result.get('steps') == manifest.get('steps') \
                 and result.get('uniqueTrainingTasks') == manifest.get('steps') \
-                and len(trace) == manifest.get('steps'), 'COMPLETED_TRAINING_EPOCH_INVALID'
+                and [row.get('step') for row in trace] == expected_steps \
+                and len({row.get('id') for row in trace}) == manifest.get('steps'), \
+                'COMPLETED_TRAINING_EPOCH_INVALID'
             assert result['checkpoint'].get('step') == manifest.get('steps') \
                 and checkpoint.is_file() and digest(checkpoint.read_bytes()) == result['checkpoint'].get('sha256'), \
                 'COMPLETED_TRAINING_ADAPTER_INVALID'

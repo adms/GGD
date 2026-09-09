@@ -97,6 +97,12 @@ class ReceiptTests(unittest.TestCase):
             self.assertTrue(result['phases']['train']['epochVerified'])
             self.assertTrue(result['phases']['train']['adapterRoundtripVerified'])
             self.assertEqual(result['phases']['train']['optimizerStepsRecorded'], 2)
+            (train / 'training-trace.json').write_text(json.dumps([
+                {'step': 1, 'id': 'a'}, {'step': 2, 'id': 'a'}]))
+            with self.assertRaisesRegex(AssertionError, 'COMPLETED_TRAINING_EPOCH_INVALID'):
+                receipt.export(run, root / 'out-duplicate')
+            (train / 'training-trace.json').write_text(json.dumps([
+                {'step': 1, 'id': 'a'}, {'step': 2, 'id': 'b'}]))
             adapter.write_bytes(b'tampered')
             with self.assertRaisesRegex(AssertionError, 'COMPLETED_TRAINING_ADAPTER_INVALID'):
                 receipt.export(run, root / 'out2')
