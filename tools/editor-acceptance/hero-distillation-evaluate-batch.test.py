@@ -44,6 +44,7 @@ class BatchTest(unittest.TestCase):
         self.options = {k: str(self.root / k) for k in ['training', 'evaluation', 'models', 'assets', 'dependencies', 'out']}
         for k in ['training', 'evaluation', 'models', 'assets', 'dependencies']:
             put(Path(self.options[k]) / 'manifest.json', {'fixture': k})
+        put(Path(self.options['evaluation']) / 'plan.json', {'split': 'internal-dev'})
         self.options['asset_roots'] = [self.options['assets']]
         self.options['api_dependencies'] = str(self.root / 'api-dependencies')
         for name in ['fastify', 'tsx']:
@@ -159,6 +160,29 @@ class BatchTest(unittest.TestCase):
         with self.assertRaisesRegex(AssertionError, 'API_DEPENDENCIES_MISSING'):
             b.run(self.options, fake, self.execute)
         self.assertEqual(fake.calls, ['checkpoint'])
+        self.assertFalse(Path(self.options['out']).exists())
+
+    def test_blind_batch_is_labeled_and_sealed_without_teacher_controls(self):
+        put(Path(self.options['evaluation']) / 'plan.json', {'split': 'blind-user-batch'})
+        state = b.run(self.options, FakeInference(), self.execute)
+        self.assertEqual(state['status'], 'completed')
+        manifest = b.read(Path(self.options['out']) / 'manifest.json')
+        result = b.read(Path(self.options['out']) / 'result.json')
+        self.assertTrue(manifest['blindTest'])
+        self.assertEqual(manifest['teacherControlReports'], {})
+        self.assertTrue(result['blindTest'])
+        self.assertTrue(result['candidateOutputsSealedBeforeTeacher'])
+
+    def test_blind_batch_rejects_teacher_visibility_before_creating_output(self):
+        put(Path(self.options['evaluation']) / 'plan.json', {'split': 'blind-user-batch'})
+        put(Path(self.options['evaluation']) / 'private-teachers.jsonl', {'answer': 'leak'})
+        with self.assertRaisesRegex(AssertionError, 'BLIND_TEACHER_VISIBLE'):
+            b.run(self.options, FakeInference(), self.execute)
+        self.assertFalse(Path(self.options['out']).exists())
+        (Path(self.options['evaluation']) / 'private-teachers.jsonl').unlink()
+        self.options['teacher_compile'] = str(self.root / 'teacher-control')
+        with self.assertRaisesRegex(AssertionError, 'BLIND_TEACHER_CONTROL_VISIBLE'):
+            b.run(self.options, FakeInference(), self.execute)
         self.assertFalse(Path(self.options['out']).exists())
 
 

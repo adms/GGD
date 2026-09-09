@@ -72,6 +72,14 @@ def run(options, inference=None, execute_cpu=cpu_command):
     roots = [Path(p).resolve(strict=True) for p in options['asset_roots']]
     assert roots and all(p.is_dir() for p in roots), 'ASSET_ROOTS_REQUIRED'
     assert all(p.is_dir() for p in [training, evaluation, models, assets, dependencies]), 'INPUT_DIRECTORY_MISSING'
+    plan = read(evaluation / 'plan.json')
+    split = plan.get('split')
+    assert split in ['internal-dev', 'blind-user-batch'], 'UNKNOWN_EVALUATION_SPLIT'
+    blind_test = split == 'blind-user-batch'
+    if blind_test:
+        assert not (evaluation / 'private-teachers.jsonl').exists(), 'BLIND_TEACHER_VISIBLE_BEFORE_CANDIDATE_GENERATION'
+        assert not any(options.get(key) for key in ['teacher_compile', 'teacher_package', 'teacher_import']), \
+            'BLIND_TEACHER_CONTROL_VISIBLE_BEFORE_CANDIDATE_GENERATION'
     node = shutil.which('node')
     assert node, 'NODE_REQUIRED'
     inference = inference or inference_module()
@@ -81,7 +89,12 @@ def run(options, inference=None, execute_cpu=cpu_command):
     assert all((api_dependencies / name / 'package.json').is_file() for name in ['fastify', 'tsx']), 'API_DEPENDENCIES_MISSING'
     sources = {name: digest(SCRIPT.with_name(name)) for name in FILES}
     inputs = {str(p / 'manifest.json'): digest(p / 'manifest.json') for p in [training, evaluation, models, assets]}
-    teacher_reports = {key: Path(options[key]).resolve() for key in ['teacher_compile', 'teacher_package', 'teacher_import'] if options.get(key)}
+    teacher_defaults = {
+        'teacher_compile': REPO / 'docs/_reports/hero-finetune-research/hero74-generation-compile-control-v2',
+        'teacher_package': REPO / 'docs/_reports/hero-finetune-research/hero74-package-admission-control-v1',
+        'teacher_import': REPO / 'docs/_reports/hero-finetune-research/hero74-import-control-v3'}
+    teacher_reports = {} if blind_test else {key: Path(options.get(key) or default).resolve()
+        for key, default in teacher_defaults.items() if Path(options.get(key) or default).is_dir()}
     for directory in teacher_reports.values():
         inputs[str(directory / 'report.json')] = digest(directory / 'report.json')
     if 'teacher_import' in teacher_reports:
@@ -100,9 +113,10 @@ def run(options, inference=None, execute_cpu=cpu_command):
         'cpuPhaseTimeoutSeconds': 180, 'importPhaseTimeoutSeconds': 180,
         'node': node, 'python': sys.executable, 'sources': sources, 'inputManifests': inputs,
         'fixedArmOrder': ['base', 'lora'], 'attemptsPerArm': 1, 'automaticRetry': False,
-        'humanRepairs': 0, 'teacherAnswerFileAccess': False,
+        'humanRepairs': 0, 'teacherAnswerFileAccess': False, 'blindTest': blind_test,
         'teacherControlReports': {key: str(value) for key, value in teacher_reports.items()},
-        'scope': 'Full public internal-dev paired generation, structural/package admission and isolated HTTP import/runtime comparison. Not blind testing, semantic equivalence, platform publication or match certification.',
+        'scope': ('Unseen public candidate generation sealed before any teacher answer; structural/package admission and isolated HTTP import/runtime comparison. Not semantic equivalence, platform publication or match certification.'
+                  if blind_test else 'Full public internal-dev paired generation, structural/package admission and isolated HTTP import/runtime comparison. Not blind testing, semantic equivalence, platform publication or match certification.'),
         'fullHeroE2EProven': False, 'modelPromoted': False}
     write(out / 'manifest.json', manifest)
     state = {'schema': 'ggd-distillation-evaluation-batch-state@1', 'status': 'running',
@@ -185,7 +199,8 @@ def run(options, inference=None, execute_cpu=cpu_command):
         step('render-report', lambda: execute_cpu(command, out / 'render-report.log'))
         result = {'schema': 'ggd-distillation-evaluation-batch-result@1', 'arms': summaries,
                   'reportDataSha256': digest(out / 'report-data.json'), 'reportHtmlSha256': digest(out / 'report.html'),
-                  'blindTest': False, 'semanticFidelityMeasured': False, 'liveImportMeasured': False,
+                  'blindTest': blind_test, 'candidateOutputsSealedBeforeTeacher': blind_test,
+                  'semanticFidelityMeasured': False, 'liveImportMeasured': False,
                   'isolatedImportEvaluationsCompleted': True,
                   'fullHeroE2EProven': False, 'modelPromoted': False,
                   'note': 'Completed means the scheduled evaluations ran, not that outputs passed or the model is ready.'}
@@ -209,7 +224,7 @@ if __name__ == '__main__':
         parser.add_argument('--' + name, required=True)
     parser.add_argument('--asset-root', action='append', required=True, dest='asset_roots')
     parser.add_argument('--api-dependencies')
-    parser.add_argument('--teacher-compile', default=str(REPO / 'docs/_reports/hero-finetune-research/hero74-generation-compile-control-v2'))
-    parser.add_argument('--teacher-package', default=str(REPO / 'docs/_reports/hero-finetune-research/hero74-package-admission-control-v1'))
-    parser.add_argument('--teacher-import', default=str(REPO / 'docs/_reports/hero-finetune-research/hero74-import-control-v3'))
+    parser.add_argument('--teacher-compile')
+    parser.add_argument('--teacher-package')
+    parser.add_argument('--teacher-import')
     print(json.dumps(run(vars(parser.parse_args())), ensure_ascii=False))
