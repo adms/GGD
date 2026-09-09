@@ -208,7 +208,7 @@ describe("GH#1140 electric charge and the next empowered cast", () => {
     const r = setup();
     expect(r.project.sourceDesign).toEqual(r.source.project.sourceDesign);
     expect(r.project.brief).toEqual(r.source.project.brief);
-    expect(r.project.revision).toBe(r.source.project.revision + 1);
+    expect(r.project.revision).toBe(r.source.project.revision + r.source.refinement.version);
     expect(r.source.project.acceptedPlan!.slots.PASSIVE.products[0]!.template.ref).toBe("tpl-on-attack");
     expect(r.project.acceptedPlan!.slots.PASSIVE.products[0]!.template.ref).toBe("tpl-mark-stacks");
   });

@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-project@2",
   "projectId": "community-review-27-20260907",
-  "revision": 15,
+  "revision": 16,
   "sourceLock": {
     "canonicalId": null,
     "versionId": null
@@ -38,7 +38,7 @@
       "fieldOwnership": {}
     },
     "skills": {
-      "revision": 15,
+      "revision": 16,
       "state": "stale",
       "fieldOwnership": {
         "acceptedPlan.slots.E.name": "locked",
@@ -56,22 +56,22 @@
       }
     },
     "mechanics": {
-      "revision": 15,
+      "revision": 16,
       "state": "stale",
       "fieldOwnership": {}
     },
     "presentation": {
-      "revision": 15,
+      "revision": 16,
       "state": "stale",
       "fieldOwnership": {}
     },
     "validation": {
-      "revision": 15,
+      "revision": 16,
       "state": "stale",
       "fieldOwnership": {}
     },
     "package": {
-      "revision": 15,
+      "revision": 16,
       "state": "stale",
       "fieldOwnership": {}
     }
@@ -318,7 +318,7 @@
           "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
         }
       },
-      "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+      "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
         "id": "tpl-effect-sequence",
         "schema": "template@1",
         "name": "自訂效果序列",
@@ -373,6 +373,11 @@
               }
             ],
             "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "recast": {
+            "type": "recast",
+            "optional": true,
+            "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
           }
         },
         "requires": [
@@ -384,134 +389,13 @@
           "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
           "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
         }
-      },
-      "sha256:fc256a57c55a0705dbb6660316bfeb64402f80fa154f09336fb1a8d393eeb5e5": {
-        "id": "tpl-leap-strike",
-        "schema": "template@1",
-        "name": "跳躍落地",
-        "description": "拋物線跳躍到指定點（或原地垂直跳），落地造成範圍傷害。飛行中無視地形；落點被障礙物（牆）或場地邊界擋住時，起跳當下就改瞄最近的合法落點（`world.wallBlock` 出貨 leap:\"clamp\"，落點截在牆前；只有 `flightExempt` 且被搬的那具身體本來就 `flightIgnoresObstacles` 的飛行狀態才豁免牆體，邊界照樣截斷），弧線隨之重算，你看到的落地位置就是實際位置。",
-        "family": "leap-strike",
-        "status": "enabled",
-        "params": {
-          "apexHeight": {
-            "type": "number",
-            "default": 600,
-            "min": 0,
-            "max": 2000,
-            "unit": "wc3h"
-          },
-          "applyTo": {
-            "type": "enum",
-            "default": "self",
-            "values": [
-              "self",
-              "target"
-            ]
-          },
-          "castTimeSec": {
-            "type": "number",
-            "default": 0.5,
-            "min": 0,
-            "max": 5,
-            "unit": "s"
-          },
-          "damage": {
-            "type": "scaling",
-            "default": {
-              "perRank": [
-                450
-              ],
-              "ratios": []
-            }
-          },
-          "damageType": {
-            "type": "enum",
-            "default": "physical",
-            "values": [
-              "magic",
-              "physical",
-              "true"
-            ]
-          },
-          "durationSec": {
-            "type": "number",
-            "default": 0.82,
-            "min": 0.1,
-            "max": 3,
-            "unit": "s"
-          },
-          "landRadius": {
-            "type": "number",
-            "default": 330,
-            "min": 0,
-            "max": 900,
-            "unit": "wc3u"
-          },
-          "mode": {
-            "type": "enum",
-            "default": "toPoint",
-            "values": [
-              "toPoint",
-              "inPlace"
-            ]
-          }
-        },
-        "requires": [
-          "leap"
-        ],
-        "gapScore": 5,
-        "exemplar": {
-          "skill": "07-03 列、在、前",
-          "jass": "A0G3"
-        }
-      },
-      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
-        "id": "tpl-buff-self",
-        "schema": "template@1",
-        "name": "變身強化-數值面",
-        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
-        "family": "buff-self",
-        "status": "enabled",
-        "params": {
-          "castTimeSec": {
-            "type": "number",
-            "default": 0,
-            "min": 0,
-            "max": 5,
-            "unit": "s",
-            "optional": true
-          },
-          "duration": {
-            "type": "number",
-            "default": 15,
-            "min": 1,
-            "max": 60,
-            "unit": "s"
-          },
-          "modifiers": {
-            "type": "statModifiers",
-            "default": [
-              {
-                "op": "flat",
-                "stat": "ad",
-                "value": 50
-              }
-            ]
-          }
-        },
-        "requires": [],
-        "gapScore": 6,
-        "exemplar": {
-          "skill": "82-04 闇之魔法",
-          "jass": "A0Q6"
-        }
       }
     },
     "slots": {
       "PASSIVE": {
         "slot": "PASSIVE",
         "name": "〔卡牌連結〕",
-        "purpose": "【修正行為】風 Q、樹 Q、W、E、R 完成施法後，與上一張卡不同即累積一層連結，上限三層；EX 只換牌不集氣。W 先消耗既有全部連結強化盾，再記入下一段牌序。回合開始重置連結與上一張牌。\n【原設計】依序使用不同卡牌累積連結，上限三層，強化下一次護盾。",
+        "purpose": "【本次玩法】庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\n【修正行為】風 Q、樹 Q、W、E、R 完成施法後，與上一張卡不同即累積一層連結，上限三層；EX 只換牌不集氣。W 先消耗既有全部連結強化盾，再記入下一段牌序。回合開始重置連結與上一張牌。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json"
@@ -527,8 +411,21 @@
                 "max": 3,
                 "durationSec": -1,
                 "resetOn": "round",
+                "perStackLost": [],
                 "lethalMode": "none",
-                "perStackLost": []
+                "lethalConsume": 1,
+                "surviveHpPct": 0.01,
+                "lethalDamageTypes": "all",
+                "internalCooldown": 0.5,
+                "invulnerableSec": 1.5,
+                "invulnerableScope": "damageAndControl",
+                "restoreHealthPct": 0.5,
+                "aoeRadius": 6,
+                "knockbackDistance": 4,
+                "knockbackSpeed": 16,
+                "knockbackFrom": "caster",
+                "stunSec": 0.5,
+                "stunStatusId": "trial-stun"
               },
               "contentSha256": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39"
             }
@@ -733,7 +630,7 @@
       "Q": {
         "slot": "Q",
         "name": "風牌",
-        "purpose": "【修正行為】風牌對敵方造成小級魔法傷害並以 GGD 小級擊退推動；換成樹牌後 Q 改為 0.7 秒束縛。兩種模式使用同一個 Q 技能實例、冷卻與魔力。\n【原設計】以風束攻擊並推動目標。",
+        "purpose": "【本次玩法】庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\n【修正行為】風牌對敵方造成小級魔法傷害並以 GGD 小級擊退推動；換成樹牌後 Q 改為 0.7 秒束縛。兩種模式使用同一個 Q 技能實例、冷卻與魔力。",
         "maxRank": 4,
         "abilityOverrides": {
           "castTimeTier": "小",
@@ -822,7 +719,7 @@
                   }
                 ]
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -839,7 +736,7 @@
       "W": {
         "slot": "W",
         "name": "盾牌",
-        "purpose": "【修正行為】為自己或指定友軍提供三秒護盾；結算時消耗既有全部連結（0–3），基礎盾量為 120 + 每層 20，再套用 GGD 等級成長。不同卡牌累積在此次結算後處理，不回頭強化同一片盾。敵方或超距施法不消耗連結。\n【原設計】為自己或指定友軍提供護盾。",
+        "purpose": "【本次玩法】庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\n【修正行為】為自己或指定友軍提供三秒護盾；結算時消耗既有全部連結（0–3），基礎盾量為 120 + 每層 20，再套用 GGD 等級成長。不同卡牌累積在此次結算後處理，不回頭強化同一片盾。敵方或超距施法不消耗連結。",
         "maxRank": 4,
         "abilityOverrides": {
           "castTimeTier": "小",
@@ -938,7 +835,7 @@
                   }
                 ]
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -955,35 +852,41 @@
       "E": {
         "slot": "E",
         "name": "翔牌",
-        "purpose": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】短期飛行位移，具有合法落點與高度限制。\n【待補機制】有限落點飛躍可預覽；翔牌武器姿態待補。",
+        "purpose": "【核准惡搞改編】翔牌改成短跳送工具：沿合法落點飛躍0.5秒，沒有傷害或無限飛行；用來追上風牌吹遠的敵人。",
         "maxRank": 4,
         "abilityOverrides": {
-          "castTimeTier": "小",
-          "cooldownTier": "小",
-          "manaCostTier": "小",
           "provenance": "editor-json",
-          "rangeTier": "大"
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
         },
         "products": [
           {
-            "instanceId": "community-review-27-20260907-e-1",
+            "instanceId": "e-parody-1",
             "template": {
-              "ref": "tpl-leap-strike",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "apexHeight": 220,
-                "applyTo": "self",
-                "castTimeSec": 0.15,
-                "damage": {
-                  "damageTier": "極小",
-                  "ratios": []
-                },
-                "damageType": "magic",
-                "durationSec": 0.5,
-                "landRadius": 150,
-                "mode": "toPoint"
+                "castType": "ground",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "leap",
+                    "mode": "toPoint",
+                    "applyTo": "self",
+                    "apexHeight": 0.32,
+                    "durationSec": 0.5,
+                    "landRadius": 1.83,
+                    "onLand": []
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:fc256a57c55a0705dbb6660316bfeb64402f80fa154f09336fb1a8d393eeb5e5"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -1002,38 +905,63 @@
       "R": {
         "slot": "R",
         "name": "劍牌",
-        "purpose": "【目前模板可執行】自身取得 4 秒增益：ad +15%、as +20%。\n【目標設計】短期將法杖化為劍，替換普攻並強化近戰。\n【待補機制】AD／攻速强化不等於劍牌；需普攻替換、武器及還原。",
+        "purpose": "【核准惡搞改編】劍牌其實是短餐刀：四秒AD+15%、攻速+20%，普攻改為近身短距離；用樹牌留人再E接近，風牌可能把晚餐吹走。到期恢復原普攻距離，",
         "maxRank": 3,
         "abilityOverrides": {
-          "castTimeTier": "大",
-          "cooldownTier": "大",
-          "manaCostTier": "大",
           "provenance": "editor-json",
-          "rangeTier": "大"
+          "range": 6,
+          "cooldown": [
+            30
+          ],
+          "manaCost": [
+            60
+          ]
         },
         "products": [
           {
-            "instanceId": "community-review-27-20260907-r-1",
+            "instanceId": "r-parody-1",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "castTimeSec": 0.15,
-                "duration": 4,
-                "modifiers": [
+                "castType": "self",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
                   {
-                    "op": "pctAdd",
-                    "stat": "ad",
-                    "value": 0.15
+                    "kind": "applyBuff",
+                    "applyTo": "self",
+                    "duration": 4,
+                    "stackKey": "community-review-27-20260907.sword",
+                    "maxStacks": 1,
+                    "modifiers": [
+                      {
+                        "stat": "ad",
+                        "op": "pctAdd",
+                        "value": 0.15
+                      },
+                      {
+                        "stat": "as",
+                        "op": "pctAdd",
+                        "value": 0.2
+                      },
+                      {
+                        "stat": "range",
+                        "op": "override",
+                        "value": 1.7
+                      }
+                    ]
                   },
                   {
-                    "op": "pctAdd",
-                    "stat": "as",
-                    "value": 0.2
+                    "kind": "floatingText",
+                    "shape": "single",
+                    "text": "今天的庫洛牌是餐刀",
+                    "applyTo": "self",
+                    "durationSec": 1
                   }
                 ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -1050,7 +978,7 @@
       "EX": {
         "slot": "EX",
         "name": "〔換牌：風與樹〕",
-        "purpose": "【修正行為】切換自身 Q 的風／樹模式，不直接攻擊或束縛敵人、不重置 Q 冷卻，也不重複收取 Q 魔力。換牌免費，採 GGD 極小冷卻；原施法未結束時不能插入切換。回合開始回復風牌。\n【原設計】將 Q 在風牌推動與樹牌束縛之間切換；兩者共享 Q 的冷卻與資源。",
+        "purpose": "【本次玩法】庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\n【修正行為】切換自身 Q 的風／樹模式，不直接攻擊或束縛敵人、不重置 Q 冷卻，也不重複收取 Q 魔力。換牌免費，採 GGD 極小冷卻；原施法未結束時不能插入切換。回合開始回復風牌。",
         "maxRank": 1,
         "abilityOverrides": {
           "cooldownTier": "極小",
@@ -1106,7 +1034,7 @@
                   }
                 ]
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -1257,38 +1185,20 @@
             {
               "kind": "anim",
               "on": "castStart",
-              "replaces": "caster.action",
-              "replacesForMs": 350,
               "at": "caster",
               "pulse": "cast"
             },
             {
-              "vfxId": "fx.prim.wind.pulse-sm",
-              "at": "self",
-              "durationSec": 0.2,
-              "kind": "vfx",
-              "on": "castStart",
-              "w3xScale": 0.7,
-              "tint": [
-                255,
-                161,
-                199
-              ],
-              "alpha": 0.6
-            },
-            {
-              "vfxId": "fx.prim.wind.arc",
-              "at": "point",
-              "durationSec": 0.35,
+              "vfxId": "fx.prim.arcane.dash",
+              "at": "target",
+              "durationSec": 0.4,
               "kind": "vfx",
               "on": "castEffect",
-              "w3xScale": 0.85,
               "tint": [
                 255,
                 161,
                 199
-              ],
-              "alpha": 0.85
+              ]
             }
           ]
         },
@@ -1312,38 +1222,20 @@
             {
               "kind": "anim",
               "on": "castStart",
-              "replaces": "caster.action",
-              "replacesForMs": 350,
               "at": "caster",
               "pulse": "cast"
             },
             {
-              "vfxId": "fx.prim.wind.pulse-sm",
+              "vfxId": "fx.prim.arcane.pulse-sm",
               "at": "self",
-              "durationSec": 0.2,
-              "kind": "vfx",
-              "on": "castStart",
-              "w3xScale": 0.7,
-              "tint": [
-                255,
-                161,
-                199
-              ],
-              "alpha": 0.6
-            },
-            {
-              "vfxId": "fx.prim.wind.pulse",
-              "at": "self",
-              "durationSec": 0.65,
+              "durationSec": 0.4,
               "kind": "vfx",
               "on": "castEffect",
-              "w3xScale": 1.25,
               "tint": [
                 255,
                 161,
                 199
-              ],
-              "alpha": 0.85
+              ]
             }
           ]
         },
@@ -1474,10 +1366,12 @@
     }
   },
   "refinementNotes": {
-    "PASSIVE": "風牌與樹牌依實際 Q 分支分別識別；EX 切換本身不增加連結。一般攻擊不集氣。牌面／圖示狀態同步仍待畫面實作驗收。",
-    "Q": "風／樹分支由 EX 狀態決定。風與自然類既有特效僅為分支提示，未宣稱原作風束／葉枝演出或圖示完成。",
-    "W": "友军／自己盾與 0–3 層連結消耗已建立，數值在此版本 JSON 可調；原文及畫面驗收狀態分開記錄。",
-    "EX": "Q 真正改走擊退或束縛分支，EX 本身不集氣。兩者共用同一 Q 實例；牌面／圖示隨模式同步仍待補，不把分支色彩提示當成完整美術。"
+    "PASSIVE": "本次保留核心並核對定位、代價、反制。庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\n風牌與樹牌依實際 Q 分支分別識別；EX 切換本身不增加連結。一般攻擊不集氣。牌面／圖示狀態同步仍待畫面實作驗收。",
+    "Q": "本次保留核心並核對定位、代價、反制。庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\n風／樹分支由 EX 狀態決定。風與自然類既有特效僅為分支提示，未宣稱原作風束／葉枝演出或圖示完成。",
+    "W": "本次保留核心並核對定位、代價、反制。庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\n友军／自己盾與 0–3 層連結消耗已建立，數值在此版本 JSON 可調；原文及畫面驗收狀態分開記錄。",
+    "E": "庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\n翔牌改成短跳送工具：沿合法落點飛躍0.5秒，沒有傷害或無限飛行；用來追上風牌吹遠的敵人。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "R": "庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\n劍牌其實是短餐刀：四秒AD+15%、攻速+20%，普攻改為近身短距離；用樹牌留人再E接近，風牌可能把晚餐吹走。到期恢復原普攻距離，\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "EX": "本次保留核心並核對定位、代價、反制。庫洛牌選錯工具：風把敵人吹遠，樹留人再跳近用短劍；交替卡牌補盾\nQ 真正改走擊退或束縛分支，EX 本身不集氣。兩者共用同一 Q 實例；牌面／圖示隨模式同步仍待補，不把分支色彩提示當成完整美術。"
   },
   "validationState": {
     "identity": {
@@ -1491,27 +1385,27 @@
       "diagnosticCodes": []
     },
     "skills": {
-      "revision": 15,
+      "revision": 16,
       "status": "stale",
       "diagnosticCodes": []
     },
     "mechanics": {
-      "revision": 15,
+      "revision": 16,
       "status": "stale",
       "diagnosticCodes": []
     },
     "presentation": {
-      "revision": 15,
+      "revision": 16,
       "status": "stale",
       "diagnosticCodes": []
     },
     "validation": {
-      "revision": 15,
+      "revision": 16,
       "status": "stale",
       "diagnosticCodes": []
     },
     "package": {
-      "revision": 15,
+      "revision": 16,
       "status": "stale",
       "diagnosticCodes": []
     }

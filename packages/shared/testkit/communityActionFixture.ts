@@ -11,8 +11,8 @@ import { asSeatId, type EntityId, type StatusId } from "../src/ids";
 import type { CastableSlot, CastTarget } from "../src/sim/intents";
 
 /** Real compiled batch hero, deterministic live combat, no incidental auto-acquire. */
-export function communityActionFixture(number: string, rank = 1) {
-  const r = communityCombatFixture(number, rank);
+export function communityActionFixture(number: string, rank = 1, refinementOverride?: Parameters<typeof communityCombatFixture>[2]) {
+  const r = communityCombatFixture(number, rank, refinementOverride);
   const { world } = r;
   const events: typeof world.events = [];
   world.combatFeel = { ...world.combatFeel,

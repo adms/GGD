@@ -53,7 +53,7 @@ describe("GH#1132 authored friendly protection", () => {
     expect(r.project.sourceDesign).toEqual(original.sourceDesign); expect(r.project.brief).toEqual(original.brief);
     expect(r.project.sourceDesign!.slots.W.requiredRefinement).toContain("希望消耗");
     expect(r.project.refinementNotes!.W).toContain("仍待畫面驗收");
-    expect(r.project.receipts).toEqual([]); expect(r.project.revision).toBe(original.revision + 2);
+    expect(r.project.receipts).toEqual([]); expect(r.project.revision).toBe(original.revision + r.source.refinement.version);
     expect(r.project.acceptedPlan!.slots.W.products[0]!.template.contentSha256).toMatch(/^sha256:/);
     expect(r.project.presentation.slots.W.script!.segments.find(s => s.kind === "vfx" && s.on === "castEffect")).toMatchObject({ at: "target" });
     r.project.acceptedPlan!.slots.W.products[0]!.template.params!.side = "enemies";

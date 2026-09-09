@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-project@2",
   "projectId": "community-review-31-20260907",
-  "revision": 13,
+  "revision": 14,
   "sourceLock": {
     "canonicalId": null,
     "versionId": null
@@ -38,7 +38,7 @@
       "fieldOwnership": {}
     },
     "skills": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {
         "acceptedPlan.slots.E.name": "locked",
@@ -56,22 +56,22 @@
       }
     },
     "mechanics": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {}
     },
     "presentation": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {}
     },
     "validation": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {}
     },
     "package": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {}
     }
@@ -318,7 +318,7 @@
           "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
         }
       },
-      "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+      "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
         "id": "tpl-effect-sequence",
         "schema": "template@1",
         "name": "自訂效果序列",
@@ -373,6 +373,11 @@
               }
             ],
             "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "recast": {
+            "type": "recast",
+            "optional": true,
+            "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
           }
         },
         "requires": [
@@ -390,7 +395,7 @@
       "PASSIVE": {
         "slot": "PASSIVE",
         "name": "〔糞作獵人的讀招〕",
-        "purpose": "三層具名讀招；W 自身閃避來源在實際衝刺移動中成功才加一層，空按／撞停／失手／其他來源不給。有效命中、受擊、真正迴避或格擋留下自己來源的四秒交鋒標記，僅供 EX 選目標，不等於讀招。\n【原設計】成功以位移避開有效攻擊後，獲得一層讀招，上限三層。單純空按移動不增加。",
+        "purpose": "【本次玩法】SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n三層具名讀招；W 自身閃避來源在實際衝刺移動中成功才加一層，空按／撞停／失手／其他來源不給。有效命中、受擊、真正迴避或格擋留下自己來源的四秒交鋒標記，僅供 EX 選目標，不等於讀招。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json"
@@ -406,8 +411,21 @@
                 "max": 3,
                 "durationSec": -1,
                 "resetOn": "round",
+                "perStackLost": [],
                 "lethalMode": "none",
-                "perStackLost": []
+                "lethalConsume": 1,
+                "surviveHpPct": 0.01,
+                "lethalDamageTypes": "all",
+                "internalCooldown": 0.5,
+                "invulnerableSec": 1.5,
+                "invulnerableScope": "damageAndControl",
+                "restoreHealthPct": 0.5,
+                "aoeRadius": 6,
+                "knockbackDistance": 4,
+                "knockbackSpeed": 16,
+                "knockbackFrom": "caster",
+                "stunSec": 0.5,
+                "stunStatusId": "trial-stun"
               },
               "contentSha256": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39"
             }
@@ -509,7 +527,7 @@
       "Q": {
         "slot": "Q",
         "name": "Spiral Edge",
-        "purpose": "近身單次小級距短劍刺擊；只消耗自己 E 在該目標留下的二秒反擊標記，追加一次極小級距傷害。別名目標、另一施法者與過期標記無追加。螺旋刃武器動作仍待畫面驗收。\n【原設計】短劍螺旋刺擊；對剛被自己反擊的目標有有限追加效果。",
+        "purpose": "【本次玩法】SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n近身單次小級距短劍刺擊；只消耗自己 E 在該目標留下的二秒反擊標記，追加一次極小級距傷害。別名目標、另一施法者與過期標記無追加。螺旋刃武器動作仍待畫面驗收。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
@@ -566,7 +584,7 @@
                   }
                 ]
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -583,7 +601,7 @@
       "W": {
         "slot": "W",
         "name": "Slide Move",
-        "purpose": "向輸入方向貼地滑步 2.4 單位、速度 8；0.3 秒內以現行 GGD 迴避上限提供普攻及技能迴避。只有本技能來源實際抽中，且閃避當下仍在衝刺並已發生位移才累積讀招。沒有跳躍或位移傷害；羽毛／短劍動作仍待畫面验收。\n【原設計】滑步位移，提供很短的精準迴避窗口。",
+        "purpose": "【本次玩法】SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n向輸入方向貼地滑步 2.4 單位、速度 8；0.3 秒內以現行 GGD 迴避上限提供普攻及技能迴避。只有本技能來源實際抽中，且閃避當下仍在衝刺並已發生位移才累積讀招。沒有跳躍或位移傷害；羽毛／短劍動作仍待畫面验收。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
@@ -655,7 +673,7 @@
                   }
                 ]
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -674,7 +692,7 @@
       "E": {
         "slot": "E",
         "name": "Repel Counter",
-        "purpose": "0.45 秒迎擊窗口，擋下第一個物理或魔法命中；只由本來源成功格擋觸發一次，將攻擊者推離 1 單位並給該目標二秒 Q 接續標記。沒有護盾量或固定自動反傷；標記按施法者隔離。招架短劍演出仍待驗。\n【原設計】短窗口迎擊攻擊，成功時擊退攻擊者，並提供一次 Q 接續機會。",
+        "purpose": "【本次玩法】SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n0.45 秒迎擊窗口，擋下第一個物理或魔法命中；只由本來源成功格擋觸發一次，將攻擊者推離 1 單位並給該目標二秒 Q 接續標記。沒有護盾量或固定自動反傷；標記按施法者隔離。招架短劍演出仍待驗。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
@@ -751,7 +769,7 @@
                   }
                 ]
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -768,7 +786,7 @@
       "R": {
         "slot": "R",
         "name": "Accel",
-        "purpose": "三秒移速與攻速各增加 25%，使用同一堆疊鍵避免重複累加，到期恢復；不修改任何其他槽冷卻，也不創造新讀招。專用加速殘像仍待驗。\n【原設計】短期提高移速與近戰輸出能力，保留原本技能冷卻。",
+        "purpose": "【本次玩法】SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n新增代價：加速三秒護甲魔抗各降低25%；格擋／精準滑步失敗更危險，讀招來源與上限不變。\n三秒移速與攻速各增加 25%，使用同一堆疊鍵避免重複累加，到期恢復；不修改任何其他槽冷卻，也不創造新讀招。專用加速殘像仍待驗。",
         "maxRank": 3,
         "abilityOverrides": {
           "provenance": "editor-json",
@@ -819,7 +837,46 @@
                   }
                 ]
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          },
+          {
+            "instanceId": "r-parody",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "self",
+                "castTimeSec": 0.2,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "applyTo": "self",
+                    "duration": 3,
+                    "modifiers": [
+                      {
+                        "stat": "armor",
+                        "op": "pctAdd",
+                        "value": -0.25
+                      },
+                      {
+                        "stat": "mr",
+                        "op": "pctAdd",
+                        "value": -0.25
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "floatingText",
+                    "shape": "single",
+                    "text": "脫防具跑比較快",
+                    "applyTo": "self",
+                    "durationSec": 1
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -836,7 +893,7 @@
       "EX": {
         "slot": "EX",
         "name": "〔攻略完成〕",
-        "purpose": "至少三層讀招且指定敵人有自己四秒交鋒標記才可施放；資格先檢查，再在開始時扣三層、魔力及冷卻。0.35 秒明確起手朝該目標單次大級距物理短劍終結；非法／過期／其他來源標記不扣資源，也不自動追逐未具資格的目標。專用終結動作仍待驗。\n【原設計】消耗三層讀招，對近期交鋒目標進行一次有方向的高傷害短劍終結。",
+        "purpose": "【本次玩法】SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n至少三層讀招且指定敵人有自己四秒交鋒標記才可施放；資格先檢查，再在開始時扣三層、魔力及冷卻。0.35 秒明確起手朝該目標單次大級距物理短劍終結；非法／過期／其他來源標記不扣資源，也不自動追逐未具資格的目標。專用終結動作仍待驗。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json",
@@ -885,7 +942,7 @@
                   }
                 ]
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -1303,12 +1360,12 @@
     }
   },
   "refinementNotes": {
-    "PASSIVE": "三層具名讀招；W 自身閃避來源在實際衝刺移動中成功才加一層，空按／撞停／失手／其他來源不給。有效命中、受擊、真正迴避或格擋留下自己來源的四秒交鋒標記，僅供 EX 選目標，不等於讀招。",
-    "Q": "近身單次小級距短劍刺擊；只消耗自己 E 在該目標留下的二秒反擊標記，追加一次極小級距傷害。別名目標、另一施法者與過期標記無追加。螺旋刃武器動作仍待畫面驗收。",
-    "W": "向輸入方向貼地滑步 2.4 單位、速度 8；0.3 秒內以現行 GGD 迴避上限提供普攻及技能迴避。只有本技能來源實際抽中，且閃避當下仍在衝刺並已發生位移才累積讀招。沒有跳躍或位移傷害；羽毛／短劍動作仍待畫面验收。",
-    "E": "0.45 秒迎擊窗口，擋下第一個物理或魔法命中；只由本來源成功格擋觸發一次，將攻擊者推離 1 單位並給該目標二秒 Q 接續標記。沒有護盾量或固定自動反傷；標記按施法者隔離。招架短劍演出仍待驗。",
-    "R": "三秒移速與攻速各增加 25%，使用同一堆疊鍵避免重複累加，到期恢復；不修改任何其他槽冷卻，也不創造新讀招。專用加速殘像仍待驗。",
-    "EX": "至少三層讀招且指定敵人有自己四秒交鋒標記才可施放；資格先檢查，再在開始時扣三層、魔力及冷卻。0.35 秒明確起手朝該目標單次大級距物理短劍終結；非法／過期／其他來源標記不扣資源，也不自動追逐未具資格的目標。專用終結動作仍待驗。"
+    "PASSIVE": "本次保留核心並核對定位、代價、反制。SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n三層具名讀招；W 自身閃避來源在實際衝刺移動中成功才加一層，空按／撞停／失手／其他來源不給。有效命中、受擊、真正迴避或格擋留下自己來源的四秒交鋒標記，僅供 EX 選目標，不等於讀招。",
+    "Q": "本次保留核心並核對定位、代價、反制。SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n近身單次小級距短劍刺擊；只消耗自己 E 在該目標留下的二秒反擊標記，追加一次極小級距傷害。別名目標、另一施法者與過期標記無追加。螺旋刃武器動作仍待畫面驗收。",
+    "W": "本次保留核心並核對定位、代價、反制。SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n向輸入方向貼地滑步 2.4 單位、速度 8；0.3 秒內以現行 GGD 迴避上限提供普攻及技能迴避。只有本技能來源實際抽中，且閃避當下仍在衝刺並已發生位移才累積讀招。沒有跳躍或位移傷害；羽毛／短劍動作仍待畫面验收。",
+    "E": "本次保留核心並核對定位、代價、反制。SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n0.45 秒迎擊窗口，擋下第一個物理或魔法命中；只由本來源成功格擋觸發一次，將攻擊者推離 1 單位並給該目標二秒 Q 接續標記。沒有護盾量或固定自動反傷；標記按施法者隔離。招架短劍演出仍待驗。",
+    "R": "本次保留核心並核對定位、代價、反制。SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n新增代價：加速三秒護甲魔抗各降低25%；格擋／精準滑步失敗更危險，讀招來源與上限不變。\n三秒移速與攻速各增加 25%，使用同一堆疊鍵避免重複累加，到期恢復；不修改任何其他槽冷卻，也不創造新讀招。專用加速殘像仍待驗。",
+    "EX": "本次保留核心並核對定位、代價、反制。SUN樂裸裝攻略：讀招和反擊保持，開加速要拿護甲魔抗當賭注\n至少三層讀招且指定敵人有自己四秒交鋒標記才可施放；資格先檢查，再在開始時扣三層、魔力及冷卻。0.35 秒明確起手朝該目標單次大級距物理短劍終結；非法／過期／其他來源標記不扣資源，也不自動追逐未具資格的目標。專用終結動作仍待驗。"
   },
   "validationState": {
     "identity": {
@@ -1322,27 +1379,27 @@
       "diagnosticCodes": []
     },
     "skills": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     },
     "mechanics": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     },
     "presentation": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     },
     "validation": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     },
     "package": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     }

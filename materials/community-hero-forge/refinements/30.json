@@ -1,6 +1,6 @@
 {
   "schema": "ggd-community-design-refinement@1",
-  "version": 1,
+  "version": 2,
   "projectId": "community-review-30-20260907",
   "sourceSha256": "82c2538225564d97e4b00273bfc19181e67b9dd02a03316389aa0f6b51a3eb63",
   "slots": {
@@ -16,8 +16,21 @@
               "max": 3,
               "durationSec": -1,
               "resetOn": "round",
+              "perStackLost": [],
               "lethalMode": "none",
-              "perStackLost": []
+              "lethalConsume": 1,
+              "surviveHpPct": 0.01,
+              "lethalDamageTypes": "all",
+              "internalCooldown": 0.5,
+              "invulnerableSec": 1.5,
+              "invulnerableScope": "damageAndControl",
+              "restoreHealthPct": 0.5,
+              "aoeRadius": 6,
+              "knockbackDistance": 4,
+              "knockbackSpeed": 16,
+              "knockbackFrom": "caster",
+              "stunSec": 0.5,
+              "stunStatusId": "trial-stun"
             },
             "contentSha256": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39"
           }
@@ -63,8 +76,8 @@
           }
         }
       ],
-      "purpose": "戰鬥中實際連續靜止一秒才獲得一層拖延，之後每秒一層、上限三層；移動只重開蓄力窗口，受有效傷害（含護盾吸收）清空三層。空走撞牆或轉向不算移動，零值／完全免疫不清空；回合開始重置。EX 每次消耗一層取得護盾。\n【原設計】停止移動後逐步累積拖延，上限三層；受擊時清空，施法可消耗強化。",
-      "note": "戰鬥中實際連續靜止一秒才獲得一層拖延，之後每秒一層、上限三層；移動只重開蓄力窗口，受有效傷害（含護盾吸收）清空三層。空走撞牆或轉向不算移動，零值／完全免疫不清空；回合開始重置。EX 每次消耗一層取得護盾。",
+      "purpose": "【本次玩法】尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n戰鬥中實際連續靜止一秒才獲得一層拖延，之後每秒一層、上限三層；移動只重開蓄力窗口，受有效傷害（含護盾吸收）清空三層。空走撞牆或轉向不算移動，零值／完全免疫不清空；回合開始重置。EX 每次消耗一層取得護盾。",
+      "note": "本次保留核心並核對定位、代價、反制。尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n戰鬥中實際連續靜止一秒才獲得一層拖延，之後每秒一層、上限三層；移動只重開蓄力窗口，受有效傷害（含護盾吸收）清空三層。空走撞牆或轉向不算移動，零值／完全免疫不清空；回合開始重置。EX 每次消耗一層取得護盾。",
       "removeOverrides": [
         "effects",
         "castType",
@@ -123,12 +136,12 @@
                 }
               ]
             },
-            "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
           }
         }
       ],
-      "purpose": "指定落點投擲，起手後再等半秒落地；落地時重新取得半徑二格內敵人，每人只結算一次小級物理傷害，移出可躲避。菸灰缸本體及拋物線演出仍待專用素材／畫面驗收。\n【原設計】投擲道具，落地造成一次小範圍傷害。",
-      "note": "指定落點投擲，起手後再等半秒落地；落地時重新取得半徑二格內敵人，每人只結算一次小級物理傷害，移出可躲避。菸灰缸本體及拋物線演出仍待專用素材／畫面驗收。",
+      "purpose": "【本次玩法】尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n指定落點投擲，起手後再等半秒落地；落地時重新取得半徑二格內敵人，每人只結算一次小級物理傷害，移出可躲避。菸灰缸本體及拋物線演出仍待專用素材／畫面驗收。",
+      "note": "本次保留核心並核對定位、代價、反制。尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n指定落點投擲，起手後再等半秒落地；落地時重新取得半徑二格內敵人，每人只結算一次小級物理傷害，移出可躲避。菸灰缸本體及拋物線演出仍待專用素材／畫面驗收。",
       "removeOverrides": [
         "effects",
         "castType",
@@ -224,12 +237,12 @@
                 }
               ]
             },
-            "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
           }
         }
       ],
-      "purpose": "落點產生四秒、半徑二格的煙霧區，每 0.2 秒對區內敵人續上 30% 普攻失手，離區最多 0.24 秒消退；進入時有命中干擾文字提示。沒有傷害、緩速或完整隱形，友軍與跨區不受影響，免控仍依 GGD 規則。灰煙演出為現有煙粒子調整，待畫面驗收。\n【原設計】形成有期限的小型煙霧區，提供明示的命中干擾；不自動賦予完整隱形。",
-      "note": "落點產生四秒、半徑二格的煙霧區，每 0.2 秒對區內敵人續上 30% 普攻失手，離區最多 0.24 秒消退；進入時有命中干擾文字提示。沒有傷害、緩速或完整隱形，友軍與跨區不受影響，免控仍依 GGD 規則。灰煙演出為現有煙粒子調整，待畫面驗收。",
+      "purpose": "【本次玩法】尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n落點產生四秒、半徑二格的煙霧區，每 0.2 秒對區內敵人續上 30% 普攻失手，離區最多 0.24 秒消退；進入時有命中干擾文字提示。沒有傷害、緩速或完整隱形，友軍與跨區不受影響，免控仍依 GGD 規則。灰煙演出為現有煙粒子調整，待畫面驗收。",
+      "note": "本次保留核心並核對定位、代價、反制。尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n落點產生四秒、半徑二格的煙霧區，每 0.2 秒對區內敵人續上 30% 普攻失手，離區最多 0.24 秒消退；進入時有命中干擾文字提示。沒有傷害、緩速或完整隱形，友軍與跨區不受影響，免控仍依 GGD 規則。灰煙演出為現有煙粒子調整，待畫面驗收。",
       "removeOverrides": [
         "effects",
         "castType",
@@ -311,12 +324,12 @@
                 }
               ]
             },
-            "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
           }
         }
       ],
-      "purpose": "朝選定撤退方向貼地衝出三格，遇牆停止；移除舊模板傷害、擊飛和推移，沒有命中收益。狼狽撤退的雜物殘影只有演出用途，專用素材仍待補。\n【原設計】短距離狼狽撤退，留下純視覺雜物殘影。",
-      "note": "朝選定撤退方向貼地衝出三格，遇牆停止；移除舊模板傷害、擊飛和推移，沒有命中收益。狼狽撤退的雜物殘影只有演出用途，專用素材仍待補。",
+      "purpose": "【本次玩法】尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n朝選定撤退方向貼地衝出三格，遇牆停止；移除舊模板傷害、擊飛和推移，沒有命中收益。狼狽撤退的雜物殘影只有演出用途，專用素材仍待補。",
+      "note": "本次保留核心並核對定位、代價、反制。尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n朝選定撤退方向貼地衝出三格，遇牆停止；移除舊模板傷害、擊飛和推移，沒有命中收益。狼狽撤退的雜物殘影只有演出用途，專用素材仍待補。",
       "removeOverrides": [
         "effects",
         "castType",
@@ -410,12 +423,12 @@
                 }
               ]
             },
-            "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
           }
         }
       ],
-      "purpose": "指定区域三波，每波先出四成秒落點預警，再對當時半徑二點五格內敵人結算一次小級物理傷害；每波相隔 0.8 秒，移出可躲、後進者可被後續波命中，死亡或回合結束清除。卡通雜物模型與完整逐波畫面尚待驗收，現有脈衝只作時間位置提示。\n【原設計】在指定區域分三波掉落卡通雜物，具有清楚落點預警。",
-      "note": "指定区域三波，每波先出四成秒落點預警，再對當時半徑二點五格內敵人結算一次小級物理傷害；每波相隔 0.8 秒，移出可躲、後進者可被後續波命中，死亡或回合結束清除。卡通雜物模型與完整逐波畫面尚待驗收，現有脈衝只作時間位置提示。",
+      "purpose": "【本次玩法】尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n指定区域三波，每波先出四成秒落點預警，再對當時半徑二點五格內敵人結算一次小級物理傷害；每波相隔 0.8 秒，移出可躲、後進者可被後續波命中，死亡或回合結束清除。卡通雜物模型與完整逐波畫面尚待驗收，現有脈衝只作時間位置提示。",
+      "note": "本次保留核心並核對定位、代價、反制。尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n指定区域三波，每波先出四成秒落點預警，再對當時半徑二點五格內敵人結算一次小級物理傷害；每波相隔 0.8 秒，移出可躲、後進者可被後續波命中，死亡或回合結束清除。卡通雜物模型與完整逐波畫面尚待驗收，現有脈衝只作時間位置提示。",
       "removeOverrides": [
         "effects",
         "castType",
@@ -471,12 +484,34 @@
                 }
               ]
             },
-            "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        },
+        {
+          "instanceId": "ex-parody",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "floatingText",
+                  "shape": "single",
+                  "text": "移動就算上班，拒絕！",
+                  "applyTo": "self",
+                  "durationSec": 1
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
           }
         }
       ],
-      "purpose": "每次消耗一層拖延，原地得到四秒、四百五十基礎吸收量的護盾（仍吃 GGD 護盾倍率）。移動、位移、換區或死亡立即使這一片盾到期；轉向或撞牆未移動不取消，不影響隊友給的其他盾。缺拖延時拒絕且不扣魔力或冷卻。原稿未指定一次扣幾層，本配方採一層。\n【原設計】消耗拖延層數，原地取得護盾；移動後提前結束。",
-      "note": "每次消耗一層拖延，原地得到四秒、四百五十基礎吸收量的護盾（仍吃 GGD 護盾倍率）。移動、位移、換區或死亡立即使這一片盾到期；轉向或撞牆未移動不取消，不影響隊友給的其他盾。缺拖延時拒絕且不扣魔力或冷卻。原稿未指定一次扣幾層，本配方採一層。",
+      "purpose": "【本次玩法】尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n保留真正移動就消失的懶人盾，以施放提示說清反制。\n每次消耗一層拖延，原地得到四秒、四百五十基礎吸收量的護盾（仍吃 GGD 護盾倍率）。移動、位移、換區或死亡立即使這一片盾到期；轉向或撞牆未移動不取消，不影響隊友給的其他盾。缺拖延時拒絕且不扣魔力或冷卻。原稿未指定一次扣幾層，本配方採一層。",
+      "note": "本次保留核心並核對定位、代價、反制。尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n保留真正移動就消失的懶人盾，以施放提示說清反制。\n每次消耗一層拖延，原地得到四秒、四百五十基礎吸收量的護盾（仍吃 GGD 護盾倍率）。移動、位移、換區或死亡立即使這一片盾到期；轉向或撞牆未移動不取消，不影響隊友給的其他盾。缺拖延時拒絕且不扣魔力或冷卻。原稿未指定一次扣幾層，本配方採一層。",
       "removeOverrides": [
         "effects",
         "castType",
@@ -558,6 +593,7 @@
         },
         "perStackLost": {
           "type": "statModifiers",
+          "optional": true,
           "default": [
             {
               "stat": "ad",
@@ -569,8 +605,7 @@
               "op": "pctAdd",
               "value": 0.1
             }
-          ],
-          "optional": true
+          ]
         },
         "lethalMode": {
           "type": "enum",
@@ -629,11 +664,11 @@
         },
         "restoreHealthPct": {
           "type": "number",
+          "optional": true,
           "default": 0.5,
           "min": 0,
           "max": 1,
-          "unit": "ratio",
-          "optional": true
+          "unit": "ratio"
         },
         "aoeRadius": {
           "type": "number",
@@ -643,10 +678,10 @@
         },
         "knockbackDistance": {
           "type": "number",
+          "optional": true,
           "default": 4,
           "min": 0.1,
-          "max": 20,
-          "optional": true
+          "max": 20
         },
         "knockbackSpeed": {
           "type": "number",
@@ -665,11 +700,11 @@
         },
         "stunSec": {
           "type": "number",
+          "optional": true,
           "default": 0.5,
           "min": 0.034,
           "max": 20,
-          "unit": "s",
-          "optional": true
+          "unit": "s"
         },
         "stunStatusId": {
           "type": "docRef",
@@ -689,12 +724,21 @@
       }
     },
     "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
-      "id": "tpl-event-passive",
       "schema": "template@1",
-      "name": "自訂事件被動",
-      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
-      "family": "event-passive",
       "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-event-passive",
+      "name": "自訂事件被動",
+      "family": "event-passive",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
       "params": {
         "hooks": {
           "type": "hooks",
@@ -714,15 +758,6 @@
           ],
           "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
         }
-      },
-      "requires": [
-        "hooks",
-        "conditions"
-      ],
-      "gapScore": 10,
-      "exemplar": {
-        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
-        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
       }
     },
     "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
@@ -790,6 +825,78 @@
       "exemplar": {
         "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
         "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      }
+    },
+    "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+      "schema": "template@1",
+      "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-effect-sequence",
+      "name": "自訂效果序列",
+      "family": "effect-sequence",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ]
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 10,
+          "unit": "s"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 40
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "enemies",
+            "allies"
+          ]
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "recast": {
+          "type": "recast",
+          "optional": true,
+          "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+        }
       }
     }
   }

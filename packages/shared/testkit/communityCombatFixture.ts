@@ -11,8 +11,9 @@ import { learnEx } from "../src/sim/abilities/abilitySystem";
 import { asSeatId, asTeamId, type EntityId } from "../src/ids";
 import { eligibleShieldTotal } from "../src/sim/combat/damage";
 
-export function communityCombatFixture(number: string, rank = 1) {
+export function communityCombatFixture(number: string, rank = 1, refinementOverride?: ReturnType<typeof communityRecipeFixture>["refinement"]) {
   const source = communityRecipeFixture(number);
+  if (refinementOverride) source.refinement = structuredClone(refinementOverride);
   const templates = [...source.catalog.documents].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc as TemplateDoc);
   const project = applyCommunityDesignRefinement(source.project, source.refinement, templates);
   const result = compileGeneratedHeroDraft(generateHeroDraft(project.acceptedPlan!, { heroId: project.projectId, heroName: project.brief.name,

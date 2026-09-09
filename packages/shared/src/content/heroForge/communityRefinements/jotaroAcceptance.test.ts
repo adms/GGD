@@ -43,6 +43,6 @@ it("v1 products have independent templates and retain the prior revision for rol
   const second = applyCommunityDesignRefinement(r.source.project, r.source.refinement, r.templates), copy = JSON.stringify(second);
   r.project.acceptedPlan!.slots.R.products[0]!.template.params!.effects = [];
   expect(JSON.stringify(second)).toBe(copy); expect(JSON.stringify(r.source.project)).toBe(before); expect(JSON.stringify(r.templates)).toBe(templates);
-  expect(second.revision).toBe(r.source.project.revision + 1);
+  expect(second.revision).toBe(r.source.project.revision + r.source.refinement.version);
   expect(() => applyCommunityDesignRefinement(r.source.project, { ...r.source.refinement, sourceSha256: "0".repeat(64) }, r.templates)).toThrow("REFINEMENT_SOURCE_MISMATCH");
 });

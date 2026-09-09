@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-project@2",
   "projectId": "community-review-37-20260907",
-  "revision": 14,
+  "revision": 15,
   "sourceLock": {
     "canonicalId": null,
     "versionId": null
@@ -38,7 +38,7 @@
       "fieldOwnership": {}
     },
     "skills": {
-      "revision": 14,
+      "revision": 15,
       "state": "stale",
       "fieldOwnership": {
         "acceptedPlan.slots.E.name": "locked",
@@ -56,22 +56,22 @@
       }
     },
     "mechanics": {
-      "revision": 14,
+      "revision": 15,
       "state": "stale",
       "fieldOwnership": {}
     },
     "presentation": {
-      "revision": 14,
+      "revision": 15,
       "state": "stale",
       "fieldOwnership": {}
     },
     "validation": {
-      "revision": 14,
+      "revision": 15,
       "state": "stale",
       "fieldOwnership": {}
     },
     "package": {
-      "revision": 14,
+      "revision": 15,
       "state": "stale",
       "fieldOwnership": {}
     }
@@ -318,7 +318,7 @@
           "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
         }
       },
-      "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+      "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
         "id": "tpl-effect-sequence",
         "schema": "template@1",
         "name": "自訂效果序列",
@@ -373,6 +373,11 @@
               }
             ],
             "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "recast": {
+            "type": "recast",
+            "optional": true,
+            "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
           }
         },
         "requires": [
@@ -390,7 +395,7 @@
       "PASSIVE": {
         "slot": "PASSIVE",
         "name": "〔雖然害怕還是努力〕",
-        "purpose": "【修正行為】5 格內其他存活友軍於最近 2 秒造成或承受敵對 HP／護盾命中，最多每 2 秒獲得 1 層勇氣，上限 3；不按命中次數累積。勇氣回合重置。成功施放瞬發 W 時扣 1 層給自身小盾；零層仍可撤退。\n【原設計】附近友軍交戰時累積勇氣，上限三層；以時間間隔累積，避免多段傷害快速疊滿。",
+        "purpose": "【本次玩法】吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n【修正行為】5 格內其他存活友軍於最近 2 秒造成或承受敵對 HP／護盾命中，最多每 2 秒獲得 1 層勇氣，上限 3；不按命中次數累積。勇氣回合重置。成功施放瞬發 W 時扣 1 層給自身小盾；零層仍可撤退。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json"
@@ -406,8 +411,21 @@
                 "max": 3,
                 "durationSec": -1,
                 "resetOn": "round",
+                "perStackLost": [],
                 "lethalMode": "none",
-                "perStackLost": []
+                "lethalConsume": 1,
+                "surviveHpPct": 0.01,
+                "lethalDamageTypes": "all",
+                "internalCooldown": 0.5,
+                "invulnerableSec": 1.5,
+                "invulnerableScope": "damageAndControl",
+                "restoreHealthPct": 0.5,
+                "aoeRadius": 6,
+                "knockbackDistance": 4,
+                "knockbackSpeed": 16,
+                "knockbackFrom": "caster",
+                "stunSec": 0.5,
+                "stunStatusId": "trial-stun"
               },
               "contentSha256": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39"
             }
@@ -486,7 +504,7 @@
       "Q": {
         "slot": "Q",
         "name": "〔討伐叉刺擊〕",
-        "purpose": "【修正行為】前方長 2、寬 0.6 的短距叉刺，每名敵人最多一筆小級物理傷害；後方、側邊與範圍外可避開。討伐叉模型、專用刺擊動作與判定對齊仍待視覺驗收。\n【原設計】短距離刺擊，武器判定與外觀一致。",
+        "purpose": "【本次玩法】吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n【修正行為】前方長 2、寬 0.6 的短距叉刺，每名敵人最多一筆小級物理傷害；後方、側邊與範圍外可避開。討伐叉模型、專用刺擊動作與判定對齊仍待視覺驗收。",
         "maxRank": 4,
         "abilityOverrides": {
           "cooldownTier": "小",
@@ -522,7 +540,7 @@
                   }
                 ]
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -539,7 +557,7 @@
       "W": {
         "slot": "W",
         "name": "〔哇啊啊撤退〕",
-        "purpose": "【修正行為】沿輸入方向移動最多 3 格，受牆與場界阻擋，不造成衝撞傷害或擊退。勇氣扣除與小盾由被動的成功施法 W hook 執行一次；零層可施放。\n【原設計】朝指定方向短距離逃跑，消耗一層勇氣可取得小護盾。",
+        "purpose": "【本次玩法】吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n保留借隊友勇氣逃跑和少打幾叉的資源取捨，逃跑時顯示同一笑點。\n【修正行為】沿輸入方向移動最多 3 格，受牆與場界阻擋，不造成衝撞傷害或擊退。勇氣扣除與小盾由被動的成功施法 W hook 執行一次；零層可施放。",
         "maxRank": 4,
         "abilityOverrides": {
           "cooldownTier": "小",
@@ -567,7 +585,29 @@
                   }
                 ]
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          },
+          {
+            "instanceId": "w-parody",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "skillshot",
+                "castTimeSec": 0,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "floatingText",
+                    "shape": "single",
+                    "text": "借你的勇氣先逃跑",
+                    "applyTo": "self",
+                    "durationSec": 1
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -587,7 +627,7 @@
       "E": {
         "slot": "E",
         "name": "〔點心時間〕",
-        "purpose": "【修正行為】原地停留 1 秒後恢復少量生命；吟唱期間 HP 受傷取消，護盾完全吸收不取消（沿用 GGD interruptOn=damage）；不先回血。点心道具與進食動作仍待視覺驗收。\n【原設計】短暫停留恢復少量生命，受擊中斷。",
+        "purpose": "【本次玩法】吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n【修正行為】原地停留 1 秒後恢復少量生命；吟唱期間 HP 受傷取消，護盾完全吸收不取消（沿用 GGD interruptOn=damage）；不先回血。点心道具與進食動作仍待視覺驗收。",
         "maxRank": 4,
         "abilityOverrides": {
           "cooldownTier": "小",
@@ -619,7 +659,7 @@
                   }
                 ]
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -636,7 +676,7 @@
       "R": {
         "slot": "R",
         "name": "〔鼓起勇氣討伐〕",
-        "purpose": "【修正行為】吟唱後消耗當時全部 0–3 層勇氣，進行 3–6 次短距叉擊，每 0.18 秒一擊，逐擊用當下位置與面向重新判定；離開範圍可躲避，施法者死亡／分區結算即停止。沒有遠距追蹤傷害或無限強化。叉擊武器與專用動作仍待視覺驗收。\n【原設計】消耗勇氣發動數次叉擊，層數決定有限的強化幅度。",
+        "purpose": "【本次玩法】吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n【修正行為】吟唱後消耗當時全部 0–3 層勇氣，進行 3–6 次短距叉擊，每 0.18 秒一擊，逐擊用當下位置與面向重新判定；離開範圍可躲避，施法者死亡／分區結算即停止。沒有遠距追蹤傷害或無限強化。叉擊武器與專用動作仍待視覺驗收。",
         "maxRank": 3,
         "abilityOverrides": {
           "cooldownTier": "大",
@@ -795,7 +835,7 @@
                   }
                 ]
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -817,7 +857,7 @@
       "EX": {
         "slot": "EX",
         "name": "〔一起加油〕",
-        "purpose": "【修正行為】以自身為中心給附近存活友軍及自己護盾與三秒抗恐懼，並清除可驅散的恐懼；敵方與範圍外不受益，不移除暈眩、緩速或其他負面狀態。遵守 GGD 淨化總開關、數量上限與不可驅散規則。\n【原設計】為附近友軍提供護盾與短效抗恐懼，自己也獲得相同效果。",
+        "purpose": "【本次玩法】吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n【修正行為】以自身為中心給附近存活友軍及自己護盾與三秒抗恐懼，並清除可驅散的恐懼；敵方與範圍外不受益，不移除暈眩、緩速或其他負面狀態。遵守 GGD 淨化總開關、數量上限與不可驅散規則。",
         "maxRank": 1,
         "abilityOverrides": {
           "castTimeTier": "小",
@@ -883,7 +923,7 @@
                   }
                 ]
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -1189,12 +1229,12 @@
     }
   },
   "refinementNotes": {
-    "PASSIVE": "5 格內其他存活友軍於最近 2 秒造成或承受敵對 HP／護盾命中，最多每 2 秒獲得 1 層勇氣，上限 3；不按命中次數累積。勇氣回合重置。成功施放瞬發 W 時扣 1 層給自身小盾；零層仍可撤退。",
-    "Q": "前方長 2、寬 0.6 的短距叉刺，每名敵人最多一筆小級物理傷害；後方、側邊與範圍外可避開。討伐叉模型、專用刺擊動作與判定對齊仍待視覺驗收。",
-    "W": "沿輸入方向移動最多 3 格，受牆與場界阻擋，不造成衝撞傷害或擊退。勇氣扣除與小盾由被動的成功施法 W hook 執行一次；零層可施放。",
-    "E": "原地停留 1 秒後恢復少量生命；吟唱期間 HP 受傷取消，護盾完全吸收不取消（沿用 GGD interruptOn=damage）；不先回血。点心道具與進食動作仍待視覺驗收。",
-    "R": "吟唱後消耗當時全部 0–3 層勇氣，進行 3–6 次短距叉擊，每 0.18 秒一擊，逐擊用當下位置與面向重新判定；離開範圍可躲避，施法者死亡／分區結算即停止。沒有遠距追蹤傷害或無限強化。叉擊武器與專用動作仍待視覺驗收。",
-    "EX": "以自身為中心給附近存活友軍及自己護盾與三秒抗恐懼，並清除可驅散的恐懼；敵方與範圍外不受益，不移除暈眩、緩速或其他負面狀態。遵守 GGD 淨化總開關、數量上限與不可驅散規則。"
+    "PASSIVE": "本次保留核心並核對定位、代價、反制。吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n5 格內其他存活友軍於最近 2 秒造成或承受敵對 HP／護盾命中，最多每 2 秒獲得 1 層勇氣，上限 3；不按命中次數累積。勇氣回合重置。成功施放瞬發 W 時扣 1 層給自身小盾；零層仍可撤退。",
+    "Q": "本次保留核心並核對定位、代價、反制。吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n前方長 2、寬 0.6 的短距叉刺，每名敵人最多一筆小級物理傷害；後方、側邊與範圍外可避開。討伐叉模型、專用刺擊動作與判定對齊仍待視覺驗收。",
+    "W": "本次保留核心並核對定位、代價、反制。吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n保留借隊友勇氣逃跑和少打幾叉的資源取捨，逃跑時顯示同一笑點。\n沿輸入方向移動最多 3 格，受牆與場界阻擋，不造成衝撞傷害或擊退。勇氣扣除與小盾由被動的成功施法 W hook 執行一次；零層可施放。",
+    "E": "本次保留核心並核對定位、代價、反制。吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n原地停留 1 秒後恢復少量生命；吟唱期間 HP 受傷取消，護盾完全吸收不取消（沿用 GGD interruptOn=damage）；不先回血。点心道具與進食動作仍待視覺驗收。",
+    "R": "本次保留核心並核對定位、代價、反制。吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n吟唱後消耗當時全部 0–3 層勇氣，進行 3–6 次短距叉擊，每 0.18 秒一擊，逐擊用當下位置與面向重新判定；離開範圍可躲避，施法者死亡／分區結算即停止。沒有遠距追蹤傷害或無限強化。叉擊武器與專用動作仍待視覺驗收。",
+    "EX": "本次保留核心並核對定位、代價、反制。吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n以自身為中心給附近存活友軍及自己護盾與三秒抗恐懼，並清除可驅散的恐懼；敵方與範圍外不受益，不移除暈眩、緩速或其他負面狀態。遵守 GGD 淨化總開關、數量上限與不可驅散規則。"
   },
   "validationState": {
     "identity": {
@@ -1208,27 +1248,27 @@
       "diagnosticCodes": []
     },
     "skills": {
-      "revision": 14,
+      "revision": 15,
       "status": "stale",
       "diagnosticCodes": []
     },
     "mechanics": {
-      "revision": 14,
+      "revision": 15,
       "status": "stale",
       "diagnosticCodes": []
     },
     "presentation": {
-      "revision": 14,
+      "revision": 15,
       "status": "stale",
       "diagnosticCodes": []
     },
     "validation": {
-      "revision": 14,
+      "revision": 15,
       "status": "stale",
       "diagnosticCodes": []
     },
     "package": {
-      "revision": 14,
+      "revision": 15,
       "status": "stale",
       "diagnosticCodes": []
     }

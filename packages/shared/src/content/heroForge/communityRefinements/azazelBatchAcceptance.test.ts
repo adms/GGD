@@ -1,3 +1,4 @@
+import baseline from '../../../../../../tools/community-hero-forge/parody/baseline-refinements.json';
 import { beforeAll, expect, it } from "vitest";
 import { communityCombatFixture } from "../../../../testkit/communityCombatFixture";
 import { registerSkeletonContent } from "../../../sim/content/skeleton";
@@ -10,7 +11,7 @@ import { applyCommunityDesignRefinement } from "./apply";
 
 beforeAll(registerSkeletonContent);
 function setup() {
-  const r = communityCombatFixture("32");
+  const r = communityCombatFixture("32", 1, baseline.refinements["32"]);
   const champion = r.compiled.champion as unknown as ChampionDef;
   const abilities = r.compiled.abilityDrafts as unknown as Record<"PASSIVE" | "Q" | "W" | "E" | "R" | "EX", AbilityDef>;
   const options = { baseline: createHeroSimulationBaseline(r.source.catalog.documents), relatedAbilities: Object.values(abilities),
@@ -18,7 +19,7 @@ function setup() {
     setup: { ...DEFAULT_HERO_SCENARIO_SETUP, opponentPreparation: "idle" as const } };
   return { ...r, champion, abilities, options };
 }
-it("the trusted importer runs the current six-slot kit with its real earned resources", () => {
+it("the trusted importer restores the v1 six-slot kit with its real earned resources", () => {
   const r = setup(); const original = JSON.stringify(r.project);
   const result = compileHeroPackageProject(r.project, r.source.catalog);
   const replay = (result.scenarios as { replay: HeroPackageReplay }).replay;

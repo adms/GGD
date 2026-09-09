@@ -1,0 +1,650 @@
+{
+  "schema": "ggd-community-design-refinement@1",
+  "projectId": "community-review-07-20260907",
+  "sourceSha256": "b01c3704427d0f0c47a8574dc146fefbc1bec9e6ba239345479e9001c721e1be",
+  "slots": {
+    "PASSIVE": {
+      "products": [
+        {
+          "instanceId": "passive-parody-1",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onCrowdControlApplied",
+                  "effects": [
+                    {
+                      "kind": "shield",
+                      "amount": {
+                        "flat": 60
+                      },
+                      "duration": 1,
+                      "absorbs": "all",
+                      "stackKey": "community-review-07-20260907.protection",
+                      "onExisting": "keepLarger"
+                    }
+                  ],
+                  "internalCooldown": 3,
+                  "target": "self"
+                }
+              ]
+            },
+            "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】自己真正施加控制後得到60護盾一秒，每三秒一次；表演翻車仍會掉血。",
+      "note": "伸縮自在的口香糖：先黏、再推遠，拉長了才像在打人\n自己真正施加控制後得到60護盾一秒，每三秒一次；表演翻車仍會掉血。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "effects",
+        "radiusTier",
+        "rangeTier",
+        "castTimeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json"
+      }
+    },
+    "Q": {
+      "products": [
+        {
+          "instanceId": "q-parody-1",
+          "template": {
+            "ref": "tpl-single-strike",
+            "params": {
+              "damage": {
+                "damageTier": "小"
+              },
+              "damageType": "physical",
+              "castTimeSec": 0.1,
+              "status": {
+                "statusId": "slow20",
+                "duration": 4,
+                "applyTo": "target",
+                "sourceScope": "caster",
+                "moveSpeedMult": 0.8
+              }
+            },
+            "contentSha256": "sha256:00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a816b495516b465e80"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】把自己的口香糖黏上敵人四秒，減速20%；別人的糖不算。",
+      "note": "伸縮自在的口香糖：先黏、再推遠，拉長了才像在打人\n把自己的口香糖黏上敵人四秒，減速20%；別人的糖不算。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-07-20260907.q",
+        "abilityId": "community-review-07-20260907.q",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "target",
+            "vfxId": "fx.prim.arcane.slash",
+            "durationSec": 0.4,
+            "tint": [
+              245,
+              61,
+              161
+            ]
+          }
+        ]
+      }
+    },
+    "W": {
+      "products": [
+        {
+          "instanceId": "w-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "statusId": "slow20",
+                  "count": "all",
+                  "subject": "target",
+                  "appliedBy": "self",
+                  "onConsumed": [
+                    {
+                      "kind": "damage",
+                      "damageType": "physical",
+                      "amount": {
+                        "damageTier": "小"
+                      },
+                      "condition": {
+                        "kind": "distance",
+                        "op": ">",
+                        "value": 4
+                      }
+                    },
+                    {
+                      "kind": "pull",
+                      "shape": "single",
+                      "destination": "caster",
+                      "speed": 14,
+                      "stopDistance": 1.5
+                    },
+                    {
+                      "kind": "floatingText",
+                      "shape": "single",
+                      "text": "拉太長會痛喔",
+                      "applyTo": "victim",
+                      "durationSec": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】收線：只有自己黏過的敵人才被拉至身前；起手距離超過四格還多一次小級傷害。",
+      "note": "伸縮自在的口香糖：先黏、再推遠，拉長了才像在打人\n收線：只有自己黏過的敵人才被拉至身前；起手距離超過四格還多一次小級傷害。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-07-20260907.w",
+        "abilityId": "community-review-07-20260907.w",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "target",
+            "vfxId": "fx.prim.arcane.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              245,
+              61,
+              161
+            ]
+          }
+        ]
+      }
+    },
+    "E": {
+      "products": [
+        {
+          "instanceId": "e-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "knockback",
+                  "distance": 4,
+                  "speed": 12,
+                  "from": "caster",
+                  "subtractGap": false,
+                  "uncontrollable": false
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】先將敵人推遠四格，替口香糖上弦；這招不自帶傷害。",
+      "note": "伸縮自在的口香糖：先黏、再推遠，拉長了才像在打人\n先將敵人推遠四格，替口香糖上弦；這招不自帶傷害。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-07-20260907.e",
+        "abilityId": "community-review-07-20260907.e",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "target",
+            "vfxId": "fx.prim.arcane.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              245,
+              61,
+              161
+            ]
+          }
+        ]
+      }
+    },
+    "R": {
+      "products": [
+        {
+          "instanceId": "r-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "中"
+                  }
+                },
+                {
+                  "kind": "applyStatus",
+                  "statusId": "root",
+                  "duration": 1,
+                  "applyTo": "target",
+                  "sourceScope": "caster",
+                  "root": true,
+                  "condition": {
+                    "kind": "status",
+                    "statusId": "slow20",
+                    "subject": "target",
+                    "appliedBy": "self"
+                  }
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】收表演費：中級打擊；仍黏著自己的糖時定身一秒，控制可以被淨化。",
+      "note": "伸縮自在的口香糖：先黏、再推遠，拉長了才像在打人\n收表演費：中級打擊；仍黏著自己的糖時定身一秒，控制可以被淨化。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          30
+        ],
+        "manaCost": [
+          60
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-07-20260907.r",
+        "abilityId": "community-review-07-20260907.r",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "target",
+            "vfxId": "fx.prim.arcane.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              245,
+              61,
+              161
+            ]
+          }
+        ]
+      }
+    },
+    "EX": {
+      "products": [
+        {
+          "instanceId": "ex-parody-1",
+          "template": {
+            "ref": "tpl-blink",
+            "params": {
+              "castTimeSec": 0.1
+            },
+            "contentSha256": "sha256:8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b41146563a36c4be10"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】魔術師換位離場，不留假的可攻擊分身。",
+      "note": "伸縮自在的口香糖：先黏、再推遠，拉長了才像在打人\n魔術師換位離場，不留假的可攻擊分身。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-07-20260907.ex",
+        "abilityId": "community-review-07-20260907.ex",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "target",
+            "vfxId": "fx.prim.arcane.dash",
+            "durationSec": 0.4,
+            "tint": [
+              245,
+              61,
+              161
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "version": 1,
+  "templateVersions": {
+    "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+      "schema": "template@1",
+      "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-event-passive",
+      "name": "自訂事件被動",
+      "family": "event-passive",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+      "params": {
+        "hooks": {
+          "type": "hooks",
+          "default": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      }
+    },
+    "sha256:00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a816b495516b465e80": {
+      "id": "tpl-single-strike",
+      "schema": "template@1",
+      "name": "單體斬擊",
+      "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。 另外兩格選填：`invulnerableSec` 是**起手的無敵幀**（護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`dot` 是**施法者自己**背上的持續傷害（界王拳那一族的代價；打在敵人身上的同型傷害請用「吸血／汲取」那一族）。三格全部清空 ⇒ 就是一發純傷害。",
+      "family": "single-strike",
+      "status": "enabled",
+      "params": {
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              350
+            ],
+            "ratios": []
+          }
+        },
+        "damageType": {
+          "type": "enum",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "default": "magic"
+        },
+        "invulnerableSec": {
+          "type": "number",
+          "optional": true,
+          "min": 0.05,
+          "max": 5,
+          "unit": "s"
+        },
+        "dot": {
+          "type": "dot",
+          "optional": true
+        },
+        "status": {
+          "type": "applyStatus",
+          "optional": true
+        },
+        "castTimeSec": {
+          "type": "number",
+          "optional": true,
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "unit": "s"
+        }
+      },
+      "requires": [
+        "applyStatus",
+        "invulnerable",
+        "periodicDamage"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "23-04 雷焰聖劍",
+        "jass": "A0OD"
+      }
+    },
+    "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+      "schema": "template@1",
+      "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-effect-sequence",
+      "name": "自訂效果序列",
+      "family": "effect-sequence",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ]
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 10,
+          "unit": "s"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 40
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "enemies",
+            "allies"
+          ]
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "recast": {
+          "type": "recast",
+          "optional": true,
+          "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+        }
+      }
+    },
+    "sha256:8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b41146563a36c4be10": {
+      "id": "tpl-blink",
+      "schema": "template@1",
+      "name": "純位移瞬移",
+      "description": "把自己的身體搬到指定的地面點 —— 真的瞬移（`kind:\"blink\"`；owner 2026-08-09「是真的瞬移，不是平移」，GH#301-2），中間那兩格身體不存在：不會被範圍技掃到、飛行途中不吃碰撞；落點仍照 `content/config/displacement-tiers.json` 結算牆前截斷／飛行豁免／場地邊界（GH#1044）。距離上限就是技能自己的射程（skeleton 的 `range`，⛔ 不是這裡的欄位）。⛔ 零參數是刻意的：出貨 7 支（57-02 任意門 · 86-02 電光一閃 · 09-02 瞬間移動 ×2 · 65-01 神出鬼沒 · 58-00 電光一閃 ×2）的 `effects` 一個位元組都不差，多一格就是編一格。要「瞬移到目標身上再打一下」走 tpl-blink-strike；要「抵達點才結算 onLand」走 tpl-teleport。",
+      "family": "blink",
+      "status": "enabled",
+      "params": {
+        "castTimeSec": {
+          "type": "number",
+          "optional": true,
+          "default": 0.467,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "origin": "census: 出貨 7/7 支純位移的 `castTimeSec` 逐位元 0.467（content/abilities/godie-n00b.e.json · o00k.w · o00x.w · ogrh.w · udea.q · o02l.passive · ofar.passive）；⚠️ 它是 castderive:build:raw 推導的欄位，文件與 params 同一個值（同 71/79 位既有採用者的慣例）。"
+        }
+      },
+      "requires": [
+        "blink"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "57-02 任意門（content/abilities/godie-n00b.e.json）",
+        "jass": "A0PM 82-02 虛空瞬動 j:35335-35336（GetOrderPointLoc → SetUnitPositionLoc；同一台「指向點」機器，expand.ts teleport 註解逐字）"
+      }
+    }
+  }
+}

@@ -150,8 +150,8 @@ describe("GH#1132 wind/tree card switching", () => {
     const cues = r.compiled.abilityDrafts.Q.effects.filter(e => e.kind === "spawnVfx");
     expect(cues).toHaveLength(2);
     expect(cues.every(e => e.condition !== undefined && e.at === "target")).toBe(true);
-    // This fixture is refinement v3, rebuilt from the original project, not v1.
-    expect(r.source.refinement.version).toBe(3);
-    expect(r.project.revision).toBe(r.source.project.revision + 3);
+    // Parody v4 keeps the tested wind/tree core and adds the new leap/sword.
+    expect(r.source.refinement.version).toBe(4);
+    expect(r.project.revision).toBe(r.source.project.revision + r.source.refinement.version);
   });
 });

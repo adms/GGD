@@ -1,3 +1,4 @@
+import baseline from '../../../../../../tools/community-hero-forge/parody/baseline-refinements.json';
 import { beforeAll, describe, expect, it } from "vitest";
 import { communityActionFixture } from "../../../../testkit/communityActionFixture";
 import { registerSkeletonContent } from "../../../sim/content/skeleton";
@@ -16,7 +17,7 @@ import { azazelStatusIds } from "./azazel";
 
 beforeAll(registerSkeletonContent);
 function setup(rank = 1) {
-  const r = communityActionFixture("32", rank), ids = azazelStatusIds(r.project.projectId);
+  const r = communityActionFixture("32", rank, baseline.refinements["32"]), ids = azazelStatusIds(r.project.projectId);
   const projectile = "imported.bolt.void" as ProjectileId;
   Projectiles.register(projectile, r.source.catalog.documents.get(`projectiles/${projectile}`) as unknown as ProjectileDef);
   const target = (entityId = r.enemy) => ({ type: "entity" as const, entityId });
@@ -36,7 +37,7 @@ function setup(rank = 1) {
   const output = (id = r.enemy) => { recomputeStats(r.world, id); return r.world.stats.get(id)!.final[Stat.OutputDamagePct]; };
   return { ...r, ids, target, point, effects, hit, count, seed, status, counter, output };
 }
-describe("Azazel current batch source and actual outgoing damage", () => {
+describe("Azazel v1 rollback source and actual outgoing damage", () => {
   it("earns three actual casts, then R→EX reverses its own curse without extra EX damage", () => {
     const r = setup(); expect(r.count()).toBe(0);
     expect(r.cast("Q", r.target(), 12)).toBe("ok"); expect(r.count()).toBe(1);

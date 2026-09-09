@@ -165,11 +165,11 @@ describe("GH#1132 Madoka effective protection and authored six slots", () => {
   });
   it("unused EX expires; a new application does not stack saves; round reset restores eligibility", () => {
     const r = setup(); expect(r.cast("EX")).toBe("ok");
-    r.ready("EX"); expect(r.cast("EX")).toBe("ok"); expect(r.salvation()?.count).toBe(1);
+    r.ready("EX"); expect(r.cast("EX")).toBe("silenced"); r.step(8); expect(r.cast("EX")).toBe("ok"); expect(r.salvation()?.count).toBe(1);
     r.step(160); expect(r.salvation()!.expiresAtTick).toBeLessThan(r.world.tick);
     r.ready("EX"); expect(r.cast("EX")).toBe("ok"); r.damage(999999); expect(r.salvation()?.savesThisRound).toBe(1);
-    clearForFreshBody(r.world, r.ally); r.ready("EX"); expect(r.cast("EX")).toBe("ok"); expect(r.salvation()?.count).toBe(0);
-    resetMarksForRound(r.world); r.ready("EX"); expect(r.cast("EX")).toBe("ok");
+    clearForFreshBody(r.world, r.ally); r.step(8); r.ready("EX"); expect(r.cast("EX")).toBe("ok"); expect(r.salvation()?.count).toBe(0);
+    resetMarksForRound(r.world); r.step(8); r.ready("EX"); expect(r.cast("EX")).toBe("ok");
     expect(r.salvation()?.count).toBe(1); r.damage(999999); expect(r.world.health.get(r.ally)!.alive).toBe(true);
   });
   it("expired EX does not protect against a lethal packet", () => {
@@ -207,7 +207,7 @@ describe("GH#1132 Madoka effective protection and authored six slots", () => {
   it("keeps source text/model binding and isolates newly versioned recipe products", () => {
     const r = setup(); expect(r.project.sourceDesign).toEqual(r.source.project.sourceDesign);
     expect(r.project.brief).toEqual(r.source.project.brief); expect(r.project.presentation.uploadedModel).toEqual(r.source.project.presentation.uploadedModel);
-    expect(r.project.revision).toBe(r.source.project.revision + 2); expect(r.project.receipts).toEqual([]);
+    expect(r.project.revision).toBe(r.source.project.revision + r.source.refinement.version); expect(r.project.receipts).toEqual([]);
     expect(r.project.sourceDesign!.slots.EX.requiredRefinement).toContain("每目標每回合一次");
     expect(r.project.refinementNotes!.Q).toContain("待製作");
   });

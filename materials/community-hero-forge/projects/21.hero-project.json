@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-project@2",
   "projectId": "community-review-21-20260907",
-  "revision": 14,
+  "revision": 15,
   "sourceLock": {
     "canonicalId": null,
     "versionId": null
@@ -38,7 +38,7 @@
       "fieldOwnership": {}
     },
     "skills": {
-      "revision": 14,
+      "revision": 15,
       "state": "stale",
       "fieldOwnership": {
         "acceptedPlan.slots.E.name": "locked",
@@ -56,22 +56,22 @@
       }
     },
     "mechanics": {
-      "revision": 14,
+      "revision": 15,
       "state": "stale",
       "fieldOwnership": {}
     },
     "presentation": {
-      "revision": 14,
+      "revision": 15,
       "state": "stale",
       "fieldOwnership": {}
     },
     "validation": {
-      "revision": 14,
+      "revision": 15,
       "state": "stale",
       "fieldOwnership": {}
     },
     "package": {
-      "revision": 14,
+      "revision": 15,
       "state": "stale",
       "fieldOwnership": {}
     }
@@ -318,7 +318,7 @@
           "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
         }
       },
-      "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+      "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
         "id": "tpl-effect-sequence",
         "schema": "template@1",
         "name": "自訂效果序列",
@@ -373,6 +373,11 @@
               }
             ],
             "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "recast": {
+            "type": "recast",
+            "optional": true,
+            "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
           }
         },
         "requires": [
@@ -390,7 +395,7 @@
       "PASSIVE": {
         "slot": "PASSIVE",
         "name": "〔希望的連結〕",
-        "purpose": "【修正行為】自己的治療實際恢復其他友軍生命、或自己給的護盾實際吸收敵對傷害時獲得一層希望，上限三層；同一傷害封包多片盾合計一次。滿血治療、零／過期盾、單純施放或刷新護盾及自我保護不計；希望回合清零。希望光效仍待畫面驗收。\n【原設計】有效保護友軍時累積希望，上限三層；溢出治療與無效護盾不提供資源。",
+        "purpose": "【本次玩法】小圓合約客服：有效救援才有希望，簽免死合約得短暫閉嘴\n【修正行為】自己的治療實際恢復其他友軍生命、或自己給的護盾實際吸收敵對傷害時獲得一層希望，上限三層；同一傷害封包多片盾合計一次。滿血治療、零／過期盾、單純施放或刷新護盾及自我保護不計；希望回合清零。希望光效仍待畫面驗收。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json"
@@ -406,8 +411,21 @@
                 "max": 3,
                 "durationSec": -1,
                 "resetOn": "round",
+                "perStackLost": [],
                 "lethalMode": "none",
-                "perStackLost": []
+                "lethalConsume": 1,
+                "surviveHpPct": 0.01,
+                "lethalDamageTypes": "all",
+                "internalCooldown": 0.5,
+                "invulnerableSec": 1.5,
+                "invulnerableScope": "damageAndControl",
+                "restoreHealthPct": 0.5,
+                "aoeRadius": 6,
+                "knockbackDistance": 4,
+                "knockbackSpeed": 16,
+                "knockbackFrom": "caster",
+                "stunSec": 0.5,
+                "stunStatusId": "trial-stun"
               },
               "contentSha256": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39"
             }
@@ -452,7 +470,7 @@
       "Q": {
         "slot": "Q",
         "name": "〔光之箭〕",
-        "purpose": "【修正行為】發射一枚沿輸入方向直行、有限射程且首碰敵人即消失的魔法彈；只在實際碰撞時結算一次魔法傷害。箭形與粉白光效仍使用既有 arcane bolt 待製作／畫面驗收。\n【原設計】發射直線魔法箭。",
+        "purpose": "【本次玩法】小圓合約客服：有效救援才有希望，簽免死合約得短暫閉嘴\n【修正行為】發射一枚沿輸入方向直行、有限射程且首碰敵人即消失的魔法彈；只在實際碰撞時結算一次魔法傷害。箭形與粉白光效仍使用既有 arcane bolt 待製作／畫面驗收。",
         "maxRank": 4,
         "abilityOverrides": {
           "castTimeTier": "小",
@@ -488,7 +506,7 @@
                   }
                 ]
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -507,7 +525,7 @@
       "W": {
         "slot": "W",
         "name": "〔希望之弓〕",
-        "purpose": "【修正行為】指定友軍（可含自身），結算時最多消耗一層希望，提供基礎 200 護盾；零層仍提供基礎 120 護盾（沿用全域階級倍率）。只給選中的目標，無效目標不扣希望。玫瑰花瓣盾仍待畫面驗收。\n【原設計】為指定友軍提供護盾；消耗一層希望可加強。",
+        "purpose": "【本次玩法】小圓合約客服：有效救援才有希望，簽免死合約得短暫閉嘴\n【修正行為】指定友軍（可含自身），結算時最多消耗一層希望，提供基礎 200 護盾；零層仍提供基礎 120 護盾（沿用全域階級倍率）。只給選中的目標，無效目標不扣希望。玫瑰花瓣盾仍待畫面驗收。",
         "maxRank": 4,
         "abilityOverrides": {
           "castTimeTier": "小",
@@ -562,7 +580,7 @@
                   }
                 ]
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -579,7 +597,7 @@
       "E": {
         "slot": "E",
         "name": "〔淨化之願〕",
-        "purpose": "【修正行為】清除自身最新一項可淨化負面狀態，保留正面、不可驅散及其餘負面狀態；提供三秒 10% 移速。沒有可淨化狀態時仍可加速；沿用既有全域驅散開關。\n【原設計】解除一項可淨化的負面狀態，並提供短效移速。",
+        "purpose": "【本次玩法】小圓合約客服：有效救援才有希望，簽免死合約得短暫閉嘴\n【修正行為】清除自身最新一項可淨化負面狀態，保留正面、不可驅散及其餘負面狀態；提供三秒 10% 移速。沒有可淨化狀態時仍可加速；沿用既有全域驅散開關。",
         "maxRank": 4,
         "abilityOverrides": {
           "castTimeTier": "小",
@@ -617,7 +635,7 @@
                   }
                 ]
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -634,7 +652,7 @@
       "R": {
         "slot": "R",
         "name": "〔願望箭雨〕",
-        "purpose": "【修正行為】指定地面區域共三波魔法傷害，每波相隔約 0.35 秒並重新判定區域內敵人；離開就不再受傷，稍後進入仍會被後續波次命中。箭形落點資產及連續畫面仍待驗收。\n【原設計】對指定區域發射有限波次的箭雨。",
+        "purpose": "【本次玩法】小圓合約客服：有效救援才有希望，簽免死合約得短暫閉嘴\n【修正行為】指定地面區域共三波魔法傷害，每波相隔約 0.35 秒並重新判定區域內敵人；離開就不再受傷，稍後進入仍會被後續波次命中。箭形落點資產及連續畫面仍待驗收。",
         "maxRank": 3,
         "abilityOverrides": {
           "castTimeTier": "大",
@@ -677,7 +695,7 @@
                   }
                 ]
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -696,7 +714,7 @@
       "EX": {
         "slot": "EX",
         "name": "圓環之理",
-        "purpose": "【修正行為】為指定友軍（可含自身）掛五秒保命印記；護盾與減傷後首次致死傷害消耗印記，保留 5% 最大生命並短暫無敵 0.5 秒。同一目標／同名印記每回合最多救一次，不同施法者與重施都不能洗掉已用次數；過期未觸發可重施，回合重置。圓環原作演出仍待畫面驗收。\n【原設計】對一名友軍施加短期保命印記。首次受到致死傷害時消耗印記，保留少量生命並短暫保護。同一目標每回合限一次。",
+        "purpose": "【本次玩法】小圓合約客服：有效救援才有希望，簽免死合約得短暫閉嘴\n新增代價：簽免死合約後自己沉默0.6秒；友軍的一次救命額度與原有效保護計數不變。\n【修正行為】為指定友軍（可含自身）掛五秒保命印記；護盾與減傷後首次致死傷害消耗印記，保留 5% 最大生命並短暫無敵 0.5 秒。同一目標／同名印記每回合最多救一次，不同施法者與重施都不能洗掉已用次數；過期未觸發可重施，回合重置。圓環原作演出仍待畫面驗收。",
         "maxRank": 1,
         "abilityOverrides": {
           "castTimeTier": "小",
@@ -748,7 +766,37 @@
                   }
                 ]
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          },
+          {
+            "instanceId": "ex-parody",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 0,
+                "side": "allies",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "magic-break",
+                    "duration": 0.6,
+                    "applyTo": "self",
+                    "sourceScope": "caster",
+                    "silenced": true
+                  },
+                  {
+                    "kind": "floatingText",
+                    "shape": "single",
+                    "text": "簽約中請保持安靜",
+                    "applyTo": "self",
+                    "durationSec": 1
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -1172,12 +1220,12 @@
     }
   },
   "refinementNotes": {
-    "PASSIVE": "自己的治療實際恢復其他友軍生命、或自己給的護盾實際吸收敵對傷害時獲得一層希望，上限三層；同一傷害封包多片盾合計一次。滿血治療、零／過期盾、單純施放或刷新護盾及自我保護不計；希望回合清零。希望光效仍待畫面驗收。",
-    "Q": "發射一枚沿輸入方向直行、有限射程且首碰敵人即消失的魔法彈；只在實際碰撞時結算一次魔法傷害。箭形與粉白光效仍使用既有 arcane bolt 待製作／畫面驗收。",
-    "W": "指定友軍（可含自身），結算時最多消耗一層希望，提供基礎 200 護盾；零層仍提供基礎 120 護盾（沿用全域階級倍率）。只給選中的目標，無效目標不扣希望。玫瑰花瓣盾仍待畫面驗收。",
-    "E": "清除自身最新一項可淨化負面狀態，保留正面、不可驅散及其餘負面狀態；提供三秒 10% 移速。沒有可淨化狀態時仍可加速；沿用既有全域驅散開關。",
-    "R": "指定地面區域共三波魔法傷害，每波相隔約 0.35 秒並重新判定區域內敵人；離開就不再受傷，稍後進入仍會被後續波次命中。箭形落點資產及連續畫面仍待驗收。",
-    "EX": "為指定友軍（可含自身）掛五秒保命印記；護盾與減傷後首次致死傷害消耗印記，保留 5% 最大生命並短暫無敵 0.5 秒。同一目標／同名印記每回合最多救一次，不同施法者與重施都不能洗掉已用次數；過期未觸發可重施，回合重置。圓環原作演出仍待畫面驗收。"
+    "PASSIVE": "本次保留核心並核對定位、代價、反制。小圓合約客服：有效救援才有希望，簽免死合約得短暫閉嘴\n自己的治療實際恢復其他友軍生命、或自己給的護盾實際吸收敵對傷害時獲得一層希望，上限三層；同一傷害封包多片盾合計一次。滿血治療、零／過期盾、單純施放或刷新護盾及自我保護不計；希望回合清零。希望光效仍待畫面驗收。",
+    "Q": "本次保留核心並核對定位、代價、反制。小圓合約客服：有效救援才有希望，簽免死合約得短暫閉嘴\n發射一枚沿輸入方向直行、有限射程且首碰敵人即消失的魔法彈；只在實際碰撞時結算一次魔法傷害。箭形與粉白光效仍使用既有 arcane bolt 待製作／畫面驗收。",
+    "W": "本次保留核心並核對定位、代價、反制。小圓合約客服：有效救援才有希望，簽免死合約得短暫閉嘴\n指定友軍（可含自身），結算時最多消耗一層希望，提供基礎 200 護盾；零層仍提供基礎 120 護盾（沿用全域階級倍率）。只給選中的目標，無效目標不扣希望。玫瑰花瓣盾仍待畫面驗收。",
+    "E": "本次保留核心並核對定位、代價、反制。小圓合約客服：有效救援才有希望，簽免死合約得短暫閉嘴\n清除自身最新一項可淨化負面狀態，保留正面、不可驅散及其餘負面狀態；提供三秒 10% 移速。沒有可淨化狀態時仍可加速；沿用既有全域驅散開關。",
+    "R": "本次保留核心並核對定位、代價、反制。小圓合約客服：有效救援才有希望，簽免死合約得短暫閉嘴\n指定地面區域共三波魔法傷害，每波相隔約 0.35 秒並重新判定區域內敵人；離開就不再受傷，稍後進入仍會被後續波次命中。箭形落點資產及連續畫面仍待驗收。",
+    "EX": "本次保留核心並核對定位、代價、反制。小圓合約客服：有效救援才有希望，簽免死合約得短暫閉嘴\n新增代價：簽免死合約後自己沉默0.6秒；友軍的一次救命額度與原有效保護計數不變。\n為指定友軍（可含自身）掛五秒保命印記；護盾與減傷後首次致死傷害消耗印記，保留 5% 最大生命並短暫無敵 0.5 秒。同一目標／同名印記每回合最多救一次，不同施法者與重施都不能洗掉已用次數；過期未觸發可重施，回合重置。圓環原作演出仍待畫面驗收。"
   },
   "validationState": {
     "identity": {
@@ -1191,27 +1239,27 @@
       "diagnosticCodes": []
     },
     "skills": {
-      "revision": 14,
+      "revision": 15,
       "status": "stale",
       "diagnosticCodes": []
     },
     "mechanics": {
-      "revision": 14,
+      "revision": 15,
       "status": "stale",
       "diagnosticCodes": []
     },
     "presentation": {
-      "revision": 14,
+      "revision": 15,
       "status": "stale",
       "diagnosticCodes": []
     },
     "validation": {
-      "revision": 14,
+      "revision": 15,
       "status": "stale",
       "diagnosticCodes": []
     },
     "package": {
-      "revision": 14,
+      "revision": 15,
       "status": "stale",
       "diagnosticCodes": []
     }

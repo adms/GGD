@@ -41,6 +41,6 @@ it("stance cost is pinned in independent products, and old revisions remain rest
   r.project.acceptedPlan!.slots.Q.abilityOverrides.statusCost = undefined;
   r.project.acceptedPlan!.slots.EX.products[0]!.template.params!.effects = [];
   expect(JSON.stringify(second)).toBe(snapshot); expect(JSON.stringify(r.source.project)).toBe(original); expect(JSON.stringify(r.templates)).toBe(templates);
-  expect(second.revision).toBe(r.source.project.revision + 2);
+  expect(second.revision).toBe(r.source.project.revision + r.source.refinement.version);
   expect(() => applyCommunityDesignRefinement(r.source.project, { ...r.source.refinement, sourceSha256: "0".repeat(64) }, r.templates)).toThrow("REFINEMENT_SOURCE_MISMATCH");
 });

@@ -49,6 +49,6 @@ it("v2 products remain isolated and preserve the previously implemented three-in
   const second = applyCommunityDesignRefinement(r.source.project, r.source.refinement, r.templates), before = JSON.stringify(second);
   r.project.acceptedPlan!.slots.PASSIVE.products[0]!.template.params!.hooks = [];
   expect(JSON.stringify(second)).toBe(before); expect(JSON.stringify(r.source.project)).toBe(baseline); expect(JSON.stringify(r.templates)).toBe(templates);
-  expect(second.revision).toBe(r.source.project.revision + 2); expect(r.abilities.E.recast?.stages).toHaveLength(2);
+  expect(second.revision).toBe(r.source.project.revision + r.source.refinement.version); expect(r.abilities.E.recast?.stages).toHaveLength(2);
   expect(() => applyCommunityDesignRefinement(r.source.project, { ...r.source.refinement, sourceSha256: "0".repeat(64) }, r.templates)).toThrow("REFINEMENT_SOURCE_MISMATCH");
 });

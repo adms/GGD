@@ -1,6 +1,6 @@
 {
   "schema": "ggd-community-design-refinement@1",
-  "version": 2,
+  "version": 3,
   "projectId": "community-review-37-20260907",
   "sourceSha256": "d6914597576ea4f3967a26e03b87190b41c306cd0006d8cc45aa5f9d2f57ac5e",
   "slots": {
@@ -62,12 +62,12 @@
                 }
               ]
             },
-            "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
           }
         }
       ],
-      "purpose": "【修正行為】以自身為中心給附近存活友軍及自己護盾與三秒抗恐懼，並清除可驅散的恐懼；敵方與範圍外不受益，不移除暈眩、緩速或其他負面狀態。遵守 GGD 淨化總開關、數量上限與不可驅散規則。\n【原設計】為附近友軍提供護盾與短效抗恐懼，自己也獲得相同效果。",
-      "note": "以自身為中心給附近存活友軍及自己護盾與三秒抗恐懼，並清除可驅散的恐懼；敵方與範圍外不受益，不移除暈眩、緩速或其他負面狀態。遵守 GGD 淨化總開關、數量上限與不可驅散規則。",
+      "purpose": "【本次玩法】吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n【修正行為】以自身為中心給附近存活友軍及自己護盾與三秒抗恐懼，並清除可驅散的恐懼；敵方與範圍外不受益，不移除暈眩、緩速或其他負面狀態。遵守 GGD 淨化總開關、數量上限與不可驅散規則。",
+      "note": "本次保留核心並核對定位、代價、反制。吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n以自身為中心給附近存活友軍及自己護盾與三秒抗恐懼，並清除可驅散的恐懼；敵方與範圍外不受益，不移除暈眩、緩速或其他負面狀態。遵守 GGD 淨化總開關、數量上限與不可驅散規則。",
       "removeOverrides": [
         "effects"
       ],
@@ -87,8 +87,21 @@
               "max": 3,
               "durationSec": -1,
               "resetOn": "round",
+              "perStackLost": [],
               "lethalMode": "none",
-              "perStackLost": []
+              "lethalConsume": 1,
+              "surviveHpPct": 0.01,
+              "lethalDamageTypes": "all",
+              "internalCooldown": 0.5,
+              "invulnerableSec": 1.5,
+              "invulnerableScope": "damageAndControl",
+              "restoreHealthPct": 0.5,
+              "aoeRadius": 6,
+              "knockbackDistance": 4,
+              "knockbackSpeed": 16,
+              "knockbackFrom": "caster",
+              "stunSec": 0.5,
+              "stunStatusId": "trial-stun"
             },
             "contentSha256": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39"
           }
@@ -151,8 +164,8 @@
           }
         }
       ],
-      "purpose": "【修正行為】5 格內其他存活友軍於最近 2 秒造成或承受敵對 HP／護盾命中，最多每 2 秒獲得 1 層勇氣，上限 3；不按命中次數累積。勇氣回合重置。成功施放瞬發 W 時扣 1 層給自身小盾；零層仍可撤退。\n【原設計】附近友軍交戰時累積勇氣，上限三層；以時間間隔累積，避免多段傷害快速疊滿。",
-      "note": "5 格內其他存活友軍於最近 2 秒造成或承受敵對 HP／護盾命中，最多每 2 秒獲得 1 層勇氣，上限 3；不按命中次數累積。勇氣回合重置。成功施放瞬發 W 時扣 1 層給自身小盾；零層仍可撤退。",
+      "purpose": "【本次玩法】吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n【修正行為】5 格內其他存活友軍於最近 2 秒造成或承受敵對 HP／護盾命中，最多每 2 秒獲得 1 層勇氣，上限 3；不按命中次數累積。勇氣回合重置。成功施放瞬發 W 時扣 1 層給自身小盾；零層仍可撤退。",
+      "note": "本次保留核心並核對定位、代價、反制。吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n5 格內其他存活友軍於最近 2 秒造成或承受敵對 HP／護盾命中，最多每 2 秒獲得 1 層勇氣，上限 3；不按命中次數累積。勇氣回合重置。成功施放瞬發 W 時扣 1 層給自身小盾；零層仍可撤退。",
       "removeOverrides": [
         "effects",
         "rangeTier",
@@ -188,12 +201,12 @@
                 }
               ]
             },
-            "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
           }
         }
       ],
-      "purpose": "【修正行為】前方長 2、寬 0.6 的短距叉刺，每名敵人最多一筆小級物理傷害；後方、側邊與範圍外可避開。討伐叉模型、專用刺擊動作與判定對齊仍待視覺驗收。\n【原設計】短距離刺擊，武器判定與外觀一致。",
-      "note": "前方長 2、寬 0.6 的短距叉刺，每名敵人最多一筆小級物理傷害；後方、側邊與範圍外可避開。討伐叉模型、專用刺擊動作與判定對齊仍待視覺驗收。",
+      "purpose": "【本次玩法】吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n【修正行為】前方長 2、寬 0.6 的短距叉刺，每名敵人最多一筆小級物理傷害；後方、側邊與範圍外可避開。討伐叉模型、專用刺擊動作與判定對齊仍待視覺驗收。",
+      "note": "本次保留核心並核對定位、代價、反制。吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n前方長 2、寬 0.6 的短距叉刺，每名敵人最多一筆小級物理傷害；後方、側邊與範圍外可避開。討伐叉模型、專用刺擊動作與判定對齊仍待視覺驗收。",
       "removeOverrides": [
         "effects",
         "rangeTier",
@@ -239,12 +252,34 @@
                 }
               ]
             },
-            "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        },
+        {
+          "instanceId": "w-parody",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "floatingText",
+                  "shape": "single",
+                  "text": "借你的勇氣先逃跑",
+                  "applyTo": "self",
+                  "durationSec": 1
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
           }
         }
       ],
-      "purpose": "【修正行為】沿輸入方向移動最多 3 格，受牆與場界阻擋，不造成衝撞傷害或擊退。勇氣扣除與小盾由被動的成功施法 W hook 執行一次；零層可施放。\n【原設計】朝指定方向短距離逃跑，消耗一層勇氣可取得小護盾。",
-      "note": "沿輸入方向移動最多 3 格，受牆與場界阻擋，不造成衝撞傷害或擊退。勇氣扣除與小盾由被動的成功施法 W hook 執行一次；零層可施放。",
+      "purpose": "【本次玩法】吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n保留借隊友勇氣逃跑和少打幾叉的資源取捨，逃跑時顯示同一笑點。\n【修正行為】沿輸入方向移動最多 3 格，受牆與場界阻擋，不造成衝撞傷害或擊退。勇氣扣除與小盾由被動的成功施法 W hook 執行一次；零層可施放。",
+      "note": "本次保留核心並核對定位、代價、反制。吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n保留借隊友勇氣逃跑和少打幾叉的資源取捨，逃跑時顯示同一笑點。\n沿輸入方向移動最多 3 格，受牆與場界阻擋，不造成衝撞傷害或擊退。勇氣扣除與小盾由被動的成功施法 W hook 執行一次；零層可施放。",
       "removeOverrides": [
         "effects",
         "rangeTier",
@@ -292,12 +327,12 @@
                 }
               ]
             },
-            "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
           }
         }
       ],
-      "purpose": "【修正行為】原地停留 1 秒後恢復少量生命；吟唱期間 HP 受傷取消，護盾完全吸收不取消（沿用 GGD interruptOn=damage）；不先回血。点心道具與進食動作仍待視覺驗收。\n【原設計】短暫停留恢復少量生命，受擊中斷。",
-      "note": "原地停留 1 秒後恢復少量生命；吟唱期間 HP 受傷取消，護盾完全吸收不取消（沿用 GGD interruptOn=damage）；不先回血。点心道具與進食動作仍待視覺驗收。",
+      "purpose": "【本次玩法】吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n【修正行為】原地停留 1 秒後恢復少量生命；吟唱期間 HP 受傷取消，護盾完全吸收不取消（沿用 GGD interruptOn=damage）；不先回血。点心道具與進食動作仍待視覺驗收。",
+      "note": "本次保留核心並核對定位、代價、反制。吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n原地停留 1 秒後恢復少量生命；吟唱期間 HP 受傷取消，護盾完全吸收不取消（沿用 GGD interruptOn=damage）；不先回血。点心道具與進食動作仍待視覺驗收。",
       "removeOverrides": [
         "effects",
         "rangeTier",
@@ -476,12 +511,12 @@
                 }
               ]
             },
-            "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
           }
         }
       ],
-      "purpose": "【修正行為】吟唱後消耗當時全部 0–3 層勇氣，進行 3–6 次短距叉擊，每 0.18 秒一擊，逐擊用當下位置與面向重新判定；離開範圍可躲避，施法者死亡／分區結算即停止。沒有遠距追蹤傷害或無限強化。叉擊武器與專用動作仍待視覺驗收。\n【原設計】消耗勇氣發動數次叉擊，層數決定有限的強化幅度。",
-      "note": "吟唱後消耗當時全部 0–3 層勇氣，進行 3–6 次短距叉擊，每 0.18 秒一擊，逐擊用當下位置與面向重新判定；離開範圍可躲避，施法者死亡／分區結算即停止。沒有遠距追蹤傷害或無限強化。叉擊武器與專用動作仍待視覺驗收。",
+      "purpose": "【本次玩法】吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n【修正行為】吟唱後消耗當時全部 0–3 層勇氣，進行 3–6 次短距叉擊，每 0.18 秒一擊，逐擊用當下位置與面向重新判定；離開範圍可躲避，施法者死亡／分區結算即停止。沒有遠距追蹤傷害或無限強化。叉擊武器與專用動作仍待視覺驗收。",
+      "note": "本次保留核心並核對定位、代價、反制。吉伊卡哇借膽逃跑：隊友打架給勇氣，拿去逃命就少一串討伐叉\n吟唱後消耗當時全部 0–3 層勇氣，進行 3–6 次短距叉擊，每 0.18 秒一擊，逐擊用當下位置與面向重新判定；離開範圍可躲避，施法者死亡／分區結算即停止。沒有遠距追蹤傷害或無限強化。叉擊武器與專用動作仍待視覺驗收。",
       "removeOverrides": [
         "effects",
         "rangeTier",
@@ -620,6 +655,7 @@
         },
         "perStackLost": {
           "type": "statModifiers",
+          "optional": true,
           "default": [
             {
               "stat": "ad",
@@ -631,8 +667,7 @@
               "op": "pctAdd",
               "value": 0.1
             }
-          ],
-          "optional": true
+          ]
         },
         "lethalMode": {
           "type": "enum",
@@ -691,11 +726,11 @@
         },
         "restoreHealthPct": {
           "type": "number",
+          "optional": true,
           "default": 0.5,
           "min": 0,
           "max": 1,
-          "unit": "ratio",
-          "optional": true
+          "unit": "ratio"
         },
         "aoeRadius": {
           "type": "number",
@@ -705,10 +740,10 @@
         },
         "knockbackDistance": {
           "type": "number",
+          "optional": true,
           "default": 4,
           "min": 0.1,
-          "max": 20,
-          "optional": true
+          "max": 20
         },
         "knockbackSpeed": {
           "type": "number",
@@ -727,11 +762,11 @@
         },
         "stunSec": {
           "type": "number",
+          "optional": true,
           "default": 0.5,
           "min": 0.034,
           "max": 20,
-          "unit": "s",
-          "optional": true
+          "unit": "s"
         },
         "stunStatusId": {
           "type": "docRef",
@@ -751,12 +786,21 @@
       }
     },
     "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
-      "id": "tpl-event-passive",
       "schema": "template@1",
-      "name": "自訂事件被動",
-      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
-      "family": "event-passive",
       "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-event-passive",
+      "name": "自訂事件被動",
+      "family": "event-passive",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
       "params": {
         "hooks": {
           "type": "hooks",
@@ -776,7 +820,11 @@
           ],
           "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
         }
-      },
+      }
+    },
+    "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+      "schema": "template@1",
+      "status": "enabled",
       "requires": [
         "hooks",
         "conditions"
@@ -785,6 +833,65 @@
       "exemplar": {
         "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
         "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-effect-sequence",
+      "name": "自訂效果序列",
+      "family": "effect-sequence",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ]
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 10,
+          "unit": "s"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 40
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "enemies",
+            "allies"
+          ]
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "recast": {
+          "type": "recast",
+          "optional": true,
+          "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+        }
       }
     }
   }

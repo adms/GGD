@@ -20,67 +20,151 @@
   "refinements": [
     {
       "path": "refinements/01.json",
-      "sha256": "be1a3cfc2f6e95f04827e6e7ee1d0ced88743935c3d9b6d94f94d7e0f210c8c6"
+      "sha256": "809ff475f871bbc85431ce0102b15f56b3c04e100f3b53266b36c0475e373bc8"
     },
     {
       "path": "refinements/02.json",
-      "sha256": "fa62272de57302f0290582f8233da1cb360c39f50fcc18ffb8e62122c8ffefb1"
+      "sha256": "e7e3692a4625ecbc5107305a4fa09c45afb5a6347f50418e0c62e1657c0827a1"
     },
     {
       "path": "refinements/03.json",
-      "sha256": "e86507fc7b101531c4da01975f1207b498f6b018541a716e290613d5a51c8f26"
+      "sha256": "b3b1de4e01a6aa56bd7248fb0d047f01da813f27ecb939dc4bfd2b98d7ee75c5"
     },
     {
       "path": "refinements/04.json",
-      "sha256": "1a524274df17673bd3e623f58a39200f043d7f20dd53e637a2e7bd6574461de9"
+      "sha256": "eb53b99e481447cc2c72fd0f682f7d956e3659b8e5c7aee3026bdaa34e77f60e"
+    },
+    {
+      "path": "refinements/05.json",
+      "sha256": "e50ce76f1469d95705ee1137858f2dbc57ef11ace9d9a0e6f9766774d283ca40"
+    },
+    {
+      "path": "refinements/06.json",
+      "sha256": "119ed1f170a85d8ed83e39603411ca62af2ad4521bce6d97ab8ffb3599717203"
+    },
+    {
+      "path": "refinements/07.json",
+      "sha256": "0bdb3bf2a6bdcfb02a66aca9b5b11cb2ace6885eceadfc46503038412bc89740"
+    },
+    {
+      "path": "refinements/08.json",
+      "sha256": "daf6d7e2cd81030e42e05b7394dab3d1c2f8372bfe9cf5b4cd30e022ba48ca88"
+    },
+    {
+      "path": "refinements/09.json",
+      "sha256": "a26f5a91fbda02a5f10e11e16b9e1c8e4a429fd297919ebe58ce4f86b05523b3"
+    },
+    {
+      "path": "refinements/10.json",
+      "sha256": "4d26006de5d031135cd07508a4fd8dad1fe39d7b1b3d0f7b05d5135f99b102bb"
+    },
+    {
+      "path": "refinements/11.json",
+      "sha256": "4718e4c30955161936c160f5dd2b380564044861430745b6998da1d240611236"
+    },
+    {
+      "path": "refinements/12.json",
+      "sha256": "124f7c1a2fbeb3e48f1b1831307e942c45983a0589358406a4e9f5dce5859dd6"
+    },
+    {
+      "path": "refinements/13.json",
+      "sha256": "1a59c53bba4221b18fbaa4744f8f48ba83e5bb0900fab237158ff22102220932"
+    },
+    {
+      "path": "refinements/14.json",
+      "sha256": "9cd2f77229153d344ebd6d886feccb011e2e7152bfab57b01974926c3036ea7b"
+    },
+    {
+      "path": "refinements/15.json",
+      "sha256": "5c379c51a1594c70976d50b2b18cce478c55ec8c2a014673de9dbac871994220"
+    },
+    {
+      "path": "refinements/16.json",
+      "sha256": "76d21d7e79e4d11c8337ce78eeb6a9b9843c44c598acad6514a82ec348b6999c"
+    },
+    {
+      "path": "refinements/17.json",
+      "sha256": "c037860a2ca20026e50336e02ed54be8bf4c7a7f05bcdf02e6ef9f0f50c45aff"
+    },
+    {
+      "path": "refinements/18.json",
+      "sha256": "f9145f37ce31042c766afc45675d6561d90e5c69723c09d3d33489cd034fee8a"
+    },
+    {
+      "path": "refinements/19.json",
+      "sha256": "53e46427c5fe7759e660d5dbe44afedca97ef33aaf4c0bed8fe6023fd80ebb55"
     },
     {
       "path": "refinements/20.json",
-      "sha256": "c3a37326f31955d48150cc9abb207cdcb65c35f1663e914f0bae59babeb4c2f0"
+      "sha256": "2b42591e6e9e6c7f5af42cbe7a85446d70d69a8d2cbd16540b8b3e386b3c3dd2"
     },
     {
       "path": "refinements/21.json",
-      "sha256": "d598df4e5977d9aa153153f4b110b974f11130b300e4866587d0c25055c7c244"
+      "sha256": "515a07cb1c7efca8219743e307193fdbeab81f672f8e420f0f0cca7c361e7991"
+    },
+    {
+      "path": "refinements/22.json",
+      "sha256": "92dafcacb2ba163041179483589e02507b8319c8525ccb56072ddb823c767535"
     },
     {
       "path": "refinements/23.json",
-      "sha256": "c219229e4fc8a5234934169ae0af939e1bfa1da1c825f243c10ef38d3f80be63"
+      "sha256": "bcadd5044ac716b74bd792c185cc445ca3cbacfc6ab3b2e06cd86e3393dfc5df"
     },
     {
       "path": "refinements/24.json",
-      "sha256": "d3a1eaf122215674e60151912c8ec8a2cc2060ec5fe0eee2ddc91fb880758379"
+      "sha256": "134d5b020fdc282ceca2a298bb1d6f97639575fb4b36d084a551e1e43e3fbb4f"
+    },
+    {
+      "path": "refinements/25.json",
+      "sha256": "cc0577ff192916c9cbde0a3fae5166bb6515696fd30b37e076297aa5178f8d81"
     },
     {
       "path": "refinements/26.json",
-      "sha256": "e3fc2c638a3a7836547864601459ba7a2fa815aa712318ff5908a05a16bb517f"
+      "sha256": "3ab309389a2f5e72c98edf6342d07bc41dc7def0b66ea84812fbb5087188c46b"
     },
     {
       "path": "refinements/27.json",
-      "sha256": "804f6abf7204957a228bd34224114dade39eef0e0b384ab63c0f819dd6d53e4e"
+      "sha256": "fd8169dd90e356a3c1db0691837205de96689064a5c7541dcb546cabb55b50e6"
     },
     {
       "path": "refinements/28.json",
-      "sha256": "aaccb9a4ddd95df8869d7021efafca1b293386b2ee25e26e5df89be94fdf76b9"
+      "sha256": "8e4e95c2151704b8d30786d141d54c909b9be40a7944d0e0962a409663e99bd9"
+    },
+    {
+      "path": "refinements/29.json",
+      "sha256": "d66d8a1a65a24ef9c6e03ffce2e40e08fcd642b1026ac790b44f3d10479f9c92"
     },
     {
       "path": "refinements/30.json",
-      "sha256": "5fd6e5e5654adedf6e9aff3463d2ef9efe1f657614fd0ee06d51d2f53f3dfb9d"
+      "sha256": "6d2d99fc10cdf7d19dd376409cb0b002d5b9699937cf7b63684b8554983413ef"
     },
     {
       "path": "refinements/31.json",
-      "sha256": "dcf469bda88a08e3542a25fbbaae39f0eaa46da9153eaf63bee784490ac3b9ab"
+      "sha256": "e8fc23b5d5461717bb73825e6f0e5580448a2cb474743f5ee68b984b5bb04295"
     },
     {
       "path": "refinements/32.json",
-      "sha256": "ff494b584e9be496c509a839ac4270484ef9b2324cdced2424de66ed291df2b2"
+      "sha256": "b5eba90325232734eb6956755322c656cebed9dbcf9169f5891e62d3e9ae8cac"
+    },
+    {
+      "path": "refinements/33.json",
+      "sha256": "4230c27927210102408059a89f87bb01de2f1bae25fb886831cc4f35de6c11e9"
+    },
+    {
+      "path": "refinements/34.json",
+      "sha256": "25f979ea6f827684912cbb57208b18e5b8586b69d08c1f2fea47ed7dda00416b"
     },
     {
       "path": "refinements/35.json",
-      "sha256": "e3687072176825576555ba63885f535a20274e1d7c86bd3318e889555b421900"
+      "sha256": "9edb8fadecd5e8877692e034206ce0734658352153eabf070c6df700ef177fb4"
+    },
+    {
+      "path": "refinements/36.json",
+      "sha256": "19ec571d393bb4960652267f59e5554609e4c76b1b6958ab4cf08c98e3138971"
     },
     {
       "path": "refinements/37.json",
-      "sha256": "9aeb3974f986ed2db35d6ab304bb8a20a3e57777cbb25367795b76bbad2f7744"
+      "sha256": "3f50ebf9ef97099f7bee630dbc25f7a5e2cca167d076f695491b87c318e7466f"
     }
   ],
   "files": [
@@ -91,8 +175,8 @@
     },
     {
       "path": "projects/01.hero-project.json",
-      "bytes": 47562,
-      "sha256": "eff49a7b51fa0f18f8d7472ccf3d8d267d7a708e95f4f376d38e73ba571d66ba"
+      "bytes": 50163,
+      "sha256": "2062a8da9f3086a4397ea0bfebbe4091054ccf6338106ccf955eee7ec39440c9"
     },
     {
       "path": "recipes/01.upload-recipe.json",
@@ -101,8 +185,8 @@
     },
     {
       "path": "projects/02.hero-project.json",
-      "bytes": 93059,
-      "sha256": "ce347870d112f3c6c355b0c5fa68ca5a21d1d5479f1db265856a5941d9391524"
+      "bytes": 95041,
+      "sha256": "f74cf40d1a1edce9ec5cb73b6532b723fd8280bde6d0c1e8b63be9d87ea32a6b"
     },
     {
       "path": "recipes/02.upload-recipe.json",
@@ -111,8 +195,8 @@
     },
     {
       "path": "projects/03.hero-project.json",
-      "bytes": 41402,
-      "sha256": "fffa25deaf9d4e300321158d827d81c29921c99813392efa4cce3519c81ca8b2"
+      "bytes": 43699,
+      "sha256": "e379fcdb274d07de2ce94c12a4c279cbbc2d199044f60fb104931d3320568e48"
     },
     {
       "path": "recipes/03.upload-recipe.json",
@@ -121,8 +205,8 @@
     },
     {
       "path": "projects/04.hero-project.json",
-      "bytes": 54411,
-      "sha256": "f937e087b1d2b852fb5e4204b9a5305936bf57eb5a92dc3bda2ef2b6556b5beb"
+      "bytes": 56327,
+      "sha256": "634205030535acc03b60bd5c961081c2225bf8bf35e975158af73d560a9a5c53"
     },
     {
       "path": "recipes/04.upload-recipe.json",
@@ -131,8 +215,8 @@
     },
     {
       "path": "projects/05.hero-project.json",
-      "bytes": 41471,
-      "sha256": "b2e9458dda1d700f90a03d4d97bf7dd1d7c39c875f306219a888a634e01a31c9"
+      "bytes": 44190,
+      "sha256": "83b84bd4a0bc2a6e7a7fc212f9331cec65d8f3fbcbac35b28995b504c0b38ebd"
     },
     {
       "path": "recipes/05.upload-recipe.json",
@@ -141,8 +225,8 @@
     },
     {
       "path": "projects/06.hero-project.json",
-      "bytes": 46376,
-      "sha256": "42a19b77fe611366d2b907360b708873968f1a61906e64eb99041f034364fdac"
+      "bytes": 34771,
+      "sha256": "52d9e4ac7e5217f3e02da2b076adb873f0873f4d04bd4e2e274b7eced2c0e28d"
     },
     {
       "path": "recipes/06.upload-recipe.json",
@@ -151,8 +235,8 @@
     },
     {
       "path": "projects/07.hero-project.json",
-      "bytes": 46011,
-      "sha256": "d976e0242e6169c5fa24628237928e1d48d705a37a8c4c210003ffc64b7d8226"
+      "bytes": 36137,
+      "sha256": "eca145876b24e3a59f3180d2a16b41a8a874d5e6d27c148ba48a6d695bbe2740"
     },
     {
       "path": "recipes/07.upload-recipe.json",
@@ -161,8 +245,8 @@
     },
     {
       "path": "projects/08.hero-project.json",
-      "bytes": 46185,
-      "sha256": "d48e83e7a482c228daa6068c9d3fcf804d2bcfea5f428ca8fa75062295c31c9d"
+      "bytes": 40458,
+      "sha256": "a9a2bf7b5028d99b181ce504dd767d7165b5234e9725ac0145c4c12b7f0f57a9"
     },
     {
       "path": "recipes/08.upload-recipe.json",
@@ -171,8 +255,8 @@
     },
     {
       "path": "projects/09.hero-project.json",
-      "bytes": 35578,
-      "sha256": "e15068eeab674e2d13b8133b4fc4c7e408f8c94aef516c7fc69c5d171e348b07"
+      "bytes": 33083,
+      "sha256": "719a6089c8f095c8b6e445478f249db70354f8e3fb5e21708439081dc322f3ba"
     },
     {
       "path": "recipes/09.upload-recipe.json",
@@ -181,8 +265,8 @@
     },
     {
       "path": "projects/10.hero-project.json",
-      "bytes": 35332,
-      "sha256": "ba6db5c6843a94a051a55b1c26350ee1fd498210624c65a1def9f9d18475a467"
+      "bytes": 33926,
+      "sha256": "e380354ed187805df0f4374fae604634890a21131ba3c5e61aa02c51a1a98409"
     },
     {
       "path": "recipes/10.upload-recipe.json",
@@ -191,8 +275,8 @@
     },
     {
       "path": "projects/11.hero-project.json",
-      "bytes": 39264,
-      "sha256": "f7961ba04d290738faf7b97a40bcacb7e3b2e0d2085faa4c15ff2b2fb23c12fd"
+      "bytes": 35676,
+      "sha256": "b33400773077631ce779d5fc581f043c2302b09b81f1ca080c192541a42a766d"
     },
     {
       "path": "recipes/11.upload-recipe.json",
@@ -201,8 +285,8 @@
     },
     {
       "path": "projects/12.hero-project.json",
-      "bytes": 48249,
-      "sha256": "95212dd86cb52ba04f264d8b8ed5c55cd1bf9576802680043fc26889ddab6611"
+      "bytes": 38442,
+      "sha256": "c1638edd049421dba4ca7d4b0c8b5bb047072fafccda27f357bf8a8740ce8891"
     },
     {
       "path": "recipes/12.upload-recipe.json",
@@ -211,8 +295,8 @@
     },
     {
       "path": "projects/13.hero-project.json",
-      "bytes": 38207,
-      "sha256": "4ddecf96da2d5122ee9ade3a24cf0524d3fa9ec08a61c152749afab7f71a5f4b"
+      "bytes": 33897,
+      "sha256": "d3fa5160001d5931ad94ce6cf04374018e7c3537bdb6ed4489fd7805860a4ffc"
     },
     {
       "path": "recipes/13.upload-recipe.json",
@@ -221,8 +305,8 @@
     },
     {
       "path": "projects/14.hero-project.json",
-      "bytes": 42948,
-      "sha256": "62e89ff2cc19353220d8d4eaf72f697aa452eeb3216281d6437e755e8cc7a7ac"
+      "bytes": 38041,
+      "sha256": "0aa8fd152ca732a1e67a963ee66870c8bded7d1fcc33d5d2bd2593d5f176f366"
     },
     {
       "path": "recipes/14.upload-recipe.json",
@@ -231,8 +315,8 @@
     },
     {
       "path": "projects/15.hero-project.json",
-      "bytes": 45552,
-      "sha256": "a6513f3cfbb7294feb2fc567f14b75e948d714f82efa83c9814c3274fc8eb444"
+      "bytes": 35470,
+      "sha256": "4a0554b6c94a15639bb147e1d0cfe34b3f2edf1756a7610f4f60e604907fbed1"
     },
     {
       "path": "recipes/15.upload-recipe.json",
@@ -241,8 +325,8 @@
     },
     {
       "path": "projects/16.hero-project.json",
-      "bytes": 37901,
-      "sha256": "a275a7704c0983e1640adb0d63631f97f9c87b4dc80fa2919d4065a3bb06367c"
+      "bytes": 37273,
+      "sha256": "c389a26536decd2c260bb954101645d38f8bf00feb520c07f5c3a50b8c0e8f87"
     },
     {
       "path": "recipes/16.upload-recipe.json",
@@ -251,8 +335,8 @@
     },
     {
       "path": "projects/17.hero-project.json",
-      "bytes": 40809,
-      "sha256": "dd07d7d57ef233721e864bafc4e826c32e867f953d9f25f6d310bdcaadb47de8"
+      "bytes": 42373,
+      "sha256": "222257db7bff45c2886cdd62129df190b70fda28e108a56a0fc76851e88fad2e"
     },
     {
       "path": "recipes/17.upload-recipe.json",
@@ -261,8 +345,8 @@
     },
     {
       "path": "projects/18.hero-project.json",
-      "bytes": 40715,
-      "sha256": "54f1f4227789b3e8de97fe720ac103ace25070de6b88a0b8615606c7996ed09b"
+      "bytes": 33027,
+      "sha256": "7960350ed8f4a9b2d2494d34734d5ffe44a06c4f765d1db15c07ff54e8415625"
     },
     {
       "path": "recipes/18.upload-recipe.json",
@@ -271,8 +355,8 @@
     },
     {
       "path": "projects/19.hero-project.json",
-      "bytes": 41310,
-      "sha256": "55586281d5e6fd5ad14991bf09bbb222c1b5e18ba4dc9e9a8cd6072f836ab2dc"
+      "bytes": 38586,
+      "sha256": "44500702f61988b548ad25b917e74c8b188eca3012f1010411bd281776c0599b"
     },
     {
       "path": "recipes/19.upload-recipe.json",
@@ -281,8 +365,8 @@
     },
     {
       "path": "projects/20.hero-project.json",
-      "bytes": 56438,
-      "sha256": "b00d20822a8284e2cceaa6c0f9b5f77b8513cd895d9d5388f02bd39d8c047b92"
+      "bytes": 57514,
+      "sha256": "a6f51a2e05e08a54230f8da28f7305176e574084fbda842d180f24b8554ddc4a"
     },
     {
       "path": "recipes/20.upload-recipe.json",
@@ -291,8 +375,8 @@
     },
     {
       "path": "projects/21.hero-project.json",
-      "bytes": 43355,
-      "sha256": "cf96a3bea81b39250ac1dff66d4dd3d01a6f7ebb69890065e7c6b5ac321ef6ef"
+      "bytes": 46221,
+      "sha256": "db88e36920069a69aead76d1c90df7688f1710f1f8454bac010f57752c065e85"
     },
     {
       "path": "recipes/21.upload-recipe.json",
@@ -301,8 +385,8 @@
     },
     {
       "path": "projects/22.hero-project.json",
-      "bytes": 45778,
-      "sha256": "460424023cb9a8058763a058a94fc014422c213e178523bcc549229007432003"
+      "bytes": 39686,
+      "sha256": "32e633490e29454f58b24a3d89053b66e0bc70d1b46e08f9868acb48efe7dd99"
     },
     {
       "path": "recipes/22.upload-recipe.json",
@@ -311,8 +395,8 @@
     },
     {
       "path": "projects/23.hero-project.json",
-      "bytes": 50251,
-      "sha256": "c25c892280928361b3c27eb8854674456a5e0f865f0d6e70a6775b65da84daeb"
+      "bytes": 53380,
+      "sha256": "770bc02574c736ac997b454c1d40b9239a20d2ef0ec29b5c56cf8a076625762f"
     },
     {
       "path": "recipes/23.upload-recipe.json",
@@ -321,8 +405,8 @@
     },
     {
       "path": "projects/24.hero-project.json",
-      "bytes": 56661,
-      "sha256": "3cbf31c07653b9bf1573ce02e1746299e477922272c67273e25e926b112075b9"
+      "bytes": 59476,
+      "sha256": "442d97eafe860bca30f73b4e3e12251dd6b6244a3e5af2b61027085be22fe689"
     },
     {
       "path": "recipes/24.upload-recipe.json",
@@ -331,8 +415,8 @@
     },
     {
       "path": "projects/25.hero-project.json",
-      "bytes": 42890,
-      "sha256": "4bf65dd98c7a1e38894a1148144bf03201fbfc783a4c4f6173de5dda46d3b490"
+      "bytes": 35747,
+      "sha256": "e0e122801f91b92b4458a83b0b64ecf5a348f41942c61c95b6d0dd3381708e3c"
     },
     {
       "path": "recipes/25.upload-recipe.json",
@@ -341,8 +425,8 @@
     },
     {
       "path": "projects/26.hero-project.json",
-      "bytes": 43560,
-      "sha256": "530b7155e6ca8390861f8cf80e8511fc82ad3b8ee4c41ea7a8f4990b94f9d4c9"
+      "bytes": 45857,
+      "sha256": "58bb70d78cda3720ba3172adece5a438e0b9da8ea6efd31b3b358bf8a63e4dd2"
     },
     {
       "path": "recipes/26.upload-recipe.json",
@@ -351,8 +435,8 @@
     },
     {
       "path": "projects/27.hero-project.json",
-      "bytes": 54053,
-      "sha256": "e8cc0beac95cd6247f83202c039f696fd73fb81a83c3905df56d9428b7eb41ce"
+      "bytes": 52485,
+      "sha256": "f224b55d71f8fd9344271fba5c34f5993d7bcad7a72db6c98296c584b567ca69"
     },
     {
       "path": "recipes/27.upload-recipe.json",
@@ -361,8 +445,8 @@
     },
     {
       "path": "projects/28.hero-project.json",
-      "bytes": 46761,
-      "sha256": "3fec4f414936a986adc1e2e00aa17f2ef0c107a952952df6e8210ebbed0e6165"
+      "bytes": 49199,
+      "sha256": "2b8ccd380b5a2222e804c685b430496f72a1de48e021dcc75fb80d3f90252d1f"
     },
     {
       "path": "recipes/28.upload-recipe.json",
@@ -371,8 +455,8 @@
     },
     {
       "path": "projects/29.hero-project.json",
-      "bytes": 41877,
-      "sha256": "8813820d40e0b1a94cc17d1a01ad3aed4d84de52be6b13bba217da53056c9429"
+      "bytes": 39129,
+      "sha256": "1dd2996b9d9b56d5f817ae5517f2d42cbc4e3f6249babf6ef83ee29b4864a2e0"
     },
     {
       "path": "recipes/29.upload-recipe.json",
@@ -381,8 +465,8 @@
     },
     {
       "path": "projects/30.hero-project.json",
-      "bytes": 46611,
-      "sha256": "86e0279e6e690c222a4a9800e79d5376a2146c5470416091348de401c4f88883"
+      "bytes": 49042,
+      "sha256": "4647e2e7381464ad689c47fac6ae7f75bee921f26ec44202a85f790ea2753579"
     },
     {
       "path": "recipes/30.upload-recipe.json",
@@ -391,8 +475,8 @@
     },
     {
       "path": "projects/31.hero-project.json",
-      "bytes": 47394,
-      "sha256": "7ff39ac0d918c4bd4d688cef6ed319d7642e6d79b9bb83fab9ab7af282805e4b"
+      "bytes": 50532,
+      "sha256": "3a62c7fce41a00d78cbed9766f18f99df89392a6113bb61fa996bdf504ca950b"
     },
     {
       "path": "recipes/31.upload-recipe.json",
@@ -401,8 +485,8 @@
     },
     {
       "path": "projects/32.hero-project.json",
-      "bytes": 56853,
-      "sha256": "74b4a019bb34a45ed0bafb072cbe006f81913576b80bc33e3992a5748480d906"
+      "bytes": 57589,
+      "sha256": "2506d96ee4702ae35e5bc4712cdafd97472ed8e1dd83c9d2dbb75ff7455021d3"
     },
     {
       "path": "recipes/32.upload-recipe.json",
@@ -411,8 +495,8 @@
     },
     {
       "path": "projects/33.hero-project.json",
-      "bytes": 41046,
-      "sha256": "3080f45c537c17d6a71ec9fb950c00315ea2abd8e5bf57c1ab22ae7306855066"
+      "bytes": 38568,
+      "sha256": "7c76702f4c18218a8ae2a9438acd5627b712b6df5fed50dd0dc1fdb7ca27c90c"
     },
     {
       "path": "recipes/33.upload-recipe.json",
@@ -421,8 +505,8 @@
     },
     {
       "path": "projects/34.hero-project.json",
-      "bytes": 39637,
-      "sha256": "439ad3bec6038f0adef691b64ee40e23bdf6d1c7e82432bb13ce93a9cfa0228c"
+      "bytes": 34600,
+      "sha256": "4df31b08302ff4947fcbda1fdaf176f709a8799577528dac9ee531c9fd4e5c2e"
     },
     {
       "path": "recipes/34.upload-recipe.json",
@@ -431,8 +515,8 @@
     },
     {
       "path": "projects/35.hero-project.json",
-      "bytes": 58001,
-      "sha256": "94ec5df377d1648a41835588f2cfd55fecb19b841329e5ccd52e31fdfb1e4202"
+      "bytes": 60428,
+      "sha256": "4269597a4fba7c03ca1a17f1e72138e71c421b9d45c8cbe06bf1a54179849ad9"
     },
     {
       "path": "recipes/35.upload-recipe.json",
@@ -441,8 +525,8 @@
     },
     {
       "path": "projects/36.hero-project.json",
-      "bytes": 38682,
-      "sha256": "98346af3947fb0678828c8fe2259945de1a70a8a934db448596acd09a7c11c60"
+      "bytes": 34936,
+      "sha256": "0258f233f6bdb74345e38f3cb08cd3a64fa69c25f4c8bcdb5d63b8dac3101ab4"
     },
     {
       "path": "recipes/36.upload-recipe.json",
@@ -451,8 +535,8 @@
     },
     {
       "path": "projects/37.hero-project.json",
-      "bytes": 46455,
-      "sha256": "fa35edc611b51bfe5dbefa3c639f3559984f7a25b3adab84b76c6df8377f044a"
+      "bytes": 49073,
+      "sha256": "2fd115757d48ee30e50ad698dd879a9e3c356f10e747f7e51c027a42093c98b4"
     },
     {
       "path": "recipes/37.upload-recipe.json",
@@ -802,5 +886,7 @@
     "EntityState.tetherZ",
     "ENTITY_KIND.TIME_STOP=9",
     "ENTITY_FLAG.TIME_STOPPED=1048576"
-  ]
+  ],
+  "approvedAdaptation": "37 heroes / 222 slots use the approved parody policy; original source remains historical. Behavioral evidence and visual/publication evidence are separate.",
+  "authoringSource": "tools/community-hero-forge/parody/build.mts"
 }

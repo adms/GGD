@@ -1,40 +1,36 @@
 # 社群英雄交付材料
 
-目前可共用來源為 `f6ff9d7986ff1986f7d2fa571427fdddc66c640b`。炭治郎 v2 已以既有機制完成六槽呼吸、破綻、水火切換、沿途斬擊與可中斷蓄勢；Q 兩式都耗一層呼吸，火式以移速負擔交換傷害。作品 revision 12→14，其他 36 名作品、37 原稿及全部模型綁定不變，斬擊演出改用既有素材。37 名／222 槽編譯通過；93 槽有登記案例、129 槽未對應，15 名仍有通用普攻被動。見 [炭治郎證據](refinements/tanjiro-verification.json) 與 [最新簡化設計規則](design-policy.json)。**整批玩法品質、畫面、當下服務 ZIP 與正式發布仍未完成。**
+第一批 37 名／222 槽已依核准的惡搞方向全部更新：21 名重新組合、11 名局部調整、4 名保留已完成核心，阿薩謝爾另套用最新極大範圍反轉。37 份微調和作品都保留獨立版本，原名、完整原稿、requiredRefinement 與模型綁定不變；本輪沒有新增引擎功能、模板定義或全域機制標籤。
 
-乾淨提交 `e2a15b15ae125725069afaafcc8539ef296798a6` 的 skills、Editor release、coord 全通過；965 項行為回歸、37 名／222 槽編譯及模型核對在 `0712459070f7768d538b5291a867fb8ce553dc39` 通過。兩提交僅差官方重建的兩份普查文件，角色與測試來源不變，未重跑行為案例。Editor 603 項測試／正式建置通過；初次普查失敗如實保留於收據，129 槽缺口仍在。炭治郎本輪機制段落已完成，新画面與正式發布仍未完成；下一步先整理現況。
+逐名玩法見 [37 名對照](refinements/parody-review.md) 與 [222 槽機器清單](refinements/parody-review.json)。42 組四條件連动、105 個主動槽效果、20 項被動事件探針與 157 項邊界檢查通過；其他保留核心與新增代價由產品回歸檢查。37 套正規化技能組沒有完全或近似重複，但這個數字不單獨证明創意、平衡或視覺品質。
 
-前批承太郎的乾淨提交 `b924c66bbf780dd9d9b64650311a7ef4726e8f14` 同批通過 skills、Editor release、coord、37 名／222 槽編譯與模型核對；947 項登記測試及 Editor 603 項測試／正式建置通過。批次退出碼 2 保留 135 槽缺口，原作畫面與正式發布仍未完成。
+**行為測試、畫面、當下服務 ZIP 與發布分開記錄。** 原稿忠實還原已依核准方向簡化，不能把這批改編叫作原作設計全數完成。目前新版本的畫面、服務 ZIP 與投稿發布仍在驗收；歷史收據不抵充新版發布，#1132 保持開啟。
 
-前批八神庵的乾淨提交 `e12c0be14a55480a3d1b4ea3bb498a68daa7597c` 同批通過 skills、Editor release、coord、37 名／222 槽編譯與模型核對；882 項登記測試及 Editor 601 項測試／正式建置通過。批次退出碼 2 保留 141 槽缺口；並非完整設計或畫面驗收通過。
-
-前批 E 的乾淨提交 `526e26591c2d2703c816200ce6c3c07c833983a3` 同批通過 skills、Editor release、coord、37 名／222 槽編譯與模型核對；837 項登記測試及 Editor 601 項測試／正式建置通過。批次退出碼 2 保留 146 槽缺口；並非完整設計或畫面驗收通過。
-
-批次檢查統一入口：[操作說明](../../tools/community-hero-forge/BATCH_VERIFICATION.md)。指定資料夾即可核對來源、重新編譯、集中跑已登記的機制測試；支援發布前檢查、來源綁定續跑與逐槽缺口報告。數量不固定為 37／222，第二批需提供自己的原稿與行為案例對應。
+阿薩謝爾 R→EX 使用既有「極大」範圍：先反轉自己 R 的詛咒，使敵人輸出 +10% 並受嘲諷兩秒，再進入三秒賢者時間，護甲／魔抗歸零、攻速／移速降低60%，到期還原。現有 GGD 嘲諷、可驅散規則及最低數值仍適用。防禦歸零的輸入由當下 combat-env/base-bonus 換算；更改這兩份配置必須重建並驗證，不能沿用舊結果。
 
 ## 最新可共用作品（2026-09-09）
 
-[index.json](index.json)＋[projects/](projects/) 已保存 37 份實際 HeroProject，配對既有 [recipes/](recipes/)；包含銀時六槽補給／招架／打斷修正、柯南六槽線索／投射物／睡眠／真相／滑板及有限牽引修正、奇犽六槽電力／有效迴避／限次反擊修正、鹿目圓希望／友軍保命與六槽修正、#1141 吉伊卡哇六槽機制與版本修正、#1140 御坂美琴電荷、EX 與單發／連鎖修正，#1139 風／樹 Q 切換及前批友軍盾、卡牌連結修正。逐檔版本與 SHA-256 在 [handoff-manifest.json](handoff-manifest.json)。**37 名／222 槽重新編譯通過；15 名仍有通用普攻被動，完整原設計、畫面與正式發布尚未完成**，詳見 [逐槽對照](refinements/design-audit.json) 及 #1132。
+[index.json](index.json)、[projects/](projects/)、[recipes/](recipes/) 與 [refinements/](refinements/) 是完整編輯來源。逐檔版本與 SHA-256 見 [handoff-manifest.json](handoff-manifest.json)，驗證策略見 [批次操作說明](../../tools/community-hero-forge/BATCH_VERIFICATION.md)。所有 222 槽已登記目前適用的產品測試；登記本身不代表測試通過。
 
-#1140 的御坂美琴使用新增 `chainLightning.retargetOnLost` 欄位；執行／編譯這批作品的工作線，須包含機制提交 `db53e47e456e6230e782222dc5f63dcf9c685ebe`（PR #1135），或已具備同等欄位支援。只複製設定到舊引擎不能完成匯入。#1141 另需機制／生成修正提交 `63b81b0754a4d8b14720b93cc182fb4d852f414d`，提供 `nearbyCombat` 條件、`dispel.statusTag` 與微調版本對應作品 revision。吉伊卡哇 revision 13→14；庫洛魔法使補正既有微調 v3 的 revision 13→15，後者技能／原稿／模型皆未改。
-
-只需閱讀／再編輯設定時，直接使用 Git 的作品及原稿。要在 Editor「選擇交接資料夾」批次匯入，先還原既有 S3 模型封存，再組合成一個新目錄：
+生成來源在 [parody/](../../tools/community-hero-forge/parody/)，先修改 designs/adapt-existing，再重新產出微調，不手改成品。模板版本由現有產生器釘選，套用時各英雄獨立實體化；baseline-refinements.json 保留改編前配方，阿薩謝爾另有舊版回放回歸。
 
 ```sh
-# 離線核對 Git 作品、原文 SHA 與 222 槽重新編譯。
+# 生成或檢查微調，接著集中驗證新連動；來源改變會拒絕舊 build。
+pnpm exec node --import tsx tools/community-hero-forge/parody/build.mts --check --out /private/tmp/ggd-parody-check
+pnpm exec node --import tsx tools/community-hero-forge/parody/verify.mts /private/tmp/ggd-parody-check
+# 核對 Git 的 37 份作品、原文與 222 槽編譯。
 pnpm exec node --import tsx tools/community-hero-forge/prepare-published-handoff.mts
-# 第一次需要模型時：依固定 profile／bucket 下載既有封存；不要使用舊交接內的作品蓋過 Git 最新版本。
-python3 materials/community-hero-forge/restore.py \
-  --manifest-dir materials/community-hero-forge/supplements/release-13956d93b \
-  --download --parts-dir /private/tmp/ggd-release-parts \
-  --output /private/tmp/ggd-release-payload
-# 核對 ZIP 與模型 SHA 後，搭配 Git 作品輸出完整可選取資料夾；output 必須不存在。
+# 模型封存已還原時，將 Git 最新作品和既有模型組成新的可匯入目錄。
 pnpm exec node --import tsx tools/community-hero-forge/prepare-published-handoff.mts \
   --release-root /private/tmp/ggd-release-payload \
   --output /private/tmp/ggd-current-authoring-handoff
 ```
 
-模型仍保存在 S3；本次沒有新增或替換模型。還原工具不修改服務、不投稿，也不重用歷史發布收據宣稱新作品已上線。取得後先依 [AI 守則](../../AI參考全自動鑄造守則.md) 依最新核准改編逐項驗證機制，再於目標服務重建 ZIP。其他工作線可直接引用本分支，不必等 Main 合併；正式整合仍由 PR #1135 審查。
+首次需要模型時，先依固定 profile/bucket 使用 restore.py 還原 supplements/release-13956d93b；下節保留封存流程。本輪沒有新增或替換模型。圖片、模型等大型材料留在 S3，Git 留生成程式、英雄設定、版本／SHA 及驗證紀錄。正式整合由 [PR #1135](https://github.com/adms/GGD/pull/1135) 交 Main 審查與合併。
+
+## 歷史驗收
+
+炭治郎、承太郎、八神庵等前批提交／測試結果保留於各自 refinements/*-verification.json；那時的 93/129 槽、965 項回歸或服務版本都是歷史數字。當前範圍與證據請讀上方入口及本次批次收據。
 
 ## 歷史大型材料
 

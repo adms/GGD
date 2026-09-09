@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-project@2",
   "projectId": "community-review-20-20260907",
-  "revision": 13,
+  "revision": 14,
   "sourceLock": {
     "canonicalId": null,
     "versionId": null
@@ -38,7 +38,7 @@
       "fieldOwnership": {}
     },
     "skills": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {
         "acceptedPlan.slots.E.name": "locked",
@@ -56,22 +56,22 @@
       }
     },
     "mechanics": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {}
     },
     "presentation": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {}
     },
     "validation": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {}
     },
     "package": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {}
     }
@@ -318,7 +318,7 @@
           "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
         }
       },
-      "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+      "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
         "id": "tpl-effect-sequence",
         "schema": "template@1",
         "name": "自訂效果序列",
@@ -373,6 +373,11 @@
               }
             ],
             "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "recast": {
+            "type": "recast",
+            "optional": true,
+            "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
           }
         },
         "requires": [
@@ -384,54 +389,13 @@
           "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
           "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
         }
-      },
-      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
-        "id": "tpl-buff-self",
-        "schema": "template@1",
-        "name": "變身強化-數值面",
-        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
-        "family": "buff-self",
-        "status": "enabled",
-        "params": {
-          "castTimeSec": {
-            "type": "number",
-            "default": 0,
-            "min": 0,
-            "max": 5,
-            "unit": "s",
-            "optional": true
-          },
-          "duration": {
-            "type": "number",
-            "default": 15,
-            "min": 1,
-            "max": 60,
-            "unit": "s"
-          },
-          "modifiers": {
-            "type": "statModifiers",
-            "default": [
-              {
-                "op": "flat",
-                "stat": "ad",
-                "value": 50
-              }
-            ]
-          }
-        },
-        "requires": [],
-        "gapScore": 6,
-        "exemplar": {
-          "skill": "82-04 闇之魔法",
-          "jass": "A0Q6"
-        }
       }
     },
     "slots": {
       "PASSIVE": {
         "slot": "PASSIVE",
         "name": "〔電荷累積〕",
-        "purpose": "【修正行為】Q／W／R 實際扣除敵人生命時，與上一個成功技能不同才加一層電荷，上限三層；同次多目標／多跳只計一次。普攻、空招與只打掉盾不集氣。電荷與過載在回合重置。\n【原設計】不同技能命中累積電荷，上限三層；下一次強化技消耗。",
+        "purpose": "【本次玩法】御坂踢販賣機：交替電擊充電，連鎖後才掉出治療飲料\n【修正行為】Q／W／R 實際扣除敵人生命時，與上一個成功技能不同才加一層電荷，上限三層；同次多目標／多跳只計一次。普攻、空招與只打掉盾不集氣。電荷與過載在回合重置。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json"
@@ -447,8 +411,21 @@
                 "max": 3,
                 "durationSec": -1,
                 "resetOn": "round",
+                "perStackLost": [],
                 "lethalMode": "none",
-                "perStackLost": []
+                "lethalConsume": 1,
+                "surviveHpPct": 0.01,
+                "lethalDamageTypes": "all",
+                "internalCooldown": 0.5,
+                "invulnerableSec": 1.5,
+                "invulnerableScope": "damageAndControl",
+                "restoreHealthPct": 0.5,
+                "aoeRadius": 6,
+                "knockbackDistance": 4,
+                "knockbackSpeed": 16,
+                "knockbackFrom": "caster",
+                "stunSec": 0.5,
+                "stunStatusId": "trial-stun"
               },
               "contentSha256": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39"
             }
@@ -463,8 +440,21 @@
                 "max": 3,
                 "durationSec": -1,
                 "resetOn": "round",
+                "perStackLost": [],
                 "lethalMode": "none",
-                "perStackLost": []
+                "lethalConsume": 1,
+                "surviveHpPct": 0.01,
+                "lethalDamageTypes": "all",
+                "internalCooldown": 0.5,
+                "invulnerableSec": 1.5,
+                "invulnerableScope": "damageAndControl",
+                "restoreHealthPct": 0.5,
+                "aoeRadius": 6,
+                "knockbackDistance": 4,
+                "knockbackSpeed": 16,
+                "knockbackFrom": "caster",
+                "stunSec": 0.5,
+                "stunStatusId": "trial-stun"
               },
               "contentSha256": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39"
             }
@@ -599,7 +589,7 @@
       "Q": {
         "slot": "Q",
         "name": "電擊之槍",
-        "purpose": "【修正行為】單一直線傷害，線內每位敵人一次。基礎長 6、寬 0.8 GGD 單位；過載每層增加長 0.5、寬 0.4，消耗全部已準備強化，實際使用時提示結果。\n【原設計】直線電擊，主要作為穩定消耗。",
+        "purpose": "【本次玩法】御坂踢販賣機：交替電擊充電，連鎖後才掉出治療飲料\n【修正行為】單一直線傷害，線內每位敵人一次。基礎長 6、寬 0.8 GGD 單位；過載每層增加長 0.5、寬 0.4，消耗全部已準備強化，實際使用時提示結果。",
         "maxRank": 4,
         "abilityOverrides": {
           "castTimeTier": "小",
@@ -746,7 +736,7 @@
                   }
                 ]
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -765,7 +755,7 @@
       "W": {
         "slot": "W",
         "name": "〔連鎖放電〕",
-        "purpose": "【修正行為】只有一條連鎖，含起點共三名，起點不再多吃一筆單體傷害。過載每層多一名，最多六名；同一發不回訪，每跳間隔 0.12 秒。預選目標死亡／離場時從上一有效節點重選，無候選停止。\n【原設計】在附近不同敵人間跳躍，同一施法不重複命中同一目標。",
+        "purpose": "【本次玩法】御坂踢販賣機：交替電擊充電，連鎖後才掉出治療飲料\n【修正行為】只有一條連鎖，含起點共三名，起點不再多吃一筆單體傷害。過載每層多一名，最多六名；同一發不回訪，每跳間隔 0.12 秒。預選目標死亡／離場時從上一有效節點重選，無候選停止。",
         "maxRank": 4,
         "abilityOverrides": {
           "castTimeTier": "小",
@@ -920,7 +910,7 @@
                   }
                 ]
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -937,40 +927,62 @@
       "E": {
         "slot": "E",
         "name": "〔鐵砂防壁〕",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-20-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】用鐵砂建立短效護盾，破盾時散開為純視覺碎粒。\n【待補機制】鐵砂碎粒及破盾事件待補。",
+        "purpose": "【核准惡搞改編】販賣機不吐飲料就踢一下：120護盾三秒；最近四秒用過W連鎖放電，自己額外回復160生命。E不集電、不耗過載。",
         "maxRank": 4,
         "abilityOverrides": {
-          "castTimeTier": "小",
-          "cooldownTier": "小",
-          "effects": [
-            {
-              "absorbs": "all",
-              "amount": {
-                "flat": 120,
-                "ratios": []
-              },
-              "duration": 3,
-              "kind": "shield",
-              "onExisting": "keepLarger",
-              "stackKey": "community-review-20-20260907.e.guard"
-            }
-          ],
-          "manaCostTier": "小",
           "provenance": "editor-json",
-          "rangeTier": "中"
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
         },
         "products": [
           {
-            "instanceId": "community-review-20-20260907-e-1",
+            "instanceId": "e-parody-1",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "castTimeSec": 0.15,
-                "duration": 3,
-                "modifiers": []
+                "castType": "self",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 120
+                    },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "community-review-20-20260907.protection",
+                    "onExisting": "keepLarger"
+                  },
+                  {
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 160
+                    },
+                    "applyTo": "self",
+                    "condition": {
+                      "kind": "recentCast",
+                      "subject": "self",
+                      "slot": "W",
+                      "withinSec": 4
+                    }
+                  },
+                  {
+                    "kind": "floatingText",
+                    "shape": "single",
+                    "text": "今天終於有找零",
+                    "applyTo": "self",
+                    "durationSec": 1
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -987,7 +999,7 @@
       "R": {
         "slot": "R",
         "name": "超電磁砲",
-        "purpose": "【修正行為】依 GGD 大級吟唱預警後，單一長 8、寬 1.2 的高傷害直線結算，每個敵人最多一筆；不消耗 Q／W 的過載準備。\n【原設計】彈出硬幣後發射有預警的高傷害直線攻擊。",
+        "purpose": "【本次玩法】御坂踢販賣機：交替電擊充電，連鎖後才掉出治療飲料\n【修正行為】依 GGD 大級吟唱預警後，單一長 8、寬 1.2 的高傷害直線結算，每個敵人最多一筆；不消耗 Q／W 的過載準備。",
         "maxRank": 3,
         "abilityOverrides": {
           "castTimeTier": "大",
@@ -1023,7 +1035,7 @@
                   }
                 ]
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -1042,7 +1054,7 @@
       "EX": {
         "slot": "EX",
         "name": "〔電磁過載〕",
-        "purpose": "【修正行為】至少一層電荷才能啟動：提交先扣一層，瞬間結算消耗其餘並準備 1–3 層過載。只強化下一次 Q 或 W，按實際使用者消耗同一份強化；E／R 不消耗。重新充填會覆蓋舊準備，不疊加。\n【原設計】消耗電荷，強化下一次 Q 的範圍或 W 的跳躍數；使用時明示強化結果。",
+        "purpose": "【本次玩法】御坂踢販賣機：交替電擊充電，連鎖後才掉出治療飲料\n【修正行為】至少一層電荷才能啟動：提交先扣一層，瞬間結算消耗其餘並準備 1–3 層過載。只強化下一次 Q 或 W，按實際使用者消耗同一份強化；E／R 不消耗。重新充填會覆蓋舊準備，不疊加。",
         "maxRank": 1,
         "abilityOverrides": {
           "cooldownTier": "大",
@@ -1162,7 +1174,7 @@
                   }
                 ]
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
             }
           }
         ],
@@ -1285,38 +1297,20 @@
             {
               "kind": "anim",
               "on": "castStart",
-              "replaces": "caster.action",
-              "replacesForMs": 350,
               "at": "caster",
               "pulse": "cast"
             },
             {
-              "vfxId": "fx.prim.lightning.pulse-sm",
+              "vfxId": "fx.prim.arcane.pulse-sm",
               "at": "self",
-              "durationSec": 0.2,
-              "kind": "vfx",
-              "on": "castStart",
-              "w3xScale": 0.7,
-              "tint": [
-                115,
-                196,
-                255
-              ],
-              "alpha": 0.6
-            },
-            {
-              "vfxId": "fx.prim.lightning.pulse",
-              "at": "self",
-              "durationSec": 0.35,
+              "durationSec": 0.4,
               "kind": "vfx",
               "on": "castEffect",
-              "w3xScale": 0.85,
               "tint": [
                 115,
                 196,
                 255
-              ],
-              "alpha": 0.85
+              ]
             }
           ]
         },
@@ -1476,11 +1470,12 @@
     }
   },
   "refinementNotes": {
-    "PASSIVE": "以實際 onDamageDealt、oncePerCast 和技能來源去重；E 純護盾不算命中，EX 只準備下一次 Q／W，不造成被動傷害。",
-    "Q": "採 GGD 現行 damageLine 單位碰撞，不再四段交疊傷害；未新增牆體遮擋規則。原作電弧美術仍待呈現驗收。",
-    "W": "jumps 與 maxTotalJumps 同時按強化層數設定；連鎖只在實際命中時計電荷，一條鏈跨 tick 仍只計一次。",
-    "R": "單發高傷害／施法預警機制已配置；硬幣模型、彈出動作與原作射線呈現仍待補，不以預設粒子宣稱完成。",
-    "EX": "有真正施法資格檢查與扣除，不再給 AP 百分比增益。強化準備保持至使用或回合結束；過載提示與實際寬度／跳數分開驗證。"
+    "PASSIVE": "本次保留核心並核對定位、代價、反制。御坂踢販賣機：交替電擊充電，連鎖後才掉出治療飲料\n以實際 onDamageDealt、oncePerCast 和技能來源去重；E 純護盾不算命中，EX 只準備下一次 Q／W，不造成被動傷害。",
+    "Q": "本次保留核心並核對定位、代價、反制。御坂踢販賣機：交替電擊充電，連鎖後才掉出治療飲料\n採 GGD 現行 damageLine 單位碰撞，不再四段交疊傷害；未新增牆體遮擋規則。原作電弧美術仍待呈現驗收。",
+    "W": "本次保留核心並核對定位、代價、反制。御坂踢販賣機：交替電擊充電，連鎖後才掉出治療飲料\njumps 與 maxTotalJumps 同時按強化層數設定；連鎖只在實際命中時計電荷，一條鏈跨 tick 仍只計一次。",
+    "E": "御坂踢販賣機：交替電擊充電，連鎖後才掉出治療飲料\n販賣機不吐飲料就踢一下：120護盾三秒；最近四秒用過W連鎖放電，自己額外回復160生命。E不集電、不耗過載。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "R": "本次保留核心並核對定位、代價、反制。御坂踢販賣機：交替電擊充電，連鎖後才掉出治療飲料\n單發高傷害／施法預警機制已配置；硬幣模型、彈出動作與原作射線呈現仍待補，不以預設粒子宣稱完成。",
+    "EX": "本次保留核心並核對定位、代價、反制。御坂踢販賣機：交替電擊充電，連鎖後才掉出治療飲料\n有真正施法資格檢查與扣除，不再給 AP 百分比增益。強化準備保持至使用或回合結束；過載提示與實際寬度／跳數分開驗證。"
   },
   "validationState": {
     "identity": {
@@ -1494,27 +1489,27 @@
       "diagnosticCodes": []
     },
     "skills": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     },
     "mechanics": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     },
     "presentation": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     },
     "validation": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     },
     "package": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     }

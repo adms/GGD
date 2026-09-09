@@ -1,6 +1,6 @@
 # 社群英雄批次驗證（#1143）
 
-用同一入口處理第一批或下一批，不把 37／222 寫死。輸入是既有 `index.json`、`handoff-manifest.json`、`projects/`、`recipes/`、`refinements/`；英雄身分、六槽、原文與 SHA 都從該批讀取。第二批尚未交付，不能宣稱它已通過。
+用同一入口處理第一批或下一批，不把 37／222 寫死。輸入是既有 `index.json`、`handoff-manifest.json`、`projects/`、`recipes/`、`refinements/`；英雄身分、六槽、原文與 SHA 都從該批讀取。第二批已有獨立資料與證據；須核對該批版本，不能自動沿用第一批結果。
 
 ```sh
 # 一次完成原文／雜湊／编譯、已登記的行為測試，輸出所有失敗與逐槽缺口。
@@ -30,7 +30,7 @@ python3 tools/community-hero-forge/verify-authoring-batch.py \
 
 新批次可先不放 plan：腳本仍核對／編譯並列出全部未覆蓋槽。建立測試時，使用 `communityRecipeFixture`／`communityCombatFixture` 讀原始配方；批次執行器會設定 `GGD_HERO_BATCH_DIR`。只能在建立真實行為案例後，將对应 hero ID／slot 加進 plan。來源不同不得直接複製第一批的測試清單。發布閘仍測 repo 本身，不把批次環境變數誤傳給既有 Editor 回歸。
 
-第一批 plan 目前對應 93 個已修正／部分修正槽，其餘仍有缺口。每槽 `originalDesignAcceptance` 保持未驗證，直到逐項 requiredRefinement 有足夠行為及畫面證據；它不是自動上架清單。
+第一批新版 plan 對應全部 222 槽：21 名新組合使用 parodyBatch.test.ts，局部代價與補完使用 parodyAdaptations.test.ts，阿薩謝爾新版使用 parodyAzazel.test.ts；其餘保留各自既有案例。每槽 `originalDesignAcceptance` 保持未驗證，直到逐項 requiredRefinement 有足夠行為及畫面證據；它不是自動上架清單。
 
 輸出必須是來源以外的新目錄。執行中如有人更改來源，整次證據標為失效，不拿它續跑。腳本不生成英雄、不修改原稿、不投稿、不發布、不操作正式帳號。
 
@@ -76,7 +76,7 @@ SUN樂驗證使用共用 `communityActionFixture(number, rank)`：讀該批版�
 
 尼古貓貓六槽使用同一治具，移動必須送入 `orderSystem` 並確認位置改變；只寫 `nav.order` 不足以建立真實走路。停留蓄層每 tick 取樣，含冷卻內走動、轉向／撞牆、垂直位移、死亡／中場／換回合和不同英雄隔離。移動撤盾核對獨立池、同 tick 傷害前到期、替換錨點及其他盾不受影響。W 後實際等待再 EX 的試玩設為空資源，支付斷言觀察當下 tick，避免後續自然蓄層誤判。30 項行為、1 項試玩和共用護盾／hook／光環回歸併入同批；四项有效突變確認檢查能攔錯。
 
-阿薩謝爾的當前來源以 `32.json` 為準，`azazelBatch.test.ts`／`azazelBatchAcceptance.test.ts` 直接讀這份配方。原 `azazel.test.ts` 是舊版本回放相容性，不能代替當前交接內容證據。批次入口與 `refine-azazel-handoff.mts` 同讀版本化 JSON，須比對所有作品位元組；兩者都不覆寫舊輸出。傷害輸出削弱／增益測實際固定傷害，不能只斷言 AD/AP 數值；反擊需實際受擊，不把一般出拳接成反彈或免傷。37＋3 項當前配方案例及距離／輸出／反彈回歸併入同次 suite。
+阿薩謝爾的當前來源以 `32.json` 為準，`parodyAzazel.test.ts` 讀新版配方；`azazelBatch.test.ts`／`azazelBatchAcceptance.test.ts` 明示讀 baseline-refinements.json 的 v1 回退配方。原 `azazel.test.ts` 是舊版本回放相容性，不能代替當前交接內容證據。批次入口與 `refine-azazel-handoff.mts` 同讀版本化 JSON，須比對所有作品位元組；兩者都不覆寫舊輸出。傷害輸出削弱／增益測實際固定傷害，不能只斷言 AD/AP 數值；反擊需實際受擊，不把一般出拳接成反彈或免傷。37＋3 項當前配方案例及距離／輸出／反彈回歸併入同次 suite。
 
 不知火舞目前由 `03.json`、`mai.test.ts` 與 `maiAcceptance.test.ts` 提供 31＋3 項案例。整批仍使用相同入口，一併檢查每人一次接觸、自然位移結束、真正命中後連段、跨目標／波次施法去重和殘像不遞迴。Editor 可選 EX 作前置技能，真實解鎖並施放後保留狀態，不能直接填入同名 buff 冒充。技能彈與角色位移的地形規則分別依目前 GGD 契約驗證。
 
@@ -91,3 +91,14 @@ SUN樂驗證使用共用 `communityActionFixture(number, rank)`：讀該批版�
 跨批次結構比對工具 `compare-hero-batches.mts` 可讀第二批現有作品、編譯及行為報告，核對來源 hash，再以目前目錄重新編譯 74 名。`kit-diversity.mjs` 會將私有資源名稱正規化，避免改名假裝新組合；其四項測試以 `pnpm exec vitest run tools/community-hero-forge/kit-diversity.test.mjs --maxWorkers=1 --minWorkers=1` 獨立執行，不加入只接受產品測試路徑的 validation-plan。工具只診斷結構，**不宣稱已完成玩法因果、惡搞品質、素材畫面或正式驗證集准入**。本輪先完成炭治郎，跨批次剩餘工作待整理現況。
 
 新增來源檔時先明確 `git add <新增檔>`，再於提交前執行官方 `decor:build`：普查器以 `git ls-files` 為母體，未追蹤檔案不會納入。炭治郎本輪先保留完整行為／Editor成功紀錄，補正兩份普查產物後同批重跑三閘；收據分別記錄兩個提交與初次失敗，不把重試改寫為一次全綠。
+
+
+## 本輪整批惡搞改編
+
+`parody/build.mts` 從角色設計、基底微調與完整出貨目錄產生 37 份版本化微調；`--check` 比對輸出位元組。`parody/verify.mts` 核對生成來源 SHA，再跑真實 SimWorld：有前置／無前置 × 有連動／移除連動四條時間線，避免把 Q 的直接傷害誤當作 Q→W 加成。主動槽和被動事件另有刪除效果的對照，失敗逐項輸出。
+
+每次修改 designs、adapt-existing、kit、基底或數值配置，都先重建 build；實際資料由 `refine-design-handoff.mts` 從保存的未微調作品重建到新目錄，不對已微調作品反覆加版本。逐份同步 projects、design-audit 與 manifest/validation-plan SHA 後才執行發布批次。
+
+`parody/capture-browser.mjs` 透過真正 Editor 匯入介面和技能槽導覽收集 37 名的 Q/W/E/R/EX。須提供含模型的還原目錄、Playwright 路徑及新的輸出目錄；可用 `--focus 32` 聚焦。每張記錄槽、回放時間、模型材質狀態及 SHA，並需人工看圖。它不登入、不投稿、不發布，SwiftShader 截圖也不是平板效能測試。阿薩謝爾的兩段機制另由真實戰鬥測試檢查，不以單槽 EX 預覽冒充先 R 再 EX。
+
+阿薩謝爾「防禦歸零」要經過環境倍率與基礎加成：生成器依出貨配置反算既有 modifier 輸入，並拒絕無法用固定輸入表示的每級防禦配置。範圍採既有極大級距，不新增全地圖選擇器；嘲諷沿用現有自動索敵規則。兩秒強化、三秒弱化、範圍／敵我、跨來源、死亡、驅散、到期還原及舊版回退均各有案例。
