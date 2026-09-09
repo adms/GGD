@@ -10,7 +10,7 @@ import type { TemplateDoc } from "../../packages/shared/src/content/schema/templ
 import { sha256Bytes } from "../../packages/shared/src/content/sha256.js";
 import { readPackageZip } from "../../packages/shared/src/content/import/readPackageZip.js";
 import { uploadedHeroModelPath } from "../../packages/shared/src/content/modelUpload/heroModelSchema.js";
-import { runHeroAbilityScenario, runHeroKitScenario } from "../../packages/shared/src/content/heroForge/scenario.js";
+import { runHeroAdmissionScenarios } from "../../packages/shared/src/content/heroForge/scenarioAdmission.js";
 import { createHeroSimulationBaseline } from "../../packages/shared/src/content/heroForge/simulationBaseline.js";
 import { contentSha256 } from "../../packages/shared/src/content/import/jcs.js";
 import { zHeroProject } from "../../packages/shared/src/content/heroForge/schema.js";
@@ -66,8 +66,7 @@ for (const project of projects) {
     assert.deepEqual(sourceProject.presentation, project.presentation);
     const relatedAbilities = Object.values(compiled.draft.abilityDrafts);
     const options = { baseline, relatedAbilities, relatedChampions: compiled.draft.relatedChampions };
-    const slots = relatedAbilities.map(ability => runHeroAbilityScenario(compiled.draft.champion, ability, { ...options, ticks: 180 }));
-    const kit = runHeroKitScenario(compiled.draft.champion, compiled.draft.abilityDrafts, { ...options, ticksPerStep: 180 });
+    const { slots, kit } = runHeroAdmissionScenarios(compiled.draft.champion, compiled.draft.abilityDrafts, options);
     const failures = slots.flatMap(row => row.assertions.filter(a => a.status === "fail").map(a => `${row.slot}: ${a.summaryZh}`));
     if (kit.status === "rejected") failures.push(`整套技能未完成：${kit.rejectedSlots.join("、")}`);
     scenarioResults.push({ projectId: project.projectId, name: project.brief.name, sourceDigest: contentSha256(sourceProject), importedDraftDigest: contentSha256(project), status: failures.length ? "failed" : "passed", failures,

@@ -24,6 +24,7 @@ import { zHeroScenarioSetup, type HeroScenarioSetup } from "./scenarioSetup";
 import { Statuses } from "../../sim/content/registry";
 import { runEffects } from "../../sim/effects/effectRunner";
 import { adjustMarkCount } from "../../sim/marks";
+import { prepareAbilityPrerequisites } from "./scenarioPrerequisites";
 import { configureScenarioCombat, prepareScenarioOpponent, scenarioResourceCost, scenarioResourceCount, type OpponentPreparation, type ScenarioResourceCost } from "./scenarioOpponent";
 
 export interface HeroScenarioState {
@@ -70,6 +71,7 @@ export interface HeroKitScenarioResult {
   readonly rejectedSlots: readonly string[];
   readonly rejectionReasonsBySlot: Readonly<Record<string, string>>;
   readonly eventCountsBySlot: Readonly<Record<string, Readonly<Record<string, number>>>>;
+  readonly prerequisiteActionsBySlot?: Readonly<Record<string, { ticks: number; actions: string[] }>>;
   readonly resourceCostsBySlot?: Readonly<Record<string, ScenarioResourceCost>>;
   readonly digestTrail: readonly number[];
   readonly assertions: readonly { id: string; status: "pass" | "fail"; summaryZh: string }[];
@@ -123,7 +125,7 @@ function placeDefaultCastTarget(world: SimWorld, caster: EntityId, victim: Entit
 export function runHeroAbilityScenario(
   champion: ChampionDef,
   ability: AbilityDef,
-  opts: { setup?: HeroScenarioSetup; baseline?: HeroSimulationBaseline; level?: number; rank?: number; ticks?: number; seed?: number; relatedChampions?: readonly ChampionDef[]; relatedAbilities?: readonly AbilityDef[]; relatedProjectiles?: readonly ProjectileDef[] } = {},
+  opts: { preparePrerequisites?: boolean; setup?: HeroScenarioSetup; baseline?: HeroSimulationBaseline; level?: number; rank?: number; ticks?: number; seed?: number; relatedChampions?: readonly ChampionDef[]; relatedAbilities?: readonly AbilityDef[]; relatedProjectiles?: readonly ProjectileDef[] } = {},
 ): HeroAbilityScenarioResult {
   const setup = opts.setup && zHeroScenarioSetup.parse(opts.setup);
   if (setup?.priorCast?.slot === ability.slot) throw new Error("前置施法請選擇另一個技能槽。");
@@ -230,6 +232,9 @@ export function runHeroAbilityScenario(
     const rejection = events.find(event => event.type === "castRejected" && event.data.entity === caster && event.data.slot === prior.slot && event.data.reason !== "approaching");
     priorCastSummary = `前置 ${prior.slot}：${accepted ? "已施放" : `未施放（${String(rejection?.data.reason ?? "no-cast-observed")}）`}，經過 ${prior.waitSec} 秒後嘗試本招；保留實際生命、魔力、位置與狀態。`;
   }
+  const prerequisitePreparation = opts.preparePrerequisites && !setup
+    ? prepareAbilityPrerequisites(world, caster, foe, ally, ability, recordPreparation) : undefined;
+  preparationTicks += prerequisitePreparation?.ticks ?? 0;
   const before = state(world, caster, targetEntity);
   const resourceBefore = scenarioResourceCount(world, caster, targetEntity, ability);
   const selectedEventStart = events.length;
@@ -273,6 +278,7 @@ export function runHeroAbilityScenario(
   }];
   if (preparedResource > 0) assertions.push({ id: "single-slot-resource-setup", status: "warning",
     summaryZh: `單槽試玩預先補入 ${preparedResource} 層施放資源；只驗證支付與技能效果，不代表已驗證集氣。整套驗收不補資源。` });
+  if (prerequisitePreparation?.actions.length) assertions.push({ id: "earned-prerequisites", status: "warning", summaryZh: `前置操作由真實輸入取得：${prerequisitePreparation.actions.join("、")}` });
   if (priorCastSummary) assertions.push({ id: "single-slot-prior-cast", status: "warning", summaryZh: priorCastSummary });
   if (opponentPrepared) assertions.push({ id: "opponent-preparation", status: "warning",
     summaryZh: "前置情境：敵方以實際普攻指令攻擊施法者 3 秒，再停止指令；保留傷害、位置、狀態與真正取得的資源，未建立或補入目標資源。" });
@@ -342,7 +348,7 @@ export function heroScenarioProjection(result: HeroAbilityScenarioResult): unkno
 export function runHeroKitScenario(
   champion: ChampionDef,
   abilities: Readonly<Record<"PASSIVE" | "Q" | "W" | "E" | "R" | "EX", AbilityDef>>,
-  opts: { baseline?: HeroSimulationBaseline; seed?: number; ticksPerStep?: number; opponentPreparation?: OpponentPreparation; relatedProjectiles?: readonly ProjectileDef[]; relatedAbilities?: readonly AbilityDef[]; relatedChampions?: readonly ChampionDef[] } = {},
+  opts: { preparePrerequisites?: boolean; baseline?: HeroSimulationBaseline; seed?: number; ticksPerStep?: number; opponentPreparation?: OpponentPreparation; relatedProjectiles?: readonly ProjectileDef[]; relatedAbilities?: readonly AbilityDef[]; relatedChampions?: readonly ChampionDef[] } = {},
 ): HeroKitScenarioResult {
   const seed = Math.max(0, Math.min(Math.floor(opts.seed ?? 0xc0ffee), 0xffffffff));
   const ticksPerStep = Math.max(30, Math.min(Math.floor(opts.ticksPerStep ?? 180), 240));
@@ -373,6 +379,7 @@ export function runHeroKitScenario(
   for (const slot of ["Q", "W", "E", "R"] as const) while (component.slots[slot].rank < abilities[slot].maxRank && rankUpAbility(world, caster, slot)) { /* real rank gate */ }
   learnEx(world, caster);
 
+  const prerequisiteActionsBySlot: Record<string, { ticks: number; actions: string[] }> = {};
   const eventCountsBySlot: Record<string, Record<string, number>> = {};
   const resourceCostsBySlot: Record<string, ScenarioResourceCost> = {};
   const rejectedSlots: string[] = [];
@@ -409,6 +416,7 @@ export function runHeroKitScenario(
       }
     };
     prepareScenarioOpponent(world, caster, abilities[slot], opts.opponentPreparation, () => { digestTrail.push(world.digest()); record(); });
+    if (opts.preparePrerequisites) prerequisiteActionsBySlot[slot] = prepareAbilityPrerequisites(world, caster, foe, ally, abilities[slot], () => { digestTrail.push(world.digest()); record(); });
     preparing = false;
     preflightCast = component.cast ? `${component.cast.slot}:${component.cast.ticksLeft}` : "none";
     const resourceTarget = abilities[slot].castType === "targeted" && abilities[slot].targetsEnemies === false ? ally : foe;
@@ -437,7 +445,7 @@ export function runHeroKitScenario(
     status: rejectedSlots.length === 0 ? "pass" as const : "fail" as const,
     summaryZh: rejectedSlots.length === 0 ? "同一世界依序完成被動、Q、W、E、R、EX。" : `未完成：${rejectedSlots.join("、")}`,
   }];
-  return { seed, ticksPerStep, order, status: rejectedSlots.length === 0 ? "accepted" : "rejected", rejectedSlots, rejectionReasonsBySlot, eventCountsBySlot,
+  return { seed, ticksPerStep, order, ...(opts.preparePrerequisites ? { prerequisiteActionsBySlot } : {}), status: rejectedSlots.length === 0 ? "accepted" : "rejected", rejectedSlots, rejectionReasonsBySlot, eventCountsBySlot,
     ...(Object.keys(resourceCostsBySlot).length ? { resourceCostsBySlot } : {}), digestTrail, assertions };
   });
 }
@@ -446,6 +454,7 @@ export function heroKitScenarioProjection(result: HeroKitScenarioResult): unknow
   return {
     seed: result.seed,
     ticksPerStep: result.ticksPerStep,
+    ...(result.prerequisiteActionsBySlot ? { prerequisiteActionsBySlot: result.prerequisiteActionsBySlot } : {}),
     order: result.order,
     status: result.status,
     rejectedSlots: result.rejectedSlots,
