@@ -27,6 +27,15 @@ const CONSUMERS = ["content/abilities", "content/items", "content/augments"];
  * ⭐ 這張表**只能變短**：把一個家族接上內容之後就把它從這裡刪掉。
  */
 const AWAITING_CONTENT: Record<string, string> = {
+  // ── ⭐ GH#1132 —— 友軍護盾，⭐ 而它的內容批**已經量到了** ────────────────
+  "tpl-ally-shield":
+    "⭐ GH#1132（帶票號的暫時列）。⭐ 內容批是**量出來的**，⛔ 不是「以後會用到」：" +
+    "37 名社群英雄裡**提到友軍的 18 槽**,其中 **12 槽**今天綁著 `tpl-buff-self` —— " +
+    "而那一族發 `applyTo: \"self\"`、⛔ 不設 `targetsEnemies` ⇒ ⭐「友軍盾」實際只罩施法者自己," +
+    "而卡面說它保護隊友（第一·五守則）。" +
+    "⚠️ ⭐ 為什麼今天還接不上：那 18 槽住 `materials/community-hero-forge/recipes/*.json`," +
+    "⛔ **不在 `content/`** —— 那 37 名尚未發布（#1147 的工作）。" +
+    "⭐ 到期條件（一行可查）：`grep -l tpl-ally-shield content/abilities/*.json` 有輸出的那一刻,這一列刪掉。",
   // ── 有票在等，⭐ 接上內容就是那張票的第一步 ──────────────────────────
   // ⭐⭐ 2026-08-31：`tpl-periodic-field` 從這張表**刪掉了** —— GH#648 內容批落地，
   //    6 支真正的領域技能接上了它（04-02 炸彈陣 ×2 · 90-01 飛葉快刀 ×2 · 92-04 · 37-03）。

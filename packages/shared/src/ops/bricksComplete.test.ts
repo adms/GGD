@@ -49,7 +49,17 @@ const GATED = new Set(["effect", "hook", "template", "vfx-subtype", "vfx-call"])
 //     積木每一顆都 false）⇒ ⛔ 補不了「只補它自己」，它與前幾批一起在等 #992 的 schemaToForm。
 //   ⭐ 為什麼值得讓分母 +1：這一族**配得上 12 支**出貨技能（`templatize.py` 逐支印出），
 //     而全庫在此之前**沒有任何模板以 `damageArea` 為主體**。
-const BASELINE_GAPS = 52
+// · 2026-09-09 GH#1132：新模板家族 `ally-shield`（友軍護盾：指定一位隊友／範圍內友軍與自己）
+//   進清冊 ⇒ 分母 +1。
+//   ⚠️ ⭐ 逐列比對過：**新增的缺口只有 `template/ally-shield 缺 後台表單` 一列，
+//     ⛔ 沒有任何一列消失** ⇒ 同上面那幾條例外，這是**分母變了**，⛔ 不是回歸。
+//   ⭐ 而它缺的仍然是**整層**那一格（`adminOpensHome("template")` ⇒ 37 顆 template
+//     積木每一顆都 false）⇒ ⛔ 補不了「只補它自己」，它與前幾批一起在等 #992 的 schemaToForm。
+//   ⭐ 為什麼值得讓分母 +1：GH#1132 量到 37 名社群英雄裡**提到友軍的 18 槽**
+//     （範圍 7 · 指定 4 · 兩者/判不出 7），其中 **12 槽**綁著 `tpl-buff-self` ——
+//     那一族發 `applyTo:"self"`、⛔ 不設 `targetsEnemies` ⇒ ⭐「友軍盾」實際只罩施法者自己，
+//     而卡面說它保護隊友（第一·五守則）。⇒ 全庫在此之前**沒有任何模板發友方指向的護盾**。
+const BASELINE_GAPS = 53
 
 interface Brick {
   id: string;

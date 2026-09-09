@@ -1,7 +1,13 @@
 {
   "collection": "ability-templates",
-  "hash": "ca2dc9cba026",
+  "hash": "04ab881d45bc",
   "entries": [
+    {
+      "id": "tpl-ally-shield",
+      "path": "ability-templates/tpl-ally-shield.json",
+      "hash": "cd1a55b463af",
+      "size": 3973
+    },
     {
       "id": "tpl-apply-status",
       "path": "ability-templates/tpl-apply-status.json",

@@ -10,8 +10,8 @@
     "⚠️ ⭐ 挑一個 `modelKey` 之前查 `modelFxEmitters.modelsWithEmitters`：那顆模型若自帶粒子，`modelFxEmitters.lostByEmitters` 的每一格**寫了也只作用在網格那一半** ⇒ ⛔ 同一顆模型會顯示兩種顏色／兩種大小，而沒有任何東西紅。"
   ],
   "counts": {
-    "templates": 55,
-    "pickable": 44,
+    "templates": 56,
+    "pickable": 45,
     "analysedButUnwired": 1,
     "shells": 9,
     "sentinels": 1,
@@ -20,6 +20,107 @@
     "matrixTheoretical": 325
   },
   "types": [
+    {
+      "id": "tpl-ally-shield",
+      "name": "友軍護盾",
+      "family": "ally-shield",
+      "description": "給**友軍**一層護盾（`kind:\"shield\"`）。⭐ `target` 三種：`self` ＝ 只罩自己（castType self）；`ally` ＝ **指定一位隊友**（castType targeted ＋ `targetsEnemies:false` ⇒ 點不到敵人）；`area` ＝ **範圍內的友軍與自己**（castType ground ＋ `targetsEnemies:false` ＋ `radius`）。⭐ 引擎那一側早就支援：`abilitySystem.ts` 的地面 AoE 在 `targetsEnemies:false` 時走 `bodiesInCircle` 的友方路徑，⭐ 而且**施法者自己算在圈內**（GH#458 的註解逐字寫著理由：一個以自己為圓心的結界把自己排除在外，就會退化成另一種「說了但不會發生」）。⇒ ⭐ 這一族補的是**模板**，⛔ 不是機制。⚠️ GH#1132 量到 37 名社群英雄裡**提到友軍的 18 槽**有 **12 槽綁著 `tpl-buff-self`** —— 那個家族發 `applyTo:self`、⛔ 不設 `targetsEnemies` ⇒ 「友軍盾」實際只罩施法者自己。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 10,
+      "requires": [],
+      "exemplar": {
+        "skill": "GH#1132：37 名社群英雄裡提到友軍的 18 槽（12 槽今天誤綁 tpl-buff-self）",
+        "jass": "⛔ 無 JASS 對照 —— 這一族是社群英雄的原設計（第〇·六守則第 1 層：owner／作者的新版說明贏過考古）"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "target": {
+          "type": "enum",
+          "default": "area",
+          "values": [
+            "self",
+            "ally",
+            "area"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "amount": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              50,
+              85,
+              120,
+              155
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.465
+              }
+            ]
+          },
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "duration": {
+          "type": "number",
+          "default": 8,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "radius": {
+          "type": "number",
+          "default": 8,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "absorbs": {
+          "type": "enum",
+          "default": null,
+          "values": [
+            "all",
+            "physical",
+            "magic",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
     {
       "id": "tpl-apply-status",
       "name": "只上狀態",

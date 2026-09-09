@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "aeca4e4d",
+  "fingerprint": "d9013d10",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -1220,6 +1220,7 @@
     ]
   },
   "templateFamilies": [
+    "ally-shield",
     "apply-status",
     "area-strike",
     "beam-roll",
