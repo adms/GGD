@@ -195,5 +195,15 @@ describe("GH#1132 Conan observed clues, collision and waking sleep", () => {
     expect(zAbilityDoc.safeParse({ ...rAbility(), castType: "self" }).success).toBe(false);
     expect(zEffectDef.safeParse({ kind: "applyBuff", duration: 1, modifiers: [], hooks: [{ on: "onBasicAttack", observedEvent: "heal", effects: [{ kind: "heal", amount: { flat: 1 } }] }] }).success).toBe(false);
   });
+  it("counts an observed effective control extension, not an unchanged refresh", () => {
+    const r = setup();
+    r.world.stealth.set(r.enemy, { fadeDelayTicks: 0, hiddenFromTick: 0 });
+    r.control(); expect(r.clues()).toBe(0);
+    r.world.stealth.delete(r.enemy);
+    r.control(); expect(r.clues()).toBe(0); // Same tick and expiry: no added control.
+    r.world.tick += 1;
+    r.control(); expect(r.clues()).toBe(1);
+    r.control(); expect(r.clues()).toBe(1);
+  });
 });
 function rAbility() { return setup().compiled.abilityDrafts.R; }

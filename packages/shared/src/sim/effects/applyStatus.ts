@@ -336,7 +336,7 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
         });
       }
       if (isCc) recordCc(world, ctx.caster, target, addedTicks);
-      if (isCc && addedTicks > 0 && (!existing || stacksGrew)) {
+      if (isCc && addedTicks > 0) {
         world.emit("controlApplied", { source: ctx.caster, target, statusId: e.statusId, origin: ctx.origin });
       }
       // 【狀態被套用的當下】(GH#300) —— `systems/WorldHookSystem.ts` 把它轉成
