@@ -105,3 +105,17 @@ describe("第十一回合的世界描述與終止（#1151 A 的第 2／3 條）"
     expect(round11EndReason(600, 0, 600)).toBe("time");
   });
 });
+
+describe("⭐ 進場回合**跟著 `finalRound` 走**，⛔ 不是寫死的 10", () => {
+  it("賽制改成 12 回合 ⇒ 第十一回合接在**第 12 回合**之後", () => {
+    // ⚠️ ⛔ 寫死 10 的話，owner 把 `finalRound` 調成 12 的那一刻
+    //   第十一回合會**永遠開不了**，⭐ 而沒有任何東西變紅。
+    expect(shouldEnterRound11(ON, 12, 3, 12)).toBe(true);
+    expect(shouldEnterRound11(ON, 10, 3, 12)).toBe(false);
+  });
+
+  it("省略時退回出貨預設（10）—— ⭐ 與既有的 `isFinalRound` 同一條規矩", () => {
+    expect(shouldEnterRound11(ON, 10, 3)).toBe(true);
+    expect(shouldEnterRound11(ON, 12, 3)).toBe(false);
+  });
+});

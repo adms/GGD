@@ -33,7 +33,19 @@ export interface Round11Gate {
   readonly triggerBossKills: number;
 }
 
-/** 第十一回合的**前一個**回合 —— ⭐ 正常流程打完十回合才輪得到它。 */
+/**
+ * ⛔⛔ **這個常數原本是寫死的 `10`** —— ⭐ 而 10 有它自己的住處。
+ *
+ * `DEFAULT_FINAL_ROUND = 10`（`schema/config/arenaRules.ts`）是**賽制的最後一回合**，
+ * ⭐ 而它是一格**後台可調**的設定（`rules.finalRound`）。
+ * ⇒ ⛔ 在這裡再寫一個 10，就是第〇·四守則的「第二個住處」：
+ *   owner 把賽制改成 12 回合的那一刻，第十一回合會**永遠開不了**，
+ *   ⭐ 而不會有任何東西變紅。
+ *
+ * ⇒ ⭐ 判準改成「**剛打完的是不是最後一回合**」，⛔ 不是「是不是第 10 回合」。
+ * ⚠️ 保留這個匯出只為了**出貨預設**的可讀性（＝ `DEFAULT_FINAL_ROUND`），
+ *   ⛔ 判定本身不讀它。
+ */
 export const ROUND11_PRECEDING_ROUND = 10;
 
 /**
@@ -54,9 +66,15 @@ export function shouldEnterRound11(
   gate: Round11Gate,
   round: number,
   cumulativeBossKills: number,
+  /**
+   * ⭐ 賽制的最後一回合（`rules.finalRound`，出貨 10）——
+   * ⛔ 省略時退回出貨預設，⭐ 而呼叫端拿得到 rules 就一定要傳
+   *   （與 `PairedDuels.isFinalRound` 同一條規矩）。
+   */
+  finalRound: number = ROUND11_PRECEDING_ROUND,
 ): boolean {
   if (!gate.enabled) return false;
-  if (round !== ROUND11_PRECEDING_ROUND) return false;
+  if (round !== finalRound) return false;
   if (gate.triggerBossKills <= 0) return false;
   return cumulativeBossKills >= gate.triggerBossKills;
 }
