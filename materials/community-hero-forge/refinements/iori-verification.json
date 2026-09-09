@@ -164,5 +164,74 @@
     "exitCode": 0,
     "logSha256": "30f38a8b028e7a4a4b35a00121072ff551e1dcb0a34aad94a23ec0469bc76032",
     "initialFailure": "tsx local IPC was denied by the sandbox (EPERM); same official generator passed outside it."
+  },
+  "finalBatch": {
+    "head": "e12c0be14a55480a3d1b4ea3bb498a68daa7597c",
+    "clean": true,
+    "command": "python3 tools/community-hero-forge/verify-authoring-batch.py --output /private/tmp/ggd-community-mechanism-fixes/iori-release-01 --release-root /private/tmp/ggd-model-upload-acceptance/release-13956d93b --release --jobs 3",
+    "sourceFingerprint": "113e9cdf51b46fcc147d49c95665db25f0a5a194ab16002fa38ff05c36b03261",
+    "exitCode": 2,
+    "errors": [],
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 81,
+      "slotsWithoutBehaviorSuite": 141
+    },
+    "registeredTestCounts": {
+      "behavior-implemented-mechanisms": 857,
+      "behavior-trap-view-and-transport": 4,
+      "behavior-motion-view-and-transport": 9,
+      "behavior-target-resource-acceptance": 12
+    },
+    "registeredTestsPassed": 882,
+    "editorTestsPassed": 601,
+    "editorTypecheck": "passed",
+    "editorProductionBuild": "passed",
+    "modelBytes": "verified",
+    "reportSha256": "380028a567860733d66afe1dc0794cd1e2445b126bfa83ae74bd17ef720f68b2",
+    "jobs": [
+      {
+        "id": "skills",
+        "exitCode": 0,
+        "logSha256": "0c174ce52c16f20c56b7874e3f3212249057395563f1bd7542da35b75a0caf5e"
+      },
+      {
+        "id": "editor",
+        "exitCode": 0,
+        "logSha256": "cf3aa6364376f1b8ccae3698d969ab9d2d9531c533beb36b0bfcd66eb67c570c"
+      },
+      {
+        "id": "coord",
+        "exitCode": 0,
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271"
+      },
+      {
+        "id": "compile-and-models",
+        "exitCode": 0,
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c"
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "exitCode": 0,
+        "logSha256": "588df04424a771204524c7aaa24f69b3852bd7341ab203671c2775ca507feaa3"
+      },
+      {
+        "id": "behavior-trap-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "77821ddf4f226d15bf13eb07cf6dab9f3fc854914ef16c0df7d6c3ed73c40fd0"
+      },
+      {
+        "id": "behavior-motion-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "c97b389f961821afc27dc73477ab19294100d220000133f649e687a8fc5f0966"
+      },
+      {
+        "id": "behavior-target-resource-acceptance",
+        "exitCode": 0,
+        "logSha256": "7a3827eea862e90b5107122a55a49e16182320bbf84080d56cfb861e0dcbe8ca"
+      }
+    ],
+    "meaning": "All executed checks passed against a clean commit. Exit 2 preserves 141 unmapped slots; full original design, art, current-service ZIP and publication remain incomplete. Subsequent commit updates receipts and documentation only."
   }
 }

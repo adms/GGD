@@ -608,6 +608,20 @@
         "materials/community-hero-forge/refinements/02.json",
         "materials/community-hero-forge/validation-plan.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "八神庵六槽批次在乾淨提交 e12c0be14a55 同批通過 skills、Editor release、coord、37 名／222 槽編譯與全部模型綁定核對；882 項登記案例、Editor 601 項測試及正式建置通過。批次退出碼 2 如實保留 141 槽未對應。原稿專用美術、當下服務 ZIP、投稿發布及 #1132 整批驗收仍未完成；不關閉或縮減原票。後續僅更新驗證收據與文件。",
+      "repro": {
+        "command": "pnpm editor:accept:release",
+        "expectedExit": 0
+      },
+      "commit": "e12c0be14a55480a3d1b4ea3bb498a68daa7597c",
+      "evidence": [
+        "materials/community-hero-forge/refinements/iori-verification.json",
+        "materials/community-hero-forge/validation-plan.json",
+        "tools/community-hero-forge/BATCH_VERIFICATION.md"
+      ]
     }
   ],
   "unblocks": [],
