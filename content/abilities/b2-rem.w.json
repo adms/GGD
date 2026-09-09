@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 1.233,
   "castType": "targeted",
   "cooldown": [
     45.0,
@@ -8,6 +8,7 @@
     45.0
   ],
   "cooldownTier": "小",
+  "provenance": "w3x-import",
   "description": "「鐵球拖把暫停你的普攻！」\n小級鐵球打擊；距離不超過 2.5 才繳械 1.5 秒（numbness 旗標），遠客人不列入清場。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：女僕服務包含拖地與拖走客人。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -40,7 +41,6 @@
   "manaCostTier": "小",
   "maxRank": 4,
   "name": "鐵球拖把暫停你的普攻",
-  "provenance": "editor-json",
   "radius": 3,
   "range": 6,
   "rangeTier": "中",

@@ -1,10 +1,11 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 1.233,
   "castType": "ground",
   "cooldown": [
     45.0
   ],
   "cooldownTier": "大",
+  "provenance": "w3x-import",
   "description": "「SEGA神諭直線超載！」\n攻略正確的直線魔法，中級單次傷害；不沿用不生效的蛇行參數。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：精靈客服與遊戲攻略，戰鬥全程社交事故。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -27,7 +28,6 @@
   "manaCostTier": "小",
   "maxRank": 1,
   "name": "SEGA神諭直線超載",
-  "provenance": "editor-json",
   "range": 6,
   "rangeTier": "中",
   "schema": "ability@1",
@@ -36,7 +36,7 @@
     "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
     "params": {
       "aim": "target",
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.233,
       "damage": {
         "damageTier": "中"
       },

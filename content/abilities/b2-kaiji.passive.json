@@ -3,6 +3,7 @@
   "cooldown": [
     0
   ],
+  "provenance": "w3x-import",
   "description": "「賭桌離場服務費！」\n施放大招後回復自身最大魔力 6%，內置冷卻 4 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：局內籌碼賭運氣，贏了就喊最後一把。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [],
   "id": "b2-kaiji.passive",
@@ -32,7 +33,6 @@
       }
     ]
   },
-  "provenance": "editor-json",
   "range": 0.0,
   "schema": "ability@1",
   "slot": "PASSIVE",

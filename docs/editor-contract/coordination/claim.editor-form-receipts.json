@@ -12316,7 +12316,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 0,
       "origin": "PRESET_FIELDS ∩ content/ability-templates/hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804.json.params",
       "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
@@ -12344,7 +12344,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 0,
       "origin": "PRESET_FIELDS ∩ content/ability-templates/hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806.json.params",
       "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",

@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.267,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -10,6 +10,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「這個形狀看起來很耐打！」\n進入 4 秒的 alternate 怪物戰鬥模式；產生正式 counterpart，外觀沿用代理，不能稱美術變怪物完成。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -38,14 +39,13 @@
       ],
       "maxRank": 4,
       "name": "這個形狀看起來很耐打",
-      "provenance": "editor-json",
       "range": 0.0,
       "slot": "E",
       "template": {
         "contentSha256": "sha256:8d2edc181c1550ef0212a29fa019c2e48a7ebb0772087e683c174456e7d01705",
         "params": {
           "buffDurationSec": 4,
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.267,
           "durationSec": 4,
           "modifiers": [
             {
@@ -67,7 +67,7 @@
       ]
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -76,6 +76,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「防禦力輸入多一個零！」\n自己得到 260 全傷害護盾 3 秒，保護自己不等於保護隊友。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -104,7 +105,6 @@
       ],
       "maxRank": 4,
       "name": "防禦力輸入多一個零",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 0.0,
       "slot": "Q",
@@ -112,7 +112,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.067,
           "castType": "self",
           "effects": [
             {
@@ -147,7 +147,7 @@
       "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 2.433,
       "castType": "targeted",
       "cooldown": [
         90.0,
@@ -155,6 +155,7 @@
         90.0
       ],
       "cooldownTier": "大",
+      "provenance": "w3x-import",
       "description": "「怪物模式限定毒龍包！」\n怪物模式才給敵人 3 秒 poison 與每秒極小魔法 DOT；本體模式只有小級咬擊。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -201,7 +202,6 @@
       "manaCostTier": "小",
       "maxRank": 3,
       "name": "怪物模式限定毒龍包",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -210,7 +210,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 2.433,
           "castType": "targeted",
           "effects": [
             {
@@ -263,7 +263,7 @@
       "radiusTier": "極小"
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -272,6 +272,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「盾後補餐退魔力！」\n保護料理：回復自己 120，若最近 4 秒用過 Q，另外回復最大魔力 10%。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -308,7 +309,6 @@
       ],
       "maxRank": 4,
       "name": "盾後補餐退魔力",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 0.0,
       "slot": "W",
@@ -316,7 +316,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.067,
           "castType": "self",
           "effects": [
             {

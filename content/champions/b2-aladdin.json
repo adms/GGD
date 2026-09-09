@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.667,
       "castType": "ground",
       "cooldown": [
         45.0,
@@ -10,7 +10,8 @@
         45.0
       ],
       "cooldownTier": "小",
-      "description": "「團員到齊才打節拍！」\n指定地點半徑 3 內的友方單位增加 80 攻擊力 4 秒，可驅散；先叫出代理再指揮，代理才會領到加班增益。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
+      "provenance": "w3x-import",
+      "description": "「團員到齊才打節拍！」\n指定地點半徑{{radius}} 內的友方單位增加 80 攻擊力 4 秒，可驅散；先叫出代理再指揮，代理才會領到加班增益。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "applyTo": "target",
@@ -35,7 +36,6 @@
       ],
       "maxRank": 4,
       "name": "團員到齊才打節拍",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -44,7 +44,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.667,
           "castType": "ground",
           "effects": [
             {
@@ -76,7 +76,7 @@
       "radiusTier": "極小"
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -85,6 +85,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「烏戈代班先派一位！」\n召喚 1 具可獨立攻擊的自身代理 4 秒，攻擊與生命倍率欄位均為 30%，本招最多 3 具；同時取得 rage 演奏暫態 4 秒。代理不是烏戈原作模型。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -116,7 +117,6 @@
       ],
       "maxRank": 4,
       "name": "烏戈代班先派一位",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 0.0,
       "slot": "Q",
@@ -171,7 +171,7 @@
       "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.833,
       "castType": "ground",
       "cooldown": [
         45.0,
@@ -179,6 +179,7 @@
         45.0
       ],
       "cooldownTier": "大",
+      "provenance": "w3x-import",
       "description": "「魔法音樂課吹整排！」\n發出直線魔法波動，打擊沿線敵人；演出是吹笛，幾何以編譯能力為準。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -203,7 +204,6 @@
       "manaCostTier": "小",
       "maxRank": 3,
       "name": "魔法音樂課吹整排",
-      "provenance": "editor-json",
       "range": 6,
       "rangeTier": "中",
       "slot": "R",
@@ -211,7 +211,7 @@
         "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
         "params": {
           "aim": "target",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.833,
           "damage": {
             "damageTier": "中"
           },
@@ -230,7 +230,7 @@
       ]
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -239,6 +239,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「樂團加演再請一位！」\n消耗自身 rage 演奏暫態再召喚 1 具同規格代理 4 秒，W 自己的上限為 3 具；沒有演奏暫態就不能加演。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -272,7 +273,6 @@
       ],
       "maxRank": 4,
       "name": "樂團加演再請一位",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 0.0,
       "slot": "W",
@@ -280,7 +280,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "self",
           "effects": [
             {
@@ -363,6 +363,7 @@
     "maxMana": 0.9581632653061187,
     "mr": 2.1118367346938776
   },
+  "msGrowthTier": "極小",
   "id": "b2-aladdin",
   "modelKey": "champ.sela",
   "name": "阿拉丁",

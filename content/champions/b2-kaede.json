@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -10,6 +10,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「電池型魔法裝甲！」\n建立 3 秒魔力屏障：每 1 魔力吸收 2 物理或魔法傷害，保留 10 魔力；真傷不在屏障清單。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -34,7 +35,6 @@
       ],
       "maxRank": 4,
       "name": "電池型魔法裝甲",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 0.0,
       "slot": "E",
@@ -42,7 +42,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "self",
           "effects": [
             {
@@ -73,7 +73,7 @@
       "radiusTier": "極小"
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castType": "self",
       "cooldown": [
         15.0,
@@ -82,6 +82,7 @@
         15.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「安裝魔劍套件！」\n取得 three-sword-style 暫態與 45 點攻擊力，維持 4 秒；原作的魔法劍士特徵改編為有期限附魔。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -110,13 +111,12 @@
       ],
       "maxRank": 4,
       "name": "安裝魔劍套件",
-      "provenance": "editor-json",
       "range": 0.0,
       "slot": "Q",
       "template": {
         "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.067,
           "duration": 4,
           "modifiers": [
             {
@@ -141,7 +141,7 @@
       ]
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.433,
       "castType": "ground",
       "cooldown": [
         90.0,
@@ -149,6 +149,7 @@
         90.0
       ],
       "cooldownTier": "大",
+      "provenance": "w3x-import",
       "description": "「技能欄批次執行！」\n以起手命中中心固定 3 秒魔法傷害場（無目標時採施法點），之後每秒重新選取圈內敵人；不是保證以游標點為中心。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -182,7 +183,6 @@
       "manaCostTier": "小",
       "maxRank": 3,
       "name": "技能欄批次執行",
-      "provenance": "editor-json",
       "radius": 4.5,
       "range": 6,
       "rangeTier": "中",
@@ -193,7 +193,7 @@
         "params": {
           "anchor": "point",
           "applyTo": "enemies",
-          "castTimeSec": 0.1,
+          "castTimeSec": 1.433,
           "damageTier": "中",
           "damageType": "magic",
           "durationSec": 3,
@@ -213,7 +213,7 @@
       "radiusTier": "小"
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "ground",
       "cooldown": [
         15.0,
@@ -222,6 +222,7 @@
         15.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「更新視窗全部穿透！」\n發出直線魔法劍氣，打擊沿線敵人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -247,7 +248,6 @@
       "manaCostTier": "小",
       "maxRank": 4,
       "name": "更新視窗全部穿透",
-      "provenance": "editor-json",
       "range": 6,
       "rangeTier": "中",
       "slot": "W",
@@ -255,7 +255,7 @@
         "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
         "params": {
           "aim": "target",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "damage": {
             "damageTier": "中"
           },
@@ -317,6 +317,7 @@
     "maxMana": 0.9581632653061187,
     "mr": 2.1118367346938776
   },
+  "msGrowthTier": "極小",
   "id": "b2-kaede",
   "modelKey": "champ.sela",
   "name": "楓",

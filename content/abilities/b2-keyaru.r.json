@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.067,
   "castType": "targeted",
   "cooldown": [
     90.0,
@@ -7,6 +7,7 @@
     90.0
   ],
   "cooldownTier": "大",
+  "provenance": "w3x-import",
   "description": "「門診加號先救人！」\n治療指定友軍 120 生命，並驅散最多 3 筆可驅散負面狀態、DOT 或增益来源。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -41,7 +42,6 @@
   ],
   "maxRank": 3,
   "name": "門診加號先救人",
-  "provenance": "editor-json",
   "radius": 3,
   "range": 6,
   "rangeTier": "中",

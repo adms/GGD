@@ -2,8 +2,8 @@
   "schema": "ggd-assets-manifest@1",
   "note": "⭐ 被 content/**/*.json 或共用 VFX 材質引用到的**每一顆**二進位資產。⛔ 產物 —— 改 `tools/asset-manifest/gen.ts`，⛔ 不要手改。⚠️ 只收**被引用到的**：content/assets/ 底下有一萬多個檔，而清單的用途是驗證引用得到的東西。",
   "counts": {
-    "entries": 1989,
-    "totalBytes": 156470096
+    "entries": 2211,
+    "totalBytes": 158128572
   },
   "entries": [
     {
@@ -7190,6 +7190,2448 @@
       "kind": "audio",
       "refs": [
         "audio-map",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-aladdin.e.webp",
+      "bytes": 9498,
+      "sha256": "4835536abb83b20cfe123900d094ed7642708a023c67a5fc5a6966065b62a31f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-aladdin.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-aladdin.ex.webp",
+      "bytes": 3250,
+      "sha256": "7f6b2a77c4ece99bb914a8fff61653d64dd3f3c4e9837cae4942aca8e39a73ad",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-aladdin.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-aladdin.passive.webp",
+      "bytes": 11964,
+      "sha256": "0e9316230b430bcf7bfee778c18fd7231dd857d03ea59f77972a149cad6831b4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-aladdin.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-aladdin.q.webp",
+      "bytes": 7682,
+      "sha256": "abc34c5efc5a4a9b668aa211835ebb35ba1723a24524da0594543ad79277b5b0",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-aladdin.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-aladdin.r.webp",
+      "bytes": 7390,
+      "sha256": "9f83c46e733b6858cbbd8ab76d8f2b4eee7635a6805c3d478ab362b38c06ecd0",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-aladdin.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-aladdin.w.webp",
+      "bytes": 5522,
+      "sha256": "1d2e65c81114fd8fb87cd8850601e76c57684bb6e18c614784a07e346fdcdb62",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-aladdin.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-albus.e.webp",
+      "bytes": 8458,
+      "sha256": "ebf61bdedd3c23d2ca26e0f2600b795fa51a39f94c04b3e4e46da3e0138b3024",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-albus.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-albus.ex.webp",
+      "bytes": 5008,
+      "sha256": "da072c02d682fe77935ce0ee41400586657fe25238e09a36a99d38667b72ba5d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-albus.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-albus.passive.webp",
+      "bytes": 9994,
+      "sha256": "e48ca39e62b702aefd776f265bc225d65bc755c9288c00d2f539f2ef7120531e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-albus.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-albus.q.webp",
+      "bytes": 7460,
+      "sha256": "2cb9d6f1a53f8b1bd33dae0702bd6d82449cf9b4f8e34d6d2eff6e3f49b67f22",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-albus.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-albus.r.webp",
+      "bytes": 8204,
+      "sha256": "767c54c1a004f1f7ba49b8cc63f1b6a4ef5ee38114a2a387bf9e13c30f990804",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-albus.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-albus.w.webp",
+      "bytes": 4850,
+      "sha256": "bd73a4a4f5bad6e092e6cff574d985e7993c77b8a91fde24337d55512fd8a5d4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-albus.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-bojji.e.webp",
+      "bytes": 8018,
+      "sha256": "d67ace5b53c458378e398ee77b5709fa36640cad8287721b6b047b0d31b67c58",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-bojji.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-bojji.ex.webp",
+      "bytes": 3258,
+      "sha256": "3470db31d03e51d80cc7ce91dd45b0c54dd32fac318888d1a35505b939d614bb",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-bojji.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-bojji.passive.webp",
+      "bytes": 6484,
+      "sha256": "3d553d2e475e39ee271f029ca83bac1cade73d78af80f0d8c508f20e2d5e01e2",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-bojji.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-bojji.q.webp",
+      "bytes": 8652,
+      "sha256": "faeb44659ab0577076eade25a05c51f3a061c74bc21e4cb79f71221d55de616a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-bojji.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-bojji.r.webp",
+      "bytes": 9804,
+      "sha256": "dd1c522b1cdd3b8d8209e402cdb1bc778448f6523f27acd9866aae6ca1c256b3",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-bojji.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-bojji.w.webp",
+      "bytes": 6314,
+      "sha256": "badea986e98fc86468b2407d6a415ccc94bc843d19f827b4a5dc8556b5a40cc8",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-bojji.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-boxxo.e.webp",
+      "bytes": 9494,
+      "sha256": "13eb390281f6e81cd3e065469ebf98653ebb95efdda2e75cd02630fa37adec6d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-boxxo.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-boxxo.ex.webp",
+      "bytes": 5732,
+      "sha256": "c2a326cea854cfe6dc1af81550182dc64f56f035a4e0f55ca07f8108d114978b",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-boxxo.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-boxxo.passive.webp",
+      "bytes": 6586,
+      "sha256": "6861696a25dcc0e44cb5360ba82f8237089f43dcb23b1f5cc632c11d6a8daac2",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-boxxo.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-boxxo.q.webp",
+      "bytes": 7808,
+      "sha256": "b08fea2f12c231a6d8b13efab8cccc0fffdea798625ff7e04692be398b500721",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-boxxo.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-boxxo.r.webp",
+      "bytes": 11370,
+      "sha256": "a78a8489884e8da92655a133000cdcf472fb22fa4f756bc9a37a28b84e29ada7",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-boxxo.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-boxxo.w.webp",
+      "bytes": 5818,
+      "sha256": "015e00a53417d2ef2be0d7653b0f09eebf3f7e86ef7650e198a626c53c1fd06d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-boxxo.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-elma.e.webp",
+      "bytes": 8176,
+      "sha256": "733dfd9e55861aa83d7a838c1ecf401b58ae393bea5671bf7081bf4c2b71bad9",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-elma.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-elma.ex.webp",
+      "bytes": 7712,
+      "sha256": "a87dc46a10b02fad2c0217598c4571ce3788125629d5c3888da99086017dda81",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-elma.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-elma.passive.webp",
+      "bytes": 6618,
+      "sha256": "2bef78d8e6ec9d55a13b424655770ddda896527079714526071c7f6871106033",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-elma.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-elma.q.webp",
+      "bytes": 4536,
+      "sha256": "7c100b72daa5351e730efb7cf2ea1accbb13faa84e9a047900606f3df80ebad0",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-elma.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-elma.r.webp",
+      "bytes": 7502,
+      "sha256": "9bbd50f8006a2723d962333b471681d78e65093c70e540f38eb76b924ee3a551",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-elma.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-elma.w.webp",
+      "bytes": 5946,
+      "sha256": "e0efdb319e5f626d3c466539d2c32fda15ecd43197e03ee4960b786710b3a5ba",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-elma.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-fushi.e.webp",
+      "bytes": 3570,
+      "sha256": "632aa0b5c5cff71a367747393dd111a41041c353a4b042e9ca90c7c63e4bcd50",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-fushi.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-fushi.ex.webp",
+      "bytes": 10410,
+      "sha256": "ba0b1bbb5a1853b24d003125173e2a61822a352294e52b59bd8fbcdd16797ede",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-fushi.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-fushi.passive.webp",
+      "bytes": 3960,
+      "sha256": "a655c0e23ad3bd58460d0108dfe57c13f6a3733c734eed00fee203e1f883e4d9",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-fushi.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-fushi.q.webp",
+      "bytes": 4460,
+      "sha256": "3602717a8b4d1fa3fce15236275b42329753596e4f1c5912ebe2249e2601f698",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-fushi.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-fushi.r.webp",
+      "bytes": 7606,
+      "sha256": "cfd17d3e9ebee5241c72f063072b32a8908d3378933dd3854b833a7ea7d59283",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-fushi.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-fushi.w.webp",
+      "bytes": 8714,
+      "sha256": "ed11e052406ac14838ef24198053ba41faab2ca62189ca904d6ecfcb88736a5b",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-fushi.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-goblin.e.webp",
+      "bytes": 7270,
+      "sha256": "d67fb710c1614d5d9c447a99c687e11bf441fee9d6f5b9e556576d3b9c78caba",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-goblin.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-goblin.ex.webp",
+      "bytes": 6434,
+      "sha256": "99e7ae11ac3ab1ad208faed60f3f6d9059f837c02ec571cd42ae5e29c6fb9466",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-goblin.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-goblin.passive.webp",
+      "bytes": 5692,
+      "sha256": "b79f4195bcbcb196b103a100d9fbd837d9e28c30a562d0955edf37f7d79f9682",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-goblin.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-goblin.q.webp",
+      "bytes": 11178,
+      "sha256": "c4e04c25ae00bf6de271341ba5d656ad30eb759e926e704be950200ef561f437",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-goblin.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-goblin.r.webp",
+      "bytes": 5716,
+      "sha256": "3954269cb62a210480fcf644dbf9292f6e0e24c04d14d398d0beed77bc9fdc1d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-goblin.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-goblin.w.webp",
+      "bytes": 9246,
+      "sha256": "9e070694bc8e124d31c41e0450ef1f21933056b9398a990be62edee6c9ed49e9",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-goblin.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-guts.e.webp",
+      "bytes": 6160,
+      "sha256": "97a09e79b3e017f58722458353865268e3f2db7c67c1e65495e4c782f0def9aa",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-guts.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-guts.ex.webp",
+      "bytes": 8458,
+      "sha256": "069f04845d4c0afed88a8183bbc8ac8ce6c9cf8f55bb3c8df48963b03f6f9b55",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-guts.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-guts.passive.webp",
+      "bytes": 6806,
+      "sha256": "1845cdf077507c99d95d30cd5ba3d66eb49ea4e8fc9bd75b28b0c819106a7447",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-guts.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-guts.q.webp",
+      "bytes": 5426,
+      "sha256": "dec202445ab10d1be2b15d88cdda5ae635b14182fb65fbe4e49c6c85e268e0cf",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-guts.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-guts.r.webp",
+      "bytes": 8604,
+      "sha256": "8dcce941610bcd517e943624065c4f4446d8f4c34a7c8c2fd31a4c5d47532578",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-guts.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-guts.w.webp",
+      "bytes": 8070,
+      "sha256": "54515a7486ecac5685d04c507a9fda355c004eb05c193e34b2224dd3d4616cb5",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-guts.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-haga.e.webp",
+      "bytes": 8058,
+      "sha256": "eed5187d07846116732f198a975be427b5ca15c32e8898a4562a09fc54ed39ea",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-haga.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-haga.ex.webp",
+      "bytes": 6800,
+      "sha256": "dbb73df78a69422671a976d6b05a0da28a8b664e15d92d4070308ee4559fcd9d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-haga.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-haga.passive.webp",
+      "bytes": 8230,
+      "sha256": "123d2403df25e799d8184b339ee010e60e26a51c803a67404fc3e6b657f96d07",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-haga.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-haga.q.webp",
+      "bytes": 4222,
+      "sha256": "8c5cb9508fcdc073d3e0e625730249e0a09f45244ef461e6776b507a64ea2ef2",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-haga.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-haga.r.webp",
+      "bytes": 8274,
+      "sha256": "0ccaed00893e094a437a01af96ab80b36df05ae2e788c932695e8acd3512ae10",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-haga.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-haga.w.webp",
+      "bytes": 7962,
+      "sha256": "a7ca665eae41e596850ecbea86899684888cee3948ff6a5bbec3cd09435b7766",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-haga.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kaede.e.webp",
+      "bytes": 5596,
+      "sha256": "9ca68d7eea656132a0763432a2df3922e14da1a5420c0fc38f90d1fc66b1b39a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kaede.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kaede.ex.webp",
+      "bytes": 8080,
+      "sha256": "922ee0eae7d1495a38b9857aefe1a3ec817d2a1ae5aec02909c0c3e772274d01",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kaede.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kaede.passive.webp",
+      "bytes": 9968,
+      "sha256": "db7127a4ee7da689b1806be6ced35cfb906b8bf5f061c7cfc6bf445dce55deaa",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kaede.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kaede.q.webp",
+      "bytes": 3866,
+      "sha256": "8042468eadd292e82e6b5c79a2d154217ce5028a23d9991a8a85f06f49e82bbb",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kaede.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kaede.r.webp",
+      "bytes": 9412,
+      "sha256": "a2ea4111a7bc6a2c46d479d66f618de5c7f1770fa40b23e580d224ecf1f48897",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kaede.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kaede.w.webp",
+      "bytes": 8044,
+      "sha256": "d5b89e2b0501ff92e5074125a311abac577abb20dd3ecc575ba4b812438d454e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kaede.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kaiji.e.webp",
+      "bytes": 6924,
+      "sha256": "ffe517058f78c2e0b1252c1724752d939feadd163cb4d9d0d3fd5f39ba1d30b2",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kaiji.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kaiji.ex.webp",
+      "bytes": 6568,
+      "sha256": "d661193242a889f20740f75f9f6da3d4defde43f06263130f8bf8ae9720f39ed",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kaiji.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kaiji.passive.webp",
+      "bytes": 4738,
+      "sha256": "4d75f5c5967adf92ea397693935271b152254e540e71ba82a1450eded993dc32",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kaiji.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kaiji.q.webp",
+      "bytes": 5672,
+      "sha256": "4d8fdfbd52e2af5505251f132bc4cc7e9b4b3a9e93b4660265cc54d832377036",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kaiji.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kaiji.r.webp",
+      "bytes": 5260,
+      "sha256": "8c62407c9c3584ee941974dc1fb3d6840d7e0ed106accf8d9d2ef26c891c98d9",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kaiji.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kaiji.w.webp",
+      "bytes": 4704,
+      "sha256": "de257c2b58673cae66a6b07ec88cd1a21f859797c29361be2dc31513a77dd874",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kaiji.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-keyaru.e.webp",
+      "bytes": 6224,
+      "sha256": "694e86ad92d9affa2a49a069a562f8f020a40ea2a5e4b6be3e16e5a4d5fe2fe5",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-keyaru.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-keyaru.ex.webp",
+      "bytes": 7574,
+      "sha256": "3a7cb5f9e6aefffe476d28e97759d19e02c8a197f73d8c00bcc53522aeecfd99",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-keyaru.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-keyaru.passive.webp",
+      "bytes": 7978,
+      "sha256": "1e2a8908b9b9e035cb30e0b58b41a825551e2eb0d5625d45fce56c33571dfb93",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-keyaru.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-keyaru.q.webp",
+      "bytes": 6532,
+      "sha256": "c4027cd353915c16bcc7cb3223870576ca588a4892cb0e3d7c670d637476c756",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-keyaru.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-keyaru.r.webp",
+      "bytes": 6228,
+      "sha256": "9e1b098fb52c410688ec7a251aa84f8f2642277cf76c899f3167cfea960cc737",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-keyaru.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-keyaru.w.webp",
+      "bytes": 7926,
+      "sha256": "b4e287edede37baab88ef8f4e97d297f992556a3a1b233982f49c333a521c8db",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-keyaru.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kisaragi.e.webp",
+      "bytes": 8504,
+      "sha256": "fa3b4f701c5add5738a7dd0b1e7a8313f75c25decdd63eec67cf1144682bf155",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kisaragi.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kisaragi.ex.webp",
+      "bytes": 8798,
+      "sha256": "648c87e2f7d7d9652d974aceb3f5ac5a1cb5e7a937e8ed38f032d8c0c35609ff",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kisaragi.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kisaragi.passive.webp",
+      "bytes": 8540,
+      "sha256": "9f1dd60d32790250f9d281e84212cdc4fd8e4dd8700b6c30cdcd2542740ffdaa",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kisaragi.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kisaragi.q.webp",
+      "bytes": 9506,
+      "sha256": "ac66972d574949c545cae001379360ca2534f90265dbaa34c89cc4539adb100e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kisaragi.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kisaragi.r.webp",
+      "bytes": 5662,
+      "sha256": "c59bc2ab83e521ac4f1b08a82f63bf39c273b7078d8c2ef745b49a518745d5a8",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kisaragi.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kisaragi.w.webp",
+      "bytes": 5550,
+      "sha256": "8c53946ca5e623fd49d7b276ad4b3caa462c9655fa16bc7f4e28e4fc5ba5abba",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kisaragi.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-klaus.e.webp",
+      "bytes": 9684,
+      "sha256": "9a1b5188fec02ef620e76f17c130e66e9e6681d6aeaecc00045e308643ec5422",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-klaus.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-klaus.ex.webp",
+      "bytes": 2924,
+      "sha256": "f350c74b00e044fbc16fc820592847aa12452f5c4fb92ab09f57f067040d91aa",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-klaus.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-klaus.passive.webp",
+      "bytes": 9184,
+      "sha256": "3aa53b9140d3178d88f4713a376e8e198ee271b206ac5a9d144a0274c0f31ca0",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-klaus.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-klaus.q.webp",
+      "bytes": 9640,
+      "sha256": "987b8593cb1c0d9f801dc9409f910b426ed50a833c3c7fd4b53ab0aea7c81180",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-klaus.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-klaus.r.webp",
+      "bytes": 8254,
+      "sha256": "69d8bc9620c94efe677d80bab2d9ec144b059bca346347b80f0cae08ddc8b3f1",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-klaus.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-klaus.w.webp",
+      "bytes": 7542,
+      "sha256": "995fbddc659f4c4426577b428927c1da75ad384f321834530ae28caa8cbea81d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-klaus.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kumoko.e.webp",
+      "bytes": 10050,
+      "sha256": "ae459ff526499ff8fae315a527274c59542bbd522f30c90ca7d2c438008fd9d6",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kumoko.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kumoko.ex.webp",
+      "bytes": 11470,
+      "sha256": "f1db21ae90e56a991e97aaed985c5b8436eef8786a59f6ed4da375883e7b4c25",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kumoko.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kumoko.passive.webp",
+      "bytes": 5450,
+      "sha256": "4e556bdda73f144c6bbb0dc7e59c0eb060d9782c91c1df10e458e8d1d9084dc2",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kumoko.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kumoko.q.webp",
+      "bytes": 9114,
+      "sha256": "5ca10309b2ca35dc3cc1c4812da87d55a30f7e7553a0c326c3dd06aa0127d081",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kumoko.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kumoko.r.webp",
+      "bytes": 9568,
+      "sha256": "c293ba634c5eece80ff3a2e2a2cf83e12a686623a59cb6aafa3f4c68ed59b3a6",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kumoko.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-kumoko.w.webp",
+      "bytes": 6930,
+      "sha256": "0d5bade41b108c6ce5653aa1ba37064b8d8ed2fc648c3d52d6cf1fe2cbb7fd89",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-kumoko.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-luckyman.e.webp",
+      "bytes": 5304,
+      "sha256": "bcd38b87429dae3d1c2f8d9b473a88d7b119a660b97f79da164b5993e3e7b0b1",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-luckyman.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-luckyman.ex.webp",
+      "bytes": 8222,
+      "sha256": "5ffc4a05f2191f4319967febafdc81cfb6533dd6d6f1c128be376c613245e428",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-luckyman.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-luckyman.passive.webp",
+      "bytes": 10560,
+      "sha256": "bdf4576bbb7afd00565cae7307ed16350c1f35bc9d373035a2ec7e79f155a2f4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-luckyman.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-luckyman.q.webp",
+      "bytes": 8214,
+      "sha256": "ab7f6e454d028e6c39919c734fc8e79ddf58553213ae4d734c521cfe30238d1b",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-luckyman.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-luckyman.r.webp",
+      "bytes": 8146,
+      "sha256": "c691b8c34b14418428dcb6c7ff1266c8837cad21e2cd89afedc3c2284d32b6cf",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-luckyman.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-luckyman.w.webp",
+      "bytes": 6926,
+      "sha256": "f4ce3530857a85fb05271c2f691e79b3ce1fe55436dc57af7df320e595dbe091",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-luckyman.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-makoto.e.webp",
+      "bytes": 10444,
+      "sha256": "53d956578707fa5280ef8875144efe16ab783e102bd856f21f77efacf5169fb3",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-makoto.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-makoto.ex.webp",
+      "bytes": 8834,
+      "sha256": "ace9706f007674475057c4ba340e051ce5c7e504432e4d9f237b67257f8c5374",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-makoto.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-makoto.passive.webp",
+      "bytes": 4912,
+      "sha256": "bfebc5069a9138301251c4b286952e53f984f85d454272c240261c7df962ae34",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-makoto.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-makoto.q.webp",
+      "bytes": 10250,
+      "sha256": "17d9662cbeefc3727feaeaf995208e63f80c5342ff82efaf1eff49d97c2c67ff",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-makoto.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-makoto.r.webp",
+      "bytes": 8368,
+      "sha256": "7318addd47bcdb34acd45252b194190569d677ef4dabb0b11c09f60d1269d159",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-makoto.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-makoto.w.webp",
+      "bytes": 9380,
+      "sha256": "de5162efbb34a894a05aaf73f6d3a655765d39c6f8af5c564f350e2eaca42e16",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-makoto.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-maomao.e.webp",
+      "bytes": 5430,
+      "sha256": "74390c14cfb8faa4f08a5d14c8ae2b64a19e7484163442606c2ec73a4af27622",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-maomao.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-maomao.ex.webp",
+      "bytes": 9920,
+      "sha256": "2e0374c28b379907a462f0a2b343001398126f6a44cb41f22ab57d23e56e15a7",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-maomao.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-maomao.passive.webp",
+      "bytes": 5196,
+      "sha256": "56f55b9d4e1aab1b94fe290f9bc691d2c85023b389603888bdc174b5e5d1bdda",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-maomao.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-maomao.q.webp",
+      "bytes": 5214,
+      "sha256": "ff25caa473a54aa477c8fde159560c9646bda282508343636c33ab9a00111655",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-maomao.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-maomao.r.webp",
+      "bytes": 8392,
+      "sha256": "6624fd00ae1c65063a3a276b6b075ddcddff5320b44d32baf6af5c831b8f1ec4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-maomao.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-maomao.w.webp",
+      "bytes": 5472,
+      "sha256": "6cae1248e44c27a47d9bf9cb27a12f1e5c444d226a8b5ccfa325fc4cda6ad069",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-maomao.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-maple.e.webp",
+      "bytes": 5776,
+      "sha256": "b9d2260dccda23e8c800d22e6c9fed69fcfaa2a97812cdc320c8f90800cee537",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-maple.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-maple.ex.webp",
+      "bytes": 8546,
+      "sha256": "424e62e96816830cb32e48f3264d042ed158ccd5a23cd3c247edc6fe7275e0ff",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-maple.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-maple.passive.webp",
+      "bytes": 12168,
+      "sha256": "86c8f6eef8b1b8833aeb858e390609ec589545f07ff4d1289c4c95e46987ddc3",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-maple.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-maple.q.webp",
+      "bytes": 10288,
+      "sha256": "e4ad102d8e32e628b51c8e77a13e6836f8385b3541ff567cc65ada8d58bf0d98",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-maple.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-maple.r.webp",
+      "bytes": 6840,
+      "sha256": "59196fbb32e7dc5a86d27485e68ed366b89a1ef16acb1d004218101449ba9676",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-maple.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-maple.w.webp",
+      "bytes": 3654,
+      "sha256": "0735a08e07eb2c96ae9c68d167bcbf54537870eebe6ba947a7ddc8e57ac18f9a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-maple.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-matthias.e.webp",
+      "bytes": 8396,
+      "sha256": "6c392f1fdb7b3a0daf6358c96f50629bd2fe0dc4b8c3e0bcc9aa312441f9b831",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-matthias.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-matthias.ex.webp",
+      "bytes": 6932,
+      "sha256": "0378893bde4d6c338bc0452375a829464bbe3e46becf062bd7cbd2d8fa12dece",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-matthias.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-matthias.passive.webp",
+      "bytes": 7032,
+      "sha256": "03895883c695faebffa66839c4ac4066db693ee79bc48b84352d38a228054225",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-matthias.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-matthias.q.webp",
+      "bytes": 6188,
+      "sha256": "af421f4969a934304f11996b4b992bafa318f6f7fffc90346aba48c59e5cd417",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-matthias.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-matthias.r.webp",
+      "bytes": 7562,
+      "sha256": "82179521a6a766d56fb913e97d337a751e3c439625b48c26200d77b6c9403ae3",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-matthias.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-matthias.w.webp",
+      "bytes": 6934,
+      "sha256": "39ac6e845d6f3ae1be6d271e262c229efacd082f3b7fc4204fd4601d4a843852",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-matthias.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-misery.e.webp",
+      "bytes": 9862,
+      "sha256": "86bc903b37b499a98a06388e86b77d2c100c40048d4851c502b019c690409f6e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-misery.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-misery.ex.webp",
+      "bytes": 6858,
+      "sha256": "5bd5621815cb389768dacf4b2fb16cd944d33b3c21d94d9cdc7ce1017570dfa1",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-misery.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-misery.passive.webp",
+      "bytes": 12040,
+      "sha256": "0361732708a3998d717f77fde611f400ba808e509ad53f9971e455713f78a578",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-misery.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-misery.q.webp",
+      "bytes": 9546,
+      "sha256": "1661529c66bf90ed950b5eb522292c8a067771bd425961098763833997e4e96e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-misery.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-misery.r.webp",
+      "bytes": 7284,
+      "sha256": "4d591fb49a7408cdd2e65e7b5272318ae21955a753757bd17ed05bb04a3ee352",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-misery.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-misery.w.webp",
+      "bytes": 7058,
+      "sha256": "4386ecd362951dfe1ce494065cee7a20d64d3d7e10fc03d25186fb7205b5b357",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-misery.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-naofumi.e.webp",
+      "bytes": 6212,
+      "sha256": "326bc67229b591351bfe31a10de8adb515372d71b8bd775960ea360f15434cbc",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-naofumi.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-naofumi.ex.webp",
+      "bytes": 5462,
+      "sha256": "6b74e43737e90ab4af76b2c49ec85c03f2de187a279ab86ab030491bd0bfdacd",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-naofumi.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-naofumi.passive.webp",
+      "bytes": 7974,
+      "sha256": "c8fe60881ad00d07a19da841203c6e0f6538d7d75a97df198ee6c5bcb49bfe73",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-naofumi.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-naofumi.q.webp",
+      "bytes": 4964,
+      "sha256": "ffa3d9df2a47649efe684fedbf28446fd364e0f25210330cff28d2dd40d337ba",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-naofumi.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-naofumi.r.webp",
+      "bytes": 6762,
+      "sha256": "c4587b5245eb48fced1f0482a496d4bd55b28028223543cbb918ec7a1cd1a73e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-naofumi.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-naofumi.w.webp",
+      "bytes": 7904,
+      "sha256": "db52fa6fe83564f58d849822fc92c3fd0b4649972070535c1df3cd02be363a1b",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-naofumi.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-ned.e.webp",
+      "bytes": 6230,
+      "sha256": "c748aa5c54e307c62657eac583390d29c00780234dc75d6535dcb1e0172c1b60",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-ned.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-ned.ex.webp",
+      "bytes": 7714,
+      "sha256": "2eabac291434b05b1d135c1d7893c8d37bb6ee8fa9eb7aa3e070f5c829f29f7a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-ned.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-ned.passive.webp",
+      "bytes": 7462,
+      "sha256": "29018193b41af23f8c82882e4e14b8725b26521b933b98fc051b4f9b0b471625",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-ned.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-ned.q.webp",
+      "bytes": 9620,
+      "sha256": "3874b09cecda684ed75fc348d5ffe7eb9728e228f1a1f3d76ea1112c95de4326",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-ned.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-ned.r.webp",
+      "bytes": 7164,
+      "sha256": "7007608d99ca00d774bee548c82e6f0912dcc7082b31a97388abbeb55fa6a422",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-ned.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-ned.w.webp",
+      "bytes": 7290,
+      "sha256": "232516272c9e5630c982ba35a493b4d2d56d4701489db8968a5f4c2d10c4eb9d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-ned.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-noor.e.webp",
+      "bytes": 6272,
+      "sha256": "28f1c754d18ebb6f048da8f9b3a17352ba7dde956ed226ecbcfda83fced07a85",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-noor.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-noor.ex.webp",
+      "bytes": 9000,
+      "sha256": "13fd77acae105ee4bfafb98a0923743dab5aae403bc7fd3845ddf570612c6d35",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-noor.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-noor.passive.webp",
+      "bytes": 7202,
+      "sha256": "a713959de975d364e87cffc780d24191797e5b0931c87fec5ed746a16e64d713",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-noor.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-noor.q.webp",
+      "bytes": 7992,
+      "sha256": "76a04df166b3b071d9b6bcea01d128aa84ad6607d7ca335ff4bfc27a4f7a5db3",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-noor.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-noor.r.webp",
+      "bytes": 3652,
+      "sha256": "45ec006b4b9365827b3e34b816a65def7eb5232b216c4a39668e28238478ddc2",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-noor.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-noor.w.webp",
+      "bytes": 7128,
+      "sha256": "cffe40993b90fc6bdd19e4ccc9bb88a6af60736de7d6ee479ef0ecab5bc29148",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-noor.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-nube.e.webp",
+      "bytes": 8402,
+      "sha256": "67d041c05566b80d3a70b551e826ef0ca7d47d2edd454904db58567da50fd9b7",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-nube.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-nube.ex.webp",
+      "bytes": 5394,
+      "sha256": "9eb029e22c3f2f64e9bba95aa5bfe51fc9ef5f8d7d30f68b657169c5a8ddf664",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-nube.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-nube.passive.webp",
+      "bytes": 8418,
+      "sha256": "1d7b1880b6cacdf17de645899c6bb02c9539de45d4d2fc288650e6a2feb88d81",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-nube.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-nube.q.webp",
+      "bytes": 9784,
+      "sha256": "962d305d709eb6df11cd75d12b10eee31323d267e712bda7aa657d99cca77ae4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-nube.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-nube.r.webp",
+      "bytes": 7126,
+      "sha256": "4cfc65ab39bcbc4e290561d769505da0fe32d5dcd06a7def415ffba9f936dcc7",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-nube.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-nube.w.webp",
+      "bytes": 8722,
+      "sha256": "e3f6168ccd3b772489006bcb46e42170c1d41ec0d07a2416c6916ec711f78314",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-nube.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-orphen.e.webp",
+      "bytes": 9886,
+      "sha256": "ed2ee142cfd9b21a927c38302e484e56d326c74d9556f56785d741d36591e8cb",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-orphen.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-orphen.ex.webp",
+      "bytes": 4416,
+      "sha256": "d2e98e85c8eb411516b5b7329f4c9ba7b3a4016039245207ec95e23a720dafe3",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-orphen.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-orphen.passive.webp",
+      "bytes": 6718,
+      "sha256": "91adcd2d7ba3282820b3dea4a66e9e2d71529aee9abe3ba74d1aafad254876cf",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-orphen.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-orphen.q.webp",
+      "bytes": 8222,
+      "sha256": "d9e487b72432bb1ec9e5219560985810e98b381de79cf78d63e3bee5cad0ec95",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-orphen.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-orphen.r.webp",
+      "bytes": 9614,
+      "sha256": "9e30afc2d3f0b34c261a8b3d8b31b374564f805a0340a2c019b5096649eebc91",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-orphen.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-orphen.w.webp",
+      "bytes": 9444,
+      "sha256": "0dd8420740dfa8400aa398bbca1e81cf1229a38d393e037b5743e122aa3ed2a7",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-orphen.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-popp.e.webp",
+      "bytes": 5942,
+      "sha256": "122753f2321b0c0167c38c8e501ae2f3c5a8d189f725286553fdc62d4c408a1e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-popp.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-popp.ex.webp",
+      "bytes": 8244,
+      "sha256": "1df60cb4f3eded832f4a92b6f01bf9e551b9a587c7c2338215976400bd7ff5e1",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-popp.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-popp.passive.webp",
+      "bytes": 8084,
+      "sha256": "9e68c33cb342b50968bbdaa8f201bd6eacbd095ac9c094c8b6fe5632d9666656",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-popp.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-popp.q.webp",
+      "bytes": 9398,
+      "sha256": "dcec6dc40397f1b39069ded5f34e81174396fd829cfc49cf3d0a29765c434fc8",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-popp.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-popp.r.webp",
+      "bytes": 5932,
+      "sha256": "45032b78a2135e5a2d5d9b42c81c175c012d54ca000bd274d3f5c840bc9312ec",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-popp.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-popp.w.webp",
+      "bytes": 9400,
+      "sha256": "b89fa1a6c4fa560f4073480836389988da65077ebf9851f03c6fdada16d0dfb9",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-popp.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-rem.e.webp",
+      "bytes": 4440,
+      "sha256": "289cea363f1d8077b619a55f1140742ce2d7c616b1cfb25aae968ce9b1e2186e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-rem.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-rem.ex.webp",
+      "bytes": 7248,
+      "sha256": "a75a95efcf634dc2b3cbb6a36f42d758b625c22243323ba9df272dbf87f415c4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-rem.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-rem.passive.webp",
+      "bytes": 8922,
+      "sha256": "840bd13711e206bc412287fe9b6ad89a0e03708ec99ef11f933840d5b2563789",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-rem.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-rem.q.webp",
+      "bytes": 8496,
+      "sha256": "7459e2acff77f3dddcf7cb5e33d22384f853776db52e0e484126396189a8a94d",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-rem.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-rem.r.webp",
+      "bytes": 6896,
+      "sha256": "9c3dec03a2983b890185d859a8283fd8100477bb1cfae5d6c2dc37ffff1ca342",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-rem.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-rem.w.webp",
+      "bytes": 4978,
+      "sha256": "3d7eea42a64d6c4141bce406e3ca5bbf3f3ad7c4a3f8e0a10ef85e39b6816046",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-rem.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-rin.e.webp",
+      "bytes": 5948,
+      "sha256": "30ad75b48eef5056527a48715465ca019afd0294010e1cb521deb6a5de1ce03a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-rin.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-rin.ex.webp",
+      "bytes": 3624,
+      "sha256": "8b8d0df67ced25b0b4725657e2f27854393b3e49c755e6d0015c2bb6b7019af6",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-rin.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-rin.passive.webp",
+      "bytes": 3830,
+      "sha256": "afe89f1c29f0dfc023266e78809a3ce93dee79310796343359cf0fe099070273",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-rin.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-rin.q.webp",
+      "bytes": 5126,
+      "sha256": "c1664ea1983f685c79db8f565419fc2fe4722602ca85147c47f058abc1c575d5",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-rin.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-rin.r.webp",
+      "bytes": 9964,
+      "sha256": "2a2e5b16708665a7fb59212e16c171f831936c539f10af3f2e9ed0ea9e57b918",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-rin.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-rin.w.webp",
+      "bytes": 7546,
+      "sha256": "d7ee4119ed860855de83d815650dd2856babba2f7434b08dc8c4562c1e22fe5a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-rin.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-shadow.e.webp",
+      "bytes": 3392,
+      "sha256": "a5da012e2b4fd395572dd3a62c1f19e2d8da674c13a03ce8564e5da3d4c4e209",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-shadow.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-shadow.ex.webp",
+      "bytes": 10696,
+      "sha256": "e4bedbee173fea46fe16aa66fe1c23e7ddf88dd3fdb6629ec34a019fd498abb0",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-shadow.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-shadow.passive.webp",
+      "bytes": 8930,
+      "sha256": "5f4c1ffb3edfcdc906a2ef19b46c43ccd1637b6953ccaffc94f99c989a8784e0",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-shadow.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-shadow.q.webp",
+      "bytes": 5444,
+      "sha256": "34fdfba6461df39836dac5cae02e3a8c8094780811d67a210057eedb29451e05",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-shadow.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-shadow.r.webp",
+      "bytes": 8204,
+      "sha256": "ff58be4a6e77c4d4a5d90f5e5e7636c6b28d60ba8b8b94613ca97ccea0f21ccb",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-shadow.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-shadow.w.webp",
+      "bytes": 6378,
+      "sha256": "4fece6815ecc94c735a4089f063861a6c9b762d4c93883928f3dea0ac69c91df",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-shadow.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-shinchan.e.webp",
+      "bytes": 9056,
+      "sha256": "23d4d7c775ba5625477d2baade23875a7a46c53472601b4d2118ca18d8f37a07",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-shinchan.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-shinchan.ex.webp",
+      "bytes": 9188,
+      "sha256": "bf1511855832cb6fbd9ab8f25d1dcbd3b86bd8c2c4a820621908b975906caf1c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-shinchan.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-shinchan.passive.webp",
+      "bytes": 7104,
+      "sha256": "4d478758df5d88ab01ef2d404acd32eee1bdd265b000aedcd7b300f5d40fd581",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-shinchan.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-shinchan.q.webp",
+      "bytes": 7180,
+      "sha256": "68c315971f9d31dd3fa33890a899b0743fac3cbada938ef3cc9f58f378da0b37",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-shinchan.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-shinchan.r.webp",
+      "bytes": 9646,
+      "sha256": "6de02aad5983be918014db7e1adda97f43a5738a06d240a497c4ab3910c04444",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-shinchan.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-shinchan.w.webp",
+      "bytes": 7526,
+      "sha256": "595942fdf763c662eae7d691bf4d97365f818b63837d6c737fe52128424d7b46",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-shinchan.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-sinbad.e.webp",
+      "bytes": 7920,
+      "sha256": "bfa1a21fa21daa86cb81ae2fc79b95d81071ec783c62d9337273f14bb23d914c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-sinbad.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-sinbad.ex.webp",
+      "bytes": 9832,
+      "sha256": "8bd3039b91d6255d0dc1a0d88e24647ef8a9d0c28b6edc18a1d1ca5418073dd5",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-sinbad.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-sinbad.passive.webp",
+      "bytes": 6058,
+      "sha256": "1df50155457ca17e2460900d53df1e424d5483c1b0ea75cd591e4ca6c4c29961",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-sinbad.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-sinbad.q.webp",
+      "bytes": 8314,
+      "sha256": "4837d3509448c62c99f92e8edbbb8dbe7d50b7741a8b5f902ca6d0bf5858a331",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-sinbad.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-sinbad.r.webp",
+      "bytes": 6916,
+      "sha256": "e6b03202c7e3fb37898fa5bd977a40fec15133e61a73316572535c7860b47368",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-sinbad.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-sinbad.w.webp",
+      "bytes": 8384,
+      "sha256": "5c64d42ffc88721b15ea09ba7dcc05db96240409e7fec123e8cc788a6a39351b",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-sinbad.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-takopi.e.webp",
+      "bytes": 7038,
+      "sha256": "8db0e2895de474c936626d61e4e412e73d3f1843f4441f032146a710eb242150",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-takopi.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-takopi.ex.webp",
+      "bytes": 5326,
+      "sha256": "b1f6abf0c5986bd8190bc60f01432930b59370ef381eafb3f7063f96c02ee44f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-takopi.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-takopi.passive.webp",
+      "bytes": 6612,
+      "sha256": "448683864a11b1968226309a15fc739ec334fb93cb060a3e47f3618d90e1ac55",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-takopi.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-takopi.q.webp",
+      "bytes": 6924,
+      "sha256": "47c8b4d18828718ef312422d30d20fbeaff08f0b74ac5c83516447012260e9b4",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-takopi.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-takopi.r.webp",
+      "bytes": 3934,
+      "sha256": "92253db8bbe80d8eb28c57c3c6a790acd29ac2200f369750c883f6a340b0fe9c",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-takopi.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-takopi.w.webp",
+      "bytes": 5794,
+      "sha256": "1289ba0909cb5fd20c392f0029c73d56afed215572a2b33b6f773ba3905072c3",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-takopi.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-touka.e.webp",
+      "bytes": 8102,
+      "sha256": "488fc08f964a1d289d685b750e4023334f1b353065dc6243d5d1a00250075920",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-touka.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-touka.ex.webp",
+      "bytes": 10616,
+      "sha256": "b24c13298f983fcb55c94ea7df545c6612c73c8c98fc5708aa66a74921d61545",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-touka.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-touka.passive.webp",
+      "bytes": 10946,
+      "sha256": "3b11ce02e5c62f0f8807b47ef8aa16314e675e040ea043b45670f8f37e087833",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-touka.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-touka.q.webp",
+      "bytes": 8598,
+      "sha256": "2987c142a0ab25bcf0ab7370699138a9397ffa5ec915bc90a8d09cd53e42247f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-touka.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-touka.r.webp",
+      "bytes": 5612,
+      "sha256": "3821448105f13cc3c00d7a7cce478d9297f506beee0650277b23fc13f863ce61",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-touka.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-touka.w.webp",
+      "bytes": 7100,
+      "sha256": "f61623e7dbb983fe9783280bea6e88ed6714e772943c54b13e78d8f285a81b0a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-touka.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-uncle.e.webp",
+      "bytes": 8460,
+      "sha256": "8c74aca6c5f50a138daa6a4b463ca3d51f89c883106be16aad6c1a10b4164aba",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-uncle.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-uncle.ex.webp",
+      "bytes": 7626,
+      "sha256": "083288ae99550a388eb0363c6029bb0a36c3562731e0c5de6a6dacdbfcf6ad98",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-uncle.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-uncle.passive.webp",
+      "bytes": 8570,
+      "sha256": "6f1b280e010167335e5656b745b65e2de9e6c946df427e48d909ccd18858c135",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-uncle.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-uncle.q.webp",
+      "bytes": 5830,
+      "sha256": "5f725a03c5d6e246dba59b776b70057c22053383e75cb536526f841bb90c70da",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-uncle.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-uncle.r.webp",
+      "bytes": 5966,
+      "sha256": "6599137017c53222f2ca643ef6cd1b346bed52e2f391671d888a96041bd95f68",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-uncle.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-uncle.w.webp",
+      "bytes": 6772,
+      "sha256": "ca7ac5361229ea5c58cd01ea9edaeb0f40c635224f0724d511bd3bc91f033c34",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-uncle.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-yogiri.e.webp",
+      "bytes": 10358,
+      "sha256": "0c8f70584b62e179ed19fa013657a3ac8a39f0889e4dfc08d867c9658159fc97",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-yogiri.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-yogiri.ex.webp",
+      "bytes": 4282,
+      "sha256": "f8372200594f11818a0adaa256c8c06592c13e2cb9b429d7f427c67d2729b4c6",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-yogiri.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-yogiri.passive.webp",
+      "bytes": 7340,
+      "sha256": "e3c8d407afb8045ab51784f2188a81a09527d2b2b754ee16b51e96ea41b5ced6",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-yogiri.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-yogiri.q.webp",
+      "bytes": 7468,
+      "sha256": "7052edd1bddec8294fc8d94f42ae1235973ef9fde06b06dd7a078069e2e0b244",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-yogiri.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-yogiri.r.webp",
+      "bytes": 10080,
+      "sha256": "f7553d4c15535d1e0903e8d791483425d5de00a1a5f0f64d994d476b5ac9ab8a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-yogiri.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-yogiri.w.webp",
+      "bytes": 8900,
+      "sha256": "79fccf450c37049efc5cff0e8093b856a0fdf739d169cc28417b616f907ff306",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-yogiri.w",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-zenitsu.e.webp",
+      "bytes": 6962,
+      "sha256": "e2b9cb3f76bbeae6b1421e7546cb197f09b08c7193c0531b7e3003d984dc437f",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-zenitsu.e",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-zenitsu.ex.webp",
+      "bytes": 9638,
+      "sha256": "91d1475993d6faa82c83c8b4c49a31a78d24107f47624f6bc03c787c9f53d653",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-zenitsu.ex",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-zenitsu.passive.webp",
+      "bytes": 7386,
+      "sha256": "bbe1f9efd55d7d183df3b6a8aefc68d13cc82d6cd0810400d0b19eebedd6881a",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-zenitsu.passive",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-zenitsu.q.webp",
+      "bytes": 8836,
+      "sha256": "2811a3f315b73d3b9aaf067a91d04b5250ef3d84f036adbf38dd0a8a23455b3e",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-zenitsu.q",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-zenitsu.r.webp",
+      "bytes": 12036,
+      "sha256": "043d6a2180d0f5a4cf1fa13ee593e677e7ad66b823e0fe5f2c067bbc2db45217",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-zenitsu.r",
+        "bundle"
+      ]
+    },
+    {
+      "path": "assets/icons/abilities/b2-zenitsu.w.webp",
+      "bytes": 8782,
+      "sha256": "7be2772f74cbd70e209f09ccbfef7c43315c680eecb26f6a9f0ec80d746cd332",
+      "contentType": "image/webp",
+      "kind": "icons",
+      "refs": [
+        "b2-zenitsu.w",
         "bundle"
       ]
     },

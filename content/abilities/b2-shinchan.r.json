@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.833,
   "castType": "self",
   "cooldown": [
     90.0,
@@ -7,6 +7,7 @@
     90.0
   ],
   "cooldownTier": "大",
+  "provenance": "w3x-import",
   "description": "「全體一起玩鬼抓人！」\n周圍敵人受到極小傷害，並套用正式 confusion 出貨旗標；效果到期後恢復原行為。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -40,7 +41,6 @@
   "manaCostTier": "小",
   "maxRank": 3,
   "name": "全體一起玩鬼抓人",
-  "provenance": "editor-json",
   "radius": 3,
   "range": 0.0,
   "schema": "ability@1",
@@ -49,7 +49,7 @@
   "template": {
     "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.833,
       "castType": "self",
       "effects": [
         {

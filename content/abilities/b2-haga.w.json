@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.467,
   "castType": "targeted",
   "cooldown": [
     45.0,
@@ -8,6 +8,7 @@
     45.0
   ],
   "cooldownTier": "小",
+  "provenance": "w3x-import",
   "description": "「跳到有我截圖的當事人！」\n指定自己留下 camera-mark 的當事人，才瞬移到他前 1.5 單位；未標記目標不位移。跨槽不使用只認同技能來源的 markedUnit。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把敵人當重現步驟，把隊友當測試同事。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -33,7 +34,6 @@
   ],
   "maxRank": 4,
   "name": "跳到有我截圖的當事人",
-  "provenance": "editor-json",
   "radius": 3,
   "range": 6,
   "rangeTier": "中",
@@ -43,7 +43,7 @@
   "template": {
     "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "targeted",
       "effects": [
         {

@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -10,6 +10,7 @@
         15.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「八極拳催款專線！」\n八極拳小級物理打擊並給 magic-break 3 秒標記；此標記不自帶減魔抗，重點是記錄催款對象。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -36,7 +37,6 @@
       "manaCostTier": "小",
       "maxRank": 4,
       "name": "八極拳催款專線",
-      "provenance": "editor-json",
       "range": 6,
       "rangeTier": "中",
       "slot": "E",
@@ -44,7 +44,7 @@
       "template": {
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.567,
           "damage": {
             "damageTier": "小"
           },
@@ -66,7 +66,7 @@
       ]
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -75,6 +75,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「寶石預付款已扣款！」\n寶石預付款：另外支付 120 魔力，按實際支付量存入既有 nen-banked 4 秒；不足只能存實際扣掉的量。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -104,7 +105,6 @@
       ],
       "maxRank": 4,
       "name": "寶石預付款已扣款",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 0.0,
       "slot": "Q",
@@ -112,7 +112,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "self",
           "effects": [
             {
@@ -148,7 +148,7 @@
       "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 2.433,
       "castType": "targeted",
       "cooldown": [
         90.0,
@@ -156,6 +156,7 @@
         90.0
       ],
       "cooldownTier": "大",
+      "provenance": "w3x-import",
       "description": "「刷爆卡才准退款！」\n中級定向魔法；目標有催款標記，消耗它並回復自身最大魔力 12%，同時讓對方沉默 1 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -196,7 +197,6 @@
       "manaCostTier": "小",
       "maxRank": 3,
       "name": "刷爆卡才准退款",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -205,7 +205,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 2.433,
           "castType": "targeted",
           "effects": [
             {
@@ -252,7 +252,7 @@
       "radiusTier": "極小"
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.233,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -261,6 +261,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「刷卡成功請簽名！」\n小級寶石打擊，追加 nen-banked 實際儲量的 1 倍（上限 180）；擊發後清空存量並退最大魔力 1% 手續費，不能同一顆寶石無限報帳。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -300,7 +301,6 @@
       "manaCostTier": "小",
       "maxRank": 4,
       "name": "刷卡成功請簽名",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -309,7 +309,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 1.233,
           "castType": "targeted",
           "effects": [
             {
@@ -397,6 +397,7 @@
     "maxMana": 0.9581632653061187,
     "mr": 2.1118367346938776
   },
+  "msGrowthTier": "極小",
   "id": "b2-rin",
   "modelKey": "community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345",
   "name": "遠坂凜",

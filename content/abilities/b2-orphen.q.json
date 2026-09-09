@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.567,
   "castType": "targeted",
   "cooldown": [
     15.0,
@@ -8,6 +8,7 @@
     15.0
   ],
   "cooldownTier": "小",
+  "provenance": "w3x-import",
   "description": "「我放出的光之催繳函！」\n打擊敵人並施加 3 秒 DOT，每秒一跳；施法當下只回復自己一次 100 生命，不是每跳吸血。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -63,7 +64,6 @@
   "manaCostTier": "小",
   "maxRank": 4,
   "name": "我放出的光之催繳函",
-  "provenance": "editor-json",
   "range": 6,
   "rangeTier": "中",
   "schema": "ability@1",
@@ -73,7 +73,7 @@
     "contentSha256": "sha256:c76d7faa4f0ae1fc83b9f46576247f99fe4dfb785449517a122082a8d9c648cc",
     "params": {
       "apRatio": 0.2,
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "damageTier": "極小",
       "damageType": "magic",
       "durationSec": 3,

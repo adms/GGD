@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.267,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -10,6 +10,7 @@
         15.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「符咒貼上禁止聊天！」\n指定敵人施加 magic-break 與 silenced 旗標 2.5 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -28,7 +29,6 @@
       ],
       "maxRank": 4,
       "name": "符咒貼上禁止聊天",
-      "provenance": "editor-json",
       "range": 6,
       "rangeTier": "中",
       "slot": "E",
@@ -36,7 +36,7 @@
       "template": {
         "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.267,
           "status": {
             "duration": 2.5,
             "silenced": true,
@@ -54,7 +54,7 @@
       ]
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.833,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -63,6 +63,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「鬼手抓回來點名！」\n對指定敵人造成極小傷害並向自己拉近 3 單位；這是既有 knockback 拉向模式，不是空中抓取。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -91,7 +92,6 @@
       "manaCostTier": "小",
       "maxRank": 4,
       "name": "鬼手抓回來點名",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -100,7 +100,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.833,
           "castType": "targeted",
           "effects": [
             {
@@ -134,7 +134,7 @@
       "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.833,
       "castType": "self",
       "cooldown": [
         90.0,
@@ -142,7 +142,8 @@
         90.0
       ],
       "cooldownTier": "大",
-      "description": "「全班留下來補課！」\n對自身周圍半徑 2.5 的敵人造成小級範圍傷害，並施加 root 定身 1.5 秒；拉進點名圈才會命中。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
+      "provenance": "w3x-import",
+      "description": "「全班留下來補課！」\n對自身周圍半徑{{radius}} 的敵人造成小級範圍傷害，並施加 root 定身 1.5 秒；拉進點名圈才會命中。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "amount": {
@@ -175,7 +176,6 @@
       "manaCostTier": "小",
       "maxRank": 3,
       "name": "全班留下來補課",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 0.0,
       "slot": "R",
@@ -183,7 +183,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.833,
           "castType": "self",
           "effects": [
             {
@@ -222,7 +222,7 @@
       "radiusTier": "極小"
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -231,6 +231,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「老師先幫你擋著！」\n指定友軍取得 210 點全傷害護盾 3 秒；確實放在該友軍身上。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -259,7 +260,6 @@
       ],
       "maxRank": 4,
       "name": "老師先幫你擋著",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -268,7 +268,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.067,
           "castType": "targeted",
           "effects": [
             {
@@ -346,6 +346,7 @@
     "maxMana": 0.8520408163265306,
     "mr": 3.299795918367347
   },
+  "msGrowthTier": "極小",
   "id": "b2-nube",
   "modelKey": "champ.thorne",
   "name": "鵺野鳴介",

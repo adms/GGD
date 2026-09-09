@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.467,
   "castType": "self",
   "cooldown": [
     45.0,
@@ -8,6 +8,7 @@
     45.0
   ],
   "cooldownTier": "小",
+  "provenance": "w3x-import",
   "description": "「樂團加演再請一位！」\n消耗自身 rage 演奏暫態再召喚 1 具同規格代理 4 秒，W 自己的上限為 3 具；沒有演奏暫態就不能加演。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -41,7 +42,6 @@
   ],
   "maxRank": 4,
   "name": "樂團加演再請一位",
-  "provenance": "editor-json",
   "radius": 3,
   "range": 0.0,
   "schema": "ability@1",
@@ -50,7 +50,7 @@
   "template": {
     "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "self",
       "effects": [
         {

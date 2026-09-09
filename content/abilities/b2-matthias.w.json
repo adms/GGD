@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.567,
   "castType": "targeted",
   "cooldown": [
     15.0,
@@ -8,6 +8,7 @@
     15.0
   ],
   "cooldownTier": "小",
+  "provenance": "w3x-import",
   "description": "「用鉛筆也能劍術考試！」\n對指定敵人造成小級物理斬擊，護甲變化走正式傷害減免。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拿舊課本批改敵人，分數直接扣血。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -28,7 +29,6 @@
   "manaCostTier": "小",
   "maxRank": 4,
   "name": "用鉛筆也能劍術考試",
-  "provenance": "editor-json",
   "range": 6,
   "rangeTier": "中",
   "schema": "ability@1",
@@ -37,7 +37,7 @@
   "template": {
     "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "damage": {
         "damageTier": "小"
       },

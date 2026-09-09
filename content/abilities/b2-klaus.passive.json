@@ -3,6 +3,7 @@
   "cooldown": [
     0
   ],
+  "provenance": "w3x-import",
   "description": "「自動回覆我正在忙！」\n每 4 秒回復自身最大魔力 4%；是真週期事件，不是離線掛機收入。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把工作交給自動功能，自己只負責按錯確認。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [],
   "id": "b2-klaus.passive",
@@ -32,7 +33,6 @@
       }
     ]
   },
-  "provenance": "editor-json",
   "range": 0.0,
   "schema": "ability@1",
   "slot": "PASSIVE",

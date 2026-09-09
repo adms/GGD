@@ -3,6 +3,7 @@
   "cooldown": [
     0
   ],
+  "provenance": "w3x-import",
   "description": "「大家不要哭嗶！」\n同隊友軍受傷時，自己取得 90 點護盾 2 秒，每 3 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：開心道具全部誤用，但認真把隊友救回來。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [],
   "id": "b2-takopi.passive",
@@ -37,7 +38,6 @@
       }
     ]
   },
-  "provenance": "editor-json",
   "range": 0.0,
   "schema": "ability@1",
   "slot": "PASSIVE",

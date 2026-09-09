@@ -1,10 +1,11 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 1.033,
   "castType": "targeted",
   "cooldown": [
     45.0
   ],
   "cooldownTier": "大",
+  "provenance": "w3x-import",
   "description": "「謝幕後閃到你背前！」\n閃到指定敵人前 1.8 單位並打小級物理傷害；不生成假的分身。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -36,7 +37,6 @@
   "manaCostTier": "小",
   "maxRank": 1,
   "name": "謝幕後閃到你背前",
-  "provenance": "editor-json",
   "range": 6,
   "rangeTier": "中",
   "schema": "ability@1",
@@ -45,7 +45,7 @@
   "template": {
     "contentSha256": "sha256:3bbc417d5c5a3bd9a34f58eec190ecff85b9d8f07a967a022763fe51c86d3be0",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.033,
       "damage": {
         "damageTier": "小"
       },

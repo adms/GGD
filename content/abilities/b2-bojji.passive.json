@@ -3,6 +3,7 @@
   "cooldown": [
     0
   ],
+  "provenance": "w3x-import",
   "description": "「你揮空我就安心了！」\n真正閃過一次攻擊才回復自己 70 生命，每 2 秒一次；普通被打不回血。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [],
   "id": "b2-bojji.passive",
@@ -34,7 +35,6 @@
       }
     ]
   },
-  "provenance": "editor-json",
   "range": 0.0,
   "schema": "ability@1",
   "slot": "PASSIVE",

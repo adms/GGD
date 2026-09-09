@@ -3,6 +3,7 @@
   "cooldown": [
     0
   ],
+  "provenance": "w3x-import",
   "description": "「睡眠品質調查表！」\n自己受控制後取得 150 點護盾 2 秒，每 4 秒最多一次；不免疫所有威脅。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：秒殺外掛改成催眠式下班通知，不按通知的人更倒楣。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [],
   "id": "b2-yogiri.passive",
@@ -37,7 +38,6 @@
       }
     ]
   },
-  "provenance": "editor-json",
   "range": 0.0,
   "schema": "ability@1",
   "slot": "PASSIVE",

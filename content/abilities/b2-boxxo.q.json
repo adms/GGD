@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.067,
   "castType": "targeted",
   "cooldown": [
     45.0,
@@ -8,6 +8,7 @@
     45.0
   ],
   "cooldownTier": "小",
+  "provenance": "w3x-import",
   "description": "「歡迎光臨飲料附憑證！」\n指定隊友喝飲料回復 120；售出後自身獲得 moon-combo 營業憑證 4 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -38,7 +39,6 @@
   ],
   "maxRank": 4,
   "name": "歡迎光臨飲料附憑證",
-  "provenance": "editor-json",
   "radius": 3,
   "range": 6,
   "rangeTier": "中",

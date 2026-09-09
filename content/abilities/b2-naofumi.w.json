@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.467,
   "castType": "targeted",
   "cooldown": [
     45.0,
@@ -8,6 +8,7 @@
     45.0
   ],
   "cooldownTier": "小",
+  "provenance": "w3x-import",
   "description": "「憑通行證補一口血！」\n消耗該隊友的通行標記，追加 200 治療；沒有標記不兌換，先前的護盾仍按原到期時間運作。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -42,7 +43,6 @@
   ],
   "maxRank": 4,
   "name": "憑通行證補一口血",
-  "provenance": "editor-json",
   "radius": 3,
   "range": 6,
   "rangeTier": "中",
@@ -52,7 +52,7 @@
   "template": {
     "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "targeted",
       "effects": [
         {

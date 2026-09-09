@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.667,
   "castType": "self",
   "cooldown": [
     90.0,
@@ -7,6 +7,7 @@
     90.0
   ],
   "cooldownTier": "大",
+  "provenance": "w3x-import",
   "description": "「移動式背景工作！」\n自己周身執行 3 秒週期傷害，每 0.5 秒重新尋找敵人；不是替玩家自動走位。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把工作交給自動功能，自己只負責按錯確認。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -41,7 +42,6 @@
   "manaCostTier": "小",
   "maxRank": 3,
   "name": "移動式背景工作",
-  "provenance": "editor-json",
   "range": 0.0,
   "schema": "ability@1",
   "slot": "R",
@@ -51,7 +51,7 @@
     "params": {
       "anchor": "caster",
       "applyTo": "enemies",
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.667,
       "damageTier": "中",
       "damageType": "physical",
       "durationSec": 3,

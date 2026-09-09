@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.567,
   "castType": "targeted",
   "cooldown": [
     15.0,
@@ -8,6 +8,7 @@
     15.0
   ],
   "cooldownTier": "小",
+  "provenance": "w3x-import",
   "description": "「入坑紀錄蓋個章！」\n貼上 root 定身 2 秒的入坑紀錄，小級物理傷害；可被淨化。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -35,7 +36,6 @@
   "manaCostTier": "小",
   "maxRank": 4,
   "name": "入坑紀錄蓋個章",
-  "provenance": "editor-json",
   "range": 6,
   "rangeTier": "中",
   "schema": "ability@1",
@@ -44,7 +44,7 @@
   "template": {
     "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "damage": {
         "damageTier": "小"
       },

@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.567,
   "castType": "targeted",
   "cooldown": [
     15.0,
@@ -8,6 +8,7 @@
     15.0
   ],
   "cooldownTier": "小",
+  "provenance": "w3x-import",
   "description": "「工具箱灰塵遮眼！」\n小級工具打擊，沿用出貨 blind 失手率 50% 配方；不使玩家螢幕全黑。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -34,7 +35,6 @@
   "manaCostTier": "小",
   "maxRank": 4,
   "name": "工具箱灰塵遮眼",
-  "provenance": "editor-json",
   "range": 6,
   "rangeTier": "中",
   "schema": "ability@1",
@@ -43,7 +43,7 @@
   "template": {
     "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "damage": {
         "damageTier": "小"
       },

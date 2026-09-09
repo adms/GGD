@@ -243,7 +243,8 @@ function templatesFor(root: string): Map<string, TemplateDoc> {
   const map = new Map<string, TemplateDoc>();
   if (existsSync(dir)) {
     for (const f of readdirSync(dir)) {
-      if (!f.startsWith("tpl-") || !f.endsWith(".json")) continue;
+      // ⛔ 同 GH#1165：⭐ 模板不是只有 `tpl-` 開頭那一種（`hero-template.<hash>` 也是）。
+      if (!f.endsWith(".json") || f.startsWith("_")) continue;
       const t = zTemplateDoc.parse(JSON.parse(readFileSync(join(dir, f), "utf8")));
       map.set(t.id, t);
     }

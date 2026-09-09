@@ -3,6 +3,7 @@
   "cooldown": [
     0
   ],
+  "provenance": "w3x-import",
   "description": "「普攻也要開發票！」\n普攻回復最大魔力 3%，每 3 秒一次；不產生新貨幣。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [],
   "id": "b2-rin.passive",
@@ -32,7 +33,6 @@
       }
     ]
   },
-  "provenance": "editor-json",
   "range": 0.0,
   "schema": "ability@1",
   "slot": "PASSIVE",

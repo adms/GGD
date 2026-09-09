@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -10,6 +10,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「退回重寫保護欄！」\n獲得 170 點全傷害護盾 3 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拿舊課本批改敵人，分數直接扣血。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -38,7 +39,6 @@
       ],
       "maxRank": 4,
       "name": "退回重寫保護欄",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 0.0,
       "slot": "E",
@@ -46,7 +46,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.067,
           "castType": "self",
           "effects": [
             {
@@ -81,7 +81,7 @@
       "radiusTier": "極小"
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -90,6 +90,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「護甲答案扣二十分！」\n指定敵人護甲降低 35，持續 4 秒，並明列 armor-break 暫態；不新增破甲規則。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拿舊課本批改敵人，分數直接扣血。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -116,7 +117,6 @@
       ],
       "maxRank": 4,
       "name": "護甲答案扣二十分",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -125,7 +125,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "targeted",
           "effects": [
             {
@@ -158,7 +158,7 @@
       "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.033,
       "castType": "targeted",
       "cooldown": [
         90.0,
@@ -166,6 +166,7 @@
         90.0
       ],
       "cooldownTier": "大",
+      "provenance": "w3x-import",
       "description": "「期末考禁止交頭接耳！」\n對指定敵人施加 magic-break 與 silenced 旗標 3 秒，期間不能施法。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拿舊課本批改敵人，分數直接扣血。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -184,7 +185,6 @@
       ],
       "maxRank": 3,
       "name": "期末考禁止交頭接耳",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -193,7 +193,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 1.033,
           "castType": "targeted",
           "effects": [
             {
@@ -219,7 +219,7 @@
       "radiusTier": "極小"
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -228,6 +228,7 @@
         15.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「用鉛筆也能劍術考試！」\n對指定敵人造成小級物理斬擊，護甲變化走正式傷害減免。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拿舊課本批改敵人，分數直接扣血。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -248,7 +249,6 @@
       "manaCostTier": "小",
       "maxRank": 4,
       "name": "用鉛筆也能劍術考試",
-      "provenance": "editor-json",
       "range": 6,
       "rangeTier": "中",
       "slot": "W",
@@ -256,7 +256,7 @@
       "template": {
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.567,
           "damage": {
             "damageTier": "小"
           },
@@ -316,6 +316,7 @@
     "maxMana": 0.9581632653061187,
     "mr": 2.1118367346938776
   },
+  "msGrowthTier": "極小",
   "id": "b2-matthias",
   "modelKey": "champ.sela",
   "name": "馬提亞斯",

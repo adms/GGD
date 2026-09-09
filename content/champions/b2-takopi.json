@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -10,6 +10,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「開心貼紙先貼對人！」\n在指定友軍身上施加 spell-shield 貼紙 4 秒；此處只作可消耗暫態，不自帶魔法免疫。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：開心道具全部誤用，但認真把隊友救回來。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -28,7 +29,6 @@
       ],
       "maxRank": 4,
       "name": "開心貼紙先貼對人",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -37,7 +37,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "targeted",
           "effects": [
             {
@@ -62,7 +62,7 @@
       "radiusTier": "極小"
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -71,6 +71,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「和好緞帶先接回來！」\n把指定友軍搬到自己腳邊，使用現有 rallyToCaster 低弧位移；落點遵守既有合法地形。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：開心道具全部誤用，但認真把隊友救回來。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -93,7 +94,6 @@
       "manaCostTier": "小",
       "maxRank": 4,
       "name": "和好緞帶先接回來",
-      "provenance": "editor-json",
       "radius": 2.75,
       "range": 6,
       "rangeTier": "中",
@@ -102,7 +102,7 @@
       "template": {
         "contentSha256": "sha256:7687b75d1bb1945a3dc0ca45c1015ad419c38757ac6e22cbc4d740088ce70761",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "destination": "rallyToCaster",
           "travelSec": 0.1
         },
@@ -117,7 +117,7 @@
       ]
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castType": "targeted",
       "cooldown": [
         90.0,
@@ -125,6 +125,7 @@
         90.0
       ],
       "cooldownTier": "大",
+      "provenance": "w3x-import",
       "description": "「道具說明書暖心頁！」\n治療指定友軍 120 生命並清除最多 3 筆可驅散負面效果。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：開心道具全部誤用，但認真把隊友救回來。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -159,7 +160,6 @@
       ],
       "maxRank": 3,
       "name": "道具說明書暖心頁",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -220,7 +220,7 @@
       "radiusTier": "極小"
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -229,6 +229,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「抱抱罩尺寸有限嗶！」\n友軍與自己距離在 2.5 以內時，給予 200 點護盾 3 秒；遠距離時抱抱罩套不到。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：開心道具全部誤用，但認真把隊友救回來。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -262,7 +263,6 @@
       ],
       "maxRank": 4,
       "name": "抱抱罩尺寸有限嗶",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -271,7 +271,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.067,
           "castType": "targeted",
           "effects": [
             {
@@ -354,6 +354,7 @@
     "maxMana": 6.564285714285716,
     "mr": 2.1118367346938776
   },
+  "msGrowthTier": "極小",
   "id": "b2-takopi",
   "modelKey": "community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a",
   "name": "章魚嗶",

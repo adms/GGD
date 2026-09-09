@@ -78,7 +78,8 @@ export async function build(repoRoot) {
   const templates = new Map(); // tplId -> { file, modelKey, path, count, … , numericParams }
   const tplDir = join(repoRoot, "content/ability-templates");
   for (const f of readdirSync(tplDir)) {
-    if (!f.startsWith("tpl-") || !f.endsWith(".json")) continue;
+    // ⛔ 同 GH#1165：⭐ 模板不是只有 `tpl-` 開頭那一種（`hero-template.<hash>` 也是）。
+    if (!f.endsWith(".json") || f.startsWith("_")) continue;
     const doc = readJson(join(tplDir, f));
     const params =
       doc.params && typeof doc.params === "object" && !Array.isArray(doc.params) ? doc.params : {};

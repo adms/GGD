@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 1.233,
   "castType": "self",
   "cooldown": [
     45.0,
@@ -8,6 +8,7 @@
     45.0
   ],
   "cooldownTier": "小",
+  "provenance": "w3x-import",
   "description": "「試藥員本人先簽到！」\n試吃：自身 poison 降低受療為 50% 持續 3 秒，另有每秒極小真傷共 3 秒。這是虛構藥劑，沒有現實配方。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -40,7 +41,6 @@
   "manaCostTier": "小",
   "maxRank": 4,
   "name": "試藥員本人先簽到",
-  "provenance": "editor-json",
   "radius": 3,
   "range": 0.0,
   "schema": "ability@1",
@@ -49,7 +49,7 @@
   "template": {
     "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.233,
       "castType": "self",
       "effects": [
         {

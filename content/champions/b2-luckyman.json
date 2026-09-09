@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -10,6 +10,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「剛好有張技能保單！」\n增加普攻及技能迴避機會 3 秒，仍受正式機率上限限制，真傷未獲豁免。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -29,7 +30,6 @@
       ],
       "maxRank": 4,
       "name": "剛好有張技能保單",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 0.0,
       "slot": "E",
@@ -37,7 +37,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "self",
           "effects": [
             {
@@ -63,7 +63,7 @@
       "radiusTier": "極小"
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -72,6 +72,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「剛好香蕉皮滑了一下！」\n增加普攻迴避機會 3 秒；填入 1 仍受正式 evasion 上限約束，不是保證無敵，也不閃技能。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -91,7 +92,6 @@
       ],
       "maxRank": 4,
       "name": "剛好香蕉皮滑了一下",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 0.0,
       "slot": "Q",
@@ -99,7 +99,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "self",
           "effects": [
             {
@@ -125,7 +125,7 @@
       "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.833,
       "castType": "self",
       "cooldown": [
         90.0,
@@ -133,6 +133,7 @@
         90.0
       ],
       "cooldownTier": "大",
+      "provenance": "w3x-import",
       "description": "「剛好天上掉贈品！」\n等權抽取回復 150 生命或 180 點護盾 3 秒；結果由種子重現，不挑成功樣本冒稱必定保命。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -187,7 +188,6 @@
       ],
       "maxRank": 3,
       "name": "剛好天上掉贈品",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 0.0,
       "slot": "R",
@@ -195,7 +195,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.833,
           "castType": "self",
           "effects": [
             {
@@ -257,7 +257,7 @@
       "radiusTier": "極小"
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -266,6 +266,7 @@
         15.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「剛好拳頭在這裡！」\n單體小級物理打擊；幸運不等於所有攻擊必中。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -286,7 +287,6 @@
       "manaCostTier": "小",
       "maxRank": 4,
       "name": "剛好拳頭在這裡",
-      "provenance": "editor-json",
       "range": 6,
       "rangeTier": "中",
       "slot": "W",
@@ -294,7 +294,7 @@
       "template": {
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.567,
           "damage": {
             "damageTier": "小"
           },
@@ -354,6 +354,7 @@
     "maxMana": 0.9209183673469388,
     "mr": 5.279591836734694
   },
+  "msGrowthTier": "極小",
   "id": "b2-luckyman",
   "modelKey": "champ.thorne",
   "name": "幸運超人",

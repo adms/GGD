@@ -1,10 +1,10 @@
 {
   "schema": "review-queue@1",
   "counts": {
-    "assets": 1249,
-    "tier0": 906,
+    "assets": 1250,
+    "tier0": 896,
     "reviewed": 0,
-    "pending": 343,
+    "pending": 354,
     "voice": {
       "champions": 51,
       "status": "measurement-stale",
@@ -14,6 +14,211 @@
     }
   },
   "items": [
+    {
+      "id": "fx.prim.arcane.pulse-sm",
+      "kind": "vfx",
+      "hash": "0b0cc1ed8cbd80ab301080ff0cf18d7035e95d64",
+      "risk": 128,
+      "reasons": [
+        "98 支上架技能引用（R/EX ×2 加權後 risk 128）",
+        "未審"
+      ],
+      "refs": [
+        "b2-aladdin.e",
+        "b2-aladdin.q",
+        "b2-aladdin.w",
+        "b2-albus.ex",
+        "b2-albus.w",
+        "b2-bojji.q",
+        "b2-bojji.r",
+        "b2-boxxo.r",
+        "b2-elma.e",
+        "b2-elma.q",
+        "b2-elma.w",
+        "b2-fushi.q",
+        "b2-fushi.r",
+        "b2-goblin.ex",
+        "b2-goblin.r",
+        "b2-goblin.w",
+        "b2-guts.ex",
+        "b2-guts.w",
+        "b2-haga.e",
+        "b2-haga.q",
+        "b2-haga.r",
+        "b2-haga.w",
+        "b2-kaede.e",
+        "b2-kaede.ex",
+        "b2-kaede.q",
+        "b2-kaiji.e",
+        "b2-kaiji.q",
+        "b2-kaiji.r",
+        "b2-kaiji.w",
+        "b2-keyaru.e",
+        "b2-keyaru.ex",
+        "b2-kisaragi.ex",
+        "b2-kisaragi.q",
+        "b2-kisaragi.w",
+        "b2-klaus.ex",
+        "b2-klaus.q",
+        "b2-kumoko.ex",
+        "b2-kumoko.q",
+        "b2-kumoko.w",
+        "b2-luckyman.e",
+        "b2-luckyman.q",
+        "b2-luckyman.r",
+        "b2-makoto.q",
+        "b2-maomao.e",
+        "b2-maomao.ex",
+        "b2-maomao.q",
+        "b2-maple.e",
+        "b2-maple.q",
+        "b2-maple.r",
+        "b2-maple.w",
+        "b2-matthias.e",
+        "b2-matthias.ex",
+        "b2-matthias.q",
+        "b2-matthias.r",
+        "b2-misery.ex",
+        "b2-misery.q",
+        "b2-misery.r",
+        "b2-misery.w",
+        "b2-naofumi.e",
+        "b2-naofumi.ex",
+        "b2-ned.e",
+        "b2-noor.e",
+        "b2-noor.ex",
+        "b2-noor.q",
+        "b2-noor.r",
+        "b2-nube.e",
+        "b2-nube.q",
+        "b2-orphen.e",
+        "b2-orphen.w",
+        "b2-rem.e",
+        "b2-rem.r",
+        "b2-rin.q",
+        "b2-shadow.e",
+        "b2-shadow.q",
+        "b2-shadow.w",
+        "b2-shinchan.ex",
+        "b2-shinchan.w",
+        "b2-sinbad.w",
+        "b2-touka.r",
+        "b2-uncle.e",
+        "b2-uncle.q",
+        "b2-uncle.r",
+        "b2-uncle.w",
+        "b2-yogiri.ex",
+        "b2-yogiri.q",
+        "b2-yogiri.r",
+        "b2-yogiri.w",
+        "b2-zenitsu.q",
+        "community-review-01-20260907.passive",
+        "community-review-07-20260907.passive",
+        "community-review-29-20260907.passive",
+        "godie-e00l.q",
+        "godie-huth.q",
+        "godie-n00b.e",
+        "godie-nbbc.q",
+        "godie-nsjs.e",
+        "godie-o02l.w",
+        "godie-udea.q"
+      ]
+    },
+    {
+      "id": "fx.prim.wind.pulse-sm",
+      "kind": "vfx",
+      "hash": "371b930a7cc17fd8aab851be3f5756b1748c3dd0",
+      "risk": 57,
+      "reasons": [
+        "38 支上架技能引用（R/EX ×2 加權後 risk 57）",
+        "未審"
+      ],
+      "refs": [
+        "b2-aladdin.ex",
+        "b2-albus.r",
+        "b2-bojji.ex",
+        "b2-boxxo.ex",
+        "b2-boxxo.q",
+        "b2-boxxo.w",
+        "b2-elma.ex",
+        "b2-fushi.e",
+        "b2-fushi.w",
+        "b2-guts.e",
+        "b2-haga.ex",
+        "b2-kaiji.ex",
+        "b2-keyaru.q",
+        "b2-keyaru.r",
+        "b2-keyaru.w",
+        "b2-makoto.ex",
+        "b2-maomao.r",
+        "b2-maomao.w",
+        "b2-maple.ex",
+        "b2-naofumi.q",
+        "b2-naofumi.r",
+        "b2-naofumi.w",
+        "b2-nube.ex",
+        "b2-nube.w",
+        "b2-orphen.ex",
+        "b2-popp.ex",
+        "b2-rin.ex",
+        "b2-shinchan.q",
+        "b2-sinbad.ex",
+        "b2-sinbad.q",
+        "b2-takopi.e",
+        "b2-takopi.ex",
+        "b2-takopi.r",
+        "b2-takopi.w",
+        "community-review-14-20260907.passive",
+        "community-review-27-20260907.passive",
+        "community-review-31-20260907.passive",
+        "community-review-34-20260907.passive"
+      ]
+    },
+    {
+      "id": "fx.prim.physical.slash",
+      "kind": "vfx",
+      "hash": "62057b1f151c3c43cdf1c3785284548a3e5e2996",
+      "risk": 45,
+      "reasons": [
+        "33 支上架技能引用（R/EX ×2 加權後 risk 45）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-04-20260907.ex",
+        "community-review-04-20260907.q",
+        "community-review-04-20260907.r",
+        "community-review-08-20260907.ex",
+        "community-review-08-20260907.q",
+        "community-review-12-20260907.e",
+        "community-review-12-20260907.q",
+        "community-review-13-20260907.ex",
+        "community-review-15-20260907.q",
+        "community-review-19-20260907.ex",
+        "community-review-19-20260907.q",
+        "community-review-19-20260907.r",
+        "community-review-23-20260907.ex",
+        "community-review-26-20260907.r",
+        "community-review-26-20260907.w",
+        "community-review-28-20260907.e",
+        "community-review-28-20260907.ex",
+        "community-review-28-20260907.q",
+        "community-review-28-20260907.r",
+        "community-review-36-20260907.e",
+        "godie-e00r.w",
+        "godie-e00w.q",
+        "godie-h01n.w",
+        "godie-h01u.w",
+        "godie-hapm.e",
+        "godie-hart.q",
+        "godie-n01c.r",
+        "godie-nbbc.r",
+        "godie-ofar.w",
+        "godie-u00j.w",
+        "godie-u01u.w",
+        "godie-umal.e",
+        "godie-umal.q"
+      ]
+    },
     {
       "id": "imported.heromusashimiyamoto",
       "kind": "model",
@@ -52,6 +257,41 @@
       ]
     },
     {
+      "id": "fx.prim.arcane.dash",
+      "kind": "vfx",
+      "hash": "1256b9ab7ccd1eca08b42512e45fdded5dd34860",
+      "risk": 31,
+      "reasons": [
+        "23 支上架技能引用（R/EX ×2 加權後 risk 31）",
+        "未審"
+      ],
+      "refs": [
+        "b2-albus.e",
+        "b2-bojji.e",
+        "b2-boxxo.e",
+        "b2-fushi.ex",
+        "b2-guts.r",
+        "b2-kisaragi.e",
+        "b2-klaus.e",
+        "b2-kumoko.e",
+        "b2-luckyman.ex",
+        "b2-misery.e",
+        "b2-ned.ex",
+        "b2-ned.q",
+        "b2-orphen.r",
+        "b2-popp.e",
+        "b2-rem.ex",
+        "b2-shinchan.e",
+        "b2-sinbad.e",
+        "b2-takopi.q",
+        "b2-touka.ex",
+        "b2-touka.w",
+        "b2-yogiri.e",
+        "b2-zenitsu.ex",
+        "godie-ogrh.w"
+      ]
+    },
+    {
       "id": "fx.prim.void.explosion-lg",
       "kind": "vfx",
       "hash": "597ab120e7e9379b574f428a552c0a839d516707",
@@ -76,6 +316,65 @@
         "godie-ubal.ex",
         "godie-uvng.e",
         "godie-uvng.ex"
+      ]
+    },
+    {
+      "id": "fx.prim.arcane.bolt",
+      "kind": "vfx",
+      "hash": "13ccd1635e8ddb9c55c62b6fb99b290862490f23",
+      "risk": 26,
+      "reasons": [
+        "16 支上架技能引用（R/EX ×2 加權後 risk 22）",
+        "抱怨族「閃電/雷電」+4",
+        "未審"
+      ],
+      "refs": [
+        "b2-aladdin.r",
+        "b2-guts.q",
+        "b2-kaede.w",
+        "b2-klaus.w",
+        "b2-ned.r",
+        "b2-orphen.q",
+        "b2-popp.r",
+        "b2-rem.q",
+        "b2-rin.w",
+        "b2-shadow.r",
+        "b2-sinbad.r",
+        "b2-uncle.ex",
+        "godie-e00s.q",
+        "godie-e010.q",
+        "godie-h01o.q",
+        "godie-u00o.e"
+      ],
+      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
+    },
+    {
+      "id": "fx.prim.arcane.nova",
+      "kind": "vfx",
+      "hash": "96b667bde804641b42a2d3d8fe8138fdabdc1105",
+      "risk": 26,
+      "reasons": [
+        "17 支上架技能引用（R/EX ×2 加權後 risk 26）",
+        "未審"
+      ],
+      "refs": [
+        "b2-goblin.q",
+        "b2-kaede.r",
+        "b2-klaus.r",
+        "b2-kumoko.r",
+        "b2-makoto.e",
+        "b2-makoto.r",
+        "b2-nube.r",
+        "b2-rin.r",
+        "b2-shinchan.r",
+        "b2-touka.q",
+        "community-review-07-20260907.q",
+        "community-review-07-20260907.r",
+        "community-review-29-20260907.r",
+        "godie-h02u.e",
+        "godie-h02v.e",
+        "godie-hgam.w",
+        "godie-o02l.e"
       ]
     },
     {
@@ -123,6 +422,62 @@
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
     {
+      "id": "fx.prim.physical.beam",
+      "kind": "vfx",
+      "hash": "6c48fc5bdf8424693c76e71cecaa8302b3ae7a7d",
+      "risk": 20,
+      "reasons": [
+        "14 支上架技能引用（R/EX ×2 加權後 risk 16）",
+        "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
+        "未審"
+      ],
+      "refs": [
+        "community-review-04-20260907.w",
+        "community-review-13-20260907.q",
+        "community-review-13-20260907.r",
+        "community-review-23-20260907.q",
+        "community-review-36-20260907.q",
+        "community-review-36-20260907.r",
+        "godie-e001.e",
+        "godie-h00l.w",
+        "godie-h01u.e",
+        "godie-hart.e",
+        "godie-hpb1.e",
+        "godie-u00l.q",
+        "godie-u00n.w",
+        "godie-u00v.q"
+      ],
+      "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
+    },
+    {
+      "id": "fx.prim.physical.pulse",
+      "kind": "vfx",
+      "hash": "967717f6f6d6155030e927449b1a0849421a3a83",
+      "risk": 20,
+      "reasons": [
+        "16 支上架技能引用（R/EX ×2 加權後 risk 20）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-04-20260907.e",
+        "community-review-08-20260907.e",
+        "community-review-12-20260907.ex",
+        "community-review-13-20260907.w",
+        "community-review-15-20260907.e",
+        "community-review-15-20260907.ex",
+        "community-review-19-20260907.w",
+        "community-review-23-20260907.e",
+        "community-review-23-20260907.r",
+        "community-review-23-20260907.w",
+        "community-review-26-20260907.e",
+        "community-review-28-20260907.w",
+        "community-review-36-20260907.ex",
+        "community-review-36-20260907.w",
+        "godie-hapm.q",
+        "godie-u01u.passive"
+      ]
+    },
+    {
       "id": "fx.prim.fire.explosion-lg",
       "kind": "vfx",
       "hash": "21159beff2b69ff348c465b1e92c36a3a25a0a70",
@@ -144,6 +499,80 @@
         "godie-o00l.r",
         "godie-u00h.ex"
       ]
+    },
+    {
+      "id": "fx.prim.holy.pulse",
+      "kind": "vfx",
+      "hash": "f6276e1a35b63133f1e98a90e55fe5e0ed6b625a",
+      "risk": 18,
+      "reasons": [
+        "15 支上架技能引用（R/EX ×2 加權後 risk 18）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-06-20260907.e",
+        "community-review-16-20260907.r",
+        "community-review-16-20260907.w",
+        "community-review-18-20260907.e",
+        "community-review-21-20260907.e",
+        "community-review-21-20260907.ex",
+        "community-review-21-20260907.q",
+        "community-review-21-20260907.w",
+        "community-review-37-20260907.e",
+        "community-review-37-20260907.ex",
+        "godie-etyr.w",
+        "godie-h00l.e",
+        "godie-hvwd.passive",
+        "godie-hvwd.w",
+        "godie-ogld.q"
+      ]
+    },
+    {
+      "id": "fx.prim.lightning.nova",
+      "kind": "vfx",
+      "hash": "b9bdfd8afc0a8996500f7ec0ea449ba5304b74dc",
+      "risk": 18,
+      "reasons": [
+        "10 支上架技能引用（R/EX ×2 加權後 risk 14）",
+        "抱怨族「閃電/雷電」+4",
+        "未審"
+      ],
+      "refs": [
+        "b2-zenitsu.r",
+        "community-review-01-20260907.r",
+        "community-review-05-20260907.r",
+        "community-review-24-20260907.ex",
+        "community-review-24-20260907.q",
+        "godie-e00w.e",
+        "godie-o00k.e",
+        "godie-o00k.q",
+        "godie-o02l.q",
+        "godie-ofar.q"
+      ],
+      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
+    },
+    {
+      "id": "fx.prim.lightning.beam",
+      "kind": "vfx",
+      "hash": "a36b893a906f941111d65290ae04c1febca9b42e",
+      "risk": 17,
+      "reasons": [
+        "8 支上架技能引用（R/EX ×2 加權後 risk 9）",
+        "抱怨族「閃電/雷電」+4",
+        "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
+        "未審"
+      ],
+      "refs": [
+        "community-review-05-20260907.q",
+        "community-review-20-20260907.q",
+        "community-review-20-20260907.r",
+        "godie-e00w.w",
+        "godie-edem.e",
+        "godie-edem.w",
+        "godie-n01c.w",
+        "godie-o00k.w"
+      ],
+      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
     {
       "id": "explosion",
@@ -169,6 +598,33 @@
       ]
     },
     {
+      "id": "fx.prim.arcane.slash",
+      "kind": "vfx",
+      "hash": "cf110fa189db3e160b97129522bacf0f35e5838d",
+      "risk": 16,
+      "reasons": [
+        "15 支上架技能引用（R/EX ×2 加權後 risk 16）",
+        "未審"
+      ],
+      "refs": [
+        "b2-albus.q",
+        "b2-bojji.w",
+        "b2-elma.r",
+        "b2-goblin.e",
+        "b2-luckyman.w",
+        "b2-matthias.w",
+        "b2-ned.w",
+        "b2-noor.w",
+        "b2-popp.q",
+        "b2-rem.w",
+        "b2-rin.e",
+        "b2-touka.e",
+        "b2-zenitsu.e",
+        "community-review-07-20260907.w",
+        "godie-h01o.w"
+      ]
+    },
+    {
       "id": "fx.prim.ki.beam-lg",
       "kind": "vfx",
       "hash": "3220adff717a822a29de5f5c0ffca582fdcf84a9",
@@ -187,6 +643,57 @@
         "godie-osam.r"
       ],
       "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
+    },
+    {
+      "id": "fx.prim.void.pulse",
+      "kind": "vfx",
+      "hash": "09f202ef6d7aa3316b6f3ade09331fa9869de076",
+      "risk": 16,
+      "reasons": [
+        "14 支上架技能引用（R/EX ×2 加權後 risk 16）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-10-20260907.e",
+        "community-review-17-20260907.e",
+        "community-review-22-20260907.e",
+        "community-review-22-20260907.ex",
+        "community-review-22-20260907.r",
+        "community-review-32-20260907.e",
+        "godie-emns.passive",
+        "godie-emns.w",
+        "godie-o00l.passive",
+        "godie-osam.passive",
+        "godie-u00j.e",
+        "godie-u00l.passive",
+        "godie-u010.passive",
+        "godie-umal.passive"
+      ]
+    },
+    {
+      "id": "fx.prim.wind.slash",
+      "kind": "vfx",
+      "hash": "b8fabf28f66aa2c7dff19b50a731da15b2a449c6",
+      "risk": 16,
+      "reasons": [
+        "13 支上架技能引用（R/EX ×2 加權後 risk 16）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-14-20260907.q",
+        "community-review-14-20260907.w",
+        "community-review-27-20260907.ex",
+        "community-review-27-20260907.q",
+        "community-review-31-20260907.ex",
+        "community-review-31-20260907.q",
+        "community-review-34-20260907.e",
+        "community-review-34-20260907.ex",
+        "community-review-34-20260907.q",
+        "godie-h00l.q",
+        "godie-osam.q",
+        "godie-osam.w",
+        "godie-u00h.q"
+      ]
     },
     {
       "id": "wc3.crushingwavecaster1",
@@ -252,28 +759,50 @@
       ]
     },
     {
-      "id": "fx.prim.physical.slash",
+      "id": "fx.prim.lightning.pulse",
       "kind": "vfx",
-      "hash": "62057b1f151c3c43cdf1c3785284548a3e5e2996",
-      "risk": 15,
+      "hash": "b5d8148cece7017c0a6b8d5d0f53e4cbc75bd095",
+      "risk": 14,
       "reasons": [
-        "13 支上架技能引用（R/EX ×2 加權後 risk 15）",
+        "7 支上架技能引用（R/EX ×2 加權後 risk 10）",
+        "抱怨族「閃電/雷電」+4",
         "未審"
       ],
       "refs": [
-        "godie-e00r.w",
-        "godie-e00w.q",
-        "godie-h01n.w",
-        "godie-h01u.w",
-        "godie-hapm.e",
-        "godie-hart.q",
-        "godie-n01c.r",
-        "godie-nbbc.r",
-        "godie-ofar.w",
-        "godie-u00j.w",
-        "godie-u01u.w",
-        "godie-umal.e",
-        "godie-umal.q"
+        "community-review-05-20260907.e",
+        "community-review-05-20260907.ex",
+        "community-review-20-20260907.e",
+        "community-review-20-20260907.ex",
+        "community-review-24-20260907.e",
+        "community-review-24-20260907.r",
+        "godie-ofar.e"
+      ],
+      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
+    },
+    {
+      "id": "fx.prim.physical.pulse-sm",
+      "kind": "vfx",
+      "hash": "e81c798123442088b59227213d0a363c525de391",
+      "risk": 14,
+      "reasons": [
+        "14 支上架技能引用（R/EX ×2 加權後 risk 14）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-04-20260907.passive",
+        "community-review-08-20260907.passive",
+        "community-review-12-20260907.passive",
+        "community-review-13-20260907.passive",
+        "community-review-15-20260907.passive",
+        "community-review-19-20260907.passive",
+        "community-review-23-20260907.passive",
+        "community-review-26-20260907.passive",
+        "community-review-28-20260907.passive",
+        "community-review-36-20260907.passive",
+        "godie-e00x.e",
+        "godie-hpb1.q",
+        "godie-hpb1.w",
+        "godie-u00l.w"
       ]
     },
     {
@@ -296,24 +825,68 @@
       ]
     },
     {
-      "id": "fx.prim.lightning.beam",
+      "id": "fx.prim.void.slash",
       "kind": "vfx",
-      "hash": "a36b893a906f941111d65290ae04c1febca9b42e",
+      "hash": "2e238c2a55516e94e75c37ec22655a46f99d6a57",
+      "risk": 14,
+      "reasons": [
+        "11 支上架技能引用（R/EX ×2 加權後 risk 14）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-10-20260907.q",
+        "community-review-10-20260907.r",
+        "community-review-10-20260907.w",
+        "community-review-17-20260907.q",
+        "community-review-22-20260907.q",
+        "community-review-32-20260907.ex",
+        "community-review-32-20260907.q",
+        "community-review-32-20260907.r",
+        "godie-hjai.e",
+        "godie-u01u.e",
+        "godie-udre.e"
+      ]
+    },
+    {
+      "id": "fx.prim.holy.beam",
+      "kind": "vfx",
+      "hash": "c157551a36e06c53eb37acb94d74837ae0047d8d",
       "risk": 13,
       "reasons": [
-        "5 支上架技能引用（R/EX ×2 加權後 risk 5）",
-        "抱怨族「閃電/雷電」+4",
+        "6 支上架技能引用（R/EX ×2 加權後 risk 9）",
         "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
         "未審"
       ],
       "refs": [
-        "godie-e00w.w",
-        "godie-edem.e",
-        "godie-edem.w",
-        "godie-n01c.w",
-        "godie-o00k.w"
+        "community-review-06-20260907.r",
+        "community-review-06-20260907.w",
+        "community-review-16-20260907.ex",
+        "community-review-16-20260907.q",
+        "community-review-18-20260907.r",
+        "godie-hvwd.q"
       ],
-      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
+      "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
+    },
+    {
+      "id": "fx.prim.wind.pulse",
+      "kind": "vfx",
+      "hash": "98f93e7b1f8fa13ede57d98bf73bd891e9cddd8e",
+      "risk": 13,
+      "reasons": [
+        "9 支上架技能引用（R/EX ×2 加權後 risk 13）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-14-20260907.e",
+        "community-review-14-20260907.r",
+        "community-review-27-20260907.r",
+        "community-review-27-20260907.w",
+        "community-review-31-20260907.e",
+        "community-review-31-20260907.r",
+        "community-review-34-20260907.r",
+        "godie-emfr.w",
+        "godie-udre.passive"
+      ]
     },
     {
       "id": "fx.prim.arcane.pulse-lg",
@@ -348,28 +921,6 @@
         "godie-e00l.ex",
         "godie-h00l.ex",
         "godie-hart.ex"
-      ],
-      "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
-    },
-    {
-      "id": "fx.prim.physical.beam",
-      "kind": "vfx",
-      "hash": "6c48fc5bdf8424693c76e71cecaa8302b3ae7a7d",
-      "risk": 12,
-      "reasons": [
-        "8 支上架技能引用（R/EX ×2 加權後 risk 8）",
-        "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
-        "未審"
-      ],
-      "refs": [
-        "godie-e001.e",
-        "godie-h00l.w",
-        "godie-h01u.e",
-        "godie-hart.e",
-        "godie-hpb1.e",
-        "godie-u00l.q",
-        "godie-u00n.w",
-        "godie-u00v.q"
       ],
       "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
     },
@@ -413,6 +964,109 @@
       ]
     },
     {
+      "id": "fx.prim.arcane.pulse",
+      "kind": "vfx",
+      "hash": "ba776efb6efd6632c5b2bdb40b942ca325c96df4",
+      "risk": 11,
+      "reasons": [
+        "9 支上架技能引用（R/EX ×2 加權後 risk 11）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-01-20260907.e",
+        "community-review-07-20260907.ex",
+        "community-review-29-20260907.ex",
+        "community-review-29-20260907.w",
+        "godie-emfr.passive",
+        "godie-huth.w",
+        "godie-hvsh.w",
+        "godie-n00b.w",
+        "godie-o00l.e"
+      ]
+    },
+    {
+      "id": "fx.prim.ice.pulse-sm",
+      "kind": "vfx",
+      "hash": "26093227e443ce6bc72e2fdde5d38ae1f64cb2ca",
+      "risk": 11,
+      "reasons": [
+        "9 支上架技能引用（R/EX ×2 加權後 risk 11）",
+        "未審"
+      ],
+      "refs": [
+        "b2-popp.w",
+        "community-review-11-20260907.e",
+        "community-review-11-20260907.ex",
+        "community-review-11-20260907.passive",
+        "community-review-11-20260907.w",
+        "community-review-35-20260907.e",
+        "community-review-35-20260907.ex",
+        "community-review-35-20260907.passive",
+        "community-review-35-20260907.w"
+      ]
+    },
+    {
+      "id": "fx.prim.lightning.slash",
+      "kind": "vfx",
+      "hash": "66256d030343021d5690071276d31d802ace9b12",
+      "risk": 11,
+      "reasons": [
+        "5 支上架技能引用（R/EX ×2 加權後 risk 7）",
+        "抱怨族「閃電/雷電」+4",
+        "未審"
+      ],
+      "refs": [
+        "b2-orphen.r",
+        "b2-shadow.ex",
+        "b2-zenitsu.w",
+        "community-review-20-20260907.w",
+        "godie-nbbc.w"
+      ],
+      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
+    },
+    {
+      "id": "fx.prim.void.nova",
+      "kind": "vfx",
+      "hash": "bf8e30f232451802e384bd708c285148c64227a4",
+      "risk": 11,
+      "reasons": [
+        "7 支上架技能引用（R/EX ×2 加權後 risk 11）",
+        "未審"
+      ],
+      "refs": [
+        "b2-kisaragi.r",
+        "community-review-10-20260907.ex",
+        "community-review-17-20260907.ex",
+        "community-review-17-20260907.r",
+        "community-review-32-20260907.w",
+        "godie-e00n.e",
+        "godie-zombiex.q"
+      ]
+    },
+    {
+      "id": "fx.prim.void.pulse-sm",
+      "kind": "vfx",
+      "hash": "db61f7947a5aa4180575b343d4c0eb297c947181",
+      "risk": 11,
+      "reasons": [
+        "11 支上架技能引用（R/EX ×2 加權後 risk 11）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-10-20260907.passive",
+        "community-review-17-20260907.passive",
+        "community-review-22-20260907.passive",
+        "community-review-32-20260907.passive",
+        "godie-e001.q",
+        "godie-e00n.q",
+        "godie-emns.q",
+        "godie-h01n.q",
+        "godie-o030.q",
+        "godie-orkn.q",
+        "godie-zombiex.passive"
+      ]
+    },
+    {
       "id": "imported.blackhole",
       "kind": "model",
       "hash": "b544c9801e9d893f6f5c620121a2abbd2d06a252",
@@ -429,6 +1083,44 @@
         "godie-u010.ex",
         "godie-uvng.e",
         "godie-uvng.ex"
+      ]
+    },
+    {
+      "id": "fx.prim.fire.beam",
+      "kind": "vfx",
+      "hash": "0be68d8b449e23ef5958242cb2c7683f70509b7b",
+      "risk": 10,
+      "reasons": [
+        "5 支上架技能引用（R/EX ×2 加權後 risk 6）",
+        "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
+        "未審"
+      ],
+      "refs": [
+        "community-review-03-20260907.w",
+        "community-review-35-20260907.r",
+        "godie-h020.e",
+        "godie-n01c.e",
+        "godie-nbbc.e"
+      ],
+      "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
+    },
+    {
+      "id": "fx.prim.fire.slash",
+      "kind": "vfx",
+      "hash": "8a9e87e42fddd093aa579294b549f44db1a52115",
+      "risk": 10,
+      "reasons": [
+        "7 支上架技能引用（R/EX ×2 加權後 risk 10）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-02-20260907.e",
+        "community-review-02-20260907.ex",
+        "community-review-02-20260907.r",
+        "community-review-03-20260907.e",
+        "community-review-03-20260907.r",
+        "godie-e008.q",
+        "godie-u00h.w"
       ]
     },
     {
@@ -464,6 +1156,28 @@
         "godie-etyr.r",
         "godie-hpb1.r",
         "godie-o02p.r"
+      ]
+    },
+    {
+      "id": "fx.prim.ki.pulse-sm",
+      "kind": "vfx",
+      "hash": "9842233879a6a3bf8f597ada1e5ffe9a1ec7eb82",
+      "risk": 10,
+      "reasons": [
+        "10 支上架技能引用（R/EX ×2 加權後 risk 10）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-25-20260907.passive",
+        "godie-e007.q",
+        "godie-ewar.e",
+        "godie-ewar.w",
+        "godie-o00x.w",
+        "godie-ogrh.e",
+        "godie-u034.q",
+        "godie-u034.w",
+        "godie-ucrl.q",
+        "godie-ucrl.w"
       ]
     },
     {
@@ -536,44 +1250,78 @@
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
     {
-      "id": "fx.prim.ki.pulse-sm",
+      "id": "fx.prim.blood.pulse-sm",
       "kind": "vfx",
-      "hash": "9842233879a6a3bf8f597ada1e5ffe9a1ec7eb82",
+      "hash": "fb6d0075b61b7991116bd6255cfb9505fc38e9e8",
       "risk": 9,
       "reasons": [
-        "9 支上架技能引用（R/EX ×2 加權後 risk 9）",
+        "7 支上架技能引用（R/EX ×2 加權後 risk 9）",
         "未審"
       ],
       "refs": [
-        "godie-e007.q",
-        "godie-ewar.e",
-        "godie-ewar.w",
-        "godie-o00x.w",
-        "godie-ogrh.e",
-        "godie-u034.q",
-        "godie-u034.w",
-        "godie-ucrl.q",
-        "godie-ucrl.w"
+        "community-review-33-20260907.ex",
+        "community-review-33-20260907.passive",
+        "community-review-33-20260907.q",
+        "community-review-33-20260907.r",
+        "community-review-33-20260907.w",
+        "godie-n01g.w",
+        "godie-u00o.passive"
       ]
     },
     {
-      "id": "fx.prim.lightning.nova",
+      "id": "fx.prim.ice.nova",
       "kind": "vfx",
-      "hash": "b9bdfd8afc0a8996500f7ec0ea449ba5304b74dc",
+      "hash": "809a89dae62cc8b4a261512ca3b9af909a898eec",
       "risk": 9,
       "reasons": [
-        "5 支上架技能引用（R/EX ×2 加權後 risk 5）",
+        "6 支上架技能引用（R/EX ×2 加權後 risk 9）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-11-20260907.r",
+        "godie-n003.e",
+        "godie-n003.r",
+        "godie-n01g.q",
+        "godie-n01g.r",
+        "godie-udea.w"
+      ]
+    },
+    {
+      "id": "fx.prim.lightning.bolt",
+      "kind": "vfx",
+      "hash": "c5edd5d09f723b38a8f4705ba8d7ac1ddc9d10ea",
+      "risk": 9,
+      "reasons": [
+        "4 支上架技能引用（R/EX ×2 加權後 risk 5）",
         "抱怨族「閃電/雷電」+4",
         "未審"
       ],
       "refs": [
-        "godie-e00w.e",
-        "godie-o00k.e",
-        "godie-o00k.q",
-        "godie-o02l.q",
-        "godie-ofar.q"
+        "community-review-05-20260907.w",
+        "godie-edem.e",
+        "godie-emfr.q",
+        "godie-emfr.r"
       ],
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
+    },
+    {
+      "id": "fx.prim.nature.pulse",
+      "kind": "vfx",
+      "hash": "f1bc688d054c6fe127f00e90d7d46f48cf28e13a",
+      "risk": 9,
+      "reasons": [
+        "7 支上架技能引用（R/EX ×2 加權後 risk 9）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-09-20260907.e",
+        "community-review-09-20260907.ex",
+        "community-review-09-20260907.r",
+        "community-review-09-20260907.w",
+        "godie-e007.w",
+        "godie-h02r.passive",
+        "godie-n00p.e"
+      ]
     },
     {
       "id": "fx.wave.physical",
@@ -626,6 +1374,23 @@
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
     {
+      "id": "fx.prim.arcane.beam",
+      "kind": "vfx",
+      "hash": "c410413cdb9cad84f08be856f332f828cb5cda23",
+      "risk": 8,
+      "reasons": [
+        "3 支上架技能引用（R/EX ×2 加權後 risk 4）",
+        "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
+        "未審"
+      ],
+      "refs": [
+        "community-review-01-20260907.ex",
+        "community-review-29-20260907.q",
+        "godie-hvsh.q"
+      ],
+      "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
+    },
+    {
       "id": "fx.prim.arcane.beam-lg",
       "kind": "vfx",
       "hash": "3418a6ea128b1d1abe31631b60b29432a9ab2d31",
@@ -642,39 +1407,22 @@
       "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
     },
     {
-      "id": "fx.prim.arcane.bolt",
+      "id": "fx.prim.holy.slash",
       "kind": "vfx",
-      "hash": "13ccd1635e8ddb9c55c62b6fb99b290862490f23",
+      "hash": "5583db5c6c76bea560b7fbab569b67420b802ba8",
       "risk": 8,
       "reasons": [
-        "4 支上架技能引用（R/EX ×2 加權後 risk 4）",
-        "抱怨族「閃電/雷電」+4",
+        "6 支上架技能引用（R/EX ×2 加權後 risk 8）",
         "未審"
       ],
       "refs": [
-        "godie-e00s.q",
-        "godie-e010.q",
-        "godie-h01o.q",
-        "godie-u00o.e"
-      ],
-      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
-    },
-    {
-      "id": "fx.prim.lightning.bolt",
-      "kind": "vfx",
-      "hash": "c5edd5d09f723b38a8f4705ba8d7ac1ddc9d10ea",
-      "risk": 8,
-      "reasons": [
-        "3 支上架技能引用（R/EX ×2 加權後 risk 4）",
-        "抱怨族「閃電/雷電」+4",
-        "未審"
-      ],
-      "refs": [
-        "godie-edem.e",
-        "godie-emfr.q",
-        "godie-emfr.r"
-      ],
-      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
+        "community-review-06-20260907.ex",
+        "community-review-18-20260907.w",
+        "community-review-37-20260907.q",
+        "community-review-37-20260907.r",
+        "community-review-37-20260907.w",
+        "godie-ogrh.q"
+      ]
     },
     {
       "id": "fx.prim.lightning.explosion-lg",
@@ -693,6 +1441,24 @@
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
     {
+      "id": "fx.prim.lightning.pulse-sm",
+      "kind": "vfx",
+      "hash": "77f0fd6be7abd64c00243b63fc92a92930440caa",
+      "risk": 8,
+      "reasons": [
+        "4 支上架技能引用（R/EX ×2 加權後 risk 4）",
+        "抱怨族「閃電/雷電」+4",
+        "未審"
+      ],
+      "refs": [
+        "community-review-05-20260907.passive",
+        "community-review-20-20260907.passive",
+        "community-review-24-20260907.passive",
+        "godie-e00x.w"
+      ],
+      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
+    },
+    {
       "id": "fx.prim.nature.explosion-lg",
       "kind": "vfx",
       "hash": "b8c79bfb262f0d207d16e2a227e68e6468406681",
@@ -706,6 +1472,24 @@
         "godie-e010.r",
         "godie-h02u.ex",
         "godie-h02u.r"
+      ]
+    },
+    {
+      "id": "fx.prim.physical.arc",
+      "kind": "vfx",
+      "hash": "be913aa8340a2304b76c8adea23c7f7f32a3ed4f",
+      "risk": 8,
+      "reasons": [
+        "6 支上架技能引用（R/EX ×2 加權後 risk 8）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-08-20260907.w",
+        "community-review-13-20260907.e",
+        "community-review-15-20260907.r",
+        "community-review-15-20260907.w",
+        "community-review-19-20260907.e",
+        "community-review-26-20260907.ex"
       ]
     },
     {
@@ -727,23 +1511,20 @@
       "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
     },
     {
-      "id": "fx.prim.void.pulse",
+      "id": "fx.prim.wind.nova",
       "kind": "vfx",
-      "hash": "09f202ef6d7aa3316b6f3ade09331fa9869de076",
+      "hash": "f9d49a514f6babe7c5e61da3253f4773cf0ef5d0",
       "risk": 8,
       "reasons": [
-        "8 支上架技能引用（R/EX ×2 加權後 risk 8）",
+        "5 支上架技能引用（R/EX ×2 加權後 risk 8）",
         "未審"
       ],
       "refs": [
-        "godie-emns.passive",
-        "godie-emns.w",
-        "godie-o00l.passive",
-        "godie-osam.passive",
-        "godie-u00j.e",
-        "godie-u00l.passive",
-        "godie-u010.passive",
-        "godie-umal.passive"
+        "community-review-14-20260907.ex",
+        "godie-etyr.q",
+        "godie-nsjs.q",
+        "godie-u01u.r",
+        "godie-udre.r"
       ]
     },
     {
@@ -786,25 +1567,6 @@
       ]
     },
     {
-      "id": "fx.prim.arcane.pulse-sm",
-      "kind": "vfx",
-      "hash": "0b0cc1ed8cbd80ab301080ff0cf18d7035e95d64",
-      "risk": 7,
-      "reasons": [
-        "7 支上架技能引用（R/EX ×2 加權後 risk 7）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e00l.q",
-        "godie-huth.q",
-        "godie-n00b.e",
-        "godie-nbbc.q",
-        "godie-nsjs.e",
-        "godie-o02l.w",
-        "godie-udea.q"
-      ]
-    },
-    {
       "id": "fx.prim.earth.pulse-sm",
       "kind": "vfx",
       "hash": "8a55ec11145cc7981d42b9518ffe336ec9b9e096",
@@ -824,21 +1586,21 @@
       ]
     },
     {
-      "id": "fx.prim.fire.beam",
+      "id": "fx.prim.fire.bolt",
       "kind": "vfx",
-      "hash": "0be68d8b449e23ef5958242cb2c7683f70509b7b",
+      "hash": "f3d0dbd2d952d7dc0cf88f574ac7c930dd182be5",
       "risk": 7,
       "reasons": [
         "3 支上架技能引用（R/EX ×2 加權後 risk 3）",
-        "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
+        "抱怨族「閃電/雷電」+4",
         "未審"
       ],
       "refs": [
-        "godie-h020.e",
-        "godie-n01c.e",
-        "godie-nbbc.e"
+        "community-review-02-20260907.q",
+        "community-review-03-20260907.q",
+        "godie-hjai.w"
       ],
-      "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
+      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
     {
       "id": "fx.prim.fire.explosion",
@@ -860,21 +1622,39 @@
       ]
     },
     {
-      "id": "fx.prim.ice.nova",
+      "id": "fx.prim.holy.pulse-sm",
       "kind": "vfx",
-      "hash": "809a89dae62cc8b4a261512ca3b9af909a898eec",
+      "hash": "52f1c23330a9aa4edd4db2cee0f92ce48a098be6",
       "risk": 7,
       "reasons": [
-        "5 支上架技能引用（R/EX ×2 加權後 risk 7）",
+        "7 支上架技能引用（R/EX ×2 加權後 risk 7）",
         "未審"
       ],
       "refs": [
-        "godie-n003.e",
-        "godie-n003.r",
-        "godie-n01g.q",
-        "godie-n01g.r",
-        "godie-udea.w"
+        "community-review-06-20260907.passive",
+        "community-review-16-20260907.passive",
+        "community-review-18-20260907.passive",
+        "community-review-21-20260907.passive",
+        "community-review-37-20260907.passive",
+        "godie-e002.q",
+        "godie-umal.w"
       ]
+    },
+    {
+      "id": "fx.prim.ki.beam",
+      "kind": "vfx",
+      "hash": "a67dbe1b175400fbf7034610fa2ba6143910c406",
+      "risk": 7,
+      "reasons": [
+        "2 支上架技能引用（R/EX ×2 加權後 risk 3）",
+        "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
+        "未審"
+      ],
+      "refs": [
+        "community-review-25-20260907.r",
+        "godie-u00v.e"
+      ],
+      "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
     },
     {
       "id": "fx.prim.ki.bolt-lg",
@@ -893,6 +1673,23 @@
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
     {
+      "id": "fx.prim.physical.nova",
+      "kind": "vfx",
+      "hash": "c14d6a6badfb4725e934ec1656edbc643d62efde",
+      "risk": 7,
+      "reasons": [
+        "5 支上架技能引用（R/EX ×2 加權後 risk 7）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-08-20260907.r",
+        "community-review-12-20260907.r",
+        "community-review-12-20260907.w",
+        "godie-u00o.q",
+        "godie-udre.w"
+      ]
+    },
+    {
       "id": "fx.prim.physical.shockwave",
       "kind": "vfx",
       "hash": "b62abd208ec00735a39c74e88dd392bda2e78a61",
@@ -909,25 +1706,6 @@
         "godie-h02u.q",
         "godie-hapm.w",
         "godie-u00n.q"
-      ]
-    },
-    {
-      "id": "fx.prim.void.pulse-sm",
-      "kind": "vfx",
-      "hash": "db61f7947a5aa4180575b343d4c0eb297c947181",
-      "risk": 7,
-      "reasons": [
-        "7 支上架技能引用（R/EX ×2 加權後 risk 7）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e001.q",
-        "godie-e00n.q",
-        "godie-emns.q",
-        "godie-h01n.q",
-        "godie-o030.q",
-        "godie-orkn.q",
-        "godie-zombiex.passive"
       ]
     },
     {
@@ -1025,6 +1803,72 @@
       ]
     },
     {
+      "id": "fx.prim.arcane.summon",
+      "kind": "vfx",
+      "hash": "693035b7cc8f488c07e800c9c1f2c7332d38f007",
+      "risk": 6,
+      "reasons": [
+        "6 支上架技能引用（R/EX ×2 加權後 risk 6）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-01-20260907.q",
+        "community-review-01-20260907.w",
+        "godie-etyr.passive",
+        "godie-n00b.passive",
+        "godie-o030.passive",
+        "godie-orkn.passive"
+      ]
+    },
+    {
+      "id": "fx.prim.holy.nova",
+      "kind": "vfx",
+      "hash": "74c74c195f72752c82551e47b5d127baea7b855a",
+      "risk": 6,
+      "reasons": [
+        "4 支上架技能引用（R/EX ×2 加權後 risk 6）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-18-20260907.ex",
+        "community-review-18-20260907.q",
+        "community-review-21-20260907.r",
+        "godie-ogld.e"
+      ]
+    },
+    {
+      "id": "fx.prim.ice.beam",
+      "kind": "vfx",
+      "hash": "cadf6b9c82a9d582c1922b7bcdebb59a3ed93391",
+      "risk": 6,
+      "reasons": [
+        "2 支上架技能引用（R/EX ×2 加權後 risk 2）",
+        "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
+        "未審"
+      ],
+      "refs": [
+        "community-review-35-20260907.q",
+        "godie-u00h.e"
+      ],
+      "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
+    },
+    {
+      "id": "fx.prim.ice.bolt",
+      "kind": "vfx",
+      "hash": "dcc2acf792e566bdb590adcd13bcecbbb79c7b49",
+      "risk": 6,
+      "reasons": [
+        "2 支上架技能引用（R/EX ×2 加權後 risk 2）",
+        "抱怨族「閃電/雷電」+4",
+        "未審"
+      ],
+      "refs": [
+        "community-review-11-20260907.q",
+        "godie-n01g.e"
+      ],
+      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
+    },
+    {
       "id": "fx.prim.ki.explosion-lg",
       "kind": "vfx",
       "hash": "ff0dc91739667c7dd4bcb8f8ddb840586f694484",
@@ -1087,6 +1931,40 @@
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
     {
+      "id": "fx.prim.nature.pulse-sm",
+      "kind": "vfx",
+      "hash": "1283d578cb5c456d61b2deb612ff9fdd76657759",
+      "risk": 6,
+      "reasons": [
+        "6 支上架技能引用（R/EX ×2 加權後 risk 6）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-09-20260907.passive",
+        "godie-e00s.e",
+        "godie-e010.e",
+        "godie-h02u.w",
+        "godie-h02v.q",
+        "godie-h02v.w"
+      ]
+    },
+    {
+      "id": "fx.prim.physical.bolt",
+      "kind": "vfx",
+      "hash": "0ba7796a8a161de7a84d128400094aa7925beb93",
+      "risk": 6,
+      "reasons": [
+        "2 支上架技能引用（R/EX ×2 加權後 risk 2）",
+        "抱怨族「閃電/雷電」+4",
+        "未審"
+      ],
+      "refs": [
+        "b2-makoto.w",
+        "community-review-26-20260907.q"
+      ],
+      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
+    },
+    {
       "id": "fx.prim.physical.explosion-lg",
       "kind": "vfx",
       "hash": "eaf906608c8d4a7228faad096690afdb23c13680",
@@ -1117,19 +1995,20 @@
       ]
     },
     {
-      "id": "fx.prim.wind.nova",
+      "id": "fx.prim.sound.pulse",
       "kind": "vfx",
-      "hash": "f9d49a514f6babe7c5e61da3253f4773cf0ef5d0",
+      "hash": "d5e2f09efa4e0235477da67180ba538f0faff0a0",
       "risk": 6,
       "reasons": [
-        "4 支上架技能引用（R/EX ×2 加權後 risk 6）",
+        "5 支上架技能引用（R/EX ×2 加權後 risk 6）",
         "未審"
       ],
       "refs": [
-        "godie-etyr.q",
-        "godie-nsjs.q",
-        "godie-u01u.r",
-        "godie-udre.r"
+        "community-review-30-20260907.e",
+        "community-review-30-20260907.ex",
+        "community-review-30-20260907.w",
+        "godie-o00k.passive",
+        "godie-o02p.w"
       ]
     },
     {
@@ -1333,85 +2212,6 @@
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
     {
-      "id": "fx.prim.arcane.beam",
-      "kind": "vfx",
-      "hash": "c410413cdb9cad84f08be856f332f828cb5cda23",
-      "risk": 5,
-      "reasons": [
-        "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
-        "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
-        "未審"
-      ],
-      "refs": [
-        "godie-hvsh.q"
-      ],
-      "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
-    },
-    {
-      "id": "fx.prim.arcane.pulse",
-      "kind": "vfx",
-      "hash": "ba776efb6efd6632c5b2bdb40b942ca325c96df4",
-      "risk": 5,
-      "reasons": [
-        "5 支上架技能引用（R/EX ×2 加權後 risk 5）",
-        "未審"
-      ],
-      "refs": [
-        "godie-emfr.passive",
-        "godie-huth.w",
-        "godie-hvsh.w",
-        "godie-n00b.w",
-        "godie-o00l.e"
-      ]
-    },
-    {
-      "id": "fx.prim.fire.bolt",
-      "kind": "vfx",
-      "hash": "f3d0dbd2d952d7dc0cf88f574ac7c930dd182be5",
-      "risk": 5,
-      "reasons": [
-        "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
-        "抱怨族「閃電/雷電」+4",
-        "未審"
-      ],
-      "refs": [
-        "godie-hjai.w"
-      ],
-      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
-    },
-    {
-      "id": "fx.prim.holy.beam",
-      "kind": "vfx",
-      "hash": "c157551a36e06c53eb37acb94d74837ae0047d8d",
-      "risk": 5,
-      "reasons": [
-        "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
-        "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
-        "未審"
-      ],
-      "refs": [
-        "godie-hvwd.q"
-      ],
-      "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
-    },
-    {
-      "id": "fx.prim.holy.pulse",
-      "kind": "vfx",
-      "hash": "f6276e1a35b63133f1e98a90e55fe5e0ed6b625a",
-      "risk": 5,
-      "reasons": [
-        "5 支上架技能引用（R/EX ×2 加權後 risk 5）",
-        "未審"
-      ],
-      "refs": [
-        "godie-etyr.w",
-        "godie-h00l.e",
-        "godie-hvwd.passive",
-        "godie-hvwd.w",
-        "godie-ogld.q"
-      ]
-    },
-    {
       "id": "fx.prim.holy.pulse-lg",
       "kind": "vfx",
       "hash": "10b924046488a8fcf2214465b03a7cb0b4f83585",
@@ -1425,51 +2225,6 @@
         "godie-h00l.passive",
         "godie-hvwd.ex"
       ]
-    },
-    {
-      "id": "fx.prim.ice.beam",
-      "kind": "vfx",
-      "hash": "cadf6b9c82a9d582c1922b7bcdebb59a3ed93391",
-      "risk": 5,
-      "reasons": [
-        "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
-        "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
-        "未審"
-      ],
-      "refs": [
-        "godie-u00h.e"
-      ],
-      "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
-    },
-    {
-      "id": "fx.prim.ice.bolt",
-      "kind": "vfx",
-      "hash": "dcc2acf792e566bdb590adcd13bcecbbb79c7b49",
-      "risk": 5,
-      "reasons": [
-        "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
-        "抱怨族「閃電/雷電」+4",
-        "未審"
-      ],
-      "refs": [
-        "godie-n01g.e"
-      ],
-      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
-    },
-    {
-      "id": "fx.prim.ki.beam",
-      "kind": "vfx",
-      "hash": "a67dbe1b175400fbf7034610fa2ba6143910c406",
-      "risk": 5,
-      "reasons": [
-        "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
-        "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
-        "未審"
-      ],
-      "refs": [
-        "godie-u00v.e"
-      ],
-      "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
     },
     {
       "id": "fx.prim.ki.pulse-lg",
@@ -1487,9 +2242,9 @@
       ]
     },
     {
-      "id": "fx.prim.lightning.pulse",
+      "id": "fx.prim.lightning.arc",
       "kind": "vfx",
-      "hash": "b5d8148cece7017c0a6b8d5d0f53e4cbc75bd095",
+      "hash": "b81064ea805dcb876d24881a66f8f735b4029b7c",
       "risk": 5,
       "reasons": [
         "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
@@ -1497,37 +2252,7 @@
         "未審"
       ],
       "refs": [
-        "godie-ofar.e"
-      ],
-      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
-    },
-    {
-      "id": "fx.prim.lightning.pulse-sm",
-      "kind": "vfx",
-      "hash": "77f0fd6be7abd64c00243b63fc92a92930440caa",
-      "risk": 5,
-      "reasons": [
-        "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
-        "抱怨族「閃電/雷電」+4",
-        "未審"
-      ],
-      "refs": [
-        "godie-e00x.w"
-      ],
-      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
-    },
-    {
-      "id": "fx.prim.lightning.slash",
-      "kind": "vfx",
-      "hash": "66256d030343021d5690071276d31d802ace9b12",
-      "risk": 5,
-      "reasons": [
-        "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
-        "抱怨族「閃電/雷電」+4",
-        "未審"
-      ],
-      "refs": [
-        "godie-nbbc.w"
+        "community-review-24-20260907.w"
       ],
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
@@ -1547,20 +2272,20 @@
       "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
     },
     {
-      "id": "fx.prim.nature.pulse-sm",
+      "id": "fx.prim.nature.slash",
       "kind": "vfx",
-      "hash": "1283d578cb5c456d61b2deb612ff9fdd76657759",
+      "hash": "2455a46e54a02729e5bd3d79d3c1b82bc0dca53f",
       "risk": 5,
       "reasons": [
         "5 支上架技能引用（R/EX ×2 加權後 risk 5）",
         "未審"
       ],
       "refs": [
-        "godie-e00s.e",
-        "godie-e010.e",
-        "godie-h02u.w",
-        "godie-h02v.q",
-        "godie-h02v.w"
+        "community-review-09-20260907.q",
+        "godie-e00x.q",
+        "godie-h02r.q",
+        "godie-hgam.q",
+        "godie-n00p.q"
       ]
     },
     {
@@ -1837,38 +2562,6 @@
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
     {
-      "id": "fx.prim.arcane.nova",
-      "kind": "vfx",
-      "hash": "96b667bde804641b42a2d3d8fe8138fdabdc1105",
-      "risk": 4,
-      "reasons": [
-        "4 支上架技能引用（R/EX ×2 加權後 risk 4）",
-        "未審"
-      ],
-      "refs": [
-        "godie-h02u.e",
-        "godie-h02v.e",
-        "godie-hgam.w",
-        "godie-o02l.e"
-      ]
-    },
-    {
-      "id": "fx.prim.arcane.summon",
-      "kind": "vfx",
-      "hash": "693035b7cc8f488c07e800c9c1f2c7332d38f007",
-      "risk": 4,
-      "reasons": [
-        "4 支上架技能引用（R/EX ×2 加權後 risk 4）",
-        "未審"
-      ],
-      "refs": [
-        "godie-etyr.passive",
-        "godie-n00b.passive",
-        "godie-o030.passive",
-        "godie-orkn.passive"
-      ]
-    },
-    {
       "id": "fx.prim.earth.beam",
       "kind": "vfx",
       "hash": "484d90277e64d56f0dbca643241315594be999b6",
@@ -1891,6 +2584,21 @@
       ],
       "refs": [],
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
+    },
+    {
+      "id": "fx.prim.fire.pulse",
+      "kind": "vfx",
+      "hash": "ca898db991a9440b60d06d2e841d354bc8f67d32",
+      "risk": 4,
+      "reasons": [
+        "3 支上架技能引用（R/EX ×2 加權後 risk 4）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-03-20260907.ex",
+        "godie-n01c.q",
+        "godie-uvng.passive"
+      ]
     },
     {
       "id": "fx.prim.ice.bolt-lg",
@@ -1932,16 +2640,35 @@
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
     {
-      "id": "fx.prim.lightning.arc",
+      "id": "fx.prim.ki.pulse",
       "kind": "vfx",
-      "hash": "b81064ea805dcb876d24881a66f8f735b4029b7c",
+      "hash": "dd4a88341d0d9367990c53b2273b43b2919e02f6",
       "risk": 4,
       "reasons": [
-        "抱怨族「閃電/雷電」+4",
+        "3 支上架技能引用（R/EX ×2 加權後 risk 4）",
         "未審"
       ],
-      "refs": [],
-      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
+      "refs": [
+        "community-review-25-20260907.ex",
+        "godie-o00x.e",
+        "godie-o00x.q"
+      ]
+    },
+    {
+      "id": "fx.prim.ki.slash",
+      "kind": "vfx",
+      "hash": "e61776e63da6848017b7d4bb49d7bbcc7d6cf837",
+      "risk": 4,
+      "reasons": [
+        "4 支上架技能引用（R/EX ×2 加權後 risk 4）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-25-20260907.e",
+        "community-review-25-20260907.q",
+        "community-review-25-20260907.w",
+        "godie-efur.w"
+      ]
     },
     {
       "id": "fx.prim.nature.beam-lg",
@@ -1956,22 +2683,6 @@
       "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
     },
     {
-      "id": "fx.prim.nature.slash",
-      "kind": "vfx",
-      "hash": "2455a46e54a02729e5bd3d79d3c1b82bc0dca53f",
-      "risk": 4,
-      "reasons": [
-        "4 支上架技能引用（R/EX ×2 加權後 risk 4）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e00x.q",
-        "godie-h02r.q",
-        "godie-hgam.q",
-        "godie-n00p.q"
-      ]
-    },
-    {
       "id": "fx.prim.physical.beam-lg",
       "kind": "vfx",
       "hash": "46400455f3653e1b91379914a1cc793d8916754f",
@@ -1982,34 +2693,6 @@
       ],
       "refs": [],
       "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
-    },
-    {
-      "id": "fx.prim.physical.bolt",
-      "kind": "vfx",
-      "hash": "0ba7796a8a161de7a84d128400094aa7925beb93",
-      "risk": 4,
-      "reasons": [
-        "抱怨族「閃電/雷電」+4",
-        "未審"
-      ],
-      "refs": [],
-      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
-    },
-    {
-      "id": "fx.prim.physical.pulse-sm",
-      "kind": "vfx",
-      "hash": "e81c798123442088b59227213d0a363c525de391",
-      "risk": 4,
-      "reasons": [
-        "4 支上架技能引用（R/EX ×2 加權後 risk 4）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e00x.e",
-        "godie-hpb1.q",
-        "godie-hpb1.w",
-        "godie-u00l.w"
-      ]
     },
     {
       "id": "fx.prim.physical.slash-lg",
@@ -2023,6 +2706,21 @@
       "refs": [
         "godie-n01c.r",
         "godie-u01u.r"
+      ]
+    },
+    {
+      "id": "fx.prim.sound.nova",
+      "kind": "vfx",
+      "hash": "e15f01e9a537db66f7b9a2348fed11755de1194f",
+      "risk": 4,
+      "reasons": [
+        "3 支上架技能引用（R/EX ×2 加權後 risk 4）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-30-20260907.q",
+        "community-review-30-20260907.r",
+        "godie-o02p.q"
       ]
     },
     {
@@ -2063,22 +2761,6 @@
         "godie-osam.e",
         "godie-u00k.q",
         "godie-ubal.e"
-      ]
-    },
-    {
-      "id": "fx.prim.wind.slash",
-      "kind": "vfx",
-      "hash": "b8fabf28f66aa2c7dff19b50a731da15b2a449c6",
-      "risk": 4,
-      "reasons": [
-        "4 支上架技能引用（R/EX ×2 加權後 risk 4）",
-        "未審"
-      ],
-      "refs": [
-        "godie-h00l.q",
-        "godie-osam.q",
-        "godie-osam.w",
-        "godie-u00h.q"
       ]
     },
     {
@@ -3077,6 +3759,21 @@
       ]
     },
     {
+      "id": "fx.prim.blood.slash",
+      "kind": "vfx",
+      "hash": "e3b3d6e024990ccad647f04f83b52d8e53b77dac",
+      "risk": 3,
+      "reasons": [
+        "3 支上架技能引用（R/EX ×2 加權後 risk 3）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-33-20260907.e",
+        "godie-e001.w",
+        "godie-e00n.w"
+      ]
+    },
+    {
       "id": "fx.prim.earth.shockwave",
       "kind": "vfx",
       "hash": "0db5727d35f665de4fe895b8e2715b0809b1995d",
@@ -3107,21 +3804,6 @@
       ]
     },
     {
-      "id": "fx.prim.nature.pulse",
-      "kind": "vfx",
-      "hash": "f1bc688d054c6fe127f00e90d7d46f48cf28e13a",
-      "risk": 3,
-      "reasons": [
-        "3 支上架技能引用（R/EX ×2 加權後 risk 3）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e007.w",
-        "godie-h02r.passive",
-        "godie-n00p.e"
-      ]
-    },
-    {
       "id": "fx.prim.physical.swarm",
       "kind": "vfx",
       "hash": "f7a50d6d42a995b3d17f54f68bc8eb283f936190",
@@ -3137,18 +3819,18 @@
       ]
     },
     {
-      "id": "fx.prim.void.slash",
+      "id": "fx.prim.wind.arc",
       "kind": "vfx",
-      "hash": "2e238c2a55516e94e75c37ec22655a46f99d6a57",
+      "hash": "f54990882e9c652f9c515865cb1ff45880fd5471",
       "risk": 3,
       "reasons": [
         "3 支上架技能引用（R/EX ×2 加權後 risk 3）",
         "未審"
       ],
       "refs": [
-        "godie-hjai.e",
-        "godie-u01u.e",
-        "godie-udre.e"
+        "community-review-27-20260907.e",
+        "community-review-31-20260907.w",
+        "community-review-34-20260907.w"
       ]
     },
     {
@@ -3351,31 +4033,17 @@
       ]
     },
     {
-      "id": "fx.prim.blood.pulse-sm",
+      "id": "fx.prim.arcane.arc",
       "kind": "vfx",
-      "hash": "fb6d0075b61b7991116bd6255cfb9505fc38e9e8",
+      "hash": "534612353910913d0e48fb2c9641a05c3d35ce76",
       "risk": 2,
       "reasons": [
         "2 支上架技能引用（R/EX ×2 加權後 risk 2）",
         "未審"
       ],
       "refs": [
-        "godie-n01g.w",
-        "godie-u00o.passive"
-      ]
-    },
-    {
-      "id": "fx.prim.blood.slash",
-      "kind": "vfx",
-      "hash": "e3b3d6e024990ccad647f04f83b52d8e53b77dac",
-      "risk": 2,
-      "reasons": [
-        "2 支上架技能引用（R/EX ×2 加權後 risk 2）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e001.w",
-        "godie-e00n.w"
+        "community-review-07-20260907.e",
+        "community-review-29-20260907.e"
       ]
     },
     {
@@ -3393,45 +4061,31 @@
       ]
     },
     {
-      "id": "fx.prim.fire.pulse",
+      "id": "fx.prim.fire.pulse-sm",
       "kind": "vfx",
-      "hash": "ca898db991a9440b60d06d2e841d354bc8f67d32",
+      "hash": "3ce494ae076464496ec5d166de55f56eb80af7ad",
       "risk": 2,
       "reasons": [
         "2 支上架技能引用（R/EX ×2 加權後 risk 2）",
         "未審"
       ],
       "refs": [
-        "godie-n01c.q",
-        "godie-uvng.passive"
+        "community-review-02-20260907.passive",
+        "community-review-03-20260907.passive"
       ]
     },
     {
-      "id": "fx.prim.fire.slash",
+      "id": "fx.prim.holy.arc",
       "kind": "vfx",
-      "hash": "8a9e87e42fddd093aa579294b549f44db1a52115",
+      "hash": "10d034fb92817e374bc06776275d264ae1f12db0",
       "risk": 2,
       "reasons": [
         "2 支上架技能引用（R/EX ×2 加權後 risk 2）",
         "未審"
       ],
       "refs": [
-        "godie-e008.q",
-        "godie-u00h.w"
-      ]
-    },
-    {
-      "id": "fx.prim.holy.pulse-sm",
-      "kind": "vfx",
-      "hash": "52f1c23330a9aa4edd4db2cee0f92ce48a098be6",
-      "risk": 2,
-      "reasons": [
-        "2 支上架技能引用（R/EX ×2 加權後 risk 2）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e002.q",
-        "godie-umal.w"
+        "community-review-06-20260907.q",
+        "community-review-16-20260907.e"
       ]
     },
     {
@@ -3471,20 +4125,6 @@
       ],
       "refs": [
         "godie-u00h.r"
-      ]
-    },
-    {
-      "id": "fx.prim.ki.pulse",
-      "kind": "vfx",
-      "hash": "dd4a88341d0d9367990c53b2273b43b2919e02f6",
-      "risk": 2,
-      "reasons": [
-        "2 支上架技能引用（R/EX ×2 加權後 risk 2）",
-        "未審"
-      ],
-      "refs": [
-        "godie-o00x.e",
-        "godie-o00x.q"
       ]
     },
     {
@@ -3568,48 +4208,6 @@
       ]
     },
     {
-      "id": "fx.prim.physical.nova",
-      "kind": "vfx",
-      "hash": "c14d6a6badfb4725e934ec1656edbc643d62efde",
-      "risk": 2,
-      "reasons": [
-        "2 支上架技能引用（R/EX ×2 加權後 risk 2）",
-        "未審"
-      ],
-      "refs": [
-        "godie-u00o.q",
-        "godie-udre.w"
-      ]
-    },
-    {
-      "id": "fx.prim.physical.pulse",
-      "kind": "vfx",
-      "hash": "967717f6f6d6155030e927449b1a0849421a3a83",
-      "risk": 2,
-      "reasons": [
-        "2 支上架技能引用（R/EX ×2 加權後 risk 2）",
-        "未審"
-      ],
-      "refs": [
-        "godie-hapm.q",
-        "godie-u01u.passive"
-      ]
-    },
-    {
-      "id": "fx.prim.sound.pulse",
-      "kind": "vfx",
-      "hash": "d5e2f09efa4e0235477da67180ba538f0faff0a0",
-      "risk": 2,
-      "reasons": [
-        "2 支上架技能引用（R/EX ×2 加權後 risk 2）",
-        "未審"
-      ],
-      "refs": [
-        "godie-o00k.passive",
-        "godie-o02p.w"
-      ]
-    },
-    {
       "id": "fx.prim.sound.swarm-lg",
       "kind": "vfx",
       "hash": "e448fd40c0d1122463467fe0380a8e04d5c53012",
@@ -3634,20 +4232,6 @@
       "refs": [
         "godie-h01o.e",
         "godie-zombiex.w"
-      ]
-    },
-    {
-      "id": "fx.prim.void.nova",
-      "kind": "vfx",
-      "hash": "bf8e30f232451802e384bd708c285148c64227a4",
-      "risk": 2,
-      "reasons": [
-        "2 支上架技能引用（R/EX ×2 加權後 risk 2）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e00n.e",
-        "godie-zombiex.q"
       ]
     },
     {
@@ -3689,20 +4273,6 @@
       ],
       "refs": [
         "godie-hvwd.r"
-      ]
-    },
-    {
-      "id": "fx.prim.wind.pulse",
-      "kind": "vfx",
-      "hash": "98f93e7b1f8fa13ede57d98bf73bd891e9cddd8e",
-      "risk": 2,
-      "reasons": [
-        "2 支上架技能引用（R/EX ×2 加權後 risk 2）",
-        "未審"
-      ],
-      "refs": [
-        "godie-emfr.w",
-        "godie-udre.passive"
       ]
     },
     {
@@ -4366,19 +4936,6 @@
       ]
     },
     {
-      "id": "fx.prim.arcane.dash",
-      "kind": "vfx",
-      "hash": "1256b9ab7ccd1eca08b42512e45fdded5dd34860",
-      "risk": 1,
-      "reasons": [
-        "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
-        "未審"
-      ],
-      "refs": [
-        "godie-ogrh.w"
-      ]
-    },
-    {
       "id": "fx.prim.arcane.explosion",
       "kind": "vfx",
       "hash": "017902bc124bbfa8976bbd029daee8d03c51e0e0",
@@ -4389,19 +4946,6 @@
       ],
       "refs": [
         "godie-udea.e"
-      ]
-    },
-    {
-      "id": "fx.prim.arcane.slash",
-      "kind": "vfx",
-      "hash": "cf110fa189db3e160b97129522bacf0f35e5838d",
-      "risk": 1,
-      "reasons": [
-        "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
-        "未審"
-      ],
-      "refs": [
-        "godie-h01o.w"
       ]
     },
     {
@@ -4431,29 +4975,16 @@
       ]
     },
     {
-      "id": "fx.prim.holy.nova",
+      "id": "fx.prim.fire.arc",
       "kind": "vfx",
-      "hash": "74c74c195f72752c82551e47b5d127baea7b855a",
+      "hash": "3830557d75081fa4ffc842d11724fa24203151f5",
       "risk": 1,
       "reasons": [
         "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
         "未審"
       ],
       "refs": [
-        "godie-ogld.e"
-      ]
-    },
-    {
-      "id": "fx.prim.holy.slash",
-      "kind": "vfx",
-      "hash": "5583db5c6c76bea560b7fbab569b67420b802ba8",
-      "risk": 1,
-      "reasons": [
-        "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
-        "未審"
-      ],
-      "refs": [
-        "godie-ogrh.q"
+        "community-review-02-20260907.w"
       ]
     },
     {
@@ -4496,19 +5027,6 @@
       ]
     },
     {
-      "id": "fx.prim.ki.slash",
-      "kind": "vfx",
-      "hash": "e61776e63da6848017b7d4bb49d7bbcc7d6cf837",
-      "risk": 1,
-      "reasons": [
-        "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
-        "未審"
-      ],
-      "refs": [
-        "godie-efur.w"
-      ]
-    },
-    {
       "id": "fx.prim.nature.explosion",
       "kind": "vfx",
       "hash": "078b2ae67f496ff820bfb2061a04d16be3416e61",
@@ -4535,16 +5053,42 @@
       ]
     },
     {
-      "id": "fx.prim.sound.nova",
+      "id": "fx.prim.sound.pulse-sm",
       "kind": "vfx",
-      "hash": "e15f01e9a537db66f7b9a2348fed11755de1194f",
+      "hash": "ee3b51fd8de9fd6c03bf546c3e1e6e67a5833b4f",
       "risk": 1,
       "reasons": [
         "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
         "未審"
       ],
       "refs": [
-        "godie-o02p.q"
+        "community-review-30-20260907.passive"
+      ]
+    },
+    {
+      "id": "fx.prim.void.arc",
+      "kind": "vfx",
+      "hash": "820228009269af23767fa46cb2621b13ce2aae1a",
+      "risk": 1,
+      "reasons": [
+        "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-22-20260907.w"
+      ]
+    },
+    {
+      "id": "fx.prim.void.summon",
+      "kind": "vfx",
+      "hash": "43c32fdfbedaa1b380a5e6798bb018448f616bfb",
+      "risk": 1,
+      "reasons": [
+        "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
+        "未審"
+      ],
+      "refs": [
+        "community-review-17-20260907.w"
       ]
     },
     {

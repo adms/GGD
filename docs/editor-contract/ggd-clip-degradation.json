@@ -56,30 +56,30 @@
     }
   },
   "population": {
-    "glbFiles": 426,
-    "animatedModels": 269,
+    "glbFiles": 427,
+    "animatedModels": 270,
     "clips": 9
   },
   "coverage": {
     "attack": {
-      "models": 187,
-      "pct": 69.5
+      "models": 188,
+      "pct": 69.6
     },
     "cast": {
-      "models": 150,
-      "pct": 55.8
+      "models": 151,
+      "pct": 55.9
     },
     "celebrate": {
       "models": 14,
       "pct": 5.2
     },
     "death": {
-      "models": 212,
-      "pct": 78.8
+      "models": 213,
+      "pct": 78.9
     },
     "dodge": {
-      "models": 178,
-      "pct": 66.2
+      "models": 179,
+      "pct": 66.3
     },
     "guard": {
       "models": 6,
@@ -87,15 +87,15 @@
     },
     "hurt": {
       "models": 22,
-      "pct": 8.2
+      "pct": 8.1
     },
     "idle": {
-      "models": 248,
+      "models": 249,
       "pct": 92.2
     },
     "run": {
-      "models": 186,
-      "pct": 69.1
+      "models": 187,
+      "pct": 69.3
     }
   },
   "degradesTo": "idle",
@@ -396,6 +396,11 @@
       "guard",
       "hurt",
       "run"
+    ],
+    "content/assets/models/imported/doraemon-cat.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
     ],
     "content/assets/models/imported/earthtornado2.glb": [
       "attack",

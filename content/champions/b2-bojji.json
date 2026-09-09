@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "ground",
       "cooldown": [
         15.0,
@@ -10,6 +10,7 @@
         15.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「太高了我先繞過去！」\n短距合法瞬移換站位；被動只在真正閃避時回血，位移本身不算閃避。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -28,14 +29,13 @@
       ],
       "maxRank": 4,
       "name": "太高了我先繞過去",
-      "provenance": "editor-json",
       "range": 6,
       "rangeTier": "中",
       "slot": "E",
       "template": {
         "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
         "params": {
-          "castTimeSec": 0.1
+          "castTimeSec": 0.467
         },
         "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
       },
@@ -48,7 +48,7 @@
       ]
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -57,6 +57,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「王子縮成迷你問號！」\n縮身 1.8 秒，提高普通攻擊迴避機會，仍受正式機率上限限制；不閃技能與真傷，不是保證無敵。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -76,7 +77,6 @@
       ],
       "maxRank": 4,
       "name": "王子縮成迷你問號",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 0.0,
       "slot": "Q",
@@ -84,7 +84,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "self",
           "effects": [
             {
@@ -110,7 +110,7 @@
       "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.633,
       "castType": "targeted",
       "cooldown": [
         90.0,
@@ -118,6 +118,7 @@
         90.0
       ],
       "cooldownTier": "大",
+      "provenance": "w3x-import",
       "description": "「笑穴變成原地罰站！」\n消耗敵人的 numbness，轉為 root 定身 1.8 秒並小級打擊；沒繳械就只打一下。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -153,7 +154,6 @@
       "manaCostTier": "小",
       "maxRank": 3,
       "name": "笑穴變成原地罰站",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -162,7 +162,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 1.633,
           "castType": "targeted",
           "effects": [
             {
@@ -204,7 +204,7 @@
       "radiusTier": "極小"
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -213,6 +213,7 @@
         15.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「王室搔癢暫停握刀！」\n王室搔癢小級物理打擊；附加 numbness 繳械 2 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -240,7 +241,6 @@
       "manaCostTier": "小",
       "maxRank": 4,
       "name": "王室搔癢暫停握刀",
-      "provenance": "editor-json",
       "range": 6,
       "rangeTier": "中",
       "slot": "W",
@@ -248,7 +248,7 @@
       "template": {
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.567,
           "damage": {
             "damageTier": "小"
           },
@@ -314,6 +314,7 @@
     "maxMana": 26.357142857142858,
     "mr": 2.639795918367347
   },
+  "msGrowthTier": "極小",
   "id": "b2-bojji",
   "modelKey": "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a",
   "name": "波吉",

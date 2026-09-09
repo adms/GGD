@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "3967f07dd799",
+  "fingerprint": "1c3a82871372",
   "capabilityFingerprint": "daccedce",
   "required": [
     {
@@ -8348,6 +8348,16 @@
     },
     {
       "group": "configField",
+      "name": "championChannelLimit",
+      "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
+      "name": "championChannelWarn",
+      "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
       "name": "champions",
       "owner": "config.boss-intro@1"
     },
@@ -11110,6 +11120,26 @@
       "group": "configField",
       "name": "heroPortraitPx",
       "owner": "config.hud-layout@1"
+    },
+    {
+      "group": "configField",
+      "name": "heroTargetMatch",
+      "owner": "config.ugc@1"
+    },
+    {
+      "group": "configField",
+      "name": "heroTargetMatch=game-and-migration",
+      "owner": "config.ugc@1"
+    },
+    {
+      "group": "configField",
+      "name": "heroTargetMatch=migration",
+      "owner": "config.ugc@1"
+    },
+    {
+      "group": "configField",
+      "name": "heroTargetMatch=strict",
+      "owner": "config.ugc@1"
     },
     {
       "group": "configField",
@@ -25075,9 +25105,9 @@
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 8,
-    "configField": 4029,
+    "configField": 4035,
     "_notRequired": 15,
-    "_total": 5149,
+    "_total": 5155,
     "_ownerOnly": 39
   }
 }

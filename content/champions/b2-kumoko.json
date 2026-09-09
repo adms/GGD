@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "ground",
       "cooldown": [
         15.0,
@@ -10,6 +10,7 @@
         15.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「房東來了躲牆角！」\n瞬移至指定合法地點；以真正位置改變移動自己的環身攻擊中心。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -28,14 +29,13 @@
       ],
       "maxRank": 4,
       "name": "房東來了躲牆角",
-      "provenance": "editor-json",
       "range": 6,
       "rangeTier": "中",
       "slot": "E",
       "template": {
         "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
         "params": {
-          "castTimeSec": 0.1
+          "castTimeSec": 0.467
         },
         "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
       },
@@ -48,7 +48,7 @@
       ]
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -57,6 +57,7 @@
         15.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「玄關地墊有點黏！」\n指定敵人被 root 定身 3 秒；這是主動蛛網控制，不是隱形陷阱物件。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -75,7 +76,6 @@
       ],
       "maxRank": 4,
       "name": "玄關地墊有點黏",
-      "provenance": "editor-json",
       "range": 6,
       "rangeTier": "中",
       "slot": "Q",
@@ -83,7 +83,7 @@
       "template": {
         "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.567,
           "status": {
             "duration": 3,
             "root": true,
@@ -101,7 +101,7 @@
       ]
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.667,
       "castType": "self",
       "cooldown": [
         90.0,
@@ -109,6 +109,7 @@
         90.0
       ],
       "cooldownTier": "大",
+      "provenance": "w3x-import",
       "description": "「整個客廳都是我的網！」\n周身建立 3 秒傷害場，每 0.5 秒重新找自己附近敵人；跟隨施法者，不是固定地點陷阱。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -143,7 +144,6 @@
       "manaCostTier": "小",
       "maxRank": 3,
       "name": "整個客廳都是我的網",
-      "provenance": "editor-json",
       "range": 0.0,
       "slot": "R",
       "targetsEnemies": true,
@@ -152,7 +152,7 @@
         "params": {
           "anchor": "caster",
           "applyTo": "enemies",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.667,
           "damageTier": "中",
           "damageType": "magic",
           "durationSec": 3,
@@ -171,7 +171,7 @@
       ]
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.7,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -180,6 +180,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「毒牙代收房租！」\n對指定敵人施加每秒一跳、持續 3 秒的魔法 DOT；若目標被 root，追加一筆獨立 DOT。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -220,7 +221,6 @@
       "manaCostTier": "小",
       "maxRank": 4,
       "name": "毒牙代收房租",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -229,7 +229,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 1.7,
           "castType": "targeted",
           "effects": [
             {
@@ -318,6 +318,7 @@
     "maxMana": 0.8520408163265306,
     "mr": 1.3198979591836735
   },
+  "msGrowthTier": "極小",
   "id": "b2-kumoko",
   "modelKey": "community.body.7138bd8e788b1b90c87ac4bb7e42d0141eadd1769f98d1f5",
   "name": "蜘蛛子",

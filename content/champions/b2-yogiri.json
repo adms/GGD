@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "ground",
       "cooldown": [
         15.0,
@@ -10,6 +10,7 @@
         15.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「枕頭要搬去安靜處！」\n瞬移到指定合法落點，調整離敵人的距離。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：秒殺外掛改成催眠式下班通知，不按通知的人更倒楣。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -28,14 +29,13 @@
       ],
       "maxRank": 4,
       "name": "枕頭要搬去安靜處",
-      "provenance": "editor-json",
       "range": 6,
       "rangeTier": "中",
       "slot": "E",
       "template": {
         "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
         "params": {
-          "castTimeSec": 0.1
+          "castTimeSec": 0.467
         },
         "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
       },
@@ -48,7 +48,7 @@
       ]
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -57,6 +57,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「下班通知已讀未回！」\n指定敵人取得 curse 通知 4 秒；此處只作條件標記，不假稱原作即死。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：秒殺外掛改成催眠式下班通知，不按通知的人更倒楣。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -76,7 +77,6 @@
       ],
       "maxRank": 4,
       "name": "下班通知已讀未回",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -85,7 +85,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "targeted",
           "effects": [
             {
@@ -111,7 +111,7 @@
       "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.233,
       "castType": "ground",
       "cooldown": [
         90.0,
@@ -119,6 +119,7 @@
         90.0
       ],
       "cooldownTier": "大",
+      "provenance": "w3x-import",
       "description": "「全體不要吵我！」\n指定地點附近敵人各受極小傷害並被沉默 2.5 秒；友軍不在清單。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：秒殺外掛改成催眠式下班通知，不按通知的人更倒楣。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -152,7 +153,6 @@
       "manaCostTier": "小",
       "maxRank": 3,
       "name": "全體不要吵我",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -161,7 +161,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 1.233,
           "castType": "ground",
           "effects": [
             {
@@ -200,7 +200,7 @@
       "radiusTier": "極小"
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.7,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -209,6 +209,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「符合門檻才能結算！」\n造成極小魔法傷害；目標同時帶 curse 且生命低於 45% 時追加中級魔法傷害，最後消耗通知並施加 1 秒沉默；沉默不另要求低血。傷害有限，沒有 kill 指令。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：秒殺外掛改成催眠式下班通知，不按通知的人更倒楣。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -269,7 +270,6 @@
       "manaCostTier": "小",
       "maxRank": 4,
       "name": "符合門檻才能結算",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -278,7 +278,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 1.7,
           "castType": "targeted",
           "effects": [
             {
@@ -387,6 +387,7 @@
     "maxMana": 0.9581632653061187,
     "mr": 2.1118367346938776
   },
+  "msGrowthTier": "極小",
   "id": "b2-yogiri",
   "modelKey": "community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82",
   "name": "高遠夜霧",

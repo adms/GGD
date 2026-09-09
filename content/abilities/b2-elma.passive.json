@@ -3,6 +3,7 @@
   "cooldown": [
     0
   ],
+  "provenance": "w3x-import",
   "description": "「物理疼痛換攻略魔力！」\n受到物理傷害才回復最大魔力 4%，每 3 秒一次；真傷與魔法傷害不觸發。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [],
   "id": "b2-elma.passive",
@@ -33,7 +34,6 @@
       }
     ]
   },
-  "provenance": "editor-json",
   "range": 0.0,
   "schema": "ability@1",
   "slot": "PASSIVE",

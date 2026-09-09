@@ -3,6 +3,7 @@
   "cooldown": [
     0
   ],
+  "provenance": "w3x-import",
   "description": "「撞壞機台保固啟動！」\n自身受傷後得到 80 護盾 2 秒，內置冷卻 4 秒；拉蜜絲與阿箱共用一條生命，不生成第二個可控玩家。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [],
   "id": "b2-boxxo.passive",
@@ -37,7 +38,6 @@
       }
     ]
   },
-  "provenance": "editor-json",
   "range": 0.0,
   "schema": "ability@1",
   "slot": "PASSIVE",

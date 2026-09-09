@@ -3,6 +3,7 @@
   "cooldown": [
     0
   ],
+  "provenance": "w3x-import",
   "description": "「負評客人我來回覆！」\n每 3 秒受傷可對攻擊者反擊一次小級物理傷害；固定反擊，不按來襲傷害比例返還。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：女僕服務包含拖地與拖走客人。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [],
   "id": "b2-rem.passive",
@@ -35,7 +36,6 @@
       }
     ]
   },
-  "provenance": "editor-json",
   "range": 0.0,
   "schema": "ability@1",
   "slot": "PASSIVE",

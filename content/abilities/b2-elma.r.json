@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 1.7,
   "castType": "targeted",
   "cooldown": [
     45.0,
@@ -7,6 +7,7 @@
     45.0
   ],
   "cooldownTier": "大",
+  "provenance": "w3x-import",
   "description": "「照攻略抄的重擊！」\n中級重擊加 0.8 AD；受 E 實際攻擊力影響。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -32,7 +33,6 @@
   "manaCostTier": "小",
   "maxRank": 3,
   "name": "照攻略抄的重擊",
-  "provenance": "editor-json",
   "range": 6,
   "rangeTier": "中",
   "schema": "ability@1",
@@ -41,7 +41,7 @@
   "template": {
     "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.7,
       "damage": {
         "damageTier": "中",
         "ratios": [

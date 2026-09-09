@@ -3,6 +3,7 @@
   "cooldown": [
     0
   ],
+  "provenance": "w3x-import",
   "description": "「這個痛我記住了！」\n受到傷害後取得 berserk 適應暫態 4 秒，內置冷卻 2 秒；不會憑空復活。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [],
   "id": "b2-fushi.passive",
@@ -34,7 +35,6 @@
       }
     ]
   },
-  "provenance": "editor-json",
   "range": 0.0,
   "schema": "ability@1",
   "slot": "PASSIVE",

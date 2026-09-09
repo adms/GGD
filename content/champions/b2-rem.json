@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -10,6 +10,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「鬼化加班先扣血！」\n鬼化加班：支付最大生命 12%，至少保留 1 HP；攻擊力 +35 持續 3 秒，沒有免費回血。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：女僕服務包含拖地與拖走客人。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -42,7 +43,6 @@
       ],
       "maxRank": 4,
       "name": "鬼化加班先扣血",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 0.0,
       "slot": "E",
@@ -50,7 +50,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "self",
           "effects": [
             {
@@ -89,7 +89,7 @@
       "radiusTier": "極小"
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -98,6 +98,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「這位客人請留步！」\n拖把鉤拉指定敵人到身邊 1 單位外，不傷害；受地形與位移規則限制。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：女僕服務包含拖地與拖走客人。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -117,7 +118,6 @@
       ],
       "maxRank": 4,
       "name": "這位客人請留步",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -126,7 +126,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "targeted",
           "effects": [
             {
@@ -152,7 +152,7 @@
       "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castType": "self",
       "cooldown": [
         90.0,
@@ -160,6 +160,7 @@
         90.0
       ],
       "cooldownTier": "大",
+      "provenance": "w3x-import",
       "description": "「半條命換急救包！」\n任何情況都得到 100 護盾 2 秒；生命低於 50% 時額外回復 240，不要求一定先用鬼化。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：女僕服務包含拖地與拖走客人。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -206,7 +207,6 @@
       ],
       "maxRank": 3,
       "name": "半條命換急救包",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 0.0,
       "slot": "R",
@@ -214,7 +214,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.067,
           "castType": "self",
           "effects": [
             {
@@ -268,7 +268,7 @@
       "radiusTier": "極小"
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.233,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -277,6 +277,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「鐵球拖把暫停你的普攻！」\n小級鐵球打擊；距離不超過 2.5 才繳械 1.5 秒（numbness 旗標），遠客人不列入清場。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：女僕服務包含拖地與拖走客人。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -309,7 +310,6 @@
       "manaCostTier": "小",
       "maxRank": 4,
       "name": "鐵球拖把暫停你的普攻",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -408,6 +408,7 @@
     "maxMana": 2.1239795918367355,
     "mr": 2.1118367346938776
   },
+  "msGrowthTier": "極小",
   "id": "b2-rem",
   "modelKey": "community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905",
   "name": "蕾姆",

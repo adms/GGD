@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.667,
       "castType": "ground",
       "cooldown": [
         45.0,
@@ -10,7 +10,8 @@
         45.0
       ],
       "cooldownTier": "小",
-      "description": "「本店定點營業範圍！」\n以起手命中中心（沒有命中則施法點）固定半徑 3，每 0.5 秒重選最多 4 名敵人，共三次 slow40 減速 40% 持續 2 秒；沒有全圖界域。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：商人試射新商品，順便把店面拆了。GGD 惡搞改編，非原作招式與數值聲明。",
+      "provenance": "w3x-import",
+      "description": "「本店定點營業範圍！」\n以起手命中中心（沒有命中則施法點）固定半徑{{radius}}，每 0.5 秒重選最多 4 名敵人，共三次 slow40 減速 40% 持續 2 秒；沒有全圖界域。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：商人試射新商品，順便把店面拆了。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "count": 3,
@@ -44,7 +45,6 @@
       ],
       "maxRank": 4,
       "name": "本店定點營業範圍",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -53,7 +53,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.667,
           "castType": "ground",
           "effects": [
             {
@@ -93,7 +93,7 @@
       "radiusTier": "極小"
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -102,6 +102,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「試射前客人請後退！」\n產品展示先請客人後退：推離指定敵人 3 單位，不造成傷害。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：商人試射新商品，順便把店面拆了。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -122,7 +123,6 @@
       ],
       "maxRank": 4,
       "name": "試射前客人請後退",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -131,7 +131,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "targeted",
           "effects": [
             {
@@ -158,7 +158,7 @@
       "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 2.433,
       "castType": "targeted",
       "cooldown": [
         90.0,
@@ -166,6 +166,7 @@
         90.0
       ],
       "cooldownTier": "大",
+      "provenance": "w3x-import",
       "description": "「慢客人請停止抱怨！」\n中級集中魔法；消耗已在營業範圍沾到的 slow40，才追加沉默 1.2 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：商人試射新商品，順便把店面拆了。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -201,7 +202,6 @@
       "manaCostTier": "小",
       "maxRank": 3,
       "name": "慢客人請停止抱怨",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -210,7 +210,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 2.433,
           "castType": "targeted",
           "effects": [
             {
@@ -252,7 +252,7 @@
       "radiusTier": "極小"
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.233,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -261,7 +261,8 @@
         45.0
       ],
       "cooldownTier": "小",
-      "description": "「站遠一點商品才夠痛！」\n弓術定點單射，小級物理傷害，距離 0 到 8 由 0.5 倍線性提高到 1.5 倍，超過按上限；真實距離決定輸出。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：商人試射新商品，順便把店面拆了。GGD 惡搞改編，非原作招式與數值聲明。",
+      "provenance": "w3x-import",
+      "description": "「站遠一點商品才夠痛！」\n弓術定點單射，小級物理傷害，{{range}}距離 到 8 由 0.5 倍線性提高到 1.5 倍，超過按上限；真實距離決定輸出。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：商人試射新商品，順便把店面拆了。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "amount": {
@@ -286,7 +287,6 @@
       "manaCostTier": "小",
       "maxRank": 4,
       "name": "站遠一點商品才夠痛",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -295,7 +295,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 1.233,
           "castType": "targeted",
           "effects": [
             {
@@ -369,6 +369,7 @@
     "maxMana": 0.9581632653061187,
     "mr": 2.1118367346938776
   },
+  "msGrowthTier": "極小",
   "id": "b2-makoto",
   "modelKey": "champ.sela",
   "name": "深澄真",

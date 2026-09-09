@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.667,
       "castType": "ground",
       "cooldown": [
         45.0,
@@ -10,6 +10,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「解除手閘本車才出發！」\n消耗自身煞車 root 才瞬移到合法施法點，沒有煞車不發車；到站極小級範圍傷害。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -51,7 +52,6 @@
       "manaCostTier": "小",
       "maxRank": 4,
       "name": "解除手閘本車才出發",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -60,7 +60,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.667,
           "castType": "ground",
           "effects": [
             {
@@ -106,7 +106,7 @@
       "radiusTier": "極小"
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -115,7 +115,8 @@
         45.0
       ],
       "cooldownTier": "小",
-      "description": "「逃票乘客請先集合！」\n驗票集合：半徑 7 內最多 8 名敵人拉向車身，在 2 單位外停下；友軍不拉。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
+      "provenance": "w3x-import",
+      "description": "「逃票乘客請先集合！」\n驗票集合：半徑{{radius}} 內最多 8 名敵人拉向車身，在 2 單位外停下；友軍不拉。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "destination": "caster",
@@ -138,7 +139,6 @@
       ],
       "maxRank": 4,
       "name": "逃票乘客請先集合",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 0.0,
       "slot": "Q",
@@ -146,7 +146,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "self",
           "effects": [
             {
@@ -175,7 +175,7 @@
       "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.833,
       "castType": "self",
       "cooldown": [
         90.0,
@@ -183,7 +183,8 @@
         90.0
       ],
       "cooldownTier": "大",
-      "description": "「如月末班車・乘客全數迷途！」\n以半徑 4 與敵人碰撞體重疊選取最多 8 名敵人，先受極小傷害，各自等權抽 8／12／16 單位，朝施法者方向瞬移，可越過車身；合法落點裁切。抵達依出貨配方施加 curse、blind、confusion。不是全地圖均勻亂數；友軍與圈外排除。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
+      "provenance": "w3x-import",
+      "description": "「如月末班車・乘客全數迷途！」\n以半徑{{radius}} 與敵人碰撞體重疊選取最多 8 名敵人，先受極小傷害，各自等權抽 8／12／16 單位，朝施法者方向瞬移，可越過車身；合法落點裁切。抵達依出貨配方施加 curse、blind、confusion。不是全地圖均勻亂數；友軍與圈外排除。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "amount": {
@@ -314,7 +315,6 @@
       "manaCostTier": "小",
       "maxRank": 3,
       "name": "如月末班車・乘客全數迷途",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 0.0,
       "slot": "R",
@@ -322,7 +322,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.833,
           "castType": "self",
           "effects": [
             {
@@ -459,7 +459,7 @@
       "radiusTier": "極小"
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -468,6 +468,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「緊急煞車先拉手閘！」\n緊急煞車：自身 root 定身 3 秒並給 140 護盾；E 可以消耗這個定身後啟動額外閃移。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -503,7 +504,6 @@
       ],
       "maxRank": 4,
       "name": "緊急煞車先拉手閘",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 0.0,
       "slot": "W",
@@ -511,7 +511,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.067,
           "castType": "self",
           "effects": [
             {
@@ -596,6 +596,7 @@
     "maxMana": 0.9209183673469388,
     "mr": 5.279591836734694
   },
+  "msGrowthTier": "極小",
   "id": "b2-kisaragi",
   "modelKey": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
   "name": "如月電車",

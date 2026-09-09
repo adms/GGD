@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.667,
   "castType": "targeted",
   "cooldown": [
     45.0,
@@ -7,6 +7,7 @@
     45.0
   ],
   "cooldownTier": "大",
+  "provenance": "w3x-import",
   "description": "「債主不用敲門！」\n瞬移接近指定敵人後斬擊，落點保持現有模板安全間距。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -40,7 +41,6 @@
   "manaCostTier": "小",
   "maxRank": 3,
   "name": "債主不用敲門",
-  "provenance": "editor-json",
   "range": 6,
   "rangeTier": "中",
   "schema": "ability@1",
@@ -49,7 +49,7 @@
   "template": {
     "contentSha256": "sha256:3bbc417d5c5a3bd9a34f58eec190ecff85b9d8f07a967a022763fe51c86d3be0",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.667,
       "damage": {
         "damageTier": "中"
       },

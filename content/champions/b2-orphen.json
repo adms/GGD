@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.267,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -10,6 +10,7 @@
         15.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「債務人請勿插話！」\n指定敵人獲得 magic-break 與 silenced 旗標 2.5 秒，期間不能施法。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -28,7 +29,6 @@
       ],
       "maxRank": 4,
       "name": "債務人請勿插話",
-      "provenance": "editor-json",
       "range": 6,
       "rangeTier": "中",
       "slot": "E",
@@ -36,7 +36,7 @@
       "template": {
         "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.267,
           "status": {
             "duration": 2.5,
             "silenced": true,
@@ -54,7 +54,7 @@
       ]
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -63,6 +63,7 @@
         15.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「我放出的光之催繳函！」\n打擊敵人並施加 3 秒 DOT，每秒一跳；施法當下只回復自己一次 100 生命，不是每跳吸血。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -118,7 +119,6 @@
       "manaCostTier": "小",
       "maxRank": 4,
       "name": "我放出的光之催繳函",
-      "provenance": "editor-json",
       "range": 6,
       "rangeTier": "中",
       "slot": "Q",
@@ -127,7 +127,7 @@
         "contentSha256": "sha256:c76d7faa4f0ae1fc83b9f46576247f99fe4dfb785449517a122082a8d9c648cc",
         "params": {
           "apRatio": 0.2,
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.567,
           "damageTier": "極小",
           "damageType": "magic",
           "durationSec": 3,
@@ -146,7 +146,7 @@
       ]
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.667,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -154,6 +154,7 @@
         45.0
       ],
       "cooldownTier": "大",
+      "provenance": "w3x-import",
       "description": "「債主不用敲門！」\n瞬移接近指定敵人後斬擊，落點保持現有模板安全間距。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -187,7 +188,6 @@
       "manaCostTier": "小",
       "maxRank": 3,
       "name": "債主不用敲門",
-      "provenance": "editor-json",
       "range": 6,
       "rangeTier": "中",
       "slot": "R",
@@ -195,7 +195,7 @@
       "template": {
         "contentSha256": "sha256:3bbc417d5c5a3bd9a34f58eec190ecff85b9d8f07a967a022763fe51c86d3be0",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.667,
           "damage": {
             "damageTier": "中"
           },
@@ -214,7 +214,7 @@
       ]
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -223,6 +223,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「利息可以再寄一次！」\n縮短 Q 尚未結束的冷卻 2 秒。Q 未進冷卻時不預存折扣。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -243,7 +244,6 @@
       ],
       "maxRank": 4,
       "name": "利息可以再寄一次",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 0.0,
       "slot": "W",
@@ -251,7 +251,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "self",
           "effects": [
             {
@@ -321,6 +321,7 @@
     "maxMana": 0.9581632653061187,
     "mr": 2.1118367346938776
   },
+  "msGrowthTier": "極小",
   "id": "b2-orphen",
   "modelKey": "champ.sela",
   "name": "歐菲",

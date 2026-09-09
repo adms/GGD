@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "ground",
       "cooldown": [
         15.0,
@@ -10,6 +10,7 @@
         15.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「店長先移去門後！」\n瞬移到指定合法落點，躲開領到跑鞋的客人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -28,14 +29,13 @@
       ],
       "maxRank": 4,
       "name": "店長先移去門後",
-      "provenance": "editor-json",
       "range": 6,
       "rangeTier": "中",
       "slot": "E",
       "template": {
         "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
         "params": {
-          "castTimeSec": 0.1
+          "castTimeSec": 0.467
         },
         "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
       },
@@ -48,7 +48,7 @@
       ]
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -57,6 +57,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「免費跑鞋條款另計！」\n指定敵人取得 rage 贈品暫態 4 秒，移動速度提高 15%；這個好處真的生效，代價需另施技能。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -76,7 +77,6 @@
       ],
       "maxRank": 4,
       "name": "免費跑鞋條款另計",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -85,7 +85,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "targeted",
           "effects": [
             {
@@ -111,7 +111,7 @@
       "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.833,
       "castType": "self",
       "cooldown": [
         90.0,
@@ -119,6 +119,7 @@
         90.0
       ],
       "cooldownTier": "大",
+      "provenance": "w3x-import",
       "description": "「櫃檯保固不是無敵！」\n建立 3 秒魔力屏障，只吸收物理和魔法傷害；耗盡可用魔力或到期即結束。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -142,7 +143,6 @@
       ],
       "maxRank": 3,
       "name": "櫃檯保固不是無敵",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 0.0,
       "slot": "R",
@@ -150,7 +150,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.833,
           "castType": "self",
           "effects": [
             {
@@ -181,7 +181,7 @@
       "radiusTier": "極小"
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -190,6 +190,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「七天鑑賞期不含眼睛！」\n消耗敵人全部 rage 贈品，施加正式 blind 配方。沒有贈品時不能退貨致盲。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -217,7 +218,6 @@
       ],
       "maxRank": 4,
       "name": "七天鑑賞期不含眼睛",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -226,7 +226,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "targeted",
           "effects": [
             {
@@ -303,6 +303,7 @@
     "maxMana": 0.9581632653061187,
     "mr": 2.1118367346938776
   },
+  "msGrowthTier": "極小",
   "id": "b2-misery",
   "modelKey": "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee",
   "name": "米瑟利",

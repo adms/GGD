@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "ground",
       "cooldown": [
         15.0,
@@ -10,6 +10,7 @@
         15.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「小白帶我換條路！」\n自己瞬移至合法落點，作為散步繞路的 GGD 改編。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -28,14 +29,13 @@
       ],
       "maxRank": 4,
       "name": "小白帶我換條路",
-      "provenance": "editor-json",
       "range": 6,
       "rangeTier": "中",
       "slot": "E",
       "template": {
         "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
         "params": {
-          "castTimeSec": 0.1
+          "castTimeSec": 0.467
         },
         "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
       },
@@ -48,7 +48,7 @@
       ]
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -57,6 +57,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「春日部接力棒快傳！」\n指定友軍取得 red-comet 與 35% 移速提升，持續 3 秒，真實改變跑動距離。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -76,7 +77,6 @@
       ],
       "maxRank": 4,
       "name": "春日部接力棒快傳",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -85,7 +85,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "targeted",
           "effects": [
             {
@@ -111,7 +111,7 @@
       "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.833,
       "castType": "self",
       "cooldown": [
         90.0,
@@ -119,6 +119,7 @@
         90.0
       ],
       "cooldownTier": "大",
+      "provenance": "w3x-import",
       "description": "「全體一起玩鬼抓人！」\n周圍敵人受到極小傷害，並套用正式 confusion 出貨旗標；效果到期後恢復原行為。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -152,7 +153,6 @@
       "manaCostTier": "小",
       "maxRank": 3,
       "name": "全體一起玩鬼抓人",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 0.0,
       "slot": "R",
@@ -160,7 +160,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.833,
           "castType": "self",
           "effects": [
             {
@@ -199,7 +199,7 @@
       "radiusTier": "極小"
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -208,6 +208,7 @@
         15.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「玩具散落請勿奔跑！」\n指定敵人被 root 定身 2.5 秒；玩具只是主動控制的童趣演出，不是隱藏陷阱。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -226,7 +227,6 @@
       ],
       "maxRank": 4,
       "name": "玩具散落請勿奔跑",
-      "provenance": "editor-json",
       "range": 6,
       "rangeTier": "中",
       "slot": "W",
@@ -234,7 +234,7 @@
       "template": {
         "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.567,
           "status": {
             "duration": 2.5,
             "root": true,
@@ -295,6 +295,7 @@
     "maxMana": 6.564285714285716,
     "mr": 2.1118367346938776
   },
+  "msGrowthTier": "極小",
   "id": "b2-shinchan",
   "modelKey": "champ.thorne",
   "name": "野原新之助",

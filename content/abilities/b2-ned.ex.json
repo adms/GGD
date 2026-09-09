@@ -1,10 +1,11 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 1.233,
   "castType": "ground",
   "cooldown": [
     45.0
   ],
   "cooldownTier": "大",
+  "provenance": "w3x-import",
   "description": "「本體沒批假也能撤！」\n瞬移至合法落點，觸發被動的短期護甲；沒有生成分身。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：青蛙劍士認真揮劍，旁人只注意他到底會不會呱。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -20,7 +21,6 @@
   ],
   "maxRank": 1,
   "name": "本體沒批假也能撤",
-  "provenance": "editor-json",
   "range": 6,
   "rangeTier": "中",
   "schema": "ability@1",
@@ -28,7 +28,7 @@
   "template": {
     "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
     "params": {
-      "castTimeSec": 0.1
+      "castTimeSec": 1.233
     },
     "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
   },

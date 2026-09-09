@@ -135,7 +135,9 @@ export function buildInventory(repoRoot, voice = voiceHitl(repoRoot)) {
         if (typeof v === "string") {
           const kind = STRING_REF_KEYS[k];
           if (kind) hit.add(`${kind}:${v}`);
-          else if ((k === "preset" || k === "tpl" || k === "ref") && v.startsWith("tpl-"))
+          // ⭐ 模板 id 有兩種前綴（GH#1165）：`tpl-*` 與 `hero-template.*`。
+          else if ((k === "preset" || k === "tpl" || k === "ref") &&
+                   (v.startsWith("tpl-") || v.startsWith("hero-template.")))
             for (const r of tplDefaults.get(v) ?? []) hit.add(r);
         } else walk(v);
       }

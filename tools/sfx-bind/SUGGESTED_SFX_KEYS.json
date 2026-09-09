@@ -27,12 +27,12 @@
     "no-source-audio": "⭐ **原作自己就沒有替它配音效** —— war3map.j 沒綁 gg_snd，base 技能也沒有 effectsound。⇒ 這不是我們欠的帳，要不要配是 #554③ 的 owner 裁決"
   },
   "summary": {
-    "abilities": 421,
+    "abilities": 865,
     "census": {
       "overlay": 0,
       "sfxKey": 72,
-      "element": 52,
-      "generic": 297
+      "element": 99,
+      "generic": 694
     },
     "suggested": 107,
     "applicable": 15,
@@ -40,10 +40,10 @@
       "A-vfx-owned": 15,
       "C-family-generic": 92
     },
-    "noSuggestion": 242,
+    "noSuggestion": 686,
     "byCause": {
-      "element-whoosh-already": 50,
-      "no-source-audio": 182,
+      "element-whoosh-already": 97,
+      "no-source-audio": 579,
       "source-map-silent": 2,
       "stock-label-only": 8
     }
@@ -1835,6 +1835,4446 @@
     }
   ],
   "noSuggestion": [
+    {
+      "ability": "b2-aladdin.e",
+      "name": "團員到齊才打節拍",
+      "champion": "b2-aladdin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-aladdin.ex",
+      "name": "暖風模式先照顧同學",
+      "champion": "b2-aladdin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-aladdin.passive",
+      "name": "吹錯音先喘口氣",
+      "champion": "b2-aladdin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-aladdin.q",
+      "name": "烏戈代班先派一位",
+      "champion": "b2-aladdin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-aladdin.r",
+      "name": "魔法音樂課吹整排",
+      "champion": "b2-aladdin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-aladdin.w",
+      "name": "樂團加演再請一位",
+      "champion": "b2-aladdin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-albus.e",
+      "name": "這裡有捷徑",
+      "champion": "b2-albus",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-albus.ex",
+      "name": "跳過劇情三段打王",
+      "champion": "b2-albus",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-albus.passive",
+      "name": "速通途中順便回血",
+      "champion": "b2-albus",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-albus.q",
+      "name": "世界紀錄第一刀",
+      "champion": "b2-albus",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-albus.r",
+      "name": "走捷徑才趕得上急救",
+      "champion": "b2-albus",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-albus.w",
+      "name": "已花冷卻才准跳段",
+      "champion": "b2-albus",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-bojji.e",
+      "name": "太高了我先繞過去",
+      "champion": "b2-bojji",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-bojji.ex",
+      "name": "勇氣不是肌肉量",
+      "champion": "b2-bojji",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-bojji.passive",
+      "name": "你揮空我就安心了",
+      "champion": "b2-bojji",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-bojji.q",
+      "name": "王子縮成迷你問號",
+      "champion": "b2-bojji",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-bojji.r",
+      "name": "笑穴變成原地罰站",
+      "champion": "b2-bojji",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-bojji.w",
+      "name": "王室搔癢暫停握刀",
+      "champion": "b2-bojji",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-boxxo.e",
+      "name": "拉蜜絲搬店不加價",
+      "champion": "b2-boxxo",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-boxxo.ex",
+      "name": "退貨順便消毒",
+      "champion": "b2-boxxo",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-boxxo.passive",
+      "name": "撞壞機台保固啟動",
+      "champion": "b2-boxxo",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-boxxo.q",
+      "name": "歡迎光臨飲料附憑證",
+      "champion": "b2-boxxo",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-boxxo.r",
+      "name": "搬家限定快閃補給站",
+      "champion": "b2-boxxo",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-boxxo.w",
+      "name": "憑證兌換防撞贈品",
+      "champion": "b2-boxxo",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-elma.e",
+      "name": "重劍攻略追加七十點",
+      "champion": "b2-elma",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-elma.ex",
+      "name": "攻略漏寫帶補包",
+      "champion": "b2-elma",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-elma.passive",
+      "name": "物理疼痛換攻略魔力",
+      "champion": "b2-elma",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-elma.q",
+      "name": "攻略說先扣自己血",
+      "champion": "b2-elma",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-elma.r",
+      "name": "照攻略抄的重擊",
+      "champion": "b2-elma",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-elma.w",
+      "name": "半血以下保固升級",
+      "champion": "b2-elma",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-fushi.e",
+      "name": "記憶形狀先借一塊",
+      "champion": "b2-fushi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-fushi.ex",
+      "name": "換一雙腿先跑路",
+      "champion": "b2-fushi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-fushi.passive",
+      "name": "這個痛我記住了",
+      "champion": "b2-fushi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-fushi.q",
+      "name": "請溫柔敲擊測試",
+      "champion": "b2-fushi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-fushi.r",
+      "name": "耐用形狀保固四秒",
+      "champion": "b2-fushi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-fushi.w",
+      "name": "把破掉的地方長回來",
+      "champion": "b2-fushi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-goblin.e",
+      "name": "工具箱灰塵遮眼",
+      "champion": "b2-goblin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-goblin.ex",
+      "name": "裝備便宜保命要緊",
+      "champion": "b2-goblin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-goblin.passive",
+      "name": "工安控制換安全帽",
+      "champion": "b2-goblin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-goblin.q",
+      "name": "工地開工三次點名",
+      "champion": "b2-goblin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-goblin.r",
+      "name": "盲目亂闖請走緊急出口",
+      "champion": "b2-goblin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-goblin.w",
+      "name": "把客人拉進施工區",
+      "champion": "b2-goblin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-guts.e",
+      "name": "工傷才能領補助",
+      "champion": "b2-guts",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-guts.ex",
+      "name": "安全帽只保護額頭",
+      "champion": "b2-guts",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-guts.passive",
+      "name": "工傷先別打卡",
+      "champion": "b2-guts",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-guts.q",
+      "name": "這把劍不進垃圾車",
+      "champion": "b2-guts",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-guts.r",
+      "name": "大型垃圾整排清運",
+      "champion": "b2-guts",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-guts.w",
+      "name": "自願加班同意書",
+      "champion": "b2-guts",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-haga.e",
+      "name": "先停止施法讓我重現",
+      "champion": "b2-haga",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-haga.ex",
+      "name": "熱修補丁先消毒",
+      "champion": "b2-haga",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-haga.passive",
+      "name": "重現工單才可報魔力",
+      "champion": "b2-haga",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-haga.q",
+      "name": "BUG-001截圖存證",
+      "champion": "b2-haga",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-haga.r",
+      "name": "測試結束回收增益與魔力",
+      "champion": "b2-haga",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-haga.w",
+      "name": "跳到有我截圖的當事人",
+      "champion": "b2-haga",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kaede.e",
+      "name": "電池型魔法裝甲",
+      "champion": "b2-kaede",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kaede.ex",
+      "name": "卸載附魔清快取",
+      "champion": "b2-kaede",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kaede.passive",
+      "name": "劍上又跳出更新通知",
+      "champion": "b2-kaede",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kaede.q",
+      "name": "安裝魔劍套件",
+      "champion": "b2-kaede",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kaede.r",
+      "name": "技能欄批次執行",
+      "champion": "b2-kaede",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kaede.w",
+      "name": "更新視窗全部穿透",
+      "champion": "b2-kaede",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kaiji.e",
+      "name": "不看牌先退桌",
+      "champion": "b2-kaiji",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kaiji.ex",
+      "name": "地下勞動急救包",
+      "champion": "b2-kaiji",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kaiji.passive",
+      "name": "賭桌離場服務費",
+      "champion": "b2-kaiji",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kaiji.q",
+      "name": "午餐錢全押這次",
+      "champion": "b2-kaiji",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kaiji.r",
+      "name": "最後一把抽獎機",
+      "champion": "b2-kaiji",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kaiji.w",
+      "name": "翻盤不是保證中獎",
+      "champion": "b2-kaiji",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-keyaru.e",
+      "name": "麻醉單請勿填錯",
+      "champion": "b2-keyaru",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-keyaru.ex",
+      "name": "電子帳單回饋魔力",
+      "champion": "b2-keyaru",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-keyaru.passive",
+      "name": "病歷影印需要工本費",
+      "champion": "b2-keyaru",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-keyaru.q",
+      "name": "醫生先給自己掛號",
+      "champion": "b2-keyaru",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-keyaru.r",
+      "name": "門診加號先救人",
+      "champion": "b2-keyaru",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-keyaru.w",
+      "name": "病歷換職災保險",
+      "champion": "b2-keyaru",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kisaragi.e",
+      "name": "解除手閘本車才出發",
+      "champion": "b2-kisaragi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kisaragi.ex",
+      "name": "車門即將關閉請勿探頭",
+      "champion": "b2-kisaragi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kisaragi.passive",
+      "name": "列車延誤請攻擊客服",
+      "champion": "b2-kisaragi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kisaragi.q",
+      "name": "逃票乘客請先集合",
+      "champion": "b2-kisaragi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kisaragi.r",
+      "name": "如月末班車・乘客全數迷途",
+      "champion": "b2-kisaragi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kisaragi.w",
+      "name": "緊急煞車先拉手閘",
+      "champion": "b2-kisaragi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-klaus.e",
+      "name": "更改辦公室位置",
+      "champion": "b2-klaus",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-klaus.ex",
+      "name": "強制結束順便保命",
+      "champion": "b2-klaus",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-klaus.passive",
+      "name": "自動回覆我正在忙",
+      "champion": "b2-klaus",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-klaus.q",
+      "name": "已加入工作佇列",
+      "champion": "b2-klaus",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-klaus.r",
+      "name": "移動式背景工作",
+      "champion": "b2-klaus",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-klaus.w",
+      "name": "全部執行不要再問",
+      "champion": "b2-klaus",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kumoko.e",
+      "name": "房東來了躲牆角",
+      "champion": "b2-kumoko",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kumoko.ex",
+      "name": "蛛絲押金換防護",
+      "champion": "b2-kumoko",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kumoko.passive",
+      "name": "租屋警報八隻眼",
+      "champion": "b2-kumoko",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kumoko.q",
+      "name": "玄關地墊有點黏",
+      "champion": "b2-kumoko",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kumoko.r",
+      "name": "整個客廳都是我的網",
+      "champion": "b2-kumoko",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-kumoko.w",
+      "name": "毒牙代收房租",
+      "champion": "b2-kumoko",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-luckyman.e",
+      "name": "剛好有張技能保單",
+      "champion": "b2-luckyman",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-luckyman.ex",
+      "name": "沒那麼幸運先搭便車",
+      "champion": "b2-luckyman",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-luckyman.passive",
+      "name": "剛好撿到零錢",
+      "champion": "b2-luckyman",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-luckyman.q",
+      "name": "剛好香蕉皮滑了一下",
+      "champion": "b2-luckyman",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-luckyman.r",
+      "name": "剛好天上掉贈品",
+      "champion": "b2-luckyman",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-luckyman.w",
+      "name": "剛好拳頭在這裡",
+      "champion": "b2-luckyman",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-makoto.e",
+      "name": "本店定點營業範圍",
+      "champion": "b2-makoto",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-makoto.ex",
+      "name": "售後服務含急救",
+      "champion": "b2-makoto",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-makoto.passive",
+      "name": "大單成交順便回血",
+      "champion": "b2-makoto",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-makoto.q",
+      "name": "試射前客人請後退",
+      "champion": "b2-makoto",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-makoto.r",
+      "name": "慢客人請停止抱怨",
+      "champion": "b2-makoto",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-makoto.w",
+      "name": "站遠一點商品才夠痛",
+      "champion": "b2-makoto",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-maomao.e",
+      "name": "樣本採好了別打翻",
+      "champion": "b2-maomao",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-maomao.ex",
+      "name": "受療打五折警示",
+      "champion": "b2-maomao",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-maomao.passive",
+      "name": "藥費按受療次數報銷",
+      "champion": "b2-maomao",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-maomao.q",
+      "name": "試藥員本人先簽到",
+      "champion": "b2-maomao",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-maomao.r",
+      "name": "憑樣本換一張處方",
+      "champion": "b2-maomao",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-maomao.w",
+      "name": "先解毒再喝急救包",
+      "champion": "b2-maomao",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-maple.e",
+      "name": "這個形狀看起來很耐打",
+      "champion": "b2-maple",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-maple.ex",
+      "name": "大家躲我後面不要推",
+      "champion": "b2-maple",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-maple.passive",
+      "name": "客服固定金額回禮",
+      "champion": "b2-maple",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-maple.q",
+      "name": "防禦力輸入多一個零",
+      "champion": "b2-maple",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-maple.r",
+      "name": "怪物模式限定毒龍包",
+      "champion": "b2-maple",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-maple.w",
+      "name": "盾後補餐退魔力",
+      "champion": "b2-maple",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-matthias.e",
+      "name": "退回重寫保護欄",
+      "champion": "b2-matthias",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-matthias.ex",
+      "name": "重修請先看黑板",
+      "champion": "b2-matthias",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-matthias.passive",
+      "name": "老師題目真的過期了",
+      "champion": "b2-matthias",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-matthias.q",
+      "name": "護甲答案扣二十分",
+      "champion": "b2-matthias",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-matthias.r",
+      "name": "期末考禁止交頭接耳",
+      "champion": "b2-matthias",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-matthias.w",
+      "name": "用鉛筆也能劍術考試",
+      "champion": "b2-matthias",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-misery.e",
+      "name": "店長先移去門後",
+      "champion": "b2-misery",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-misery.ex",
+      "name": "小字條款稍後生效",
+      "champion": "b2-misery",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-misery.passive",
+      "name": "異界店主不包售後",
+      "champion": "b2-misery",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-misery.q",
+      "name": "免費跑鞋條款另計",
+      "champion": "b2-misery",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-misery.r",
+      "name": "櫃檯保固不是無敵",
+      "champion": "b2-misery",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-misery.w",
+      "name": "七天鑑賞期不含眼睛",
+      "champion": "b2-misery",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-naofumi.e",
+      "name": "盾牌清空違停入口",
+      "champion": "b2-naofumi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-naofumi.ex",
+      "name": "糾察隊本人安全帽",
+      "champion": "b2-naofumi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-naofumi.passive",
+      "name": "隊友受傷我先回魔",
+      "champion": "b2-naofumi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-naofumi.q",
+      "name": "友軍通行證附贈盾牌",
+      "champion": "b2-naofumi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-naofumi.r",
+      "name": "清完門口才能接隊友",
+      "champion": "b2-naofumi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-naofumi.w",
+      "name": "憑通行證補一口血",
+      "champion": "b2-naofumi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-ned.e",
+      "name": "請退後不要問會不會呱",
+      "champion": "b2-ned",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-ned.ex",
+      "name": "本體沒批假也能撤",
+      "champion": "b2-ned",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-ned.passive",
+      "name": "我真的是劍士不是坐騎",
+      "champion": "b2-ned",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-ned.q",
+      "name": "蛙跳出差交通費",
+      "champion": "b2-ned",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-ned.r",
+      "name": "青蛙劍術會議沿線開",
+      "champion": "b2-ned",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-ned.w",
+      "name": "不是舌頭是近身劍",
+      "champion": "b2-ned",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-noor.e",
+      "name": "先備好防護收據",
+      "champion": "b2-noor",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-noor.ex",
+      "name": "把下一位考官拉近",
+      "champion": "b2-noor",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-noor.passive",
+      "name": "反彈成功才發收據",
+      "champion": "b2-noor",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-noor.q",
+      "name": "這招物理技能我能擋",
+      "champion": "b2-noor",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-noor.r",
+      "name": "收據換厚盾不找零",
+      "champion": "b2-noor",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-noor.w",
+      "name": "新人拿收據換急救",
+      "champion": "b2-noor",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-nube.e",
+      "name": "符咒貼上禁止聊天",
+      "champion": "b2-nube",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-nube.ex",
+      "name": "保健室先解除惡靈",
+      "champion": "b2-nube",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-nube.passive",
+      "name": "班導還不能下班",
+      "champion": "b2-nube",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-nube.q",
+      "name": "鬼手抓回來點名",
+      "champion": "b2-nube",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-nube.r",
+      "name": "全班留下來補課",
+      "champion": "b2-nube",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-nube.w",
+      "name": "老師先幫你擋著",
+      "champion": "b2-nube",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-orphen.e",
+      "name": "債務人請勿插話",
+      "champion": "b2-orphen",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-orphen.ex",
+      "name": "這筆急救算借你的",
+      "champion": "b2-orphen",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-orphen.passive",
+      "name": "催收電話無須長談",
+      "champion": "b2-orphen",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-orphen.q",
+      "name": "我放出的光之催繳函",
+      "champion": "b2-orphen",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-orphen.r",
+      "name": "債主不用敲門",
+      "champion": "b2-orphen",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-orphen.w",
+      "name": "利息可以再寄一次",
+      "champion": "b2-orphen",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-popp.e",
+      "name": "隊友加油我先繞背",
+      "champion": "b2-popp",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-popp.ex",
+      "name": "撤退前先把隊友扶起來",
+      "champion": "b2-popp",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-popp.passive",
+      "name": "撤退路線也是回魔路線",
+      "champion": "b2-popp",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-popp.q",
+      "name": "先幫你預熱",
+      "champion": "b2-popp",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-popp.r",
+      "name": "美拉佐瑪烤肉吃到飽",
+      "champion": "b2-popp",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-popp.w",
+      "name": "冷氣帳單換定身",
+      "champion": "b2-popp",
+      "todayPlays": "magicIce",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicIce"
+      }
+    },
+    {
+      "ability": "b2-rem.e",
+      "name": "鬼化加班先扣血",
+      "champion": "b2-rem",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-rem.ex",
+      "name": "姊姊今天不在家",
+      "champion": "b2-rem",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-rem.passive",
+      "name": "負評客人我來回覆",
+      "champion": "b2-rem",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-rem.q",
+      "name": "這位客人請留步",
+      "champion": "b2-rem",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-rem.r",
+      "name": "半條命換急救包",
+      "champion": "b2-rem",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-rem.w",
+      "name": "鐵球拖把暫停你的普攻",
+      "champion": "b2-rem",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-rin.e",
+      "name": "八極拳催款專線",
+      "champion": "b2-rin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-rin.ex",
+      "name": "退款只退生命值",
+      "champion": "b2-rin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-rin.passive",
+      "name": "普攻也要開發票",
+      "champion": "b2-rin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-rin.q",
+      "name": "寶石預付款已扣款",
+      "champion": "b2-rin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-rin.r",
+      "name": "刷爆卡才准退款",
+      "champion": "b2-rin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-rin.w",
+      "name": "刷卡成功請簽名",
+      "champion": "b2-rin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-shadow.e",
+      "name": "對鏡練習我是路人",
+      "champion": "b2-shadow",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-shadow.ex",
+      "name": "謝幕後閃到你背前",
+      "champion": "b2-shadow",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "b2-shadow.passive",
+      "name": "講完大招才想起防護",
+      "champion": "b2-shadow",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-shadow.q",
+      "name": "觀眾請往舞台靠攏",
+      "champion": "b2-shadow",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-shadow.r",
+      "name": "I AM 加班到 ATOMIC",
+      "champion": "b2-shadow",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-shadow.w",
+      "name": "掌聲先等零點七秒",
+      "champion": "b2-shadow",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-shinchan.e",
+      "name": "小白帶我換條路",
+      "champion": "b2-shinchan",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-shinchan.ex",
+      "name": "玩具箱彈簧送客",
+      "champion": "b2-shinchan",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-shinchan.passive",
+      "name": "動感超人不用補習",
+      "champion": "b2-shinchan",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-shinchan.q",
+      "name": "春日部接力棒快傳",
+      "champion": "b2-shinchan",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-shinchan.r",
+      "name": "全體一起玩鬼抓人",
+      "champion": "b2-shinchan",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-shinchan.w",
+      "name": "玩具散落請勿奔跑",
+      "champion": "b2-shinchan",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-sinbad.e",
+      "name": "巡迴剪綵走捷徑",
+      "champion": "b2-sinbad",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-sinbad.ex",
+      "name": "合作夥伴急救條款",
+      "champion": "b2-sinbad",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-sinbad.passive",
+      "name": "剪綵也是一種續航",
+      "champion": "b2-sinbad",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-sinbad.q",
+      "name": "合夥人早鳥紅利",
+      "champion": "b2-sinbad",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-sinbad.r",
+      "name": "七海規格產品示範",
+      "champion": "b2-sinbad",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-sinbad.w",
+      "name": "商會代表自備保險",
+      "champion": "b2-sinbad",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-takopi.e",
+      "name": "開心貼紙先貼對人",
+      "champion": "b2-takopi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-takopi.ex",
+      "name": "貼紙集滿換繃帶",
+      "champion": "b2-takopi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-takopi.passive",
+      "name": "大家不要哭嗶",
+      "champion": "b2-takopi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-takopi.q",
+      "name": "和好緞帶先接回來",
+      "champion": "b2-takopi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-takopi.r",
+      "name": "道具說明書暖心頁",
+      "champion": "b2-takopi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-takopi.w",
+      "name": "抱抱罩尺寸有限嗶",
+      "champion": "b2-takopi",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-touka.e",
+      "name": "入坑紀錄蓋個章",
+      "champion": "b2-touka",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-touka.ex",
+      "name": "工頭先下班",
+      "champion": "b2-touka",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-touka.passive",
+      "name": "工頭撤退有體力補貼",
+      "champion": "b2-touka",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-touka.q",
+      "name": "英雄招募延時坑",
+      "champion": "b2-touka",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-touka.r",
+      "name": "錄取地下室再送出口",
+      "champion": "b2-touka",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-touka.w",
+      "name": "聖劍當釣竿使",
+      "champion": "b2-touka",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-uncle.e",
+      "name": "結界收據請保留",
+      "champion": "b2-uncle",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-uncle.ex",
+      "name": "SEGA神諭直線超載",
+      "champion": "b2-uncle",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-uncle.passive",
+      "name": "結界客服退通話費",
+      "champion": "b2-uncle",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-uncle.q",
+      "name": "精靈把增益寄錯人",
+      "champion": "b2-uncle",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-uncle.r",
+      "name": "收據換一位代理客服",
+      "champion": "b2-uncle",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-uncle.w",
+      "name": "請按一撤回贈品",
+      "champion": "b2-uncle",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-yogiri.e",
+      "name": "枕頭要搬去安靜處",
+      "champion": "b2-yogiri",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-yogiri.ex",
+      "name": "通知換成勿擾模式",
+      "champion": "b2-yogiri",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-yogiri.passive",
+      "name": "睡眠品質調查表",
+      "champion": "b2-yogiri",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-yogiri.q",
+      "name": "下班通知已讀未回",
+      "champion": "b2-yogiri",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-yogiri.r",
+      "name": "全體不要吵我",
+      "champion": "b2-yogiri",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-yogiri.w",
+      "name": "符合門檻才能結算",
+      "champion": "b2-yogiri",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-zenitsu.e",
+      "name": "鼾聲大到握不住武器",
+      "champion": "b2-zenitsu",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-zenitsu.ex",
+      "name": "下班電梯不等人",
+      "champion": "b2-zenitsu",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-zenitsu.passive",
+      "name": "逃跑也算打卡",
+      "champion": "b2-zenitsu",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-zenitsu.q",
+      "name": "瞇半秒就好",
+      "champion": "b2-zenitsu",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "b2-zenitsu.r",
+      "name": "霹靂三閃・已讀亂回",
+      "champion": "b2-zenitsu",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "b2-zenitsu.w",
+      "name": "雷之呼吸・補眠卡核銷",
+      "champion": "b2-zenitsu",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "community-review-01-20260907.e",
+      "name": "神聖彗星・反射力量",
+      "champion": "community-review-01-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-01-20260907.ex",
+      "name": "黑・魔・導",
+      "champion": "community-review-01-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-01-20260907.passive",
+      "name": "〔決鬥者的布局〕",
+      "champion": "community-review-01-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-01-20260907.q",
+      "name": "黑魔導",
+      "champion": "community-review-01-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-01-20260907.r",
+      "name": "歐西里斯的天空龍",
+      "champion": "community-review-01-20260907",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "community-review-01-20260907.w",
+      "name": "黑魔導女孩",
+      "champion": "community-review-01-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-02-20260907.e",
+      "name": "百二十七式・葵花",
+      "champion": "community-review-02-20260907",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "community-review-02-20260907.ex",
+      "name": "裏三百十六式・豺華",
+      "champion": "community-review-02-20260907",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "community-review-02-20260907.passive",
+      "name": "〔八神之炎〕",
+      "champion": "community-review-02-20260907",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "community-review-02-20260907.q",
+      "name": "百八式・闇拂",
+      "champion": "community-review-02-20260907",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "community-review-02-20260907.r",
+      "name": "禁千二百十一式・八稚女",
+      "champion": "community-review-02-20260907",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "community-review-02-20260907.w",
+      "name": "百式・鬼燒",
+      "champion": "community-review-02-20260907",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "community-review-03-20260907.e",
+      "name": "必殺忍蜂",
+      "champion": "community-review-03-20260907",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "community-review-03-20260907.ex",
+      "name": "陽炎之舞",
+      "champion": "community-review-03-20260907",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "community-review-03-20260907.passive",
+      "name": "〔不知火流身法〕",
+      "champion": "community-review-03-20260907",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "community-review-03-20260907.q",
+      "name": "花蝶扇",
+      "champion": "community-review-03-20260907",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "community-review-03-20260907.r",
+      "name": "超必殺忍蜂",
+      "champion": "community-review-03-20260907",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "community-review-03-20260907.w",
+      "name": "龍炎舞",
+      "champion": "community-review-03-20260907",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "community-review-04-20260907.e",
+      "name": "〔替身護衛〕",
+      "champion": "community-review-04-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-04-20260907.ex",
+      "name": "〔歐拉終結拳〕",
+      "champion": "community-review-04-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-04-20260907.passive",
+      "name": "〔白金之星・精密動作〕",
+      "champion": "community-review-04-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-04-20260907.q",
+      "name": "歐拉連打",
+      "champion": "community-review-04-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-04-20260907.r",
+      "name": "白金之星・世界",
+      "champion": "community-review-04-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-04-20260907.w",
+      "name": "流星指刺",
+      "champion": "community-review-04-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-05-20260907.e",
+      "name": "Leaf Shield",
+      "champion": "community-review-05-20260907",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "community-review-05-20260907.ex",
+      "name": "〔特殊武器切換〕",
+      "champion": "community-review-05-20260907",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "community-review-05-20260907.passive",
+      "name": "〔武器能源管理〕",
+      "champion": "community-review-05-20260907",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "community-review-05-20260907.q",
+      "name": "洛克砲",
+      "champion": "community-review-05-20260907",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "community-review-05-20260907.r",
+      "name": "〔全武裝齊射〕",
+      "champion": "community-review-05-20260907",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "community-review-05-20260907.w",
+      "name": "Metal Blade",
+      "champion": "community-review-05-20260907",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "community-review-06-20260907.e",
+      "name": "石頭",
+      "champion": "community-review-06-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-06-20260907.ex",
+      "name": "複製能力",
+      "champion": "community-review-06-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-06-20260907.passive",
+      "name": "〔圓滾滾的韌性〕",
+      "champion": "community-review-06-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-06-20260907.q",
+      "name": "吸入",
+      "champion": "community-review-06-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-06-20260907.r",
+      "name": "超級巨劍",
+      "champion": "community-review-06-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-06-20260907.w",
+      "name": "吐出",
+      "champion": "community-review-06-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-07-20260907.e",
+      "name": "〔收線〕",
+      "champion": "community-review-07-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-07-20260907.ex",
+      "name": "輕薄的假象",
+      "champion": "community-review-07-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-07-20260907.passive",
+      "name": "〔魔術師的節奏〕",
+      "champion": "community-review-07-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-07-20260907.q",
+      "name": "〔撲克牌連射〕",
+      "champion": "community-review-07-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-07-20260907.r",
+      "name": "〔彈性殺陣〕",
+      "champion": "community-review-07-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-07-20260907.w",
+      "name": "伸縮自在的愛",
+      "champion": "community-review-07-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-08-20260907.e",
+      "name": "〔補給與換刃〕",
+      "champion": "community-review-08-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-08-20260907.ex",
+      "name": "〔立體機動・迴旋斬〕",
+      "champion": "community-review-08-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-08-20260907.passive",
+      "name": "〔阿卡曼戰鬥直覺〕",
+      "champion": "community-review-08-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-08-20260907.q",
+      "name": "〔雙刃斬擊〕",
+      "champion": "community-review-08-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-08-20260907.r",
+      "name": "雷槍",
+      "champion": "community-review-08-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-08-20260907.w",
+      "name": "立體機動裝置",
+      "champion": "community-review-08-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-09-20260907.e",
+      "name": "〔麥穗庇護〕",
+      "champion": "community-review-09-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-09-20260907.ex",
+      "name": "〔豐收的約定〕",
+      "champion": "community-review-09-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-09-20260907.passive",
+      "name": "〔賢狼的眼光〕",
+      "champion": "community-review-09-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-09-20260907.q",
+      "name": "〔狼牙警告〕",
+      "champion": "community-review-09-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-09-20260907.r",
+      "name": "賢狼真身",
+      "champion": "community-review-09-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-09-20260907.w",
+      "name": "〔行商議價〕",
+      "champion": "community-review-09-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-10-20260907.e",
+      "name": "〔撤退指令〕",
+      "champion": "community-review-10-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-10-20260907.ex",
+      "name": "〔Checkmate〕",
+      "champion": "community-review-10-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-10-20260907.passive",
+      "name": "〔戰局推演〕",
+      "champion": "community-review-10-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-10-20260907.q",
+      "name": "〔戰術射擊〕",
+      "champion": "community-review-10-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-10-20260907.r",
+      "name": "絕對遵守的 Geass",
+      "champion": "community-review-10-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-10-20260907.w",
+      "name": "〔集中火力〕",
+      "champion": "community-review-10-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-11-20260907.e",
+      "name": "擬態",
+      "champion": "community-review-11-20260907",
+      "todayPlays": "magicIce",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicIce"
+      }
+    },
+    {
+      "ability": "community-review-11-20260907.ex",
+      "name": "〔解析完成・能力再現〕",
+      "champion": "community-review-11-20260907",
+      "todayPlays": "magicIce",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicIce"
+      }
+    },
+    {
+      "ability": "community-review-11-20260907.passive",
+      "name": "大賢者",
+      "champion": "community-review-11-20260907",
+      "todayPlays": "magicIce",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicIce"
+      }
+    },
+    {
+      "ability": "community-review-11-20260907.q",
+      "name": "水刃",
+      "champion": "community-review-11-20260907",
+      "todayPlays": "magicIce",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicIce"
+      }
+    },
+    {
+      "ability": "community-review-11-20260907.r",
+      "name": "黑炎",
+      "champion": "community-review-11-20260907",
+      "todayPlays": "magicIce",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicIce"
+      }
+    },
+    {
+      "ability": "community-review-11-20260907.w",
+      "name": "捕食者",
+      "champion": "community-review-11-20260907",
+      "todayPlays": "magicIce",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicIce"
+      }
+    },
+    {
+      "ability": "community-review-12-20260907.e",
+      "name": "〔強化・踏步〕",
+      "champion": "community-review-12-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-12-20260907.ex",
+      "name": "〔投影・迎擊〕",
+      "champion": "community-review-12-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-12-20260907.passive",
+      "name": "〔武器解析〕",
+      "champion": "community-review-12-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-12-20260907.q",
+      "name": "干將・莫邪",
+      "champion": "community-review-12-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-12-20260907.r",
+      "name": "無限劍製",
+      "champion": "community-review-12-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-12-20260907.w",
+      "name": "〔投影・飛劍〕",
+      "champion": "community-review-12-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-13-20260907.e",
+      "name": "〔戰術翻滾〕",
+      "champion": "community-review-13-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-13-20260907.ex",
+      "name": "〔副武器應急射擊〕",
+      "champion": "community-review-13-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-13-20260907.passive",
+      "name": "〔狙擊專注〕",
+      "champion": "community-review-13-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-13-20260907.q",
+      "name": "〔Hecate II・精準射擊〕",
+      "champion": "community-review-13-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-13-20260907.r",
+      "name": "〔Hecate II・決定性一槍〕",
+      "champion": "community-review-13-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-13-20260907.w",
+      "name": "〔觀測射界〕",
+      "champion": "community-review-13-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-14-20260907.e",
+      "name": "〔觸手再生〕",
+      "champion": "community-review-14-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-14-20260907.ex",
+      "name": "〔分身式教學〕",
+      "champion": "community-review-14-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-14-20260907.passive",
+      "name": "〔教師的觀察〕",
+      "champion": "community-review-14-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-14-20260907.q",
+      "name": "〔觸手批改〕",
+      "champion": "community-review-14-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-14-20260907.r",
+      "name": "完全防禦形態",
+      "champion": "community-review-14-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-14-20260907.w",
+      "name": "〔高速授課〕",
+      "champion": "community-review-14-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-15-20260907.e",
+      "name": "〔肩膀衝撞〕",
+      "champion": "community-review-15-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-15-20260907.ex",
+      "name": "〔兄弟站起來〕",
+      "champion": "community-review-15-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-15-20260907.passive",
+      "name": "〔兄貴的氣勢〕",
+      "champion": "community-review-15-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-15-20260907.q",
+      "name": "〔正面擒抱〕",
+      "champion": "community-review-15-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-15-20260907.r",
+      "name": "〔兄貴背摔〕",
+      "champion": "community-review-15-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-15-20260907.w",
+      "name": "〔肌肉防線〕",
+      "champion": "community-review-15-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-16-20260907.e",
+      "name": "〔魔法少女飛行〕",
+      "champion": "community-review-16-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-16-20260907.ex",
+      "name": "限定展開・Excalibur",
+      "champion": "community-review-16-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-16-20260907.passive",
+      "name": "〔紅寶石的支援〕",
+      "champion": "community-review-16-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-16-20260907.q",
+      "name": "〔魔力砲擊〕",
+      "champion": "community-review-16-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-16-20260907.r",
+      "name": "夢幻召喚・Saber",
+      "champion": "community-review-16-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-16-20260907.w",
+      "name": "〔魔力防壁〕",
+      "champion": "community-review-16-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-17-20260907.e",
+      "name": "高階傳送",
+      "champion": "community-review-17-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-17-20260907.ex",
+      "name": "死亡是所有生命的終點",
+      "champion": "community-review-17-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-17-20260907.passive",
+      "name": "〔情緒抑制〕",
+      "champion": "community-review-17-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-17-20260907.q",
+      "name": "心臟掌握",
+      "champion": "community-review-17-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-17-20260907.r",
+      "name": "墜落天空",
+      "champion": "community-review-17-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-17-20260907.w",
+      "name": "死亡騎士",
+      "champion": "community-review-17-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-18-20260907.e",
+      "name": "〔黃金甲冑〕",
+      "champion": "community-review-18-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-18-20260907.ex",
+      "name": "〔王之財寶・齊射〕",
+      "champion": "community-review-18-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-18-20260907.passive",
+      "name": "〔王的財庫〕",
+      "champion": "community-review-18-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-18-20260907.q",
+      "name": "王之財寶",
+      "champion": "community-review-18-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-18-20260907.r",
+      "name": "天地乖離開闢之星",
+      "champion": "community-review-18-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-18-20260907.w",
+      "name": "天之鎖",
+      "champion": "community-review-18-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-19-20260907.e",
+      "name": "Sonic Leap",
+      "champion": "community-review-19-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-19-20260907.ex",
+      "name": "The Eclipse",
+      "champion": "community-review-19-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-19-20260907.passive",
+      "name": "二刀流",
+      "champion": "community-review-19-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-19-20260907.q",
+      "name": "〔雙劍交叉斬〕",
+      "champion": "community-review-19-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-19-20260907.r",
+      "name": "Starburst Stream",
+      "champion": "community-review-19-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-19-20260907.w",
+      "name": "〔劍技招架〕",
+      "champion": "community-review-19-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-20-20260907.e",
+      "name": "〔鐵砂防壁〕",
+      "champion": "community-review-20-20260907",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "community-review-20-20260907.ex",
+      "name": "〔電磁過載〕",
+      "champion": "community-review-20-20260907",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "community-review-20-20260907.passive",
+      "name": "〔電荷累積〕",
+      "champion": "community-review-20-20260907",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "community-review-20-20260907.q",
+      "name": "電擊之槍",
+      "champion": "community-review-20-20260907",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "community-review-20-20260907.r",
+      "name": "超電磁砲",
+      "champion": "community-review-20-20260907",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "community-review-20-20260907.w",
+      "name": "〔連鎖放電〕",
+      "champion": "community-review-20-20260907",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "community-review-21-20260907.e",
+      "name": "〔淨化之願〕",
+      "champion": "community-review-21-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-21-20260907.ex",
+      "name": "圓環之理",
+      "champion": "community-review-21-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-21-20260907.passive",
+      "name": "〔希望的連結〕",
+      "champion": "community-review-21-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-21-20260907.q",
+      "name": "〔光之箭〕",
+      "champion": "community-review-21-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-21-20260907.r",
+      "name": "〔願望箭雨〕",
+      "champion": "community-review-21-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-21-20260907.w",
+      "name": "〔希望之弓〕",
+      "champion": "community-review-21-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-22-20260907.e",
+      "name": "〔重新振作〕",
+      "champion": "community-review-22-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-22-20260907.ex",
+      "name": "〔重新選擇〕",
+      "champion": "community-review-22-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-22-20260907.passive",
+      "name": "〔記住這次失敗〕",
+      "champion": "community-review-22-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-22-20260907.q",
+      "name": "Shamac",
+      "champion": "community-review-22-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-22-20260907.r",
+      "name": "死亡回歸",
+      "champion": "community-review-22-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-22-20260907.w",
+      "name": "〔鞭繩牽制〕",
+      "champion": "community-review-22-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-23-20260907.e",
+      "name": "〔萬事屋式反擊〕",
+      "champion": "community-review-23-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-23-20260907.ex",
+      "name": "〔吐槽也是武器〕",
+      "champion": "community-review-23-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-23-20260907.passive",
+      "name": "〔糖分補給〕",
+      "champion": "community-review-23-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-23-20260907.q",
+      "name": "〔洞爺湖・橫斬〕",
+      "champion": "community-review-23-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-23-20260907.r",
+      "name": "〔白夜叉〕",
+      "champion": "community-review-23-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-23-20260907.w",
+      "name": "〔草莓牛奶休息時間〕",
+      "champion": "community-review-23-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-24-20260907.e",
+      "name": "電光石火",
+      "champion": "community-review-24-20260907",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "community-review-24-20260907.ex",
+      "name": "〔充電釋放〕",
+      "champion": "community-review-24-20260907",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "community-review-24-20260907.passive",
+      "name": "〔電力儲備〕",
+      "champion": "community-review-24-20260907",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "community-review-24-20260907.q",
+      "name": "落雷",
+      "champion": "community-review-24-20260907",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "community-review-24-20260907.r",
+      "name": "神速・疾風迅雷",
+      "champion": "community-review-24-20260907",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "community-review-24-20260907.w",
+      "name": "肢曲",
+      "champion": "community-review-24-20260907",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "community-review-25-20260907.e",
+      "name": "〔趕上特賣〕",
+      "champion": "community-review-25-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-25-20260907.ex",
+      "name": "認真系列・認真反覆橫跳",
+      "champion": "community-review-25-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-25-20260907.passive",
+      "name": "〔興趣使然的英雄〕",
+      "champion": "community-review-25-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-25-20260907.q",
+      "name": "普通拳",
+      "champion": "community-review-25-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-25-20260907.r",
+      "name": "認真系列・認真一拳",
+      "champion": "community-review-25-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-25-20260907.w",
+      "name": "連續普通拳",
+      "champion": "community-review-25-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-26-20260907.e",
+      "name": "渦輪引擎滑板",
+      "champion": "community-review-26-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-26-20260907.ex",
+      "name": "伸縮吊帶",
+      "champion": "community-review-26-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-26-20260907.passive",
+      "name": "〔線索整理〕",
+      "champion": "community-review-26-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-26-20260907.q",
+      "name": "足球射擊",
+      "champion": "community-review-26-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-26-20260907.r",
+      "name": "〔真相只有一個〕",
+      "champion": "community-review-26-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-26-20260907.w",
+      "name": "手錶型麻醉槍",
+      "champion": "community-review-26-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-27-20260907.e",
+      "name": "翔牌",
+      "champion": "community-review-27-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-27-20260907.ex",
+      "name": "〔換牌：風與樹〕",
+      "champion": "community-review-27-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-27-20260907.passive",
+      "name": "〔卡牌連結〕",
+      "champion": "community-review-27-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-27-20260907.q",
+      "name": "風牌",
+      "champion": "community-review-27-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-27-20260907.r",
+      "name": "劍牌",
+      "champion": "community-review-27-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-27-20260907.w",
+      "name": "盾牌",
+      "champion": "community-review-27-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-28-20260907.e",
+      "name": "〔逼近步〕",
+      "champion": "community-review-28-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-28-20260907.ex",
+      "name": "〔狂劍追擊〕",
+      "champion": "community-review-28-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-28-20260907.passive",
+      "name": "〔劍神流・先發制人〕",
+      "champion": "community-review-28-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-28-20260907.q",
+      "name": "〔猛進斬〕",
+      "champion": "community-review-28-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-28-20260907.r",
+      "name": "光之太刀",
+      "champion": "community-review-28-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-28-20260907.w",
+      "name": "〔鬥氣護身〕",
+      "champion": "community-review-28-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-29-20260907.e",
+      "name": "飛行魔法",
+      "champion": "community-review-29-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-29-20260907.ex",
+      "name": "變出花田的魔法",
+      "champion": "community-review-29-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-29-20260907.passive",
+      "name": "魔力抑制",
+      "champion": "community-review-29-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-29-20260907.q",
+      "name": "一般攻擊魔法・Zoltraak",
+      "champion": "community-review-29-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-29-20260907.r",
+      "name": "〔葬送連射〕",
+      "champion": "community-review-29-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-29-20260907.w",
+      "name": "防禦魔法",
+      "champion": "community-review-29-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-30-20260907.e",
+      "name": "〔先溜再說〕",
+      "champion": "community-review-30-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-30-20260907.ex",
+      "name": "〔今天真的不想動〕",
+      "champion": "community-review-30-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-30-20260907.passive",
+      "name": "〔拖延症〕",
+      "champion": "community-review-30-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-30-20260907.q",
+      "name": "〔菸灰缸飛過去〕",
+      "champion": "community-review-30-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-30-20260907.r",
+      "name": "〔房間大崩壞〕",
+      "champion": "community-review-30-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-30-20260907.w",
+      "name": "〔煙霧瀰漫〕",
+      "champion": "community-review-30-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-31-20260907.e",
+      "name": "Repel Counter",
+      "champion": "community-review-31-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-31-20260907.ex",
+      "name": "〔攻略完成〕",
+      "champion": "community-review-31-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-31-20260907.passive",
+      "name": "〔糞作獵人的讀招〕",
+      "champion": "community-review-31-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-31-20260907.q",
+      "name": "Spiral Edge",
+      "champion": "community-review-31-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-31-20260907.r",
+      "name": "Accel",
+      "champion": "community-review-31-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-31-20260907.w",
+      "name": "Slide Move",
+      "champion": "community-review-31-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-32-20260907.e",
+      "name": "闇ぱんち",
+      "champion": "community-review-32-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-32-20260907.ex",
+      "name": "THE END OF SON〔終章〕",
+      "champion": "community-review-32-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-32-20260907.passive",
+      "name": "淫奔",
+      "champion": "community-review-32-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-32-20260907.q",
+      "name": "肩パンチ",
+      "champion": "community-review-32-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-32-20260907.r",
+      "name": "THE END OF SON",
+      "champion": "community-review-32-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-32-20260907.w",
+      "name": "流精群（ホワイトレイン）",
+      "champion": "community-review-32-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-33-20260907.e",
+      "name": "〔踏地突進〕",
+      "champion": "community-review-33-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-33-20260907.ex",
+      "name": "〔重力劍・壓潰〕",
+      "champion": "community-review-33-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-33-20260907.passive",
+      "name": "〔不死者再生〕",
+      "champion": "community-review-33-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-33-20260907.q",
+      "name": "〔重力劍・橫掃〕",
+      "champion": "community-review-33-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-33-20260907.r",
+      "name": "〔不死者的再起〕",
+      "champion": "community-review-33-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-33-20260907.w",
+      "name": "〔重量切換〕",
+      "champion": "community-review-33-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-34-20260907.e",
+      "name": "〔妖怪的咒印〕",
+      "champion": "community-review-34-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-34-20260907.ex",
+      "name": "〔百公里衝撞〕",
+      "champion": "community-review-34-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-34-20260907.passive",
+      "name": "〔追上你了〕",
+      "champion": "community-review-34-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-34-20260907.q",
+      "name": "〔疾走爪擊〕",
+      "champion": "community-review-34-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-34-20260907.r",
+      "name": "〔全速追獵〕",
+      "champion": "community-review-34-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-34-20260907.w",
+      "name": "〔急轉彎〕",
+      "champion": "community-review-34-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-35-20260907.e",
+      "name": "〔呼吸調整〕",
+      "champion": "community-review-35-20260907",
+      "todayPlays": "magicIce",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicIce"
+      }
+    },
+    {
+      "ability": "community-review-35-20260907.ex",
+      "name": "〔呼吸切換〕",
+      "champion": "community-review-35-20260907",
+      "todayPlays": "magicIce",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicIce"
+      }
+    },
+    {
+      "ability": "community-review-35-20260907.passive",
+      "name": "〔嗅覺・破綻辨識〕",
+      "champion": "community-review-35-20260907",
+      "todayPlays": "magicIce",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicIce"
+      }
+    },
+    {
+      "ability": "community-review-35-20260907.q",
+      "name": "水之呼吸・水面斬",
+      "champion": "community-review-35-20260907",
+      "todayPlays": "magicIce",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicIce"
+      }
+    },
+    {
+      "ability": "community-review-35-20260907.r",
+      "name": "火之神神樂・圓舞",
+      "champion": "community-review-35-20260907",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "community-review-35-20260907.w",
+      "name": "水之呼吸・水車",
+      "champion": "community-review-35-20260907",
+      "todayPlays": "magicIce",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicIce"
+      }
+    },
+    {
+      "ability": "community-review-36-20260907.e",
+      "name": "〔霸王突進〕",
+      "champion": "community-review-36-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-36-20260907.ex",
+      "name": "〔跟著本大爺衝〕",
+      "champion": "community-review-36-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-36-20260907.passive",
+      "name": "〔自信過剩〕",
+      "champion": "community-review-36-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-36-20260907.q",
+      "name": "〔蠻力斬擊〕",
+      "champion": "community-review-36-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-36-20260907.r",
+      "name": "Rance Attack／蘭斯攻擊",
+      "champion": "community-review-36-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-36-20260907.w",
+      "name": "〔本大爺還沒認真〕",
+      "champion": "community-review-36-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-37-20260907.e",
+      "name": "〔點心時間〕",
+      "champion": "community-review-37-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-37-20260907.ex",
+      "name": "〔一起加油〕",
+      "champion": "community-review-37-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-37-20260907.passive",
+      "name": "〔雖然害怕還是努力〕",
+      "champion": "community-review-37-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-37-20260907.q",
+      "name": "〔討伐叉刺擊〕",
+      "champion": "community-review-37-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-37-20260907.r",
+      "name": "〔鼓起勇氣討伐〕",
+      "champion": "community-review-37-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "community-review-37-20260907.w",
+      "name": "〔哇啊啊撤退〕",
+      "champion": "community-review-37-20260907",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
     {
       "ability": "godie-e001.e",
       "name": "22-03 五吋釘",

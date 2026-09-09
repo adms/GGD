@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.833,
   "castType": "ground",
   "cooldown": [
     45.0,
@@ -7,6 +7,7 @@
     45.0
   ],
   "cooldownTier": "大",
+  "provenance": "w3x-import",
   "description": "「I AM 加班到 ATOMIC！」\n中級直線魔法加 0.7725 AP（正式出身縮放後）；只有實際 AP 增益能提高這段，沒有偽裝成原作核爆。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -37,7 +38,6 @@
   "manaCostTier": "小",
   "maxRank": 3,
   "name": "I AM 加班到 ATOMIC",
-  "provenance": "editor-json",
   "range": 6,
   "rangeTier": "中",
   "schema": "ability@1",
@@ -46,7 +46,7 @@
     "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
     "params": {
       "aim": "target",
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.833,
       "damage": {
         "damageTier": "中",
         "ratios": [

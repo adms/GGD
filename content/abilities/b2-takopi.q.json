@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.467,
   "castType": "targeted",
   "cooldown": [
     45.0,
@@ -8,6 +8,7 @@
     45.0
   ],
   "cooldownTier": "小",
+  "provenance": "w3x-import",
   "description": "「和好緞帶先接回來！」\n把指定友軍搬到自己腳邊，使用現有 rallyToCaster 低弧位移；落點遵守既有合法地形。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：開心道具全部誤用，但認真把隊友救回來。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -30,7 +31,6 @@
   "manaCostTier": "小",
   "maxRank": 4,
   "name": "和好緞帶先接回來",
-  "provenance": "editor-json",
   "radius": 2.75,
   "range": 6,
   "rangeTier": "中",
@@ -40,7 +40,7 @@
   "template": {
     "contentSha256": "sha256:7687b75d1bb1945a3dc0ca45c1015ad419c38757ac6e22cbc4d740088ce70761",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "destination": "rallyToCaster",
       "travelSec": 0.1
     },

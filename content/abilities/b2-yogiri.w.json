@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 1.7,
   "castType": "targeted",
   "cooldown": [
     45.0,
@@ -8,6 +8,7 @@
     45.0
   ],
   "cooldownTier": "小",
+  "provenance": "w3x-import",
   "description": "「符合門檻才能結算！」\n造成極小魔法傷害；目標同時帶 curse 且生命低於 45% 時追加中級魔法傷害，最後消耗通知並施加 1 秒沉默；沉默不另要求低血。傷害有限，沒有 kill 指令。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：秒殺外掛改成催眠式下班通知，不按通知的人更倒楣。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -68,7 +69,6 @@
   "manaCostTier": "小",
   "maxRank": 4,
   "name": "符合門檻才能結算",
-  "provenance": "editor-json",
   "radius": 3,
   "range": 6,
   "rangeTier": "中",
@@ -78,7 +78,7 @@
   "template": {
     "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.7,
       "castType": "targeted",
       "effects": [
         {

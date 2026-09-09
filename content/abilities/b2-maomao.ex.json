@@ -1,10 +1,11 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 1.433,
   "castType": "targeted",
   "cooldown": [
     90.0
   ],
   "cooldownTier": "大",
+  "provenance": "w3x-import",
   "description": "「受療打五折警示！」\n敵人試飲警示：施加 grievous-wounds，受療、吸血與自然回復各為 50%，持续 3 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -23,7 +24,6 @@
   ],
   "maxRank": 1,
   "name": "受療打五折警示",
-  "provenance": "editor-json",
   "radius": 3,
   "range": 6,
   "rangeTier": "中",
@@ -33,7 +33,7 @@
   "template": {
     "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.433,
       "castType": "targeted",
       "effects": [
         {

@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.067,
   "castType": "targeted",
   "cooldown": [
     45.0,
@@ -8,6 +8,7 @@
     45.0
   ],
   "cooldownTier": "小",
+  "provenance": "w3x-import",
   "description": "「記憶形狀先借一塊！」\n指定友軍取得 190 點護盾 3 秒；若自己有 berserk 適應暫態，額外回復該友軍 100 生命。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -54,7 +55,6 @@
   ],
   "maxRank": 4,
   "name": "記憶形狀先借一塊",
-  "provenance": "editor-json",
   "radius": 3,
   "range": 6,
   "rangeTier": "中",
@@ -64,7 +64,7 @@
   "template": {
     "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castType": "targeted",
       "effects": [
         {

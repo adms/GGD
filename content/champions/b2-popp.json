@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "ground",
       "cooldown": [
         15.0,
@@ -10,6 +10,7 @@
         15.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「隊友加油我先繞背！」\n瞬移到合法施法點，準備 4 秒急救窗口；不授予無敵。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：撤退也是施法距離管理。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -28,14 +29,13 @@
       ],
       "maxRank": 4,
       "name": "隊友加油我先繞背",
-      "provenance": "editor-json",
       "range": 6,
       "rangeTier": "中",
       "slot": "E",
       "template": {
         "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
         "params": {
-          "castTimeSec": 0.1
+          "castTimeSec": 0.467
         },
         "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
       },
@@ -48,7 +48,7 @@
       ]
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -57,6 +57,7 @@
         15.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「先幫你預熱！」\n小級火焰打擊並標記 burn 3 秒；火候標記本身不造成持續傷害。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：撤退也是施法距離管理。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -83,7 +84,6 @@
       "manaCostTier": "小",
       "maxRank": 4,
       "name": "先幫你預熱",
-      "provenance": "editor-json",
       "range": 6,
       "rangeTier": "中",
       "slot": "Q",
@@ -91,7 +91,7 @@
       "template": {
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.567,
           "damage": {
             "damageTier": "小"
           },
@@ -113,7 +113,7 @@
       ]
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.833,
       "castType": "ground",
       "cooldown": [
         45.0,
@@ -121,6 +121,7 @@
         45.0
       ],
       "cooldownTier": "大",
+      "provenance": "w3x-import",
       "description": "「美拉佐瑪烤肉吃到飽！」\n一條中級直線魔法；一次命中結算，烤肉梗不額外偷偷加 DOT。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：撤退也是施法距離管理。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -145,7 +146,6 @@
       "manaCostTier": "小",
       "maxRank": 3,
       "name": "美拉佐瑪烤肉吃到飽",
-      "provenance": "editor-json",
       "range": 6,
       "rangeTier": "中",
       "slot": "R",
@@ -153,7 +153,7 @@
         "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
         "params": {
           "aim": "target",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.833,
           "damage": {
             "damageTier": "中"
           },
@@ -172,7 +172,7 @@
       ]
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.233,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -181,6 +181,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「冷氣帳單換定身！」\n小級冰擊；消耗目標全部 burn 才定身 1.8 秒，沒有火候就只降溫打擊。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：撤退也是施法距離管理。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -217,7 +218,6 @@
       "manaCostTier": "小",
       "maxRank": 4,
       "name": "冷氣帳單換定身",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -226,7 +226,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 1.233,
           "castType": "targeted",
           "effects": [
             {
@@ -311,6 +311,7 @@
     "maxMana": 0.9581632653061187,
     "mr": 2.1118367346938776
   },
+  "msGrowthTier": "極小",
   "id": "b2-popp",
   "modelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
   "name": "何布",

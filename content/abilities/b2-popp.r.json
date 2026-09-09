@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.833,
   "castType": "ground",
   "cooldown": [
     45.0,
@@ -7,6 +7,7 @@
     45.0
   ],
   "cooldownTier": "大",
+  "provenance": "w3x-import",
   "description": "「美拉佐瑪烤肉吃到飽！」\n一條中級直線魔法；一次命中結算，烤肉梗不額外偷偷加 DOT。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：撤退也是施法距離管理。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
@@ -31,7 +32,6 @@
   "manaCostTier": "小",
   "maxRank": 3,
   "name": "美拉佐瑪烤肉吃到飽",
-  "provenance": "editor-json",
   "range": 6,
   "rangeTier": "中",
   "schema": "ability@1",
@@ -40,7 +40,7 @@
     "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
     "params": {
       "aim": "target",
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.833,
       "damage": {
         "damageTier": "中"
       },

@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.667,
       "castType": "ground",
       "cooldown": [
         45.0,
@@ -10,6 +10,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「拉蜜絲搬店不加價！」\n拉蜜絲搬運到施法點，0.35 秒後落地；不扔敵人，也不讓阿箱自行走下機台。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -31,7 +32,6 @@
       "manaCostTier": "小",
       "maxRank": 4,
       "name": "拉蜜絲搬店不加價",
-      "provenance": "editor-json",
       "radius": 2.75,
       "range": 6,
       "rangeTier": "中",
@@ -41,7 +41,7 @@
         "contentSha256": "sha256:7687b75d1bb1945a3dc0ca45c1015ad419c38757ac6e22cbc4d740088ce70761",
         "params": {
           "arriveRadius": 150,
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.667,
           "destination": "castPoint",
           "travelSec": 0.35
         },
@@ -56,7 +56,7 @@
       ]
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -65,6 +65,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「歡迎光臨飲料附憑證！」\n指定隊友喝飲料回復 120；售出後自身獲得 moon-combo 營業憑證 4 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -95,7 +96,6 @@
       ],
       "maxRank": 4,
       "name": "歡迎光臨飲料附憑證",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -151,7 +151,7 @@
       "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.833,
       "castType": "self",
       "cooldown": [
         90.0,
@@ -159,7 +159,8 @@
         90.0
       ],
       "cooldownTier": "大",
-      "description": "「搬家限定快閃補給站！」\n移動後 4 秒內才開快閃店：三次每秒重選自身半徑 3 內最多 4 位友軍，各回復 80，離開就不再補；不是對友軍造成傷害的 periodic-field。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
+      "provenance": "w3x-import",
+      "description": "「搬家限定快閃補給站！」\n移動後 4 秒內才開快閃店：三次每秒重選自身半徑{{radius}} 內最多 4 位友軍，各回復 80，離開就不再補；不是對友軍造成傷害的 periodic-field。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "anchor": "caster",
@@ -204,7 +205,6 @@
       ],
       "maxRank": 3,
       "name": "搬家限定快閃補給站",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 0.0,
       "slot": "R",
@@ -212,7 +212,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.833,
           "castType": "self",
           "effects": [
             {
@@ -264,7 +264,7 @@
       "radiusTier": "極小"
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -273,6 +273,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「憑證兌換防撞贈品！」\n消耗自身全部營業憑證，給指定隊友 240 護盾 3 秒；沒有購買紀錄就沒有贈品。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -310,7 +311,6 @@
       ],
       "maxRank": 4,
       "name": "憑證兌換防撞贈品",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -319,7 +319,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "targeted",
           "effects": [
             {
@@ -406,6 +406,7 @@
     "maxMana": 0.8520408163265306,
     "mr": 3.299795918367347
   },
+  "msGrowthTier": "極小",
   "id": "b2-boxxo",
   "modelKey": "champ.thorne",
   "name": "阿箱＋拉蜜絲",

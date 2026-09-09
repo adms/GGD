@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.267,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -10,6 +10,7 @@
         15.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「麻醉單請勿填錯！」\n指定敵人被施加 magic-break，明確帶 silenced 旗標 2.5 秒；不造成麻醉傷害。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -28,7 +29,6 @@
       ],
       "maxRank": 4,
       "name": "麻醉單請勿填錯",
-      "provenance": "editor-json",
       "range": 6,
       "rangeTier": "中",
       "slot": "E",
@@ -36,7 +36,7 @@
       "template": {
         "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.267,
           "status": {
             "duration": 2.5,
             "silenced": true,
@@ -54,7 +54,7 @@
       ]
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castType": "self",
       "cooldown": [
         15.0,
@@ -63,6 +63,7 @@
         15.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「醫生先給自己掛號！」\n回復自身 120 生命；缺血時的真治療事件會建立病歷。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -87,7 +88,6 @@
       ],
       "maxRank": 4,
       "name": "醫生先給自己掛號",
-      "provenance": "editor-json",
       "range": 0.0,
       "slot": "Q",
       "template": {
@@ -102,7 +102,7 @@
               180
             ]
           },
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.067,
           "target": "self"
         },
         "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6"
@@ -116,7 +116,7 @@
       ]
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castType": "targeted",
       "cooldown": [
         90.0,
@@ -124,6 +124,7 @@
         90.0
       ],
       "cooldownTier": "大",
+      "provenance": "w3x-import",
       "description": "「門診加號先救人！」\n治療指定友軍 120 生命，並驅散最多 3 筆可驅散負面狀態、DOT 或增益来源。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -158,7 +159,6 @@
       ],
       "maxRank": 3,
       "name": "門診加號先救人",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -219,7 +219,7 @@
       "radiusTier": "極小"
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -228,6 +228,7 @@
         45.0
       ],
       "cooldownTier": "小",
+      "provenance": "w3x-import",
       "description": "「病歷換職災保險！」\n消耗自己全部 rage 病歷，對指定友軍給予 190 點護盾 3 秒。未持有病歷則沒有護盾。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
@@ -265,7 +266,6 @@
       ],
       "maxRank": 4,
       "name": "病歷換職災保險",
-      "provenance": "editor-json",
       "radius": 3,
       "range": 6,
       "rangeTier": "中",
@@ -274,7 +274,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "targeted",
           "effects": [
             {
@@ -361,6 +361,7 @@
     "maxMana": 0.9581632653061187,
     "mr": 2.1118367346938776
   },
+  "msGrowthTier": "極小",
   "id": "b2-keyaru",
   "modelKey": "champ.sela",
   "name": "凱亞爾",
