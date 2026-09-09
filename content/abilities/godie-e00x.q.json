@@ -24,9 +24,19 @@
   "range": 0.0,
   "effects": [
     {
-      "kind": "damage",
-      "damageType": "physical",
-      "amount": {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "imported.earthtornado2",
+      "soundKey": "wc3.blademasterwhirlwind"
+    }
+  ],
+  "template": {
+    "ref": "tpl-proxy-cast",
+    "params": {
+      "anchor": "point",
+      "radius": 327.27,
+      "damage": {
         "ratios": [
           {
             "stat": "ad",
@@ -39,22 +49,13 @@
           "小",
           "小"
         ]
-      }
-    },
-    {
-      "kind": "applyStatus",
+      },
+      "damageType": "physical",
       "statusId": "burnstun",
-      "duration": 0.8,
-      "stun": true
-    },
-    {
-      "kind": "spawnModelFx",
-      "shape": "single",
-      "preset": "tpl-locust-orb",
-      "modelKey": "imported.earthtornado2",
-      "soundKey": "wc3.blademasterwhirlwind"
+      "statusDurationSec": 0.8,
+      "castTimeSec": 0.8
     }
-  ],
+  },
   "vfxKey": "fx.prim.nature.slash",
   "sfxKey": "wc3.darksummoninglaunch1",
   "targetsEnemies": true,

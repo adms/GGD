@@ -326,12 +326,6 @@
       "aim": [
         "路徑"
       ],
-      "length": [
-        "路徑"
-      ],
-      "width": [
-        "路徑"
-      ],
       "alpha": [
         "續效特效"
       ],
@@ -445,14 +439,23 @@
       "landRadius": [
         "路徑"
       ],
+      "length": [
+        "路徑"
+      ],
       "lifeSec": [
         "等待"
+      ],
+      "modelFx": [
+        "續效特效"
       ],
       "modelKey": [
         "續效特效"
       ],
       "offsetForwardU": [
         "路徑"
+      ],
+      "onHitTargets": [
+        "多段"
       ],
       "onHitVfx": [
         "續效特效"
@@ -468,6 +471,9 @@
       ],
       "perHitDamage": [
         "多段"
+      ],
+      "perRank": [
+        "持續"
       ],
       "projectileId": [
         "路徑"
@@ -577,11 +583,11 @@
         "路徑",
         "等待"
       ],
-      "perRank": [
-        "持續"
+      "vfx": [
+        "續效特效"
       ],
-      "onHitTargets": [
-        "多段"
+      "width": [
+        "路徑"
       ]
     },
     "ignored": {

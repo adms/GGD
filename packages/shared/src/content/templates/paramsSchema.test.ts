@@ -134,6 +134,15 @@ function probesFor(slot: ParamSlot, current: unknown): unknown[] {
         { vfxId: "probe.vfx.one", at: "self" },
         { vfxId: "probe.vfx.two", at: "bone", attach: "chest", boneOn: "victim" },
       ].filter(differs);
+    case "spawnModelFx":
+      // ⭐ GH#1146 —— 整個 spawnModelFx 節點。⚠️ 兩個候選的**模型與尺寸都不同**,
+      //    ⛔ 不是只差 `scale`（只動尺寸的探針對「展開器把 modelKey 掉了」是瞎的）。
+      //    ⚠️ 一定要帶 `preset`：`zSpawnModelFx` 的 refine 是「沒有 preset 就 path／speed／…
+      //    三格必填」，⛔ 而出貨那 3 個節點走的正是 preset 那條路（`tpl-locust-orb` …）。
+      return [
+        { shape: "single", preset: "tpl-locust-orb", modelKey: "probe.model.one", clip: "idle", scale: 2, lifeSec: 1 },
+        { shape: "single", preset: "tpl-locust-strike", modelKey: "probe.model.two", clip: "birth", scale: 5, lifeSec: 3 },
+      ].filter(differs);
     case "buffPerRank":
       // ⭐ GH#993 —— 逐階欄位表。⚠️ 兩個候選的**階數與 modifier 都不同**，⛔ 不是只有秒數不同
       //    （只動 duration 的探針對「展開器把 modifiers 那一欄掉了」是瞎的）。

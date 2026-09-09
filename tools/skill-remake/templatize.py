@@ -1090,7 +1090,7 @@ def m_transform(tpl: dict, doc: dict):
 #: ⭐ 2026-09-06 晚：blink / apply-status / heal / projectile-strike 四份模板檔落地（#1069 #1071 #1072 #1068）；
 #:    `plan()` 對不存在的 ref 仍然直接跳過（拿 `--templates-dir` 試提案中的模板時才會遇到）。
 def m_area_strike(tpl: dict, doc: dict):
-    """⭐ GH#1146 範圍打擊：`[damageArea]` 一個節點,追加效果住 `onHitTargets`。
+    """⭐ GH#1146 範圍打擊：`damageArea` 主體（＋選配的一格視覺節點）。
 
     ⛔ 與 `m_instant_blast` 的差別是**節點型別**,⛔ 不是參數：
     instant-blast 發「文件層 radius ＋ `kind:damage`」,這一族發「`kind:damageArea`」。
@@ -1103,9 +1103,25 @@ def m_area_strike(tpl: dict, doc: dict):
     那會是第二個住處（`zDamageArea` 本人已經在驗它）。
     """
     eff = doc.get("effects") or []
-    if len(eff) != 1 or not isinstance(eff[0], dict) or eff[0].get("kind") != "damageArea":
+    if not eff or not isinstance(eff[0], dict) or eff[0].get("kind") != "damageArea":
         return None, None
     da = eff[0]
+    # ⭐ GH#1146 —— **視覺是第二個頂層節點**（⛔ 不在 `onHitTargets` 裡）。
+    #   ⚠️ 兩件事語意不同：`onHitTargets` 是「打中的每一個人身上追加什麼」,
+    #   視覺是「這一發長什麼樣」。⭐ 出貨 4 支就是這個結構
+    #   （`spawnModelFx` ×3 · `spawnVfx` ×1）。
+    #   ⭐ 兩格分開,⛔ 不是一格二選一：參數集合完全不相交（見 zParamType 的註解）。
+    visuals = {}
+    for node in eff[1:]:
+        if not isinstance(node, dict):
+            return None, "effects 裡有非物件的節點"
+        kind = node.get("kind")
+        slot = {"spawnVfx": "vfx", "spawnModelFx": "modelFx"}.get(kind)
+        if slot is None:
+            return None, f"第二個節點是「{kind}」,⛔ 這一族只收 spawnVfx／spawnModelFx"
+        if slot in visuals:
+            return None, f"同一種視覺節點（{kind}）出現兩次"
+        visuals[slot] = {k: v for k, v in node.items() if k != "kind"}
     ct = doc.get("castType")
     if ct not in ("self", "ground", "targeted"):
         return None, f"castType「{ct}」不在這一族的三個值裡"
@@ -1143,6 +1159,8 @@ def m_area_strike(tpl: dict, doc: dict):
         params["onHitTargets"] = da["onHitTargets"]
     if da.get("condition") is not None:
         params["condition"] = da["condition"]
+    for slot, node in visuals.items():
+        params[slot] = node
     r = _cast_time(tpl, doc, params)
     if r:
         return None, r

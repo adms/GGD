@@ -170,4 +170,8 @@ A("45-002", "45-002 天照", "self", [120], [650], 0,
            status("burn", 10.0),
            status("paralysis", 10.0, silenced=True),
            {"kind": "dot", "damageType": "magic", "amountPerTick": amt(flat=400),
-            "intervalSec": 1.0, "durationSec": 10.0, "stacking": "refresh"}])
+            "intervalSec": 1.0, "durationSec": 10.0, "stacking": "refresh"}],
+  # ⭐ GH#1146 —— 綁 `tpl-area-strike`（含**第二個頂層節點**的視覺槽）。
+  #   ⚠️ params 由 `templatize.py::m_area_strike()` 從出貨文件算出來,⛔ 不是手打;
+  #   等價由 `templatizeEquivalence.test.ts` 逐位元判。
+  template={'ref': 'tpl-area-strike', 'params': {'castType': 'self', 'damageType': 'magic', 'damage': {'flat': 1.0}, 'radius': 6.0, 'radiusTier': '中', 'onHitTargets': [{'kind': 'applyBuff', 'modifiers': [{'stat': 'ad', 'op': 'pctAdd', 'value': -0.4}], 'duration': 10.0, 'dispellable': True, 'polarity': 'debuff'}, {'kind': 'applyStatus', 'statusId': 'burn', 'duration': 10.0}, {'kind': 'applyStatus', 'statusId': 'paralysis', 'duration': 10.0, 'silenced': True}, {'kind': 'dot', 'damageType': 'magic', 'amountPerTick': {'flat': 400.0}, 'intervalSec': 1.0, 'durationSec': 10.0, 'stacking': 'refresh'}], 'modelFx': {'shape': 'single', 'preset': 'tpl-locust-orb', 'modelKey': 'imported.netherstrike', 'clip': 'idle', 'soundKey': 'wc3.flamestrikebirth1', 'scale': 4.0, 'lifeSec': 2.0}, 'castTimeSec': 1.633}})

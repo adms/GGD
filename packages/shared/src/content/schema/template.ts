@@ -94,6 +94,20 @@ export const zParamType = z.enum([
   "dot",
   "spawnVfx",
   /**
+   * ⭐ GH#1146 —— 同一個做法的第五格：**一整個 `spawnModelFx` 節點**（去掉 `kind`）。
+   *
+   * ⭐ 為什麼它不能併進 `spawnVfx` 那一格：兩者的**參數集合完全不相交** ——
+   * `spawnVfx` 是粒子腳本（`vfxId`＋`at`／`attach`／`boneOn`），
+   * `spawnModelFx` 是**模型**（`modelKey`／`scale`／`scaleAxis`／`clipTimeScale`／`count`／
+   * `spacing`／12 格 `MODEL_FX_PATH_FIELDS` 的路徑動畫）。硬併成一格二選一，
+   * 後台就要畫一個**兩套欄位互斥**的表單 —— 而 `walkZod` 畫不出那個東西。
+   *
+   * ⭐ 出處（⛔ 不是我挑的）：出貨 `damageArea` 單發技能裡，第二個頂層節點是
+   * `spawnModelFx` 的有 **3 支**（`godie-e00w.q`／`godie-e00w.r`／`godie-edem.ex`）、
+   * 是 `spawnVfx` 的 **1 支**（`godie-e00s.q`）。⇒ 多的那一種反而是模型。
+   */
+  "spawnModelFx",
+  /**
    * ⭐ GH#993 —— **逐階欄位表**（`applyBuff.perRank`：WC3 的 buff 一階一欄）。
    * 值是 `zApplyBuff.shape.perRank` 那一份**同一個** schema（`{modifiers, duration?}[]`），
    * 與 `applyStatus`／`dot`／`spawnVfx` 三格「整個節點」是同一個做法的第四個客戶。

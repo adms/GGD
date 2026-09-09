@@ -73,6 +73,31 @@ function modelFxSites(): Array<{ where: string; modelKey: string }> {
   return out;
 }
 
+/**
+ * ⭐ GH#1146 —— **鍵序不是行為**，所以比對前要正規化。
+ *
+ * ⛔ 在此之前這裡是裸的 `JSON.stringify(a) === JSON.stringify(node)`，而那對
+ * **鍵序**敏感：文件上的節點是產生器照來源列的順序寫的，展開出來的那一份則過了
+ * `zSpawnModelFx.safeParse()` ⇒ 鍵被照 Zod 宣告序重排。⇒ 同一顆模型、同一組參數，
+ * ⭐ 兩邊逐位元不同 ⇒ 這條守衛會喊「它不見了」，而它**就在那裡**。
+ *
+ * ⚠️ 同族前科：`abilityScaling.test.ts` 的 fx-19 也是拿 `JSON.stringify` 比兩份鏡射，
+ * 而 `common.py` 為此留了一整段「鍵序不同就是假的 desync」的註解。
+ */
+function canonical(v: unknown): string {
+  const norm = (x: unknown): unknown => {
+    if (Array.isArray(x)) return x.map(norm);
+    if (x !== null && typeof x === "object") {
+      const o = x as Record<string, unknown>;
+      const out: Record<string, unknown> = {};
+      for (const k of Object.keys(o).sort()) out[k] = norm(o[k]);
+      return out;
+    }
+    return x;
+  };
+  return JSON.stringify(norm(v));
+}
+
 describe("w3x dummy 模型接線", () => {
   it("每一個 spawnModelFx.modelKey 都指得到一具畫得出來的網格", () => {
     const models = shippedDocMap<Doc>("models");
@@ -140,7 +165,7 @@ describe("w3x dummy 模型接線", () => {
         ? (res.merged["effects"] as Doc[]).filter((e) => e?.kind === "spawnModelFx")
         : [];
       for (const node of before) {
-        if (!after.some((a) => JSON.stringify(a) === JSON.stringify(node))) {
+        if (!after.some((a) => canonical(a) === canonical(node))) {
           erased.push(
             `abilities/${String(doc.id)}: 文件上的 spawnModelFx(${String(node.modelKey ?? node.preset)}) ` +
               `在 mergeExpansion() 之後**不見了** —— 卡片印得出來、schema 收得下、遊戲裡不存在。` +

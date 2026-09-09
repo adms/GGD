@@ -1217,6 +1217,14 @@ const FAMILIES: Readonly<Record<string, Family>> = {
         // ⭐ 追加效果住這裡（見上面那段）。⛔ 不是第二個頂層節點。
         ...(has(t, p, "onHitTargets") ? { onHitTargets: raw(t, p, "onHitTargets") } : {}),
       } as unknown as EffectDef,
+      // ⭐ GH#1146 —— **視覺是第二個頂層節點**，⛔ 不在 `onHitTargets` 裡。
+      //   ⚠️ 那兩件事的語意不同：`onHitTargets` 是「打中的每一個人身上追加什麼」，
+      //   而視覺是「這一發長什麼樣」——⭐ 出貨那 12 支逐位元就是這個結構
+      //   （`[damageArea, spawnModelFx]` / `[damageArea, spawnVfx]`）。
+      //   ⭐ 兩格分開（⛔ 不是一格二選一）：`spawnVfx` 是粒子腳本、`spawnModelFx` 是模型，
+      //   參數集合完全不同，硬併會變成一個後台畫不出來的欄位。
+      ...(has(t, p, "vfx") ? [effectNode(t, p, "vfx", "spawnVfx", zSpawnVfx)] : []),
+      ...(has(t, p, "modelFx") ? [effectNode(t, p, "modelFx", "spawnModelFx", zSpawnModelFx)] : []),
     ],
   }),
 

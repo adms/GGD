@@ -71,6 +71,16 @@
       "max": 5,
       "unit": "s",
       "origin": "derived: 沿用出貨 71/79 位採用者的慣例（文件與 params 同一個值）—— 同 `tpl-instant-blast.castTimeSec`。⭐ 預設 0 ＝ 瞬發,⛔ 而真正的值由 `castTimeFormula.deriveCastTime()` 算（那是唯一來源）。"
+    },
+    "vfx": {
+      "type": "spawnVfx",
+      "optional": true,
+      "origin": "census: 出貨那 32 個被擋形狀裡 `spawnVfx` 出現 **5** 次。⭐ 它是**第二個頂層節點**（⛔ 不在 onHitTargets 裡）—— 語意是「這一發長什麼樣」,⛔ 不是「打中的人身上追加什麼」。⛔ 刻意無預設：一顆看不見的特效比沒有特效更糟（第一·五守則）。"
+    },
+    "modelFx": {
+      "type": "spawnModelFx",
+      "optional": true,
+      "origin": "census: 同一批裡 `spawnModelFx` 出現 **7** 次（最多的視覺）。⛔ 同上,無預設。"
     }
   },
   "requires": [],

@@ -80,7 +80,7 @@ const CENSUS = JSON.parse(
 //   它們的另一半是**手編的變身態**（變身態沒有產生器），一邊轉一邊沒轉
 //   ⇒ `abilityCodeParityForms` 紅，⭐ 而那條閘是對的：玩家變身之後會用到舊的那一份。
 //   ⇒ ⭐ 那兩支要等變身態那一邊也能綁（另一件事）。
-const HAND_WRITTEN_BASELINE = 119;
+const HAND_WRITTEN_BASELINE = 114;
 
 /**
  * ⭐ 判定寫成**純函式**，這樣 sentinel 餵得進去 ——
