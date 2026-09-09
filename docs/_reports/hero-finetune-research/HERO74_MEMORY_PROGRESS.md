@@ -2,7 +2,11 @@
 
 2026-09-09。承接 `hero74-training-v2` 的 500 train／119 internal-dev；不是重新選資料，不截斷，模型仍為固定 Gemma 4 12B IT 8-bit、末兩層 q/o LoRA、rank 8。未獲正式訓練通過證據前不產生 release。
 
-## 最新終止狀態：v20 被電力保護停止，optimizer 0
+## 最新授權：電量低於 40% 才停，重新開始 v21
+
+使用者已明確要求改為電量低於 40% 才處理，並確認始終接電，見 `battery-floor-40-authorization.json`。v21 用絕對電量 `< 40` 取代相對下降 2 點；100→98%、80%、40% 都允許，39.99% 停止，讀不到電量則失敗關閉。接電、RAM、swap、单步／階段與 16 小時上限不變。13/13 CPU guard tests 通過；既有 run 與收據不改、未指定新授權的歷史預設不變。本次只重新開始同一 500 train／119 dev 單輪，不擴充資料、不換模型、不增加 epoch。v20 以下為歷史終止狀態，不再等待先前的重啟確認。
+
+## 歷史終止狀態：v20 被電力保護停止，optimizer 0
 
 v20 的 probe completed（411.015 秒，四種格式全通過），train 則在 360.982 秒後 `stopped-or-failed`：持續接電但電量由 100% 降到 98%，觸發既定 `BATTERY_DROPPING`。exec session 71240 已回 exit 1，supervisor 終止並 join worker，沒有自動重試。停止於 `community-review-24-20260907:PASSIVE` 的 dev-before；未產生 order／training-trace／checkpoint，optimizer 0，沒有新 adapter，也沒有完成的 119 筆 dev-before 數值可用來算訓練改善。
 

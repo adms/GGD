@@ -1,0 +1,10 @@
+{
+  "schema": "ggd-distillation-battery-authorization@1",
+  "date": "2026-09-09",
+  "userQuote": "我一直都接著電源 你等電源掉到40%以下再來處理好嗎 不要杯弓蛇影",
+  "minimumPercent": 40,
+  "comparison": "strictly-less-than",
+  "replacesRelativeDropGuard": true,
+  "otherGuardsUnchanged": true,
+  "scope": "Restart the interrupted one-epoch 500-train/119-dev Mac run under the existing 57600-second cap. Battery at 40 percent is allowed; below 40 stops. Keep AC, memory, swap, phase timeouts and exclusive GPU ownership. No automatic retry or additional epoch. Historical runs are unchanged."
+}

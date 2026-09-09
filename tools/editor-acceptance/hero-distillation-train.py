@@ -61,7 +61,12 @@ def resources():
 def violation(start, now, guard):
     if not now['acPower']:
         return 'AC_POWER_REQUIRED'
-    if now['batteryPercent'] is None or start['batteryPercent'] - now['batteryPercent'] >= guard['maxBatteryDropPoints']:
+    if 'minBatteryPercent' in guard:
+        if now['batteryPercent'] is None:
+            return 'BATTERY_STATUS_UNKNOWN'
+        if now['batteryPercent'] < guard['minBatteryPercent']:
+            return 'BATTERY_BELOW_FLOOR'
+    elif now['batteryPercent'] is None or start['batteryPercent'] - now['batteryPercent'] >= guard['maxBatteryDropPoints']:
         return 'BATTERY_DROPPING'
     if now['availableBytes'] < guard['minAvailableGiB'] * GIB:
         return 'LOW_AVAILABLE_MEMORY'
@@ -128,10 +133,22 @@ def begin_gradient_probe(progress,row,comparison):
     return time.monotonic()
 
 
+def battery_authorization(path):
+    if path is None:
+        return {'maxBatteryDropPoints': 2}, None
+    record = read(path)
+    assert record['schema'] == 'ggd-distillation-battery-authorization@1'
+    assert record['minimumPercent'] == 40 and record['comparison'] == 'strictly-less-than'
+    assert record['replacesRelativeDropGuard'] is True and record['otherGuardsUnchanged'] is True
+    assert record['userQuote'] == '我一直都接著電源 你等電源掉到40%以下再來處理好嗎 不要杯弓蛇影'
+    return {'minBatteryPercent': 40}, {'sha256': digest(path), 'record': record}
+
+
 def prepare(args):
     out, data = args.out.resolve(), args.data.resolve()
     assert not out.exists(), 'OUTPUT_ALREADY_EXISTS'
     maximum_seconds,authorization=time_authorization(getattr(args,'time_authorization',None))
+    battery_guard,battery_record=battery_authorization(getattr(args,'battery_authorization',None))
     manifest = read(data / 'manifest.json')
     assert digest(data / 'examples.json') == manifest['outputs']['examples.json'], 'FROZEN_DATA_DRIFT'
     receipt = read(args.base_receipt)
@@ -194,7 +211,8 @@ def prepare(args):
               'capacityEstimatePolicy': 'Per-format observed gradient max * (train tasks + 2 * dev tasks), sum * 1.5 + 300s; heuristic admission estimate, not a timing guarantee. No dev gradients.',
               'metalLimitGiB': 28, 'secondsMaximum': maximum_seconds, 'probeSecondsMaximum': 1200, 'stepSecondsMaximum': 120,
               'timeAuthorization':authorization,
-              'guard': {'minAvailableGiB': 6, 'maxSwapGrowthGiB': 2, 'maxBatteryDropPoints': 2, 'acRequired': True, 'concurrentOwnGpuWorkers': 1},
+              'batteryAuthorization':battery_record,
+              'guard': {'minAvailableGiB': 6, 'maxSwapGrowthGiB': 2, **battery_guard, 'acRequired': True, 'concurrentOwnGpuWorkers': 1},
               'saveEvery': max(1, math.ceil(len(train) / 5)), 'selection': 'fixed final one-epoch adapter; no dev checkpoint selection',
               'loss': 'completion-only exact causal teacher forcing; retain full prompt attention; only project completion hidden states into vocabulary',
               'memoryPolicy': {'queryBlockTokens': QUERY_BLOCK_TOKENS, 'lossBlockTokens': 128, 'sourceOrAnswerTruncation': False,
@@ -555,6 +573,7 @@ if __name__ == '__main__':
     parser.add_argument('--run', type=Path); parser.add_argument('--phase', choices=['probe', 'train']); parser.add_argument('--token')
     parser.add_argument('--cache-diagnostic', action='store_true', help='Prepare a bounded forward-only cache diagnostic, never a training admission.')
     parser.add_argument('--time-authorization', type=Path, help='Explicit user authorization record for this single epoch; default remains 7200s.')
+    parser.add_argument('--battery-authorization', type=Path, help='Explicit 40-percent floor authorization; replaces relative battery-drop guard for this new run only.')
     args = parser.parse_args()
     if args.action == 'prepare':
         assert args.data and args.base_receipt and args.out
