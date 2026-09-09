@@ -1,0 +1,47 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "question.native-runtime-version-parity",
+  "kind": "question",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "4e11f1b0253c106e08a0e873e289f8822e32681d",
+  "contractFingerprint": "bdb64ca51f9b3b1d",
+  "title": "完整英雄全自動生成：兩份固定原生輸出跨版本 runtime 差異的判定政策（不重開 champion 匯出票）",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "目前研究驗收器的完整英雄分母為 17，15 名 hero-project 可進入既有 Main package admission，godie-edem:HERO／godie-h02v:HERO 兩名 native-content 仍為 native-import-bridge-pending。這是本研究介接缺口，不是已證明 Main 所有匯入路徑都不支援。判定位置為 tools/editor-acceptance/hero-distillation-package-admission.mts:71 及 :113；不將原生輸出轉成另一套模板來湊通過率，也不以通過編譯取代匯入或對局證據。",
+      "repro": {
+        "command": "pnpm exec node --import tsx --test tools/editor-acceptance/hero-distillation-package-admission.test.mts",
+        "expectedExit": 0
+      },
+      "commit": "10e54ca78d76328878d8af94c4950bc62e064e60",
+      "evidence": [
+        "tools/editor-acceptance/hero-distillation-package-admission.mts",
+        "tools/editor-acceptance/hero-distillation-package-admission.test.mts",
+        "docs/_reports/hero-finetune-research/hero74-package-admission-control-v1/report.json",
+        "docs/_reports/hero-finetune-research/hero74-generation-compile-control-v2/report.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "對相同兩份固定原生輸出做唯讀重編譯：來源 6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92 的 zAuthoringKind 不接受 champion；受測候選 1fdc84e4d18a14136287cf17c32fa9ad3fee64a4 接受，但 2/2 編譯成功不代表 runtime 等價。兩名 runtime 分別有 5／12 處差異；候選程式搭配原來源 catalog 仍有 3／12 處差異，完整差異路徑見收據。沒有宣稱該候選是目前最新版，沒有認定差異必然是產品 regression，也沒有自行修改引擎、平衡資料或教師答案。",
+      "repro": {
+        "command": "pnpm exec node --import tsx --test tools/editor-acceptance/hero-distillation-native-compatibility.test.mts",
+        "expectedExit": 0
+      },
+      "commit": "53dec0c5658a05c04e2c8c0158b42257cc33f15b",
+      "evidence": [
+        "tools/editor-acceptance/hero-distillation-native-compatibility.mts",
+        "tools/editor-acceptance/hero-distillation-native-compatibility.test.mts",
+        "docs/_reports/hero-finetune-research/hero74-native-compatibility-control-v2/report.json"
+      ]
+    }
+  ],
+  "asks": [
+    "本票目的為 12B＋script 全自動創建完整可上場英雄，不是只產 JSON 或模板建議。本地已有 claim.export-champion-package-landed／claim.hero-forge-plan-main-response 的歷史協作紀錄；本輪也已實測候選版本接受 champion enum。因此不要求重做 GH#1024、補同一個 enum 或另造 importer，原生作品流程介接仍是 Editor 的工作。本票只請 Main 判定以下已量出的跨版本 runtime 差異。",
+    "請逐項對照收據內兩名英雄的 differencePaths 及 candidateWithSourceCatalog.differencePaths，指認哪些屬於已採用的版本／平衡規則變更、哪些是需修正的問題。尤其換回原 catalog 後仍有 3／12 處差異，不能只用共用平衡設定已更新來概括所有差異。請提供權威來源／規則與可重現預期值，不以口頭相容性宣告代替。",
+    "若較新版本的變化是必要且合法的遷移，請確認三方 A/B/教師共同使用的目標契約與必要機制等價條件；研究不能一邊拿舊 runtime 當教師標準、一邊把新版不同結果當成模型錯誤，也不能靜默修改原教師答案。若屬引擎問題，由 Main 修正，研究不代修。所有固定舊 run 與來源保持原樣。",
+    "驗收至少包含這兩份原生輸出的 source 完整重讀、runtime 等價或明確核准的遷移差異、依賴／素材閉包、隔離匯入、選角與必要六槽正反行為證據。正確拒絕或未驗證不算英雄創建成功；此票不要求修改研究資料、增加訓練英雄、重新選模、公開上架或放寬資源保護。"
+  ]
+}
