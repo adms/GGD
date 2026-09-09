@@ -1,0 +1,24 @@
+{
+  "schema": "ggd-distillation-evaluation-batch-state@1",
+  "status": "stopped-or-failed",
+  "pid": 60077,
+  "startedAt": 1788973359.913289,
+  "steps": [
+    {
+      "name": "prepare-inference",
+      "status": "completed",
+      "startedAt": 1788973359.9144251,
+      "finishedAt": 1788973359.997256
+    },
+    {
+      "name": "infer-base",
+      "status": "stopped-or-failed",
+      "startedAt": 1788973359.998602,
+      "finishedAt": 1788980561.094908
+    }
+  ],
+  "fullHeroE2EProven": false,
+  "modelPromoted": false,
+  "error": "SystemExit(1)",
+  "finishedAt": 1788980561.094913
+}

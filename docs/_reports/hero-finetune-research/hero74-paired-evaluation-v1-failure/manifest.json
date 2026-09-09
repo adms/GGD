@@ -1,0 +1,61 @@
+{
+  "schema": "ggd-distillation-evaluation-batch@1",
+  "trainingDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/full-hero-distillation-v21",
+  "trainingManifestSha256": "f54167a0bd8e6341d75d38f8a80ae25cd9813b1048453bf731000ec99b97c1e6",
+  "evaluationDirectory": "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-eval-plan-v1",
+  "evaluationManifestSha256": "ac297f754978c4542d632a7e49df5dc7af7e6e79ab63237b2919f733dbe8e260",
+  "modelBindingsDirectory": "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-model-bindings-v1",
+  "modelBindingsManifestSha256": "e28dae8e2135b3a442c8e783e770c91b1aea29bd6a86e59deec8ae6553f9316e",
+  "frozenAssetsDirectory": "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-training-v3",
+  "frozenAssetsManifestSha256": "b80ca65f68ede20e18781995f3d983a2e7f0b79e4ee1f0d3bd1b43c4c57a5d94",
+  "dependenciesDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/packages/shared/node_modules",
+  "apiDependenciesDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/apps/content-api/node_modules",
+  "assetRoots": [
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-model-options-20260909/release-v7",
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/content"
+  ],
+  "cpuPhaseTimeoutSeconds": 180,
+  "importPhaseTimeoutSeconds": 180,
+  "node": "/usr/local/bin/node",
+  "python": "/private/tmp/ggd-qwen38-eval-20260907-venv/bin/python",
+  "sources": {
+    "hero-distillation-evaluate-batch.py": "5f9a9f100deb26e87fdf5f464e7ce355a7b8f481e9ad73822f6c5f87d2e16adb",
+    "hero-distillation-infer.py": "3971065685bebe83526f62e30f6000bc0a9158893d70421b48b6dd1628e2e7cc",
+    "hero-distillation-train.py": "99a07649ae5fbe3d4b69e42e041cc2cf87e577ee5b5e0ebf256b122e82320f39",
+    "hero-distillation-generation.py": "1872be9f55ea14a1bd9f498435d5a439c52127de1964488ffaf41a3627380729",
+    "hero-distillation-generation-compile.mts": "dfc1240120a6449703c7343359acb141e955dbd15a614efd1afb9733b2a02a49",
+    "hero-distillation-adapter.mjs": "4c66c50c34b8da9758273e8c02ad41448ca04a97182b0140c23cba8185356a21",
+    "hero-distillation-freeze.mjs": "1fcde24bd90500c27f9bb3f91adc522ef299f86451ea868ed18c94c202a3de21",
+    "hero-distillation-package-admission.mts": "e92e9164b7ccf28c65a07f79f48c2235ba64c4df62e9796a28845e202686f77e",
+    "hero-distillation-results.py": "50bdae301536187f3741a24bd2b9f8d78e0f898261fbd0c50d165df5f3c76bf5",
+    "hero-distillation-report.py": "f38ffc5cde5ca28e81ea2255013b14b46929d75133eb43a13761089836143dc5",
+    "hero-distillation-import-roundtrip.mts": "24b07c32354817ccb96ff6fc79481c857292adf89370d0dd93de6c658f2fdb0e"
+  },
+  "inputManifests": {
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/full-hero-distillation-v21/manifest.json": "f54167a0bd8e6341d75d38f8a80ae25cd9813b1048453bf731000ec99b97c1e6",
+    "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-eval-plan-v1/manifest.json": "ac297f754978c4542d632a7e49df5dc7af7e6e79ab63237b2919f733dbe8e260",
+    "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-model-bindings-v1/manifest.json": "e28dae8e2135b3a442c8e783e770c91b1aea29bd6a86e59deec8ae6553f9316e",
+    "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-training-v3/manifest.json": "b80ca65f68ede20e18781995f3d983a2e7f0b79e4ee1f0d3bd1b43c4c57a5d94",
+    "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-generation-compile-control-v2/report.json": "897c8f712ae6f59cbd5eab80f900c314f0407294d00f1281ba3484ce42c0ac67",
+    "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-package-admission-control-v1/report.json": "11c21c7d8d386377564b3b87e000412d0485af3906b6a077167a527738217f74",
+    "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-import-control-v3/report.json": "d4e3be741fd3f3bac5da441a655cc543567ec0081a8c9edafe2f7e78744c4ee8",
+    "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-import-control-v3/runtime-audit.json": "e70700e85ce7d4b6ac7eacad11edcf4337ad6cac0117775f4470f61b7e038258"
+  },
+  "fixedArmOrder": [
+    "base",
+    "lora"
+  ],
+  "attemptsPerArm": 1,
+  "automaticRetry": false,
+  "humanRepairs": 0,
+  "teacherAnswerFileAccess": false,
+  "blindTest": false,
+  "teacherControlReports": {
+    "teacher_compile": "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-generation-compile-control-v2",
+    "teacher_package": "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-package-admission-control-v1",
+    "teacher_import": "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-import-control-v3"
+  },
+  "scope": "Full public internal-dev paired generation, structural/package admission and isolated HTTP import/runtime comparison. Not blind testing, semantic equivalence, platform publication or match certification.",
+  "fullHeroE2EProven": false,
+  "modelPromoted": false
+}

@@ -18,6 +18,12 @@
 
 完整終止證據已以 `hero-distillation-receipt.py` 驗證並保存於 `hero74-prefix-v21/`；其中包含執行來源、manifest、500 步唯一順序、前後 dev、資源 trace 與 adapter roundtrip，權重只記 hash、不放入 Git。固定 Base→LoRA、各 119 題的單次配對評測已由 `hero-distillation-evaluate-batch.py` 啟動；在它產生完整 schema/compiler/重讀/封裝/HTTP 匯入結果以前，不宣告實際生成品質改善、模型 ready 或可上場。
 
+### 配對評測終止：Base 觸發固定 7,200 秒上限
+
+同一個 controller／session `2574` 已正常 join worker 並以 exit 1 終止；Base arm 的 terminal error 為 `RuntimeError('RUN_TIME_LIMIT')`，沒有因觀察 timeout 重啟。固定 119 題中保存 **66 個 case 檔、65 個完整輸出、45 個格式吻合輸出**，實際 case generation 累計 7,187.75 秒；最後一題在 supervisor 停止時留下明示不完整的 `InterruptedError('SUPERVISOR_STOP')`。LoRA arm、編譯、封裝、HTTP 匯入、結果與 HTML 報告均未啟動，因此沒有有效 Base／LoRA 勝負或完整英雄成功率。
+
+`hero-distillation-evaluation-failure-receipt.py` 會嚴格要求 controller 與 arm 都已 terminal、worker 清除、來源及輸入 hash 不漂移、case/index 與固定 caseIds 保持前綴順序，並拒絕存在成功報告的失敗 run。它已將 90 份文字證據逐檔 hash 保存於 `hero74-paired-evaluation-v1-failure/`；`evaluationCompleted=false`、`fullHeroE2EProven=false`、`modelPromoted=false`。依既定規則未延長 guard、未重跑至新目錄、未個別啟動 LoRA。下一個有效實驗必須先針對完整長輸出吞吐重新設計並重新凍結評測契約，不能把這次部分 Base 當成縮小分母。
+
 ## 最新進度：v21 已有正式更新；接上實際素材與封裝准入
 
 訓練後單次批次入口已完成：`hero-distillation-evaluate-batch.py` 先要求整輪 completed／worker joined／固定 final checkpoint／8-tensor reload 證据通過，才建立新的輸出目錄。之後依序 prepare → base 119 題 → LoRA 119 題 → 各自 schema/compiler/存檔重讀 → 各自封裝准入。沿用受保護 inference supervisor，不另寫 GPU 執行或改 guard；每 arm 上限仍 7,200 秒，單題／階段 610 秒，不自動延長或重試。controller 未在 live train 期間啟動，不把準備好脚本當成已推論。
