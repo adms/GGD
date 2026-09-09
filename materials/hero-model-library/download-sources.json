@@ -3311,16 +3311,19 @@
     },
     {
       "id": "hive-anime-team-survival",
-      "target": "Anime Team Survival 3.7v 地圖",
-      "heroIds": [],
+      "target": "Anime Team Survival 地圖：初音、犬夜叉、亞絲娜、赫蘿",
+      "heroIds": [
+        "godie-o02p",
+        "community-review-09-20260907"
+      ],
       "url": "https://www.hiveworkshop.com/threads/anime-team-survival-3-7v.248807/",
       "uploader": "Mindarms；zehs00 上傳",
-      "format": "W3X",
+      "format": "W3X → MDX + BLP；4 份候選 GLB",
       "accessStatus": "public-map-download",
-      "checkedAt": "2026-09-09T19:35:14+00:00",
+      "checkedAt": "2026-09-09T19:57:59+00:00",
       "acquisitionStatus": "downloaded-verified",
       "readiness": "pending-standardization",
-      "purchaseDecision": "not-a-hero-purchase",
+      "purchaseDecision": "hold-purchase-review-free-source",
       "defaultEligible": false,
       "localPath": "GGD-Asset-Library/intake/public-models-20260910/hive-anime-team-survival",
       "files": [
@@ -3331,16 +3334,83 @@
           "archiveMember": "raw/hive-anime-team-survival.w3x"
         }
       ],
-      "verification": "已取得地圖並讀出單位／技能資料；尚未完成模型檔案清單解析與角色對應，不能認列額外角色模型。",
+      "verification": "依單位／技能、腳本與 MDX 引用讀出 84 MDX、164 BLP、18 MP3 檔。初音 36 骨節／18 動畫、犬夜叉 59／22、亞絲娜 88／13、赫蘿 31／14，四者已轉候選 GLB；犬夜叉缺兩張原生特效貼圖。原生粒子／緞帶等仍待轉換；地圖共 584 個引用未找到，不能宣稱封包全部完成。",
       "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
       "usage": "intake-only; no automatic runtime selection",
       "backup": {
-        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/hive-anime-team-survival/fc48b197deac80e794842c86ac3b3eb3a867c33b5abeb1c02b292bee5529a2c2.zip",
-        "bytes": 8461395,
-        "sha256": "fc48b197deac80e794842c86ac3b3eb3a867c33b5abeb1c02b292bee5529a2c2",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/hive-anime-team-survival/6a48ed5310910611e9b0abdda5b58eb08812f1e4fa23257b61027c8d42325107.zip",
+        "bytes": 20261074,
+        "sha256": "6a48ed5310910611e9b0abdda5b58eb08812f1e4fa23257b61027c8d42325107",
         "readbackVerified": true,
         "usage": "legacy; human permission required; not runtime-ready"
-      }
+      },
+      "ownerEntryIds": [
+        "owner-model-022",
+        "owner-model-030"
+      ],
+      "characters": [
+        {
+          "name": "初音未來",
+          "unitId": "H003",
+          "heroIds": [
+            "godie-o02p"
+          ],
+          "ownerEntryIds": [],
+          "modelPath": "extracted/HastuneMiku_Ebony.mdx",
+          "sha256": "fe45501e7e473c06a07145bc15549b15e5ff7903dffb3bedc197a80a86ecb850",
+          "nodes": 36,
+          "animationClips": 18,
+          "evidence": "war3map.w3u unit umdl reference and native MDX; visual acceptance pending"
+        },
+        {
+          "name": "赫蘿",
+          "unitId": "E000",
+          "heroIds": [
+            "community-review-09-20260907"
+          ],
+          "ownerEntryIds": [],
+          "modelPath": "extracted/Holo.mdx",
+          "sha256": "80ddc14e7de509bd15167f0ee8bce52a9d11a408f2b72971691bcde1368f8737",
+          "nodes": 31,
+          "animationClips": 14,
+          "evidence": "war3map.w3u unit umdl reference and native MDX; visual acceptance pending"
+        },
+        {
+          "name": "犬夜叉",
+          "unitId": "E009",
+          "heroIds": [],
+          "ownerEntryIds": [
+            "owner-model-030"
+          ],
+          "modelPath": "extracted/Inuyasha.mdx",
+          "sha256": "fef823acadb0d15e0834e460b19b85e978728a280a7617e119e1053afcf133ec",
+          "nodes": 59,
+          "animationClips": 22,
+          "evidence": "war3map.w3u unit umdl reference and native MDX; visual acceptance pending"
+        },
+        {
+          "name": "亞絲娜",
+          "unitId": "E00F",
+          "heroIds": [],
+          "ownerEntryIds": [
+            "owner-model-022"
+          ],
+          "modelPath": "extracted/Asuna.mdx",
+          "sha256": "d3ee80e4b1ca4d68bfac771447df0a379cbd36aae5e97971f420a7eb33605c0b",
+          "nodes": 88,
+          "animationClips": 13,
+          "evidence": "war3map.w3u unit umdl reference and native MDX; visual acceptance pending"
+        }
+      ],
+      "backupHistory": [
+        {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/hive-anime-team-survival/fc48b197deac80e794842c86ac3b3eb3a867c33b5abeb1c02b292bee5529a2c2.zip",
+          "bytes": 8461395,
+          "sha256": "fc48b197deac80e794842c86ac3b3eb3a867c33b5abeb1c02b292bee5529a2c2",
+          "readbackVerified": true,
+          "usage": "legacy; human permission required; not runtime-ready"
+        }
+      ]
     },
     {
       "id": "thunderstore-rezero",
@@ -3446,6 +3516,186 @@
         "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-rimuru-ror2/eac46f5895b43dbc53468d25ad2675f313f4140451c5110513bae61894cdc8a5.zip",
         "bytes": 37851215,
         "sha256": "eac46f5895b43dbc53468d25ad2675f313f4140451c5110513bae61894cdc8a5",
+        "readbackVerified": true,
+        "usage": "legacy; human permission required; not runtime-ready"
+      }
+    },
+    {
+      "id": "thunderstore-iori",
+      "target": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "url": "https://thunderstore.io/c/lethal-company/p/TonyPizza/Iori/",
+      "downloadUrl": "https://thunderstore.io/package/download/TonyPizza/Iori/0.2.0/",
+      "uploader": "TonyPizza",
+      "format": "Unity AssetBundle in DLL",
+      "accessStatus": "public-mod-download",
+      "checkedAt": "2026-09-09T19:57:59+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-iori",
+      "files": [
+        {
+          "path": "raw/thunderstore-iori.zip",
+          "bytes": 1221569,
+          "sha256": "578687006f6788bc984e7f188582ca63d8ae441c6b93106e8df5c2cb747c0221",
+          "archiveMember": "raw/thunderstore-iori.zip"
+        }
+      ],
+      "verification": "已靜態擷取 Iori.IoriKOF bundle：2 Mesh、2 SkinnedMeshRenderer、105 Transform、2 貼圖、1 Avatar；0 AnimationClip。bundle 與模型名為 IoriKOF／bashen；待骨架 GLB 轉換與視覺驗收。",
+      "reuseTerms": "署名與包內 README 已保留；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+      "usage": "intake-only; no automatic runtime selection",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-iori/ce83cafc0a4e8b481c7bfc1300d2dbf14f9e054ad7b3e1b67aa1601f91b0282c.zip",
+        "bytes": 6569196,
+        "sha256": "ce83cafc0a4e8b481c7bfc1300d2dbf14f9e054ad7b3e1b67aa1601f91b0282c",
+        "readbackVerified": true,
+        "usage": "legacy; human permission required; not runtime-ready"
+      }
+    },
+    {
+      "id": "thunderstore-eva01",
+      "target": "初號機",
+      "heroIds": [
+        "godie-e00r"
+      ],
+      "url": "https://thunderstore.io/c/lethal-company/p/onyxqueen/Neon_Genesis_Evangelion_Models/",
+      "downloadUrl": "https://thunderstore.io/package/download/onyxqueen/Neon_Genesis_Evangelion_Models/1.1.0/",
+      "uploader": "onyxqueen",
+      "format": "Unity AssetBundle in DLL",
+      "accessStatus": "public-mod-download",
+      "checkedAt": "2026-09-09T19:57:59+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-eva01",
+      "files": [
+        {
+          "path": "raw/thunderstore-eva01.zip",
+          "bytes": 1323802,
+          "sha256": "ca62bd72c0ad8b9337b73c2908af1adab5bc1fa28c31b9c88b6e05a55cf34979",
+          "archiveMember": "raw/thunderstore-eva01.zip"
+        }
+      ],
+      "verification": "已靜態擷取 EVA.evangelion bundle：初號機 3 Mesh、3 SkinnedMeshRenderer、70 Transform、15 Material、1 Avatar；0 Texture2D、0 AnimationClip。另有綾波零 bundle，未認列額外 GGD 角色。材質外觀、骨架 GLB 與動作綁定待驗收。",
+      "reuseTerms": "署名與包內 README 已保留；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+      "usage": "intake-only; no automatic runtime selection",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-eva01/49999053a5ec9b83a9a02a04922f694c9ea20603c3bbf36c3b94aa015fa27408.zip",
+        "bytes": 7902100,
+        "sha256": "49999053a5ec9b83a9a02a04922f694c9ea20603c3bbf36c3b94aa015fa27408",
+        "readbackVerified": true,
+        "usage": "legacy; human permission required; not runtime-ready"
+      }
+    },
+    {
+      "id": "thunderstore-kenshiro",
+      "target": "拳四郎",
+      "heroIds": [
+        "godie-umal"
+      ],
+      "url": "https://thunderstore.io/c/lethal-company/p/Irados69/Kenshiro3DModel/",
+      "downloadUrl": "https://thunderstore.io/package/download/Irados69/Kenshiro3DModel/0.1.0/",
+      "uploader": "Irados69",
+      "format": "Unity AssetBundle in DLL",
+      "accessStatus": "public-mod-download",
+      "checkedAt": "2026-09-09T19:57:59+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-kenshiro",
+      "files": [
+        {
+          "path": "raw/thunderstore-kenshiro.zip",
+          "bytes": 8782406,
+          "sha256": "38e6cd3bb0d2726b12c6c4eb5101979eb9f121abcd5f4e386b206db93cd2ce0a",
+          "archiveMember": "raw/thunderstore-kenshiro.zip"
+        }
+      ],
+      "verification": "已靜態擷取 KenshiroB.Kenshiro bundle：13 Mesh、13 SkinnedMeshRenderer、121 Transform、8 貼圖、1 Avatar；0 AnimationClip。只對應拳四郎本體，變身維持既有放大皮卡丘。待骨架 GLB 轉換與動作綁定。",
+      "reuseTerms": "署名與包內 README 已保留；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+      "usage": "intake-only; no automatic runtime selection",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-kenshiro/933d753ac2bf8647d81d35d64ef827e3c2ab3425e811837f14adcbcce23d93d7.zip",
+        "bytes": 47982895,
+        "sha256": "933d753ac2bf8647d81d35d64ef827e3c2ab3425e811837f14adcbcce23d93d7",
+        "readbackVerified": true,
+        "usage": "legacy; human permission required; not runtime-ready"
+      }
+    },
+    {
+      "id": "thunderstore-hokuto-lr",
+      "target": "拳四郎（Legends ReVIVE 多角色包）",
+      "heroIds": [
+        "godie-umal"
+      ],
+      "url": "https://thunderstore.io/c/lethal-company/p/GiriTeam/GirisLRModels/",
+      "downloadUrl": "https://thunderstore.io/package/download/GiriTeam/GirisLRModels/1.5.3/",
+      "uploader": "GiriTeam；模型擷取 wiiuski；原模型 Sega",
+      "format": "Unity AssetBundle in DLL",
+      "accessStatus": "public-mod-download",
+      "checkedAt": "2026-09-09T19:57:59+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-hokuto-lr",
+      "files": [
+        {
+          "path": "raw/thunderstore-hokuto-lr.zip",
+          "bytes": 14868636,
+          "sha256": "a9aa31d32e284862422295b7fde23eb161a310ad6d2bf619f6b22252c24d3e24",
+          "archiveMember": "raw/thunderstore-hokuto-lr.zip"
+        }
+      ],
+      "verification": "已靜態擷取 GiriPlugin.giris.lrmodels：50 Mesh、57 SkinnedMeshRenderer、80 貼圖、17 Avatar，包含 kenshirocleanAvatar；0 AnimationClip。其他北斗／刃牙／Virtua Fighter 角色僅留來源池，未逐一認列 GGD ID。拳四郎變身維持既有放大皮卡丘；待標準化。",
+      "reuseTerms": "署名與包內 README 已保留；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+      "usage": "intake-only; no automatic runtime selection",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-hokuto-lr/8b9c1ea9bb7a5fdc422c221c787cb6ed312598478317eaeda93d746f0e87d8ad.zip",
+        "bytes": 70444890,
+        "sha256": "8b9c1ea9bb7a5fdc422c221c787cb6ed312598478317eaeda93d746f0e87d8ad",
+        "readbackVerified": true,
+        "usage": "legacy; human permission required; not runtime-ready"
+      }
+    },
+    {
+      "id": "steam-korosensei",
+      "target": "殺老師",
+      "heroIds": [
+        "community-review-14-20260907"
+      ],
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=640452938",
+      "downloadUrl": "https://cdn.steamusercontent.com/ugc/320125411213871325/95B219EE0F29DAF966217B2368FB7957C0565282/",
+      "uploader": "Lukis（重上傳）；頁面署名 Audrey Belrose；包內標註 Shi~",
+      "format": "LZMA / GMA → Source MDL 48 + VVD/VTX + VMT/VTF",
+      "accessStatus": "public-steam-file-url",
+      "checkedAt": "2026-09-09T20:02:24+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/steam-korosensei",
+      "files": [
+        {
+          "path": "raw/korosensei.gma.lzma",
+          "bytes": 373658,
+          "sha256": "cf7d52e841f052a5e30a3c8239a46bbd755a1c9979f525ea9a3a2e3ecb6da297",
+          "archiveMember": "raw/korosensei.gma.lzma"
+        }
+      ],
+      "verification": "Valve 官方公開 API 回傳可下載檔案，已核對大小與 SHA-256；解出 25 個檔案，逐檔 CRC32 通過。含 kuro.mdl／VVD／3 種 VTX、9 VMT、9 VTF；MDL 表頭為 58 骨節、3 本地動作描述、3 序列，另引用包外 models/f_anm.mdl。待骨架 GLB、貼圖轉換與動作依賴整合；未執行 Lua。",
+      "reuseTerms": "工坊頁與包內署名分別記錄；取得公開檔案不等於已核實跨遊戲轉換或再散布授權。",
+      "usage": "intake-only; no automatic runtime selection",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-korosensei/db49dfe987e5f1a704a210a67ff6a7f73d55bb5e5ef6882629b91e70c1ec550a.zip",
+        "bytes": 928107,
+        "sha256": "db49dfe987e5f1a704a210a67ff6a7f73d55bb5e5ef6882629b91e70c1ec550a",
         "readbackVerified": true,
         "usage": "legacy; human permission required; not runtime-ready"
       }

@@ -8,6 +8,16 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
 
+def public_match_scope(sources, query):
+    hero_ids, entry_ids = set(), set()
+    for source in sources:
+        characters = [c for c in source.get('characters',[]) if query in json.dumps(c,ensure_ascii=False).casefold()]
+        matches = characters or ([source] if query in json.dumps(source,ensure_ascii=False).casefold() else [])
+        for match in matches:
+            hero_ids.update(match['heroIds'])
+            entry_ids.update(match.get('ownerEntryIds',[]))
+    return hero_ids, entry_ids
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('query', nargs='?', default='')
@@ -20,8 +30,9 @@ def main():
     data = json.loads((REPO/'materials/hero-model-library/inventory.json').read_text())
     query = args.query.casefold()
     if args.downloads:
-        matching_sources = {s['id'] for s in data['downloadPlan'].get('publicSources',[]) if query in json.dumps(s,ensure_ascii=False).casefold()}
-        records = [e for e in data['downloadPlan']['entries'] if not query or query in json.dumps(e, ensure_ascii=False).casefold() or matching_sources.intersection(e.get('acquiredPublicSources',[]))]
+        direct = [e for e in data['downloadPlan']['entries'] if not query or query in json.dumps(e, ensure_ascii=False).casefold()]
+        hero_ids, entry_ids = public_match_scope(data['downloadPlan'].get('publicSources',[]),query)
+        records = direct or [e for e in data['downloadPlan']['entries'] if e['id'] in entry_ids or hero_ids.intersection(e['heroIds'])]
         if args.json:
             source_ids={sid for e in records for sid in e.get('acquiredPublicSources',[])}
             print(json.dumps({'release':data['release'], 'entries':records,
@@ -30,17 +41,22 @@ def main():
             labels = {'defer-acquired-public':'免費來源已取得，暫緩購買','defer-approved-derivative':'已有核准加工副本，暫緩付費下載','defer-existing-300':'已有 300，暫緩付費下載','owner-highest':'優先下載','needs-roster-mapping':'待對應角色 ID'}
             for e in records:
                 print(f"{e['target']} | {labels[e['downloadPriority']]} | {', '.join(e['heroIds']) or '未對應'}")
+                if e.get('purchaseHoldWithoutHeroId'):
+                    print('  免費來源已取得，暫緩購買：清單組 '+e['id']+'；尚待 GGD 角色 ID 對應')
                 if e.get('purchaseHoldFor'):
                     print('  免費來源已取得，暫緩購買：'+', '.join(e['purchaseHoldFor'])+'；先完成轉換／動作驗收')
                     if e.get('partialPurchaseHold'):
                         print('  其他形態尚未取得，保留原下載安排：'+', '.join(i for i in e['heroIds'] if i not in e['purchaseHoldFor']))
+                if e.get('purchaseHold') or e.get('partialPurchaseHold'):
                     for s in data['downloadPlan'].get('publicSources',[]):
                         if s['id'] in e['acquiredPublicSources']: print('    '+s['url']+' | '+s['verification'])
                 for s in e['sources']: print('  '+s['submittedUrl'])
                 for note in e['ownerNotes']: print('  指定處理：'+note)
         return 0 if records else 1
     exact = [h for h in data['heroes'] if h['id'].casefold() == query]
-    records = exact or [h for h in data['heroes'] if not query or query in json.dumps([h['id'],h['name'],h['work'],h['options'],h.get('publicCandidates',[])],ensure_ascii=False).casefold()]
+    direct = [h for h in data['heroes'] if not query or query in json.dumps([h['id'],h['name'],h['work'],h['options']],ensure_ascii=False).casefold()]
+    hero_ids, _ = public_match_scope(data['downloadPlan'].get('publicSources',[]),query)
+    records = exact or direct or [h for h in data['heroes'] if h['id'] in hero_ids]
     if args.json:
         print(json.dumps({'release':data['release'],'productionSnapshot':data['productionSnapshot'],'heroes':records},ensure_ascii=False,indent=2))
         return 0 if records else 1

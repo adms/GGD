@@ -39,11 +39,17 @@ class InventoryHandoff(unittest.TestCase):
                 self.assertTrue(entry['downloadPriority'].startswith('defer-'))
                 for sid in entry['acquiredPublicSources']:
                     self.assertEqual(public[sid]['acquisitionStatus'],'downloaded-verified')
-                    self.assertTrue(set(entry['heroIds']) & set(public[sid]['heroIds']))
+                    self.assertTrue(set(entry['heroIds']) & set(public[sid]['heroIds']) or entry['id'] in public[sid].get('ownerEntryIds',[]))
                     self.assertFalse(public[sid]['defaultEligible'])
         maomao=heroes['b2-maomao']['publicCandidates']
         self.assertEqual([s['id'] for s in maomao],['thunderstore-maomao'])
         self.assertEqual(heroes['community-review-30-20260907']['publicCandidates'],[])
+        for target in ['犬夜叉','刀劍神域 阿絲娜']:
+            entry=next(e for e in inventory['downloadPlan']['entries'] if e['target']==target)
+            self.assertEqual(entry['heroIds'],[])
+            self.assertTrue(entry['purchaseHoldWithoutHeroId'])
+            self.assertTrue(entry['purchaseHold'])
+            self.assertEqual(entry['downloadPriority'],'defer-acquired-public')
         gon = next(e for e in inventory['downloadPlan']['entries'] if 'godie-ucrl' in e['heroIds'])
         self.assertEqual(gon['purchaseHoldFor'], ['godie-ucrl'])
         self.assertTrue(gon['partialPurchaseHold'])
@@ -70,6 +76,9 @@ class InventoryHandoff(unittest.TestCase):
             self.assertEqual(json.loads(result)['heroes'][0]['default']['id'],'derivative:popp')
             result=subprocess.check_output([sys.executable,str(script.with_name('query.py')),'小傑','--downloads','--json'],text=True)
             self.assertEqual(json.loads(result)['entries'][0]['purchaseHoldFor'],['godie-ucrl'])
+            for query, expected_target in [('犬夜叉','犬夜叉'),('亞絲娜','刀劍神域 阿絲娜')]:
+                result=subprocess.check_output([sys.executable,str(script.with_name('query.py')),query,'--downloads','--json'],text=True)
+                self.assertEqual([e['target'] for e in json.loads(result)['entries']],[expected_target])
             self.assertFalse((target.parent/'GGD-Asset-Library').exists())
             inputs=target/'materials/hero-model-library/download-sources.json'
             changed=json.loads(inputs.read_text());changed['entries'][0]['ownerNotes'].append('changed handoff fixture')

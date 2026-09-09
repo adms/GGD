@@ -64,6 +64,10 @@ AWS 僅使用 `vibe-coding`、`ap-east-2`。不索取或讀取憑證，不換 pr
 
 原始包、解包檔、骨架／材質大型解析 JSON 與未驗收 GLB 保存於本機 intake 與 S3 `legacy/public-model-sources/`；Git 的 `public-source-files.json` 記逐檔 SHA-256 與備份包位置。人工取得原始檔後可用 `tools/hero-model-library/extract_public_sources.py <單一來源 intake 目錄>` 解析，依同目錄 `public-source-requirements.txt` 安裝獨立 Python 環境；W3X 另需本機 StormLib。此工具靜態讀取 MOD 的 DLL 資源，不執行 MOD。
 
+清單角色尚未對應 GGD ID、但已取得模型時，用來源的 `ownerEntryIds` 明確連結原清單組；盤點的 `purchaseHoldWithoutHeroId=true` 與 `purchaseHold=true` 表示該組也先暫緩購買，不因缺少 ID 而重買。地圖來源的 `characters` 記模型路徑、單位參照、骨架與動畫數，避免把整張地圖當作每個角色都已取得。地圖解析器沿單位／技能、腳本及 MDX 貼圖／附加模型的實際引用讀檔；`map-reference-extraction.json` 保留未解出的引用，不宣稱已取得未被引用的全部封包成員。
+
+Steam 來源僅在 [Valve 官方公開 API](https://partner.steamgames.com/doc/webapi/ISteamRemoteStorage#GetPublishedFileDetails) 回傳可用公開 `file_url` 時直接取得；沒有回傳就保留未取得狀態。GMA／Steam LZMA 包使用同一解析器，檢查路徑、解壓大小及每個成員的 CRC32，不執行附帶的 Lua。Source MDL、VVD、VTX 與材質仍須另行轉換，不把解包成功當成成品可用。
+
 每批收尾必做：
 
 ```sh

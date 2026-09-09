@@ -9,11 +9,12 @@ def plan_sources(data, manifest, policy):
     heroes = {h['id']: h for h in manifest['heroes']}
     for entry in data['entries']:
         acquired = [s for s in data.get('publicSources', [])
-            if set(s['heroIds']) & set(entry['heroIds']) and s['acquisitionStatus'] == 'downloaded-verified']
+            if (set(s['heroIds']) & set(entry['heroIds']) or entry['id'] in s.get('ownerEntryIds',[])) and s['acquisitionStatus'] == 'downloaded-verified']
         entry['acquiredPublicSources'] = [s['id'] for s in acquired]
         held_ids = {i for s in acquired if s.get('purchaseDecision') == 'hold-purchase-review-free-source' for i in s['heroIds']}
         entry['purchaseHoldFor'] = [i for i in entry['heroIds'] if i in held_ids]
-        entry['purchaseHold'] = bool(entry['heroIds']) and all(i in held_ids for i in entry['heroIds'])
+        entry['purchaseHoldWithoutHeroId'] = not entry['heroIds'] and any(entry['id'] in s.get('ownerEntryIds',[]) and s.get('purchaseDecision') == 'hold-purchase-review-free-source' for s in acquired)
+        entry['purchaseHold'] = entry['purchaseHoldWithoutHeroId'] or bool(entry['heroIds']) and all(i in held_ids for i in entry['heroIds'])
         entry['partialPurchaseHold'] = bool(entry['purchaseHoldFor']) and not entry['purchaseHold']
         available = []
         for hero_id in entry['heroIds']:
@@ -40,8 +41,9 @@ def render_sources(data):
             '購買暫緩只適用表內明列的角色 ID／形態。同名的其他形態仍須各自核對；機器讀 `purchaseHoldFor`，不可只按角色名稱略過整組。', '',
             '| 角色／資源 | 已下載來源與署名 | 目前驗證結果 | 購買安排 |', '|---|---|---|---|']
         for s in public:
-            decision = '**暫緩購買，先處理已取得免費檔**' if s['heroIds'] else '地圖素材池；尚未認列角色'
+            decision = '**暫緩購買，先處理已取得免費檔**' if s['heroIds'] or s.get('ownerEntryIds') else '地圖素材池；尚未認列角色'
             ids = '<br>' + '、'.join(f'`{i}`' for i in s['heroIds']) if s['heroIds'] else ''
+            if s.get('ownerEntryIds'): ids += '<br>未對應角色 ID 的清單組：' + '、'.join(f'`{i}`' for i in s['ownerEntryIds'])
             lines.append(f'| {s["target"]}{ids} | [{s["id"]}]({s["url"]})<br>{s["uploader"]}；{s["format"]} | {s["verification"]} | {decision} |')
         lines += ['', '逐檔大小、SHA-256、本機與 S3 位置記於 `download-sources.json → publicSources`。`readiness` 尚未通過的來源只供人工處理，不进入成品自動取用；來源使用條件另行保留，不把免費下載當成已確認可再散布。', '']
     lines += [
@@ -65,6 +67,7 @@ def render_sources(data):
                 state += '；頁面要求回覆解鎖，模型身分待核'
             if entry.get('purchaseHold'):
                 state = '**免費來源已取得，暫緩購買**；' + '、'.join(entry['acquiredPublicSources']) + '；待完成標準化'
+                if entry['purchaseHoldWithoutHeroId']:state += '；尚待 GGD 角色 ID 對應，保留購買暫緩'
             elif entry.get('partialPurchaseHold'):
                 held = '、'.join(f'`{i}`' for i in entry['purchaseHoldFor'])
                 remaining = '、'.join(f'`{i}`' for i in entry['heroIds'] if i not in entry['purchaseHoldFor'])
