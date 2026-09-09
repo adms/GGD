@@ -113,11 +113,19 @@ const EXPECTED: Readonly<Record<string, readonly string[]>> = {
   // ALTERNATE_FORM_IDS in standinRoster.test.ts. 兩對都整對留在營運名冊上。
   // ⭐ 2026-08-20（GH#479）：godie-e00u / godie-hblm / godie-u01f 三位隨退場批次
   // 進了 `_legacy`，所以他們離開這份**營運**普查（檔案沒有消失，見檔頭）。
+  // ⭐⭐ 2026-09-10（GH#1165）：37 名社群英雄以「預設官方角色」的身分上架，
+  // 其中 **13 名今天還沒有自己的模型**（`全角色模型盤點.md` 逐名記著「尚未取得」）
+  // ⇒ 他們**照設計**借替身：**2 名在這一格，11 名在 champ.thorne**。
+  // ⛔ 這**不是**缺陷、⛔ 也不是退步 —— 那 13 名的模型取得是另一條線；
+  // ⭐ 而把他們寫進這份普查，正是為了讓「他們拿到自己的模型了沒」**看得見**。
   "champ.sela": [
+    "community-review-11-20260907",
+    "community-review-30-20260907",
     "godie-e00s",
     "godie-e010",
     "godie-efur",
-    "godie-n00b",
+    // ⭐ 2026-09-10（`4058d8166`）：`godie-n00b` 哆啦A夢**畢業了** ——
+    // 從方塊法師換成 `imported.doraemon-cat`，⇒ 它不再借這顆替身。
     "godie-o030",
     "godie-ogld",
     "godie-orkn",
@@ -125,7 +133,25 @@ const EXPECTED: Readonly<Record<string, readonly string[]>> = {
     "sela",
   ],
   // blocky-knight.glb
-  "champ.thorne": ["godie-hapm", "godie-ucrl", "godie-udea", "thorne"],
+  // ⭐ 2026-09-10（GH#1165）：11 名社群英雄借這一格（見 champ.sela 上面的說明）。
+  "champ.thorne": [
+    "community-review-02-20260907",
+    "community-review-05-20260907",
+    "community-review-07-20260907",
+    "community-review-09-20260907",
+    "community-review-14-20260907",
+    "community-review-15-20260907",
+    "community-review-22-20260907",
+    "community-review-33-20260907",
+    "community-review-34-20260907",
+    "community-review-36-20260907",
+    "community-review-37-20260907",
+    "godie-hapm",
+    // ⭐ 2026-09-10（`107626f90`）：`godie-ucrl` 傑・富力士**畢業了** ——
+    // 同角色的另一張卡早就有模型（`imported.herobiggon`），⇒ 不再借這顆替身。
+    "godie-udea",
+    "thorne",
+  ],
   // blocky-barbarian.glb. godie-umal 拳四郎 is here: the #249 base-form swap
   // moved him onto a shared mesh, a downgrade the owner already knows about,
   // and #231's per-champion skin is what makes it survivable.

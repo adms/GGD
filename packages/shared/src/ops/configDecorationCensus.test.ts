@@ -89,6 +89,11 @@ const KNOWN: Record<string, string> = {
     "`modelLod.ts::applyPlatformPolicy` → `frameCap.ts:115/123`，守衛 `apps/client/src/render/platformPolicy.test.ts` " +
     "用 jsdom 兩個方向都驗過（iPad mini 744 ⇒ 30 · 桌機 ⇒ 60）。⛔ 不是裝飾。" +
     "⭐ 什麼事情發生時這一列作廢：普查長出「在平板視窗下也量一次」的能力（或 CI 跑真機／模擬器），那時它自己就量得到差別。",
+  // ── ⭐ 模型匯入預算（GH#1164）—— 一個理由，2 格共用 ───────────────
+  "model-lod.json:championChannelWarn":
+    "GH#1164（owner 2026-09-10 逐字：「太低了 至少要有 300以上每個」「**請你開票變成後台設定**」「你改成 300 warning, 500 limit」）—— ⭐ 它**今天量不到差別**是因為它是**匯入時**的閘門檻，⛔ 不是執行期旋鈕：`tools/model-budget/guard.ts` 在**模型進庫那一刻**讀它，⇒ 一場已經開始的比賽裡把它調高調低，玩家量到的一模一樣。⭐ 消費端逐行在：`modelUpload/budget.ts::HERO_MODEL_BUDGET.channels` → `guard.ts`，守衛 `modelBudgetThresholdsOrdered.test.ts` 兩個方向都驗過（三名被 160 擋過的英雄在新上限下過、在舊上限下確實不過）。⛔ 不是裝飾。⚠️ ⭐ 而它**本來該是環境變數**（記憶 `ggd-switch-home-by-who-turns-it`：只有 CI／作者會轉的用環境變數）—— ⭐ 它進後台的唯一理由是 **owner 指名要**，⛔ 不是我判斷它該在那裡。⭐ 什麼事情發生時這一列作廢：owner 說他不需要自己轉這一格（⇒ 降級成環境變數），或普查長出「在匯入流程上也量一次」的能力。",
+  "model-lod.json:championChannelLimit":
+    "GH#1164（owner 2026-09-10 逐字：「太低了 至少要有 300以上每個」「**請你開票變成後台設定**」「你改成 300 warning, 500 limit」）—— ⭐ 它**今天量不到差別**是因為它是**匯入時**的閘門檻，⛔ 不是執行期旋鈕：`tools/model-budget/guard.ts` 在**模型進庫那一刻**讀它，⇒ 一場已經開始的比賽裡把它調高調低，玩家量到的一模一樣。⭐ 消費端逐行在：`modelUpload/budget.ts::HERO_MODEL_BUDGET.channels` → `guard.ts`，守衛 `modelBudgetThresholdsOrdered.test.ts` 兩個方向都驗過（三名被 160 擋過的英雄在新上限下過、在舊上限下確實不過）。⛔ 不是裝飾。⚠️ ⭐ 而它**本來該是環境變數**（記憶 `ggd-switch-home-by-who-turns-it`：只有 CI／作者會轉的用環境變數）—— ⭐ 它進後台的唯一理由是 **owner 指名要**，⛔ 不是我判斷它該在那裡。⭐ 什麼事情發生時這一列作廢：owner 說他不需要自己轉這一格（⇒ 降級成環境變數），或普查長出「在匯入流程上也量一次」的能力。",
   // ── ⭐ 資產驗收漏斗 Phase 2（GH#664）—— 一個理由，5 格共用 ──────────
   "review-tuning.json:blockShipOnPending":
     "⭐ 資產驗收漏斗 Phase 2 的可調參數（GH#664）—— ⭐ **票文逐字要求它們不可以寫死**：「pHash 閾值做成一格可調（⛔ 寫死 —— 它就是 owner 之後會調的東西）」。⚠️ 而今天量不到差別是**對的**：`perceptualBaselineEnabled` 出貨 `false`（參考影格那一半還沒建）、`blockShipOnPending` 出貨 `false`（⭐ 那是硬規定：⛔ 部署不可以被「人不在」卡死），而 Tier2 那一頁的核准帳本現在是 **0 筆** ⇒ 整條漂移偵測沒有東西可比對。⇒ **到期條件**：`docs/_review/approvals.json` 出現第一筆核准 ⇒ 基準線打開 ⇒ 這幾列當場作廢。",
@@ -239,7 +244,13 @@ const KNOWN: Record<string, string> = {
  * ⛔ 而它**不可以**被當成「以後可以再調高」的先例：
  * 其餘 32 列每一列都是一個**個別的**債，⭐ 它們仍然只准變少。
  */
-const EXEMPT_CAP = 54; // 2026-09-07 GH#1089：平台政策的 tabletFpsCap 進 KNOWN（桌機量尺量不到它，消費端與 jsdom 守衛逐行在理由裡）—— ⭐ 分母變大，⛔ 不是欠帳變多；普查長出平板視窗那一天這一列與上限一起降
+// ⚠️⚠️ ⭐ 2026-09-10 GH#1164：**這一次是往上調的**（54 → 56），⛔ 而棘輪的預設是只能變短。
+// ⭐ 往上調要付的代價就是這一段字：兩格是 `model-lod.json` 的匯入預算門檻
+// （`championChannelWarn` / `championChannelLimit`），owner 2026-09-10 **指名**
+// 「請你開票變成後台設定」。⛔ 依 `ggd-switch-home-by-who-turns-it`，只有 CI／作者
+// 會轉的門檻本來該是環境變數 —— ⭐ 它們在這裡的唯一理由是 owner 要自己轉。
+// ⇒ ⭐ 這兩列作廢的條件寫在 KNOWN 裡，而作廢時**這個數字要跟著回到 54**。
+const EXEMPT_CAP = 56; // 2026-09-07 GH#1089：平台政策的 tabletFpsCap 進 KNOWN（桌機量尺量不到它，消費端與 jsdom 守衛逐行在理由裡）—— ⭐ 分母變大，⛔ 不是欠帳變多；普查長出平板視窗那一天這一列與上限一起降
 
 
 describe("🔍 設定裝飾欄位普查 (config-decoration-census)", () => {
