@@ -4,6 +4,10 @@
 
 ## 最新授權：電量低於 40% 才停，重新開始 v21
 
+v21 已啟動，exec session 10097 為單一 probe→train 流程，追蹤排程 16 已切換至 v21。接電／98% 的即時樣本正常執行，不再觸發舊相對掉電門檻。尚未有 optimizer 更新證據。
+
+CPU 側另完成 `hero74-model-bindings-v1/`：從相同固定來源的 74 份 project（逐份 git blob hash 核對）抽出 37 個 uploaded model 的純素材 metadata，與 frozen public index 合併為 187 個模型 ID 的 resolver sidecar。這不是新訓練資料，也不增加／更改 model prompt；沒有匯出 acceptedPlan、技能、教師答案或 per-hero 關係判斷。模型 index 本來也包含 uploaded IDs，合併是在空 locator 上補 metadata，不是兩份互斥的素材庫；該交集回歸與 conflict／source drift／缺素材檢查共 4/4 測試通過。這張表供生成結果的既有 `materializeTarget` 查找，實際素材 bytes、角色素材身分符合度及完整編譯／對局仍需另外驗證。
+
 使用者已明確要求改為電量低於 40% 才處理，並確認始終接電，見 `battery-floor-40-authorization.json`。v21 用絕對電量 `< 40` 取代相對下降 2 點；100→98%、80%、40% 都允許，39.99% 停止，讀不到電量則失敗關閉。接電、RAM、swap、单步／階段與 16 小時上限不變。13/13 CPU guard tests 通過；既有 run 與收據不改、未指定新授權的歷史預設不變。本次只重新開始同一 500 train／119 dev 單輪，不擴充資料、不換模型、不增加 epoch。v20 以下為歷史終止狀態，不再等待先前的重啟確認。
 
 ## 歷史終止狀態：v20 被電力保護停止，optimizer 0
