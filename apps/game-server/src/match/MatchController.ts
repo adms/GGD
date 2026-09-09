@@ -17,6 +17,11 @@ import {
 } from "@ggd/shared/constants";
 import { visionRulesFromDoc } from "@ggd/shared/sim/vision";
 import { recordBossKill, shouldEnterRound11 } from "@ggd/shared/sim/round11Gate";
+import {
+  round11MobRulesPatch,
+  round11AliveCap,
+  type Round11MobRulesPatch,
+} from "@ggd/shared/sim/round11Waves";
 import { retiredChampionIds } from "@ggd/shared/content/championRetirement";
 import { heroStartLevel } from "@ggd/shared/content/schema/config/match";
 import { asSeatId, asTeamId, type AugmentId, type ChampionId, type EntityId, type ItemId, type SeatId, type StatusId, type TeamId } from "@ggd/shared/ids";
@@ -2839,9 +2844,20 @@ export class MatchController {
         // ⭐ GH#657 —— `inertSeats` 走**同一扇門**（`humanSeats` 的那一扇，理由逐字
         // 寫在 `MobRules.humanSeats` 上）：規則表本來就每一回合重建並交進 sim，
         // 所以「哪幾個座位是靶子」不需要在協定上開第二個欄位。
+        // ⭐⭐ GH#1151 B —— 第十一回合走**同一扇門**：把 `round11.waveTable`
+        // 翻成 `MobRules` 的那幾格疊上去（`sim/round11Waves.round11MobRulesPatch`）。
+        //
+        // ⭐ 與練習房**同一個形狀**（上面那段註解逐字：「規則表本來就每回合重建，
+        // 所以它跟著回合走、不會有殘留」）⇒ ⛔ 不必在 `SimWorld` 上開新欄位、
+        // ⛔ 也不必寫第二個生怪器（第〇·五守則）。
+        //
+        // ⚠️ ⭐ `spawnRampSec` **不在這裡** —— `MobRules.maxAlivePerZone` 是靜態的，
+        // 而漸進是逐 tick 的事（見 `round11Waves` 那條會紅的斷言）。⇒ 見 `step()`。
         this.practice
           ? { ...mobRules, autoWaves: this.practice.autoMobWaves, inertSeats: this.inertSeatIds() }
-          : mobRules,
+          : this.round11Round === this.phase.round
+            ? { ...mobRules, ...this.round11MobPatch() }
+            : mobRules,
         this.activeZones(),
       );
     } else if (this.rules.mobWaves && humanSeatsDue) {
@@ -4128,6 +4144,36 @@ export class MatchController {
    * ⭐ 第十一回合現在該開了嗎？—— ⛔ 判定住 `sim/round11Gate`（純函式），
    * 這裡只把**這一場的三個輸入**餵給它。
    */
+  /**
+   * ⭐ 第十一回合的**漸進生成** —— 逐 tick 把 `maxAlivePerZone` 從 0 夾到上限。
+   *
+   * ⚠️ ⭐ 這一支**只在第十一回合做事**（⛔ 其他回合一個位元組都不碰），
+   * 而它改的是 `world.mobRules` 上的那一格 —— ⭐ 規則表本來就每回合重建，
+   * ⛔ 所以不會有殘留（與練習房的 `autoWaves` 同一個理由）。
+   */
+  private clampRound11AliveCap(): void {
+    if (this.round11Round !== this.phase.round) return;
+    const rules = this.world.mobRules;
+    if (!rules) return;
+    const elapsedSec = this.world.mobTicks / TICK_HZ;
+    const cap = round11AliveCap(
+      elapsedSec,
+      this.rules.round11.spawnRampSec,
+      this.rules.round11.maxAliveZombies,
+    );
+    (rules as { maxAlivePerZone: number }).maxAlivePerZone = cap;
+  }
+
+  /** ⭐ 第十一回合的 `MobRules` 覆寫 —— 翻譯住 `sim/round11Waves`。 */
+  private round11MobPatch(): Round11MobRulesPatch {
+    return round11MobRulesPatch(
+      this.phase.round,
+      this.rules.round11.waveTable,
+      this.rules.round11.maxAliveZombies,
+      TICK_HZ,
+    );
+  }
+
   private round11Due(): boolean {
     return shouldEnterRound11(
       this.rules.round11,
@@ -4822,6 +4868,12 @@ export class MatchController {
         // ⛔ 不可以改成「把 checkCombatEnd 的結束條件放寬」：那會動到**每一場**比賽
         // 的結束判定。這裡擋的是這一間房的相位推進，正式賽一個字都沒碰到。
         if (this.practice?.endlessCombat) break;
+        // ⭐⭐ GH#1151 B —— **漸進生成**：`MobRules.maxAlivePerZone` 是**靜態**的
+        // （見 `round11Waves.round11MobRulesPatch` 那條會紅的斷言），
+        // ⭐ 所以「從 0 長到上限」只能在這裡逐 tick 夾。
+        //
+        // ⛔ 一開場就允許 `maxAliveZombies` 隻，等於把「生存」變成「開場即團滅」。
+        this.clampRound11AliveCap();
         this.accelFireRingForBotOnly(); // GH#643 —— 只剩 bot 在打就提前縮火圈
         // ⭐【回合分數與排名】GH#737 —— owner:「進入戰鬥房間，**隨時**顯示玩家
         // 自己回合累積分數及排名」。1 Hz 取樣（⛔ 不是每 tick：12 席 × 4 個數字 ×

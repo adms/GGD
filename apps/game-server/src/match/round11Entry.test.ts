@@ -13,7 +13,7 @@ import { MatchController, type SeatSpec } from "./MatchController";
 import { DEFAULT_ARENA_RULES, type ArenaRules } from "./arenaRules";
 import { recordBossKill } from "@ggd/shared/sim/round11Gate";
 import { DEFAULT_BURN_CURVE } from "@ggd/shared/sim/fireRing";
-import { type FireRingConfig } from "@ggd/shared/content";
+import { type FireRingConfig, DEFAULT_MOB_WAVES_CONFIG } from "@ggd/shared/content";
 
 /** ⭐ 出貨形狀的火圈 —— 這支測試要問「哪一回合有圈」,⛔ 沒有圈就問不了。 */
 const RING: FireRingConfig = {
@@ -33,6 +33,9 @@ const allBots = (): SeatSpec[] =>
 
 const rules = (round11: Partial<ArenaRules["round11"]>): ArenaRules => ({
   ...DEFAULT_ARENA_RULES,
+  // ⭐ 出貨的 `arena-rules.json` **有** mobWaves（fromRound 3）——
+  //   ⛔ 沒有它,第十一回合的生怪整段不會武裝(`world.mobRules` 是 null)。
+  mobWaves: { ...DEFAULT_MOB_WAVES_CONFIG, fromRound: 1 },
   finalRound: 3, // ⭐ 縮短賽制,⛔ 免得測試跑十回合
   round11: {
     enabled: false,
@@ -115,5 +118,52 @@ describe("第十一回合的世界（GH#1151 A 第 2 條）", () => {
     // ⭐ 兩個方向：finalRound（3）有圈、⛔ 第十一回合（4）沒有。
     expect(ringByRound.get(3), "第十回合(royale)⭐有火圈").toBe(true);
     expect(ringByRound.get(4), "第十一回合⛔沒有火圈").toBe(false);
+  });
+});
+
+describe("第十一回合的生怪（GH#1151 B）", () => {
+  const WAVES = { eventIntervalSec: 1, difficultyBase: 1.15, events: [{ kind: "normal", weight: 100 }] };
+
+  it("⭐ `waveTable` 真的變成 `MobRules`，⛔ 而其他回合不受影響", () => {
+    const ctl = new MatchController(
+      "r11-mobs", 7, allBots(), FAST, undefined,
+      rules({ enabled: true, maxAliveZombies: 40, spawnRampSec: 0, waveTable: WAVES }),
+      undefined, undefined, undefined, RING,
+    );
+    recordBossKill(ctl.round11BossKillsForTest, 1);
+    recordBossKill(ctl.round11BossKillsForTest, 2);
+    let n = 0, prev = "";
+    const capByRound = new Map<number, number | undefined>();
+    while (ctl.phase.phase !== "matchEnd" && n++ < 40000) {
+      ctl.tick();
+      const k = `${ctl.phase.round}/${ctl.phase.phase}`;
+      if (k !== prev && ctl.phase.phase === "combat") {
+        capByRound.set(ctl.phase.round, (ctl.world.mobRules as { maxAlivePerZone?: number } | null)?.maxAlivePerZone);
+      }
+      prev = k;
+    }
+    // ⭐ 第十一回合（4）吃到設定的 40；⛔ 第十回合（3）沒有。
+    expect(capByRound.get(4), "第十一回合⭐用 round11 的上限").toBe(40);
+    expect(capByRound.get(3), "⛔ 第十回合不受影響").not.toBe(40);
+  });
+
+  it("⭐⭐ **漸進生成**：上限從 0 長上去，⛔ 不是一開場就滿載", () => {
+    const ctl = new MatchController(
+      "r11-ramp", 7, allBots(), FAST, undefined,
+      rules({ enabled: true, maxAliveZombies: 100, spawnRampSec: 5, waveTable: WAVES }),
+      undefined, undefined, undefined, RING,
+    );
+    recordBossKill(ctl.round11BossKillsForTest, 1);
+    recordBossKill(ctl.round11BossKillsForTest, 2);
+    let n = 0;
+    while (!(ctl.phase.round === 4 && ctl.phase.phase === "combat") && n++ < 40000) ctl.tick();
+    const capNow = (): number => (ctl.world.mobRules as { maxAlivePerZone: number }).maxAlivePerZone;
+    ctl.tick();
+    const early = capNow();
+    for (let i = 0; i < 5 * 30; i++) ctl.tick();
+    const late = capNow();
+    // ⛔ 開場遠低於上限、⭐ 而 rampSec 之後到頂 —— 兩個方向都量。
+    expect(early, "⛔ 開場不可以滿載").toBeLessThan(20);
+    expect(late, "⭐ ramp 之後到頂").toBe(100);
   });
 });
