@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "9e347e9fb657",
-  "capabilityFingerprint": "e37f411f",
+  "fingerprint": "16d1d121f735",
+  "capabilityFingerprint": "5debe6db",
   "required": [
     {
       "group": "abilityField",
@@ -257,6 +257,10 @@
     {
       "group": "abilityField",
       "name": "innateKind"
+    },
+    {
+      "group": "abilityField",
+      "name": "interruptible"
     },
     {
       "group": "abilityField",
@@ -20695,6 +20699,10 @@
     },
     {
       "group": "effectField",
+      "name": "arcHalfAngleCos"
+    },
+    {
+      "group": "effectField",
       "name": "armDelaySec"
     },
     {
@@ -21576,6 +21584,10 @@
     {
       "group": "effectFieldPath",
       "name": "applyTo"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "arcHalfAngleCos"
     },
     {
       "group": "effectFieldPath",
@@ -23807,6 +23819,10 @@
     },
     {
       "group": "effectKind",
+      "name": "interruptCast"
+    },
+    {
+      "group": "effectKind",
       "name": "invulnerable"
     },
     {
@@ -23931,6 +23947,10 @@
     },
     {
       "group": "hookEvent",
+      "name": "onBlock"
+    },
+    {
+      "group": "hookEvent",
       "name": "onBossSpawn"
     },
     {
@@ -24052,6 +24072,10 @@
     {
       "group": "hookField",
       "name": "abilitySlot"
+    },
+    {
+      "group": "hookField",
+      "name": "blockSource"
     },
     {
       "group": "hookField",
@@ -25230,16 +25254,16 @@
     }
   ],
   "counts": {
-    "effectKind": 50,
-    "effectField": 285,
-    "hookEvent": 37,
-    "hookField": 25,
-    "abilityField": 40,
+    "effectKind": 51,
+    "effectField": 286,
+    "hookEvent": 38,
+    "hookField": 26,
+    "abilityField": 41,
     "auraField": 8,
     "templateFamily": 43,
     "conditionLeaf": 11,
     "conditionLeafField": 20,
-    "effectFieldPath": 482,
+    "effectFieldPath": 483,
     "vfxField": 91,
     "modelField": 46,
     "projectileField": 15,
@@ -25247,7 +25271,7 @@
     "vfxScriptField": 8,
     "configField": 4023,
     "_notRequired": 15,
-    "_total": 5193,
+    "_total": 5199,
     "_ownerOnly": 39
   }
 }

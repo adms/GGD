@@ -311,6 +311,7 @@ export type HookEvent =
    *（與 `onStunned` / `onReflectSuccess` 同一個方向）。
    */
   | "onEvade"
+  | "onBlock"
   /**
    * ── 以下四個由**契約層**（2026-08-09，GH#300）加進詞彙，**發射點還沒接** ──
    *
@@ -503,6 +504,8 @@ export interface HookDef {
   observedEvent?: "basicHit" | "abilityHit" | "heal" | "control";
   evadeChannel?: "basic" | "ability";
   evadeSource?: "defender" | "thisSource";
+  /** Require the positive block grant to be this modifier source. */
+  blockSource?: "thisSource";
   damageSource?: "any" | "basic" | "nonBasic" | "ability" | "other";
   /**
    * B2 (2026-08-05) —— 觸發這個 hook 的那一發傷害**是什麼型別**。

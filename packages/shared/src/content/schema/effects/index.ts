@@ -37,6 +37,7 @@ import { zCycleBuff } from "./cycleBuff";
 import { zRestore } from "./restore";
 import { zSpendHealth } from "./spendHealth";
 import { zSpendMana } from "./spendMana";
+import { zInterruptCast } from "./interruptCast";
 import { zDash } from "./dash";
 import { zLeap } from "./leap";
 import { zBlink, refine as refine_blink } from "./blink";
@@ -89,6 +90,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   zRestore,
   zSpendHealth,
   zSpendMana,
+  zInterruptCast,
   zDash,
   zLeap,
   zBlink,

@@ -859,6 +859,7 @@ export function castAbility(
       // Baseline for `interruptOn: "damage"` (CastResolveSystem). Written
       // unconditionally — see `CastState.hpAtStart`.
       hpAtStart: hp.hp,
+      ...(def.interruptOn === "damageOrMove" ? { posAtStart: { ...world.transform.get(caster)!.pos } } : {}),
       // ⭐ GH#1086 —— 按下的那一 tick（`recentCast` 的窗口基準）＋ 提交點烘焙好的效果清單。
       beganTick: world.tick,
       ...(frozenEffects !== undefined ? { effects: frozenEffects } : {}),

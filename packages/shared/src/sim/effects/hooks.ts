@@ -289,6 +289,8 @@ export function fireHooks(
     for (let hi = 0; hi < src.hooks.length; hi++) {
       const hook = src.hooks[hi]!;
       if (hook.on !== event) continue;
+      if (event === "onBlock" && (!incoming?.blockSourceIds?.length ||
+          (hook.blockSource === "thisSource" && !incoming.blockSourceIds.includes(src.id)))) continue;
       if (hook.observedEvent !== undefined && observedEvent !== hook.observedEvent) continue;
       if (hook.evadeChannel !== undefined && evade?.channel !== hook.evadeChannel) continue;
       if (hook.evadeSource !== undefined && (evade === undefined ||

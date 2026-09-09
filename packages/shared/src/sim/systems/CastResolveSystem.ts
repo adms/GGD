@@ -43,8 +43,12 @@ export function castResolveSystem(world: SimWorld): void {
     const damaged =
       def.interruptOn === "damage" && hp !== undefined && hp.hp < cast.hpAtStart;
 
-    // interrupt: death, stun, or a knockdown cancels the cast (mana stays spent)
-    if (!hp?.alive || stunned || damaged || (world.knockdown.get(id) ?? 0) > 0) {
+    const pos = world.transform.get(id)?.pos;
+    const moved = def.interruptOn === "damageOrMove" && cast.posAtStart !== undefined && pos !== undefined &&
+      (pos.x !== cast.posAtStart.x || pos.z !== cast.posAtStart.z);
+    const hit = def.interruptOn === "damageOrMove" && cast.hitSinceStart === true;
+    // Death always cancels; protected wind-ups retain their normal clock.
+    if (!hp?.alive || (def.interruptible !== false && (stunned || damaged || moved || hit || (world.knockdown.get(id) ?? 0) > 0))) {
       ab.cast = null;
       world.emit("castInterrupt", { caster: id, slot: cast.slot, abilityId: cast.abilityId });
       continue;

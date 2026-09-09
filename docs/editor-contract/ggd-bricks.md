@@ -4,26 +4,26 @@
 
 owner 2026-09-05：「[後台編輯器及codex編輯器] 是**堆積木**的角色 **要充分了解有哪些積木**, 而 main 遊戲主程式 是**做出積木**供使用的角色」
 
-capability 指紋：`e37f411f`
+capability 指紋：`5debe6db`
 
 ## 一眼看完
 
 | | |
 |---|---:|
-| total | 177 |
-| effect | 50 |
-| hook | 37 |
+| total | 179 |
+| effect | 51 |
+| hook | 38 |
 | leaf | 11 |
 | template | 43 |
 | vfx-prim | 13 |
 | vfx-subtype | 4 |
 | vfx-call | 4 |
 | model-preset | 15 |
-| gated | 138 |
+| gated | 140 |
 | gaps | 51 |
 | missingAdminForm | 51 |
 | missingEditorForm | 4 |
-| zeroAdoption | 69 |
+| zeroAdoption | 71 |
 
 ## 兩個編輯器的表單怎麼量的
 
@@ -31,7 +31,7 @@ capability 指紋：`e37f411f`
 - **editorForm**：⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 171 顆有收據；收據裡沒有的才退回代理值。
 - **要 Codex 給的收據**：⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / vfx-call / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。
 
-## `effect`（50）
+## `effect`（51）
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
@@ -46,7 +46,7 @@ capability 指紋：`e37f411f`
 | `convertTeam` | 9 | 1 | 0 | ✅ | ✅ | 0 |
 | `cycleBuff` | 4 | 0 | 0 | ✅ | ✅ | 1 |
 | `damage` | 12 | 0 | 0 | ✅ | ✅ | 75 |
-| `damageArea` | 15 | 1 | 0 | ✅ | ✅ | 50 |
+| `damageArea` | 17 | 1 | 0 | ✅ | ✅ | 50 |
 | `damageLine` | 17 | 0 | 0 | ✅ | ✅ | 19 |
 | `dash` | 8 | 1 | 0 | ✅ | ✅ | 8 |
 | `delayed` | 18 | 1 | 0 | ✅ | ✅ | 24 |
@@ -61,6 +61,7 @@ capability 指紋：`e37f411f`
 | `grantGold` | 6 | 0 | 0 | ✅ | ✅ | 2 |
 | `grantXp` | 3 | 0 | 0 | ✅ | ✅ | 1 |
 | `heal` | 3 | 0 | 0 | ✅ | ✅ | 2 |
+| `interruptCast` | 2 | 0 | 0 | ✅ | ✅ | 0 |
 | `invulnerable` | 6 | 0 | 0 | ✅ | ✅ | 7 |
 | `knockback` | 13 | 1 | 0 | ✅ | ✅ | 15 |
 | `leap` | 9 | 0 | 0 | ✅ | ✅ | 5 |
@@ -86,47 +87,48 @@ capability 指紋：`e37f411f`
 | `trap` | 9 | 0 | 0 | ✅ | ✅ | 0 |
 | `weightedBranch` | 7 | 1 | 0 | ✅ | ✅ | 9 |
 
-## `hook`（37）
+## `hook`（38）
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
-| `onAbilityCast` | 25 | 0 | 0 | ✅ | ✅ | 6 |
-| `onAbilityHit` | 25 | 0 | 0 | ✅ | ✅ | 4 |
-| `onAllyDamaged` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onAllyDeath` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onAllyProtected` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onAttackAttempt` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onBasicAttack` | 25 | 0 | 0 | ✅ | ✅ | 38 |
-| `onBossSpawn` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onBoundaryTouch` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onCrowdControlApplied` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onCrowdControlReceived` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onDamageDealt` | 25 | 0 | 0 | ✅ | ✅ | 2 |
-| `onDamageTaken` | 25 | 0 | 0 | ✅ | ✅ | 17 |
-| `onDashOrBlink` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onDeath` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onEvade` | 25 | 0 | 0 | ✅ | ✅ | 2 |
-| `onFireRingIgnite` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onGuardianDown` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onHeal` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onInterval` | 25 | 0 | 0 | ✅ | ✅ | 6 |
-| `onKill` | 25 | 0 | 0 | ✅ | ✅ | 7 |
-| `onLethalDamage` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onObservedCombat` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onOverheal` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onProjectileExpire` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onReflectSuccess` | 25 | 0 | 0 | ✅ | ✅ | 8 |
-| `onRevive` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onRoundEnd` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onRoundStart` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onShieldBroken` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onShieldGained` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onStatCapReached` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onStatusApplied` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onStunned` | 25 | 0 | 0 | ✅ | ✅ | 2 |
-| `onSummonHit` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onUltimateCast` | 25 | 0 | 0 | ✅ | ✅ | 0 |
-| `onUltimateHit` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onAbilityCast` | 26 | 0 | 0 | ✅ | ✅ | 6 |
+| `onAbilityHit` | 26 | 0 | 0 | ✅ | ✅ | 4 |
+| `onAllyDamaged` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onAllyDeath` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onAllyProtected` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onAttackAttempt` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onBasicAttack` | 26 | 0 | 0 | ✅ | ✅ | 38 |
+| `onBlock` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onBossSpawn` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onBoundaryTouch` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onCrowdControlApplied` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onCrowdControlReceived` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onDamageDealt` | 26 | 0 | 0 | ✅ | ✅ | 2 |
+| `onDamageTaken` | 26 | 0 | 0 | ✅ | ✅ | 17 |
+| `onDashOrBlink` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onDeath` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onEvade` | 26 | 0 | 0 | ✅ | ✅ | 2 |
+| `onFireRingIgnite` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onGuardianDown` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onHeal` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onInterval` | 26 | 0 | 0 | ✅ | ✅ | 6 |
+| `onKill` | 26 | 0 | 0 | ✅ | ✅ | 7 |
+| `onLethalDamage` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onObservedCombat` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onOverheal` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onProjectileExpire` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onReflectSuccess` | 26 | 0 | 0 | ✅ | ✅ | 8 |
+| `onRevive` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onRoundEnd` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onRoundStart` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onShieldBroken` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onShieldGained` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onStatCapReached` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onStatusApplied` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onStunned` | 26 | 0 | 0 | ✅ | ✅ | 2 |
+| `onSummonHit` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onUltimateCast` | 26 | 0 | 0 | ✅ | ✅ | 0 |
+| `onUltimateHit` | 26 | 0 | 0 | ✅ | ✅ | 0 |
 
 ## `leaf`（11）
 

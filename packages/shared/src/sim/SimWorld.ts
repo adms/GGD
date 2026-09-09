@@ -2018,6 +2018,12 @@ export class SimWorld {
       // divergence three ticks later. 0 when free, which is the overwhelmingly
       // common case, so a pre-feature world hashes identically.
       mix(this.abilities.get(id)?.recovery?.ticksLeft ?? 0);
+      const sensitiveCast = this.abilities.get(id)?.cast;
+      if (sensitiveCast?.posAtStart) {
+        mix(4001); mix(id); mix(sensitiveCast.ticksLeft);
+        mix(sensitiveCast.posAtStart.x); mix(sensitiveCast.posAtStart.z);
+        mix(sensitiveCast.hitSinceStart ? 1 : 0);
+      }
       for (const s of this.status.get(id)?.effects ?? []) {
         if (s.applierId !== undefined && s.expiresAtTick > this.tick) {
           mixOwned(id, 1, s.applierId, s.sourceId, s.statusId, s.expiresAtTick, s.stacks);

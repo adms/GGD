@@ -84,6 +84,7 @@ import { spawnProjectileEffect } from "./spawnProjectile";
 import { spawnVfxEffect } from "./spawnVfx";
 import { spendHealthEffect } from "./spendHealth";
 import { spendManaEffect } from "./spendMana";
+import { interruptCastEffect } from "./interruptCast";
 
 // ── landed primitives (GH#289 lanes) ─────────────────────────────────────────
 import { dotEffect } from "./dot"; // P1 持續傷害 — payout half in ./dotTick.ts
@@ -174,6 +175,7 @@ export const EFFECT_HANDLERS: EffectRegistry = {
   // hook's own `condition`, never by itself; see effects/spendMana.ts.
   spendHealth: spendHealthEffect,
   spendMana: spendManaEffect,
+  interruptCast: interruptCastEffect,
   dash: dashEffect,
   leap: leapEffect,
   championForm: championFormEffect,

@@ -109,6 +109,7 @@ export const zHookEvent = z.enum([
   "onRevive",
   /** 迴避時。⚠️ 持有者＝**閃掉的那個**，target＝攻擊者。 */
   "onEvade",
+  "onBlock",
 
   // ── 契約層 2026-08-09（GH#300）加的四個，⛔ **發射點由 lane B 接** ────────
   //
@@ -163,6 +164,7 @@ const DAMAGE_BEARING_EVENTS: readonly string[] = [
   "onSummonHit",
   "onDamageTaken",
   "onDamageDealt",
+  "onBlock",
   // 2026-08-08 —— 第三個。`onReflectSuccess` 是在**反彈封包落地的那一格**發的
   //（`combat/damage.ts` 排空迴圈裡，`trigger` 就是那一發封包本身），所以它跟
   // 上面兩個一樣帶得到 `EffectContext.incoming`。
@@ -236,6 +238,7 @@ export function refineHookDamageContext(
     damageCrit?: string | undefined;
     critSource?: string | undefined;
     evadeSource?: string | undefined;
+    blockSource?: string | undefined;
     evadeChannel?: string | undefined;
     observedEvent?: string | undefined;
     reflectedDamageSource?: string | undefined;
@@ -417,6 +420,9 @@ export function refineHookDamageContext(
   }
   if (hook.observedEvent !== undefined && hook.on !== "onObservedCombat") {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["observedEvent"], message: "觀察事件種類只適用 onObservedCombat。" });
+  }
+  if (hook.blockSource !== undefined && hook.on !== "onBlock") {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["blockSource"], message: "格擋來源只適用 onBlock。" });
   }
   if ((hook.evadeSource !== undefined || hook.evadeChannel !== undefined) && hook.on !== "onEvade") {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["evadeSource"], message: "迴避來源只適用 onEvade。" });
@@ -639,6 +645,7 @@ export const zHookDefBase = z
      */
     internalCooldownScope: z.enum(["source", "perAbilitySlot"]).optional(),
     observedEvent: z.enum(["basicHit", "abilityHit", "heal", "control"]).optional().describe("觀察同區可見敵人的有效普攻命中、技能命中、治療或控制；target 是被觀察的敵人，不是受害者。"),
+    blockSource: z.enum(["thisSource"]).optional().describe("只在這份增益真正擋下正值傷害時觸發；護盾吸收、其他來源與空事件不算。"),
     evadeChannel: z.enum(["basic", "ability"]).optional().describe("限定真正普攻或技能迴避；不包含攻擊者失手。"),
     evadeSource: z.enum(["defender", "thisSource"]).optional().describe("只計真正防禦方迴避，排除攻擊者失手；thisSource 另要求實際抽中的迴避來源就是本增益。省略保留原事件行為。"),
     oncePerCast: z.boolean().optional().describe("每次有效施法最多觸發一次；onDamageDealt 計實際扣血的技能命中，onSummonHit 計召喚物實際傷害／護盾命中。跨目標、波次及同次召喚身體共用一次，不計自傷或反傷。"),

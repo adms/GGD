@@ -38,6 +38,8 @@ z
     /** GGD 單位。不經過 combatEnv.abilityRange — 見 sim/effects/effect.ts。 */
     radius: z.number().positive().max(SPREAD_MAX_RADIUS),
     radiusTier: zAoeTier.optional(),
+    fromCaster: z.boolean().optional().describe("以施法者為範圍中心。"),
+    arcHalfAngleCos: z.number().min(0).max(1).optional().describe("前方弧形：0 為前方半圓，0.5 為120度。省略為整圓。"),
     /** 邊緣倍率: 1 = 不衰減 (預設), 0 = 邊緣歸零 */
     falloff: z
       .number()

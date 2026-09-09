@@ -15,7 +15,7 @@ import { recordDamage } from "../stats/matchStats";
 import { refusesDamage } from "../effects/invulnerable";
 import { noteDamageStreak, refusesByTypeStreak } from "./typeStreakImmunity";
 import { rollEvadeAbility } from "./evasion";
-import { blockCutFor } from "./block";
+import { blockCutFor, type SuccessfulBlock } from "./block";
 import { manaBarrierCutFor } from "../effects/manaBarrier";
 import { lethalSaveFor } from "./lethalSave";
 import { consumeShieldCredit, mergeShieldCredit } from "./shieldCredit";
@@ -1143,6 +1143,7 @@ export function combatResolveSystem(world: SimWorld): void {
       // `blockCutFor` keeps its own ZERO GUARANTEE (no eligible source ⇒ it
       // returns before touching `world.rng`), so this line is inert — and every
       // existing replay bit-identical — until an item authors `block`.
+      const successfulBlocks: SuccessfulBlock[] = [];
       const blockCut = blockCutFor(
         world,
         pkt.target,
@@ -1150,6 +1151,7 @@ export function combatResolveSystem(world: SimWorld): void {
         impact,
         hp.hp,
         shieldBefore,
+        successfulBlocks,
       );
       let dmg = impact - blockCut;
 
@@ -1477,6 +1479,11 @@ export function combatResolveSystem(world: SimWorld): void {
       // 三個讀數的來由寫在上面 `triggerBase` 那一段;這裡只補上到這一行才知道的
       // `hpLost`(免傷那一發是 0,而那是字面為真)。
       const trigger: TriggerDamage = { ...triggerBase, hpLost: Math.max(0, dmg), shieldAbsorbed };
+      const activeCast = world.abilities.get(pkt.target)?.cast;
+      if (impact > 0 && activeCast && Abilities.get(activeCast.abilityId).interruptOn === "damageOrMove") activeCast.hitSinceStart = true;
+      if (successfulBlocks.length) fireHooks(world, pkt.target, "onBlock", pkt.source, undefined, {
+        ...trigger, blockSourceIds: successfulBlocks.map(hit => hit.sourceId),
+      });
       fireHooks(world, pkt.source, "onDamageDealt", pkt.target, undefined, trigger);
       const summon = world.summon.get(pkt.source);
       if (summon && summon.expiresAtTick > world.tick && world.health.get(summon.ownerId)?.alive === true &&

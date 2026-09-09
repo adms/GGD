@@ -259,7 +259,9 @@ export interface AbilityDef {
    * caster's HP is below what it was at cast-begin — see `zAbilityDef` for the
    * full statement of what counts as 「被打」 and why it is a field.
    */
-  interruptOn?: "none" | "damage";
+  interruptOn?: "none" | "damage" | "damageOrMove";
+  /** False protects an active wind-up from interruption; death still cancels. */
+  interruptible?: boolean;
   /**
    * RECOVERY (後搖) — seconds of post-resolve commitment (no cast, no basic
    * attack). Absent = `DEFAULT_RECOVERY_SEC` (0.6 s), not 0. A landed hit on an

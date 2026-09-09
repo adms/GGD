@@ -1,0 +1,577 @@
+{
+  "schema": "ggd-community-design-refinement@1",
+  "version": 1,
+  "projectId": "community-review-23-20260907",
+  "sourceSha256": "e5ef08a61c9b45d823be6c2f8956dcfc6818de3a297e889bacad62206b767843",
+  "slots": {
+    "PASSIVE": {
+      "products": [
+        {
+          "instanceId": "supply",
+          "template": {
+            "ref": "tpl-mark-stacks",
+            "params": {
+              "markId": "community-review-23-20260907.supply",
+              "initial": 0,
+              "max": 1,
+              "durationSec": -1,
+              "resetOn": "round",
+              "lethalMode": "none",
+              "perStackLost": []
+            }
+          }
+        },
+        {
+          "instanceId": "initial-rest",
+          "template": {
+            "ref": "tpl-mark-stacks",
+            "params": {
+              "markId": "community-review-23-20260907.combat-busy",
+              "initial": 1,
+              "max": 1,
+              "durationSec": 5,
+              "resetOn": "round",
+              "lethalMode": "none",
+              "perStackLost": []
+            }
+          }
+        },
+        {
+          "instanceId": "supply-events",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onAttackAttempt",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-23-20260907.combat-busy",
+                      "applyTo": "self",
+                      "duration": 5,
+                      "stacks": 1,
+                      "grantMark": {
+                        "max": 1,
+                        "resetOn": "round"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "on": "onAbilityCast",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-23-20260907.combat-busy",
+                      "applyTo": "self",
+                      "duration": 5,
+                      "stacks": 1,
+                      "grantMark": {
+                        "max": 1,
+                        "resetOn": "round"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "on": "onDamageTaken",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-23-20260907.combat-busy",
+                      "applyTo": "self",
+                      "duration": 5,
+                      "stacks": 1,
+                      "grantMark": {
+                        "max": 1,
+                        "resetOn": "round"
+                      }
+                    }
+                  ],
+                  "victim": "enemy"
+                },
+                {
+                  "on": "onDamageDealt",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-23-20260907.combat-busy",
+                      "applyTo": "self",
+                      "duration": 5,
+                      "stacks": 1,
+                      "grantMark": {
+                        "max": 1,
+                        "resetOn": "round"
+                      }
+                    }
+                  ],
+                  "victim": "enemy"
+                },
+                {
+                  "on": "onBlock",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-23-20260907.combat-busy",
+                      "applyTo": "self",
+                      "duration": 5,
+                      "stacks": 1,
+                      "grantMark": {
+                        "max": 1,
+                        "resetOn": "round"
+                      }
+                    }
+                  ],
+                  "victim": "enemy"
+                },
+                {
+                  "on": "onInterval",
+                  "internalCooldown": 1,
+                  "target": "self",
+                  "condition": {
+                    "all": [
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-23-20260907.combat-busy"
+                        }
+                      },
+                      {
+                        "not": {
+                          "any": [
+                            {
+                              "kind": "recentCast",
+                              "subject": "self",
+                              "slot": "Q",
+                              "withinSec": 5
+                            },
+                            {
+                              "kind": "recentCast",
+                              "subject": "self",
+                              "slot": "W",
+                              "withinSec": 5
+                            },
+                            {
+                              "kind": "recentCast",
+                              "subject": "self",
+                              "slot": "E",
+                              "withinSec": 5
+                            },
+                            {
+                              "kind": "recentCast",
+                              "subject": "self",
+                              "slot": "R",
+                              "withinSec": 5
+                            },
+                            {
+                              "kind": "recentCast",
+                              "subject": "self",
+                              "slot": "EX",
+                              "withinSec": 5
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-23-20260907.supply",
+                      "stacks": 1,
+                      "duration": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】5 秒未攻擊、施法或參與敵對命中後保存一份補給，最多一份；W 提交消耗，回合重置。\n【原設計】脫戰後累積一份補給，供 W 消耗；最多保存一份。",
+      "note": "5 秒未攻擊、施法或參與敵對命中後保存一份補給，最多一份；W 提交消耗，回合重置。 專用木刀／牛奶／白夜叉動作與表情畫面仍待素材及視覺驗收；不以代理素材宣稱完成。",
+      "removeOverrides": [
+        "effects",
+        "rangeTier",
+        "castTimeTier",
+        "manaCostTier",
+        "cooldownTier"
+      ],
+      "abilityOverrides": {}
+    },
+    "Q": {
+      "products": [
+        {
+          "instanceId": "wood-sweep",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "damageArea",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "小",
+                    "ratios": []
+                  },
+                  "radius": 3,
+                  "maxTargets": 12,
+                  "falloff": 1,
+                  "fromCaster": true,
+                  "arcHalfAngleCos": 0,
+                  "includeOrigin": true
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】以輸入方向作半徑3的前方半圓木刀橫掃，每敵人一次；後方、友軍與範圍外不受傷。\n【原設計】木刀橫掃前方。",
+      "note": "以輸入方向作半徑3的前方半圓木刀橫掃，每敵人一次；後方、友軍與範圍外不受傷。 專用木刀／牛奶／白夜叉動作與表情畫面仍待素材及視覺驗收；不以代理素材宣稱完成。",
+      "removeOverrides": [
+        "effects",
+        "rangeTier",
+        "castTimeTier",
+        "manaCostTier",
+        "cooldownTier"
+      ],
+      "abilityOverrides": {
+        "range": 3,
+        "cooldown": [
+          5,
+          5,
+          5,
+          5
+        ],
+        "manaCost": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "castTimeSec": 0.1
+      }
+    },
+    "W": {
+      "products": [
+        {
+          "instanceId": "drink",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 100,
+                    "perRank": [
+                      0,
+                      50,
+                      100,
+                      150
+                    ],
+                    "ratios": []
+                  },
+                  "applyTo": "self"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】消耗一份補給後飲用1秒，再恢復100/150/200/250生命；真正移動或受擊（含護盾／格擋命中）中斷，已付補給與冷卻不返還。\n【原設計】短暫飲用補給恢復生命，受擊或移動會中斷。",
+      "note": "消耗一份補給後飲用1秒，再恢復100/150/200/250生命；真正移動或受擊（含護盾／格擋命中）中斷，已付補給與冷卻不返還。 專用木刀／牛奶／白夜叉動作與表情畫面仍待素材及視覺驗收；不以代理素材宣稱完成。",
+      "removeOverrides": [
+        "effects",
+        "rangeTier",
+        "castTimeTier",
+        "manaCostTier",
+        "cooldownTier"
+      ],
+      "abilityOverrides": {
+        "range": 0,
+        "cooldown": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "castTimeSec": 1,
+        "rootWhileCasting": false,
+        "interruptOn": "damageOrMove",
+        "statusCost": {
+          "statusId": "community-review-23-20260907.supply",
+          "count": 1
+        }
+      }
+    },
+    "E": {
+      "products": [
+        {
+          "instanceId": "parry-counter",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "duration": 0.65,
+                  "modifiers": [],
+                  "stackKey": "community-review-23-20260907.parry",
+                  "maxStacks": 1,
+                  "block": {
+                    "chance": 1,
+                    "fraction": 1,
+                    "damageTypes": [
+                      "physical",
+                      "magic"
+                    ],
+                    "internalCooldown": 1
+                  },
+                  "hooks": [
+                    {
+                      "on": "onBlock",
+                      "victim": "enemy",
+                      "blockSource": "thisSource",
+                      "target": "self",
+                      "internalCooldown": 1,
+                      "effects": [
+                        {
+                          "kind": "applyStatus",
+                          "statusId": "community-review-23-20260907.counter",
+                          "stacks": 1,
+                          "duration": 2,
+                          "grantMark": {
+                            "max": 1,
+                            "resetOn": "round"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "kind": "applyBuff",
+                  "duration": 2.65,
+                  "modifiers": [],
+                  "stackKey": "community-review-23-20260907.counter-listener",
+                  "maxStacks": 1,
+                  "hooks": [
+                    {
+                      "on": "onBasicAttack",
+                      "victim": "enemy",
+                      "target": "event",
+                      "effects": [
+                        {
+                          "kind": "consumeStatus",
+                          "shape": "single",
+                          "subject": "self",
+                          "statusId": "community-review-23-20260907.counter",
+                          "count": 1,
+                          "onConsumed": [
+                            {
+                              "kind": "damage",
+                              "damageType": "physical",
+                              "amount": {
+                                "damageTier": "小",
+                                "ratios": []
+                              }
+                            },
+                            {
+                              "kind": "floatingText",
+                              "shape": "single",
+                              "applyTo": "self",
+                              "text": "木刀反擊！",
+                              "durationSec": 1,
+                              "colorRgb": [
+                                245,
+                                220,
+                                160
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】0.65秒內實際格擋一次物理或魔法命中，成功才取得2秒內下一次普攻的一次木刀追加反擊；其他護盾或格擋來源不授予，不自動尋敵。\n【原設計】短時間招架，成功後可接一次木刀反擊。",
+      "note": "0.65秒內實際格擋一次物理或魔法命中，成功才取得2秒內下一次普攻的一次木刀追加反擊；其他護盾或格擋來源不授予，不自動尋敵。 專用木刀／牛奶／白夜叉動作與表情畫面仍待素材及視覺驗收；不以代理素材宣稱完成。",
+      "removeOverrides": [
+        "effects",
+        "rangeTier",
+        "castTimeTier",
+        "manaCostTier",
+        "cooldownTier"
+      ],
+      "abilityOverrides": {
+        "range": 0,
+        "cooldown": [
+          9,
+          9,
+          9,
+          9
+        ],
+        "manaCost": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "castTimeSec": 0
+      }
+    },
+    "R": {
+      "products": [
+        {
+          "instanceId": "white-yaksha",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.35,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "duration": 4,
+                  "modifiers": [
+                    {
+                      "stat": "ad",
+                      "op": "pctAdd",
+                      "value": 0.15
+                    },
+                    {
+                      "stat": "ms",
+                      "op": "pctAdd",
+                      "msBonusTier": "極小"
+                    }
+                  ],
+                  "stackKey": "community-review-23-20260907.white-yaksha",
+                  "maxStacks": 1
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】白夜叉狀態維持4秒，近戰攻擊力+15%、移速極小級；到期還原來源，沒有永久變身。\n【原設計】限時強化近戰動作與追擊能力，不提供永久變形。",
+      "note": "白夜叉狀態維持4秒，近戰攻擊力+15%、移速極小級；到期還原來源，沒有永久變身。 專用木刀／牛奶／白夜叉動作與表情畫面仍待素材及視覺驗收；不以代理素材宣稱完成。",
+      "removeOverrides": [
+        "effects",
+        "rangeTier",
+        "castTimeTier",
+        "manaCostTier",
+        "cooldownTier"
+      ],
+      "abilityOverrides": {
+        "range": 0,
+        "cooldown": [
+          18,
+          18,
+          18,
+          18
+        ],
+        "manaCost": [
+          100,
+          100,
+          100,
+          100
+        ],
+        "castTimeSec": 0.35
+      }
+    },
+    "EX": {
+      "products": [
+        {
+          "instanceId": "retort",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "小",
+                    "ratios": []
+                  }
+                },
+                {
+                  "kind": "interruptCast",
+                  "shape": "single"
+                },
+                {
+                  "kind": "floatingText",
+                  "shape": "single",
+                  "applyTo": "self",
+                  "text": "吐槽也是武器啊！",
+                  "durationSec": 1.2,
+                  "colorRgb": [
+                    255,
+                    235,
+                    180
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】近身重擊後只取消存活目標仍在進行且可中斷的前搖；不附加暈眩、不重置冷卻、不撤銷已完成效果，同時顯示吐槽文字。\n【原設計】近身重擊打斷一個可中斷的施法，以吐槽文字及誇張表情演出。",
+      "note": "近身重擊後只取消存活目標仍在進行且可中斷的前搖；不附加暈眩、不重置冷卻、不撤銷已完成效果，同時顯示吐槽文字。 專用木刀／牛奶／白夜叉動作與表情畫面仍待素材及視覺驗收；不以代理素材宣稱完成。",
+      "removeOverrides": [
+        "effects",
+        "rangeTier",
+        "castTimeTier",
+        "manaCostTier",
+        "cooldownTier"
+      ],
+      "abilityOverrides": {
+        "range": 2,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ],
+        "castTimeSec": 0.1
+      }
+    }
+  }
+}

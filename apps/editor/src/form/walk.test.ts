@@ -231,6 +231,7 @@ describe("discriminated EffectDef union (editor-02)", () => {
         "grantXp",
         "floatingText",
         "heal",
+        "interruptCast", // active interruptible wind-up, not a stun
         "invulnerable", // lane P3 — 無敵
         "knockback", // lane P4 — 擊退
         "leap", // task #247
@@ -402,6 +403,8 @@ describe("discriminated EffectDef union (editor-02)", () => {
     });
     expect(f.get("canCrit")).toMatchObject({ kind: "boolean", optional: true });
     expect(f.get("includeOrigin")).toMatchObject({ kind: "boolean", optional: true });
+    expect(f.get("fromCaster")).toMatchObject({ kind: "boolean", optional: true });
+    expect(f.get("arcHalfAngleCos")).toMatchObject({ kind: "number", optional: true, min: 0, max: 1 });
 
     // The card switch hands the server something it accepts. `damageArea` has
     // no ref fields, so a clean parse is reachable without a human picking

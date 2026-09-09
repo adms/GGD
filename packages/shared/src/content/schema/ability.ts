@@ -918,7 +918,8 @@ export const zAbilityDef = z
      * than special cases, and the knob to switch the whole thing off is this
      * field.
      */
-    interruptOn: z.enum(["none", "damage"]).optional(),
+    interruptOn: z.enum(["none", "damage", "damageOrMove"]).optional(),
+    interruptible: z.boolean().optional().describe("能否中斷施法前搖；省略為可中斷。關閉後受控或中斷技能不取消，死亡仍取消。"),
     /**
      * RECOVERY (後搖) — seconds of commitment AFTER the ability resolves, during
      * which the caster may not cast or basic-attack. Absent = the sim's

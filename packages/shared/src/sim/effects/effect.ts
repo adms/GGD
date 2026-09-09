@@ -51,6 +51,8 @@ export type IncomingBasis = "raw" | "mitigated" | "hpLost";
  * 不會發生」不是一個能出貨的狀態。
  */
 export interface TriggerDamage {
+  /** Actual positive block contributions for this packet, never shield absorption. */
+  readonly blockSourceIds?: readonly string[];
   /** The original accepted cast; absent for unrelated/derived damage. */
   readonly castInstance?: import("../content/castInstance").CastInstance;
   /** Contributing casts of one combined stacked-DoT payout. */
@@ -304,6 +306,7 @@ import type { CycleBuffVariant } from "./variants/cycleBuff";
 import type { RestoreVariant } from "./variants/restore";
 import type { SpendHealthVariant } from "./variants/spendHealth";
 import type { SpendManaVariant } from "./variants/spendMana";
+import type { InterruptCastVariant } from "./variants/interruptCast";
 import type { DashVariant } from "./variants/dash";
 import type { LeapVariant } from "./variants/leap";
 import type { BlinkVariant } from "./variants/blink";
@@ -367,6 +370,7 @@ type EffectVariant =
   | RestoreVariant
   | SpendHealthVariant
   | SpendManaVariant
+  | InterruptCastVariant
   | DashVariant
   | LeapVariant
   | BlinkVariant

@@ -576,7 +576,9 @@ function effectLines(
         out.push({
           depth,
           kind: e.kind,
-          summary: `${e.damageType} area damage r=${e.radius}u${taper}${cap}${origin}`,
+          summary: `${e.damageType} area damage r=${e.radius}u${taper}${cap}${origin}` +
+            `${e.fromCaster ? " · 以施法者為中心" : ""}` +
+            `${e.arcHalfAngleCos !== undefined ? ` · 前方弧形 cos(半角)=${e.arcHalfAngleCos}` : ""}`,
           perRank,
         });
         break;
@@ -710,6 +712,9 @@ function effectLines(
         out.push({ depth, kind: e.kind, summary: `畫面震動 幅度 ${e.amplitude} ${e.durationSec}s` });
         break;
       // ⭐ 特效文字（owner 點名）。原作 CreateTextTagUnitBJ —— 克勞德每一刀冒 "1Hit"…"7Hit"。
+      case "interruptCast":
+        out.push({ depth, kind: e.kind, summary: "中斷同區敵人可打斷的施法前搖；免控／不可打斷者無效，不附加暈眩或回復消耗" });
+        break;
       case "floatingText":
         out.push({ depth, kind: e.kind, summary: `特效文字「${e.text}」` });
         break;

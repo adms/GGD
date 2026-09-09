@@ -85,6 +85,9 @@ export interface CastState {
    * silently stops working for whoever set the flag second.
    */
   hpAtStart: number;
+  /** Authored movement/hit-sensitive channels only. */
+  posAtStart?: Vec2;
+  hitSinceStart?: boolean;
   /**
    * ⭐ GH#1086 —— 這一次施放是第幾 tick **提交**的（按下那一刻）。
    * `CastResolveSystem` 把它放進 `EffectContext.castCommitTick`，`recentCast` 拿它當基準
