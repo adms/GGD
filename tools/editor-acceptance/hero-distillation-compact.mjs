@@ -243,10 +243,13 @@ export function semanticProjection(target,detailedCatalog=null){
 
 export function decisionSpaceOf(publicInput,vfxIds){
   const c=publicInput.allowedCatalog;
-  const vfx=vfxStyleSpace(vfxIds).axes;
+  const vfxSpace=vfxStyleSpace(vfxIds),vfx=vfxSpace.axes;
   return {revision:c.revision,fingerprint:c.fingerprint,templates:c.bricksByLayer.template.map(id=>'tpl-'+id),
     effects:clone(c.bricksByLayer.effect),hooks:clone(c.bricksByLayer.hook),conditions:clone(c.bricksByLayer.leaf),
-    vfxStyleAxes:vfx,unsupported:clone(c.unsupported),knownRestrictions:c.knownBroken.map(item=>({token:item.token,issue:item.issue}))};
+    // Axes explain the style vocabulary to the model.  The exact finite list
+    // lets the runtime reject a made-up element/shape combination before it
+    // reaches the engine.
+    vfxStyles:[...vfxSpace.styles].sort(),vfxStyleAxes:vfx,unsupported:clone(c.unsupported),knownRestrictions:c.knownBroken.map(item=>({token:item.token,issue:item.issue}))};
 }
 
 export function parameterContracts(selection,detailedCatalog){
@@ -327,6 +330,10 @@ export function freezeCompact(source,out){
   const save=(name,value,jsonl=false)=>{const text=jsonl?value.map(compact).join('\n')+'\n':JSON.stringify(value,null,2)+'\n';fs.writeFileSync(path.join(out,name),text,{flag:'wx'});outputs[name]=sha(text);};
   save('examples.json',records);save('train.jsonl',train,true);save('dev.jsonl',dev,true);
   save('decision-space.json',decisionSpaceOf(JSON.parse(community[0].messages[1].content),vfxIds));
+  // Assembly expands only defaults pinned in this exact source catalog.  It
+  // is script input, never an LLM prompt, and is retained with the freeze so
+  // an adapter can be restored and run without reaching into a mutable tree.
+  save('parameter-catalog.json',catalog);
   save('asset-bindings.json',Object.fromEntries(community.filter(r=>r.slot==='HERO').map((r,i)=>[r.heroId,projected[community.indexOf(r)].assetBinding])));
   save('ownership-report.json',{schema:'ggd-compact-llm-ownership-report@1',tasks:records.length,
     checks:{fullAssetInventoryInPrompt:0,nativeIdsOrPathsInOutput:0,productInstanceIdsInOutput:0,provenanceInOutput:0,

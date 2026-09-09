@@ -8,6 +8,8 @@
 
 `hero74-compact-v7/` 把流程改成每名英雄固定 **7 次有界 LLM 決策**：一次全英雄語意選型，六次可平行的單槽「非預設機制 delta」。LLM 僅負責英雄定位／屬性分類、模板／effect／hook／condition 選擇、跨槽語意關係、非預設機制值和 VFX style。Script 負責候選與 schema 查找、strict JSON、全部 ID／路徑／素材、product instance ID、rank／provenance／conflict 預設、capability／direction／fallback metadata、模板預設展開、VFX ID／事件／掛點、編譯、封裝、匯入及行為閘。
 
+2026-09-10 的 `hero74-compact-v8/` 進一步把這個分工做成可執行 runtime 合約：模型輸出必須是單一 JSON，且所有 template／effect／hook／condition／VFX style 都必須落在同一題已提供的有限候選集；任何原生資產 ID、路徑、instance ID、provenance、capability／direction／fallback metadata 或未選候選都在組裝前拒絕。script 才會把一個 selection 與六個 slot delta 展開成 HeroPlan。資料集同時封存只供 script 使用的 parameter catalog，因此還原／推論不再依賴可變工作樹；74／74 名教師的 518 個 decision 都已經過此 runtime 重新組裝通過。這是資料與介面 roundtrip 證據，仍不是已訓練 adapter 的生成品質成績。
+
 固定資料仍是兩批 37 名、共 74 名／518 個教師任務，不擴充英雄：train **413**（59 名／59 個全英雄選型＋354 槽），dev **105**（15 名／15 個全英雄選型＋90 槽），hero/group 不跨 split。實測 ownership report 的七項洩漏計數全為 0：prompt 無完整資產庫，輸出無原生路徑、instance ID、provenance、capability/direction/fallback metadata，configure prompt 無全域 constraint blob，configure output 無 raw VFX style。產品內 VFX 只引用 `$vfx#N`，實際 `fx.prim.*` 由 script 從第一階段選型展開。
 
 | 候選 | selection p50／p95 total tokens | configure p50／p95 total tokens | 主要問題 |

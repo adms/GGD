@@ -1,0 +1,3 @@
+# Compact ForgePlan dataset
+
+Each of 74 verified HeroProjects yields one whole-hero semantic selection and six bounded slot configurations. The LLM only selects semantic templates/styles and writes non-default per-slot mechanism deltas. It never receives the full asset inventory and never owns native JSON, instance IDs, capability metadata, rank/provenance/conflict defaults, VFX event/attachment defaults, package paths, schema wrapping, compilation or validation. Configure inputs use the matching whole-hero teacher selection during training; end-to-end evaluation must use that arm's own selection output.

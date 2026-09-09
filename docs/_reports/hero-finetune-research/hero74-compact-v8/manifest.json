@@ -1,0 +1,68 @@
+{
+  "schema": "ggd-distillation-compact-frozen-data@1",
+  "counts": {
+    "train": {
+      "tasks": 413,
+      "wholeHeroes": 59,
+      "slots": 354,
+      "groups": 48,
+      "uniqueHeroes": 59
+    },
+    "dev": {
+      "tasks": 105,
+      "wholeHeroes": 15,
+      "slots": 90,
+      "groups": 15,
+      "uniqueHeroes": 15
+    }
+  },
+  "sourceDatasetManifestSha256": "b80ca65f68ede20e18781995f3d983a2e7f0b79e4ee1f0d3bd1b43c4c57a5d94",
+  "sourceDatasetSchema": "ggd-distillation-frozen-data@1",
+  "outputs": {
+    "examples.json": "9b00167b3e7b5248dbf7c08549aab3b6f45ddc8fa027196219ab3aa7fad953fa",
+    "train.jsonl": "ae094d599e2f5eed1b9902fe3fefbe22443c05bf85c2449a14fc22562a96adc7",
+    "dev.jsonl": "4d91564daa635a540ea0d8232f7610a85bd07bf03eca94d8c9ea12e1d1f506b5",
+    "decision-space.json": "940397138ae990bebc8498f6bdb6f57f096573db962983fcbd1dbf2b37df666b",
+    "parameter-catalog.json": "36fafd234ff5d374d5a29e80c81ea5f7755c19c33614c6ad711115f87ca48860",
+    "asset-bindings.json": "010d853c01d3900a858487cc34bda89c4b975720e34639643657ba091335eb4d",
+    "ownership-report.json": "d8d4a93c3378d08672e7e06aff613f79ee6b31a0164aefe1d66f7098182096b0",
+    "projection-report.json": "dd39cfc8a631322c46942272bec9c3c72893beb72b14181c917001d5a5253267",
+    "README.md": "e58129dd4dbd899351da1380a76f1589acc4c4e36bf62ae03340cf22e3333822"
+  },
+  "stages": [
+    "select",
+    "configure"
+  ],
+  "sourceExamples": 518,
+  "projectedTasks": 518,
+  "semanticRoundtripPassed": 518,
+  "trainingSelection": "one traversal of all compact train tasks; no replacement, paraphrase multiplication, automatic sweep or new heroes",
+  "configureTraining": "Teacher-forced exact selection; production and end-to-end evaluation must configure from the same model own selection output.",
+  "scriptOwned": [
+    "native JSON and schema wrapper",
+    "hero, ability and product instance identifiers",
+    "rank/provenance/conflict defaults",
+    "capability/direction/fallback metadata",
+    "parameter default expansion",
+    "asset/icon/model/action paths",
+    "VFX event/attachment/fallback defaults",
+    "template catalog filtering",
+    "compilation/package/import/testing"
+  ],
+  "modelOwned": [
+    "hero identity classification",
+    "template/effect/hook/condition selection",
+    "cross-slot semantic relationships",
+    "non-default mechanism parameters",
+    "VFX style/template recommendation"
+  ],
+  "cautions": [
+    "Roundtrip covers mechanism-bearing fields after catalog-default normalization and VFX style choices; VFX event/attachment layout is intentionally script-owned.",
+    "Generated prose purpose/summary is replaced by source request text.",
+    "This freeze is not a trained-model or unseen-hero quality result.",
+    "Native adopted-catalog teachers are excluded because there is no proven deterministic inverse into HeroPlan; they remain regression evidence."
+  ],
+  "scriptSha256": "d6793d3e28904ba05729bf9e6e119662cddbfdcb8b06ccd70b0658df17cbd253",
+  "frozenWeightsStarted": false,
+  "releaseQualified": false
+}
