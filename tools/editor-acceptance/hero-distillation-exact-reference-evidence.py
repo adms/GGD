@@ -41,7 +41,7 @@ def save(path, value):
         stream.write('\n')
 
 
-def safe_evidence(root, entries):
+def safe_evidence(root, entries, qualification):
     checked = []
     for item in entries:
         assert item.get('kind') in ['source-semantic', 'teacher-gameplay'], 'UNKNOWN_TEACHER_EVIDENCE_KIND'
@@ -50,7 +50,19 @@ def safe_evidence(root, entries):
         file = (root / relative).resolve()
         assert file.is_relative_to(root) and file.is_file(), 'MISSING_TEACHER_EVIDENCE'
         assert digest(file) == item['sha256'], 'TEACHER_EVIDENCE_DRIFT:' + item['path']
-        checked.append({'kind': item['kind'], 'path': str(file), 'sha256': item['sha256']})
+        receipt = read(file)
+        expected_schema = {'source-semantic': 'ggd-hero-source-semantic-receipt@1',
+                           'teacher-gameplay': 'ggd-hero-live-game-receipt@1'}[item['kind']]
+        assert receipt.get('schema') == expected_schema, 'WRONG_TEACHER_EVIDENCE_SCHEMA:' + item['kind']
+        assert (receipt.get('id'), receipt.get('heroId')) == (qualification['id'], qualification['heroId']), \
+            'TEACHER_EVIDENCE_IDENTITY_DRIFT:' + item['kind']
+        assert receipt.get('engineRevision') == qualification.get('engineRevision'), 'TEACHER_EVIDENCE_ENGINE_DRIFT:' + item['kind']
+        assert receipt.get('compiledSha256') == qualification.get('compiledSha256'), 'TEACHER_EVIDENCE_COMPILED_DRIFT:' + item['kind']
+        verdict = qualification['semanticFidelity'] if item['kind'] == 'source-semantic' else qualification['gameplay']
+        assert type(receipt.get('passed')) is bool and receipt['passed'] is (verdict == 'passed'), \
+            'TEACHER_EVIDENCE_VERDICT_DRIFT:' + item['kind']
+        checked.append({'kind': item['kind'], 'path': str(file), 'sha256': item['sha256'],
+                        'schema': receipt['schema'], 'passed': receipt['passed']})
     assert sorted(x['kind'] for x in checked) == ['source-semantic', 'teacher-gameplay'], 'INCOMPLETE_TEACHER_EVIDENCE'
     return checked
 
@@ -93,7 +105,7 @@ def build(results_path, qualification_path, compile_dirs, out):
     for row in qualification['rows']:
         assert row['semanticFidelity'] in ['passed', 'failed'] and row['gameplay'] in ['passed', 'failed'], 'UNVERIFIED_TEACHER_QUALITY'
         assert type(row['unsafeAccept']) is bool, 'INVALID_TEACHER_UNSAFE_FLAG'
-        qualified[row['id']] = {**row, 'checkedEvidence': safe_evidence(qroot, row['evidence'])}
+        qualified[row['id']] = {**row, 'checkedEvidence': safe_evidence(qroot, row['evidence'], row)}
     indexes = {}
     for arm in ARMS:
         expected_arm = 'teacher-control' if arm == 'teacher' else arm
