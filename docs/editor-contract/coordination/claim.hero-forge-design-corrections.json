@@ -6,7 +6,7 @@
   "to": "main",
   "baseCommit": "6efdd3bfb4df593a26fa2e94d4d65f8e572c3c64",
   "contractFingerprint": "2b7596f9946625ab",
-  "title": "37 名社群英雄／222 槽依核准惡搞方向改編，保留原稿及独立版本；畫面與服務交付另驗",
+  "title": "37 名惡搞改編與獨立版本；32 名隔離發布，5 名投稿情境及 PBR 畫面待修",
   "claims": [
     {
       "kind": "confirmed",
@@ -15,7 +15,7 @@
         "command": "pnpm exec node --import tsx tools/community-hero-forge/prepare-published-handoff.mts",
         "expectedExit": 0
       },
-      "commit": "36ed5daa4465b784c7fb0401980c3eb7db642e2b",
+      "commit": "219c413d8f9f264ef9549f907a0d39c662f726d2",
       "evidence": [
         "materials/community-hero-forge/handoff-manifest.json",
         "materials/community-hero-forge/refinements/parody-review.json",
@@ -29,7 +29,7 @@
         "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements/parodyBatch.test.ts packages/shared/src/content/heroForge/communityRefinements/parodyAdaptations.test.ts packages/shared/src/content/heroForge/communityRefinements/parodyAzazel.test.ts --maxWorkers=2 --minWorkers=1",
         "expectedExit": 0
       },
-      "commit": "36ed5daa4465b784c7fb0401980c3eb7db642e2b",
+      "commit": "219c413d8f9f264ef9549f907a0d39c662f726d2",
       "evidence": [
         "tools/community-hero-forge/parody",
         "packages/shared/src/content/heroForge/communityRefinements/parodyAzazel.test.ts",
@@ -43,7 +43,7 @@
         "command": "pnpm exec node --import tsx tools/community-hero-forge/parody/build.mts --check",
         "expectedExit": 0
       },
-      "commit": "36ed5daa4465b784c7fb0401980c3eb7db642e2b",
+      "commit": "219c413d8f9f264ef9549f907a0d39c662f726d2",
       "evidence": [
         "tools/community-hero-forge/parody/build.mts",
         "materials/community-hero-forge/design-policy.json",
@@ -52,16 +52,18 @@
     },
     {
       "kind": "confirmed",
-      "text": "PR 前段已提供資源、指定友軍保護、觀察事件、召喚／陷阱、滑板／牽引、格擋／中斷、局部時停、獨立續段及模板歷史等共用支援；相應角色與 transport/Editor 回歸仍登記在 validation-plan.json，歷史證據保留在各角色驗證檔。Main 需一併審查並同步整合 client/game-server/content-api，不能只收新版 JSON 至舊執行器。當前修正後瀏覽器畫面及服務 ZIP／投稿尚未驗收完成；#1132 保持開啟。",
+      "text": "PR 前段已提供資源、指定友軍保護、觀察事件、召喚／陷阱、滑板／牽引、格擋／中斷、局部時停、獨立續段及模板歷史等共用支援；相應角色與 transport/Editor 回歸仍登記在 validation-plan.json，歷史證據保留在各角色驗證檔。Main 需一併審查並同步整合 client/game-server/content-api，不能只收新版 JSON 至舊執行器。本輪另保留投稿預設情境與隔離服務、發布、S3 往返收據；原稿忠實還原及整批正式交付仍未完成，#1132 保持開啟。",
       "repro": {
         "command": "pnpm exec tsc --noEmit -p packages/shared/tsconfig.json",
         "expectedExit": 0
       },
-      "commit": "36ed5daa4465b784c7fb0401980c3eb7db642e2b",
+      "commit": "219c413d8f9f264ef9549f907a0d39c662f726d2",
       "evidence": [
         "materials/community-hero-forge/validation-plan.json",
         "materials/community-hero-forge/refinements/README.md",
-        "AI參考全自動鑄造守則.md"
+        "AI參考全自動鑄造守則.md",
+        "materials/community-hero-forge/refinements/parody-verification.json",
+        "materials/community-hero-forge/refinements/parody-admission-scenes.json"
       ]
     }
   ],
@@ -91,6 +93,7 @@
   "asks": [
     "Main 審查完整 37 名新版玩法、原稿差異、個別版本／rollback 與新增集中驗證。阿薩謝爾依最後裁決用既有極大 AoE，嘲諷沿用 GGD 自動索敵規則；目前配置下護甲／魔抗實際歸零，配置更動須重建並重驗。",
     "一併審查 PR 前段的通用資源、觀察事件、盾保護／免死、召喚／陷阱、位移、格擋／中斷、局部時停、recast、獨立模板歷史與快照／Editor 介接；相關範圍由 validation-plan 的 suite 指向。整合時同步建置 client/game-server/content-api。",
-    "畫面、當下服務 ZIP 與投稿驗收保持獨立狀態；歷史隔離發布或編譯通過不能抵充新版上線。#1132 留開直到其剩餘驗收與正式改編審查完成；Main 只做審查／合併，本 task 不派工給其他任務。"
+    "Main 審查目前實測狀態：32 名已依服務 1385c2f83008 重建 ZIP、隔離投稿／管理員發布及異帳號下載還原；武藤遊戲、銀時、奇犽、艾莉絲、SUN樂仍被預設投稿情境擋住。離線 --scenario-report 可在上傳前重現相同 5 名失敗，不能刪使用條件或假造資源放行。PBR 光照預載兩種渲染設定均失敗，畫面未通過。#1132 留開；這些是本 task 待完成項，不派給其他任務。正式站尚未部署或發布。",
+    "同步審查生成器明確採用與新增修訂、AI 守則 v1.3、批次投稿預檢、32 份服務 ZIP 和 201 份 S3 封存／重下載證據。材料入口為 materials/community-hero-forge；大型 ZIP／模擬原始資料／PNG 在 supplements/parody-37-20260909 指向的授權 S3，Git 保存全部 37 名可維護來源和精簡收據。"
   ]
 }
