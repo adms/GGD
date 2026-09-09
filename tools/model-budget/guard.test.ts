@@ -65,16 +65,38 @@ describe("the import guard scores against the role gate", () => {
     const axis = (k: string) => out.results[0].axes.find((a: any) => a.key === k);
     expect(axis("maxTextureEdge").verdict).toBe("warn");
     expect(axis("drawCalls").verdict).toBe("over");
-    expect(axis("animChannels").verdict).toBe("warn");
+    // ⭐ GH#1164 —— 這一行原本斷言 `warn`（那時警戒線是 120，而這顆是 123 通道）。
+    // ⛔ owner 2026-09-10 把警戒線移到 300 ⇒ 123 通道現在是 `ok`，而那是**對的**。
+    // ⭐ 這條測試真正的主體是 `drawCalls: over`（上一行）——⛔ 通道那一格只是順帶。
+    expect(axis("animChannels").verdict).toBe("ok");
     expect(run([OVERSIZED, "--role", "champion", "--warn-only"]).status).toBe(0);
   });
 
-  it("still rejects animation-heavy imports above the tablet champion allowance", () => {
+  /**
+   * ⭐⭐ GH#1164 —— 這一條原本拿 `dragon2.glb`（**412** 通道）當「超標」的夾具，
+   * 因為當時上限是 160。⛔ owner 2026-09-10 把上限移到 **500** ⇒ 412 現在是 `warn`。
+   *
+   * ⚠️⚠️ ⭐ **而全 repo 426 顆模型裡，最重的就是那 412 —— 一顆都沒有超過 500。**
+   * ⇒ ⛔ 這條測試**失去了它的夾具**。
+   *
+   * ⭐ 而正確的處置**不是刪掉它**（那會讓「超標會被擋」這件事沒有任何守衛）——
+   * ⇒ 改成**兩段**：
+   *   ① 出貨語料裡最重的那一顆確實只到 `warn`（⭐ 這是**現況**的斷言）
+   *   ② ⭐ 把上限**臨時調到 400** 再跑同一顆 ⇒ 必須 `over` 且 `exit=1`
+   *      （⭐ 這證明「擋」那條路**還活著**，⛔ 不是因為沒人超標才沒紅）
+   */
+  it("超標仍然會被擋 —— ⭐ 而出貨語料裡今天沒有人超標", () => {
     const dragon = path.join(ROOT, "content/assets/models/menu/dragon2.glb");
-    const { status, stdout } = run([dragon, "--role", "champion", "--json"]);
-    expect(status).toBe(1);
-    const axis = JSON.parse(stdout).results[0].axes.find((a: any) => a.key === "animChannels");
-    expect(axis.verdict).toBe("over");
+    // ① 現況：出貨上限 500 之下，最重的那一顆只到 warn
+    const now = run([dragon, "--role", "champion", "--json"]);
+    const axisOf = (out: string) =>
+      JSON.parse(out).results[0].axes.find((a: any) => a.key === "animChannels");
+    expect(axisOf(now.stdout).verdict).toBe("warn");
+    expect(now.status).toBe(0);
+    // ② ⭐ 把上限壓到那顆之下 ⇒ 「擋」那條路必須真的擋
+    const tight = run([dragon, "--role", "champion", "--json", "--channel-limit", "400"]);
+    expect(axisOf(tight.stdout).verdict, "⛔ 上限壓到 400 而 412 通道沒被判 over ⇒ 擋的那條路是死的").toBe("over");
+    expect(tight.status).toBe(1);
   });
 
   it("refuses to guess a role it cannot resolve (exit 2)", () => {

@@ -10,6 +10,7 @@ import {
   C_MESH_MS,
   ANIMATION_FRAME_MS,
   CHAMPION_CHANNEL_LIMIT,
+  DERIVED_CHAMPION_CHANNEL_LIMIT,
   CHAMPION_INSTANCES,
   CHAN_LIMIT,
   COMBAT_FRAME_SPLIT,
@@ -37,10 +38,25 @@ describe("scene lines are the frame slice divided by the derated constant", () =
   it("mesh line = 6 ms budget, within one rounding step", () => {
     expect(Math.abs(MESH_LIMIT - 6.0 / (C_MESH_MS * DERATE))).toBeLessThan(10);
   });
-  it("twelve maximum-cost heroes fit the estimated animation slice", () => {
+  /**
+   * ⭐⭐ GH#1164 —— 這一條在 2026-09-10 之前斷言「出貨上限**塞得進** 9 ms 的動畫切片」。
+   *
+   * > owner 2026-09-10（逐字）：「太低了 至少要有 300以上每個」「你改成 300 warning, 500 limit」
+   *
+   * ⇒ ⭐ 出貨值現在是**他指定的字面值**（`content/config/model-lod.json`），
+   * ⛔ 而**不再**由這條公式推導 ⇒ 舊斷言必然紅，而它紅的**不是缺陷**。
+   *
+   * ⭐ 保留的是**公式本身仍然成立**（⛔ 不是刪掉它）：
+   * `DERIVED_CHAMPION_CHANNEL_LIMIT` 照原本那組假設算出 160，
+   * ⭐ 而它今天的角色是**診斷** —— 它讓「調高上限的代價」看得見。
+   */
+  it("推導本身仍然成立（⛔ 而它不再決定出貨值）", () => {
+    // ⭐ 公式沒壞：照 3× 保守係數，12 名同場塞得進 9 ms
+    expect(DERIVED_CHAMPION_CHANNEL_LIMIT * CHAMPION_INSTANCES * C_CHAN_MS * DERATE).toBeLessThanOrEqual(ANIMATION_FRAME_MS);
+    expect((DERIVED_CHAMPION_CHANNEL_LIMIT + 10) * CHAMPION_INSTANCES * C_CHAN_MS * DERATE).toBeGreaterThan(ANIMATION_FRAME_MS);
+    // ⭐ 而出貨值**高於**推導值 ⇒ 保守餘裕被刻意縮小了，⛔ 那是 owner 的裁決
+    expect(CHAMPION_CHANNEL_LIMIT).toBeGreaterThan(DERIVED_CHAMPION_CHANNEL_LIMIT);
     expect(CHAN_LIMIT).toBe(CHAMPION_INSTANCES * CHAMPION_CHANNEL_LIMIT);
-    expect(CHAN_LIMIT * C_CHAN_MS * DERATE).toBeLessThanOrEqual(ANIMATION_FRAME_MS);
-    expect((CHAMPION_CHANNEL_LIMIT + 10) * CHAMPION_INSTANCES * C_CHAN_MS * DERATE).toBeGreaterThan(ANIMATION_FRAME_MS);
   });
   it("the supported tablet allocation totals one 30 fps frame", () => {
     expect(TARGET.fps).toBe(30);

@@ -1,0 +1,80 @@
+{
+  "issue": 1159,
+  "integratedMain": "4d1d054c30899e07d505bad9fa019f2ea938a083",
+  "mergeCommit": "0af6764125fd0be9232af53e84a575eba02cca25",
+  "fix": "Use current HERO_MODEL_BUDGET channel limit + 1 in the existing rejection test; keep all rejection and unused-clip assertions. No hero design changes.",
+  "modelSettingsSource": "Owner-maintained workspace 全角色模型盤點.md and its inventory.json/query.py; read latest before import or model revision; retain independent rollback versions.",
+  "validation": [
+    {
+      "command": "pnpm exec vitest run packages/shared/src/ops/modelBudgetThresholdsOrdered.test.ts tools/model-budget/limits.test.ts tools/model-budget/guard.test.ts --maxWorkers=1 --minWorkers=1",
+      "exitCode": 0,
+      "testsPassed": 23
+    },
+    {
+      "command": "pnpm exec vitest run packages/shared/src/content/modelUpload/heroModel.test.ts --maxWorkers=1 --minWorkers=1",
+      "exitCode": 0,
+      "testsPassed": 3
+    },
+    {
+      "command": "pnpm --filter @ggd/shared typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm --filter @ggd/editor exec vitest run src/readmeContract.test.ts src/form/coverageMatchesContract.test.ts --maxWorkers=1 --minWorkers=1",
+      "exitCode": 0,
+      "testsPassed": 3
+    },
+    {
+      "command": "pnpm coord:check",
+      "exitCode": 0,
+      "packets": 29
+    }
+  ],
+  "affectedContracts": [
+    {
+      "command": "pnpm editorcov:check",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm bricks:check",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm decor:check",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm docs:readme:check",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm contract:numbers:check",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm caps:check",
+      "exitCode": 0
+    }
+  ],
+  "board": [
+    {
+      "command": "bash scripts/genrun.sh board:build board:build:raw",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm board:check",
+      "exitCode": 0
+    }
+  ],
+  "preservation": {
+    "first37PlusLoL7": 44,
+    "unchangedSha256": true
+  },
+  "coverage": {
+    "fingerprint": "5d7c1809af12",
+    "required": 5236,
+    "capabilityFingerprint": "abedce92"
+  },
+  "reusedEvidence": "Prior accepted hero projects and Editor release suite are retained; only affected budget, schema, coverage, generator and coordination checks rerun. This is not a claim of a new full-suite run.",
+  "formalPublication": "0 of 81 verified published; pending Main review/merge, deployed service and authenticated Editor/Admin workflow."
+}
