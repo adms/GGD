@@ -1,0 +1,84 @@
+{
+  "schema": "ggd-batch2-validation-decisions@2",
+  "date": "2026-09-09",
+  "count": 37,
+  "partition": "external-evaluation-only",
+  "trainEligible": false,
+  "designPolicy": "保留角色辨識元素與定位，從完整既有目錄設計有實際連動的惡搞玩法。不新增機制標籤、註冊模板或引擎功能，不限制只能選少數積木。37 名應有可辨識的招牌玩法；少數契合角色且具可執行笑點的相似或重複組合可逐對說明後列為例外；僅改名稱、特效、傷害類型、數值或技能槽位不算新設計。底層既有積木可以共用，但不能複製整套特色玩法。",
+  "signaturePolicy": {
+    "requiredDistinctHeroSignatures": null,
+    "sharedAtomicTemplatesAllowed": true,
+    "catalogSelection": "all-existing-enabled-compatible",
+    "cosmeticChangesCountAsNovelty": false,
+    "numericChangesCountAsNovelty": false,
+    "damageTypeChangesCountAsNovelty": false,
+    "slotPermutationCountsAsNovelty": false,
+    "signatureReview": "逐名核對起手條件、作用對象、技能間因果、操作節奏與結算效果；不能僅依名稱或模板 ID 的集合判定創意。",
+    "previousRecipeSet": "rejected-for-signature-reuse",
+    "admissionRequires": [
+      "所有相似或重複特色逐對說明，少數角色契合且可執行惡搞者可接受",
+      "每名至少兩條實質因果連動",
+      "每名逐項趣味與角色特色審查",
+      "重新編譯與正反行為驗證"
+    ],
+    "scriptLimit": "結構去重只能排除部分複製配方，不能證明趣味、角色還原或所有近似機制皆已辨識。",
+    "unreviewedDuplicateSignaturesAllowed": 0,
+    "reviewedExceptionsAllowed": true,
+    "reviewedExceptionRequires": [
+      "列出共享機制",
+      "分別說明角色契合與可執行笑點",
+      "如實保留相似或重複分類，不算新玩法",
+      "逐對代理複核記錄"
+    ]
+  },
+  "scopeGuard": {
+    "newEngineMechanisms": false,
+    "newStatusIds": false,
+    "newRegisteredTemplates": false,
+    "newCustomResourceSystems": false,
+    "automaticTrainingAdmission": false
+  },
+  "identityDecisions": {
+    "06": "阿箱＋拉蜜絲為單一搭檔英雄",
+    "21": "依名單提案採楓",
+    "32": "依名單提案採米瑟利",
+    "35": "依名單提案採阿拉丁",
+    "36": "青蛙劍士 Ned",
+    "37": "如月車站原創擬人化；可操作本體是一台電車"
+  },
+  "trainUltimate": {
+    "name": "如月末班車・乘客全數迷途",
+    "required": [
+      "附近多名敵人隨機傳送至合法落點",
+      "套用既有 curse",
+      "套用既有 blind",
+      "套用既有 confusion"
+    ],
+    "reuseStatusIds": [
+      "curse",
+      "blind",
+      "confusion"
+    ],
+    "doNotRedefineStatuses": true,
+    "acceptance": [
+      "友軍不受影響",
+      "所有三種狀態實際生效",
+      "落點合法且不可永久出界",
+      "固定種子可重現",
+      "不同種子涵蓋多種落點",
+      "持續時間結束後恢復操作"
+    ],
+    "withdrawnProposal": "詛咒削弱回復。該提案不符合現有 curse，已撤回，不作為教師答案。"
+  },
+  "ownerQuotes": [
+    "好 請你依照這份 md 開始產生全自動英雄所需要的所有資料 並且通過 script 驗證後 commit + push 合併回工作流 做為 模型微調驗證集比對資料",
+    "採用車站擬人化原創英雄",
+    "你可以放一台電車 這樣超惡搞 如果有引擎不支援的機制請你重新思考設計用惡搞的方式拼湊既有機制來完成",
+    "你可以更大膽惡搞一點 例如異世界放逐是把一堆周圍敵人都傳送到隨機地點",
+    "然後全部詛咒＋致盲＋混亂",
+    "所有英雄的技能盡量都惡搞放飛自我 亂做一通 好玩為主",
+    "這三個狀態已經都有預設標籤可以使用了 你不需要另外定義",
+    "對請你簡化設計盡量複用已有機制標籤與模板 不要再發明新的擴大範圍 無助微調收斂學習知識提升準度",
+    "偶爾有幾個雖然相似重複 但是因為契合角色本身特色跟足夠惡搞 是可以接受 但你要跟我說明"
+  ]
+}

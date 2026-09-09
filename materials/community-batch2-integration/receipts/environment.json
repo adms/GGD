@@ -1,0 +1,14 @@
+{
+  "schema": "ggd-isolated-batch-platform@1",
+  "platform": "http://127.0.0.1:8099",
+  "importer": "http://127.0.0.1:8824",
+  "dataDirectory": "/private/tmp/ggd-model-upload-acceptance/batch2-current-acceptance/data",
+  "platformBinarySha256": "2cb7ca10fdb24a394b76ddb87d15647a1d2c27c97dd1a2fbcc2fd4452823229a",
+  "accountFixture": "Existing Owner-authorized model-author/model-reviewer, unchanged roles",
+  "intakeQuotaPerDay": 100,
+  "pids": {
+    "redis": 69769,
+    "platform": 69770
+  },
+  "productionModified": false
+}

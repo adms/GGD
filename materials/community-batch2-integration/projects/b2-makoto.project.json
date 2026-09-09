@@ -1,0 +1,751 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "b2-makoto",
+  "revision": 2,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "深澄真",
+    "concept": "月光下的異世界之旅｜商人試射新商品，順便把店面拆了。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "moveNames": {
+      "PASSIVE": "大單成交順便回血",
+      "Q": "試射前客人請後退",
+      "W": "站遠一點商品才夠痛",
+      "E": "本店定點營業範圍",
+      "R": "慢客人請停止抱怨",
+      "EX": "售後服務含急救"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "attributes": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "mechanics": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "b2-makoto.plan",
+    "title": "深澄真",
+    "summary": "月光下的異世界之旅｜商人試射新商品，順便把店面拆了。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "法師",
+    "archetype": "mage",
+    "attackType": "ranged",
+    "budget": {
+      "power": 60,
+      "complexity": 35
+    },
+    "statOverrides": {},
+    "templateVersions": {
+      "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+        "id": "tpl-event-passive",
+        "schema": "template@1",
+        "name": "自訂事件被動",
+        "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+        "family": "event-passive",
+        "status": "enabled",
+        "params": {
+          "hooks": {
+            "type": "hooks",
+            "default": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ]
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+        "id": "tpl-effect-sequence",
+        "schema": "template@1",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
+        "status": "enabled",
+        "params": {
+          "castType": {
+            "type": "enum",
+            "default": "targeted",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 10,
+            "unit": "s",
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "radius": {
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "side": {
+            "type": "enum",
+            "default": "enemies",
+            "values": [
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda611a82716b3b2f856": {
+        "id": "tpl-heal",
+        "schema": "template@1",
+        "name": "回血",
+        "description": "加一個量的回血（`kind:\"heal\"`，走 Scaling：perRank ＋ 係數），⛔ 不是把生命回到某個比例 —— 那是 tpl-life-manipulate 的 `restore`，兩個 effect kind，⛔ 不塞進同一個下拉。`target`：self ＝ 對自己施放（castType self）；ally ＝ 指定一位隊友（targeted、點不到敵人）。`applyTo` 留空 ＝ 回這次施法的對象（self 施法就是自己、指定隊友就是那位隊友）；填 self ＝ 不管點誰都回自己（GH#1046：省略的語意是 ctx.targets，對回血族那正是要的人）。出貨 5 支：42-02 吸血祭品 ×2（self）· 08-01 雙龍紋 ×2 · 99-02 最初的聲音（ally）。⚠️ 回血沒有級距表（damage-tiers 是傷害的），所以 `amount` 走 perRank —— 五支出貨文件本來就是字面 perRank，這裡沒有第二個住處。",
+        "family": "heal",
+        "status": "enabled",
+        "params": {
+          "target": {
+            "type": "enum",
+            "default": "ally",
+            "values": [
+              "self",
+              "ally"
+            ],
+            "origin": "taxonomy: 出貨 5 支 heal-only 裡 3 支指定隊友（08-01 ×2 · 99-02）、2 支回自己（42-02 ×2）⇒ 預設跟多數與 exemplar 走。"
+          },
+          "amount": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                50,
+                85,
+                120,
+                155
+              ],
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 0.465
+                }
+              ]
+            },
+            "origin": "derived: exemplar 08-01 雙龍紋 content/abilities/godie-n01c.q.json effects[0].amount 逐位元（孿生 godie-nbbc.q 同值）。"
+          },
+          "applyTo": {
+            "type": "enum",
+            "values": [
+              "self",
+              "target"
+            ],
+            "optional": true
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0.067,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true,
+            "origin": "census: 出貨 5/5 支 heal-only 的 `castTimeSec` 逐位元 0.067；castderive:build:raw 推導欄位，文件與 params 同值。"
+          }
+        },
+        "requires": [],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "08-01 雙龍紋（content/abilities/godie-n01c.q.json）",
+          "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）；原作對照見 tools/skill-remake 的 08-01 列"
+        }
+      }
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "大單成交順便回血",
+        "purpose": "「大單成交順便回血！」\n每次終極技命中後自己回復 80 生命，內置冷卻 3 秒；不是全場無限供魔。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：商人試射新商品，順便把店面拆了。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "b2-makoto.passive.card1",
+            "template": {
+              "ref": "tpl-event-passive",
+              "params": {
+                "hooks": [
+                  {
+                    "on": "onUltimateHit",
+                    "effects": [
+                      {
+                        "kind": "heal",
+                        "amount": {
+                          "flat": 80
+                        },
+                        "applyTo": "self"
+                      }
+                    ],
+                    "internalCooldown": 3,
+                    "target": "self"
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "試射前客人請後退",
+        "purpose": "「試射前客人請後退！」\n產品展示先請客人後退：推離指定敵人 3 單位，不造成傷害。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：商人試射新商品，順便把店面拆了。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-makoto.q.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "knockback",
+                    "distance": 3,
+                    "speed": 12,
+                    "from": "caster",
+                    "subtractGap": false,
+                    "uncontrollable": false
+                  }
+                ],
+                "castType": "targeted",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "站遠一點商品才夠痛",
+        "purpose": "「站遠一點商品才夠痛！」\n弓術定點單射，小級物理傷害，距離 0 到 8 由 0.5 倍線性提高到 1.5 倍，超過按上限；真實距離決定輸出。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：商人試射新商品，順便把店面拆了。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-makoto.w.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "小"
+                    },
+                    "distanceScale": {
+                      "atRange": 8,
+                      "near": 0.5,
+                      "far": 1.5
+                    }
+                  }
+                ],
+                "castType": "targeted",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "本店定點營業範圍",
+        "purpose": "「本店定點營業範圍！」\n以起手命中中心（沒有命中則施法點）固定半徑 3，每 0.5 秒重選最多 4 名敵人，共三次 slow40 減速 40% 持續 2 秒；沒有全圖界域。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：商人試射新商品，順便把店面拆了。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-makoto.e.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "delayed",
+                    "shape": "circle",
+                    "delaySec": 0.5,
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "slow40",
+                        "duration": 2,
+                        "applyTo": "target",
+                        "moveSpeedMult": 0.6
+                      }
+                    ],
+                    "stopOnCasterDeath": true,
+                    "radius": 3,
+                    "side": "enemies",
+                    "maxTargets": 4,
+                    "targetMode": "reresolve",
+                    "count": 3,
+                    "intervalSec": 0.5
+                  }
+                ],
+                "castType": "ground",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "慢客人請停止抱怨",
+        "purpose": "「慢客人請停止抱怨！」\n中級集中魔法；消耗已在營業範圍沾到的 slow40，才追加沉默 1.2 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：商人試射新商品，順便把店面拆了。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-makoto.r.card1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "中"
+                    }
+                  },
+                  {
+                    "kind": "consumeStatus",
+                    "shape": "single",
+                    "statusId": "slow40",
+                    "count": "all",
+                    "subject": "target",
+                    "onConsumed": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "magic-break",
+                        "duration": 1.2,
+                        "applyTo": "target",
+                        "silenced": true
+                      }
+                    ]
+                  }
+                ],
+                "castType": "targeted",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 90,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "售後服務含急救",
+        "purpose": "「售後服務含急救！」\n指定合作隊友回復 120，售後範圍照正式施法距離。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：商人試射新商品，順便把店面拆了。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-makoto.ex.card1",
+            "template": {
+              "ref": "tpl-heal",
+              "params": {
+                "target": "ally",
+                "amount": {
+                  "flat": 120
+                },
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda611a82716b3b2f856"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "champ.sela",
+    "championIcon": null,
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-makoto.q",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-makoto.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.physical.bolt",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-makoto.w",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-makoto.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.nova",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-makoto.e",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-makoto.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.nova",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-makoto.r",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-makoto.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.wind.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "script": {
+          "id": "b2-makoto.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "b2-makoto.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": []
+  },
+  "validationState": {
+    "identity": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": []
+}
