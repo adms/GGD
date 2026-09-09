@@ -109,6 +109,7 @@ def prepare(run, dataset, out):
     (out / 'public-heroes.json').write_text(serialized)
     (out / 'source').mkdir()
     source_files = [SCRIPT, SCRIPT.with_name('hero-distillation-compact-generation.py'),
+                    SCRIPT.with_name('hero-distillation-generation.py'),
                     SCRIPT.with_name('hero-distillation-compact-runtime-cli.mjs'),
                     SCRIPT.with_name('hero-distillation-compact-runtime.mjs'), SCRIPT.with_name('hero-distillation-compact.mjs'),
                     SCRIPT.with_name('hero-distillation-freeze.mjs')]
@@ -135,7 +136,7 @@ def verify_bundle(directory):
     directory = Path(directory).resolve()
     p = read(directory / 'manifest.json')
     assert p['schema'] == 'ggd-compact-protected-evaluation@1', 'COMPACT_EVALUATION_SCHEMA'
-    for file in [SCRIPT, SCRIPT.with_name('hero-distillation-compact-generation.py'), SCRIPT.with_name('hero-distillation-compact-runtime-cli.mjs'),
+    for file in [SCRIPT, SCRIPT.with_name('hero-distillation-compact-generation.py'), SCRIPT.with_name('hero-distillation-generation.py'), SCRIPT.with_name('hero-distillation-compact-runtime-cli.mjs'),
                  SCRIPT.with_name('hero-distillation-compact-runtime.mjs'), SCRIPT.with_name('hero-distillation-compact.mjs'),
                  SCRIPT.with_name('hero-distillation-freeze.mjs')]:
         assert p['sources'][file.name] == t.digest(file), 'RUNNER_DRIFT'
