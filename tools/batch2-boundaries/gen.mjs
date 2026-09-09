@@ -45,6 +45,16 @@ const nativeBodies = new Set(
     : [],
 );
 
+/** ⭐ 逐條驗過「它會不會在畫面上動起來」的那幾顆（⛔ 不是「像不像」）。 */
+const screenPath = join(REPO, "docs/_reports/batch2-37-bodies/screen-verification.json");
+const screenOk = new Set(
+  existsSync(screenPath)
+    ? Object.entries(JSON.parse(readFileSync(screenPath, "utf8")).bodies ?? {})
+        .filter(([, r]) => r.ok === true)
+        .map(([id]) => id)
+    : [],
+);
+
 const pkg = read("package-report");
 const pipe = read("pipeline-report");
 const review = read("author-review");
@@ -82,9 +92,17 @@ const rows = (pkg.heroes ?? []).map((h) => {
   const intake = h.status === "passed" && typeof h.zipSha256 === "string" ? YES : NO;
   // ⭐ 「遊戲畫面驗收」—— 收據有一格 `liveGameVerified`（⚠️ ⭐ 而它今天全是 false）
   //   ⛔ 沒有那一格才回 `?`；有而是 false ⇒ ⛔ 就是 ⛔，⛔ 不要柔化成「未知」。
-  const screen = typeof h.model?.liveGameVerified === "boolean"
-    ? (h.model.liveGameVerified ? YES : NO)
-    : UNKNOWN;
+  // ⭐⭐ ④「遊戲畫面驗收」有**兩個**來源，⛔ 而收據那一個只說得出 `false`：
+  //   · 收據的 `model.liveGameVerified`（Codex 打包當下）
+  //   · ⭐ `screen-verification.json` —— **可判版本**（頂點／骨架／六 clip／NaN／人形高度）
+  //   ⇒ 後者為真時贏：一顆已經逐條驗過的身體，
+  //     ⛔ 不會因為舊收據還寫著 false 就變回沒驗過。
+  //   ⚠️ ⭐ 而它**刻意不是**「像不像那個角色」—— 那一題只有人答得出來（HITL）。
+  const screen = screenOk.has(h.id)
+    ? YES
+    : typeof h.model?.liveGameVerified === "boolean"
+      ? (h.model.liveGameVerified ? YES : NO)
+      : UNKNOWN;
   // ⭐ 「正式發布」＝ 這隻在**出貨的** content/champions/ 裡嗎（⛔ 不是「打包過」）
   const shipped = existsSync(join(REPO, "content/champions", `${h.id}.json`)) ? YES : NO;
   const r = byId.get(h.id);

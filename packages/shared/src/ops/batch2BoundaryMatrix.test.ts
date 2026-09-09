@@ -44,6 +44,22 @@ describe("第二批 37 名的五道界線矩陣（GH#1150 AC①）", () => {
     expect(shippedYes, "⛔ 表上的『正式發布』與出貨樹對不上 ⇒ 那張表在說謊").toBe(Number(onDisk));
   });
 
+  // ⭐⭐ ④「畫面驗收」那一欄要對得上**逐條驗過**的收據 —— ⛔ 不是一個手填的勾。
+  it("⭐ 「畫面驗收」那一欄 ＝ screen-verification.json 裡 ok 的那幾顆", () => {
+    const p = join(REPO, "docs/_reports/batch2-37-bodies/screen-verification.json");
+    const okCount = existsSync(p)
+      ? Object.values(
+          (JSON.parse(readFileSync(p, "utf8")) as { bodies: Record<string, { ok: boolean }> }).bodies,
+        ).filter((r) => r.ok).length
+      : 0;
+    const tally = /\| ④畫面驗收 \| (\d+) \| (\d+) \| (\d+) \|/.exec(md);
+    expect(tally, "⛔ 合計那一列不見了").not.toBeNull();
+    expect(
+      Number(tally![1]),
+      "⛔ 表上的『畫面驗收』與逐條驗過的收據對不上 ⇒ 那張表在說謊",
+    ).toBe(okCount);
+  });
+
   it("⭐ 每一格都是**量到的**：⛔ 不可以留白（留白讀起來像「不適用」）", () => {
     const bad = md
       .split("\n")
