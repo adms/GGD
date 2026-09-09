@@ -58,5 +58,11 @@
       "bytes": 18521,
       "credentialPatternScan": "0 findings; full file scanned"
     }
-  ]
+  ],
+  "postMergeBoard": {
+    "sourceCommit": "f43f5005eb28e4e3fd7ca2deb9ddb465a2e59d88",
+    "boardCheckExit": 0,
+    "sameBoardAndRuntimeAsFirst": true,
+    "receipt": "materials/community-hero-forge/receipts/main-v0433-integration/post-merge-board.json"
+  }
 }
