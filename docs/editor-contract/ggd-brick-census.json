@@ -9,8 +9,8 @@
     "shells": 10,
     "zeroAdoption": 26,
     "terminal": 1,
-    "handWritten": 114,
-    "distinctShapes": 78,
+    "handWritten": 112,
+    "distinctShapes": 77,
     "singletonShapes": 52,
     "top8Coverage": 26
   },
@@ -77,14 +77,6 @@
       "examples": [
         "godie-o030.passive",
         "godie-orkn.passive"
-      ]
-    },
-    {
-      "shape": "applyBuff + applyStatus + damageArea",
-      "count": 2,
-      "examples": [
-        "godie-e001.passive",
-        "godie-e00n.passive"
       ]
     },
     {
@@ -214,6 +206,14 @@
         "godie-e00s.r",
         "godie-e010.r"
       ]
+    },
+    {
+      "shape": "damageLine + floatingText + screenShake + spawnModelFx×2 + spawnVfx×2",
+      "count": 2,
+      "examples": [
+        "godie-e002.e",
+        "godie-e00l.e"
+      ]
     }
   ],
   "engineFamilies": [
@@ -337,21 +337,21 @@
       "terminal": false
     },
     {
+      "id": "tpl-area-strike",
+      "family": "area-strike",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 12,
+      "abilities": 10,
+      "terminal": false
+    },
+    {
       "id": "tpl-beam-roll",
       "family": "beam-roll",
       "engineKnows": true,
       "status": "enabled",
       "params": 21,
       "abilities": 9,
-      "terminal": false
-    },
-    {
-      "id": "tpl-area-strike",
-      "family": "area-strike",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 10,
-      "abilities": 8,
       "terminal": false
     },
     {

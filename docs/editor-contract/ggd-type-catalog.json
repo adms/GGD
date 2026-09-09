@@ -93,7 +93,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 8
+        "ref": 10
       },
       "inertParams": [],
       "params": {
@@ -153,6 +153,15 @@
           },
           "inert": null
         },
+        "includeOrigin": {
+          "type": "boolean",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
         "radius": {
           "type": "number",
           "default": 4.5,
@@ -200,6 +209,15 @@
         },
         "modelFx": {
           "type": "spawnModelFx",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "selfBuff": {
+          "type": "applyBuff",
           "default": null,
           "fillsVia": "template.ref → expand()",
           "fillsViaByContext": {

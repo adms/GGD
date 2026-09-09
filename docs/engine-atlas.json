@@ -430,9 +430,9 @@
   },
   "oversizedAoe": {
     "zoneRadius": 24,
-    "total": 42,
+    "total": 44,
     "over": [],
-    "note": "42 支模板技能的 AoE 半徑全部在 zone 半徑 24 之內 —— WC3 單位換算（GGD_PER_WC3 = 11/600）由 expand() 正確套用。"
+    "note": "44 支模板技能的 AoE 半徑全部在 zone 半徑 24 之內 —— WC3 單位換算（GGD_PER_WC3 = 11/600）由 expand() 正確套用。"
   },
   "geometryFields": {
     "範圍與形狀": [
