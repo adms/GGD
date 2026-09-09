@@ -2,7 +2,13 @@
 
 2026-09-09。承接 `hero74-training-v2` 的 500 train／119 internal-dev；不是重新選資料，不截斷，模型仍為固定 Gemma 4 12B IT 8-bit、末兩層 q/o LoRA、rank 8。未獲正式訓練通過證據前不產生 release。
 
-## 後續執行狀態：16 小時已核准，v19 計時問題修正為 v20
+## 後續執行狀態：v20 預檢通過，正式流程正在 dev-before
+
+v20 probe 已 completed、worker 已 join，四種完整格式 4/4 通過；`fitsTimeBudget=true`、`fitsStepBudget=true`、`prefixCacheParityPassed=true`。快取前向／反向依序 20.119、26.732、32.821、45.027 秒；各自未快取對照 44.833、55.184、58.633、65.752 秒，皆小於每段 120 秒。固定估算公式得 31,555.717 秒（8.765 小時），低於核准的 16 小時；估時不是完成保證。
+
+同一受保護 shell 已自動接續 train，於本次記錄時 worker 42858 正在 119 筆 `dev-before`。這是訓練流程啟動，不是 optimizer 已更新；必須以後續 `training-trace.json` 確認更新筆數。probe 和 train 的即時證據位於 workspace `outputs/hero-forge-12b-restart-20260908/full-hero-distillation-v20/`；train 尚未終止，不提前產生完成收據或 release。
+
+新增 CPU-only 推論核心 `tools/editor-acceptance/hero-distillation-generation.py`：119 個 public cases 均通過輸入 hash／契約邊界檢查，6 項單元測試通過。固定所有題目及 base/LoRA 的無思考、greedy、16,384 output-token 上限、256-token prefill；不讀 teacher、不截斷 prompt、不按教師答案長度設輸出限制、不自動重試。保留原始輸出及中途錯誤；即使截斷輸出能解析 JSON 也不能當完整輸出。研究包裝只接受純 JSON 或完整單一 JSON fence，拒絕重複鍵／非有限數字，不代替 Editor #1108。這支是受保護 worker 的待接核心，尚未啟動 GPU 推論，尚缺 final adapter 綁定、數值策略與 supervisor 接線、編譯及對局驗收；CPU 測試不算生成品質。
 
 使用者已明確核准「延長到16小時」，見 `time-authorization-16h.json`；下面 v18 的待授權敘述是當時狀態，不再是目前阻擋。
 
