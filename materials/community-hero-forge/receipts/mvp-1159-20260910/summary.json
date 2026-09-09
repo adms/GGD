@@ -122,6 +122,11 @@
       "path": "skills-tag-aligned.log",
       "bytes": 944,
       "sha256": "2d5c7594e09ba440fd9afee21ed25687e1e6def4d59ec920b194ea965b78f294"
+    },
+    {
+      "path": "ci-unit-announcement-only.log",
+      "bytes": 915777,
+      "sha256": "085744c5793d3896d1d60bc62e7067ed1280c05c13835d33d39c6a3c11d53ca4"
     }
   ],
   "skills": {
@@ -199,6 +204,48 @@
     "skillsSteps": 70,
     "skillsExit": 0,
     "singleAggregatePass": true,
-    "unitResult": "pending; keep current CI running before next push"
+    "unitResult": "completed; sole shared-test failure is missing v0.42.26 announcement"
+  },
+  "ciCompletedBeforeTagFixPush": {
+    "run": 34380843572,
+    "conclusion": "failure",
+    "sharedTests": {
+      "passed": 6261,
+      "failed": 1,
+      "skipped": 4,
+      "onlyFailure": "src/ops/everyTagAnnounced.test.ts: v0.42.26"
+    },
+    "contractFailure": "board v0.43.0 -> v0.43.2; fixed by original generator and 70/70 local checks",
+    "jobs": [
+      {
+        "name": "setup",
+        "conclusion": "success"
+      },
+      {
+        "name": "vuln",
+        "conclusion": "success"
+      },
+      {
+        "name": "unit",
+        "conclusion": "failure"
+      },
+      {
+        "name": "go-platform",
+        "conclusion": "success"
+      },
+      {
+        "name": "contract",
+        "conclusion": "failure"
+      },
+      {
+        "name": "e2e",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "regression",
+        "conclusion": "skipped"
+      }
+    ],
+    "limitation": "Shared failure stops later workspace suites and downstream CI steps. Not a full workspace pass or formal publication."
   }
 }
