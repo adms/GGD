@@ -1,0 +1,11 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+
+ ✓ packages/shared/src/ops/iconRedrawTargetsAreLive.test.ts (3 tests) 102ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  01:03:27
+   Duration  1.23s (transform 123ms, setup 0ms, collect 249ms, tests 102ms, environment 0ms, prepare 153ms)
+

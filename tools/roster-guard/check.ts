@@ -474,6 +474,11 @@ const DERIVATION_IMPORT = /from\s+["'][^"']*\/(shippedSurface|balancePopulation)
  * 會 → 它該走推導模組，⛔ 不該進這張表。
  */
 const WHOLE_TREE_BY_DESIGN: Record<string, string> = {
+  "packages/shared/src/ops/iconRedrawTargetsAreLive.test.ts":
+    "待重畫資產的全樹孤兒棘輪：69 的原始基準線量的是任何內容文件都沒有同 id 字串引用，" +
+    "不是玩家可見性。只掃上架面會把仍被未上架道具引用的資產誤列為孤兒；這條不要求重畫它們，" +
+    "也不把全樹有引用視為玩家可見或重畫排程。反駁方式：若判準改成玩家可見的重畫工作清單，" +
+    "應改用 shippedItemIds() 等上架面推導並移除此列；不得沿用全樹孤兒數冒充曝光量。",
   // ── 2026-09-07 GH#1102 —— AP 走訪根改成從 schema 推導之後的**反方向**檢查 ──────
   "packages/shared/src/content/apCoefficient.test.ts":
     "它掃 `content/items`／`content/augments` 是為了證明一件**否定的事**：AP 走訪對它們" +

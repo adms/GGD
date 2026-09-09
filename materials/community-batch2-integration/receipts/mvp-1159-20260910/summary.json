@@ -61,6 +61,21 @@
       "path": "main-doc-update-checks.log",
       "bytes": 1073,
       "sha256": "0be073e57cc6f6ab14299cf79ecf24d0cb2f12ad1fc5a1c853c76417d44cb2d2"
+    },
+    {
+      "path": "ci-contract-before-roster.log",
+      "bytes": 81606,
+      "sha256": "d050cd8a1437a2da9977e955349dccef52aaaebed261e06e79962635520f7bba"
+    },
+    {
+      "path": "icon-orphan-tests.log",
+      "bytes": 533,
+      "sha256": "4de96870f677c78f2fef7a7543d9ae3807d733066eb9ceed289ac66e1168b784"
+    },
+    {
+      "path": "roster-check.log",
+      "bytes": 164,
+      "sha256": "c54b063958e966572a695057b12bc8bb9784bb115a1fcb08db13c21c3926d774"
     }
   ],
   "skills": {
@@ -107,5 +122,21 @@
     "newGuardsExit": 0,
     "boardCheckExit": 0,
     "reason": "Remote PR still conflicted after Main published v0.43.1 and v0.43.2; no rerun of passed hero/Editor suites."
+  },
+  "rosterFollowup": {
+    "issue": 1159,
+    "ciRun": 34379666717,
+    "contractJob": 102561367566,
+    "previousHead": "d3708d4d273b454d884a38668147329a564de4a0",
+    "status": "source-fixed-targeted-passed-new-ci-pending",
+    "testCount": 3,
+    "testExit": 0,
+    "rosterExit": 0,
+    "baselineUnchanged": 69,
+    "scope": "Whole-tree orphan regression only; references in inactive items are not player-visible proof. No hero, icon, runtime or template change.",
+    "sourceSha256": {
+      "packages/shared/src/ops/iconRedrawTargetsAreLive.test.ts": "dbbd1afa831326e8f89b33503e5b1b7dcffa169fbdb600e94ce22e37d55baf0d",
+      "tools/roster-guard/check.ts": "2adc82729be07c7effb33559a03042c9e5af6f66017ff6ebbe6a30678504e0c3"
+    }
   }
 }
