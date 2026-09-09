@@ -8,7 +8,8 @@ from pathlib import Path
 
 def render(data):
     assert data['schema'] == 'ggd-distillation-results@1'
-    assert data['fullHeroE2EProven'] is False and data['modelPromoted'] is False
+    assert type(data['fullHeroE2EProven']) is bool and data['modelPromoted'] is False
+    evidence_complete = data['fullHeroE2EProven']
     e = lambda x: escape(str(x), quote=True)
     number = lambda x: '未測' if x is None else f'{x:.3f}'
     t, count = data['training'], data['counts']['primaryWholeHeroes']
@@ -17,7 +18,16 @@ def render(data):
     assert len(primary) == count
     for arm in data['arms'].values():
         assert [r['id'] for r in arm['rows']] == [r['id'] for r in primary]
-        assert arm['fullHeroSuccess'] is None and arm['unsafeAccepts'] is None, 'UNVERIFIED_QUALITY_CANNOT_BE_SCORED'
+        if evidence_complete:
+            assert type(arm['fullHeroSuccess']) is int and 0 <= arm['fullHeroSuccess'] <= count, 'INVALID_SUCCESS_COUNT'
+            assert type(arm['unsafeAccepts']) is int and 0 <= arm['unsafeAccepts'] <= count, 'INVALID_UNSAFE_COUNT'
+            assert arm['fullHeroSuccess'] == sum(r.get('fullHeroSuccess') is True for r in arm['rows']), 'SUCCESS_AGGREGATE_DRIFT'
+            assert arm['unsafeAccepts'] == sum(r.get('unsafeAccept') is True for r in arm['rows']), 'UNSAFE_AGGREGATE_DRIFT'
+            assert all(type(r.get('fullHeroSuccess')) is bool and type(r.get('unsafeAccept')) is bool
+                       and all(r.get(key) in ['passed', 'failed'] for key in ['semanticFidelity', 'liveImport', 'gameplay'])
+                       for r in arm['rows']), 'INCOMPLETE_ROW_QUALITY'
+        else:
+            assert arm['fullHeroSuccess'] is None and arm['unsafeAccepts'] is None, 'UNVERIFIED_QUALITY_CANNOT_BE_SCORED'
 
     bars, quality, costs = [], [], []
     for key, name in [('base', '未微調基底'), ('lora', '本次 LoRA')]:
@@ -40,7 +50,14 @@ def render(data):
         bars.append(f'<div class="bar"><span>{e(name)}</span><div>{meter}</div></div>')
         packaged = '未測' if arm['packageAdmissionPassed'] is None else f'{arm["packageAdmissionPassed"]} / {count}'
         imported = '未測' if arm.get('runtimeVerifiedImports') is None else f'{arm["runtimeVerifiedImports"]} / {count}'
-        quality.append(f'<tr><th scope="row">{e(name)}</th><td>{packaged}</td><td>{imported}</td><td>未驗證</td><td>未驗證</td><td>未測，不能當 0</td></tr>')
+        if evidence_complete:
+            semantic = sum(r['semanticFidelity'] == 'passed' for r in arm['rows'])
+            full = arm['fullHeroSuccess']
+            unsafe = arm['unsafeAccepts']
+            quality.append(f'<tr><th scope="row">{e(name)}</th><td>{packaged}</td><td>{imported}</td>'
+                f'<td>{semantic} / {count}</td><td>{full} / {count}</td><td>{unsafe}</td></tr>')
+        else:
+            quality.append(f'<tr><th scope="row">{e(name)}</th><td>{packaged}</td><td>{imported}</td><td>未驗證</td><td>未驗證</td><td>未測，不能當 0</td></tr>')
     rows = []
     for index, row in enumerate(primary):
         cells = []
@@ -55,7 +72,16 @@ def render(data):
             detail = '; '.join(str(x) for x in [structural.get('error') if structural else None,
                 package.get('error') if package else None, imported.get('error') if imported else None] if x)
             cells.append(f'<td>{status}<br><small>{packaged}<br>{import_text}</small>' + (f'<details><summary>原因</summary>{e(detail)}</details>' if detail else '') + '</td>')
-        rows.append(f'<tr><th scope="row">{e(row["name"])}<small>{e(row["id"])}</small></th>{"".join(cells)}<td>未驗證</td></tr>')
+        if evidence_complete:
+            verdicts = []
+            for arm in ['teacher', 'base', 'lora']:
+                own = data['arms'][arm]['rows'][index]
+                label = '成功' if own['fullHeroSuccess'] else '失敗'
+                verdicts.append(f'{arm}: {label}（語意 {own["semanticFidelity"]}／匯入 {own["liveImport"]}／玩法 {own["gameplay"]}）')
+            quality_text = '<br>'.join(e(value) for value in verdicts)
+        else:
+            quality_text = '未驗證'
+        rows.append(f'<tr><th scope="row">{e(row["name"])}<small>{e(row["id"])}</small></th>{"".join(cells)}<td>{quality_text}</td></tr>')
     ce_rows = []
     for key, name in [('devBefore', '訓練前'), ('devAfter', '訓練後')]:
         value = t[key]
@@ -63,14 +89,17 @@ def render(data):
     sources = ''.join(f'<li><code>{e(file)}</code><small>SHA-256 {e(meta["sha256"])}</small></li>' for file, meta in data['sourceFiles'].items())
     peak = t['recordedStepPeakMetalBytes']
     peak_text = '未測' if peak is None else f'{peak / 1024**3:.2f} GiB'
+    split_text = 'Blind unseen batch' if data.get('blindTest') is True else 'Internal dev'
+    notice = ('已收齊逐英雄品質收據；此頁呈現證據結果，但仍須通過獨立 release gate，且不代表已部署。'
+              if evidence_complete else '目前不宣告模型達標。結構通過、封裝准入與 CE 改善，都不等於技能機制正確或可上場。')
     return f'''<!doctype html>
 <html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Hero74・Gemma 4 12B 配對結果</title><style>
 :root{{color-scheme:light dark;--bg:light-dark(#fafbfc,#14171b);--ink:light-dark(#17222d,#e3eaf0);--muted:light-dark(#526171,#a9b8c6);--line:light-dark(#d3dde6,#41505c);--accent:light-dark(#176c80,#71cde0)}}
 *{{box-sizing:border-box}}body{{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,sans-serif}}main{{max-width:1000px;margin:auto;padding:32px 24px}}h1{{font-size:clamp(24px,4vw,34px);margin:0}}h2{{font-size:21px;margin:0 0 12px}}section{{padding:24px 0;border-bottom:1px solid var(--line)}}p{{margin:8px 0}}small,.muted,.pending{{color:var(--muted)}}small{{display:block;font-size:13px;overflow-wrap:anywhere}}.notice{{border-left:4px solid var(--accent);padding-left:16px}}.bar{{display:grid;grid-template-columns:160px 1fr;gap:16px;margin:12px 0}}.bar>div{{display:flex;align-items:center;gap:12px}}progress{{accent-color:var(--accent);height:18px;width:min(100%,480px);min-width:0}}.table-wrap{{overflow-x:auto}}table{{width:100%;border-collapse:collapse;text-align:left;font-size:14px}}th,td{{padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top}}th{{font-weight:600}}.table-wrap th:first-child{{min-width:150px}}code{{font-size:12px;overflow-wrap:anywhere}}li{{margin:12px 0}}summary{{cursor:pointer}}.stats{{display:flex;flex-wrap:wrap;gap:14px 32px}}.stats p{{margin:0}}@media(max-width:500px){{main{{padding:20px 14px}}.bar{{grid-template-columns:1fr;gap:0}}th,td{{padding:10px 8px}}}}
 </style></head><body><main>
-<header><p class="muted">Hero74 / Internal dev / Mac-only</p><h1>Gemma 4 12B：微調與完整英雄生成</h1>
-<p class="notice">目前不宣告模型達標。結構通過、封裝准入與 CE 改善，都不等於技能機制正確或可上場。</p>
+<header><p class="muted">Hero74 / {e(split_text)} / Mac-only</p><h1>Gemma 4 12B：微調與完整英雄生成</h1>
+<p class="notice">{e(notice)}</p>
 <small>快照時間 {e(data['capturedAt'])}。這是檔案快照，不是即時行程狀態；不會自動刷新。</small></header>
 <section><h2>訓練進度</h2><p>已記錄 {t['completedSteps']} / {t['plannedSteps']} 個 optimizer 更新</p>
 <progress value="{t['completedSteps']}" max="{t['plannedSteps']}" aria-label="訓練更新進度"></progress>
