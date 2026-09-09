@@ -6,7 +6,7 @@
   "to": "main",
   "baseCommit": "ec4e0a48ed8a90b997a794a4fb861ac1c9c87bf4",
   "contractFingerprint": "ed197415160df4f6",
-  "title": "模型選項與完整盤點：81 名新角色、11 個獨立副本及來源順位",
+  "title": "統一素材庫共編入口、下載順位與 11 個核准加工副本",
   "claims": [
     {
       "kind": "owner-decision",
@@ -68,11 +68,27 @@
         "command": "python3 tools/hero-model-library/check-index.py",
         "expectedExit": 0
       }
+    },
+    {
+      "kind": "confirmed",
+      "commit": "54bf2dcc5b7372f2d712de1654aaaab61afda28c",
+      "text": "統一共編入口為 materials/asset-library/README.md；131 個使用者來源網址完整保留，去除重複頁為 129 帖。盤點與查詢不依賴本機 intake/outputs；未核准 style-proxy 不再自動用作來源匯入預設，僅 11 個指定加工副本列入核准範圍。",
+      "evidence": [
+        "materials/asset-library/README.md",
+        "materials/hero-model-library/default-policy.json",
+        "materials/hero-model-library/download-sources.json",
+        "materials/hero-model-library/全角色模型盤點.md"
+      ],
+      "repro": {
+        "command": "python3 tools/hero-model-library/test_inventory.py",
+        "expectedExit": 0
+      }
     }
   ],
   "asks": [
     "Main review shared schema 與正式後台／部署接線；CI 綠且 review 通過後合併，再用 mini-deploy.sh 部署同一 Git 與固定 S3 版本。",
     "此 PR 僅改素材選項與管理流程。新增角色名單涵蓋 37＋37＋7＝81；共 156 筆角色／形態 ID，85 筆未在目前靜態出貨目錄。11 個指定代理使用獨立模型／貼圖／骨架／動作副本，不能以素材索引存在宣稱完整英雄已上架。",
-    "保留遠端 88ac699fd 的 15 名既有英雄手動原模型選擇及所有候選。本次未修改戰情版；本機 board:check 顯示既有產物有 22 份帳本、分支來源僅 21 份，msgledger:check 也回報 2026-09-09 訊息漏列。待 Main 補齊來源後重生，不藉此覆蓋現有紀錄。"
+    "保留遠端 88ac699fd 的 15 名既有英雄手動原模型選擇及所有候選。本次未修改戰情版；本機 board:check 顯示既有產物有 22 份帳本、分支來源僅 21 份，msgledger:check 也回報 2026-09-09 訊息漏列。待 Main 補齊來源後重生，不藉此覆蓋現有紀錄。",
+    "共編請從 materials/asset-library/README.md 開始；來源配對改 pairing-inputs.json、下載來源改 download-sources.json、核准範圍改 default-policy.json，來源與全角色模型盤點同批提交。僅 11 組加工替身獲准預設；其餘相似模型仍是候選，勿將 S3 候選清單第一列直接當成預設。"
   ]
 }
