@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-project@2",
   "projectId": "community-review-28-20260907",
-  "revision": 12,
+  "revision": 13,
   "sourceLock": {
     "canonicalId": null,
     "versionId": null
@@ -38,8 +38,8 @@
       "fieldOwnership": {}
     },
     "skills": {
-      "revision": 12,
-      "state": "draft",
+      "revision": 13,
+      "state": "stale",
       "fieldOwnership": {
         "acceptedPlan.slots.E.name": "locked",
         "acceptedPlan.slots.E.products.0.template": "manual",
@@ -56,22 +56,22 @@
       }
     },
     "mechanics": {
-      "revision": 1,
+      "revision": 13,
       "state": "stale",
       "fieldOwnership": {}
     },
     "presentation": {
-      "revision": 3,
+      "revision": 13,
       "state": "stale",
       "fieldOwnership": {}
     },
     "validation": {
-      "revision": 1,
+      "revision": 13,
       "state": "stale",
       "fieldOwnership": {}
     },
     "package": {
-      "revision": 3,
+      "revision": 13,
       "state": "stale",
       "fieldOwnership": {}
     }
@@ -107,291 +107,108 @@
     },
     "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
     "templateVersions": {
-      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
-        "id": "tpl-buff-self",
+      "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+        "id": "tpl-event-passive",
         "schema": "template@1",
-        "name": "變身強化-數值面",
-        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
-        "family": "buff-self",
+        "name": "自訂事件被動",
+        "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+        "family": "event-passive",
         "status": "enabled",
         "params": {
-          "castTimeSec": {
-            "type": "number",
-            "default": 0,
-            "min": 0,
-            "max": 5,
-            "unit": "s",
-            "optional": true
-          },
-          "duration": {
-            "type": "number",
-            "default": 15,
-            "min": 1,
-            "max": 60,
-            "unit": "s"
-          },
-          "modifiers": {
-            "type": "statModifiers",
+          "hooks": {
+            "type": "hooks",
             "default": [
               {
-                "op": "flat",
-                "stat": "ad",
-                "value": 50
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ]
               }
-            ]
-          }
-        },
-        "requires": [],
-        "gapScore": 6,
-        "exemplar": {
-          "skill": "82-04 闇之魔法",
-          "jass": "A0Q6"
-        }
-      },
-      "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0": {
-        "id": "tpl-on-attack",
-        "schema": "template@1",
-        "name": "攻擊觸發",
-        "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
-        "family": "on-attack",
-        "status": "enabled",
-        "params": {
-          "bonusDamage": {
-            "type": "scaling",
-            "default": {
-              "perRank": [
-                100
-              ],
-              "ratios": []
-            }
-          },
-          "chance": {
-            "type": "number",
-            "min": 0,
-            "max": 1,
-            "unit": "ratio",
-            "optional": true
-          },
-          "condition": {
-            "type": "condition",
-            "default": {
-              "any": [
-                {
-                  "all": [
-                    {
-                      "not": {
-                        "is": "champion",
-                        "kind": "kind",
-                        "subject": "target"
-                      }
-                    },
-                    {
-                      "kind": "stat",
-                      "mode": "percent",
-                      "op": "<",
-                      "stat": "hp",
-                      "subject": "target",
-                      "value": 0.35
-                    }
-                  ]
-                },
-                {
-                  "all": [
-                    {
-                      "is": "champion",
-                      "kind": "kind",
-                      "subject": "target"
-                    },
-                    {
-                      "kind": "chance",
-                      "p": 0.01
-                    }
-                  ]
-                }
-              ]
-            },
-            "optional": true
-          },
-          "damageType": {
-            "type": "enum",
-            "default": "magic",
-            "values": [
-              "magic",
-              "physical",
-              "true"
-            ]
-          },
-          "event": {
-            "type": "enum",
-            "default": "onBasicAttack",
-            "values": [
-              "onBasicAttack",
-              "onDamageDealt"
-            ]
-          },
-          "internalCooldown": {
-            "type": "number",
-            "default": 0,
-            "min": 0,
-            "max": 60,
-            "unit": "s",
-            "optional": true
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
           }
         },
         "requires": [
           "hooks",
           "conditions"
         ],
-        "gapScore": 9,
+        "gapScore": 10,
         "exemplar": {
-          "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者",
-          "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效"
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
         }
       },
-      "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b": {
-        "id": "tpl-single-strike",
+      "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+        "id": "tpl-effect-sequence",
         "schema": "template@1",
-        "name": "單體斬擊",
-        "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。",
-        "family": "single-strike",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
         "status": "enabled",
         "params": {
-          "castTimeSec": {
-            "type": "number",
-            "default": 0,
-            "min": 0,
-            "max": 5,
-            "unit": "s",
-            "optional": true
-          },
-          "damage": {
-            "type": "scaling",
-            "default": {
-              "perRank": [
-                350
-              ],
-              "ratios": []
-            }
-          },
-          "damageType": {
+          "castType": {
             "type": "enum",
-            "default": "magic",
+            "default": "targeted",
             "values": [
-              "magic",
-              "physical",
-              "true"
-            ]
-          }
-        },
-        "requires": [],
-        "gapScore": 9,
-        "exemplar": {
-          "skill": "23-04 雷焰聖劍",
-          "jass": "A0OD"
-        }
-      },
-      "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e": {
-        "id": "tpl-charge-push",
-        "schema": "template@1",
-        "name": "衝鋒推撞",
-        "description": "朝目標點直線衝鋒，抵達後對落點周圍造成範圍傷害，並把該處的敵人推開。預設貼地衝刺（衝鋒弧高 0）；把弧高拉起來就變成 52-02 蹂躪編年史那種掄飛。「推開距離」清空 = 只衝鋒不推撞（52-04 巨神一擊）。傷害與推撞都在抵達點結算，不是在起跳點。",
-        "family": "charge-push",
-        "status": "enabled",
-        "params": {
-          "apexHeight": {
-            "type": "number",
-            "default": 0,
-            "min": 0,
-            "max": 600,
-            "unit": "wc3h"
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
           },
           "castTimeSec": {
             "type": "number",
             "default": 0,
             "min": 0,
-            "max": 5,
+            "max": 10,
             "unit": "s",
-            "optional": true
-          },
-          "damage": {
-            "type": "scaling",
-            "default": {
-              "perRank": [
-                350
-              ],
-              "ratios": []
-            }
-          },
-          "damageType": {
-            "type": "enum",
-            "default": "physical",
-            "values": [
-              "magic",
-              "physical",
-              "true"
-            ]
-          },
-          "dashDistance": {
-            "type": "number",
-            "default": 600,
-            "min": 100,
-            "max": 1309,
-            "unit": "wc3u"
-          },
-          "dashDurationSec": {
-            "type": "number",
-            "default": 0.4,
-            "min": 0.05,
-            "max": 2,
-            "unit": "s"
-          },
-          "pushDistance": {
-            "type": "number",
-            "default": 400,
-            "min": 50,
-            "max": 1090,
-            "unit": "wc3u",
-            "optional": true
-          },
-          "pushFrom": {
-            "type": "enum",
-            "default": "facing",
-            "values": [
-              "caster",
-              "facing",
-              "pull"
-            ]
-          },
-          "pushLaunchHeight": {
-            "type": "number",
-            "default": 0,
-            "min": 0,
-            "max": 600,
-            "unit": "wc3h"
-          },
-          "pushSpeed": {
-            "type": "number",
-            "default": 872,
-            "min": 100,
-            "max": 2181,
-            "unit": "wc3u"
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
           },
           "radius": {
             "type": "number",
-            "default": 300,
-            "min": 50,
-            "max": 900,
-            "unit": "wc3u"
+            "default": 2,
+            "min": 0,
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "side": {
+            "type": "enum",
+            "default": "enemies",
+            "values": [
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
           }
         },
         "requires": [
-          "leap",
-          "knockback"
+          "hooks",
+          "conditions"
         ],
-        "gapScore": 5,
+        "gapScore": 10,
         "exemplar": {
-          "skill": "38-01 邪王炎殺劍",
-          "jass": "A0OG"
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
         }
       }
     },
@@ -399,31 +216,277 @@
       "PASSIVE": {
         "slot": "PASSIVE",
         "name": "〔劍神流・先發制人〕",
-        "purpose": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。\n【目標設計】對剛進入交鋒的目標，首次近戰命中獲得有限強化；同一目標有冷卻。\n【待補機制】需對剛交鋒目標的首次命中及每目標冷卻。",
+        "purpose": "每個敵人分開記交鋒：有效普攻／技能扣血或護盾開始二秒先手窗口，首個三格內命中追加一次極小物理傷害；同目標八秒冷卻。交鋒四秒無有效互動才重新開始，持續纏鬥不重開窗口；自己命中另留二秒追擊標記。不同施法者互不借用標記；零值、免疫與普通觸發傷害不建立交鋒。\n【原設計】對剛進入交鋒的目標，首次近戰命中獲得有限強化；同一目標有冷卻。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json"
         },
         "products": [
           {
-            "instanceId": "community-review-28-20260907-passive-1",
+            "instanceId": "engagement",
             "template": {
-              "ref": "tpl-on-attack",
+              "ref": "tpl-event-passive",
               "params": {
-                "bonusDamage": {
-                  "damageTier": "極小",
-                  "ratios": []
-                },
-                "condition": {
-                  "kind": "chance",
-                  "p": 1
-                },
-                "damageType": "physical",
-                "event": "onBasicAttack",
-                "internalCooldown": 3
+                "hooks": [
+                  {
+                    "on": "onDamageDealt",
+                    "victim": "enemy",
+                    "damageSource": "basic",
+                    "damageConnected": true,
+                    "target": "event",
+                    "effects": [
+                      {
+                        "kind": "applyBuff",
+                        "statusId": "community-review-28-20260907.opening",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-28-20260907.opening",
+                        "maxStacks": 1,
+                        "duration": 2,
+                        "modifiers": [],
+                        "dispellable": false,
+                        "condition": {
+                          "not": {
+                            "kind": "status",
+                            "subject": "target",
+                            "statusId": "community-review-28-20260907.combat",
+                            "appliedBy": "self"
+                          }
+                        }
+                      },
+                      {
+                        "kind": "consumeStatus",
+                        "shape": "single",
+                        "statusId": "community-review-28-20260907.opening",
+                        "appliedBy": "self",
+                        "count": 1,
+                        "condition": {
+                          "all": [
+                            {
+                              "kind": "distance",
+                              "op": "<=",
+                              "value": 3
+                            },
+                            {
+                              "not": {
+                                "kind": "status",
+                                "subject": "target",
+                                "statusId": "community-review-28-20260907.opener-lock",
+                                "appliedBy": "self"
+                              }
+                            }
+                          ]
+                        },
+                        "onConsumed": [
+                          {
+                            "kind": "applyBuff",
+                            "statusId": "community-review-28-20260907.opener-lock",
+                            "sourceScope": "caster",
+                            "stackKey": "community-review-28-20260907.opener-lock",
+                            "maxStacks": 1,
+                            "duration": 8,
+                            "modifiers": [],
+                            "dispellable": false
+                          },
+                          {
+                            "kind": "damage",
+                            "damageType": "physical",
+                            "amount": {
+                              "damageTier": "極小",
+                              "ratios": []
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "applyBuff",
+                        "statusId": "community-review-28-20260907.combat",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-28-20260907.combat",
+                        "maxStacks": 1,
+                        "duration": 4,
+                        "modifiers": [],
+                        "dispellable": false
+                      },
+                      {
+                        "kind": "applyBuff",
+                        "statusId": "community-review-28-20260907.recent-hit",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-28-20260907.recent-hit",
+                        "maxStacks": 1,
+                        "duration": 2,
+                        "modifiers": [],
+                        "dispellable": false
+                      }
+                    ]
+                  },
+                  {
+                    "on": "onDamageTaken",
+                    "victim": "enemy",
+                    "damageSource": "basic",
+                    "damageConnected": true,
+                    "target": "event",
+                    "effects": [
+                      {
+                        "kind": "applyBuff",
+                        "statusId": "community-review-28-20260907.opening",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-28-20260907.opening",
+                        "maxStacks": 1,
+                        "duration": 2,
+                        "modifiers": [],
+                        "dispellable": false,
+                        "condition": {
+                          "not": {
+                            "kind": "status",
+                            "subject": "target",
+                            "statusId": "community-review-28-20260907.combat",
+                            "appliedBy": "self"
+                          }
+                        }
+                      },
+                      {
+                        "kind": "applyBuff",
+                        "statusId": "community-review-28-20260907.combat",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-28-20260907.combat",
+                        "maxStacks": 1,
+                        "duration": 4,
+                        "modifiers": [],
+                        "dispellable": false
+                      }
+                    ]
+                  },
+                  {
+                    "on": "onDamageDealt",
+                    "victim": "enemy",
+                    "damageSource": "ability",
+                    "damageConnected": true,
+                    "target": "event",
+                    "effects": [
+                      {
+                        "kind": "applyBuff",
+                        "statusId": "community-review-28-20260907.opening",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-28-20260907.opening",
+                        "maxStacks": 1,
+                        "duration": 2,
+                        "modifiers": [],
+                        "dispellable": false,
+                        "condition": {
+                          "not": {
+                            "kind": "status",
+                            "subject": "target",
+                            "statusId": "community-review-28-20260907.combat",
+                            "appliedBy": "self"
+                          }
+                        }
+                      },
+                      {
+                        "kind": "consumeStatus",
+                        "shape": "single",
+                        "statusId": "community-review-28-20260907.opening",
+                        "appliedBy": "self",
+                        "count": 1,
+                        "condition": {
+                          "all": [
+                            {
+                              "kind": "distance",
+                              "op": "<=",
+                              "value": 3
+                            },
+                            {
+                              "not": {
+                                "kind": "status",
+                                "subject": "target",
+                                "statusId": "community-review-28-20260907.opener-lock",
+                                "appliedBy": "self"
+                              }
+                            }
+                          ]
+                        },
+                        "onConsumed": [
+                          {
+                            "kind": "applyBuff",
+                            "statusId": "community-review-28-20260907.opener-lock",
+                            "sourceScope": "caster",
+                            "stackKey": "community-review-28-20260907.opener-lock",
+                            "maxStacks": 1,
+                            "duration": 8,
+                            "modifiers": [],
+                            "dispellable": false
+                          },
+                          {
+                            "kind": "damage",
+                            "damageType": "physical",
+                            "amount": {
+                              "damageTier": "極小",
+                              "ratios": []
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "applyBuff",
+                        "statusId": "community-review-28-20260907.combat",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-28-20260907.combat",
+                        "maxStacks": 1,
+                        "duration": 4,
+                        "modifiers": [],
+                        "dispellable": false
+                      },
+                      {
+                        "kind": "applyBuff",
+                        "statusId": "community-review-28-20260907.recent-hit",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-28-20260907.recent-hit",
+                        "maxStacks": 1,
+                        "duration": 2,
+                        "modifiers": [],
+                        "dispellable": false
+                      }
+                    ]
+                  },
+                  {
+                    "on": "onDamageTaken",
+                    "victim": "enemy",
+                    "damageSource": "ability",
+                    "damageConnected": true,
+                    "target": "event",
+                    "effects": [
+                      {
+                        "kind": "applyBuff",
+                        "statusId": "community-review-28-20260907.opening",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-28-20260907.opening",
+                        "maxStacks": 1,
+                        "duration": 2,
+                        "modifiers": [],
+                        "dispellable": false,
+                        "condition": {
+                          "not": {
+                            "kind": "status",
+                            "subject": "target",
+                            "statusId": "community-review-28-20260907.combat",
+                            "appliedBy": "self"
+                          }
+                        }
+                      },
+                      {
+                        "kind": "applyBuff",
+                        "statusId": "community-review-28-20260907.combat",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-28-20260907.combat",
+                        "maxStacks": 1,
+                        "duration": 4,
+                        "modifiers": [],
+                        "dispellable": false
+                      }
+                    ]
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0"
+              "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
             }
           }
         ],
@@ -443,38 +506,58 @@
       "Q": {
         "slot": "Q",
         "name": "〔猛進斬〕",
-        "purpose": "【目前模板可執行】向指定方向突進 180 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】向前踏步斬擊。\n【待補機制】短踏步可以預覽；需武器斬擊時點。",
+        "purpose": "向輸入方向踏進一格後，才從實際終點揮一次前方近身弧斬；貼地移動，敵人逐個單次傷害，牆前停止後從實際終點判定。專用劍擊動作仍待畫面驗收。\n【原設計】向前踏步斬擊。",
         "maxRank": 4,
         "abilityOverrides": {
-          "castTimeTier": "小",
-          "cooldownTier": "小",
-          "manaCostTier": "小",
           "provenance": "editor-json",
-          "rangeTier": "小"
+          "castTimeSec": 0.15,
+          "cooldown": [
+            5,
+            5,
+            5,
+            5
+          ],
+          "manaCost": [
+            40,
+            40,
+            40,
+            40
+          ],
+          "range": 3
         },
         "products": [
           {
-            "instanceId": "community-review-28-20260907-q-1",
+            "instanceId": "q-authored",
             "template": {
-              "ref": "tpl-charge-push",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "apexHeight": 0,
-                "castTimeSec": 0.1,
-                "damage": {
-                  "damageTier": "極小",
-                  "ratios": []
-                },
-                "damageType": "physical",
-                "dashDistance": 180,
-                "dashDurationSec": 0.3,
-                "pushDistance": 200,
-                "pushFrom": "facing",
-                "pushLaunchHeight": 0,
-                "pushSpeed": 872,
-                "radius": 150
+                "castType": "skillshot",
+                "castTimeSec": 0.15,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "dash",
+                    "mode": "forward",
+                    "speed": 8,
+                    "maxDistance": 1,
+                    "onEnd": [
+                      {
+                        "kind": "damageArea",
+                        "fromCaster": true,
+                        "radius": 2,
+                        "arcHalfAngleCos": 0.3,
+                        "amount": {
+                          "damageTier": "小",
+                          "ratios": []
+                        },
+                        "damageType": "physical"
+                      }
+                    ]
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -494,40 +577,58 @@
       "W": {
         "slot": "W",
         "name": "〔鬥氣護身〕",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-28-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】短時間提高承傷能力，無法無限疊加。\n【待補機制】有限承傷對應基礎版。",
+        "purpose": "三秒護甲與魔抗各加三十，使用固定堆疊鍵至多一層，到期還原；增加物理／魔法承傷能力，不是永久增益或無限護盾。\n【原設計】短時間提高承傷能力，無法無限疊加。",
         "maxRank": 4,
         "abilityOverrides": {
-          "castTimeTier": "小",
-          "cooldownTier": "小",
-          "effects": [
-            {
-              "absorbs": "all",
-              "amount": {
-                "flat": 120,
-                "ratios": []
-              },
-              "duration": 3,
-              "kind": "shield",
-              "onExisting": "keepLarger",
-              "stackKey": "community-review-28-20260907.w.guard"
-            }
-          ],
-          "manaCostTier": "小",
           "provenance": "editor-json",
-          "rangeTier": "中"
+          "castTimeSec": 0,
+          "cooldown": [
+            8,
+            8,
+            8,
+            8
+          ],
+          "manaCost": [
+            45,
+            45,
+            45,
+            45
+          ],
+          "range": 0
         },
         "products": [
           {
-            "instanceId": "community-review-28-20260907-w-1",
+            "instanceId": "w-authored",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "castTimeSec": 0.15,
-                "duration": 3,
-                "modifiers": []
+                "castType": "self",
+                "castTimeSec": 0,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "applyTo": "self",
+                    "stackKey": "community-review-28-20260907.guard",
+                    "maxStacks": 1,
+                    "duration": 3,
+                    "modifiers": [
+                      {
+                        "stat": "armor",
+                        "op": "flat",
+                        "value": 30
+                      },
+                      {
+                        "stat": "mr",
+                        "op": "flat",
+                        "value": 30
+                      }
+                    ]
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -544,38 +645,46 @@
       "E": {
         "slot": "E",
         "name": "〔逼近步〕",
-        "purpose": "【目前模板可執行】向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】短距離接近，保留可被攔截的路徑。\n【待補機制】此模板附帶傷害推移，需審查逼近步是否保留這項改編。",
+        "purpose": "向輸入方向短距離貼地接近；地形或第一個敵人攔截即停，不附帶原模板的傷害、擊飛或推移。保留 GGD 既有已開始衝刺的控制規則。\n【原設計】短距離接近，保留可被攔截的路徑。",
         "maxRank": 4,
         "abilityOverrides": {
-          "castTimeTier": "小",
-          "cooldownTier": "小",
-          "manaCostTier": "小",
           "provenance": "editor-json",
-          "rangeTier": "小"
+          "castTimeSec": 0,
+          "cooldown": [
+            6,
+            6,
+            6,
+            6
+          ],
+          "manaCost": [
+            40,
+            40,
+            40,
+            40
+          ],
+          "range": 3
         },
         "products": [
           {
-            "instanceId": "community-review-28-20260907-e-1",
+            "instanceId": "e-authored",
             "template": {
-              "ref": "tpl-charge-push",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "apexHeight": 0,
-                "castTimeSec": 0.1,
-                "damage": {
-                  "damageTier": "極小",
-                  "ratios": []
-                },
-                "damageType": "physical",
-                "dashDistance": 250,
-                "dashDurationSec": 0.3,
-                "pushDistance": 200,
-                "pushFrom": "facing",
-                "pushLaunchHeight": 0,
-                "pushSpeed": 872,
-                "radius": 150
+                "castType": "skillshot",
+                "castTimeSec": 0,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "dash",
+                    "mode": "forward",
+                    "speed": 10,
+                    "maxDistance": 3,
+                    "stopOnHit": "enemy"
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -595,38 +704,56 @@
       "R": {
         "slot": "R",
         "name": "光之太刀",
-        "purpose": "【目前模板可執行】向指定方向突進 450 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】有明確起手的高速直線斬擊，命中後停在合法位置。\n【待補機制】需較長起手、高速單段斬及命中停點。",
+        "purpose": "0.55 秒可被打斷的明確起手後，沿輸入方向最多八格高速直線衝刺（速度仍依 GGD 位移上限換算，當下為每秒十六格），第一個合法敵方身體接觸點停止並單次結算大級距傷害；地形優先，空放或只撞牆不產生命中傷害。光之太刀專用細亮線與動作仍待畫面驗收。\n【原設計】有明確起手的高速直線斬擊，命中後停在合法位置。",
         "maxRank": 3,
         "abilityOverrides": {
-          "castTimeTier": "大",
-          "cooldownTier": "大",
-          "manaCostTier": "大",
           "provenance": "editor-json",
-          "rangeTier": "小"
+          "castTimeSec": 0.55,
+          "cooldown": [
+            15,
+            15,
+            15,
+            15
+          ],
+          "manaCost": [
+            95,
+            95,
+            95,
+            95
+          ],
+          "range": 8
         },
         "products": [
           {
-            "instanceId": "community-review-28-20260907-r-1",
+            "instanceId": "r-authored",
             "template": {
-              "ref": "tpl-charge-push",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "apexHeight": 0,
-                "castTimeSec": 0.1,
-                "damage": {
-                  "damageTier": "極小",
-                  "ratios": []
-                },
-                "damageType": "physical",
-                "dashDistance": 450,
-                "dashDurationSec": 0.3,
-                "pushDistance": 200,
-                "pushFrom": "facing",
-                "pushLaunchHeight": 0,
-                "pushSpeed": 872,
-                "radius": 150
+                "castType": "skillshot",
+                "castTimeSec": 0.55,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "dash",
+                    "mode": "forward",
+                    "speed": 22,
+                    "maxDistance": 8,
+                    "stopOnHit": "enemy",
+                    "onHit": [
+                      {
+                        "kind": "damage",
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "大",
+                          "ratios": []
+                        }
+                      }
+                    ]
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -646,30 +773,58 @@
       "EX": {
         "slot": "EX",
         "name": "〔狂劍追擊〕",
-        "purpose": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】對剛被自己擊中的近身目標進行一次額外追擊，超距時不能使用。\n【待補機制】需剛被自身命中的目標條件與追擊窗口。",
+        "purpose": "指定自己二秒內有效命中的近身敵人，消耗該次追擊標記追加一次小級距劍擊。超距直接拒絕，不自動接近，不扣魔力、冷卻或目標標記；別來源／過期／非法目標不能施放。\n【原設計】對剛被自己擊中的近身目標進行一次額外追擊，超距時不能使用。",
         "maxRank": 1,
         "abilityOverrides": {
-          "castTimeTier": "小",
-          "cooldownTier": "大",
-          "manaCostTier": "大",
           "provenance": "editor-json",
-          "rangeTier": "小"
+          "castTimeSec": 0.12,
+          "cooldown": [
+            7,
+            7,
+            7,
+            7
+          ],
+          "manaCost": [
+            50,
+            50,
+            50,
+            50
+          ],
+          "range": 3,
+          "allowApproach": false,
+          "requiredTargetStatus": {
+            "statusId": "community-review-28-20260907.recent-hit",
+            "appliedBy": "self"
+          },
+          "statusCost": {
+            "subject": "target",
+            "statusId": "community-review-28-20260907.recent-hit",
+            "count": 1,
+            "appliedBy": "self"
+          }
         },
         "products": [
           {
-            "instanceId": "community-review-28-20260907-ex-1",
+            "instanceId": "ex-authored",
             "template": {
-              "ref": "tpl-single-strike",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "castTimeSec": 0.2,
-                "damage": {
-                  "damageTier": "小",
-                  "ratios": []
-                },
-                "damageType": "physical"
+                "castType": "targeted",
+                "castTimeSec": 0.12,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "小",
+                      "ratios": []
+                    }
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -1086,6 +1241,14 @@
       }
     }
   },
+  "refinementNotes": {
+    "PASSIVE": "每個敵人分開記交鋒：有效普攻／技能扣血或護盾開始二秒先手窗口，首個三格內命中追加一次極小物理傷害；同目標八秒冷卻。交鋒四秒無有效互動才重新開始，持續纏鬥不重開窗口；自己命中另留二秒追擊標記。不同施法者互不借用標記；零值、免疫與普通觸發傷害不建立交鋒。",
+    "Q": "向輸入方向踏進一格後，才從實際終點揮一次前方近身弧斬；貼地移動，敵人逐個單次傷害，牆前停止後從實際終點判定。專用劍擊動作仍待畫面驗收。",
+    "W": "三秒護甲與魔抗各加三十，使用固定堆疊鍵至多一層，到期還原；增加物理／魔法承傷能力，不是永久增益或無限護盾。",
+    "E": "向輸入方向短距離貼地接近；地形或第一個敵人攔截即停，不附帶原模板的傷害、擊飛或推移。保留 GGD 既有已開始衝刺的控制規則。",
+    "R": "0.55 秒可被打斷的明確起手後，沿輸入方向最多八格高速直線衝刺（速度仍依 GGD 位移上限換算，當下為每秒十六格），第一個合法敵方身體接觸點停止並單次結算大級距傷害；地形優先，空放或只撞牆不產生命中傷害。光之太刀專用細亮線與動作仍待畫面驗收。",
+    "EX": "指定自己二秒內有效命中的近身敵人，消耗該次追擊標記追加一次小級距劍擊。超距直接拒絕，不自動接近，不扣魔力、冷卻或目標標記；別來源／過期／非法目標不能施放。"
+  },
   "validationState": {
     "identity": {
       "revision": 1,
@@ -1098,43 +1261,30 @@
       "diagnosticCodes": []
     },
     "skills": {
-      "revision": 12,
-      "status": "idle",
+      "revision": 13,
+      "status": "stale",
       "diagnosticCodes": []
     },
     "mechanics": {
-      "revision": 1,
+      "revision": 13,
       "status": "stale",
       "diagnosticCodes": []
     },
     "presentation": {
-      "revision": 3,
+      "revision": 13,
       "status": "stale",
       "diagnosticCodes": []
     },
     "validation": {
-      "revision": 1,
+      "revision": 13,
       "status": "stale",
       "diagnosticCodes": []
     },
     "package": {
-      "revision": 3,
+      "revision": 13,
       "status": "stale",
       "diagnosticCodes": []
     }
   },
-  "receipts": [
-    {
-      "kind": "generator-adopted",
-      "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
-      "projectRevision": 5,
-      "digest": "a38f09930b08548f8de6c88f19ec6d09873de17a600db0d0ddfabdf92e8caa33"
-    },
-    {
-      "kind": "generator-adopted",
-      "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
-      "projectRevision": 12,
-      "digest": "bf7c2fe8b396abdb94f03c53ab76b975e40ad392a4d1abcdd9fcc413ac042762"
-    }
-  ]
+  "receipts": []
 }

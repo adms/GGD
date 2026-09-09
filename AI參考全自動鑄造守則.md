@@ -226,3 +226,11 @@ Editor 的「敵方前置行動」可切換自動、靜止或普攻，並显示�
 - 招架接續使用短效、自己來源的目標標記；一次追加以實際消耗觸發。驗證第一次有追加、第二次沒有、他人及過期標記無效。
 - 單槽試玩準備具名資源必須明列，不能聲稱它證明實際取得資源。整套煙霧情境沒有完成成功閃避時應保留 EX 拒絕；另用真實 W／E／Q／R／EX 行動驗證同一世界連段，不得灌層數掩蓋缺口。
 - 參考 [SUN樂微調](materials/community-hero-forge/refinements/31.json)、[共用戰鬥治具](packages/shared/testkit/communityActionFixture.ts)、[行為測試](packages/shared/src/content/heroForge/communityRefinements/sunraku.test.ts)、[试玩反例](packages/shared/src/content/heroForge/communityRefinements/sunrakuAcceptance.test.ts) 及 [收據](materials/community-hero-forge/refinements/sunraku-verification.json)。哈桑風格代理未證明鳥頭、短劍或原角色演出。
+
+## 接觸停止、短期交鋒與禁止自動接近
+
+- 「命中後停下」使用實際位移接觸，不可以起點範圍傷害冒充。`dash.stopOnHit` 選敵人或敵方英雄，`onHit` 僅對第一次合法接觸結算；地形先限制路徑，保留 GGD 位移速度上限、友軍身體擠壓及既有控制規則。空放、只撞牆、背後身體、死亡、跨區、替換或零方向不得附加錯誤命中。
+- 「剛進入交鋒的首次近戰命中」需逐目標及施法者保留有限窗口、同目標冷卻與脫戰条件，不能直接配置每次普攻追加。`damageConnected: true` 只接受實際扣血或消耗護盾的事件；零值或完全免疫不能製造交鋒資源，也不能搭配扣血前的免傷反彈判斷。
+- 「超距不能使用」配置 `allowApproach: false`；驗證超距直接拒絕、沒有自動移動及扣費，近期自己的目標標記仍保留。他人、過期與非法目標須分別拒絕。
+- 前置技能驗收以實際 Q／R 命中取得標記，再執行 EX；空放及無傷害的接近步不得補標記。短效防禦需驗證有效期、刷新不疊加及到期還原。
+- 參考 [艾莉絲微調](materials/community-hero-forge/refinements/28.json)、[行為測試](packages/shared/src/content/heroForge/communityRefinements/eris.test.ts)、[前置命中试玩](packages/shared/src/content/heroForge/communityRefinements/erisAcceptance.test.ts) 與 [收據](materials/community-hero-forge/refinements/eris-verification.json)。本尊模型綁定仍不代表專用劍擊、光線、高攻速動作或音效已验收。

@@ -4,8 +4,8 @@
   "scope": "Original requirements versus compiled authoring; compilation is not design acceptance",
   "heroes": 37,
   "slots": 222,
-  "changedSlots": 51,
-  "passiveOnAttackTemplates": 21,
+  "changedSlots": 57,
+  "passiveOnAttackTemplates": 20,
   "originalDesignAcceptance": "incomplete",
   "published": false,
   "rows": [
@@ -3439,16 +3439,19 @@
       "ownerDescription": "對剛進入交鋒的目標，首次近戰命中獲得有限強化；同一目標有冷卻。",
       "requiredRefinement": "需對剛交鋒目標的首次命中及每目標冷卻。",
       "products": [
-        "tpl-on-attack"
+        "tpl-event-passive"
       ],
       "castType": "self",
       "effects": [],
       "hooks": [
-        "onBasicAttack"
+        "onDamageDealt",
+        "onDamageTaken",
+        "onDamageDealt",
+        "onDamageTaken"
       ],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "每個敵人分開記交鋒：有效普攻／技能扣血或護盾開始二秒先手窗口，首個三格內命中追加一次極小物理傷害；同目標八秒冷卻。交鋒四秒無有效互動才重新開始，持續纏鬥不重開窗口；自己命中另留二秒追擊標記。不同施法者互不借用標記；零值、免疫與普通觸發傷害不建立交鋒。"
     },
     {
       "hero": "28",
@@ -3459,17 +3462,17 @@
       "ownerDescription": "向前踏步斬擊。",
       "requiredRefinement": "短踏步可以預覽；需武器斬擊時點。",
       "products": [
-        "tpl-charge-push"
+        "tpl-effect-sequence"
       ],
-      "castType": "ground",
+      "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "leap"
+        "dash"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "向輸入方向踏進一格後，才從實際終點揮一次前方近身弧斬；貼地移動，敵人逐個單次傷害，牆前停止後從實際終點判定。專用劍擊動作仍待畫面驗收。"
     },
     {
       "hero": "28",
@@ -3480,17 +3483,17 @@
       "ownerDescription": "短時間提高承傷能力，無法無限疊加。",
       "requiredRefinement": "有限承傷對應基礎版。",
       "products": [
-        "tpl-buff-self"
+        "tpl-effect-sequence"
       ],
       "castType": "self",
+      "targetsEnemies": true,
       "effects": [
-        "applyBuff",
-        "shield"
+        "applyBuff"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "三秒護甲與魔抗各加三十，使用固定堆疊鍵至多一層，到期還原；增加物理／魔法承傷能力，不是永久增益或無限護盾。"
     },
     {
       "hero": "28",
@@ -3501,17 +3504,17 @@
       "ownerDescription": "短距離接近，保留可被攔截的路徑。",
       "requiredRefinement": "此模板附帶傷害推移，需審查逼近步是否保留這項改編。",
       "products": [
-        "tpl-charge-push"
+        "tpl-effect-sequence"
       ],
-      "castType": "ground",
+      "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "leap"
+        "dash"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "向輸入方向短距離貼地接近；地形或第一個敵人攔截即停，不附帶原模板的傷害、擊飛或推移。保留 GGD 既有已開始衝刺的控制規則。"
     },
     {
       "hero": "28",
@@ -3522,17 +3525,17 @@
       "ownerDescription": "有明確起手的高速直線斬擊，命中後停在合法位置。",
       "requiredRefinement": "需較長起手、高速單段斬及命中停點。",
       "products": [
-        "tpl-charge-push"
+        "tpl-effect-sequence"
       ],
-      "castType": "ground",
+      "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "leap"
+        "dash"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "0.55 秒可被打斷的明確起手後，沿輸入方向最多八格高速直線衝刺（速度仍依 GGD 位移上限換算，當下為每秒十六格），第一個合法敵方身體接觸點停止並單次結算大級距傷害；地形優先，空放或只撞牆不產生命中傷害。光之太刀專用細亮線與動作仍待畫面驗收。"
     },
     {
       "hero": "28",
@@ -3543,7 +3546,7 @@
       "ownerDescription": "對剛被自己擊中的近身目標進行一次額外追擊，超距時不能使用。",
       "requiredRefinement": "需剛被自身命中的目標條件與追擊窗口。",
       "products": [
-        "tpl-single-strike"
+        "tpl-effect-sequence"
       ],
       "castType": "targeted",
       "targetsEnemies": true,
@@ -3551,9 +3554,9 @@
         "damage"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "指定自己二秒內有效命中的近身敵人，消耗該次追擊標記追加一次小級距劍擊。超距直接拒絕，不自動接近，不扣魔力、冷卻或目標標記；別來源／過期／非法目標不能施放。"
     },
     {
       "hero": "29",

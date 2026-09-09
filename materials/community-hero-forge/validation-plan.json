@@ -1,6 +1,6 @@
 {
   "schema": "ggd-batch-validation-plan@1",
-  "manifestSha256": "ebf5f5533d9efe79ab82f078600b844850c050bcfa703ea6d1108f42f06adfff",
+  "manifestSha256": "b2a8557a053ba6c6dc49be948e1c9b8755871e266047a0d1465e2b342af625f9",
   "suites": [
     {
       "id": "implemented-mechanisms",
@@ -33,7 +33,11 @@
         "packages/shared/src/sim/effects/evasion.test.ts",
         "packages/shared/src/sim/abilities/statusCost.test.ts",
         "packages/shared/src/sim/abilities/castApproach.test.ts",
-        "apps/client/src/ui/castFeedback.test.ts"
+        "apps/client/src/ui/castFeedback.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/eris.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/erisAcceptance.test.ts",
+        "packages/shared/src/sim/effects/lane3Kinds.test.ts",
+        "packages/shared/src/sim/effects/oncePerCast.test.ts"
       ],
       "heroSlots": {
         "community-review-20-20260907": [
@@ -98,6 +102,14 @@
           "EX"
         ],
         "community-review-31-20260907": [
+          "PASSIVE",
+          "Q",
+          "W",
+          "E",
+          "R",
+          "EX"
+        ],
+        "community-review-28-20260907": [
           "PASSIVE",
           "Q",
           "W",

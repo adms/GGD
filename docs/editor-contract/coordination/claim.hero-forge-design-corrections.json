@@ -6,7 +6,7 @@
   "to": "main",
   "baseCommit": "6efdd3bfb4df593a26fa2e94d4d65f8e572c3c64",
   "contractFingerprint": "b91a0f59c31289ed",
-  "title": "#1132 原設計逐槽修正含 SUN樂六槽與版本化作品；37 名整體未完成",
+  "title": "#1132 原設計逐槽修正含艾莉絲六槽與版本化作品；37 名整體未完成",
   "claims": [
     {
       "kind": "confirmed",
@@ -457,6 +457,20 @@
         "materials/community-hero-forge/refinements/sunraku-verification.json",
         "materials/community-hero-forge/validation-plan.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "#1132 艾莉絲六槽 v1：逐目標交鋒先手、終點斬擊、有限防禦、無傷害逼近、首次敵人接觸停止及自身近期命中 EX，超距不自動接近也不扣費。25 項行為、3 項試玩、四項突變、363 項集中回歸與四端型別通過。37 名／222 槽重編譯，只有艾莉絲 revision12→13，其他作品／原稿／模型不變。57 槽登記行為案例、165 槽未對應。本尊模型保留，專用動作與效果畫面未驗收；#1132 原設計／畫面／當下服務 ZIP／發布範圍繼續開啟。",
+      "repro": {
+        "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/eris.test.ts src/content/heroForge/communityRefinements/erisAcceptance.test.ts --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "09dbc46d01a60a50bf41d76ed17bb78c92533e21",
+      "evidence": [
+        "materials/community-hero-forge/refinements/eris-verification.json",
+        "materials/community-hero-forge/refinements/28.json",
+        "materials/community-hero-forge/validation-plan.json"
+      ]
     }
   ],
   "unblocks": [],
@@ -467,6 +481,6 @@
     }
   ],
   "asks": [
-    "請 Main 一併審查 SUN樂需要的通用 requiredTargetStatus、evadeDuring、evasionScope 與試玩前置交鋒路徑。請 Main 一併審查銀時需要的通用 onBlock/blockSource、damageOrMove/interruptible、interruptCast 與前方弧形來源欄位及版本化配方。請 Main 一併審查 drive／pull.grapple 共用移動、動態閘門碰撞一致性、EntityState motion/tether 欄位與 Client 預測暫停及回放。請 Main 一併審查柯南的 onObservedCombat／observedEvent、statusCost.subject、vision.revealed 與零實際傷害不喚醒睡眠的共用修正。請 Main 審查本批武藤遊戲與奇犽修正：onSummonHit／onAttackAttempt、trap 與 onTrigger 子鏈、召喚換目標與槽位來源、requiredSummonSlot、黑魔導發射位置、Client／Server 傳輸與 Forge 回放。請 Main 加入審查奇犽的通用具名資源維持費、全量施法成本、迴避來源／通道過濾與六槽配方。請 Main 加入審查鹿目圓 onAllyProtected、盾吸收歸屬、applyStatus.grantMark 及每回合救援次數的 schema/runtime 與版本化配方。請 Main 一併審查 #1143 批次驗證入口、失敗集中回報、來源綁定續跑及批次測試治具。請 Main 審查 #1141 nearbyCombat 条件與表單、dispel.statusTag 過濾、微調 version 對應作品 revision 與吉伊卡哇六槽；以及 #1140 的共用 chainLightning.retargetOnLost schema／runtime 選项及對應配方、#1139 換牌、友軍盾、radius:0 生成器修正、官方契約與 AI 守則。最新 37 份可共用作品在 materials/community-hero-forge/projects；#1132 保持開啟，完整原設計、修正後畫面／服務 ZIP 及正式發布仍未完成，不據此發布 37 名。"
+    "請 Main 一併審查艾莉絲需要的通用 allowApproach、damageConnected、dash 首次接觸與回呼生命週期。請 Main 一併審查 SUN樂需要的通用 requiredTargetStatus、evadeDuring、evasionScope 與試玩前置交鋒路徑。請 Main 一併審查銀時需要的通用 onBlock/blockSource、damageOrMove/interruptible、interruptCast 與前方弧形來源欄位及版本化配方。請 Main 一併審查 drive／pull.grapple 共用移動、動態閘門碰撞一致性、EntityState motion/tether 欄位與 Client 預測暫停及回放。請 Main 一併審查柯南的 onObservedCombat／observedEvent、statusCost.subject、vision.revealed 與零實際傷害不喚醒睡眠的共用修正。請 Main 審查本批武藤遊戲與奇犽修正：onSummonHit／onAttackAttempt、trap 與 onTrigger 子鏈、召喚換目標與槽位來源、requiredSummonSlot、黑魔導發射位置、Client／Server 傳輸與 Forge 回放。請 Main 加入審查奇犽的通用具名資源維持費、全量施法成本、迴避來源／通道過濾與六槽配方。請 Main 加入審查鹿目圓 onAllyProtected、盾吸收歸屬、applyStatus.grantMark 及每回合救援次數的 schema/runtime 與版本化配方。請 Main 一併審查 #1143 批次驗證入口、失敗集中回報、來源綁定續跑及批次測試治具。請 Main 審查 #1141 nearbyCombat 条件與表單、dispel.statusTag 過濾、微調 version 對應作品 revision 與吉伊卡哇六槽；以及 #1140 的共用 chainLightning.retargetOnLost schema／runtime 選项及對應配方、#1139 換牌、友軍盾、radius:0 生成器修正、官方契約與 AI 守則。最新 37 份可共用作品在 materials/community-hero-forge/projects；#1132 保持開啟，完整原設計、修正後畫面／服務 ZIP 及正式發布仍未完成，不據此發布 37 名。"
   ]
 }
