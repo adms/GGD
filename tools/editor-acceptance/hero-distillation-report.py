@@ -89,6 +89,12 @@ def render(data):
     sources = ''.join(f'<li><code>{e(file)}</code><small>SHA-256 {e(meta["sha256"])}</small></li>' for file, meta in data['sourceFiles'].items())
     peak = t['recordedStepPeakMetalBytes']
     peak_text = '未測' if peak is None else f'{peak / 1024**3:.2f} GiB'
+    delta = t.get('devAfterMinusBefore')
+    delta_text = ('待完整前後評估' if delta is None else
+                  f'每題平均 CE {delta["macroCE"]:+.3f}；答案 token 加權 CE {delta["tokenWeightedCE"]:+.3f}')
+    paired = data.get('pairedStructural') or {}
+    paired_text = ('待完成 Base／LoRA 結構比較' if paired.get('improved') is None or paired.get('regressed') is None else
+                   f'LoRA 相對 Base：改善 {paired["improved"]} 名，退步 {paired["regressed"]} 名')
     split_text = 'Blind unseen batch' if data.get('blindTest') is True else 'Internal dev'
     notice = ('已收齊逐英雄品質收據；此頁呈現證據結果，但仍須通過獨立 release gate，且不代表已部署。'
               if evidence_complete else '目前不宣告模型達標。結構通過、封裝准入與 CE 改善，都不等於技能機制正確或可上場。')
@@ -106,8 +112,9 @@ def render(data):
 <div class="stats"><p>紀錄狀態：{e(t['recordedStatus'])}</p><p>已完成步驟平均：{number(t['meanRecordedStepSeconds'])} 秒</p><p>已完成訓練步驟 Metal 峰值：{peak_text}</p></div>
 <small>記憶體值不代表全流程峰值或系統 RAM。逐步訓練使用不同題目，不以其 loss 走勢判定前後品質。</small></section>
 <section><h2>同 {data['counts']['tasks']} 題的教師答案 CE</h2><div class="table-wrap"><table><thead><tr><th>階段</th><th>題數</th><th>每題平均 CE</th><th>答案 token 加權 CE</th></tr></thead><tbody>{''.join(ce_rows)}</tbody></table></div>
+<p>{e(delta_text)}</p>
 <small>越低代表對既有教師答案的預測損失較低，不是自動生成成功率。前後皆完整完成且題目／答案長度一致才計算差異。</small></section>
-<section><h2>完整英雄結構檢查</h2>{''.join(bars)}<small>主分母固定 {count} 名；{data['counts']['secondarySlots']} 個輔助單槽不加入分母。歷史教師是控制組，並非預設 100% 正確。</small>
+<section><h2>完整英雄結構檢查</h2>{''.join(bars)}<p>{e(paired_text)}</p><small>主分母固定 {count} 名；{data['counts']['secondarySlots']} 個輔助單槽不加入分母。歷史教師是控制組，並非預設 100% 正確。</small>
 <h3>推論成本與輸出完成情形</h3><div class="table-wrap"><table><thead><tr><th>比較組／任務</th><th>已保存／計畫</th><th>完整輸出／其中有效 JSON</th><th>平均秒</th><th>P95 秒</th><th>已記錄 Metal 峰值 GiB</th></tr></thead><tbody>{''.join(costs)}</tbody></table></div>
 <small>耗時含 prefill、decode 與輸出解析，不含載入模型或輸入 tokenization；失敗輸出也納入。P95 採 nearest-rank，小樣本不代表穩定尾延遲。未保存的中斷呼叫不計成本，不冒稱完整批次耗時。有效 JSON 不等於英雄成功；TTFT／純 decode TPS 未量測。歷史 Codex 教師缺少同口徑成本紀錄。</small></section>
 <section><h2>不能省略的驗收</h2><div class="table-wrap"><table><thead><tr><th>比較組</th><th>封裝准入</th><th>隔離匯入／runtime 一致</th><th>機制忠實度</th><th>完整上場</th><th>危險錯誤接受</th></tr></thead><tbody>{''.join(quality)}</tbody></table></div>

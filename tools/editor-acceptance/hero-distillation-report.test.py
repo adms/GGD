@@ -49,6 +49,15 @@ class ReportTest(unittest.TestCase):
         self.assertIn('teacher: 成功', html)
         self.assertNotIn('未測，不能當 0', html)
 
+    def test_renders_before_after_delta_and_paired_structural_changes(self):
+        data = fixture()
+        data['training'].update(devAfterMinusBefore={'macroCE': -0.1254, 'tokenWeightedCE': -0.25})
+        data['pairedStructural'] = {'improved': 1, 'regressed': 0}
+        html = report.render(data)
+        self.assertIn('每題平均 CE -0.125', html)
+        self.assertIn('答案 token 加權 CE -0.250', html)
+        self.assertIn('LoRA 相對 Base：改善 1 名，退步 0 名', html)
+
     def test_e2e_claim_rejects_missing_or_drifting_row_evidence(self):
         data = fixture(); data['fullHeroE2EProven'] = True
         for arm in data['arms'].values():
