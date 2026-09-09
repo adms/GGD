@@ -498,6 +498,19 @@
         "materials/community-hero-forge/refinements/30.json",
         "materials/community-hero-forge/validation-plan.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "乾淨提交 45751bcf7214 同批通過 skills、Editor release、coord、37 名／222 槽編譯及模型位元組核對與 666 項登記案例；Editor 601 項測試、型別與正式建置通過。訊息帳本檢查通過。退出碼 2 保留 159 槽未對應，不是完整設計／畫面通過；本次僅尼古貓貓 revision 12→13，其他 36 名作品與全部原稿／模型不變。#1132 完整原範圍及新服務 ZIP／投稿發布仍未完成。",
+      "repro": {
+        "command": "pnpm editor:accept:release",
+        "expectedExit": 0
+      },
+      "commit": "45751bcf7214286adabcb7aa3fb7231d554a1dd7",
+      "evidence": [
+        "materials/community-hero-forge/refinements/yanineko-verification.json",
+        "materials/community-hero-forge/validation-plan.json"
+      ]
     }
   ],
   "unblocks": [],
