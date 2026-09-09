@@ -375,6 +375,21 @@
         "materials/community-hero-forge/refinements/conan-mobility-verification.json",
         "materials/community-hero-forge/validation-plan.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "#1132 柯南 R 驗收場景修正：啟動真實戰鬥事件，以受控敌方普攻取得一條自己的目標線索，all 成本正常消耗；靜止、缺被動與成本不足仍拒絕，不直接補線索。Editor 和可信投稿編譯器六槽／整套投影相同，12 項目標資源與一致性測試、345 項共用回歸及25 項呈現生命週期回歸通過。前置事件計入回放長度；新增可切換敵方前置行動與資源數量。37 份作品／原稿／模型未改。PBR 等待補入真實繪製步驟，仍需實際畫面證據；新服務 ZIP、正式發布及完整原設計未完成。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements/conanAcceptance.test.ts apps/editor/src/hero/validationBaseline.test.ts --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "00c50debe1a0e09be184f98b4ce0c95178dd0138",
+      "evidence": [
+        "materials/community-hero-forge/refinements/conan-acceptance-verification.json",
+        "packages/shared/src/content/heroForge/communityRefinements/conanAcceptance.test.ts",
+        "apps/editor/src/hero/validationBaseline.test.ts",
+        "materials/community-hero-forge/validation-plan.json"
+      ]
     }
   ],
   "unblocks": [],
