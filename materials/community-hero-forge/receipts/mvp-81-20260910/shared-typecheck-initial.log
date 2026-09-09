@@ -1,0 +1,4 @@
+testkit/communityActionFixture.ts(28,9): error TS2741: Property 'tags' is missing in type '{ id: ItemId; name: string; cost: number; tier: number; modifiers: ({ stat: Stat.MaxHealth; op: ModOp.Override; value: number; } | { stat: Stat.HealthRegen; op: ModOp.Override; value: number; } | { stat: Stat.ManaRegen; op: ModOp.Override; value: number; })[]; }' but required in type 'ItemDef'.
+undefined
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/packages/shared:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 2: tsc --noEmit --incremental false
