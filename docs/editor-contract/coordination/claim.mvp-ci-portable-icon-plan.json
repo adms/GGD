@@ -1,0 +1,30 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.mvp-ci-portable-icon-plan",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "d078070252fd883fac0a1ff2b73adf19e8542be9",
+  "contractFingerprint": "e2850e24ab2e78a1",
+  "title": "修正新 checkout 的 icon-plan CI 回歸，保持全文比對與舊 schema 相容",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "本機缺檔狀況移到 CLI，持久 plan 不再包含 missingSurfaceFiles；schema 接受舊欄位。缺檔仍警告，內容位元組變更與實際 veto 改變仍使 check 失敗；不建立或修改營運 whitelist，不改分類。",
+      "repro": {
+        "command": "pnpm exec vitest run tools/icon-gen/test/icon-gen.test.ts --maxWorkers=2 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "b5464ecb11e85add005ee1cdd86964404216962d",
+      "evidence": [
+        "tools/icon-gen/src/plan.py",
+        "packages/shared/src/content/schema/config/iconPlan.ts",
+        "tools/icon-gen/test/icon-gen.test.ts",
+        "materials/community-hero-forge/receipts/ci-portability-20260909/icon-gen-complete.log"
+      ]
+    }
+  ],
+  "asks": [
+    "Main 審查 #1135 中的 schema 相容與既有檢查修復；#1153 帶相同共用修正。#1131 待合併驗證後關票。本收據不宣稱共同服務上架完成。"
+  ]
+}
