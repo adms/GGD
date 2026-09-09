@@ -1,0 +1,61 @@
+{
+  "schema": "ggd-published-game-preflight@1",
+  "status": "blocked-before-login",
+  "environment": {
+    "schema": "ggd-local-live-match-environment@1",
+    "platform": "http://127.0.0.1:8099",
+    "game": "http://127.0.0.1:2579",
+    "importer": "http://127.0.0.1:8824",
+    "target": {
+      "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+      "contentVersion": "cv_b9b47052d2e3",
+      "migrationFingerprint": "17d1f388d5c0",
+      "processorFingerprint": "adf109dc5ba1"
+    },
+    "runtimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3",
+    "runtimeHead": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+    "runtimeContentDiffFromTarget": [],
+    "platformPreviousPid": 69770,
+    "platformPid": 17528,
+    "gamePid": 17522,
+    "dataDirectory": "/private/tmp/ggd-model-upload-acceptance/batch2-current-acceptance/data",
+    "simulationOverrides": false,
+    "loopbackBindOnly": true,
+    "productionModified": false
+  },
+  "script": "tools/community-hero-forge/published-game-proof.mts",
+  "scriptSha256": "abfb2d265433991026822a932f348e9b173299da35f37f034bf0e6178898466c",
+  "bootContent": {
+    "ok": true,
+    "champions": 71,
+    "items": 146,
+    "abilities": 421,
+    "quarantined": 0,
+    "quarantinedDocs": [],
+    "reason": null
+  },
+  "bootBuild": {
+    "stamp": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+    "stamped": true,
+    "source": "env",
+    "note": null
+  },
+  "guardCheck": {
+    "explicitLocalOptInRequired": true,
+    "parsedWithoutCredentials": true
+  },
+  "plannedSelectedHeroes": [
+    "b2-kisaragi",
+    "b2-maomao"
+  ],
+  "gameplayVerifiedHeroes": 0,
+  "socketMatchExecuted": false,
+  "visualAcceptanceVerified": false,
+  "productionDeploymentVerified": false,
+  "blocker": {
+    "source": "automatic-approval-review",
+    "rejections": 2,
+    "action": "Read the existing isolated model-author/model-reviewer test password from /private/tmp and pass it in memory to the localhost match proof",
+    "reason": "Approval review interpreted the credential restriction as also prohibiting local application test passwords. Re-review after confirming no AWS access was rejected again. Explicit clarification requested; no alternate credential route attempted."
+  }
+}
