@@ -107,7 +107,7 @@ def load_plan(batch, slots):
             raise ValueError('Suites accept test files and coverage only, never commands')
         for name in suite['files']:
             path = member(REPO, name)
-            if not name.startswith(('packages/shared/', 'apps/editor/', 'apps/client/', 'apps/game-server/')) or not name.endswith(('.test.ts', '.test.tsx')) or not path.is_file():
+            if not name.startswith(('packages/shared/', 'apps/editor/', 'apps/client/', 'apps/game-server/', 'apps/content-api/')) or not name.endswith(('.test.ts', '.test.tsx')) or not path.is_file():
                 raise ValueError(f'Not an existing repository test: {name}')
         for hero, covered in suite['heroSlots'].items():
             if not covered or any((hero, s) not in known for s in covered):

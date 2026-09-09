@@ -108,7 +108,7 @@ class BatchVerifierTests(unittest.TestCase):
         original_repo = v.REPO
         try:
             v.REPO = self.b
-            names = [prefix+'/src/real.test.ts' for prefix in ('packages/shared', 'apps/editor', 'apps/client', 'apps/game-server')]
+            names = [prefix+'/src/real.test.ts' for prefix in ('packages/shared', 'apps/editor', 'apps/client', 'apps/game-server', 'apps/content-api')]
             for name in names + ['tools/real.test.ts', 'apps/client/src/not-a-test.ts']:
                 path = self.b/name; path.parent.mkdir(parents=True, exist_ok=True); path.write_text('// test fixture')
             plan['suites'][0]['files'] = names

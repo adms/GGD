@@ -443,5 +443,33 @@
     "DOM render and replay tests are not browser pixel or complete game acceptance.",
     "Current-service ZIP, corrected submission/publication and full 37-hero original design remain incomplete.",
     "Ship client, game-server and content-api from this source together before enabling recast content; old clients do not display recast state."
-  ]
+  ],
+  "initialBatch": {
+    "head": "e1a6776660506d86e21046625f1d4785d0498731",
+    "exitCode": 1,
+    "reportSha256": "51d01261a7a760e8e78866004a57c3e754c2acc776363e33e6724c54fccd3f6d",
+    "errors": [
+      "Not an existing repository test: apps/content-api/src/heroShippedTemplateHistory.test.ts"
+    ],
+    "failedJobs": [
+      {
+        "id": "skills",
+        "exitCode": 1
+      },
+      {
+        "id": "skills-shapes-check",
+        "exitCode": 1
+      }
+    ],
+    "editorTestsPassed": 601,
+    "allSkillsChildrenChecked": 67,
+    "resolution": "Added content-api test path to guarded allowlist and classified recast stages/window in the generated shape index. No mechanics or authoring project changed."
+  },
+  "automationRegression": {
+    "batchVerifierTests": 10,
+    "shapeScannerSelftestGroups": 5,
+    "preflightMappedSlots": 76,
+    "prefixGuards": "Only existing repository .test.ts/.test.tsx in the five approved package/app roots; traversal and symlinks remain rejected.",
+    "recastShapes": "finite input state and distinct stages; not an automatic loop. Nested standalone and template recast effect fields remain checked."
+  }
 }

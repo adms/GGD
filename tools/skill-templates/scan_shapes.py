@@ -153,6 +153,7 @@ def implemented_axes(doc: dict, axes: dict) -> tuple[set[str], list[tuple[str, s
                 walk(v)
 
     walk(doc.get("effects") or [])
+    walk(doc.get("recast") or {})
 
     # 技能文件自己的欄位
     for f in doc:
@@ -189,7 +190,9 @@ def implemented_axes(doc: dict, axes: dict) -> tuple[set[str], list[tuple[str, s
     #    `template.params`。⛔ 少了這一段，那 86 支會全部被算成「沒有形狀」。
     tpl = doc.get("template")
     if isinstance(tpl, dict):
-        a, u = template_param_axes((tpl.get("params") or {}).keys(), axes)
+        params = tpl.get("params") or {}
+        walk(params.get("recast") or {})
+        a, u = template_param_axes(params.keys(), axes)
         got.update(a)
         unknown.extend((f"(template:{tpl.get('ref')})", f) for f in u)
 
@@ -587,9 +590,24 @@ def selftest() -> int:
     if not implemented_axes(novel_hook, axes)[1]:
         fails.append("④ 覆蓋閘瞎了：沒分類過的 on=onFullMoon 沒有被回報")
 
+    # ⑤ 續段需要新輸入；窗口有期限，各段內仍要掃描真正的效果與未知欄位。
+    recast = {"windowSec": 1.2, "minIntervalSec": 0.2, "cost": "first",
+              "stages": [{"effects": [{"kind": "delayed", "delaySec": 0.5, "count": 1,
+                                       "effects": [{"kind": "damage", "amount": 1}]}]}]}
+    for document in ({"id": "x", "recast": recast},
+                     {"id": "x", "template": {"ref": "tpl-effect-sequence", "params": {"recast": recast}}}):
+        got, unknown = implemented_axes(document, axes)
+        if not {"持續", "多段", "等待"} <= got or "迴圈" in got or unknown:
+            fails.append("⑤ recast 續段漏掃或被誤算成自動迴圈")
+        novel_stage = json.loads(json.dumps(document))
+        program = novel_stage.get("recast") or novel_stage["template"]["params"]["recast"]
+        program["stages"][0]["effects"][0]["windUpSec"] = 3
+        if ("delayed", "windUpSec") not in implemented_axes(novel_stage, axes)[1]:
+            fails.append("⑤ 續段內的新欄位逃過覆蓋閘")
+
     for f in fails:
         print("FAIL " + f, file=sys.stderr)
-    print(f"selftest: {len(fails)} 條失敗" if fails else "selftest: 4/4 ok")
+    print(f"selftest: {len(fails)} 條失敗" if fails else "selftest: 5/5 ok")
     return 1 if fails else 0
 
 
