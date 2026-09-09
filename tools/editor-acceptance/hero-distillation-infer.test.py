@@ -99,6 +99,28 @@ class InferenceTests(unittest.TestCase):
             with self.assertRaisesRegex(AssertionError, 'INVALID_BLIND_PROTOCOL'):
                 i.prepare(run, evaluation, out)
 
+    def test_blind_plan_builder_output_is_accepted_without_contract_translation(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); run, evaluation, _ = fixture(root)
+            data = root/'data'; data.mkdir()
+            i.t.atomic(data/'manifest.json', {'schema': 'fixture-dataset'})
+            frozen = i.t.digest(data/'manifest.json')
+            for name in ['train.jsonl', 'dev.jsonl']:
+                (data/name).write_text(i.g.compact({'id': 'seen:HERO', 'heroId': 'seen'})+'\n')
+            manifest = i.t.read(run/'manifest.json')
+            manifest.update(frozenManifestSha256=frozen, dataDirectory=str(data))
+            i.t.atomic(run/'manifest.json', manifest)
+            state = i.t.read(run/'train/state.json'); state['manifestSha256'] = i.t.digest(run/'manifest.json')
+            i.t.atomic(run/'train/state.json', state)
+            blind = root/'blind-evaluation'
+            command = ['node', str(Path(__file__).with_name('hero-distillation-blind-eval-plan.mjs')),
+                       str(run), str(evaluation/'public-cases.jsonl'), str(blind)]
+            completed = i.subprocess.run(command, check=True, capture_output=True, text=True)
+            self.assertEqual(completed.returncode, 0)
+            prepared = i.prepare(run, blind, root/'blind-inference')
+            self.assertTrue(prepared['blindTest'])
+            self.assertEqual(prepared['caseIds'], ['test:HERO'])
+
     def test_running_training_or_nonfinal_checkpoint_cannot_prepare(self):
         for changes, file, message in [({'status': 'running', 'workerPid': 123}, 'state.json', 'TRAIN_NOT_TERMINAL_SUCCESS'),
                 ({'steps': 0}, 'result.json', 'INCOMPLETE_EPOCH'),
