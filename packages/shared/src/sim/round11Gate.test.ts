@@ -11,6 +11,8 @@ import { describe, it, expect } from "vitest";
 import {
   shouldEnterRound11,
   recordBossKill,
+  round11SetupFrom,
+  round11EndReason,
   ROUND11_PRECEDING_ROUND,
   type Round11Gate,
 } from "./round11Gate";
@@ -64,5 +66,42 @@ describe("第十一回合進場判定（GH#1151）", () => {
     //   會在那個前提消失時看起來像回歸。⇒ 上面每一條都**自己造 gate**，
     //   ⛔ 不讀 `content/config/arena-rules.json`。這一條把那件事寫下來。
     expect(shouldEnterRound11({ enabled: false, triggerBossKills: 3 }, 10, 3)).toBe(false);
+  });
+});
+
+describe("第十一回合的世界描述與終止（#1151 A 的第 2／3 條）", () => {
+  it("⭐ 設定的場地／時限／橫幅**照抄**，⛔ 不在這一層改", () => {
+    const s = round11SetupFrom({ arenaId: "arena.royale", durationSec: 600, bannerText: "第十一回合・生存模式" });
+    expect(s.arenaId).toBe("arena.royale");
+    expect(s.durationSec).toBe(600);
+    expect(s.bannerText).toBe("第十一回合・生存模式");
+  });
+
+  it("⭐ 四個禁用／保留**是值，⛔ 不是註解** —— 消費端漏掉就 tsc 紅", () => {
+    const s = round11SetupFrom({ arenaId: "a", durationSec: 1, bannerText: "b" });
+    expect(s.fireRing).toBeNull();          // 無火圈
+    expect(s.skipIntermission).toBe(true);  // 無商店
+    expect(s.healAllToFull).toBe(true);
+    expect(s.keepLegendaries).toBe(true);   // 繼承前十回合寶具
+    expect(s.keepTeamsHostile).toBe(true);  // 兩隊維持敵對
+  });
+
+  it("⭐ 還在打 ⇒ null；⛔ 不可以提早喊結束", () => {
+    expect(round11EndReason(0, 4, 600)).toBeNull();
+    expect(round11EndReason(599, 1, 600)).toBeNull();
+  });
+
+  it("⭐ 時限到 ⇒ `time`", () => {
+    expect(round11EndReason(600, 4, 600)).toBe("time");
+    expect(round11EndReason(601, 4, 600)).toBe("time");
+  });
+
+  it("⭐ 人類全滅 ⇒ `humansWiped`", () => {
+    expect(round11EndReason(10, 0, 600)).toBe("humansWiped");
+  });
+
+  it("⭐⭐ **時限先判** —— 最後一人在時限那一刻倒下算 `time`，⛔ 不是全滅", () => {
+    // ⚠️ 兩種結局的計分不一樣（G 項）⇒ ⛔ 判錯會把一個平手記成全滅。
+    expect(round11EndReason(600, 0, 600)).toBe("time");
   });
 });

@@ -14,7 +14,11 @@ import { readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { rulesFromDoc, DEFAULT_ARENA_RULES } from "./arenaRules";
-import { shouldEnterRound11, ROUND11_PRECEDING_ROUND } from "@ggd/shared/sim/round11Gate";
+import {
+  shouldEnterRound11,
+  round11SetupFrom,
+  ROUND11_PRECEDING_ROUND,
+} from "@ggd/shared/sim/round11Gate";
 
 const REPO = resolve(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const DOC = JSON.parse(readFileSync(join(REPO, "content/config/arena-rules.json"), "utf8"));
@@ -42,5 +46,24 @@ describe("第十一回合的設定 → 判定 接線（GH#1151）", () => {
   it("⛔ 沒有內容文件時的 fallback **也是關著的**", () => {
     expect(DEFAULT_ARENA_RULES.round11.enabled).toBe(false);
     expect(shouldEnterRound11(DEFAULT_ARENA_RULES.round11, ROUND11_PRECEDING_ROUND, 999)).toBe(false);
+  });
+
+  it("⭐ 進場後的場地／時限／橫幅也**走得到** —— 三格都從出貨設定來", () => {
+    const r = rulesFromDoc(DOC).round11;
+    const s = round11SetupFrom(r);
+    expect(s.arenaId).toBe(DOC.round11.arenaId);
+    expect(s.durationSec).toBe(DOC.round11.durationSec);
+    expect(s.bannerText).toBe(DOC.round11.bannerText);
+    // ⭐ 出貨值本身要是有意義的（⛔ 一個 0 秒的回合是設定壞了）。
+    expect(s.durationSec).toBeGreaterThan(0);
+    expect(s.arenaId.length).toBeGreaterThan(0);
+    expect(s.bannerText.length).toBeGreaterThan(0);
+  });
+
+  it("⛔ 缺欄的設定 ⇒ fallback 是**不會動**的值（⛔ 不是一個看起來合理的預設）", () => {
+    const bare = rulesFromDoc({ ...DOC, round11: undefined }).round11;
+    expect(bare.durationSec).toBe(0);
+    expect(bare.arenaId).toBe("");
+    expect(bare.enabled).toBe(false);
   });
 });

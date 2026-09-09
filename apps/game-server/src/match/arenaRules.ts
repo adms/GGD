@@ -97,7 +97,14 @@ export interface ArenaRules {
    * 消費端 `sim/round11Gate.ts::shouldEnterRound11`。
    * ⚠️ 出貨 `enabled` 是 `false`；⛔ 它是 owner 的一鍵 rollback，不要在程式裡覆寫。
    */
-  round11: { readonly enabled: boolean; readonly triggerBossKills: number };
+  round11: {
+    readonly enabled: boolean;
+    readonly triggerBossKills: number;
+    /** ⭐ 進場之後要用的那三格（#1151 A 第 2 條）——消費端 `sim/round11Gate.round11SetupFrom`。 */
+    readonly arenaId: string;
+    readonly durationSec: number;
+    readonly bannerText: string;
+  };
   /** round from which R is learnable at any level; null = classic 6/11/16 */
   ultUnlockRound: number | null;
   /** round from which champions with an exAbility unlock EX; null = never */
@@ -271,7 +278,7 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
   // ⭐ 沒有內容文件時的第十一回合：**關著**，而且門檻是 0（＝不設門檻 ⇒ 仍然不開）。
   // ⛔ 兩個都不可以「保險起見」設成開 —— 一個 fallback 開著的模式，
   //   在內容載入失敗那一刻就會變成「玩家進到一個沒有人測過的回合」。
-  round11: { enabled: false, triggerBossKills: 0 },
+  round11: { enabled: false, triggerBossKills: 0, arenaId: "", durationSec: 0, bannerText: "" },
   ultUnlockRound: null,
   exUnlockRound: null,
   offerCount: 3,
@@ -439,6 +446,12 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
     round11: {
       enabled: doc.round11?.enabled ?? false,
       triggerBossKills: doc.round11?.triggerBossKills ?? 0,
+      // ⭐ 三個 fallback 刻意都是「**不會動**」的值：空場地 id、0 秒、空橫幅。
+      // ⛔ 不給一個「看起來合理」的預設（例如 600 秒）—— 那會讓一份缺欄的設定
+      //   靜靜地跑出一個沒有人授權過的回合長度。
+      arenaId: doc.round11?.arenaId ?? "",
+      durationSec: doc.round11?.durationSec ?? 0,
+      bannerText: doc.round11?.bannerText ?? "",
     },
   };
 }

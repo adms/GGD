@@ -76,3 +76,83 @@ export function recordBossKill(slain: Set<number>, bossEntityId: number): number
   slain.add(bossEntityId);
   return slain.size;
 }
+
+// ─────────────────────────────────────────────────────────────────────────
+// ⭐ A 項的其餘：**進場之後的世界長什麼樣**，以及**什麼時候結束**
+// ─────────────────────────────────────────────────────────────────────────
+
+/**
+ * ⭐ 第十一回合真正會用到的那幾格（#1151 A 的第 2 條逐字：
+ * 「進場使用設定中的**最大場地、時限與橫幅**；全員滿血，繼承前十回合寶具，
+ *  兩隊維持敵對，**無商店、無火圈**」）。
+ *
+ * ⚠️ ⭐ 這是一個**描述**，⛔ 不是一個會動手的東西 ——
+ * 它讓「第十一回合的世界是什麼」變成**一個可以斷言的值**，
+ * ⛔ 而不是散落在 `MatchController` 五千行裡的一串 if。
+ */
+export interface Round11Setup {
+  readonly arenaId: string;
+  readonly durationSec: number;
+  readonly bannerText: string;
+  /** ⭐ 無火圈 ＝ `fireRing` 給 null（出貨型別本來就允許）。 */
+  readonly fireRing: null;
+  /** ⭐ 無商店 ＝ 進場前後**不排 intermission**。 */
+  readonly skipIntermission: true;
+  /** ⭐ 全員滿血。 */
+  readonly healAllToFull: true;
+  /** ⭐ 繼承前十回合的寶具（⛔ 不清背包）。 */
+  readonly keepLegendaries: true;
+  /** ⭐ 兩隊維持敵對（⛔ 不合併成一隊打怪）。 */
+  readonly keepTeamsHostile: true;
+}
+
+/** 這支需要的設定形狀 —— ⛔ 一樣不吃整份 config。 */
+export interface Round11SetupSource {
+  readonly arenaId: string;
+  readonly durationSec: number;
+  readonly bannerText: string;
+}
+
+/**
+ * ⭐ 設定 → 這一回合的世界描述。
+ *
+ * ⚠️ ⭐ 後面四格是**常數 true**，而它們**刻意**寫在型別裡而不是註解裡：
+ * ⛔ 一句「記得進場要滿血」是散文（本文件記錄過五次判準失效），
+ * ⭐ 而一個 `healAllToFull: true` 的欄位，消費端漏掉它時 `tsc` 會說話。
+ */
+export function round11SetupFrom(src: Round11SetupSource): Round11Setup {
+  return {
+    arenaId: src.arenaId,
+    durationSec: src.durationSec,
+    bannerText: src.bannerText,
+    fireRing: null,
+    skipIntermission: true,
+    healAllToFull: true,
+    keepLegendaries: true,
+    keepTeamsHostile: true,
+  };
+}
+
+/** 第十一回合的結束理由 —— `null` ＝ 還在打。 */
+export type Round11EndReason = "time" | "humansWiped";
+
+/**
+ * ⭐ 這一回合該結束了嗎？（#1151 A 的第 3 條：「時限、**無存活人類**⋯
+ * 有明確終止與清理策略」）
+ *
+ * @param elapsedSec   進場後經過的秒數（⭐ 由呼叫端給 —— `sim/**` ⛔ 不可以讀時鐘）
+ * @param aliveHumans  還活著的**人類**玩家數（⛔ 不含被控的王）
+ *
+ * ⚠️⚠️ ⭐ 順序是刻意的：**時限先判**。
+ * ⛔ 反過來的話，「最後一個人在時限那一刻倒下」會被記成 `humansWiped`，
+ *   ⭐ 而那兩種結局的計分不一樣（G 項）⇒ 一個平手會被判成全滅。
+ */
+export function round11EndReason(
+  elapsedSec: number,
+  aliveHumans: number,
+  durationSec: number,
+): Round11EndReason | null {
+  if (elapsedSec >= durationSec) return "time";
+  if (aliveHumans <= 0) return "humansWiped";
+  return null;
+}
