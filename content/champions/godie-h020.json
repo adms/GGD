@@ -109,16 +109,16 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        15,
-        15,
-        15,
-        15
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "manaCost": [
-        72,
-        72,
-        72,
-        72
+        72.0,
+        72.0,
+        72.0,
+        72.0
       ],
       "manaCostTier": "極小",
       "range": 12,
@@ -160,20 +160,20 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        30,
-        30,
-        30,
-        30
+        30.0,
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
-        72,
-        72,
-        72,
-        72
+        72.0,
+        72.0,
+        72.0,
+        72.0
       ],
       "manaCostTier": "極小",
       "range": 12,
-      "radius": 6,
+      "radius": 6.0,
       "radiusTier": "中",
       "rangeTier": "極大",
       "cooldownTier": "極小",
@@ -205,20 +205,20 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        60,
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        288,
-        288,
-        288,
-        288
+        288.0,
+        288.0,
+        288.0,
+        288.0
       ],
       "manaCostTier": "中",
       "range": 12,
-      "radius": 8,
+      "radius": 8.0,
       "radiusTier": "大",
       "rangeTier": "極大",
       "cooldownTier": "中",
@@ -354,16 +354,9 @@
                   }
                 ]
               },
-              "radius": 8,
+              "radius": 8.0,
               "radiusTier": "大",
               "includeOrigin": true,
-              "victimCondition": {
-                "not": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "dragon-slave-swept"
-                }
-              },
               "onHitTargets": [
                 {
                   "kind": "applyStatus",
@@ -371,7 +364,14 @@
                   "duration": 1.5,
                   "moveSpeedMult": 0.6
                 }
-              ]
+              ],
+              "victimCondition": {
+                "not": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "dragon-slave-swept"
+                }
+              }
             },
             {
               "kind": "screenShake",
@@ -434,14 +434,14 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -454,9 +454,9 @@
           "shape": "single",
           "modelKey": "imported.herocloudcyd",
           "path": "orbit",
-          "speed": 1,
-          "distance": 0.1,
           "count": 1,
+          "distance": 0.1,
+          "speed": 1.0,
           "lifeSec": 2.5
         }
       ],
@@ -488,7 +488,7 @@
           "damageType": "magic",
           "status": {
             "statusId": "slow40",
-            "duration": 2,
+            "duration": 2.0,
             "moveSpeedMult": 0.6
           },
           "castTimeSec": 2

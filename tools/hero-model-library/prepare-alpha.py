@@ -15,7 +15,7 @@ for m in manifest['models']:
  if not changed:continue
  d=out/m['id'].replace(':','-');d.mkdir();receipt=read(runtime/'receipt.json');prep=receipt['preparation']
  prep['upstreamPreparationSource']=prep['source'];prep['source']=dict(path=str(runtime/'body.glb'),sha256=hashlib.sha256(raw).hexdigest(),bytes=len(raw))
- prep.update(schema='ggd-library-model-preparation@1',output=dict(path=str(runtime/'body.glb'),sha256=hashlib.sha256(raw).hexdigest(),bytes=len(raw)),stateClips=read(runtime/'model.json')['clipMap'])
+ prep.update(schema='ggd-library-model-preparation@1',output=dict(path=str(runtime/'body.glb'),sha256=hashlib.sha256(raw).hexdigest(),bytes=len(raw)),stateClips=read(runtime/'model.json')['clipMap'],yawOffsetDeg=read(runtime/'model.json').get('yawOffsetDeg',0))
  write(d/'input.receipt.json',prep)
  for index,cmd in enumerate([['node','--import','tsx',str(tools/'finalize-library-body.mts'),'--receipt',str(d/'input.receipt.json'),'--out',str(d/'runtime')],['node',str(tools/'inspect-library-motion.mjs'),str(d/'runtime'),str(d/'runtime/motion.json')]]):
   with (d/f'{index}.log').open('w') as log:r=subprocess.run(cmd,cwd=repo,stdout=log,stderr=subprocess.STDOUT)

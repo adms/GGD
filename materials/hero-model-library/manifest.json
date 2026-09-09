@@ -634,11 +634,11 @@
     },
     {
       "id": "300heroes:272",
-      "modelKey": "community.body.9c2953df85603be07bc8a284bedb5c352e8b9a190ebe2183",
-      "glbPath": "assets/models/community/3315744ff508ca988eeefd557993afe04a49e62e160242db92168ce9ef5777bb.glb",
-      "sha256": "3315744ff508ca988eeefd557993afe04a49e62e160242db92168ce9ef5777bb",
-      "bytes": 1444724,
-      "documentSha256": "7602d4e2bff70ade449ea77ab86cda3a8cfe0b737545b1ebb95319ce9aaa4cd0",
+      "modelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
+      "glbPath": "assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb",
+      "sha256": "0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607",
+      "bytes": 920828,
+      "documentSha256": "93011ca09d17b780568d3c89f0a890d80aab56944eddee884395efed3e26540e",
       "sourceCharacter": "梅普露",
       "sourceWork": "怕痛的我，把防禦力點滿就對了",
       "sourceAssetId": "300heroes:143555c3ac43ac85b6538424",
@@ -656,7 +656,7 @@
       ],
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
-      "bundleId": "ggd.model.7602d4e2bff70ade449ea77a"
+      "bundleId": "ggd.model.93011ca09d17b780568d3c89"
     },
     {
       "id": "300heroes:310",
@@ -1096,11 +1096,11 @@
     },
     {
       "id": "existing:bulbasaur",
-      "modelKey": "community.body.5de9cf2a7afbb0e21cc2e402072b22ff4b380bb11ff0ea40",
+      "modelKey": "community.body.6db170052bfc70f342be8027580562fdefc595acec455209",
       "glbPath": "assets/models/community/d28b8e6fef41eb1afc2d194de86397902ff5a594123adeca23a1d2e62a712a6c.glb",
       "sha256": "d28b8e6fef41eb1afc2d194de86397902ff5a594123adeca23a1d2e62a712a6c",
       "bytes": 375904,
-      "documentSha256": "c924dce9cc2e804b5a46ed6fecb366d93648b0de9b3edb5e51ab704819493975",
+      "documentSha256": "8c760ab364722f6d7cce619ec122c4799b8859cc56ce9341c5fcbb513d48cacb",
       "sourceCharacter": "妙蛙種子模型",
       "sourceWork": "Pokémon；現有匯入模型",
       "sourceAssetId": "existing:bulbasaur",
@@ -1119,7 +1119,7 @@
       ],
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
-      "bundleId": "ggd.model.c924dce9cc2e804b5a46ed6f"
+      "bundleId": "ggd.model.8c760ab364722f6d7cce619e"
     },
     {
       "id": "existing:tram",
@@ -4128,7 +4128,7 @@
       "options": [
         {
           "sourceId": "300heroes:272",
-          "sourceModelKey": "community.body.9c2953df85603be07bc8a284bedb5c352e8b9a190ebe2183",
+          "sourceModelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
           "label": "梅普露",
           "source": {
             "kind": "exact",
@@ -4631,7 +4631,7 @@
       "options": [
         {
           "sourceId": "existing:bulbasaur",
-          "sourceModelKey": "community.body.5de9cf2a7afbb0e21cc2e402072b22ff4b380bb11ff0ea40",
+          "sourceModelKey": "community.body.6db170052bfc70f342be8027580562fdefc595acec455209",
           "label": "妙蛙種子模型",
           "source": {
             "kind": "style-proxy",

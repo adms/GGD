@@ -1,10 +1,11 @@
+import { spliceMembers } from "../../packages/shared/src/content/editModel";
 /** Apply validated library choices, preserving existing bytes, versions and manual overrides. */
-import { existsSync, readFileSync, writeFileSync, mkdirSync, copyFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync, mkdirSync, copyFileSync, renameSync, realpathSync } from 'node:fs';
 import { resolve, dirname, join, sep } from 'node:path';
 import { parseArgs } from 'node:util';
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { ModelVersions } from '../../apps/content-api/src/modelVersions';
-import { writeDocAtomic, rebuildAllIndexes } from '../../packages/shared/src/content/node';
+import { rebuildAllIndexes } from '../../packages/shared/src/content/node';
 import { zModelVersionCommand } from '../../packages/shared/src/content/schema/championModelVersions';
 const {values}=parseArgs({options:{release:{type:'string'},content:{type:'string'},report:{type:'string'}}});
 if(!values.release||!values.content||!values.report)throw Error('--release, --content and --report required');
@@ -12,7 +13,7 @@ const release=resolve(values.release),root=resolve(values.content),read=(p:strin
 const manifest=read(join(release,'manifest.json'));
 if(manifest.schema!=='ggd-hero-model-library@1')throw Error('Unknown release manifest');
 const sha=(p:string)=>createHash('sha256').update(readFileSync(p)).digest('hex');
-const within=(base:string,p:string)=>{const file=resolve(base,p);if(!file.startsWith(base+sep))throw Error('Escaping path');return file;};
+const within=(base:string,p:string)=>{const file=resolve(base,p);if(!file.startsWith(base+sep))throw Error('Escaping path');let ancestor=file;while(!existsSync(ancestor))ancestor=dirname(ancestor);const real=realpathSync(ancestor);if(real!==realpathSync(base)&&!real.startsWith(realpathSync(base)+sep))throw Error('Escaping symlink');return file;};
 const copies=new Map<string,string>();
 // Check every source and collision before importing any byte.
 for(const model of manifest.models){
@@ -35,13 +36,17 @@ for(const hero of manifest.heroes){
    if(state.versions.some(v=>v.sourceModelKey===option.sourceModelKey&&v.source.tier===option.source.tier)){continue;}
    const command=zModelVersionCommand.parse({action:'register',expectedHash:state.expectedHash,sourceModelKey:option.sourceModelKey,label:option.label,source:option.source});
    const prepared=await service.prepare(hero.id,command);service.assertCurrent(hero.id,state.expectedHash);service.writeArtifacts(prepared.artifacts);
-   writeDocAtomic(root,'champions',prepared.champion);result.registered.push(option.sourceId);
+   const file=join(root,'champions',hero.id+'.json'),before=readFileSync(file,'utf8');
+   service.assertCurrent(hero.id,state.expectedHash);
+   const after=spliceMembers(before,{modelKey:prepared.champion.modelKey,modelVersions:prepared.champion.modelVersions,modelSelectionMode:prepared.champion.modelSelectionMode});
+   const temporary=file+'.'+randomUUID()+'.tmp';writeFileSync(temporary,after,{flag:'wx'});renameSync(temporary,file);
+   result.registered.push(option.sourceId);
   }
-  result.state=service.state(hero.id);result.status='registered';
+  result.state=service.state(hero.id);result.status=result.registered.length?'registered':'unchanged';
  }catch(error){result.status='failed';result.error=String(error);}
  writeFileSync(values.report,JSON.stringify(report,null,2)+'\n');
 }
 rebuildAllIndexes(root);
 writeFileSync(values.report,JSON.stringify(report,null,2)+'\n');
-console.log(JSON.stringify({registered:report.heroes.filter((r:any)=>r.status==='registered').length,absent:report.heroes.filter((r:any)=>r.status==='hero-not-in-target-catalog').length,failed:report.heroes.filter((r:any)=>r.status==='failed').length}));
+console.log(JSON.stringify({registered:report.heroes.filter((r:any)=>r.status==='registered').length,unchanged:report.heroes.filter((r:any)=>r.status==='unchanged').length,absent:report.heroes.filter((r:any)=>r.status==='hero-not-in-target-catalog').length,failed:report.heroes.filter((r:any)=>r.status==='failed').length}));
 if(report.heroes.some((r:any)=>r.status==='failed'))process.exitCode=1;

@@ -36,6 +36,19 @@ stage.mkdir(parents=True, exist_ok=True)
 def read(path): return json.loads(path.read_text())
 def write(path, data): path.write_text(json.dumps(data, ensure_ascii=False, indent=2)+'\n')
 def admit(bundle):
+    current=read(library/'catalog.json')
+    for entry in current['entries']:
+        if entry['id']!=bundle.name:continue
+        existing=library/entry['path'];proof=read(library/entry['validation'])
+        if (existing/'resource.json').read_bytes()!=(bundle/'resource.json').read_bytes():break
+        rules={'policy_sha256':'policy.json','validator_sha256':'tools/admit.py','schema_validator_sha256':'tools/validate-schema.mts'}
+        if not all(hashlib.sha256((library/v).read_bytes()).hexdigest()==proof[k] for k,v in rules.items()):break
+        schema=hashlib.sha256()
+        for file in sorted((repo/'packages/shared/src/content/schema').rglob('*.ts')):schema.update(str(file.relative_to(repo)).encode());schema.update(file.read_bytes())
+        if schema.hexdigest()!=proof['schema_tree_sha256']:break
+        if all(hashlib.sha256((bundle/f['path']).read_bytes()).hexdigest()==f['sha256'] and hashlib.sha256((existing/f['path']).read_bytes()).hexdigest()==f['sha256'] for f in proof['files']):
+            print('verified-existing '+entry['id'],flush=True);return
+        break
     result = subprocess.run([sys.executable, str(library/'tools/admit.py'), str(bundle)], env=env, capture_output=True, text=True)
     if result.returncode:
         raise RuntimeError(result.stdout+result.stderr)

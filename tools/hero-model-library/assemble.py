@@ -7,7 +7,7 @@ def read(p):return json.loads(p.read_text())
 def write(p,d):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n')
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 base=ws/'outputs/hero-model-options-20260909';sources={};failures={}
-for name in ['native-v2','native-v3','mba-v4','pets-v2','existing-v3','gintoki-v6','alpha-v2','alpha-v3']:
+for name in ['native-v2','native-v3','mba-v4','pets-v2','existing-v3','gintoki-v6','alpha-v2','alpha-v3','orientation-v1','maple-v1']:
  for r in read(base/name/'summary.json'):
   if r['stage']=='prepared':sources[r['characterId']]=dict(runtime=Path(r['runtime']),name=r['sourceCharacter'],work=r['sourceWork'])
   elif 'error' in r:failures[r['characterId']]=r['error'].splitlines()[-1]
@@ -34,7 +34,7 @@ heroes={}
 def hero(id,name):return heroes.setdefault(id,dict(id=id,name=name,options=[],pending=[]))
 def option(h,key,kind,tier,label=None):
  if key not in models:
-  
+
   if not any(x['source']==key for x in h['pending']):h['pending'].append(dict(source=key,reason=failures.get(key,'尚未完成可用模型轉換')))
   return
  m=models[key]

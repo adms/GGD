@@ -48,7 +48,7 @@ try {
   const inspection = await inspectModelUpload(bytes);
   assert.equal(new Set(original.json.animations.map((clip: { name: string }) => clip.name)).size, original.json.animations.length, "Source clip names must be unique");
   const selections = Object.fromEntries(HERO_MODEL_STATES.map((state) => [state, inspection.clips.findIndex((clip) => clip.name === names[state])])) as Record<(typeof HERO_MODEL_STATES)[number], number>;
-  const body = await prepareUploadedHeroModel(bytes, selections);
+  const body = await prepareUploadedHeroModel(bytes, selections, preparation.yawOffsetDeg ?? 0);
   const verified = await verifyUploadedHeroModel(body.model, body.bytes);
   assert.deepEqual(verified.document, body.document);
   const receipt = {

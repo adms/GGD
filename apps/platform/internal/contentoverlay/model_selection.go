@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"github.com/ggd/platform/internal/auth"
@@ -40,6 +41,9 @@ type ModelSelectionState struct {
 }
 
 func modelDigest(raw []byte) string { sum := sha256.Sum256(raw); return hex.EncodeToString(sum[:]) }
+
+var mbaModelLibrary = regexp.MustCompile(`(?i)\bmba\b|magical[-_ ]battle[-_ ]arena|魔法少女武鬥祭`)
+
 func modelTier(v retainedModel) int {
 	tier := v.Source.Tier
 	if tier == "" {
@@ -47,7 +51,7 @@ func modelTier(v retainedModel) int {
 		switch {
 		case strings.Contains(name, "300heroes") || strings.Contains(name, "300英雄"):
 			tier = "300heroes"
-		case name == "mba" || strings.Contains(name, "battle-arena") || strings.Contains(name, "battle_arena") || strings.Contains(name, "battle arena") || strings.Contains(name, "魔法少女武鬥祭"):
+		case mbaModelLibrary.MatchString(name):
 			tier = "mba"
 		case strings.Contains(name, "w3x") || strings.Contains(name, "warcraft"):
 			tier = "w3x"

@@ -5,13 +5,13 @@
   "from": "codex",
   "to": "main",
   "baseCommit": "ec4e0a48ed8a90b997a794a4fb861ac1c9c87bf4",
-  "contractFingerprint": "23d3e78f6ec4d047",
+  "contractFingerprint": "ed197415160df4f6",
   "title": "素材庫模型選項：300 > MBA > 原版 > 借用 W3X，保留手動選擇",
   "claims": [
     {
       "kind": "owner-decision",
-      "commit": "ec4e0a48ed8a90b997a794a4fb861ac1c9c87bf4",
-      "text": "認領 shared 模型版本 schema、開發與正式後台模型選擇、固定成品資源索引及 Mac mini 部署前模型同步；依來源排序保留手動選擇，機制變更請 Main review。",
+      "commit": "24d6bfcf3",
+      "text": "認領 shared 模型版本 schema、開發與正式後台模型選擇、固定成品資源索引及 Mac mini 部署前模型同步；依來源排序保留手動選擇，並重生新預設模型衍生的特效仰角及外觀索引。機制變更請 Main review。",
       "ownerQuote": {
         "date": "2026-09-09",
         "text": "請你全部都上架照這個順序設定 並且在後台每個角色都有下拉式選單 可以替換多個選項 但預設是我上面給你的順序"
@@ -30,7 +30,7 @@
     },
     {
       "kind": "confirmed",
-      "commit": "ec4e0a48ed8a90b997a794a4fb861ac1c9c87bf4",
+      "commit": "24d6bfcf3",
       "text": "來源索引將銀時、蜘蛛子寵物形態、海克力斯列為本尊首選；S3 發布與逐檔讀回收據留在 Git，並未宣稱網站已部署。",
       "evidence": [
         "materials/hero-model-library/manifest.json",
@@ -42,5 +42,9 @@
         "expectedExit": 0
       }
     }
+  ],
+  "asks": [
+    "Main review shared schema 與正式後台／部署接線；CI 綠且 review 通過後合併，再用 mini-deploy.sh 部署同一 Git 與固定 S3 版本。",
+    "此 PR 僅改素材選項與管理流程。78 筆目標 ID 不在目前出貨目錄，已保留於對應索引，不能以索引存在宣稱已上架其完整英雄。"
   ]
 }

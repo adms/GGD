@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-09-08 18:55 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-09-09 07:23 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.42.12 · 資料截至 2026-09-08 18:55 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-08 18:55 (GMT+8)</h1><div class="meta"><span>帳本 <b>21</b> 份</span><span>點名票號 <b>419</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.42.12 · 資料截至 2026-09-09 07:23 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-09 07:23 (GMT+8)</h1><div class="meta"><span>帳本 <b>22</b> 份</span><span>點名票號 <b>423</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -1396,6 +1396,28 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>17:43</td><td>好我手動改名</td><td>— 手動改名 leagcy→legacy（owner 自己做）</td></tr>
 <tr><td>18:41</td><td>資料 存放位置 原始模型、動畫、這批大型解析 JSON S3 解析／轉換程式、英雄與技能設定 JSON、版本清單、SHA-256、文件 Git 這個規則也讓你知道</td><td>1116 1117</td></tr>
 <tr><td>18:55</td><td>CloudFront 是目前對外的 CDN 嗎? (包含 ggd.adms.ai ?) 目前 S3 是台北機房延遲最低，CDN 也是嗎? 本機 167 GB 理論上都要上去 S3 or Git ，有例外要跟我特別說明 (legacy/也要上傳, leagcy是錯誤的拼字，請你一併在所有文件與script中修正並留下記錄) 誰負責上傳哪些檔案請先分工好，main 則是最後抓漏的角色(驗收與合併)，通知沒人負責上傳後自己上傳並作記錄</td><td>1116 1117</td></tr>
+</table></div>
+<p># 2026-09-09</p>
+<blockquote>⭐ 這張表由 <code>scripts/message-ledger.sh</code> 從 session transcript <b>逐則</b>撈出來對帳，</blockquote>
+<blockquote><code>scripts/ruling.sh</code> 收到裁決時也寫進同一張表。</blockquote>
+<blockquote>表格那一格是<b>截斷</b>過的；⛔ 全文沒有被壓縮取代，它在 <code>ledger-source_temp_*.md</code>。</blockquote>
+<blockquote>票號那一格 ⛔ 不可以留空：對不到票就寫 <code>⏸ 未對票</code>，<code>--check</code> 會紅。</blockquote>
+<div class="scroll"><table><tr><th>時間</th><th>owner 說了什麼（逐字）</th><th>票</th></tr>
+<tr><td>01:36</td><td>請你開票請 main 及 codex編輯器分工合作以下內容（〈Main：GGD 素材庫完整使用與網站整合交接〉2026-09-09） 這張票應該也彙整合進 補完整 docs —— docs/素材庫與-S3-統一資源庫.md</td><td>1128 1124 1125 1126 1127</td></tr>
+<tr><td>01:58</td><td>新的 37支英雄及技能 icon 需要重新生成，請你拿之前開發好的 icon 生成 script 來補完，記得 FATE 風格</td><td>1129</td></tr>
+<tr><td>00:38</td><td>1 .yes</td><td>— 部署裁決（v0.41.5 → mini）與 outputs 上傳時機</td></tr>
+<tr><td>00:58</td><td>Codex 認領 outputs/ 110 GB 這裡面放的是什麼</td><td>1116</td></tr>
+<tr><td>01:04</td><td>outputs/ 110 GB 裝什麼 —— 285,057 個檔，三團 都讓你用自動化 script 上傳 不用每個都手動檢查 1. yes 2. yes but 補充完整 docs 相關md 3. yes</td><td>1116</td></tr>
+<tr><td>01:06</td><td>https://github.com/adms/GGD/pull/1119#issuecomment-5588896407</td><td>1116</td></tr>
+<tr><td>01:34</td><td>compact</td><td>— 指令（壓縮 context），非需求</td></tr>
+<tr><td>01:59</td><td>你要開票 不要實作喔</td><td>1129</td></tr>
+<tr><td>01:59</td><td>是本地端SD 生成 icon 還記得嗎</td><td>1129</td></tr>
+<tr><td>03:01</td><td>請參考 全角色狀態清單 PR #1134。分支：codex/hero-status-inventory 目錄：docs/_reports/hero-character-status-20260909/ 人工讀取 全角色狀態清單.md；程式讀取 inventory.json。共 163 筆，含 26 筆變身型態。這是專案名冊快照，不代表正式站即時上架狀態。 產ICON的票可參考這個清單的新增角色以及延伸的相關技能來生成對應的內容與數量ICON</td><td>1129</td></tr>
+<tr><td>03:18</td><td>icon 票 #1129 的 37 名社群英雄：主題來源／有沒有模型可參考 =&gt; 這些新角色都有對應新模型在素材庫喔</td><td>1129</td></tr>
+<tr><td>03:22</td><td>#1129 第④點（拿 git 上的 fronts/NN-front.png 裁上半身當 exact 18 名頭像的 PASS1 img2img 起點，A/B 接觸表決定）要不要做 =&gt; 4 ok</td><td>1129</td></tr>
+<tr><td>07:14</td><td>不對，是跟往常一樣CF直接接原站ggd.adms.ai就好了 根本沒差，而S3變成純備份了</td><td>1116 1124 1128</td></tr>
+<tr><td>07:23</td><td>第二批 37 名（PR #1144／#1142 的離線驗證集）要不要整合上場、素材配對索引怎麼接 =&gt; 請你開票 第二批37個新英雄含技能特效機制等已完成，請你參考整合使用 ／ 第二批 37 名角色素材配對（本機候選索引） 固定入口：/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/batch2-37/README.md（機器清單 pairs.json · 逐名資料 characters/&lt;b2-id&gt;.json · 實檔 SHA-256 file-proofs.json · 核對結果 validation.json · 查詢 query.py --summary／query.py b2-rem）</td><td>1150</td></tr>
+<tr><td>03:21</td><td>4 ok</td><td>⏸ 未對票</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

@@ -4,7 +4,7 @@
   "resolverFingerprint": "21a5483cdc47",
   "totals": {
     "champions": 71,
-    "standIns": 14,
+    "standIns": 13,
     "failures": 0
   },
   "appearances": [
@@ -87,69 +87,23 @@
     {
       "championId": "godie-e002",
       "schema": "resolved-appearance@1",
-      "modelKey": "imported.herosaber",
-      "glbPath": "assets/models/imported/herosaber.glb",
-      "modelDocDigest": "7b83f716189e",
+      "modelKey": "version.body.68cfd17a20e43e38be323af5ecc73ff21176d1af2e294bce",
+      "glbPath": "assets/models/community/versions/ada782968f855a1bb061fb26e54b0b2aaf77168222d2e60ab68bf9e886311caa.glb",
+      "modelDocDigest": "59c16513ec0f",
       "scale": 1,
-      "collisionRadius": 0.55,
-      "authoredYawOffsetDeg": null,
-      "effectiveYawOffsetDeg": 90,
-      "yawOffsetDeg": 90,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "Stand",
-        "run": "Walk",
-        "attack": "Attack",
-        "cast": "Spell",
-        "hurt": "Stand",
-        "death": "Death"
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_attack_attcom_1",
+        "hurt": "bat_idle",
+        "death": "dead"
       },
-      "attachPoints": {
-        "Foot Right": {
-          "x": 0.0554,
-          "y": 0.1599,
-          "z": 0.0807
-        },
-        "Foot Left": {
-          "x": 0.0554,
-          "y": 0.1599,
-          "z": -0.0828
-        },
-        "Hand Right": {
-          "x": -0.0187,
-          "y": 0.9148,
-          "z": 0.2347
-        },
-        "Hand Left": {
-          "x": -0.0187,
-          "y": 0.9148,
-          "z": -0.2366
-        },
-        "Head": {
-          "x": 0.0155,
-          "y": 1.7386,
-          "z": -0.0022
-        },
-        "Chest": {
-          "x": 0.0139,
-          "y": 1.1676,
-          "z": -0.0013
-        },
-        "Origin": {
-          "x": -0.0104,
-          "y": 0.1025,
-          "z": 0.0044
-        },
-        "OverHead": {
-          "x": -0.0104,
-          "y": 2.0356,
-          "z": 0.0044
-        },
-        "Weapon": {
-          "x": 0.7947,
-          "y": 0.8915,
-          "z": 0.2264
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
       "isStandIn": false,
       "axesNotCovered": [
@@ -234,69 +188,23 @@
     {
       "championId": "godie-e008",
       "schema": "resolved-appearance@1",
-      "modelKey": "imported.heroshana",
-      "glbPath": "assets/models/imported/heroshana.glb",
-      "modelDocDigest": "1428274fbe61",
+      "modelKey": "version.body.a82e311f9bf0c92137a65cb53209ff7b0851fcd21b40e0bc",
+      "glbPath": "assets/models/community/versions/ae0e8a8f48d38d72348da0e28c43014e1e64c0e56c0d5d6c904f6f6471dd6849.glb",
+      "modelDocDigest": "d90921f96e15",
       "scale": 1,
-      "collisionRadius": 0.55,
-      "authoredYawOffsetDeg": null,
-      "effectiveYawOffsetDeg": 90,
-      "yawOffsetDeg": 90,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "Stand",
-        "run": "Walk",
-        "attack": "Attack",
-        "cast": "Spell",
-        "hurt": "Stand",
-        "death": "Death"
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
       },
-      "attachPoints": {
-        "Hand Right": {
-          "x": -0.0899,
-          "y": 0.8447,
-          "z": 0.2336
-        },
-        "Hand Left": {
-          "x": -0.0899,
-          "y": 0.8447,
-          "z": -0.2336
-        },
-        "Chest": {
-          "x": -0.0899,
-          "y": 0.9885,
-          "z": 0
-        },
-        "Foot Right": {
-          "x": -0.0192,
-          "y": 0,
-          "z": 0.1089
-        },
-        "Foot Left": {
-          "x": -0.0192,
-          "y": 0,
-          "z": -0.0983
-        },
-        "Origin": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "Overhead": {
-          "x": -0.0899,
-          "y": 1.7973,
-          "z": 0
-        },
-        "Head -": {
-          "x": -0.0899,
-          "y": 1.348,
-          "z": 0
-        },
-        "Weapon": {
-          "x": 0.8088,
-          "y": 0.8447,
-          "z": 0.2516
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
       "isStandIn": false,
       "axesNotCovered": [
@@ -310,69 +218,23 @@
     {
       "championId": "godie-e00l",
       "schema": "resolved-appearance@1",
-      "modelKey": "imported.herosaber",
-      "glbPath": "assets/models/imported/herosaber.glb",
-      "modelDocDigest": "7b83f716189e",
+      "modelKey": "version.body.68cfd17a20e43e38be323af5ecc73ff21176d1af2e294bce",
+      "glbPath": "assets/models/community/versions/ada782968f855a1bb061fb26e54b0b2aaf77168222d2e60ab68bf9e886311caa.glb",
+      "modelDocDigest": "59c16513ec0f",
       "scale": 1,
-      "collisionRadius": 0.55,
-      "authoredYawOffsetDeg": null,
-      "effectiveYawOffsetDeg": 90,
-      "yawOffsetDeg": 90,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "Stand",
-        "run": "Walk",
-        "attack": "Attack",
-        "cast": "Spell",
-        "hurt": "Stand",
-        "death": "Death"
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_attack_attcom_1",
+        "hurt": "bat_idle",
+        "death": "dead"
       },
-      "attachPoints": {
-        "Foot Right": {
-          "x": 0.0554,
-          "y": 0.1599,
-          "z": 0.0807
-        },
-        "Foot Left": {
-          "x": 0.0554,
-          "y": 0.1599,
-          "z": -0.0828
-        },
-        "Hand Right": {
-          "x": -0.0187,
-          "y": 0.9148,
-          "z": 0.2347
-        },
-        "Hand Left": {
-          "x": -0.0187,
-          "y": 0.9148,
-          "z": -0.2366
-        },
-        "Head": {
-          "x": 0.0155,
-          "y": 1.7386,
-          "z": -0.0022
-        },
-        "Chest": {
-          "x": 0.0139,
-          "y": 1.1676,
-          "z": -0.0013
-        },
-        "Origin": {
-          "x": -0.0104,
-          "y": 0.1025,
-          "z": 0.0044
-        },
-        "OverHead": {
-          "x": -0.0104,
-          "y": 2.0356,
-          "z": 0.0044
-        },
-        "Weapon": {
-          "x": 0.7947,
-          "y": 0.8915,
-          "z": 0.2264
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
       "isStandIn": false,
       "axesNotCovered": [
@@ -746,69 +608,23 @@
     {
       "championId": "godie-edem",
       "schema": "resolved-appearance@1",
-      "modelKey": "imported.herosasuke",
-      "glbPath": "assets/models/imported/herosasuke.glb",
-      "modelDocDigest": "120e99859650",
+      "modelKey": "version.body.c7c18b4fe781830b000e7fe0c755d9c945f3779ddee8e6d6",
+      "glbPath": "assets/models/community/versions/9716b4d9495a359cebf1facde9fcbbd4c21a48859fa185edb610ba3926259d74.glb",
+      "modelDocDigest": "7891fab95af9",
       "scale": 1,
-      "collisionRadius": 0.55,
-      "authoredYawOffsetDeg": null,
-      "effectiveYawOffsetDeg": 90,
-      "yawOffsetDeg": 90,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "Stand",
-        "run": "Walk",
-        "attack": "Attack",
-        "cast": "Spell",
-        "hurt": "Stand",
-        "death": "Death"
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
       },
-      "attachPoints": {
-        "Origin": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "Overhead": {
-          "x": 0,
-          "y": 1.9141,
-          "z": 0
-        },
-        "Hand Left": {
-          "x": 0,
-          "y": 0.7089,
-          "z": -0.2127
-        },
-        "Hand Right": {
-          "x": 0,
-          "y": 0.7089,
-          "z": 0.2127
-        },
-        "Foot Right": {
-          "x": 0.0354,
-          "y": 0.0354,
-          "z": 0.1418
-        },
-        "Foot Left": {
-          "x": 0.0354,
-          "y": 0.0354,
-          "z": -0.1418
-        },
-        "Weapon": {
-          "x": -0.0946,
-          "y": 0.638,
-          "z": -0.3545
-        },
-        "Chest": {
-          "x": 0,
-          "y": 1.1343,
-          "z": 0
-        },
-        "Head -": {
-          "x": 0,
-          "y": 1.4887,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
       "isStandIn": false,
       "axesNotCovered": [
@@ -1233,69 +1049,23 @@
     {
       "championId": "godie-h01n",
       "schema": "resolved-appearance@1",
-      "modelKey": "imported.heroichigo",
-      "glbPath": "assets/models/imported/heroichigo.glb",
-      "modelDocDigest": "831346cd4b68",
+      "modelKey": "version.body.8d7862441a426d48f6ffdd3f97e2d7c93c50af070486e31b",
+      "glbPath": "assets/models/community/versions/efc5d5ca21d1b525faa8b35720f3e5528a5720ea31b220c42b3bd47685050509.glb",
+      "modelDocDigest": "926f1b9835b1",
       "scale": 1,
-      "collisionRadius": 0.55,
-      "authoredYawOffsetDeg": null,
-      "effectiveYawOffsetDeg": 90,
-      "yawOffsetDeg": 90,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "stand",
-        "run": "Walk",
-        "attack": "Attack - 1",
-        "cast": "Attack - 1",
-        "hurt": "stand",
-        "death": "death"
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
       },
-      "attachPoints": {
-        "Origin": {
-          "x": -0.039,
-          "y": 0.0302,
-          "z": -0.0058
-        },
-        "OverHead": {
-          "x": -0.0259,
-          "y": 2.0236,
-          "z": -0.0064
-        },
-        "Foot Right": {
-          "x": 0.0598,
-          "y": 0.0554,
-          "z": 0.2103
-        },
-        "Foot Left": {
-          "x": 0.0371,
-          "y": 0.0602,
-          "z": -0.2014
-        },
-        "Hand Right": {
-          "x": -0.0999,
-          "y": 1.2858,
-          "z": 0.6956
-        },
-        "Weapon": {
-          "x": 1.0127,
-          "y": 1.356,
-          "z": 0.6666
-        },
-        "Head": {
-          "x": -0.0564,
-          "y": 1.8429,
-          "z": -0.0065
-        },
-        "Hand Left": {
-          "x": -0.0912,
-          "y": 1.284,
-          "z": -0.7264
-        },
-        "Chest": {
-          "x": -0.1267,
-          "y": 1.5075,
-          "z": 0.0084
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
       "isStandIn": false,
       "axesNotCovered": [
@@ -1309,69 +1079,23 @@
     {
       "championId": "godie-h01o",
       "schema": "resolved-appearance@1",
-      "modelKey": "imported.heroichigo-bankai",
-      "glbPath": "assets/models/imported/heroichigo.glb",
-      "modelDocDigest": "a6eed80c63d6",
+      "modelKey": "version.body.8d7862441a426d48f6ffdd3f97e2d7c93c50af070486e31b",
+      "glbPath": "assets/models/community/versions/efc5d5ca21d1b525faa8b35720f3e5528a5720ea31b220c42b3bd47685050509.glb",
+      "modelDocDigest": "926f1b9835b1",
       "scale": 1,
-      "collisionRadius": 0.55,
-      "authoredYawOffsetDeg": null,
-      "effectiveYawOffsetDeg": 90,
-      "yawOffsetDeg": 90,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "stand",
-        "run": "Walk",
-        "attack": "Attack - 1",
-        "cast": "Attack - 1",
-        "hurt": "stand",
-        "death": "death"
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
       },
-      "attachPoints": {
-        "Origin": {
-          "x": -0.039,
-          "y": 0.0302,
-          "z": -0.0058
-        },
-        "OverHead": {
-          "x": -0.0259,
-          "y": 2.0236,
-          "z": -0.0064
-        },
-        "Foot Right": {
-          "x": 0.0598,
-          "y": 0.0554,
-          "z": 0.2103
-        },
-        "Foot Left": {
-          "x": 0.0371,
-          "y": 0.0602,
-          "z": -0.2014
-        },
-        "Hand Right": {
-          "x": -0.0999,
-          "y": 1.2858,
-          "z": 0.6956
-        },
-        "Weapon": {
-          "x": 1.0127,
-          "y": 1.356,
-          "z": 0.6666
-        },
-        "Head": {
-          "x": -0.0564,
-          "y": 1.8429,
-          "z": -0.0065
-        },
-        "Hand Left": {
-          "x": -0.0912,
-          "y": 1.284,
-          "z": -0.7264
-        },
-        "Chest": {
-          "x": -0.1267,
-          "y": 1.5075,
-          "z": 0.0084
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
       "isStandIn": false,
       "axesNotCovered": [
@@ -1466,69 +1190,23 @@
     {
       "championId": "godie-h020",
       "schema": "resolved-appearance@1",
-      "modelKey": "imported.linainvers",
-      "glbPath": "assets/models/imported/linainvers.glb",
-      "modelDocDigest": "af9b3b18d7e4",
+      "modelKey": "version.body.0a75adabf453db16048f0b8763c24cd03fb64707c0cc95b3",
+      "glbPath": "assets/models/community/versions/df07ee9d9baf46a88033329bcba43d814580521de3d8b4b9a5deb161bd1f0628.glb",
+      "modelDocDigest": "746e742b81e0",
       "scale": 1,
-      "collisionRadius": 0.55,
-      "authoredYawOffsetDeg": null,
-      "effectiveYawOffsetDeg": 90,
-      "yawOffsetDeg": 90,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "Stand - 1",
-        "run": "walk",
-        "attack": "Attack - 1",
-        "cast": "Attack - 1",
-        "hurt": "Stand - 1",
-        "death": "death"
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
       },
-      "attachPoints": {
-        "origin": {
-          "x": 0,
-          "y": 0.0124,
-          "z": 0
-        },
-        "head": {
-          "x": -0.0372,
-          "y": 1.6755,
-          "z": 0
-        },
-        "overhead": {
-          "x": 0,
-          "y": 1.8617,
-          "z": 0
-        },
-        "chest": {
-          "x": 0,
-          "y": 1.2411,
-          "z": 0
-        },
-        "hand right": {
-          "x": 0,
-          "y": 0.9184,
-          "z": 0.2482
-        },
-        "weapon": {
-          "x": 0,
-          "y": 0.9184,
-          "z": 0.2482
-        },
-        "hand left": {
-          "x": 0.0124,
-          "y": 0.9184,
-          "z": -0.2482
-        },
-        "foot left": {
-          "x": 0,
-          "y": 0.0124,
-          "z": -0.0869
-        },
-        "foot right": {
-          "x": 0,
-          "y": 0.0124,
-          "z": 0.0869
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
       "isStandIn": false,
       "axesNotCovered": [
@@ -1806,36 +1484,25 @@
     {
       "championId": "godie-hapm",
       "schema": "resolved-appearance@1",
-      "modelKey": "champ.thorne",
-      "glbPath": "assets/models/champions/blocky-knight.glb",
-      "modelDocDigest": "082b1a16e49d",
+      "modelKey": "version.body.726a54d30297338f0d7405091514d2be37bcf10df0f57649",
+      "glbPath": "assets/models/community/versions/45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c.glb",
+      "modelDocDigest": "be7c0de18539",
       "scale": 1,
       "collisionRadius": 0.6,
-      "authoredYawOffsetDeg": null,
+      "authoredYawOffsetDeg": 0,
       "effectiveYawOffsetDeg": 0,
       "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "idle",
-        "run": "run",
-        "attack": "attack",
-        "cast": "cast",
-        "hurt": "hurt",
-        "death": "death"
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
       },
-      "attachPoints": {
-        "rightHand": {
-          "x": 0.34,
-          "y": 0.73,
-          "z": 0.11
-        },
-        "overhead": {
-          "x": 0,
-          "y": 1.95,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
-      "isStandIn": true,
+      "isStandIn": false,
       "axesNotCovered": [
         "skin",
         "form",
@@ -1974,69 +1641,23 @@
     {
       "championId": "godie-hjai",
       "schema": "resolved-appearance@1",
-      "modelKey": "imported.linainvers",
-      "glbPath": "assets/models/imported/linainvers.glb",
-      "modelDocDigest": "af9b3b18d7e4",
+      "modelKey": "version.body.0a75adabf453db16048f0b8763c24cd03fb64707c0cc95b3",
+      "glbPath": "assets/models/community/versions/df07ee9d9baf46a88033329bcba43d814580521de3d8b4b9a5deb161bd1f0628.glb",
+      "modelDocDigest": "746e742b81e0",
       "scale": 1,
-      "collisionRadius": 0.55,
-      "authoredYawOffsetDeg": null,
-      "effectiveYawOffsetDeg": 90,
-      "yawOffsetDeg": 90,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "Stand - 1",
-        "run": "walk",
-        "attack": "Attack - 1",
-        "cast": "Attack - 1",
-        "hurt": "Stand - 1",
-        "death": "death"
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
       },
-      "attachPoints": {
-        "origin": {
-          "x": 0,
-          "y": 0.0124,
-          "z": 0
-        },
-        "head": {
-          "x": -0.0372,
-          "y": 1.6755,
-          "z": 0
-        },
-        "overhead": {
-          "x": 0,
-          "y": 1.8617,
-          "z": 0
-        },
-        "chest": {
-          "x": 0,
-          "y": 1.2411,
-          "z": 0
-        },
-        "hand right": {
-          "x": 0,
-          "y": 0.9184,
-          "z": 0.2482
-        },
-        "weapon": {
-          "x": 0,
-          "y": 0.9184,
-          "z": 0.2482
-        },
-        "hand left": {
-          "x": 0.0124,
-          "y": 0.9184,
-          "z": -0.2482
-        },
-        "foot left": {
-          "x": 0,
-          "y": 0.0124,
-          "z": -0.0869
-        },
-        "foot right": {
-          "x": 0,
-          "y": 0.0124,
-          "z": 0.0869
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
       "isStandIn": false,
       "axesNotCovered": [
@@ -2202,69 +1823,23 @@
     {
       "championId": "godie-hvsh",
       "schema": "resolved-appearance@1",
-      "modelKey": "imported.herorider",
-      "glbPath": "assets/models/imported/herorider.glb",
-      "modelDocDigest": "3c3b4dbde5f6",
+      "modelKey": "version.body.a806e2beb9b0683d6b0437a4b4e7b761e3b2ee4d234579f8",
+      "glbPath": "assets/models/community/versions/572134b9f8460e95c4fbdd797c32cf597c61a06b7fdc5f81785f9053cacc4910.glb",
+      "modelDocDigest": "678f6b917a31",
       "scale": 1,
-      "collisionRadius": 0.55,
-      "authoredYawOffsetDeg": null,
-      "effectiveYawOffsetDeg": 90,
-      "yawOffsetDeg": 90,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "Stand",
-        "run": "Walk",
-        "attack": "Attack",
-        "cast": "Spell",
-        "hurt": "Stand",
-        "death": "Death"
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_attack_attcom_1",
+        "hurt": "bat_idle",
+        "death": "dead"
       },
-      "attachPoints": {
-        "foot Right": {
-          "x": -0.0271,
-          "y": 0.0332,
-          "z": 0.0942
-        },
-        "foot Left": {
-          "x": -0.0247,
-          "y": 0.0363,
-          "z": -0.0962
-        },
-        "Hand Right": {
-          "x": 0.0775,
-          "y": 0.8297,
-          "z": 0.2176
-        },
-        "Hand Left": {
-          "x": 0.0751,
-          "y": 0.8296,
-          "z": -0.2178
-        },
-        "Head": {
-          "x": 0.0073,
-          "y": 1.5655,
-          "z": 0.0063
-        },
-        "Chest": {
-          "x": -0.0024,
-          "y": 1.2529,
-          "z": 0.0022
-        },
-        "Origin": {
-          "x": -0.009,
-          "y": -0.0032,
-          "z": 0.0038
-        },
-        "OverHead": {
-          "x": -0.009,
-          "y": 1.7817,
-          "z": 0.0038
-        },
-        "Weapon": {
-          "x": 0.2271,
-          "y": 0.6055,
-          "z": 0.2176
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
       "isStandIn": false,
       "axesNotCovered": [
@@ -3496,69 +3071,23 @@
     {
       "championId": "godie-osam",
       "schema": "resolved-appearance@1",
-      "modelKey": "imported.sesshomaru",
-      "glbPath": "assets/models/imported/sesshomaru.glb",
-      "modelDocDigest": "6911be3c3da3",
+      "modelKey": "version.body.f6f12733d6fe2dfdc5ae3977a724f0526c465a9c29ba6b93",
+      "glbPath": "assets/models/community/versions/cc746a618bff25e360aa9637d84b55f80812184f3e1eae26ab9f200895869047.glb",
+      "modelDocDigest": "c6a4eb7ad612",
       "scale": 1,
-      "collisionRadius": 0.55,
-      "authoredYawOffsetDeg": null,
-      "effectiveYawOffsetDeg": 90,
-      "yawOffsetDeg": 90,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "Stand",
-        "run": "Walk",
-        "attack": "Attack",
-        "cast": "Attack",
-        "hurt": "Stand",
-        "death": "Death"
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
       },
-      "attachPoints": {
-        "Hand Right": {
-          "x": 0.0009,
-          "y": 0.8726,
-          "z": 0.4423
-        },
-        "Weapon": {
-          "x": 0.6951,
-          "y": 0.8544,
-          "z": 0.4444
-        },
-        "Head -": {
-          "x": 0.029,
-          "y": 1.6291,
-          "z": -0.0021
-        },
-        "Hand Left": {
-          "x": -0.3135,
-          "y": 1.0998,
-          "z": -0.537
-        },
-        "Chest": {
-          "x": -0.0036,
-          "y": 1.3198,
-          "z": -0.0019
-        },
-        "Foot Right": {
-          "x": -0.065,
-          "y": 0.1534,
-          "z": 0.1809
-        },
-        "Foot Left": {
-          "x": -0.0652,
-          "y": 0.1532,
-          "z": -0.1823
-        },
-        "Origin": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "Overhead": {
-          "x": 0,
-          "y": 1.7094,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
       "isStandIn": false,
       "axesNotCovered": [
@@ -3841,69 +3370,23 @@
     {
       "championId": "godie-u00n",
       "schema": "resolved-appearance@1",
-      "modelKey": "imported.luffe",
-      "glbPath": "assets/models/imported/luffe.glb",
-      "modelDocDigest": "fc14d9be1196",
+      "modelKey": "version.body.5f4ddabc134289f295a29834bd0b06041e7fad3284685e84",
+      "glbPath": "assets/models/community/versions/5a3e6085538174519370e5348ff199a60cd2d4637da9edf6a61f498d6e714a68.glb",
+      "modelDocDigest": "20e11962ccff",
       "scale": 1,
-      "collisionRadius": 0.55,
-      "authoredYawOffsetDeg": null,
-      "effectiveYawOffsetDeg": 90,
-      "yawOffsetDeg": 90,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "Stand",
-        "run": "Walk",
-        "attack": "Attack",
-        "cast": "Spell",
-        "hurt": "Stand",
-        "death": "Death"
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_attack_attcom_1",
+        "hurt": "bat_idle",
+        "death": "dead"
       },
-      "attachPoints": {
-        "Hand Left": {
-          "x": 0.0199,
-          "y": 1.1558,
-          "z": -0.7222
-        },
-        "Hand Right": {
-          "x": 0.0199,
-          "y": 1.1558,
-          "z": 0.7221
-        },
-        "Weapon": {
-          "x": 0.0428,
-          "y": 1.1397,
-          "z": 0.8015
-        },
-        "Head": {
-          "x": -0.0302,
-          "y": 1.5048,
-          "z": 0
-        },
-        "Foot Right": {
-          "x": 0.188,
-          "y": 0.0735,
-          "z": 0.3401
-        },
-        "Foot Left": {
-          "x": 0.188,
-          "y": 0.0735,
-          "z": -0.3401
-        },
-        "Chest": {
-          "x": -0.019,
-          "y": 0.9601,
-          "z": -0.0038
-        },
-        "Origin": {
-          "x": 0,
-          "y": 0.0269,
-          "z": 0
-        },
-        "OverHead": {
-          "x": 0,
-          "y": 1.7705,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
       "isStandIn": false,
       "axesNotCovered": [
@@ -3917,69 +3400,23 @@
     {
       "championId": "godie-u00o",
       "schema": "resolved-appearance@1",
-      "modelKey": "imported.luffe",
-      "glbPath": "assets/models/imported/luffe.glb",
-      "modelDocDigest": "fc14d9be1196",
+      "modelKey": "version.body.5f4ddabc134289f295a29834bd0b06041e7fad3284685e84",
+      "glbPath": "assets/models/community/versions/5a3e6085538174519370e5348ff199a60cd2d4637da9edf6a61f498d6e714a68.glb",
+      "modelDocDigest": "20e11962ccff",
       "scale": 1,
-      "collisionRadius": 0.55,
-      "authoredYawOffsetDeg": null,
-      "effectiveYawOffsetDeg": 90,
-      "yawOffsetDeg": 90,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "Stand",
-        "run": "Walk",
-        "attack": "Attack",
-        "cast": "Spell",
-        "hurt": "Stand",
-        "death": "Death"
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_attack_attcom_1",
+        "hurt": "bat_idle",
+        "death": "dead"
       },
-      "attachPoints": {
-        "Hand Left": {
-          "x": 0.0199,
-          "y": 1.1558,
-          "z": -0.7222
-        },
-        "Hand Right": {
-          "x": 0.0199,
-          "y": 1.1558,
-          "z": 0.7221
-        },
-        "Weapon": {
-          "x": 0.0428,
-          "y": 1.1397,
-          "z": 0.8015
-        },
-        "Head": {
-          "x": -0.0302,
-          "y": 1.5048,
-          "z": 0
-        },
-        "Foot Right": {
-          "x": 0.188,
-          "y": 0.0735,
-          "z": 0.3401
-        },
-        "Foot Left": {
-          "x": 0.188,
-          "y": 0.0735,
-          "z": -0.3401
-        },
-        "Chest": {
-          "x": -0.019,
-          "y": 0.9601,
-          "z": -0.0038
-        },
-        "Origin": {
-          "x": 0,
-          "y": 0.0269,
-          "z": 0
-        },
-        "OverHead": {
-          "x": 0,
-          "y": 1.7705,
-          "z": 0
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
       "isStandIn": false,
       "axesNotCovered": [
@@ -4140,69 +3577,23 @@
     {
       "championId": "godie-u01u",
       "schema": "resolved-appearance@1",
-      "modelKey": "imported.heromusashimiyamoto",
-      "glbPath": "assets/models/imported/heromusashimiyamoto.glb",
-      "modelDocDigest": "25bfba2c5926",
+      "modelKey": "version.body.965b027d52481be1d8dffc44dafccb4176fd460326ebc0b8",
+      "glbPath": "assets/models/community/versions/8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5.glb",
+      "modelDocDigest": "4bf5fd04531a",
       "scale": 1,
-      "collisionRadius": 0.55,
-      "authoredYawOffsetDeg": null,
-      "effectiveYawOffsetDeg": 90,
-      "yawOffsetDeg": 90,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "Stand",
-        "run": "Walk",
-        "attack": "Attack",
-        "cast": "Spell",
-        "hurt": "Stand",
-        "death": "Death"
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01_a",
+        "hurt": "bat_idle",
+        "death": "dead"
       },
-      "attachPoints": {
-        "Hand Right": {
-          "x": -0.0077,
-          "y": 0.8039,
-          "z": 0.4091
-        },
-        "Weapon": {
-          "x": 0.8665,
-          "y": 0.7963,
-          "z": 0.44
-        },
-        "Hand Left": {
-          "x": -0.0077,
-          "y": 0.8039,
-          "z": -0.4097
-        },
-        "Head -": {
-          "x": 0.04,
-          "y": 1.5442,
-          "z": -0.0011
-        },
-        "Chest": {
-          "x": -0.0287,
-          "y": 0.9851,
-          "z": -0.0016
-        },
-        "Foot Right": {
-          "x": 0.0198,
-          "y": 0.1337,
-          "z": 0.1435
-        },
-        "Foot Left": {
-          "x": 0.0198,
-          "y": 0.1337,
-          "z": -0.1441
-        },
-        "Origin": {
-          "x": 0,
-          "y": -0.0019,
-          "z": 0
-        },
-        "Overhead": {
-          "x": 0.0033,
-          "y": 1.5662,
-          "z": -0.0011
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
       "isStandIn": false,
       "axesNotCovered": [
@@ -4410,69 +3801,23 @@
     {
       "championId": "godie-udre",
       "schema": "resolved-appearance@1",
-      "modelKey": "imported.heromusashimiyamoto",
-      "glbPath": "assets/models/imported/heromusashimiyamoto.glb",
-      "modelDocDigest": "25bfba2c5926",
+      "modelKey": "version.body.965b027d52481be1d8dffc44dafccb4176fd460326ebc0b8",
+      "glbPath": "assets/models/community/versions/8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5.glb",
+      "modelDocDigest": "4bf5fd04531a",
       "scale": 1,
-      "collisionRadius": 0.55,
-      "authoredYawOffsetDeg": null,
-      "effectiveYawOffsetDeg": 90,
-      "yawOffsetDeg": 90,
+      "collisionRadius": 0.6,
+      "authoredYawOffsetDeg": 0,
+      "effectiveYawOffsetDeg": 0,
+      "yawOffsetDeg": 0,
       "clipMap": {
-        "idle": "Stand",
-        "run": "Walk",
-        "attack": "Attack",
-        "cast": "Spell",
-        "hurt": "Stand",
-        "death": "Death"
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01_a",
+        "hurt": "bat_idle",
+        "death": "dead"
       },
-      "attachPoints": {
-        "Hand Right": {
-          "x": -0.0077,
-          "y": 0.8039,
-          "z": 0.4091
-        },
-        "Weapon": {
-          "x": 0.8665,
-          "y": 0.7963,
-          "z": 0.44
-        },
-        "Hand Left": {
-          "x": -0.0077,
-          "y": 0.8039,
-          "z": -0.4097
-        },
-        "Head -": {
-          "x": 0.04,
-          "y": 1.5442,
-          "z": -0.0011
-        },
-        "Chest": {
-          "x": -0.0287,
-          "y": 0.9851,
-          "z": -0.0016
-        },
-        "Foot Right": {
-          "x": 0.0198,
-          "y": 0.1337,
-          "z": 0.1435
-        },
-        "Foot Left": {
-          "x": 0.0198,
-          "y": 0.1337,
-          "z": -0.1441
-        },
-        "Origin": {
-          "x": 0,
-          "y": -0.0019,
-          "z": 0
-        },
-        "Overhead": {
-          "x": 0.0033,
-          "y": 1.5662,
-          "z": -0.0011
-        }
-      },
+      "attachPoints": {},
       "teamTintMaterials": [],
       "isStandIn": false,
       "axesNotCovered": [

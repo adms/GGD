@@ -48,7 +48,10 @@ for cid in sorted(ids,key=lambda v:int(v.split(':')[1])):
    g=unpack('<24I',h,f['ageo']+124*i); tid=unpack('<i',h,f['amtl']+48*g[4]+12)[0];name=texnames[tid] if 0<=tid<len(texnames) else ''
    if not name or Path(name).stem.lower().startswith('tx_') or g[7]<50:continue
    meshes.append((i,g[7],g[4],name))
-  explicit={'300heroes:53':[0,5],'300heroes:113':[4,0],'300heroes:137':[0,1],'300heroes:253':[1,0]}
+  # Maple's Object001/Object010 are two independent companion bodies, not
+  # her humanoid body or shield. Keep them in the native source; this release
+  # selects mesh 5 (body), 1 (shield) and 3 (body accessory) only.
+  explicit={'300heroes:53':[0,5],'300heroes:113':[4,0],'300heroes:137':[0,1],'300heroes:253':[1,0],'300heroes:272':[5,1,3]}
   if cid in explicit:meshes=[m for m in meshes if m[0] in explicit[cid]]
   meshes=sorted(meshes,key=lambda v:-v[1])[:5]
   config=known.get(cid)

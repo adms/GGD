@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_ae95068ac3cb",
+    "contentVersion": "cv_5789d569ddb1",
     "collections": {
       "champions": {
         "hash": "f7a54ebc54ad",
@@ -42,12 +42,12 @@
         "count": 7
       },
       "config": {
-        "hash": "c0a4eaffb157",
+        "hash": "84c972253a96",
         "count": 103
       },
       "models": {
-        "hash": "a625b83ddcd7",
-        "count": 249
+        "hash": "bea7257037a0",
+        "count": 250
       },
       "vfx": {
         "hash": "7df129081586",
@@ -6645,11 +6645,11 @@
       }
     ]
   },
-  "assetManifestDigest": "c72e67a72494",
+  "assetManifestDigest": "ad8b82d869ee",
   "assetManifest": {
     "path": "assets-manifest.json",
-    "entries": 1650,
-    "totalBytes": 103970638
+    "entries": 1746,
+    "totalBytes": 193119654
   },
   "effectiveVfxLimits": {
     "schema": "ggd-effective-vfx-limits@1",
@@ -6737,5 +6737,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "962937b745b9"
+  "profileDigest": "8285255b046f"
 }

@@ -41,3 +41,11 @@ func TestModelReleaseHashesMatchShared(t *testing.T) {
 	}
 	require.Positive(t, count)
 }
+
+func TestLegacySourceTierMatchesSharedLabels(t *testing.T) {
+	for library, expected := range map[string]int{"300heroes native": 0, "MBA Complete Form 1.60": 1, "Magical-Battle-Arena": 1, "GGD": 2, "W3X imported": 3} {
+		var v retainedModel
+		v.Source.Library = library
+		require.Equal(t, expected, modelTier(v), library)
+	}
+}

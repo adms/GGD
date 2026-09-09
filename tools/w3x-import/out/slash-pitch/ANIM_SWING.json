@@ -21,18 +21,6 @@
    "pitchDeg": 66,
    "attackClipPitchDeg": 67
   },
-  "godie-e008.q": {
-   "champion": "godie-e008",
-   "championName": "火霧戰士 - 夏娜",
-   "ability": "21-02 拔焰刀",
-   "modelKey": "imported.heroshana",
-   "clip": "Spell",
-   "blade": "Bone_Weapon←Bone_Hand_R",
-   "sweptDeg": 86.2,
-   "planarity": 0.985,
-   "pitchDeg": 64,
-   "attackClipPitchDeg": 64
-  },
   "godie-e00n.w": {
    "champion": "godie-e00n",
    "championName": "蟬在叫人壞掉 - 龍宮禮奈",
@@ -93,30 +81,6 @@
    "pitchDeg": 87,
    "attackClipPitchDeg": 87
   },
-  "godie-h01n.w": {
-   "champion": "godie-h01n",
-   "championName": "開外掛的死神 - 黑崎一護",
-   "ability": "79-02 月牙斬擊",
-   "modelKey": "imported.heroichigo",
-   "clip": "Attack - 1",
-   "blade": "Weapon Ref←bone_handR",
-   "sweptDeg": 161.0,
-   "planarity": 0.983,
-   "pitchDeg": 73,
-   "attackClipPitchDeg": 73
-  },
-  "godie-h01o.w": {
-   "champion": "godie-h01o",
-   "championName": "外掛開很大的死神 - 黑崎一護",
-   "ability": "79-02 斬擊",
-   "modelKey": "imported.heroichigo-bankai",
-   "clip": "Attack - 1",
-   "blade": "Weapon Ref←bone_handR",
-   "sweptDeg": 161.0,
-   "planarity": 0.983,
-   "pitchDeg": 73,
-   "attackClipPitchDeg": 73
-  },
   "godie-h01u.w": {
    "champion": "godie-h01u",
    "championName": "亂世癿王者 - 呂布奉先",
@@ -129,18 +93,6 @@
    "pitchDeg": 75,
    "attackClipPitchDeg": 64
   },
-  "godie-hapm.e": {
-   "champion": "godie-hapm",
-   "championName": "海克力斯 - Berserker",
-   "ability": "52-03 無銘斧劍",
-   "modelKey": "champ.thorne",
-   "clip": "cast",
-   "blade": "weapon←handRight",
-   "sweptDeg": 74.9,
-   "planarity": 0.998,
-   "pitchDeg": 89,
-   "attackClipPitchDeg": 84
-  },
   "godie-hart.q": {
    "champion": "godie-hart",
    "championName": "最終幻想 - 克勞德",
@@ -152,30 +104,6 @@
    "planarity": 0.992,
    "pitchDeg": 6,
    "attackClipPitchDeg": 63
-  },
-  "godie-hjai.e": {
-   "champion": "godie-hjai",
-   "championName": "黑魔導士 - 莉娜因巴斯",
-   "ability": "04-03 龍破斬",
-   "modelKey": "imported.linainvers",
-   "clip": "Attack - 1",
-   "blade": "weapon←bone low right arm",
-   "sweptDeg": 70.5,
-   "planarity": 1.0,
-   "pitchDeg": 89,
-   "attackClipPitchDeg": 89
-  },
-  "godie-hjai.r": {
-   "champion": "godie-hjai",
-   "championName": "黑魔導士 - 莉娜因巴斯",
-   "ability": "04-04 神滅斬",
-   "modelKey": "imported.linainvers",
-   "clip": "Attack - 1",
-   "blade": "weapon←bone low right arm",
-   "sweptDeg": 70.5,
-   "planarity": 1.0,
-   "pitchDeg": 89,
-   "attackClipPitchDeg": 89
   },
   "godie-n00p.q": {
    "champion": "godie-n00p",
@@ -249,30 +177,6 @@
    "pitchDeg": 29,
    "attackClipPitchDeg": 16
   },
-  "godie-osam.q": {
-   "champion": "godie-osam",
-   "championName": "犬妖 - 殺生丸",
-   "ability": "34-01 毒華爪",
-   "modelKey": "imported.sesshomaru",
-   "clip": "Attack",
-   "blade": "Weapon Ref←Bone_Hand_R",
-   "sweptDeg": 147.7,
-   "planarity": 0.978,
-   "pitchDeg": 56,
-   "attackClipPitchDeg": 56
-  },
-  "godie-osam.w": {
-   "champion": "godie-osam",
-   "championName": "犬妖 - 殺生丸",
-   "ability": "34-02 閃光鞭",
-   "modelKey": "imported.sesshomaru",
-   "clip": "Attack",
-   "blade": "Weapon Ref←Bone_Hand_R",
-   "sweptDeg": 147.7,
-   "planarity": 0.978,
-   "pitchDeg": 56,
-   "attackClipPitchDeg": 56
-  },
   "godie-u00h.q": {
    "champion": "godie-u00h",
    "championName": "鬼畜紅王 - 鬼畜狂刀KYO",
@@ -309,54 +213,6 @@
    "pitchDeg": 32,
    "attackClipPitchDeg": 60
   },
-  "godie-u01u.e": {
-   "champion": "godie-u01u",
-   "championName": "三刀流劍士 - 索隆",
-   "ability": "11-03 鬼氣九刀流-阿修羅壹霧銀",
-   "modelKey": "imported.heromusashimiyamoto",
-   "clip": "Spell",
-   "blade": "Weapon Ref←Bone_Hand_R",
-   "sweptDeg": 225.8,
-   "planarity": 0.851,
-   "pitchDeg": 78,
-   "attackClipPitchDeg": 5
-  },
-  "godie-u01u.r": {
-   "champion": "godie-u01u",
-   "championName": "三刀流劍士 - 索隆",
-   "ability": "11-04 三千世界",
-   "modelKey": "imported.heromusashimiyamoto",
-   "clip": "Spell",
-   "blade": "Weapon Ref←Bone_Hand_R",
-   "sweptDeg": 225.8,
-   "planarity": 0.851,
-   "pitchDeg": 78,
-   "attackClipPitchDeg": 5
-  },
-  "godie-u01u.w": {
-   "champion": "godie-u01u",
-   "championName": "三刀流劍士 - 索隆",
-   "ability": "11-02 虎狩獵",
-   "modelKey": "imported.heromusashimiyamoto",
-   "clip": "Spell",
-   "blade": "Weapon Ref←Bone_Hand_R",
-   "sweptDeg": 225.8,
-   "planarity": 0.851,
-   "pitchDeg": 78,
-   "attackClipPitchDeg": 5
-  },
-  "godie-udre.e": {
-   "champion": "godie-udre",
-   "championName": "三刀流劍士 - 索隆",
-   "ability": "11-03 鬼氣九刀流-阿修羅壹霧銀",
-   "modelKey": "imported.heromusashimiyamoto",
-   "clip": "Spell",
-   "blade": "Weapon Ref←Bone_Hand_R",
-   "sweptDeg": 225.8,
-   "planarity": 0.851,
-   "pitchDeg": 78,
-   "attackClipPitchDeg": 5
-  },
   "godie-umal.e": {
    "champion": "godie-umal",
    "championName": "北斗神拳掌門人 - 拳四郎",
@@ -383,6 +239,15 @@
   }
  },
  "unmeasured": {
+  "godie-e008.q": {
+   "champion": "godie-e008",
+   "ability": "21-02 拔焰刀",
+   "modelKey": "version.body.a82e311f9bf0c92137a65cb53209ff7b0851fcd21b40e0bc",
+   "reason": "no-blade",
+   "detail": "找不到 武器/手 與一個非退化的近端關節",
+   "castClip": null,
+   "attackFallbackPitchDeg": null
+  },
   "godie-e00r.w": {
    "champion": "godie-e00r",
    "ability": "59-02 高週波短刀",
@@ -391,6 +256,24 @@
    "detail": "掃過 19.8° < 25.0°",
    "castClip": "Stand Ready",
    "attackFallbackPitchDeg": 31
+  },
+  "godie-h01n.w": {
+   "champion": "godie-h01n",
+   "ability": "79-02 月牙斬擊",
+   "modelKey": "version.body.8d7862441a426d48f6ffdd3f97e2d7c93c50af070486e31b",
+   "reason": "no-blade",
+   "detail": "找不到 武器/手 與一個非退化的近端關節",
+   "castClip": null,
+   "attackFallbackPitchDeg": null
+  },
+  "godie-h01o.w": {
+   "champion": "godie-h01o",
+   "ability": "79-02 斬擊",
+   "modelKey": "version.body.8d7862441a426d48f6ffdd3f97e2d7c93c50af070486e31b",
+   "reason": "no-blade",
+   "detail": "找不到 武器/手 與一個非退化的近端關節",
+   "castClip": null,
+   "attackFallbackPitchDeg": null
   },
   "godie-h02r.q": {
    "champion": "godie-h02r",
@@ -401,6 +284,15 @@
    "castClip": "spell",
    "attackFallbackPitchDeg": 41
   },
+  "godie-hapm.e": {
+   "champion": "godie-hapm",
+   "ability": "52-03 無銘斧劍",
+   "modelKey": "version.body.726a54d30297338f0d7405091514d2be37bcf10df0f57649",
+   "reason": "no-blade",
+   "detail": "找不到 武器/手 與一個非退化的近端關節",
+   "castClip": null,
+   "attackFallbackPitchDeg": null
+  },
   "godie-hgam.q": {
    "champion": "godie-hgam",
    "ability": "90-01 飛葉快刀",
@@ -410,6 +302,24 @@
    "castClip": "spell",
    "attackFallbackPitchDeg": 41
   },
+  "godie-hjai.e": {
+   "champion": "godie-hjai",
+   "ability": "04-03 龍破斬",
+   "modelKey": "version.body.0a75adabf453db16048f0b8763c24cd03fb64707c0cc95b3",
+   "reason": "no-blade",
+   "detail": "找不到 武器/手 與一個非退化的近端關節",
+   "castClip": null,
+   "attackFallbackPitchDeg": null
+  },
+  "godie-hjai.r": {
+   "champion": "godie-hjai",
+   "ability": "04-04 神滅斬",
+   "modelKey": "version.body.0a75adabf453db16048f0b8763c24cd03fb64707c0cc95b3",
+   "reason": "no-blade",
+   "detail": "找不到 武器/手 與一個非退化的近端關節",
+   "castClip": null,
+   "attackFallbackPitchDeg": null
+  },
   "godie-ofar.w": {
    "champion": "godie-ofar",
    "ability": "58-02 鋼鐵尾巴",
@@ -418,6 +328,60 @@
    "detail": "刀身完全沒有轉動",
    "castClip": null,
    "attackFallbackPitchDeg": 69
+  },
+  "godie-osam.q": {
+   "champion": "godie-osam",
+   "ability": "34-01 毒華爪",
+   "modelKey": "version.body.f6f12733d6fe2dfdc5ae3977a724f0526c465a9c29ba6b93",
+   "reason": "no-blade",
+   "detail": "找不到 武器/手 與一個非退化的近端關節",
+   "castClip": null,
+   "attackFallbackPitchDeg": null
+  },
+  "godie-osam.w": {
+   "champion": "godie-osam",
+   "ability": "34-02 閃光鞭",
+   "modelKey": "version.body.f6f12733d6fe2dfdc5ae3977a724f0526c465a9c29ba6b93",
+   "reason": "no-blade",
+   "detail": "找不到 武器/手 與一個非退化的近端關節",
+   "castClip": null,
+   "attackFallbackPitchDeg": null
+  },
+  "godie-u01u.e": {
+   "champion": "godie-u01u",
+   "ability": "11-03 鬼氣九刀流-阿修羅壹霧銀",
+   "modelKey": "version.body.965b027d52481be1d8dffc44dafccb4176fd460326ebc0b8",
+   "reason": "no-blade",
+   "detail": "找不到 武器/手 與一個非退化的近端關節",
+   "castClip": null,
+   "attackFallbackPitchDeg": null
+  },
+  "godie-u01u.r": {
+   "champion": "godie-u01u",
+   "ability": "11-04 三千世界",
+   "modelKey": "version.body.965b027d52481be1d8dffc44dafccb4176fd460326ebc0b8",
+   "reason": "no-blade",
+   "detail": "找不到 武器/手 與一個非退化的近端關節",
+   "castClip": null,
+   "attackFallbackPitchDeg": null
+  },
+  "godie-u01u.w": {
+   "champion": "godie-u01u",
+   "ability": "11-02 虎狩獵",
+   "modelKey": "version.body.965b027d52481be1d8dffc44dafccb4176fd460326ebc0b8",
+   "reason": "no-blade",
+   "detail": "找不到 武器/手 與一個非退化的近端關節",
+   "castClip": null,
+   "attackFallbackPitchDeg": null
+  },
+  "godie-udre.e": {
+   "champion": "godie-udre",
+   "ability": "11-03 鬼氣九刀流-阿修羅壹霧銀",
+   "modelKey": "version.body.965b027d52481be1d8dffc44dafccb4176fd460326ebc0b8",
+   "reason": "no-blade",
+   "detail": "找不到 武器/手 與一個非退化的近端關節",
+   "castClip": null,
+   "attackFallbackPitchDeg": null
   }
  }
 }
