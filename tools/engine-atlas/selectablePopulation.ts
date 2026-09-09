@@ -141,6 +141,14 @@ export function retiredIds(repoRoot: string): ReadonlySet<string> {
  * @param whitelist 白名單種子（`starterChampionIds`）
  * @param retired   下架清單（`retiredIds`）
  */
+/**
+ * ⭐ `main.tsx` 在內容載入失敗時註冊的兩隻骨架 —— ⛔ 它們**不是**英雄。
+ * ⚠️ 這一份與 `tools/roster-guard/check.ts` 的 `SKELETON_IDS` 是同一個事實；
+ * ⛔ 而它只有兩個字串，⭐ 抽成共用模組的成本高於它的價值 —— 兩邊都在守著彼此
+ * （`roster:check` 的第②條會列出「既不在名單、也不是變身態、也不是骨架」的卡）。
+ */
+const SKELETON_FALLBACK_IDS: ReadonlySet<string> = new Set(["sela", "thorne"]);
+
 export function classifyPopulation(
   ids: readonly string[],
   whitelist: ReadonlySet<string>,
@@ -157,12 +165,22 @@ export function classifyPopulation(
     const base = baseFormIdOf(id);
     const mk = (v: Omit<Verdict, "id">): void => void out.set(id, { id, ...v });
 
-    if (!id.startsWith("godie-")) {
+    // ⛔⛔ **這裡原本是 `if (!id.startsWith("godie-"))`** —— 把「不是 godie- 開頭」
+    // 當成「它是骨架替身」。⭐ 那在只有一種命名的世界裡是對的，
+    // ⚠️ 而 2026-09-10（GH#1165）37 名社群英雄（`community-review-…`）上架之後，
+    // 它們**每一位**都被判成骨架 ⇒ `reachable: false` ⇒
+    // ⛔ 它們從**每一份平衡量測、每一張界線推導表**裡消失，⭐ 而沒有任何東西變紅
+    //   （`docs/hero-stat-tiers.json` 的 `pickableTotal` 停在 49，而名單是 86）。
+    //
+    // ⭐ 真正的骨架**只有兩顆** —— `main.tsx` 在內容載入失敗時註冊的那兩隻。
+    // ⇒ 判準改成**問它是不是那兩顆**，⛔ 不是問它叫什麼開頭。
+    //   ⚠️ 一個用命名前綴當身分的判準，會在**下一種命名**出現時安靜地誤判一整批。
+    if (SKELETON_FALLBACK_IDS.has(id)) {
       mk({
         reachable: false,
         reachability: "骨架替身",
         pickable: false,
-        why: "不是 godie- 文件；main.tsx 內容載入失敗時註冊的骨架，不在任何白名單",
+        why: "main.tsx 內容載入失敗時註冊的骨架替身，不在任何白名單",
       });
       continue;
     }
