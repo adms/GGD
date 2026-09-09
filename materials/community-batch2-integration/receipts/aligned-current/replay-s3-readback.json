@@ -1,0 +1,14 @@
+{
+  "schema": "ggd-batch-resource-readback@1",
+  "manifestSha256": "64e8f0ac62194daab289bbbfae16c7076c344fbe0fd64797531916e9db450c7e",
+  "verifiedFiles": 1,
+  "files": [
+    {
+      "path": "ggd-batch2-live-match-02/replays/m_01M235Q6BHMA3367DNSAKQBF1W.jsonl.gz",
+      "bytes": 35709,
+      "sha256": "43611dfc1d00b8905e8d12706ba527b3477395f8fa40af0cd53cdaf0fa97a8ac",
+      "mode": 420
+    }
+  ],
+  "source": "Fresh S3 download; complete compressed recording hash verified."
+}

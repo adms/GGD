@@ -1,0 +1,66 @@
+{
+  "schema": "ggd-batch2-current-acceptance@1",
+  "status": "passed",
+  "target": {
+    "gameRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+    "contentVersion": "cv_d3b33838b6cc",
+    "migrationFingerprint": "17d1f388d5c0",
+    "processorFingerprint": "adf109dc5ba1"
+  },
+  "localPublishedHeroes": 37,
+  "versionPins": 37,
+  "controlledHeroes": [
+    {
+      "accountId": "01M22KB9WZHV661WRKPG0HT8H4",
+      "championId": "b2-maomao"
+    },
+    {
+      "accountId": "01M22KB9YVJDHGDQ19EFEB6HMJ",
+      "championId": "b2-kisaragi"
+    }
+  ],
+  "fullMatchSettled": true,
+  "recordedReplayCheckpoints": 987,
+  "replayDivergences": [],
+  "scriptSha256": {
+    "tools/community-hero-forge/published-game-proof.mts": "979b4ff6031897431f11673f96f8bbdf761d12eed74e9410fbff2688a8e3394c",
+    "tools/community-hero-forge/published-replay-proof.mts": "4e32684513348cb2fee9c328270c1ebeb158676b62f998de8cd92e09a1a31244",
+    "tools/community-hero-forge/check-batch2-integration.mjs": "3856193898babca1eb6cc081aad9d846d75407e5474c0928f2716e3326a1266d"
+  },
+  "twoBatchRoster": "../../two-batch-handoff.json",
+  "twoBatchHeroes": 74,
+  "twoBatchSlots": 444,
+  "firstBatchRerunThisTurn": false,
+  "productionDeploymentVerified": false,
+  "visualAcceptanceVerified": false,
+  "modelsDeferredByOwner": true,
+  "prePushGates": [
+    {
+      "command": "pnpm skills:check",
+      "exitCode": 1,
+      "seconds": 60.74,
+      "log": "/private/tmp/ggd-batch2-aligned-gates-01/skills-check.log"
+    },
+    {
+      "command": "pnpm editor:accept:release",
+      "exitCode": 0,
+      "seconds": 205.64,
+      "log": "/private/tmp/ggd-batch2-aligned-gates-01/editor-accept-release.log"
+    },
+    {
+      "command": "pnpm coord:check",
+      "exitCode": 0,
+      "seconds": 4.23,
+      "log": "/private/tmp/ggd-batch2-aligned-gates-01/coord-check.log"
+    }
+  ],
+  "finalCoordCheck": {
+    "exitCode": 0,
+    "packets": 27
+  },
+  "independentStaticReview": {
+    "blockingFindings": 0,
+    "scope": "Changed acceptance scripts and nullable modelKey test helper; no services or credentials accessed."
+  },
+  "earlierFailurePreserved": "failed-overlay-mismatch.json"
+}

@@ -64,6 +64,7 @@ const json = async (path: string, token: string | null = null, body?: unknown, h
 type Actor = { account: { id: string }; tokens: { accessToken: string } };
 const lobbySockets: WebSocket[] = [];
 const rooms: Array<{ leave(): Promise<number> }> = [];
+let pendingRoom: { id: string; tokens: string[] } | undefined;
 async function lobby(actor: Actor) {
   const socket = new WebSocket(`ws://127.0.0.1:${platformPort}/api/v1/lobby/ws?token=${encodeURIComponent(actor.tokens.accessToken)}`);
   lobbySockets.push(socket);
@@ -101,12 +102,16 @@ try {
   proof.runtimeRoot = root;
   proof.runtimeHead = execFileSync("git", ["rev-parse", "HEAD"], {cwd:root,encoding:"utf8"}).trim();
   assert.equal(execFileSync("git", ["diff", "--name-only", target.gameRevision, "--", "packages/shared", "apps/game-server", "content"], {cwd:root,encoding:"utf8"}).trim(), "", "Runtime and content must match the pinned service revision");
+  const loaded = await new ContentLoader(new OverlayContentSource(new FsContentSource(resolve(root, "content")), await json("/content-overlay/bundle"))).load({ policy: "fail-closed" });
+  assert.equal(loaded.manifest.contentVersion, target.contentVersion, "Importer and game platform overlay must agree before creating a room");
+  proof.loadedContentVersion = loaded.manifest.contentVersion;
   proof.publications = publications;
   const authorMessages = await lobby(author), reviewerMessages = await lobby(reviewer);
   const created = await json("/rooms", at, { name: "已發布英雄一般對局驗收", mapId: "arena.castle", champSelectSec: 30, intermissionSec: 5,
     ...(fullMatch ? { combatMaxSec: 110, maxRounds: 1 } : {}),
     });
   const roomId = created.room.id; proof.platformRoomId = roomId;
+  pendingRoom = { id: roomId, tokens: [rt, at] };
   await json(`/rooms/${roomId}/join`, rt, {});
   await json(`/rooms/${roomId}/ready`, rt, { ready: true });
   const start = await json(`/rooms/${roomId}/start`, at, {}); proof.matchId = start.matchId; log("room created", start.matchId);
@@ -119,9 +124,6 @@ try {
     assert.equal(endpoint.hostname, "127.0.0.1", "Game endpoint must remain loopback");
     assert.equal(endpoint.protocol, "ws:");
   }
-  const loaded = await new ContentLoader(new OverlayContentSource(new FsContentSource(resolve(root, "content")), await json("/content-overlay/bundle"))).load({ policy: "fail-closed" });
-  assert.equal(loaded.manifest.contentVersion, target.contentVersion, "client proof and published package must use the same merged content");
-  proof.loadedContentVersion = loaded.manifest.contentVersion;
   registerAll(loaded.store); registerSkeletonContent();
   const base = captureCommunityContentBase(loaded.store);
   const archives = new Map<string, Uint8Array>();
@@ -243,6 +245,7 @@ try {
       await new Promise((resolve) => setTimeout(resolve, 250));
     }
     assert(disposed, "Platform must acknowledge settlement and dispose the pending room");
+    pendingRoom = undefined;
     const afterEconomy = await Promise.all([economicState(at), economicState(rt)]);
     for(let i=0;i<2;i++)assert.equal(afterEconomy[i].account.games,beforeEconomy![i].account.games+1,"Published heroes use ordinary match settlement");
     proof.completeMatch = { hostSettings: { combatMaxSec: 110, maxRounds: 1 },
@@ -260,5 +263,14 @@ try {
 } finally {
   for (const room of rooms) await room.leave().catch(() => {});
   for (const socket of lobbySockets) socket.close();
+  if (pendingRoom) {
+    proof.roomCleanup = await Promise.all(pendingRoom.tokens.map(async (token) => {
+      try {
+        const res = await fetch(`${platform}/rooms/${pendingRoom!.id}/leave`, { method: "POST", headers: { authorization: `Bearer ${token}` }, signal: AbortSignal.timeout(10000) });
+        return { status: res.status };
+      } catch { return { status: "unavailable" }; }
+    }));
+    save();
+  }
   console.log(`Evidence: ${report}`);
 }

@@ -1,0 +1,24 @@
+{
+  "schema": "ggd-scoped-ci-repair@1",
+  "ciRun": "https://github.com/adms/GGD/actions/runs/34350665317",
+  "failure": "TS2345: meshOf required modelKey?: string while IdentityChampion permits null.",
+  "change": "Reuse Pick<IdentityChampion, \"modelKey\">; runtime helper already resolves null with ?? \"\".",
+  "implementation": "packages/shared/src/content/championIdentity.test.ts",
+  "runtimeBehaviorChanged": false,
+  "checks": [
+    {
+      "command": "pnpm --filter @ggd/shared typecheck",
+      "exitCode": 0,
+      "log": "shared-typecheck.log"
+    },
+    {
+      "command": "pnpm exec vitest run packages/shared/src/content/championIdentity.test.ts",
+      "exitCode": 0,
+      "tests": 14,
+      "log": "champion-identity-test.log"
+    }
+  ],
+  "trackingIssue": 1150,
+  "newIssueCreated": false,
+  "reason": "Existing integration ticket; immediately repairable one-line CI failure."
+}

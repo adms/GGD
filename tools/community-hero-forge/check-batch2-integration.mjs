@@ -10,6 +10,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const base = resolve(root, 'materials/community-batch2-integration');
 const { values } = parseArgs({ options: {
   'service-proof': { type: 'string' }, 'publication-proof': { type: 'string' },
+  'game-proof': { type: 'string' }, 'replay-proof': { type: 'string' },
 } });
 const read = p => JSON.parse(readFileSync(p, 'utf8'));
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -29,7 +30,7 @@ for (const h of lock.heroes) {
   assert.equal(p.presentation.modelKey, h.modelKey);
   assert.deepEqual(Object.keys(p.acceptedPlan.slots).sort(), ['E', 'EX', 'PASSIVE', 'Q', 'R', 'W']);
 }
-let service;
+let service, publication, game;
 if (values['service-proof']) {
   service = read(resolve(root, values['service-proof']));
   assert.equal(service.schema, 'ggd-handoff-service-proof@1');
@@ -51,6 +52,7 @@ if (values['service-proof']) {
 if (values['publication-proof']) {
   assert(service, 'Publication receipts require their matching service proof.');
   const p = read(resolve(root, values['publication-proof']));
+  publication = p;
   assert.equal(p.schema, 'ggd-handoff-publication-proof@1');
   assert.equal(p.status, 'passed'); assert.equal(p.passed, 37); assert.equal(p.results.length, 37);
   assert.equal(new Set(p.results.map(r => r.workId)).size, 37);
@@ -66,6 +68,49 @@ if (values['publication-proof']) {
     assert(r.submissionId && r.versionId && r.publicationRevision > 0);
   }
 }
+if (values['game-proof']) {
+  assert(publication, 'Game receipts require the matching publication receipt.');
+  game = read(resolve(root, values['game-proof']));
+  assert.equal(game.schema, 'ggd-community-socket-proof@1');
+  assert.equal(game.status, 'passed');
+  assert.equal(game.platform, publication.origin);
+  assert.deepEqual(game.target, service.target);
+  assert.equal(game.loadedContentVersion, service.target.contentVersion);
+  assert.equal(game.roomContent.heroes.length, 37);
+  for (const row of publication.results) {
+    const pin = game.roomContent.heroes.find(h => h.workId === row.workId);
+    assert(pin);
+    for (const key of ['submissionId', 'packageDigest']) assert.equal(pin[key], row[key]);
+  }
+  assert.equal(game.selectedSeats.length, 2);
+  assert.equal(new Set(game.selectedSeats.map(s => s.accountId)).size, 2);
+  for (const seat of game.selectedSeats) assert(lock.heroes.some(h => h.id === seat.championId));
+  assert.equal(game.reconnection.passed, true);
+  assert.equal(game.reconnection.manifestDigest, game.roomContent.digest);
+  assert.equal(game.completeMatch.phase, 'matchEnd');
+  assert.equal(game.completeMatch.platformRoomDisposed, true);
+  const { beforeEconomy, afterEconomy } = game.completeMatch;
+  assert.equal(beforeEconomy.length, 2); assert.equal(afterEconomy.length, 2);
+  for (const before of beforeEconomy) {
+    const after = afterEconomy.find(e => e.account.id === before.account.id);
+    assert(after); assert.equal(after.account.games, before.account.games + 1);
+  }
+}
+if (values['replay-proof']) {
+  assert(game, 'Replay receipts require their successful complete match.');
+  const replay = read(resolve(root, values['replay-proof']));
+  assert.equal(replay.schema, 'ggd-community-replay-proof@1');
+  assert.equal(replay.status, 'passed'); assert.equal(replay.matchId, game.matchId);
+  assert.equal(replay.recordedDigest, game.roomContent.digest);
+  assert.equal(replay.compatibility.compatible, true);
+  assert.deepEqual(replay.refusals, []); assert.deepEqual(replay.divergences, []);
+  assert.deepEqual(replay.selectedSeats, game.selectedSeats);
+  assert.equal(replay.recordedEnd.footer.faultCount, 0);
+  assert.equal(replay.recordedEnd.checkpointCount, replay.recordedEnd.footer.finalTick + 1);
+  assert.equal(replay.lastStatus.tick, replay.recordedEnd.footer.finalTick + 1);
+}
 console.log(JSON.stringify({ heroes: 37, slots: 222, sourceFilesUnchanged: true,
   serviceReceipts: service ? 37 : 0, localPublicationReceipts: values['publication-proof'] ? 37 : 0,
+  matchedRoomPublicationPins: game ? 37 : 0, liveSelectedHeroes: game?.selectedSeats.length ?? 0,
+  fullMatchSettlementVerified: Boolean(game), recordedReplayVerified: Boolean(values['replay-proof']),
   productionDeploymentVerified: false, modelReplacementDeferred: true }));

@@ -35,6 +35,21 @@
         "materials/community-batch2-integration/receipts/s3-readback.json",
         "materials/community-batch2-integration/s3/s3-location.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "第二批依遊戲平台overlay重建37份並發布新版，普通房間固定全部37個版本；兩名測試玩家完成W施法、斷線重連與正常結算，固定回放檢查到錄影結尾。這條命令核對收據關係，不重跑遊戲，亦不宣稱74名全技能或畫面驗收。",
+      "repro": {
+        "command": "node tools/community-hero-forge/check-batch2-integration.mjs --service-proof materials/community-batch2-integration/receipts/aligned-current/service-proof.json --publication-proof materials/community-batch2-integration/receipts/aligned-current/publication-proof.json --game-proof materials/community-batch2-integration/receipts/aligned-current/current-match.json --replay-proof materials/community-batch2-integration/receipts/aligned-current/current-replay.json",
+        "expectedExit": 0
+      },
+      "commit": "27486675b84085dbbd3997419aa0ad37cf90fd55",
+      "evidence": [
+        "materials/community-batch2-integration/receipts/aligned-current/overlay-alignment.json",
+        "materials/community-batch2-integration/receipts/aligned-current/current-match.json",
+        "materials/community-batch2-integration/receipts/aligned-current/current-replay.json",
+        "materials/community-batch2-integration/two-batch-handoff.json"
+      ]
     }
   ],
   "ownerQuotes": [
@@ -49,6 +64,7 @@
     "正式部署必須核對當下target並重建ZIP；內建模型包約3MB，正式投稿政策maxBytes須至少涵蓋此大小（隔離驗收使用既有合法4MiB設定）。此PR未修改正式政策或啟用正式投稿。",
     "本分支已無衝突合入main 1fdc84e4d；daily/release及board/legacy產生器與該版一致，仍缺版控中的docs/_daily/2026-09-09.md。Main本機來源已定位但尚未提交，請沿既有生成來源流程補齊；不要以重生刪掉Owner紀錄。證據：materials/community-batch2-integration/receipts/merged-main.json 與既有 baseline-board-gap.json。",
     "完整skills檢查亦量到iconplan:check產物過期，並提示clean worktree缺data/curation/whitelist.json。本批未偽造白名單或修改正式資料，請Main提供既有驗證環境；保留Draft待CI與正式整合。",
-    "Editor release已通過592項測試、型別檢查及production build；coord通過。完整log與三項exit code：materials/community-batch2-integration/receipts/checks/。skills未全部通過，保留Draft，不跳過CI合併。"
+    "Editor release已通過592項測試、型別檢查及production build；coord通過。完整log與三項exit code：materials/community-batch2-integration/receipts/checks/。skills未全部通過，保留Draft，不跳過CI合併。",
+    "本輪新增兩批74名/444槽總表，第一批PR#1135與第二批本PR均保留原始材料與版本。第二批新版已對齊8099實際overlay，補上普通對局/結算/回放收據；Main整合部署時仍須按正式target重建。另修復合入main後CI的IdentityChampion nullable modelKey測試helper型別，shared typecheck與14項定向測試通過。"
   ]
 }
