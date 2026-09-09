@@ -1,0 +1,191 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "Q",
+      "name": "電擊之槍",
+      "purpose": "【本次玩法】御坂踢販賣機：交替電擊充電，連鎖後才掉出治療飲料\n【修正行為】單一直線傷害，線內每位敵人一次。基礎長 6、寬 0.8 GGD 單位；過載每層增加長 0.5、寬 0.4，消耗全部已準備強化，實際使用時提示結果。",
+      "maxRank": 4,
+      "abilityOverrides": {
+        "castTimeTier": "小",
+        "cooldownTier": "小",
+        "manaCostTier": "小",
+        "provenance": "editor-json",
+        "rangeTier": "中"
+      },
+      "products": [
+        {
+          "instanceId": "q-electric-effect",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "subject": "self",
+                  "statusId": "community-review-20-20260907.overload",
+                  "count": 3,
+                  "onConsumed": [
+                    {
+                      "kind": "damageLine",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "小",
+                        "ratios": []
+                      },
+                      "length": 7.5,
+                      "width": 2,
+                      "aim": "facing",
+                      "fromCaster": true,
+                      "includeOrigin": true,
+                      "maxTargets": 12
+                    },
+                    {
+                      "kind": "floatingText",
+                      "shape": "single",
+                      "text": "強化電擊：長 7.5／寬 2",
+                      "applyTo": "self",
+                      "durationSec": 1.5,
+                      "colorRgb": [
+                        180,
+                        225,
+                        255
+                      ]
+                    }
+                  ],
+                  "onMissing": [
+                    {
+                      "kind": "consumeStatus",
+                      "shape": "single",
+                      "subject": "self",
+                      "statusId": "community-review-20-20260907.overload",
+                      "count": 2,
+                      "onConsumed": [
+                        {
+                          "kind": "damageLine",
+                          "damageType": "magic",
+                          "amount": {
+                            "damageTier": "小",
+                            "ratios": []
+                          },
+                          "length": 7,
+                          "width": 1.6,
+                          "aim": "facing",
+                          "fromCaster": true,
+                          "includeOrigin": true,
+                          "maxTargets": 12
+                        },
+                        {
+                          "kind": "floatingText",
+                          "shape": "single",
+                          "text": "強化電擊：長 7／寬 1.6",
+                          "applyTo": "self",
+                          "durationSec": 1.5,
+                          "colorRgb": [
+                            180,
+                            225,
+                            255
+                          ]
+                        }
+                      ],
+                      "onMissing": [
+                        {
+                          "kind": "consumeStatus",
+                          "shape": "single",
+                          "subject": "self",
+                          "statusId": "community-review-20-20260907.overload",
+                          "count": 1,
+                          "onConsumed": [
+                            {
+                              "kind": "damageLine",
+                              "damageType": "magic",
+                              "amount": {
+                                "damageTier": "小",
+                                "ratios": []
+                              },
+                              "length": 6.5,
+                              "width": 1.2,
+                              "aim": "facing",
+                              "fromCaster": true,
+                              "includeOrigin": true,
+                              "maxTargets": 12
+                            },
+                            {
+                              "kind": "floatingText",
+                              "shape": "single",
+                              "text": "強化電擊：長 6.5／寬 1.2",
+                              "applyTo": "self",
+                              "durationSec": 1.5,
+                              "colorRgb": [
+                                180,
+                                225,
+                                255
+                              ]
+                            }
+                          ],
+                          "onMissing": [
+                            {
+                              "kind": "damageLine",
+                              "damageType": "magic",
+                              "amount": {
+                                "damageTier": "小",
+                                "ratios": []
+                              },
+                              "length": 6,
+                              "width": 0.8,
+                              "aim": "facing",
+                              "fromCaster": true,
+                              "includeOrigin": true,
+                              "maxTargets": 12
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 10,
+        "manaCost": 40,
+        "range": 6
+      },
+      "capabilityIds": [
+        "projectile"
+      ],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/sela.q.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast",
+          "replaces": "caster.action"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-20-20260907:HERO",
+    "wholeTargetSha256": "41a2ce14779f899cc756ea8ac66793c383a37a71fd9ac371d7845d44b9c5503c",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

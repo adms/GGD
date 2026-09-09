@@ -1,0 +1,61 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "PASSIVE",
+      "name": "這個痛我記住了",
+      "purpose": "「這個痛我記住了！」\n受到傷害後取得 berserk 適應暫態 4 秒，內置冷卻 2 秒；不會憑空復活。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
+      "maxRank": 1,
+      "abilityOverrides": {
+        "provenance": "editor-json"
+      },
+      "products": [
+        {
+          "instanceId": "b2-fushi.passive.card1",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onDamageTaken",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "berserk",
+                      "duration": 4,
+                      "applyTo": "self"
+                    }
+                  ],
+                  "internalCooldown": 2,
+                  "target": "self"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 0,
+        "manaCost": 0,
+        "range": 0
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": null,
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": []
+    }
+  },
+  "context": {
+    "wholeCaseId": "b2-fushi:HERO",
+    "wholeTargetSha256": "1eed21957c99c1f1611c1ea93a2c505f87d46cb12fb5c17d3ba5a23b79ac7798",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "W",
+      "name": "把破掉的地方長回來",
+      "purpose": "「把破掉的地方長回來！」\n消耗 berserk 適應暫態回復自身 220 生命；沒有實際受擊留下的暫態就不回復。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
+      "maxRank": 4,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "manaCostTier": "小"
+      },
+      "products": [
+        {
+          "instanceId": "b2-fushi.w.card1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "effects": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "statusId": "berserk",
+                  "count": "all",
+                  "subject": "self",
+                  "onConsumed": [
+                    {
+                      "kind": "heal",
+                      "amount": {
+                        "flat": 220
+                      },
+                      "applyTo": "self"
+                    }
+                  ]
+                }
+              ],
+              "castType": "self",
+              "side": "enemies",
+              "castTimeSec": 0.1,
+              "radius": 3
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 45,
+        "manaCost": 144,
+        "range": 6
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": null,
+      "sfxKey": null,
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.wind.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "b2-fushi:HERO",
+    "wholeTargetSha256": "1eed21957c99c1f1611c1ea93a2c505f87d46cb12fb5c17d3ba5a23b79ac7798",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

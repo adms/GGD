@@ -1,0 +1,80 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "R",
+      "name": "墜落天空",
+      "purpose": "【核准惡搞改編】0.8秒可中斷的魔法簡報，中級魔法傷害加0.8AP；趁會議加成放，敵人可控制打斷。",
+      "maxRank": 3,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          30
+        ],
+        "manaCost": [
+          60
+        ]
+      },
+      "products": [
+        {
+          "instanceId": "r-parody-1",
+          "template": {
+            "ref": "tpl-line-strike",
+            "params": {
+              "damage": {
+                "damageTier": "中",
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.8
+                  }
+                ]
+              },
+              "damageType": "magic",
+              "length": 9,
+              "width": 1.5,
+              "aim": "target",
+              "castTimeSec": 0.8
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 60,
+        "manaCost": 100,
+        "range": 6
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/sela.r.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "target",
+          "vfxId": "fx.prim.arcane.bolt"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-17-20260907:HERO",
+    "wholeTargetSha256": "6cd3c403d830e4f37b00583f548fa8caf2bd9c84c8d38d30e87004c295494d71",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

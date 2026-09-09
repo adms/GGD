@@ -1,0 +1,87 @@
+{
+  "id": "godie-h02v.ex",
+  "name": "92-002 最終戈壁",
+  "provenance": "owner-spec",
+  "description": "[被動][週期][回復][範圍][AP加成]\n\n「草泥馬戈壁，傷而扶壁曲」\n當 [馬勒戈壁] 施展期間，每秒對[周圍][範圍]友方單位 [回復] 10%[最大魔力]、也對 [周圍][範圍]敵人單位造成 2%[最大生命] + {{ap}}% [AP] 傷害，持續 6秒。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0,
+  "targetsEnemies": false,
+  "effects": [],
+  "passive": {
+    "name": "92-002 最終戈壁",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onAbilityCast",
+            "abilitySlot": "R",
+            "effects": [
+              {
+                "kind": "delayed",
+                "shape": "single",
+                "delaySec": 1,
+                "count": 6,
+                "intervalSec": 1,
+                "effects": [
+                  {
+                    "kind": "damageArea",
+                    "damageType": "magic",
+                    "amount": {
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 1
+                        }
+                      ]
+                    },
+                    "radius": 8,
+                    "radiusTier": "大",
+                    "resourcePct": {
+                      "subject": "target",
+                      "resource": "health",
+                      "basis": "max",
+                      "perRank": [
+                        0.02
+                      ]
+                    }
+                  },
+                  {
+                    "kind": "weightedBranch",
+                    "shape": "circle",
+                    "radius": 8,
+                    "radiusTier": "大",
+                    "side": "allies",
+                    "maxTargets": 24,
+                    "branches": [
+                      {
+                        "weight": 1,
+                        "effects": [
+                          {
+                            "kind": "restore",
+                            "manaPct": 0.1
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "target": "self"
+          }
+        ]
+      }
+    ]
+  },
+  "vfxKey": "fx.prim.nature.pulse-lg",
+  "icon": "assets/icons/abilities/godie-h02v.ex.webp",
+  "schema": "ability@1"
+}

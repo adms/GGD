@@ -1,0 +1,84 @@
+{
+  "id": "community-review-26-20260907.q",
+  "name": "足球射擊",
+  "provenance": "editor-json",
+  "description": "【本次玩法】柯南原地推理：觀察對方真實行為取證，說真相時自己站住\n【修正行為】沿瞄準方向發射單枚實體彈，射程12、首個合法敵方碰撞一次物理傷害；偏離可閃避，到射程消失。暫用既有 bolt 的模型／特效，足球與踢球專用演出仍待替換及畫面驗收。",
+  "slot": "Q",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 12,
+  "cooldownTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.bolt.arcane",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [],
+            "flat": 500,
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/thorne.q.webp",
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "castType": "skillshot",
+      "castTimeSec": 0.1,
+      "radius": 0,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.bolt.arcane",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "ratios": [],
+                "flat": 500,
+                "perRank": [
+                  0,
+                  250,
+                  500,
+                  750
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

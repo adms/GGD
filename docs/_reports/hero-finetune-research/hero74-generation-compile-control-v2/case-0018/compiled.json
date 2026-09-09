@@ -1,0 +1,109 @@
+{
+  "id": "community-review-09-20260907.e",
+  "name": "〔麥穗庇護〕",
+  "provenance": "editor-json",
+  "description": "【核准惡搞改編】理賠審核：隊友得到120護盾；自己生命低於50%時再追加240治療。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    10
+  ],
+  "manaCost": [
+    40
+  ],
+  "range": 6,
+  "radius": 3,
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 120,
+        "perRank": [
+          0,
+          60,
+          120,
+          180
+        ]
+      },
+      "duration": 3,
+      "absorbs": "all",
+      "stackKey": "community-review-09-20260907.protection",
+      "onExisting": "keepLarger"
+    },
+    {
+      "kind": "heal",
+      "condition": {
+        "kind": "stat",
+        "subject": "self",
+        "stat": "hp",
+        "mode": "percent",
+        "op": "<",
+        "value": 0.5
+      },
+      "amount": {
+        "flat": 240,
+        "perRank": [
+          0,
+          120,
+          240,
+          360
+        ]
+      },
+      "applyTo": "target"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/sela.e.webp",
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "castType": "targeted",
+      "castTimeSec": 0.1,
+      "radius": 3,
+      "side": "allies",
+      "effects": [
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 120,
+            "perRank": [
+              0,
+              60,
+              120,
+              180
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "community-review-09-20260907.protection",
+          "onExisting": "keepLarger"
+        },
+        {
+          "kind": "heal",
+          "amount": {
+            "flat": 240,
+            "perRank": [
+              0,
+              120,
+              240,
+              360
+            ]
+          },
+          "applyTo": "target",
+          "condition": {
+            "kind": "stat",
+            "subject": "self",
+            "stat": "hp",
+            "mode": "percent",
+            "op": "<",
+            "value": 0.5
+          }
+        }
+      ]
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

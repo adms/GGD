@@ -1,0 +1,86 @@
+{
+  "id": "community-review-28-20260907.r",
+  "name": "光之太刀",
+  "provenance": "editor-json",
+  "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n0.55 秒可被打斷的明確起手後，沿輸入方向最多八格高速直線衝刺（速度仍依 GGD 位移上限換算，當下為每秒十六格），第一個合法敵方身體接觸點停止並單次結算大級距傷害；地形優先，空放或只撞牆不產生命中傷害。光之太刀專用細亮線與動作仍待畫面驗收。",
+  "slot": "R",
+  "castType": "skillshot",
+  "maxRank": 3,
+  "cooldown": [
+    15,
+    15,
+    15,
+    15
+  ],
+  "manaCost": [
+    95,
+    95,
+    95,
+    95
+  ],
+  "range": 8,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "dash",
+      "mode": "forward",
+      "stopOnHit": "enemy",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "大",
+            "ratios": [],
+            "flat": 1500,
+            "perRank": [
+              0,
+              750,
+              1500
+            ]
+          }
+        }
+      ],
+      "speed": 16,
+      "maxDistance": 8
+    }
+  ],
+  "castTimeSec": 0.55,
+  "icon": "assets/icons/abilities/thorne.r.webp",
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "castType": "skillshot",
+      "castTimeSec": 0.55,
+      "radius": 0,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "forward",
+          "speed": 16,
+          "maxDistance": 8,
+          "stopOnHit": "enemy",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "大",
+                "ratios": [],
+                "flat": 1500,
+                "perRank": [
+                  0,
+                  750,
+                  1500
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

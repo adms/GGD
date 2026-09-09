@@ -1,0 +1,64 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "PASSIVE",
+      "name": "〔紅寶石的支援〕",
+      "purpose": "【核准惡搞改編】施放EX準備卸妝時回復5%魔力，每三秒一次；並非普攻免費附傷。",
+      "maxRank": 1,
+      "abilityOverrides": {
+        "provenance": "editor-json"
+      },
+      "products": [
+        {
+          "instanceId": "passive-parody-1",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onAbilityCast",
+                  "effects": [
+                    {
+                      "kind": "restore",
+                      "manaPct": 0.05,
+                      "applyTo": "self"
+                    }
+                  ],
+                  "internalCooldown": 3,
+                  "target": "self",
+                  "abilitySlot": "EX"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 0,
+        "manaCost": 0,
+        "range": 0
+      },
+      "capabilityIds": [
+        "hooks",
+        "conditions"
+      ],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/sela.q.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": []
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-16-20260907:HERO",
+    "wholeTargetSha256": "e56268510993043feb1fa31ab5a52c266b3c999fc169cff1a91eeb9b72bbd722",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

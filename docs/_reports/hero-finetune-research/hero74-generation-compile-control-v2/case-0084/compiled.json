@@ -1,0 +1,1281 @@
+{
+  "champion": {
+    "id": "community-review-36-20260907",
+    "name": "鬼畜王蘭斯",
+    "description": "鬼畜王蘭斯 社群英雄功能驗收稿。作品：《鬼畜王蘭斯／Rance》  \n角色實體：蘭斯；與鬼眼狂刀 KYO 無關。  \n定位：近戰爆發、有限成長、隊伍衝鋒。\n\n視覺方向：綠色勇猛光、厚重白斬、漫畫喊招；不導入成人情節或其他人的招式。\n以 GGD 狂戰 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "role": "fighter",
+    "attackType": "melee",
+    "archetype": "fighter",
+    "origin": "狂戰",
+    "modelKey": "community.body.e69a0c8e9b49032709aa22dbf1ab17597d1cb145e849a8c4",
+    "baseStats": {
+      "maxHealth": 541,
+      "healthRegen": 0.97,
+      "maxMana": 370,
+      "manaRegen": 1.41,
+      "ad": 32,
+      "ap": 18,
+      "as": 0.7,
+      "range": 1.4,
+      "critChance": 0,
+      "critDamage": 1.75,
+      "cdr": 0,
+      "lifesteal": 0,
+      "ms": 8,
+      "armor": 0,
+      "mr": 0
+    },
+    "growth": {
+      "maxHealth": 38.2761224489796,
+      "healthRegen": 0.10039591836734693,
+      "maxMana": 17.385714285714286,
+      "manaRegen": 0,
+      "ad": 3.9845714285714284,
+      "as": 0,
+      "mr": 2.1118367346938776,
+      "armor": 0.5585816326530613,
+      "ap": 0
+    },
+    "attributes": {
+      "str": 25,
+      "agi": 23,
+      "int": 12,
+      "strGrowth": 2.36,
+      "agiGrowth": 2.17,
+      "intGrowth": 1.18,
+      "primary": "STR",
+      "source": "authored"
+    },
+    "abilities": {
+      "Q": {
+        "id": "community-review-36-20260907.q",
+        "name": "〔蠻力斬擊〕",
+        "provenance": "editor-json",
+        "description": "【核准惡搞改編】粗魯一刀小級物理傷害；三秒內用過W，再多極小物理傷害。",
+        "slot": "Q",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ],
+        "range": 6,
+        "radius": 3,
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "physical",
+            "amount": {
+              "damageTier": "小",
+              "flat": 500,
+              "perRank": [
+                0,
+                250,
+                500,
+                750
+              ]
+            }
+          },
+          {
+            "kind": "damage",
+            "condition": {
+              "kind": "recentCast",
+              "subject": "self",
+              "slot": "W",
+              "withinSec": 3
+            },
+            "damageType": "physical",
+            "amount": {
+              "damageTier": "極小",
+              "flat": 200,
+              "perRank": [
+                0,
+                100,
+                200,
+                300
+              ]
+            }
+          }
+        ],
+        "castTimeSec": 0.1,
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "template": {
+          "cards": [
+            {
+              "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+              "params": {
+                "damage": {
+                  "damageTier": "小",
+                  "flat": 500,
+                  "perRank": [
+                    0,
+                    250,
+                    500,
+                    750
+                  ]
+                },
+                "damageType": "physical",
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
+            },
+            {
+              "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+              "params": {
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "極小",
+                      "flat": 200,
+                      "perRank": [
+                        0,
+                        100,
+                        200,
+                        300
+                      ]
+                    },
+                    "condition": {
+                      "kind": "recentCast",
+                      "subject": "self",
+                      "slot": "W",
+                      "withinSec": 3
+                    }
+                  }
+                ]
+              },
+              "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+            }
+          ],
+          "onConflict": "reject"
+        }
+      },
+      "W": {
+        "id": "community-review-36-20260907.w",
+        "name": "〔本大爺還沒認真〕",
+        "provenance": "editor-json",
+        "description": "【核准惡搞改編】嘴砲搶仇恨：三格內敵人嘲諷自己1.2秒，取得180護盾；依GGD規則優先自動索敵。",
+        "slot": "W",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ],
+        "range": 6,
+        "radius": 3,
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "taunt",
+            "durationSec": 1.2,
+            "radius": 3,
+            "maxTargets": 6
+          },
+          {
+            "kind": "shield",
+            "amount": {
+              "flat": 180,
+              "perRank": [
+                0,
+                90,
+                180,
+                270
+              ]
+            },
+            "duration": 2,
+            "absorbs": "all",
+            "stackKey": "community-review-36-20260907.protection",
+            "onExisting": "keepLarger"
+          },
+          {
+            "kind": "floatingText",
+            "shape": "single",
+            "text": "有種都衝我來！",
+            "durationSec": 1,
+            "applyTo": "self"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "template": {
+          "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+          "params": {
+            "castType": "self",
+            "castTimeSec": 0.1,
+            "radius": 3,
+            "side": "enemies",
+            "effects": [
+              {
+                "kind": "taunt",
+                "radius": 3,
+                "durationSec": 1.2,
+                "maxTargets": 6
+              },
+              {
+                "kind": "shield",
+                "amount": {
+                  "flat": 180,
+                  "perRank": [
+                    0,
+                    90,
+                    180,
+                    270
+                  ]
+                },
+                "duration": 2,
+                "absorbs": "all",
+                "stackKey": "community-review-36-20260907.protection",
+                "onExisting": "keepLarger"
+              },
+              {
+                "kind": "floatingText",
+                "shape": "single",
+                "text": "有種都衝我來！",
+                "applyTo": "self",
+                "durationSec": 1
+              }
+            ]
+          },
+          "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+        }
+      },
+      "E": {
+        "id": "community-review-36-20260907.e",
+        "name": "〔霸王突進〕",
+        "provenance": "editor-json",
+        "description": "【核准惡搞改編】勇者先衝：貼地前進三格，敵人仍可用地形攔截。",
+        "slot": "E",
+        "castType": "skillshot",
+        "maxRank": 4,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ],
+        "range": 6,
+        "radius": 3,
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "dash",
+            "mode": "forward",
+            "speed": 8,
+            "maxDistance": 3
+          }
+        ],
+        "castTimeSec": 0.1,
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "template": {
+          "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+          "params": {
+            "castType": "skillshot",
+            "castTimeSec": 0.1,
+            "radius": 3,
+            "side": "enemies",
+            "effects": [
+              {
+                "kind": "dash",
+                "mode": "forward",
+                "speed": 8,
+                "maxDistance": 3
+              }
+            ]
+          },
+          "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+        }
+      },
+      "R": {
+        "id": "community-review-36-20260907.r",
+        "name": "Rance Attack／蘭斯攻擊",
+        "provenance": "editor-json",
+        "description": "【核准惡搞改編】隊友先走：指定隊友移速+40%三秒；四秒內用過W再給240護盾。",
+        "slot": "R",
+        "castType": "targeted",
+        "maxRank": 3,
+        "cooldown": [
+          30
+        ],
+        "manaCost": [
+          60
+        ],
+        "range": 6,
+        "radius": 3,
+        "targetsEnemies": false,
+        "effects": [
+          {
+            "kind": "applyStatus",
+            "sourceScope": "caster",
+            "statusId": "rage",
+            "duration": 3,
+            "applyTo": "target",
+            "moveSpeedMult": 1.4
+          },
+          {
+            "kind": "shield",
+            "condition": {
+              "kind": "recentCast",
+              "subject": "self",
+              "slot": "W",
+              "withinSec": 4
+            },
+            "amount": {
+              "flat": 240,
+              "perRank": [
+                0,
+                120,
+                240
+              ]
+            },
+            "duration": 3,
+            "absorbs": "all",
+            "stackKey": "community-review-36-20260907.protection",
+            "onExisting": "keepLarger"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "template": {
+          "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+          "params": {
+            "castType": "targeted",
+            "castTimeSec": 0.1,
+            "radius": 3,
+            "side": "allies",
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "rage",
+                "duration": 3,
+                "applyTo": "target",
+                "sourceScope": "caster",
+                "moveSpeedMult": 1.4
+              },
+              {
+                "kind": "shield",
+                "amount": {
+                  "flat": 240,
+                  "perRank": [
+                    0,
+                    120,
+                    240
+                  ]
+                },
+                "duration": 3,
+                "absorbs": "all",
+                "stackKey": "community-review-36-20260907.protection",
+                "onExisting": "keepLarger",
+                "condition": {
+                  "kind": "recentCast",
+                  "subject": "self",
+                  "slot": "W",
+                  "withinSec": 4
+                }
+              }
+            ]
+          },
+          "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+        }
+      }
+    },
+    "exAbility": "community-review-36-20260907.ex",
+    "passiveAbility": "community-review-36-20260907.passive",
+    "icon": "assets/icons/champions/thorne.webp",
+    "skillOrder": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ],
+    "buildPriority": [],
+    "tags": [],
+    "schema": "champion@1"
+  },
+  "relatedChampions": [],
+  "templateInstances": [
+    {
+      "id": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+      "schema": "template@1",
+      "name": "單體斬擊",
+      "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。 另外兩格選填：`invulnerableSec` 是**起手的無敵幀**（護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`dot` 是**施法者自己**背上的持續傷害（界王拳那一族的代價；打在敵人身上的同型傷害請用「吸血／汲取」那一族）。三格全部清空 ⇒ 就是一發純傷害。",
+      "family": "single-strike",
+      "status": "enabled",
+      "params": {
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              350
+            ],
+            "ratios": []
+          }
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ]
+        },
+        "invulnerableSec": {
+          "type": "number",
+          "min": 0.05,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        },
+        "dot": {
+          "type": "dot",
+          "optional": true
+        },
+        "status": {
+          "type": "applyStatus",
+          "optional": true
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        }
+      },
+      "requires": [
+        "applyStatus",
+        "invulnerable",
+        "periodicDamage"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "23-04 雷焰聖劍",
+        "jass": "A0OD"
+      }
+    },
+    {
+      "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+      "schema": "template@1",
+      "name": "自訂事件被動",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+      "family": "event-passive",
+      "status": "enabled",
+      "params": {
+        "hooks": {
+          "type": "hooks",
+          "default": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      },
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      }
+    },
+    {
+      "id": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+      "schema": "template@1",
+      "name": "自訂效果序列",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "family": "effect-sequence",
+      "status": "enabled",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 10,
+          "unit": "s",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "min": 0,
+          "max": 40,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "values": [
+            "enemies",
+            "allies"
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "recast": {
+          "type": "recast",
+          "optional": true,
+          "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+        }
+      },
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      }
+    }
+  ],
+  "abilityDrafts": {
+    "PASSIVE": {
+      "id": "community-review-36-20260907.passive",
+      "name": "〔自信過剩〕",
+      "provenance": "editor-json",
+      "description": "【核准惡搞改編】自己受傷時，三秒內用過W才回復80生命，每兩秒一次；嘴砲前被打沒有安慰獎。",
+      "slot": "PASSIVE",
+      "innateKind": "passive",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        0
+      ],
+      "manaCost": [
+        0
+      ],
+      "range": 0,
+      "effects": [],
+      "passive": {
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onDamageTaken",
+                "effects": [
+                  {
+                    "kind": "heal",
+                    "condition": {
+                      "kind": "recentCast",
+                      "subject": "self",
+                      "slot": "W",
+                      "withinSec": 3
+                    },
+                    "amount": {
+                      "flat": 80
+                    },
+                    "applyTo": "self"
+                  }
+                ],
+                "internalCooldown": 2,
+                "target": "self"
+              }
+            ]
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "template": {
+        "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "params": {
+          "hooks": [
+            {
+              "on": "onDamageTaken",
+              "effects": [
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 80
+                  },
+                  "applyTo": "self",
+                  "condition": {
+                    "kind": "recentCast",
+                    "subject": "self",
+                    "slot": "W",
+                    "withinSec": 3
+                  }
+                }
+              ],
+              "internalCooldown": 2,
+              "target": "self"
+            }
+          ]
+        },
+        "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+      },
+      "schema": "ability@1"
+    },
+    "Q": {
+      "id": "community-review-36-20260907.q",
+      "name": "〔蠻力斬擊〕",
+      "provenance": "editor-json",
+      "description": "【核准惡搞改編】粗魯一刀小級物理傷害；三秒內用過W，再多極小物理傷害。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        10
+      ],
+      "manaCost": [
+        40
+      ],
+      "range": 6,
+      "radius": 3,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "flat": 500,
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          }
+        },
+        {
+          "kind": "damage",
+          "condition": {
+            "kind": "recentCast",
+            "subject": "self",
+            "slot": "W",
+            "withinSec": 3
+          },
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "極小",
+            "flat": 200,
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          }
+        }
+      ],
+      "castTimeSec": 0.1,
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "template": {
+        "cards": [
+          {
+            "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+            "params": {
+              "damage": {
+                "damageTier": "小",
+                "flat": 500,
+                "perRank": [
+                  0,
+                  250,
+                  500,
+                  750
+                ]
+              },
+              "damageType": "physical",
+              "castTimeSec": 0.1
+            },
+            "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
+          },
+          {
+            "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "極小",
+                    "flat": 200,
+                    "perRank": [
+                      0,
+                      100,
+                      200,
+                      300
+                    ]
+                  },
+                  "condition": {
+                    "kind": "recentCast",
+                    "subject": "self",
+                    "slot": "W",
+                    "withinSec": 3
+                  }
+                }
+              ]
+            },
+            "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+          }
+        ],
+        "onConflict": "reject"
+      },
+      "schema": "ability@1"
+    },
+    "W": {
+      "id": "community-review-36-20260907.w",
+      "name": "〔本大爺還沒認真〕",
+      "provenance": "editor-json",
+      "description": "【核准惡搞改編】嘴砲搶仇恨：三格內敵人嘲諷自己1.2秒，取得180護盾；依GGD規則優先自動索敵。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        10
+      ],
+      "manaCost": [
+        40
+      ],
+      "range": 6,
+      "radius": 3,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "taunt",
+          "durationSec": 1.2,
+          "radius": 3,
+          "maxTargets": 6
+        },
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 180,
+            "perRank": [
+              0,
+              90,
+              180,
+              270
+            ]
+          },
+          "duration": 2,
+          "absorbs": "all",
+          "stackKey": "community-review-36-20260907.protection",
+          "onExisting": "keepLarger"
+        },
+        {
+          "kind": "floatingText",
+          "shape": "single",
+          "text": "有種都衝我來！",
+          "durationSec": 1,
+          "applyTo": "self"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "icon": "assets/icons/abilities/thorne.w.webp",
+      "template": {
+        "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "radius": 3,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "taunt",
+              "radius": 3,
+              "durationSec": 1.2,
+              "maxTargets": 6
+            },
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 180,
+                "perRank": [
+                  0,
+                  90,
+                  180,
+                  270
+                ]
+              },
+              "duration": 2,
+              "absorbs": "all",
+              "stackKey": "community-review-36-20260907.protection",
+              "onExisting": "keepLarger"
+            },
+            {
+              "kind": "floatingText",
+              "shape": "single",
+              "text": "有種都衝我來！",
+              "applyTo": "self",
+              "durationSec": 1
+            }
+          ]
+        },
+        "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+      },
+      "schema": "ability@1"
+    },
+    "E": {
+      "id": "community-review-36-20260907.e",
+      "name": "〔霸王突進〕",
+      "provenance": "editor-json",
+      "description": "【核准惡搞改編】勇者先衝：貼地前進三格，敵人仍可用地形攔截。",
+      "slot": "E",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        10
+      ],
+      "manaCost": [
+        40
+      ],
+      "range": 6,
+      "radius": 3,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "forward",
+          "speed": 8,
+          "maxDistance": 3
+        }
+      ],
+      "castTimeSec": 0.1,
+      "icon": "assets/icons/abilities/thorne.e.webp",
+      "template": {
+        "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+        "params": {
+          "castType": "skillshot",
+          "castTimeSec": 0.1,
+          "radius": 3,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "dash",
+              "mode": "forward",
+              "speed": 8,
+              "maxDistance": 3
+            }
+          ]
+        },
+        "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+      },
+      "schema": "ability@1"
+    },
+    "R": {
+      "id": "community-review-36-20260907.r",
+      "name": "Rance Attack／蘭斯攻擊",
+      "provenance": "editor-json",
+      "description": "【核准惡搞改編】隊友先走：指定隊友移速+40%三秒；四秒內用過W再給240護盾。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        30
+      ],
+      "manaCost": [
+        60
+      ],
+      "range": 6,
+      "radius": 3,
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "sourceScope": "caster",
+          "statusId": "rage",
+          "duration": 3,
+          "applyTo": "target",
+          "moveSpeedMult": 1.4
+        },
+        {
+          "kind": "shield",
+          "condition": {
+            "kind": "recentCast",
+            "subject": "self",
+            "slot": "W",
+            "withinSec": 4
+          },
+          "amount": {
+            "flat": 240,
+            "perRank": [
+              0,
+              120,
+              240
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "community-review-36-20260907.protection",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "icon": "assets/icons/abilities/thorne.r.webp",
+      "template": {
+        "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+        "params": {
+          "castType": "targeted",
+          "castTimeSec": 0.1,
+          "radius": 3,
+          "side": "allies",
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "rage",
+              "duration": 3,
+              "applyTo": "target",
+              "sourceScope": "caster",
+              "moveSpeedMult": 1.4
+            },
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 240,
+                "perRank": [
+                  0,
+                  120,
+                  240
+                ]
+              },
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "community-review-36-20260907.protection",
+              "onExisting": "keepLarger",
+              "condition": {
+                "kind": "recentCast",
+                "subject": "self",
+                "slot": "W",
+                "withinSec": 4
+              }
+            }
+          ]
+        },
+        "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+      },
+      "schema": "ability@1"
+    },
+    "EX": {
+      "id": "community-review-36-20260907.ex",
+      "name": "〔跟著本大爺衝〕",
+      "provenance": "editor-json",
+      "description": "【核准惡搞改編】事後裝沒事：回復160生命，不把自己的嘲諷轉嫁隊友。",
+      "slot": "EX",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        10
+      ],
+      "manaCost": [
+        40
+      ],
+      "range": 6,
+      "radius": 3,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "heal",
+          "amount": {
+            "flat": 160
+          },
+          "applyTo": "self"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "icon": "assets/icons/abilities/thorne.r.webp",
+      "template": {
+        "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "radius": 3,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "heal",
+              "amount": {
+                "flat": 160
+              },
+              "applyTo": "self"
+            }
+          ]
+        },
+        "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+      },
+      "schema": "ability@1"
+    }
+  },
+  "standaloneAbilities": [
+    {
+      "id": "community-review-36-20260907.passive",
+      "name": "〔自信過剩〕",
+      "provenance": "editor-json",
+      "description": "【核准惡搞改編】自己受傷時，三秒內用過W才回復80生命，每兩秒一次；嘴砲前被打沒有安慰獎。",
+      "slot": "PASSIVE",
+      "innateKind": "passive",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        0
+      ],
+      "manaCost": [
+        0
+      ],
+      "range": 0,
+      "effects": [],
+      "passive": {
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onDamageTaken",
+                "effects": [
+                  {
+                    "kind": "heal",
+                    "condition": {
+                      "kind": "recentCast",
+                      "subject": "self",
+                      "slot": "W",
+                      "withinSec": 3
+                    },
+                    "amount": {
+                      "flat": 80
+                    },
+                    "applyTo": "self"
+                  }
+                ],
+                "internalCooldown": 2,
+                "target": "self"
+              }
+            ]
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "template": {
+        "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "params": {
+          "hooks": [
+            {
+              "on": "onDamageTaken",
+              "effects": [
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 80
+                  },
+                  "applyTo": "self",
+                  "condition": {
+                    "kind": "recentCast",
+                    "subject": "self",
+                    "slot": "W",
+                    "withinSec": 3
+                  }
+                }
+              ],
+              "internalCooldown": 2,
+              "target": "self"
+            }
+          ]
+        },
+        "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+      },
+      "schema": "ability@1"
+    },
+    {
+      "id": "community-review-36-20260907.ex",
+      "name": "〔跟著本大爺衝〕",
+      "provenance": "editor-json",
+      "description": "【核准惡搞改編】事後裝沒事：回復160生命，不把自己的嘲諷轉嫁隊友。",
+      "slot": "EX",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        10
+      ],
+      "manaCost": [
+        40
+      ],
+      "range": 6,
+      "radius": 3,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "heal",
+          "amount": {
+            "flat": 160
+          },
+          "applyTo": "self"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "icon": "assets/icons/abilities/thorne.r.webp",
+      "template": {
+        "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "radius": 3,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "heal",
+              "amount": {
+                "flat": 160
+              },
+              "applyTo": "self"
+            }
+          ]
+        },
+        "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+      },
+      "schema": "ability@1"
+    }
+  ],
+  "vfxScripts": [
+    {
+      "id": "community-review-36-20260907.q",
+      "schema": "vfx-script@1",
+      "abilityId": "community-review-36-20260907.q",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "vfxId": "fx.prim.arcane.slash",
+          "at": "target",
+          "kind": "vfx",
+          "on": "castEffect"
+        }
+      ]
+    },
+    {
+      "id": "community-review-36-20260907.w",
+      "schema": "vfx-script@1",
+      "abilityId": "community-review-36-20260907.w",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "vfxId": "fx.prim.arcane.pulse-sm",
+          "at": "self",
+          "kind": "vfx",
+          "on": "castEffect"
+        }
+      ]
+    },
+    {
+      "id": "community-review-36-20260907.e",
+      "schema": "vfx-script@1",
+      "abilityId": "community-review-36-20260907.e",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "vfxId": "fx.prim.arcane.dash",
+          "at": "target",
+          "kind": "vfx",
+          "on": "castEffect"
+        }
+      ]
+    },
+    {
+      "id": "community-review-36-20260907.r",
+      "schema": "vfx-script@1",
+      "abilityId": "community-review-36-20260907.r",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "vfxId": "fx.prim.wind.pulse-sm",
+          "at": "target",
+          "kind": "vfx",
+          "on": "castEffect"
+        }
+      ]
+    },
+    {
+      "id": "community-review-36-20260907.ex",
+      "schema": "vfx-script@1",
+      "abilityId": "community-review-36-20260907.ex",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "vfxId": "fx.prim.arcane.pulse-sm",
+          "at": "self",
+          "kind": "vfx",
+          "on": "castEffect"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "level": "warn",
+      "field": "medians",
+      "message": "沒有傳入同定位的中位數，其餘八項用的是保守 fallback —— 數字可能已經過期。"
+    }
+  ]
+}

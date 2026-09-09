@@ -1,0 +1,85 @@
+{
+  "format": "native-slot",
+  "ability": {
+    "id": "godie-edem.ex",
+    "schema": "ability@1",
+    "name": "45-002 天照",
+    "provenance": "owner-spec",
+    "description": "[主動][範圍][燃燒][沉默][虛弱][週期]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n有效半徑：{{radius}}\n\n「寫輪眼。天照」\n發動天照，使[周圍][大範圍]敵人每秒受到400點[燃燒]傷害並附加[燃燒]標記，同時[沉默]且[攻擊力降低]40%，持續10秒。",
+    "slot": "EX",
+    "castType": "self",
+    "maxRank": 1,
+    "cooldown": [
+      120
+    ],
+    "manaCost": [
+      576
+    ],
+    "range": 0,
+    "radiusTier": "中",
+    "targetsEnemies": true,
+    "effects": [
+      {
+        "kind": "damageArea",
+        "damageType": "magic",
+        "amount": {
+          "flat": 1
+        },
+        "radius": 6,
+        "radiusTier": "中",
+        "includeOrigin": true,
+        "onHitTargets": [
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "ad",
+                "op": "pctAdd",
+                "value": -0.4
+              }
+            ],
+            "duration": 10,
+            "dispellable": true,
+            "polarity": "debuff"
+          },
+          {
+            "kind": "applyStatus",
+            "statusId": "burn",
+            "duration": 10
+          },
+          {
+            "kind": "applyStatus",
+            "statusId": "paralysis",
+            "duration": 10,
+            "silenced": true
+          },
+          {
+            "kind": "dot",
+            "damageType": "magic",
+            "amountPerTick": {
+              "flat": 400
+            },
+            "intervalSec": 1,
+            "durationSec": 10,
+            "stacking": "refresh"
+          }
+        ]
+      },
+      {
+        "kind": "spawnModelFx",
+        "shape": "single",
+        "preset": "tpl-locust-orb",
+        "modelKey": "imported.netherstrike",
+        "clip": "idle",
+        "soundKey": "wc3.flamestrikebirth1",
+        "scale": 4,
+        "lifeSec": 2
+      }
+    ],
+    "icon": "assets/icons/abilities/godie-edem.ex.webp",
+    "vfxKey": "fx.prim.void.explosion-lg",
+    "cooldownTier": "極大",
+    "manaCostTier": "大",
+    "castTimeSec": 1.633
+  }
+}

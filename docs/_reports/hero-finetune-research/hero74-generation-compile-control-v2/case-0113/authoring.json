@@ -1,0 +1,60 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "PASSIVE",
+      "name": "班導還不能下班",
+      "purpose": "「班導還不能下班！」\n友軍受到傷害後，自己回復最大魔力 6%，每 3 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
+      "maxRank": 1,
+      "abilityOverrides": {
+        "provenance": "editor-json"
+      },
+      "products": [
+        {
+          "instanceId": "b2-nube.passive.card1",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onAllyDamaged",
+                  "effects": [
+                    {
+                      "kind": "restore",
+                      "manaPct": 0.06,
+                      "applyTo": "self"
+                    }
+                  ],
+                  "internalCooldown": 3,
+                  "target": "self"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 0,
+        "manaCost": 0,
+        "range": 0
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": null,
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": []
+    }
+  },
+  "context": {
+    "wholeCaseId": "b2-nube:HERO",
+    "wholeTargetSha256": "32a88596ef6591fdbcc06093ac0cba8b50152b3cd05b9a5fc7564924159243b7",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

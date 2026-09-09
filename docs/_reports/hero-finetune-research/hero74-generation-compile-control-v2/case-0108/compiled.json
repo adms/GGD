@@ -1,0 +1,94 @@
+{
+  "id": "b2-fushi.w",
+  "name": "把破掉的地方長回來",
+  "provenance": "editor-json",
+  "description": "「把破掉的地方長回來！」\n消耗 berserk 適應暫態回復自身 220 生命；沒有實際受擊留下的暫態就不回復。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "radius": 3,
+  "rangeTier": "中",
+  "cooldownTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "consumeStatus",
+      "shape": "single",
+      "statusId": "berserk",
+      "count": "all",
+      "subject": "self",
+      "onConsumed": [
+        {
+          "kind": "heal",
+          "amount": {
+            "flat": 220,
+            "perRank": [
+              0,
+              110,
+              220,
+              330
+            ]
+          },
+          "applyTo": "self"
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.prim.wind.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "attachTo": "caster"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "effects": [
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "berserk",
+          "count": "all",
+          "subject": "self",
+          "onConsumed": [
+            {
+              "kind": "heal",
+              "amount": {
+                "flat": 220,
+                "perRank": [
+                  0,
+                  110,
+                  220,
+                  330
+                ]
+              },
+              "applyTo": "self"
+            }
+          ]
+        }
+      ],
+      "castType": "self",
+      "side": "enemies",
+      "castTimeSec": 0.1,
+      "radius": 3
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

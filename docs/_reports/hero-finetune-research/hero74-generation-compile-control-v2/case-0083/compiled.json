@@ -1,0 +1,81 @@
+{
+  "id": "community-review-33-20260907.ex",
+  "name": "〔重力劍・壓潰〕",
+  "provenance": "editor-json",
+  "description": "【核准惡搞改編】卸鐵片：消耗自己的重劍buff才回復8%魔力並得到25%移速兩秒；沒掛過不補貼。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    10
+  ],
+  "manaCost": [
+    40
+  ],
+  "range": 6,
+  "radius": 3,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "consumeStatus",
+      "shape": "single",
+      "statusId": "slow40",
+      "count": "all",
+      "subject": "self",
+      "appliedBy": "self",
+      "onConsumed": [
+        {
+          "kind": "restore",
+          "manaPct": 0.08,
+          "applyTo": "self"
+        },
+        {
+          "kind": "applyStatus",
+          "sourceScope": "caster",
+          "statusId": "rage",
+          "duration": 2,
+          "applyTo": "self",
+          "moveSpeedMult": 1.25
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/thorne.r.webp",
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "castType": "self",
+      "castTimeSec": 0.1,
+      "radius": 3,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "slow40",
+          "count": "all",
+          "subject": "self",
+          "appliedBy": "self",
+          "onConsumed": [
+            {
+              "kind": "restore",
+              "manaPct": 0.08,
+              "applyTo": "self"
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "rage",
+              "duration": 2,
+              "applyTo": "self",
+              "sourceScope": "caster",
+              "moveSpeedMult": 1.25
+            }
+          ]
+        }
+      ]
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

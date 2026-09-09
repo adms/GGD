@@ -1,0 +1,89 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "E",
+      "name": "記憶形狀先借一塊",
+      "purpose": "「記憶形狀先借一塊！」\n指定友軍取得 190 點護盾 3 秒；若自己有 berserk 適應暫態，額外回復該友軍 100 生命。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
+      "maxRank": 4,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "manaCostTier": "小"
+      },
+      "products": [
+        {
+          "instanceId": "b2-fushi.e.card1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "effects": [
+                {
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 190
+                  },
+                  "duration": 3,
+                  "absorbs": "all",
+                  "stackKey": "b2-protection",
+                  "onExisting": "keepLarger"
+                },
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 100
+                  },
+                  "applyTo": "target",
+                  "condition": {
+                    "kind": "status",
+                    "statusId": "berserk",
+                    "subject": "self"
+                  }
+                }
+              ],
+              "castType": "targeted",
+              "side": "allies",
+              "castTimeSec": 0.1,
+              "radius": 3
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 45,
+        "manaCost": 144,
+        "range": 6
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": null,
+      "sfxKey": null,
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.wind.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "b2-fushi:HERO",
+    "wholeTargetSha256": "1eed21957c99c1f1611c1ea93a2c505f87d46cb12fb5c17d3ba5a23b79ac7798",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

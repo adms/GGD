@@ -1,0 +1,82 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "Q",
+      "name": "鬼手抓回來點名",
+      "purpose": "「鬼手抓回來點名！」\n對指定敵人造成極小傷害並向自己拉近 3 單位；這是既有 knockback 拉向模式，不是空中抓取。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
+      "maxRank": 4,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "manaCostTier": "小"
+      },
+      "products": [
+        {
+          "instanceId": "b2-nube.q.card1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                },
+                {
+                  "kind": "knockback",
+                  "distance": 3,
+                  "speed": 12,
+                  "from": "pull",
+                  "subtractGap": false,
+                  "uncontrollable": false
+                }
+              ],
+              "castType": "targeted",
+              "side": "enemies",
+              "castTimeSec": 0.1,
+              "radius": 3
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 45,
+        "manaCost": 144,
+        "range": 6
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": null,
+      "sfxKey": null,
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "b2-nube:HERO",
+    "wholeTargetSha256": "32a88596ef6591fdbcc06093ac0cba8b50152b3cd05b9a5fc7564924159243b7",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

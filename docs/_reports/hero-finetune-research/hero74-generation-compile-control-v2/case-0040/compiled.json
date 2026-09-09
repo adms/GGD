@@ -1,0 +1,89 @@
+{
+  "id": "community-review-19-20260907.r",
+  "name": "Starburst Stream",
+  "provenance": "editor-json",
+  "description": "【核准惡搞改編】限量四連斬：四段極小傷害，最後不再乘一次段數。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    30
+  ],
+  "manaCost": [
+    60
+  ],
+  "range": 6,
+  "radius": 2.75,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "dot",
+      "damageType": "physical",
+      "amountPerTick": {
+        "damageTier": "極小",
+        "flat": 200,
+        "perRank": [
+          0,
+          100,
+          200
+        ]
+      },
+      "intervalSec": 0.2,
+      "durationSec": 0.8
+    },
+    {
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "inPlace",
+      "apexHeight": 0,
+      "durationSec": 0.8,
+      "landRadius": 2.75,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "perRank": [
+              450,
+              450,
+              450
+            ],
+            "ratios": []
+          }
+        }
+      ]
+    }
+  ],
+  "icon": "assets/icons/abilities/thorne.r.webp",
+  "template": {
+    "ref": "hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c",
+    "params": {
+      "hitCount": 4,
+      "hitIntervalSec": 0.2,
+      "perHitDamage": {
+        "damageTier": "極小",
+        "flat": 200,
+        "perRank": [
+          0,
+          100,
+          200
+        ]
+      },
+      "finisherDamage": {
+        "perRank": [
+          450,
+          450,
+          450
+        ],
+        "ratios": []
+      },
+      "finisherRadius": 150,
+      "damageType": "physical",
+      "lockTarget": "none",
+      "casterGuard": "none",
+      "trigger": "onCast"
+    },
+    "contentSha256": "sha256:3564b6a4aa6e8ba56515a3e021d366443236e05e20c89a4267a82774cd521c26"
+  },
+  "schema": "ability@1"
+}

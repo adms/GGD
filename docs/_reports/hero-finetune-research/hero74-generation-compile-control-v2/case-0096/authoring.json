@@ -1,0 +1,88 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "R",
+      "name": "收據換一位代理客服",
+      "purpose": "「收據換一位代理客服！」\n交出結界收據才能叫來一名 4 秒的自己分身；生命／攻擊倍率欄位各 0.3，依正式屬性管線產生，不繼承主人當下增益；該來源最多 2 具，本體死亡消失。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：精靈客服與遊戲攻略，戰鬥全程社交事故。GGD 惡搞改編，非原作招式與數值聲明。",
+      "maxRank": 3,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "manaCostTier": "小"
+      },
+      "products": [
+        {
+          "instanceId": "b2-uncle.r.card1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "effects": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "statusId": "spell-shield",
+                  "count": "all",
+                  "subject": "self",
+                  "onConsumed": [
+                    {
+                      "kind": "summon",
+                      "body": "self",
+                      "count": 1,
+                      "durationSec": 4,
+                      "damageMult": 0.3,
+                      "hpMult": 0.3,
+                      "formation": "ring",
+                      "spread": 2,
+                      "maxAlive": 2,
+                      "onOwnerDeath": "despawn"
+                    }
+                  ]
+                }
+              ],
+              "castType": "self",
+              "side": "enemies",
+              "castTimeSec": 0.1,
+              "radius": 3
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 90,
+        "manaCost": 144,
+        "range": 6
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": null,
+      "sfxKey": null,
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "b2-uncle:HERO",
+    "wholeTargetSha256": "8d3bb9c55e0019d7e6b003a193ad97bb3372f08dd67a9dde645f7af0c662f4df",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

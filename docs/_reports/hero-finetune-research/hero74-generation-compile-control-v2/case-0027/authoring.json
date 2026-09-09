@@ -1,0 +1,89 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "EX",
+      "name": "限定展開・Excalibur",
+      "purpose": "【核准惡搞改編】卸妝退票：消耗自己的職階增益還原攻擊力與魔法攻擊力，回復10%魔力；沒有衣服不退額外魔力。",
+      "maxRank": 1,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "products": [
+        {
+          "instanceId": "ex-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "statusId": "rage",
+                  "count": "all",
+                  "subject": "self",
+                  "appliedBy": "self",
+                  "onConsumed": [
+                    {
+                      "kind": "restore",
+                      "manaPct": 0.1,
+                      "applyTo": "self"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 60,
+        "manaCost": 100,
+        "range": 6
+      },
+      "capabilityIds": [
+        "projectile"
+      ],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/sela.r.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "self",
+          "vfxId": "fx.prim.arcane.pulse-sm"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-16-20260907:HERO",
+    "wholeTargetSha256": "e56268510993043feb1fa31ab5a52c266b3c999fc169cff1a91eeb9b72bbd722",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

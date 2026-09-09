@@ -1,0 +1,73 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "PASSIVE",
+      "name": "〔不死者再生〕",
+      "purpose": "【核准惡搞改編】背著自己的slow40重劍增益受傷時回復60生命，每兩秒一次；空身不領健身補貼。",
+      "maxRank": 1,
+      "abilityOverrides": {
+        "provenance": "editor-json"
+      },
+      "products": [
+        {
+          "instanceId": "passive-parody-1",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onDamageTaken",
+                  "effects": [
+                    {
+                      "kind": "heal",
+                      "amount": {
+                        "flat": 60
+                      },
+                      "applyTo": "self",
+                      "condition": {
+                        "kind": "status",
+                        "statusId": "slow40",
+                        "subject": "self",
+                        "appliedBy": "self"
+                      }
+                    }
+                  ],
+                  "internalCooldown": 2,
+                  "target": "self"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 0,
+        "manaCost": 0,
+        "range": 0
+      },
+      "capabilityIds": [
+        "marks",
+        "invulnerable",
+        "knockback",
+        "applyStatus"
+      ],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": []
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-33-20260907:HERO",
+    "wholeTargetSha256": "33aac70fef492f493f825552094f278b4342e10602704acaf2527c338418b283",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

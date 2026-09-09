@@ -1,0 +1,54 @@
+{
+  "id": "community-review-28-20260907.e",
+  "name": "〔逼近步〕",
+  "provenance": "editor-json",
+  "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n向輸入方向短距離貼地接近；地形或第一個敵人攔截即停，不附帶原模板的傷害、擊飛或推移。保留 GGD 既有已開始衝刺的控制規則。",
+  "slot": "E",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    6,
+    6,
+    6,
+    6
+  ],
+  "manaCost": [
+    40,
+    40,
+    40,
+    40
+  ],
+  "range": 3,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "dash",
+      "mode": "forward",
+      "stopOnHit": "enemy",
+      "speed": 10,
+      "maxDistance": 3
+    }
+  ],
+  "castTimeSec": 0,
+  "icon": "assets/icons/abilities/thorne.e.webp",
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "castType": "skillshot",
+      "castTimeSec": 0,
+      "radius": 0,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "forward",
+          "speed": 10,
+          "maxDistance": 3,
+          "stopOnHit": "enemy"
+        }
+      ]
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

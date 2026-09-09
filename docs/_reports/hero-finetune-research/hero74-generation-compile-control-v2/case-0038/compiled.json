@@ -1,0 +1,54 @@
+{
+  "id": "community-review-19-20260907.w",
+  "name": "〔劍技招架〕",
+  "provenance": "editor-json",
+  "description": "【核准惡搞改編】左手小級劍擊；P只在Q→W時報銷Q冷卻，不直接給無敵。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    10
+  ],
+  "manaCost": [
+    40
+  ],
+  "range": 6,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "physical",
+      "amount": {
+        "damageTier": "小",
+        "flat": 500,
+        "perRank": [
+          0,
+          250,
+          500,
+          750
+        ]
+      }
+    }
+  ],
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/thorne.w.webp",
+  "template": {
+    "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+    "params": {
+      "damage": {
+        "damageTier": "小",
+        "flat": 500,
+        "perRank": [
+          0,
+          250,
+          500,
+          750
+        ]
+      },
+      "damageType": "physical",
+      "castTimeSec": 0.1
+    },
+    "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
+  },
+  "schema": "ability@1"
+}

@@ -1,0 +1,77 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "W",
+      "name": "老師先幫你擋著",
+      "purpose": "「老師先幫你擋著！」\n指定友軍取得 210 點全傷害護盾 3 秒；確實放在該友軍身上。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
+      "maxRank": 4,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "manaCostTier": "小"
+      },
+      "products": [
+        {
+          "instanceId": "b2-nube.w.card1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "effects": [
+                {
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 210
+                  },
+                  "duration": 3,
+                  "absorbs": "all",
+                  "stackKey": "b2-protection",
+                  "onExisting": "keepLarger"
+                }
+              ],
+              "castType": "targeted",
+              "side": "allies",
+              "castTimeSec": 0.1,
+              "radius": 3
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 45,
+        "manaCost": 144,
+        "range": 6
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": null,
+      "sfxKey": null,
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.wind.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "b2-nube:HERO",
+    "wholeTargetSha256": "32a88596ef6591fdbcc06093ac0cba8b50152b3cd05b9a5fc7564924159243b7",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

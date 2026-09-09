@@ -1,0 +1,79 @@
+{
+  "id": "community-review-09-20260907.q",
+  "name": "〔狼牙警告〕",
+  "provenance": "editor-json",
+  "description": "【核准惡搞改編】禁止退貨：敵方小級魔法傷害並受療減半三秒。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    10
+  ],
+  "manaCost": [
+    40
+  ],
+  "range": 6,
+  "radius": 3,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "小",
+        "flat": 500,
+        "perRank": [
+          0,
+          250,
+          500,
+          750
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "sourceScope": "caster",
+      "statusId": "grievous-wounds",
+      "duration": 3,
+      "applyTo": "target",
+      "healingTakenMult": 0.5
+    }
+  ],
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/sela.q.webp",
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "castType": "targeted",
+      "castTimeSec": 0.1,
+      "radius": 3,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "flat": 500,
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "grievous-wounds",
+          "duration": 3,
+          "applyTo": "target",
+          "sourceScope": "caster",
+          "healingTakenMult": 0.5
+        }
+      ]
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

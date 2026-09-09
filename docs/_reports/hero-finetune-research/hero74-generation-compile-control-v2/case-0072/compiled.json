@@ -1,0 +1,92 @@
+{
+  "id": "community-review-28-20260907.q",
+  "name": "〔猛進斬〕",
+  "provenance": "editor-json",
+  "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n向輸入方向踏進一格後，才從實際終點揮一次前方近身弧斬；貼地移動，敵人逐個單次傷害，牆前停止後從實際終點判定。專用劍擊動作仍待畫面驗收。",
+  "slot": "Q",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    5,
+    5,
+    5,
+    5
+  ],
+  "manaCost": [
+    40,
+    40,
+    40,
+    40
+  ],
+  "range": 3,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "dash",
+      "mode": "forward",
+      "speed": 8,
+      "maxDistance": 1,
+      "onEnd": [
+        {
+          "kind": "damageArea",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [],
+            "flat": 500,
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          },
+          "radius": 2,
+          "fromCaster": true,
+          "arcHalfAngleCos": 0.3
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 0.15,
+  "icon": "assets/icons/abilities/thorne.q.webp",
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "castType": "skillshot",
+      "castTimeSec": 0.15,
+      "radius": 0,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "forward",
+          "speed": 8,
+          "maxDistance": 1,
+          "onEnd": [
+            {
+              "kind": "damageArea",
+              "fromCaster": true,
+              "radius": 2,
+              "arcHalfAngleCos": 0.3,
+              "amount": {
+                "damageTier": "小",
+                "ratios": [],
+                "flat": 500,
+                "perRank": [
+                  0,
+                  250,
+                  500,
+                  750
+                ]
+              },
+              "damageType": "physical"
+            }
+          ]
+        }
+      ]
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

@@ -1,0 +1,87 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "R",
+      "name": "Starburst Stream",
+      "purpose": "【核准惡搞改編】限量四連斬：四段極小傷害，最後不再乘一次段數。",
+      "maxRank": 3,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          30
+        ],
+        "manaCost": [
+          60
+        ]
+      },
+      "products": [
+        {
+          "instanceId": "r-parody-1",
+          "template": {
+            "ref": "tpl-lock-combo",
+            "params": {
+              "hitCount": 4,
+              "hitIntervalSec": 0.2,
+              "perHitDamage": {
+                "damageTier": "極小"
+              },
+              "finisherDamage": {
+                "perRank": [
+                  450
+                ],
+                "ratios": []
+              },
+              "finisherRadius": 150,
+              "damageType": "physical",
+              "lockTarget": "none",
+              "casterGuard": "none",
+              "trigger": "onCast"
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 60,
+        "manaCost": 100,
+        "range": 6
+      },
+      "capabilityIds": [
+        "periodicDamage",
+        "invulnerable",
+        "applyStatus",
+        "leap"
+      ],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.r.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "target",
+          "vfxId": "fx.prim.arcane.pulse-sm"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-19-20260907:HERO",
+    "wholeTargetSha256": "d91a865cb80ddddfa52fadada6abcb6fb4990c0c2e90d69306a866fcc122d3db",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

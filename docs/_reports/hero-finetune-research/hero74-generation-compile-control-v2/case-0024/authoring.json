@@ -1,0 +1,98 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "W",
+      "name": "〔魔力防壁〕",
+      "purpose": "【核准惡搞改編】近戰職階裝填：三秒攻擊力+80、魔法攻擊力-20。",
+      "maxRank": 4,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "products": [
+        {
+          "instanceId": "w-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "applyTo": "self",
+                  "statusId": "rage",
+                  "sourceScope": "caster",
+                  "duration": 3,
+                  "modifiers": [
+                    {
+                      "stat": "ad",
+                      "op": "flat",
+                      "value": 80
+                    },
+                    {
+                      "stat": "ap",
+                      "op": "flat",
+                      "value": -20
+                    }
+                  ]
+                },
+                {
+                  "kind": "floatingText",
+                  "shape": "single",
+                  "text": "魔法少女用拳頭！",
+                  "applyTo": "self",
+                  "durationSec": 1
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 10,
+        "manaCost": 40,
+        "range": 6
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/sela.w.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "self",
+          "vfxId": "fx.prim.arcane.pulse-sm"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-16-20260907:HERO",
+    "wholeTargetSha256": "e56268510993043feb1fa31ab5a52c266b3c999fc169cff1a91eeb9b72bbd722",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

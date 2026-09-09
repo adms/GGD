@@ -1,0 +1,552 @@
+{
+  "id": "community-review-28-20260907.passive",
+  "name": "〔劍神流・先發制人〕",
+  "provenance": "editor-json",
+  "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n每個敵人分開記交鋒：有效普攻／技能扣血或護盾開始二秒先手窗口，首個三格內命中追加一次極小物理傷害；同目標八秒冷卻。交鋒四秒無有效互動才重新開始，持續纏鬥不重開窗口；自己命中另留二秒追擊標記。不同施法者互不借用標記；零值、免疫與普通觸發傷害不建立交鋒。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0,
+  "effects": [],
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onDamageDealt",
+            "effects": [
+              {
+                "kind": "applyBuff",
+                "condition": {
+                  "not": {
+                    "kind": "status",
+                    "subject": "target",
+                    "statusId": "community-review-28-20260907.combat",
+                    "appliedBy": "self"
+                  }
+                },
+                "sourceScope": "caster",
+                "modifiers": [],
+                "duration": 2,
+                "statusId": "community-review-28-20260907.opening",
+                "stackKey": "community-review-28-20260907.opening",
+                "maxStacks": 1,
+                "dispellable": false
+              },
+              {
+                "kind": "consumeStatus",
+                "condition": {
+                  "all": [
+                    {
+                      "kind": "distance",
+                      "op": "<=",
+                      "value": 3
+                    },
+                    {
+                      "not": {
+                        "kind": "status",
+                        "subject": "target",
+                        "statusId": "community-review-28-20260907.opener-lock",
+                        "appliedBy": "self"
+                      }
+                    }
+                  ]
+                },
+                "shape": "single",
+                "statusId": "community-review-28-20260907.opening",
+                "count": 1,
+                "appliedBy": "self",
+                "onConsumed": [
+                  {
+                    "kind": "applyBuff",
+                    "sourceScope": "caster",
+                    "modifiers": [],
+                    "duration": 8,
+                    "statusId": "community-review-28-20260907.opener-lock",
+                    "stackKey": "community-review-28-20260907.opener-lock",
+                    "maxStacks": 1,
+                    "dispellable": false
+                  },
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "極小",
+                      "ratios": [],
+                      "flat": 200
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "applyBuff",
+                "sourceScope": "caster",
+                "modifiers": [],
+                "duration": 4,
+                "statusId": "community-review-28-20260907.combat",
+                "stackKey": "community-review-28-20260907.combat",
+                "maxStacks": 1,
+                "dispellable": false
+              },
+              {
+                "kind": "applyBuff",
+                "sourceScope": "caster",
+                "modifiers": [],
+                "duration": 2,
+                "statusId": "community-review-28-20260907.recent-hit",
+                "stackKey": "community-review-28-20260907.recent-hit",
+                "maxStacks": 1,
+                "dispellable": false
+              }
+            ],
+            "target": "event",
+            "victim": "enemy",
+            "damageConnected": true,
+            "damageSource": "basic"
+          },
+          {
+            "on": "onDamageTaken",
+            "effects": [
+              {
+                "kind": "applyBuff",
+                "condition": {
+                  "not": {
+                    "kind": "status",
+                    "subject": "target",
+                    "statusId": "community-review-28-20260907.combat",
+                    "appliedBy": "self"
+                  }
+                },
+                "sourceScope": "caster",
+                "modifiers": [],
+                "duration": 2,
+                "statusId": "community-review-28-20260907.opening",
+                "stackKey": "community-review-28-20260907.opening",
+                "maxStacks": 1,
+                "dispellable": false
+              },
+              {
+                "kind": "applyBuff",
+                "sourceScope": "caster",
+                "modifiers": [],
+                "duration": 4,
+                "statusId": "community-review-28-20260907.combat",
+                "stackKey": "community-review-28-20260907.combat",
+                "maxStacks": 1,
+                "dispellable": false
+              }
+            ],
+            "target": "event",
+            "victim": "enemy",
+            "damageConnected": true,
+            "damageSource": "basic"
+          },
+          {
+            "on": "onDamageDealt",
+            "effects": [
+              {
+                "kind": "applyBuff",
+                "condition": {
+                  "not": {
+                    "kind": "status",
+                    "subject": "target",
+                    "statusId": "community-review-28-20260907.combat",
+                    "appliedBy": "self"
+                  }
+                },
+                "sourceScope": "caster",
+                "modifiers": [],
+                "duration": 2,
+                "statusId": "community-review-28-20260907.opening",
+                "stackKey": "community-review-28-20260907.opening",
+                "maxStacks": 1,
+                "dispellable": false
+              },
+              {
+                "kind": "consumeStatus",
+                "condition": {
+                  "all": [
+                    {
+                      "kind": "distance",
+                      "op": "<=",
+                      "value": 3
+                    },
+                    {
+                      "not": {
+                        "kind": "status",
+                        "subject": "target",
+                        "statusId": "community-review-28-20260907.opener-lock",
+                        "appliedBy": "self"
+                      }
+                    }
+                  ]
+                },
+                "shape": "single",
+                "statusId": "community-review-28-20260907.opening",
+                "count": 1,
+                "appliedBy": "self",
+                "onConsumed": [
+                  {
+                    "kind": "applyBuff",
+                    "sourceScope": "caster",
+                    "modifiers": [],
+                    "duration": 8,
+                    "statusId": "community-review-28-20260907.opener-lock",
+                    "stackKey": "community-review-28-20260907.opener-lock",
+                    "maxStacks": 1,
+                    "dispellable": false
+                  },
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "極小",
+                      "ratios": [],
+                      "flat": 200
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "applyBuff",
+                "sourceScope": "caster",
+                "modifiers": [],
+                "duration": 4,
+                "statusId": "community-review-28-20260907.combat",
+                "stackKey": "community-review-28-20260907.combat",
+                "maxStacks": 1,
+                "dispellable": false
+              },
+              {
+                "kind": "applyBuff",
+                "sourceScope": "caster",
+                "modifiers": [],
+                "duration": 2,
+                "statusId": "community-review-28-20260907.recent-hit",
+                "stackKey": "community-review-28-20260907.recent-hit",
+                "maxStacks": 1,
+                "dispellable": false
+              }
+            ],
+            "target": "event",
+            "victim": "enemy",
+            "damageConnected": true,
+            "damageSource": "ability"
+          },
+          {
+            "on": "onDamageTaken",
+            "effects": [
+              {
+                "kind": "applyBuff",
+                "condition": {
+                  "not": {
+                    "kind": "status",
+                    "subject": "target",
+                    "statusId": "community-review-28-20260907.combat",
+                    "appliedBy": "self"
+                  }
+                },
+                "sourceScope": "caster",
+                "modifiers": [],
+                "duration": 2,
+                "statusId": "community-review-28-20260907.opening",
+                "stackKey": "community-review-28-20260907.opening",
+                "maxStacks": 1,
+                "dispellable": false
+              },
+              {
+                "kind": "applyBuff",
+                "sourceScope": "caster",
+                "modifiers": [],
+                "duration": 4,
+                "statusId": "community-review-28-20260907.combat",
+                "stackKey": "community-review-28-20260907.combat",
+                "maxStacks": 1,
+                "dispellable": false
+              }
+            ],
+            "target": "event",
+            "victim": "enemy",
+            "damageConnected": true,
+            "damageSource": "ability"
+          }
+        ]
+      }
+    ]
+  },
+  "icon": "assets/icons/abilities/thorne.q.webp",
+  "template": {
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+    "params": {
+      "hooks": [
+        {
+          "on": "onDamageDealt",
+          "victim": "enemy",
+          "damageSource": "basic",
+          "damageConnected": true,
+          "target": "event",
+          "effects": [
+            {
+              "kind": "applyBuff",
+              "statusId": "community-review-28-20260907.opening",
+              "sourceScope": "caster",
+              "stackKey": "community-review-28-20260907.opening",
+              "maxStacks": 1,
+              "duration": 2,
+              "modifiers": [],
+              "dispellable": false,
+              "condition": {
+                "not": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "community-review-28-20260907.combat",
+                  "appliedBy": "self"
+                }
+              }
+            },
+            {
+              "kind": "consumeStatus",
+              "shape": "single",
+              "statusId": "community-review-28-20260907.opening",
+              "appliedBy": "self",
+              "count": 1,
+              "condition": {
+                "all": [
+                  {
+                    "kind": "distance",
+                    "op": "<=",
+                    "value": 3
+                  },
+                  {
+                    "not": {
+                      "kind": "status",
+                      "subject": "target",
+                      "statusId": "community-review-28-20260907.opener-lock",
+                      "appliedBy": "self"
+                    }
+                  }
+                ]
+              },
+              "onConsumed": [
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-28-20260907.opener-lock",
+                  "sourceScope": "caster",
+                  "stackKey": "community-review-28-20260907.opener-lock",
+                  "maxStacks": 1,
+                  "duration": 8,
+                  "modifiers": [],
+                  "dispellable": false
+                },
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "極小",
+                    "ratios": [],
+                    "flat": 200
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "applyBuff",
+              "statusId": "community-review-28-20260907.combat",
+              "sourceScope": "caster",
+              "stackKey": "community-review-28-20260907.combat",
+              "maxStacks": 1,
+              "duration": 4,
+              "modifiers": [],
+              "dispellable": false
+            },
+            {
+              "kind": "applyBuff",
+              "statusId": "community-review-28-20260907.recent-hit",
+              "sourceScope": "caster",
+              "stackKey": "community-review-28-20260907.recent-hit",
+              "maxStacks": 1,
+              "duration": 2,
+              "modifiers": [],
+              "dispellable": false
+            }
+          ]
+        },
+        {
+          "on": "onDamageTaken",
+          "victim": "enemy",
+          "damageSource": "basic",
+          "damageConnected": true,
+          "target": "event",
+          "effects": [
+            {
+              "kind": "applyBuff",
+              "statusId": "community-review-28-20260907.opening",
+              "sourceScope": "caster",
+              "stackKey": "community-review-28-20260907.opening",
+              "maxStacks": 1,
+              "duration": 2,
+              "modifiers": [],
+              "dispellable": false,
+              "condition": {
+                "not": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "community-review-28-20260907.combat",
+                  "appliedBy": "self"
+                }
+              }
+            },
+            {
+              "kind": "applyBuff",
+              "statusId": "community-review-28-20260907.combat",
+              "sourceScope": "caster",
+              "stackKey": "community-review-28-20260907.combat",
+              "maxStacks": 1,
+              "duration": 4,
+              "modifiers": [],
+              "dispellable": false
+            }
+          ]
+        },
+        {
+          "on": "onDamageDealt",
+          "victim": "enemy",
+          "damageSource": "ability",
+          "damageConnected": true,
+          "target": "event",
+          "effects": [
+            {
+              "kind": "applyBuff",
+              "statusId": "community-review-28-20260907.opening",
+              "sourceScope": "caster",
+              "stackKey": "community-review-28-20260907.opening",
+              "maxStacks": 1,
+              "duration": 2,
+              "modifiers": [],
+              "dispellable": false,
+              "condition": {
+                "not": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "community-review-28-20260907.combat",
+                  "appliedBy": "self"
+                }
+              }
+            },
+            {
+              "kind": "consumeStatus",
+              "shape": "single",
+              "statusId": "community-review-28-20260907.opening",
+              "appliedBy": "self",
+              "count": 1,
+              "condition": {
+                "all": [
+                  {
+                    "kind": "distance",
+                    "op": "<=",
+                    "value": 3
+                  },
+                  {
+                    "not": {
+                      "kind": "status",
+                      "subject": "target",
+                      "statusId": "community-review-28-20260907.opener-lock",
+                      "appliedBy": "self"
+                    }
+                  }
+                ]
+              },
+              "onConsumed": [
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-28-20260907.opener-lock",
+                  "sourceScope": "caster",
+                  "stackKey": "community-review-28-20260907.opener-lock",
+                  "maxStacks": 1,
+                  "duration": 8,
+                  "modifiers": [],
+                  "dispellable": false
+                },
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "極小",
+                    "ratios": [],
+                    "flat": 200
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "applyBuff",
+              "statusId": "community-review-28-20260907.combat",
+              "sourceScope": "caster",
+              "stackKey": "community-review-28-20260907.combat",
+              "maxStacks": 1,
+              "duration": 4,
+              "modifiers": [],
+              "dispellable": false
+            },
+            {
+              "kind": "applyBuff",
+              "statusId": "community-review-28-20260907.recent-hit",
+              "sourceScope": "caster",
+              "stackKey": "community-review-28-20260907.recent-hit",
+              "maxStacks": 1,
+              "duration": 2,
+              "modifiers": [],
+              "dispellable": false
+            }
+          ]
+        },
+        {
+          "on": "onDamageTaken",
+          "victim": "enemy",
+          "damageSource": "ability",
+          "damageConnected": true,
+          "target": "event",
+          "effects": [
+            {
+              "kind": "applyBuff",
+              "statusId": "community-review-28-20260907.opening",
+              "sourceScope": "caster",
+              "stackKey": "community-review-28-20260907.opening",
+              "maxStacks": 1,
+              "duration": 2,
+              "modifiers": [],
+              "dispellable": false,
+              "condition": {
+                "not": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "community-review-28-20260907.combat",
+                  "appliedBy": "self"
+                }
+              }
+            },
+            {
+              "kind": "applyBuff",
+              "statusId": "community-review-28-20260907.combat",
+              "sourceScope": "caster",
+              "stackKey": "community-review-28-20260907.combat",
+              "maxStacks": 1,
+              "duration": 4,
+              "modifiers": [],
+              "dispellable": false
+            }
+          ]
+        }
+      ]
+    },
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+  },
+  "schema": "ability@1"
+}

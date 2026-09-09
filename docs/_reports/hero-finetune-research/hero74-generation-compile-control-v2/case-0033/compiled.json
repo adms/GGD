@@ -1,0 +1,71 @@
+{
+  "id": "community-review-17-20260907.r",
+  "name": "墜落天空",
+  "provenance": "editor-json",
+  "description": "【核准惡搞改編】0.8秒可中斷的魔法簡報，中級魔法傷害加0.8AP；趁會議加成放，敵人可控制打斷。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    30
+  ],
+  "manaCost": [
+    60
+  ],
+  "range": 6,
+  "effects": [
+    {
+      "kind": "damageLine",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "中",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6867
+          }
+        ],
+        "flat": 1000,
+        "perRank": [
+          0,
+          500,
+          1000
+        ]
+      },
+      "length": 9,
+      "width": 1.5,
+      "aim": "target",
+      "fromCaster": true,
+      "includeOrigin": true
+    }
+  ],
+  "castTimeSec": 0.8,
+  "icon": "assets/icons/abilities/sela.r.webp",
+  "template": {
+    "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71",
+    "params": {
+      "damage": {
+        "damageTier": "中",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.8
+          }
+        ],
+        "flat": 1000,
+        "perRank": [
+          0,
+          500,
+          1000
+        ]
+      },
+      "damageType": "magic",
+      "length": 9,
+      "width": 1.5,
+      "aim": "target",
+      "castTimeSec": 0.8
+    },
+    "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5"
+  },
+  "schema": "ability@1"
+}

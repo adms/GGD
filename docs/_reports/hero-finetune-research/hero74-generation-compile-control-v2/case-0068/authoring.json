@@ -1,0 +1,136 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "R",
+      "name": "〔真相只有一個〕",
+      "purpose": "【本次玩法】柯南原地推理：觀察對方真實行為取證，說真相時自己站住\n新增代價：推理宣布時自己定身0.8秒；線索仍須觀察實際事件取得，不能自己造證據。\n【修正行為】指定同區敵人，至少需要一條由自己蒐集的線索；施法開始扣除該目標全部自己的線索，其他敵人／觀察者不變。4秒揭示該目標並降低15%護甲與魔抗，同一施法者重施只刷新、不疊加。到期或驅散後恢復原隱形規則，不延長／取消其隱形時鐘；只使用當前對決的伺服器戰鬥實體，沒有玩家私密資料。",
+      "maxRank": 3,
+      "abilityOverrides": {
+        "cooldownTier": "大",
+        "manaCostTier": "大",
+        "provenance": "editor-json",
+        "castTimeSec": 0.1,
+        "range": 12,
+        "statusCost": {
+          "statusId": "community-review-26-20260907.clues",
+          "count": "all",
+          "appliedBy": "self",
+          "subject": "target"
+        }
+      },
+      "products": [
+        {
+          "instanceId": "r-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "modifiers": [
+                    {
+                      "stat": "armor",
+                      "op": "pctAdd",
+                      "value": -0.15
+                    },
+                    {
+                      "stat": "mr",
+                      "op": "pctAdd",
+                      "value": -0.15
+                    }
+                  ],
+                  "duration": 4,
+                  "stackKey": "community-review-26-20260907.weakness",
+                  "maxStacks": 1,
+                  "statusId": "community-review-26-20260907.weakness",
+                  "polarity": "debuff",
+                  "dispellable": true,
+                  "vision": {
+                    "revealed": true
+                  },
+                  "sourceScope": "caster"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "instanceId": "r-parody",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "root",
+                  "duration": 0.8,
+                  "applyTo": "self",
+                  "sourceScope": "caster",
+                  "root": true
+                },
+                {
+                  "kind": "floatingText",
+                  "shape": "single",
+                  "text": "真相只有一個，先聽我講完",
+                  "applyTo": "self",
+                  "durationSec": 1
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 60,
+        "manaCost": 100,
+        "range": 8
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.r.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast",
+          "replaces": "caster.action"
+        },
+        {
+          "kind": "vfx",
+          "on": "castStart",
+          "at": "self",
+          "vfxId": "fx.prim.physical.pulse-sm"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "target",
+          "vfxId": "fx.prim.physical.slash"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-26-20260907:HERO",
+    "wholeTargetSha256": "b5df86ed757062b641b4e1030343e1fa4b4bac13b0a937115398853edbf9e71a",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

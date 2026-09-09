@@ -1,0 +1,63 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "PASSIVE",
+      "name": "〔賢狼的眼光〕",
+      "purpose": "【核准惡搞改編】隊友實際受傷後，自己回復4%魔力，每三秒一次；不是鼓勵站著白挨打的回血光環。",
+      "maxRank": 1,
+      "abilityOverrides": {
+        "provenance": "editor-json"
+      },
+      "products": [
+        {
+          "instanceId": "passive-parody-1",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onAllyDamaged",
+                  "effects": [
+                    {
+                      "kind": "restore",
+                      "manaPct": 0.04,
+                      "applyTo": "self"
+                    }
+                  ],
+                  "internalCooldown": 3,
+                  "target": "self"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 0,
+        "manaCost": 0,
+        "range": 0
+      },
+      "capabilityIds": [
+        "hooks",
+        "conditions"
+      ],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/sela.q.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": []
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-09-20260907:HERO",
+    "wholeTargetSha256": "605a3e3d2beaff443437e1472d4dadeb2384607cd9784566bc70938d9ae34256",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "Q",
+      "name": "〔蠻力斬擊〕",
+      "purpose": "【核准惡搞改編】粗魯一刀小級物理傷害；三秒內用過W，再多極小物理傷害。",
+      "maxRank": 4,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "products": [
+        {
+          "instanceId": "q-parody-1",
+          "template": {
+            "ref": "tpl-single-strike",
+            "params": {
+              "damage": {
+                "damageTier": "小"
+              },
+              "damageType": "physical",
+              "castTimeSec": 0.1
+            }
+          }
+        },
+        {
+          "instanceId": "q-parody-2",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "極小"
+                  },
+                  "condition": {
+                    "kind": "recentCast",
+                    "subject": "self",
+                    "slot": "W",
+                    "withinSec": 3
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 10,
+        "manaCost": 40,
+        "range": 6
+      },
+      "capabilityIds": [
+        "projectile"
+      ],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "target",
+          "vfxId": "fx.prim.arcane.slash"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-36-20260907:HERO",
+    "wholeTargetSha256": "b4cc0c6e5eaf880247361ccf37c83ce7b9220bc9e9dff906f5860fd9dc101800",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

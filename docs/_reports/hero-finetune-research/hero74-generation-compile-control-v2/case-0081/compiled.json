@@ -1,0 +1,87 @@
+{
+  "id": "community-review-33-20260907.e",
+  "name": "〔踏地突進〕",
+  "provenance": "editor-json",
+  "description": "【核准惡搞改編】掛上鐵片：四秒AD+45、移速-40%，同一份具名buff，卸下時一起還原。",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    10
+  ],
+  "manaCost": [
+    40
+  ],
+  "range": 6,
+  "radius": 3,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "sourceScope": "caster",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "flat",
+          "value": 45
+        },
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "value": -0.4
+        }
+      ],
+      "duration": 4,
+      "statusId": "slow40",
+      "applyTo": "self"
+    },
+    {
+      "kind": "floatingText",
+      "shape": "single",
+      "text": "這支啞鈴有劍柄",
+      "durationSec": 1,
+      "applyTo": "self"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/thorne.e.webp",
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "castType": "self",
+      "castTimeSec": 0.1,
+      "radius": 3,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "statusId": "slow40",
+          "sourceScope": "caster",
+          "applyTo": "self",
+          "duration": 4,
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "flat",
+              "value": 45
+            },
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": -0.4
+            }
+          ]
+        },
+        {
+          "kind": "floatingText",
+          "shape": "single",
+          "text": "這支啞鈴有劍柄",
+          "applyTo": "self",
+          "durationSec": 1
+        }
+      ]
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

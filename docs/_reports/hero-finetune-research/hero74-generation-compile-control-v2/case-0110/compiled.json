@@ -1,0 +1,70 @@
+{
+  "id": "b2-fushi.r",
+  "name": "耐用形狀保固四秒",
+  "provenance": "editor-json",
+  "description": "「耐用形狀保固四秒！」\n獲得 60 護甲及 30 魔抗 4 秒；這是形態意象的數值強化，沒有換模或復活。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "rangeTier": "中",
+  "cooldownTier": "大",
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "armor",
+          "op": "flat",
+          "value": 60
+        },
+        {
+          "stat": "mr",
+          "op": "flat",
+          "value": 30
+        }
+      ],
+      "duration": 4
+    }
+  ],
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "attachTo": "caster"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "template": {
+    "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+    "params": {
+      "duration": 4,
+      "modifiers": [
+        {
+          "stat": "armor",
+          "op": "flat",
+          "value": 60
+        },
+        {
+          "stat": "mr",
+          "op": "flat",
+          "value": 30
+        }
+      ],
+      "castTimeSec": 0.1
+    },
+    "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
+  },
+  "schema": "ability@1"
+}

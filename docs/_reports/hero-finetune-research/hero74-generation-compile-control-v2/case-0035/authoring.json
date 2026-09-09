@@ -1,0 +1,947 @@
+{
+  "format": "hero-project",
+  "project": {
+    "schema": "ggd-hero-project@2",
+    "projectId": "community-review-19-20260907",
+    "revision": 0,
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "brief": {
+      "name": "桐谷和人",
+      "concept": "桐谷和人 社群英雄功能驗收稿。作品：《刀劍神域》  \n採用：SAO 二刀流桐人。  \n定位：多段近戰、連擊中斷、雙武器動作。\n\n視覺方向：黑白雙劍加青色斬線；命中特效節流，只有末段放大閃光。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "moveNames": {
+        "PASSIVE": "二刀流",
+        "Q": "〔雙劍交叉斬〕",
+        "W": "〔劍技招架〕",
+        "E": "Sonic Leap",
+        "R": "Starburst Stream",
+        "EX": "The Eclipse"
+      }
+    },
+    "sections": {
+      "identity": {
+        "revision": 0,
+        "state": "draft",
+        "fieldOwnership": {}
+      },
+      "attributes": {
+        "revision": 0,
+        "state": "draft",
+        "fieldOwnership": {}
+      },
+      "skills": {
+        "revision": 0,
+        "state": "draft",
+        "fieldOwnership": {}
+      },
+      "mechanics": {
+        "revision": 0,
+        "state": "draft",
+        "fieldOwnership": {}
+      },
+      "presentation": {
+        "revision": 0,
+        "state": "draft",
+        "fieldOwnership": {}
+      },
+      "validation": {
+        "revision": 0,
+        "state": "draft",
+        "fieldOwnership": {}
+      },
+      "package": {
+        "revision": 0,
+        "state": "draft",
+        "fieldOwnership": {}
+      }
+    },
+    "acceptedPlan": {
+      "schema": "ggd-hero-plan@2",
+      "planId": "community-review-19-20260907.plan",
+      "title": "桐谷和人",
+      "summary": "桐谷和人 社群英雄功能驗收稿。作品：《刀劍神域》  \n採用：SAO 二刀流桐人。  \n定位：多段近戰、連擊中斷、雙武器動作。\n\n視覺方向：黑白雙劍加青色斬線；命中特效節流，只有末段放大閃光。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "sourceLock": {
+        "canonicalId": null,
+        "versionId": null
+      },
+      "origin": "鬥士",
+      "archetype": "fighter",
+      "attackType": "melee",
+      "budget": {
+        "power": 50,
+        "complexity": 60
+      },
+      "statOverrides": {
+        "ms": "中",
+        "mr": "中",
+        "armor": "中",
+        "maxHealth": "中",
+        "maxMana": "中",
+        "ad": "大",
+        "ap": "小",
+        "as": "中",
+        "healthRegen": "中",
+        "manaRegen": "中",
+        "range": "小"
+      },
+      "templateVersions": {
+        "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+          "id": "tpl-event-passive",
+          "schema": "template@1",
+          "name": "自訂事件被動",
+          "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+          "family": "event-passive",
+          "status": "enabled",
+          "params": {
+            "hooks": {
+              "type": "hooks",
+              "default": [
+                {
+                  "on": "onBasicAttack",
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "極小"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+            }
+          },
+          "requires": [
+            "hooks",
+            "conditions"
+          ],
+          "gapScore": 10,
+          "exemplar": {
+            "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+            "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+          }
+        },
+        "sha256:00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a816b495516b465e80": {
+          "id": "tpl-single-strike",
+          "schema": "template@1",
+          "name": "單體斬擊",
+          "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。 另外兩格選填：`invulnerableSec` 是**起手的無敵幀**（護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`dot` 是**施法者自己**背上的持續傷害（界王拳那一族的代價；打在敵人身上的同型傷害請用「吸血／汲取」那一族）。三格全部清空 ⇒ 就是一發純傷害。",
+          "family": "single-strike",
+          "status": "enabled",
+          "params": {
+            "damage": {
+              "type": "scaling",
+              "default": {
+                "perRank": [
+                  350
+                ],
+                "ratios": []
+              }
+            },
+            "damageType": {
+              "type": "enum",
+              "default": "magic",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ]
+            },
+            "invulnerableSec": {
+              "type": "number",
+              "min": 0.05,
+              "max": 5,
+              "unit": "s",
+              "optional": true
+            },
+            "dot": {
+              "type": "dot",
+              "optional": true
+            },
+            "status": {
+              "type": "applyStatus",
+              "optional": true
+            },
+            "castTimeSec": {
+              "type": "number",
+              "default": 0,
+              "min": 0,
+              "max": 5,
+              "unit": "s",
+              "optional": true
+            }
+          },
+          "requires": [
+            "applyStatus",
+            "invulnerable",
+            "periodicDamage"
+          ],
+          "gapScore": 9,
+          "exemplar": {
+            "skill": "23-04 雷焰聖劍",
+            "jass": "A0OD"
+          }
+        },
+        "sha256:8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b41146563a36c4be10": {
+          "id": "tpl-blink",
+          "schema": "template@1",
+          "name": "純位移瞬移",
+          "description": "把自己的身體搬到指定的地面點 —— 真的瞬移（`kind:\"blink\"`；owner 2026-08-09「是真的瞬移，不是平移」，GH#301-2），中間那兩格身體不存在：不會被範圍技掃到、飛行途中不吃碰撞；落點仍照 `content/config/displacement-tiers.json` 結算牆前截斷／飛行豁免／場地邊界（GH#1044）。距離上限就是技能自己的射程（skeleton 的 `range`，⛔ 不是這裡的欄位）。⛔ 零參數是刻意的：出貨 7 支（57-02 任意門 · 86-02 電光一閃 · 09-02 瞬間移動 ×2 · 65-01 神出鬼沒 · 58-00 電光一閃 ×2）的 `effects` 一個位元組都不差，多一格就是編一格。要「瞬移到目標身上再打一下」走 tpl-blink-strike；要「抵達點才結算 onLand」走 tpl-teleport。",
+          "family": "blink",
+          "status": "enabled",
+          "params": {
+            "castTimeSec": {
+              "type": "number",
+              "default": 0.467,
+              "min": 0,
+              "max": 5,
+              "unit": "s",
+              "optional": true,
+              "origin": "census: 出貨 7/7 支純位移的 `castTimeSec` 逐位元 0.467（content/abilities/godie-n00b.e.json · o00k.w · o00x.w · ogrh.w · udea.q · o02l.passive · ofar.passive）；⚠️ 它是 castderive:build:raw 推導的欄位，文件與 params 同一個值（同 71/79 位既有採用者的慣例）。"
+            }
+          },
+          "requires": [
+            "blink"
+          ],
+          "gapScore": 9,
+          "exemplar": {
+            "skill": "57-02 任意門（content/abilities/godie-n00b.e.json）",
+            "jass": "A0PM 82-02 虛空瞬動 j:35335-35336（GetOrderPointLoc → SetUnitPositionLoc；同一台「指向點」機器，expand.ts teleport 註解逐字）"
+          }
+        },
+        "sha256:e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771cd614a89d04e016c6": {
+          "id": "tpl-lock-combo",
+          "schema": "template@1",
+          "name": "鎖定連段",
+          "description": "把一個人鎖住打完一整段。命中後目標被定住、施法者進入演出狀態（這段期間打不到他），連段一擊一擊落下，最後一記終結技在收招那一刻結算並掃過周圍。「連段次數 × 每段間隔」就是整段長度 —— 它是算出來的，所以沒有『持續時間』這個欄位可以填。⚠️ 原作的連段中施法者會一擊一擊瞬移到目標身邊，這裡沒有搬過來：那段期間雙方都被 pause + 無敵，施法者站哪裡不影響任何結算，只有終結技的圓心用得到，所以收成原地演出。想要遞減間隔（52-002 射殺百頭的 CD×0.75）也還做不到。 ⭐ owner 2026-08-13：終結技可以是**另一支具名技能**（finisherAbility，走 proxyCast 代放），⛔ 不是把那支技能的傷害抄一份進來 —— 抄一份之後那支技能改了，連段裡的版本不會跟著改。留空則沿用 finisherDamage 那個數字。發動條件也是一格（trigger）：預設 onCast，20-002 是 onReflectSuccess（反彈成功才發），所以整段連段可以掛在被動 hook 上而不是主動施放。",
+          "family": "lock-combo",
+          "status": "enabled",
+          "params": {
+            "hitCount": {
+              "type": "number",
+              "default": 5,
+              "min": 1,
+              "max": 20,
+              "unit": "count"
+            },
+            "hitIntervalSec": {
+              "type": "number",
+              "default": 0.4,
+              "min": 0.05,
+              "max": 3,
+              "unit": "s"
+            },
+            "perHitDamage": {
+              "type": "scaling",
+              "default": {
+                "perRank": [
+                  100
+                ],
+                "ratios": []
+              }
+            },
+            "finisherDamage": {
+              "type": "scaling",
+              "default": {
+                "perRank": [
+                  450
+                ],
+                "ratios": []
+              }
+            },
+            "finisherRadius": {
+              "type": "number",
+              "default": 150,
+              "min": 50,
+              "max": 1800,
+              "unit": "wc3u"
+            },
+            "damageType": {
+              "type": "enum",
+              "default": "magic",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ]
+            },
+            "lockTarget": {
+              "type": "enum",
+              "default": "stun",
+              "values": [
+                "stun",
+                "root",
+                "none"
+              ]
+            },
+            "casterGuard": {
+              "type": "enum",
+              "default": "all",
+              "values": [
+                "all",
+                "magic",
+                "none"
+              ]
+            },
+            "finisherAbility": {
+              "type": "docRef",
+              "optional": true
+            },
+            "trigger": {
+              "type": "enum",
+              "default": "onCast",
+              "values": [
+                "onCast",
+                "onReflectSuccess",
+                "onKill",
+                "onBasicAttack",
+                "onDamageTaken"
+              ]
+            }
+          },
+          "requires": [
+            "periodicDamage",
+            "invulnerable",
+            "applyStatus",
+            "leap"
+          ],
+          "gapScore": 6,
+          "exemplar": {
+            "skill": "84-04 給我蜂蜜",
+            "jass": "A0CX"
+          }
+        },
+        "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+          "id": "tpl-effect-sequence",
+          "schema": "template@1",
+          "name": "自訂效果序列",
+          "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+          "family": "effect-sequence",
+          "status": "enabled",
+          "params": {
+            "castType": {
+              "type": "enum",
+              "default": "targeted",
+              "values": [
+                "targeted",
+                "self",
+                "ground",
+                "skillshot"
+              ],
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+            },
+            "castTimeSec": {
+              "type": "number",
+              "default": 0,
+              "min": 0,
+              "max": 10,
+              "unit": "s",
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+            },
+            "radius": {
+              "type": "number",
+              "default": 2,
+              "min": 0,
+              "max": 40,
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+            },
+            "side": {
+              "type": "enum",
+              "default": "enemies",
+              "values": [
+                "enemies",
+                "allies"
+              ],
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+            },
+            "effects": {
+              "type": "effects",
+              "default": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ],
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+            },
+            "recast": {
+              "type": "recast",
+              "optional": true,
+              "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+            }
+          },
+          "requires": [
+            "hooks",
+            "conditions"
+          ],
+          "gapScore": 10,
+          "exemplar": {
+            "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+            "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+          }
+        }
+      },
+      "slots": {
+        "PASSIVE": {
+          "slot": "PASSIVE",
+          "name": "二刀流",
+          "purpose": "【核准惡搞改編】W成功施法且四秒內用過Q，減少Q冷卻四秒；同按Q、隔太久W都不退。",
+          "maxRank": 1,
+          "abilityOverrides": {
+            "provenance": "editor-json"
+          },
+          "products": [
+            {
+              "instanceId": "passive-parody-1",
+              "template": {
+                "ref": "tpl-event-passive",
+                "params": {
+                  "hooks": [
+                    {
+                      "on": "onAbilityCast",
+                      "effects": [
+                        {
+                          "kind": "modifyCooldown",
+                          "shape": "single",
+                          "who": "self",
+                          "slot": "Q",
+                          "mode": "reduceFlat",
+                          "amount": 4
+                        },
+                        {
+                          "kind": "floatingText",
+                          "shape": "single",
+                          "text": "連點器不算雙刀！",
+                          "applyTo": "self",
+                          "durationSec": 1
+                        }
+                      ],
+                      "internalCooldown": 3,
+                      "target": "self",
+                      "abilitySlot": "W",
+                      "condition": {
+                        "kind": "recentCast",
+                        "subject": "self",
+                        "slot": "Q",
+                        "withinSec": 4
+                      }
+                    }
+                  ]
+                },
+                "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+              }
+            }
+          ],
+          "templateConflictPolicy": "reject",
+          "tuning": {
+            "cooldownSec": 0,
+            "manaCost": 0,
+            "range": 0
+          },
+          "capabilityIds": [
+            "hooks",
+            "conditions"
+          ],
+          "directionOptionIds": [],
+          "fallbackOptionIds": []
+        },
+        "Q": {
+          "slot": "Q",
+          "name": "〔雙劍交叉斬〕",
+          "purpose": "【核准惡搞改編】右手小級劍擊，實際冷卻留給W接續；仍支付自己的魔力。",
+          "maxRank": 4,
+          "abilityOverrides": {
+            "provenance": "editor-json",
+            "range": 6,
+            "cooldown": [
+              10
+            ],
+            "manaCost": [
+              40
+            ]
+          },
+          "products": [
+            {
+              "instanceId": "q-parody-1",
+              "template": {
+                "ref": "tpl-single-strike",
+                "params": {
+                  "damage": {
+                    "damageTier": "小"
+                  },
+                  "damageType": "physical",
+                  "castTimeSec": 0.1
+                },
+                "contentSha256": "sha256:00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a816b495516b465e80"
+              }
+            }
+          ],
+          "templateConflictPolicy": "reject",
+          "tuning": {
+            "cooldownSec": 10,
+            "manaCost": 40,
+            "range": 6
+          },
+          "capabilityIds": [
+            "periodicDamage",
+            "invulnerable",
+            "applyStatus",
+            "leap"
+          ],
+          "directionOptionIds": [],
+          "fallbackOptionIds": []
+        },
+        "W": {
+          "slot": "W",
+          "name": "〔劍技招架〕",
+          "purpose": "【核准惡搞改編】左手小級劍擊；P只在Q→W時報銷Q冷卻，不直接給無敵。",
+          "maxRank": 4,
+          "abilityOverrides": {
+            "provenance": "editor-json",
+            "range": 6,
+            "cooldown": [
+              10
+            ],
+            "manaCost": [
+              40
+            ]
+          },
+          "products": [
+            {
+              "instanceId": "w-parody-1",
+              "template": {
+                "ref": "tpl-single-strike",
+                "params": {
+                  "damage": {
+                    "damageTier": "小"
+                  },
+                  "damageType": "physical",
+                  "castTimeSec": 0.1
+                },
+                "contentSha256": "sha256:00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a816b495516b465e80"
+              }
+            }
+          ],
+          "templateConflictPolicy": "reject",
+          "tuning": {
+            "cooldownSec": 10,
+            "manaCost": 40,
+            "range": 6
+          },
+          "capabilityIds": [],
+          "directionOptionIds": [],
+          "fallbackOptionIds": []
+        },
+        "E": {
+          "slot": "E",
+          "name": "Sonic Leap",
+          "purpose": "【核准惡搞改編】側步離場到合法落點，不自動重置雙刀。",
+          "maxRank": 4,
+          "abilityOverrides": {
+            "provenance": "editor-json",
+            "range": 6,
+            "cooldown": [
+              10
+            ],
+            "manaCost": [
+              40
+            ]
+          },
+          "products": [
+            {
+              "instanceId": "e-parody-1",
+              "template": {
+                "ref": "tpl-blink",
+                "params": {
+                  "castTimeSec": 0.1
+                },
+                "contentSha256": "sha256:8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b41146563a36c4be10"
+              }
+            }
+          ],
+          "templateConflictPolicy": "reject",
+          "tuning": {
+            "cooldownSec": 10,
+            "manaCost": 40,
+            "range": 6
+          },
+          "capabilityIds": [
+            "leap"
+          ],
+          "directionOptionIds": [],
+          "fallbackOptionIds": []
+        },
+        "R": {
+          "slot": "R",
+          "name": "Starburst Stream",
+          "purpose": "【核准惡搞改編】限量四連斬：四段極小傷害，最後不再乘一次段數。",
+          "maxRank": 3,
+          "abilityOverrides": {
+            "provenance": "editor-json",
+            "range": 6,
+            "cooldown": [
+              30
+            ],
+            "manaCost": [
+              60
+            ]
+          },
+          "products": [
+            {
+              "instanceId": "r-parody-1",
+              "template": {
+                "ref": "tpl-lock-combo",
+                "params": {
+                  "hitCount": 4,
+                  "hitIntervalSec": 0.2,
+                  "perHitDamage": {
+                    "damageTier": "極小"
+                  },
+                  "finisherDamage": {
+                    "perRank": [
+                      450
+                    ],
+                    "ratios": []
+                  },
+                  "finisherRadius": 150,
+                  "damageType": "physical",
+                  "lockTarget": "none",
+                  "casterGuard": "none",
+                  "trigger": "onCast"
+                },
+                "contentSha256": "sha256:e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771cd614a89d04e016c6"
+              }
+            }
+          ],
+          "templateConflictPolicy": "reject",
+          "tuning": {
+            "cooldownSec": 60,
+            "manaCost": 100,
+            "range": 6
+          },
+          "capabilityIds": [
+            "periodicDamage",
+            "invulnerable",
+            "applyStatus",
+            "leap"
+          ],
+          "directionOptionIds": [],
+          "fallbackOptionIds": []
+        },
+        "EX": {
+          "slot": "EX",
+          "name": "The Eclipse",
+          "purpose": "【核准惡搞改編】左手忙完才包紮：回復100生命，四秒內用過W再回復120。",
+          "maxRank": 1,
+          "abilityOverrides": {
+            "provenance": "editor-json",
+            "range": 6,
+            "cooldown": [
+              10
+            ],
+            "manaCost": [
+              40
+            ]
+          },
+          "products": [
+            {
+              "instanceId": "ex-parody-1",
+              "template": {
+                "ref": "tpl-effect-sequence",
+                "params": {
+                  "castType": "self",
+                  "castTimeSec": 0.1,
+                  "radius": 3,
+                  "side": "enemies",
+                  "effects": [
+                    {
+                      "kind": "heal",
+                      "amount": {
+                        "flat": 100
+                      },
+                      "applyTo": "self"
+                    },
+                    {
+                      "kind": "heal",
+                      "amount": {
+                        "flat": 120
+                      },
+                      "applyTo": "self",
+                      "condition": {
+                        "kind": "recentCast",
+                        "subject": "self",
+                        "slot": "W",
+                        "withinSec": 4
+                      }
+                    }
+                  ]
+                },
+                "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+              }
+            }
+          ],
+          "templateConflictPolicy": "reject",
+          "tuning": {
+            "cooldownSec": 60,
+            "manaCost": 100,
+            "range": 6
+          },
+          "capabilityIds": [
+            "periodicDamage",
+            "invulnerable",
+            "applyStatus",
+            "leap"
+          ],
+          "directionOptionIds": [],
+          "fallbackOptionIds": []
+        }
+      }
+    },
+    "presentation": {
+      "schema": "ggd-hero-presentation@1",
+      "modelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+      "uploadedModel": {
+        "schema": "ggd-uploaded-hero-model@1",
+        "sha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+        "byteSize": 1104488,
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01a",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "yawOffsetDeg": 0
+      },
+      "championIcon": "assets/icons/champions/thorne.webp",
+      "slots": {
+        "PASSIVE": {
+          "slot": "PASSIVE",
+          "gameplayEvent": "abilityCast",
+          "vfxLayers": [],
+          "script": null,
+          "sfxKey": null,
+          "icon": "assets/icons/abilities/thorne.q.webp",
+          "fallback": {
+            "pointWithoutTarget": "caster",
+            "missingSfx": "generic-cast",
+            "missingVfx": "block-package"
+          }
+        },
+        "Q": {
+          "slot": "Q",
+          "gameplayEvent": "abilityCast",
+          "vfxLayers": [],
+          "script": {
+            "id": "community-review-19-20260907.q",
+            "schema": "vfx-script@1",
+            "abilityId": "community-review-19-20260907.q",
+            "segments": [
+              {
+                "kind": "anim",
+                "on": "castStart",
+                "at": "caster",
+                "pulse": "cast"
+              },
+              {
+                "vfxId": "fx.prim.arcane.slash",
+                "at": "target",
+                "kind": "vfx",
+                "on": "castEffect"
+              }
+            ]
+          },
+          "sfxKey": null,
+          "icon": "assets/icons/abilities/thorne.q.webp",
+          "fallback": {
+            "pointWithoutTarget": "caster",
+            "missingSfx": "generic-cast",
+            "missingVfx": "block-package"
+          }
+        },
+        "W": {
+          "slot": "W",
+          "gameplayEvent": "abilityCast",
+          "vfxLayers": [],
+          "script": {
+            "id": "community-review-19-20260907.w",
+            "schema": "vfx-script@1",
+            "abilityId": "community-review-19-20260907.w",
+            "segments": [
+              {
+                "kind": "anim",
+                "on": "castStart",
+                "at": "caster",
+                "pulse": "cast"
+              },
+              {
+                "vfxId": "fx.prim.arcane.slash",
+                "at": "target",
+                "kind": "vfx",
+                "on": "castEffect"
+              }
+            ]
+          },
+          "sfxKey": null,
+          "icon": "assets/icons/abilities/thorne.w.webp",
+          "fallback": {
+            "pointWithoutTarget": "caster",
+            "missingSfx": "generic-cast",
+            "missingVfx": "block-package"
+          }
+        },
+        "E": {
+          "slot": "E",
+          "gameplayEvent": "abilityCast",
+          "vfxLayers": [],
+          "script": {
+            "id": "community-review-19-20260907.e",
+            "schema": "vfx-script@1",
+            "abilityId": "community-review-19-20260907.e",
+            "segments": [
+              {
+                "kind": "anim",
+                "on": "castStart",
+                "at": "caster",
+                "pulse": "cast"
+              },
+              {
+                "vfxId": "fx.prim.arcane.dash",
+                "at": "target",
+                "kind": "vfx",
+                "on": "castEffect"
+              }
+            ]
+          },
+          "sfxKey": null,
+          "icon": "assets/icons/abilities/thorne.e.webp",
+          "fallback": {
+            "pointWithoutTarget": "caster",
+            "missingSfx": "generic-cast",
+            "missingVfx": "block-package"
+          }
+        },
+        "R": {
+          "slot": "R",
+          "gameplayEvent": "abilityCast",
+          "vfxLayers": [],
+          "script": {
+            "id": "community-review-19-20260907.r",
+            "schema": "vfx-script@1",
+            "abilityId": "community-review-19-20260907.r",
+            "segments": [
+              {
+                "kind": "anim",
+                "on": "castStart",
+                "at": "caster",
+                "pulse": "cast"
+              },
+              {
+                "vfxId": "fx.prim.arcane.pulse-sm",
+                "at": "target",
+                "kind": "vfx",
+                "on": "castEffect"
+              }
+            ]
+          },
+          "sfxKey": null,
+          "icon": "assets/icons/abilities/thorne.r.webp",
+          "fallback": {
+            "pointWithoutTarget": "caster",
+            "missingSfx": "generic-cast",
+            "missingVfx": "block-package"
+          }
+        },
+        "EX": {
+          "slot": "EX",
+          "gameplayEvent": "abilityCast",
+          "vfxLayers": [],
+          "script": {
+            "id": "community-review-19-20260907.ex",
+            "schema": "vfx-script@1",
+            "abilityId": "community-review-19-20260907.ex",
+            "segments": [
+              {
+                "kind": "anim",
+                "on": "castStart",
+                "at": "caster",
+                "pulse": "cast"
+              },
+              {
+                "vfxId": "fx.prim.arcane.pulse-sm",
+                "at": "self",
+                "kind": "vfx",
+                "on": "castEffect"
+              }
+            ]
+          },
+          "sfxKey": null,
+          "icon": "assets/icons/abilities/thorne.r.webp",
+          "fallback": {
+            "pointWithoutTarget": "caster",
+            "missingSfx": "generic-cast",
+            "missingVfx": "block-package"
+          }
+        }
+      },
+      "assetLocks": [
+        {
+          "path": "assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
+          "byteSize": 1104488,
+          "mediaType": "model/gltf-binary",
+          "sha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+          "kind": "model",
+          "registry": "normalized-upload",
+          "consumers": [
+            "champion:model"
+          ]
+        }
+      ]
+    },
+    "validationState": {
+      "identity": {
+        "revision": 0,
+        "status": "idle",
+        "diagnosticCodes": []
+      },
+      "attributes": {
+        "revision": 0,
+        "status": "idle",
+        "diagnosticCodes": []
+      },
+      "skills": {
+        "revision": 0,
+        "status": "idle",
+        "diagnosticCodes": []
+      },
+      "mechanics": {
+        "revision": 0,
+        "status": "idle",
+        "diagnosticCodes": []
+      },
+      "presentation": {
+        "revision": 0,
+        "status": "idle",
+        "diagnosticCodes": []
+      },
+      "validation": {
+        "revision": 0,
+        "status": "idle",
+        "diagnosticCodes": []
+      },
+      "package": {
+        "revision": 0,
+        "status": "idle",
+        "diagnosticCodes": []
+      }
+    },
+    "receipts": []
+  }
+}

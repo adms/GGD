@@ -1,0 +1,76 @@
+{
+  "id": "b2-haga.w",
+  "name": "跳到有我截圖的當事人",
+  "provenance": "editor-json",
+  "description": "「跳到有我截圖的當事人！」\n指定自己留下 camera-mark 的當事人，才瞬移到他前 1.5 單位；未標記目標不位移。跨槽不使用只認同技能來源的 markedUnit。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把敵人當重現步驟，把隊友當測試同事。GGD 惡搞改編，非原作招式與數值聲明。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "radius": 3,
+  "rangeTier": "中",
+  "cooldownTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "blink",
+      "condition": {
+        "kind": "status",
+        "subject": "target",
+        "statusId": "camera-mark",
+        "appliedBy": "self"
+      },
+      "shape": "single",
+      "to": "targetUnit",
+      "applyTo": "self",
+      "stopShortUnits": 1.5
+    }
+  ],
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "attachTo": "caster"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "effects": [
+        {
+          "kind": "blink",
+          "shape": "single",
+          "to": "targetUnit",
+          "applyTo": "self",
+          "stopShortUnits": 1.5,
+          "condition": {
+            "kind": "status",
+            "statusId": "camera-mark",
+            "subject": "target",
+            "appliedBy": "self"
+          }
+        }
+      ],
+      "castType": "targeted",
+      "side": "enemies",
+      "castTimeSec": 0.1,
+      "radius": 3
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

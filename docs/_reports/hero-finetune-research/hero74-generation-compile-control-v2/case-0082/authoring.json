@@ -1,0 +1,82 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "R",
+      "name": "〔不死者的再起〕",
+      "purpose": "【核准惡搞改編】健身成果展示，兩次小級物理傷害；不是永久吸血。",
+      "maxRank": 3,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          30
+        ],
+        "manaCost": [
+          60
+        ]
+      },
+      "products": [
+        {
+          "instanceId": "r-parody-1",
+          "template": {
+            "ref": "tpl-lock-combo",
+            "params": {
+              "hitCount": 2,
+              "hitIntervalSec": 0.3,
+              "perHitDamage": {
+                "damageTier": "小"
+              },
+              "finisherDamage": {
+                "perRank": [
+                  450
+                ],
+                "ratios": []
+              },
+              "finisherRadius": 150,
+              "damageType": "physical",
+              "lockTarget": "none",
+              "casterGuard": "none",
+              "trigger": "onCast"
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 60,
+        "manaCost": 100,
+        "range": 6
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.r.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "target",
+          "vfxId": "fx.prim.arcane.pulse-sm"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-33-20260907:HERO",
+    "wholeTargetSha256": "33aac70fef492f493f825552094f278b4342e10602704acaf2527c338418b283",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

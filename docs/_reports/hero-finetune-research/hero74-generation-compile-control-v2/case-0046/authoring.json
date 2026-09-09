@@ -1,0 +1,102 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "E",
+      "name": "〔鐵砂防壁〕",
+      "purpose": "【核准惡搞改編】販賣機不吐飲料就踢一下：120護盾三秒；最近四秒用過W連鎖放電，自己額外回復160生命。E不集電、不耗過載。",
+      "maxRank": 4,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "products": [
+        {
+          "instanceId": "e-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 120
+                  },
+                  "duration": 3,
+                  "absorbs": "all",
+                  "stackKey": "community-review-20-20260907.protection",
+                  "onExisting": "keepLarger"
+                },
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 160
+                  },
+                  "applyTo": "self",
+                  "condition": {
+                    "kind": "recentCast",
+                    "subject": "self",
+                    "slot": "W",
+                    "withinSec": 4
+                  }
+                },
+                {
+                  "kind": "floatingText",
+                  "shape": "single",
+                  "text": "今天終於有找零",
+                  "applyTo": "self",
+                  "durationSec": 1
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 10,
+        "manaCost": 40,
+        "range": 6
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/sela.e.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "self",
+          "vfxId": "fx.prim.arcane.pulse-sm"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-20-20260907:HERO",
+    "wholeTargetSha256": "41a2ce14779f899cc756ea8ac66793c383a37a71fd9ac371d7845d44b9c5503c",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

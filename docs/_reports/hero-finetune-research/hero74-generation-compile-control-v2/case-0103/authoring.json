@@ -1,0 +1,92 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "R",
+      "name": "測試結束回收增益與魔力",
+      "purpose": "「測試結束回收增益與魔力！」\n移除敵人最多 2 項增益；若仍有 magic-break，回復自己最大魔力 10% 並消耗該標記。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把敵人當重現步驟，把隊友當測試同事。GGD 惡搞改編，非原作招式與數值聲明。",
+      "maxRank": 3,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "manaCostTier": "小"
+      },
+      "products": [
+        {
+          "instanceId": "b2-haga.r.card1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "effects": [
+                {
+                  "kind": "dispel",
+                  "shape": "single",
+                  "polarity": "buff",
+                  "pools": {
+                    "buffs": true,
+                    "shields": true
+                  },
+                  "count": 2,
+                  "order": "newest"
+                },
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "statusId": "magic-break",
+                  "count": "all",
+                  "subject": "target",
+                  "onConsumed": [
+                    {
+                      "kind": "restore",
+                      "manaPct": 0.1,
+                      "applyTo": "self"
+                    }
+                  ]
+                }
+              ],
+              "castType": "targeted",
+              "side": "enemies",
+              "castTimeSec": 0.1,
+              "radius": 3
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 90,
+        "manaCost": 144,
+        "range": 6
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": null,
+      "sfxKey": null,
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "b2-haga:HERO",
+    "wholeTargetSha256": "23df8d4d4dbb4c8df5f09a1f80b49219520d2baf45e2165cff9d09d5998bb45b",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

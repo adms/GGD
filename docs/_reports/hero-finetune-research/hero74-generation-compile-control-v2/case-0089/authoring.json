@@ -1,0 +1,98 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "R",
+      "name": "Rance Attack／蘭斯攻擊",
+      "purpose": "【核准惡搞改編】隊友先走：指定隊友移速+40%三秒；四秒內用過W再給240護盾。",
+      "maxRank": 3,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          30
+        ],
+        "manaCost": [
+          60
+        ]
+      },
+      "products": [
+        {
+          "instanceId": "r-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "allies",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "rage",
+                  "duration": 3,
+                  "applyTo": "target",
+                  "sourceScope": "caster",
+                  "moveSpeedMult": 1.4
+                },
+                {
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 240
+                  },
+                  "duration": 3,
+                  "absorbs": "all",
+                  "stackKey": "community-review-36-20260907.protection",
+                  "onExisting": "keepLarger",
+                  "condition": {
+                    "kind": "recentCast",
+                    "subject": "self",
+                    "slot": "W",
+                    "withinSec": 4
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 60,
+        "manaCost": 100,
+        "range": 6
+      },
+      "capabilityIds": [
+        "projectile"
+      ],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.r.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "target",
+          "vfxId": "fx.prim.wind.pulse-sm"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-36-20260907:HERO",
+    "wholeTargetSha256": "b4cc0c6e5eaf880247361ccf37c83ce7b9220bc9e9dff906f5860fd9dc101800",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

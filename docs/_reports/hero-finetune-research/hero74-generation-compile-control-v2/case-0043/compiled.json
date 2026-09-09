@@ -1,0 +1,315 @@
+{
+  "id": "community-review-20-20260907.passive",
+  "name": "〔電荷累積〕",
+  "provenance": "editor-json",
+  "description": "【本次玩法】御坂踢販賣機：交替電擊充電，連鎖後才掉出治療飲料\n【修正行為】Q／W／R 實際扣除敵人生命時，與上一個成功技能不同才加一層電荷，上限三層；同次多目標／多跳只計一次。普攻、空招與只打掉盾不集氣。電荷與過載在回合重置。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0,
+  "effects": [],
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onDamageDealt",
+            "abilitySlot": "Q",
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "community-review-20-20260907.charge",
+                "stacks": 1,
+                "duration": 1
+              },
+              {
+                "kind": "applyBuff",
+                "modifiers": [],
+                "permanent": true,
+                "permanentScope": "round",
+                "statusId": "community-review-20-20260907.last-q",
+                "applyTo": "self",
+                "exclusiveGroup": "community-review-20-20260907.last-skill",
+                "exclusiveOnExisting": "replace",
+                "stackKey": "community-review-20-20260907.last-q",
+                "maxStacks": 1
+              }
+            ],
+            "condition": {
+              "not": {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "community-review-20-20260907.last-q"
+              }
+            },
+            "target": "self",
+            "oncePerCast": true,
+            "damageSource": "ability"
+          },
+          {
+            "on": "onDamageDealt",
+            "abilitySlot": "W",
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "community-review-20-20260907.charge",
+                "stacks": 1,
+                "duration": 1
+              },
+              {
+                "kind": "applyBuff",
+                "modifiers": [],
+                "permanent": true,
+                "permanentScope": "round",
+                "statusId": "community-review-20-20260907.last-w",
+                "applyTo": "self",
+                "exclusiveGroup": "community-review-20-20260907.last-skill",
+                "exclusiveOnExisting": "replace",
+                "stackKey": "community-review-20-20260907.last-w",
+                "maxStacks": 1
+              }
+            ],
+            "condition": {
+              "not": {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "community-review-20-20260907.last-w"
+              }
+            },
+            "target": "self",
+            "oncePerCast": true,
+            "damageSource": "ability"
+          },
+          {
+            "on": "onDamageDealt",
+            "abilitySlot": "R",
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "community-review-20-20260907.charge",
+                "stacks": 1,
+                "duration": 1
+              },
+              {
+                "kind": "applyBuff",
+                "modifiers": [],
+                "permanent": true,
+                "permanentScope": "round",
+                "statusId": "community-review-20-20260907.last-r",
+                "applyTo": "self",
+                "exclusiveGroup": "community-review-20-20260907.last-skill",
+                "exclusiveOnExisting": "replace",
+                "stackKey": "community-review-20-20260907.last-r",
+                "maxStacks": 1
+              }
+            ],
+            "condition": {
+              "not": {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "community-review-20-20260907.last-r"
+              }
+            },
+            "target": "self",
+            "oncePerCast": true,
+            "damageSource": "ability"
+          }
+        ]
+      }
+    ]
+  },
+  "marks": [
+    {
+      "markId": "community-review-20-20260907.charge",
+      "initial": 0,
+      "max": 3,
+      "durationSec": -1,
+      "resetOn": "round",
+      "perStackLost": []
+    },
+    {
+      "markId": "community-review-20-20260907.overload",
+      "initial": 0,
+      "max": 3,
+      "durationSec": -1,
+      "resetOn": "round",
+      "perStackLost": []
+    }
+  ],
+  "icon": "assets/icons/abilities/sela.q.webp",
+  "template": {
+    "cards": [
+      {
+        "ref": "hero-template.c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8",
+        "params": {
+          "markId": "community-review-20-20260907.charge",
+          "initial": 0,
+          "max": 3,
+          "durationSec": -1,
+          "resetOn": "round",
+          "perStackLost": [],
+          "lethalMode": "none",
+          "lethalConsume": 1,
+          "surviveHpPct": 0.01,
+          "lethalDamageTypes": "all",
+          "internalCooldown": 0.5,
+          "invulnerableSec": 1.5,
+          "invulnerableScope": "damageAndControl",
+          "restoreHealthPct": 0.5,
+          "aoeRadius": 6,
+          "knockbackDistance": 4,
+          "knockbackSpeed": 16,
+          "knockbackFrom": "caster",
+          "stunSec": 0.5,
+          "stunStatusId": "trial-stun"
+        },
+        "contentSha256": "sha256:96c2b1dc9c2f30e2ce468873ef2dc08edee6ff6ec678862db64e565a31a00dbc"
+      },
+      {
+        "ref": "hero-template.c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8",
+        "params": {
+          "markId": "community-review-20-20260907.overload",
+          "initial": 0,
+          "max": 3,
+          "durationSec": -1,
+          "resetOn": "round",
+          "perStackLost": [],
+          "lethalMode": "none",
+          "lethalConsume": 1,
+          "surviveHpPct": 0.01,
+          "lethalDamageTypes": "all",
+          "internalCooldown": 0.5,
+          "invulnerableSec": 1.5,
+          "invulnerableScope": "damageAndControl",
+          "restoreHealthPct": 0.5,
+          "aoeRadius": 6,
+          "knockbackDistance": 4,
+          "knockbackSpeed": 16,
+          "knockbackFrom": "caster",
+          "stunSec": 0.5,
+          "stunStatusId": "trial-stun"
+        },
+        "contentSha256": "sha256:96c2b1dc9c2f30e2ce468873ef2dc08edee6ff6ec678862db64e565a31a00dbc"
+      },
+      {
+        "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "params": {
+          "hooks": [
+            {
+              "on": "onDamageDealt",
+              "abilitySlot": "Q",
+              "damageSource": "ability",
+              "oncePerCast": true,
+              "target": "self",
+              "condition": {
+                "not": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "community-review-20-20260907.last-q"
+                }
+              },
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "community-review-20-20260907.charge",
+                  "stacks": 1,
+                  "duration": 1
+                },
+                {
+                  "kind": "applyBuff",
+                  "applyTo": "self",
+                  "statusId": "community-review-20-20260907.last-q",
+                  "stackKey": "community-review-20-20260907.last-q",
+                  "maxStacks": 1,
+                  "modifiers": [],
+                  "permanent": true,
+                  "permanentScope": "round",
+                  "exclusiveGroup": "community-review-20-20260907.last-skill",
+                  "exclusiveOnExisting": "replace"
+                }
+              ]
+            },
+            {
+              "on": "onDamageDealt",
+              "abilitySlot": "W",
+              "damageSource": "ability",
+              "oncePerCast": true,
+              "target": "self",
+              "condition": {
+                "not": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "community-review-20-20260907.last-w"
+                }
+              },
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "community-review-20-20260907.charge",
+                  "stacks": 1,
+                  "duration": 1
+                },
+                {
+                  "kind": "applyBuff",
+                  "applyTo": "self",
+                  "statusId": "community-review-20-20260907.last-w",
+                  "stackKey": "community-review-20-20260907.last-w",
+                  "maxStacks": 1,
+                  "modifiers": [],
+                  "permanent": true,
+                  "permanentScope": "round",
+                  "exclusiveGroup": "community-review-20-20260907.last-skill",
+                  "exclusiveOnExisting": "replace"
+                }
+              ]
+            },
+            {
+              "on": "onDamageDealt",
+              "abilitySlot": "R",
+              "damageSource": "ability",
+              "oncePerCast": true,
+              "target": "self",
+              "condition": {
+                "not": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "community-review-20-20260907.last-r"
+                }
+              },
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "community-review-20-20260907.charge",
+                  "stacks": 1,
+                  "duration": 1
+                },
+                {
+                  "kind": "applyBuff",
+                  "applyTo": "self",
+                  "statusId": "community-review-20-20260907.last-r",
+                  "stackKey": "community-review-20-20260907.last-r",
+                  "maxStacks": 1,
+                  "modifiers": [],
+                  "permanent": true,
+                  "permanentScope": "round",
+                  "exclusiveGroup": "community-review-20-20260907.last-skill",
+                  "exclusiveOnExisting": "replace"
+                }
+              ]
+            }
+          ]
+        },
+        "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+      }
+    ],
+    "onConflict": "reject"
+  },
+  "schema": "ability@1"
+}

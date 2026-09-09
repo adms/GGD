@@ -1,0 +1,96 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "E",
+      "name": "〔逼近步〕",
+      "purpose": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n向輸入方向短距離貼地接近；地形或第一個敵人攔截即停，不附帶原模板的傷害、擊飛或推移。保留 GGD 既有已開始衝刺的控制規則。",
+      "maxRank": 4,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "castTimeSec": 0,
+        "cooldown": [
+          6,
+          6,
+          6,
+          6
+        ],
+        "manaCost": [
+          40,
+          40,
+          40,
+          40
+        ],
+        "range": 3
+      },
+      "products": [
+        {
+          "instanceId": "e-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "dash",
+                  "mode": "forward",
+                  "speed": 10,
+                  "maxDistance": 3,
+                  "stopOnHit": "enemy"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 10,
+        "manaCost": 40,
+        "range": 6
+      },
+      "capabilityIds": [
+        "leap",
+        "knockback"
+      ],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.e.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast",
+          "replaces": "caster.action"
+        },
+        {
+          "kind": "vfx",
+          "on": "castStart",
+          "at": "self",
+          "vfxId": "fx.prim.physical.pulse-sm"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "self",
+          "vfxId": "fx.prim.physical.slash"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-28-20260907:HERO",
+    "wholeTargetSha256": "83b7b62e201feb55955b9cd361a9d7edd36ba41d694a0dad2f3905b0604bbc38",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

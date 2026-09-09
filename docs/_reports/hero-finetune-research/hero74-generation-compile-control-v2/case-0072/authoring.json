@@ -1,0 +1,108 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "Q",
+      "name": "〔猛進斬〕",
+      "purpose": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n向輸入方向踏進一格後，才從實際終點揮一次前方近身弧斬；貼地移動，敵人逐個單次傷害，牆前停止後從實際終點判定。專用劍擊動作仍待畫面驗收。",
+      "maxRank": 4,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "castTimeSec": 0.15,
+        "cooldown": [
+          5,
+          5,
+          5,
+          5
+        ],
+        "manaCost": [
+          40,
+          40,
+          40,
+          40
+        ],
+        "range": 3
+      },
+      "products": [
+        {
+          "instanceId": "q-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0.15,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "dash",
+                  "mode": "forward",
+                  "speed": 8,
+                  "maxDistance": 1,
+                  "onEnd": [
+                    {
+                      "kind": "damageArea",
+                      "fromCaster": true,
+                      "radius": 2,
+                      "arcHalfAngleCos": 0.3,
+                      "amount": {
+                        "damageTier": "小",
+                        "ratios": []
+                      },
+                      "damageType": "physical"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 10,
+        "manaCost": 40,
+        "range": 6
+      },
+      "capabilityIds": [
+        "leap",
+        "knockback"
+      ],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast",
+          "replaces": "caster.action"
+        },
+        {
+          "kind": "vfx",
+          "on": "castStart",
+          "at": "self",
+          "vfxId": "fx.prim.physical.pulse-sm"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "self",
+          "vfxId": "fx.prim.physical.slash"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-28-20260907:HERO",
+    "wholeTargetSha256": "83b7b62e201feb55955b9cd361a9d7edd36ba41d694a0dad2f3905b0604bbc38",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

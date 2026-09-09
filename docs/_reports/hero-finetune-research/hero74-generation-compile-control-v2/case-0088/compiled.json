@@ -1,0 +1,47 @@
+{
+  "id": "community-review-36-20260907.e",
+  "name": "〔霸王突進〕",
+  "provenance": "editor-json",
+  "description": "【核准惡搞改編】勇者先衝：貼地前進三格，敵人仍可用地形攔截。",
+  "slot": "E",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    10
+  ],
+  "manaCost": [
+    40
+  ],
+  "range": 6,
+  "radius": 3,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "dash",
+      "mode": "forward",
+      "speed": 8,
+      "maxDistance": 3
+    }
+  ],
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/thorne.e.webp",
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "castType": "skillshot",
+      "castTimeSec": 0.1,
+      "radius": 3,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "forward",
+          "speed": 8,
+          "maxDistance": 3
+        }
+      ]
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

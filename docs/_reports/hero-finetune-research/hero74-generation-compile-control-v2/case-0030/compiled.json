@@ -1,0 +1,73 @@
+{
+  "id": "community-review-17-20260907.q",
+  "name": "心臟掌握",
+  "provenance": "editor-json",
+  "description": "【核准惡搞改編】例行業務魔法：小級魔法傷害加0.5AP。",
+  "slot": "Q",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    10
+  ],
+  "manaCost": [
+    40
+  ],
+  "range": 6,
+  "effects": [
+    {
+      "kind": "damageLine",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.2232
+          }
+        ],
+        "flat": 500,
+        "perRank": [
+          0,
+          250,
+          500,
+          750
+        ]
+      },
+      "length": 9,
+      "width": 1.5,
+      "aim": "target",
+      "fromCaster": true,
+      "includeOrigin": true
+    }
+  ],
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/sela.q.webp",
+  "template": {
+    "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71",
+    "params": {
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.5
+          }
+        ],
+        "flat": 500,
+        "perRank": [
+          0,
+          250,
+          500,
+          750
+        ]
+      },
+      "damageType": "magic",
+      "length": 9,
+      "width": 1.5,
+      "aim": "target",
+      "castTimeSec": 0.1
+    },
+    "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5"
+  },
+  "schema": "ability@1"
+}

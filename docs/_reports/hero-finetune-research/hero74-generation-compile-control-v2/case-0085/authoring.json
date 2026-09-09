@@ -1,0 +1,71 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "PASSIVE",
+      "name": "〔自信過剩〕",
+      "purpose": "【核准惡搞改編】自己受傷時，三秒內用過W才回復80生命，每兩秒一次；嘴砲前被打沒有安慰獎。",
+      "maxRank": 1,
+      "abilityOverrides": {
+        "provenance": "editor-json"
+      },
+      "products": [
+        {
+          "instanceId": "passive-parody-1",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onDamageTaken",
+                  "effects": [
+                    {
+                      "kind": "heal",
+                      "amount": {
+                        "flat": 80
+                      },
+                      "applyTo": "self",
+                      "condition": {
+                        "kind": "recentCast",
+                        "subject": "self",
+                        "slot": "W",
+                        "withinSec": 3
+                      }
+                    }
+                  ],
+                  "internalCooldown": 2,
+                  "target": "self"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 0,
+        "manaCost": 0,
+        "range": 0
+      },
+      "capabilityIds": [
+        "hooks",
+        "conditions"
+      ],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": []
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-36-20260907:HERO",
+    "wholeTargetSha256": "b4cc0c6e5eaf880247361ccf37c83ce7b9220bc9e9dff906f5860fd9dc101800",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

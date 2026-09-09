@@ -1,0 +1,55 @@
+{
+  "id": "b2-nube.e",
+  "name": "符咒貼上禁止聊天",
+  "provenance": "editor-json",
+  "description": "「符咒貼上禁止聊天！」\n指定敵人施加 magic-break 與 silenced 旗標 2.5 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    15,
+    15,
+    15,
+    15
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "rangeTier": "中",
+  "cooldownTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "statusId": "magic-break",
+      "duration": 2.5,
+      "silenced": true
+    }
+  ],
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "attachTo": "caster"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "template": {
+    "ref": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
+    "params": {
+      "status": {
+        "statusId": "magic-break",
+        "duration": 2.5,
+        "silenced": true
+      },
+      "castTimeSec": 0.1
+    },
+    "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539"
+  },
+  "schema": "ability@1"
+}

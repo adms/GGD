@@ -1,0 +1,106 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "W",
+      "name": "〔草莓牛奶休息時間〕",
+      "purpose": "【本次玩法】銀時偷喝草莓奶：偷閒存貨，喝奶怕被打斷，吐槽打斷別人\n【修正行為】消耗一份補給後飲用1秒，再恢復100/150/200/250生命；真正移動或受擊（含護盾／格擋命中）中斷，已付補給與冷卻不返還。",
+      "maxRank": 4,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 0,
+        "cooldown": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "castTimeSec": 1,
+        "rootWhileCasting": false,
+        "interruptOn": "damageOrMove",
+        "statusCost": {
+          "statusId": "community-review-23-20260907.supply",
+          "count": 1
+        }
+      },
+      "products": [
+        {
+          "instanceId": "drink",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 100,
+                    "perRank": [
+                      0,
+                      50,
+                      100,
+                      150
+                    ],
+                    "ratios": []
+                  },
+                  "applyTo": "self"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 10,
+        "manaCost": 40,
+        "range": 6
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.w.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast",
+          "replaces": "caster.action"
+        },
+        {
+          "kind": "vfx",
+          "on": "castStart",
+          "at": "self",
+          "vfxId": "fx.prim.physical.pulse-sm"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "self",
+          "vfxId": "fx.prim.physical.pulse"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-23-20260907:HERO",
+    "wholeTargetSha256": "e5cfd1a78ad71be587655f71fbc7a0df1fdf80cadc045863c81a847476de0ffb",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

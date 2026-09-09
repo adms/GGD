@@ -1,0 +1,2068 @@
+{
+  "schema": "ggd-distillation-generation-compile@1",
+  "sourceEvidence": {
+    "arm": "teacher-control",
+    "answersSha256": "66e5b12240df5730f9409f1f25ddd19b057136af8c69cfd9142ed472128d7f15",
+    "modelInferenceCalls": 0
+  },
+  "scriptSha256": "dfc1240120a6449703c7343359acb141e955dbd15a614efd1afb9733b2a02a49",
+  "adapterSha256": "4c66c50c34b8da9758273e8c02ad41448ca04a97182b0140c23cba8185356a21",
+  "evaluationManifestSha256": "ac297f754978c4542d632a7e49df5dc7af7e6e79ab63237b2919f733dbe8e260",
+  "modelBindingsSha256": "951cc8b0f2c95003040854f153638be6d6ec3027e49bd9808f65f41911172d89",
+  "engines": {
+    "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92": {
+      "revision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "archiveSha256": "8c2b0a1ecafc03b18bd206629fd4c4218371548f9de6e575586823258c0832c5",
+      "archiveBytes": 19302400,
+      "zodVersion": "3.25.76",
+      "sourceFiles": {
+        "heroForge/schema.ts": "5646135ec6e04a705403d8032c05169c684d3247a328c458d20df97cc3388f1d",
+        "schema/ability.ts": "3e8b8b2535feae5d932d8cbae149136334c49eeaab72ed4e3fa13b581c277c2e",
+        "schema/champion.ts": "7fbdb2ad519609d7ec464c6f49867f8ab3c25b65b4e413edded2cab70b3af7b3",
+        "heroForge/generator.ts": "2df5ad73425482dab395bcd2eb8cf54d71e7cf44b6141e840f4384fb1c2d8064",
+        "runtimeResolver.ts": "06a4709bc9ea04c36dae17f32a39d76e072c0720896485e4ee2115c34c281b6c",
+        "templates/resolve.ts": "2f5517ceeba4d5a7bac6534870de1c81ba3e32a5e094711d37eaf4c18130fe57",
+        "heroForge/presentation.ts": "ebe52db9a5d3e3e4416a9112c7c85c1b6da86f265be67a2003dab2882e77a49b"
+      }
+    },
+    "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b": {
+      "revision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "archiveSha256": "418bda31a75deac1bf21dd1e67719b78f188a1854851f8ece00aed83c88cca08",
+      "archiveBytes": 20531200,
+      "zodVersion": "3.25.76",
+      "sourceFiles": {
+        "heroForge/schema.ts": "3954f52625d309e950eb9fdfe638248e1399a1c3bd230e3f3593d6e5b50f164e",
+        "schema/ability.ts": "d655a3a2f77f0043f743f6762d05c607e39846e91752147967190771ecf389ea",
+        "schema/champion.ts": "c02f4c1f4476c757ecd316684d34246943b6aaf0f583c95927d3997b9c8782d3",
+        "heroForge/generator.ts": "ab36e7bee2e8638a9542f4a3b381f877d35e415d4b47bfc1bcc3698e43275b77",
+        "runtimeResolver.ts": "06a4709bc9ea04c36dae17f32a39d76e072c0720896485e4ee2115c34c281b6c",
+        "templates/resolve.ts": "2f5517ceeba4d5a7bac6534870de1c81ba3e32a5e094711d37eaf4c18130fe57",
+        "heroForge/presentation.ts": "ebe52db9a5d3e3e4416a9112c7c85c1b6da86f265be67a2003dab2882e77a49b",
+        "heroForge/templateVersions.ts": "f2c64a67262db9f5ccdf397fd222a7565f3b7f79cd439b1e6e4d1f571a818d9b"
+      }
+    }
+  },
+  "counts": {
+    "allCases": 119,
+    "primaryWholeHeroes": 17,
+    "structuralPassed": 17,
+    "auxiliarySlots": 102,
+    "auxiliaryStructuralPassed": 102,
+    "auxiliaryBlockedByOwnWhole": 0,
+    "auxiliarySlotsPending": 0
+  },
+  "scope": "Primary whole-hero materialization, schema, pinned compilation and disk reload/recompile. Auxiliary native abilities compile standalone; hero-slots replace one slot in the same arm own already-valid whole-hero output. Other slots/origin are never invented or borrowed from the teacher arm. No semantic fidelity, asset-byte closure, editor UI, game import/selection or match behavior certification.",
+  "fullHeroE2EProven": false,
+  "modelPromoted": false,
+  "rows": [
+    {
+      "id": "godie-edem:HERO",
+      "heroId": "godie-edem",
+      "slot": "HERO",
+      "engineRevision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "structural-pass-not-game-acceptance",
+      "authoringSha256": "f17c54d60bcdce4a60345bc47f3fd8b8057888cc03239d4f467aece1332e6c73",
+      "compiledSha256": "41c2ee81fdad583083ee01a286c03c91c13617ec921f0806e4f8641abfd50702"
+    },
+    {
+      "id": "godie-edem:PASSIVE",
+      "heroId": "godie-edem",
+      "slot": "PASSIVE",
+      "engineRevision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": null,
+      "authoringSha256": "69efd72156e7b1309a62d0aec967696c24e1215d6f2e36c39934711c00a62ba9",
+      "compiledSha256": "84def67f7012056f979cbd5b4a202bee199460eea12c4ce1d782b7cafb7d194e"
+    },
+    {
+      "id": "godie-edem:Q",
+      "heroId": "godie-edem",
+      "slot": "Q",
+      "engineRevision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": null,
+      "authoringSha256": "3d8a80e0f69d74f1108f4caee6ee477c03ca4bc1ae97d580495cbaa9371ddc8e",
+      "compiledSha256": "88fe8bd3e0fb342700c261f508682a7aecc98a69c8e591f398589c9e7cda3484"
+    },
+    {
+      "id": "godie-edem:W",
+      "heroId": "godie-edem",
+      "slot": "W",
+      "engineRevision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": null,
+      "authoringSha256": "d3b96fe975023f3943fdcfcd0a3853cdecdc895e6ea3621bdc3a0e66c6058104",
+      "compiledSha256": "dde01de44b1e15d6bdcc9d785cf650e43f1370c542207d247b2018c9068e8062"
+    },
+    {
+      "id": "godie-edem:E",
+      "heroId": "godie-edem",
+      "slot": "E",
+      "engineRevision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": null,
+      "authoringSha256": "92296fe766adc60a7e22b6bd21a4cfa8f83983a82a04f9c3a788c900de916f4a",
+      "compiledSha256": "9bd785f341d2fcb25fb93eb5fa1e89e42b95ebc8621ea082546a7a15a38221d8"
+    },
+    {
+      "id": "godie-edem:R",
+      "heroId": "godie-edem",
+      "slot": "R",
+      "engineRevision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": null,
+      "authoringSha256": "4ff0d4f5a69127367803c6a6533bf670ed2a85c9ed1d8225d9df5317faff3fd3",
+      "compiledSha256": "f56ce1c8f01f4508864ed8a2a07106a9556368710a1cfd2a8a69bf7b88af9aa7"
+    },
+    {
+      "id": "godie-edem:EX",
+      "heroId": "godie-edem",
+      "slot": "EX",
+      "engineRevision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": null,
+      "authoringSha256": "d5f7862974512c9c945096b8ba25a209d891edd0874fac1fe8fbb01011b11fdd",
+      "compiledSha256": "34fb3f84c1345d102e65cb7b569e75b42631ee7a1a069adce665bd45ac17bcd6"
+    },
+    {
+      "id": "godie-h02v:HERO",
+      "heroId": "godie-h02v",
+      "slot": "HERO",
+      "engineRevision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "structural-pass-not-game-acceptance",
+      "authoringSha256": "5e73bcd36fc7f24c49f920f1c5b4a7d586489be93a43d538954eb3303912db72",
+      "compiledSha256": "f430776eff7b142a845dbd05b734fb8e6802e47f4cd789beee1bcc6f63bcfcee"
+    },
+    {
+      "id": "godie-h02v:PASSIVE",
+      "heroId": "godie-h02v",
+      "slot": "PASSIVE",
+      "engineRevision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": null,
+      "authoringSha256": "183042995b22148f1b999b7e260482f6f64d96165f49607b4cf544ac8e0f9803",
+      "compiledSha256": "d2182332972576f04954985cd31c798cdc17e050a92c0416e1796ae639ebd3cd"
+    },
+    {
+      "id": "godie-h02v:Q",
+      "heroId": "godie-h02v",
+      "slot": "Q",
+      "engineRevision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": null,
+      "authoringSha256": "16c94b601b254374dde1a7b835f0c9507dc1c6684a8673c688710312889a8f00",
+      "compiledSha256": "f09a2cd163313557006f57537368f063b5e3d0d300293ce0e1c19725dc0407cf"
+    },
+    {
+      "id": "godie-h02v:W",
+      "heroId": "godie-h02v",
+      "slot": "W",
+      "engineRevision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": null,
+      "authoringSha256": "52f86de7cfccc7a333f89dde8aab605f6bfe0553f49297ca78462812688feb78",
+      "compiledSha256": "7a8c0388c97b8122039c49b8c9dae00f1477ce71402294f3b18d6eebf08df2e4"
+    },
+    {
+      "id": "godie-h02v:E",
+      "heroId": "godie-h02v",
+      "slot": "E",
+      "engineRevision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": null,
+      "authoringSha256": "775a5e5cc5f5fea756bf255f92bca65215ff60c90ecafa087122f4871953061e",
+      "compiledSha256": "81fdc8dbd51fc023d48458c59b078752b6340ae9cba7af540c0c9b7d2cffc636"
+    },
+    {
+      "id": "godie-h02v:R",
+      "heroId": "godie-h02v",
+      "slot": "R",
+      "engineRevision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": null,
+      "authoringSha256": "1435852aabd0125c4dbc79b388ac5ed6befed748a0847a8f7a35dde2657df975",
+      "compiledSha256": "7589ef1310fce9d4b7a9261998546a108c4255c699b1477357b7bfdb550a6ca1"
+    },
+    {
+      "id": "godie-h02v:EX",
+      "heroId": "godie-h02v",
+      "slot": "EX",
+      "engineRevision": "6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": null,
+      "authoringSha256": "ef86c227c7ce31728b1b5bdec27b973dab5a2ec9a728f9b9550fbad4fa5e2db9",
+      "compiledSha256": "34d242a18dcdf112bf673d23acbfa5c0c31a8a67e1ca71f239dcafadb9249e78"
+    },
+    {
+      "id": "community-review-09-20260907:HERO",
+      "heroId": "community-review-09-20260907",
+      "slot": "HERO",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "structural-pass-not-game-acceptance",
+      "authoringSha256": "ebf82c92f0fc8eda33d0fc9dadbca1d3c5eb2845ac20d12e9247ac9da00813c9",
+      "compiledSha256": "f627a179b746eb294524b5e7edc2573d09b6f1760d5522a618b9ca5e57f4fa88"
+    },
+    {
+      "id": "community-review-09-20260907:PASSIVE",
+      "heroId": "community-review-09-20260907",
+      "slot": "PASSIVE",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-09-20260907:HERO",
+        "wholeTargetSha256": "605a3e3d2beaff443437e1472d4dadeb2384607cd9784566bc70938d9ae34256",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "b533fef033d609010b4864f4d93d32e15a4d1b571306e4cc3c2db05c7ea49eed",
+      "compiledSha256": "a56249bc4a73d9883fc5818d729b1eceebe7c67c3dfc07fd3b72a0ff20cf36f0"
+    },
+    {
+      "id": "community-review-09-20260907:Q",
+      "heroId": "community-review-09-20260907",
+      "slot": "Q",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-09-20260907:HERO",
+        "wholeTargetSha256": "605a3e3d2beaff443437e1472d4dadeb2384607cd9784566bc70938d9ae34256",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "072a9de1244c0347193e925641949fb26290802a941197e62c5946acf9157746",
+      "compiledSha256": "5939a3d21d06c3d7ee4871de564b6cc5181b3ead7a59af18a1d4b67fec62f58d"
+    },
+    {
+      "id": "community-review-09-20260907:W",
+      "heroId": "community-review-09-20260907",
+      "slot": "W",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-09-20260907:HERO",
+        "wholeTargetSha256": "605a3e3d2beaff443437e1472d4dadeb2384607cd9784566bc70938d9ae34256",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "20a6f8cba34d9fa005d8bcf88d52effbd84f37425e39f557efe20f2d26107a7e",
+      "compiledSha256": "1889309f815a26f55920de0aa1f37d6fbecb17323ee31d5eeb7f48cd9176526c"
+    },
+    {
+      "id": "community-review-09-20260907:E",
+      "heroId": "community-review-09-20260907",
+      "slot": "E",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-09-20260907:HERO",
+        "wholeTargetSha256": "605a3e3d2beaff443437e1472d4dadeb2384607cd9784566bc70938d9ae34256",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "d1412125b06c87e64a97c44b85258f7a11d9dc9004210ec26f2d8c42576c2693",
+      "compiledSha256": "68608cbb257a7a9308f1e4de6feeba1b1f0bc56347901240d57035cc590b7f52"
+    },
+    {
+      "id": "community-review-09-20260907:R",
+      "heroId": "community-review-09-20260907",
+      "slot": "R",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-09-20260907:HERO",
+        "wholeTargetSha256": "605a3e3d2beaff443437e1472d4dadeb2384607cd9784566bc70938d9ae34256",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "52238742e3fbab3ba26d7cf1780b30c9f9110942dd341f3105af108457d022b4",
+      "compiledSha256": "a1e47845db30e460579282c1fb374bc69aa3dc00f8518f40fb19084a84a2da39"
+    },
+    {
+      "id": "community-review-09-20260907:EX",
+      "heroId": "community-review-09-20260907",
+      "slot": "EX",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-09-20260907:HERO",
+        "wholeTargetSha256": "605a3e3d2beaff443437e1472d4dadeb2384607cd9784566bc70938d9ae34256",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "4b37f7074ae4ff6b0bfa24f5de1bac95782c62ce0f3ac74194e578f679cb3abd",
+      "compiledSha256": "fa8b2e2b92171e65995dc7671816a0cdac3b71cb1c8159f4b9922bf4c173542b"
+    },
+    {
+      "id": "community-review-16-20260907:HERO",
+      "heroId": "community-review-16-20260907",
+      "slot": "HERO",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "structural-pass-not-game-acceptance",
+      "authoringSha256": "3880c99a1c02323e51fc4105165fe32b27e7060c2f5d5968f3d8ee85dd378ff6",
+      "compiledSha256": "2f400328a4fe4d6c4464222eb8e907e94ef0f71cb6897801ca8860aa0b3626ce"
+    },
+    {
+      "id": "community-review-16-20260907:PASSIVE",
+      "heroId": "community-review-16-20260907",
+      "slot": "PASSIVE",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-16-20260907:HERO",
+        "wholeTargetSha256": "e56268510993043feb1fa31ab5a52c266b3c999fc169cff1a91eeb9b72bbd722",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "46f7dee2bdd3128965f861762c6011b0fe58031aea856b26f87fd3c8b83765b9",
+      "compiledSha256": "3e03a3f93826115913ebe68e4dacb817eb190e8543139d75fe0d1e5a96f568a4"
+    },
+    {
+      "id": "community-review-16-20260907:Q",
+      "heroId": "community-review-16-20260907",
+      "slot": "Q",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-16-20260907:HERO",
+        "wholeTargetSha256": "e56268510993043feb1fa31ab5a52c266b3c999fc169cff1a91eeb9b72bbd722",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "25ceeb048ef122ccf6d45282507daa2587892dc97e2f6c9a83f21175d02a457b",
+      "compiledSha256": "ee7dafb213e4ed04e6c33e64f3de1ef6e3accf33c88074507b5f514dca847ebe"
+    },
+    {
+      "id": "community-review-16-20260907:W",
+      "heroId": "community-review-16-20260907",
+      "slot": "W",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-16-20260907:HERO",
+        "wholeTargetSha256": "e56268510993043feb1fa31ab5a52c266b3c999fc169cff1a91eeb9b72bbd722",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "caae4f80fa866c6cdb1ecb63692b6cf1fb84a48d34e863fdf7a1c28ea4b4f7ef",
+      "compiledSha256": "1f1ee1ab1fe8343a75ed10349286c06b879fd20b6b5677bf3e552a8a755563b9"
+    },
+    {
+      "id": "community-review-16-20260907:E",
+      "heroId": "community-review-16-20260907",
+      "slot": "E",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-16-20260907:HERO",
+        "wholeTargetSha256": "e56268510993043feb1fa31ab5a52c266b3c999fc169cff1a91eeb9b72bbd722",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "2c8fa31dd6430dde5984f894bd0ac50f38b0f77f74e3efc4933962c4ae7040f4",
+      "compiledSha256": "772e52e14ba2d83559a8604bb12b64bed1cdbc473190683486c7a05a6c9e9d4c"
+    },
+    {
+      "id": "community-review-16-20260907:R",
+      "heroId": "community-review-16-20260907",
+      "slot": "R",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-16-20260907:HERO",
+        "wholeTargetSha256": "e56268510993043feb1fa31ab5a52c266b3c999fc169cff1a91eeb9b72bbd722",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "484aa830707c75b281cf25a1272da020d60b91d931832416305bb8947a09c280",
+      "compiledSha256": "c886561d377718d62d54d23ab600ac43d26a78c9ff526f94c2925a431d5beb68"
+    },
+    {
+      "id": "community-review-16-20260907:EX",
+      "heroId": "community-review-16-20260907",
+      "slot": "EX",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-16-20260907:HERO",
+        "wholeTargetSha256": "e56268510993043feb1fa31ab5a52c266b3c999fc169cff1a91eeb9b72bbd722",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "bace32965c39ea2329c41e522d24a91652e3a9d5a423e5090d0903be710d7302",
+      "compiledSha256": "f7d1f1bb0fa4990917d0125abd0986bdbf72d51c886f1dc3d538bd6664460631"
+    },
+    {
+      "id": "community-review-17-20260907:HERO",
+      "heroId": "community-review-17-20260907",
+      "slot": "HERO",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "structural-pass-not-game-acceptance",
+      "authoringSha256": "f0ab8bf27a9b1b820d555c84b00bab04c162354748d8fe7a746efd7162ea3dbb",
+      "compiledSha256": "049bc10d428d1da0177d50b1f086c5255814f931dd4cb853c3ad4f9951beaa58"
+    },
+    {
+      "id": "community-review-17-20260907:PASSIVE",
+      "heroId": "community-review-17-20260907",
+      "slot": "PASSIVE",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-17-20260907:HERO",
+        "wholeTargetSha256": "6cd3c403d830e4f37b00583f548fa8caf2bd9c84c8d38d30e87004c295494d71",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "f1771688785214d77d37d1fe4c1d008f204444d4acebad08cd1131fe70f67ce0",
+      "compiledSha256": "303fbbf0767a626ff6f1516ea894b7b72df7a508dafd1a998f2ee23ac3aa3f48"
+    },
+    {
+      "id": "community-review-17-20260907:Q",
+      "heroId": "community-review-17-20260907",
+      "slot": "Q",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-17-20260907:HERO",
+        "wholeTargetSha256": "6cd3c403d830e4f37b00583f548fa8caf2bd9c84c8d38d30e87004c295494d71",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "2555055da530da1a11342f5d2003e0ed3ffa28d67f6dd20a063e3fb471563725",
+      "compiledSha256": "3ef1a44100594438ea5d7adb7b1e068fc7660dd0bcc2cb129c9bad0ccdb628ac"
+    },
+    {
+      "id": "community-review-17-20260907:W",
+      "heroId": "community-review-17-20260907",
+      "slot": "W",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-17-20260907:HERO",
+        "wholeTargetSha256": "6cd3c403d830e4f37b00583f548fa8caf2bd9c84c8d38d30e87004c295494d71",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "803c31489339da809d8127ba296c72b30659bd81b9d98b10040b0b6e0f43d4f4",
+      "compiledSha256": "30bd69e10c82fdbb85b83dfd022526de39c0c572812f63d5d0c7ba1a28748f11"
+    },
+    {
+      "id": "community-review-17-20260907:E",
+      "heroId": "community-review-17-20260907",
+      "slot": "E",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-17-20260907:HERO",
+        "wholeTargetSha256": "6cd3c403d830e4f37b00583f548fa8caf2bd9c84c8d38d30e87004c295494d71",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "feaca3a51d1fdbb547a933793c5b2f3e89e5a484e52199ad977e3b7d865b4c93",
+      "compiledSha256": "667f815da796bb9b721a2ddee3d7f94692f8e5bc38f4134c3708c9c8c19326cc"
+    },
+    {
+      "id": "community-review-17-20260907:R",
+      "heroId": "community-review-17-20260907",
+      "slot": "R",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-17-20260907:HERO",
+        "wholeTargetSha256": "6cd3c403d830e4f37b00583f548fa8caf2bd9c84c8d38d30e87004c295494d71",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "27df00b3b9b28e3b14cc1fa682bc7d4ace87f55834801398ba5773144dc041db",
+      "compiledSha256": "1b2e8d6862f123fa8253353aceb106fb0b22274f4e65a2ff1f47d7a92e779428"
+    },
+    {
+      "id": "community-review-17-20260907:EX",
+      "heroId": "community-review-17-20260907",
+      "slot": "EX",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-17-20260907:HERO",
+        "wholeTargetSha256": "6cd3c403d830e4f37b00583f548fa8caf2bd9c84c8d38d30e87004c295494d71",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "3eb326b506189da46ba37a6767df05d749dab39ca8cc5f1e288af34ed41b0ad2",
+      "compiledSha256": "f9a816ef5ae32ea21b6f0987c8488c7479fe3ef24a6d1f7e8fa5bcde6f178b1c"
+    },
+    {
+      "id": "community-review-19-20260907:HERO",
+      "heroId": "community-review-19-20260907",
+      "slot": "HERO",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "structural-pass-not-game-acceptance",
+      "authoringSha256": "ed7fc6ed766491a300a0b13a7eea3c3aa1547fb8f23336eeb726deaaa59296a4",
+      "compiledSha256": "fd42c7c3a75a3ff18ed44971c620c1cd91dfd79ec79a04c60b276c5f7f9d188e"
+    },
+    {
+      "id": "community-review-19-20260907:PASSIVE",
+      "heroId": "community-review-19-20260907",
+      "slot": "PASSIVE",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-19-20260907:HERO",
+        "wholeTargetSha256": "d91a865cb80ddddfa52fadada6abcb6fb4990c0c2e90d69306a866fcc122d3db",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "12330aed5a1e4c57f6bec485f728b77a390372e5d720ed0519b96347994c243e",
+      "compiledSha256": "4331c957b54276c0858e3785cbfab25ff148f6bd7b8505418f59ddfd63889541"
+    },
+    {
+      "id": "community-review-19-20260907:Q",
+      "heroId": "community-review-19-20260907",
+      "slot": "Q",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-19-20260907:HERO",
+        "wholeTargetSha256": "d91a865cb80ddddfa52fadada6abcb6fb4990c0c2e90d69306a866fcc122d3db",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "dc95cba3508e6e754946c98f0b4a32af83fcad17e29606614b257f71b2c4c4fc",
+      "compiledSha256": "3702fcfd32ea52235033e10f6fe9f9734da06b0ddfb658f82b68147e5960d413"
+    },
+    {
+      "id": "community-review-19-20260907:W",
+      "heroId": "community-review-19-20260907",
+      "slot": "W",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-19-20260907:HERO",
+        "wholeTargetSha256": "d91a865cb80ddddfa52fadada6abcb6fb4990c0c2e90d69306a866fcc122d3db",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "1a4365e630cade4a120a17a3790c09c845d5ad25c40e45a4785da69787d4cd3a",
+      "compiledSha256": "266b5fc0f6f9195e8fad7e31eef8b161696b7ead49d0aab459872bc5c33cf217"
+    },
+    {
+      "id": "community-review-19-20260907:E",
+      "heroId": "community-review-19-20260907",
+      "slot": "E",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-19-20260907:HERO",
+        "wholeTargetSha256": "d91a865cb80ddddfa52fadada6abcb6fb4990c0c2e90d69306a866fcc122d3db",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "8f59c82fce1b4949323f35dcc5bae5fa839e172dc97cea76fd6194a2cb6056d9",
+      "compiledSha256": "cd9c72d83a1a78303096b6ad7777d343e5bc2ebfb51b95c7255e0c220a270125"
+    },
+    {
+      "id": "community-review-19-20260907:R",
+      "heroId": "community-review-19-20260907",
+      "slot": "R",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-19-20260907:HERO",
+        "wholeTargetSha256": "d91a865cb80ddddfa52fadada6abcb6fb4990c0c2e90d69306a866fcc122d3db",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "76b6f8abe6ecad199470ab207a84a440a30c4d9498bf1d23826d2417a0bc7d36",
+      "compiledSha256": "d61e8c0d94f22795f3e2ac222191cc443be5d99a5d0fe33e2d8633728363c1ac"
+    },
+    {
+      "id": "community-review-19-20260907:EX",
+      "heroId": "community-review-19-20260907",
+      "slot": "EX",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-19-20260907:HERO",
+        "wholeTargetSha256": "d91a865cb80ddddfa52fadada6abcb6fb4990c0c2e90d69306a866fcc122d3db",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "28ea3dbb7b43fca0cf647a1ae3538749badae4b25ceec9f0d7f86d8d74940f6a",
+      "compiledSha256": "276261ff26b61538a5e80cea5edde77942d16e5df915b547e834c459a69c8dda"
+    },
+    {
+      "id": "community-review-20-20260907:HERO",
+      "heroId": "community-review-20-20260907",
+      "slot": "HERO",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "structural-pass-not-game-acceptance",
+      "authoringSha256": "657882219b18651561c2a57b9588b83ae72fe3950e0de8e80a6f9fee345ae121",
+      "compiledSha256": "d3b46d8d7e592d4a980862dcdd4ac8dac37078aec08f787fc73ff01129232a10"
+    },
+    {
+      "id": "community-review-20-20260907:PASSIVE",
+      "heroId": "community-review-20-20260907",
+      "slot": "PASSIVE",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-20-20260907:HERO",
+        "wholeTargetSha256": "41a2ce14779f899cc756ea8ac66793c383a37a71fd9ac371d7845d44b9c5503c",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "e3b65bc1feaeabdd328b5e6ab66dc6597de18cfe365f5574b78116ee33e98cd6",
+      "compiledSha256": "f7c4d0b9d579177777bb514358065ef9faac2c4e93b2b1f13f8efd34c2957fc2"
+    },
+    {
+      "id": "community-review-20-20260907:Q",
+      "heroId": "community-review-20-20260907",
+      "slot": "Q",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-20-20260907:HERO",
+        "wholeTargetSha256": "41a2ce14779f899cc756ea8ac66793c383a37a71fd9ac371d7845d44b9c5503c",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "c95b3f8241b810bd42b0b753cbf1e0c02faa7dfc6f8783fc06e08d8a5208549c",
+      "compiledSha256": "b3798e0cf512655e38cd96a18fabf3497c53d20963ded1c1617b2171673e21a6"
+    },
+    {
+      "id": "community-review-20-20260907:W",
+      "heroId": "community-review-20-20260907",
+      "slot": "W",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-20-20260907:HERO",
+        "wholeTargetSha256": "41a2ce14779f899cc756ea8ac66793c383a37a71fd9ac371d7845d44b9c5503c",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "b763ef312723924652e81275f9430bcbf44a30aae31b8b65801a67bbc9061d69",
+      "compiledSha256": "030ee7c4237abbf9ee8d7510b051d4c079890b2be975265902d02083ac8613f1"
+    },
+    {
+      "id": "community-review-20-20260907:E",
+      "heroId": "community-review-20-20260907",
+      "slot": "E",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-20-20260907:HERO",
+        "wholeTargetSha256": "41a2ce14779f899cc756ea8ac66793c383a37a71fd9ac371d7845d44b9c5503c",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "0e088671701e2d87a33490855eb3043bd9718b3315a3d9ec77c56679fbdaa749",
+      "compiledSha256": "32758800dc234fec66677e8050b2d89312d82d02b42e62c3a5ea2a3a52e64604"
+    },
+    {
+      "id": "community-review-20-20260907:R",
+      "heroId": "community-review-20-20260907",
+      "slot": "R",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-20-20260907:HERO",
+        "wholeTargetSha256": "41a2ce14779f899cc756ea8ac66793c383a37a71fd9ac371d7845d44b9c5503c",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "4634d56e10a754c2a120f720891c4b72d613c2ad7aea552092322a7fdbf4850a",
+      "compiledSha256": "fb1200fb5e6c27c34961a0042bb18e59951fa1ca616c743636fb36f61b1cd474"
+    },
+    {
+      "id": "community-review-20-20260907:EX",
+      "heroId": "community-review-20-20260907",
+      "slot": "EX",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-20-20260907:HERO",
+        "wholeTargetSha256": "41a2ce14779f899cc756ea8ac66793c383a37a71fd9ac371d7845d44b9c5503c",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "1aee46ed40b775d15f61461e038ce385c86ebf3b2b85950eaf0a62a1f0f5298f",
+      "compiledSha256": "c4a6759cf6ecac64d70fa65463652fc1799b616f41628e1ce45c45f672401c1f"
+    },
+    {
+      "id": "community-review-23-20260907:HERO",
+      "heroId": "community-review-23-20260907",
+      "slot": "HERO",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "structural-pass-not-game-acceptance",
+      "authoringSha256": "f08eb82086a0070cd9228dadd3c806c7c512e5f362f269bf684e31f42c8654cf",
+      "compiledSha256": "2efc1f187522e2284c4c7f137e22206646784903a318d3ae9a71a464f7c7faa6"
+    },
+    {
+      "id": "community-review-23-20260907:PASSIVE",
+      "heroId": "community-review-23-20260907",
+      "slot": "PASSIVE",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-23-20260907:HERO",
+        "wholeTargetSha256": "e5cfd1a78ad71be587655f71fbc7a0df1fdf80cadc045863c81a847476de0ffb",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "7e20746d2d5fa1376e1c145eac5dd3c4213aa0e8143d5af93160c48103862362",
+      "compiledSha256": "6cb47cb1fda3af384a5d407e7b9d93e72a27dc16e071b8597c36686a04d383bd"
+    },
+    {
+      "id": "community-review-23-20260907:Q",
+      "heroId": "community-review-23-20260907",
+      "slot": "Q",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-23-20260907:HERO",
+        "wholeTargetSha256": "e5cfd1a78ad71be587655f71fbc7a0df1fdf80cadc045863c81a847476de0ffb",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "2f6fe2fbbebd38a5dae940299a2706f6bdff6414de6d50f17094a25f5a1bfbc4",
+      "compiledSha256": "fd161102dbbf2541a431ab733e0a3898c04dfcad163ee256b45c9cb2762d22ab"
+    },
+    {
+      "id": "community-review-23-20260907:W",
+      "heroId": "community-review-23-20260907",
+      "slot": "W",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-23-20260907:HERO",
+        "wholeTargetSha256": "e5cfd1a78ad71be587655f71fbc7a0df1fdf80cadc045863c81a847476de0ffb",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "2f181c9c5e94ae112950d1aa33e746f9c0b8f824cdb9e59b1af4258e999bd821",
+      "compiledSha256": "55c278938b22a31783b9b81930fe743c0b3bdb579cd31052f508ce9d8dfc9c91"
+    },
+    {
+      "id": "community-review-23-20260907:E",
+      "heroId": "community-review-23-20260907",
+      "slot": "E",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-23-20260907:HERO",
+        "wholeTargetSha256": "e5cfd1a78ad71be587655f71fbc7a0df1fdf80cadc045863c81a847476de0ffb",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "d766776af022378d3cfd75295012a907d4e553bcab80dde17fb880bcab6b40f5",
+      "compiledSha256": "1d556f9fac7476b6c11ee60194c60177d9099c613218d840fc8aafc799695de3"
+    },
+    {
+      "id": "community-review-23-20260907:R",
+      "heroId": "community-review-23-20260907",
+      "slot": "R",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-23-20260907:HERO",
+        "wholeTargetSha256": "e5cfd1a78ad71be587655f71fbc7a0df1fdf80cadc045863c81a847476de0ffb",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "a1f3d447037df3f2e32b0d0183ca4a8b70d81bd670c535ea263e1561d67537df",
+      "compiledSha256": "03ba82c7fc63e408a90c0b8d33db5bcf32f29c751af6e0396eeacb78525a3df0"
+    },
+    {
+      "id": "community-review-23-20260907:EX",
+      "heroId": "community-review-23-20260907",
+      "slot": "EX",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-23-20260907:HERO",
+        "wholeTargetSha256": "e5cfd1a78ad71be587655f71fbc7a0df1fdf80cadc045863c81a847476de0ffb",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "88076fd2bdd5c681e83de23c341830ad3d9ee26fd74c16b969ac1684b3d7ed99",
+      "compiledSha256": "ea0e68e986112e072b9d32f7829c1bdc7d54900cd984c9307bf6be77770a7e3d"
+    },
+    {
+      "id": "community-review-24-20260907:HERO",
+      "heroId": "community-review-24-20260907",
+      "slot": "HERO",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "structural-pass-not-game-acceptance",
+      "authoringSha256": "e86af76b8ca20757eded23d69a7cdc2f4dd427e62cb25d6d14d4a2d2e6128424",
+      "compiledSha256": "ee80637d019e0282bf6779354677b75f8590fb4410ab10958ff2c943bf422cc3"
+    },
+    {
+      "id": "community-review-24-20260907:PASSIVE",
+      "heroId": "community-review-24-20260907",
+      "slot": "PASSIVE",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-24-20260907:HERO",
+        "wholeTargetSha256": "440aaa4fe5e224c2184c4b226fd5fa34357fd02c3557b3284140ba35a87e5c71",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "168984b682e4740eaa2eaac8af9e0d20364cec22046e9f9cf9c42a71d76cb696",
+      "compiledSha256": "c86a72a0065a266ec49cd19a3b13ff1c747e03e56fa4a5c58ef5cd27141b3f28"
+    },
+    {
+      "id": "community-review-24-20260907:Q",
+      "heroId": "community-review-24-20260907",
+      "slot": "Q",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-24-20260907:HERO",
+        "wholeTargetSha256": "440aaa4fe5e224c2184c4b226fd5fa34357fd02c3557b3284140ba35a87e5c71",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "4aa1a17d4a6718820ff3b279bb50e62ae29c893c2c07de58de8d4a8c400ea2a2",
+      "compiledSha256": "cdf6c883f0c12065bc4c89ece9d91e7c0d86c6df10d75377649154c6023ce2de"
+    },
+    {
+      "id": "community-review-24-20260907:W",
+      "heroId": "community-review-24-20260907",
+      "slot": "W",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-24-20260907:HERO",
+        "wholeTargetSha256": "440aaa4fe5e224c2184c4b226fd5fa34357fd02c3557b3284140ba35a87e5c71",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "05df84c2a6abc94b369b7804da5c44d1063121b67d72e3e27492b7aaac756814",
+      "compiledSha256": "29a082e9f76a9314a988f8b38ac48a8049c30f3779d28df35057d1e983f95810"
+    },
+    {
+      "id": "community-review-24-20260907:E",
+      "heroId": "community-review-24-20260907",
+      "slot": "E",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-24-20260907:HERO",
+        "wholeTargetSha256": "440aaa4fe5e224c2184c4b226fd5fa34357fd02c3557b3284140ba35a87e5c71",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "4a844f13c90230e2825a7121c97ffd47f1c04618e7783c3cef308e114d9ceed8",
+      "compiledSha256": "0ef4a14963c9cac78dc140c77e5a0f8e40e57f369ef67c4e2619b92aef517b7d"
+    },
+    {
+      "id": "community-review-24-20260907:R",
+      "heroId": "community-review-24-20260907",
+      "slot": "R",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-24-20260907:HERO",
+        "wholeTargetSha256": "440aaa4fe5e224c2184c4b226fd5fa34357fd02c3557b3284140ba35a87e5c71",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "acc3af2f52b390fb16e2d8b4646c809ffd1fa9821a72f2598e07c4c37fe74f7d",
+      "compiledSha256": "3e145033e3bae9e3e0f01b1892d70504ec9cd681d7ed12d0f850a6782a95638c"
+    },
+    {
+      "id": "community-review-24-20260907:EX",
+      "heroId": "community-review-24-20260907",
+      "slot": "EX",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-24-20260907:HERO",
+        "wholeTargetSha256": "440aaa4fe5e224c2184c4b226fd5fa34357fd02c3557b3284140ba35a87e5c71",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "aeb11bed92cd930802e30ccb860a58b17bb9410c2f1daa2284acee8a83f23f86",
+      "compiledSha256": "c348ea1bc03245a74c2584f5c26ef1034d10dc57739f71f201ef8e050e4b2a64"
+    },
+    {
+      "id": "community-review-26-20260907:HERO",
+      "heroId": "community-review-26-20260907",
+      "slot": "HERO",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "structural-pass-not-game-acceptance",
+      "authoringSha256": "f4929871c5bd726470d4803e3879b382013f9d00e7d98f6dc22c11eb319fae80",
+      "compiledSha256": "6c6c1aa74a6248dce4d4fc07ca1df951d34ff75e99f28c036f85c988926ed41b"
+    },
+    {
+      "id": "community-review-26-20260907:PASSIVE",
+      "heroId": "community-review-26-20260907",
+      "slot": "PASSIVE",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-26-20260907:HERO",
+        "wholeTargetSha256": "b5df86ed757062b641b4e1030343e1fa4b4bac13b0a937115398853edbf9e71a",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "efa169a92e6617173b3079f0b8be42dd034cf1711ae2f3c84ca2024f543e1329",
+      "compiledSha256": "a5d982a8a9dd729e21defa3565239ba532405b3a758e36d1ac6d12ac6918e2af"
+    },
+    {
+      "id": "community-review-26-20260907:Q",
+      "heroId": "community-review-26-20260907",
+      "slot": "Q",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-26-20260907:HERO",
+        "wholeTargetSha256": "b5df86ed757062b641b4e1030343e1fa4b4bac13b0a937115398853edbf9e71a",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "9e27e5dc6a3aaf6b76d87805290a5c0bcec0be63340084937cb3c15cb534c703",
+      "compiledSha256": "ef4358cbd813f502e7d2f8e01f469dad11f87b6f9661485c001bc6b6263ceaa9"
+    },
+    {
+      "id": "community-review-26-20260907:W",
+      "heroId": "community-review-26-20260907",
+      "slot": "W",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-26-20260907:HERO",
+        "wholeTargetSha256": "b5df86ed757062b641b4e1030343e1fa4b4bac13b0a937115398853edbf9e71a",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "628ab75d13e8ef0c10b28909a38c26680536d0a63a18799355a3c63f6233d66c",
+      "compiledSha256": "d4e56c935ff72f1d810b5978af24736b744156c53832f03cd5b3ad0a221e1d88"
+    },
+    {
+      "id": "community-review-26-20260907:E",
+      "heroId": "community-review-26-20260907",
+      "slot": "E",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-26-20260907:HERO",
+        "wholeTargetSha256": "b5df86ed757062b641b4e1030343e1fa4b4bac13b0a937115398853edbf9e71a",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "619cfc423e16859b1274c9112fe145cbd55d968065bae2ff9028247cfef50f36",
+      "compiledSha256": "c7dea6a8a61a0231f07137e68660e6bad22b652efbfe62727710deb341db733a"
+    },
+    {
+      "id": "community-review-26-20260907:R",
+      "heroId": "community-review-26-20260907",
+      "slot": "R",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-26-20260907:HERO",
+        "wholeTargetSha256": "b5df86ed757062b641b4e1030343e1fa4b4bac13b0a937115398853edbf9e71a",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "370d7d3bf17ec2151bc261ed6eefea26cbde352f70217043bc7b2d3596bbdc87",
+      "compiledSha256": "cbdf73ca956ce91a80733d8e4574eac443bec816fa76a69307b79e1093cedc5c"
+    },
+    {
+      "id": "community-review-26-20260907:EX",
+      "heroId": "community-review-26-20260907",
+      "slot": "EX",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-26-20260907:HERO",
+        "wholeTargetSha256": "b5df86ed757062b641b4e1030343e1fa4b4bac13b0a937115398853edbf9e71a",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "f550bf23efe0b740c3b84229f58ae8a289812eac98fea4a977ed37d2c98062d4",
+      "compiledSha256": "26d92551668ac7d7193d4c0f121051332495198b62a5b9398b571a1a93c1a6a2"
+    },
+    {
+      "id": "community-review-28-20260907:HERO",
+      "heroId": "community-review-28-20260907",
+      "slot": "HERO",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "structural-pass-not-game-acceptance",
+      "authoringSha256": "97a54f9f29da9016fa50ecbea87a9cd1e3dd9fe0e849de2c91fb4f522e0204f3",
+      "compiledSha256": "5bce5a72dbb94879fb364724e0a5c9fcc8d9cfee43e50e273dceea193dfd345f"
+    },
+    {
+      "id": "community-review-28-20260907:PASSIVE",
+      "heroId": "community-review-28-20260907",
+      "slot": "PASSIVE",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-28-20260907:HERO",
+        "wholeTargetSha256": "83b7b62e201feb55955b9cd361a9d7edd36ba41d694a0dad2f3905b0604bbc38",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "1fe3c22803f89caa31587663609bd2bd01ab7ee6ecf733f718a206abb9a7f886",
+      "compiledSha256": "fb5abe9f8e305e6c700d58b16c8421286eac68f8ef8bd39454ed20cf3eab0d2b"
+    },
+    {
+      "id": "community-review-28-20260907:Q",
+      "heroId": "community-review-28-20260907",
+      "slot": "Q",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-28-20260907:HERO",
+        "wholeTargetSha256": "83b7b62e201feb55955b9cd361a9d7edd36ba41d694a0dad2f3905b0604bbc38",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "987ee746d38a78d15bbf5cb51efb363c3de0fa49fb70fa2f983cb3c1e9a7c1e0",
+      "compiledSha256": "f0f3b67816f00e88248dad16efdcf5d1bda0f6b6ef51dc79a1a648ec50c75a7f"
+    },
+    {
+      "id": "community-review-28-20260907:W",
+      "heroId": "community-review-28-20260907",
+      "slot": "W",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-28-20260907:HERO",
+        "wholeTargetSha256": "83b7b62e201feb55955b9cd361a9d7edd36ba41d694a0dad2f3905b0604bbc38",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "dca2548a3927bf83602bc5e956ad3c6fac040892e9c3cd973bc9fffc75e4d284",
+      "compiledSha256": "9fa72ab8ab225653339c0da134848e0d721bbcacbe510312b7e7bf5a020e5138"
+    },
+    {
+      "id": "community-review-28-20260907:E",
+      "heroId": "community-review-28-20260907",
+      "slot": "E",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-28-20260907:HERO",
+        "wholeTargetSha256": "83b7b62e201feb55955b9cd361a9d7edd36ba41d694a0dad2f3905b0604bbc38",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "eabbf1837ba58c095f58fd6fe6011140ee7b646b67375979a15c798a39f2a87f",
+      "compiledSha256": "b644bdb4959c742cc5769e7b074ab9ea4fdc5517ab9c998777074e963cc1c56d"
+    },
+    {
+      "id": "community-review-28-20260907:R",
+      "heroId": "community-review-28-20260907",
+      "slot": "R",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-28-20260907:HERO",
+        "wholeTargetSha256": "83b7b62e201feb55955b9cd361a9d7edd36ba41d694a0dad2f3905b0604bbc38",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "53efa8f637a9ea63bb4aa3cfbf12df23517c502808b404dfab08aa6d4f5e6bee",
+      "compiledSha256": "11340eec67fa7a1d4997c046280bc5f2e4d7391756299e5d9497d32b1489de47"
+    },
+    {
+      "id": "community-review-28-20260907:EX",
+      "heroId": "community-review-28-20260907",
+      "slot": "EX",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-28-20260907:HERO",
+        "wholeTargetSha256": "83b7b62e201feb55955b9cd361a9d7edd36ba41d694a0dad2f3905b0604bbc38",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "44fea54d8da316b0e54b83cdaf40f3e3ba5c8272af63a8a0a761e0cb19ef6ad8",
+      "compiledSha256": "75bf3f6d67a3986da351dab5110db5dc8b859d1903dc5106385514ce8eb2b887"
+    },
+    {
+      "id": "community-review-33-20260907:HERO",
+      "heroId": "community-review-33-20260907",
+      "slot": "HERO",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "structural-pass-not-game-acceptance",
+      "authoringSha256": "7b9e147d2e76ef55c3a8c2f257215724abdbd21976ac0b7aa8cbc6166d238d59",
+      "compiledSha256": "32b754ffc380794e4d40aace6e607da8094a62ce419cded235f724a44d2ee9ec"
+    },
+    {
+      "id": "community-review-33-20260907:PASSIVE",
+      "heroId": "community-review-33-20260907",
+      "slot": "PASSIVE",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-33-20260907:HERO",
+        "wholeTargetSha256": "33aac70fef492f493f825552094f278b4342e10602704acaf2527c338418b283",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "eaade04abc30c114fc8a8121633189f03f90b7838f62f6070db0603208370c05",
+      "compiledSha256": "92187e04641ab617457e063e802a20876e620d2fcaf25051e00c790e73e385f7"
+    },
+    {
+      "id": "community-review-33-20260907:Q",
+      "heroId": "community-review-33-20260907",
+      "slot": "Q",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-33-20260907:HERO",
+        "wholeTargetSha256": "33aac70fef492f493f825552094f278b4342e10602704acaf2527c338418b283",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "82757cbff9fa6ea69bec29092c5b1ccada09fad4e371a36587ef2748ccb92859",
+      "compiledSha256": "c824bf2b8c284a59dc078b0b4b95d8a2c717f5e15e5971aa12b0ffe1b0673de6"
+    },
+    {
+      "id": "community-review-33-20260907:W",
+      "heroId": "community-review-33-20260907",
+      "slot": "W",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-33-20260907:HERO",
+        "wholeTargetSha256": "33aac70fef492f493f825552094f278b4342e10602704acaf2527c338418b283",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "21c2e3bbf2fe68b211a2986e9a1d2f26c3b519b18a977fffb06de5231a54d55a",
+      "compiledSha256": "aff1df46ebff0e22dd68424e85c61e5cf56de170acdcc1edeec7f755ee243c24"
+    },
+    {
+      "id": "community-review-33-20260907:E",
+      "heroId": "community-review-33-20260907",
+      "slot": "E",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-33-20260907:HERO",
+        "wholeTargetSha256": "33aac70fef492f493f825552094f278b4342e10602704acaf2527c338418b283",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "284671e4281dc9b806e56cab2b314a3f01b0eea996bf1824586306b06f40418f",
+      "compiledSha256": "be394feb990748a7cc5820668e3ad1806ea4a2450555f54a4a824de6ac356b9e"
+    },
+    {
+      "id": "community-review-33-20260907:R",
+      "heroId": "community-review-33-20260907",
+      "slot": "R",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-33-20260907:HERO",
+        "wholeTargetSha256": "33aac70fef492f493f825552094f278b4342e10602704acaf2527c338418b283",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "66aa4d67b0b45472ba87bf82bfd3d528f6cbbf3dc8e75678ec7d716d96175a08",
+      "compiledSha256": "d34bed3b63394ce56a6a7808edceb4f83640d5162701b7f2141c423cb55967d3"
+    },
+    {
+      "id": "community-review-33-20260907:EX",
+      "heroId": "community-review-33-20260907",
+      "slot": "EX",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-33-20260907:HERO",
+        "wholeTargetSha256": "33aac70fef492f493f825552094f278b4342e10602704acaf2527c338418b283",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "6a82d05b1ddc7cdf80c142e62324cb6e9ecefa8230fa1f51bc59e6e99b7f5eca",
+      "compiledSha256": "b013ae0e96c111efdad679b41f37f660ccc677d8e183111ef78c2cae22dd0f29"
+    },
+    {
+      "id": "community-review-36-20260907:HERO",
+      "heroId": "community-review-36-20260907",
+      "slot": "HERO",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "structural-pass-not-game-acceptance",
+      "authoringSha256": "a8b233d901e8c9073f7418f5ec61b9171c8242cea8d2d0fc8479501e1815bfd9",
+      "compiledSha256": "a178873360182634a27588c0c227253d2adbe28f71283a62e2854db8d5e9894e"
+    },
+    {
+      "id": "community-review-36-20260907:PASSIVE",
+      "heroId": "community-review-36-20260907",
+      "slot": "PASSIVE",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-36-20260907:HERO",
+        "wholeTargetSha256": "b4cc0c6e5eaf880247361ccf37c83ce7b9220bc9e9dff906f5860fd9dc101800",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "afded67dd565aadd493d0bccdbae1f3908f52d08898396df5c6cf58896df0002",
+      "compiledSha256": "242f6496c403f0f76f1dacf1e39ba575a554e0426abd1fe2e32f8f017d1377f2"
+    },
+    {
+      "id": "community-review-36-20260907:Q",
+      "heroId": "community-review-36-20260907",
+      "slot": "Q",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-36-20260907:HERO",
+        "wholeTargetSha256": "b4cc0c6e5eaf880247361ccf37c83ce7b9220bc9e9dff906f5860fd9dc101800",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "bd935dda485e7acf8d473dbe88126fab98db39aef8a6cafdd9bd52931c0bcbca",
+      "compiledSha256": "1f6f22b6c3d2b93bbf17af7e56fa3c5d38901e7b5d62d285f0923f0eb0b3e1ba"
+    },
+    {
+      "id": "community-review-36-20260907:W",
+      "heroId": "community-review-36-20260907",
+      "slot": "W",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-36-20260907:HERO",
+        "wholeTargetSha256": "b4cc0c6e5eaf880247361ccf37c83ce7b9220bc9e9dff906f5860fd9dc101800",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "8dbd064940e27fbd4eaeeaab0d47731926526f829f765cca3c86cd8172d70c50",
+      "compiledSha256": "e979347846f1ca570e7a837b5a86de33e28f890b330756d420c43ae783334b66"
+    },
+    {
+      "id": "community-review-36-20260907:E",
+      "heroId": "community-review-36-20260907",
+      "slot": "E",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-36-20260907:HERO",
+        "wholeTargetSha256": "b4cc0c6e5eaf880247361ccf37c83ce7b9220bc9e9dff906f5860fd9dc101800",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "2c752454a607b87c525ed007c8cb3a1a37d9b592c29a4b2b2c2a750624385198",
+      "compiledSha256": "5ee213d564d43626af40e2b6955f4dc4475fd66ed43a78c05efb89d4739102a5"
+    },
+    {
+      "id": "community-review-36-20260907:R",
+      "heroId": "community-review-36-20260907",
+      "slot": "R",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-36-20260907:HERO",
+        "wholeTargetSha256": "b4cc0c6e5eaf880247361ccf37c83ce7b9220bc9e9dff906f5860fd9dc101800",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "157b017ca26042f31b89c1fbc5e25794d78d5c5ed4110a5b365d7cbb384c8f33",
+      "compiledSha256": "827231c5c6fd68f2df3e74fe5f9d464ecaeddf3b3dcbcdc0868dc5724b64b7a3"
+    },
+    {
+      "id": "community-review-36-20260907:EX",
+      "heroId": "community-review-36-20260907",
+      "slot": "EX",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "community-review-36-20260907:HERO",
+        "wholeTargetSha256": "b4cc0c6e5eaf880247361ccf37c83ce7b9220bc9e9dff906f5860fd9dc101800",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "800ffb8f946461cb12838a4c3c6708f5b1c199855ce5bf09f82edd01f366e6e9",
+      "compiledSha256": "c7f94f6d774f972519900e72c9204113c041bc728a60907bf074bb7f7f889e05"
+    },
+    {
+      "id": "b2-uncle:HERO",
+      "heroId": "b2-uncle",
+      "slot": "HERO",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "structural-pass-not-game-acceptance",
+      "authoringSha256": "35a25ffcee0e16d98cf02625c9dc837b6b19e9f79265d3dd98a143a2a4e318e5",
+      "compiledSha256": "ada9b652b874f0c0a6c156eaf6b1cde0ab050bacdf85132f8897482e6bff2bb8"
+    },
+    {
+      "id": "b2-uncle:PASSIVE",
+      "heroId": "b2-uncle",
+      "slot": "PASSIVE",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-uncle:HERO",
+        "wholeTargetSha256": "8d3bb9c55e0019d7e6b003a193ad97bb3372f08dd67a9dde645f7af0c662f4df",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "c738568d45dbcf145aaaeaca2815ea27c28e378e4c0256aaceac8b8bafb8948c",
+      "compiledSha256": "070f29c950ada60e8479c57798fcae9c7c7c02e86a16f7c5bf3a07871c10e51a"
+    },
+    {
+      "id": "b2-uncle:Q",
+      "heroId": "b2-uncle",
+      "slot": "Q",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-uncle:HERO",
+        "wholeTargetSha256": "8d3bb9c55e0019d7e6b003a193ad97bb3372f08dd67a9dde645f7af0c662f4df",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "0e6b8ef824a5d0ebe68f731a3460b7fa28dbbc7b9bab4af3e61344e3790240b3",
+      "compiledSha256": "a047f97cdce575313c8ad87333573e6844dde02ef416ed28fbec60f2273bdc7f"
+    },
+    {
+      "id": "b2-uncle:W",
+      "heroId": "b2-uncle",
+      "slot": "W",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-uncle:HERO",
+        "wholeTargetSha256": "8d3bb9c55e0019d7e6b003a193ad97bb3372f08dd67a9dde645f7af0c662f4df",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "a3c77fe208d0f687fb92fdacdfec7b21c664cacf648b1787ca53a7c43bd4c87d",
+      "compiledSha256": "76efe3bfcf9d66313002b3bd64d4772ed9f076ba92d593d94b4afec519f3406a"
+    },
+    {
+      "id": "b2-uncle:E",
+      "heroId": "b2-uncle",
+      "slot": "E",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-uncle:HERO",
+        "wholeTargetSha256": "8d3bb9c55e0019d7e6b003a193ad97bb3372f08dd67a9dde645f7af0c662f4df",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "fc54eea34e2c3c04d1e735b293a4ad5dbebf90ebfaf614c3c305e71765aa384b",
+      "compiledSha256": "38906c7aedc36545baddbe8f2869feca2b0f8aac951a8424d39e9ea7bde96b63"
+    },
+    {
+      "id": "b2-uncle:R",
+      "heroId": "b2-uncle",
+      "slot": "R",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-uncle:HERO",
+        "wholeTargetSha256": "8d3bb9c55e0019d7e6b003a193ad97bb3372f08dd67a9dde645f7af0c662f4df",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "af69f73014c118338f4eabba3321086b30a7cba762ebd51e94a96fc4ec3c609b",
+      "compiledSha256": "9c93f2d53db439db67b52fde69af73e0d334d131a88a9980c1f22a86d19f915b"
+    },
+    {
+      "id": "b2-uncle:EX",
+      "heroId": "b2-uncle",
+      "slot": "EX",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-uncle:HERO",
+        "wholeTargetSha256": "8d3bb9c55e0019d7e6b003a193ad97bb3372f08dd67a9dde645f7af0c662f4df",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "73c00b7450dac2d73f7e654707e0e01ea9f9b79fc122d367ee552bf8dd3dcdfe",
+      "compiledSha256": "62ef7cffd3f5f35573202207194fbe3020788a126746eb2212b53b24429a9fc9"
+    },
+    {
+      "id": "b2-haga:HERO",
+      "heroId": "b2-haga",
+      "slot": "HERO",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "structural-pass-not-game-acceptance",
+      "authoringSha256": "d420249f412462c44f07ae1d3ff355d8f7cb3aa0c9a4b126098211cbed51a5f6",
+      "compiledSha256": "cc3d609f6d69b99ffd8d7e7c27cadd598a757b00aca9cc54a76a0b0d724d62af"
+    },
+    {
+      "id": "b2-haga:PASSIVE",
+      "heroId": "b2-haga",
+      "slot": "PASSIVE",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-haga:HERO",
+        "wholeTargetSha256": "23df8d4d4dbb4c8df5f09a1f80b49219520d2baf45e2165cff9d09d5998bb45b",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "a80a86f194d738b9384a9e5cbfb71e01d81ac64b106e6b4b81f2bb5c2cbdf6f1",
+      "compiledSha256": "ef98c97ca2984d85219b304fbdb03c1b9226df1bc5fe00e0742330d0e7511335"
+    },
+    {
+      "id": "b2-haga:Q",
+      "heroId": "b2-haga",
+      "slot": "Q",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-haga:HERO",
+        "wholeTargetSha256": "23df8d4d4dbb4c8df5f09a1f80b49219520d2baf45e2165cff9d09d5998bb45b",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "eef99a6782cd677c58be6801ac9603b6035aa2e6f8d8b7872be45a4d7af36c56",
+      "compiledSha256": "911730c6931344f4a77158bf65bd895b98685072558c2820fecf06d4ee8c5603"
+    },
+    {
+      "id": "b2-haga:W",
+      "heroId": "b2-haga",
+      "slot": "W",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-haga:HERO",
+        "wholeTargetSha256": "23df8d4d4dbb4c8df5f09a1f80b49219520d2baf45e2165cff9d09d5998bb45b",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "3abaf40567b9d78411cdef860de2c18a86dc27a5ce118d2ecb8a345201610f72",
+      "compiledSha256": "edd72baa88b3777c6348c45ea260e776916acb1aa9d65912cce09f8a6fbf4025"
+    },
+    {
+      "id": "b2-haga:E",
+      "heroId": "b2-haga",
+      "slot": "E",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-haga:HERO",
+        "wholeTargetSha256": "23df8d4d4dbb4c8df5f09a1f80b49219520d2baf45e2165cff9d09d5998bb45b",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "38d986f182d3d97b3cb214626f971be6962ffbbfe77478629de04aaaba096401",
+      "compiledSha256": "be4b476ec34bf28e6825d4e988b7fd814f9157e7435cf6edb88287e0ec70e41e"
+    },
+    {
+      "id": "b2-haga:R",
+      "heroId": "b2-haga",
+      "slot": "R",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-haga:HERO",
+        "wholeTargetSha256": "23df8d4d4dbb4c8df5f09a1f80b49219520d2baf45e2165cff9d09d5998bb45b",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "d058aa6d5079e6b8816ecc642a77e76158e9782025c269e8b6feff5305dce3eb",
+      "compiledSha256": "c5dd9d01699ec25bf77e271a47ac4731f506901baaa734b9114a22b52d4d4f5d"
+    },
+    {
+      "id": "b2-haga:EX",
+      "heroId": "b2-haga",
+      "slot": "EX",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-haga:HERO",
+        "wholeTargetSha256": "23df8d4d4dbb4c8df5f09a1f80b49219520d2baf45e2165cff9d09d5998bb45b",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "6e2e72db5126f0d4975fb0b2a6cb05d2adf6f254d7e3f3b56539e6668131353d",
+      "compiledSha256": "2f377468a1fa65c53513c54eb680afd8728a55ef66a4d06ed920a919237e86ec"
+    },
+    {
+      "id": "b2-fushi:HERO",
+      "heroId": "b2-fushi",
+      "slot": "HERO",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "structural-pass-not-game-acceptance",
+      "authoringSha256": "937d1e94fb8b45de7c77d305aadf7a942d046eac038ab5df16eda30660611066",
+      "compiledSha256": "615efa8d5afe65637eb3a758c9ea1180bf7462ce13c88bfe2db2cec223ed4c03"
+    },
+    {
+      "id": "b2-fushi:PASSIVE",
+      "heroId": "b2-fushi",
+      "slot": "PASSIVE",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-fushi:HERO",
+        "wholeTargetSha256": "1eed21957c99c1f1611c1ea93a2c505f87d46cb12fb5c17d3ba5a23b79ac7798",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "82bc30000cecf8c126c26031f71311fa35531791851253d27ec57027a00defca",
+      "compiledSha256": "92680cec6a0c28ab8f93cfa5b1e7cf5e74327dd3f989074aad90bcc946776b84"
+    },
+    {
+      "id": "b2-fushi:Q",
+      "heroId": "b2-fushi",
+      "slot": "Q",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-fushi:HERO",
+        "wholeTargetSha256": "1eed21957c99c1f1611c1ea93a2c505f87d46cb12fb5c17d3ba5a23b79ac7798",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "4226217d415cf971de74a177e303bb7a109cdb94dd87ec29a61f14e5319d057b",
+      "compiledSha256": "7d4c2b9231bda34f812b95d30cc81fd606568493a782b044605a132364cfe413"
+    },
+    {
+      "id": "b2-fushi:W",
+      "heroId": "b2-fushi",
+      "slot": "W",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-fushi:HERO",
+        "wholeTargetSha256": "1eed21957c99c1f1611c1ea93a2c505f87d46cb12fb5c17d3ba5a23b79ac7798",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "df6547df8f3eb2511d4f9b4761441fe3860b18764ac4a30dfe8890f064ab731d",
+      "compiledSha256": "636d259e89299251f977bed2a96ca0154fb28e2a7ad3e74ee2b0933700d19f15"
+    },
+    {
+      "id": "b2-fushi:E",
+      "heroId": "b2-fushi",
+      "slot": "E",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-fushi:HERO",
+        "wholeTargetSha256": "1eed21957c99c1f1611c1ea93a2c505f87d46cb12fb5c17d3ba5a23b79ac7798",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "704f8d6577b2a21de7e8bfc2ad0cec06935c7b30dcd05fb844cb481ab972ad97",
+      "compiledSha256": "92d75aac4600544888bab3c566a671b9aefdffed96c34da936bfe535f0166004"
+    },
+    {
+      "id": "b2-fushi:R",
+      "heroId": "b2-fushi",
+      "slot": "R",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-fushi:HERO",
+        "wholeTargetSha256": "1eed21957c99c1f1611c1ea93a2c505f87d46cb12fb5c17d3ba5a23b79ac7798",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "8d18c733c4d37ee75c340a533ba6fbfa1da66823db37ef79db58d651794ebb5b",
+      "compiledSha256": "04d56d0760ed35548b248b9bb91ed575c261b86ff592de2076c7369e530cf035"
+    },
+    {
+      "id": "b2-fushi:EX",
+      "heroId": "b2-fushi",
+      "slot": "EX",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-fushi:HERO",
+        "wholeTargetSha256": "1eed21957c99c1f1611c1ea93a2c505f87d46cb12fb5c17d3ba5a23b79ac7798",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "18fc18bc7205101310fca71c6988bb67e9eb5bed0f3dff0c1d2097b306d40c07",
+      "compiledSha256": "0cff32c39a215f9526e63d8f949fdfcba52cbf16d9fcb83254cd31908871ac6b"
+    },
+    {
+      "id": "b2-nube:HERO",
+      "heroId": "b2-nube",
+      "slot": "HERO",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "structural-pass-not-game-acceptance",
+      "authoringSha256": "a674a4b606cac8aa17efe000612e34287ae880e7ce71c5a748ac05e22795ceb3",
+      "compiledSha256": "3a2c283f7ee4aa247acf6fcdc9ca267b065dcefeb78081d86baad9db39ede150"
+    },
+    {
+      "id": "b2-nube:PASSIVE",
+      "heroId": "b2-nube",
+      "slot": "PASSIVE",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-nube:HERO",
+        "wholeTargetSha256": "32a88596ef6591fdbcc06093ac0cba8b50152b3cd05b9a5fc7564924159243b7",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "1400818666a2b3ccfa1a9d725765a35fcae620ae6e2bd452b1ed79be40b5f3bf",
+      "compiledSha256": "ac6b5ffd35bc4099cc6d33417cb678aeefe6bfbc9040b9e8187ee5183f5411d6"
+    },
+    {
+      "id": "b2-nube:Q",
+      "heroId": "b2-nube",
+      "slot": "Q",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-nube:HERO",
+        "wholeTargetSha256": "32a88596ef6591fdbcc06093ac0cba8b50152b3cd05b9a5fc7564924159243b7",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "78d47f211b060808bb879a07a9bea6a459a35968d5c719703f398eee62781c88",
+      "compiledSha256": "7eaed4eb2f5f822794b20e76df440a827bc026b1106b395a1d4e7547d6778f34"
+    },
+    {
+      "id": "b2-nube:W",
+      "heroId": "b2-nube",
+      "slot": "W",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-nube:HERO",
+        "wholeTargetSha256": "32a88596ef6591fdbcc06093ac0cba8b50152b3cd05b9a5fc7564924159243b7",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "bbe5b960257a9f8f1f6ce2781ab3f96d60dc9f829537062d9c8a05349eebe48e",
+      "compiledSha256": "e06881782b370f13a379d5ea6ca51cf0b4ef4d0690588841d3cf046e98a95f64"
+    },
+    {
+      "id": "b2-nube:E",
+      "heroId": "b2-nube",
+      "slot": "E",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-nube:HERO",
+        "wholeTargetSha256": "32a88596ef6591fdbcc06093ac0cba8b50152b3cd05b9a5fc7564924159243b7",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "595684ef7bf995f0d62d7b7e1eaac95c1aa560a05003ace254c3da72d8d69584",
+      "compiledSha256": "b88a4425a896ed5a1ec0f213d39a292419ccd2195093e87248d266ba4e628e03"
+    },
+    {
+      "id": "b2-nube:R",
+      "heroId": "b2-nube",
+      "slot": "R",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-nube:HERO",
+        "wholeTargetSha256": "32a88596ef6591fdbcc06093ac0cba8b50152b3cd05b9a5fc7564924159243b7",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "34513b7c23890595ea04d7e53fd91261687dc8420cd7a7eddfb343cfc8fc5de4",
+      "compiledSha256": "35f8d574931cc41769035816e19dae5d2cdce5a6b8125a4acaf20fc39682592b"
+    },
+    {
+      "id": "b2-nube:EX",
+      "heroId": "b2-nube",
+      "slot": "EX",
+      "engineRevision": "2cdc3f902b4dbc0c45b2b49b4b74ed0436ff3d8b",
+      "schemaCompilePassed": true,
+      "diskReloadCompileIdentical": true,
+      "fullHeroE2EProven": false,
+      "humanRepairs": 0,
+      "status": "auxiliary-structural-pass-not-game-acceptance",
+      "context": {
+        "wholeCaseId": "b2-nube:HERO",
+        "wholeTargetSha256": "32a88596ef6591fdbcc06093ac0cba8b50152b3cd05b9a5fc7564924159243b7",
+        "source": "same-arm-generated-whole-hero"
+      },
+      "authoringSha256": "3be9355e04f9f59258d18e73bd2b63e9752fe5029079e96c1e8bd4871f5f3aa2",
+      "compiledSha256": "cd9633a27cdec18078cac7fb4509526c573bc1177ad33c421afdd291aa94bde0"
+    }
+  ]
+}

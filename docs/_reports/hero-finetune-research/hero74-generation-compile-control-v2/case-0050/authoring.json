@@ -1,0 +1,255 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "PASSIVE",
+      "name": "〔糖分補給〕",
+      "purpose": "【本次玩法】銀時偷喝草莓奶：偷閒存貨，喝奶怕被打斷，吐槽打斷別人\n【修正行為】5 秒未攻擊、施法或參與敵對命中後保存一份補給，最多一份；W 提交消耗，回合重置。",
+      "maxRank": 1,
+      "abilityOverrides": {
+        "provenance": "editor-json"
+      },
+      "products": [
+        {
+          "instanceId": "supply",
+          "template": {
+            "ref": "tpl-mark-stacks",
+            "params": {
+              "markId": "community-review-23-20260907.supply",
+              "initial": 0,
+              "max": 1,
+              "durationSec": -1,
+              "resetOn": "round",
+              "perStackLost": [],
+              "lethalMode": "none",
+              "lethalConsume": 1,
+              "surviveHpPct": 0.01,
+              "lethalDamageTypes": "all",
+              "internalCooldown": 0.5,
+              "invulnerableSec": 1.5,
+              "invulnerableScope": "damageAndControl",
+              "restoreHealthPct": 0.5,
+              "aoeRadius": 6,
+              "knockbackDistance": 4,
+              "knockbackSpeed": 16,
+              "knockbackFrom": "caster",
+              "stunSec": 0.5,
+              "stunStatusId": "trial-stun"
+            }
+          }
+        },
+        {
+          "instanceId": "initial-rest",
+          "template": {
+            "ref": "tpl-mark-stacks",
+            "params": {
+              "markId": "community-review-23-20260907.combat-busy",
+              "initial": 1,
+              "max": 1,
+              "durationSec": 5,
+              "resetOn": "round",
+              "perStackLost": [],
+              "lethalMode": "none",
+              "lethalConsume": 1,
+              "surviveHpPct": 0.01,
+              "lethalDamageTypes": "all",
+              "internalCooldown": 0.5,
+              "invulnerableSec": 1.5,
+              "invulnerableScope": "damageAndControl",
+              "restoreHealthPct": 0.5,
+              "aoeRadius": 6,
+              "knockbackDistance": 4,
+              "knockbackSpeed": 16,
+              "knockbackFrom": "caster",
+              "stunSec": 0.5,
+              "stunStatusId": "trial-stun"
+            }
+          }
+        },
+        {
+          "instanceId": "supply-events",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onAttackAttempt",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-23-20260907.combat-busy",
+                      "applyTo": "self",
+                      "duration": 5,
+                      "stacks": 1,
+                      "grantMark": {
+                        "max": 1,
+                        "resetOn": "round"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "on": "onAbilityCast",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-23-20260907.combat-busy",
+                      "applyTo": "self",
+                      "duration": 5,
+                      "stacks": 1,
+                      "grantMark": {
+                        "max": 1,
+                        "resetOn": "round"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "on": "onDamageTaken",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-23-20260907.combat-busy",
+                      "applyTo": "self",
+                      "duration": 5,
+                      "stacks": 1,
+                      "grantMark": {
+                        "max": 1,
+                        "resetOn": "round"
+                      }
+                    }
+                  ],
+                  "victim": "enemy"
+                },
+                {
+                  "on": "onDamageDealt",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-23-20260907.combat-busy",
+                      "applyTo": "self",
+                      "duration": 5,
+                      "stacks": 1,
+                      "grantMark": {
+                        "max": 1,
+                        "resetOn": "round"
+                      }
+                    }
+                  ],
+                  "victim": "enemy"
+                },
+                {
+                  "on": "onBlock",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-23-20260907.combat-busy",
+                      "applyTo": "self",
+                      "duration": 5,
+                      "stacks": 1,
+                      "grantMark": {
+                        "max": 1,
+                        "resetOn": "round"
+                      }
+                    }
+                  ],
+                  "victim": "enemy"
+                },
+                {
+                  "on": "onInterval",
+                  "internalCooldown": 1,
+                  "target": "self",
+                  "condition": {
+                    "all": [
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-23-20260907.combat-busy"
+                        }
+                      },
+                      {
+                        "not": {
+                          "any": [
+                            {
+                              "kind": "recentCast",
+                              "subject": "self",
+                              "slot": "Q",
+                              "withinSec": 5
+                            },
+                            {
+                              "kind": "recentCast",
+                              "subject": "self",
+                              "slot": "W",
+                              "withinSec": 5
+                            },
+                            {
+                              "kind": "recentCast",
+                              "subject": "self",
+                              "slot": "E",
+                              "withinSec": 5
+                            },
+                            {
+                              "kind": "recentCast",
+                              "subject": "self",
+                              "slot": "R",
+                              "withinSec": 5
+                            },
+                            {
+                              "kind": "recentCast",
+                              "subject": "self",
+                              "slot": "EX",
+                              "withinSec": 5
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-23-20260907.supply",
+                      "stacks": 1,
+                      "duration": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 0,
+        "manaCost": 0,
+        "range": 0
+      },
+      "capabilityIds": [
+        "hooks",
+        "conditions"
+      ],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": []
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-23-20260907:HERO",
+    "wholeTargetSha256": "e5cfd1a78ad71be587655f71fbc7a0df1fdf80cadc045863c81a847476de0ffb",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

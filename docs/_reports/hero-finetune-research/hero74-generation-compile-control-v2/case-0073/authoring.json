@@ -1,0 +1,134 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "W",
+      "name": "〔鬥氣護身〕",
+      "purpose": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n新增代價：硬化三秒自己減速30%；可以用E接近或R衝刺打破站樁僵局。\n三秒護甲與魔抗各加三十，使用固定堆疊鍵至多一層，到期還原；增加物理／魔法承傷能力，不是永久增益或無限護盾。",
+      "maxRank": 4,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "castTimeSec": 0,
+        "cooldown": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "manaCost": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "range": 0
+      },
+      "products": [
+        {
+          "instanceId": "w-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "applyTo": "self",
+                  "stackKey": "community-review-28-20260907.guard",
+                  "maxStacks": 1,
+                  "duration": 3,
+                  "modifiers": [
+                    {
+                      "stat": "armor",
+                      "op": "flat",
+                      "value": 30
+                    },
+                    {
+                      "stat": "mr",
+                      "op": "flat",
+                      "value": 30
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "instanceId": "w-parody",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "slow30",
+                  "duration": 3,
+                  "applyTo": "self",
+                  "sourceScope": "caster",
+                  "moveSpeedMult": 0.7
+                },
+                {
+                  "kind": "floatingText",
+                  "shape": "single",
+                  "text": "淑女站好……我忍不了啦",
+                  "applyTo": "self",
+                  "durationSec": 1
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 10,
+        "manaCost": 40,
+        "range": 6
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.w.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast",
+          "replaces": "caster.action"
+        },
+        {
+          "kind": "vfx",
+          "on": "castStart",
+          "at": "self",
+          "vfxId": "fx.prim.physical.pulse-sm"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "self",
+          "vfxId": "fx.prim.physical.pulse"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-28-20260907:HERO",
+    "wholeTargetSha256": "83b7b62e201feb55955b9cd361a9d7edd36ba41d694a0dad2f3905b0604bbc38",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

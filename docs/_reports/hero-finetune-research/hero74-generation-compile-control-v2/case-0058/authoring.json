@@ -1,0 +1,110 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "Q",
+      "name": "落雷",
+      "purpose": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n【修正行為】消耗兩點電力；指定半徑 1.5 的地面落點，約 0.4 秒後重新判定敵人並電擊一次。離開可躲過，後進入仍會命中。閃電專屬素材仍待畫面驗收。",
+      "maxRank": 4,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          6,
+          6,
+          6,
+          6
+        ],
+        "castTimeSec": 0.1,
+        "range": 8,
+        "statusCost": {
+          "statusId": "community-review-24-20260907.electricity",
+          "count": 2
+        }
+      },
+      "products": [
+        {
+          "instanceId": "q-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "ground",
+              "castTimeSec": 0.1,
+              "radius": 1.5,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "delayed",
+                  "shape": "circle",
+                  "radius": 1.5,
+                  "side": "enemies",
+                  "delaySec": 0.4,
+                  "count": 1,
+                  "targetMode": "reresolve",
+                  "anchor": "point",
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "小",
+                        "ratios": []
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 10,
+        "manaCost": 40,
+        "range": 6
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast",
+          "replaces": "caster.action"
+        },
+        {
+          "kind": "vfx",
+          "on": "castStart",
+          "at": "self",
+          "vfxId": "fx.prim.lightning.pulse-sm"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "point",
+          "vfxId": "fx.prim.lightning.nova"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-24-20260907:HERO",
+    "wholeTargetSha256": "440aaa4fe5e224c2184c4b226fd5fa34357fd02c3557b3284140ba35a87e5c71",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

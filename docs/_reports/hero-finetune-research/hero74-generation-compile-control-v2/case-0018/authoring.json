@@ -1,0 +1,97 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "E",
+      "name": "〔麥穗庇護〕",
+      "purpose": "【核准惡搞改編】理賠審核：隊友得到120護盾；自己生命低於50%時再追加240治療。",
+      "maxRank": 4,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "products": [
+        {
+          "instanceId": "e-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "allies",
+              "effects": [
+                {
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 120
+                  },
+                  "duration": 3,
+                  "absorbs": "all",
+                  "stackKey": "community-review-09-20260907.protection",
+                  "onExisting": "keepLarger"
+                },
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 240
+                  },
+                  "applyTo": "target",
+                  "condition": {
+                    "kind": "stat",
+                    "subject": "self",
+                    "stat": "hp",
+                    "mode": "percent",
+                    "op": "<",
+                    "value": 0.5
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 10,
+        "manaCost": 40,
+        "range": 8
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/sela.e.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "target",
+          "vfxId": "fx.prim.wind.pulse-sm"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-09-20260907:HERO",
+    "wholeTargetSha256": "605a3e3d2beaff443437e1472d4dadeb2384607cd9784566bc70938d9ae34256",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

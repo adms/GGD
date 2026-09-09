@@ -1,0 +1,142 @@
+{
+  "id": "godie-edem.r",
+  "name": "45-04 哥哥",
+  "provenance": "owner-spec",
+  "description": "[被動][技能命中時][身上有某狀態時][範圍][AP加成]\n{{cd}}秒冷卻\n有效半徑：{{radius}}\n\n「我愚蠢的弟弟啊！憎恨吧！」\n當「千鳥」命中帶有[燃燒]標記的敵人時引發忍術「麒麟」雷電大爆炸，對目標[周圍][小範圍]敵人造成{{dmg}}+ {{ap}}% [AP] 傷害。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    0,
+    0,
+    0
+  ],
+  "manaCost": [
+    0,
+    0,
+    0
+  ],
+  "range": 0,
+  "targetsEnemies": false,
+  "effects": [],
+  "passive": {
+    "name": "45-04 哥哥",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onAbilityHit",
+            "abilitySlot": "E",
+            "effects": [
+              {
+                "kind": "damageArea",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 400,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 3
+                    }
+                  ],
+                  "perRank": [
+                    0,
+                    200,
+                    400
+                  ]
+                },
+                "radius": 3,
+                "radiusTier": "極小",
+                "includeOrigin": true
+              }
+            ],
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "tag": "burn"
+            },
+            "target": "event"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onAbilityHit",
+            "abilitySlot": "E",
+            "effects": [
+              {
+                "kind": "damageArea",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 700,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 3
+                    }
+                  ],
+                  "perRank": [
+                    0,
+                    350,
+                    700
+                  ]
+                },
+                "radius": 3,
+                "radiusTier": "極小",
+                "includeOrigin": true
+              }
+            ],
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "tag": "burn"
+            },
+            "target": "event"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onAbilityHit",
+            "abilitySlot": "E",
+            "effects": [
+              {
+                "kind": "damageArea",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 1000,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 3
+                    }
+                  ],
+                  "perRank": [
+                    0,
+                    500,
+                    1000
+                  ]
+                },
+                "radius": 3,
+                "radiusTier": "極小",
+                "includeOrigin": true
+              }
+            ],
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "tag": "burn"
+            },
+            "target": "event"
+          }
+        ]
+      }
+    ]
+  },
+  "vfxKey": "fx.prim.void.pulse-lg",
+  "sfxKey": "wc3.thunderboltmissiledeath",
+  "icon": "assets/icons/abilities/godie-edem.r.png",
+  "schema": "ability@1"
+}

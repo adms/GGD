@@ -1,0 +1,78 @@
+{
+  "id": "b2-uncle.q",
+  "name": "精靈把增益寄錯人",
+  "provenance": "editor-json",
+  "description": "「精靈把增益寄錯人！」\n客服選错收件人：替敵人增加 50 攻擊力，持續 3 秒，可被驅散；這是真實代價。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：精靈客服與遊戲攻略，戰鬥全程社交事故。GGD 惡搞改編，非原作招式與數值聲明。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "radius": 3,
+  "rangeTier": "中",
+  "cooldownTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "flat",
+          "value": 50
+        }
+      ],
+      "duration": 3,
+      "applyTo": "target",
+      "dispellable": true,
+      "polarity": "buff"
+    }
+  ],
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "attachTo": "caster"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "target",
+          "duration": 3,
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "flat",
+              "value": 50
+            }
+          ],
+          "polarity": "buff",
+          "dispellable": true
+        }
+      ],
+      "castType": "targeted",
+      "side": "enemies",
+      "castTimeSec": 0.1,
+      "radius": 3
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

@@ -1,0 +1,80 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "R",
+      "name": "夢幻召喚・Saber",
+      "purpose": "【核准惡搞改編】魔法光束：中級魔法傷害加0.8AP；穿近戰服時這招會弱，選裝有取捨。",
+      "maxRank": 3,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          30
+        ],
+        "manaCost": [
+          60
+        ]
+      },
+      "products": [
+        {
+          "instanceId": "r-parody-1",
+          "template": {
+            "ref": "tpl-line-strike",
+            "params": {
+              "damage": {
+                "damageTier": "中",
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.8
+                  }
+                ]
+              },
+              "damageType": "magic",
+              "length": 9,
+              "width": 1.5,
+              "aim": "target",
+              "castTimeSec": 0.1
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 60,
+        "manaCost": 100,
+        "range": 6
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/sela.r.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "target",
+          "vfxId": "fx.prim.arcane.bolt"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-16-20260907:HERO",
+    "wholeTargetSha256": "e56268510993043feb1fa31ab5a52c266b3c999fc169cff1a91eeb9b72bbd722",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "EX",
+      "name": "伸縮吊帶",
+      "purpose": "【本次玩法】柯南原地推理：觀察對方真實行為取證，說真相時自己站住\n【修正行為】沿瞄準方向連接8格內首個合法可見敵人或地形錨點；敵人被拉向施法者，地形則拉動自己。最多移動4格一次，抵達前保留身體間距；碰撞、超距、死亡、跨區或對決結束中止，沒有摔投或落地傷害。空射、免控敵人與範圍外不拉動；空射仍支付本次施法消耗。專用吊帶／動作與畫面仍待驗收。",
+      "maxRank": 1,
+      "abilityOverrides": {
+        "cooldownTier": "大",
+        "manaCostTier": "大",
+        "provenance": "editor-json",
+        "castTimeSec": 0.1,
+        "range": 8
+      },
+      "products": [
+        {
+          "instanceId": "ex-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "pull",
+                  "shape": "single",
+                  "speed": 12,
+                  "stopDistance": 0.7,
+                  "grapple": {
+                    "range": 8,
+                    "maxTravel": 4,
+                    "hitRadius": 0.2
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 60,
+        "manaCost": 100,
+        "range": 8
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.r.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast",
+          "replaces": "caster.action"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-26-20260907:HERO",
+    "wholeTargetSha256": "b5df86ed757062b641b4e1030343e1fa4b4bac13b0a937115398853edbf9e71a",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

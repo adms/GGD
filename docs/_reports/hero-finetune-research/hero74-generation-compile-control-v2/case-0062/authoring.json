@@ -1,0 +1,145 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "EX",
+      "name": "〔充電釋放〕",
+      "purpose": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n新增代價：放空電力後自己繳械一秒，不能普攻；原三秒充電封鎖保留。\n【修正行為】至少有一點電力才可施放，施法開始一次消耗全部剩餘電力，對自身半徑二內敌人造成中級魔法爆發；三秒低電力狀態禁止充電。既有加速在電力耗盡時解除。原文未指定傷害按電量倍率，此版傷害沿用全域中級倍率，電量是全額施法成本。近身電爆仍待畫面驗收。",
+      "maxRank": 1,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "castTimeSec": 0.1,
+        "range": 8,
+        "statusCost": {
+          "statusId": "community-review-24-20260907.electricity",
+          "count": "all"
+        }
+      },
+      "products": [
+        {
+          "instanceId": "ex-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "community-review-24-20260907.low-electricity",
+                  "duration": 3,
+                  "applyTo": "self"
+                },
+                {
+                  "kind": "delayed",
+                  "shape": "circle",
+                  "radius": 2,
+                  "side": "enemies",
+                  "anchor": "caster",
+                  "targetMode": "reresolve",
+                  "delaySec": 0.03333333333333333,
+                  "count": 1,
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "中",
+                        "ratios": []
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "instanceId": "ex-parody",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "numbness",
+                  "duration": 1,
+                  "applyTo": "self",
+                  "sourceScope": "caster",
+                  "disarmed": true
+                },
+                {
+                  "kind": "floatingText",
+                  "shape": "single",
+                  "text": "電量0%，普攻也下班",
+                  "applyTo": "self",
+                  "durationSec": 1
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 60,
+        "manaCost": 100,
+        "range": 6
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.r.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast",
+          "replaces": "caster.action"
+        },
+        {
+          "kind": "vfx",
+          "on": "castStart",
+          "at": "self",
+          "vfxId": "fx.prim.lightning.pulse-sm"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "point",
+          "vfxId": "fx.prim.lightning.nova"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-24-20260907:HERO",
+    "wholeTargetSha256": "440aaa4fe5e224c2184c4b226fd5fa34357fd02c3557b3284140ba35a87e5c71",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "id": "godie-edem.e",
+  "name": "45-03 千鳥",
+  "provenance": "owner-spec",
+  "description": "[主動][指向][範圍][衝刺][AP加成]\n{{cd}}秒冷卻，吟唱{{cast}}秒\n消耗MP{{mp}}\n施法距離：{{range}}\n有效半徑：{{radius}}\n\n「千鳥・雷切」\n將查克拉集中在手上，以高速[直線][衝刺]，對沿途[周圍]敵人造成{{dmg}}+{{ap}}% [AP]點傷害。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 12,
+  "radiusTier": "中",
+  "rangeTier": "極大",
+  "cooldownTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "dash",
+      "mode": "toPoint",
+      "speed": 16,
+      "maxDistance": 12.83
+    },
+    {
+      "kind": "damageLine",
+      "damageType": "magic",
+      "amount": {
+        "damageTierPerRank": [
+          "極小",
+          "小",
+          "小",
+          "小"
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.2565
+          }
+        ],
+        "perRank": [
+          200,
+          500,
+          500,
+          500
+        ]
+      },
+      "length": 12.83,
+      "width": 12,
+      "aim": "facing",
+      "fromCaster": true,
+      "includeOrigin": true
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-strike",
+      "modelKey": "w3x.stock.monsoonbolttarget",
+      "path": "static",
+      "anchor": "point",
+      "scale": 8,
+      "clip": "idle",
+      "alpha": 1,
+      "lifeSec": 1
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "w3x.stock.thunderclapcaster",
+      "clip": "idle",
+      "scale": 3.5,
+      "tint": [
+        1,
+        0,
+        0
+      ],
+      "lifeSec": 1,
+      "soundKey": "wc3.thunderclapcaster",
+      "path": "orbit",
+      "speed": 1,
+      "distance": 0.1,
+      "count": 1,
+      "alpha": 0.9
+    }
+  ],
+  "vfxKey": "fx.prim.lightning.beam",
+  "vfxLayers": [
+    {
+      "pitchDeg": 0,
+      "vfxKey": "fx.prim.lightning.bolt",
+      "attachTo": "point"
+    }
+  ],
+  "castTimeSec": 0.067,
+  "icon": "assets/icons/abilities/godie-edem.e.webp",
+  "schema": "ability@1",
+  "radius": 6
+}

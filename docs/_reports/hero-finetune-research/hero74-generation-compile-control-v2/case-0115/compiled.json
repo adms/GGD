@@ -1,0 +1,82 @@
+{
+  "id": "b2-nube.w",
+  "name": "老師先幫你擋著",
+  "provenance": "editor-json",
+  "description": "「老師先幫你擋著！」\n指定友軍取得 210 點全傷害護盾 3 秒；確實放在該友軍身上。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "radius": 3,
+  "rangeTier": "中",
+  "cooldownTier": "小",
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 210,
+        "perRank": [
+          0,
+          105,
+          210,
+          315
+        ]
+      },
+      "duration": 3,
+      "absorbs": "all",
+      "stackKey": "b2-protection",
+      "onExisting": "keepLarger"
+    }
+  ],
+  "vfxKey": "fx.prim.wind.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "attachTo": "caster"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "effects": [
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 210,
+            "perRank": [
+              0,
+              105,
+              210,
+              315
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "b2-protection",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "castType": "targeted",
+      "side": "allies",
+      "castTimeSec": 0.1,
+      "radius": 3
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

@@ -1,0 +1,340 @@
+{
+  "id": "godie-h02v.e",
+  "name": "92-02 消化液",
+  "provenance": "owner-spec",
+  "description": "[被動][指向][範圍][破魔][AP加成][機率][週期]\n\n草泥馬在 [受到傷害] 的時候有 10% [機率]，會從嘴巴裡噴出消化液攻擊敵人，造成[前方][一直線] [範圍] 敵人，每秒受到20/30/40/50+ {{ap}}% [AP] 傷害，附帶 [破魔] 降低魔抗 50%，持續3秒。",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "manaCost": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "range": 0,
+  "targetsEnemies": false,
+  "effects": [],
+  "passive": {
+    "name": "92-02 消化液",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onDamageTaken",
+            "effects": [
+              {
+                "kind": "damageLine",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 20,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.3
+                    }
+                  ],
+                  "perRank": [
+                    0,
+                    10,
+                    20,
+                    30
+                  ]
+                },
+                "length": 8,
+                "width": 1.8,
+                "aim": "target",
+                "fromCaster": true,
+                "onHitTargets": [
+                  {
+                    "kind": "dot",
+                    "damageType": "magic",
+                    "amountPerTick": {
+                      "flat": 20,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.3
+                        }
+                      ],
+                      "perRank": [
+                        0,
+                        10,
+                        20,
+                        30
+                      ]
+                    },
+                    "intervalSec": 1,
+                    "durationSec": 3,
+                    "stacking": "refresh"
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "magic-break",
+                    "duration": 3
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "modifiers": [
+                      {
+                        "stat": "mr",
+                        "op": "pctAdd",
+                        "value": -1
+                      }
+                    ],
+                    "duration": 3,
+                    "dispellable": true,
+                    "polarity": "debuff"
+                  }
+                ]
+              }
+            ],
+            "internalCooldown": 2,
+            "chance": 0.1,
+            "target": "event"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onDamageTaken",
+            "effects": [
+              {
+                "kind": "damageLine",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 30,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.3
+                    }
+                  ],
+                  "perRank": [
+                    0,
+                    15,
+                    30,
+                    45
+                  ]
+                },
+                "length": 8,
+                "width": 1.8,
+                "aim": "target",
+                "fromCaster": true,
+                "onHitTargets": [
+                  {
+                    "kind": "dot",
+                    "damageType": "magic",
+                    "amountPerTick": {
+                      "flat": 30,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.3
+                        }
+                      ],
+                      "perRank": [
+                        0,
+                        15,
+                        30,
+                        45
+                      ]
+                    },
+                    "intervalSec": 1,
+                    "durationSec": 3,
+                    "stacking": "refresh"
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "magic-break",
+                    "duration": 3
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "modifiers": [
+                      {
+                        "stat": "mr",
+                        "op": "pctAdd",
+                        "value": -1
+                      }
+                    ],
+                    "duration": 3,
+                    "dispellable": true,
+                    "polarity": "debuff"
+                  }
+                ]
+              }
+            ],
+            "internalCooldown": 2,
+            "chance": 0.1,
+            "target": "event"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onDamageTaken",
+            "effects": [
+              {
+                "kind": "damageLine",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 40,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.3
+                    }
+                  ],
+                  "perRank": [
+                    0,
+                    20,
+                    40,
+                    60
+                  ]
+                },
+                "length": 8,
+                "width": 1.8,
+                "aim": "target",
+                "fromCaster": true,
+                "onHitTargets": [
+                  {
+                    "kind": "dot",
+                    "damageType": "magic",
+                    "amountPerTick": {
+                      "flat": 40,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.3
+                        }
+                      ],
+                      "perRank": [
+                        0,
+                        20,
+                        40,
+                        60
+                      ]
+                    },
+                    "intervalSec": 1,
+                    "durationSec": 3,
+                    "stacking": "refresh"
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "magic-break",
+                    "duration": 3
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "modifiers": [
+                      {
+                        "stat": "mr",
+                        "op": "pctAdd",
+                        "value": -1
+                      }
+                    ],
+                    "duration": 3,
+                    "dispellable": true,
+                    "polarity": "debuff"
+                  }
+                ]
+              }
+            ],
+            "internalCooldown": 2,
+            "chance": 0.1,
+            "target": "event"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onDamageTaken",
+            "effects": [
+              {
+                "kind": "damageLine",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 50,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.3
+                    }
+                  ],
+                  "perRank": [
+                    0,
+                    25,
+                    50,
+                    75
+                  ]
+                },
+                "length": 8,
+                "width": 1.8,
+                "aim": "target",
+                "fromCaster": true,
+                "onHitTargets": [
+                  {
+                    "kind": "dot",
+                    "damageType": "magic",
+                    "amountPerTick": {
+                      "flat": 50,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.3
+                        }
+                      ],
+                      "perRank": [
+                        0,
+                        25,
+                        50,
+                        75
+                      ]
+                    },
+                    "intervalSec": 1,
+                    "durationSec": 3,
+                    "stacking": "refresh"
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "magic-break",
+                    "duration": 3
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "modifiers": [
+                      {
+                        "stat": "mr",
+                        "op": "pctAdd",
+                        "value": -1
+                      }
+                    ],
+                    "duration": 3,
+                    "dispellable": true,
+                    "polarity": "debuff"
+                  }
+                ]
+              }
+            ],
+            "internalCooldown": 2,
+            "chance": 0.1,
+            "target": "event"
+          }
+        ]
+      }
+    ]
+  },
+  "vfxKey": "fx.prim.arcane.nova",
+  "icon": "assets/icons/abilities/godie-h02v.e.webp",
+  "schema": "ability@1"
+}

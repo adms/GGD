@@ -1,0 +1,75 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "R",
+      "name": "耐用形狀保固四秒",
+      "purpose": "「耐用形狀保固四秒！」\n獲得 60 護甲及 30 魔抗 4 秒；這是形態意象的數值強化，沒有換模或復活。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
+      "maxRank": 3,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "manaCostTier": "小"
+      },
+      "products": [
+        {
+          "instanceId": "b2-fushi.r.card1",
+          "template": {
+            "ref": "tpl-buff-self",
+            "params": {
+              "duration": 4,
+              "modifiers": [
+                {
+                  "stat": "armor",
+                  "op": "flat",
+                  "value": 60
+                },
+                {
+                  "stat": "mr",
+                  "op": "flat",
+                  "value": 30
+                }
+              ],
+              "castTimeSec": 0.1
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 45,
+        "manaCost": 144,
+        "range": 6
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": null,
+      "sfxKey": null,
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "b2-fushi:HERO",
+    "wholeTargetSha256": "1eed21957c99c1f1611c1ea93a2c505f87d46cb12fb5c17d3ba5a23b79ac7798",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

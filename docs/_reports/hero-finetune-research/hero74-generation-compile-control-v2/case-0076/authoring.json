@@ -1,0 +1,105 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "EX",
+      "name": "〔狂劍追擊〕",
+      "purpose": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n指定自己二秒內有效命中的近身敵人，消耗該次追擊標記追加一次小級距劍擊。超距直接拒絕，不自動接近，不扣魔力、冷卻或目標標記；別來源／過期／非法目標不能施放。",
+      "maxRank": 1,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "castTimeSec": 0.12,
+        "cooldown": [
+          7,
+          7,
+          7,
+          7
+        ],
+        "manaCost": [
+          50,
+          50,
+          50,
+          50
+        ],
+        "range": 3,
+        "allowApproach": false,
+        "requiredTargetStatus": {
+          "statusId": "community-review-28-20260907.recent-hit",
+          "appliedBy": "self"
+        },
+        "statusCost": {
+          "subject": "target",
+          "statusId": "community-review-28-20260907.recent-hit",
+          "count": 1,
+          "appliedBy": "self"
+        }
+      },
+      "products": [
+        {
+          "instanceId": "ex-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.12,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "小",
+                    "ratios": []
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 60,
+        "manaCost": 100,
+        "range": 6
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.r.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast",
+          "replaces": "caster.action"
+        },
+        {
+          "kind": "vfx",
+          "on": "castStart",
+          "at": "self",
+          "vfxId": "fx.prim.physical.pulse-sm"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "target",
+          "vfxId": "fx.prim.physical.slash"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-28-20260907:HERO",
+    "wholeTargetSha256": "83b7b62e201feb55955b9cd361a9d7edd36ba41d694a0dad2f3905b0604bbc38",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

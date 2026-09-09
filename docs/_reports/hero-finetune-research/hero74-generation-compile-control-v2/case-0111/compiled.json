@@ -1,0 +1,43 @@
+{
+  "id": "b2-fushi.ex",
+  "name": "換一雙腿先跑路",
+  "provenance": "editor-json",
+  "description": "「換一雙腿先跑路！」\n瞬移至指定合法地點；適應暫態仍依原期限到期。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
+  "slot": "EX",
+  "castType": "ground",
+  "maxRank": 1,
+  "cooldown": [
+    45
+  ],
+  "manaCost": [
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "rangeTier": "中",
+  "cooldownTier": "大",
+  "effects": [
+    {
+      "kind": "blink",
+      "shape": "single",
+      "to": "point",
+      "applyTo": "self"
+    }
+  ],
+  "vfxKey": "fx.prim.arcane.dash",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.arcane.dash",
+      "attachTo": "caster"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "template": {
+    "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+    "params": {
+      "castTimeSec": 0.1
+    },
+    "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
+  },
+  "schema": "ability@1"
+}

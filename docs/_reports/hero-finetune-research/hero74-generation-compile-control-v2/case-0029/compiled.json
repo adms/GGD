@@ -1,0 +1,70 @@
+{
+  "id": "community-review-17-20260907.passive",
+  "name": "〔情緒抑制〕",
+  "provenance": "editor-json",
+  "description": "【核准惡搞改編】R演說開始時獲得120護盾一秒，每五秒一次；護盾不等於免打斷。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0,
+  "effects": [],
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onUltimateCast",
+            "effects": [
+              {
+                "kind": "shield",
+                "amount": {
+                  "flat": 120
+                },
+                "duration": 1,
+                "absorbs": "all",
+                "stackKey": "community-review-17-20260907.protection",
+                "onExisting": "keepLarger"
+              }
+            ],
+            "internalCooldown": 5,
+            "target": "self"
+          }
+        ]
+      }
+    ]
+  },
+  "icon": "assets/icons/abilities/sela.q.webp",
+  "template": {
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+    "params": {
+      "hooks": [
+        {
+          "on": "onUltimateCast",
+          "effects": [
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 120
+              },
+              "duration": 1,
+              "absorbs": "all",
+              "stackKey": "community-review-17-20260907.protection",
+              "onExisting": "keepLarger"
+            }
+          ],
+          "internalCooldown": 5,
+          "target": "self"
+        }
+      ]
+    },
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+  },
+  "schema": "ability@1"
+}

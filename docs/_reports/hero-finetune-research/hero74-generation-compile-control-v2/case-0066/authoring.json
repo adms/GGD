@@ -1,0 +1,78 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "W",
+      "name": "手錶型麻醉槍",
+      "purpose": "【本次玩法】柯南原地推理：觀察對方真實行為取證，說真相時自己站住\n【修正行為】單枚直線麻醉彈首碰敵人後睡眠1.2秒，不額外造成傷害；受到後續實際HP傷害即提前醒來，只移除此睡眠，護盾吸收及零傷不喚醒。免控拒絕、未命中不睡眠；正常施法支付自己的魔力與冷卻。針與手錶演出仍使用代理彈待驗。",
+      "maxRank": 4,
+      "abilityOverrides": {
+        "cooldownTier": "小",
+        "manaCostTier": "小",
+        "provenance": "editor-json",
+        "castTimeSec": 0.1,
+        "range": 12
+      },
+      "products": [
+        {
+          "instanceId": "w-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "spawnProjectile",
+                  "projectileId": "imported.bolt.arcane",
+                  "onHit": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-26-20260907.sleep",
+                      "stun": true,
+                      "breakOnDamage": true,
+                      "duration": 1.2,
+                      "dispellable": true
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 10,
+        "manaCost": 40,
+        "range": 8
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.w.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast",
+          "replaces": "caster.action"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-26-20260907:HERO",
+    "wholeTargetSha256": "b5df86ed757062b641b4e1030343e1fa4b4bac13b0a937115398853edbf9e71a",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

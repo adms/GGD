@@ -1,0 +1,84 @@
+{
+  "id": "community-review-26-20260907.e",
+  "name": "渦輪引擎滑板",
+  "provenance": "editor-json",
+  "description": "【本次玩法】柯南原地推理：觀察對方真實行為取證，說真相時自己站住\n【修正行為】3秒滑行：移速提高50%，0.3秒加速、0.2秒煞車；急轉降到30%速度並漸進轉向。沿指令方向實際行進，碰撞地形／身體即停止，束縛或暈眩立即停下；到期回到普通移動，不把移速增益當作加減速狀態。專用滑板模型、尾跡與畫面仍待驗收。",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 8,
+  "cooldownTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "value": 0.5
+        }
+      ],
+      "duration": 3,
+      "applyTo": "self",
+      "stackKey": "community-review-26-20260907.ride",
+      "maxStacks": 1,
+      "drive": {
+        "accelSec": 0.3,
+        "brakeSec": 0.2,
+        "turnFactor": 0.2,
+        "sharpTurnDot": 0.5,
+        "sharpTurnSpeed": 0.3
+      }
+    }
+  ],
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/thorne.e.webp",
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "castType": "self",
+      "castTimeSec": 0.1,
+      "radius": 0,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "duration": 3,
+          "stackKey": "community-review-26-20260907.ride",
+          "maxStacks": 1,
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": 0.5
+            }
+          ],
+          "drive": {
+            "accelSec": 0.3,
+            "brakeSec": 0.2,
+            "turnFactor": 0.2,
+            "sharpTurnDot": 0.5,
+            "sharpTurnSpeed": 0.3
+          }
+        }
+      ]
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

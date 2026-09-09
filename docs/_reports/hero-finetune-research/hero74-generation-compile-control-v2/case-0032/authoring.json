@@ -1,0 +1,79 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "E",
+      "name": "高階傳送",
+      "purpose": "【核准惡搞改編】請一名四秒保鑣，攻擊/生命倍率各0.3，最多兩名；死亡跟著散會。",
+      "maxRank": 4,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "products": [
+        {
+          "instanceId": "e-parody-1",
+          "template": {
+            "ref": "tpl-summon-agent",
+            "params": {
+              "count": 1,
+              "body": "self",
+              "durationSec": 4,
+              "damageMult": 0.3,
+              "hpMult": 0.3,
+              "formation": "ring",
+              "spread": 2,
+              "maxAlive": 2,
+              "onOwnerDeath": "despawn",
+              "cleanse": "none",
+              "castTimeSec": 0
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 10,
+        "manaCost": 40,
+        "range": 6
+      },
+      "capabilityIds": [
+        "leap"
+      ],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/sela.e.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "target",
+          "vfxId": "fx.prim.arcane.pulse-sm"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-17-20260907:HERO",
+    "wholeTargetSha256": "6cd3c403d830e4f37b00583f548fa8caf2bd9c84c8d38d30e87004c295494d71",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "id": "community-review-24-20260907.w",
+  "name": "肢曲",
+  "provenance": "editor-json",
+  "description": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n【修正行為】消耗一點電力，向指向方向貼地側移 2.5；0.6 秒內提供 80% 普攻迴避（遵守 GGD 上限）。只有實際由此增益抽中的迴避補回兩點電力，單次肢曲限一次，供後續反擊使用。空放、敵人失手、其他迴避來源和無敵免傷不給電力；不再跳躍或落地傷害。殘像仍待畫面驗收。",
+  "slot": "W",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    6,
+    6,
+    6,
+    6
+  ],
+  "manaCost": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "statusCost": {
+    "statusId": "community-review-24-20260907.electricity",
+    "count": 1
+  },
+  "range": 8,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "evasion",
+          "op": "flat",
+          "value": 0.8
+        }
+      ],
+      "duration": 0.6,
+      "applyTo": "self",
+      "stackKey": "community-review-24-20260907.w.evade",
+      "maxStacks": 1,
+      "hooks": [
+        {
+          "on": "onEvade",
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "community-review-24-20260907.electricity",
+              "stacks": 2,
+              "duration": 1
+            }
+          ],
+          "target": "self",
+          "evadeSource": "thisSource",
+          "maxTriggers": 1
+        }
+      ]
+    },
+    {
+      "kind": "dash",
+      "mode": "toPoint",
+      "speed": 12,
+      "maxDistance": 2.5
+    }
+  ],
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/thorne.w.webp",
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "castType": "ground",
+      "castTimeSec": 0.1,
+      "radius": 0,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "duration": 0.6,
+          "stackKey": "community-review-24-20260907.w.evade",
+          "maxStacks": 1,
+          "modifiers": [
+            {
+              "stat": "evasion",
+              "op": "flat",
+              "value": 0.8
+            }
+          ],
+          "hooks": [
+            {
+              "on": "onEvade",
+              "evadeSource": "thisSource",
+              "target": "self",
+              "maxTriggers": 1,
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "community-review-24-20260907.electricity",
+                  "stacks": 2,
+                  "duration": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "dash",
+          "mode": "toPoint",
+          "speed": 12,
+          "maxDistance": 2.5
+        }
+      ]
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

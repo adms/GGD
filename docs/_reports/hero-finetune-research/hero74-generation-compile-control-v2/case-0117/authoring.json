@@ -1,0 +1,87 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "R",
+      "name": "全班留下來補課",
+      "purpose": "「全班留下來補課！」\n對自身周圍半徑 2.5 的敵人造成小級範圍傷害，並施加 root 定身 1.5 秒；拉進點名圈才會命中。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
+      "maxRank": 3,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "manaCostTier": "小"
+      },
+      "products": [
+        {
+          "instanceId": "b2-nube.r.card1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "effects": [
+                {
+                  "kind": "damageArea",
+                  "radius": 2.5,
+                  "includeOrigin": true,
+                  "amount": {
+                    "damageTier": "小"
+                  },
+                  "damageType": "magic",
+                  "maxTargets": 6,
+                  "onHitTargets": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "root",
+                      "duration": 1.5,
+                      "applyTo": "target",
+                      "root": true
+                    }
+                  ],
+                  "onHitTargetsMode": "perTarget"
+                }
+              ],
+              "castType": "self",
+              "side": "enemies",
+              "castTimeSec": 0.1,
+              "radius": 3
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 90,
+        "manaCost": 144,
+        "range": 6
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": null,
+      "sfxKey": null,
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.nova",
+          "attachTo": "caster"
+        }
+      ],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "b2-nube:HERO",
+    "wholeTargetSha256": "32a88596ef6591fdbcc06093ac0cba8b50152b3cd05b9a5fc7564924159243b7",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

@@ -3,12 +3,13 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
-import {compileFullCase,engineLoader} from './hero-distillation-generation-compile.mts';
+import {compileFullCase,compileSlotCase,engineLoader} from './hero-distillation-generation-compile.mts';
 import {expandFactorTable} from './hero-distillation-freeze.mjs';
 const hash=(x:any)=>createHash('sha256').update(x).digest('hex');
 const base=path.resolve('docs/_reports/hero-finetune-research');
 const jsonl=(name:string)=>fs.readFileSync(path.join(base,'hero74-eval-plan-v1',name),'utf8').trim().split('\n').map(JSON.parse);
-const cases=jsonl('public-cases.jsonl').filter((r:any)=>r.slot==='HERO');
+const allCases=jsonl('public-cases.jsonl');
+const cases=allCases.filter((r:any)=>r.slot==='HERO');
 const answers=new Map(jsonl('private-teachers.jsonl').map((r:any)=>[r.id,JSON.parse(r.answer)]));
 const models=JSON.parse(fs.readFileSync(path.join(base,'hero74-model-bindings-v1/models.json'),'utf8'));
 const loader=engineLoader(path.resolve('.'));
@@ -45,17 +46,47 @@ test('wrong engine, public message drift and unknown mechanics fail closed',()=>
   assert.throws(()=>compileFullCase(native,target,engineNative,models));
 });
 test('disk artifacts match control receipt; structural pass never means playable',()=>{
-  const directory=path.join(base,'hero74-generation-compile-control-v1');
+  const directory=path.join(base,'hero74-generation-compile-control-v2');
   const report=JSON.parse(fs.readFileSync(path.join(directory,'report.json'),'utf8'));
   assert.equal(report.sourceEvidence.modelInferenceCalls,0);
   assert.equal(report.counts.primaryWholeHeroes,17);assert.equal(report.counts.structuralPassed,17);
-  assert.equal(report.counts.auxiliarySlotsPending,102);assert.equal(report.fullHeroE2EProven,false);
+  assert.equal(report.counts.auxiliaryStructuralPassed,102);assert.equal(report.counts.auxiliarySlotsPending,0);
+  assert.equal(report.fullHeroE2EProven,false);
   assert.equal(report.scriptSha256,hash(fs.readFileSync(new URL('./hero-distillation-generation-compile.mts',import.meta.url))));
   for(const [index,row]of report.rows.entries()){
     assert.equal(row.fullHeroE2EProven,false);
-    if(row.slot!=='HERO')continue;
     const folder=path.join(directory,`case-${String(index).padStart(4,'0')}`);
     assert.equal(hash(fs.readFileSync(path.join(folder,'authoring.json'))),row.authoringSha256);
     assert.equal(hash(fs.readFileSync(path.join(folder,'compiled.json'))),row.compiledSha256);
   }
+});
+test('all 102 independent teacher slots match their whole-teacher compiled ability',async()=>{
+  const wholeResults=new Map();
+  for(const row of cases)wholeResults.set(row.id,compileFullCase(row,answers.get(row.id),await loader.loadEngine(row.engineRevision),models));
+  const auxiliary=allCases.filter((r:any)=>r.slot!=='HERO');assert.equal(auxiliary.length,102);
+  for(const row of auxiliary){
+    const whole=cases.find((r:any)=>r.heroId===row.heroId),target=answers.get(row.id),snapshot=JSON.stringify(target);
+    const result=compileSlotCase(row,target,whole,answers.get(whole.id),await loader.loadEngine(row.engineRevision),models);
+    assert.deepEqual(result.compiled,wholeResults.get(whole.id).compiled.abilityDrafts[row.slot]);
+    assert.equal(JSON.stringify(target),snapshot);
+  }
+});
+test('hero-slot uses its own answer and requires matching whole context',()=>{
+  const row=allCases.find((r:any)=>r.format==='hero-slot'),whole=cases.find((r:any)=>r.heroId===row.heroId);
+  const target=structuredClone(answers.get(row.id)),originalWhole=JSON.stringify(answers.get(whole.id));
+  target.slot.name='Independently generated slot';
+  const result=compileSlotCase(row,target,whole,answers.get(whole.id),engineCommunity,models);
+  assert.equal(result.compiled.name,target.slot.name);
+  assert.equal(JSON.stringify(answers.get(whole.id)),originalWhole);
+  assert.throws(()=>compileSlotCase(row,target,null,null,engineCommunity,models),/OWN_ARM_WHOLE_CONTEXT_REQUIRED/);
+  assert.throws(()=>compileSlotCase(row,target,native,answers.get(native.id),engineCommunity,models),/CONTEXT_HERO_MISMATCH/);
+  target.slot.slot='invalid';
+  assert.throws(()=>compileSlotCase(row,target,whole,answers.get(whole.id),engineCommunity,models),/PLAN_SLOT_MISMATCH/);
+});
+test('native slot does not require or borrow a whole-hero answer',()=>{
+  const row=allCases.find((r:any)=>r.format==='native-slot'),target=structuredClone(answers.get(row.id));
+  const result=compileSlotCase(row,target,null,null,engineNative,models);
+  assert.equal(result.context,null);assert.equal(result.compiled.id,target.ability.id);
+  target.ability.id='another.q';
+  assert.throws(()=>compileSlotCase(row,target,null,null,engineNative,models),/ABILITY_ID_MISMATCH/);
 });

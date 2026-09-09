@@ -1,0 +1,82 @@
+{
+  "id": "community-review-20-20260907.r",
+  "name": "超電磁砲",
+  "provenance": "editor-json",
+  "description": "【本次玩法】御坂踢販賣機：交替電擊充電，連鎖後才掉出治療飲料\n【修正行為】依 GGD 大級吟唱預警後，單一長 8、寬 1.2 的高傷害直線結算，每個敵人最多一筆；不消耗 Q／W 的過載準備。",
+  "slot": "R",
+  "castType": "skillshot",
+  "maxRank": 3,
+  "cooldown": [
+    90,
+    90,
+    90
+  ],
+  "manaCost": [
+    576,
+    576,
+    576
+  ],
+  "manaCostTier": "大",
+  "range": 8,
+  "rangeTier": "大",
+  "cooldownTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damageLine",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "大",
+        "ratios": [],
+        "flat": 1500,
+        "perRank": [
+          0,
+          1125,
+          2250
+        ]
+      },
+      "length": 8,
+      "width": 1.2,
+      "aim": "facing",
+      "fromCaster": true,
+      "maxTargets": 12,
+      "includeOrigin": true
+    }
+  ],
+  "castTimeSec": 0.5,
+  "castTimeTier": "大",
+  "icon": "assets/icons/abilities/sela.r.webp",
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "castType": "skillshot",
+      "castTimeSec": 0.1,
+      "radius": 0,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "大",
+            "ratios": [],
+            "flat": 1500,
+            "perRank": [
+              0,
+              1125,
+              2250
+            ]
+          },
+          "length": 8,
+          "width": 1.2,
+          "aim": "facing",
+          "fromCaster": true,
+          "includeOrigin": true,
+          "maxTargets": 12
+        }
+      ]
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

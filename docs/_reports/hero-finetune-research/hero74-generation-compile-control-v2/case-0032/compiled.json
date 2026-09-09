@@ -1,0 +1,52 @@
+{
+  "id": "community-review-17-20260907.e",
+  "name": "高階傳送",
+  "provenance": "editor-json",
+  "description": "【核准惡搞改編】請一名四秒保鑣，攻擊/生命倍率各0.3，最多兩名；死亡跟著散會。",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    10
+  ],
+  "manaCost": [
+    40
+  ],
+  "range": 6,
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "summon",
+      "body": "self",
+      "championId": "self",
+      "count": 1,
+      "durationSec": 4,
+      "formation": "ring",
+      "spread": 2,
+      "maxAlive": 2,
+      "onOwnerDeath": "despawn",
+      "hpMult": 0.3,
+      "damageMult": 0.3
+    }
+  ],
+  "castTimeSec": 0,
+  "icon": "assets/icons/abilities/sela.e.webp",
+  "template": {
+    "ref": "hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804",
+    "params": {
+      "count": 1,
+      "body": "self",
+      "durationSec": 4,
+      "damageMult": 0.3,
+      "hpMult": 0.3,
+      "formation": "ring",
+      "spread": 2,
+      "maxAlive": 2,
+      "onOwnerDeath": "despawn",
+      "cleanse": "none",
+      "castTimeSec": 0
+    },
+    "contentSha256": "sha256:d08ea1add026b0548f07c7d9d7362263b0e38701f3bb9b6237e963a5f78d1f6f"
+  },
+  "schema": "ability@1"
+}

@@ -1,0 +1,69 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "EX",
+      "name": "SEGA神諭直線超載",
+      "purpose": "「SEGA神諭直線超載！」\n攻略正確的直線魔法，中級單次傷害；不沿用不生效的蛇行參數。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：精靈客服與遊戲攻略，戰鬥全程社交事故。GGD 惡搞改編，非原作招式與數值聲明。",
+      "maxRank": 1,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "manaCostTier": "小"
+      },
+      "products": [
+        {
+          "instanceId": "b2-uncle.ex.card1",
+          "template": {
+            "ref": "tpl-line-strike",
+            "params": {
+              "damage": {
+                "damageTier": "中"
+              },
+              "damageType": "magic",
+              "length": 9,
+              "width": 1.5,
+              "aim": "target",
+              "castTimeSec": 0.1
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 45,
+        "manaCost": 144,
+        "range": 6
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": null,
+      "sfxKey": null,
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.bolt",
+          "attachTo": "caster"
+        }
+      ],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "b2-uncle:HERO",
+    "wholeTargetSha256": "8d3bb9c55e0019d7e6b003a193ad97bb3372f08dd67a9dde645f7af0c662f4df",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

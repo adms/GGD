@@ -1,0 +1,75 @@
+{
+  "id": "community-review-19-20260907.ex",
+  "name": "The Eclipse",
+  "provenance": "editor-json",
+  "description": "【核准惡搞改編】左手忙完才包紮：回復100生命，四秒內用過W再回復120。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    10
+  ],
+  "manaCost": [
+    40
+  ],
+  "range": 6,
+  "radius": 3,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "heal",
+      "amount": {
+        "flat": 100
+      },
+      "applyTo": "self"
+    },
+    {
+      "kind": "heal",
+      "condition": {
+        "kind": "recentCast",
+        "subject": "self",
+        "slot": "W",
+        "withinSec": 4
+      },
+      "amount": {
+        "flat": 120
+      },
+      "applyTo": "self"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/thorne.r.webp",
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "castType": "self",
+      "castTimeSec": 0.1,
+      "radius": 3,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "heal",
+          "amount": {
+            "flat": 100
+          },
+          "applyTo": "self"
+        },
+        {
+          "kind": "heal",
+          "amount": {
+            "flat": 120
+          },
+          "applyTo": "self",
+          "condition": {
+            "kind": "recentCast",
+            "subject": "self",
+            "slot": "W",
+            "withinSec": 4
+          }
+        }
+      ]
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

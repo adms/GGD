@@ -1,0 +1,101 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "W",
+      "name": "死亡騎士",
+      "purpose": "【核准惡搞改編】會議室鎖門：自己定身兩秒，AP+70兩秒；可以施法，但不能逃跑。",
+      "maxRank": 4,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "products": [
+        {
+          "instanceId": "w-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "root",
+                  "duration": 2,
+                  "applyTo": "self",
+                  "sourceScope": "caster",
+                  "root": true
+                },
+                {
+                  "kind": "applyBuff",
+                  "applyTo": "self",
+                  "duration": 2,
+                  "modifiers": [
+                    {
+                      "stat": "ap",
+                      "op": "flat",
+                      "value": 70
+                    }
+                  ]
+                },
+                {
+                  "kind": "floatingText",
+                  "shape": "single",
+                  "text": "我其實也不知道在講什麼",
+                  "applyTo": "self",
+                  "durationSec": 1
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 10,
+        "manaCost": 40,
+        "range": 6
+      },
+      "capabilityIds": [
+        "summon"
+      ],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/sela.w.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "self",
+          "vfxId": "fx.prim.arcane.pulse-sm"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-17-20260907:HERO",
+    "wholeTargetSha256": "6cd3c403d830e4f37b00583f548fa8caf2bd9c84c8d38d30e87004c295494d71",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

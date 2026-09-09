@@ -1,0 +1,102 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "Q",
+      "name": "〔洞爺湖・橫斬〕",
+      "purpose": "【本次玩法】銀時偷喝草莓奶：偷閒存貨，喝奶怕被打斷，吐槽打斷別人\n【修正行為】以輸入方向作半徑3的前方半圓木刀橫掃，每敵人一次；後方、友軍與範圍外不受傷。",
+      "maxRank": 4,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 3,
+        "cooldown": [
+          5,
+          5,
+          5,
+          5
+        ],
+        "manaCost": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "castTimeSec": 0.1
+      },
+      "products": [
+        {
+          "instanceId": "wood-sweep",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "damageArea",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "小",
+                    "ratios": []
+                  },
+                  "radius": 3,
+                  "maxTargets": 12,
+                  "falloff": 1,
+                  "fromCaster": true,
+                  "arcHalfAngleCos": 0,
+                  "includeOrigin": true
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 10,
+        "manaCost": 40,
+        "range": 6
+      },
+      "capabilityIds": [
+        "projectile"
+      ],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast",
+          "replaces": "caster.action"
+        },
+        {
+          "kind": "vfx",
+          "on": "castStart",
+          "at": "self",
+          "vfxId": "fx.prim.physical.pulse-sm"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "target",
+          "vfxId": "fx.prim.physical.beam"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-23-20260907:HERO",
+    "wholeTargetSha256": "e5cfd1a78ad71be587655f71fbc7a0df1fdf80cadc045863c81a847476de0ffb",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

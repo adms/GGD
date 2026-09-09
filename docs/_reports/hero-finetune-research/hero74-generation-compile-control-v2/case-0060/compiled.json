@@ -1,0 +1,177 @@
+{
+  "id": "community-review-24-20260907.e",
+  "name": "電光石火",
+  "provenance": "editor-json",
+  "description": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n【修正行為】開啟消耗一點電力，每秒再消耗一點，開啟期間移速增加 30% 且停止充電；再次按下立即關閉。電力耗盡或被其他技能用光便卸下加速，關閉後重新等待充電。不是固定三秒增益。電流輪廓仍待畫面驗收。",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "manaCost": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "statusCost": {
+    "statusId": "community-review-24-20260907.electricity",
+    "count": 1
+  },
+  "range": 8,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "statusId": "community-review-24-20260907.busy",
+      "duration": 3
+    }
+  ],
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/thorne.e.webp",
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "castType": "self",
+      "castTimeSec": 0.1,
+      "radius": 0,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "community-review-24-20260907.busy",
+          "duration": 3
+        }
+      ]
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "toggle": {
+    "upkeepCadence": "perSecond",
+    "upkeepCost": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "upkeepResource": "status",
+    "upkeepStatus": {
+      "statusId": "community-review-24-20260907.electricity"
+    },
+    "upkeepIntervalSec": 1,
+    "onExit": [
+      {
+        "kind": "applyStatus",
+        "statusId": "community-review-24-20260907.busy",
+        "stacks": 1,
+        "duration": 3
+      }
+    ],
+    "whileOn": {
+      "ranks": [
+        {
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": 0.3
+            }
+          ],
+          "hooks": [
+            {
+              "on": "onInterval",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "community-review-24-20260907.busy",
+                  "stacks": 1,
+                  "duration": 3
+                }
+              ],
+              "internalCooldown": 0.1,
+              "target": "self"
+            }
+          ]
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": 0.3
+            }
+          ],
+          "hooks": [
+            {
+              "on": "onInterval",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "community-review-24-20260907.busy",
+                  "stacks": 1,
+                  "duration": 3
+                }
+              ],
+              "internalCooldown": 0.1,
+              "target": "self"
+            }
+          ]
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": 0.3
+            }
+          ],
+          "hooks": [
+            {
+              "on": "onInterval",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "community-review-24-20260907.busy",
+                  "stacks": 1,
+                  "duration": 3
+                }
+              ],
+              "internalCooldown": 0.1,
+              "target": "self"
+            }
+          ]
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": 0.3
+            }
+          ],
+          "hooks": [
+            {
+              "on": "onInterval",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "community-review-24-20260907.busy",
+                  "stacks": 1,
+                  "duration": 3
+                }
+              ],
+              "internalCooldown": 0.1,
+              "target": "self"
+            }
+          ]
+        }
+      ]
+    },
+    "costOnExit": false
+  },
+  "schema": "ability@1"
+}

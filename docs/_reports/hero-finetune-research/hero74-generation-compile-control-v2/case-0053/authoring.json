@@ -1,0 +1,168 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "E",
+      "name": "〔萬事屋式反擊〕",
+      "purpose": "【本次玩法】銀時偷喝草莓奶：偷閒存貨，喝奶怕被打斷，吐槽打斷別人\n【修正行為】0.65秒內實際格擋一次物理或魔法命中，成功才取得2秒內下一次普攻的一次木刀追加反擊；其他護盾或格擋來源不授予，不自動尋敵。",
+      "maxRank": 4,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 0,
+        "cooldown": [
+          9,
+          9,
+          9,
+          9
+        ],
+        "manaCost": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "castTimeSec": 0
+      },
+      "products": [
+        {
+          "instanceId": "parry-counter",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "duration": 0.65,
+                  "modifiers": [],
+                  "stackKey": "community-review-23-20260907.parry",
+                  "maxStacks": 1,
+                  "block": {
+                    "chance": 1,
+                    "fraction": 1,
+                    "damageTypes": [
+                      "physical",
+                      "magic"
+                    ],
+                    "internalCooldown": 1
+                  },
+                  "hooks": [
+                    {
+                      "on": "onBlock",
+                      "victim": "enemy",
+                      "blockSource": "thisSource",
+                      "target": "self",
+                      "internalCooldown": 1,
+                      "effects": [
+                        {
+                          "kind": "applyStatus",
+                          "statusId": "community-review-23-20260907.counter",
+                          "stacks": 1,
+                          "duration": 2,
+                          "grantMark": {
+                            "max": 1,
+                            "resetOn": "round"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "kind": "applyBuff",
+                  "duration": 2.65,
+                  "modifiers": [],
+                  "stackKey": "community-review-23-20260907.counter-listener",
+                  "maxStacks": 1,
+                  "hooks": [
+                    {
+                      "on": "onBasicAttack",
+                      "victim": "enemy",
+                      "target": "event",
+                      "effects": [
+                        {
+                          "kind": "consumeStatus",
+                          "shape": "single",
+                          "subject": "self",
+                          "statusId": "community-review-23-20260907.counter",
+                          "count": 1,
+                          "onConsumed": [
+                            {
+                              "kind": "damage",
+                              "damageType": "physical",
+                              "amount": {
+                                "damageTier": "小",
+                                "ratios": []
+                              }
+                            },
+                            {
+                              "kind": "floatingText",
+                              "shape": "single",
+                              "applyTo": "self",
+                              "text": "木刀反擊！",
+                              "durationSec": 1,
+                              "colorRgb": [
+                                245,
+                                220,
+                                160
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 10,
+        "manaCost": 40,
+        "range": 6
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.e.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast",
+          "replaces": "caster.action"
+        },
+        {
+          "kind": "vfx",
+          "on": "castStart",
+          "at": "self",
+          "vfxId": "fx.prim.physical.pulse-sm"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "self",
+          "vfxId": "fx.prim.physical.pulse"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-23-20260907:HERO",
+    "wholeTargetSha256": "e5cfd1a78ad71be587655f71fbc7a0df1fdf80cadc045863c81a847476de0ffb",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

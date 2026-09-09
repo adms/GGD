@@ -1,0 +1,162 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "PASSIVE",
+      "name": "〔電力儲備〕",
+      "purpose": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n【修正行為】具名電力初始／上限 10；三秒沒有普攻、施法、造成或受到敵對傷害後，每秒回一點。電光石火開啟期間及充電釋放後三秒不充電。回合重置；不再用普攻附傷冒充資源，魔力不支付此英雄技能。電量介面與電弧仍待畫面驗收。",
+      "maxRank": 1,
+      "abilityOverrides": {
+        "provenance": "editor-json"
+      },
+      "products": [
+        {
+          "instanceId": "electricity",
+          "template": {
+            "ref": "tpl-mark-stacks",
+            "params": {
+              "markId": "community-review-24-20260907.electricity",
+              "initial": 10,
+              "max": 10,
+              "durationSec": -1,
+              "resetOn": "round",
+              "perStackLost": [],
+              "lethalMode": "none",
+              "lethalConsume": 1,
+              "surviveHpPct": 0.01,
+              "lethalDamageTypes": "all",
+              "internalCooldown": 0.5,
+              "invulnerableSec": 1.5,
+              "invulnerableScope": "damageAndControl",
+              "restoreHealthPct": 0.5,
+              "aoeRadius": 6,
+              "knockbackDistance": 4,
+              "knockbackSpeed": 16,
+              "knockbackFrom": "caster",
+              "stunSec": 0.5,
+              "stunStatusId": "trial-stun"
+            }
+          }
+        },
+        {
+          "instanceId": "passive-events",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onAttackAttempt",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-24-20260907.busy",
+                      "stacks": 1,
+                      "duration": 3
+                    }
+                  ]
+                },
+                {
+                  "on": "onAbilityCast",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-24-20260907.busy",
+                      "stacks": 1,
+                      "duration": 3
+                    }
+                  ]
+                },
+                {
+                  "on": "onDamageTaken",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-24-20260907.busy",
+                      "stacks": 1,
+                      "duration": 3
+                    }
+                  ],
+                  "victim": "enemy"
+                },
+                {
+                  "on": "onDamageDealt",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-24-20260907.busy",
+                      "stacks": 1,
+                      "duration": 3
+                    }
+                  ],
+                  "victim": "enemy"
+                },
+                {
+                  "on": "onInterval",
+                  "internalCooldown": 1,
+                  "target": "self",
+                  "condition": {
+                    "all": [
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-24-20260907.busy",
+                          "minStacks": 1
+                        }
+                      },
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-24-20260907.low-electricity",
+                          "minStacks": 1
+                        }
+                      }
+                    ]
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-24-20260907.electricity",
+                      "stacks": 1,
+                      "duration": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 0,
+        "manaCost": 0,
+        "range": 0
+      },
+      "capabilityIds": [
+        "hooks",
+        "conditions"
+      ],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": []
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-24-20260907:HERO",
+    "wholeTargetSha256": "440aaa4fe5e224c2184c4b226fd5fa34357fd02c3557b3284140ba35a87e5c71",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

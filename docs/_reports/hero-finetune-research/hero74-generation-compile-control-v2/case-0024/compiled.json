@@ -1,0 +1,87 @@
+{
+  "id": "community-review-16-20260907.w",
+  "name": "〔魔力防壁〕",
+  "provenance": "editor-json",
+  "description": "【核准惡搞改編】近戰職階裝填：三秒攻擊力+80、魔法攻擊力-20。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    10
+  ],
+  "manaCost": [
+    40
+  ],
+  "range": 6,
+  "radius": 3,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "sourceScope": "caster",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "flat",
+          "value": 80
+        },
+        {
+          "stat": "ap",
+          "op": "flat",
+          "value": -20
+        }
+      ],
+      "duration": 3,
+      "statusId": "rage",
+      "applyTo": "self"
+    },
+    {
+      "kind": "floatingText",
+      "shape": "single",
+      "text": "魔法少女用拳頭！",
+      "durationSec": 1,
+      "applyTo": "self"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/sela.w.webp",
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "castType": "self",
+      "castTimeSec": 0.1,
+      "radius": 3,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "statusId": "rage",
+          "sourceScope": "caster",
+          "duration": 3,
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "flat",
+              "value": 80
+            },
+            {
+              "stat": "ap",
+              "op": "flat",
+              "value": -20
+            }
+          ]
+        },
+        {
+          "kind": "floatingText",
+          "shape": "single",
+          "text": "魔法少女用拳頭！",
+          "applyTo": "self",
+          "durationSec": 1
+        }
+      ]
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

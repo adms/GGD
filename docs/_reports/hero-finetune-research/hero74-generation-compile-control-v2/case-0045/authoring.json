@@ -1,0 +1,197 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "W",
+      "name": "〔連鎖放電〕",
+      "purpose": "【本次玩法】御坂踢販賣機：交替電擊充電，連鎖後才掉出治療飲料\n【修正行為】只有一條連鎖，含起點共三名，起點不再多吃一筆單體傷害。過載每層多一名，最多六名；同一發不回訪，每跳間隔 0.12 秒。預選目標死亡／離場時從上一有效節點重選，無候選停止。",
+      "maxRank": 4,
+      "abilityOverrides": {
+        "castTimeTier": "小",
+        "cooldownTier": "小",
+        "manaCostTier": "小",
+        "provenance": "editor-json",
+        "rangeTier": "小"
+      },
+      "products": [
+        {
+          "instanceId": "w-electric-effect",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "subject": "self",
+                  "statusId": "community-review-20-20260907.overload",
+                  "count": 3,
+                  "onConsumed": [
+                    {
+                      "kind": "chainLightning",
+                      "shape": "single",
+                      "amount": {
+                        "damageTier": "小",
+                        "ratios": []
+                      },
+                      "damageType": "magic",
+                      "jumps": 6,
+                      "jumpRange": 3,
+                      "decay": 0.8,
+                      "revisit": false,
+                      "maxTotalJumps": 6,
+                      "jumpIntervalSec": 0.12,
+                      "retargetOnLost": true
+                    },
+                    {
+                      "kind": "floatingText",
+                      "shape": "single",
+                      "text": "強化連鎖：最多 6 名",
+                      "applyTo": "self",
+                      "durationSec": 1.5,
+                      "colorRgb": [
+                        180,
+                        225,
+                        255
+                      ]
+                    }
+                  ],
+                  "onMissing": [
+                    {
+                      "kind": "consumeStatus",
+                      "shape": "single",
+                      "subject": "self",
+                      "statusId": "community-review-20-20260907.overload",
+                      "count": 2,
+                      "onConsumed": [
+                        {
+                          "kind": "chainLightning",
+                          "shape": "single",
+                          "amount": {
+                            "damageTier": "小",
+                            "ratios": []
+                          },
+                          "damageType": "magic",
+                          "jumps": 5,
+                          "jumpRange": 3,
+                          "decay": 0.8,
+                          "revisit": false,
+                          "maxTotalJumps": 5,
+                          "jumpIntervalSec": 0.12,
+                          "retargetOnLost": true
+                        },
+                        {
+                          "kind": "floatingText",
+                          "shape": "single",
+                          "text": "強化連鎖：最多 5 名",
+                          "applyTo": "self",
+                          "durationSec": 1.5,
+                          "colorRgb": [
+                            180,
+                            225,
+                            255
+                          ]
+                        }
+                      ],
+                      "onMissing": [
+                        {
+                          "kind": "consumeStatus",
+                          "shape": "single",
+                          "subject": "self",
+                          "statusId": "community-review-20-20260907.overload",
+                          "count": 1,
+                          "onConsumed": [
+                            {
+                              "kind": "chainLightning",
+                              "shape": "single",
+                              "amount": {
+                                "damageTier": "小",
+                                "ratios": []
+                              },
+                              "damageType": "magic",
+                              "jumps": 4,
+                              "jumpRange": 3,
+                              "decay": 0.8,
+                              "revisit": false,
+                              "maxTotalJumps": 4,
+                              "jumpIntervalSec": 0.12,
+                              "retargetOnLost": true
+                            },
+                            {
+                              "kind": "floatingText",
+                              "shape": "single",
+                              "text": "強化連鎖：最多 4 名",
+                              "applyTo": "self",
+                              "durationSec": 1.5,
+                              "colorRgb": [
+                                180,
+                                225,
+                                255
+                              ]
+                            }
+                          ],
+                          "onMissing": [
+                            {
+                              "kind": "chainLightning",
+                              "shape": "single",
+                              "amount": {
+                                "damageTier": "小",
+                                "ratios": []
+                              },
+                              "damageType": "magic",
+                              "jumps": 3,
+                              "jumpRange": 3,
+                              "decay": 0.8,
+                              "revisit": false,
+                              "maxTotalJumps": 3,
+                              "jumpIntervalSec": 0.12,
+                              "retargetOnLost": true
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 10,
+        "manaCost": 40,
+        "range": 6
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/sela.w.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast",
+          "replaces": "caster.action"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-20-20260907:HERO",
+    "wholeTargetSha256": "41a2ce14779f899cc756ea8ac66793c383a37a71fd9ac371d7845d44b9c5503c",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

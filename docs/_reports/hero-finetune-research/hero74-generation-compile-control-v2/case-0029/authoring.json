@@ -1,0 +1,67 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "PASSIVE",
+      "name": "〔情緒抑制〕",
+      "purpose": "【核准惡搞改編】R演說開始時獲得120護盾一秒，每五秒一次；護盾不等於免打斷。",
+      "maxRank": 1,
+      "abilityOverrides": {
+        "provenance": "editor-json"
+      },
+      "products": [
+        {
+          "instanceId": "passive-parody-1",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onUltimateCast",
+                  "effects": [
+                    {
+                      "kind": "shield",
+                      "amount": {
+                        "flat": 120
+                      },
+                      "duration": 1,
+                      "absorbs": "all",
+                      "stackKey": "community-review-17-20260907.protection",
+                      "onExisting": "keepLarger"
+                    }
+                  ],
+                  "internalCooldown": 5,
+                  "target": "self"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 0,
+        "manaCost": 0,
+        "range": 0
+      },
+      "capabilityIds": [
+        "hooks"
+      ],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/sela.q.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": []
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-17-20260907:HERO",
+    "wholeTargetSha256": "6cd3c403d830e4f37b00583f548fa8caf2bd9c84c8d38d30e87004c295494d71",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

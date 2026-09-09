@@ -1,0 +1,994 @@
+{
+  "format": "hero-project",
+  "project": {
+    "schema": "ggd-hero-project@2",
+    "projectId": "community-review-26-20260907",
+    "revision": 0,
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "brief": {
+      "name": "名偵探柯南",
+      "concept": "名偵探柯南 社群英雄功能驗收稿。作品：《名偵探柯南》  \n角色實體：江戶川柯南；保留指定顯示名稱。  \n定位：情報標記、可喚醒控制、道具射擊。\n\n視覺方向：足球白線、麻醉針微光、藍色滑板尾跡、放大鏡標記；不用黑客式資訊揭露。\n以 GGD 射手 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "moveNames": {
+        "PASSIVE": "〔線索整理〕",
+        "Q": "足球射擊",
+        "W": "手錶型麻醉槍",
+        "E": "渦輪引擎滑板",
+        "R": "〔真相只有一個〕",
+        "EX": "伸縮吊帶"
+      }
+    },
+    "sections": {
+      "identity": {
+        "revision": 0,
+        "state": "draft",
+        "fieldOwnership": {}
+      },
+      "attributes": {
+        "revision": 0,
+        "state": "draft",
+        "fieldOwnership": {}
+      },
+      "skills": {
+        "revision": 0,
+        "state": "draft",
+        "fieldOwnership": {}
+      },
+      "mechanics": {
+        "revision": 0,
+        "state": "draft",
+        "fieldOwnership": {}
+      },
+      "presentation": {
+        "revision": 0,
+        "state": "draft",
+        "fieldOwnership": {}
+      },
+      "validation": {
+        "revision": 0,
+        "state": "draft",
+        "fieldOwnership": {}
+      },
+      "package": {
+        "revision": 0,
+        "state": "draft",
+        "fieldOwnership": {}
+      }
+    },
+    "acceptedPlan": {
+      "schema": "ggd-hero-plan@2",
+      "planId": "community-review-26-20260907.plan",
+      "title": "名偵探柯南",
+      "summary": "名偵探柯南 社群英雄功能驗收稿。作品：《名偵探柯南》  \n角色實體：江戶川柯南；保留指定顯示名稱。  \n定位：情報標記、可喚醒控制、道具射擊。\n\n視覺方向：足球白線、麻醉針微光、藍色滑板尾跡、放大鏡標記；不用黑客式資訊揭露。\n以 GGD 射手 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "sourceLock": {
+        "canonicalId": null,
+        "versionId": null
+      },
+      "origin": "射手",
+      "archetype": "marksman",
+      "attackType": "ranged",
+      "budget": {
+        "power": 50,
+        "complexity": 60
+      },
+      "statOverrides": {
+        "ms": "中",
+        "mr": "小",
+        "armor": "小",
+        "maxHealth": "小",
+        "maxMana": "中",
+        "ad": "大",
+        "ap": "小",
+        "as": "大",
+        "healthRegen": "小",
+        "manaRegen": "中",
+        "range": "大"
+      },
+      "templateVersions": {
+        "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+          "id": "tpl-event-passive",
+          "schema": "template@1",
+          "name": "自訂事件被動",
+          "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+          "family": "event-passive",
+          "status": "enabled",
+          "params": {
+            "hooks": {
+              "type": "hooks",
+              "default": [
+                {
+                  "on": "onBasicAttack",
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "極小"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+            }
+          },
+          "requires": [
+            "hooks",
+            "conditions"
+          ],
+          "gapScore": 10,
+          "exemplar": {
+            "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+            "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+          }
+        },
+        "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+          "id": "tpl-effect-sequence",
+          "schema": "template@1",
+          "name": "自訂效果序列",
+          "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+          "family": "effect-sequence",
+          "status": "enabled",
+          "params": {
+            "castType": {
+              "type": "enum",
+              "default": "targeted",
+              "values": [
+                "targeted",
+                "self",
+                "ground",
+                "skillshot"
+              ],
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+            },
+            "castTimeSec": {
+              "type": "number",
+              "default": 0,
+              "min": 0,
+              "max": 10,
+              "unit": "s",
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+            },
+            "radius": {
+              "type": "number",
+              "default": 2,
+              "min": 0,
+              "max": 40,
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+            },
+            "side": {
+              "type": "enum",
+              "default": "enemies",
+              "values": [
+                "enemies",
+                "allies"
+              ],
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+            },
+            "effects": {
+              "type": "effects",
+              "default": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ],
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+            },
+            "recast": {
+              "type": "recast",
+              "optional": true,
+              "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+            }
+          },
+          "requires": [
+            "hooks",
+            "conditions"
+          ],
+          "gapScore": 10,
+          "exemplar": {
+            "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+            "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+          }
+        }
+      },
+      "slots": {
+        "PASSIVE": {
+          "slot": "PASSIVE",
+          "name": "〔線索整理〕",
+          "purpose": "【本次玩法】柯南原地推理：觀察對方真實行為取證，說真相時自己站住\n【修正行為】觀察同對決、當前可見的敵方英雄：有效普攻命中、技能命中、實際治療、成功控制各為一種事件。每名敵人／每名觀察者各自記錄，同種事件每名敵人／回合只記一次，最多保存三條線索；只到回合結束，不因重複事件或不同命中目標再增加。R 消耗該敵人身上由自己蒐集的線索，已見種類仍保留到重置。護盾實際吸收計入有效命中；無敵、零傷、過量治療、免控、不可見、跨區及對決結束不計。",
+          "maxRank": 1,
+          "abilityOverrides": {
+            "provenance": "editor-json"
+          },
+          "products": [
+            {
+              "instanceId": "observed-clues",
+              "template": {
+                "ref": "tpl-event-passive",
+                "params": {
+                  "hooks": [
+                    {
+                      "on": "onObservedCombat",
+                      "observedEvent": "basicHit",
+                      "victim": "enemyChampion",
+                      "condition": {
+                        "all": [
+                          {
+                            "not": {
+                              "kind": "status",
+                              "subject": "target",
+                              "statusId": "community-review-26-20260907.seen-basichit",
+                              "minStacks": 1,
+                              "appliedBy": "self"
+                            }
+                          },
+                          {
+                            "not": {
+                              "kind": "status",
+                              "subject": "target",
+                              "statusId": "community-review-26-20260907.clues",
+                              "minStacks": 3,
+                              "appliedBy": "self"
+                            }
+                          }
+                        ]
+                      },
+                      "effects": [
+                        {
+                          "kind": "applyBuff",
+                          "modifiers": [],
+                          "permanent": true,
+                          "permanentScope": "round",
+                          "sourceScope": "caster",
+                          "stackKey": "community-review-26-20260907.clues",
+                          "statusId": "community-review-26-20260907.clues",
+                          "maxStacks": 3,
+                          "dispellable": false,
+                          "polarity": "debuff"
+                        },
+                        {
+                          "kind": "applyBuff",
+                          "modifiers": [],
+                          "permanent": true,
+                          "permanentScope": "round",
+                          "sourceScope": "caster",
+                          "stackKey": "community-review-26-20260907.seen-basichit",
+                          "statusId": "community-review-26-20260907.seen-basichit",
+                          "maxStacks": 1,
+                          "dispellable": false,
+                          "polarity": "debuff"
+                        }
+                      ]
+                    },
+                    {
+                      "on": "onObservedCombat",
+                      "observedEvent": "abilityHit",
+                      "victim": "enemyChampion",
+                      "condition": {
+                        "all": [
+                          {
+                            "not": {
+                              "kind": "status",
+                              "subject": "target",
+                              "statusId": "community-review-26-20260907.seen-abilityhit",
+                              "minStacks": 1,
+                              "appliedBy": "self"
+                            }
+                          },
+                          {
+                            "not": {
+                              "kind": "status",
+                              "subject": "target",
+                              "statusId": "community-review-26-20260907.clues",
+                              "minStacks": 3,
+                              "appliedBy": "self"
+                            }
+                          }
+                        ]
+                      },
+                      "effects": [
+                        {
+                          "kind": "applyBuff",
+                          "modifiers": [],
+                          "permanent": true,
+                          "permanentScope": "round",
+                          "sourceScope": "caster",
+                          "stackKey": "community-review-26-20260907.clues",
+                          "statusId": "community-review-26-20260907.clues",
+                          "maxStacks": 3,
+                          "dispellable": false,
+                          "polarity": "debuff"
+                        },
+                        {
+                          "kind": "applyBuff",
+                          "modifiers": [],
+                          "permanent": true,
+                          "permanentScope": "round",
+                          "sourceScope": "caster",
+                          "stackKey": "community-review-26-20260907.seen-abilityhit",
+                          "statusId": "community-review-26-20260907.seen-abilityhit",
+                          "maxStacks": 1,
+                          "dispellable": false,
+                          "polarity": "debuff"
+                        }
+                      ]
+                    },
+                    {
+                      "on": "onObservedCombat",
+                      "observedEvent": "heal",
+                      "victim": "enemyChampion",
+                      "condition": {
+                        "all": [
+                          {
+                            "not": {
+                              "kind": "status",
+                              "subject": "target",
+                              "statusId": "community-review-26-20260907.seen-heal",
+                              "minStacks": 1,
+                              "appliedBy": "self"
+                            }
+                          },
+                          {
+                            "not": {
+                              "kind": "status",
+                              "subject": "target",
+                              "statusId": "community-review-26-20260907.clues",
+                              "minStacks": 3,
+                              "appliedBy": "self"
+                            }
+                          }
+                        ]
+                      },
+                      "effects": [
+                        {
+                          "kind": "applyBuff",
+                          "modifiers": [],
+                          "permanent": true,
+                          "permanentScope": "round",
+                          "sourceScope": "caster",
+                          "stackKey": "community-review-26-20260907.clues",
+                          "statusId": "community-review-26-20260907.clues",
+                          "maxStacks": 3,
+                          "dispellable": false,
+                          "polarity": "debuff"
+                        },
+                        {
+                          "kind": "applyBuff",
+                          "modifiers": [],
+                          "permanent": true,
+                          "permanentScope": "round",
+                          "sourceScope": "caster",
+                          "stackKey": "community-review-26-20260907.seen-heal",
+                          "statusId": "community-review-26-20260907.seen-heal",
+                          "maxStacks": 1,
+                          "dispellable": false,
+                          "polarity": "debuff"
+                        }
+                      ]
+                    },
+                    {
+                      "on": "onObservedCombat",
+                      "observedEvent": "control",
+                      "victim": "enemyChampion",
+                      "condition": {
+                        "all": [
+                          {
+                            "not": {
+                              "kind": "status",
+                              "subject": "target",
+                              "statusId": "community-review-26-20260907.seen-control",
+                              "minStacks": 1,
+                              "appliedBy": "self"
+                            }
+                          },
+                          {
+                            "not": {
+                              "kind": "status",
+                              "subject": "target",
+                              "statusId": "community-review-26-20260907.clues",
+                              "minStacks": 3,
+                              "appliedBy": "self"
+                            }
+                          }
+                        ]
+                      },
+                      "effects": [
+                        {
+                          "kind": "applyBuff",
+                          "modifiers": [],
+                          "permanent": true,
+                          "permanentScope": "round",
+                          "sourceScope": "caster",
+                          "stackKey": "community-review-26-20260907.clues",
+                          "statusId": "community-review-26-20260907.clues",
+                          "maxStacks": 3,
+                          "dispellable": false,
+                          "polarity": "debuff"
+                        },
+                        {
+                          "kind": "applyBuff",
+                          "modifiers": [],
+                          "permanent": true,
+                          "permanentScope": "round",
+                          "sourceScope": "caster",
+                          "stackKey": "community-review-26-20260907.seen-control",
+                          "statusId": "community-review-26-20260907.seen-control",
+                          "maxStacks": 1,
+                          "dispellable": false,
+                          "polarity": "debuff"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+              }
+            }
+          ],
+          "templateConflictPolicy": "reject",
+          "tuning": {
+            "cooldownSec": 0,
+            "manaCost": 0,
+            "range": 0
+          },
+          "capabilityIds": [
+            "hooks",
+            "conditions"
+          ],
+          "directionOptionIds": [],
+          "fallbackOptionIds": []
+        },
+        "Q": {
+          "slot": "Q",
+          "name": "足球射擊",
+          "purpose": "【本次玩法】柯南原地推理：觀察對方真實行為取證，說真相時自己站住\n【修正行為】沿瞄準方向發射單枚實體彈，射程12、首個合法敵方碰撞一次物理傷害；偏離可閃避，到射程消失。暫用既有 bolt 的模型／特效，足球與踢球專用演出仍待替換及畫面驗收。",
+          "maxRank": 4,
+          "abilityOverrides": {
+            "cooldownTier": "小",
+            "manaCostTier": "小",
+            "provenance": "editor-json",
+            "castTimeSec": 0.1,
+            "range": 12
+          },
+          "products": [
+            {
+              "instanceId": "q-authored",
+              "template": {
+                "ref": "tpl-effect-sequence",
+                "params": {
+                  "castType": "skillshot",
+                  "castTimeSec": 0.1,
+                  "radius": 0,
+                  "side": "enemies",
+                  "effects": [
+                    {
+                      "kind": "spawnProjectile",
+                      "projectileId": "imported.bolt.arcane",
+                      "onHit": [
+                        {
+                          "kind": "damage",
+                          "damageType": "physical",
+                          "amount": {
+                            "damageTier": "小",
+                            "ratios": []
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+              }
+            }
+          ],
+          "templateConflictPolicy": "reject",
+          "tuning": {
+            "cooldownSec": 10,
+            "manaCost": 40,
+            "range": 8
+          },
+          "capabilityIds": [
+            "travelingWave"
+          ],
+          "directionOptionIds": [],
+          "fallbackOptionIds": []
+        },
+        "W": {
+          "slot": "W",
+          "name": "手錶型麻醉槍",
+          "purpose": "【本次玩法】柯南原地推理：觀察對方真實行為取證，說真相時自己站住\n【修正行為】單枚直線麻醉彈首碰敵人後睡眠1.2秒，不額外造成傷害；受到後續實際HP傷害即提前醒來，只移除此睡眠，護盾吸收及零傷不喚醒。免控拒絕、未命中不睡眠；正常施法支付自己的魔力與冷卻。針與手錶演出仍使用代理彈待驗。",
+          "maxRank": 4,
+          "abilityOverrides": {
+            "cooldownTier": "小",
+            "manaCostTier": "小",
+            "provenance": "editor-json",
+            "castTimeSec": 0.1,
+            "range": 12
+          },
+          "products": [
+            {
+              "instanceId": "w-authored",
+              "template": {
+                "ref": "tpl-effect-sequence",
+                "params": {
+                  "castType": "skillshot",
+                  "castTimeSec": 0.1,
+                  "radius": 0,
+                  "side": "enemies",
+                  "effects": [
+                    {
+                      "kind": "spawnProjectile",
+                      "projectileId": "imported.bolt.arcane",
+                      "onHit": [
+                        {
+                          "kind": "applyStatus",
+                          "statusId": "community-review-26-20260907.sleep",
+                          "stun": true,
+                          "breakOnDamage": true,
+                          "duration": 1.2,
+                          "dispellable": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+              }
+            }
+          ],
+          "templateConflictPolicy": "reject",
+          "tuning": {
+            "cooldownSec": 10,
+            "manaCost": 40,
+            "range": 8
+          },
+          "capabilityIds": [],
+          "directionOptionIds": [],
+          "fallbackOptionIds": []
+        },
+        "E": {
+          "slot": "E",
+          "name": "渦輪引擎滑板",
+          "purpose": "【本次玩法】柯南原地推理：觀察對方真實行為取證，說真相時自己站住\n【修正行為】3秒滑行：移速提高50%，0.3秒加速、0.2秒煞車；急轉降到30%速度並漸進轉向。沿指令方向實際行進，碰撞地形／身體即停止，束縛或暈眩立即停下；到期回到普通移動，不把移速增益當作加減速狀態。專用滑板模型、尾跡與畫面仍待驗收。",
+          "maxRank": 4,
+          "abilityOverrides": {
+            "cooldownTier": "小",
+            "manaCostTier": "小",
+            "provenance": "editor-json",
+            "castTimeSec": 0.1
+          },
+          "products": [
+            {
+              "instanceId": "e-authored",
+              "template": {
+                "ref": "tpl-effect-sequence",
+                "params": {
+                  "castType": "self",
+                  "castTimeSec": 0.1,
+                  "radius": 0,
+                  "side": "enemies",
+                  "effects": [
+                    {
+                      "kind": "applyBuff",
+                      "applyTo": "self",
+                      "duration": 3,
+                      "stackKey": "community-review-26-20260907.ride",
+                      "maxStacks": 1,
+                      "modifiers": [
+                        {
+                          "stat": "ms",
+                          "op": "pctAdd",
+                          "value": 0.5
+                        }
+                      ],
+                      "drive": {
+                        "accelSec": 0.3,
+                        "brakeSec": 0.2,
+                        "turnFactor": 0.2,
+                        "sharpTurnDot": 0.5,
+                        "sharpTurnSpeed": 0.3
+                      }
+                    }
+                  ]
+                },
+                "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+              }
+            }
+          ],
+          "templateConflictPolicy": "reject",
+          "tuning": {
+            "cooldownSec": 10,
+            "manaCost": 40,
+            "range": 8
+          },
+          "capabilityIds": [],
+          "directionOptionIds": [],
+          "fallbackOptionIds": []
+        },
+        "R": {
+          "slot": "R",
+          "name": "〔真相只有一個〕",
+          "purpose": "【本次玩法】柯南原地推理：觀察對方真實行為取證，說真相時自己站住\n新增代價：推理宣布時自己定身0.8秒；線索仍須觀察實際事件取得，不能自己造證據。\n【修正行為】指定同區敵人，至少需要一條由自己蒐集的線索；施法開始扣除該目標全部自己的線索，其他敵人／觀察者不變。4秒揭示該目標並降低15%護甲與魔抗，同一施法者重施只刷新、不疊加。到期或驅散後恢復原隱形規則，不延長／取消其隱形時鐘；只使用當前對決的伺服器戰鬥實體，沒有玩家私密資料。",
+          "maxRank": 3,
+          "abilityOverrides": {
+            "cooldownTier": "大",
+            "manaCostTier": "大",
+            "provenance": "editor-json",
+            "castTimeSec": 0.1,
+            "range": 12,
+            "statusCost": {
+              "statusId": "community-review-26-20260907.clues",
+              "count": "all",
+              "appliedBy": "self",
+              "subject": "target"
+            }
+          },
+          "products": [
+            {
+              "instanceId": "r-authored",
+              "template": {
+                "ref": "tpl-effect-sequence",
+                "params": {
+                  "castType": "targeted",
+                  "castTimeSec": 0.1,
+                  "radius": 0,
+                  "side": "enemies",
+                  "effects": [
+                    {
+                      "kind": "applyBuff",
+                      "modifiers": [
+                        {
+                          "stat": "armor",
+                          "op": "pctAdd",
+                          "value": -0.15
+                        },
+                        {
+                          "stat": "mr",
+                          "op": "pctAdd",
+                          "value": -0.15
+                        }
+                      ],
+                      "duration": 4,
+                      "stackKey": "community-review-26-20260907.weakness",
+                      "maxStacks": 1,
+                      "statusId": "community-review-26-20260907.weakness",
+                      "polarity": "debuff",
+                      "dispellable": true,
+                      "vision": {
+                        "revealed": true
+                      },
+                      "sourceScope": "caster"
+                    }
+                  ]
+                },
+                "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+              }
+            },
+            {
+              "instanceId": "r-parody",
+              "template": {
+                "ref": "tpl-effect-sequence",
+                "params": {
+                  "castType": "targeted",
+                  "castTimeSec": 0.1,
+                  "radius": 0,
+                  "side": "enemies",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "root",
+                      "duration": 0.8,
+                      "applyTo": "self",
+                      "sourceScope": "caster",
+                      "root": true
+                    },
+                    {
+                      "kind": "floatingText",
+                      "shape": "single",
+                      "text": "真相只有一個，先聽我講完",
+                      "applyTo": "self",
+                      "durationSec": 1
+                    }
+                  ]
+                },
+                "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+              }
+            }
+          ],
+          "templateConflictPolicy": "reject",
+          "tuning": {
+            "cooldownSec": 60,
+            "manaCost": 100,
+            "range": 8
+          },
+          "capabilityIds": [],
+          "directionOptionIds": [],
+          "fallbackOptionIds": []
+        },
+        "EX": {
+          "slot": "EX",
+          "name": "伸縮吊帶",
+          "purpose": "【本次玩法】柯南原地推理：觀察對方真實行為取證，說真相時自己站住\n【修正行為】沿瞄準方向連接8格內首個合法可見敵人或地形錨點；敵人被拉向施法者，地形則拉動自己。最多移動4格一次，抵達前保留身體間距；碰撞、超距、死亡、跨區或對決結束中止，沒有摔投或落地傷害。空射、免控敵人與範圍外不拉動；空射仍支付本次施法消耗。專用吊帶／動作與畫面仍待驗收。",
+          "maxRank": 1,
+          "abilityOverrides": {
+            "cooldownTier": "大",
+            "manaCostTier": "大",
+            "provenance": "editor-json",
+            "castTimeSec": 0.1,
+            "range": 8
+          },
+          "products": [
+            {
+              "instanceId": "ex-authored",
+              "template": {
+                "ref": "tpl-effect-sequence",
+                "params": {
+                  "castType": "skillshot",
+                  "castTimeSec": 0.1,
+                  "radius": 0,
+                  "side": "enemies",
+                  "effects": [
+                    {
+                      "kind": "pull",
+                      "shape": "single",
+                      "speed": 12,
+                      "stopDistance": 0.7,
+                      "grapple": {
+                        "range": 8,
+                        "maxTravel": 4,
+                        "hitRadius": 0.2
+                      }
+                    }
+                  ]
+                },
+                "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+              }
+            }
+          ],
+          "templateConflictPolicy": "reject",
+          "tuning": {
+            "cooldownSec": 60,
+            "manaCost": 100,
+            "range": 8
+          },
+          "capabilityIds": [],
+          "directionOptionIds": [],
+          "fallbackOptionIds": []
+        }
+      }
+    },
+    "presentation": {
+      "schema": "ggd-hero-presentation@1",
+      "modelKey": "community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df",
+      "uploadedModel": {
+        "schema": "ggd-uploaded-hero-model@1",
+        "sha256": "ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08",
+        "byteSize": 589076,
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "yawOffsetDeg": 0
+      },
+      "championIcon": "assets/icons/champions/thorne.webp",
+      "slots": {
+        "PASSIVE": {
+          "slot": "PASSIVE",
+          "gameplayEvent": "abilityCast",
+          "vfxLayers": [],
+          "script": null,
+          "sfxKey": null,
+          "icon": "assets/icons/abilities/thorne.q.webp",
+          "fallback": {
+            "pointWithoutTarget": "caster",
+            "missingSfx": "generic-cast",
+            "missingVfx": "block-package"
+          }
+        },
+        "Q": {
+          "slot": "Q",
+          "gameplayEvent": "abilityCast",
+          "vfxLayers": [],
+          "script": {
+            "id": "community-review-26-20260907.q",
+            "schema": "vfx-script@1",
+            "abilityId": "community-review-26-20260907.q",
+            "segments": [
+              {
+                "kind": "anim",
+                "on": "castStart",
+                "replaces": "caster.action",
+                "at": "caster",
+                "pulse": "cast"
+              }
+            ]
+          },
+          "sfxKey": null,
+          "icon": "assets/icons/abilities/thorne.q.webp",
+          "fallback": {
+            "pointWithoutTarget": "caster",
+            "missingSfx": "generic-cast",
+            "missingVfx": "block-package"
+          }
+        },
+        "W": {
+          "slot": "W",
+          "gameplayEvent": "abilityCast",
+          "vfxLayers": [],
+          "script": {
+            "id": "community-review-26-20260907.w",
+            "schema": "vfx-script@1",
+            "abilityId": "community-review-26-20260907.w",
+            "segments": [
+              {
+                "kind": "anim",
+                "on": "castStart",
+                "replaces": "caster.action",
+                "at": "caster",
+                "pulse": "cast"
+              }
+            ]
+          },
+          "sfxKey": null,
+          "icon": "assets/icons/abilities/thorne.w.webp",
+          "fallback": {
+            "pointWithoutTarget": "caster",
+            "missingSfx": "generic-cast",
+            "missingVfx": "block-package"
+          }
+        },
+        "E": {
+          "slot": "E",
+          "gameplayEvent": "abilityCast",
+          "vfxLayers": [],
+          "script": {
+            "id": "community-review-26-20260907.e",
+            "schema": "vfx-script@1",
+            "abilityId": "community-review-26-20260907.e",
+            "segments": [
+              {
+                "kind": "anim",
+                "on": "castStart",
+                "replaces": "caster.action",
+                "at": "caster",
+                "pulse": "cast"
+              }
+            ]
+          },
+          "sfxKey": null,
+          "icon": "assets/icons/abilities/thorne.e.webp",
+          "fallback": {
+            "pointWithoutTarget": "caster",
+            "missingSfx": "generic-cast",
+            "missingVfx": "block-package"
+          }
+        },
+        "R": {
+          "slot": "R",
+          "gameplayEvent": "abilityCast",
+          "vfxLayers": [],
+          "script": {
+            "id": "community-review-26-20260907.r",
+            "schema": "vfx-script@1",
+            "abilityId": "community-review-26-20260907.r",
+            "segments": [
+              {
+                "kind": "anim",
+                "on": "castStart",
+                "replaces": "caster.action",
+                "at": "caster",
+                "pulse": "cast"
+              },
+              {
+                "vfxId": "fx.prim.physical.pulse-sm",
+                "at": "self",
+                "kind": "vfx",
+                "on": "castStart"
+              },
+              {
+                "vfxId": "fx.prim.physical.slash",
+                "at": "target",
+                "kind": "vfx",
+                "on": "castEffect"
+              }
+            ]
+          },
+          "sfxKey": null,
+          "icon": "assets/icons/abilities/thorne.r.webp",
+          "fallback": {
+            "pointWithoutTarget": "caster",
+            "missingSfx": "generic-cast",
+            "missingVfx": "block-package"
+          }
+        },
+        "EX": {
+          "slot": "EX",
+          "gameplayEvent": "abilityCast",
+          "vfxLayers": [],
+          "script": {
+            "id": "community-review-26-20260907.ex",
+            "schema": "vfx-script@1",
+            "abilityId": "community-review-26-20260907.ex",
+            "segments": [
+              {
+                "kind": "anim",
+                "on": "castStart",
+                "replaces": "caster.action",
+                "at": "caster",
+                "pulse": "cast"
+              }
+            ]
+          },
+          "sfxKey": null,
+          "icon": "assets/icons/abilities/thorne.r.webp",
+          "fallback": {
+            "pointWithoutTarget": "caster",
+            "missingSfx": "generic-cast",
+            "missingVfx": "block-package"
+          }
+        }
+      },
+      "assetLocks": [
+        {
+          "path": "assets/models/community/ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08.glb",
+          "byteSize": 589076,
+          "mediaType": "model/gltf-binary",
+          "sha256": "ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08",
+          "kind": "model",
+          "registry": "normalized-upload",
+          "consumers": [
+            "champion:model"
+          ]
+        }
+      ]
+    },
+    "validationState": {
+      "identity": {
+        "revision": 0,
+        "status": "idle",
+        "diagnosticCodes": []
+      },
+      "attributes": {
+        "revision": 0,
+        "status": "idle",
+        "diagnosticCodes": []
+      },
+      "skills": {
+        "revision": 0,
+        "status": "idle",
+        "diagnosticCodes": []
+      },
+      "mechanics": {
+        "revision": 0,
+        "status": "idle",
+        "diagnosticCodes": []
+      },
+      "presentation": {
+        "revision": 0,
+        "status": "idle",
+        "diagnosticCodes": []
+      },
+      "validation": {
+        "revision": 0,
+        "status": "idle",
+        "diagnosticCodes": []
+      },
+      "package": {
+        "revision": 0,
+        "status": "idle",
+        "diagnosticCodes": []
+      }
+    },
+    "receipts": []
+  }
+}

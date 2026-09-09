@@ -4,6 +4,10 @@
 
 ## 最新授權：電量低於 40% 才停，重新開始 v21
 
+後續單槽接線已完成：`hero74-generation-compile-control-v2/` 保留全部 119 題，教師 control 結果為完整英雄 **17/17**、輔助單槽 **102/102** schema／compiler／磁碟重讀再編譯通過，pending 0。8/8 tests 通過，其中逐一比較 102 槽編譯结果與其教師完整英雄的對應 ability 一致；測試亦確認獨立槽的輸出確實取代該槽，沒有只重複使用完整英雄答案。
+
+輔助定義明確分開：native-slot 直接以原生能力 schema／template resolver／runtime 編譯，不需要完整英雄；hero-slot 放回**同一 arm 自己已通過結構檢查的完整英雄**，使用該 arm 其他五槽／出身作編譯上下文。若 own whole 失敗，就記 `blocked-by-own-whole-context`，不能借教師或捏造缺失內容。這是有條件的輔助槽檢查，不是 102 個獨立完整英雄成功；主分母仍固定 17。v1 原始收據不修改；GPU 模型尚未輸出，當前所有控制結果都不是 base／LoRA 品質分數或對局驗收。
+
 v21 probe 已 completed，4/4 格式與快取一致性通過，保守單輪估時 30,246.948 秒（8.402 小時），`fitsTimeBudget=true`。同一 exec 10097 已接續 train；worker 50361 在 dev-before，當時接電 98%，未因相對掉電停止；正式權重更新仍以 training trace 為準。
 
 生成後編譯接線 `hero-distillation-generation-compile.mts` 已有 CPU 實測：`hero74-generation-compile-control-v1/` 使用固定教師答案作 control，不呼叫模型。119 題完整保留，其中 **17/17 完整英雄**通過既有 materializer、各題固定 Git revision 的 schema／compiler、磁碟 authoring JSON 存檔重讀與再次編譯一致性；34 份 authoring/compiled 成品有 hash。5/5 測試涵蓋所有 17 名、缺槽／錯身分、錯 engine／輸入漂移／未知效果、目錄權限及落盤證據。102 槽的獨立驗證仍 pending，不混入 17 名主分母。這不是 12B 推論成績或真實遊戲上場驗收。

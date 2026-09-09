@@ -1,0 +1,34 @@
+{
+  "id": "community-review-19-20260907.e",
+  "name": "Sonic Leap",
+  "provenance": "editor-json",
+  "description": "【核准惡搞改編】側步離場到合法落點，不自動重置雙刀。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    10
+  ],
+  "manaCost": [
+    40
+  ],
+  "range": 6,
+  "effects": [
+    {
+      "kind": "blink",
+      "shape": "single",
+      "to": "point",
+      "applyTo": "self"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/thorne.e.webp",
+  "template": {
+    "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+    "params": {
+      "castTimeSec": 0.1
+    },
+    "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
+  },
+  "schema": "ability@1"
+}

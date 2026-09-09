@@ -1,0 +1,128 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "W",
+      "name": "肢曲",
+      "purpose": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n【修正行為】消耗一點電力，向指向方向貼地側移 2.5；0.6 秒內提供 80% 普攻迴避（遵守 GGD 上限）。只有實際由此增益抽中的迴避補回兩點電力，單次肢曲限一次，供後續反擊使用。空放、敵人失手、其他迴避來源和無敵免傷不給電力；不再跳躍或落地傷害。殘像仍待畫面驗收。",
+      "maxRank": 4,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          6,
+          6,
+          6,
+          6
+        ],
+        "castTimeSec": 0.1,
+        "range": 8,
+        "statusCost": {
+          "statusId": "community-review-24-20260907.electricity",
+          "count": 1
+        }
+      },
+      "products": [
+        {
+          "instanceId": "w-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "ground",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "applyTo": "self",
+                  "duration": 0.6,
+                  "stackKey": "community-review-24-20260907.w.evade",
+                  "maxStacks": 1,
+                  "modifiers": [
+                    {
+                      "stat": "evasion",
+                      "op": "flat",
+                      "value": 0.8
+                    }
+                  ],
+                  "hooks": [
+                    {
+                      "on": "onEvade",
+                      "evadeSource": "thisSource",
+                      "target": "self",
+                      "maxTriggers": 1,
+                      "effects": [
+                        {
+                          "kind": "applyStatus",
+                          "statusId": "community-review-24-20260907.electricity",
+                          "stacks": 2,
+                          "duration": 1
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "kind": "dash",
+                  "mode": "toPoint",
+                  "speed": 12,
+                  "maxDistance": 2.5
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 10,
+        "manaCost": 40,
+        "range": 6
+      },
+      "capabilityIds": [
+        "leap"
+      ],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.w.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast",
+          "replaces": "caster.action"
+        },
+        {
+          "kind": "vfx",
+          "on": "castStart",
+          "at": "self",
+          "vfxId": "fx.prim.lightning.pulse-sm"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "point",
+          "vfxId": "fx.prim.lightning.arc"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-24-20260907:HERO",
+    "wholeTargetSha256": "440aaa4fe5e224c2184c4b226fd5fa34357fd02c3557b3284140ba35a87e5c71",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

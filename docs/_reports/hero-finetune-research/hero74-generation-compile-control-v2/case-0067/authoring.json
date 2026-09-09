@@ -1,0 +1,84 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "E",
+      "name": "渦輪引擎滑板",
+      "purpose": "【本次玩法】柯南原地推理：觀察對方真實行為取證，說真相時自己站住\n【修正行為】3秒滑行：移速提高50%，0.3秒加速、0.2秒煞車；急轉降到30%速度並漸進轉向。沿指令方向實際行進，碰撞地形／身體即停止，束縛或暈眩立即停下；到期回到普通移動，不把移速增益當作加減速狀態。專用滑板模型、尾跡與畫面仍待驗收。",
+      "maxRank": 4,
+      "abilityOverrides": {
+        "cooldownTier": "小",
+        "manaCostTier": "小",
+        "provenance": "editor-json",
+        "castTimeSec": 0.1
+      },
+      "products": [
+        {
+          "instanceId": "e-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "applyTo": "self",
+                  "duration": 3,
+                  "stackKey": "community-review-26-20260907.ride",
+                  "maxStacks": 1,
+                  "modifiers": [
+                    {
+                      "stat": "ms",
+                      "op": "pctAdd",
+                      "value": 0.5
+                    }
+                  ],
+                  "drive": {
+                    "accelSec": 0.3,
+                    "brakeSec": 0.2,
+                    "turnFactor": 0.2,
+                    "sharpTurnDot": 0.5,
+                    "sharpTurnSpeed": 0.3
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 10,
+        "manaCost": 40,
+        "range": 8
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.e.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast",
+          "replaces": "caster.action"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-26-20260907:HERO",
+    "wholeTargetSha256": "b5df86ed757062b641b4e1030343e1fa4b4bac13b0a937115398853edbf9e71a",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

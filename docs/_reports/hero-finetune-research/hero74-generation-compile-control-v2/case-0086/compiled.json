@@ -1,0 +1,112 @@
+{
+  "id": "community-review-36-20260907.q",
+  "name": "〔蠻力斬擊〕",
+  "provenance": "editor-json",
+  "description": "【核准惡搞改編】粗魯一刀小級物理傷害；三秒內用過W，再多極小物理傷害。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    10
+  ],
+  "manaCost": [
+    40
+  ],
+  "range": 6,
+  "radius": 3,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "physical",
+      "amount": {
+        "damageTier": "小",
+        "flat": 500,
+        "perRank": [
+          0,
+          250,
+          500,
+          750
+        ]
+      }
+    },
+    {
+      "kind": "damage",
+      "condition": {
+        "kind": "recentCast",
+        "subject": "self",
+        "slot": "W",
+        "withinSec": 3
+      },
+      "damageType": "physical",
+      "amount": {
+        "damageTier": "極小",
+        "flat": 200,
+        "perRank": [
+          0,
+          100,
+          200,
+          300
+        ]
+      }
+    }
+  ],
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/thorne.q.webp",
+  "template": {
+    "cards": [
+      {
+        "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "flat": 500,
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.1
+        },
+        "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
+      },
+      {
+        "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+        "params": {
+          "castType": "targeted",
+          "castTimeSec": 0.1,
+          "radius": 3,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "flat": 200,
+                "perRank": [
+                  0,
+                  100,
+                  200,
+                  300
+                ]
+              },
+              "condition": {
+                "kind": "recentCast",
+                "subject": "self",
+                "slot": "W",
+                "withinSec": 3
+              }
+            }
+          ]
+        },
+        "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+      }
+    ],
+    "onConflict": "reject"
+  },
+  "schema": "ability@1"
+}

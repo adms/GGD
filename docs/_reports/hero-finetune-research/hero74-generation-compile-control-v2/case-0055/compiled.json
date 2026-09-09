@@ -1,0 +1,115 @@
+{
+  "id": "community-review-23-20260907.ex",
+  "name": "〔吐槽也是武器〕",
+  "provenance": "editor-json",
+  "description": "【本次玩法】銀時偷喝草莓奶：偷閒存貨，喝奶怕被打斷，吐槽打斷別人\n保留喝奶／打斷連動，以命中時吐槽提示辨識實際中斷嘗試。\n【修正行為】近身重擊後只取消存活目標仍在進行且可中斷的前搖；不附加暈眩、不重置冷卻、不撤銷已完成效果，同時顯示吐槽文字。",
+  "slot": "EX",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    10
+  ],
+  "manaCost": [
+    40
+  ],
+  "range": 2,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "physical",
+      "amount": {
+        "damageTier": "小",
+        "ratios": [],
+        "flat": 500
+      }
+    },
+    {
+      "kind": "interruptCast",
+      "shape": "single"
+    },
+    {
+      "kind": "floatingText",
+      "shape": "single",
+      "text": "吐槽也是武器啊！",
+      "colorRgb": [
+        255,
+        235,
+        180
+      ],
+      "durationSec": 1.2,
+      "applyTo": "self"
+    },
+    {
+      "kind": "floatingText",
+      "shape": "single",
+      "text": "上班先學會吐槽",
+      "durationSec": 1,
+      "applyTo": "victim"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/thorne.r.webp",
+  "template": {
+    "cards": [
+      {
+        "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+        "params": {
+          "castType": "targeted",
+          "castTimeSec": 0.1,
+          "radius": 0,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "ratios": [],
+                "flat": 500
+              }
+            },
+            {
+              "kind": "interruptCast",
+              "shape": "single"
+            },
+            {
+              "kind": "floatingText",
+              "shape": "single",
+              "applyTo": "self",
+              "text": "吐槽也是武器啊！",
+              "durationSec": 1.2,
+              "colorRgb": [
+                255,
+                235,
+                180
+              ]
+            }
+          ]
+        },
+        "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+      },
+      {
+        "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+        "params": {
+          "castType": "targeted",
+          "castTimeSec": 0.1,
+          "radius": 0,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "floatingText",
+              "shape": "single",
+              "text": "上班先學會吐槽",
+              "applyTo": "victim",
+              "durationSec": 1
+            }
+          ]
+        },
+        "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+      }
+    ],
+    "onConflict": "reject"
+  },
+  "schema": "ability@1"
+}

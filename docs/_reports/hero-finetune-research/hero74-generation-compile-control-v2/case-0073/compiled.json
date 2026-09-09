@@ -1,0 +1,125 @@
+{
+  "id": "community-review-28-20260907.w",
+  "name": "〔鬥氣護身〕",
+  "provenance": "editor-json",
+  "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n新增代價：硬化三秒自己減速30%；可以用E接近或R衝刺打破站樁僵局。\n三秒護甲與魔抗各加三十，使用固定堆疊鍵至多一層，到期還原；增加物理／魔法承傷能力，不是永久增益或無限護盾。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    8,
+    8,
+    8,
+    8
+  ],
+  "manaCost": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "range": 0,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "armor",
+          "op": "flat",
+          "value": 30
+        },
+        {
+          "stat": "mr",
+          "op": "flat",
+          "value": 30
+        }
+      ],
+      "duration": 3,
+      "applyTo": "self",
+      "stackKey": "community-review-28-20260907.guard",
+      "maxStacks": 1
+    },
+    {
+      "kind": "applyStatus",
+      "sourceScope": "caster",
+      "statusId": "slow30",
+      "duration": 3,
+      "applyTo": "self",
+      "moveSpeedMult": 0.7
+    },
+    {
+      "kind": "floatingText",
+      "shape": "single",
+      "text": "淑女站好……我忍不了啦",
+      "durationSec": 1,
+      "applyTo": "self"
+    }
+  ],
+  "castTimeSec": 0,
+  "icon": "assets/icons/abilities/thorne.w.webp",
+  "template": {
+    "cards": [
+      {
+        "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0,
+          "radius": 0,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "applyBuff",
+              "applyTo": "self",
+              "stackKey": "community-review-28-20260907.guard",
+              "maxStacks": 1,
+              "duration": 3,
+              "modifiers": [
+                {
+                  "stat": "armor",
+                  "op": "flat",
+                  "value": 30
+                },
+                {
+                  "stat": "mr",
+                  "op": "flat",
+                  "value": 30
+                }
+              ]
+            }
+          ]
+        },
+        "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+      },
+      {
+        "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0,
+          "radius": 0,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "slow30",
+              "duration": 3,
+              "applyTo": "self",
+              "sourceScope": "caster",
+              "moveSpeedMult": 0.7
+            },
+            {
+              "kind": "floatingText",
+              "shape": "single",
+              "text": "淑女站好……我忍不了啦",
+              "applyTo": "self",
+              "durationSec": 1
+            }
+          ]
+        },
+        "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+      }
+    ],
+    "onConflict": "reject"
+  },
+  "schema": "ability@1"
+}

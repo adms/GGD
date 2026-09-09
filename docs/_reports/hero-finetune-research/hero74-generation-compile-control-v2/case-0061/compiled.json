@@ -1,0 +1,384 @@
+{
+  "id": "community-review-24-20260907.r",
+  "name": "神速・疾風迅雷",
+  "provenance": "editor-json",
+  "description": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n【修正行為】開啟消耗一點電力，五秒內對距離四以內的敵人普攻命中或真正迴避事件自動反擊。共用三次額度與 0.5 秒間隔，每次須足額支付兩點電力。技能傷害、反擊衍生傷害、敵人失手、遠處攻擊均不觸發；雙方神速不會互相無限反擊。電擊動作仍待畫面驗收。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    12,
+    12,
+    12,
+    12
+  ],
+  "manaCost": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "statusCost": {
+    "statusId": "community-review-24-20260907.electricity",
+    "count": 1
+  },
+  "range": 8,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "grantMark": {
+        "max": 3,
+        "resetOn": "round"
+      },
+      "statusId": "community-review-24-20260907.reaction",
+      "stacks": 3,
+      "duration": 5
+    },
+    {
+      "kind": "applyBuff",
+      "modifiers": [],
+      "duration": 5,
+      "stackKey": "community-review-24-20260907.r.reflex",
+      "maxStacks": 1,
+      "hooks": [
+        {
+          "on": "onDamageTaken",
+          "effects": [
+            {
+              "kind": "consumeStatus",
+              "shape": "single",
+              "statusId": "community-review-24-20260907.electricity",
+              "count": 2,
+              "subject": "self",
+              "onConsumed": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "statusId": "community-review-24-20260907.reaction",
+                  "count": 1,
+                  "subject": "self",
+                  "onConsumed": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-24-20260907.reaction-lock",
+                      "duration": 0.5,
+                      "applyTo": "self"
+                    },
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "小",
+                        "ratios": [],
+                        "flat": 500,
+                        "perRank": [
+                          0,
+                          250,
+                          500
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "condition": {
+            "all": [
+              {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "community-review-24-20260907.electricity",
+                "minStacks": 2
+              },
+              {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "community-review-24-20260907.reaction",
+                "minStacks": 1
+              },
+              {
+                "not": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "community-review-24-20260907.reaction-lock",
+                  "minStacks": 1
+                }
+              },
+              {
+                "kind": "distance",
+                "op": "<=",
+                "value": 4
+              }
+            ]
+          },
+          "target": "event",
+          "victim": "enemy",
+          "damageSource": "basic"
+        },
+        {
+          "on": "onEvade",
+          "effects": [
+            {
+              "kind": "consumeStatus",
+              "shape": "single",
+              "statusId": "community-review-24-20260907.electricity",
+              "count": 2,
+              "subject": "self",
+              "onConsumed": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "statusId": "community-review-24-20260907.reaction",
+                  "count": 1,
+                  "subject": "self",
+                  "onConsumed": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-24-20260907.reaction-lock",
+                      "duration": 0.5,
+                      "applyTo": "self"
+                    },
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "小",
+                        "ratios": [],
+                        "flat": 500,
+                        "perRank": [
+                          0,
+                          250,
+                          500
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "condition": {
+            "all": [
+              {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "community-review-24-20260907.electricity",
+                "minStacks": 2
+              },
+              {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "community-review-24-20260907.reaction",
+                "minStacks": 1
+              },
+              {
+                "not": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "community-review-24-20260907.reaction-lock",
+                  "minStacks": 1
+                }
+              },
+              {
+                "kind": "distance",
+                "op": "<=",
+                "value": 4
+              }
+            ]
+          },
+          "target": "event",
+          "victim": "enemy",
+          "evadeChannel": "basic",
+          "evadeSource": "defender"
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/thorne.r.webp",
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "castType": "self",
+      "castTimeSec": 0.1,
+      "radius": 0,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "community-review-24-20260907.reaction",
+          "duration": 5,
+          "stacks": 3,
+          "grantMark": {
+            "max": 3,
+            "resetOn": "round"
+          }
+        },
+        {
+          "kind": "applyBuff",
+          "duration": 5,
+          "modifiers": [],
+          "stackKey": "community-review-24-20260907.r.reflex",
+          "maxStacks": 1,
+          "hooks": [
+            {
+              "on": "onDamageTaken",
+              "victim": "enemy",
+              "target": "event",
+              "condition": {
+                "all": [
+                  {
+                    "kind": "status",
+                    "subject": "self",
+                    "statusId": "community-review-24-20260907.electricity",
+                    "minStacks": 2
+                  },
+                  {
+                    "kind": "status",
+                    "subject": "self",
+                    "statusId": "community-review-24-20260907.reaction",
+                    "minStacks": 1
+                  },
+                  {
+                    "not": {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "community-review-24-20260907.reaction-lock",
+                      "minStacks": 1
+                    }
+                  },
+                  {
+                    "kind": "distance",
+                    "op": "<=",
+                    "value": 4
+                  }
+                ]
+              },
+              "effects": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "subject": "self",
+                  "statusId": "community-review-24-20260907.electricity",
+                  "count": 2,
+                  "onConsumed": [
+                    {
+                      "kind": "consumeStatus",
+                      "shape": "single",
+                      "subject": "self",
+                      "statusId": "community-review-24-20260907.reaction",
+                      "count": 1,
+                      "onConsumed": [
+                        {
+                          "kind": "applyStatus",
+                          "applyTo": "self",
+                          "statusId": "community-review-24-20260907.reaction-lock",
+                          "duration": 0.5
+                        },
+                        {
+                          "kind": "damage",
+                          "damageType": "magic",
+                          "amount": {
+                            "damageTier": "小",
+                            "ratios": [],
+                            "flat": 500,
+                            "perRank": [
+                              0,
+                              250,
+                              500
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "damageSource": "basic"
+            },
+            {
+              "on": "onEvade",
+              "victim": "enemy",
+              "target": "event",
+              "condition": {
+                "all": [
+                  {
+                    "kind": "status",
+                    "subject": "self",
+                    "statusId": "community-review-24-20260907.electricity",
+                    "minStacks": 2
+                  },
+                  {
+                    "kind": "status",
+                    "subject": "self",
+                    "statusId": "community-review-24-20260907.reaction",
+                    "minStacks": 1
+                  },
+                  {
+                    "not": {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "community-review-24-20260907.reaction-lock",
+                      "minStacks": 1
+                    }
+                  },
+                  {
+                    "kind": "distance",
+                    "op": "<=",
+                    "value": 4
+                  }
+                ]
+              },
+              "effects": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "subject": "self",
+                  "statusId": "community-review-24-20260907.electricity",
+                  "count": 2,
+                  "onConsumed": [
+                    {
+                      "kind": "consumeStatus",
+                      "shape": "single",
+                      "subject": "self",
+                      "statusId": "community-review-24-20260907.reaction",
+                      "count": 1,
+                      "onConsumed": [
+                        {
+                          "kind": "applyStatus",
+                          "applyTo": "self",
+                          "statusId": "community-review-24-20260907.reaction-lock",
+                          "duration": 0.5
+                        },
+                        {
+                          "kind": "damage",
+                          "damageType": "magic",
+                          "amount": {
+                            "damageTier": "小",
+                            "ratios": [],
+                            "flat": 500,
+                            "perRank": [
+                              0,
+                              250,
+                              500
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "evadeSource": "defender",
+              "evadeChannel": "basic"
+            }
+          ]
+        }
+      ]
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

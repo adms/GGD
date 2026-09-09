@@ -1,0 +1,74 @@
+{
+  "id": "community-review-23-20260907.w",
+  "name": "〔草莓牛奶休息時間〕",
+  "provenance": "editor-json",
+  "description": "【本次玩法】銀時偷喝草莓奶：偷閒存貨，喝奶怕被打斷，吐槽打斷別人\n【修正行為】消耗一份補給後飲用1秒，再恢復100/150/200/250生命；真正移動或受擊（含護盾／格擋命中）中斷，已付補給與冷卻不返還。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    8,
+    8,
+    8,
+    8
+  ],
+  "manaCost": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "statusCost": {
+    "statusId": "community-review-23-20260907.supply",
+    "count": 1
+  },
+  "range": 0,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "heal",
+      "amount": {
+        "flat": 100,
+        "perRank": [
+          0,
+          50,
+          100,
+          150
+        ],
+        "ratios": []
+      },
+      "applyTo": "self"
+    }
+  ],
+  "castTimeSec": 1,
+  "rootWhileCasting": false,
+  "interruptOn": "damageOrMove",
+  "icon": "assets/icons/abilities/thorne.w.webp",
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "castType": "self",
+      "castTimeSec": 1,
+      "radius": 0,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "heal",
+          "amount": {
+            "flat": 100,
+            "perRank": [
+              0,
+              50,
+              100,
+              150
+            ],
+            "ratios": []
+          },
+          "applyTo": "self"
+        }
+      ]
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

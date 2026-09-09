@@ -1,0 +1,90 @@
+{
+  "id": "b2-nube.ex",
+  "name": "保健室先解除惡靈",
+  "provenance": "editor-json",
+  "description": "「保健室先解除惡靈！」\n治療指定友軍 120 生命並解除可驅散負面效果；不是對死亡單位復活。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，非原作招式與數值聲明。",
+  "slot": "EX",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    90
+  ],
+  "manaCost": [
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "radius": 3,
+  "rangeTier": "中",
+  "cooldownTier": "大",
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "heal",
+      "amount": {
+        "flat": 120
+      }
+    },
+    {
+      "kind": "dispel",
+      "shape": "single",
+      "pools": {
+        "status": true,
+        "dot": true,
+        "buffs": true
+      },
+      "polarity": "debuff",
+      "count": 3,
+      "order": "newest"
+    }
+  ],
+  "vfxKey": "fx.prim.wind.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "attachTo": "caster"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "template": {
+    "cards": [
+      {
+        "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+        "params": {
+          "target": "ally",
+          "amount": {
+            "flat": 120
+          },
+          "castTimeSec": 0.1
+        },
+        "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b"
+      },
+      {
+        "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+        "params": {
+          "effects": [
+            {
+              "kind": "dispel",
+              "shape": "single",
+              "polarity": "debuff",
+              "pools": {
+                "status": true,
+                "dot": true,
+                "buffs": true
+              },
+              "count": 3,
+              "order": "newest"
+            }
+          ],
+          "castType": "targeted",
+          "side": "allies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+      }
+    ],
+    "onConflict": "reject"
+  },
+  "schema": "ability@1"
+}

@@ -1,0 +1,80 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "PASSIVE",
+      "name": "二刀流",
+      "purpose": "【核准惡搞改編】W成功施法且四秒內用過Q，減少Q冷卻四秒；同按Q、隔太久W都不退。",
+      "maxRank": 1,
+      "abilityOverrides": {
+        "provenance": "editor-json"
+      },
+      "products": [
+        {
+          "instanceId": "passive-parody-1",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onAbilityCast",
+                  "effects": [
+                    {
+                      "kind": "modifyCooldown",
+                      "shape": "single",
+                      "who": "self",
+                      "slot": "Q",
+                      "mode": "reduceFlat",
+                      "amount": 4
+                    },
+                    {
+                      "kind": "floatingText",
+                      "shape": "single",
+                      "text": "連點器不算雙刀！",
+                      "applyTo": "self",
+                      "durationSec": 1
+                    }
+                  ],
+                  "internalCooldown": 3,
+                  "target": "self",
+                  "abilitySlot": "W",
+                  "condition": {
+                    "kind": "recentCast",
+                    "subject": "self",
+                    "slot": "Q",
+                    "withinSec": 4
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 0,
+        "manaCost": 0,
+        "range": 0
+      },
+      "capabilityIds": [
+        "hooks",
+        "conditions"
+      ],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": []
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-19-20260907:HERO",
+    "wholeTargetSha256": "d91a865cb80ddddfa52fadada6abcb6fb4990c0c2e90d69306a866fcc122d3db",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

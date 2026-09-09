@@ -1,0 +1,69 @@
+{
+  "id": "community-review-28-20260907.ex",
+  "name": "〔狂劍追擊〕",
+  "provenance": "editor-json",
+  "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n指定自己二秒內有效命中的近身敵人，消耗該次追擊標記追加一次小級距劍擊。超距直接拒絕，不自動接近，不扣魔力、冷卻或目標標記；別來源／過期／非法目標不能施放。",
+  "slot": "EX",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    7,
+    7,
+    7,
+    7
+  ],
+  "manaCost": [
+    50,
+    50,
+    50,
+    50
+  ],
+  "allowApproach": false,
+  "requiredTargetStatus": {
+    "statusId": "community-review-28-20260907.recent-hit",
+    "appliedBy": "self"
+  },
+  "statusCost": {
+    "statusId": "community-review-28-20260907.recent-hit",
+    "count": 1,
+    "appliedBy": "self",
+    "subject": "target"
+  },
+  "range": 3,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "physical",
+      "amount": {
+        "damageTier": "小",
+        "ratios": [],
+        "flat": 500
+      }
+    }
+  ],
+  "castTimeSec": 0.12,
+  "icon": "assets/icons/abilities/thorne.r.webp",
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "castType": "targeted",
+      "castTimeSec": 0.12,
+      "radius": 0,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [],
+            "flat": 500
+          }
+        }
+      ]
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

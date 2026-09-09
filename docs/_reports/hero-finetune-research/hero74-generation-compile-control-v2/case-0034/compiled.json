@@ -1,0 +1,69 @@
+{
+  "id": "community-review-17-20260907.ex",
+  "name": "死亡是所有生命的終點",
+  "provenance": "editor-json",
+  "description": "【核准惡搞改編】提早散會：解除自己的會議定身才能取得240生命；若已坐完會，沒出席費。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    10
+  ],
+  "manaCost": [
+    40
+  ],
+  "range": 6,
+  "radius": 3,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "consumeStatus",
+      "shape": "single",
+      "statusId": "root",
+      "count": "all",
+      "subject": "self",
+      "appliedBy": "self",
+      "onConsumed": [
+        {
+          "kind": "heal",
+          "amount": {
+            "flat": 240
+          },
+          "applyTo": "self"
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/sela.r.webp",
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "castType": "self",
+      "castTimeSec": 0.1,
+      "radius": 3,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "root",
+          "count": "all",
+          "subject": "self",
+          "appliedBy": "self",
+          "onConsumed": [
+            {
+              "kind": "heal",
+              "amount": {
+                "flat": 240
+              },
+              "applyTo": "self"
+            }
+          ]
+        }
+      ]
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

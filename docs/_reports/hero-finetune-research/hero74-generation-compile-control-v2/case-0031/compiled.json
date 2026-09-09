@@ -1,0 +1,89 @@
+{
+  "id": "community-review-17-20260907.w",
+  "name": "死亡騎士",
+  "provenance": "editor-json",
+  "description": "【核准惡搞改編】會議室鎖門：自己定身兩秒，AP+70兩秒；可以施法，但不能逃跑。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    10
+  ],
+  "manaCost": [
+    40
+  ],
+  "range": 6,
+  "radius": 3,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "sourceScope": "caster",
+      "statusId": "root",
+      "duration": 2,
+      "applyTo": "self",
+      "root": true
+    },
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ap",
+          "op": "flat",
+          "value": 70
+        }
+      ],
+      "duration": 2,
+      "applyTo": "self"
+    },
+    {
+      "kind": "floatingText",
+      "shape": "single",
+      "text": "我其實也不知道在講什麼",
+      "durationSec": 1,
+      "applyTo": "self"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/sela.w.webp",
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "castType": "self",
+      "castTimeSec": 0.1,
+      "radius": 3,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "root",
+          "duration": 2,
+          "applyTo": "self",
+          "sourceScope": "caster",
+          "root": true
+        },
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "duration": 2,
+          "modifiers": [
+            {
+              "stat": "ap",
+              "op": "flat",
+              "value": 70
+            }
+          ]
+        },
+        {
+          "kind": "floatingText",
+          "shape": "single",
+          "text": "我其實也不知道在講什麼",
+          "applyTo": "self",
+          "durationSec": 1
+        }
+      ]
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

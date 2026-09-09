@@ -1,0 +1,104 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "R",
+      "name": "〔白夜叉〕",
+      "purpose": "【本次玩法】銀時偷喝草莓奶：偷閒存貨，喝奶怕被打斷，吐槽打斷別人\n【修正行為】白夜叉狀態維持4秒，近戰攻擊力+15%、移速極小級；到期還原來源，沒有永久變身。",
+      "maxRank": 3,
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 0,
+        "cooldown": [
+          18,
+          18,
+          18,
+          18
+        ],
+        "manaCost": [
+          100,
+          100,
+          100,
+          100
+        ],
+        "castTimeSec": 0.35
+      },
+      "products": [
+        {
+          "instanceId": "white-yaksha",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.35,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "duration": 4,
+                  "modifiers": [
+                    {
+                      "stat": "ad",
+                      "op": "pctAdd",
+                      "value": 0.15
+                    },
+                    {
+                      "stat": "ms",
+                      "op": "pctAdd",
+                      "msBonusTier": "極小"
+                    }
+                  ],
+                  "stackKey": "community-review-23-20260907.white-yaksha",
+                  "maxStacks": 1
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 60,
+        "manaCost": 100,
+        "range": 6
+      },
+      "capabilityIds": [],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.r.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast",
+          "replaces": "caster.action"
+        },
+        {
+          "kind": "vfx",
+          "on": "castStart",
+          "at": "self",
+          "vfxId": "fx.prim.physical.pulse-sm"
+        },
+        {
+          "kind": "vfx",
+          "on": "castEffect",
+          "at": "self",
+          "vfxId": "fx.prim.physical.pulse"
+        }
+      ]
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-23-20260907:HERO",
+    "wholeTargetSha256": "e5cfd1a78ad71be587655f71fbc7a0df1fdf80cadc045863c81a847476de0ffb",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

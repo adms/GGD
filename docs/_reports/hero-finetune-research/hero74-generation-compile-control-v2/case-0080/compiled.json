@@ -1,0 +1,99 @@
+{
+  "id": "community-review-33-20260907.w",
+  "name": "〔重量切換〕",
+  "provenance": "editor-json",
+  "description": "【核准惡搞改編】負重深蹲：回復100；仍背重劍時再回復180。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    10
+  ],
+  "manaCost": [
+    40
+  ],
+  "range": 6,
+  "radius": 3,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "heal",
+      "condition": {
+        "kind": "status",
+        "subject": "self",
+        "statusId": "slow40",
+        "appliedBy": "self"
+      },
+      "amount": {
+        "flat": 180,
+        "perRank": [
+          0,
+          90,
+          180,
+          270
+        ]
+      },
+      "applyTo": "self"
+    },
+    {
+      "kind": "heal",
+      "amount": {
+        "flat": 100,
+        "perRank": [
+          0,
+          50,
+          100,
+          150
+        ]
+      },
+      "applyTo": "self"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/thorne.w.webp",
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "castType": "self",
+      "castTimeSec": 0.1,
+      "radius": 3,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "heal",
+          "amount": {
+            "flat": 180,
+            "perRank": [
+              0,
+              90,
+              180,
+              270
+            ]
+          },
+          "applyTo": "self",
+          "condition": {
+            "kind": "status",
+            "statusId": "slow40",
+            "subject": "self",
+            "appliedBy": "self"
+          }
+        },
+        {
+          "kind": "heal",
+          "amount": {
+            "flat": 100,
+            "perRank": [
+              0,
+              50,
+              100,
+              150
+            ]
+          },
+          "applyTo": "self"
+        }
+      ]
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

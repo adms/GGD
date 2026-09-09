@@ -1,0 +1,75 @@
+{
+  "id": "community-review-09-20260907.ex",
+  "name": "〔豐收的約定〕",
+  "provenance": "editor-json",
+  "description": "【核准惡搞改編】售後服務：淨化指定隊友最多三項負面；自己減速30%兩秒去跑腿。",
+  "slot": "EX",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    10
+  ],
+  "manaCost": [
+    40
+  ],
+  "range": 6,
+  "radius": 3,
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "dispel",
+      "shape": "single",
+      "pools": {
+        "status": true,
+        "dot": true,
+        "buffs": true
+      },
+      "polarity": "debuff",
+      "count": 3,
+      "order": "newest"
+    },
+    {
+      "kind": "applyStatus",
+      "sourceScope": "caster",
+      "statusId": "slow30",
+      "duration": 2,
+      "applyTo": "self",
+      "moveSpeedMult": 0.7
+    }
+  ],
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/sela.r.webp",
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "castType": "targeted",
+      "castTimeSec": 0.1,
+      "radius": 3,
+      "side": "allies",
+      "effects": [
+        {
+          "kind": "dispel",
+          "shape": "single",
+          "polarity": "debuff",
+          "pools": {
+            "status": true,
+            "dot": true,
+            "buffs": true
+          },
+          "count": 3,
+          "order": "newest"
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow30",
+          "duration": 2,
+          "applyTo": "self",
+          "sourceScope": "caster",
+          "moveSpeedMult": 0.7
+        }
+      ]
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

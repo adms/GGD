@@ -1,0 +1,90 @@
+{
+  "id": "b2-uncle.r",
+  "name": "收據換一位代理客服",
+  "provenance": "editor-json",
+  "description": "「收據換一位代理客服！」\n交出結界收據才能叫來一名 4 秒的自己分身；生命／攻擊倍率欄位各 0.3，依正式屬性管線產生，不繼承主人當下增益；該來源最多 2 具，本體死亡消失。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：精靈客服與遊戲攻略，戰鬥全程社交事故。GGD 惡搞改編，非原作招式與數值聲明。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    90,
+    90,
+    90
+  ],
+  "manaCost": [
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "radius": 3,
+  "rangeTier": "中",
+  "cooldownTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "consumeStatus",
+      "shape": "single",
+      "statusId": "spell-shield",
+      "count": "all",
+      "subject": "self",
+      "onConsumed": [
+        {
+          "kind": "summon",
+          "body": "self",
+          "count": 1,
+          "durationSec": 4,
+          "formation": "ring",
+          "spread": 2,
+          "maxAlive": 2,
+          "onOwnerDeath": "despawn",
+          "hpMult": 0.3,
+          "damageMult": 0.3
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "attachTo": "caster"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "template": {
+    "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+    "params": {
+      "effects": [
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "spell-shield",
+          "count": "all",
+          "subject": "self",
+          "onConsumed": [
+            {
+              "kind": "summon",
+              "body": "self",
+              "count": 1,
+              "durationSec": 4,
+              "damageMult": 0.3,
+              "hpMult": 0.3,
+              "formation": "ring",
+              "spread": 2,
+              "maxAlive": 2,
+              "onOwnerDeath": "despawn"
+            }
+          ]
+        }
+      ],
+      "castType": "self",
+      "side": "enemies",
+      "castTimeSec": 0.1,
+      "radius": 3
+    },
+    "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+  },
+  "schema": "ability@1"
+}

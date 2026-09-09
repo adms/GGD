@@ -54,6 +54,16 @@ export function engineLoader(repo:string){
   return {loadEngine,evidence};
 }
 
+function compileNativeAbility(source:any,e:any){
+  let authored=e.ability.zAbilityDoc.parse(source);
+  if(authored.template!==undefined){
+    const expanded=e.resolveTemplateExpansion(authored,e.templateMap);
+    assert(expanded.ok,'NATIVE_TEMPLATE_FAILED:'+JSON.stringify(expanded.failure));
+    authored=e.ability.zAbilityDoc.parse(expanded.merged);
+  }
+  return e.runtime.resolve(authored);
+}
+
 export function compileMaterialized(output:any,e:any){
   if(output.format==='hero-project'){
     const p=e.project.zHeroProject.parse(output.project);
@@ -66,13 +76,7 @@ export function compileMaterialized(output:any,e:any){
   assert.equal(output.format,'native-content','UNSUPPORTED_MATERIALIZED_FORMAT');
   const champion=e.champion.zChampionDoc.parse(output.champion),abilities:Record<string,any>={};
   for(const slot of SLOTS){
-    let authored=e.ability.zAbilityDoc.parse(output.abilities[slot]);
-    if(authored.template!==undefined){
-      const expanded=e.resolveTemplateExpansion(authored,e.templateMap);
-      assert(expanded.ok,'NATIVE_TEMPLATE_FAILED:'+JSON.stringify(expanded.failure));
-      authored=e.ability.zAbilityDoc.parse(expanded.merged);
-    }
-    abilities[slot]=e.runtime.resolve(authored);
+    abilities[slot]=compileNativeAbility(output.abilities[slot],e);
   }
   return {champion,abilityDrafts:abilities};
 }
@@ -97,6 +101,39 @@ export function compileFullCase(row:any,target:any,e:any,models:any){
   if(declared?.source)assert(isDeepStrictEqual(models[modelKey].source,declared.source),'SELECTED_ASSET_SOURCE_MISMATCH');
   const output=materializeTarget(target,{heroId:row.heroId,heroName:c.heroName},e,models);
   return {output,compiled:compileMaterialized(output,e)};
+}
+
+export function compileSlotCase(row:any,target:any,wholeRow:any,wholeTarget:any,e:any,models:any){
+  assert(SLOTS.includes(row.slot),'AUXILIARY_SLOT_REQUIRED');
+  assert.equal(row.engineRevision,e.revision,'ENGINE_REVISION_MISMATCH');
+  assert.equal(hash(JSON.stringify(row.messages)),row.messagesSha256,'PUBLIC_MESSAGE_DRIFT');
+  assert.equal(hash(row.messages[1].content),row.inputSha256,'PUBLIC_INPUT_DRIFT');
+  const contract=JSON.parse(row.messages[1].content).outputContract;
+  assert.equal(contract.heroId,row.heroId);assert.equal(contract.slot,row.slot);assert.equal(contract.format,row.format);
+  assert.equal(target.format,row.format,'OUTPUT_FORMAT_MISMATCH');
+  if(row.format==='native-slot'){
+    assert.deepEqual(Object.keys(target).sort(),['ability','format'],'NATIVE_SLOT_KEYS');
+    assert.equal(target.ability.id,`${row.heroId}.${row.slot.toLowerCase()}`,'ABILITY_ID_MISMATCH');
+    assert.equal(target.ability.slot,row.slot,'ABILITY_SLOT_MISMATCH');
+    return {output:structuredClone(target),compiled:compileNativeAbility(target.ability,e),context:null};
+  }
+  assert.equal(row.format,'hero-slot','UNSUPPORTED_SLOT_FORMAT');
+  assert.deepEqual(Object.keys(target).sort(),['format','presentationSelection','slot'],'HERO_SLOT_KEYS');
+  assert.equal(target.slot.slot,row.slot,'PLAN_SLOT_MISMATCH');
+  assert(wholeRow&&wholeTarget,'OWN_ARM_WHOLE_CONTEXT_REQUIRED');
+  assert.equal(wholeRow.heroId,row.heroId,'CONTEXT_HERO_MISMATCH');
+  assert.equal(wholeRow.engineRevision,row.engineRevision,'CONTEXT_ENGINE_MISMATCH');
+  assert.equal(wholeRow.format,'hero-plan','CONTEXT_FORMAT_MISMATCH');
+  assert(isDeepStrictEqual(JSON.parse(row.messages[1].content).assets,JSON.parse(wholeRow.messages[1].content).assets),'CONTEXT_CATALOG_MISMATCH');
+  // Never invent missing origin/other slots or read another arm's answers.
+  // The caller requires that this arm's unmodified whole context passed first.
+  const combined=structuredClone(wholeTarget);
+  combined.plan.slots[row.slot]=structuredClone(target.slot);
+  combined.presentationSelection.slots[row.slot]=structuredClone(target.presentationSelection);
+  const result=compileFullCase(wholeRow,combined,e,models);
+  const context={wholeCaseId:wholeRow.id,wholeTargetSha256:hash(JSON.stringify(wholeTarget)),source:'same-arm-generated-whole-hero'};
+  return {output:{format:'hero-slot-in-own-context',target:structuredClone(target),context},
+    compiled:result.compiled.abilityDrafts[row.slot],context};
 }
 
 export async function run(options:Record<string,string|boolean>){
@@ -171,13 +208,41 @@ export async function run(options:Record<string,string|boolean>){
         authoringSha256:hash(fs.readFileSync(path.join(folder,'authoring.json'))),compiledSha256:hash(fs.readFileSync(path.join(folder,'compiled.json')))});
     }catch(error:any){row.status='structural-failure';row.error=String(error);}
   }
+  const byId=new Map(rows.map(r=>[r.id,r]));
+  for(const [index,c]of cases.entries()){
+    if(c.slot==='HERO')continue;
+    const row=rows[index],answer=answers.get(c.id);
+    if(!answer?.complete){row.status='incomplete-or-invalid-generation';continue;}
+    const whole=cases.find((r:any)=>r.heroId===c.heroId&&r.slot==='HERO'),wholeAnswer=whole&&answers.get(whole.id);
+    if(c.format==='hero-slot'&&(!wholeAnswer?.complete||!byId.get(whole.id)?.schemaCompilePassed)){
+      row.status='blocked-by-own-whole-context';continue;
+    }
+    try{
+      const e=await loader.loadEngine(c.engineRevision);
+      const result=compileSlotCase(c,answer.target,whole,wholeAnswer?.target,e,models);
+      const folder=path.join(out,`case-${String(index).padStart(4,'0')}`);fs.mkdirSync(folder);
+      save(path.join(folder,'authoring.json'),result.output);
+      const reloaded=read(path.join(folder,'authoring.json'));assert.deepEqual(reloaded,result.output,'DISK_RELOAD_CHANGED');
+      const target=c.format==='hero-slot'?reloaded.target:reloaded;
+      const again=compileSlotCase(c,target,whole,wholeAnswer?.target,e,models);
+      assert.deepEqual(again.compiled,result.compiled,'RECOMPILE_CHANGED');
+      save(path.join(folder,'compiled.json'),result.compiled);
+      Object.assign(row,{status:'auxiliary-structural-pass-not-game-acceptance',schemaCompilePassed:true,
+        diskReloadCompileIdentical:true,context:result.context,
+        authoringSha256:hash(fs.readFileSync(path.join(folder,'authoring.json'))),compiledSha256:hash(fs.readFileSync(path.join(folder,'compiled.json')))});
+    }catch(error:any){row.status='auxiliary-structural-failure';row.error=String(error);}
+  }
   const primary=rows.filter(r=>r.slot==='HERO');assert.equal(primary.length,plan.counts.primaryWholeHeroes);
   const report={schema:'ggd-distillation-generation-compile@1',sourceEvidence,
     scriptSha256:hash(fs.readFileSync(script)),adapterSha256:hash(fs.readFileSync(new URL('./hero-distillation-adapter.mjs',import.meta.url))),
     evaluationManifestSha256:hash(fs.readFileSync(path.join(evaluation,'manifest.json'))),modelBindingsSha256:hash(modelsBytes),
     engines:loader.evidence,counts:{allCases:rows.length,primaryWholeHeroes:primary.length,
-      structuralPassed:primary.filter(r=>r.schemaCompilePassed&&r.diskReloadCompileIdentical).length,auxiliarySlotsPending:rows.length-primary.length},
-    scope:'Primary whole-hero materialization, schema, pinned compilation and disk reload/recompile. Auxiliary slot validation still pending. No semantic fidelity, asset-byte closure, editor UI, game import/selection or match behavior certification.',
+      structuralPassed:primary.filter(r=>r.schemaCompilePassed&&r.diskReloadCompileIdentical).length,
+      auxiliarySlots:rows.length-primary.length,
+      auxiliaryStructuralPassed:rows.filter(r=>r.slot!=='HERO'&&r.schemaCompilePassed&&r.diskReloadCompileIdentical).length,
+      auxiliaryBlockedByOwnWhole:rows.filter(r=>r.status==='blocked-by-own-whole-context').length,
+      auxiliarySlotsPending:rows.filter(r=>r.status==='auxiliary-slot-validation-pending').length},
+    scope:'Primary whole-hero materialization, schema, pinned compilation and disk reload/recompile. Auxiliary native abilities compile standalone; hero-slots replace one slot in the same arm own already-valid whole-hero output. Other slots/origin are never invented or borrowed from the teacher arm. No semantic fidelity, asset-byte closure, editor UI, game import/selection or match behavior certification.',
     fullHeroE2EProven:false,modelPromoted:false,rows};
   save(path.join(out,'report.json'),report);return report;
 }

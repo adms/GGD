@@ -1,0 +1,263 @@
+{
+  "format": "hero-slot-in-own-context",
+  "target": {
+    "format": "hero-slot",
+    "slot": {
+      "slot": "PASSIVE",
+      "name": "〔線索整理〕",
+      "purpose": "【本次玩法】柯南原地推理：觀察對方真實行為取證，說真相時自己站住\n【修正行為】觀察同對決、當前可見的敵方英雄：有效普攻命中、技能命中、實際治療、成功控制各為一種事件。每名敵人／每名觀察者各自記錄，同種事件每名敵人／回合只記一次，最多保存三條線索；只到回合結束，不因重複事件或不同命中目標再增加。R 消耗該敵人身上由自己蒐集的線索，已見種類仍保留到重置。護盾實際吸收計入有效命中；無敵、零傷、過量治療、免控、不可見、跨區及對決結束不計。",
+      "maxRank": 1,
+      "abilityOverrides": {
+        "provenance": "editor-json"
+      },
+      "products": [
+        {
+          "instanceId": "observed-clues",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onObservedCombat",
+                  "observedEvent": "basicHit",
+                  "victim": "enemyChampion",
+                  "condition": {
+                    "all": [
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-26-20260907.seen-basichit",
+                          "minStacks": 1,
+                          "appliedBy": "self"
+                        }
+                      },
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-26-20260907.clues",
+                          "minStacks": 3,
+                          "appliedBy": "self"
+                        }
+                      }
+                    ]
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyBuff",
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-26-20260907.clues",
+                      "statusId": "community-review-26-20260907.clues",
+                      "maxStacks": 3,
+                      "dispellable": false,
+                      "polarity": "debuff"
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-26-20260907.seen-basichit",
+                      "statusId": "community-review-26-20260907.seen-basichit",
+                      "maxStacks": 1,
+                      "dispellable": false,
+                      "polarity": "debuff"
+                    }
+                  ]
+                },
+                {
+                  "on": "onObservedCombat",
+                  "observedEvent": "abilityHit",
+                  "victim": "enemyChampion",
+                  "condition": {
+                    "all": [
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-26-20260907.seen-abilityhit",
+                          "minStacks": 1,
+                          "appliedBy": "self"
+                        }
+                      },
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-26-20260907.clues",
+                          "minStacks": 3,
+                          "appliedBy": "self"
+                        }
+                      }
+                    ]
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyBuff",
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-26-20260907.clues",
+                      "statusId": "community-review-26-20260907.clues",
+                      "maxStacks": 3,
+                      "dispellable": false,
+                      "polarity": "debuff"
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-26-20260907.seen-abilityhit",
+                      "statusId": "community-review-26-20260907.seen-abilityhit",
+                      "maxStacks": 1,
+                      "dispellable": false,
+                      "polarity": "debuff"
+                    }
+                  ]
+                },
+                {
+                  "on": "onObservedCombat",
+                  "observedEvent": "heal",
+                  "victim": "enemyChampion",
+                  "condition": {
+                    "all": [
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-26-20260907.seen-heal",
+                          "minStacks": 1,
+                          "appliedBy": "self"
+                        }
+                      },
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-26-20260907.clues",
+                          "minStacks": 3,
+                          "appliedBy": "self"
+                        }
+                      }
+                    ]
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyBuff",
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-26-20260907.clues",
+                      "statusId": "community-review-26-20260907.clues",
+                      "maxStacks": 3,
+                      "dispellable": false,
+                      "polarity": "debuff"
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-26-20260907.seen-heal",
+                      "statusId": "community-review-26-20260907.seen-heal",
+                      "maxStacks": 1,
+                      "dispellable": false,
+                      "polarity": "debuff"
+                    }
+                  ]
+                },
+                {
+                  "on": "onObservedCombat",
+                  "observedEvent": "control",
+                  "victim": "enemyChampion",
+                  "condition": {
+                    "all": [
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-26-20260907.seen-control",
+                          "minStacks": 1,
+                          "appliedBy": "self"
+                        }
+                      },
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-26-20260907.clues",
+                          "minStacks": 3,
+                          "appliedBy": "self"
+                        }
+                      }
+                    ]
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyBuff",
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-26-20260907.clues",
+                      "statusId": "community-review-26-20260907.clues",
+                      "maxStacks": 3,
+                      "dispellable": false,
+                      "polarity": "debuff"
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-26-20260907.seen-control",
+                      "statusId": "community-review-26-20260907.seen-control",
+                      "maxStacks": 1,
+                      "dispellable": false,
+                      "polarity": "debuff"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templateConflictPolicy": "reject",
+      "tuning": {
+        "cooldownSec": 0,
+        "manaCost": 0,
+        "range": 0
+      },
+      "capabilityIds": [
+        "hooks",
+        "conditions"
+      ],
+      "directionOptionIds": [],
+      "fallbackOptionIds": []
+    },
+    "presentationSelection": {
+      "gameplayEvent": "abilityCast",
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "sfxKey": null,
+      "vfxLayers": [],
+      "scriptSelections": []
+    }
+  },
+  "context": {
+    "wholeCaseId": "community-review-26-20260907:HERO",
+    "wholeTargetSha256": "b5df86ed757062b641b4e1030343e1fa4b4bac13b0a937115398853edbf9e71a",
+    "source": "same-arm-generated-whole-hero"
+  }
+}

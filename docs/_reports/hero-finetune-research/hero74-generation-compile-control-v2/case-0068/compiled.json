@@ -1,0 +1,143 @@
+{
+  "id": "community-review-26-20260907.r",
+  "name": "〔真相只有一個〕",
+  "provenance": "editor-json",
+  "description": "【本次玩法】柯南原地推理：觀察對方真實行為取證，說真相時自己站住\n新增代價：推理宣布時自己定身0.8秒；線索仍須觀察實際事件取得，不能自己造證據。\n【修正行為】指定同區敵人，至少需要一條由自己蒐集的線索；施法開始扣除該目標全部自己的線索，其他敵人／觀察者不變。4秒揭示該目標並降低15%護甲與魔抗，同一施法者重施只刷新、不疊加。到期或驅散後恢復原隱形規則，不延長／取消其隱形時鐘；只使用當前對決的伺服器戰鬥實體，沒有玩家私密資料。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    90,
+    90,
+    90
+  ],
+  "manaCost": [
+    576,
+    576,
+    576
+  ],
+  "statusCost": {
+    "statusId": "community-review-26-20260907.clues",
+    "count": "all",
+    "appliedBy": "self",
+    "subject": "target"
+  },
+  "manaCostTier": "大",
+  "range": 12,
+  "cooldownTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "sourceScope": "caster",
+      "modifiers": [
+        {
+          "stat": "armor",
+          "op": "pctAdd",
+          "value": -0.15
+        },
+        {
+          "stat": "mr",
+          "op": "pctAdd",
+          "value": -0.15
+        }
+      ],
+      "duration": 4,
+      "statusId": "community-review-26-20260907.weakness",
+      "stackKey": "community-review-26-20260907.weakness",
+      "maxStacks": 1,
+      "dispellable": true,
+      "polarity": "debuff",
+      "vision": {
+        "revealed": true
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "sourceScope": "caster",
+      "statusId": "root",
+      "duration": 0.8,
+      "applyTo": "self",
+      "root": true
+    },
+    {
+      "kind": "floatingText",
+      "shape": "single",
+      "text": "真相只有一個，先聽我講完",
+      "durationSec": 1,
+      "applyTo": "self"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/thorne.r.webp",
+  "template": {
+    "cards": [
+      {
+        "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+        "params": {
+          "castType": "targeted",
+          "castTimeSec": 0.1,
+          "radius": 0,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "applyBuff",
+              "modifiers": [
+                {
+                  "stat": "armor",
+                  "op": "pctAdd",
+                  "value": -0.15
+                },
+                {
+                  "stat": "mr",
+                  "op": "pctAdd",
+                  "value": -0.15
+                }
+              ],
+              "duration": 4,
+              "stackKey": "community-review-26-20260907.weakness",
+              "maxStacks": 1,
+              "statusId": "community-review-26-20260907.weakness",
+              "polarity": "debuff",
+              "dispellable": true,
+              "vision": {
+                "revealed": true
+              },
+              "sourceScope": "caster"
+            }
+          ]
+        },
+        "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+      },
+      {
+        "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+        "params": {
+          "castType": "targeted",
+          "castTimeSec": 0.1,
+          "radius": 0,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "root",
+              "duration": 0.8,
+              "applyTo": "self",
+              "sourceScope": "caster",
+              "root": true
+            },
+            {
+              "kind": "floatingText",
+              "shape": "single",
+              "text": "真相只有一個，先聽我講完",
+              "applyTo": "self",
+              "durationSec": 1
+            }
+          ]
+        },
+        "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+      }
+    ],
+    "onConflict": "reject"
+  },
+  "schema": "ability@1"
+}
