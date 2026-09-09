@@ -2,8 +2,8 @@
   "schema": "ggd-assets-manifest@1",
   "note": "⭐ 被 content/**/*.json 或共用 VFX 材質引用到的**每一顆**二進位資產。⛔ 產物 —— 改 `tools/asset-manifest/gen.ts`，⛔ 不要手改。⚠️ 只收**被引用到的**：content/assets/ 底下有一萬多個檔，而清單的用途是驗證引用得到的東西。",
   "counts": {
-    "entries": 1650,
-    "totalBytes": 104112032
+    "entries": 1654,
+    "totalBytes": 108918316
   },
   "entries": [
     {
@@ -15499,6 +15499,50 @@
         "champ.mob.zombie",
         "champ.mob.zombie-king",
         "champ.mob.zombie-special"
+      ]
+    },
+    {
+      "path": "assets/models/community/01a0040e5b7b5a4053ca8431ffb00ca2b70baad9a9cfc4134681b46f3c4ace72.glb",
+      "bytes": 1165520,
+      "sha256": "01a0040e5b7b5a4053ca8431ffb00ca2b70baad9a9cfc4134681b46f3c4ace72",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.01a0040e5b7b5a4053ca8431ffb00ca2b70baad9a9cfc413"
+      ]
+    },
+    {
+      "path": "assets/models/community/212742ce3f4270d9cdb8dc8a2a1940d032da026dea2f5df475b705281eb10e1c.glb",
+      "bytes": 993232,
+      "sha256": "212742ce3f4270d9cdb8dc8a2a1940d032da026dea2f5df475b705281eb10e1c",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.212742ce3f4270d9cdb8dc8a2a1940d032da026dea2f5df4"
+      ]
+    },
+    {
+      "path": "assets/models/community/40532a1478491e4f8fd0b05c3598e215da3a323c2af901f847d889d9d903f46f.glb",
+      "bytes": 1416448,
+      "sha256": "40532a1478491e4f8fd0b05c3598e215da3a323c2af901f847d889d9d903f46f",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.40532a1478491e4f8fd0b05c3598e215da3a323c2af901f8"
+      ]
+    },
+    {
+      "path": "assets/models/community/42b8b816b13fcbd3faf4d7fe31a3120b4101dbc8fb163259ee0ec0c101149e39.glb",
+      "bytes": 1231084,
+      "sha256": "42b8b816b13fcbd3faf4d7fe31a3120b4101dbc8fb163259ee0ec0c101149e39",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.42b8b816b13fcbd3faf4d7fe31a3120b4101dbc8fb163259"
       ]
     },
     {

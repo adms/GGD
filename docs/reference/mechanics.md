@@ -8,11 +8,11 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_3e888a5a4bcf`
+contentVersion `cv_ee068f3903f5`
 
 ---
 
-## 效果（effect kind） —— 50 種
+## 效果（effect kind） —— 52 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
@@ -42,6 +42,7 @@ contentVersion `cv_3e888a5a4bcf`
 | `grantGold` | 發錢 | 2 | `godie-h02u.r`、`godie-n00b.passive` |
 | `grantXp` | 發經驗值 | 1 | `godie-h02u.ex` |
 | `heal` | 治療（吃係數） | 2 | `godie-hvsh.e`、`godie-o02p.r` |
+| `interruptCast` | 中斷合法敵人的可打斷施法前搖 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `invulnerable` | 免疫／魔免／免控 | 13 | `godie-e00r.ex`、`godie-e00r.passive`、`godie-hapm.ex`、`godie-hapm.passive`、`godie-hapm.w`、`godie-hart.r`、`godie-u00j.q`、`grail-c-12`、`grail-a-06`、`grail-a-07`、`grail-a-15`、`grail-ex-09` …（共 13） |
 | `knockback` | 擊退／擊飛／拉扯／擊倒 | 17 | `godie-e007.ex`、`godie-e00w.q`、`godie-efur.w`、`godie-ewar.ex`、`godie-h00l.q`、`godie-h00l.r`、`godie-h01u.w`、`godie-h02k.r`、`godie-hapm.ex`、`godie-hapm.passive`、`godie-u00v.r`、`godie-u034.passive` …（共 17） |
 | `leap` | 跳躍（拋物線離地） | 5 | `godie-h00l.w`、`godie-hapm.w`、`godie-hart.q`、`godie-hpb1.e`、`godie-zombieking.passive` |
@@ -64,10 +65,11 @@ contentVersion `cv_3e888a5a4bcf`
 | `summon` | 召喚 | 2 | `godie-e00s.r`、`godie-e010.r` |
 | `swapResource` | 資源互換 | 1 | `godie-emns.ex` |
 | `taunt` | 嘲諷 | 2 | `godie-n00b.passive`、`godie-o00k.passive` |
+| `timeStop` | 局部時停 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `trap` | 定點單次普攻觸發陷阱 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `weightedBranch` | 加權分支（隨機挑一段） | 10 | `godie-e00s.ex`、`godie-h02k.ex`、`godie-h02v.ex`、`godie-n00b.passive`、`godie-o02p.ex`、`godie-u034.passive`、`godie-u034.r`、`godie-ucrl.passive`、`godie-ucrl.r`、`grail-ex-08` |
 
-## 觸發事件（hook event） —— 37 種
+## 觸發事件（hook event） —— 38 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
@@ -78,6 +80,7 @@ contentVersion `cv_3e888a5a4bcf`
 | `onAllyProtected` | 自己實際治療其他友軍或所給護盾吸收敵對傷害時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onAttackAttempt` | 普攻提交時（含揮空、被閃避與後續前搖取消） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onBasicAttack` | 普攻時 | 106 | `godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e00l.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00s.w`、`godie-e00s.w`、`godie-e00s.w` …（共 106） |
+| `onBlock` | 實際格擋正值傷害時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onBossSpawn` | 殭屍王出現時 | 1 | `grail-c-13` |
 | `onBoundaryTouch` | 碰到場地邊界時（＝踏進火圈） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onCrowdControlApplied` | 對別人施加控場時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
