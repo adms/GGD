@@ -1,0 +1,31 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration
+
+stderr | apps/game-server/src/curation/communityRoomPool.test.ts > GH#1155 —— 一般房間預設包含已核准英雄 (community-room-pool) > 一般房間預設可見並可選已核准英雄，官方英雄不受影響
+[server-ops] could not reach the platform at http://localhost:8080/api/v1/server-ops — FAILING SAFE to the last known good table (admin 系統運維 settings NOT re-read). [TypeError: fetch failed] {
+  [cause]: AggregateError: 
+      at internalConnectMultiple (node:net:1193:18)
+      at afterConnectMultiple (node:net:1783:7) {
+    code: 'ECONNREFUSED',
+    [errors]: [ [Error], [Error] ]
+  }
+}
+
+stderr | apps/game-server/src/curation/communityRoomPool.test.ts > GH#1155 —— 一般房間預設包含已核准英雄 (community-room-pool) > 一般房間預設可見並可選已核准英雄，官方英雄不受影響
+[base-bonus] could not reach the platform at http://localhost:8080/api/v1/content-overlay/bundle — FAILING SAFE to the content default (an admin 基礎加成 edit made since this shard booted is NOT in this match). [TypeError: fetch failed] {
+  [cause]: AggregateError: 
+      at internalConnectMultiple (node:net:1193:18)
+      at afterConnectMultiple (node:net:1783:7) {
+    code: 'ECONNREFUSED',
+    [errors]: [ [Error], [Error] ]
+  }
+}
+
+ ✓ apps/game-server/src/curation/communityRoomPool.test.ts (4 tests) 123ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  22:47:37
+   Duration  5.90s (transform 3.13s, setup 0ms, collect 4.99s, tests 123ms, environment 0ms, prepare 116ms)
+
