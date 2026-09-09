@@ -1,7 +1,7 @@
 {
   "file": "AI參考全自動鑄造守則.md",
-  "sha256": "d03a58ddabcfa50383971b02982af19c62542dc2f41b18198f1fe80aa497482a",
-  "localLinksChecked": 61,
+  "sha256": "ae7e0ac0a25d3612d0c3064128a4c5b86f1c2dc6c58bd6f83efa8ffdbacd583b",
+  "localLinksChecked": 65,
   "missingLinks": [],
   "commandsAndReferencedTests": "checked against current repository",
   "semanticReview": [
@@ -57,7 +57,11 @@
     "actual movement sampling before interval cooldown and per-source clocks",
     "stationary shield pool isolation and expiry before damage",
     "real intent movement and earned wait before EX",
-    "delayed area re-resolution and provisional art kept unaccepted"
+    "delayed area re-resolution and provisional art kept unaccepted",
+    "actual output modifier versus AD AP and zero-base flat operation",
+    "normal shadow counter without implicit immunity or reflection",
+    "current batch source versus frozen legacy replay tests",
+    "dual authoring entries byte comparison and same-source curse reversal"
   ],
   "runtimeClaims": "guide does not claim full hero acceptance",
   "batchVerificationReview": {

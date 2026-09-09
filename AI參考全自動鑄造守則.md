@@ -243,3 +243,11 @@ Editor 的「敵方前置行動」可切換自動、靜止或普攻，並显示�
 - 投擲落地與分波落點需延遲後重新取得當時範圍目標，分別測移出、後進、友軍、死亡及回合結束。煙霧命中干擾要明寫失手機率、有效範圍、進出與免控規則，不能用減速或隱形冒充。
 - 測試走路需送出真正指令並確認位移；不可只改導航意圖後宣稱驗到移动。EX 以空資源起跑，等待真實蓄層再施放；消耗時點與後續自然蓄層分開斷言。
 - 參考 [尼古貓貓微調](materials/community-hero-forge/refinements/30.json)、[行為測試](packages/shared/src/content/heroForge/communityRefinements/yanineko.test.ts)、[實際等待試玩](packages/shared/src/content/heroForge/communityRefinements/yaninekoAcceptance.test.ts) 與 [收據](materials/community-hero-forge/refinements/yanineko-verification.json)。既有煙霧、脈衝或玉藻前模型是待驗收替代，不能當作原設計的菸灰缸／雜物／角色／動作／音效已完成。
+
+## 實際輸出、反擊與目前交接版本
+
+- 「降低／提高傷害輸出」應使用 `outputDamagePct`，其基底為零，比例修正用 `op: flat`；不能以 AD/AP 變動冒充固定傷害也已變動。透過實際傷害封包驗證比例與到期，治療／护盾輸出是否一起變動必須由原稿決定。
+- 阿薩謝爾 THE END OF SON：EX 只消耗同施法者的 R 萎靡，改給有限傷害增益而不再補一般 EX 傷害。其他施法者、到期／驅散、能量不足、同 tick 多來源各自反轉均要有反例；完整連段必須自己取得三層資源。
+- 「受擊後反擊」不能擅自增加免傷、護盾或正面限制；`damageConnected` 以實際 HP／盾吸收認定有效命中，普通影子拳應走普通傷害，不套零比例反彈而跳過全域倍率。近身距離必須在同一對決內成立，反傷與衍生 hook 不反覆消耗反擊窗口。
+- 凍結的舊版本函式／測試保留作 rollback 相容性；目前交接版本要直接從目前 JSON 微調編譯。多個產生入口共用同一份資料，另比對生成作品，而不是維護兩份實作後各自宣称通過。
+- 參考 [阿薩謝爾本批配方](materials/community-hero-forge/refinements/32.json)、[目前行為](packages/shared/src/content/heroForge/communityRefinements/azazelBatch.test.ts)、[目前匯入與試玩](packages/shared/src/content/heroForge/communityRefinements/azazelBatchAcceptance.test.ts) 與 [收據](materials/community-hero-forge/refinements/azazel-batch-verification.json)。保留原名稱、來源與描述；代理模型和文字提示不等於影子、魔力雨、能量球、反轉表情／音效已完成。

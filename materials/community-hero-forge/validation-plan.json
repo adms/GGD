@@ -1,6 +1,6 @@
 {
   "schema": "ggd-batch-validation-plan@1",
-  "manifestSha256": "66f6969505509a952544c7d91219ca2262051bb038b8b9ddff72a662fd383b68",
+  "manifestSha256": "0050c0c130d8954d1af2380246a5d173e020447348a825e97b4762c71b0d3739",
   "suites": [
     {
       "id": "implemented-mechanisms",
@@ -44,7 +44,13 @@
         "packages/shared/src/sim/effects/shieldBreak.test.ts",
         "packages/shared/src/sim/effects/hookLedgerAbilityCrit.test.ts",
         "packages/shared/src/sim/effects/hookFamily.test.ts",
-        "packages/shared/src/sim/aura/aura.test.ts"
+        "packages/shared/src/sim/aura/aura.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/azazelBatch.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/azazelBatchAcceptance.test.ts",
+        "packages/shared/src/sim/content/conditionDistanceLearned.test.ts",
+        "packages/shared/src/sim/content/conditionFacing.test.ts",
+        "packages/shared/src/sim/stats/outputMult.test.ts",
+        "packages/shared/src/sim/effects/incomingReflect.test.ts"
       ],
       "heroSlots": {
         "community-review-20-20260907": [
@@ -125,6 +131,14 @@
           "EX"
         ],
         "community-review-30-20260907": [
+          "PASSIVE",
+          "Q",
+          "W",
+          "E",
+          "R",
+          "EX"
+        ],
+        "community-review-32-20260907": [
           "PASSIVE",
           "Q",
           "W",

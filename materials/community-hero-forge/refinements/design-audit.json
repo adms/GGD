@@ -4,7 +4,7 @@
   "scope": "Original requirements versus compiled authoring; compilation is not design acceptance",
   "heroes": 37,
   "slots": 222,
-  "changedSlots": 63,
+  "changedSlots": 69,
   "passiveOnAttackTemplates": 19,
   "originalDesignAcceptance": "incomplete",
   "published": false,
@@ -3958,9 +3958,9 @@
       "hooks": [
         "onDamageDealt"
       ],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": "M01/M10：正式 oncePerCast + 回合標記；需六槽整體模擬收據。"
+      "refinementNote": "有效技能扣除敵人生命時，每次施法最多一層負面能量，上限三、回合重置；同一次施法的不同敵人、波次及持續傷害共用一次，自傷、反傷與衍生 hook 不集氣。"
     },
     {
       "hero": "32",
@@ -3980,9 +3980,9 @@
         "knockback"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": "M10：短起手與固定 0.4u 目標擊退；誇張／普通的視覺反差待驗。"
+      "refinementNote": "0.2 秒起手後近身普通肩膀拳，小級物理傷害與 0.4 格擊退。施法範圍兩格，沒有範圍濺射。一本正經起手的表情與專用動作仍待驗。"
     },
     {
       "hero": "32",
@@ -4001,9 +4001,9 @@
         "delayed"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": "M10/M11：固定落點三波、重新取敵；原作特效及漫畫表情未完成。"
+      "refinementNote": "固定落點三波白色魔力雨，半徑 2.75 格、每波間隔 0.45 秒；每波重查敵人，各人每波一次，整次施法至多一層能量。死亡或對決結束後取消後續波次。白點、速度線及漫畫表情仍待素材和畫面驗收。"
     },
     {
       "hero": "32",
@@ -4022,9 +4022,9 @@
         "applyBuff"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": "M07/M10：取代舊護盾為一次近身普攻防守反擊；方向門檻與近身技能分類尚未表達，不標記 M07 完成；闇人格來源及影子演出待驗。"
+      "refinementNote": "0.5 秒影子反擊窗口，第一個距離 2.5 格內敵人的有效普攻或技能傷害（含護盾吸收）觸發一次普通肩膀拳。原傷害照常結算，沒有額外免傷、方向限制或護盾；零值、完全免疫、環境／hook 反傷及不同對決不觸發。一次反擊後窗口移除，不產生負面能量。闇人格是 GGD 反擊改編，影子模型與一次出拳演出仍待验收。"
     },
     {
       "hero": "32",
@@ -4044,9 +4044,9 @@
         "spawnProjectile"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": "M10：0.8s 釋放支付、非傷害生命代價、各施法者獨立詛咒。虛空彈是代理素材。"
+      "refinementNote": "0.8 秒可中斷蓄力，成功放出時支付最大生命 3% 且至少保留 1 HP；投射物真正命中才造成小級魔法傷害與本來源萎靡四秒。萎靡降低整體傷害輸出 15%，包括沒有 AD/AP 係數的固定技能傷害；不改動治療／護盾輸出。現有虛空彈仍是代理效果。"
     },
     {
       "hero": "32",
@@ -4065,9 +4065,9 @@
         "consumeStatus"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": "M10：三層施放資格／原子消耗、只反轉同來源 R。兩分支已有不同文字，金光、上揚圖示及施法者表情仍待視覺驗收。"
+      "refinementNote": "原子消耗三層負面能量。目標已有本施法者 R 萎靡時，只移除該來源詛咒，改給兩秒傷害輸出 +10%，不再附加一般 EX 傷害；其他人的 R 保留。無自身 R 萎靡時，結算小級魔法傷害與兩秒傷害輸出 -20%。到期回復，重施同來源不疊加；增益、兩種詛咒保留各自獨立來源。金光、上揚圖示與驚愕表情尚待驗收。"
     },
     {
       "hero": "33",
