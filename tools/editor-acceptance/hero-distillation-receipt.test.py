@@ -50,5 +50,26 @@ class ReceiptTests(unittest.TestCase):
                 with self.assertRaises(AssertionError): receipt.export(run, root / 'out')
                 self.assertFalse((root / 'out').exists())
 
+    def test_optional_cache_source_is_bound_and_drift_rejected(self):
+        for drift in [False, True]:
+            with self.subTest(drift=drift), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory); run = self.fixture(root)
+                data = b'fixed-cache-source\n'
+                target = run / 'source/hero-distillation-prefix-cache.py'
+                target.write_bytes(data if not drift else b'changed')
+                manifest = receipt.read(run / 'manifest.json')
+                manifest['cacheHelperSha256'] = receipt.digest(data)
+                (run / 'manifest.json').write_text(json.dumps(manifest))
+                state = receipt.read(run / 'probe/state.json')
+                state['manifestSha256'] = receipt.digest((run / 'manifest.json').read_bytes())
+                (run / 'probe/state.json').write_text(json.dumps(state))
+                if drift:
+                    with self.assertRaisesRegex(AssertionError, 'SOURCE_SNAPSHOT_MISMATCH'):
+                        receipt.export(run, root / 'out')
+                    self.assertFalse((root / 'out').exists())
+                else:
+                    result = receipt.export(run, root / 'out')
+                    self.assertEqual(result['files']['source/hero-distillation-prefix-cache.py']['sha256'], receipt.digest(data))
+
 
 if __name__ == '__main__': unittest.main()

@@ -19,7 +19,9 @@ def export(run, out):
     manifest_bytes = (run / 'manifest.json').read_bytes()
     manifest = json.loads(manifest_bytes)
     payloads = {'manifest.json': manifest_bytes}
-    for filename, key in [('hero-distillation-train.py', 'workerSha256'), ('hero-distillation-memory.py', 'memoryHelperSha256')]:
+    sources=[('hero-distillation-train.py','workerSha256'),('hero-distillation-memory.py','memoryHelperSha256')]
+    if 'cacheHelperSha256' in manifest:sources.append(('hero-distillation-prefix-cache.py','cacheHelperSha256'))
+    for filename, key in sources:
         data = (run / 'source' / filename).read_bytes()
         assert digest(data) == manifest[key], 'EXECUTED_SOURCE_SNAPSHOT_MISMATCH'
         payloads['source/' + filename] = data
