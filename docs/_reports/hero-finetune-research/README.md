@@ -14,6 +14,25 @@ The separate user-provided unseen hero batch has not been supplied. It must be f
 
 The normal internal route is owned by `hero-distillation-evaluate-batch.py`: prepare the immutable inference bundle, run Base then LoRA once, compile all retained cases, run package admission and isolated HTTP import/runtime audit, collect a hash-bound JSON result and render the offline report. Existing output directories are never overwritten or renamed for a retry.
 
+After separately qualified teacher semantic/gameplay receipts exist, the conservative no-LLM scorer can produce row evidence automatically. It passes a candidate only when the complete compiled hero is byte-identical to that exact qualified teacher under the same pinned engine and the candidate's isolated import/runtime receipt passes. A different but potentially equivalent design fails closed; this avoids a fuzzy similarity score becoming a dangerous acceptance. The second command derives aggregate success and renders the immutable evidence-aware report:
+
+```sh
+python3 tools/editor-acceptance/hero-distillation-exact-reference-evidence.py \
+  --results /absolute/unverified-report-data.json \
+  --teacher-quality /absolute/teacher-quality.json \
+  --teacher-compile /absolute/teacher-compile \
+  --base-compile /absolute/base-compile \
+  --lora-compile /absolute/lora-compile \
+  --out /absolute/new-quality-evidence
+
+python3 tools/editor-acceptance/hero-distillation-finalize-evaluation.py \
+  --results /absolute/unverified-report-data.json \
+  --evidence /absolute/new-quality-evidence/quality-evidence.json \
+  --out /absolute/new-finalized-evaluation
+```
+
+Neither command creates teacher qualification, repairs a result, retries inference or promotes the model. All compile reports, compiled heroes, qualification receipts and final receipts are hash-bound. The HTML renderer accepts both explicitly unverified snapshots and fully adjudicated snapshots; it refuses partial or aggregate-drifting quality claims.
+
 When the user supplies the unseen batch, first convert it to the same public-case contract, with no assistant/teacher message, then freeze it against the already completed run:
 
 ```sh
