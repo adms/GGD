@@ -335,7 +335,22 @@ function generatorDirs(): Map<string, string[]> {
         // ⭐ 指名一份**追蹤中的檔** + 這支檔案有寫入呼叫 ⇒ 它是那份產物的產生器。
         //    ⚠️ 這一格是必要的:出貨的產生器多半把落點寫成一個模組級常數,再在別的地方
         //    透過**別的名字**（迴圈變數、dict 的鍵）寫出去 —— 逐行追名字追不到它。
-        let writes = trackedFiles.has(p);
+        // ⛔⛔ **一行「讀」不是一行「寫」。**
+        //
+        // ⚠️ 2026-09-10 抓到（PR #1144）：`tools/editor-acceptance/batch2-37/runtime-catalog.mjs`
+        // 的第 26 行是 `const capability = read('docs/editor-contract/ggd-runtime-capabilities.json')`
+        // —— ⭐ **純讀**。⛔ 而 `trackedFiles.has(p)` 讓它被判成「這支在寫那份產物」
+        // ⇒ 整個 `tools/editor-acceptance/` 被當成一個沒有 `*:check` 的產生器目錄。
+        //
+        // ⭐ 那份產物的**真正**擁有者是 `caps:export`（`genguard` 逐字回答）——
+        // ⇒ 一支讀它的腳本被要求「給它一支 *:build/*:check」是**錯的指示**：
+        //   ⛔ 照做會造出**第二個寫入端**，而那正是第〇·四守則要防的東西。
+        //
+        // ⭐ 修法刻意很窄：只有**這一行同時滿足「有讀的呼叫」與「沒有寫的呼叫」**時才不算。
+        // ⛔ 不動那條「追蹤檔 ⇒ 算寫」的啟發式本身 —— 它存在的理由（產生器常把落點
+        //   寫成模組級常數再透過別的名字寫出去）**沒有變**。
+        const READ_CALL = /\b(?:read|readFileSync|readdirSync|readdir|loadJson)\s*\(|JSON\.parse\s*\(/;
+        let writes = trackedFiles.has(p) && !(READ_CALL.test(line) && !WRITE.test(line));
         if (!writes) writes = WRITE.test(line);
         if (!writes) {
           const bind = line.match(/^\s*(?:export\s+)?(?:const|let|var)?\s*([A-Za-z_]\w*)\s*[:=]/);
