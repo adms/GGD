@@ -467,6 +467,22 @@ if (refused.length && ALLOW_EMPTY === null) {
 }
 if (singleStep) {
   const merged = mergeStepsInto(existing, traced);
+  /**
+   * ⭐⭐ GH#1131 —— **單步併入之後，母鏈可能也變了**。
+   *
+   * `mergeStepsInto()` 只動 steps，它拿不到母鏈（這一趟量的是 `iconplan:build`，
+   * ⛔ 不是 `skills:sync`）⇒ 新加一支產生器時 `chain` 會停在舊字串，
+   * ⭐ 而 `syncPlan.test.ts` 的第一條就是「chain 跟 package.json 對不上 ⇒ 表過期」
+   * ⇒ 三條測試同時紅，而訊息指向**別的**東西（「這是看得懂的路徑，⛔ 不該退回全跑」）。
+   *
+   * ⭐ 這裡從 **package.json 本人**重讀母鏈（⛔ 不是猜、⛔ 也不是手改產物）——
+   * 它就是那條鏈的唯一住處。⚠️ 只在母鏈**真的變了**時印一行，⛔ 不靜默。
+   */
+  const parentChain = pkg.scripts?.[merged.script];
+  if (typeof parentChain === "string" && parentChain !== merged.chain) {
+    console.log(`⭐ 母鏈 ${merged.script} 變了 ⇒ 從 package.json 重讀（⛔ 不是手改產物）`);
+    merged.chain = parentChain;
+  }
   writeFileSync(OUT, `${JSON.stringify(merged, null, 2)}\n`, "utf8");
   console.log(
     `\n⭐ 併入 ${OUT} —— 只動 ${traced.map((s) => s.name).join(" · ")} 這 ${traced.length} 段（聯集），` +

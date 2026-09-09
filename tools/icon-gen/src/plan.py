@@ -333,6 +333,11 @@ def build_plan() -> dict:
 def main() -> None:
     ap = argparse.ArgumentParser(description="plan which docs get a generated icon")
     ap.add_argument("--write", action="store_true", help=f"save to {PLAN_PATH}")
+    # ⭐ GH#1131 —— 這份檔**是程式寫的**,而在此之前 `genguard` 判它「手編」
+    #   （`sync-io.json` 的 writes 零筆含它）⇒ 產物隔離區與 genguard 都保護不到它。
+    #   ⚠️ 逐位元組比對,⛔ 無時鐘欄位（`contentDigest` 是**內容**推導的,不是時鐘）。
+    ap.add_argument("--check", action="store_true",
+                    help="⭐ 只驗不寫：磁碟上那一份與現在算出來的逐位元組相同嗎（過期 ⇒ 非零）")
     args = ap.parse_args()
 
     plan = build_plan()
@@ -360,11 +365,28 @@ def main() -> None:
         for rel in plan["missingSurfaceFiles"]:
             print(f"    {rel}")
 
+    text = json.dumps(plan, ensure_ascii=False, indent=2) + "\n"
+
+    if args.check:
+        rel = os.path.relpath(PLAN_PATH, ROOT)
+        try:
+            have = open(PLAN_PATH, encoding="utf-8").read()
+        except FileNotFoundError:
+            print(f"\n⛔ {rel} 不存在 —— 跑 `pnpm iconplan:build`", file=sys.stderr)
+            raise SystemExit(1)
+        if have != text:
+            print(f"\n⛔ {rel} 過期（或被手改）——⭐ 它是 `iconplan:build` 的產物。\n"
+                  "  → 跑 `bash scripts/genrun.sh iconplan:build` 然後 `git add content/config/icon-plan.json`。\n"
+                  "  ⛔ 不要手改：下一次重生成會把它蓋回去,而那個「又不一樣了」看起來像**新的**錯。",
+                  file=sys.stderr)
+            raise SystemExit(1)
+        print(f"\n✓ {rel} 是最新的")
+        return
+
     if args.write:
         os.makedirs(os.path.dirname(PLAN_PATH), exist_ok=True)
         with open(PLAN_PATH, "w", encoding="utf-8") as fh:
-            json.dump(plan, fh, ensure_ascii=False, indent=2)
-            fh.write("\n")
+            fh.write(text)
         print(f"\n  wrote {os.path.relpath(PLAN_PATH, ROOT)}")
 
 
