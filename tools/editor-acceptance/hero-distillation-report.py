@@ -28,7 +28,8 @@ def render(data):
             f'<progress max="{count}" value="{value}" aria-label="{e(name)} 結構通過"></progress><span>{value} / {count}</span>')
         bars.append(f'<div class="bar"><span>{e(name)}</span><div>{meter}</div></div>')
         packaged = '未測' if arm['packageAdmissionPassed'] is None else f'{arm["packageAdmissionPassed"]} / {count}'
-        quality.append(f'<tr><th scope="row">{e(name)}</th><td>{packaged}</td><td>未驗證</td><td>未驗證</td><td>未測，不能當 0</td></tr>')
+        imported = '未測' if arm.get('runtimeVerifiedImports') is None else f'{arm["runtimeVerifiedImports"]} / {count}'
+        quality.append(f'<tr><th scope="row">{e(name)}</th><td>{packaged}</td><td>{imported}</td><td>未驗證</td><td>未驗證</td><td>未測，不能當 0</td></tr>')
     rows = []
     for index, row in enumerate(primary):
         cells = []
@@ -38,9 +39,11 @@ def render(data):
             status = '未測' if structural is None else '結構通過' if structural['structuralPassed'] else '結構失敗'
             package = own['package']
             packaged = '封裝未測' if package is None else '封裝准入通過' if package['passed'] else '封裝待處理／失敗'
+            imported = own.get('isolatedImport')
+            import_text = '隔離匯入未測' if imported is None else '隔離匯入／runtime 一致' if imported['runtimeMatchesAdmission'] is True else '隔離匯入／runtime 未通過或未完成'
             detail = '; '.join(str(x) for x in [structural.get('error') if structural else None,
-                package.get('error') if package else None] if x)
-            cells.append(f'<td>{status}<br><small>{packaged}</small>' + (f'<details><summary>原因</summary>{e(detail)}</details>' if detail else '') + '</td>')
+                package.get('error') if package else None, imported.get('error') if imported else None] if x)
+            cells.append(f'<td>{status}<br><small>{packaged}<br>{import_text}</small>' + (f'<details><summary>原因</summary>{e(detail)}</details>' if detail else '') + '</td>')
         rows.append(f'<tr><th scope="row">{e(row["name"])}<small>{e(row["id"])}</small></th>{"".join(cells)}<td>未驗證</td></tr>')
     ce_rows = []
     for key, name in [('devBefore', '訓練前'), ('devAfter', '訓練後')]:
@@ -65,7 +68,8 @@ def render(data):
 <section><h2>同 {data['counts']['tasks']} 題的教師答案 CE</h2><div class="table-wrap"><table><thead><tr><th>階段</th><th>題數</th><th>每題平均 CE</th><th>答案 token 加權 CE</th></tr></thead><tbody>{''.join(ce_rows)}</tbody></table></div>
 <small>越低代表對既有教師答案的預測損失較低，不是自動生成成功率。前後皆完整完成且題目／答案長度一致才計算差異。</small></section>
 <section><h2>完整英雄結構檢查</h2>{''.join(bars)}<small>主分母固定 {count} 名；{data['counts']['secondarySlots']} 個輔助單槽不加入分母。歷史教師是控制組，並非預設 100% 正確。</small></section>
-<section><h2>不能省略的驗收</h2><div class="table-wrap"><table><thead><tr><th>比較組</th><th>封裝准入</th><th>機制忠實度</th><th>完整上場</th><th>危險錯誤接受</th></tr></thead><tbody>{''.join(quality)}</tbody></table></div>
+<section><h2>不能省略的驗收</h2><div class="table-wrap"><table><thead><tr><th>比較組</th><th>封裝准入</th><th>隔離匯入／runtime 一致</th><th>機制忠實度</th><th>完整上場</th><th>危險錯誤接受</th></tr></thead><tbody>{''.join(quality)}</tbody></table></div>
+<small>隔離匯入通過不等於平台選角或實際對局通過。</small>
 <small>完整支援英雄目標至少 95%，本 dev 組須 {math.ceil(count * .95)}/{count}；仍需未見新批測試，不能據此保證泛化。</small></section>
 <section><h2>逐英雄比較</h2><div class="table-wrap"><table><thead><tr><th>英雄</th><th>教師</th><th>基底</th><th>LoRA</th><th>語意／對局</th></tr></thead><tbody>{''.join(rows)}</tbody></table></div></section>
 <section><h2>接下來看什麼</h2><p>固定比較基底與 LoRA 的逐例改善及退步；依題型分開檢查來源還原與功能等價創作。未驗證項不通過，不以特效或格式分數補償機制錯誤。</p>

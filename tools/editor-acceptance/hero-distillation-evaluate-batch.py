@@ -21,7 +21,7 @@ FILES = [SCRIPT.name, 'hero-distillation-infer.py', 'hero-distillation-train.py'
          'hero-distillation-generation.py', 'hero-distillation-generation-compile.mts',
          'hero-distillation-adapter.mjs', 'hero-distillation-freeze.mjs',
          'hero-distillation-package-admission.mts', 'hero-distillation-results.py',
-         'hero-distillation-report.py']
+         'hero-distillation-report.py', 'hero-distillation-import-roundtrip.mts']
 
 
 def read(file):
@@ -77,11 +77,16 @@ def run(options, inference=None, execute_cpu=cpu_command):
     inference = inference or inference_module()
     # No directory, subprocess, weights loading or GPU lock before this gate.
     training_manifest, adapter, keys = inference.final_checkpoint(training)
+    api_dependencies = Path(options.get('api_dependencies') or dependencies.parents[2] / 'apps/content-api/node_modules').resolve()
+    assert all((api_dependencies / name / 'package.json').is_file() for name in ['fastify', 'tsx']), 'API_DEPENDENCIES_MISSING'
     sources = {name: digest(SCRIPT.with_name(name)) for name in FILES}
     inputs = {str(p / 'manifest.json'): digest(p / 'manifest.json') for p in [training, evaluation, models, assets]}
-    teacher_reports = {key: Path(options[key]).resolve() for key in ['teacher_compile', 'teacher_package'] if options.get(key)}
+    teacher_reports = {key: Path(options[key]).resolve() for key in ['teacher_compile', 'teacher_package', 'teacher_import'] if options.get(key)}
     for directory in teacher_reports.values():
         inputs[str(directory / 'report.json')] = digest(directory / 'report.json')
+    if 'teacher_import' in teacher_reports:
+        file = teacher_reports['teacher_import'] / 'runtime-audit.json'
+        inputs[str(file)] = digest(file)
     out.mkdir(parents=True)
     (out / 'source').mkdir()
     for name in FILES:
@@ -91,12 +96,13 @@ def run(options, inference=None, execute_cpu=cpu_command):
         'evaluationDirectory': str(evaluation), 'evaluationManifestSha256': digest(evaluation / 'manifest.json'),
         'modelBindingsDirectory': str(models), 'modelBindingsManifestSha256': digest(models / 'manifest.json'),
         'frozenAssetsDirectory': str(assets), 'frozenAssetsManifestSha256': digest(assets / 'manifest.json'),
-        'dependenciesDirectory': str(dependencies), 'assetRoots': list(map(str, roots)),
+        'dependenciesDirectory': str(dependencies), 'apiDependenciesDirectory': str(api_dependencies), 'assetRoots': list(map(str, roots)),
+        'cpuPhaseTimeoutSeconds': 180, 'importPhaseTimeoutSeconds': 180,
         'node': node, 'python': sys.executable, 'sources': sources, 'inputManifests': inputs,
         'fixedArmOrder': ['base', 'lora'], 'attemptsPerArm': 1, 'automaticRetry': False,
         'humanRepairs': 0, 'teacherAnswerFileAccess': False,
         'teacherControlReports': {key: str(value) for key, value in teacher_reports.items()},
-        'scope': 'Full public internal-dev paired generation plus structural/package admission; not blind testing, semantic equivalence, live import or match certification.',
+        'scope': 'Full public internal-dev paired generation, structural/package admission and isolated HTTP import/runtime comparison. Not blind testing, semantic equivalence, platform publication or match certification.',
         'fullHeroE2EProven': False, 'modelPromoted': False}
     write(out / 'manifest.json', manifest)
     state = {'schema': 'ggd-distillation-evaluation-batch-state@1', 'status': 'running',
@@ -152,6 +158,22 @@ def run(options, inference=None, execute_cpu=cpu_command):
             assert summaries[arm]['compile']['counts']['allCases'] == counts['tasks'], 'COMPILE_CASES_MISSING'
             assert summaries[arm]['compile']['counts']['primaryWholeHeroes'] == counts['primaryWholeHeroes'], 'COMPILE_HERO_DENOMINATOR_DRIFT'
             assert summaries[arm]['package-admission']['counts']['wholeHeroes'] == counts['primaryWholeHeroes'], 'PACKAGE_HERO_DENOMINATOR_DRIFT'
+        for arm in ['base', 'lora']:
+            packaged, imported, audit = [out / (arm + '-' + suffix) for suffix in ['package-admission', 'import-roundtrip', 'import-runtime-audit']]
+            command = [node, '--import', 'tsx', str(SCRIPT.with_name('hero-distillation-import-roundtrip.mts')),
+                '--admitted', str(packaged), '--source-repo', str(REPO), '--out', str(imported),
+                '--dependencies', str(dependencies), '--api-dependencies', str(api_dependencies)]
+            for root in roots:
+                command.extend(['--asset-root', str(root)])
+            # Same existing 180-second CPU-stage cap; no automatic extension.
+            step('isolated-import-' + arm, lambda command=command, arm=arm: execute_cpu(command, out / ('import-' + arm + '.log')))
+            command = [node, '--import', 'tsx', str(SCRIPT.with_name('hero-distillation-import-roundtrip.mts')),
+                '--admitted', str(packaged), '--verify-saved-runtime', str(imported), '--source-repo', str(REPO), '--out', str(audit)]
+            step('verify-import-runtime-' + arm, lambda command=command, arm=arm: execute_cpu(command, out / ('runtime-' + arm + '.log')))
+            for label in ['import-roundtrip', 'import-runtime-audit']:
+                report = out / (arm + '-' + label) / 'report.json'
+                summaries[arm][label] = {'counts': read(report)['counts'], 'reportSha256': digest(report)}
+                assert summaries[arm][label]['counts']['wholeHeroes'] == counts['primaryWholeHeroes'], 'IMPORT_HERO_DENOMINATOR_DRIFT'
         command = [sys.executable, str(SCRIPT.with_name('hero-distillation-results.py')),
             '--training', str(training), '--evaluation', str(evaluation), '--paired', str(out),
             '--out', str(out / 'report-data.json')]
@@ -164,6 +186,7 @@ def run(options, inference=None, execute_cpu=cpu_command):
         result = {'schema': 'ggd-distillation-evaluation-batch-result@1', 'arms': summaries,
                   'reportDataSha256': digest(out / 'report-data.json'), 'reportHtmlSha256': digest(out / 'report.html'),
                   'blindTest': False, 'semanticFidelityMeasured': False, 'liveImportMeasured': False,
+                  'isolatedImportEvaluationsCompleted': True,
                   'fullHeroE2EProven': False, 'modelPromoted': False,
                   'note': 'Completed means the scheduled evaluations ran, not that outputs passed or the model is ready.'}
         write(out / 'result.json', result)
@@ -185,6 +208,8 @@ if __name__ == '__main__':
     for name in ['training', 'evaluation', 'models', 'assets', 'dependencies', 'out']:
         parser.add_argument('--' + name, required=True)
     parser.add_argument('--asset-root', action='append', required=True, dest='asset_roots')
+    parser.add_argument('--api-dependencies')
     parser.add_argument('--teacher-compile', default=str(REPO / 'docs/_reports/hero-finetune-research/hero74-generation-compile-control-v2'))
     parser.add_argument('--teacher-package', default=str(REPO / 'docs/_reports/hero-finetune-research/hero74-package-admission-control-v1'))
+    parser.add_argument('--teacher-import', default=str(REPO / 'docs/_reports/hero-finetune-research/hero74-import-control-v3'))
     print(json.dumps(run(vars(parser.parse_args())), ensure_ascii=False))

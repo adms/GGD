@@ -45,6 +45,9 @@ class BatchTest(unittest.TestCase):
         for k in ['training', 'evaluation', 'models', 'assets', 'dependencies']:
             put(Path(self.options[k]) / 'manifest.json', {'fixture': k})
         self.options['asset_roots'] = [self.options['assets']]
+        self.options['api_dependencies'] = str(self.root / 'api-dependencies')
+        for name in ['fastify', 'tsx']:
+            put(Path(self.options['api_dependencies']) / name / 'package.json', {'version': 'fixture'})
         self.cpu = []
 
     def tearDown(self):
@@ -75,8 +78,9 @@ class BatchTest(unittest.TestCase):
         self.assertEqual(fake.calls, ['checkpoint', 'prepare', 'base', 'lora'])
         self.assertEqual([s['name'] for s in state['steps']], ['prepare-inference', 'infer-base', 'infer-lora',
             'compile-base', 'package-admission-base', 'compile-lora', 'package-admission-lora',
+            'isolated-import-base', 'verify-import-runtime-base', 'isolated-import-lora', 'verify-import-runtime-lora',
             'collect-results', 'render-report'])
-        self.assertEqual(len(self.cpu), 6)
+        self.assertEqual(len(self.cpu), 10)
         self.assertEqual(state['status'], 'completed')
         result = b.read(Path(self.options['out']) / 'result.json')
         for key in ['fullHeroE2EProven', 'modelPromoted', 'semanticFidelityMeasured', 'liveImportMeasured']:
@@ -133,6 +137,29 @@ class BatchTest(unittest.TestCase):
         with self.assertRaisesRegex(AssertionError, 'INPUT_MANIFEST_DRIFT'):
             b.run(self.options, fake, self.execute)
         self.assertEqual(fake.calls, ['checkpoint', 'prepare', 'base'])
+
+    def test_import_timeout_does_not_retry_or_produce_final_success(self):
+        def timeout(command, log):
+            if '--api-dependencies' in command:
+                raise TimeoutError('IMPORT_PHASE_TIMEOUT')
+            self.execute(command, log)
+        with self.assertRaisesRegex(TimeoutError, 'IMPORT_PHASE_TIMEOUT'):
+            b.run(self.options, FakeInference(), timeout)
+        out = Path(self.options['out'])
+        self.assertTrue((out / 'lora-compile/report.json').exists())
+        self.assertFalse((out / 'result.json').exists())
+        self.assertEqual(b.read(out / 'state.json')['steps'][-1]['name'], 'isolated-import-base')
+        manifest = b.read(out / 'manifest.json')
+        self.assertEqual(manifest['importPhaseTimeoutSeconds'], 180)
+        self.assertIs(manifest['automaticRetry'], False)
+
+    def test_missing_api_dependencies_fail_before_inference_prepare(self):
+        self.options['api_dependencies'] = str(self.root / 'missing')
+        fake = FakeInference()
+        with self.assertRaisesRegex(AssertionError, 'API_DEPENDENCIES_MISSING'):
+            b.run(self.options, fake, self.execute)
+        self.assertEqual(fake.calls, ['checkpoint'])
+        self.assertFalse(Path(self.options['out']).exists())
 
 
 if __name__ == '__main__':

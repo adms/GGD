@@ -1,0 +1,956 @@
+{
+  "schema": "ggd-distillation-results@1",
+  "capturedAt": "2026-09-09T15:04:18.231583+00:00",
+  "training": {
+    "recordedStatus": "running",
+    "completedSteps": 188,
+    "plannedSteps": 500,
+    "meanRecordedStepSeconds": 19.824430082664588,
+    "recordedStepPeakMetalBytes": 35263849898,
+    "devBefore": {
+      "cases": 119,
+      "answerTokens": 96332,
+      "macroCE": 2.258402675139804,
+      "tokenWeightedCE": 1.7193839967458722
+    },
+    "devAfter": null,
+    "devAfterMinusBefore": null
+  },
+  "counts": {
+    "tasks": 119,
+    "primaryWholeHeroes": 17,
+    "secondarySlots": 102
+  },
+  "arms": {
+    "teacher": {
+      "wholeHeroes": 17,
+      "measuredStructural": true,
+      "structuralPassed": 17,
+      "packageAdmissionPassed": 15,
+      "isolatedImportPassed": 14,
+      "runtimeVerifiedImports": 14,
+      "fullHeroSuccess": null,
+      "unsafeAccepts": null,
+      "rows": [
+        {
+          "id": "godie-edem:HERO",
+          "name": "寫輪眼復仇者 - 宇智波佐助",
+          "structural": {
+            "structuralPassed": true,
+            "status": "structural-pass-not-game-acceptance",
+            "error": null
+          },
+          "package": {
+            "passed": false,
+            "status": "native-import-bridge-pending",
+            "error": null
+          },
+          "isolatedImport": {
+            "passed": false,
+            "status": "native-import-bridge-pending",
+            "error": null,
+            "runtimeMatchesAdmission": null
+          },
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "godie-h02v:HERO",
+          "name": "看似憂鬱的神獸 - 草泥馬",
+          "structural": {
+            "structuralPassed": true,
+            "status": "structural-pass-not-game-acceptance",
+            "error": null
+          },
+          "package": {
+            "passed": false,
+            "status": "native-import-bridge-pending",
+            "error": null
+          },
+          "isolatedImport": {
+            "passed": false,
+            "status": "native-import-bridge-pending",
+            "error": null,
+            "runtimeMatchesAdmission": null
+          },
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-09-20260907:HERO",
+          "name": "赫蘿",
+          "structural": {
+            "structuralPassed": true,
+            "status": "structural-pass-not-game-acceptance",
+            "error": null
+          },
+          "package": {
+            "passed": true,
+            "status": "package-admission-pass-not-live-import",
+            "error": null
+          },
+          "isolatedImport": {
+            "passed": false,
+            "status": "import-failed",
+            "error": "TypeError: fetch failed",
+            "runtimeMatchesAdmission": null
+          },
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-16-20260907:HERO",
+          "name": "魔法少女☆伊莉雅",
+          "structural": {
+            "structuralPassed": true,
+            "status": "structural-pass-not-game-acceptance",
+            "error": null
+          },
+          "package": {
+            "passed": true,
+            "status": "package-admission-pass-not-live-import",
+            "error": null
+          },
+          "isolatedImport": {
+            "passed": true,
+            "status": "isolated-import-roundtrip-pass",
+            "error": null,
+            "runtimeMatchesAdmission": true
+          },
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-17-20260907:HERO",
+          "name": "安茲·烏爾·恭",
+          "structural": {
+            "structuralPassed": true,
+            "status": "structural-pass-not-game-acceptance",
+            "error": null
+          },
+          "package": {
+            "passed": true,
+            "status": "package-admission-pass-not-live-import",
+            "error": null
+          },
+          "isolatedImport": {
+            "passed": true,
+            "status": "isolated-import-roundtrip-pass",
+            "error": null,
+            "runtimeMatchesAdmission": true
+          },
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-19-20260907:HERO",
+          "name": "桐谷和人",
+          "structural": {
+            "structuralPassed": true,
+            "status": "structural-pass-not-game-acceptance",
+            "error": null
+          },
+          "package": {
+            "passed": true,
+            "status": "package-admission-pass-not-live-import",
+            "error": null
+          },
+          "isolatedImport": {
+            "passed": true,
+            "status": "isolated-import-roundtrip-pass",
+            "error": null,
+            "runtimeMatchesAdmission": true
+          },
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-20-20260907:HERO",
+          "name": "御坂美琴",
+          "structural": {
+            "structuralPassed": true,
+            "status": "structural-pass-not-game-acceptance",
+            "error": null
+          },
+          "package": {
+            "passed": true,
+            "status": "package-admission-pass-not-live-import",
+            "error": null
+          },
+          "isolatedImport": {
+            "passed": true,
+            "status": "isolated-import-roundtrip-pass",
+            "error": null,
+            "runtimeMatchesAdmission": true
+          },
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-23-20260907:HERO",
+          "name": "坂田銀時",
+          "structural": {
+            "structuralPassed": true,
+            "status": "structural-pass-not-game-acceptance",
+            "error": null
+          },
+          "package": {
+            "passed": true,
+            "status": "package-admission-pass-not-live-import",
+            "error": null
+          },
+          "isolatedImport": {
+            "passed": true,
+            "status": "isolated-import-roundtrip-pass",
+            "error": null,
+            "runtimeMatchesAdmission": true
+          },
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-24-20260907:HERO",
+          "name": "奇犽",
+          "structural": {
+            "structuralPassed": true,
+            "status": "structural-pass-not-game-acceptance",
+            "error": null
+          },
+          "package": {
+            "passed": true,
+            "status": "package-admission-pass-not-live-import",
+            "error": null
+          },
+          "isolatedImport": {
+            "passed": true,
+            "status": "isolated-import-roundtrip-pass",
+            "error": null,
+            "runtimeMatchesAdmission": true
+          },
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-26-20260907:HERO",
+          "name": "名偵探柯南",
+          "structural": {
+            "structuralPassed": true,
+            "status": "structural-pass-not-game-acceptance",
+            "error": null
+          },
+          "package": {
+            "passed": true,
+            "status": "package-admission-pass-not-live-import",
+            "error": null
+          },
+          "isolatedImport": {
+            "passed": true,
+            "status": "isolated-import-roundtrip-pass",
+            "error": null,
+            "runtimeMatchesAdmission": true
+          },
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-28-20260907:HERO",
+          "name": "艾莉絲·伯雷亞斯·格雷拉特",
+          "structural": {
+            "structuralPassed": true,
+            "status": "structural-pass-not-game-acceptance",
+            "error": null
+          },
+          "package": {
+            "passed": true,
+            "status": "package-admission-pass-not-live-import",
+            "error": null
+          },
+          "isolatedImport": {
+            "passed": true,
+            "status": "isolated-import-roundtrip-pass",
+            "error": null,
+            "runtimeMatchesAdmission": true
+          },
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-33-20260907:HERO",
+          "name": "近衛刀太",
+          "structural": {
+            "structuralPassed": true,
+            "status": "structural-pass-not-game-acceptance",
+            "error": null
+          },
+          "package": {
+            "passed": true,
+            "status": "package-admission-pass-not-live-import",
+            "error": null
+          },
+          "isolatedImport": {
+            "passed": true,
+            "status": "isolated-import-roundtrip-pass",
+            "error": null,
+            "runtimeMatchesAdmission": true
+          },
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-36-20260907:HERO",
+          "name": "鬼畜王蘭斯",
+          "structural": {
+            "structuralPassed": true,
+            "status": "structural-pass-not-game-acceptance",
+            "error": null
+          },
+          "package": {
+            "passed": true,
+            "status": "package-admission-pass-not-live-import",
+            "error": null
+          },
+          "isolatedImport": {
+            "passed": true,
+            "status": "isolated-import-roundtrip-pass",
+            "error": null,
+            "runtimeMatchesAdmission": true
+          },
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "b2-uncle:HERO",
+          "name": "異世界舅舅",
+          "structural": {
+            "structuralPassed": true,
+            "status": "structural-pass-not-game-acceptance",
+            "error": null
+          },
+          "package": {
+            "passed": true,
+            "status": "package-admission-pass-not-live-import",
+            "error": null
+          },
+          "isolatedImport": {
+            "passed": true,
+            "status": "isolated-import-roundtrip-pass",
+            "error": null,
+            "runtimeMatchesAdmission": true
+          },
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "b2-haga:HERO",
+          "name": "羽賀",
+          "structural": {
+            "structuralPassed": true,
+            "status": "structural-pass-not-game-acceptance",
+            "error": null
+          },
+          "package": {
+            "passed": true,
+            "status": "package-admission-pass-not-live-import",
+            "error": null
+          },
+          "isolatedImport": {
+            "passed": true,
+            "status": "isolated-import-roundtrip-pass",
+            "error": null,
+            "runtimeMatchesAdmission": true
+          },
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "b2-fushi:HERO",
+          "name": "不死",
+          "structural": {
+            "structuralPassed": true,
+            "status": "structural-pass-not-game-acceptance",
+            "error": null
+          },
+          "package": {
+            "passed": true,
+            "status": "package-admission-pass-not-live-import",
+            "error": null
+          },
+          "isolatedImport": {
+            "passed": true,
+            "status": "isolated-import-roundtrip-pass",
+            "error": null,
+            "runtimeMatchesAdmission": true
+          },
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "b2-nube:HERO",
+          "name": "鵺野鳴介",
+          "structural": {
+            "structuralPassed": true,
+            "status": "structural-pass-not-game-acceptance",
+            "error": null
+          },
+          "package": {
+            "passed": true,
+            "status": "package-admission-pass-not-live-import",
+            "error": null
+          },
+          "isolatedImport": {
+            "passed": true,
+            "status": "isolated-import-roundtrip-pass",
+            "error": null,
+            "runtimeMatchesAdmission": true
+          },
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        }
+      ]
+    },
+    "base": {
+      "wholeHeroes": 17,
+      "measuredStructural": false,
+      "structuralPassed": null,
+      "packageAdmissionPassed": null,
+      "isolatedImportPassed": null,
+      "runtimeVerifiedImports": null,
+      "fullHeroSuccess": null,
+      "unsafeAccepts": null,
+      "rows": [
+        {
+          "id": "godie-edem:HERO",
+          "name": "寫輪眼復仇者 - 宇智波佐助",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "godie-h02v:HERO",
+          "name": "看似憂鬱的神獸 - 草泥馬",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-09-20260907:HERO",
+          "name": "赫蘿",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-16-20260907:HERO",
+          "name": "魔法少女☆伊莉雅",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-17-20260907:HERO",
+          "name": "安茲·烏爾·恭",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-19-20260907:HERO",
+          "name": "桐谷和人",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-20-20260907:HERO",
+          "name": "御坂美琴",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-23-20260907:HERO",
+          "name": "坂田銀時",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-24-20260907:HERO",
+          "name": "奇犽",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-26-20260907:HERO",
+          "name": "名偵探柯南",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-28-20260907:HERO",
+          "name": "艾莉絲·伯雷亞斯·格雷拉特",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-33-20260907:HERO",
+          "name": "近衛刀太",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-36-20260907:HERO",
+          "name": "鬼畜王蘭斯",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "b2-uncle:HERO",
+          "name": "異世界舅舅",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "b2-haga:HERO",
+          "name": "羽賀",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "b2-fushi:HERO",
+          "name": "不死",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "b2-nube:HERO",
+          "name": "鵺野鳴介",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        }
+      ]
+    },
+    "lora": {
+      "wholeHeroes": 17,
+      "measuredStructural": false,
+      "structuralPassed": null,
+      "packageAdmissionPassed": null,
+      "isolatedImportPassed": null,
+      "runtimeVerifiedImports": null,
+      "fullHeroSuccess": null,
+      "unsafeAccepts": null,
+      "rows": [
+        {
+          "id": "godie-edem:HERO",
+          "name": "寫輪眼復仇者 - 宇智波佐助",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "godie-h02v:HERO",
+          "name": "看似憂鬱的神獸 - 草泥馬",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-09-20260907:HERO",
+          "name": "赫蘿",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-16-20260907:HERO",
+          "name": "魔法少女☆伊莉雅",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-17-20260907:HERO",
+          "name": "安茲·烏爾·恭",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-19-20260907:HERO",
+          "name": "桐谷和人",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-20-20260907:HERO",
+          "name": "御坂美琴",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-23-20260907:HERO",
+          "name": "坂田銀時",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-24-20260907:HERO",
+          "name": "奇犽",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-26-20260907:HERO",
+          "name": "名偵探柯南",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-28-20260907:HERO",
+          "name": "艾莉絲·伯雷亞斯·格雷拉特",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-33-20260907:HERO",
+          "name": "近衛刀太",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "community-review-36-20260907:HERO",
+          "name": "鬼畜王蘭斯",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "b2-uncle:HERO",
+          "name": "異世界舅舅",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "b2-haga:HERO",
+          "name": "羽賀",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "b2-fushi:HERO",
+          "name": "不死",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        },
+        {
+          "id": "b2-nube:HERO",
+          "name": "鵺野鳴介",
+          "structural": null,
+          "package": null,
+          "isolatedImport": null,
+          "semanticFidelity": "unverified",
+          "liveImport": "unverified",
+          "gameplay": "unverified",
+          "fullHeroSuccess": null,
+          "unsafeAccept": null
+        }
+      ]
+    }
+  },
+  "pairedStructural": {
+    "improved": null,
+    "regressed": null
+  },
+  "fullHeroE2EProven": false,
+  "modelPromoted": false,
+  "blindTest": false,
+  "limits": [
+    "File snapshot, not an OS process-liveness check.",
+    "Teacher-forced CE is not generated hero quality; per-step losses concern different tasks.",
+    "Package admission is not live import or match verification.",
+    "Isolated import/storage/runtime roundtrip is not platform publication, hero selection or match behavior.",
+    "Unknown full-hero quality and dangerous acceptance counts remain null, not zero.",
+    "Internal dev is not an unseen generalization test."
+  ],
+  "sourceFiles": {
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/full-hero-distillation-v21/manifest.json": {
+      "sha256": "f54167a0bd8e6341d75d38f8a80ae25cd9813b1048453bf731000ec99b97c1e6",
+      "bytes": 250226
+    },
+    "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-eval-plan-v1/manifest.json": {
+      "sha256": "ac297f754978c4542d632a7e49df5dc7af7e6e79ab63237b2919f733dbe8e260",
+      "bytes": 561
+    },
+    "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-eval-plan-v1/plan.json": {
+      "sha256": "bfe7849d242a2f4ae0b764162edb12f7439683cf7641e5abe18f3666ca64ff14",
+      "bytes": 6481
+    },
+    "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-eval-plan-v1/public-cases.jsonl": {
+      "sha256": "7e615ae78fab7927022d1cc815986c5b6f41c6d83af2e468a0607f0e509211f3",
+      "bytes": 7052610
+    },
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/full-hero-distillation-v21/train/state.json": {
+      "sha256": "8db3f1c7eb29fc31d093146a41a10632db41a8078fad66d6d7cff38c7c6a3a2d",
+      "bytes": 330889
+    },
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/full-hero-distillation-v21/train/training-trace.json": {
+      "sha256": "73616912716bf5015941a6c36468c777b091a2ef1299d06cb7312ec732581e07",
+      "bytes": 26860
+    },
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/full-hero-distillation-v21/train/dev-before.json": {
+      "sha256": "02962ad07caf503f8e711b6a81cdb015bed352a19ad0232c2759a0caaf57d93d",
+      "bytes": 9437
+    },
+    "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-generation-compile-control-v2/report.json": {
+      "sha256": "897c8f712ae6f59cbd5eab80f900c314f0407294d00f1281ba3484ce42c0ac67",
+      "bytes": 91795
+    },
+    "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-package-admission-control-v1/report.json": {
+      "sha256": "11c21c7d8d386377564b3b87e000412d0485af3906b6a077167a527738217f74",
+      "bytes": 587507
+    },
+    "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-import-control-v3/report.json": {
+      "sha256": "d4e3be741fd3f3bac5da441a655cc543567ec0081a8c9edafe2f7e78744c4ee8",
+      "bytes": 16760
+    },
+    "/private/tmp/ggd-hero-finetune-research-delivery/docs/_reports/hero-finetune-research/hero74-import-control-v3/runtime-audit.json": {
+      "sha256": "e70700e85ce7d4b6ac7eacad11edcf4337ad6cac0117775f4470f61b7e038258",
+      "bytes": 4567
+    }
+  }
+}

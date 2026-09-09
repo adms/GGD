@@ -61,6 +61,43 @@ class ResultsTest(unittest.TestCase):
         put(file, value)
         return file, value
 
+    def imported_fixture(self):
+        compiled, _ = self.compilation('base')
+        package_sha = put(self.paired / 'base-package-admission/report.json', {
+            'schema': 'ggd-distillation-package-admission@1', 'compiledReportSha256': sha(compiled),
+            'rows': [{'id': str(i), 'packageAdmissionPassed': True, 'status': 'passed'} for i in range(17)]})
+        imported = {'schema': 'ggd-distillation-import-roundtrip@1', 'admittedReportSha256': package_sha,
+            'rows': [{'id': str(i), 'liveImportPassed': i < 14, 'status': 'passed' if i < 14 else 'not-passed'} for i in range(17)]}
+        import_sha = put(self.paired / 'base-import-roundtrip/report.json', imported)
+        audit = {'schema': 'ggd-distillation-import-runtime-audit@1', 'admittedReportSha256': package_sha,
+            'importReportSha256': import_sha, 'rows': [{'id': str(i), 'runtimeMatchesAdmission': True if i < 14 else None} for i in range(17)]}
+        put(self.paired / 'base-import-runtime-audit/report.json', audit)
+        return audit
+
+    def test_isolated_import_never_upgrades_full_game_success(self):
+        self.imported_fixture()
+        data = self.collect()
+        arm = data['arms']['base']
+        self.assertEqual(arm['isolatedImportPassed'], 14)
+        self.assertEqual(arm['runtimeVerifiedImports'], 14)
+        self.assertIsNone(arm['fullHeroSuccess'])
+        self.assertTrue(all(r['gameplay'] == 'unverified' for r in arm['rows']))
+        self.assertIn('隔離匯入通過不等於平台選角', h.render(data))
+
+    def test_runtime_audit_cannot_pass_unimported_hero(self):
+        audit = self.imported_fixture()
+        audit['rows'][-1]['runtimeMatchesAdmission'] = True
+        put(self.paired / 'base-import-runtime-audit/report.json', audit)
+        with self.assertRaisesRegex(AssertionError, 'RUNTIME_AUDIT_PASSED_WITHOUT_IMPORT'):
+            self.collect()
+
+    def test_runtime_audit_must_bind_exact_import_report(self):
+        audit = self.imported_fixture()
+        audit['importReportSha256'] = 'wrong'
+        put(self.paired / 'base-import-runtime-audit/report.json', audit)
+        with self.assertRaisesRegex(AssertionError, 'AUDIT_IMPORT_DRIFT'):
+            self.collect()
+
     def test_missing_is_null_not_zero_and_html_escapes(self):
         data = self.collect()
         self.assertIsNone(data['training']['devAfterMinusBefore'])

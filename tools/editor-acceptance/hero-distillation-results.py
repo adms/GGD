@@ -37,7 +37,7 @@ def structural_rows(report, cases):
             for r in report['rows'] if r['slot'] == 'HERO'}
 
 
-def collect(training, evaluation, paired=None, teacher_compile=None, teacher_package=None):
+def collect(training, evaluation, paired=None, teacher_compile=None, teacher_package=None, teacher_import=None):
     pins = {}
 
     def raw(file):
@@ -98,12 +98,36 @@ def collect(training, evaluation, paired=None, teacher_compile=None, teacher_pac
             assert [r['id'] for r in package['rows']] == [c['id'] for c in primary], 'PACKAGE_HERO_ORDER_MISMATCH'
         packages = {r['id']: {'passed': r['packageAdmissionPassed'], 'status': r['status'], 'error': r.get('error')}
                     for r in package['rows']} if package else {}
+        ir = Path(teacher_import) / 'report.json' if arm == 'teacher' and teacher_import else (
+            Path(paired) / f'{arm}-import-roundtrip/report.json' if arm != 'teacher' and paired else None)
+        ar = Path(teacher_import) / 'runtime-audit.json' if arm == 'teacher' and teacher_import else (
+            Path(paired) / f'{arm}-import-runtime-audit/report.json' if arm != 'teacher' and paired else None)
+        imported = read(ir, True) if ir else None
+        audited = read(ar, True) if ar else None
+        primary_ids = [c['id'] for c in primary]
+        if imported:
+            assert package and imported['schema'] == 'ggd-distillation-import-roundtrip@1', 'IMPORT_WITHOUT_PACKAGE'
+            assert imported['admittedReportSha256'] == pins[str(pr.resolve())]['sha256'], 'IMPORT_PACKAGE_DRIFT'
+            assert [r['id'] for r in imported['rows']] == primary_ids, 'IMPORT_HERO_ORDER_MISMATCH'
+        if audited:
+            assert imported and audited['schema'] == 'ggd-distillation-import-runtime-audit@1', 'AUDIT_WITHOUT_IMPORT'
+            assert audited['importReportSha256'] == pins[str(ir.resolve())]['sha256'], 'AUDIT_IMPORT_DRIFT'
+            assert audited['admittedReportSha256'] == pins[str(pr.resolve())]['sha256'], 'AUDIT_PACKAGE_DRIFT'
+            assert [r['id'] for r in audited['rows']] == primary_ids, 'AUDIT_HERO_ORDER_MISMATCH'
+        audits = {r['id']: r['runtimeMatchesAdmission'] for r in audited['rows']} if audited else {}
+        imports = {r['id']: {'passed': r['liveImportPassed'], 'status': r['status'], 'error': r.get('error'),
+                             'runtimeMatchesAdmission': audits.get(r['id'])} for r in imported['rows']} if imported else {}
+        for hero_id, value in imports.items():
+            assert value['passed'] is not True or packages[hero_id]['passed'] is True, 'IMPORT_PASSED_WITHOUT_ADMISSION'
+            assert value['runtimeMatchesAdmission'] is not True or value['passed'] is True, 'RUNTIME_AUDIT_PASSED_WITHOUT_IMPORT'
         arms[arm] = {'wholeHeroes': len(primary), 'measuredStructural': compilation is not None,
             'structuralPassed': None if compilation is None else sum(r['structuralPassed'] for r in structural.values()),
             'packageAdmissionPassed': None if package is None else sum(r['passed'] is True for r in packages.values()),
+            'isolatedImportPassed': None if imported is None else sum(r['passed'] is True for r in imports.values()),
+            'runtimeVerifiedImports': None if audited is None else sum(r['passed'] is True and r['runtimeMatchesAdmission'] is True for r in imports.values()),
             'fullHeroSuccess': None, 'unsafeAccepts': None,
             'rows': [{'id': c['id'], 'name': json.loads(c['messages'][1]['content'])['request']['heroName'],
-                      'structural': structural[c['id']], 'package': packages.get(c['id']),
+                      'structural': structural[c['id']], 'package': packages.get(c['id']), 'isolatedImport': imports.get(c['id']),
                       'semanticFidelity': 'unverified', 'liveImport': 'unverified', 'gameplay': 'unverified',
                       'fullHeroSuccess': None, 'unsafeAccept': None} for c in primary]}
     improvements = regressions = None
@@ -124,6 +148,7 @@ def collect(training, evaluation, paired=None, teacher_compile=None, teacher_pac
         'limits': ['File snapshot, not an OS process-liveness check.',
                    'Teacher-forced CE is not generated hero quality; per-step losses concern different tasks.',
                    'Package admission is not live import or match verification.',
+                   'Isolated import/storage/runtime roundtrip is not platform publication, hero selection or match behavior.',
                    'Unknown full-hero quality and dangerous acceptance counts remain null, not zero.',
                    'Internal dev is not an unseen generalization test.'], 'sourceFiles': pins}
 
@@ -132,11 +157,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ['training', 'evaluation', 'out']:
         parser.add_argument('--' + name, type=Path, required=True)
-    for name in ['paired', 'teacher-compile', 'teacher-package']:
+    for name in ['paired', 'teacher-compile', 'teacher-package', 'teacher-import']:
         parser.add_argument('--' + name, type=Path)
     args = parser.parse_args()
     assert not args.out.exists(), 'REFUSE_OVERWRITE'
-    report = collect(args.training, args.evaluation, args.paired, args.teacher_compile, args.teacher_package)
+    report = collect(args.training, args.evaluation, args.paired, args.teacher_compile, args.teacher_package, args.teacher_import)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     with args.out.open('x') as stream:
         json.dump(report, stream, ensure_ascii=False, indent=2)

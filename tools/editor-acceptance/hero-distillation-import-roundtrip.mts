@@ -175,10 +175,18 @@ export async function run(options:any){
     scope:'Pinned Main HTTP build, inspect, immutable isolated storage and download. No platform publication, hero selection, game behavior or model readiness.',
     fullHeroE2EProven:false,modelPromoted:false};
   const services=new Map<string,any>(),serviceFailures=new Map<string,string>();
+  const progress=(status:string)=>{
+    const file=path.join(out,'progress.json'),tmp=file+'.tmp';
+    fs.writeFileSync(tmp,JSON.stringify({schema:'ggd-distillation-import-progress@1',status,
+      plannedWholeHeroes:admitted.rows.length,rows:report.rows,fullHeroE2EProven:false},null,2)+'\n');
+    fs.renameSync(tmp,file);
+  };
+  progress('running');
   try{
     for(const item of admitted.rows){
       const row:any={id:item.id,heroId:item.heroId,engineRevision:item.engineRevision,liveImportPassed:false,fullHeroE2EProven:false};report.rows.push(row);
-      if(!item.packageAdmissionPassed){row.status=item.status==='native-import-bridge-pending'?'native-import-bridge-pending':'blocked-by-package-admission';continue;}
+      if(!item.packageAdmissionPassed){row.status=item.status==='native-import-bridge-pending'?'native-import-bridge-pending':'blocked-by-package-admission';progress('running');continue;}
+      row.status='running';progress('running');
       try{
         assert(/^case-\d{4}\.json$/.test(item.artifact),'UNSAFE_ARTIFACT_PATH');
         const bytes=fs.readFileSync(path.join(input,item.artifact));assert.equal(hash(bytes),item.artifactSha256,'ARTIFACT_DRIFT');
@@ -193,6 +201,7 @@ export async function run(options:any){
         Object.assign(row,await roundtrip(service,artifact.project,assets,path.join(out,item.artifact.replace('.json',''))),
           {liveImportPassed:true,status:'isolated-import-roundtrip-pass',assets:assets.evidence});
       }catch(error){row.status=serviceFailures.has(item.engineRevision)?'service-unavailable-not-model-failure':'import-failed';row.error=String(error);}
+      progress('running');
     }
   }finally{
     await Promise.all([...services.values()].map(s=>s.app.close()));
@@ -200,6 +209,7 @@ export async function run(options:any){
       failed:report.rows.filter((r:any)=>r.status==='import-failed').length,
       serviceUnavailable:report.rows.filter((r:any)=>r.status==='service-unavailable-not-model-failure').length};
     save(path.join(out,'report.json'),report);
+    progress('completed-evaluations');
   }
   return report;
 }
