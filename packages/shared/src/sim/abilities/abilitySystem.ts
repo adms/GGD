@@ -601,7 +601,8 @@ export function castAbility(
   if (def.requiredSummonSlot && ownedSummonsForSlot(world, caster, def.requiredSummonSlot).length === 0) return "no-summon";
   const statusCost = def.statusCost;
   const costApplier = statusCost?.appliedBy === "self" ? caster : undefined;
-  if (statusCost && consumableStatusStacks(world, caster, statusCost.statusId, costApplier) < (statusCost.count === "all" ? 1 : statusCost.count)) {
+  if (statusCost?.subject === "target" && def.castType !== "targeted") return "bad-target";
+  if (statusCost && statusCost.subject !== "target" && consumableStatusStacks(world, caster, statusCost.statusId, costApplier) < (statusCost.count === "all" ? 1 : statusCost.count)) {
     return "no-resource";
   }
 
@@ -702,10 +703,11 @@ export function castAbility(
     }
   }
 
+  const costSubject = statusCost?.subject === "target" ? targets[0]! : caster;
   // ---- pay costs (mana + cooldown paid up-front, at cast-begin) ----
   // Recheck and debit atomically after targeting. No rejected cast may spend
   // resources; no accepted cast may pay mana/cooldown without its full cost.
-  if (statusCost && consumeStatusStacks(world, caster, statusCost.statusId, statusCost.count, costApplier) === 0) {
+  if (statusCost && consumeStatusStacks(world, costSubject, statusCost.statusId, statusCost.count, costApplier) === 0) {
     return "no-resource";
   }
   // ⭐ GH#733 —— 地板。今天 `:594` 的 `hp.mana < mana` 讓這一行**在這條路上**

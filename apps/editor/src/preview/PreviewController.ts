@@ -595,7 +595,7 @@ function effectLines(
         out.push({
           depth,
           kind: e.kind,
-          summary: `apply ${e.statusId} for ${e.duration}s${e.stun ? " (stun)" : ""}${e.root ? " (root)" : ""}${e.moveSpeedMult !== undefined ? ` (ms ×${e.moveSpeedMult})` : ""}`,
+          summary: `apply ${e.statusId} for ${e.duration}s${e.stun ? " (stun)" : ""}${e.breakOnDamage ? "（實際受傷即解除）" : ""}${e.root ? " (root)" : ""}${e.moveSpeedMult !== undefined ? ` (ms ×${e.moveSpeedMult})` : ""}`,
         });
         break;
       case "applyBuff":
@@ -608,10 +608,13 @@ function effectLines(
           // `statusId`（這份增益同時是一個具名標記）。印錯就是卡片說謊。
           summary:
             `buff ${e.modifiers.map((m) => `${m.stat} ${m.op} ${m.value}`).join(", ")} ` +
-            `${e.permanent === true ? "永久" : `for ${e.duration}s`}` +
+            `${e.permanent === true ? e.permanentScope === "round" ? "至本回合結束" : "永久" : `for ${e.duration}s`}` +
             `${e.applyTo === "self" ? " → 自己" : " → 目標"}` +
             `${e.statusId !== undefined ? ` [標記 ${e.statusId}]` : ""}` +
-            `${e.exclusiveGroup !== undefined ? ` [互斥組 ${e.exclusiveGroup}]` : ""}`,
+            `${e.exclusiveGroup !== undefined ? ` [互斥組 ${e.exclusiveGroup}]` : ""}` +
+            `${e.vision?.revealed ? " · 揭示承受者" : ""}` +
+            `${e.sourceScope === "caster" ? " · 依施法者分開" : ""}` +
+            `${e.maxStacks !== undefined ? ` · 最多 ${e.maxStacks} 層` : ""}`,
         });
         break;
       case "dash":

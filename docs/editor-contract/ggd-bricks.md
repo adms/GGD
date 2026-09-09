@@ -4,26 +4,26 @@
 
 owner 2026-09-05：「[後台編輯器及codex編輯器] 是**堆積木**的角色 **要充分了解有哪些積木**, 而 main 遊戲主程式 是**做出積木**供使用的角色」
 
-capability 指紋：`1186f881`
+capability 指紋：`7704c20a`
 
 ## 一眼看完
 
 | | |
 |---|---:|
-| total | 176 |
+| total | 177 |
 | effect | 50 |
-| hook | 36 |
+| hook | 37 |
 | leaf | 11 |
 | template | 43 |
 | vfx-prim | 13 |
 | vfx-subtype | 4 |
 | vfx-call | 4 |
 | model-preset | 15 |
-| gated | 137 |
+| gated | 138 |
 | gaps | 51 |
 | missingAdminForm | 51 |
 | missingEditorForm | 4 |
-| zeroAdoption | 68 |
+| zeroAdoption | 69 |
 
 ## 兩個編輯器的表單怎麼量的
 
@@ -86,46 +86,47 @@ capability 指紋：`1186f881`
 | `trap` | 9 | 0 | 0 | ✅ | ✅ | 0 |
 | `weightedBranch` | 7 | 1 | 0 | ✅ | ✅ | 9 |
 
-## `hook`（36）
+## `hook`（37）
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
-| `onAbilityCast` | 24 | 0 | 0 | ✅ | ✅ | 6 |
-| `onAbilityHit` | 24 | 0 | 0 | ✅ | ✅ | 4 |
-| `onAllyDamaged` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onAllyDeath` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onAllyProtected` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onAttackAttempt` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onBasicAttack` | 24 | 0 | 0 | ✅ | ✅ | 38 |
-| `onBossSpawn` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onBoundaryTouch` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onCrowdControlApplied` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onCrowdControlReceived` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onDamageDealt` | 24 | 0 | 0 | ✅ | ✅ | 2 |
-| `onDamageTaken` | 24 | 0 | 0 | ✅ | ✅ | 17 |
-| `onDashOrBlink` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onDeath` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onEvade` | 24 | 0 | 0 | ✅ | ✅ | 2 |
-| `onFireRingIgnite` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onGuardianDown` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onHeal` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onInterval` | 24 | 0 | 0 | ✅ | ✅ | 6 |
-| `onKill` | 24 | 0 | 0 | ✅ | ✅ | 7 |
-| `onLethalDamage` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onOverheal` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onProjectileExpire` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onReflectSuccess` | 24 | 0 | 0 | ✅ | ✅ | 8 |
-| `onRevive` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onRoundEnd` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onRoundStart` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onShieldBroken` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onShieldGained` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onStatCapReached` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onStatusApplied` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onStunned` | 24 | 0 | 0 | ✅ | ✅ | 2 |
-| `onSummonHit` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onUltimateCast` | 24 | 0 | 0 | ✅ | ✅ | 0 |
-| `onUltimateHit` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onAbilityCast` | 25 | 0 | 0 | ✅ | ✅ | 6 |
+| `onAbilityHit` | 25 | 0 | 0 | ✅ | ✅ | 4 |
+| `onAllyDamaged` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onAllyDeath` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onAllyProtected` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onAttackAttempt` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onBasicAttack` | 25 | 0 | 0 | ✅ | ✅ | 38 |
+| `onBossSpawn` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onBoundaryTouch` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onCrowdControlApplied` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onCrowdControlReceived` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onDamageDealt` | 25 | 0 | 0 | ✅ | ✅ | 2 |
+| `onDamageTaken` | 25 | 0 | 0 | ✅ | ✅ | 17 |
+| `onDashOrBlink` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onDeath` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onEvade` | 25 | 0 | 0 | ✅ | ✅ | 2 |
+| `onFireRingIgnite` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onGuardianDown` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onHeal` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onInterval` | 25 | 0 | 0 | ✅ | ✅ | 6 |
+| `onKill` | 25 | 0 | 0 | ✅ | ✅ | 7 |
+| `onLethalDamage` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onObservedCombat` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onOverheal` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onProjectileExpire` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onReflectSuccess` | 25 | 0 | 0 | ✅ | ✅ | 8 |
+| `onRevive` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onRoundEnd` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onRoundStart` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onShieldBroken` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onShieldGained` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onStatCapReached` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onStatusApplied` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onStunned` | 25 | 0 | 0 | ✅ | ✅ | 2 |
+| `onSummonHit` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onUltimateCast` | 25 | 0 | 0 | ✅ | ✅ | 0 |
+| `onUltimateHit` | 25 | 0 | 0 | ✅ | ✅ | 0 |
 
 ## `leaf`（11）
 

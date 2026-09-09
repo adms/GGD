@@ -4,8 +4,8 @@
   "scope": "Original requirements versus compiled authoring; compilation is not design acceptance",
   "heroes": 37,
   "slots": 222,
-  "changedSlots": 33,
-  "passiveOnAttackTemplates": 24,
+  "changedSlots": 37,
+  "passiveOnAttackTemplates": 23,
   "originalDesignAcceptance": "incomplete",
   "published": false,
   "rows": [
@@ -3168,16 +3168,19 @@
       "ownerDescription": "對已觀察敵人收集最多三條線索，每種有效戰鬥事件只計一次。",
       "requiredRefinement": "需觀察線索、事件類型去重與三層上限。",
       "products": [
-        "tpl-on-attack"
+        "tpl-event-passive"
       ],
       "castType": "self",
       "effects": [],
       "hooks": [
-        "onBasicAttack"
+        "onObservedCombat",
+        "onObservedCombat",
+        "onObservedCombat",
+        "onObservedCombat"
       ],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "觀察同對決、當前可見的敵方英雄：有效普攻命中、技能命中、實際治療、成功控制各為一種事件。每名敵人／每名觀察者各自記錄，同種事件每名敵人／回合只記一次，最多保存三條線索；只到回合結束，不因重複事件或不同命中目標再增加。R 消耗該敵人身上由自己蒐集的線索，已見種類仍保留到重置。護盾實際吸收計入有效命中；無敵、零傷、過量治療、免控、不可見、跨區及對決結束不計。"
     },
     {
       "hero": "26",
@@ -3188,17 +3191,17 @@
       "ownerDescription": "以腳力增強鞋踢出足球，依射線與碰撞命中。",
       "requiredRefinement": "需足球單彈碰撞與腳踢動作。",
       "products": [
-        "tpl-traveling-wave"
+        "tpl-effect-sequence"
       ],
       "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "delayed"
+        "spawnProjectile"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "沿瞄準方向發射單枚實體彈，射程12、首個合法敵方碰撞一次物理傷害；偏離可閃避，到射程消失。暫用既有 bolt 的模型／特效，足球與踢球專用演出仍待替換及畫面驗收。"
     },
     {
       "hero": "26",
@@ -3209,18 +3212,17 @@
       "ownerDescription": "單發針造成短暫睡眠；目標受到後續傷害時提前醒來。",
       "requiredRefinement": "0.7 秒暈眩只是底稿；需受傷可喚醒的睡眠及針彈碰撞。",
       "products": [
-        "tpl-single-strike"
+        "tpl-effect-sequence"
       ],
-      "castType": "targeted",
+      "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "damage",
-        "applyStatus"
+        "spawnProjectile"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "單枚直線麻醉彈首碰敵人後睡眠1.2秒，不額外造成傷害；受到後續實際HP傷害即提前醒來，只移除此睡眠，護盾吸收及零傷不喚醒。免控拒絕、未命中不睡眠；正常施法支付自己的魔力與冷卻。針與手錶演出仍使用代理彈待驗。"
     },
     {
       "hero": "26",
@@ -3251,18 +3253,17 @@
       "ownerDescription": "消耗目標線索，揭示其當前位置並施加短效弱點標記；不揭露對決外或未授權資訊。",
       "requiredRefinement": "目前緩速；需消耗線索、弱點標記及合法位置揭示。",
       "products": [
-        "tpl-single-strike"
+        "tpl-effect-sequence"
       ],
       "castType": "targeted",
       "targetsEnemies": true,
       "effects": [
-        "damage",
-        "applyStatus"
+        "applyBuff"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "指定同區敵人，至少需要一條由自己蒐集的線索；施法開始扣除該目標全部自己的線索，其他敵人／觀察者不變。4秒揭示該目標並降低15%護甲與魔抗，同一施法者重施只刷新、不疊加。到期或驅散後恢復原隱形規則，不延長／取消其隱形時鐘；只使用當前對決的伺服器戰鬥實體，沒有玩家私密資料。"
     },
     {
       "hero": "26",

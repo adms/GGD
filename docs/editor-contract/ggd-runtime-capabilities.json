@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "1186f881",
+  "fingerprint": "7704c20a",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -76,6 +76,7 @@
     "onInterval",
     "onKill",
     "onLethalDamage",
+    "onObservedCombat",
     "onOverheal",
     "onProjectileExpire",
     "onReflectSuccess",
@@ -143,6 +144,7 @@
     "internalCooldownScope",
     "key",
     "maxTriggers",
+    "observedEvent",
     "on",
     "onConsumed",
     "oncePerCast",
@@ -905,6 +907,7 @@
     "victim",
     "victimCondition",
     "vision",
+    "vision.revealed",
     "vision.stealthFadeDelaySec",
     "vision.trueSightRadius",
     "who",

@@ -744,16 +744,17 @@ export const zFlightGrant = z
  */
 export const zVisionGrant = z
   .object({
+    revealed: z.boolean().optional().describe("此來源存續時揭示承受者本身，不改隱形冷卻；仍遵守對決分區。"),
     stealthFadeDelaySec: z.number().min(0).max(60).optional(),
     trueSightRadius: z.number().positive().max(40).optional(),
   })
   .strict()
   .refine(
     (v) =>
-      v.stealthFadeDelaySec !== undefined || v.trueSightRadius !== undefined,
+      v.revealed === true || v.stealthFadeDelaySec !== undefined || v.trueSightRadius !== undefined,
     {
       message:
-        "vision grant must carry at least one of stealthFadeDelaySec / trueSightRadius",
+        "vision grant must carry at least one of revealed:true / stealthFadeDelaySec / trueSightRadius",
     },
   );
 

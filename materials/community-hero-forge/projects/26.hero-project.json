@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-project@2",
   "projectId": "community-review-26-20260907",
-  "revision": 12,
+  "revision": 13,
   "sourceLock": {
     "canonicalId": null,
     "versionId": null
@@ -38,8 +38,8 @@
       "fieldOwnership": {}
     },
     "skills": {
-      "revision": 12,
-      "state": "draft",
+      "revision": 13,
+      "state": "stale",
       "fieldOwnership": {
         "acceptedPlan.slots.E.name": "locked",
         "acceptedPlan.slots.E.products.0.template": "manual",
@@ -56,22 +56,22 @@
       }
     },
     "mechanics": {
-      "revision": 1,
+      "revision": 13,
       "state": "stale",
       "fieldOwnership": {}
     },
     "presentation": {
-      "revision": 3,
+      "revision": 13,
       "state": "stale",
       "fieldOwnership": {}
     },
     "validation": {
-      "revision": 1,
+      "revision": 13,
       "state": "stale",
       "fieldOwnership": {}
     },
     "package": {
-      "revision": 3,
+      "revision": 13,
       "state": "stale",
       "fieldOwnership": {}
     }
@@ -107,6 +107,110 @@
     },
     "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
     "templateVersions": {
+      "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+        "id": "tpl-event-passive",
+        "schema": "template@1",
+        "name": "自訂事件被動",
+        "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+        "family": "event-passive",
+        "status": "enabled",
+        "params": {
+          "hooks": {
+            "type": "hooks",
+            "default": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ]
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+        "id": "tpl-effect-sequence",
+        "schema": "template@1",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
+        "status": "enabled",
+        "params": {
+          "castType": {
+            "type": "enum",
+            "default": "targeted",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 10,
+            "unit": "s",
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "radius": {
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "side": {
+            "type": "enum",
+            "default": "enemies",
+            "values": [
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
       "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
         "id": "tpl-buff-self",
         "schema": "template@1",
@@ -146,231 +250,6 @@
         "exemplar": {
           "skill": "82-04 闇之魔法",
           "jass": "A0Q6"
-        }
-      },
-      "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0": {
-        "id": "tpl-on-attack",
-        "schema": "template@1",
-        "name": "攻擊觸發",
-        "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
-        "family": "on-attack",
-        "status": "enabled",
-        "params": {
-          "bonusDamage": {
-            "type": "scaling",
-            "default": {
-              "perRank": [
-                100
-              ],
-              "ratios": []
-            }
-          },
-          "chance": {
-            "type": "number",
-            "min": 0,
-            "max": 1,
-            "unit": "ratio",
-            "optional": true
-          },
-          "condition": {
-            "type": "condition",
-            "default": {
-              "any": [
-                {
-                  "all": [
-                    {
-                      "not": {
-                        "is": "champion",
-                        "kind": "kind",
-                        "subject": "target"
-                      }
-                    },
-                    {
-                      "kind": "stat",
-                      "mode": "percent",
-                      "op": "<",
-                      "stat": "hp",
-                      "subject": "target",
-                      "value": 0.35
-                    }
-                  ]
-                },
-                {
-                  "all": [
-                    {
-                      "is": "champion",
-                      "kind": "kind",
-                      "subject": "target"
-                    },
-                    {
-                      "kind": "chance",
-                      "p": 0.01
-                    }
-                  ]
-                }
-              ]
-            },
-            "optional": true
-          },
-          "damageType": {
-            "type": "enum",
-            "default": "magic",
-            "values": [
-              "magic",
-              "physical",
-              "true"
-            ]
-          },
-          "event": {
-            "type": "enum",
-            "default": "onBasicAttack",
-            "values": [
-              "onBasicAttack",
-              "onDamageDealt"
-            ]
-          },
-          "internalCooldown": {
-            "type": "number",
-            "default": 0,
-            "min": 0,
-            "max": 60,
-            "unit": "s",
-            "optional": true
-          }
-        },
-        "requires": [
-          "hooks",
-          "conditions"
-        ],
-        "gapScore": 9,
-        "exemplar": {
-          "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者",
-          "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效"
-        }
-      },
-      "sha256:bd9d8342c4ff231d5c4eb94f3e87434981ccc5d4ba402b7e615b292317436add": {
-        "id": "tpl-traveling-wave",
-        "schema": "template@1",
-        "name": "行進波動",
-        "description": "傷害點沿一條線逐段推進，每一段各播一次特效並各結算一次傷害（同一個人整串只吃一次），可帶終點爆發。設計正典範例：龍破斬。",
-        "family": "traveling-wave",
-        "status": "enabled",
-        "params": {
-          "aoePerStep": {
-            "type": "number",
-            "default": 200,
-            "min": 50,
-            "max": 900,
-            "unit": "wc3u"
-          },
-          "castTimeSec": {
-            "type": "number",
-            "default": 0,
-            "min": 0,
-            "max": 5,
-            "unit": "s",
-            "optional": true
-          },
-          "damage": {
-            "type": "scaling",
-            "default": {
-              "perRank": [
-                200
-              ],
-              "ratios": []
-            }
-          },
-          "damageType": {
-            "type": "enum",
-            "default": "magic",
-            "values": [
-              "magic",
-              "physical",
-              "true"
-            ]
-          },
-          "stepCount": {
-            "type": "number",
-            "default": 20,
-            "min": 3,
-            "max": 140
-          },
-          "stepIntervalSec": {
-            "type": "number",
-            "default": 0.03,
-            "min": 0.01,
-            "max": 1,
-            "unit": "s"
-          },
-          "stepSize": {
-            "type": "number",
-            "default": 45,
-            "min": 20,
-            "max": 200,
-            "unit": "wc3u"
-          },
-          "stepVfx": {
-            "type": "docRef",
-            "optional": true
-          },
-          "terminalBurst": {
-            "type": "number",
-            "default": 450,
-            "min": 100,
-            "max": 900,
-            "unit": "wc3u",
-            "optional": true
-          }
-        },
-        "requires": [
-          "travelingWave"
-        ],
-        "gapScore": 7,
-        "exemplar": {
-          "skill": "04-03 龍破斬",
-          "jass": "A04R"
-        }
-      },
-      "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b": {
-        "id": "tpl-single-strike",
-        "schema": "template@1",
-        "name": "單體斬擊",
-        "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。",
-        "family": "single-strike",
-        "status": "enabled",
-        "params": {
-          "castTimeSec": {
-            "type": "number",
-            "default": 0,
-            "min": 0,
-            "max": 5,
-            "unit": "s",
-            "optional": true
-          },
-          "damage": {
-            "type": "scaling",
-            "default": {
-              "perRank": [
-                350
-              ],
-              "ratios": []
-            }
-          },
-          "damageType": {
-            "type": "enum",
-            "default": "magic",
-            "values": [
-              "magic",
-              "physical",
-              "true"
-            ]
-          }
-        },
-        "requires": [],
-        "gapScore": 9,
-        "exemplar": {
-          "skill": "23-04 雷焰聖劍",
-          "jass": "A0OD"
         }
       },
       "sha256:eed77432b653ea9503a4d1649ef677fe7641003db81eb04c88bfca47176804ad": {
@@ -502,31 +381,233 @@
       "PASSIVE": {
         "slot": "PASSIVE",
         "name": "〔線索整理〕",
-        "purpose": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。\n【目標設計】對已觀察敵人收集最多三條線索，每種有效戰鬥事件只計一次。\n【待補機制】需觀察線索、事件類型去重與三層上限。",
+        "purpose": "【修正行為】觀察同對決、當前可見的敵方英雄：有效普攻命中、技能命中、實際治療、成功控制各為一種事件。每名敵人／每名觀察者各自記錄，同種事件每名敵人／回合只記一次，最多保存三條線索；只到回合結束，不因重複事件或不同命中目標再增加。R 消耗該敵人身上由自己蒐集的線索，已見種類仍保留到重置。護盾實際吸收計入有效命中；無敵、零傷、過量治療、免控、不可見、跨區及對決結束不計。\n【原設計】對已觀察敵人收集最多三條線索，每種有效戰鬥事件只計一次。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json"
         },
         "products": [
           {
-            "instanceId": "community-review-26-20260907-passive-1",
+            "instanceId": "observed-clues",
             "template": {
-              "ref": "tpl-on-attack",
+              "ref": "tpl-event-passive",
               "params": {
-                "bonusDamage": {
-                  "damageTier": "極小",
-                  "ratios": []
-                },
-                "condition": {
-                  "kind": "chance",
-                  "p": 1
-                },
-                "damageType": "physical",
-                "event": "onBasicAttack",
-                "internalCooldown": 3
+                "hooks": [
+                  {
+                    "on": "onObservedCombat",
+                    "observedEvent": "basicHit",
+                    "victim": "enemyChampion",
+                    "condition": {
+                      "all": [
+                        {
+                          "not": {
+                            "kind": "status",
+                            "subject": "target",
+                            "statusId": "community-review-26-20260907.seen-basichit",
+                            "minStacks": 1,
+                            "appliedBy": "self"
+                          }
+                        },
+                        {
+                          "not": {
+                            "kind": "status",
+                            "subject": "target",
+                            "statusId": "community-review-26-20260907.clues",
+                            "minStacks": 3,
+                            "appliedBy": "self"
+                          }
+                        }
+                      ]
+                    },
+                    "effects": [
+                      {
+                        "kind": "applyBuff",
+                        "modifiers": [],
+                        "permanent": true,
+                        "permanentScope": "round",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-26-20260907.clues",
+                        "statusId": "community-review-26-20260907.clues",
+                        "maxStacks": 3,
+                        "dispellable": false,
+                        "polarity": "debuff"
+                      },
+                      {
+                        "kind": "applyBuff",
+                        "modifiers": [],
+                        "permanent": true,
+                        "permanentScope": "round",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-26-20260907.seen-basichit",
+                        "statusId": "community-review-26-20260907.seen-basichit",
+                        "maxStacks": 1,
+                        "dispellable": false,
+                        "polarity": "debuff"
+                      }
+                    ]
+                  },
+                  {
+                    "on": "onObservedCombat",
+                    "observedEvent": "abilityHit",
+                    "victim": "enemyChampion",
+                    "condition": {
+                      "all": [
+                        {
+                          "not": {
+                            "kind": "status",
+                            "subject": "target",
+                            "statusId": "community-review-26-20260907.seen-abilityhit",
+                            "minStacks": 1,
+                            "appliedBy": "self"
+                          }
+                        },
+                        {
+                          "not": {
+                            "kind": "status",
+                            "subject": "target",
+                            "statusId": "community-review-26-20260907.clues",
+                            "minStacks": 3,
+                            "appliedBy": "self"
+                          }
+                        }
+                      ]
+                    },
+                    "effects": [
+                      {
+                        "kind": "applyBuff",
+                        "modifiers": [],
+                        "permanent": true,
+                        "permanentScope": "round",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-26-20260907.clues",
+                        "statusId": "community-review-26-20260907.clues",
+                        "maxStacks": 3,
+                        "dispellable": false,
+                        "polarity": "debuff"
+                      },
+                      {
+                        "kind": "applyBuff",
+                        "modifiers": [],
+                        "permanent": true,
+                        "permanentScope": "round",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-26-20260907.seen-abilityhit",
+                        "statusId": "community-review-26-20260907.seen-abilityhit",
+                        "maxStacks": 1,
+                        "dispellable": false,
+                        "polarity": "debuff"
+                      }
+                    ]
+                  },
+                  {
+                    "on": "onObservedCombat",
+                    "observedEvent": "heal",
+                    "victim": "enemyChampion",
+                    "condition": {
+                      "all": [
+                        {
+                          "not": {
+                            "kind": "status",
+                            "subject": "target",
+                            "statusId": "community-review-26-20260907.seen-heal",
+                            "minStacks": 1,
+                            "appliedBy": "self"
+                          }
+                        },
+                        {
+                          "not": {
+                            "kind": "status",
+                            "subject": "target",
+                            "statusId": "community-review-26-20260907.clues",
+                            "minStacks": 3,
+                            "appliedBy": "self"
+                          }
+                        }
+                      ]
+                    },
+                    "effects": [
+                      {
+                        "kind": "applyBuff",
+                        "modifiers": [],
+                        "permanent": true,
+                        "permanentScope": "round",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-26-20260907.clues",
+                        "statusId": "community-review-26-20260907.clues",
+                        "maxStacks": 3,
+                        "dispellable": false,
+                        "polarity": "debuff"
+                      },
+                      {
+                        "kind": "applyBuff",
+                        "modifiers": [],
+                        "permanent": true,
+                        "permanentScope": "round",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-26-20260907.seen-heal",
+                        "statusId": "community-review-26-20260907.seen-heal",
+                        "maxStacks": 1,
+                        "dispellable": false,
+                        "polarity": "debuff"
+                      }
+                    ]
+                  },
+                  {
+                    "on": "onObservedCombat",
+                    "observedEvent": "control",
+                    "victim": "enemyChampion",
+                    "condition": {
+                      "all": [
+                        {
+                          "not": {
+                            "kind": "status",
+                            "subject": "target",
+                            "statusId": "community-review-26-20260907.seen-control",
+                            "minStacks": 1,
+                            "appliedBy": "self"
+                          }
+                        },
+                        {
+                          "not": {
+                            "kind": "status",
+                            "subject": "target",
+                            "statusId": "community-review-26-20260907.clues",
+                            "minStacks": 3,
+                            "appliedBy": "self"
+                          }
+                        }
+                      ]
+                    },
+                    "effects": [
+                      {
+                        "kind": "applyBuff",
+                        "modifiers": [],
+                        "permanent": true,
+                        "permanentScope": "round",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-26-20260907.clues",
+                        "statusId": "community-review-26-20260907.clues",
+                        "maxStacks": 3,
+                        "dispellable": false,
+                        "polarity": "debuff"
+                      },
+                      {
+                        "kind": "applyBuff",
+                        "modifiers": [],
+                        "permanent": true,
+                        "permanentScope": "round",
+                        "sourceScope": "caster",
+                        "stackKey": "community-review-26-20260907.seen-control",
+                        "statusId": "community-review-26-20260907.seen-control",
+                        "maxStacks": 1,
+                        "dispellable": false,
+                        "polarity": "debuff"
+                      }
+                    ]
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0"
+              "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
             }
           }
         ],
@@ -546,34 +627,43 @@
       "Q": {
         "slot": "Q",
         "name": "足球射擊",
-        "purpose": "【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。\n【目標設計】以腳力增強鞋踢出足球，依射線與碰撞命中。\n【待補機制】需足球單彈碰撞與腳踢動作。",
+        "purpose": "【修正行為】沿瞄準方向發射單枚實體彈，射程12、首個合法敵方碰撞一次物理傷害；偏離可閃避，到射程消失。暫用既有 bolt 的模型／特效，足球與踢球專用演出仍待替換及畫面驗收。\n【原設計】以腳力增強鞋踢出足球，依射線與碰撞命中。",
         "maxRank": 4,
         "abilityOverrides": {
-          "castTimeTier": "小",
           "cooldownTier": "小",
           "manaCostTier": "小",
           "provenance": "editor-json",
-          "rangeTier": "大"
+          "castTimeSec": 0.1,
+          "range": 12
         },
         "products": [
           {
-            "instanceId": "community-review-26-20260907-q-1",
+            "instanceId": "q-authored",
             "template": {
-              "ref": "tpl-traveling-wave",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "aoePerStep": 100,
-                "castTimeSec": 0.2,
-                "damage": {
-                  "damageTier": "極小",
-                  "ratios": []
-                },
-                "damageType": "physical",
-                "stepCount": 4,
-                "stepIntervalSec": 0.12,
-                "stepSize": 100
+                "castType": "skillshot",
+                "castTimeSec": 0.1,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "spawnProjectile",
+                    "projectileId": "imported.bolt.arcane",
+                    "onHit": [
+                      {
+                        "kind": "damage",
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "小",
+                          "ratios": []
+                        }
+                      }
+                    ]
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:bd9d8342c4ff231d5c4eb94f3e87434981ccc5d4ba402b7e615b292317436add"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -592,39 +682,43 @@
       "W": {
         "slot": "W",
         "name": "手錶型麻醉槍",
-        "purpose": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"stun\",\"duration\":0.7,\"applyTo\":\"target\",\"stun\":true}]。\n【目標設計】單發針造成短暫睡眠；目標受到後續傷害時提前醒來。\n【待補機制】0.7 秒暈眩只是底稿；需受傷可喚醒的睡眠及針彈碰撞。",
+        "purpose": "【修正行為】單枚直線麻醉彈首碰敵人後睡眠1.2秒，不額外造成傷害；受到後續實際HP傷害即提前醒來，只移除此睡眠，護盾吸收及零傷不喚醒。免控拒絕、未命中不睡眠；正常施法支付自己的魔力與冷卻。針與手錶演出仍使用代理彈待驗。\n【原設計】單發針造成短暫睡眠；目標受到後續傷害時提前醒來。",
         "maxRank": 4,
         "abilityOverrides": {
-          "castTimeTier": "小",
           "cooldownTier": "小",
-          "effects": [
-            {
-              "applyTo": "target",
-              "duration": 0.7,
-              "kind": "applyStatus",
-              "statusId": "stun",
-              "stun": true
-            }
-          ],
           "manaCostTier": "小",
           "provenance": "editor-json",
-          "rangeTier": "小"
+          "castTimeSec": 0.1,
+          "range": 12
         },
         "products": [
           {
-            "instanceId": "community-review-26-20260907-w-1",
+            "instanceId": "w-authored",
             "template": {
-              "ref": "tpl-single-strike",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "castTimeSec": 0.2,
-                "damage": {
-                  "damageTier": "小",
-                  "ratios": []
-                },
-                "damageType": "magic"
+                "castType": "skillshot",
+                "castTimeSec": 0.1,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "spawnProjectile",
+                    "projectileId": "imported.bolt.arcane",
+                    "onHit": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "community-review-26-20260907.sleep",
+                        "stun": true,
+                        "breakOnDamage": true,
+                        "duration": 1.2,
+                        "dispellable": true
+                      }
+                    ]
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -684,39 +778,60 @@
       "R": {
         "slot": "R",
         "name": "〔真相只有一個〕",
-        "purpose": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"slow30\",\"duration\":2,\"applyTo\":\"target\",\"moveSpeedMult\":0.7}]。\n【目標設計】消耗目標線索，揭示其當前位置並施加短效弱點標記；不揭露對決外或未授權資訊。\n【待補機制】目前緩速；需消耗線索、弱點標記及合法位置揭示。",
+        "purpose": "【修正行為】指定同區敵人，至少需要一條由自己蒐集的線索；施法開始扣除該目標全部自己的線索，其他敵人／觀察者不變。4秒揭示該目標並降低15%護甲與魔抗，同一施法者重施只刷新、不疊加。到期或驅散後恢復原隱形規則，不延長／取消其隱形時鐘；只使用當前對決的伺服器戰鬥實體，沒有玩家私密資料。\n【原設計】消耗目標線索，揭示其當前位置並施加短效弱點標記；不揭露對決外或未授權資訊。",
         "maxRank": 3,
         "abilityOverrides": {
-          "castTimeTier": "大",
           "cooldownTier": "大",
-          "effects": [
-            {
-              "applyTo": "target",
-              "duration": 2,
-              "kind": "applyStatus",
-              "moveSpeedMult": 0.7,
-              "statusId": "slow30"
-            }
-          ],
           "manaCostTier": "大",
           "provenance": "editor-json",
-          "rangeTier": "小"
+          "castTimeSec": 0.1,
+          "range": 12,
+          "statusCost": {
+            "statusId": "community-review-26-20260907.clues",
+            "count": "all",
+            "appliedBy": "self",
+            "subject": "target"
+          }
         },
         "products": [
           {
-            "instanceId": "community-review-26-20260907-r-1",
+            "instanceId": "r-authored",
             "template": {
-              "ref": "tpl-single-strike",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "castTimeSec": 0.2,
-                "damage": {
-                  "damageTier": "小",
-                  "ratios": []
-                },
-                "damageType": "magic"
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "modifiers": [
+                      {
+                        "stat": "armor",
+                        "op": "pctAdd",
+                        "value": -0.15
+                      },
+                      {
+                        "stat": "mr",
+                        "op": "pctAdd",
+                        "value": -0.15
+                      }
+                    ],
+                    "duration": 4,
+                    "stackKey": "community-review-26-20260907.weakness",
+                    "maxStacks": 1,
+                    "statusId": "community-review-26-20260907.weakness",
+                    "polarity": "debuff",
+                    "dispellable": true,
+                    "vision": {
+                      "revealed": true
+                    },
+                    "sourceScope": "caster"
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -831,37 +946,9 @@
               "kind": "anim",
               "on": "castStart",
               "replaces": "caster.action",
-              "replacesForMs": 350,
+              "replacesForMs": 100,
               "at": "caster",
               "pulse": "cast"
-            },
-            {
-              "vfxId": "fx.prim.physical.pulse-sm",
-              "at": "self",
-              "durationSec": 0.2,
-              "kind": "vfx",
-              "on": "castStart",
-              "w3xScale": 0.7,
-              "tint": [
-                77,
-                148,
-                237
-              ],
-              "alpha": 0.6
-            },
-            {
-              "vfxId": "fx.prim.physical.bolt",
-              "at": "target",
-              "durationSec": 0.35,
-              "kind": "vfx",
-              "on": "castEffect",
-              "w3xScale": 0.85,
-              "tint": [
-                77,
-                148,
-                237
-              ],
-              "alpha": 0.85
             }
           ]
         },
@@ -886,37 +973,9 @@
               "kind": "anim",
               "on": "castStart",
               "replaces": "caster.action",
-              "replacesForMs": 350,
+              "replacesForMs": 100,
               "at": "caster",
               "pulse": "cast"
-            },
-            {
-              "vfxId": "fx.prim.physical.pulse-sm",
-              "at": "self",
-              "durationSec": 0.2,
-              "kind": "vfx",
-              "on": "castStart",
-              "w3xScale": 0.7,
-              "tint": [
-                77,
-                148,
-                237
-              ],
-              "alpha": 0.6
-            },
-            {
-              "vfxId": "fx.prim.physical.slash",
-              "at": "target",
-              "durationSec": 0.35,
-              "kind": "vfx",
-              "on": "castEffect",
-              "w3xScale": 0.85,
-              "tint": [
-                77,
-                148,
-                237
-              ],
-              "alpha": 0.85
             }
           ]
         },
@@ -1190,6 +1249,12 @@
       }
     }
   },
+  "refinementNotes": {
+    "PASSIVE": "觀察同對決、當前可見的敵方英雄：有效普攻命中、技能命中、實際治療、成功控制各為一種事件。每名敵人／每名觀察者各自記錄，同種事件每名敵人／回合只記一次，最多保存三條線索；只到回合結束，不因重複事件或不同命中目標再增加。R 消耗該敵人身上由自己蒐集的線索，已見種類仍保留到重置。護盾實際吸收計入有效命中；無敵、零傷、過量治療、免控、不可見、跨區及對決結束不計。",
+    "Q": "沿瞄準方向發射單枚實體彈，射程12、首個合法敵方碰撞一次物理傷害；偏離可閃避，到射程消失。暫用既有 bolt 的模型／特效，足球與踢球專用演出仍待替換及畫面驗收。",
+    "W": "單枚直線麻醉彈首碰敵人後睡眠1.2秒，不額外造成傷害；受到後續實際HP傷害即提前醒來，只移除此睡眠，護盾吸收及零傷不喚醒。免控拒絕、未命中不睡眠；正常施法支付自己的魔力與冷卻。針與手錶演出仍使用代理彈待驗。",
+    "R": "指定同區敵人，至少需要一條由自己蒐集的線索；施法開始扣除該目標全部自己的線索，其他敵人／觀察者不變。4秒揭示該目標並降低15%護甲與魔抗，同一施法者重施只刷新、不疊加。到期或驅散後恢復原隱形規則，不延長／取消其隱形時鐘；只使用當前對決的伺服器戰鬥實體，沒有玩家私密資料。"
+  },
   "validationState": {
     "identity": {
       "revision": 1,
@@ -1202,43 +1267,30 @@
       "diagnosticCodes": []
     },
     "skills": {
-      "revision": 12,
-      "status": "idle",
+      "revision": 13,
+      "status": "stale",
       "diagnosticCodes": []
     },
     "mechanics": {
-      "revision": 1,
+      "revision": 13,
       "status": "stale",
       "diagnosticCodes": []
     },
     "presentation": {
-      "revision": 3,
+      "revision": 13,
       "status": "stale",
       "diagnosticCodes": []
     },
     "validation": {
-      "revision": 1,
+      "revision": 13,
       "status": "stale",
       "diagnosticCodes": []
     },
     "package": {
-      "revision": 3,
+      "revision": 13,
       "status": "stale",
       "diagnosticCodes": []
     }
   },
-  "receipts": [
-    {
-      "kind": "generator-adopted",
-      "generatorVersion": "sha256:2bd31988f577ec283ce1c33d74997466d78741c0e701b7bf23fdafdd30ba5962",
-      "projectRevision": 5,
-      "digest": "c644ffe31e13031027112750a1e4a3eff8e68549cdfc47671a9993043ca5a509"
-    },
-    {
-      "kind": "generator-adopted",
-      "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
-      "projectRevision": 12,
-      "digest": "c27a26342accd04098d9f19a313a9bc6dbd7ff87c1accf7a945b63e690332ed8"
-    }
-  ]
+  "receipts": []
 }

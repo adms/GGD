@@ -1453,6 +1453,7 @@ export function combatResolveSystem(world: SimWorld): void {
         source: pkt.source,
         target: pkt.target,
         amount: dmg,
+        shieldAbsorbed,
         type: pkt.type,
         dmgType: pkt.type,
         blocked,

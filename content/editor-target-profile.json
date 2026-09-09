@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "1186f881",
+    "fingerprint": "7704c20a",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -173,6 +173,7 @@
       "onInterval",
       "onKill",
       "onLethalDamage",
+      "onObservedCombat",
       "onOverheal",
       "onProjectileExpire",
       "onReflectSuccess",
@@ -240,6 +241,7 @@
       "internalCooldownScope",
       "key",
       "maxTriggers",
+      "observedEvent",
       "on",
       "onConsumed",
       "oncePerCast",
@@ -1002,6 +1004,7 @@
       "victim",
       "victimCondition",
       "vision",
+      "vision.revealed",
       "vision.stealthFadeDelaySec",
       "vision.trueSightRadius",
       "who",
@@ -5669,12 +5672,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "1186f881",
+    "engineFingerprint": "7704c20a",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 1186f881 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 7704c20a —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -6542,15 +6545,15 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "0683c1a04a0d",
+    "fingerprint": "2325d266bc5c",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "f3dad017a987"
+        "digest": "9a3b57bec565"
       },
       {
         "surface": "ability-item-zod-schemas",
-        "digest": "8466d7c76211"
+        "digest": "9412ee018f33"
       },
       {
         "surface": "exact-ref-collector",
@@ -6612,5 +6615,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "1ca1168c1877"
+  "profileDigest": "c3061c29ccd4"
 }

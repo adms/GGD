@@ -735,8 +735,9 @@ export const zAbilityDef = z
       statusId: zRef<StatusId>("status-effects", { soft: true }),
       count: z.union([z.number().int().min(1).max(MARK_MAX_COUNT), z.literal("all")]),
       appliedBy: z.enum(["self"]).optional(),
+      subject: z.enum(["self", "target"]).optional().describe("資源持有人；target 只適用指定目標技能，省略為自身。"),
     }).strict().optional().describe(
-      "額外消耗自身狀態或具名資源層數。足額且目標合法才在施法開始時扣除，" +
+      "額外消耗自身或指定目標的狀態／具名資源層數。足額且目標合法才在施法開始時扣除，" +
       "與魔力、冷卻一起支付；all 至少需要一層並一次扣清；吟唱中斷不退還。省略 appliedBy 才能使用沒有施法者歸屬的具名計數器。",
     ),
     /**
@@ -1080,6 +1081,11 @@ export const zAbilityDoc = zAbilityDef
   .extend({ schema: z.literal("ability@1") })
   .strict()
   .superRefine(refineInnate)
-  .superRefine(refineUnlimitedRange);
+  .superRefine(refineUnlimitedRange)
+  .superRefine((ability, ctx) => {
+    if (ability.statusCost?.subject === "target" && ability.castType !== "targeted") {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["statusCost", "subject"], message: "目標資源成本只適用 targeted 技能。" });
+    }
+  });
 
 export type AbilityDoc = z.infer<typeof zAbilityDoc>;

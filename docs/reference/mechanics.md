@@ -67,7 +67,7 @@ contentVersion `cv_6c2412e2eca3`
 | `trap` | 定點單次普攻觸發陷阱 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `weightedBranch` | 加權分支（隨機挑一段） | 10 | `godie-e00s.ex`、`godie-h02k.ex`、`godie-h02v.ex`、`godie-n00b.passive`、`godie-o02p.ex`、`godie-u034.passive`、`godie-u034.r`、`godie-ucrl.passive`、`godie-ucrl.r`、`grail-ex-08` |
 
-## 觸發事件（hook event） —— 36 種
+## 觸發事件（hook event） —— 37 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
@@ -93,6 +93,7 @@ contentVersion `cv_6c2412e2eca3`
 | `onInterval` | 週期（每 N 秒） | 14 | `godie-e00r.e`、`godie-e00r.e`、`godie-e00r.e`、`godie-e00r.e`、`godie-e00r.ex`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.passive`、`godie-e00r.q`、`godie-e00r.q`、`godie-emfr.passive`、`godie-hvsh.e` …（共 14） |
 | `onKill` | 擊殺時 | 15 | `godie-h01u.passive`、`godie-hpb1.passive`、`godie-hvsh.e`、`godie-o00x.passive`、`godie-ogrh.passive`、`godie-zombieking.passive`、`godie-zombiex.passive`、`godie-zombiex.passive`、`grail-c-10`、`grail-c-14`、`grail-a-05`、`grail-ex-03` …（共 15） |
 | `onLethalDamage` | 受到致命傷害時（免死有沒有生效都會發） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onObservedCombat` | 觀察同區可見敵人的有效命中、治療或控制 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onOverheal` | 治療溢出時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onProjectileExpire` | 自己的投射物消失時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onReflectSuccess` | 反彈成功時 | 14 | `godie-e002.ex`、`godie-e002.r`、`godie-e00l.ex`、`godie-e00l.r`、`godie-emfr.ex`、`godie-h00l.ex`、`godie-h00l.r`、`godie-h00l.r`、`godie-h02k.w`、`grail-c-02`、`grail-c-03`、`grail-a-01` …（共 14） |

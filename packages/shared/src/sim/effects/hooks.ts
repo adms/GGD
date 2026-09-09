@@ -267,6 +267,7 @@ export function fireHooks(
    */
   hookFilter?: (hook: HookDef) => boolean,
   evade?: EvadeEvent,
+  observedEvent?: HookDef["observedEvent"],
 ): number {
   let fired = 0;
   const sc = world.stats.get(owner);
@@ -288,6 +289,7 @@ export function fireHooks(
     for (let hi = 0; hi < src.hooks.length; hi++) {
       const hook = src.hooks[hi]!;
       if (hook.on !== event) continue;
+      if (hook.observedEvent !== undefined && observedEvent !== hook.observedEvent) continue;
       if (hook.evadeChannel !== undefined && evade?.channel !== hook.evadeChannel) continue;
       if (hook.evadeSource !== undefined && (evade === undefined ||
           (evade.channel !== "basic" && evade.channel !== "ability") ||

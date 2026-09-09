@@ -1,0 +1,421 @@
+{
+  "schema": "ggd-community-design-refinement@1",
+  "version": 1,
+  "projectId": "community-review-26-20260907",
+  "sourceSha256": "e849a934129ef794a4306faa0dd2e1c0b9cad28277e153629aca3dc8f9f677d4",
+  "slots": {
+    "PASSIVE": {
+      "products": [
+        {
+          "instanceId": "observed-clues",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onObservedCombat",
+                  "observedEvent": "basicHit",
+                  "victim": "enemyChampion",
+                  "condition": {
+                    "all": [
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-26-20260907.seen-basichit",
+                          "minStacks": 1,
+                          "appliedBy": "self"
+                        }
+                      },
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-26-20260907.clues",
+                          "minStacks": 3,
+                          "appliedBy": "self"
+                        }
+                      }
+                    ]
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyBuff",
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-26-20260907.clues",
+                      "statusId": "community-review-26-20260907.clues",
+                      "maxStacks": 3,
+                      "dispellable": false,
+                      "polarity": "debuff"
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-26-20260907.seen-basichit",
+                      "statusId": "community-review-26-20260907.seen-basichit",
+                      "maxStacks": 1,
+                      "dispellable": false,
+                      "polarity": "debuff"
+                    }
+                  ]
+                },
+                {
+                  "on": "onObservedCombat",
+                  "observedEvent": "abilityHit",
+                  "victim": "enemyChampion",
+                  "condition": {
+                    "all": [
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-26-20260907.seen-abilityhit",
+                          "minStacks": 1,
+                          "appliedBy": "self"
+                        }
+                      },
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-26-20260907.clues",
+                          "minStacks": 3,
+                          "appliedBy": "self"
+                        }
+                      }
+                    ]
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyBuff",
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-26-20260907.clues",
+                      "statusId": "community-review-26-20260907.clues",
+                      "maxStacks": 3,
+                      "dispellable": false,
+                      "polarity": "debuff"
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-26-20260907.seen-abilityhit",
+                      "statusId": "community-review-26-20260907.seen-abilityhit",
+                      "maxStacks": 1,
+                      "dispellable": false,
+                      "polarity": "debuff"
+                    }
+                  ]
+                },
+                {
+                  "on": "onObservedCombat",
+                  "observedEvent": "heal",
+                  "victim": "enemyChampion",
+                  "condition": {
+                    "all": [
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-26-20260907.seen-heal",
+                          "minStacks": 1,
+                          "appliedBy": "self"
+                        }
+                      },
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-26-20260907.clues",
+                          "minStacks": 3,
+                          "appliedBy": "self"
+                        }
+                      }
+                    ]
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyBuff",
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-26-20260907.clues",
+                      "statusId": "community-review-26-20260907.clues",
+                      "maxStacks": 3,
+                      "dispellable": false,
+                      "polarity": "debuff"
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-26-20260907.seen-heal",
+                      "statusId": "community-review-26-20260907.seen-heal",
+                      "maxStacks": 1,
+                      "dispellable": false,
+                      "polarity": "debuff"
+                    }
+                  ]
+                },
+                {
+                  "on": "onObservedCombat",
+                  "observedEvent": "control",
+                  "victim": "enemyChampion",
+                  "condition": {
+                    "all": [
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-26-20260907.seen-control",
+                          "minStacks": 1,
+                          "appliedBy": "self"
+                        }
+                      },
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-26-20260907.clues",
+                          "minStacks": 3,
+                          "appliedBy": "self"
+                        }
+                      }
+                    ]
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyBuff",
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-26-20260907.clues",
+                      "statusId": "community-review-26-20260907.clues",
+                      "maxStacks": 3,
+                      "dispellable": false,
+                      "polarity": "debuff"
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-26-20260907.seen-control",
+                      "statusId": "community-review-26-20260907.seen-control",
+                      "maxStacks": 1,
+                      "dispellable": false,
+                      "polarity": "debuff"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】觀察同對決、當前可見的敵方英雄：有效普攻命中、技能命中、實際治療、成功控制各為一種事件。每名敵人／每名觀察者各自記錄，同種事件每名敵人／回合只記一次，最多保存三條線索；只到回合結束，不因重複事件或不同命中目標再增加。R 消耗該敵人身上由自己蒐集的線索，已見種類仍保留到重置。護盾實際吸收計入有效命中；無敵、零傷、過量治療、免控、不可見、跨區及對決結束不計。\n【原設計】對已觀察敵人收集最多三條線索，每種有效戰鬥事件只計一次。",
+      "note": "觀察同對決、當前可見的敵方英雄：有效普攻命中、技能命中、實際治療、成功控制各為一種事件。每名敵人／每名觀察者各自記錄，同種事件每名敵人／回合只記一次，最多保存三條線索；只到回合結束，不因重複事件或不同命中目標再增加。R 消耗該敵人身上由自己蒐集的線索，已見種類仍保留到重置。護盾實際吸收計入有效命中；無敵、零傷、過量治療、免控、不可見、跨區及對決結束不計。",
+      "removeOverrides": [
+        "effects",
+        "castTimeTier",
+        "rangeTier"
+      ],
+      "abilityOverrides": {}
+    },
+    "Q": {
+      "products": [
+        {
+          "instanceId": "q-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "spawnProjectile",
+                  "projectileId": "imported.bolt.arcane",
+                  "onHit": [
+                    {
+                      "kind": "damage",
+                      "damageType": "physical",
+                      "amount": {
+                        "damageTier": "小",
+                        "ratios": []
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】沿瞄準方向發射單枚實體彈，射程12、首個合法敵方碰撞一次物理傷害；偏離可閃避，到射程消失。暫用既有 bolt 的模型／特效，足球與踢球專用演出仍待替換及畫面驗收。\n【原設計】以腳力增強鞋踢出足球，依射線與碰撞命中。",
+      "note": "沿瞄準方向發射單枚實體彈，射程12、首個合法敵方碰撞一次物理傷害；偏離可閃避，到射程消失。暫用既有 bolt 的模型／特效，足球與踢球專用演出仍待替換及畫面驗收。",
+      "removeOverrides": [
+        "effects",
+        "castTimeTier",
+        "rangeTier"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0.1,
+        "range": 12
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-26-20260907.q",
+        "abilityId": "community-review-26-20260907.q",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast",
+            "replaces": "caster.action",
+            "replacesForMs": 100
+          }
+        ]
+      }
+    },
+    "W": {
+      "products": [
+        {
+          "instanceId": "w-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "spawnProjectile",
+                  "projectileId": "imported.bolt.arcane",
+                  "onHit": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-26-20260907.sleep",
+                      "stun": true,
+                      "breakOnDamage": true,
+                      "duration": 1.2,
+                      "dispellable": true
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】單枚直線麻醉彈首碰敵人後睡眠1.2秒，不額外造成傷害；受到後續實際HP傷害即提前醒來，只移除此睡眠，護盾吸收及零傷不喚醒。免控拒絕、未命中不睡眠；正常施法支付自己的魔力與冷卻。針與手錶演出仍使用代理彈待驗。\n【原設計】單發針造成短暫睡眠；目標受到後續傷害時提前醒來。",
+      "note": "單枚直線麻醉彈首碰敵人後睡眠1.2秒，不額外造成傷害；受到後續實際HP傷害即提前醒來，只移除此睡眠，護盾吸收及零傷不喚醒。免控拒絕、未命中不睡眠；正常施法支付自己的魔力與冷卻。針與手錶演出仍使用代理彈待驗。",
+      "removeOverrides": [
+        "effects",
+        "castTimeTier",
+        "rangeTier"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0.1,
+        "range": 12
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-26-20260907.w",
+        "abilityId": "community-review-26-20260907.w",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast",
+            "replaces": "caster.action",
+            "replacesForMs": 100
+          }
+        ]
+      }
+    },
+    "R": {
+      "products": [
+        {
+          "instanceId": "r-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "modifiers": [
+                    {
+                      "stat": "armor",
+                      "op": "pctAdd",
+                      "value": -0.15
+                    },
+                    {
+                      "stat": "mr",
+                      "op": "pctAdd",
+                      "value": -0.15
+                    }
+                  ],
+                  "duration": 4,
+                  "stackKey": "community-review-26-20260907.weakness",
+                  "maxStacks": 1,
+                  "statusId": "community-review-26-20260907.weakness",
+                  "polarity": "debuff",
+                  "dispellable": true,
+                  "vision": {
+                    "revealed": true
+                  },
+                  "sourceScope": "caster"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】指定同區敵人，至少需要一條由自己蒐集的線索；施法開始扣除該目標全部自己的線索，其他敵人／觀察者不變。4秒揭示該目標並降低15%護甲與魔抗，同一施法者重施只刷新、不疊加。到期或驅散後恢復原隱形規則，不延長／取消其隱形時鐘；只使用當前對決的伺服器戰鬥實體，沒有玩家私密資料。\n【原設計】消耗目標線索，揭示其當前位置並施加短效弱點標記；不揭露對決外或未授權資訊。",
+      "note": "指定同區敵人，至少需要一條由自己蒐集的線索；施法開始扣除該目標全部自己的線索，其他敵人／觀察者不變。4秒揭示該目標並降低15%護甲與魔抗，同一施法者重施只刷新、不疊加。到期或驅散後恢復原隱形規則，不延長／取消其隱形時鐘；只使用當前對決的伺服器戰鬥實體，沒有玩家私密資料。",
+      "removeOverrides": [
+        "effects",
+        "castTimeTier",
+        "rangeTier"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0.1,
+        "range": 12,
+        "statusCost": {
+          "statusId": "community-review-26-20260907.clues",
+          "count": "all",
+          "appliedBy": "self",
+          "subject": "target"
+        }
+      },
+      "visualTargets": {
+        "castEffect": "target"
+      }
+    }
+  }
+}

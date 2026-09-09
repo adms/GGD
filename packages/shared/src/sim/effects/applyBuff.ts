@@ -199,6 +199,9 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
       ? `${scopePrefix}stack:${e.stackKey}`
       : `${compoundPrefix}${world.tick}`;
     for (const target of subjects) {
+      if (e.vision?.revealed === true && (!world.health.get(target)?.alive ||
+          world.transform.get(target)?.zone !== world.transform.get(ctx.caster)?.zone ||
+          world.settledZones.has(world.transform.get(target)!.zone))) continue;
       // A scoped source's expired stacks must not survive a same-tick reapply
       // before the expiry system gets its next turn.
       if (e.sourceScope === "caster") {

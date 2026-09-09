@@ -57,7 +57,11 @@
 import type { EvadeEvent } from "../combat/evasion";
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
-import type { HookEvent } from "../stats/modifiers";
+import { canSee } from "../stealth";
+import { visionRulesOf } from "../vision";
+import { activeObstacles } from "../map/gates";
+import { hasLineOfSight } from "../map/lineOfSight";
+import type { HookDef, HookEvent } from "../stats/modifiers";
 import { alliedChampions, fireHooks } from "../effects/hooks";
 import { StatusEffects } from "../../content/registries";
 
@@ -70,7 +74,8 @@ interface WorldHookRow {
    * `"world"` = 全場活人；`"actor"` = 事件裡指名的那一位；
    * `"allies"` = 那一位**活著的隊友**（他自己不收）。
    */
-  readonly scope: "world" | "actor" | "allies";
+  readonly scope: "world" | "actor" | "allies" | "observers";
+  readonly observedEvent?: HookDef["observedEvent"];
   /**
    * `scope:"actor"` 時，從 `ev.data` 的哪一格取「持有者」。
    * `scope:"allies"` 時，取的是**事件講的那個人**（收件人由他的隊伍推出來）。
@@ -143,6 +148,26 @@ function isControlStatus(data: Record<string, unknown>): boolean {
 function positiveAt(data: Record<string, unknown>, key: string): boolean {
   const v = data[key];
   return typeof v === "number" && v > 0;
+}
+
+function hostileCombatEvent(world: SimWorld, data: Record<string, unknown>): boolean {
+  const source = idAt(data, "source"), target = idAt(data, "target");
+  if (source === undefined || target === undefined || source === target) return false;
+  const a = world.team.get(source), b = world.team.get(target);
+  return a !== undefined && b !== undefined && a.teamId !== b.teamId &&
+    world.transform.get(source)?.zone === world.transform.get(target)?.zone;
+}
+
+/** The observation audience uses the same stealth and map-visibility rules as play. */
+function canObserve(world: SimWorld, observer: EntityId, actor: EntityId): boolean {
+  const a = world.transform.get(observer), b = world.transform.get(actor);
+  const ta = world.team.get(observer), tb = world.team.get(actor);
+  if (!a || !b || !ta || !tb || a.zone !== b.zone || ta.teamId === tb.teamId ||
+      world.settledZones.has(a.zone) || !world.champion.has(actor) ||
+      !world.health.get(actor)?.alive || !canSee(world, observer, actor)) return false;
+  if (visionRulesOf(world).fullVision) return true;
+  const zone = world.arena.zones[a.zone];
+  return zone !== undefined && hasLineOfSight(a.pos, b.pos, activeObstacles(zone.obstacles, world.gateSchedule, world.tick));
 }
 
 function effectiveAllyProtection(world: SimWorld, data: Record<string, unknown>): boolean {
@@ -355,6 +380,18 @@ const WORLD_HOOKS: readonly WorldHookRow[] = [
     actorKey: "entity",
     firesOutsideCombat: true,
   },
+  { simEvent: "damage", hook: "onObservedCombat", scope: "observers", actorKey: "source", observedEvent: "basicHit",
+    when: (world, data) => data.origin === "basic" && hostileCombatEvent(world, data) &&
+      (positiveAt(data, "amount") || positiveAt(data, "shieldAbsorbed")) },
+  { simEvent: "damage", hook: "onObservedCombat", scope: "observers", actorKey: "source", observedEvent: "abilityHit",
+    when: (world, data) => typeof data.origin === "string" && data.origin.startsWith("ability:") && hostileCombatEvent(world, data) &&
+      (positiveAt(data, "amount") || positiveAt(data, "shieldAbsorbed")) },
+  { simEvent: "heal", hook: "onObservedCombat", scope: "observers", actorKey: "source", observedEvent: "heal",
+    when: (world, data) => positiveAt(data, "amount") &&
+      world.team.get(idAt(data, "source")!)?.teamId === world.team.get(idAt(data, "target")!)?.teamId &&
+      world.transform.get(idAt(data, "source")!)?.zone === world.transform.get(idAt(data, "target")!)?.zone },
+  { simEvent: "controlApplied", hook: "onObservedCombat", scope: "observers", actorKey: "source", observedEvent: "control",
+    when: hostileCombatEvent },
   { simEvent: "roundStart", hook: "onRoundStart", scope: "world" },
   // ⚠️ `firesOutsideCombat` 非有不可 —— 見那個欄位的註解。
   { simEvent: "roundEnd", hook: "onRoundEnd", scope: "world", firesOutsideCombat: true },
@@ -436,6 +473,16 @@ export function worldHookSystem(world: SimWorld): void {
             undefined,
             ev.type === "evade" ? ev.data as unknown as EvadeEvent : undefined,
           );
+          continue;
+        }
+        if (row.scope === "observers") {
+          const actor = idAt(ev.data, row.actorKey);
+          if (actor === undefined) continue;
+          const observers = [...world.champion.keys()].sort((a, b) => a - b);
+          for (const observer of observers) {
+            if (!canObserve(world, observer, actor)) continue;
+            fireHooks(world, observer, row.hook, actor, undefined, undefined, undefined, undefined, undefined, row.observedEvent);
+          }
           continue;
         }
         if (row.scope === "allies") {

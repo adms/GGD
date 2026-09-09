@@ -1645,7 +1645,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 | `summon` | 2 | `swapResource` | 1 | `taunt` | 2 |
 | `trap` | 0 | `weightedBranch` | 10 |  |  |
 
-### 觸發事件（hook event）—— 36 種
+### 觸發事件（hook event）—— 37 種
 
 | 事件 | 中文 | 用它的內容 |
 |---|---|--:|
@@ -1671,6 +1671,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 | `onInterval` | 週期（每 N 秒） | 14 |
 | `onKill` | 擊殺時 | 15 |
 | `onLethalDamage` | 受到致命傷害時（免死有沒有生效都會發） | 0 |
+| `onObservedCombat` | 觀察同區可見敵人的有效命中、治療或控制 | 0 |
 | `onOverheal` | 治療溢出時 | 0 |
 | `onProjectileExpire` | 自己的投射物消失時 | 0 |
 | `onReflectSuccess` | 反彈成功時 | 14 |

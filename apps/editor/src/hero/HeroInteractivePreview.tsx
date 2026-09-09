@@ -42,10 +42,10 @@ export function HeroInteractivePreview(props: { project: HeroProject; slot: Hero
   const requiredSummon = props.result.compiled?.abilityDrafts[slot].requiredSummonSlot;
   return <section aria-label="可調整的試玩情境">
     {requiredSummon ? <p>需要自己 {requiredSummon}「{project.acceptedPlan?.slots[requiredSummon].name}」的存活召喚物。可在前置施法選擇 {requiredSummon} 後試玩；只補足資源不會建立召喚物。</p> : null}
-    {statusCost ? <p>單槽試玩{setup.resourceSetup === "empty" ? "保留初始" : "預先補足已安裝的"}資源；本招消耗{statusCost.count === "all" ? "全部剩餘資源（至少一層）" : `${statusCost.count} 層`}。整套驗收不補資源。</p> : null}
+    {statusCost?.subject === "target" ? <p>本招消耗指定目標身上的資源，必須先由實際機制取得；單槽試玩不會建立線索等目標資源。</p> : statusCost ? <p>單槽試玩{setup.resourceSetup === "empty" ? "保留初始" : "預先補足已安裝的"}資源；本招消耗自身{statusCost.count === "all" ? "全部剩餘資源（至少一層）" : `${statusCost.count} 層`}。整套驗收不補資源。</p> : null}
     <details><summary>調整試玩情境</summary>
       <p>位置以場地中心為原點。這些設定只影響本次試玩；投稿仍執行固定的六槽驗收。</p>
-      {statusCost ? <label><input type="checkbox" checked={setup.resourceSetup !== "empty"} onChange={(event) => setSetup({ ...setup, resourceSetup: event.target.checked ? "ready" : "empty" })} />單槽試玩補足施放資源（不修改作品）</label> : null}
+      {statusCost && statusCost.subject !== "target" ? <label><input type="checkbox" checked={setup.resourceSetup !== "empty"} onChange={(event) => setSetup({ ...setup, resourceSetup: event.target.checked ? "ready" : "empty" })} />單槽試玩補足施放資源（不修改作品）</label> : null}
       <label>前置施法<select aria-label="前置施法" value={setup.priorCast?.slot ?? ""} onChange={(event) => {
         const priorSlot = event.target.value;
         setSetup({ ...setup, priorCast: priorSlot === "Q" || priorSlot === "W" || priorSlot === "E" || priorSlot === "R"

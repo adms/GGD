@@ -336,6 +336,9 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
         });
       }
       if (isCc) recordCc(world, ctx.caster, target, addedTicks);
+      if (isCc && addedTicks > 0 && (!existing || stacksGrew)) {
+        world.emit("controlApplied", { source: ctx.caster, target, statusId: e.statusId, origin: ctx.origin });
+      }
       // 【狀態被套用的當下】(GH#300) —— `systems/WorldHookSystem.ts` 把它轉成
       // `onStatusApplied`。emit 而不是 `fireHooks`，理由與下面那個 `stunApplied`
       // 逐字相同（import 環）。

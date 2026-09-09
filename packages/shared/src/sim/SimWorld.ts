@@ -2024,6 +2024,9 @@ export class SimWorld {
         }
       }
       for (const s of this.stats.get(id)?.sources ?? []) {
+        if (s.vision?.revealed === true && (s.expiresAtTick === undefined || s.expiresAtTick > this.tick)) {
+          mixOwned(id, 3, s.applierId ?? id, s.id, "revealed", s.expiresAtTick, s.stacks);
+        }
         if (s.applierId !== undefined && (s.expiresAtTick === undefined || s.expiresAtTick > this.tick)) {
           mixOwned(id, 2, s.applierId, s.id, s.statusId ?? "", s.expiresAtTick, s.stacks);
         }

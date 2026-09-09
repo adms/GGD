@@ -1,9 +1,9 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "1186f881",
+  "capabilityFingerprint": "7704c20a",
   "counts": {
     "effectKinds": 50,
-    "hookEvents": 36,
+    "hookEvents": 37,
     "conditionLeafKinds": 11,
     "templateFamilies": 43,
     "effectFields": 283,
@@ -565,6 +565,7 @@
       "onInterval",
       "onKill",
       "onLethalDamage",
+      "onObservedCombat",
       "onOverheal",
       "onProjectileExpire",
       "onReflectSuccess",

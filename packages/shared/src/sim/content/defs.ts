@@ -199,7 +199,7 @@ export interface AbilityDef {
   /** Debited once at cast-begin, after validation, alongside mana/cooldown.
    * Interrupts do not refund it. Missing leaves legacy casts unchanged. */
   requiredSummonSlot?: import("../intents").CastableSlot;
-  statusCost?: { statusId: StatusId; count: number | "all"; appliedBy?: "self" };
+  statusCost?: { statusId: StatusId; count: number | "all"; appliedBy?: "self"; subject?: "self" | "target" };
   /**
    * ⚠️ 可以是 `Number.POSITIVE_INFINITY` —— 「無上限施法距離」（GH#602）。
    * 文件寫的是 `rangeUnlimited: true` + `range: 0`，`content/rangeTiers.ts` 的

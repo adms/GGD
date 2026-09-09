@@ -163,7 +163,7 @@ export function runHeroAbilityScenario(
   // Never manufacture a missing counter or override its declared capacity.
   let preparedResource = 0;
   const cost = ability.statusCost;
-  if (cost && cost.appliedBy === undefined && setup?.resourceSetup !== "empty") {
+  if (cost && cost.subject !== "target" && cost.appliedBy === undefined && setup?.resourceSetup !== "empty") {
     const mark = world.marks.get(caster)?.get(cost.statusId);
     const required = cost.count === "all" ? 1 : cost.count;
     if (mark && mark.max >= required && mark.count < required) {

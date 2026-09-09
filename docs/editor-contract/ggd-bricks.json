@@ -1,25 +1,25 @@
 {
   "schema": "ggd-bricks@1",
   "note": "⭐ 積木清冊 —— 「有哪些積木、每一顆在哪個編輯器有表單、誰在用」的**唯一**一份答案（GH#989）。⛔ 產物：改 `tools/brick-census/bricks.ts` 再 `pnpm bricks:build`，⛔ 不要手改。⛔ 刻意沒有產生時間戳（隨時鐘變的欄位會讓 `--check` 永遠不相等）。",
-  "capabilityFingerprint": "1186f881",
+  "capabilityFingerprint": "7704c20a",
   "adminFormSource": "apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（72 份）→ 後台自己的 readSchema()（1169 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。",
   "editorFormSource": "⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 171 顆有收據；收據裡沒有的才退回代理值。",
   "editorFormNeededFromCodex": "⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / vfx-call / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。",
   "counts": {
-    "total": 176,
+    "total": 177,
     "effect": 50,
-    "hook": 36,
+    "hook": 37,
     "leaf": 11,
     "template": 43,
     "vfx-prim": 13,
     "vfx-subtype": 4,
     "vfx-call": 4,
     "model-preset": 15,
-    "gated": 137,
+    "gated": 138,
     "gaps": 51,
     "missingAdminForm": 51,
     "missingEditorForm": 4,
-    "zeroAdoption": 68
+    "zeroAdoption": 69
   },
   "gaps": [
     {
@@ -4544,6 +4544,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -4567,6 +4578,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -4785,6 +4797,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -4808,6 +4831,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -5026,6 +5050,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -5049,6 +5084,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -5267,6 +5303,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -5290,6 +5337,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -5508,6 +5556,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -5531,6 +5590,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -5749,6 +5809,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -5772,6 +5843,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -5990,6 +6062,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -6013,6 +6096,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -6231,6 +6315,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -6254,6 +6349,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -6472,6 +6568,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -6495,6 +6602,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -6713,6 +6821,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -6736,6 +6855,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -6954,6 +7074,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -6977,6 +7108,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -7195,6 +7327,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -7218,6 +7361,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -7436,6 +7580,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -7459,6 +7614,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -7677,6 +7833,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -7700,6 +7867,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -7918,6 +8086,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -7941,6 +8120,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -8159,6 +8339,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -8182,6 +8373,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -8400,6 +8592,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -8423,6 +8626,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -8641,6 +8845,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -8664,6 +8879,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -8882,6 +9098,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -8905,6 +9132,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -9123,6 +9351,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -9146,6 +9385,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -9364,6 +9604,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -9387,6 +9638,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -9605,6 +9857,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -9628,6 +9891,260 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
+            "onDamageDealt",
+            "onDamageTaken",
+            "onKill",
+            "onStunned",
+            "onInterval",
+            "onReflectSuccess",
+            "onBossSpawn",
+            "onFireRingIgnite",
+            "onGuardianDown",
+            "onDeath",
+            "onRevive",
+            "onEvade",
+            "onShieldGained",
+            "onShieldBroken",
+            "onAllyDeath",
+            "onStatusApplied"
+          ]
+        },
+        {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
+          "name": "onConsumed",
+          "type": "enum",
+          "values": [
+            "stop",
+            "detachSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "perTarget",
+          "type": "boolean",
+          "optional": true
+        },
+        {
+          "name": "reflectedDamageSource",
+          "type": "enum",
+          "values": [
+            "any",
+            "basic",
+            "nonBasic",
+            "ability",
+            "other"
+          ],
+          "optional": true
+        },
+        {
+          "name": "reflectedDamageType",
+          "type": "enum",
+          "values": [
+            "any",
+            "physical",
+            "magic",
+            "true"
+          ],
+          "optional": true
+        },
+        {
+          "name": "target",
+          "type": "enum",
+          "values": [
+            "self",
+            "event",
+            "allies"
+          ],
+          "optional": true
+        },
+        {
+          "name": "victim",
+          "type": "enum",
+          "values": [
+            "champion",
+            "mob",
+            "any",
+            "enemyChampion",
+            "allyChampion",
+            "enemy"
+          ],
+          "optional": true
+        }
+      ],
+      "adminForm": true,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+    },
+    {
+      "id": "onObservedCombat",
+      "layer": "hook",
+      "params": [
+        {
+          "name": "abilitySlot",
+          "type": "enum",
+          "values": [
+            "Q",
+            "W",
+            "E",
+            "R",
+            "EX",
+            "PASSIVE"
+          ],
+          "optional": true
+        },
+        {
+          "name": "chance",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "chanceFrom",
+          "type": "object",
+          "optional": true
+        },
+        {
+          "name": "condition",
+          "type": "lazy",
+          "optional": true
+        },
+        {
+          "name": "consumeOn",
+          "type": "enum",
+          "values": [
+            "fire"
+          ],
+          "optional": true
+        },
+        {
+          "name": "critSource",
+          "type": "enum",
+          "values": [
+            "any",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "damageCrit",
+          "type": "enum",
+          "values": [
+            "any",
+            "crit",
+            "nonCrit"
+          ],
+          "optional": true
+        },
+        {
+          "name": "damageSource",
+          "type": "enum",
+          "values": [
+            "any",
+            "basic",
+            "nonBasic",
+            "ability",
+            "other"
+          ],
+          "optional": true
+        },
+        {
+          "name": "damageType",
+          "type": "enum",
+          "values": [
+            "any",
+            "physical",
+            "magic",
+            "true"
+          ],
+          "optional": true
+        },
+        {
+          "name": "effects",
+          "type": "array"
+        },
+        {
+          "name": "evadeChannel",
+          "type": "enum",
+          "values": [
+            "basic",
+            "ability"
+          ],
+          "optional": true
+        },
+        {
+          "name": "evadeSource",
+          "type": "enum",
+          "values": [
+            "defender",
+            "thisSource"
+          ],
+          "optional": true
+        },
+        {
+          "name": "internalCooldown",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "internalCooldownScope",
+          "type": "enum",
+          "values": [
+            "source",
+            "perAbilitySlot"
+          ],
+          "optional": true
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "name": "maxTriggers",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
+          "name": "on",
+          "type": "enum",
+          "values": [
+            "onUltimateCast",
+            "onUltimateHit",
+            "onCrowdControlApplied",
+            "onCrowdControlReceived",
+            "onHeal",
+            "onAllyProtected",
+            "onOverheal",
+            "onAllyDamaged",
+            "onProjectileExpire",
+            "onBoundaryTouch",
+            "onDashOrBlink",
+            "onLethalDamage",
+            "onStatCapReached",
+            "onRoundStart",
+            "onRoundEnd",
+            "onAbilityCast",
+            "onAbilityHit",
+            "onBasicAttack",
+            "onAttackAttempt",
+            "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -9846,6 +10363,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -9869,6 +10397,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -10087,6 +10616,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -10110,6 +10650,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -10328,6 +10869,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -10351,6 +10903,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -10569,6 +11122,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -10592,6 +11156,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -10810,6 +11375,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -10833,6 +11409,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -11051,6 +11628,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -11074,6 +11662,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -11292,6 +11881,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -11315,6 +11915,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -11533,6 +12134,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -11556,6 +12168,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -11774,6 +12387,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -11797,6 +12421,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -12015,6 +12640,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -12038,6 +12674,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -12256,6 +12893,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -12279,6 +12927,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -12497,6 +13146,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -12520,6 +13180,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -12738,6 +13399,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -12761,6 +13433,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
@@ -12979,6 +13652,17 @@
           "optional": true
         },
         {
+          "name": "observedEvent",
+          "type": "enum",
+          "values": [
+            "basicHit",
+            "abilityHit",
+            "heal",
+            "control"
+          ],
+          "optional": true
+        },
+        {
           "name": "on",
           "type": "enum",
           "values": [
@@ -13002,6 +13686,7 @@
             "onBasicAttack",
             "onAttackAttempt",
             "onSummonHit",
+            "onObservedCombat",
             "onDamageDealt",
             "onDamageTaken",
             "onKill",
