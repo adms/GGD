@@ -1,0 +1,46 @@
+{
+  "id": "community-review-37-20260907.passive",
+  "schema": "ability@1",
+  "name": "〔雖然害怕還是努力〕",
+  "description": "附近友軍交戰時累積勇氣，上限三層；以時間間隔累積，避免多段傷害快速疊滿。",
+  "slot": "PASSIVE",
+  "provenance": "editor-json",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0,
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 3,
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            }
+          }
+        ]
+      }
+    ],
+    "name": "〔雖然害怕還是努力〕"
+  },
+  "effects": [],
+  "innateKind": "passive"
+}

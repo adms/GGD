@@ -1,0 +1,57 @@
+{
+  "id": "community-review-26-20260907.e",
+  "name": "渦輪引擎滑板",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】短期提高移動能力，急轉、碰撞與停止均有清楚狀態。\n【待補機制】僅 3 秒移速；需滑板加減速、急轉與碰撞狀態。",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    15,
+    15,
+    15,
+    15
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 8,
+  "rangeTier": "大",
+  "cooldownTier": "小",
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "msBonusTier": "極小"
+        }
+      ],
+      "duration": 3
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/thorne.e.webp",
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 3,
+      "modifiers": [
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "msBonusTier": "極小"
+        }
+      ],
+      "castTimeSec": 0.15
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}

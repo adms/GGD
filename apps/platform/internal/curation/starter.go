@@ -348,6 +348,50 @@ var (
 		"godie-umal",    // 拳四郎 - 北斗神拳掌門人  #25  — 本體；u00l 北斗之鼠 是 25-04 ChangeDNA 的變身態
 		"godie-uvng",    // 飛影 - 邪眼師  #38  — 本體；u010 是 38-00 邪眼全開 的變身態
 		"godie-zombiex", // 喪標麥可 - 聖杯黑泥醬  #100  — owner 2026-07-28:「喪標麥可 應該在預設英雄開放名單上」
+
+		// ── ⭐ 第一批 37 名社群英雄（GH#1165）────────────────────────────
+		// owner 2026-09-10（逐字）：「⋯**已經取得審查授權可以直接上架，
+		//   被認定為預設官方角色**⋯」⇒ ⛔ 不走社群房／HITL，直接進出貨名單。
+		// ⭐ 資料由 `tools/ship-81/gen.py` 從三張表 join 產生：
+		//   ①`materials/community-hero-forge/recipes/` ②已產的圖示 ③⭐ owner 維護的
+		//   `全角色模型盤點.md`（⛔ 不抄一份 —— 它會持續更新）。
+		"community-review-01-20260907", // 武藤遊戲｜法師｜mage
+		"community-review-02-20260907", // 八神庵｜鬥士｜fighter
+		"community-review-03-20260907", // 不知火舞｜鬥士｜fighter
+		"community-review-04-20260907", // 空條承太郎｜鬥士｜fighter
+		"community-review-05-20260907", // 洛克人｜射手｜marksman
+		"community-review-06-20260907", // 卡比｜坦克｜tank
+		"community-review-07-20260907", // 西索｜法刺｜fighter
+		"community-review-08-20260907", // 米卡莎｜鬥士｜fighter
+		"community-review-09-20260907", // 赫蘿｜軟輔｜fighter
+		"community-review-10-20260907", // 魯路修｜軟輔｜fighter
+		"community-review-11-20260907", // 利姆路｜法鬥｜mage
+		"community-review-12-20260907", // 衛宮士郎｜法鬥｜mage
+		"community-review-13-20260907", // 朝田詩乃｜射手｜marksman
+		"community-review-14-20260907", // 殺老師｜法刺｜fighter
+		"community-review-15-20260907", // 比利海靈頓｜硬輔｜tank
+		"community-review-16-20260907", // 魔法少女☆伊莉雅｜法師｜mage
+		"community-review-17-20260907", // 安茲·烏爾·恭｜法師｜mage
+		"community-review-18-20260907", // 吉爾伽美什｜砲手｜marksman
+		"community-review-19-20260907", // 桐谷和人｜鬥士｜fighter
+		"community-review-20-20260907", // 御坂美琴｜法師｜mage
+		"community-review-21-20260907", // 鹿目圓｜軟輔｜fighter
+		"community-review-22-20260907", // 菜月昴｜硬輔｜tank
+		"community-review-23-20260907", // 坂田銀時｜鬥士｜fighter
+		"community-review-24-20260907", // 奇犽｜法刺｜fighter
+		"community-review-25-20260907", // 一拳超人｜狂戰｜fighter
+		"community-review-26-20260907", // 名偵探柯南｜射手｜marksman
+		"community-review-27-20260907", // 庫洛魔法使｜軟輔｜fighter
+		"community-review-28-20260907", // 艾莉絲·伯雷亞斯·格雷拉特｜鬥士｜fighter
+		"community-review-29-20260907", // 芙莉蓮｜法師｜mage
+		"community-review-30-20260907", // 尼古貓貓｜法師｜mage
+		"community-review-31-20260907", // SUN樂｜鬥士｜fighter
+		"community-review-32-20260907", // 阿薩謝爾｜法鬥｜mage
+		"community-review-33-20260907", // 近衛刀太｜狂戰｜fighter
+		"community-review-34-20260907", // 高速婆婆｜狂戰｜fighter
+		"community-review-35-20260907", // 炭治郎｜鬥士｜fighter
+		"community-review-36-20260907", // 鬼畜王蘭斯｜狂戰｜fighter
+		"community-review-37-20260907", // 吉伊卡哇｜硬輔｜tank
 	}
 
 	// SHOP items — the FINAL CRAFTED WEAPONS, and nothing else (owner rule 1,
@@ -463,97 +507,97 @@ var (
 	starterLegendaryItems = []string{
 		// ── EX（content/loot-tables/legendary-weapons.json）
 		"cleaver-of-the-warden", // 泰坦九頭蛇
-		"godie-i000", // 丈八蛇矛
-		"godie-i007", // 虛哭神去
-		"godie-i00i", // 炎龍巨弩
-		"godie-i00j", // 奇門盾甲
-		"godie-i00s", // 黃金聖鬥衣
-		"godie-i00u", // 名刀-天狼
-		"godie-i00z", // 四魂之玉
-		"godie-i012", // 熾天使之弓
-		"godie-i013", // 緣一零式
-		"godie-i018", // 朗基努斯之槍
-		"godie-i01g", // 貫雷槍
-		"godie-i01i", // 雷神之鎚
-		"godie-i01n", // 天堂之劍
-		"godie-i01w", // 祕銀鎖子甲
-		"godie-i020", // 瑪那魔杖
-		"godie-i027", // 光魔杖
-		"godie-i02e", // 狂暴軒轅劍
-		"godie-i039", // 幻之匕首
-		"godie-i03h", // 天地崩裂魔杖
-		"godie-i03m", // 反射之盾
-		"godie-i04d", // 冰晶虎魄 - 改
-		"godie-i061", // 死之王的神盾
-		"godie-i06a", // 妖物碎殺牙
-		"godie-i06d", // 斬龍刀
-		"godie-i06e", // 月牙魔杖
-		"godie-i06j", // 獸人船長十字鎬
-		"godie-i06n", // 老衲的棒子
-		"godie-i06o", // 血染八月
+		"godie-i000",            // 丈八蛇矛
+		"godie-i007",            // 虛哭神去
+		"godie-i00i",            // 炎龍巨弩
+		"godie-i00j",            // 奇門盾甲
+		"godie-i00s",            // 黃金聖鬥衣
+		"godie-i00u",            // 名刀-天狼
+		"godie-i00z",            // 四魂之玉
+		"godie-i012",            // 熾天使之弓
+		"godie-i013",            // 緣一零式
+		"godie-i018",            // 朗基努斯之槍
+		"godie-i01g",            // 貫雷槍
+		"godie-i01i",            // 雷神之鎚
+		"godie-i01n",            // 天堂之劍
+		"godie-i01w",            // 祕銀鎖子甲
+		"godie-i020",            // 瑪那魔杖
+		"godie-i027",            // 光魔杖
+		"godie-i02e",            // 狂暴軒轅劍
+		"godie-i039",            // 幻之匕首
+		"godie-i03h",            // 天地崩裂魔杖
+		"godie-i03m",            // 反射之盾
+		"godie-i04d",            // 冰晶虎魄 - 改
+		"godie-i061",            // 死之王的神盾
+		"godie-i06a",            // 妖物碎殺牙
+		"godie-i06d",            // 斬龍刀
+		"godie-i06e",            // 月牙魔杖
+		"godie-i06j",            // 獸人船長十字鎬
+		"godie-i06n",            // 老衲的棒子
+		"godie-i06o",            // 血染八月
 		// ── [EX解放]（content/loot-tables/ex-release-weapons.json）
-		"book-of-gospel", // 福音書
-		"bulwark-charge-greaves", // 近擊的巨人鎧
+		"book-of-gospel",            // 福音書
+		"bulwark-charge-greaves",    // 近擊的巨人鎧
 		"collar-of-the-deadly-soul", // 致命魂之首輪
-		"endless-edge", // 無盡連刃
-		"fingerless-gloves", // 指貫手套
-		"godie-i004", // 至尊魔戒
-		"godie-i006", // 雅典娜的驚嘆號
-		"godie-i00f", // 霸王破甲槍
-		"godie-i00l", // 落魂的嗜血劍
-		"godie-i014", // 天叢雲劍
-		"godie-i01d", // 死之王的長槍
-		"godie-i01s", // 仙后座
-		"godie-i01v", // 螺旋劍
-		"godie-i02d", // 消失的密室
-		"godie-i03f", // 甘豆腐之袍
-		"godie-i067", // 惡夢魔王碎片
-		"godie-i06f", // 傲慢水龍王
-		"godie-i06i", // 炎神弩
-		"godie-i06q", // 鍊金術之盾
-		"gravity-sword-black-rod", // 重力劍〈黑棒〉
-		"lance-kongotetsu", // 神槍・金剛徹
-		"magic-armor-type-zero", // 魔導鎧・零式
-		"meat-cleaver", // 肉切菜刀
-		"meteor-ring", // 流星之戒
-		"mystery-scrap-of-paper", // 謎之紙片
-		"odm-gear", // 立體機動裝置
-		"pale-moon-requiem-crown", // 蒼月葬送・千年彼方花冠
-		"shining-golden-orbs", // 閃耀金玉
-		"soul-eater", // 噬魂者
-		"spear-of-lightning", // 雷槍
-		"staff-of-ainz-ooal-gown", // 安茲・烏爾・恭之杖
-		"stone-mask", // 石鬼面
-		"torch-master", // 火把師父
-		"ultimate-mod-shiranui", // 終極魔改・不知火
-		"usagizuki-twin-crescents", // 兎月【雙弦月】
+		"endless-edge",              // 無盡連刃
+		"fingerless-gloves",         // 指貫手套
+		"godie-i004",                // 至尊魔戒
+		"godie-i006",                // 雅典娜的驚嘆號
+		"godie-i00f",                // 霸王破甲槍
+		"godie-i00l",                // 落魂的嗜血劍
+		"godie-i014",                // 天叢雲劍
+		"godie-i01d",                // 死之王的長槍
+		"godie-i01s",                // 仙后座
+		"godie-i01v",                // 螺旋劍
+		"godie-i02d",                // 消失的密室
+		"godie-i03f",                // 甘豆腐之袍
+		"godie-i067",                // 惡夢魔王碎片
+		"godie-i06f",                // 傲慢水龍王
+		"godie-i06i",                // 炎神弩
+		"godie-i06q",                // 鍊金術之盾
+		"gravity-sword-black-rod",   // 重力劍〈黑棒〉
+		"lance-kongotetsu",          // 神槍・金剛徹
+		"magic-armor-type-zero",     // 魔導鎧・零式
+		"meat-cleaver",              // 肉切菜刀
+		"meteor-ring",               // 流星之戒
+		"mystery-scrap-of-paper",    // 謎之紙片
+		"odm-gear",                  // 立體機動裝置
+		"pale-moon-requiem-crown",   // 蒼月葬送・千年彼方花冠
+		"shining-golden-orbs",       // 閃耀金玉
+		"soul-eater",                // 噬魂者
+		"spear-of-lightning",        // 雷槍
+		"staff-of-ainz-ooal-gown",   // 安茲・烏爾・恭之杖
+		"stone-mask",                // 石鬼面
+		"torch-master",              // 火把師父
+		"ultimate-mod-shiranui",     // 終極魔改・不知火
+		"usagizuki-twin-crescents",  // 兎月【雙弦月】
 		// ⭐ 2026-08-18 owner 交來真正的 [EX∅ 根源] 清單之後，這 5 件從根源池搬回
 		// [EX解放]（它們是 Claude 的提案，不是 owner 指定的）。⚠️ 白名單是**聯集**，
 		// 所以搬池不影響這裡 —— 少一列的後果是那件寶具**靜靜地永遠不出現**。
-		"godie-i016", // 晨曦之光
-		"godie-i031", // 天生牙
-		"godie-i060", // 死之王的意志
-		"godie-i06g", // 殺豬刀
+		"godie-i016",          // 晨曦之光
+		"godie-i031",          // 天生牙
+		"godie-i060",          // 死之王的意志
+		"godie-i06g",          // 殺豬刀
 		"teardrop-of-rebirth", // 再誕之淚珠
 		// ── [EX∅ 根源]（content/loot-tables/ex-origin-weapons.json，owner 2026-08-18）
-		"all-might-hair", // 歐爾麥特的頭髮
+		"all-might-hair",           // 歐爾麥特的頭髮
 		"bezoar-of-the-apothecary", // 藥師少女的牛黃
-		"gantz-suit", // GANTZ Suit
-		"grief-seed", // 悲嘆之種
-		"icha-icha-paradise", // 親熱天堂
-		"millennium-puzzle", // 千年積木
-		"red-comet-mask", // 赤色面具
-		"senzu-bean", // 仙豆
-		"soul-gem", // 魂之寶石
-		"touyako", // 洞爺湖
+		"gantz-suit",               // GANTZ Suit
+		"grief-seed",               // 悲嘆之種
+		"icha-icha-paradise",       // 親熱天堂
+		"millennium-puzzle",        // 千年積木
+		"red-comet-mask",           // 赤色面具
+		"senzu-bean",               // 仙豆
+		"soul-gem",                 // 魂之寶石
+		"touyako",                  // 洞爺湖
 		// ⭐ 2026-08-18 第二輪：owner 那 15 件裡卡在引擎缺口的最後 5 件，機制做完了
 		// 才進池（第一·五守則）。⚠️ 少一列的後果不是「這件寶具比較少見」——
 		// 它是「做完了但永遠掉不出來，而且沒有任何測試會紅」。
 		"master-ball", // 大師球
-		"nezuko-box", // 禰豆子的木箱
-		"sasumata", // 討伐叉
-		"scouter", // 戰鬥力探測器
-		"slime-suit", // 史萊姆裝
+		"nezuko-box",  // 禰豆子的木箱
+		"sasumata",    // 討伐叉
+		"scouter",     // 戰鬥力探測器
+		"slime-suit",  // 史萊姆裝
 	}
 
 	// The whitelist gates every surface with ONE item list, so the bundle is the

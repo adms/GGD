@@ -1,0 +1,64 @@
+{
+  "id": "community-review-32-20260907.q",
+  "name": "肩パンチ",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】近距離肩膀拳，造成小幅擊退。演出重點是一本正經地使出很普通的一拳，保留喜劇落差。\n【待補機制】肩膀拳需小幅擊退与一本正經起手，当前只是單擊。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    15,
+    15,
+    15,
+    15
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 4.5,
+  "rangeTier": "小",
+  "cooldownTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "physical",
+      "amount": {
+        "damageTier": "小",
+        "ratios": [],
+        "perRank": [
+          0,
+          250,
+          500,
+          750
+        ]
+      }
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/sela.q.webp",
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
+        "damageTier": "小",
+        "ratios": [],
+        "perRank": [
+          0,
+          250,
+          500,
+          750
+        ]
+      },
+      "damageType": "physical",
+      "castTimeSec": 0.2
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}

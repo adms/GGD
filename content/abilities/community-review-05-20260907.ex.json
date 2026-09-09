@@ -1,0 +1,31 @@
+{
+  "id": "community-review-05-20260907.ex",
+  "schema": "ability@1",
+  "name": "〔特殊武器切換〕",
+  "description": "讓 Q 在洛克砲與已核准的特殊武器版本間切換；保留各自冷卻與共用能源。",
+  "slot": "EX",
+  "provenance": "editor-json",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    45
+  ],
+  "manaCost": [
+    576
+  ],
+  "range": 8,
+  "castTimeSec": 0.1,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 0.2
+        }
+      ],
+      "duration": 3
+    }
+  ]
+}

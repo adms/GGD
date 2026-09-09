@@ -1,0 +1,46 @@
+{
+  "id": "community-review-34-20260907.passive",
+  "schema": "ability@1",
+  "name": "〔追上你了〕",
+  "description": "持續追逐同一可見目標時累積速度，轉換目標、失去視線或停止追逐後衰退。",
+  "slot": "PASSIVE",
+  "provenance": "editor-json",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0,
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 3,
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            }
+          }
+        ]
+      }
+    ],
+    "name": "〔追上你了〕"
+  },
+  "effects": [],
+  "innateKind": "passive"
+}

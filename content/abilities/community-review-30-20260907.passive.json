@@ -1,0 +1,46 @@
+{
+  "id": "community-review-30-20260907.passive",
+  "schema": "ability@1",
+  "name": "〔拖延症〕",
+  "description": "停止移動後逐步累積拖延，上限三層；受擊時清空，施法可消耗強化。",
+  "slot": "PASSIVE",
+  "provenance": "editor-json",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0,
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 3,
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            }
+          }
+        ]
+      }
+    ],
+    "name": "〔拖延症〕"
+  },
+  "effects": [],
+  "innateKind": "passive"
+}

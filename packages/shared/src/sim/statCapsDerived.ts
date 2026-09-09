@@ -32,24 +32,24 @@ export interface DerivedCapProvenance {
 export const DERIVED_CAP_PROVENANCE: DerivedCapProvenance = Object.freeze({
   anchorLevel: 30,
   multiple: 200,
-  population: 49,
+  population: 86,
   medians: Object.freeze({
-  "maxHealth": 2776.2126,
-  "maxMana": 1693.5668,
-  "healthRegen": 6.8298,
-  "manaRegen": 8.5545,
-  "ad": 100.481,
-  "armor": 26.185,
+  "maxHealth": 2808.6,
+  "maxMana": 1756.9332,
+  "healthRegen": 6.1761,
+  "manaRegen": 10.2107,
+  "ad": 107.6621,
+  "armor": 33.1924,
   "mr": 80.9569,
   }),
 });
 
 export const DERIVED_STAT_CAPS: Readonly<Partial<Record<Stat, DerivedStatCap>>> = Object.freeze({
-  "maxHealth": Object.freeze({ base: 555243, unlocked: 555243 }),
-  "maxMana": Object.freeze({ base: 338713, unlocked: 338713 }),
-  "healthRegen": Object.freeze({ base: 1366, unlocked: 1366 }),
-  "manaRegen": Object.freeze({ base: 1711, unlocked: 1711 }),
-  "ad": Object.freeze({ base: 20096, unlocked: 20096 }),
-  "armor": Object.freeze({ base: 5237, unlocked: 5237 }),
+  "maxHealth": Object.freeze({ base: 561720, unlocked: 561720 }),
+  "maxMana": Object.freeze({ base: 351387, unlocked: 351387 }),
+  "healthRegen": Object.freeze({ base: 1235, unlocked: 1235 }),
+  "manaRegen": Object.freeze({ base: 2042, unlocked: 2042 }),
+  "ad": Object.freeze({ base: 21532, unlocked: 21532 }),
+  "armor": Object.freeze({ base: 6638, unlocked: 6638 }),
   "mr": Object.freeze({ base: 16191, unlocked: 16191 }),
 });

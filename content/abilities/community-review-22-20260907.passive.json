@@ -1,0 +1,62 @@
+{
+  "id": "community-review-22-20260907.passive",
+  "schema": "ability@1",
+  "name": "〔記住這次失敗〕",
+  "description": "完成一次死亡回歸後，短暫標記造成致死傷害的敵人；只顯示當前合法可見資訊。\n\n【尚未實作】這個被動的效果還在調整中，目前**不會發生任何事**。",
+  "slot": "PASSIVE",
+  "provenance": "editor-json",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0,
+  "marks": [
+    {
+      "markId": "community-review-22-20260907.last-chance",
+      "initial": 1,
+      "max": 1,
+      "durationSec": -1,
+      "resetOn": "match",
+      "perStackLost": [],
+      "lethal": {
+        "consume": 1,
+        "surviveHpPct": 0.01,
+        "damageTypes": [
+          "physical",
+          "magic",
+          "true"
+        ],
+        "internalCooldown": 1,
+        "selfEffects": [
+          {
+            "kind": "invulnerable",
+            "durationSec": 0.5,
+            "applyTo": "self",
+            "blocksControl": true
+          },
+          {
+            "kind": "restore",
+            "healthPct": 0.15
+          }
+        ],
+        "aoeEffects": [],
+        "aoeRadius": 0
+      }
+    }
+  ],
+  "effects": [],
+  "innateKind": "passive",
+  "passive": {
+    "name": "〔記住這次失敗〕",
+    "ranks": [
+      {
+        "modifiers": [],
+        "hooks": []
+      }
+    ]
+  }
+}

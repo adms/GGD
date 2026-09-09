@@ -1,0 +1,31 @@
+{
+  "id": "community-review-25-20260907.ex",
+  "schema": "ability@1",
+  "name": "認真系列・認真反覆橫跳",
+  "description": "短期快速左右移動並產生殘像，提供有限迴避機會。",
+  "slot": "EX",
+  "provenance": "editor-json",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    45
+  ],
+  "manaCost": [
+    576
+  ],
+  "range": 6,
+  "castTimeSec": 0.1,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "msBonusTier": "極小"
+        }
+      ],
+      "duration": 3
+    }
+  ]
+}

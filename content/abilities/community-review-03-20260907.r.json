@@ -1,0 +1,100 @@
+{
+  "id": "community-review-03-20260907.r",
+  "name": "超必殺忍蜂",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】4 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】有明顯起手的強化突進連擊，末段小範圍爆發。\n【待補機制】缺突進命中後才接連擊條件。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    90,
+    90,
+    90
+  ],
+  "manaCost": [
+    576,
+    576,
+    576
+  ],
+  "manaCostTier": "大",
+  "range": 3,
+  "radius": 2.75,
+  "rangeTier": "極小",
+  "cooldownTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "dot",
+      "damageType": "physical",
+      "amountPerTick": {
+        "damageTier": "極小",
+        "ratios": [],
+        "perRank": [
+          0,
+          150,
+          300
+        ]
+      },
+      "intervalSec": 0.18,
+      "durationSec": 0.72
+    },
+    {
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "inPlace",
+      "apexHeight": 0,
+      "durationSec": 0.72,
+      "landRadius": 2.75,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [],
+            "perRank": [
+              0,
+              375,
+              750
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "castTimeTier": "大",
+  "icon": "assets/icons/abilities/thorne.r.webp",
+  "template": {
+    "ref": "tpl-lock-combo",
+    "params": {
+      "hitCount": 4,
+      "hitIntervalSec": 0.18,
+      "perHitDamage": {
+        "damageTier": "極小",
+        "ratios": [],
+        "perRank": [
+          0,
+          150,
+          300
+        ]
+      },
+      "finisherDamage": {
+        "damageTier": "小",
+        "ratios": [],
+        "perRank": [
+          0,
+          375,
+          750
+        ]
+      },
+      "finisherRadius": 150,
+      "damageType": "physical",
+      "lockTarget": "none",
+      "casterGuard": "none",
+      "trigger": "onCast"
+    },
+    "inheritDefaults": true
+  },
+  "castTimeSec": 0.5,
+  "schema": "ability@1"
+}

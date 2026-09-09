@@ -1,0 +1,67 @@
+{
+  "id": "community-review-10-20260907.r",
+  "name": "絕對遵守的 Geass",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"stun\",\"duration\":0.8,\"applyTo\":\"target\",\"stun\":true}]。\n【目標設計】在視線成立後，命令一名敵人沿合法路徑朝指定位置移動，持續約 1 秒。每名目標每回合只能成功受此命令一次；控制免疫或視線失敗時不記為成功。\n【待補機制】單體 0.8 秒暈眩不能代替 Geass；需視線、強制合法移動與每目標每回合成功一次。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    576,
+    576,
+    576
+  ],
+  "manaCostTier": "大",
+  "range": 4.5,
+  "rangeTier": "小",
+  "cooldownTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "小",
+        "ratios": [],
+        "perRank": [
+          0,
+          375,
+          750
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "stun",
+      "duration": 0.8,
+      "applyTo": "target",
+      "stun": true
+    }
+  ],
+  "castTimeSec": 0.5,
+  "castTimeTier": "大",
+  "icon": "assets/icons/abilities/sela.r.webp",
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
+        "damageTier": "小",
+        "ratios": [],
+        "perRank": [
+          0,
+          375,
+          750
+        ]
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.2
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}

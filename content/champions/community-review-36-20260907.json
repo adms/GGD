@@ -1,0 +1,375 @@
+{
+  "id": "community-review-36-20260907",
+  "name": "鬼畜王蘭斯",
+  "description": "鬼畜王蘭斯 社群英雄功能驗收稿。作品：《鬼畜王蘭斯／Rance》  \n角色實體：蘭斯；與鬼眼狂刀 KYO 無關。  \n定位：近戰爆發、有限成長、隊伍衝鋒。\n\n視覺方向：綠色勇猛光、厚重白斬、漫畫喊招；不導入成人情節或其他人的招式。\n以 GGD 狂戰 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "role": "fighter",
+  "attackType": "melee",
+  "archetype": "fighter",
+  "origin": "狂戰",
+  "modelKey": "champ.thorne",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.4,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 38.2761224489796,
+    "healthRegen": 0.10039591836734693,
+    "maxMana": 17.385714285714286,
+    "manaRegen": 0,
+    "ad": 3.9845714285714284,
+    "as": 0,
+    "mr": 2.1118367346938776,
+    "armor": 0.5585816326530613,
+    "ap": 0
+  },
+  "attributes": {
+    "str": 25,
+    "agi": 23,
+    "int": 12,
+    "strGrowth": 2.36,
+    "agiGrowth": 2.17,
+    "intGrowth": 1.18,
+    "primary": "STR",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "community-review-36-20260907.q",
+      "name": "〔蠻力斬擊〕",
+      "provenance": "editor-json",
+      "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】大開大合的正面斬擊。\n【待補機制】需正面蠻力弧形斬。",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 2.75,
+          "side": "enemies",
+          "delaySec": 0.05,
+          "count": 4,
+          "intervalSec": 0.05,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": [],
+                "perRank": [
+                  0,
+                  100,
+                  200,
+                  300
+                ]
+              }
+            }
+          ],
+          "targetMode": "reresolve",
+          "advance": {
+            "stepDist": 1.83,
+            "dir": "facing"
+          },
+          "hitOncePerTarget": true
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "template": {
+        "ref": "tpl-line-sweep",
+        "params": {
+          "segmentCount": 4,
+          "stepSize": 100,
+          "segmentAoe": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": [],
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.35
+        },
+        "inheritDefaults": true
+      }
+    },
+    "W": {
+      "id": "community-review-36-20260907.w",
+      "name": "〔本大爺還沒認真〕",
+      "provenance": "editor-json",
+      "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-36-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】短暫蓄勢取得護盾，下一次主動攻擊消耗護盾換取有限增傷。\n【待補機制】需下一次主動攻擊消耗剩餘盾換取有限增傷。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [],
+          "duration": 3
+        },
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 120,
+            "ratios": [],
+            "perRank": [
+              0,
+              60,
+              120,
+              180
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "community-review-36-20260907.w.guard",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/thorne.w.webp",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [],
+          "castTimeSec": 0.15
+        },
+        "inheritDefaults": true
+      }
+    },
+    "E": {
+      "id": "community-review-36-20260907.e",
+      "name": "〔霸王突進〕",
+      "provenance": "editor-json",
+      "description": "【目前模板可執行】向指定方向突進 350 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】直線衝鋒，命中後停止。\n【待補機制】需命中第一人後停止。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 4.5,
+      "radius": 2.75,
+      "rangeTier": "小",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 0,
+          "durationSec": 0.3,
+          "throwDistance": 6.42,
+          "landRadius": 2.75,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": [],
+                "perRank": [
+                  0,
+                  100,
+                  200,
+                  300
+                ]
+              }
+            },
+            {
+              "kind": "knockback",
+              "distance": 3.67,
+              "speed": 15.99,
+              "from": "facing",
+              "launchHeight": 0
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/thorne.e.webp",
+      "template": {
+        "ref": "tpl-charge-push",
+        "params": {
+          "dashDistance": 350,
+          "dashDurationSec": 0.3,
+          "apexHeight": 0,
+          "radius": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": [],
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          },
+          "damageType": "physical",
+          "pushDistance": 200,
+          "pushSpeed": 872,
+          "pushFrom": "facing",
+          "pushLaunchHeight": 0,
+          "castTimeSec": 0.1
+        },
+        "inheritDefaults": true
+      }
+    },
+    "R": {
+      "id": "community-review-36-20260907.r",
+      "name": "Rance Attack／蘭斯攻擊",
+      "provenance": "editor-json",
+      "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】蓄力後的大範圍重斬，保留喊招與誇張爆發。\n【待補機制】需大範圍重斬、長起手與總傷害預算。",
+      "slot": "R",
+      "castType": "skillshot",
+      "maxRank": 3,
+      "cooldown": [
+        90,
+        90,
+        90
+      ],
+      "manaCost": [
+        576,
+        576,
+        576
+      ],
+      "manaCostTier": "大",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 2.75,
+          "side": "enemies",
+          "delaySec": 0.05,
+          "count": 4,
+          "intervalSec": 0.05,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": [],
+                "perRank": [
+                  0,
+                  150,
+                  300
+                ]
+              }
+            }
+          ],
+          "targetMode": "reresolve",
+          "advance": {
+            "stepDist": 1.83,
+            "dir": "facing"
+          },
+          "hitOncePerTarget": true
+        }
+      ],
+      "castTimeSec": 0.5,
+      "castTimeTier": "大",
+      "icon": "assets/icons/abilities/thorne.r.webp",
+      "template": {
+        "ref": "tpl-line-sweep",
+        "params": {
+          "segmentCount": 4,
+          "stepSize": 100,
+          "segmentAoe": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": [],
+            "perRank": [
+              0,
+              150,
+              300
+            ]
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.35
+        },
+        "inheritDefaults": true
+      }
+    }
+  },
+  "exAbility": "community-review-36-20260907.ex",
+  "passiveAbility": "community-review-36-20260907.passive",
+  "icon": "assets/icons/champions/community-review-36-20260907.webp",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1"
+}

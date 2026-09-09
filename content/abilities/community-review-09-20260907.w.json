@@ -1,0 +1,50 @@
+{
+  "id": "community-review-09-20260907.w",
+  "name": "〔行商議價〕",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"restore\",\"manaPct\":0.1,\"applyTo\":\"self\"}]。\n【目標設計】消耗一枚籌碼，取得少量當局戰鬥金幣；每回合最多三次。\n【待補機制】預覽只回復 10% 魔力；需籌碼消耗與每回合三次戰鬥金幣交易。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    15,
+    15,
+    15,
+    15
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 8,
+  "rangeTier": "大",
+  "cooldownTier": "小",
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [],
+      "duration": 3
+    },
+    {
+      "kind": "restore",
+      "manaPct": 0.1,
+      "applyTo": "self"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/sela.w.webp",
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 3,
+      "modifiers": [],
+      "castTimeSec": 0.15
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}

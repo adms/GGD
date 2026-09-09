@@ -3,15 +3,15 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_b3613e0ab7f1",
+    "contentVersion": "cv_14c41f6f6cb6",
     "collections": {
       "champions": {
-        "hash": "6546aa88bd6d",
-        "count": 71
+        "hash": "f3b12e49d91c",
+        "count": 108
       },
       "abilities": {
-        "hash": "35a6502b6cc8",
-        "count": 421
+        "hash": "754e5b84a49e",
+        "count": 643
       },
       "items": {
         "hash": "1ee281a7f136",
@@ -42,12 +42,12 @@
         "count": 7
       },
       "config": {
-        "hash": "d1d60a8a65e9",
+        "hash": "9a37cee6ef0b",
         "count": 103
       },
       "models": {
-        "hash": "a385fd978ca5",
-        "count": 156
+        "hash": "0329d2aa649f",
+        "count": 181
       },
       "vfx": {
         "hash": "7df129081586",
@@ -1918,8 +1918,8 @@
   "contentVocabulary": {
     "note": "出貨內容**實際用了**哪些值。⚠️ 與 runtimeCapabilities 不同：那一份說引擎做得到什麼，這一份說內容裡有哪些合法的 id。⛔ 填一個不在這裡的 vfxKey，技能照放但畫面上什麼都不會出現。",
     "ability": {
-      "count": 421,
-      "fromTemplate": 225,
+      "count": 643,
+      "fromTemplate": 373,
       "templates": [
         {
           "id": "tpl-ally-shield",
@@ -6634,7 +6634,7 @@
         {
           "rule": "low-damage-cell",
           "zh": "傷害相對冷卻偏低",
-          "note": "⚠️ **傷害偏低的 2 格**（相對錨點 單體・極小 的 33.3/卡面秒）：「範圍・極小」-60%（照對角線填「極小」＝200 傷害 × 2 人 ÷ 30 卡面秒 = 13.3/秒；要追平錨點得跳到「小」）；「範圍・小」-33%（照對角線填「小」＝500 傷害 × 2 人 ÷ 45 卡面秒 = 22.2/秒；要追平錨點得跳到「中」）。⭐ 全部是**算出來的**：改「期望命中人數」／冷卻五級距／傷害五級距任何一格，這份名單下一秒就跟著動。⚠️ 只**警告不擋** —— owner 說的是「不合理」不是「不准」。",
+          "note": "⚠️ **傷害偏低的 2 格**（相對錨點 單體・極小 的 41.7/卡面秒）：「範圍・極小」-60%（照對角線填「極小」＝250 傷害 × 2 人 ÷ 30 卡面秒 = 16.7/秒；要追平錨點得跳到「小」）；「範圍・小」-33%（照對角線填「小」＝625 傷害 × 2 人 ÷ 45 卡面秒 = 27.8/秒；要追平錨點得跳到「中」）。⭐ 全部是**算出來的**：改「期望命中人數」／冷卻五級距／傷害五級距任何一格，這份名單下一秒就跟著動。⚠️ 只**警告不擋** —— owner 說的是「不合理」不是「不准」。",
           "enabled": true
         }
       ],
@@ -6643,23 +6643,23 @@
           "shape": "範圍",
           "cooldownTier": "極小",
           "cooldownSec": 30,
-          "ratePerCardSecond": 13.333333333333334,
-          "anchorRate": 33.333333333333336,
+          "ratePerCardSecond": 16.666666666666668,
+          "anchorRate": 41.666666666666664,
           "deficitPct": -60,
           "diagonalDamageTier": "極小",
           "requiredDamageTier": "小",
-          "note": "「範圍・極小」的期望輸出比錨點（單體・極小）**-60%**：照級距名填「極小」傷害的話，每卡面秒只有 13.3。⇒ 要嘛把傷害拉到「小」，要嘛把冷卻挪出這一格。⚠️ 只警告不擋。"
+          "note": "「範圍・極小」的期望輸出比錨點（單體・極小）**-60%**：照級距名填「極小」傷害的話，每卡面秒只有 16.7。⇒ 要嘛把傷害拉到「小」，要嘛把冷卻挪出這一格。⚠️ 只警告不擋。"
         },
         {
           "shape": "範圍",
           "cooldownTier": "小",
           "cooldownSec": 45,
-          "ratePerCardSecond": 22.22222222222222,
-          "anchorRate": 33.333333333333336,
+          "ratePerCardSecond": 27.77777777777778,
+          "anchorRate": 41.666666666666664,
           "deficitPct": -33,
           "diagonalDamageTier": "小",
           "requiredDamageTier": "中",
-          "note": "「範圍・小」的期望輸出比錨點（單體・極小）**-33%**：照級距名填「小」傷害的話，每卡面秒只有 22.2。⇒ 要嘛把傷害拉到「中」，要嘛把冷卻挪出這一格。⚠️ 只警告不擋。"
+          "note": "「範圍・小」的期望輸出比錨點（單體・極小）**-33%**：照級距名填「小」傷害的話，每卡面秒只有 27.8。⇒ 要嘛把傷害拉到「中」，要嘛把冷卻挪出這一格。⚠️ 只警告不擋。"
         }
       ],
       "derivedFrom": [
@@ -6781,11 +6781,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "c7aa6264f68a",
+    "fingerprint": "4ecf72081652",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "923493bcb8b1"
+        "digest": "391b2a146b9e"
       },
       {
         "surface": "ability-item-zod-schemas",
@@ -6851,5 +6851,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "bec2003b8b17"
+  "profileDigest": "a2ae5b38996a"
 }

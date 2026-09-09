@@ -1,0 +1,80 @@
+{
+  "id": "community-review-36-20260907.r",
+  "name": "Rance Attack／蘭斯攻擊",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】蓄力後的大範圍重斬，保留喊招與誇張爆發。\n【待補機制】需大範圍重斬、長起手與總傷害預算。",
+  "slot": "R",
+  "castType": "skillshot",
+  "maxRank": 3,
+  "cooldown": [
+    90,
+    90,
+    90
+  ],
+  "manaCost": [
+    576,
+    576,
+    576
+  ],
+  "manaCostTier": "大",
+  "range": 6,
+  "rangeTier": "中",
+  "cooldownTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "delayed",
+      "shape": "circle",
+      "radius": 2.75,
+      "side": "enemies",
+      "delaySec": 0.05,
+      "count": 4,
+      "intervalSec": 0.05,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": [],
+            "perRank": [
+              0,
+              150,
+              300
+            ]
+          }
+        }
+      ],
+      "targetMode": "reresolve",
+      "advance": {
+        "stepDist": 1.83,
+        "dir": "facing"
+      },
+      "hitOncePerTarget": true
+    }
+  ],
+  "castTimeSec": 0.5,
+  "castTimeTier": "大",
+  "icon": "assets/icons/abilities/thorne.r.webp",
+  "template": {
+    "ref": "tpl-line-sweep",
+    "params": {
+      "segmentCount": 4,
+      "stepSize": 100,
+      "segmentAoe": 150,
+      "damage": {
+        "damageTier": "極小",
+        "ratios": [],
+        "perRank": [
+          0,
+          150,
+          300
+        ]
+      },
+      "damageType": "physical",
+      "castTimeSec": 0.35
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}

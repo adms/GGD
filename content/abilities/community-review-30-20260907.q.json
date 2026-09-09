@@ -1,0 +1,66 @@
+{
+  "id": "community-review-30-20260907.q",
+  "name": "〔菸灰缸飛過去〕",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】指定落點半徑 300 wc3u 的一次小級範圍傷害。\n【目標設計】投擲道具，落地造成一次小範圍傷害。\n【待補機制】菸灰缸道具拋物線未綁；落地一次傷害可測。",
+  "slot": "Q",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "radius": 5.5,
+  "rangeTier": "中",
+  "cooldownTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "physical",
+      "amount": {
+        "damageTier": "小",
+        "ratios": [],
+        "perRank": [
+          0,
+          250,
+          500,
+          750
+        ]
+      }
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/sela.q.webp",
+  "template": {
+    "ref": "tpl-ground-nova",
+    "params": {
+      "radius": 300,
+      "damage": {
+        "damageTier": "小",
+        "ratios": [],
+        "perRank": [
+          0,
+          250,
+          500,
+          750
+        ]
+      },
+      "damageType": "physical",
+      "castTimeSec": 0.4
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}

@@ -1,0 +1,46 @@
+{
+  "id": "community-review-20-20260907.passive",
+  "schema": "ability@1",
+  "name": "〔電荷累積〕",
+  "description": "不同技能命中累積電荷，上限三層；下一次強化技消耗。",
+  "slot": "PASSIVE",
+  "provenance": "editor-json",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0,
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 3,
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            }
+          }
+        ]
+      }
+    ],
+    "name": "〔電荷累積〕"
+  },
+  "effects": [],
+  "innateKind": "passive"
+}

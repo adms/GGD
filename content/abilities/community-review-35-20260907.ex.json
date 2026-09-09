@@ -1,0 +1,31 @@
+{
+  "id": "community-review-35-20260907.ex",
+  "schema": "ability@1",
+  "name": "〔呼吸切換〕",
+  "description": "讓 Q 在水面斬與火之神神樂的強化斬版本間切換。共用 Q 冷卻；火之神版本消耗較高並增加自身負擔。",
+  "slot": "EX",
+  "provenance": "editor-json",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    45
+  ],
+  "manaCost": [
+    576
+  ],
+  "range": 6,
+  "castTimeSec": 0.1,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.15
+        }
+      ],
+      "duration": 3
+    }
+  ]
+}

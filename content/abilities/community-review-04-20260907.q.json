@@ -1,0 +1,106 @@
+{
+  "id": "community-review-04-20260907.q",
+  "name": "歐拉連打",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】6 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】白金之星在前方進行多段拳擊，每段重新確認距離與目標。\n【待補機制】需逐段距離重新檢查、替身掛點及雙模型動作。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 3,
+  "radius": 2.75,
+  "rangeTier": "極小",
+  "cooldownTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "dot",
+      "damageType": "physical",
+      "amountPerTick": {
+        "damageTier": "極小",
+        "ratios": [],
+        "perRank": [
+          0,
+          100,
+          200,
+          300
+        ]
+      },
+      "intervalSec": 0.18,
+      "durationSec": 1.08
+    },
+    {
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "inPlace",
+      "apexHeight": 0,
+      "durationSec": 1.08,
+      "landRadius": 2.75,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [],
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/thorne.q.webp",
+  "template": {
+    "ref": "tpl-lock-combo",
+    "params": {
+      "hitCount": 6,
+      "hitIntervalSec": 0.18,
+      "perHitDamage": {
+        "damageTier": "極小",
+        "ratios": [],
+        "perRank": [
+          0,
+          100,
+          200,
+          300
+        ]
+      },
+      "finisherDamage": {
+        "damageTier": "小",
+        "ratios": [],
+        "perRank": [
+          0,
+          250,
+          500,
+          750
+        ]
+      },
+      "finisherRadius": 150,
+      "damageType": "physical",
+      "lockTarget": "none",
+      "casterGuard": "none",
+      "trigger": "onCast"
+    },
+    "inheritDefaults": true
+  },
+  "castTimeSec": 0.1,
+  "schema": "ability@1"
+}

@@ -1,0 +1,28 @@
+{
+  "id": "community-review-13-20260907.ex",
+  "schema": "ability@1",
+  "name": "〔副武器應急射擊〕",
+  "description": "近距離快速射擊，附帶小幅後退；給狙擊手有限自保能力。",
+  "slot": "EX",
+  "provenance": "editor-json",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    45
+  ],
+  "manaCost": [
+    576
+  ],
+  "range": 4.5,
+  "castTimeSec": 0.1,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "physical",
+      "amount": {
+        "damageTier": "小",
+        "ratios": []
+      }
+    }
+  ]
+}

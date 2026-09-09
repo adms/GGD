@@ -1,0 +1,78 @@
+{
+  "id": "community-review-17-20260907.e",
+  "name": "高階傳送",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】傳送到指定落點，抵達後小範圍極小級傷害。\n【目標設計】移動到合法落點，保留可辨識的起點與終點演出。\n【待補機制】原設計只有傳送，模板帶抵達傷害，需審查這項改編。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "radius": 2.75,
+  "rangeTier": "中",
+  "cooldownTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "toPoint",
+      "apexHeight": 0,
+      "durationSec": 0.15,
+      "landRadius": 2.75,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": [],
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/sela.e.webp",
+  "template": {
+    "ref": "tpl-teleport",
+    "params": {
+      "destination": "castPoint",
+      "castTimeSec": 0.25,
+      "travelSec": 0.15,
+      "arriveRadius": 150,
+      "damage": {
+        "damageTier": "極小",
+        "ratios": [],
+        "perRank": [
+          0,
+          100,
+          200,
+          300
+        ]
+      },
+      "damageType": "magic"
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}

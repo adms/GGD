@@ -1,0 +1,80 @@
+{
+  "id": "community-review-22-20260907.w",
+  "name": "〔鞭繩牽制〕",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】拖拉指定目標後向前投擲 100 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】中短距離鞭擊，命中後小幅牽引。\n【待補機制】抓投是模板預覽；需鞭擊後小幅牽引，不應拋飛目標。",
+  "slot": "W",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    15,
+    15,
+    15,
+    15
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 4.5,
+  "rangeTier": "小",
+  "cooldownTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "leap",
+      "applyTo": "target",
+      "mode": "toPoint",
+      "apexHeight": 0.005,
+      "durationSec": 0.45,
+      "throwDistance": 1.83,
+      "dragToCaster": true,
+      "landRadius": 2,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.4082
+              }
+            ],
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/thorne.w.webp",
+  "template": {
+    "ref": "tpl-pull-throw",
+    "params": {
+      "mode": "toPoint",
+      "grabMode": "dragToCaster",
+      "throwMode": "distance",
+      "apexHeight": 1.2,
+      "durationSec": 0.45,
+      "throwDistance": 100,
+      "landRadius": 2,
+      "landDamageTier": "小",
+      "landApRatio": 0,
+      "damageType": "physical",
+      "castTimeSec": 0.2
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}

@@ -1,0 +1,59 @@
+{
+  "id": "community-review-14-20260907.e",
+  "name": "〔觸手再生〕",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":100,\"ratios\":[]},\"applyTo\":\"self\"}]。\n【目標設計】消耗資源分段恢復生命，受控制時停止。\n【待補機制】目前立即回血；需分段再生與受控中止。",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    15,
+    15,
+    15,
+    15
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "rangeTier": "中",
+  "cooldownTier": "小",
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [],
+      "duration": 3
+    },
+    {
+      "kind": "heal",
+      "amount": {
+        "flat": 100,
+        "ratios": [],
+        "perRank": [
+          0,
+          50,
+          100,
+          150
+        ]
+      },
+      "applyTo": "self"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/thorne.e.webp",
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 3,
+      "modifiers": [],
+      "castTimeSec": 0.15
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}

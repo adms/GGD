@@ -1,0 +1,65 @@
+{
+  "id": "community-review-27-20260907.r",
+  "name": "劍牌",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】自身取得 4 秒增益：ad +15%、as +20%。\n【目標設計】短期將法杖化為劍，替換普攻並強化近戰。\n【待補機制】AD／攻速强化不等於劍牌；需普攻替換、武器及還原。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    576,
+    576,
+    576
+  ],
+  "manaCostTier": "大",
+  "range": 8,
+  "rangeTier": "大",
+  "cooldownTier": "大",
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.15
+        },
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 0.2
+        }
+      ],
+      "duration": 4
+    }
+  ],
+  "castTimeSec": 0.5,
+  "castTimeTier": "大",
+  "icon": "assets/icons/abilities/sela.r.webp",
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 4,
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.15
+        },
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 0.2
+        }
+      ],
+      "castTimeSec": 0.15
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}

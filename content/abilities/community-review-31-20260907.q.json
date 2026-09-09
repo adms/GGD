@@ -1,0 +1,64 @@
+{
+  "id": "community-review-31-20260907.q",
+  "name": "Spiral Edge",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】短劍螺旋刺擊；對剛被自己反擊的目標有有限追加效果。\n【待補機制】需螺旋刃動畫與反擊後目標追加條件。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    15,
+    15,
+    15,
+    15
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 4.5,
+  "rangeTier": "小",
+  "cooldownTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "physical",
+      "amount": {
+        "damageTier": "小",
+        "ratios": [],
+        "perRank": [
+          0,
+          250,
+          500,
+          750
+        ]
+      }
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/thorne.q.webp",
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
+        "damageTier": "小",
+        "ratios": [],
+        "perRank": [
+          0,
+          250,
+          500,
+          750
+        ]
+      },
+      "damageType": "physical",
+      "castTimeSec": 0.2
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}

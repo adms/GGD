@@ -1,0 +1,28 @@
+{
+  "id": "community-review-10-20260907.ex",
+  "schema": "ability@1",
+  "name": "〔Checkmate〕",
+  "description": "消耗指揮層數，對已標記區域發動有預警的戰術打擊。",
+  "slot": "EX",
+  "provenance": "editor-json",
+  "castType": "ground",
+  "maxRank": 1,
+  "cooldown": [
+    90
+  ],
+  "manaCost": [
+    576
+  ],
+  "range": 8,
+  "castTimeSec": 0.1,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "中",
+        "ratios": []
+      }
+    }
+  ]
+}

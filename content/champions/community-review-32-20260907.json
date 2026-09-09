@@ -1,0 +1,317 @@
+{
+  "id": "community-review-32-20260907",
+  "name": "阿薩謝爾",
+  "description": "阿薩謝爾 社群英雄功能驗收稿。作品：《召喚惡魔／よんでますよ、アザゼルさん。》  \n角色實體：アザゼル篤史。  \n定位：負面能量、反噬、重複詛咒反轉、惡搞演出。\n\n**查證紀錄**：\n\n- 淫奔：角色的職能，官方動畫介紹可確認。\n- 肩パンチ：招式辭典記載於第 34 話，使用者為阿薩謝爾。\n- THE END OF SON：官方動畫採此拼法；辭典記載漫畫第 64 話出現。\n- 闇ぱんち：辭典記載第 73 話，使用者為闇阿薩謝爾。\n- 流精群（ホワイトレイン）：辭典記載第 160 話，使用者為阿薩謝爾。\n- THE END OF SON FAINAL：辭典的終章條目原樣拼字，尚未核對漫畫原頁。\n- 遊戲以 THE END OF SON〔終章〕顯示最後一項；「終章」是本稿區分標籤。\n- ファイナルビッグベン 屬於貝西卜，不納入阿薩謝爾本人基本技能。\n\n視覺方向：Q 普通一拳配誇張凝重起手；W 白色魔力雨；R 紫黑能量球；EX 反轉時敵人金光、施法者驚愕。\n以 GGD 法鬥 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "role": "mage",
+  "attackType": "melee",
+  "archetype": "mage",
+  "origin": "法鬥",
+  "modelKey": "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.4,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 35.000204081632646,
+    "healthRegen": 0.08789387755102042,
+    "maxMana": 0.9581632653061187,
+    "manaRegen": 0,
+    "ad": 3.2177142857142864,
+    "as": 0.001523029594003207,
+    "mr": 2.639795918367347,
+    "armor": 0.7118877551020408,
+    "ap": 0
+  },
+  "attributes": {
+    "str": 18,
+    "agi": 13,
+    "int": 29,
+    "strGrowth": 1.67,
+    "agiGrowth": 1.25,
+    "intGrowth": 2.78,
+    "primary": "INT",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "community-review-32-20260907.q",
+      "name": "肩パンチ",
+      "provenance": "editor-json",
+      "description": "【目前模板可執行】指定單一敵人造成小級物理傷害。\n【目標設計】近距離肩膀拳，造成小幅擊退。演出重點是一本正經地使出很普通的一拳，保留喜劇落差。\n【待補機制】肩膀拳需小幅擊退与一本正經起手，当前只是單擊。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 4.5,
+      "rangeTier": "小",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [],
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          }
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/sela.q.webp",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [],
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.2
+        },
+        "inheritDefaults": true
+      }
+    },
+    "W": {
+      "id": "community-review-32-20260907.w",
+      "name": "流精群（ホワイトレイン）",
+      "provenance": "editor-json",
+      "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.45 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】指定區域落下三波白色魔力雨。每波對同一目標最多命中一次；以白色光點、漫畫速度線及誇張表情演出。\n【待補機制】三波白色雨可作時序預覽；每波同目標一次與白點落下造型須驗收。",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 4.95,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dot",
+          "damageType": "magic",
+          "amountPerTick": {
+            "damageTier": "極小",
+            "ratios": [],
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          },
+          "intervalSec": 0.45,
+          "durationSec": 0.9,
+          "tickOnApply": true
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/sela.w.webp",
+      "template": {
+        "ref": "tpl-random-barrage",
+        "params": {
+          "count": 3,
+          "intervalSec": 0.45,
+          "impactDamage": {
+            "damageTier": "極小",
+            "ratios": [],
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          },
+          "damageType": "magic",
+          "impactRadius": 150,
+          "scatterRadius": 120,
+          "payout": "perImpact",
+          "castTimeSec": 0.5
+        },
+        "inheritDefaults": true
+      }
+    },
+    "E": {
+      "id": "community-review-32-20260907.e",
+      "name": "闇ぱんち",
+      "provenance": "editor-json",
+      "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-32-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】短暫叫出闇人格的影子進入反擊窗口。受到第一個符合條件的近身攻擊後，影子向攻擊者出拳並消失。「闇人格向敵人反擊」為 GGD 改編，不改寫原作招式使用者。\n【待補機制】護盾不代表闇人格反擊；需第一個近身受擊成功事件及一次出拳。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [],
+          "duration": 3
+        },
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 120,
+            "ratios": [],
+            "perRank": [
+              0,
+              60,
+              120,
+              180
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "community-review-32-20260907.e.guard",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/sela.e.webp",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [],
+          "castTimeSec": 0.15
+        },
+        "inheritDefaults": true
+      }
+    },
+    "R": {
+      "id": "community-review-32-20260907.r",
+      "name": "THE END OF SON",
+      "provenance": "editor-json",
+      "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。\n【目標設計】舉起負面能量球，蓄力後投出。命中造成傷害，並施加四秒「萎靡」：降低目標輸出。成功放出時，阿薩謝爾承受有生命底線的少量反噬。施法被中斷時按 GGD 中斷規則處理，不產生完整命中效果。\n【待補機制】需四秒萎靡的輸出降低，以及不致死反噬；目前只有可預覽的單體魔法命中。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        576,
+        576,
+        576
+      ],
+      "manaCostTier": "大",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [],
+            "perRank": [
+              0,
+              375,
+              750
+            ]
+          }
+        }
+      ],
+      "castTimeSec": 0.5,
+      "castTimeTier": "大",
+      "icon": "assets/icons/abilities/sela.r.webp",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [],
+            "perRank": [
+              0,
+              375,
+              750
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.2
+        },
+        "inheritDefaults": true
+      }
+    }
+  },
+  "exAbility": "community-review-32-20260907.ex",
+  "passiveAbility": "community-review-32-20260907.passive",
+  "icon": "assets/icons/champions/community-review-32-20260907.webp",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1"
+}

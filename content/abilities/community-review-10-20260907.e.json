@@ -1,0 +1,57 @@
+{
+  "id": "community-review-10-20260907.e",
+  "name": "〔撤退指令〕",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】為附近友軍提供朝安全方向移動時的短效加速。\n【待補機制】目前只加速自身；需朝安全方向移動的友軍條件。",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    15,
+    15,
+    15,
+    15
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 8,
+  "rangeTier": "大",
+  "cooldownTier": "小",
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "msBonusTier": "極小"
+        }
+      ],
+      "duration": 3
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/sela.e.webp",
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 3,
+      "modifiers": [
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "msBonusTier": "極小"
+        }
+      ],
+      "castTimeSec": 0.15
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}

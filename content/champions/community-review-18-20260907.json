@@ -1,0 +1,344 @@
+{
+  "id": "community-review-18-20260907",
+  "name": "吉爾伽美什",
+  "description": "吉爾伽美什 社群英雄功能驗收稿。作品：《Fate》  \n採用：Archer 英雄王。  \n定位：多投射物、束縛、大型蓄力攻擊。\n\n視覺方向：金色門環、寶物白金軌跡、天之鎖金線、Ea 紅色旋流。\n以 GGD 砲手 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "role": "marksman",
+  "attackType": "ranged",
+  "archetype": "marksman",
+  "origin": "砲手",
+  "modelKey": "community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 10,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 6,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 6.888571428571428,
+    "healthRegen": 0.004616326530612235,
+    "maxMana": 32.01,
+    "manaRegen": 0,
+    "ad": 3.8002448979591836,
+    "as": 0,
+    "mr": 2.1118367346938776,
+    "armor": 0.7118877551020408,
+    "ap": 0
+  },
+  "attributes": {
+    "str": 29,
+    "agi": 13,
+    "int": 18,
+    "strGrowth": 2.78,
+    "agiGrowth": 1.25,
+    "intGrowth": 1.67,
+    "primary": "STR",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "community-review-18-20260907.q",
+      "name": "王之財寶",
+      "provenance": "editor-json",
+      "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.18 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】開啟三個門，依序發射武器。\n【待補機制】目前三發落點打擊；需三門武器投射物及門的掛點。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 8,
+      "radius": 4.95,
+      "rangeTier": "大",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dot",
+          "damageType": "physical",
+          "amountPerTick": {
+            "damageTier": "極小",
+            "ratios": [],
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          },
+          "intervalSec": 0.18,
+          "durationSec": 0.36,
+          "tickOnApply": true
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "template": {
+        "ref": "tpl-random-barrage",
+        "params": {
+          "count": 3,
+          "intervalSec": 0.18,
+          "impactDamage": {
+            "damageTier": "極小",
+            "ratios": [],
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          },
+          "damageType": "physical",
+          "impactRadius": 150,
+          "scatterRadius": 120,
+          "payout": "perImpact",
+          "castTimeSec": 0.5
+        },
+        "inheritDefaults": true
+      }
+    },
+    "W": {
+      "id": "community-review-18-20260907.w",
+      "name": "天之鎖",
+      "provenance": "editor-json",
+      "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"root\",\"duration\":0.7,\"applyTo\":\"target\",\"root\":true}]。\n【目標設計】射出鎖鏈，命中後短暫束縛；目標超出有效距離時解除。\n【待補機制】鎖足可作基礎控制；需超距解鎖、鎖鏈端點。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 4.5,
+      "rangeTier": "小",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [],
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "root",
+          "duration": 0.7,
+          "applyTo": "target",
+          "root": true
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/thorne.w.webp",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [],
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.2
+        },
+        "inheritDefaults": true
+      }
+    },
+    "E": {
+      "id": "community-review-18-20260907.e",
+      "name": "〔黃金甲冑〕",
+      "provenance": "editor-json",
+      "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-18-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】提供短效護盾，降低正面承受的爆發。\n【待補機制】目前全方向盾；缺正面條件。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 8,
+      "rangeTier": "大",
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [],
+          "duration": 3
+        },
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 120,
+            "ratios": [],
+            "perRank": [
+              0,
+              60,
+              120,
+              180
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "community-review-18-20260907.e.guard",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/thorne.e.webp",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [],
+          "castTimeSec": 0.15
+        },
+        "inheritDefaults": true
+      }
+    },
+    "R": {
+      "id": "community-review-18-20260907.r",
+      "name": "天地乖離開闢之星",
+      "provenance": "editor-json",
+      "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】以 Ea 進行明顯蓄力後的扇形／直線範圍攻擊。\n【待補機制】Ea 造型、蓄力層與單一總傷害預算需補。",
+      "slot": "R",
+      "castType": "skillshot",
+      "maxRank": 3,
+      "cooldown": [
+        90,
+        90,
+        90
+      ],
+      "manaCost": [
+        576,
+        576,
+        576
+      ],
+      "manaCostTier": "大",
+      "range": 8,
+      "rangeTier": "大",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 2.75,
+          "side": "enemies",
+          "delaySec": 0.05,
+          "count": 4,
+          "intervalSec": 0.05,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": [],
+                "perRank": [
+                  0,
+                  150,
+                  300
+                ]
+              }
+            }
+          ],
+          "targetMode": "reresolve",
+          "advance": {
+            "stepDist": 1.83,
+            "dir": "facing"
+          },
+          "hitOncePerTarget": true
+        }
+      ],
+      "castTimeSec": 0.5,
+      "castTimeTier": "大",
+      "icon": "assets/icons/abilities/thorne.r.webp",
+      "template": {
+        "ref": "tpl-line-sweep",
+        "params": {
+          "segmentCount": 4,
+          "stepSize": 100,
+          "segmentAoe": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": [],
+            "perRank": [
+              0,
+              150,
+              300
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.35
+        },
+        "inheritDefaults": true
+      }
+    }
+  },
+  "exAbility": "community-review-18-20260907.ex",
+  "passiveAbility": "community-review-18-20260907.passive",
+  "icon": "assets/icons/champions/community-review-18-20260907.webp",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1"
+}

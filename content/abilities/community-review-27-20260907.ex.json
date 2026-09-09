@@ -1,0 +1,35 @@
+{
+  "id": "community-review-27-20260907.ex",
+  "schema": "ability@1",
+  "name": "〔換牌：風與樹〕",
+  "description": "將 Q 在風牌推動與樹牌束縛之間切換；兩者共享 Q 的冷卻與資源。",
+  "slot": "EX",
+  "provenance": "editor-json",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    45
+  ],
+  "manaCost": [
+    576
+  ],
+  "range": 4.5,
+  "castTimeSec": 0.1,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "小",
+        "ratios": []
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "root",
+      "duration": 0.7,
+      "applyTo": "target",
+      "root": true
+    }
+  ]
+}

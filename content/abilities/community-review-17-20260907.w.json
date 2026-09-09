@@ -1,0 +1,62 @@
+{
+  "id": "community-review-17-20260907.w",
+  "name": "死亡騎士",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】召喚 1 名 thorne 樣板代理，6 秒、25% 傷害、30% 生命，同類上限 1、主人死亡清除。\n【目標設計】召喚一名可受擊的死亡騎士，負責近身牽制。\n【待補機制】死亡騎士造型待製，代理採 thorne。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    15,
+    15,
+    15,
+    15
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "rangeTier": "中",
+  "cooldownTier": "小",
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "summon",
+      "championId": "thorne",
+      "count": 1,
+      "durationSec": 6,
+      "formation": "ring",
+      "spread": 1.5,
+      "maxAlive": 1,
+      "onOwnerDeath": "despawn",
+      "hpMult": 0.3,
+      "damageMult": 0.25
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/sela.w.webp",
+  "template": {
+    "ref": "tpl-summon-agent",
+    "params": {
+      "count": 1,
+      "body": "champion",
+      "championId": "thorne",
+      "durationSec": 6,
+      "damageMult": 0.25,
+      "hpMult": 0.3,
+      "formation": "ring",
+      "spread": 1.5,
+      "maxAlive": 1,
+      "onOwnerDeath": "despawn",
+      "cleanse": "none",
+      "castTimeSec": 0.35
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}

@@ -1,0 +1,35 @@
+{
+  "id": "community-review-23-20260907.ex",
+  "schema": "ability@1",
+  "name": "〔吐槽也是武器〕",
+  "description": "近身重擊打斷一個可中斷的施法，以吐槽文字及誇張表情演出。",
+  "slot": "EX",
+  "provenance": "editor-json",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    45
+  ],
+  "manaCost": [
+    576
+  ],
+  "range": 4.5,
+  "castTimeSec": 0.1,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "physical",
+      "amount": {
+        "damageTier": "小",
+        "ratios": []
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "stun",
+      "duration": 0.5,
+      "applyTo": "target",
+      "stun": true
+    }
+  ]
+}

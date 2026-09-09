@@ -1,0 +1,377 @@
+{
+  "id": "community-review-04-20260907",
+  "name": "空條承太郎",
+  "description": "空條承太郎 社群英雄功能驗收稿。作品：《JoJo 的奇妙冒險》  \n採用：第三部後期、已能停止時間。  \n定位：替身近戰、局部時停。\n\n視覺方向：白金之星為待製副模型；拳線紫白、時停要求灰階環界與恢復裂紋，視覺不能代替模擬。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "role": "fighter",
+  "attackType": "melee",
+  "archetype": "fighter",
+  "origin": "鬥士",
+  "modelKey": "community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.4,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 35.000204081632646,
+    "healthRegen": 0.08789387755102042,
+    "maxMana": 26.357142857142858,
+    "manaRegen": 0,
+    "ad": 4.289142857142858,
+    "as": 0,
+    "mr": 2.639795918367347,
+    "armor": 0.4578979591836735,
+    "ap": 0
+  },
+  "attributes": {
+    "str": 18,
+    "agi": 29,
+    "int": 13,
+    "strGrowth": 1.67,
+    "agiGrowth": 2.78,
+    "intGrowth": 1.25,
+    "primary": "AGI",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "community-review-04-20260907.q",
+      "name": "歐拉連打",
+      "provenance": "editor-json",
+      "description": "【目前模板可執行】6 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】白金之星在前方進行多段拳擊，每段重新確認距離與目標。\n【待補機制】需逐段距離重新檢查、替身掛點及雙模型動作。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 3,
+      "radius": 2.75,
+      "rangeTier": "極小",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dot",
+          "damageType": "physical",
+          "amountPerTick": {
+            "damageTier": "極小",
+            "ratios": [],
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          },
+          "intervalSec": 0.18,
+          "durationSec": 1.08
+        },
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "inPlace",
+          "apexHeight": 0,
+          "durationSec": 1.08,
+          "landRadius": 2.75,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "ratios": [],
+                "perRank": [
+                  0,
+                  250,
+                  500,
+                  750
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "template": {
+        "ref": "tpl-lock-combo",
+        "params": {
+          "hitCount": 6,
+          "hitIntervalSec": 0.18,
+          "perHitDamage": {
+            "damageTier": "極小",
+            "ratios": [],
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          },
+          "finisherDamage": {
+            "damageTier": "小",
+            "ratios": [],
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          },
+          "finisherRadius": 150,
+          "damageType": "physical",
+          "lockTarget": "none",
+          "casterGuard": "none",
+          "trigger": "onCast"
+        },
+        "inheritDefaults": true
+      },
+      "castTimeSec": 0.1
+    },
+    "W": {
+      "id": "community-review-04-20260907.w",
+      "name": "流星指刺",
+      "provenance": "editor-json",
+      "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】中短距離直線刺擊，用於追擊離開普攻範圍的敵人。\n【待補機制】需單條流星指刺與單目標去重。",
+      "slot": "W",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 2.75,
+          "side": "enemies",
+          "delaySec": 0.05,
+          "count": 4,
+          "intervalSec": 0.05,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": [],
+                "perRank": [
+                  0,
+                  100,
+                  200,
+                  300
+                ]
+              }
+            }
+          ],
+          "targetMode": "reresolve",
+          "advance": {
+            "stepDist": 1.83,
+            "dir": "facing"
+          },
+          "hitOncePerTarget": true
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/thorne.w.webp",
+      "template": {
+        "ref": "tpl-line-sweep",
+        "params": {
+          "segmentCount": 4,
+          "stepSize": 100,
+          "segmentAoe": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": [],
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.35
+        },
+        "inheritDefaults": true
+      }
+    },
+    "E": {
+      "id": "community-review-04-20260907.e",
+      "name": "〔替身護衛〕",
+      "provenance": "editor-json",
+      "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-04-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】白金之星進入短暫防禦姿態，減免一次正面攻擊並推開近身敵人。\n【待補機制】需正面一次格擋與推開近敵，不能以一般護盾驗收。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [],
+          "duration": 3
+        },
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 120,
+            "ratios": [],
+            "perRank": [
+              0,
+              60,
+              120,
+              180
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "community-review-04-20260907.e.guard",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/thorne.e.webp",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [],
+          "castTimeSec": 0.15
+        },
+        "inheritDefaults": true
+      }
+    },
+    "R": {
+      "id": "community-review-04-20260907.r",
+      "name": "白金之星・世界",
+      "provenance": "editor-json",
+      "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"stun\",\"duration\":0.8,\"applyTo\":\"target\",\"stun\":true}]。\n【目標設計】建立短暫局部時停區域。暫停範圍內敵方單位的動作與指定計時器，以及敵方投射物運動。對決倒數及時停自身的結束計時繼續。承太郎在期間造成的命中記入有限佇列，時停結束後依序結算。\n【待補機制】此槽僅單體 0.8 秒暈眩作模板預覽；局部時停、投射物暫停、計時器分類及命中佇列尚未提供。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        576,
+        576,
+        576
+      ],
+      "manaCostTier": "大",
+      "range": 4.5,
+      "rangeTier": "小",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [],
+            "perRank": [
+              0,
+              375,
+              750
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "stun",
+          "duration": 0.8,
+          "applyTo": "target",
+          "stun": true
+        }
+      ],
+      "castTimeSec": 0.5,
+      "castTimeTier": "大",
+      "icon": "assets/icons/abilities/thorne.r.webp",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [],
+            "perRank": [
+              0,
+              375,
+              750
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.2
+        },
+        "inheritDefaults": true
+      }
+    }
+  },
+  "exAbility": "community-review-04-20260907.ex",
+  "passiveAbility": "community-review-04-20260907.passive",
+  "icon": "assets/icons/champions/community-review-04-20260907.webp",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1"
+}

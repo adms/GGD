@@ -1,0 +1,405 @@
+{
+  "id": "community-review-12-20260907",
+  "name": "衛宮士郎",
+  "description": "衛宮士郎 社群英雄功能驗收稿。作品：《Fate/stay night》  \n採用：Unlimited Blade Works 路線。  \n定位：投影武器、短期武裝、區域劍製。\n\n視覺方向：橘色投影線稿、鋼色雙劍、紅褐劍域；不得生成永久背包武器。\n以 GGD 法鬥 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "role": "mage",
+  "attackType": "melee",
+  "archetype": "mage",
+  "origin": "法鬥",
+  "modelKey": "community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.4,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 35.000204081632646,
+    "healthRegen": 0.08789387755102042,
+    "maxMana": 0.9581632653061187,
+    "manaRegen": 0,
+    "ad": 3.2177142857142864,
+    "as": 0.001523029594003207,
+    "mr": 2.639795918367347,
+    "armor": 0.7118877551020408,
+    "ap": 0
+  },
+  "attributes": {
+    "str": 18,
+    "agi": 13,
+    "int": 29,
+    "strGrowth": 1.67,
+    "agiGrowth": 1.25,
+    "intGrowth": 2.78,
+    "primary": "INT",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "community-review-12-20260907.q",
+      "name": "干將・莫邪",
+      "provenance": "editor-json",
+      "description": "【目前模板可執行】2 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。\n【目標設計】投影雙劍進行近身交叉斬擊。\n【待補機制】雙劍掛點與交叉斬動畫待製。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 3,
+      "radius": 2.75,
+      "rangeTier": "極小",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dot",
+          "damageType": "physical",
+          "amountPerTick": {
+            "damageTier": "極小",
+            "ratios": [],
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          },
+          "intervalSec": 0.18,
+          "durationSec": 0.36
+        },
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "inPlace",
+          "apexHeight": 0,
+          "durationSec": 0.36,
+          "landRadius": 2.75,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "ratios": [],
+                "perRank": [
+                  0,
+                  250,
+                  500,
+                  750
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/sela.q.webp",
+      "template": {
+        "ref": "tpl-lock-combo",
+        "params": {
+          "hitCount": 2,
+          "hitIntervalSec": 0.18,
+          "perHitDamage": {
+            "damageTier": "極小",
+            "ratios": [],
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          },
+          "finisherDamage": {
+            "damageTier": "小",
+            "ratios": [],
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          },
+          "finisherRadius": 150,
+          "damageType": "physical",
+          "lockTarget": "none",
+          "casterGuard": "none",
+          "trigger": "onCast"
+        },
+        "inheritDefaults": true
+      },
+      "castTimeSec": 0.1
+    },
+    "W": {
+      "id": "community-review-12-20260907.w",
+      "name": "〔投影・飛劍〕",
+      "provenance": "editor-json",
+      "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.15 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】將有限數量的投影劍射向指定方向。\n【待補機制】目前定點三發落劍；需按方向投影飛劍。",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 4.95,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dot",
+          "damageType": "physical",
+          "amountPerTick": {
+            "damageTier": "極小",
+            "ratios": [],
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          },
+          "intervalSec": 0.15,
+          "durationSec": 0.3,
+          "tickOnApply": true
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/sela.w.webp",
+      "template": {
+        "ref": "tpl-random-barrage",
+        "params": {
+          "count": 3,
+          "intervalSec": 0.15,
+          "impactDamage": {
+            "damageTier": "極小",
+            "ratios": [],
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          },
+          "damageType": "physical",
+          "impactRadius": 150,
+          "scatterRadius": 120,
+          "payout": "perImpact",
+          "castTimeSec": 0.5
+        },
+        "inheritDefaults": true
+      }
+    },
+    "E": {
+      "id": "community-review-12-20260907.e",
+      "name": "〔強化・踏步〕",
+      "provenance": "editor-json",
+      "description": "【目前模板可執行】向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】短距離移動並強化下一次近戰命中。\n【待補機制】缺下一次近戰強化。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 4.5,
+      "radius": 2.75,
+      "rangeTier": "小",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 0,
+          "durationSec": 0.3,
+          "throwDistance": 4.58,
+          "landRadius": 2.75,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": [],
+                "perRank": [
+                  0,
+                  100,
+                  200,
+                  300
+                ]
+              }
+            },
+            {
+              "kind": "knockback",
+              "distance": 3.67,
+              "speed": 15.99,
+              "from": "facing",
+              "launchHeight": 0
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "icon": "assets/icons/abilities/sela.e.webp",
+      "template": {
+        "ref": "tpl-charge-push",
+        "params": {
+          "dashDistance": 250,
+          "dashDurationSec": 0.3,
+          "apexHeight": 0,
+          "radius": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": [],
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          },
+          "damageType": "physical",
+          "pushDistance": 200,
+          "pushSpeed": 872,
+          "pushFrom": "facing",
+          "pushLaunchHeight": 0,
+          "castTimeSec": 0.1
+        },
+        "inheritDefaults": true
+      }
+    },
+    "R": {
+      "id": "community-review-12-20260907.r",
+      "name": "無限劍製",
+      "provenance": "editor-json",
+      "description": "【目前模板可執行】指定落點維持 3 秒的小級半徑傷害區，每秒一跳極小級傷害。\n【目標設計】展開有期限的劍域，強化 W 並在固定節奏追加投影劍；領域不改寫地圖邊界。\n【待補機制】目前領域傷害；需領域内 W 強化、投影劍生成與退出還原。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        90,
+        90,
+        90
+      ],
+      "manaCost": [
+        576,
+        576,
+        576
+      ],
+      "manaCostTier": "大",
+      "range": 6,
+      "radius": 4.5,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 4.5,
+          "radiusTier": "小",
+          "side": "enemies",
+          "delaySec": 1,
+          "count": 3,
+          "intervalSec": 1,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "mult": 0.3333333333333333,
+                "perRank": [
+                  0,
+                  150,
+                  300
+                ]
+              }
+            }
+          ],
+          "targetMode": "reresolve"
+        }
+      ],
+      "castTimeSec": 0.5,
+      "castTimeTier": "大",
+      "icon": "assets/icons/abilities/sela.r.webp",
+      "template": {
+        "ref": "tpl-periodic-field",
+        "params": {
+          "intervalSec": 1,
+          "durationSec": 3,
+          "radiusTier": "小",
+          "anchor": "point",
+          "applyTo": "enemies",
+          "damageTier": "極小",
+          "damageType": "physical",
+          "castTimeSec": 0.3,
+          "radius": 4.5,
+          "perRank": [
+            0,
+            150,
+            300
+          ]
+        },
+        "inheritDefaults": true
+      }
+    }
+  },
+  "exAbility": "community-review-12-20260907.ex",
+  "passiveAbility": "community-review-12-20260907.passive",
+  "icon": "assets/icons/champions/community-review-12-20260907.webp",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [],
+  "schema": "champion@1"
+}

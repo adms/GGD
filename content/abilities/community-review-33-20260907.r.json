@@ -1,0 +1,56 @@
+{
+  "id": "community-review-33-20260907.r",
+  "name": "〔不死者的再起〕",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":100,\"ratios\":[]},\"applyTo\":\"self\"}]。\n【目標設計】短時間準備再起；首次致死傷害被攔截，經明顯恢復動作後回復有限生命。每回合一次。\n【待補機制】目前立即回復；需主動再起窗口、首次致死截取與每回合一次。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    576,
+    576,
+    576
+  ],
+  "manaCostTier": "大",
+  "range": 6,
+  "rangeTier": "中",
+  "cooldownTier": "大",
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [],
+      "duration": 3
+    },
+    {
+      "kind": "heal",
+      "amount": {
+        "flat": 100,
+        "ratios": [],
+        "perRank": [
+          0,
+          75,
+          150
+        ]
+      },
+      "applyTo": "self"
+    }
+  ],
+  "castTimeSec": 0.5,
+  "castTimeTier": "大",
+  "icon": "assets/icons/abilities/thorne.r.webp",
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 3,
+      "modifiers": [],
+      "castTimeSec": 0.15
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}

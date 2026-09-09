@@ -1,0 +1,62 @@
+{
+  "id": "community-review-06-20260907.passive",
+  "schema": "ability@1",
+  "name": "〔圓滾滾的韌性〕",
+  "description": "脫離戰鬥後逐步恢復少量生命；受擊即中斷。\n\n【尚未實作】這個被動的效果還在調整中，目前**不會發生任何事**。",
+  "slot": "PASSIVE",
+  "provenance": "editor-json",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0,
+  "marks": [
+    {
+      "markId": "community-review-06-20260907.last-chance",
+      "initial": 1,
+      "max": 1,
+      "durationSec": -1,
+      "resetOn": "match",
+      "perStackLost": [],
+      "lethal": {
+        "consume": 1,
+        "surviveHpPct": 0.01,
+        "damageTypes": [
+          "physical",
+          "magic",
+          "true"
+        ],
+        "internalCooldown": 1,
+        "selfEffects": [
+          {
+            "kind": "invulnerable",
+            "durationSec": 0.5,
+            "applyTo": "self",
+            "blocksControl": true
+          },
+          {
+            "kind": "restore",
+            "healthPct": 0.15
+          }
+        ],
+        "aoeEffects": [],
+        "aoeRadius": 0
+      }
+    }
+  ],
+  "effects": [],
+  "innateKind": "passive",
+  "passive": {
+    "name": "〔圓滾滾的韌性〕",
+    "ranks": [
+      {
+        "modifiers": [],
+        "hooks": []
+      }
+    ]
+  }
+}

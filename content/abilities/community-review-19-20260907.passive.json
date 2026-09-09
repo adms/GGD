@@ -1,0 +1,46 @@
+{
+  "id": "community-review-19-20260907.passive",
+  "schema": "ability@1",
+  "name": "二刀流",
+  "description": "交替命中累積連擊節奏，停止交鋒後衰退；提供有限攻速加成。",
+  "slot": "PASSIVE",
+  "provenance": "editor-json",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0,
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 3,
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            }
+          }
+        ]
+      }
+    ],
+    "name": "二刀流"
+  },
+  "effects": [],
+  "innateKind": "passive"
+}

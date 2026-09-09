@@ -2,8 +2,8 @@
   "schema": "ggd-assets-offdisk@1",
   "note": "⭐ **不在 git 裡**的資產：位元組住 S3 ggd-390630837668-ap-east-2-an，⭐ 而驗得起來的那半（bytes + sha256）住這裡（owner 2026-09-08 的歸屬表）。⛔ 沒有宣告的缺席資產仍然 fail-loud —— 這**不是**一張放行清單。⚠️ 內容定址的路徑（檔名 = 64 hex），sha256 必須等於檔名，⭐ 產生器會當場擋下自我矛盾的宣告。",
   "counts": {
-    "entries": 100,
-    "totalBytes": 93955300
+    "entries": 104,
+    "totalBytes": 97629468
   },
   "entries": {
     "assets/models/champions/versions/b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810.glb": {
@@ -133,6 +133,18 @@
     "assets/models/community/6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf.glb": {
       "bytes": 1275656,
       "sha256": "6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf"
+    },
+    "assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb": {
+      "bytes": 1736188,
+      "sha256": "7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d"
+    },
+    "assets/models/community/7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2.glb": {
+      "bytes": 679728,
+      "sha256": "7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2"
+    },
+    "assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb": {
+      "bytes": 199860,
+      "sha256": "7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963"
     },
     "assets/models/community/7f1b4ceac21c09818ba23adde6c76fb43425dc9c39ec60162880a60d60a4a892.glb": {
       "bytes": 1436500,
@@ -293,6 +305,10 @@
     "assets/models/community/eeb903a85ee447a044d77d6bc058753bd714fe822eea335bd948fb2766c76789.glb": {
       "bytes": 742988,
       "sha256": "eeb903a85ee447a044d77d6bc058753bd714fe822eea335bd948fb2766c76789"
+    },
+    "assets/models/community/ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0.glb": {
+      "bytes": 1058392,
+      "sha256": "ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0"
     },
     "assets/models/community/efc5d5ca21d1b525faa8b35720f3e5528a5720ea31b220c42b3bd47685050509.glb": {
       "bytes": 1104152,

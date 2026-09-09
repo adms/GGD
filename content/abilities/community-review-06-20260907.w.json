@@ -1,0 +1,84 @@
+{
+  "id": "community-review-06-20260907.w",
+  "name": "吐出",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】含住目標時將其安全釋放並射出星彈；空腹時只能使用較弱的普通星彈。\n【待補機制】目前固定星光線；需持有物判斷與安全吐出。",
+  "slot": "W",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "rangeTier": "中",
+  "cooldownTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "delayed",
+      "shape": "circle",
+      "radius": 2.75,
+      "side": "enemies",
+      "delaySec": 0.05,
+      "count": 4,
+      "intervalSec": 0.05,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": [],
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          }
+        }
+      ],
+      "targetMode": "reresolve",
+      "advance": {
+        "stepDist": 1.83,
+        "dir": "facing"
+      },
+      "hitOncePerTarget": true
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/thorne.w.webp",
+  "template": {
+    "ref": "tpl-line-sweep",
+    "params": {
+      "segmentCount": 4,
+      "stepSize": 100,
+      "segmentAoe": 150,
+      "damage": {
+        "damageTier": "極小",
+        "ratios": [],
+        "perRank": [
+          0,
+          100,
+          200,
+          300
+        ]
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.35
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}

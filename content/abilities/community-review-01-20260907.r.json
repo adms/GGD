@@ -1,0 +1,62 @@
+{
+  "id": "community-review-01-20260907.r",
+  "name": "歐西里斯的天空龍",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】指定落點半徑 300 wc3u 的一次大級範圍傷害。\n【目標設計】以天空龍投影演出有預警的區域雷擊；此招是一次性施法投影，不增加常駐召喚物。\n【待補機制】天空龍投影是待製資產；預覽以雷電區域脈衝表達。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    90,
+    90,
+    90
+  ],
+  "manaCost": [
+    576,
+    576,
+    576
+  ],
+  "manaCostTier": "大",
+  "range": 6,
+  "radius": 5.5,
+  "rangeTier": "中",
+  "cooldownTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "大",
+        "ratios": [],
+        "perRank": [
+          0,
+          1125,
+          2250
+        ]
+      }
+    }
+  ],
+  "castTimeSec": 0.5,
+  "castTimeTier": "大",
+  "icon": "assets/icons/abilities/sela.r.webp",
+  "template": {
+    "ref": "tpl-ground-nova",
+    "params": {
+      "radius": 300,
+      "damage": {
+        "damageTier": "大",
+        "ratios": [],
+        "perRank": [
+          0,
+          1125,
+          2250
+        ]
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.4
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}

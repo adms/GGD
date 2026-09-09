@@ -1,0 +1,45 @@
+{
+  "id": "community-review-26-20260907.ex",
+  "schema": "ability@1",
+  "name": "伸縮吊帶",
+  "description": "連接合法目標或錨點，完成一次有限拉動；超距與碰撞時中止。",
+  "slot": "EX",
+  "provenance": "editor-json",
+  "castType": "ground",
+  "maxRank": 1,
+  "cooldown": [
+    45
+  ],
+  "manaCost": [
+    576
+  ],
+  "range": 4.5,
+  "castTimeSec": 0.1,
+  "effects": [
+    {
+      "kind": "leap",
+      "applyTo": "target",
+      "mode": "toPoint",
+      "apexHeight": 0.005,
+      "durationSec": 0.45,
+      "throwDistance": 2.2,
+      "dragToCaster": true,
+      "landRadius": 2,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 2.6938
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

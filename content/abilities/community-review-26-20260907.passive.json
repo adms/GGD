@@ -1,0 +1,46 @@
+{
+  "id": "community-review-26-20260907.passive",
+  "schema": "ability@1",
+  "name": "〔線索整理〕",
+  "description": "對已觀察敵人收集最多三條線索，每種有效戰鬥事件只計一次。",
+  "slot": "PASSIVE",
+  "provenance": "editor-json",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0,
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 3,
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            }
+          }
+        ]
+      }
+    ],
+    "name": "〔線索整理〕"
+  },
+  "effects": [],
+  "innateKind": "passive"
+}

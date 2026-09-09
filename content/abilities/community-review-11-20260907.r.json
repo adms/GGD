@@ -1,0 +1,77 @@
+{
+  "id": "community-review-11-20260907.r",
+  "name": "黑炎",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】指定落點維持 3 秒的小級半徑傷害區，每秒一跳極小級傷害。\n【目標設計】在指定區域產生有限脈衝的黑炎，結束後清理全部區域效果。\n【待補機制】固定 3 秒黑炎可作基本區域驗收；黑炎色覆寫。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    90,
+    90,
+    90
+  ],
+  "manaCost": [
+    576,
+    576,
+    576
+  ],
+  "manaCostTier": "大",
+  "range": 6,
+  "radius": 4.5,
+  "rangeTier": "中",
+  "cooldownTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "delayed",
+      "shape": "circle",
+      "radius": 4.5,
+      "radiusTier": "小",
+      "side": "enemies",
+      "delaySec": 1,
+      "count": 3,
+      "intervalSec": 1,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "極小",
+            "mult": 0.3333333333333333,
+            "perRank": [
+              0,
+              150,
+              300
+            ]
+          }
+        }
+      ],
+      "targetMode": "reresolve"
+    }
+  ],
+  "castTimeSec": 0.5,
+  "castTimeTier": "大",
+  "icon": "assets/icons/abilities/sela.r.webp",
+  "template": {
+    "ref": "tpl-periodic-field",
+    "params": {
+      "intervalSec": 1,
+      "durationSec": 3,
+      "radiusTier": "小",
+      "anchor": "point",
+      "applyTo": "enemies",
+      "damageTier": "極小",
+      "damageType": "magic",
+      "castTimeSec": 0.3,
+      "radius": 4.5,
+      "perRank": [
+        0,
+        150,
+        300
+      ]
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}

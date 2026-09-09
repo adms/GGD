@@ -1,0 +1,59 @@
+{
+  "id": "community-review-14-20260907.r",
+  "name": "完全防禦形態",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":180,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-14-20260907.r.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】進入短暫球體防禦，期間無法移動及施法；結束後有明顯恢復動作。\n【待補機制】需球體變形、禁移動禁施法與限時防禦；目前只有盾。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    576,
+    576,
+    576
+  ],
+  "manaCostTier": "大",
+  "range": 6,
+  "rangeTier": "中",
+  "cooldownTier": "大",
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [],
+      "duration": 3
+    },
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 180,
+        "ratios": [],
+        "perRank": [
+          0,
+          135,
+          270
+        ]
+      },
+      "duration": 3,
+      "absorbs": "all",
+      "stackKey": "community-review-14-20260907.r.guard",
+      "onExisting": "keepLarger"
+    }
+  ],
+  "castTimeSec": 0.5,
+  "castTimeTier": "大",
+  "icon": "assets/icons/abilities/thorne.r.webp",
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 3,
+      "modifiers": [],
+      "castTimeSec": 0.15
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}

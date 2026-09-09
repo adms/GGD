@@ -1,0 +1,71 @@
+{
+  "id": "community-review-18-20260907.w",
+  "name": "天之鎖",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"root\",\"duration\":0.7,\"applyTo\":\"target\",\"root\":true}]。\n【目標設計】射出鎖鏈，命中後短暫束縛；目標超出有效距離時解除。\n【待補機制】鎖足可作基礎控制；需超距解鎖、鎖鏈端點。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    15,
+    15,
+    15,
+    15
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 4.5,
+  "rangeTier": "小",
+  "cooldownTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "小",
+        "ratios": [],
+        "perRank": [
+          0,
+          250,
+          500,
+          750
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "root",
+      "duration": 0.7,
+      "applyTo": "target",
+      "root": true
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/thorne.w.webp",
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
+        "damageTier": "小",
+        "ratios": [],
+        "perRank": [
+          0,
+          250,
+          500,
+          750
+        ]
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.2
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}

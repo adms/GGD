@@ -1,0 +1,46 @@
+{
+  "id": "community-review-18-20260907.passive",
+  "schema": "ability@1",
+  "name": "〔王的財庫〕",
+  "description": "技能按次累積財庫能量，供 EX 消耗；命中段數不等於獲得次數。",
+  "slot": "PASSIVE",
+  "provenance": "editor-json",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0,
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 3,
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            }
+          }
+        ]
+      }
+    ],
+    "name": "〔王的財庫〕"
+  },
+  "effects": [],
+  "innateKind": "passive"
+}

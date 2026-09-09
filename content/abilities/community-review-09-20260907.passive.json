@@ -1,0 +1,46 @@
+{
+  "id": "community-review-09-20260907.passive",
+  "schema": "ability@1",
+  "name": "〔賢狼的眼光〕",
+  "description": "參與有效助攻獲得交易籌碼，上限三枚；同一擊殺事件只結算一次。",
+  "slot": "PASSIVE",
+  "provenance": "editor-json",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0,
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 3,
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            }
+          }
+        ]
+      }
+    ],
+    "name": "〔賢狼的眼光〕"
+  },
+  "effects": [],
+  "innateKind": "passive"
+}

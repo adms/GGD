@@ -608,6 +608,48 @@ var firstOpenRoster = []string{
 	"godie-ubal", "godie-ucrl", "godie-udea", "godie-udre", "godie-umal",
 	"godie-uvng",
 	"godie-zombiex",
+
+	// ── ⭐ 第一批 37 名社群英雄（GH#1165）────────────────────────────
+	// owner 2026-09-10：「⋯**已經取得審查授權可以直接上架，被認定為預設官方角色**⋯」
+	// ⚠️ 這一份與 starter.go 的 starterChampions 是**同一個事實的兩份抄寫**
+	//   ⇒ ⛔ 不可以只改一邊（`roster:check` 的第①條在守）。
+	"community-review-01-20260907",
+	"community-review-02-20260907",
+	"community-review-03-20260907",
+	"community-review-04-20260907",
+	"community-review-05-20260907",
+	"community-review-06-20260907",
+	"community-review-07-20260907",
+	"community-review-08-20260907",
+	"community-review-09-20260907",
+	"community-review-10-20260907",
+	"community-review-11-20260907",
+	"community-review-12-20260907",
+	"community-review-13-20260907",
+	"community-review-14-20260907",
+	"community-review-15-20260907",
+	"community-review-16-20260907",
+	"community-review-17-20260907",
+	"community-review-18-20260907",
+	"community-review-19-20260907",
+	"community-review-20-20260907",
+	"community-review-21-20260907",
+	"community-review-22-20260907",
+	"community-review-23-20260907",
+	"community-review-24-20260907",
+	"community-review-25-20260907",
+	"community-review-26-20260907",
+	"community-review-27-20260907",
+	"community-review-28-20260907",
+	"community-review-29-20260907",
+	"community-review-30-20260907",
+	"community-review-31-20260907",
+	"community-review-32-20260907",
+	"community-review-33-20260907",
+	"community-review-34-20260907",
+	"community-review-35-20260907",
+	"community-review-36-20260907",
+	"community-review-37-20260907",
 }
 
 // whitelist-first-open-roster: the enabled champion set the starter bundle
@@ -652,8 +694,10 @@ type storeDoc struct {
 // —— 那才是這條斷言真正在守的東西（「免費的比例不可以偷偷變」）。
 // ⛔ 如果哪天 free 也跟著動了，那就**不是**跟著名單走，要回來問 owner。
 const (
-	starterFreeChampions   = 12
-	starterPricedChampions = 37
+	starterFreeChampions = 12
+	// ⭐ GH#1165：+37（第一批社群英雄）—— ⚠️ **免費那 12 位一位都沒動**，
+	//   那才是這條斷言真正在守的東西（「免費的比例不可以偷偷變」）。
+	starterPricedChampions = 74
 )
 
 // clientWalletMetaPath is the champ-select module that carries the client's

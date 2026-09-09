@@ -1,0 +1,80 @@
+{
+  "id": "community-review-13-20260907.e",
+  "name": "〔戰術翻滾〕",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】短距離翻滾，打斷自己的瞄準並重新定位。\n【待補機制】翻滾應為貼地移動且清空瞄準，目前是低弧跳躍。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 8,
+  "radius": 2.75,
+  "rangeTier": "大",
+  "cooldownTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "toPoint",
+      "apexHeight": 0.28,
+      "durationSec": 0.5,
+      "landRadius": 2.75,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": [],
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/thorne.e.webp",
+  "template": {
+    "ref": "tpl-leap-strike",
+    "params": {
+      "mode": "toPoint",
+      "applyTo": "self",
+      "apexHeight": 70,
+      "durationSec": 0.5,
+      "landRadius": 150,
+      "damage": {
+        "damageTier": "極小",
+        "ratios": [],
+        "perRank": [
+          0,
+          100,
+          200,
+          300
+        ]
+      },
+      "damageType": "physical",
+      "castTimeSec": 0.15
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}

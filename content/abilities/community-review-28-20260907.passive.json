@@ -1,0 +1,46 @@
+{
+  "id": "community-review-28-20260907.passive",
+  "schema": "ability@1",
+  "name": "〔劍神流・先發制人〕",
+  "description": "對剛進入交鋒的目標，首次近戰命中獲得有限強化；同一目標有冷卻。",
+  "slot": "PASSIVE",
+  "provenance": "editor-json",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0,
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 3,
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            }
+          }
+        ]
+      }
+    ],
+    "name": "〔劍神流・先發制人〕"
+  },
+  "effects": [],
+  "innateKind": "passive"
+}

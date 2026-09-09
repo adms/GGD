@@ -1,0 +1,46 @@
+{
+  "id": "community-review-05-20260907.passive",
+  "schema": "ability@1",
+  "name": "〔武器能源管理〕",
+  "description": "特殊武器共用有限能源；能源隨時間恢復，切換武器不補滿。",
+  "slot": "PASSIVE",
+  "provenance": "editor-json",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0,
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 3,
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            }
+          }
+        ]
+      }
+    ],
+    "name": "〔武器能源管理〕"
+  },
+  "effects": [],
+  "innateKind": "passive"
+}

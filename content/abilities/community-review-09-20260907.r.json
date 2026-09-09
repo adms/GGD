@@ -1,0 +1,65 @@
+{
+  "id": "community-review-09-20260907.r",
+  "name": "賢狼真身",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】自身取得 4 秒增益：ad +15%、極小級移速。\n【目標設計】變為有限體型的大狼，強化普攻與 Q，暫時失去 W 的交易功能。\n【待補機制】目前 4 秒 AD／移速；需狼形態、碰撞調整、Q 替換及 W 禁用。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    576,
+    576,
+    576
+  ],
+  "manaCostTier": "大",
+  "range": 8,
+  "rangeTier": "大",
+  "cooldownTier": "大",
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.15
+        },
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "msBonusTier": "極小"
+        }
+      ],
+      "duration": 4
+    }
+  ],
+  "castTimeSec": 0.5,
+  "castTimeTier": "大",
+  "icon": "assets/icons/abilities/sela.r.webp",
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 4,
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.15
+        },
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "msBonusTier": "極小"
+        }
+      ],
+      "castTimeSec": 0.15
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "community-review-09-20260907.ex",
+  "schema": "ability@1",
+  "name": "〔豐收的約定〕",
+  "description": "消耗剩餘籌碼，按消耗量強化附近友軍的護盾；不另外產生金幣。",
+  "slot": "EX",
+  "provenance": "editor-json",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    45
+  ],
+  "manaCost": [
+    576
+  ],
+  "range": 8,
+  "castTimeSec": 0.1,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [],
+      "duration": 3
+    },
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 150,
+        "ratios": []
+      },
+      "duration": 3,
+      "absorbs": "all",
+      "stackKey": "community-review-09-20260907.ex.guard",
+      "onExisting": "keepLarger"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "id": "community-review-01-20260907.w",
+  "name": "黑魔導女孩",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】召喚 1 名 sela 樣板代理，6 秒、25% 傷害、30% 生命，同類上限 1、主人死亡清除。\n【目標設計】召喚一名可受擊的黑魔導女孩；與黑魔導共同攻擊同一目標時，觸發有內置冷卻的協同追加傷害。\n【待補機制】黑魔導女孩造型、與黑魔導協同事件未提供；目前同模板上限須驗證跨槽隔離。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    15,
+    15,
+    15,
+    15
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "rangeTier": "中",
+  "cooldownTier": "小",
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "summon",
+      "championId": "sela",
+      "count": 1,
+      "durationSec": 6,
+      "formation": "ring",
+      "spread": 1.5,
+      "maxAlive": 1,
+      "onOwnerDeath": "despawn",
+      "hpMult": 0.3,
+      "damageMult": 0.25
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/sela.w.webp",
+  "template": {
+    "ref": "tpl-summon-agent",
+    "params": {
+      "count": 1,
+      "body": "champion",
+      "championId": "sela",
+      "durationSec": 6,
+      "damageMult": 0.25,
+      "hpMult": 0.3,
+      "formation": "ring",
+      "spread": 1.5,
+      "maxAlive": 1,
+      "onOwnerDeath": "despawn",
+      "cleanse": "none",
+      "castTimeSec": 0.35
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}

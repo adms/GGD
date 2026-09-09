@@ -1,0 +1,28 @@
+{
+  "id": "community-review-28-20260907.ex",
+  "schema": "ability@1",
+  "name": "〔狂劍追擊〕",
+  "description": "對剛被自己擊中的近身目標進行一次額外追擊，超距時不能使用。",
+  "slot": "EX",
+  "provenance": "editor-json",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    45
+  ],
+  "manaCost": [
+    576
+  ],
+  "range": 4.5,
+  "castTimeSec": 0.1,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "physical",
+      "amount": {
+        "damageTier": "小",
+        "ratios": []
+      }
+    }
+  ]
+}

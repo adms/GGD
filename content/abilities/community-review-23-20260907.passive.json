@@ -1,0 +1,46 @@
+{
+  "id": "community-review-23-20260907.passive",
+  "schema": "ability@1",
+  "name": "〔糖分補給〕",
+  "description": "脫戰後累積一份補給，供 W 消耗；最多保存一份。",
+  "slot": "PASSIVE",
+  "provenance": "editor-json",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0,
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 3,
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            }
+          }
+        ]
+      }
+    ],
+    "name": "〔糖分補給〕"
+  },
+  "effects": [],
+  "innateKind": "passive"
+}

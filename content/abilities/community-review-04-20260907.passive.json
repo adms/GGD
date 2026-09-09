@@ -1,0 +1,46 @@
+{
+  "id": "community-review-04-20260907.passive",
+  "schema": "ability@1",
+  "name": "〔白金之星・精密動作〕",
+  "description": "近距離命中累積精密層數；滿層後強化下一次 Q 的末擊。",
+  "slot": "PASSIVE",
+  "provenance": "editor-json",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0,
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": []
+                }
+              }
+            ],
+            "internalCooldown": 3,
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            }
+          }
+        ]
+      }
+    ],
+    "name": "〔白金之星・精密動作〕"
+  },
+  "effects": [],
+  "innateKind": "passive"
+}

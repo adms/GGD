@@ -1,0 +1,91 @@
+{
+  "id": "community-review-28-20260907.q",
+  "name": "〔猛進斬〕",
+  "provenance": "editor-json",
+  "description": "【目前模板可執行】向指定方向突進 180 wc3u，造成極小級碰撞範圍傷害與推移。\n【目標設計】向前踏步斬擊。\n【待補機制】短踏步可以預覽；需武器斬擊時點。",
+  "slot": "Q",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    45,
+    45,
+    45,
+    45
+  ],
+  "manaCost": [
+    144,
+    144,
+    144,
+    144
+  ],
+  "manaCostTier": "小",
+  "range": 4.5,
+  "radius": 2.75,
+  "rangeTier": "小",
+  "cooldownTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "toPoint",
+      "apexHeight": 0,
+      "durationSec": 0.3,
+      "throwDistance": 3.3,
+      "landRadius": 2.75,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": [],
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          }
+        },
+        {
+          "kind": "knockback",
+          "distance": 3.67,
+          "speed": 15.99,
+          "from": "facing",
+          "launchHeight": 0
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "icon": "assets/icons/abilities/thorne.q.webp",
+  "template": {
+    "ref": "tpl-charge-push",
+    "params": {
+      "dashDistance": 180,
+      "dashDurationSec": 0.3,
+      "apexHeight": 0,
+      "radius": 150,
+      "damage": {
+        "damageTier": "極小",
+        "ratios": [],
+        "perRank": [
+          0,
+          100,
+          200,
+          300
+        ]
+      },
+      "damageType": "physical",
+      "pushDistance": 200,
+      "pushSpeed": 872,
+      "pushFrom": "facing",
+      "pushLaunchHeight": 0,
+      "castTimeSec": 0.1
+    },
+    "inheritDefaults": true
+  },
+  "schema": "ability@1"
+}
