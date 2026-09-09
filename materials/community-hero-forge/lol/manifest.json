@@ -1,0 +1,995 @@
+{
+  "schema": "ggd-community-lol-source-handoff@1",
+  "sourceCodeCommit": "d52ad8a7121dda1217dd31f8a77f56a509eb0804",
+  "sourceFiles": [
+    {
+      "path": "packages/shared/src/content/heroForge/communityExamples.ts",
+      "sha256": "d639adf82535551ff744ec1b1c37475e9c07d6af9c15f26819e7eda1c5cd752a"
+    },
+    {
+      "path": "apps/editor/src/hero/projectModel.ts",
+      "sha256": "a7dba6365f59df7154ee4f0f5e694fdeec9e17959d25df544cd7db074c13bf63"
+    },
+    {
+      "path": "packages/shared/src/content/heroForge/generator.ts",
+      "sha256": "ab36e7bee2e8638a9542f4a3b381f877d35e415d4b47bfc1bcc3698e43275b77"
+    },
+    {
+      "path": "materials/community-hero-forge/lol/rebuild.mts",
+      "sha256": "b718872c156d6a89a936cda100015f4df5f506531300d088f14dac8b9bf483d1"
+    }
+  ],
+  "contentInputs": {
+    "digest": "sha256:d19c349517cf3428aeadc2751ba8d30917581eb5b552379af68f0f574c6b1354",
+    "documents": [
+      {
+        "path": "ability-templates/tpl-ally-shield",
+        "contentSha256": "sha256:cd1a55b463af1810a2877caa1a555bc5133aea203f5bb08250897febe16549be"
+      },
+      {
+        "path": "ability-templates/tpl-apply-status",
+        "contentSha256": "sha256:981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4be411f697b9cf4937"
+      },
+      {
+        "path": "ability-templates/tpl-area-strike",
+        "contentSha256": "sha256:dbd6165ec40c1f36188fcd0c11d0dbf24fcb0406994f54142746b7b749864a18"
+      },
+      {
+        "path": "ability-templates/tpl-barrier-domain",
+        "contentSha256": "sha256:e3bda129eee57de3ca8c90eab1aaacedba6de74ce1065a5fc4c110f1955b73f3"
+      },
+      {
+        "path": "ability-templates/tpl-beam-roll",
+        "contentSha256": "sha256:b3f33c0a872b6c9ee46eb30aec3092d71307cce9fae4102b1c7b849ebcc94449"
+      },
+      {
+        "path": "ability-templates/tpl-blink",
+        "contentSha256": "sha256:8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b41146563a36c4be10"
+      },
+      {
+        "path": "ability-templates/tpl-blink-strike",
+        "contentSha256": "sha256:4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f161452bd780097ace4"
+      },
+      {
+        "path": "ability-templates/tpl-buff-self",
+        "contentSha256": "sha256:bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec66924f52e39108974d18"
+      },
+      {
+        "path": "ability-templates/tpl-channel-beam",
+        "contentSha256": "sha256:3585c60dc177d570ac1bd174a879b1d33da68c526bc64f8e76b7b924e7c275b3"
+      },
+      {
+        "path": "ability-templates/tpl-charge-push",
+        "contentSha256": "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e"
+      },
+      {
+        "path": "ability-templates/tpl-charge-resource",
+        "contentSha256": "sha256:0be1bfa8b23464460a5358493424fb52eef0e3fbd67c671e8607e4e66e82d414"
+      },
+      {
+        "path": "ability-templates/tpl-combo-finisher",
+        "contentSha256": "sha256:267e58af1137d0f05d1ef807f4011b09cf90f60c692da449826a3d6a592ecebc"
+      },
+      {
+        "path": "ability-templates/tpl-data-no-trigger",
+        "contentSha256": "sha256:0f9a9da1e682493dde3f65488c1546303933b46a8c301771d354477ccb2618cc"
+      },
+      {
+        "path": "ability-templates/tpl-death-mechanic",
+        "contentSha256": "sha256:552354890a7f0dd263806fcf8d9cd2f975e453b1f31e9e427fe694cc8a812101"
+      },
+      {
+        "path": "ability-templates/tpl-dragon-quake",
+        "contentSha256": "sha256:ab97e476370df409a4cce7a88144c32e1a8c252accb7dbb8f874ae7ba80f1f92"
+      },
+      {
+        "path": "ability-templates/tpl-dragon-serpent",
+        "contentSha256": "sha256:667af774573cb980f96b9dbb3dc159807a45f9305b983e79801738a8d5cd8519"
+      },
+      {
+        "path": "ability-templates/tpl-dragon-shockwave",
+        "contentSha256": "sha256:113e93aff00f8c3acb0f45f2015b04ab4cc1950a5ecf190897671414c247086e"
+      },
+      {
+        "path": "ability-templates/tpl-drain-leech",
+        "contentSha256": "sha256:eeb97623763a184bab0219a940b43f3db6560ce19bb589900d2ad0e541fd1e5b"
+      },
+      {
+        "path": "ability-templates/tpl-effect-sequence",
+        "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+      },
+      {
+        "path": "ability-templates/tpl-event-passive",
+        "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+      },
+      {
+        "path": "ability-templates/tpl-global-rule",
+        "contentSha256": "sha256:b77af65437f0ba03d109d6e75e4afb9831eff3bd8adc953271ad343d1cbfe388"
+      },
+      {
+        "path": "ability-templates/tpl-ground-nova",
+        "contentSha256": "sha256:976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68b5c12bc9a25ee7e4"
+      },
+      {
+        "path": "ability-templates/tpl-growth-charge",
+        "contentSha256": "sha256:bc54822249d9f15f966c632bf0175c1352dcd1297f45fa153be58fed133cf3aa"
+      },
+      {
+        "path": "ability-templates/tpl-heal",
+        "contentSha256": "sha256:5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda611a82716b3b2f856"
+      },
+      {
+        "path": "ability-templates/tpl-instant-blast",
+        "contentSha256": "sha256:4d96d004deae36c4cf424c6f254ea0a103f0f483aa06fa46c4a1f3b77df2fc2a"
+      },
+      {
+        "path": "ability-templates/tpl-leap-strike",
+        "contentSha256": "sha256:c908c89286a452169fdeb648106cf65dac155753e5cc6b52c2df27788b18f864"
+      },
+      {
+        "path": "ability-templates/tpl-life-manipulate",
+        "contentSha256": "sha256:c3d0ebb38acb40ed32ffa14fdd00577bdb472b5fb417939a55187aa95bf37834"
+      },
+      {
+        "path": "ability-templates/tpl-line-blast",
+        "contentSha256": "sha256:6980e48d5803526fb838e7a5e015ec0c324c508a1f3f0eea5da53e338eedc9e9"
+      },
+      {
+        "path": "ability-templates/tpl-line-strike",
+        "contentSha256": "sha256:895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb712d62b4a40ff1ada5"
+      },
+      {
+        "path": "ability-templates/tpl-line-sweep",
+        "contentSha256": "sha256:431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699006b55c40f5b54c7"
+      },
+      {
+        "path": "ability-templates/tpl-lock-combo",
+        "contentSha256": "sha256:e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771cd614a89d04e016c6"
+      },
+      {
+        "path": "ability-templates/tpl-locust-line",
+        "contentSha256": "sha256:c3404a71bd109f219f4361807b240222395edae66ff8adde03c0af99f7839c64"
+      },
+      {
+        "path": "ability-templates/tpl-locust-orb",
+        "contentSha256": "sha256:1f6f98c673eaaba0cbf62ed332ab863bc5ced58cda94c5e99202ee55c32b9bca"
+      },
+      {
+        "path": "ability-templates/tpl-locust-strike",
+        "contentSha256": "sha256:1e32c0e8221bf1bf4de66773a9738e7f28ea70b1471dfbd16f719e0516ae1190"
+      },
+      {
+        "path": "ability-templates/tpl-locust-swarm",
+        "contentSha256": "sha256:1fc6d06fb96825cfe04aa95a736814a3e1b5871b92f930595a945190922506e9"
+      },
+      {
+        "path": "ability-templates/tpl-locust-travel",
+        "contentSha256": "sha256:4679e52864e2890322525d4371aa0635ec26977582ec5e17bba05dd91b7d299e"
+      },
+      {
+        "path": "ability-templates/tpl-mark-stacks",
+        "contentSha256": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39"
+      },
+      {
+        "path": "ability-templates/tpl-on-attack",
+        "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0"
+      },
+      {
+        "path": "ability-templates/tpl-on-hit-react",
+        "contentSha256": "sha256:a0174c3324e732c421ab641d1e36cd2f49f758475f851ee428f1604b57c3d85f"
+      },
+      {
+        "path": "ability-templates/tpl-orbit-array",
+        "contentSha256": "sha256:3b6dc9abd1a6bc788e34c86d538f73a7703f54633dedd28f016c782bf643b18e"
+      },
+      {
+        "path": "ability-templates/tpl-periodic-field",
+        "contentSha256": "sha256:8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806676b36f2bcfb9911"
+      },
+      {
+        "path": "ability-templates/tpl-projectile-strike",
+        "contentSha256": "sha256:22f3592f006a022a252618d0bbc9fb733d12e81613182d1cbe4215650038f48f"
+      },
+      {
+        "path": "ability-templates/tpl-proxy-cast",
+        "contentSha256": "sha256:e7ea0a9bc7f238e6edbb3f1f5f4e0924f7e1cbb8b670af70917730f9c93e778a"
+      },
+      {
+        "path": "ability-templates/tpl-proxy-fanout",
+        "contentSha256": "sha256:ebacf67cbf361b95a4b7acc2b3ca6483b0363c77b3421e78f122f83ccd7c9580"
+      },
+      {
+        "path": "ability-templates/tpl-pull-throw",
+        "contentSha256": "sha256:231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd63b3d20fa9ae41c03"
+      },
+      {
+        "path": "ability-templates/tpl-pure-cosmetic",
+        "contentSha256": "sha256:d79926d1ef57766dbb8dc194134061cd709065a89870b222bfbf26a497f4a18e"
+      },
+      {
+        "path": "ability-templates/tpl-radial-burst",
+        "contentSha256": "sha256:521552b3622a48ad2fd739a33160f0d4a597d87565ceac7f4b04b938aebf31c9"
+      },
+      {
+        "path": "ability-templates/tpl-random-barrage",
+        "contentSha256": "sha256:34fc1fc2579e395212180f244209347185c83466671e8b1d041e2f0933004424"
+      },
+      {
+        "path": "ability-templates/tpl-range-gamble",
+        "contentSha256": "sha256:4f91692716dc445492f80530c48fd3f463cd1ffc2d1ed001ab79683dbc773e69"
+      },
+      {
+        "path": "ability-templates/tpl-resource-ops",
+        "contentSha256": "sha256:87b54b4fd0a2f4bae16ba9e57c7e66d195f6ebd5970ff86845faf2960d28a359"
+      },
+      {
+        "path": "ability-templates/tpl-single-strike",
+        "contentSha256": "sha256:00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a816b495516b465e80"
+      },
+      {
+        "path": "ability-templates/tpl-spend-resource",
+        "contentSha256": "sha256:3b9c31df23e1aedf3fa6b6b180d933bdf92e565f947bcf1bd60879cbecd89756"
+      },
+      {
+        "path": "ability-templates/tpl-strip-transform",
+        "contentSha256": "sha256:ad27d53eb64f06dd1c1c3904bd52d879b23797d2a8d165d8d3cf9c2f26214bff"
+      },
+      {
+        "path": "ability-templates/tpl-summon-agent",
+        "contentSha256": "sha256:1112de91c80812d8694c17311498df56dc44e672d3fe9804c7b7ddb2a8c8df18"
+      },
+      {
+        "path": "ability-templates/tpl-team-synergy",
+        "contentSha256": "sha256:30197389108b0a7a5dbe70fd91efcb9ca73a863b5058eb9e8821fc2afc108767"
+      },
+      {
+        "path": "ability-templates/tpl-teleport",
+        "contentSha256": "sha256:0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b271ca9f597729458"
+      },
+      {
+        "path": "ability-templates/tpl-transform",
+        "contentSha256": "sha256:c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f550107820b19e43ef6525"
+      },
+      {
+        "path": "ability-templates/tpl-traveling-wave",
+        "contentSha256": "sha256:bd9d8342c4ff231d5c4eb94f3e87434981ccc5d4ba402b7e615b292317436add"
+      },
+      {
+        "path": "config/ability-vfx-bindings",
+        "contentSha256": "sha256:ef617199ca50e48f10b7ee53f3221067374b3b34bab90c8e30ca19617f5750ad"
+      },
+      {
+        "path": "config/admin-friend",
+        "contentSha256": "sha256:f62b5374ce71ef8740ad681ab57ac91729276564fc7d8fdc42e99f2b4ad4c40f"
+      },
+      {
+        "path": "config/ambient-vfx",
+        "contentSha256": "sha256:b1ba3b61f86c34ed4d0bb85aab25380309d1264c790488029f3aa847cee89ac9"
+      },
+      {
+        "path": "config/aoe-tiers",
+        "contentSha256": "sha256:5f4b138cc6e944c77d4f1f963ec173f9d0c92f2cce5254200320c5d8aae64637"
+      },
+      {
+        "path": "config/ap-coefficient",
+        "contentSha256": "sha256:33bb88afbeafd80ad81e0fdc5f266f6b1369972435793672594766ca7dc0665e"
+      },
+      {
+        "path": "config/ap-damage-scaling",
+        "contentSha256": "sha256:3187f452df716a8f574d92756ce4e39dcb6175f255b95bf4dcc51a1d7e99803d"
+      },
+      {
+        "path": "config/arena-pool",
+        "contentSha256": "sha256:de967097e50b3d7835c0a1f7bcdb14b870c73dcd174653b27546010c4bf4afe5"
+      },
+      {
+        "path": "config/arena-rules",
+        "contentSha256": "sha256:8f8e9abf77c560013ce21d3a5d8cac4f7df6904ba55dbc1306786650425bd8d7"
+      },
+      {
+        "path": "config/asset-cdn",
+        "contentSha256": "sha256:0ccc9fd36c7081e1c30d1735212c3eb54b9bc3808eae8d65e77b0951898ae62a"
+      },
+      {
+        "path": "config/asset-downloads",
+        "contentSha256": "sha256:63f283b1f4960e2c74aeef0883ec1dc9e012a23d2c8884b56dd36c508008ba6e"
+      },
+      {
+        "path": "config/audio-map",
+        "contentSha256": "sha256:53f5d3149cc25abd8471a8ce8de15cf96af0de3ed8fc3b9b2abcc31e8f2f3929"
+      },
+      {
+        "path": "config/audio-mix",
+        "contentSha256": "sha256:325c2458388ea52d2d33b3a6bd46feb50a4ffa19fe203115c91de2de27c0652a"
+      },
+      {
+        "path": "config/augment-filter",
+        "contentSha256": "sha256:759e7cc37d82ddf9d1c2a571edcc081984a3a00f9a13289bd0c7de02a9b70f38"
+      },
+      {
+        "path": "config/authoring-rules",
+        "contentSha256": "sha256:debe3d095be9e4ff8784dbe452bcb549b70aa7ab42524fc4d55ae18f4cf2a2f2"
+      },
+      {
+        "path": "config/base-bonus",
+        "contentSha256": "sha256:77ad44a246fd015db12625b37f324a02945a33c632afd78ed2b3241ad411a31a"
+      },
+      {
+        "path": "config/berserk",
+        "contentSha256": "sha256:fc2afe60e7512289d34f550a86e615fbada5192babddcc7e28e1480877e06404"
+      },
+      {
+        "path": "config/block",
+        "contentSha256": "sha256:346c580ce8fd513e3c66a582d471f79ebfa0e65bc0877ada2549454536d6fcdd"
+      },
+      {
+        "path": "config/body-scale",
+        "contentSha256": "sha256:a205bb9aabbfabbd4f6cef9834b5921844ddfa5b3a8bff76965ab42f7e06b2aa"
+      },
+      {
+        "path": "config/boss-intro",
+        "contentSha256": "sha256:7923400b57e301c64760698e9e47636f8197a8e632b03aa721714a8bc2c70bf7"
+      },
+      {
+        "path": "config/camera",
+        "contentSha256": "sha256:16038f879da40e82812c1f0e4fddc8b221a50abbda389b178b301598c4f3e271"
+      },
+      {
+        "path": "config/cast-approach",
+        "contentSha256": "sha256:9289c4300fc4dc57506d45c93e8ac6ed37d54e3c6536d716ce13d0aff7e915c1"
+      },
+      {
+        "path": "config/cast-time",
+        "contentSha256": "sha256:54107ce3c680e50682d5bbf5079342e65cb6bcebfaf0ee41826904dad03014db"
+      },
+      {
+        "path": "config/cast-time-tiers",
+        "contentSha256": "sha256:d8473dae1ef5b3e75de0b329f0572459003f793b33ae420cab0386469f9f52ba"
+      },
+      {
+        "path": "config/champion-voices",
+        "contentSha256": "sha256:4f9ccff9d6c8a3faa66ed69733fdfa8ad97a92ad139b59576b348350c9a38ca4"
+      },
+      {
+        "path": "config/combat-env",
+        "contentSha256": "sha256:32747e2007114e82d118ad3e1c208410efcab9fcf3b07b21effd13368616c854"
+      },
+      {
+        "path": "config/combat-feel",
+        "contentSha256": "sha256:8c855e98a355fe69bdcf603b937d640576d09f7215c6c8fa9a684ce28717ba0e"
+      },
+      {
+        "path": "config/combo-strikes",
+        "contentSha256": "sha256:12c42556d5c80f8ff2c912a3479a4f168bb256366f7656815d7d77e4e0c47463"
+      },
+      {
+        "path": "config/config.match",
+        "contentSha256": "sha256:4909c6237044842b17d9d78a33b505b70d1e564f473a1054b28604085ed85528"
+      },
+      {
+        "path": "config/content-load",
+        "contentSha256": "sha256:353591cea47490029b8fb6258f41fd47260bd9640c24927d9f5b94fefd9efc06"
+      },
+      {
+        "path": "config/controller-scheme",
+        "contentSha256": "sha256:c84034a8e0498a07b1cd5776c689292bbdf192518a11e3629dcb88c9e027dac3"
+      },
+      {
+        "path": "config/cooldown-rules",
+        "contentSha256": "sha256:fc0a73ab9351c212060f0a5afc3a22187c99939c336dbd0ef782f5610c0aae03"
+      },
+      {
+        "path": "config/cooldown-tiers",
+        "contentSha256": "sha256:46868e5860aec88cf16ec2a11d50f831c7b1178ed019deb7da169662b47865e5"
+      },
+      {
+        "path": "config/crit",
+        "contentSha256": "sha256:3345634f03ec3db9709ee3efa1ab168fd97fcda1536010d0bbd6d9e2c0b52a9d"
+      },
+      {
+        "path": "config/damage-colors",
+        "contentSha256": "sha256:a6f5c09245fcdb2b92ab199f39499015766d01613b851d9a2dc5d0ea04c6fba1"
+      },
+      {
+        "path": "config/damage-rules",
+        "contentSha256": "sha256:03e9dd42bdb27ad5c2d382711f09ab0af5927e5c71327cfb8d69c269fc01f02f"
+      },
+      {
+        "path": "config/damage-tier-exemptions",
+        "contentSha256": "sha256:195461728e14da745f5ebf584c65f5e600439293461b1ab3c39e37be24ede0db"
+      },
+      {
+        "path": "config/damage-tiers",
+        "contentSha256": "sha256:c24538adce9ffe04c714b5ec5a8902d6fe9c61eb02d25b8035ca015f67bc6923"
+      },
+      {
+        "path": "config/dispel",
+        "contentSha256": "sha256:37c0ea2cf961fd8dcaf442546b9b906c72ad9ab5bf5960f373b924f45942b6a4"
+      },
+      {
+        "path": "config/displacement-tiers",
+        "contentSha256": "sha256:b3e44fc40e2626cd45e683cd265d805f54f2fcdab3251494ef316b1573824fdb"
+      },
+      {
+        "path": "config/feel-fx",
+        "contentSha256": "sha256:58709dd24f79779abb32423630dbbb97de1378456f34961a0f35e34a2d01621f"
+      },
+      {
+        "path": "config/form-visuals",
+        "contentSha256": "sha256:b0c96c9b51df9ce18e6073d8936c2345d86ab6fbf26a9cca9e14a589f7632c96"
+      },
+      {
+        "path": "config/gamepad",
+        "contentSha256": "sha256:93e063ded26444ff01b835e3ce3a751e19142c315eb2b7dc57cb74092d10ecdc"
+      },
+      {
+        "path": "config/gore",
+        "contentSha256": "sha256:89daaf3c38c96b81c93c283c08b602e5a40d7e5693fdcabc8f3f798b0a787284"
+      },
+      {
+        "path": "config/hud-layout",
+        "contentSha256": "sha256:76d6078a7b9a0dd383ccd83e17436fda1a760e99f1b5d6cf2700239fb2be4acb"
+      },
+      {
+        "path": "config/icon-plan",
+        "contentSha256": "sha256:79e28d780b1d8e6eb667a17b5dc0cd1bbaaa076282ac5b383ceb139fe803776f"
+      },
+      {
+        "path": "config/icon-style",
+        "contentSha256": "sha256:eccc429706da47647bd58534bc84b7d877688708bcd2b3442b242d22acd188e4"
+      },
+      {
+        "path": "config/icon-upload",
+        "contentSha256": "sha256:a5e5329cfd641380eba42b8ccf6635a44fa04114d1738a739c95129302e9d7a1"
+      },
+      {
+        "path": "config/item-card",
+        "contentSha256": "sha256:81809523e0a7175e055522d1508320c17cf4a10a2ab4511445362990ca81e6b8"
+      },
+      {
+        "path": "config/lobby-layout",
+        "contentSha256": "sha256:01b29afb39eadb884a3f42bc4fb747f775645c7bd6d8bba684db049599bdb561"
+      },
+      {
+        "path": "config/lobby-rally",
+        "contentSha256": "sha256:1b2d16e456efc13dfe4c3f8b4f4aa9d8d04edec04d30bf72f35852f964b59a43"
+      },
+      {
+        "path": "config/mana-economy",
+        "contentSha256": "sha256:a9c130dc45e09697bb9b1c481947e007d92e9fba3a98e054ffe7e115e0e10c8b"
+      },
+      {
+        "path": "config/mana-tiers",
+        "contentSha256": "sha256:0995909cf6928edf526fbf30a2138e90d5827d6a7df277d76484319c5ba61bb4"
+      },
+      {
+        "path": "config/map-report",
+        "contentSha256": "sha256:2c4746142fec80ca841eff755987e330a99eb3bf588a1f5b315bd5ecc22b465d"
+      },
+      {
+        "path": "config/map-spec",
+        "contentSha256": "sha256:ef37f05a75aa847f58258bb4e2950385b73a7ae6de3b21abf6d90b1a12b5bb0c"
+      },
+      {
+        "path": "config/mitigation",
+        "contentSha256": "sha256:3d2fdc92403a642306e71819707bee2de82fbf3b05eaf1d9311ada85853d062e"
+      },
+      {
+        "path": "config/model-lod",
+        "contentSha256": "sha256:27d4d83780b4df0fd19018c748a519baa33c14c9189cb9902d45df6dacfcc8ed"
+      },
+      {
+        "path": "config/move-speed-tiers",
+        "contentSha256": "sha256:28475b952c342218b351853cd1a26750eb76ccf80fcd4bb7aea6dc4221bb4634"
+      },
+      {
+        "path": "config/new-hero-checks",
+        "contentSha256": "sha256:6908e89dd53feefa38f19905fcaa55ad7b439985572b2827623276fba5202139"
+      },
+      {
+        "path": "config/one-shot-clamp",
+        "contentSha256": "sha256:18be96faf9c3745039e461b6a45f29e3a6f732fc86846aedcfb80597e9acc7a2"
+      },
+      {
+        "path": "config/origin-routes",
+        "contentSha256": "sha256:1b75573e79be5dd31687431ec8bf76cf710f65480b34e67fec820635426425a4"
+      },
+      {
+        "path": "config/owner-knobs",
+        "contentSha256": "sha256:6d1c98f7bc4622827e22d12e0dea12e422cfda504e474843de732791de0e4464"
+      },
+      {
+        "path": "config/per-level-bonus",
+        "contentSha256": "sha256:4787ecfd66fb60f61bea08b7390d93188c2e8fea864bc3fe84404ad13128cfac"
+      },
+      {
+        "path": "config/practice",
+        "contentSha256": "sha256:3431ce6b1ce82d783c8c78fb516d1ee1d647d647ce782bc3e9a946b4dc130bb8"
+      },
+      {
+        "path": "config/range-guide",
+        "contentSha256": "sha256:2fb5de9b43fd126e8c4dfc6572982bc1e8cb6262f0468c8c0e7121d2917fccbf"
+      },
+      {
+        "path": "config/range-tiers",
+        "contentSha256": "sha256:d87cdbcfecf44c6167c6540fd28cc12b8f9e46d6dfd0e0e92959dc35b780ce09"
+      },
+      {
+        "path": "config/rank-growth",
+        "contentSha256": "sha256:e77c1d0733209a71160330f41bcddf1c53da805e777dce24a639b0bf81a1af63"
+      },
+      {
+        "path": "config/ranking",
+        "contentSha256": "sha256:601d5eb9e57844622e61b295bcc05bff17c931db6e7f5db0b6e5c220307534cd"
+      },
+      {
+        "path": "config/regen",
+        "contentSha256": "sha256:c51fc34f99aa1bb5d5ac28adf8ee6e02601c1e2bcfa68c85b05e924a46a199cc"
+      },
+      {
+        "path": "config/replay",
+        "contentSha256": "sha256:fd1721f9edc7c51a695d75ac43ddf61fe539391f2ac11a99c6b8f950638ed8ed"
+      },
+      {
+        "path": "config/review-tuning",
+        "contentSha256": "sha256:6bdc3fa6b4878c51cd502815bb186c9766d62191a95a1b0d8d845fb6221bad5d"
+      },
+      {
+        "path": "config/roster",
+        "contentSha256": "sha256:b8ee47643f514105c61afbe20737e312b22259df95cf6dd5c8a8ddc84b51018d"
+      },
+      {
+        "path": "config/round-grade",
+        "contentSha256": "sha256:fe58dd47b882bfc5004db003476fe7e1228af5b003b0bd1acfada20c89fca12a"
+      },
+      {
+        "path": "config/screen-fx",
+        "contentSha256": "sha256:ac0473f75637af860c366af87fd239d79a719b5ed010c4ec15bcf7b700dae833"
+      },
+      {
+        "path": "config/shield",
+        "contentSha256": "sha256:70c8ab068aa066b233db3e40a869675a8df959c2a7b64e3d0f05ffd919ff8b26"
+      },
+      {
+        "path": "config/skill-normalize",
+        "contentSha256": "sha256:790f4a7be6f1601d3d27efab47392fa80eedbaf8d5aaf03e9d206f7052c46b94"
+      },
+      {
+        "path": "config/speed-growth-tiers",
+        "contentSha256": "sha256:44d5928e9d17d4407789545243e155b7c7a43e75560e8f7d49cf25c3bcd7de01"
+      },
+      {
+        "path": "config/stat-caps",
+        "contentSha256": "sha256:e1d91f5745c52a83ff52f5486b265c793647ef569126443c01138bc1170f6af5"
+      },
+      {
+        "path": "config/stat-normalization",
+        "contentSha256": "sha256:2c83473621e7c81b24f2a31ceb6afd97fa05519daa948ff70861f77b1cc26261"
+      },
+      {
+        "path": "config/stealth",
+        "contentSha256": "sha256:2fd33aee2bf7a022f188c246fbc6edeef18b877307215a375ff09e418fc9b916"
+      },
+      {
+        "path": "config/store",
+        "contentSha256": "sha256:1f9242bdfe64435d5bc18f6b7250f474de46059ae14ae922a80cb58d5fb47ee2"
+      },
+      {
+        "path": "config/taunt",
+        "contentSha256": "sha256:501b1b2be7b7f023a917702c14cd19000b247cee5a2d1da0e7ee6d5618043f9b"
+      },
+      {
+        "path": "config/toggle-ability",
+        "contentSha256": "sha256:6ce567e661a5c8a2b4f1af7a58b053504d8a27bc4955a06779f98774e4e91af2"
+      },
+      {
+        "path": "config/ugc",
+        "contentSha256": "sha256:9a82b3404bdc76aa39cce2654ea6ea4bd0c51b5638d3dc305f80dc4cff2af642"
+      },
+      {
+        "path": "config/ui-cues",
+        "contentSha256": "sha256:d491b704a40da1f6f146f7ac2da9c382b8a4028258f581237208f415ff1e1adf"
+      },
+      {
+        "path": "config/ui-lexicon",
+        "contentSha256": "sha256:4804e90cd0f5113a8b2593fd36b23d61f679fe87b5f73251079587d267fd3faa"
+      },
+      {
+        "path": "config/unit-tints",
+        "contentSha256": "sha256:e4773bf9eb11fdbab67465fc789ad58df5a166e8259b57f58fd4719449e29f2a"
+      },
+      {
+        "path": "config/unsafe-textures",
+        "contentSha256": "sha256:d2133597dd85bab422fe230492b7f0c15f1014b425dfba2d95abe0083787ae24"
+      },
+      {
+        "path": "config/valhalla-sandbox",
+        "contentSha256": "sha256:ec920637826e4ecf20a2b520d85629349149a34e72241a2d5d05e81bd3f097ef"
+      },
+      {
+        "path": "config/vfx-ability-art",
+        "contentSha256": "sha256:e427905fef6a9507dd387a04f09d71780540f261ac4b5e5a333121c45a1c9716"
+      },
+      {
+        "path": "config/vfx-budget",
+        "contentSha256": "sha256:9e928e600a2a9904dc4f4a192027c6a80def98c349a8db976d2e531ce3256924"
+      },
+      {
+        "path": "config/vfx-cleanup",
+        "contentSha256": "sha256:589690f20e305e321b9d4a579b097c077c166a1959f69e34fc263055ddb91fb7"
+      },
+      {
+        "path": "config/vfx-families",
+        "contentSha256": "sha256:ba31fc3947dbc860986c46d805514f562f4a8e7ce241fe1e46d113a599a2e8f7"
+      },
+      {
+        "path": "config/vfx-scripts",
+        "contentSha256": "sha256:1b951b2a6090b71d249b8c408ce19894319d63c519054b42d895331a4b4461db"
+      },
+      {
+        "path": "config/victory-fx",
+        "contentSha256": "sha256:23bbb1946e3781c178bbc87d82d040a01dc5bc1bdcea2d052e3963c0bb6959f8"
+      },
+      {
+        "path": "config/victory-podium",
+        "contentSha256": "sha256:45bfbd580028e522d36d67ffab826a3b71b2919826bc2c4317aef72c7be08ceb"
+      },
+      {
+        "path": "config/victory-taunts",
+        "contentSha256": "sha256:0fccc289c0ff68350c5a97c0a4d482428178ea94beb3b31647b5fc65391c30c9"
+      },
+      {
+        "path": "config/voxel-barcodes",
+        "contentSha256": "sha256:494b633baa8a57c850f2044d04be69b4085158fc228cb69d1331d802c12bcc39"
+      },
+      {
+        "path": "config/voxel-bodies",
+        "contentSha256": "sha256:2c4008f4c7ac5b50c3e379a6b4e792ae7796900cd4edac03d65eb14f66855e50"
+      },
+      {
+        "path": "config/voxel-look",
+        "contentSha256": "sha256:584bed02ff433017b7d4f95dc8b773c4c3ca34389e7288ea3f8ca150c751fc39"
+      },
+      {
+        "path": "config/weakness",
+        "contentSha256": "sha256:0b3229cb05e5072bddfd53545ced7e9f5142bc8015b99d03ac1334270cf900a0"
+      },
+      {
+        "path": "config/weather",
+        "contentSha256": "sha256:61a63dbd8665efe0441b7e7a69852a93dff486f8ec83788c4bf6d5e50dbcd7f7"
+      },
+      {
+        "path": "config/world-cues",
+        "contentSha256": "sha256:937b1c925963ca1f11d3bb934bcef977a9f23705be053706190311b8cc06830f"
+      },
+      {
+        "path": "config/wounds",
+        "contentSha256": "sha256:0f1d752b60e04eb50c97eb1ec05387b827f01a3c383cba77e7f43a77b6ca714f"
+      },
+      {
+        "path": "vfx-subtypes/sub.bladestorm-8hit",
+        "contentSha256": "sha256:c067e5f4c5bce7d21ccb5823c3d7eca1358800a6d877d71485ddb83684fd25b2"
+      },
+      {
+        "path": "vfx-subtypes/sub.dive-dash-thunder",
+        "contentSha256": "sha256:0a8664234da4a1c71a547e65afc50cf84f55502b7928f7c6ea819c553118a83a"
+      },
+      {
+        "path": "vfx-subtypes/sub.doom-mark-cast",
+        "contentSha256": "sha256:e77e5a9386f766249a873767c46f81872208da9bad21b6139200bab729168e81"
+      },
+      {
+        "path": "vfx-subtypes/sub.forward-twin-blast",
+        "contentSha256": "sha256:0725dad2c5bd58915d4f4b1d0c7911df5423a8bc5f1ec3433e733f03283a4e91"
+      }
+    ]
+  },
+  "counts": {
+    "heroes": 7,
+    "slots": 42,
+    "modelDocuments": 7,
+    "includedGlbFiles": 0
+  },
+  "command": "node --import tsx materials/community-hero-forge/lol/rebuild.mts",
+  "heroes": [
+    {
+      "id": "warwick",
+      "name": "沃維克",
+      "projectId": "community-concept-warwick",
+      "heroId": "community-concept-warwick",
+      "slotCount": 6,
+      "project": {
+        "path": "projects/warwick.project.json",
+        "sha256": "972d01ea98b57e92a9d330b6385d3292876343ed30bdfcc43ee806fab56514ca",
+        "contentSha256": "sha256:d391e8a82aa51154a081576915ad9c1aefc69641ddc7719b87cd0142071c4995"
+      },
+      "model": {
+        "key": "community.lol.warwick",
+        "path": "models/community.lol.warwick.json",
+        "sha256": "372d998fd1d538eeaedefa5cc6d742b9450450fc70c7c727fa0a0596b9b1bbd7",
+        "source": "docs/_reports/community-hero-forge/lol-models/forge-preview/model-docs/community.lol.warwick.json",
+        "glbPath": "assets/models/community-local/warwick.glb",
+        "localFile": "../outputs/community-lol-models-20260907/ggd-runtime-candidate/warwick.glb",
+        "sha256Glb": "c159e999e5e46650a166271092f1812d77b0f0ba2ba3a450d9606a91ec3d5ef8",
+        "byteSize": 2095144,
+        "delivery": "external-local-file-not-in-git",
+        "formalServiceCatalogVerified": false
+      },
+      "compilation": {
+        "passed": true,
+        "compiledSha256": "sha256:aee0527c2cebf0fb900161f5004ba37b23e70fb69378c678548646a257991463",
+        "abilityIds": [
+          "community-concept-warwick.passive",
+          "community-concept-warwick.q",
+          "community-concept-warwick.w",
+          "community-concept-warwick.e",
+          "community-concept-warwick.r",
+          "community-concept-warwick.ex"
+        ]
+      },
+      "evidence": [
+        "docs/_reports/community-hero-forge/community-concepts/deterministic/warwick.project.json",
+        "docs/_reports/community-hero-forge/lol-models/forge-preview/browser/warwick-idle.txt",
+        "docs/_reports/community-hero-forge/lol-models/forge-preview/browser/warwick-cast.txt"
+      ]
+    },
+    {
+      "id": "karthus",
+      "name": "卡爾瑟斯",
+      "projectId": "community-concept-karthus",
+      "heroId": "community-concept-karthus",
+      "slotCount": 6,
+      "project": {
+        "path": "projects/karthus.project.json",
+        "sha256": "470493b538eca199828bdbd5c267d8ff176761e79c662163fec2cce57c927f58",
+        "contentSha256": "sha256:926c334a4ceae20a7089bdc5ea9e5df2a21eefc51e9e18c60d74fcc2746eed9e"
+      },
+      "model": {
+        "key": "community.lol.karthus",
+        "path": "models/community.lol.karthus.json",
+        "sha256": "3634469db18e344a1cf3dcdacf4484b4e67bc074baf9f7bf3fc8e875e272e643",
+        "source": "docs/_reports/community-hero-forge/lol-models/forge-preview/model-docs/community.lol.karthus.json",
+        "glbPath": "assets/models/community-local/karthus.glb",
+        "localFile": "../outputs/community-lol-models-20260907/ggd-runtime-candidate/karthus.glb",
+        "sha256Glb": "896b61306285904ec771460bc32266d607b04d5b43a4549db96fef18317d1f8c",
+        "byteSize": 1761228,
+        "delivery": "external-local-file-not-in-git",
+        "formalServiceCatalogVerified": false
+      },
+      "compilation": {
+        "passed": true,
+        "compiledSha256": "sha256:b42ab85e1389f6d4e6142c938e018748d50c2e6663bad86b0282c571f97aa5f4",
+        "abilityIds": [
+          "community-concept-karthus.passive",
+          "community-concept-karthus.q",
+          "community-concept-karthus.w",
+          "community-concept-karthus.e",
+          "community-concept-karthus.r",
+          "community-concept-karthus.ex"
+        ]
+      },
+      "evidence": [
+        "docs/_reports/community-hero-forge/community-concepts/deterministic/karthus.project.json",
+        "docs/_reports/community-hero-forge/lol-models/forge-preview/browser/karthus-idle.txt",
+        "docs/_reports/community-hero-forge/lol-models/forge-preview/browser/karthus-cast.txt"
+      ]
+    },
+    {
+      "id": "lux",
+      "name": "拉克絲",
+      "projectId": "community-concept-lux",
+      "heroId": "community-concept-lux",
+      "slotCount": 6,
+      "project": {
+        "path": "projects/lux.project.json",
+        "sha256": "190125715b0a263c32ee90af8147e5e052af6122ee886058f7d084cb9ec6967c",
+        "contentSha256": "sha256:370810f26ca904fba48bc557af2ff2f9e41da64eb40110c49196ad1717d4d3a5"
+      },
+      "model": {
+        "key": "community.lol.lux",
+        "path": "models/community.lol.lux.json",
+        "sha256": "83acd9c886cf8c365dbb079d76b1675a7ae2e2853488c3fa85faf5c9a89ccf55",
+        "source": "docs/_reports/community-hero-forge/lol-models/forge-preview/model-docs/community.lol.lux.json",
+        "glbPath": "assets/models/community-local/lux.glb",
+        "localFile": "../outputs/community-lol-models-20260907/ggd-runtime-candidate/lux.glb",
+        "sha256Glb": "6ccd3b50b01b4bb1c9bbda8352ca3c4b487f0cd034b6d2b62664a7df239d7375",
+        "byteSize": 2011696,
+        "delivery": "external-local-file-not-in-git",
+        "formalServiceCatalogVerified": false
+      },
+      "compilation": {
+        "passed": true,
+        "compiledSha256": "sha256:92d7ac6668849cc0a638385ffd5fdcfb5939e8bd7c2a8989bc4d33eac77fb0bc",
+        "abilityIds": [
+          "community-concept-lux.passive",
+          "community-concept-lux.q",
+          "community-concept-lux.w",
+          "community-concept-lux.e",
+          "community-concept-lux.r",
+          "community-concept-lux.ex"
+        ]
+      },
+      "evidence": [
+        "docs/_reports/community-hero-forge/community-concepts/deterministic/lux.project.json",
+        "docs/_reports/community-hero-forge/lol-models/forge-preview/browser/lux-idle.txt",
+        "docs/_reports/community-hero-forge/lol-models/forge-preview/browser/lux-cast.txt"
+      ]
+    },
+    {
+      "id": "yasuo",
+      "name": "犽宿",
+      "projectId": "community-concept-yasuo",
+      "heroId": "community-concept-yasuo",
+      "slotCount": 6,
+      "project": {
+        "path": "projects/yasuo.project.json",
+        "sha256": "5a316cf5371aa6e188b3e51bf933cafaa90d9e2c372f7c1c4d6732157a1cd914",
+        "contentSha256": "sha256:f04ab2ce0ed1ce44134a0c0c50caa646836c67953be70cd0704978440669e623"
+      },
+      "model": {
+        "key": "community.lol.yasuo",
+        "path": "models/community.lol.yasuo.json",
+        "sha256": "ceff7db30c5e2f55bd6da54b939f7e034ded9333467e0e33c4aee067863697c1",
+        "source": "docs/_reports/community-hero-forge/lol-models/forge-preview/model-docs/community.lol.yasuo.json",
+        "glbPath": "assets/models/community-local/yasuo.glb",
+        "localFile": "../outputs/community-lol-models-20260907/ggd-runtime-candidate/yasuo.glb",
+        "sha256Glb": "d1b6123438b0b8735fdc6585eb72c433530e951027ee1860746153e9955b16b2",
+        "byteSize": 1896196,
+        "delivery": "external-local-file-not-in-git",
+        "formalServiceCatalogVerified": false
+      },
+      "compilation": {
+        "passed": true,
+        "compiledSha256": "sha256:25262cd806185770856b4fa4a556af0c64669ec520873bcd1d1cbe31d48dd40c",
+        "abilityIds": [
+          "community-concept-yasuo.passive",
+          "community-concept-yasuo.q",
+          "community-concept-yasuo.w",
+          "community-concept-yasuo.e",
+          "community-concept-yasuo.r",
+          "community-concept-yasuo.ex"
+        ]
+      },
+      "evidence": [
+        "docs/_reports/community-hero-forge/community-concepts/deterministic/yasuo.project.json",
+        "docs/_reports/community-hero-forge/lol-models/forge-preview/browser/yasuo-idle.txt",
+        "docs/_reports/community-hero-forge/lol-models/forge-preview/browser/yasuo-cast.txt"
+      ]
+    },
+    {
+      "id": "missfortune",
+      "name": "好運姐",
+      "projectId": "community-concept-missfortune",
+      "heroId": "community-concept-missfortune",
+      "slotCount": 6,
+      "project": {
+        "path": "projects/missfortune.project.json",
+        "sha256": "accf8a3491f0441bb9c127a8441f230fdf8d7ef200cbcf306614773343cd701d",
+        "contentSha256": "sha256:0032e21b81548c1a3e7c9ea8875d704b2c2e5397c118391c48fa1d3457d47904"
+      },
+      "model": {
+        "key": "community.lol.missfortune",
+        "path": "models/community.lol.missfortune.json",
+        "sha256": "160477fd9d0f89c32ddcc0a9f5714cd6ed83310cbc706eed354bda7fac463969",
+        "source": "docs/_reports/community-hero-forge/lol-models/forge-preview/model-docs/community.lol.missfortune.json",
+        "glbPath": "assets/models/community-local/missfortune.glb",
+        "localFile": "../outputs/community-lol-models-20260907/ggd-runtime-candidate/missfortune.glb",
+        "sha256Glb": "c3bc5f079618f6de7e3e1d30960e32a755b9622ed403ea00f4103991918b5cc2",
+        "byteSize": 1463248,
+        "delivery": "external-local-file-not-in-git",
+        "formalServiceCatalogVerified": false
+      },
+      "compilation": {
+        "passed": true,
+        "compiledSha256": "sha256:4ed6d15e7dd1e3ebd022dcc2ba0f6f16674ddb0cdb9c232e3bc8940de20a81b9",
+        "abilityIds": [
+          "community-concept-missfortune.passive",
+          "community-concept-missfortune.q",
+          "community-concept-missfortune.w",
+          "community-concept-missfortune.e",
+          "community-concept-missfortune.r",
+          "community-concept-missfortune.ex"
+        ]
+      },
+      "evidence": [
+        "docs/_reports/community-hero-forge/community-concepts/deterministic/missfortune.project.json",
+        "docs/_reports/community-hero-forge/lol-models/forge-preview/browser/missfortune-idle.txt",
+        "docs/_reports/community-hero-forge/lol-models/forge-preview/browser/missfortune-cast.txt"
+      ]
+    },
+    {
+      "id": "leesin",
+      "name": "李星",
+      "projectId": "community-concept-leesin",
+      "heroId": "community-concept-leesin",
+      "slotCount": 6,
+      "project": {
+        "path": "projects/leesin.project.json",
+        "sha256": "53486da77d2a6e40a38a40a9597b066366b406abf13ed08bca06cf4438227116",
+        "contentSha256": "sha256:c7dcb3b0416370cc6277717fbfc27b9c472941e1eae05bc61f5211d286f0d993"
+      },
+      "model": {
+        "key": "community.lol.leesin",
+        "path": "models/community.lol.leesin.json",
+        "sha256": "7ac88ca674efe5565070cd5fc4d42b18ec92e1d8b8ab5cd24242171827a0885c",
+        "source": "docs/_reports/community-hero-forge/lol-models/forge-preview/model-docs/community.lol.leesin.json",
+        "glbPath": "assets/models/community-local/leesin.glb",
+        "localFile": "../outputs/community-lol-models-20260907/ggd-runtime-candidate/leesin.glb",
+        "sha256Glb": "5a885d6c0a13cb719da5d1e838f4d19d3115b41b826b88cf913fb443e260d40c",
+        "byteSize": 2581236,
+        "delivery": "external-local-file-not-in-git",
+        "formalServiceCatalogVerified": false
+      },
+      "compilation": {
+        "passed": true,
+        "compiledSha256": "sha256:99afbb7bbefd8b369ef6c41f561e882d1a6d2c844e26b8a8f740c46074327e39",
+        "abilityIds": [
+          "community-concept-leesin.passive",
+          "community-concept-leesin.q",
+          "community-concept-leesin.w",
+          "community-concept-leesin.e",
+          "community-concept-leesin.r",
+          "community-concept-leesin.ex"
+        ]
+      },
+      "evidence": [
+        "docs/_reports/community-hero-forge/community-concepts/deterministic/leesin.project.json",
+        "docs/_reports/community-hero-forge/lol-models/forge-preview/browser/leesin-idle.txt",
+        "docs/_reports/community-hero-forge/lol-models/forge-preview/browser/leesin-cast.txt"
+      ]
+    },
+    {
+      "id": "xerath",
+      "name": "齊勒斯",
+      "projectId": "community-concept-xerath",
+      "heroId": "community-concept-xerath",
+      "slotCount": 6,
+      "project": {
+        "path": "projects/xerath.project.json",
+        "sha256": "91032135f672c6417ac7a26a1b9ca2484dde7bc5326eb568b3e719c23cc66c56",
+        "contentSha256": "sha256:953127986e81831869a824d1736c682ad6c567fa7d431316b6070cb2f64b603e"
+      },
+      "model": {
+        "key": "community.lol.xerath",
+        "path": "models/community.lol.xerath.json",
+        "sha256": "711cfd1eded63d31de59497cb6512bef4502ffe3c150aa59b8aaaf1d64248835",
+        "source": "docs/_reports/community-hero-forge/lol-models/forge-preview/model-docs/community.lol.xerath.json",
+        "glbPath": "assets/models/community-local/xerath.glb",
+        "localFile": "../outputs/community-lol-models-20260907/ggd-runtime-candidate/xerath.glb",
+        "sha256Glb": "8c875d6c33a41f34830ca330f2278d5b14e09ed01bc4ac3e12afd13eec93110b",
+        "byteSize": 2323836,
+        "delivery": "external-local-file-not-in-git",
+        "formalServiceCatalogVerified": false
+      },
+      "compilation": {
+        "passed": true,
+        "compiledSha256": "sha256:4b96af4e3dc1aede7bd9550818470df149b3eb52e726757c5c8660c702f38591",
+        "abilityIds": [
+          "community-concept-xerath.passive",
+          "community-concept-xerath.q",
+          "community-concept-xerath.w",
+          "community-concept-xerath.e",
+          "community-concept-xerath.r",
+          "community-concept-xerath.ex"
+        ]
+      },
+      "evidence": [
+        "docs/_reports/community-hero-forge/community-concepts/deterministic/xerath.project.json",
+        "docs/_reports/community-hero-forge/lol-models/forge-preview/browser/xerath-idle.txt",
+        "docs/_reports/community-hero-forge/lol-models/forge-preview/browser/xerath-cast.txt"
+      ]
+    }
+  ],
+  "status": {
+    "localSourceCompilation": "passed",
+    "integratedServiceTargetPackageBuilt": false,
+    "submitted": false,
+    "published": false
+  },
+  "limitations": [
+    "Compilation uses the existing recipes and local preview body documents; no service model approval is claimed.",
+    "Full HeroProject source and pinned template snapshots are included; large GLBs remain external at the recorded paths and SHA-256.",
+    "No new simulation, visual acceptance, package ZIP, service submission or publication was performed.",
+    "Recipe source prose is preserved, including its historical placeholder-model description; presentation.modelKey records the original LoL body selected in the existing preview."
+  ]
+}
