@@ -76,5 +76,11 @@
     },
     "inheritDefaults": true
   },
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.arcane.arc",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.arcane.arc"
+    }
+  ]
 }

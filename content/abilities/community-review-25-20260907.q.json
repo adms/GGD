@@ -60,5 +60,11 @@
     },
     "inheritDefaults": true
   },
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.ki.slash",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.ki.slash"
+    }
+  ]
 }

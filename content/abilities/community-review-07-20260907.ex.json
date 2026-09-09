@@ -28,5 +28,12 @@
       "duration": 3
     }
   ],
+  "vfxKey": "fx.prim.arcane.pulse",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.arcane.pulse",
+      "attachTo": "caster"
+    }
+  ],
   "icon": "assets/icons/abilities/community-review-07-20260907.ex.webp"
 }

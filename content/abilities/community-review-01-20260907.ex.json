@@ -42,5 +42,11 @@
       "hitOncePerTarget": true
     }
   ],
+  "vfxKey": "fx.prim.arcane.beam",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.arcane.beam"
+    }
+  ],
   "icon": "assets/icons/abilities/community-review-01-20260907.ex.webp"
 }

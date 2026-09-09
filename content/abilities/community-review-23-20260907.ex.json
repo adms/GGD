@@ -32,5 +32,11 @@
       "stun": true
     }
   ],
+  "vfxKey": "fx.prim.physical.slash",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.physical.slash"
+    }
+  ],
   "icon": "assets/icons/abilities/community-review-23-20260907.ex.webp"
 }

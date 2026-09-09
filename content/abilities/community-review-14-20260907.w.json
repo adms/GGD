@@ -87,5 +87,12 @@
     },
     "inheritDefaults": true
   },
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.wind.slash",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.wind.slash",
+      "attachTo": "caster"
+    }
+  ]
 }

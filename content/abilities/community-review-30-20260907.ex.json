@@ -33,5 +33,12 @@
       "onExisting": "keepLarger"
     }
   ],
+  "vfxKey": "fx.prim.sound.pulse",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.sound.pulse",
+      "attachTo": "caster"
+    }
+  ],
   "icon": "assets/icons/abilities/community-review-30-20260907.ex.webp"
 }

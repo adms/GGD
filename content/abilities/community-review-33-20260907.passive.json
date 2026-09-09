@@ -59,5 +59,11 @@
       }
     ]
   },
+  "vfxKey": "fx.prim.blood.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.blood.pulse-sm"
+    }
+  ],
   "icon": "assets/icons/abilities/community-review-33-20260907.passive.webp"
 }

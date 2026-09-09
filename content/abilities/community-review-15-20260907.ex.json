@@ -39,5 +39,12 @@
       "onExisting": "keepLarger"
     }
   ],
+  "vfxKey": "fx.prim.physical.pulse",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.physical.pulse",
+      "attachTo": "caster"
+    }
+  ],
   "icon": "assets/icons/abilities/community-review-15-20260907.ex.webp"
 }

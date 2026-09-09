@@ -42,5 +42,11 @@
       "hitOncePerTarget": true
     }
   ],
+  "vfxKey": "fx.prim.holy.beam",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.holy.beam"
+    }
+  ],
   "icon": "assets/icons/abilities/community-review-16-20260907.ex.webp"
 }

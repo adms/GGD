@@ -25,5 +25,11 @@
       }
     }
   ],
+  "vfxKey": "fx.prim.holy.slash",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.holy.slash"
+    }
+  ],
   "icon": "assets/icons/abilities/community-review-06-20260907.ex.webp"
 }

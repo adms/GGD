@@ -43,5 +43,12 @@
       ]
     }
   ],
+  "vfxKey": "fx.prim.wind.slash",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.wind.slash",
+      "attachTo": "caster"
+    }
+  ],
   "icon": "assets/icons/abilities/community-review-34-20260907.ex.webp"
 }

@@ -102,3 +102,50 @@ def _model_key(entry: dict) -> str:
     if not key:
         raise ValueError(f"⛔ catalog 的 {entry.get('id')} 沒有 modelKey —— 它入庫時就缺了")
     return key
+
+
+# ⭐⭐ 盤點表的**阻塞理由**也會過期 —— 而它過期時沒有任何東西會紅。
+#
+# ⛔⛔ 量到的（2026-09-10，GH#1165）：盤點表把三名英雄聯盟角色標成
+# 「待取得核准模型」，理由逐字是
+#
+#     「單段動作通道 196 超過英雄模型上限 **160**。」（李星／沃維克／犽宿）
+#
+# ⭐ 而 GH#1164 已經把那個上限改成**後台設定**（warn 300 / limit 500）
+# ⇒ 三個理由**全部不再成立**，⛔ 而表上一個字都沒變。
+#
+# ⚠️ ⭐ 這是第三守則的形狀：**一句在它到期之後還活著的散文** ——
+# 而它比一般的過期註解更貴，因為 owner 讀那張表來決定**下一步買什麼模型**。
+#
+# ⇒ ⭐ 判準不是「記得回頭看那張表」（判準 0/4 全破），
+#   是**把理由裡的數字抓出來，跟出貨設定比一次**。
+STALE_LIMIT_RE = re.compile(
+    r"通道\s*(?P<value>\d+)\s*超過[^0-9]*?(?P<limit>\d+)")
+
+
+def stale_blockers(path: Path, shipped_limit: int) -> list[dict]:
+    """
+    ⭐ 回傳盤點表裡「理由引用的上限已經被改掉」的每一列。
+
+    ⛔ 它**不改表**（那是 owner 的檔）——它只說得出「這一列該重新評估了」。
+    ⚠️ ⭐ 而它刻意只認**引用得到數字**的理由：一句「模型品質不夠」沒有數字，
+    ⛔ 這支程式無權判斷它過期沒有。
+    """
+    out = []
+    for raw in path.read_text(encoding="utf-8").split("\n"):
+        m = STALE_LIMIT_RE.search(raw)
+        if not m:
+            continue
+        value, cited = int(m.group("value")), int(m.group("limit"))
+        if cited >= shipped_limit or value > shipped_limit:
+            continue          # ⭐ 理由仍然成立（或今天仍然超標）⇒ ⛔ 不要喊
+        cells = [c.strip() for c in raw.strip("|").split("|")]
+        out.append({
+            "row": cells[0] if cells else raw.strip()[:60],
+            "value": value,
+            "citedLimit": cited,
+            "shippedLimit": shipped_limit,
+            "why": f"⭐ 理由引用上限 {cited}，⛔ 而出貨值已經是 {shipped_limit} "
+                   f"⇒ 通道 {value} **今天過得了** —— 這一列該重新評估",
+        })
+    return out

@@ -59,5 +59,11 @@
       }
     ]
   },
+  "vfxKey": "fx.prim.void.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.void.pulse-sm"
+    }
+  ],
   "icon": "assets/icons/abilities/community-review-22-20260907.passive.webp"
 }

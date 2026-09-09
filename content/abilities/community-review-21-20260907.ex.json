@@ -33,5 +33,12 @@
       "onExisting": "keepLarger"
     }
   ],
+  "vfxKey": "fx.prim.holy.pulse",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.holy.pulse",
+      "attachTo": "caster"
+    }
+  ],
   "icon": "assets/icons/abilities/community-review-21-20260907.ex.webp"
 }

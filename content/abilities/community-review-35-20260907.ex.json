@@ -28,5 +28,12 @@
       "duration": 3
     }
   ],
+  "vfxKey": "fx.prim.ice.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.ice.pulse-sm",
+      "attachTo": "caster"
+    }
+  ],
   "icon": "assets/icons/abilities/community-review-35-20260907.ex.webp"
 }

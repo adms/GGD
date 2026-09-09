@@ -87,5 +87,12 @@
     },
     "inheritDefaults": true
   },
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.fire.slash",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.fire.slash",
+      "attachTo": "caster"
+    }
+  ]
 }

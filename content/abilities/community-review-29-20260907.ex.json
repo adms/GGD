@@ -33,5 +33,12 @@
       "onExisting": "keepLarger"
     }
   ],
+  "vfxKey": "fx.prim.arcane.pulse",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.arcane.pulse",
+      "attachTo": "caster"
+    }
+  ],
   "icon": "assets/icons/abilities/community-review-29-20260907.ex.webp"
 }

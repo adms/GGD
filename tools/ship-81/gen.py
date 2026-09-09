@@ -30,7 +30,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from model_map import parse_inventory, catalog_titles, resolve  # noqa: E402
+from model_map import parse_inventory, catalog_titles, resolve, stale_blockers  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[2]
 RECIPES = REPO / "materials/community-hero-forge/recipes"
@@ -91,6 +91,8 @@ def load_batch2(root: Path) -> list[dict]:
 # ⭐ 級距欄位（值在載入時從共用表解析）—— 第〇·四守則。
 # ⛔ 同一個節點同時有級距與算好的值 ⇒ schema 直接拒絕：
 #    「msBonusTier 與 value 不可同時存在（第〇·四守則：value 是第二個住處）」
+UNEXPRESSIBLE: list[dict] = []
+
 TIER_FIELDS = ("msBonusTier", "damageTier", "cooldownTier", "rangeTier", "manaCostTier",
                "radiusTier", "castTimeTier", "healTier", "shieldTier")
 
@@ -203,6 +205,37 @@ def ability_docs(hero: dict, slots: list[dict]) -> list[dict]:
     #   測試綠 —— 失敗形態②（做了、出貨了，⛔ 而玩家拿不到）。
     #
     # ⇒ ⭐ 接線放在**六格都會經過**的這一段（第〇·五守則：⛔ 不要為某一格寫一個 if）。
+    # ── ⭐ 特效：把 recipe 的 `slots[].vfx` 接上去 ────────────────────────
+    #
+    # ⛔⛔ 2026-09-10 抓到（GH#1165）：第一批 **222 支技能一個 `vfxKey` 都沒有**,
+    #   ⭐ 而 recipe 裡 **222/222 都有 `resolvedVfxId`**（60 個不同的 id,
+    #   ⭐ 而且 `content/vfx/` 裡**一個都不缺**）—— 是這支產生器把它整段丟掉了。
+    #   ⚠️ 而 owner 的目標逐字列了「**特效**」⇒ 失敗形態②（做了、出貨了,玩家看不到）。
+    #
+    # ⚠️⚠️ ⭐ **錨點只翻得過去一半** —— recipe 的 anchor 有三種,
+    #   而出貨的 `attachTo` 只有 `caster | point`：
+    #
+    #     self(75)   → caster   ⭐ 翻得過去
+    #     point(33)  → point    ⭐ 翻得過去
+    #     target(114)→ ⛔ **沒有這個錨點**（省略 ⇒ 預設 caster）
+    #
+    # ⭐ 這與 CLAUDE.md 記過的 GH#565 是**同一個引擎缺口**（「316 次呼叫裡
+    #   施法者 124 : 受擊者 124 —— 出貨機制正好覆蓋一半」）。
+    # ⇒ ⭐ 選擇：**特效照播**（⛔ 零特效更糟）,⭐ 而「錨點翻不過去」逐支**記進報告**,
+    #   ⛔ 不是假裝它掛在受擊者身上。報告欄 `vfxAnchorUnexpressible`。
+    ANCHOR = {"self": "caster", "point": "point"}
+    for d in docs:
+        v = (by_slot.get(str(d.get("slot", "")).upper()) or {}).get("vfx") or {}
+        vid = v.get("resolvedVfxId")
+        if vid:
+            d["vfxKey"] = vid
+            layer = {"vfxKey": vid}
+            at = ANCHOR.get(v.get("anchor"))
+            if at:
+                layer["attachTo"] = at
+            else:
+                UNEXPRESSIBLE.append({"ability": d["id"], "anchor": v.get("anchor")})
+            d["vfxLayers"] = [layer]
     for d in docs:
         src = ICONS / "abilities" / f"{d['id']}.webp"
         if src.is_file() or (ICON_AB / f"{d['id']}.webp").is_file():
@@ -254,6 +287,11 @@ def main() -> None:
     args = ap.parse_args()
 
     inv = {r["heroId"]: r for r in parse_inventory(args.inventory)}
+    # ⭐ 出貨的通道上限**從 config 讀**，⛔ 不抄字面值（第〇·四守則：值只有一個住處）。
+    lod = json.loads((REPO / "content/config/model-lod.json").read_text(encoding="utf-8"))
+    stale = stale_blockers(args.inventory, int(lod["championChannelLimit"]))
+    for b in stale:
+        print(f"⚠️ 盤點表這一列的理由過期了：{b['row']} —— {b['why']}", file=sys.stderr)
     titles = catalog_titles(args.catalog)
     heroes = load_batch2(args.batch2_dir) if args.batch2_dir else load_batch1()
     if not heroes:
@@ -329,6 +367,11 @@ def main() -> None:
         "skeletonByDesign": sum(1 for r in rows if r["modelState"] == "skeleton-by-design"),
         "pending": sum(1 for r in rows if r["modelState"].startswith("pending")),
         "inventoryStale": [r["name"] for r in rows if r["modelState"] == "real-late"],
+        # ⭐ 盤點表裡「理由引用的上限已經被改掉」的那幾列 —— ⛔ 這支程式不改表，
+        #   它只說得出「該重新評估了」（表是 owner 的檔）。
+        "staleBlockers": stale,
+        # ⭐ 錨點翻不過去的那幾支（recipe 說 target,⛔ 而引擎只有 caster|point）。
+        "vfxAnchorUnexpressible": len(UNEXPRESSIBLE),
         "withPlaceholders": n_ph,
         "rows": [{k: r[k] for k in ("id", "name", "modelKey", "icon", "modelState", "why", "placeholders")} for r in rows],
     }
@@ -336,7 +379,8 @@ def main() -> None:
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: summary[k] for k in
-                      ("heroes", "withRealModel", "skeletonByDesign", "pending", "inventoryStale", "withPlaceholders")},
+                      ("heroes", "withRealModel", "skeletonByDesign", "pending", "inventoryStale",
+                       "staleBlockers", "vfxAnchorUnexpressible", "withPlaceholders")},
                      ensure_ascii=False, indent=2))
 
 

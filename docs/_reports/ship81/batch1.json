@@ -5,6 +5,37 @@
   "skeletonByDesign": 13,
   "pending": 0,
   "inventoryStale": [],
+  "staleBlockers": [
+    {
+      "row": "阿箱＋拉蜜絲 `b2-boxxo`",
+      "value": 237,
+      "citedLimit": 160,
+      "shippedLimit": 500,
+      "why": "⭐ 理由引用上限 160，⛔ 而出貨值已經是 500 ⇒ 通道 237 **今天過得了** —— 這一列該重新評估"
+    },
+    {
+      "row": "李星 `example:leesin`",
+      "value": 196,
+      "citedLimit": 160,
+      "shippedLimit": 500,
+      "why": "⭐ 理由引用上限 160，⛔ 而出貨值已經是 500 ⇒ 通道 196 **今天過得了** —— 這一列該重新評估"
+    },
+    {
+      "row": "沃維克 `example:warwick`",
+      "value": 188,
+      "citedLimit": 160,
+      "shippedLimit": 500,
+      "why": "⭐ 理由引用上限 160，⛔ 而出貨值已經是 500 ⇒ 通道 188 **今天過得了** —— 這一列該重新評估"
+    },
+    {
+      "row": "犽宿 `example:yasuo`",
+      "value": 170,
+      "citedLimit": 160,
+      "shippedLimit": 500,
+      "why": "⭐ 理由引用上限 160，⛔ 而出貨值已經是 500 ⇒ 通道 170 **今天過得了** —— 這一列該重新評估"
+    }
+  ],
+  "vfxAnchorUnexpressible": 114,
   "withPlaceholders": 13,
   "rows": [
     {

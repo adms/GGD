@@ -76,5 +76,11 @@
     },
     "inheritDefaults": true
   },
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.physical.beam",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.physical.beam"
+    }
+  ]
 }

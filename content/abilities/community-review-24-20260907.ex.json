@@ -25,5 +25,12 @@
       }
     }
   ],
+  "vfxKey": "fx.prim.lightning.nova",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.lightning.nova",
+      "attachTo": "point"
+    }
+  ],
   "icon": "assets/icons/abilities/community-review-24-20260907.ex.webp"
 }

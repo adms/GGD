@@ -32,5 +32,11 @@
       "root": true
     }
   ],
+  "vfxKey": "fx.prim.wind.slash",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.wind.slash"
+    }
+  ],
   "icon": "assets/icons/abilities/community-review-27-20260907.ex.webp"
 }

@@ -76,5 +76,12 @@
     },
     "inheritDefaults": true
   },
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.holy.arc",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.holy.arc",
+      "attachTo": "point"
+    }
+  ]
 }

@@ -98,5 +98,11 @@
     },
     "inheritDefaults": true
   },
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.physical.bolt",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.physical.bolt"
+    }
+  ]
 }

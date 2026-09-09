@@ -73,5 +73,12 @@
     },
     "inheritDefaults": true
   },
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "vfxKey": "fx.prim.ice.nova",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.ice.nova",
+      "attachTo": "point"
+    }
+  ]
 }

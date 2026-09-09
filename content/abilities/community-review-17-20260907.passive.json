@@ -41,5 +41,11 @@
   },
   "effects": [],
   "innateKind": "passive",
+  "vfxKey": "fx.prim.void.pulse-sm",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.void.pulse-sm"
+    }
+  ],
   "icon": "assets/icons/abilities/community-review-17-20260907.passive.webp"
 }
