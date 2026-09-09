@@ -1,0 +1,11 @@
+{
+  "schema": "ggd-distillation-evaluation-inputs@1",
+  "sourceManifestSha256": "b80ca65f68ede20e18781995f3d983a2e7f0b79e4ee1f0d3bd1b43c4c57a5d94",
+  "builderSha256": "184c52c773325a5da47a93a6609dcc80ebf2660536bf90d20dbdc1d04425e164",
+  "outputs": {
+    "public-cases.jsonl": "7e615ae78fab7927022d1cc815986c5b6f41c6d83af2e468a0607f0e509211f3",
+    "private-teachers.jsonl": "66e5b12240df5730f9409f1f25ddd19b057136af8c69cfd9142ed472128d7f15",
+    "plan.json": "bfe7849d242a2f4ae0b764162edb12f7439683cf7641e5abe18f3666ca64ff14"
+  },
+  "inferenceStarted": false
+}
