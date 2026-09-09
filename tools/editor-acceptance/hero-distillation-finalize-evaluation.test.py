@@ -64,6 +64,15 @@ class FinalizeTest(unittest.TestCase):
         self.assertTrue(json.loads((out / 'report-data.json').read_text())['fullHeroE2EProven'])
         self.assertIn('已收齊逐英雄品質收據', (out / 'report.html').read_text())
         self.assertEqual(manifest['outputs']['report-data.json'], sha(out / 'report-data.json'))
+        self.assertEqual(len(manifest['evidenceArtifacts']), 9)
+        for entry in list(manifest['inputs'].values()) + manifest['evidenceArtifacts']:
+            snapshot = out / entry['snapshot']
+            self.assertTrue(snapshot.is_file()); self.assertEqual(entry['sha256'], sha(snapshot))
+        self.assertEqual(set(manifest['scriptSnapshots']), {
+            'hero-distillation-finalize-evaluation.py', 'hero-distillation-quality-adjudication.py',
+            'hero-distillation-report.py'})
+        self.assertTrue(all(sha(out / entry['path']) == entry['sha256']
+                            for entry in manifest['scriptSnapshots'].values()))
         self.assertFalse(manifest['modelPromoted'])
 
     def test_refuses_existing_output_and_drifted_receipt_artifact(self):

@@ -9,6 +9,7 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
+import shutil
 
 
 SCRIPT = Path(__file__).resolve()
@@ -47,12 +48,45 @@ def finalize(results, evidence, out):
     assert adjudicated['fullHeroE2EProven'] is True and adjudicated['modelPromoted'] is False
     html = renderer.render(adjudicated)
     out.mkdir(parents=True)
+    inputs = out / 'inputs'; sources = out / 'source'
+    inputs.mkdir(); sources.mkdir()
+    result_snapshot = inputs / 'unverified-report-data.json'
+    evidence_snapshot = inputs / 'quality-evidence.json'
+    shutil.copyfile(results, result_snapshot); shutil.copyfile(evidence, evidence_snapshot)
+    evidence_document = json.loads(evidence.read_text())
+    artifact_records, copied = [], {}
+    artifact_root = evidence.parent.resolve(); artifact_out = inputs / 'evidence-artifacts'
+    artifact_out.mkdir()
+    for row in evidence_document['rows']:
+        for item in row['evidence']:
+            relative = Path(item['path'])
+            assert not relative.is_absolute() and '..' not in relative.parts, 'UNSAFE_EVIDENCE_PATH'
+            original = (artifact_root / relative).resolve()
+            assert original.is_relative_to(artifact_root) and original.is_file(), 'MISSING_EVIDENCE_FILE'
+            assert digest(original) == item['sha256'], 'QUALITY_EVIDENCE_DRIFT:' + item['path']
+            key = str(original)
+            if key not in copied:
+                snapshot = artifact_out / f'{len(copied):04d}-{original.name}'
+                shutil.copyfile(original, snapshot); copied[key] = snapshot
+            snapshot = copied[key]
+            artifact_records.append({'arm': row['arm'], 'id': row['id'], 'kind': item['kind'],
+                'originalPath': key, 'snapshot': str(snapshot.relative_to(out)),
+                'sha256': item['sha256'], 'bytes': original.stat().st_size})
+    script_snapshots = {}
+    for path in [SCRIPT, adjudicator_path, renderer_path]:
+        snapshot = sources / path.name
+        shutil.copyfile(path, snapshot)
+        script_snapshots[path.name] = {'path': str(snapshot.relative_to(out)), 'sha256': digest(snapshot)}
     save(out / 'report-data.json', adjudicated)
     save(out / 'report.html', html)
     manifest = {'schema': 'ggd-distillation-finalized-evaluation@1',
-        'inputs': {str(results): {'sha256': digest(results), 'bytes': results.stat().st_size},
-                   str(evidence): {'sha256': digest(evidence), 'bytes': evidence.stat().st_size}},
+        'inputs': {str(results): {'sha256': digest(results), 'bytes': results.stat().st_size,
+                                  'snapshot': str(result_snapshot.relative_to(out))},
+                   str(evidence): {'sha256': digest(evidence), 'bytes': evidence.stat().st_size,
+                                   'snapshot': str(evidence_snapshot.relative_to(out))}},
+        'evidenceArtifacts': artifact_records,
         'scripts': {str(path): digest(path) for path in [SCRIPT, adjudicator_path, renderer_path]},
+        'scriptSnapshots': script_snapshots,
         'outputs': {'report-data.json': digest(out / 'report-data.json'),
                     'report.html': digest(out / 'report.html')},
         'blindTest': adjudicated['blindTest'], 'fullHeroE2EProven': True,
