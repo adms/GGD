@@ -28,6 +28,43 @@ def write(path, value):
         f.write('\n')
 
 
+def terminal_evidence(workspace, terminal):
+    """Accept only a known terminal workflow with its success evidence intact."""
+    state_path = workspace / terminal
+    state = json.loads(state_path.read_text())
+    if state.get('status') in {
+            'completed-experiment-not-promoted', 'completed-control-not-promoted', 'stopped-report-written'}:
+        return state
+    assert state.get('status') == 'completed', 'WORKFLOW_NOT_TERMINAL'
+    parent = state_path.parent
+    if state.get('schema') == 'ggd-distillation-evaluation-batch-state@1':
+        manifest = json.loads((parent / 'manifest.json').read_text())
+        result = json.loads((parent / 'result.json').read_text())
+        assert manifest.get('schema') == 'ggd-distillation-evaluation-batch@1', 'EVALUATION_MANIFEST_INVALID'
+        assert result.get('schema') == 'ggd-distillation-evaluation-batch-result@1', 'EVALUATION_RESULT_INVALID'
+        assert state.get('steps') and all(step.get('status') == 'completed' for step in state['steps']), \
+            'EVALUATION_STEPS_INCOMPLETE'
+        assert result.get('reportDataSha256') == digest(parent / 'report-data.json') \
+            and result.get('reportHtmlSha256') == digest(parent / 'report.html'), 'EVALUATION_REPORT_DRIFT'
+        assert state.get('modelPromoted') is False and manifest.get('modelPromoted') is False \
+            and result.get('modelPromoted') is False, 'PROMOTED_MODEL_NOT_RESEARCH_ARCHIVE'
+        return state
+    if state.get('phase') == 'train':
+        manifest = json.loads((parent.parent / 'manifest.json').read_text())
+        result = json.loads((parent / 'result.json').read_text())
+        roundtrip = json.loads((parent / 'adapter-roundtrip.json').read_text())
+        checkpoint = parent / result['checkpoint']['path'] / 'adapters.safetensors'
+        assert state.get('workerPid') is None and state.get('manifestSha256') == digest(parent.parent / 'manifest.json'), \
+            'TRAINING_STATE_INVALID'
+        assert result.get('phase') == 'train' and result.get('steps') == manifest.get('steps') \
+            and result.get('uniqueTrainingTasks') == manifest.get('steps'), 'TRAINING_EPOCH_INCOMPLETE'
+        assert checkpoint.is_file() and digest(checkpoint) == result['checkpoint'].get('sha256'), \
+            'FINAL_ADAPTER_DRIFT'
+        assert roundtrip.get('passed') is True, 'ADAPTER_ROUNDTRIP_FAILED'
+        return state
+    raise AssertionError('UNKNOWN_COMPLETED_WORKFLOW')
+
+
 def build(workspace, out, include=None, terminal_state=None):
     workspace, out = workspace.resolve(), out.resolve()
     assert not out.exists(), 'NEW_ARCHIVE_DIRECTORY_REQUIRED'
@@ -48,8 +85,7 @@ def build(workspace, out, include=None, terminal_state=None):
     # Only archive a terminal new workflow, never a misleading running snapshot.
     terminal = terminal_state or Path('outputs/hero-forge-12b-restart-20260908/ir5-workflow-v1/state.json')
     assert not terminal.is_absolute() and '..' not in terminal.parts, 'RELATIVE_STATE_PATH_REQUIRED'
-    workflow = json.loads((workspace / terminal).read_text())
-    assert workflow['status'] in {'completed-experiment-not-promoted', 'completed-control-not-promoted', 'stopped-report-written'}, 'WORKFLOW_NOT_TERMINAL'
+    workflow = terminal_evidence(workspace, terminal)
     out.mkdir(parents=True)
     (out / 'archives').mkdir()
     (out / 'models').mkdir()

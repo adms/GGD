@@ -82,5 +82,52 @@ class ArchiveTests(unittest.TestCase):
             with self.assertRaisesRegex(AssertionError,'RELATIVE_SOURCE_PATH'):
                 a.build(root,Path(d)/'out',[Path('../outside')],Path('state.json'))
 
+    def test_scoped_increment_accepts_only_complete_bound_training(self):
+        with tempfile.TemporaryDirectory() as d, contextlib.redirect_stdout(io.StringIO()):
+            root=Path(d)/'workspace'; self.fixture(root)
+            rel=Path('outputs/hero-forge-12b-restart-20260908/full-hero-distillation-v21')
+            run=root/rel; train=run/'train'; checkpoint=train/'checkpoint-0002'
+            checkpoint.mkdir(parents=True)
+            adapter=checkpoint/'adapters.safetensors'; adapter.write_bytes(b'complete-test-adapter')
+            (run/'manifest.json').write_text(json.dumps({'steps':2}))
+            (train/'result.json').write_text(json.dumps({'phase':'train','steps':2,'uniqueTrainingTasks':2,
+                'checkpoint':{'path':'checkpoint-0002','sha256':a.digest(adapter)}}))
+            (train/'adapter-roundtrip.json').write_text(json.dumps({'passed':True}))
+            state={'status':'completed','phase':'train','workerPid':None,
+                'manifestSha256':a.digest(run/'manifest.json')}
+            (train/'state.json').write_text(json.dumps(state))
+            a.build(root,Path(d)/'out',[rel],rel/'train/state.json')
+            state['workerPid']=123; (train/'state.json').write_text(json.dumps(state))
+            with self.assertRaisesRegex(AssertionError,'TRAINING_STATE_INVALID'):
+                a.build(root,Path(d)/'bad',[rel],rel/'train/state.json')
+
+    def test_scoped_increment_accepts_complete_bound_evaluation(self):
+        with tempfile.TemporaryDirectory() as d, contextlib.redirect_stdout(io.StringIO()):
+            root=Path(d)/'workspace'; self.fixture(root)
+            rel=Path('outputs/hero-forge-12b-restart-20260908/hero74-paired-evaluation-v1')
+            run=root/rel; run.mkdir(parents=True)
+            (run/'report-data.json').write_text('{}\n'); (run/'report.html').write_text('<p>report</p>\n')
+            (run/'manifest.json').write_text(json.dumps({'schema':'ggd-distillation-evaluation-batch@1',
+                'modelPromoted':False}))
+            result={'schema':'ggd-distillation-evaluation-batch-result@1','modelPromoted':False,
+                'reportDataSha256':a.digest(run/'report-data.json'),'reportHtmlSha256':a.digest(run/'report.html')}
+            (run/'result.json').write_text(json.dumps(result))
+            state={'schema':'ggd-distillation-evaluation-batch-state@1','status':'completed',
+                'steps':[{'status':'completed'}],'modelPromoted':False}
+            (run/'state.json').write_text(json.dumps(state))
+            a.build(root,Path(d)/'out',[rel],rel/'state.json')
+            (run/'report.html').write_text('<p>changed</p>\n')
+            with self.assertRaisesRegex(AssertionError,'EVALUATION_REPORT_DRIFT'):
+                a.build(root,Path(d)/'bad',[rel],rel/'state.json')
+
+    def test_arbitrary_completed_state_is_not_terminal_evidence(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d)/'workspace'; r=self.fixture(root)
+            state=Path('outputs/hero-forge-12b-restart-20260908/arbitrary-state.json')
+            (root/state).write_text(json.dumps({'status':'completed'}))
+            include=[Path('outputs/hero-forge-12b-restart-20260908/sample.py')]
+            with self.assertRaisesRegex(AssertionError,'UNKNOWN_COMPLETED_WORKFLOW'):
+                a.build(root,Path(d)/'out',include,state)
+
 
 if __name__ == '__main__': unittest.main()
