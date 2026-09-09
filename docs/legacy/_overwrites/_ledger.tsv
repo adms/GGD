@@ -8177,3 +8177,17 @@ overwrite_temp_20260909-211811	Bash	有未提交改動	/Users/Takuro/GGD/scripts
 overwrite_temp_20260909-213619	Bash	有未提交改動	/Users/Takuro/GGD/scripts/preserve-before-overwrite.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260909-213619/scripts/preserve-before-overwrite.py
 20260909-214033	preserve.sh	SKIP(git 有)	docs/_execution-batches.md	
 20260909-214238	gen_board	產生器覆蓋前	/Users/Takuro/GGD/docs/_release/ggd-board.html	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260909-214237/docs/_release/ggd-board.html
+overwrite_temp_20260909-215543	Bash	未追蹤	/Users/Takuro/GGD/packages/shared/src/sim/economy/draftSwapWhenFull.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260909-215543/packages/shared/src/sim/economy/draftSwapWhenFull.test.ts
+20260909-215721	gen_board	產生器覆蓋前	/Users/Takuro/GGD/docs/_release/ggd-board.html	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260909-215721/docs/_release/ggd-board.html
+overwrite_temp_20260909-220436	Bash	有未提交改動	/Users/Takuro/GGD/packages/shared/src/ops/ugcGateIsArmed.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260909-220436/packages/shared/src/ops/ugcGateIsArmed.test.ts
+20260909-221053	gen_board	產生器覆蓋前	/Users/Takuro/GGD/docs/_release/ggd-board.html	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260909-221053/docs/_release/ggd-board.html
+overwrite_temp_20260909-221433	Edit	SKIP(git 有)	content/config/ugc.json	
+overwrite_temp_20260909-221458	Edit	SKIP(git 有)	content/config/ugc.json	
+overwrite_temp_20260909-221459	Edit	SKIP(git 有)	packages/shared/src/sim/SimWorld.ts	
+overwrite_temp_20260909-221508	Bash	有未提交改動	/Users/Takuro/GGD/scripts/preserve-before-overwrite.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260909-221508/scripts/preserve-before-overwrite.py
+overwrite_temp_20260909-221513	Edit	SKIP(git 有)	content/config/ugc.json	
+overwrite_temp_20260909-221514	Edit	SKIP(git 有)	packages/shared/src/sim/SimWorld.ts	
+overwrite_temp_20260909-221516	Edit	SKIP(git 有)	content/config/ugc.json	
+overwrite_temp_20260909-221516	Edit	SKIP(git 有)	packages/shared/src/sim/SimWorld.ts	
+20260909-221620	preserve.sh	SKIP(git 有)	docs/_execution-batches.md	
+20260909-221833	gen_board	產生器覆蓋前	/Users/Takuro/GGD/docs/_release/ggd-board.html	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260909-221833/docs/_release/ggd-board.html
