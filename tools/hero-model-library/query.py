@@ -22,11 +22,17 @@ def main():
     if args.downloads:
         records = [e for e in data['downloadPlan']['entries'] if not query or query in json.dumps(e, ensure_ascii=False).casefold()]
         if args.json:
-            print(json.dumps({'release':data['release'], 'entries':records}, ensure_ascii=False, indent=2))
+            source_ids={sid for e in records for sid in e.get('acquiredPublicSources',[])}
+            print(json.dumps({'release':data['release'], 'entries':records,
+                'publicSources':[s for s in data['downloadPlan'].get('publicSources',[]) if s['id'] in source_ids]}, ensure_ascii=False, indent=2))
         else:
-            labels = {'defer-approved-derivative':'已有核准加工副本，暫緩付費下載','defer-existing-300':'已有 300，暫緩付費下載','owner-highest':'優先下載','needs-roster-mapping':'待對應角色 ID'}
+            labels = {'defer-acquired-public':'免費來源已取得，暫緩購買','defer-approved-derivative':'已有核准加工副本，暫緩付費下載','defer-existing-300':'已有 300，暫緩付費下載','owner-highest':'優先下載','needs-roster-mapping':'待對應角色 ID'}
             for e in records:
                 print(f"{e['target']} | {labels[e['downloadPriority']]} | {', '.join(e['heroIds']) or '未對應'}")
+                if e.get('purchaseHold'):
+                    print('  免費來源已取得：暫緩購買，先完成轉換／動作驗收')
+                    for s in data['downloadPlan'].get('publicSources',[]):
+                        if s['id'] in e['acquiredPublicSources']: print('    '+s['url']+' | '+s['verification'])
                 for s in e['sources']: print('  '+s['submittedUrl'])
                 for note in e['ownerNotes']: print('  指定處理：'+note)
         return 0 if records else 1
@@ -52,6 +58,9 @@ def main():
                 print('    S3: '+asset['s3Uri']);print('    SHA-256: '+asset['sha256'])
             else:print('    位置：專案既有模型，未列入此 S3 成品版本')
         for p in h['pending']: print('  待轉換：'+p['name'])
+        for s in h.get('publicCandidates',[]):
+            print('  已取得免費來源（暫緩購買）：'+s['target']+' | '+s['url'])
+            print('    '+s['verification'])
         if h['downloadSources']: print('  指定下載來源：'+', '.join(h['downloadSources'])+'；用 --downloads '+h['id']+' 查詢')
     return 0 if records else 1
 

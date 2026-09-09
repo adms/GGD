@@ -8,6 +8,9 @@ def plan_sources(data, manifest, policy):
     data = deepcopy(data)
     heroes = {h['id']: h for h in manifest['heroes']}
     for entry in data['entries']:
+        entry['acquiredPublicSources'] = [s['id'] for s in data.get('publicSources', [])
+            if set(s['heroIds']) & set(entry['heroIds']) and s['acquisitionStatus'] == 'downloaded-verified']
+        entry['purchaseHold'] = bool(entry['acquiredPublicSources'])
         available = []
         for hero_id in entry['heroIds']:
             ids = [o['sourceId'] for o in heroes.get(hero_id, {}).get('options', []) if o['source']['tier'] == '300heroes' and eligible(policy,hero_id,o['sourceId'],o['sourceModelKey'],o['source']['kind'])]
@@ -17,6 +20,7 @@ def plan_sources(data, manifest, policy):
         entry['approvedDerivatives'] = [a['sourceId'] for a in policy['approvedDerivatives'] if a['heroId'] in entry['heroIds']]
         entry['needsDownloadFor'] = [i for i in entry['heroIds'] if i not in {a['heroId'] for a in available}]
         entry['downloadPriority'] = ('defer-approved-derivative' if entry['approvedDerivatives'] else 'defer-existing-300' if entry['heroIds'] and not entry['needsDownloadFor'] else
+                                     'defer-acquired-public' if entry['purchaseHold'] else
                                      'owner-highest' if entry['heroIds'] else 'needs-roster-mapping')
     return data
 
@@ -24,13 +28,23 @@ def render_sources(data):
     sources = {s['id']: s for s in data['sources']}
     entries = data['entries']
     count = sum(len(e['sources']) for e in entries)
-    lines = [
+    public = data.get('publicSources', [])
+    lines = []
+    if public:
+        lines += ['## 已取得免費來源：先暫緩購買', '',
+            '**以下角色已取得免費來源的實際檔案，其他工作流先不要重複付費購買。** 這是購買暫緩記錄，並非全部已完成標準化或可直接作預設。沿用 300 優先與 11 組核准加工副本規則。', '',
+            '| 角色／資源 | 已下載來源與署名 | 目前驗證結果 | 購買安排 |', '|---|---|---|---|']
+        for s in public:
+            decision = '**暫緩購買，先處理已取得免費檔**' if s['heroIds'] else '地圖素材池；尚未認列角色'
+            lines.append(f'| {s["target"]} | [{s["id"]}]({s["url"]})<br>{s["uploader"]}；{s["format"]} | {s["verification"]} | {decision} |')
+        lines += ['', '逐檔大小、SHA-256、本機與 S3 位置記於 `download-sources.json → publicSources`。`readiness` 尚未通過的來源只供人工處理，不进入成品自動取用；來源使用條件另行保留，不把免費下載當成已確認可再散布。', '']
+    lines += [
         '## 指定下載來源與購買順位', '',
         '**已有可用 300英雄模型 → 預設使用 300英雄，付費來源暫緩；指定的 11 個核准加工副本也可預設。缺可用 300英雄模型 → 下列使用者來源為最高優先下載。**', '',
         f'清單共有 {len(entries)} 組角色／形態、{count} 個原始網址；去除同帖不同頁後為 {len(sources)} 個資源帖。', '',
-        f'這 {len(entries)} 組來源中：**{sum(e["downloadPriority"] == "defer-existing-300" for e in entries)} 組已有 300、暫緩付費下載；{sum(e["downloadPriority"] == "owner-highest" for e in entries)} 組優先下載；{sum(e["downloadPriority"] == "needs-roster-mapping" for e in entries)} 組待對應角色 ID。** 數量按來源組計算，巴恩兩種形態各佔一組。', '',
+        f'這 {len(entries)} 組來源中：**{sum(e["downloadPriority"] == "defer-existing-300" for e in entries)} 組已有 300、暫緩付費下載；{sum(e["downloadPriority"] == "defer-acquired-public" for e in entries)} 組免費來源已取得、暫緩購買；{sum(e["downloadPriority"] == "owner-highest" for e in entries)} 組優先下載；{sum(e["downloadPriority"] == "needs-roster-mapping" for e in entries)} 組待對應角色 ID。** 數量按來源組計算，巴恩兩種形態各佔一組。', '',
         f'「待整合」{sum(e["category"] == "primary" for e in entries)} 組與「加購替換」{sum(e["category"] == "optional" for e in entries)} 組保留原分類；實際下載順位依上面的 300 優先規則。未取得並驗證的模型不會直接取代遊戲預設。', '',
-        '來源狀態與後續共編欄位：[download-sources.json](https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/download-sources.json)。網站登入、回覆或付費要求須逐帖核對；目前沒有因本清單而新增已下載／已轉換宣告。', '',
+        '來源狀態與後續共編欄位：[download-sources.json](https://github.com/adms/GGD/blob/codex/hero-model-library-options/materials/hero-model-library/download-sources.json)。網站登入、回覆或付費要求須逐帖核對；上方免費來源與原清單資源帖分開記錄，取得替代來源不代表已下載原帖附件。', '',
     ]
     for category, title in [('primary', '待整合來源'), ('optional', '加購替換選項')]:
         lines += [f'### {title}', '', '| 對應角色 | 下載來源頁 | 使用者指定處理 | 對應與下載狀態 |', '|---|---|---|---|']
@@ -42,6 +56,8 @@ def render_sources(data):
             state = '**核准加工副本，暫緩付費**' if priority == 'defer-approved-derivative' else '**已有 300，暫緩付費下載**' if priority == 'defer-existing-300' else '**優先下載**；網址未核' if priority == 'owner-highest' else '先對應角色 ID'
             if any(sources[s['sourceId']]['accessStatus'] == 'reply-required' for s in entry['sources']):
                 state += '；頁面要求回覆解鎖，模型身分待核'
+            if entry.get('purchaseHold'):
+                state = '**免費來源已取得，暫緩購買**；' + '、'.join(entry['acquiredPublicSources']) + '；待完成標準化'
             if entry.get('mappingNote'): notes += '；' + entry['mappingNote']
             lines.append(f'| {entry["target"]} | {links} | {notes} | {ids}<br>{state} |')
         lines.append('')

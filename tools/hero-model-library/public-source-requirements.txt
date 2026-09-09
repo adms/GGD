@@ -1,0 +1,5 @@
+# Used with Python 3.12; these parse data and do not load/execute mod DLLs.
+UnityPy==1.25.3
+dnfile==0.18.0
+numpy==2.5.3
+pillow==12.3.0

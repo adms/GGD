@@ -7,6 +7,7 @@
 | 我要做什麼 | 直接入口 |
 |---|---|
 | 看全部角色、預設模型、候選來源 | [全角色模型盤點.md](../hero-model-library/全角色模型盤點.md) |
+| 避免重複購買已取得免費模型的角色 | 先看同份盤點最前面的「已取得免費來源：先暫緩購買」；機器讀 `download-sources.json → publicSources` 與盤點 `purchaseHold` |
 | 看使用者給的付費下載清單與改造要求 | 同份盤點最前面的「指定下載來源與購買順位」 |
 | 查單一角色、取得 modelKey 與 S3 檔案位置 | 下方的 `query.py`；程序加 `--json` |
 | 把本版模型補進自己的 GGD checkout | 下方的 `sync.py` |
@@ -58,6 +59,10 @@ AWS 僅使用 `vibe-coding`、`ap-east-2`。不索取或讀取憑證，不換 pr
 | 正式機實際觀測結果 | [inventory-context.json](../hero-model-library/inventory-context.json) | 取得真實新快照才更新，不把文件生成時間當作部署時間 |
 
 `manifest.json`、`release.json`、`inventory.json`、`全角色模型盤點.md` 是發布或盤點產物。不要只改產物掩蓋來源差異；模型成品用既有 `assemble.py → register.mts → 入庫／S3 發布 → pin-release.py` 流程。轉換流程仍需要原始素材與本機轉換收據，並不宣稱 clone 即可重新製作所有模型。
+
+公開模型、MOD、魔獸自訂地圖的新增取得記錄統一放在 `download-sources.json → publicSources`。`acquisitionStatus=downloaded-verified` 只證明已取得並驗證檔案；`purchaseDecision=hold-purchase-review-free-source` 表示先暫緩購買，待檢查免費來源。每個角色的 `publicCandidates` 及下載安排的 `purchaseHold` 都會由盤點產生器同步更新。這批候選還未加入成品 release，不可自動從 `legacy/` 上架。
+
+原始包、解包檔、骨架／材質大型解析 JSON 與未驗收 GLB 保存於本機 intake 與 S3 `legacy/public-model-sources/`；Git 的 `public-source-files.json` 記逐檔 SHA-256 與備份包位置。人工取得原始檔後可用 `tools/hero-model-library/extract_public_sources.py <單一來源 intake 目錄>` 解析，依同目錄 `public-source-requirements.txt` 安裝獨立 Python 環境；W3X 另需本機 StormLib。此工具靜態讀取 MOD 的 DLL 資源，不執行 MOD。
 
 每批收尾必做：
 

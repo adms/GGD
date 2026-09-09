@@ -33,6 +33,17 @@ class InventoryHandoff(unittest.TestCase):
         kenshiro = next(e for e in sources['entries'] if e['target'] == '拳四郎')
         self.assertNotIn('godie-u00l', kenshiro['heroIds'])
         self.assertEqual(kenshiro['preserve']['heroId'], 'godie-u00l')
+        public = {s['id']:s for s in inventory['downloadPlan'].get('publicSources',[])}
+        for entry in inventory['downloadPlan']['entries']:
+            if entry.get('purchaseHold'):
+                self.assertTrue(entry['downloadPriority'].startswith('defer-'))
+                for sid in entry['acquiredPublicSources']:
+                    self.assertEqual(public[sid]['acquisitionStatus'],'downloaded-verified')
+                    self.assertTrue(set(entry['heroIds']) & set(public[sid]['heroIds']))
+                    self.assertFalse(public[sid]['defaultEligible'])
+        maomao=heroes['b2-maomao']['publicCandidates']
+        self.assertEqual([s['id'] for s in maomao],['thunderstore-maomao'])
+        self.assertEqual(heroes['community-review-30-20260907']['publicCandidates'],[])
 
     def test_clean_checkout_needs_no_library_and_detects_stale_inputs(self):
         with tempfile.TemporaryDirectory(prefix='ggd-handoff-') as folder:

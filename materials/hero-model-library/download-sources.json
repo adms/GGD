@@ -3062,5 +3062,286 @@
       "identityStatus": "owner-target-unverified",
       "conversionStatus": "not-started"
     }
-  ]
+  ],
+  "publicSources": [
+    {
+      "id": "itch-kmiliz-doraemon",
+      "target": "哆啦A夢",
+      "heroIds": [
+        "godie-n00b"
+      ],
+      "url": "https://kmiliz.itch.io/doraemon",
+      "uploader": "Kmiliz",
+      "format": "FBX",
+      "accessStatus": "creator-free-download",
+      "checkedAt": "2026-09-09T19:35:14+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/itch-kmiliz-doraemon",
+      "files": [
+        {
+          "path": "raw/DORAEMON FBX.fbx",
+          "bytes": 1924380,
+          "sha256": "1cbb6cb3b61b88953dca469096bda161fa49c60d7d716884220d839253bf393f",
+          "archiveMember": "raw/DORAEMON FBX.fbx"
+        }
+      ],
+      "verification": "骨架已解析：54 個關節；0 段動畫。已轉成候選 GLB；仍需視覺驗收與動作綁定。",
+      "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+      "usage": "intake-only; no automatic runtime selection",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/itch-kmiliz-doraemon/4501bf5704552835759bc15638695db84c1146f0450cd645dc3fc9f45260c56c.zip",
+        "bytes": 2875742,
+        "sha256": "4501bf5704552835759bc15638695db84c1146f0450cd645dc3fc9f45260c56c",
+        "readbackVerified": true,
+        "usage": "legacy; human permission required; not runtime-ready"
+      }
+    },
+    {
+      "id": "hive-megaman-x",
+      "target": "洛克人 X",
+      "heroIds": [
+        "community-review-05-20260907"
+      ],
+      "url": "https://www.hiveworkshop.com/threads/megaman-x.48005/",
+      "uploader": "Afronight_76；RDZ；Black_Stan；General Frank",
+      "format": "MDX + BLP",
+      "accessStatus": "public-download",
+      "checkedAt": "2026-09-09T19:35:14+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/hive-megaman-x",
+      "files": [
+        {
+          "path": "raw/megaman-x.zip",
+          "bytes": 231289,
+          "sha256": "2d9ca293a86438e728f131453894ddbaf8f5cad6ef957b0a95e4cd72392dc7ad",
+          "archiveMember": "raw/megaman-x.zip"
+        }
+      ],
+      "verification": "本體 55 骨節、9 段動畫；另有肖像 43 骨節、4 段動畫。已轉候選 GLB；原包缺 blue_star.blp 特效貼圖，待補齊。",
+      "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+      "usage": "intake-only; no automatic runtime selection",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/hive-megaman-x/6c41859808a194354c95f305cd2bd1490b341e477f64d50de1d138e958ab608c.zip",
+        "bytes": 1573978,
+        "sha256": "6c41859808a194354c95f305cd2bd1490b341e477f64d50de1d138e958ab608c",
+        "readbackVerified": true,
+        "usage": "legacy; human permission required; not runtime-ready"
+      }
+    },
+    {
+      "id": "hive-sephiroth",
+      "target": "賽菲洛斯",
+      "heroIds": [
+        "godie-u00j"
+      ],
+      "url": "https://www.hiveworkshop.com/threads/sephiroth.48518/",
+      "uploader": "Kitabatake",
+      "format": "MDX + BLP",
+      "accessStatus": "public-download",
+      "checkedAt": "2026-09-09T19:35:14+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/hive-sephiroth",
+      "files": [
+        {
+          "path": "raw/hive-sephiroth.zip",
+          "bytes": 117466,
+          "sha256": "0e0170e39c14db65dbf457c28cd8f6ed7fc2e59420c1bdc138a228c08a5e7d1b",
+          "archiveMember": "raw/hive-sephiroth.zip"
+        }
+      ],
+      "verification": "47 骨節、14 段動畫，含原生粒子／緞帶資料。已轉候選 GLB；魔獸原生特效貼圖待解析補齊，尚未完成特效標準化。",
+      "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+      "usage": "intake-only; no automatic runtime selection",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/hive-sephiroth/b78eef730af848e24cf812d52a5d085ea1d3a116cdcaac10917b3c2ea1c5bd48.zip",
+        "bytes": 594736,
+        "sha256": "b78eef730af848e24cf812d52a5d085ea1d3a116cdcaac10917b3c2ea1c5bd48",
+        "readbackVerified": true,
+        "usage": "legacy; human permission required; not runtime-ready"
+      }
+    },
+    {
+      "id": "thunderstore-hisoka",
+      "target": "西索",
+      "heroIds": [
+        "community-review-07-20260907"
+      ],
+      "url": "https://thunderstore.io/c/lethal-company/p/Irados69/Hisoka3DModel/",
+      "uploader": "Irados69",
+      "format": "Unity AssetBundle in DLL",
+      "accessStatus": "public-mod-download",
+      "checkedAt": "2026-09-09T19:35:14+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-hisoka",
+      "files": [
+        {
+          "path": "raw/thunderstore-hisoka.zip",
+          "bytes": 10348234,
+          "sha256": "170bb98c510efa53a0fe3c5964ddb7bb938ca696d631931a3840e96dee09911a",
+          "archiveMember": "raw/thunderstore-hisoka.zip"
+        }
+      ],
+      "verification": "已靜態擷取 Unity bundle：12 Mesh、12 SkinnedMeshRenderer、151 Transform、6 貼圖、1 Avatar；包內 0 AnimationClip。尚待骨架 GLB 轉換與動作綁定。",
+      "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+      "usage": "intake-only; no automatic runtime selection",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-hisoka/b0f83626cc03b33545b8f0e420e049cce22a9d0c6bc8c06a63991197575ada8e.zip",
+        "bytes": 52016652,
+        "sha256": "b0f83626cc03b33545b8f0e420e049cce22a9d0c6bc8c06a63991197575ada8e",
+        "readbackVerified": true,
+        "usage": "legacy; human permission required; not runtime-ready"
+      }
+    },
+    {
+      "id": "thunderstore-maomao",
+      "target": "貓貓",
+      "heroIds": [
+        "b2-maomao"
+      ],
+      "url": "https://thunderstore.io/c/lethal-company/p/GrogCompany/MaomaoModel/",
+      "uploader": "GrogCompany",
+      "format": "Unity AssetBundle in DLL",
+      "accessStatus": "public-mod-download",
+      "checkedAt": "2026-09-09T19:35:14+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-maomao",
+      "files": [
+        {
+          "path": "raw/thunderstore-maomao.zip",
+          "bytes": 43300328,
+          "sha256": "cb6e2ab1ebf0aec2510dd4caf7b2471ec5c5000a252d55861dff6e5d1bbf2052",
+          "archiveMember": "raw/thunderstore-maomao.zip"
+        }
+      ],
+      "verification": "已靜態擷取 Unity bundle：1 Mesh、1 SkinnedMeshRenderer、210 Transform、1 貼圖、1 Avatar；包內 0 AnimationClip。尚待骨架 GLB 轉換與動作綁定。",
+      "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+      "usage": "intake-only; no automatic runtime selection",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-maomao/52a524d2f1fc4d10aaa64a54b8427a7cacccfc8094786a4c05782142e4ca7fce.zip",
+        "bytes": 270435865,
+        "sha256": "52a524d2f1fc4d10aaa64a54b8427a7cacccfc8094786a4c05782142e4ca7fce",
+        "readbackVerified": true,
+        "usage": "legacy; human permission required; not runtime-ready"
+      }
+    },
+    {
+      "id": "thunderstore-holo",
+      "target": "赫蘿",
+      "heroIds": [
+        "community-review-09-20260907"
+      ],
+      "url": "https://thunderstore.io/c/lethal-company/p/GhostsModels/Holo/",
+      "uploader": "GhostsModels",
+      "format": "Unity AssetBundle in DLL",
+      "accessStatus": "public-mod-download",
+      "checkedAt": "2026-09-09T19:35:14+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-holo",
+      "files": [
+        {
+          "path": "raw/thunderstore-holo.zip",
+          "bytes": 1346456,
+          "sha256": "0d91f99f47fcdd6373b20866aff850903ccbece004fae343840eee8cda6c8bcd",
+          "archiveMember": "raw/thunderstore-holo.zip"
+        }
+      ],
+      "verification": "已靜態擷取 Unity bundle：35 Mesh、35 SkinnedMeshRenderer、182 Transform、7 貼圖、1 Avatar；包內 0 AnimationClip。尚待骨架 GLB 轉換與動作綁定。",
+      "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+      "usage": "intake-only; no automatic runtime selection",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-holo/43a94e15b393d22595b330f8f8719cdb0c9d2601572cdafcb9d8da1b021398c1.zip",
+        "bytes": 6969829,
+        "sha256": "43a94e15b393d22595b330f8f8719cdb0c9d2601572cdafcb9d8da1b021398c1",
+        "readbackVerified": true,
+        "usage": "legacy; human permission required; not runtime-ready"
+      }
+    },
+    {
+      "id": "thunderstore-guts",
+      "target": "凱茲",
+      "heroIds": [
+        "b2-guts"
+      ],
+      "url": "https://thunderstore.io/c/lethal-company/p/RRoD/GutsPlayerModel/",
+      "uploader": "RRoD",
+      "format": "Unity AssetBundle in DLL",
+      "accessStatus": "public-mod-download",
+      "checkedAt": "2026-09-09T19:35:14+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-guts",
+      "files": [
+        {
+          "path": "raw/thunderstore-guts.zip",
+          "bytes": 3236888,
+          "sha256": "db34b0fcb904f086fdc9da33ca0effd77a89ba7ac68129dcdb300e4faa4cca50",
+          "archiveMember": "raw/thunderstore-guts.zip"
+        }
+      ],
+      "verification": "已靜態擷取 Unity bundle：1 Mesh、1 SkinnedMeshRenderer、76 Transform、4 貼圖、1 Avatar；包內 0 AnimationClip。尚待骨架 GLB 轉換與動作綁定。",
+      "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+      "usage": "intake-only; no automatic runtime selection",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-guts/f0152af02c37338c894158a7b4d2cb897232f2f1490d28a4cee72fca38007c80.zip",
+        "bytes": 19264676,
+        "sha256": "f0152af02c37338c894158a7b4d2cb897232f2f1490d28a4cee72fca38007c80",
+        "readbackVerified": true,
+        "usage": "legacy; human permission required; not runtime-ready"
+      }
+    },
+    {
+      "id": "hive-anime-team-survival",
+      "target": "Anime Team Survival 3.7v 地圖",
+      "heroIds": [],
+      "url": "https://www.hiveworkshop.com/threads/anime-team-survival-3-7v.248807/",
+      "uploader": "Mindarms；zehs00 上傳",
+      "format": "W3X",
+      "accessStatus": "public-map-download",
+      "checkedAt": "2026-09-09T19:35:14+00:00",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "pending-standardization",
+      "purchaseDecision": "not-a-hero-purchase",
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-models-20260910/hive-anime-team-survival",
+      "files": [
+        {
+          "path": "raw/hive-anime-team-survival.w3x",
+          "bytes": 8295240,
+          "sha256": "2160245e825985d3c5cf3805fc255a6f5a6b1ebc709a8e50fadd05ab873aa7da",
+          "archiveMember": "raw/hive-anime-team-survival.w3x"
+        }
+      ],
+      "verification": "已取得地圖並讀出單位／技能資料；尚未完成模型檔案清單解析與角色對應，不能認列額外角色模型。",
+      "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+      "usage": "intake-only; no automatic runtime selection",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/hive-anime-team-survival/fc48b197deac80e794842c86ac3b3eb3a867c33b5abeb1c02b292bee5529a2c2.zip",
+        "bytes": 8461395,
+        "sha256": "fc48b197deac80e794842c86ac3b3eb3a867c33b5abeb1c02b292bee5529a2c2",
+        "readbackVerified": true,
+        "usage": "legacy; human permission required; not runtime-ready"
+      }
+    }
+  ],
+  "publicSourcePolicy": "免費來源已取得的角色先暫緩購買；待檔案、角色身分、骨架、動畫與使用條件檢查完成，再决定是否需要付費來源。這不改變已有可用 300 優先與僅 11 組加工副本可預設的規則。"
 }

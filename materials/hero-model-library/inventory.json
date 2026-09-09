@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-10T03:20:43+08:00",
-  "inputsSha256": "c830ab5d1d7d687cba2d93839b263b88070029a191482aba83f303e016f796e1",
+  "generatedAt": "2026-09-10T03:39:52+08:00",
+  "inputsSha256": "17c0e425bd5ffa035be4dee44eae8d770fac450ab2c46d67207ac4addf3438fe",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "productionSnapshot": {
     "observedAt": "2026-09-10 01:59 Asia/Taipei",
@@ -63,7 +63,8 @@
         "modelKey": "imported.renaryugu2",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-e002",
@@ -146,7 +147,8 @@
       },
       "downloadSources": [
         "owner-model-084"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-e007",
@@ -203,7 +205,8 @@
         "modelKey": "imported.herolingtong",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-e008",
@@ -286,7 +289,8 @@
       },
       "downloadSources": [
         "owner-model-077"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-e00l",
@@ -369,7 +373,8 @@
       },
       "downloadSources": [
         "owner-model-084"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-e00n",
@@ -426,7 +431,8 @@
         "modelKey": "imported.renaryugu2",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-e00r",
@@ -485,7 +491,8 @@
       },
       "downloadSources": [
         "owner-model-001"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-e00s",
@@ -544,7 +551,8 @@
       },
       "downloadSources": [
         "owner-model-034"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-e00w",
@@ -601,7 +609,8 @@
         "modelKey": "imported.mfls",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-e00x",
@@ -658,7 +667,8 @@
         "modelKey": "imported.mfls",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-e010",
@@ -717,7 +727,8 @@
       },
       "downloadSources": [
         "owner-model-034"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-edem",
@@ -800,7 +811,8 @@
       },
       "downloadSources": [
         "owner-model-089"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-efur",
@@ -857,7 +869,8 @@
         "modelKey": "champ.sela",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-emfr",
@@ -914,7 +927,8 @@
         "modelKey": "imported.negi",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-emns",
@@ -973,7 +987,8 @@
       },
       "downloadSources": [
         "owner-model-073"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-etyr",
@@ -1030,7 +1045,8 @@
         "modelKey": "imported.herooichi",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-ewar",
@@ -1087,7 +1103,8 @@
         "modelKey": "imported.herolingtong",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-h00l",
@@ -1144,7 +1161,8 @@
         "modelKey": "imported.linkstik",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-h01n",
@@ -1227,7 +1245,8 @@
       },
       "downloadSources": [
         "owner-model-083"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-h01o",
@@ -1310,7 +1329,8 @@
       },
       "downloadSources": [
         "owner-model-083"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-h01u",
@@ -1369,7 +1389,8 @@
       },
       "downloadSources": [
         "owner-model-079"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-h020",
@@ -1468,7 +1489,8 @@
         "modelKey": "version.body.3532abc61c3a2aaeb94ff49668026e6e6bd9061dd722bffb",
         "mode": "manual"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-h02k",
@@ -1527,7 +1549,8 @@
       },
       "downloadSources": [
         "owner-model-017"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-h02r",
@@ -1584,7 +1607,8 @@
         "modelKey": "imported.bulbasaur",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-h02u",
@@ -1641,7 +1665,8 @@
         "modelKey": "imported.horse",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-h02v",
@@ -1698,7 +1723,8 @@
         "modelKey": "imported.horse",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-hapm",
@@ -1781,7 +1807,8 @@
       },
       "downloadSources": [
         "owner-model-066"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-hart",
@@ -1838,7 +1865,8 @@
         "modelKey": "imported.cloud",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-hgam",
@@ -1895,7 +1923,8 @@
         "modelKey": "imported.bulbasaur",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-hjai",
@@ -1994,7 +2023,8 @@
         "modelKey": "version.body.3532abc61c3a2aaeb94ff49668026e6e6bd9061dd722bffb",
         "mode": "manual"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-hpb1",
@@ -2053,7 +2083,8 @@
       },
       "downloadSources": [
         "owner-model-088"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-huth",
@@ -2110,7 +2141,8 @@
         "modelKey": "imported.herobuu",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-hvsh",
@@ -2191,7 +2223,8 @@
         "modelKey": "version.body.db39bed40d040d70cd4adc7a340aef4c682b34b51b89d60a",
         "mode": "manual"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-hvwd",
@@ -2250,7 +2283,8 @@
       },
       "downloadSources": [
         "owner-model-080"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-n003",
@@ -2309,7 +2343,8 @@
       },
       "downloadSources": [
         "owner-model-086"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-n00b",
@@ -2368,6 +2403,43 @@
       },
       "downloadSources": [
         "owner-model-002"
+      ],
+      "publicCandidates": [
+        {
+          "id": "itch-kmiliz-doraemon",
+          "target": "哆啦A夢",
+          "heroIds": [
+            "godie-n00b"
+          ],
+          "url": "https://kmiliz.itch.io/doraemon",
+          "uploader": "Kmiliz",
+          "format": "FBX",
+          "accessStatus": "creator-free-download",
+          "checkedAt": "2026-09-09T19:35:14+00:00",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "pending-standardization",
+          "purchaseDecision": "hold-purchase-review-free-source",
+          "defaultEligible": false,
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/itch-kmiliz-doraemon",
+          "files": [
+            {
+              "path": "raw/DORAEMON FBX.fbx",
+              "bytes": 1924380,
+              "sha256": "1cbb6cb3b61b88953dca469096bda161fa49c60d7d716884220d839253bf393f",
+              "archiveMember": "raw/DORAEMON FBX.fbx"
+            }
+          ],
+          "verification": "骨架已解析：54 個關節；0 段動畫。已轉成候選 GLB；仍需視覺驗收與動作綁定。",
+          "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+          "usage": "intake-only; no automatic runtime selection",
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/itch-kmiliz-doraemon/4501bf5704552835759bc15638695db84c1146f0450cd645dc3fc9f45260c56c.zip",
+            "bytes": 2875742,
+            "sha256": "4501bf5704552835759bc15638695db84c1146f0450cd645dc3fc9f45260c56c",
+            "readbackVerified": true,
+            "usage": "legacy; human permission required; not runtime-ready"
+          }
+        }
       ]
     },
     {
@@ -2425,7 +2497,8 @@
         "modelKey": "imported.fox",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-n01c",
@@ -2482,7 +2555,8 @@
         "modelKey": "imported.sd2",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-n01g",
@@ -2541,7 +2615,8 @@
       },
       "downloadSources": [
         "owner-model-086"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-nbbc",
@@ -2598,7 +2673,8 @@
         "modelKey": "imported.sd2",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-nsjs",
@@ -2655,7 +2731,8 @@
         "modelKey": "imported.fox2",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-o00k",
@@ -2712,7 +2789,8 @@
         "modelKey": "imported.pika",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-o00l",
@@ -2769,7 +2847,8 @@
         "modelKey": "imported.heroxelloss",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-o00x",
@@ -2828,7 +2907,8 @@
       },
       "downloadSources": [
         "owner-model-082"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-o02l",
@@ -2887,7 +2967,8 @@
       },
       "downloadSources": [
         "owner-model-081"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-o02p",
@@ -2946,7 +3027,8 @@
       },
       "downloadSources": [
         "owner-model-087"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-o030",
@@ -3005,7 +3087,8 @@
       },
       "downloadSources": [
         "owner-model-042"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-ofar",
@@ -3064,7 +3147,8 @@
       },
       "downloadSources": [
         "owner-model-081"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-ogld",
@@ -3123,7 +3207,8 @@
       },
       "downloadSources": [
         "owner-model-041"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-ogrh",
@@ -3182,7 +3267,8 @@
       },
       "downloadSources": [
         "owner-model-082"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-orkn",
@@ -3241,7 +3327,8 @@
       },
       "downloadSources": [
         "owner-model-042"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-osam",
@@ -3324,7 +3411,8 @@
       },
       "downloadSources": [
         "owner-model-071"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-u00h",
@@ -3381,7 +3469,8 @@
         "modelKey": "imported.herokyo",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-u00j",
@@ -3450,6 +3539,43 @@
       },
       "downloadSources": [
         "owner-model-076"
+      ],
+      "publicCandidates": [
+        {
+          "id": "hive-sephiroth",
+          "target": "賽菲洛斯",
+          "heroIds": [
+            "godie-u00j"
+          ],
+          "url": "https://www.hiveworkshop.com/threads/sephiroth.48518/",
+          "uploader": "Kitabatake",
+          "format": "MDX + BLP",
+          "accessStatus": "public-download",
+          "checkedAt": "2026-09-09T19:35:14+00:00",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "pending-standardization",
+          "purchaseDecision": "hold-purchase-review-free-source",
+          "defaultEligible": false,
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/hive-sephiroth",
+          "files": [
+            {
+              "path": "raw/hive-sephiroth.zip",
+              "bytes": 117466,
+              "sha256": "0e0170e39c14db65dbf457c28cd8f6ed7fc2e59420c1bdc138a228c08a5e7d1b",
+              "archiveMember": "raw/hive-sephiroth.zip"
+            }
+          ],
+          "verification": "47 骨節、14 段動畫，含原生粒子／緞帶資料。已轉候選 GLB；魔獸原生特效貼圖待解析補齊，尚未完成特效標準化。",
+          "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+          "usage": "intake-only; no automatic runtime selection",
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/hive-sephiroth/b78eef730af848e24cf812d52a5d085ea1d3a116cdcaac10917b3c2ea1c5bd48.zip",
+            "bytes": 594736,
+            "sha256": "b78eef730af848e24cf812d52a5d085ea1d3a116cdcaac10917b3c2ea1c5bd48",
+            "readbackVerified": true,
+            "usage": "legacy; human permission required; not runtime-ready"
+          }
+        }
       ]
     },
     {
@@ -3509,7 +3635,8 @@
       },
       "downloadSources": [
         "owner-model-012"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-u00l",
@@ -3566,7 +3693,8 @@
         "modelKey": "imported.heropikachu",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-u00n",
@@ -3649,7 +3777,8 @@
       },
       "downloadSources": [
         "owner-model-075"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-u00o",
@@ -3732,7 +3861,8 @@
       },
       "downloadSources": [
         "owner-model-075"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-u00v",
@@ -3789,7 +3919,8 @@
         "modelKey": "imported.rabbit",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-u010",
@@ -3846,7 +3977,8 @@
         "modelKey": "imported.herohehi",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-u01u",
@@ -3929,7 +4061,8 @@
       },
       "downloadSources": [
         "owner-model-072"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-u034",
@@ -3988,7 +4121,8 @@
       },
       "downloadSources": [
         "owner-model-023"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-ubal",
@@ -4048,7 +4182,8 @@
       "downloadSources": [
         "owner-model-025",
         "owner-model-026"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-ucrl",
@@ -4107,7 +4242,8 @@
       },
       "downloadSources": [
         "owner-model-023"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-udea",
@@ -4166,7 +4302,8 @@
       },
       "downloadSources": [
         "owner-model-049"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-udre",
@@ -4249,7 +4386,8 @@
       },
       "downloadSources": [
         "owner-model-072"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-umal",
@@ -4308,7 +4446,8 @@
       },
       "downloadSources": [
         "owner-model-005"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-uvng",
@@ -4365,7 +4504,8 @@
         "modelKey": "imported.herohehi",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-zombiex",
@@ -4422,7 +4562,8 @@
         "modelKey": "champ.godie-zombiex",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "sela",
@@ -4479,7 +4620,8 @@
         "modelKey": "champ.sela",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "thorne",
@@ -4536,7 +4678,8 @@
         "modelKey": "champ.thorne",
         "mode": "auto"
       },
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "community-review-01-20260907",
@@ -4605,7 +4748,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "community-review-02-20260907",
@@ -4672,7 +4816,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-045"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "community-review-03-20260907",
@@ -4763,7 +4908,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "community-review-04-20260907",
@@ -4834,7 +4980,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-032"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "community-review-05-20260907",
@@ -4901,6 +5048,43 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-044"
+      ],
+      "publicCandidates": [
+        {
+          "id": "hive-megaman-x",
+          "target": "洛克人 X",
+          "heroIds": [
+            "community-review-05-20260907"
+          ],
+          "url": "https://www.hiveworkshop.com/threads/megaman-x.48005/",
+          "uploader": "Afronight_76；RDZ；Black_Stan；General Frank",
+          "format": "MDX + BLP",
+          "accessStatus": "public-download",
+          "checkedAt": "2026-09-09T19:35:14+00:00",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "pending-standardization",
+          "purchaseDecision": "hold-purchase-review-free-source",
+          "defaultEligible": false,
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/hive-megaman-x",
+          "files": [
+            {
+              "path": "raw/megaman-x.zip",
+              "bytes": 231289,
+              "sha256": "2d9ca293a86438e728f131453894ddbaf8f5cad6ef957b0a95e4cd72392dc7ad",
+              "archiveMember": "raw/megaman-x.zip"
+            }
+          ],
+          "verification": "本體 55 骨節、9 段動畫；另有肖像 43 骨節、4 段動畫。已轉候選 GLB；原包缺 blue_star.blp 特效貼圖，待補齊。",
+          "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+          "usage": "intake-only; no automatic runtime selection",
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/hive-megaman-x/6c41859808a194354c95f305cd2bd1490b341e477f64d50de1d138e958ab608c.zip",
+            "bytes": 1573978,
+            "sha256": "6c41859808a194354c95f305cd2bd1490b341e477f64d50de1d138e958ab608c",
+            "readbackVerified": true,
+            "usage": "legacy; human permission required; not runtime-ready"
+          }
+        }
       ]
     },
     {
@@ -4988,7 +5172,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "community-review-07-20260907",
@@ -5055,6 +5240,43 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-006"
+      ],
+      "publicCandidates": [
+        {
+          "id": "thunderstore-hisoka",
+          "target": "西索",
+          "heroIds": [
+            "community-review-07-20260907"
+          ],
+          "url": "https://thunderstore.io/c/lethal-company/p/Irados69/Hisoka3DModel/",
+          "uploader": "Irados69",
+          "format": "Unity AssetBundle in DLL",
+          "accessStatus": "public-mod-download",
+          "checkedAt": "2026-09-09T19:35:14+00:00",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "pending-standardization",
+          "purchaseDecision": "hold-purchase-review-free-source",
+          "defaultEligible": false,
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-hisoka",
+          "files": [
+            {
+              "path": "raw/thunderstore-hisoka.zip",
+              "bytes": 10348234,
+              "sha256": "170bb98c510efa53a0fe3c5964ddb7bb938ca696d631931a3840e96dee09911a",
+              "archiveMember": "raw/thunderstore-hisoka.zip"
+            }
+          ],
+          "verification": "已靜態擷取 Unity bundle：12 Mesh、12 SkinnedMeshRenderer、151 Transform、6 貼圖、1 Avatar；包內 0 AnimationClip。尚待骨架 GLB 轉換與動作綁定。",
+          "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+          "usage": "intake-only; no automatic runtime selection",
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-hisoka/b0f83626cc03b33545b8f0e420e049cce22a9d0c6bc8c06a63991197575ada8e.zip",
+            "bytes": 52016652,
+            "sha256": "b0f83626cc03b33545b8f0e420e049cce22a9d0c6bc8c06a63991197575ada8e",
+            "readbackVerified": true,
+            "usage": "legacy; human permission required; not runtime-ready"
+          }
+        }
       ]
     },
     {
@@ -5124,7 +5346,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "community-review-09-20260907",
@@ -5191,6 +5414,43 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-007"
+      ],
+      "publicCandidates": [
+        {
+          "id": "thunderstore-holo",
+          "target": "赫蘿",
+          "heroIds": [
+            "community-review-09-20260907"
+          ],
+          "url": "https://thunderstore.io/c/lethal-company/p/GhostsModels/Holo/",
+          "uploader": "GhostsModels",
+          "format": "Unity AssetBundle in DLL",
+          "accessStatus": "public-mod-download",
+          "checkedAt": "2026-09-09T19:35:14+00:00",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "pending-standardization",
+          "purchaseDecision": "hold-purchase-review-free-source",
+          "defaultEligible": false,
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-holo",
+          "files": [
+            {
+              "path": "raw/thunderstore-holo.zip",
+              "bytes": 1346456,
+              "sha256": "0d91f99f47fcdd6373b20866aff850903ccbece004fae343840eee8cda6c8bcd",
+              "archiveMember": "raw/thunderstore-holo.zip"
+            }
+          ],
+          "verification": "已靜態擷取 Unity bundle：35 Mesh、35 SkinnedMeshRenderer、182 Transform、7 貼圖、1 Avatar；包內 0 AnimationClip。尚待骨架 GLB 轉換與動作綁定。",
+          "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+          "usage": "intake-only; no automatic runtime selection",
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-holo/43a94e15b393d22595b330f8f8719cdb0c9d2601572cdafcb9d8da1b021398c1.zip",
+            "bytes": 6969829,
+            "sha256": "43a94e15b393d22595b330f8f8719cdb0c9d2601572cdafcb9d8da1b021398c1",
+            "readbackVerified": true,
+            "usage": "legacy; human permission required; not runtime-ready"
+          }
+        }
       ]
     },
     {
@@ -5262,7 +5522,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-067"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "community-review-11-20260907",
@@ -5329,7 +5590,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-008"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "community-review-12-20260907",
@@ -5398,7 +5660,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "community-review-13-20260907",
@@ -5467,7 +5730,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "community-review-14-20260907",
@@ -5532,7 +5796,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-009"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "community-review-15-20260907",
@@ -5599,7 +5864,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-010"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "community-review-16-20260907",
@@ -5668,7 +5934,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "community-review-17-20260907",
@@ -5737,7 +6004,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "community-review-18-20260907",
@@ -5808,7 +6076,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-070"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "community-review-19-20260907",
@@ -5877,7 +6146,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "community-review-20-20260907",
@@ -5948,7 +6218,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-063"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "community-review-21-20260907",
@@ -6017,7 +6288,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "community-review-22-20260907",
@@ -6084,7 +6356,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-050"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "community-review-23-20260907",
@@ -6173,7 +6446,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "community-review-24-20260907",
@@ -6244,7 +6518,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-069"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "community-review-25-20260907",
@@ -6313,7 +6588,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "community-review-26-20260907",
@@ -6382,7 +6658,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "community-review-27-20260907",
@@ -6447,7 +6724,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "community-review-28-20260907",
@@ -6516,7 +6794,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "community-review-29-20260907",
@@ -6587,7 +6866,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-031"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "community-review-30-20260907",
@@ -6654,7 +6934,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-047"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "community-review-31-20260907",
@@ -6745,7 +7026,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "community-review-32-20260907",
@@ -6836,7 +7118,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "community-review-33-20260907",
@@ -6903,7 +7186,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-051"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "community-review-34-20260907",
@@ -6970,7 +7254,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-052"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "community-review-35-20260907",
@@ -7041,7 +7326,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-016"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "community-review-36-20260907",
@@ -7108,7 +7394,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-053"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "community-review-37-20260907",
@@ -7175,7 +7462,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-020"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "godie-e00u",
@@ -7228,7 +7516,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-o01z",
@@ -7317,7 +7606,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-o02v",
@@ -7406,7 +7696,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "godie-ntin",
@@ -7531,7 +7822,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "b2-popp",
@@ -7606,7 +7898,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "b2-rem",
@@ -7659,7 +7952,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "b2-zenitsu",
@@ -7714,7 +8008,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-015"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-rin",
@@ -7769,7 +8064,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-065"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-uncle",
@@ -7805,7 +8101,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-043"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-boxxo",
@@ -7853,7 +8150,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-036"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-shadow",
@@ -7889,7 +8187,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-046"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-bojji",
@@ -7970,7 +8269,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "b2-maomao",
@@ -8006,6 +8306,43 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-011"
+      ],
+      "publicCandidates": [
+        {
+          "id": "thunderstore-maomao",
+          "target": "貓貓",
+          "heroIds": [
+            "b2-maomao"
+          ],
+          "url": "https://thunderstore.io/c/lethal-company/p/GrogCompany/MaomaoModel/",
+          "uploader": "GrogCompany",
+          "format": "Unity AssetBundle in DLL",
+          "accessStatus": "public-mod-download",
+          "checkedAt": "2026-09-09T19:35:14+00:00",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "pending-standardization",
+          "purchaseDecision": "hold-purchase-review-free-source",
+          "defaultEligible": false,
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-maomao",
+          "files": [
+            {
+              "path": "raw/thunderstore-maomao.zip",
+              "bytes": 43300328,
+              "sha256": "cb6e2ab1ebf0aec2510dd4caf7b2471ec5c5000a252d55861dff6e5d1bbf2052",
+              "archiveMember": "raw/thunderstore-maomao.zip"
+            }
+          ],
+          "verification": "已靜態擷取 Unity bundle：1 Mesh、1 SkinnedMeshRenderer、210 Transform、1 貼圖、1 Avatar；包內 0 AnimationClip。尚待骨架 GLB 轉換與動作綁定。",
+          "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+          "usage": "intake-only; no automatic runtime selection",
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-maomao/52a524d2f1fc4d10aaa64a54b8427a7cacccfc8094786a4c05782142e4ca7fce.zip",
+            "bytes": 270435865,
+            "sha256": "52a524d2f1fc4d10aaa64a54b8427a7cacccfc8094786a4c05782142e4ca7fce",
+            "readbackVerified": true,
+            "usage": "legacy; human permission required; not runtime-ready"
+          }
+        }
       ]
     },
     {
@@ -8042,7 +8379,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-048"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-albus",
@@ -8117,7 +8455,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "b2-goblin",
@@ -8192,7 +8531,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "b2-maple",
@@ -8245,7 +8585,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "b2-naofumi",
@@ -8301,7 +8642,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-035"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-makoto",
@@ -8337,7 +8679,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-019"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-noor",
@@ -8394,7 +8737,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-027"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-touka",
@@ -8430,7 +8774,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-028"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-haga",
@@ -8466,7 +8811,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-054"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-guts",
@@ -8523,6 +8869,43 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-021"
+      ],
+      "publicCandidates": [
+        {
+          "id": "thunderstore-guts",
+          "target": "凱茲",
+          "heroIds": [
+            "b2-guts"
+          ],
+          "url": "https://thunderstore.io/c/lethal-company/p/RRoD/GutsPlayerModel/",
+          "uploader": "RRoD",
+          "format": "Unity AssetBundle in DLL",
+          "accessStatus": "public-mod-download",
+          "checkedAt": "2026-09-09T19:35:14+00:00",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "pending-standardization",
+          "purchaseDecision": "hold-purchase-review-free-source",
+          "defaultEligible": false,
+          "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-guts",
+          "files": [
+            {
+              "path": "raw/thunderstore-guts.zip",
+              "bytes": 3236888,
+              "sha256": "db34b0fcb904f086fdc9da33ca0effd77a89ba7ac68129dcdb300e4faa4cca50",
+              "archiveMember": "raw/thunderstore-guts.zip"
+            }
+          ],
+          "verification": "已靜態擷取 Unity bundle：1 Mesh、1 SkinnedMeshRenderer、76 Transform、4 貼圖、1 Avatar；包內 0 AnimationClip。尚待骨架 GLB 轉換與動作綁定。",
+          "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+          "usage": "intake-only; no automatic runtime selection",
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-guts/f0152af02c37338c894158a7b4d2cb897232f2f1490d28a4cee72fca38007c80.zip",
+            "bytes": 19264676,
+            "sha256": "f0152af02c37338c894158a7b4d2cb897232f2f1490d28a4cee72fca38007c80",
+            "readbackVerified": true,
+            "usage": "legacy; human permission required; not runtime-ready"
+          }
+        }
       ]
     },
     {
@@ -8559,7 +8942,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-055"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-kaede",
@@ -8595,7 +8979,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-056"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-matthias",
@@ -8631,7 +9016,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-057"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-sinbad",
@@ -8667,7 +9053,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-037"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-kumoko",
@@ -8726,7 +9113,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-014"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-yogiri",
@@ -8801,7 +9189,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "b2-kaiji",
@@ -8857,7 +9246,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-058"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-fushi",
@@ -8893,7 +9283,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-059"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-orphen",
@@ -8929,7 +9320,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-038"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-klaus",
@@ -8965,7 +9357,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-039"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-takopi",
@@ -9022,7 +9415,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "b2-luckyman",
@@ -9058,7 +9452,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-062"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-misery",
@@ -9133,7 +9528,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "b2-nube",
@@ -9169,7 +9565,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-040"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-shinchan",
@@ -9207,7 +9604,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-060"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-aladdin",
@@ -9243,7 +9641,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-033"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-ned",
@@ -9280,7 +9679,8 @@
       "checkoutSelection": null,
       "downloadSources": [
         "owner-model-061"
-      ]
+      ],
+      "publicCandidates": []
     },
     {
       "id": "b2-kisaragi",
@@ -9333,7 +9733,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "example:karthus",
@@ -9388,7 +9789,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "example:leesin",
@@ -9411,7 +9813,8 @@
         }
       ],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "example:lux",
@@ -9466,7 +9869,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "example:missfortune",
@@ -9521,7 +9925,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "example:warwick",
@@ -9544,7 +9949,8 @@
         }
       ],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "example:xerath",
@@ -9599,7 +10005,8 @@
       ],
       "pending": [],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     },
     {
       "id": "example:yasuo",
@@ -9622,7 +10029,8 @@
         }
       ],
       "checkoutSelection": null,
-      "downloadSources": []
+      "downloadSources": [],
+      "publicCandidates": []
     }
   ],
   "downloadPlan": {
@@ -9648,6 +10056,8 @@
             "submittedUrl": "https://www.ou99.com/thread-498341-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -9670,12 +10080,16 @@
             "submittedUrl": "https://www.ou99.com/thread-496905-1-2.html"
           }
         ],
+        "acquiredPublicSources": [
+          "itch-kmiliz-doraemon"
+        ],
+        "purchaseHold": true,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
           "godie-n00b"
         ],
-        "downloadPriority": "owner-highest"
+        "downloadPriority": "defer-acquired-public"
       },
       {
         "id": "owner-model-003",
@@ -9690,6 +10104,8 @@
             "submittedUrl": "https://www.ou99.com/thread-480489-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [],
@@ -9708,6 +10124,8 @@
             "submittedUrl": "https://www.ou99.com/thread-485012-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [],
@@ -9734,6 +10152,8 @@
           "heroId": "godie-u00l",
           "instruction": "變身保持放大皮卡丘；此下载來源只對應拳四郎人型本體"
         },
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -9756,12 +10176,16 @@
             "submittedUrl": "https://www.ou99.com/thread-497211-1-3.html"
           }
         ],
+        "acquiredPublicSources": [
+          "thunderstore-hisoka"
+        ],
+        "purchaseHold": true,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
           "community-review-07-20260907"
         ],
-        "downloadPriority": "owner-highest"
+        "downloadPriority": "defer-acquired-public"
       },
       {
         "id": "owner-model-007",
@@ -9778,12 +10202,16 @@
             "submittedUrl": "https://www.ou99.com/thread-468771-1-49.html"
           }
         ],
+        "acquiredPublicSources": [
+          "thunderstore-holo"
+        ],
+        "purchaseHold": true,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
           "community-review-09-20260907"
         ],
-        "downloadPriority": "owner-highest"
+        "downloadPriority": "defer-acquired-public"
       },
       {
         "id": "owner-model-008",
@@ -9800,6 +10228,8 @@
             "submittedUrl": "https://www.ou99.com/forum.php?mod=viewthread&tid=457280"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -9822,6 +10252,8 @@
             "submittedUrl": "https://www.ou99.com/thread-472112-1-41.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -9844,6 +10276,8 @@
             "submittedUrl": "https://www.ou99.com/thread-457123-1-139.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -9866,12 +10300,16 @@
             "submittedUrl": "https://www.ou99.com/thread-467165-1-56.html"
           }
         ],
+        "acquiredPublicSources": [
+          "thunderstore-maomao"
+        ],
+        "purchaseHold": true,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
           "b2-maomao"
         ],
-        "downloadPriority": "owner-highest"
+        "downloadPriority": "defer-acquired-public"
       },
       {
         "id": "owner-model-012",
@@ -9888,6 +10326,8 @@
             "submittedUrl": "https://www.ou99.com/thread-459087-1-34.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -9908,6 +10348,8 @@
             "submittedUrl": "https://www.ou99.com/thread-496746-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [],
@@ -9928,6 +10370,8 @@
             "submittedUrl": "https://www.ou99.com/thread-478121-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [
           {
             "heroId": "b2-kumoko",
@@ -9955,6 +10399,8 @@
             "submittedUrl": "https://www.ou99.com/thread-454069-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [
           {
             "heroId": "b2-zenitsu",
@@ -9982,6 +10428,8 @@
             "submittedUrl": "https://www.ou99.com/thread-466002-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [
           {
             "heroId": "community-review-35-20260907",
@@ -10009,6 +10457,8 @@
             "submittedUrl": "https://www.ou99.com/thread-463344-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10029,6 +10479,8 @@
             "submittedUrl": "https://www.ou99.com/thread-476060-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [],
@@ -10049,6 +10501,8 @@
             "submittedUrl": "https://www.ou99.com/thread-478642-1-71.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10071,6 +10525,8 @@
             "submittedUrl": "https://www.ou99.com/thread-459617-1-199.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10093,12 +10549,16 @@
             "submittedUrl": "https://www.ou99.com/thread-460977-1-184.html"
           }
         ],
+        "acquiredPublicSources": [
+          "thunderstore-guts"
+        ],
+        "purchaseHold": true,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
           "b2-guts"
         ],
-        "downloadPriority": "owner-highest"
+        "downloadPriority": "defer-acquired-public"
       },
       {
         "id": "owner-model-022",
@@ -10113,6 +10573,8 @@
             "submittedUrl": "https://www.ou99.com/thread-470467-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [],
@@ -10134,6 +10596,8 @@
             "submittedUrl": "https://www.ou99.com/thread-458241-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10156,6 +10620,8 @@
           }
         ],
         "mappingNote": "清單寫「揍敵客阿福」；現有角色為揍敵客桀諾，尚未認定為同一角色。",
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [],
@@ -10179,6 +10645,8 @@
           }
         ],
         "mappingNote": "同一巴恩角色的不同外觀候選；目前沒有分離的變身角色 ID。",
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10204,6 +10672,8 @@
           }
         ],
         "mappingNote": "同一巴恩角色的不同外觀候選；目前沒有分離的變身角色 ID。",
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10226,6 +10696,8 @@
             "submittedUrl": "https://www.ou99.com/thread-453949-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10248,6 +10720,8 @@
             "submittedUrl": "https://www.ou99.com/thread-459257-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10268,6 +10742,8 @@
             "submittedUrl": "https://www.ou99.com/thread-498407-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [],
@@ -10286,6 +10762,8 @@
             "submittedUrl": "https://www.ou99.com/thread-452782-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [],
@@ -10306,6 +10784,8 @@
             "submittedUrl": "https://www.ou99.com/thread-457780-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [
           {
             "heroId": "community-review-29-20260907",
@@ -10333,6 +10813,8 @@
             "submittedUrl": "https://www.ou99.com/thread-497213-1-13.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [
           {
             "heroId": "community-review-04-20260907",
@@ -10360,6 +10842,8 @@
             "submittedUrl": "https://www.ou99.com/thread-473324-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10383,6 +10867,8 @@
             "submittedUrl": "https://www.ou99.com/thread-470225-1-107.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10408,6 +10894,8 @@
             "submittedUrl": "https://www.ou99.com/thread-470782-1-104.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10432,6 +10920,8 @@
             "submittedUrl": "https://www.ou99.com/thread-491448-1-32.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10454,6 +10944,8 @@
             "submittedUrl": "https://www.ou99.com/thread-491497-1-32.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10476,6 +10968,8 @@
             "submittedUrl": "https://www.ou99.com/thread-496452-1-16.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10498,6 +10992,8 @@
             "submittedUrl": "https://www.ou99.com/thread-487487-1-46.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10520,6 +11016,8 @@
             "submittedUrl": "https://www.ou99.com/thread-487484-1-47.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10542,6 +11040,8 @@
             "submittedUrl": "https://www.ou99.com/thread-495978-1-18.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10565,6 +11065,8 @@
             "submittedUrl": "https://www.ou99.com/thread-456546-1-240.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10588,6 +11090,8 @@
             "submittedUrl": "https://www.ou99.com/thread-454482-1-265.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10610,12 +11114,16 @@
             "submittedUrl": "https://www.ou99.com/thread-287871-1-716.html"
           }
         ],
+        "acquiredPublicSources": [
+          "hive-megaman-x"
+        ],
+        "purchaseHold": true,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
           "community-review-05-20260907"
         ],
-        "downloadPriority": "owner-highest"
+        "downloadPriority": "defer-acquired-public"
       },
       {
         "id": "owner-model-045",
@@ -10632,6 +11140,8 @@
             "submittedUrl": "https://www.ou99.com/thread-313646-1-624.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10654,6 +11164,8 @@
             "submittedUrl": "https://www.ou99.com/thread-481732-1-62.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10676,6 +11188,8 @@
             "submittedUrl": "https://www.ou99.com/thread-498214-1-7.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10698,6 +11212,8 @@
             "submittedUrl": "https://www.ou99.com/thread-472038-1-98.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10720,6 +11236,8 @@
             "submittedUrl": "https://www.ou99.com/thread-469191-1-111.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10742,6 +11260,8 @@
             "submittedUrl": "https://www.ou99.com/thread-311294-1-694.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10764,6 +11284,8 @@
             "submittedUrl": "https://www.ou99.com/thread-470087-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10786,6 +11308,8 @@
             "submittedUrl": "https://www.ou99.com/thread-458013-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10808,6 +11332,8 @@
             "submittedUrl": "https://www.ou99.com/thread-493578-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10830,6 +11356,8 @@
             "submittedUrl": "https://www.ou99.com/thread-495015-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10854,6 +11382,8 @@
             "submittedUrl": "https://www.ou99.com/thread-458777-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10876,6 +11406,8 @@
             "submittedUrl": "https://www.ou99.com/thread-474258-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10898,6 +11430,8 @@
             "submittedUrl": "https://www.ou99.com/thread-465884-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10920,6 +11454,8 @@
             "submittedUrl": "https://www.ou99.com/thread-457710-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10942,6 +11478,8 @@
             "submittedUrl": "https://www.ou99.com/thread-467227-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10964,6 +11502,8 @@
             "submittedUrl": "https://www.ou99.com/thread-457874-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -10986,6 +11526,8 @@
             "submittedUrl": "https://www.ou99.com/thread-456917-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -11010,6 +11552,8 @@
             "submittedUrl": "https://www.ou99.com/thread-457594-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -11032,6 +11576,8 @@
             "submittedUrl": "https://www.ou99.com/thread-283718-1-718.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [
           {
             "heroId": "community-review-20-20260907",
@@ -11057,6 +11603,8 @@
             "submittedUrl": "https://www.ou99.com/thread-312479-1-687.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [],
@@ -11077,6 +11625,8 @@
             "submittedUrl": "https://www.ou99.com/thread-310996-1-697.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [
           {
             "heroId": "b2-rin",
@@ -11104,6 +11654,8 @@
             "submittedUrl": "https://www.ou99.com/thread-328403-1-516.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [
           {
             "heroId": "godie-hapm",
@@ -11131,6 +11683,8 @@
             "submittedUrl": "https://www.ou99.com/thread-413694-1-376.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [
           {
             "heroId": "community-review-10-20260907",
@@ -11156,6 +11710,8 @@
             "submittedUrl": "https://www.ou99.com/thread-455144-1-258.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [],
@@ -11176,6 +11732,8 @@
             "submittedUrl": "https://www.ou99.com/thread-497400-1-12.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [
           {
             "heroId": "community-review-24-20260907",
@@ -11203,6 +11761,8 @@
             "submittedUrl": "https://www.ou99.com/thread-497746-1-10.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [
           {
             "heroId": "community-review-18-20260907",
@@ -11238,6 +11798,8 @@
             "submittedUrl": "https://www.ou99.com/thread-467258-1-123.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [
           {
             "heroId": "godie-osam",
@@ -11270,6 +11832,8 @@
             "submittedUrl": "https://www.ou99.com/thread-455488-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [
           {
             "heroId": "godie-u01u",
@@ -11307,6 +11871,8 @@
             "submittedUrl": "https://www.ou99.com/thread-433442-1-335.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -11335,6 +11901,8 @@
             "submittedUrl": "https://www.ou99.com/thread-493659-1-24.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [],
@@ -11360,6 +11928,8 @@
             "submittedUrl": "https://www.ou99.com/thread-497483-1-12.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [
           {
             "heroId": "godie-u00n",
@@ -11397,12 +11967,16 @@
             "submittedUrl": "https://www.ou99.com/thread-453337-1-280.html"
           }
         ],
+        "acquiredPublicSources": [
+          "hive-sephiroth"
+        ],
+        "purchaseHold": true,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
           "godie-u00j"
         ],
-        "downloadPriority": "owner-highest"
+        "downloadPriority": "defer-acquired-public"
       },
       {
         "id": "owner-model-077",
@@ -11419,6 +11993,8 @@
             "submittedUrl": "https://www.ou99.com/thread-478203-1-1.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [
           {
             "heroId": "godie-e008",
@@ -11448,6 +12024,8 @@
             "submittedUrl": "https://www.ou99.com/thread-470351-1-106.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [],
@@ -11476,6 +12054,8 @@
             "submittedUrl": "https://www.ou99.com/thread-498472-1-6.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -11498,6 +12078,8 @@
             "submittedUrl": "https://www.ou99.com/thread-406299-1-388.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -11525,6 +12107,8 @@
             "submittedUrl": "https://www.ou99.com/thread-478915-1-70.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -11553,6 +12137,8 @@
             "submittedUrl": "https://www.ou99.com/thread-497131-1-14.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -11577,6 +12163,8 @@
             "submittedUrl": "https://www.ou99.com/thread-497434-1-12.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [
           {
             "heroId": "godie-h01n",
@@ -11679,6 +12267,8 @@
             "submittedUrl": "https://www.ou99.com/thread-468447-1-115.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [
           {
             "heroId": "godie-e002",
@@ -11719,6 +12309,8 @@
           }
         ],
         "mappingNote": "現有 Saber 的 alternate 是風王結界形態，不能直接當作黑化 Saber。",
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [],
@@ -11752,6 +12344,8 @@
             "submittedUrl": "https://www.ou99.com/thread-470426-1-106.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -11787,6 +12381,8 @@
             "submittedUrl": "https://www.ou99.com/thread-491161-1-34.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -11819,6 +12415,8 @@
             "submittedUrl": "https://www.ou99.com/thread-495084-1-20.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
@@ -11849,6 +12447,8 @@
             "submittedUrl": "https://www.ou99.com/thread-479248-1-69.html"
           }
         ],
+        "acquiredPublicSources": [],
+        "purchaseHold": false,
         "available300": [
           {
             "heroId": "godie-edem",
@@ -13317,6 +13917,287 @@
         "identityStatus": "owner-target-unverified",
         "conversionStatus": "not-started"
       }
-    ]
+    ],
+    "publicSources": [
+      {
+        "id": "itch-kmiliz-doraemon",
+        "target": "哆啦A夢",
+        "heroIds": [
+          "godie-n00b"
+        ],
+        "url": "https://kmiliz.itch.io/doraemon",
+        "uploader": "Kmiliz",
+        "format": "FBX",
+        "accessStatus": "creator-free-download",
+        "checkedAt": "2026-09-09T19:35:14+00:00",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-standardization",
+        "purchaseDecision": "hold-purchase-review-free-source",
+        "defaultEligible": false,
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/itch-kmiliz-doraemon",
+        "files": [
+          {
+            "path": "raw/DORAEMON FBX.fbx",
+            "bytes": 1924380,
+            "sha256": "1cbb6cb3b61b88953dca469096bda161fa49c60d7d716884220d839253bf393f",
+            "archiveMember": "raw/DORAEMON FBX.fbx"
+          }
+        ],
+        "verification": "骨架已解析：54 個關節；0 段動畫。已轉成候選 GLB；仍需視覺驗收與動作綁定。",
+        "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+        "usage": "intake-only; no automatic runtime selection",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/itch-kmiliz-doraemon/4501bf5704552835759bc15638695db84c1146f0450cd645dc3fc9f45260c56c.zip",
+          "bytes": 2875742,
+          "sha256": "4501bf5704552835759bc15638695db84c1146f0450cd645dc3fc9f45260c56c",
+          "readbackVerified": true,
+          "usage": "legacy; human permission required; not runtime-ready"
+        }
+      },
+      {
+        "id": "hive-megaman-x",
+        "target": "洛克人 X",
+        "heroIds": [
+          "community-review-05-20260907"
+        ],
+        "url": "https://www.hiveworkshop.com/threads/megaman-x.48005/",
+        "uploader": "Afronight_76；RDZ；Black_Stan；General Frank",
+        "format": "MDX + BLP",
+        "accessStatus": "public-download",
+        "checkedAt": "2026-09-09T19:35:14+00:00",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-standardization",
+        "purchaseDecision": "hold-purchase-review-free-source",
+        "defaultEligible": false,
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/hive-megaman-x",
+        "files": [
+          {
+            "path": "raw/megaman-x.zip",
+            "bytes": 231289,
+            "sha256": "2d9ca293a86438e728f131453894ddbaf8f5cad6ef957b0a95e4cd72392dc7ad",
+            "archiveMember": "raw/megaman-x.zip"
+          }
+        ],
+        "verification": "本體 55 骨節、9 段動畫；另有肖像 43 骨節、4 段動畫。已轉候選 GLB；原包缺 blue_star.blp 特效貼圖，待補齊。",
+        "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+        "usage": "intake-only; no automatic runtime selection",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/hive-megaman-x/6c41859808a194354c95f305cd2bd1490b341e477f64d50de1d138e958ab608c.zip",
+          "bytes": 1573978,
+          "sha256": "6c41859808a194354c95f305cd2bd1490b341e477f64d50de1d138e958ab608c",
+          "readbackVerified": true,
+          "usage": "legacy; human permission required; not runtime-ready"
+        }
+      },
+      {
+        "id": "hive-sephiroth",
+        "target": "賽菲洛斯",
+        "heroIds": [
+          "godie-u00j"
+        ],
+        "url": "https://www.hiveworkshop.com/threads/sephiroth.48518/",
+        "uploader": "Kitabatake",
+        "format": "MDX + BLP",
+        "accessStatus": "public-download",
+        "checkedAt": "2026-09-09T19:35:14+00:00",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-standardization",
+        "purchaseDecision": "hold-purchase-review-free-source",
+        "defaultEligible": false,
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/hive-sephiroth",
+        "files": [
+          {
+            "path": "raw/hive-sephiroth.zip",
+            "bytes": 117466,
+            "sha256": "0e0170e39c14db65dbf457c28cd8f6ed7fc2e59420c1bdc138a228c08a5e7d1b",
+            "archiveMember": "raw/hive-sephiroth.zip"
+          }
+        ],
+        "verification": "47 骨節、14 段動畫，含原生粒子／緞帶資料。已轉候選 GLB；魔獸原生特效貼圖待解析補齊，尚未完成特效標準化。",
+        "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+        "usage": "intake-only; no automatic runtime selection",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/hive-sephiroth/b78eef730af848e24cf812d52a5d085ea1d3a116cdcaac10917b3c2ea1c5bd48.zip",
+          "bytes": 594736,
+          "sha256": "b78eef730af848e24cf812d52a5d085ea1d3a116cdcaac10917b3c2ea1c5bd48",
+          "readbackVerified": true,
+          "usage": "legacy; human permission required; not runtime-ready"
+        }
+      },
+      {
+        "id": "thunderstore-hisoka",
+        "target": "西索",
+        "heroIds": [
+          "community-review-07-20260907"
+        ],
+        "url": "https://thunderstore.io/c/lethal-company/p/Irados69/Hisoka3DModel/",
+        "uploader": "Irados69",
+        "format": "Unity AssetBundle in DLL",
+        "accessStatus": "public-mod-download",
+        "checkedAt": "2026-09-09T19:35:14+00:00",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-standardization",
+        "purchaseDecision": "hold-purchase-review-free-source",
+        "defaultEligible": false,
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-hisoka",
+        "files": [
+          {
+            "path": "raw/thunderstore-hisoka.zip",
+            "bytes": 10348234,
+            "sha256": "170bb98c510efa53a0fe3c5964ddb7bb938ca696d631931a3840e96dee09911a",
+            "archiveMember": "raw/thunderstore-hisoka.zip"
+          }
+        ],
+        "verification": "已靜態擷取 Unity bundle：12 Mesh、12 SkinnedMeshRenderer、151 Transform、6 貼圖、1 Avatar；包內 0 AnimationClip。尚待骨架 GLB 轉換與動作綁定。",
+        "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+        "usage": "intake-only; no automatic runtime selection",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-hisoka/b0f83626cc03b33545b8f0e420e049cce22a9d0c6bc8c06a63991197575ada8e.zip",
+          "bytes": 52016652,
+          "sha256": "b0f83626cc03b33545b8f0e420e049cce22a9d0c6bc8c06a63991197575ada8e",
+          "readbackVerified": true,
+          "usage": "legacy; human permission required; not runtime-ready"
+        }
+      },
+      {
+        "id": "thunderstore-maomao",
+        "target": "貓貓",
+        "heroIds": [
+          "b2-maomao"
+        ],
+        "url": "https://thunderstore.io/c/lethal-company/p/GrogCompany/MaomaoModel/",
+        "uploader": "GrogCompany",
+        "format": "Unity AssetBundle in DLL",
+        "accessStatus": "public-mod-download",
+        "checkedAt": "2026-09-09T19:35:14+00:00",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-standardization",
+        "purchaseDecision": "hold-purchase-review-free-source",
+        "defaultEligible": false,
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-maomao",
+        "files": [
+          {
+            "path": "raw/thunderstore-maomao.zip",
+            "bytes": 43300328,
+            "sha256": "cb6e2ab1ebf0aec2510dd4caf7b2471ec5c5000a252d55861dff6e5d1bbf2052",
+            "archiveMember": "raw/thunderstore-maomao.zip"
+          }
+        ],
+        "verification": "已靜態擷取 Unity bundle：1 Mesh、1 SkinnedMeshRenderer、210 Transform、1 貼圖、1 Avatar；包內 0 AnimationClip。尚待骨架 GLB 轉換與動作綁定。",
+        "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+        "usage": "intake-only; no automatic runtime selection",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-maomao/52a524d2f1fc4d10aaa64a54b8427a7cacccfc8094786a4c05782142e4ca7fce.zip",
+          "bytes": 270435865,
+          "sha256": "52a524d2f1fc4d10aaa64a54b8427a7cacccfc8094786a4c05782142e4ca7fce",
+          "readbackVerified": true,
+          "usage": "legacy; human permission required; not runtime-ready"
+        }
+      },
+      {
+        "id": "thunderstore-holo",
+        "target": "赫蘿",
+        "heroIds": [
+          "community-review-09-20260907"
+        ],
+        "url": "https://thunderstore.io/c/lethal-company/p/GhostsModels/Holo/",
+        "uploader": "GhostsModels",
+        "format": "Unity AssetBundle in DLL",
+        "accessStatus": "public-mod-download",
+        "checkedAt": "2026-09-09T19:35:14+00:00",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-standardization",
+        "purchaseDecision": "hold-purchase-review-free-source",
+        "defaultEligible": false,
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-holo",
+        "files": [
+          {
+            "path": "raw/thunderstore-holo.zip",
+            "bytes": 1346456,
+            "sha256": "0d91f99f47fcdd6373b20866aff850903ccbece004fae343840eee8cda6c8bcd",
+            "archiveMember": "raw/thunderstore-holo.zip"
+          }
+        ],
+        "verification": "已靜態擷取 Unity bundle：35 Mesh、35 SkinnedMeshRenderer、182 Transform、7 貼圖、1 Avatar；包內 0 AnimationClip。尚待骨架 GLB 轉換與動作綁定。",
+        "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+        "usage": "intake-only; no automatic runtime selection",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-holo/43a94e15b393d22595b330f8f8719cdb0c9d2601572cdafcb9d8da1b021398c1.zip",
+          "bytes": 6969829,
+          "sha256": "43a94e15b393d22595b330f8f8719cdb0c9d2601572cdafcb9d8da1b021398c1",
+          "readbackVerified": true,
+          "usage": "legacy; human permission required; not runtime-ready"
+        }
+      },
+      {
+        "id": "thunderstore-guts",
+        "target": "凱茲",
+        "heroIds": [
+          "b2-guts"
+        ],
+        "url": "https://thunderstore.io/c/lethal-company/p/RRoD/GutsPlayerModel/",
+        "uploader": "RRoD",
+        "format": "Unity AssetBundle in DLL",
+        "accessStatus": "public-mod-download",
+        "checkedAt": "2026-09-09T19:35:14+00:00",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-standardization",
+        "purchaseDecision": "hold-purchase-review-free-source",
+        "defaultEligible": false,
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-guts",
+        "files": [
+          {
+            "path": "raw/thunderstore-guts.zip",
+            "bytes": 3236888,
+            "sha256": "db34b0fcb904f086fdc9da33ca0effd77a89ba7ac68129dcdb300e4faa4cca50",
+            "archiveMember": "raw/thunderstore-guts.zip"
+          }
+        ],
+        "verification": "已靜態擷取 Unity bundle：1 Mesh、1 SkinnedMeshRenderer、76 Transform、4 貼圖、1 Avatar；包內 0 AnimationClip。尚待骨架 GLB 轉換與動作綁定。",
+        "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+        "usage": "intake-only; no automatic runtime selection",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/thunderstore-guts/f0152af02c37338c894158a7b4d2cb897232f2f1490d28a4cee72fca38007c80.zip",
+          "bytes": 19264676,
+          "sha256": "f0152af02c37338c894158a7b4d2cb897232f2f1490d28a4cee72fca38007c80",
+          "readbackVerified": true,
+          "usage": "legacy; human permission required; not runtime-ready"
+        }
+      },
+      {
+        "id": "hive-anime-team-survival",
+        "target": "Anime Team Survival 3.7v 地圖",
+        "heroIds": [],
+        "url": "https://www.hiveworkshop.com/threads/anime-team-survival-3-7v.248807/",
+        "uploader": "Mindarms；zehs00 上傳",
+        "format": "W3X",
+        "accessStatus": "public-map-download",
+        "checkedAt": "2026-09-09T19:35:14+00:00",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "pending-standardization",
+        "purchaseDecision": "not-a-hero-purchase",
+        "defaultEligible": false,
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/hive-anime-team-survival",
+        "files": [
+          {
+            "path": "raw/hive-anime-team-survival.w3x",
+            "bytes": 8295240,
+            "sha256": "2160245e825985d3c5cf3805fc255a6f5a6b1ebc709a8e50fadd05ab873aa7da",
+            "archiveMember": "raw/hive-anime-team-survival.w3x"
+          }
+        ],
+        "verification": "已取得地圖並讀出單位／技能資料；尚未完成模型檔案清單解析與角色對應，不能認列額外角色模型。",
+        "reuseTerms": "來源署名已記錄；免費下載不等於已核實跨遊戲轉換或再散布授權。",
+        "usage": "intake-only; no automatic runtime selection",
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/hive-anime-team-survival/fc48b197deac80e794842c86ac3b3eb3a867c33b5abeb1c02b292bee5529a2c2.zip",
+          "bytes": 8461395,
+          "sha256": "fc48b197deac80e794842c86ac3b3eb3a867c33b5abeb1c02b292bee5529a2c2",
+          "readbackVerified": true,
+          "usage": "legacy; human permission required; not runtime-ready"
+        }
+      }
+    ],
+    "publicSourcePolicy": "免費來源已取得的角色先暫緩購買；待檔案、角色身分、骨架、動畫與使用條件檢查完成，再决定是否需要付費來源。這不改變已有可用 300 優先與僅 11 組加工副本可預設的規則。"
   }
 }
