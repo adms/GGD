@@ -13,12 +13,15 @@ import { contentSha256 } from "../../packages/shared/src/content/import/jcs.js";
 import { readPackageZip } from "../../packages/shared/src/content/import/readPackageZip.js";
 import { uploadedHeroModelPath } from "../../packages/shared/src/content/modelUpload/heroModelSchema.js";
 import { sha256Bytes } from "../../packages/shared/src/content/sha256.js";
+import { snapshotHeroGenerator } from "../../packages/shared/src/content/import/heroBuildSources.js";
+import { adoptHeroGenerator } from "../../apps/editor/src/hero/projectModel.js";
 
-const { values } = parseArgs({ options: { input: { type: "string" }, output: { type: "string" } } });
+const { values } = parseArgs({ options: { input: { type: "string" }, output: { type: "string" }, "adopt-current-generator": { type: "boolean", default: false } } });
 if (!values.input || !values.output) throw new Error("--input <37 rebuilt project directories> --output <new handoff directory>");
 const input = path.resolve(values.input), output = path.resolve(values.output);
 if (input === output || output.startsWith(input + path.sep)) throw new Error("Output must be a new sibling directory");
 const root = path.resolve(import.meta.dirname, "../..");
+const generatorVersion = values["adopt-current-generator"] ? snapshotHeroGenerator(root).versionId : undefined;
 const catalog = shippedHeroCatalog();
 const templates = [...catalog.documents].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc as TemplateDoc);
 const configs = [...catalog.documents].filter(([key]) => key.startsWith("config/")).map(([, doc]) => doc);
@@ -36,7 +39,13 @@ for (let i = 1; i <= 37; i++) {
   let patch: unknown;
   try { patch = JSON.parse(await fs.readFile(patchPath, "utf8")); }
   catch (error) { if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error; }
-  const after = patch ? applyCommunityDesignRefinement(before, patch, templates) : before;
+  const refined = patch ? applyCommunityDesignRefinement(before, patch, templates) : before;
+  // Use the Editor's explicit adoption operation: preserve the old receipt and
+  // append a revision, never silently relabel an already accepted generator.
+  const after = generatorVersion && refined.acceptedPlan?.generatorVersion !== generatorVersion
+    ? adoptHeroGenerator(refined, generatorVersion) : refined;
+  if (generatorVersion) assert.equal(after.acceptedPlan?.generatorVersion, generatorVersion, `${number}: generator field is locked`);
+  assert.deepEqual(after.acceptedPlan?.slots, refined.acceptedPlan?.slots);
   assert.deepEqual(after.sourceDesign, before.sourceDesign);
   assert.deepEqual(after.brief, before.brief);
   assert.deepEqual(after.presentation.uploadedModel, before.presentation.uploadedModel);

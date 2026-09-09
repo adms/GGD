@@ -1,0 +1,166 @@
+{
+  "schema": "ggd-first37-parody-verification@1",
+  "issue": 1132,
+  "scope": "Owner-approved adaptation, not full original-design recreation. Runtime source and project hashes are recorded separately.",
+  "runtimeSourceCommit": "1385c2f83008bf1114301ce80ffd256040a3a2e5",
+  "authoring": {
+    "heroes": 37,
+    "slots": 222,
+    "rewrites": 21,
+    "localAdaptations": 11,
+    "corePreserved": 4,
+    "azazelOwnerUpdate": 1,
+    "generatorAdoption": "Editor adoptHeroGenerator, one new revision per project; original text, slots and models unchanged"
+  },
+  "causalValidation": {
+    "fourTimelineCombos": 42,
+    "activePayloadAblations": 105,
+    "passiveEventProbes": 20,
+    "boundaryProbes": 157,
+    "failures": 0,
+    "normalizedDistinctKits": 37
+  },
+  "regression": {
+    "head": "1385c2f83008bf1114301ce80ffd256040a3a2e5",
+    "implementedMechanismsTests": 1046,
+    "editorTests": 603,
+    "jobs": [
+      {
+        "id": "skills",
+        "exitCode": 0,
+        "logSha256": "3c43aa3b5c4144e6a249984c66b8135a1ddc3c1787489ef8ac9e6ad9f68d16ef",
+        "seconds": 112.21
+      },
+      {
+        "id": "editor",
+        "exitCode": 0,
+        "logSha256": "9455c5d0d8c040b5c3a934301337f41d5700ab210a9407a338852ceaa91a6f57",
+        "seconds": 293.44
+      },
+      {
+        "id": "coord",
+        "exitCode": 0,
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271",
+        "seconds": 3.99
+      },
+      {
+        "id": "compile-and-models",
+        "exitCode": 0,
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c",
+        "seconds": 7.05
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "exitCode": 0,
+        "logSha256": "d17d497ae439b2dc493040fd1a90cdb12d382c53f1284b26b3774baff5f35299",
+        "seconds": 123.82
+      },
+      {
+        "id": "behavior-trap-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "16d302597448588b3dfe27c22145641296af3f46a5dc2f1c8c10db5bb9302ed6",
+        "seconds": 7.4
+      },
+      {
+        "id": "behavior-motion-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "c983cbe81cb13451bf6582329e08f59de0f1be441a8443ed39f161d002d7c506",
+        "seconds": 9.97
+      },
+      {
+        "id": "behavior-target-resource-acceptance",
+        "exitCode": 0,
+        "logSha256": "ce67679f6d90d2e0fd45c352b4b1e3b85193db28acf33b624bcb2376c845c43c",
+        "seconds": 13.38
+      }
+    ]
+  },
+  "currentServiceZip": {
+    "report": "parody-service-proof.json",
+    "passed": 32,
+    "failed": 5,
+    "target": {
+      "gameRevision": "1385c2f83008bf1114301ce80ffd256040a3a2e5",
+      "contentVersion": "cv_b9b47052d2e3",
+      "migrationFingerprint": "17d1f388d5c0",
+      "processorFingerprint": "2b794477f42d"
+    }
+  },
+  "admissionPreflight": {
+    "report": "parody-admission-scenes.json",
+    "matchesServiceFailedHeroes": true,
+    "nonzeroExitExpectedUntilFixed": true
+  },
+  "visual": {
+    "status": "failed",
+    "runs": [
+      {
+        "gpu": "swiftshader",
+        "origin": "http://127.0.0.1:5198",
+        "inputProjectSha256": "2506d96ee4702ae35e5bc4712cdafd97472ed8e1dd83c9d2dbb75ff7455021d3",
+        "adoptedInBrowser": true,
+        "errors": [
+          "3D 場景的 PBR 光照貼圖尚未就緒"
+        ],
+        "heroErrors": [
+          "TimeoutError: page.waitForFunction: Timeout 60000ms exceeded."
+        ],
+        "completedCaptures": 0,
+        "failureImage": {
+          "path": "ggd-first37-browser-32-05/32/failure.png",
+          "bytes": 265671,
+          "sha256": "71554c1646bdf9ef678df68b34bca3feee6ece98dd07829723213f00ffe5b656"
+        }
+      },
+      {
+        "gpu": "native",
+        "origin": "http://127.0.0.1:5198",
+        "inputProjectSha256": "9d4593d450c9e1e7e2c39904058e31989331b376b12001a3ee72236604bd8b1d",
+        "adoptedInBrowser": false,
+        "errors": [
+          "3D 場景的 PBR 光照貼圖尚未就緒"
+        ],
+        "heroErrors": [
+          "TimeoutError: page.waitForFunction: Timeout 60000ms exceeded."
+        ],
+        "completedCaptures": 0,
+        "failureImage": {
+          "path": "ggd-first37-browser-32-06/32/failure.png",
+          "bytes": 265745,
+          "sha256": "e537ffb673f2cfe00e9fde17ff802beb42edb735c4fc58ba1aa50a447eb6334c"
+        }
+      }
+    ],
+    "diagnosis": "PBR environment BRDF readiness failure under both software and native-configured browser launches; no successful model/skill image proof."
+  },
+  "localPublication": {
+    "status": "partial",
+    "published": 32,
+    "blocked": 5,
+    "report": "parody-publication-proof.json",
+    "attributedDownloadsByteIdentical": 32,
+    "environment": "127.0.0.1:8098 isolated test data",
+    "formalDeployment": false
+  },
+  "formalPublication": false,
+  "originalDesignAcceptance": "incomplete",
+  "remaining": [
+    "Resolve 5 default admission scenario failures without fabricating prerequisites or removing kit mechanics.",
+    "Resolve PBR readiness failure and complete actual model/skill visual review.",
+    "Complete formal adaptation review and integrated deployment through Main review/merge."
+  ],
+  "artifactArchive": {
+    "path": "../supplements/parody-37-20260909",
+    "manifestSha256": "6df04c35100841044bf2aef0dc7b5c31da47ac6264d55c6993c2741a680ae915",
+    "uploadedObjects": 4,
+    "restoredFiles": 201,
+    "parts": 3
+  },
+  "localIntakePolicy": {
+    "pending": 50,
+    "daily": 100,
+    "powerUserDaily": 200,
+    "modelZipMaxBytes": 33554432,
+    "note": "Authenticated admin overlay in new isolated test dataset only; not shipped or production policy."
+  }
+}

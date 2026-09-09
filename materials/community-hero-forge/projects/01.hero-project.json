@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-project@2",
   "projectId": "community-review-01-20260907",
-  "revision": 16,
+  "revision": 17,
   "sourceLock": {
     "canonicalId": null,
     "versionId": null
@@ -38,8 +38,8 @@
       "fieldOwnership": {}
     },
     "skills": {
-      "revision": 16,
-      "state": "stale",
+      "revision": 17,
+      "state": "draft",
       "fieldOwnership": {
         "acceptedPlan.slots.E.name": "locked",
         "acceptedPlan.slots.E.products.0.template": "manual",
@@ -108,7 +108,7 @@
       "manaRegen": "大",
       "range": "大"
     },
-    "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
+    "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020",
     "templateVersions": {
       "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39": {
         "id": "tpl-mark-stacks",
@@ -1284,8 +1284,8 @@
       "diagnosticCodes": []
     },
     "skills": {
-      "revision": 16,
-      "status": "stale",
+      "revision": 17,
+      "status": "idle",
       "diagnosticCodes": []
     },
     "mechanics": {
@@ -1309,5 +1309,12 @@
       "diagnosticCodes": []
     }
   },
-  "receipts": []
+  "receipts": [
+    {
+      "kind": "generator-adopted",
+      "projectRevision": 17,
+      "digest": "98db098a953c7f80e12e5f52ee25a7df90cd168d1a915740511d2ca3317e8992",
+      "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020"
+    }
+  ]
 }

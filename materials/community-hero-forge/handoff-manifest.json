@@ -5,8 +5,8 @@
   "slotCount": 222,
   "compilation": "passed",
   "originalDesignAcceptance": "incomplete",
-  "visualAcceptance": "unverified",
-  "currentServiceZip": "not-built",
+  "visualAcceptance": "failed-PBR-preload",
+  "currentServiceZip": "partial-32-of-37",
   "formalPublication": false,
   "issues": [
     1132,
@@ -16,7 +16,7 @@
   ],
   "modelArchive": "supplements/release-13956d93b",
   "modelArchiveManifestSha256": "abecb2b2cb9d47d981b7688903d22c6627cf7e8b84af9c1cc7c852159390dada",
-  "modelAvailability": "Existing S3 archive; each unchanged model extracted from its recorded ZIP and verified by SHA-256. No new S3 upload.",
+  "modelAvailability": "Existing models reused with verified SHA-256; current ZIP and raw acceptance artifacts are recorded in the separate delivery archive.",
   "refinements": [
     {
       "path": "refinements/01.json",
@@ -175,8 +175,8 @@
     },
     {
       "path": "projects/01.hero-project.json",
-      "bytes": 50163,
-      "sha256": "2062a8da9f3086a4397ea0bfebbe4091054ccf6338106ccf955eee7ec39440c9"
+      "bytes": 50425,
+      "sha256": "90c90f0d2c1fd4344b35f7825f12195eb71ea40c86dd6ccf94eb86edc9c3cbcb"
     },
     {
       "path": "recipes/01.upload-recipe.json",
@@ -185,8 +185,8 @@
     },
     {
       "path": "projects/02.hero-project.json",
-      "bytes": 95041,
-      "sha256": "f74cf40d1a1edce9ec5cb73b6532b723fd8280bde6d0c1e8b63be9d87ea32a6b"
+      "bytes": 95303,
+      "sha256": "efafbd57d787cc814b8f377459e5df9ec90de6c81585070a49a4176051951f5d"
     },
     {
       "path": "recipes/02.upload-recipe.json",
@@ -195,8 +195,8 @@
     },
     {
       "path": "projects/03.hero-project.json",
-      "bytes": 43699,
-      "sha256": "e379fcdb274d07de2ce94c12a4c279cbbc2d199044f60fb104931d3320568e48"
+      "bytes": 43961,
+      "sha256": "91070583da76a21bd75c96432a9721610895a0d54d7e461563522a8c9f7395aa"
     },
     {
       "path": "recipes/03.upload-recipe.json",
@@ -205,8 +205,8 @@
     },
     {
       "path": "projects/04.hero-project.json",
-      "bytes": 56327,
-      "sha256": "634205030535acc03b60bd5c961081c2225bf8bf35e975158af73d560a9a5c53"
+      "bytes": 56589,
+      "sha256": "3ee546606697c89613c1d80a9932b46eaa6e4d1768a70c5179cf39d5ff67987c"
     },
     {
       "path": "recipes/04.upload-recipe.json",
@@ -215,8 +215,8 @@
     },
     {
       "path": "projects/05.hero-project.json",
-      "bytes": 44190,
-      "sha256": "83b84bd4a0bc2a6e7a7fc212f9331cec65d8f3fbcbac35b28995b504c0b38ebd"
+      "bytes": 44452,
+      "sha256": "c7c0bb50a98195e726c492c0695ae67759b274c5886ec86294305accd76beae3"
     },
     {
       "path": "recipes/05.upload-recipe.json",
@@ -225,8 +225,8 @@
     },
     {
       "path": "projects/06.hero-project.json",
-      "bytes": 34771,
-      "sha256": "52d9e4ac7e5217f3e02da2b076adb873f0873f4d04bd4e2e274b7eced2c0e28d"
+      "bytes": 35033,
+      "sha256": "074bc704c1043940dc349e443e4e18a7d2aac928d50871dd2c6d01c93a0fd0c1"
     },
     {
       "path": "recipes/06.upload-recipe.json",
@@ -235,8 +235,8 @@
     },
     {
       "path": "projects/07.hero-project.json",
-      "bytes": 36137,
-      "sha256": "eca145876b24e3a59f3180d2a16b41a8a874d5e6d27c148ba48a6d695bbe2740"
+      "bytes": 36399,
+      "sha256": "5f5dc30cd30caf5d0060187667ed157b89dbe2b206f28aa707a73c46d37e1860"
     },
     {
       "path": "recipes/07.upload-recipe.json",
@@ -245,8 +245,8 @@
     },
     {
       "path": "projects/08.hero-project.json",
-      "bytes": 40458,
-      "sha256": "a9a2bf7b5028d99b181ce504dd767d7165b5234e9725ac0145c4c12b7f0f57a9"
+      "bytes": 40720,
+      "sha256": "49bf4a8ac1e651c14626b47c251479b6e0e0fff5670b2a092a5aff52d7e935e4"
     },
     {
       "path": "recipes/08.upload-recipe.json",
@@ -255,8 +255,8 @@
     },
     {
       "path": "projects/09.hero-project.json",
-      "bytes": 33083,
-      "sha256": "719a6089c8f095c8b6e445478f249db70354f8e3fb5e21708439081dc322f3ba"
+      "bytes": 33345,
+      "sha256": "510648f664c033803981a73f2e3ad20456ad4e1aebb90ac6de00c8a6e5a9ef19"
     },
     {
       "path": "recipes/09.upload-recipe.json",
@@ -265,8 +265,8 @@
     },
     {
       "path": "projects/10.hero-project.json",
-      "bytes": 33926,
-      "sha256": "e380354ed187805df0f4374fae604634890a21131ba3c5e61aa02c51a1a98409"
+      "bytes": 34188,
+      "sha256": "44a1da20b208628e48195f03d748b1f1733f976d47b432fcf79886f4cf61de90"
     },
     {
       "path": "recipes/10.upload-recipe.json",
@@ -275,8 +275,8 @@
     },
     {
       "path": "projects/11.hero-project.json",
-      "bytes": 35676,
-      "sha256": "b33400773077631ce779d5fc581f043c2302b09b81f1ca080c192541a42a766d"
+      "bytes": 35938,
+      "sha256": "8797011dbf5389ca70a6e7be759aec163611273f76a61cc258e5f2341360b129"
     },
     {
       "path": "recipes/11.upload-recipe.json",
@@ -285,8 +285,8 @@
     },
     {
       "path": "projects/12.hero-project.json",
-      "bytes": 38442,
-      "sha256": "c1638edd049421dba4ca7d4b0c8b5bb047072fafccda27f357bf8a8740ce8891"
+      "bytes": 38704,
+      "sha256": "1c19816680502ff7dbf9dc52bf6d81f8b6c4082e204f0fa3fde63efe95cbffea"
     },
     {
       "path": "recipes/12.upload-recipe.json",
@@ -295,8 +295,8 @@
     },
     {
       "path": "projects/13.hero-project.json",
-      "bytes": 33897,
-      "sha256": "d3fa5160001d5931ad94ce6cf04374018e7c3537bdb6ed4489fd7805860a4ffc"
+      "bytes": 34159,
+      "sha256": "d57fbeaf1e0429c97cfa56031f58e84136868611e1533d90f2bc7ccb3f07bb95"
     },
     {
       "path": "recipes/13.upload-recipe.json",
@@ -305,8 +305,8 @@
     },
     {
       "path": "projects/14.hero-project.json",
-      "bytes": 38041,
-      "sha256": "0aa8fd152ca732a1e67a963ee66870c8bded7d1fcc33d5d2bd2593d5f176f366"
+      "bytes": 38303,
+      "sha256": "ebfd0ec30492266442f9363872f6884756ee73979a7912bbc4ed96a315d5d8f9"
     },
     {
       "path": "recipes/14.upload-recipe.json",
@@ -315,8 +315,8 @@
     },
     {
       "path": "projects/15.hero-project.json",
-      "bytes": 35470,
-      "sha256": "4a0554b6c94a15639bb147e1d0cfe34b3f2edf1756a7610f4f60e604907fbed1"
+      "bytes": 35732,
+      "sha256": "7448dac03bb119304083a2c052e092945ad16526ec5e9a8c777a7f1921e38872"
     },
     {
       "path": "recipes/15.upload-recipe.json",
@@ -325,8 +325,8 @@
     },
     {
       "path": "projects/16.hero-project.json",
-      "bytes": 37273,
-      "sha256": "c389a26536decd2c260bb954101645d38f8bf00feb520c07f5c3a50b8c0e8f87"
+      "bytes": 37535,
+      "sha256": "d9fbc00840c73bb04e57381f2cfc7e13be54577ca49e8a2e511829484f39b178"
     },
     {
       "path": "recipes/16.upload-recipe.json",
@@ -335,8 +335,8 @@
     },
     {
       "path": "projects/17.hero-project.json",
-      "bytes": 42373,
-      "sha256": "222257db7bff45c2886cdd62129df190b70fda28e108a56a0fc76851e88fad2e"
+      "bytes": 42635,
+      "sha256": "8edb40e52f667f00b7f55699b5eb31d425030f1fbf269b964331e17915ffd271"
     },
     {
       "path": "recipes/17.upload-recipe.json",
@@ -345,8 +345,8 @@
     },
     {
       "path": "projects/18.hero-project.json",
-      "bytes": 33027,
-      "sha256": "7960350ed8f4a9b2d2494d34734d5ffe44a06c4f765d1db15c07ff54e8415625"
+      "bytes": 33289,
+      "sha256": "7ccb64d9cbfc81309c0f895dfba07b167d8e46ed88786666fd8bf2a75b0b37cf"
     },
     {
       "path": "recipes/18.upload-recipe.json",
@@ -355,8 +355,8 @@
     },
     {
       "path": "projects/19.hero-project.json",
-      "bytes": 38586,
-      "sha256": "44500702f61988b548ad25b917e74c8b188eca3012f1010411bd281776c0599b"
+      "bytes": 38848,
+      "sha256": "ec2692703efa3726395cc394827d0c608fef41bf4f2196ae589406e2f92f1fbe"
     },
     {
       "path": "recipes/19.upload-recipe.json",
@@ -365,8 +365,8 @@
     },
     {
       "path": "projects/20.hero-project.json",
-      "bytes": 57514,
-      "sha256": "a6f51a2e05e08a54230f8da28f7305176e574084fbda842d180f24b8554ddc4a"
+      "bytes": 57776,
+      "sha256": "da0bce96857c028c9eb2b25ce1b0ba45a365769448a4622f154395cd7c83785a"
     },
     {
       "path": "recipes/20.upload-recipe.json",
@@ -375,8 +375,8 @@
     },
     {
       "path": "projects/21.hero-project.json",
-      "bytes": 46221,
-      "sha256": "db88e36920069a69aead76d1c90df7688f1710f1f8454bac010f57752c065e85"
+      "bytes": 46483,
+      "sha256": "bcdafe8837b4b308964cb54343b5e673200f56fbbbb94150ad9dd4d59af8e99b"
     },
     {
       "path": "recipes/21.upload-recipe.json",
@@ -385,8 +385,8 @@
     },
     {
       "path": "projects/22.hero-project.json",
-      "bytes": 39686,
-      "sha256": "32e633490e29454f58b24a3d89053b66e0bc70d1b46e08f9868acb48efe7dd99"
+      "bytes": 39948,
+      "sha256": "81d477713380038fa3bb876c55a9a443367228e747c9343db8331d76e565fe40"
     },
     {
       "path": "recipes/22.upload-recipe.json",
@@ -395,8 +395,8 @@
     },
     {
       "path": "projects/23.hero-project.json",
-      "bytes": 53380,
-      "sha256": "770bc02574c736ac997b454c1d40b9239a20d2ef0ec29b5c56cf8a076625762f"
+      "bytes": 53642,
+      "sha256": "68b3f4e0d9385d721d7ba8e8f65e375c43bbb0ad8cd028847ebf950f4b0337ec"
     },
     {
       "path": "recipes/23.upload-recipe.json",
@@ -405,8 +405,8 @@
     },
     {
       "path": "projects/24.hero-project.json",
-      "bytes": 59476,
-      "sha256": "442d97eafe860bca30f73b4e3e12251dd6b6244a3e5af2b61027085be22fe689"
+      "bytes": 59738,
+      "sha256": "cca9d6fc95a44203610fd4fa4b458e2dd7f7509b440a680405422737e06304fe"
     },
     {
       "path": "recipes/24.upload-recipe.json",
@@ -415,8 +415,8 @@
     },
     {
       "path": "projects/25.hero-project.json",
-      "bytes": 35747,
-      "sha256": "e0e122801f91b92b4458a83b0b64ecf5a348f41942c61c95b6d0dd3381708e3c"
+      "bytes": 36009,
+      "sha256": "9f36392bec08225aefead4a04fecb3d2d8102dd726ccd769a6037db53e2f6a7a"
     },
     {
       "path": "recipes/25.upload-recipe.json",
@@ -425,8 +425,8 @@
     },
     {
       "path": "projects/26.hero-project.json",
-      "bytes": 45857,
-      "sha256": "58bb70d78cda3720ba3172adece5a438e0b9da8ea6efd31b3b358bf8a63e4dd2"
+      "bytes": 46119,
+      "sha256": "db85d47623a94228b5d3f764f81cca65f52775726831903715ed1666372eceb4"
     },
     {
       "path": "recipes/26.upload-recipe.json",
@@ -435,8 +435,8 @@
     },
     {
       "path": "projects/27.hero-project.json",
-      "bytes": 52485,
-      "sha256": "f224b55d71f8fd9344271fba5c34f5993d7bcad7a72db6c98296c584b567ca69"
+      "bytes": 52747,
+      "sha256": "c9ad8227b66c4599db12378173095aea4da14875947cf7f9e60bd0e1d97da5d8"
     },
     {
       "path": "recipes/27.upload-recipe.json",
@@ -445,8 +445,8 @@
     },
     {
       "path": "projects/28.hero-project.json",
-      "bytes": 49199,
-      "sha256": "2b8ccd380b5a2222e804c685b430496f72a1de48e021dcc75fb80d3f90252d1f"
+      "bytes": 49461,
+      "sha256": "276f658304bfb0928539f569bc0061c89e7b254f8d1d4bd00af6da2d32870062"
     },
     {
       "path": "recipes/28.upload-recipe.json",
@@ -455,8 +455,8 @@
     },
     {
       "path": "projects/29.hero-project.json",
-      "bytes": 39129,
-      "sha256": "1dd2996b9d9b56d5f817ae5517f2d42cbc4e3f6249babf6ef83ee29b4864a2e0"
+      "bytes": 39391,
+      "sha256": "47127e80070a6cbc237b642834295cb503292a1c821885f8c2a593793870766a"
     },
     {
       "path": "recipes/29.upload-recipe.json",
@@ -465,8 +465,8 @@
     },
     {
       "path": "projects/30.hero-project.json",
-      "bytes": 49042,
-      "sha256": "4647e2e7381464ad689c47fac6ae7f75bee921f26ec44202a85f790ea2753579"
+      "bytes": 49304,
+      "sha256": "f778fc018b4f6a592a2001b1ba16c66aa41c4c087f3899bb074fe6f2176e13a3"
     },
     {
       "path": "recipes/30.upload-recipe.json",
@@ -475,8 +475,8 @@
     },
     {
       "path": "projects/31.hero-project.json",
-      "bytes": 50532,
-      "sha256": "3a62c7fce41a00d78cbed9766f18f99df89392a6113bb61fa996bdf504ca950b"
+      "bytes": 50794,
+      "sha256": "45d0f8e46a932a25c9b67c91f70ff3308f5038304b6c65d50d81937aca85a334"
     },
     {
       "path": "recipes/31.upload-recipe.json",
@@ -485,8 +485,8 @@
     },
     {
       "path": "projects/32.hero-project.json",
-      "bytes": 57589,
-      "sha256": "2506d96ee4702ae35e5bc4712cdafd97472ed8e1dd83c9d2dbb75ff7455021d3"
+      "bytes": 57851,
+      "sha256": "9d4593d450c9e1e7e2c39904058e31989331b376b12001a3ee72236604bd8b1d"
     },
     {
       "path": "recipes/32.upload-recipe.json",
@@ -495,8 +495,8 @@
     },
     {
       "path": "projects/33.hero-project.json",
-      "bytes": 38568,
-      "sha256": "7c76702f4c18218a8ae2a9438acd5627b712b6df5fed50dd0dc1fdb7ca27c90c"
+      "bytes": 38830,
+      "sha256": "548c51172f7dcf907a8611bb6a42e9111d58d758daefb2ef330d1705553e7d88"
     },
     {
       "path": "recipes/33.upload-recipe.json",
@@ -505,8 +505,8 @@
     },
     {
       "path": "projects/34.hero-project.json",
-      "bytes": 34600,
-      "sha256": "4df31b08302ff4947fcbda1fdaf176f709a8799577528dac9ee531c9fd4e5c2e"
+      "bytes": 34862,
+      "sha256": "92e22dadb5eecf8ee87e6f9012dfa76d733bb3fcf1c04936d2b2e2376834066d"
     },
     {
       "path": "recipes/34.upload-recipe.json",
@@ -515,8 +515,8 @@
     },
     {
       "path": "projects/35.hero-project.json",
-      "bytes": 60428,
-      "sha256": "4269597a4fba7c03ca1a17f1e72138e71c421b9d45c8cbe06bf1a54179849ad9"
+      "bytes": 60690,
+      "sha256": "a476f62574fe283749a876b58e83d90dc78c684daee42241ec93c4bf7ce0635c"
     },
     {
       "path": "recipes/35.upload-recipe.json",
@@ -525,8 +525,8 @@
     },
     {
       "path": "projects/36.hero-project.json",
-      "bytes": 34936,
-      "sha256": "0258f233f6bdb74345e38f3cb08cd3a64fa69c25f4c8bcdb5d63b8dac3101ab4"
+      "bytes": 35198,
+      "sha256": "c951e0c7370d50749c1cfdeca2e4490c86dd837c379da7b44450788740627635"
     },
     {
       "path": "recipes/36.upload-recipe.json",
@@ -535,8 +535,8 @@
     },
     {
       "path": "projects/37.hero-project.json",
-      "bytes": 49073,
-      "sha256": "2fd115757d48ee30e50ad698dd879a9e3c356f10e747f7e51c027a42093c98b4"
+      "bytes": 49335,
+      "sha256": "a9ec307b671e1d741d107c9de68ba4e50fbdc45b56571918ade57f0bb6de3686"
     },
     {
       "path": "recipes/37.upload-recipe.json",
@@ -888,5 +888,29 @@
     "ENTITY_FLAG.TIME_STOPPED=1048576"
   ],
   "approvedAdaptation": "37 heroes / 222 slots use the approved parody policy; original source remains historical. Behavioral evidence and visual/publication evidence are separate.",
-  "authoringSource": "tools/community-hero-forge/parody/build.mts"
+  "authoringSource": "tools/community-hero-forge/parody/build.mts",
+  "generatorAdoption": {
+    "method": "Editor adoptHeroGenerator",
+    "previousRevisionRetained": true,
+    "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020",
+    "heroes": 37,
+    "unchanged": [
+      "sourceDesign",
+      "slots",
+      "presentation"
+    ]
+  },
+  "currentEvidence": {
+    "verification": "refinements/parody-verification.json",
+    "service": "refinements/parody-service-proof.json",
+    "admission": "refinements/parody-admission-scenes.json",
+    "artifactArchive": "supplements/parody-37-20260909",
+    "artifactManifestSha256": "6df04c35100841044bf2aef0dc7b5c31da47ac6264d55c6993c2741a680ae915"
+  },
+  "localPublication": {
+    "published": 32,
+    "blocked": 5,
+    "proof": "refinements/parody-publication-proof.json",
+    "formalDeployment": false
+  }
 }

@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-project@2",
   "projectId": "community-review-10-20260907",
-  "revision": 13,
+  "revision": 14,
   "sourceLock": {
     "canonicalId": null,
     "versionId": null
@@ -38,8 +38,8 @@
       "fieldOwnership": {}
     },
     "skills": {
-      "revision": 13,
-      "state": "stale",
+      "revision": 14,
+      "state": "draft",
       "fieldOwnership": {
         "acceptedPlan.slots.E.name": "locked",
         "acceptedPlan.slots.E.products.0.template": "manual",
@@ -105,7 +105,7 @@
       "manaRegen": "大",
       "range": "中"
     },
-    "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
+    "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020",
     "templateVersions": {
       "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
         "id": "tpl-event-passive",
@@ -916,8 +916,8 @@
       "diagnosticCodes": []
     },
     "skills": {
-      "revision": 13,
-      "status": "stale",
+      "revision": 14,
+      "status": "idle",
       "diagnosticCodes": []
     },
     "mechanics": {
@@ -941,5 +941,12 @@
       "diagnosticCodes": []
     }
   },
-  "receipts": []
+  "receipts": [
+    {
+      "kind": "generator-adopted",
+      "projectRevision": 14,
+      "digest": "14d29687a566107b3af8f0808046242d7f9b31d48be4d84d0aaba6d98b10d508",
+      "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020"
+    }
+  ]
 }

@@ -5,7 +5,7 @@ import {pathToFileURL} from 'node:url';
 import {parseArgs} from 'node:util';
 import {createHash} from 'node:crypto';
 import {tmpdir} from 'node:os';
-const {values:v}=parseArgs({options:{input:{type:'string'},output:{type:'string'},origin:{type:'string',default:'http://127.0.0.1:5197'},'playwright-module':{type:'string'},focus:{type:'string'}}});
+const {values:v}=parseArgs({options:{input:{type:'string'},output:{type:'string'},origin:{type:'string',default:'http://127.0.0.1:5197'},'playwright-module':{type:'string'},focus:{type:'string'},gpu:{type:'string',default:'native'}}});
 if(!v.input||!v.output||!v['playwright-module'])throw Error('--input <restored handoff> --output <new directory> --playwright-module <module> required');
 const input=fs.realpathSync(v.input),output=path.resolve(v.output),origin=new URL(v.origin);
 if(origin.protocol!=='http:'||!['127.0.0.1','localhost','[::1]'].includes(origin.hostname)||origin.username||origin.password)throw Error('Loopback only');
@@ -21,12 +21,14 @@ if(v.focus){
  fs.writeFileSync(path.join(selectedInput,'index.json'),JSON.stringify({...index,heroCount:heroes.length,slotCount:heroes.length*6,heroes}));
 }
 const sha=file=>createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+if(!['native','swiftshader'].includes(v.gpu))throw Error('--gpu must be native or swiftshader');
 const {chromium}=await import(pathToFileURL(path.resolve(v['playwright-module'])).href);
 fs.mkdirSync(output,{recursive:true});
-const report={schema:'ggd-first37-browser-capture@1',origin:origin.origin,serviceRevision:'not-attested',indexSha256:sha(path.join(input,'index.json')),scriptSha256:sha(new URL(import.meta.url)),heroes:[],errors:[],publicationVerified:false};
-const browser=await chromium.launch({channel:'chrome',headless:true,args:['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+const report={schema:'ggd-first37-browser-capture@1',origin:origin.origin,gpu:v.gpu,serviceRevision:'not-attested',indexSha256:sha(path.join(input,'index.json')),scriptSha256:sha(new URL(import.meta.url)),heroes:[],errors:[],consoleErrors:[],publicationVerified:false};
+const browser=await chromium.launch({channel:'chrome',headless:true,args:v.gpu==='swiftshader'?['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']:[]});
 const page=await browser.newPage({viewport:{width:1440,height:1100}});page.setDefaultTimeout(30000);
 page.on('pageerror',e=>report.errors.push(e.message));
+page.on('console',e=>{if(e.type()==='error')report.consoleErrors.push(e.text().slice(0,2000));});
 const flush=()=>fs.writeFileSync(path.join(output,'captures.json'),JSON.stringify(report,null,2)+'\n');
 try{
  console.log('Opening Editor');
@@ -59,6 +61,11 @@ try{
     console.log(`${hero.index}/${slot}: opening preview`);
     const nav=page.getByRole('navigation',{name:'技能槽',exact:true});await nav.getByRole('button',{name:slot,exact:true}).click();
     const region=page.getByRole('region',{name:'可調整的試玩情境'});await region.waitFor({timeout:180000});
+    if(hero.index==='32'&&slot==='EX'){
+     await region.locator('summary').filter({hasText:'調整試玩情境'}).click();
+     await region.getByLabel('前置施法',{exact:true}).selectOption('R');
+     await region.getByLabel('前置施法後經過秒數',{exact:true}).fill('1');
+    }
     await region.getByText('正在試算此情境…',{exact:true}).waitFor({state:'hidden',timeout:180000});
     const status=region.getByRole('status');await status.waitFor({timeout:180000});
     const stage=region.locator('.vfx-stage');await stage.locator('canvas').waitFor({timeout:60000});

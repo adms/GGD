@@ -8,6 +8,12 @@ python3 tools/community-hero-forge/verify-authoring-batch.py \
   --batch-dir materials/community-hero-forge \
   --output /private/tmp/ggd-batch-check-01
 
+# 在模型還原／HTTP 建包之前，先跑投稿器相同的預設六槽與固定順序情境。
+# 非零退出就讀報告處理；不能以其他角色測試全綠抵充這一步。
+pnpm exec node --import tsx tools/community-hero-forge/prepare-published-handoff.mts \
+  --batch-dir materials/community-hero-forge \
+  --scenario-report /private/tmp/ggd-admission-scenes-01.json
+
 # 完整發布前檢查：三閘一起啟動，另讀已在本機的模型封存，沒有 S3 操作。
 python3 tools/community-hero-forge/verify-authoring-batch.py \
   --batch-dir materials/community-hero-forge \
@@ -25,6 +31,12 @@ python3 tools/community-hero-forge/verify-authoring-batch.py \
 `report.md` 是集中失敗與缺口清單；`report.json` 保留逐槽原文、requiredRefinement、適用測試、命令、退出碼、來源與日誌 SHA。每個步驟有獨立 `.log`，不用從最後 100 行猜原因。`skills:check` 若失敗，會自動展開其所有獨立子檢查，一次列齊，成功者可供同一版本續跑。逾時預設 600 秒，會終止整個程序群；可用 `--timeout` 調整。
 
 退出碼：`1` 有輸入／測試／工具失敗；`2` 自動檢查通過但仍有技能槽未配行為測試；`0` 已登記自動檢查及逐槽測試覆蓋通過。**任何退出碼都不代表原設計、模型外觀／動作或正式發布完成。** 模型未提供 `--release-root` 時明列未核對位元組；有檔案、SHA 或編譯通過都不是視覺驗收。模型封存每次重新讀取，不用過期快取。
+
+2026-09-09 新版預設投稿情境實測 32 名通過、5 名拒絕：武藤遊戲缺召喚物、銀時／奇犽／SUN樂在固定次序缺資源、艾莉絲 EX 缺自己的前置命中。離線 `--scenario-report` 與真實服務回傳的失敗名單一致。這不是 37 名全數可投稿；保留真實機制與拒絕證據，#1132 留開。新增的離線步驟是早期診斷，不取代完整模型檢查與服務 ZIP。
+
+需要更新生成器時，`refine-design-handoff.mts --adopt-current-generator` 使用 Editor 的 `adoptHeroGenerator`，保留舊 receipt、追加作品修訂，不修改六槽或原文。省略此旗標維持原生成器；建包器仍拒絕過期版本。
+
+隔離服務可使用 `parody/publish-local.mts --service-proof <handoff-service-proof 輸出> --output <新證據目錄> --platform-port <本機埠> --author <測試作者> --reviewer <測試管理員>`。必須另有 Owner 的隔離投稿／審查授權，並以環境提供 `GGD_LOCAL_COMMUNITY_PROOF=disposable-local-only` 與測試密碼。腳本先保存 ZIP 的模型原檔、草稿，再投稿、審查發布與異帳號署名下載；不建立權限或開站。預設拒絕部分通過的服務報告；明確指定 `--publish-passing-only` 才處理已通過者，報告保持 `partial` 並完整保留未通過名單。中斷續跑可用 `--resume-identical-drafts`，只重用 digest 相同的草稿，不覆寫舊版。
 
 `validation-plan.json` 將一組既有測試檔對應到本批英雄／技能槽。它綁定 manifest SHA，來源更新後須重新核對對應，不能直接換 SHA 冒充案例仍適用。只收 repo 現有 `.test.ts`／`.test.tsx` 路徑，不接受任意命令。所有測試檔可合併成一個 suite，避免同一個測試反覆跑。
 
