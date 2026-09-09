@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_84be34f70bbd",
+    "contentVersion": "cv_6414cfcf4e0f",
     "collections": {
       "champions": {
-        "hash": "77051074f3d9",
+        "hash": "eff5269c4916",
         "count": 146
       },
       "abilities": {
-        "hash": "bd6cbceb3335",
+        "hash": "baacabc272a1",
         "count": 865
       },
       "items": {
@@ -5591,6 +5591,7 @@
         "fx.fam.blink.ki.s65",
         "fx.fam.light-column.fire.s150",
         "fx.firestorm",
+        "fx.prim.arcane.arc",
         "fx.prim.arcane.beam",
         "fx.prim.arcane.beam-lg",
         "fx.prim.arcane.bolt",
@@ -5612,13 +5613,16 @@
         "fx.prim.earth.nova-lg",
         "fx.prim.earth.pulse-sm",
         "fx.prim.earth.shockwave",
+        "fx.prim.fire.arc",
         "fx.prim.fire.beam",
         "fx.prim.fire.bolt",
         "fx.prim.fire.explosion",
         "fx.prim.fire.explosion-lg",
         "fx.prim.fire.nova",
         "fx.prim.fire.pulse",
+        "fx.prim.fire.pulse-sm",
         "fx.prim.fire.slash",
+        "fx.prim.holy.arc",
         "fx.prim.holy.beam",
         "fx.prim.holy.beam-lg",
         "fx.prim.holy.explosion",
@@ -5646,8 +5650,10 @@
         "fx.prim.ki.pulse-sm",
         "fx.prim.ki.shockwave",
         "fx.prim.ki.slash",
+        "fx.prim.lightning.arc",
         "fx.prim.lightning.beam",
         "fx.prim.lightning.beam-lg",
+        "fx.prim.lightning.bolt",
         "fx.prim.lightning.dash",
         "fx.prim.lightning.explosion-lg",
         "fx.prim.lightning.nova",
@@ -5670,6 +5676,7 @@
         "fx.prim.nature.slash-lg",
         "fx.prim.nature.swarm",
         "fx.prim.nature.swarm-lg",
+        "fx.prim.physical.arc",
         "fx.prim.physical.beam",
         "fx.prim.physical.bolt",
         "fx.prim.physical.explosion-lg",
@@ -5685,7 +5692,9 @@
         "fx.prim.sound.explosion",
         "fx.prim.sound.nova",
         "fx.prim.sound.pulse",
+        "fx.prim.sound.pulse-sm",
         "fx.prim.sound.swarm-lg",
+        "fx.prim.void.arc",
         "fx.prim.void.beam",
         "fx.prim.void.dash",
         "fx.prim.void.explosion",
@@ -5697,8 +5706,10 @@
         "fx.prim.void.pulse-sm",
         "fx.prim.void.shockwave",
         "fx.prim.void.slash",
+        "fx.prim.void.summon",
         "fx.prim.void.swarm",
         "fx.prim.void.swarm-lg",
+        "fx.prim.wind.arc",
         "fx.prim.wind.beam",
         "fx.prim.wind.nova",
         "fx.prim.wind.pulse",
@@ -5768,7 +5779,7 @@
         "wc3.trollwoodworkswhat1",
         "wc3.waygatewhat1"
       ],
-      "boundAbilities": 570,
+      "boundAbilities": 792,
       "danglingKeys": []
     },
     "item": {
@@ -6854,5 +6865,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "c0f3284a6d35"
+  "profileDigest": "4704e94b577e"
 }

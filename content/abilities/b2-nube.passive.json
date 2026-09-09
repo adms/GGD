@@ -12,6 +12,7 @@
   ],
   "maxRank": 1,
   "name": "班導還不能下班",
+  "icon": "assets/icons/abilities/b2-nube.passive.webp",
   "passive": {
     "ranks": [
       {
