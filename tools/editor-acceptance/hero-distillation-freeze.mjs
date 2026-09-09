@@ -54,6 +54,32 @@ export function prefixTable(ids) {
   return groups;
 }
 
+/** Exact Cartesian factoring: only prefixes with IDENTICAL suffix sets share
+ * a group. No range, wildcard, guessed extension, or omitted asset is allowed.
+ */
+export function factorTable(ids) {
+  const grouped = new Map();
+  for (const [prefix, suffixes] of Object.entries(prefixTable(ids))) {
+    const key = JSON.stringify(suffixes);
+    if (!grouped.has(key)) grouped.set(key, {prefixes: [], suffixes});
+    grouped.get(key).prefixes.push(prefix);
+  }
+  const result = [...grouped.values()].map(({prefixes, suffixes}) => {
+    let common = prefixes[0];
+    for (const prefix of prefixes) {
+      let i = 0; while (i < common.length && common[i] === prefix[i]) i++;
+      common = common.slice(0, i);
+    }
+    return [common, prefixes.map(prefix => prefix.slice(common.length)), suffixes];
+  });
+  assert.deepEqual(expandFactorTable(result).sort(), [...new Set(ids)].sort(), 'LOSSY_ASSET_FACTORING');
+  return result;
+}
+
+export function expandFactorTable(groups) {
+  return groups.flatMap(([prefix, middles, suffixes]) => middles.flatMap(middle => suffixes.map(suffix => prefix + middle + suffix)));
+}
+
 const normalizedText = value => String(value ?? '').normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}]/gu, '');
 const grams = text => new Set(Array.from({length: Math.max(0, text.length - 3)}, (_, i) => text.slice(i, i + 4)));
 export function nearDuplicateGroups(examples, selected) {
@@ -160,10 +186,10 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   }
   // The same complete catalog index is supplied to every hero. No reference
   // shortlist is selected by the example's answer, source tags, or expected IDs.
-  const assets = {schema: 'ggd-generation-asset-index@1', prefixTableRule: 'Each key is a literal prefix. Concatenate with exactly one listed suffix; not wildcard permission.',
-    byCollection: Object.fromEntries(Object.entries(publicIds).map(([key, ids]) => [key, prefixTable(ids)])),
+  const assets = {schema: 'ggd-generation-asset-index@2', factorTableRule: 'Each group is [literalPrefix, literalMiddles[], literalSuffixes[]]. Each allowed ID is prefix + exactly one middle + exactly one suffix from THAT SAME group. All combinations within a group exist. Never mix groups or invent suffixes; not wildcard permission.',
+    byCollection: Object.fromEntries(Object.entries(publicIds).map(([key, ids]) => [key, factorTable(ids)])),
     uploadedModels: Object.entries(modelMetadata).map(([id, m]) => ({id, source: m.source})),
-    icons: prefixTable(catalogManifest.files.filter(f => f.path.startsWith('assets/icons/')).map(f => f.path)),
+    icons: factorTable(catalogManifest.files.filter(f => f.path.startsWith('assets/icons/')).map(f => f.path)),
     warning: 'Asset source identity is not a guarantee of exact identity match to this hero. Model selection does not certify asset closure or runtime readiness.'};
   const {rows, devGroups, grouping} = splitExamples(examples, quality);
   const data = rows.map(e => {

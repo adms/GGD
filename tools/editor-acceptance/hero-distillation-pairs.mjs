@@ -81,18 +81,32 @@ export function communityRequest(project, independent) {
   };
 }
 
-export function nativeRequest(champion, abilities, identity, owner) {
+export function nativeRequest(champion, abilities, identity, owner, historical = null) {
   const slots = {};
   const missing = [];
+  const recovered = [];
   for (const slot of SLOTS) {
     const ability = abilities[slot];
     const source = ability && owner[ability.id];
     if (source?.description) slots[slot] = {name: ability.name, description: source.description};
-    else missing.push(slot);
+    else {
+      const prior = historical?.abilities?.[slot];
+      // Historical repository prose is an existing requirement candidate,
+      // NOT a current Owner override. Only identical prose, name, slot and ID
+      // can establish this pairing; executable fields never enter the input.
+      const exact = ability && prior?.description && prior.id === ability.id && prior.slot === slot
+        && prior.name === ability.name && prior.description === ability.description;
+      if (exact) { slots[slot] = {name: prior.name, description: prior.description}; recovered.push(slot); }
+      else missing.push(slot);
+    }
   }
+  const priorHero = historical?.champion;
+  const recoveredIdentity = !identity?.description && Boolean(priorHero?.description
+    && priorHero.id === champion.id && priorHero.name === champion.name && priorHero.description === champion.description);
+  const identityText = identity?.description ?? (recoveredIdentity ? priorHero.description : null);
   return {
-    request: {heroName: champion.name, identity: identity?.description ?? null, slots},
-    missing, identityMissing: !identity?.description,
+    request: {heroName: champion.name, identity: identityText, slots},
+    missing, identityMissing: !identityText, recovered, recoveredIdentity,
   };
 }
 
@@ -228,6 +242,22 @@ export function build({workspace, sourceRepo, sourceCommit, decisions = []}) {
   const owner = parseOwnerSources(moduleBytes.toString(), tsvBytes.toString());
   const identities = read('outputs/forge-mechanism-priority-r3-20260906/main-hero-inventory-v2.json');
   const identityById = new Map(identities.rows.map(row => [row.id, row]));
+  // This is the already-used identity-source revision, not a new hero corpus
+  // or a search for a version that happens to maximize training counts.
+  const historicalRevision = identities.revision;
+  assert(/^[a-f0-9]{40}$/.test(historicalRevision));
+  const historicalPaths = new Set(execFileSync('git', ['ls-tree', '-r', '--name-only', historicalRevision,
+    'content/champions', 'content/abilities'], {cwd: sourceRepo, encoding: 'utf8'}).trim().split('\n'));
+  const historicalCache = new Map();
+  function historicalFile(relative) {
+    if (!historicalPaths.has(relative)) return null;
+    if (!historicalCache.has(relative)) {
+      const bytes = execFileSync('git', ['show', `${historicalRevision}:${relative}`], {cwd: sourceRepo, maxBuffer: 4 * 1024 * 1024});
+      pins[`${historicalRevision}:${relative}`] = sha(bytes);
+      historicalCache.set(relative, JSON.parse(bytes));
+    }
+    return historicalCache.get(relative);
+  }
   const packageAudit = read(`${PUB}/generator-rebuild/current-package-audit.json`, true);
   const heroes = [];
   const artifacts = {};
@@ -242,7 +272,10 @@ export function build({workspace, sourceRepo, sourceCommit, decisions = []}) {
       const ability = id && catalogFile(`catalog/abilities/${id}.json`);
       if (ability) { assert.equal(ability.slot, slot, 'ABILITY_SLOT_MISMATCH'); abilities[slot] = ability; }
     }
-    const source = nativeRequest(champion, abilities, identityById.get(item.id), owner);
+    const historical = {champion: historicalFile(`content/champions/${champion.id}.json`),
+      abilities: Object.fromEntries(SLOTS.map(slot => [slot,
+        abilities[slot] && !owner[abilities[slot].id]?.description ? historicalFile(`content/abilities/${abilities[slot].id}.json`) : null]))};
+    const source = nativeRequest(champion, abilities, identityById.get(item.id), owner, historical);
     const teacher = {champion, abilities};
     const teacherSha256 = sha(compact(teacher));
     const groupId = champion.transform?.role === 'alternate' ? champion.transform.counterpartId : champion.id;
@@ -252,6 +285,9 @@ export function build({workspace, sourceRepo, sourceCommit, decisions = []}) {
       provenance: {teacherVersion: meta.versionId, gameRevision: catalogVersion.gameRevision,
         sourcePath: `${baseline}/${item.path}`, identitySourceRevision: identities.revision,
         sourceKind: 'independent-owner-text-plus-prior-identity-inventory',
+        historicalRequestRecovery: {revision: historicalRevision, slots: source.recovered, identity: source.recoveredIdentity,
+          policy: 'Existing repository prose with identical ID/name/slot/description only; latest Owner text wins; not latest-Owner certification or runtime validation.',
+          slotDescriptionHashes: Object.fromEntries(source.recovered.map(slot => [slot, sha(source.request.slots[slot].description)]))},
         originalCodexModel: 'unknown', originalCodexEffort: 'unknown',
         priorExposure: 'existing-teacher-pool; historical-evaluations-become-seen-regression-if-trained'},
     });

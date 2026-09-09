@@ -1,0 +1,1794 @@
+{
+  "schema": "ggd-handoff-admission-scenarios@1",
+  "scope": "Offline shared admission scenarios with real prerequisite actions when required; no asset, service, visual or publication proof.",
+  "baselineDigest": "sha256:15757511cd97199ade972abd5e75e7b159b4274bbeaf256a33fa377038ad5358",
+  "passed": 37,
+  "failed": 0,
+  "results": [
+    {
+      "projectId": "community-review-01-20260907",
+      "name": "武藤遊戲",
+      "sourceDigest": "sha256:3834b3fba5214d45b41240122eb06119d938705b5f20f91c96863c35cc649e36",
+      "importedDraftDigest": "sha256:0c9c7a29c9455a1c9c5028e33470ddd3648e482a0ff1461eba59977002c926f9",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": [
+            "前置操作由真實輸入取得：cast:Q:required-summon"
+          ]
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {},
+        "prerequisiteActionsBySlot": {
+          "PASSIVE": {
+            "ticks": 0,
+            "actions": []
+          },
+          "Q": {
+            "ticks": 0,
+            "actions": []
+          },
+          "W": {
+            "ticks": 0,
+            "actions": []
+          },
+          "E": {
+            "ticks": 0,
+            "actions": []
+          },
+          "R": {
+            "ticks": 0,
+            "actions": []
+          },
+          "EX": {
+            "ticks": 47,
+            "actions": [
+              "cast:Q:required-summon"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "projectId": "community-review-02-20260907",
+      "name": "八神庵",
+      "sourceDigest": "sha256:5f04938fd41d395885655e625289fd9589a8490f016ca444079b209799846744",
+      "importedDraftDigest": "sha256:6a8555feb1c2f54b373da0a5b15d8a5e28cd6927110e9c104d00451ef9a0b67d",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-03-20260907",
+      "name": "不知火舞",
+      "sourceDigest": "sha256:e9340b8a61c21437e041f3cd6aba8170bd1b83df5badb98fef62ac2e3b916758",
+      "importedDraftDigest": "sha256:80c187ea0c07d761c584cdddd1947e02497712ba0f8313036050058ff8b6f5d7",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-04-20260907",
+      "name": "空條承太郎",
+      "sourceDigest": "sha256:1bd9ad6e645a45031f88b1295295c2808eeea2df22368737e20bee3e6580c617",
+      "importedDraftDigest": "sha256:1a502455a594b1f99c1d796850c122b84e08855c9424ae012465993bb7b8cbde",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-05-20260907",
+      "name": "洛克人",
+      "sourceDigest": "sha256:b85dd5ee658697323ded8bd3d211f75872fa21912c64bc5c298cd0e817ffca22",
+      "importedDraftDigest": "sha256:f350c7fab410032b6d2c32e4d3365a5a99d2b1e96b3d2ac2391e1483c704417c",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-06-20260907",
+      "name": "卡比",
+      "sourceDigest": "sha256:151888cf9c7c83277b6e5841162557c293a0515108608f4b09862a29221ab99d",
+      "importedDraftDigest": "sha256:6da608a36caaedbc1224d6c33337f44ffad79975d8c676a136803edafa9cc728",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-07-20260907",
+      "name": "西索",
+      "sourceDigest": "sha256:b6755502e9555824c68d077bf6ac8932285e08b299b7a241ee3c7a98d6b6ce10",
+      "importedDraftDigest": "sha256:cea37518ededf4b0dbfdde3e62da9edb4fb480621c391ebc198af2af8c10c8c4",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-08-20260907",
+      "name": "米卡莎",
+      "sourceDigest": "sha256:06dd9f1d40bcff3296373ff782b8b932278113130db437b47e2d3c6eb485f1ab",
+      "importedDraftDigest": "sha256:ec2fada13d413437c729cc42b5c4c3082e9423265fafceb3b2cd8f3b3efdae77",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-09-20260907",
+      "name": "赫蘿",
+      "sourceDigest": "sha256:950266d3b9a7f24286f2456be1b74c3132ea11040ca83865d93cb82475d3483b",
+      "importedDraftDigest": "sha256:7272cd374772dc58d072e45aaf298f9aa77638767cb2bd247b5d43d1abc87005",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-10-20260907",
+      "name": "魯路修",
+      "sourceDigest": "sha256:99a92b17348fa9f920023fcf3c33ad0b8e98f01b817865da6a3c3856d337509b",
+      "importedDraftDigest": "sha256:f0f89f740da4523f661d33c9169aa7f8930e1e2772bcf6b41878165e3ab370fe",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-11-20260907",
+      "name": "利姆路",
+      "sourceDigest": "sha256:1ed614f214eab42e42d271ec1a806b5b553795bff9353ad7e240d0ed0c43a9e7",
+      "importedDraftDigest": "sha256:7be2ff44844274b2eba1a05075c6ab91fb7d6cef183cd9bea71585108659b227",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-12-20260907",
+      "name": "衛宮士郎",
+      "sourceDigest": "sha256:5bea186597bf0148a8f52e9dd319f80c2cd9db4bf5374661acd922ba2d0ae6b7",
+      "importedDraftDigest": "sha256:6eaf5256b723b50b778e0abd1180b46043672bcc56eeb818243b7857ef0727d9",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-13-20260907",
+      "name": "朝田詩乃",
+      "sourceDigest": "sha256:34059319b01a73df7b5c34b805b51dbd5a1dac164a0c752d549cad304abb8819",
+      "importedDraftDigest": "sha256:0c1a5d6607ec5101240cc5e0c29fb7a6151e6323ed435c091d7ca14401762b04",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-14-20260907",
+      "name": "殺老師",
+      "sourceDigest": "sha256:8a7c523544b2d1ead2640e6aefe7b4a8fc892ae79798ee8b27a8c9b3332fddbe",
+      "importedDraftDigest": "sha256:553e07cb53edef2e34c5d6854217bee746651de02539248d34167d32d6906394",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-15-20260907",
+      "name": "比利海靈頓",
+      "sourceDigest": "sha256:0e4fc319db27b90a6211cc83802484beb6feddfde7fc238e1cc9d106a19961f7",
+      "importedDraftDigest": "sha256:4109125cf60175819af8a75ac39cc23aa03fee868773329d3881c109c5a9139d",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-16-20260907",
+      "name": "魔法少女☆伊莉雅",
+      "sourceDigest": "sha256:05eb9a94ede2dc07e78c152c31dc4292501c67b81b1c1306b38bcb40b44947f2",
+      "importedDraftDigest": "sha256:92765945c8d3460c42e1dfbe1da1edf33827908534280a95672ea92d809c9249",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-17-20260907",
+      "name": "安茲·烏爾·恭",
+      "sourceDigest": "sha256:b0949d31945d65b76b219dd9adeb12e3918d2de0b48699f2a2ba284e6c10f41d",
+      "importedDraftDigest": "sha256:b384c45889a8af13af5aabe289649dd71d9b8ffc4226939771e32631f1fb89f7",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-18-20260907",
+      "name": "吉爾伽美什",
+      "sourceDigest": "sha256:7bd1aad39ba87e9743afdf9e78d2be2a85572806c75f7e1a009f0aa27e605762",
+      "importedDraftDigest": "sha256:27691e09522647cc9ce6306e46e6dad91798c3048d239ee4a03608d8fcc75ac8",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-19-20260907",
+      "name": "桐谷和人",
+      "sourceDigest": "sha256:48bd8fc72452e6b06a0bf33d48dbcf59826e407d0228760be1a92dc0494fc89f",
+      "importedDraftDigest": "sha256:a286452aebcfee2371ac78edf737740c7a5dbfd5ac012c3e7077e08c7dd7ca6f",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-20-20260907",
+      "name": "御坂美琴",
+      "sourceDigest": "sha256:6f453b226d21454d3244f1c8ddf94093a9805f4a30c512692beb13aa9037f1ff",
+      "importedDraftDigest": "sha256:c85330a34a284d7c3c1e944cfb3b5281887d308743fb4ccefa5fbd543a164654",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-21-20260907",
+      "name": "鹿目圓",
+      "sourceDigest": "sha256:ace1011a6383d0cb8cca8533767fdbdaed60910f79c0d68d1143389463dbcaec",
+      "importedDraftDigest": "sha256:24f9e4690b6a5f2150c07babb2e0807173fb31bfede52796110df0756d160ff4",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-22-20260907",
+      "name": "菜月昴",
+      "sourceDigest": "sha256:f33cfe3cfcaaf6fa29201f209dfd6318f4ba60df1560df526ac907e3fd46e209",
+      "importedDraftDigest": "sha256:e97b435f51c9877c997543fca5e23d1644b3b8c80dc6699cc7e95a63c7eab096",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-23-20260907",
+      "name": "坂田銀時",
+      "sourceDigest": "sha256:9b0565275cfca53cf5c39e1ea1c8e8940b21650aefff42eb1a4b4fcf84da13d1",
+      "importedDraftDigest": "sha256:1b33ada4b2430b3ef9eedb140c5f979162853e09a35bee9b62aaeb61ff823ce6",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {},
+        "prerequisiteActionsBySlot": {
+          "PASSIVE": {
+            "ticks": 0,
+            "actions": []
+          },
+          "Q": {
+            "ticks": 0,
+            "actions": []
+          },
+          "W": {
+            "ticks": 211,
+            "actions": [
+              "hold:7s:resource-recovery"
+            ]
+          },
+          "E": {
+            "ticks": 0,
+            "actions": []
+          },
+          "R": {
+            "ticks": 0,
+            "actions": []
+          },
+          "EX": {
+            "ticks": 0,
+            "actions": []
+          }
+        }
+      }
+    },
+    {
+      "projectId": "community-review-24-20260907",
+      "name": "奇犽",
+      "sourceDigest": "sha256:b053a177540e713a3a322c5b8a97100e592a80bef5dcba232d39876dc5e801a1",
+      "importedDraftDigest": "sha256:f2c3471296d06ecd1c67686d96f436e04de987f37c0732ac15f10c9dc5744d43",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {},
+        "prerequisiteActionsBySlot": {
+          "PASSIVE": {
+            "ticks": 0,
+            "actions": []
+          },
+          "Q": {
+            "ticks": 0,
+            "actions": []
+          },
+          "W": {
+            "ticks": 0,
+            "actions": []
+          },
+          "E": {
+            "ticks": 0,
+            "actions": []
+          },
+          "R": {
+            "ticks": 0,
+            "actions": []
+          },
+          "EX": {
+            "ticks": 211,
+            "actions": [
+              "hold:7s:resource-recovery"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "projectId": "community-review-25-20260907",
+      "name": "一拳超人",
+      "sourceDigest": "sha256:400606707077260285d81f6c05f5c0f70f79f854cdb052cf5a98a0e548250808",
+      "importedDraftDigest": "sha256:dc13e6cce473eae328d991e872b3c0d03f177ffaa9512476c043641d812fcbfa",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-26-20260907",
+      "name": "名偵探柯南",
+      "sourceDigest": "sha256:a00d7e7d54ac2777ac688cb7fd4694ca0887ca23afcb7b69bf3c0bcf42b91d8b",
+      "importedDraftDigest": "sha256:f29cf8c283d30419f20f0385c7b82a01646a13f2afc6051d4008dca138db9ed8",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-27-20260907",
+      "name": "庫洛魔法使",
+      "sourceDigest": "sha256:32aa98543d3a191b53dd50c7f5ff0a6f8e739f6d9cd6e2f58ed5d9f9c4160e47",
+      "importedDraftDigest": "sha256:f371b7b7808362a2b9f3fa1d8057ae1faf32ecb7c9f173a232022c2f1297891a",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-28-20260907",
+      "name": "艾莉絲·伯雷亞斯·格雷拉特",
+      "sourceDigest": "sha256:8dfa07aae7fa41d19a6886df280c36c0730c2f7d9fb3eee1639b42a66147bee0",
+      "importedDraftDigest": "sha256:160f69e7428dc043ed0553bac98350c82296f29dfb758fc4c421bae56d28a891",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": [
+            "前置操作由真實輸入取得：attack-target:earn-own-hit"
+          ]
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-29-20260907",
+      "name": "芙莉蓮",
+      "sourceDigest": "sha256:a35d7643a297c73a5c29c48cd416799bf8c5412aeeb9f5ce86549db7389d8f69",
+      "importedDraftDigest": "sha256:e51c59772ae7de4f2f78897c889b028795a27b3511a4a7292572f266bd251a6f",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-30-20260907",
+      "name": "尼古貓貓",
+      "sourceDigest": "sha256:2460e9f722d647a5b1bad15227519fbbcb740d8ad53363118defa0e1ac37f965",
+      "importedDraftDigest": "sha256:9ce8f54d832bfd974238efab156c9b874c8c80f10d6c1e93a389519cc66f8665",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-31-20260907",
+      "name": "SUN樂",
+      "sourceDigest": "sha256:3cafe25192a5dbe32add15c54046acaad86a61b5d980f885d7603fca692850e7",
+      "importedDraftDigest": "sha256:8c4a2ddeeea595371a787836397fea21207a72fa5aa90d7c6bbccc419164672b",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {},
+        "prerequisiteActionsBySlot": {
+          "PASSIVE": {
+            "ticks": 0,
+            "actions": []
+          },
+          "Q": {
+            "ticks": 0,
+            "actions": []
+          },
+          "W": {
+            "ticks": 0,
+            "actions": []
+          },
+          "E": {
+            "ticks": 0,
+            "actions": []
+          },
+          "R": {
+            "ticks": 0,
+            "actions": []
+          },
+          "EX": {
+            "ticks": 407,
+            "actions": [
+              "hold:7s:resource-recovery",
+              "cast:W:evade-exchange:1",
+              "cast:W:evade-exchange:2",
+              "cast:W:evade-exchange:3",
+              "cast:W:evade-exchange:4"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "projectId": "community-review-32-20260907",
+      "name": "阿薩謝爾",
+      "sourceDigest": "sha256:81091265e8b691df282177094ad6dc46274d15a07d48ffd511e9058f9d9cb347",
+      "importedDraftDigest": "sha256:c578f573b8784242ff303a12ee8c252a01e77f13e1c020c10aaa0109387c921f",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-33-20260907",
+      "name": "近衛刀太",
+      "sourceDigest": "sha256:6e889a323f57399407c164a30896b557fb1989c7e95ceb6b7b4bb20a89d5462a",
+      "importedDraftDigest": "sha256:529b96538da0c0020edc0a0c31bc5d3f08a123d3d7a224b4e11674474904aa82",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-34-20260907",
+      "name": "高速婆婆",
+      "sourceDigest": "sha256:00f24fa75cce0c48562ab39c280db36a4b1646631555f7f2181862d3d09d654a",
+      "importedDraftDigest": "sha256:f7dc321ac18f61725cab213c70f30f804569377a363b0f92f6f4cdc224eb3caf",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-35-20260907",
+      "name": "炭治郎",
+      "sourceDigest": "sha256:b6dc85724e55b6f0d681afb4c77240660e040bf7aa5c17fd1852ce4c497a3732",
+      "importedDraftDigest": "sha256:1c3511d006a30719e06e0e50a3607c2c8846c88a4250a3b1ccddcb790955b2af",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-36-20260907",
+      "name": "鬼畜王蘭斯",
+      "sourceDigest": "sha256:2197a0b0d13caa22fa28a76febd40ae30d119dcb3d430f5232685ce11841eccc",
+      "importedDraftDigest": "sha256:6bd0f11b7a948a10e6297404f22bdd5633dbb84bca23e3a0260f85f2526e29f1",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    },
+    {
+      "projectId": "community-review-37-20260907",
+      "name": "吉伊卡哇",
+      "sourceDigest": "sha256:18e93e776bb62faaba67b6b6ce445def96604cf0e82b89cb31679deec4bc24c8",
+      "importedDraftDigest": "sha256:a184ac913b943bf6f7cb5c75afecf6a41c1e0c28dd80f44d27280a53cc5fddc1",
+      "status": "passed",
+      "failures": [],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "status": "passive",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "Q",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "W",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "E",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "R",
+          "status": "accepted",
+          "prerequisiteActions": []
+        },
+        {
+          "slot": "EX",
+          "status": "accepted",
+          "prerequisiteActions": []
+        }
+      ],
+      "kit": {
+        "status": "accepted",
+        "rejectedSlots": [],
+        "rejectionReasonsBySlot": {}
+      }
+    }
+  ]
+}

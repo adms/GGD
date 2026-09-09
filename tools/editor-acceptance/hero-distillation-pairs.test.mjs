@@ -54,6 +54,29 @@ test('TSV wins over old source while preserving literal dialogue and line breaks
   const result = parseOwnerSources(module, tsv);
   assert.equal(result['godie-h.q'].description, '[主動]\n「hi」\n');
 });
+test('existing historical prose can restore a missing request, never executable answer fields', () => {
+  const champion = {id: 'h', name: 'Hero', description: 'identity'};
+  const q = {id: 'h.q', slot: 'Q', name: 'Q', description: 'existing prose', template: {ref: 'SECRET_TARGET'}};
+  const prior = {champion: {...champion}, abilities: {Q: {...q, template: {ref: 'OLDER_EXECUTABLE'}}}};
+  const result = nativeRequest(champion, {Q: q}, null, {}, prior);
+  assert.deepEqual(result.recovered, ['Q']);
+  assert.equal(result.recoveredIdentity, true);
+  assert.equal(result.request.slots.Q.description, 'existing prose');
+  assert(!JSON.stringify(result.request).includes('EXECUTABLE'));
+  assert(!JSON.stringify(result.request).includes('SECRET'));
+  assert.equal(nativeRequest(champion, {Q: q}, null, {'h.q': {description: 'new Owner'}}, prior).request.slots.Q.description, 'new Owner');
+});
+test('historical source identity, slot, name and prose drift never silently restore a request', () => {
+  const champion = {id: 'h', name: 'Hero', description: 'identity'};
+  const q = {id: 'h.q', slot: 'Q', name: 'Q', description: 'old'};
+  for (const field of ['id', 'slot', 'name', 'description']) {
+    const result = nativeRequest(champion, {Q: q}, null, {}, {champion, abilities: {Q: {...q, [field]: 'changed'}}});
+    assert.deepEqual(result.recovered, []);
+    assert.equal(result.request.slots.Q, undefined);
+  }
+  const result = nativeRequest(champion, {Q: q}, null, {}, {champion: {...champion, name: 'wrong identity'}, abilities: {Q: q}});
+  assert.equal(result.identityMissing, true);
+});
 test('single bad slot excludes its full-hero positive but retains other slots', () => {
   const p = project(), hero = {id: 'hero', groupId: 'hero', teacherSha256: 'abc', request: communityRequest(p, independent(p)), target: communityTarget(p)};
   const rows = makeExamples(hero, [{heroId: 'hero', slot: 'Q', teacherSha256: 'abc', reason: 'wrong-target', evidence: 'receipt.json'}]);

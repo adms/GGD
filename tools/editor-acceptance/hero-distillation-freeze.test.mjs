@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { nearDuplicateGroups, splitExamples, prefixTable, learningTarget } from './hero-distillation-freeze.mjs';
+import { nearDuplicateGroups, splitExamples, prefixTable, factorTable, expandFactorTable, learningTarget } from './hero-distillation-freeze.mjs';
 
 const read = name => JSON.parse(fs.readFileSync(new URL('../../docs/_reports/hero-finetune-research/' + name, import.meta.url)));
 function hero(id, groupId, heroName, description) {
@@ -33,6 +33,22 @@ test('learning target removes only deterministic template hash and never changes
   const result = learningTarget(original);
   assert.deepEqual(result.slot.products[0].template, {ref: 'tpl', params: {damage: 5}});
   assert.equal(original.slot.products[0].template.contentSha256, 'hash');
+});
+test('exact factoring shares repeated suffix sets but preserves missing slots and mixed extensions', () => {
+  const ids = ['icons/a.q.webp', 'icons/a.w.webp', 'icons/b.q.webp', 'icons/b.w.webp', 'icons/c.q.png', 'icons/c.w.webp', 'icons/d.q.webp'];
+  const table = factorTable(ids);
+  assert.deepEqual(expandFactorTable(table).sort(), ids.sort());
+  assert(!expandFactorTable(table).includes('icons/c.q.webp'));
+  assert(!expandFactorTable(table).includes('icons/d.w.webp'));
+  assert.equal(table.length, 3);
+});
+test('all real catalog IDs and icons survive factoring with no invented IDs', () => {
+  const assets = read('distillation-training-v1/frozen-grouped/assets.json');
+  for (const table of [...Object.values(assets.byCollection), assets.icons]) {
+    const ids = Object.entries(table).flatMap(([prefix, suffixes]) => suffixes.map(suffix => prefix + suffix));
+    const encoded = factorTable(ids);
+    assert.deepEqual(expandFactorTable(encoded).sort(), ids.sort());
+  }
 });
 test('real eligible pool keeps all 124 tasks, source groups isolated, both formats represented in training', () => {
   const examples = read('distillation-pairs-v1/examples.json');
