@@ -38,6 +38,14 @@ function flatRankNodes(): string[] {
   for (const f of readdirSync(DIR)) {
     if (!f.endsWith(".json") || f === "_index.json") continue;
     const d = JSON.parse(readFileSync(join(DIR, f), "utf8")) as { id: string };
+    // ⭐⭐ GH#1146 —— 走**展開後的效果**，⛔ 不是整份原始 JSON。
+    //
+    // ⚠️ 一支綁了模板的技能，同一個邏輯節點在磁碟上有**兩個**寫法：
+    //   `effects[].amount.damageTierPerRank` 與 `template.params.damage.damageTierPerRank`
+    // ⇒ 裸的 `walk(d)` 會把它**數兩次**（2026-09-09 實測：綁一支 ⇒ 27 → 28）。
+    //
+    // ⭐ 而那正是 GH#1105 記過的病：「同一個邏輯節點被數 N 次」。
+    // ⇒ ⛔ 不是把棘輪 +1（那會把一次量錯記成一次回歸），是**修這把尺**。
     const walk = (o: unknown): void => {
       if (Array.isArray(o)) return o.forEach(walk);
       if (!o || typeof o !== "object") return;
@@ -46,7 +54,11 @@ function flatRankNodes(): string[] {
         bad.push(d.id);
       for (const v of Object.values(o)) walk(v);
     };
-    walk(d);
+    // ⭐ `template` 是**同一份知識的第二個寫法** —— 展開之後它會變成 `effects`，
+    //   而磁碟上的 `effects` 已經是展開的結果（`mergeExpansion` 在載入時蓋上去）。
+    //   ⇒ 走 `effects`／`passive`／`marks`，⛔ 跳過 `template`。
+    const { template: _tpl, ...rest } = d as Record<string, unknown>;
+    walk(rest);
   }
   return bad;
 }

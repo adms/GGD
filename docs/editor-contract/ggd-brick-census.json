@@ -7,12 +7,12 @@
     "usable": 44,
     "engineMissing": 10,
     "shells": 10,
-    "zeroAdoption": 27,
+    "zeroAdoption": 26,
     "terminal": 1,
-    "handWritten": 124,
+    "handWritten": 123,
     "distinctShapes": 85,
     "singletonShapes": 58,
-    "top8Coverage": 28
+    "top8Coverage": 27
   },
   "demand": [
     {
@@ -70,15 +70,6 @@
         "godie-e007.ex",
         "godie-efur.w",
         "godie-ewar.ex"
-      ]
-    },
-    {
-      "shape": "damageArea",
-      "count": 3,
-      "examples": [
-        "godie-e00x.passive",
-        "godie-efur.e",
-        "godie-emns.e"
       ]
     },
     {
@@ -199,6 +190,14 @@
       "examples": [
         "godie-h01n.w",
         "godie-h01o.w"
+      ]
+    },
+    {
+      "shape": "damageArea",
+      "count": 2,
+      "examples": [
+        "godie-e00x.passive",
+        "godie-emns.e"
       ]
     },
     {
@@ -474,6 +473,15 @@
       "terminal": false
     },
     {
+      "id": "tpl-area-strike",
+      "family": "area-strike",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 8,
+      "abilities": 1,
+      "terminal": false
+    },
+    {
       "id": "tpl-blink-strike",
       "family": "blink-strike",
       "engineKnows": true,
@@ -507,15 +515,6 @@
       "status": "enabled",
       "params": 9,
       "abilities": 1,
-      "terminal": false
-    },
-    {
-      "id": "tpl-area-strike",
-      "family": "area-strike",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 8,
-      "abilities": 0,
       "terminal": false
     },
     {

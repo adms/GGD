@@ -27,24 +27,6 @@ const CONSUMERS = ["content/abilities", "content/items", "content/augments"];
  * ⭐ 這張表**只能變短**：把一個家族接上內容之後就把它從這裡刪掉。
  */
 const AWAITING_CONTENT: Record<string, string> = {
-  // ⭐⭐ GH#1146 —— 在等**產生器學會發模板綁定**，⛔ 不是在等內容。
-  //
-  // 這一族今天已經**配得上 12 支**出貨技能（`templatize.py` 逐支印
-  // 「⭐ 今天就配得上 tpl-area-strike」：godie-e00s.e/.q · e00w.q/.r ·
-  // edem.q/.w/.ex · efur.e · emns.e · h00l.q · h01u.w · h02v.r）——
-  // ⭐ 而那 12 支全部是 `skillremake:json` 的**產物**。
-  //
-  // ⛔ 而 `template` 在 `tools/skill-remake/common.py` 的 **`RETIRED`** 表上，
-  // 理由逐字：「救回它 ＝ **靜默回滾 36 支重製稿**，而且描述講新的、場上打舊的」。
-  // ⇒ ⭐ `templatize.py --apply` 寫進去會被下一次 sync 打回來，**而那是刻意的**。
-  //
-  // ⭐ 到期條件（一行可查）：`tools/skill-remake/` 的來源列能發出
-  // `{"template": {"ref": "tpl-area-strike", …}}` 的那一天，這一列刪掉 ——
-  // 那時 `python3 tools/skill-remake/templatize.py` 的提案數會從 0 跳到 12。
-  "tpl-area-strike":
-    "GH#1146 —— 配得上 12 支出貨技能，⛔ 而它們是 `skillremake:json` 的產物，" +
-    "且 `template` 在那支產生器的 RETIRED 表上（救回它會靜默回滾 36 支重製稿）。" +
-    "⇒ 在等產生器學會**發**模板綁定，⛔ 不是在等內容。",
   // ── 有票在等，⭐ 接上內容就是那張票的第一步 ──────────────────────────
   // ⭐⭐ 2026-08-31：`tpl-periodic-field` 從這張表**刪掉了** —— GH#648 內容批落地，
   //    6 支真正的領域技能接上了它（04-02 炸彈陣 ×2 · 90-01 飛葉快刀 ×2 · 92-04 · 37-03）。

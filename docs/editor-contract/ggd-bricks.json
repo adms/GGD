@@ -19,7 +19,7 @@
     "gaps": 52,
     "missingAdminForm": 52,
     "missingEditorForm": 4,
-    "zeroAdoption": 64
+    "zeroAdoption": 63
   },
   "gaps": [
     {
@@ -12811,7 +12811,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 1,
       "origin": "template@1:content/ability-templates/tpl-area-strike.json"
     },
     {

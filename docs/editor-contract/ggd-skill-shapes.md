@@ -28,10 +28,10 @@ owner 技能模板群組 **⑨** 逐字：
 |---|---:|
 | 掃到的技能 | **421** |
 | 不同的形狀（群） | **41** |
-| 已經接上模板的技能 | **212**（50%） |
-| ⛔ 還沒接模板的技能 | **209** |
+| 已經接上模板的技能 | **213**（50%） |
+| ⛔ 還沒接模板的技能 | **208** |
 | 模板文件總數 | **55** |
-| ⛔ 一支技能都沒引用的模板 | **36** |
+| ⛔ 一支技能都沒引用的模板 | **35** |
 
 ## 1. 形狀群 → 支數 → 有沒有模板 → 建議
 
@@ -58,7 +58,7 @@ owner 技能模板群組 **⑨** 逐字：
 | 17 | 等待＋迴圈＋持續＋多段 | **4** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-growth-charge・tpl-random-barrage |
 | 18 | 等待＋迴圈＋持續＋續效特效 | **4** | 2 | tpl-periodic-field | 沿用（2 支還沒接） |
 | 19 | 多段＋路徑 | **3** | 3 | tpl-line-sweep・tpl-orbit-array | ✅ 全部接上了 |
-| 20 | 等待＋續效特效 | **3** | 1 | tpl-single-strike | 沿用（2 支還沒接） |
+| 20 | 等待＋續效特效 | **3** | 2 | tpl-area-strike・tpl-single-strike | 沿用（1 支還沒接） |
 | 21 | 等待＋迴圈＋多段＋路徑 | **3** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-lock-combo（另有 3 份較不貼合） |
 | 22 | 迴圈＋持續＋多段＋路徑 | **3** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-lock-combo（另有 4 份較不貼合） |
 | 23 | 等待＋多段＋路徑 | **2** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-charge-push・tpl-teleport |
@@ -241,11 +241,11 @@ owner 技能模板群組 **⑨** 逐字：
 | `tpl-leap-strike` | 跳躍落地 | enabled | 10 | 3 | 持續＋續效特效＋路徑 | 持續＋續效特效＋路徑×3 |
 | `tpl-summon-agent` | 召喚代理 | enabled | 12 | 3 | 持續＋多段 | 持續＋多段×3 |
 | `tpl-orbit-array` | 環形放射陣 | enabled | 7 | 2 | 迴圈＋多段＋路徑 | 多段＋路徑×2 |
+| `tpl-area-strike` | 範圍打擊 | enabled | 8 | 1 | 多段 | 等待＋續效特效×1 |
 | `tpl-blink-strike` | 瞬移突斬 | enabled | 6 | 1 | — | （無時序形狀）×1 |
 | `tpl-line-sweep` | 直線分段掃擊 | enabled | 6 | 1 | 多段＋路徑 | 多段＋路徑×1 |
 | `tpl-proxy-fanout` | 範圍逐一施法 | enabled | 5 | 1 | 續效特效 | 續效特效×1 |
 | `tpl-traveling-wave` | 行進波動 | enabled | 9 | 1 | 迴圈＋續效特效＋多段＋路徑 | 迴圈＋續效特效＋多段＋路徑×1 |
-| `tpl-area-strike` | 範圍打擊 | enabled | 8 | **0** | — | — |
 | `tpl-barrier-domain` | 結界領域 | draft | 0 | **0** | — | — |
 | `tpl-beam-roll` | 翻滾光束（橫放光束砲） | enabled | 21 | **0** | 等待＋續效特效＋多段＋路徑 | — |
 | `tpl-channel-beam` | 引導通魔 | draft | 0 | **0** | — | — |
@@ -295,16 +295,16 @@ CLAUDE.md 第〇·五守則：「⛔ **不要逐支實作。** 按**擋住的支
 | 路徑 | **17** | `tpl-leap-strike`・`tpl-line-strike` | draft・enabled | ⭐ **模板已在、而且真的跑出這條軸** ⇒ 把這 17 支接上去（改內容，⛔ 不必動引擎） |
 | 多段 | **6** | `tpl-drain-leech`・`tpl-line-sweep` | enabled | ⭐ **模板已在、而且真的跑出這條軸** ⇒ 把這 6 支接上去（改內容，⛔ 不必動引擎） |
 
-⚠️ **另一個方向的浪費**：有 **23** 份模板參數面已經做好（≥5 格參數）卻**一支技能都沒引用** ——
-　`tpl-area-strike`(8格/enabled)・`tpl-beam-roll`(21格/enabled)・`tpl-charge-push`(11格/enabled)・`tpl-combo-finisher`(13格/enabled)・`tpl-dragon-quake`(15格/enabled)・`tpl-dragon-serpent`(17格/enabled)・`tpl-dragon-shockwave`(9格/draft)・`tpl-effect-sequence`(5格/enabled)・`tpl-growth-charge`(9格/enabled)・`tpl-line-blast`(15格/enabled)・`tpl-lock-combo`(10格/enabled)・`tpl-locust-line`(11格/enabled)・`tpl-locust-orb`(12格/enabled)・`tpl-locust-strike`(11格/enabled)・`tpl-locust-swarm`(12格/enabled)・`tpl-locust-travel`(11格/enabled)・`tpl-mark-stacks`(20格/enabled)・`tpl-on-attack`(6格/enabled)・`tpl-on-hit-react`(5格/enabled)・`tpl-pull-throw`(12格/enabled)・`tpl-radial-burst`(12格/enabled)・`tpl-random-barrage`(9格/enabled)・`tpl-teleport`(6格/enabled)
+⚠️ **另一個方向的浪費**：有 **22** 份模板參數面已經做好（≥5 格參數）卻**一支技能都沒引用** ——
+　`tpl-beam-roll`(21格/enabled)・`tpl-charge-push`(11格/enabled)・`tpl-combo-finisher`(13格/enabled)・`tpl-dragon-quake`(15格/enabled)・`tpl-dragon-serpent`(17格/enabled)・`tpl-dragon-shockwave`(9格/draft)・`tpl-effect-sequence`(5格/enabled)・`tpl-growth-charge`(9格/enabled)・`tpl-line-blast`(15格/enabled)・`tpl-lock-combo`(10格/enabled)・`tpl-locust-line`(11格/enabled)・`tpl-locust-orb`(12格/enabled)・`tpl-locust-strike`(11格/enabled)・`tpl-locust-swarm`(12格/enabled)・`tpl-locust-travel`(11格/enabled)・`tpl-mark-stacks`(20格/enabled)・`tpl-on-attack`(6格/enabled)・`tpl-on-hit-react`(5格/enabled)・`tpl-pull-throw`(12格/enabled)・`tpl-radial-burst`(12格/enabled)・`tpl-random-barrage`(9格/enabled)・`tpl-teleport`(6格/enabled)
 
 ⛔ 它們與上表是**同一個問題的兩半**：一邊有技能在等機制，一邊有機制在等技能。
 
 ## 5. 閘 —— 未分類欄位
 
-⛔ 下面這些欄位出現在出貨技能裡，而 `shape_axes.json` 沒有替它們做過決定：
+✅ 出貨技能裡的**每一個**欄位名都在 `shape_axes.json` 裡有決定
+（帶軸，或在 `ignored` 裡帶著一個能被反駁的理由）。
 
-| 欄位 | 出現次數 |
-|---|---:|
-| `(template:tpl-area-strike).onHitTargets` | 1 |
+⇒ 引擎哪天多一個 `windUpSec` 而沒有人分類它，`--check` 會**紅**並指名它 ——
+⛔ 不是安靜地把那一族技能算成「沒有等待」。
 

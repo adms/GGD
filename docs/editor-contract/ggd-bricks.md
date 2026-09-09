@@ -23,7 +23,7 @@ capability 指紋：`d9164615`
 | gaps | 52 |
 | missingAdminForm | 52 |
 | missingEditorForm | 4 |
-| zeroAdoption | 64 |
+| zeroAdoption | 63 |
 
 ## 兩個編輯器的表單怎麼量的
 
@@ -163,7 +163,7 @@ capability 指紋：`d9164615`
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
 | `apply-status` | 3 | 0 | 0 | ⛔ | ✅ | 6 |
-| `area-strike` | 8 | 1 | 0 | ⛔ | ✅ | 0 |
+| `area-strike` | 8 | 1 | 0 | ⛔ | ✅ | 1 |
 | `beam-roll` | 21 | 1 | 2 | ⛔ | ✅ | 9 |
 | `blink` | 1 | 0 | 0 | ⛔ | ✅ | 7 |
 | `blink-strike` | 6 | 0 | 0 | ⛔ | ✅ | 1 |

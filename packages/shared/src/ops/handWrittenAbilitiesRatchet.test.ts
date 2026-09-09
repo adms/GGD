@@ -68,7 +68,13 @@ const CENSUS = JSON.parse(
 //   `tpl-line-strike`（4：o00x.r／ogrh.r／h02r.r／hgam.r）與 `tpl-projectile-strike`
 //   （2：42-04 世界終結的 n003.r／n01g.r —— `delayed{只排程演出}` 也算演出之後才收得進來）。
 //   ⛔ 棘輪只准往下：不把這一行跟著降，之後它會靜靜地允許爬回 130。
-const HAND_WRITTEN_BASELINE = 124;
+// ⭐ 2026-09-09（GH#1146 試點）：124 → 123（−1）。降的那一支是 `godie-efur.e`
+//   （13-03 龍頭戲畫。布陣）—— ⭐ 第一支綁 `tpl-area-strike` 的技能。
+//   ⭐ 它證明了**產生器發得出模板綁定**：來源列加一格 `template=`，
+//   `templatizeEquivalence.test.ts` 逐位元判等價（158 條綠）。
+//   ⇒ 同一份模板今天還配得上**另外 11 支**（`templatize.py` 逐支印出），
+//     每一支都是「來源列加一格」⇒ ⭐ 124 → 112 是做得完的。
+const HAND_WRITTEN_BASELINE = 123;
 
 /**
  * ⭐ 判定寫成**純函式**，這樣 sentinel 餵得進去 ——
