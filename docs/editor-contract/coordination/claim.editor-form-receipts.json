@@ -5,7 +5,7 @@
   "from": "codex",
   "to": "main",
   "baseCommit": "0709f475fbbe966f0f1f009dc4b65ee67e24d5a9",
-  "contractFingerprint": "9f3ab477601fa13e",
+  "contractFingerprint": "f1ad1aba71563118",
   "title": "Editor 175 顆積木的 React 操作與回讀：170 通過、5 不可用",
   "claims": [
     {
@@ -29,7 +29,7 @@
     "brickInputSha256": "6b55e5354fe728fd64d6dcfc8255ce69903b10660d0db1953c51474dc0d29db3",
     "capabilityFingerprint": "daccedce",
     "typeCatalog": "docs/editor-contract/ggd-type-catalog.json",
-    "typeCatalogSha256": "9f3ab477601fa13ef95c4a4cd5136c2461faa27d77942a49490bf8d08fdbbcff"
+    "typeCatalogSha256": "f1ad1aba71563118de0b1a91e13f9d93870f688c2b9dd565378cdc3afaa64813"
   },
   "summary": {
     "total": 175,
@@ -3220,7 +3220,7 @@
       "surface": "ability.effects[].kind=pull",
       "renderable": true,
       "reason": null,
-      "controlCount": 19,
+      "controlCount": 20,
       "editedPath": "value.radius",
       "parameterEdited": true,
       "roundTrip": true,

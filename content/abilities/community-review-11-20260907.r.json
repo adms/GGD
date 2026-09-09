@@ -7,20 +7,20 @@
   "castType": "ground",
   "maxRank": 3,
   "cooldown": [
-    90,
-    90,
-    90
+    90.0,
+    90.0,
+    90.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
-    576,
-    576,
-    576
+    576.0,
+    576.0,
+    576.0
   ],
   "manaCostTier": "大",
   "range": 6,
   "radius": 4.5,
   "rangeTier": "中",
-  "cooldownTier": "大",
   "targetsEnemies": true,
   "effects": [
     {
@@ -38,19 +38,14 @@
           "damageType": "magic",
           "amount": {
             "damageTier": "極小",
-            "mult": 0.3333333333333333,
-            "perRank": [
-              0,
-              150,
-              300
-            ]
+            "mult": 0.3333333333333333
           }
         }
       ],
       "targetMode": "reresolve"
     }
   ],
-  "castTimeSec": 0.5,
+  "castTimeSec": 1.433,
   "castTimeTier": "大",
   "icon": "assets/icons/abilities/community-review-11-20260907.r.webp",
   "template": {
@@ -63,7 +58,7 @@
       "applyTo": "enemies",
       "damageTier": "極小",
       "damageType": "magic",
-      "castTimeSec": 0.3,
+      "castTimeSec": 1.433,
       "radius": 4.5,
       "perRank": [
         0,
@@ -80,5 +75,6 @@
       "vfxKey": "fx.prim.ice.nova",
       "attachTo": "point"
     }
-  ]
+  ],
+  "radiusTier": "小"
 }

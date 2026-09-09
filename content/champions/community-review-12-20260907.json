@@ -55,16 +55,16 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "range": 3,
@@ -101,14 +101,13 @@
               "kind": "damage",
               "damageType": "physical",
               "amount": {
-                "damageTier": "小",
-                "ratios": [],
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
+                "damageTierPerRank": [
+                  "極小",
+                  "極小",
+                  "極小",
+                  "小"
+                ],
+                "ratios": []
               }
             }
           ]
@@ -149,7 +148,7 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 0.1
+      "castTimeSec": 0.367
     },
     "W": {
       "id": "community-review-12-20260907.w",
@@ -160,20 +159,20 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4.95,
+      "radius": 4.5,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
@@ -196,7 +195,7 @@
           "tickOnApply": true
         }
       ],
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.3,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/sela.w.webp",
       "template": {
@@ -218,10 +217,11 @@
           "impactRadius": 150,
           "scatterRadius": 120,
           "payout": "perImpact",
-          "castTimeSec": 0.5
+          "castTimeSec": 0.3
         },
         "inheritDefaults": true
-      }
+      },
+      "radiusTier": "小"
     },
     "E": {
       "id": "community-review-12-20260907.e",
@@ -232,16 +232,16 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -264,13 +264,7 @@
               "damageType": "physical",
               "amount": {
                 "damageTier": "極小",
-                "ratios": [],
-                "perRank": [
-                  0,
-                  100,
-                  200,
-                  300
-                ]
+                "ratios": []
               }
             },
             {
@@ -283,7 +277,7 @@
           ]
         }
       ],
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.033,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/sela.e.webp",
       "template": {
@@ -295,20 +289,14 @@
           "radius": 150,
           "damage": {
             "damageTier": "極小",
-            "ratios": [],
-            "perRank": [
-              0,
-              100,
-              200,
-              300
-            ]
+            "ratios": []
           },
           "damageType": "physical",
           "pushDistance": 200,
           "pushSpeed": 872,
           "pushFrom": "facing",
           "pushLaunchHeight": 0,
-          "castTimeSec": 0.1
+          "castTimeSec": 1.033
         },
         "inheritDefaults": true
       }
@@ -322,14 +310,14 @@
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        90,
-        90,
-        90
+        90.0,
+        90.0,
+        90.0
       ],
       "manaCost": [
-        576,
-        576,
-        576
+        576.0,
+        576.0,
+        576.0
       ],
       "manaCostTier": "大",
       "range": 6,
@@ -353,19 +341,14 @@
               "damageType": "physical",
               "amount": {
                 "damageTier": "極小",
-                "mult": 0.3333333333333333,
-                "perRank": [
-                  0,
-                  150,
-                  300
-                ]
+                "mult": 0.3333333333333333
               }
             }
           ],
           "targetMode": "reresolve"
         }
       ],
-      "castTimeSec": 0.5,
+      "castTimeSec": 1.433,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/sela.r.webp",
       "template": {
@@ -378,7 +361,7 @@
           "applyTo": "enemies",
           "damageTier": "極小",
           "damageType": "physical",
-          "castTimeSec": 0.3,
+          "castTimeSec": 1.433,
           "radius": 4.5,
           "perRank": [
             0,
@@ -387,7 +370,8 @@
           ]
         },
         "inheritDefaults": true
-      }
+      },
+      "radiusTier": "小"
     }
   },
   "exAbility": "community-review-12-20260907.ex",

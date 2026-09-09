@@ -1,13 +1,13 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.267,
       "castType": "self",
       "cooldown": [
-        15,
-        15,
-        15,
-        15
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "cooldownTier": "小",
       "description": "「對鏡練習我是路人！」\n對鏡練台詞，AP +80 持續 3 秒；沒有無敵。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -26,22 +26,20 @@
       ],
       "id": "b2-shadow.e",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
       "maxRank": 4,
       "name": "對鏡練習我是路人",
       "provenance": "editor-json",
-      "range": 6,
-      "rangeTier": "中",
+      "range": 0.0,
       "slot": "E",
       "template": {
         "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.267,
           "duration": 3,
           "modifiers": [
             {
@@ -62,13 +60,13 @@
       ]
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "self",
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "cooldownTier": "小",
       "description": "「觀眾請往舞台靠攏！」\n工作人員引導觀眾：半徑 6 內最多 6 名敵人拉到自己 1.5 單位外。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -81,29 +79,28 @@
           "shape": "circle",
           "side": "enemies",
           "speed": 20,
-          "stopDistance": 1.5
+          "stopDistance": 1.5,
+          "radiusTier": "中"
         }
       ],
       "id": "b2-shadow.q",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
       "maxRank": 4,
       "name": "觀眾請往舞台靠攏",
       "provenance": "editor-json",
       "radius": 3,
-      "range": 6,
-      "rangeTier": "中",
+      "range": 0.0,
       "slot": "Q",
       "targetsEnemies": true,
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "self",
           "effects": [
             {
@@ -128,15 +125,16 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
-      ]
+      ],
+      "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.833,
       "castType": "ground",
       "cooldown": [
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0
       ],
       "cooldownTier": "大",
       "description": "「I AM 加班到 ATOMIC！」\n中級直線魔法加 0.7725 AP（正式出身縮放後）；只有實際 AP 增益能提高這段，沒有偽裝成原作核爆。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -144,11 +142,10 @@
         {
           "aim": "target",
           "amount": {
-            "damageTier": "中",
-            "perRank": [
-              0,
-              750,
-              1500
+            "damageTierPerRank": [
+              "極小",
+              "小",
+              "中"
             ],
             "ratios": [
               {
@@ -167,9 +164,9 @@
       ],
       "id": "b2-shadow.r",
       "manaCost": [
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -182,13 +179,12 @@
         "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
         "params": {
           "aim": "target",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.833,
           "damage": {
-            "damageTier": "中",
-            "perRank": [
-              0,
-              750,
-              1500
+            "damageTierPerRank": [
+              "極小",
+              "小",
+              "中"
             ],
             "ratios": [
               {
@@ -212,13 +208,13 @@
       ]
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "self",
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "cooldownTier": "小",
       "description": "「掌聲先等零點七秒！」\n等 0.7 秒才在自己半徑 3 重新選敵，最多 6 人中級魔法傷害；敵人走開可躲，本體死亡取消。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -229,12 +225,11 @@
           "effects": [
             {
               "amount": {
-                "damageTier": "中",
-                "perRank": [
-                  0,
-                  500,
-                  1000,
-                  1500
+                "damageTierPerRank": [
+                  "極小",
+                  "極小",
+                  "小",
+                  "中"
                 ]
               },
               "damageType": "magic",
@@ -247,29 +242,29 @@
           "shape": "circle",
           "side": "enemies",
           "stopOnCasterDeath": true,
-          "targetMode": "reresolve"
+          "targetMode": "reresolve",
+          "radiusTier": "極小"
         }
       ],
       "id": "b2-shadow.w",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
       "name": "掌聲先等零點七秒",
       "provenance": "editor-json",
       "radius": 3,
-      "range": 6,
-      "rangeTier": "中",
+      "range": 0.0,
       "slot": "W",
       "targetsEnemies": true,
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "self",
           "effects": [
             {
@@ -279,6 +274,7 @@
                 {
                   "amount": {
                     "damageTier": "中",
+                    "flat": 1000,
                     "perRank": [
                       0,
                       500,
@@ -310,7 +306,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
-      ]
+      ],
+      "radiusTier": "極小"
     }
   },
   "archetype": "fighter",
@@ -359,7 +356,6 @@
   "id": "b2-shadow",
   "modelKey": "champ.thorne",
   "name": "闇影",
-  "icon": "assets/icons/champions/b2-shadow.webp",
   "origin": "法刺",
   "passiveAbility": "b2-shadow.passive",
   "role": "fighter",
@@ -370,5 +366,6 @@
     "E",
     "R"
   ],
-  "tags": []
+  "tags": [],
+  "icon": "assets/icons/champions/b2-shadow.webp"
 }

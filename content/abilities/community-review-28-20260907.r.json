@@ -7,20 +7,20 @@
   "castType": "ground",
   "maxRank": 3,
   "cooldown": [
-    90,
-    90,
-    90
+    90.0,
+    90.0,
+    90.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
-    576,
-    576,
-    576
+    576.0,
+    576.0,
+    576.0
   ],
   "manaCostTier": "大",
   "range": 4.5,
   "radius": 2.75,
   "rangeTier": "小",
-  "cooldownTier": "大",
   "targetsEnemies": true,
   "effects": [
     {
@@ -37,12 +37,7 @@
           "damageType": "physical",
           "amount": {
             "damageTier": "極小",
-            "ratios": [],
-            "perRank": [
-              0,
-              150,
-              300
-            ]
+            "ratios": []
           }
         },
         {
@@ -55,7 +50,7 @@
       ]
     }
   ],
-  "castTimeSec": 0.5,
+  "castTimeSec": 1.433,
   "castTimeTier": "大",
   "icon": "assets/icons/abilities/community-review-28-20260907.r.webp",
   "template": {
@@ -67,19 +62,14 @@
       "radius": 150,
       "damage": {
         "damageTier": "極小",
-        "ratios": [],
-        "perRank": [
-          0,
-          150,
-          300
-        ]
+        "ratios": []
       },
       "damageType": "physical",
       "pushDistance": 200,
       "pushSpeed": 872,
       "pushFrom": "facing",
       "pushLaunchHeight": 0,
-      "castTimeSec": 0.1
+      "castTimeSec": 1.433
     },
     "inheritDefaults": true
   },

@@ -1,11 +1,11 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.667,
   "castType": "ground",
   "cooldown": [
-    45,
-    45,
-    45,
-    45
+    45.0,
+    45.0,
+    45.0,
+    45.0
   ],
   "cooldownTier": "小",
   "description": "「英雄招募延時坑！」\n以起手命中中心（沒有命中則施法點）定坑，0.6 秒後重選半徑 2.5 的敌人，各定身 2 秒；坑是一次排程區域，沒有永久地形洞。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -24,24 +24,23 @@
       ],
       "kind": "delayed",
       "maxTargets": 4,
-      "radius": 2.5,
+      "radius": 3.0,
       "shape": "circle",
       "side": "enemies",
       "stopOnCasterDeath": true,
-      "targetMode": "reresolve"
+      "targetMode": "reresolve",
+      "radiusTier": "極小"
     }
   ],
   "id": "b2-touka.q",
   "manaCost": [
-    144,
-    144,
-    144,
-    144
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "manaCostTier": "小",
   "maxRank": 4,
   "name": "英雄招募延時坑",
-  "icon": "assets/icons/abilities/b2-touka.q.webp",
   "provenance": "editor-json",
   "radius": 3,
   "range": 6,
@@ -52,7 +51,7 @@
   "template": {
     "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.667,
       "castType": "ground",
       "effects": [
         {
@@ -87,5 +86,6 @@
       "attachTo": "caster",
       "vfxKey": "fx.prim.arcane.nova"
     }
-  ]
+  ],
+  "radiusTier": "極小"
 }

@@ -1,7 +1,121 @@
 {
   "collection": "ability-templates",
-  "hash": "444e6cd5b4aa",
+  "hash": "1549a016b360",
   "entries": [
+    {
+      "id": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+      "path": "ability-templates/hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8.json",
+      "hash": "cba5b2f29e6f",
+      "size": 1411
+    },
+    {
+      "id": "hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b",
+      "path": "ability-templates/hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b.json",
+      "hash": "7687b75d1bb1",
+      "size": 2406
+    },
+    {
+      "id": "hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804",
+      "path": "ability-templates/hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804.json",
+      "hash": "d08ea1add026",
+      "size": 3868
+    },
+    {
+      "id": "hero-template.231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd6",
+      "path": "ability-templates/hero-template.231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd6.json",
+      "hash": "b61b2a1c1ffc",
+      "size": 6171
+    },
+    {
+      "id": "hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16",
+      "path": "ability-templates/hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16.json",
+      "hash": "3bbc417d5c5a",
+      "size": 2499
+    },
+    {
+      "id": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+      "path": "ability-templates/hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6.json",
+      "hash": "9c7291d301ab",
+      "size": 2058
+    },
+    {
+      "id": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+      "path": "ability-templates/hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550.json",
+      "hash": "ba349d3ee57d",
+      "size": 1518
+    },
+    {
+      "id": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71",
+      "path": "ability-templates/hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71.json",
+      "hash": "a22546087b67",
+      "size": 4537
+    },
+    {
+      "id": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+      "path": "ability-templates/hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4.json",
+      "hash": "c3f995f4bfa4",
+      "size": 1664
+    },
+    {
+      "id": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+      "path": "ability-templates/hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806.json",
+      "hash": "44ed9bdce3fd",
+      "size": 2897
+    },
+    {
+      "id": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
+      "path": "ability-templates/hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b.json",
+      "hash": "7e5f6a5e7703",
+      "size": 2232
+    },
+    {
+      "id": "hero-template.a0174c3324e732c421ab641d1e36cd2f49f758475f851ee4",
+      "path": "ability-templates/hero-template.a0174c3324e732c421ab641d1e36cd2f49f758475f851ee4.json",
+      "hash": "1829800740ba",
+      "size": 843
+    },
+    {
+      "id": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+      "path": "ability-templates/hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692.json",
+      "hash": "ce3a548348b5",
+      "size": 1366
+    },
+    {
+      "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+      "path": "ability-templates/hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77.json",
+      "hash": "5e28e73ce269",
+      "size": 859
+    },
+    {
+      "id": "hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52",
+      "path": "ability-templates/hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52.json",
+      "hash": "71dee08ad6f5",
+      "size": 1861
+    },
+    {
+      "id": "hero-template.c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f55010",
+      "path": "ability-templates/hero-template.c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f55010.json",
+      "hash": "8d2edc181c15",
+      "size": 3353
+    },
+    {
+      "id": "hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c",
+      "path": "ability-templates/hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c.json",
+      "hash": "3564b6a4aa6e",
+      "size": 2255
+    },
+    {
+      "id": "hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368",
+      "path": "ability-templates/hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368.json",
+      "hash": "3f80978b955a",
+      "size": 1521
+    },
+    {
+      "id": "hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990",
+      "path": "ability-templates/hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990.json",
+      "hash": "c76d7faa4f0a",
+      "size": 3702
+    },
     {
       "id": "tpl-ally-shield",
       "path": "ability-templates/tpl-ally-shield.json",

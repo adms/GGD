@@ -1,11 +1,11 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.267,
   "castType": "targeted",
   "cooldown": [
-    15,
-    15,
-    15,
-    15
+    15.0,
+    15.0,
+    15.0,
+    15.0
   ],
   "cooldownTier": "小",
   "description": "「債務人請勿插話！」\n指定敵人獲得 magic-break 與 silenced 旗標 2.5 秒，期間不能施法。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -19,15 +19,13 @@
   ],
   "id": "b2-orphen.e",
   "manaCost": [
-    144,
-    144,
-    144,
-    144
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "manaCostTier": "小",
   "maxRank": 4,
   "name": "債務人請勿插話",
-  "icon": "assets/icons/abilities/b2-orphen.e.webp",
   "provenance": "editor-json",
   "range": 6,
   "rangeTier": "中",
@@ -37,7 +35,7 @@
   "template": {
     "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.267,
       "status": {
         "duration": 2.5,
         "silenced": true,

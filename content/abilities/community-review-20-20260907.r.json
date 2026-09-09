@@ -7,25 +7,25 @@
   "castType": "skillshot",
   "maxRank": 3,
   "cooldown": [
-    90,
-    90,
-    90
+    90.0,
+    90.0,
+    90.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
-    576,
-    576,
-    576
+    576.0,
+    576.0,
+    576.0
   ],
   "manaCostTier": "大",
   "range": 8,
   "rangeTier": "大",
-  "cooldownTier": "大",
   "targetsEnemies": true,
   "effects": [
     {
       "kind": "delayed",
       "shape": "circle",
-      "radius": 2.75,
+      "radius": 3.0,
       "side": "enemies",
       "delaySec": 0.05,
       "count": 4,
@@ -36,12 +36,7 @@
           "damageType": "magic",
           "amount": {
             "damageTier": "極小",
-            "ratios": [],
-            "perRank": [
-              0,
-              150,
-              300
-            ]
+            "ratios": []
           }
         }
       ],
@@ -50,10 +45,11 @@
         "stepDist": 1.83,
         "dir": "facing"
       },
-      "hitOncePerTarget": true
+      "hitOncePerTarget": true,
+      "radiusTier": "極小"
     }
   ],
-  "castTimeSec": 0.5,
+  "castTimeSec": 0.833,
   "castTimeTier": "大",
   "icon": "assets/icons/abilities/community-review-20-20260907.r.webp",
   "template": {
@@ -64,15 +60,10 @@
       "segmentAoe": 150,
       "damage": {
         "damageTier": "極小",
-        "ratios": [],
-        "perRank": [
-          0,
-          150,
-          300
-        ]
+        "ratios": []
       },
       "damageType": "magic",
-      "castTimeSec": 0.35
+      "castTimeSec": 0.833
     },
     "inheritDefaults": true
   },

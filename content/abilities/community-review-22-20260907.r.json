@@ -7,19 +7,17 @@
   "castType": "self",
   "maxRank": 3,
   "cooldown": [
-    45,
-    45,
-    45
+    45.0,
+    45.0,
+    45.0
   ],
-  "manaCost": [
-    576,
-    576,
-    576
-  ],
-  "manaCostTier": "大",
-  "range": 6,
-  "rangeTier": "中",
   "cooldownTier": "大",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
   "effects": [
     {
       "kind": "applyBuff",
@@ -40,7 +38,7 @@
       "applyTo": "self"
     }
   ],
-  "castTimeSec": 0.5,
+  "castTimeSec": 0.067,
   "castTimeTier": "大",
   "icon": "assets/icons/abilities/community-review-22-20260907.r.webp",
   "template": {
@@ -48,7 +46,7 @@
     "params": {
       "duration": 3,
       "modifiers": [],
-      "castTimeSec": 0.15
+      "castTimeSec": 0.067
     },
     "inheritDefaults": true
   },

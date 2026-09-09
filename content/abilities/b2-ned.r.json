@@ -1,10 +1,10 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.833,
   "castType": "ground",
   "cooldown": [
-    45,
-    45,
-    45
+    45.0,
+    45.0,
+    45.0
   ],
   "cooldownTier": "大",
   "description": "「青蛙劍術會議沿線開！」\n沿直線打出物理劍波；用方向和線寬決定命中，不是假分身攻擊。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：青蛙劍士認真揮劍，旁人只注意他到底會不會呱。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -12,12 +12,10 @@
     {
       "aim": "target",
       "amount": {
-        "damageTier": "中",
-        "flat": 1000,
-        "perRank": [
-          0,
-          750,
-          1500
+        "damageTierPerRank": [
+          "極小",
+          "小",
+          "中"
         ]
       },
       "damageType": "physical",
@@ -30,14 +28,13 @@
   ],
   "id": "b2-ned.r",
   "manaCost": [
-    144,
-    144,
-    144
+    144.0,
+    144.0,
+    144.0
   ],
   "manaCostTier": "小",
   "maxRank": 3,
   "name": "青蛙劍術會議沿線開",
-  "icon": "assets/icons/abilities/b2-ned.r.webp",
   "provenance": "editor-json",
   "range": 6,
   "rangeTier": "中",
@@ -47,14 +44,12 @@
     "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
     "params": {
       "aim": "target",
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.833,
       "damage": {
-        "damageTier": "中",
-        "flat": 1000,
-        "perRank": [
-          0,
-          750,
-          1500
+        "damageTierPerRank": [
+          "極小",
+          "小",
+          "中"
         ]
       },
       "damageType": "physical",

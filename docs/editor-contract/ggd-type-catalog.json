@@ -10,16 +10,1918 @@
     "⚠️ ⭐ 挑一個 `modelKey` 之前查 `modelFxEmitters.modelsWithEmitters`：那顆模型若自帶粒子，`modelFxEmitters.lostByEmitters` 的每一格**寫了也只作用在網格那一半** ⇒ ⛔ 同一顆模型會顯示兩種顏色／兩種大小，而沒有任何東西紅。"
   ],
   "counts": {
-    "templates": 58,
-    "pickable": 47,
+    "templates": 77,
+    "pickable": 66,
     "analysedButUnwired": 1,
     "shells": 9,
     "sentinels": 1,
-    "inertParamsAcrossPickable": 20,
+    "inertParamsAcrossPickable": 22,
     "matrixPresent": 154,
     "matrixTheoretical": 325
   },
   "types": [
+    {
+      "id": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+      "name": "單體斬擊",
+      "family": "single-strike",
+      "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。 另外兩格選填：`invulnerableSec` 是**起手的無敵幀**（護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`dot` 是**施法者自己**背上的持續傷害（界王拳那一族的代價；打在敵人身上的同型傷害請用「吸血／汲取」那一族）。三格全部清空 ⇒ 就是一發純傷害。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 9,
+      "requires": [
+        "applyStatus",
+        "invulnerable",
+        "periodicDamage"
+      ],
+      "exemplar": {
+        "jass": "A0OD",
+        "skill": "23-04 雷焰聖劍"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              350
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "dot": {
+          "type": "dot",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "invulnerableSec": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "status": {
+          "type": "applyStatus",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b",
+      "name": "瞬移貼身",
+      "family": "teleport",
+      "description": "把身體搬到別的地方 —— ⛔ 但它**不是**無條件穿牆的真瞬移。展開出來的是 `kind:\"leap\"`（弧高 0、最短 2 tick，`templates/expand.ts` 的 teleport 家族），⛔ 不是 `blink`，也不授予飛行。【空中】飛行途中每 tick 不做碰撞、不吃地形。【落點】起跳前就先經 `resolveLandingPoint(mode:\"leap\")` → `resolveDisplacementEnd` 用 `world.wallBlock` 結算（出貨 `content/config/displacement-tiers.json`：enabled、leap:\"clamp\"、flightExempt:true、pillarsBlock:false）：① 一般（非飛行）角色的落點被**截在牆前**這一側（graybox 牆只有 2 單位厚，「終點不在牆裡」不等於「在牆的這一邊」）；② 只有 `flightExempt` **且**被位移的那具身體本來就 `flightIgnoresObstacles`（走路就穿得過牆的飛行狀態）才豁免牆體 —— 問的是被搬的人，不是施法者；③ 場地**邊界**與落點合法性照樣截斷，柱子不算牆。⇒ 「空中不碰撞」與「能穿到牆另一邊」是兩件事（GH#1044）。三種終點：貼上目標單位（08-02 萊丁快速劍、17-03 空破圓斬）／指向的地面點（82-02 虛空瞬動，距離上限就是技能自己的射程，不是這裡的欄位）／把一位隊友拉到自己腳邊（84-002 我只想確定你在這裡；`inPlace`＋`dragToCaster`，只拉到施法者腳邊，不回血不回魔）。傷害是**可選**的落地傷害（`onLand`，半徑 `arriveRadius`），抵達點才結算。⚠️ 「抵達耗時」的下限是 0.067 秒（模擬器弧線最短 2 tick），不是原作的同幀瞬移；拉長它就變成看得見的殘影衝刺。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 7,
+      "requires": [
+        "leap"
+      ],
+      "exemplar": {
+        "jass": "A07M",
+        "skill": "17-03 空破圓斬"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "arriveRadius": {
+          "type": "number",
+          "default": 150,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.5,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damage": {
+          "type": "scaling",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "destination": {
+          "type": "enum",
+          "default": "targetUnit",
+          "values": [
+            "targetUnit",
+            "castPoint",
+            "rallyToCaster"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "travelSec": {
+          "type": "number",
+          "default": 0.067,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804",
+      "name": "召喚代理",
+      "family": "summon-agent",
+      "description": "召喚代理 —— 生出 N 具會自己打的身體。⭐ `body:\"self\"` = 分身（複製施法者自己）。⚠️ `cleanse` 是獨立的一格：卡面上的「除掉身上的法術效果」與召喚是兩件事，⛔ 綁死在一起就表達不出「只召喚、不淨化」那一半的技能。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 4,
+      "requires": [
+        "summon"
+      ],
+      "exemplar": {
+        "jass": "A0??",
+        "skill": "28-02 分身（普屋）"
+      },
+      "wiring": "both",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [
+        "championId"
+      ],
+      "params": {
+        "body": {
+          "type": "enum",
+          "default": "self",
+          "values": [
+            "champion",
+            "self"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "championId": {
+          "type": "docRef",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": "⛔ 只有 `body:\"champion\"` 時才讀得到它；`self`（本家族的預設）時由 sim 端填施法者自己 ⇒ 它沒有一個有意義的預設。"
+        },
+        "cleanse": {
+          "type": "enum",
+          "default": "none",
+          "values": [
+            "none",
+            "status",
+            "all"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "count": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
+          "inert": null
+        },
+        "damageMult": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "durationSec": {
+          "type": "number",
+          "default": 10,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "formation": {
+          "type": "enum",
+          "default": "ring",
+          "values": [
+            "ring",
+            "line",
+            "scatter"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "hpMult": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "maxAlive": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "onOwnerDeath": {
+          "type": "enum",
+          "default": "despawn",
+          "values": [
+            "despawn",
+            "persist"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "spread": {
+          "type": "number",
+          "default": 2,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "hero-template.231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd6",
+      "name": "拉扯投擲",
+      "family": "pull-throw",
+      "description": "P2 拉扯投擲 (需位移詞彙)。\n\n⭐ 契約（GH#1050）：這一族是 ground 施法 —— 玩家選的點是**抓取圈的中心 ＋ 拋投的方向**，⛔ 不是終點。落點＝起跳點（`grabMode: dragToCaster` 是施法者、`throwOnly` 是受害者自己）＋ 方向 × `throwDistance`（`throwMode: distance`，原作這一族每一支都是方向×定長：A0U1 沿施法者朝向、A0L6/A0SQ 沿施法者→受害者）。`throwMode: point` 是 2026-09-06 之前的行為（選點＝終點），留著當 rollback；那個模式下 `throwDistance` 不寫進節點。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 3,
+      "requires": [],
+      "exemplar": {
+        "jass": "war3map.j:4753-4759 / 4793（共用投擲引擎）· 50201 / 29712 / 52208 / 54322（逐支 throwDistance）",
+        "skill": "52-02 蹂躪編年史（`A0U1`，`content/abilities/godie-hapm.w.json`）"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "apexHeight": {
+          "type": "number",
+          "default": 300,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "durationSec": {
+          "type": "number",
+          "default": 0.42,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "grabInvulnSec": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "grabMode": {
+          "type": "enum",
+          "default": "dragToCaster",
+          "values": [
+            "dragToCaster",
+            "throwOnly"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "landApRatio": {
+          "type": "number",
+          "default": 0.5,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "landDamageTier": {
+          "type": "enum",
+          "default": "小",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "landRadius": {
+          "type": "number",
+          "default": 4.95,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "mode": {
+          "type": "enum",
+          "default": "toPoint",
+          "values": [
+            "toPoint",
+            "inPlace"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "throwDistance": {
+          "type": "number",
+          "default": 500,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "throwMode": {
+          "type": "enum",
+          "default": "distance",
+          "values": [
+            "distance",
+            "point"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16",
+      "name": "瞬移突斬",
+      "family": "blink-strike",
+      "description": "⭐ 瞬移到目標身邊、停在他前面一點點，落地當下打一發。⚠️ 出貨量到的形狀（2026-09-02，⛔ 不是我編的）：5 支帶 `to:\"targetUnit\"` 的 blink 技能 —— `godie-h01o.q`（magic ap 0.5）· `godie-n01c.w`（physical ad 0.5）· `godie-nbbc.w`（只有特效）· `godie-u00v.r`（大組合）· `godie-efur.q`（致盲）。⭐ 其中 4/5 支的 `stopShortUnits` 逐位元都是 **1.8**。⛔ 另有 7 支純位移（`to:\"point\"`，零 `onArrive`）—— 那是**另一個家族**，⛔ 不走這一份。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 5,
+      "requires": [
+        "blink"
+      ],
+      "exemplar": {
+        "jass": "(P2/P3)",
+        "skill": "godie-n01c.w（出貨最接近預設的那一支）"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "arriveVfxId": {
+          "type": "docRef",
+          "default": "fx.prim.lightning.slash",
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "coeff": 0.5,
+                "stat": "ad"
+              }
+            ]
+          },
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "physical",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "range": {
+          "type": "number",
+          "default": 6,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "stopShortUnits": {
+          "type": "number",
+          "default": 1.8,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+      "name": "回血",
+      "family": "heal",
+      "description": "加一個量的回血（`kind:\"heal\"`，走 Scaling：perRank ＋ 係數），⛔ 不是把生命回到某個比例 —— 那是 tpl-life-manipulate 的 `restore`，兩個 effect kind，⛔ 不塞進同一個下拉。`target`：self ＝ 對自己施放（castType self）；ally ＝ 指定一位隊友（targeted、點不到敵人）。`applyTo` 留空 ＝ 回這次施法的對象（self 施法就是自己、指定隊友就是那位隊友）；填 self ＝ 不管點誰都回自己（GH#1046：省略的語意是 ctx.targets，對回血族那正是要的人）。出貨 5 支：42-02 吸血祭品 ×2（self）· 08-01 雙龍紋 ×2 · 99-02 最初的聲音（ally）。⚠️ 回血沒有級距表（damage-tiers 是傷害的），所以 `amount` 走 perRank —— 五支出貨文件本來就是字面 perRank，這裡沒有第二個住處。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 9,
+      "requires": [],
+      "exemplar": {
+        "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）；原作對照見 tools/skill-remake 的 08-01 列",
+        "skill": "08-01 雙龍紋（content/abilities/godie-n01c.q.json）"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "amount": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              50,
+              85,
+              120,
+              155
+            ],
+            "ratios": [
+              {
+                "coeff": 0.465,
+                "stat": "ap"
+              }
+            ]
+          },
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "applyTo": {
+          "type": "enum",
+          "default": null,
+          "values": [
+            "self",
+            "target"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.067,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "target": {
+          "type": "enum",
+          "default": "ally",
+          "values": [
+            "self",
+            "ally"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+      "name": "自訂效果序列",
+      "family": "effect-sequence",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 10,
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "exemplar": {
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。",
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "amount": {
+                "damageTier": "極小"
+              },
+              "damageType": "magic",
+              "kind": "damage"
+            }
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "values": [
+            "enemies",
+            "allies"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71",
+      "name": "直線貫穿",
+      "family": "line-strike",
+      "description": "⭐【一道從施法者身上射出去的直線，一次結算】—— `damageLine` 一顆節點，打到線上的每一個人。⚠️ 它與「沿線分段推進」（`tpl-line-sweep`／`tpl-traveling-wave`：`delayed` ＋ `advance`，每一段各結算一次）是**兩件事**：這一族是**一次**判定，卡面寫的就是那一次的數字。\n\n⭐ `aim` 是這一族唯一的形狀開關，而它同時決定三格（出貨 9 支手寫 `damageLine` 逐支量到，9/9 一致，⛔ 不是我編的規則）：`facing` ＝ 朝**面向**射出去（`castType:\"skillshot\"`、起點那一格不算，9 支裡 4 支：09-04 龜派氣功 ×2 · 90-04 陽光烈焰 ×2）；`target` ＝ 從施法者射向一個**指定點**（`castType:\"ground\"`、`includeOrigin:true` 把起點算進去，9 支裡 5 支：20-03 約束與勝利之劍 ×2 · 59-04 野戰型陽電子砲 · 15-01 雷神槍 · 79-03 月牙天衝）。\n\n⛔ 射程（`range`）與敵我（`targetsEnemies`）住在**技能骨架**，⛔ 不是這裡的欄位 —— 出貨 9 支的 `range` 6／8／12 各不相同，`targetsEnemies` 有寫的 6 支沒寫的 3 支（走可組合鍵讓文件的值站著）。⛔ 這一族也不發 `radius`：`damageLine` 有自己的 `length`／`width` 幾何，文件層再帶一格 `radius` 會被 merge 刪掉（正規化器會擋）。\n\n⭐ 光束的**演出**（`spawnModelFx`／`spawnVfx`／`screenShake`）不在這裡 —— 行為模板 × 演出是一個外積，演出留在技能自己的 `effects` 裡（`mergeExpansion` 保留展開沒產出的 kind）。⛔ 不要為了「看起來像一道光束」把模型參數搬進來。\n\n⚠️ 還沒有槽的兩格（出貨量到，⛔ 不是漏寫）：`onHitTargets`（打到之後對**每一個**受害者再做一件事 —— 15-01 上減速、79-03 追加條件傷害）與 `resourcePct`（59-04 按目標最大生命的百分比）。它們今天的客戶全部是 `skillremake:json` 的產物，⇒ 要先改 `tools/skill-remake/batch1.py` 的來源列才碰得到（GH#993）；在那之前加槽就是一格沒有人讀的欄位（第一·五守則）。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 9,
+      "requires": [
+        "damageLine"
+      ],
+      "exemplar": {
+        "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）",
+        "skill": "90-04 陽光烈焰（content/abilities/godie-h02r.r.json）"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "aim": {
+          "type": "enum",
+          "default": "facing",
+          "values": [
+            "facing",
+            "target"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.833,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "damageTier": "大"
+          },
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "length": {
+          "type": "number",
+          "default": 11.67,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "width": {
+          "type": "number",
+          "default": 1.4,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+      "name": "純位移瞬移",
+      "family": "blink",
+      "description": "把自己的身體搬到指定的地面點 —— 真的瞬移（`kind:\"blink\"`；owner 2026-08-09「是真的瞬移，不是平移」，GH#301-2），中間那兩格身體不存在：不會被範圍技掃到、飛行途中不吃碰撞；落點仍照 `content/config/displacement-tiers.json` 結算牆前截斷／飛行豁免／場地邊界（GH#1044）。距離上限就是技能自己的射程（skeleton 的 `range`，⛔ 不是這裡的欄位）。⛔ 零參數是刻意的：出貨 7 支（57-02 任意門 · 86-02 電光一閃 · 09-02 瞬間移動 ×2 · 65-01 神出鬼沒 · 58-00 電光一閃 ×2）的 `effects` 一個位元組都不差，多一格就是編一格。要「瞬移到目標身上再打一下」走 tpl-blink-strike；要「抵達點才結算 onLand」走 tpl-teleport。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 9,
+      "requires": [
+        "blink"
+      ],
+      "exemplar": {
+        "jass": "A0PM 82-02 虛空瞬動 j:35335-35336（GetOrderPointLoc → SetUnitPositionLoc；同一台「指向點」機器，expand.ts teleport 註解逐字）",
+        "skill": "57-02 任意門（content/abilities/godie-n00b.e.json）"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.467,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+      "name": "週期領域",
+      "family": "periodic-field",
+      "description": "一片每隔 intervalSec 就把圈內重算一次的傷害場。⭐ 它與【延遲序列】的差別只有一格 anchor：point = 放完就留在原地(04-02 炸彈陣的火柱、37-03 災難之牆)；caster = 圈跟著施法者走(90-01 飛葉快刀「每秒對附近的敵人造成傷害」、92-04 馬勒戈壁「每秒奪取周圍英雄」、99-04「初音週遭的部隊每秒受到傷害」)。⛔ 落幾發不是一格參數 —— 它是 durationSec / intervalSec 算出來的(第〇·四守則:算得出來的值不進文件)。⭐⭐【平衡決策的唯一住處】damageTier 名的是**整段**的預算,⛔ 不是逐發的量:每一發拿到 整段÷發數,而那個除法寫成 Scaling.mult(一個**運算子**,⛔ 不是算好的數字)。出處是 config/damage-tier-exemptions.json 的 dot-per-tick 逐字「五級距的錨點是『20 發打死中位英雄』,那把尺量的是**單發**」。⇒ 這個決策住在 expand.ts 的 FAMILIES['periodic-field'] **一列**,⛔ 不可以抄進 N 份技能 JSON。⚠️ applyTo 今天只選圈的 side(enemies/allies),⛔ 治療場還沒有參數 —— 要做的話是補一格 healTier,⛔ 不是拿 damageTier 去治療。⚠️ intervalSec 的下界在 2026-08-30 從 0.034(＝30Hz 的一個 tick)收到 0.2,兩個理由:①一片每一幀都跳的圈是**光環**,⛔ 不是週期領域 —— 這一族的卡面逐字都是「每秒」;②發數＝durationSec÷intervalSec,而模擬器一次施放排得出的段數上界是 DELAYED_MAX_COUNT=32(sim/effects/kindLimits.ts) ⇒ 下界太小會讓一組合法的表單值展開成一個排不出來的班表。超界時 expand.ts **大聲擲錯並指名要調哪一格**,⛔ 不靜默夾掉。⛔ 收緊的當下零支出貨技能引用這份模板,所以它改變不了任何一場比賽。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 5,
+      "requires": [
+        "periodicDamage"
+      ],
+      "exemplar": {
+        "jass": "(P3 待查 —— 引擎面由 delayed.anchor 落地)",
+        "skill": "90-01 飛葉快刀（每秒對附近的敵人造成傷害，持續2秒）"
+      },
+      "wiring": "both",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "anchor": {
+          "type": "enum",
+          "default": "caster",
+          "values": [
+            "point",
+            "caster"
+          ],
+          "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
+          "inert": null
+        },
+        "applyTo": {
+          "type": "enum",
+          "default": "enemies",
+          "values": [
+            "enemies",
+            "allies"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damageTier": {
+          "type": "enum",
+          "default": "極小",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "durationSec": {
+          "type": "number",
+          "default": 5,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "hitVfx": {
+          "type": "docRef",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "intervalSec": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "radiusTier": {
+          "type": "enum",
+          "default": "中",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
+      "name": "只上狀態",
+      "family": "apply-status",
+      "description": "只掛一個狀態、不打傷害：指定一個敵人（不填 radius）或指定地面點的範圍內每一個敵人（填 radius）都吃到 `status`。⭐ 狀態的機制欄位（root／stun／moveSpeedMult／berserk／missChance／逐階 duration…）住在節點上，由 `zApplyStatus` 本人驗 —— ⛔ 不是一個 id 的下拉：id 只是 HUD 的標籤，sim 讀的是那幾格（`godie-e00t.w` 掛了 slow30 卻沒帶 moveSpeedMult，今天誰都沒減速）。出貨 7 支：70-03 木束縛之術（root）· 90-02 麻痺粉 ×2（範圍 slow60）· 30-01 綁架 ×2（root）· 02-00 淨化（root）· 44-01 死神之眼（逐階時長＋失手率）。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 9,
+      "requires": [
+        "applyStatus"
+      ],
+      "exemplar": {
+        "jass": "entanglingroots 系（root:true ↔ 22 份出貨文件的配對，expand.ts 原 CC_MECHANIC 註解）；GGD 出貨值以 content 為準（第〇·六守則第 2 層）",
+        "skill": "70-03 木束縛之術（content/abilities/godie-e010.e.json）"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.833,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "radius": {
+          "type": "number",
+          "default": 327,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "status": {
+          "type": "applyStatus",
+          "default": {
+            "duration": 1.5,
+            "root": true,
+            "statusId": "root"
+          },
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "hero-template.a0174c3324e732c421ab641d1e36cd2f49f758475f851ee4",
+      "name": "受擊反應",
+      "family": "on-hit-react",
+      "description": "受到傷害時的被動反制（反制窗/吸收轉化為紅色降級槽）。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 7,
+      "requires": [
+        "hooks"
+      ],
+      "exemplar": {
+        "jass": "A0CT",
+        "skill": "20-04 Avalon"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [
+        "reflectRadius"
+      ],
+      "params": {
+        "chance": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "internalCooldown": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "reflectDamage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              30
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "reflectRadius": {
+          "type": "number",
+          "default": 900,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": "hook 無範圍結算：反擊只打觸發者，半徑不生效"
+        }
+      }
+    },
+    {
+      "id": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+      "name": "變身強化-數值面",
+      "family": "buff-self",
+      "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。 兩格選填讓它同時掛一個「別人問得到」的名字：`statusId` 把標記併進**同一份**增益來源（延長／淨化／到期一起發生，例：三刀流），`status` 則是**另一顆獨立**的狀態節點（秒數與增益各自算，機制欄位住在節點上，例：邪王真眼）。兩格都清空 ⇒ 就是一份純數值增益。 `perRank` 是**逐階欄位表**（WC3 的 buff 一階一欄）：填了它之後每一階換的是一整組 modifier ＋ 秒數，而上面的 `modifiers`／`duration` 就沒有人讀（handler 走 `perRank[階-1]`），⛔ 但仍要填第一階的值。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 6,
+      "requires": [
+        "applyStatus"
+      ],
+      "exemplar": {
+        "jass": "A0Q6",
+        "skill": "82-04 闇之魔法"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "duration": {
+          "type": "number",
+          "default": 15,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "modifiers": {
+          "type": "statModifiers",
+          "default": [
+            {
+              "op": "flat",
+              "stat": "ad",
+              "value": 50
+            }
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "perRank": {
+          "type": "buffPerRank",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "status": {
+          "type": "applyStatus",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "statusId": {
+          "type": "docRef",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+      "name": "自訂事件被動",
+      "family": "event-passive",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 10,
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "exemplar": {
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。",
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "hooks": {
+          "type": "hooks",
+          "default": [
+            {
+              "effects": [
+                {
+                  "amount": {
+                    "damageTier": "極小"
+                  },
+                  "damageType": "magic",
+                  "kind": "damage"
+                }
+              ],
+              "on": "onBasicAttack"
+            }
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52",
+      "name": "跳躍落地",
+      "family": "leap-strike",
+      "description": "拋物線跳躍到指定點（或原地垂直跳），落地造成範圍傷害。飛行中無視地形；落點被障礙物（牆）或場地邊界擋住時，起跳當下就改瞄最近的合法落點（`world.wallBlock` 出貨 leap:\"clamp\"，落點截在牆前；只有 `flightExempt` 且被搬的那具身體本來就 `flightIgnoresObstacles` 的飛行狀態才豁免牆體，邊界照樣截斷），弧線隨之重算，你看到的落地位置就是實際位置。 兩格選填：`invulnerableSec` 是**起跳的無敵幀**（免疫在位移開始的同一刻就在，⛔ 不是落地才生效；護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`status` 是落地順便上的狀態（暈眩／定身／減速…，機制欄位住在節點上）。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 5,
+      "requires": [
+        "leap",
+        "invulnerable",
+        "applyStatus"
+      ],
+      "exemplar": {
+        "jass": "A0G3",
+        "skill": "07-03 列、在、前"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "apexHeight": {
+          "type": "number",
+          "default": 600,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "applyTo": {
+          "type": "enum",
+          "default": "self",
+          "values": [
+            "self",
+            "target"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.5,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              450
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "physical",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "durationSec": {
+          "type": "number",
+          "default": 0.82,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "invulnerableSec": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "landRadius": {
+          "type": "number",
+          "default": 330,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "mode": {
+          "type": "enum",
+          "default": "toPoint",
+          "values": [
+            "toPoint",
+            "inPlace"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "status": {
+          "type": "applyStatus",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "hero-template.c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f55010",
+      "name": "變身",
+      "family": "transform",
+      "description": "換一具身體（`championForm`）—— 英雄卡的 `transform.counterpartId` 那一份。`形態` 選 `alternate`（變過去）／`base`（變回來）／`toggle`（同一格按第二次就切回去，風王結界／紮根那一族）；`持續秒數` 清空 = 永不逾時（toggle 那四支就是）。⭐ **強化住在這一支技能裡，⛔ 不在變身身體的卡上**（owner 2026-08-13：「我決定變身所有的屬性改變都用技能標籤組合到該變身技能中就好，所以屬性不用多一份考量，都是一樣」）⇒ `增益` 那一格填 modifiers（清空 = 純換身體，出貨 9 支就是），`增益秒數` 是它自己的長度 —— ⚠️ 它**不一定等於**變身的長度（出貨 90-002 妙蛙花變身 18 秒而 AD 加成只有 6 秒）。`狀態` 那一格是伴隨的 buff/debuff 節點（38-00 邪眼那一族）。⛔ **這一族不發 `targetsEnemies`**（可組合鍵，文件自己的值站著），⛔ 也不管變身身體長什麼樣、換不換技能組 —— 那些住在 `content/champions/<變身態>.json`。⚠️ 逐階不同長度的（w3a `ahdu` 一階一格，例 06-04）今天填不進來：`持續秒數` 是單一數字槽。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 9,
+      "requires": [
+        "championForm",
+        "applyBuff",
+        "applyStatus"
+      ],
+      "exemplar": {
+        "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）；原作的 `ahdu`／`uabi` 對照見 content/champions/<變身態>.json 的 transform.triggerAbility",
+        "skill": "58-04 神騎寶貝（content/abilities/godie-ofar.r.json）—— 出貨最單純的一支：只換身體、6 秒、沒有伴隨增益"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "buffDurationSec": {
+          "type": "number",
+          "default": 6,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.667,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "durationSec": {
+          "type": "number",
+          "default": 6,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "modifiers": {
+          "type": "statModifiers",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "status": {
+          "type": "applyStatus",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "to": {
+          "type": "enum",
+          "default": "alternate",
+          "values": [
+            "alternate",
+            "base",
+            "toggle"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c",
+      "name": "鎖定連段",
+      "family": "lock-combo",
+      "description": "把一個人鎖住打完一整段。命中後目標被定住、施法者進入演出狀態（這段期間打不到他），連段一擊一擊落下，最後一記終結技在收招那一刻結算並掃過周圍。「連段次數 × 每段間隔」就是整段長度 —— 它是算出來的，所以沒有『持續時間』這個欄位可以填。⚠️ 原作的連段中施法者會一擊一擊瞬移到目標身邊，這裡沒有搬過來：那段期間雙方都被 pause + 無敵，施法者站哪裡不影響任何結算，只有終結技的圓心用得到，所以收成原地演出。想要遞減間隔（52-002 射殺百頭的 CD×0.75）也還做不到。 ⭐ owner 2026-08-13：終結技可以是**另一支具名技能**（finisherAbility，走 proxyCast 代放），⛔ 不是把那支技能的傷害抄一份進來 —— 抄一份之後那支技能改了，連段裡的版本不會跟著改。留空則沿用 finisherDamage 那個數字。發動條件也是一格（trigger）：預設 onCast，20-002 是 onReflectSuccess（反彈成功才發），所以整段連段可以掛在被動 hook 上而不是主動施放。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 6,
+      "requires": [
+        "periodicDamage",
+        "invulnerable",
+        "applyStatus",
+        "leap"
+      ],
+      "exemplar": {
+        "jass": "A0CX",
+        "skill": "84-04 給我蜂蜜"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "casterGuard": {
+          "type": "enum",
+          "default": "all",
+          "values": [
+            "all",
+            "magic",
+            "none"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "finisherAbility": {
+          "type": "docRef",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "finisherDamage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              450
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "finisherRadius": {
+          "type": "number",
+          "default": 150,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "hitCount": {
+          "type": "number",
+          "default": 5,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "hitIntervalSec": {
+          "type": "number",
+          "default": 0.4,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "lockTarget": {
+          "type": "enum",
+          "default": "stun",
+          "values": [
+            "stun",
+            "root",
+            "none"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "perHitDamage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              100
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "trigger": {
+          "type": "enum",
+          "default": "onCast",
+          "values": [
+            "onCast",
+            "onReflectSuccess",
+            "onKill",
+            "onBasicAttack",
+            "onDamageTaken"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368",
+      "name": "衝鋒推撞",
+      "family": "charge-push",
+      "description": "朝目標點直線衝鋒，抵達後對落點周圍造成範圍傷害，並把該處的敵人推開。預設貼地衝刺（衝鋒弧高 0）；把弧高拉起來就變成 52-02 蹂躪編年史那種掄飛。「推開距離」清空 = 只衝鋒不推撞（52-04 巨神一擊）。傷害與推撞都在抵達點結算，不是在起跳點。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 5,
+      "requires": [
+        "leap",
+        "knockback"
+      ],
+      "exemplar": {
+        "jass": "A0OG",
+        "skill": "38-01 邪王炎殺劍"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "apexHeight": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              350
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "physical",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "dashDistance": {
+          "type": "number",
+          "default": 600,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "dashDurationSec": {
+          "type": "number",
+          "default": 0.4,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "pushDistance": {
+          "type": "number",
+          "default": 400,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "pushFrom": {
+          "type": "enum",
+          "default": "facing",
+          "values": [
+            "caster",
+            "facing",
+            "pull"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "pushLaunchHeight": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "pushSpeed": {
+          "type": "number",
+          "default": 872,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "radius": {
+          "type": "number",
+          "default": 300,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990",
+      "name": "汲取吸附",
+      "family": "drain-leech",
+      "description": "汲取吸附：打一下 → 持續傷害（同傷害型別、同級距、同係數的 dot）→ 回施法者一個定量（`leechFlat`，⭐ 可清空 ⇒ 純「打一下＋dot」，#1073）。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 4,
+      "requires": [],
+      "exemplar": {
+        "jass": "war3map.j:26592 / 26603 / 26604 / 26608（Trig_Parasitism_Seed_Actions：buff 閘 → 5 跳 × 0.95s → 回施法者 +50）",
+        "skill": "90-00 寄生種子（妙蛙種子／妙蛙花 `godie-hgam.passive` ＋ `godie-h02r.passive`）"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "apRatio": {
+          "type": "number",
+          "default": 0.6,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damageTier": {
+          "type": "enum",
+          "default": "小",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "durationSec": {
+          "type": "number",
+          "default": 5,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "intervalSec": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "leechFlat": {
+          "type": "number",
+          "default": 50,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "stacking": {
+          "type": "enum",
+          "default": "refresh",
+          "values": [
+            "refresh",
+            "independent",
+            "stack"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
     {
       "id": "tpl-ally-shield",
       "name": "友軍護盾",
@@ -744,7 +2646,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 55
+        "ref": 98
       },
       "inertParams": [],
       "params": {
@@ -830,7 +2732,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 0
+        "ref": 12
       },
       "inertParams": [],
       "params": {
@@ -1880,7 +3782,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 0
+        "ref": 5
       },
       "inertParams": [],
       "params": {
@@ -2228,7 +4130,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 3
+        "ref": 14
       },
       "inertParams": [],
       "params": {
@@ -2716,7 +4618,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 1
+        "ref": 20
       },
       "inertParams": [],
       "params": {
@@ -2808,7 +4710,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 0
+        "ref": 11
       },
       "inertParams": [],
       "params": {
@@ -4243,7 +6145,7 @@
       "wiring": "both",
       "usedVia": {
         "preset": 0,
-        "ref": 5
+        "ref": 7
       },
       "inertParams": [],
       "params": {
@@ -4678,7 +6580,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 0
+        "ref": 5
       },
       "inertParams": [],
       "params": {
@@ -4998,7 +6900,7 @@
       "wiring": "both",
       "usedVia": {
         "preset": 0,
-        "ref": 0
+        "ref": 9
       },
       "inertParams": [],
       "params": {
@@ -5121,7 +7023,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 54
+        "ref": 75
       },
       "inertParams": [],
       "params": {
@@ -5300,7 +7202,7 @@
       "wiring": "both",
       "usedVia": {
         "preset": 0,
-        "ref": 3
+        "ref": 6
       },
       "inertParams": [
         "championId"
@@ -5454,7 +7356,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 0
+        "ref": 1
       },
       "inertParams": [],
       "params": {
@@ -5629,7 +7531,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 1
+        "ref": 7
       },
       "inertParams": [],
       "params": {

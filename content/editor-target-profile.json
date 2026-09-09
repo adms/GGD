@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_6414cfcf4e0f",
+    "contentVersion": "cv_eb910878e6e1",
     "collections": {
       "champions": {
-        "hash": "eff5269c4916",
+        "hash": "5d352b1c8e3a",
         "count": 146
       },
       "abilities": {
-        "hash": "baacabc272a1",
+        "hash": "e7efc912ca51",
         "count": 865
       },
       "items": {
@@ -58,8 +58,8 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "444e6cd5b4aa",
-        "count": 58
+        "hash": "1549a016b360",
+        "count": 77
       },
       "vfx-scripts": {
         "hash": "3d945d196d0a",
@@ -1921,6 +1921,1191 @@
       "count": 865,
       "fromTemplate": 584,
       "templates": [
+        {
+          "id": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+          "family": "single-strike",
+          "status": "enabled",
+          "params": {
+            "castTimeSec": {
+              "default": 0,
+              "max": 5,
+              "min": 0,
+              "optional": true,
+              "type": "number",
+              "unit": "s"
+            },
+            "damage": {
+              "default": {
+                "perRank": [
+                  350
+                ],
+                "ratios": []
+              },
+              "type": "scaling"
+            },
+            "damageType": {
+              "default": "magic",
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ]
+            },
+            "dot": {
+              "optional": true,
+              "type": "dot"
+            },
+            "invulnerableSec": {
+              "max": 5,
+              "min": 0.05,
+              "optional": true,
+              "type": "number",
+              "unit": "s"
+            },
+            "status": {
+              "optional": true,
+              "type": "applyStatus"
+            }
+          }
+        },
+        {
+          "id": "hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b",
+          "family": "teleport",
+          "status": "enabled",
+          "params": {
+            "arriveRadius": {
+              "default": 150,
+              "max": 900,
+              "min": 50,
+              "type": "number",
+              "unit": "wc3u"
+            },
+            "castTimeSec": {
+              "default": 0.5,
+              "max": 5,
+              "min": 0,
+              "type": "number",
+              "unit": "s"
+            },
+            "damage": {
+              "optional": true,
+              "type": "scaling"
+            },
+            "damageType": {
+              "default": "magic",
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ]
+            },
+            "destination": {
+              "default": "targetUnit",
+              "type": "enum",
+              "values": [
+                "targetUnit",
+                "castPoint",
+                "rallyToCaster"
+              ]
+            },
+            "travelSec": {
+              "default": 0.067,
+              "max": 1,
+              "min": 0.067,
+              "type": "number",
+              "unit": "s"
+            }
+          }
+        },
+        {
+          "id": "hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804",
+          "family": "summon-agent",
+          "status": "enabled",
+          "params": {
+            "body": {
+              "default": "self",
+              "optional": true,
+              "origin": "taxonomy:分身族（複製施法者自己）是這個家族的**多數**形狀 —— `summon.ts` 檔頭逐字點名 57-03 複製鏡 / 27-002 霧隱分身之術；⭐ 選 `self` 當預設讓那一族**零個欄位**就寫得出來。",
+              "type": "enum",
+              "values": [
+                "champion",
+                "self"
+              ]
+            },
+            "castTimeSec": {
+              "default": 0,
+              "max": 5,
+              "min": 0,
+              "optional": true,
+              "origin": "taxonomy:0 ＝ 瞬發，也就是「沒有宣告吟唱」的中性值（同 `tpl-single-strike` 的同名格）。",
+              "type": "number",
+              "unit": "s"
+            },
+            "championId": {
+              "inert": "⛔ 只有 `body:\"champion\"` 時才讀得到它；`self`（本家族的預設）時由 sim 端填施法者自己 ⇒ 它沒有一個有意義的預設。",
+              "optional": true,
+              "origin": "inert —— ⛔ 只有 `body:\"champion\"` 時才讀得到它；`self`（本家族的預設）時由 sim 端填施法者自己。",
+              "type": "docRef"
+            },
+            "cleanse": {
+              "default": "none",
+              "optional": true,
+              "origin": "taxonomy:`none` ＝ **只召喚**。⚠️ 淨化是**另一件事**（普屋 E 的卡面把兩件事寫在同一句），⛔ 綁死在一起就表達不出只召喚的技能。",
+              "type": "enum",
+              "values": [
+                "none",
+                "status",
+                "all"
+              ]
+            },
+            "count": {
+              "default": 1,
+              "max": 20,
+              "min": 1,
+              "origin": "taxonomy:一具是召喚的**最小**單位 —— ⛔ 0 具不是召喚。逐支的具數由卡面決定（普屋 E 逐字「創造出 **2** 個普烏的實體」）。",
+              "type": "number"
+            },
+            "damageMult": {
+              "default": 1,
+              "max": 10,
+              "min": 0.01,
+              "optional": true,
+              "origin": "taxonomy:1 ＝ **與本體同強**，也就是「沒有宣告倍率」的中性值。⭐ 逐支覆寫由卡面決定（普屋 E 逐字「具有 **30%** 攻擊力」）。",
+              "type": "number"
+            },
+            "durationSec": {
+              "default": 10,
+              "max": 600,
+              "min": 0.5,
+              "optional": true,
+              "origin": "taxonomy:出貨的分身族卡面全部是**有時限**的（普屋 E 逐字「可持續 **10** 秒」）；⭐ 10 秒是那一族的中位數，⛔ 缺席才是「永久」（原作 0 秒的那種）。",
+              "type": "number",
+              "unit": "s"
+            },
+            "formation": {
+              "default": "ring",
+              "optional": true,
+              "origin": "taxonomy:`ring` 是唯一與具數無關的陣型（1 具也成立，N 具不重疊）；⛔ `line` 需要一個朝向、`scatter` 需要 RNG。",
+              "type": "enum",
+              "values": [
+                "ring",
+                "line",
+                "scatter"
+              ]
+            },
+            "hpMult": {
+              "default": 1,
+              "max": 10,
+              "min": 0.01,
+              "optional": true,
+              "origin": "taxonomy:同 `damageMult` —— 1 是中性值，⛔ 不是一個平衡選擇。",
+              "type": "number"
+            },
+            "maxAlive": {
+              "default": 0,
+              "max": 20,
+              "min": 0,
+              "optional": true,
+              "origin": "taxonomy:0 ＝ **不設上限**，也就是「沒有宣告」的中性值。⭐ 要設上限的技能自己填。",
+              "type": "number"
+            },
+            "onOwnerDeath": {
+              "default": "despawn",
+              "optional": true,
+              "origin": "taxonomy:`despawn` —— 分身是施法者的延伸，⭐ 本體死了它們留著會變成「打不死的殘影」；`persist` 是少數（獨立召喚物）才要的。",
+              "type": "enum",
+              "values": [
+                "despawn",
+                "persist"
+              ]
+            },
+            "spread": {
+              "default": 2,
+              "max": 12,
+              "min": 0.1,
+              "optional": true,
+              "origin": "taxonomy:2 個**世界單位** ≈ 一個身體寬 —— ⭐ 讓兩具不互相卡住的最小間距。⚠️ ⛔ 這一格刻意**沒有** `unit` —— 標成 `wc3u` 會被展開器除以 50（2026-09-01 實測：2 變成 0.04，兩具疊在同一點），⭐ 而 `summon.spread` 本來就是世界單位。",
+              "type": "number"
+            }
+          }
+        },
+        {
+          "id": "hero-template.231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd6",
+          "family": "pull-throw",
+          "status": "enabled",
+          "params": {
+            "apexHeight": {
+              "default": 300,
+              "max": 2000,
+              "min": 0,
+              "origin": "j:51828 A0U1 `SetUnitFlyHeightBJ( target, ( -3 × (Index − 11)² ) + 300, 0 )` —— 原作自己在 j:51827 的註解逐字「Index=11時高度=**300**」⇒ 峰高 **300 wc3**。`toApex(300) = 300 ÷ 250 = 1.2` ＝ 出貨 `godie-hapm.w.json` 的 `leap.apexHeight`（⚠️ 那一格**已經是 GGD 單位**，`schema/effects/leap.ts` 檔頭逐字「apexHeight arrives in GGD units」）。⚠️⚠️ GH#1060：2026-09-06 之前這一格 default 是 **1.2** —— 把出貨節點的 GGD 值抄進了一個 `wc3h` 槽，於是 `expand.ts` 的 `num()` 再換算一次 ⇒ 弧頂 **0.005** GGD ＝ 貼地滑行，⛔ 不是拋物線。⭐ 判準：`wc3h`／`wc3u` 槽的 default 一律是**原作那一把尺**上的值（JASS 字面值，整數），⛔ 不是出貨節點的值 —— 守衛 `pullThrowApex.test.ts` 掃全部模板。⭐ `wc3h` 與 `wc3u` 是**兩把不同的尺**（`toApex` 1/250 vs `toLen` 11/600）—— 這一格走 apex。max 2000 ＝ 全圖最高拋物線 1000（76-04, j:36757）的 2×，仍擋得住把 `SetUnitFlyHeightBJ` 第三參數（速率 5000）誤貼進來（同 `tpl-leap-strike`）。",
+              "type": "number",
+              "unit": "wc3h"
+            },
+            "castTimeSec": {
+              "max": 10,
+              "min": 0,
+              "optional": true,
+              "origin": "taxonomy: ⛔ **刻意不給 default** —— 逐支不同（出貨那一支是 0.833）。",
+              "type": "number",
+              "unit": "s"
+            },
+            "damageType": {
+              "default": "magic",
+              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].damageType = \"magic\"`。",
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ]
+            },
+            "durationSec": {
+              "default": 0.42,
+              "max": 10,
+              "min": 0.05,
+              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.durationSec = 0.42`。⭐ 與 `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） 的 `throwStepIntervalSec` 0.04（j:4793 共用引擎）× 約 10 步同一個量級。",
+              "type": "number",
+              "unit": "s"
+            },
+            "grabInvulnSec": {
+              "max": 10,
+              "min": 0,
+              "optional": true,
+              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `effects[0]` 是 `invulnerable{durationSec:1.05, applyTo:\"self\", blocksControl:true}`。⛔ **刻意不給 default** —— 「抓取期間施法者是不是無敵」是逐支的設計選擇，⛔ 不是這一族的性質。",
+              "type": "number",
+              "unit": "s"
+            },
+            "grabMode": {
+              "default": "dragToCaster",
+              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.dragToCaster = true`（＝先拉到施法者身上再拋）。⚠️ `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） §2.3 的 `approach` 欄記載另外兩種（`casterToVictimTile`=A0L6 j:50113 · `casterToVictimFront`=A0SQ j:29646）—— ⛔ 那兩種今天 `zLeap` 表達不了。⭐ 這一格同時決定拋投**方向**（`sim/effects/leap.ts` 的 `throwDirection`）：`dragToCaster` ⇒ 施法者朝向（A0U1 j:51765）；`throwOnly` ⇒ 施法者→受害者（A0L6 j:50109 / A0SQ j:29634）。",
+              "type": "enum",
+              "values": [
+                "dragToCaster",
+                "throwOnly"
+              ]
+            },
+            "landApRatio": {
+              "default": 0.5,
+              "max": 5,
+              "min": 0,
+              "optional": true,
+              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].amount.ratios = [{stat:\"ap\",coeff:**0.5**}]`。",
+              "type": "number",
+              "unit": "ratio"
+            },
+            "landDamageTier": {
+              "default": "小",
+              "optional": true,
+              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].amount.damageTierPerRank = [\"極小\",\"極小\",\"小\",\"小\"] ` ⇒ 家族取中位的「小」。⛔ 走級距，⛔ 不烘數字。",
+              "type": "enum",
+              "values": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ]
+            },
+            "landRadius": {
+              "default": 4.95,
+              "max": 30,
+              "min": 0,
+              "optional": true,
+              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.landRadius = 4.95`（已是 GGD 單位）。",
+              "type": "number",
+              "unit": "count"
+            },
+            "mode": {
+              "default": "toPoint",
+              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.mode = \"toPoint\"`；`docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） 的六個力學形狀裡有五個是「把被害者搬到另一個點」。",
+              "type": "enum",
+              "values": [
+                "toPoint",
+                "inPlace"
+              ]
+            },
+            "throwDistance": {
+              "default": 500,
+              "max": 2600,
+              "min": 0,
+              "origin": "⚠️ 只在 `throwMode: distance` 讀 —— `point` 模式下 expand 不把它寫進節點（GH#1050）。j:4757 共用投擲引擎 `10 × 50 = **500**`。⭐ 這一格是**多支**的：A0L6 `20×40=800`（j:50201，⚠️ tooltip 說 1000 而 **JASS 勝**）· A0SQ `12×50=600`（j:29712）· A0U5 200（j:52208）· A0Y7 `(4+4L)×50`=400…1000（j:54322）⇒ 家族取共用引擎值。",
+              "type": "number",
+              "unit": "wc3u"
+            },
+            "throwMode": {
+              "default": "distance",
+              "origin": "j:51765 A0U1 `PolarProjectionBJ(casterLoc, 400.00, GetUnitFacing(caster))` · j:50109 A0L6 / j:29634 A0SQ `AngleBetweenPoints(caster, victim)` ⇒ 原作這一族**沒有任何一支**有「落點」，每一次拋投都是**方向 × 定長** ⇒ 預設 `distance`。`point`＝2026-09-06 之前的出貨行為（玩家選的點就是終點；expand 在這個模式下**不寫** `throwDistance` 進節點，所以那一格不是「可調卻無效」而是不進節點）—— 留著當 rollback 開關（owner 2026-08-23「沒做完以前別問我了自己判斷 但是留後台開關可以簡易 rollback」）。GH#1050。",
+              "type": "enum",
+              "values": [
+                "distance",
+                "point"
+              ]
+            }
+          }
+        },
+        {
+          "id": "hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16",
+          "family": "blink-strike",
+          "status": "enabled",
+          "params": {
+            "arriveVfxId": {
+              "default": "fx.prim.lightning.slash",
+              "origin": "census: 出貨兩支用 `fx.prim.lightning.slash`（n01c.w · nbbc.w），另兩支各自不同 ⇒ **多數決**。",
+              "type": "docRef"
+            },
+            "castTimeSec": {
+              "default": 0,
+              "max": 5,
+              "min": 0,
+              "optional": true,
+              "origin": "census: 出貨五支**全部**沒有 castTimeSec ⇒ 0（瞬發）。",
+              "type": "number",
+              "unit": "s"
+            },
+            "damage": {
+              "default": {
+                "damageTier": "小",
+                "ratios": [
+                  {
+                    "coeff": 0.5,
+                    "stat": "ad"
+                  }
+                ]
+              },
+              "origin": "census: 三支帶傷害的**全部**是 `damageTier:\"小\"` —— n01c.w（ad 0.5）· h01o.q（ap 0.5）· u00v.r（ap 0.8）⇒ 取兩支相同的 **0.5**。",
+              "type": "scaling"
+            },
+            "damageType": {
+              "default": "physical",
+              "origin": "census: 出貨 2:1 偏 physical（n01c.w physical · u00v.r physical · h01o.q magic）。",
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ]
+            },
+            "range": {
+              "default": 6,
+              "max": 20,
+              "min": 1,
+              "origin": "census: 出貨 5 支 `to:\"targetUnit\"` 的 blink 技能施法距離 —— godie-n01c.w 6 · godie-nbbc.w 6 · godie-h01o.q 8 · godie-u00v.r 12 · godie-efur.q 4.5 ⇒ **中位數 6**（⛔ 不是平均 9.3 —— 那一支 12 是大招）。（⚠️ 單位是 **GGD 格**，⛔ 不是 wc3u —— schema 的 `unit` 列舉裡沒有它，所以這一格刻意留空。）",
+              "type": "number"
+            },
+            "stopShortUnits": {
+              "default": 1.8,
+              "max": 5,
+              "min": 0,
+              "origin": "census: 出貨 **4/5 支逐位元都是 1.8**（n01c.w · nbbc.w · h01o.q · u00v.r），只有 godie-efur.q 是 1。⛔ 0 會讓施法者疊進目標身體裡。（⚠️ 單位是 **GGD 格**，⛔ 不是 wc3u —— schema 的 `unit` 列舉裡沒有它，所以這一格刻意留空。）",
+              "type": "number"
+            }
+          }
+        },
+        {
+          "id": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+          "family": "heal",
+          "status": "enabled",
+          "params": {
+            "amount": {
+              "default": {
+                "perRank": [
+                  50,
+                  85,
+                  120,
+                  155
+                ],
+                "ratios": [
+                  {
+                    "coeff": 0.465,
+                    "stat": "ap"
+                  }
+                ]
+              },
+              "origin": "derived: exemplar 08-01 雙龍紋 content/abilities/godie-n01c.q.json effects[0].amount 逐位元（孿生 godie-nbbc.q 同值）。",
+              "type": "scaling"
+            },
+            "applyTo": {
+              "optional": true,
+              "type": "enum",
+              "values": [
+                "self",
+                "target"
+              ]
+            },
+            "castTimeSec": {
+              "default": 0.067,
+              "max": 5,
+              "min": 0,
+              "optional": true,
+              "origin": "census: 出貨 5/5 支 heal-only 的 `castTimeSec` 逐位元 0.067；castderive:build:raw 推導欄位，文件與 params 同值。",
+              "type": "number",
+              "unit": "s"
+            },
+            "target": {
+              "default": "ally",
+              "origin": "taxonomy: 出貨 5 支 heal-only 裡 3 支指定隊友（08-01 ×2 · 99-02）、2 支回自己（42-02 ×2）⇒ 預設跟多數與 exemplar 走。",
+              "type": "enum",
+              "values": [
+                "self",
+                "ally"
+              ]
+            }
+          }
+        },
+        {
+          "id": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "family": "effect-sequence",
+          "status": "enabled",
+          "params": {
+            "castTimeSec": {
+              "default": 0,
+              "max": 10,
+              "min": 0,
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+              "type": "number",
+              "unit": "s"
+            },
+            "castType": {
+              "default": "targeted",
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+              "type": "enum",
+              "values": [
+                "targeted",
+                "self",
+                "ground",
+                "skillshot"
+              ]
+            },
+            "effects": {
+              "default": [
+                {
+                  "amount": {
+                    "damageTier": "極小"
+                  },
+                  "damageType": "magic",
+                  "kind": "damage"
+                }
+              ],
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+              "type": "effects"
+            },
+            "radius": {
+              "default": 2,
+              "max": 40,
+              "min": 0,
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+              "type": "number"
+            },
+            "side": {
+              "default": "enemies",
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+              "type": "enum",
+              "values": [
+                "enemies",
+                "allies"
+              ]
+            }
+          }
+        },
+        {
+          "id": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71",
+          "family": "line-strike",
+          "status": "enabled",
+          "params": {
+            "aim": {
+              "default": "facing",
+              "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].aim。census: 出貨 9 支 facing 4（09-04 ×2 · 90-04 ×2，全部 castType skillshot 且無 includeOrigin）／target 5（20-03 ×2 · 59-04 · 15-01 · 79-03，全部 castType ground 且 includeOrigin:true）—— ⭐ 那兩組關聯是 9/9，所以 castType 與 includeOrigin 由這一格帶出來，⛔ 不是兩個各自可填的欄位。",
+              "type": "enum",
+              "values": [
+                "facing",
+                "target"
+              ]
+            },
+            "castTimeSec": {
+              "default": 0.833,
+              "max": 5,
+              "min": 0,
+              "optional": true,
+              "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r 的 castTimeSec 0.833；census: 出貨 9 支裡 5 支同值（09-04 ×2 · 90-04 ×2 · 59-04），其餘 0.467×2／1×2。",
+              "type": "number",
+              "unit": "s"
+            },
+            "damage": {
+              "default": {
+                "damageTier": "大"
+              },
+              "origin": "derived: exemplar 90-04 陽光烈焰 content/abilities/godie-h02r.r.json effects[0].amount 逐位元（孿生 godie-hgam.r 同值）。⛔ 走級距，⛔ 不烘數字（第〇·四守則）。",
+              "type": "scaling"
+            },
+            "damageType": {
+              "default": "magic",
+              "origin": "census: 出貨 9 支手寫 damageLine 技能的 damageType **8/9 magic**（只有 59-04 野戰型陽電子砲 godie-e00r.r 是 true）。",
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ]
+            },
+            "length": {
+              "default": 11.67,
+              "max": 24,
+              "min": 0.5,
+              "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].length（孿生 godie-hgam.r 同值）；上界 24 ＝ zDamageLine 讀的 SPREAD_MAX_RADIUS（packages/shared/src/sim/effects/spreadLimits.ts:51），⛔ 這裡不抄第二個數字上限的來源。census: 出貨 9 支是 6.42／8.25／11／11.67×2／14×4。",
+              "type": "number"
+            },
+            "width": {
+              "default": 1.4,
+              "max": 24,
+              "min": 0.2,
+              "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].width（孿生 godie-hgam.r 同值）。census: 出貨 9 支是 1.4×2／1.6／2.0×5／2.2 —— 2.0 最多，⛔ 但這一族的預設跟著 exemplar 走（同 tpl-projectile-strike 的做法）。",
+              "type": "number"
+            }
+          }
+        },
+        {
+          "id": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+          "family": "blink",
+          "status": "enabled",
+          "params": {
+            "castTimeSec": {
+              "default": 0.467,
+              "max": 5,
+              "min": 0,
+              "optional": true,
+              "origin": "census: 出貨 7/7 支純位移的 `castTimeSec` 逐位元 0.467（content/abilities/godie-n00b.e.json · o00k.w · o00x.w · ogrh.w · udea.q · o02l.passive · ofar.passive）；⚠️ 它是 castderive:build:raw 推導的欄位，文件與 params 同一個值（同 71/79 位既有採用者的慣例）。",
+              "type": "number",
+              "unit": "s"
+            }
+          }
+        },
+        {
+          "id": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+          "family": "periodic-field",
+          "status": "enabled",
+          "params": {
+            "anchor": {
+              "default": "caster",
+              "type": "enum",
+              "values": [
+                "point",
+                "caster"
+              ]
+            },
+            "applyTo": {
+              "default": "enemies",
+              "type": "enum",
+              "values": [
+                "enemies",
+                "allies"
+              ]
+            },
+            "castTimeSec": {
+              "default": 0,
+              "max": 5,
+              "min": 0,
+              "optional": true,
+              "type": "number",
+              "unit": "s"
+            },
+            "damageTier": {
+              "default": "極小",
+              "type": "enum",
+              "values": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ]
+            },
+            "damageType": {
+              "default": "magic",
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ]
+            },
+            "durationSec": {
+              "default": 5,
+              "max": 60,
+              "min": 0.1,
+              "type": "number",
+              "unit": "s"
+            },
+            "hitVfx": {
+              "optional": true,
+              "type": "docRef"
+            },
+            "intervalSec": {
+              "default": 1,
+              "max": 10,
+              "min": 0.2,
+              "type": "number",
+              "unit": "s"
+            },
+            "radiusTier": {
+              "default": "中",
+              "type": "enum",
+              "values": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ]
+            }
+          }
+        },
+        {
+          "id": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
+          "family": "apply-status",
+          "status": "enabled",
+          "params": {
+            "castTimeSec": {
+              "default": 0.833,
+              "max": 5,
+              "min": 0,
+              "optional": true,
+              "origin": "derived: exemplar 70-03（godie-e010.e）`castTimeSec` 0.833；castderive:build:raw 推導欄位，文件與 params 同值。",
+              "type": "number",
+              "unit": "s"
+            },
+            "radius": {
+              "default": 327,
+              "max": 1500,
+              "min": 50,
+              "optional": true,
+              "origin": "derived: 出貨兩支範圍版 90-02 麻痺粉（godie-h02r.w／godie-hgam.w）文件層 radius **6.0**（GGD 格）；6.0 ÷ (11/600) = 327.27，取 `toLen()` 逐位元回 6.0 的**整數** wc3u 327（round2(327×11/600) = round2(5.995) = 6.0；328 會回 6.01）。⚠️ 原作 JASS 的字面值這台機器上量不到（war3map.j 不在 checkout），⭐ 依第〇·六守則第 2 層以出貨 content 為準。清空 ⇒ 指定單體（targeted）。",
+              "type": "number",
+              "unit": "wc3u"
+            },
+            "status": {
+              "default": {
+                "duration": 1.5,
+                "root": true,
+                "statusId": "root"
+              },
+              "origin": "census: 出貨 7 支 applyStatus-only 裡 root 4 支最多（70-03 · 30-01 ×2 · 02-00）；時長取 exemplar 70-03（content/abilities/godie-e010.e.json effects[0] 逐位元）。",
+              "type": "applyStatus"
+            }
+          }
+        },
+        {
+          "id": "hero-template.a0174c3324e732c421ab641d1e36cd2f49f758475f851ee4",
+          "family": "on-hit-react",
+          "status": "enabled",
+          "params": {
+            "chance": {
+              "default": 1,
+              "max": 1,
+              "min": 0,
+              "type": "number",
+              "unit": "ratio"
+            },
+            "damageType": {
+              "default": "magic",
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ]
+            },
+            "internalCooldown": {
+              "default": 0,
+              "max": 60,
+              "min": 0,
+              "optional": true,
+              "type": "number",
+              "unit": "s"
+            },
+            "reflectDamage": {
+              "default": {
+                "perRank": [
+                  30
+                ],
+                "ratios": []
+              },
+              "type": "scaling"
+            },
+            "reflectRadius": {
+              "default": 900,
+              "inert": "hook 無範圍結算：反擊只打觸發者，半徑不生效",
+              "max": 1200,
+              "min": 100,
+              "optional": true,
+              "type": "number",
+              "unit": "wc3u"
+            }
+          }
+        },
+        {
+          "id": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+          "family": "buff-self",
+          "status": "enabled",
+          "params": {
+            "castTimeSec": {
+              "default": 0,
+              "max": 5,
+              "min": 0,
+              "optional": true,
+              "type": "number",
+              "unit": "s"
+            },
+            "duration": {
+              "default": 15,
+              "max": 60,
+              "min": 1,
+              "type": "number",
+              "unit": "s"
+            },
+            "modifiers": {
+              "default": [
+                {
+                  "op": "flat",
+                  "stat": "ad",
+                  "value": 50
+                }
+              ],
+              "type": "statModifiers"
+            },
+            "perRank": {
+              "optional": true,
+              "type": "buffPerRank"
+            },
+            "status": {
+              "optional": true,
+              "type": "applyStatus"
+            },
+            "statusId": {
+              "optional": true,
+              "type": "docRef"
+            }
+          }
+        },
+        {
+          "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+          "family": "event-passive",
+          "status": "enabled",
+          "params": {
+            "hooks": {
+              "default": [
+                {
+                  "effects": [
+                    {
+                      "amount": {
+                        "damageTier": "極小"
+                      },
+                      "damageType": "magic",
+                      "kind": "damage"
+                    }
+                  ],
+                  "on": "onBasicAttack"
+                }
+              ],
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+              "type": "hooks"
+            }
+          }
+        },
+        {
+          "id": "hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52",
+          "family": "leap-strike",
+          "status": "enabled",
+          "params": {
+            "apexHeight": {
+              "default": 600,
+              "max": 2000,
+              "min": 0,
+              "type": "number",
+              "unit": "wc3h"
+            },
+            "applyTo": {
+              "default": "self",
+              "type": "enum",
+              "values": [
+                "self",
+                "target"
+              ]
+            },
+            "castTimeSec": {
+              "default": 0.5,
+              "max": 5,
+              "min": 0,
+              "type": "number",
+              "unit": "s"
+            },
+            "damage": {
+              "default": {
+                "perRank": [
+                  450
+                ],
+                "ratios": []
+              },
+              "type": "scaling"
+            },
+            "damageType": {
+              "default": "physical",
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ]
+            },
+            "durationSec": {
+              "default": 0.82,
+              "max": 3,
+              "min": 0.1,
+              "type": "number",
+              "unit": "s"
+            },
+            "invulnerableSec": {
+              "max": 5,
+              "min": 0.05,
+              "optional": true,
+              "type": "number",
+              "unit": "s"
+            },
+            "landRadius": {
+              "default": 330,
+              "max": 900,
+              "min": 0,
+              "type": "number",
+              "unit": "wc3u"
+            },
+            "mode": {
+              "default": "toPoint",
+              "type": "enum",
+              "values": [
+                "toPoint",
+                "inPlace"
+              ]
+            },
+            "status": {
+              "optional": true,
+              "type": "applyStatus"
+            }
+          }
+        },
+        {
+          "id": "hero-template.c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f55010",
+          "family": "transform",
+          "status": "enabled",
+          "params": {
+            "buffDurationSec": {
+              "default": 6,
+              "max": 120,
+              "min": 0.1,
+              "optional": true,
+              "origin": "census: 出貨 11 支「變身＋增益」的 applyBuff.duration —— **6 秒 4 支**（04-002 · 42-002 · 90-002 · 77-03 rank1）是最多的一格，其餘 7/8/15/20 各 1–3 支。⚠️ 它有預設是**必要的**：`增益` 填了而這一格空著時，展開器會用它 —— ⛔ 沒有預設就是擲例外（＝一份表單存得起來、載入時整支技能降級成沒有效果）。",
+              "type": "number",
+              "unit": "s"
+            },
+            "castTimeSec": {
+              "default": 0.667,
+              "max": 5,
+              "min": 0,
+              "optional": true,
+              "origin": "derived: exemplar 58-04（godie-ofar.r）`castTimeSec` 0.667；castderive:build:raw 推導欄位，文件與 params 同值（同 71/79 位既有採用者的慣例）。",
+              "type": "number",
+              "unit": "s"
+            },
+            "durationSec": {
+              "default": 6,
+              "max": 120,
+              "min": 0.1,
+              "optional": true,
+              "origin": "derived: exemplar 58-04（content/abilities/godie-ofar.r.json）`effects[0].durationSec` 逐位元 6。⚠️ 這是 w3a `ahdu`；⛔ **不是**中位數（20 支 alternate 的分佈 6/7/8/10/15/18/20 很散，取 exemplar 那一支）。清空 = 永不逾時（toggle 那四支）。",
+              "type": "number",
+              "unit": "s"
+            },
+            "modifiers": {
+              "optional": true,
+              "type": "statModifiers"
+            },
+            "status": {
+              "optional": true,
+              "type": "applyStatus"
+            },
+            "to": {
+              "default": "alternate",
+              "origin": "census: 出貨 24 支帶 championForm 的手寫技能逐節點數 —— `alternate` **20**、`toggle` 4（20-01 誓約勝利之劍 ×2 · 70-00 白木老樹精 ×2）、`base` 0。",
+              "type": "enum",
+              "values": [
+                "alternate",
+                "base",
+                "toggle"
+              ]
+            }
+          }
+        },
+        {
+          "id": "hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c",
+          "family": "lock-combo",
+          "status": "enabled",
+          "params": {
+            "casterGuard": {
+              "default": "all",
+              "type": "enum",
+              "values": [
+                "all",
+                "magic",
+                "none"
+              ]
+            },
+            "damageType": {
+              "default": "magic",
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ]
+            },
+            "finisherAbility": {
+              "optional": true,
+              "type": "docRef"
+            },
+            "finisherDamage": {
+              "default": {
+                "perRank": [
+                  450
+                ],
+                "ratios": []
+              },
+              "type": "scaling"
+            },
+            "finisherRadius": {
+              "default": 150,
+              "max": 1800,
+              "min": 50,
+              "type": "number",
+              "unit": "wc3u"
+            },
+            "hitCount": {
+              "default": 5,
+              "max": 20,
+              "min": 1,
+              "type": "number",
+              "unit": "count"
+            },
+            "hitIntervalSec": {
+              "default": 0.4,
+              "max": 3,
+              "min": 0.05,
+              "type": "number",
+              "unit": "s"
+            },
+            "lockTarget": {
+              "default": "stun",
+              "type": "enum",
+              "values": [
+                "stun",
+                "root",
+                "none"
+              ]
+            },
+            "perHitDamage": {
+              "default": {
+                "perRank": [
+                  100
+                ],
+                "ratios": []
+              },
+              "type": "scaling"
+            },
+            "trigger": {
+              "default": "onCast",
+              "type": "enum",
+              "values": [
+                "onCast",
+                "onReflectSuccess",
+                "onKill",
+                "onBasicAttack",
+                "onDamageTaken"
+              ]
+            }
+          }
+        },
+        {
+          "id": "hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368",
+          "family": "charge-push",
+          "status": "enabled",
+          "params": {
+            "apexHeight": {
+              "default": 0,
+              "max": 600,
+              "min": 0,
+              "type": "number",
+              "unit": "wc3h"
+            },
+            "castTimeSec": {
+              "default": 0,
+              "max": 5,
+              "min": 0,
+              "optional": true,
+              "type": "number",
+              "unit": "s"
+            },
+            "damage": {
+              "default": {
+                "perRank": [
+                  350
+                ],
+                "ratios": []
+              },
+              "type": "scaling"
+            },
+            "damageType": {
+              "default": "physical",
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ]
+            },
+            "dashDistance": {
+              "default": 600,
+              "max": 1309,
+              "min": 100,
+              "type": "number",
+              "unit": "wc3u"
+            },
+            "dashDurationSec": {
+              "default": 0.4,
+              "max": 2,
+              "min": 0.05,
+              "type": "number",
+              "unit": "s"
+            },
+            "pushDistance": {
+              "default": 400,
+              "max": 1090,
+              "min": 50,
+              "optional": true,
+              "type": "number",
+              "unit": "wc3u"
+            },
+            "pushFrom": {
+              "default": "facing",
+              "type": "enum",
+              "values": [
+                "caster",
+                "facing",
+                "pull"
+              ]
+            },
+            "pushLaunchHeight": {
+              "default": 0,
+              "max": 600,
+              "min": 0,
+              "type": "number",
+              "unit": "wc3h"
+            },
+            "pushSpeed": {
+              "default": 872,
+              "max": 2181,
+              "min": 100,
+              "type": "number",
+              "unit": "wc3u"
+            },
+            "radius": {
+              "default": 300,
+              "max": 900,
+              "min": 50,
+              "type": "number",
+              "unit": "wc3u"
+            }
+          }
+        },
+        {
+          "id": "hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990",
+          "family": "drain-leech",
+          "status": "enabled",
+          "params": {
+            "apRatio": {
+              "default": 0.6,
+              "max": 5,
+              "min": 0,
+              "origin": "derived: 出貨兩份逐位元 `ratios:[{stat:\"ap\",coeff:**0.6**}]`。",
+              "type": "number",
+              "unit": "ratio"
+            },
+            "castTimeSec": {
+              "max": 10,
+              "min": 0,
+              "optional": true,
+              "origin": "taxonomy: ⛔ **刻意不給 default** —— 兩支候選差太遠（`godie-h02r.passive` 1.7 vs `godie-osam.passive` 0.267），⭐ 給一個 default 就是編一個（同 `tpl-locust-orb.tint` 留空的理由）。",
+              "type": "number",
+              "unit": "s"
+            },
+            "damageTier": {
+              "default": "小",
+              "origin": "derived: 出貨兩份逐位元 `小`（`content/abilities/godie-hgam.passive.json` · `godie-h02r.passive.json` 的 `effects[0].amount.damageTier` 與 `effects[2].amountPerTick.damageTier`）。⛔ 走級距，⛔ 不烘數字（第〇·四守則）。",
+              "type": "enum",
+              "values": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ]
+            },
+            "damageType": {
+              "default": "magic",
+              "origin": "derived: 出貨兩份 `damageType:\"magic\"`；原作 `A0KV` 是 WC3 Parasite 系（`OBJECTS.json`）。",
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ]
+            },
+            "durationSec": {
+              "default": 5,
+              "max": 60,
+              "min": 0.2,
+              "origin": "derived: 出貨兩份 `durationSec: **5.0**`；原作是 `j:26603` `exitwhen udg_Frog_Seed_Index > **5**` 五跳 × `j:26604` 的 0.95s = 4.75s，w3a `abilities.A0KV.duration.1 = 5.0999999` ⇒ 三個來源都在 5 附近。",
+              "type": "number",
+              "unit": "s"
+            },
+            "intervalSec": {
+              "default": 1,
+              "max": 10,
+              "min": 0.2,
+              "origin": "derived: 出貨兩份 `intervalSec: **1.0**`。⚠️ ⭐ 原作 `j:26604` 是 `TriggerSleepAction( **0.95** )` —— 兩個來源打架，而第〇·六守則的階梯是「**編輯器產生的 JSON ＞ JASS 實際效果**」⇒ 取 1.0。⛔ 0.95 這個事實留在這裡，⛔ 不無聲丟掉。",
+              "type": "number",
+              "unit": "s"
+            },
+            "leechFlat": {
+              "default": 50,
+              "max": 5000,
+              "min": 0,
+              "optional": true,
+              "origin": "j:26608 `call SetUnitLifeBJ( udg_Frog_Hero, ( GetUnitStateSwap(UNIT_STATE_LIFE, udg_Frog_Hero) + **50.00** ) )` —— 回的是**施法者**（`udg_Frog_Hero = GetTriggerUnit()`）。⚠️ 原作是**每跳** +50 × 5 跳，⭐ 而出貨把它收斂成**一次** 50 —— 我照抄出貨（diff=0 優先），⛔ 不是原作。⭐ GH#1046：展開器的 heal 節點要帶 `applyTo:\"self\"` —— 在此之前漏寫，而 `heal.ts` 的省略語意是 target ⇒ 回的是**被點的敵人**（守衛 `drainLeechSubject.test.ts`，真 sim 兩具缺血身體）。⚠️ 出貨那兩份（`godie-hgam.passive`／`godie-h02r.passive`）的 heal 節點**同樣漏寫** —— 「diff=0」抄到的正是那個錯，⛔ 不在這條 lane 的柵欄裡，另記報告。 ⭐ #1073：這一格改成 **optional** —— 清空 ⇒ 展開沒有 heal 節點（「打一下＋持續傷害」而不吸血：30-03 痴漢火焰 ×2 · 72-02 黑人牙菌斑，出貨 3 支逐位元對得上）；default 50 只是編輯器的建議值（`has()` 對 optional 槽：沒填＝缺席）。",
+              "type": "number",
+              "unit": "count"
+            },
+            "stacking": {
+              "default": "refresh",
+              "origin": "derived: 出貨兩份 `stacking: \"refresh\"`。",
+              "type": "enum",
+              "values": [
+                "refresh",
+                "independent",
+                "stack"
+              ]
+            }
+          }
+        },
         {
           "id": "tpl-ally-shield",
           "family": "ally-shield",
@@ -5572,7 +6757,7 @@
         }
       ],
       "templateStatus": {
-        "enabled": 47,
+        "enabled": 66,
         "draft": 11
       },
       "innateKinds": [
@@ -6795,11 +7980,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "cce2dd494567",
+    "fingerprint": "45d380d4e028",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "67f2e3214a5b"
+        "digest": "b84b3ffc5177"
       },
       {
         "surface": "ability-item-zod-schemas",
@@ -6865,5 +8050,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "4704e94b577e"
+  "profileDigest": "cf3039c98b8f"
 }

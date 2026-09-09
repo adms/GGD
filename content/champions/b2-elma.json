@@ -1,13 +1,13 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.267,
       "castType": "self",
       "cooldown": [
-        15,
-        15,
-        15,
-        15
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "cooldownTier": "小",
       "description": "「重劍攻略追加七十點！」\n重劍模式 3 秒攻擊力 +70；只改戰鬥屬性，未冒稱更换原作裝甲模型。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -26,22 +26,20 @@
       ],
       "id": "b2-elma.e",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
       "maxRank": 4,
       "name": "重劍攻略追加七十點",
       "provenance": "editor-json",
-      "range": 6,
-      "rangeTier": "中",
+      "range": 0.0,
       "slot": "E",
       "template": {
         "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.267,
           "duration": 3,
           "modifiers": [
             {
@@ -62,13 +60,13 @@
       ]
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castType": "self",
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "cooldownTier": "小",
       "description": "「攻略說先扣自己血！」\n照攻略支付最大生命 15%，底線 1 HP；先得到 60 護盾 2 秒，代價不被自己的護盾抵銷。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -100,24 +98,22 @@
       ],
       "id": "b2-elma.q",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
       "maxRank": 4,
       "name": "攻略說先扣自己血",
       "provenance": "editor-json",
       "radius": 3,
-      "range": 6,
-      "rangeTier": "中",
+      "range": 0.0,
       "slot": "Q",
       "targetsEnemies": true,
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.067,
           "castType": "self",
           "effects": [
             {
@@ -156,26 +152,26 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
-      ]
+      ],
+      "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.633,
       "castType": "targeted",
       "cooldown": [
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0
       ],
       "cooldownTier": "大",
       "description": "「照攻略抄的重擊！」\n中級重擊加 0.8 AD；受 E 實際攻擊力影響。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "amount": {
-            "damageTier": "中",
-            "perRank": [
-              0,
-              750,
-              1500
+            "damageTierPerRank": [
+              "極小",
+              "小",
+              "中"
             ],
             "ratios": [
               {
@@ -190,9 +186,9 @@
       ],
       "id": "b2-elma.r",
       "manaCost": [
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -205,13 +201,12 @@
       "template": {
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 1.633,
           "damage": {
-            "damageTier": "中",
-            "perRank": [
-              0,
-              750,
-              1500
+            "damageTierPerRank": [
+              "極小",
+              "小",
+              "中"
             ],
             "ratios": [
               {
@@ -233,13 +228,13 @@
       ]
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castType": "self",
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "cooldownTier": "小",
       "description": "「半血以下保固升級！」\n血量低於 50% 才給 300 護盾 3 秒；高血量按只回復最大魔力 2%，不可無代價厚盾。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -276,24 +271,22 @@
       ],
       "id": "b2-elma.w",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
       "maxRank": 4,
       "name": "半血以下保固升級",
       "provenance": "editor-json",
       "radius": 3,
-      "range": 6,
-      "rangeTier": "中",
+      "range": 0.0,
       "slot": "W",
       "targetsEnemies": true,
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.067,
           "castType": "self",
           "effects": [
             {
@@ -337,7 +330,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
-      ]
+      ],
+      "radiusTier": "極小"
     }
   },
   "archetype": "tank",
@@ -386,7 +380,6 @@
   "id": "b2-elma",
   "modelKey": "champ.thorne",
   "name": "艾爾瑪",
-  "icon": "assets/icons/champions/b2-elma.webp",
   "origin": "坦克",
   "passiveAbility": "b2-elma.passive",
   "role": "tank",
@@ -397,5 +390,6 @@
     "E",
     "R"
   ],
-  "tags": []
+  "tags": [],
+  "icon": "assets/icons/champions/b2-elma.webp"
 }

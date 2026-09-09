@@ -7,19 +7,19 @@
   "castType": "ground",
   "maxRank": 3,
   "cooldown": [
-    45,
-    45,
-    45
+    45.0,
+    45.0,
+    45.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
-    576,
-    576,
-    576
+    576.0,
+    576.0,
+    576.0
   ],
   "manaCostTier": "大",
   "range": 4.5,
   "rangeTier": "小",
-  "cooldownTier": "大",
   "targetsEnemies": true,
   "effects": [
     {
@@ -36,24 +36,23 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "damageTier": "小",
+            "damageTierPerRank": [
+              "極小",
+              "極小",
+              "小"
+            ],
             "ratios": [
               {
                 "stat": "ap",
                 "coeff": 1.4577
               }
-            ],
-            "perRank": [
-              0,
-              375,
-              750
             ]
           }
         }
       ]
     }
   ],
-  "castTimeSec": 0.5,
+  "castTimeSec": 1.633,
   "castTimeTier": "大",
   "icon": "assets/icons/abilities/community-review-15-20260907.r.webp",
   "template": {
@@ -69,7 +68,7 @@
       "landDamageTier": "小",
       "landApRatio": 0,
       "damageType": "physical",
-      "castTimeSec": 0.2
+      "castTimeSec": 1.633
     },
     "inheritDefaults": true
   },

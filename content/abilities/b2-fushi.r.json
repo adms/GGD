@@ -1,10 +1,10 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.667,
   "castType": "self",
   "cooldown": [
-    45,
-    45,
-    45
+    45.0,
+    45.0,
+    45.0
   ],
   "cooldownTier": "大",
   "description": "「耐用形狀保固四秒！」\n獲得 60 護甲及 30 魔抗 4 秒；這是形態意象的數值強化，沒有換模或復活。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -28,23 +28,20 @@
   ],
   "id": "b2-fushi.r",
   "manaCost": [
-    144,
-    144,
-    144
+    0.0,
+    0.0,
+    0.0
   ],
-  "manaCostTier": "小",
   "maxRank": 3,
   "name": "耐用形狀保固四秒",
-  "icon": "assets/icons/abilities/b2-fushi.r.webp",
   "provenance": "editor-json",
-  "range": 6,
-  "rangeTier": "中",
+  "range": 0.0,
   "schema": "ability@1",
   "slot": "R",
   "template": {
     "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.667,
       "duration": 4,
       "modifiers": [
         {

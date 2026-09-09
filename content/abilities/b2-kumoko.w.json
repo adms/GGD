@@ -1,11 +1,11 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 1.7,
   "castType": "targeted",
   "cooldown": [
-    45,
-    45,
-    45,
-    45
+    45.0,
+    45.0,
+    45.0,
+    45.0
   ],
   "cooldownTier": "小",
   "description": "「毒牙代收房租！」\n對指定敵人施加每秒一跳、持續 3 秒的魔法 DOT；若目標被 root，追加一筆獨立 DOT。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -54,15 +54,14 @@
   ],
   "id": "b2-kumoko.w",
   "manaCost": [
-    144,
-    144,
-    144,
-    144
+    144.0,
+    144.0,
+    144.0,
+    144.0
   ],
   "manaCostTier": "小",
   "maxRank": 4,
   "name": "毒牙代收房租",
-  "icon": "assets/icons/abilities/b2-kumoko.w.webp",
   "provenance": "editor-json",
   "radius": 3,
   "range": 6,
@@ -73,7 +72,7 @@
   "template": {
     "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.7,
       "castType": "targeted",
       "effects": [
         {
@@ -129,5 +128,6 @@
       "attachTo": "caster",
       "vfxKey": "fx.prim.arcane.pulse-sm"
     }
-  ]
+  ],
+  "radiusTier": "極小"
 }

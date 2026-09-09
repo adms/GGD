@@ -1,13 +1,13 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castType": "self",
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "cooldownTier": "小",
       "description": "「先備好防護收據！」\n先做好防護，spell-shield 收據 3 秒與 100 護盾。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -37,24 +37,22 @@
       ],
       "id": "b2-noor.e",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
       "maxRank": 4,
       "name": "先備好防護收據",
       "provenance": "editor-json",
       "radius": 3,
-      "range": 6,
-      "rangeTier": "中",
+      "range": 0.0,
       "slot": "E",
       "targetsEnemies": true,
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.067,
           "castType": "self",
           "effects": [
             {
@@ -91,16 +89,17 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
-      ]
+      ],
+      "radiusTier": "極小"
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "self",
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "cooldownTier": "小",
       "description": "「這招物理技能我能擋！」\n取得護甲 +10 與 1.8 秒不限定角度的物理技能反制；反彈成功後會一併提早撤下護甲與反制：只對 physical 的 ability 來襲，以原始傷害的 100% 產生魔法回擊（仍受對方減傷）並免去原發；1 次後撤下。普通攻擊、魔法、真傷不列入。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -151,24 +150,22 @@
       ],
       "id": "b2-noor.q",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
       "maxRank": 4,
       "name": "這招物理技能我能擋",
       "provenance": "editor-json",
       "radius": 3,
-      "range": 6,
-      "rangeTier": "中",
+      "range": 0.0,
       "slot": "Q",
       "targetsEnemies": true,
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "self",
           "effects": [
             {
@@ -226,15 +223,16 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
-      ]
+      ],
+      "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.833,
       "castType": "self",
       "cooldown": [
-        90,
-        90,
-        90
+        90.0,
+        90.0,
+        90.0
       ],
       "cooldownTier": "大",
       "description": "「收據換厚盾不找零！」\n把防護收據換成 300 護盾 3 秒；沒有收據不發厚盾。收據不等於萬能反彈。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -266,23 +264,21 @@
       ],
       "id": "b2-noor.r",
       "manaCost": [
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
       "maxRank": 3,
       "name": "收據換厚盾不找零",
       "provenance": "editor-json",
       "radius": 3,
-      "range": 6,
-      "rangeTier": "中",
+      "range": 0.0,
       "slot": "R",
       "targetsEnemies": true,
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.833,
           "castType": "self",
           "effects": [
             {
@@ -321,28 +317,28 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
-      ]
+      ],
+      "radiusTier": "極小"
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.233,
       "castType": "targeted",
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "cooldownTier": "小",
       "description": "「新人拿收據換急救！」\n新人重擊，小級物理傷害；消耗反彈收據才給自己 220 生命回復。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "amount": {
-            "damageTier": "小",
-            "perRank": [
-              0,
-              250,
-              500,
-              750
+            "damageTierPerRank": [
+              "極小",
+              "極小",
+              "極小",
+              "小"
             ]
           },
           "damageType": "physical",
@@ -373,10 +369,10 @@
       ],
       "id": "b2-noor.w",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -395,6 +391,7 @@
               "castTimeSec": 0.1,
               "damage": {
                 "damageTier": "小",
+                "flat": 500,
                 "perRank": [
                   0,
                   250,
@@ -449,7 +446,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.slash"
         }
-      ]
+      ],
+      "radiusTier": "極小"
     }
   },
   "archetype": "tank",
@@ -498,7 +496,6 @@
   "id": "b2-noor",
   "modelKey": "champ.thorne",
   "name": "諾爾",
-  "icon": "assets/icons/champions/b2-noor.webp",
   "origin": "坦克",
   "passiveAbility": "b2-noor.passive",
   "role": "tank",
@@ -509,5 +506,6 @@
     "E",
     "R"
   ],
-  "tags": []
+  "tags": [],
+  "icon": "assets/icons/champions/b2-noor.webp"
 }

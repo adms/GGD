@@ -1,11 +1,11 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.467,
   "castType": "ground",
   "cooldown": [
-    15,
-    15,
-    15,
-    15
+    15.0,
+    15.0,
+    15.0,
+    15.0
   ],
   "cooldownTier": "小",
   "description": "「這把劍不進垃圾車！」\n沿面向斬出直線物理清運波，打擊線上的敵人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -13,13 +13,11 @@
     {
       "aim": "target",
       "amount": {
-        "damageTier": "中",
-        "flat": 1000,
-        "perRank": [
-          0,
-          500,
-          1000,
-          1500
+        "damageTierPerRank": [
+          "極小",
+          "極小",
+          "小",
+          "中"
         ]
       },
       "damageType": "physical",
@@ -32,15 +30,14 @@
   ],
   "id": "b2-guts.q",
   "manaCost": [
-    144,
-    144,
-    144,
-    144
+    144.0,
+    144.0,
+    144.0,
+    144.0
   ],
   "manaCostTier": "小",
   "maxRank": 4,
   "name": "這把劍不進垃圾車",
-  "icon": "assets/icons/abilities/b2-guts.q.webp",
   "provenance": "editor-json",
   "range": 6,
   "rangeTier": "中",
@@ -50,15 +47,13 @@
     "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
     "params": {
       "aim": "target",
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "damage": {
-        "damageTier": "中",
-        "flat": 1000,
-        "perRank": [
-          0,
-          500,
-          1000,
-          1500
+        "damageTierPerRank": [
+          "極小",
+          "極小",
+          "小",
+          "中"
         ]
       },
       "damageType": "physical",

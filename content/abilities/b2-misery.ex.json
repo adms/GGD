@@ -1,8 +1,8 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 1.433,
   "castType": "targeted",
   "cooldown": [
-    90
+    90.0
   ],
   "cooldownTier": "大",
   "description": "「小字條款稍後生效！」\n0.7 秒後再次檢查目標是否仍持有 rage 贈品；仍持有才施加 2.5 秒 magic-break 沉默。標記提早消失就取消。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -30,12 +30,10 @@
   ],
   "id": "b2-misery.ex",
   "manaCost": [
-    144
+    0.0
   ],
-  "manaCostTier": "小",
   "maxRank": 1,
   "name": "小字條款稍後生效",
-  "icon": "assets/icons/abilities/b2-misery.ex.webp",
   "provenance": "editor-json",
   "radius": 3,
   "range": 6,
@@ -46,7 +44,7 @@
   "template": {
     "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.433,
       "castType": "targeted",
       "effects": [
         {
@@ -81,5 +79,6 @@
       "attachTo": "caster",
       "vfxKey": "fx.prim.arcane.pulse-sm"
     }
-  ]
+  ],
+  "radiusTier": "極小"
 }

@@ -1,11 +1,11 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.567,
   "castType": "targeted",
   "cooldown": [
-    15,
-    15,
-    15,
-    15
+    15.0,
+    15.0,
+    15.0,
+    15.0
   ],
   "cooldownTier": "小",
   "description": "「玩具散落請勿奔跑！」\n指定敵人被 root 定身 2.5 秒；玩具只是主動控制的童趣演出，不是隱藏陷阱。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -19,15 +19,13 @@
   ],
   "id": "b2-shinchan.w",
   "manaCost": [
-    144,
-    144,
-    144,
-    144
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "manaCostTier": "小",
   "maxRank": 4,
   "name": "玩具散落請勿奔跑",
-  "icon": "assets/icons/abilities/b2-shinchan.w.webp",
   "provenance": "editor-json",
   "range": 6,
   "rangeTier": "中",
@@ -37,7 +35,7 @@
   "template": {
     "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "status": {
         "duration": 2.5,
         "root": true,

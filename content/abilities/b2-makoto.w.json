@@ -1,24 +1,22 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 1.233,
   "castType": "targeted",
   "cooldown": [
-    45,
-    45,
-    45,
-    45
+    45.0,
+    45.0,
+    45.0,
+    45.0
   ],
   "cooldownTier": "小",
   "description": "「站遠一點商品才夠痛！」\n弓術定點單射，小級物理傷害，距離 0 到 8 由 0.5 倍線性提高到 1.5 倍，超過按上限；真實距離決定輸出。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：商人試射新商品，順便把店面拆了。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
       "amount": {
-        "damageTier": "小",
-        "flat": 500,
-        "perRank": [
-          0,
-          250,
-          500,
-          750
+        "damageTierPerRank": [
+          "極小",
+          "極小",
+          "極小",
+          "小"
         ]
       },
       "damageType": "physical",
@@ -32,15 +30,14 @@
   ],
   "id": "b2-makoto.w",
   "manaCost": [
-    144,
-    144,
-    144,
-    144
+    144.0,
+    144.0,
+    144.0,
+    144.0
   ],
   "manaCostTier": "小",
   "maxRank": 4,
   "name": "站遠一點商品才夠痛",
-  "icon": "assets/icons/abilities/b2-makoto.w.webp",
   "provenance": "editor-json",
   "radius": 3,
   "range": 6,
@@ -51,7 +48,7 @@
   "template": {
     "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.233,
       "castType": "targeted",
       "effects": [
         {
@@ -85,5 +82,6 @@
       "attachTo": "caster",
       "vfxKey": "fx.prim.physical.bolt"
     }
-  ]
+  ],
+  "radiusTier": "極小"
 }

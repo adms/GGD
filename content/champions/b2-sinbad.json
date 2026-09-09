@@ -1,13 +1,13 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "ground",
       "cooldown": [
-        15,
-        15,
-        15,
-        15
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "cooldownTier": "小",
       "description": "「巡迴剪綵走捷徑！」\n自身瞬移至指定合法地點；移動事件可觸發被動回復。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：用宴會與推銷開局，最後變成強制商業合作。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -21,12 +21,11 @@
       ],
       "id": "b2-sinbad.e",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
       "maxRank": 4,
       "name": "巡迴剪綵走捷徑",
       "provenance": "editor-json",
@@ -36,7 +35,7 @@
       "template": {
         "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
         "params": {
-          "castTimeSec": 0.1
+          "castTimeSec": 0.467
         },
         "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
       },
@@ -49,13 +48,13 @@
       ]
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "targeted",
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "cooldownTier": "小",
       "description": "「合夥人早鳥紅利！」\n指定友軍增加 70 攻擊力，持續 4 秒；可明確驅散，不改友敵陣營。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：用宴會與推銷開局，最後變成強制商業合作。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -76,12 +75,11 @@
       ],
       "id": "b2-sinbad.q",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
       "maxRank": 4,
       "name": "合夥人早鳥紅利",
       "provenance": "editor-json",
@@ -93,7 +91,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "targeted",
           "effects": [
             {
@@ -121,15 +119,16 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
-      ]
+      ],
+      "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.833,
       "castType": "ground",
       "cooldown": [
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0
       ],
       "cooldownTier": "大",
       "description": "「七海規格產品示範！」\n向前打出大範圍直線魔法展示；不宣稱七種魔裝皆已完整實作。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：用宴會與推銷開局，最後變成強制商業合作。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -137,11 +136,10 @@
         {
           "aim": "target",
           "amount": {
-            "damageTier": "中",
-            "perRank": [
-              0,
-              750,
-              1500
+            "damageTierPerRank": [
+              "極小",
+              "小",
+              "中"
             ]
           },
           "damageType": "magic",
@@ -154,9 +152,9 @@
       ],
       "id": "b2-sinbad.r",
       "manaCost": [
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -169,13 +167,12 @@
         "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
         "params": {
           "aim": "target",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.833,
           "damage": {
-            "damageTier": "中",
-            "perRank": [
-              0,
-              750,
-              1500
+            "damageTierPerRank": [
+              "極小",
+              "小",
+              "中"
             ]
           },
           "damageType": "magic",
@@ -193,13 +190,13 @@
       ]
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "self",
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "cooldownTier": "小",
       "description": "「商會代表自備保險！」\n自身取得 3 秒魔力屏障，每 1 魔力抵擋 2 物理／魔法傷害，保留 10 魔力。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：用宴會與推銷開局，最後變成強制商業合作。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -219,24 +216,22 @@
       ],
       "id": "b2-sinbad.w",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
       "maxRank": 4,
       "name": "商會代表自備保險",
       "provenance": "editor-json",
       "radius": 3,
-      "range": 6,
-      "rangeTier": "中",
+      "range": 0.0,
       "slot": "W",
       "targetsEnemies": true,
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "self",
           "effects": [
             {
@@ -263,7 +258,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
-      ]
+      ],
+      "radiusTier": "極小"
     }
   },
   "archetype": "fighter",
@@ -312,7 +308,6 @@
   "id": "b2-sinbad",
   "modelKey": "champ.thorne",
   "name": "辛巴達",
-  "icon": "assets/icons/champions/b2-sinbad.webp",
   "origin": "鬥士",
   "passiveAbility": "b2-sinbad.passive",
   "role": "fighter",
@@ -323,5 +318,6 @@
     "E",
     "R"
   ],
-  "tags": []
+  "tags": [],
+  "icon": "assets/icons/champions/b2-sinbad.webp"
 }

@@ -1,10 +1,10 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.067,
   "castType": "targeted",
   "cooldown": [
-    90,
-    90,
-    90
+    90.0,
+    90.0,
+    90.0
   ],
   "cooldownTier": "大",
   "description": "「走捷徑才趕得上急救！」\n隊友得到 100 護盾 2 秒；最近 4 秒用過 E，額外回復 200。這是趕到現場急救，不是讀檔。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -45,14 +45,12 @@
   ],
   "id": "b2-albus.r",
   "manaCost": [
-    144,
-    144,
-    144
+    0.0,
+    0.0,
+    0.0
   ],
-  "manaCostTier": "小",
   "maxRank": 3,
   "name": "走捷徑才趕得上急救",
-  "icon": "assets/icons/abilities/b2-albus.r.webp",
   "provenance": "editor-json",
   "radius": 3,
   "range": 6,
@@ -63,7 +61,7 @@
   "template": {
     "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castType": "targeted",
       "effects": [
         {
@@ -111,5 +109,6 @@
       "attachTo": "caster",
       "vfxKey": "fx.prim.wind.pulse-sm"
     }
-  ]
+  ],
+  "radiusTier": "極小"
 }

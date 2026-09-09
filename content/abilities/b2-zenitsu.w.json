@@ -1,24 +1,22 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 1.233,
   "castType": "targeted",
   "cooldown": [
-    45,
-    45,
-    45,
-    45
+    45.0,
+    45.0,
+    45.0,
+    45.0
   ],
   "cooldownTier": "小",
   "description": "「雷之呼吸・補眠卡核銷！」\n指定敵人小級斬擊；只有消耗完成的補眠窗口才瞬移到目標前 1 單位，落地再斬一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：清醒時申請離職，睡著後開始加班。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
       "amount": {
-        "damageTier": "小",
-        "flat": 500,
-        "perRank": [
-          0,
-          250,
-          500,
-          750
+        "damageTierPerRank": [
+          "極小",
+          "極小",
+          "極小",
+          "小"
         ]
       },
       "damageType": "physical",
@@ -34,13 +32,11 @@
           "onArrive": [
             {
               "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
+                "damageTierPerRank": [
+                  "極小",
+                  "極小",
+                  "極小",
+                  "小"
                 ]
               },
               "damageType": "physical",
@@ -59,15 +55,14 @@
   ],
   "id": "b2-zenitsu.w",
   "manaCost": [
-    144,
-    144,
-    144,
-    144
+    144.0,
+    144.0,
+    144.0,
+    144.0
   ],
   "manaCostTier": "小",
   "maxRank": 4,
   "name": "雷之呼吸・補眠卡核銷",
-  "icon": "assets/icons/abilities/b2-zenitsu.w.webp",
   "provenance": "editor-json",
   "radius": 3,
   "range": 6,
@@ -78,7 +73,7 @@
   "template": {
     "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.233,
       "castType": "targeted",
       "effects": [
         {
@@ -139,5 +134,6 @@
       "attachTo": "caster",
       "vfxKey": "fx.prim.lightning.slash"
     }
-  ]
+  ],
+  "radiusTier": "極小"
 }

@@ -55,16 +55,16 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "range": 3,
@@ -101,14 +101,13 @@
               "kind": "damage",
               "damageType": "physical",
               "amount": {
-                "damageTier": "小",
-                "ratios": [],
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
+                "damageTierPerRank": [
+                  "極小",
+                  "極小",
+                  "極小",
+                  "小"
+                ],
+                "ratios": []
               }
             }
           ]
@@ -149,7 +148,7 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 0.1
+      "castTimeSec": 1.067
     },
     "W": {
       "id": "community-review-04-20260907.w",
@@ -160,16 +159,16 @@
       "castType": "skillshot",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -180,7 +179,7 @@
         {
           "kind": "delayed",
           "shape": "circle",
-          "radius": 2.75,
+          "radius": 3.0,
           "side": "enemies",
           "delaySec": 0.05,
           "count": 4,
@@ -191,13 +190,7 @@
               "damageType": "physical",
               "amount": {
                 "damageTier": "極小",
-                "ratios": [],
-                "perRank": [
-                  0,
-                  100,
-                  200,
-                  300
-                ]
+                "ratios": []
               }
             }
           ],
@@ -206,10 +199,11 @@
             "stepDist": 1.83,
             "dir": "facing"
           },
-          "hitOncePerTarget": true
+          "hitOncePerTarget": true,
+          "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.267,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/thorne.w.webp",
       "template": {
@@ -220,16 +214,10 @@
           "segmentAoe": 150,
           "damage": {
             "damageTier": "極小",
-            "ratios": [],
-            "perRank": [
-              0,
-              100,
-              200,
-              300
-            ]
+            "ratios": []
           },
           "damageType": "physical",
-          "castTimeSec": 0.35
+          "castTimeSec": 0.267
         },
         "inheritDefaults": true
       }
@@ -243,20 +231,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        15,
-        15,
-        15,
-        15
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
-      "range": 6,
-      "rangeTier": "中",
+      "range": 0.0,
       "cooldownTier": "小",
       "effects": [
         {
@@ -282,7 +268,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/thorne.e.webp",
       "template": {
@@ -290,7 +276,7 @@
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.15
+          "castTimeSec": 0.067
         },
         "inheritDefaults": true
       }
@@ -304,14 +290,14 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        576,
-        576,
-        576
+        576.0,
+        576.0,
+        576.0
       ],
       "manaCostTier": "大",
       "range": 4.5,
@@ -323,13 +309,12 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "damageTier": "小",
-            "ratios": [],
-            "perRank": [
-              0,
-              375,
-              750
-            ]
+            "damageTierPerRank": [
+              "極小",
+              "極小",
+              "小"
+            ],
+            "ratios": []
           }
         },
         {
@@ -340,23 +325,22 @@
           "stun": true
         }
       ],
-      "castTimeSec": 0.5,
+      "castTimeSec": 0.8,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/thorne.r.webp",
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTier": "小",
-            "ratios": [],
-            "perRank": [
-              0,
-              375,
-              750
-            ]
+            "damageTierPerRank": [
+              "極小",
+              "極小",
+              "小"
+            ],
+            "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.2
+          "castTimeSec": 0.8
         },
         "inheritDefaults": true
       }

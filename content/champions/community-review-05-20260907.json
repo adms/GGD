@@ -55,16 +55,16 @@
       "castType": "skillshot",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "range": 8,
@@ -75,7 +75,7 @@
         {
           "kind": "delayed",
           "shape": "circle",
-          "radius": 2.75,
+          "radius": 3.0,
           "side": "enemies",
           "delaySec": 0.05,
           "count": 4,
@@ -86,13 +86,7 @@
               "damageType": "magic",
               "amount": {
                 "damageTier": "極小",
-                "ratios": [],
-                "perRank": [
-                  0,
-                  100,
-                  200,
-                  300
-                ]
+                "ratios": []
               }
             }
           ],
@@ -101,10 +95,11 @@
             "stepDist": 1.83,
             "dir": "facing"
           },
-          "hitOncePerTarget": true
+          "hitOncePerTarget": true,
+          "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.267,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/thorne.q.webp",
       "template": {
@@ -115,16 +110,10 @@
           "segmentAoe": 150,
           "damage": {
             "damageTier": "極小",
-            "ratios": [],
-            "perRank": [
-              0,
-              100,
-              200,
-              300
-            ]
+            "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.35
+          "castTimeSec": 0.267
         },
         "inheritDefaults": true
       }
@@ -138,16 +127,16 @@
       "castType": "skillshot",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "range": 8,
@@ -158,7 +147,7 @@
         {
           "kind": "delayed",
           "shape": "circle",
-          "radius": 1.83,
+          "radius": 3.0,
           "side": "enemies",
           "delaySec": 0.12,
           "count": 4,
@@ -169,13 +158,7 @@
               "damageType": "physical",
               "amount": {
                 "damageTier": "極小",
-                "ratios": [],
-                "perRank": [
-                  0,
-                  100,
-                  200,
-                  300
-                ]
+                "ratios": []
               }
             }
           ],
@@ -185,15 +168,10 @@
               "damageType": "physical",
               "amount": {
                 "damageTier": "極小",
-                "ratios": [],
-                "perRank": [
-                  0,
-                  100,
-                  200,
-                  300
-                ]
+                "ratios": []
               },
-              "radius": 8.25
+              "radius": 8.0,
+              "radiusTier": "大"
             }
           ],
           "targetMode": "reresolve",
@@ -201,10 +179,11 @@
             "stepDist": 1.83,
             "dir": "facing"
           },
-          "hitOncePerTarget": true
+          "hitOncePerTarget": true,
+          "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.267,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/thorne.w.webp",
       "template": {
@@ -216,16 +195,10 @@
           "aoePerStep": 100,
           "damage": {
             "damageTier": "極小",
-            "ratios": [],
-            "perRank": [
-              0,
-              100,
-              200,
-              300
-            ]
+            "ratios": []
           },
           "damageType": "physical",
-          "castTimeSec": 0.2
+          "castTimeSec": 0.267
         },
         "inheritDefaults": true
       }
@@ -239,20 +212,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        15,
-        15,
-        15,
-        15
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
-      "range": 8,
-      "rangeTier": "大",
+      "range": 0.0,
       "cooldownTier": "小",
       "effects": [
         {
@@ -278,7 +249,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/thorne.e.webp",
       "template": {
@@ -286,7 +257,7 @@
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.15
+          "castTimeSec": 0.067
         },
         "inheritDefaults": true
       }
@@ -300,18 +271,18 @@
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        90,
-        90,
-        90
+        90.0,
+        90.0,
+        90.0
       ],
       "manaCost": [
-        576,
-        576,
-        576
+        576.0,
+        576.0,
+        576.0
       ],
       "manaCostTier": "大",
       "range": 8,
-      "radius": 4.95,
+      "radius": 4.5,
       "rangeTier": "大",
       "cooldownTier": "大",
       "targetsEnemies": true,
@@ -333,7 +304,7 @@
           "tickOnApply": true
         }
       ],
-      "castTimeSec": 0.5,
+      "castTimeSec": 1.767,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/thorne.r.webp",
       "template": {
@@ -354,10 +325,11 @@
           "impactRadius": 150,
           "scatterRadius": 120,
           "payout": "perImpact",
-          "castTimeSec": 0.5
+          "castTimeSec": 1.767
         },
         "inheritDefaults": true
-      }
+      },
+      "radiusTier": "小"
     }
   },
   "exAbility": "community-review-05-20260907.ex",

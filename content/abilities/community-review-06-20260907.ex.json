@@ -8,13 +8,15 @@
   "castType": "targeted",
   "maxRank": 1,
   "cooldown": [
-    45
+    45.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
-    576
+    576.0
   ],
+  "manaCostTier": "大",
   "range": 4.5,
-  "castTimeSec": 0.1,
+  "castTimeSec": 1.433,
   "effects": [
     {
       "kind": "damage",
@@ -31,5 +33,6 @@
       "vfxKey": "fx.prim.holy.slash"
     }
   ],
-  "icon": "assets/icons/abilities/community-review-06-20260907.ex.webp"
+  "icon": "assets/icons/abilities/community-review-06-20260907.ex.webp",
+  "rangeTier": "小"
 }

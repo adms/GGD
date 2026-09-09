@@ -12,7 +12,6 @@
   ],
   "maxRank": 1,
   "name": "反彈成功才發收據",
-  "icon": "assets/icons/abilities/b2-noor.passive.webp",
   "passive": {
     "ranks": [
       {
@@ -35,7 +34,7 @@
     ]
   },
   "provenance": "editor-json",
-  "range": 0,
+  "range": 0.0,
   "schema": "ability@1",
   "slot": "PASSIVE",
   "template": {

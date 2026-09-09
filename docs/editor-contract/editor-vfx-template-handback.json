@@ -36,12 +36,12 @@
     "path": "docs/editor-contract/ggd-type-catalog.json",
     "schema": "ggd-type-catalog@1",
     "counts": {
-      "templates": 58,
-      "pickable": 47,
+      "templates": 77,
+      "pickable": 66,
       "analysedButUnwired": 1,
       "shells": 9,
       "sentinels": 1,
-      "inertParamsAcrossPickable": 20,
+      "inertParamsAcrossPickable": 22,
       "matrixPresent": 154,
       "matrixTheoretical": 325
     },
@@ -1542,5 +1542,5 @@
       "blockingBrickRequests": []
     }
   ],
-  "fingerprint": "f420fd65f1cf"
+  "fingerprint": "863437c73136"
 }

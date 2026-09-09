@@ -1,25 +1,24 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "castType": "targeted",
       "cooldown": [
-        15,
-        15,
-        15,
-        15
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "cooldownTier": "小",
       "description": "「八極拳催款專線！」\n八極拳小級物理打擊並給 magic-break 3 秒標記；此標記不自帶減魔抗，重點是記錄催款對象。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "amount": {
-            "damageTier": "小",
-            "perRank": [
-              0,
-              250,
-              500,
-              750
+            "damageTierPerRank": [
+              "極小",
+              "極小",
+              "極小",
+              "小"
             ]
           },
           "damageType": "physical",
@@ -34,10 +33,10 @@
       ],
       "id": "b2-rin.e",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -50,14 +49,13 @@
       "template": {
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.567,
           "damage": {
-            "damageTier": "小",
-            "perRank": [
-              0,
-              250,
-              500,
-              750
+            "damageTierPerRank": [
+              "極小",
+              "極小",
+              "極小",
+              "小"
             ]
           },
           "damageType": "physical",
@@ -78,13 +76,13 @@
       ]
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "self",
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "cooldownTier": "小",
       "description": "「寶石預付款已扣款！」\n寶石預付款：另外支付 120 魔力，按實際支付量存入既有 nen-banked 4 秒；不足只能存實際扣掉的量。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -109,24 +107,22 @@
       ],
       "id": "b2-rin.q",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
       "maxRank": 4,
       "name": "寶石預付款已扣款",
       "provenance": "editor-json",
       "radius": 3,
-      "range": 6,
-      "rangeTier": "中",
+      "range": 0.0,
       "slot": "Q",
       "targetsEnemies": true,
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "self",
           "effects": [
             {
@@ -158,26 +154,26 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
-      ]
+      ],
+      "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 2.433,
       "castType": "targeted",
       "cooldown": [
-        90,
-        90,
-        90
+        90.0,
+        90.0,
+        90.0
       ],
       "cooldownTier": "大",
       "description": "「刷爆卡才准退款！」\n中級定向魔法；目標有催款標記，消耗它並回復自身最大魔力 12%，同時讓對方沉默 1 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "amount": {
-            "damageTier": "中",
-            "perRank": [
-              0,
-              750,
-              1500
+            "damageTierPerRank": [
+              "極小",
+              "小",
+              "中"
             ]
           },
           "damageType": "magic",
@@ -207,9 +203,9 @@
       ],
       "id": "b2-rin.r",
       "manaCost": [
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -223,12 +219,13 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 2.433,
           "castType": "targeted",
           "effects": [
             {
               "amount": {
                 "damageTier": "中",
+                "flat": 1000,
                 "perRank": [
                   0,
                   750,
@@ -271,28 +268,28 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.nova"
         }
-      ]
+      ],
+      "radiusTier": "極小"
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.233,
       "castType": "targeted",
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "cooldownTier": "小",
       "description": "「刷卡成功請簽名！」\n小級寶石打擊，追加 nen-banked 實際儲量的 1 倍（上限 180）；擊發後清空存量並退最大魔力 1% 手續費，不能同一顆寶石無限報帳。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "amount": {
-            "damageTier": "小",
-            "perRank": [
-              0,
-              250,
-              500,
-              750
+            "damageTierPerRank": [
+              "極小",
+              "極小",
+              "極小",
+              "小"
             ]
           },
           "bankedBonus": {
@@ -320,10 +317,10 @@
       ],
       "id": "b2-rin.w",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -337,12 +334,13 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 1.233,
           "castType": "targeted",
           "effects": [
             {
               "amount": {
                 "damageTier": "小",
+                "flat": 500,
                 "perRank": [
                   0,
                   250,
@@ -384,7 +382,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.bolt"
         }
-      ]
+      ],
+      "radiusTier": "極小"
     }
   },
   "archetype": "mage",
@@ -433,7 +432,6 @@
   "id": "b2-rin",
   "modelKey": "community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345",
   "name": "遠坂凜",
-  "icon": "assets/icons/champions/b2-rin.webp",
   "origin": "法師",
   "passiveAbility": "b2-rin.passive",
   "role": "mage",
@@ -444,5 +442,6 @@
     "E",
     "R"
   ],
-  "tags": []
+  "tags": [],
+  "icon": "assets/icons/champions/b2-rin.webp"
 }

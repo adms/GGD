@@ -1,10 +1,10 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 1.033,
   "castType": "targeted",
   "cooldown": [
-    90,
-    90,
-    90
+    90.0,
+    90.0,
+    90.0
   ],
   "cooldownTier": "大",
   "description": "「期末考禁止交頭接耳！」\n對指定敵人施加 magic-break 與 silenced 旗標 3 秒，期間不能施法。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拿舊課本批改敵人，分數直接扣血。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -19,14 +19,12 @@
   ],
   "id": "b2-matthias.r",
   "manaCost": [
-    144,
-    144,
-    144
+    0.0,
+    0.0,
+    0.0
   ],
-  "manaCostTier": "小",
   "maxRank": 3,
   "name": "期末考禁止交頭接耳",
-  "icon": "assets/icons/abilities/b2-matthias.r.webp",
   "provenance": "editor-json",
   "radius": 3,
   "range": 6,
@@ -37,7 +35,7 @@
   "template": {
     "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.033,
       "castType": "targeted",
       "effects": [
         {
@@ -59,5 +57,6 @@
       "attachTo": "caster",
       "vfxKey": "fx.prim.arcane.pulse-sm"
     }
-  ]
+  ],
+  "radiusTier": "極小"
 }

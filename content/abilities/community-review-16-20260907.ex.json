@@ -8,18 +8,20 @@
   "castType": "skillshot",
   "maxRank": 1,
   "cooldown": [
-    90
+    90.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
-    576
+    576.0
   ],
+  "manaCostTier": "大",
   "range": 8,
-  "castTimeSec": 0.5,
+  "castTimeSec": 1.233,
   "effects": [
     {
       "kind": "delayed",
       "shape": "circle",
-      "radius": 2.75,
+      "radius": 3.0,
       "side": "enemies",
       "delaySec": 0.05,
       "count": 4,
@@ -39,7 +41,8 @@
         "stepDist": 1.83,
         "dir": "facing"
       },
-      "hitOncePerTarget": true
+      "hitOncePerTarget": true,
+      "radiusTier": "極小"
     }
   ],
   "vfxKey": "fx.prim.holy.beam",
@@ -48,5 +51,6 @@
       "vfxKey": "fx.prim.holy.beam"
     }
   ],
-  "icon": "assets/icons/abilities/community-review-16-20260907.ex.webp"
+  "icon": "assets/icons/abilities/community-review-16-20260907.ex.webp",
+  "rangeTier": "大"
 }

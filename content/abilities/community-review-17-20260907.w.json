@@ -7,21 +7,19 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    15,
-    15,
-    15,
-    15
+    15.0,
+    15.0,
+    15.0,
+    15.0
   ],
-  "manaCost": [
-    144,
-    144,
-    144,
-    144
-  ],
-  "manaCostTier": "小",
-  "range": 6,
-  "rangeTier": "中",
   "cooldownTier": "小",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
   "targetsEnemies": false,
   "effects": [
     {
@@ -37,7 +35,7 @@
       "damageMult": 0.25
     }
   ],
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.267,
   "castTimeTier": "小",
   "icon": "assets/icons/abilities/community-review-17-20260907.w.webp",
   "template": {
@@ -54,7 +52,7 @@
       "maxAlive": 1,
       "onOwnerDeath": "despawn",
       "cleanse": "none",
-      "castTimeSec": 0.35
+      "castTimeSec": 0.267
     },
     "inheritDefaults": true
   },

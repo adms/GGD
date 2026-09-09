@@ -12,7 +12,6 @@
   ],
   "maxRank": 1,
   "name": "劍上又跳出更新通知",
-  "icon": "assets/icons/abilities/b2-kaede.passive.webp",
   "passive": {
     "ranks": [
       {
@@ -42,7 +41,7 @@
     ]
   },
   "provenance": "editor-json",
-  "range": 0,
+  "range": 0.0,
   "schema": "ability@1",
   "slot": "PASSIVE",
   "template": {

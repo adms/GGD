@@ -1,10 +1,10 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.067,
   "castType": "targeted",
   "cooldown": [
-    90,
-    90,
-    90
+    90.0,
+    90.0,
+    90.0
   ],
   "cooldownTier": "大",
   "description": "「道具說明書暖心頁！」\n治療指定友軍 120 生命並清除最多 3 筆可驅散負面效果。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：開心道具全部誤用，但認真把隊友救回來。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -35,14 +35,12 @@
   ],
   "id": "b2-takopi.r",
   "manaCost": [
-    144,
-    144,
-    144
+    0.0,
+    0.0,
+    0.0
   ],
-  "manaCostTier": "小",
   "maxRank": 3,
   "name": "道具說明書暖心頁",
-  "icon": "assets/icons/abilities/b2-takopi.r.webp",
   "provenance": "editor-json",
   "radius": 3,
   "range": 6,
@@ -101,5 +99,6 @@
       "attachTo": "caster",
       "vfxKey": "fx.prim.wind.pulse-sm"
     }
-  ]
+  ],
+  "radiusTier": "極小"
 }

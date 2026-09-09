@@ -1,11 +1,11 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.067,
   "castType": "self",
   "cooldown": [
-    15,
-    15,
-    15,
-    15
+    15.0,
+    15.0,
+    15.0,
+    15.0
   ],
   "cooldownTier": "小",
   "description": "「安裝魔劍套件！」\n取得 three-sword-style 暫態與 45 點攻擊力，維持 4 秒；原作的魔法劍士特徵改編為有期限附魔。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -29,24 +29,21 @@
   ],
   "id": "b2-kaede.q",
   "manaCost": [
-    144,
-    144,
-    144,
-    144
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "manaCostTier": "小",
   "maxRank": 4,
   "name": "安裝魔劍套件",
-  "icon": "assets/icons/abilities/b2-kaede.q.webp",
   "provenance": "editor-json",
-  "range": 6,
-  "rangeTier": "中",
+  "range": 0.0,
   "schema": "ability@1",
   "slot": "Q",
   "template": {
     "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "duration": 4,
       "modifiers": [
         {

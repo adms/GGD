@@ -8,13 +8,15 @@
   "castType": "ground",
   "maxRank": 1,
   "cooldown": [
-    90
+    60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
-    576
+    576.0
   ],
+  "manaCostTier": "大",
   "range": 4.5,
-  "castTimeSec": 0.1,
+  "castTimeSec": 1.433,
   "effects": [
     {
       "kind": "leap",
@@ -50,5 +52,6 @@
       "attachTo": "caster"
     }
   ],
-  "icon": "assets/icons/abilities/community-review-08-20260907.ex.webp"
+  "icon": "assets/icons/abilities/community-review-08-20260907.ex.webp",
+  "rangeTier": "小"
 }

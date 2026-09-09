@@ -8,13 +8,15 @@
   "castType": "ground",
   "maxRank": 1,
   "cooldown": [
-    90
+    60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
-    576
+    576.0
   ],
+  "manaCostTier": "大",
   "range": 6,
-  "castTimeSec": 0.1,
+  "castTimeSec": 2.233,
   "effects": [
     {
       "kind": "damage",
@@ -32,5 +34,6 @@
       "attachTo": "point"
     }
   ],
-  "icon": "assets/icons/abilities/community-review-24-20260907.ex.webp"
+  "icon": "assets/icons/abilities/community-review-24-20260907.ex.webp",
+  "rangeTier": "中"
 }

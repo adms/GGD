@@ -1,22 +1,20 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 1.633,
   "castType": "targeted",
   "cooldown": [
-    45,
-    45,
-    45
+    45.0,
+    45.0,
+    45.0
   ],
   "cooldownTier": "大",
   "description": "「照攻略抄的重擊！」\n中級重擊加 0.8 AD；受 E 實際攻擊力影響。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
       "amount": {
-        "damageTier": "中",
-        "flat": 1000,
-        "perRank": [
-          0,
-          750,
-          1500
+        "damageTierPerRank": [
+          "極小",
+          "小",
+          "中"
         ],
         "ratios": [
           {
@@ -31,14 +29,13 @@
   ],
   "id": "b2-elma.r",
   "manaCost": [
-    144,
-    144,
-    144
+    144.0,
+    144.0,
+    144.0
   ],
   "manaCostTier": "小",
   "maxRank": 3,
   "name": "照攻略抄的重擊",
-  "icon": "assets/icons/abilities/b2-elma.r.webp",
   "provenance": "editor-json",
   "range": 6,
   "rangeTier": "中",
@@ -48,14 +45,12 @@
   "template": {
     "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.633,
       "damage": {
-        "damageTier": "中",
-        "flat": 1000,
-        "perRank": [
-          0,
-          750,
-          1500
+        "damageTierPerRank": [
+          "極小",
+          "小",
+          "中"
         ],
         "ratios": [
           {

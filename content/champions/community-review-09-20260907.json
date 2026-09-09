@@ -55,16 +55,16 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        15,
-        15,
-        15,
-        15
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -76,14 +76,13 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "damageTier": "小",
-            "ratios": [],
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
+            "damageTierPerRank": [
+              "極小",
+              "極小",
+              "極小",
+              "小"
+            ],
+            "ratios": []
           }
         },
         {
@@ -94,24 +93,23 @@
           "moveSpeedMult": 0.7
         }
       ],
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/sela.q.webp",
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTier": "小",
-            "ratios": [],
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
+            "damageTierPerRank": [
+              "極小",
+              "極小",
+              "極小",
+              "小"
+            ],
+            "ratios": []
           },
           "damageType": "physical",
-          "castTimeSec": 0.2
+          "castTimeSec": 0.567
         },
         "inheritDefaults": true
       }
@@ -125,20 +123,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        15,
-        15,
-        15,
-        15
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
-      "range": 8,
-      "rangeTier": "大",
+      "range": 0.0,
       "cooldownTier": "小",
       "effects": [
         {
@@ -152,7 +148,7 @@
           "applyTo": "self"
         }
       ],
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/sela.w.webp",
       "template": {
@@ -160,7 +156,7 @@
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.15
+          "castTimeSec": 0.067
         },
         "inheritDefaults": true
       }
@@ -174,20 +170,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        15,
-        15,
-        15,
-        15
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
-      "range": 8,
-      "rangeTier": "大",
+      "range": 0.0,
       "cooldownTier": "小",
       "effects": [
         {
@@ -213,7 +207,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/sela.e.webp",
       "template": {
@@ -221,7 +215,7 @@
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.15
+          "castTimeSec": 0.067
         },
         "inheritDefaults": true
       }
@@ -235,18 +229,16 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        576,
-        576,
-        576
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "大",
-      "range": 8,
-      "rangeTier": "大",
+      "range": 0.0,
       "cooldownTier": "大",
       "effects": [
         {
@@ -266,7 +258,7 @@
           "duration": 4
         }
       ],
-      "castTimeSec": 0.5,
+      "castTimeSec": 0.667,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/sela.r.webp",
       "template": {
@@ -285,7 +277,7 @@
               "msBonusTier": "極小"
             }
           ],
-          "castTimeSec": 0.15
+          "castTimeSec": 0.667
         },
         "inheritDefaults": true
       }

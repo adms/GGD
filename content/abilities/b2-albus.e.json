@@ -1,11 +1,11 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.467,
   "castType": "ground",
   "cooldown": [
-    15,
-    15,
-    15,
-    15
+    15.0,
+    15.0,
+    15.0,
+    15.0
   ],
   "cooldownTier": "小",
   "description": "「這裡有捷徑！」\n走有限合法捷徑；先走捷徑的 4 秒內可使用 R 的急救分支。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -19,15 +19,13 @@
   ],
   "id": "b2-albus.e",
   "manaCost": [
-    144,
-    144,
-    144,
-    144
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "manaCostTier": "小",
   "maxRank": 4,
   "name": "這裡有捷徑",
-  "icon": "assets/icons/abilities/b2-albus.e.webp",
   "provenance": "editor-json",
   "range": 6,
   "rangeTier": "中",
@@ -36,7 +34,7 @@
   "template": {
     "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
     "params": {
-      "castTimeSec": 0.1
+      "castTimeSec": 0.467
     },
     "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
   },

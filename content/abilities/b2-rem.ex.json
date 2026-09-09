@@ -1,8 +1,8 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 2.033,
   "castType": "ground",
   "cooldown": [
-    90
+    90.0
   ],
   "cooldownTier": "大",
   "description": "「姊姊今天不在家！」\n向前衝鋒，落地打擊並推離人群；不是真實家務清潔。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：女僕服務包含拖地與拖走客人。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -17,8 +17,7 @@
       "onLand": [
         {
           "amount": {
-            "damageTier": "小",
-            "flat": 500
+            "damageTier": "小"
           },
           "damageType": "physical",
           "kind": "damage"
@@ -36,12 +35,11 @@
   ],
   "id": "b2-rem.ex",
   "manaCost": [
-    144
+    144.0
   ],
   "manaCostTier": "小",
   "maxRank": 1,
   "name": "姊姊今天不在家",
-  "icon": "assets/icons/abilities/b2-rem.ex.webp",
   "provenance": "editor-json",
   "radius": 2.75,
   "range": 6,
@@ -52,10 +50,9 @@
   "template": {
     "contentSha256": "sha256:3f80978b955a7744a0e86651ddce738ec5f483e55ecfaa7213a23d6d735803e2",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 2.033,
       "damage": {
-        "damageTier": "小",
-        "flat": 500
+        "damageTier": "小"
       },
       "dashDistance": 200,
       "dashDurationSec": 0.4,

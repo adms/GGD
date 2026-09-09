@@ -1,25 +1,24 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "castType": "targeted",
       "cooldown": [
-        15,
-        15,
-        15,
-        15
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "cooldownTier": "小",
       "description": "「工具箱灰塵遮眼！」\n小級工具打擊，沿用出貨 blind 失手率 50% 配方；不使玩家螢幕全黑。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "amount": {
-            "damageTier": "小",
-            "perRank": [
-              0,
-              250,
-              500,
-              750
+            "damageTierPerRank": [
+              "極小",
+              "極小",
+              "極小",
+              "小"
             ]
           },
           "damageType": "physical",
@@ -34,10 +33,10 @@
       ],
       "id": "b2-goblin.e",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -50,14 +49,13 @@
       "template": {
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.567,
           "damage": {
-            "damageTier": "小",
-            "perRank": [
-              0,
-              250,
-              500,
-              750
+            "damageTierPerRank": [
+              "極小",
+              "極小",
+              "極小",
+              "小"
             ]
           },
           "damageType": "physical",
@@ -78,13 +76,13 @@
       ]
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.667,
       "castType": "ground",
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "cooldownTier": "小",
       "description": "「工地開工三次點名！」\n以起手命中者位置（沒有命中則施法點）固定半徑 2.5，建立三次每 0.5 秒重選敵人的施工傷害區，每次極小物理傷害；離開可躲，沒有隱形陷阱實體。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -96,13 +94,7 @@
           "effects": [
             {
               "amount": {
-                "damageTier": "極小",
-                "perRank": [
-                  0,
-                  100,
-                  200,
-                  300
-                ]
+                "damageTier": "極小"
               },
               "damageType": "physical",
               "kind": "damage"
@@ -111,19 +103,20 @@
           "intervalSec": 0.5,
           "kind": "delayed",
           "maxTargets": 4,
-          "radius": 2.5,
+          "radius": 3.0,
           "shape": "circle",
           "side": "enemies",
           "stopOnCasterDeath": true,
-          "targetMode": "reresolve"
+          "targetMode": "reresolve",
+          "radiusTier": "極小"
         }
       ],
       "id": "b2-goblin.q",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -137,7 +130,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.667,
           "castType": "ground",
           "effects": [
             {
@@ -148,6 +141,7 @@
                 {
                   "amount": {
                     "damageTier": "極小",
+                    "flat": 200,
                     "perRank": [
                       0,
                       100,
@@ -180,26 +174,26 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.nova"
         }
-      ]
+      ],
+      "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.633,
       "castType": "targeted",
       "cooldown": [
-        90,
-        90,
-        90
+        90.0,
+        90.0,
+        90.0
       ],
       "cooldownTier": "大",
       "description": "「盲目亂闖請走緊急出口！」\n敵人被致盲時才追加推離 4 單位；一般情況只有小級打擊，施工流程可被對方淨化打斷。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "amount": {
-            "damageTier": "小",
-            "perRank": [
-              0,
-              375,
-              750
+            "damageTierPerRank": [
+              "極小",
+              "極小",
+              "小"
             ]
           },
           "damageType": "physical",
@@ -221,9 +215,9 @@
       ],
       "id": "b2-goblin.r",
       "manaCost": [
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -237,12 +231,13 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 1.633,
           "castType": "targeted",
           "effects": [
             {
               "amount": {
                 "damageTier": "小",
+                "flat": 500,
                 "perRank": [
                   0,
                   375,
@@ -277,16 +272,17 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
-      ]
+      ],
+      "radiusTier": "極小"
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "targeted",
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "cooldownTier": "小",
       "description": "「把客人拉進施工區！」\n先把指定敵人拉到自己前 1 單位，便於把他帶到預定工地。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -301,12 +297,11 @@
       ],
       "id": "b2-goblin.w",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
       "maxRank": 4,
       "name": "把客人拉進施工區",
       "provenance": "editor-json",
@@ -318,7 +313,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.467,
           "castType": "targeted",
           "effects": [
             {
@@ -340,7 +335,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
-      ]
+      ],
+      "radiusTier": "極小"
     }
   },
   "archetype": "fighter",
@@ -389,7 +385,6 @@
   "id": "b2-goblin",
   "modelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
   "name": "哥布林殺手",
-  "icon": "assets/icons/champions/b2-goblin.webp",
   "origin": "鬥士",
   "passiveAbility": "b2-goblin.passive",
   "role": "fighter",
@@ -400,5 +395,6 @@
     "E",
     "R"
   ],
-  "tags": []
+  "tags": [],
+  "icon": "assets/icons/champions/b2-goblin.webp"
 }

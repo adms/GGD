@@ -7,32 +7,31 @@
   "castType": "targeted",
   "maxRank": 3,
   "cooldown": [
-    45,
-    45,
-    45
+    45.0,
+    45.0,
+    45.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
-    576,
-    576,
-    576
+    576.0,
+    576.0,
+    576.0
   ],
   "manaCostTier": "大",
   "range": 4.5,
   "rangeTier": "小",
-  "cooldownTier": "大",
   "targetsEnemies": true,
   "effects": [
     {
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "damageTier": "小",
-        "ratios": [],
-        "perRank": [
-          0,
-          375,
-          750
-        ]
+        "damageTierPerRank": [
+          "極小",
+          "極小",
+          "小"
+        ],
+        "ratios": []
       }
     },
     {
@@ -43,23 +42,22 @@
       "stun": true
     }
   ],
-  "castTimeSec": 0.5,
+  "castTimeSec": 0.8,
   "castTimeTier": "大",
   "icon": "assets/icons/abilities/community-review-04-20260907.r.webp",
   "template": {
     "ref": "tpl-single-strike",
     "params": {
       "damage": {
-        "damageTier": "小",
-        "ratios": [],
-        "perRank": [
-          0,
-          375,
-          750
-        ]
+        "damageTierPerRank": [
+          "極小",
+          "極小",
+          "小"
+        ],
+        "ratios": []
       },
       "damageType": "magic",
-      "castTimeSec": 0.2
+      "castTimeSec": 0.8
     },
     "inheritDefaults": true
   },

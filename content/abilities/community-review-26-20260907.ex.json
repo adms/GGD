@@ -8,13 +8,15 @@
   "castType": "ground",
   "maxRank": 1,
   "cooldown": [
-    45
+    45.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
-    576
+    576.0
   ],
+  "manaCostTier": "大",
   "range": 4.5,
-  "castTimeSec": 0.1,
+  "castTimeSec": 1.633,
   "effects": [
     {
       "kind": "leap",
@@ -48,5 +50,6 @@
       "vfxKey": "fx.prim.physical.arc"
     }
   ],
-  "icon": "assets/icons/abilities/community-review-26-20260907.ex.webp"
+  "icon": "assets/icons/abilities/community-review-26-20260907.ex.webp",
+  "rangeTier": "小"
 }

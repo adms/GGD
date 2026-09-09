@@ -7,20 +7,20 @@
   "castType": "ground",
   "maxRank": 3,
   "cooldown": [
-    90,
-    90,
-    90
+    90.0,
+    90.0,
+    90.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
-    576,
-    576,
-    576
+    576.0,
+    576.0,
+    576.0
   ],
   "manaCostTier": "大",
   "range": 6,
-  "radius": 4.95,
+  "radius": 4.5,
   "rangeTier": "中",
-  "cooldownTier": "大",
   "targetsEnemies": true,
   "effects": [
     {
@@ -40,7 +40,7 @@
       "tickOnApply": true
     }
   ],
-  "castTimeSec": 0.5,
+  "castTimeSec": 0.4,
   "castTimeTier": "大",
   "icon": "assets/icons/abilities/community-review-08-20260907.r.webp",
   "template": {
@@ -61,7 +61,7 @@
       "impactRadius": 150,
       "scatterRadius": 120,
       "payout": "perImpact",
-      "castTimeSec": 0.5
+      "castTimeSec": 0.4
     },
     "inheritDefaults": true
   },
@@ -72,5 +72,6 @@
       "vfxKey": "fx.prim.physical.nova",
       "attachTo": "point"
     }
-  ]
+  ],
+  "radiusTier": "小"
 }

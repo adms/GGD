@@ -1,24 +1,22 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.567,
   "castType": "targeted",
   "cooldown": [
-    15,
-    15,
-    15,
-    15
+    15.0,
+    15.0,
+    15.0,
+    15.0
   ],
   "cooldownTier": "小",
   "description": "「世界紀錄第一刀！」\n小級斬擊，這段速通照常支付魔力與冷卻。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
       "amount": {
-        "damageTier": "小",
-        "flat": 500,
-        "perRank": [
-          0,
-          250,
-          500,
-          750
+        "damageTierPerRank": [
+          "極小",
+          "極小",
+          "極小",
+          "小"
         ]
       },
       "damageType": "physical",
@@ -27,15 +25,14 @@
   ],
   "id": "b2-albus.q",
   "manaCost": [
-    144,
-    144,
-    144,
-    144
+    144.0,
+    144.0,
+    144.0,
+    144.0
   ],
   "manaCostTier": "小",
   "maxRank": 4,
   "name": "世界紀錄第一刀",
-  "icon": "assets/icons/abilities/b2-albus.q.webp",
   "provenance": "editor-json",
   "range": 6,
   "rangeTier": "中",
@@ -45,15 +42,13 @@
   "template": {
     "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "damage": {
-        "damageTier": "小",
-        "flat": 500,
-        "perRank": [
-          0,
-          250,
-          500,
-          750
+        "damageTierPerRank": [
+          "極小",
+          "極小",
+          "極小",
+          "小"
         ]
       },
       "damageType": "physical"

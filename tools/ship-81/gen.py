@@ -40,6 +40,7 @@ OUT_AB = REPO / "content/abilities"
 ICON_CH = REPO / "content/assets/icons/champions"
 ICON_AB = REPO / "content/assets/icons/abilities"
 OUT_MODELS = REPO / "content/models"
+OUT_TPL = REPO / "content/ability-templates"
 SKELETON_ICONS = ("sela.webp", "thorne.webp")
 
 
@@ -245,6 +246,31 @@ def ability_docs(hero: dict, slots: list[dict]) -> list[dict]:
     return docs
 
 
+def copy_ability_templates(src_root: Path, needed: set[str]) -> list[str]:
+    """
+    ⭐ 把技能**真的引用到**的 `ability-template@1` 搬進 `content/ability-templates/`。
+
+    ⛔⛔ 2026-09-10 抓到（GH#1165）：第二批 **222 支技能的模板展開全部失敗**,
+    而載入器**fail-open**（逐字：「已個別降級（其餘內容照常註冊）」）
+    ⇒ ⭐ 內容照樣註冊、`content:build` **exit 0**、選人畫面看得到那些英雄 ——
+    ⛔ 而技能的模板參數一個都沒有套用。⇒ 這正是本文件記過的
+    「fail-open 沒錯，**靜默**才是缺陷」。
+
+    ⭐ 只搬**被引用的**（⛔ 不是把 20 份全倒進去）——
+    一份沒有人引用的模板就是下一個孤兒（第一·五守則的鄰居）。
+    """
+    OUT_TPL.mkdir(parents=True, exist_ok=True)
+    seen, copied = {}, []
+    for f in src_root.rglob("*.json"):
+        if f.parent.name != "ability-templates" or f.stem not in needed:
+            continue
+        seen.setdefault(f.stem, f)
+    for tid, f in sorted(seen.items()):
+        shutil.copyfile(f, OUT_TPL / f"{tid}.json")
+        copied.append(tid)
+    return copied
+
+
 def copy_model_docs(catalog_path: Path, needed: set[str]) -> list[str]:
     """⭐ 把用到的 `model@1` 文件從素材庫搬進 `content/models/`。
 
@@ -334,6 +360,28 @@ def main() -> None:
                      "abilities": h["abilities"] if "abilities" in h else ability_docs(c, h["slots"])})
 
     if args.write:
+        # ⭐ 技能引用到的模板 —— ⛔ 沒有它們,載入器會 fail-open 把每一支技能降級。
+        if args.batch2_dir:
+            # ⚠️ ⭐ **遞迴收集**，⛔ 不是只看 `template.cards[]`。
+            #   ⛔ 我第一版只走頂層 cards ⇒ 只收到 **4** 份（實際引用 **19**）
+            #   ⇒ 15 份缺席 ⇒ 82 支技能繼續 fail-open 降級,
+            #   ⭐ 而 `content:build` 仍然 **exit 0** —— 一個「修好了一半」
+            #   讀起來跟「修好了」一模一樣。
+            def _refs(o):
+                if isinstance(o, dict):
+                    r = o.get("ref")
+                    if isinstance(r, str) and r.startswith("hero-template."):
+                        yield r
+                    for v in o.values():
+                        yield from _refs(v)
+                elif isinstance(o, list):
+                    for v in o:
+                        yield from _refs(v)
+            want_tpl = {t for r in rows for a in r["abilities"] for t in _refs(a)}
+            tpl = copy_ability_templates(args.batch2_dir.parent, want_tpl)
+            missing_tpl = sorted(want_tpl - set(tpl))
+            print(f"⭐ 技能模板：引用 {len(want_tpl)} · 搬進來 {len(tpl)}"
+                  + (f" · ⛔ 缺 {missing_tpl}" if missing_tpl else ""), file=sys.stderr)
         needed = {r["doc"].get("modelKey") for r in rows if str(r["doc"].get("modelKey", "")).startswith("community.body.")}
         copied = copy_model_docs(args.catalog, needed)
         missing_models = sorted(needed - set(copied))

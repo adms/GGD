@@ -1,25 +1,18 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.833,
   "castType": "targeted",
   "cooldown": [
-    45,
-    45,
-    45,
-    45
+    45.0,
+    45.0,
+    45.0,
+    45.0
   ],
   "cooldownTier": "小",
   "description": "「翻盤不是保證中獎！」\n造成極小魔法傷害，並讀取 nen-banked 實付存款追加有限傷害，上限 180；存款不足時不會憑空取得滿額。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：局內籌碼賭運氣，贏了就喊最後一把。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
       "amount": {
-        "damageTier": "極小",
-        "flat": 200,
-        "perRank": [
-          0,
-          100,
-          200,
-          300
-        ]
+        "damageTier": "極小"
       },
       "bankedBonus": {
         "coeff": 1,
@@ -32,15 +25,14 @@
   ],
   "id": "b2-kaiji.w",
   "manaCost": [
-    144,
-    144,
-    144,
-    144
+    144.0,
+    144.0,
+    144.0,
+    144.0
   ],
   "manaCostTier": "小",
   "maxRank": 4,
   "name": "翻盤不是保證中獎",
-  "icon": "assets/icons/abilities/b2-kaiji.w.webp",
   "provenance": "editor-json",
   "radius": 3,
   "range": 6,
@@ -51,7 +43,7 @@
   "template": {
     "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.833,
       "castType": "targeted",
       "effects": [
         {
@@ -85,5 +77,6 @@
       "attachTo": "caster",
       "vfxKey": "fx.prim.arcane.pulse-sm"
     }
-  ]
+  ],
+  "radiusTier": "極小"
 }

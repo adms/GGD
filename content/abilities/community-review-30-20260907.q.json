@@ -7,40 +7,39 @@
   "castType": "ground",
   "maxRank": 4,
   "cooldown": [
-    45,
-    45,
-    45,
-    45
+    45.0,
+    45.0,
+    45.0,
+    45.0
   ],
+  "cooldownTier": "小",
   "manaCost": [
-    144,
-    144,
-    144,
-    144
+    144.0,
+    144.0,
+    144.0,
+    144.0
   ],
   "manaCostTier": "小",
   "range": 6,
-  "radius": 5.5,
+  "radius": 6.0,
   "rangeTier": "中",
-  "cooldownTier": "小",
   "targetsEnemies": true,
   "effects": [
     {
       "kind": "damage",
       "damageType": "physical",
       "amount": {
-        "damageTier": "小",
-        "ratios": [],
-        "perRank": [
-          0,
-          250,
-          500,
-          750
-        ]
+        "damageTierPerRank": [
+          "極小",
+          "極小",
+          "極小",
+          "小"
+        ],
+        "ratios": []
       }
     }
   ],
-  "castTimeSec": 0.1,
+  "castTimeSec": 1.433,
   "castTimeTier": "小",
   "icon": "assets/icons/abilities/community-review-30-20260907.q.webp",
   "template": {
@@ -48,17 +47,16 @@
     "params": {
       "radius": 300,
       "damage": {
-        "damageTier": "小",
-        "ratios": [],
-        "perRank": [
-          0,
-          250,
-          500,
-          750
-        ]
+        "damageTierPerRank": [
+          "極小",
+          "極小",
+          "極小",
+          "小"
+        ],
+        "ratios": []
       },
       "damageType": "physical",
-      "castTimeSec": 0.4
+      "castTimeSec": 1.433
     },
     "inheritDefaults": true
   },
@@ -69,5 +67,6 @@
       "vfxKey": "fx.prim.sound.nova",
       "attachTo": "point"
     }
-  ]
+  ],
+  "radiusTier": "中"
 }

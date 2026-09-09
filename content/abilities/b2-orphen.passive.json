@@ -12,7 +12,6 @@
   ],
   "maxRank": 1,
   "name": "催收電話無須長談",
-  "icon": "assets/icons/abilities/b2-orphen.passive.webp",
   "passive": {
     "ranks": [
       {
@@ -34,7 +33,7 @@
     ]
   },
   "provenance": "editor-json",
-  "range": 0,
+  "range": 0.0,
   "schema": "ability@1",
   "slot": "PASSIVE",
   "template": {

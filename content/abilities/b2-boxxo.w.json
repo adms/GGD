@@ -1,11 +1,11 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.467,
   "castType": "targeted",
   "cooldown": [
-    45,
-    45,
-    45,
-    45
+    45.0,
+    45.0,
+    45.0,
+    45.0
   ],
   "cooldownTier": "小",
   "description": "「憑證兌換防撞贈品！」\n消耗自身全部營業憑證，給指定隊友 240 護盾 3 秒；沒有購買紀錄就沒有贈品。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -38,15 +38,13 @@
   ],
   "id": "b2-boxxo.w",
   "manaCost": [
-    144,
-    144,
-    144,
-    144
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "manaCostTier": "小",
   "maxRank": 4,
   "name": "憑證兌換防撞贈品",
-  "icon": "assets/icons/abilities/b2-boxxo.w.webp",
   "provenance": "editor-json",
   "radius": 3,
   "range": 6,
@@ -57,7 +55,7 @@
   "template": {
     "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "targeted",
       "effects": [
         {
@@ -97,5 +95,6 @@
       "attachTo": "caster",
       "vfxKey": "fx.prim.wind.pulse-sm"
     }
-  ]
+  ],
+  "radiusTier": "極小"
 }

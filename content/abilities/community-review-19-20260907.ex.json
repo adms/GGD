@@ -8,13 +8,15 @@
   "castType": "targeted",
   "maxRank": 1,
   "cooldown": [
-    90
+    60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
-    576
+    576.0
   ],
+  "manaCostTier": "大",
   "range": 3,
-  "castTimeSec": 0.1,
+  "castTimeSec": 2,
   "effects": [
     {
       "kind": "dot",
@@ -51,5 +53,6 @@
       "vfxKey": "fx.prim.physical.slash"
     }
   ],
-  "icon": "assets/icons/abilities/community-review-19-20260907.ex.webp"
+  "icon": "assets/icons/abilities/community-review-19-20260907.ex.webp",
+  "rangeTier": "極小"
 }

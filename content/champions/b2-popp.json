@@ -1,13 +1,13 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.467,
       "castType": "ground",
       "cooldown": [
-        15,
-        15,
-        15,
-        15
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "cooldownTier": "小",
       "description": "「隊友加油我先繞背！」\n瞬移到合法施法點，準備 4 秒急救窗口；不授予無敵。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：撤退也是施法距離管理。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -21,12 +21,11 @@
       ],
       "id": "b2-popp.e",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
       "maxRank": 4,
       "name": "隊友加油我先繞背",
       "provenance": "editor-json",
@@ -36,7 +35,7 @@
       "template": {
         "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
         "params": {
-          "castTimeSec": 0.1
+          "castTimeSec": 0.467
         },
         "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
       },
@@ -49,25 +48,24 @@
       ]
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "castType": "targeted",
       "cooldown": [
-        15,
-        15,
-        15,
-        15
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "cooldownTier": "小",
       "description": "「先幫你預熱！」\n小級火焰打擊並標記 burn 3 秒；火候標記本身不造成持續傷害。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：撤退也是施法距離管理。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "amount": {
-            "damageTier": "小",
-            "perRank": [
-              0,
-              250,
-              500,
-              750
+            "damageTierPerRank": [
+              "極小",
+              "極小",
+              "極小",
+              "小"
             ]
           },
           "damageType": "magic",
@@ -82,10 +80,10 @@
       ],
       "id": "b2-popp.q",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -98,14 +96,13 @@
       "template": {
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.567,
           "damage": {
-            "damageTier": "小",
-            "perRank": [
-              0,
-              250,
-              500,
-              750
+            "damageTierPerRank": [
+              "極小",
+              "極小",
+              "極小",
+              "小"
             ]
           },
           "damageType": "magic",
@@ -126,12 +123,12 @@
       ]
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.833,
       "castType": "ground",
       "cooldown": [
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0
       ],
       "cooldownTier": "大",
       "description": "「美拉佐瑪烤肉吃到飽！」\n一條中級直線魔法；一次命中結算，烤肉梗不額外偷偷加 DOT。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：撤退也是施法距離管理。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -139,11 +136,10 @@
         {
           "aim": "target",
           "amount": {
-            "damageTier": "中",
-            "perRank": [
-              0,
-              750,
-              1500
+            "damageTierPerRank": [
+              "極小",
+              "小",
+              "中"
             ]
           },
           "damageType": "magic",
@@ -156,9 +152,9 @@
       ],
       "id": "b2-popp.r",
       "manaCost": [
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -171,13 +167,12 @@
         "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
         "params": {
           "aim": "target",
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.833,
           "damage": {
-            "damageTier": "中",
-            "perRank": [
-              0,
-              750,
-              1500
+            "damageTierPerRank": [
+              "極小",
+              "小",
+              "中"
             ]
           },
           "damageType": "magic",
@@ -195,25 +190,24 @@
       ]
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.233,
       "castType": "targeted",
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "cooldownTier": "小",
       "description": "「冷氣帳單換定身！」\n小級冰擊；消耗目標全部 burn 才定身 1.8 秒，沒有火候就只降溫打擊。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：撤退也是施法距離管理。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "amount": {
-            "damageTier": "小",
-            "perRank": [
-              0,
-              250,
-              500,
-              750
+            "damageTierPerRank": [
+              "極小",
+              "極小",
+              "極小",
+              "小"
             ]
           },
           "damageType": "magic",
@@ -238,10 +232,10 @@
       ],
       "id": "b2-popp.w",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -255,12 +249,13 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 1.233,
           "castType": "targeted",
           "effects": [
             {
               "amount": {
                 "damageTier": "小",
+                "flat": 500,
                 "perRank": [
                   0,
                   250,
@@ -299,7 +294,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.ice.pulse-sm"
         }
-      ]
+      ],
+      "radiusTier": "極小"
     }
   },
   "archetype": "mage",
@@ -348,7 +344,6 @@
   "id": "b2-popp",
   "modelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
   "name": "何布",
-  "icon": "assets/icons/champions/b2-popp.webp",
   "origin": "法師",
   "passiveAbility": "b2-popp.passive",
   "role": "mage",
@@ -359,5 +354,6 @@
     "E",
     "R"
   ],
-  "tags": []
+  "tags": [],
+  "icon": "assets/icons/champions/b2-popp.webp"
 }

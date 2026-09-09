@@ -9,7 +9,7 @@ import {
   PULL_MAX_TRAVEL,
 } from "../../../sim/effects/kindLimits";
 import { DISPLACEMENT_SPEED_MIN } from "../../displacementTiers";
-import { EFFECT_COMMON_SHAPE, refineDispelShape } from "./_shared";
+import { EFFECT_COMMON_SHAPE, refineDispelShape, zAoeTier } from "./_shared";
 
 /**
  * ⭐【吸引】`pull`（#147）—— 把一組身體**搬到一個點**。
@@ -25,6 +25,23 @@ export const zPull = z
     /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
     shape: z.enum(["single", "circle"]),
     radius: z.number().positive().max(PULL_MAX_RADIUS).optional(),
+    /**
+     * ⭐ 半徑級別（第〇·四守則：值在載入時從共用表解析）。
+     *
+     * ⛔⛔ 2026-09-10 抓到（GH#1165）：`pull` 有 `radius` 卻**沒有**這一格，
+     * ⭐ 而 `blink` / `carry` / `chainLightning` / `damageArea` / `delayed` /
+     * `taunt` / `dispel` 全都有 —— ⇒ ⛔ 它是這張表上**唯一漏掉的一格**。
+     *
+     * ⚠️ ⭐ 而它是被**正規化器**撞出來的，⛔ 不是有人讀出來的：
+     * `apply_tiers.py` 對「有 radius 的節點」一律補 `radiusTier` ⇒ 兩支新技能
+     * （`b2-kisaragi.q` / `b2-shadow.q`）當場被 `.strict()` 擋在 `content:build`。
+     * ⇒ ⭐ 正規化器是對的（`pull.radius` 就是一個半徑），⛔ 漏的是這一行。
+     *
+     * ⭐ 解析走全專案唯一那一處（`aoeTiers.ts::resolveRadiusTier`，
+     * 它是**逐節點遞迴**的 ⇒ 不必為 `pull` 加任何解析程式碼）。
+     * 兩格都填 → **級別贏**（與其他每一個 kind 同一條規則）。
+     */
+    radiusTier: zAoeTier.optional(),
     side: z.enum(["allies", "enemies"]).optional(),
     maxTargets: z.number().int().positive().max(24).optional(),
     destination: z

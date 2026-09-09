@@ -1,10 +1,10 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 2.033,
   "castType": "ground",
   "cooldown": [
-    90,
-    90,
-    90
+    90.0,
+    90.0,
+    90.0
   ],
   "cooldownTier": "大",
   "description": "「大型垃圾整排清運！」\n向前低弧衝撞，落地時對落點周圍敵人造成物理傷害並推開；不是沿途連續碰撞。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -19,12 +19,10 @@
       "onLand": [
         {
           "amount": {
-            "damageTier": "中",
-            "flat": 1000,
-            "perRank": [
-              0,
-              750,
-              1500
+            "damageTierPerRank": [
+              "極小",
+              "小",
+              "中"
             ]
           },
           "damageType": "physical",
@@ -43,14 +41,13 @@
   ],
   "id": "b2-guts.r",
   "manaCost": [
-    144,
-    144,
-    144
+    144.0,
+    144.0,
+    144.0
   ],
   "manaCostTier": "小",
   "maxRank": 3,
   "name": "大型垃圾整排清運",
-  "icon": "assets/icons/abilities/b2-guts.r.webp",
   "provenance": "editor-json",
   "radius": 1.83,
   "range": 6,
@@ -61,14 +58,12 @@
   "template": {
     "contentSha256": "sha256:3f80978b955a7744a0e86651ddce738ec5f483e55ecfaa7213a23d6d735803e2",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 2.033,
       "damage": {
-        "damageTier": "中",
-        "flat": 1000,
-        "perRank": [
-          0,
-          750,
-          1500
+        "damageTierPerRank": [
+          "極小",
+          "小",
+          "中"
         ]
       },
       "damageType": "physical",

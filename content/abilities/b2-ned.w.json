@@ -1,24 +1,22 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 1.7,
   "castType": "targeted",
   "cooldown": [
-    45,
-    45,
-    45,
-    45
+    45.0,
+    45.0,
+    45.0,
+    45.0
   ],
   "cooldownTier": "小",
   "description": "「不是舌頭是近身劍！」\n只在自己與敵人距離不大於 2.5 時造成中級物理斬擊；站太遠揮空，不另補位移。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：青蛙劍士認真揮劍，旁人只注意他到底會不會呱。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
       "amount": {
-        "damageTier": "中",
-        "flat": 1000,
-        "perRank": [
-          0,
-          500,
-          1000,
-          1500
+        "damageTierPerRank": [
+          "極小",
+          "極小",
+          "小",
+          "中"
         ]
       },
       "condition": {
@@ -32,15 +30,14 @@
   ],
   "id": "b2-ned.w",
   "manaCost": [
-    144,
-    144,
-    144,
-    144
+    144.0,
+    144.0,
+    144.0,
+    144.0
   ],
   "manaCostTier": "小",
   "maxRank": 4,
   "name": "不是舌頭是近身劍",
-  "icon": "assets/icons/abilities/b2-ned.w.webp",
   "provenance": "editor-json",
   "radius": 3,
   "range": 6,
@@ -51,7 +48,7 @@
   "template": {
     "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
     "params": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.7,
       "castType": "targeted",
       "effects": [
         {
@@ -85,5 +82,6 @@
       "attachTo": "caster",
       "vfxKey": "fx.prim.arcane.slash"
     }
-  ]
+  ],
+  "radiusTier": "極小"
 }

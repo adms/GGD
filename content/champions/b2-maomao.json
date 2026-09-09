@@ -1,13 +1,13 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castType": "self",
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "cooldownTier": "小",
       "description": "「樣本採好了別打翻！」\n採樣表完成：得到 moon-combo 樣本 4 秒和 80 護盾 2 秒；不是新資源系統。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -37,24 +37,22 @@
       ],
       "id": "b2-maomao.e",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
       "maxRank": 4,
       "name": "樣本採好了別打翻",
       "provenance": "editor-json",
       "radius": 3,
-      "range": 6,
-      "rangeTier": "中",
+      "range": 0.0,
       "slot": "E",
       "targetsEnemies": true,
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 0.067,
           "castType": "self",
           "effects": [
             {
@@ -91,16 +89,17 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
-      ]
+      ],
+      "radiusTier": "極小"
     },
     "Q": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.233,
       "castType": "self",
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "cooldownTier": "小",
       "description": "「試藥員本人先簽到！」\n試吃：自身 poison 降低受療為 50% 持續 3 秒，另有每秒極小真傷共 3 秒。這是虛構藥劑，沒有現實配方。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -115,6 +114,7 @@
         {
           "amountPerTick": {
             "damageTier": "極小",
+            "flat": 200,
             "perRank": [
               0,
               100,
@@ -133,24 +133,23 @@
       ],
       "id": "b2-maomao.q",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
       "name": "試藥員本人先簽到",
       "provenance": "editor-json",
       "radius": 3,
-      "range": 6,
-      "rangeTier": "中",
+      "range": 0.0,
       "slot": "Q",
       "targetsEnemies": true,
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 1.233,
           "castType": "self",
           "effects": [
             {
@@ -163,6 +162,7 @@
             {
               "amountPerTick": {
                 "damageTier": "極小",
+                "flat": 200,
                 "perRank": [
                   0,
                   100,
@@ -190,15 +190,16 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
-      ]
+      ],
+      "radiusTier": "極小"
     },
     "R": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 1.033,
       "castType": "targeted",
       "cooldown": [
-        90,
-        90,
-        90
+        90.0,
+        90.0,
+        90.0
       ],
       "cooldownTier": "大",
       "description": "「憑樣本換一張處方！」\n有樣本才開處方：消耗自身 moon-combo，為友軍驅散負面並回復 240；缺樣本不假裝開藥成功。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -239,11 +240,10 @@
       ],
       "id": "b2-maomao.r",
       "manaCost": [
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
       "maxRank": 3,
       "name": "憑樣本換一張處方",
       "provenance": "editor-json",
@@ -255,7 +255,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.1,
+          "castTimeSec": 1.033,
           "castType": "targeted",
           "effects": [
             {
@@ -303,16 +303,17 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
-      ]
+      ],
+      "radiusTier": "極小"
     },
     "W": {
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.067,
       "castType": "self",
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "cooldownTier": "小",
       "description": "「先解毒再喝急救包！」\n先移除自己最多 3 項可驅散負面／DOT，再回復 120；解毒与回血是兩段獨立效果。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -344,18 +345,16 @@
       ],
       "id": "b2-maomao.w",
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
       "maxRank": 4,
       "name": "先解毒再喝急救包",
       "provenance": "editor-json",
       "radius": 3,
-      "range": 6,
-      "rangeTier": "中",
+      "range": 0.0,
       "slot": "W",
       "targetsEnemies": true,
       "template": {
@@ -410,7 +409,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
-      ]
+      ],
+      "radiusTier": "極小"
     }
   },
   "archetype": "fighter",
@@ -459,7 +459,6 @@
   "id": "b2-maomao",
   "modelKey": "champ.thorne",
   "name": "貓貓",
-  "icon": "assets/icons/champions/b2-maomao.webp",
   "origin": "軟輔",
   "passiveAbility": "b2-maomao.passive",
   "role": "fighter",
@@ -470,5 +469,6 @@
     "E",
     "R"
   ],
-  "tags": []
+  "tags": [],
+  "icon": "assets/icons/champions/b2-maomao.webp"
 }

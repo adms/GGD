@@ -8,13 +8,14 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    45
+    45.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
-    576
+    0.0
   ],
-  "range": 6,
-  "castTimeSec": 0.1,
+  "range": 0.0,
+  "castTimeSec": 1.033,
   "effects": [
     {
       "kind": "applyBuff",

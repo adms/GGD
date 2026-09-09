@@ -1,11 +1,11 @@
 {
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.567,
   "castType": "ground",
   "cooldown": [
-    15,
-    15,
-    15,
-    15
+    15.0,
+    15.0,
+    15.0,
+    15.0
   ],
   "cooldownTier": "小",
   "description": "「聖劍當釣竿使！」\n聖劍當釣竿：將命中敵人先拉至自己再沿方向拋出 100 WC3 距離（由現有模板換算世界單位），0.4 秒落地造成小級魔法傷害；不是無限高度坑。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
@@ -21,13 +21,11 @@
       "onLand": [
         {
           "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
+            "damageTierPerRank": [
+              "極小",
+              "極小",
+              "極小",
+              "小"
             ]
           },
           "damageType": "magic",
@@ -39,15 +37,14 @@
   ],
   "id": "b2-touka.w",
   "manaCost": [
-    144,
-    144,
-    144,
-    144
+    144.0,
+    144.0,
+    144.0,
+    144.0
   ],
   "manaCostTier": "小",
   "maxRank": 4,
   "name": "聖劍當釣竿使",
-  "icon": "assets/icons/abilities/b2-touka.w.webp",
   "provenance": "editor-json",
   "range": 6,
   "rangeTier": "中",
@@ -58,7 +55,7 @@
     "contentSha256": "sha256:b61b2a1c1ffc981faabdd966f3aeeb6676a6acb846f52b43941474cb27ce883d",
     "params": {
       "apexHeight": 100,
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "durationSec": 0.4,
       "grabMode": "dragToCaster",
       "landDamageTier": "小",
