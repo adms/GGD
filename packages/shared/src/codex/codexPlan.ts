@@ -1,6 +1,7 @@
 /**
- * codexPlan — reads the ICON PLAN that `tools/icon-gen/src/plan.py --write`
- * publishes at `content/config/icon-plan.json`.
+ * codexPlan — reads the ICON PLAN at `content/config/icon-plan.json`.
+ * ⭐ 那是產生器 **`iconplan:build`** 的產物（`tools/icon-gen/src/plan.py --write`）——
+ * ⛔ 手改沒有用，跑 `bash scripts/genrun.sh iconplan:build`（GH#1131）。
  *
  * WHY THE CODEX NEEDS IT. Before this, the broken-data table said "768 沒有圖示"
  * under a note holding three HAND-TYPED numbers (695 stock / 2 map-custom / 168

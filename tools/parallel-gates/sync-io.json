@@ -1,6 +1,6 @@
 {
   "script": "skills:sync",
-  "chain": "pnpm quarantine:unlock && pnpm skillremake:json && pnpm castderive:build:raw && pnpm apconv:build && pnpm tiers:apply && pnpm skillremake:provenance && pnpm grail:wishes && pnpm vfxfam:build && pnpm pitch:build && pnpm anchors:build && pnpm statcaps:build && pnpm apconv:plan && pnpm apdmg:build && pnpm prose:build && pnpm content:build && pnpm audit:build && pnpm mana:audit && pnpm caps:export && pnpm skillremake:docs && pnpm contract:numbers && pnpm atlas:build && pnpm treasure:csv && pnpm docs:readme && pnpm docs:status && pnpm newhero:build && pnpm lowdmg:build && pnpm archetypes:build && pnpm templates:build && pnpm msgledger:build && pnpm board:build && pnpm skillnorm:build && pnpm jasscombo:build && pnpm vfxbind:build && pnpm sfxbind:build && pnpm speedtiers:build && pnpm shapes:build && pnpm bricks:build && pnpm assets:manifest && pnpm review:build && pnpm speedlists:build && pnpm locust:build && pnpm appearance:build && pnpm ptokens:build && pnpm decor:build && pnpm board:roll && pnpm receipt:build && pnpm handback:build && pnpm clipdeg:build && pnpm apcoeffdiff:build && pnpm w3a:build && pnpm jasstpl:build && pnpm declshape:build && pnpm enableaudit:build && pnpm typecat:build && pnpm skillforge:audit && pnpm skillforge:visual-review:build && pnpm skillforge:visual-sheets:build && pnpm vfxforge:handback:build && pnpm editorcov:build && pnpm lod:build && pnpm roster:check && pnpm iconplan:build && pnpm quarantine:lock",
+  "chain": "pnpm quarantine:unlock && pnpm skillremake:json && pnpm castderive:build:raw && pnpm apconv:build && pnpm tiers:apply && pnpm skillremake:provenance && pnpm grail:wishes && pnpm vfxfam:build && pnpm pitch:build && pnpm anchors:build && pnpm statcaps:build && pnpm apconv:plan && pnpm apdmg:build && pnpm prose:build && pnpm content:build && pnpm audit:build && pnpm mana:audit && pnpm caps:export && pnpm skillremake:docs && pnpm contract:numbers && pnpm atlas:build && pnpm treasure:csv && pnpm docs:readme && pnpm docs:status && pnpm newhero:build && pnpm lowdmg:build && pnpm archetypes:build && pnpm templates:build && pnpm msgledger:build && pnpm board:build && pnpm skillnorm:build && pnpm jasscombo:build && pnpm vfxbind:build && pnpm sfxbind:build && pnpm speedtiers:build && pnpm shapes:build && pnpm assets:manifest && pnpm review:build && pnpm speedlists:build && pnpm locust:build && pnpm appearance:build && pnpm ptokens:build && pnpm decor:build && pnpm board:roll && pnpm receipt:build && pnpm handback:build && pnpm clipdeg:build && pnpm apcoeffdiff:build && pnpm w3a:build && pnpm jasstpl:build && pnpm declshape:build && pnpm enableaudit:build && pnpm typecat:build && pnpm skillforge:audit && pnpm skillforge:visual-review:build && pnpm skillforge:visual-advisory:build && pnpm skillforge:visual-sheets:build && pnpm vfxforge:handback:build && pnpm editorcov:build && pnpm bricks:build && pnpm lod:build && pnpm roster:check && pnpm collections:build && pnpm iconplan:build && pnpm quarantine:lock",
   "passes": 3,
   "steps": [
     {
@@ -18087,7 +18087,7 @@
       "ok": true,
       "ms": 5076,
       "readCount": 32410,
-      "writeCount": 1,
+      "writeCount": 3,
       "reads": [
         "README.md",
         "content/abilities/_index.json",
@@ -18802,7 +18802,9 @@
         "寶具總表_EX三階.csv"
       ],
       "writes": [
-        "docs/editor-contract/ggd-brick-census.json"
+        "docs/editor-contract/ggd-brick-census.json",
+        "docs/editor-contract/ggd-bricks.json",
+        "docs/editor-contract/ggd-bricks.md"
       ]
     },
     {
@@ -27629,6 +27631,21 @@
       ]
     },
     {
+      "name": "skillforge:visual-advisory:build",
+      "ok": true,
+      "ms": 2222,
+      "readCount": 16,
+      "writeCount": 2,
+      "reads": [
+        "docs/_reports/editor-skill-acceptance-42x46.json",
+        "docs/_reports/editor-skill-human-review/index.json"
+      ],
+      "writes": [
+        "docs/_reports/editor-skill-codex-advisory/review.json",
+        "docs/_reports/editor-skill-codex-advisory/review.md"
+      ]
+    },
+    {
       "name": "skillforge:visual-sheets:build",
       "ok": true,
       "reads": [
@@ -30051,6 +30068,20 @@
       ],
       "writes": [
         "content/config/icon-plan.json"
+      ]
+    },
+    {
+      "name": "collections:build",
+      "ok": true,
+      "ms": 3664,
+      "readCount": 405,
+      "writeCount": 1,
+      "reads": [
+        "packages/shared/src/content/balanceAnchorsDerived.ts",
+        "packages/shared/src/sim/statCapsDerived.ts"
+      ],
+      "writes": [
+        "apps/platform/internal/contentoverlay/collections_gen.go"
       ]
     }
   ],
