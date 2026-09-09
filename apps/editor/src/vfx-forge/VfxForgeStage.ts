@@ -131,6 +131,7 @@ function castFocusOf(
 export type VfxForgeStageMode = "script" | "runtime";
 
 export interface ForgeOverlay {
+  motion?: ReturnType<AbilityMotionReplay["snapshot"]>;
   flash: { color: readonly [number, number, number]; alpha: number } | null;
   texts: readonly { id: number; text: string; x: number; z: number; untilMs: number }[];
   runtimeTexts?: readonly ForgeFloatingText[];
@@ -1699,6 +1700,12 @@ export class VfxForgeStage {
         view.root.setEnabled(false);
         actor.fallback.setEnabled(true);
         const issue = `${champion.name} · ${appearance.modelKey} 未在 ${ACTOR_MODEL_LOAD_BUDGET_MS}ms 內採用遊戲 GLB`;
+        if (this.requestColdActorRetry(actor)) {
+          this.visualAssetIssues.add(`${issue}，正在執行有界冷載入重試`);
+          this.setActorStatus(actor, `↻ ${issue}，重建預覽場景…`);
+          this.emitOverlay("3D 模型冷載入重試中，暫停視覺驗收");
+          return;
+        }
         this.visualAssetIssues.add(issue);
         this.setActorStatus(actor, `⚠ ${issue}，已顯示替身並封鎖視覺驗收`);
         this.emitOverlay("3D 模型未就緒，候選不得送審");
@@ -2751,6 +2758,6 @@ export class VfxForgeStage {
       : status;
     const runtimeTexts = projectFloatingTexts(this.runtimeVfx?.floatingTextEntries ?? [],
       (x, y, z) => this.cameraRig.projectToScreen(x, y, z));
-    this.onOverlay({ flash: this.flash, texts: this.texts, runtimeTexts, status: view, actors: { ...this.actorStatus } });
+    this.onOverlay({ motion: this.motionReplay.snapshot(), flash: this.flash, texts: this.texts, runtimeTexts, status: view, actors: { ...this.actorStatus } });
   }
 }

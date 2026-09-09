@@ -15,6 +15,7 @@ const COLORS: Readonly<Record<string, Color3>> = {
 };
 /** Gameplay state marker and tether shared by the live client and Forge replay. */
 export class AbilityMotionView {
+  motionState = "";
   readonly root: TransformNode;
   readonly board: TransformNode;
   readonly rope;
@@ -34,6 +35,7 @@ export class AbilityMotionView {
     this.root.setEnabled(false);
   }
   sync(pose: MotionPose): void {
+    this.motionState = pose.motionState;
     const color = COLORS[pose.motionState];
     this.root.setEnabled(!!color);
     if (!color) return;

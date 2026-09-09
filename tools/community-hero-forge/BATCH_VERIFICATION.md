@@ -45,3 +45,21 @@ python3 -m unittest discover -s tools/community-hero-forge -p test_verify_author
 測試路徑限 `packages/shared/`、`apps/editor/`、`apps/client/`、`apps/game-server/` 中實際存在的 `.test.ts`／`.test.tsx`，不接受任意指令、來源外路徑或越界 symlink。新增 effect kind 後，除了能力契約也須用官方 `contract:numbers` 更新數字，所有程式變更完成後再執行 `decor:build`，避免過期文件使整批失敗。
 
 柯南 E／EX 的 `motion-view-and-transport` suite 集中驗證實際狀態傳輸、Client 狀態圖形與預測暫停、Forge 回放；移動行為案例讀同一份版本化配方。滑板與牽引以實際模擬狀態驅動畫面，程序示意素材不代表專用原稿素材已完成。
+
+## 瀏覽器位移畫面收集
+
+`capture-motion-browser.mjs` 是指定英雄的 E 滑板／EX 牽引驗收設定，不適用所有技能。它從完整交接暫存選定英雄的原檔與模型，透過真正匯入介面開啟，避免重複驗證其他 36 名。輸出記錄完整來源 index SHA 與暫存 index SHA；不能把單英雄結果稱作整批通過。
+
+```sh
+node tools/community-hero-forge/capture-motion-browser.mjs \
+  --handoff-dir /private/tmp/restored-handoff \
+  --hero-index 26 \
+  --origin http://127.0.0.1:5198 \
+  --output /private/tmp/ggd-motion-capture-01
+```
+
+需另有可用的 Playwright 與 Chrome，以及同分支的本機 Editor／內容服務；可用 `--playwright-module /absolute/path/playwright/index.mjs` 指定既有模組。脚本不安裝依賴、不使用既有瀏覽器帳號，也不投稿或發布。建議使用正式建置的本機 preview，畫面收集期間不要重建服務。
+
+它保留實際採用生成器後的草稿版本／原稿 SHA，等候雙方模型材質，逐張確認技能槽、時間及來自實際網格的位移狀態／座標，再收集加速、急轉、煞車、停止、撞牆、兩種牽引及清除共九張畫面。失敗時保留階段、文字及可取得的診斷畫面；失敗或未完的執行不可當作驗收通過。即使腳本通過，仍須查看圖片，判斷物件跟隨、顏色、遮擋與繩索端點；它不會自動裁決原稿美術。有效圖片依素材政策存 S3，Git 只留腳本、來源、SHA 與判讀結果。
+
+這個瀏覽器設定目前仍未完成九張通過證據；冷載入與 PBR 光照就緒失敗見 [柯南修正紀錄](../../materials/community-hero-forge/refinements/conan-mobility-verification.json)。背景六槽初始驗證最多等三分鐘，模型就緒最多一分鐘；逾時仍失敗，不以替身通過。收據中的 checkout HEAD／dirty 狀態只識別執行腳本的程式樹，不能冒充本機服務部署版本證明。

@@ -1,6 +1,6 @@
 import type { Scene } from "@babylonjs/core/scene";
 import type { EventMessage } from "@ggd/shared/protocol/messages";
-import { AbilityMotionView } from "../../../client/src/render/views/AbilityMotionView";
+import { AbilityMotionView, MOTION_PHASE_LABELS } from "../../../client/src/render/views/AbilityMotionView";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import type { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
@@ -30,6 +30,12 @@ export class AbilityMotionReplay {
     let view = this.views.get(id);
     if (!view) { view = new AbilityMotionView(this.scene); this.views.set(id, view); }
     view.sync({ motionState: d.motionState, x: Number(d.x), z: Number(d.z), fx: Number(d.fx), fz: Number(d.fz), tetherX: Number(d.tetherX), tetherZ: Number(d.tetherZ) });
+  }
+  snapshot() {
+    return [...this.views].filter(([, view]) => view.root.isEnabled()).map(([id, view]) => ({
+      id, state: view.motionState, label: MOTION_PHASE_LABELS[view.motionState] ?? view.motionState,
+      x: view.root.position.x, z: view.root.position.z,
+    }));
   }
   reset(): void { for (const view of this.views.values()) view.deactivate(); this.wall?.setEnabled(false); }
   dispose(): void { for (const view of this.views.values()) view.dispose(); this.views.clear(); this.wall?.dispose(false, true); }

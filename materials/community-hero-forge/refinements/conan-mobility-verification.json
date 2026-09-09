@@ -110,10 +110,97 @@
   ],
   "knownLimits": [
     "Procedural deck/wheels and tether are gameplay markers, not original skateboard/belt model or animation acceptance. Dedicated football, needle/watch, art and sound remain pending.",
-    "Full original-design acceptance, rendered visual acceptance, current-service ZIP and formal publication remain incomplete."
+    "Full original-design acceptance, rendered visual acceptance, current-service ZIP and formal publication remain incomplete.",
+    "Browser observed Conan R no-resource in the default single-slot and kit setup; positive acceptance needs real prerequisite enemy events. Costs were not removed and target clues were not fabricated. Current-service package remains blocked/unbuilt."
   ],
   "originalDesignAcceptance": "incomplete",
   "visualAcceptance": "unverified",
   "currentServiceZip": "not-built",
-  "formalPublication": false
+  "formalPublication": false,
+  "additionalTransportAndWorkerChecks": {
+    "exitCode": 0,
+    "tests": 11,
+    "files": 5,
+    "logSha256": "ba021a784a4c54760abc38519813d26bd5eb91abab4004bd61136255573f9514",
+    "scope": "Previous four transport/view files now include a real scenario-to-replay root-position/braking-color assertion (9 tests); two worker cold-start/deadline lifecycle tests. Not rendered visual acceptance."
+  },
+  "overlayTypecheck": {
+    "package": "editor",
+    "exitCode": 0,
+    "logSha256": "486eafd3c0debbbff5ae7dddb4aa8823f853e470eff3bacbda032617862caca2"
+  },
+  "initialReleaseBatch": {
+    "head": "c3c111495803c3c904c2856f26ebd46fae16c2a5",
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 39,
+      "slotsWithoutBehaviorSuite": 183
+    },
+    "exitCode": 1,
+    "errors": [],
+    "failedJobs": [
+      {
+        "id": "skills",
+        "exitCode": 1,
+        "logSha256": "21e0a2e43d3f002882046adb7f177f56afdd6a353b3da743614d1f16201dace4"
+      },
+      {
+        "id": "skills-decor-check",
+        "exitCode": 1,
+        "logSha256": "4a586d261e15bb0d467b29bce631baf2fd41ea367efe49e2996a9cbc486bcde9"
+      }
+    ],
+    "note": "Editor release, coord, compile/models and registered suites passed. skills failed only for stale decoration census; the batch expanded all skill children and msgledger passed. Census regeneration must follow staging new source files."
+  },
+  "renderingFollowUp": {
+    "changes": [
+      "Expose actual active motion-root phase/coordinates in the preview overlay.",
+      "GLB adoption timeout now requests the same existing bounded per-role cold-scene retries as material failures; exhausted retries still show a fallback and block visual certification.",
+      "A current compiled hero can replay its valid single-slot scenario even when another slot or the kit is rejected; ZIP/submission retains the all-errors-clear gate."
+    ],
+    "existingAdoptionLifecycleTests": 3,
+    "adoptionLifecycleExitCode": 0,
+    "adoptionLifecycleLogSha256": "1318e45c8db334b2af10676ff08362b0cdb69859118afc2d4ffe4f5bb472ef55"
+  },
+  "browserCapture": {
+    "status": "failed",
+    "profile": "selected Conan E/EX through real folder import and editor controls",
+    "script": "tools/community-hero-forge/capture-motion-browser.mjs",
+    "scriptSha256": "628d1fb511bb13ed1bc38041dd24c5784ecdfe90b0123fb7a478defa02961a67",
+    "origin": "http://127.0.0.1:5198",
+    "rendering": "headless Chrome / SwiftShader",
+    "importedHeroes": 1,
+    "passedFrames": 0,
+    "attempts": [
+      {
+        "attempt": "03",
+        "exitCode": 1,
+        "reason": "six-slot background validation exceeded 60-second capture wait",
+        "logSha256": "0c34ecfb64ed99b9a006e7f7007e24117f33d4221b9e5e59ed163d241513c0bb",
+        "diagnosticTextSha256": "00d59409537bb3820a0c22a58b2a2d451afb5624c8e3cf7e487b71e0aac73437"
+      },
+      {
+        "attempt": "04",
+        "exitCode": 1,
+        "reason": "caster GLB adoption timeout; target model did load",
+        "logSha256": "80dca7d0532910cef0ea4bddbb759b92e5fa45e3db1c747b9e2ebd8a025e5905",
+        "diagnosticTextSha256": "a92fd3199adb18565d580f55b3db58bfd127bbac31c3bb01b80401a1c6b13809"
+      },
+      {
+        "attempt": "05",
+        "exitCode": 1,
+        "reason": "after bounded adoption retry patch, PBR environment texture not ready; fallback bodies remain",
+        "logSha256": "5ab7c893088da34f0e4d6864cf90d011135648467bc17795905aa90f0d6d78cf",
+        "diagnosticTextSha256": "046070d277014eda0bca12e5a08b1048cf61871a5bed6a0780e3db9b8107d4df"
+      }
+    ],
+    "scope": "Not a hardware performance result; no valid motion/framebuffer acceptance and no original-art verdict. Earlier static blue-marker interpretation remains unconfirmed, not a proven motion-root defect.",
+    "pending": [
+      "Resolve PBR environment readiness and finish nine rendered frames.",
+      "Exercise real clue prerequisites for Conan R and keep empty-resource rejection.",
+      "Recheck interactive Play after the current-compiled-preview eligibility change."
+    ],
+    "diagnosticStorage": "conan-mobility-visual-diagnostics.json"
+  }
 }

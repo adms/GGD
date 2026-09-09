@@ -1,7 +1,7 @@
 {
   "file": "AI參考全自動鑄造守則.md",
-  "sha256": "8b013266acc6a65f3cb11b9d22caccb809efb994a477a0a6902550294c9cea92",
-  "localLinksChecked": 42,
+  "sha256": "1e74929a44ba0362da84549e7a7b16b37b9fdb546f5c9354197be11297967b01",
+  "localLinksChecked": 43,
   "missingLinks": [],
   "commandsAndReferencedTests": "checked against current repository",
   "semanticReview": [
@@ -32,7 +32,9 @@
     "target versus real terrain anchor branch",
     "total travel budget and immediate range cancellation",
     "shared dynamic gate geometry",
-    "actual motion snapshot and replay lifecycle"
+    "actual motion snapshot and replay lifecycle",
+    "actual mesh state before rendered-marker identification",
+    "resource-gated default rejection retained until real preconditions are demonstrated"
   ],
   "runtimeClaims": "guide does not claim full hero acceptance",
   "batchVerificationReview": {

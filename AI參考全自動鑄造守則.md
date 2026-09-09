@@ -200,3 +200,5 @@ pnpm --filter @ggd/shared typecheck
 - 試玩移動路線／實體牆面是單次情境輸入，不寫入英雄配方。程序滑板、輪子與白線是可驗收的狀態標記，不能據此宣稱角色原稿美術或完整畫面已驗收。
 
 範例：[柯南 v2 配方](materials/community-hero-forge/refinements/26.json)、[移動行為案例](packages/shared/src/content/heroForge/communityRefinements/conanMobility.test.ts)、[跨端回放案例](apps/editor/src/vfx-forge/AbilityMotionReplay.test.ts)、[證據及剩餘缺口](materials/community-hero-forge/refinements/conan-mobility-verification.json)。
+
+位移畫面可依 [批次驗證的瀏覽器設定](tools/community-hero-forge/BATCH_VERIFICATION.md) 收集。先核對技能槽、時間、實際網格狀態與座標，再判斷畫面物件；不能把固定施法標記誤認為移動模型。單英雄畫面或 NullEngine 通過不代表整批畫面通過。預設情境資源不足的拒絕必須保留，另建立有真實前置事件的可施放情境，不能移除成本或偽造線索來取得全綠。
