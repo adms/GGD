@@ -552,6 +552,19 @@
         "materials/community-hero-forge/refinements/03.json",
         "materials/community-hero-forge/validation-plan.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "乾淨提交 c2e02feaa414 同批通過 skills、Editor release、coord、37名／222槽編譯與模型核對、800項登記案例；Editor 601项測試、型別與正式建置通過，訊息帳本檢查通過。退出碼2保留147槽未對應。本輪不知火舞revision12→13，其他36名作品、37原稿與全部模型綁定不變；原稿美術、當下服務ZIP與投稿發布尚未完成，#1132保持原完整範圍開啟。",
+      "repro": {
+        "command": "pnpm editor:accept:release",
+        "expectedExit": 0
+      },
+      "commit": "c2e02feaa4144a15c115281def8c681c3f5a628c",
+      "evidence": [
+        "materials/community-hero-forge/refinements/mai-verification.json",
+        "materials/community-hero-forge/validation-plan.json"
+      ]
     }
   ],
   "unblocks": [],

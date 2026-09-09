@@ -396,5 +396,149 @@
     "mai-typecheck-shared.log": {
       "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
     }
+  },
+  "finalBatch": {
+    "head": "c2e02feaa4144a15c115281def8c681c3f5a628c",
+    "workingTreeClean": true,
+    "sourceFingerprint": "b8ed2e1467a92d10d6cd87c1dd0e2ddd65f5e9fd006e9c2265af44baf4fce3b2",
+    "exitCode": 2,
+    "errors": [],
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 75,
+      "slotsWithoutBehaviorSuite": 147
+    },
+    "modelBytes": "verified",
+    "reportSha256": "91bff271e784961e30c5c5f7124113bdbac6db1bfd9b1766c9443fa6f7d96e3a",
+    "editorTests": 601,
+    "registeredTests": 800,
+    "jobs": [
+      {
+        "id": "skills",
+        "exitCode": 0,
+        "logSha256": "759562130cfcb13819341d3e9ad353368589c3f459eebb126cfc1d718bdd9540"
+      },
+      {
+        "id": "editor",
+        "exitCode": 0,
+        "logSha256": "74d49d4aadb27559820a529686169ab45ae405d5b8acd3e5f507a5f5fba36860"
+      },
+      {
+        "id": "coord",
+        "exitCode": 0,
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271"
+      },
+      {
+        "id": "compile-and-models",
+        "exitCode": 0,
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c"
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "exitCode": 0,
+        "logSha256": "9fa86d7d0679d036298903dc2f67f64a6380ac660717f5f2c750674496bcaaf5"
+      },
+      {
+        "id": "behavior-trap-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "8c0afc013d3dbf9170a2a0e41e5b1a59f09c873cc4b7a4eded181a9c766c3d76"
+      },
+      {
+        "id": "behavior-motion-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "a372311d1ca4eee715b0069df3fd14fca87bc3334cd4d6420da628786ce08644"
+      },
+      {
+        "id": "behavior-target-resource-acceptance",
+        "exitCode": 0,
+        "logSha256": "b33855f8da52d983777fd6ddf983ee3299ec87830fc5cfda67ab05c4211ab4a4"
+      }
+    ],
+    "meaning": "All executed checks passed on a clean commit. Exit 2 preserves 147 unmapped slots. Original art, complete design and publication remain unaccepted. A receipt-only commit follows."
+  },
+  "additionalShieldProbe": {
+    "head": "c2e02feaa4144a15c115281def8c681c3f5a628c",
+    "exitCode": 0,
+    "note": "After the clean batch, strengthened the shield-only R evidence without changing runtime, authoring or test sources. Receipt-only changes were pending. The existing R shield-range test proves leaving range cancels but does not alone prove a full shield-only combo.",
+    "program": "import assert from \"node:assert/strict\";\nimport { communityActionFixture } from \"/Users/Takuro/Dropbox/\\u6211\\u7684 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/packages/shared/testkit/communityActionFixture.ts\";\nimport { registerSkeletonContent } from \"/Users/Takuro/Dropbox/\\u6211\\u7684 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/packages/shared/src/sim/content/skeleton.ts\";\nimport { runEffects } from \"/Users/Takuro/Dropbox/\\u6211\\u7684 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/packages/shared/src/sim/effects/effectRunner.ts\";\nregisterSkeletonContent();\nconst r = communityActionFixture(\"03\"); r.place(r.enemy, 3);\nrunEffects([{ kind: \"shield\", amount: { flat: 10000 }, duration: 5 }], { world: r.world, caster: r.enemy, targets: [r.enemy], rank: 1, origin: \"probe\", rng: r.world.rng });\nconst before = r.world.health.get(r.enemy)!.hp;\nassert.equal(r.cast(\"R\", { type: \"dir\", dir: { x: 1, z: 0 } }, 50), \"ok\");\nconst contacts = r.hits(\"R\"), followups = r.events.filter(e => e.type === \"damage\" && String(e.data.origin).includes(\"r-followup\"));\nassert.equal(contacts.length, 1); assert.equal(followups.length, 4);\nassert.equal(r.world.health.get(r.enemy)!.hp, before);\nconsole.log(JSON.stringify({ primaryContacts: contacts.length, followups: followups.length, hpUnchanged: true, damageEvents: [...contacts, ...followups].map(e => e.data) }));\n",
+    "result": {
+      "primaryContacts": 1,
+      "followups": 4,
+      "hpUnchanged": true,
+      "damageEvents": [
+        {
+          "x": -37,
+          "z": 8,
+          "source": 1,
+          "target": 3,
+          "amount": 0,
+          "shieldAbsorbed": 342.27028591745693,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": true,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:community-review-03-20260907.r"
+        },
+        {
+          "x": -37,
+          "z": 8,
+          "source": 1,
+          "target": 3,
+          "amount": 0,
+          "shieldAbsorbed": 154.17580446732245,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": true,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "hook:buff:caster:1:stack:community-review-03-20260907.r-followup"
+        },
+        {
+          "x": -37,
+          "z": 8,
+          "source": 1,
+          "target": 3,
+          "amount": 0,
+          "shieldAbsorbed": 154.17580446732245,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": true,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "hook:buff:caster:1:stack:community-review-03-20260907.r-followup"
+        },
+        {
+          "x": -37,
+          "z": 8,
+          "source": 1,
+          "target": 3,
+          "amount": 0,
+          "shieldAbsorbed": 154.17580446732245,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": true,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "hook:buff:caster:1:stack:community-review-03-20260907.r-followup"
+        },
+        {
+          "x": -37,
+          "z": 8,
+          "source": 1,
+          "target": 3,
+          "amount": 0,
+          "shieldAbsorbed": 248.072376381484,
+          "type": "magic",
+          "dmgType": "magic",
+          "blocked": true,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "hook:buff:caster:1:stack:community-review-03-20260907.r-followup"
+        }
+      ]
+    },
+    "logSha256": "ef51b60fd0dda8f0e0bd006f41841cc5c70d82c9a4023ff6dab1095ab9fed9bb"
   }
 }
