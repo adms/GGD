@@ -2,7 +2,9 @@ import { zEffectDef, zHookDef } from "../../schema/effect";
 import type { HeroSlot } from "../constants";
 import { zHeroProject, type HeroProject } from "../schema";
 
-/** Authored GGD adaptation. Original sidecar text and model provenance are immutable. */
+/** Frozen legacy adaptation for old-version replay tests. New handoffs use
+ * materials/community-hero-forge/refinements/32.json through the generic applier.
+ * Original sidecar text and model provenance are immutable. */
 export function refineAzazelProject(input: HeroProject): HeroProject {
   const project = zHeroProject.parse(input);
   if (project.brief.name !== "阿薩謝爾" || !project.sourceDesign?.identity.includes("アザゼル篤史") || !project.acceptedPlan) {

@@ -1376,7 +1376,8 @@ function evalNode(
     if (ctx.target === undefined) return false;
     const a = world.transform.get(ctx.self);
     const b = world.transform.get(ctx.target);
-    if (a === undefined || b === undefined) return false;
+    // Different duels have no comparable combat distance, for every operator.
+    if (a === undefined || b === undefined || a.zone !== b.zone) return false;
     return compare(cond.op, dist(a.pos, b.pos), cond.value);
   }
   if (cond.kind === "facing") {
