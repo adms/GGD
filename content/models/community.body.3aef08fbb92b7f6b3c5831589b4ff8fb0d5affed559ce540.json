@@ -1,0 +1,16 @@
+{
+  "id": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "yasuo_idle1",
+    "run": "yasuo_run1",
+    "attack": "yasuo_attack1",
+    "cast": "yasuo_spell1a",
+    "hurt": "yasuo_idle1",
+    "death": "yasuo_death"
+  },
+  "yawOffsetDeg": 0
+}
