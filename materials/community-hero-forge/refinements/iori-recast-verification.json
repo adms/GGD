@@ -471,5 +471,87 @@
     "preflightMappedSlots": 76,
     "prefixGuards": "Only existing repository .test.ts/.test.tsx in the five approved package/app roots; traversal and symlinks remain rejected.",
     "recastShapes": "finite input state and distinct stages; not an automatic loop. Nested standalone and template recast effect fields remain checked."
+  },
+  "finalBatch": {
+    "head": "526e26591c2d2703c816200ce6c3c07c833983a3",
+    "clean": true,
+    "command": "python3 tools/community-hero-forge/verify-authoring-batch.py --output /private/tmp/ggd-community-mechanism-fixes/recast-release-02 --release-root /private/tmp/ggd-model-upload-acceptance/release-13956d93b --release --jobs 3",
+    "sourceFingerprint": "1c64177ae8ea5c1e27c22daeb84d97db406a23656c7cb0cb8832824ccb8dfb14",
+    "exitCode": 2,
+    "errors": [],
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 76,
+      "slotsWithoutBehaviorSuite": 146
+    },
+    "registeredTestCounts": {
+      "behavior-implemented-mechanisms": 812,
+      "behavior-trap-view-and-transport": 4,
+      "behavior-motion-view-and-transport": 9,
+      "behavior-target-resource-acceptance": 12
+    },
+    "registeredTestsPassed": 837,
+    "editorTestsPassed": 601,
+    "editorTypecheck": "passed",
+    "editorProductionBuild": "passed",
+    "modelBytes": "verified",
+    "reportSha256": "bb6f27dc665fb75e931655a46cdaca8fe34560e5332ac88f76843c23054751cf",
+    "jobs": [
+      {
+        "id": "skills",
+        "exitCode": 0,
+        "logSha256": "be7b9eba9d9ebc4748b6373d0bd860e6d6ce0e0fc64dab45d717bbdd65dc359b"
+      },
+      {
+        "id": "editor",
+        "exitCode": 0,
+        "logSha256": "27166d6c660b2ebf19a84ab57afffdda09fb002a3dedca424cc818276d7871d5"
+      },
+      {
+        "id": "coord",
+        "exitCode": 0,
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271"
+      },
+      {
+        "id": "compile-and-models",
+        "exitCode": 0,
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c"
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "exitCode": 0,
+        "logSha256": "b6a675eff36a4e3e1cc4369b177ad050e3eae44f62ebf865ede7f7865c507a57"
+      },
+      {
+        "id": "behavior-trap-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "83f0d6ab4045161299013ea7d428943ce4dd65df6ca5a2e40883de7f55f698cf"
+      },
+      {
+        "id": "behavior-motion-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "f02eb9f4f9a8a709a9decc9128b4e511ab361135caf36a510b41452cece6f838"
+      },
+      {
+        "id": "behavior-target-resource-acceptance",
+        "exitCode": 0,
+        "logSha256": "8eb9f3893c693f93dd3fd3fa251e293889376bc0d32aa2c9e7e00b0ca93b4d02"
+      }
+    ],
+    "meaning": "All executed checks passed against a clean commit. Exit 2 preserves 146 unmapped slots; full original design, art, current-service ZIP and publication remain incomplete. Subsequent commit updates receipts and documentation only."
+  },
+  "receiptOnlyChecks": {
+    "coord": {
+      "exitCode": 0,
+      "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271"
+    },
+    "decor": {
+      "initialExitCode": 1,
+      "initialFailure": "Sandbox denied tsx local IPC listen (EPERM); no content assertion ran.",
+      "initialLogSha256": "933ed92d688f71eb2a19585e82cd36ab2c3505f841066d3a2046940dcc4ec991",
+      "sameCommandOutsideSandboxExitCode": 0,
+      "logSha256": "1f134d2265b10ec2a7052fa78c77cd5760c73d91af6927a2acd312556bdaedb6"
+    }
   }
 }

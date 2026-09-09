@@ -580,6 +580,20 @@
         "materials/community-hero-forge/validation-plan.json",
         "packages/shared/src/content/templates/shippedHistory.ts"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "乾淨提交 526e26591c2d 同批通過 skills、Editor release、coord、37 名／222 槽編譯及 37 份模型綁定核對；837 項登記案例、Editor 601 項測試與正式建置通過。初次批次檢出的 content-api 測試路徑與 recast 形狀索引缺漏已修正；10 項執行器測試及 5 組形狀自檢通過。退出碼 2 保留 146 槽未對應；八神庵目前僅 E 完成此輪機制修正，其他五槽與全批原稿美術、當下服務 ZIP、投稿發布仍未完成。#1132 原完整驗收條件不變且保持開啟。",
+      "repro": {
+        "command": "pnpm editor:accept:release",
+        "expectedExit": 0
+      },
+      "commit": "526e26591c2d2703c816200ce6c3c07c833983a3",
+      "evidence": [
+        "materials/community-hero-forge/refinements/iori-recast-verification.json",
+        "materials/community-hero-forge/validation-plan.json",
+        "tools/community-hero-forge/BATCH_VERIFICATION.md"
+      ]
     }
   ],
   "unblocks": [],
