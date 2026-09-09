@@ -30,7 +30,7 @@ python3 tools/community-hero-forge/verify-authoring-batch.py \
 
 新批次可先不放 plan：腳本仍核對／編譯並列出全部未覆蓋槽。建立測試時，使用 `communityRecipeFixture`／`communityCombatFixture` 讀原始配方；批次執行器會設定 `GGD_HERO_BATCH_DIR`。只能在建立真實行為案例後，將对应 hero ID／slot 加進 plan。來源不同不得直接複製第一批的測試清單。發布閘仍測 repo 本身，不把批次環境變數誤傳給既有 Editor 回歸。
 
-第一批 plan 目前對應 57 個已修正／部分修正槽，其餘仍有缺口。每槽 `originalDesignAcceptance` 保持未驗證，直到逐項 requiredRefinement 有足夠行為及畫面證據；它不是自動上架清單。
+第一批 plan 目前對應 63 個已修正／部分修正槽，其餘仍有缺口。每槽 `originalDesignAcceptance` 保持未驗證，直到逐項 requiredRefinement 有足夠行為及畫面證據；它不是自動上架清單。
 
 輸出必須是來源以外的新目錄。執行中如有人更改來源，整次證據標為失效，不拿它續跑。腳本不生成英雄、不修改原稿、不投稿、不發布、不操作正式帳號。
 
@@ -73,3 +73,5 @@ node tools/community-hero-forge/capture-motion-browser.mjs \
 SUN樂驗證使用共用 `communityActionFixture(number, rank)`：讀該批版本化原稿、產生編譯後在真正戰鬥世界操作，集中提供事件收集、擺位與有效資源讀取。`ready` 只供明確測試下一次施法，不可用來冒充正常冷卻連段。26 項實際行為、3 項試玩及來源授予／迴避／接近／前端拒絕回歸合併進同一 suite。單槽準備資源、全套未取得資源的拒絕及真實連段正例須分別保留，不能調高層數使煙霧測試看起來全過。
 
 艾莉絲沿用共用治具與 `priorCast` 真實前置命中，集中驗證逐目標／逐來源交鋒、有限防禦、位移碰撞及超距拒絕。`allowApproach: false` 的技能要在扣費前直接拒絕；`dash.onHit` 要有首次合法接觸、牆後／背後／他人／死亡／跨區／替換及零方向反例。接觸測試保留現有友軍身體擠壓，不可為固定座標結果而關閉碰撞。25 項行為與3項試玩加進既有 suite，四項突變確認檢查確實攔截錯誤。
+
+尼古貓貓六槽使用同一治具，移動必須送入 `orderSystem` 並確認位置改變；只寫 `nav.order` 不足以建立真實走路。停留蓄層每 tick 取樣，含冷卻內走動、轉向／撞牆、垂直位移、死亡／中場／換回合和不同英雄隔離。移動撤盾核對獨立池、同 tick 傷害前到期、替換錨點及其他盾不受影響。W 後實際等待再 EX 的試玩設為空資源，支付斷言觀察當下 tick，避免後續自然蓄層誤判。30 項行為、1 項試玩和共用護盾／hook／光環回歸併入同批；四项有效突變確認檢查能攔錯。

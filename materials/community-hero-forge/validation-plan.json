@@ -1,6 +1,6 @@
 {
   "schema": "ggd-batch-validation-plan@1",
-  "manifestSha256": "b2a8557a053ba6c6dc49be948e1c9b8755871e266047a0d1465e2b342af625f9",
+  "manifestSha256": "66f6969505509a952544c7d91219ca2262051bb038b8b9ddff72a662fd383b68",
   "suites": [
     {
       "id": "implemented-mechanisms",
@@ -37,7 +37,14 @@
         "packages/shared/src/content/heroForge/communityRefinements/eris.test.ts",
         "packages/shared/src/content/heroForge/communityRefinements/erisAcceptance.test.ts",
         "packages/shared/src/sim/effects/lane3Kinds.test.ts",
-        "packages/shared/src/sim/effects/oncePerCast.test.ts"
+        "packages/shared/src/sim/effects/oncePerCast.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/yanineko.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/yaninekoAcceptance.test.ts",
+        "packages/shared/src/sim/effects/shieldAbsorb.test.ts",
+        "packages/shared/src/sim/effects/shieldBreak.test.ts",
+        "packages/shared/src/sim/effects/hookLedgerAbilityCrit.test.ts",
+        "packages/shared/src/sim/effects/hookFamily.test.ts",
+        "packages/shared/src/sim/aura/aura.test.ts"
       ],
       "heroSlots": {
         "community-review-20-20260907": [
@@ -110,6 +117,14 @@
           "EX"
         ],
         "community-review-28-20260907": [
+          "PASSIVE",
+          "Q",
+          "W",
+          "E",
+          "R",
+          "EX"
+        ],
+        "community-review-30-20260907": [
           "PASSIVE",
           "Q",
           "W",

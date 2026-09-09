@@ -4,8 +4,8 @@
   "scope": "Original requirements versus compiled authoring; compilation is not design acceptance",
   "heroes": 37,
   "slots": 222,
-  "changedSlots": 57,
-  "passiveOnAttackTemplates": 20,
+  "changedSlots": 63,
+  "passiveOnAttackTemplates": 19,
   "originalDesignAcceptance": "incomplete",
   "published": false,
   "rows": [
@@ -3692,16 +3692,18 @@
       "ownerDescription": "停止移動後逐步累積拖延，上限三層；受擊時清空，施法可消耗強化。",
       "requiredRefinement": "需靜止三層拖延、受擊清除與施法消耗。",
       "products": [
-        "tpl-on-attack"
+        "tpl-mark-stacks",
+        "tpl-event-passive"
       ],
       "castType": "self",
       "effects": [],
       "hooks": [
-        "onBasicAttack"
+        "onInterval",
+        "onDamageTaken"
       ],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "戰鬥中實際連續靜止一秒才獲得一層拖延，之後每秒一層、上限三層；移動只重開蓄力窗口，受有效傷害（含護盾吸收）清空三層。空走撞牆或轉向不算移動，零值／完全免疫不清空；回合開始重置。EX 每次消耗一層取得護盾。"
     },
     {
       "hero": "30",
@@ -3712,17 +3714,17 @@
       "ownerDescription": "投擲道具，落地造成一次小範圍傷害。",
       "requiredRefinement": "菸灰缸道具拋物線未綁；落地一次傷害可測。",
       "products": [
-        "tpl-ground-nova"
+        "tpl-effect-sequence"
       ],
       "castType": "ground",
       "targetsEnemies": true,
       "effects": [
-        "damage"
+        "delayed"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "指定落點投擲，起手後再等半秒落地；落地時重新取得半徑二格內敵人，每人只結算一次小級物理傷害，移出可躲避。菸灰缸本體及拋物線演出仍待專用素材／畫面驗收。"
     },
     {
       "hero": "30",
@@ -3733,18 +3735,17 @@
       "ownerDescription": "形成有期限的小型煙霧區，提供明示的命中干擾；不自動賦予完整隱形。",
       "requiredRefinement": "單體緩速不是煙霧區命中干擾；需區域及明示效果。",
       "products": [
-        "tpl-single-strike"
+        "tpl-effect-sequence"
       ],
-      "castType": "targeted",
+      "castType": "ground",
       "targetsEnemies": true,
       "effects": [
-        "damage",
-        "applyStatus"
+        "delayed"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "落點產生四秒、半徑二格的煙霧區，每 0.2 秒對區內敵人續上 30% 普攻失手，離區最多 0.24 秒消退；進入時有命中干擾文字提示。沒有傷害、緩速或完整隱形，友軍與跨區不受影響，免控仍依 GGD 規則。灰煙演出為現有煙粒子調整，待畫面驗收。"
     },
     {
       "hero": "30",
@@ -3755,17 +3756,17 @@
       "ownerDescription": "短距離狼狽撤退，留下純視覺雜物殘影。",
       "requiredRefinement": "撤退应無碰撞輸出，模板帶推移傷害，須審查改編。",
       "products": [
-        "tpl-charge-push"
+        "tpl-effect-sequence"
       ],
-      "castType": "ground",
+      "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "leap"
+        "dash"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "朝選定撤退方向貼地衝出三格，遇牆停止；移除舊模板傷害、擊飛和推移，沒有命中收益。狼狽撤退的雜物殘影只有演出用途，專用素材仍待補。"
     },
     {
       "hero": "30",
@@ -3776,17 +3777,17 @@
       "ownerDescription": "在指定區域分三波掉落卡通雜物，具有清楚落點預警。",
       "requiredRefinement": "三波落點可測；卡通雜物模型與逐波預警待補。",
       "products": [
-        "tpl-random-barrage"
+        "tpl-effect-sequence"
       ],
       "castType": "ground",
       "targetsEnemies": true,
       "effects": [
-        "dot"
+        "delayed"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "指定区域三波，每波先出四成秒落點預警，再對當時半徑二點五格內敵人結算一次小級物理傷害；每波相隔 0.8 秒，移出可躲、後進者可被後續波命中，死亡或回合結束清除。卡通雜物模型與完整逐波畫面尚待驗收，現有脈衝只作時間位置提示。"
     },
     {
       "hero": "30",
@@ -3797,17 +3798,17 @@
       "ownerDescription": "消耗拖延層數，原地取得護盾；移動後提前結束。",
       "requiredRefinement": "需拖延消耗與移動取消盾。",
       "products": [
-        "tpl-buff-self"
+        "tpl-effect-sequence"
       ],
       "castType": "self",
+      "targetsEnemies": true,
       "effects": [
-        "applyBuff",
         "shield"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "每次消耗一層拖延，原地得到四秒、四百五十基礎吸收量的護盾（仍吃 GGD 護盾倍率）。移動、位移、換區或死亡立即使這一片盾到期；轉向或撞牆未移動不取消，不影響隊友給的其他盾。缺拖延時拒絕且不扣魔力或冷卻。原稿未指定一次扣幾層，本配方採一層。"
     },
     {
       "hero": "31",

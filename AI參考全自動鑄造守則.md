@@ -234,3 +234,12 @@ Editor 的「敵方前置行動」可切換自動、靜止或普攻，並显示�
 - 「超距不能使用」配置 `allowApproach: false`；驗證超距直接拒絕、沒有自動移動及扣費，近期自己的目標標記仍保留。他人、過期與非法目標須分別拒絕。
 - 前置技能驗收以實際 Q／R 命中取得標記，再執行 EX；空放及無傷害的接近步不得補標記。短效防禦需驗證有效期、刷新不疊加及到期還原。
 - 參考 [艾莉絲微調](materials/community-hero-forge/refinements/28.json)、[行為測試](packages/shared/src/content/heroForge/communityRefinements/eris.test.ts)、[前置命中试玩](packages/shared/src/content/heroForge/communityRefinements/erisAcceptance.test.ts) 與 [收據](materials/community-hero-forge/refinements/eris-verification.json)。本尊模型綁定仍不代表專用劍擊、光線、高攻速動作或音效已验收。
+
+## 停留資源、移動取消護盾與逐波落點
+
+- 「停止移動後逐步累積」用 `onInterval.stationaryForSec` 觀察實際位置並搭配 `internalCooldown`，不用普攻事件代替。冷卻中也要取樣；空走撞牆、轉向不算位移，垂直移動／換區、死亡、中場及新回合需重新等待。資源要有上限、清層事件、合法消耗和逐英雄隔離。
+- 「受擊清空」若採實際命中語意，使用 `damageConnected: true`，納入護盾吸收而排除零傷及完全免疫。具名 mark 的 delta 節點仍需 schema 要求的 `duration`；具名 mark 自己的生命週期由 mark spec 決定。
+- 「原地護盾，移動後提前結束」使用 `shield.breakOnMove`；每片盾保存自己的位置，移動只到期該片盾，不清除其他技能或友軍的護盾，也不偽造敵方破盾事件。重新施加需明確 `replace`，禁止與不同位置的盾量模糊混合。
+- 投擲落地與分波落點需延遲後重新取得當時範圍目標，分別測移出、後進、友軍、死亡及回合結束。煙霧命中干擾要明寫失手機率、有效範圍、進出與免控規則，不能用減速或隱形冒充。
+- 測試走路需送出真正指令並確認位移；不可只改導航意圖後宣稱驗到移动。EX 以空資源起跑，等待真實蓄層再施放；消耗時點與後續自然蓄層分開斷言。
+- 參考 [尼古貓貓微調](materials/community-hero-forge/refinements/30.json)、[行為測試](packages/shared/src/content/heroForge/communityRefinements/yanineko.test.ts)、[實際等待試玩](packages/shared/src/content/heroForge/communityRefinements/yaninekoAcceptance.test.ts) 與 [收據](materials/community-hero-forge/refinements/yanineko-verification.json)。既有煙霧、脈衝或玉藻前模型是待驗收替代，不能當作原設計的菸灰缸／雜物／角色／動作／音效已完成。
