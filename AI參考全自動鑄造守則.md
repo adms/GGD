@@ -267,4 +267,12 @@ Editor 的「敵方前置行動」可切換自動、靜止或普攻，並显示�
 - 同時測一次輸入、三次合法輸入、同 tick 連按、窗口最後合法 tick、到期 tick、控制中斷、魔力／資源不足、改方向、不同英雄及斷線重送。真實技能列也要顯示下一段、剩餘窗口與本段成本資格。Editor 的「接續輸入測試」會送正式命令，不補資源或清冷卻。
 - 微調配方需保存 `template.contentSha256` 與 `templateVersions` 原文。更新共享模板時，其他英雄不能自動升版。已生成的作品也要逐位元比對；只測模板函式無法證明整批重建仍獨立。
 - 作品帶的模板快照不等於伺服器核准。舊版本須由伺服器歷史庫或版本控制中的明確歷史來源解析，核对 id 與 SHA；未知或竄改來源仍拒絕。
-- 參考 [葵花配方](materials/community-hero-forge/refinements/02.json)、[實際輸入測試](packages/shared/src/content/heroForge/communityRefinements/ioriRecast.test.ts)、[Editor／匯入案例](packages/shared/src/content/heroForge/communityRefinements/ioriRecastAcceptance.test.ts) 與 [本輪收據](materials/community-hero-forge/refinements/iori-recast-verification.json)。此版只修八神庵 E，不代表其餘五槽或紫炎與三段原作動作已完成。
+- 參考 [葵花配方](materials/community-hero-forge/refinements/02.json)、[實際輸入測試](packages/shared/src/content/heroForge/communityRefinements/ioriRecast.test.ts)、[Editor／匯入案例](packages/shared/src/content/heroForge/communityRefinements/ioriRecastAcceptance.test.ts) 與 [本輪收據](materials/community-hero-forge/refinements/iori-recast-verification.json)。前一版只修八神庵 E；其餘五槽後續機制見下段，紫炎與原作動作仍待畫面驗收。
+
+## 命中、連段與完成窗口的驗證
+
+- 資源根據真正 HP／盾吸收命中累積，明確區分按鍵、碰撞、傷害排程與有效傷害。目標身上的短期疊層與牌序用具名狀態，按施法者隔離並驗真實回合還原；不可假設限時 buff 就會在換回合時立即清除。
+- 有限連段的每次效果與後續排程各自重查有效目標／距離。只在安排計時器時檢查，會讓稍後離開的目標多挨一擊。不能以 recentCast 代替「最後一段已完成」窗口。
+- 接續 EX 保留獨立版，原子消耗自己的同目標完成窗口後選分支；兩分支不能都跑。驗早按、到期、別人完成、改打別人、無效目標及魔力不足，並確認 EX 自己的冷卻不重置 R。
+- 預設近戰煙霧场景可依正式施法射程擺位，設計者明確輸入的位置不得被悄悄改動；手動超距案例必須仍拒絕。真正連動案例另用前置施法，不補完成標記、不清冷卻。
+- 參考 [八神庵 v2 配方](materials/community-hero-forge/refinements/02.json)、[行為案例](packages/shared/src/content/heroForge/communityRefinements/iori.test.ts)、[Editor／匯入案例](packages/shared/src/content/heroForge/communityRefinements/ioriAcceptance.test.ts) 與 [收據](materials/community-hero-forge/refinements/iori-verification.json)。機制案例通過仍不代表原作素材與畫面完成。

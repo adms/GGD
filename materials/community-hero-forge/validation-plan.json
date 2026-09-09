@@ -1,6 +1,6 @@
 {
   "schema": "ggd-batch-validation-plan@1",
-  "manifestSha256": "00ad7954533eb2c6526888ce2f0535603bbc7df3ac4800f75c9d9d30d98fd5ac",
+  "manifestSha256": "a3316517b901a7e69f9aabd1d55d6d47fcf070f32acc25ce3a5cd03fef6235b1",
   "suites": [
     {
       "id": "implemented-mechanisms",
@@ -59,7 +59,10 @@
         "packages/shared/src/content/heroForge/templateVersions.test.ts",
         "apps/game-server/src/net/recastSnapshot.test.ts",
         "apps/client/src/ui/recastWiring.test.ts",
-        "apps/content-api/src/heroShippedTemplateHistory.test.ts"
+        "apps/content-api/src/heroShippedTemplateHistory.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/iori.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/ioriAcceptance.test.ts",
+        "packages/shared/src/sim/effects/casterScopedStatus.test.ts"
       ],
       "heroSlots": {
         "community-review-20-20260907": [
@@ -164,7 +167,12 @@
           "EX"
         ],
         "community-review-02-20260907": [
-          "E"
+          "PASSIVE",
+          "Q",
+          "W",
+          "E",
+          "R",
+          "EX"
         ]
       }
     },

@@ -1,7 +1,7 @@
 {
   "file": "AI參考全自動鑄造守則.md",
-  "sha256": "a0dc132c40dd251c7782aec4764f5d28e849241d36ed680d0de04c2164fd2c14",
-  "localLinksChecked": 73,
+  "sha256": "c4a1b409f6e681dcfd914cef5a783d65337a71ec8c185cfa303135d0f3274b32",
+  "localLinksChecked": 77,
   "missingLinks": [],
   "commandsAndReferencedTests": "checked against current repository",
   "semanticReview": [
@@ -68,7 +68,11 @@
     "GGD skill terrain policy versus body displacement",
     "independent recast inputs and normal cooldown semantics",
     "pinned refinement template snapshots and independently trusted server history",
-    "explicitly partial Iori E delivery"
+    "explicitly partial Iori E delivery",
+    "target-owned transient flame lifecycle and real round restoration",
+    "execution-time range gates for finite recursive chains",
+    "actual R completion versus recent cast for EX branch and independent costs",
+    "default range-aware smoke geometry never changes explicit designer inputs"
   ],
   "runtimeClaims": "guide does not claim full hero acceptance",
   "batchVerificationReview": {
