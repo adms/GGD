@@ -1,7 +1,7 @@
 {
   "file": "AI參考全自動鑄造守則.md",
-  "sha256": "c0e1ec14f08d219c2c137758977f042ea7a4bee0a80b4f7ca9db99507edbbae5",
-  "localLinksChecked": 35,
+  "sha256": "0df06d3563195885718eb6858efb3da471fbddf44960f4b5772fe5214d45cfa8",
+  "localLinksChecked": 38,
   "missingLinks": [],
   "commandsAndReferencedTests": "checked against current repository",
   "semanticReview": [
@@ -23,7 +23,11 @@
     "trap cancellation precedes projectile spawn",
     "required emitter never falls back to hero",
     "attack attempts include misses and canceled windup",
-    "type-level child-chain and rejection-map completeness"
+    "type-level child-chain and rejection-map completeness",
+    "observed event identity and duel visibility",
+    "target-owned resources debit only their caster source",
+    "reveal preserves stealth clock and duel boundaries",
+    "only actual HP damage wakes sleep"
   ],
   "runtimeClaims": "guide does not claim full hero acceptance",
   "batchVerificationReview": {

@@ -1,6 +1,6 @@
 {
   "schema": "ggd-shared-authoring-handoff@1",
-  "sourceCommit": "92ce186ace9f341046f8a2aea778eb74f0de095f",
+  "sourceCommit": "50a821472197fe480deb09b4f37b6bbfbd205f13",
   "heroCount": 37,
   "slotCount": 222,
   "compilation": "passed",
@@ -33,6 +33,10 @@
     {
       "path": "refinements/24.json",
       "sha256": "7c7378ae9bfb8fddc714c674659dd4c1045e25ee8ac45aa6146129fc7f7901a8"
+    },
+    {
+      "path": "refinements/26.json",
+      "sha256": "fbcf85d3830526f4328d478e9bea1f6ee26fc0782811238d34cec9fc14851b7f"
     },
     {
       "path": "refinements/27.json",
@@ -301,8 +305,8 @@
     },
     {
       "path": "projects/26.hero-project.json",
-      "bytes": 43895,
-      "sha256": "db18a8fbacafd9da3bc5f5eb5f266cd57d7ac8f66906e9af428f90bcdd2a4114"
+      "bytes": 51295,
+      "sha256": "fffb1dfe52b4b4872d770b85b84336ade6e87ccb02423bd94604fa6592fa9ba7"
     },
     {
       "path": "recipes/26.upload-recipe.json",
@@ -686,7 +690,9 @@
     "63b81b0754a4d8b14720b93cc182fb4d852f414d",
     "597db32918ad27262ca6e343217a9d12672d672d",
     "996fa4a45053c3831d3a820c03f342cda76de5b8",
-    "c699a9ef51922e6dff101cac83bfec80952159d5"
+    "c699a9ef51922e6dff101cac83bfec80952159d5",
+    "63badb5afef229c557574ded348b8f70b308d78b",
+    "50a821472197fe480deb09b4f37b6bbfbd205f13"
   ],
   "requiredEffectFields": [
     "chainLightning.retargetOnLost",
@@ -694,7 +700,8 @@
     "applyStatus.grantMark",
     "summon.onCap=retarget",
     "summon.targetOnSpawn",
-    "damageLine.fromSummonSlot"
+    "damageLine.fromSummonSlot",
+    "applyBuff.vision.revealed"
   ],
   "requiredConditionLeaves": [
     "nearbyCombat"
@@ -705,17 +712,20 @@
   "requiredHooks": [
     "onAllyProtected",
     "onSummonHit",
-    "onAttackAttempt"
+    "onAttackAttempt",
+    "onObservedCombat"
   ],
   "requiredAbilityFields": [
     "statusCost.count=all",
     "toggle.upkeepResource=status",
     "toggle.upkeepStatus",
-    "requiredSummonSlot"
+    "requiredSummonSlot",
+    "statusCost.subject=target"
   ],
   "requiredHookFields": [
     "evadeSource",
-    "evadeChannel"
+    "evadeChannel",
+    "observedEvent"
   ],
   "requiredEffectKinds": [
     "trap"

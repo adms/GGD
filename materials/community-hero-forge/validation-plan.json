@@ -1,6 +1,6 @@
 {
   "schema": "ggd-batch-validation-plan@1",
-  "manifestSha256": "6b9e4b8ee6bbb56771163b722c457792caf7e5f6d938d5b4db28721a84f732fb",
+  "manifestSha256": "ca054860d41d7f859c873b1a580d3c3918d7a49a7d74a5dc333434f5d7c8c4a6",
   "suites": [
     {
       "id": "implemented-mechanisms",
@@ -12,7 +12,8 @@
         "packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts",
         "packages/shared/src/content/heroForge/communityRefinements/madoka.test.ts",
         "packages/shared/src/content/heroForge/communityRefinements/kirua.test.ts",
-        "packages/shared/src/content/heroForge/communityRefinements/yugi.test.ts"
+        "packages/shared/src/content/heroForge/communityRefinements/yugi.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/conan.test.ts"
       ],
       "heroSlots": {
         "community-review-20-20260907": [
@@ -59,6 +60,12 @@
           "E",
           "R",
           "EX"
+        ],
+        "community-review-26-20260907": [
+          "PASSIVE",
+          "Q",
+          "W",
+          "R"
         ]
       }
     },

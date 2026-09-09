@@ -1,12 +1,12 @@
 # 37 英雄原設計修正（#1132）
 
-最新一批為武藤遊戲六槽 v1 與奇犽 v2：33 槽已登記行為測試，189 槽仍未對應，24 名仍使用通用普攻被動。原設計整體／畫面／新服務 ZIP／發布未完成，#1132 保持開啟。詳見 [武藤遊戲與奇犽證據](yugi-verification.json)。下列段落保留各次提交的歷史數字。
+最新為柯南 v1 四槽修正，作品 revision 12→13。累計 37 槽登記行為測試，185 槽仍未對應，23 名仍使用通用普攻被動。柯南 E／EX、專用素材、完整原設計／畫面／新服務 ZIP／發布尚未完成，#1132 保持開啟。見 [柯南證據](conan-verification.json)。後文數字是各次提交的歷史收據。
 
 原始 `recipes/*.upload-recipe.json` 保持逐位元組不變。此處的逐英雄 JSON 是版本化的微調設定，必須與同一 projectId、sourceSha256 配對。既有模板由 `pinHeroPlanTemplates` 固定版本並實體化；套用器建立新作品 revision，不修改共用模板或舊英雄版本。
 
 前批有 6 槽局部修正：鹿目圓 W、庫洛魔法使 W 指定友軍或自己；吉伊卡哇 EX 給附近友軍及自己護盾、三秒抗恐懼；庫洛魔法使 PASSIVE 改為卡牌連結資源。指定盾的 castEffect 視覺改綁 target。庫洛魔法使四張卡牌的順序、三層連結與下一盾消耗已實作並通過 9 項行為測試；W 先消耗既有連結，再把此次盾牌記入下一段牌序。新增 #1139：EX 自身切換風／樹 Q，風 Q 傷害／推動、樹 Q 束縛；同一 Q 實例共用冷卻／魔力，風／樹分別記牌序，EX 本身不集氣，回合回復風牌。9 項換牌測試與兩個反例 mutation 通過；牌面／動態圖示、劍牌與翔牌呈現仍待補。當時鹿目圓僅修盾目標；最新希望與六槽修正見文末。
 
-`design-audit.json` 是這次實際 37 名／222 槽的原要求與編譯結果對照。25 名仍使用 tpl-on-attack 被動；沒有任何列因能編譯而自動標為原設計通過。這份資料不是發布清單。
+`design-audit.json` 是這次實際 37 名／222 槽的原要求與編譯結果對照。早期對照曾有 25 名使用 tpl-on-attack 被動（現況見頁首）；沒有任何列因能編譯而自動標為原設計通過。這份資料不是發布清單。
 
 執行 `pnpm exec node --import tsx tools/community-hero-forge/refine-design-handoff.mts --input <上次重建的37目錄> --output <新的交接目錄>` 產生可匯入 Editor 的 index、37 份 projects、原始 recipes 與已驗證模型。輸入每名目錄需有 after.hero-project.json 與 package.zip。程式拒絕覆寫既有輸出；可重新選用原先固定版本作 rollback。
 

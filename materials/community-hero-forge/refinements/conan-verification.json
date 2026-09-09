@@ -1,0 +1,121 @@
+{
+  "schema": "ggd-conan-verification@1",
+  "issue": 1132,
+  "sourceCommit": "50a821472197fe480deb09b4f37b6bbfbd205f13",
+  "refinementVersion": 1,
+  "refinementSha256": "fbcf85d3830526f4328d478e9bea1f6ee26fc0782811238d34cec9fc14851b7f",
+  "regression": {
+    "exitCode": 0,
+    "tests": 237,
+    "files": 18,
+    "conanTests": 22,
+    "logSha256": "5d8b2bd019762ddf43106e48b54062305688b7b2cff6e2fd93d7dc5351a5d998",
+    "scope": "Conan and all existing community refinements including Azazel repeated same-source curse reversal, plus sleep, stealth, full vision, status costs, hooks, source grants and purity."
+  },
+  "typechecks": [
+    {
+      "package": "shared",
+      "exitCode": 0,
+      "command": "pnpm --filter @ggd/shared typecheck",
+      "logSha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    },
+    {
+      "package": "editor",
+      "exitCode": 0,
+      "command": "pnpm --filter @ggd/editor typecheck",
+      "logSha256": "486eafd3c0debbbff5ae7dddb4aa8823f853e470eff3bacbda032617862caca2"
+    },
+    {
+      "package": "client",
+      "exitCode": 0,
+      "command": "pnpm --filter @ggd/client typecheck",
+      "logSha256": "39d946f6b36b6e4e7de7bfbe2267744c75dc2daf57912304bbcdcd88a0cc130d"
+    },
+    {
+      "package": "game-server",
+      "exitCode": 0,
+      "command": "pnpm --filter @ggd/game-server typecheck",
+      "logSha256": "b05c3d89729ac8d5380fe460caa7c9227683cd32eda0fd3fbdcddaedd946d715"
+    }
+  ],
+  "typecheckScope": "Typechecks precede the final one-line control-extension fix and its additional test; final Editor release gate validates the integrated tree.",
+  "mutations": [
+    {
+      "mutation": "observation-kind-filter",
+      "file": "packages/shared/src/sim/effects/hooks.ts",
+      "exitCode": 1,
+      "logSha256": "08d05633648ee60a6ab6baa3e93b137ee40d8f0aca5783aef6df0238e1f82385",
+      "detected": true
+    },
+    {
+      "mutation": "target-resource-debit",
+      "file": "packages/shared/src/sim/abilities/abilitySystem.ts",
+      "exitCode": 1,
+      "logSha256": "43ff2b717644013f78c33b893d6620e7c98c62f59df580af91adab736cd0fb83",
+      "detected": true
+    },
+    {
+      "mutation": "zero-damage-sleep",
+      "file": "packages/shared/src/sim/statusBreak.ts",
+      "exitCode": 1,
+      "logSha256": "5a978edf2c6d9ebd0d6e266574a163bb6ffb2ba3909a5e8838d7ebf88f32d009",
+      "detected": true
+    },
+    {
+      "mutation": "reveal-visibility",
+      "file": "packages/shared/src/sim/stealth.ts",
+      "exitCode": 1,
+      "logSha256": "d9d86cc9fef49febaeb543ed8344537817a0deaf58e308b26e19626673c2f633",
+      "detected": true
+    }
+  ],
+  "handoff": {
+    "changedProjects": [
+      {
+        "hero": "26",
+        "previousRevision": 12,
+        "revision": 13
+      }
+    ],
+    "otherProjectsByteIdentical": 36,
+    "originalRecipesUnchanged": 37,
+    "modelBindingsUnchanged": 37
+  },
+  "batchCoverage": {
+    "heroes": 37,
+    "slots": 222,
+    "mappedBehaviorSlots": 37,
+    "unmappedBehaviorSlots": 185,
+    "genericOnAttackPassives": 23
+  },
+  "initialFailures": [
+    "Target cost field was initially inserted under toggle upkeep; moved to statusCost before successful compile.",
+    "Seen-event IDs initially contained uppercase characters; normalized to legal lowercase IDs.",
+    "Immunity fixture needed applyTo=target.",
+    "Actual zero damage and shield-only hits woke sleeping targets; fixed positive HP damage guard and verified through the real damage pipeline."
+  ],
+  "semantics": [
+    "Each visible hostile champion is observed only inside the same active unsettled duel, respecting stealth and map sight.",
+    "Four event categories each count once per observed enemy and observer per round; at most three stored clues. Consuming clues does not erase seen categories; ordinary death/revive does not reset round sources.",
+    "R consumes only the selected target clues applied by this caster; illegal or unfunded casts pay nothing. Legal cast interrupted before effect does not refund.",
+    "R reveal preserves the underlying stealth clock, expires or dispels with its source and stops across duel zones; same caster refreshes one weakness source.",
+    "Q and W use real first-collision projectiles. W causes no direct damage; subsequent positive HP loss wakes it, zero damage and shield-only absorption do not."
+  ],
+  "knownLimits": [
+    "E skateboard steering/collision/stop states and EX valid-target-or-anchor bounded pull remain unfinished.",
+    "Football, needle/watch, skating, dedicated models/animations/VFX/audio and rendered visual acceptance remain pending; Q/W still use an existing bolt proxy.",
+    "All-hero original-design acceptance, current-service ZIP and formal publication remain incomplete."
+  ],
+  "originalDesignAcceptance": "incomplete",
+  "visualAcceptance": "unverified",
+  "currentServiceZip": "not-built",
+  "formalPublication": false,
+  "controlRefreshRegression": {
+    "beforeFixCommit": "63badb5afef229c557574ded348b8f70b308d78b",
+    "failedTests": 1,
+    "passingTests": 21,
+    "beforeLogSha256": "c1a418d74ea28f4f68bb99c4082923b9bb6b4b525810122b8438ae75f65e11ed",
+    "fixedCommit": "50a821472197fe480deb09b4f37b6bbfbd205f13",
+    "result": "Effective visible control extension now counts, unchanged expiry does not."
+  }
+}

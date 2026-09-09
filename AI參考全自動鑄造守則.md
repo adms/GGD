@@ -181,3 +181,12 @@ pnpm --filter @ggd/shared typecheck
 - 「停止攻擊後回復」使用 `onAttackAttempt` 的攻擊提交時刻。有效命中、失手、被閃避及前搖後取消要走真實攻擊系統測試，不能只手動呼叫命中 hook。新增巢狀效果或拒絕理由後，必須跑型別檢查，涵蓋子效果鏈與所有回饋對照表。
 
 可重用的實作與負例見 [武藤遊戲配方](materials/community-hero-forge/refinements/01.json)、[武藤遊戲行為測試](packages/shared/src/content/heroForge/communityRefinements/yugi.test.ts) 與 [集中證據](materials/community-hero-forge/refinements/yugi-verification.json)。專屬召喚物及天空龍仍為素材缺口，這些機制範例不表示原作演出已完成。
+
+## 觀察事件、目標資源與睡眠
+
+- `onObservedCombat` 觀察同一有效對決內當前可見的敵方英雄；`observedEvent` 分普攻命中、技能命中、實際治療與成功控制。目標是作出事件的敵人，不能換成受害者。免疫、零傷與過量治療不計；有效護盾吸收可算命中。需要逐種類去重時，使用依施法者分開的回合來源，並驗證多敵人、多觀察者與真正回合清除。
+- `statusCost.subject=target` 只用於指定目標技能。配合 `appliedBy=self` 只消耗該目標身上自己的資源；合法目標與足額檢查後才一併支付。消耗資源和清除已見種類是兩件事，原稿未要求重置時不可偷偷重置。Editor 單槽預覽不會偽造目標線索。
+- `applyBuff.vision.revealed=true` 揭示承受者，不重啟隱形時鐘；來源到期或驅散後回到原隱形規則。檢查施法中離區、死亡與對決結束；施加後移往另一對決也不能持續洩漏位置。
+- 睡眠用 `breakOnDamage`，正值實際 HP 傷害才提前喚醒；零傷或完全由護盾吸收的命中不喚醒。用真實投射物碰撞與傷害系統驗證，不以直接塞狀態或呼叫解除函式冒充完整行為。
+
+範例：[柯南配方](materials/community-hero-forge/refinements/26.json)、[行為測試](packages/shared/src/content/heroForge/communityRefinements/conan.test.ts)、[證據與缺口](materials/community-hero-forge/refinements/conan-verification.json)。它只涵蓋四槽；滑板、吊帶及專用演出仍待完成。
