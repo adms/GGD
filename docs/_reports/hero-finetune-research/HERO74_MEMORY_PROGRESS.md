@@ -2,6 +2,14 @@
 
 2026-09-09。承接 `hero74-training-v2` 的 500 train／119 internal-dev；不是重新選資料，不截斷，模型仍為固定 Gemma 4 12B IT 8-bit、末兩層 q/o LoRA、rank 8。未獲正式訓練通過證據前不產生 release。
 
+## 2026-09-10：終止後品質與交付鏈已自動化
+
+訓練仍只由既有 v21 worker 執行；CPU 端已補齊後續不可竄改鏈。`hero-distillation-exact-reference-evidence.py` 現在不只核對檔案 hash，也要求教師語意／玩法收據與候選品質收據逐一對上同一 arm、英雄、引擎、編譯 artifact 與 verdict。`hero-distillation-finalize-evaluation.py` 會保存兩份輸入、所有逐英雄收據及三支裁決／報告程式的獨立快照；release gate 只接受這種 finalized directory，不接受可事後改寫的裸 results JSON。
+
+`hero-distillation-delivery.py build` 只在訓練與配對評測都完整成功、adapter roundtrip 與報告 hash 仍相符時執行。它自動複製 12 份可讀 JSON／HTML，並用原 archive verifier 封裝完整 raw outputs 與 adapter；`verify` 可在交付前後重驗。生成的 `.gitignore` 明確使 `bundle/archives/`、`bundle/models/` 不進 Git；`hero-finetune-s3.py plan` 由已提交的 bundle manifest 找到這些未追蹤 payload，之後仍只用固定 `vibe-coding`／`ap-east-2`／指定 bucket 做 conditional PUT 與每物件 GET+SHA256。沒有自動 push、merge、部署或模型 promotion。
+
+品質、finalization、release、delivery、archive、S3、batch evaluation、results 與 HTML report 相關 **72 項 CPU tests** 已在同一 checkout 通過。這些是流程證據，不是 v21 模型品質或對局成功證據；後者仍必須等實際訓練、推論、收據與未見新批完成。
+
 ## 最新進度：v21 已有正式更新；接上實際素材與封裝准入
 
 訓練後單次批次入口已完成：`hero-distillation-evaluate-batch.py` 先要求整輪 completed／worker joined／固定 final checkpoint／8-tensor reload 證据通過，才建立新的輸出目錄。之後依序 prepare → base 119 題 → LoRA 119 題 → 各自 schema/compiler/存檔重讀 → 各自封裝准入。沿用受保護 inference supervisor，不另寫 GPU 執行或改 guard；每 arm 上限仍 7,200 秒，單題／階段 610 秒，不自動延長或重試。controller 未在 live train 期間啟動，不把準備好脚本當成已推論。
