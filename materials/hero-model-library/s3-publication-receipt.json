@@ -1,13 +1,13 @@
 {
   "status": "published_and_read_back_verified",
-  "checked_at": "2026-09-09T16:04:21.764393+08:00",
+  "checked_at": "2026-09-10T02:20:31.241869+08:00",
   "bucket": "ggd-390630837668-ap-east-2-an",
   "profile": "vibe-coding",
   "region": "ap-east-2",
-  "release": "c6debe1cf925052e75d88f60",
+  "release": "7b6ec0c8c5bd75fc173c5f2d",
   "shared_root": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/",
-  "verified_release_files": 383,
+  "verified_release_files": 443,
   "verified_control_files": 11,
-  "archive_sha256": "8a6cd3f42b1c03fbb8e67323597ea832145c36453e5bc53897789056ee1b1858",
+  "archive_sha256": "fd96e9bb86c4995536caa253cc47977bb52d546231e6621115ef83a49ee81758",
   "deletions": 0
 }

@@ -20,13 +20,24 @@ for m in models.values():
     assert release['model_locations'][m['modelKey']].startswith('ready/')
 heroes={h['id']:h for h in manifest['heroes']}
 for h in heroes.values():
-    ranks=[(manifest['priority'].index(o['source']['tier']),['exact','alternate','style-proxy','previous'].index(o['source']['kind'])) for o in h['options']]
+    ranks=[(manifest['priority'].index(o['source']['tier']),0 if o['sourceId']==h.get('preferredDerivative') else 1,['exact','alternate','style-proxy','previous'].index(o['source']['kind'])) for o in h['options']]
     assert ranks==sorted(ranks),h['id']
     assert all(o['sourceId'] in models for o in h['options'])
 for hero,source in [('community-review-23-20260907','300heroes:137'),('b2-kumoko','pet:spider'),('godie-hapm','300heroes:41')]:
     assert heroes[hero]['options'][0]['sourceId']==source
     assert heroes[hero]['options'][0]['source']['kind']=='exact'
     assert not heroes[hero]['pending']
+derivatives=read(root/'derivatives.json')['entries'];copies=read(root/'derivative-validation.json')['entries']
+assert len(derivatives)==len(copies)==11
+assert sum(h['id'].startswith('community-review-') for h in heroes.values())==37
+assert sum(h['id'].startswith('b2-') for h in heroes.values())==37
+assert sum(h['id'].startswith('example:') for h in heroes.values())==7
+for e in derivatives:
+    key='derivative:'+e['id'];h=heroes[e['heroId']];m=models[key];copy=next(x for x in copies if x['derivativeId']==key)
+    assert h['options'][0]['sourceId']==key
+    assert m['sha256']==copy['sha256'] and copy['sha256']!=copy['sourceSha256']
+    assert copy['physicalCopy'] and copy['embeddedResources'] and copy['skinAndAnimationPayloadUnchanged']
+    assert m['derivation']['sourceId']==e['sourceId']
 proof=read(root/'spider-identity.json')
 assert proof['evidence'][0]['fields']['10']==proof['evidence'][1]['fields']['1']==45029
 assert all(e['fields']['2']=='蜘蛛子' for e in proof['evidence'])

@@ -1,0 +1,16 @@
+{
+  "id": "community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "xerath_idle1",
+    "run": "xerath_run",
+    "attack": "xerath_attack1",
+    "cast": "xerath_spell1",
+    "hurt": "xerath_idle1",
+    "death": "xerath_death"
+  },
+  "yawOffsetDeg": 0
+}

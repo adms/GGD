@@ -10,7 +10,7 @@ from PIL import Image
 from convert_jumpx_body import convert, decompose, native, rotation_matrix, optimize_static_channels, normalize_palette, model_identity, BIAS
 
 
-def fixture(shear=False):
+def fixture(shear=False, damaged=False):
     head, binary = bytearray(b"fixture\0"), bytearray()
 
     def h(data):
@@ -43,6 +43,9 @@ def fixture(shear=False):
         keys[7] = d("<9f", [0, i, 0, 1, i*2, 0, 2, i, 0])
         keys[10] = d("<12f", ([0, 0, 0.382683432365, 0.923879532511] if shear and i else [0, 0, 0, 1]) * 3)
         keys[13] = d("<9f", ([2, 1, 1] if shear and not i else [1, 1, 1]) * 3)
+        if damaged and i:
+            for ci, ai, width in [(6,7,3),(9,10,4),(12,13,3)]:
+                struct.pack_into('<'+'f'*width, binary, keys[ai]-BIAS+width*4, *([float('nan')]*width))
         bone_headers.append(struct.pack("<3I2iI", 0, 0, name, i-1, 3, 1)
                             + struct.pack("<16f", *inverse.T.reshape(-1))
                             + bytes(28) + struct.pack("<14I", *keys))
@@ -60,6 +63,18 @@ def values(doc, binary, index, width):
 
 
 class NativeBodyTest(unittest.TestCase):
+    def test_nonfinite_motion_requires_named_derivative_repair_and_keeps_finite_samples(self):
+        with tempfile.TemporaryDirectory() as temp:
+            image=Path(temp)/'body.png';Image.new('RGBA',(4,4),(100,20,200,255)).save(image)
+            row={'id':'fixture','path':str(image),'exists_local':True,'kind':'texture','readiness':'native'}
+            with self.assertRaisesRegex(ValueError,'Invalid native quaternion'):
+                convert(fixture(damaged=True),[0],['idle'],{'0':row},32)
+            _,_,fixed=convert(fixture(damaged=True),[0],['idle'],{'0':row},32,repair_key_bones=('Child',))
+            _,_,original=convert(fixture(),[0],['idle'],{'0':row},32)
+        for sample,baseline in zip(fixed['nativePoseSamples'],original['nativePoseSamples']):
+            self.assertTrue(np.isfinite(np.asarray(sample['positions'])).all())
+            if sample['nativeFrame'] in (0,2):self.assertEqual(sample['positions'],baseline['positions'])
+
     def test_selective_repair_detaches_only_joint_with_local_shear(self):
         with tempfile.TemporaryDirectory() as temp:
             image = Path(temp)/"body.png"

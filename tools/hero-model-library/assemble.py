@@ -63,10 +63,37 @@ for e in pairs:
   if c['id'] in ['cloud','lux','bulbasaur','tram']:
    option(h,'existing:'+c['id'],'exact' if c['id']=='tram' else 'style-proxy','original' if c['id']=='tram' else 'w3x');continue
   option(h,key,'exact' if e['visual_match_status']=='identity_candidate' or (e['id']=='b2-kumoko' and key=='pet:spider') else 'style-proxy','300heroes')
+# Explicit owner-directed independent copies and the seven LoL prototypes.
+derivative_config=read(repo/'materials/hero-model-library/derivatives.json')['entries']
+derivative_results={}
+for folder in ['copies-v1','copies-v2','copies-v3','copies-v4','copies-v5']:
+ for r in read(ws/'outputs/hero-model-derivatives-20260910'/folder/'summary.json'):
+  if r['stage']=='prepared':derivative_results[r['characterId']]=r
+for e in derivative_config:
+ key='derivative:'+e['id'];r=derivative_results[key]
+ upstream=models.get(e['sourceId'])
+ if upstream is None and e['sourceId']=='pet:octopus':
+  upstream=dict(sourceCharacter='八爪魚寵物 11_bazhuayu',sourceWork='300英雄寵物；其他作品出處未確認')
+ add(key,dict(runtime=Path(r['runtime']),name=e['name']+'（獨立副本／'+upstream['sourceCharacter']+'）',work=upstream['sourceWork']))
+ models[key]['derivation']=dict(heroId=e['heroId'],targetName=e['name'],targetWork=e['work'],sourceId=e['sourceId'],sourceSha256=r['sourceSha256'],copyMode='independent-embedded-copy',changes=e['changes'])
+ h=hero(e['heroId'],e['name']);tier='original' if e['id']=='kirby' else '300heroes'
+ option(h,key,'style-proxy',tier)
+ h['options'].insert(0,h['options'].pop())
+ h['preferredDerivative']=key
+ if e['id']=='takopi':h['pending']=[x for x in h['pending'] if x['source']!='pet:octopus']
+for r in read(ws/'outputs/hero-model-derivatives-20260910/lol-v1/summary.json'):
+ h=hero(r['heroId'],r['sourceCharacter']);h['work']=r['sourceWork'];h['rosterGroup']='lol7';h['identityScope']='Existing recipe key, not a fabricated published champion ID'
+ key=r['characterId']
+ if r['stage']=='prepared':
+  add(key,dict(runtime=Path(r['runtime']),name=r['sourceCharacter'],work=r['sourceWork']))
+  option(h,key,'exact','original');h['options'][-1]['source']['library']='lol'
+ else:
+  failures[key]=r['error'].split('Error: ')[-1].splitlines()[0]
+  option(h,key,'exact','original')
 order=['300heroes','mba','original','w3x']
-for h in heroes.values():h['options'].sort(key=lambda o:(order.index(o['source']['tier']), ['exact','alternate','style-proxy','previous'].index(o['source']['kind'])))
+for h in heroes.values():h['options'].sort(key=lambda o:(order.index(o['source']['tier']), 0 if o['sourceId']==h.get('preferredDerivative') else 1, ['exact','alternate','style-proxy','previous'].index(o['source']['kind'])))
 manifest=dict(schema='ggd-hero-model-library@1',priority=order,policy='300>MBA>原版>借用w3x',models=list(models.values()),heroes=list(heroes.values()),scope='模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。')
-manifest['withinTierPolicy']='本尊優先，其次同角色其他形態，再其次視覺代理；同類依清單順序。'
+manifest['withinTierPolicy']='同來源順位先採用 Owner 指定的獨立副本，其餘本尊、同角色形態、視覺代理依序；舊版本保留。'
 manifest['resolved']=[dict(sourceId=k,character=n,status='converted',removedFromConversionGaps=True,sha256=models[k]['sha256']) for k,n in [('300heroes:137','坂田銀時'),('300heroes:41','海克力斯')]]
 manifest['resolved'].append(dict(sourceId='pet:spider',character='蜘蛛子',status='identity-confirmed-pet-form',proof='spider-identity.json',sha256=models['pet:spider']['sha256']))
 write(out/'manifest.json',manifest);write(base/'runtime-locations.json',local)

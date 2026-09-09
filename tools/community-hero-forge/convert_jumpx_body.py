@@ -152,7 +152,7 @@ def normalize_palette(count, ids, weights, bone_count):
     return [ids[j] if weights[j] > 0 else ids[live[0]] for j in range(4)], weights/sum(weights)
 
 
-def convert(raw, mesh_ids, clip_names, texture_rows, fps, flatten_hierarchy=False):
+def convert(raw, mesh_ids, clip_names, texture_rows, fps, flatten_hierarchy=False, repair_key_bones=()):
     version, fields, head, data = native(raw)
     if not 0 < fps <= 120 or len(set(mesh_ids)) != len(mesh_ids) or not 0 < len(mesh_ids) <= 5:
         raise ValueError("Choose 1-5 unique body meshes and an explicit frame rate")
@@ -336,7 +336,25 @@ def convert(raw, mesh_ids, clip_names, texture_rows, fps, flatten_hierarchy=Fals
             raise ValueError("Packed animation keys require a separate verified decoder")
         if count != 1 and frame >= count:
             raise ValueError("Animation frame outside native keys")
-        return np.array(unpack("<" + "f"*width, data, address-BIAS+(0 if count == 1 else frame)*width*4))
+        value = np.array(unpack("<" + "f"*width, data, address-BIAS+(0 if count == 1 else frame)*width*4))
+        if not np.all(np.isfinite(value)) and bone['name'] in repair_key_bones:
+            if count == 1: raise ValueError('Cannot reconstruct a non-finite constant track')
+            # Explicit derivative-only reconstruction. Never alter the native bytes.
+            # Interpolate only inside this selected clip; preserve every finite key.
+            def sample(at):
+                return np.array(unpack('<' + 'f'*width, data, address-BIAS+at*width*4))
+            left = next((j for j in range(frame-1, start-1, -1) if np.all(np.isfinite(sample(j)))), None)
+            right = next((j for j in range(frame+1, end) if np.all(np.isfinite(sample(j)))), None)
+            if left is None and right is None:
+                raise ValueError('No finite key in selected clip for '+bone['name'])
+            if left is None: value = sample(right)
+            elif right is None: value = sample(left)
+            else:
+                a, b = sample(left), sample(right)
+                if width == 4 and np.dot(a, b) < 0: b = -b
+                value = a + (b-a) * ((frame-left)/(right-left))
+            if width == 4: value /= np.linalg.norm(value)
+        return value
 
     # A rigid weapon's visibility can use its exclusive leaf joint. Refuse a
     # shared joint: hiding it would incorrectly collapse other body geometry.

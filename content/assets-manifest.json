@@ -2,8 +2,8 @@
   "schema": "ggd-assets-manifest@1",
   "note": "⭐ 被 content/**/*.json 或共用 VFX 材質引用到的**每一顆**二進位資產。⛔ 產物 —— 改 `tools/asset-manifest/gen.ts`，⛔ 不要手改。⚠️ 只收**被引用到的**：content/assets/ 底下有一萬多個檔，而清單的用途是驗證引用得到的東西。",
   "counts": {
-    "entries": 1746,
-    "totalBytes": 193261048
+    "entries": 1761,
+    "totalBytes": 214153644
   },
   "entries": [
     {
@@ -15546,6 +15546,17 @@
       ]
     },
     {
+      "path": "assets/models/community/1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc.glb",
+      "bytes": 2287728,
+      "sha256": "1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c"
+      ]
+    },
+    {
       "path": "assets/models/community/20fc46c2468b3d9d79677763ac34cebbff9f3fd9d4672454691308a743054175.glb",
       "bytes": 951004,
       "sha256": "20fc46c2468b3d9d79677763ac34cebbff9f3fd9d4672454691308a743054175",
@@ -15612,6 +15623,17 @@
       ]
     },
     {
+      "path": "assets/models/community/28fe31e942415e1a2b8f93963f31fb77d06a464d9fee7bf37db23df981dae48b.glb",
+      "bytes": 1281100,
+      "sha256": "28fe31e942415e1a2b8f93963f31fb77d06a464d9fee7bf37db23df981dae48b",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee"
+      ]
+    },
+    {
       "path": "assets/models/community/296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a.glb",
       "bytes": 1579724,
       "sha256": "296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a",
@@ -15620,6 +15642,17 @@
       "refs": [
         "bundle",
         "community.body.16a3490b238155c7c49fdea9fd35fe4d69b850df6916e8b9"
+      ]
+    },
+    {
+      "path": "assets/models/community/2b52ec923450fa53fdef2cde4bae03ef56f99881222ab60333b733d21af5abbf.glb",
+      "bytes": 856548,
+      "sha256": "2b52ec923450fa53fdef2cde4bae03ef56f99881222ab60333b733d21af5abbf",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a"
       ]
     },
     {
@@ -15744,6 +15777,17 @@
       ]
     },
     {
+      "path": "assets/models/community/5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee.glb",
+      "bytes": 1968836,
+      "sha256": "5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128"
+      ]
+    },
+    {
       "path": "assets/models/community/595aaa5d929c9ed65cf231990e21770c69ee1ab24879678249129d37636d05ea.glb",
       "bytes": 685580,
       "sha256": "595aaa5d929c9ed65cf231990e21770c69ee1ab24879678249129d37636d05ea",
@@ -15788,6 +15832,17 @@
       ]
     },
     {
+      "path": "assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
+      "bytes": 2361292,
+      "sha256": "6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c"
+      ]
+    },
+    {
       "path": "assets/models/community/6c378a151d80e5a705ca31acabcb7fc5dff5352059957642614606f383767467.glb",
       "bytes": 1088600,
       "sha256": "6c378a151d80e5a705ca31acabcb7fc5dff5352059957642614606f383767467",
@@ -15807,6 +15862,39 @@
       "refs": [
         "bundle",
         "community.body.c1d58311b32ce991b89fd6a2aba74ac9548a4bd1340b4e18"
+      ]
+    },
+    {
+      "path": "assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb",
+      "bytes": 1736188,
+      "sha256": "7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c"
+      ]
+    },
+    {
+      "path": "assets/models/community/7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2.glb",
+      "bytes": 679728,
+      "sha256": "7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b"
+      ]
+    },
+    {
+      "path": "assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb",
+      "bytes": 199860,
+      "sha256": "7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b"
       ]
     },
     {
@@ -15840,6 +15928,17 @@
       "refs": [
         "bundle",
         "community.body.e69a0c8e9b49032709aa22dbf1ab17597d1cb145e849a8c4"
+      ]
+    },
+    {
+      "path": "assets/models/community/8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c.glb",
+      "bytes": 1426364,
+      "sha256": "8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.e45bcd1295cf8dec23dffc6cdc201a6ea76586c778534981"
       ]
     },
     {
@@ -16041,6 +16140,17 @@
       ]
     },
     {
+      "path": "assets/models/community/c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29.glb",
+      "bytes": 762900,
+      "sha256": "c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878"
+      ]
+    },
+    {
       "path": "assets/models/community/cc746a618bff25e360aa9637d84b55f80812184f3e1eae26ab9f200895869047.glb",
       "bytes": 1030392,
       "sha256": "cc746a618bff25e360aa9637d84b55f80812184f3e1eae26ab9f200895869047",
@@ -16105,6 +16215,17 @@
       "refs": [
         "bundle",
         "community.body.44221ab16b078a550562a74cda12fd753fbd236c5c8b1c47"
+      ]
+    },
+    {
+      "path": "assets/models/community/d637360355919ae5253a6467d4c9ef3bf110084b5a7bce3200db6578279d9329.glb",
+      "bytes": 1519620,
+      "sha256": "d637360355919ae5253a6467d4c9ef3bf110084b5a7bce3200db6578279d9329",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a"
       ]
     },
     {
@@ -16218,6 +16339,17 @@
       ]
     },
     {
+      "path": "assets/models/community/eb9de32d14a7d5422295b1f1b0ea30becee83d8319df1586841ec0a89ef7a019.glb",
+      "bytes": 2355552,
+      "sha256": "eb9de32d14a7d5422295b1f1b0ea30becee83d8319df1586841ec0a89ef7a019",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216"
+      ]
+    },
+    {
       "path": "assets/models/community/ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de.glb",
       "bytes": 1249564,
       "sha256": "ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de",
@@ -16248,6 +16380,17 @@
       "refs": [
         "bundle",
         "community.body.5266229eb0dbd3ef4d817116b31b26655eb15d256b411127"
+      ]
+    },
+    {
+      "path": "assets/models/community/ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0.glb",
+      "bytes": 1058392,
+      "sha256": "ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855"
       ]
     },
     {
@@ -16295,6 +16438,17 @@
       ]
     },
     {
+      "path": "assets/models/community/f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b.glb",
+      "bytes": 1715124,
+      "sha256": "f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d"
+      ]
+    },
+    {
       "path": "assets/models/community/f9c77d0749ae3cb6c5341c9cd01bbf117d52b14158ddc06007b93b90875e7bd2.glb",
       "bytes": 2010288,
       "sha256": "f9c77d0749ae3cb6c5341c9cd01bbf117d52b14158ddc06007b93b90875e7bd2",
@@ -16314,6 +16468,17 @@
       "refs": [
         "bundle",
         "community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef"
+      ]
+    },
+    {
+      "path": "assets/models/community/fe62599a460e7cecdfe5ac5726a09a4d6e4a44663576c8529b3c2be6841a984c.glb",
+      "bytes": 683364,
+      "sha256": "fe62599a460e7cecdfe5ac5726a09a4d6e4a44663576c8529b3c2be6841a984c",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82"
       ]
     },
     {
