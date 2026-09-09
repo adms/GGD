@@ -78,6 +78,16 @@ function routeSources(pathPattern: string): string {
         // ⚠️⚠️ ⭐ `.*` 而**不是** `[^\\n]*` —— 後者在 JS 字串裡會被寫成一個
         //   **真的換行**，grep 收到 `[^<換行>]` ⇒ 「brackets not balanced」⇒ **exit 2**。
         //   ⭐ 而下面那個 catch 若把它讀成「沒找到」就是⭐⭐ **一條永遠綠的閘**。
+        // ⛔⛔ **`-E` 是大小寫敏感的**（2026-09-09 量到）：動詞清單全是小寫，
+        //   ⭐ 而 Go 的 chi router 寫的是 **`r.Post(`／`r.Put(`** ——
+        //   ⇒ 這把尺**從來配不到 Go 的任何一條路由**。
+        //   ⚠️ 而它的失敗方向最糟：`goRoute` 永遠是空字串
+        //   ⇒ 「Go 側零個提交路由」⇒ ⭐ 它會在 `enabled` 被打開的那一刻
+        //     喊「那一格在宣稱一條不存在的路」——**而那條路一直都在**
+        //     （`apps/platform/internal/submissions/handlers.go:125`
+        //       逐字 `r.Post("/submissions", h.submit)`）。
+        //   ⇒ 加 `-i`。⛔ 不放寬動詞清單（那會配到註解裡的 `POST /api/...`）。
+        "-i",
         `(post|put|patch|Handle|HandleFunc|route).*(${pathPattern})`,
         "apps",
       ],
@@ -187,7 +197,12 @@ describe("UGC 提交閘的規格閘（GH#991）", () => {
     //   （`apps/platform/internal/submissions/handlers.go` 的 `Mount`）。
     //   ⇒ owner 哪天把 `enabled` 翻成 true，這一條會用「**零個** UGC 提交路由」紅掉 ——
     //   ⚠️ ⭐ 而那句話是**假的**。一條在它最該說話的那一刻說謊的閘，比沒有閘更糟。
-    const goRoute = routeSources('r\\.Post\\("/submissions"');
+    // ⛔⛔ **pattern 自己不可以含動詞**（2026-09-09 量到的第二層）：
+    //   舊的是 `r\.Post\("/submissions"`，而 `routeSources` 組出來的是
+    //   `(post|put|…).*(<pattern>)` ⇒ ⭐ 它要求動詞**出現在 pattern 之前**，
+    //   而這裡動詞就在 pattern 裡面 ⇒ **永遠配不到**（配到也要有第二個 `r.Post`）。
+    //   ⇒ 只給路徑，讓前綴那組動詞去配 `r.Post(`。
+    const goRoute = routeSources('"/submissions"');
     expect(
       ugcSubmitSources() + goRoute,
       "⛔⛔ `content/config/ugc.json` 的 `enabled` 是 **true**，而 TS 與 Go 兩側\n" +
@@ -198,14 +213,20 @@ describe("UGC 提交閘的規格閘（GH#991）", () => {
     ).not.toBe("");
   });
 
-  it("⭐ 出貨預設與 Zod 預設同意「這條路今天是關著的」", () => {
+  it("⭐ 出貨檔與 Zod 預設**同一個答案** —— ⛔ 不是「必須關著」", () => {
     // ⚠️ 這不是在測「數字是多少」（第二守則：守衛驗機制不驗數字）——
     // ⭐ 它測的是**兩份預設沒有打架**：一份說關、另一份說開的話，
-    //   「內容讀不到時退回預設」那條路會**靜靜地把 UGC 打開**。
-    expect(DEFAULT_UGC.enabled, "⛔ Zod 出貨預設把 UGC 開著 —— fail-open 的方向反了").toBe(false);
+    //   「內容讀不到時退回預設」那條路會**靜靜地翻轉 UGC**。
+    //
+    // ⛔⛔ **在此之前第一行是 `toBe(false)`** —— ⭐ 而那把「今天的值」寫死進了守衛。
+    //   owner 2026-09-09 逐字裁決「**開**，我們總共新增兩批 37+37=74 個新英雄喔」
+    //   ⇒ 那一行會用「fail-open 的方向反了」擋住一個**他親口下的決定**。
+    //   ⚠️ 而它擋的理由是假的：⭐ 上面那一條（路由真的存在嗎）才是安全閘，
+    //     ⛔ 這一條的職責只有「兩份不要打架」。
+    // ⇒ 拿掉寫死的 `false`，只守**關係**。
     expect(
       (shippedUgc() as { enabled: unknown }).enabled,
-      "⛔ 出貨檔與 Zod 預設對「開不開」的答案不一樣",
+      "⛔ 出貨檔與 Zod 預設對「開不開」的答案不一樣 —— 內容讀不到時會靜靜地翻轉",
     ).toBe(DEFAULT_UGC.enabled);
   });
 });

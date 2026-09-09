@@ -35,7 +35,11 @@
     "open": true,
     "priceMultiplier": 3,
     "sellRefundPct": 0.4,
-    "randomOnlyTables": ["ex-release-weapons", "ex-origin-weapons"]
+    "randomOnlyTables": [
+      "ex-release-weapons",
+      "ex-origin-weapons"
+    ],
+    "swapWhenFull": false
   },
   "weaponShelfOpen": false,
   "vision": {
