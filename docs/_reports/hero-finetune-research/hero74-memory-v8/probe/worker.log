@@ -1,0 +1,33 @@
+Traceback (most recent call last):
+  File "/private/tmp/ggd-hero-finetune-research-delivery/tools/editor-acceptance/hero-distillation-train.py", line 445, in <module>
+    worker(args.run.resolve(), args.phase, args.token)
+  File "/private/tmp/ggd-hero-finetune-research-delivery/tools/editor-acceptance/hero-distillation-train.py", line 282, in worker
+    loss, grads = gradient_fn(model, row, False, prefix)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/ggd-qwen38-eval-20260907-venv/lib/python3.11/site-packages/mlx/nn/utils.py", line 35, in wrapped_value_grad_fn
+    value, grad = value_grad_fn(model.trainable_parameters(), *args, **kwargs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/ggd-qwen38-eval-20260907-venv/lib/python3.11/site-packages/mlx/nn/utils.py", line 29, in inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/ggd-hero-finetune-research-delivery/tools/editor-acceptance/hero-distillation-train.py", line 234, in loss_fn
+    hidden = memory.tail_hidden(mx, net, prefix, tail_layers=p['numLayers'],
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/ggd-hero-finetune-research-delivery/tools/editor-acceptance/hero-distillation-memory.py", line 56, in tail_hidden
+    hidden, _, _ = layer(hidden, mask, None, per_layer_input=None, shared_kv=None, offset=None)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/ggd-qwen38-eval-20260907-venv/lib/python3.11/site-packages/mlx_vlm/models/gemma4/language.py", line 320, in __call__
+    h, shared_kv, offset = self.self_attn(
+                           ^^^^^^^^^^^^^^^
+  File "/private/tmp/ggd-qwen38-eval-20260907-venv/lib/python3.11/site-packages/mlx_vlm/models/gemma4/language.py", line 239, in __call__
+    output = scaled_dot_product_attention(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/ggd-hero-finetune-research-delivery/tools/editor-acceptance/hero-distillation-memory.py", line 189, in attention
+    return functions[key](q, k, v).astype(dtype)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/ggd-hero-finetune-research-delivery/tools/editor-acceptance/hero-distillation-memory.py", line 92, in attention
+    if observer: observer('attention-forward-block', begin=begin, end=end)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/ggd-hero-finetune-research-delivery/tools/editor-acceptance/hero-distillation-train.py", line 224, in memory_audit
+    assert not over, 'ACTIVE_METAL_LIMIT'
+AssertionError: ACTIVE_METAL_LIMIT

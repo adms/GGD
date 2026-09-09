@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/private/tmp/ggd-hero-finetune-research-delivery/tools/editor-acceptance/hero-distillation-train.py", line 452, in <module>
+    worker(args.run.resolve(), args.phase, args.token)
+  File "/private/tmp/ggd-hero-finetune-research-delivery/tools/editor-acceptance/hero-distillation-train.py", line 289, in worker
+    loss, grads = gradient_fn(model, row, False, prefix)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/ggd-hero-finetune-research-delivery/tools/editor-acceptance/hero-distillation-train.py", line 255, in gradient_fn
+    return memory.tail_value_and_grad(mx,nn,net,prefix,targets,tail_layers=p['numLayers'],
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/ggd-hero-finetune-research-delivery/tools/editor-acceptance/hero-distillation-memory.py", line 100, in tail_value_and_grad
+    outputs,values=mx.vjp(forward,[checkpoints[index-split],*original],[gradient])
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/ggd-hero-finetune-research-delivery/tools/editor-acceptance/hero-distillation-memory.py", line 215, in attention_vjp
+    if observer: observer('attention-backward-block', begin=begin, end=end)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/ggd-hero-finetune-research-delivery/tools/editor-acceptance/hero-distillation-train.py", line 226, in memory_audit
+    assert not over, 'ACTIVE_METAL_LIMIT'
+AssertionError: ACTIVE_METAL_LIMIT
