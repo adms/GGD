@@ -508,6 +508,9 @@
       "segmentCount": [
         "多段"
       ],
+      "selfBuff": [
+        "持續"
+      ],
       "serpentineDeg": [
         "路徑"
       ],
@@ -607,6 +610,7 @@
       "blastRadiusTier": "級距名",
       "body": "召喚體的**外觀來源**（self／target／某個模型）—— 決定長什麼樣，⛔ 不決定時序／範圍／多段／路徑",
       "bonusDamage": "純數值",
+      "castType": "施法方式（targeted／ground／self）—— ⭐ 它決定**怎麼指定目標**，⛔ 不決定形狀（時序／範圍／多段／路徑一格都不動）。⭐ 同 `templateParams.axes` 裡的 `target: []`／`to: []`。⭐ 可反駁：哪天出現「ground 施放才會多一段」這種機制，它就變成一條軸。",
       "casterGuard": "施法者保護開關",
       "championId": "召喚出來的是**哪一位**（識別碼）—— 形狀住在被召喚者自己的文件裡，⛔ 不在這一格",
       "chance": "機率",
@@ -616,6 +620,7 @@
       "damageMult": "純數值（召喚體打多痛）",
       "damageTier": "級距名",
       "damageType": "傷害型別",
+      "effects": "⭐ **容器**：這是 `tpl-effect-sequence`（no-code 積木，PR 1118）的效果序列本身 —— ⭐ 軸來自它**裡面每一顆效果**（掃描器會逐顆走進去），⛔ 這一格自己沒有軸。⚠️ 給它一條軸等於把整支技能的形狀壓成一格。",
       "event": "觸發事件名",
       "finisherFlashAlpha": "透明度",
       "finisherRadius": "幾何",
@@ -626,9 +631,11 @@
       "hitTextRiseSpeed": "文字自己的動畫",
       "hitTextSizeGrowth": "文字自己的動畫",
       "hitTextSizeScale": "字級",
+      "hooks": "⭐ **容器**：`tpl-event-passive`（同上）的觸發器清單 —— 軸來自每一顆 hook 的 `on`（`hookOn` 那張表在管）與它的 `effects`，⛔ 這一格自己沒有軸。",
       "hpMult": "純數值（召喚體多耐打）",
       "impactDamage": "純數值",
       "impactRadius": "幾何",
+      "includeOrigin": "⭐ 是非 —— 「原點那一格算不算在範圍內」。⛔ 它不排任何時序,也不改形狀的**輪廓**,只改判定要不要含起點。",
       "initial": "起始值",
       "internalCooldown": "冷卻 —— 是**下一次**能不能觸發，⛔ 不是這一次的時序",
       "invulnerableScope": "無敵範圍列舉（期間住在 invulnerableSec）",
@@ -662,6 +669,7 @@
       "scatterRadius": "幾何",
       "segmentAoe": "幾何",
       "shakeAmplitude": "震幅",
+      "side": "作用陣營（敵／我）—— 同上，是**打誰**，⛔ 不是**怎麼打**。",
       "soundKey": "音效**綁定** —— owner ④ 的範圍（特效音效綁定），⛔ 不是⑨的時序軸:一個聲音鍵沒有壽命、沒有間隔、也不移動",
       "spread": "陣型的**間距** —— 同 `formation`，只把同一批召喚體擺開，⛔ 不改任何判定",
       "statusId": "狀態識別碼",
@@ -670,11 +678,7 @@
       "surviveHpPct": "比例",
       "touchDamageTier": "級距名",
       "trigger": "觸發事件名",
-      "victim": "篩選鍵 —— 受害者過濾，⛔ 不是形狀",
-      "castType": "施法方式（targeted／ground／self）—— ⭐ 它決定**怎麼指定目標**，⛔ 不決定形狀（時序／範圍／多段／路徑一格都不動）。⭐ 同 `templateParams.axes` 裡的 `target: []`／`to: []`。⭐ 可反駁：哪天出現「ground 施放才會多一段」這種機制，它就變成一條軸。",
-      "side": "作用陣營（敵／我）—— 同上，是**打誰**，⛔ 不是**怎麼打**。",
-      "effects": "⭐ **容器**：這是 `tpl-effect-sequence`（no-code 積木，PR 1118）的效果序列本身 —— ⭐ 軸來自它**裡面每一顆效果**（掃描器會逐顆走進去），⛔ 這一格自己沒有軸。⚠️ 給它一條軸等於把整支技能的形狀壓成一格。",
-      "hooks": "⭐ **容器**：`tpl-event-passive`（同上）的觸發器清單 —— 軸來自每一顆 hook 的 `on`（`hookOn` 那張表在管）與它的 `effects`，⛔ 這一格自己沒有軸。"
+      "victim": "篩選鍵 —— 受害者過濾，⛔ 不是形狀"
     }
   },
   "_passiveWhy": "被動的 `ranks[]` 裡有兩族東西自帶軸：`auras` 是一個常駐的圈（持續），`hooks` **這個容器本身**⛔ 不帶軸 —— 軸住在**每一個 hook 的 `on`**（見 `hookOn`）。⚠️ 這一格在 2026-08-27 之前寫的是「`hooks` ⛔ 不是（它是**事件**不是時序 —— 一個 on-hit 觸發沒有期間也沒有重複）」，而那句話**對 10 個 `on` 成立、對第 11 個是假的**：`onInterval` 逐字就是「每隔 T 秒一次」。⇒ 把整族判成無軸 = 用一句對多數成立的散文蓋掉少數的真相（GH#648，量到 3 支誤報）。",

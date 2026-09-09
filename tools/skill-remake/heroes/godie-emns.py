@@ -77,7 +77,7 @@ A("44-03", "44-03 火車輾過", "targeted", [60, 50, 40, 30], [150, 250, 350, 4
                 condition={"kind": "status", "subject": "target", "statusId": "curse"})],
   # ⭐ GH#1146 —— 綁 `tpl-area-strike`。⚠️ params 由 `templatize.py::m_area_strike()`
   #   從出貨文件算出來,⛔ 不是手打;等價由 `templatizeEquivalence.test.ts` 逐位元判。
-  template={'ref': 'tpl-area-strike', 'params': {'castType': 'targeted', 'damageType': 'magic', 'damage': {'damageTierPerRank': ['小', '中', '中', '中'], 'ratios': [{'stat': 'ap', 'coeff': 0.6}]}, 'radius': 6.0, 'radiusTier': '中', 'condition': {'kind': 'status', 'subject': 'target', 'statusId': 'curse'}, 'castTimeSec': 0.833}},
+  template={'ref': 'tpl-area-strike', 'params': {'castType': 'targeted', 'damageType': 'magic', 'damage': {'damageTierPerRank': ['小', '中', '中', '中'], 'ratios': [{'stat': 'ap', 'coeff': 0.6}]}, 'radius': 6.0, 'radiusTier': '中', 'includeOrigin': True, 'condition': {'kind': 'status', 'subject': 'target', 'statusId': 'curse'}, 'castTimeSec': 0.833}},
   )
 
 A("44-04", "44-04 心臟麻痺", "targeted", [35, 35, 35], [150, 250, 350], 12,

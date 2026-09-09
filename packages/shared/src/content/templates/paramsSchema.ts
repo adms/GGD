@@ -96,6 +96,13 @@ function slotSchema(slot: ParamSlot): z.ZodTypeAny {
       //    彼此的成對 refine 也住在 `zEffectDef` 上 —— 表單收得下的節點,
       //    展開之後仍然要過 `zAbilityDoc` 那一關。
       return zSpawnModelFx.omit({ kind: true });
+    case "boolean":
+      // ⭐ GH#1146 —— 是非。⚠️ 「不填」由 slot 的 `optional` 表達,⛔ 不是第三個值。
+      return z.boolean();
+    case "applyBuff":
+      // ⭐ GH#1146 —— 整個 applyBuff 節點。⚠️ 與 `buffPerRank` 是**包含關係**,⛔ 不是二選一：
+      //    那一格只是這個節點的 `perRank` 那一欄。
+      return zApplyBuff.omit({ kind: true });
     case "buffPerRank":
       // ⭐ GH#993 —— 逐階欄位表。讀的是 `zApplyBuff` **本人**那一格（`.unwrap()` 掉 optional：
       //    「這一支要不要逐階」由 slot 的 `optional` 決定，⛔ 不是由 schema 再選填一次）。

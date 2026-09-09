@@ -134,6 +134,7 @@
           },
           "radius": 6.0,
           "radiusTier": "中",
+          "includeOrigin": true,
           "onHitTargets": [
             {
               "kind": "applyStatus",
@@ -249,6 +250,7 @@
           },
           "radius": 6.0,
           "radiusTier": "中",
+          "includeOrigin": true,
           "onHitTargets": [
             {
               "kind": "applyBuff",

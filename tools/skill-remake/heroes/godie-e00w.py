@@ -38,7 +38,7 @@ A("77-01", "77-01 百烈櫻華斬", "self", [40, 40, 40, 40], [75, 110, 145, 180
   # ⭐ GH#1146 —— 綁 `tpl-area-strike`（含**第二個頂層節點**的視覺槽）。
   #   ⚠️ params 由 `templatize.py::m_area_strike()` 從出貨文件算出來,⛔ 不是手打;
   #   等價由 `templatizeEquivalence.test.ts` 逐位元判。
-  template={'ref': 'tpl-area-strike', 'params': {'castType': 'self', 'damageType': 'physical', 'damage': {'damageTierPerRank': ['極小', '極小', '小', '小'], 'ratios': [{'stat': 'ad', 'coeff': 0.5}]}, 'radius': 6.0, 'radiusTier': '中', 'onHitTargets': [{'kind': 'knockback', 'distance': 3.0, 'speed': 15.0, 'from': 'caster'}], 'modelFx': {'shape': 'single', 'preset': 'tpl-locust-orb', 'modelKey': 'imported.earthtornado2', 'soundKey': 'wc3.blademasterwhirlwind'}, 'castTimeSec': 0.667}})
+  template={'ref': 'tpl-area-strike', 'params': {'castType': 'self', 'damageType': 'physical', 'damage': {'damageTierPerRank': ['極小', '極小', '小', '小'], 'ratios': [{'stat': 'ad', 'coeff': 0.5}]}, 'radius': 6.0, 'radiusTier': '中', 'includeOrigin': True, 'onHitTargets': [{'kind': 'knockback', 'distance': 3.0, 'speed': 15.0, 'from': 'caster'}], 'modelFx': {'shape': 'single', 'preset': 'tpl-locust-orb', 'modelKey': 'imported.earthtornado2', 'soundKey': 'wc3.blademasterwhirlwind'}, 'castTimeSec': 0.667}})
 
 A("77-02", "77-02 雷鳴劍", "self", [0], [0], 0,
   "[被動][普攻時][機率][暴擊][範圍][AP加成]\n\n「雷鳴。會心」\n[攻擊時]有10%的[機率]可以使出[會心一擊]造成1.5倍的[暴擊]傷害，並且附加落雷，造成[範圍內]敵方{{ap}}% [AP]傷害。",
@@ -77,7 +77,7 @@ A("77-04", "77-04 真-雷光劍", "ground", [70, 70, 70], [150, 225, 300], 11,
   # ⭐ GH#1146 —— 綁 `tpl-area-strike`（含**第二個頂層節點**的視覺槽）。
   #   ⚠️ params 由 `templatize.py::m_area_strike()` 從出貨文件算出來,⛔ 不是手打;
   #   等價由 `templatizeEquivalence.test.ts` 逐位元判。
-  template={'ref': 'tpl-area-strike', 'params': {'castType': 'ground', 'damageType': 'physical', 'damage': {'damageTierPerRank': ['小', '中', '中'], 'ratios': [{'stat': 'ad', 'coeff': 0.6}]}, 'radius': 3.0, 'radiusTier': '極小', 'modelFx': {'shape': 'single', 'preset': 'tpl-locust-strike', 'modelKey': 'w3x.stock.monsoonbolttarget'}, 'castTimeSec': 2}})
+  template={'ref': 'tpl-area-strike', 'params': {'castType': 'ground', 'damageType': 'physical', 'damage': {'damageTierPerRank': ['小', '中', '中'], 'ratios': [{'stat': 'ad', 'coeff': 0.6}]}, 'radius': 3.0, 'radiusTier': '極小', 'includeOrigin': True, 'modelFx': {'shape': 'single', 'preset': 'tpl-locust-strike', 'modelKey': 'w3x.stock.monsoonbolttarget'}, 'castTimeSec': 2}})
 
 A("77-002", "77-002 御雷劍", "self", [0], [0], 0,
   "[被動][機率]\n\n「御雷劍。飛行」\n使用從者道具「御雷劍」的剎那，其雷鳴劍發動[機率]上升至50%，[GLADIARIA ALAT] 持續時間增加至30秒。",

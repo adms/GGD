@@ -66,6 +66,7 @@
       },
       "radius": 4.5,
       "radiusTier": "小",
+      "includeOrigin": true,
       "castTimeSec": 0.667
     }
   },

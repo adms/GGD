@@ -50,7 +50,7 @@ A("45-01", "45-01 火遁-豪火龍之術", "ground", [45, 45, 45, 45], [150, 190
             "intervalSec": 1.0, "durationSec": 3.0, "stacking": "refresh"}],
   # ⭐ GH#1146 —— 綁 `tpl-area-strike`。⚠️ params 由 `templatize.py::m_area_strike()`
   #   從出貨文件算出來,⛔ 不是手打;等價由 `templatizeEquivalence.test.ts` 逐位元判。
-  template={'ref': 'tpl-area-strike', 'params': {'castType': 'ground', 'damageType': 'magic', 'damage': {'damageTierPerRank': ['極小', '極小', '小', '小']}, 'radius': 6.0, 'radiusTier': '中', 'onHitTargets': [{'kind': 'applyStatus', 'statusId': 'burn', 'duration': 3.0}, {'kind': 'dot', 'damageType': 'magic', 'amountPerTick': {'flat': 1.0}, 'resourcePct': {'subject': 'target', 'resource': 'health', 'basis': 'current', 'scale': 'ratio', 'perRank': [0.01]}, 'resourcePctPhase': 'onTick', 'intervalSec': 1.0, 'durationSec': 3.0, 'stacking': 'refresh'}], 'castTimeSec': 1.033}},
+  template={'ref': 'tpl-area-strike', 'params': {'castType': 'ground', 'damageType': 'magic', 'damage': {'damageTierPerRank': ['極小', '極小', '小', '小']}, 'radius': 6.0, 'radiusTier': '中', 'includeOrigin': True, 'onHitTargets': [{'kind': 'applyStatus', 'statusId': 'burn', 'duration': 3.0}, {'kind': 'dot', 'damageType': 'magic', 'amountPerTick': {'flat': 1.0}, 'resourcePct': {'subject': 'target', 'resource': 'health', 'basis': 'current', 'scale': 'ratio', 'perRank': [0.01]}, 'resourcePctPhase': 'onTick', 'intervalSec': 1.0, 'durationSec': 3.0, 'stacking': 'refresh'}], 'castTimeSec': 1.033}},
   )
 
 A("45-02", "45-02 千鳥流", "self", [45, 45, 45, 45], [70, 120, 170, 220], 0,
@@ -66,7 +66,7 @@ A("45-02", "45-02 千鳥流", "self", [45, 45, 45, 45], [70, 120, 170, 220], 0,
            status("slow50", 3.0, moveSpeedMult=0.5)],
   # ⭐ GH#1146 —— 綁 `tpl-area-strike`。⚠️ params 由 `templatize.py::m_area_strike()`
   #   從出貨文件算出來,⛔ 不是手打;等價由 `templatizeEquivalence.test.ts` 逐位元判。
-  template={'ref': 'tpl-area-strike', 'params': {'castType': 'self', 'damageType': 'magic', 'damage': {'damageTier': '極小', 'ratios': [{'stat': 'ap', 'coeff': 0.2}]}, 'radius': 6.0, 'radiusTier': '中', 'onHitTargets': [{'kind': 'applyBuff', 'modifiers': [{'stat': 'as', 'op': 'pctAdd', 'value': -0.5}], 'duration': 3.0, 'dispellable': True, 'polarity': 'debuff'}, {'kind': 'applyStatus', 'statusId': 'slow50', 'duration': 3.0, 'moveSpeedMult': 0.5}], 'castTimeSec': 0.833}},
+  template={'ref': 'tpl-area-strike', 'params': {'castType': 'self', 'damageType': 'magic', 'damage': {'damageTier': '極小', 'ratios': [{'stat': 'ap', 'coeff': 0.2}]}, 'radius': 6.0, 'radiusTier': '中', 'includeOrigin': True, 'onHitTargets': [{'kind': 'applyBuff', 'modifiers': [{'stat': 'as', 'op': 'pctAdd', 'value': -0.5}], 'duration': 3.0, 'dispellable': True, 'polarity': 'debuff'}, {'kind': 'applyStatus', 'statusId': 'slow50', 'duration': 3.0, 'moveSpeedMult': 0.5}], 'castTimeSec': 0.833}},
   )
 
 A("45-03", "45-03 千鳥", "ground", [45, 45, 45, 45], [120, 185, 250, 315], 12.83,
@@ -174,4 +174,4 @@ A("45-002", "45-002 天照", "self", [120], [650], 0,
   # ⭐ GH#1146 —— 綁 `tpl-area-strike`（含**第二個頂層節點**的視覺槽）。
   #   ⚠️ params 由 `templatize.py::m_area_strike()` 從出貨文件算出來,⛔ 不是手打;
   #   等價由 `templatizeEquivalence.test.ts` 逐位元判。
-  template={'ref': 'tpl-area-strike', 'params': {'castType': 'self', 'damageType': 'magic', 'damage': {'flat': 1.0}, 'radius': 6.0, 'radiusTier': '中', 'onHitTargets': [{'kind': 'applyBuff', 'modifiers': [{'stat': 'ad', 'op': 'pctAdd', 'value': -0.4}], 'duration': 10.0, 'dispellable': True, 'polarity': 'debuff'}, {'kind': 'applyStatus', 'statusId': 'burn', 'duration': 10.0}, {'kind': 'applyStatus', 'statusId': 'paralysis', 'duration': 10.0, 'silenced': True}, {'kind': 'dot', 'damageType': 'magic', 'amountPerTick': {'flat': 400.0}, 'intervalSec': 1.0, 'durationSec': 10.0, 'stacking': 'refresh'}], 'modelFx': {'shape': 'single', 'preset': 'tpl-locust-orb', 'modelKey': 'imported.netherstrike', 'clip': 'idle', 'soundKey': 'wc3.flamestrikebirth1', 'scale': 4.0, 'lifeSec': 2.0}, 'castTimeSec': 1.633}})
+  template={'ref': 'tpl-area-strike', 'params': {'castType': 'self', 'damageType': 'magic', 'damage': {'flat': 1.0}, 'radius': 6.0, 'radiusTier': '中', 'includeOrigin': True, 'onHitTargets': [{'kind': 'applyBuff', 'modifiers': [{'stat': 'ad', 'op': 'pctAdd', 'value': -0.4}], 'duration': 10.0, 'dispellable': True, 'polarity': 'debuff'}, {'kind': 'applyStatus', 'statusId': 'burn', 'duration': 10.0}, {'kind': 'applyStatus', 'statusId': 'paralysis', 'duration': 10.0, 'silenced': True}, {'kind': 'dot', 'damageType': 'magic', 'amountPerTick': {'flat': 400.0}, 'intervalSec': 1.0, 'durationSec': 10.0, 'stacking': 'refresh'}], 'modelFx': {'shape': 'single', 'preset': 'tpl-locust-orb', 'modelKey': 'imported.netherstrike', 'clip': 'idle', 'soundKey': 'wc3.flamestrikebirth1', 'scale': 4.0, 'lifeSec': 2.0}, 'castTimeSec': 1.633}})

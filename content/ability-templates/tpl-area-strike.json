@@ -46,6 +46,11 @@
       "default": "中",
       "origin": "census: 同一批 10 支 —— 中 5 · 小 4 · 極小 1。⚠️ ⭐ 真正說話的是這一格：`resolveRadiusTier` 在載入時把 `radius` 蓋掉（AoE 級距表）。"
     },
+    "includeOrigin": {
+      "type": "boolean",
+      "optional": true,
+      "origin": "census: 全樹 damageArea 的 includeOrigin 是 **20 true / 5 不存在**（⛔ 0 個 false）。⛔ 刻意無預設：`zDamageArea.includeOrigin` 是 `z.boolean().optional()` ⇒ **不存在 ≠ false**,一個預設值會把那 5 支的原點傷害無中生有。"
+    },
     "radius": {
       "type": "number",
       "default": 4.5,
@@ -81,6 +86,11 @@
       "type": "spawnModelFx",
       "optional": true,
       "origin": "census: 同一批裡 `spawnModelFx` 出現 **7** 次（最多的視覺）。⛔ 同上,無預設。"
+    },
+    "selfBuff": {
+      "type": "applyBuff",
+      "optional": true,
+      "origin": "census: 出貨 damageArea 單發技能裡,第二個頂層節點是 `applyBuff` 的有 **3 支**（`godie-e001.passive`／`godie-e00n.passive`／`godie-h02u.r`）,而三支的節點逐位元相同（`as pctAdd 4.0` / 4 秒）。⛔ 刻意無預設：一格看不見的增益比沒有增益更糟（第一·五守則）。"
     }
   },
   "requires": [],

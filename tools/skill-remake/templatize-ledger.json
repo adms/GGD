@@ -71,6 +71,108 @@
         "range"
       ]
     },
+    "godie-e001.passive": {
+      "ref": "tpl-area-strike",
+      "params": {
+        "castType": "self",
+        "damageType": "physical",
+        "damage": {
+          "damageTier": "小",
+          "ratios": [
+            {
+              "stat": "ad",
+              "coeff": 0.5
+            }
+          ]
+        },
+        "radius": 6.0,
+        "radiusTier": "中",
+        "onHitTargets": [
+          {
+            "kind": "applyStatus",
+            "statusId": "burnstun",
+            "duration": 0.1,
+            "stun": true
+          }
+        ],
+        "selfBuff": {
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 4.0
+            }
+          ],
+          "duration": 4.0
+        },
+        "castTimeSec": 0.833
+      },
+      "before": {
+        "castType": "self",
+        "effects": [
+          {
+            "kind": "damageArea",
+            "damageType": "physical",
+            "amount": {
+              "damageTier": "小",
+              "ratios": [
+                {
+                  "stat": "ad",
+                  "coeff": 0.5
+                }
+              ]
+            },
+            "radius": 6.0,
+            "radiusTier": "中",
+            "onHitTargets": [
+              {
+                "kind": "applyStatus",
+                "statusId": "burnstun",
+                "duration": 0.1,
+                "stun": true
+              }
+            ]
+          },
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "as",
+                "op": "pctAdd",
+                "value": 4.0
+              }
+            ],
+            "duration": 4.0
+          }
+        ],
+        "range": 0.0,
+        "castTimeSec": 0.833,
+        "targetsEnemies": true,
+        "innateKind": "active"
+      },
+      "order": [
+        "id",
+        "schema",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "innateKind",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "manaCostTier",
+        "range",
+        "targetsEnemies",
+        "effects",
+        "vfxKey",
+        "castTimeSec",
+        "radiusTier"
+      ]
+    },
     "godie-e001.q": {
       "ref": "tpl-buff-self",
       "params": {
@@ -647,6 +749,108 @@
         "vfxKey",
         "schema",
         "castTimeSec"
+      ]
+    },
+    "godie-e00n.passive": {
+      "ref": "tpl-area-strike",
+      "params": {
+        "castType": "self",
+        "damageType": "physical",
+        "damage": {
+          "damageTier": "小",
+          "ratios": [
+            {
+              "stat": "ad",
+              "coeff": 0.5
+            }
+          ]
+        },
+        "radius": 6.0,
+        "radiusTier": "中",
+        "onHitTargets": [
+          {
+            "kind": "applyStatus",
+            "statusId": "burnstun",
+            "duration": 0.1,
+            "stun": true
+          }
+        ],
+        "selfBuff": {
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 4.0
+            }
+          ],
+          "duration": 4.0
+        },
+        "castTimeSec": 0.833
+      },
+      "before": {
+        "castType": "self",
+        "effects": [
+          {
+            "kind": "damageArea",
+            "damageType": "physical",
+            "amount": {
+              "damageTier": "小",
+              "ratios": [
+                {
+                  "stat": "ad",
+                  "coeff": 0.5
+                }
+              ]
+            },
+            "radius": 6.0,
+            "radiusTier": "中",
+            "onHitTargets": [
+              {
+                "kind": "applyStatus",
+                "statusId": "burnstun",
+                "duration": 0.1,
+                "stun": true
+              }
+            ]
+          },
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "as",
+                "op": "pctAdd",
+                "value": 4.0
+              }
+            ],
+            "duration": 4.0
+          }
+        ],
+        "range": 0.0,
+        "castTimeSec": 0.833,
+        "targetsEnemies": true,
+        "innateKind": "active"
+      },
+      "order": [
+        "id",
+        "schema",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "innateKind",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "manaCostTier",
+        "range",
+        "targetsEnemies",
+        "effects",
+        "vfxKey",
+        "castTimeSec",
+        "radiusTier"
       ]
     },
     "godie-e00n.q": {

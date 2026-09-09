@@ -66,11 +66,7 @@ A("13-03", "13-03 龍頭戲畫。布陣", "self", [60, 60, 60, 60], [120, 180, 2
   #   ⭐ 而 `effects=` **保留不動**：`mergeExpansion()` 會用模板的展開結果蓋掉它,
   #   ⇒ 兩者相不相同由 `templatizeEquivalence.test.ts` **逐位元**判 ——
   #   ⛔ 不同就會紅,而那正是「這一支不該綁這份模板」的訊號。
-  template={"ref": "tpl-area-strike", "params": {
-      "castType": "self", "damageType": "magic",
-      "damage": {"damageTierPerRank": ["極小", "極小", "小", "小"],
-                 "ratios": [{"stat": "ap", "coeff": 0.6}]},
-      "radius": 4.5, "radiusTier": "小", "castTimeSec": 0.667}},
+  template={'ref': 'tpl-area-strike', 'params': {'castType': 'self', 'damageType': 'magic', 'damage': {'damageTierPerRank': ['極小', '極小', '小', '小'], 'ratios': [{'stat': 'ap', 'coeff': 0.6}]}, 'radius': 4.5, 'radiusTier': '小', 'includeOrigin': True, 'castTimeSec': 0.667}},
   effects=[area("magic", tier="小", per=[150, 250, 350, 450], ap=0.6)])
 
 # ⭐ GH#405 —— castType `ground` → `self`（第〇·六守則細則①：**內文 > 標籤**）。

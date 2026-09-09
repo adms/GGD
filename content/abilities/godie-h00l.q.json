@@ -74,6 +74,7 @@
       },
       "radius": 4.5,
       "radiusTier": "小",
+      "includeOrigin": true,
       "onHitTargets": [
         {
           "kind": "knockback",

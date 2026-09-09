@@ -470,6 +470,15 @@ function str(t: TemplateDoc, params: Record<string, unknown>, name: string): str
  * 用的是 `zId` 本人 —— 和編輯器表單那一側（`paramsSchema.ts` 的 `docRef` 分支）
  * 同一個 schema，這樣「表單收得下的」與「展開收得下的」不可能分岔。
  */
+/** ⭐ GH#1146 —— 是非槽的讀取器（`zParamType` 的 `boolean`）。 */
+function bool(t: TemplateDoc, params: Record<string, unknown>, name: string): boolean {
+  const v = raw(t, params, name);
+  if (typeof v !== "boolean") {
+    throw new ExpandError(`template ${t.id}: param "${name}" must be a boolean`);
+  }
+  return v;
+}
+
 function docRef(t: TemplateDoc, params: Record<string, unknown>, name: string): string {
   const v = str(t, params, name);
   const parsed = zId.safeParse(v);
@@ -1211,8 +1220,11 @@ const FAMILIES: Readonly<Record<string, Family>> = {
         amount: scaling(t, p, "damage"),
         radius: num(t, p, "radius"),
         radiusTier: str(t, p, "radiusTier"),
-        // ⭐ 10/10 都是 true —— 常數，⛔ 不是參數。
-        includeOrigin: true,
+        // ⭐⭐ GH#1146 —— ⛔ 這裡曾經寫著「10/10 都是 true —— 常數，⛔ 不是參數」,
+        //   ⚠️ 而全樹量到的是 **20 true / 5 不存在** ⇒ 那句話是一句活過保存期限的散文
+        //   （第三守則）,而它擋住 5 支技能。⭐ 三態:填 true / 填 false / **不填**
+        //   （`zDamageArea.includeOrigin` 是 `z.boolean().optional()`,不存在 ≠ false）。
+        ...(has(t, p, "includeOrigin") ? { includeOrigin: bool(t, p, "includeOrigin") } : {}),
         ...(has(t, p, "condition") ? { condition: raw(t, p, "condition") } : {}),
         // ⭐ 追加效果住這裡（見上面那段）。⛔ 不是第二個頂層節點。
         ...(has(t, p, "onHitTargets") ? { onHitTargets: raw(t, p, "onHitTargets") } : {}),
@@ -1223,6 +1235,10 @@ const FAMILIES: Readonly<Record<string, Family>> = {
       //   （`[damageArea, spawnModelFx]` / `[damageArea, spawnVfx]`）。
       //   ⭐ 兩格分開（⛔ 不是一格二選一）：`spawnVfx` 是粒子腳本、`spawnModelFx` 是模型，
       //   參數集合完全不同，硬併會變成一個後台畫不出來的欄位。
+      // ⭐ GH#1146 —— 施法者身上的增益（出貨 3 支：AoE 傷害 ＋ 自己加速）。
+      //   ⚠️ 它排在視覺**前面** —— 出貨那 3 支的節點次序就是 `[damageArea, applyBuff]`,
+      //   ⭐ 而次序是逐位元等價的一部分（`templatizeEquivalence` 會指名它）。
+      ...(has(t, p, "selfBuff") ? [effectNode(t, p, "selfBuff", "applyBuff", zApplyBuff)] : []),
       ...(has(t, p, "vfx") ? [effectNode(t, p, "vfx", "spawnVfx", zSpawnVfx)] : []),
       ...(has(t, p, "modelFx") ? [effectNode(t, p, "modelFx", "spawnModelFx", zSpawnModelFx)] : []),
     ],

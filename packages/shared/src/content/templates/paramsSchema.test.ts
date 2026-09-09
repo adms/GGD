@@ -143,6 +143,16 @@ function probesFor(slot: ParamSlot, current: unknown): unknown[] {
         { shape: "single", preset: "tpl-locust-orb", modelKey: "probe.model.one", clip: "idle", scale: 2, lifeSec: 1 },
         { shape: "single", preset: "tpl-locust-strike", modelKey: "probe.model.two", clip: "birth", scale: 5, lifeSec: 3 },
       ].filter(differs);
+    case "boolean":
+      // ⭐ GH#1146 —— 是非只有一個「別的值」。
+      return [current !== true].filter(differs);
+    case "applyBuff":
+      // ⭐ GH#1146 —— 整個 applyBuff 節點。⚠️ 兩個候選的 **modifier 與秒數都不同**,
+      //    ⛔ 不是只差 duration（只動秒數的探針對「展開器把 modifiers 掉了」是瞎的）。
+      return [
+        { modifiers: [{ stat: "as", op: "pctAdd", value: 1 }], duration: 2 },
+        { modifiers: [{ stat: "armor", op: "flat", value: 7 }], duration: 9 },
+      ].filter(differs);
     case "buffPerRank":
       // ⭐ GH#993 —— 逐階欄位表。⚠️ 兩個候選的**階數與 modifier 都不同**，⛔ 不是只有秒數不同
       //    （只動 duration 的探針對「展開器把 modifiers 那一欄掉了」是瞎的）。

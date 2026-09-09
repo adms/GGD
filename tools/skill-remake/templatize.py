@@ -1116,9 +1116,9 @@ def m_area_strike(tpl: dict, doc: dict):
         if not isinstance(node, dict):
             return None, "effects 裡有非物件的節點"
         kind = node.get("kind")
-        slot = {"spawnVfx": "vfx", "spawnModelFx": "modelFx"}.get(kind)
+        slot = {"spawnVfx": "vfx", "spawnModelFx": "modelFx", "applyBuff": "selfBuff"}.get(kind)
         if slot is None:
-            return None, f"第二個節點是「{kind}」,⛔ 這一族只收 spawnVfx／spawnModelFx"
+            return None, f"第二個節點是「{kind}」,⛔ 這一族只收 spawnVfx／spawnModelFx／applyBuff"
         if slot in visuals:
             return None, f"同一種視覺節點（{kind}）出現兩次"
         visuals[slot] = {k: v for k, v in node.items() if k != "kind"}
@@ -1127,10 +1127,10 @@ def m_area_strike(tpl: dict, doc: dict):
         return None, f"castType「{ct}」不在這一族的三個值裡"
     if not slot_ok(tpl, "castType", ct):
         return None, f"castType「{ct}」不在模板的 values 裡"
-    # ⭐ 這一族**必定**發 includeOrigin: true（出貨 10/10）——
-    #   文件不同就不轉（⛔ 差一格就不轉,不放寬）。
-    if da.get("includeOrigin") is not True:
-        return None, f"includeOrigin 是 {json.dumps(da.get('includeOrigin'))}，⛔ 這一族發 true"
+    # ⭐ GH#1146 —— `includeOrigin` 是**三態參數**,⛔ 不是常數：
+    #   全樹量到 20 true / 5 不存在（⛔ 0 個 false）,而「不存在 ≠ false」。
+    if da.get("includeOrigin") not in (True, False, None):
+        return None, f"includeOrigin 是 {json.dumps(da.get('includeOrigin'))}，⛔ 只收 true/false/不填"
     for k in ("damageType", "amount", "radius", "radiusTier"):
         if k not in da:
             return None, f"damageArea 少了必填的 {k}"
@@ -1155,6 +1155,8 @@ def m_area_strike(tpl: dict, doc: dict):
         "radius": da["radius"],
         "radiusTier": da["radiusTier"],
     }
+    if da.get("includeOrigin") is not None:
+        params["includeOrigin"] = da["includeOrigin"]
     if da.get("onHitTargets") is not None:
         params["onHitTargets"] = da["onHitTargets"]
     if da.get("condition") is not None:

@@ -38,7 +38,7 @@ A("60-01", "60-01 旋風斬", "self", [30, 30, 30, 30], [100, 150, 200, 250], 0,
            {"kind": "knockback", "distance": 3.0, "speed": 15.0, "from": "caster"}],
   # ⭐ GH#1146 —— 綁 `tpl-area-strike`。⚠️ params 由 `templatize.py::m_area_strike()`
   #   從出貨文件算出來,⛔ 不是手打;等價由 `templatizeEquivalence.test.ts` 逐位元判。
-  template={'ref': 'tpl-area-strike', 'params': {'castType': 'self', 'damageType': 'physical', 'damage': {'damageTierPerRank': ['極小', '極小', '小', '小'], 'ratios': [{'stat': 'ad', 'coeff': 0.5}]}, 'radius': 4.5, 'radiusTier': '小', 'onHitTargets': [{'kind': 'knockback', 'distance': 3.0, 'speed': 15.0, 'from': 'caster'}], 'castTimeSec': 0.667}},
+  template={'ref': 'tpl-area-strike', 'params': {'castType': 'self', 'damageType': 'physical', 'damage': {'damageTierPerRank': ['極小', '極小', '小', '小'], 'ratios': [{'stat': 'ad', 'coeff': 0.5}]}, 'radius': 4.5, 'radiusTier': '小', 'includeOrigin': True, 'onHitTargets': [{'kind': 'knockback', 'distance': 3.0, 'speed': 15.0, 'from': 'caster'}], 'castTimeSec': 0.667}},
   )
 
 # ⭐ castType `ground` → `targeted`：內文逐字是「勾住**一個單位**」，標籤列也是

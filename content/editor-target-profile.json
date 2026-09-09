@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_a75d237fb2c5",
+    "contentVersion": "cv_027416f4eeee",
     "collections": {
       "champions": {
-        "hash": "6711d588cb2a",
+        "hash": "89b7db52137a",
         "count": 71
       },
       "abilities": {
-        "hash": "49032146411b",
+        "hash": "3bcf0a9c8d2c",
         "count": 421
       },
       "items": {
@@ -58,7 +58,7 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "13edb958eebd",
+        "hash": "ca2dc9cba026",
         "count": 55
       },
       "vfx-scripts": {
@@ -1916,7 +1916,7 @@
     "note": "出貨內容**實際用了**哪些值。⚠️ 與 runtimeCapabilities 不同：那一份說引擎做得到什麼，這一份說內容裡有哪些合法的 id。⛔ 填一個不在這裡的 vfxKey，技能照放但畫面上什麼都不會出現。",
     "ability": {
       "count": 421,
-      "fromTemplate": 222,
+      "fromTemplate": 224,
       "templates": [
         {
           "id": "tpl-apply-status",
@@ -1997,6 +1997,11 @@
               "default": "中",
               "origin": "census: 同一批 10 支 —— 中 5 · 小 4 · 極小 1。⚠️ ⭐ 真正說話的是這一格：`resolveRadiusTier` 在載入時把 `radius` 蓋掉（AoE 級距表）。"
             },
+            "includeOrigin": {
+              "type": "boolean",
+              "optional": true,
+              "origin": "census: 全樹 damageArea 的 includeOrigin 是 **20 true / 5 不存在**（⛔ 0 個 false）。⛔ 刻意無預設：`zDamageArea.includeOrigin` 是 `z.boolean().optional()` ⇒ **不存在 ≠ false**,一個預設值會把那 5 支的原點傷害無中生有。"
+            },
             "radius": {
               "type": "number",
               "default": 4.5,
@@ -2032,6 +2037,11 @@
               "type": "spawnModelFx",
               "optional": true,
               "origin": "census: 同一批裡 `spawnModelFx` 出現 **7** 次（最多的視覺）。⛔ 同上,無預設。"
+            },
+            "selfBuff": {
+              "type": "applyBuff",
+              "optional": true,
+              "origin": "census: 出貨 damageArea 單發技能裡,第二個頂層節點是 `applyBuff` 的有 **3 支**（`godie-e001.passive`／`godie-e00n.passive`／`godie-h02u.r`）,而三支的節點逐位元相同（`as pctAdd 4.0` / 4 秒）。⛔ 刻意無預設：一格看不見的增益比沒有增益更糟（第一·五守則）。"
             }
           }
         },
@@ -6586,11 +6596,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "356e80ef6a68",
+    "fingerprint": "7b6264207c91",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "b0f30572a799"
+        "digest": "40452a8d9d31"
       },
       {
         "surface": "ability-item-zod-schemas",
@@ -6656,5 +6666,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "55c223250e2a"
+  "profileDigest": "806594d297ed"
 }
