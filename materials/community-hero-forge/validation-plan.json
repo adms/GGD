@@ -1,6 +1,6 @@
 {
   "schema": "ggd-batch-validation-plan@1",
-  "manifestSha256": "0050c0c130d8954d1af2380246a5d173e020447348a825e97b4762c71b0d3739",
+  "manifestSha256": "3397a910b824faed64b8277e42964da01f25b96c213f37b2d36868d7c8794c8e",
   "suites": [
     {
       "id": "implemented-mechanisms",
@@ -50,7 +50,9 @@
         "packages/shared/src/sim/content/conditionDistanceLearned.test.ts",
         "packages/shared/src/sim/content/conditionFacing.test.ts",
         "packages/shared/src/sim/stats/outputMult.test.ts",
-        "packages/shared/src/sim/effects/incomingReflect.test.ts"
+        "packages/shared/src/sim/effects/incomingReflect.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/mai.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/maiAcceptance.test.ts"
       ],
       "heroSlots": {
         "community-review-20-20260907": [
@@ -139,6 +141,14 @@
           "EX"
         ],
         "community-review-32-20260907": [
+          "PASSIVE",
+          "Q",
+          "W",
+          "E",
+          "R",
+          "EX"
+        ],
+        "community-review-03-20260907": [
           "PASSIVE",
           "Q",
           "W",

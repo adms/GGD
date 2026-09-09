@@ -251,3 +251,11 @@ Editor 的「敵方前置行動」可切換自動、靜止或普攻，並显示�
 - 「受擊後反擊」不能擅自增加免傷、護盾或正面限制；`damageConnected` 以實際 HP／盾吸收認定有效命中，普通影子拳應走普通傷害，不套零比例反彈而跳過全域倍率。近身距離必須在同一對決內成立，反傷與衍生 hook 不反覆消耗反擊窗口。
 - 凍結的舊版本函式／測試保留作 rollback 相容性；目前交接版本要直接從目前 JSON 微調編譯。多個產生入口共用同一份資料，另比對生成作品，而不是維護兩份實作後各自宣称通過。
 - 參考 [阿薩謝爾本批配方](materials/community-hero-forge/refinements/32.json)、[目前行為](packages/shared/src/content/heroForge/communityRefinements/azazelBatch.test.ts)、[目前匯入與試玩](packages/shared/src/content/heroForge/communityRefinements/azazelBatchAcceptance.test.ts) 與 [收據](materials/community-hero-forge/refinements/azazel-batch-verification.json)。保留原名稱、來源與描述；代理模型和文字提示不等於影子、魔力雨、能量球、反轉表情／音效已完成。
+
+## 沿途突進、完成時刻與有限追加
+
+- 使用 `dash.onTouch` 表達沿路每名敵人一次並繼續前進；以 `touchScope` 選敵人或敵方英雄。它與 `stopOnHit/onHit` 的首碰停止不同，不能混填。傷害須跟著實際位移及該次施法識別，不能用起點範圍傷害代替。
+- 完成位移後才生效可用 `onEndOn: resolved`：須實際移動，並由距離、地形或接觸正常結束；取消／取代不算。不要把起手的 `onDashOrBlink` 事件當成完成證據。
+- `oncePerCast` 預設只認實際扣血；若原稿的命中包含盾吸收，再明填 `damageConnected: true`。多目標、波次、殘像／反傷、他人施法都要有去重反例。
+- 技能彈可否穿地形與角色能否穿牆分開核對 GGD 規則；目前技能穿地形，角色突進仍碰撞。不要把 ProjectileSystem 的歷史檔頭誤當目前規則。
+- Editor 前置施法可選 EX，需使用實際 EX 解鎖與施法路徑，保留消耗及狀態。參考 [不知火舞配方](materials/community-hero-forge/refinements/03.json)、[行為](packages/shared/src/content/heroForge/communityRefinements/mai.test.ts)、[匯入與試玩](packages/shared/src/content/heroForge/communityRefinements/maiAcceptance.test.ts) 與 [收據](materials/community-hero-forge/refinements/mai-verification.json)。火球或現有角色代理不能當作扇彈、火焰弧與殘像畫面已完成。

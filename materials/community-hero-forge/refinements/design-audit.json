@@ -4,8 +4,8 @@
   "scope": "Original requirements versus compiled authoring; compilation is not design acceptance",
   "heroes": 37,
   "slots": 222,
-  "changedSlots": 69,
-  "passiveOnAttackTemplates": 19,
+  "changedSlots": 75,
+  "passiveOnAttackTemplates": 18,
   "originalDesignAcceptance": "incomplete",
   "published": false,
   "rows": [
@@ -276,16 +276,16 @@
       "ownerDescription": "完成位移後獲得一次短效普攻強化；刷新不疊加。",
       "requiredRefinement": "需位移完成後一次普攻增益，刷新不疊加。",
       "products": [
-        "tpl-on-attack"
+        "tpl-event-passive"
       ],
       "castType": "self",
       "effects": [],
       "hooks": [
-        "onBasicAttack"
+        "onDamageDealt"
       ],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "E／R 實際移動後正常停在距離終點、地形或 R 敵人接觸點，取得三秒身法；下一次有效敵方普攻命中（含盾吸收）消耗並追加一次極小物理傷害。E／R 刷新共用同一層，不疊加；空方向、零移動、取代、死亡與對決結束不給。技能、零傷害與免疫不消耗。"
     },
     {
       "hero": "03",
@@ -296,17 +296,17 @@
       "ownerDescription": "投出扇子，對沿途合法目標造成傷害。",
       "requiredRefinement": "扇子模型及逐彈碰撞需補，模板是分段傷害波。",
       "products": [
-        "tpl-traveling-wave"
+        "tpl-effect-sequence"
       ],
       "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "delayed"
+        "spawnProjectile"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "單一實體穿透彈沿方向飛行，每人每彈最多一次小級魔法傷害；友軍、死亡及其他對決不命中。依 GGD 技能不被地形遮擋規則可穿牆，至射程或邊界消失。現有火球為代理，扇子模型與旋轉演出仍待完成。"
     },
     {
       "hero": "03",
@@ -317,17 +317,17 @@
       "ownerDescription": "向前揮出近身火焰弧，適合迎擊貼身敵人。",
       "requiredRefinement": "目前為窄直線，需前方近身弧形判定。",
       "products": [
-        "tpl-line-sweep"
+        "tpl-effect-sequence"
       ],
       "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "delayed"
+        "damageArea"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "以自身當下位置及施法方向揮出 120 度、2.5 格近身火焰弧，各敵人只結算一次；後方、弧外、遠處、友軍與其他對決排除。專用火焰弧畫面待驗。"
     },
     {
       "hero": "03",
@@ -338,17 +338,17 @@
       "ownerDescription": "直線突進撞擊；遇牆或到達最大距離停止。",
       "requiredRefinement": "核對 Owner 原文與模擬／畫面後才可驗收。",
       "products": [
-        "tpl-charge-push"
+        "tpl-effect-sequence"
       ],
-      "castType": "ground",
+      "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "leap"
+        "dash"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "身體沿直線突進五格，沿實際路徑每名合法敵人碰撞一次小級物理傷害，穿過敵人後繼續，遇牆或距離終點停止；不從起點或牆後結算假碰撞。完成实际位移後刷新身法。"
     },
     {
       "hero": "03",
@@ -359,18 +359,18 @@
       "ownerDescription": "有明顯起手的強化突進連擊，末段小範圍爆發。",
       "requiredRefinement": "缺突進命中後才接連擊條件。",
       "products": [
-        "tpl-lock-combo"
+        "tpl-effect-sequence"
       ],
-      "castType": "targeted",
+      "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "dot",
-        "leap"
+        "applyBuff",
+        "dash"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "0.65 秒可中斷起手後向前突進七格，在首名敵人或地形停止。接觸造成實際 HP／盾吸收後才啟動三次近身連擊，末段追加 1.8 格爆發；逐段重查三格距離，死亡／對決結束取消。空放、牆阻與免疫不接連段，沒有額外無敵或硬控。正常位移結束刷新同一層身法。"
     },
     {
       "hero": "03",
@@ -381,16 +381,17 @@
       "ownerDescription": "短時間產生跟隨施法的火焰殘像；追加傷害有次數上限，殘像不獨立尋敵。",
       "requiredRefinement": "目前為自身 3 秒 +15% AD；需限次跟隨施法殘像及去重。",
       "products": [
-        "tpl-buff-self"
+        "tpl-effect-sequence"
       ],
       "castType": "self",
+      "targetsEnemies": true,
       "effects": [
         "applyBuff"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "三秒陽炎窗口內，自己的有效技能命中後延遲 0.1 秒向同一目標追加極小魔法傷害；每次施法跨波次／目標最多一次，共三次，消耗後撤除。普攻、其他施法者、殘像及連段衍生傷害不觸發；原目標死亡、離開十二格或對決結束時取消，不重新尋敵。火焰殘像模型／動作／音效仍待實際畫面驗收。"
     },
     {
       "hero": "04",

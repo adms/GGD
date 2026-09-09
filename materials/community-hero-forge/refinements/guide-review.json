@@ -1,7 +1,7 @@
 {
   "file": "AI參考全自動鑄造守則.md",
-  "sha256": "ae7e0ac0a25d3612d0c3064128a4c5b86f1c2dc6c58bd6f83efa8ffdbacd583b",
-  "localLinksChecked": 65,
+  "sha256": "2c0b51f707d38dcaa98a8709bc7cb999c3e8b999991a622123ed16a717bc0e17",
+  "localLinksChecked": 69,
   "missingLinks": [],
   "commandsAndReferencedTests": "checked against current repository",
   "semanticReview": [
@@ -61,7 +61,11 @@
     "actual output modifier versus AD AP and zero-base flat operation",
     "normal shadow counter without implicit immunity or reflection",
     "current batch source versus frozen legacy replay tests",
-    "dual authoring entries byte comparison and same-source curse reversal"
+    "dual authoring entries byte comparison and same-source curse reversal",
+    "swept dash contacts versus stop contact and natural completion",
+    "explicit shield-connected per-cast credit without proc recursion",
+    "actual prior EX slot unlock and cast",
+    "GGD skill terrain policy versus body displacement"
   ],
   "runtimeClaims": "guide does not claim full hero acceptance",
   "batchVerificationReview": {
