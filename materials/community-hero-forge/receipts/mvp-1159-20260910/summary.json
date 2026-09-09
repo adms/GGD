@@ -1,0 +1,130 @@
+{
+  "issue": 1159,
+  "sourceCommit": "0f0f3745ae626daa2c38f06a44debe9f5a50900c",
+  "fixedMain": "213916e393364d07ef059d84e4f77b5ff7fbb87f",
+  "spreadValidation": {
+    "tests": 89,
+    "sharedTypecheck": 0,
+    "adminTypecheck": 0,
+    "testedWorktree": "GGD-community-batch2-integration",
+    "firstBranchPort": "same 16-file change; preserve first-branch damageLine fromSummonSlot"
+  },
+  "fieldAdoption": {
+    "tests": 10,
+    "staticDocs": 1858,
+    "acceptedCommunityDocs": 259,
+    "initialKeys": 53,
+    "communityAdopted": 38,
+    "defaultLive": 2,
+    "landingUnadopted": 13,
+    "landingSince": "2026-09-09",
+    "graceDaysUnchanged": 30,
+    "removedStale": 43
+  },
+  "formalPublication": "pending integrated service and existing-account login",
+  "files": [
+    {
+      "path": "adoption-audit.json",
+      "bytes": 23587,
+      "sha256": "ba487ebb11ce86826f6ffa9a300b10d06910cad116912eea002618ea1a959652"
+    },
+    {
+      "path": "adoption-audit.tsv",
+      "bytes": 10741,
+      "sha256": "26d299ae5571af1eb55bcaf08ab3bad63f0d52d4b3abc6dfaf656a990d8c9f38"
+    },
+    {
+      "path": "announcement-fixed-main.log",
+      "bytes": 2316,
+      "sha256": "3d7ad4f8fa6146975913f74efac4c04a40cfcf26406541bb828aaf9e16b81a91"
+    },
+    {
+      "path": "content-build.log",
+      "bytes": 3733,
+      "sha256": "42576abf7445ff58b9605a31fd54d6699b7f7a3d82848927f0b87c6b29bf15e9"
+    },
+    {
+      "path": "editor-fixes-and-build.log",
+      "bytes": 13464,
+      "sha256": "64c7a3a1c1b4cbd8115b7f3376f8c4b18bdd0c575534e2143bd7d58def8adacb"
+    },
+    {
+      "path": "editor-release-aggregate.log",
+      "bytes": 6835,
+      "sha256": "65406398a7716c97d8424d7761afcf3d4ed6e6c66d26ee4afb903b947c211d59"
+    },
+    {
+      "path": "field-adoption-after.log",
+      "bytes": 399512,
+      "sha256": "e9afdfa2330c6f6c25dcf2513bb776d7406f5b48e4d7e1a3d6c95a04a0ad5401"
+    },
+    {
+      "path": "field-adoption-before.log",
+      "bytes": 432762,
+      "sha256": "d458cf470242b78701be9019d270d1a5fb8926d41e9a755de21b79c90fd59cbd"
+    },
+    {
+      "path": "final-targeted.log",
+      "bytes": 6693,
+      "sha256": "a7676c94fe59e5f8783f35cb6f882c9f8a98ced07cf37a37230fccbae4ece474"
+    },
+    {
+      "path": "skills-collection.log",
+      "bytes": 2330,
+      "sha256": "1d486cca480694cd1fb4c89dddcef6aa9168d018c6e8e429ae4b1a66c8a63181"
+    },
+    {
+      "path": "spread-admin-typecheck.log",
+      "bytes": 177,
+      "sha256": "7aca444ca09b37cfda349d6bd4127e5d83b4fa2a881c88703db6cc4b5b713127"
+    },
+    {
+      "path": "spread-shared-typecheck.log",
+      "bytes": 183,
+      "sha256": "b079271f31f534d187500d493318e33f8035fe301457ac608118f4e874041aac"
+    },
+    {
+      "path": "spread-tests.log",
+      "bytes": 1068,
+      "sha256": "cf19bddb7563ce87f629b276ff02b72f5264c29cae6a88e8c234b87563bbf5c1"
+    }
+  ],
+  "skills": {
+    "command": "GGD_GATE_CONCURRENCY=4 node tools/parallel-gates/run.mjs skills:check",
+    "steps": 70,
+    "initialPassed": 67,
+    "initialFailed": [
+      "board:check",
+      "decor:check",
+      "decor:check"
+    ],
+    "fixedTargetedExit": 0,
+    "singleAggregatePass": false
+  },
+  "editorRelease": {
+    "initialExitCode": 1,
+    "initialFailedTests": [
+      "src/readmeContract.test.ts",
+      "src/form/walk.test.ts"
+    ],
+    "fixedTargetedTests": 14,
+    "fixedTargetedExit": 0,
+    "productionBuildExit": 0,
+    "singleAggregatePass": false,
+    "note": "Reuse passed prefix and unaffected tests; rerun only failed files, then run the previously unreached build. Aggregate log contains wrapper failure tail, not full per-file stdout."
+  },
+  "coord": {
+    "packets": 29,
+    "exitCode": 0
+  },
+  "announcement": {
+    "testedWorktree": "GGD-community-hero-forge-s3",
+    "exitCode": 1,
+    "missingTags": [
+      "v0.42.26"
+    ],
+    "mainRef": "213916e393364d07ef059d84e4f77b5ff7fbb87f",
+    "actualFailedDeliveryLogSha256": "aa7f4d08d56e99099c48f648d73a99e024c574246aa7b2a52cb8526ca37b7a53",
+    "mainComment": "https://github.com/adms/GGD/pull/1135#issuecomment-5605319136"
+  }
+}

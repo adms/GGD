@@ -17,7 +17,6 @@ import {
 import {
   SPREAD_MAX_FALLOFF,
   SPREAD_MAX_RADIUS,
-  SPREAD_MAX_TARGETS,
   SPREAD_MIN_FALLOFF,
 } from "@ggd/shared/sim/effects/spreadLimits";
 import { cover } from "@ggd/shared/testkit/cover";
@@ -383,9 +382,10 @@ describe("discriminated EffectDef union (editor-02)", () => {
    *
    * `damageArea` reaching the tag list only proves the walker SAW it. Two
    * things a designer actually needs, neither implied by the tag:
-   *   • the three 擴散 knobs arrive as bounded number widgets, carrying the
-   *     REAL caps out of sim/effects/spreadLimits.ts — those caps are
-   *     mis-parse guards (w3x lengths are ~54.5× GGD units, so a pasted
+   *   • the 擴散 knobs arrive as bounded number widgets. Radius and falloff
+   *     carry their semantic caps; maxTargets carries the safe-integer
+   *     representation limit, while damage-rules owns its runtime policy.
+   *     Radius guards mis-parsed w3x lengths (~54.5× GGD units, so a pasted
    *     `Area: 450` becomes a field-covering circle), and a widget with no
    *     `max` lets exactly that paste through the form;
    *   • switching a card to `damageArea` produces a document the shipping
@@ -422,7 +422,7 @@ describe("discriminated EffectDef union (editor-02)", () => {
       int: true,
       optional: true,
       min: 1,
-      max: SPREAD_MAX_TARGETS,
+      max: Number.MAX_SAFE_INTEGER,
     });
     expect(f.get("canCrit")).toMatchObject({ kind: "boolean", optional: true });
     expect(f.get("includeOrigin")).toMatchObject({ kind: "boolean", optional: true });
