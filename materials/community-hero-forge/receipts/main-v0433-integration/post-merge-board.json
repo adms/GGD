@@ -1,0 +1,36 @@
+{
+  "issue": 1159,
+  "checkedHead": "d4278e5dd9681ededbf234c9840ac5bff844bd0e",
+  "cause": "board:build was executed before the merge commit; git describe saw the old HEAD. After committing the merge, v0.43.3 became an ancestor and CI correctly rejected the old board version.",
+  "fix": "Run the original board:build after the merge commit, then board:check. No new main fetch, source changes or gate exceptions.",
+  "contentChange": "Only the text 線上 v0.43.2 becomes 線上 v0.43.3; all other bytes identical.",
+  "beforeSha256": "3b40bc04fc5ddf7427e3f08b57cefc00d0329120fa47c10fc21d48b2ba4ccdfa",
+  "afterSha256": "57112e9dcd002a17ceecf9146d58c979e9ae6c4b0b3acd1f8e20ea114c430a61",
+  "boardCheck": {
+    "command": "pnpm board:check",
+    "exitCode": 0
+  },
+  "remoteFailures": [
+    {
+      "run": 34392622033,
+      "job": 102604649419,
+      "url": "https://github.com/adms/GGD/actions/runs/34392622033/job/102604649419"
+    },
+    {
+      "run": 34392623741,
+      "job": 102604641554,
+      "url": "https://github.com/adms/GGD/actions/runs/34392623741/job/102604641554"
+    }
+  ],
+  "goObservation": {
+    "failedJob": 102604649378,
+    "test": "TestInvitePush",
+    "error": "failed to get reader: context deadline exceeded",
+    "identicalCodeSecondJob": 102604641280,
+    "secondJobConclusion": "success",
+    "localRepro": "go test ./internal/room -run ^TestInvitePush$ -count=1",
+    "localReproExit": 0,
+    "interpretation": "One remote timeout; not reproduced locally. No runtime fix or timeout relaxation made."
+  },
+  "unchangedValidation": "Apps/packages/content untouched; existing validated results retained. Current unit jobs still running; no cancellation or restart."
+}
