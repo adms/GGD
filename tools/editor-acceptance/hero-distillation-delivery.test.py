@@ -54,6 +54,10 @@ class DeliveryTest(unittest.TestCase):
                            if 'modelBlob' in row]
         self.assertEqual(len(adapter_entries), 1)
         self.assertEqual(d.digest(out / 'bundle/manifest.json'), result['bundleManifest']['sha256'])
+        self.assertTrue(d.verify(out)['verified'])
+        (out / 'readable/evaluation/report.html').write_text('changed')
+        with self.assertRaisesRegex(AssertionError, 'READABLE_EVIDENCE_DRIFT'):
+            d.verify(out)
 
     def test_rejects_running_or_mismatched_evaluation(self):
         state = json.loads((self.evaluation / 'state.json').read_text()); state['status'] = 'running'

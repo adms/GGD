@@ -28,6 +28,38 @@ def write(path, value):
         stream.write(value if isinstance(value, str) else json.dumps(value, ensure_ascii=False, indent=2) + '\n')
 
 
+def safe(root, name):
+    relative = Path(name)
+    assert name and not relative.is_absolute() and '..' not in relative.parts, 'UNSAFE_DELIVERY_PATH'
+    target = (root / relative).resolve()
+    assert target.is_relative_to(root.resolve()), 'DELIVERY_PATH_ESCAPE'
+    return target
+
+
+def verify(out):
+    out = Path(out).resolve()
+    manifest = json.loads((out / 'DELIVERY_MANIFEST.json').read_text())
+    assert manifest.get('schema') == 'ggd-hero-distillation-delivery@1' \
+        and manifest.get('productionQualified') is False, 'DELIVERY_POLICY_MISMATCH'
+    assert manifest.get('gitPolicy') == {
+        'tracked': ['.gitignore', 'DELIVERY_MANIFEST.json', 'readable/**', 'bundle/manifest.json'],
+        'ignoredPayloads': ['bundle/archives/**', 'bundle/models/**']}, 'GIT_PAYLOAD_POLICY_DRIFT'
+    assert manifest.get('s3Policy') == {'profile': 'vibe-coding', 'region': 'ap-east-2',
+                                        'bucket': 'ggd-390630837668-ap-east-2-an'}, 'S3_POLICY_DRIFT'
+    assert (out / '.gitignore').read_text() == 'bundle/archives/\nbundle/models/\n', 'GITIGNORE_DRIFT'
+    paths = []
+    for item in manifest['readableEvidence']:
+        file = safe(out, item['path']); paths.append(item['path'])
+        assert file.is_file() and file.stat().st_size == item['bytes'] \
+            and digest(file) == item['sha256'], 'READABLE_EVIDENCE_DRIFT:' + item['path']
+    assert len(paths) == len(set(paths)) == 12, 'READABLE_EVIDENCE_DENOMINATOR_DRIFT'
+    bundle = safe(out, manifest['bundleManifest']['path'])
+    assert bundle.is_file() and digest(bundle) == manifest['bundleManifest']['sha256'], 'BUNDLE_MANIFEST_DRIFT'
+    archive.verify(bundle.parent)
+    return {'verified': True, 'readableFiles': len(paths), 'bundleManifestSha256': digest(bundle),
+            'productionQualified': False}
+
+
 def build(workspace, training, evaluation, out):
     workspace, training, evaluation, out = map(lambda p: Path(p).resolve(),
                                                 (workspace, training, evaluation, out))
@@ -79,14 +111,22 @@ def build(workspace, training, evaluation, out):
         'productionQualified': False,
         'scope': 'Terminal evidence packaging only; no training, inference, upload, commit, promotion or deployment.'}
     write(out / 'DELIVERY_MANIFEST.json', manifest)
+    verify(out)
     return manifest
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('mode', choices=['build', 'verify'])
     for name in ['workspace', 'training', 'evaluation', 'out']:
-        parser.add_argument('--' + name, type=Path, required=True)
-    value = build(**vars(parser.parse_args()))
-    print(json.dumps({'readableFiles': len(value['readableEvidence']),
-                      'bundleManifestSha256': value['bundleManifest']['sha256'],
-                      'productionQualified': False}, ensure_ascii=False))
+        parser.add_argument('--' + name, type=Path, required=name == 'out')
+    args = parser.parse_args()
+    if args.mode == 'build':
+        assert all(getattr(args, name) for name in ['workspace', 'training', 'evaluation']), 'BUILD_INPUTS_REQUIRED'
+        value = build(args.workspace, args.training, args.evaluation, args.out)
+        result = {'readableFiles': len(value['readableEvidence']),
+                  'bundleManifestSha256': value['bundleManifest']['sha256'],
+                  'productionQualified': False}
+    else:
+        result = verify(args.out)
+    print(json.dumps(result, ensure_ascii=False))
