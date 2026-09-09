@@ -1,0 +1,993 @@
+{
+  "champion": {
+    "id": "godie-edem",
+    "name": "寫輪眼復仇者 - 宇智波佐助",
+    "description": "故事：\n在忍者學校以第一名的成績畢業，是有名的\"宇智波一族\"的後代。復仇信念堅定，一心想殺了哥哥宇智波鼬。在與大蛇丸戰鬥時被施以咒印，有時會難以控制自我心性與力量。\n(出自:火影忍者)\n\n推薦玩家 : 連技殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.40\n敏捷 + 2.50\n智慧 + 2.00\n基礎跑速 305\n\n可學習的技能：\n火遁-豪火龍之術、千鳥流、雷切、哥哥",
+    "role": "fighter",
+    "attackType": "melee",
+    "origin": "法刺",
+    "playstyle": [
+      "位移",
+      "爆發",
+      "切後排"
+    ],
+    "pitch": "等待破綻快速切入，把技能集中在脆弱目標身上，殺完立即脫離。",
+    "modelKey": "imported.herosasuke",
+    "baseStats": {
+      "maxHealth": 150,
+      "healthRegen": 0.01,
+      "maxMana": 100,
+      "manaRegen": 0.1,
+      "ad": 6,
+      "ap": 0,
+      "armor": 0,
+      "mr": 28,
+      "as": 0.5,
+      "ms": 5.9,
+      "critChance": 0,
+      "critDamage": 1.75,
+      "cdr": 0,
+      "lifesteal": 0,
+      "range": 1.4
+    },
+    "growth": {
+      "maxHealth": 36.0571,
+      "healthRegen": 0.1305,
+      "maxMana": 37.5347,
+      "manaRegen": 0.1341,
+      "ad": 1.1828,
+      "armor": 0.3801,
+      "mr": 1.0342,
+      "as": 0.003,
+      "ap": 2.9184
+    },
+    "msGrowthTier": "極小",
+    "attributes": {
+      "str": 17,
+      "agi": 26,
+      "int": 14,
+      "strGrowth": 0,
+      "agiGrowth": 0,
+      "intGrowth": 0,
+      "primary": "AGI",
+      "source": "w3x"
+    },
+    "hitFeel": {
+      "hitstopTicks": 1,
+      "knockbackMag": 0,
+      "shakeMag": 0.18
+    },
+    "abilities": {
+      "Q": {
+        "id": "godie-edem.q",
+        "name": "45-01 火遁-豪火龍之術",
+        "provenance": "owner-spec",
+        "description": "[主動][指定][範圍][燃燒][週期]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n施法距離：{{range}}\n有效半徑：{{radius}}\n\n「接招吧！我的復仇之火」\n將吐出的火焰化為龍形，對[指定範圍]內敵人造250/350/450/550傷害，並附加[燃燒]標記，使其每秒受到當下[現存生命]1%的傷害，持續3秒。",
+        "slot": "Q",
+        "castType": "ground",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 12,
+        "radiusTier": "中",
+        "rangeTier": "極大",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "damageArea",
+            "damageType": "magic",
+            "amount": {
+              "damageTierPerRank": [
+                "極小",
+                "極小",
+                "小",
+                "小"
+              ]
+            },
+            "radius": 6,
+            "radiusTier": "中",
+            "includeOrigin": true,
+            "onHitTargets": [
+              {
+                "kind": "applyStatus",
+                "statusId": "burn",
+                "duration": 3
+              },
+              {
+                "kind": "dot",
+                "damageType": "magic",
+                "amountPerTick": {
+                  "flat": 1
+                },
+                "resourcePct": {
+                  "subject": "target",
+                  "resource": "health",
+                  "basis": "current",
+                  "scale": "ratio",
+                  "perRank": [
+                    0.01
+                  ]
+                },
+                "resourcePctPhase": "onTick",
+                "intervalSec": 1,
+                "durationSec": 3,
+                "stacking": "refresh"
+              }
+            ]
+          }
+        ],
+        "vfxKey": "fx.prim.fire.explosion",
+        "castTimeSec": 1.033,
+        "icon": "assets/icons/abilities/godie-edem.q.webp"
+      },
+      "W": {
+        "id": "godie-edem.w",
+        "name": "45-02 千鳥流",
+        "provenance": "owner-spec",
+        "description": "[主動][範圍][減速][AP加成]\n{{cd}}秒冷卻\n消耗[MP] {{mp}}\n有效半徑：{{radius}}\n\n「千鳥流。奔流」\n讓全身充滿千鳥的雷電，對[周圍][大範圍]敵人造成{{dmg}}+{{ap}}% [AP]點傷害，並使其[攻擊與移動速度][降低]50%，持續3秒。",
+        "slot": "W",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          72,
+          72,
+          72,
+          72
+        ],
+        "manaCostTier": "極小",
+        "range": 0,
+        "radiusTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "damageArea",
+            "damageType": "magic",
+            "amount": {
+              "damageTier": "極小",
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 0.2
+                }
+              ]
+            },
+            "radius": 6,
+            "radiusTier": "中",
+            "includeOrigin": true,
+            "onHitTargets": [
+              {
+                "kind": "applyBuff",
+                "modifiers": [
+                  {
+                    "stat": "as",
+                    "op": "pctAdd",
+                    "value": -0.5
+                  }
+                ],
+                "duration": 3,
+                "dispellable": true,
+                "polarity": "debuff"
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "slow50",
+                "duration": 3,
+                "moveSpeedMult": 0.5
+              }
+            ]
+          }
+        ],
+        "vfxKey": "fx.prim.lightning.beam",
+        "castTimeSec": 0.833,
+        "icon": "assets/icons/abilities/godie-edem.w.webp"
+      },
+      "E": {
+        "id": "godie-edem.e",
+        "name": "45-03 千鳥",
+        "provenance": "owner-spec",
+        "description": "[主動][指向][範圍][衝刺][AP加成]\n{{cd}}秒冷卻，吟唱{{cast}}秒\n消耗MP{{mp}}\n施法距離：{{range}}\n有效半徑：{{radius}}\n\n「千鳥・雷切」\n將查克拉集中在手上，以高速[直線][衝刺]，對沿途[周圍]敵人造成{{dmg}}+{{ap}}% [AP]點傷害。",
+        "slot": "E",
+        "castType": "ground",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 12,
+        "radiusTier": "中",
+        "rangeTier": "極大",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "dash",
+            "mode": "toPoint",
+            "speed": 16,
+            "maxDistance": 12.83
+          },
+          {
+            "kind": "damageLine",
+            "damageType": "magic",
+            "amount": {
+              "damageTierPerRank": [
+                "極小",
+                "小",
+                "小",
+                "小"
+              ],
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 1
+                }
+              ]
+            },
+            "length": 12.83,
+            "width": 12,
+            "aim": "facing",
+            "fromCaster": true,
+            "includeOrigin": true
+          },
+          {
+            "kind": "spawnModelFx",
+            "shape": "single",
+            "preset": "tpl-locust-strike",
+            "modelKey": "w3x.stock.monsoonbolttarget"
+          },
+          {
+            "kind": "spawnModelFx",
+            "shape": "single",
+            "preset": "tpl-locust-orb",
+            "modelKey": "w3x.stock.thunderclapcaster",
+            "clip": "idle",
+            "scale": 3.5,
+            "tint": [
+              1,
+              0,
+              0
+            ],
+            "lifeSec": 1,
+            "soundKey": "wc3.thunderclapcaster"
+          }
+        ],
+        "vfxKey": "fx.prim.lightning.beam",
+        "vfxLayers": [
+          {
+            "pitchDeg": 0,
+            "vfxKey": "fx.prim.lightning.bolt",
+            "attachTo": "point"
+          }
+        ],
+        "castTimeSec": 0.067,
+        "icon": "assets/icons/abilities/godie-edem.e.webp"
+      },
+      "R": {
+        "id": "godie-edem.r",
+        "name": "45-04 哥哥",
+        "provenance": "owner-spec",
+        "description": "[被動][技能命中時][身上有某狀態時][範圍][AP加成]\n{{cd}}秒冷卻\n有效半徑：{{radius}}\n\n「我愚蠢的弟弟啊！憎恨吧！」\n當「千鳥」命中帶有[燃燒]標記的敵人時引發忍術「麒麟」雷電大爆炸，對目標[周圍][小範圍]敵人造成{{dmg}}+ {{ap}}% [AP] 傷害。",
+        "slot": "R",
+        "castType": "self",
+        "maxRank": 3,
+        "cooldown": [
+          0,
+          0,
+          0
+        ],
+        "manaCost": [
+          0,
+          0,
+          0
+        ],
+        "range": 0,
+        "targetsEnemies": false,
+        "effects": [],
+        "passive": {
+          "name": "45-04 哥哥",
+          "ranks": [
+            {
+              "hooks": [
+                {
+                  "on": "onAbilityHit",
+                  "abilitySlot": "E",
+                  "effects": [
+                    {
+                      "kind": "damageArea",
+                      "damageType": "magic",
+                      "amount": {
+                        "flat": 400,
+                        "ratios": [
+                          {
+                            "stat": "ap",
+                            "coeff": 3
+                          }
+                        ]
+                      },
+                      "radius": 3,
+                      "radiusTier": "極小",
+                      "includeOrigin": true
+                    }
+                  ],
+                  "condition": {
+                    "kind": "status",
+                    "subject": "target",
+                    "tag": "burn"
+                  },
+                  "target": "event"
+                }
+              ]
+            },
+            {
+              "hooks": [
+                {
+                  "on": "onAbilityHit",
+                  "abilitySlot": "E",
+                  "effects": [
+                    {
+                      "kind": "damageArea",
+                      "damageType": "magic",
+                      "amount": {
+                        "flat": 700,
+                        "ratios": [
+                          {
+                            "stat": "ap",
+                            "coeff": 3
+                          }
+                        ]
+                      },
+                      "radius": 3,
+                      "radiusTier": "極小",
+                      "includeOrigin": true
+                    }
+                  ],
+                  "condition": {
+                    "kind": "status",
+                    "subject": "target",
+                    "tag": "burn"
+                  },
+                  "target": "event"
+                }
+              ]
+            },
+            {
+              "hooks": [
+                {
+                  "on": "onAbilityHit",
+                  "abilitySlot": "E",
+                  "effects": [
+                    {
+                      "kind": "damageArea",
+                      "damageType": "magic",
+                      "amount": {
+                        "flat": 1000,
+                        "ratios": [
+                          {
+                            "stat": "ap",
+                            "coeff": 3
+                          }
+                        ]
+                      },
+                      "radius": 3,
+                      "radiusTier": "極小",
+                      "includeOrigin": true
+                    }
+                  ],
+                  "condition": {
+                    "kind": "status",
+                    "subject": "target",
+                    "tag": "burn"
+                  },
+                  "target": "event"
+                }
+              ]
+            }
+          ]
+        },
+        "vfxKey": "fx.prim.void.pulse-lg",
+        "sfxKey": "wc3.thunderboltmissiledeath",
+        "icon": "assets/icons/abilities/godie-edem.r.png"
+      }
+    },
+    "exAbility": "godie-edem.ex",
+    "passiveAbility": "godie-edem.passive",
+    "icon": "assets/icons/champions/godie-edem.png",
+    "skillOrder": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ],
+    "buildPriority": [],
+    "tags": [
+      "wc3-import",
+      "godie",
+      "katana"
+    ],
+    "schema": "champion@1"
+  },
+  "abilityDrafts": {
+    "PASSIVE": {
+      "id": "godie-edem.passive",
+      "name": "45-00 寫輪眼",
+      "provenance": "owner-spec",
+      "description": "[被動][反彈][機率]\n\n「我只要看一次，就知道你穿什麼內褲」\n宇智波家族的血繼限界，洞察眼能夠看清忍術並仿冒，有20%[機率][反彈]魔法([AP])傷害。",
+      "slot": "PASSIVE",
+      "innateKind": "passive",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        0
+      ],
+      "manaCost": [
+        0
+      ],
+      "range": 0,
+      "targetsEnemies": false,
+      "effects": [],
+      "passive": {
+        "name": "45-00 寫輪眼",
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onDamageTaken",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 0
+                    },
+                    "incomingPct": {
+                      "perRank": [
+                        1
+                      ],
+                      "negateOriginal": true
+                    }
+                  }
+                ],
+                "internalCooldown": 0.5,
+                "chance": 0.2,
+                "target": "event",
+                "damageType": "magic"
+              }
+            ]
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-edem.passive.webp",
+      "schema": "ability@1"
+    },
+    "Q": {
+      "id": "godie-edem.q",
+      "name": "45-01 火遁-豪火龍之術",
+      "provenance": "owner-spec",
+      "description": "[主動][指定][範圍][燃燒][週期]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n施法距離：{{range}}\n有效半徑：{{radius}}\n\n「接招吧！我的復仇之火」\n將吐出的火焰化為龍形，對[指定範圍]內敵人造250/350/450/550傷害，並附加[燃燒]標記，使其每秒受到當下[現存生命]1%的傷害，持續3秒。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 12,
+      "radiusTier": "中",
+      "rangeTier": "極大",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "damageTierPerRank": [
+              "極小",
+              "極小",
+              "小",
+              "小"
+            ],
+            "perRank": [
+              200,
+              200,
+              500,
+              500
+            ]
+          },
+          "radius": 6,
+          "radiusTier": "中",
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "statusId": "burn",
+              "duration": 3
+            },
+            {
+              "kind": "dot",
+              "damageType": "magic",
+              "amountPerTick": {
+                "flat": 1,
+                "perRank": [
+                  0,
+                  0.5,
+                  1,
+                  1.5
+                ]
+              },
+              "resourcePct": {
+                "subject": "target",
+                "resource": "health",
+                "basis": "current",
+                "scale": "ratio",
+                "perRank": [
+                  0.01
+                ]
+              },
+              "resourcePctPhase": "onTick",
+              "intervalSec": 1,
+              "durationSec": 3,
+              "stacking": "refresh"
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.fire.explosion",
+      "castTimeSec": 1.033,
+      "icon": "assets/icons/abilities/godie-edem.q.webp",
+      "schema": "ability@1",
+      "radius": 6
+    },
+    "W": {
+      "id": "godie-edem.w",
+      "name": "45-02 千鳥流",
+      "provenance": "owner-spec",
+      "description": "[主動][範圍][減速][AP加成]\n{{cd}}秒冷卻\n消耗[MP] {{mp}}\n有效半徑：{{radius}}\n\n「千鳥流。奔流」\n讓全身充滿千鳥的雷電，對[周圍][大範圍]敵人造成{{dmg}}+{{ap}}% [AP]點傷害，並使其[攻擊與移動速度][降低]50%，持續3秒。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        72,
+        72,
+        72,
+        72
+      ],
+      "manaCostTier": "極小",
+      "range": 0,
+      "radiusTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.3314
+              }
+            ],
+            "flat": 200,
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          },
+          "radius": 6,
+          "radiusTier": "中",
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyBuff",
+              "modifiers": [
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": -0.5
+                }
+              ],
+              "duration": 3,
+              "dispellable": true,
+              "polarity": "debuff"
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "slow50",
+              "duration": 3,
+              "moveSpeedMult": 0.5
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.lightning.beam",
+      "castTimeSec": 0.833,
+      "icon": "assets/icons/abilities/godie-edem.w.webp",
+      "schema": "ability@1",
+      "radius": 6
+    },
+    "E": {
+      "id": "godie-edem.e",
+      "name": "45-03 千鳥",
+      "provenance": "owner-spec",
+      "description": "[主動][指向][範圍][衝刺][AP加成]\n{{cd}}秒冷卻，吟唱{{cast}}秒\n消耗MP{{mp}}\n施法距離：{{range}}\n有效半徑：{{radius}}\n\n「千鳥・雷切」\n將查克拉集中在手上，以高速[直線][衝刺]，對沿途[周圍]敵人造成{{dmg}}+{{ap}}% [AP]點傷害。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 12,
+      "radiusTier": "中",
+      "rangeTier": "極大",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "toPoint",
+          "speed": 16,
+          "maxDistance": 12.83
+        },
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "damageTierPerRank": [
+              "極小",
+              "小",
+              "小",
+              "小"
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.2565
+              }
+            ],
+            "perRank": [
+              200,
+              500,
+              500,
+              500
+            ]
+          },
+          "length": 12.83,
+          "width": 12,
+          "aim": "facing",
+          "fromCaster": true,
+          "includeOrigin": true
+        },
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "preset": "tpl-locust-strike",
+          "modelKey": "w3x.stock.monsoonbolttarget",
+          "path": "static",
+          "anchor": "point",
+          "scale": 8,
+          "clip": "idle",
+          "alpha": 1,
+          "lifeSec": 1
+        },
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "preset": "tpl-locust-orb",
+          "modelKey": "w3x.stock.thunderclapcaster",
+          "clip": "idle",
+          "scale": 3.5,
+          "tint": [
+            1,
+            0,
+            0
+          ],
+          "lifeSec": 1,
+          "soundKey": "wc3.thunderclapcaster",
+          "path": "orbit",
+          "speed": 1,
+          "distance": 0.1,
+          "count": 1,
+          "alpha": 0.9
+        }
+      ],
+      "vfxKey": "fx.prim.lightning.beam",
+      "vfxLayers": [
+        {
+          "pitchDeg": 0,
+          "vfxKey": "fx.prim.lightning.bolt",
+          "attachTo": "point"
+        }
+      ],
+      "castTimeSec": 0.067,
+      "icon": "assets/icons/abilities/godie-edem.e.webp",
+      "schema": "ability@1",
+      "radius": 6
+    },
+    "R": {
+      "id": "godie-edem.r",
+      "name": "45-04 哥哥",
+      "provenance": "owner-spec",
+      "description": "[被動][技能命中時][身上有某狀態時][範圍][AP加成]\n{{cd}}秒冷卻\n有效半徑：{{radius}}\n\n「我愚蠢的弟弟啊！憎恨吧！」\n當「千鳥」命中帶有[燃燒]標記的敵人時引發忍術「麒麟」雷電大爆炸，對目標[周圍][小範圍]敵人造成{{dmg}}+ {{ap}}% [AP] 傷害。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        0,
+        0,
+        0
+      ],
+      "manaCost": [
+        0,
+        0,
+        0
+      ],
+      "range": 0,
+      "targetsEnemies": false,
+      "effects": [],
+      "passive": {
+        "name": "45-04 哥哥",
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onAbilityHit",
+                "abilitySlot": "E",
+                "effects": [
+                  {
+                    "kind": "damageArea",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 400,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 3
+                        }
+                      ],
+                      "perRank": [
+                        0,
+                        200,
+                        400
+                      ]
+                    },
+                    "radius": 3,
+                    "radiusTier": "極小",
+                    "includeOrigin": true
+                  }
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "tag": "burn"
+                },
+                "target": "event"
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onAbilityHit",
+                "abilitySlot": "E",
+                "effects": [
+                  {
+                    "kind": "damageArea",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 700,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 3
+                        }
+                      ],
+                      "perRank": [
+                        0,
+                        350,
+                        700
+                      ]
+                    },
+                    "radius": 3,
+                    "radiusTier": "極小",
+                    "includeOrigin": true
+                  }
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "tag": "burn"
+                },
+                "target": "event"
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onAbilityHit",
+                "abilitySlot": "E",
+                "effects": [
+                  {
+                    "kind": "damageArea",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 1000,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 3
+                        }
+                      ],
+                      "perRank": [
+                        0,
+                        500,
+                        1000
+                      ]
+                    },
+                    "radius": 3,
+                    "radiusTier": "極小",
+                    "includeOrigin": true
+                  }
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "tag": "burn"
+                },
+                "target": "event"
+              }
+            ]
+          }
+        ]
+      },
+      "vfxKey": "fx.prim.void.pulse-lg",
+      "sfxKey": "wc3.thunderboltmissiledeath",
+      "icon": "assets/icons/abilities/godie-edem.r.png",
+      "schema": "ability@1"
+    },
+    "EX": {
+      "id": "godie-edem.ex",
+      "name": "45-002 天照",
+      "provenance": "owner-spec",
+      "description": "[主動][範圍][燃燒][沉默][虛弱][週期]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n有效半徑：{{radius}}\n\n「寫輪眼。天照」\n發動天照，使[周圍][大範圍]敵人每秒受到400點[燃燒]傷害並附加[燃燒]標記，同時[沉默]且[攻擊力降低]40%，持續10秒。",
+      "slot": "EX",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        120
+      ],
+      "manaCost": [
+        576
+      ],
+      "manaCostTier": "大",
+      "range": 0,
+      "radiusTier": "中",
+      "cooldownTier": "極大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "flat": 1
+          },
+          "radius": 6,
+          "radiusTier": "中",
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyBuff",
+              "modifiers": [
+                {
+                  "stat": "ad",
+                  "op": "pctAdd",
+                  "value": -0.4
+                }
+              ],
+              "duration": 10,
+              "dispellable": true,
+              "polarity": "debuff"
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "burn",
+              "duration": 10
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "paralysis",
+              "duration": 10,
+              "silenced": true
+            },
+            {
+              "kind": "dot",
+              "damageType": "magic",
+              "amountPerTick": {
+                "flat": 400
+              },
+              "intervalSec": 1,
+              "durationSec": 10,
+              "stacking": "refresh"
+            }
+          ]
+        },
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "preset": "tpl-locust-orb",
+          "modelKey": "imported.netherstrike",
+          "clip": "idle",
+          "scale": 4,
+          "lifeSec": 2,
+          "soundKey": "wc3.flamestrikebirth1",
+          "path": "orbit",
+          "speed": 1,
+          "distance": 0.1,
+          "count": 1,
+          "alpha": 0.9
+        }
+      ],
+      "vfxKey": "fx.prim.void.explosion-lg",
+      "castTimeSec": 1.633,
+      "icon": "assets/icons/abilities/godie-edem.ex.webp",
+      "schema": "ability@1",
+      "radius": 6
+    }
+  }
+}

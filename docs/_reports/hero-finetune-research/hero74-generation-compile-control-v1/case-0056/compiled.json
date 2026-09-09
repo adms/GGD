@@ -1,0 +1,2817 @@
+{
+  "champion": {
+    "id": "community-review-24-20260907",
+    "name": "奇犽",
+    "description": "奇犽 社群英雄功能驗收稿。作品：《HUNTER×HUNTER》  \n定位：電力資源、高速移動、自動反應。\n\n視覺方向：藍白短電弧、側移殘像、神速輪廓電流；電量 UI 不以裝飾光冒充。\n以 GGD 法刺 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "role": "fighter",
+    "attackType": "melee",
+    "archetype": "fighter",
+    "origin": "法刺",
+    "modelKey": "community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df",
+    "baseStats": {
+      "maxHealth": 541,
+      "healthRegen": 0.97,
+      "maxMana": 370,
+      "manaRegen": 1.41,
+      "ad": 32,
+      "ap": 18,
+      "as": 0.7,
+      "range": 1.4,
+      "critChance": 0,
+      "critDamage": 1.75,
+      "cdr": 0,
+      "lifesteal": 0,
+      "ms": 10,
+      "armor": 0,
+      "mr": 0
+    },
+    "growth": {
+      "maxHealth": 31.047346938775508,
+      "healthRegen": 0.07555510204081634,
+      "maxMana": 11.026530612244898,
+      "manaRegen": 0,
+      "ad": 3.4382040816326525,
+      "as": 0,
+      "mr": 2.1118367346938776,
+      "armor": 0.3431428571428571,
+      "ap": 0
+    },
+    "attributes": {
+      "str": 12,
+      "agi": 25,
+      "int": 23,
+      "strGrowth": 1.18,
+      "agiGrowth": 2.36,
+      "intGrowth": 2.17,
+      "primary": "AGI",
+      "source": "authored"
+    },
+    "abilities": {
+      "Q": {
+        "id": "community-review-24-20260907.q",
+        "name": "落雷",
+        "provenance": "editor-json",
+        "description": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n【修正行為】消耗兩點電力；指定半徑 1.5 的地面落點，約 0.4 秒後重新判定敵人並電擊一次。離開可躲過，後進入仍會命中。閃電專屬素材仍待畫面驗收。",
+        "slot": "Q",
+        "castType": "ground",
+        "maxRank": 4,
+        "cooldown": [
+          6,
+          6,
+          6,
+          6
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "statusCost": {
+          "statusId": "community-review-24-20260907.electricity",
+          "count": 2
+        },
+        "range": 8,
+        "radius": 1.5,
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "delayed",
+            "shape": "circle",
+            "radius": 1.5,
+            "side": "enemies",
+            "delaySec": 0.4,
+            "count": 1,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "小",
+                  "ratios": [],
+                  "flat": 500,
+                  "perRank": [
+                    0,
+                    250,
+                    500,
+                    750
+                  ]
+                }
+              }
+            ],
+            "targetMode": "reresolve",
+            "anchor": "point"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "template": {
+          "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+          "params": {
+            "castType": "ground",
+            "castTimeSec": 0.1,
+            "radius": 1.5,
+            "side": "enemies",
+            "effects": [
+              {
+                "kind": "delayed",
+                "shape": "circle",
+                "radius": 1.5,
+                "side": "enemies",
+                "delaySec": 0.4,
+                "count": 1,
+                "targetMode": "reresolve",
+                "anchor": "point",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "小",
+                      "ratios": [],
+                      "flat": 500,
+                      "perRank": [
+                        0,
+                        250,
+                        500,
+                        750
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+        }
+      },
+      "W": {
+        "id": "community-review-24-20260907.w",
+        "name": "肢曲",
+        "provenance": "editor-json",
+        "description": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n【修正行為】消耗一點電力，向指向方向貼地側移 2.5；0.6 秒內提供 80% 普攻迴避（遵守 GGD 上限）。只有實際由此增益抽中的迴避補回兩點電力，單次肢曲限一次，供後續反擊使用。空放、敵人失手、其他迴避來源和無敵免傷不給電力；不再跳躍或落地傷害。殘像仍待畫面驗收。",
+        "slot": "W",
+        "castType": "ground",
+        "maxRank": 4,
+        "cooldown": [
+          6,
+          6,
+          6,
+          6
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "statusCost": {
+          "statusId": "community-review-24-20260907.electricity",
+          "count": 1
+        },
+        "range": 8,
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "evasion",
+                "op": "flat",
+                "value": 0.8
+              }
+            ],
+            "duration": 0.6,
+            "applyTo": "self",
+            "stackKey": "community-review-24-20260907.w.evade",
+            "maxStacks": 1,
+            "hooks": [
+              {
+                "on": "onEvade",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "community-review-24-20260907.electricity",
+                    "stacks": 2,
+                    "duration": 1
+                  }
+                ],
+                "target": "self",
+                "evadeSource": "thisSource",
+                "maxTriggers": 1
+              }
+            ]
+          },
+          {
+            "kind": "dash",
+            "mode": "toPoint",
+            "speed": 12,
+            "maxDistance": 2.5
+          }
+        ],
+        "castTimeSec": 0.1,
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "template": {
+          "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+          "params": {
+            "castType": "ground",
+            "castTimeSec": 0.1,
+            "radius": 0,
+            "side": "enemies",
+            "effects": [
+              {
+                "kind": "applyBuff",
+                "applyTo": "self",
+                "duration": 0.6,
+                "stackKey": "community-review-24-20260907.w.evade",
+                "maxStacks": 1,
+                "modifiers": [
+                  {
+                    "stat": "evasion",
+                    "op": "flat",
+                    "value": 0.8
+                  }
+                ],
+                "hooks": [
+                  {
+                    "on": "onEvade",
+                    "evadeSource": "thisSource",
+                    "target": "self",
+                    "maxTriggers": 1,
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "community-review-24-20260907.electricity",
+                        "stacks": 2,
+                        "duration": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "dash",
+                "mode": "toPoint",
+                "speed": 12,
+                "maxDistance": 2.5
+              }
+            ]
+          },
+          "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+        }
+      },
+      "E": {
+        "id": "community-review-24-20260907.e",
+        "name": "電光石火",
+        "provenance": "editor-json",
+        "description": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n【修正行為】開啟消耗一點電力，每秒再消耗一點，開啟期間移速增加 30% 且停止充電；再次按下立即關閉。電力耗盡或被其他技能用光便卸下加速，關閉後重新等待充電。不是固定三秒增益。電流輪廓仍待畫面驗收。",
+        "slot": "E",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "statusCost": {
+          "statusId": "community-review-24-20260907.electricity",
+          "count": 1
+        },
+        "range": 8,
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "applyStatus",
+            "statusId": "community-review-24-20260907.busy",
+            "duration": 3
+          }
+        ],
+        "castTimeSec": 0.1,
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "template": {
+          "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+          "params": {
+            "castType": "self",
+            "castTimeSec": 0.1,
+            "radius": 0,
+            "side": "enemies",
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "community-review-24-20260907.busy",
+                "duration": 3
+              }
+            ]
+          },
+          "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+        },
+        "toggle": {
+          "upkeepCadence": "perSecond",
+          "upkeepCost": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "upkeepResource": "status",
+          "upkeepStatus": {
+            "statusId": "community-review-24-20260907.electricity"
+          },
+          "upkeepIntervalSec": 1,
+          "onExit": [
+            {
+              "kind": "applyStatus",
+              "statusId": "community-review-24-20260907.busy",
+              "stacks": 1,
+              "duration": 3
+            }
+          ],
+          "whileOn": {
+            "ranks": [
+              {
+                "modifiers": [
+                  {
+                    "stat": "ms",
+                    "op": "pctAdd",
+                    "value": 0.3
+                  }
+                ],
+                "hooks": [
+                  {
+                    "on": "onInterval",
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "community-review-24-20260907.busy",
+                        "stacks": 1,
+                        "duration": 3
+                      }
+                    ],
+                    "internalCooldown": 0.1,
+                    "target": "self"
+                  }
+                ]
+              },
+              {
+                "modifiers": [
+                  {
+                    "stat": "ms",
+                    "op": "pctAdd",
+                    "value": 0.3
+                  }
+                ],
+                "hooks": [
+                  {
+                    "on": "onInterval",
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "community-review-24-20260907.busy",
+                        "stacks": 1,
+                        "duration": 3
+                      }
+                    ],
+                    "internalCooldown": 0.1,
+                    "target": "self"
+                  }
+                ]
+              },
+              {
+                "modifiers": [
+                  {
+                    "stat": "ms",
+                    "op": "pctAdd",
+                    "value": 0.3
+                  }
+                ],
+                "hooks": [
+                  {
+                    "on": "onInterval",
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "community-review-24-20260907.busy",
+                        "stacks": 1,
+                        "duration": 3
+                      }
+                    ],
+                    "internalCooldown": 0.1,
+                    "target": "self"
+                  }
+                ]
+              },
+              {
+                "modifiers": [
+                  {
+                    "stat": "ms",
+                    "op": "pctAdd",
+                    "value": 0.3
+                  }
+                ],
+                "hooks": [
+                  {
+                    "on": "onInterval",
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "community-review-24-20260907.busy",
+                        "stacks": 1,
+                        "duration": 3
+                      }
+                    ],
+                    "internalCooldown": 0.1,
+                    "target": "self"
+                  }
+                ]
+              }
+            ]
+          },
+          "costOnExit": false
+        }
+      },
+      "R": {
+        "id": "community-review-24-20260907.r",
+        "name": "神速・疾風迅雷",
+        "provenance": "editor-json",
+        "description": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n【修正行為】開啟消耗一點電力，五秒內對距離四以內的敵人普攻命中或真正迴避事件自動反擊。共用三次額度與 0.5 秒間隔，每次須足額支付兩點電力。技能傷害、反擊衍生傷害、敵人失手、遠處攻擊均不觸發；雙方神速不會互相無限反擊。電擊動作仍待畫面驗收。",
+        "slot": "R",
+        "castType": "self",
+        "maxRank": 3,
+        "cooldown": [
+          12,
+          12,
+          12,
+          12
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "statusCost": {
+          "statusId": "community-review-24-20260907.electricity",
+          "count": 1
+        },
+        "range": 8,
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "applyStatus",
+            "grantMark": {
+              "max": 3,
+              "resetOn": "round"
+            },
+            "statusId": "community-review-24-20260907.reaction",
+            "stacks": 3,
+            "duration": 5
+          },
+          {
+            "kind": "applyBuff",
+            "modifiers": [],
+            "duration": 5,
+            "stackKey": "community-review-24-20260907.r.reflex",
+            "maxStacks": 1,
+            "hooks": [
+              {
+                "on": "onDamageTaken",
+                "effects": [
+                  {
+                    "kind": "consumeStatus",
+                    "shape": "single",
+                    "statusId": "community-review-24-20260907.electricity",
+                    "count": 2,
+                    "subject": "self",
+                    "onConsumed": [
+                      {
+                        "kind": "consumeStatus",
+                        "shape": "single",
+                        "statusId": "community-review-24-20260907.reaction",
+                        "count": 1,
+                        "subject": "self",
+                        "onConsumed": [
+                          {
+                            "kind": "applyStatus",
+                            "statusId": "community-review-24-20260907.reaction-lock",
+                            "duration": 0.5,
+                            "applyTo": "self"
+                          },
+                          {
+                            "kind": "damage",
+                            "damageType": "magic",
+                            "amount": {
+                              "damageTier": "小",
+                              "ratios": [],
+                              "flat": 500,
+                              "perRank": [
+                                0,
+                                250,
+                                500
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "condition": {
+                  "all": [
+                    {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "community-review-24-20260907.electricity",
+                      "minStacks": 2
+                    },
+                    {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "community-review-24-20260907.reaction",
+                      "minStacks": 1
+                    },
+                    {
+                      "not": {
+                        "kind": "status",
+                        "subject": "self",
+                        "statusId": "community-review-24-20260907.reaction-lock",
+                        "minStacks": 1
+                      }
+                    },
+                    {
+                      "kind": "distance",
+                      "op": "<=",
+                      "value": 4
+                    }
+                  ]
+                },
+                "target": "event",
+                "victim": "enemy",
+                "damageSource": "basic"
+              },
+              {
+                "on": "onEvade",
+                "effects": [
+                  {
+                    "kind": "consumeStatus",
+                    "shape": "single",
+                    "statusId": "community-review-24-20260907.electricity",
+                    "count": 2,
+                    "subject": "self",
+                    "onConsumed": [
+                      {
+                        "kind": "consumeStatus",
+                        "shape": "single",
+                        "statusId": "community-review-24-20260907.reaction",
+                        "count": 1,
+                        "subject": "self",
+                        "onConsumed": [
+                          {
+                            "kind": "applyStatus",
+                            "statusId": "community-review-24-20260907.reaction-lock",
+                            "duration": 0.5,
+                            "applyTo": "self"
+                          },
+                          {
+                            "kind": "damage",
+                            "damageType": "magic",
+                            "amount": {
+                              "damageTier": "小",
+                              "ratios": [],
+                              "flat": 500,
+                              "perRank": [
+                                0,
+                                250,
+                                500
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "condition": {
+                  "all": [
+                    {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "community-review-24-20260907.electricity",
+                      "minStacks": 2
+                    },
+                    {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "community-review-24-20260907.reaction",
+                      "minStacks": 1
+                    },
+                    {
+                      "not": {
+                        "kind": "status",
+                        "subject": "self",
+                        "statusId": "community-review-24-20260907.reaction-lock",
+                        "minStacks": 1
+                      }
+                    },
+                    {
+                      "kind": "distance",
+                      "op": "<=",
+                      "value": 4
+                    }
+                  ]
+                },
+                "target": "event",
+                "victim": "enemy",
+                "evadeChannel": "basic",
+                "evadeSource": "defender"
+              }
+            ]
+          }
+        ],
+        "castTimeSec": 0.1,
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "template": {
+          "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+          "params": {
+            "castType": "self",
+            "castTimeSec": 0.1,
+            "radius": 0,
+            "side": "enemies",
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "community-review-24-20260907.reaction",
+                "duration": 5,
+                "stacks": 3,
+                "grantMark": {
+                  "max": 3,
+                  "resetOn": "round"
+                }
+              },
+              {
+                "kind": "applyBuff",
+                "duration": 5,
+                "modifiers": [],
+                "stackKey": "community-review-24-20260907.r.reflex",
+                "maxStacks": 1,
+                "hooks": [
+                  {
+                    "on": "onDamageTaken",
+                    "victim": "enemy",
+                    "target": "event",
+                    "condition": {
+                      "all": [
+                        {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-24-20260907.electricity",
+                          "minStacks": 2
+                        },
+                        {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-24-20260907.reaction",
+                          "minStacks": 1
+                        },
+                        {
+                          "not": {
+                            "kind": "status",
+                            "subject": "self",
+                            "statusId": "community-review-24-20260907.reaction-lock",
+                            "minStacks": 1
+                          }
+                        },
+                        {
+                          "kind": "distance",
+                          "op": "<=",
+                          "value": 4
+                        }
+                      ]
+                    },
+                    "effects": [
+                      {
+                        "kind": "consumeStatus",
+                        "shape": "single",
+                        "subject": "self",
+                        "statusId": "community-review-24-20260907.electricity",
+                        "count": 2,
+                        "onConsumed": [
+                          {
+                            "kind": "consumeStatus",
+                            "shape": "single",
+                            "subject": "self",
+                            "statusId": "community-review-24-20260907.reaction",
+                            "count": 1,
+                            "onConsumed": [
+                              {
+                                "kind": "applyStatus",
+                                "applyTo": "self",
+                                "statusId": "community-review-24-20260907.reaction-lock",
+                                "duration": 0.5
+                              },
+                              {
+                                "kind": "damage",
+                                "damageType": "magic",
+                                "amount": {
+                                  "damageTier": "小",
+                                  "ratios": [],
+                                  "flat": 500,
+                                  "perRank": [
+                                    0,
+                                    250,
+                                    500
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "damageSource": "basic"
+                  },
+                  {
+                    "on": "onEvade",
+                    "victim": "enemy",
+                    "target": "event",
+                    "condition": {
+                      "all": [
+                        {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-24-20260907.electricity",
+                          "minStacks": 2
+                        },
+                        {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-24-20260907.reaction",
+                          "minStacks": 1
+                        },
+                        {
+                          "not": {
+                            "kind": "status",
+                            "subject": "self",
+                            "statusId": "community-review-24-20260907.reaction-lock",
+                            "minStacks": 1
+                          }
+                        },
+                        {
+                          "kind": "distance",
+                          "op": "<=",
+                          "value": 4
+                        }
+                      ]
+                    },
+                    "effects": [
+                      {
+                        "kind": "consumeStatus",
+                        "shape": "single",
+                        "subject": "self",
+                        "statusId": "community-review-24-20260907.electricity",
+                        "count": 2,
+                        "onConsumed": [
+                          {
+                            "kind": "consumeStatus",
+                            "shape": "single",
+                            "subject": "self",
+                            "statusId": "community-review-24-20260907.reaction",
+                            "count": 1,
+                            "onConsumed": [
+                              {
+                                "kind": "applyStatus",
+                                "applyTo": "self",
+                                "statusId": "community-review-24-20260907.reaction-lock",
+                                "duration": 0.5
+                              },
+                              {
+                                "kind": "damage",
+                                "damageType": "magic",
+                                "amount": {
+                                  "damageTier": "小",
+                                  "ratios": [],
+                                  "flat": 500,
+                                  "perRank": [
+                                    0,
+                                    250,
+                                    500
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "evadeSource": "defender",
+                    "evadeChannel": "basic"
+                  }
+                ]
+              }
+            ]
+          },
+          "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+        }
+      }
+    },
+    "exAbility": "community-review-24-20260907.ex",
+    "passiveAbility": "community-review-24-20260907.passive",
+    "icon": "assets/icons/champions/thorne.webp",
+    "skillOrder": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ],
+    "buildPriority": [],
+    "tags": [],
+    "schema": "champion@1"
+  },
+  "relatedChampions": [],
+  "templateInstances": [
+    {
+      "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+      "schema": "template@1",
+      "name": "自訂事件被動",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+      "family": "event-passive",
+      "status": "enabled",
+      "params": {
+        "hooks": {
+          "type": "hooks",
+          "default": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      },
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      }
+    },
+    {
+      "id": "hero-template.c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8",
+      "schema": "template@1",
+      "name": "具名標記-層數與免死",
+      "description": "在持有者身上裝一個有層數的具名標記（【試煉】【風王結界】【縮地】），可跨回合、可永久，並可選擇讓它變成一張免死牌：受致命傷害時消耗一層 → 無敵 → 回復 → 擊退暈眩周圍敵人；每失去一層永久獲得一組加成。⚠️ 落差：無敵/回復/擊退是救活的同一格一起發生，文案上的「隨後」看不出來 —— ⛔ 那是**這張模板**尚未把回復／擊退接上延後排程，⛔ 不是引擎沒有：引擎**有** `kind:\"delayed\"`（`delaySec`／`count`／`intervalSec`／`effects`，出貨例：初號機 `godie-e00r` 的 berserk_smoke），⭐ 但 lethalSave 的 `selfEffects`／`aoeEffects` 是同格跑的；要接延後得另驗死亡／重觸發／施法者狀態／排程取消的時序，⛔ 不是改說明就算做了（GH#1044）；火圈燒傷不走傷害佇列，這張免死牌擋不到它。",
+      "family": "mark-stacks",
+      "status": "enabled",
+      "params": {
+        "markId": {
+          "type": "docRef",
+          "default": "godie-hapm.passive"
+        },
+        "initial": {
+          "type": "number",
+          "default": 12,
+          "min": 0,
+          "max": 999,
+          "unit": "count"
+        },
+        "max": {
+          "type": "number",
+          "default": 12,
+          "min": 1,
+          "max": 999,
+          "unit": "count"
+        },
+        "durationSec": {
+          "type": "number",
+          "default": -1,
+          "min": -1,
+          "max": 600,
+          "unit": "s"
+        },
+        "resetOn": {
+          "type": "enum",
+          "default": "match",
+          "values": [
+            "match",
+            "round",
+            "never"
+          ]
+        },
+        "perStackLost": {
+          "type": "statModifiers",
+          "default": [
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 0.1
+            },
+            {
+              "stat": "maxHealth",
+              "op": "pctAdd",
+              "value": 0.1
+            }
+          ],
+          "optional": true
+        },
+        "lethalMode": {
+          "type": "enum",
+          "default": "save",
+          "values": [
+            "save",
+            "none"
+          ]
+        },
+        "lethalConsume": {
+          "type": "number",
+          "default": 1,
+          "min": 1,
+          "max": 999,
+          "unit": "count"
+        },
+        "surviveHpPct": {
+          "type": "number",
+          "default": 0.01,
+          "min": 0.01,
+          "max": 1,
+          "unit": "ratio"
+        },
+        "lethalDamageTypes": {
+          "type": "enum",
+          "default": "all",
+          "values": [
+            "all",
+            "physicalMagic",
+            "physical",
+            "magic",
+            "true"
+          ]
+        },
+        "internalCooldown": {
+          "type": "number",
+          "default": 0.5,
+          "min": 0,
+          "max": 30,
+          "unit": "s"
+        },
+        "invulnerableSec": {
+          "type": "number",
+          "default": 1.5,
+          "min": 0.1,
+          "max": 30,
+          "unit": "s"
+        },
+        "invulnerableScope": {
+          "type": "enum",
+          "default": "damageAndControl",
+          "values": [
+            "damageAndControl",
+            "damageOnly"
+          ]
+        },
+        "restoreHealthPct": {
+          "type": "number",
+          "default": 0.5,
+          "min": 0,
+          "max": 1,
+          "unit": "ratio",
+          "optional": true
+        },
+        "aoeRadius": {
+          "type": "number",
+          "default": 6,
+          "min": 0,
+          "max": 12
+        },
+        "knockbackDistance": {
+          "type": "number",
+          "default": 4,
+          "min": 0.1,
+          "max": 20,
+          "optional": true
+        },
+        "knockbackSpeed": {
+          "type": "number",
+          "default": 16,
+          "min": 1,
+          "max": 40
+        },
+        "knockbackFrom": {
+          "type": "enum",
+          "default": "caster",
+          "values": [
+            "caster",
+            "facing",
+            "pull"
+          ]
+        },
+        "stunSec": {
+          "type": "number",
+          "default": 0.5,
+          "min": 0.034,
+          "max": 20,
+          "unit": "s",
+          "optional": true
+        },
+        "stunStatusId": {
+          "type": "docRef",
+          "default": "trial-stun"
+        }
+      },
+      "requires": [
+        "marks",
+        "invulnerable",
+        "knockback",
+        "applyStatus"
+      ],
+      "gapScore": 8,
+      "exemplar": {
+        "skill": "52-00 十二道試煉（海克力斯 Berserker 天生技）",
+        "jass": "無 JASS 出處 —— owner 2026-08-08 口述規格，不是從 war3map.j 復原的家族"
+      }
+    },
+    {
+      "id": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+      "schema": "template@1",
+      "name": "自訂效果序列",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "family": "effect-sequence",
+      "status": "enabled",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 10,
+          "unit": "s",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "min": 0,
+          "max": 40,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "values": [
+            "enemies",
+            "allies"
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "recast": {
+          "type": "recast",
+          "optional": true,
+          "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+        }
+      },
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      }
+    }
+  ],
+  "abilityDrafts": {
+    "PASSIVE": {
+      "id": "community-review-24-20260907.passive",
+      "name": "〔電力儲備〕",
+      "provenance": "editor-json",
+      "description": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n【修正行為】具名電力初始／上限 10；三秒沒有普攻、施法、造成或受到敵對傷害後，每秒回一點。電光石火開啟期間及充電釋放後三秒不充電。回合重置；不再用普攻附傷冒充資源，魔力不支付此英雄技能。電量介面與電弧仍待畫面驗收。",
+      "slot": "PASSIVE",
+      "innateKind": "passive",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        0
+      ],
+      "manaCost": [
+        0
+      ],
+      "range": 0,
+      "effects": [],
+      "passive": {
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onAttackAttempt",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "community-review-24-20260907.busy",
+                    "stacks": 1,
+                    "duration": 3
+                  }
+                ],
+                "target": "self"
+              },
+              {
+                "on": "onAbilityCast",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "community-review-24-20260907.busy",
+                    "stacks": 1,
+                    "duration": 3
+                  }
+                ],
+                "target": "self"
+              },
+              {
+                "on": "onDamageTaken",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "community-review-24-20260907.busy",
+                    "stacks": 1,
+                    "duration": 3
+                  }
+                ],
+                "target": "self",
+                "victim": "enemy"
+              },
+              {
+                "on": "onDamageDealt",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "community-review-24-20260907.busy",
+                    "stacks": 1,
+                    "duration": 3
+                  }
+                ],
+                "target": "self",
+                "victim": "enemy"
+              },
+              {
+                "on": "onInterval",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "community-review-24-20260907.electricity",
+                    "stacks": 1,
+                    "duration": 1
+                  }
+                ],
+                "internalCooldown": 1,
+                "condition": {
+                  "all": [
+                    {
+                      "not": {
+                        "kind": "status",
+                        "subject": "self",
+                        "statusId": "community-review-24-20260907.busy",
+                        "minStacks": 1
+                      }
+                    },
+                    {
+                      "not": {
+                        "kind": "status",
+                        "subject": "self",
+                        "statusId": "community-review-24-20260907.low-electricity",
+                        "minStacks": 1
+                      }
+                    }
+                  ]
+                },
+                "target": "self"
+              }
+            ]
+          }
+        ]
+      },
+      "marks": [
+        {
+          "markId": "community-review-24-20260907.electricity",
+          "initial": 10,
+          "max": 10,
+          "durationSec": -1,
+          "resetOn": "round",
+          "perStackLost": []
+        }
+      ],
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "template": {
+        "cards": [
+          {
+            "ref": "hero-template.c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8",
+            "params": {
+              "markId": "community-review-24-20260907.electricity",
+              "initial": 10,
+              "max": 10,
+              "durationSec": -1,
+              "resetOn": "round",
+              "perStackLost": [],
+              "lethalMode": "none",
+              "lethalConsume": 1,
+              "surviveHpPct": 0.01,
+              "lethalDamageTypes": "all",
+              "internalCooldown": 0.5,
+              "invulnerableSec": 1.5,
+              "invulnerableScope": "damageAndControl",
+              "restoreHealthPct": 0.5,
+              "aoeRadius": 6,
+              "knockbackDistance": 4,
+              "knockbackSpeed": 16,
+              "knockbackFrom": "caster",
+              "stunSec": 0.5,
+              "stunStatusId": "trial-stun"
+            },
+            "contentSha256": "sha256:96c2b1dc9c2f30e2ce468873ef2dc08edee6ff6ec678862db64e565a31a00dbc"
+          },
+          {
+            "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onAttackAttempt",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-24-20260907.busy",
+                      "stacks": 1,
+                      "duration": 3
+                    }
+                  ]
+                },
+                {
+                  "on": "onAbilityCast",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-24-20260907.busy",
+                      "stacks": 1,
+                      "duration": 3
+                    }
+                  ]
+                },
+                {
+                  "on": "onDamageTaken",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-24-20260907.busy",
+                      "stacks": 1,
+                      "duration": 3
+                    }
+                  ],
+                  "victim": "enemy"
+                },
+                {
+                  "on": "onDamageDealt",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-24-20260907.busy",
+                      "stacks": 1,
+                      "duration": 3
+                    }
+                  ],
+                  "victim": "enemy"
+                },
+                {
+                  "on": "onInterval",
+                  "internalCooldown": 1,
+                  "target": "self",
+                  "condition": {
+                    "all": [
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-24-20260907.busy",
+                          "minStacks": 1
+                        }
+                      },
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-24-20260907.low-electricity",
+                          "minStacks": 1
+                        }
+                      }
+                    ]
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-24-20260907.electricity",
+                      "stacks": 1,
+                      "duration": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+          }
+        ],
+        "onConflict": "reject"
+      },
+      "schema": "ability@1"
+    },
+    "Q": {
+      "id": "community-review-24-20260907.q",
+      "name": "落雷",
+      "provenance": "editor-json",
+      "description": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n【修正行為】消耗兩點電力；指定半徑 1.5 的地面落點，約 0.4 秒後重新判定敵人並電擊一次。離開可躲過，後進入仍會命中。閃電專屬素材仍待畫面驗收。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        6,
+        6,
+        6,
+        6
+      ],
+      "manaCost": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "statusCost": {
+        "statusId": "community-review-24-20260907.electricity",
+        "count": 2
+      },
+      "range": 8,
+      "radius": 1.5,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 1.5,
+          "side": "enemies",
+          "delaySec": 0.4,
+          "count": 1,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小",
+                "ratios": [],
+                "flat": 500,
+                "perRank": [
+                  0,
+                  250,
+                  500,
+                  750
+                ]
+              }
+            }
+          ],
+          "targetMode": "reresolve",
+          "anchor": "point"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "template": {
+        "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+        "params": {
+          "castType": "ground",
+          "castTimeSec": 0.1,
+          "radius": 1.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "delayed",
+              "shape": "circle",
+              "radius": 1.5,
+              "side": "enemies",
+              "delaySec": 0.4,
+              "count": 1,
+              "targetMode": "reresolve",
+              "anchor": "point",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "小",
+                    "ratios": [],
+                    "flat": 500,
+                    "perRank": [
+                      0,
+                      250,
+                      500,
+                      750
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+      },
+      "schema": "ability@1"
+    },
+    "W": {
+      "id": "community-review-24-20260907.w",
+      "name": "肢曲",
+      "provenance": "editor-json",
+      "description": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n【修正行為】消耗一點電力，向指向方向貼地側移 2.5；0.6 秒內提供 80% 普攻迴避（遵守 GGD 上限）。只有實際由此增益抽中的迴避補回兩點電力，單次肢曲限一次，供後續反擊使用。空放、敵人失手、其他迴避來源和無敵免傷不給電力；不再跳躍或落地傷害。殘像仍待畫面驗收。",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        6,
+        6,
+        6,
+        6
+      ],
+      "manaCost": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "statusCost": {
+        "statusId": "community-review-24-20260907.electricity",
+        "count": 1
+      },
+      "range": 8,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "evasion",
+              "op": "flat",
+              "value": 0.8
+            }
+          ],
+          "duration": 0.6,
+          "applyTo": "self",
+          "stackKey": "community-review-24-20260907.w.evade",
+          "maxStacks": 1,
+          "hooks": [
+            {
+              "on": "onEvade",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "community-review-24-20260907.electricity",
+                  "stacks": 2,
+                  "duration": 1
+                }
+              ],
+              "target": "self",
+              "evadeSource": "thisSource",
+              "maxTriggers": 1
+            }
+          ]
+        },
+        {
+          "kind": "dash",
+          "mode": "toPoint",
+          "speed": 12,
+          "maxDistance": 2.5
+        }
+      ],
+      "castTimeSec": 0.1,
+      "icon": "assets/icons/abilities/thorne.w.webp",
+      "template": {
+        "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+        "params": {
+          "castType": "ground",
+          "castTimeSec": 0.1,
+          "radius": 0,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "applyBuff",
+              "applyTo": "self",
+              "duration": 0.6,
+              "stackKey": "community-review-24-20260907.w.evade",
+              "maxStacks": 1,
+              "modifiers": [
+                {
+                  "stat": "evasion",
+                  "op": "flat",
+                  "value": 0.8
+                }
+              ],
+              "hooks": [
+                {
+                  "on": "onEvade",
+                  "evadeSource": "thisSource",
+                  "target": "self",
+                  "maxTriggers": 1,
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-24-20260907.electricity",
+                      "stacks": 2,
+                      "duration": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "dash",
+              "mode": "toPoint",
+              "speed": 12,
+              "maxDistance": 2.5
+            }
+          ]
+        },
+        "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+      },
+      "schema": "ability@1"
+    },
+    "E": {
+      "id": "community-review-24-20260907.e",
+      "name": "電光石火",
+      "provenance": "editor-json",
+      "description": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n【修正行為】開啟消耗一點電力，每秒再消耗一點，開啟期間移速增加 30% 且停止充電；再次按下立即關閉。電力耗盡或被其他技能用光便卸下加速，關閉後重新等待充電。不是固定三秒增益。電流輪廓仍待畫面驗收。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "manaCost": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "statusCost": {
+        "statusId": "community-review-24-20260907.electricity",
+        "count": 1
+      },
+      "range": 8,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "community-review-24-20260907.busy",
+          "duration": 3
+        }
+      ],
+      "castTimeSec": 0.1,
+      "icon": "assets/icons/abilities/thorne.e.webp",
+      "template": {
+        "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "radius": 0,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "community-review-24-20260907.busy",
+              "duration": 3
+            }
+          ]
+        },
+        "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+      },
+      "toggle": {
+        "upkeepCadence": "perSecond",
+        "upkeepCost": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "upkeepResource": "status",
+        "upkeepStatus": {
+          "statusId": "community-review-24-20260907.electricity"
+        },
+        "upkeepIntervalSec": 1,
+        "onExit": [
+          {
+            "kind": "applyStatus",
+            "statusId": "community-review-24-20260907.busy",
+            "stacks": 1,
+            "duration": 3
+          }
+        ],
+        "whileOn": {
+          "ranks": [
+            {
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "value": 0.3
+                }
+              ],
+              "hooks": [
+                {
+                  "on": "onInterval",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-24-20260907.busy",
+                      "stacks": 1,
+                      "duration": 3
+                    }
+                  ],
+                  "internalCooldown": 0.1,
+                  "target": "self"
+                }
+              ]
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "value": 0.3
+                }
+              ],
+              "hooks": [
+                {
+                  "on": "onInterval",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-24-20260907.busy",
+                      "stacks": 1,
+                      "duration": 3
+                    }
+                  ],
+                  "internalCooldown": 0.1,
+                  "target": "self"
+                }
+              ]
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "value": 0.3
+                }
+              ],
+              "hooks": [
+                {
+                  "on": "onInterval",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-24-20260907.busy",
+                      "stacks": 1,
+                      "duration": 3
+                    }
+                  ],
+                  "internalCooldown": 0.1,
+                  "target": "self"
+                }
+              ]
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "value": 0.3
+                }
+              ],
+              "hooks": [
+                {
+                  "on": "onInterval",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-24-20260907.busy",
+                      "stacks": 1,
+                      "duration": 3
+                    }
+                  ],
+                  "internalCooldown": 0.1,
+                  "target": "self"
+                }
+              ]
+            }
+          ]
+        },
+        "costOnExit": false
+      },
+      "schema": "ability@1"
+    },
+    "R": {
+      "id": "community-review-24-20260907.r",
+      "name": "神速・疾風迅雷",
+      "provenance": "editor-json",
+      "description": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n【修正行為】開啟消耗一點電力，五秒內對距離四以內的敵人普攻命中或真正迴避事件自動反擊。共用三次額度與 0.5 秒間隔，每次須足額支付兩點電力。技能傷害、反擊衍生傷害、敵人失手、遠處攻擊均不觸發；雙方神速不會互相無限反擊。電擊動作仍待畫面驗收。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        12,
+        12,
+        12,
+        12
+      ],
+      "manaCost": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "statusCost": {
+        "statusId": "community-review-24-20260907.electricity",
+        "count": 1
+      },
+      "range": 8,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "grantMark": {
+            "max": 3,
+            "resetOn": "round"
+          },
+          "statusId": "community-review-24-20260907.reaction",
+          "stacks": 3,
+          "duration": 5
+        },
+        {
+          "kind": "applyBuff",
+          "modifiers": [],
+          "duration": 5,
+          "stackKey": "community-review-24-20260907.r.reflex",
+          "maxStacks": 1,
+          "hooks": [
+            {
+              "on": "onDamageTaken",
+              "effects": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "statusId": "community-review-24-20260907.electricity",
+                  "count": 2,
+                  "subject": "self",
+                  "onConsumed": [
+                    {
+                      "kind": "consumeStatus",
+                      "shape": "single",
+                      "statusId": "community-review-24-20260907.reaction",
+                      "count": 1,
+                      "subject": "self",
+                      "onConsumed": [
+                        {
+                          "kind": "applyStatus",
+                          "statusId": "community-review-24-20260907.reaction-lock",
+                          "duration": 0.5,
+                          "applyTo": "self"
+                        },
+                        {
+                          "kind": "damage",
+                          "damageType": "magic",
+                          "amount": {
+                            "damageTier": "小",
+                            "ratios": [],
+                            "flat": 500,
+                            "perRank": [
+                              0,
+                              250,
+                              500
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "condition": {
+                "all": [
+                  {
+                    "kind": "status",
+                    "subject": "self",
+                    "statusId": "community-review-24-20260907.electricity",
+                    "minStacks": 2
+                  },
+                  {
+                    "kind": "status",
+                    "subject": "self",
+                    "statusId": "community-review-24-20260907.reaction",
+                    "minStacks": 1
+                  },
+                  {
+                    "not": {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "community-review-24-20260907.reaction-lock",
+                      "minStacks": 1
+                    }
+                  },
+                  {
+                    "kind": "distance",
+                    "op": "<=",
+                    "value": 4
+                  }
+                ]
+              },
+              "target": "event",
+              "victim": "enemy",
+              "damageSource": "basic"
+            },
+            {
+              "on": "onEvade",
+              "effects": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "statusId": "community-review-24-20260907.electricity",
+                  "count": 2,
+                  "subject": "self",
+                  "onConsumed": [
+                    {
+                      "kind": "consumeStatus",
+                      "shape": "single",
+                      "statusId": "community-review-24-20260907.reaction",
+                      "count": 1,
+                      "subject": "self",
+                      "onConsumed": [
+                        {
+                          "kind": "applyStatus",
+                          "statusId": "community-review-24-20260907.reaction-lock",
+                          "duration": 0.5,
+                          "applyTo": "self"
+                        },
+                        {
+                          "kind": "damage",
+                          "damageType": "magic",
+                          "amount": {
+                            "damageTier": "小",
+                            "ratios": [],
+                            "flat": 500,
+                            "perRank": [
+                              0,
+                              250,
+                              500
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "condition": {
+                "all": [
+                  {
+                    "kind": "status",
+                    "subject": "self",
+                    "statusId": "community-review-24-20260907.electricity",
+                    "minStacks": 2
+                  },
+                  {
+                    "kind": "status",
+                    "subject": "self",
+                    "statusId": "community-review-24-20260907.reaction",
+                    "minStacks": 1
+                  },
+                  {
+                    "not": {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "community-review-24-20260907.reaction-lock",
+                      "minStacks": 1
+                    }
+                  },
+                  {
+                    "kind": "distance",
+                    "op": "<=",
+                    "value": 4
+                  }
+                ]
+              },
+              "target": "event",
+              "victim": "enemy",
+              "evadeChannel": "basic",
+              "evadeSource": "defender"
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "icon": "assets/icons/abilities/thorne.r.webp",
+      "template": {
+        "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "radius": 0,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "community-review-24-20260907.reaction",
+              "duration": 5,
+              "stacks": 3,
+              "grantMark": {
+                "max": 3,
+                "resetOn": "round"
+              }
+            },
+            {
+              "kind": "applyBuff",
+              "duration": 5,
+              "modifiers": [],
+              "stackKey": "community-review-24-20260907.r.reflex",
+              "maxStacks": 1,
+              "hooks": [
+                {
+                  "on": "onDamageTaken",
+                  "victim": "enemy",
+                  "target": "event",
+                  "condition": {
+                    "all": [
+                      {
+                        "kind": "status",
+                        "subject": "self",
+                        "statusId": "community-review-24-20260907.electricity",
+                        "minStacks": 2
+                      },
+                      {
+                        "kind": "status",
+                        "subject": "self",
+                        "statusId": "community-review-24-20260907.reaction",
+                        "minStacks": 1
+                      },
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-24-20260907.reaction-lock",
+                          "minStacks": 1
+                        }
+                      },
+                      {
+                        "kind": "distance",
+                        "op": "<=",
+                        "value": 4
+                      }
+                    ]
+                  },
+                  "effects": [
+                    {
+                      "kind": "consumeStatus",
+                      "shape": "single",
+                      "subject": "self",
+                      "statusId": "community-review-24-20260907.electricity",
+                      "count": 2,
+                      "onConsumed": [
+                        {
+                          "kind": "consumeStatus",
+                          "shape": "single",
+                          "subject": "self",
+                          "statusId": "community-review-24-20260907.reaction",
+                          "count": 1,
+                          "onConsumed": [
+                            {
+                              "kind": "applyStatus",
+                              "applyTo": "self",
+                              "statusId": "community-review-24-20260907.reaction-lock",
+                              "duration": 0.5
+                            },
+                            {
+                              "kind": "damage",
+                              "damageType": "magic",
+                              "amount": {
+                                "damageTier": "小",
+                                "ratios": [],
+                                "flat": 500,
+                                "perRank": [
+                                  0,
+                                  250,
+                                  500
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "damageSource": "basic"
+                },
+                {
+                  "on": "onEvade",
+                  "victim": "enemy",
+                  "target": "event",
+                  "condition": {
+                    "all": [
+                      {
+                        "kind": "status",
+                        "subject": "self",
+                        "statusId": "community-review-24-20260907.electricity",
+                        "minStacks": 2
+                      },
+                      {
+                        "kind": "status",
+                        "subject": "self",
+                        "statusId": "community-review-24-20260907.reaction",
+                        "minStacks": 1
+                      },
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-24-20260907.reaction-lock",
+                          "minStacks": 1
+                        }
+                      },
+                      {
+                        "kind": "distance",
+                        "op": "<=",
+                        "value": 4
+                      }
+                    ]
+                  },
+                  "effects": [
+                    {
+                      "kind": "consumeStatus",
+                      "shape": "single",
+                      "subject": "self",
+                      "statusId": "community-review-24-20260907.electricity",
+                      "count": 2,
+                      "onConsumed": [
+                        {
+                          "kind": "consumeStatus",
+                          "shape": "single",
+                          "subject": "self",
+                          "statusId": "community-review-24-20260907.reaction",
+                          "count": 1,
+                          "onConsumed": [
+                            {
+                              "kind": "applyStatus",
+                              "applyTo": "self",
+                              "statusId": "community-review-24-20260907.reaction-lock",
+                              "duration": 0.5
+                            },
+                            {
+                              "kind": "damage",
+                              "damageType": "magic",
+                              "amount": {
+                                "damageTier": "小",
+                                "ratios": [],
+                                "flat": 500,
+                                "perRank": [
+                                  0,
+                                  250,
+                                  500
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "evadeSource": "defender",
+                  "evadeChannel": "basic"
+                }
+              ]
+            }
+          ]
+        },
+        "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+      },
+      "schema": "ability@1"
+    },
+    "EX": {
+      "id": "community-review-24-20260907.ex",
+      "name": "〔充電釋放〕",
+      "provenance": "editor-json",
+      "description": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n新增代價：放空電力後自己繳械一秒，不能普攻；原三秒充電封鎖保留。\n【修正行為】至少有一點電力才可施放，施法開始一次消耗全部剩餘電力，對自身半徑二內敌人造成中級魔法爆發；三秒低電力狀態禁止充電。既有加速在電力耗盡時解除。原文未指定傷害按電量倍率，此版傷害沿用全域中級倍率，電量是全額施法成本。近身電爆仍待畫面驗收。",
+      "slot": "EX",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "manaCost": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "statusCost": {
+        "statusId": "community-review-24-20260907.electricity",
+        "count": "all"
+      },
+      "range": 8,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "community-review-24-20260907.low-electricity",
+          "duration": 3,
+          "applyTo": "self"
+        },
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 2,
+          "side": "enemies",
+          "delaySec": 0.03333333333333333,
+          "count": 1,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "中",
+                "ratios": [],
+                "flat": 1000
+              }
+            }
+          ],
+          "targetMode": "reresolve",
+          "anchor": "caster"
+        },
+        {
+          "kind": "applyStatus",
+          "sourceScope": "caster",
+          "statusId": "numbness",
+          "duration": 1,
+          "applyTo": "self",
+          "disarmed": true
+        },
+        {
+          "kind": "floatingText",
+          "shape": "single",
+          "text": "電量0%，普攻也下班",
+          "durationSec": 1,
+          "applyTo": "self"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "icon": "assets/icons/abilities/thorne.r.webp",
+      "template": {
+        "cards": [
+          {
+            "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "community-review-24-20260907.low-electricity",
+                  "duration": 3,
+                  "applyTo": "self"
+                },
+                {
+                  "kind": "delayed",
+                  "shape": "circle",
+                  "radius": 2,
+                  "side": "enemies",
+                  "anchor": "caster",
+                  "targetMode": "reresolve",
+                  "delaySec": 0.03333333333333333,
+                  "count": 1,
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "中",
+                        "ratios": [],
+                        "flat": 1000
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+          },
+          {
+            "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "numbness",
+                  "duration": 1,
+                  "applyTo": "self",
+                  "sourceScope": "caster",
+                  "disarmed": true
+                },
+                {
+                  "kind": "floatingText",
+                  "shape": "single",
+                  "text": "電量0%，普攻也下班",
+                  "applyTo": "self",
+                  "durationSec": 1
+                }
+              ]
+            },
+            "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+          }
+        ],
+        "onConflict": "reject"
+      },
+      "schema": "ability@1"
+    }
+  },
+  "standaloneAbilities": [
+    {
+      "id": "community-review-24-20260907.passive",
+      "name": "〔電力儲備〕",
+      "provenance": "editor-json",
+      "description": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n【修正行為】具名電力初始／上限 10；三秒沒有普攻、施法、造成或受到敵對傷害後，每秒回一點。電光石火開啟期間及充電釋放後三秒不充電。回合重置；不再用普攻附傷冒充資源，魔力不支付此英雄技能。電量介面與電弧仍待畫面驗收。",
+      "slot": "PASSIVE",
+      "innateKind": "passive",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        0
+      ],
+      "manaCost": [
+        0
+      ],
+      "range": 0,
+      "effects": [],
+      "passive": {
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onAttackAttempt",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "community-review-24-20260907.busy",
+                    "stacks": 1,
+                    "duration": 3
+                  }
+                ],
+                "target": "self"
+              },
+              {
+                "on": "onAbilityCast",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "community-review-24-20260907.busy",
+                    "stacks": 1,
+                    "duration": 3
+                  }
+                ],
+                "target": "self"
+              },
+              {
+                "on": "onDamageTaken",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "community-review-24-20260907.busy",
+                    "stacks": 1,
+                    "duration": 3
+                  }
+                ],
+                "target": "self",
+                "victim": "enemy"
+              },
+              {
+                "on": "onDamageDealt",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "community-review-24-20260907.busy",
+                    "stacks": 1,
+                    "duration": 3
+                  }
+                ],
+                "target": "self",
+                "victim": "enemy"
+              },
+              {
+                "on": "onInterval",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "community-review-24-20260907.electricity",
+                    "stacks": 1,
+                    "duration": 1
+                  }
+                ],
+                "internalCooldown": 1,
+                "condition": {
+                  "all": [
+                    {
+                      "not": {
+                        "kind": "status",
+                        "subject": "self",
+                        "statusId": "community-review-24-20260907.busy",
+                        "minStacks": 1
+                      }
+                    },
+                    {
+                      "not": {
+                        "kind": "status",
+                        "subject": "self",
+                        "statusId": "community-review-24-20260907.low-electricity",
+                        "minStacks": 1
+                      }
+                    }
+                  ]
+                },
+                "target": "self"
+              }
+            ]
+          }
+        ]
+      },
+      "marks": [
+        {
+          "markId": "community-review-24-20260907.electricity",
+          "initial": 10,
+          "max": 10,
+          "durationSec": -1,
+          "resetOn": "round",
+          "perStackLost": []
+        }
+      ],
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "template": {
+        "cards": [
+          {
+            "ref": "hero-template.c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8",
+            "params": {
+              "markId": "community-review-24-20260907.electricity",
+              "initial": 10,
+              "max": 10,
+              "durationSec": -1,
+              "resetOn": "round",
+              "perStackLost": [],
+              "lethalMode": "none",
+              "lethalConsume": 1,
+              "surviveHpPct": 0.01,
+              "lethalDamageTypes": "all",
+              "internalCooldown": 0.5,
+              "invulnerableSec": 1.5,
+              "invulnerableScope": "damageAndControl",
+              "restoreHealthPct": 0.5,
+              "aoeRadius": 6,
+              "knockbackDistance": 4,
+              "knockbackSpeed": 16,
+              "knockbackFrom": "caster",
+              "stunSec": 0.5,
+              "stunStatusId": "trial-stun"
+            },
+            "contentSha256": "sha256:96c2b1dc9c2f30e2ce468873ef2dc08edee6ff6ec678862db64e565a31a00dbc"
+          },
+          {
+            "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onAttackAttempt",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-24-20260907.busy",
+                      "stacks": 1,
+                      "duration": 3
+                    }
+                  ]
+                },
+                {
+                  "on": "onAbilityCast",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-24-20260907.busy",
+                      "stacks": 1,
+                      "duration": 3
+                    }
+                  ]
+                },
+                {
+                  "on": "onDamageTaken",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-24-20260907.busy",
+                      "stacks": 1,
+                      "duration": 3
+                    }
+                  ],
+                  "victim": "enemy"
+                },
+                {
+                  "on": "onDamageDealt",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-24-20260907.busy",
+                      "stacks": 1,
+                      "duration": 3
+                    }
+                  ],
+                  "victim": "enemy"
+                },
+                {
+                  "on": "onInterval",
+                  "internalCooldown": 1,
+                  "target": "self",
+                  "condition": {
+                    "all": [
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-24-20260907.busy",
+                          "minStacks": 1
+                        }
+                      },
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-24-20260907.low-electricity",
+                          "minStacks": 1
+                        }
+                      }
+                    ]
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-24-20260907.electricity",
+                      "stacks": 1,
+                      "duration": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+          }
+        ],
+        "onConflict": "reject"
+      },
+      "schema": "ability@1"
+    },
+    {
+      "id": "community-review-24-20260907.ex",
+      "name": "〔充電釋放〕",
+      "provenance": "editor-json",
+      "description": "【本次玩法】奇犽省電模式：閒置充電、移動耗電，一鍵放空後沒力普攻\n新增代價：放空電力後自己繳械一秒，不能普攻；原三秒充電封鎖保留。\n【修正行為】至少有一點電力才可施放，施法開始一次消耗全部剩餘電力，對自身半徑二內敌人造成中級魔法爆發；三秒低電力狀態禁止充電。既有加速在電力耗盡時解除。原文未指定傷害按電量倍率，此版傷害沿用全域中級倍率，電量是全額施法成本。近身電爆仍待畫面驗收。",
+      "slot": "EX",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "manaCost": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "statusCost": {
+        "statusId": "community-review-24-20260907.electricity",
+        "count": "all"
+      },
+      "range": 8,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "community-review-24-20260907.low-electricity",
+          "duration": 3,
+          "applyTo": "self"
+        },
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 2,
+          "side": "enemies",
+          "delaySec": 0.03333333333333333,
+          "count": 1,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "中",
+                "ratios": [],
+                "flat": 1000
+              }
+            }
+          ],
+          "targetMode": "reresolve",
+          "anchor": "caster"
+        },
+        {
+          "kind": "applyStatus",
+          "sourceScope": "caster",
+          "statusId": "numbness",
+          "duration": 1,
+          "applyTo": "self",
+          "disarmed": true
+        },
+        {
+          "kind": "floatingText",
+          "shape": "single",
+          "text": "電量0%，普攻也下班",
+          "durationSec": 1,
+          "applyTo": "self"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "icon": "assets/icons/abilities/thorne.r.webp",
+      "template": {
+        "cards": [
+          {
+            "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "community-review-24-20260907.low-electricity",
+                  "duration": 3,
+                  "applyTo": "self"
+                },
+                {
+                  "kind": "delayed",
+                  "shape": "circle",
+                  "radius": 2,
+                  "side": "enemies",
+                  "anchor": "caster",
+                  "targetMode": "reresolve",
+                  "delaySec": 0.03333333333333333,
+                  "count": 1,
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "中",
+                        "ratios": [],
+                        "flat": 1000
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+          },
+          {
+            "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "numbness",
+                  "duration": 1,
+                  "applyTo": "self",
+                  "sourceScope": "caster",
+                  "disarmed": true
+                },
+                {
+                  "kind": "floatingText",
+                  "shape": "single",
+                  "text": "電量0%，普攻也下班",
+                  "applyTo": "self",
+                  "durationSec": 1
+                }
+              ]
+            },
+            "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+          }
+        ],
+        "onConflict": "reject"
+      },
+      "schema": "ability@1"
+    }
+  ],
+  "vfxScripts": [
+    {
+      "id": "community-review-24-20260907.q",
+      "schema": "vfx-script@1",
+      "abilityId": "community-review-24-20260907.q",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "replaces": "caster.action",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "vfxId": "fx.prim.lightning.pulse-sm",
+          "at": "self",
+          "kind": "vfx",
+          "on": "castStart"
+        },
+        {
+          "vfxId": "fx.prim.lightning.nova",
+          "at": "point",
+          "kind": "vfx",
+          "on": "castEffect"
+        }
+      ]
+    },
+    {
+      "id": "community-review-24-20260907.w",
+      "schema": "vfx-script@1",
+      "abilityId": "community-review-24-20260907.w",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "replaces": "caster.action",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "vfxId": "fx.prim.lightning.pulse-sm",
+          "at": "self",
+          "kind": "vfx",
+          "on": "castStart"
+        },
+        {
+          "vfxId": "fx.prim.lightning.arc",
+          "at": "point",
+          "kind": "vfx",
+          "on": "castEffect"
+        }
+      ]
+    },
+    {
+      "id": "community-review-24-20260907.e",
+      "schema": "vfx-script@1",
+      "abilityId": "community-review-24-20260907.e",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "replaces": "caster.action",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "vfxId": "fx.prim.lightning.pulse-sm",
+          "at": "self",
+          "kind": "vfx",
+          "on": "castStart"
+        },
+        {
+          "vfxId": "fx.prim.lightning.pulse",
+          "at": "self",
+          "kind": "vfx",
+          "on": "castEffect"
+        }
+      ]
+    },
+    {
+      "id": "community-review-24-20260907.r",
+      "schema": "vfx-script@1",
+      "abilityId": "community-review-24-20260907.r",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "replaces": "caster.action",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "vfxId": "fx.prim.lightning.pulse-sm",
+          "at": "self",
+          "kind": "vfx",
+          "on": "castStart"
+        },
+        {
+          "vfxId": "fx.prim.lightning.pulse",
+          "at": "self",
+          "kind": "vfx",
+          "on": "castEffect"
+        }
+      ]
+    },
+    {
+      "id": "community-review-24-20260907.ex",
+      "schema": "vfx-script@1",
+      "abilityId": "community-review-24-20260907.ex",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "replaces": "caster.action",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "vfxId": "fx.prim.lightning.pulse-sm",
+          "at": "self",
+          "kind": "vfx",
+          "on": "castStart"
+        },
+        {
+          "vfxId": "fx.prim.lightning.nova",
+          "at": "point",
+          "kind": "vfx",
+          "on": "castEffect"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "level": "warn",
+      "field": "medians",
+      "message": "沒有傳入同定位的中位數，其餘八項用的是保守 fallback —— 數字可能已經過期。"
+    }
+  ]
+}

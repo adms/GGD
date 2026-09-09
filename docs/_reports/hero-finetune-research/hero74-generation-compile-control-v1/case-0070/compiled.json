@@ -1,0 +1,2271 @@
+{
+  "champion": {
+    "id": "community-review-28-20260907",
+    "name": "艾莉絲·伯雷亞斯·格雷拉特",
+    "description": "艾莉絲·伯雷亞斯·格雷拉特 社群英雄功能驗收稿。作品：《無職轉生》  \n採用：接受劍之聖地訓練後的劍士版本。  \n定位：先手、重斬、近身追擊。\n\n視覺方向：紅髮色輪廓、白銀重斬、光之太刀單道細亮線；避免螢幕全白。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "role": "fighter",
+    "attackType": "melee",
+    "archetype": "fighter",
+    "origin": "鬥士",
+    "modelKey": "community.body.44221ab16b078a550562a74cda12fd753fbd236c5c8b1c47",
+    "baseStats": {
+      "maxHealth": 541,
+      "healthRegen": 0.97,
+      "maxMana": 370,
+      "manaRegen": 1.41,
+      "ad": 32,
+      "ap": 18,
+      "as": 0.7,
+      "range": 1.4,
+      "critChance": 0,
+      "critDamage": 1.75,
+      "cdr": 0,
+      "lifesteal": 0,
+      "ms": 8,
+      "armor": 0,
+      "mr": 0
+    },
+    "growth": {
+      "maxHealth": 35.000204081632646,
+      "healthRegen": 0.08789387755102042,
+      "maxMana": 26.357142857142858,
+      "manaRegen": 0,
+      "ad": 4.289142857142858,
+      "as": 0,
+      "mr": 2.639795918367347,
+      "armor": 0.4578979591836735,
+      "ap": 0
+    },
+    "attributes": {
+      "str": 18,
+      "agi": 29,
+      "int": 13,
+      "strGrowth": 1.67,
+      "agiGrowth": 2.78,
+      "intGrowth": 1.25,
+      "primary": "AGI",
+      "source": "authored"
+    },
+    "abilities": {
+      "Q": {
+        "id": "community-review-28-20260907.q",
+        "name": "〔猛進斬〕",
+        "provenance": "editor-json",
+        "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n向輸入方向踏進一格後，才從實際終點揮一次前方近身弧斬；貼地移動，敵人逐個單次傷害，牆前停止後從實際終點判定。專用劍擊動作仍待畫面驗收。",
+        "slot": "Q",
+        "castType": "skillshot",
+        "maxRank": 4,
+        "cooldown": [
+          5,
+          5,
+          5,
+          5
+        ],
+        "manaCost": [
+          40,
+          40,
+          40,
+          40
+        ],
+        "range": 3,
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "dash",
+            "mode": "forward",
+            "speed": 8,
+            "maxDistance": 1,
+            "onEnd": [
+              {
+                "kind": "damageArea",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "小",
+                  "ratios": [],
+                  "flat": 500,
+                  "perRank": [
+                    0,
+                    250,
+                    500,
+                    750
+                  ]
+                },
+                "radius": 2,
+                "fromCaster": true,
+                "arcHalfAngleCos": 0.3
+              }
+            ]
+          }
+        ],
+        "castTimeSec": 0.15,
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "template": {
+          "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+          "params": {
+            "castType": "skillshot",
+            "castTimeSec": 0.15,
+            "radius": 0,
+            "side": "enemies",
+            "effects": [
+              {
+                "kind": "dash",
+                "mode": "forward",
+                "speed": 8,
+                "maxDistance": 1,
+                "onEnd": [
+                  {
+                    "kind": "damageArea",
+                    "fromCaster": true,
+                    "radius": 2,
+                    "arcHalfAngleCos": 0.3,
+                    "amount": {
+                      "damageTier": "小",
+                      "ratios": [],
+                      "flat": 500,
+                      "perRank": [
+                        0,
+                        250,
+                        500,
+                        750
+                      ]
+                    },
+                    "damageType": "physical"
+                  }
+                ]
+              }
+            ]
+          },
+          "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+        }
+      },
+      "W": {
+        "id": "community-review-28-20260907.w",
+        "name": "〔鬥氣護身〕",
+        "provenance": "editor-json",
+        "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n新增代價：硬化三秒自己減速30%；可以用E接近或R衝刺打破站樁僵局。\n三秒護甲與魔抗各加三十，使用固定堆疊鍵至多一層，到期還原；增加物理／魔法承傷能力，不是永久增益或無限護盾。",
+        "slot": "W",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "manaCost": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "range": 0,
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "armor",
+                "op": "flat",
+                "value": 30
+              },
+              {
+                "stat": "mr",
+                "op": "flat",
+                "value": 30
+              }
+            ],
+            "duration": 3,
+            "applyTo": "self",
+            "stackKey": "community-review-28-20260907.guard",
+            "maxStacks": 1
+          },
+          {
+            "kind": "applyStatus",
+            "sourceScope": "caster",
+            "statusId": "slow30",
+            "duration": 3,
+            "applyTo": "self",
+            "moveSpeedMult": 0.7
+          },
+          {
+            "kind": "floatingText",
+            "shape": "single",
+            "text": "淑女站好……我忍不了啦",
+            "durationSec": 1,
+            "applyTo": "self"
+          }
+        ],
+        "castTimeSec": 0,
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "template": {
+          "cards": [
+            {
+              "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+              "params": {
+                "castType": "self",
+                "castTimeSec": 0,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "applyTo": "self",
+                    "stackKey": "community-review-28-20260907.guard",
+                    "maxStacks": 1,
+                    "duration": 3,
+                    "modifiers": [
+                      {
+                        "stat": "armor",
+                        "op": "flat",
+                        "value": 30
+                      },
+                      {
+                        "stat": "mr",
+                        "op": "flat",
+                        "value": 30
+                      }
+                    ]
+                  }
+                ]
+              },
+              "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+            },
+            {
+              "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+              "params": {
+                "castType": "self",
+                "castTimeSec": 0,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "slow30",
+                    "duration": 3,
+                    "applyTo": "self",
+                    "sourceScope": "caster",
+                    "moveSpeedMult": 0.7
+                  },
+                  {
+                    "kind": "floatingText",
+                    "shape": "single",
+                    "text": "淑女站好……我忍不了啦",
+                    "applyTo": "self",
+                    "durationSec": 1
+                  }
+                ]
+              },
+              "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+            }
+          ],
+          "onConflict": "reject"
+        }
+      },
+      "E": {
+        "id": "community-review-28-20260907.e",
+        "name": "〔逼近步〕",
+        "provenance": "editor-json",
+        "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n向輸入方向短距離貼地接近；地形或第一個敵人攔截即停，不附帶原模板的傷害、擊飛或推移。保留 GGD 既有已開始衝刺的控制規則。",
+        "slot": "E",
+        "castType": "skillshot",
+        "maxRank": 4,
+        "cooldown": [
+          6,
+          6,
+          6,
+          6
+        ],
+        "manaCost": [
+          40,
+          40,
+          40,
+          40
+        ],
+        "range": 3,
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "dash",
+            "mode": "forward",
+            "stopOnHit": "enemy",
+            "speed": 10,
+            "maxDistance": 3
+          }
+        ],
+        "castTimeSec": 0,
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "template": {
+          "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+          "params": {
+            "castType": "skillshot",
+            "castTimeSec": 0,
+            "radius": 0,
+            "side": "enemies",
+            "effects": [
+              {
+                "kind": "dash",
+                "mode": "forward",
+                "speed": 10,
+                "maxDistance": 3,
+                "stopOnHit": "enemy"
+              }
+            ]
+          },
+          "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+        }
+      },
+      "R": {
+        "id": "community-review-28-20260907.r",
+        "name": "光之太刀",
+        "provenance": "editor-json",
+        "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n0.55 秒可被打斷的明確起手後，沿輸入方向最多八格高速直線衝刺（速度仍依 GGD 位移上限換算，當下為每秒十六格），第一個合法敵方身體接觸點停止並單次結算大級距傷害；地形優先，空放或只撞牆不產生命中傷害。光之太刀專用細亮線與動作仍待畫面驗收。",
+        "slot": "R",
+        "castType": "skillshot",
+        "maxRank": 3,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          95,
+          95,
+          95,
+          95
+        ],
+        "range": 8,
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "dash",
+            "mode": "forward",
+            "stopOnHit": "enemy",
+            "onHit": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "大",
+                  "ratios": [],
+                  "flat": 1500,
+                  "perRank": [
+                    0,
+                    750,
+                    1500
+                  ]
+                }
+              }
+            ],
+            "speed": 16,
+            "maxDistance": 8
+          }
+        ],
+        "castTimeSec": 0.55,
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "template": {
+          "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+          "params": {
+            "castType": "skillshot",
+            "castTimeSec": 0.55,
+            "radius": 0,
+            "side": "enemies",
+            "effects": [
+              {
+                "kind": "dash",
+                "mode": "forward",
+                "speed": 16,
+                "maxDistance": 8,
+                "stopOnHit": "enemy",
+                "onHit": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "大",
+                      "ratios": [],
+                      "flat": 1500,
+                      "perRank": [
+                        0,
+                        750,
+                        1500
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+        }
+      }
+    },
+    "exAbility": "community-review-28-20260907.ex",
+    "passiveAbility": "community-review-28-20260907.passive",
+    "icon": "assets/icons/champions/thorne.webp",
+    "skillOrder": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ],
+    "buildPriority": [],
+    "tags": [],
+    "schema": "champion@1"
+  },
+  "relatedChampions": [],
+  "templateInstances": [
+    {
+      "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+      "schema": "template@1",
+      "name": "自訂事件被動",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+      "family": "event-passive",
+      "status": "enabled",
+      "params": {
+        "hooks": {
+          "type": "hooks",
+          "default": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      },
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      }
+    },
+    {
+      "id": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+      "schema": "template@1",
+      "name": "自訂效果序列",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "family": "effect-sequence",
+      "status": "enabled",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 10,
+          "unit": "s",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "min": 0,
+          "max": 40,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "values": [
+            "enemies",
+            "allies"
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "recast": {
+          "type": "recast",
+          "optional": true,
+          "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+        }
+      },
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      }
+    }
+  ],
+  "abilityDrafts": {
+    "PASSIVE": {
+      "id": "community-review-28-20260907.passive",
+      "name": "〔劍神流・先發制人〕",
+      "provenance": "editor-json",
+      "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n每個敵人分開記交鋒：有效普攻／技能扣血或護盾開始二秒先手窗口，首個三格內命中追加一次極小物理傷害；同目標八秒冷卻。交鋒四秒無有效互動才重新開始，持續纏鬥不重開窗口；自己命中另留二秒追擊標記。不同施法者互不借用標記；零值、免疫與普通觸發傷害不建立交鋒。",
+      "slot": "PASSIVE",
+      "innateKind": "passive",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        0
+      ],
+      "manaCost": [
+        0
+      ],
+      "range": 0,
+      "effects": [],
+      "passive": {
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onDamageDealt",
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "condition": {
+                      "not": {
+                        "kind": "status",
+                        "subject": "target",
+                        "statusId": "community-review-28-20260907.combat",
+                        "appliedBy": "self"
+                      }
+                    },
+                    "sourceScope": "caster",
+                    "modifiers": [],
+                    "duration": 2,
+                    "statusId": "community-review-28-20260907.opening",
+                    "stackKey": "community-review-28-20260907.opening",
+                    "maxStacks": 1,
+                    "dispellable": false
+                  },
+                  {
+                    "kind": "consumeStatus",
+                    "condition": {
+                      "all": [
+                        {
+                          "kind": "distance",
+                          "op": "<=",
+                          "value": 3
+                        },
+                        {
+                          "not": {
+                            "kind": "status",
+                            "subject": "target",
+                            "statusId": "community-review-28-20260907.opener-lock",
+                            "appliedBy": "self"
+                          }
+                        }
+                      ]
+                    },
+                    "shape": "single",
+                    "statusId": "community-review-28-20260907.opening",
+                    "count": 1,
+                    "appliedBy": "self",
+                    "onConsumed": [
+                      {
+                        "kind": "applyBuff",
+                        "sourceScope": "caster",
+                        "modifiers": [],
+                        "duration": 8,
+                        "statusId": "community-review-28-20260907.opener-lock",
+                        "stackKey": "community-review-28-20260907.opener-lock",
+                        "maxStacks": 1,
+                        "dispellable": false
+                      },
+                      {
+                        "kind": "damage",
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "極小",
+                          "ratios": [],
+                          "flat": 200
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "sourceScope": "caster",
+                    "modifiers": [],
+                    "duration": 4,
+                    "statusId": "community-review-28-20260907.combat",
+                    "stackKey": "community-review-28-20260907.combat",
+                    "maxStacks": 1,
+                    "dispellable": false
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "sourceScope": "caster",
+                    "modifiers": [],
+                    "duration": 2,
+                    "statusId": "community-review-28-20260907.recent-hit",
+                    "stackKey": "community-review-28-20260907.recent-hit",
+                    "maxStacks": 1,
+                    "dispellable": false
+                  }
+                ],
+                "target": "event",
+                "victim": "enemy",
+                "damageConnected": true,
+                "damageSource": "basic"
+              },
+              {
+                "on": "onDamageTaken",
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "condition": {
+                      "not": {
+                        "kind": "status",
+                        "subject": "target",
+                        "statusId": "community-review-28-20260907.combat",
+                        "appliedBy": "self"
+                      }
+                    },
+                    "sourceScope": "caster",
+                    "modifiers": [],
+                    "duration": 2,
+                    "statusId": "community-review-28-20260907.opening",
+                    "stackKey": "community-review-28-20260907.opening",
+                    "maxStacks": 1,
+                    "dispellable": false
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "sourceScope": "caster",
+                    "modifiers": [],
+                    "duration": 4,
+                    "statusId": "community-review-28-20260907.combat",
+                    "stackKey": "community-review-28-20260907.combat",
+                    "maxStacks": 1,
+                    "dispellable": false
+                  }
+                ],
+                "target": "event",
+                "victim": "enemy",
+                "damageConnected": true,
+                "damageSource": "basic"
+              },
+              {
+                "on": "onDamageDealt",
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "condition": {
+                      "not": {
+                        "kind": "status",
+                        "subject": "target",
+                        "statusId": "community-review-28-20260907.combat",
+                        "appliedBy": "self"
+                      }
+                    },
+                    "sourceScope": "caster",
+                    "modifiers": [],
+                    "duration": 2,
+                    "statusId": "community-review-28-20260907.opening",
+                    "stackKey": "community-review-28-20260907.opening",
+                    "maxStacks": 1,
+                    "dispellable": false
+                  },
+                  {
+                    "kind": "consumeStatus",
+                    "condition": {
+                      "all": [
+                        {
+                          "kind": "distance",
+                          "op": "<=",
+                          "value": 3
+                        },
+                        {
+                          "not": {
+                            "kind": "status",
+                            "subject": "target",
+                            "statusId": "community-review-28-20260907.opener-lock",
+                            "appliedBy": "self"
+                          }
+                        }
+                      ]
+                    },
+                    "shape": "single",
+                    "statusId": "community-review-28-20260907.opening",
+                    "count": 1,
+                    "appliedBy": "self",
+                    "onConsumed": [
+                      {
+                        "kind": "applyBuff",
+                        "sourceScope": "caster",
+                        "modifiers": [],
+                        "duration": 8,
+                        "statusId": "community-review-28-20260907.opener-lock",
+                        "stackKey": "community-review-28-20260907.opener-lock",
+                        "maxStacks": 1,
+                        "dispellable": false
+                      },
+                      {
+                        "kind": "damage",
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "極小",
+                          "ratios": [],
+                          "flat": 200
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "sourceScope": "caster",
+                    "modifiers": [],
+                    "duration": 4,
+                    "statusId": "community-review-28-20260907.combat",
+                    "stackKey": "community-review-28-20260907.combat",
+                    "maxStacks": 1,
+                    "dispellable": false
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "sourceScope": "caster",
+                    "modifiers": [],
+                    "duration": 2,
+                    "statusId": "community-review-28-20260907.recent-hit",
+                    "stackKey": "community-review-28-20260907.recent-hit",
+                    "maxStacks": 1,
+                    "dispellable": false
+                  }
+                ],
+                "target": "event",
+                "victim": "enemy",
+                "damageConnected": true,
+                "damageSource": "ability"
+              },
+              {
+                "on": "onDamageTaken",
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "condition": {
+                      "not": {
+                        "kind": "status",
+                        "subject": "target",
+                        "statusId": "community-review-28-20260907.combat",
+                        "appliedBy": "self"
+                      }
+                    },
+                    "sourceScope": "caster",
+                    "modifiers": [],
+                    "duration": 2,
+                    "statusId": "community-review-28-20260907.opening",
+                    "stackKey": "community-review-28-20260907.opening",
+                    "maxStacks": 1,
+                    "dispellable": false
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "sourceScope": "caster",
+                    "modifiers": [],
+                    "duration": 4,
+                    "statusId": "community-review-28-20260907.combat",
+                    "stackKey": "community-review-28-20260907.combat",
+                    "maxStacks": 1,
+                    "dispellable": false
+                  }
+                ],
+                "target": "event",
+                "victim": "enemy",
+                "damageConnected": true,
+                "damageSource": "ability"
+              }
+            ]
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "template": {
+        "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "params": {
+          "hooks": [
+            {
+              "on": "onDamageDealt",
+              "victim": "enemy",
+              "damageSource": "basic",
+              "damageConnected": true,
+              "target": "event",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-28-20260907.opening",
+                  "sourceScope": "caster",
+                  "stackKey": "community-review-28-20260907.opening",
+                  "maxStacks": 1,
+                  "duration": 2,
+                  "modifiers": [],
+                  "dispellable": false,
+                  "condition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "target",
+                      "statusId": "community-review-28-20260907.combat",
+                      "appliedBy": "self"
+                    }
+                  }
+                },
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "statusId": "community-review-28-20260907.opening",
+                  "appliedBy": "self",
+                  "count": 1,
+                  "condition": {
+                    "all": [
+                      {
+                        "kind": "distance",
+                        "op": "<=",
+                        "value": 3
+                      },
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-28-20260907.opener-lock",
+                          "appliedBy": "self"
+                        }
+                      }
+                    ]
+                  },
+                  "onConsumed": [
+                    {
+                      "kind": "applyBuff",
+                      "statusId": "community-review-28-20260907.opener-lock",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-28-20260907.opener-lock",
+                      "maxStacks": 1,
+                      "duration": 8,
+                      "modifiers": [],
+                      "dispellable": false
+                    },
+                    {
+                      "kind": "damage",
+                      "damageType": "physical",
+                      "amount": {
+                        "damageTier": "極小",
+                        "ratios": [],
+                        "flat": 200
+                      }
+                    }
+                  ]
+                },
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-28-20260907.combat",
+                  "sourceScope": "caster",
+                  "stackKey": "community-review-28-20260907.combat",
+                  "maxStacks": 1,
+                  "duration": 4,
+                  "modifiers": [],
+                  "dispellable": false
+                },
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-28-20260907.recent-hit",
+                  "sourceScope": "caster",
+                  "stackKey": "community-review-28-20260907.recent-hit",
+                  "maxStacks": 1,
+                  "duration": 2,
+                  "modifiers": [],
+                  "dispellable": false
+                }
+              ]
+            },
+            {
+              "on": "onDamageTaken",
+              "victim": "enemy",
+              "damageSource": "basic",
+              "damageConnected": true,
+              "target": "event",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-28-20260907.opening",
+                  "sourceScope": "caster",
+                  "stackKey": "community-review-28-20260907.opening",
+                  "maxStacks": 1,
+                  "duration": 2,
+                  "modifiers": [],
+                  "dispellable": false,
+                  "condition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "target",
+                      "statusId": "community-review-28-20260907.combat",
+                      "appliedBy": "self"
+                    }
+                  }
+                },
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-28-20260907.combat",
+                  "sourceScope": "caster",
+                  "stackKey": "community-review-28-20260907.combat",
+                  "maxStacks": 1,
+                  "duration": 4,
+                  "modifiers": [],
+                  "dispellable": false
+                }
+              ]
+            },
+            {
+              "on": "onDamageDealt",
+              "victim": "enemy",
+              "damageSource": "ability",
+              "damageConnected": true,
+              "target": "event",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-28-20260907.opening",
+                  "sourceScope": "caster",
+                  "stackKey": "community-review-28-20260907.opening",
+                  "maxStacks": 1,
+                  "duration": 2,
+                  "modifiers": [],
+                  "dispellable": false,
+                  "condition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "target",
+                      "statusId": "community-review-28-20260907.combat",
+                      "appliedBy": "self"
+                    }
+                  }
+                },
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "statusId": "community-review-28-20260907.opening",
+                  "appliedBy": "self",
+                  "count": 1,
+                  "condition": {
+                    "all": [
+                      {
+                        "kind": "distance",
+                        "op": "<=",
+                        "value": 3
+                      },
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-28-20260907.opener-lock",
+                          "appliedBy": "self"
+                        }
+                      }
+                    ]
+                  },
+                  "onConsumed": [
+                    {
+                      "kind": "applyBuff",
+                      "statusId": "community-review-28-20260907.opener-lock",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-28-20260907.opener-lock",
+                      "maxStacks": 1,
+                      "duration": 8,
+                      "modifiers": [],
+                      "dispellable": false
+                    },
+                    {
+                      "kind": "damage",
+                      "damageType": "physical",
+                      "amount": {
+                        "damageTier": "極小",
+                        "ratios": [],
+                        "flat": 200
+                      }
+                    }
+                  ]
+                },
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-28-20260907.combat",
+                  "sourceScope": "caster",
+                  "stackKey": "community-review-28-20260907.combat",
+                  "maxStacks": 1,
+                  "duration": 4,
+                  "modifiers": [],
+                  "dispellable": false
+                },
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-28-20260907.recent-hit",
+                  "sourceScope": "caster",
+                  "stackKey": "community-review-28-20260907.recent-hit",
+                  "maxStacks": 1,
+                  "duration": 2,
+                  "modifiers": [],
+                  "dispellable": false
+                }
+              ]
+            },
+            {
+              "on": "onDamageTaken",
+              "victim": "enemy",
+              "damageSource": "ability",
+              "damageConnected": true,
+              "target": "event",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-28-20260907.opening",
+                  "sourceScope": "caster",
+                  "stackKey": "community-review-28-20260907.opening",
+                  "maxStacks": 1,
+                  "duration": 2,
+                  "modifiers": [],
+                  "dispellable": false,
+                  "condition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "target",
+                      "statusId": "community-review-28-20260907.combat",
+                      "appliedBy": "self"
+                    }
+                  }
+                },
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-28-20260907.combat",
+                  "sourceScope": "caster",
+                  "stackKey": "community-review-28-20260907.combat",
+                  "maxStacks": 1,
+                  "duration": 4,
+                  "modifiers": [],
+                  "dispellable": false
+                }
+              ]
+            }
+          ]
+        },
+        "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+      },
+      "schema": "ability@1"
+    },
+    "Q": {
+      "id": "community-review-28-20260907.q",
+      "name": "〔猛進斬〕",
+      "provenance": "editor-json",
+      "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n向輸入方向踏進一格後，才從實際終點揮一次前方近身弧斬；貼地移動，敵人逐個單次傷害，牆前停止後從實際終點判定。專用劍擊動作仍待畫面驗收。",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        5,
+        5,
+        5,
+        5
+      ],
+      "manaCost": [
+        40,
+        40,
+        40,
+        40
+      ],
+      "range": 3,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "forward",
+          "speed": 8,
+          "maxDistance": 1,
+          "onEnd": [
+            {
+              "kind": "damageArea",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "ratios": [],
+                "flat": 500,
+                "perRank": [
+                  0,
+                  250,
+                  500,
+                  750
+                ]
+              },
+              "radius": 2,
+              "fromCaster": true,
+              "arcHalfAngleCos": 0.3
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.15,
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "template": {
+        "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+        "params": {
+          "castType": "skillshot",
+          "castTimeSec": 0.15,
+          "radius": 0,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "dash",
+              "mode": "forward",
+              "speed": 8,
+              "maxDistance": 1,
+              "onEnd": [
+                {
+                  "kind": "damageArea",
+                  "fromCaster": true,
+                  "radius": 2,
+                  "arcHalfAngleCos": 0.3,
+                  "amount": {
+                    "damageTier": "小",
+                    "ratios": [],
+                    "flat": 500,
+                    "perRank": [
+                      0,
+                      250,
+                      500,
+                      750
+                    ]
+                  },
+                  "damageType": "physical"
+                }
+              ]
+            }
+          ]
+        },
+        "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+      },
+      "schema": "ability@1"
+    },
+    "W": {
+      "id": "community-review-28-20260907.w",
+      "name": "〔鬥氣護身〕",
+      "provenance": "editor-json",
+      "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n新增代價：硬化三秒自己減速30%；可以用E接近或R衝刺打破站樁僵局。\n三秒護甲與魔抗各加三十，使用固定堆疊鍵至多一層，到期還原；增加物理／魔法承傷能力，不是永久增益或無限護盾。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "manaCost": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "range": 0,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 30
+            },
+            {
+              "stat": "mr",
+              "op": "flat",
+              "value": 30
+            }
+          ],
+          "duration": 3,
+          "applyTo": "self",
+          "stackKey": "community-review-28-20260907.guard",
+          "maxStacks": 1
+        },
+        {
+          "kind": "applyStatus",
+          "sourceScope": "caster",
+          "statusId": "slow30",
+          "duration": 3,
+          "applyTo": "self",
+          "moveSpeedMult": 0.7
+        },
+        {
+          "kind": "floatingText",
+          "shape": "single",
+          "text": "淑女站好……我忍不了啦",
+          "durationSec": 1,
+          "applyTo": "self"
+        }
+      ],
+      "castTimeSec": 0,
+      "icon": "assets/icons/abilities/thorne.w.webp",
+      "template": {
+        "cards": [
+          {
+            "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "applyTo": "self",
+                  "stackKey": "community-review-28-20260907.guard",
+                  "maxStacks": 1,
+                  "duration": 3,
+                  "modifiers": [
+                    {
+                      "stat": "armor",
+                      "op": "flat",
+                      "value": 30
+                    },
+                    {
+                      "stat": "mr",
+                      "op": "flat",
+                      "value": 30
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+          },
+          {
+            "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "slow30",
+                  "duration": 3,
+                  "applyTo": "self",
+                  "sourceScope": "caster",
+                  "moveSpeedMult": 0.7
+                },
+                {
+                  "kind": "floatingText",
+                  "shape": "single",
+                  "text": "淑女站好……我忍不了啦",
+                  "applyTo": "self",
+                  "durationSec": 1
+                }
+              ]
+            },
+            "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+          }
+        ],
+        "onConflict": "reject"
+      },
+      "schema": "ability@1"
+    },
+    "E": {
+      "id": "community-review-28-20260907.e",
+      "name": "〔逼近步〕",
+      "provenance": "editor-json",
+      "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n向輸入方向短距離貼地接近；地形或第一個敵人攔截即停，不附帶原模板的傷害、擊飛或推移。保留 GGD 既有已開始衝刺的控制規則。",
+      "slot": "E",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        6,
+        6,
+        6,
+        6
+      ],
+      "manaCost": [
+        40,
+        40,
+        40,
+        40
+      ],
+      "range": 3,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "forward",
+          "stopOnHit": "enemy",
+          "speed": 10,
+          "maxDistance": 3
+        }
+      ],
+      "castTimeSec": 0,
+      "icon": "assets/icons/abilities/thorne.e.webp",
+      "template": {
+        "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+        "params": {
+          "castType": "skillshot",
+          "castTimeSec": 0,
+          "radius": 0,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "dash",
+              "mode": "forward",
+              "speed": 10,
+              "maxDistance": 3,
+              "stopOnHit": "enemy"
+            }
+          ]
+        },
+        "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+      },
+      "schema": "ability@1"
+    },
+    "R": {
+      "id": "community-review-28-20260907.r",
+      "name": "光之太刀",
+      "provenance": "editor-json",
+      "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n0.55 秒可被打斷的明確起手後，沿輸入方向最多八格高速直線衝刺（速度仍依 GGD 位移上限換算，當下為每秒十六格），第一個合法敵方身體接觸點停止並單次結算大級距傷害；地形優先，空放或只撞牆不產生命中傷害。光之太刀專用細亮線與動作仍待畫面驗收。",
+      "slot": "R",
+      "castType": "skillshot",
+      "maxRank": 3,
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "manaCost": [
+        95,
+        95,
+        95,
+        95
+      ],
+      "range": 8,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "forward",
+          "stopOnHit": "enemy",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "大",
+                "ratios": [],
+                "flat": 1500,
+                "perRank": [
+                  0,
+                  750,
+                  1500
+                ]
+              }
+            }
+          ],
+          "speed": 16,
+          "maxDistance": 8
+        }
+      ],
+      "castTimeSec": 0.55,
+      "icon": "assets/icons/abilities/thorne.r.webp",
+      "template": {
+        "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+        "params": {
+          "castType": "skillshot",
+          "castTimeSec": 0.55,
+          "radius": 0,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "dash",
+              "mode": "forward",
+              "speed": 16,
+              "maxDistance": 8,
+              "stopOnHit": "enemy",
+              "onHit": [
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "大",
+                    "ratios": [],
+                    "flat": 1500,
+                    "perRank": [
+                      0,
+                      750,
+                      1500
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+      },
+      "schema": "ability@1"
+    },
+    "EX": {
+      "id": "community-review-28-20260907.ex",
+      "name": "〔狂劍追擊〕",
+      "provenance": "editor-json",
+      "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n指定自己二秒內有效命中的近身敵人，消耗該次追擊標記追加一次小級距劍擊。超距直接拒絕，不自動接近，不扣魔力、冷卻或目標標記；別來源／過期／非法目標不能施放。",
+      "slot": "EX",
+      "castType": "targeted",
+      "maxRank": 1,
+      "cooldown": [
+        7,
+        7,
+        7,
+        7
+      ],
+      "manaCost": [
+        50,
+        50,
+        50,
+        50
+      ],
+      "allowApproach": false,
+      "requiredTargetStatus": {
+        "statusId": "community-review-28-20260907.recent-hit",
+        "appliedBy": "self"
+      },
+      "statusCost": {
+        "statusId": "community-review-28-20260907.recent-hit",
+        "count": 1,
+        "appliedBy": "self",
+        "subject": "target"
+      },
+      "range": 3,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [],
+            "flat": 500
+          }
+        }
+      ],
+      "castTimeSec": 0.12,
+      "icon": "assets/icons/abilities/thorne.r.webp",
+      "template": {
+        "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+        "params": {
+          "castType": "targeted",
+          "castTimeSec": 0.12,
+          "radius": 0,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "ratios": [],
+                "flat": 500
+              }
+            }
+          ]
+        },
+        "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+      },
+      "schema": "ability@1"
+    }
+  },
+  "standaloneAbilities": [
+    {
+      "id": "community-review-28-20260907.passive",
+      "name": "〔劍神流・先發制人〕",
+      "provenance": "editor-json",
+      "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n每個敵人分開記交鋒：有效普攻／技能扣血或護盾開始二秒先手窗口，首個三格內命中追加一次極小物理傷害；同目標八秒冷卻。交鋒四秒無有效互動才重新開始，持續纏鬥不重開窗口；自己命中另留二秒追擊標記。不同施法者互不借用標記；零值、免疫與普通觸發傷害不建立交鋒。",
+      "slot": "PASSIVE",
+      "innateKind": "passive",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        0
+      ],
+      "manaCost": [
+        0
+      ],
+      "range": 0,
+      "effects": [],
+      "passive": {
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onDamageDealt",
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "condition": {
+                      "not": {
+                        "kind": "status",
+                        "subject": "target",
+                        "statusId": "community-review-28-20260907.combat",
+                        "appliedBy": "self"
+                      }
+                    },
+                    "sourceScope": "caster",
+                    "modifiers": [],
+                    "duration": 2,
+                    "statusId": "community-review-28-20260907.opening",
+                    "stackKey": "community-review-28-20260907.opening",
+                    "maxStacks": 1,
+                    "dispellable": false
+                  },
+                  {
+                    "kind": "consumeStatus",
+                    "condition": {
+                      "all": [
+                        {
+                          "kind": "distance",
+                          "op": "<=",
+                          "value": 3
+                        },
+                        {
+                          "not": {
+                            "kind": "status",
+                            "subject": "target",
+                            "statusId": "community-review-28-20260907.opener-lock",
+                            "appliedBy": "self"
+                          }
+                        }
+                      ]
+                    },
+                    "shape": "single",
+                    "statusId": "community-review-28-20260907.opening",
+                    "count": 1,
+                    "appliedBy": "self",
+                    "onConsumed": [
+                      {
+                        "kind": "applyBuff",
+                        "sourceScope": "caster",
+                        "modifiers": [],
+                        "duration": 8,
+                        "statusId": "community-review-28-20260907.opener-lock",
+                        "stackKey": "community-review-28-20260907.opener-lock",
+                        "maxStacks": 1,
+                        "dispellable": false
+                      },
+                      {
+                        "kind": "damage",
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "極小",
+                          "ratios": [],
+                          "flat": 200
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "sourceScope": "caster",
+                    "modifiers": [],
+                    "duration": 4,
+                    "statusId": "community-review-28-20260907.combat",
+                    "stackKey": "community-review-28-20260907.combat",
+                    "maxStacks": 1,
+                    "dispellable": false
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "sourceScope": "caster",
+                    "modifiers": [],
+                    "duration": 2,
+                    "statusId": "community-review-28-20260907.recent-hit",
+                    "stackKey": "community-review-28-20260907.recent-hit",
+                    "maxStacks": 1,
+                    "dispellable": false
+                  }
+                ],
+                "target": "event",
+                "victim": "enemy",
+                "damageConnected": true,
+                "damageSource": "basic"
+              },
+              {
+                "on": "onDamageTaken",
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "condition": {
+                      "not": {
+                        "kind": "status",
+                        "subject": "target",
+                        "statusId": "community-review-28-20260907.combat",
+                        "appliedBy": "self"
+                      }
+                    },
+                    "sourceScope": "caster",
+                    "modifiers": [],
+                    "duration": 2,
+                    "statusId": "community-review-28-20260907.opening",
+                    "stackKey": "community-review-28-20260907.opening",
+                    "maxStacks": 1,
+                    "dispellable": false
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "sourceScope": "caster",
+                    "modifiers": [],
+                    "duration": 4,
+                    "statusId": "community-review-28-20260907.combat",
+                    "stackKey": "community-review-28-20260907.combat",
+                    "maxStacks": 1,
+                    "dispellable": false
+                  }
+                ],
+                "target": "event",
+                "victim": "enemy",
+                "damageConnected": true,
+                "damageSource": "basic"
+              },
+              {
+                "on": "onDamageDealt",
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "condition": {
+                      "not": {
+                        "kind": "status",
+                        "subject": "target",
+                        "statusId": "community-review-28-20260907.combat",
+                        "appliedBy": "self"
+                      }
+                    },
+                    "sourceScope": "caster",
+                    "modifiers": [],
+                    "duration": 2,
+                    "statusId": "community-review-28-20260907.opening",
+                    "stackKey": "community-review-28-20260907.opening",
+                    "maxStacks": 1,
+                    "dispellable": false
+                  },
+                  {
+                    "kind": "consumeStatus",
+                    "condition": {
+                      "all": [
+                        {
+                          "kind": "distance",
+                          "op": "<=",
+                          "value": 3
+                        },
+                        {
+                          "not": {
+                            "kind": "status",
+                            "subject": "target",
+                            "statusId": "community-review-28-20260907.opener-lock",
+                            "appliedBy": "self"
+                          }
+                        }
+                      ]
+                    },
+                    "shape": "single",
+                    "statusId": "community-review-28-20260907.opening",
+                    "count": 1,
+                    "appliedBy": "self",
+                    "onConsumed": [
+                      {
+                        "kind": "applyBuff",
+                        "sourceScope": "caster",
+                        "modifiers": [],
+                        "duration": 8,
+                        "statusId": "community-review-28-20260907.opener-lock",
+                        "stackKey": "community-review-28-20260907.opener-lock",
+                        "maxStacks": 1,
+                        "dispellable": false
+                      },
+                      {
+                        "kind": "damage",
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "極小",
+                          "ratios": [],
+                          "flat": 200
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "sourceScope": "caster",
+                    "modifiers": [],
+                    "duration": 4,
+                    "statusId": "community-review-28-20260907.combat",
+                    "stackKey": "community-review-28-20260907.combat",
+                    "maxStacks": 1,
+                    "dispellable": false
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "sourceScope": "caster",
+                    "modifiers": [],
+                    "duration": 2,
+                    "statusId": "community-review-28-20260907.recent-hit",
+                    "stackKey": "community-review-28-20260907.recent-hit",
+                    "maxStacks": 1,
+                    "dispellable": false
+                  }
+                ],
+                "target": "event",
+                "victim": "enemy",
+                "damageConnected": true,
+                "damageSource": "ability"
+              },
+              {
+                "on": "onDamageTaken",
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "condition": {
+                      "not": {
+                        "kind": "status",
+                        "subject": "target",
+                        "statusId": "community-review-28-20260907.combat",
+                        "appliedBy": "self"
+                      }
+                    },
+                    "sourceScope": "caster",
+                    "modifiers": [],
+                    "duration": 2,
+                    "statusId": "community-review-28-20260907.opening",
+                    "stackKey": "community-review-28-20260907.opening",
+                    "maxStacks": 1,
+                    "dispellable": false
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "sourceScope": "caster",
+                    "modifiers": [],
+                    "duration": 4,
+                    "statusId": "community-review-28-20260907.combat",
+                    "stackKey": "community-review-28-20260907.combat",
+                    "maxStacks": 1,
+                    "dispellable": false
+                  }
+                ],
+                "target": "event",
+                "victim": "enemy",
+                "damageConnected": true,
+                "damageSource": "ability"
+              }
+            ]
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "template": {
+        "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "params": {
+          "hooks": [
+            {
+              "on": "onDamageDealt",
+              "victim": "enemy",
+              "damageSource": "basic",
+              "damageConnected": true,
+              "target": "event",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-28-20260907.opening",
+                  "sourceScope": "caster",
+                  "stackKey": "community-review-28-20260907.opening",
+                  "maxStacks": 1,
+                  "duration": 2,
+                  "modifiers": [],
+                  "dispellable": false,
+                  "condition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "target",
+                      "statusId": "community-review-28-20260907.combat",
+                      "appliedBy": "self"
+                    }
+                  }
+                },
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "statusId": "community-review-28-20260907.opening",
+                  "appliedBy": "self",
+                  "count": 1,
+                  "condition": {
+                    "all": [
+                      {
+                        "kind": "distance",
+                        "op": "<=",
+                        "value": 3
+                      },
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-28-20260907.opener-lock",
+                          "appliedBy": "self"
+                        }
+                      }
+                    ]
+                  },
+                  "onConsumed": [
+                    {
+                      "kind": "applyBuff",
+                      "statusId": "community-review-28-20260907.opener-lock",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-28-20260907.opener-lock",
+                      "maxStacks": 1,
+                      "duration": 8,
+                      "modifiers": [],
+                      "dispellable": false
+                    },
+                    {
+                      "kind": "damage",
+                      "damageType": "physical",
+                      "amount": {
+                        "damageTier": "極小",
+                        "ratios": [],
+                        "flat": 200
+                      }
+                    }
+                  ]
+                },
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-28-20260907.combat",
+                  "sourceScope": "caster",
+                  "stackKey": "community-review-28-20260907.combat",
+                  "maxStacks": 1,
+                  "duration": 4,
+                  "modifiers": [],
+                  "dispellable": false
+                },
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-28-20260907.recent-hit",
+                  "sourceScope": "caster",
+                  "stackKey": "community-review-28-20260907.recent-hit",
+                  "maxStacks": 1,
+                  "duration": 2,
+                  "modifiers": [],
+                  "dispellable": false
+                }
+              ]
+            },
+            {
+              "on": "onDamageTaken",
+              "victim": "enemy",
+              "damageSource": "basic",
+              "damageConnected": true,
+              "target": "event",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-28-20260907.opening",
+                  "sourceScope": "caster",
+                  "stackKey": "community-review-28-20260907.opening",
+                  "maxStacks": 1,
+                  "duration": 2,
+                  "modifiers": [],
+                  "dispellable": false,
+                  "condition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "target",
+                      "statusId": "community-review-28-20260907.combat",
+                      "appliedBy": "self"
+                    }
+                  }
+                },
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-28-20260907.combat",
+                  "sourceScope": "caster",
+                  "stackKey": "community-review-28-20260907.combat",
+                  "maxStacks": 1,
+                  "duration": 4,
+                  "modifiers": [],
+                  "dispellable": false
+                }
+              ]
+            },
+            {
+              "on": "onDamageDealt",
+              "victim": "enemy",
+              "damageSource": "ability",
+              "damageConnected": true,
+              "target": "event",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-28-20260907.opening",
+                  "sourceScope": "caster",
+                  "stackKey": "community-review-28-20260907.opening",
+                  "maxStacks": 1,
+                  "duration": 2,
+                  "modifiers": [],
+                  "dispellable": false,
+                  "condition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "target",
+                      "statusId": "community-review-28-20260907.combat",
+                      "appliedBy": "self"
+                    }
+                  }
+                },
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "statusId": "community-review-28-20260907.opening",
+                  "appliedBy": "self",
+                  "count": 1,
+                  "condition": {
+                    "all": [
+                      {
+                        "kind": "distance",
+                        "op": "<=",
+                        "value": 3
+                      },
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-28-20260907.opener-lock",
+                          "appliedBy": "self"
+                        }
+                      }
+                    ]
+                  },
+                  "onConsumed": [
+                    {
+                      "kind": "applyBuff",
+                      "statusId": "community-review-28-20260907.opener-lock",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-28-20260907.opener-lock",
+                      "maxStacks": 1,
+                      "duration": 8,
+                      "modifiers": [],
+                      "dispellable": false
+                    },
+                    {
+                      "kind": "damage",
+                      "damageType": "physical",
+                      "amount": {
+                        "damageTier": "極小",
+                        "ratios": [],
+                        "flat": 200
+                      }
+                    }
+                  ]
+                },
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-28-20260907.combat",
+                  "sourceScope": "caster",
+                  "stackKey": "community-review-28-20260907.combat",
+                  "maxStacks": 1,
+                  "duration": 4,
+                  "modifiers": [],
+                  "dispellable": false
+                },
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-28-20260907.recent-hit",
+                  "sourceScope": "caster",
+                  "stackKey": "community-review-28-20260907.recent-hit",
+                  "maxStacks": 1,
+                  "duration": 2,
+                  "modifiers": [],
+                  "dispellable": false
+                }
+              ]
+            },
+            {
+              "on": "onDamageTaken",
+              "victim": "enemy",
+              "damageSource": "ability",
+              "damageConnected": true,
+              "target": "event",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-28-20260907.opening",
+                  "sourceScope": "caster",
+                  "stackKey": "community-review-28-20260907.opening",
+                  "maxStacks": 1,
+                  "duration": 2,
+                  "modifiers": [],
+                  "dispellable": false,
+                  "condition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "target",
+                      "statusId": "community-review-28-20260907.combat",
+                      "appliedBy": "self"
+                    }
+                  }
+                },
+                {
+                  "kind": "applyBuff",
+                  "statusId": "community-review-28-20260907.combat",
+                  "sourceScope": "caster",
+                  "stackKey": "community-review-28-20260907.combat",
+                  "maxStacks": 1,
+                  "duration": 4,
+                  "modifiers": [],
+                  "dispellable": false
+                }
+              ]
+            }
+          ]
+        },
+        "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+      },
+      "schema": "ability@1"
+    },
+    {
+      "id": "community-review-28-20260907.ex",
+      "name": "〔狂劍追擊〕",
+      "provenance": "editor-json",
+      "description": "【本次玩法】艾莉絲淑女站姿：硬化時走得慢，忍不住就衝出去接自己的追擊\n指定自己二秒內有效命中的近身敵人，消耗該次追擊標記追加一次小級距劍擊。超距直接拒絕，不自動接近，不扣魔力、冷卻或目標標記；別來源／過期／非法目標不能施放。",
+      "slot": "EX",
+      "castType": "targeted",
+      "maxRank": 1,
+      "cooldown": [
+        7,
+        7,
+        7,
+        7
+      ],
+      "manaCost": [
+        50,
+        50,
+        50,
+        50
+      ],
+      "allowApproach": false,
+      "requiredTargetStatus": {
+        "statusId": "community-review-28-20260907.recent-hit",
+        "appliedBy": "self"
+      },
+      "statusCost": {
+        "statusId": "community-review-28-20260907.recent-hit",
+        "count": 1,
+        "appliedBy": "self",
+        "subject": "target"
+      },
+      "range": 3,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [],
+            "flat": 500
+          }
+        }
+      ],
+      "castTimeSec": 0.12,
+      "icon": "assets/icons/abilities/thorne.r.webp",
+      "template": {
+        "ref": "hero-template.c85b652bcce6fcad6c48fff79eb073328741a07b122af77f",
+        "params": {
+          "castType": "targeted",
+          "castTimeSec": 0.12,
+          "radius": 0,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "ratios": [],
+                "flat": 500
+              }
+            }
+          ]
+        },
+        "contentSha256": "sha256:58b4629e517c733e34e243a4ddcabb77fffcdb39ce84ad12b903b9bced7e7603"
+      },
+      "schema": "ability@1"
+    }
+  ],
+  "vfxScripts": [
+    {
+      "id": "community-review-28-20260907.q",
+      "schema": "vfx-script@1",
+      "abilityId": "community-review-28-20260907.q",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "replaces": "caster.action",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "vfxId": "fx.prim.physical.pulse-sm",
+          "at": "self",
+          "kind": "vfx",
+          "on": "castStart"
+        },
+        {
+          "vfxId": "fx.prim.physical.slash",
+          "at": "self",
+          "kind": "vfx",
+          "on": "castEffect"
+        }
+      ]
+    },
+    {
+      "id": "community-review-28-20260907.w",
+      "schema": "vfx-script@1",
+      "abilityId": "community-review-28-20260907.w",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "replaces": "caster.action",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "vfxId": "fx.prim.physical.pulse-sm",
+          "at": "self",
+          "kind": "vfx",
+          "on": "castStart"
+        },
+        {
+          "vfxId": "fx.prim.physical.pulse",
+          "at": "self",
+          "kind": "vfx",
+          "on": "castEffect"
+        }
+      ]
+    },
+    {
+      "id": "community-review-28-20260907.e",
+      "schema": "vfx-script@1",
+      "abilityId": "community-review-28-20260907.e",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "replaces": "caster.action",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "vfxId": "fx.prim.physical.pulse-sm",
+          "at": "self",
+          "kind": "vfx",
+          "on": "castStart"
+        },
+        {
+          "vfxId": "fx.prim.physical.slash",
+          "at": "self",
+          "kind": "vfx",
+          "on": "castEffect"
+        }
+      ]
+    },
+    {
+      "id": "community-review-28-20260907.r",
+      "schema": "vfx-script@1",
+      "abilityId": "community-review-28-20260907.r",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "replaces": "caster.action",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "vfxId": "fx.prim.physical.pulse-sm",
+          "at": "self",
+          "kind": "vfx",
+          "on": "castStart"
+        },
+        {
+          "vfxId": "fx.prim.physical.slash",
+          "at": "self",
+          "kind": "vfx",
+          "on": "castEffect"
+        }
+      ]
+    },
+    {
+      "id": "community-review-28-20260907.ex",
+      "schema": "vfx-script@1",
+      "abilityId": "community-review-28-20260907.ex",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "replaces": "caster.action",
+          "at": "caster",
+          "pulse": "cast"
+        },
+        {
+          "vfxId": "fx.prim.physical.pulse-sm",
+          "at": "self",
+          "kind": "vfx",
+          "on": "castStart"
+        },
+        {
+          "vfxId": "fx.prim.physical.slash",
+          "at": "target",
+          "kind": "vfx",
+          "on": "castEffect"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "level": "warn",
+      "field": "medians",
+      "message": "沒有傳入同定位的中位數，其餘八項用的是保守 fallback —— 數字可能已經過期。"
+    }
+  ]
+}

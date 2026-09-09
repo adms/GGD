@@ -4,6 +4,12 @@
 
 ## 最新授權：電量低於 40% 才停，重新開始 v21
 
+v21 probe 已 completed，4/4 格式與快取一致性通過，保守單輪估時 30,246.948 秒（8.402 小時），`fitsTimeBudget=true`。同一 exec 10097 已接續 train；worker 50361 在 dev-before，當時接電 98%，未因相對掉電停止；正式權重更新仍以 training trace 為準。
+
+生成後編譯接線 `hero-distillation-generation-compile.mts` 已有 CPU 實測：`hero74-generation-compile-control-v1/` 使用固定教師答案作 control，不呼叫模型。119 題完整保留，其中 **17/17 完整英雄**通過既有 materializer、各題固定 Git revision 的 schema／compiler、磁碟 authoring JSON 存檔重讀與再次編譯一致性；34 份 authoring/compiled 成品有 hash。5/5 測試涵蓋所有 17 名、缺槽／錯身分、錯 engine／輸入漂移／未知效果、目錄權限及落盤證據。102 槽的獨立驗證仍 pending，不混入 17 名主分母。這不是 12B 推論成績或真實遊戲上場驗收。
+
+接線檢查發現 retained native cases 保留原目錄，而 74 名新題用新版目錄；這是來源版本差異，不修改訓練資料。resolver sidecar 雖是 union，模型選擇仍按每題原始 public assets 限制；新目錄才存在的 ID 不得因 sidecar 有它就通過舊題。起初假設所有題都用同一目錄的檢查已改為逐題限制，並有真實舊題選新 ID 的拒絕測試。尚未執行生成模型 arm、語意等價、素材 bytes／角色身分、Editor UI 匯入或對局測試。
+
 v21 已啟動，exec session 10097 為單一 probe→train 流程，追蹤排程 16 已切換至 v21。接電／98% 的即時樣本正常執行，不再觸發舊相對掉電門檻。尚未有 optimizer 更新證據。
 
 CPU 側另完成 `hero74-model-bindings-v1/`：從相同固定來源的 74 份 project（逐份 git blob hash 核對）抽出 37 個 uploaded model 的純素材 metadata，與 frozen public index 合併為 187 個模型 ID 的 resolver sidecar。這不是新訓練資料，也不增加／更改 model prompt；沒有匯出 acceptedPlan、技能、教師答案或 per-hero 關係判斷。模型 index 本來也包含 uploaded IDs，合併是在空 locator 上補 metadata，不是兩份互斥的素材庫；該交集回歸與 conflict／source drift／缺素材檢查共 4/4 測試通過。這張表供生成結果的既有 `materializeTarget` 查找，實際素材 bytes、角色素材身分符合度及完整編譯／對局仍需另外驗證。
