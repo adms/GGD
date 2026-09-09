@@ -1,7 +1,7 @@
 {
   "file": "AI參考全自動鑄造守則.md",
-  "sha256": "0df06d3563195885718eb6858efb3da471fbddf44960f4b5772fe5214d45cfa8",
-  "localLinksChecked": 38,
+  "sha256": "8b013266acc6a65f3cb11b9d22caccb809efb994a477a0a6902550294c9cea92",
+  "localLinksChecked": 42,
   "missingLinks": [],
   "commandsAndReferencedTests": "checked against current repository",
   "semanticReview": [
@@ -27,7 +27,12 @@
     "observed event identity and duel visibility",
     "target-owned resources debit only their caster source",
     "reveal preserves stealth clock and duel boundaries",
-    "only actual HP damage wakes sleep"
+    "only actual HP damage wakes sleep",
+    "source-owned movement lifetime and aim priority",
+    "target versus real terrain anchor branch",
+    "total travel budget and immediate range cancellation",
+    "shared dynamic gate geometry",
+    "actual motion snapshot and replay lifecycle"
   ],
   "runtimeClaims": "guide does not claim full hero acceptance",
   "batchVerificationReview": {

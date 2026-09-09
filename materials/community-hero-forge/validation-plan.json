@@ -1,6 +1,6 @@
 {
   "schema": "ggd-batch-validation-plan@1",
-  "manifestSha256": "ca054860d41d7f859c873b1a580d3c3918d7a49a7d74a5dc333434f5d7c8c4a6",
+  "manifestSha256": "d97e53c6ff0f9fd3d4579f162118602cf66bf23d6acbf70de117d3e8d29e2a9a",
   "suites": [
     {
       "id": "implemented-mechanisms",
@@ -13,7 +13,8 @@
         "packages/shared/src/content/heroForge/communityRefinements/madoka.test.ts",
         "packages/shared/src/content/heroForge/communityRefinements/kirua.test.ts",
         "packages/shared/src/content/heroForge/communityRefinements/yugi.test.ts",
-        "packages/shared/src/content/heroForge/communityRefinements/conan.test.ts"
+        "packages/shared/src/content/heroForge/communityRefinements/conan.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/conanMobility.test.ts"
       ],
       "heroSlots": {
         "community-review-20-20260907": [
@@ -65,7 +66,9 @@
           "PASSIVE",
           "Q",
           "W",
-          "R"
+          "E",
+          "R",
+          "EX"
         ]
       }
     },
@@ -79,6 +82,21 @@
       "heroSlots": {
         "community-review-01-20260907": [
           "E"
+        ]
+      }
+    },
+    {
+      "id": "motion-view-and-transport",
+      "files": [
+        "apps/client/src/render/views/AbilityMotionView.test.ts",
+        "apps/client/src/predict/predictionHoldWiring.test.ts",
+        "apps/editor/src/vfx-forge/AbilityMotionReplay.test.ts",
+        "apps/game-server/src/net/abilityMotionWire.test.ts"
+      ],
+      "heroSlots": {
+        "community-review-26-20260907": [
+          "E",
+          "EX"
         ]
       }
     }

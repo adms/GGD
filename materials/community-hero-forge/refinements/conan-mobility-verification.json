@@ -1,0 +1,119 @@
+{
+  "schema": "ggd-conan-mobility-verification@1",
+  "issue": 1132,
+  "sourceCommit": "1ede970a77514c967eb3df25412d6ea003fb0f06",
+  "previousReceipt": "conan-verification.json",
+  "refinementVersion": 2,
+  "refinementSha256": "f8a0eb36e78916df72de680ac8538d167e9086d8bcdb84bbd3d1c942dfe930b1",
+  "regression": {
+    "exitCode": 0,
+    "tests": 292,
+    "files": 26,
+    "mobilityTests": 25,
+    "logSha256": "ae0f6602437325562bc3ef1f413ba7778846ffbd96b56dcb344db84adc91d074",
+    "scope": "All prior community refinements including Azazel repeated same-source curse reversal, Conan all six slots, sleep/stealth/resources, movement/collision, held gates, aim priority, digest and purity."
+  },
+  "transportAndView": {
+    "exitCode": 0,
+    "tests": 8,
+    "files": 4,
+    "logSha256": "22ac32f454be865fd15bbcf419014fcfd88ee14db3b244feb2b4daab03c4ad52",
+    "scope": "Real snapshot and Colyseus encode/decode, client registry visibility/lifecycle, Forge replay and client prediction hold. NullEngine geometry is not rendered visual acceptance."
+  },
+  "typechecks": [
+    {
+      "package": "shared",
+      "exitCode": 0,
+      "command": "pnpm --filter @ggd/shared typecheck",
+      "logSha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    },
+    {
+      "package": "editor",
+      "exitCode": 0,
+      "command": "pnpm --filter @ggd/editor typecheck",
+      "logSha256": "486eafd3c0debbbff5ae7dddb4aa8823f853e470eff3bacbda032617862caca2"
+    },
+    {
+      "package": "client",
+      "exitCode": 0,
+      "command": "pnpm --filter @ggd/client typecheck",
+      "logSha256": "39d946f6b36b6e4e7de7bfbe2267744c75dc2daf57912304bbcdcd88a0cc130d"
+    },
+    {
+      "package": "game-server",
+      "exitCode": 0,
+      "command": "pnpm --filter @ggd/game-server typecheck",
+      "logSha256": "b05c3d89729ac8d5380fe460caa7c9227683cd32eda0fd3fbdcddaedd946d715"
+    }
+  ],
+  "mutations": [
+    {
+      "mutation": "travel-cap",
+      "file": "packages/shared/src/sim/movement/abilityMotion.ts",
+      "exitCode": 1,
+      "logSha256": "3aa2f329005947c1f109ea5038f7b9164238aa154e91641a8cb8c209c206fc10",
+      "detected": true
+    },
+    {
+      "mutation": "braking",
+      "file": "packages/shared/src/sim/movement/abilityMotion.ts",
+      "exitCode": 1,
+      "logSha256": "9c52118c0b05109d5d755afc7b280594332dc86149056832045f4adb84cc07e1",
+      "detected": true
+    },
+    {
+      "mutation": "link-range",
+      "file": "packages/shared/src/sim/movement/abilityMotion.ts",
+      "exitCode": 1,
+      "logSha256": "ad710dae2946cf0851d7c475467cdc723a9e0f7a84fc352b31f014a231a24a03",
+      "detected": true
+    }
+  ],
+  "initialMutationMiss": {
+    "mutation": "link-range",
+    "file": "packages/shared/src/sim/movement/abilityMotion.ts",
+    "exitCode": 0,
+    "logSha256": "b91db47d6dddbe6dee7b0d050649e975fa3b94a216740983ddae2df3e9662462",
+    "detected": false
+  },
+  "mutationImprovement": "The original range test only checked eventual stop, so removing the range guard escaped detection. The corrected test asserts next-tick stop and unchanged position; the same mutation now fails. Sources restored after each probe.",
+  "handoff": {
+    "changedProjects": [
+      {
+        "hero": "26",
+        "previousRevision": 13,
+        "revision": 14
+      }
+    ],
+    "otherProjectsByteIdentical": 36,
+    "originalRecipesUnchanged": 37,
+    "modelBindingsUnchanged": 37
+  },
+  "batchCoverage": {
+    "heroes": 37,
+    "slots": 222,
+    "mappedBehaviorSlots": 39,
+    "unmappedBehaviorSlots": 183,
+    "genericOnAttackPassives": 23
+  },
+  "semantics": [
+    "Source-owned E has acceleration, braking, sharp turn speed reduction and visible phases; root/stun/slow and cast/aim facing priority remain effective. Expiry removes only its own drive grant.",
+    "EX catches the first visible legal enemy or real blocking terrain along its direction. Enemy branch pulls the enemy toward the caster; terrain branch pulls self. Empty space is not an anchor, immune first targets block the catch, and ordinary allies are not pulled.",
+    "A grapple has a finite total travel budget. Range, collision, death, hidden target, zone change and settled duel terminate it. No airborne throw or damage is added.",
+    "Live snapshot and Forge replay share procedural board/tether rendering. Preview movement orders and test wall are session-only actual SimWorld inputs, never changes to the hero project.",
+    "Navigation, moving ability collision and final collision cleanup now use the same active gate geometry; a held-open gate does not become solid again in the cleanup or slide pass."
+  ],
+  "initialFailures": [
+    "PullVariant initially lacked the grapple type; corrected before passing typechecks.",
+    "Single-target effect rejects an unused side field; recipe uses the existing single-target contract.",
+    "A held-open gate still blocked the rider during the existing collision cleanup; shared worldObstacles fixes navigation, forced movement, slide and cleanup consistently."
+  ],
+  "knownLimits": [
+    "Procedural deck/wheels and tether are gameplay markers, not original skateboard/belt model or animation acceptance. Dedicated football, needle/watch, art and sound remain pending.",
+    "Full original-design acceptance, rendered visual acceptance, current-service ZIP and formal publication remain incomplete."
+  ],
+  "originalDesignAcceptance": "incomplete",
+  "visualAcceptance": "unverified",
+  "currentServiceZip": "not-built",
+  "formalPublication": false
+}

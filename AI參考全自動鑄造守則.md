@@ -189,4 +189,14 @@ pnpm --filter @ggd/shared typecheck
 - `applyBuff.vision.revealed=true` 揭示承受者，不重啟隱形時鐘；來源到期或驅散後回到原隱形規則。檢查施法中離區、死亡與對決結束；施加後移往另一對決也不能持續洩漏位置。
 - 睡眠用 `breakOnDamage`，正值實際 HP 傷害才提前喚醒；零傷或完全由護盾吸收的命中不喚醒。用真實投射物碰撞與傷害系統驗證，不以直接塞狀態或呼叫解除函式冒充完整行為。
 
-範例：[柯南配方](materials/community-hero-forge/refinements/26.json)、[行為測試](packages/shared/src/content/heroForge/communityRefinements/conan.test.ts)、[證據與缺口](materials/community-hero-forge/refinements/conan-verification.json)。它只涵蓋四槽；滑板、吊帶及專用演出仍待完成。
+範例：[柯南配方](materials/community-hero-forge/refinements/26.json)、[行為測試](packages/shared/src/content/heroForge/communityRefinements/conan.test.ts)、[證據與缺口](materials/community-hero-forge/refinements/conan-verification.json)。該 v1 證據是四槽歷史收據；E／EX 移動見下節，專用演出仍待完成。
+
+## 加減速移動與有限牽引
+
+- `applyBuff.drive` 由來源壽命控制加速、煞車、急轉減速與停止／碰撞狀態。移速沿用角色屬性及減速效果，不寫死一份移速；瞄準與施法面向優先於移動面向。到期／死亡移除移動狀態，不能刪除其他来源增益。
+- `pull.grapple` 是沿施法方向連接首個合法敵人或實體障礙物：敵人被拉向施法者，地形則拉施法者。空白落點不是錨點，不自行增加摔投、傷害或擊飛。它只支援 `shape=single`，不可混用 legacy 的 destination／side／uncontrollable 模式。
+- `maxTravel` 限制整次總行程，移動錨點不能補充行程。超距／離區／死亡／碰撞須中止；測試必須斷言中止當下的位置，不能只等自然行程跑完再聲稱「超距會停」。
+- 位移、导航與最後碰撞整理須使用同一份當前障礙物（包括玩家撐開的閘門）。畫面從真實快照或事件的階段與端點繪製，不能用假軌跡動畫冒充移動效果；回放重置與單位消失均須清除圖形。
+- 試玩移動路線／實體牆面是單次情境輸入，不寫入英雄配方。程序滑板、輪子與白線是可驗收的狀態標記，不能據此宣稱角色原稿美術或完整畫面已驗收。
+
+範例：[柯南 v2 配方](materials/community-hero-forge/refinements/26.json)、[移動行為案例](packages/shared/src/content/heroForge/communityRefinements/conanMobility.test.ts)、[跨端回放案例](apps/editor/src/vfx-forge/AbilityMotionReplay.test.ts)、[證據及剩餘缺口](materials/community-hero-forge/refinements/conan-mobility-verification.json)。

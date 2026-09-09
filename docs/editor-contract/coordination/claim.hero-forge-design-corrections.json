@@ -334,6 +334,20 @@
         "materials/community-hero-forge/refinements/conan-verification.json",
         "materials/community-hero-forge/validation-plan.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "#1132 柯南 v2 補 E／EX：來源限定滑板加速、急轉減速、煞車、碰撞停止；有限牽引分首個合法敵人／實體地形錨點，超距立即中止，不增加摔投傷害。實際快照、Client 圖形與 Forge 回放接線完成；試玩路線及牆面使用真實模擬。修正既有開門碰撞整理與滑動重新撞門問題，保留瞄準優先。292 項回歸、8 項跨端案例、四端型別與三項有效突變檢查通過。只有柯南 revision 13→14，原稿及其他英雄不變。39 槽有行為案例、183 槽未對應；程序素材不等於原稿素材驗收，#1132 保持開啟。",
+      "repro": {
+        "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/conanMobility.test.ts --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "1ede970a77514c967eb3df25412d6ea003fb0f06",
+      "evidence": [
+        "materials/community-hero-forge/refinements/conan-mobility-verification.json",
+        "materials/community-hero-forge/refinements/26.json",
+        "materials/community-hero-forge/validation-plan.json"
+      ]
     }
   ],
   "unblocks": [],
@@ -344,6 +358,6 @@
     }
   ],
   "asks": [
-    "請 Main 一併審查柯南的 onObservedCombat／observedEvent、statusCost.subject、vision.revealed 與零實際傷害不喚醒睡眠的共用修正。請 Main 審查本批武藤遊戲與奇犽修正：onSummonHit／onAttackAttempt、trap 與 onTrigger 子鏈、召喚換目標與槽位來源、requiredSummonSlot、黑魔導發射位置、Client／Server 傳輸與 Forge 回放。請 Main 加入審查奇犽的通用具名資源維持費、全量施法成本、迴避來源／通道過濾與六槽配方。請 Main 加入審查鹿目圓 onAllyProtected、盾吸收歸屬、applyStatus.grantMark 及每回合救援次數的 schema/runtime 與版本化配方。請 Main 一併審查 #1143 批次驗證入口、失敗集中回報、來源綁定續跑及批次測試治具。請 Main 審查 #1141 nearbyCombat 条件與表單、dispel.statusTag 過濾、微調 version 對應作品 revision 與吉伊卡哇六槽；以及 #1140 的共用 chainLightning.retargetOnLost schema／runtime 選项及對應配方、#1139 換牌、友軍盾、radius:0 生成器修正、官方契約與 AI 守則。最新 37 份可共用作品在 materials/community-hero-forge/projects；#1132 保持開啟，完整原設計、修正後畫面／服務 ZIP 及正式發布仍未完成，不據此發布 37 名。"
+    "請 Main 一併審查 drive／pull.grapple 共用移動、動態閘門碰撞一致性、EntityState motion/tether 欄位與 Client 預測暫停及回放。請 Main 一併審查柯南的 onObservedCombat／observedEvent、statusCost.subject、vision.revealed 與零實際傷害不喚醒睡眠的共用修正。請 Main 審查本批武藤遊戲與奇犽修正：onSummonHit／onAttackAttempt、trap 與 onTrigger 子鏈、召喚換目標與槽位來源、requiredSummonSlot、黑魔導發射位置、Client／Server 傳輸與 Forge 回放。請 Main 加入審查奇犽的通用具名資源維持費、全量施法成本、迴避來源／通道過濾與六槽配方。請 Main 加入審查鹿目圓 onAllyProtected、盾吸收歸屬、applyStatus.grantMark 及每回合救援次數的 schema/runtime 與版本化配方。請 Main 一併審查 #1143 批次驗證入口、失敗集中回報、來源綁定續跑及批次測試治具。請 Main 審查 #1141 nearbyCombat 条件與表單、dispel.statusTag 過濾、微調 version 對應作品 revision 與吉伊卡哇六槽；以及 #1140 的共用 chainLightning.retargetOnLost schema／runtime 選项及對應配方、#1139 換牌、友軍盾、radius:0 生成器修正、官方契約與 AI 守則。最新 37 份可共用作品在 materials/community-hero-forge/projects；#1132 保持開啟，完整原設計、修正後畫面／服務 ZIP 及正式發布仍未完成，不據此發布 37 名。"
   ]
 }
