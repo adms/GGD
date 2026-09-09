@@ -10,6 +10,9 @@ from pathlib import Path
 
 
 def digest(data): return hashlib.sha256(data).hexdigest()
+def file_digest(path):
+    with Path(path).open('rb') as stream:
+        return hashlib.file_digest(stream, 'sha256').hexdigest()
 def read(path): return json.loads(path.read_text())
 
 
@@ -56,7 +59,7 @@ def export(run, out):
                 and len({row.get('id') for row in trace}) == manifest.get('steps'), \
                 'COMPLETED_TRAINING_EPOCH_INVALID'
             assert result['checkpoint'].get('step') == manifest.get('steps') \
-                and checkpoint.is_file() and digest(checkpoint.read_bytes()) == result['checkpoint'].get('sha256'), \
+                and checkpoint.is_file() and file_digest(checkpoint) == result['checkpoint'].get('sha256'), \
                 'COMPLETED_TRAINING_ADAPTER_INVALID'
             assert roundtrip.get('passed') is True and len(roundtrip.get('tensorKeys') or []) == 8, \
                 'COMPLETED_TRAINING_ROUNDTRIP_INVALID'
@@ -68,13 +71,13 @@ def export(run, out):
                 payloads[file.relative_to(run).as_posix()] = file.read_bytes()
     assert phases, 'NO_TERMINAL_PHASE'
     payloads['token-preflight.json'] = (run / 'token-preflight.json').read_bytes()
-    assert digest((run / 'tokens.json').read_bytes()) == manifest['tokenizedSha256'], 'TOKEN_DATA_MISMATCH'
+    assert file_digest(run / 'tokens.json') == manifest['tokenizedSha256'], 'TOKEN_DATA_MISMATCH'
     omitted = []
     for file in sorted(run.rglob('*')):
         assert not file.is_symlink(), 'NO_SYMLINK_EVIDENCE'
         if file.is_file() and file.relative_to(run).as_posix() not in payloads:
             omitted.append({'path': file.relative_to(run).as_posix(), 'bytes': file.stat().st_size,
-                            'sha256': digest(file.read_bytes()),
+                            'sha256': file_digest(file),
                             'reason': 'weights-not-in-git' if file.suffix == '.safetensors' else 'not-a-receipt'})
     receipt = {'schema': 'ggd-distillation-receipt@1', 'run': str(run), 'phases': phases,
                'files': {name: {'sha256': digest(data), 'bytes': len(data)} for name, data in payloads.items()},
