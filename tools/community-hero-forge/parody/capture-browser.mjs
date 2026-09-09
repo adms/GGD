@@ -63,12 +63,12 @@ try{
     console.log(`${hero.index}/${slot}: opening preview`);
     const nav=page.getByRole('navigation',{name:'技能槽',exact:true});await nav.getByRole('button',{name:slot,exact:true}).click();
     const region=page.getByRole('region',{name:'可調整的試玩情境'});await region.waitFor({timeout:180000});
-    if(hero.index==='04'){
-     await region.locator('summary').filter({hasText:'調整試玩情境'}).click();
+    if(hero.index==='04'||(hero.index==='02'&&slot==='EX')){
+     if(!await region.getByLabel('施放者 X',{exact:true}).isVisible())await region.locator('summary').filter({hasText:'調整試玩情境'}).click();
      await region.getByLabel('施放者 X',{exact:true}).fill('-1');await region.getByLabel('目標 X',{exact:true}).fill('1');
     }
     if(['01','28','32'].includes(hero.index)&&slot==='EX'){
-     await region.locator('summary').filter({hasText:'調整試玩情境'}).click();
+     if(!await region.getByLabel('施放者 X',{exact:true}).isVisible())await region.locator('summary').filter({hasText:'調整試玩情境'}).click();
      await region.getByLabel('前置施法',{exact:true}).selectOption(hero.index==='32'?'R':'Q');
      await region.getByLabel('前置施法後經過秒數',{exact:true}).fill(hero.index==='01'?'1.5':'1');
      if(hero.index==='28'){await region.getByLabel('施放者 X',{exact:true}).fill('-1');await region.getByLabel('目標 X',{exact:true}).fill('1.3');}
@@ -98,6 +98,7 @@ try{
      await stage.getByRole('button',{name:'返回編輯',exact:true}).click();
     }
    }
+   const missingAssets=report.httpFailures.filter(r=>new URL(r.path).pathname.startsWith('/content/assets/'));if(missingAssets.length)throw Error('Missing runtime assets: '+[...new Set(missingAssets.map(r=>r.path))].join(', '));
    row.completed=true;console.log(`${hero.index} ${hero.name}: ${row.captures.length} captures`);
   }catch(e){row.errors.push(String(e));console.error(`${hero.index}: ${e}`);await page.screenshot({path:path.join(dir,'failure.png')}).catch(()=>{});fs.writeFileSync(path.join(dir,'failure.txt'),await page.locator('body').innerText().catch(()=>''));}
   flush();

@@ -2356,7 +2356,7 @@ export class VfxForgeStage {
     const bounds = root.getHierarchyBoundingVectors(true);
     const center = bounds.min.add(bounds.max).scale(0.5);
     const extent = Math.max(1, bounds.max.subtract(bounds.min).length());
-    camera.position.copyFrom(center.add(new Vector3(extent * 0.6, extent * 0.4, extent * 1.8)));
+    camera.position.copyFrom(center.add(new Vector3(extent * 0.4, extent * 0.25, extent * 1.1)));
     camera.setTarget(center);
     try {
       const shown = await read();
