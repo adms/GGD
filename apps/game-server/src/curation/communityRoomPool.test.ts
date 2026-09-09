@@ -1,5 +1,7 @@
 /**
- * ⭐⭐ GH#1025 Scope C —— **社群內容預設只進社群房**，走過真的 `MatchRoom.onCreate`。
+ * GH#1155：Owner 2026-09-09 裁決不分社群房；預設房間可選已核准英雄。
+ * 走過真的 `MatchRoom.onCreate`，沿用 DEFAULT_UGC 的出貨預設。
+ * 下方 GH#1025 的雙向與突變紀錄是更改預設之前的歷史證據。
  *
  * ── ⭐ 為什麼這一份必須走 MatchRoom，⛔ 不是直接測 `applyContentPool()` ────────
  * `matchRoomSettings.test.ts` 的檔頭已經記過同一件事：四條線各自的守衛都停在
@@ -105,19 +107,18 @@ afterEach(() => {
   setSharedCommunityContentCache(null);
 });
 
-describe("GH#1025 Scope C —— 社群內容預設只進社群房 (community-room-pool)", () => {
-  it("⭐ 官方房（房主沒選 ⇒ 預設）**選不到**社群英雄，官方英雄不受影響", async () => {
+describe("GH#1155 —— 一般房間預設包含已核准英雄 (community-room-pool)", () => {
+  it("一般房間預設可見並可選已核准英雄，官方英雄不受影響", async () => {
     const r = room();
     await r.onCreate({ ...base() });
     expect(r.ctl.whitelist.allowsChampion("sela"), "官方英雄被誤傷了").toBe(true);
     expect(
       r.ctl.whitelist.allowsChampion("thorne"),
-      "⛔ 社群英雄出現在官方房 —— `applyContentPool` 那一行斷了",
-    ).toBe(false);
-    // ⭐ 權威那一道閘（偽造／重放的 SELECT_CHAMPION 也走它）真的擋得住。
+      "已核准英雄仍被預設一般房間排除",
+    ).toBe(true);
+    // 確認實際選角路徑也接受已核准英雄，不只名單可見。
     expect(r.ctl.selectChampion(asSeatId(0), "thorne")).toEqual({
-      ok: false,
-      reason: "not-whitelisted",
+      ok: true,
     });
   });
 
