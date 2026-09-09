@@ -161,5 +161,462 @@
     "diversityDiagnosticTests": 4,
     "testLogSha256": "080e472c18e61e35f053b70c70d8270d9a62b269749ffae686afbf8b9c32fee9",
     "meaning": "Reference compilation only; second batch causal behavior was not rerun. New strict signature review remains pending."
+  },
+  "finalBatch": {
+    "head": "0712459070f7768d538b5291a867fb8ce553dc39",
+    "workingTreeClean": true,
+    "sourceFingerprint": "cc919623559338b0742292a18d3b94693b629a1cd3077b1a4a0e6971d889d38e",
+    "exitCode": 1,
+    "errors": [],
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 93,
+      "slotsWithoutBehaviorSuite": 129
+    },
+    "modelBytes": "verified",
+    "reportSha256": "ff3e43f334fcaec3ee8e9399fbb4771618f523fad9f93f7a2411931cf6d06c30",
+    "editorTests": 603,
+    "registeredTests": 965,
+    "jobs": [
+      {
+        "id": "skills",
+        "exitCode": 1,
+        "logSha256": "791c99c96b3f198fd7c3ac1bb8a213911c3eb5150a053bd878ffe79a75a3d08c"
+      },
+      {
+        "id": "editor",
+        "exitCode": 0,
+        "logSha256": "b276ced9f138a0f851534edfea3c499ca4248f85bdb8a816a84ea6e1359d5491"
+      },
+      {
+        "id": "coord",
+        "exitCode": 0,
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271"
+      },
+      {
+        "id": "compile-and-models",
+        "exitCode": 0,
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c"
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "exitCode": 0,
+        "logSha256": "0be2c2f9896dd40efb854598eb56ffd4610aeb0d45b8826c14286f9872c198e9"
+      },
+      {
+        "id": "behavior-trap-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "f4fdd285ee6b371043fdbb25d8bd508e54afbd8ae9bb80f2a0c8c42d77815da2"
+      },
+      {
+        "id": "behavior-motion-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "a4ade72a9aa2955350c3994bea76f48a19e3a5c018deb7a896188187091b3014"
+      },
+      {
+        "id": "behavior-target-resource-acceptance",
+        "exitCode": 0,
+        "logSha256": "18b6007f453ea009d262f14f01164e09f53adfb7c1495eacb6bf93eaf66d44b9"
+      },
+      {
+        "id": "skills-tiers-apply-check",
+        "exitCode": 0,
+        "logSha256": "bc7fedd653d35624411566de8b25768f0897c0fd3af574b86dd8a615c8e78f90"
+      },
+      {
+        "id": "skills-spec-check",
+        "exitCode": 0,
+        "logSha256": "baf9ab00837bc1b94b8bb7e5040266e936b4c19552f78aec063a589dfcb571b5"
+      },
+      {
+        "id": "skills-overview-check",
+        "exitCode": 0,
+        "logSha256": "499ec655b349dbff5d147a8ca4283f2c31cccc6bbf8d516b946d545256348d8a"
+      },
+      {
+        "id": "skills-tiers-check",
+        "exitCode": 0,
+        "logSha256": "7f49b94083329b758db55e9ee28f9dcfc13de447693df65a6381e3d212977e3a"
+      },
+      {
+        "id": "skills-mana-audit-check",
+        "exitCode": 0,
+        "logSha256": "79a4d17682f37ae570c9443e378d9334645b6b6746cf23cff02b9d999d8909a1"
+      },
+      {
+        "id": "skills-typecat-check",
+        "exitCode": 0,
+        "logSha256": "0eaa10155a19e88158e76713aac3478ddb6743151afb19242d33d44447008a82"
+      },
+      {
+        "id": "skills-skillforge-audit-check",
+        "exitCode": 0,
+        "logSha256": "68285b41f6d56806bffc207573a2cf9930c3ee3c895908954a00e07fa2bcb937"
+      },
+      {
+        "id": "skills-skillforge-visual-review-check",
+        "exitCode": 0,
+        "logSha256": "d67231983acbd1790753a4f8fb00a81a915507337068d65aadf124920706e13d"
+      },
+      {
+        "id": "skills-skillforge-visual-sheets-check",
+        "exitCode": 0,
+        "logSha256": "c7bf7bf6aa504c396f34d6b419dcce6d42d43806efebccb46436f02dfe17240f"
+      },
+      {
+        "id": "skills-skillforge-visual-advisory-check",
+        "exitCode": 0,
+        "logSha256": "8703367942974a8cb1ee9d1cbaa9968cddf22a3f86d2aec89d87d9aa2ba8bd0f"
+      },
+      {
+        "id": "skills-vfxforge-handback-check",
+        "exitCode": 0,
+        "logSha256": "c7f1df763b5c28c65df3d31dfe7270ac53fe82deadecb828c051a56fb4779881"
+      },
+      {
+        "id": "skills-editorcov-check",
+        "exitCode": 0,
+        "logSha256": "d8d3349f9625b45b9f23edd4a050f5edc80c313f6fab34837fd1c9edee236512"
+      },
+      {
+        "id": "skills-bricks-check",
+        "exitCode": 0,
+        "logSha256": "1b7ffeda6cbfd610330bb50d8d9d488037337e5dc5ae63bebd944936d40612eb"
+      },
+      {
+        "id": "skills-assets-manifest-check",
+        "exitCode": 0,
+        "logSha256": "4b562fbd237c124257d68933af62ba7c26d11bea45cada56538108de990fcb03"
+      },
+      {
+        "id": "skills-jasstpl-check",
+        "exitCode": 0,
+        "logSha256": "e88cdb7f8c1ff03d9a7b0b0e4243f1f3cf3e7b27595d6f60ef2c9efef17f8d2b"
+      },
+      {
+        "id": "skills-caps-check",
+        "exitCode": 0,
+        "logSha256": "0fe5e2eca6f72320d51b5cb6101b55667492e6629e8180ff9b44563674550f81"
+      },
+      {
+        "id": "skills-collections-check",
+        "exitCode": 0,
+        "logSha256": "4d4e8301e4ca324fbdd526de4c18a4610dffe57842c4994633f929b26b9d649d"
+      },
+      {
+        "id": "skills-skillremake-docs-check",
+        "exitCode": 0,
+        "logSha256": "d8c86acc73bc999d43869a7e861902cfaba71f3a7513b6b14da44d4a30ab7f35"
+      },
+      {
+        "id": "skills-skillremake-json-check",
+        "exitCode": 0,
+        "logSha256": "ab3ceeceb1649f40261f9c3b8b918276b7e9e0e758dce9f34209c06999f62d52"
+      },
+      {
+        "id": "skills-skillremake-provenance-check",
+        "exitCode": 0,
+        "logSha256": "d656126090677ea7723731afb050300373ae76ce7dec81856718c6435fc8e934"
+      },
+      {
+        "id": "skills-grail-wishes-check",
+        "exitCode": 0,
+        "logSha256": "2e5ddcdb122cc1fe1adadf9b66c2280ed119b507ba2ca10e9e60c2769f7c5bd3"
+      },
+      {
+        "id": "skills-contract-numbers-check",
+        "exitCode": 0,
+        "logSha256": "0819936447ebe602a59e8a816bd0f33811a625fd5a6996ab43fb341a14d4a52c"
+      },
+      {
+        "id": "skills-atlas-check",
+        "exitCode": 0,
+        "logSha256": "78f38cf94121c953ab5ea54658e7d223e626b3187490a425a8a145533c386709"
+      },
+      {
+        "id": "skills-treasure-csv-check",
+        "exitCode": 0,
+        "logSha256": "0a1dd95f4d75ee1170c83c7e3fb5b900afb655d5ee6bf6a782de2364853825b3"
+      },
+      {
+        "id": "skills-docs-readme-check",
+        "exitCode": 0,
+        "logSha256": "928883ad637a8d6d0acbc106b742140c622b3fe9d60e3a9a09242de450f5fe23"
+      },
+      {
+        "id": "skills-docs-status-check",
+        "exitCode": 0,
+        "logSha256": "e9f50303ddcf245bc5393d0ef60f10d1a0efe1c0811ef49e7b319ea05c7a587a"
+      },
+      {
+        "id": "skills-roster-check",
+        "exitCode": 0,
+        "logSha256": "71996c022510cef9977589c743c786db12653edcca0544a1f957c4bfb083ad55"
+      },
+      {
+        "id": "skills-pitch-check",
+        "exitCode": 0,
+        "logSha256": "d36eaa316e1eaeed88e1cda9712cc34fb10c5edd66b17e2fb82f1d1c03116d50"
+      },
+      {
+        "id": "skills-newhero-check",
+        "exitCode": 0,
+        "logSha256": "821fd01f952b2bdef50eefebad02be5a2acef2e4e0020a1caa1d8d6e6bbbbb79"
+      },
+      {
+        "id": "skills-lowdmg-check",
+        "exitCode": 0,
+        "logSha256": "788f88e563ca97c594bbfd7f4dc9ab5802afb59c150e48e62c909f7254c3bd18"
+      },
+      {
+        "id": "skills-anchors-check",
+        "exitCode": 0,
+        "logSha256": "e5cda6ff2a23910f8ef55141e839171959e2bb1df85afd8472f23cc1ae9accdc"
+      },
+      {
+        "id": "skills-statcaps-check",
+        "exitCode": 0,
+        "logSha256": "a88d0b985a130593bd0a9c078a4c26d6ff1554d68d3e86e1ac5df32f5921c9d3"
+      },
+      {
+        "id": "skills-apconv-plan-check",
+        "exitCode": 0,
+        "logSha256": "b5f6343460aa243e2bdfe2047d9c7663db0ff5b5d7871bf0c486387d0e763fa1"
+      },
+      {
+        "id": "skills-apconv-check",
+        "exitCode": 0,
+        "logSha256": "eb24d28cd28da12bff8889ec968fbb5b9a6b7a703086e44214eb2878b3d224a5"
+      },
+      {
+        "id": "skills-apdmg-check",
+        "exitCode": 0,
+        "logSha256": "0f6843a5556f41233eef3d0006c1223a5fdf8996acbf7adf6e19bd1b75ee4a4a"
+      },
+      {
+        "id": "skills-board-check",
+        "exitCode": 0,
+        "logSha256": "869e28abba319723cb75d4731f21f79cefc82716eab3a85d020af8602c0c2b9d"
+      },
+      {
+        "id": "skills-msgledger-check",
+        "exitCode": 0,
+        "logSha256": "8d40e2cf3d3a70f479a8242a07f5b352b28483f6c472766ec33318729fffc1a1"
+      },
+      {
+        "id": "skills-skillnorm-check",
+        "exitCode": 0,
+        "logSha256": "c7cdf5063adb4ee92b976ddf8f90bcb081b69f24521bac2234a4618941683e71"
+      },
+      {
+        "id": "skills-speedtiers-check",
+        "exitCode": 0,
+        "logSha256": "51e4de3eaff2fae6547e3f6a1a3e497a4d842b95731bdb44870b1ec9de5cc93b"
+      },
+      {
+        "id": "skills-jasscombo-check",
+        "exitCode": 0,
+        "logSha256": "9594402837362aa1e218a6e8cc753d84efde0835f4cdced44d7db433f991ecd1"
+      },
+      {
+        "id": "skills-vfxbind-check",
+        "exitCode": 0,
+        "logSha256": "80e41ba1ce4158c07eee1b59c8fed72471e06e5942df2fa65d5af0d05672dc37"
+      },
+      {
+        "id": "skills-models-check",
+        "exitCode": 0,
+        "logSha256": "5aa519ce72c9b5cd0bb085e4458c6d442c3099e122ce8533969f2e3aee76ddc9"
+      },
+      {
+        "id": "skills-lod-check",
+        "exitCode": 0,
+        "logSha256": "81a6b213369cf381a62570f9424d043d48c36d9b20147500f557f1f849344488"
+      },
+      {
+        "id": "skills-audit-check",
+        "exitCode": 0,
+        "logSha256": "86de0724cf8571c73fd8962e5e11aa8c99a269db5aaa8724094e0aeb1e8dc1f5"
+      },
+      {
+        "id": "skills-echoloop-check",
+        "exitCode": 0,
+        "logSha256": "9a2ceae0cbdf4b0d8f416c2fbea0973ba233427b56c9f2459797e61e6fffc63c"
+      },
+      {
+        "id": "skills-templates-check",
+        "exitCode": 0,
+        "logSha256": "61e8e123a14b026e182295354ab9d2f6c1f0718b237e06f8a1b96d79236a06a2"
+      },
+      {
+        "id": "skills-prose-check",
+        "exitCode": 0,
+        "logSha256": "334de9778b8ead5cdfdc78b5b51bce5a5725ff9f4cd1253f134e7472c54584c6"
+      },
+      {
+        "id": "skills-sfxbind-check",
+        "exitCode": 0,
+        "logSha256": "19a0a4b8942369d2e0125c12a968fa0e704201b64701b2fcd1084fec2c83310f"
+      },
+      {
+        "id": "skills-shapes-check",
+        "exitCode": 0,
+        "logSha256": "b0f10079d17164662c1571bcc68794c9829f5384ce970aea665c7dc72752db41"
+      },
+      {
+        "id": "skills-beam-check",
+        "exitCode": 0,
+        "logSha256": "3711297c53c5f8e4d04f187b232418dc78df83cfab620d253b5a95a7e1419da3"
+      },
+      {
+        "id": "skills-archetypes-check",
+        "exitCode": 0,
+        "logSha256": "b9fc5ff6d364d229f48fa88b1ac58d706f21e43d0f7f7d17395344574ede4278"
+      },
+      {
+        "id": "skills-enableaudit-check",
+        "exitCode": 0,
+        "logSha256": "12c269c7784ecbe25a2802955c016ae611c93ad4e9db76219c8a4cde252f2154"
+      },
+      {
+        "id": "skills-review-check",
+        "exitCode": 0,
+        "logSha256": "bcce25b9357e6310237a782673a9deffae47f4abf0e4061acb7f5f86601803c7"
+      },
+      {
+        "id": "skills-declshape-check",
+        "exitCode": 0,
+        "logSha256": "5be5c2ad5ce829e1e0992c006583353d074a364eec30d7c1d0a8c26b7b61cab3"
+      },
+      {
+        "id": "skills-decor-check",
+        "exitCode": 1,
+        "logSha256": "4a586d261e15bb0d467b29bce631baf2fd41ea367efe49e2996a9cbc486bcde9"
+      },
+      {
+        "id": "skills-speedlists-check",
+        "exitCode": 0,
+        "logSha256": "c76a7c943be50f89565621eb95df193a2cae35a7bdd52ce80b03db8390a0f615"
+      },
+      {
+        "id": "skills-locust-check",
+        "exitCode": 0,
+        "logSha256": "68471fcac14e710db435475c555c6cc172cf1fc54b4c0fb8ee7d67e72ee92c37"
+      },
+      {
+        "id": "skills-w3a-check",
+        "exitCode": 0,
+        "logSha256": "81d680c9cf17536ee0d1c4bdd4c8d660cfd835da572ed45157b3b31c1b9e2ba5"
+      },
+      {
+        "id": "skills-board-roll-check",
+        "exitCode": 0,
+        "logSha256": "a66bf5d75d03c97f34f3096659bf1b29d04fce82fe17a67e8fb9e7a0e6e32b76"
+      },
+      {
+        "id": "skills-ruleslip-check",
+        "exitCode": 0,
+        "logSha256": "7b16b9de154d4caba33389da8d5a8ccc97f81c79e4f298d574f2e19b0c791d98"
+      },
+      {
+        "id": "skills-receipt-check",
+        "exitCode": 0,
+        "logSha256": "681517f82027535a6b6650bce8dc1cf3ea77d242cbb256f9d533a1ef83ae1eb5"
+      },
+      {
+        "id": "skills-handback-check",
+        "exitCode": 0,
+        "logSha256": "fe3edaa8e36fdd20841a009b891e6b18474c646e46960572da39d3316dbe6e97"
+      },
+      {
+        "id": "skills-clipdeg-check",
+        "exitCode": 0,
+        "logSha256": "d58d492f7dead8e61dfbdef88015a9af7413546bc2861a7b6c8c9bec9d0c289f"
+      },
+      {
+        "id": "skills-apcoeffdiff-check",
+        "exitCode": 0,
+        "logSha256": "012085c593a85a370c07f32740e2bf4ad00297da63a007d0a3f492f9c18a14e4"
+      },
+      {
+        "id": "skills-appearance-check",
+        "exitCode": 0,
+        "logSha256": "703b7b86c745b98d539642ed67400e39367f90063ca1bd7995e20e1a2a972429"
+      },
+      {
+        "id": "skills-ptokens-check",
+        "exitCode": 0,
+        "logSha256": "0f77cc98828c455596a2aed4c2372d53094b6c86ec1cca07bad9b278e3d44931"
+      },
+      {
+        "id": "skills-coord-check",
+        "exitCode": 0,
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271"
+      }
+    ],
+    "meaning": "Behavior, models and Editor passed on this clean commit. Aggregate exit 1 records the stale generated census failure. The official generator changed only its two census documents; finalReleaseGates records the corrected clean head. 129 unmapped slots and visual/publication gaps remain."
+  },
+  "finalReleaseGates": {
+    "head": "e2a15b15ae125725069afaafcc8539ef296798a6",
+    "workingTreeClean": true,
+    "sourceFingerprint": "88c56fa7c71019ef3186de5a9ba724bd755db0676bfda67e349e2d2cfdad9e2a",
+    "behaviorHead": "0712459070f7768d538b5291a867fb8ce553dc39",
+    "deltaFromBehaviorHead": [
+      "docs/editor-contract/ggd-config-decoration-census.json",
+      "docs/editor-contract/ggd-config-decoration-census.md"
+    ],
+    "unchangedBehaviorSource": true,
+    "jobs": [
+      {
+        "id": "skills",
+        "argv": [
+          "pnpm",
+          "skills:check"
+        ],
+        "exitCode": 0,
+        "fingerprint": "0f606794123216292aff3ef41aefe9f08f23c5a5b5701e30a51411f886a7c8be",
+        "log": "skills.log",
+        "logSha256": "077c5a6dca3892fca0506cc79949fc1bf5ce1114381c850a4765df01d98b1f9e",
+        "seconds": 106.35,
+        "reused": false
+      },
+      {
+        "id": "editor",
+        "argv": [
+          "pnpm",
+          "editor:accept:release"
+        ],
+        "exitCode": 0,
+        "fingerprint": "3e3f0720e61bb884fa5ed4a196ec34f86e0525ab1846541ef000ebe346406e12",
+        "log": "editor.log",
+        "logSha256": "87c6758ed2b1b875c4a2fa012f155e292677514cf45d47ced8b04113f9f1833b",
+        "seconds": 287.5,
+        "reused": false
+      },
+      {
+        "id": "coord",
+        "argv": [
+          "pnpm",
+          "coord:check"
+        ],
+        "exitCode": 0,
+        "fingerprint": "5afadd8384fb6a67ae3ab0397dca0e24fed60eecb0c81c8bba86753951524660",
+        "log": "coord.log",
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271",
+        "seconds": 3.31,
+        "reused": false
+      }
+    ],
+    "exitCode": 0,
+    "meaning": "Only generated census documents changed after the full behavior/model batch; required three release gates rerun together on this clean head. Behavioral cases were not redundantly rerun.",
+    "reportSha256": "63d1560198d8c817d265060f87ce47a16f697c10e5ce1a2928fd5d0279491ad2",
+    "editorTests": 603
+  },
+  "mutationDescriptions": {
+    "missing-breath-cost": "Remove Q/W abilityOverrides.statusCost; the Q insufficient-breath case must fail.",
+    "rear-arc": "Remove arcHalfAngleCos from frontal damageArea effects; the behind-caster target case must fail.",
+    "no-stillness-gate": "Remove stationaryForSec from breathing bonus; the moving-versus-stationary comparison must fail.",
+    "no-round-cleanup": "Replace onRoundStart with onRevive in the refinement; the round-cleanup case must fail."
   }
 }

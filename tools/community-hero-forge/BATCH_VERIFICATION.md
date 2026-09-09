@@ -89,3 +89,5 @@ SUN樂驗證使用共用 `communityActionFixture(number, rank)`：讀該批版�
 炭治郎 v2 納入同一批次驗證：呼吸是具名資源；實際防禦迴避與刀技命中形成破綻連動；Q 水火同成本且共用冷卻，火式以負擔交換傷害；調息需比較靜止／移動／HP或盾受擊；死亡、回合、到期及蓄勢中斷不可留下舊效果。18 項角色／匯入／Editor 案例對應六槽，無新增引擎機制。
 
 跨批次結構比對工具 `compare-hero-batches.mts` 可讀第二批現有作品、編譯及行為報告，核對來源 hash，再以目前目錄重新編譯 74 名。`kit-diversity.mjs` 會將私有資源名稱正規化，避免改名假裝新組合；其四項測試以 `pnpm exec vitest run tools/community-hero-forge/kit-diversity.test.mjs --maxWorkers=1 --minWorkers=1` 獨立執行，不加入只接受產品測試路徑的 validation-plan。工具只診斷結構，**不宣稱已完成玩法因果、惡搞品質、素材畫面或正式驗證集准入**。本輪先完成炭治郎，跨批次剩餘工作待整理現況。
+
+新增來源檔時先明確 `git add <新增檔>`，再於提交前執行官方 `decor:build`：普查器以 `git ls-files` 為母體，未追蹤檔案不會納入。炭治郎本輪先保留完整行為／Editor成功紀錄，補正兩份普查產物後同批重跑三閘；收據分別記錄兩個提交與初次失敗，不把重試改寫為一次全綠。

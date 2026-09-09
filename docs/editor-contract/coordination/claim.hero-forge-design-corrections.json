@@ -663,6 +663,19 @@
         "materials/community-hero-forge/refinements/35.json",
         "materials/community-hero-forge/design-policy.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "炭治郎在乾淨提交 e2a15b15ae12 同批通過 skills、Editor release、coord。行為來源不變的 0712459070f7 通過37名／222槽編譯與模型核對、965項登記案例；Editor 603項測試及正式建置也通過。初次批次退出碼1的過期普查已由官方產生器補正兩份文件；129槽未對應仍保留；炭治郎行為段落已交付，但新畫面、當下服務ZIP／發布及 #1132 整批驗收未完成。",
+      "repro": {
+        "command": "pnpm editor:accept:release",
+        "expectedExit": 0
+      },
+      "commit": "e2a15b15ae125725069afaafcc8539ef296798a6",
+      "evidence": [
+        "materials/community-hero-forge/refinements/tanjiro-verification.json",
+        "materials/community-hero-forge/validation-plan.json"
+      ]
     }
   ],
   "unblocks": [],
