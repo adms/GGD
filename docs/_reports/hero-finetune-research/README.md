@@ -6,7 +6,34 @@ Research artifacts only. No editor activation, model service, cloud training, ga
 
 **2026-09-09: the user approved the [Codex-to-12B complete playable hero goal](CODEX_DISTILLATION_GOAL_20260909.md), cleared the old goal, and the replacement system goal was successfully created as active.** Use adopted heroes plus the 37 community heroes as existing teacher demonstrations for complete generation: identity, origin/stats, six skills, mechanics, VFX templates and required bindings. The final 12B-plus-script workflow must automatically fill, save, compile, import and validate a playable hero without human completion or per-hero Codex repair. The user will supply a separate new-hero batch for fixed Codex/base/LoRA comparison; never train or tune on it.
 
-This turn configured the goal and documentation only; the new teacher corpus, output contract and training settings are not frozen, and no new training or new-batch inference has started. The separate community37 corrected corpus contains 555 source-verdict auxiliary cases and must not be omitted from intake; earlier candidate counts were not full-library totals. The superseded [classification-first scope proposal](REVISED_SCOPE_REVIEW_20260909.md) and all historical results remain unchanged. Training-admission evidence is not the same as production qualification. No automatic public release, deployment, push or merge is authorized.
+The complete-generation corpus and one-epoch recipe are now frozen as **619 tasks: 500 train and 119 internal dev**. The protected Gemma 4 12B v21 run is the only authorized training run; it uses one GPU worker, no sweep, no retry and no added heroes. After terminal success, the one-shot controller runs the fixed Base/LoRA internal comparison and preserves raw generation, compile, package, isolated-import, runtime and report evidence. This internal dev set is historically exposed and is not a blind generalization result.
+
+The separate user-provided unseen hero batch has not been supplied. It must be frozen only after checkpoint selection with `hero-distillation-blind-eval-plan.mjs`; the candidate workers receive public system/user messages only, never teacher answers. Codex teacher outputs are generated and sealed afterward for the three-arm comparison. The release gate requires at least 95% whole-hero success, zero dangerous accepts, zero manual filling, canonical hero-ID separation and row-level semantic/import/runtime/gameplay evidence. CE, valid JSON, compilation, package admission or an isolated import cannot independently promote the model. No automatic public release, deployment, push or merge is authorized.
+
+### Current automated route
+
+The normal internal route is owned by `hero-distillation-evaluate-batch.py`: prepare the immutable inference bundle, run Base then LoRA once, compile all retained cases, run package admission and isolated HTTP import/runtime audit, collect a hash-bound JSON result and render the offline report. Existing output directories are never overwritten or renamed for a retry.
+
+When the user supplies the unseen batch, first convert it to the same public-case contract, with no assistant/teacher message, then freeze it against the already completed run:
+
+```sh
+node tools/editor-acceptance/hero-distillation-blind-eval-plan.mjs \
+  /absolute/completed-training-run \
+  /absolute/unseen-public-cases.jsonl \
+  /absolute/new-blind-evaluation
+```
+
+The protected inference entry accepts both `internal-dev` and `blind-user-batch`, but validates different provenance rules. For a blind batch it rejects train/dev hero overlap, training-dataset reuse, teacher visibility, tuning reuse and checkpoint selection after generation. The final evidence-only gate is:
+
+```sh
+python3 tools/editor-acceptance/hero-distillation-release-gate.py \
+  --training /absolute/completed-training-run \
+  --internal-results /absolute/internal-results.json \
+  --blind-results /absolute/blind-results.json \
+  --out /absolute/new-release-gate.json
+```
+
+This gate cannot create missing quality evidence. A failed or unverified row remains failed or unverified, and correct rejection does not count as successful hero creation.
 
 ### Historical completed work
 
