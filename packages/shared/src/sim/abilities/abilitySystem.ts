@@ -1,4 +1,3 @@
-import { resolveStatusCost } from "./statusCost";
 import { isTimeStopped } from "../timeStop";
 import { CAST_APPROACHES, approachesOf, type CastApproach } from "../content/castApproachState";
 /**
@@ -612,7 +611,7 @@ export function castAbility(
   if (hp.mana < mana) return "no-mana";
   if (def.requiredSummonSlot && ownedSummonsForSlot(world, caster, def.requiredSummonSlot).length === 0) return "no-summon";
   if (def.requiredTargetStatus && def.castType !== "targeted") return "bad-target";
-  const statusCost = freeRecast ? undefined : resolveStatusCost(world, caster, def.statusCost);
+  const statusCost = freeRecast ? undefined : def.statusCost;
   const costApplier = statusCost?.appliedBy === "self" ? caster : undefined;
   if (statusCost?.subject === "target" && def.castType !== "targeted") return "bad-target";
   if (statusCost && statusCost.subject !== "target" && consumableStatusStacks(world, caster, statusCost.statusId, costApplier) < (statusCost.count === "all" ? 1 : statusCost.count)) {

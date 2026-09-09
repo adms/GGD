@@ -1,0 +1,19 @@
+{
+  "schema": "ggd-community-design-policy@1",
+  "version": 1,
+  "effectiveDate": "2026-09-09",
+  "engineBaseline": "3d90145b7bc51d5bd3cf2d501e347d3bb600235d",
+  "scope": "First batch refinement, using the completed second batch as a versioned reference",
+  "rules": [
+    "Preserve hero identity and original source text for history; gameplay adaptations may simplify original fidelity.",
+    "Use existing enabled templates, effect kinds, hooks and conditions. Do not add engine features, template definitions or global status labels.",
+    "Humor must change the player's decisions or combo outcomes; cosmetic renaming alone is not a distinct signature.",
+    "Each hero needs a distinct core combo, a role and an actionable counter. Do not add unrelated abilities merely to improve diversity counts.",
+    "Reuse shipped curse, blind and confusion behavior; instance-local resources must remain isolated between heroes and versions.",
+    "A previous similar-loop exception is not automatic approval under this policy.",
+    "Only validated content enters the accepted evaluation set; compilation, asset presence and structural uniqueness are separate diagnostics.",
+    "Keep template, generator, hero and model version history. No shared-instance edits or silent replacement."
+  ],
+  "tanjiroAdaptation": "Water and fire share a one-breath Q. Fire trades movement speed for damage; EX cannot reset cooldown or remove burden. The unpushed conditional-cost engine extension is withdrawn.",
+  "status": "active; batch-wide adaptation and acceptance incomplete"
+}

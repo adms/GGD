@@ -48,7 +48,7 @@ export function HeroInteractivePreview(props: { project: HeroProject; slot: Hero
     {hasDrive ? <p>滑板狀態：藍色加速、青色滑行、橙色急轉、黃色煞車、紅色碰撞停止、灰色停止。移動與煞車使用下方試玩情境設定；模型為程序示意。</p> : null}
     {hasGrapple ? <p>吊帶沿瞄準方向連接第一個合法敵人或地形；白線顯示實際牽引，結束即消失。空射仍消耗本次施法資源。</p> : null}
     {requiredSummon ? <p>需要自己 {requiredSummon}「{project.acceptedPlan?.slots[requiredSummon].name}」的存活召喚物。可在前置施法選擇 {requiredSummon} 後試玩；只補足資源不會建立召喚物。</p> : null}
-    {statusCost?.subject === "target" ? <p>本招消耗指定目標身上的資源，必須先由實際機制取得；預設先讓敵人嘗試普攻 3 秒，不直接建立線索等目標資源。可改成靜止敵人測試資源不足。</p> : statusCost ? <p>單槽試玩{setup.resourceSetup === "empty" ? "保留初始" : "預先補足已安裝的"}資源；本招消耗自身{statusCost.count === "all" ? "全部剩餘資源（至少一層）" : `${statusCost.count} 層`}。{statusCost.countWhileStatus ? `進入指定姿態時改消耗 ${statusCost.countWhileStatus.count === "all" ? "全部" : statusCost.countWhileStatus.count} 層，施放前驗足額。` : ""}整套驗收不補資源。</p> : null}
+    {statusCost?.subject === "target" ? <p>本招消耗指定目標身上的資源，必須先由實際機制取得；預設先讓敵人嘗試普攻 3 秒，不直接建立線索等目標資源。可改成靜止敵人測試資源不足。</p> : statusCost ? <p>單槽試玩{setup.resourceSetup === "empty" ? "保留初始" : "預先補足已安裝的"}資源；本招消耗自身{statusCost.count === "all" ? "全部剩餘資源（至少一層）" : `${statusCost.count} 層`}。整套驗收不補資源。</p> : null}
     {recast ? <label>接續輸入測試<select aria-label="接續輸入測試" value={JSON.stringify(setup.recastPresses ?? [])} onChange={event => setSetup({ ...setup, recastPresses: JSON.parse(event.target.value) as number[] })}>
       <option value="[]">只按一次，確認不自動接段</option>
       <option value="[0.3,0.6]">再按兩次：0.3 秒、0.6 秒</option>

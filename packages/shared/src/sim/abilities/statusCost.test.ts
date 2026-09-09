@@ -61,33 +61,6 @@ function rig(count = 3) {
 }
 
 describe("ability status cost", () => {
-  it.each(["own", "foreign", "expired", "absent"] as const)("stance cost uses only the live matching owner (%s)", mode => {
-    const stance = "fixture-status-cost.fire" as StatusId;
-    const priced = zAbilityDoc.parse({ ...Q, schema: "ability@1", statusCost: { statusId: ENERGY, count: 1,
-      countWhileStatus: { statusId: stance, count: 2, appliedBy: "self" } } }) as AbilityDef;
-    Abilities.register(Q.id, priced);
-    try {
-      const r = rig(1), mana = r.world.health.get(r.caster)!.mana;
-      if (mode !== "absent") r.world.status.get(r.caster)!.effects.push({ sourceId: "fixture-stance", statusId: stance,
-        applierId: mode === "foreign" ? r.target : r.caster, expiresAtTick: r.world.tick + (mode === "expired" ? 0 : 100) });
-      expect(r.cast()).toBe(mode === "own" ? "no-resource" : "ok");
-      expect(r.resource()).toBe(mode === "own" ? 1 : 0);
-      expect(r.world.health.get(r.caster)!.mana).toBe(mana - (mode === "own" ? 0 : 20));
-      expect(r.ab.slots.Q.cooldownRemainingTicks > 0).toBe(mode !== "own");
-      expect(priced.statusCost!.count).toBe(1);
-    } finally { Abilities.register(Q.id, Q); }
-  });
-
-  it("a stance can pay all remaining stacks without changing the legacy base cost", () => {
-    const priced = zAbilityDoc.parse({ ...Q, schema: "ability@1", statusCost: { statusId: ENERGY, count: 1,
-      countWhileStatus: { statusId: ENERGY, count: "all" } } }) as AbilityDef;
-    Abilities.register(Q.id, priced);
-    try { const r = rig(3); expect(r.cast()).toBe("ok"); expect(r.resource()).toBe(0); }
-    finally { Abilities.register(Q.id, Q); }
-    for (const count of [0, -1, 1.5, 1000, "remaining"]) expect(zAbilityDoc.safeParse({ ...priced, schema: "ability@1",
-      statusCost: { statusId: ENERGY, count: 1, countWhileStatus: { statusId: ENERGY, count } } }).success).toBe(false);
-  });
-
   it("insufficient resources reject before mana, cooldown, or cast effects are paid", () => {
     const r = rig(2); const hp = r.world.health.get(r.caster)!;
     const mana = hp.mana; const targetHp = r.world.health.get(r.target)!.hp;

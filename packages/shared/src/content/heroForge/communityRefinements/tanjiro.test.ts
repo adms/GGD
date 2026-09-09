@@ -41,16 +41,19 @@ function setup(rank = 1) {
 }
 
 describe("Tanjiro breathing, opening and one shared Q stance", () => {
-  it.each([1, 4])("rank %i Q is one front arc, and fire costs more and hits harder", rank => {
+  it.each([1, 4])("rank %i Q is one front arc, and fire trades movement for stronger damage", rank => {
     const r = setup(rank); r.place(r.enemy, 1.5, 1);
     r.world.team.get(r.distant)!.teamId = r.world.team.get(r.enemy)!.teamId; r.place(r.distant, -1.5);
     expect(r.count("breath")).toBe(6); expect(r.cast("Q", r.dir, 15)).toBe("ok");
     expect(r.hits("Q").map(e => e.data.target)).toEqual([r.enemy]); expect(r.count("breath")).toBe(5);
     const water = r.hits("Q")[0]!.data.amount;
+    const cues = () => r.events.filter(e => e.type === "vfxSpawn" && e.data.origin === `ability:${r.project.projectId}.q`).map(e => e.data.vfxId);
+    expect(cues()).toEqual(["fx.prim.ice.pulse-sm", "fx.prim.wind.slash"]);
     expect(r.cast("EX", r.self, 8)).toBe("ok"); expect(r.status("fire")).toBe(1);
-    r.ready("Q"); expect(r.cast("Q", r.dir, 15)).toBe("ok"); expect(r.count("breath")).toBe(3);
+    r.ready("Q"); expect(r.cast("Q", r.dir, 15)).toBe("ok"); expect(r.count("breath")).toBe(4);
     expect(r.hits("Q")).toHaveLength(2); expect(r.hits("Q")[1]!.data.amount).toBeGreaterThan(water as number);
     expect(r.status("burden")).toBe(1);
+    expect(cues()).toEqual(["fx.prim.ice.pulse-sm", "fx.prim.wind.slash", "fx.prim.fire.slash"]);
   });
 
   it("EX preserves the actual Q instance, running cooldown, mana, breath and existing burden", () => {
@@ -66,7 +69,7 @@ describe("Tanjiro breathing, opening and one shared Q stance", () => {
 
   it.each(["Q", "W", "R"] as const)("%s cannot spend insufficient breath, mana or cooldown", slot => {
     const r = setup(); if (slot === "Q") expect(r.cast("EX", r.self, 8)).toBe("ok");
-    r.setBreath(slot === "Q" ? 1 : slot === "R" ? 2 : 0);
+    r.setBreath(slot === "R" ? 2 : 0);
     const before = r.count("breath"), mana = r.world.health.get(r.caster)!.mana;
     expect(r.cast(slot, r.dir)).toBe("no-resource"); expect(r.count("breath")).toBe(before);
     expect(r.world.health.get(r.caster)!.mana).toBe(mana); expect(r.world.abilities.get(r.caster)!.slots[slot].cooldownRemainingTicks).toBe(0);

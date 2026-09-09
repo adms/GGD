@@ -15,7 +15,7 @@ function fixture() {
     abilities: r.compiled.abilityDrafts as unknown as Record<"PASSIVE" | "Q" | "W" | "E" | "R" | "EX", AbilityDef>,
     baseline: createHeroSimulationBaseline(r.source.catalog.documents) };
 }
-it("Editor EX preparation uses real fire stance and pays two breath for the same Q", () => {
+it("Editor EX preparation uses real fire stance and keeps the same one-breath Q cost", () => {
   const r = fixture(), before = JSON.stringify(r.project);
   const options = { baseline: r.baseline, relatedAbilities: Object.values(r.abilities), ticks: 30,
     setup: { ...DEFAULT_HERO_SCENARIO_SETUP, opponentPreparation: "idle" as const, resourceSetup: "empty" as const,
@@ -23,7 +23,7 @@ it("Editor EX preparation uses real fire stance and pays two breath for the same
   const water = runHeroAbilityScenario(r.champion, r.abilities.Q, options);
   const fire = runHeroAbilityScenario(r.champion, r.abilities.Q, { ...options, setup: { ...options.setup, priorCast: { slot: "EX", waitSec: .3 } } });
   expect(water.status).toBe("accepted"); expect(fire.status).toBe("accepted");
-  expect(water.resourceCost).toMatchObject({ before: 6, after: 5 }); expect(fire.resourceCost).toMatchObject({ before: 6, after: 4 });
+  expect(water.resourceCost).toMatchObject({ before: 6, after: 5 }); expect(fire.resourceCost).toMatchObject({ before: 6, after: 5 });
   expect(fire.events.some(e => e.type === "abilityCast" && e.data.abilityId === r.abilities.EX.id)).toBe(true);
   expect(JSON.stringify(r.project)).toBe(before);
 });
@@ -41,6 +41,6 @@ it("stance cost is pinned in independent products, and old revisions remain rest
   r.project.acceptedPlan!.slots.Q.abilityOverrides.statusCost = undefined;
   r.project.acceptedPlan!.slots.EX.products[0]!.template.params!.effects = [];
   expect(JSON.stringify(second)).toBe(snapshot); expect(JSON.stringify(r.source.project)).toBe(original); expect(JSON.stringify(r.templates)).toBe(templates);
-  expect(second.revision).toBe(r.source.project.revision + 1);
+  expect(second.revision).toBe(r.source.project.revision + 2);
   expect(() => applyCommunityDesignRefinement(r.source.project, { ...r.source.refinement, sourceSha256: "0".repeat(64) }, r.templates)).toThrow("REFINEMENT_SOURCE_MISMATCH");
 });
