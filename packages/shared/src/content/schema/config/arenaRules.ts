@@ -662,6 +662,22 @@ export const zLegendaryShelfConfig = z
      */
     sellRefundPct: z.number().min(0).max(1).optional(),
     /**
+     * ⭐⭐ **背包滿的時候，三選一可不可以換掉一件**（GH#1110 B）。
+     *
+     * ⭐ A 段已經做完：滿的時候會發 `itemPickRejected{reason:"no-slot"}`，
+     *   卡片**留著**（⛔ 機會不被吃掉），而且**事先**就標出「道具欄已滿」。
+     * ⇒ B 段問的是下一題：**要不要讓他當場賣掉一件換上新的**。
+     *
+     * ⚠️ ⭐ 出貨 `false` 是刻意的：它改變的是**一場比賽的取捨**
+     *   （「先想清楚再拿」vs「隨時可換」）——⛔ 那是 owner 的設計決定，
+     *   ⛔ 不是我能引用得到原話的東西（第一守則）。
+     *   ⭐ 開關先接好，他要開就是改這一格。
+     *
+     * ⚠️ 退款走**上面那一格** `sellRefundPct` —— ⛔ 不另開第二個百分比：
+     *   同一個值兩個住處必然各自漂（第〇·四守則）。
+     */
+    swapWhenFull: z.boolean().optional(),
+    /**
      * ⭐ **隨機限定階層**（owner 2026-08-17：「仍然可以有寶具是隨機才能取得的，
      * 我預計是新增的 50~70 個⋯」）。⚠️ owner 2026-08-17 稍後**正式廢除**了他當時用的
      * 「EX理外」這個名字，改成 **EX ＜ [EX解放] ＜ [EX∅ 根源]** —— 理由是玩家拿到的是
@@ -1012,6 +1028,8 @@ export const DEFAULT_LEGENDARY_SHELF: LegendaryShelfConfig = {
   // ⚠️ 歷史：6 →（owner 2026-08-17「一場根本買不起 2 把⋯改成 4 倍比較好?」）→ 4 → 3。
   priceMultiplier: 3,
   sellRefundPct: 0.4,
+  // ⭐ 出貨 false —— 它是**設計決定**（一場比賽的取捨），⛔ 不是我能自己轉的（第一守則）。
+  swapWhenFull: false,
   // ⭐ GH#1111（owner 2026-09-06:「開票 確保所有EX都進隨機清單」）——
   //   [EX解放] 與 [EX∅ 根源] 兩階**只能隨機**,而在此之前那件事是靠
   //   ⛔ **`cost: 0` 的副作用**達成的（`shop.ts:199-202` 算不出價 ⇒ `"not-purchasable"`）。
