@@ -6,675 +6,62 @@
   "to": "main",
   "baseCommit": "6efdd3bfb4df593a26fa2e94d4d65f8e572c3c64",
   "contractFingerprint": "2b7596f9946625ab",
-  "title": "#1132 炭治郎既有機制六槽、版本化作品與集中驗證；整批尚待完成",
+  "title": "37 名社群英雄／222 槽依核准惡搞方向改編，保留原稿及独立版本；畫面與服務交付另驗",
   "claims": [
     {
       "kind": "confirmed",
-      "text": "鹿目圓 W、庫洛魔法使 W 改為指定友方；吉伊卡哇 EX 給附近友方及自身護盾與短效抗恐懼。修正使用既有 effect-sequence 模板、固定模板版本的新作品 revision；半徑 0 代表非範圍施法，產生器不再輸出非法 radius:0。阿薩謝爾重複詛咒反轉與版本隔離回歸保留。",
-      "repro": {
-        "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/friendlyProtection.test.ts src/content/heroForge/communityRefinements/azazel.test.ts src/content/heroForge/templateVersions.test.ts src/content/heroForge/productInstances.test.ts src/content/templates/expand.test.ts",
-        "expectedExit": 0
-      },
-      "commit": "67848cf34b616b70a0d899a49e888511263a3c5f",
-      "evidence": [
-        "materials/community-hero-forge/refinements/verification.json",
-        "materials/community-hero-forge/refinements/design-audit.json",
-        "packages/shared/src/content/heroForge/communityRefinements/friendlyProtection.test.ts"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "型別檢查通過；37 名原稿與模型不變，222 槽保留全部 requiredRefinement。26 名仍使用通用普攻被動；布局／線索、庫洛魔法使劍牌普攻／武器及動態牌面等仍未落地。本 PR 不代表完整原設計完成，不關閉 #1132；修正後 UI、目前服務 ZIP 與正式發布尚未驗證。",
-      "repro": {
-        "command": "pnpm --filter @ggd/shared typecheck",
-        "expectedExit": 0
-      },
-      "commit": "63b81b0754a4d8b14720b93cc182fb4d852f414d",
-      "evidence": [
-        "materials/community-hero-forge/refinements/README.md",
-        "materials/community-hero-forge/refinements/verification.json",
-        "materials/community-hero-forge/refinements/design-audit.json",
-        "materials/community-hero-forge/refinements/electric-charge-verification.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "依 #1123 審查從 Main 新建分支，保留 S3 清單、SHA-256、上传／實際還原收據及 37 名版本索引；2,840 份原始證據不再進 Git。此命令驗離線索引與既有收據一致性，並非重新下載 S3 或重新驗證遊戲機制。",
-      "repro": {
-        "command": "python3 tools/community-hero-forge/check-release-materials.py",
-        "expectedExit": 0
-      },
-      "commit": "67848cf34b616b70a0d899a49e888511263a3c5f",
-      "evidence": [
-        "materials/community-hero-forge/supplements/release-13956d93b/README.md",
-        "materials/community-hero-forge/supplements/release-evidence-c2487661f/source-verification.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "AI參考全自動鑄造守則.md 已加入 #1143 批次驗證入口與退出碼語意，獨立收據核對 30 個本機引用及新增段落。原始守則提交 c5a6a81fc 可追溯；目前完整用法需包含本 PR 後續腳本。coord 檢查封包及證據存在，不代表自動驗證文件全部語意。",
-      "repro": {
-        "command": "pnpm coord:check",
-        "expectedExit": 0
-      },
-      "commit": "5b21506707ba4e8693f682cdd5ebbd4976ea022d",
-      "evidence": [
-        "AI參考全自動鑄造守則.md",
-        "materials/community-hero-forge/refinements/guide-review.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "庫洛魔法使 Q/W/E/R 完成施法時按不同卡牌累積連結，最多三層；W 結算先消耗既有全部連結強化盾，再把 W 記入下一段牌序。重複卡、非法目標、不同施法者及回合重置已驗證，兩個回退 mutation 被檢出。此處為前批牌序證據；後續 #1139 換牌新增證據另列，未宣稱完整牌組美術完成。",
-      "repro": {
-        "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/cardLinks.test.ts src/content/heroForge/communityRefinements/friendlyProtection.test.ts",
-        "expectedExit": 0
-      },
-      "commit": "2306b776e58a4dd113489586ba869737ef4114c2",
-      "evidence": [
-        "materials/community-hero-forge/refinements/27.json",
-        "materials/community-hero-forge/refinements/card-links-verification.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "以官方 typecat/caps/editorcov/bricks 產生器恢復被較舊清單遺漏的能力與欄位；原失敗的三份 Editor 表單／契約測試共五項已通過，沒有刪除欄位或降低要求。",
-      "repro": {
-        "command": "pnpm --filter @ggd/editor exec vitest run src/form/coverageMatchesContract.test.ts src/form/fullCoverageMatchesContract.test.ts src/form/editorFormInteractions.test.tsx --pool=threads --minWorkers=1 --maxWorkers=1",
-        "expectedExit": 0
-      },
-      "commit": "2306b776e58a4dd113489586ba869737ef4114c2",
-      "evidence": [
-        "materials/community-hero-forge/refinements/card-links-verification.json",
-        "docs/editor-contract/ggd-type-catalog.json",
-        "docs/editor-contract/ggd-editor-coverage.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "#1139 批次的 Editor release（592 項、型別及正式建置）與 coord 通過；skills 在官方重生成設定清單後通過。初次兩項沙盒 IPC 錯誤及生成清單修正均有記錄，依各自提交保存證據；應用程式與配方在後續清單／測試補強期間未變。畫面、當下服务 ZIP 與正式發布仍未驗證。",
-      "repro": {
-        "command": "pnpm editor:accept:release",
-        "expectedExit": 0
-      },
-      "commit": "f6e0ff7a65fbd523f6c5c8b474c556f3d56b3f0f",
-      "evidence": [
-        "materials/community-hero-forge/refinements/card-variants-verification.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "#1139 風 Q 傷害／推動與樹 Q 束縛實際分流，EX 自身切換不重置 Q 冷卻／魔力；風／樹分別記牌序，施法途中、非法目標、資源不足及回合重置均驗證。9 項新增測試與合計 57 項回歸通過；兩個故意回退被檢出。動態牌面／圖示、劍牌與翔牌呈現仍未完成。",
-      "repro": {
-        "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/cardVariants.test.ts src/content/heroForge/communityRefinements/cardLinks.test.ts src/content/heroForge/communityRefinements/friendlyProtection.test.ts --pool=threads --minWorkers=1 --maxWorkers=1",
-        "expectedExit": 0
-      },
-      "commit": "4b1822a12a2be22992126a622d689b9f293b3b48",
-      "evidence": [
-        "materials/community-hero-forge/refinements/card-variants-verification.json",
-        "packages/shared/src/content/heroForge/communityRefinements/cardVariants.test.ts"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "Git 已保存 37 份實際 HeroProject、配對 index 與完整原始 recipes，可由其他工作線直接讀取。離線工具核對 75 份設定 SHA、原文配對並重新編譯 222 槽；可從既有 S3 ZIP 還原 37 名所綁定的 34 份模型。此離線命令不下載 S3，也不證明正式發布或原設計全部完成。",
+      "text": "37 份版本化微調與 HeroProject 已重建。原名、222 槽 ownerDescription/requiredRefinement、英雄屬性與既有模型綁定保留；微調與成品由獨立模板實例釘選版本。沒有通用 tpl-on-attack 被動替代資源。原稿忠實還原不再作本輪完成宣稱，逐槽改編明列於 parody-review.json。",
       "repro": {
         "command": "pnpm exec node --import tsx tools/community-hero-forge/prepare-published-handoff.mts",
         "expectedExit": 0
       },
-      "commit": "06d24437319137191b7d385475c3055d1c14edd4",
+      "commit": "36ed5daa4465b784c7fb0401980c3eb7db642e2b",
       "evidence": [
         "materials/community-hero-forge/handoff-manifest.json",
-        "materials/community-hero-forge/index.json",
-        "materials/community-hero-forge/README.md"
+        "materials/community-hero-forge/refinements/parody-review.json",
+        "materials/community-hero-forge/refinements/design-audit.json"
       ]
     },
     {
       "kind": "confirmed",
-      "text": "#1140 御坂美琴 PASSIVE 改為不同成功技能命中的三層電荷，EX 真正消耗並強化下一次 Q 範圍或 W 跳數；Q／R 每目標單發，W 單鏈不重訪。retargetOnLost 可選重選失效節點，舊預設仍中止。16 項角色行為與 6 項連鎖測試通過，另有 80 項整批回歸及兩個故意回退的失敗證據。原作硬幣、鐵砂破盾碎粒和正式畫面驗收仍未完成。",
+      "text": "新增可重跑的角色來源與因果驗證：21 名重組核心有四條匹配時間線，105 個主動槽有刪除實際效果的對照，被動由真實事件或致死攻擊觸發；局部代價與御坂 E、庫洛 E/R 另有回歸。阿薩謝爾新版測極大範圍、多目標先強化兩秒、再弱化三秒、實際零防禦、來源隔離、驅散、死亡與到期恢復；v1 回退測試保留。測試通過不代表原作美術、正式平衡或發布通過。",
       "repro": {
-        "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/electricCharge.test.ts src/sim/effects/chainLightning.test.ts --pool=threads --minWorkers=1 --maxWorkers=1",
+        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements/parodyBatch.test.ts packages/shared/src/content/heroForge/communityRefinements/parodyAdaptations.test.ts packages/shared/src/content/heroForge/communityRefinements/parodyAzazel.test.ts --maxWorkers=2 --minWorkers=1",
         "expectedExit": 0
       },
-      "commit": "db53e47e456e6230e782222dc5f63dcf9c685ebe",
+      "commit": "36ed5daa4465b784c7fb0401980c3eb7db642e2b",
       "evidence": [
-        "materials/community-hero-forge/refinements/20.json",
-        "materials/community-hero-forge/refinements/electric-charge-verification.json",
-        "packages/shared/src/content/heroForge/communityRefinements/electricCharge.test.ts",
-        "packages/shared/src/sim/effects/chainLightning.ts"
+        "tools/community-hero-forge/parody",
+        "packages/shared/src/content/heroForge/communityRefinements/parodyAzazel.test.ts",
+        "materials/community-hero-forge/refinements/parody-review.md"
       ]
     },
     {
       "kind": "confirmed",
-      "text": "#1140 最終同批 skills:check、editor:accept:release、coord:check 均通過，Editor 包含 592 項測試、型別與正式建置。schema 相依文件依官方產生器重生成，README 指紋同步；沒有把原作視覺待審改為通過。skills 的當日訊息帳本沿用既有未結日豁免，不代表全專案嚴格結帳或正式發版。",
+      "text": "生成來源、微調輸出與數值配置可用 --check 逐位元核對；37 套正規化整體技能組无完全或近似重複。結構診斷不單獨裁決創意、樂趣或平衡。本輪不新增引擎功能、模板定義或全域標籤；基礎魔抗在 override 之後加回的問題，依現有配置反算輸入，沒有改引擎。",
       "repro": {
-        "command": "pnpm editor:accept:release",
+        "command": "pnpm exec node --import tsx tools/community-hero-forge/parody/build.mts --check",
         "expectedExit": 0
       },
-      "commit": "e23c0123f5deba3e66766a2f604a3dab413294ab",
+      "commit": "36ed5daa4465b784c7fb0401980c3eb7db642e2b",
       "evidence": [
-        "materials/community-hero-forge/refinements/electric-charge-verification.json"
+        "tools/community-hero-forge/parody/build.mts",
+        "materials/community-hero-forge/design-policy.json",
+        "materials/community-hero-forge/refinements/parody-review.json"
       ]
     },
     {
       "kind": "confirmed",
-      "text": "#1141：吉伊卡哇勇氣按附近友軍真實交戰與固定間隔累積；短叉刺、撤退耗一層盾、站定點心受傷中斷、0–3 層對應 3–6 次近距叉擊，EX 清除可驅散恐懼並保護友軍。26 項行為測試；三個承重反例均檢出。微調 version 推進作品 revision；27 號僅補正舊 v3 revision，37 號六槽更新。叉模型／動作與畫面及新服務 ZIP／正式發布未驗證，#1132 保持開啟。",
+      "text": "PR 前段已提供資源、指定友軍保護、觀察事件、召喚／陷阱、滑板／牽引、格擋／中斷、局部時停、獨立續段及模板歷史等共用支援；相應角色與 transport/Editor 回歸仍登記在 validation-plan.json，歷史證據保留在各角色驗證檔。Main 需一併審查並同步整合 client/game-server/content-api，不能只收新版 JSON 至舊執行器。當前修正後瀏覽器畫面及服務 ZIP／投稿尚未驗收完成；#1132 保持開啟。",
       "repro": {
-        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts apps/editor/src/forge/conditionEditor.test.ts",
+        "command": "pnpm exec tsc --noEmit -p packages/shared/tsconfig.json",
         "expectedExit": 0
       },
-      "commit": "63b81b0754a4d8b14720b93cc182fb4d852f414d",
+      "commit": "36ed5daa4465b784c7fb0401980c3eb7db642e2b",
       "evidence": [
-        "materials/community-hero-forge/refinements/chiikawa-verification.json",
-        "materials/community-hero-forge/refinements/37.json",
-        "packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts",
-        "packages/shared/src/content/heroForge/communityRefinements/apply.ts"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "#1143 批次驗證器接受指定資料夾並推導數量、原文及六槽；綁定 manifest 的現有行為測試集中執行，成功證據僅在來源／命令／日誌 SHA 相符時重用。第一批 37／222 實跑與一名／六槽入口通過；68 項行為測試涵蓋清單中的 16 槽，206 槽未配對。release 失敗後自動展開全部 skills 子檢查，保留失敗；未宣稱第二批、原設計、視覺或正式發布完成。",
-      "repro": {
-        "command": "python3 tools/community-hero-forge/test_verify_authoring_batch.py -v",
-        "expectedExit": 0
-      },
-      "commit": "d635f8fcfe371e6c7f6214d46288c33c4efd3a79",
-      "evidence": [
-        "tools/community-hero-forge/verify-authoring-batch.py",
-        "tools/community-hero-forge/BATCH_VERIFICATION.md",
         "materials/community-hero-forge/validation-plan.json",
-        "materials/community-hero-forge/refinements/batch-verifier-verification.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "#1141／#1143 最終同批 skills:check、editor:accept:release、coord:check 均 exit 0，Editor 包含 593 項測試、型別及正式建置。批次模型綁定與已登記行為測試通過；因 206 槽尚未配對行為 suite，總執行器依設計回 exit 2。同版本快取續跑實測 6.47 秒、重用四項成功證據並重新核對模型。原設計、視覺及正式发布仍未完成。",
-      "repro": {
-        "command": "pnpm editor:accept:release",
-        "expectedExit": 0
-      },
-      "commit": "5b21506707ba4e8693f682cdd5ebbd4976ea022d",
-      "evidence": [
-        "materials/community-hero-forge/refinements/chiikawa-verification.json",
-        "materials/community-hero-forge/refinements/batch-verifier-verification.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "#1132 鹿目圓 v2 實作有效友軍保護累積希望、消耗希望強化友軍盾、直線碰撞 Q、單項淨化 E、三波地面重判 R 及每目標每回合一次保命 EX。19 項角色行為、207 項集中回歸與三個承重反例通過。僅 21 號作品 revision 13→14，其餘 36 份逐位元組不變；原作箭／玫瑰盾／圓環畫面與目前服務 ZIP、正式發布尚未驗證，父票保持開啟。",
-      "repro": {
-        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements/madoka.test.ts",
-        "expectedExit": 0
-      },
-      "commit": "597db32918ad27262ca6e343217a9d12672d672d",
-      "evidence": [
-        "materials/community-hero-forge/refinements/madoka-verification.json",
-        "materials/community-hero-forge/refinements/21.json",
-        "packages/shared/src/content/heroForge/communityRefinements/madoka.test.ts"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "鹿目圓修正後，同批 skills:check、editor:accept:release、coord:check 全部 exit 0；Editor 593 項測試、型別與正式建置通過。37 名模型綁定和 87 項已登記行為测试通過。清單對應 21 槽，另外 201 槽尚未登記 suite，總執行器如實回 exit 2；這不是完整原設計或視覺通過。",
-      "repro": {
-        "command": "pnpm editor:accept:release",
-        "expectedExit": 0
-      },
-      "commit": "c57a73c5a15aa428d82c657a9d0233c5762503e9",
-      "evidence": [
-        "materials/community-hero-forge/refinements/madoka-verification.json",
-        "materials/community-hero-forge/validation-plan.json",
-        "apps/editor/README.md"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "功能分支已整合 main a6537b864；生成檔衝突從合併來源重建，素材資料夾的兩個既有覆寫變數均保留。相同待提交檔案樹通過三項發布檢查、593 項 Editor 測試及建置、37 名編譯／模型核對與 87 項已登記行為測試；另外 45 項阿薩謝爾、版本隔離、匯入 profile 與跨平台回歸通過。合併未改 37 份作品與原稿；#1132 原驗收條件仍未全部完成。",
-      "repro": {
-        "command": "pnpm editor:accept:release",
-        "expectedExit": 0
-      },
-      "commit": "257ad22b3e57f5657546669775f1e7e2189a75d6",
-      "evidence": [
-        "materials/community-hero-forge/refinements/madoka-verification.json",
-        "content/editor-target-profile.json",
-        "tools/asset-cdn/outputs/reconcile_outputs.py"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "奇犽六槽已從原始配方生成具名電力、落雷、有效自身迴避回電、持續加速開關、共用限次反擊及全電力 EX。24 項行為案例與 213 項集中回歸通過，三項故意回退被檢出；保留原稿與其餘 36 名作品。具名資源維持費、all 施法成本、迴避來源／通道均為通用欄位。畫面、當下服務 ZIP 與正式發布仍未完成。",
-      "repro": {
-        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements/kirua.test.ts packages/shared/src/sim/abilities/statusCost.test.ts packages/shared/src/sim/abilities/toggle.test.ts --maxWorkers=1 --minWorkers=1",
-        "expectedExit": 0
-      },
-      "commit": "996fa4a45053c3831d3a820c03f342cda76de5b8",
-      "evidence": [
-        "materials/community-hero-forge/refinements/24.json",
-        "materials/community-hero-forge/refinements/kirua-verification.json",
-        "packages/shared/src/content/heroForge/communityRefinements/kirua.test.ts"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "奇犽交接提交 c13c6c9de711 在乾淨工作樹同批通過 skills、Editor release、coord；Editor 593 項測試、型別與正式建置均通過。37 名編譯／模型核對及 111 項已登記行為測試通過；批次退出碼 2 仍保留 195 槽未對應案例，沒有宣稱畫面、整體原設計或正式發布完成。",
-      "repro": {
-        "command": "pnpm editor:accept:release",
-        "expectedExit": 0
-      },
-      "commit": "c13c6c9de711f9a8c902338aedce86980b763d54",
-      "evidence": [
-        "materials/community-hero-forge/refinements/kirua-verification.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "#1132 武藤遊戲補上召喚／陷阱有效命中累積布局、跨槽獨立召喚與再次下令、雙向共用冷卻的協同命中、定點一次性普攻抵消反擊、預警後一次區域雷擊及由存活 Q 發射的 EX。新增 trap 的 schema、執行器、子鏈登記、傳輸、Client 標記與 Forge 回放；原作黑魔導造型及天空龍投影仍未完成。奇犽 v2 改以真實攻擊提交重置回電等待，包含失手、迴避及取消前搖；先前 v1 只手動觸發 onBasicAttack，沒有證明此情境。兩角合計 48 項行為與 4 項呈現／傳輸測試通過；三端型別通過。37 原稿、模型不變，只有 01／24 作品升版。總票保留，沒有新 ZIP 或正式發布。",
-      "repro": {
-        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements/yugi.test.ts packages/shared/src/content/heroForge/communityRefinements/kirua.test.ts apps/client/src/render/views/TrapView.test.ts apps/editor/src/vfx-forge/TrapReplay.test.ts apps/game-server/src/net/trapWire.test.ts --maxWorkers=1 --minWorkers=1",
-        "expectedExit": 0
-      },
-      "commit": "c699a9ef51922e6dff101cac83bfec80952159d5",
-      "evidence": [
-        "materials/community-hero-forge/refinements/yugi-verification.json",
-        "materials/community-hero-forge/refinements/kirua-verification.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "#1143 因本批真實回歸重新開啟：批次 plan 原本只允許 shared/editor，拒絕存在的 Client／Game Server 測試。已擴充明確的四個目錄，仍拒絕來源外路徑、非測試副檔名、缺檔與任意命令；10 項執行器測試通過。實際跨端呈現與傳輸 suite 另登記，NullEngine 不冒充瀏覽器畫面驗收。",
-      "repro": {
-        "command": "python3 tools/community-hero-forge/test_verify_authoring_batch.py -v",
-        "expectedExit": 0
-      },
-      "commit": "e94963582ecab32274720dd7e526cc9cd0a4eee9",
-      "evidence": [
-        "materials/community-hero-forge/refinements/yugi-verification.json",
-        "tools/community-hero-forge/BATCH_VERIFICATION.md"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "乾淨提交 9e68e3cd9438 同批通過 skills、Editor release 與 coord。Editor 595 項測試、型別及正式建置通過；37 名／222 槽编譯、37 份模型綁定及 139 項已登記機制／跨端測試通過。批次退出碼 2 保留 189 槽無案例對應，原設計、畫面與正式發布仍未完成。#1143 跨端路徑修正已完成；#1132 原驗收條件不變。",
-      "repro": {
-        "command": "pnpm editor:accept:release",
-        "expectedExit": 0
-      },
-      "commit": "9e68e3cd94383e6a37ba07ec8c3e4a22390bfabf",
-      "evidence": [
-        "materials/community-hero-forge/refinements/yugi-verification.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "#1132 柯南四槽修正：同區可見敵人的有效事件分種類去重、三條線索按目標與觀察者隔離；Q／W 真實首碰投射物、W 睡眠只被正值 HP 傷害喚醒；R 扣指定目標自己的線索，短效揭示與弱點，保留隱形時鐘及對決邊界。237 項集中回歸及四個故意回退通過，另以先失敗後通過案例驗證有效控制續期，原始 37 份配方與模型不變，只有 26 升至 revision 13。E／EX 及專用素材畫面仍待補，沒有新服務 ZIP／發布；#1132 原驗收條件不變。",
-      "repro": {
-        "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/conan.test.ts --maxWorkers=1 --minWorkers=1",
-        "expectedExit": 0
-      },
-      "commit": "50a821472197fe480deb09b4f37b6bbfbd205f13",
-      "evidence": [
-        "materials/community-hero-forge/refinements/conan-verification.json",
-        "materials/community-hero-forge/refinements/26.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "柯南修正整合於乾淨提交 2572fcd9c547，同批 skills、Editor release 與 coord 全通過；Editor 595 項測試／型別／正式建置、37 名／222 槽編譯與 37 份模型綁定、161 項登記行為／跨端測試通過。37 槽有案例對應、185 槽仍缺，故批次退出碼 2。原設計全量、素材畫面與當下服務 ZIP／發布未完成，#1132 保持開啟。",
-      "repro": {
-        "command": "pnpm editor:accept:release",
-        "expectedExit": 0
-      },
-      "commit": "2572fcd9c547debe091c28a1e088fa22fa858649",
-      "evidence": [
-        "materials/community-hero-forge/refinements/conan-verification.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "#1132 柯南 v2 補 E／EX：來源限定滑板加速、急轉減速、煞車、碰撞停止；有限牽引分首個合法敵人／實體地形錨點，超距立即中止，不增加摔投傷害。實際快照、Client 圖形與 Forge 回放接線完成；試玩路線及牆面使用真實模擬。修正既有開門碰撞整理與滑動重新撞門問題，保留瞄準優先。292 項回歸、8 項跨端案例、四端型別與三項有效突變檢查通過。只有柯南 revision 13→14，原稿及其他英雄不變。39 槽有行為案例、183 槽未對應；程序素材不等於原稿素材驗收，#1132 保持開啟。",
-      "repro": {
-        "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/conanMobility.test.ts --maxWorkers=1 --minWorkers=1",
-        "expectedExit": 0
-      },
-      "commit": "1ede970a77514c967eb3df25412d6ea003fb0f06",
-      "evidence": [
-        "materials/community-hero-forge/refinements/conan-mobility-verification.json",
-        "materials/community-hero-forge/refinements/26.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "柯南位移補上實際網格狀態／座標提示、原配方到回放位置及煞車顏色案例；模型工作程序允許冷載入但保留 60 秒上限，GLB 採用逾時接入既有有界重試。單槽預覽不再被其他槽的資源拒絕連帶停用，完整 ZIP／投稿仍要求全部檢查通過。11 項跨端／工作程序與 3 項既有載入生命週期測試通過。新增指定英雄的瀏覽器收集腳本，但真實畫面仍因冷載入／PBR 就緒失敗，未完成九張驗收；兩張失敗診斷存 S3 並已下載核對 SHA。R 預設情境缺線索與 183 槽未對應仍未解決，#1132 不關閉。",
-      "repro": {
-        "command": "pnpm exec vitest run apps/editor/src/hero/modelUploadJob.test.ts apps/editor/src/vfx-forge/AbilityMotionReplay.test.ts apps/editor/src/vfx-forge/waitForActorModel.test.ts --maxWorkers=1 --minWorkers=1",
-        "expectedExit": 0
-      },
-      "commit": "f64c906aff8500bc087a2c2417a030e606d26d2f",
-      "evidence": [
-        "materials/community-hero-forge/refinements/conan-mobility-verification.json",
-        "materials/community-hero-forge/refinements/conan-mobility-visual-diagnostics.json",
-        "tools/community-hero-forge/BATCH_VERIFICATION.md"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "乾淨提交 273db499896c 的集中發布前檢查通過：skills（含訊息帳本與修正後 decor）、Editor release、coord 同批完成；Editor 599 項測試、型別與正式建置通過，37／222 編譯及模型位元組核對、195 項登記機制／跨端案例通過。39 槽有測試對應、183 槽未對應，故退出碼 2；九張真實畫面驗收、R 前置線索情境、完整原設計與當下服務 ZIP／發布仍未完成，#1132 原條件不變且保持開啟。",
-      "repro": {
-        "command": "pnpm editor:accept:release",
-        "expectedExit": 0
-      },
-      "commit": "273db499896cf07c59b665addd27fc35819823ea",
-      "evidence": [
-        "materials/community-hero-forge/refinements/conan-mobility-verification.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "#1132 柯南 R 驗收場景修正：啟動真實戰鬥事件，以受控敌方普攻取得一條自己的目標線索，all 成本正常消耗；靜止、缺被動與成本不足仍拒絕，不直接補線索。Editor 和可信投稿編譯器六槽／整套投影相同，12 項目標資源與一致性測試、345 項共用回歸及25 項呈現生命週期回歸通過。前置事件計入回放長度；新增可切換敵方前置行動與資源數量。37 份作品／原稿／模型未改。PBR 等待補入真實繪製步驟，仍需實際畫面證據；新服務 ZIP、正式發布及完整原設計未完成。",
-      "repro": {
-        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements/conanAcceptance.test.ts apps/editor/src/hero/validationBaseline.test.ts --maxWorkers=1 --minWorkers=1",
-        "expectedExit": 0
-      },
-      "commit": "00c50debe1a0e09be184f98b4ce0c95178dd0138",
-      "evidence": [
-        "materials/community-hero-forge/refinements/conan-acceptance-verification.json",
-        "packages/shared/src/content/heroForge/communityRefinements/conanAcceptance.test.ts",
-        "apps/editor/src/hero/validationBaseline.test.ts",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "乾淨提交 c6f1fc737 同批通過 skills、Editor release、coord、37 名／222 槽編譯模型核對及四组登記案例。Editor 600 項、登記案例234 項均通過；退出碼2 保留183 槽缺口。真實瀏覽器匯入柯南後顯示六槽編譯模擬通過，但 PBR 預載仍失敗、九張位移畫面未取得；獨立 PBR 小場景551ms成功只縮小診斷範圍。診斷畫面已存授權 S3 並下載核對 SHA，未當成通過。#1132 原範圍保持開啟，無新服務 ZIP 或正式發布。",
-      "repro": {
-        "command": "pnpm editor:accept:release",
-        "expectedExit": 0
-      },
-      "commit": "c6f1fc737dbdfb6111cbee3ba3c533cc9ae1dc2e",
-      "evidence": [
-        "materials/community-hero-forge/refinements/conan-acceptance-verification.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "#1132 銀時六槽 v1：真正脫戰補給及接受施法消耗、前方弧斬、受擊或移動中斷休息、自身成功招架後一次限時反擊、短效白夜叉與合法敵方施法打斷。28 項角色案例及五項突變檢查通過，四端型別與37 項 Editor 表單／預覽案例通過；初次補給退款與預覽漏接皆已修正並保留記錄。37 名／222 槽重編譯，只有銀時 revision12→13，其他作品／原稿／模型不變。45 槽有登記行為案例、177 槽未對應；本尊模型仍是候選，木刀／牛奶／專用演出及完整原設計、當下服務 ZIP／發布未完成，#1132 原範圍保持開啟。",
-      "repro": {
-        "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/gintoki.test.ts --maxWorkers=1 --minWorkers=1",
-        "expectedExit": 0
-      },
-      "commit": "4822d5ff5560ad6ba07f212d6b0715f7fdab9820",
-      "evidence": [
-        "materials/community-hero-forge/refinements/gintoki-verification.json",
-        "materials/community-hero-forge/refinements/23.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "乾淨提交 50543be8e467 同批通過 skills、Editor release、coord、37 名／222 槽編譯與模型位元組核對及371 項登記案例；Editor 601 項測試、型別與正式建置通過。首次發布閘的六項相依文件／詞彙失敗已由正式來源與產生器修正並保留收據；訊息帳本检查通過。退出碼2 保留177 槽未對應，原稿及36 名其他作品不變；專用素材畫面、整體原設計與新服務 ZIP／發布未完成，#1132 保持原範圍開啟。",
-      "repro": {
-        "command": "pnpm editor:accept:release",
-        "expectedExit": 0
-      },
-      "commit": "50543be8e467eb4d1de9e9941d577ff7d7dea00a",
-      "evidence": [
-        "materials/community-hero-forge/refinements/gintoki-verification.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "#1132 SUN樂六槽 v1：實際滑步閃避讀招、自身招架後一次 Q 接續、三秒加速與三層讀招加近期自己交鋒標記的 EX。26 項實際行為、3 項試玩、四項突變、333 項集中回歸、接近回歸、29 項 Client 回饋與四端型別通過。37 名／222 槽重編譯，只有 SUN樂 revision12→13，其他作品／原稿／模型不變。51 槽登記行為案例、171 槽未對應。全套煙霧沒有實際讀招時正確拒絕 EX，另有真實连段正例；不得把它稱為整套 UI 或原作素材驗收。哈桑代理、原生 clip 綁定保留；#1132 原設計／畫面／當下服務 ZIP／發布範圍繼續開啟。",
-      "repro": {
-        "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/sunraku.test.ts src/content/heroForge/communityRefinements/sunrakuAcceptance.test.ts --maxWorkers=1 --minWorkers=1",
-        "expectedExit": 0
-      },
-      "commit": "3a8daa1394392584653f969276c667d3cca13155",
-      "evidence": [
-        "materials/community-hero-forge/refinements/sunraku-verification.json",
-        "materials/community-hero-forge/refinements/31.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "乾淨提交 682cf03597a4 同批通過 skills、Editor release、coord、37 名／222 槽編譯及模型位元組核對與 491 項登記案例；Editor 601 項測試、型別與正式建置通過。訊息帳本檢查通過。退出碼 2 保留 171 槽未對應，不是完整設計／畫面通過；本次僅 SUN樂 revision 12→13，其他 36 名作品與全部原稿／模型不變。#1132 完整原範圍及新服務 ZIP／投稿發布仍未完成。",
-      "repro": {
-        "command": "pnpm editor:accept:release",
-        "expectedExit": 0
-      },
-      "commit": "682cf03597a41ee12707f4934bf53c9d8056d428",
-      "evidence": [
-        "materials/community-hero-forge/refinements/sunraku-verification.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "#1132 艾莉絲六槽 v1：逐目標交鋒先手、終點斬擊、有限防禦、無傷害逼近、首次敵人接觸停止及自身近期命中 EX，超距不自動接近也不扣費。25 項行為、3 項試玩、四項突變、363 項集中回歸與四端型別通過。37 名／222 槽重編譯，只有艾莉絲 revision12→13，其他作品／原稿／模型不變。57 槽登記行為案例、165 槽未對應。本尊模型保留，專用動作與效果畫面未驗收；#1132 原設計／畫面／當下服務 ZIP／發布範圍繼續開啟。",
-      "repro": {
-        "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/eris.test.ts src/content/heroForge/communityRefinements/erisAcceptance.test.ts --maxWorkers=1 --minWorkers=1",
-        "expectedExit": 0
-      },
-      "commit": "09dbc46d01a60a50bf41d76ed17bb78c92533e21",
-      "evidence": [
-        "materials/community-hero-forge/refinements/eris-verification.json",
-        "materials/community-hero-forge/refinements/28.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "乾淨提交 a81602327909 同批通過 skills、Editor release、coord、37 名／222 槽編譯及模型位元組核對與 557 項登記案例；Editor 601 項測試、型別與正式建置通過。訊息帳本檢查通過。退出碼 2 保留 165 槽未對應，不是完整設計／畫面通過；本次僅艾莉絲 revision 12→13，其他 36 名作品與全部原稿／模型不變。#1132 完整原範圍及新服務 ZIP／投稿發布仍未完成。",
-      "repro": {
-        "command": "pnpm editor:accept:release",
-        "expectedExit": 0
-      },
-      "commit": "a81602327909221c787e5a693fc74a9e7737dd27",
-      "evidence": [
-        "materials/community-hero-forge/refinements/eris-verification.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "#1132 尼古貓貓六槽 v1：實際靜止蓄層／有效受擊清層、落點判定、有限煙霧失手、無傷害撤退、三波預警及獨立移動撤盾。30 項行為、1 項空資源真實等待試玩、四項突變、417 項集中回歸與四端型別通過。37 名／222 槽重編譯，只有尼古貓貓 revision12→13，其他作品／原稿／模型不變。63 槽登記行為案例、159 槽未對應；19 名仍有通用普攻被動。代理模型及臨時效果不等於原設計美術完成；#1132 原設計／畫面／當下服務 ZIP／發布範圍繼續開啟。",
-      "repro": {
-        "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/yanineko.test.ts src/content/heroForge/communityRefinements/yaninekoAcceptance.test.ts --maxWorkers=1 --minWorkers=1",
-        "expectedExit": 0
-      },
-      "commit": "b9333a8b2098f46dfe40b5e18b07f439f7eec5e3",
-      "evidence": [
-        "materials/community-hero-forge/refinements/yanineko-verification.json",
-        "materials/community-hero-forge/refinements/30.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "乾淨提交 45751bcf7214 同批通過 skills、Editor release、coord、37 名／222 槽編譯及模型位元組核對與 666 項登記案例；Editor 601 項測試、型別與正式建置通過。訊息帳本檢查通過。退出碼 2 保留 159 槽未對應，不是完整設計／畫面通過；本次僅尼古貓貓 revision 12→13，其他 36 名作品與全部原稿／模型不變。#1132 完整原範圍及新服務 ZIP／投稿發布仍未完成。",
-      "repro": {
-        "command": "pnpm editor:accept:release",
-        "expectedExit": 0
-      },
-      "commit": "45751bcf7214286adabcb7aa3fb7231d554a1dd7",
-      "evidence": [
-        "materials/community-hero-forge/refinements/yanineko-verification.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "#1132 阿薩謝爾目前第32份作品接入版本化 JSON：R萎靡／EX反轉使用實際傷害輸出倍率，保留只反轉同來源且不補一般EX傷害；E依一次近身有效受擊出拳，不附加免傷、正面限制或反傷倍率例外。37項目前行為、3項匯入／試玩、9項距離、四項突變、466項集中回歸及四端型別通過。共用距離葉拒絕不同對決；兩個交接產生入口的全部37份作品位元組一致，只有阿薩謝爾revision30→31，原稿／模型不變。69槽已對應、153槽未對應；原稿美術及新版ZIP／投稿發布尚未完成，#1132保持完整原範圍。",
-      "repro": {
-        "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/azazelBatch.test.ts src/content/heroForge/communityRefinements/azazelBatchAcceptance.test.ts src/sim/content/conditionDistanceLearned.test.ts --maxWorkers=1 --minWorkers=1",
-        "expectedExit": 0
-      },
-      "commit": "7586263e5f8197aadbd9d714f9fb7ffebcd0618a",
-      "evidence": [
-        "materials/community-hero-forge/refinements/azazel-batch-verification.json",
-        "materials/community-hero-forge/refinements/32.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "乾淨提交 f070566715b9 同批通過 skills、Editor release、coord、37名／222槽編譯與模型核對、766項登記案例；Editor 601項測試、型別與正式建置通過。訊息帳本檢查通過。退出碼2保留153槽未對應；本次阿薩謝爾revision30→31，兩個交接入口的37份作品一致，其餘36名作品及全部原稿／模型不變。專用原稿美術、當下服務ZIP及投稿發布未完成；#1132保持完整原範圍開啟。",
-      "repro": {
-        "command": "pnpm editor:accept:release",
-        "expectedExit": 0
-      },
-      "commit": "f070566715b94a39cd9737f834914c9e712662dc",
-      "evidence": [
-        "materials/community-hero-forge/refinements/azazel-batch-verification.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "#1132 不知火舞六槽 v1：自然位移結束的一次身法、單一穿透彈、前方弧形、沿途每人一次接觸突進、有效 R 命中後連段及每次施法一次／三次上限殘像。共用 dash onTouch/touchScope/resolved 已進 schema／執行器／自動表單；oncePerCast 只有明填 damageConnected 才計盾吸收。Editor 可真實先解鎖施放 EX 再測其他槽。31項行為、3項匯入／試玩、四项突變、444項集中回歸及四端型別通過。37份重建只有不知火舞revision12→13，其餘36名作品、37原稿與模型綁定不變；75槽有案例、147槽未對應，18名通用普攻被動。真田幸村風格代理保留，專用畫面／音效與當下服務 ZIP／投稿發布未完成；#1132維持原完整範圍。",
-      "repro": {
-        "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/mai.test.ts src/content/heroForge/communityRefinements/maiAcceptance.test.ts --maxWorkers=1 --minWorkers=1",
-        "expectedExit": 0
-      },
-      "commit": "3990c5c863e4dbcc3e4ca5ff81aabada33b8d897",
-      "evidence": [
-        "materials/community-hero-forge/refinements/mai-verification.json",
-        "materials/community-hero-forge/refinements/03.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "乾淨提交 c2e02feaa414 同批通過 skills、Editor release、coord、37名／222槽編譯與模型核對、800項登記案例；Editor 601项測試、型別與正式建置通過，訊息帳本檢查通過。退出碼2保留147槽未對應。本輪不知火舞revision12→13，其他36名作品、37原稿與全部模型綁定不變；原稿美術、當下服務ZIP與投稿發布尚未完成，#1132保持原完整範圍開啟。",
-      "repro": {
-        "command": "pnpm editor:accept:release",
-        "expectedExit": 0
-      },
-      "commit": "c2e02feaa4144a15c115281def8c681c3f5a628c",
-      "evidence": [
-        "materials/community-hero-forge/refinements/mai-verification.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "八神庵 E 以共用 recast 狀態實作三次獨立輸入，最短0.2秒、窗口1.2秒；逾時或控制中斷，首段支付成本且冷卻持續流逝。模板、生成器、Editor試玩、快照與桌面／平板技能列已接線，22項行為、6項Editor／匯入、2項線路／重送與4項突變通過。歷史模板獨立保留於伺服器出貨來源；微調釘选原文，未知hash不核准。整批重建只改八神庵E，revision12→13；其他36份作品、其餘五槽、37原稿與模型不變。76槽有案例、146槽未對應，18名通用普攻被動。八神庵P/Q/W/R/EX、專用動作／紫炎、當下服務ZIP與投稿發布尚未完成；#1132原始AC保持開啟。",
-      "repro": {
-        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements/ioriRecast.test.ts packages/shared/src/content/heroForge/communityRefinements/ioriRecastAcceptance.test.ts apps/game-server/src/net/recastSnapshot.test.ts apps/client/src/ui/recastWiring.test.ts apps/content-api/src/heroShippedTemplateHistory.test.ts --maxWorkers=1 --minWorkers=1",
-        "expectedExit": 0
-      },
-      "commit": "925f1350438df0ebf0b3e260bf148a097821b558",
-      "evidence": [
-        "materials/community-hero-forge/refinements/iori-recast-verification.json",
-        "materials/community-hero-forge/refinements/02.json",
-        "materials/community-hero-forge/validation-plan.json",
-        "packages/shared/src/content/templates/shippedHistory.ts"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "乾淨提交 526e26591c2d 同批通過 skills、Editor release、coord、37 名／222 槽編譯及 37 份模型綁定核對；837 項登記案例、Editor 601 項測試與正式建置通過。初次批次檢出的 content-api 測試路徑與 recast 形狀索引缺漏已修正；10 項執行器測試及 5 組形狀自檢通過。退出碼 2 保留 146 槽未對應；八神庵目前僅 E 完成此輪機制修正，其他五槽與全批原稿美術、當下服務 ZIP、投稿發布仍未完成。#1132 原完整驗收條件不變且保持開啟。",
-      "repro": {
-        "command": "pnpm editor:accept:release",
-        "expectedExit": 0
-      },
-      "commit": "526e26591c2d2703c816200ce6c3c07c833983a3",
-      "evidence": [
-        "materials/community-hero-forge/refinements/iori-recast-verification.json",
-        "materials/community-hero-forge/validation-plan.json",
-        "tools/community-hero-forge/BATCH_VERIFICATION.md"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "八神庵 v2 補完 P/Q/W/R/EX：逐目標／施法者紫炎、第一敵人碰撞彈、原地短窗口迎擊、真正命中後有限連擊與同目標 R 完成窗口的 EX。E 三次輸入程式不變。29 項行為、4 項 Editor／匯入、既有 28 項接續及 12 項來源隔離回歸通過，四項有效突變攔截穿透 Q、提前完成窗口、無條件 EX 及跨施法者互斥。預設近戰測試擺位依正式射程，手動超距仍拒絕；沒有改大技能射程。37 份重建只改八神庵 revision13→14，原稿及模型不變。81 槽有案例、141 槽未對應，17 名仍用通用普攻被動；原稿美術、當下服務 ZIP／發布與 #1132 完整驗收仍未完成。",
-      "repro": {
-        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements/iori.test.ts packages/shared/src/content/heroForge/communityRefinements/ioriAcceptance.test.ts packages/shared/src/sim/effects/casterScopedStatus.test.ts --maxWorkers=1 --minWorkers=1",
-        "expectedExit": 0
-      },
-      "commit": "5a2b7d3f90af0a93f242b9075c309047e298b72c",
-      "evidence": [
-        "materials/community-hero-forge/refinements/iori-verification.json",
-        "materials/community-hero-forge/refinements/02.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "八神庵六槽批次在乾淨提交 e12c0be14a55 同批通過 skills、Editor release、coord、37 名／222 槽編譯與全部模型綁定核對；882 項登記案例、Editor 601 項測試及正式建置通過。批次退出碼 2 如實保留 141 槽未對應。原稿專用美術、當下服務 ZIP、投稿發布及 #1132 整批驗收仍未完成；不關閉或縮減原票。後續僅更新驗證收據與文件。",
-      "repro": {
-        "command": "pnpm editor:accept:release",
-        "expectedExit": 0
-      },
-      "commit": "e12c0be14a55480a3d1b4ea3bb498a68daa7597c",
-      "evidence": [
-        "materials/community-hero-forge/refinements/iori-verification.json",
-        "materials/community-hero-forge/validation-plan.json",
-        "tools/community-hero-forge/BATCH_VERIFICATION.md"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "承太郎 v1 已完成精密層數、逐段重查連打、單次直線刺擊、正面一次格擋、局部時停與终結拳的行為案例。時停有有界傷害佇列、死亡／重疊／單次致死／投射物跨界、快照／動畫／移動預測及 Editor 真實前置施法重播證據；四項有效突變被攔截。37 份重建僅承太郎 revision12→13，原稿與模型不變；87 槽登記、135 槽未對應、16 名通用普攻被動。替身副模型、專用演出／音效、快速身體跨界、當下服務 ZIP／發布及 #1132 完整驗收仍未完成。",
-      "repro": {
-        "command": "pnpm exec vitest run packages/shared/src/sim/timeStop.test.ts packages/shared/src/content/heroForge/communityRefinements/jotaro.test.ts packages/shared/src/content/heroForge/communityRefinements/jotaroAcceptance.test.ts apps/game-server/src/net/timeStopWire.test.ts apps/client/src/render/views/TimeStopView.test.ts apps/editor/src/vfx-forge/TimeStopReplay.test.ts --maxWorkers=1 --minWorkers=1",
-        "expectedExit": 0
-      },
-      "commit": "6d4d9c66897f3131b2572cca49bedfc904339608",
-      "evidence": [
-        "materials/community-hero-forge/refinements/jotaro-verification.json",
-        "materials/community-hero-forge/refinements/04.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "承太郎批次在乾淨提交 b924c66bbf78 同批通過 skills、Editor release、coord、37名／222槽編譯與模型核對；947項登記案例、Editor 603項測試及正式建置通過。退出碼2保留135槽未對應；原稿美術、當下服務ZIP／發布與 #1132 完整验收仍未完成。",
-      "repro": {
-        "command": "pnpm editor:accept:release",
-        "expectedExit": 0
-      },
-      "commit": "b924c66bbf780dd9d9b64650311a7ef4726e8f14",
-      "evidence": [
-        "materials/community-hero-forge/refinements/jotaro-verification.json",
-        "materials/community-hero-forge/validation-plan.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "炭治郎 v2 六槽使用既有模板：呼吸、有效迴避破綻、水火同成本共享Q冷卻、牆阻水車、移動／受擊降低調息效率與可中斷R。18項角色／Editor／匯入及9項資源回歸通過，四項突變攔截；其他36作品與37原稿／模型綁定不變。未宣稱畫面或正式發布完成。",
-      "repro": {
-        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements/tanjiro.test.ts packages/shared/src/content/heroForge/communityRefinements/tanjiroAcceptance.test.ts packages/shared/src/sim/abilities/statusCost.test.ts --maxWorkers=1 --minWorkers=1",
-        "expectedExit": 0
-      },
-      "commit": "f6ff9d7986ff1986f7d2fa571427fdddc66c640b",
-      "evidence": [
-        "materials/community-hero-forge/refinements/tanjiro-verification.json",
-        "materials/community-hero-forge/refinements/35.json",
-        "materials/community-hero-forge/design-policy.json"
-      ]
-    },
-    {
-      "kind": "confirmed",
-      "text": "炭治郎在乾淨提交 e2a15b15ae12 同批通過 skills、Editor release、coord。行為來源不變的 0712459070f7 通過37名／222槽編譯與模型核對、965項登記案例；Editor 603項測試及正式建置也通過。初次批次退出碼1的過期普查已由官方產生器補正兩份文件；129槽未對應仍保留；炭治郎行為段落已交付，但新畫面、當下服務ZIP／發布及 #1132 整批驗收未完成。",
-      "repro": {
-        "command": "pnpm editor:accept:release",
-        "expectedExit": 0
-      },
-      "commit": "e2a15b15ae125725069afaafcc8539ef296798a6",
-      "evidence": [
-        "materials/community-hero-forge/refinements/tanjiro-verification.json",
-        "materials/community-hero-forge/validation-plan.json"
+        "materials/community-hero-forge/refinements/README.md",
+        "AI參考全自動鑄造守則.md"
       ]
     }
   ],
@@ -690,10 +77,20 @@
     },
     {
       "date": "2026-09-09",
-      "text": "等你做完炭治郎後 我們重新整理現況"
+      "text": "好 請你開始全部逐一更新"
+    },
+    {
+      "date": "2026-09-09",
+      "text": "而且還要附帶全地圖嘲諷"
+    },
+    {
+      "date": "2026-09-09",
+      "text": "阿薩謝爾 根據漫畫是全地球 所以極大就好了"
     }
   ],
   "asks": [
-    "請 Main 審查炭治郎 v2 的現有模板组合、來源與版本隔離。此段沒有新增引擎欄位、模板定義或全域標籤；先前尚未推送的條件成本擴充已撤回。第一批可按最新核准政策簡化原作忠實度，保留原稿及明示改編；整批行為品質、畫面、當下服務ZIP／發布仍待完成。請 Main 審查局部時停的局部／世界計時政策、有界傷害佇列及正面格擋；同步部署新 client/game-server 後才能採用 timeStop 內容。請 Main 一併審查八神庵六槽版本化配方、預設近戰試玩擺位與按施法者隔離的互斥組；手動擺位與正式施法規則保持有效。請 Main 審查共用 recast、模板歷史來源與新增快照欄位；啟用新內容前同步建置 client/game-server/content-api。請 Main 審查共用 dash 沿途接觸／自然結束、明示盾吸收的施法去重及 Editor 前置 EX。請 Main 一併審查阿薩謝爾目前配方的傷害输出／有效受擊語意，以及共用距離葉的同對決限制；舊版回放測試保留。請 Main 一併審查尼古貓貓需要的通用 stationaryForSec 與 shield.breakOnMove：實際位置取樣、逐來源窗口、獨立盾池到期及回放摘要。請 Main 一併審查艾莉絲需要的通用 allowApproach、damageConnected、dash 首次接觸與回呼生命週期。請 Main 一併審查 SUN樂需要的通用 requiredTargetStatus、evadeDuring、evasionScope 與試玩前置交鋒路徑。請 Main 一併審查銀時需要的通用 onBlock/blockSource、damageOrMove/interruptible、interruptCast 與前方弧形來源欄位及版本化配方。請 Main 一併審查 drive／pull.grapple 共用移動、動態閘門碰撞一致性、EntityState motion/tether 欄位與 Client 預測暫停及回放。請 Main 一併審查柯南的 onObservedCombat／observedEvent、statusCost.subject、vision.revealed 與零實際傷害不喚醒睡眠的共用修正。請 Main 審查本批武藤遊戲與奇犽修正：onSummonHit／onAttackAttempt、trap 與 onTrigger 子鏈、召喚換目標與槽位來源、requiredSummonSlot、黑魔導發射位置、Client／Server 傳輸與 Forge 回放。請 Main 加入審查奇犽的通用具名資源維持費、全量施法成本、迴避來源／通道過濾與六槽配方。請 Main 加入審查鹿目圓 onAllyProtected、盾吸收歸屬、applyStatus.grantMark 及每回合救援次數的 schema/runtime 與版本化配方。請 Main 一併審查 #1143 批次驗證入口、失敗集中回報、來源綁定續跑及批次測試治具。請 Main 審查 #1141 nearbyCombat 条件與表單、dispel.statusTag 過濾、微調 version 對應作品 revision 與吉伊卡哇六槽；以及 #1140 的共用 chainLightning.retargetOnLost schema／runtime 選项及對應配方、#1139 換牌、友軍盾、radius:0 生成器修正、官方契約與 AI 守則。最新 37 份可共用作品在 materials/community-hero-forge/projects；#1132 保持開啟，完整原設計、修正後畫面／服務 ZIP 及正式發布仍未完成，不據此發布 37 名。"
+    "Main 審查完整 37 名新版玩法、原稿差異、個別版本／rollback 與新增集中驗證。阿薩謝爾依最後裁決用既有極大 AoE，嘲諷沿用 GGD 自動索敵規則；目前配置下護甲／魔抗實際歸零，配置更動須重建並重驗。",
+    "一併審查 PR 前段的通用資源、觀察事件、盾保護／免死、召喚／陷阱、位移、格擋／中斷、局部時停、recast、獨立模板歷史與快照／Editor 介接；相關範圍由 validation-plan 的 suite 指向。整合時同步建置 client/game-server/content-api。",
+    "畫面、當下服務 ZIP 與投稿驗收保持獨立狀態；歷史隔離發布或編譯通過不能抵充新版上線。#1132 留開直到其剩餘驗收與正式改編審查完成；Main 只做審查／合併，本 task 不派工給其他任務。"
   ]
 }
