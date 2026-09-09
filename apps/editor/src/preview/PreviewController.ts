@@ -123,6 +123,7 @@ export interface CastPreviewOptions {
 }
 
 export interface PreviewActorPose {
+  readonly timeStopped?: { readonly caster: boolean; readonly target: boolean };
   readonly caster: Vec2;
   readonly target: Vec2;
 }
@@ -800,6 +801,12 @@ function effectLines(
         });
         break;
       }
+      case "timeStop":
+        out.push({ depth, kind: e.kind, summary:
+          `局部時停 · 半徑 ${e.radius} · ${e.durationSec}s · 暫停範圍內敵人的動作、局部計時與投射物` +
+          ` · 施法者命中最多暫存 ${e.maxQueuedHits ?? 64} 次，結束後依序結算；溢出丟棄` +
+          " · 比賽與時停期限照常；主人死亡、換區或回合重置清除暫存" });
+        break;
       case "trap": {
         out.push({ depth, kind: e.kind, summary:
           `定點陷阱 · 半徑 ${e.radius} · 持續 ${e.durationSec}s · ${e.armDelaySec ?? 0}s 後啟動` +

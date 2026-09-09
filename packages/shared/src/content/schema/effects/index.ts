@@ -45,6 +45,7 @@ import { zChampionForm } from "./championForm";
 import { zSpawnProjectile } from "./spawnProjectile";
 import { zSpawnVfx, refine as refine_spawnVfx } from "./spawnVfx";
 import { zDot, refine as refine_dot } from "./dot";
+import { zTimeStop } from "./timeStop";
 import { zTrap, refine as refine_trap } from "./trap";
 import { zSummon, refine as refine_summon } from "./summon";
 import { zInvulnerable } from "./invulnerable";
@@ -98,6 +99,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   zSpawnProjectile,
   zSpawnVfx,
   zDot,
+  zTimeStop,
   zTrap,
   zSummon,
   zInvulnerable,

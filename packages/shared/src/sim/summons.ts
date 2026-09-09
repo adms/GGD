@@ -1,3 +1,4 @@
+import { isTimeStopped } from "./timeStop";
 /**
  * 召喚物 — the summon lifecycle (GH#289 lane P2).
  *
@@ -441,6 +442,8 @@ export function summonSystem(world: SimWorld): void {
         continue;
       }
     }
+
+    if (isTimeStopped(world, id)) continue;
 
     // 4) AIM. `autoAcquirePass` is champion-only, so this is the summon's own
     //    acquisition: nearest living enemy in the same zone, ties broken by the

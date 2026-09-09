@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../timeStop";
 import { CAST_APPROACHES, approachesOf, type CastApproach } from "../content/castApproachState";
 /**
  * Ability casting + rank-up. Validation order: learned → alive → not stunned →
@@ -209,6 +210,7 @@ export type CastResult =
   | "ok"
   | "not-learned"
   | "dead"
+  | "time-stopped"
   | "stunned"
   | "silenced"
   | "cooldown"
@@ -446,6 +448,7 @@ export function castApproachSystem(world: SimWorld): void {
   const rules = castApproachRules(world);
   const ids = [...pending.keys()].sort((a, b) => a - b);
   for (const id of ids) {
+    if (isTimeStopped(world, id)) continue;
     const p = pending.get(id);
     if (!p) continue;
     const t = world.transform.get(id);
@@ -529,6 +532,7 @@ export function castAbility(
   target: CastTarget,
   opts: CastOptions = {},
 ): CastResult {
+  if (isTimeStopped(world, caster)) return "time-stopped";
   const allowApproach = opts.allowApproach !== false;
   const ab = world.abilities.get(caster);
   const t = world.transform.get(caster);
@@ -1021,6 +1025,7 @@ export function cooldownDrainTicks(tick: number, rate: number): number {
 /** Tick down cooldowns (called by commandSystem each tick). */
 export function tickCooldowns(world: SimWorld): void {
   for (const [id, ab] of world.abilities) {
+    if (isTimeStopped(world, id)) continue;
     // Recast deadlines/interrupts use simulation time even when cooldown drain is frozen.
     for (const inst of [...Object.values(ab.slots), ab.exSlot, ab.passiveSlot]) {
       if (inst?.recast && !currentRecast(world, id, inst, Abilities.get(inst.abilityId))) delete inst.recast;

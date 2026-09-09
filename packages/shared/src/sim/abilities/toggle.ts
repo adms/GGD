@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../timeStop";
 /**
  * 【切換】—— 開／關兩態的按鈕，以及**資源耗盡自動關閉**。
  *
@@ -223,6 +224,7 @@ export function toggleUpkeepSystem(world: SimWorld): void {
   owners.sort((a, b) => a - b);
 
   for (const id of owners) {
+    if (isTimeStopped(world, id)) continue;
     const ab = world.abilities.get(id);
     const hp = world.health.get(id);
     if (!ab?.toggles) continue;

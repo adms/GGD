@@ -314,6 +314,7 @@ import type { ChampionFormVariant } from "./variants/championForm";
 import type { SpawnProjectileVariant } from "./variants/spawnProjectile";
 import type { SpawnVfxVariant } from "./variants/spawnVfx";
 import type { DotVariant } from "./variants/dot";
+import type { TimeStopVariant } from "./variants/timeStop";
 import type { TrapVariant } from "./variants/trap";
 import type { SummonVariant } from "./variants/summon";
 import type { InvulnerableVariant } from "./variants/invulnerable";
@@ -378,6 +379,7 @@ type EffectVariant =
   | SpawnProjectileVariant
   | SpawnVfxVariant
   | DotVariant
+  | TimeStopVariant
   | TrapVariant
   | SummonVariant
   | InvulnerableVariant

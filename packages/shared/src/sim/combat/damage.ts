@@ -1,3 +1,4 @@
+import { deferTimeStopHit } from "../timeStop";
 import { bodyPosition } from "../movement/bodyPosition";
 import { expireMovedShields } from "./movementShield";
 /**
@@ -54,6 +55,8 @@ import {
 } from "./hitFeel";
 
 export interface DamagePacket {
+  /** Internal thaw marker; prevents re-queueing a hit during overlapping fields. */
+  timeStopReleased?: true;
   castInstance?: import("../content/castInstance").CastInstance;
   /** Contributing casts of one combined stacked-DoT payout. */
   castInstances?: readonly import("../content/castInstance").CastInstance[];
@@ -905,6 +908,8 @@ export function combatResolveSystem(world: SimWorld): void {
     for (const pkt of batch) {
       const hp = world.health.get(pkt.target);
       if (!hp || !hp.alive) continue;
+      if (pkt.timeStopReleased && hp.hp <= 0) continue;
+      if (deferTimeStopHit(world, pkt)) continue;
       expireMovedShields(world, pkt.target);
 
       // ---- 傷害型別轉換 · "beforeGates" 相位 (無視防禦 / 真實傷害家族) -------
@@ -1155,6 +1160,7 @@ export function combatResolveSystem(world: SimWorld): void {
         hp.hp,
         shieldBefore,
         successfulBlocks,
+        pkt.source,
       );
       let dmg = impact - blockCut;
 

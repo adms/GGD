@@ -1,3 +1,4 @@
+import { forgetTimeStopsFor } from "./timeStop";
 /**
  * `clearPools` —— 「把一個實體身上的暫時性東西清掉」這件事的**唯一**一支函式。
  *
@@ -295,6 +296,7 @@ export function clearPools(
  * 不可驅散的減速也不可以跨過墳墓／回合活下來。
  */
 export function clearForFreshBody(world: SimWorld, id: EntityId): ClearPoolsResult {
+  forgetTimeStopsFor(world, id);
   world.combatActivity.delete(id);
   return clearPools(world, id, {
     pools: { status: true, shields: true, dot: true },

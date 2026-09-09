@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../timeStop";
 /**
  * `chainLightning`（GH#451）——「範圍內的**每一個**單位各觸發一次連鎖閃電」，
  * 而且**逐跳之間有時間差**。
@@ -493,6 +494,7 @@ export function chainLightningSystem(world: SimWorld): void {
   let anyDone = false;
   // 陣列 = 插入序 = 全序（不迭代 Map）。
   for (const cast of q) {
+    if (isTimeStopped(world, cast.caster)) continue;
     // 決鬥已經結束的分區不再放電 —— 與 `dotTick` / `randomArea` / `delayed` 對
     // `settledZones` 的處置逐字相同（#100/#216：回合結束後還在扣血玩家看得見）。
     // ⚠️ 這一條路**不付** `onHitTargets`：那一段是「這次施放打完了」的獎勵，

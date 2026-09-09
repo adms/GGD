@@ -413,6 +413,7 @@ export function refineCueGeometry(
  */
 export const zBlockGrant = z
   .object({
+    facingArcDegrees: z.number().finite().min(1).max(360).optional().describe("僅格擋正面扇形內的來源；完整角度，120 為左右各 60 度。留空全方向。"),
     damageTypes: z
       .array(zDamageType)
       .min(1)

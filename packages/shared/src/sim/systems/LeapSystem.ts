@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../timeStop";
 /**
  * LeapSystem (task #247) — owns the whole parabolic arc: planar position,
  * height, and the landing detonation. Runs IMMEDIATELY BEFORE movementSystem,
@@ -73,6 +74,7 @@ export function leapSystem(world: SimWorld): void {
   const landings: PendingLanding[] = [];
   // id order (world.transform is the same ordered store MovementSystem walks)
   for (const [id, t] of world.transform) {
+    if (isTimeStopped(world, id)) continue;
     const nav = world.nav.get(id);
     const ov = nav?.override;
     if (!ov || ov.kind !== "leap") continue;

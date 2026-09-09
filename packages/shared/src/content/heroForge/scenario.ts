@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../../sim/timeStop";
 import {
   Abilities,
   Projectiles,
@@ -58,7 +59,7 @@ export interface HeroAbilityScenarioResult {
 
 /** Resolved actor transforms accompany events; renderers never infer movement. */
 export type HeroScenarioEvent = SimEvent & {
-  readonly actorPose: { readonly caster: { x: number; z: number }; readonly target: { x: number; z: number } };
+  readonly actorPose: { readonly caster: { x: number; z: number }; readonly target: { x: number; z: number }; readonly timeStopped?: { caster: boolean; target: boolean } };
 };
 
 export interface HeroKitScenarioResult {
@@ -198,7 +199,7 @@ export function runHeroAbilityScenario(
   const digestTrail: number[] = [];
   const isPassiveSource = ability.innateKind === "passive" || isPassiveOnly(ability);
   const recordEvents = () => {
-    const actorPose = { caster: { ...world.transform.get(caster)!.pos }, target: { ...world.transform.get(targetEntity)!.pos } };
+    const actorPose = { caster: { ...world.transform.get(caster)!.pos }, target: { ...world.transform.get(targetEntity)!.pos }, timeStopped: { caster: isTimeStopped(world, caster), target: isTimeStopped(world, targetEntity) } };
     events.push(...world.events.map((event) => ({ ...event, data: structuredClone(event.data), actorPose })));
   };
   if (setup) recordEvents();

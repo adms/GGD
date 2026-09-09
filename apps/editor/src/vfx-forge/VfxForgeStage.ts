@@ -1,3 +1,4 @@
+import { TimeStopReplay } from "./TimeStopReplay";
 import { AbilityMotionReplay } from "./AbilityMotionReplay";
 import { TrapReplay } from "./TrapReplay";
 import type { Engine } from "@babylonjs/core/Engines/engine";
@@ -248,6 +249,8 @@ export class VfxForgeStage {
   readonly scene: Scene;
   readonly cameraRig: CameraRig;
 
+  private readonly timeStopReplay: TimeStopReplay;
+  private timeStoppedActors = { caster: false, target: false };
   private readonly trapReplay: TrapReplay;
   private readonly motionReplay: AbilityMotionReplay;
   private script: VfxScriptDoc;
@@ -341,6 +344,7 @@ export class VfxForgeStage {
     this.renderer = new Renderer(canvas);
     this.engine = this.renderer.engine;
     this.scene = this.renderer.scene;
+    this.timeStopReplay = new TimeStopReplay(this.scene);
     this.trapReplay = new TrapReplay(this.scene);
     this.motionReplay = new AbilityMotionReplay(this.scene);
     // A near-black clear colour made black-haired/dark-armour heroes disappear
@@ -1554,6 +1558,7 @@ export class VfxForgeStage {
       }
     }
     for (const actor of this.allActors()) this.disposeActor(actor);
+    this.timeStopReplay.dispose();
     this.trapReplay.dispose();
     this.motionReplay.dispose();
     this.runtimeVfx?.dispose();
@@ -1994,6 +1999,7 @@ export class VfxForgeStage {
     this.setActorPose(this.homePose);
     // Timeline replay keeps preloaded GLB containers and reuses pooled geometry;
     // clearing the container map here makes the first scrub frame an empty shell.
+    this.timeStopReplay.reset();
     this.trapReplay.reset();
     this.motionReplay.reset();
     this.modelRig.resetForRound();
@@ -2070,6 +2076,7 @@ export class VfxForgeStage {
       const view = actor.view;
       if (!view) continue;
       view.setPose(x, z, actor.facing.x, actor.facing.z, offset?.y ?? 0);
+      view.setTimeStopped(actor.role !== "summon" && this.timeStoppedActors[actor.role], dtMs);
       const state = view.anim.update({ alive: true, moving: false }, this.nowMs);
       view.update(state, this.nowMs, dtMs);
     }
@@ -2087,6 +2094,7 @@ export class VfxForgeStage {
       const item = this.schedule[this.nextEvent++]!;
       if (item.actorPose) this.setActorPose(item.actorPose);
       this.applySummonLifecycleEvent(item.event);
+      this.timeStopReplay.onEvent(item.event);
       this.trapReplay.onEvent(item.event, item.atMs);
       this.motionReplay.onEvent(item.event);
       if (this.mode === "runtime") {
@@ -2192,6 +2200,7 @@ export class VfxForgeStage {
   }
 
   private setActorPose(pose: PreviewActorPose): void {
+    this.timeStoppedActors = pose.timeStopped ?? { caster: false, target: false };
     const caster = this.actors.caster;
     const target = this.actors.target;
     this.moveActor(caster, pose.caster.x, pose.caster.z);

@@ -1,3 +1,4 @@
+import { isTimeStopped } from "@ggd/shared/sim/timeStop";
 import { Abilities } from "@ggd/shared/sim/content/registry";
 import { abilityInstanceFor } from "@ggd/shared/sim/abilities/innateActive";
 import { recastView } from "@ggd/shared/sim/abilities/recast";
@@ -463,8 +464,16 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
     es.fz = t.facing.z;
     es.zone = t.zone;
 
+    const field = world.timeStop.get(id);
+    if (field) {
+      es.kind = ENTITY_KIND.TIME_STOP; es.seatId = -1; es.key = "prop.time-stop";
+      es.hp = Math.max(0, field.expiresAtTick - world.tick); es.maxHp = 0;
+      es.shield = field.radius; es.mana = field.team; es.maxMana = 0; es.alive = true; es.flags = 0;
+      continue;
+    }
     const proj = world.projectile.get(id);
     if (proj) {
+      es.flags = isTimeStopped(world, id) ? ENTITY_FLAG.TIME_STOPPED : 0;
       es.kind = ENTITY_KIND.PROJECTILE;
       es.seatId = -1;
       es.key = proj.projectileId;
@@ -648,6 +657,7 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         // ⚠️ 沒有覆寫時**顯式寫回 0**（下面那個 `|` 的左運算元就是 0 起頭）：
         // `EntityState` 物件是**重用**的，上一格留下的 bit 不會自己消失。
         es.flags =
+          (isTimeStopped(world, id) ? ENTITY_FLAG.TIME_STOPPED : 0) |
           (mob.kind === "special" || mob.kind === "boss" ? ENTITY_FLAG.MOB_ELITE : 0) |
           (isCarried(world, id) ? ENTITY_FLAG.CARRIED : 0) |
           teamOverrideFlagsFor(mindControlTeamOf(world, id));
@@ -688,7 +698,7 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         );
       }
       // status flags for animation/UI
-      let flags = 0;
+      let flags = isTimeStopped(world, id) ? ENTITY_FLAG.TIME_STOPPED : 0;
       const nav = world.nav.get(id);
       if (nav?.override) flags |= ENTITY_FLAG.DASHING;
       const ab = world.abilities.get(id);

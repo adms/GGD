@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../timeStop";
 /**
  * MobSystem — the roguelite mob-wave lifecycle (task #215 肉鴿小怪波).
  *
@@ -197,6 +198,7 @@ export function mobSystem(world: SimWorld): void {
   //    champion in its zone. Every champion is an enemy (team !== MONSTER), so
   //    this is champion-blind aggro with no per-team logic.
   for (const [mobId, mob] of world.mob) {
+    if (isTimeStopped(world, mobId)) continue;
     const mt2 = world.transform.get(mobId);
     const mhp = world.health.get(mobId);
     if (!mt2 || !mhp?.alive) continue;

@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../timeStop";
 /**
  * HitstopSystem — ages the combat-juice freeze counters (hitstop + knockdown +
  * the victim-only hitstun) by one tick each. Deterministic: integer decrements
@@ -15,15 +16,16 @@
  */
 import type { SimWorld } from "../SimWorld";
 
-function age(map: Map<import("../../ids").EntityId, number>): void {
+function age(world: SimWorld, map: Map<import("../../ids").EntityId, number>): void {
   for (const [id, ticks] of map) {
+    if (isTimeStopped(world, id)) continue;
     if (ticks <= 1) map.delete(id);
     else map.set(id, ticks - 1);
   }
 }
 
 export function hitstopDecaySystem(world: SimWorld): void {
-  age(world.hitstop);
-  age(world.knockdown);
-  age(world.hitstun);
+  age(world, world.hitstop);
+  age(world, world.knockdown);
+  age(world, world.hitstun);
 }

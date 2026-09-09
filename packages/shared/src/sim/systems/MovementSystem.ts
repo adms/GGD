@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../timeStop";
 /**
  * MovementSystem — integrates navigation into positions with collision:
  *   1. dash/knockback overrides win over normal movement,
@@ -89,6 +90,8 @@ export function movementSystem(world: SimWorld): void {
   const dt = world.dt;
 
   for (const [id, t] of world.transform) {
+    if (isTimeStopped(world, id)) { t.vel = { x: 0, z: 0 }; continue; }
+    if (world.timeStop.has(id)) continue;
     if (world.projectile.has(id)) continue; // projectiles integrate in their own system
     const nav = world.nav.get(id);
     if (!nav) continue;
@@ -375,6 +378,7 @@ export function movementSystem(world: SimWorld): void {
   // 4) Unit-vs-unit soft separation within each zone (ascending id pairs via
   //    the spatial grid; grid returns sorted ids).
   for (const [id, t] of world.transform) {
+    if (world.timeStop.has(id)) continue;
     if (world.projectile.has(id)) continue;
     // revive circles are ground area, not bodies — they never push and are
     // never pushed (they are also absent from the grid, so the inner loop
@@ -423,8 +427,8 @@ export function movementSystem(world: SimWorld): void {
       // out of them like a soft pillar but the prop itself never moves. A
       // guardian is authoritative terrain placed at the zone centre by
       // GuardianSystem — it must stay put even when a champion body overlaps it.
-      const aStatic = world.flower.has(id) || world.structure.has(id);
-      const bStatic = world.flower.has(otherId) || world.structure.has(otherId);
+      const aStatic = isTimeStopped(world, id) || world.flower.has(id) || world.structure.has(id);
+      const bStatic = isTimeStopped(world, otherId) || world.flower.has(otherId) || world.structure.has(otherId);
       if (aStatic && bStatic) continue;
       if (aStatic || bStatic) {
         const anchor = aStatic ? t : o;
@@ -455,6 +459,8 @@ export function movementSystem(world: SimWorld): void {
 
   // Post-separation: never leave anyone inside a wall or outside the boundary.
   for (const [id, t] of world.transform) {
+    if (isTimeStopped(world, id)) continue;
+    if (world.timeStop.has(id)) continue;
     if (world.projectile.has(id)) continue;
     if (world.reviveCircle.has(id)) continue; // stays exactly on the corpse
     // A coin was already pushed out of obstacles + clamped at spawn (coinDropPos);

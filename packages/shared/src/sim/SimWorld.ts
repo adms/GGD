@@ -1,4 +1,6 @@
 import { expireMovedShields } from "./combat/movementShield";
+import { timeStopSystem, forgetTimeStopsFor, digestTimeStops } from "./timeStop";
+import { pauseTimeStopClocks } from "./timeStopClocks";
 import { digestCastCredits } from "./content/castLedger";
 /**
  * SimWorld — the deterministic authoritative world. A pure function of
@@ -1102,6 +1104,7 @@ export class SimWorld {
    * against its own cap and pays 20 gold per kill from that ledger. Putting
    * summons there would quietly rewrite the roguelike economy.
    */
+  readonly timeStop = new Map<EntityId, import("./timeStop").TimeStopField>();
   readonly trap = new Map<EntityId, import("./trapState").TrapComp>();
   readonly summon = new Map<EntityId, import("./effects/summon").SummonComp>();
 
@@ -1503,6 +1506,8 @@ export class SimWorld {
   }
 
   destroy(id: EntityId): void {
+    forgetTimeStopsFor(this, id);
+    this.timeStop.delete(id);
     // #288 — CAPTURED BEFORE `this.champion.delete(id)` fifteen lines down. The
     // `bossDamage` sweep at the bottom needs to know whether this entity could
     // ever have appeared as a DAMAGER, and by the time it runs the component is
@@ -1655,6 +1660,7 @@ export class SimWorld {
       // Revive circles are GROUND AREA, not bodies: keeping them out of the
       // broad-phase is what makes them structurally untargetable (every
       // ability/projectile query walks this grid) and non-colliding.
+      if (this.timeStop.has(id)) continue;
       if (this.reviveCircle.has(id)) continue;
       // Dropped coins are LOOT lying on the floor, not bodies: out of the
       // broad-phase means structurally untargetable (every ability/projectile
@@ -1684,6 +1690,8 @@ export class SimWorld {
   step(intents: ReadonlyMap<SeatId, IntentFrame>): void {
     this.events.length = 0;
     this.rebuildGrid();
+    timeStopSystem(this);
+    pauseTimeStopClocks(this);
 
     // FIXED system order — the client prediction replays this exact order.
     championFormSystem(this); //  0a. 變身 (task #249): expire timed forms and
@@ -1874,6 +1882,7 @@ export class SimWorld {
     //                             (no-op unless armed + combatActive); runs BEFORE
     //                             deathSystem so its kills resolve THIS tick (#132)
     deathSystem(this); // 9. deaths, kill credit, xp/gold
+    timeStopSystem(this); // Discard a dead owner's queued hits before any same-tick revival.
     flowerSystem(this); //   9b. flower burst on death + spawn cadence (no-op unless armed)
     reviveSystem(this); //   9c. revive circles: drop on death, channel, revive/expire
     //                             (no-op unless armed; consumes this tick's deaths)
@@ -2376,6 +2385,7 @@ export class SimWorld {
     for (const id of [...this.combatActivity.keys()].sort((a, b) => a - b)) {
       mix(id); mix(this.combatActivity.get(id)!);
     }
+    digestTimeStops(this, mix);
     digestTraps(this, mix);
     digestCastCredits(this, mix);
     mix(this.rng.state);

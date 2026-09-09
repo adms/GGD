@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../timeStop";
 /**
  * CastResolveSystem — ticks down in-progress ability casts (cast time > 0) and
  * fires their effects deterministically when the wind-up elapses. Runs BEFORE
@@ -22,6 +23,7 @@ import { abilityInstanceFor } from "../abilities/innateActive";
 
 export function castResolveSystem(world: SimWorld): void {
   for (const [id, ab] of world.abilities) {
+    if (isTimeStopped(world, id)) continue;
     const cast = ab.cast;
     if (!cast) continue;
 

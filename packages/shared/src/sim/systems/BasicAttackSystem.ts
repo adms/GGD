@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../timeStop";
 /**
  * BasicAttackSystem — champion-driven autos honoring per-champion attack data.
  *
@@ -207,6 +208,7 @@ function seesTarget(world: SimWorld, zone: number, from: Vec2, to: Vec2): boolea
 
 export function basicAttackSystem(world: SimWorld): void {
   for (const [id, ab] of world.abilities) {
+    if (isTimeStopped(world, id)) continue;
     // ⭐ GH#577 —— 殭屍王從 2026-08-23 起**有** AbilitiesComp 與 StatsComp
     // （`sim/mobs.ts::installKingKit`），於是它第一次落進這個迴圈。⛔ 但它的普攻
     // 不走這裡：`MobSystem` 有自己那條「射程 + 冷卻 + 打就站定 → 推一發封包」的

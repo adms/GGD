@@ -73,6 +73,7 @@ import { uiCues } from "./uiCuesConfig";
 export type CastRejectReason =
   | "not-learned"
   | "dead"
+  | "time-stopped"
   | "stunned"
   | "silenced"
   | "cooldown"
@@ -93,6 +94,7 @@ export type CastRejectReason =
 export const CAST_REJECT_TEXT: Record<CastRejectReason, string> = {
   "not-learned": "尚未學習（用技能上的 ＋ 加點）",
   dead: "陣亡中，無法施放",
+  "time-stopped": "時間暫停中，解除後可施放",
   stunned: "被控制中，無法施放",
   // 【沉默】C1（#278）—— 與被控制分開的字，因為玩家仍然走得動、打得到。
   silenced: "被沉默，無法施放技能",

@@ -25,6 +25,7 @@ export const KIND_MOB = 6;
  */
 export const KIND_NIGHT_FLAG = 7;
 export const KIND_TRAP = 8;
+export const KIND_TIME_STOP = 9;
 
 /**
  * Does this entity kind carry an over-head HP bar? Revive circles (kind 3)

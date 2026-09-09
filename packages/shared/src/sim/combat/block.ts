@@ -1,3 +1,4 @@
+import { evaluateCondition } from "../content/condition";
 /**
  * ═══════════════════════════════════════════════════════════════════════════
  *  格擋 — ONE source-carried gate for four items that promise three mechanics
@@ -217,6 +218,8 @@ export type BlockLethalBasis = "hp" | "hpAndShields";
  * 擋下,不是在下游被靜默夾掉)。
  */
 export interface BlockGrant {
+  /** Optional frontal arc. Missing attacker or unusable facing fails closed. */
+  facingArcDegrees?: number;
   /**
    * 這個格擋對哪些傷害型別生效。**必填、明列**,`[]` 不合法。
    *
@@ -362,14 +365,15 @@ export function blockCutFor(
   currentHp: number,
   eligibleShield: number,
   successful?: SuccessfulBlock[],
+  attacker?: EntityId,
 ): number {
   if (!(impact > 0)) return 0;
   const sc = world.stats.get(target);
   if (!sc) return 0; // 建築/花/投射物沒有 StatsComp —— 依構造沒有格擋
   const stacking: BlockStacking = world.blockRules.stacking;
   return stacking === "best"
-    ? bestBlockCut(world, target, sc.sources, type, impact, currentHp, eligibleShield, successful)
-    : chainBlockCut(world, target, sc.sources, type, impact, currentHp, eligibleShield, successful);
+    ? bestBlockCut(world, target, sc.sources, type, impact, currentHp, eligibleShield, successful, attacker)
+    : chainBlockCut(world, target, sc.sources, type, impact, currentHp, eligibleShield, successful, attacker);
 }
 
 /**
@@ -387,6 +391,7 @@ function chainBlockCut(
   currentHp: number,
   eligibleShield: number,
   successful?: SuccessfulBlock[],
+  attacker?: EntityId,
 ): number {
   let remaining = impact;
   for (const src of sources) {
@@ -394,6 +399,7 @@ function chainBlockCut(
     if (b === undefined) continue;
     if (src.expiresAtTick !== undefined && src.expiresAtTick <= world.tick) continue;
     if (!b.damageTypes.includes(type)) continue;
+    if (b.facingArcDegrees !== undefined && (attacker === undefined || !evaluateCondition(world, { kind: "facing", subject: "self", arcDegrees: b.facingArcDegrees }, { self: target, target: attacker }))) continue;
     // ⭐ GH#650 —— 系統倍率（`config.block@1.chanceMult`，出貨 1.0 ＝ 逐位元不變）。
     //   ⚠️ ⭐ 乘在 **clamp 之前**是承重的：先夾再乘會讓一格 0.6 的機率
     //   乘 2 之後變成 1.2 而 `blockOnCooldown` 之後的 `rng.chance(1.2)` 恆真 ——
@@ -444,6 +450,7 @@ function bestBlockCut(
   currentHp: number,
   eligibleShield: number,
   successful?: SuccessfulBlock[],
+  attacker?: EntityId,
 ): number {
   let bestChance = 0;
   let bestFraction = 0;
@@ -454,6 +461,7 @@ function bestBlockCut(
     if (b === undefined) continue;
     if (src.expiresAtTick !== undefined && src.expiresAtTick <= world.tick) continue;
     if (!b.damageTypes.includes(type)) continue;
+    if (b.facingArcDegrees !== undefined && (attacker === undefined || !evaluateCondition(world, { kind: "facing", subject: "self", arcDegrees: b.facingArcDegrees }, { self: target, target: attacker }))) continue;
     if (b.lethalOnly === true) {
       const pool =
         (b.lethalBasis ?? "hpAndShields") === "hp" ? currentHp : currentHp + eligibleShield;

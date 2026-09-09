@@ -4,6 +4,7 @@ import type { AbilityDef, ChampionDef, EffectDef } from "@ggd/shared/sim";
 import type { AbilityId, ChampionId, ItemId } from "@ggd/shared/ids";
 
 const LANDED: readonly EffectDef[] = [
+  { kind: "timeStop", radius: 6, durationSec: 1.2, maxQueuedHits: 64 },
   { kind: "interruptCast", shape: "single" },
   { kind: "spendHealth", amount: { flat: 0 }, pctMaxHealth: 0.03, minimumHp: 1 },
   { kind: "summon", body: "self", count: 1 },

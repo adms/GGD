@@ -144,6 +144,7 @@ import {
   KIND_REVIVE_CIRCLE,
   KIND_NIGHT_FLAG,
   KIND_TRAP,
+  KIND_TIME_STOP,
 } from "./render/overheadAnchors";
 import { anchorDrawable } from "./render/anchorBounds";
 import { occludeArgsFor } from "./render/occlusionZone";
@@ -1433,13 +1434,14 @@ export class GameApp {
    */
   private predictionHeldByServer(state: MatchState | null | undefined): boolean {
     const mask = predictionHoldFlagMask();
-    if (mask === 0) return false;
+
     // Source-owned driving and grapples follow authoritative motion until their snapshot clears.
     const lid = hudStore.getState().localEntityId;
     if (lid === null || !state?.entities) return false;
     const es = entitiesOf(state).get(String(lid));
     // ⚠️ `!== 0` 不是 `> 0` —— flags 是 uint32，高半部 `&` 出來是負數。
-    return es !== undefined && ((es.motionState ?? "") !== "" || (es.flags & mask) !== 0);
+    return es !== undefined && ((es.flags & ENTITY_FLAG.TIME_STOPPED) !== 0 ||
+      (mask !== 0 && ((es.motionState ?? "") !== "" || (es.flags & mask) !== 0)));
   }
 
   /**
@@ -2516,6 +2518,9 @@ export class GameApp {
       } else if (e.nightFlag) {
         e.nightFlag = undefined;
       }
+      if (es.kind === KIND_TIME_STOP) {
+        e.timeStop = { radius: es.shield, ticks: es.hp, teamId: es.mana };
+      } else { e.timeStop = undefined; }
       if (es.kind === KIND_TRAP) {
         const trap = e.trap ?? (e.trap = { radius: 0, teamId: -1, armed: false });
         trap.radius = es.shield; trap.teamId = es.mana; trap.armed = es.hp >= 1;

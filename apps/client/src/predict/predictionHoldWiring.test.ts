@@ -43,6 +43,12 @@ function stepShadow(flags: number, motionState = ""): { steps: number; accumMs: 
 
 beforeEach(() => resetPredictionHold());
 
+it("local time stop holds prediction until the authoritative snapshot clears", () => {
+  expect(stepShadow(ENTITY_FLAG.TIME_STOPPED).steps).toBe(0);
+  expect(stepShadow(ENTITY_FLAG.TIME_STOPPED).accumMs).toBe(0);
+  expect(stepShadow(0).steps).toBeGreaterThan(0);
+});
+
 describe("伺服器握著身體時影子不往前爬 (GH#370)", () => {
   it("★ 施法鎖亮著 → 影子一步都不踏；旗標一滅立刻恢復", () => {
     // 隕石擊那 26 個 tick：量到影子最大領先權威 2.14 單位、66 次 reconcile。
