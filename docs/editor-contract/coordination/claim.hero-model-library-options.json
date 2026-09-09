@@ -41,6 +41,19 @@
         "command": "python3 tools/hero-model-library/check-index.py",
         "expectedExit": 0
       }
+    },
+    {
+      "kind": "confirmed",
+      "commit": "30d4cbf26",
+      "text": "本機 Editor 發布驗收通過：592 項完整測試及 production build；固定 S3 版本 c6debe1cf925052e75d88f60 已讀回驗證 383 個版本檔與 11 個控制檔。正式／本機原始 checkout 尚待 PR 合併後同步。",
+      "evidence": [
+        "materials/hero-model-library/s3-publication-receipt.json",
+        "materials/hero-model-library/README.md"
+      ],
+      "repro": {
+        "command": "pnpm editor:accept:release",
+        "expectedExit": 0
+      }
     }
   ],
   "asks": [
