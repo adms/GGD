@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "steps": 12,
+  "freshProcesses": 4,
+  "resumes": 2,
+  "weightsOptimizerRngTraceEqual": true,
+  "mlxVersion": "0.32.2",
+  "checkpointHelperSha256": "1ca4b835a1f4193bae4fa0055697a39988bb62fc765c2f65373399cfb612ea60",
+  "testSha256": "81f6a7f908efb32bd387d2fe37f1187e3efa63e0333ee254695c98f4d9db28ba",
+  "scope": "small MLX Adam; not full Gemma training parity"
+}

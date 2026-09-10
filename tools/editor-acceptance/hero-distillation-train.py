@@ -33,6 +33,12 @@ LOCK = Path('/private/tmp/ggd-forge-training-runtime/gpu.lock')
 SCRIPT = Path(__file__).resolve()
 MEMORY_SCRIPT = SCRIPT.with_name('hero-distillation-memory.py')
 CACHE_SCRIPT = SCRIPT.with_name('hero-distillation-prefix-cache.py')
+sys.path.insert(0, str(SCRIPT.parent))
+import training_power_governor as power
+import training_runtime_checkpoint as runtime_checkpoint
+POWER_SCRIPT = Path(power.__file__).resolve()
+RUNTIME_SCRIPT = Path(runtime_checkpoint.__file__).resolve()
+PAUSED_EXIT = 75
 
 
 def digest(path):
@@ -160,6 +166,10 @@ def prepare(args):
     assert not out.exists(), 'OUTPUT_ALREADY_EXISTS'
     maximum_seconds,authorization=time_authorization(getattr(args,'time_authorization',None))
     battery_guard,battery_record=battery_authorization(getattr(args,'battery_authorization',None))
+    power_policy = None
+    if getattr(args, 'power_policy', None):
+        power_policy = power.validate(read(args.power_policy))
+        assert power_policy['hardStopPercent'] == battery_guard.get('minBatteryPercent'), 'POWER_FLOOR_AUTHORIZATION_MISMATCH'
     manifest = read(data / 'manifest.json')
     assert digest(data / 'examples.json') == manifest['outputs']['examples.json'], 'FROZEN_DATA_DRIFT'
     receipt = read(args.base_receipt)
@@ -200,7 +210,7 @@ def prepare(args):
     probe_ids = sorted({identity for stratum in strata.values() for identity in stratum['probeIds']})
     out.mkdir(parents=True)
     (out / 'source').mkdir()
-    for file in [SCRIPT, MEMORY_SCRIPT, CACHE_SCRIPT]:
+    for file in [SCRIPT, MEMORY_SCRIPT, CACHE_SCRIPT, POWER_SCRIPT, RUNTIME_SCRIPT]:
         snapshot = out / 'source' / file.name
         with snapshot.open('xb') as stream: stream.write(file.read_bytes())
         assert digest(snapshot) == digest(file), 'SOURCE_SNAPSHOT_DRIFT'
@@ -227,7 +237,9 @@ def prepare(args):
               'maxTrainOutputTokens': max(r['outputTokens'] for r in train), 'probeIds': probe_ids, 'capacityStrata': strata,
               'capacityEstimatePolicy': 'Per-format observed gradient max * (train tasks + 2 * dev tasks), sum * 1.5 + 300s; heuristic admission estimate, not a timing guarantee. No dev gradients.',
               'metalLimitGiB': 28, 'secondsMaximum': maximum_seconds, 'probeSecondsMaximum': 1200, 'stepSecondsMaximum': 120,
-              'resourceSampleIntervalSeconds': RESOURCE_SAMPLE_INTERVAL_SECONDS,
+              'resourceSampleIntervalSeconds': power_policy['sampleIntervalSeconds'] if power_policy else RESOURCE_SAMPLE_INTERVAL_SECONDS,
+              'powerPolicy': power_policy,
+              'powerHelperSha256': digest(POWER_SCRIPT), 'runtimeHelperSha256': digest(RUNTIME_SCRIPT),
               'timeAuthorization':authorization,
               'batteryAuthorization':battery_record,
               'guard': {'minAvailableGiB': 6, 'maxSwapGrowthGiB': 2, **battery_guard, 'acRequired': True, 'concurrentOwnGpuWorkers': 1},
@@ -258,19 +270,26 @@ def prepare(args):
     print(json.dumps(summary), flush=True)
 
 
-def worker(directory, phase, token):
+def worker(directory, phase, token, resume_checkpoint=None):
     p = read(directory / 'manifest.json')
     work = directory / phase
     assert read(LOCK)['token'] == token and read(LOCK)['task'] == str(work), 'OWNED_LOCK_REQUIRED'
     assert digest(SCRIPT) == p['workerSha256'], 'WORKER_DRIFT'
     assert digest(MEMORY_SCRIPT) == p['memoryHelperSha256'], 'MEMORY_HELPER_DRIFT'
     assert digest(CACHE_SCRIPT) == p['cacheHelperSha256'], 'CACHE_HELPER_DRIFT'
+    for key, helper in [('powerHelperSha256', POWER_SCRIPT), ('runtimeHelperSha256', RUNTIME_SCRIPT)]:
+        if key in p: assert digest(helper) == p[key], 'RUNTIME_HELPER_DRIFT'
     assert digest(directory / 'tokens.json') == p['tokenizedSha256'], 'TOKEN_DATA_DRIFT'
     assert digest(Path(p['dataDirectory']) / 'manifest.json') == p['frozenManifestSha256'], 'FROZEN_MANIFEST_DRIFT'
     data = read(directory / 'tokens.json')
     train, dev = ([r for r in data if r['split'] == split] for split in ['train', 'dev'])
-    start_resource = resources()
-    assert start_resource['acPower'] and start_resource['availableBytes'] >= p['minimumAvailableBytes'], 'RESOURCE_ADMISSION'
+    def latest_resources():
+        sample = read(work / 'resource-sample.json')
+        assert 0 <= time.time() - sample['sampledAt'] <= p['resourceSampleIntervalSeconds'] + 30, 'STALE_RESOURCE_SAMPLE'
+        return sample
+    current_resource = latest_resources()
+    start_resource = read(work / 'state.json')['preflight']
+    assert current_resource['acPower'] and current_resource['availableBytes'] >= p['minimumAvailableBytes'], 'RESOURCE_ADMISSION'
 
     def progress(name, **fields):
         atomic(work / 'worker-progress.json', {'pid': os.getpid(), 'phase': name, 'startedAt': time.time(), **fields})
@@ -292,6 +311,7 @@ def worker(directory, phase, token):
     mx.set_memory_limit(min(p['metalLimitGiB'] * GIB, mx.device_info()['max_recommended_working_set_size']))
     mx.set_cache_limit(128 * 1024 ** 2)
     mx.random.seed(p['seed'])
+    random.seed(p['seed'])
     progress('load-model')
     model, processor = load(p['modelDirectory'], lazy=True, strict=True, trust_remote_code=False)
     mx.eval(model.parameters()); model.freeze()
@@ -453,28 +473,81 @@ def worker(directory, phase, token):
         assert probe.get('prefixCacheParityPassed'),'CACHE_NOT_ADMITTED'
         build_caches()
     optimizer = optim.Adam(learning_rate=p['learningRate'])
+    optimizer.init(model.trainable_parameters())
+    order = list(range(len(train))); random.Random(p['seed']).shuffle(order)
+    before, after, trace, checkpoints = [], [], [], []
+    contract = {'manifestSha256': digest(directory / 'manifest.json'),
+                'versions': {k: metadata.version(k) for k in ['mlx', 'mlx-vlm', 'transformers']}}
+    stage = 'dev-before'
+    if resume_checkpoint:
+        recovered = runtime_checkpoint.load(read(resume_checkpoint), contract, load_tensors=mx.load)
+        assert recovered['order'] == order, 'RESUME_ORDER_DRIFT'
+        assert set(recovered['weights']) == set(params), 'RESUME_TENSOR_SCOPE'
+        model.load_weights(list(recovered['weights'].items()), strict=False)
+        optimizer.state = recovered['optimizer']
+        random.setstate(recovered['pythonRandom'])
+        runtime_checkpoint.restore_mlx_random(mx, recovered['mlxRandom'])
+        before, after, trace, checkpoints = (recovered[k] for k in ('before', 'after', 'trace', 'checkpoints'))
+        stage = recovered['stage']
+        assert stage in ('dev-before', 'training', 'dev-after'), 'RESUME_STAGE'
+        assert recovered['nextStep'] == len(trace) + 1 == int(optimizer.step.item()) + 1, 'RESUME_STEP_DRIFT'
+        assert [r['id'] for r in trace] == [train[i]['id'] for i in order[:len(trace)]], 'RESUME_TRACE_DRIFT'
+        mx.eval(model.trainable_parameters(), optimizer.state, mx.random.state)
+
+    def save_runtime():
+        mx.eval(model.trainable_parameters(), optimizer.state, mx.random.state)
+        receipt = runtime_checkpoint.save(work / 'runtime-checkpoints', contract,
+            {'weights': dict(tree_flatten(model.trainable_parameters())), 'optimizer': optimizer.state,
+             'mlxRandom': runtime_checkpoint.capture_mlx_random(mx), 'pythonRandom': random.getstate(), 'order': order,
+             'nextStep': len(trace) + 1, 'stage': stage, 'before': before, 'after': after,
+             'trace': trace, 'checkpoints': checkpoints},
+            is_tensor=lambda x: isinstance(x, mx.array), save_tensors=mx.save_safetensors)
+        receipt.update(workerPid=os.getpid(), completedSteps=len(trace), stage=stage)
+        return receipt
+
+    def safe_point():
+        if (work / 'STOP').exists(): raise InterruptedError('USER_STOP')
+        reason = violation(start_resource, latest_resources(), p['guard'])
+        if reason: raise RuntimeError(reason)
+        control_path = work / 'power-control.json'
+        if not control_path.exists(): return
+        control = read(control_path)
+        if control == {'workerPid': None, 'action': 'run-full'}: return
+        assert control['workerPid'] == os.getpid(), 'POWER_CONTROL_OWNER'
+        if control['action'] == 'checkpoint-pause':
+            progress('checkpoint-save')
+            receipt = save_runtime()
+            atomic(work / 'resume.json', receipt)
+            progress('paused', step=len(trace), checkpoint=receipt)
+            raise SystemExit(PAUSED_EXIT)
+        if control['action'] == 'run-throttled':
+            progress('power-cooldown')
+            end = time.monotonic() + control['sleepSeconds']
+            while time.monotonic() < end:
+                if (work / 'STOP').exists(): raise InterruptedError('USER_STOP')
+                reason = violation(start_resource, latest_resources(), p['guard'])
+                if reason: raise RuntimeError(reason)
+                time.sleep(min(1, max(0, end - time.monotonic())))
 
     def evaluate(name):
-        model.eval(); results = []
-        for row in dev:
+        model.eval(); results = before if name == 'dev-before' else after
+        for row in dev[len(results):]:
+            safe_point()
             progress(name, id=row['id'])
             results.append({'id': row['id'], 'loss': scalar_loss(row), 'outputTokens': row['outputTokens']})
             gc.collect(); mx.clear_cache()
         atomic(work / (name + '.json'), results)
         return results
 
-    before = evaluate('dev-before')
-    order = list(range(len(train))); random.Random(p['seed']).shuffle(order)
+    if stage == 'dev-before': before = evaluate('dev-before')
+    assert len(before) == len(dev), 'INCOMPLETE_BEFORE'
+    stage = 'training'
     atomic(work / 'order.json', [train[i]['id'] for i in order])
-    trace = []; checkpoints = []
     model.train()
-    for step, index in enumerate(order, 1):
-        if (work / 'STOP').exists():
-            raise InterruptedError('USER_STOP')
-        reason = violation(start_resource, resources(), p['guard'])
-        if reason:
-            raise RuntimeError(reason)
-        row = train[index]; progress('training', step=step, id=row['id'], tokens=row['totalTokens'])
+    for step in range(len(trace) + 1, len(order) + 1):
+        safe_point()
+        index = order[step - 1]
+        row = train[index]; progress('training', step=step, completedSteps=len(trace), id=row['id'], tokens=row['totalTokens'])
         started = time.monotonic(); mx.reset_peak_memory()
         prefix = prefix_for(row)
         loss, grads = gradient_fn(model, row, False, prefix); mx.eval(loss, grads)
@@ -485,15 +558,18 @@ def worker(directory, phase, token):
         trace.append({'step': step, 'id': row['id'], 'loss': loss.item(), 'totalTokens': row['totalTokens'],
                       'seconds': time.monotonic() - started, 'peakMetalBytes': mx.get_peak_memory()})
         atomic(work / 'training-trace.json', trace)
+        progress('training', step=step, completedSteps=len(trace), id=row['id'], tokens=row['totalTokens'])
         if step % p['saveEvery'] == 0 or step == len(order):
             checkpoint = work / f'checkpoint-{step:04d}'; checkpoint.mkdir()
             atomic(checkpoint / 'adapter_config.json', {'fine_tune_type': 'lora', 'num_layers': p['numLayers'], 'lora_parameters': p['loraParameters']})
             mx.save_safetensors(str(checkpoint / 'adapters.safetensors'), dict(tree_flatten(model.trainable_parameters())))
             checkpoints.append({'step': step, 'path': checkpoint.name, 'sha256': digest(checkpoint / 'adapters.safetensors')})
             atomic(work / 'checkpoints.json', checkpoints)
+            atomic(work / 'latest-runtime-checkpoint.json', save_runtime())
         del grads, flat, loss, prefix
         gc.collect(); mx.clear_cache()
     assert len(trace) == p['steps'] and len({r['id'] for r in trace}) == len(train), 'INCOMPLETE_EPOCH'
+    stage = 'dev-after'
     after = evaluate('dev-after')
     progress('adapter-roundtrip')
     saved = mx.load(str(work / checkpoints[-1]['path'] / 'adapters.safetensors'))
@@ -545,29 +621,99 @@ def supervise(directory, phase):
         work.mkdir()
         work_created = True
         signal.signal(signal.SIGTERM, interrupt); signal.signal(signal.SIGINT, interrupt)
+        policy = p.get('powerPolicy') if phase == 'train' else None
+        if policy:
+            power.validate(policy)
+            assert policy['hardStopPercent'] == p['guard']['minBatteryPercent'], 'POWER_FLOOR_DRIFT'
+        mode = 'paused' if policy else 'full-speed'
+        sample = {**start, 'sampledAt': time.time()}
+        atomic(work / 'resource-sample.json', sample)
+        last_resource_sample = time.monotonic()
+        wall_started = time.monotonic()
+        maximum = p['probeSecondsMaximum'] if phase == 'probe' else p['secondsMaximum']
+        state['powerEvents'] = []
+        resume_checkpoint = None
+        declines = 0
+
+        def sample_and_check():
+            nonlocal sample, last_resource_sample, declines
+            if (work / 'STOP').exists(): raise InterruptedError('USER_STOP')
+            if time.monotonic() - wall_started > maximum: raise RuntimeError('RUN_TIME_LIMIT')
+            if time.monotonic() - last_resource_sample >= p['resourceSampleIntervalSeconds']:
+                previous = sample.get('batteryPercent')
+                sample = resources(); sample['sampledAt'] = time.time()
+                declines = declines + 1 if (previous is not None and sample.get('batteryPercent') is not None
+                                           and sample['batteryPercent'] < previous) else 0
+                state['samples'].append(sample)
+                atomic(work / 'resource-sample.json', sample)
+                atomic(work / 'state.json', state)
+                last_resource_sample = time.monotonic()
+            reason = violation(start, sample, p['guard'])
+            if reason: raise RuntimeError(reason)
+
+        def event(name, **fields):
+            state['powerEvents'].append({'at': time.time(), 'event': name, **fields})
+            atomic(work / 'state.json', state)
+
         with (work / 'worker.log').open('x') as log:
-            child = subprocess.Popen([sys.executable, str(SCRIPT), 'worker', '--run', str(directory), '--phase', phase, '--token', token],
-                                     stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
-            state.update(status='running', workerPid=child.pid); atomic(work / 'state.json', state)
-            last_resource_sample = time.monotonic()
-            while child.poll() is None:
-                time.sleep(2)
-                # Keep the short process/step deadline, but do not wake
-                # battery/RAM/swap sensors more frequently than authorised.
-                reason = None
-                if time.monotonic() - last_resource_sample >= p['resourceSampleIntervalSeconds']:
-                    sample = resources(); state['samples'].append(sample); atomic(work / 'state.json', state)
-                    reason = violation(start, sample, p['guard'])
-                    last_resource_sample = time.monotonic()
-                if (work / 'STOP').exists(): reason = 'USER_STOP'
-                maximum = p['probeSecondsMaximum'] if phase == 'probe' else p['secondsMaximum']
-                if time.time() - state['startedAt'] > maximum: reason = 'RUN_TIME_LIMIT'
-                if (work / 'worker-progress.json').exists():
-                    progress = read(work / 'worker-progress.json'); assert progress['pid'] == child.pid
-                    limit = p['stepSecondsMaximum'] if progress['phase'] in ['training', 'gradient-probe'] else 610
-                    if time.time() - progress['startedAt'] > limit: reason = 'PHASE_TIME_LIMIT'
-                if reason: raise RuntimeError(reason)
-            assert child.returncode == 0, f'WORKER_EXIT:{child.returncode}'
+            while True:
+                if policy and mode == 'paused':
+                    state.update(status='paused-charging', workerPid=None)
+                    event('charging', completedSteps=state.get('completedSteps', 0))
+                    while True:
+                        sample_and_check()
+                        decision = power.decide(policy, sample, 'paused')
+                        if decision['action'] == 'hard-stop': raise RuntimeError(decision['reason'])
+                        if decision['action'] == 'run-full': break
+                        time.sleep(2)
+                    assert sample['availableBytes'] >= p['minimumAvailableBytes'], 'RESUME_MEMORY_ADMISSION'
+                    mode = 'full-speed'; declines = 0
+                args = [sys.executable, str(SCRIPT), 'worker', '--run', str(directory), '--phase', phase, '--token', token]
+                if resume_checkpoint: args += ['--resume-checkpoint', str(resume_checkpoint)]
+                launched = time.time()
+                atomic(work / 'state.json', state)
+                atomic(work / 'power-control.json', {'workerPid': None, 'action': 'run-full'})
+                child = subprocess.Popen(args, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+                atomic(work / 'power-control.json', {'workerPid': child.pid, 'action': 'run-full'})
+                state.update(status='running', workerPid=child.pid)
+                event('worker-start', resumed=bool(resume_checkpoint))
+                pause_requested = False
+                while child.poll() is None:
+                    time.sleep(2)
+                    sample_and_check()
+                    if policy and not pause_requested:
+                        decision = power.decide(policy, sample, mode)
+                        if decision['action'] == 'hard-stop': raise RuntimeError(decision['reason'])
+                        if decision['action'] == 'run-throttled' and declines >= policy.get('throttleDecliningSamples', 2):
+                            decision = {'action': 'checkpoint-pause', 'nextMode': 'paused', 'reason': 'THROTTLE_STILL_DISCHARGING'}
+                        mode = decision['nextMode']
+                        atomic(work / 'power-control.json', {**decision, 'workerPid': child.pid})
+                        if decision['action'] == 'checkpoint-pause':
+                            pause_requested = True; event('pause-request', reason=decision['reason'])
+                    progress_path = work / 'worker-progress.json'
+                    if progress_path.exists():
+                        progress = read(progress_path)
+                        # The previous segment's receipt can remain until the new worker starts.
+                        if progress['pid'] != child.pid:
+                            assert progress['startedAt'] < launched, 'WORKER_PROGRESS_OWNER'
+                        else:
+                            limit = p['stepSecondsMaximum'] if progress['phase'] in ['training', 'gradient-probe'] else 610
+                            if progress['phase'] == 'power-cooldown' and policy:
+                                limit = max(limit, policy.get('throttleSeconds', 0) + 30)
+                            if time.time() - progress['startedAt'] > limit: raise RuntimeError('PHASE_TIME_LIMIT')
+                    if time.time() - launched > 610 and (not progress_path.exists() or read(progress_path)['pid'] != child.pid):
+                        raise RuntimeError('WORKER_START_TIMEOUT')
+                if child.returncode != PAUSED_EXIT:
+                    assert child.returncode == 0, f'WORKER_EXIT:{child.returncode}'
+                    break
+                assert policy and pause_requested, 'UNSOLICITED_WORKER_PAUSE'
+                receipt = read(work / 'resume.json')
+                assert receipt['workerPid'] == child.pid, 'STALE_PAUSE_RECEIPT'
+                assert runtime_checkpoint.sha(Path(receipt['path']) / 'state.json') == receipt['stateSha256'], 'PAUSE_CHECKPOINT_DRIFT'
+                state.update(workerPid=None, completedSteps=receipt['completedSteps'])
+                event('worker-exited-for-charge', checkpoint=receipt)
+                resume_checkpoint = work / 'resume.json'
+                mode = 'paused'
             assert read(work / 'result.json')['phase'] == phase
             state['status'] = 'completed'
     except BaseException as error:
@@ -598,13 +744,15 @@ if __name__ == '__main__':
     parser.add_argument('--cache-diagnostic', action='store_true', help='Prepare a bounded forward-only cache diagnostic, never a training admission.')
     parser.add_argument('--time-authorization', type=Path, help='Explicit user authorization record for this single epoch; default remains 7200s.')
     parser.add_argument('--battery-authorization', type=Path, help='Explicit 20-percent floor authorization; replaces relative battery-drop guard for this new run only.')
+    parser.add_argument('--power-policy', type=Path, help='Opt-in JSON charging/pause policy, pinned in a new run manifest.')
+    parser.add_argument('--resume-checkpoint', type=Path, help='Internal supervisor-owned resume receipt; adapter-only checkpoints are not accepted.')
     args = parser.parse_args()
     if args.action == 'prepare':
         assert args.data and args.base_receipt and args.out
         prepare(args)
     elif args.action == 'worker':
         assert args.run and args.phase and args.token
-        worker(args.run.resolve(), args.phase, args.token)
+        worker(args.run.resolve(), args.phase, args.token, args.resume_checkpoint)
     else:
         assert args.run
         supervise(args.run.resolve(), args.action)

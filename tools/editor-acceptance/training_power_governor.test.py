@@ -23,6 +23,13 @@ class GovernorTests(unittest.TestCase):
         policy = {**POLICY, 'lowPowerMode': 'throttle', 'throttleSeconds': 4}
         got = g.decide(policy, self.sample(25)); self.assertEqual((got['action'], got['sleepSeconds']), ('run-throttled', 4))
     def test_rejects_invalid_policy(self):
-        with self.assertRaises(AssertionError): g.validate({**POLICY, 'pauseBelowPercent': 20})
+        with self.assertRaises(ValueError): g.validate({**POLICY, 'pauseBelowPercent': 20})
+        with self.assertRaises(ValueError): g.validate({**POLICY, 'throttleDecliningSamples': 0})
+        for value in (float('nan'), float('inf'), True, '20'):
+            with self.assertRaises(ValueError): g.validate({**POLICY, 'hardStopPercent': value})
+        with self.assertRaises(ValueError): g.validate({**POLICY, 'lowPowerMode': 'throttle'})
+    def test_bad_sensor_never_runs(self):
+        for percent in (float('nan'), float('inf'), -1, 101, True, '80'):
+            self.assertEqual(g.decide(POLICY, self.sample(percent))['action'], 'hard-stop')
 
 if __name__ == '__main__': unittest.main()

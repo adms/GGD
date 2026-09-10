@@ -6,5 +6,6 @@
   "sampleIntervalSeconds": 180,
   "lowPowerMode": "pause",
   "throttleSeconds": 0,
+  "throttleDecliningSamples": 2,
   "meaning": "At >=70% run full speed. Below 30% finish one atomic step, write a complete runtime checkpoint, release the GPU, and wait. Below 20% stop. A project may opt into lowPowerMode=throttle, but must prove checkpoint/reload equivalence before claiming resumability."
 }

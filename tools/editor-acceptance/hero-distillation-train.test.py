@@ -108,7 +108,8 @@ class GuardTests(unittest.TestCase):
             self.assertEqual(trainer.violation(START, {**START, **changes}, GUARD), reason)
 
     def fixture(self, directory):
-        config = {'workerSha256': trainer.digest(trainer.SCRIPT), 'minimumAvailableBytes': 24 * trainer.GIB, 'guard': GUARD}
+        config = {'workerSha256': trainer.digest(trainer.SCRIPT), 'minimumAvailableBytes': 24 * trainer.GIB, 'guard': GUARD,
+                  'probeSecondsMaximum': 1200, 'secondsMaximum': 57600, 'resourceSampleIntervalSeconds': 180}
         trainer.atomic(directory / 'manifest.json', config)
         return directory / 'gpu.lock'
 
@@ -126,10 +127,12 @@ class GuardTests(unittest.TestCase):
         handlers = {sig: signal.getsignal(sig) for sig in [signal.SIGTERM, signal.SIGINT]}
         with tempfile.TemporaryDirectory() as tmp:
             directory = Path(tmp); lock = self.fixture(directory)
-            with patch.object(trainer, 'LOCK', lock), patch.object(trainer, 'resources', return_value=START), patch.object(trainer.subprocess, 'Popen', side_effect=OSError('spawn-test')):
+            with patch.object(trainer, 'LOCK', lock), patch.object(trainer, 'resources', return_value=START), patch.object(trainer.subprocess, 'Popen', side_effect=OSError('spawn-test')) as popen:
                 with self.assertRaises(SystemExit): trainer.supervise(directory, 'probe')
+                popen.assert_called_once()
             self.assertFalse(lock.exists())
             self.assertEqual(trainer.read(directory / 'probe/state.json')['status'], 'stopped-or-failed')
+            self.assertIn('spawn-test', trainer.read(directory / 'probe/state.json')['error'])
         self.assertEqual(handlers, {sig: signal.getsignal(sig) for sig in handlers})
 
     def test_mkdir_failure_releases_own_lock_without_writing_foreign_directory(self):

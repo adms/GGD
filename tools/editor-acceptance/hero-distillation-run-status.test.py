@@ -30,7 +30,20 @@ class RunStatusTest(unittest.TestCase):
             actual = MODULE.summarize(run, rows)
         self.assertEqual(actual['completedSteps'], 2)
         self.assertEqual(actual['totalSteps'], 3)
-        self.assertEqual(actual['source'], 'worker-progress.step')
+        self.assertEqual(actual['source'], 'worker-progress.step-legacy')
+
+    def test_completed_count_is_not_inflight_step(self):
+        temp, run, rows = self.fixture(progress={'phase': 'training', 'step': 2, 'completedSteps': 1})
+        with temp: actual = MODULE.summarize(run, rows)
+        self.assertEqual(actual['completedSteps'], 1)
+
+    def test_pause_and_guard_stop_are_reportable(self):
+        for status in ('paused-charging', 'stopped-or-failed'):
+            temp, run, rows = self.fixture(status=status, progress={'phase': 'paused', 'step': 2})
+            with temp:
+                (run / 'train/training-trace.json').write_text('[{}, {}]')
+                actual = MODULE.summarize(run, rows)
+            self.assertEqual(actual['completedSteps'], 2)
 
     def test_completed_run_reports_full_training_set(self):
         temp, run, rows = self.fixture(status='completed')

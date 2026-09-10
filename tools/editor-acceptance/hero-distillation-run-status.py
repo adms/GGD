@@ -30,20 +30,27 @@ def summarize(run: Path, train_jsonl: Path):
     run = run.resolve()
     train = run / 'train'
     state = read(train / 'state.json')
-    require(state.get('status') in {'running', 'completed', 'failed', 'stopped'}, 'INVALID_TRAIN_STATE')
+    require(state.get('status') in {'starting', 'running', 'paused-charging', 'completed', 'failed', 'stopped', 'stopped-or-failed'}, 'INVALID_TRAIN_STATE')
     total = jsonl_count(train_jsonl)
     require(total > 0, 'EMPTY_TRAIN_JSONL')
     progress_path = train / 'worker-progress.json'
     progress = read(progress_path) if progress_path.exists() else {}
     phase = progress.get('phase')
     step = progress.get('step')
-    if phase == 'training':
-        require(type(step) is int and 1 <= step <= total, 'INVALID_LIVE_TRAIN_STEP')
-        completed = step
-    elif state.get('status') == 'completed':
+    source = 'terminal-state-or-not-yet-training'
+    if state.get('status') == 'completed':
         completed = total
+    elif state.get('status') == 'paused-charging' or phase in ('paused', 'checkpoint-save', 'power-cooldown', 'dev-after', 'adapter-roundtrip'):
+        trace_path = train / 'training-trace.json'
+        completed = len(read(trace_path)) if trace_path.exists() else state.get('completedSteps', 0)
+        source = 'training-trace-or-paused-state'
+    elif phase == 'training':
+        require(type(step) is int and 1 <= step <= total, 'INVALID_LIVE_TRAIN_STEP')
+        completed = progress.get('completedSteps', step)
+        source = 'worker-progress.completedSteps' if 'completedSteps' in progress else 'worker-progress.step-legacy'
     else:
-        completed = 0
+        completed = state.get('completedSteps', 0)
+    require(type(completed) is int and 0 <= completed <= total, 'INVALID_COMPLETED_STEPS')
     return {
         'schema': 'ggd-hero-distillation-run-status@1',
         'run': str(run),
@@ -52,7 +59,7 @@ def summarize(run: Path, train_jsonl: Path):
         'completedSteps': completed,
         'totalSteps': total,
         'fraction': completed / total,
-        'source': 'worker-progress.step' if phase == 'training' else 'terminal-state-or-not-yet-training',
+        'source': source,
         'error': state.get('error'),
     }
 
