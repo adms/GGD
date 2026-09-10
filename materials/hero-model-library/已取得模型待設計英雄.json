@@ -1,8 +1,8 @@
 {
   "schema": "ggd-acquired-model-design-backlog@1",
-  "sourceIdentityCount": 731,
+  "sourceIdentityCount": 732,
   "counts": {
-    "not-defined": 387,
+    "not-defined": 388,
     "definitions-incomplete": 11,
     "identity-review": 247,
     "designed": 86,
@@ -55,7 +55,7 @@
     },
     {
       "path": "materials/hero-model-library/design-backlog/hero-design-coverage.json",
-      "sha256": "0ed6e668a70eb23b8e67ee797ebecb9eed74e645936d9bcab733898e3784a818"
+      "sha256": "594fddea99676155623a34e940d55e13dbcb3f12b93986addc483de77c44723c"
     },
     {
       "path": "materials/hero-model-library/design-backlog/localization-zh-TW.json",
@@ -67,15 +67,15 @@
     },
     {
       "path": "materials/hero-model-library/voice-index.json",
-      "sha256": "1beb7b08eff2e83c693f2b8303fa54c7577f233759e1ca39946218dc4d5da6e3"
+      "sha256": "e36a33f4e359df879d96e82b3e403967eaf5074f47ee9718f354fdb12c445cdf"
     },
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "948632a781c3850e493fb892e80395e7ba6cf951180584b20873e6e13d536d96"
+      "sha256": "2ee7ddb7cb92a2190c42167220aa56fffef690d5cd64bcfaa9bb0e61c3804c7f"
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
-      "sha256": "129c2bea9fdcbd3c39a50fef651035879cbfda7aa553680bba1ffab3538500bb"
+      "sha256": "4f1330864a18147592853d88a6d9a2cde816e2b8ca751ed77072f322d9066fbf"
     },
     {
       "path": "content/champions/b2-aladdin.json",
@@ -185810,13 +185810,128 @@
         ],
         "classificationIsAcquisitionSnapshot": true
       }
+    },
+    {
+      "id": "community:multiversus-superman-payload-20260910",
+      "name": "超人／Superman",
+      "work": "MultiVersus",
+      "sourceIds": [
+        "parallel-community-adult-gon-multiversus"
+      ],
+      "aliases": [
+        "Superman",
+        "Superman_Skeleton",
+        "Panda_Main/Characters/Superman/Mesh"
+      ],
+      "modelCandidates": [
+        {
+          "id": "parallel-community-adult-gon-multiversus.superman-skeletal-mesh",
+          "library": "community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-adult-gon-multiversus/extracted/unpacked-v4/Superman.uasset",
+          "bytes": 10633,
+          "sha256": "1f6cc51f8099eee5bb0db561023e6c5fb4c7558cd7cbfca87617a671db67d0dd",
+          "format": "unreal-uasset-with-uexp",
+          "readiness": "native-character-body-identity-verified-pending-dependency-and-standardization",
+          "converted": false,
+          "resourceRole": "character-body",
+          "sourceId": "parallel-community-adult-gon-multiversus",
+          "sourceClass": "community-mod-unreal-pak",
+          "sourceUrl": "https://gamebanana.com/mods/393359",
+          "identityReviewRequired": false,
+          "assetFiles": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-adult-gon-multiversus/extracted/unpacked-v4/Superman.uexp",
+              "bytes": 3290685,
+              "sha256": "83e61f8a2594dc7f9aa987ab1a92666920b3008e0224f82f30f71cae3dbb5c49"
+            }
+          ],
+          "nativeSkeletonFiles": 0,
+          "nativeSkeletonReference": "/Game/Panda_Main/Characters/Superman/Mesh/Superman_Skeleton",
+          "nativeAnimationCount": 0,
+          "nativeEffectContainerCount": 0,
+          "audioDecodedPlayableFiles": 0,
+          "materialCount": 11,
+          "textureCount": 6,
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "runtimeSelectable": false,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-adult-gon-multiversus/extracted/unpacked-v4/Superman.uasset",
+          "existsLocal": true,
+          "localSizeMatches": true
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "proxyUseHeroIds": [],
+      "possibleIdentityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "已以 PAK 掛載點、唯一 SkeletalMesh 名稱、Skeleton 引用與材質包路徑驗證為 MultiVersus Superman；目前 content/champions 與模型盤點沒有 Superman 對應英雄 ID，因此保留為待設計、待綁定來源，未杜撰 GGD ID。",
+      "evidence": {
+        "sourcePageClaim": "Adult Gon / JUMP FORCE model",
+        "verifiedPayloadIdentity": "MultiVersus Superman",
+        "staticAnalysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-adult-gon-multiversus/unreal-v4-static-analysis.json",
+        "staticAnalysisSha256": "5cb3b78683608dde6f0850717757c2151000483036e7c50bbef4586cd8c4b8c2",
+        "uassetExportAnalysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-adult-gon-multiversus/extracted/unpacked-v4-uasset-export-analysis.json",
+        "uassetExportAnalysisSha256": "d2f11a59f4111d7acc9ee17e809acf41253c8f5c952d0196c196044b7021ebf5",
+        "nameAndWorkCatalogChecked": true,
+        "heroDefinitionCount": 153,
+        "runtimeAcceptance": false
+      },
+      "limitations": [
+        "PAK 內只有外部 Superman_Skeleton 引用，沒有 Skeleton 本檔，不能轉換或宣稱骨架完整。",
+        "沒有 AnimationSequence、音效、語音或特效容器；不能以模型存在推定原生動作齊全。",
+        "未完成 Unreal 資產轉換、材質視覺驗收、GGD 匯入或後台切換驗證。",
+        "來源頁角色主張與已驗證 payload 身分不符；此列只登記 payload 的 Superman 身分，保留錯包證據。"
+      ],
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-adult-gon-multiversus-unreal-v4-analysis/78dfd98cd9f2853c20443eb847a68504253202840282dc9acbbbca0975c50cfe.tar.gz",
+        "sha256": "78dfd98cd9f2853c20443eb847a68504253202840282dc9acbbbca0975c50cfe",
+        "archiveBytes": 24920550,
+        "memberCount": 54,
+        "fullGetAndMemberShaVerified": true,
+        "s3Use": "backup-only-not-runtime-entry"
+      },
+      "currentHeroChecks": [],
+      "suggestedHeroIds": [],
+      "nameZh": "超人／Superman",
+      "workZh": "作品中文名稱待確認",
+      "displayName": "超人／Superman",
+      "displayWork": "作品中文名稱待確認（MultiVersus）",
+      "nameTranslationBasis": "existing-source-label-or-alias",
+      "workTranslationBasis": "pending-chinese-title",
+      "localizationChangesIdentity": false,
+      "resources": {
+        "motion": "已核對版本未含動作；其他來源待核",
+        "vfx": "尚未建立角色專屬特效對應",
+        "sfx": "尚未建立角色專屬音訊對應",
+        "voice": "尚未建立角色專屬語音對應",
+        "voiceGroupIds": [],
+        "indexedAudioFileCount": 0,
+        "unclassifiedAudioFileCount": 0,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
+        "sourceLabels": [
+          "JUMP 大亂鬥（JUMP FORCE）"
+        ],
+        "voiceIndex": "materials/hero-model-library/voice-index.json",
+        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
+        "motionCandidateCounts": [
+          {
+            "candidateId": "parallel-community-adult-gon-multiversus.superman-skeletal-mesh",
+            "count": 0,
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          }
+        ],
+        "nativeMotionSources": [],
+        "evidencePaths": [],
+        "classificationIsAcquisitionSnapshot": true
+      }
     }
   ],
   "localization": {
     "locale": "zh-TW",
     "identityUnchanged": true,
     "pendingChineseNames": 0,
-    "pendingChineseWorks": 0
+    "pendingChineseWorks": 1
   },
   "resourceCoverage": {
     "schema": "ggd-design-backlog-resource-coverage@1",

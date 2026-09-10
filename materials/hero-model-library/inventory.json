@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-11T06:46:58+08:00",
-  "inputsSha256": "2ebd2c26b7b95106516cff0dc3eb2bcd5c51a8d494db260c2087918a0c5eaa7e",
+  "generatedAt": "2026-09-11T06:59:22+08:00",
+  "inputsSha256": "b4960b2c39ad1547228f81a12d53ac8306f837cd3bdc6fa894de093465f7d1d3",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -30956,119 +30956,7 @@
       ],
       "publicCandidates": [],
       "paidCandidates": [],
-      "supplementSources": [
-        {
-          "id": "parallel-community-adult-gon-multiversus",
-          "target": "Adult Gon — MultiVersus MOD",
-          "heroIds": [
-            "godie-u034"
-          ],
-          "ownerEntryIds": [],
-          "url": "https://gamebanana.com/mods/393359",
-          "uploader": "-Brudi-",
-          "format": "RAR／原生 Unreal PAK",
-          "accessStatus": "public-direct-download",
-          "acquisitionStatus": "downloaded-verified",
-          "readiness": "reserved-pending-conversion",
-          "purchaseDecision": "supplement-only-continue-model-search",
-          "defaultEligible": false,
-          "resourceRole": "component-supplement",
-          "localPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-community-adult-gon-multiversus",
-          "sourceGame": "MultiVersus",
-          "platform": "PC",
-          "sourceWork": "Hunter x Hunter",
-          "selectionClass": "community-mod",
-          "discoveryChannel": "mod-site",
-          "assetKinds": [
-            "native-container"
-          ],
-          "files": [
-            {
-              "path": "original/gon_p.rar",
-              "bytes": 7590288,
-              "sha256": "b6c1365daee1f88d62dc1f843aff84ceb398c7465e22c40603591ebdfeb05f77",
-              "downloadUrl": "https://gamebanana.com/dl/841191"
-            }
-          ],
-          "sourceEvidence": {
-            "reportSha256": "a144a15d6710858c393b057dbcd011079a20144c0e4b1c3a8da3d142e771bd55",
-            "sourceApiPath": "source-api.json",
-            "sourceApiSha256": "1c94584c047158e4453d9c5472b52774e65ab894f92347ef2fa478bd632a6ee8",
-            "extractedManifestPath": "extracted-files.jsonl",
-            "extractedManifestSha256": "a80581f68fe82cddbceb01cfa35335014e142ad586b81ce510bc064867da2009"
-          },
-          "publicationStatus": "s3-readback-verified",
-          "reuseTerms": "<a rel=\"license\" href=\"http://creativecommons.org/licenses/by-nc-nd/4.0/\"><img alt=\"Creative Commons License\" style=\"border-width:0\" src=\"https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png\" /></a><br />This work is licensed under a <a rel=\"license\" href=\"http://creativecommons.org/licenses/by-nc-nd/4.0/\">Creative Commons Attribution-NonCommercial-NoDerivs 4.0 Unported License</a>.",
-          "reuseChecklist": {
-            "yes": [
-              "Download and install this Mod"
-            ],
-            "ask": [
-              "Redistribute this Mod on other sites",
-              "Modify this Mod and distribute the modified Mod on GameBanana",
-              "Modify this Mod and distribute the modified Mod on another site",
-              "Use parts of this Mod in another Mod and distribute the Mod on GameBanana",
-              "Use parts of this Mod in another Mod and distribute the Mod on another site",
-              "Use this Mod or components of this Mod in adult/NSFW content"
-            ],
-            "no": [
-              "Use this Mod or components of this Mod commercially"
-            ]
-          },
-          "credits": [
-            {
-              "_sGroupName": "Key Authors",
-              "_aAuthors": [
-                {
-                  "_sRole": "Modder",
-                  "_idRow": "2186953",
-                  "_sName": "-Brudi-",
-                  "_sUpicUrl": "https://images.gamebanana.com/img/upic/68b557091b470.png",
-                  "_sProfileUrl": "https://gamebanana.com/members/2186953",
-                  "_sAvatarUrl": "https://images.gamebanana.com/img/av/68b55752d42eb.png",
-                  "_bIsOnline": false
-                },
-                {
-                  "_sRole": "Modeler",
-                  "_sName": "Rubyrain19"
-                },
-                {
-                  "_sRole": "Game genesis",
-                  "_sName": "Jump force"
-                },
-                {
-                  "_sRole": "Franchise creator",
-                  "_sName": "Yoshihiro Togashi"
-                },
-                {
-                  "_sRole": "JumpForce creators",
-                  "_sName": "Bandai Namco"
-                }
-              ]
-            }
-          ],
-          "publicRedistributionRightsVerified": false,
-          "usage": "local reserve and preparation; no automatic runtime selection",
-          "backendIntegration": {
-            "required": true,
-            "state": "pending-standardization",
-            "heroIds": [
-              "godie-u034"
-            ],
-            "selectionVerified": false
-          },
-          "verification": "完整大傑 MultiVersus MOD 原包及 PAK 已取得，作者 MD5／SHA 通過；來源署名 JUMP FORCE 模型。PAK v4 索引 SHA1 通過、42 條目、索引未加密，但內部模型、骨架、動作、音訊尚未解析，不能算本體驗收通過。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
-          "backup": {
-            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-adult-gon-multiversus/d4f320164cc3cabfc05a860af876679c7d986dd4db61b3f05e93897f5c82fb95.zip",
-            "bytes": 17434220,
-            "sha256": "d4f320164cc3cabfc05a860af876679c7d986dd4db61b3f05e93897f5c82fb95",
-            "archiveFormat": "zip",
-            "readbackVerified": true,
-            "fullGetVerified": true,
-            "allMemberSha256Verified": true
-          }
-        }
-      ],
+      "supplementSources": [],
       "audioSources": []
     },
     {
@@ -56826,13 +56714,11 @@
           "steam-adult-gon"
         ],
         "acquiredPublicSources": [
-          "thunderstore-gon",
-          "parallel-community-adult-gon-multiversus"
+          "thunderstore-gon"
         ],
         "acquiredPaidSources": [],
         "acquiredSourceIds": [
-          "thunderstore-gon",
-          "parallel-community-adult-gon-multiversus"
+          "thunderstore-gon"
         ],
         "retainedWorkflowSources": [],
         "purchaseHoldFor": [
@@ -69287,20 +69173,18 @@
       },
       {
         "id": "parallel-community-adult-gon-multiversus",
-        "target": "Adult Gon — MultiVersus MOD",
-        "heroIds": [
-          "godie-u034"
-        ],
+        "target": "Adult Gon — MultiVersus MOD（payload 身分不符：Superman）",
+        "heroIds": [],
         "ownerEntryIds": [],
         "url": "https://gamebanana.com/mods/393359",
         "uploader": "-Brudi-",
         "format": "RAR／原生 Unreal PAK",
         "accessStatus": "public-direct-download",
         "acquisitionStatus": "downloaded-verified",
-        "readiness": "reserved-pending-conversion",
+        "readiness": "identity-mismatch-pending-review",
         "purchaseDecision": "supplement-only-continue-model-search",
         "defaultEligible": false,
-        "resourceRole": "component-supplement",
+        "resourceRole": "native-game-assets-identity-mismatch",
         "localPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-community-adult-gon-multiversus",
         "sourceGame": "MultiVersus",
         "platform": "PC",
@@ -69308,6 +69192,9 @@
         "selectionClass": "community-mod",
         "discoveryChannel": "mod-site",
         "assetKinds": [
+          "model",
+          "material",
+          "texture",
           "native-container"
         ],
         "files": [
@@ -69323,7 +69210,9 @@
           "sourceApiPath": "source-api.json",
           "sourceApiSha256": "1c94584c047158e4453d9c5472b52774e65ab894f92347ef2fa478bd632a6ee8",
           "extractedManifestPath": "extracted-files.jsonl",
-          "extractedManifestSha256": "a80581f68fe82cddbceb01cfa35335014e142ad586b81ce510bc064867da2009"
+          "extractedManifestSha256": "a80581f68fe82cddbceb01cfa35335014e142ad586b81ce510bc064867da2009",
+          "unrealStaticAnalysisPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-community-adult-gon-multiversus/unreal-v4-static-analysis.json",
+          "unrealStaticAnalysisSha256": "5cb3b78683608dde6f0850717757c2151000483036e7c50bbef4586cd8c4b8c2"
         },
         "publicationStatus": "s3-readback-verified",
         "reuseTerms": "<a rel=\"license\" href=\"http://creativecommons.org/licenses/by-nc-nd/4.0/\"><img alt=\"Creative Commons License\" style=\"border-width:0\" src=\"https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png\" /></a><br />This work is licensed under a <a rel=\"license\" href=\"http://creativecommons.org/licenses/by-nc-nd/4.0/\">Creative Commons Attribution-NonCommercial-NoDerivs 4.0 Unported License</a>.",
@@ -69379,13 +69268,11 @@
         "usage": "local reserve and preparation; no automatic runtime selection",
         "backendIntegration": {
           "required": true,
-          "state": "pending-standardization",
-          "heroIds": [
-            "godie-u034"
-          ],
+          "state": "identity-mismatch-pending-review",
+          "heroIds": [],
           "selectionVerified": false
         },
-        "verification": "完整大傑 MultiVersus MOD 原包及 PAK 已取得，作者 MD5／SHA 通過；來源署名 JUMP FORCE 模型。PAK v4 索引 SHA1 通過、42 條目、索引未加密，但內部模型、骨架、動作、音訊尚未解析，不能算本體驗收通過。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+        "verification": "原始 Adult Gon MultiVersus MOD RAR 與 PAK 已取得，作者 MD5／SHA 通過，固定 ZIP 已完成 S3 完整讀回與逐成員 SHA-256 驗證。後續靜態解包已驗證 PAK v4 未加密索引、42 條 Zlib payload、15,985,928 decoded bytes 與逐檔 SHA-256；UE4.26 匯出表只含 1 SkeletalMesh（Superman）、11 Material、6 Texture2D。掛載點、網格名與引用骨架均為 MultiVersus Superman，且 PAK 內沒有 Skeleton、AnimationSequence、音訊或特效。故 payload 與 Adult Gon 身分不符，已取消 godie-u034 綁定；不可算作大傑模型、動作、特效、音效或語音完成，待人工覆核錯包或另覓可驗證來源。",
         "backup": {
           "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-adult-gon-multiversus/d4f320164cc3cabfc05a860af876679c7d986dd4db61b3f05e93897f5c82fb95.zip",
           "bytes": 17434220,
@@ -69394,7 +69281,35 @@
           "readbackVerified": true,
           "fullGetVerified": true,
           "allMemberSha256Verified": true
-        }
+        },
+        "supplementalDeliveries": [
+          {
+            "id": "parallel-community-adult-gon-multiversus-unreal-v4-analysis",
+            "sourceId": "parallel-community-adult-gon-multiversus",
+            "resourceRole": "integration-evidence-backup",
+            "localPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-community-adult-gon-multiversus",
+            "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/outputs/intake-backups/parallel-community-adult-gon-multiversus-unreal-v4-analysis/7ca2128f63b112debcb48e4ba2d5490c9963201b82fec6b4ea289862bbd88c22/source.tar.gz",
+            "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/outputs/intake-backups/parallel-community-adult-gon-multiversus-unreal-v4-analysis/7ca2128f63b112debcb48e4ba2d5490c9963201b82fec6b4ea289862bbd88c22/readback.tar.gz",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-adult-gon-multiversus-unreal-v4-analysis/78dfd98cd9f2853c20443eb847a68504253202840282dc9acbbbca0975c50cfe.tar.gz",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-adult-gon-multiversus-unreal-v4-analysis/78dfd98cd9f2853c20443eb847a68504253202840282dc9acbbbca0975c50cfe.files.json",
+            "bytes": 24920550,
+            "sha256": "78dfd98cd9f2853c20443eb847a68504253202840282dc9acbbbca0975c50cfe",
+            "fileCount": 54,
+            "archiveFormat": "tar-gzip",
+            "archiveMemberRoot": "",
+            "readbackVerified": true,
+            "fullReadbackVerified": true,
+            "s3ReadbackVerified": true,
+            "localPreserved": true,
+            "acquiredAssetPayloadCount": 0,
+            "snapshotScope": "manifest-listed-files-only",
+            "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+            "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/outputs/intake-backups/parallel-community-adult-gon-multiversus-unreal-v4-analysis/latest-receipt.json",
+            "receiptSha256": "7ed80b5d9a1b2e6f221e63508e4d0f45a753cb882055cf0ff01309490a3573c4",
+            "manifestSha256": "55b50ef1ad5ece7839f9e89b406bcb746aad878fa44539a245f741081674dd3c",
+            "s3Use": "backup-only-not-runtime-entry"
+          }
+        ]
       },
       {
         "id": "parallel-community-goblin-slayer-ssbu",

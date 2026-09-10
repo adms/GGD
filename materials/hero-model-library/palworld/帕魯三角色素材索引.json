@@ -3,15 +3,15 @@
   "inputs": [
     {
       "gitPath": "materials/hero-model-library/download-sources.json",
-      "sha256": "948632a781c3850e493fb892e80395e7ba6cf951180584b20873e6e13d536d96"
+      "sha256": "2ee7ddb7cb92a2190c42167220aa56fffef690d5cd64bcfaa9bb0e61c3804c7f"
     },
     {
       "gitPath": "materials/hero-model-library/public-source-files.json",
-      "sha256": "f75b8d41397937cb75f913650559017f441a4d52cc639a6beb05dc48eef1e8b2"
+      "sha256": "801ff1af5edf5d1f6fa6ce426bd5ed8e124198e4501a0d7cdb17605cc4991c92"
     },
     {
       "gitPath": "materials/hero-model-library/design-backlog/sources-supplemental.json",
-      "sha256": "129c2bea9fdcbd3c39a50fef651035879cbfda7aa553680bba1ffab3538500bb"
+      "sha256": "4f1330864a18147592853d88a6d9a2cde816e2b8ca751ed77072f322d9066fbf"
     },
     {
       "gitPath": "materials/hero-model-library/palworld/character-settings.json",

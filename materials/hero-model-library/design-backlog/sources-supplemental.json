@@ -2731,6 +2731,84 @@
         "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-jetragon-20260911/full-get.tar.gz",
         "receiptPath": "materials/hero-model-library/priority-evidence/palworld-three/jetragon-s3-backup.json"
       }
+    },
+    {
+      "id": "community:multiversus-superman-payload-20260910",
+      "name": "超人／Superman",
+      "work": "MultiVersus",
+      "sourceIds": [
+        "parallel-community-adult-gon-multiversus"
+      ],
+      "aliases": [
+        "Superman",
+        "Superman_Skeleton",
+        "Panda_Main/Characters/Superman/Mesh"
+      ],
+      "modelCandidates": [
+        {
+          "id": "parallel-community-adult-gon-multiversus.superman-skeletal-mesh",
+          "library": "community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-adult-gon-multiversus/extracted/unpacked-v4/Superman.uasset",
+          "bytes": 10633,
+          "sha256": "1f6cc51f8099eee5bb0db561023e6c5fb4c7558cd7cbfca87617a671db67d0dd",
+          "format": "unreal-uasset-with-uexp",
+          "readiness": "native-character-body-identity-verified-pending-dependency-and-standardization",
+          "converted": false,
+          "resourceRole": "character-body",
+          "sourceId": "parallel-community-adult-gon-multiversus",
+          "sourceClass": "community-mod-unreal-pak",
+          "sourceUrl": "https://gamebanana.com/mods/393359",
+          "identityReviewRequired": false,
+          "assetFiles": [
+            {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-adult-gon-multiversus/extracted/unpacked-v4/Superman.uexp",
+              "bytes": 3290685,
+              "sha256": "83e61f8a2594dc7f9aa987ab1a92666920b3008e0224f82f30f71cae3dbb5c49"
+            }
+          ],
+          "nativeSkeletonFiles": 0,
+          "nativeSkeletonReference": "/Game/Panda_Main/Characters/Superman/Mesh/Superman_Skeleton",
+          "nativeAnimationCount": 0,
+          "nativeEffectContainerCount": 0,
+          "audioDecodedPlayableFiles": 0,
+          "materialCount": 11,
+          "textureCount": 6,
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "runtimeSelectable": false
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "proxyUseHeroIds": [],
+      "possibleIdentityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "已以 PAK 掛載點、唯一 SkeletalMesh 名稱、Skeleton 引用與材質包路徑驗證為 MultiVersus Superman；目前 content/champions 與模型盤點沒有 Superman 對應英雄 ID，因此保留為待設計、待綁定來源，未杜撰 GGD ID。",
+      "evidence": {
+        "sourcePageClaim": "Adult Gon / JUMP FORCE model",
+        "verifiedPayloadIdentity": "MultiVersus Superman",
+        "staticAnalysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-adult-gon-multiversus/unreal-v4-static-analysis.json",
+        "staticAnalysisSha256": "5cb3b78683608dde6f0850717757c2151000483036e7c50bbef4586cd8c4b8c2",
+        "uassetExportAnalysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-adult-gon-multiversus/extracted/unpacked-v4-uasset-export-analysis.json",
+        "uassetExportAnalysisSha256": "d2f11a59f4111d7acc9ee17e809acf41253c8f5c952d0196c196044b7021ebf5",
+        "nameAndWorkCatalogChecked": true,
+        "heroDefinitionCount": 153,
+        "runtimeAcceptance": false
+      },
+      "limitations": [
+        "PAK 內只有外部 Superman_Skeleton 引用，沒有 Skeleton 本檔，不能轉換或宣稱骨架完整。",
+        "沒有 AnimationSequence、音效、語音或特效容器；不能以模型存在推定原生動作齊全。",
+        "未完成 Unreal 資產轉換、材質視覺驗收、GGD 匯入或後台切換驗證。",
+        "來源頁角色主張與已驗證 payload 身分不符；此列只登記 payload 的 Superman 身分，保留錯包證據。"
+      ],
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-community-adult-gon-multiversus-unreal-v4-analysis/78dfd98cd9f2853c20443eb847a68504253202840282dc9acbbbca0975c50cfe.tar.gz",
+        "sha256": "78dfd98cd9f2853c20443eb847a68504253202840282dc9acbbbca0975c50cfe",
+        "archiveBytes": 24920550,
+        "memberCount": 54,
+        "fullGetAndMemberShaVerified": true,
+        "s3Use": "backup-only-not-runtime-entry"
+      }
     }
   ],
   "policy": "Retain reviewed new acquisitions until the main source scanner explicitly supports and preserves each candidate. ｜ ou99 偶久網付費下載（owner 2026-09-11 授權）：18 顆已轉換入庫並在 GGD 主線 content/models/_index.json 裡，heroBody:true ⇒ 後台與編輯器選單可選。"
