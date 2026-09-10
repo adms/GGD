@@ -11,6 +11,22 @@ SPEC.loader.exec_module(M)
 
 
 class ActionEvaluateTest(unittest.TestCase):
+    def test_action_metrics_separate_json_health_from_hero_correctness(self):
+        metrics = M.action_metrics([
+            {'stage': 'identity', 'complete': True, 'jsonAccepted': True},
+            {'stage': 'identity', 'complete': True, 'jsonAccepted': False},
+            {'stage': 'action', 'complete': False, 'jsonAccepted': False},
+        ], [
+            {'heroId': 'a', 'status': 'complete'},
+            {'heroId': 'b', 'status': 'failed', 'error': "AssertionError('ACTION_VALUE_NOT_SCALAR')"},
+            {'heroId': 'c', 'status': 'failed', 'error': "AssertionError('ACTION_VALUE_NOT_SCALAR')"},
+        ])
+        self.assertEqual(metrics['byStage']['identity'], {'calls': 2, 'streamComplete': 2, 'jsonAccepted': 1,
+                                                           'transportAndJsonAccepted': 1})
+        self.assertEqual(metrics['terminalHeroFailures']["AssertionError('ACTION_VALUE_NOT_SCALAR')"], 2)
+        self.assertEqual(metrics['completeHeroes'], 1)
+        self.assertFalse(metrics['semanticCorrectnessProven'])
+
     def test_frozen_public_cases_have_no_assistant_teacher_message(self):
         source = ROOT / 'docs/_reports/hero-finetune-research/hero74-action-v3'
         with tempfile.TemporaryDirectory() as temp:

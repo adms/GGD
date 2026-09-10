@@ -223,6 +223,37 @@ def safe_name(value):
     return value
 
 
+def action_metrics(calls, completed):
+    """Summarize raw protocol health without treating it as hero success.
+
+    The values are derived only from model call receipts and terminal no-repair
+    outcomes.  They deliberately do not compare against teacher answers, so a
+    valid action is not mislabelled as semantic or gameplay correctness.
+    """
+    by_stage = {}
+    for call in calls:
+        stage = call['stage']
+        row = by_stage.setdefault(stage, {'calls': 0, 'streamComplete': 0, 'jsonAccepted': 0,
+                                          'transportAndJsonAccepted': 0})
+        row['calls'] += 1
+        if call['complete']:
+            row['streamComplete'] += 1
+        if call['jsonAccepted']:
+            row['jsonAccepted'] += 1
+        if call['complete'] and call['jsonAccepted']:
+            row['transportAndJsonAccepted'] += 1
+    failures = {}
+    for hero in completed:
+        if hero['status'] == 'failed':
+            error = hero.get('error', 'UNKNOWN_TERMINAL_FAILURE')
+            failures[error] = failures.get(error, 0) + 1
+    return {'schema': 'ggd-action-evaluation-metrics@1', 'calls': len(calls),
+            'byStage': by_stage, 'terminalHeroFailures': failures,
+            'completeHeroes': sum(hero['status'] == 'complete' for hero in completed),
+            'failedHeroes': sum(hero['status'] == 'failed' for hero in completed),
+            'semanticCorrectnessProven': False, 'gameplayCorrectnessProven': False}
+
+
 def worker(directory, arm, token):
     assert arm in ['base', 'lora'], 'UNKNOWN_ARM'
     directory, work = Path(directory).resolve(), Path(directory).resolve() / arm
@@ -280,8 +311,11 @@ def worker(directory, arm, token):
             atomic(work / 'heroes' / (safe_name(hero['heroId']) + '.json'), value); atomic(work / 'hero-index.json', completed)
     assert len(completed) == len(heroes), 'INCOMPLETE_ACTION_EVALUATION'
     successful = sum(row['status'] == 'complete' for row in completed)
+    metrics = action_metrics(calls, completed)
+    atomic(work / 'action-metrics.json', metrics)
     atomic(work / 'result.json', {'arm': arm, 'kind': p['kind'], 'attemptedHeroes': len(completed), 'attemptedCalls': len(calls),
                                    'completeHeroes': successful, 'failedHeroes': len(completed) - successful,
+                                   'actionMetricsSha256': digest(work / 'action-metrics.json'),
                                    'humanRepairs': 0, 'modelPromoted': False, 'fullHeroE2EProven': False})
 
 
