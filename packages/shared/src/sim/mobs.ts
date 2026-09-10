@@ -2762,6 +2762,39 @@ export function spawnMob(
  * 被測的不是出貨的那個). The arithmetic lives in `sim/fireRing.ts`, next to the
  * clock it moves.
  */
+/**
+ * ⭐⭐ 把一隻**普通**殭屍就地升級成**特殊**殭屍（GH#920 / #1151 C）。
+ *
+ * > owner 2026-09-01（逐字）：「**普通殭屍放著會變成特殊殭屍**」
+ *
+ * ⚠️⚠️ ⭐ 「就地升級」而**不是**「殺掉再生一隻」是刻意的，三個理由：
+ *   ① 殺掉會發 `death` ⇒ ⛔ 那會被算成一次擊殺（⭐ 而玩家什麼都沒做）
+ *   ② 殺掉再生會讓 `spawnTick` 歸零 ⇒ ⛔ 累積已生成數被灌水（王的強度吃那個數）
+ *   ③ 位置與仇恨目標會斷 ⇒ ⛔ 畫面上是一隻怪憑空消失、另一隻憑空出現
+ *
+ * ⭐ 而**體型與血量要跟著換**：`mobSpawnProfile` 是**唯一**一份「這一種怪長什麼樣」，
+ * ⛔ 只改 `mob.kind` 會得到一隻**掛著特殊怪標籤、而數值仍是普通怪**的東西。
+ *
+ * ⭐ 回 `true` ＝ 真的升級了。
+ */
+export function promoteMobToSpecial(world: SimWorld, id: EntityId, rules: MobRules): boolean {
+  const m = world.mob.get(id);
+  if (!m || m.kind !== "normal") return false;
+  const hp = world.health.get(id);
+  if (!hp?.alive) return false;
+  const profile = mobSpawnProfile(world, m.zone, rules, "special");
+  m.kind = "special";
+  // ⭐ 血量**按比例**帶過去 —— ⛔ 不是回滿：一隻快死的普通怪升級之後
+  //   ⭐ 仍然是快死的（⛔ 否則「放著不清」會變成「幫敵人補血」）。
+  const frac = hp.maxHp > 0 ? hp.hp / hp.maxHp : 1;
+  hp.maxHp = profile.maxHp;
+  hp.hp = profile.maxHp * (frac > 0 ? (frac > 1 ? 1 : frac) : 0);
+  const t = world.transform.get(id);
+  if (t) t.radius = profile.radius;
+  world.emit("mobPromote", { id, zone: m.zone, from: "normal", to: "special", maxHp: profile.maxHp });
+  return true;
+}
+
 export function summonMobBoss(
   world: SimWorld,
   zone: number,

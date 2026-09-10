@@ -62,6 +62,38 @@ const zPossession = z
   })
   .strict();
 
+/**
+ * ⭐ 取捨迴圈的三格（GH#920）—— owner 2026-09-01 的四條規則裡，
+ * ①②③ 各一格開關（④ 重抽三選一另案）。
+ */
+const zSurvivalLoop = z
+  .object({
+    /** ⭐ owner 2026-09-02 逐字：「[普通 → 特殊：一隻普通殭屍存活滿 **45 秒** 就轉化] ok」 */
+    normalToSpecialSec: z
+      .number()
+      .min(0)
+      .max(600)
+      .describe(
+        "@zh 第十一回合 · 普通殭屍存活幾秒後轉成特殊殭屍\n" +
+          "@note owner 逐字「一隻普通殭屍存活滿 45 秒就轉化」（出貨 {{出貨值}}）。⭐ 這一格是整個取捨迴圈的心臟：清乾淨＝場面安全但復活權變少，放著養＝復活權多但場面失控。⛔ 調 0 ＝ **不轉化**（機制關著），⛔ 不是「一出生就轉」。",
+      ),
+    /** ⭐ owner：「**特殊殭屍打死才能復活隊友一次**（出現復活圈）而不是無限復活」 */
+    specialDropsReviveCircle: z
+      .boolean()
+      .describe(
+        "@zh 第十一回合 · 特殊殭屍被打死時掉一個復活圈\n" +
+          "@note 開著＝打死特殊殭屍的那一隊拿到**一次**復活權（owner 逐字「⛔ 而不是無限復活」）。⛔ 關掉＝第十一回合完全沒有復活途徑，死了就是死了。",
+      ),
+    /** ⭐ owner：「噴寶具是**你死就一定會噴 被誰殺死都會隨機噴一件**⋯**就是損壞了 不能撿回**」 */
+    breakItemOnDeath: z
+      .boolean()
+      .describe(
+        "@zh 第十一回合 · 英雄死亡時永久損壞一件隨機寶具\n" +
+          "@note 開著＝死一次就少一件寶具，⛔ **撿不回來也退不了錢**（owner 逐字「就是損壞了 不能撿回」）。⭐ 它是這一回合「死亡有代價」的唯一來源；⛔ 關掉之後死亡只剩下換邊，取捨迴圈就斷了一半。",
+      ),
+  })
+  .strict();
+
 const zBombardment = z
   .object({
     enabled: z
@@ -315,6 +347,8 @@ export const zRound11Config = z
         "@zh 第十一回合 · 陣亡的玩家換邊操作殭屍王\n" +
           "@note 開著＝死掉的人不離場，改成操作王去追活著的隊友（GH#922）。⛔ 關掉＝死了就是旁觀，回到今天的行為。⚠️ 這是一個**體驗決策**不是數值：開著時最後一名玩家會發現自己在被前隊友追殺，那是刻意的。",
       ),
+    /** ⭐ 取捨迴圈的三格（GH#920）。 */
+    survivalLoop: zSurvivalLoop,
     /** ⭐ 換邊的三格（GH#922）—— ⛔ 與上面那一格分開：那是「開不開」,這是「長什麼樣」。 */
     possession: zPossession,
     /** ⭐ BR 大轟炸（GH#923）。 */
@@ -345,6 +379,11 @@ export const SHIPPED_ROUND11: Round11Config = {
   bossStrengthMult: 2,
   bossScaleFloor: 1,
   bossScaleCeil: 8,
+  survivalLoop: {
+    normalToSpecialSec: 45,
+    specialDropsReviveCircle: true,
+    breakItemOnDeath: true,
+  },
   deadPlayersControlBoss: true,
   possession: {
     escapeWindowSec: 10,

@@ -50,6 +50,7 @@ const rules = (round11: Partial<ArenaRules["round11"]>): ArenaRules => ({
     bossScaleFloor: 1,
     bossScaleCeil: 1,
     bombardment: { enabled: false, telegraphSec: 0, damagePctOfMaxHp: 0, radius: 0, crowdBias: 0 },
+    survivalLoop: { normalToSpecialSec: 0, specialDropsReviveCircle: false, breakItemOnDeath: false },
     deadPlayersControlBoss: false,
     possession: { escapeWindowSec: 0, telegraphRadius: 1, inheritBossAugments: false },
     scoring: { survivalWeight: 0, scoreMultiplier: 1, minContributionForFullSurvival: 0 },

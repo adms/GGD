@@ -48,6 +48,12 @@ import {
   round11FrozenSurvivalFrac,
   round11Score,
 } from "@ggd/shared/sim/round11Scoring";
+import {
+  pickItemToBreak,
+  shouldConvertToSpecial,
+} from "@ggd/shared/sim/round11SurvivalLoop";
+import { promoteMobToSpecial } from "@ggd/shared/sim/mobs";
+import { breakItem } from "@ggd/shared/sim/economy/shop";
 import { COMBAT_SCORE_SCALE } from "@ggd/shared/sim/stats/rating";
 import { retiredChampionIds } from "@ggd/shared/content/championRetirement";
 import { heroStartLevel } from "@ggd/shared/content/schema/config/match";
@@ -4703,6 +4709,91 @@ export class MatchController {
     }
   }
 
+  /**
+   * ⭐⭐ ① 普通殭屍**放著不清就變成特殊殭屍**（GH#920 ①）。
+   *
+   * > owner 2026-09-01（逐字）：「**普通殭屍放著會變成特殊殭屍**」
+   * > owner 2026-09-02（逐字）：「[⋯存活滿 **45 秒** 就轉化] ok」
+   *
+   * ⭐ 這是整個取捨迴圈的心臟：清乾淨＝場面安全但**復活權變少**；
+   * 放著養＝復活權多但**場面失控**。
+   *
+   * ⚠️ ⭐ 迭代 `world.mob` 之前先把 id 收成陣列並**排序** ——
+   * `sim/**` 的「Map 迭代要先排序」（⛔ 而升級會寫回同一張表）。
+   */
+  private tickRound11Promotions(): void {
+    if (this.round11Round !== this.phase.round) return;
+    const secs = this.rules.round11.survivalLoop.normalToSpecialSec;
+    if (!(secs > 0)) return;
+    const rules = this.world.mobRules;
+    if (!rules) return;
+    const due: number[] = [];
+    for (const [id, m] of this.world.mob) {
+      if (m.kind !== "normal") continue;
+      if (shouldConvertToSpecial(m.spawnTick, this.world.mobTicks, secs, TICK_HZ)) {
+        due.push(id as unknown as number);
+      }
+    }
+    due.sort((a, b) => a - b);
+    for (const id of due) promoteMobToSpecial(this.world, id as EntityId, rules);
+  }
+
+  /**
+   * ⭐⭐ ② 特殊殭屍被打死 ⇒ 那一隊拿到**一次**復活權（GH#920 ②）。
+   *
+   * > owner 2026-09-01（逐字）：「**特殊殭屍打死才能復活隊友一次**（出現復活圈）
+   * >  ⛔ 而不是無限復活」
+   *
+   * ⛔⛔ **第一版我做錯了**，而且錯得很有教育意義：我直接 `spawnReviveCircle()`，
+   * 把 `ownerId` 填成**兇手**。⇒ ⭐ 那個圈在**下一 tick 就被熄掉**了 ——
+   * `ReviveSystem.updateCircle()` 逐字：「owner already alive again ⇒ 圈是多餘的」。
+   * ⭐ 因為復活圈的 `ownerId` 是**要被復活的那具屍體**，⛔ 不是誰生出它的。
+   *
+   * ⭐ 正解是**加一格復活權**，⛔ 不是自己生圈：
+   * `ReviveSystem.spawnCirclesForDeaths()` 本來就在「有人死 ＋ 那一隊還有 charge」
+   * 時生圈 ⇒ ⭐ 這條規則要做的事只有**發 charge**。
+   * ⚠️ 而那也正好是 owner 那句「⛔ 而不是無限復活」的意思：
+   * 第十一回合的基礎 charge 是 0，**每一格都要打一隻特殊怪換**。
+   */
+  private onRound11SpecialSlain(mobId: EntityId, killer: EntityId): void {
+    if (this.round11Round !== this.phase.round) return;
+    if (!this.rules.round11.survivalLoop.specialDropsReviveCircle) return;
+    // ⭐ 去重：一隻怪只換一格（同 tick 多來源致命／重播重複抵達都走同一本帳）。
+    if (!this.round11Claims.claim("specialRevive", String(mobId))) return;
+    const team = this.world.team.get(killer)?.teamId;
+    if (team === undefined) return;
+    const before = this.world.reviveCharges.get(team) ?? 0;
+    this.world.reviveCharges.set(team, before + 1);
+    this.world.emit("round11ReviveCharge", { teamId: team, from: before, to: before + 1, mobId });
+  }
+
+  /**
+   * ⭐⭐ ③ 英雄死亡 ⇒ **永久損壞一件隨機寶具**（GH#920 ③）。
+   *
+   * > owner 2026-09-01（逐字）：「噴寶具是**你死就一定會噴 被誰殺死都會隨機噴一件**⋯
+   * >  **寶具掉落 就是損壞了 不能撿回**」
+   *
+   * ⚠️⚠️ ⭐ 「被誰殺死都會噴」⇒ ⛔ **不看兇手**（火圈、轟炸、自殺一樣噴）。
+   * ⭐ 而「一定會噴」⇒ 抽籤只在**有東西的格子**之間進行
+   *   （⛔ 在 6 個格子裡抽會讓只帶一件的人有 5/6 的機率沒事）。
+   */
+  private onRound11ChampionDeath(id: EntityId): void {
+    if (this.round11Round !== this.phase.round) return;
+    if (!this.rules.round11.survivalLoop.breakItemOnDeath) return;
+    const champ = this.world.champion.get(id);
+    if (!champ) return;
+    const seatId = this.seatOfEntity(id);
+    if (seatId === null) return;
+    // ⭐ 去重：一次死亡只損壞一件（斷線重連／同 tick 多來源致命都走同一本帳）。
+    if (!this.round11Claims.claim("itemBreak", `${seatId}:${this.world.tick}`)) return;
+    const slot = pickItemToBreak(champ.items, this.world.rng.next());
+    if (slot === null) return;
+    const broken = breakItem(this.world, id, slot);
+    if (broken !== null) {
+      this.world.emit("round11ItemBroken", { entity: id, seatId, slot, itemId: broken });
+    }
+  }
+
   private clampRound11AliveCap(): void {
     if (this.round11Round !== this.phase.round) return;
     const rules = this.world.mobRules;
@@ -5116,12 +5207,21 @@ export class MatchController {
           data.id as EntityId,
           typeof data.killer === "number" ? (data.killer as EntityId) : null,
         );
+        // ⭐ GH#920 ③ —— 英雄死亡損壞一件寶具（⛔ 不看兇手）。
+        this.onRound11ChampionDeath(data.id as EntityId);
         return;
       }
       case "mobSpawn": {
         // ⭐ GH#1151 D —— 第十一回合的王強度依**累計已生成**成長。
         //   ⛔ 只在第十一回合數（其他回合這個欄位一直是 0）。
         if (this.round11Round === this.phase.round) this.round11MobsSpawned++;
+        return;
+      }
+      case "mobSlain": {
+        // ⭐ GH#920 ② —— 特殊殭屍被打死 ⇒ 一次復活權。
+        if (data.kind === "special" && typeof data.killer === "number") {
+          this.onRound11SpecialSlain(data.id as EntityId, data.killer as EntityId);
+        }
         return;
       }
       case "mobBossSlain": {
@@ -5446,6 +5546,7 @@ export class MatchController {
         //   ⛔ 不該被 `maxAlivePerZone` 那一格算進去。
         this.convertWipedTeamsToBosses();
         // ⭐ GH#1151 B/F —— 波次事件排程 ＋ 大轟炸的倒數與結算。
+        this.tickRound11Promotions(); // ⭐ GH#920 ① 普通 → 特殊
         this.tickRound11Events();
         this.tickRound11Bombardment();
         this.accelFireRingForBotOnly(); // GH#643 —— 只剩 bot 在打就提前縮火圈

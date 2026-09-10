@@ -389,6 +389,11 @@
     "bossStrengthMult": 2,
     "bossScaleFloor": 1,
     "bossScaleCeil": 8,
+    "survivalLoop": {
+      "normalToSpecialSec": 45,
+      "specialDropsReviveCircle": true,
+      "breakItemOnDeath": true
+    },
     "deadPlayersControlBoss": true,
     "possession": {
       "escapeWindowSec": 10,

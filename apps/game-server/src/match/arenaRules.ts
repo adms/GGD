@@ -130,6 +130,12 @@ export interface ArenaRules {
       readonly radius: number;
       readonly crowdBias: number;
     };
+    /** ⭐ 取捨迴圈（#1151 C / GH#920）——消費端 `sim/round11SurvivalLoop` ＋ `MatchController`。 */
+    readonly survivalLoop: {
+      readonly normalToSpecialSec: number;
+      readonly specialDropsReviveCircle: boolean;
+      readonly breakItemOnDeath: boolean;
+    };
     /** ⭐ 陣亡玩家改控自己的殭屍王（#1151 E）。 */
     readonly deadPlayersControlBoss: boolean;
     /**
@@ -339,6 +345,8 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
     bossScaleFloor: 1,
     bossScaleCeil: 1,
     bombardment: { enabled: false, telegraphSec: 0, damagePctOfMaxHp: 0, radius: 0, crowdBias: 0 },
+    // ⭐ 全部惰性:⛔ 沒有一格開關被預設打開。
+    survivalLoop: { normalToSpecialSec: 0, specialDropsReviveCircle: false, breakItemOnDeath: false },
     deadPlayersControlBoss: false,
     // ⭐ 逃跑窗 0 ＋ 不繼承增幅 ＝ 逐位元惰性(⛔ 沒有開關被預設打開)。
     possession: { escapeWindowSec: 0, telegraphRadius: 1, inheritBossAugments: false },
@@ -538,6 +546,11 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
         damagePctOfMaxHp: doc.round11?.bombardment?.damagePctOfMaxHp ?? 0,
         radius: doc.round11?.bombardment?.radius ?? 0,
         crowdBias: doc.round11?.bombardment?.crowdBias ?? 0,
+      },
+      survivalLoop: {
+        normalToSpecialSec: doc.round11?.survivalLoop?.normalToSpecialSec ?? 0,
+        specialDropsReviveCircle: doc.round11?.survivalLoop?.specialDropsReviveCircle ?? false,
+        breakItemOnDeath: doc.round11?.survivalLoop?.breakItemOnDeath ?? false,
       },
       deadPlayersControlBoss: doc.round11?.deadPlayersControlBoss ?? false,
       possession: {

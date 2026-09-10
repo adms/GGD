@@ -62,6 +62,32 @@ function setSlot(champ: ChampionComp, slot: number, itemId: ItemId, acq: ItemAcq
   champ.itemAcq[slot] = acq;
 }
 
+/**
+ * ⭐⭐ **永久損壞**一格寶具（GH#920 / #1151 C）—— 回被損壞的 itemId；`null` ＝ 那格是空的。
+ *
+ * > owner 2026-09-01（逐字）：「噴寶具是**你死就一定會噴 被誰殺死都會隨機噴一件**⋯
+ * >  **寶具掉落 就是損壞了 不能撿回**」
+ *
+ * ⚠️⚠️ ⭐ 它與 `sellItem` 的差別是**三件事都不做**：
+ *   ⛔ 不退錢（它不是賣掉）· ⛔ 不進 `undoStack`（損壞**不可以**被 undo 撿回來）
+ *   · ⛔ 不生任何掉落物實體（owner：「⛔ 不能撿回」）
+ *
+ * ⭐ 而它與 `sellItem` **共用**那兩個一定要成對的動作：
+ *   `clearSlot()`（`champ.items[]` 的檔頭逐字警告「⛔ 任何地方都不要單獨寫
+ *   `champ.items[slot] = …`」）＋ `detachItemSource()`（⛔ 少了它就是
+ *   「**賣掉還留著**」—— 格子空了而加成還掛著，⭐ 而沒有任何逐件測試看得到）。
+ */
+export function breakItem(world: SimWorld, id: EntityId, slot: number): string | null {
+  const champ = world.champion.get(id);
+  if (!champ) return null;
+  const itemId = champ.items[slot];
+  if (itemId === null || itemId === undefined) return null;
+  clearSlot(champ, slot);
+  // DETACH SITE 2 of 2 —— 與賣出那一處同一個理由（見上面那段註解）。
+  detachItemSource(world, id, itemId, slot);
+  return itemId;
+}
+
 /** {@link setSlot} 的反面 —— 賣出與 undo-買 的唯一出口。 */
 function clearSlot(champ: ChampionComp, slot: number): void {
   champ.items[slot] = null;

@@ -26,7 +26,11 @@ export type Round11ClaimKind =
   | "revive"
   | "legendaryBreak"
   /** ⭐ 換邊操作殭屍王(GH#922)——⛔ 一個座位只轉一次(「重生第二具」的入口之一)。 */
-  | "possession";
+  | "possession"
+  /** ⭐ 死亡損壞寶具(GH#920 ③)——⛔ 一次死亡只損壞一件。 */
+  | "itemBreak"
+  /** ⭐ 特殊殭屍掉復活圈(GH#920 ②)——⛔ 一隻怪只掉一個。 */
+  | "specialRevive";
 
 /**
  * ⭐ 一次性帳本。⛔ 不持有時間、⛔ 不持有玩家 —— 它只記「哪些 key 用過了」。
