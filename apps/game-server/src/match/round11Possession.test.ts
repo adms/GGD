@@ -12,6 +12,7 @@ import { DEFAULT_ARENA_RULES, type ArenaRules } from "./arenaRules";
 import { recordBossKill } from "@ggd/shared/sim/round11Gate";
 import { DEFAULT_MOB_WAVES_CONFIG } from "@ggd/shared/content";
 import { asSeatId, type EntityId, type SeatId } from "@ggd/shared/ids";
+import { rankScore } from "@ggd/shared/sim/stats/rating";
 
 const FAST = { champSelectTicks: 2, intermissionTicks: 3, combatMaxTicks: 20, resolutionTicks: 2 };
 const allBots = (): SeatSpec[] =>
@@ -258,6 +259,48 @@ describe("③④ 分數凍結 · 擊倒回滿 · 獨立統計（GH#922 驗收④
     ctl.tick();
     expect(hp.hp, "⭐ 回滿 —— ⛔ 而且是**夾限之後**的上限").toBe(hp.maxHp);
     expect(ctl.round11BossKillTallyForTest.get(s as unknown as number)).toBe(1);
+  });
+
+  it("⭐⭐ 驗收⑦：結算真的多**獨立的一行**，⛔ 而它沒有進 `score`", () => {
+    const ctl = make("poss-settle");
+    toRound11(ctl);
+    const wiped = wipeTeam(ctl, 0);
+    ctl.tick();
+    const s = wiped[0]!;
+    const boss = ctl.round11PossessionsForTest.get(s)!.bossEntityId;
+    const victim = [...ctl.seats.values()].find(
+      (st) => (st.teamId as unknown as number) !== 0 && st.entityId !== null,
+    )!.entityId!;
+    ctl.world.damageQueue.push({
+      source: boss,
+      target: victim,
+      amount: ctl.world.health.get(victim)!.maxHp * 100,
+      type: "true",
+      crit: false,
+      origin: "mob",
+    });
+    ctl.tick();
+    let n = 0;
+    while (ctl.phase.phase !== "matchEnd" && n++ < 40000) ctl.tick();
+    expect(ctl.phase.phase, "比賽有結束").toBe("matchEnd");
+    const players = ctl.settlement!.perPlayer;
+    const mine = players.find((p) => p.seatId === (s as unknown as number))!;
+    expect(mine.bossKills, "⭐ 那一行真的送出去了").toBe(1);
+    // ⛔⛔ 而它**沒有**混進分數 —— ⭐ 拿**出貨的那支式子**照 `stats` 重算一次:
+    //   如果哪一天有人把擊倒數折進分數,這一行就對不上了。
+    //   ⚠️ ⭐ 這是**重算**,⛔ 不是「拿 score 跟 score 比」(那種斷言恆真)。
+    //   ⚠️ `roundsSurvived` ⛔ 不在 `stats` 裡（它是 `rankScore` 的**第三個**輸入）
+    //   ⇒ ⭐ 拿它自己公布的那一行 `survivalBonus` 把兩半拆開比。
+    const lobby = players.map((p) => p.stats);
+    expect(
+      rankScore({ stats: mine.stats, role: mine.role, roundsSurvived: 0 }, lobby),
+      "⭐ 分數仍然只有戰鬥＋存活兩半 —— ⛔ 擊倒數沒有被折進去",
+    ).toBe(mine.score! - mine.survivalBonus!);
+    // ⭐ 沒換邊的座位留 `undefined` —— ⛔ 不是 0(0 會被畫成「開了王而沒打到」)。
+    const other = players.find(
+      (p) => !wiped.map((w) => w as unknown as number).includes(p.seatId as never),
+    )!;
+    expect(other.bossKills, "⛔ 沒開過王的人不該有這一行").toBeUndefined();
   });
 
   it("⛔ 開關關掉 ⇒ 擊倒⛔ 不回滿（⭐ 一鍵 rollback）", () => {

@@ -247,6 +247,18 @@ export interface SettlementPlayer {
    * the player cannot tell it exists, which is this repo's #1 failure.
    */
   survivalBonus?: number;
+  /**
+   * ⭐⭐ 「**殭屍王擊倒 N 人**」——第十一回合換邊之後那具王打倒的英雄數（GH#922 驗收⑦）。
+   *
+   * ⛔⛔ 它**刻意不進 `score` / `survivalBonus`** —— owner 逐字
+   * 「結算多一行**獨立統計**⋯⛔ **不進生存分數**」。
+   * ⭐ 而它是**獨立的一行**正是為了讓玩家看得懂：分數凍在英雄死掉那一刻，
+   * ⛔ 開王期間的戰果不會回刷分數，⭐ 但它也不該憑空消失。
+   *
+   * ⚠️ 缺席（`undefined`）＝ 這一場沒有第十一回合，⛔ 不是 0
+   *   —— ⭐ 0 會被畫成「他開了王而一個都沒打到」。
+   */
+  bossKills?: number;
   /** ranked-ladder deltas — filled by the platform layer, not the game server */
   pointsDelta?: number;
   tierBefore?: string;

@@ -4019,6 +4019,12 @@ export class MatchController {
         grade: "C", // replaced below (kept non-optional for the type)
         rank: 0, // replaced below
         stats: entry.stats,
+        // ⭐ GH#922 驗收⑦ ——「殭屍王擊倒 N 人」是**獨立的一行**。
+        //   ⚠️ ⭐ 沒換邊的座位留 `undefined`(⛔ 不是 0):0 會被畫成
+        //   「他開了王而一個都沒打到」,⭐ 而他根本沒開過王。
+        ...(this.round11BossKillTally.has(seatId as unknown as number)
+          ? { bossKills: this.round11BossKillTally.get(seatId as unknown as number)! }
+          : {}),
       });
     }
     const lobby = entries.map((e) => e.stats);
