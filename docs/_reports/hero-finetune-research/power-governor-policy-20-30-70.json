@@ -1,0 +1,10 @@
+{
+  "schema": "ggd-training-power-governor@1",
+  "hardStopPercent": 20,
+  "pauseBelowPercent": 30,
+  "fullSpeedResumePercent": 70,
+  "sampleIntervalSeconds": 180,
+  "lowPowerMode": "pause",
+  "throttleSeconds": 0,
+  "meaning": "At >=70% run full speed. Below 30% finish one atomic step, write a complete runtime checkpoint, release the GPU, and wait. Below 20% stop. A project may opt into lowPowerMode=throttle, but must prove checkpoint/reload equivalence before claiming resumability."
+}
