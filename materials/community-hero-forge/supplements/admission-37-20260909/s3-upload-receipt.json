@@ -1,0 +1,52 @@
+{
+  "schema": "ggd-community-materials-s3-receipt@1",
+  "bucket": "ggd-390630837668-ap-east-2-an",
+  "region": "ap-east-2",
+  "profile": "vibe-coding",
+  "manifestSha256": "396fa15327689702ce1a36a197292356b336f2888bf0c5b6cc63142a88d534e8",
+  "prefix": "community-hero-forge/396fa15327689702ce1a36a197292356b336f2888bf0c5b6cc63142a88d534e8/",
+  "objects": [
+    {
+      "path": "payload.tar.gz.part000",
+      "bytes": 33554432,
+      "sha256": "8971316b8f8e119af552037f27847f536c8846aefa99e06505d61ec05900bb22",
+      "key": "community-hero-forge/396fa15327689702ce1a36a197292356b336f2888bf0c5b6cc63142a88d534e8/payload.tar.gz.part000",
+      "etag": "\"96c4c9b88e2e9d96ddda376c9e7d6619\"",
+      "checksumSHA256": "iXExa4+OEZr1UgN/J4R/U2yIRq76meBlBdYewFkAuyI="
+    },
+    {
+      "path": "payload.tar.gz.part001",
+      "bytes": 33554432,
+      "sha256": "f19e3ebcd194ec450e8c8726216aee053393b18a1accb752339708bacd617353",
+      "key": "community-hero-forge/396fa15327689702ce1a36a197292356b336f2888bf0c5b6cc63142a88d534e8/payload.tar.gz.part001",
+      "etag": "\"067d3480cf4370c9cb4a631595f6a005\"",
+      "checksumSHA256": "8Z4+vNGU7EUOjIcmIWruBTOTsYoazLdSM5cIus1hc1M="
+    },
+    {
+      "path": "payload.tar.gz.part002",
+      "bytes": 33554432,
+      "sha256": "7ba76a61a2a530e6a6788123f5131ebdb0f36387876e699dfce9b93b34329dee",
+      "key": "community-hero-forge/396fa15327689702ce1a36a197292356b336f2888bf0c5b6cc63142a88d534e8/payload.tar.gz.part002",
+      "etag": "\"6e8d1d9a9348debc19b09fb25296aa97\"",
+      "checksumSHA256": "e6dqYaKlMOameIEj9RMevbDzY4eHbmmd/Om5OzQyne4="
+    },
+    {
+      "path": "payload.tar.gz.part003",
+      "bytes": 2206239,
+      "sha256": "c3838e99e2f972546576512e8fc42c37136a96783145d9861c166230d42824cf",
+      "key": "community-hero-forge/396fa15327689702ce1a36a197292356b336f2888bf0c5b6cc63142a88d534e8/payload.tar.gz.part003",
+      "etag": "\"1e77bec3c374126841b281ce5f949f2b\"",
+      "checksumSHA256": "w4OOmeL5clRldlEuj8QsNxNqlngxRdmGHBZiMNQoJM8="
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 8396,
+      "sha256": "396fa15327689702ce1a36a197292356b336f2888bf0c5b6cc63142a88d534e8",
+      "key": "community-hero-forge/396fa15327689702ce1a36a197292356b336f2888bf0c5b6cc63142a88d534e8/manifest.json",
+      "etag": "\"7cdc68faed5171e938ce800e8aa4e146\"",
+      "checksumSHA256": "OW+hUydolwLOGjahlykjVrM28oiL8MW2zGMUKojVNOg="
+    }
+  ],
+  "parts": 4,
+  "partBytes": 102869535
+}

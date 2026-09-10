@@ -1,0 +1,158 @@
+{
+  "schema": "ggd-first37-browser-capture@1",
+  "origin": "http://127.0.0.1:5203",
+  "gpu": "native",
+  "nodeVersion": "v24.19.0",
+  "nodeArchitecture": "arm64",
+  "nodeExecutable": "/Users/Takuro/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+  "serviceRevision": "not-attested",
+  "indexSha256": "b7cda5d0c63b6e64d27321316f52123af96e49a4c01b2df04eab29e378322aba",
+  "scriptSha256": "015c263e13fdb801b95bc1ae031c40051a87ddc0f92ce78195c794647c61d67a",
+  "heroes": [
+    {
+      "index": "22",
+      "name": "菜月昴",
+      "projectSha256": "81d477713380038fa3bb876c55a9a443367228e747c9343db8331d76e565fe40",
+      "captures": [
+        {
+          "slot": "Q",
+          "requestedMs": 175,
+          "ms": 167,
+          "file": "22/Q-167.png",
+          "sha256": "edb03007fa6e37f3145c2fe09e27c33ed71b6e0c6187387c458d5ed9df4611d4",
+          "bytes": 136992,
+          "actors": "施法者：菜月昴 · community.body.2956d65224d9c24236376242811bda048b1e0f45fb85254e · 2 meshes · ×1.747 · Main ChampionView · 材質正常\n目標：菜月昴 · community.body.2956d65224d9c24236376242811bda048b1e0f45fb85254e · 2 meshes · ×1.747 · Main ChampionView · 材質正常",
+          "status": "完成施放 · 實際技能階級 1 · 目標生命 5979 → 5063"
+        },
+        {
+          "slot": "Q",
+          "requestedMs": 240,
+          "ms": 233,
+          "file": "22/Q-233.png",
+          "sha256": "0214ff4adf0a4fb041c50215c013b22d5b1c6bd666f7522c512757e177646881",
+          "bytes": 143986,
+          "actors": "施法者：菜月昴 · community.body.2956d65224d9c24236376242811bda048b1e0f45fb85254e · 2 meshes · ×1.747 · Main ChampionView · 材質正常\n目標：菜月昴 · community.body.2956d65224d9c24236376242811bda048b1e0f45fb85254e · 2 meshes · ×1.747 · Main ChampionView · 材質正常",
+          "status": "完成施放 · 實際技能階級 1 · 目標生命 5979 → 5063"
+        },
+        {
+          "slot": "Q",
+          "requestedMs": 500,
+          "ms": 500,
+          "file": "22/Q-500.png",
+          "sha256": "5d0d868f8ca2cebd2971c42dc0353cdf391d9608a70d8e06ce2c240a2001e17e",
+          "bytes": 102394,
+          "actors": "施法者：菜月昴 · community.body.2956d65224d9c24236376242811bda048b1e0f45fb85254e · 2 meshes · ×1.747 · Main ChampionView · 材質正常\n目標：菜月昴 · community.body.2956d65224d9c24236376242811bda048b1e0f45fb85254e · 2 meshes · ×1.747 · Main ChampionView · 材質正常",
+          "status": "完成施放 · 實際技能階級 1 · 目標生命 5979 → 5063"
+        },
+        {
+          "slot": "Q",
+          "requestedMs": 1000,
+          "ms": 1000,
+          "file": "22/Q-1000.png",
+          "sha256": "1896ca8d46a9883ad0749bf0d5cb1ef0d6bd3b19052f9da24847ecda96be2dde",
+          "bytes": 95365,
+          "actors": "施法者：菜月昴 · community.body.2956d65224d9c24236376242811bda048b1e0f45fb85254e · 2 meshes · ×1.747 · Main ChampionView · 材質正常\n目標：菜月昴 · community.body.2956d65224d9c24236376242811bda048b1e0f45fb85254e · 2 meshes · ×1.747 · Main ChampionView · 材質正常",
+          "status": "完成施放 · 實際技能階級 1 · 目標生命 5979 → 5063"
+        }
+      ],
+      "errors": [
+        "TimeoutError: page.waitForFunction: Timeout 60000ms exceeded."
+      ],
+      "inputDraft": {
+        "revision": 14,
+        "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020",
+        "sourceSha256": "09a5066e5650407ab61302b3432099c1feb6f97db8726e2eec31b246b0e638dc",
+        "modelSha256": "57ee177f0c20a31aaa7b729e5b5311f67c5a2427040060b5f317b70d633398a9"
+      },
+      "previewSetups": {
+        "Q": {
+          "status": "完成施放 · 實際技能階級 1 · 目標生命 5979 → 5063",
+          "sampleSource": "Editor recommended event keyframes"
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "publicationVerified": false,
+  "httpFailures": [
+    {
+      "status": 404,
+      "path": "http://127.0.0.1:5203/content-api/desktop-source"
+    },
+    {
+      "status": 404,
+      "path": "http://127.0.0.1:5203/content-api/desktop-source"
+    },
+    {
+      "status": 404,
+      "path": "http://127.0.0.1:5203/content-api/desktop-source"
+    },
+    {
+      "status": 404,
+      "path": "http://127.0.0.1:5203/content-api/desktop-source"
+    },
+    {
+      "status": 404,
+      "path": "http://127.0.0.1:5203/content-api/desktop-source"
+    },
+    {
+      "status": 404,
+      "path": "http://127.0.0.1:5203/content-api/desktop-source"
+    },
+    {
+      "status": 404,
+      "path": "http://127.0.0.1:5203/content-api/desktop-source"
+    },
+    {
+      "status": 404,
+      "path": "http://127.0.0.1:5203/content-api/desktop-source"
+    },
+    {
+      "status": 404,
+      "path": "http://127.0.0.1:5203/content-api/desktop-source"
+    },
+    {
+      "status": 404,
+      "path": "http://127.0.0.1:5203/content-api/desktop-source"
+    },
+    {
+      "status": 404,
+      "path": "http://127.0.0.1:5203/content-api/desktop-source"
+    },
+    {
+      "status": 404,
+      "path": "http://127.0.0.1:5203/content-api/desktop-source"
+    },
+    {
+      "status": 404,
+      "path": "http://127.0.0.1:5203/content-api/desktop-source"
+    },
+    {
+      "status": 404,
+      "path": "http://127.0.0.1:5203/content-api/desktop-source"
+    },
+    {
+      "status": 404,
+      "path": "http://127.0.0.1:5203/content-api/desktop-source"
+    }
+  ],
+  "importText": "批次匯入英雄交接\n\n選取交接資料夾，自動配對英雄、六槽模板、微調、隨附模型及動作，將每位角色保存為新的本機作品。\n\n選擇交接資料夾\n\n已匯入 1 名英雄、6 槽技能與原始待補項，綁定 1 名英雄的隨附模型。選擇角色繼續調整，完成後再建立當前版本的 ZIP 並送審。\n\n菜月昴"
+}

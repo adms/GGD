@@ -1,0 +1,82 @@
+
+> ggd@0.0.0 skills:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> pnpm tiers:apply:check && pnpm spec:check && pnpm overview:check && pnpm tiers:check && pnpm mana:audit:check && pnpm typecat:check && pnpm skillforge:audit:check && pnpm skillforge:visual-review:check && pnpm skillforge:visual-sheets:check && pnpm skillforge:visual-advisory:check && pnpm vfxforge:handback:check && pnpm editorcov:check && pnpm bricks:check && pnpm assets:manifest:check && pnpm jasstpl:check && pnpm caps:check && pnpm collections:check && pnpm skillremake:docs:check && pnpm skillremake:json:check && pnpm skillremake:provenance:check && pnpm grail:wishes:check && pnpm contract:numbers:check && pnpm atlas:check && pnpm treasure:csv:check && pnpm docs:readme:check && pnpm docs:status:check && pnpm roster:check && pnpm pitch:check && pnpm newhero:check && pnpm lowdmg:check && pnpm anchors:check && pnpm statcaps:check && pnpm apconv:plan:check && pnpm apconv:check && pnpm apdmg:check && pnpm board:check && pnpm msgledger:check && pnpm skillnorm:check && pnpm speedtiers:check && pnpm jasscombo:check && pnpm vfxbind:check && pnpm models:check && pnpm lod:check && pnpm audit:check && pnpm echoloop:check && pnpm templates:check && pnpm prose:check && pnpm sfxbind:check && pnpm shapes:check && pnpm iconplan:check && pnpm formreceipts:check && pnpm beam:check && pnpm archetypes:check && pnpm enableaudit:check && pnpm review:check && pnpm declshape:check && pnpm decor:check && pnpm speedlists:check && pnpm locust:check && pnpm w3a:check && pnpm board:roll:check && pnpm ruleslip:check && pnpm receipt:check && pnpm handback:check && pnpm clipdeg:check && pnpm apcoeffdiff:check && pnpm decor:check && pnpm appearance:check && pnpm ptokens:check && pnpm coord:check
+
+
+> ggd@0.0.0 tiers:apply:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> python3 tools/skill-remake/apply_tiers.py --check
+
+收進級距：0 / 421 份直接編的技能文件（產生器擁有的 15 位英雄由 batch1.py 套用同一個 tierize）
+英雄卡內嵌鏡射：0 份
+
+> ggd@0.0.0 spec:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> tsx tools/skill-spec/gen_spec.ts --check
+
+[content-cache] Redis 連不上（127.0.0.1:6379）⇒ 退回檔案層
+✅ 技能規則說明是最新的（4869 行）
+
+> ggd@0.0.0 overview:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> tsx tools/innate-legendary/gen_overview.ts --check
+
+✅ 固有能力及寶具總覽是最新的（3188 行）
+
+> ggd@0.0.0 tiers:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> tsx tools/skill-tiers/gen_tiers.ts --check
+
+✅ 技能級距文件是最新的
+
+> ggd@0.0.0 mana:audit:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> tsx tools/mana-audit/gen_mana_audit.ts --check
+
+✅ 魔力回復例外清單是最新的
+
+> ggd@0.0.0 typecat:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> bash scripts/gencheck.sh tsx tools/type-catalog/gen.ts --check
+
+✓ type 目錄是新的（47 可挑 · 1 待接線 · 9 空殼）
+
+> ggd@0.0.0 skillforge:audit:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> node --import tsx tools/skill-forge/audit-42x46.ts --check
+
+PASS Skill acceptance receipt current · 43/47
+(node:72199) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+> ggd@0.0.0 skillforge:visual-review:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> node tools/skill-forge/build-visual-review-packet.mjs --check
+
+PASS human review packet · 12 pages / 47 documents · 4e2f1e4734ed83a2 · advisory stale
+
+> ggd@0.0.0 skillforge:visual-sheets:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> node tools/skill-forge/build-visual-contact-sheets.mjs --check
+
+PASS 47 chronological visual contact sheets are current
+
+> ggd@0.0.0 skillforge:visual-advisory:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> node tools/skill-forge/build-codex-visual-advisory.mjs --check
+
+PASS Codex advisory · 46/47 documents · current 0 / stale 46 · awaiting capture 0 · awaiting review 1 · null/10
+
+> ggd@0.0.0 vfxforge:handback:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> node --import tsx tools/vfx-forge/build-template-handback.mjs --check
+
+PASS Editor VFX template handback f420fd65f1cf (21 recipes)
+
+> ggd@0.0.0 editorcov:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> tsx tools/editor-contract/gen_editor_coverage.ts --check
+
+✓ ggd-editor-coverage.json 是新鮮的
+
+> ggd@0.0.0 bricks:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> tsx tools/brick-census/gen.ts --check
+
+bricks:check OK
+(node:72332) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+> ggd@0.0.0 assets:manifest:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> tsx tools/asset-manifest/gen.ts --check
+
+⛔ content/assets-manifest.json 過期了 —— 跑 `pnpm assets:manifest` 然後 git add
+ ELIFECYCLE  Command failed with exit code 1.
+ ELIFECYCLE  Command failed with exit code 1.

@@ -27,6 +27,7 @@
  */
 export interface PullVariant {
   kind: "pull";
+  grapple?: import("../../movement/abilityMotion").GrappleSpec;
   /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。`single` = 沿用上游解好的目標。 */
   shape: "single" | "circle";
   /** `shape:"circle"` 的作用半徑（A091 是 `250 + 100×等級` wc3 ⇒ 4.58…11.92）。 */

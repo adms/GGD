@@ -33,7 +33,7 @@ describe("玩家公告永遠不會是空的（owner 2026-08-30 常設指令）",
     expect(src.includes("這一行不存在於任何版本")).toBe(false);
   });
 
-  it("★ 沒有任何票寫玩家那一句時，它仍然產出**一行**公告", () => {
+  it("★ 沒有玩家改動與候選票時，它仍然產出**一行**公告", () => {
     // ⭐ 真的把腳本跑起來，⛔ 不是掃原始碼字串（失敗形態⑥）
     // ⛔⛔ **第一版在這裡永遠會過** —— 2026-08-30 實測到的：
     //   它真的打 gh（300 張票），耗時 **120005ms ＝ 正好撞到 120 秒 timeout**
@@ -44,19 +44,21 @@ describe("玩家公告永遠不會是空的（owner 2026-08-30 常設指令）",
     //
     // ⭐ 改成走 `GGD_PLAYERNOTE_NO_GH=1`：跳過那個 2 分鐘的 I/O，
     //   ⛔ 而 fallback 那一段是**同一份出貨程式碼**（⛔ 不是為了測試造的第二條路）。
+    // NO_GH 只代表票庫空，不能把最新版本的玩家改動也當成零。
+    // 明確使用空的 HEAD..HEAD 區間；有出貨卻缺玩家句仍由原本的閘擋下。
     let out: string;
     try {
-      out = execFileSync("bash", [SCRIPT], {
+      out = execFileSync("bash", [SCRIPT, "--since", "HEAD", "--until", "HEAD"], {
         cwd: REPO,
         encoding: "utf8",
         timeout: 60_000,
-        env: { ...process.env, GGD_PLAYERNOTE_NO_GH: "1" },
+        env: { PATH: process.env.PATH, GGD_PLAYERNOTE_NO_GH: "1" },
       });
     } catch (e) {
       // ⭐ 跑不起來就是**紅**，⛔ 不是 return —— 見上面那段。
       expect.fail(
         "⛔ release-note-players.sh 在 GGD_PLAYERNOTE_NO_GH=1 下跑不起來 ——\n" +
-          "   ⭐ 那條路不碰網路，所以這不是「連不上」，是腳本壞了。\n" +
+          "   空 commit 區間與空票庫應可產出維護公告；請核對腳本與 fixture。\n" +
           `   ${String(e).slice(0, 400)}`,
       );
     }

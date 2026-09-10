@@ -1,3 +1,4 @@
+import { timeStopProjectileFraction } from "../timeStop";
 /**
  * ProjectileSystem — advances projectiles with swept-circle hit tests against
  * enemy units, terminates on walls/range, and runs the carried onHit effects.
@@ -51,7 +52,10 @@ export function projectileSystem(world: SimWorld): void {
       toDestroy.push(id);
       continue;
     }
-    const stepLen = Math.min(proj.speed * world.dt, proj.remainingRange);
+    const fullStep = Math.min(proj.speed * world.dt, proj.remainingRange);
+    const allowed = timeStopProjectileFraction(world, id, scale(proj.dir, fullStep));
+    if (allowed <= 0) continue;
+    const stepLen = fullStep * allowed;
     const delta = scale(proj.dir, stepLen);
 
     // combat-env `abilityRange` (task #136) shrinks an ABILITY skillshot's hit

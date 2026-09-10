@@ -73,11 +73,14 @@ import { uiCues } from "./uiCuesConfig";
 export type CastRejectReason =
   | "not-learned"
   | "dead"
+  | "time-stopped"
   | "stunned"
   | "silenced"
   | "cooldown"
   | "no-mana"
   | "no-resource"
+  | "no-summon"
+  | "target-condition"
   | "out-of-range"
   | "bad-target"
   | "passive"
@@ -91,12 +94,15 @@ export type CastRejectReason =
 export const CAST_REJECT_TEXT: Record<CastRejectReason, string> = {
   "not-learned": "尚未學習（用技能上的 ＋ 加點）",
   dead: "陣亡中，無法施放",
+  "time-stopped": "時間暫停中，解除後可施放",
   stunned: "被控制中，無法施放",
   // 【沉默】C1（#278）—— 與被控制分開的字，因為玩家仍然走得動、打得到。
   silenced: "被沉默，無法施放技能",
   cooldown: "冷卻中",
   "no-mana": "魔力不足",
   "no-resource": "技能資源不足，請先累積所需層數",
+  "no-summon": "需要自己指定技能召喚的存活召喚物",
+  "target-condition": "目標尚未符合本技能的標記／交鋒條件",
   "out-of-range": "距離太遠",
   "bad-target": "沒有可施放的目標",
   passive: "這是被動技，永久生效，不需施放",

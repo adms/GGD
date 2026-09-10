@@ -150,3 +150,12 @@ describe("caster-scoped status attribution", () => {
     expect(r.world.digest()).toBe(before);
   });
 });
+
+it.each(["replace", "reject"] as const)("caster-scoped exclusive %s only considers that caster's own group", mode => {
+  const r = rig();
+  const old = { ...debuff(true), exclusiveGroup: "fixture-group", exclusiveOnExisting: mode } as EffectDef;
+  r.run(r.a, old); r.run(r.b, old);
+  expect(r.gate(r.a)).toBe(true); expect(r.gate(r.b)).toBe(true);
+  r.run(r.a, { ...old, statusId: REWARD, stackKey: "fixture-next" } as EffectDef);
+  expect(r.gate(r.a)).toBe(mode === "reject"); expect(r.gate(r.b)).toBe(true);
+});

@@ -1,0 +1,28 @@
+{
+  "incomingMainExactCount": 4418,
+  "mergedDifferences": [
+    "README.md",
+    "apps/editor/README.md",
+    "apps/game-server/src/match/arenaRules.ts",
+    "content/bundle.json",
+    "content/config/_index.json",
+    "content/editor-target-profile.json",
+    "content/manifest.json",
+    "docs/_release/ggd-board.html",
+    "docs/_release/戰情版-20260910.md",
+    "docs/_reports/editor-skill-acceptance-42x46.json",
+    "docs/_reports/editor-skill-acceptance-42x46.md",
+    "docs/editor-contract/ggd-bricks.json",
+    "docs/editor-contract/ggd-bricks.md",
+    "docs/editor-contract/ggd-config-decoration-census.json",
+    "docs/editor-contract/ggd-config-decoration-census.md",
+    "docs/editor-contract/ggd-editor-coverage.json",
+    "docs/legacy/_overwrites/_ledger.tsv",
+    "docs/reference/abilities.md",
+    "docs/reference/grail-wishes.md",
+    "docs/reference/items.md",
+    "docs/reference/mechanics.md",
+    "docs/reference/roster.md",
+    "docs/技能編輯器引擎須知 20260811.md"
+  ]
+}

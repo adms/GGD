@@ -1,0 +1,410 @@
+{
+  "schema": "ggd-yanineko-verification@1",
+  "issue": 1132,
+  "sourceCommit": "b9333a8b2098f46dfe40b5e18b07f439f7eec5e3",
+  "refinementVersion": 1,
+  "refinementSha256": "10102301df53f689b14a07d111bc9987944ca8eae980b9cec9e58d6c3dea0af0",
+  "changes": [
+    "PASSIVE gains one procrastination after a continuous second of actual stillness, then at most one per second, maximum three. Walk, retreat, vertical displacement, zone/round changes and missed combat ticks restart the waiting window. Facing and blocked input do not count as displacement. Positive HP or shield loss clears all stacks; zero and immune packets cannot clear them.",
+    "Q is a single delayed landing hit at the chosen point. It re-resolves enemies at landing, so targets can leave and later arrivals can enter. There is no immediate cast-acceptance damage.",
+    "W applies 30% basic-attack miss chance to enemies in a finite, fixed smoke area. It respects control immunity, does not damage, slow or hide anyone, refreshes every 0.2 seconds and lingers at most 0.24 seconds after departure. An entry marker prevents message spam even on immune targets. Existing smoke VFX is bound at the selected point but is not visually accepted.",
+    "E is a harmless grounded retreat of up to three units in the selected direction, stopped by terrain and existing body collision. The former damage, push and leap are removed.",
+    "R schedules exactly three waves, each with a 0.4-second warning before one landing hit and 0.8 seconds between warnings. Each landing re-resolves its own victims. Caster death or settled combat cancels pending waves. Current pulse effects are timing and location cues, not accepted cartoon junk assets.",
+    "EX consumes one earned procrastination stack for a four-second shield with flat 450 before existing shield multipliers. Actual movement, teleport, vertical motion, zone change or death expires only that pool, including before same-tick incoming damage. It leaves other shields intact and does not emit hostile shieldBroken. No resource refuses without mana or cooldown expenditure. The source did not specify stacks per cast; this version explicitly selects one.",
+    "Generic opt-in stationaryForSec samples actual positions every interval event, before ICD. Per-source/per-hook state is invalidated on source rewrite and included in deterministic digest. Generic shield.breakOnMove stores a per-pool anchor; replace renews or removes it. Non-interval stillness and ambiguous moving-shield merging are rejected by schema.",
+    "Editor preview with resourceSetup empty refuses immediate EX. A real W followed by 1.5 seconds of waiting earns a stack, then EX pays it. No synthetic stack is inserted and the source project remains unchanged."
+  ],
+  "checks": {
+    "yaninekoBehavior": {
+      "tests": 30,
+      "exitCode": 0
+    },
+    "yaninekoScenario": {
+      "tests": 1,
+      "exitCode": 0
+    },
+    "communityAndRuntimeRegression": {
+      "tests": 417,
+      "files": 27,
+      "exitCode": 0,
+      "includesAzazelReversal": true
+    },
+    "typechecks": {
+      "shared": 0,
+      "editor": 0,
+      "client": 0,
+      "game-server": 0
+    }
+  },
+  "initialFailures": [
+    "Mark delta nodes omitted schema-required duration even though named marks have their own permanent lifetime. Added duration 1 to the two delta nodes; authoritative mark spec remains durationSec -1.",
+    "The invisibility assertion used a nonexistent ModifierSource field; changed to the actual vision grant field.",
+    "The first runner invocation omitted minWorkers and conflicted with the repository pool minimum. No tests ran; subsequent invocations specify both bounds.",
+    "Movement fixtures initially changed nav.order without applying the player intent, leaving moveTarget empty. Replaced with orderSystem and asserted actual displacement. A nearby ally then caused real separation after hold; moved that unrelated body off the test route rather than suppressing collision.",
+    "The expected EX refusal enum was incorrectly status-cost; the actual public result is no-resource.",
+    "The preview result reports resources at the end of its observation window. Waiting two further seconds naturally accumulated another stack; payment-specific assertion now observes the immediate post-cast tick. Full lifetime is tested separately."
+  ],
+  "mutations": [
+    {
+      "mutation": "stillness-filter",
+      "file": "packages/shared/src/sim/effects/hooks.ts",
+      "from": "if (hook.stationaryForSec !== undefined && !intervalStillness(world, owner, src, hi, hook.stationaryForSec)) continue;",
+      "to": "",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/yanineko.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "waits for actual stillness"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "9e70051d4aa190f08e94ba4258fc9c5d8a0bf52ee0e84e91318520d62f6f2069"
+    },
+    {
+      "mutation": "actual-movement",
+      "file": "packages/shared/src/sim/effects/intervalStillness.ts",
+      "from": "before.round === world.round && !bodyMoved(before, position);",
+      "to": "before.round === world.round;",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/yanineko.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "walking during"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "2a5283e409b6cc020612c0b226a4a1b791c6f438ad30fbb9787394f05384513b"
+    },
+    {
+      "mutation": "own-shield-expiry",
+      "file": "packages/shared/src/sim/combat/movementShield.ts",
+      "from": "if (!hp.alive || !now || bodyMoved(shield.moveBreakAnchor, now)) shield.expiresAtTick = world.tick;",
+      "to": "",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/yanineko.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "moving expires only"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "29d2e2d887f06dcb4f06dfc3c985b1add491dd04d3ce432ec80f2f30c1746070"
+    },
+    {
+      "mutation": "connected-hit",
+      "file": "packages/shared/src/sim/effects/hooks.ts",
+      "from": "if (hook.damageConnected && !(incoming && incoming.hpLost + (incoming.shieldAbsorbed ?? 0) > 0)) continue;",
+      "to": "",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/yanineko.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "zero damage"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "8a856f96a54947cfbf29078a29e68768d971eea33e592bff245d27f773bc12d9"
+    }
+  ],
+  "generators": [
+    {
+      "step": "typecat:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/yanineko-gen-typecat-build.log"
+    },
+    {
+      "step": "caps:export",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/yanineko-gen-caps-export.log"
+    },
+    {
+      "step": "editorcov:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/yanineko-gen-editorcov-build.log"
+    },
+    {
+      "step": "bricks:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/yanineko-gen-bricks-build.log"
+    },
+    {
+      "step": "contract:numbers",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/yanineko-gen-contract-numbers.log"
+    },
+    {
+      "step": "spec:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/yanineko-gen-spec-build.log"
+    },
+    {
+      "step": "overview:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/yanineko-gen-overview-build.log"
+    },
+    {
+      "step": "skillforge:audit",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/yanineko-gen-skillforge-audit.log"
+    },
+    {
+      "step": "skillremake:docs",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/yanineko-gen-skillremake-docs.log"
+    },
+    {
+      "step": "atlas:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/yanineko-gen-atlas-build.log"
+    },
+    {
+      "step": "docs:readme",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/yanineko-gen-docs-readme.log"
+    },
+    {
+      "step": "decor:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/yanineko-gen-decor-build.log"
+    }
+  ],
+  "handoff": {
+    "changedProjects": [
+      "30.hero-project.json"
+    ],
+    "otherProjectsByteIdentical": 36,
+    "originalRecipesByteIdentical": 37,
+    "indexByteIdentical": true,
+    "sourceDesignAndBriefUnchanged": true,
+    "modelProvenanceAndLocksUnchanged": true,
+    "changedPresentations": [
+      "W"
+    ],
+    "revisionBefore": 12,
+    "revisionAfter": 13,
+    "modelSha256": "6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf",
+    "generatedAudit": 63
+  },
+  "coverage": {
+    "mappedSlots": 63,
+    "unmappedSlots": 159,
+    "genericOnAttackPassives": 19
+  },
+  "assetReview": {
+    "entry": "../ASSET_LIBRARIES.md",
+    "queries": [
+      "尼古 --pending --limit 5",
+      "smoke --kind vfx --limit 5",
+      "煙 --kind vfx --limit 5",
+      "雜物 --pending --limit 5"
+    ],
+    "result": "Only community37:30 proxy-design entry matched the character/junk terms; the two VFX queries returned no rows. These bounded queries do not establish exhaustive absence. No new binary asset was consumed or uploaded.",
+    "currentModelCharacter": "玉藻前",
+    "currentModelSourceWork": "Fate/EXTRA 系列",
+    "currentModelRelationship": "style-proxy",
+    "currentModelSha256": "6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf",
+    "modelChanged": false,
+    "clipMap": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_1",
+      "cast": "single_skill_01_a",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "limitations": [
+      "Tamamo has fox features and different clothing; she is an approved style proxy, not Yanineko original appearance.",
+      "Hurt aliases idle and cast uses one shared clip. Ashtray geometry/arc, junk afterimage, cartoon objects and dedicated sounds remain pending.",
+      "W references existing fx.w3x.particle.flamessmoke.p00 with a gray tint; original emitter gradient is colored/additive and its radius/opacity/readability still require browser inspection.",
+      "R pulse warning and nova impact are provisional timing cues; no original-design visual acceptance."
+    ]
+  },
+  "originalDesignAcceptance": "incomplete",
+  "visualAcceptance": "unverified",
+  "currentServiceZip": "not-built",
+  "formalPublication": false,
+  "issueOriginalBodySha256": "6c370f10a75bcc6d55f24e8f341b527afd3d48dc0b8850395ee8f64b513b054d",
+  "logs": {
+    "yanineko-gen-atlas-build.log": {
+      "sha256": "49f7e9503821ae6e8e56aa2c6b8fe93db31c45a9b819b6f538453aa5ec7bfd00"
+    },
+    "yanineko-gen-bricks-build.log": {
+      "sha256": "e77c2535f35739f7366075b3557222d444f43e6d712161c1aca25384f0ace1ea"
+    },
+    "yanineko-gen-caps-export.log": {
+      "sha256": "624a6148b8e50760a662419f91ade0b0e3ff7a18bb1c53bbd46668b553a366c2"
+    },
+    "yanineko-gen-contract-numbers.log": {
+      "sha256": "74f669584cf58ba3a694b30363ee0f306cdde4f18495005ec05ed8cc70fe5965"
+    },
+    "yanineko-gen-decor-build.log": {
+      "sha256": "30f38a8b028e7a4a4b35a00121072ff551e1dcb0a34aad94a23ec0469bc76032"
+    },
+    "yanineko-gen-docs-readme.log": {
+      "sha256": "c1376f0b9f50e5b20ae019511a075131234156c80d663753699b842f6a93184e"
+    },
+    "yanineko-gen-editorcov-build.log": {
+      "sha256": "d7c9147da3aac283119cebab12e41934acdc2982f411ed91fb8f1a2ee02e2015"
+    },
+    "yanineko-gen-overview-build.log": {
+      "sha256": "dc71d50c4be5a38c3e063a263304685254162e186394f2e6e086ce2b89b6fc89"
+    },
+    "yanineko-gen-skillforge-audit.log": {
+      "sha256": "971b606449ca35f736d673d0bae1074596d1ef0159ff59ddd9156242bac061b9"
+    },
+    "yanineko-gen-skillremake-docs.log": {
+      "sha256": "375dea34242c3392245cdefa4c4b78dad126b6dfcb63e6c913a5ddc3cdeca4af"
+    },
+    "yanineko-gen-spec-build.log": {
+      "sha256": "8f0a01922b883eefafb6db4136a74d3efef0c8b868cd67dcdb378a77829ab13b"
+    },
+    "yanineko-gen-typecat-build.log": {
+      "sha256": "a51cfc10a35b2f99fe40a75b5c932dac5c521896ebd0f247308f14c7c016f7e9"
+    },
+    "yanineko-handoff.log": {
+      "sha256": "917114f0e1cdd46c43a8e7392905774104e05c861c4adda0e08fe1580ef2d07d"
+    },
+    "yanineko-mutation-actual-movement.log": {
+      "sha256": "2a5283e409b6cc020612c0b226a4a1b791c6f438ad30fbb9787394f05384513b"
+    },
+    "yanineko-mutation-connected-hit.log": {
+      "sha256": "8a856f96a54947cfbf29078a29e68768d971eea33e592bff245d27f773bc12d9"
+    },
+    "yanineko-mutation-own-shield-expiry.log": {
+      "sha256": "29d2e2d887f06dcb4f06dfc3c985b1add491dd04d3ce432ec80f2f30c1746070"
+    },
+    "yanineko-mutation-stillness-filter.log": {
+      "sha256": "9e70051d4aa190f08e94ba4258fc9c5d8a0bf52ee0e84e91318520d62f6f2069"
+    },
+    "yanineko-probe.log": {
+      "sha256": "7cbd52dde358992e7b6f52ce8e25db2c005d2da670f4b490dd5d14c6c5c68bda"
+    },
+    "yanineko-regression.log": {
+      "sha256": "09bcaef1896a2a715395186fb159947977692f17017c427f77032fb3d7ec8f85"
+    },
+    "yanineko-tests-01.log": {
+      "sha256": "b3b34b26db9310ab8a8acbeed91923937b1a0ae9458df7133e0e116d2d8b36af"
+    },
+    "yanineko-tests-02.log": {
+      "sha256": "c107430c796a489083c1aefcd40097e12ca1e01287d927109c89f715ba834e7e"
+    },
+    "yanineko-tests-03.log": {
+      "sha256": "dc261dee08882fcbc093e31c57761b16a784b0b310268e54d486e975e3cd4687"
+    },
+    "yanineko-tests-04.log": {
+      "sha256": "20b66f999b697db389c343da37d670ad7278b1718d5403fda9ed85ba42d34baa"
+    },
+    "yanineko-tests-05.log": {
+      "sha256": "da9420dbb500064b4827bce89acbff1343a0822664a982a2291922d24143def6"
+    },
+    "yanineko-tests-06.log": {
+      "sha256": "092e0fb43165d30d80c6405ae4fb6f914ce20d0b3726dd11cae2b3924a5dd3d0"
+    },
+    "yanineko-typecheck-01.log": {
+      "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    },
+    "yanineko-typecheck-02.log": {
+      "sha256": "1e964239bcddd0e96bc9f4d2dc753ff457f41da84e16b5336c03226fa6ee07a5"
+    },
+    "yanineko-typecheck-client.log": {
+      "sha256": "39d946f6b36b6e4e7de7bfbe2267744c75dc2daf57912304bbcdcd88a0cc130d"
+    },
+    "yanineko-typecheck-editor.log": {
+      "sha256": "486eafd3c0debbbff5ae7dddb4aa8823f853e470eff3bacbda032617862caca2"
+    },
+    "yanineko-typecheck-game-server.log": {
+      "sha256": "b05c3d89729ac8d5380fe460caa7c9227683cd32eda0fd3fbdcddaedd946d715"
+    },
+    "yanineko-typecheck-shared.log": {
+      "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    }
+  },
+  "finalBatch": {
+    "head": "45751bcf7214286adabcb7aa3fb7231d554a1dd7",
+    "workingTreeClean": true,
+    "sourceFingerprint": "6510d2aa9fd45743e606690493b9d7a95eea74af9173bbfe86af7b9b111ae9d1",
+    "exitCode": 2,
+    "errors": [],
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 63,
+      "slotsWithoutBehaviorSuite": 159
+    },
+    "modelBytes": "verified",
+    "reportSha256": "0a84dd2a981c0af3bf57601a4c27fba40ae8b7e9549f40eb08b940cee13fa7b9",
+    "editorTests": 601,
+    "registeredTests": 666,
+    "jobs": [
+      {
+        "id": "skills",
+        "exitCode": 0,
+        "logSha256": "ae3d37c1f5dec9c3081d1732695dd924cc34c2750ddfb454b4bf731e38120217"
+      },
+      {
+        "id": "editor",
+        "exitCode": 0,
+        "logSha256": "0507d1ef2260f0e895f8b99fd10725b91faa38b4116c626c3e4ca7ed14995ed8"
+      },
+      {
+        "id": "coord",
+        "exitCode": 0,
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271"
+      },
+      {
+        "id": "compile-and-models",
+        "exitCode": 0,
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c"
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "exitCode": 0,
+        "logSha256": "c28aa333982af9a9d1077a722fed9ce4c5eec9f250dfab455538beead0a6f435"
+      },
+      {
+        "id": "behavior-trap-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "297e79f4e19c34018e3053428efc7fac3e4ce7467ee6a65695b817d4527eef3f"
+      },
+      {
+        "id": "behavior-motion-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "9eab85d5ac6a0495c3fd8afe81f5d53e89af8dfb306f0711b70d6509e7e552ff"
+      },
+      {
+        "id": "behavior-target-resource-acceptance",
+        "exitCode": 0,
+        "logSha256": "c02b0ae3922eaffb7a59c87488e6736af785a0627cabd0ab0efe522a1de7ee18"
+      }
+    ],
+    "meaning": "Every executed check passed on the clean commit. Exit 2 preserves 159 unmapped slots; no original-art, full-design or publication verdict. Receipt-only commit follows the tested source."
+  }
+}

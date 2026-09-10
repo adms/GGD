@@ -53,6 +53,9 @@ export class SeatState extends Schema {
   declare augments: ArraySchema<string>;
   declare offers: ArraySchema<OfferState>;
   declare abilityRanks: ArraySchema<number>; // Q W E R
+  declare recastStages: ArraySchema<number>; // six slots, next input stage or zero
+  declare recastWindows: ArraySchema<number>; // remaining window ticks, six slots
+  declare recastFreeMask: number;
   declare cooldowns: ArraySchema<number>; // remaining ticks Q W E R
   declare unspentPoints: number;
   // per-hero "EX 技能" (5th slot). exAbilityId "" = this hero has no EX skill;
@@ -453,6 +456,9 @@ export class SeatState extends Schema {
     this.offers = new ArraySchema<OfferState>();
     this.abilityRanks = new ArraySchema<number>();
     this.cooldowns = new ArraySchema<number>();
+    this.recastStages = new ArraySchema<number>();
+    this.recastWindows = new ArraySchema<number>();
+    this.recastFreeMask = 0;
     this.unspentPoints = 0;
     this.exAbilityId = "";
     this.exRank = 0;
@@ -561,6 +567,10 @@ defineTypes(SeatState, {
   apNow: "uint16",
   hpNow: "uint16",
   hpMaxNow: "uint16",
+  // APPEND-ONLY: independent input stages, preserving all existing wire indices.
+  recastStages: ["uint8"],
+  recastWindows: ["uint16"],
+  recastFreeMask: "uint8",
 });
 
 /**
@@ -757,6 +767,9 @@ export class EntityState extends Schema {
    * of honest field beats a shield bar that flickers during a jump.
    */
   declare h: number;
+  declare motionState: string;
+  declare tetherX: number;
+  declare tetherZ: number;
   /*
    * NO `sc` (temporary model scale) FIELD — deliberately removed, #247
    * follow-up. #247 shipped a uint8 `sc` percent channel end to end (wire →
@@ -803,6 +816,7 @@ export class EntityState extends Schema {
     this.alive = true;
     this.flags = 0;
     this.h = 0;
+    this.motionState = ""; this.tetherX = 0; this.tetherZ = 0;
   }
 }
 defineTypes(EntityState, {
@@ -825,6 +839,7 @@ defineTypes(EntityState, {
   // ⚠️ 這是**改一個既有欄位的型別**，不是 append。理由與代價寫在下面的 BIT BUDGET。
   flags: "uint32",
   h: "float32",
+  motionState: "string", tetherX: "float32", tetherZ: "float32",
 });
 
 export class MatchState extends Schema {
@@ -1184,6 +1199,10 @@ export const ENTITY_KIND = {
    *   hp/maxHp = 0 → `hasOverheadBar` false → no health bar.
    */
   NIGHT_FLAG: 7,
+  /** Fixed single-use trap: shield = radius, mana = team, hp = armed (0/1), no health bar. */
+  TRAP: 8,
+  /** Local time field: shield = radius, hp = remaining ticks, maxHp = 0, mana = team. */
+  TIME_STOP: 9,
 } as const;
 
 /**
@@ -1370,6 +1389,8 @@ export const ENTITY_FLAG = {
   TEAM_OVERRIDE_A: 262144,
   /** 覆寫隊伍序數的**高位**。見 {@link teamOverrideFromFlags} / {@link teamOverrideFlagsFor}。 */
   TEAM_OVERRIDE_B: 524288,
+  /** Authoritative temporal pause: hold model animation and local prediction. */
+  TIME_STOPPED: 1048576,
 } as const;
 
 /**
@@ -1381,13 +1402,13 @@ export const ENTITY_FLAG = {
  * 「暫時換陣營」、「被魅惑」三種**玩家看得見**的狀態，三條各開一條事件頻道的成本遠高於
  * 一次加寬 —— 所以走加寬。
  *
- *   used  (20): 1 DASHING · 2 ROOTED · 4 STUNNED · 8 SLOWED · 16 CASTING ·
+ *   used  (21): 1 DASHING · 2 ROOTED · 4 STUNNED · 8 SLOWED · 16 CASTING ·
  *               32 WINDUP · 64 CHANNELLING · 128 CONTESTED · 256 BURNING ·
  *               512 MUD_SWELL · 1024 MUD_BOSS · 2048 AIRBORNE ·
  *               4096 FORM_A · 8192 FORM_B · 16384 INVISIBLE · 32768 MOB_ELITE ·
  *               65536 CARRIED · 131072 TEAM_OVERRIDE · 262144 TEAM_OVERRIDE_A ·
- *               524288 TEAM_OVERRIDE_B
- *   FREE   (11): 2^20 … 2^30（1048576 … 1073741824），見 {@link ENTITY_FLAG_FREE_BITS}
+ *               524288 TEAM_OVERRIDE_B · 1048576 TIME_STOPPED
+ *   FREE   (10): 2^21 … 2^30（2097152 … 1073741824），見 {@link ENTITY_FLAG_FREE_BITS}
  *   ⛔ 不可用 (1): 2^31 —— 見 {@link ENTITY_FLAG_RESERVED_BIT}
  *
  * ════════════════════════════════════════════════════════════════════════════
@@ -1415,7 +1436,7 @@ export const ENTITY_FLAG_FREE_BITS = [
   // ⚠️ 2026-08-18：[EX∅ 根源] 拿走了 65536 / 131072 / 262144 / 524288
   //（CARRIED · TEAM_OVERRIDE · TEAM_OVERRIDE_A · TEAM_OVERRIDE_B）——
   // 也就是加寬那一次逐字說明要給它的四顆。⛔ 不要把它們加回來。
-  1048576, 2097152, 4194304, 8388608,
+  2097152, 4194304, 8388608,
   16777216, 33554432, 67108864, 134217728, 268435456, 536870912, 1073741824,
 ] as const;
 

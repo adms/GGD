@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../timeStop";
 /**
  * MovementSystem — integrates navigation into positions with collision:
  *   1. dash/knockback overrides win over normal movement,
@@ -20,6 +21,8 @@
  * decoupling it from the velocity keeps controls responsive and needs no speed
  * clamp while turning.
  */
+import { advanceDrive, advanceGrapple, publishAbilityMotion } from "../movement/abilityMotion";
+import { dashContact, dashContacts } from "../movement/dashContact";
 import { moveFeelRules } from "../moveFeel";
 import type { SimWorld } from "../SimWorld";
 import type { Vec2 } from "../math/vec2";
@@ -28,7 +31,7 @@ import { moveWithCollision, separatePair, clampToBoundary, pushOutOfObstacle } f
 import { flightIgnoresObstacles, flightIgnoresUnits, flightStaysInBoundary } from "../flight";
 import { steerAroundObstacles } from "../collision/avoid";
 import { walkWaypoint, navRules } from "../navRoute";
-import { activeObstacles, heldGates } from "../map/gates";
+import { worldObstacles } from "../map/gates";
 import { Stat } from "../stats/statTypes";
 import { facingLockDir } from "../facingLock";
 import {
@@ -87,11 +90,18 @@ export function movementSystem(world: SimWorld): void {
   const dt = world.dt;
 
   for (const [id, t] of world.transform) {
+    if (isTimeStopped(world, id)) { t.vel = { x: 0, z: 0 }; continue; }
+    if (world.timeStop.has(id)) continue;
     if (world.projectile.has(id)) continue; // projectiles integrate in their own system
     const nav = world.nav.get(id);
     if (!nav) continue;
     const hp = world.health.get(id);
     if (hp && !hp.alive) {
+      if (nav.override?.kind === "dash" && (nav.override.stopOnHit || nav.override.touchScope)) nav.override = null;
+      const hadMotion = nav.drive || (nav.override?.kind !== "leap" && nav.override?.grapple);
+      delete nav.drive;
+      if (nav.override?.kind !== "leap" && nav.override?.grapple) nav.override = null;
+      if (hadMotion) publishAbilityMotion(world, id);
       t.vel = { x: 0, z: 0 };
       continue;
     }
@@ -177,24 +187,39 @@ export function movementSystem(world: SimWorld): void {
 
     // 1) Movement override (dash/knockback) — ignores root by design (dashes
     //    committed before CC still complete; knockbacks are forced).
+    if (advanceGrapple(world, id)) continue;
     if (nav.override) {
       const ov = nav.override;
       const stepLen = Math.min(ov.speed * dt, ov.remaining);
       const delta = scale(ov.dir, stepLen);
       const before = { x: t.pos.x, z: t.pos.z };
       const body = { pos: t.pos, radius: t.radius };
-      moveWithCollision(body, delta, zone);
+      moveWithCollision(body, delta, zone, worldObstacles(world, t.zone));
+      if (ov.kind === "dash" && ov.stopOnHit) {
+        const contact = dashContact(world, id, before, body.pos, ov.stopOnHit);
+        if (contact) { body.pos = contact.point; ov.hitTarget = contact.target; }
+      }
+      if (ov.kind === "dash" && ov.touchScope) {
+        const touched = ov.touchedTargets ??= [];
+        for (const contact of dashContacts(world, id, before, body.pos, ov.touchScope)) {
+          if (!touched.includes(contact.target)) touched.push(contact.target);
+        }
+      }
       t.pos = body.pos;
       ov.remaining -= stepLen;
       const moved = len(sub(t.pos, before));
       // Dash stopped early by a wall → end the dash.
-      if (moved + 1e-6 < stepLen || ov.remaining <= 1e-6) nav.override = null;
+      if (ov.hitTarget !== undefined || moved + 1e-6 < stepLen || ov.remaining <= 1e-6) {
+        if (ov.kind === "dash") ov.endReason = ov.hitTarget !== undefined ? "contact" : moved + 1e-6 < stepLen ? "terrain" : "distance";
+        nav.override = null;
+      }
       // Velocity is what the body ACTUALLY did (see the note in step 2).
       t.vel = scale(sub(t.pos, before), 1 / dt);
       continue;
     }
 
     // 2) Normal steering toward moveTarget.
+    if (advanceDrive(world, id, rooted || stunned, speedMult, turnToward, aimedThisTick ? t.facing : lockDir)) continue;
     let moved = false;
     if (nav.moveTarget && !rooted) {
       // ⭐ GH#324 —— **繞牆走**。`steerAroundObstacles` 是無狀態的單切線啟發式，
@@ -217,25 +242,7 @@ export function movementSystem(world: SimWorld): void {
       const zoneForNav = world.arena.zones[t.zone] ?? world.arena.zones[0];
       // ⭐ GH#324 —— 這一 tick 真的擋路的障礙物（開著的門不擋人）。
       // ⚠️ 沒有 gateSchedule 時 `activeObstacles` 原樣回傳 ⇒ 既有場地零成本。
-      const liveObstacles =
-        zoneForNav === undefined
-          ? []
-          : activeObstacles(
-              zoneForNav.obstacles,
-              world.gateSchedule,
-              world.tick,
-              // ⭐ 玩家站著撐開／壓住的門。⚠️ 位置**按 entity id 排序**取出來 ——
-              //    Map 的插入序在 sim 裡是禁止的（purity 閘）。
-              zoneForNav.gateHolds === undefined
-                ? undefined
-                : heldGates(
-                    zoneForNav.gateHolds,
-                    [...world.transform.keys()]
-                      .sort((a, b) => a - b)
-                      .filter((eid) => world.transform.get(eid)?.zone === t.zone)
-                      .map((eid) => world.transform.get(eid)!.pos),
-                  ),
-            );
+      const liveObstacles = worldObstacles(world, t.zone);
       // ⭐ 飛行：**不查導航表**（`navRoute.ts` 的 `flyersGoStraight`）。
       //    飛行的定義就是「穿過牆與柱子」，而導航表存在的唯一理由是繞開它們 ——
       //    讓她照著地面路線繞路是兩個機制互相矛盾，而且那條繞路是**客戶端預測
@@ -303,7 +310,7 @@ export function movementSystem(world: SimWorld): void {
               t.radius,
               { x: to.x / d, z: to.z / d },
               d,
-              zone.obstacles,
+              liveObstacles,
               mf.avoidMargin,
             );
         // body turns toward the move direction; motion is the ordered direction.
@@ -371,6 +378,7 @@ export function movementSystem(world: SimWorld): void {
   // 4) Unit-vs-unit soft separation within each zone (ascending id pairs via
   //    the spatial grid; grid returns sorted ids).
   for (const [id, t] of world.transform) {
+    if (world.timeStop.has(id)) continue;
     if (world.projectile.has(id)) continue;
     // revive circles are ground area, not bodies — they never push and are
     // never pushed (they are also absent from the grid, so the inner loop
@@ -419,8 +427,8 @@ export function movementSystem(world: SimWorld): void {
       // out of them like a soft pillar but the prop itself never moves. A
       // guardian is authoritative terrain placed at the zone centre by
       // GuardianSystem — it must stay put even when a champion body overlaps it.
-      const aStatic = world.flower.has(id) || world.structure.has(id);
-      const bStatic = world.flower.has(otherId) || world.structure.has(otherId);
+      const aStatic = isTimeStopped(world, id) || world.flower.has(id) || world.structure.has(id);
+      const bStatic = isTimeStopped(world, otherId) || world.flower.has(otherId) || world.structure.has(otherId);
       if (aStatic && bStatic) continue;
       if (aStatic || bStatic) {
         const anchor = aStatic ? t : o;
@@ -437,6 +445,10 @@ export function movementSystem(world: SimWorld): void {
       //   的場界一格都沒動 —— 保險絲只解單位互卡,不發穿牆逃課券。
       //   (放這一行、⛔ 不學 flight 在外圈 continue,正是為了讓 static 照舊。)
       if (stuckEscapePhasing(world, id) || stuckEscapePhasing(world, otherId)) continue;
+      // A continuing contact dash sweeps enemies instead of stopping against
+      // their soft bodies. Terrain and static props retain their earlier gates.
+      const aDash = world.nav.get(id)?.override, bDash = world.nav.get(otherId)?.override;
+      if ((aDash?.kind === "dash" && aDash.touchScope) || (bDash?.kind === "dash" && bDash.touchScope)) continue;
       const a = { pos: t.pos, radius: t.radius };
       const b = { pos: o.pos, radius: o.radius };
       separatePair(a, b, 0.6);
@@ -447,6 +459,8 @@ export function movementSystem(world: SimWorld): void {
 
   // Post-separation: never leave anyone inside a wall or outside the boundary.
   for (const [id, t] of world.transform) {
+    if (isTimeStopped(world, id)) continue;
+    if (world.timeStop.has(id)) continue;
     if (world.projectile.has(id)) continue;
     if (world.reviveCircle.has(id)) continue; // stays exactly on the corpse
     // A coin was already pushed out of obstacles + clamped at spawn (coinDropPos);
@@ -483,7 +497,7 @@ export function movementSystem(world: SimWorld): void {
     // unless a grant explicitly opts out, which is the answer to 「會不會飛出
     // 場外」. Leaving the arena breaks every zone-scoped mechanic there is.
     if (!flightIgnoresObstacles(world, id)) {
-      for (const ob of zone.obstacles) pushOutOfObstacle(body, ob);
+      for (const ob of worldObstacles(world, t.zone)) pushOutOfObstacle(body, ob);
     }
     if (flightStaysInBoundary(world, id)) clampToBoundary(body, zone);
     t.pos = body.pos;

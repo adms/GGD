@@ -3,13 +3,13 @@
  *
  * ── 這一支要證明的三件事 ────────────────────────────────────────────────────
  *
- * ① 數字是真的：出貨名單 53 位 / 42 種身體 / 14 位共用（overlay 缺席時），
+ * ① 數字是真的：出貨名單 / 41 種身體 / 11 位共用（overlay 缺席時），
  *    而且那三組共用組的成員逐位釘住。任何一位英雄被加進 / 移出開放名單、
  *    或被改成穿另一具模型，這裡就紅並且**指名道姓**。
  *
  * ② 判定不是掃 `modelKey`（失敗形態 ⑥/⑦）。這一點靠**同一份資料、兩個答案**
- *    來證：overlay 缺席 → 42 種身體、14 位共用；overlay 在場 → 53 種身體、
- *    0 位共用。掃 `modelKey` 欄位的實作在兩種情境下只會給出同一個 42，
+ *    來證：overlay 缺席 → 41 種身體、11 位共用；overlay 在場 → 一人一具身體、
+ *    0 位共用。掃 `modelKey` 欄位的實作在兩種情境下只會給出同一個 41，
  *    所以這條斷言只有走真的解析路徑才過得了。
  *
  * ③ 判定跟出貨的渲染路徑一致（失敗形態 ⑤「被測的不是出貨的那個」）。
@@ -169,7 +169,7 @@ afterAll(() => {
 });
 
 describe("#224 替身普查 —— 數字", () => {
-  it("overlay 缺席：全名單 / 40 種身體 / 14 位共用 / 3 組", async () => {
+  it("overlay 缺席：全名單 / 41 種身體 / 11 位共用 / 3 組", async () => {
     cover("standin-census");
     // ⚠️ 2026-08-16 —— 這一整段的數字**跟著名單走**。owner 下架四位英雄
   //    （安云 · 藤井八雲 · 賈修貝爾 · 麻倉葉）之後全部往下移一階：
@@ -179,10 +179,12 @@ describe("#224 替身普查 —— 數字", () => {
   //    身體種類／共用數是**量出來的**，只能重新量，所以留著字面值。
     const census = censusChampionBodies(ROSTER, hooksFor(await overlayModels(false)));
     expect(census.totals.champions).toBe(ROSTER.length);
-    expect(census.totals.distinctBodies).toBe(40);
+    // Main 107626f90: godie-ucrl left blocky-knight for imported.herobiggon.
+    // The remaining knight pair still shares a body, so the group count stays 3.
+    expect(census.totals.distinctBodies).toBe(41);
     // ⚠️ 14→12：下架的四位裡有兩位在共用組（賈修貝爾在 blocky-mage、
     //    藤井八雲在 blocky-barbarian）。組數還是 3 —— 兩組都還有 ≥2 人。
-    expect(census.totals.sharing).toBe(12);
+    expect(census.totals.sharing).toBe(11);
     expect(census.totals.sharedGroups).toBe(3);
   });
 
@@ -208,7 +210,7 @@ describe("#224 替身普查 —— 數字", () => {
         "assets/models/champions/blocky-barbarian.glb",
         ["godie-h02k", "godie-ubal", "godie-umal"],
       ],
-      ["assets/models/champions/blocky-knight.glb", ["godie-hapm", "godie-ucrl", "godie-udea"]],
+      ["assets/models/champions/blocky-knight.glb", ["godie-hapm", "godie-udea"]],
     ]);
     // owner 點名的那一對：哆拉A夢 與 死之王 站在同一具身體上。
     expect(sharedWith(census, "godie-n00b")).toContain("godie-u00k");
@@ -220,7 +222,7 @@ describe("#224 替身普查 —— 數字", () => {
     // 掃 `doc.modelKey` 的實作在這兩種情境下都會回同一個數 —— 這一條是它過不了的。
     const off = censusChampionBodies(ROSTER, hooksFor(await overlayModels(false)));
     const on = censusChampionBodies(ROSTER, hooksFor(await overlayModels(true)));
-    expect(off.totals.distinctBodies).toBe(40);
+    expect(off.totals.distinctBodies).toBe(41);
     expect(on.totals.distinctBodies).toBe(ROSTER.length);
     expect(on.totals.sharing).toBe(0);
     expect(on.totals.sharedGroups).toBe(0);
@@ -228,7 +230,7 @@ describe("#224 替身普查 —— 數字", () => {
     for (const id of ROSTER) {
       expect(on.bodies.get(id)!.modelKey).toBe(off.bodies.get(id)!.modelKey);
     }
-    // 那 14 位在 overlay 在場時各自穿自己的 WC3 身體。
+    // 共用替身的英雄在 overlay 在場時各自穿自己的 WC3 身體。
     for (const id of ["godie-n00b", "godie-u00k", "godie-hapm"]) {
       const b = on.bodies.get(id)!;
       expect(b.source).toBe("wc3-overlay");
@@ -276,24 +278,26 @@ describe("#77 替身回退有沒有丟掉地圖的真 scale", () => {
     expect(dropped).toEqual([]);
   });
 
-  it("地圖的真模型指向是機器讀得到的：13 位穿通用身體的有 10 位帶著 umdl", async () => {
+  it("地圖的真模型指向是機器讀得到的：12 位穿通用身體的有 8 位帶著 umdl", async () => {
     cover("standin-census");
     const census = censusChampionBodies(ROSTER, hooksFor(await overlayModels(false)));
     const standins = [...census.bodies.values()].filter((b) => b.isStandin);
-    // 13 = 撞臉的 12 位 + 喪標麥可（獨佔 blocky-undead）。
+    // 12 = 撞臉的 11 位 + 喪標麥可（獨佔 blocky-undead）。
     // 「穿別人的身體」與「跟人撞臉」是兩件事。
     // ⚠️ 2026-08-16 下架四位之後 16→14。
     // ⭐ 2026-09-02（GH#933）14→13：**初號機畢業了** —— 它從 blocky-rogue
     //   搬到自己的 `w3x.stock.satyrtrickster`（War3x.mpq 抽出來轉的），
     //   ⇒ 不再穿通用身體。⭐ 這是棘輪的**正確方向**（少一位借身體的）。
-    expect(standins.length).toBe(13);
-    expect(census.totals.onGenericBody).toBe(13);
-    expect(census.totals.sharing).toBe(12);
+    // Main 107626f90: 傑富力士也改用 imported.herobiggon（13→12）。
+    expect(standins.length).toBe(12);
+    expect(census.totals.onGenericBody).toBe(12);
+    expect(census.totals.sharing).toBe(11);
     // 地圖沒有覆寫 umdl（繼承 base unit）的那幾位沒有這個欄位。
     // ⭐ 2026-09-02（GH#933）10→9：初號機（`godie-e00r`）搬去自己的
     //   `w3x.stock.satyrtrickster` ⇒ 它不在「穿通用身體」這個母體裡了，
     //   而它正是帶著 umdl 的那 10 位之一。
-    expect(standins.filter((b) => b.mapModel !== null).length).toBe(9);
+    // 傑富力士保留 HighElfPeasant 的來源紀錄，但已不在替身母體裡（9→8）。
+    expect(standins.filter((b) => b.mapModel !== null).length).toBe(8);
     // 小叮噹本來是一隻 0.6 倍的藍色熊貓，而且那件事現在寫在資料裡。
     const n00b = census.bodies.get("godie-n00b")!;
     expect(n00b.mapScale).toBe(0.6);
@@ -370,7 +374,7 @@ describe("#224 普查的判定 = 渲染器真的做了什麼", () => {
     //   `assets/models/imported/satyrtrickster.glb`（下面那條 >20 因此也多一位）。
     expect(
       [...observed.values()].filter((p) => p?.startsWith("assets/models/champions/blocky-")).length,
-    ).toBe(13);
+    ).toBe(12);
     // 而且真的有人載到自己的模型（另一半的空對帳防線）。
     expect([...observed.values()].filter((p) => p?.startsWith("assets/models/imported/")).length)
       .toBeGreaterThan(20);

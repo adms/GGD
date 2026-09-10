@@ -27,6 +27,11 @@ export const zPull = z
     radius: z.number().positive().max(PULL_MAX_RADIUS).optional(),
     side: z.enum(["allies", "enemies"]).optional(),
     maxTargets: z.number().int().positive().max(24).optional(),
+    grapple: z.object({
+      range: z.number().positive().max(PULL_MAX_TRAVEL),
+      maxTravel: z.number().positive().max(PULL_MAX_TRAVEL),
+      hitRadius: z.number().min(0).max(2),
+    }).strict().optional().describe("沿技能方向連接首個合法敵人或地形錨點；前者拉敵人、後者拉自己。只拉一次且有總行程上限；斷線、超距、碰撞或失效即停止。"),
     destination: z
       .enum(["caster", "point", "anchorRing"])
       .optional()
@@ -50,6 +55,9 @@ export const refine = (
   ctx: z.RefinementCtx,
 ): void => {
   refineDispelShape(e, ctx);
+  if (e.grapple && (e.shape !== "single" || e.destination !== undefined || e.side !== undefined || e.uncontrollable !== undefined || e.getupTicks !== undefined)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["grapple"], message: "牽引分支須 shape:single；不混用 side、落點、控制鎖或起身延遲。" });
+  }
 
   // 錨點環的兩格只有在選了那個 destination 時才有人讀 —— 反過來也一樣。
   const ring = e.destination === "anchorRing";

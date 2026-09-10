@@ -143,6 +143,8 @@ import {
   KIND_MOB,
   KIND_REVIVE_CIRCLE,
   KIND_NIGHT_FLAG,
+  KIND_TRAP,
+  KIND_TIME_STOP,
 } from "./render/overheadAnchors";
 import { anchorDrawable } from "./render/anchorBounds";
 import { occludeArgsFor } from "./render/occlusionZone";
@@ -1432,12 +1434,14 @@ export class GameApp {
    */
   private predictionHeldByServer(state: MatchState | null | undefined): boolean {
     const mask = predictionHoldFlagMask();
-    if (mask === 0) return false;
+
+    // Source-owned driving and grapples follow authoritative motion until their snapshot clears.
     const lid = hudStore.getState().localEntityId;
     if (lid === null || !state?.entities) return false;
     const es = entitiesOf(state).get(String(lid));
     // ⚠️ `!== 0` 不是 `> 0` —— flags 是 uint32，高半部 `&` 出來是負數。
-    return es !== undefined && (es.flags & mask) !== 0;
+    return es !== undefined && ((es.flags & ENTITY_FLAG.TIME_STOPPED) !== 0 ||
+      (mask !== 0 && ((es.motionState ?? "") !== "" || (es.flags & mask) !== 0)));
   }
 
   /**
@@ -2449,6 +2453,7 @@ export class GameApp {
       e.fx = es.fx;
       e.fz = es.fz;
       e.alive = es.alive;
+      e.motionState = es.motionState; e.tetherX = es.tetherX; e.tetherZ = es.tetherZ;
       // #268 — 「自己角色更顯眼」. Champions only (kind 0): a projectile or a
       // dropped coin has no owner to BE, and a stale true on a pooled slot that
       // got reused by another kind would put a caret over a flying bolt.
@@ -2513,6 +2518,13 @@ export class GameApp {
       } else if (e.nightFlag) {
         e.nightFlag = undefined;
       }
+      if (es.kind === KIND_TIME_STOP) {
+        e.timeStop = { radius: es.shield, ticks: es.hp, teamId: es.mana };
+      } else { e.timeStop = undefined; }
+      if (es.kind === KIND_TRAP) {
+        const trap = e.trap ?? (e.trap = { radius: 0, teamId: -1, armed: false });
+        trap.radius = es.shield; trap.teamId = es.mana; trap.armed = es.hp >= 1;
+      } else { e.trap = undefined; }
       scratch.push(e);
       i++;
     });

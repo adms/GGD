@@ -1,0 +1,1037 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "community-concept-warwick",
+  "revision": 2,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "沃維克",
+    "concept": "循血追擊的近戰獵手，以短程撲擊、持續汲取與壓制連段作戰。\n\n概念來源：LoL 沃維克\nhttps://www.leagueoflegends.com/zh-tw/champions/warwick/\n\n本遊戲改編：\n• 低血量獵物改為普攻追加傷害，追獵加速需主動施放；不提供全圖追蹤。\n• 減傷改為短效護盾，恐懼為指定目標；大招可被反擊，沒有無敵。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+    "moveNames": {
+      "PASSIVE": "嗅血",
+      "Q": "噬痕",
+      "W": "循血疾行",
+      "E": "驚獵嚎聲",
+      "R": "獵衛封喉",
+      "EX": "血性護甲"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "attributes": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "mechanics": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 2,
+      "state": "draft",
+      "fieldOwnership": {
+        "presentation.modelKey": "manual"
+      }
+    },
+    "validation": {
+      "revision": 1,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 1,
+      "state": "stale",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "community-concept-warwick.concept",
+    "title": "沃維克",
+    "summary": "循血追擊的近戰獵手，以短程撲擊、持續汲取與壓制連段作戰。\n\n概念來源：LoL 沃維克\nhttps://www.leagueoflegends.com/zh-tw/champions/warwick/\n\n本遊戲改編：\n• 低血量獵物改為普攻追加傷害，追獵加速需主動施放；不提供全圖追蹤。\n• 減傷改為短效護盾，恐懼為指定目標；大招可被反擊，沒有無敵。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "狂戰",
+    "archetype": "fighter",
+    "attackType": "melee",
+    "budget": {
+      "power": 50,
+      "complexity": 40
+    },
+    "statOverrides": {},
+    "templateVersions": {
+      "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0": {
+        "id": "tpl-on-attack",
+        "schema": "template@1",
+        "name": "攻擊觸發",
+        "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
+        "family": "on-attack",
+        "status": "enabled",
+        "params": {
+          "event": {
+            "type": "enum",
+            "default": "onBasicAttack",
+            "values": [
+              "onBasicAttack",
+              "onDamageDealt"
+            ]
+          },
+          "condition": {
+            "type": "condition",
+            "default": {
+              "any": [
+                {
+                  "all": [
+                    {
+                      "not": {
+                        "kind": "kind",
+                        "subject": "target",
+                        "is": "champion"
+                      }
+                    },
+                    {
+                      "kind": "stat",
+                      "subject": "target",
+                      "stat": "hp",
+                      "mode": "percent",
+                      "op": "<",
+                      "value": 0.35
+                    }
+                  ]
+                },
+                {
+                  "all": [
+                    {
+                      "kind": "kind",
+                      "subject": "target",
+                      "is": "champion"
+                    },
+                    {
+                      "kind": "chance",
+                      "p": 0.01
+                    }
+                  ]
+                }
+              ]
+            },
+            "optional": true
+          },
+          "chance": {
+            "type": "number",
+            "min": 0,
+            "max": 1,
+            "unit": "ratio",
+            "optional": true
+          },
+          "bonusDamage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                100
+              ],
+              "ratios": []
+            }
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "internalCooldown": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 60,
+            "unit": "s",
+            "optional": true
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者",
+          "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效"
+        }
+      },
+      "sha256:eeb97623763a184bab0219a940b43f3db6560ce19bb589900d2ad0e541fd1e5b": {
+        "id": "tpl-drain-leech",
+        "schema": "template@1",
+        "name": "汲取吸附",
+        "description": "汲取吸附：打一下 → 持續傷害（同傷害型別、同級距、同係數的 dot）→ 回施法者一個定量（`leechFlat`，⭐ 可清空 ⇒ 純「打一下＋dot」，#1073）。",
+        "family": "drain-leech",
+        "status": "enabled",
+        "params": {
+          "damageTier": {
+            "type": "enum",
+            "default": "小",
+            "values": [
+              "極小",
+              "小",
+              "中",
+              "大",
+              "極大"
+            ],
+            "origin": "derived: 出貨兩份逐位元 `小`（`content/abilities/godie-hgam.passive.json` · `godie-h02r.passive.json` 的 `effects[0].amount.damageTier` 與 `effects[2].amountPerTick.damageTier`）。⛔ 走級距，⛔ 不烘數字（第〇·四守則）。"
+          },
+          "apRatio": {
+            "type": "number",
+            "default": 0.6,
+            "min": 0,
+            "max": 5,
+            "unit": "ratio",
+            "origin": "derived: 出貨兩份逐位元 `ratios:[{stat:\"ap\",coeff:**0.6**}]`。"
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ],
+            "origin": "derived: 出貨兩份 `damageType:\"magic\"`；原作 `A0KV` 是 WC3 Parasite 系（`OBJECTS.json`）。"
+          },
+          "leechFlat": {
+            "type": "number",
+            "default": 50,
+            "min": 0,
+            "max": 5000,
+            "unit": "count",
+            "optional": true,
+            "origin": "j:26608 `call SetUnitLifeBJ( udg_Frog_Hero, ( GetUnitStateSwap(UNIT_STATE_LIFE, udg_Frog_Hero) + **50.00** ) )` —— 回的是**施法者**（`udg_Frog_Hero = GetTriggerUnit()`）。⚠️ 原作是**每跳** +50 × 5 跳，⭐ 而出貨把它收斂成**一次** 50 —— 我照抄出貨（diff=0 優先），⛔ 不是原作。⭐ GH#1046：展開器的 heal 節點要帶 `applyTo:\"self\"` —— 在此之前漏寫，而 `heal.ts` 的省略語意是 target ⇒ 回的是**被點的敵人**（守衛 `drainLeechSubject.test.ts`，真 sim 兩具缺血身體）。⚠️ 出貨那兩份（`godie-hgam.passive`／`godie-h02r.passive`）的 heal 節點**同樣漏寫** —— 「diff=0」抄到的正是那個錯，⛔ 不在這條 lane 的柵欄裡，另記報告。 ⭐ #1073：這一格改成 **optional** —— 清空 ⇒ 展開沒有 heal 節點（「打一下＋持續傷害」而不吸血：30-03 痴漢火焰 ×2 · 72-02 黑人牙菌斑，出貨 3 支逐位元對得上）；default 50 只是編輯器的建議值（`has()` 對 optional 槽：沒填＝缺席）。"
+          },
+          "intervalSec": {
+            "type": "number",
+            "default": 1,
+            "min": 0.2,
+            "max": 10,
+            "unit": "s",
+            "origin": "derived: 出貨兩份 `intervalSec: **1.0**`。⚠️ ⭐ 原作 `j:26604` 是 `TriggerSleepAction( **0.95** )` —— 兩個來源打架，而第〇·六守則的階梯是「**編輯器產生的 JSON ＞ JASS 實際效果**」⇒ 取 1.0。⛔ 0.95 這個事實留在這裡，⛔ 不無聲丟掉。"
+          },
+          "durationSec": {
+            "type": "number",
+            "default": 5,
+            "min": 0.2,
+            "max": 60,
+            "unit": "s",
+            "origin": "derived: 出貨兩份 `durationSec: **5.0**`；原作是 `j:26603` `exitwhen udg_Frog_Seed_Index > **5**` 五跳 × `j:26604` 的 0.95s = 4.75s，w3a `abilities.A0KV.duration.1 = 5.0999999` ⇒ 三個來源都在 5 附近。"
+          },
+          "stacking": {
+            "type": "enum",
+            "default": "refresh",
+            "values": [
+              "refresh",
+              "independent",
+              "stack"
+            ],
+            "origin": "derived: 出貨兩份 `stacking: \"refresh\"`。"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "min": 0,
+            "max": 10,
+            "unit": "s",
+            "optional": true,
+            "origin": "taxonomy: ⛔ **刻意不給 default** —— 兩支候選差太遠（`godie-h02r.passive` 1.7 vs `godie-osam.passive` 0.267），⭐ 給一個 default 就是編一個（同 `tpl-locust-orb.tint` 留空的理由）。"
+          }
+        },
+        "requires": [],
+        "gapScore": 4,
+        "exemplar": {
+          "skill": "90-00 寄生種子（妙蛙種子／妙蛙花 `godie-hgam.passive` ＋ `godie-h02r.passive`）",
+          "jass": "war3map.j:26592 / 26603 / 26604 / 26608（Trig_Parasitism_Seed_Actions：buff 閘 → 5 跳 × 0.95s → 回施法者 +50）"
+        }
+      },
+      "sha256:bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec66924f52e39108974d18": {
+        "id": "tpl-buff-self",
+        "schema": "template@1",
+        "name": "變身強化-數值面",
+        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。 兩格選填讓它同時掛一個「別人問得到」的名字：`statusId` 把標記併進**同一份**增益來源（延長／淨化／到期一起發生，例：三刀流），`status` 則是**另一顆獨立**的狀態節點（秒數與增益各自算，機制欄位住在節點上，例：邪王真眼）。兩格都清空 ⇒ 就是一份純數值增益。 `perRank` 是**逐階欄位表**（WC3 的 buff 一階一欄）：填了它之後每一階換的是一整組 modifier ＋ 秒數，而上面的 `modifiers`／`duration` 就沒有人讀（handler 走 `perRank[階-1]`），⛔ 但仍要填第一階的值。",
+        "family": "buff-self",
+        "status": "enabled",
+        "params": {
+          "duration": {
+            "type": "number",
+            "default": 15,
+            "min": 1,
+            "max": 60,
+            "unit": "s"
+          },
+          "modifiers": {
+            "type": "statModifiers",
+            "default": [
+              {
+                "stat": "ad",
+                "op": "flat",
+                "value": 50
+              }
+            ]
+          },
+          "perRank": {
+            "type": "buffPerRank",
+            "optional": true
+          },
+          "statusId": {
+            "type": "docRef",
+            "optional": true
+          },
+          "status": {
+            "type": "applyStatus",
+            "optional": true
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          }
+        },
+        "requires": [
+          "applyStatus"
+        ],
+        "gapScore": 6,
+        "exemplar": {
+          "skill": "82-04 闇之魔法",
+          "jass": "A0Q6"
+        }
+      },
+      "sha256:00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a816b495516b465e80": {
+        "id": "tpl-single-strike",
+        "schema": "template@1",
+        "name": "單體斬擊",
+        "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。 另外兩格選填：`invulnerableSec` 是**起手的無敵幀**（護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`dot` 是**施法者自己**背上的持續傷害（界王拳那一族的代價；打在敵人身上的同型傷害請用「吸血／汲取」那一族）。三格全部清空 ⇒ 就是一發純傷害。",
+        "family": "single-strike",
+        "status": "enabled",
+        "params": {
+          "damage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            }
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "invulnerableSec": {
+            "type": "number",
+            "min": 0.05,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          },
+          "dot": {
+            "type": "dot",
+            "optional": true
+          },
+          "status": {
+            "type": "applyStatus",
+            "optional": true
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          }
+        },
+        "requires": [
+          "applyStatus",
+          "invulnerable",
+          "periodicDamage"
+        ],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "23-04 雷焰聖劍",
+          "jass": "A0OD"
+        }
+      },
+      "sha256:e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771cd614a89d04e016c6": {
+        "id": "tpl-lock-combo",
+        "schema": "template@1",
+        "name": "鎖定連段",
+        "description": "把一個人鎖住打完一整段。命中後目標被定住、施法者進入演出狀態（這段期間打不到他），連段一擊一擊落下，最後一記終結技在收招那一刻結算並掃過周圍。「連段次數 × 每段間隔」就是整段長度 —— 它是算出來的，所以沒有『持續時間』這個欄位可以填。⚠️ 原作的連段中施法者會一擊一擊瞬移到目標身邊，這裡沒有搬過來：那段期間雙方都被 pause + 無敵，施法者站哪裡不影響任何結算，只有終結技的圓心用得到，所以收成原地演出。想要遞減間隔（52-002 射殺百頭的 CD×0.75）也還做不到。 ⭐ owner 2026-08-13：終結技可以是**另一支具名技能**（finisherAbility，走 proxyCast 代放），⛔ 不是把那支技能的傷害抄一份進來 —— 抄一份之後那支技能改了，連段裡的版本不會跟著改。留空則沿用 finisherDamage 那個數字。發動條件也是一格（trigger）：預設 onCast，20-002 是 onReflectSuccess（反彈成功才發），所以整段連段可以掛在被動 hook 上而不是主動施放。",
+        "family": "lock-combo",
+        "status": "enabled",
+        "params": {
+          "hitCount": {
+            "type": "number",
+            "default": 5,
+            "min": 1,
+            "max": 20,
+            "unit": "count"
+          },
+          "hitIntervalSec": {
+            "type": "number",
+            "default": 0.4,
+            "min": 0.05,
+            "max": 3,
+            "unit": "s"
+          },
+          "perHitDamage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                100
+              ],
+              "ratios": []
+            }
+          },
+          "finisherDamage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                450
+              ],
+              "ratios": []
+            }
+          },
+          "finisherRadius": {
+            "type": "number",
+            "default": 150,
+            "min": 50,
+            "max": 1800,
+            "unit": "wc3u"
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "lockTarget": {
+            "type": "enum",
+            "default": "stun",
+            "values": [
+              "stun",
+              "root",
+              "none"
+            ]
+          },
+          "casterGuard": {
+            "type": "enum",
+            "default": "all",
+            "values": [
+              "all",
+              "magic",
+              "none"
+            ]
+          },
+          "finisherAbility": {
+            "type": "docRef",
+            "optional": true
+          },
+          "trigger": {
+            "type": "enum",
+            "default": "onCast",
+            "values": [
+              "onCast",
+              "onReflectSuccess",
+              "onKill",
+              "onBasicAttack",
+              "onDamageTaken"
+            ]
+          }
+        },
+        "requires": [
+          "periodicDamage",
+          "invulnerable",
+          "applyStatus",
+          "leap"
+        ],
+        "gapScore": 6,
+        "exemplar": {
+          "skill": "84-04 給我蜂蜜",
+          "jass": "A0CX"
+        }
+      }
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "嗅血",
+        "purpose": "普攻生命低於 35% 的目標時追加極小級魔法傷害，內置冷卻 2 秒。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "warwick-passive-1",
+            "template": {
+              "ref": "tpl-on-attack",
+              "params": {
+                "event": "onBasicAttack",
+                "condition": {
+                  "kind": "stat",
+                  "subject": "target",
+                  "stat": "hp",
+                  "mode": "percent",
+                  "op": "<",
+                  "value": 0.35
+                },
+                "bonusDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "internalCooldown": 2
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "噬痕",
+        "purpose": "對指定敵人施加持續傷害，3 秒內每秒造成傷害；施放時立即回復自身生命。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "極小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "castTimeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "warwick-q-1",
+            "template": {
+              "ref": "tpl-drain-leech",
+              "params": {
+                "damageTier": "極小",
+                "damageType": "magic",
+                "leechFlat": 50,
+                "intervalSec": 1,
+                "durationSec": 3,
+                "stacking": "refresh",
+                "castTimeSec": 0.1
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:eeb97623763a184bab0219a940b43f3db6560ce19bb589900d2ad0e541fd1e5b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "循血疾行",
+        "purpose": "主動獲得 3 秒極小級移速加成與 20% 攻速加成。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "castTimeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "warwick-w-1",
+            "template": {
+              "ref": "tpl-buff-self",
+              "params": {
+                "duration": 3,
+                "modifiers": [
+                  {
+                    "stat": "ms",
+                    "op": "pctAdd",
+                    "msBonusTier": "極小"
+                  },
+                  {
+                    "stat": "as",
+                    "op": "pctAdd",
+                    "value": 0.2
+                  }
+                ],
+                "castTimeSec": 0.1
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec66924f52e39108974d18"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "applyStatus"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "驚獵嚎聲",
+        "purpose": "指定近處敵人，造成傷害並使其恐懼 0.8 秒。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "極小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "castTimeTier": "小",
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "fear",
+              "duration": 0.8,
+              "applyTo": "target",
+              "feared": true
+            }
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "warwick-e-1",
+            "template": {
+              "ref": "tpl-single-strike",
+              "params": {
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "castTimeSec": 0.1
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a816b495516b465e80"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "applyStatus",
+          "invulnerable",
+          "periodicDamage"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "獵衛封喉",
+        "purpose": "鎖足敵人 0.9 秒，連續汲傷後收尾；施法者不獲得無敵。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "極小",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "castTimeTier": "大"
+        },
+        "products": [
+          {
+            "instanceId": "warwick-r-1",
+            "template": {
+              "ref": "tpl-lock-combo",
+              "params": {
+                "hitCount": 3,
+                "hitIntervalSec": 0.3,
+                "perHitDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "finisherDamage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "finisherRadius": 400,
+                "damageType": "magic",
+                "lockTarget": "root",
+                "casterGuard": "none",
+                "trigger": "onCast"
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771cd614a89d04e016c6"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "periodicDamage",
+          "invulnerable",
+          "applyStatus",
+          "leap"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "血性護甲",
+        "purpose": "獲得持續 3 秒的全傷害護盾；同一護盾保留較大值。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小",
+          "castTimeTier": "小",
+          "effects": [
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 120,
+                "ratios": []
+              },
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "concept-warwick-guard",
+              "onExisting": "keepLarger"
+            }
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "warwick-ex-1",
+            "template": {
+              "ref": "tpl-buff-self",
+              "params": {
+                "duration": 3,
+                "modifiers": [],
+                "castTimeSec": 0.1
+              },
+              "inheritDefaults": true,
+              "contentSha256": "sha256:bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec66924f52e39108974d18"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "applyStatus"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "community.lol.warwick",
+    "championIcon": null,
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-concept-warwick.q",
+          "schema": "vfx-script@1",
+          "abilityId": "community-concept-warwick.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "text": "噬痕",
+              "colorRgb": [
+                210,
+                230,
+                255
+              ],
+              "durationSec": 0.7,
+              "kind": "floatingText",
+              "on": "castEffect"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-concept-warwick.w",
+          "schema": "vfx-script@1",
+          "abilityId": "community-concept-warwick.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "text": "循血疾行",
+              "colorRgb": [
+                210,
+                230,
+                255
+              ],
+              "durationSec": 0.7,
+              "kind": "floatingText",
+              "on": "castEffect"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-concept-warwick.e",
+          "schema": "vfx-script@1",
+          "abilityId": "community-concept-warwick.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "text": "驚獵嚎聲",
+              "colorRgb": [
+                210,
+                230,
+                255
+              ],
+              "durationSec": 0.7,
+              "kind": "floatingText",
+              "on": "castEffect"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-concept-warwick.r",
+          "schema": "vfx-script@1",
+          "abilityId": "community-concept-warwick.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "text": "獵衛封喉",
+              "colorRgb": [
+                210,
+                230,
+                255
+              ],
+              "durationSec": 0.7,
+              "kind": "floatingText",
+              "on": "castEffect"
+            },
+            {
+              "call": {
+                "subtype": "sub.forward-twin-blast",
+                "params": {
+                  "trigger": "castEffect",
+                  "anchor": "target",
+                  "offsetForwardU": 0,
+                  "burstLifeSec": 0.8
+                }
+              }
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-concept-warwick.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "community-concept-warwick.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "text": "血性護甲",
+              "colorRgb": [
+                210,
+                230,
+                255
+              ],
+              "durationSec": 0.7,
+              "kind": "floatingText",
+              "on": "castEffect"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": []
+  },
+  "validationState": {
+    "identity": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 2,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 1,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 1,
+      "status": "stale",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": []
+}

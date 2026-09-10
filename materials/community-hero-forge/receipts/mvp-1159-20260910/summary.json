@@ -1,0 +1,251 @@
+{
+  "issue": 1159,
+  "sourceCommit": "0f0f3745ae626daa2c38f06a44debe9f5a50900c",
+  "fixedMain": "213916e393364d07ef059d84e4f77b5ff7fbb87f",
+  "spreadValidation": {
+    "tests": 89,
+    "sharedTypecheck": 0,
+    "adminTypecheck": 0,
+    "testedWorktree": "GGD-community-batch2-integration",
+    "firstBranchPort": "same 16-file change; preserve first-branch damageLine fromSummonSlot"
+  },
+  "fieldAdoption": {
+    "tests": 10,
+    "staticDocs": 1858,
+    "acceptedCommunityDocs": 259,
+    "initialKeys": 53,
+    "communityAdopted": 38,
+    "defaultLive": 2,
+    "landingUnadopted": 13,
+    "landingSince": "2026-09-09",
+    "graceDaysUnchanged": 30,
+    "removedStale": 43
+  },
+  "formalPublication": "pending integrated service and existing-account login",
+  "files": [
+    {
+      "path": "adoption-audit.json",
+      "bytes": 23587,
+      "sha256": "ba487ebb11ce86826f6ffa9a300b10d06910cad116912eea002618ea1a959652"
+    },
+    {
+      "path": "adoption-audit.tsv",
+      "bytes": 10741,
+      "sha256": "26d299ae5571af1eb55bcaf08ab3bad63f0d52d4b3abc6dfaf656a990d8c9f38"
+    },
+    {
+      "path": "announcement-fixed-main.log",
+      "bytes": 2316,
+      "sha256": "3d7ad4f8fa6146975913f74efac4c04a40cfcf26406541bb828aaf9e16b81a91"
+    },
+    {
+      "path": "content-build.log",
+      "bytes": 3733,
+      "sha256": "42576abf7445ff58b9605a31fd54d6699b7f7a3d82848927f0b87c6b29bf15e9"
+    },
+    {
+      "path": "editor-fixes-and-build.log",
+      "bytes": 13464,
+      "sha256": "64c7a3a1c1b4cbd8115b7f3376f8c4b18bdd0c575534e2143bd7d58def8adacb"
+    },
+    {
+      "path": "editor-release-aggregate.log",
+      "bytes": 6835,
+      "sha256": "65406398a7716c97d8424d7761afcf3d4ed6e6c66d26ee4afb903b947c211d59"
+    },
+    {
+      "path": "field-adoption-after.log",
+      "bytes": 399512,
+      "sha256": "e9afdfa2330c6f6c25dcf2513bb776d7406f5b48e4d7e1a3d6c95a04a0ad5401"
+    },
+    {
+      "path": "field-adoption-before.log",
+      "bytes": 432762,
+      "sha256": "d458cf470242b78701be9019d270d1a5fb8926d41e9a755de21b79c90fd59cbd"
+    },
+    {
+      "path": "final-targeted.log",
+      "bytes": 6693,
+      "sha256": "a7676c94fe59e5f8783f35cb6f882c9f8a98ced07cf37a37230fccbae4ece474"
+    },
+    {
+      "path": "skills-collection.log",
+      "bytes": 2330,
+      "sha256": "1d486cca480694cd1fb4c89dddcef6aa9168d018c6e8e429ae4b1a66c8a63181"
+    },
+    {
+      "path": "spread-admin-typecheck.log",
+      "bytes": 177,
+      "sha256": "7aca444ca09b37cfda349d6bd4127e5d83b4fa2a881c88703db6cc4b5b713127"
+    },
+    {
+      "path": "spread-shared-typecheck.log",
+      "bytes": 183,
+      "sha256": "b079271f31f534d187500d493318e33f8035fe301457ac608118f4e874041aac"
+    },
+    {
+      "path": "spread-tests.log",
+      "bytes": 1068,
+      "sha256": "cf19bddb7563ce87f629b276ff02b72f5264c29cae6a88e8c234b87563bbf5c1"
+    },
+    {
+      "path": "main-doc-update-checks.log",
+      "bytes": 1063,
+      "sha256": "67e31349b52afa659a8f49763d9fc26bba93caa7c48c35dddbacf8167748eece"
+    },
+    {
+      "path": "ci-contract-before-roster.log",
+      "bytes": 80885,
+      "sha256": "0b6175f120151d9830317f6eca582d3afe1768a04921bf5dd83a7d7457f2acc1"
+    },
+    {
+      "path": "icon-orphan-tests.log",
+      "bytes": 526,
+      "sha256": "55a1ff2477f4ca47e8c6b7d46815c069320944ea5a156c7d0ce6a4658c76af44"
+    },
+    {
+      "path": "roster-check.log",
+      "bytes": 159,
+      "sha256": "71996c022510cef9977589c743c786db12653edcca0544a1f957c4bfb083ad55"
+    },
+    {
+      "path": "ci-contract-before-tags.log",
+      "bytes": 83489,
+      "sha256": "30588e3ed6c1a9ede082d384e34edf1f443466064e7d8736ddab9ab7cfa9f289"
+    },
+    {
+      "path": "board-tag-aligned.log",
+      "bytes": 1039,
+      "sha256": "87384d3088e91e5b966524e4a08757827b2d148f4f4410e126deb9dd93963b65"
+    },
+    {
+      "path": "skills-tag-aligned.log",
+      "bytes": 944,
+      "sha256": "2d5c7594e09ba440fd9afee21ed25687e1e6def4d59ec920b194ea965b78f294"
+    },
+    {
+      "path": "ci-unit-announcement-only.log",
+      "bytes": 915777,
+      "sha256": "085744c5793d3896d1d60bc62e7067ed1280c05c13835d33d39c6a3c11d53ca4"
+    }
+  ],
+  "skills": {
+    "command": "GGD_GATE_CONCURRENCY=4 node tools/parallel-gates/run.mjs skills:check",
+    "steps": 70,
+    "initialPassed": 67,
+    "initialFailed": [
+      "board:check",
+      "decor:check",
+      "decor:check"
+    ],
+    "fixedTargetedExit": 0,
+    "singleAggregatePass": false
+  },
+  "editorRelease": {
+    "initialExitCode": 1,
+    "initialFailedTests": [
+      "src/readmeContract.test.ts",
+      "src/form/walk.test.ts"
+    ],
+    "fixedTargetedTests": 14,
+    "fixedTargetedExit": 0,
+    "productionBuildExit": 0,
+    "singleAggregatePass": false,
+    "note": "Reuse passed prefix and unaffected tests; rerun only failed files, then run the previously unreached build. Aggregate log contains wrapper failure tail, not full per-file stdout."
+  },
+  "coord": {
+    "packets": 29,
+    "exitCode": 0
+  },
+  "announcement": {
+    "testedWorktree": "GGD-community-hero-forge-s3",
+    "exitCode": 1,
+    "missingTags": [
+      "v0.42.26"
+    ],
+    "mainRef": "213916e393364d07ef059d84e4f77b5ff7fbb87f",
+    "actualFailedDeliveryLogSha256": "aa7f4d08d56e99099c48f648d73a99e024c574246aa7b2a52cb8526ca37b7a53",
+    "mainComment": "https://github.com/adms/GGD/pull/1135#issuecomment-5605319136"
+  },
+  "latestMergedMain": "bbc62a06df8eb7910e7a30304770f3fb03f01f2f",
+  "mainDocUpdate": {
+    "filesChanged": 7,
+    "runtimeOrHeroChanges": false,
+    "newGuardsExit": 0,
+    "boardCheckExit": 0,
+    "reason": "Remote PR still conflicted after Main published v0.43.1 and v0.43.2; no rerun of passed hero/Editor suites."
+  },
+  "rosterFollowup": {
+    "issue": 1159,
+    "ciRun": 34379658753,
+    "contractJob": 102563233539,
+    "previousHead": "9eef02216e6deaede32a7dd00cf50415b42a1332",
+    "status": "source-fixed-targeted-passed-new-ci-pending",
+    "testCount": 3,
+    "testExit": 0,
+    "rosterExit": 0,
+    "baselineUnchanged": 69,
+    "scope": "Whole-tree orphan regression only; references in inactive items are not player-visible proof. No hero, icon, runtime or template change.",
+    "sourceSha256": {
+      "packages/shared/src/ops/iconRedrawTargetsAreLive.test.ts": "dbbd1afa831326e8f89b33503e5b1b7dcffa169fbdb600e94ce22e37d55baf0d",
+      "tools/roster-guard/check.ts": "2adc82729be07c7effb33559a03042c9e5af6f66017ff6ebbe6a30678504e0c3"
+    }
+  },
+  "tagAlignedContracts": {
+    "ciRunBeforeFix": 34380843572,
+    "cause": "Local v0.43.1 and v0.43.2 tags missing; prior board check used v0.43.0. GitHub full tag fetch correctly rejected stale board.",
+    "fetchedTags": {
+      "v0.43.1": "6d09d45afbf47ffe996d5464955c9b9ecd5a1093",
+      "v0.43.2": "c577f8985cfd6c6bc54ad8952b6ca97eba023733"
+    },
+    "tagsAreAncestorsOfFixedMain": true,
+    "boardGenerator": "bash scripts/genrun.sh board:build",
+    "boardCheckExit": 0,
+    "skillsSteps": 70,
+    "skillsExit": 0,
+    "singleAggregatePass": true,
+    "unitResult": "completed; sole shared-test failure is missing v0.42.26 announcement"
+  },
+  "ciCompletedBeforeTagFixPush": {
+    "run": 34380843572,
+    "conclusion": "failure",
+    "sharedTests": {
+      "passed": 6261,
+      "failed": 1,
+      "skipped": 4,
+      "onlyFailure": "src/ops/everyTagAnnounced.test.ts: v0.42.26"
+    },
+    "contractFailure": "board v0.43.0 -> v0.43.2; fixed by original generator and 70/70 local checks",
+    "jobs": [
+      {
+        "name": "setup",
+        "conclusion": "success"
+      },
+      {
+        "name": "vuln",
+        "conclusion": "success"
+      },
+      {
+        "name": "unit",
+        "conclusion": "failure"
+      },
+      {
+        "name": "go-platform",
+        "conclusion": "success"
+      },
+      {
+        "name": "contract",
+        "conclusion": "failure"
+      },
+      {
+        "name": "e2e",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "regression",
+        "conclusion": "skipped"
+      }
+    ],
+    "limitation": "Shared failure stops later workspace suites and downstream CI steps. Not a full workspace pass or formal publication."
+  }
+}

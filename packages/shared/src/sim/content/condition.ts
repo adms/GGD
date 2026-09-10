@@ -736,6 +736,20 @@ export function isRecentCastAbilityLeaf(leaf: RecentCastLeaf): leaf is RecentCas
   return (leaf as RecentCastAbilityLeaf).abilityId !== undefined;
 }
 
+/** Other living allied bodies near the subject engaged in a recent hostile hit.
+ * HP or shield impact counts, not casts, invulnerable hits or friendly damage.
+ * Radius is center-to-center; no self, no other zone. Current position is used.
+ */
+export interface NearbyCombatLeaf {
+  kind: "nearbyCombat";
+  subject: ConditionSubject;
+  radius: number;
+  withinSec: number;
+}
+export const COMBAT_WITHIN_MIN_SEC = 1 / 30;
+export const COMBAT_WITHIN_MAX_SEC = 10;
+export const COMBAT_RADIUS_MAX = 40;
+
 export type ConditionLeaf =
   | ChanceLeaf
   | StatLeaf
@@ -746,7 +760,8 @@ export type ConditionLeaf =
   | DistanceLeaf
   | FacingLeaf
   | LearnedLeaf
-  | FormLeaf;
+  | FormLeaf
+  | NearbyCombatLeaf;
 
 /** 且 — every child must hold. Schema requires ≥1 child, so it is never vacuous. */
 export interface AllCondition {
@@ -1361,7 +1376,8 @@ function evalNode(
     if (ctx.target === undefined) return false;
     const a = world.transform.get(ctx.self);
     const b = world.transform.get(ctx.target);
-    if (a === undefined || b === undefined) return false;
+    // Different duels have no comparable combat distance, for every operator.
+    if (a === undefined || b === undefined || a.zone !== b.zone) return false;
     return compare(cond.op, dist(a.pos, b.pos), cond.value);
   }
   if (cond.kind === "facing") {
@@ -1394,6 +1410,23 @@ function evalNode(
     // ⭐ 與 `formGatePasses` 逐字同一條式子：`base` 是 `alternate` 的否定，
     // 兩者共用同一個 `inAlternateForm` ⇒ ⛔ 不可能「兩邊都說是」。
     return (cond.form === "alternate") === inAlternateForm(world, id);
+  }
+  if (cond.kind === "nearbyCombat") {
+    const id = subjectOf(ctx, cond.subject);
+    if (id === undefined || !world.combatActive) return false;
+    const center = world.transform.get(id);
+    const team = world.team.get(id);
+    if (!center || !team || !world.health.get(id)?.alive || world.settledZones.has(center.zone)) return false;
+    const windowTicks = Math.round(cond.withinSec / world.dt);
+    for (const [other, at] of world.combatActivity) {
+      if (other === id || at > world.tick || world.tick - at > windowTicks) continue;
+      if (!world.health.get(other)?.alive || world.team.get(other)?.teamId !== team.teamId) continue;
+      const pos = world.transform.get(other);
+      if (pos?.zone !== center.zone) continue;
+      const dx = pos.pos.x - center.pos.x, dz = pos.pos.z - center.pos.z;
+      if (dx * dx + dz * dz <= cond.radius * cond.radius) return true;
+    }
+    return false;
   }
   if (cond.kind === "recentCast") {
     const id = subjectOf(ctx, cond.subject);
@@ -1700,6 +1733,7 @@ function recentCastMatchLabel(leaf: RecentCastLeaf): string {
 }
 
 function describeLeaf(leaf: ConditionLeaf): string {
+  if (leaf.kind === "nearbyCombat") return `${SUBJECT_LABEL[leaf.subject]} ${num(leaf.radius)} 格內其他存活友軍在 ${num(leaf.withinSec)} 秒內造成或承受敵對命中`;
   if (leaf.kind === "chance") return `${pct(leaf.p)} 機率`;
   if (leaf.kind === "recentCast") {
     // ⛔ 秒數一定要進句子：一張「1 秒內接上才有追加」的卡如果印成「最近施放過

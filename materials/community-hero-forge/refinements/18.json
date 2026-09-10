@@ -1,0 +1,590 @@
+{
+  "schema": "ggd-community-design-refinement@1",
+  "projectId": "community-review-18-20260907",
+  "sourceSha256": "01a071565fb9ebbfa398a8bda21b2f3dfa5e455487a760c0ba78429283f9a67d",
+  "slots": {
+    "PASSIVE": {
+      "products": [
+        {
+          "instanceId": "passive-parody-1",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onDamageDealt",
+                  "effects": [
+                    {
+                      "kind": "restore",
+                      "manaPct": 0.08,
+                      "applyTo": "self"
+                    }
+                  ],
+                  "internalCooldown": 0,
+                  "target": "self",
+                  "abilitySlot": "R",
+                  "damageSource": "ability",
+                  "oncePerCast": true
+                }
+              ]
+            },
+            "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】R真正命中敵人後自己回復8%魔力，每次施法一次；空放不退款。",
+      "note": "王之信用審查：先扣對手魔力，餘額不足才加收寶具手續費\nR真正命中敵人後自己回復8%魔力，每次施法一次；空放不退款。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "effects",
+        "radiusTier",
+        "rangeTier",
+        "castTimeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json"
+      }
+    },
+    "Q": {
+      "products": [
+        {
+          "instanceId": "q-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "小"
+                  }
+                },
+                {
+                  "kind": "spendMana",
+                  "amount": {
+                    "flat": 120
+                  },
+                  "applyTo": "target"
+                },
+                {
+                  "kind": "floatingText",
+                  "shape": "single",
+                  "text": "餘額不足也敢見本王",
+                  "applyTo": "victim",
+                  "durationSec": 1
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】刷卡驗資：指定敌人小級魔法傷害，另扣目標120魔力；不足只扣剩餘量。",
+      "note": "王之信用審查：先扣對手魔力，餘額不足才加收寶具手續費\n刷卡驗資：指定敌人小級魔法傷害，另扣目標120魔力；不足只扣剩餘量。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-18-20260907.q",
+        "abilityId": "community-review-18-20260907.q",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "target",
+            "vfxId": "fx.prim.arcane.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              255,
+              186,
+              41
+            ]
+          }
+        ]
+      }
+    },
+    "W": {
+      "products": [
+        {
+          "instanceId": "w-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 120
+                  },
+                  "duration": 3,
+                  "absorbs": "all",
+                  "stackKey": "community-review-18-20260907.protection",
+                  "onExisting": "keepLarger"
+                },
+                {
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 220
+                  },
+                  "duration": 3,
+                  "absorbs": "all",
+                  "stackKey": "community-review-18-20260907.protection",
+                  "onExisting": "keepLarger",
+                  "condition": {
+                    "kind": "stat",
+                    "subject": "self",
+                    "stat": "mp",
+                    "mode": "percent",
+                    "op": ">",
+                    "value": 0.5
+                  }
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】富人護盾：120護盾；自己魔力超過50%再加100護盾，同一來源採較大值不無限疊。",
+      "note": "王之信用審查：先扣對手魔力，餘額不足才加收寶具手續費\n富人護盾：120護盾；自己魔力超過50%再加100護盾，同一來源採較大值不無限疊。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-18-20260907.w",
+        "abilityId": "community-review-18-20260907.w",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "self",
+            "vfxId": "fx.prim.arcane.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              255,
+              186,
+              41
+            ]
+          }
+        ]
+      }
+    },
+    "E": {
+      "products": [
+        {
+          "instanceId": "e-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "knockback",
+                  "distance": 3,
+                  "speed": 12,
+                  "from": "caster",
+                  "subtractGap": false,
+                  "uncontrollable": false
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】排隊請後退：敵人推離三格，不再给一片無關的自己護盾。",
+      "note": "王之信用審查：先扣對手魔力，餘額不足才加收寶具手續費\n排隊請後退：敵人推離三格，不再给一片無關的自己護盾。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-18-20260907.e",
+        "abilityId": "community-review-18-20260907.e",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "target",
+            "vfxId": "fx.prim.arcane.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              255,
+              186,
+              41
+            ]
+          }
+        ]
+      }
+    },
+    "R": {
+      "products": [
+        {
+          "instanceId": "r-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "中"
+                  }
+                },
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "小"
+                  },
+                  "condition": {
+                    "kind": "stat",
+                    "subject": "target",
+                    "stat": "mp",
+                    "mode": "percent",
+                    "op": "<",
+                    "value": 0.5
+                  }
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】逾期手續費：中級魔法傷害，目標魔力低於50%再追加小級傷害。",
+      "note": "王之信用審查：先扣對手魔力，餘額不足才加收寶具手續費\n逾期手續費：中級魔法傷害，目標魔力低於50%再追加小級傷害。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          30
+        ],
+        "manaCost": [
+          60
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-18-20260907.r",
+        "abilityId": "community-review-18-20260907.r",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "target",
+            "vfxId": "fx.prim.arcane.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              255,
+              186,
+              41
+            ]
+          }
+        ]
+      }
+    },
+    "EX": {
+      "products": [
+        {
+          "instanceId": "ex-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "dispel",
+                  "shape": "single",
+                  "polarity": "buff",
+                  "pools": {
+                    "buffs": true
+                  },
+                  "count": 1,
+                  "order": "newest"
+                },
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "小"
+                  }
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】回收贈品：移除目標最近一項可驅散增益，魔法打擊小級。",
+      "note": "王之信用審查：先扣對手魔力，餘額不足才加收寶具手續費\n回收贈品：移除目標最近一項可驅散增益，魔法打擊小級。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-18-20260907.ex",
+        "abilityId": "community-review-18-20260907.ex",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "target",
+            "vfxId": "fx.prim.arcane.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              255,
+              186,
+              41
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "version": 1,
+  "templateVersions": {
+    "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+      "schema": "template@1",
+      "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-event-passive",
+      "name": "自訂事件被動",
+      "family": "event-passive",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+      "params": {
+        "hooks": {
+          "type": "hooks",
+          "default": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      }
+    },
+    "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+      "schema": "template@1",
+      "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-effect-sequence",
+      "name": "自訂效果序列",
+      "family": "effect-sequence",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ]
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 10,
+          "unit": "s"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 40
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "enemies",
+            "allies"
+          ]
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "recast": {
+          "type": "recast",
+          "optional": true,
+          "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,585 @@
+{
+  "schema": "ggd-community-design-refinement@1",
+  "projectId": "community-review-09-20260907",
+  "sourceSha256": "15667448b50c1276ed00e302de5abca78fbd41a6ab44c71756417bfd7fa48dd4",
+  "slots": {
+    "PASSIVE": {
+      "products": [
+        {
+          "instanceId": "passive-parody-1",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onAllyDamaged",
+                  "effects": [
+                    {
+                      "kind": "restore",
+                      "manaPct": 0.04,
+                      "applyTo": "self"
+                    }
+                  ],
+                  "internalCooldown": 3,
+                  "target": "self"
+                }
+              ]
+            },
+            "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】隊友實際受傷後，自己回復4%魔力，每三秒一次；不是鼓勵站著白挨打的回血光環。",
+      "note": "賢狼保險：拿自己的血當保費，快破產時才開出大額理賠\n隊友實際受傷後，自己回復4%魔力，每三秒一次；不是鼓勵站著白挨打的回血光環。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "effects",
+        "radiusTier",
+        "rangeTier",
+        "castTimeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json"
+      }
+    },
+    "Q": {
+      "products": [
+        {
+          "instanceId": "q-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "小"
+                  }
+                },
+                {
+                  "kind": "applyStatus",
+                  "statusId": "grievous-wounds",
+                  "duration": 3,
+                  "applyTo": "target",
+                  "sourceScope": "caster",
+                  "healingTakenMult": 0.5
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】禁止退貨：敵方小級魔法傷害並受療減半三秒。",
+      "note": "賢狼保險：拿自己的血當保費，快破產時才開出大額理賠\n禁止退貨：敵方小級魔法傷害並受療減半三秒。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-09-20260907.q",
+        "abilityId": "community-review-09-20260907.q",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "target",
+            "vfxId": "fx.prim.arcane.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              235,
+              166,
+              56
+            ]
+          }
+        ]
+      }
+    },
+    "W": {
+      "products": [
+        {
+          "instanceId": "w-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "allies",
+              "effects": [
+                {
+                  "kind": "spendHealth",
+                  "amount": {
+                    "flat": 0
+                  },
+                  "pctMaxHealth": 0.15,
+                  "minimumHp": 1
+                },
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 160
+                  },
+                  "applyTo": "target"
+                },
+                {
+                  "kind": "floatingText",
+                  "shape": "single",
+                  "text": "利息另計",
+                  "applyTo": "victim",
+                  "durationSec": 1
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】墊付保費：自己付最大生命15%但至少留1HP，指定隊友回復160。",
+      "note": "賢狼保險：拿自己的血當保費，快破產時才開出大額理賠\n墊付保費：自己付最大生命15%但至少留1HP，指定隊友回復160。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-09-20260907.w",
+        "abilityId": "community-review-09-20260907.w",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "target",
+            "vfxId": "fx.prim.wind.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              235,
+              166,
+              56
+            ]
+          }
+        ]
+      }
+    },
+    "E": {
+      "products": [
+        {
+          "instanceId": "e-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "allies",
+              "effects": [
+                {
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 120
+                  },
+                  "duration": 3,
+                  "absorbs": "all",
+                  "stackKey": "community-review-09-20260907.protection",
+                  "onExisting": "keepLarger"
+                },
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 240
+                  },
+                  "applyTo": "target",
+                  "condition": {
+                    "kind": "stat",
+                    "subject": "self",
+                    "stat": "hp",
+                    "mode": "percent",
+                    "op": "<",
+                    "value": 0.5
+                  }
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】理賠審核：隊友得到120護盾；自己生命低於50%時再追加240治療。",
+      "note": "賢狼保險：拿自己的血當保費，快破產時才開出大額理賠\n理賠審核：隊友得到120護盾；自己生命低於50%時再追加240治療。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-09-20260907.e",
+        "abilityId": "community-review-09-20260907.e",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "target",
+            "vfxId": "fx.prim.wind.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              235,
+              166,
+              56
+            ]
+          }
+        ]
+      }
+    },
+    "R": {
+      "products": [
+        {
+          "instanceId": "r-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 220
+                  },
+                  "applyTo": "self"
+                },
+                {
+                  "kind": "restore",
+                  "manaPct": 0.2,
+                  "applyTo": "self"
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】先救保險公司：自己回復220生命與20%魔力；不改隊友帳戶。",
+      "note": "賢狼保險：拿自己的血當保費，快破產時才開出大額理賠\n先救保險公司：自己回復220生命與20%魔力；不改隊友帳戶。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          30
+        ],
+        "manaCost": [
+          60
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-09-20260907.r",
+        "abilityId": "community-review-09-20260907.r",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "self",
+            "vfxId": "fx.prim.arcane.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              235,
+              166,
+              56
+            ]
+          }
+        ]
+      }
+    },
+    "EX": {
+      "products": [
+        {
+          "instanceId": "ex-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "allies",
+              "effects": [
+                {
+                  "kind": "dispel",
+                  "shape": "single",
+                  "polarity": "debuff",
+                  "pools": {
+                    "status": true,
+                    "dot": true,
+                    "buffs": true
+                  },
+                  "count": 3,
+                  "order": "newest"
+                },
+                {
+                  "kind": "applyStatus",
+                  "statusId": "slow30",
+                  "duration": 2,
+                  "applyTo": "self",
+                  "sourceScope": "caster",
+                  "moveSpeedMult": 0.7
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】售後服務：淨化指定隊友最多三項負面；自己減速30%兩秒去跑腿。",
+      "note": "賢狼保險：拿自己的血當保費，快破產時才開出大額理賠\n售後服務：淨化指定隊友最多三項負面；自己減速30%兩秒去跑腿。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-09-20260907.ex",
+        "abilityId": "community-review-09-20260907.ex",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "target",
+            "vfxId": "fx.prim.wind.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              235,
+              166,
+              56
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "version": 1,
+  "templateVersions": {
+    "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+      "schema": "template@1",
+      "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-event-passive",
+      "name": "自訂事件被動",
+      "family": "event-passive",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+      "params": {
+        "hooks": {
+          "type": "hooks",
+          "default": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      }
+    },
+    "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+      "schema": "template@1",
+      "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-effect-sequence",
+      "name": "自訂效果序列",
+      "family": "effect-sequence",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ]
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 10,
+          "unit": "s"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 40
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "enemies",
+            "allies"
+          ]
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "recast": {
+          "type": "recast",
+          "optional": true,
+          "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+        }
+      }
+    }
+  }
+}

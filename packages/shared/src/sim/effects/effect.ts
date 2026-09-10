@@ -51,6 +51,8 @@ export type IncomingBasis = "raw" | "mitigated" | "hpLost";
  * 不會發生」不是一個能出貨的狀態。
  */
 export interface TriggerDamage {
+  /** Actual positive block contributions for this packet, never shield absorption. */
+  readonly blockSourceIds?: readonly string[];
   /** The original accepted cast; absent for unrelated/derived damage. */
   readonly castInstance?: import("../content/castInstance").CastInstance;
   /** Contributing casts of one combined stacked-DoT payout. */
@@ -78,6 +80,7 @@ export interface TriggerDamage {
   readonly mitigated: number;
   /** 真的從血條扣掉的量(護盾吸收的不算) */
   readonly hpLost: number;
+  readonly shieldAbsorbed?: number;
   /** 封包的 provenance,`"basic"` = 普通攻擊。`HookDef.damageSource` 讀它 */
   readonly origin: string;
   /**
@@ -303,6 +306,7 @@ import type { CycleBuffVariant } from "./variants/cycleBuff";
 import type { RestoreVariant } from "./variants/restore";
 import type { SpendHealthVariant } from "./variants/spendHealth";
 import type { SpendManaVariant } from "./variants/spendMana";
+import type { InterruptCastVariant } from "./variants/interruptCast";
 import type { DashVariant } from "./variants/dash";
 import type { LeapVariant } from "./variants/leap";
 import type { BlinkVariant } from "./variants/blink";
@@ -310,6 +314,8 @@ import type { ChampionFormVariant } from "./variants/championForm";
 import type { SpawnProjectileVariant } from "./variants/spawnProjectile";
 import type { SpawnVfxVariant } from "./variants/spawnVfx";
 import type { DotVariant } from "./variants/dot";
+import type { TimeStopVariant } from "./variants/timeStop";
+import type { TrapVariant } from "./variants/trap";
 import type { SummonVariant } from "./variants/summon";
 import type { InvulnerableVariant } from "./variants/invulnerable";
 import type { KnockbackVariant } from "./variants/knockback";
@@ -365,6 +371,7 @@ type EffectVariant =
   | RestoreVariant
   | SpendHealthVariant
   | SpendManaVariant
+  | InterruptCastVariant
   | DashVariant
   | LeapVariant
   | BlinkVariant
@@ -372,6 +379,8 @@ type EffectVariant =
   | SpawnProjectileVariant
   | SpawnVfxVariant
   | DotVariant
+  | TimeStopVariant
+  | TrapVariant
   | SummonVariant
   | InvulnerableVariant
   | KnockbackVariant

@@ -317,6 +317,7 @@ export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreview
         {mode === "runtime" ? "真 Sim → 真 VfxSystem" : "真 IntentFrame → VFX Script"}
         {" · "}雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step
       </div>
+      <div className="vfx-motion-status" aria-label="位移狀態">{overlay.motion?.map(motion => <span key={motion.id} data-motion-state={motion.state} data-motion-x={motion.x} data-motion-z={motion.z}>{motion.state === "pulling" ? "吊帶" : "滑板"}：{motion.label}</span>)}</div>
       <div className="vfx-stage-status">{overlay.status}</div>
       <div className="vfx-actor-status">施法者：{overlay.actors.caster}<br />目標：{overlay.actors.target}</div>
       <div className="vfx-stage-tools">

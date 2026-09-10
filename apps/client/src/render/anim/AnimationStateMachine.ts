@@ -126,6 +126,12 @@ export class AnimationStateMachine {
    * the clip is frozen for that long, so its window has to grow by the same
    * amount or the state would expire while the clip is still mid-swing.
    */
+  hold(ms: number): void {
+    if (!(ms > 0)) return;
+    if (this.pulse !== null) this.pulseEndMs += ms;
+    if (Number.isFinite(this.lastMovingMs)) this.lastMovingMs += ms;
+  }
+
   extendPulse(kind: AnimPulse, ms: number): void {
     if (this.pulse === kind && ms > 0) this.pulseEndMs += ms;
   }

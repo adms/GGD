@@ -1,0 +1,408 @@
+{
+  "schema": "ggd-eris-verification@1",
+  "issue": 1132,
+  "sourceCommit": "09dbc46d01a60a50bf41d76ed17bb78c92533e21",
+  "refinementVersion": 1,
+  "refinementSha256": "63c26b49561261516db07d01fd31944c572628ef6a4b79e2aea2816991955f0d",
+  "changes": [
+    "PASSIVE tracks each enemy and caster independently: genuine basic/ability HP or shield loss opens a two-second melee opener; the first in-range hit gains one finite bonus, with an eight-second per-target lock. Four seconds without combat are needed to re-engage; ongoing combat cannot renew the opening window.",
+    "Q moves one grounded unit, then strikes one forward arc from the actual endpoint. It no longer jumps or pushes targets.",
+    "W adds finite armor and magic resistance for three seconds through one stack key. Recasting refreshes rather than stacking; expiry restores ordinary damage.",
+    "E is a harmless grounded approach: wall or first enemy body stops it. It does not inherit damage, push or leap from the former charge template.",
+    "R has a 0.55-second interruptible windup, then a bounded straight dash. Wall-permitted displacement is swept for the first legal enemy and stops at contact before one damage payload. Ties use entity ID; allies, dead bodies, other zones, behind-wall and behind-direction bodies do not qualify. Existing soft body separation and GGD speed caps remain; authored speed 22 resolves to current runtime cap 16.",
+    "EX requires the target to have the caster own two-second recent-hit mark and be within three units. It consumes one mark at acceptance, delivers one extra strike, and refuses out-of-range use without approach, mana, cooldown or mark expenditure.",
+    "Generic opt-in fields are allowApproach, dash.stopOnHit/onHit and damageConnected. Deferred contact keeps exact dash identity and cast context; zero-direction reuse, death and replacement cannot inherit a stale contact payload.",
+    "Editor preview earns EX eligibility through a real prior Q or R hit. Empty preview and the harmless E step cannot manufacture the mark; the source project remains unchanged."
+  ],
+  "checks": {
+    "erisBehavior": {
+      "tests": 25,
+      "exitCode": 0
+    },
+    "erisScenario": {
+      "tests": 3,
+      "exitCode": 0
+    },
+    "communityAndRuntimeRegression": {
+      "tests": 363,
+      "files": 24,
+      "exitCode": 0,
+      "includesAzazelReversal": true
+    },
+    "typechecks": {
+      "shared": 0,
+      "editor": 0,
+      "client": 0,
+      "gameServer": 0
+    }
+  },
+  "initialFailures": [
+    "The immunity fixture initially applied immunity to the caster instead of the target; corrected applyTo and retained the negative event checks.",
+    "The defense comparison initially included the enemy Eris opener only in its baseline; consumed that actual opener before comparing ordinary damage.",
+    "An endpoint assertion incorrectly expected phasing through friendly/dead bodies. Probes confirmed ordinary soft body separation changes travelled distance while the dash budget expires without contact; retained existing collision rules and asserted the actual reason for stopping.",
+    "The schema positive control omitted the required damage amount; restored a valid pre-damage hook before checking the new incompatible settled-damage filter.",
+    "Typecheck caught remaining-distance access on a leap union; narrowed to a ground dash.",
+    "Review found zero-direction input could reuse an existing dash object. Guarded new override identity and added a runtime regression."
+  ],
+  "mutations": [
+    {
+      "mutation": "contact-stop",
+      "file": "packages/shared/src/sim/systems/MovementSystem.ts",
+      "from": "if (ov.kind === \"dash\" && ov.stopOnHit) {",
+      "to": "if (false && ov.kind === \"dash\" && ov.stopOnHit) {",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/eris.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "R waits for its windup"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "d1da75cad2803e7474c26c35ad54c194ebc26559cd72716193154c8f32b68afa"
+    },
+    {
+      "mutation": "range-refusal",
+      "file": "packages/shared/src/sim/abilities/abilitySystem.ts",
+      "from": "allowApproach && def.allowApproach !== false && armCastApproach",
+      "to": "allowApproach && armCastApproach",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/eris.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "EX refuses range immediately"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "c29043cd3b404cfdd51fd2fd20230053c12ae42ea62cf78e19667064b8acd7a6"
+    },
+    {
+      "mutation": "connected-damage",
+      "file": "packages/shared/src/sim/effects/hooks.ts",
+      "from": "if (hook.damageConnected && !(incoming && incoming.hpLost + (incoming.shieldAbsorbed ?? 0) > 0)) continue;",
+      "to": "",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/eris.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "zero contact"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "ef4932163dade051fe1c6a73fb9a1fe35174f183485db484665ce9ccf3ddee88"
+    },
+    {
+      "mutation": "forward-contact",
+      "file": "packages/shared/src/sim/movement/dashContact.ts",
+      "from": "if (dot(sub(body.pos, from), delta) < 0) continue;",
+      "to": "",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/eris.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "an overlapping enemy behind"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "5076c6e5b690a1319e43ac7e2230a23b65860b7dcd0a4fdf6634b70e4d1291f5"
+    }
+  ],
+  "generators": [
+    {
+      "step": "typecat:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/eris-gen-typecat-build.log"
+    },
+    {
+      "step": "caps:export",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/eris-gen-caps-export.log"
+    },
+    {
+      "step": "editorcov:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/eris-gen-editorcov-build.log"
+    },
+    {
+      "step": "bricks:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/eris-gen-bricks-build.log"
+    },
+    {
+      "step": "contract:numbers",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/eris-gen-contract-numbers.log"
+    },
+    {
+      "step": "spec:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/eris-gen-spec-build.log"
+    },
+    {
+      "step": "overview:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/eris-gen-overview-build.log"
+    },
+    {
+      "step": "skillforge:audit",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/eris-gen-skillforge-audit.log"
+    },
+    {
+      "step": "skillremake:docs",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/eris-gen-skillremake-docs.log"
+    },
+    {
+      "step": "atlas:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/eris-gen-atlas-build.log"
+    },
+    {
+      "step": "docs:readme",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/eris-gen-docs-readme.log"
+    },
+    {
+      "step": "decor:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/eris-gen-decor-build.log"
+    },
+    {
+      "step": "decor:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/eris-gen-decor-final.log"
+    }
+  ],
+  "handoff": {
+    "changedProjects": [
+      "28.hero-project.json"
+    ],
+    "otherProjectsByteIdentical": 36,
+    "originalRecipesByteIdentical": 37,
+    "indexByteIdentical": true,
+    "sourceDesignBriefPresentationUnchanged": true,
+    "revisionBefore": 12,
+    "revisionAfter": 13,
+    "modelSha256": "d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83",
+    "generatedAudit": 57
+  },
+  "coverage": {
+    "mappedSlots": 57,
+    "unmappedSlots": 165,
+    "genericOnAttackPassives": 20
+  },
+  "assetReview": {
+    "entry": "../ASSET_LIBRARIES.md",
+    "queries": [
+      "艾莉絲 --pending --limit 5"
+    ],
+    "result": "Registry candidate 300heroes:336 is 艾莉丝 from 無職轉生, native and static preview. The versioned project already binds a normalized exact Eris model; the registry status alone is not an import verdict.",
+    "currentModelCharacter": "艾莉丝",
+    "currentModelSourceWork": "無職轉生～到了異世界就拿出真本事～",
+    "currentModelRelationship": "exact",
+    "currentModelSha256": "d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83",
+    "modelChanged": false,
+    "clipMap": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_1",
+      "cast": "single_skill_05",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "limitations": [
+      "Dedicated sword timing, light-cut line, high-attack-speed motion and sounds remain unverified.",
+      "Existing cast uses one shared native clip and hurt aliases idle. Old VFX timing remains unaccepted; compile and model bytes are not visual proof."
+    ]
+  },
+  "originalDesignAcceptance": "incomplete",
+  "visualAcceptance": "unverified",
+  "currentServiceZip": "not-built",
+  "formalPublication": false,
+  "logs": {
+    "eris-body-probe.log": {
+      "sha256": "81e955a8cb9b2516325a12d82a204eeeab68434b8d005420e83675924188f1ec"
+    },
+    "eris-gen-atlas-build.log": {
+      "sha256": "49f7e9503821ae6e8e56aa2c6b8fe93db31c45a9b819b6f538453aa5ec7bfd00"
+    },
+    "eris-gen-bricks-build.log": {
+      "sha256": "2026994c32eb40ea8f0ca687e9331f4400b93d46aa86edbd78083edb01d3e8a9"
+    },
+    "eris-gen-caps-export.log": {
+      "sha256": "d12a233f2ac31a4726ed6bf0249250dacd41de4589c422c2cdce07bf339a04e7"
+    },
+    "eris-gen-contract-numbers.log": {
+      "sha256": "74f669584cf58ba3a694b30363ee0f306cdde4f18495005ec05ed8cc70fe5965"
+    },
+    "eris-gen-decor-build.log": {
+      "sha256": "30f38a8b028e7a4a4b35a00121072ff551e1dcb0a34aad94a23ec0469bc76032"
+    },
+    "eris-gen-decor-final.log": {
+      "sha256": "30f38a8b028e7a4a4b35a00121072ff551e1dcb0a34aad94a23ec0469bc76032"
+    },
+    "eris-gen-docs-readme.log": {
+      "sha256": "c1376f0b9f50e5b20ae019511a075131234156c80d663753699b842f6a93184e"
+    },
+    "eris-gen-editorcov-build.log": {
+      "sha256": "75fcf45172aa042222bb4301bf8db6da6cb8ff405aae7dcf72e264f609d4ada5"
+    },
+    "eris-gen-overview-build.log": {
+      "sha256": "dc71d50c4be5a38c3e063a263304685254162e186394f2e6e086ce2b89b6fc89"
+    },
+    "eris-gen-skillforge-audit.log": {
+      "sha256": "0fe710f96ff477c082823fcc7fbeca6ba1629f3f7a3de64a6ab4c4a00044ae2b"
+    },
+    "eris-gen-skillremake-docs.log": {
+      "sha256": "375dea34242c3392245cdefa4c4b78dad126b6dfcb63e6c913a5ddc3cdeca4af"
+    },
+    "eris-gen-spec-build.log": {
+      "sha256": "2fd6cec3920fbcbd6635f30267d112b10f50337c54ea92217669e0d5a2b36904"
+    },
+    "eris-gen-typecat-build.log": {
+      "sha256": "a51cfc10a35b2f99fe40a75b5c932dac5c521896ebd0f247308f14c7c016f7e9"
+    },
+    "eris-handoff.log": {
+      "sha256": "879306cbaac0df644a9a751ddbf64cf4ee7f593ca67f3a4e4283d1ed7c5f217f"
+    },
+    "eris-mutation-connected-damage.log": {
+      "sha256": "ef4932163dade051fe1c6a73fb9a1fe35174f183485db484665ce9ccf3ddee88"
+    },
+    "eris-mutation-contact-stop.log": {
+      "sha256": "d1da75cad2803e7474c26c35ad54c194ebc26559cd72716193154c8f32b68afa"
+    },
+    "eris-mutation-forward-contact.log": {
+      "sha256": "5076c6e5b690a1319e43ac7e2230a23b65860b7dcd0a4fdf6634b70e4d1291f5"
+    },
+    "eris-mutation-range-refusal.log": {
+      "sha256": "c29043cd3b404cfdd51fd2fd20230053c12ae42ea62cf78e19667064b8acd7a6"
+    },
+    "eris-probe.log": {
+      "sha256": "35407b8dcfa47d2ec95e86f11ac9e4ffcd0263cb98979365ab3430f872ef0b9e"
+    },
+    "eris-regression.log": {
+      "sha256": "0fdd1e44a59d7fe3ef2308879dbb2a4c25fd744793d59e6a82734708f1887269"
+    },
+    "eris-tests-01.log": {
+      "sha256": "323f1197c50fc84e3ff9206877fb35ddef3765669a8ebd5418ccb33cf19dcb22"
+    },
+    "eris-tests-02.log": {
+      "sha256": "c1674cf82451b638eedd171ffc908b8f2d17682ef0564adeb4297491c85d5ade"
+    },
+    "eris-tests-03.log": {
+      "sha256": "c8652b7ebd71b3cc8135fe9d39d80a1f53f7537bc5c7038be35205cf504a1d02"
+    },
+    "eris-tests-04.log": {
+      "sha256": "65887a9b25a1b1ccc71bbf16972f95bc92a7496951a0386093699e78ef96d18a"
+    },
+    "eris-typecheck-01.log": {
+      "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    },
+    "eris-typecheck-02.log": {
+      "sha256": "7f1e0d81ed497d3a1af30855502f2469df7d7e9924fc2439e15d6fbfe6ce961a"
+    },
+    "eris-typecheck-03.log": {
+      "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    },
+    "eris-typecheck-final-client.log": {
+      "sha256": "39d946f6b36b6e4e7de7bfbe2267744c75dc2daf57912304bbcdcd88a0cc130d"
+    },
+    "eris-typecheck-final-editor.log": {
+      "sha256": "486eafd3c0debbbff5ae7dddb4aa8823f853e470eff3bacbda032617862caca2"
+    },
+    "eris-typecheck-final-game-server.log": {
+      "sha256": "b05c3d89729ac8d5380fe460caa7c9227683cd32eda0fd3fbdcddaedd946d715"
+    },
+    "eris-typecheck-final-shared.log": {
+      "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    }
+  },
+  "finalBatch": {
+    "head": "a81602327909221c787e5a693fc74a9e7737dd27",
+    "workingTreeClean": true,
+    "sourceFingerprint": "5efdc095133d00440ed8ba371d1f6820995abead2eb2fa8ebdc17d4724600065",
+    "exitCode": 2,
+    "errors": [],
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 57,
+      "slotsWithoutBehaviorSuite": 165
+    },
+    "modelBytes": "verified",
+    "reportSha256": "08807f9569a9e55e5412a16bee78aec53106381fefef448e16e238cd837141fa",
+    "editorTests": 601,
+    "registeredTests": 557,
+    "jobs": [
+      {
+        "id": "skills",
+        "exitCode": 0,
+        "logSha256": "502e454dacf226a1b180a0565f9f0964e50e79d06602aee2167db0128f2d8c6a"
+      },
+      {
+        "id": "editor",
+        "exitCode": 0,
+        "logSha256": "e8654abf46c819ab720369b1000603682fcb5090498f9c5f030efdce11fd03b7"
+      },
+      {
+        "id": "coord",
+        "exitCode": 0,
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271"
+      },
+      {
+        "id": "compile-and-models",
+        "exitCode": 0,
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c"
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "exitCode": 0,
+        "logSha256": "490e78b69b6e952c85bd65d97a206e887d01ffba4ead53e4376364b12f92147b"
+      },
+      {
+        "id": "behavior-trap-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "b0d89a78be369d980647319159b0d32d5a6bc7872d83ccee7f35cf46981ab567"
+      },
+      {
+        "id": "behavior-motion-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "bfb9adca3053314d328846bd6d4c2f32e114fe1830d1d74b2cef95ff07c19daa"
+      },
+      {
+        "id": "behavior-target-resource-acceptance",
+        "exitCode": 0,
+        "logSha256": "1f73eb55e41aea5dc0292cd6ac1b9513d1118072570278a21c353a23a15fae50"
+      }
+    ],
+    "meaning": "Every executed check passed on the clean commit. Exit 2 preserves 165 unmapped slots; no original-art, full-design or publication verdict. Receipt-only commit follows the tested source."
+  }
+}

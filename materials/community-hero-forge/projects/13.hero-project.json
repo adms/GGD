@@ -1,0 +1,958 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "community-review-13-20260907",
+  "revision": 14,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "朝田詩乃",
+    "concept": "朝田詩乃 社群英雄功能驗收稿。作品：《刀劍神域》  \n採用：GGO 的詩乃，使用 Hecate II。  \n定位：瞄準、視線、狙擊與撤離。\n\n視覺方向：青色狙擊線、金色槍口火、灰色翻滾塵；採 GGO 槍械版本。\n以 GGD 射手 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "PASSIVE": "〔狙擊專注〕",
+      "Q": "〔Hecate II・精準射擊〕",
+      "W": "〔觀測射界〕",
+      "E": "〔戰術翻滾〕",
+      "R": "〔Hecate II・決定性一槍〕",
+      "EX": "〔副武器應急射擊〕"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      }
+    },
+    "attributes": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 14,
+      "state": "draft",
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      }
+    },
+    "mechanics": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "community-review-13-20260907.plan",
+    "title": "朝田詩乃",
+    "summary": "朝田詩乃 社群英雄功能驗收稿。作品：《刀劍神域》  \n採用：GGO 的詩乃，使用 Hecate II。  \n定位：瞄準、視線、狙擊與撤離。\n\n視覺方向：青色狙擊線、金色槍口火、灰色翻滾塵；採 GGO 槍械版本。\n以 GGD 射手 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "射手",
+    "archetype": "marksman",
+    "attackType": "ranged",
+    "budget": {
+      "power": 50,
+      "complexity": 60
+    },
+    "statOverrides": {
+      "ms": "中",
+      "mr": "小",
+      "armor": "小",
+      "maxHealth": "小",
+      "maxMana": "中",
+      "ad": "大",
+      "ap": "小",
+      "as": "大",
+      "healthRegen": "小",
+      "manaRegen": "中",
+      "range": "大"
+    },
+    "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020",
+    "templateVersions": {
+      "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+        "id": "tpl-event-passive",
+        "schema": "template@1",
+        "name": "自訂事件被動",
+        "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+        "family": "event-passive",
+        "status": "enabled",
+        "params": {
+          "hooks": {
+            "type": "hooks",
+            "default": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ]
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+        "id": "tpl-effect-sequence",
+        "schema": "template@1",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
+        "status": "enabled",
+        "params": {
+          "castType": {
+            "type": "enum",
+            "default": "targeted",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 10,
+            "unit": "s",
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "radius": {
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "side": {
+            "type": "enum",
+            "default": "enemies",
+            "values": [
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "recast": {
+            "type": "recast",
+            "optional": true,
+            "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b41146563a36c4be10": {
+        "id": "tpl-blink",
+        "schema": "template@1",
+        "name": "純位移瞬移",
+        "description": "把自己的身體搬到指定的地面點 —— 真的瞬移（`kind:\"blink\"`；owner 2026-08-09「是真的瞬移，不是平移」，GH#301-2），中間那兩格身體不存在：不會被範圍技掃到、飛行途中不吃碰撞；落點仍照 `content/config/displacement-tiers.json` 結算牆前截斷／飛行豁免／場地邊界（GH#1044）。距離上限就是技能自己的射程（skeleton 的 `range`，⛔ 不是這裡的欄位）。⛔ 零參數是刻意的：出貨 7 支（57-02 任意門 · 86-02 電光一閃 · 09-02 瞬間移動 ×2 · 65-01 神出鬼沒 · 58-00 電光一閃 ×2）的 `effects` 一個位元組都不差，多一格就是編一格。要「瞬移到目標身上再打一下」走 tpl-blink-strike；要「抵達點才結算 onLand」走 tpl-teleport。",
+        "family": "blink",
+        "status": "enabled",
+        "params": {
+          "castTimeSec": {
+            "type": "number",
+            "default": 0.467,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true,
+            "origin": "census: 出貨 7/7 支純位移的 `castTimeSec` 逐位元 0.467（content/abilities/godie-n00b.e.json · o00k.w · o00x.w · ogrh.w · udea.q · o02l.passive · ofar.passive）；⚠️ 它是 castderive:build:raw 推導的欄位，文件與 params 同一個值（同 71/79 位既有採用者的慣例）。"
+          }
+        },
+        "requires": [
+          "blink"
+        ],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "57-02 任意門（content/abilities/godie-n00b.e.json）",
+          "jass": "A0PM 82-02 虛空瞬動 j:35335-35336（GetOrderPointLoc → SetUnitPositionLoc；同一台「指向點」機器，expand.ts teleport 註解逐字）"
+        }
+      }
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "〔狙擊專注〕",
+        "purpose": "【核准惡搞改編】W架槍後0.6秒才取得焦點四秒；沒有瞬間瞄準。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "passive-parody-1",
+            "template": {
+              "ref": "tpl-event-passive",
+              "params": {
+                "hooks": [
+                  {
+                    "on": "onAbilityCast",
+                    "effects": [
+                      {
+                        "kind": "delayed",
+                        "shape": "single",
+                        "delaySec": 0.6,
+                        "effects": [
+                          {
+                            "kind": "applyStatus",
+                            "statusId": "camera-mark",
+                            "duration": 4,
+                            "applyTo": "self",
+                            "sourceScope": "caster"
+                          }
+                        ],
+                        "stopOnCasterDeath": true
+                      }
+                    ],
+                    "internalCooldown": 0,
+                    "target": "self",
+                    "abilitySlot": "W"
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "〔Hecate II・精準射擊〕",
+        "purpose": "【核准惡搞改編】證件照：小級射擊，消耗完成的焦點再追加中級物理傷害。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "q-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "小"
+                    }
+                  },
+                  {
+                    "kind": "consumeStatus",
+                    "shape": "single",
+                    "statusId": "camera-mark",
+                    "count": "all",
+                    "subject": "self",
+                    "appliedBy": "self",
+                    "onConsumed": [
+                      {
+                        "kind": "damage",
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "中"
+                        }
+                      },
+                      {
+                        "kind": "floatingText",
+                        "shape": "single",
+                        "text": "不要動，拍糊了",
+                        "applyTo": "victim",
+                        "durationSec": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        },
+        "capabilityIds": [
+          "projectile"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "〔觀測射界〕",
+        "purpose": "【核准惡搞改編】架腳架：自己定身0.7秒並取得80護盾；P在架穩後給焦點。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "w-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "self",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "root",
+                    "duration": 0.7,
+                    "applyTo": "self",
+                    "sourceScope": "caster",
+                    "root": true
+                  },
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 80
+                    },
+                    "duration": 1,
+                    "absorbs": "all",
+                    "stackKey": "community-review-13-20260907.protection",
+                    "onExisting": "keepLarger"
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "〔戰術翻滾〕",
+        "purpose": "【核准惡搞改編】鏡頭裝不下：將敌人推遠四格，不自帶傷害。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "e-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "knockback",
+                    "distance": 4,
+                    "speed": 12,
+                    "from": "caster",
+                    "subtractGap": false,
+                    "uncontrollable": false
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 8
+        },
+        "capabilityIds": [
+          "leap"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "〔Hecate II・決定性一槍〕",
+        "purpose": "【核准惡搞改編】遠景照：小級物理傷害，起手距離超過四格追加中級傷害；貼臉不算遠景。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            30
+          ],
+          "manaCost": [
+            60
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "r-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "小"
+                    }
+                  },
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "中"
+                    },
+                    "condition": {
+                      "kind": "distance",
+                      "op": ">",
+                      "value": 4
+                    }
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 8
+        },
+        "capabilityIds": [
+          "projectile"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "〔副武器應急射擊〕",
+        "purpose": "【核准惡搞改編】背著腳架撤離合法落點，不洗掉Q冷卻。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "ex-parody-1",
+            "template": {
+              "ref": "tpl-blink",
+              "params": {
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b41146563a36c4be10"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 8
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782",
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870",
+      "byteSize": 816876,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_skill_03",
+        "cast": "single_skill_03",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "modelProvenance": {
+      "schema": "ggd-hero-model-provenance@1",
+      "modelSha256": "9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870",
+      "sourceAssetId": "300heroes:d4ce2cfc061185921d1cb222",
+      "sourceCharacter": "冰之狙击手",
+      "sourceWork": "刀劍神域 Sword Art Online",
+      "relationship": "exact",
+      "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。 普攻及施法暫共用原生持槍瞄準動作，命中時點由技能設定另驗收。"
+    },
+    "championIcon": "assets/icons/champions/thorne.webp",
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-13-20260907.q",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-13-20260907.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "target",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                66,
+                179,
+                176
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-13-20260907.w",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-13-20260907.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "self",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                66,
+                179,
+                176
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-13-20260907.e",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-13-20260907.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "target",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                66,
+                179,
+                176
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-13-20260907.r",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-13-20260907.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "target",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                66,
+                179,
+                176
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-13-20260907.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-13-20260907.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.dash",
+              "at": "target",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                66,
+                179,
+                176
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870.glb",
+        "byteSize": 816876,
+        "mediaType": "model/gltf-binary",
+        "sha256": "9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "sourceDesign": {
+    "schema": "ggd-hero-source-design@1",
+    "sourceSha256": "fa2b0954e949cc025183f412aaecdeb7f9db15989bd0213a1abddb365ee66767",
+    "name": "朝田詩乃",
+    "identity": "作品：《刀劍神域》  \n採用：GGO 的詩乃，使用 Hecate II。  \n定位：瞄準、視線、狙擊與撤離。",
+    "ownerText": "### 13｜朝田詩乃\n\n作品：《刀劍神域》  \n採用：GGO 的詩乃，使用 Hecate II。  \n定位：瞄準、視線、狙擊與撤離。\n\n- **PASSIVE｜〔狙擊專注〕**：保持穩定姿勢累積瞄準，移動或受擊降低；效果有上限。\n- **Q｜〔Hecate II・精準射擊〕**：短蓄力直線射擊，依瞄準層數提高傷害。\n- **W｜〔觀測射界〕**：顯示有效射線與遮蔽物，短暫標記一名已可見敵人。\n- **E｜〔戰術翻滾〕**：短距離翻滾，打斷自己的瞄準並重新定位。\n- **R｜〔Hecate II・決定性一槍〕**：較長瞄準後射出高傷害子彈，敵人可見射線預警。\n- **EX｜〔副武器應急射擊〕**：近距離快速射擊，附帶小幅後退；給狙擊手有限自保能力。\n\n**審查重點**：傷害依伺服器射線與碰撞結算；驗證掩體、視線中斷、移動取消與高速目標。版本中不混入 ALO 弓箭或詩乃神帳號能力。\n\n",
+    "reviewText": "傷害依伺服器射線與碰撞結算；驗證掩體、視線中斷、移動取消與高速目標。版本中不混入 ALO 弓箭或詩乃神帳號能力。",
+    "slots": {
+      "PASSIVE": {
+        "name": "〔狙擊專注〕",
+        "ownerDescription": "保持穩定姿勢累積瞄準，移動或受擊降低；效果有上限。",
+        "baselineBehavior": "普攻追加極小級物理傷害，內置冷卻 3 秒。",
+        "requiredRefinement": "需静止瞄準層與移動受傷衰退。",
+        "refinementContracts": [
+          "M02",
+          "M12"
+        ]
+      },
+      "Q": {
+        "name": "〔Hecate II・精準射擊〕",
+        "ownerDescription": "短蓄力直線射擊，依瞄準層數提高傷害。",
+        "baselineBehavior": "向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。",
+        "requiredRefinement": "固定起手分段線；需蓄力、射線掩體與瞄準層增傷。",
+        "refinementContracts": [
+          "M02",
+          "M12"
+        ]
+      },
+      "W": {
+        "name": "〔觀測射界〕",
+        "ownerDescription": "顯示有效射線與遮蔽物，短暫標記一名已可見敵人。",
+        "baselineBehavior": "自身取得 3 秒增益：as +20%。",
+        "requiredRefinement": "目前攻速增益；需射界 UI、合法可見敵人的觀測標記。",
+        "refinementContracts": [
+          "M02",
+          "M12"
+        ]
+      },
+      "E": {
+        "name": "〔戰術翻滾〕",
+        "ownerDescription": "短距離翻滾，打斷自己的瞄準並重新定位。",
+        "baselineBehavior": "朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。",
+        "requiredRefinement": "翻滾應為貼地移動且清空瞄準，目前是低弧跳躍。",
+        "refinementContracts": [
+          "M02",
+          "M12"
+        ]
+      },
+      "R": {
+        "name": "〔Hecate II・決定性一槍〕",
+        "ownerDescription": "較長瞄準後射出高傷害子彈，敵人可見射線預警。",
+        "baselineBehavior": "向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。",
+        "requiredRefinement": "需單發高傷害射線、較長瞄準與移動取消。",
+        "refinementContracts": [
+          "M02",
+          "M12"
+        ]
+      },
+      "EX": {
+        "name": "〔副武器應急射擊〕",
+        "ownerDescription": "近距離快速射擊，附帶小幅後退；給狙擊手有限自保能力。",
+        "baselineBehavior": "指定單一敵人造成小級物理傷害。",
+        "requiredRefinement": "缺小幅後退位移。",
+        "refinementContracts": [
+          "M02",
+          "M12"
+        ]
+      }
+    }
+  },
+  "refinementNotes": {
+    "PASSIVE": "自拍狙擊：架好相機才有大頭照，嫌臉太大就把人推遠\nW架槍後0.6秒才取得焦點四秒；沒有瞬間瞄準。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "Q": "自拍狙擊：架好相機才有大頭照，嫌臉太大就把人推遠\n證件照：小級射擊，消耗完成的焦點再追加中級物理傷害。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "W": "自拍狙擊：架好相機才有大頭照，嫌臉太大就把人推遠\n架腳架：自己定身0.7秒並取得80護盾；P在架穩後給焦點。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "E": "自拍狙擊：架好相機才有大頭照，嫌臉太大就把人推遠\n鏡頭裝不下：將敌人推遠四格，不自帶傷害。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "R": "自拍狙擊：架好相機才有大頭照，嫌臉太大就把人推遠\n遠景照：小級物理傷害，起手距離超過四格追加中級傷害；貼臉不算遠景。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "EX": "自拍狙擊：架好相機才有大頭照，嫌臉太大就把人推遠\n背著腳架撤離合法落點，不洗掉Q冷卻。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。"
+  },
+  "validationState": {
+    "identity": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 14,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": [
+    {
+      "kind": "generator-adopted",
+      "projectRevision": 14,
+      "digest": "05a600fb7192fc6e7fbf81b2ff16742786ef13e9b88b57883c601e80ff913caa",
+      "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020"
+    }
+  ]
+}

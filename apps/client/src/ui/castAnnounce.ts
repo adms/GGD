@@ -22,6 +22,7 @@
  * mana-starved ability played the happy click — a lie. The announcement's
  * verdict now decides the tone.
  */
+import { recastFree } from "./recastView";
 import { TICK_HZ } from "@ggd/shared/constants";
 import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
 import { isPassiveOnly } from "@ggd/shared/sim/abilities/abilityPassives";
@@ -336,7 +337,7 @@ function resolveSlot(
       name: stripAbilityNumber(def.name),
       rank: seat.exRank,
       cooldownTicks: seat.exCooldown ?? 0,
-      manaCost: def.manaCost[0] ?? 0,
+      manaCost: recastFree(seat, slot) ? 0 : def.manaCost[0] ?? 0,
       passive: isPassiveOnly(def),
     };
   }
@@ -353,7 +354,7 @@ function resolveSlot(
       // to the server just to be refused — feedback arriving a round-trip late,
       // for a reason the client is holding in its hand.
       cooldownTicks: seat.passiveCooldown ?? 0,
-      manaCost: innate.manaCost ?? 0,
+      manaCost: recastFree(seat, slot) ? 0 : innate.manaCost ?? 0,
       passive: innate.innateKind !== "active",
     };
   }
@@ -366,7 +367,7 @@ function resolveSlot(
     rank,
     cooldownTicks: seat.cooldowns[i] ?? 0,
     // the cost of the rank ABOUT TO BE CAST (rank-1 values before it is learned)
-    manaCost: def.manaCost[Math.max(0, rank - 1)] ?? 0,
+    manaCost: recastFree(seat, slot) ? 0 : def.manaCost[Math.max(0, rank - 1)] ?? 0,
     passive: isPassiveOnly(def),
   };
 }

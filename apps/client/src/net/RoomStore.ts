@@ -143,6 +143,9 @@ export interface SeatView {
   abilityRanks: number[];
   /** remaining cooldown ticks Q W E R */
   cooldowns: number[];
+  recastStages?: number[];
+  recastWindows?: number[];
+  recastFreeMask?: number;
   /** per-hero EX skill: id ("" = hero has none), rank (0 locked / 1 unlocked), cd ticks */
   exAbilityId: string;
   exRank: number;
@@ -950,6 +953,9 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
       augments: [...ss.augments],
       abilityRanks: [...ss.abilityRanks],
       cooldowns: [...ss.cooldowns],
+      recastStages: [...(ss.recastStages ?? [])],
+      recastWindows: [...(ss.recastWindows ?? [])],
+      recastFreeMask: ss.recastFreeMask ?? 0,
       exAbilityId: ss.exAbilityId,
       exRank: ss.exRank,
       exCooldown: ss.exCooldown,

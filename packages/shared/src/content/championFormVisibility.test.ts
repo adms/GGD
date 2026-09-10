@@ -20,7 +20,7 @@
  * ---------------------------------------------------------------------------
  * WHAT MAKES A TRANSFORM VISIBLE
  * ---------------------------------------------------------------------------
- * Exactly two things, and this suite reads both off the shipped content:
+ * Three existing rendering paths, read off the shipped content:
  *
  *   1. the two halves resolve to DIFFERENT `modelKey`s — a genuinely different
  *      mesh walks out; or
@@ -28,8 +28,11 @@
  *      ALTERNATE's championId, giving it a `tint` and/or `scaleMult` — the
  *      config that exists precisely so a same-mesh pair can still read as a
  *      transform (its own note calls those numbers 美術決定, not w3x facts).
+ *   3. the champion docs carry DIFFERENT intrinsic `tint`s. `championBody`'s
+ *      form-aware `championTintFor` applies those even without a form-visuals
+ *      entry; `formAwareModelResolve.test.ts` exercises the real consumer.
  *
- * A pair with neither is art debt, and {@link ART_DEBT} is the ledger of it.
+ * A pair with none is art debt, and {@link ART_DEBT} is the ledger of it.
  * The list is the deliverable: it names exactly which heroes are owed a
  * form-visuals entry before their transform means anything on screen.
  *
@@ -165,6 +168,14 @@ interface Reachable {
   altId: string;
   sameMesh: boolean;
   hasFormVisual: boolean;
+  hasIntrinsicTintChange: boolean;
+}
+
+function hasIntrinsicTintChange(base: Doc, alternate: Doc): boolean {
+  // Absent tint is the identity, as in the renderer's resolveModelTint.
+  const baseTint = (base.tint ?? [1, 1, 1]) as readonly number[];
+  const alternateTint = (alternate.tint ?? [1, 1, 1]) as readonly number[];
+  return baseTint.some((channel, index) => channel !== alternateTint[index]);
 }
 
 /**
@@ -206,6 +217,7 @@ function reachableTransforms(): Reachable[] {
       altId: link.counterpartId,
       sameMesh: champ!.modelKey === alt.modelKey,
       hasFormVisual: Object.prototype.hasOwnProperty.call(formVisuals, link.counterpartId),
+      hasIntrinsicTintChange: hasIntrinsicTintChange(champ!, alt),
     });
   }
   return out;
@@ -265,12 +277,14 @@ describe("every reachable 變身 is one the player can see (#249)", () => {
 
   it("no reachable transform is invisible unless it is on the art-debt ledger", () => {
     cover("champion-form-visibility");
-    const invisible = reachableTransforms().filter((r) => r.sameMesh && !r.hasFormVisual);
+    const invisible = reachableTransforms().filter(
+      (r) => r.sameMesh && !r.hasFormVisual && !r.hasIntrinsicTintChange,
+    );
     // Collect EVERY offender before failing: a bare expect inside the loop
     // would report 1 defect for 18.
     const unlisted = invisible.filter((r) => !ART_DEBT.has(r.altId));
     expect(
-      unlisted.map((r) => `${r.abilityId} → ${r.altId} (same mesh, no form-visuals entry)`),
+      unlisted.map((r) => `${r.abilityId} → ${r.altId} (same mesh, no form-visuals entry or intrinsic tint change)`),
       "a transform was wired that the player cannot see, and it is not on ART_DEBT",
     ).toEqual([]);
   });
@@ -279,7 +293,7 @@ describe("every reachable 變身 is one the player can see (#249)", () => {
     cover("champion-form-visibility");
     const invisible = new Set(
       reachableTransforms()
-        .filter((r) => r.sameMesh && !r.hasFormVisual)
+        .filter((r) => r.sameMesh && !r.hasFormVisual && !r.hasIntrinsicTintChange)
         .map((r) => r.altId),
     );
     const stale = [...ART_DEBT].filter((id) => !invisible.has(id));
@@ -315,17 +329,37 @@ describe("every reachable 變身 is one the player can see (#249)", () => {
 
   it("a transform with a DIFFERENT mesh needs no ledger entry", () => {
     cover("champion-form-visibility");
-    // The three shipped in the first batch (妖狐藏馬 / 拳四郎 / 皮卡丘) plus
-    // 傑富力士 swap to a genuinely different body. If a future edit points a
+    // The three shipped in the first batch (妖狐藏馬 / 拳四郎 / 皮卡丘)
+    // swap to a genuinely different body. If a future edit points a
     // pair at one shared mesh, it drops out of here and into the assertion
     // above — which is the whole point of measuring the mesh rather than
     // counting how many docs carry the effect.
     const byBase = new Map(reachableTransforms().map((r) => [r.baseId, r]));
-    for (const base of ["godie-nsjs", "godie-umal", "godie-ofar", "godie-ucrl"]) {
+    for (const base of ["godie-nsjs", "godie-umal", "godie-ofar"]) {
       const r = byBase.get(base);
       expect(r, `${base} is reachable`).toBeDefined();
       expect(r!.sameMesh, `${base} swaps to a different mesh`).toBe(false);
       expect(ART_DEBT.has(r!.altId), `${base} is not art debt`).toBe(false);
     }
+  });
+
+  it("傑富力士 keeps a visible intrinsic tint change on the shared imported mesh", () => {
+    cover("champion-form-visibility");
+    const r = reachableTransforms().find((entry) => entry.baseId === "godie-ucrl");
+    expect(r, "傑富力士 remains reachable").toBeDefined();
+    expect(r!.sameMesh).toBe(true);
+    expect(r!.hasIntrinsicTintChange).toBe(true);
+    expect(ART_DEBT.has(r!.altId)).toBe(false);
+    const champions = new Map(docs("champions").map((doc) => [doc.id, doc]));
+    expect(champions.get(r!.baseId)!.tint).toEqual([0.3922, 1, 0.3922]);
+    expect(champions.get(r!.altId)!.tint).toEqual([0.3922, 0.3922, 0.3922]);
+  });
+
+  it("equal or absent intrinsic tints cannot pay off art debt", () => {
+    cover("champion-form-visibility");
+    expect(hasIntrinsicTintChange({}, {})).toBe(false);
+    expect(hasIntrinsicTintChange({}, { tint: [1, 1, 1] })).toBe(false);
+    expect(hasIntrinsicTintChange({ tint: [1, 1, 1] }, {})).toBe(false);
+    expect(hasIntrinsicTintChange({ tint: [0.4, 1, 0.4] }, { tint: [0.4, 1, 0.4] })).toBe(false);
   });
 });

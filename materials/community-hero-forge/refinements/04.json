@@ -1,0 +1,844 @@
+{
+  "schema": "ggd-community-design-refinement@1",
+  "version": 2,
+  "projectId": "community-review-04-20260907",
+  "sourceSha256": "efa6e215376a822eeb99001216c87c088f2f03e5875432f2d3d4c36f559cb66d",
+  "templateVersions": {
+    "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+      "schema": "template@1",
+      "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-effect-sequence",
+      "name": "自訂效果序列",
+      "family": "effect-sequence",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ]
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 10,
+          "unit": "s"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 40
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "enemies",
+            "allies"
+          ]
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "recast": {
+          "type": "recast",
+          "optional": true,
+          "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+        }
+      }
+    },
+    "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+      "schema": "template@1",
+      "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-event-passive",
+      "name": "自訂事件被動",
+      "family": "event-passive",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+      "params": {
+        "hooks": {
+          "type": "hooks",
+          "default": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      }
+    }
+  },
+  "slots": {
+    "PASSIVE": {
+      "products": [
+        {
+          "instanceId": "passive-authored",
+          "template": {
+            "ref": "tpl-event-passive",
+            "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onDamageDealt",
+                  "damageSource": "basic",
+                  "damageConnected": true,
+                  "victim": "enemy",
+                  "target": "event",
+                  "condition": {
+                    "kind": "distance",
+                    "op": "<=",
+                    "value": 3
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-04-20260907.precision",
+                      "sourceScope": "caster",
+                      "applyTo": "self",
+                      "duration": 8,
+                      "stacks": 1,
+                      "condition": {
+                        "not": {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-04-20260907.precision",
+                          "appliedBy": "self",
+                          "minStacks": 3
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "on": "onDamageDealt",
+                  "damageSource": "ability",
+                  "damageConnected": true,
+                  "victim": "enemy",
+                  "target": "event",
+                  "condition": {
+                    "kind": "distance",
+                    "op": "<=",
+                    "value": 3
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-04-20260907.precision",
+                      "sourceScope": "caster",
+                      "applyTo": "self",
+                      "duration": 8,
+                      "stacks": 1,
+                      "condition": {
+                        "not": {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-04-20260907.precision",
+                          "appliedBy": "self",
+                          "minStacks": 3
+                        }
+                      }
+                    }
+                  ],
+                  "oncePerCast": true
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【本次玩法】承太郎拍團體照：全區暫停，攝影師自己也必須定點擺姿勢\n近距離（中心距離 ≤3）實際 HP／護盾命中累積精密，最多三層、八秒有效；每次技能施法最多一次，普攻依實際命中。滿三層後下一次 Q 在施法結算時消耗，強化該次末擊；技能中斷／末擊落空不退還。反彈、衍生傷害與無效命中不累積。",
+      "note": "本次保留核心並核對定位、代價、反制。承太郎拍團體照：全區暫停，攝影師自己也必須定點擺姿勢\n近距離（中心距離 ≤3）實際 HP／護盾命中累積精密，最多三層、八秒有效；每次技能施法最多一次，普攻依實際命中。滿三層後下一次 Q 在施法結算時消耗，強化該次末擊；技能中斷／末擊落空不退還。反彈、衍生傷害與無效命中不累積。",
+      "removeOverrides": [
+        "effects",
+        "castTimeTier",
+        "rangeTier",
+        "range",
+        "allowApproach",
+        "castType",
+        "targetFilter",
+        "projectile"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json"
+      }
+    },
+    "Q": {
+      "products": [
+        {
+          "instanceId": "q-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.2,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "subject": "self",
+                  "statusId": "community-review-04-20260907.precision",
+                  "appliedBy": "self",
+                  "count": 3,
+                  "onConsumed": [
+                    {
+                      "kind": "damage",
+                      "damageType": "physical",
+                      "amount": {
+                        "damageTier": "極小"
+                      },
+                      "condition": {
+                        "all": [
+                          {
+                            "kind": "distance",
+                            "op": "<=",
+                            "value": 3
+                          },
+                          {
+                            "kind": "facing",
+                            "subject": "self",
+                            "arcDegrees": 120
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "kind": "delayed",
+                      "shape": "single",
+                      "delaySec": 0.16,
+                      "stopOnCasterDeath": true,
+                      "condition": {
+                        "all": [
+                          {
+                            "kind": "distance",
+                            "op": "<=",
+                            "value": 3
+                          },
+                          {
+                            "kind": "facing",
+                            "subject": "self",
+                            "arcDegrees": 120
+                          }
+                        ]
+                      },
+                      "effects": [
+                        {
+                          "kind": "damage",
+                          "damageType": "physical",
+                          "amount": {
+                            "damageTier": "極小"
+                          },
+                          "condition": {
+                            "all": [
+                              {
+                                "kind": "distance",
+                                "op": "<=",
+                                "value": 3
+                              },
+                              {
+                                "kind": "facing",
+                                "subject": "self",
+                                "arcDegrees": 120
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "delayed",
+                          "shape": "single",
+                          "delaySec": 0.16,
+                          "stopOnCasterDeath": true,
+                          "condition": {
+                            "all": [
+                              {
+                                "kind": "distance",
+                                "op": "<=",
+                                "value": 3
+                              },
+                              {
+                                "kind": "facing",
+                                "subject": "self",
+                                "arcDegrees": 120
+                              }
+                            ]
+                          },
+                          "effects": [
+                            {
+                              "kind": "damage",
+                              "damageType": "physical",
+                              "amount": {
+                                "damageTier": "極小"
+                              },
+                              "condition": {
+                                "all": [
+                                  {
+                                    "kind": "distance",
+                                    "op": "<=",
+                                    "value": 3
+                                  },
+                                  {
+                                    "kind": "facing",
+                                    "subject": "self",
+                                    "arcDegrees": 120
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "delayed",
+                              "shape": "single",
+                              "delaySec": 0.16,
+                              "stopOnCasterDeath": true,
+                              "condition": {
+                                "all": [
+                                  {
+                                    "kind": "distance",
+                                    "op": "<=",
+                                    "value": 3
+                                  },
+                                  {
+                                    "kind": "facing",
+                                    "subject": "self",
+                                    "arcDegrees": 120
+                                  }
+                                ]
+                              },
+                              "effects": [
+                                {
+                                  "kind": "damage",
+                                  "damageType": "physical",
+                                  "amount": {
+                                    "damageTier": "小"
+                                  },
+                                  "condition": {
+                                    "all": [
+                                      {
+                                        "kind": "distance",
+                                        "op": "<=",
+                                        "value": 3
+                                      },
+                                      {
+                                        "kind": "facing",
+                                        "subject": "self",
+                                        "arcDegrees": 120
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "kind": "damage",
+                                  "damageType": "physical",
+                                  "amount": {
+                                    "damageTier": "極小"
+                                  },
+                                  "condition": {
+                                    "all": [
+                                      {
+                                        "kind": "distance",
+                                        "op": "<=",
+                                        "value": 3
+                                      },
+                                      {
+                                        "kind": "facing",
+                                        "subject": "self",
+                                        "arcDegrees": 120
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "onMissing": [
+                    {
+                      "kind": "damage",
+                      "damageType": "physical",
+                      "amount": {
+                        "damageTier": "極小"
+                      },
+                      "condition": {
+                        "all": [
+                          {
+                            "kind": "distance",
+                            "op": "<=",
+                            "value": 3
+                          },
+                          {
+                            "kind": "facing",
+                            "subject": "self",
+                            "arcDegrees": 120
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "kind": "delayed",
+                      "shape": "single",
+                      "delaySec": 0.16,
+                      "stopOnCasterDeath": true,
+                      "condition": {
+                        "all": [
+                          {
+                            "kind": "distance",
+                            "op": "<=",
+                            "value": 3
+                          },
+                          {
+                            "kind": "facing",
+                            "subject": "self",
+                            "arcDegrees": 120
+                          }
+                        ]
+                      },
+                      "effects": [
+                        {
+                          "kind": "damage",
+                          "damageType": "physical",
+                          "amount": {
+                            "damageTier": "極小"
+                          },
+                          "condition": {
+                            "all": [
+                              {
+                                "kind": "distance",
+                                "op": "<=",
+                                "value": 3
+                              },
+                              {
+                                "kind": "facing",
+                                "subject": "self",
+                                "arcDegrees": 120
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "delayed",
+                          "shape": "single",
+                          "delaySec": 0.16,
+                          "stopOnCasterDeath": true,
+                          "condition": {
+                            "all": [
+                              {
+                                "kind": "distance",
+                                "op": "<=",
+                                "value": 3
+                              },
+                              {
+                                "kind": "facing",
+                                "subject": "self",
+                                "arcDegrees": 120
+                              }
+                            ]
+                          },
+                          "effects": [
+                            {
+                              "kind": "damage",
+                              "damageType": "physical",
+                              "amount": {
+                                "damageTier": "極小"
+                              },
+                              "condition": {
+                                "all": [
+                                  {
+                                    "kind": "distance",
+                                    "op": "<=",
+                                    "value": 3
+                                  },
+                                  {
+                                    "kind": "facing",
+                                    "subject": "self",
+                                    "arcDegrees": 120
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "delayed",
+                              "shape": "single",
+                              "delaySec": 0.16,
+                              "stopOnCasterDeath": true,
+                              "condition": {
+                                "all": [
+                                  {
+                                    "kind": "distance",
+                                    "op": "<=",
+                                    "value": 3
+                                  },
+                                  {
+                                    "kind": "facing",
+                                    "subject": "self",
+                                    "arcDegrees": 120
+                                  }
+                                ]
+                              },
+                              "effects": [
+                                {
+                                  "kind": "damage",
+                                  "damageType": "physical",
+                                  "amount": {
+                                    "damageTier": "小"
+                                  },
+                                  "condition": {
+                                    "all": [
+                                      {
+                                        "kind": "distance",
+                                        "op": "<=",
+                                        "value": 3
+                                      },
+                                      {
+                                        "kind": "facing",
+                                        "subject": "self",
+                                        "arcDegrees": 120
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【本次玩法】承太郎拍團體照：全區暫停，攝影師自己也必須定點擺姿勢\n指定前方近距離敵人，0.2 秒起手後四拳、間隔 0.16 秒。每拳及下一拳排程重新檢查同一存活目標、同區、三單位距離與正面 120 度；失去條件、死亡或對決結束立即停止且不重選。開始時滿三層精密會消耗並加強末拳；本次 Q 才累積的層數留給下一次。白金之星副模型及雙模型動作仍未驗收。",
+      "note": "本次保留核心並核對定位、代價、反制。承太郎拍團體照：全區暫停，攝影師自己也必須定點擺姿勢\n指定前方近距離敵人，0.2 秒起手後四拳、間隔 0.16 秒。每拳及下一拳排程重新檢查同一存活目標、同區、三單位距離與正面 120 度；失去條件、死亡或對決結束立即停止且不重選。開始時滿三層精密會消耗並加強末拳；本次 Q 才累積的層數留給下一次。白金之星副模型及雙模型動作仍未驗收。",
+      "removeOverrides": [
+        "effects",
+        "castTimeTier",
+        "rangeTier",
+        "range",
+        "allowApproach",
+        "castType",
+        "targetFilter",
+        "projectile"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "cooldownTier": "小",
+        "manaCostTier": "小",
+        "range": 3,
+        "allowApproach": false
+      }
+    },
+    "W": {
+      "products": [
+        {
+          "instanceId": "w-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0.15,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "damageLine",
+                  "fromCaster": true,
+                  "aim": "facing",
+                  "includeOrigin": true,
+                  "length": 6,
+                  "width": 0.65,
+                  "maxTargets": 1,
+                  "amount": {
+                    "damageTier": "小"
+                  },
+                  "damageType": "physical"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【本次玩法】承太郎拍團體照：全區暫停，攝影師自己也必須定點擺姿勢\n0.15 秒起手後按瞄準方向打一條長六、寬 0.65 的直線，只命中第一名合法敵人一次；不是重複分段傷害波。流星指副模型及動作仍待驗收。",
+      "note": "本次保留核心並核對定位、代價、反制。承太郎拍團體照：全區暫停，攝影師自己也必須定點擺姿勢\n0.15 秒起手後按瞄準方向打一條長六、寬 0.65 的直線，只命中第一名合法敵人一次；不是重複分段傷害波。流星指副模型及動作仍待驗收。",
+      "removeOverrides": [
+        "effects",
+        "castTimeTier",
+        "rangeTier",
+        "range",
+        "allowApproach",
+        "castType",
+        "targetFilter",
+        "projectile"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "cooldownTier": "小",
+        "manaCostTier": "小",
+        "rangeTier": "中"
+      }
+    },
+    "E": {
+      "products": [
+        {
+          "instanceId": "e-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "applyTo": "self",
+                  "statusId": "community-review-04-20260907.guard",
+                  "stackKey": "community-review-04-20260907.guard",
+                  "sourceScope": "caster",
+                  "maxStacks": 1,
+                  "duration": 0.6,
+                  "modifiers": [],
+                  "block": {
+                    "chance": 1,
+                    "fraction": 0.8,
+                    "damageTypes": [
+                      "physical",
+                      "magic"
+                    ],
+                    "facingArcDegrees": 120
+                  },
+                  "hooks": [
+                    {
+                      "on": "onBlock",
+                      "blockSource": "thisSource",
+                      "victim": "enemy",
+                      "target": "event",
+                      "maxTriggers": 1,
+                      "onConsumed": "detachSource",
+                      "effects": [
+                        {
+                          "kind": "knockback",
+                          "distance": 1,
+                          "speed": 10,
+                          "subtractGap": false,
+                          "condition": {
+                            "kind": "distance",
+                            "op": "<=",
+                            "value": 3
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【本次玩法】承太郎拍團體照：全區暫停，攝影師自己也必須定點擺姿勢\n原地開啟 0.6 秒防禦姿態，僅正面 120 度內物理／魔法攻擊減傷 80%，成功一次即消耗該來源；背後、真傷、零傷害不消耗。成功時推開三單位內攻擊者一單位，不增加護盾。",
+      "note": "本次保留核心並核對定位、代價、反制。承太郎拍團體照：全區暫停，攝影師自己也必須定點擺姿勢\n原地開啟 0.6 秒防禦姿態，僅正面 120 度內物理／魔法攻擊減傷 80%，成功一次即消耗該來源；背後、真傷、零傷害不消耗。成功時推開三單位內攻擊者一單位，不增加護盾。",
+      "removeOverrides": [
+        "effects",
+        "castTimeTier",
+        "rangeTier",
+        "range",
+        "allowApproach",
+        "castType",
+        "targetFilter",
+        "projectile"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "cooldownTier": "中",
+        "manaCostTier": "小",
+        "rangeTier": "小"
+      }
+    },
+    "R": {
+      "products": [
+        {
+          "instanceId": "r-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.35,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "timeStop",
+                  "radius": 6,
+                  "durationSec": 1.2,
+                  "maxQueuedHits": 64
+                }
+              ]
+            }
+          }
+        },
+        {
+          "instanceId": "r-parody",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.35,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "root",
+                  "duration": 1.2,
+                  "applyTo": "self",
+                  "sourceScope": "caster",
+                  "root": true
+                },
+                {
+                  "kind": "floatingText",
+                  "shape": "single",
+                  "text": "大家別動！我也不動！",
+                  "applyTo": "self",
+                  "durationSec": 1
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【本次玩法】承太郎拍團體照：全區暫停，攝影師自己也必須定點擺姿勢\n新增代價：時停成立時自己也定身1.2秒，只能原地打近身目標；時間佇列、施法與到期規則保留。\n0.35 秒起手，在施法者當前位置建立半徑六、持續 1.2 秒的固定局部時停。敵方移動／輸入／攻擊／施法進度、局部冷卻、狀態／盾／增益／持續傷害／排程與敌彈暫停；對決、火圈及時停期限繼續。施法者對區內敵人的命中最多排隊 64 發，滿額不洩漏即時傷害；到期依序結算，死亡／換區／換回合取消。重疊只停一次，双方時停期限仍前進。灰階環界、恢復裂紋和雙模型畫面未驗收。",
+      "note": "本次保留核心並核對定位、代價、反制。承太郎拍團體照：全區暫停，攝影師自己也必須定點擺姿勢\n新增代價：時停成立時自己也定身1.2秒，只能原地打近身目標；時間佇列、施法與到期規則保留。\n0.35 秒起手，在施法者當前位置建立半徑六、持續 1.2 秒的固定局部時停。敵方移動／輸入／攻擊／施法進度、局部冷卻、狀態／盾／增益／持續傷害／排程與敌彈暫停；對決、火圈及時停期限繼續。施法者對區內敵人的命中最多排隊 64 發，滿額不洩漏即時傷害；到期依序結算，死亡／換區／換回合取消。重疊只停一次，双方時停期限仍前進。灰階環界、恢復裂紋和雙模型畫面未驗收。",
+      "removeOverrides": [
+        "effects",
+        "castTimeTier",
+        "rangeTier",
+        "range",
+        "allowApproach",
+        "castType",
+        "targetFilter",
+        "projectile"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "cooldownTier": "極大",
+        "manaCostTier": "大",
+        "rangeTier": "小"
+      }
+    },
+    "EX": {
+      "products": [
+        {
+          "instanceId": "ex-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.4,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "大"
+                  },
+                  "condition": {
+                    "all": [
+                      {
+                        "kind": "distance",
+                        "op": "<=",
+                        "value": 3
+                      },
+                      {
+                        "kind": "facing",
+                        "subject": "self",
+                        "arcDegrees": 120
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【本次玩法】承太郎拍團體照：全區暫停，攝影師自己也必須定點擺姿勢\n0.4 秒起手的單次近距離重拳；結算時重驗同目標三單位與正面 120 度。時停內自動進入 R 的同一條有限命中佇列，獨立支付魔力及冷卻。",
+      "note": "本次保留核心並核對定位、代價、反制。承太郎拍團體照：全區暫停，攝影師自己也必須定點擺姿勢\n0.4 秒起手的單次近距離重拳；結算時重驗同目標三單位與正面 120 度。時停內自動進入 R 的同一條有限命中佇列，獨立支付魔力及冷卻。",
+      "removeOverrides": [
+        "effects",
+        "castTimeTier",
+        "rangeTier",
+        "range",
+        "allowApproach",
+        "castType",
+        "targetFilter",
+        "projectile"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "cooldownTier": "大",
+        "manaCostTier": "大",
+        "range": 3,
+        "allowApproach": false
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "community.lol.yasuo",
+  "schema": "model@1",
+  "glbPath": "assets/models/community-local/yasuo.glb",
+  "scale": 0.008332902949613018,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "yasuo_idle1",
+    "run": "yasuo_run1",
+    "attack": "yasuo_attack1",
+    "cast": "yasuo_spell1a",
+    "death": "yasuo_death",
+    "hurt": "yasuo_idle1"
+  },
+  "heroBody": true,
+  "yawOffsetDeg": 0,
+  "attachPoints": {
+    "head": {
+      "x": 0,
+      "y": 1.7,
+      "z": 0
+    },
+    "muzzle": {
+      "x": 0,
+      "y": 1,
+      "z": 0.4
+    }
+  }
+}

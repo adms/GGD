@@ -107,9 +107,22 @@ describe("ability status cost", () => {
 
   it("runtime registration retains the parsed cost and schema rejects malformed costs", () => {
     expect(Abilities.get(Q.id).statusCost).toEqual({ statusId: ENERGY, count: 3 });
-    for (const count of [0, -1, 1.5, 1000, "all"]) {
+    for (const count of [0, -1, 1.5, 1000, "remaining"]) {
       expect(zAbilityDoc.safeParse({ ...Q, schema: "ability@1", statusCost: { statusId: ENERGY, count } }).success).toBe(false);
     }
+  });
+
+  it("all costs reject empty or invalid targets, then atomically consume all live stacks", () => {
+    const all = zAbilityDoc.parse({ ...Q, schema: "ability@1", statusCost: { statusId: ENERGY, count: "all" } }) as AbilityDef;
+    Abilities.register(all.id, all);
+    try {
+      const empty = rig(0); expect(empty.cast()).toBe("no-resource");
+      const r = rig(2); const mana = r.world.health.get(r.caster)!.mana;
+      expect(castAbility(r.world, r.caster, "Q", { type: "entity", entityId: r.caster })).toBe("bad-target");
+      expect(r.resource()).toBe(2); expect(r.world.health.get(r.caster)!.mana).toBe(mana);
+      expect(r.cast()).toBe("ok"); expect(r.resource()).toBe(0);
+      r.ab.slots.Q.cooldownRemainingTicks = 0; expect(r.cast()).toBe("no-resource");
+    } finally { Abilities.register(Q.id, Q); }
   });
 
   it.each([false, true])("real R/EX casts combine one resource debit with the correct live branch (cleansed=%s)", cleansed => {

@@ -161,6 +161,7 @@ export const zParamType = z.enum([
    * （見 `schema/effects/applyBuff.ts` 的 `perRank` 註解：填了它 `e.modifiers` 就沒有人讀）。
    */
   "buffPerRank",
+  "recast",
 ]);
 
 /**

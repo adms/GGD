@@ -1,0 +1,45 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.community-editor-deployment",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "4d1d054c30899e07d505bad9fa019f2ea938a083",
+  "contractFingerprint": "e2850e24ab2e78a1",
+  "title": "社群 Editor 明確啟用部署，保留預設不公開與私有 content-api 邊界",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "既有 community overlay 可提供 Editor 入口與深連結；真實 nginx 容器證明 community 配置不代理 content-api，hero API 仍送往 Platform。未執行正式部署或宣稱英雄已發布。",
+      "repro": {
+        "command": "pnpm exec go -C tools/testrunner test ./internal/infracheck -run TestNginxCommunityEditorRoutes -count=1",
+        "expectedExit": 0
+      },
+      "commit": "2c232970f3bbdb36fa77f97870b95b5b1113c726",
+      "evidence": [
+        "docker/compose.community.yaml",
+        "nginx/community/editor.conf",
+        "tools/testrunner/internal/infracheck/nginx_test.go",
+        "materials/community-hero-forge/receipts/community-editor-deployment.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "預設部署保留 Editor build flag 為關閉，預設 nginx 沒有 Editor 路由；既有正式部署曝光守衛的全部斷言保持通過。",
+      "repro": {
+        "command": "pnpm exec go -C tools/testrunner test ./internal/infracheck -run TestContentEditorNotExposedInProduction -count=1",
+        "expectedExit": 0
+      },
+      "commit": "2c232970f3bbdb36fa77f97870b95b5b1113c726",
+      "evidence": [
+        "docker/edge.Dockerfile",
+        "tools/testrunner/internal/infracheck/editor_exposure_test.go",
+        "materials/community-hero-forge/receipts/community-editor-deployment.json"
+      ]
+    }
+  ],
+  "asks": [
+    "請審查本 PR 的最小部署接線；核准合併後，依既有 release 流程加入 compose.community.yaml 並重建 edge。無需另行實作 Editor 或公開開發用 content-api。",
+    "沿既有公告流程處理 #1159 的真實公告紀錄缺口；完成部署後，本線才走正式 Editor 投稿、Admin 核准與 81 名必要進場確認。"
+  ]
+}

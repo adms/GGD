@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../timeStop";
 /**
  * CastResolveSystem — ticks down in-progress ability casts (cast time > 0) and
  * fires their effects deterministically when the wind-up elapses. Runs BEFORE
@@ -17,8 +18,12 @@ import { armRecovery } from "../abilities/abilityRecovery";
 // ⭐ GH#1091 ——【法術護盾】整發攔截（與 abilitySystem.ts 共用同一支，⛔ 不是第二份判準）。
 import { spellWardRefusesCast } from "../spellWardCast";
 
+import { advanceRecast, recastInterrupted } from "../abilities/recast";
+import { abilityInstanceFor } from "../abilities/innateActive";
+
 export function castResolveSystem(world: SimWorld): void {
   for (const [id, ab] of world.abilities) {
+    if (isTimeStopped(world, id)) continue;
     const cast = ab.cast;
     if (!cast) continue;
 
@@ -43,9 +48,15 @@ export function castResolveSystem(world: SimWorld): void {
     const damaged =
       def.interruptOn === "damage" && hp !== undefined && hp.hp < cast.hpAtStart;
 
-    // interrupt: death, stun, or a knockdown cancels the cast (mana stays spent)
-    if (!hp?.alive || stunned || damaged || (world.knockdown.get(id) ?? 0) > 0) {
+    const pos = world.transform.get(id)?.pos;
+    const moved = def.interruptOn === "damageOrMove" && cast.posAtStart !== undefined && pos !== undefined &&
+      (pos.x !== cast.posAtStart.x || pos.z !== cast.posAtStart.z);
+    const hit = def.interruptOn === "damageOrMove" && cast.hitSinceStart === true;
+    // Death always cancels; protected wind-ups retain their normal clock.
+    if ((def.recast && recastInterrupted(world, id)) || !hp?.alive || (def.interruptible !== false && (stunned || damaged || moved || hit || (world.knockdown.get(id) ?? 0) > 0))) {
       ab.cast = null;
+      const interruptedInst = abilityInstanceFor(ab, cast.slot);
+      if (interruptedInst) delete interruptedInst.recast;
       world.emit("castInterrupt", { caster: id, slot: cast.slot, abilityId: cast.abilityId });
       continue;
     }
@@ -93,7 +104,7 @@ export function castResolveSystem(world: SimWorld): void {
     const augmentedEffects =
       cast.effects ??
       applyAugmentToEffects(
-        def.effects,
+        cast.stageEffects ?? def.effects,
         collectAugmentOps(world, id, cast.abilityId),
       );
     // ⭐ GH#1091 ——【法術護盾】整發攔截。這一行是 `abilitySystem.ts::castAbility`
@@ -125,6 +136,8 @@ export function castResolveSystem(world: SimWorld): void {
       });
     }
     // ⛔ `onAbilityCast` 不受攔截影響（他確實放了一發）；被吃掉的是「命中」。
+    const inst = abilityInstanceFor(ab, cast.slot);
+    if (inst) advanceRecast(world, id, inst, def, cast.recastStage ?? 0);
     fireHooks(world, id, "onAbilityCast", targets[0], cast.slot);
     if (!wardRefused) {
       for (const hitId of targets) {

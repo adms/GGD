@@ -251,12 +251,16 @@ function walk(
         const shape = (optSchema._def as { shape: () => Record<string, ZodTypeAny> }).shape();
         const tagSchema = unwrap(shape[discriminator]!).schema;
         const tag = String((tagSchema._def as { value: unknown }).value);
-        const fields = Object.entries(shape)
-          .filter(([key]) => key !== discriminator)
-          .map(([key, child]) =>
-            down(child, path ? `${path}.${key}` : key, humanize(key)),
-          );
-        return { tag, fields };
+        // Forms list every tag but render only the selected variant. Expanding
+        // every recursive effect branch here blocks the main thread on each
+        // render, starving model workers, image decoding and GPU readiness.
+        // Keep the exact schema/depth bounds; materialize a branch on demand.
+        let fields: UINode[] | undefined;
+        return { tag, get fields() {
+          return fields ??= Object.entries(shape)
+            .filter(([key]) => key !== discriminator)
+            .map(([key, child]) => down(child, path ? `${path}.${key}` : key, humanize(key)));
+        } };
       });
       return { kind: "discriminatedUnion", ...base, discriminator, variants };
     }

@@ -1,0 +1,139 @@
+{
+  "schema": "ggd-chiikawa-verification@1",
+  "issue": 1141,
+  "sourceCommit": "63b81b0754a4d8b14720b93cc182fb4d852f414d",
+  "refinementVersion": 2,
+  "refinementSha256": "88f2f05f40e9025ac2df62c390c7d537298e8439962325e530570d129cae95c8",
+  "regression": {
+    "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements packages/shared/src/content/heroForge/templateVersions.test.ts packages/shared/src/content/heroForge/productInstances.test.ts packages/shared/src/sim/clearPools.test.ts packages/shared/src/sim/purity.test.ts",
+    "exitCode": 0,
+    "testFiles": 10,
+    "tests": 110,
+    "logSha256": "01b00c50c3a08bb6c32d77840a324878fc2dd67b4a22ce382236e5962e4c3c7a"
+  },
+  "focusedTests": 26,
+  "conditionEditorTests": 37,
+  "contractTests": {
+    "tests": 12,
+    "exitCode": 0,
+    "logSha256": "abe1df9dd75da591a067c56a581906e0d4a44fa8e69294a8448b89d9a83044c5"
+  },
+  "mutations": {
+    "results": [
+      {
+        "mutation": "courage-no-interval",
+        "exitCode": 1,
+        "test": "earns courage from allies dealing OR taking actual damage",
+        "logSha256": "0583634ff11497e698b49b1004c66e1018954761767310aae4971f73f47de75b",
+        "detected": true
+      },
+      {
+        "mutation": "snack-no-interrupt",
+        "exitCode": 1,
+        "test": "HP damage interrupts E",
+        "logSha256": "bdbf277449573fb1f85c9dfbfcbad8f60a6eeae775ca35091981feba8f796915",
+        "detected": true
+      },
+      {
+        "mutation": "ex-cleanse-all",
+        "exitCode": 1,
+        "test": "EX clears only dispellable fear",
+        "logSha256": "16f74b249144929fcb40ed6c98bfc46955f9451f88577e50d8bd7b0b1a585be7",
+        "detected": true
+      }
+    ],
+    "restoredSha256": "88f2f05f40e9025ac2df62c390c7d537298e8439962325e530570d129cae95c8"
+  },
+  "testConditions": [
+    "Compiled actual recipes and independent pinned templates; no precompiled placeholder fixture.",
+    "Durable training bodies, zero HP regeneration, ordinary hit knockback and hitstop disabled in fixture; actual W displacement, incoming HP/shield damage and E movement command execute.",
+    "Invulnerability fixture corrected from an unsupported applyStatus field to the real invulnerable effect.",
+    "Old cardVariants revision assertion assumed v1; corrected to assert its actual pinned refinement v3."
+  ],
+  "handoff": {
+    "heroes": 37,
+    "slots": 222,
+    "changedSlots": 16,
+    "onAttackPassivesRemaining": 27,
+    "originalRecipesUnchanged": 37,
+    "boundModelsUnchanged": 37,
+    "changedProjects": [
+      {
+        "hero": "27",
+        "previousRevision": 13,
+        "revision": 15,
+        "kind": "revision-only"
+      },
+      {
+        "hero": "37",
+        "previousRevision": 13,
+        "revision": 14,
+        "kind": "six-slot-mechanisms"
+      }
+    ],
+    "otherProjectsByteIdentical": 35,
+    "logSha256": "d5dddcb5741835397fdfc84673850e48806921294a148f4c42e9ed8aa6c7ac08",
+    "sharedRestore": {
+      "command": "pnpm exec node --import tsx tools/community-hero-forge/prepare-published-handoff.mts --release-root <restored-release-13956d93b> --output <new-directory>",
+      "exitCode": 0,
+      "boundModelsVerified": 37,
+      "distinctModelFiles": 34,
+      "logSha256": "177885dd2e8c8b2c80288d5fa1eba12f022a9d52d2d2a5bbdd4bffaa60251214",
+      "networkOperations": 0
+    }
+  },
+  "ui": "unverified",
+  "originalDesignAcceptance": "incomplete",
+  "currentServiceZip": "not-built",
+  "formalPublication": false,
+  "releaseChecks": {
+    "sourceCommit": "5b21506707ba4e8693f682cdd5ebbd4976ea022d",
+    "commands": [
+      {
+        "id": "skills",
+        "argv": [
+          "pnpm",
+          "skills:check"
+        ],
+        "exitCode": 0,
+        "logSha256": "6fc64778555f887b72a08c828b54ca99692e945e06b43fa72d7a2b3ed1e85366",
+        "seconds": 111.96
+      },
+      {
+        "id": "editor",
+        "argv": [
+          "pnpm",
+          "editor:accept:release"
+        ],
+        "exitCode": 0,
+        "logSha256": "406c0f43292dabe4cb0fd3ed034e2e2ddd13eae0d85db6651896c5369540ddce",
+        "seconds": 191.8
+      },
+      {
+        "id": "coord",
+        "argv": [
+          "pnpm",
+          "coord:check"
+        ],
+        "exitCode": 0,
+        "logSha256": "573c0629641d94a47c324f4c157645433641bc3e535fee227f8234ccab9a0359",
+        "seconds": 4.48
+      }
+    ],
+    "editorTests": 593,
+    "editorTypecheck": "passed",
+    "editorProductionBuild": "passed",
+    "messageLedger": "skills log: 2026-09-08 all 18 messages matched tickets; existing pending visual-review records remain pending",
+    "batchRunnerEvidence": "materials/community-hero-forge/refinements/batch-verifier-verification.json",
+    "firstFailuresAndRepairs": [
+      "skillAcceptanceCatalog lacked nearbyCombat capability-only registration; repaired without claiming shipped visual acceptance.",
+      "fullCoverageMatchesContract found missing radius in actual-control registry; existing control registered, 39 focused tests passed.",
+      "decor corpus count was stale; official generator updated 2526 to 2528 with no knob/classification changes."
+    ]
+  },
+  "typecheck": {
+    "command": "pnpm --filter @ggd/shared typecheck",
+    "exitCode": 0,
+    "logSha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+  }
+}

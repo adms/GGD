@@ -1,0 +1,903 @@
+{
+  "schema": "ggd-community-design-refinement@1",
+  "version": 2,
+  "projectId": "community-review-30-20260907",
+  "sourceSha256": "82c2538225564d97e4b00273bfc19181e67b9dd02a03316389aa0f6b51a3eb63",
+  "slots": {
+    "PASSIVE": {
+      "products": [
+        {
+          "instanceId": "procrastination",
+          "template": {
+            "ref": "tpl-mark-stacks",
+            "params": {
+              "markId": "community-review-30-20260907.procrastination",
+              "initial": 0,
+              "max": 3,
+              "durationSec": -1,
+              "resetOn": "round",
+              "perStackLost": [],
+              "lethalMode": "none",
+              "lethalConsume": 1,
+              "surviveHpPct": 0.01,
+              "lethalDamageTypes": "all",
+              "internalCooldown": 0.5,
+              "invulnerableSec": 1.5,
+              "invulnerableScope": "damageAndControl",
+              "restoreHealthPct": 0.5,
+              "aoeRadius": 6,
+              "knockbackDistance": 4,
+              "knockbackSpeed": 16,
+              "knockbackFrom": "caster",
+              "stunSec": 0.5,
+              "stunStatusId": "trial-stun"
+            },
+            "contentSha256": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39"
+          }
+        },
+        {
+          "instanceId": "stillness",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onInterval",
+                  "stationaryForSec": 1,
+                  "internalCooldown": 1,
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "applyTo": "self",
+                      "statusId": "community-review-30-20260907.procrastination",
+                      "stacks": 1,
+                      "duration": 1
+                    }
+                  ]
+                },
+                {
+                  "on": "onDamageTaken",
+                  "damageConnected": true,
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "applyTo": "self",
+                      "statusId": "community-review-30-20260907.procrastination",
+                      "stacks": -3,
+                      "duration": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+          }
+        }
+      ],
+      "purpose": "【本次玩法】尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n戰鬥中實際連續靜止一秒才獲得一層拖延，之後每秒一層、上限三層；移動只重開蓄力窗口，受有效傷害（含護盾吸收）清空三層。空走撞牆或轉向不算移動，零值／完全免疫不清空；回合開始重置。EX 每次消耗一層取得護盾。",
+      "note": "本次保留核心並核對定位、代價、反制。尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n戰鬥中實際連續靜止一秒才獲得一層拖延，之後每秒一層、上限三層；移動只重開蓄力窗口，受有效傷害（含護盾吸收）清空三層。空走撞牆或轉向不算移動，零值／完全免疫不清空；回合開始重置。EX 每次消耗一層取得護盾。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeTier",
+        "castTimeSec",
+        "radiusTier",
+        "radius",
+        "rangeTier",
+        "range",
+        "manaCostTier",
+        "manaCost",
+        "cooldownTier",
+        "cooldown"
+      ],
+      "abilityOverrides": {}
+    },
+    "Q": {
+      "products": [
+        {
+          "instanceId": "q-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "ground",
+              "castTimeSec": 0.2,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "delayed",
+                  "shape": "circle",
+                  "radius": 2,
+                  "side": "enemies",
+                  "delaySec": 0.5,
+                  "targetMode": "reresolve",
+                  "anchor": "point",
+                  "count": 1,
+                  "intervalSec": 0.5,
+                  "stopOnCasterDeath": true,
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "physical",
+                      "amount": {
+                        "damageTier": "小",
+                        "ratios": []
+                      }
+                    },
+                    {
+                      "kind": "spawnVfx",
+                      "vfxId": "fx.prim.sound.pulse",
+                      "at": "point",
+                      "durationSec": 0.4
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【本次玩法】尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n指定落點投擲，起手後再等半秒落地；落地時重新取得半徑二格內敵人，每人只結算一次小級物理傷害，移出可躲避。菸灰缸本體及拋物線演出仍待專用素材／畫面驗收。",
+      "note": "本次保留核心並核對定位、代價、反制。尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n指定落點投擲，起手後再等半秒落地；落地時重新取得半徑二格內敵人，每人只結算一次小級物理傷害，移出可躲避。菸灰缸本體及拋物線演出仍待專用素材／畫面驗收。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeTier",
+        "castTimeSec",
+        "radiusTier",
+        "radius",
+        "rangeTier",
+        "range",
+        "manaCostTier",
+        "manaCost",
+        "cooldownTier",
+        "cooldown"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0.2,
+        "cooldown": [
+          5,
+          5,
+          5,
+          5
+        ],
+        "manaCost": [
+          35,
+          35,
+          35,
+          35
+        ],
+        "range": 6
+      }
+    },
+    "W": {
+      "products": [
+        {
+          "instanceId": "w-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "ground",
+              "castTimeSec": 0.15,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "delayed",
+                  "shape": "circle",
+                  "radius": 2,
+                  "side": "enemies",
+                  "delaySec": 0.03333333333333333,
+                  "targetMode": "reresolve",
+                  "anchor": "point",
+                  "count": 20,
+                  "intervalSec": 0.2,
+                  "stopOnCasterDeath": true,
+                  "effects": [
+                    {
+                      "kind": "floatingText",
+                      "shape": "single",
+                      "applyTo": "victim",
+                      "text": "煙霧區：普攻失手 30%（免控例外）",
+                      "colorRgb": [
+                        166,
+                        158,
+                        150
+                      ],
+                      "durationSec": 0.8,
+                      "condition": {
+                        "not": {
+                          "kind": "status",
+                          "subject": "target",
+                          "statusId": "community-review-30-20260907.smoke-seen",
+                          "appliedBy": "self"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "statusId": "community-review-30-20260907.smoke-seen",
+                      "sourceScope": "caster",
+                      "stackKey": "community-review-30-20260907.smoke-seen",
+                      "maxStacks": 1,
+                      "duration": 0.24,
+                      "modifiers": [],
+                      "dispellable": false
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-30-20260907.smoke",
+                      "duration": 0.24,
+                      "missChance": 0.3
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【本次玩法】尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n落點產生四秒、半徑二格的煙霧區，每 0.2 秒對區內敵人續上 30% 普攻失手，離區最多 0.24 秒消退；進入時有命中干擾文字提示。沒有傷害、緩速或完整隱形，友軍與跨區不受影響，免控仍依 GGD 規則。灰煙演出為現有煙粒子調整，待畫面驗收。",
+      "note": "本次保留核心並核對定位、代價、反制。尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n落點產生四秒、半徑二格的煙霧區，每 0.2 秒對區內敵人續上 30% 普攻失手，離區最多 0.24 秒消退；進入時有命中干擾文字提示。沒有傷害、緩速或完整隱形，友軍與跨區不受影響，免控仍依 GGD 規則。灰煙演出為現有煙粒子調整，待畫面驗收。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeTier",
+        "castTimeSec",
+        "radiusTier",
+        "radius",
+        "rangeTier",
+        "range",
+        "manaCostTier",
+        "manaCost",
+        "cooldownTier",
+        "cooldown"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0.15,
+        "cooldown": [
+          9,
+          9,
+          9,
+          9
+        ],
+        "manaCost": [
+          50,
+          50,
+          50,
+          50
+        ],
+        "range": 5
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-30-20260907.w",
+        "abilityId": "community-review-30-20260907.w",
+        "yields": [
+          "caster.castFx"
+        ],
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "point",
+            "vfxId": "fx.w3x.particle.flamessmoke.p00",
+            "durationSec": 4,
+            "tint": [
+              166,
+              158,
+              150
+            ],
+            "alpha": 0.3,
+            "w3xScale": 1.1
+          }
+        ]
+      }
+    },
+    "E": {
+      "products": [
+        {
+          "instanceId": "e-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "dash",
+                  "mode": "forward",
+                  "speed": 8,
+                  "maxDistance": 3
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【本次玩法】尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n朝選定撤退方向貼地衝出三格，遇牆停止；移除舊模板傷害、擊飛和推移，沒有命中收益。狼狽撤退的雜物殘影只有演出用途，專用素材仍待補。",
+      "note": "本次保留核心並核對定位、代價、反制。尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n朝選定撤退方向貼地衝出三格，遇牆停止；移除舊模板傷害、擊飛和推移，沒有命中收益。狼狽撤退的雜物殘影只有演出用途，專用素材仍待補。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeTier",
+        "castTimeSec",
+        "radiusTier",
+        "radius",
+        "rangeTier",
+        "range",
+        "manaCostTier",
+        "manaCost",
+        "cooldownTier",
+        "cooldown"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0,
+        "cooldown": [
+          6,
+          6,
+          6,
+          6
+        ],
+        "manaCost": [
+          35,
+          35,
+          35,
+          35
+        ],
+        "range": 3
+      }
+    },
+    "R": {
+      "products": [
+        {
+          "instanceId": "r-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "ground",
+              "castTimeSec": 0.4,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "delayed",
+                  "shape": "circle",
+                  "radius": 2.5,
+                  "side": "enemies",
+                  "delaySec": 0.03333333333333333,
+                  "targetMode": "reresolve",
+                  "anchor": "point",
+                  "count": 3,
+                  "intervalSec": 0.8,
+                  "stopOnCasterDeath": true,
+                  "effects": [
+                    {
+                      "kind": "spawnVfx",
+                      "vfxId": "fx.prim.sound.pulse-sm",
+                      "at": "point",
+                      "durationSec": 0.4
+                    },
+                    {
+                      "kind": "delayed",
+                      "shape": "circle",
+                      "radius": 2.5,
+                      "side": "enemies",
+                      "delaySec": 0.4,
+                      "targetMode": "reresolve",
+                      "anchor": "point",
+                      "count": 1,
+                      "intervalSec": 0.5,
+                      "stopOnCasterDeath": true,
+                      "effects": [
+                        {
+                          "kind": "damage",
+                          "damageType": "physical",
+                          "amount": {
+                            "damageTier": "小",
+                            "ratios": []
+                          }
+                        },
+                        {
+                          "kind": "spawnVfx",
+                          "vfxId": "fx.prim.sound.nova",
+                          "at": "point",
+                          "durationSec": 0.3
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【本次玩法】尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n指定区域三波，每波先出四成秒落點預警，再對當時半徑二點五格內敵人結算一次小級物理傷害；每波相隔 0.8 秒，移出可躲、後進者可被後續波命中，死亡或回合結束清除。卡通雜物模型與完整逐波畫面尚待驗收，現有脈衝只作時間位置提示。",
+      "note": "本次保留核心並核對定位、代價、反制。尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n指定区域三波，每波先出四成秒落點預警，再對當時半徑二點五格內敵人結算一次小級物理傷害；每波相隔 0.8 秒，移出可躲、後進者可被後續波命中，死亡或回合結束清除。卡通雜物模型與完整逐波畫面尚待驗收，現有脈衝只作時間位置提示。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeTier",
+        "castTimeSec",
+        "radiusTier",
+        "radius",
+        "rangeTier",
+        "range",
+        "manaCostTier",
+        "manaCost",
+        "cooldownTier",
+        "cooldown"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0.4,
+        "cooldown": [
+          18,
+          18,
+          18,
+          18
+        ],
+        "manaCost": [
+          90,
+          90,
+          90,
+          90
+        ],
+        "range": 6
+      }
+    },
+    "EX": {
+      "products": [
+        {
+          "instanceId": "ex-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 450
+                  },
+                  "duration": 4,
+                  "breakOnMove": true,
+                  "stackKey": "community-review-30-20260907.stay-shield",
+                  "onExisting": "replace"
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        },
+        {
+          "instanceId": "ex-parody",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "floatingText",
+                  "shape": "single",
+                  "text": "移動就算上班，拒絕！",
+                  "applyTo": "self",
+                  "durationSec": 1
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【本次玩法】尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n保留真正移動就消失的懶人盾，以施放提示說清反制。\n每次消耗一層拖延，原地得到四秒、四百五十基礎吸收量的護盾（仍吃 GGD 護盾倍率）。移動、位移、換區或死亡立即使這一片盾到期；轉向或撞牆未移動不取消，不影響隊友給的其他盾。缺拖延時拒絕且不扣魔力或冷卻。原稿未指定一次扣幾層，本配方採一層。",
+      "note": "本次保留核心並核對定位、代價、反制。尼古貓貓拒絕上班：站著拖延換盾，真的移動盾就沒了\n保留真正移動就消失的懶人盾，以施放提示說清反制。\n每次消耗一層拖延，原地得到四秒、四百五十基礎吸收量的護盾（仍吃 GGD 護盾倍率）。移動、位移、換區或死亡立即使這一片盾到期；轉向或撞牆未移動不取消，不影響隊友給的其他盾。缺拖延時拒絕且不扣魔力或冷卻。原稿未指定一次扣幾層，本配方採一層。",
+      "removeOverrides": [
+        "effects",
+        "castType",
+        "castTimeTier",
+        "castTimeSec",
+        "radiusTier",
+        "radius",
+        "rangeTier",
+        "range",
+        "manaCostTier",
+        "manaCost",
+        "cooldownTier",
+        "cooldown"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0,
+        "cooldown": [
+          7,
+          7,
+          7,
+          7
+        ],
+        "manaCost": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "range": 0,
+        "statusCost": {
+          "statusId": "community-review-30-20260907.procrastination",
+          "count": 1
+        }
+      }
+    }
+  },
+  "templateVersions": {
+    "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39": {
+      "id": "tpl-mark-stacks",
+      "schema": "template@1",
+      "name": "具名標記-層數與免死",
+      "description": "在持有者身上裝一個有層數的具名標記（【試煉】【風王結界】【縮地】），可跨回合、可永久，並可選擇讓它變成一張免死牌：受致命傷害時消耗一層 → 無敵 → 回復 → 擊退暈眩周圍敵人；每失去一層永久獲得一組加成。⚠️ 落差：無敵/回復/擊退是救活的同一格一起發生，文案上的「隨後」看不出來 —— ⛔ 那是**這張模板**尚未把回復／擊退接上延後排程，⛔ 不是引擎沒有：引擎**有** `kind:\"delayed\"`（`delaySec`／`count`／`intervalSec`／`effects`，出貨例：初號機 `godie-e00r` 的 berserk_smoke），⭐ 但 lethalSave 的 `selfEffects`／`aoeEffects` 是同格跑的；要接延後得另驗死亡／重觸發／施法者狀態／排程取消的時序，⛔ 不是改說明就算做了（GH#1044）；火圈燒傷不走傷害佇列，這張免死牌擋不到它。",
+      "family": "mark-stacks",
+      "status": "enabled",
+      "params": {
+        "markId": {
+          "type": "docRef",
+          "default": "godie-hapm.passive"
+        },
+        "initial": {
+          "type": "number",
+          "default": 12,
+          "min": 0,
+          "max": 999,
+          "unit": "count"
+        },
+        "max": {
+          "type": "number",
+          "default": 12,
+          "min": 1,
+          "max": 999,
+          "unit": "count"
+        },
+        "durationSec": {
+          "type": "number",
+          "default": -1,
+          "min": -1,
+          "max": 600,
+          "unit": "s"
+        },
+        "resetOn": {
+          "type": "enum",
+          "default": "match",
+          "values": [
+            "match",
+            "round",
+            "never"
+          ]
+        },
+        "perStackLost": {
+          "type": "statModifiers",
+          "optional": true,
+          "default": [
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 0.1
+            },
+            {
+              "stat": "maxHealth",
+              "op": "pctAdd",
+              "value": 0.1
+            }
+          ]
+        },
+        "lethalMode": {
+          "type": "enum",
+          "default": "save",
+          "values": [
+            "save",
+            "none"
+          ]
+        },
+        "lethalConsume": {
+          "type": "number",
+          "default": 1,
+          "min": 1,
+          "max": 999,
+          "unit": "count"
+        },
+        "surviveHpPct": {
+          "type": "number",
+          "default": 0.01,
+          "min": 0.01,
+          "max": 1,
+          "unit": "ratio"
+        },
+        "lethalDamageTypes": {
+          "type": "enum",
+          "default": "all",
+          "values": [
+            "all",
+            "physicalMagic",
+            "physical",
+            "magic",
+            "true"
+          ]
+        },
+        "internalCooldown": {
+          "type": "number",
+          "default": 0.5,
+          "min": 0,
+          "max": 30,
+          "unit": "s"
+        },
+        "invulnerableSec": {
+          "type": "number",
+          "default": 1.5,
+          "min": 0.1,
+          "max": 30,
+          "unit": "s"
+        },
+        "invulnerableScope": {
+          "type": "enum",
+          "default": "damageAndControl",
+          "values": [
+            "damageAndControl",
+            "damageOnly"
+          ]
+        },
+        "restoreHealthPct": {
+          "type": "number",
+          "optional": true,
+          "default": 0.5,
+          "min": 0,
+          "max": 1,
+          "unit": "ratio"
+        },
+        "aoeRadius": {
+          "type": "number",
+          "default": 6,
+          "min": 0,
+          "max": 12
+        },
+        "knockbackDistance": {
+          "type": "number",
+          "optional": true,
+          "default": 4,
+          "min": 0.1,
+          "max": 20
+        },
+        "knockbackSpeed": {
+          "type": "number",
+          "default": 16,
+          "min": 1,
+          "max": 40
+        },
+        "knockbackFrom": {
+          "type": "enum",
+          "default": "caster",
+          "values": [
+            "caster",
+            "facing",
+            "pull"
+          ]
+        },
+        "stunSec": {
+          "type": "number",
+          "optional": true,
+          "default": 0.5,
+          "min": 0.034,
+          "max": 20,
+          "unit": "s"
+        },
+        "stunStatusId": {
+          "type": "docRef",
+          "default": "trial-stun"
+        }
+      },
+      "requires": [
+        "marks",
+        "invulnerable",
+        "knockback",
+        "applyStatus"
+      ],
+      "gapScore": 8,
+      "exemplar": {
+        "skill": "52-00 十二道試煉（海克力斯 Berserker 天生技）",
+        "jass": "無 JASS 出處 —— owner 2026-08-08 口述規格，不是從 war3map.j 復原的家族"
+      }
+    },
+    "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+      "schema": "template@1",
+      "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-event-passive",
+      "name": "自訂事件被動",
+      "family": "event-passive",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+      "params": {
+        "hooks": {
+          "type": "hooks",
+          "default": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      }
+    },
+    "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
+      "id": "tpl-effect-sequence",
+      "schema": "template@1",
+      "name": "自訂效果序列",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "family": "effect-sequence",
+      "status": "enabled",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 10,
+          "unit": "s",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "min": 0,
+          "max": 40,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "values": [
+            "enemies",
+            "allies"
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      },
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      }
+    },
+    "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+      "schema": "template@1",
+      "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-effect-sequence",
+      "name": "自訂效果序列",
+      "family": "effect-sequence",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ]
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 10,
+          "unit": "s"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 40
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "enemies",
+            "allies"
+          ]
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "recast": {
+          "type": "recast",
+          "optional": true,
+          "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "schema": "ggd-community-card-release-gates@1",
+  "testedCommit": "c0dc16d1aec325f56a828d9f73a6fe26ce3d43d6",
+  "sameBatch": true,
+  "checks": [
+    {
+      "command": "pnpm skills:check",
+      "exitCode": 0,
+      "logSha256": "d97d6998924cdb93a693a4f44fd54aba02f84f4ac7755fd843b0a590bf5be391"
+    },
+    {
+      "command": "pnpm editor:accept:release",
+      "exitCode": 0,
+      "logSha256": "5b227638c11bdc79e8c9859ba0c3376df47e0d1a0414f4527bf3c52904055b06"
+    },
+    {
+      "command": "pnpm coord:check",
+      "exitCode": 0,
+      "logSha256": "573c0629641d94a47c324f4c157645433641bc3e535fee227f8234ccab9a0359"
+    }
+  ],
+  "editor": {
+    "tests": 592,
+    "typecheck": "passed",
+    "productionBuild": "passed"
+  },
+  "behavior": {
+    "cardAndFriendlyTests": 17,
+    "cardResourceTests": 9,
+    "mutationsDetected": 2
+  },
+  "ui": {
+    "status": "unverified",
+    "attempts": [
+      "IAB folder/single-file chooser timeout",
+      "Native Safari control unavailable: Computer Use permissions not granted"
+    ]
+  },
+  "originalDesignAcceptance": "incomplete",
+  "formalPublication": false,
+  "issue": 1132,
+  "postMerge": {
+    "originMain": "b2ffdfc58afe04121082bbbd608e017e822be379",
+    "checks": [
+      {
+        "command": "pnpm editor:accept:release",
+        "testedCommit": "cdffb0736d9ceb2b25862bc61ea2500d6ccb04e6",
+        "exitCode": 0,
+        "logSha256": "48cbeea5acc9a8704ef6e600c544dd115485849dd024849f083d2d3a664458be"
+      },
+      {
+        "command": "pnpm skills:check",
+        "testedCommit": "61df3c412cea4b08fba96a37e6d9f30480080dc1",
+        "exitCode": 0,
+        "logSha256": "6a8833bf0f042b2657fc6b51f718818a6454a4bb36a9020a5002562f0e2ba3d4"
+      },
+      {
+        "command": "pnpm coord:check",
+        "testedCommit": "cdffb0736d9ceb2b25862bc61ea2500d6ccb04e6",
+        "exitCode": 0,
+        "logSha256": "573c0629641d94a47c324f4c157645433641bc3e535fee227f8234ccab9a0359"
+      },
+      {
+        "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/cardLinks.test.ts src/content/heroForge/communityRefinements/friendlyProtection.test.ts src/sim/arena.test.ts src/sim/economy/randomOnlyTablesDeclared.test.ts --pool=threads --minWorkers=1 --maxWorkers=1",
+        "testedCommit": "cdffb0736d9ceb2b25862bc61ea2500d6ccb04e6",
+        "exitCode": 0,
+        "logSha256": "cc84169456e8af5012171da1760c762cc27926bf5e947079c85ffbfbc669d25e"
+      }
+    ],
+    "execution": "Three release gates started together after merge; skills:check alone reran after its only failure, stale dashboard version, was regenerated. Commit 61df3c412 changes only the dashboard version.",
+    "editorTests": 592,
+    "behaviorTests": 24,
+    "supersedesPreMergeReleaseChecks": true,
+    "ui": "unverified",
+    "currentServiceZip": "unverified",
+    "formalPublication": false,
+    "originalDesignAcceptance": "incomplete"
+  }
+}

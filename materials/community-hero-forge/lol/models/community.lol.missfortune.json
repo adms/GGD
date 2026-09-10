@@ -1,0 +1,29 @@
+{
+  "id": "community.lol.missfortune",
+  "schema": "model@1",
+  "glbPath": "assets/models/community-local/missfortune.glb",
+  "scale": 0.010740181490839584,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "missfortune_idle1",
+    "run": "missfortune_run",
+    "attack": "missfortune_attack1",
+    "cast": "missfortune_spell1",
+    "death": "missfortune_death",
+    "hurt": "missfortune_idle1"
+  },
+  "heroBody": true,
+  "yawOffsetDeg": 0,
+  "attachPoints": {
+    "head": {
+      "x": 0,
+      "y": 1.7,
+      "z": 0
+    },
+    "muzzle": {
+      "x": 0,
+      "y": 1,
+      "z": 0.4
+    }
+  }
+}

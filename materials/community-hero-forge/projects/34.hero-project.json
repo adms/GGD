@@ -1,0 +1,972 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "community-review-34-20260907",
+  "revision": 14,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "高速婆婆",
+    "concept": "高速婆婆 社群英雄功能驗收稿。作品：《膽大黨》  \n採用：高速婆婆本體的妖怪戰鬥意象。  \n定位：高速追擊、轉向、有限詛咒。\n\n視覺方向：紅黑風線、追獵咒紋、急轉地面擦痕；採妖怪本體，不用厄卡倫或招財貓。\n以 GGD 狂戰 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "moveNames": {
+      "PASSIVE": "〔追上你了〕",
+      "Q": "〔疾走爪擊〕",
+      "W": "〔急轉彎〕",
+      "E": "〔妖怪的咒印〕",
+      "R": "〔全速追獵〕",
+      "EX": "〔百公里衝撞〕"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {
+        "brief.moveNames.E": "locked",
+        "brief.moveNames.EX": "locked",
+        "brief.moveNames.PASSIVE": "locked",
+        "brief.moveNames.Q": "locked",
+        "brief.moveNames.R": "locked",
+        "brief.moveNames.W": "locked",
+        "brief.name": "locked"
+      }
+    },
+    "attributes": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 14,
+      "state": "draft",
+      "fieldOwnership": {
+        "acceptedPlan.slots.E.name": "locked",
+        "acceptedPlan.slots.E.products.0.template": "manual",
+        "acceptedPlan.slots.EX.name": "locked",
+        "acceptedPlan.slots.EX.products.0.template": "manual",
+        "acceptedPlan.slots.PASSIVE.name": "locked",
+        "acceptedPlan.slots.PASSIVE.products.0.template": "manual",
+        "acceptedPlan.slots.Q.name": "locked",
+        "acceptedPlan.slots.Q.products.0.template": "manual",
+        "acceptedPlan.slots.R.name": "locked",
+        "acceptedPlan.slots.R.products.0.template": "manual",
+        "acceptedPlan.slots.W.name": "locked",
+        "acceptedPlan.slots.W.products.0.template": "manual"
+      }
+    },
+    "mechanics": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 13,
+      "state": "stale",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "community-review-34-20260907.plan",
+    "title": "高速婆婆",
+    "summary": "高速婆婆 社群英雄功能驗收稿。作品：《膽大黨》  \n採用：高速婆婆本體的妖怪戰鬥意象。  \n定位：高速追擊、轉向、有限詛咒。\n\n視覺方向：紅黑風線、追獵咒紋、急轉地面擦痕；採妖怪本體，不用厄卡倫或招財貓。\n以 GGD 狂戰 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "狂戰",
+    "archetype": "fighter",
+    "attackType": "melee",
+    "budget": {
+      "power": 50,
+      "complexity": 60
+    },
+    "statOverrides": {
+      "ms": "大",
+      "mr": "小",
+      "armor": "中",
+      "maxHealth": "大",
+      "maxMana": "小",
+      "ad": "大",
+      "ap": "小",
+      "as": "中",
+      "healthRegen": "大",
+      "manaRegen": "小",
+      "range": "小"
+    },
+    "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020",
+    "templateVersions": {
+      "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+        "id": "tpl-event-passive",
+        "schema": "template@1",
+        "name": "自訂事件被動",
+        "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+        "family": "event-passive",
+        "status": "enabled",
+        "params": {
+          "hooks": {
+            "type": "hooks",
+            "default": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ]
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+        "id": "tpl-effect-sequence",
+        "schema": "template@1",
+        "name": "自訂效果序列",
+        "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+        "family": "effect-sequence",
+        "status": "enabled",
+        "params": {
+          "castType": {
+            "type": "enum",
+            "default": "targeted",
+            "values": [
+              "targeted",
+              "self",
+              "ground",
+              "skillshot"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 10,
+            "unit": "s",
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "radius": {
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 40,
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "side": {
+            "type": "enum",
+            "default": "enemies",
+            "values": [
+              "enemies",
+              "allies"
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "effects": {
+            "type": "effects",
+            "default": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+          },
+          "recast": {
+            "type": "recast",
+            "optional": true,
+            "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+          }
+        },
+        "requires": [
+          "hooks",
+          "conditions"
+        ],
+        "gapScore": 10,
+        "exemplar": {
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b41146563a36c4be10": {
+        "id": "tpl-blink",
+        "schema": "template@1",
+        "name": "純位移瞬移",
+        "description": "把自己的身體搬到指定的地面點 —— 真的瞬移（`kind:\"blink\"`；owner 2026-08-09「是真的瞬移，不是平移」，GH#301-2），中間那兩格身體不存在：不會被範圍技掃到、飛行途中不吃碰撞；落點仍照 `content/config/displacement-tiers.json` 結算牆前截斷／飛行豁免／場地邊界（GH#1044）。距離上限就是技能自己的射程（skeleton 的 `range`，⛔ 不是這裡的欄位）。⛔ 零參數是刻意的：出貨 7 支（57-02 任意門 · 86-02 電光一閃 · 09-02 瞬間移動 ×2 · 65-01 神出鬼沒 · 58-00 電光一閃 ×2）的 `effects` 一個位元組都不差，多一格就是編一格。要「瞬移到目標身上再打一下」走 tpl-blink-strike；要「抵達點才結算 onLand」走 tpl-teleport。",
+        "family": "blink",
+        "status": "enabled",
+        "params": {
+          "castTimeSec": {
+            "type": "number",
+            "default": 0.467,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true,
+            "origin": "census: 出貨 7/7 支純位移的 `castTimeSec` 逐位元 0.467（content/abilities/godie-n00b.e.json · o00k.w · o00x.w · ogrh.w · udea.q · o02l.passive · ofar.passive）；⚠️ 它是 castderive:build:raw 推導的欄位，文件與 params 同一個值（同 71/79 位既有採用者的慣例）。"
+          }
+        },
+        "requires": [
+          "blink"
+        ],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "57-02 任意門（content/abilities/godie-n00b.e.json）",
+          "jass": "A0PM 82-02 虛空瞬動 j:35335-35336（GetOrderPointLoc → SetUnitPositionLoc；同一台「指向點」機器，expand.ts teleport 註解逐字）"
+        }
+      }
+    },
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "〔追上你了〕",
+        "purpose": "【核准惡搞改編】R催油門後護甲和魔抗各降低30兩秒；跑很快不代表撞車不痛。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "passive-parody-1",
+            "template": {
+              "ref": "tpl-event-passive",
+              "params": {
+                "hooks": [
+                  {
+                    "on": "onAbilityCast",
+                    "effects": [
+                      {
+                        "kind": "applyBuff",
+                        "applyTo": "self",
+                        "duration": 2,
+                        "modifiers": [
+                          {
+                            "stat": "armor",
+                            "op": "flat",
+                            "value": -30
+                          },
+                          {
+                            "stat": "mr",
+                            "op": "flat",
+                            "value": -30
+                          }
+                        ]
+                      }
+                    ],
+                    "internalCooldown": 0,
+                    "target": "self",
+                    "abilitySlot": "R"
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "〔疾走爪擊〕",
+        "purpose": "【核准惡搞改編】直線違規：衝六格，沿途敌人各受一次小級物理傷害，不鎖住目標。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "q-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "skillshot",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "dash",
+                    "mode": "forward",
+                    "speed": 8,
+                    "maxDistance": 6,
+                    "onTouch": [
+                      {
+                        "kind": "damage",
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "小"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "leap",
+          "knockback"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "〔急轉彎〕",
+        "purpose": "【核准惡搞改編】急剎：自己定身0.5秒；四秒內用過Q，周圍三格敌人被推開三格。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "w-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "self",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "root",
+                    "duration": 0.5,
+                    "applyTo": "self",
+                    "sourceScope": "caster",
+                    "root": true
+                  },
+                  {
+                    "kind": "delayed",
+                    "shape": "circle",
+                    "delaySec": 0.1,
+                    "effects": [
+                      {
+                        "kind": "knockback",
+                        "distance": 3,
+                        "speed": 12,
+                        "from": "caster",
+                        "subtractGap": false,
+                        "uncontrollable": false
+                      }
+                    ],
+                    "stopOnCasterDeath": true,
+                    "radius": 3,
+                    "side": "enemies",
+                    "anchor": "caster",
+                    "targetMode": "reresolve",
+                    "condition": {
+                      "kind": "recentCast",
+                      "subject": "self",
+                      "slot": "Q",
+                      "withinSec": 4
+                    }
+                  },
+                  {
+                    "kind": "floatingText",
+                    "shape": "single",
+                    "text": "這裡沒有測速照相吧？",
+                    "applyTo": "self",
+                    "durationSec": 1
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "leap"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "〔妖怪的咒印〕",
+        "purpose": "【核准惡搞改編】收罰單：指定敵人減速40%兩秒；四秒內用過W再繳械一秒。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "e-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "slow40",
+                    "duration": 2,
+                    "applyTo": "target",
+                    "sourceScope": "caster",
+                    "moveSpeedMult": 0.6
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "numbness",
+                    "duration": 1,
+                    "applyTo": "target",
+                    "sourceScope": "caster",
+                    "disarmed": true,
+                    "condition": {
+                      "kind": "recentCast",
+                      "subject": "self",
+                      "slot": "W",
+                      "withinSec": 4
+                    }
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "〔全速追獵〕",
+        "purpose": "【核准惡搞改編】破表油門：自身移速增加60%兩秒，P同步降防。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            30
+          ],
+          "manaCost": [
+            60
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "r-parody-1",
+            "template": {
+              "ref": "tpl-effect-sequence",
+              "params": {
+                "castType": "self",
+                "castTimeSec": 0.1,
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "rage",
+                    "duration": 2,
+                    "applyTo": "self",
+                    "sourceScope": "caster",
+                    "moveSpeedMult": 1.6
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "〔百公里衝撞〕",
+        "purpose": "【核准惡搞改編】下個路口再見：短距離合法瞬移，不取消既有罰單或冷卻。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "range": 6,
+          "cooldown": [
+            10
+          ],
+          "manaCost": [
+            40
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "ex-parody-1",
+            "template": {
+              "ref": "tpl-blink",
+              "params": {
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b41146563a36c4be10"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 60,
+          "manaCost": 100,
+          "range": 6
+        },
+        "capabilityIds": [
+          "leap",
+          "knockback"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "community.body.022b9aa2fc736b1b6fa974532e47edfc590d78ce161c90aa",
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "dfb25661e3126984d719393d02721ee0c0ea0cd2f09f21626d29165ea1481084",
+      "byteSize": 946740,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "modelProvenance": {
+      "schema": "ggd-hero-model-provenance@1",
+      "modelSha256": "dfb25661e3126984d719393d02721ee0c0ea0cd2f09f21626d29165ea1481084",
+      "sourceAssetId": "300heroes:7d330d5e4eae4e8c4a9b7c34",
+      "sourceCharacter": "八云紫",
+      "sourceWork": "東方 Project",
+      "relationship": "style-proxy",
+      "notes": "暫採妖怪女性與和式衣裝氛圍；實際為八雲紫，外觀年齡、金髮、陽傘與高速婆婆不同，不是原作老婦造型。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。"
+    },
+    "championIcon": "assets/icons/champions/thorne.webp",
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-34-20260907.q",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-34-20260907.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.dash",
+              "at": "target",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                204,
+                46,
+                46
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-34-20260907.w",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-34-20260907.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "self",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                204,
+                46,
+                46
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-34-20260907.e",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-34-20260907.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "target",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                204,
+                46,
+                46
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-34-20260907.r",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-34-20260907.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "self",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                204,
+                46,
+                46
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-review-34-20260907.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-34-20260907.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.dash",
+              "at": "target",
+              "durationSec": 0.4,
+              "kind": "vfx",
+              "on": "castEffect",
+              "tint": [
+                204,
+                46,
+                46
+              ]
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/dfb25661e3126984d719393d02721ee0c0ea0cd2f09f21626d29165ea1481084.glb",
+        "byteSize": 946740,
+        "mediaType": "model/gltf-binary",
+        "sha256": "dfb25661e3126984d719393d02721ee0c0ea0cd2f09f21626d29165ea1481084",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "sourceDesign": {
+    "schema": "ggd-hero-source-design@1",
+    "sourceSha256": "1992d2a65620e63219a53f44a52d450d11ee2de2b1e27bcd8b1ce3812ba35af9",
+    "name": "高速婆婆",
+    "identity": "作品：《膽大黨》  \n採用：高速婆婆本體的妖怪戰鬥意象。  \n定位：高速追擊、轉向、有限詛咒。",
+    "ownerText": "### 34｜高速婆婆\n\n作品：《膽大黨》  \n採用：高速婆婆本體的妖怪戰鬥意象。  \n定位：高速追擊、轉向、有限詛咒。\n\n- **PASSIVE｜〔追上你了〕**：持續追逐同一可見目標時累積速度，轉換目標、失去視線或停止追逐後衰退。\n- **Q｜〔疾走爪擊〕**：短距離突進爪擊。\n- **W｜〔急轉彎〕**：快速改變方向，降低當前加速層數以換取操作能力。\n- **E｜〔妖怪的咒印〕**：標記一個可見敵人，使自己朝其移動時獲得有限加速。\n- **R｜〔全速追獵〕**：短期提升速度上限與轉向能力，期間仍須通過碰撞檢查。\n- **EX｜〔百公里衝撞〕**：蓄勢後沿長直線衝撞，命中第一名英雄或障礙物時停止。\n\n**審查重點**：測試高速穿牆、轉角、目標死亡及追擊超距；區分高速婆婆、招財貓容器與厄卡倫的能力持有狀態。\n\n",
+    "reviewText": "測試高速穿牆、轉角、目標死亡及追擊超距；區分高速婆婆、招財貓容器與厄卡倫的能力持有狀態。",
+    "slots": {
+      "PASSIVE": {
+        "name": "〔追上你了〕",
+        "ownerDescription": "持續追逐同一可見目標時累積速度，轉換目標、失去視線或停止追逐後衰退。",
+        "baselineBehavior": "普攻追加極小級物理傷害，內置冷卻 3 秒。",
+        "requiredRefinement": "需同一可見目標追逐速度與轉目標衰退。",
+        "refinementContracts": [
+          "M01",
+          "M06"
+        ]
+      },
+      "Q": {
+        "name": "〔疾走爪擊〕",
+        "ownerDescription": "短距離突進爪擊。",
+        "baselineBehavior": "向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。",
+        "requiredRefinement": "爪擊模型待製。",
+        "refinementContracts": [
+          "M01",
+          "M06"
+        ]
+      },
+      "W": {
+        "name": "〔急轉彎〕",
+        "ownerDescription": "快速改變方向，降低當前加速層數以換取操作能力。",
+        "baselineBehavior": "朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。",
+        "requiredRefinement": "需急轉向與消耗加速層，不能單純低跳。",
+        "refinementContracts": [
+          "M01",
+          "M06"
+        ]
+      },
+      "E": {
+        "name": "〔妖怪的咒印〕",
+        "ownerDescription": "標記一個可見敵人，使自己朝其移動時獲得有限加速。",
+        "baselineBehavior": "指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"slow30\",\"duration\":1.5,\"applyTo\":\"target\",\"moveSpeedMult\":0.7}]。",
+        "requiredRefinement": "緩速只是底稿；需追獵目標標記與朝向加速。",
+        "refinementContracts": [
+          "M01",
+          "M06"
+        ]
+      },
+      "R": {
+        "name": "〔全速追獵〕",
+        "ownerDescription": "短期提升速度上限與轉向能力，期間仍須通過碰撞檢查。",
+        "baselineBehavior": "自身取得 3 秒增益：極小級移速。",
+        "requiredRefinement": "3 秒移速增益；需上限与轉向能力独立参数。",
+        "refinementContracts": [
+          "M01",
+          "M06"
+        ]
+      },
+      "EX": {
+        "name": "〔百公里衝撞〕",
+        "ownerDescription": "蓄勢後沿長直線衝撞，命中第一名英雄或障礙物時停止。",
+        "baselineBehavior": "向指定方向突進 500 wc3u，造成極小級碰撞範圍傷害與推移。",
+        "requiredRefinement": "需命中第一英雄或牆即停止，不能穿越後繼續連撞。",
+        "refinementContracts": [
+          "M01",
+          "M06"
+        ]
+      }
+    }
+  },
+  "refinementNotes": {
+    "PASSIVE": "高速婆婆測速照：先違規加速再剎車，把罰單塞給追兵\nR催油門後護甲和魔抗各降低30兩秒；跑很快不代表撞車不痛。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "Q": "高速婆婆測速照：先違規加速再剎車，把罰單塞給追兵\n直線違規：衝六格，沿途敌人各受一次小級物理傷害，不鎖住目標。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "W": "高速婆婆測速照：先違規加速再剎車，把罰單塞給追兵\n急剎：自己定身0.5秒；四秒內用過Q，周圍三格敌人被推開三格。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "E": "高速婆婆測速照：先違規加速再剎車，把罰單塞給追兵\n收罰單：指定敵人減速40%兩秒；四秒內用過W再繳械一秒。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "R": "高速婆婆測速照：先違規加速再剎車，把罰單塞給追兵\n破表油門：自身移速增加60%兩秒，P同步降防。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+    "EX": "高速婆婆測速照：先違規加速再剎車，把罰單塞給追兵\n下個路口再見：短距離合法瞬移，不取消既有罰單或冷卻。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。"
+  },
+  "validationState": {
+    "identity": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 14,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 13,
+      "status": "stale",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": [
+    {
+      "kind": "generator-adopted",
+      "projectRevision": 14,
+      "digest": "b606d407eaefd1d8b8adc82fcdc6badf117374fc73559eb7580c98e61aa673fe",
+      "generatorVersion": "sha256:c2198d2a48beecd560656b02372f2115e19332e72be733a04f49b460883ea020"
+    }
+  ]
+}

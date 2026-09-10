@@ -5,7 +5,8 @@ import { zHeroProject, type HeroProject } from "../heroForge/schema";
 import { HERO_SLOTS } from "../heroForge/constants";
 import { compileGeneratedHeroDraft, generateHeroDraft, type GeneratedHeroDraft, type CompiledHeroDraft } from "../heroForge/generator";
 import { zVfxSubtypeDoc } from "../schema/vfxSubtype";
-import { heroScenarioProjection, heroKitScenarioProjection, runHeroAbilityScenario, runHeroKitScenario } from "../heroForge/scenario";
+import { runHeroAdmissionScenarios } from "../heroForge/scenarioAdmission";
+import { heroScenarioProjection, heroKitScenarioProjection } from "../heroForge/scenario";
 import { normalizeTemplateBinding } from "../templates/expand";
 import { contentSha256, jcsByteLength } from "./jcs";
 import { packageDigest } from "./digest";
@@ -255,8 +256,7 @@ export function compileHeroPackageProject(raw: unknown, catalog: HeroPackageCata
   let scenarios: unknown = null;
   if (simulate) {
     const baseline = createHeroSimulationBaseline(catalog.documents);
-    const slots = HERO_SLOTS.map((slot) => runHeroAbilityScenario(compiled.champion, compiled.abilityDrafts[slot], { baseline, ticks: 180, relatedAbilities, relatedProjectiles, relatedChampions }));
-    const kit = runHeroKitScenario(compiled.champion, compiled.abilityDrafts, { baseline, ticksPerStep: 180, relatedAbilities, relatedProjectiles, relatedChampions });
+    const { slots, kit } = runHeroAdmissionScenarios(compiled.champion, compiled.abilityDrafts, { baseline, ticks: 180, relatedAbilities, relatedProjectiles, relatedChampions });
     const failures = slots.flatMap((scenario) => scenario.assertions.filter((assertion) => assertion.status === "fail").map((assertion) => `${scenario.slot}: ${assertion.summaryZh}`));
     if (kit.status === "rejected") failures.push(`整套技能未完成：${kit.rejectedSlots.join("、")}`);
     if (failures.length) throw new Error(failures.join("；"));

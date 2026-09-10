@@ -65,10 +65,13 @@ const CAST_REASON: Readonly<Record<CastResult, string>> = {
   "not-learned": "這一格還沒學",
   dead: "英雄倒下了",
   stunned: "被控制中",
+  "time-stopped": "時間暫停中",
   silenced: "被沉默",
   cooldown: "冷卻中",
   "no-mana": "魔力不足",
   "no-resource": "技能資源不足，請先累積所需層數",
+  "no-summon": "缺少本技能要求的存活召喚物",
+  "target-condition": "目標尚未符合本技能的標記／交鋒條件",
   "out-of-range": "距離太遠",
   // ⭐ owner 2026-08-22：「**超過施法距離人物不會走過去放技能（做成後台開關）**」
   //    ⇒ 距離不足不再是**拒絕**，是**武裝接近**：走到射程邊緣再放。

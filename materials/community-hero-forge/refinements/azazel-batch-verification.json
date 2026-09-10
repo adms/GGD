@@ -1,0 +1,410 @@
+{
+  "schema": "ggd-azazel-batch-verification@1",
+  "issue": 1132,
+  "sourceCommit": "7586263e5f8197aadbd9d714f9fb7ffebcd0618a",
+  "refinementVersion": 1,
+  "refinementSha256": "f15c6f52001a3814b169698b014de3c5411dce0737dc639a1e3c89d6577e89b8",
+  "changes": [
+    "Current batch 32 now uses a source-locked JSON refinement through the same template-pinning, compiler and runtime fixtures as the other heroes. The legacy Azazel function and tests remain explicitly frozen old-version compatibility evidence; they are not counted as current-batch semantic proof.",
+    "PASSIVE earns at most one negative-energy mark per real paid cast that damages enemy HP, across targets and waves. It caps at three and resets by round. Self-damage, zero/immune/fully shielded contacts, raw packets lacking a cast identity and hook reflections cannot create a cast credit.",
+    "Q has a two-unit range, a 0.2-second interruptible windup, one physical punch and 0.4 units of knockback. W re-resolves a fixed 2.75-unit landing area for three waves 0.45 seconds apart, one hit per target per wave and one energy credit total. Death or settled combat cancels pending rain.",
+    "E grants a 0.5-second, caster-owned counter window. Its mutually exclusive basic/ability hooks require positive HP or shield loss from an enemy within 2.5 units, then deliver one normal physical shadow punch and remove the window. Incoming damage is not negated; there is no undocumented front-only condition. Zero/immune, distant, friendly, cross-duel, hook and expired contacts do not consume it. Counter packets use normal damage multipliers and cannot consume another counter window or earn energy.",
+    "R keeps its 0.8-second charge, successful-launch 3% maximum-life cost with a one-HP floor, and actual projectile hit. Its four-second curse now changes outputDamagePct by -0.15 using a flat modifier rather than AD/AP; fixed damage is truly reduced. Healing and shield output axes are unchanged.",
+    "EX atomically pays three marks. An own-source R curse is removed and replaced by a two-second +0.10 damage-output boon without ordinary EX damage. Missing, cleansed or expired own curse instead gives normal EX damage and a two-second -0.20 output curse. Another caster's R remains independent. THE END OF SON R→EX reversal is preserved and proven with genuinely earned resources.",
+    "A generic distance condition now rejects entities in different duel zones for every comparison operator, consistent with the existing facing condition. It no longer lets a close-hit counter act across duels.",
+    "The trusted importer runs the current authored whole kit, earning its EX marks without seeding. Editor prior-R preview establishes the actual curse; ready-resource setup remains explicitly labelled and empty-resource preview still refuses with only one earned mark. Template and project clones stay isolated.",
+    "The existing Azazel-specific handoff command now reads the same versioned refinement JSON as the bulk command. Both independently rebuilt all 37 projects with byte-identical results; old originals, models and rollback versions remain available."
+  ],
+  "checks": {
+    "currentBatchBehavior": {
+      "tests": 37,
+      "exitCode": 0
+    },
+    "currentBatchAcceptance": {
+      "tests": 3,
+      "exitCode": 0
+    },
+    "distanceConditions": {
+      "tests": 9,
+      "exitCode": 0
+    },
+    "communityAndRuntimeRegression": {
+      "tests": 466,
+      "files": 28,
+      "exitCode": 0,
+      "includesLegacyAzazelReversal": true
+    },
+    "typechecks": {
+      "shared": 0,
+      "editor": 0,
+      "client": 0,
+      "game-server": 0
+    }
+  },
+  "initialFailures": [
+    "Initial E status assertions specified an applier but the new self buff lacked sourceScope caster. Made ownership explicit in the authoring data; positive and nonconsuming negative cases then passed.",
+    "Typecheck caught an unbranded test stun status identifier; used a valid StatusId in the fixture.",
+    "Review found the inherited zero-percent incomingPct still classified the fixed shadow punch as reflection and skipped the global damage multiplier. Removed it; basic/ability hook filters already prevent counter loops. Added actual multiplier and no-reflectSuccess assertions.",
+    "One decoration-generation attempt overlapped the tail of a reversible mutation run. Discarded it as evidence and regenerated after both handles had completed and the original distance guard was restored."
+  ],
+  "mutations": [
+    {
+      "mutation": "output-axis",
+      "file": "materials/community-hero-forge/refinements/32.json",
+      "from": "\"stat\": \"outputDamagePct\"",
+      "to": "\"stat\": \"ad\"",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/azazelBatch.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "actual fixed"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "480c9fffaba0d1f7361b7eff8e21e37b636a3b06182de55edee580347338cf4f"
+    },
+    {
+      "mutation": "curse-owner",
+      "file": "materials/community-hero-forge/refinements/32.json",
+      "from": "\"appliedBy\": \"self\",",
+      "to": "",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/azazelBatch.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "another caster's R"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "56077ab64c0af6f061e3abb228900e5b1a5cf6365c25b295c41f5d6494333824"
+    },
+    {
+      "mutation": "positive-counter",
+      "file": "materials/community-hero-forge/refinements/32.json",
+      "from": "\"damageConnected\": true,",
+      "to": "",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/azazelBatch.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "zero cannot spend"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "848e43d5e539baad33ccbf35b0518cd8f9fe356848766254aa1c1e9a3e21659a"
+    },
+    {
+      "mutation": "same-duel",
+      "file": "packages/shared/src/sim/content/condition.ts",
+      "from": "if (a === undefined || b === undefined || a.zone !== b.zone) return false;",
+      "to": "if (a === undefined || b === undefined) return false;",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/sim/content/conditionDistanceLearned.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "different duels"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "6f81d843a1aebdba0f6a9b53c63571736f93321c0d1d5768434d4c383fcdf720"
+    }
+  ],
+  "generators": [
+    {
+      "step": "typecat:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/azazel-batch-gen-typecat-build.log"
+    },
+    {
+      "step": "caps:export",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/azazel-batch-gen-caps-export.log"
+    },
+    {
+      "step": "editorcov:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/azazel-batch-gen-editorcov-build.log"
+    },
+    {
+      "step": "bricks:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/azazel-batch-gen-bricks-build.log"
+    },
+    {
+      "step": "contract:numbers",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/azazel-batch-gen-contract-numbers.log"
+    },
+    {
+      "step": "spec:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/azazel-batch-gen-spec-build.log"
+    },
+    {
+      "step": "overview:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/azazel-batch-gen-overview-build.log"
+    },
+    {
+      "step": "skillforge:audit",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/azazel-batch-gen-skillforge-audit.log"
+    },
+    {
+      "step": "skillremake:docs",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/azazel-batch-gen-skillremake-docs.log"
+    },
+    {
+      "step": "atlas:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/azazel-batch-gen-atlas-build.log"
+    },
+    {
+      "step": "docs:readme",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/azazel-batch-gen-docs-readme.log"
+    },
+    {
+      "step": "decor:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/azazel-batch-gen-decor-build.log"
+    },
+    {
+      "step": "decor:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/azazel-batch-gen-decor-restored.log",
+      "afterMutationRestoration": true
+    }
+  ],
+  "handoff": {
+    "changedProjects": [
+      "32.hero-project.json"
+    ],
+    "otherProjectsByteIdentical": 36,
+    "originalRecipesByteIdentical": 37,
+    "indexByteIdentical": true,
+    "sourceDesignBriefPresentationUnchanged": true,
+    "revisionBefore": 30,
+    "revisionAfter": 31,
+    "modelSha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c",
+    "generatedAudit": 69,
+    "bothEntryPointsProjectsByteIdentical": 37,
+    "azazelEntryReportSha256": "69518e06572ed739e800938401c557222e2b99fba529bb1c93901b62fa999dfb"
+  },
+  "coverage": {
+    "mappedSlots": 69,
+    "unmappedSlots": 153,
+    "genericOnAttackPassives": 19
+  },
+  "assetReview": {
+    "entry": "../ASSET_LIBRARIES.md",
+    "queries": [
+      "阿薩謝爾 --pending --limit 5"
+    ],
+    "result": "The bounded name query returned only community37:32 with design_with_proxy_assets readiness. No new native candidate or binary asset was acquired. Existing versioned GLB bytes were verified by the handoff compiler.",
+    "currentModelCharacter": "喜羊羊",
+    "currentModelSourceWork": "喜羊羊與灰太狼",
+    "currentModelRelationship": "style-proxy",
+    "currentModelSha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c",
+    "modelChanged": false,
+    "clipMap": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_1",
+      "cast": "single_skill_01",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "limitations": [
+      "Pleasant Goat is a white cartoon goat proxy, not the yellow original demon.",
+      "Hurt aliases idle and cast shares one native clip. The shadow personality, white rain, joke windup, held/thrown energy sphere, golden reversal and shocked expression remain unaccepted original-art requirements.",
+      "No dedicated original sounds, browser visual acceptance, new service ZIP or formal publication occurred."
+    ]
+  },
+  "originalDesignAcceptance": "incomplete",
+  "visualAcceptance": "unverified",
+  "currentServiceZip": "not-built",
+  "formalPublication": false,
+  "issueOriginalBodySha256": "6c370f10a75bcc6d55f24e8f341b527afd3d48dc0b8850395ee8f64b513b054d",
+  "logs": {
+    "azazel-batch-cli.log": {
+      "sha256": "5d855b979c67e5de3ef637f32ff89ca199b591508f142c9bfb2f3b75f1a8c653"
+    },
+    "azazel-batch-gen-atlas-build.log": {
+      "sha256": "49f7e9503821ae6e8e56aa2c6b8fe93db31c45a9b819b6f538453aa5ec7bfd00"
+    },
+    "azazel-batch-gen-bricks-build.log": {
+      "sha256": "89364935df3cd84af7762d1ee9f960e41f349264b740ef5bdc9734f63763f4fc"
+    },
+    "azazel-batch-gen-caps-export.log": {
+      "sha256": "624a6148b8e50760a662419f91ade0b0e3ff7a18bb1c53bbd46668b553a366c2"
+    },
+    "azazel-batch-gen-contract-numbers.log": {
+      "sha256": "74f669584cf58ba3a694b30363ee0f306cdde4f18495005ec05ed8cc70fe5965"
+    },
+    "azazel-batch-gen-decor-build.log": {
+      "sha256": "30f38a8b028e7a4a4b35a00121072ff551e1dcb0a34aad94a23ec0469bc76032"
+    },
+    "azazel-batch-gen-decor-final.log": {
+      "sha256": "30f38a8b028e7a4a4b35a00121072ff551e1dcb0a34aad94a23ec0469bc76032"
+    },
+    "azazel-batch-gen-decor-restored.log": {
+      "sha256": "30f38a8b028e7a4a4b35a00121072ff551e1dcb0a34aad94a23ec0469bc76032"
+    },
+    "azazel-batch-gen-docs-readme.log": {
+      "sha256": "c1376f0b9f50e5b20ae019511a075131234156c80d663753699b842f6a93184e"
+    },
+    "azazel-batch-gen-editorcov-build.log": {
+      "sha256": "d7c9147da3aac283119cebab12e41934acdc2982f411ed91fb8f1a2ee02e2015"
+    },
+    "azazel-batch-gen-overview-build.log": {
+      "sha256": "dc71d50c4be5a38c3e063a263304685254162e186394f2e6e086ce2b89b6fc89"
+    },
+    "azazel-batch-gen-skillforge-audit.log": {
+      "sha256": "4f2a1fef7a55426b4ad3fa4b095a1f2cdec842f697e4ead88c65d7b753e52fef"
+    },
+    "azazel-batch-gen-skillremake-docs.log": {
+      "sha256": "b43e3a1a8f1eb3b6585b975debd832e61033287531a8873d43b03159dd860e89"
+    },
+    "azazel-batch-gen-spec-build.log": {
+      "sha256": "8f0a01922b883eefafb6db4136a74d3efef0c8b868cd67dcdb378a77829ab13b"
+    },
+    "azazel-batch-gen-typecat-build.log": {
+      "sha256": "a51cfc10a35b2f99fe40a75b5c932dac5c521896ebd0f247308f14c7c016f7e9"
+    },
+    "azazel-batch-handoff.log": {
+      "sha256": "95f75a3552ebfe3ea66cdfcb562e38a0adc851f685aed5634113c75b4d66e6d7"
+    },
+    "azazel-batch-mutation-curse-owner.log": {
+      "sha256": "56077ab64c0af6f061e3abb228900e5b1a5cf6365c25b295c41f5d6494333824"
+    },
+    "azazel-batch-mutation-output-axis.log": {
+      "sha256": "480c9fffaba0d1f7361b7eff8e21e37b636a3b06182de55edee580347338cf4f"
+    },
+    "azazel-batch-mutation-positive-counter.log": {
+      "sha256": "848e43d5e539baad33ccbf35b0518cd8f9fe356848766254aa1c1e9a3e21659a"
+    },
+    "azazel-batch-mutation-same-duel.log": {
+      "sha256": "6f81d843a1aebdba0f6a9b53c63571736f93321c0d1d5768434d4c383fcdf720"
+    },
+    "azazel-batch-regression.log": {
+      "sha256": "44975a4d9bffc965d6060302ab1f7559860559c131e110e8eb20faf99dd720ec"
+    },
+    "azazel-batch-tests-01.log": {
+      "sha256": "61aa92848100ff294d6a697c92743667f89c6f39dfd5c882b5f443b5dfa784ac"
+    },
+    "azazel-batch-tests-02.log": {
+      "sha256": "112b54cb6a8666541bc50d5a2a55e506bedd1ad5bbe1453a4f23f04bd2db7d7d"
+    },
+    "azazel-batch-tests-03.log": {
+      "sha256": "460a568ebeee31a404056d66c2b1df36b1e4caa84303b584ce6158bbec30d6e5"
+    },
+    "azazel-batch-tests-04.log": {
+      "sha256": "4d3761c5d8958ed4246c0b8a301c0f13169954436667b5aab26a17c6851d5775"
+    },
+    "azazel-batch-typecheck-01.log": {
+      "sha256": "4a62469559158c9ffd5a07d8e878c603e6e9e25fc2a5d784c8c401ff441fde43"
+    },
+    "azazel-batch-typecheck-client.log": {
+      "sha256": "39d946f6b36b6e4e7de7bfbe2267744c75dc2daf57912304bbcdcd88a0cc130d"
+    },
+    "azazel-batch-typecheck-editor.log": {
+      "sha256": "486eafd3c0debbbff5ae7dddb4aa8823f853e470eff3bacbda032617862caca2"
+    },
+    "azazel-batch-typecheck-game-server.log": {
+      "sha256": "b05c3d89729ac8d5380fe460caa7c9227683cd32eda0fd3fbdcddaedd946d715"
+    },
+    "azazel-batch-typecheck-shared.log": {
+      "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    }
+  },
+  "finalBatch": {
+    "head": "f070566715b94a39cd9737f834914c9e712662dc",
+    "workingTreeClean": true,
+    "sourceFingerprint": "5b908cbd30f46c68a57e251abce4d5f11760f8cdfc0000133ce66b23237959da",
+    "exitCode": 2,
+    "errors": [],
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 69,
+      "slotsWithoutBehaviorSuite": 153
+    },
+    "modelBytes": "verified",
+    "reportSha256": "6218fd62b4057f05af36a4592e3da97ad1324db49d879d516707b2d050c056e5",
+    "editorTests": 601,
+    "registeredTests": 766,
+    "jobs": [
+      {
+        "id": "skills",
+        "exitCode": 0,
+        "logSha256": "17ef5932f89802fb75706fd2caae52a4eccce61b66129d31cea8cf9ac8e072c4"
+      },
+      {
+        "id": "editor",
+        "exitCode": 0,
+        "logSha256": "fcd9c2a551122f478bfb794224682014346d533c4500b35552d12718e877d5d9"
+      },
+      {
+        "id": "coord",
+        "exitCode": 0,
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271"
+      },
+      {
+        "id": "compile-and-models",
+        "exitCode": 0,
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c"
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "exitCode": 0,
+        "logSha256": "77e9e1cd3ad2f602d516a3f94dd7222e2bf7bd233ad159f60aa4a8aaae12439e"
+      },
+      {
+        "id": "behavior-trap-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "ff40f385280aaa3597ee16b4a448c18fb7df1d938a12c0a6e27a8024fc4c670b"
+      },
+      {
+        "id": "behavior-motion-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "05573cbba036d8c9617c871c7f0c2959cf2aa6b05cd7ea5ad790d162e1f04265"
+      },
+      {
+        "id": "behavior-target-resource-acceptance",
+        "exitCode": 0,
+        "logSha256": "ea419dd4d64568bc75b0bdf6e3ae8f0a2bc205f0f2d1577f0b434bb92da0c2b0"
+      }
+    ],
+    "meaning": "Every executed check passed on the clean commit. Exit 2 preserves 153 unmapped slots; no original-art, full-design or publication verdict. Receipt-only commit follows the tested source."
+  }
+}

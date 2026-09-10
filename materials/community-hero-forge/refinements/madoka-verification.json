@@ -1,0 +1,276 @@
+{
+  "schema": "ggd-madoka-verification@1",
+  "issue": 1132,
+  "sourceCommit": "597db32918ad27262ca6e343217a9d12672d672d",
+  "refinementVersion": 2,
+  "refinementSha256": "9bfa5a527ca95c2c4412c0af01f2a7213ac33e67575e8c14cf7e1b096186e362",
+  "focusedTests": 19,
+  "regression": {
+    "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements packages/shared/src/sim/clearPools.test.ts packages/shared/src/sim/markInstall.test.ts packages/shared/src/sim/purity.test.ts packages/shared/src/sim/effects/shieldAbsorb.test.ts packages/shared/src/sim/effects/shieldBreak.test.ts packages/shared/src/sim/combat/lethalSave.test.ts packages/shared/src/sim/combat/restore.test.ts packages/shared/src/content/compat.test.ts packages/shared/src/content/schema/mark.test.ts packages/shared/src/content/templates/markStacks.test.ts packages/shared/src/content/schema/effects/effectShardWiring.test.ts apps/editor/src/forge/skillAcceptanceCatalog.test.ts apps/editor/src/form/fullCoverageMatchesContract.test.ts --pool=threads --minWorkers=1 --maxWorkers=2",
+    "exitCode": 0,
+    "testFiles": 20,
+    "tests": 207,
+    "logSha256": "000e0499c629d5801385acb8e5a781a3963afa70a48ca5f4e005a0e380ad2d16"
+  },
+  "typecheck": {
+    "command": "pnpm --filter @ggd/shared typecheck",
+    "exitCode": 0,
+    "logSha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+  },
+  "mutations": [
+    {
+      "mutation": "hope-on-grant",
+      "test": "W generation/refresh",
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "0ad82132a11edf384278e6e7b56adbb63b9af071dc00d5a663ce9631a5a326cf"
+    },
+    {
+      "mutation": "save-cap-disabled",
+      "test": "save limits survive",
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "8240d6b668bfd4fd901d8726defa04f4cbabd14863cfce6ca1e917f30db38916"
+    },
+    {
+      "mutation": "rain-follows-victim",
+      "test": "R lets enemies leave",
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "bd488abe36ddbf602b115e5e84db2221a00bcb055af8d45a3891ed1051a18b7a"
+    }
+  ],
+  "handoff": {
+    "heroes": 37,
+    "slots": 222,
+    "changedSlots": 21,
+    "onAttackPassivesRemaining": 26,
+    "originalRecipesUnchanged": 37,
+    "boundModelsUnchanged": 37,
+    "changedProjects": [
+      {
+        "hero": "21",
+        "previousRevision": 13,
+        "revision": 14
+      }
+    ],
+    "otherProjectsByteIdentical": 36,
+    "logSha256": "7fc9ba00c726a1c4bd38b668b4f7efd9c4877844fed95532f3ac6a4b12780ed0",
+    "sharedRestore": {
+      "boundModelsVerified": 37,
+      "distinctModelFiles": 34,
+      "networkOperations": 0
+    }
+  },
+  "testConditions": [
+    "Source recipe -> pinned effect-sequence/event-passive/mark-stacks templates -> generator/compiler -> actual casts and SimWorld.",
+    "Durable bodies, automatic attack range zero, HP regen zero, ordinary hitstop and knockback disabled; skill collision, area entry/exit, healing and damage still execute.",
+    "Base shield values use existing rank scaling: 120/200 at rank 1, 300/500 at rank 4. Lethal rescue returns 5% of actual derived max HP.",
+    "Three intentional regressions fail on behavior assertions, not compilation; modified sources restored."
+  ],
+  "limitations": [
+    "Q uses existing arcane projectile geometry; arrow model and original pink-white presentation remain pending.",
+    "Hope, rose shield, arrow-rain and salvation visuals have not been visually accepted.",
+    "R now uses delayed circle re-resolution rather than applying DOT to initial victims.",
+    "Per-round limit counts actual saves; an expired unused mark may be reapplied."
+  ],
+  "ui": "unverified",
+  "originalDesignAcceptance": "incomplete",
+  "currentServiceZip": "not-built",
+  "formalPublication": false,
+  "releaseChecks": {
+    "sourceCommit": "c57a73c5a15aa428d82c657a9d0233c5762503e9",
+    "sourceFingerprint": "ce41610d999993a28c0a3c01c3df27863bb4286682f1c290782b3d568a4fabdf",
+    "commands": [
+      {
+        "id": "skills",
+        "argv": [
+          "pnpm",
+          "skills:check"
+        ],
+        "exitCode": 0,
+        "logSha256": "8e7718da6bbe54fefbc52cd8bc4deda16457ab7ed94f0ba039b28999b65e5445",
+        "seconds": 119.71
+      },
+      {
+        "id": "editor",
+        "argv": [
+          "pnpm",
+          "editor:accept:release"
+        ],
+        "exitCode": 0,
+        "logSha256": "d7042889066e9f527ef8c3dcb6a35a5eba9b6f8aeb8a4aa112b6516058dff49d",
+        "seconds": 269.93
+      },
+      {
+        "id": "coord",
+        "argv": [
+          "pnpm",
+          "coord:check"
+        ],
+        "exitCode": 0,
+        "logSha256": "573c0629641d94a47c324f4c157645433641bc3e535fee227f8234ccab9a0359",
+        "seconds": 3.6
+      },
+      {
+        "id": "compile-and-models",
+        "argv": [
+          "pnpm",
+          "exec",
+          "node",
+          "--import",
+          "tsx",
+          "tools/community-hero-forge/prepare-published-handoff.mts",
+          "--batch-dir",
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge",
+          "--release-root",
+          "/private/tmp/ggd-model-upload-acceptance/release-13956d93b"
+        ],
+        "exitCode": 0,
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c",
+        "seconds": 7.0
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "argv": [
+          "pnpm",
+          "exec",
+          "vitest",
+          "run",
+          "packages/shared/src/content/heroForge/communityRefinements/electricCharge.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/cardLinks.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/cardVariants.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/friendlyProtection.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/madoka.test.ts",
+          "--pool=threads",
+          "--minWorkers=1",
+          "--maxWorkers=1"
+        ],
+        "exitCode": 0,
+        "logSha256": "b35a8acbdcfcf24281aee1a9cf70c42f64454bbc92d4b56382a9f77bbf90ab74",
+        "seconds": 17.45
+      }
+    ],
+    "editorTests": 593,
+    "behaviorTests": 87,
+    "editorTypecheck": "passed",
+    "editorProductionBuild": "passed",
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 21,
+      "slotsWithoutBehaviorSuite": 201
+    },
+    "overallExitCode": 2,
+    "overallMeaning": "All registered automated jobs passed; 201 slots have no mapped behavior suite. Original design and visual acceptance remain incomplete.",
+    "firstFailuresAndRepairs": [
+      "Official generators refreshed schema-derived specs, overview, audit, docs, atlas and decoration census.",
+      "Added onAllyProtected Chinese label to curated hook vocabulary; kept generation checks intact.",
+      "Updated Editor README from actual generated coverage/capability fingerprints; exact regression passed before full release rerun."
+    ],
+    "reportSha256": "d5e41487d806fe848f2ed907eee14b1cfa714682b394ce984e912c3a118099ed"
+  },
+  "integrationChecks": {
+    "sourceCommit": "257ad22b3e57f5657546669775f1e7e2189a75d6",
+    "mergedMain": "a6537b8640050e8eca85092836da0931a37f69be",
+    "testedTree": "62ed36c9b3e991d344c5a733d12aa944abf49454",
+    "executionContext": "All jobs ran against the staged merge tree before commit; commit tree was verified identical. Raw runner head is the pre-merge HEAD, not the tested file tree.",
+    "runnerHead": "386c7b470c5a227ed855b01ceb823b572e282cc7",
+    "sourceFingerprint": "8d24fb41749084e8b74f6f20d845ff0fae375d10c27fa9f5e86fd16d8b90666e",
+    "commands": [
+      {
+        "id": "skills",
+        "argv": [
+          "pnpm",
+          "skills:check"
+        ],
+        "exitCode": 0,
+        "logSha256": "b9a13250e5e1a84068b60dad7985d96d1f7417bce1dc8aa7aa7b804da3c08bbd",
+        "seconds": 114.54
+      },
+      {
+        "id": "editor",
+        "argv": [
+          "pnpm",
+          "editor:accept:release"
+        ],
+        "exitCode": 0,
+        "logSha256": "a7f517878012c234b5f2ae6657b0c583bf7b3062d553d8bcf625fcc3248cc9a9",
+        "seconds": 248.87
+      },
+      {
+        "id": "coord",
+        "argv": [
+          "pnpm",
+          "coord:check"
+        ],
+        "exitCode": 0,
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271",
+        "seconds": 3.99
+      },
+      {
+        "id": "compile-and-models",
+        "argv": [
+          "pnpm",
+          "exec",
+          "node",
+          "--import",
+          "tsx",
+          "tools/community-hero-forge/prepare-published-handoff.mts",
+          "--batch-dir",
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge",
+          "--release-root",
+          "/private/tmp/ggd-model-upload-acceptance/release-13956d93b"
+        ],
+        "exitCode": 0,
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c",
+        "seconds": 7.89
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "argv": [
+          "pnpm",
+          "exec",
+          "vitest",
+          "run",
+          "packages/shared/src/content/heroForge/communityRefinements/electricCharge.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/cardLinks.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/cardVariants.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/friendlyProtection.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/madoka.test.ts",
+          "--pool=threads",
+          "--minWorkers=1",
+          "--maxWorkers=1"
+        ],
+        "exitCode": 0,
+        "logSha256": "8b7a1d64730e4ec01d56e59137435bc2498c4f670b6b34183635bd1ad72f0e50",
+        "seconds": 18.35
+      }
+    ],
+    "editorTests": 593,
+    "behaviorTests": 87,
+    "overallExitCode": 2,
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 21,
+      "slotsWithoutBehaviorSuite": 201
+    },
+    "additionalRegression": {
+      "tests": 45,
+      "files": 8,
+      "exitCode": 0,
+      "logSha256": "f4edd3fb4f6b8e5ac9c66d46a5506af77cf71f5d1fdc3614095c718d84f21f79"
+    },
+    "reportSha256": "7ff90a1e3ad90cc535b5da6e4c3a564b48895e346ead2021003dde0ce42730ab",
+    "conflictResolution": [
+      "Generated conflicts rebuilt through official genrun from combined sources, including content/editor-target-profile.json.",
+      "Both full-path GGD_HERO_RESEARCH_DIR and parent-path GGD_RESEARCH_DIR overrides preserved; three isolated path checks passed without AWS operations.",
+      "nearbyCombat Chinese vocabulary and Editor README receipt synchronized to the regenerated profile.",
+      "Incoming historical TSV preserved byte-for-byte, with one official board-generator backup row appended; its empty final cells were retained."
+    ],
+    "heroProjectsAndRecipesChangedByMerge": 0
+  }
+}

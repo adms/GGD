@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../timeStop";
 /**
  * `chainLightning`（GH#451）——「範圍內的**每一個**單位各觸發一次連鎖閃電」，
  * 而且**逐跳之間有時間差**。
@@ -193,6 +194,7 @@ export interface ChainLightningCast {
   critChance: number;
   critDamage: number;
   revisit: boolean;
+  retargetOnLost?: boolean;
   strands: ChainStrand[];
   /** 這一次施放**總共**被電到的人（去重），整串跑完才交給 `onHitTargets`。 */
   struck: EntityId[];
@@ -231,9 +233,10 @@ function pickNextNode(
   cast: ChainLightningCast,
   s: ChainStrand,
   rng: Rng,
+  anchor = s.target,
 ): EntityId | undefined {
   if (cast.jumpRange <= 0) return undefined;
-  const here = world.transform.get(s.target);
+  const here = world.transform.get(anchor);
   if (!here) return undefined;
   const cands: EntityId[] = [];
   for (const id of enemiesInCircle(world, cast.caster, here.pos, cast.jumpRange)) {
@@ -255,12 +258,17 @@ function pickNextNode(
  * ⛔ 不是兩份實作（檔頭⑤）。
  */
 function boltOnce(world: SimWorld, cast: ChainLightningCast, s: ChainStrand, rng: Rng): void {
-  const hereT = world.transform.get(s.target);
-  // 目標在等待的這幾個 tick 之間死掉/離場了 → 這條鏈到此為止，⛔ 不鞭屍
-  // （`world.health` 沒有這一格 = 這個身體沒有生命元件，照舊當成可以打）。
+  let hereT = world.transform.get(s.target);
+  // Default keeps the old stop policy. Opt-in reselects once at the due tick,
+  // using the previous valid node, without spending another jump or decay.
   if (!hereT || world.health.get(s.target)?.alive === false) {
-    s.done = true;
-    return;
+    const replacement = cast.retargetOnLost
+      ? pickNextNode(world, cast, s, rng, s.from ?? cast.caster)
+      : undefined;
+    if (replacement === undefined) { s.done = true; return; }
+    s.target = replacement;
+    s.walked.add(replacement);
+    hereT = world.transform.get(replacement)!;
   }
 
   let dealt = s.amount;
@@ -404,6 +412,7 @@ export const chainLightningEffect: EffectKindSpec<"chainLightning"> = {
       critChance: stats[Stat.CritChance] ?? 0,
       critDamage: stats[Stat.CritDamage] || 1.75,
       revisit: e.revisit === true,
+      ...(e.retargetOnLost === true ? { retargetOnLost: true } : {}),
       strands: [],
       struck: [],
       struckSeen: new Set<EntityId>(),
@@ -485,6 +494,7 @@ export function chainLightningSystem(world: SimWorld): void {
   let anyDone = false;
   // 陣列 = 插入序 = 全序（不迭代 Map）。
   for (const cast of q) {
+    if (isTimeStopped(world, cast.caster)) continue;
     // 決鬥已經結束的分區不再放電 —— 與 `dotTick` / `randomArea` / `delayed` 對
     // `settledZones` 的處置逐字相同（#100/#216：回合結束後還在扣血玩家看得見）。
     // ⚠️ 這一條路**不付** `onHitTargets`：那一段是「這次施放打完了」的獎勵，

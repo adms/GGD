@@ -1,3 +1,4 @@
+import { intervalStillness } from "./intervalStillness";
 /**
  * Hook dispatch — event-driven effects from ModifierSources (champion passives,
  * item passives, augments). Hooks run inline at emit time; any damage they
@@ -18,6 +19,7 @@ import { originInScope } from "../combat/damageTypeOverride";
 // ⭐ S6 `onConsumed: "detachSource"` 的出口。`stats/statPipeline.ts` 不 import 這支，
 // 所以這條邊不成環（`effectKind.ts` 檔頭那個 runtime-undefined 陷阱在這裡不成立）。
 import { detachSource } from "../stats/statPipeline";
+import type { EvadeEvent } from "../combat/evasion";
 import { NEVER_FIRED, hookIcdTicks } from "./hookIcd";
 
 /**
@@ -265,6 +267,8 @@ export function fireHooks(
    * 否則兩次呼叫會各抽一次籤，而一支免傷反彈的機率就變成了兩倍。
    */
   hookFilter?: (hook: HookDef) => boolean,
+  evade?: EvadeEvent,
+  observedEvent?: HookDef["observedEvent"],
 ): number {
   let fired = 0;
   const sc = world.stats.get(owner);
@@ -286,6 +290,16 @@ export function fireHooks(
     for (let hi = 0; hi < src.hooks.length; hi++) {
       const hook = src.hooks[hi]!;
       if (hook.on !== event) continue;
+      if (hook.stationaryForSec !== undefined && !intervalStillness(world, owner, src, hi, hook.stationaryForSec)) continue;
+      if (event === "onBlock" && (!incoming?.blockSourceIds?.length ||
+          (hook.blockSource === "thisSource" && !incoming.blockSourceIds.includes(src.id)))) continue;
+      if (hook.observedEvent !== undefined && observedEvent !== hook.observedEvent) continue;
+      if (hook.evadeDuring === "dash" && evade?.duringDash !== true) continue;
+      if (hook.damageConnected && !(incoming && incoming.hpLost + (incoming.shieldAbsorbed ?? 0) > 0)) continue;
+      if (hook.evadeChannel !== undefined && evade?.channel !== hook.evadeChannel) continue;
+      if (hook.evadeSource !== undefined && (evade === undefined ||
+          (evade.channel !== "basic" && evade.channel !== "ability") ||
+          (hook.evadeSource === "thisSource" && evade.by?.id !== src.id))) continue;
       // ⭐ 45-00 —— 呼叫端的互補謂詞（見上）。rng-FREE，所以擋在 ICD 與骰子前面。
       if (hookFilter !== undefined && !hookFilter(hook)) continue;
       // Stacked DoTs may contain several contributing casts in one packet.
@@ -296,9 +310,11 @@ export function fireHooks(
       for (const creditCast of creditCasts) {
         const creditKey = hook.oncePerCast === true ? JSON.stringify([owner, src.id, hi]) : undefined;
         if (hook.oncePerCast === true) {
-          if (event !== "onDamageDealt" || creditCast === undefined || creditCast.caster !== owner ||
-              incoming === undefined || !(incoming.hpLost > 0) || target === undefined || target === owner ||
-              incoming.reflectDepth !== 0 || !originInScope(incoming.origin ?? "", "ability") ||
+          const summonHit = event === "onSummonHit";
+          if ((!summonHit && event !== "onDamageDealt") || creditCast === undefined || creditCast.caster !== owner ||
+              incoming === undefined || !(incoming.hpLost + (summonHit || hook.damageConnected ? incoming.shieldAbsorbed ?? 0 : 0) > 0) ||
+              target === undefined || target === owner || incoming.reflectDepth !== 0 ||
+              (!summonHit && !originInScope(incoming.origin ?? "", "ability")) ||
               creditCast.creditedHooks.includes(creditKey!)) continue;
         }
         if (hook.abilitySlot && hook.abilitySlot !== (abilitySlot ?? creditCast?.slot)) continue;

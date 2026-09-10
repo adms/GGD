@@ -1,3 +1,6 @@
+import { deferTimeStopHit } from "../timeStop";
+import { bodyPosition } from "../movement/bodyPosition";
+import { expireMovedShields } from "./movementShield";
 /**
  * Damage queue + resolution. Effects QUEUE damage; this system drains the queue
  * in one ordered pass per tick (mitigation → shields → hp → hooks), so results
@@ -15,9 +18,10 @@ import { recordDamage } from "../stats/matchStats";
 import { refusesDamage } from "../effects/invulnerable";
 import { noteDamageStreak, refusesByTypeStreak } from "./typeStreakImmunity";
 import { rollEvadeAbility } from "./evasion";
-import { blockCutFor } from "./block";
+import { blockCutFor, type SuccessfulBlock } from "./block";
 import { manaBarrierCutFor } from "../effects/manaBarrier";
 import { lethalSaveFor } from "./lethalSave";
+import { consumeShieldCredit, mergeShieldCredit } from "./shieldCredit";
 import { effectiveLifesteal } from "./critStrike";
 import {
   applyDamageConversion,
@@ -51,6 +55,8 @@ import {
 } from "./hitFeel";
 
 export interface DamagePacket {
+  /** Internal thaw marker; prevents re-queueing a hit during overlapping fields. */
+  timeStopReleased?: true;
   castInstance?: import("../content/castInstance").CastInstance;
   /** Contributing casts of one combined stacked-DoT payout. */
   castInstances?: readonly import("../content/castInstance").CastInstance[];
@@ -902,6 +908,9 @@ export function combatResolveSystem(world: SimWorld): void {
     for (const pkt of batch) {
       const hp = world.health.get(pkt.target);
       if (!hp || !hp.alive) continue;
+      if (pkt.timeStopReleased && hp.hp <= 0) continue;
+      if (deferTimeStopHit(world, pkt)) continue;
+      expireMovedShields(world, pkt.target);
 
       // ---- 傷害型別轉換 · "beforeGates" 相位 (無視防禦 / 真實傷害家族) -------
       // 這一相位的來源在**免疫與閃避之前**就把封包蓋掉,所以那兩道閘看到的是
@@ -1142,6 +1151,7 @@ export function combatResolveSystem(world: SimWorld): void {
       // `blockCutFor` keeps its own ZERO GUARANTEE (no eligible source ⇒ it
       // returns before touching `world.rng`), so this line is inert — and every
       // existing replay bit-identical — until an item authors `block`.
+      const successfulBlocks: SuccessfulBlock[] = [];
       const blockCut = blockCutFor(
         world,
         pkt.target,
@@ -1149,20 +1159,28 @@ export function combatResolveSystem(world: SimWorld): void {
         impact,
         hp.hp,
         shieldBefore,
+        successfulBlocks,
+        pkt.source,
       );
       let dmg = impact - blockCut;
 
       // shields absorb what is LEFT (oldest first, deterministic). Track how
       // much was absorbed + whether the shield pool went from >0 to 0 (a guard
       // break).
+      const protection = new Map<EntityId, number>();
       for (const sh of eligibleShields(hp.shields, world.tick, pkt.type, world.shieldRules.absorbOrder)) {
         const absorbed = Math.min(sh.amount, dmg);
+        consumeShieldCredit(sh, absorbed, protection);
         sh.amount -= absorbed;
         dmg -= absorbed;
         if (dmg <= 0) break;
       }
       hp.shields = hp.shields.filter((s) => s.amount > 0 && s.expiresAtTick > world.tick);
       const shieldAbsorbed = shieldBefore - eligibleShieldTotal(hp.shields, world.tick, pkt.type);
+      // One positive event per contributor and damage packet, even across several pools.
+      for (const [source, amount] of [...protection].sort(([a], [b]) => a - b)) {
+        world.emit("shieldAbsorbed", { source, target: pkt.target, attacker: pkt.source, amount });
+      }
 
       // ---- 魔力屏障 (44-00 機警「每點魔力可以抵免 3 點傷害」) ---------------
       // 位置：護盾**之後**、免死與扣血**之前**。三個邊界各有理由，推導寫在
@@ -1388,6 +1406,17 @@ export function combatResolveSystem(world: SimWorld): void {
         }
       }
 
+      // GH#1141: combat activity follows actual HP/shield loss, not the score's
+      // pre-block output. Fully blocked / immune / friendly hits earn nothing.
+      const from = world.transform.get(pkt.source), to = world.transform.get(pkt.target);
+      const sourceTeam = world.team.get(pkt.source), targetTeam = world.team.get(pkt.target);
+      if (dmg + shieldAbsorbed > 0 && world.combatActive && pkt.source !== pkt.target
+        && from && to && from.zone === to.zone && !world.settledZones.has(from.zone)
+        && sourceTeam && targetTeam && sourceTeam.teamId !== targetTeam.teamId) {
+        world.combatActivity.set(pkt.source, world.tick);
+        world.combatActivity.set(pkt.target, world.tick);
+      }
+
       // ---- match scoreboard: attribute this resolved packet ----
       // output = mitigated force pre-shield (credits attacker even if shielded);
       // hpLoss = HP actually removed; blocked = armor/MR mitigation + shield
@@ -1435,6 +1464,7 @@ export function combatResolveSystem(world: SimWorld): void {
         source: pkt.source,
         target: pkt.target,
         amount: dmg,
+        shieldAbsorbed,
         type: pkt.type,
         dmgType: pkt.type,
         blocked,
@@ -1457,8 +1487,22 @@ export function combatResolveSystem(world: SimWorld): void {
       // THE PACKET ITSELF, handed to the hooks it is about ([反彈], #GGD-legendary).
       // 三個讀數的來由寫在上面 `triggerBase` 那一段;這裡只補上到這一行才知道的
       // `hpLost`(免傷那一發是 0,而那是字面為真)。
-      const trigger: TriggerDamage = { ...triggerBase, hpLost: Math.max(0, dmg) };
+      const trigger: TriggerDamage = { ...triggerBase, hpLost: Math.max(0, dmg), shieldAbsorbed };
+      const activeCast = world.abilities.get(pkt.target)?.cast;
+      if (impact > 0 && activeCast && Abilities.get(activeCast.abilityId).interruptOn === "damageOrMove") activeCast.hitSinceStart = true;
+      if (successfulBlocks.length) fireHooks(world, pkt.target, "onBlock", pkt.source, undefined, {
+        ...trigger, blockSourceIds: successfulBlocks.map(hit => hit.sourceId),
+      });
       fireHooks(world, pkt.source, "onDamageDealt", pkt.target, undefined, trigger);
+      const summon = world.summon.get(pkt.source);
+      if (summon && summon.expiresAtTick > world.tick && world.health.get(summon.ownerId)?.alive === true &&
+          world.transform.get(summon.ownerId)?.zone === world.transform.get(pkt.source)?.zone &&
+          world.team.get(summon.ownerId)?.teamId !== world.team.get(pkt.target)?.teamId &&
+          pkt.origin === "basic" && trigger.hpLost + shieldAbsorbed > 0) {
+        fireHooks(world, summon.ownerId, "onSummonHit", pkt.target, summon.slot, {
+          ...trigger, castInstance: summon.castInstance, castInstances: undefined,
+        });
+      }
       // ⭐ 45-00 —— **互補的謂詞**:免傷那一族已經在扣血前跑過了(見上)。
       // ⛔ 少了這個否定,一條免傷反彈會在同一發封包上觸發兩次 —— 反彈量變兩倍、
       //    ICD 被燒兩次,而畫面上只是「這張卡好像特別強」。
@@ -1543,6 +1587,7 @@ export function addShield(
    * （`"item:xxx"` / `"ability:yyy#3"`），不是實體 id，反推就是在猜。
    */
   grantedBy?: EntityId,
+  breakOnMove?: true,
 ): void {
   const hp = world.health.get(target);
   if (!hp) return;
@@ -1551,6 +1596,7 @@ export function addShield(
   amount *= outputMult(world, grantedBy, Stat.OutputShieldPct);
   const expiresAtTick = world.tick + Math.round(durationSecs / world.dt);
   const absorbsPart = absorbs !== undefined && absorbs !== "all" ? { absorbs } : {};
+  const anchor = breakOnMove ? bodyPosition(world, target) : undefined;
   if (stack !== undefined) {
     // ⚠️ 找**還沒過期**的那一片：一片到期的盾還躺在陣列裡（清掃是消費端的事），
     // 而「跟一片已經失效的盾合併」會讓新盾繼承一個過去的到期 tick = 掛上去就沒了。
@@ -1558,6 +1604,7 @@ export function addShield(
       (s) => s.stackKey === stack.stackKey && s.expiresAtTick > world.tick,
     );
     if (live !== undefined) {
+      mergeShieldCredit(live, amount, grantedBy, stack.onExisting);
       if (stack.onExisting === "stack") live.amount += amount;
       else if (stack.onExisting === "keepLarger") live.amount = Math.max(live.amount, amount);
       else live.amount = amount;
@@ -1566,6 +1613,10 @@ export function addShield(
       live.expiresAtTick =
         stack.onExisting === "replace" ? expiresAtTick : Math.max(live.expiresAtTick, expiresAtTick);
       live.sourceId = sourceId;
+      if (stack.onExisting === "replace") {
+        if (anchor) live.moveBreakAnchor = anchor;
+        else delete live.moveBreakAnchor;
+      }
       return;
     }
   }
@@ -1573,7 +1624,9 @@ export function addShield(
     amount,
     expiresAtTick,
     sourceId,
+    ...(grantedBy !== undefined && amount > 0 ? { credits: [{ source: grantedBy, amount }] } : {}),
     ...absorbsPart,
+    ...(anchor ? { moveBreakAnchor: anchor } : {}),
     ...(stack !== undefined ? { stackKey: stack.stackKey } : {}),
   });
 }

@@ -1,0 +1,698 @@
+{
+  "schema": "ggd-first37-functional-visual-review@1",
+  "status": "functional-delivery-complete-art-tuning-not-required",
+  "ownerDecision": "除非有重大問題 例如技能特效機制失效 不然你不需要介入微調",
+  "heroes": 37,
+  "allActiveSlotsCapturedHeroes": 36,
+  "activeSlotsCaptured": 181,
+  "captures": 688,
+  "runtimeMechanismsTests": 1053,
+  "localPublicationPassed": 37,
+  "formalDeployment": false,
+  "artAcceptance": "not-claimed",
+  "reviewedContactSheets": [
+    "01",
+    "02",
+    "03",
+    "04"
+  ],
+  "additionalFullFrameReviewed": [
+    "22/Q/1000ms"
+  ],
+  "observations": [
+    {
+      "index": "02",
+      "slot": "EX",
+      "observation": "Captured frames are very dark and obscure the bodies; no visual polish acceptance awarded. Skill behavior tests pass."
+    },
+    {
+      "index": "04",
+      "slot": "Q",
+      "observation": "Orange presentation obscures much of these close-range frames. Existing cast succeeds; no micro-tuning requested."
+    },
+    {
+      "index": "22",
+      "slot": "W",
+      "observation": "Preview body framebuffer test rejects below 250 changed pixels despite decoded material/texture; Q body is visible. Do not equate this diagnostic failure with proven runtime skill failure."
+    }
+  ],
+  "remainingWork": "Main review/merge and formal deployment; camera/art micro-tuning excluded by latest Owner decision.",
+  "runs": [
+    {
+      "report": "visual-captures/ggd-first37-final-1.json",
+      "sha256": "0db3c8359372f4306a5cb6ee7ade46088bc0866383fc3b887aaefc3b7d58c37a",
+      "completedHeroes": 19,
+      "errors": [],
+      "httpFailures": {
+        "http://127.0.0.1:5203/content-api/desktop-source": 58
+      }
+    },
+    {
+      "report": "visual-captures/ggd-first37-final-2.json",
+      "sha256": "9a0a80573905e5808eb80f677b6681f12ea0abfc2a1028b712d0ab832a0ffea4",
+      "completedHeroes": 17,
+      "errors": [],
+      "httpFailures": {
+        "http://127.0.0.1:5203/content-api/desktop-source": 52
+      }
+    },
+    {
+      "report": "visual-captures/ggd-final-proxy-diagnose-22.json",
+      "sha256": "81a7af1ff3eb6f987e244544d8316e0e35680da63b9177b515ec39de49f09096",
+      "completedHeroes": 0,
+      "errors": [],
+      "httpFailures": {
+        "http://127.0.0.1:5203/content-api/desktop-source": 15
+      }
+    }
+  ],
+  "results": [
+    {
+      "index": "01",
+      "name": "武藤遊戲",
+      "captures": 19,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "90c90f0d2c1fd4344b35f7825f12195eb71ea40c86dd6ccf94eb86edc9c3cbcb",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-1"
+    },
+    {
+      "index": "02",
+      "name": "八神庵",
+      "captures": 17,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "efafbd57d787cc814b8f377459e5df9ec90de6c81585070a49a4176051951f5d",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-1"
+    },
+    {
+      "index": "03",
+      "name": "不知火舞",
+      "captures": 19,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "91070583da76a21bd75c96432a9721610895a0d54d7e461563522a8c9f7395aa",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-1"
+    },
+    {
+      "index": "04",
+      "name": "空條承太郎",
+      "captures": 19,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "3ee546606697c89613c1d80a9932b46eaa6e4d1768a70c5179cf39d5ff67987c",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-1"
+    },
+    {
+      "index": "05",
+      "name": "洛克人",
+      "captures": 19,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "c7c0bb50a98195e726c492c0695ae67759b274c5886ec86294305accd76beae3",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-1"
+    },
+    {
+      "index": "06",
+      "name": "卡比",
+      "captures": 20,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "074bc704c1043940dc349e443e4e18a7d2aac928d50871dd2c6d01c93a0fd0c1",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-1"
+    },
+    {
+      "index": "07",
+      "name": "西索",
+      "captures": 20,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "5f5dc30cd30caf5d0060187667ed157b89dbe2b206f28aa707a73c46d37e1860",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-1"
+    },
+    {
+      "index": "08",
+      "name": "米卡莎",
+      "captures": 19,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "49bf4a8ac1e651c14626b47c251479b6e0e0fff5670b2a092a5aff52d7e935e4",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-1"
+    },
+    {
+      "index": "09",
+      "name": "赫蘿",
+      "captures": 20,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "510648f664c033803981a73f2e3ad20456ad4e1aebb90ac6de00c8a6e5a9ef19",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-1"
+    },
+    {
+      "index": "10",
+      "name": "魯路修",
+      "captures": 20,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "44a1da20b208628e48195f03d748b1f1733f976d47b432fcf79886f4cf61de90",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-1"
+    },
+    {
+      "index": "11",
+      "name": "利姆路",
+      "captures": 20,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "8797011dbf5389ca70a6e7be759aec163611273f76a61cc258e5f2341360b129",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-1"
+    },
+    {
+      "index": "12",
+      "name": "衛宮士郎",
+      "captures": 19,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "1c19816680502ff7dbf9dc52bf6d81f8b6c4082e204f0fa3fde63efe95cbffea",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-1"
+    },
+    {
+      "index": "13",
+      "name": "朝田詩乃",
+      "captures": 20,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "d57fbeaf1e0429c97cfa56031f58e84136868611e1533d90f2bc7ccb3f07bb95",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-1"
+    },
+    {
+      "index": "14",
+      "name": "殺老師",
+      "captures": 19,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "ebfd0ec30492266442f9363872f6884756ee73979a7912bbc4ed96a315d5d8f9",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-1"
+    },
+    {
+      "index": "15",
+      "name": "比利海靈頓",
+      "captures": 20,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "7448dac03bb119304083a2c052e092945ad16526ec5e9a8c777a7f1921e38872",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-1"
+    },
+    {
+      "index": "16",
+      "name": "魔法少女☆伊莉雅",
+      "captures": 20,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "d9fbc00840c73bb04e57381f2cfc7e13be54577ca49e8a2e511829484f39b178",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-1"
+    },
+    {
+      "index": "17",
+      "name": "安茲·烏爾·恭",
+      "captures": 19,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "8edb40e52f667f00b7f55699b5eb31d425030f1fbf269b964331e17915ffd271",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-1"
+    },
+    {
+      "index": "18",
+      "name": "吉爾伽美什",
+      "captures": 20,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "7ccb64d9cbfc81309c0f895dfba07b167d8e46ed88786666fd8bf2a75b0b37cf",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-1"
+    },
+    {
+      "index": "19",
+      "name": "桐谷和人",
+      "captures": 19,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "ec2692703efa3726395cc394827d0c608fef41bf4f2196ae589406e2f92f1fbe",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-1"
+    },
+    {
+      "index": "20",
+      "name": "御坂美琴",
+      "captures": 16,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "da0bce96857c028c9eb2b25ce1b0ba45a365769448a4622f154395cd7c83785a",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-2"
+    },
+    {
+      "index": "21",
+      "name": "鹿目圓",
+      "captures": 20,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "bcdafe8837b4b308964cb54343b5e673200f56fbbbb94150ad9dd4d59af8e99b",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-2"
+    },
+    {
+      "index": "22",
+      "name": "菜月昴",
+      "captures": 4,
+      "capturedSlots": [
+        "Q"
+      ],
+      "allActiveSlotsCaptured": false,
+      "sourceSha256": "81d477713380038fa3bb876c55a9a443367228e747c9343db8331d76e565fe40",
+      "captureErrors": [
+        "TimeoutError: page.waitForFunction: Timeout 60000ms exceeded."
+      ],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-final-proxy-diagnose-22"
+    },
+    {
+      "index": "23",
+      "name": "坂田銀時",
+      "captures": 19,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "68b3f4e0d9385d721d7ba8e8f65e375c43bbb0ad8cd028847ebf950f4b0337ec",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-2"
+    },
+    {
+      "index": "24",
+      "name": "奇犽",
+      "captures": 20,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "cca9d6fc95a44203610fd4fa4b458e2dd7f7509b440a680405422737e06304fe",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-2"
+    },
+    {
+      "index": "25",
+      "name": "一拳超人",
+      "captures": 20,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "9f36392bec08225aefead4a04fecb3d2d8102dd726ccd769a6037db53e2f6a7a",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-2"
+    },
+    {
+      "index": "26",
+      "name": "名偵探柯南",
+      "captures": 16,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "db85d47623a94228b5d3f764f81cca65f52775726831903715ed1666372eceb4",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-2"
+    },
+    {
+      "index": "27",
+      "name": "庫洛魔法使",
+      "captures": 18,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "c9ad8227b66c4599db12378173095aea4da14875947cf7f9e60bd0e1d97da5d8",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-2"
+    },
+    {
+      "index": "28",
+      "name": "艾莉絲·伯雷亞斯·格雷拉特",
+      "captures": 18,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "276f658304bfb0928539f569bc0061c89e7b254f8d1d4bd00af6da2d32870062",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-2"
+    },
+    {
+      "index": "29",
+      "name": "芙莉蓮",
+      "captures": 20,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "47127e80070a6cbc237b642834295cb503292a1c821885f8c2a593793870766a",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-2"
+    },
+    {
+      "index": "30",
+      "name": "尼古貓貓",
+      "captures": 18,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "f778fc018b4f6a592a2001b1ba16c66aa41c4c087f3899bb074fe6f2176e13a3",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-2"
+    },
+    {
+      "index": "31",
+      "name": "SUN樂",
+      "captures": 18,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "45d0f8e46a932a25c9b67c91f70ff3308f5038304b6c65d50d81937aca85a334",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-2"
+    },
+    {
+      "index": "32",
+      "name": "阿薩謝爾",
+      "captures": 21,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "9d4593d450c9e1e7e2c39904058e31989331b376b12001a3ee72236604bd8b1d",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-2"
+    },
+    {
+      "index": "33",
+      "name": "近衛刀太",
+      "captures": 19,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "548c51172f7dcf907a8611bb6a42e9111d58d758daefb2ef330d1705553e7d88",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-2"
+    },
+    {
+      "index": "34",
+      "name": "高速婆婆",
+      "captures": 20,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "92e22dadb5eecf8ee87e6f9012dfa76d733bb3fcf1c04936d2b2e2376834066d",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-2"
+    },
+    {
+      "index": "35",
+      "name": "炭治郎",
+      "captures": 17,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "a476f62574fe283749a876b58e83d90dc78c684daee42241ec93c4bf7ce0635c",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-2"
+    },
+    {
+      "index": "36",
+      "name": "鬼畜王蘭斯",
+      "captures": 20,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "c951e0c7370d50749c1cfdeca2e4490c86dd837c379da7b44450788740627635",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-2"
+    },
+    {
+      "index": "37",
+      "name": "吉伊卡哇",
+      "captures": 16,
+      "capturedSlots": [
+        "E",
+        "EX",
+        "Q",
+        "R",
+        "W"
+      ],
+      "allActiveSlotsCaptured": true,
+      "sourceSha256": "a9ec307b671e1d741d107c9de68ba4e50fbdc45b56571918ade57f0bb6de3686",
+      "captureErrors": [],
+      "humanArtVerdict": "not-awarded",
+      "run": "ggd-first37-final-2"
+    }
+  ]
+}

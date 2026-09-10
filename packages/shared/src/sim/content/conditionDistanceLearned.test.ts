@@ -36,6 +36,10 @@ function stage(dx: number): { world: SimWorld; hero: EntityId; other: EntityId }
 }
 
 describe("GH#1020 distance 葉 —— 施法者↔目標的距離門檻", () => {
+  it.each(["<", "<=", ">", ">=", "==", "!="] as const)("different duels have no comparable distance (%s)", op => {
+    const r = stage(3); r.world.transform.get(r.other)!.zone = 1;
+    expect(evaluateCondition(r.world, { kind: "distance", op, value: 4 }, { self: r.hero, target: r.other })).toBe(false);
+  });
   const near: EffectCondition = { kind: "distance", op: "<=", value: 4.58 };
   it("① 近的成立、遠的不成立；② 沒有目標一律不成立（⛔ 不是距離 0）", () => {
     const a = stage(3);

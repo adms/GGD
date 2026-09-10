@@ -1,0 +1,33 @@
+{
+  "issue": 1159,
+  "beforeCommit": "f43f5005eb28e4e3fd7ca2deb9ddb465a2e59d88",
+  "file": "apps/game-server/src/match/arenaRules.ts",
+  "cause": "Auto-merge retained both equivalent swapWhenFull properties from the branch and Main, producing TS1117.",
+  "fix": "Delete the earlier duplicate; preserve Main assignment and false fallback. No runtime behavior or hero content change.",
+  "beforeSha256": "23eee85c4271d141e1b853f61f687cb50365f8a2d19c18ab59ab07e414666cfe",
+  "afterSha256": "c2ed37dd716b81af8a47e4899218362593bd6429f37f23c6d3b611bc986db950",
+  "validation": [
+    {
+      "command": "pnpm --filter @ggd/game-server typecheck",
+      "exitCode": 0,
+      "output": "> @ggd/game-server@0.0.0 typecheck /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/apps/game-server\n> tsc --noEmit -p tsconfig.json"
+    },
+    {
+      "command": "pnpm decor:check",
+      "exitCode": 0,
+      "output": "> ggd@0.0.0 decor:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3\n> tsx tools/config-decor/gen.ts --check\n\ndecor:check OK（1985 格旋鈕 · A 45 · B 9）"
+    }
+  ],
+  "observedFailedJobs": [
+    {
+      "job": 102604649335,
+      "url": "https://github.com/adms/GGD/actions/runs/34392622033/job/102604649335"
+    },
+    {
+      "job": 102604641518,
+      "url": "https://github.com/adms/GGD/actions/runs/34392623741/job/102604641518"
+    }
+  ],
+  "priorUnitStatus": "Typecheck failed; workspace tests and verdict ledger did not execute. Do not describe these runs as announcement-only failures.",
+  "otherValidation": "Keep existing Editor and hero acceptance evidence; no duplicate full run."
+}

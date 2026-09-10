@@ -1,0 +1,12 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+
+ ✓ tools/icon-gen/test/icon-gen.test.ts (10 tests) 1290ms
+   ✓ icon-gen runner money gates > refuses a live run that would exceed the spend ceiling 323ms
+
+ Test Files  1 passed (1)
+      Tests  10 passed (10)
+   Start at  23:26:30
+   Duration  2.19s (transform 380ms, setup 0ms, collect 486ms, tests 1.29s, environment 0ms, prepare 89ms)
+

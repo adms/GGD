@@ -1,0 +1,17 @@
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-batch2-integration/packages/shared
+
+ ✓ src/ops/playerNoteDeclaredNone.test.ts (3 tests) 2761ms
+   ✓ 「人答過玩家看不到」⛔ 不等於「沒有人回答」（owner 2026-09-09） > ① 寫了「無（…）」⇒ ⭐ 放行，並把它印在自己那一欄 982ms
+   ✓ 「人答過玩家看不到」⛔ 不等於「沒有人回答」（owner 2026-09-09） > ② 什麼都沒寫 ⇒ ⛔ 擋下（⭐ 這一條證明①不是靠放寬換來的） 1004ms
+   ✓ 「人答過玩家看不到」⛔ 不等於「沒有人回答」（owner 2026-09-09） > ③ 連進度標記都沒有 ⇒ ⛔ 仍然擋下（⭐ 它不可以靜靜消失） 774ms
+ ✓ src/ops/playerNoteNoRepeat.test.ts (3 tests) 3573ms
+   ✓ 同一句玩家公告⛔不發第二次（2026-09-09 量到，同一天兩次） > ① 帳本上沒有 ⇒ ⭐ 照常發 1595ms
+   ✓ 同一句玩家公告⛔不發第二次（2026-09-09 量到，同一天兩次） > ② 帳本上已經有 ⇒ ⛔ 不重複發，⭐ 但要說出來 1000ms
+   ✓ 同一句玩家公告⛔不發第二次（2026-09-09 量到，同一天兩次） > ③ 而它仍然發得出**這一版的**維護句（⭐ 證明②不是把公告整個關掉） 977ms
+
+ Test Files  2 passed (2)
+      Tests  6 passed (6)
+   Start at  00:01:13
+   Duration  4.37s (transform 169ms, setup 0ms, collect 185ms, tests 6.33s, environment 0ms, prepare 227ms)
+

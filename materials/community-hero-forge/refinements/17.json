@@ -1,0 +1,751 @@
+{
+  "schema": "ggd-community-design-refinement@1",
+  "projectId": "community-review-17-20260907",
+  "sourceSha256": "d76c6bdfe3d31db6183947e00aac69e6ad320088a1a7ddd51aa1f4a9c0b6c85d",
+  "slots": {
+    "PASSIVE": {
+      "products": [
+        {
+          "instanceId": "passive-parody-1",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onUltimateCast",
+                  "effects": [
+                    {
+                      "kind": "shield",
+                      "amount": {
+                        "flat": 120
+                      },
+                      "duration": 1,
+                      "absorbs": "all",
+                      "stackKey": "community-review-17-20260907.protection",
+                      "onExisting": "keepLarger"
+                    }
+                  ],
+                  "internalCooldown": 5,
+                  "target": "self"
+                }
+              ]
+            },
+            "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】R演說開始時獲得120護盾一秒，每五秒一次；護盾不等於免打斷。",
+      "note": "骨王年會：自己站住講幹話換魔攻，保鑣與提早散會救場\nR演說開始時獲得120護盾一秒，每五秒一次；護盾不等於免打斷。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "effects",
+        "radiusTier",
+        "rangeTier",
+        "castTimeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json"
+      }
+    },
+    "Q": {
+      "products": [
+        {
+          "instanceId": "q-parody-1",
+          "template": {
+            "ref": "tpl-line-strike",
+            "params": {
+              "damage": {
+                "damageTier": "小",
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.5
+                  }
+                ]
+              },
+              "damageType": "magic",
+              "length": 9,
+              "width": 1.5,
+              "aim": "target",
+              "castTimeSec": 0.1
+            },
+            "contentSha256": "sha256:895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb712d62b4a40ff1ada5"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】例行業務魔法：小級魔法傷害加0.5AP。",
+      "note": "骨王年會：自己站住講幹話換魔攻，保鑣與提早散會救場\n例行業務魔法：小級魔法傷害加0.5AP。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-17-20260907.q",
+        "abilityId": "community-review-17-20260907.q",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "target",
+            "vfxId": "fx.prim.arcane.bolt",
+            "durationSec": 0.4,
+            "tint": [
+              112,
+              41,
+              179
+            ]
+          }
+        ]
+      }
+    },
+    "W": {
+      "products": [
+        {
+          "instanceId": "w-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "root",
+                  "duration": 2,
+                  "applyTo": "self",
+                  "sourceScope": "caster",
+                  "root": true
+                },
+                {
+                  "kind": "applyBuff",
+                  "applyTo": "self",
+                  "duration": 2,
+                  "modifiers": [
+                    {
+                      "stat": "ap",
+                      "op": "flat",
+                      "value": 70
+                    }
+                  ]
+                },
+                {
+                  "kind": "floatingText",
+                  "shape": "single",
+                  "text": "我其實也不知道在講什麼",
+                  "applyTo": "self",
+                  "durationSec": 1
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】會議室鎖門：自己定身兩秒，AP+70兩秒；可以施法，但不能逃跑。",
+      "note": "骨王年會：自己站住講幹話換魔攻，保鑣與提早散會救場\n會議室鎖門：自己定身兩秒，AP+70兩秒；可以施法，但不能逃跑。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-17-20260907.w",
+        "abilityId": "community-review-17-20260907.w",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "self",
+            "vfxId": "fx.prim.arcane.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              112,
+              41,
+              179
+            ]
+          }
+        ]
+      }
+    },
+    "E": {
+      "products": [
+        {
+          "instanceId": "e-parody-1",
+          "template": {
+            "ref": "tpl-summon-agent",
+            "params": {
+              "count": 1,
+              "body": "self",
+              "durationSec": 4,
+              "damageMult": 0.3,
+              "hpMult": 0.3,
+              "formation": "ring",
+              "spread": 2,
+              "maxAlive": 2,
+              "onOwnerDeath": "despawn",
+              "cleanse": "none",
+              "castTimeSec": 0
+            },
+            "contentSha256": "sha256:1112de91c80812d8694c17311498df56dc44e672d3fe9804c7b7ddb2a8c8df18"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】請一名四秒保鑣，攻擊/生命倍率各0.3，最多兩名；死亡跟著散會。",
+      "note": "骨王年會：自己站住講幹話換魔攻，保鑣與提早散會救場\n請一名四秒保鑣，攻擊/生命倍率各0.3，最多兩名；死亡跟著散會。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-17-20260907.e",
+        "abilityId": "community-review-17-20260907.e",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "target",
+            "vfxId": "fx.prim.arcane.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              112,
+              41,
+              179
+            ]
+          }
+        ]
+      }
+    },
+    "R": {
+      "products": [
+        {
+          "instanceId": "r-parody-1",
+          "template": {
+            "ref": "tpl-line-strike",
+            "params": {
+              "damage": {
+                "damageTier": "中",
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.8
+                  }
+                ]
+              },
+              "damageType": "magic",
+              "length": 9,
+              "width": 1.5,
+              "aim": "target",
+              "castTimeSec": 0.8
+            },
+            "contentSha256": "sha256:895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb712d62b4a40ff1ada5"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】0.8秒可中斷的魔法簡報，中級魔法傷害加0.8AP；趁會議加成放，敵人可控制打斷。",
+      "note": "骨王年會：自己站住講幹話換魔攻，保鑣與提早散會救場\n0.8秒可中斷的魔法簡報，中級魔法傷害加0.8AP；趁會議加成放，敵人可控制打斷。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          30
+        ],
+        "manaCost": [
+          60
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-17-20260907.r",
+        "abilityId": "community-review-17-20260907.r",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "target",
+            "vfxId": "fx.prim.arcane.bolt",
+            "durationSec": 0.4,
+            "tint": [
+              112,
+              41,
+              179
+            ]
+          }
+        ]
+      }
+    },
+    "EX": {
+      "products": [
+        {
+          "instanceId": "ex-parody-1",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "statusId": "root",
+                  "count": "all",
+                  "subject": "self",
+                  "appliedBy": "self",
+                  "onConsumed": [
+                    {
+                      "kind": "heal",
+                      "amount": {
+                        "flat": 240
+                      },
+                      "applyTo": "self"
+                    }
+                  ]
+                }
+              ]
+            },
+            "contentSha256": "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b"
+          }
+        }
+      ],
+      "purpose": "【核准惡搞改編】提早散會：解除自己的會議定身才能取得240生命；若已坐完會，沒出席費。",
+      "note": "骨王年會：自己站住講幹話換魔攻，保鑣與提早散會救場\n提早散會：解除自己的會議定身才能取得240生命；若已坐完會，沒出席費。\n原文留在sourceDesign。既有模型綁定保留；畫面與發布驗收另記，不以編譯取代。",
+      "removeOverrides": [
+        "provenance",
+        "rangeTier",
+        "cooldownTier",
+        "manaCostTier",
+        "castTimeTier",
+        "effects",
+        "radiusTier",
+        "statusCost"
+      ],
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "range": 6,
+        "cooldown": [
+          10
+        ],
+        "manaCost": [
+          40
+        ]
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-17-20260907.ex",
+        "abilityId": "community-review-17-20260907.ex",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast"
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "self",
+            "vfxId": "fx.prim.arcane.pulse-sm",
+            "durationSec": 0.4,
+            "tint": [
+              112,
+              41,
+              179
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "version": 1,
+  "templateVersions": {
+    "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+      "schema": "template@1",
+      "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-event-passive",
+      "name": "自訂事件被動",
+      "family": "event-passive",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+      "params": {
+        "hooks": {
+          "type": "hooks",
+          "default": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      }
+    },
+    "sha256:895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb712d62b4a40ff1ada5": {
+      "id": "tpl-line-strike",
+      "schema": "template@1",
+      "name": "直線貫穿",
+      "description": "⭐【一道從施法者身上射出去的直線，一次結算】—— `damageLine` 一顆節點，打到線上的每一個人。⚠️ 它與「沿線分段推進」（`tpl-line-sweep`／`tpl-traveling-wave`：`delayed` ＋ `advance`，每一段各結算一次）是**兩件事**：這一族是**一次**判定，卡面寫的就是那一次的數字。\n\n⭐ `aim` 是這一族唯一的形狀開關，而它同時決定三格（出貨 9 支手寫 `damageLine` 逐支量到，9/9 一致，⛔ 不是我編的規則）：`facing` ＝ 朝**面向**射出去（`castType:\"skillshot\"`、起點那一格不算，9 支裡 4 支：09-04 龜派氣功 ×2 · 90-04 陽光烈焰 ×2）；`target` ＝ 從施法者射向一個**指定點**（`castType:\"ground\"`、`includeOrigin:true` 把起點算進去，9 支裡 5 支：20-03 約束與勝利之劍 ×2 · 59-04 野戰型陽電子砲 · 15-01 雷神槍 · 79-03 月牙天衝）。\n\n⛔ 射程（`range`）與敵我（`targetsEnemies`）住在**技能骨架**，⛔ 不是這裡的欄位 —— 出貨 9 支的 `range` 6／8／12 各不相同，`targetsEnemies` 有寫的 6 支沒寫的 3 支（走可組合鍵讓文件的值站著）。⛔ 這一族也不發 `radius`：`damageLine` 有自己的 `length`／`width` 幾何，文件層再帶一格 `radius` 會被 merge 刪掉（正規化器會擋）。\n\n⭐ 光束的**演出**（`spawnModelFx`／`spawnVfx`／`screenShake`）不在這裡 —— 行為模板 × 演出是一個外積，演出留在技能自己的 `effects` 裡（`mergeExpansion` 保留展開沒產出的 kind）。⛔ 不要為了「看起來像一道光束」把模型參數搬進來。\n\n⚠️ 還沒有槽的兩格（出貨量到，⛔ 不是漏寫）：`onHitTargets`（打到之後對**每一個**受害者再做一件事 —— 15-01 上減速、79-03 追加條件傷害）與 `resourcePct`（59-04 按目標最大生命的百分比）。它們今天的客戶全部是 `skillremake:json` 的產物，⇒ 要先改 `tools/skill-remake/batch1.py` 的來源列才碰得到（GH#993）；在那之前加槽就是一格沒有人讀的欄位（第一·五守則）。",
+      "family": "line-strike",
+      "status": "enabled",
+      "params": {
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "damageTier": "大"
+          },
+          "origin": "derived: exemplar 90-04 陽光烈焰 content/abilities/godie-h02r.r.json effects[0].amount 逐位元（孿生 godie-hgam.r 同值）。⛔ 走級距，⛔ 不烘數字（第〇·四守則）。"
+        },
+        "damageType": {
+          "type": "enum",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "default": "magic",
+          "origin": "census: 出貨 9 支手寫 damageLine 技能的 damageType **8/9 magic**（只有 59-04 野戰型陽電子砲 godie-e00r.r 是 true）。"
+        },
+        "length": {
+          "type": "number",
+          "default": 11.67,
+          "min": 0.5,
+          "max": 24,
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].length（孿生 godie-hgam.r 同值）；上界 24 ＝ zDamageLine 讀的 SPREAD_MAX_RADIUS（packages/shared/src/sim/effects/spreadLimits.ts:51），⛔ 這裡不抄第二個數字上限的來源。census: 出貨 9 支是 6.42／8.25／11／11.67×2／14×4。"
+        },
+        "width": {
+          "type": "number",
+          "default": 1.4,
+          "min": 0.2,
+          "max": 24,
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].width（孿生 godie-hgam.r 同值）。census: 出貨 9 支是 1.4×2／1.6／2.0×5／2.2 —— 2.0 最多，⛔ 但這一族的預設跟著 exemplar 走（同 tpl-projectile-strike 的做法）。"
+        },
+        "aim": {
+          "type": "enum",
+          "values": [
+            "facing",
+            "target"
+          ],
+          "default": "facing",
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].aim。census: 出貨 9 支 facing 4（09-04 ×2 · 90-04 ×2，全部 castType skillshot 且無 includeOrigin）／target 5（20-03 ×2 · 59-04 · 15-01 · 79-03，全部 castType ground 且 includeOrigin:true）—— ⭐ 那兩組關聯是 9/9，所以 castType 與 includeOrigin 由這一格帶出來，⛔ 不是兩個各自可填的欄位。"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "optional": true,
+          "default": 0.833,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r 的 castTimeSec 0.833；census: 出貨 9 支裡 5 支同值（09-04 ×2 · 90-04 ×2 · 59-04），其餘 0.467×2／1×2。"
+        }
+      },
+      "requires": [
+        "damageLine"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "90-04 陽光烈焰（content/abilities/godie-h02r.r.json）",
+        "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）"
+      }
+    },
+    "sha256:c85b652bcce6fcad6c48fff79eb073328741a07b122af77fedb634a2aa22c06b": {
+      "schema": "template@1",
+      "status": "enabled",
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "id": "tpl-effect-sequence",
+      "name": "自訂效果序列",
+      "family": "effect-sequence",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ]
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 10,
+          "unit": "s"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "min": 0,
+          "max": 40
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+          "values": [
+            "enemies",
+            "allies"
+          ]
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "recast": {
+          "type": "recast",
+          "optional": true,
+          "origin": "taxonomy:社群八神庵葵花需三次獨立輸入；窗口與額外段落可微調，缺省維持單次施放"
+        }
+      }
+    },
+    "sha256:1112de91c80812d8694c17311498df56dc44e672d3fe9804c7b7ddb2a8c8df18": {
+      "id": "tpl-summon-agent",
+      "schema": "template@1",
+      "name": "召喚代理",
+      "description": "召喚代理 —— 生出 N 具會自己打的身體。⭐ `body:\"self\"` = 分身（複製施法者自己）。⚠️ `cleanse` 是獨立的一格：卡面上的「除掉身上的法術效果」與召喚是兩件事，⛔ 綁死在一起就表達不出「只召喚、不淨化」那一半的技能。",
+      "family": "summon-agent",
+      "status": "enabled",
+      "params": {
+        "count": {
+          "type": "number",
+          "default": 1,
+          "min": 1,
+          "max": 20,
+          "origin": "taxonomy:一具是召喚的**最小**單位 —— ⛔ 0 具不是召喚。逐支的具數由卡面決定（普屋 E 逐字「創造出 **2** 個普烏的實體」）。"
+        },
+        "body": {
+          "type": "enum",
+          "values": [
+            "champion",
+            "self"
+          ],
+          "default": "self",
+          "optional": true,
+          "origin": "taxonomy:分身族（複製施法者自己）是這個家族的**多數**形狀 —— `summon.ts` 檔頭逐字點名 57-03 複製鏡 / 27-002 霧隱分身之術；⭐ 選 `self` 當預設讓那一族**零個欄位**就寫得出來。"
+        },
+        "championId": {
+          "type": "docRef",
+          "optional": true,
+          "origin": "inert —— ⛔ 只有 `body:\"champion\"` 時才讀得到它；`self`（本家族的預設）時由 sim 端填施法者自己。",
+          "inert": "⛔ 只有 `body:\"champion\"` 時才讀得到它；`self`（本家族的預設）時由 sim 端填施法者自己 ⇒ 它沒有一個有意義的預設。"
+        },
+        "durationSec": {
+          "type": "number",
+          "optional": true,
+          "default": 10,
+          "min": 0.5,
+          "max": 600,
+          "unit": "s",
+          "origin": "taxonomy:出貨的分身族卡面全部是**有時限**的（普屋 E 逐字「可持續 **10** 秒」）；⭐ 10 秒是那一族的中位數，⛔ 缺席才是「永久」（原作 0 秒的那種）。"
+        },
+        "damageMult": {
+          "type": "number",
+          "optional": true,
+          "default": 1,
+          "min": 0.01,
+          "max": 10,
+          "origin": "taxonomy:1 ＝ **與本體同強**，也就是「沒有宣告倍率」的中性值。⭐ 逐支覆寫由卡面決定（普屋 E 逐字「具有 **30%** 攻擊力」）。"
+        },
+        "hpMult": {
+          "type": "number",
+          "optional": true,
+          "default": 1,
+          "min": 0.01,
+          "max": 10,
+          "origin": "taxonomy:同 `damageMult` —— 1 是中性值，⛔ 不是一個平衡選擇。"
+        },
+        "formation": {
+          "type": "enum",
+          "values": [
+            "ring",
+            "line",
+            "scatter"
+          ],
+          "default": "ring",
+          "optional": true,
+          "origin": "taxonomy:`ring` 是唯一與具數無關的陣型（1 具也成立，N 具不重疊）；⛔ `line` 需要一個朝向、`scatter` 需要 RNG。"
+        },
+        "spread": {
+          "type": "number",
+          "optional": true,
+          "default": 2,
+          "min": 0.1,
+          "max": 12,
+          "origin": "taxonomy:2 個**世界單位** ≈ 一個身體寬 —— ⭐ 讓兩具不互相卡住的最小間距。⚠️ ⛔ 這一格刻意**沒有** `unit` —— 標成 `wc3u` 會被展開器除以 50（2026-09-01 實測：2 變成 0.04，兩具疊在同一點），⭐ 而 `summon.spread` 本來就是世界單位。"
+        },
+        "maxAlive": {
+          "type": "number",
+          "optional": true,
+          "default": 0,
+          "min": 0,
+          "max": 20,
+          "origin": "taxonomy:0 ＝ **不設上限**，也就是「沒有宣告」的中性值。⭐ 要設上限的技能自己填。"
+        },
+        "onOwnerDeath": {
+          "type": "enum",
+          "values": [
+            "despawn",
+            "persist"
+          ],
+          "default": "despawn",
+          "optional": true,
+          "origin": "taxonomy:`despawn` —— 分身是施法者的延伸，⭐ 本體死了它們留著會變成「打不死的殘影」；`persist` 是少數（獨立召喚物）才要的。"
+        },
+        "cleanse": {
+          "type": "enum",
+          "values": [
+            "none",
+            "status",
+            "all"
+          ],
+          "default": "none",
+          "optional": true,
+          "origin": "taxonomy:`none` ＝ **只召喚**。⚠️ 淨化是**另一件事**（普屋 E 的卡面把兩件事寫在同一句），⛔ 綁死在一起就表達不出只召喚的技能。"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "optional": true,
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "origin": "taxonomy:0 ＝ 瞬發，也就是「沒有宣告吟唱」的中性值（同 `tpl-single-strike` 的同名格）。"
+        }
+      },
+      "requires": [
+        "summon"
+      ],
+      "gapScore": 4,
+      "exemplar": {
+        "skill": "28-02 分身（普屋）",
+        "jass": "A0??"
+      }
+    }
+  }
+}

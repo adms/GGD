@@ -21,7 +21,7 @@ export async function runModelUploadJob(job: ModelUploadJob, signal?: AbortSigna
     return await new Promise((resolve, reject) => {
       const cleanup = () => { clearTimeout(timer); signal?.removeEventListener("abort", aborted); };
       const aborted = () => { cleanup(); reject(new Error("模型處理已取消。")); };
-      const timer = setTimeout(() => { cleanup(); reject(new Error("模型處理超過 20 秒，請縮小模型或動作庫後重試。")); }, 20_000);
+      const timer = setTimeout(() => { cleanup(); reject(new Error("模型檢查未在 60 秒內完成（包含檢查器載入），請確認本機服務後重試。")); }, 60_000);
       signal?.addEventListener("abort", aborted, { once: true });
       instance.onerror = (event) => { cleanup(); reject(new Error(event.message || "模型處理程序失敗。")); };
       instance.onmessage = (event: MessageEvent<{ result?: ModelUploadResult; error?: string }>) => {

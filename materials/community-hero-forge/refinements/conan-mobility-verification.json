@@ -1,0 +1,366 @@
+{
+  "schema": "ggd-conan-mobility-verification@1",
+  "issue": 1132,
+  "sourceCommit": "1ede970a77514c967eb3df25412d6ea003fb0f06",
+  "previousReceipt": "conan-verification.json",
+  "refinementVersion": 2,
+  "refinementSha256": "f8a0eb36e78916df72de680ac8538d167e9086d8bcdb84bbd3d1c942dfe930b1",
+  "regression": {
+    "exitCode": 0,
+    "tests": 292,
+    "files": 26,
+    "mobilityTests": 25,
+    "logSha256": "ae0f6602437325562bc3ef1f413ba7778846ffbd96b56dcb344db84adc91d074",
+    "scope": "All prior community refinements including Azazel repeated same-source curse reversal, Conan all six slots, sleep/stealth/resources, movement/collision, held gates, aim priority, digest and purity."
+  },
+  "transportAndView": {
+    "exitCode": 0,
+    "tests": 8,
+    "files": 4,
+    "logSha256": "22ac32f454be865fd15bbcf419014fcfd88ee14db3b244feb2b4daab03c4ad52",
+    "scope": "Real snapshot and Colyseus encode/decode, client registry visibility/lifecycle, Forge replay and client prediction hold. NullEngine geometry is not rendered visual acceptance."
+  },
+  "typechecks": [
+    {
+      "package": "shared",
+      "exitCode": 0,
+      "command": "pnpm --filter @ggd/shared typecheck",
+      "logSha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    },
+    {
+      "package": "editor",
+      "exitCode": 0,
+      "command": "pnpm --filter @ggd/editor typecheck",
+      "logSha256": "486eafd3c0debbbff5ae7dddb4aa8823f853e470eff3bacbda032617862caca2"
+    },
+    {
+      "package": "client",
+      "exitCode": 0,
+      "command": "pnpm --filter @ggd/client typecheck",
+      "logSha256": "39d946f6b36b6e4e7de7bfbe2267744c75dc2daf57912304bbcdcd88a0cc130d"
+    },
+    {
+      "package": "game-server",
+      "exitCode": 0,
+      "command": "pnpm --filter @ggd/game-server typecheck",
+      "logSha256": "b05c3d89729ac8d5380fe460caa7c9227683cd32eda0fd3fbdcddaedd946d715"
+    }
+  ],
+  "mutations": [
+    {
+      "mutation": "travel-cap",
+      "file": "packages/shared/src/sim/movement/abilityMotion.ts",
+      "exitCode": 1,
+      "logSha256": "3aa2f329005947c1f109ea5038f7b9164238aa154e91641a8cb8c209c206fc10",
+      "detected": true
+    },
+    {
+      "mutation": "braking",
+      "file": "packages/shared/src/sim/movement/abilityMotion.ts",
+      "exitCode": 1,
+      "logSha256": "9c52118c0b05109d5d755afc7b280594332dc86149056832045f4adb84cc07e1",
+      "detected": true
+    },
+    {
+      "mutation": "link-range",
+      "file": "packages/shared/src/sim/movement/abilityMotion.ts",
+      "exitCode": 1,
+      "logSha256": "ad710dae2946cf0851d7c475467cdc723a9e0f7a84fc352b31f014a231a24a03",
+      "detected": true
+    }
+  ],
+  "initialMutationMiss": {
+    "mutation": "link-range",
+    "file": "packages/shared/src/sim/movement/abilityMotion.ts",
+    "exitCode": 0,
+    "logSha256": "b91db47d6dddbe6dee7b0d050649e975fa3b94a216740983ddae2df3e9662462",
+    "detected": false
+  },
+  "mutationImprovement": "The original range test only checked eventual stop, so removing the range guard escaped detection. The corrected test asserts next-tick stop and unchanged position; the same mutation now fails. Sources restored after each probe.",
+  "handoff": {
+    "changedProjects": [
+      {
+        "hero": "26",
+        "previousRevision": 13,
+        "revision": 14
+      }
+    ],
+    "otherProjectsByteIdentical": 36,
+    "originalRecipesUnchanged": 37,
+    "modelBindingsUnchanged": 37
+  },
+  "batchCoverage": {
+    "heroes": 37,
+    "slots": 222,
+    "mappedBehaviorSlots": 39,
+    "unmappedBehaviorSlots": 183,
+    "genericOnAttackPassives": 23
+  },
+  "semantics": [
+    "Source-owned E has acceleration, braking, sharp turn speed reduction and visible phases; root/stun/slow and cast/aim facing priority remain effective. Expiry removes only its own drive grant.",
+    "EX catches the first visible legal enemy or real blocking terrain along its direction. Enemy branch pulls the enemy toward the caster; terrain branch pulls self. Empty space is not an anchor, immune first targets block the catch, and ordinary allies are not pulled.",
+    "A grapple has a finite total travel budget. Range, collision, death, hidden target, zone change and settled duel terminate it. No airborne throw or damage is added.",
+    "Live snapshot and Forge replay share procedural board/tether rendering. Preview movement orders and test wall are session-only actual SimWorld inputs, never changes to the hero project.",
+    "Navigation, moving ability collision and final collision cleanup now use the same active gate geometry; a held-open gate does not become solid again in the cleanup or slide pass."
+  ],
+  "initialFailures": [
+    "PullVariant initially lacked the grapple type; corrected before passing typechecks.",
+    "Single-target effect rejects an unused side field; recipe uses the existing single-target contract.",
+    "A held-open gate still blocked the rider during the existing collision cleanup; shared worldObstacles fixes navigation, forced movement, slide and cleanup consistently."
+  ],
+  "knownLimits": [
+    "Procedural deck/wheels and tether are gameplay markers, not original skateboard/belt model or animation acceptance. Dedicated football, needle/watch, art and sound remain pending.",
+    "Full original-design acceptance, rendered visual acceptance, current-service ZIP and formal publication remain incomplete.",
+    "Browser observed Conan R no-resource in the default single-slot and kit setup; positive acceptance needs real prerequisite enemy events. Costs were not removed and target clues were not fabricated. Current-service package remains blocked/unbuilt."
+  ],
+  "originalDesignAcceptance": "incomplete",
+  "visualAcceptance": "unverified",
+  "currentServiceZip": "not-built",
+  "formalPublication": false,
+  "additionalTransportAndWorkerChecks": {
+    "exitCode": 0,
+    "tests": 11,
+    "files": 5,
+    "logSha256": "ba021a784a4c54760abc38519813d26bd5eb91abab4004bd61136255573f9514",
+    "scope": "Previous four transport/view files now include a real scenario-to-replay root-position/braking-color assertion (9 tests); two worker cold-start/deadline lifecycle tests. Not rendered visual acceptance."
+  },
+  "overlayTypecheck": {
+    "package": "editor",
+    "exitCode": 0,
+    "logSha256": "486eafd3c0debbbff5ae7dddb4aa8823f853e470eff3bacbda032617862caca2"
+  },
+  "initialReleaseBatch": {
+    "head": "c3c111495803c3c904c2856f26ebd46fae16c2a5",
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 39,
+      "slotsWithoutBehaviorSuite": 183
+    },
+    "exitCode": 1,
+    "errors": [],
+    "failedJobs": [
+      {
+        "id": "skills",
+        "exitCode": 1,
+        "logSha256": "21e0a2e43d3f002882046adb7f177f56afdd6a353b3da743614d1f16201dace4"
+      },
+      {
+        "id": "skills-decor-check",
+        "exitCode": 1,
+        "logSha256": "4a586d261e15bb0d467b29bce631baf2fd41ea367efe49e2996a9cbc486bcde9"
+      }
+    ],
+    "note": "Editor release, coord, compile/models and registered suites passed. skills failed only for stale decoration census; the batch expanded all skill children and msgledger passed. Census regeneration must follow staging new source files."
+  },
+  "renderingFollowUp": {
+    "changes": [
+      "Expose actual active motion-root phase/coordinates in the preview overlay.",
+      "GLB adoption timeout now requests the same existing bounded per-role cold-scene retries as material failures; exhausted retries still show a fallback and block visual certification.",
+      "A current compiled hero can replay its valid single-slot scenario even when another slot or the kit is rejected; ZIP/submission retains the all-errors-clear gate."
+    ],
+    "existingAdoptionLifecycleTests": 3,
+    "adoptionLifecycleExitCode": 0,
+    "adoptionLifecycleLogSha256": "1318e45c8db334b2af10676ff08362b0cdb69859118afc2d4ffe4f5bb472ef55",
+    "sourceCommit": "f64c906aff8500bc087a2c2417a030e606d26d2f"
+  },
+  "browserCapture": {
+    "status": "failed",
+    "profile": "selected Conan E/EX through real folder import and editor controls",
+    "script": "tools/community-hero-forge/capture-motion-browser.mjs",
+    "scriptSha256": "628d1fb511bb13ed1bc38041dd24c5784ecdfe90b0123fb7a478defa02961a67",
+    "origin": "http://127.0.0.1:5198",
+    "rendering": "headless Chrome / SwiftShader",
+    "importedHeroes": 1,
+    "passedFrames": 0,
+    "attempts": [
+      {
+        "attempt": "03",
+        "exitCode": 1,
+        "reason": "six-slot background validation exceeded 60-second capture wait",
+        "logSha256": "0c34ecfb64ed99b9a006e7f7007e24117f33d4221b9e5e59ed163d241513c0bb",
+        "diagnosticTextSha256": "00d59409537bb3820a0c22a58b2a2d451afb5624c8e3cf7e487b71e0aac73437"
+      },
+      {
+        "attempt": "04",
+        "exitCode": 1,
+        "reason": "caster GLB adoption timeout; target model did load",
+        "logSha256": "80dca7d0532910cef0ea4bddbb759b92e5fa45e3db1c747b9e2ebd8a025e5905",
+        "diagnosticTextSha256": "a92fd3199adb18565d580f55b3db58bfd127bbac31c3bb01b80401a1c6b13809"
+      },
+      {
+        "attempt": "05",
+        "exitCode": 1,
+        "reason": "after bounded adoption retry patch, PBR environment texture not ready; fallback bodies remain",
+        "logSha256": "5ab7c893088da34f0e4d6864cf90d011135648467bc17795905aa90f0d6d78cf",
+        "diagnosticTextSha256": "046070d277014eda0bca12e5a08b1048cf61871a5bed6a0780e3db9b8107d4df"
+      }
+    ],
+    "scope": "Not a hardware performance result; no valid motion/framebuffer acceptance and no original-art verdict. Earlier static blue-marker interpretation remains unconfirmed, not a proven motion-root defect.",
+    "pending": [
+      "Resolve PBR environment readiness and finish nine rendered frames.",
+      "Exercise real clue prerequisites for Conan R and keep empty-resource rejection.",
+      "Recheck interactive Play after the current-compiled-preview eligibility change."
+    ],
+    "diagnosticStorage": "conan-mobility-visual-diagnostics.json"
+  },
+  "finalReleaseBatch": {
+    "reportSha256": "3d3eabdb26582e9205b7f8cf7477c4995dc955c1b2475b85d8b1c37f14113ab3",
+    "testedHead": "273db499896cf07c59b665addd27fc35819823ea",
+    "sourceFingerprint": "47e9fd5e7c54763cf53a600096088557a9399fc21795cfbbe6d3aef2e1d40d96",
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 39,
+      "slotsWithoutBehaviorSuite": 183
+    },
+    "exitCode": 2,
+    "errors": [],
+    "modelBytes": "verified",
+    "editorTests": 599,
+    "registeredTests": 195,
+    "jobs": [
+      {
+        "id": "skills",
+        "argv": [
+          "pnpm",
+          "skills:check"
+        ],
+        "exitCode": 0,
+        "fingerprint": "3695357bbf544385bf11bc45b40aaeba40bf5d44ff66ccec2764ceb69bdc1dc1",
+        "log": "skills.log",
+        "logSha256": "53914f966529a2895bbc4a85cc9b777e4925d3d0ceeb66e57d40b9ce2c53538d",
+        "seconds": 93.2,
+        "reused": false
+      },
+      {
+        "id": "editor",
+        "argv": [
+          "pnpm",
+          "editor:accept:release"
+        ],
+        "exitCode": 0,
+        "fingerprint": "477da2c6ec0afd2e17b08a22077c2a2db9bcaa4597e5e66bc7e173448863f81c",
+        "log": "editor.log",
+        "logSha256": "310c8385bd0365fab1a3fe77e44f0c7dfd00daa3d302c92d27908fae9d334ead",
+        "seconds": 214.03,
+        "reused": false
+      },
+      {
+        "id": "coord",
+        "argv": [
+          "pnpm",
+          "coord:check"
+        ],
+        "exitCode": 0,
+        "fingerprint": "dccfbf3837f4979823fb841e646a911c24e0dfc8704acf471770fafe1c7484f7",
+        "log": "coord.log",
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271",
+        "seconds": 3.07,
+        "reused": false
+      },
+      {
+        "id": "compile-and-models",
+        "argv": [
+          "pnpm",
+          "exec",
+          "node",
+          "--import",
+          "tsx",
+          "tools/community-hero-forge/prepare-published-handoff.mts",
+          "--batch-dir",
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge",
+          "--release-root",
+          "/private/tmp/ggd-model-upload-acceptance/release-13956d93b"
+        ],
+        "exitCode": 0,
+        "fingerprint": "f8052038145649b74807d57500a125c78e877f8d191004fce36052fe40d0ed76",
+        "log": "compile-and-models.log",
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c",
+        "seconds": 6.0,
+        "reused": false
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "argv": [
+          "pnpm",
+          "exec",
+          "vitest",
+          "run",
+          "packages/shared/src/content/heroForge/communityRefinements/electricCharge.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/cardLinks.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/cardVariants.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/friendlyProtection.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/madoka.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/kirua.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/yugi.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/conan.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/conanMobility.test.ts",
+          "--pool=threads",
+          "--minWorkers=1",
+          "--maxWorkers=1"
+        ],
+        "exitCode": 0,
+        "fingerprint": "b6918468d11a99ef5a6ff1b8edc831017878ae9f4850c22da37bfc1cf55c6e81",
+        "log": "behavior-implemented-mechanisms.log",
+        "logSha256": "d1c0391c58e2368ef965321d37fbe2e118e9411441bd250ab3accd64e9ec9c5c",
+        "seconds": 23.17,
+        "reused": false
+      },
+      {
+        "id": "behavior-trap-view-and-transport",
+        "argv": [
+          "pnpm",
+          "exec",
+          "vitest",
+          "run",
+          "apps/client/src/render/views/TrapView.test.ts",
+          "apps/editor/src/vfx-forge/TrapReplay.test.ts",
+          "apps/game-server/src/net/trapWire.test.ts",
+          "--pool=threads",
+          "--minWorkers=1",
+          "--maxWorkers=1"
+        ],
+        "exitCode": 0,
+        "fingerprint": "dca3012e7312fcc98d76a405e86da3e9f3018c2ad8b709a90e3c98701e4a215e",
+        "log": "behavior-trap-view-and-transport.log",
+        "logSha256": "993fe0edcce722fd100cddf9d2de1e59aa8170366da482bb4a6560cf2a5f3dcd",
+        "seconds": 4.99,
+        "reused": false
+      },
+      {
+        "id": "behavior-motion-view-and-transport",
+        "argv": [
+          "pnpm",
+          "exec",
+          "vitest",
+          "run",
+          "apps/client/src/render/views/AbilityMotionView.test.ts",
+          "apps/client/src/predict/predictionHoldWiring.test.ts",
+          "apps/editor/src/vfx-forge/AbilityMotionReplay.test.ts",
+          "apps/game-server/src/net/abilityMotionWire.test.ts",
+          "--pool=threads",
+          "--minWorkers=1",
+          "--maxWorkers=1"
+        ],
+        "exitCode": 0,
+        "fingerprint": "8456e7c98477ff8b3975a764aa40e497ef2bb2d73e9cc67872d1a41f3c89fd44",
+        "log": "behavior-motion-view-and-transport.log",
+        "logSha256": "babbbb54113e0a6bdd36684a2bc9abb7b1474e3bf497d97cc413ff98ce277cf8",
+        "seconds": 8.04,
+        "reused": false
+      }
+    ],
+    "originalDesignAcceptance": "unverified",
+    "visualAcceptance": "unverified",
+    "formalPublication": false,
+    "meaning": "All executed automated checks passed. Exit 2 preserves 183 slots without a registered behavior suite; neither compiler success nor 39 mapped slots certifies original design or rendered visuals."
+  },
+  "packetRepro": {
+    "tests": 7,
+    "files": 3,
+    "exitCode": 0,
+    "logSha256": "6dafcf7e9e6137b8a61524b449aa92ae5182b29d24abe4a74737b609bb301a77"
+  }
+}

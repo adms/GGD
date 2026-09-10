@@ -13,6 +13,7 @@ export * from "./presentation";
 export * from "./effectAuthoring";
 export * from "./templateVersions";
 export * from "./scenario";
+export * from "./scenarioAdmission";
 export * from "./simulationBaseline";
 export * from "./scenarioSetup";
 export * from "./migration";

@@ -78,7 +78,7 @@ function rig() {
   return { world, caster: caster!, second: second!, foe: foe!, events, step, count, fill, hp, stat, cast };
 }
 
-describe("Azazel authored six-slot refinement", () => {
+describe("Azazel legacy v1 replay compatibility (current batch is azazelBatch.test.ts)", () => {
   it("single-slot preparation is explicit; the actual kit earns its own EX resources", () => {
     const authored = { ...structuredClone(project), presentation: defaultHeroPresentation() };
     const packet = compileHeroPackageProject(authored, catalog);

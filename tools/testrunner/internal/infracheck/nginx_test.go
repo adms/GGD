@@ -41,13 +41,24 @@ func TestNginxConfigSyntax(t *testing.T) {
 	assert.Contains(t, out, "syntax is ok")
 }
 
+// The community opt-in serves Editor deep links without enabling content-api.
+func TestNginxCommunityEditorRoutes(t *testing.T) {
+	c := startNginx(t, false, "community")
+	for _, path := range []string{"/editor", "/editor/", "/editor/hero-forge", "/editor/works"} {
+		status, _, body := c.get(t, path)
+		assert.Equal(t, 200, status, path)
+		assert.Contains(t, body, "GGD editor stub", path)
+	}
+	status, _, body := c.get(t, "/content-api/champions")
+	assert.Equal(t, 200, status)
+	assert.Contains(t, body, "GGD client stub", "community must not expose the dev content-api")
+	status, _, _ = c.get(t, "/api/v1/hero-works/mine")
+	assert.Equal(t, 502, status, "community API still routes to Platform, not a static fallback")
+}
+
 // TestNginxEdgeRouting — docs/todo/infra.md infra-02 (infra-nginx-routes) and
 // infra-03 (infra-cache-immutable), plus the runtime half of infra-05.
-//
-// Boots the real config in a real container with stub client/editor dists and
-// a stub content store. Proxied routes point at dead loopback upstreams, so a
-// 502 proves nginx matched the location AND attempted the proxy (a miss would
-// fall through to the SPA and return 200/404 instead).
+// Proxied routes point at dead loopback upstreams: 502 proves the proxy matched.
 func TestNginxEdgeRouting(t *testing.T) {
 	c := startNginx(t, false) // prod layout
 

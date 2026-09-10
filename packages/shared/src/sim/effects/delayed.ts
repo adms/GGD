@@ -1,3 +1,4 @@
+import { isTimeStopped } from "../timeStop";
 /**
  * `delayed` —— ⭐ G12【延遲序列】：一串排在**未來 tick** 的效果，而且**目標在
  * 施放那一刻就凍住**。
@@ -367,6 +368,7 @@ export function delayedSystem(world: SimWorld): void {
   let anyDone = false;
   // 陣列 = 插入序 = 全序（不迭代 Map）。
   for (const wave of q) {
+    if (isTimeStopped(world, wave.caster)) continue;
     // 決鬥已經結束的分區不再揮刀 —— 與 `dotTick` / `randomArea` 對 `settledZones`
     // 的處置逐字相同（#100/#216：回合結束後還在扣血是玩家看得見的缺陷）。
     if (world.settledZones.has(wave.zone)) {

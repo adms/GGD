@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "d1d60a8a65e9",
+  "hash": "1e4d32e2434a",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -209,8 +209,8 @@
     {
       "id": "damage-rules",
       "path": "config/damage-rules.json",
-      "hash": "03e9dd42bdb2",
-      "size": 679
+      "hash": "19aad8977765",
+      "size": 708
     },
     {
       "id": "damage-tier-exemptions",
@@ -269,8 +269,8 @@
     {
       "id": "icon-plan",
       "path": "config/icon-plan.json",
-      "hash": "7cd8dffc660a",
-      "size": 879
+      "hash": "79e28d780b1d",
+      "size": 850
     },
     {
       "id": "icon-style",

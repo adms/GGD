@@ -27,9 +27,9 @@ import { hudStore } from "../net/RoomStore";
  * 之後測試**還是綠的** —— 那條守衛是空的（失敗形態⑤：被測的不是出貨的那個）。
  * 現在它打的是真的原型方法，拿掉那一行就會紅。
  */
-function stepShadow(flags: number): { steps: number; accumMs: number } {
+function stepShadow(flags: number, motionState = ""): { steps: number; accumMs: number } {
   hudStore.setState({ localEntityId: 7 });
-  const state = { entities: new Map([["7", { flags }]]) };
+  const state = { entities: new Map([["7", { flags, motionState }]]) };
   let steps = 0;
   // 40 + 16 = 56 ms > 一個 TICK_MS(33.3) ⇒ **沒有**被扣留的話一定會踏出一步。
   const self = { predAccumMs: 40, prediction: { stepTick: () => void steps++ } };
@@ -42,6 +42,12 @@ function stepShadow(flags: number): { steps: number; accumMs: number } {
 }
 
 beforeEach(() => resetPredictionHold());
+
+it("local time stop holds prediction until the authoritative snapshot clears", () => {
+  expect(stepShadow(ENTITY_FLAG.TIME_STOPPED).steps).toBe(0);
+  expect(stepShadow(ENTITY_FLAG.TIME_STOPPED).accumMs).toBe(0);
+  expect(stepShadow(0).steps).toBeGreaterThan(0);
+});
 
 describe("伺服器握著身體時影子不往前爬 (GH#370)", () => {
   it("★ 施法鎖亮著 → 影子一步都不踏；旗標一滅立刻恢復", () => {
@@ -92,4 +98,12 @@ describe("伺服器握著身體時影子不往前爬 (GH#370)", () => {
     expect(predictionHoldFlagMask()).toBe(predictionHoldMask(DEFAULT_PREDICTION_HOLD));
     expect(normalizePredictionHold({ enabled: true }).flags).toEqual(DEFAULT_PREDICTION_HOLD.flags);
   });
+});
+
+it("source-owned driving and grapples hold prediction only during authoritative motion", () => {
+  expect(stepShadow(0, "accelerating").steps).toBe(0);
+  expect(stepShadow(0, "pulling").steps).toBe(0);
+  expect(stepShadow(0, "").steps).toBeGreaterThan(0);
+  applyPredictionHoldDoc({ predictionHold: { enabled: false } });
+  expect(stepShadow(0, "accelerating").steps).toBeGreaterThan(0);
 });

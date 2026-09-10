@@ -199,9 +199,13 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "3967f07dd799",
-  "capabilityFingerprint": "daccedce",
+  "fingerprint": "5d7c1809af12",
+  "capabilityFingerprint": "abedce92",
   "required": [
+    {
+      "group": "abilityField",
+      "name": "allowApproach"
+    },
     {
       "group": "abilityField",
       "name": "augment"
@@ -257,6 +261,10 @@
     {
       "group": "abilityField",
       "name": "innateKind"
+    },
+    {
+      "group": "abilityField",
+      "name": "interruptible"
     },
     {
       "group": "abilityField",
@@ -316,11 +324,23 @@
     },
     {
       "group": "abilityField",
+      "name": "recast"
+    },
+    {
+      "group": "abilityField",
       "name": "recoveryRoots"
     },
     {
       "group": "abilityField",
       "name": "recoverySec"
+    },
+    {
+      "group": "abilityField",
+      "name": "requiredSummonSlot"
+    },
+    {
+      "group": "abilityField",
+      "name": "requiredTargetStatus"
     },
     {
       "group": "abilityField",
@@ -456,6 +476,10 @@
     },
     {
       "group": "conditionLeafField",
+      "name": "radius"
+    },
+    {
+      "group": "conditionLeafField",
       "name": "slot"
     },
     {
@@ -493,6 +517,10 @@
     {
       "group": "conditionLeaf",
       "name": "learned"
+    },
+    {
+      "group": "conditionLeaf",
+      "name": "nearbyCombat"
     },
     {
       "group": "conditionLeaf",
@@ -8348,6 +8376,16 @@
     },
     {
       "group": "configField",
+      "name": "championChannelLimit",
+      "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
+      "name": "championChannelWarn",
+      "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
       "name": "champions",
       "owner": "config.boss-intro@1"
     },
@@ -11110,6 +11148,26 @@
       "group": "configField",
       "name": "heroPortraitPx",
       "owner": "config.hud-layout@1"
+    },
+    {
+      "group": "configField",
+      "name": "heroTargetMatch",
+      "owner": "config.ugc@1"
+    },
+    {
+      "group": "configField",
+      "name": "heroTargetMatch=game-and-migration",
+      "owner": "config.ugc@1"
+    },
+    {
+      "group": "configField",
+      "name": "heroTargetMatch=migration",
+      "owner": "config.ugc@1"
+    },
+    {
+      "group": "configField",
+      "name": "heroTargetMatch=strict",
+      "owner": "config.ugc@1"
     },
     {
       "group": "configField",
@@ -19423,6 +19481,11 @@
     },
     {
       "group": "configField",
+      "name": "spreadMaxTargetsCap",
+      "owner": "config.damage-rules@1"
+    },
+    {
+      "group": "configField",
       "name": "stackBelowWidthPx",
       "owner": "config.lobby-layout@1"
     },
@@ -20713,6 +20776,14 @@
     },
     {
       "group": "effectField",
+      "name": "arcHalfAngleCos"
+    },
+    {
+      "group": "effectField",
+      "name": "armDelaySec"
+    },
+    {
+      "group": "effectField",
       "name": "arriveSoundKey"
     },
     {
@@ -20797,11 +20868,19 @@
     },
     {
       "group": "effectField",
+      "name": "breakOnMove"
+    },
+    {
+      "group": "effectField",
       "name": "buff"
     },
     {
       "group": "effectField",
       "name": "burnsInFireRing"
+    },
+    {
+      "group": "effectField",
+      "name": "cancelAttack"
     },
     {
       "group": "effectField",
@@ -20949,6 +21028,10 @@
     },
     {
       "group": "effectField",
+      "name": "drive"
+    },
+    {
+      "group": "effectField",
       "name": "dropDeadTargets"
     },
     {
@@ -20966,6 +21049,10 @@
     {
       "group": "effectField",
       "name": "emitCastEvents"
+    },
+    {
+      "group": "effectField",
+      "name": "evasionScope"
     },
     {
       "group": "effectField",
@@ -21045,7 +21132,19 @@
     },
     {
       "group": "effectField",
+      "name": "fromSummonSlot"
+    },
+    {
+      "group": "effectField",
       "name": "getupTicks"
+    },
+    {
+      "group": "effectField",
+      "name": "grantMark"
+    },
+    {
+      "group": "effectField",
+      "name": "grapple"
     },
     {
       "group": "effectField",
@@ -21201,6 +21300,10 @@
     },
     {
       "group": "effectField",
+      "name": "maxQueuedHits"
+    },
+    {
+      "group": "effectField",
       "name": "maxRemainingSec"
     },
     {
@@ -21350,6 +21453,10 @@
     {
       "group": "effectField",
       "name": "onTouch"
+    },
+    {
+      "group": "effectField",
+      "name": "onTrigger"
     },
     {
       "group": "effectField",
@@ -21569,6 +21676,14 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "arcHalfAngleCos"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "armDelaySec"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "arriveSoundKey"
     },
     {
@@ -21654,6 +21769,10 @@
     {
       "group": "effectFieldPath",
       "name": "block.damageTypes"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "block.facingArcDegrees"
     },
     {
       "group": "effectFieldPath",
@@ -21745,6 +21864,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "breakOnMove"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "buff"
     },
     {
@@ -21762,6 +21885,10 @@
     {
       "group": "effectFieldPath",
       "name": "burnsInFireRing"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "cancelAttack"
     },
     {
       "group": "effectFieldPath",
@@ -22057,6 +22184,30 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "drive"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "drive.accelSec"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "drive.brakeSec"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "drive.sharpTurnDot"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "drive.sharpTurnSpeed"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "drive.turnFactor"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "dropDeadTargets"
     },
     {
@@ -22074,6 +22225,18 @@
     {
       "group": "effectFieldPath",
       "name": "emitCastEvents"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "evasionScope"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "evasionScope.abilities"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "evasionScope.trueDamage"
     },
     {
       "group": "effectFieldPath",
@@ -22169,7 +22332,79 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "fromSummonSlot"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "getupTicks"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.lethal"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.lethal.aoeEffects"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.lethal.aoeRadius"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.lethal.consume"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.lethal.damageTypes"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.lethal.internalCooldown"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.lethal.maxSavesPerRound"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.lethal.restoreMode"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.lethal.selfEffects"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.lethal.surviveHpPct"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.max"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.resetOn"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grapple"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grapple.hitRadius"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grapple.maxTravel"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grapple.range"
     },
     {
       "group": "effectFieldPath",
@@ -22354,6 +22589,10 @@
     {
       "group": "effectFieldPath",
       "name": "maxHeld"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "maxQueuedHits"
     },
     {
       "group": "effectFieldPath",
@@ -22550,6 +22789,10 @@
     {
       "group": "effectFieldPath",
       "name": "onTouch"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "onTrigger"
     },
     {
       "group": "effectFieldPath",
@@ -22801,6 +23044,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "retargetOnLost"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "revisit"
     },
     {
@@ -22917,6 +23164,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "statusTag"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "steps"
     },
     {
@@ -22966,6 +23217,10 @@
     {
       "group": "effectFieldPath",
       "name": "stopOnCasterDeath"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "stopOnHit"
     },
     {
       "group": "effectFieldPath",
@@ -23021,6 +23276,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "targetOnSpawn"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "targetPriority"
     },
     {
@@ -23073,7 +23332,15 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "touchScope"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "touchSide"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "triggerAt"
     },
     {
       "group": "effectFieldPath",
@@ -23142,6 +23409,10 @@
     {
       "group": "effectFieldPath",
       "name": "vision"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "vision.revealed"
     },
     {
       "group": "effectFieldPath",
@@ -23293,6 +23564,10 @@
     },
     {
       "group": "effectField",
+      "name": "retargetOnLost"
+    },
+    {
+      "group": "effectField",
       "name": "revisit"
     },
     {
@@ -23401,6 +23676,10 @@
     },
     {
       "group": "effectField",
+      "name": "statusTag"
+    },
+    {
+      "group": "effectField",
       "name": "steps"
     },
     {
@@ -23410,6 +23689,10 @@
     {
       "group": "effectField",
       "name": "stopOnCasterDeath"
+    },
+    {
+      "group": "effectField",
+      "name": "stopOnHit"
     },
     {
       "group": "effectField",
@@ -23446,6 +23729,10 @@
     {
       "group": "effectField",
       "name": "targetMode"
+    },
+    {
+      "group": "effectField",
+      "name": "targetOnSpawn"
     },
     {
       "group": "effectField",
@@ -23501,7 +23788,15 @@
     },
     {
       "group": "effectField",
+      "name": "touchScope"
+    },
+    {
+      "group": "effectField",
       "name": "touchSide"
+    },
+    {
+      "group": "effectField",
+      "name": "triggerAt"
     },
     {
       "group": "effectField",
@@ -23653,6 +23948,10 @@
     },
     {
       "group": "effectKind",
+      "name": "interruptCast"
+    },
+    {
+      "group": "effectKind",
       "name": "invulnerable"
     },
     {
@@ -23741,6 +24040,14 @@
     },
     {
       "group": "effectKind",
+      "name": "timeStop"
+    },
+    {
+      "group": "effectKind",
+      "name": "trap"
+    },
+    {
+      "group": "effectKind",
       "name": "weightedBranch"
     },
     {
@@ -23761,7 +24068,19 @@
     },
     {
       "group": "hookEvent",
+      "name": "onAllyProtected"
+    },
+    {
+      "group": "hookEvent",
+      "name": "onAttackAttempt"
+    },
+    {
+      "group": "hookEvent",
       "name": "onBasicAttack"
+    },
+    {
+      "group": "hookEvent",
+      "name": "onBlock"
     },
     {
       "group": "hookEvent",
@@ -23825,6 +24144,10 @@
     },
     {
       "group": "hookEvent",
+      "name": "onObservedCombat"
+    },
+    {
+      "group": "hookEvent",
       "name": "onOverheal"
     },
     {
@@ -23869,6 +24192,10 @@
     },
     {
       "group": "hookEvent",
+      "name": "onSummonHit"
+    },
+    {
+      "group": "hookEvent",
       "name": "onUltimateCast"
     },
     {
@@ -23878,6 +24205,10 @@
     {
       "group": "hookField",
       "name": "abilitySlot"
+    },
+    {
+      "group": "hookField",
+      "name": "blockSource"
     },
     {
       "group": "hookField",
@@ -23901,6 +24232,10 @@
     },
     {
       "group": "hookField",
+      "name": "damageConnected"
+    },
+    {
+      "group": "hookField",
       "name": "damageCrit"
     },
     {
@@ -23917,6 +24252,18 @@
     },
     {
       "group": "hookField",
+      "name": "evadeChannel"
+    },
+    {
+      "group": "hookField",
+      "name": "evadeDuring"
+    },
+    {
+      "group": "hookField",
+      "name": "evadeSource"
+    },
+    {
+      "group": "hookField",
       "name": "internalCooldown"
     },
     {
@@ -23930,6 +24277,10 @@
     {
       "group": "hookField",
       "name": "maxTriggers"
+    },
+    {
+      "group": "hookField",
+      "name": "observedEvent"
     },
     {
       "group": "hookField",
@@ -23954,6 +24305,10 @@
     {
       "group": "hookField",
       "name": "reflectedDamageType"
+    },
+    {
+      "group": "hookField",
+      "name": "stationaryForSec"
     },
     {
       "group": "hookField",
@@ -25060,24 +25415,24 @@
     }
   ],
   "counts": {
-    "effectKind": 49,
-    "effectField": 274,
-    "hookEvent": 33,
-    "hookField": 22,
-    "abilityField": 39,
+    "effectKind": 52,
+    "effectField": 291,
+    "hookEvent": 38,
+    "hookField": 29,
+    "abilityField": 44,
     "auraField": 8,
     "templateFamily": 47,
-    "conditionLeaf": 10,
-    "conditionLeafField": 19,
-    "effectFieldPath": 450,
+    "conditionLeaf": 11,
+    "conditionLeafField": 20,
+    "effectFieldPath": 491,
     "vfxField": 91,
     "modelField": 46,
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 8,
-    "configField": 4029,
+    "configField": 4036,
     "_notRequired": 15,
-    "_total": 5149,
+    "_total": 5236,
     "_ownerOnly": 39
   }
 }

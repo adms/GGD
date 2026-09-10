@@ -1,0 +1,18 @@
+🔓 隔離區:解鎖 462 份（追蹤 867,缺 0）
+
+> ggd@0.0.0 bricks:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> bash scripts/genrun.sh bricks:build bricks:build:raw
+
+
+> ggd@0.0.0 bricks:build:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+> tsx tools/brick-census/gen.ts
+
+✅ /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/docs/editor-contract/ggd-brick-census.json
+   {"engineFamilies":47,"templateDocs":58,"usable":47,"engineMissing":10,"shells":10,"zeroAdoption":29,"terminal":1,"handWritten":111,"distinctShapes":76,"singletonShapes":51,"top8Coverage":26}
+✅ /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/docs/editor-contract/ggd-bricks.json
+   {"total":184,"effect":52,"hook":38,"leaf":11,"template":47,"vfx-prim":13,"vfx-subtype":4,"vfx-call":4,"model-preset":15,"gated":145,"gaps":55,"missingAdminForm":55,"missingEditorForm":4,"zeroAdoption":75}
+✅ /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/docs/editor-contract/ggd-bricks.md
+(node:62187) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+🔒 隔離區:上鎖 462 份（追蹤 867,缺 0,正規化器專屬 403 份不上鎖,部分產物 2 份不上鎖(GH#1097)）
+✓ genrun: bricks:build 完成（產物已重新上鎖）

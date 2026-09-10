@@ -61,8 +61,8 @@ beforeAll(async () => {
 });
 
 /** 一場真的比賽，停在中場（商店開著的那一格）。 */
-function shopping(mult: number): { ctl: MatchController; entity: EntityId } {
-  const rules = rulesFromDoc({ ...doc, legendaryShelf: { ...doc.legendaryShelf!, priceMultiplier: mult } });
+function shopping(mult: number, swapWhenFull?: boolean): { ctl: MatchController; entity: EntityId } {
+  const rules = rulesFromDoc({ ...doc, legendaryShelf: { ...doc.legendaryShelf!, priceMultiplier: mult, swapWhenFull } });
   // ⚠️ 同 shopEconomy：這一條驗的是「後台倍率 → 收的錢」，⛔ 不是 bot 折扣
   // （owner 2026-08-18 讓 bot 半價，而夾具全是 allBots）。折扣另有守衛。
   const ctl = new MatchController("legendary-shelf-wiring", 42, allBots(), FAST, 3, {
@@ -76,6 +76,15 @@ function shopping(mult: number): { ctl: MatchController; entity: EntityId } {
 }
 
 describe("寶具貨架的後台設定真的進得了比賽（legendary-shelf-wiring）", () => {
+  it.each([
+    { configured: undefined, expected: false },
+    { configured: true, expected: true },
+    { configured: false, expected: false },
+  ])("swapWhenFull=$configured → 比賽收到 $expected（缺席沿用 false）", ({ configured, expected }) => {
+    const { ctl } = shopping(CAPRICE, configured);
+    expect(ctl.world.legendaryShelf.swapWhenFull).toBe(expected);
+  });
+
   it("① 後台改倍率 → 這一場**收的錢**就是那個倍率算出來的（config → rules → world → 扣款）", () => {
     const { ctl, entity } = shopping(CAPRICE);
     const price = legendaryShelfPrice(CAPRICE);

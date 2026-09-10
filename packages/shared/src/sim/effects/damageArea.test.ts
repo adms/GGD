@@ -28,6 +28,7 @@ import { SKELETON_ARENA } from "../world/ArenaDef";
 import { runEffects } from "./effectRunner";
 import type { EffectContext, EffectDef } from "./effect";
 import { SPREAD_MAX_RADIUS, SPREAD_MAX_TARGETS } from "./spreadLimits";
+import { damageRulesFromDoc } from "../damageRules";
 import { zEffectDef } from "../../content/schema/effect";
 import { ContentLoader } from "../../content/loader";
 import { FsContentSource } from "../../content/node/FsContentSource";
@@ -142,6 +143,24 @@ describe("damageArea — 擴散真的打到第二個人 (do-spread-area)", () =>
 });
 
 describe("damageArea — maxTargets 真的封頂 (do-spread-cap)", () => {
+  it.each([
+    [undefined, undefined, 20],
+    [undefined, 24, 20],
+    [2, undefined, 2],
+    [2, 24, 2],
+    [24, undefined, 24],
+    [24, 24, 24],
+    [24, 2, 2],
+    [24, 2.9, 2],
+    [24, -1, 0],
+    [24, NaN, 24],
+  ])("全域設定 %s，技能 %s → 實際命中 %s 人", (cap, authored, expected) => {
+    const r = rig(Array.from({ length: 25 }, (_, i) => 0.2 + i / 10));
+    r.world.damageRules = damageRulesFromDoc({ schema: "config.damage-rules@1", spreadMaxTargetsCap: cap });
+    runEffects([area(authored === undefined ? {} : { maxTargets: authored })], ctxOf(r));
+    expect([...hits(r.world).keys()]).toEqual(r.bystanders.slice(0, expected));
+  });
+
   it("caps the victim count and keeps the NEAREST ones", () => {
     cover("do-spread-cap");
     const r = rig([1, 2, 3, 3.5]);
@@ -193,6 +212,13 @@ describe("damageArea — falloff 真的遞減 (do-spread-falloff)", () => {
     expect(h.get(r.bystanders[1]!)).toBe(100);
   });
 
+  it.each([1, 1.5])("明填 falloff %s 不會造成距離增傷，1 仍是語意上界", (falloff) => {
+    const r = rig([1, 3]);
+    runEffects([area({ radius: 4, falloff })], ctxOf(r));
+    expect([...hits(r.world).values()]).toEqual([100, 100]);
+    expect(zEffectDef.safeParse(area({ falloff })).success).toBe(falloff === 1);
+  });
+
   it("falloff 0 zeroes the rim but never goes negative past it", () => {
     cover("do-spread-falloff");
     // radius 2 with a body that reaches in from 2.05 — `enemiesInCircle` is a
@@ -219,7 +245,7 @@ describe("damageArea — 上界真的夾 (do-spread-limits)", () => {
     expect(h.has(r.bystanders[1]!), "the 300 u radius was honoured — the whole zone").toBe(false);
   });
 
-  it("the schema REFUSES the same out-of-range values the sim clamps", () => {
+  it("schema guards geometry and safe integer targets; the match config owns the target policy", () => {
     cover("do-spread-limits");
     const base = { kind: "damageArea", damageType: "physical", amount: { flat: 1 } };
     expect(zEffectDef.safeParse({ ...base, radius: 300 }).success).toBe(false);
@@ -228,7 +254,10 @@ describe("damageArea — 上界真的夾 (do-spread-limits)", () => {
     expect(zEffectDef.safeParse({ ...base, radius: 4, falloff: -0.1 }).success).toBe(false);
     expect(
       zEffectDef.safeParse({ ...base, radius: 4, maxTargets: SPREAD_MAX_TARGETS + 1 }).success,
-    ).toBe(false);
+    ).toBe(true);
+    expect(zEffectDef.safeParse({ ...base, radius: 4, maxTargets: Number.MAX_SAFE_INTEGER }).success).toBe(true);
+    expect(zEffectDef.safeParse({ ...base, radius: 4, maxTargets: Number.MAX_SAFE_INTEGER + 1 }).success).toBe(false);
+    expect(zEffectDef.safeParse({ ...base, radius: 4, maxTargets: 0 }).success).toBe(false);
     expect(zEffectDef.safeParse({ ...base, radius: 4, maxTargets: 2.5 }).success).toBe(false);
   });
 });

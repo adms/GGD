@@ -39,7 +39,8 @@ import { blockingImmunitySource, spendImmunityCharge } from "../statusTagImmunit
 import { detachSource } from "../stats/statPipeline";
 import { Statuses } from "../content/registry";
 import { clampMarkCount } from "../markLimits";
-import { adjustMarkCount } from "../marks";
+import { adjustMarkCount, installMark } from "../marks";
+import { markExpired } from "../markLimits";
 import type { SimWorld } from "../SimWorld";
 import type { EntityId } from "../../ids";
 import type { DamageType } from "./effect";
@@ -207,6 +208,18 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
       // `perStackLost` / 免死都掛在它上面），狀態那半整段跳過。理由見檔頭。
       //
       // ⛔ 位置在免控閘**之後**：一發被免疫拒絕的效果不該動對方的計數器。
+      if (e.grantMark !== undefined) {
+        if (!world.health.get(target)?.alive) continue;
+        let mark = world.marks.get(target)?.get(e.statusId);
+        if (!mark) {
+          installMark(world, target, { markId: e.statusId, initial: 0, max: e.grantMark.max,
+            durationSec: duration, resetOn: e.grantMark.resetOn, lethal: e.grantMark.lethal });
+          mark = world.marks.get(target)!.get(e.statusId)!;
+        }
+        if (mark.lethal?.maxSavesPerRound !== undefined && (mark.savesThisRound ?? 0) >= mark.lethal.maxSavesPerRound) continue;
+        if (markExpired(mark.expiresAtTick, world.tick)) mark.count = 0;
+        if (e.refresh !== "keep" || markExpired(mark.expiresAtTick, world.tick)) mark.expiresAtTick = expiresAtTick;
+      }
       if (e.sourceScope === undefined && e.stacks !== undefined && world.marks.get(target)?.has(e.statusId) === true) {
         adjustMarkCount(world, target, e.statusId, e.stacks);
         continue;
@@ -323,6 +336,9 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
         });
       }
       if (isCc) recordCc(world, ctx.caster, target, addedTicks);
+      if (isCc && addedTicks > 0) {
+        world.emit("controlApplied", { source: ctx.caster, target, statusId: e.statusId, origin: ctx.origin });
+      }
       // 【狀態被套用的當下】(GH#300) —— `systems/WorldHookSystem.ts` 把它轉成
       // `onStatusApplied`。emit 而不是 `fireHooks`，理由與下面那個 `stunApplied`
       // 逐字相同（import 環）。

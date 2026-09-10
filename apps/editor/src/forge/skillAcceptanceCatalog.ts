@@ -306,15 +306,15 @@ export const SKILL_ACCEPTANCE_THEME_IDS = new Set(
 );
 
 export const CAPABILITY_ONLY_EFFECT_KINDS = [
-  "spendHealth", "carry", "consumeStatus", "convertTeam", "evasion", "pull", "revive", "shieldBreak",
+  "spendHealth", "carry", "consumeStatus", "convertTeam", "evasion", "pull", "revive", "shieldBreak", "trap", "interruptCast", "timeStop",
 ] as const;
 
 export const CAPABILITY_ONLY_HOOK_EVENTS = [
   "onAllyDamaged", "onAllyDeath", "onBossSpawn", "onBoundaryTouch",
   "onCrowdControlApplied", "onCrowdControlReceived", "onDashOrBlink", "onDeath",
-  "onFireRingIgnite", "onGuardianDown", "onHeal", "onLethalDamage", "onOverheal",
+  "onFireRingIgnite", "onGuardianDown", "onHeal", "onAllyProtected", "onSummonHit", "onAttackAttempt", "onObservedCombat", "onBlock", "onLethalDamage", "onOverheal",
   "onProjectileExpire", "onRevive", "onRoundEnd", "onRoundStart", "onShieldBroken",
   "onShieldGained", "onStatCapReached", "onStatusApplied", "onUltimateCast", "onUltimateHit",
 ] as const;
 
-export const CAPABILITY_ONLY_CONDITION_KINDS = ["chance", "equipment", "facing"] as const;
+export const CAPABILITY_ONLY_CONDITION_KINDS = ["chance", "equipment", "facing", "nearbyCombat"] as const;

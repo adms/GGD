@@ -1,0 +1,544 @@
+{
+  "schema": "ggd-mai-verification@1",
+  "issue": 1132,
+  "sourceCommit": "3990c5c863e4dbcc3e4ca5ff81aabada33b8d897",
+  "refinementVersion": 1,
+  "refinementSha256": "1affae1eef12032265892da1140f0af9ca63bd21890bda9c6bfdf257c451c1e3",
+  "changes": [
+    "PASSIVE consumes a single caster-owned three-second nimble buff only after a connected enemy basic hit, including shield absorption. E and R refresh the same buff without stacking. Ordinary attacks before completion, skills, zero, immune and friendly contacts do not consume or fabricate it.",
+    "Q is one actual piercing fire projectile, one hit per enemy per missile, with no friendly/dead/off-path/cross-duel contact. It follows the existing GGD skill-through-terrain decision in sim/map/lineOfSight.ts. The fire projectile remains a visual proxy, not an accepted original fan model.",
+    "W uses the actual caster origin and cast direction for a 120-degree 2.5-unit front arc, one small-tier magic hit per enemy, excluding the rear and out-of-range targets.",
+    "E sweeps the real body path through enemies once each and continues to its five-unit endpoint or terrain stop. Generic dash.onTouch/touchScope carries the real cast identity and shared nested-effect bake; only this opt-in continuing dash skips soft unit separation. Walls and static props remain blocking, and death cancels the pending displacement.",
+    "R has a 0.65-second interruptible windup, seven-unit first-contact dash, and a primary physical hit. A true HP/shield contact from that cast starts three nearby followups and one 1.8-unit final explosion. Empty casts, wall-only stops and immunity cannot start it; each strike rechecks three-unit range, and death/settled combat cancels pending strikes. No extra invulnerability or control was added.",
+    "EX grants a three-second window with at most three followups. Only the caster's actual connected ability hits can produce a 0.1-second delayed hit on the same original victim; each accepted cast counts once across targets/waves. Basics, other casters and proc damage cannot recurse. A lost, dead or distant victim is not replaced.",
+    "Generic dash.onEndOn=resolved distinguishes natural distance/terrain/contact completion after nonzero movement from cancellation/replacement. Existing always/completed options remain available for old content. Touch and stop contact modes are rejected when authored together; touchScope without onTouch is rejected.",
+    "Hook oncePerCast still requires actual HP damage by default; explicit damageConnected also admits absorbed shield damage. Existing default cast-credit cases and Azazel energy behavior remain in regression.",
+    "Editor and shared scenario preparation now allow actual EX before another slot, using the real exSlot/unlock path. It preserves mana, cooldown, damage and state, and does not write setup into the hero. Source snapshots and instantiated projects remain isolated."
+  ],
+  "checks": {
+    "behavior": {
+      "tests": 31,
+      "exitCode": 0
+    },
+    "acceptance": {
+      "tests": 3,
+      "exitCode": 0
+    },
+    "regression": {
+      "tests": 444,
+      "files": 27,
+      "exitCode": 0
+    },
+    "jobs": [
+      {
+        "name": "shared",
+        "exitCode": 0,
+        "command": [
+          "pnpm",
+          "--filter",
+          "@ggd/shared",
+          "typecheck"
+        ],
+        "log": "/private/tmp/ggd-community-mechanism-fixes/mai-check-shared.log",
+        "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+      },
+      {
+        "name": "editor",
+        "exitCode": 0,
+        "command": [
+          "pnpm",
+          "--filter",
+          "@ggd/editor",
+          "typecheck"
+        ],
+        "log": "/private/tmp/ggd-community-mechanism-fixes/mai-check-editor.log",
+        "sha256": "486eafd3c0debbbff5ae7dddb4aa8823f853e470eff3bacbda032617862caca2"
+      },
+      {
+        "name": "game-server",
+        "exitCode": 0,
+        "command": [
+          "pnpm",
+          "--filter",
+          "@ggd/game-server",
+          "typecheck"
+        ],
+        "log": "/private/tmp/ggd-community-mechanism-fixes/mai-check-game-server.log",
+        "sha256": "b05c3d89729ac8d5380fe460caa7c9227683cd32eda0fd3fbdcddaedd946d715"
+      },
+      {
+        "name": "client",
+        "exitCode": 0,
+        "command": [
+          "pnpm",
+          "--filter",
+          "@ggd/client",
+          "typecheck"
+        ],
+        "log": "/private/tmp/ggd-community-mechanism-fixes/mai-check-client.log",
+        "sha256": "39d946f6b36b6e4e7de7bfbe2267744c75dc2daf57912304bbcdcd88a0cc130d"
+      },
+      {
+        "name": "regression",
+        "exitCode": 0,
+        "command": [
+          "pnpm",
+          "--filter",
+          "@ggd/shared",
+          "exec",
+          "vitest",
+          "run",
+          "src/content/heroForge/communityRefinements",
+          "src/sim/effects/oncePerCast.test.ts",
+          "src/sim/effects/lane3Kinds.test.ts",
+          "src/sim/effects/effectChildChains.test.ts",
+          "src/sim/purity.test.ts",
+          "src/content/compat.test.ts",
+          "--minWorkers=1",
+          "--maxWorkers=1"
+        ],
+        "log": "/private/tmp/ggd-community-mechanism-fixes/mai-check-regression.log",
+        "sha256": "78d47efbc6ad472142b554c860014bdf48c44c13f4a1e5e873bbef6bce7e313f"
+      }
+    ]
+  },
+  "initialFailures": [
+    "The first E test showed soft unit separation blocking a continuing contact dash before the second victim. Opt-in onTouch dashes now sweep through dynamic bodies while terrain/static props retain collision.",
+    "The first R test found its trigger lacked primary cast credit and therefore could not match abilitySlot R on damage events. The JSON now requests oncePerCast and actual connected damage; shield-only contact is explicitly covered.",
+    "The real Editor EX→W test exposed the prior-slot schema/UI excluding EX and the runtime trying to index EX as a core slot. Added EX preparation and resolved it through abilityInstanceFor/learnEx; current six-slot tests and four typechecks pass."
+  ],
+  "mutations": [
+    {
+      "mutation": "touch-dedup",
+      "file": "packages/shared/src/sim/systems/MovementSystem.ts",
+      "from": "if (!touched.includes(contact.target)) touched.push(contact.target);",
+      "to": "touched.push(contact.target);",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/mai.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "E touches each swept"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "51b45909794c1bb07a3d02fa4fc855061c4f9d025fd47ed5e90561b6022a732f"
+    },
+    {
+      "mutation": "resolved-only",
+      "file": "packages/shared/src/sim/effects/dashOnEnd.ts",
+      "from": "if (p.onEndOn === \"resolved\" && (!p.override?.endReason || len(sub(t.pos, p.from)) <= 1e-6)) continue;",
+      "to": "",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/mai.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "replacement cancels E"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "a87e5a589b42260c6a017eacf52b1aadde5a557f6986a2ace0ae68c4e455e572"
+    },
+    {
+      "mutation": "cast-dedup",
+      "file": "materials/community-hero-forge/refinements/03.json",
+      "from": "\"oncePerCast\": true,",
+      "to": "",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/mai.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "one piercing Q"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "2f30624b1599b7af7d8663043c0cef8b801680aa9fab093e49a5b980980f2116"
+    },
+    {
+      "mutation": "shield-connected",
+      "file": "packages/shared/src/sim/effects/hooks.ts",
+      "from": "summonHit || hook.damageConnected",
+      "to": "summonHit",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@ggd/shared",
+        "exec",
+        "vitest",
+        "run",
+        "src/content/heroForge/communityRefinements/mai.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "-t",
+        "EX admits real shield"
+      ],
+      "exitCode": 1,
+      "detected": true,
+      "logSha256": "f1671c7cc5f284a136421e9548d350b05c05a72cc43bbea9aeb47670acb0aa6f"
+    }
+  ],
+  "generators": [
+    {
+      "step": "typecat:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/mai-gen-typecat-build.log"
+    },
+    {
+      "step": "caps:export",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/mai-gen-caps-export.log"
+    },
+    {
+      "step": "editorcov:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/mai-gen-editorcov-build.log"
+    },
+    {
+      "step": "bricks:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/mai-gen-bricks-build.log"
+    },
+    {
+      "step": "contract:numbers",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/mai-gen-contract-numbers.log"
+    },
+    {
+      "step": "spec:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/mai-gen-spec-build.log"
+    },
+    {
+      "step": "overview:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/mai-gen-overview-build.log"
+    },
+    {
+      "step": "skillforge:audit",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/mai-gen-skillforge-audit.log"
+    },
+    {
+      "step": "skillremake:docs",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/mai-gen-skillremake-docs.log"
+    },
+    {
+      "step": "atlas:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/mai-gen-atlas-build.log"
+    },
+    {
+      "step": "docs:readme",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/mai-gen-docs-readme.log"
+    },
+    {
+      "step": "decor:build",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-mechanism-fixes/mai-gen-decor-build.log"
+    }
+  ],
+  "handoff": {
+    "changedProjects": [
+      "03.hero-project.json"
+    ],
+    "otherProjectsByteIdentical": 36,
+    "originalRecipesByteIdentical": 37,
+    "indexByteIdentical": true,
+    "sourceDesignBriefPresentationUnchanged": true,
+    "revisionBefore": 12,
+    "revisionAfter": 13,
+    "modelSha256": "296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a",
+    "generatedAudit": 75
+  },
+  "coverage": {
+    "mappedSlots": 75,
+    "unmappedSlots": 147,
+    "genericOnAttackPassives": 18
+  },
+  "assetReview": {
+    "entry": "../ASSET_LIBRARIES.md",
+    "query": "不知火舞 --pending --limit 5",
+    "result": "Only community37:03 design_with_proxy_assets returned by this bounded query; no new model package or binary was acquired. Existing handoff model bytes verified.",
+    "currentModelCharacter": "真田幸村",
+    "currentModelSourceWork": "百花繚亂 SAMURAI GIRLS",
+    "relationship": "style-proxy",
+    "sha256": "296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a",
+    "clipMap": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_1",
+      "cast": "single_skill_01a",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "modelChanged": false,
+    "limitations": [
+      "Sanada Yukimura from Samurai Girls remains the approved red-clothes dual-fan style proxy, not the original Mai model.",
+      "Fan projectile mesh, body-contact pose, fire arc, flame afterimages, dedicated animations and sounds remain unverified original-art requirements. Hurt aliases idle.",
+      "No browser visual acceptance, current-service ZIP, submission or formal publication in this batch."
+    ]
+  },
+  "originalDesignAcceptance": "incomplete",
+  "visualAcceptance": "unverified",
+  "currentServiceZip": "not-built",
+  "formalPublication": false,
+  "issueOriginalBodySha256": "6c370f10a75bcc6d55f24e8f341b527afd3d48dc0b8850395ee8f64b513b054d",
+  "logs": {
+    "mai-check-client.log": {
+      "sha256": "39d946f6b36b6e4e7de7bfbe2267744c75dc2daf57912304bbcdcd88a0cc130d"
+    },
+    "mai-check-editor.log": {
+      "sha256": "486eafd3c0debbbff5ae7dddb4aa8823f853e470eff3bacbda032617862caca2"
+    },
+    "mai-check-game-server.log": {
+      "sha256": "b05c3d89729ac8d5380fe460caa7c9227683cd32eda0fd3fbdcddaedd946d715"
+    },
+    "mai-check-regression.log": {
+      "sha256": "78d47efbc6ad472142b554c860014bdf48c44c13f4a1e5e873bbef6bce7e313f"
+    },
+    "mai-check-shared.log": {
+      "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    },
+    "mai-gen-atlas-build.log": {
+      "sha256": "49f7e9503821ae6e8e56aa2c6b8fe93db31c45a9b819b6f538453aa5ec7bfd00"
+    },
+    "mai-gen-bricks-build.log": {
+      "sha256": "7ed2b207da7c531fb717fa46860298b8194dd1aed2980e13d8cd1cbb1396ac4f"
+    },
+    "mai-gen-caps-export.log": {
+      "sha256": "a63b02dff7d6fb0f9d5cd999af74c37756226736c591b749228a4b4bb1bf772b"
+    },
+    "mai-gen-contract-numbers.log": {
+      "sha256": "74f669584cf58ba3a694b30363ee0f306cdde4f18495005ec05ed8cc70fe5965"
+    },
+    "mai-gen-decor-build.log": {
+      "sha256": "30f38a8b028e7a4a4b35a00121072ff551e1dcb0a34aad94a23ec0469bc76032"
+    },
+    "mai-gen-docs-readme.log": {
+      "sha256": "c1376f0b9f50e5b20ae019511a075131234156c80d663753699b842f6a93184e"
+    },
+    "mai-gen-editorcov-build.log": {
+      "sha256": "ccc4638c0320ed1dddaa7ed28dc1eea4bed253ba155db7386a7dda951aa5b4db"
+    },
+    "mai-gen-overview-build.log": {
+      "sha256": "dc71d50c4be5a38c3e063a263304685254162e186394f2e6e086ce2b89b6fc89"
+    },
+    "mai-gen-skillforge-audit.log": {
+      "sha256": "7fa7347b0c44ca0e361580fc954d9cbc445e39657bd8ee58effe4a802d56c74a"
+    },
+    "mai-gen-skillremake-docs.log": {
+      "sha256": "375dea34242c3392245cdefa4c4b78dad126b6dfcb63e6c913a5ddc3cdeca4af"
+    },
+    "mai-gen-spec-build.log": {
+      "sha256": "2ae329ba27587ac23d13ec145683c91674e289acea3a1f51edcd2af62bcc4f09"
+    },
+    "mai-gen-typecat-build.log": {
+      "sha256": "a51cfc10a35b2f99fe40a75b5c932dac5c521896ebd0f247308f14c7c016f7e9"
+    },
+    "mai-handoff.log": {
+      "sha256": "941f0d5ec550c4110ef26f430265c77256825fae72113d31bd8443a5ca0bb66c"
+    },
+    "mai-initial-regression.log": {
+      "sha256": "5be1e560b466e2471dfe9a52058b677d61230e437514d0c3ee6ae0b7d62b8cdd"
+    },
+    "mai-mutation-cast-dedup.log": {
+      "sha256": "2f30624b1599b7af7d8663043c0cef8b801680aa9fab093e49a5b980980f2116"
+    },
+    "mai-mutation-resolved-only.log": {
+      "sha256": "a87e5a589b42260c6a017eacf52b1aadde5a557f6986a2ace0ae68c4e455e572"
+    },
+    "mai-mutation-shield-connected.log": {
+      "sha256": "f1671c7cc5f284a136421e9548d350b05c05a72cc43bbea9aeb47670acb0aa6f"
+    },
+    "mai-mutation-touch-dedup.log": {
+      "sha256": "51b45909794c1bb07a3d02fa4fc855061c4f9d025fd47ed5e90561b6022a732f"
+    },
+    "mai-regression.log": {
+      "sha256": "833ea370f38fabb9e272411ef3512e769f2114728b81689b9234d9a663b2bd10"
+    },
+    "mai-tests-01.log": {
+      "sha256": "b31439ff99f02c540add313fb1e2d981ca8dc1d5ca75c1a159d4758690810988"
+    },
+    "mai-tests-02.log": {
+      "sha256": "9070b35e4eb62b8b365ad04f63d45ec5c74d64fc0215a78a0a742f6305c7f345"
+    },
+    "mai-tests-03.log": {
+      "sha256": "931006b3a50bca27ad23e38eab86a7644d3a3beb13243958864cafd9306efb6d"
+    },
+    "mai-tests-04.log": {
+      "sha256": "53fcecf505c7f621e4314549e66cba5021551323c86420b233c5bad5ff8b040f"
+    },
+    "mai-tests-05.log": {
+      "sha256": "6e1d9eb5a3ca1cfc7dbbadfb5bc75d5f75e53bc0cdb47692e2f223f868056a8e"
+    },
+    "mai-typecheck-shared.log": {
+      "sha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    }
+  },
+  "finalBatch": {
+    "head": "c2e02feaa4144a15c115281def8c681c3f5a628c",
+    "workingTreeClean": true,
+    "sourceFingerprint": "b8ed2e1467a92d10d6cd87c1dd0e2ddd65f5e9fd006e9c2265af44baf4fce3b2",
+    "exitCode": 2,
+    "errors": [],
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 75,
+      "slotsWithoutBehaviorSuite": 147
+    },
+    "modelBytes": "verified",
+    "reportSha256": "91bff271e784961e30c5c5f7124113bdbac6db1bfd9b1766c9443fa6f7d96e3a",
+    "editorTests": 601,
+    "registeredTests": 800,
+    "jobs": [
+      {
+        "id": "skills",
+        "exitCode": 0,
+        "logSha256": "759562130cfcb13819341d3e9ad353368589c3f459eebb126cfc1d718bdd9540"
+      },
+      {
+        "id": "editor",
+        "exitCode": 0,
+        "logSha256": "74d49d4aadb27559820a529686169ab45ae405d5b8acd3e5f507a5f5fba36860"
+      },
+      {
+        "id": "coord",
+        "exitCode": 0,
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271"
+      },
+      {
+        "id": "compile-and-models",
+        "exitCode": 0,
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c"
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "exitCode": 0,
+        "logSha256": "9fa86d7d0679d036298903dc2f67f64a6380ac660717f5f2c750674496bcaaf5"
+      },
+      {
+        "id": "behavior-trap-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "8c0afc013d3dbf9170a2a0e41e5b1a59f09c873cc4b7a4eded181a9c766c3d76"
+      },
+      {
+        "id": "behavior-motion-view-and-transport",
+        "exitCode": 0,
+        "logSha256": "a372311d1ca4eee715b0069df3fd14fca87bc3334cd4d6420da628786ce08644"
+      },
+      {
+        "id": "behavior-target-resource-acceptance",
+        "exitCode": 0,
+        "logSha256": "b33855f8da52d983777fd6ddf983ee3299ec87830fc5cfda67ab05c4211ab4a4"
+      }
+    ],
+    "meaning": "All executed checks passed on a clean commit. Exit 2 preserves 147 unmapped slots. Original art, complete design and publication remain unaccepted. A receipt-only commit follows."
+  },
+  "additionalShieldProbe": {
+    "head": "c2e02feaa4144a15c115281def8c681c3f5a628c",
+    "exitCode": 0,
+    "note": "After the clean batch, strengthened the shield-only R evidence without changing runtime, authoring or test sources. Receipt-only changes were pending. The existing R shield-range test proves leaving range cancels but does not alone prove a full shield-only combo.",
+    "program": "import assert from \"node:assert/strict\";\nimport { communityActionFixture } from \"/Users/Takuro/Dropbox/\\u6211\\u7684 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/packages/shared/testkit/communityActionFixture.ts\";\nimport { registerSkeletonContent } from \"/Users/Takuro/Dropbox/\\u6211\\u7684 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/packages/shared/src/sim/content/skeleton.ts\";\nimport { runEffects } from \"/Users/Takuro/Dropbox/\\u6211\\u7684 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/packages/shared/src/sim/effects/effectRunner.ts\";\nregisterSkeletonContent();\nconst r = communityActionFixture(\"03\"); r.place(r.enemy, 3);\nrunEffects([{ kind: \"shield\", amount: { flat: 10000 }, duration: 5 }], { world: r.world, caster: r.enemy, targets: [r.enemy], rank: 1, origin: \"probe\", rng: r.world.rng });\nconst before = r.world.health.get(r.enemy)!.hp;\nassert.equal(r.cast(\"R\", { type: \"dir\", dir: { x: 1, z: 0 } }, 50), \"ok\");\nconst contacts = r.hits(\"R\"), followups = r.events.filter(e => e.type === \"damage\" && String(e.data.origin).includes(\"r-followup\"));\nassert.equal(contacts.length, 1); assert.equal(followups.length, 4);\nassert.equal(r.world.health.get(r.enemy)!.hp, before);\nconsole.log(JSON.stringify({ primaryContacts: contacts.length, followups: followups.length, hpUnchanged: true, damageEvents: [...contacts, ...followups].map(e => e.data) }));\n",
+    "result": {
+      "primaryContacts": 1,
+      "followups": 4,
+      "hpUnchanged": true,
+      "damageEvents": [
+        {
+          "x": -37,
+          "z": 8,
+          "source": 1,
+          "target": 3,
+          "amount": 0,
+          "shieldAbsorbed": 342.27028591745693,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": true,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:community-review-03-20260907.r"
+        },
+        {
+          "x": -37,
+          "z": 8,
+          "source": 1,
+          "target": 3,
+          "amount": 0,
+          "shieldAbsorbed": 154.17580446732245,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": true,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "hook:buff:caster:1:stack:community-review-03-20260907.r-followup"
+        },
+        {
+          "x": -37,
+          "z": 8,
+          "source": 1,
+          "target": 3,
+          "amount": 0,
+          "shieldAbsorbed": 154.17580446732245,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": true,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "hook:buff:caster:1:stack:community-review-03-20260907.r-followup"
+        },
+        {
+          "x": -37,
+          "z": 8,
+          "source": 1,
+          "target": 3,
+          "amount": 0,
+          "shieldAbsorbed": 154.17580446732245,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": true,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "hook:buff:caster:1:stack:community-review-03-20260907.r-followup"
+        },
+        {
+          "x": -37,
+          "z": 8,
+          "source": 1,
+          "target": 3,
+          "amount": 0,
+          "shieldAbsorbed": 248.072376381484,
+          "type": "magic",
+          "dmgType": "magic",
+          "blocked": true,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "hook:buff:caster:1:stack:community-review-03-20260907.r-followup"
+        }
+      ]
+    },
+    "logSha256": "ef51b60fd0dda8f0e0bd006f41841cc5c70d82c9a4023ff6dab1095ab9fed9bb"
+  }
+}

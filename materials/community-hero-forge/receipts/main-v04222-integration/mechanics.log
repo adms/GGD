@@ -1,0 +1,17 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3
+
+ ✓ packages/shared/src/content/heroForge/communityRefinements/parodyAdaptations.test.ts (11 tests) 2629ms
+   ✓ GH#1132 local parody adaptations preserve cores and apply real costs > 01 W applies its own finite slow25 cost 437ms
+   ✓ GH#1132 local parody adaptations preserve cores and apply real costs > Misaka W causes E to restore health, with matched ablated and unprepared controls 916ms
+ ✓ packages/shared/src/content/heroForge/communityRefinements/parodyAzazel.test.ts (13 tests) 2974ms
+   ✓ GH#1132 Azazel approved largest-area reversal and sage-time > keeps the tested v1 passive, punch, rain and counter payloads for rollback comparison 495ms
+   ✓ GH#1132 Azazel approved largest-area reversal and sage-time > the trusted importer accepts the current six-slot kit and keeps original descriptions separate 1115ms
+ ✓ packages/shared/src/content/heroForge/communityRefinements/parodyBatch.test.ts (83 tests) 7209ms
+
+ Test Files  3 passed (3)
+      Tests  107 passed (107)
+   Start at  22:50:01
+   Duration  16.63s (transform 3.02s, setup 0ms, collect 9.04s, tests 12.81s, environment 1ms, prepare 266ms)
+

@@ -1,0 +1,9 @@
+{
+  "restoredFiles": 37,
+  "verifiedParts": 4,
+  "output": "/private/tmp/ggd-admission37-restored",
+  "redactedFiles": 0,
+  "manifestSha256": "396fa15327689702ce1a36a197292356b336f2888bf0c5b6cc63142a88d534e8",
+  "logSha256": "7b9b43ce25937a24395536922173d6ffb3589cf1cd6eda70e561efb997640ab1",
+  "scope": "37 current-service ZIPs re-downloaded from authorized S3 and restored with per-file SHA verification. Visual and formal deployment acceptance are separate."
+}

@@ -32,7 +32,8 @@ import { spawnChampion } from "./spawnChampion";
 import { runEffects } from "./effects/effectRunner";
 import { combatResolveSystem } from "./combat/damage";
 import { normalizeCombatEnv } from "./combatEnv";
-import { DEFAULT_DAMAGE_RULES } from "./damageRules";
+import { DEFAULT_DAMAGE_RULES, damageRulesFromDoc, normalizeDamageRules } from "./damageRules";
+import { SHIPPED_DAMAGE_RULES, zConfigDamageRulesDoc } from "../content/schema/config/damageRules";
 import { Stat } from "./stats/statTypes";
 import type { EffectContext, EffectDef } from "./effects/effect";
 import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../ids";
@@ -127,7 +128,7 @@ describe("技能傷害的預設型別", () => {
     cover("dmg-default-is-a-field");
     const { world, caster, target } = stage();
     // 把後台那一格改成物理 —— 同一份「沒寫型別」的文件應該跟著換邊。
-    world.damageRules = { defaultAbilityDamageType: "physical" };
+    world.damageRules = { ...DEFAULT_DAMAGE_RULES, defaultAbilityDamageType: "physical" };
     const before = world.health.get(target)!.hp;
     runEffects([{ kind: "damage", amount: { flat: 100 } } as EffectDef], {
       world,
@@ -144,5 +145,29 @@ describe("技能傷害的預設型別", () => {
     expect(flipped).toBeCloseTo(hpLost({ damageType: "physical" }), 6);
     // 而且跟出貨預設（魔法）**不一樣** —— 否則這條測試什麼都沒證明。
     expect(flipped).not.toBeCloseTo(hpLost({ damageType: "magic" }), 3);
+  });
+});
+
+describe("範圍傷害人數政策的載入", () => {
+  it("缺文件與舊 overlay 缺欄都保留出貨上限，既有傷害型別仍可覆寫", () => {
+    const oldDoc = { id: "damage-rules", schema: "config.damage-rules@1", defaultAbilityDamageType: "physical" };
+    expect(zConfigDamageRulesDoc.safeParse(oldDoc).success).toBe(true);
+    expect(damageRulesFromDoc(undefined).spreadMaxTargetsCap).toBe(20);
+    expect(damageRulesFromDoc(oldDoc)).toEqual({ defaultAbilityDamageType: "physical", spreadMaxTargetsCap: 20 });
+  });
+
+  it("schema 與 runtime 同守正 safe integer；壞欄位不抹掉另一格有效設定", () => {
+    for (const cap of [1, 24, Number.MAX_SAFE_INTEGER]) {
+      const doc = { ...SHIPPED_DAMAGE_RULES, spreadMaxTargetsCap: cap };
+      expect(zConfigDamageRulesDoc.safeParse(doc).success).toBe(true);
+      expect(damageRulesFromDoc(doc).spreadMaxTargetsCap).toBe(cap);
+    }
+    for (const cap of [0, -1, 2.5, NaN, Infinity, Number.MAX_SAFE_INTEGER + 1, "24"]) {
+      const doc = { ...SHIPPED_DAMAGE_RULES, defaultAbilityDamageType: "physical", spreadMaxTargetsCap: cap };
+      expect(zConfigDamageRulesDoc.safeParse(doc).success).toBe(false);
+      expect(damageRulesFromDoc(doc)).toEqual({ defaultAbilityDamageType: "physical", spreadMaxTargetsCap: 20 });
+    }
+    expect(normalizeDamageRules({ defaultAbilityDamageType: "invalid", spreadMaxTargetsCap: 24 }))
+      .toEqual({ defaultAbilityDamageType: "magic", spreadMaxTargetsCap: 24 });
   });
 });

@@ -28,7 +28,14 @@ export const dashEffect: EffectKindSpec<"dash"> = {
       e.mode === "toPoint" && ctx.point
         ? normalize(sub(ctx.point, t.pos))
         : ctx.direction ?? t.facing;
+    const previous = world.nav.get(ctx.caster)?.override;
     startDash(world, ctx.caster, dir, e.speed, e.maxDistance);
+    const override = world.nav.get(ctx.caster)?.override;
+    // A zero direction leaves an existing dash untouched; it cannot borrow that
+    // dash's displacement, event or deferred payload.
+    if (override?.kind !== "dash" || override === previous) return;
+    if (e.stopOnHit) override.stopOnHit = e.stopOnHit;
+    if (e.onTouch?.length) override.touchScope = e.touchScope ?? "enemy";
 
     // GH#354 —— 位移的統一時刻（衝刺／閃現／跳躍共用一則），
     // `mode` 帶種類，所以「使用位移技後⋯」一張卡就涵蓋三種，
@@ -63,7 +70,7 @@ export const dashEffect: EffectKindSpec<"dash"> = {
     }
 
     // ⭐ S7 —— 缺席 = 沒有回呼 = 這個欄位出現之前的行為，一個 tick 都不差。
-    if (!e.onEnd || e.onEnd.length === 0) return;
+    if (!e.onEnd?.length && !e.onHit?.length && !e.onTouch?.length) return;
     // `startDash` 在方向為零向量時**不建 override**，那時登記一筆回呼會讓它在
     // 下一個 tick 立刻付掉（衝刺根本沒發生）—— 所以照著 override 有沒有真的
     // 建起來決定，⛔ 不是照著我們「有沒有呼叫」決定。
@@ -72,9 +79,12 @@ export const dashEffect: EffectKindSpec<"dash"> = {
     dashOnEndQueue(world).push({
       castInstance: ctx.castInstance,
       caster: ctx.caster,
+      override,
       from: { x: t.pos.x, z: t.pos.z },
       maxDistance: e.maxDistance,
-      effects: e.onEnd.slice(0, DASH_ON_END_MAX_EFFECTS),
+      effects: e.onEnd?.slice(0, DASH_ON_END_MAX_EFFECTS) ?? [],
+      ...(e.onHit ? { onHit: e.onHit.slice(0, DASH_ON_END_MAX_EFFECTS) } : {}),
+      ...(e.onTouch ? { onTouch: e.onTouch.slice(0, DASH_ON_END_MAX_EFFECTS), touchesPaid: 0 } : {}),
       rank: ctx.rank,
       origin: ctx.origin,
       ...(ctx.abilitySlot !== undefined ? { abilitySlot: ctx.abilitySlot } : {}),
@@ -90,7 +100,11 @@ export const dashEffect: EffectKindSpec<"dash"> = {
    * 那一刻的狀態。
    */
   bake(e, ctx, bakeList) {
-    if (!e.onEnd) return e;
-    return { ...e, onEnd: bakeList(e.onEnd, ctx) };
+    if (!e.onEnd && !e.onHit && !e.onTouch) return e;
+    return { ...e,
+      ...(e.onEnd ? { onEnd: bakeList(e.onEnd, ctx) } : {}),
+      ...(e.onHit ? { onHit: bakeList(e.onHit, ctx) } : {}),
+      ...(e.onTouch ? { onTouch: bakeList(e.onTouch, ctx) } : {}),
+    };
   },
 };

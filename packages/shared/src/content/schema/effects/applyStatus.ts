@@ -1,8 +1,9 @@
 import { z } from "zod";
 import type { StatusId } from "../../../ids";
 import type { EffectDef } from "../../../sim/effects/effect";
-import { MARK_MAX_COUNT } from "../../../sim/markLimits";
+import { MARK_MAX_COUNT, MARK_MIN_DURATION_SEC } from "../../../sim/markLimits";
 import { zRef } from "../common";
+import { zMarkLethalRule } from "./_mark";
 import {
   EFFECT_COMMON_SHAPE,
   HARD_CC_FLAGS,
@@ -46,6 +47,9 @@ export const zApplyStatus =
 z
   .object({
     kind: z.literal("applyStatus"),
+    grantMark: z.object({ max: z.number().int().min(1).max(MARK_MAX_COUNT),
+      resetOn: z.enum(["match", "round", "never"]), lethal: zMarkLethalRule.optional() }).strict().optional()
+      .describe("授予目標具名標記；statusId、duration、stacks 共用既有欄位，救援次數不因重施重置。"),
     ...EFFECT_COMMON_SHAPE,
     sourceScope: z.enum(["caster"]).optional().describe("依施法者分開刷新與增減層數，不修改同名的共用標記計數器；省略沿用原有規則。"),
     statusId: zRef<StatusId>("status-effects", { soft: true }),
@@ -275,4 +279,18 @@ z
   })
   .strict();
 
-export const refine = refineHardCcDuration;
+export const refine = (e: Extract<EffectDef, { kind: "applyStatus" }>, ctx: z.RefinementCtx): void => {
+  refineHardCcDuration(e, ctx);
+  if (!e.grantMark) return;
+  if (e.sourceScope !== undefined || e.stacks === undefined || e.stacks <= 0 || e.stacks > e.grantMark.max) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["grantMark"], message: "授予具名標記須明確給正整數層数且不超過 max，不可依施法者分成其他計數器。" });
+  }
+  const durations = typeof e.duration === "number" ? [e.duration] : e.duration;
+  if (durations.some(duration => duration < MARK_MIN_DURATION_SEC) || (e.grantMark.lethal?.consume ?? 0) > e.grantMark.max) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["grantMark"], message: "具名標記須至少持續一個 tick，救援消耗不可高於可持有上限。" });
+  }
+  const allowed = new Set(["kind", "grantMark", "statusId", "duration", "stacks", "refresh", "applyTo", "condition"]);
+  if (Object.keys(e).some(key => !allowed.has(key))) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["grantMark"], message: "具名標記不能混入會被忽略的暈眩、移速等一般狀態欄位。" });
+  }
+};

@@ -1,0 +1,266 @@
+{
+  "schema": "ggd-community-materials-archive@1",
+  "purpose": "audited-resource-supplement",
+  "sources": [
+    {
+      "path": "adms/GGD",
+      "branch": "codex/community-hero-forge-release-materials",
+      "serviceRevision": "417abec9d90424b5ccbe7948331a60f98dd0f689",
+      "purpose": "37 accepted current-service hero ZIPs; isolated publication proof in Git"
+    }
+  ],
+  "files": [
+    {
+      "path": "ggd-first37-current-service-07/01.zip",
+      "bytes": 4211168,
+      "sha256": "fea445145ede215fa792e65010d50a1b5ff0adc7c32c10a8f75e849dbe99c6fc",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/02.zip",
+      "bytes": 4099527,
+      "sha256": "91e817fcee93ad93e8697c98b28d6cd974214d31695555f8bf5f1ed61b45eee2",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/03.zip",
+      "bytes": 4625679,
+      "sha256": "ba20a228118926abdb8073d22f117389252c55ff8164e676f2742836146d24ef",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/04.zip",
+      "bytes": 3741026,
+      "sha256": "3719f5ea06880d2a1ba7b7706828f050fa2262571c72e9e3bc63c15191ec7284",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/05.zip",
+      "bytes": 6090258,
+      "sha256": "090134ea137cc313906bd393a23e1a0a709dc74f3085c09f513f9457083e6be5",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/06.zip",
+      "bytes": 3106727,
+      "sha256": "fa0b01a073bd72dab86df378442ed50de41dac3cf4b5bd559ae7e9a8e7da34e2",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/07.zip",
+      "bytes": 3661916,
+      "sha256": "6822fb07c435a2d36feebd53d6d47f29b6a4d1a8dd865067fe90e86aab79a3c8",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/08.zip",
+      "bytes": 4095838,
+      "sha256": "48e76b0efa44aa84f9b4bf1d02758f76ce6fb3b4283d957c847192a57a25c10f",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/09.zip",
+      "bytes": 4180252,
+      "sha256": "36c216c75d774a1b0f970eac5363f8861b50e5ac95047d7754ceb4c71ccbb2e5",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/10.zip",
+      "bytes": 3804002,
+      "sha256": "1c3370face2e7e9bfaa71f580126473a5f6a1eac92fc2b1ef93cf71ef4704436",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/11.zip",
+      "bytes": 3710052,
+      "sha256": "2a3ad3cbf5bd09ddaa74ffdc3221469c2b79dab4df8a8f87e973e19dd94e0c7e",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/12.zip",
+      "bytes": 3925921,
+      "sha256": "c04e38e03faccee1c17a7a2b76e44b57c83a2aa86f1014b2b75fd37ddacda613",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/13.zip",
+      "bytes": 3737902,
+      "sha256": "900b47ca0a412061df1008fbdde972b03c3bf5b216dc28c0d68c3a3468861e18",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/14.zip",
+      "bytes": 3234470,
+      "sha256": "b721471bfc225e5446d34b27dc42c13c84197ab356bae5146a41c43b123cdbd8",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/15.zip",
+      "bytes": 3787445,
+      "sha256": "ef28fea14164a8b0a885c384ecad3bb485d5b3bdc93f8f341758dbd4dd76d2cd",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/16.zip",
+      "bytes": 3977713,
+      "sha256": "16aeb5778590544a25d0833f29820be61b72eaf9ca56a92e5a3703c621547aa1",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/17.zip",
+      "bytes": 4226969,
+      "sha256": "df10ef2b0e6eeb9e9876a62113a809e52e1d87d554632561eb32d2711e00a4dd",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/18.zip",
+      "bytes": 3743921,
+      "sha256": "707ef18c50a4ab510d5b301103ca79037109cf4c352e75a94d0008f38efdeee6",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/19.zip",
+      "bytes": 4030342,
+      "sha256": "05583634fa4749af1d366894c714c6a9f317cc72efaa434f24e09f48c3fe7208",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/20.zip",
+      "bytes": 4492134,
+      "sha256": "16c0f777330e985b6d1d9683f37154f2f02ce099c525e4a0a3aac202628ece45",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/21.zip",
+      "bytes": 3898783,
+      "sha256": "a68aad692c673afaf0c12d8af85e1ef21530444a87208e9381fec68f28013df2",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/22.zip",
+      "bytes": 3615258,
+      "sha256": "47e5a58532652f9a008aaa8b9863c9796ee87f390df902446bdd6f67aa710086",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/23.zip",
+      "bytes": 4976220,
+      "sha256": "0dc727a8dffeb998ffcfc95f57d4fb948212fd0d393a0ce28f1a7a5c22f2c620",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/24.zip",
+      "bytes": 3680155,
+      "sha256": "2188f13c760e0b474a7e3319aaf94d2b9d983b732aac98c18be88d3f4de24ab9",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/25.zip",
+      "bytes": 3766718,
+      "sha256": "7bcdc872128de5464c74b28e33703ecd03d173b32c7fd27d33b19863bbf52920",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/26.zip",
+      "bytes": 3675214,
+      "sha256": "db08ebb952f689a72e85954709035313d7cb3a1918406ce9a9845e492a5cc2a3",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/27.zip",
+      "bytes": 3972341,
+      "sha256": "f177049f07a0a00bba3f46f7daabb0a8f471590687bc661ac0d9071ad96a2f8e",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/28.zip",
+      "bytes": 5307691,
+      "sha256": "c06409068fc66103ce5944e81a9ee0dae1ab003f57cac4899e40016840e36623",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/29.zip",
+      "bytes": 5275134,
+      "sha256": "2d256c0508932d3cd3ed34a349c21852da82e145db42db550fd4b18a8ef18f88",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/30.zip",
+      "bytes": 4267118,
+      "sha256": "0e41a93b6216cc47cc5f6a7bcc1e9c69449bbdeaeb4f39bb380b541507a6daa5",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/31.zip",
+      "bytes": 3857470,
+      "sha256": "ccaddbd0eab48d077c66596addea783b26d1f11dd0139e01402410c73c24ae5a",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/32.zip",
+      "bytes": 3532458,
+      "sha256": "38ee0aba57e69881b719587a8cc42038c096eb40d6b295536f9d574caa3b8f93",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/33.zip",
+      "bytes": 4025328,
+      "sha256": "200020969f1ff5ffc591baff1e9f67ef044c25a5dfe0ce9bbbfa6629b4caf78e",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/34.zip",
+      "bytes": 3858628,
+      "sha256": "546ff265136490624f15f3634ad4ce6d03f3e37d7249406642683f256bd82aba",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/35.zip",
+      "bytes": 4284541,
+      "sha256": "f049466aa171d4ce3d7e7cd2560a281a27495d20ded12946bba1b613491853f0",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/36.zip",
+      "bytes": 3807109,
+      "sha256": "449e07d23612830c5a82d708efd26a325b88c40d8b704ecb916f49763f2adcc8",
+      "mode": 420
+    },
+    {
+      "path": "ggd-first37-current-service-07/37.zip",
+      "bytes": 3510359,
+      "sha256": "3e44d77701f1262a4e2bcf5cec385020e6f8ed782a0e130fb28701d1b358585a",
+      "mode": 420
+    }
+  ],
+  "parts": [
+    {
+      "path": "payload.tar.gz.part000",
+      "bytes": 33554432,
+      "sha256": "8971316b8f8e119af552037f27847f536c8846aefa99e06505d61ec05900bb22"
+    },
+    {
+      "path": "payload.tar.gz.part001",
+      "bytes": 33554432,
+      "sha256": "f19e3ebcd194ec450e8c8726216aee053393b18a1accb752339708bacd617353"
+    },
+    {
+      "path": "payload.tar.gz.part002",
+      "bytes": 33554432,
+      "sha256": "7ba76a61a2a530e6a6788123f5131ebdb0f36387876e699dfce9b93b34329dee"
+    },
+    {
+      "path": "payload.tar.gz.part003",
+      "bytes": 2206239,
+      "sha256": "c3838e99e2f972546576512e8fc42c37136a96783145d9861c166230d42824cf"
+    }
+  ],
+  "excluded": [],
+  "summary": {
+    "files": 37,
+    "uniquePayloads": 37,
+    "bytes": 149793787,
+    "compressedBytes": 102869535,
+    "redactedFiles": 0
+  }
+}

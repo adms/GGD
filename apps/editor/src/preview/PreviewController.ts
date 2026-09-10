@@ -123,6 +123,7 @@ export interface CastPreviewOptions {
 }
 
 export interface PreviewActorPose {
+  readonly timeStopped?: { readonly caster: boolean; readonly target: boolean };
   readonly caster: Vec2;
   readonly target: Vec2;
 }
@@ -576,7 +577,9 @@ function effectLines(
         out.push({
           depth,
           kind: e.kind,
-          summary: `${e.damageType} area damage r=${e.radius}u${taper}${cap}${origin}`,
+          summary: `${e.damageType} area damage r=${e.radius}u${taper}${cap}${origin}` +
+            `${e.fromCaster ? " · 以施法者為中心" : ""}` +
+            `${e.arcHalfAngleCos !== undefined ? ` · 前方弧形 cos(半角)=${e.arcHalfAngleCos}` : ""}`,
           perRank,
         });
         break;
@@ -595,7 +598,7 @@ function effectLines(
         out.push({
           depth,
           kind: e.kind,
-          summary: `apply ${e.statusId} for ${e.duration}s${e.stun ? " (stun)" : ""}${e.root ? " (root)" : ""}${e.moveSpeedMult !== undefined ? ` (ms ×${e.moveSpeedMult})` : ""}`,
+          summary: `apply ${e.statusId} for ${e.duration}s${e.stun ? " (stun)" : ""}${e.breakOnDamage ? "（實際受傷即解除）" : ""}${e.root ? " (root)" : ""}${e.moveSpeedMult !== undefined ? ` (ms ×${e.moveSpeedMult})` : ""}`,
         });
         break;
       case "applyBuff":
@@ -608,10 +611,14 @@ function effectLines(
           // `statusId`（這份增益同時是一個具名標記）。印錯就是卡片說謊。
           summary:
             `buff ${e.modifiers.map((m) => `${m.stat} ${m.op} ${m.value}`).join(", ")} ` +
-            `${e.permanent === true ? "永久" : `for ${e.duration}s`}` +
+            `${e.permanent === true ? e.permanentScope === "round" ? "至本回合結束" : "永久" : `for ${e.duration}s`}` +
             `${e.applyTo === "self" ? " → 自己" : " → 目標"}` +
             `${e.statusId !== undefined ? ` [標記 ${e.statusId}]` : ""}` +
-            `${e.exclusiveGroup !== undefined ? ` [互斥組 ${e.exclusiveGroup}]` : ""}`,
+            `${e.exclusiveGroup !== undefined ? ` [互斥組 ${e.exclusiveGroup}]` : ""}` +
+            `${e.vision?.revealed ? " · 揭示承受者" : ""}` +
+            `${e.drive ? ` · 加速${e.drive.accelSec}s／煞車${e.drive.brakeSec}s，急轉與碰撞停止` : ""}` +
+            `${e.sourceScope === "caster" ? " · 依施法者分開" : ""}` +
+            `${e.maxStacks !== undefined ? ` · 最多 ${e.maxStacks} 層` : ""}`,
         });
         break;
       case "dash":
@@ -706,10 +713,17 @@ function effectLines(
         out.push({ depth, kind: e.kind, summary: `畫面震動 幅度 ${e.amplitude} ${e.durationSec}s` });
         break;
       // ⭐ 特效文字（owner 點名）。原作 CreateTextTagUnitBJ —— 克勞德每一刀冒 "1Hit"…"7Hit"。
+      case "interruptCast":
+        out.push({ depth, kind: e.kind, summary: "中斷同區敵人可打斷的施法前搖；免控／不可打斷者無效，不附加暈眩或回復消耗" });
+        break;
       case "floatingText":
         out.push({ depth, kind: e.kind, summary: `特效文字「${e.text}」` });
         break;
       case "pull": {
+        if (e.grapple) {
+          out.push({ depth, kind: e.kind, summary: `牽引首個敵人或地形錨點，射程 ${e.grapple.range} · 最多拉動 ${e.grapple.maxTravel} · 速度 ${e.speed}；超距／碰撞中止` });
+          break;
+        }
         const dest =
           e.destination === "anchorRing"
             ? `等分錨點環（${e.anchorCount ?? "?"} 點 · 半徑 ${e.anchorRadius ?? "?"}）`
@@ -787,6 +801,21 @@ function effectLines(
         });
         break;
       }
+      case "timeStop":
+        out.push({ depth, kind: e.kind, summary:
+          `局部時停 · 半徑 ${e.radius} · ${e.durationSec}s · 暫停範圍內敵人的動作、局部計時與投射物` +
+          ` · 施法者命中最多暫存 ${e.maxQueuedHits ?? 64} 次，結束後依序結算；溢出丟棄` +
+          " · 比賽與時停期限照常；主人死亡、換區或回合重置清除暫存" });
+        break;
+      case "trap": {
+        out.push({ depth, kind: e.kind, summary:
+          `定點陷阱 · 半徑 ${e.radius} · 持續 ${e.durationSec}s · ${e.armDelaySec ?? 0}s 後啟動` +
+          ` · ${e.triggerAt === "victim" ? "受攻擊友軍" : "敵方攻擊者"}在範圍內時觸發一次` +
+          `${e.cancelAttack === false ? "" : " · 抵消該次普攻"}` +
+          ` · 同時上限 ${e.maxAlive ?? 1}` + `${e.onOwnerDeath === "persist" ? " · 主人死後保留" : " · 主人死亡清除"}` });
+        effectLines(e.onTrigger, finalStats, attrs, maxRank, depth + 1, out);
+        break;
+      }
       case "summon": {
         const body = e.body === "self" ? "施法者分身" : (e.championId ?? "（缺少英雄 id）");
         const at = e.at === "target" ? "目標" : e.at === "point" ? "指定地點" : "施法者";
@@ -799,7 +828,8 @@ function effectLines(
             `${e.spread !== undefined ? `，間距/半徑 ${e.spread}` : ""}` +
             `${e.durationSec !== undefined ? ` · 持續 ${e.durationSec}s` : " · 永久"}` +
             `${e.maxAlive !== undefined ? ` · 同時上限 ${e.maxAlive}` : ""}` +
-            `${e.onCap === "replaceOldest" ? " · 滿額時替換最舊召喚物" : ""}`,
+            `${e.onCap === "replaceOldest" ? " · 滿額時替換最舊召喚物" : e.onCap === "retarget" ? " · 滿額時只更換攻擊目標，不刷新生命或壽命" : ""}` +
+            `${e.targetOnSpawn ? " · 出場攻擊選定目標" : ""}`,
         });
         break;
       }
