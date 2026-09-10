@@ -29,3 +29,17 @@ actions in one tree, below the explicit 512 limit. That multiplier makes this
 version a controlled experiment, not a claimed quality improvement: final
 full-hero success still requires zero invalid decisions, assembly, compiler,
 import, and gameplay evidence.
+
+## Frozen local projection receipt
+
+The run admitted on 2026-09-10 uses this deterministic source manifest:
+`1d58be824bd5a211aa93c3e02f3eabb0147cbce30811b3cd512077120de6f785`.
+The generated local files must hash exactly as follows before a replay:
+
+| File | SHA-256 |
+| --- | --- |
+| `examples.json` | `b61c71b9ec1adc1a067763aff2923e3e4c2f6676ac29c50bc521bc5a8e2e3459` |
+| `train.jsonl` | `df3c376ff7375a57fe037116535e2f23c900a563f5fb5a46e6adf3cc86eb9eaf` |
+| `dev.jsonl` | `e403a58fac25342dab8f0696bafce5855a07c3197f7c198b3ef5bf64acf9d74d` |
+| `metrics.json` | `a3678ee83bdace8b9a524564bf34f2c90ddee67ee8663d85f911fd46d3c533c3` |
+| `projection-report.json` | `e8616d96ba115932a91e5ab33a660681c620f052648efa9497b0b1e5061202f5` |
