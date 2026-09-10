@@ -10,6 +10,35 @@ M = importlib.util.module_from_spec(SPEC); SPEC.loader.exec_module(M)
 
 
 class ActionE2ETest(unittest.TestCase):
+    def test_partial_and_zero_arms_do_not_suppress_other_candidates(self):
+        for complete in ({'base': 0, 'lora': 2}, {'base': 1, 'lora': 2}):
+            with self.subTest(complete=complete), tempfile.TemporaryDirectory() as temp:
+                root = Path(temp)
+                evaluation, models, deps, assets = [root / name for name in ['evaluation', 'models', 'deps', 'assets']]
+                for folder in [evaluation, models, deps, assets]: folder.mkdir()
+                (evaluation / 'manifest.json').write_text(json.dumps({'schema': 'ggd-action-protected-evaluation@1',
+                    'kind': 'internal-dev-seen-regression', 'heroes': 3}))
+                for arm in ['base', 'lora']:
+                    (evaluation / arm).mkdir()
+                    (evaluation / arm / 'state.json').write_text(json.dumps({'status': 'completed', 'workerPid': None}))
+                    (evaluation / arm / 'result.json').write_text(json.dumps({'attemptedHeroes': 3, 'completeHeroes': complete[arm]}))
+                (models / 'manifest.json').write_text('{}')
+                calls = []
+                def fake(argv, log, timeout=180):
+                    calls.append(argv)
+                    out = Path(argv[argv.index('--out') + 1]); out.mkdir()
+                    counts = {'primaryWholeHeroes': 3} if 'action-compile' in argv[3] else {'wholeHeroes': 3}
+                    (out / 'report.json').write_text(json.dumps({'counts': counts}))
+                M.run({'evaluation': evaluation, 'models': models, 'dependencies': deps, 'source_repo': ROOT,
+                    'api_dependencies': deps, 'asset_roots': [assets], 'out': root / 'out'}, execute=fake)
+                report = json.loads((root / 'out/result.json').read_text())
+                self.assertEqual(len(calls), 8)
+                self.assertFalse(report.get('skipped', False))
+                for arm in ['base', 'lora']:
+                    self.assertEqual(report['generationCounts'][arm], {'attemptedHeroes': 3, 'completeHeroes': complete[arm]})
+                    self.assertEqual(report['arms'][arm]['runtimeAudit']['wholeHeroes'], 3)
+                self.assertFalse(report['fullHeroE2EProven'])
+
     def test_keeps_full_denominator_through_all_cpu_stages(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp); evaluation, models, dependencies, assets = [root / name for name in ['evaluation', 'models', 'deps', 'assets']]

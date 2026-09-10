@@ -109,19 +109,19 @@ def run(options, execute=command):
     def interrupted(signum, frame): raise InterruptedError('ACTION_E2E_INTERRUPTED')
     signal.signal(signal.SIGTERM, interrupted)
     try:
-        # There is no CPU compilation unit when an arm has no complete HeroPlan.
-        # Preserve the full denominator and a durable negative receipt rather
-        # than turning this expected model result into a controller exception.
+        # Only skip when neither arm produced a candidate. The compiler and
+        # downstream gates already retain failed-generation rows, so partial
+        # arms must still validate their candidates against the full denominator.
         incomplete = {arm: result['completeHeroes'] for arm, result in arm_results.items()
                       if result['completeHeroes'] != p['heroes']}
-        if incomplete:
+        if not any(result['completeHeroes'] for result in arm_results.values()):
             write(out / 'result.json', {'schema': 'ggd-action-e2e-result@1', 'arms': {
                 arm: {'completeHeroes': result['completeHeroes'], 'attemptedHeroes': result['attemptedHeroes']}
                 for arm, result in arm_results.items()}, 'evaluationKind': p['kind'],
                 'skipped': True, 'skipReason': 'INCOMPLETE_HERO_PLANS', 'incompleteArms': incomplete,
                 'humanRepairs': 0, 'semanticFidelityMeasured': False, 'gameplayMeasured': False,
                 'fullHeroE2EProven': False, 'modelPromoted': False,
-                'note': 'No compiler/package/import/readback was run because one or more arms lacked a complete no-repair HeroPlan for the fixed denominator.'})
+                'note': 'Neither arm produced a complete no-repair HeroPlan. No compiler/package/import/readback was run; every attempted hero remains in the denominator.'})
             state['status'] = 'completed'
             return state
         summaries = {}
@@ -149,6 +149,9 @@ def run(options, execute=command):
             assert summaries[arm]['import']['wholeHeroes'] == p['heroes'], 'IMPORT_DENOMINATOR_DRIFT'
             assert summaries[arm]['runtimeAudit']['wholeHeroes'] == p['heroes'], 'RUNTIME_DENOMINATOR_DRIFT'
         write(out / 'result.json', {'schema': 'ggd-action-e2e-result@1', 'arms': summaries, 'evaluationKind': p['kind'],
+                                     'generationCounts': {arm: {'attemptedHeroes': result['attemptedHeroes'], 'completeHeroes': result['completeHeroes']}
+                                                          for arm, result in arm_results.items()},
+                                     'incompleteArms': incomplete,
                                      'humanRepairs': 0, 'semanticFidelityMeasured': False, 'gameplayMeasured': False,
                                      'fullHeroE2EProven': False, 'modelPromoted': False,
                                      'note': 'Completed means all scheduled evidence steps ran; it does not assert model readiness or game behavior.'})

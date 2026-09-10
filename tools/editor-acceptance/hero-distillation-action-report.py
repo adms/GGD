@@ -68,8 +68,8 @@ def render(data):
             stage_rows.append(f'<tr><th>{label} / {esc(stage)}</th><td>{row["calls"]}</td><td>{row["streamComplete"]}</td>'
                               f'<td>{row["jsonAccepted"]}</td><td>{row["transportAndJsonAccepted"]}</td></tr>')
     e2e = data['e2e']
-    e2e_text = ('未執行編譯／封裝／匯入：任一 arm 未組成完整固定分母 HeroPlan。'
-                if e2e.get('skipped') else '所有既定 CPU 證據步驟已執行；仍不代表語意、選角或對局已證明。')
+    e2e_text = ('未執行編譯／封裝／匯入；此為該次收據記錄的跳過結果，原因見原始結果。'
+                if e2e.get('skipped') else '各組保留完整固定分母，未生成或未通過的英雄不會被移除。既定 CPU 證據步驟已執行，不代表所有成品通過，也不代表語意、選角或對局已證明。')
     return f'''<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Hero Forge action LoRA receipt</title><style>
 body{{font:16px/1.55 system-ui,sans-serif;max-width:980px;margin:auto;padding:28px;color:#17222d;background:#fafbfc}}section{{border-top:1px solid #ccd6df;padding:20px 0}}table{{border-collapse:collapse;width:100%}}th,td{{border-bottom:1px solid #d7e0e8;padding:9px;text-align:left;vertical-align:top}}small,.note{{color:#526171}}.notice{{border-left:4px solid #176c80;padding-left:14px}}code{{overflow-wrap:anywhere}}</style>
