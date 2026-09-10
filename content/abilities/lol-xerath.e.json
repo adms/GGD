@@ -1,27 +1,27 @@
 {
   "id": "lol-xerath.e",
   "name": "奧能拘束",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "對指定敵人造成傷害並暈眩 0.8 秒，不按飛行距離延長。",
   "slot": "E",
   "castType": "targeted",
   "maxRank": 4,
   "cooldown": [
-    15,
-    15,
-    15,
-    15
+    15.0,
+    15.0,
+    15.0,
+    15.0
   ],
+  "cooldownTier": "小",
   "manaCost": [
-    144,
-    144,
-    144,
-    144
+    144.0,
+    144.0,
+    144.0,
+    144.0
   ],
   "manaCostTier": "小",
   "range": 6,
   "rangeTier": "中",
-  "cooldownTier": "小",
   "targetsEnemies": true,
   "effects": [
     {
@@ -40,7 +40,7 @@
       "stun": true
     }
   ],
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.567,
   "castTimeTier": "小",
   "template": {
     "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
@@ -50,7 +50,7 @@
         "ratios": []
       },
       "damageType": "magic",
-      "castTimeSec": 0.1
+      "castTimeSec": 0.567
     },
     "inheritDefaults": true,
     "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"

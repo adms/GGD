@@ -1,26 +1,26 @@
 {
   "id": "lol-xerath.r",
   "name": "星牢轟擊",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "在極大級距內選定落點，依序降下三發奧術砲擊，無法中途重新瞄準。",
   "slot": "R",
   "castType": "ground",
   "maxRank": 3,
   "cooldown": [
-    120,
-    120,
-    120
+    120.0,
+    120.0,
+    120.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
-    576,
-    576,
-    576
+    576.0,
+    576.0,
+    576.0
   ],
   "manaCostTier": "大",
   "range": 12,
-  "radius": 5.5,
+  "radius": 6.0,
   "rangeTier": "極大",
-  "cooldownTier": "極大",
   "targetsEnemies": true,
   "effects": [
     {
@@ -56,5 +56,6 @@
     "contentSha256": "sha256:960958a07d7fef432d3c6192f3bd6c19209fa428159b622b0e3fb6a68ade487b"
   },
   "schema": "ability@1",
-  "icon": "assets/icons/abilities/lol-xerath.r.webp"
+  "icon": "assets/icons/abilities/lol-xerath.r.webp",
+  "radiusTier": "中"
 }

@@ -1,28 +1,28 @@
 {
   "id": "lol-yasuo.e",
   "name": "踏風進擊",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "朝指定方向短距突進，打擊接觸範圍的敵人；推移量會扣除雙方距離。",
   "slot": "E",
   "castType": "ground",
   "maxRank": 4,
   "cooldown": [
-    45,
-    45,
-    45,
-    45
+    45.0,
+    45.0,
+    45.0,
+    45.0
   ],
+  "cooldownTier": "小",
   "manaCost": [
-    144,
-    144,
-    144,
-    144
+    144.0,
+    144.0,
+    144.0,
+    144.0
   ],
   "manaCostTier": "小",
   "range": 4.5,
   "radius": 2.75,
   "rangeTier": "小",
-  "cooldownTier": "小",
   "targetsEnemies": true,
   "effects": [
     {
@@ -52,7 +52,7 @@
       ]
     }
   ],
-  "castTimeSec": 0.1,
+  "castTimeSec": 1.033,
   "castTimeTier": "小",
   "template": {
     "ref": "hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368",
@@ -70,7 +70,7 @@
       "pushSpeed": 872,
       "pushFrom": "facing",
       "pushLaunchHeight": 0,
-      "castTimeSec": 0.1
+      "castTimeSec": 1.033
     },
     "inheritDefaults": true,
     "contentSha256": "sha256:3f80978b955a7744a0e86651ddce738ec5f483e55ecfaa7213a23d6d735803e2"

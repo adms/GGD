@@ -1,10 +1,10 @@
 {
   "schema": "ops.enable-audit@1",
   "note": "⭐ GH#473 —— 「啟用上架」稽核的 **build 期預算**。⛔ 產物，不要手改。⭐ 它零執行期狀態（只讀 content/ 的集合歸屬 ＋ 稽核實作檔有沒有匯出進入點）⇒ 正式後台不必開一條 API 就答得出「這一格啟用之後要驗什麼」。",
-  "ids": 1244,
+  "ids": 1293,
   "counts": {
-    "callable": 2974,
-    "n/a": 758
+    "callable": 3107,
+    "n/a": 772
   },
   "wiring": {
     "savePoint": "apps/admin/src/ui/CurationPage.tsx（白名單／貨架存檔）",
@@ -33810,6 +33810,1434 @@
       "audit": "descriptionClaims",
       "status": "n/a",
       "detail": "這條稽核不管 augments"
+    },
+    {
+      "id": "lol-karthus",
+      "collection": "champions",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-karthus",
+      "collection": "champions",
+      "audit": "castability",
+      "status": "n/a",
+      "detail": "這條稽核不管 champions"
+    },
+    {
+      "id": "lol-karthus",
+      "collection": "champions",
+      "audit": "descriptionClaims",
+      "status": "n/a",
+      "detail": "這條稽核不管 champions"
+    },
+    {
+      "id": "lol-karthus.e",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-karthus.e",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-karthus.e",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-karthus.ex",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-karthus.ex",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-karthus.ex",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-karthus.passive",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-karthus.passive",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-karthus.passive",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-karthus.q",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-karthus.q",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-karthus.q",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-karthus.r",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-karthus.r",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-karthus.r",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-karthus.w",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-karthus.w",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-karthus.w",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-leesin",
+      "collection": "champions",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-leesin",
+      "collection": "champions",
+      "audit": "castability",
+      "status": "n/a",
+      "detail": "這條稽核不管 champions"
+    },
+    {
+      "id": "lol-leesin",
+      "collection": "champions",
+      "audit": "descriptionClaims",
+      "status": "n/a",
+      "detail": "這條稽核不管 champions"
+    },
+    {
+      "id": "lol-leesin.e",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-leesin.e",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-leesin.e",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-leesin.ex",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-leesin.ex",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-leesin.ex",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-leesin.passive",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-leesin.passive",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-leesin.passive",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-leesin.q",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-leesin.q",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-leesin.q",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-leesin.r",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-leesin.r",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-leesin.r",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-leesin.w",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-leesin.w",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-leesin.w",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-lux",
+      "collection": "champions",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-lux",
+      "collection": "champions",
+      "audit": "castability",
+      "status": "n/a",
+      "detail": "這條稽核不管 champions"
+    },
+    {
+      "id": "lol-lux",
+      "collection": "champions",
+      "audit": "descriptionClaims",
+      "status": "n/a",
+      "detail": "這條稽核不管 champions"
+    },
+    {
+      "id": "lol-lux.e",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-lux.e",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-lux.e",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-lux.ex",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-lux.ex",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-lux.ex",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-lux.passive",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-lux.passive",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-lux.passive",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-lux.q",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-lux.q",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-lux.q",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-lux.r",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-lux.r",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-lux.r",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-lux.w",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-lux.w",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-lux.w",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-missfortune",
+      "collection": "champions",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-missfortune",
+      "collection": "champions",
+      "audit": "castability",
+      "status": "n/a",
+      "detail": "這條稽核不管 champions"
+    },
+    {
+      "id": "lol-missfortune",
+      "collection": "champions",
+      "audit": "descriptionClaims",
+      "status": "n/a",
+      "detail": "這條稽核不管 champions"
+    },
+    {
+      "id": "lol-missfortune.e",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-missfortune.e",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-missfortune.e",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-missfortune.ex",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-missfortune.ex",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-missfortune.ex",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-missfortune.passive",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-missfortune.passive",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-missfortune.passive",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-missfortune.q",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-missfortune.q",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-missfortune.q",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-missfortune.r",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-missfortune.r",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-missfortune.r",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-missfortune.w",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-missfortune.w",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-missfortune.w",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-warwick",
+      "collection": "champions",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-warwick",
+      "collection": "champions",
+      "audit": "castability",
+      "status": "n/a",
+      "detail": "這條稽核不管 champions"
+    },
+    {
+      "id": "lol-warwick",
+      "collection": "champions",
+      "audit": "descriptionClaims",
+      "status": "n/a",
+      "detail": "這條稽核不管 champions"
+    },
+    {
+      "id": "lol-warwick.e",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-warwick.e",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-warwick.e",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-warwick.ex",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-warwick.ex",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-warwick.ex",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-warwick.passive",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-warwick.passive",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-warwick.passive",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-warwick.q",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-warwick.q",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-warwick.q",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-warwick.r",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-warwick.r",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-warwick.r",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-warwick.w",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-warwick.w",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-warwick.w",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-xerath",
+      "collection": "champions",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-xerath",
+      "collection": "champions",
+      "audit": "castability",
+      "status": "n/a",
+      "detail": "這條稽核不管 champions"
+    },
+    {
+      "id": "lol-xerath",
+      "collection": "champions",
+      "audit": "descriptionClaims",
+      "status": "n/a",
+      "detail": "這條稽核不管 champions"
+    },
+    {
+      "id": "lol-xerath.e",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-xerath.e",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-xerath.e",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-xerath.ex",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-xerath.ex",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-xerath.ex",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-xerath.passive",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-xerath.passive",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-xerath.passive",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-xerath.q",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-xerath.q",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-xerath.q",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-xerath.r",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-xerath.r",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-xerath.r",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-xerath.w",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-xerath.w",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-xerath.w",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-yasuo",
+      "collection": "champions",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-yasuo",
+      "collection": "champions",
+      "audit": "castability",
+      "status": "n/a",
+      "detail": "這條稽核不管 champions"
+    },
+    {
+      "id": "lol-yasuo",
+      "collection": "champions",
+      "audit": "descriptionClaims",
+      "status": "n/a",
+      "detail": "這條稽核不管 champions"
+    },
+    {
+      "id": "lol-yasuo.e",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-yasuo.e",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-yasuo.e",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-yasuo.ex",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-yasuo.ex",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-yasuo.ex",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-yasuo.passive",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-yasuo.passive",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-yasuo.passive",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-yasuo.q",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-yasuo.q",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-yasuo.q",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-yasuo.r",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-yasuo.r",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-yasuo.r",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
+    },
+    {
+      "id": "lol-yasuo.w",
+      "collection": "abilities",
+      "audit": "noOpModifierClaims",
+      "zh": "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/noOpModifierClaims.ts 匯出 noOpClaimsOf()",
+      "module": "packages/shared/src/content/noOpModifierClaims.ts",
+      "symbol": "noOpClaimsOf"
+    },
+    {
+      "id": "lol-yasuo.w",
+      "collection": "abilities",
+      "audit": "castability",
+      "zh": "可施放性普查：這支技能的 effect 真的有處理器嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/abilityNoOpEffects.ts 匯出 analyseAbility()",
+      "module": "packages/shared/src/content/abilityNoOpEffects.ts",
+      "symbol": "analyseAbility"
+    },
+    {
+      "id": "lol-yasuo.w",
+      "collection": "abilities",
+      "audit": "descriptionClaims",
+      "zh": "說明↔JSON 一致性：卡面上的數字與標籤對得上實作嗎",
+      "status": "callable",
+      "detail": "packages/shared/src/content/descriptionClaims.ts 匯出 scanAbility()",
+      "module": "packages/shared/src/content/descriptionClaims.ts",
+      "symbol": "scanAbility"
     },
     {
       "id": "magic-armor-type-zero",

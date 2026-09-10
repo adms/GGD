@@ -25,18 +25,18 @@ owner 2026-08-19（GH#438，這一份要涵蓋的**全部**軸）：
 04-02 炸彈陣 w3a 300 → 5.5 落「大」，04-03 龍破斬 w3a 450 → 8.25 落「超大」——
 **剛好高一級**，正是 owner 說的「龍破斬應該高一級」。⇒ 係數不動。
 
-這一份最早（GH#414）只回答了**幾何**那三軸；缺的是施法距離從來沒有表 —— 量到 468 支帶施法距離的技能，各自帶一個從 w3a 換算來的自由數字，最大 Infinity，而決鬥區半徑只有 24。
+這一份最早（GH#414）只回答了**幾何**那三軸；缺的是施法距離從來沒有表 —— 量到 457 支帶施法距離的技能，各自帶一個從 w3a 換算來的自由數字，最大 Infinity，而決鬥區半徑只有 24。
 
 **六個視窗現在全部有表了**（GH#438 點名的四軸 = 幾何三軸 + 傷害/耗魔/冷卻），
 而且每一軸都住在 `content/config/*-tiers.json`（＝後台在改的那一份）：
 
 | 軸 | JSON 欄位 | 出貨 config | 幾支技能填了 | 開關 |
 |---|---|---|---:|---|
-| 施法距離 | `rangeTier` | `range-tiers.json` | 466 (51.4%) | `enabled: true` |
-| 施法範圍 | `radiusTier` | `aoe-tiers.json` | 284 (31.3%) | `enabled: true` |
+| 施法距離 | `rangeTier` | `range-tiers.json` | 455 (50.2%) | `enabled: true` |
+| 施法範圍 | `radiusTier` | `aoe-tiers.json` | 293 (32.3%) | `enabled: true` |
 | 位移 | `distanceTier` | `displacement-tiers.json` | 6 (0.7%) | `enabled: true` |
 | **傷害** | `damageTier` | `damage-tiers.json` | 425 (46.9%) | `enabled: true` |
-| **耗魔** | `manaCostTier` | `mana-tiers.json` | 412 (45.4%) | `enabled: true` |
+| **耗魔** | `manaCostTier` | `mana-tiers.json` | 402 (44.3%) | `enabled: true` |
 | **冷卻** | `cooldownTier` (+`cooldownShape`) | `cooldown-tiers.json` | 739 (81.5%) | `enabled: true` |
 
 <sub>分母 = `content/abilities/` 的 907 份技能文件（含被動與 EX）。⚠️ 採用率**不是** 100% 不代表壞掉：手寫數字一直是合法的寫法，級距是**預設走的那條路**。</sub>
@@ -189,7 +189,7 @@ owner 2026-08-19：「**JASS 的部分優先權大於 w3x 技能設定**，因�
 |---|---:|---|
 | **JASS**（第 3 層） | 26 | JASS 明確寫了 `AoE <數字>`，用它 |
 | **w3a**（第 5 層） | 137 | JASS 沒寫幾何，退回 w3a 的 `area` / `cast_range` 欄位 |
-| — | 400 | 對不到原作（GGD 原創、EX、或編號不在 w3x 裡） |
+| — | 389 | 對不到原作（GGD 原創、EX、或編號不在 w3x 裡） |
 
 ⚠️ 「w3a」那一列**不代表已經驗證過** —— 它代表**沒有人去 JASS 確認過**。
 `JASS_BEHAVIOR.json` 的 `geometry` 是稽核欄，只有 35 支寫了明確的 AoE 數字。
@@ -239,7 +239,7 @@ owner 2026-08-19：「**JASS 的部分優先權大於 w3x 技能設定**，因�
 
 ---
 
-## 五 · 逐支對照（全部 563 支）
+## 五 · 逐支對照（全部 552 支）
 
 `原作` = 依上面的優先序取到的 WC3 值。`引擎` = 真的跑過 `registerAll()` 之後註冊表裡的數字。
 `→級` = 用出貨級距表就近收之後會落在哪一級（⛔ 尚未寫回技能 JSON）。
@@ -768,41 +768,30 @@ owner 2026-08-19：「**JASS 的部分優先權大於 w3x 技能設定**，因�
 | 100-01 肝泥抹德 | `godie-zombiex.q` | — | — | 3 | 極小 | — | 6 | 中 |
 | 100-04 百式・哈基米 | `godie-zombiex.r` | — | — | 4.5 | 小 | — | — | — |
 | 100-02 黑天覆七重咖哩・硬啦 | `godie-zombiex.w` | — | — | — | — | — | 6 | 中 |
-| 荒蕪迴音 | `lol-karthus.e` | — | — | — | — | — | 6 | 中 |
-| 靜默幕衣 | `lol-karthus.ex` | — | — | — | — | — | 6 | 中 |
-| 暮點 | `lol-karthus.q` | — | — | 5.5 | 中 | — | 6 | 中 |
-| 暮鐘終曲 | `lol-karthus.r` | — | — | 5.5 | 中 | — | 12 | 極大 |
+| 暮點 | `lol-karthus.q` | — | — | 6 | 中 | — | 6 | 中 |
+| 暮鐘終曲 | `lol-karthus.r` | — | — | 6 | 中 | — | 12 | 極大 |
 | 亡途繫縛 | `lol-karthus.w` | — | — | — | — | — | 6 | 中 |
-| 震地迴響 | `lol-leesin.e` | — | — | 5.5 | 中 | — | 4.5 | 小 |
+| 震地迴響 | `lol-leesin.e` | — | — | 6 | 中 | — | 4.5 | 小 |
 | 逐響躍步 | `lol-leesin.ex` | — | — | 2.75 | 極小 | — | 6 | 中 |
 | 聽雷探手 | `lol-leesin.q` | — | — | — | — | — | 6 | 中 |
 | 斷陣踢 | `lol-leesin.r` | — | — | 2.75 | 極小 | — | 4.5 | 小 |
-| 定心護體 | `lol-leesin.w` | — | — | — | — | — | 6 | 中 |
 | 流光之域 | `lol-lux.e` | — | — | 4.5 | 小 | — | 6 | 中 |
-| 引路星芒 | `lol-lux.ex` | — | — | — | — | — | 6 | 中 |
 | 稜光束縛 | `lol-lux.q` | — | — | — | — | — | 6 | 中 |
 | 破曉光路 | `lol-lux.r` | — | — | — | — | — | 8 | 大 |
-| 折光護衣 | `lol-lux.w` | — | — | — | — | — | 6 | 中 |
 | 緋帆彈雨 | `lol-missfortune.e` | — | — | 4.5 | 小 | — | 6 | 中 |
-| 藏帆備彈 | `lol-missfortune.ex` | — | — | — | — | — | 6 | 中 |
 | 回聲雙響 | `lol-missfortune.q` | — | — | — | — | — | 6 | 中 |
-| 扇港齊射 | `lol-missfortune.r` | — | — | 5.5 | 中 | — | 8 | 大 |
-| 揚帆快步 | `lol-missfortune.w` | — | — | — | — | — | 6 | 中 |
+| 扇港齊射 | `lol-missfortune.r` | — | — | 6 | 中 | — | 8 | 大 |
 | 驚獵嚎聲 | `lol-warwick.e` | — | — | — | — | — | 3 | 極小 |
-| 血性護甲 | `lol-warwick.ex` | — | — | — | — | — | 6 | 中 |
 | 噬痕 | `lol-warwick.q` | — | — | — | — | — | 3 | 極小 |
 | 獵衛封喉 | `lol-warwick.r` | — | — | 7.33 | 大 | — | 3 | 極小 |
-| 循血疾行 | `lol-warwick.w` | — | — | — | — | — | 6 | 中 |
 | 奧能拘束 | `lol-xerath.e` | — | — | — | — | — | 6 | 中 |
-| 回收奧能 | `lol-xerath.ex` | — | — | — | — | — | 6 | 中 |
 | 星牢光路 | `lol-xerath.q` | — | — | — | — | — | 8 | 大 |
-| 星牢轟擊 | `lol-xerath.r` | — | — | 5.5 | 中 | — | 12 | 極大 |
-| 星核墜落 | `lol-xerath.w` | — | — | 5.5 | 中 | — | 6 | 中 |
+| 星牢轟擊 | `lol-xerath.r` | — | — | 6 | 中 | — | 12 | 極大 |
+| 星核墜落 | `lol-xerath.w` | — | — | 6 | 中 | — | 6 | 中 |
 | 踏風進擊 | `lol-yasuo.e` | — | — | 2.75 | 極小 | — | 4.5 | 小 |
 | 旋風縛步 | `lol-yasuo.ex` | — | — | — | — | — | 8 | 大 |
 | 斬風 | `lol-yasuo.q` | — | — | — | — | — | 4.5 | 小 |
 | 天際斷章 | `lol-yasuo.r` | — | — | 7.33 | 大 | — | 3 | 極小 |
-| 迎風架勢 | `lol-yasuo.w` | — | — | — | — | — | 6 | 中 |
 | Scorch Ring | `sela.e` | — | — | 3 | 極小 | — | 12 | 極大 |
 | Ember Bolt | `sela.q` | — | — | — | — | — | 12 | 極大 |
 | Firestorm | `sela.r` | — | — | 5 | 小 | — | 8 | 大 |

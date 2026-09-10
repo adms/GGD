@@ -475,13 +475,13 @@
       "godie-udre.r"
     ]
   },
-  "medianEngineHpLv30": 12758.3,
+  "medianEngineHpLv30": 12790.7,
   "biggestDamageTier": 2500,
   "provenance": {
     "population": "apps/platform/internal/curation/starter.go 的 starterChampions − content/config/roster.json 的 retiredChampions − 變身態（英雄卡的 transform.role === \"alternate\"）",
-    "populationSize": 123,
+    "populationSize": 130,
     "abilityCorpus": "content/abilities/*.json（全部，含變身態）",
-    "abilityCorpusSize": 865,
+    "abilityCorpusSize": 907,
     "generatorOwnedHeroes": [
       "godie-e002",
       "godie-e00r",
@@ -516,7 +516,7 @@
       "medianSkillDps": 0.0,
       "medianAutoDps": 192.7,
       "medianRatio": 0.0,
-      "meanRatio": 0.18
+      "meanRatio": 0.17
     },
     {
       "level": 50,
@@ -524,7 +524,7 @@
       "medianAd": 299.3,
       "medianAs": 1.399,
       "medianSkillDps": 0.0,
-      "medianAutoDps": 327.0,
+      "medianAutoDps": 328.3,
       "medianRatio": 0.0,
       "meanRatio": 0.17
     },
@@ -549,12 +549,12 @@
           "medianSkillDps": 0.0,
           "medianAutoDps": 192.7,
           "medianRatio": 0.0,
-          "meanRatio": 0.16
+          "meanRatio": 0.15
         },
         "50": {
           "medianAp": 364.0,
           "medianSkillDps": 0.0,
-          "medianAutoDps": 327.0,
+          "medianAutoDps": 328.3,
           "medianRatio": 0.0,
           "meanRatio": 0.15
         },
@@ -563,11 +563,11 @@
           "medianSkillDps": 0.0,
           "medianAutoDps": 891.2,
           "medianRatio": 0.0,
-          "meanRatio": 0.16
+          "meanRatio": 0.15
         }
       },
-      "growthApZeroed": 74,
-      "population": 123
+      "growthApZeroed": 81,
+      "population": 130
     },
     {
       "intToAbilityPower": 4,
@@ -578,12 +578,12 @@
           "medianSkillDps": 0.0,
           "medianAutoDps": 192.7,
           "medianRatio": 0.0,
-          "meanRatio": 0.18
+          "meanRatio": 0.17
         },
         "50": {
           "medianAp": 364.0,
           "medianSkillDps": 0.0,
-          "medianAutoDps": 327.0,
+          "medianAutoDps": 328.3,
           "medianRatio": 0.0,
           "meanRatio": 0.17
         },
@@ -595,8 +595,8 @@
           "meanRatio": 0.17
         }
       },
-      "growthApZeroed": 74,
-      "population": 123
+      "growthApZeroed": 81,
+      "population": 130
     },
     {
       "intToAbilityPower": 6.5,
@@ -607,12 +607,12 @@
           "medianSkillDps": 0.0,
           "medianAutoDps": 192.7,
           "medianRatio": 0.0,
-          "meanRatio": 0.25
+          "meanRatio": 0.24
         },
         "50": {
           "medianAp": 549.6,
           "medianSkillDps": 0.0,
-          "medianAutoDps": 327.0,
+          "medianAutoDps": 328.3,
           "medianRatio": 0.0,
           "meanRatio": 0.24
         },
@@ -621,11 +621,11 @@
           "medianSkillDps": 0.0,
           "medianAutoDps": 891.2,
           "medianRatio": 0.0,
-          "meanRatio": 0.26
+          "meanRatio": 0.25
         }
       },
-      "growthApZeroed": 76,
-      "population": 123
+      "growthApZeroed": 83,
+      "population": 130
     },
     {
       "intToAbilityPower": 6.5,
@@ -641,7 +641,7 @@
         "50": {
           "medianAp": 549.6,
           "medianSkillDps": 0.0,
-          "medianAutoDps": 327.0,
+          "medianAutoDps": 328.3,
           "medianRatio": 0.0,
           "meanRatio": 0.26
         },
@@ -650,11 +650,11 @@
           "medianSkillDps": 0.0,
           "medianAutoDps": 891.2,
           "medianRatio": 0.0,
-          "meanRatio": 0.27
+          "meanRatio": 0.26
         }
       },
-      "growthApZeroed": 76,
-      "population": 123
+      "growthApZeroed": 83,
+      "population": 130
     }
   ],
   "rows": [

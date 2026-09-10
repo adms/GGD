@@ -3,7 +3,7 @@
 > ⛔ **這份是產生的** —— `pnpm typecat:build`。改它請改 `content/ability-templates/`。
 > ⭐ 交付格式與止損協定見 `CODEX_TYPE_HANDOFF.md`；機器可讀版在 `ggd-type-catalog.json`。
 
-**66 個可挑 type** · ⭐ 1 個「分析做完但引擎沒接線」 · ⛔ 9 個空殼 · 1 個哨兵 · 矩陣 154/325 格
+**71 個可挑 type** · ⭐ 1 個「分析做完但引擎沒接線」 · ⛔ 9 個空殼 · 1 個哨兵 · 矩陣 154/325 格
 
 ## ⭐⭐ 怎麼 fail-closed
 
@@ -21,17 +21,22 @@
 | `hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8` | `doc` | 6 | — | 0 | 0 | 9 | 23-04 雷焰聖劍 |
 | `hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b` | `doc` | 6 | — | 0 | 0 | 7 | 17-03 空破圓斬 |
 | `hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804` | `both` | 12 | ⛔ championId | 0 | 0 | 4 | 28-02 分身（普屋） |
+| `hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71` | `doc` | 6 | — | 0 | 0 | 9 | 獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者 |
 | `hero-template.231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd6` | `doc` | 12 | — | 0 | 0 | 3 | 52-02 蹂躪編年史（`A0U1`，`content/abilities/godie-hapm.w.json`） |
+| `hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d` | `both` | 9 | — | 0 | 0 | 6 | 74-03 闇之天使 |
+| `hero-template.431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699` | `doc` | 6 | — | 0 | 0 | 7 | 20-03 約束與勝利之劍 |
 | `hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16` | `doc` | 6 | — | 0 | 0 | 5 | godie-n01c.w（出貨最接近預設的那一支） |
 | `hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6` | `doc` | 4 | — | 0 | 0 | 9 | 08-01 雙龍紋（content/abilities/godie-n01c.q.json） |
 | `hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550` | `doc` | 5 | — | 0 | 0 | 10 | GGD 社群複合效果／阿薩謝爾、反擊與資源技能 |
 | `hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71` | `doc` | 6 | — | 0 | 0 | 9 | 90-04 陽光烈焰（content/abilities/godie-h02r.r.json） |
 | `hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4` | `doc` | 1 | — | 0 | 0 | 9 | 57-02 任意門（content/abilities/godie-n00b.e.json） |
 | `hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806` | `both` | 9 | — | 0 | 0 | 5 | 90-01 飛葉快刀（每秒對附近的敵人造成傷害，持續2秒） |
+| `hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68` | `doc` | 4 | — | 0 | 0 | 8 | 80-03 鬼神烈戟 |
 | `hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b` | `doc` | 3 | — | 0 | 0 | 9 | 70-03 木束縛之術（content/abilities/godie-e010.e.json） |
 | `hero-template.a0174c3324e732c421ab641d1e36cd2f49f758475f851ee4` | `doc` | 5 | ⛔ reflectRadius | 0 | 0 | 7 | 20-04 Avalon |
 | `hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692` | `doc` | 6 | — | 0 | 0 | 6 | 82-04 闇之魔法 |
 | `hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77` | `doc` | 1 | — | 0 | 0 | 10 | GGD 社群複合效果／阿薩謝爾、反擊與資源技能 |
+| `hero-template.c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8` | `doc` | 20 | — | 0 | 0 | 8 | 52-00 十二道試煉（海克力斯 Berserker 天生技） |
 | `hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52` | `doc` | 10 | — | 0 | 0 | 5 | 07-03 列、在、前 |
 | `hero-template.c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f55010` | `doc` | 6 | — | 0 | 0 | 9 | 58-04 神騎寶貝（content/abilities/godie-ofar.r.json）—— 出貨最單純的一支：只換身體、6 秒、沒有伴隨增益 |
 | `hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c` | `doc` | 10 | — | 0 | 0 | 6 | 84-04 給我蜂蜜 |

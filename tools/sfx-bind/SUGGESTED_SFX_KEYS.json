@@ -27,12 +27,12 @@
     "no-source-audio": "⭐ **原作自己就沒有替它配音效** —— war3map.j 沒綁 gg_snd，base 技能也沒有 effectsound。⇒ 這不是我們欠的帳，要不要配是 #554③ 的 owner 裁決"
   },
   "summary": {
-    "abilities": 865,
+    "abilities": 907,
     "census": {
       "overlay": 0,
       "sfxKey": 72,
       "element": 99,
-      "generic": 694
+      "generic": 736
     },
     "suggested": 107,
     "applicable": 15,
@@ -40,10 +40,10 @@
       "A-vfx-owned": 15,
       "C-family-generic": 92
     },
-    "noSuggestion": 686,
+    "noSuggestion": 728,
     "byCause": {
       "element-whoosh-already": 97,
-      "no-source-audio": 579,
+      "no-source-audio": 621,
       "source-map-silent": 2,
       "stock-label-only": 8
     }
@@ -8621,6 +8621,426 @@
       "ability": "godie-zombiex.w",
       "name": "100-02 黑天覆七重咖哩・硬啦",
       "champion": "godie-zombiex",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-karthus.e",
+      "name": "荒蕪迴音",
+      "champion": "lol-karthus",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-karthus.ex",
+      "name": "靜默幕衣",
+      "champion": "lol-karthus",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-karthus.passive",
+      "name": "未竟尾聲",
+      "champion": "lol-karthus",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-karthus.q",
+      "name": "暮點",
+      "champion": "lol-karthus",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-karthus.r",
+      "name": "暮鐘終曲",
+      "champion": "lol-karthus",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-karthus.w",
+      "name": "亡途繫縛",
+      "champion": "lol-karthus",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-leesin.e",
+      "name": "震地迴響",
+      "champion": "lol-leesin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-leesin.ex",
+      "name": "逐響躍步",
+      "champion": "lol-leesin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-leesin.passive",
+      "name": "回響拳",
+      "champion": "lol-leesin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-leesin.q",
+      "name": "聽雷探手",
+      "champion": "lol-leesin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-leesin.r",
+      "name": "斷陣踢",
+      "champion": "lol-leesin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-leesin.w",
+      "name": "定心護體",
+      "champion": "lol-leesin",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-lux.e",
+      "name": "流光之域",
+      "champion": "lol-lux",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-lux.ex",
+      "name": "引路星芒",
+      "champion": "lol-lux",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-lux.passive",
+      "name": "餘光",
+      "champion": "lol-lux",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-lux.q",
+      "name": "稜光束縛",
+      "champion": "lol-lux",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-lux.r",
+      "name": "破曉光路",
+      "champion": "lol-lux",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-lux.w",
+      "name": "折光護衣",
+      "champion": "lol-lux",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-missfortune.e",
+      "name": "緋帆彈雨",
+      "champion": "lol-missfortune",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-missfortune.ex",
+      "name": "藏帆備彈",
+      "champion": "lol-missfortune",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-missfortune.passive",
+      "name": "先聲奪人",
+      "champion": "lol-missfortune",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-missfortune.q",
+      "name": "回聲雙響",
+      "champion": "lol-missfortune",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-missfortune.r",
+      "name": "扇港齊射",
+      "champion": "lol-missfortune",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-missfortune.w",
+      "name": "揚帆快步",
+      "champion": "lol-missfortune",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-warwick.e",
+      "name": "驚獵嚎聲",
+      "champion": "lol-warwick",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-warwick.ex",
+      "name": "血性護甲",
+      "champion": "lol-warwick",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-warwick.passive",
+      "name": "嗅血",
+      "champion": "lol-warwick",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-warwick.q",
+      "name": "噬痕",
+      "champion": "lol-warwick",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-warwick.r",
+      "name": "獵衛封喉",
+      "champion": "lol-warwick",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-warwick.w",
+      "name": "循血疾行",
+      "champion": "lol-warwick",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-xerath.e",
+      "name": "奧能拘束",
+      "champion": "lol-xerath",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-xerath.ex",
+      "name": "回收奧能",
+      "champion": "lol-xerath",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-xerath.passive",
+      "name": "逸散奧能",
+      "champion": "lol-xerath",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-xerath.q",
+      "name": "星牢光路",
+      "champion": "lol-xerath",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-xerath.r",
+      "name": "星牢轟擊",
+      "champion": "lol-xerath",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-xerath.w",
+      "name": "星核墜落",
+      "champion": "lol-xerath",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-yasuo.e",
+      "name": "踏風進擊",
+      "champion": "lol-yasuo",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-yasuo.ex",
+      "name": "旋風縛步",
+      "champion": "lol-yasuo",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-yasuo.passive",
+      "name": "風行刃",
+      "champion": "lol-yasuo",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-yasuo.q",
+      "name": "斬風",
+      "champion": "lol-yasuo",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-yasuo.r",
+      "name": "天際斷章",
+      "champion": "lol-yasuo",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "lol-yasuo.w",
+      "name": "迎風架勢",
+      "champion": "lol-yasuo",
       "todayPlays": "abilityCast",
       "cause": "no-source-audio",
       "evidence": {

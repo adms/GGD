@@ -35,6 +35,7 @@
     "armor": 0.374704081632653,
     "ap": 0
   },
+  "msGrowthTier": "極小",
   "attributes": {
     "str": 25,
     "agi": 23,
@@ -49,22 +50,22 @@
     "Q": {
       "id": "lol-warwick.q",
       "name": "噬痕",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "對指定敵人施加持續傷害，3 秒內每秒造成傷害；施放時立即回復自身生命。",
       "slot": "Q",
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        15,
-        15,
-        15,
-        15
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "range": 3,
@@ -115,7 +116,7 @@
           "stacking": "refresh"
         }
       ],
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990",
@@ -126,7 +127,7 @@
           "intervalSec": 1,
           "durationSec": 3,
           "stacking": "refresh",
-          "castTimeSec": 0.1
+          "castTimeSec": 0.567
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:c76d7faa4f0ae1fc83b9f46576247f99fe4dfb785449517a122082a8d9c648cc"
@@ -135,26 +136,24 @@
     "W": {
       "id": "lol-warwick.w",
       "name": "循血疾行",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "主動獲得 3 秒極小級移速加成與 20% 攻速加成。",
       "slot": "W",
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        15,
-        15,
-        15,
-        15
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
-      "range": 6,
-      "rangeTier": "中",
+      "range": 0.0,
       "cooldownTier": "小",
       "effects": [
         {
@@ -174,7 +173,7 @@
           "duration": 3
         }
       ],
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.267,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
@@ -192,7 +191,7 @@
               "value": 0.2
             }
           ],
-          "castTimeSec": 0.1
+          "castTimeSec": 0.267
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
@@ -201,22 +200,22 @@
     "E": {
       "id": "lol-warwick.e",
       "name": "驚獵嚎聲",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "指定近處敵人，造成傷害並使其恐懼 0.8 秒。",
       "slot": "E",
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        15,
-        15,
-        15,
-        15
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "range": 3,
@@ -240,7 +239,7 @@
           "feared": true
         }
       ],
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
@@ -250,7 +249,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.1
+          "castTimeSec": 0.567
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
@@ -259,20 +258,20 @@
     "R": {
       "id": "lol-warwick.r",
       "name": "獵衛封喉",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "鎖足敵人 0.9 秒，連續汲傷後收尾；施法者不獲得無敵。",
       "slot": "R",
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        90,
-        90,
-        90
+        90.0,
+        90.0,
+        90.0
       ],
       "manaCost": [
-        576,
-        576,
-        576
+        576.0,
+        576.0,
+        576.0
       ],
       "manaCostTier": "大",
       "range": 3,
@@ -340,7 +339,7 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:3564b6a4aa6e8ba56515a3e021d366443236e05e20c89a4267a82774cd521c26"
       },
-      "castTimeSec": 0.5
+      "castTimeSec": 0.9
     }
   },
   "exAbility": "lol-warwick.ex",

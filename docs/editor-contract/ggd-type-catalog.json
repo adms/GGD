@@ -10,8 +10,8 @@
     "⚠️ ⭐ 挑一個 `modelKey` 之前查 `modelFxEmitters.modelsWithEmitters`：那顆模型若自帶粒子，`modelFxEmitters.lostByEmitters` 的每一格**寫了也只作用在網格那一半** ⇒ ⛔ 同一顆模型會顯示兩種顏色／兩種大小，而沒有任何東西紅。"
   ],
   "counts": {
-    "templates": 77,
-    "pickable": 66,
+    "templates": 82,
+    "pickable": 71,
     "analysedButUnwired": 1,
     "shells": 9,
     "sentinels": 1,
@@ -355,6 +355,135 @@
       }
     },
     {
+      "id": "hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71",
+      "name": "攻擊觸發",
+      "family": "on-attack",
+      "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 9,
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "exemplar": {
+        "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效",
+        "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "bonusDamage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              100
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "chance": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "condition": {
+          "type": "condition",
+          "default": {
+            "any": [
+              {
+                "all": [
+                  {
+                    "not": {
+                      "is": "champion",
+                      "kind": "kind",
+                      "subject": "target"
+                    }
+                  },
+                  {
+                    "kind": "stat",
+                    "mode": "percent",
+                    "op": "<",
+                    "stat": "hp",
+                    "subject": "target",
+                    "value": 0.35
+                  }
+                ]
+              },
+              {
+                "all": [
+                  {
+                    "is": "champion",
+                    "kind": "kind",
+                    "subject": "target"
+                  },
+                  {
+                    "kind": "chance",
+                    "p": 0.01
+                  }
+                ]
+              }
+            ]
+          },
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "event": {
+          "type": "enum",
+          "default": "onBasicAttack",
+          "values": [
+            "onBasicAttack",
+            "onDamageDealt"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "internalCooldown": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
       "id": "hero-template.231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd6",
       "name": "拉扯投擲",
       "family": "pull-throw",
@@ -501,6 +630,216 @@
             "distance",
             "point"
           ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d",
+      "name": "亂數彈幕轟炸",
+      "family": "random-barrage",
+      "description": "在一個區域裡連續丟 N 發爆炸,每一發的落點都是隨機的。原作 8 支成員全部是同一個迴圈:`GetRandomLocInRect(RectFromCenterSizeBJ(中心, S, S))` → 生一隻 dummy → 叫它放一發 → 睡一下 → 再來。\n\n**總時長不是欄位,是算出來的**(發數 − 1) × 每發間隔 —— 原作的迴圈也是這樣,把它做成第三個可填的數字只會讓三個數字互相打架。\n\n決策點是「傷害怎麼付」:\n· 逐發結算(預設,5/8 支) —— 站在轟炸區裡的人每一發都會挨一下。\n· 施法瞬間一次付清(3/8 支) —— 23-03 雷牙一閃、81-02 Acxel Shooter、53-01 獸王牙操彈 的彈幕**完全是演出**,傷害在觸發裡只判一次矩形。把整片火光算成 N 段傷害會讓這三支變成原作的好幾倍。\n\n「開場直傷」清空 = 純轟炸;填了 = 先來一發大的再開始炸(42-04 世界終結 的 100% [AP] 起手)。\n\n⚠️ 已知落差:sim 的持續傷害綁在**施法當下解出來的目標**上,所以(a)開炸之後才走進區域的人不會挨,先走出去的人還是會繼續挨;(b)每一發的隨機落點沒有模擬 —— 區域內的人是**每一發都吃到**,而不是機率性地吃到其中幾發。原作 42-04 的雷震半徑(375)本來就大於它的散佈半徑(225),那一支剛好完全吻合;21-002 天破壤碎(散佈 600 / 半徑 320)則是這個模型最不準的一支。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 6,
+      "requires": [
+        "periodicDamage"
+      ],
+      "exemplar": {
+        "jass": "A0F4 → dummy A011 ×8 (war3map.j:48501-48519)",
+        "skill": "74-03 闇之天使"
+      },
+      "wiring": "both",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "count": {
+          "type": "number",
+          "default": 9,
+          "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
+          "inert": null
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "impactDamage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              150
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "impactRadius": {
+          "type": "number",
+          "default": 320,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "intervalSec": {
+          "type": "number",
+          "default": 0.1,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "openingDamage": {
+          "type": "scaling",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "payout": {
+          "type": "enum",
+          "default": "perImpact",
+          "values": [
+            "perImpact",
+            "onceAtCast"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "scatterRadius": {
+          "type": "number",
+          "default": 225,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "hero-template.431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699",
+      "name": "直線分段掃擊",
+      "family": "line-sweep",
+      "description": "沿直線分段的掃擊：每一段各自在自己的落點結算一次（`delayed` + `advance`，GH#393 的機制）。⭐ 同一個目標整串只被打一次（`hitOncePerTarget`）—— 那是原作的規則，卡片寫的是**一次**的數字。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 7,
+      "requires": [
+        "projectile"
+      ],
+      "exemplar": {
+        "jass": "A0D5",
+        "skill": "20-03 約束與勝利之劍"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              150
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "segmentAoe": {
+          "type": "number",
+          "default": 400,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "segmentCount": {
+          "type": "number",
+          "default": 6,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "stepSize": {
+          "type": "number",
+          "default": 200,
           "fillsVia": "template.ref → expand()",
           "fillsViaByContext": {
             "doc": "template.ref → expand()"
@@ -1029,6 +1368,75 @@
       }
     },
     {
+      "id": "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
+      "name": "原地震波",
+      "family": "ground-nova",
+      "description": "以施法者為中心的環形震波。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 8,
+      "requires": [],
+      "exemplar": {
+        "jass": "A0N0",
+        "skill": "80-03 鬼神烈戟"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              150
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "radius": {
+          "type": "number",
+          "default": 530,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
       "id": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
       "name": "只上狀態",
       "family": "apply-status",
@@ -1291,6 +1699,250 @@
               "on": "onBasicAttack"
             }
           ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "hero-template.c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8",
+      "name": "具名標記-層數與免死",
+      "family": "mark-stacks",
+      "description": "在持有者身上裝一個有層數的具名標記（【試煉】【風王結界】【縮地】），可跨回合、可永久，並可選擇讓它變成一張免死牌：受致命傷害時消耗一層 → 無敵 → 回復 → 擊退暈眩周圍敵人；每失去一層永久獲得一組加成。⚠️ 落差：無敵/回復/擊退是救活的同一格一起發生，文案上的「隨後」看不出來 —— ⛔ 那是**這張模板**尚未把回復／擊退接上延後排程，⛔ 不是引擎沒有：引擎**有** `kind:\"delayed\"`（`delaySec`／`count`／`intervalSec`／`effects`，出貨例：初號機 `godie-e00r` 的 berserk_smoke），⭐ 但 lethalSave 的 `selfEffects`／`aoeEffects` 是同格跑的；要接延後得另驗死亡／重觸發／施法者狀態／排程取消的時序，⛔ 不是改說明就算做了（GH#1044）；火圈燒傷不走傷害佇列，這張免死牌擋不到它。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 8,
+      "requires": [
+        "marks",
+        "invulnerable",
+        "knockback",
+        "applyStatus"
+      ],
+      "exemplar": {
+        "jass": "無 JASS 出處 —— owner 2026-08-08 口述規格，不是從 war3map.j 復原的家族",
+        "skill": "52-00 十二道試煉（海克力斯 Berserker 天生技）"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "aoeRadius": {
+          "type": "number",
+          "default": 6,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "durationSec": {
+          "type": "number",
+          "default": -1,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "initial": {
+          "type": "number",
+          "default": 12,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "internalCooldown": {
+          "type": "number",
+          "default": 0.5,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "invulnerableScope": {
+          "type": "enum",
+          "default": "damageAndControl",
+          "values": [
+            "damageAndControl",
+            "damageOnly"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "invulnerableSec": {
+          "type": "number",
+          "default": 1.5,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "knockbackDistance": {
+          "type": "number",
+          "default": 4,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "knockbackFrom": {
+          "type": "enum",
+          "default": "caster",
+          "values": [
+            "caster",
+            "facing",
+            "pull"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "knockbackSpeed": {
+          "type": "number",
+          "default": 16,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "lethalConsume": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "lethalDamageTypes": {
+          "type": "enum",
+          "default": "all",
+          "values": [
+            "all",
+            "physicalMagic",
+            "physical",
+            "magic",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "lethalMode": {
+          "type": "enum",
+          "default": "save",
+          "values": [
+            "save",
+            "none"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "markId": {
+          "type": "docRef",
+          "default": "godie-hapm.passive",
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "max": {
+          "type": "number",
+          "default": 12,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "perStackLost": {
+          "type": "statModifiers",
+          "default": [
+            {
+              "op": "pctAdd",
+              "stat": "ad",
+              "value": 0.1
+            },
+            {
+              "op": "pctAdd",
+              "stat": "maxHealth",
+              "value": 0.1
+            }
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "resetOn": {
+          "type": "enum",
+          "default": "match",
+          "values": [
+            "match",
+            "round",
+            "never"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "restoreHealthPct": {
+          "type": "number",
+          "default": 0.5,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "stunSec": {
+          "type": "number",
+          "default": 0.5,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "stunStatusId": {
+          "type": "docRef",
+          "default": "trial-stun",
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "surviveHpPct": {
+          "type": "number",
+          "default": 0.01,
           "fillsVia": "template.ref → expand()",
           "fillsViaByContext": {
             "doc": "template.ref → expand()"

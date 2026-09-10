@@ -2,14 +2,14 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_65fe17414cf7`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
-> 資料列：**146**　·　開放名單來源：快照 `docs/reference/_curation-snapshot.json`（whitelist updatedAt `2026-09-09T20:42:53.697491Z`；英雄 123 · 道具 116 · 技能 615）；即時名單 `GET /api/v1/curation/whitelist`
+> 產生自 contentVersion **`cv_0885ffae3078`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 資料列：**153**　·　開放名單來源：快照 `docs/reference/_curation-snapshot.json`（whitelist updatedAt `2026-09-10T06:39:58.329461Z`；英雄 130 · 道具 116 · 技能 650）；即時名單 `GET /api/v1/curation/whitelist`
 
-`content/champions/*.json` 共 **146** 名英雄，其中 **123** 名在開放名單（OPEN roster）內。開放名單是營運策展狀態，不是程式常數：真相是 `data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` 提供，由 game-server 在建房時執行；本檔印的是它進版控的快照（表頭有 updatedAt）。
+`content/champions/*.json` 共 **153** 名英雄，其中 **130** 名在開放名單（OPEN roster）內。開放名單是營運策展狀態，不是程式常數：真相是 `data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` 提供，由 game-server 在建房時執行；本檔印的是它進版控的快照（表頭有 updatedAt）。
 
 > 本檔的數值是 `content/` 的**原始值**，未套用 `combat-env` 全域倍率（`content/config/combat-env.json`）。遊戲內顯示的一律是乘算後的最終值，所以畫面上的冷卻／傷害／生命與這裡不會相同 —— 那是預期行為，不是資料錯誤。
 >
-> **每名英雄有六個 slot：天生技（PASSIVE）＋ Q／W／E／R／EX。** 天生技是 w3x 的 `NN-00`，**等級 1 就擁有**，doc 是 `champion.passiveAbility` 指到的 `<id>.passive`（`exAbility` 的同款寫法）。143 名有天生技；3 名沒有 `passiveAbility` —— `godie-ogld`（有 `72-01..04` 與 `72-002`，但地圖裡不存在 `72-00`）、`sela`（非 w3x 原創英雄，沒有 `NN` 編號）、`thorne`（非 w3x 原創英雄，沒有 `NN` 編號） —— **那是還原出來的事實，不是待辦**。
+> **每名英雄有六個 slot：天生技（PASSIVE）＋ Q／W／E／R／EX。** 天生技是 w3x 的 `NN-00`，**等級 1 就擁有**，doc 是 `champion.passiveAbility` 指到的 `<id>.passive`（`exAbility` 的同款寫法）。150 名有天生技；3 名沒有 `passiveAbility` —— `godie-ogld`（有 `72-01..04` 與 `72-002`，但地圖裡不存在 `72-00`）、`sela`（非 w3x 原創英雄，沒有 `NN` 編號）、`thorne`（非 w3x 原創英雄，沒有 `NN` 編號） —— **那是還原出來的事實，不是待辦**。
 >
 > `稱號` / `全名` 是從 `name` 欄位拆出來的（慣例 `稱號 - 全名`），champion doc 上**沒有**獨立的稱號欄位；不符慣例的會顯示 `—`。
 >
@@ -17,7 +17,7 @@
 
 ---
 
-## 1. 開放名單 OPEN roster（123）
+## 1. 開放名單 OPEN roster（130）
 
 | id | 全名 | 稱號 | role | 攻擊 | 開放 | 一句話說明 | 技能 id（天生 Q W E R EX） |
 |---|---|---|---|---|---|---|---|
@@ -144,6 +144,13 @@
 | `godie-umal` | 拳四郎 | 北斗神拳掌門人 | fighter | 近戰 | ✅ | 北斗神拳的唯一傳人，使用難以置信的秘穴(!?)拳法致敵人於死地。由於北斗星是不祥之星，與拳… | `godie-umal.passive` `godie-umal.q` `godie-umal.w` `godie-umal.e` `godie-umal.r` `godie-umal.ex` |
 | `godie-uvng` | 飛影 | 邪眼師 | fighter | 近戰 | ✅ | 在魔界中有名的盜賊妖怪，除了是一位邪王炎殺拳的高手之外，也是一位用劍的高手。為了尋找妹妹雪… | `godie-uvng.passive` `godie-uvng.q` `godie-uvng.w` `godie-uvng.e` `godie-uvng.r` `godie-uvng.ex` |
 | `godie-zombiex` | 喪標麥可 | 聖杯黑泥醬 | tank | 近戰 | ✅ | 黑化聖杯溢出的惡意黑泥受肉凝聚，本來在美國重生，但不小心被印度工程師當成咖喱帶回家鄉，成了… | `godie-zombiex.passive` `godie-zombiex.q` `godie-zombiex.w` `godie-zombiex.e` `godie-zombiex.r` `godie-zombiex.ex` |
+| `lol-karthus` | 卡爾瑟斯 | — | mage | 遠程 | ✅ | 在陣地間敲響暮鐘，使用延遲爆破、持續領域與有預警的遠端轟擊。 | `lol-karthus.passive` `lol-karthus.q` `lol-karthus.w` `lol-karthus.e` `lol-karthus.r` `lol-karthus.ex` |
+| `lol-leesin` | 李星 | — | fighter | 近戰 | ✅ | 以聲波探擊、短程進身、護身與踢離敵人的連續節奏作戰。 | `lol-leesin.passive` `lol-leesin.q` `lol-leesin.w` `lol-leesin.e` `lol-leesin.r` `lol-leesin.ex` |
+| `lol-lux` | 拉克絲 | — | fighter | 遠程 | ✅ | 結合光束、短效束縛與護盾，以清楚的施法提示協助隊伍創造進攻空間。 | `lol-lux.passive` `lol-lux.q` `lol-lux.w` `lol-lux.e` `lol-lux.r` `lol-lux.ex` |
+| `lol-missfortune` | 好運姐 | — | marksman | 遠程 | ✅ | 以雙重射擊、機動增益與持續彈雨控制交戰區域。 | `lol-missfortune.passive` `lol-missfortune.q` `lol-missfortune.w` `lol-missfortune.e` `lol-missfortune.r` `lol-missfortune.ex` |
+| `lol-warwick` | 沃維克 | — | fighter | 近戰 | ✅ | 循血追擊的近戰獵手，以短程撲擊、持續汲取與壓制連段作戰。 | `lol-warwick.passive` `lol-warwick.q` `lol-warwick.w` `lol-warwick.e` `lol-warwick.r` `lol-warwick.ex` |
+| `lol-xerath` | 齊勒斯 | — | mage | 遠程 | ✅ | 以蓄能光路、落點爆破與定身咒彈控制距離，施放有限次數的奧術轟擊。 | `lol-xerath.passive` `lol-xerath.q` `lol-xerath.w` `lol-xerath.e` `lol-xerath.r` `lol-xerath.ex` |
+| `lol-yasuo` | 犽宿 | — | fighter | 近戰 | ✅ | 以短程穿行與風刃連擊掌握距離，使用防護姿態承受反擊。 | `lol-yasuo.passive` `lol-yasuo.q` `lol-yasuo.w` `lol-yasuo.e` `lol-yasuo.r` `lol-yasuo.ex` |
 
 ## 2. 未開放 not in the open roster（23）
 

@@ -1,26 +1,26 @@
 {
   "id": "lol-warwick.r",
   "name": "獵衛封喉",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "鎖足敵人 0.9 秒，連續汲傷後收尾；施法者不獲得無敵。",
   "slot": "R",
   "castType": "targeted",
   "maxRank": 3,
   "cooldown": [
-    90,
-    90,
-    90
+    90.0,
+    90.0,
+    90.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
-    576,
-    576,
-    576
+    576.0,
+    576.0,
+    576.0
   ],
   "manaCostTier": "大",
   "range": 3,
   "radius": 7.33,
   "rangeTier": "極小",
-  "cooldownTier": "大",
   "targetsEnemies": true,
   "effects": [
     {
@@ -83,6 +83,6 @@
     "contentSha256": "sha256:3564b6a4aa6e8ba56515a3e021d366443236e05e20c89a4267a82774cd521c26"
   },
   "schema": "ability@1",
-  "castTimeSec": 0.5,
+  "castTimeSec": 0.9,
   "icon": "assets/icons/abilities/lol-warwick.r.webp"
 }

@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "1c3a82871372",
+  "fingerprint": "d18427f10501",
   "capabilityFingerprint": "daccedce",
   "required": [
     {
@@ -16978,6 +16978,26 @@
     },
     {
       "group": "configField",
+      "name": "round11.possession",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.possession.escapeWindowSec",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.possession.inheritBossAugments",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.possession.telegraphRadius",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
       "name": "round11.scoring",
       "owner": "config.arena-rules@1"
     },
@@ -17003,12 +17023,47 @@
     },
     {
       "group": "configField",
+      "name": "round11.survivalLoop",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.survivalLoop.bossRerollChancePct",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.survivalLoop.bossRerollTable",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.survivalLoop.breakItemOnDeath",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.survivalLoop.normalToSpecialSec",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.survivalLoop.specialDropsReviveCircle",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
       "name": "round11.triggerBossKills",
       "owner": "config.arena-rules@1"
     },
     {
       "group": "configField",
       "name": "round11.waveTable",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.waveTable.baseSpawnCount",
       "owner": "config.arena-rules@1"
     },
     {
@@ -25105,9 +25160,9 @@
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 8,
-    "configField": 4035,
+    "configField": 4046,
     "_notRequired": 15,
-    "_total": 5155,
+    "_total": 5166,
     "_ownerOnly": 39
   }
 }

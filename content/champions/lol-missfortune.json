@@ -35,6 +35,7 @@
     "armor": 0,
     "ap": 0
   },
+  "msGrowthTier": "極小",
   "attributes": {
     "str": 13,
     "agi": 29,
@@ -49,22 +50,22 @@
     "Q": {
       "id": "lol-missfortune.q",
       "name": "回聲雙響",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "先命中指定敵人，再發出最多兩人的物理連鎖；起點會承受追加一擊。",
       "slot": "Q",
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        15,
-        15,
-        15,
-        15
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -96,7 +97,7 @@
           "maxTotalJumps": 2
         }
       ],
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
@@ -106,7 +107,7 @@
             "ratios": []
           },
           "damageType": "physical",
-          "castTimeSec": 0.1
+          "castTimeSec": 0.567
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
@@ -115,26 +116,24 @@
     "W": {
       "id": "lol-missfortune.w",
       "name": "揚帆快步",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "獲得 3 秒極小級移速加成與 20% 攻速加成。",
       "slot": "W",
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        15,
-        15,
-        15,
-        15
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "manaCostTier": "小",
-      "range": 6,
-      "rangeTier": "中",
+      "range": 0.0,
       "cooldownTier": "小",
       "effects": [
         {
@@ -154,7 +153,7 @@
           "duration": 3
         }
       ],
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.267,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
@@ -172,7 +171,7 @@
               "value": 0.2
             }
           ],
-          "castTimeSec": 0.1
+          "castTimeSec": 0.267
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
@@ -181,22 +180,22 @@
     "E": {
       "id": "lol-missfortune.e",
       "name": "緋帆彈雨",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "在指定區域維持 3 秒彈雨，每秒造成極小級魔法傷害。",
       "slot": "E",
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -227,7 +226,7 @@
           "targetMode": "reresolve"
         }
       ],
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.833,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
@@ -239,34 +238,35 @@
           "applyTo": "enemies",
           "damageTier": "極小",
           "damageType": "magic",
-          "castTimeSec": 0.3,
+          "castTimeSec": 0.833,
           "radius": 4.5
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:44ed9bdce3fd02c4742a91506d46d5c31ef78947271f1629700d0f5822d3e189"
-      }
+      },
+      "radiusTier": "小"
     },
     "R": {
       "id": "lol-missfortune.r",
       "name": "扇港齊射",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "向指定區域連續投下六發物理彈幕，散布及命中區域均有界。",
       "slot": "R",
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        90,
-        90,
-        90
+        90.0,
+        90.0,
+        90.0
       ],
       "manaCost": [
-        576,
-        576,
-        576
+        576.0,
+        576.0,
+        576.0
       ],
       "manaCostTier": "大",
       "range": 8,
-      "radius": 5.5,
+      "radius": 6.0,
       "rangeTier": "大",
       "cooldownTier": "大",
       "targetsEnemies": true,
@@ -283,7 +283,7 @@
           "tickOnApply": true
         }
       ],
-      "castTimeSec": 0.5,
+      "castTimeSec": 1,
       "castTimeTier": "大",
       "template": {
         "ref": "hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d",
@@ -298,11 +298,12 @@
           "impactRadius": 150,
           "scatterRadius": 150,
           "payout": "perImpact",
-          "castTimeSec": 0.5
+          "castTimeSec": 1
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:960958a07d7fef432d3c6192f3bd6c19209fa428159b622b0e3fb6a68ade487b"
-      }
+      },
+      "radiusTier": "中"
     }
   },
   "exAbility": "lol-missfortune.ex",

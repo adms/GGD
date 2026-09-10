@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "2f1ba7c75a52",
+  "hash": "ea0da2dd2366",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -47,8 +47,8 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "e6ff764ee534",
-      "size": 9931
+      "hash": "9406a30a5679",
+      "size": 10011
     },
     {
       "id": "asset-cdn",
@@ -551,8 +551,8 @@
     {
       "id": "vfx-families",
       "path": "config/vfx-families.json",
-      "hash": "b5729bc10131",
-      "size": 30559
+      "hash": "f89d1a6ec5a5",
+      "size": 30261
     },
     {
       "id": "vfx-scripts",

@@ -417,7 +417,7 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 
 其餘 **18** 項是 1.0（不動）：`abilityDamage`、`abilityPower`、`attackDamage`、`attackSpeed`、`critChance`、`critDamage`、`damageDealt`、`defense`、`goldHeroKill`、`goldQuest`、`goldRoundPayout`、`healing`、`healthRegen`、`itemCooldown`、`lifesteal`、`maxMana`、`moveSpeed`、`shield`。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_65fe17414cf7` 產生。 倍率讀 `content/config/combat-env.json`（version 9）。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_0885ffae3078` 產生。 倍率讀 `content/config/combat-env.json`（version 9）。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:combat-env -->
 
 倍率表在 tick 0 之前注入模擬並隨快照下發，兩邊用同一支正規化函式，所以預測與伺服器永遠對得上。技能卡面上的冷卻／距離／傷害怎麼過這張表，見 [⭐ 技能五級距](#-技能五級距)。
@@ -453,7 +453,7 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 | `arena.skeleton` | 新手競技場 | 🔁 | 24 | 2 | 4 | 12 | `stone` | — | 24+20 | — |
 | `arena.world-tree` | 世界樹核心 | 🔁 | 30 | 2 | 28 | 12 | `grass` | ✅ | 29+36 | 區域×10、互動×16、機關門 |
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_65fe17414cf7` 產生。 輪替 12 / 全 13 張。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_0885ffae3078` 產生。 輪替 12 / 全 13 張。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:arenas -->
 
 ### 設定陷阱（改了不會生效）
@@ -649,7 +649,7 @@ make lan-probe
 | 生命 | 4074.6 | 6519.36 | 8149.2 | 10186.5 | 16298.4 | 581152 | 581152 | ✅ |
 | 裝甲 | 45.05 | 72.07 | 90.09 | 112.61 | 180.18 | 6638 | 6638 | ✅ |
 | 魔抗 | 129.35 | 206.96 | 258.7 | 323.38 | 517.4 | 15311 | 15311 | ✅ |
-| 魔力 | 2492.75 | 3988.4 | 4985.5 | 6231.88 | 9971 | 351387 | 351387 | ✅ |
+| 魔力 | 2492.75 | 3988.4 | 4985.5 | 6231.88 | 9971 | 352091 | 352091 | ✅ |
 | 生命回復 | 8.43 | 13.48 | 16.85 | 21.06 | 33.7 | 1235 | 1235 | ✅ |
 | 魔力回復 | 10.11 | 16.18 | 20.22 | 25.27 | 40.44 | 2351 | 2351 | ✅ |
 | **攻擊距離**（近戰尺） | 1.2 | 1.4 | 1.6 | 1.8 | 2 | 16 | 16 | ✅ |
@@ -662,13 +662,13 @@ make lan-probe
 
 #### 🔴 每級成長 **100% 由出身決定**（三圍成長已經全部歸 0）
 
-> 力量／敏捷／智慧的**每級成長全部是 0**（146/146 張英雄卡，含變身態）。一位英雄升一級拿到的每一點，都是引擎**反解**出來的 —— 反解的目標就是上表那一格級距值（等級 99 的終值）。
+> 力量／敏捷／智慧的**每級成長全部是 0**（153/153 張英雄卡，含變身態）。一位英雄升一級拿到的每一點，都是引擎**反解**出來的 —— 反解的目標就是上表那一格級距值（等級 99 的終值）。
 >
 > ⭐ owner 的分工一句話：**初始＝個性（卡上的 `baseStats`），成長＝定位（出身的級距）**。兩位同出身的英雄可以有不同的起點，但他們在等級 99 收斂到同一格。
 >
 > ⚠️ 所以調 `combat-env` 的 `intToAbilityPower` **不會**讓法強終值變高 —— 它只改「等級 1 拿到多少」，反解把差額從每級成長裡等量扣掉，等級 99 逐位元不變。要改法強終值只有一格：上表的 `bands.ap`。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_65fe17414cf7` 產生。 級距與 `appliesTo` 讀 `content/config/stat-normalization.json`、上限讀 `stat-caps.json`、成長現況現場數 `content/champions/`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_0885ffae3078` 產生。 級距與 `appliesTo` 讀 `content/config/stat-normalization.json`、上限讀 `stat-caps.json`、成長現況現場數 `content/champions/`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:stat-bands -->
 
 **49 位可選英雄的逐隻對照**（出身 / 普攻距離 / 核心玩法 / 選角說明）在
@@ -774,7 +774,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 > 這一節講的是**一支技能**的冷卻／距離／範圍／位移／傷害落在哪一格。
 
 <!-- BEGIN GENERATED:tiers -->
-#### ⭐ 技能五級距（9 張表 · 15 條梯子 · 母體 **123 位對戰可選英雄**）
+#### ⭐ 技能五級距（9 張表 · 15 條梯子 · 母體 **130 位對戰可選英雄**）
 
 > **級距名全專案只有一份**（`packages/shared/src/content/skillTiers.ts` 的 `SKILL_TIER_NAMES` = **極小** / **小** / **中** / **大** / **極大**）—— ⛔ 沒有「超大」，也沒有任何一軸可以自己再宣告一組。
 >
@@ -827,13 +827,13 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 |---|---|---|
 | 施法距離 · AoE · 位移 | w3x 的 `w3a` 欄位（JASS 優先） | 先乘換算係數 `GGD_PER_WC3 = 11/600`，再靠到梯子上。梯子本身是**決鬥區半徑的分數**（owner 給的錨：大 = 1/4、極大 = 1/3），⛔ 不是等比也不是等差 |
 | 冷卻 | w3x 匯進來的自由秒數 | owner 2026-08-19 **直接給滿**十五格（單體／範圍／變身各一列），⛔ 所以這一軸照抄，沒有推導梯子。不在格點上的走 `tierSnap` 靠攏 |
-| 傷害 | 技能自己手寫的 `flat` / `perRank` | **推導**：母體 123 位可選英雄的純基礎中位血量 ÷ owner 的「20 發要能殺死」× HP 倍率 ＋ 初始加成 ÷ 20 → 進位 = 極小；其餘四格 = 極小 × **單體冷卻比**。填了 `damageTier` 就**取代** `flat`/`perRank`（⛔ 不是相加） |
+| 傷害 | 技能自己手寫的 `flat` / `perRank` | **推導**：母體 130 位可選英雄的純基礎中位血量 ÷ owner 的「20 發要能殺死」× HP 倍率 ＋ 初始加成 ÷ 20 → 進位 = 極小；其餘四格 = 極小 × **單體冷卻比**。填了 `damageTier` 就**取代** `flat`/`perRank`（⛔ 不是相加） |
 
-> ⭐ **母體是 123 位對戰可選英雄**，⛔ 不是 `content/champions/` 的檔案數 —— 那一份含**變身態**（同一位英雄的第二張卡 ⇒ 重複計數）與 fail-open 骨架佔位。定義只有一個住處（`packages/shared/testkit/balancePopulation.ts`：對戰可選名單 − 退場名單 − 變身態），`pnpm roster:check` 逐份交付物驗它。
+> ⭐ **母體是 130 位對戰可選英雄**，⛔ 不是 `content/champions/` 的檔案數 —— 那一份含**變身態**（同一位英雄的第二張卡 ⇒ 重複計數）與 fail-open 骨架佔位。定義只有一個住處（`packages/shared/testkit/balancePopulation.ts`：對戰可選名單 − 退場名單 − 變身態），`pnpm roster:check` 逐份交付物驗它。
 >
 > 逐格推導、三個錨點（LV30 hard / LV50 soft / LV99 極限）的達成率、以及兩個「空間」（純基礎 ↔ 引擎最終）的對照表在 [`docs/平衡錨點量測.md`](./docs/平衡錨點量測.md)；與 w3x 的逐支對照與梯子推導在 [`docs/editor-contract/ggd-skill-tiers.md`](./docs/editor-contract/ggd-skill-tiers.md)。兩份都是產生的。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_65fe17414cf7` 產生。 級距讀 `content/config/*-tiers.json`（9 張表）、母體讀 `docs/平衡錨點量測.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_0885ffae3078` 產生。 級距讀 `content/config/*-tiers.json`（9 張表）、母體讀 `docs/平衡錨點量測.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:tiers -->
 
 ### 開放清單（以下預設展開，不用點）
@@ -841,13 +841,13 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 以下三段是機器產生的**開放名單**：開放英雄＋技能、商店貨架＋抽卡池。全 78／461／239 的完整表在各段結尾連到 `docs/reference/*.md`。
 
 <!-- BEGIN GENERATED:roster -->
-#### 開放名單 OPEN roster（123 名）— 角色 + 六個技能 slot
+#### 開放名單 OPEN roster（130 名）— 角色 + 六個技能 slot
 
-> 選角畫面看得到、bot 也會抽到的就是這些。這是**營運策展狀態**，不是程式常數：真相在 `data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` 提供、game-server 在建房時執行。來源：快照 `docs/reference/_curation-snapshot.json`（whitelist updatedAt `2026-09-09T20:42:53.697491Z`；英雄 123 · 道具 116 · 技能 615）；即時名單 `GET /api/v1/curation/whitelist`
+> 選角畫面看得到、bot 也會抽到的就是這些。這是**營運策展狀態**，不是程式常數：真相在 `data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` 提供、game-server 在建房時執行。來源：快照 `docs/reference/_curation-snapshot.json`（whitelist updatedAt `2026-09-10T06:39:58.329461Z`；英雄 130 · 道具 116 · 技能 650）；即時名單 `GET /api/v1/curation/whitelist`
 >
 > 每名英雄一格：**`id` 全名**（稱號 · 職業 · 攻擊）— 一句話說明，底下**六條**是**天生技（等級 1 就有）＋ Q/W/E/R/EX** 的**技能名稱＋一行效果**。天生技那條會標 `天生·被動`（光環／機率觸發／回復類）或 `天生·主動`（有冷卻、原本掛在 D 鍵的）。效果截斷到 34 字、說明截斷到 40 字，結尾的 `…` 是產生器加的。完整逐字內容在 [`docs/reference/abilities.md`](./docs/reference/abilities.md) 或 <http://localhost:39527/#codex>。
 
-> ℹ️ 其中 **黑人牙膏**（`godie-ogld`）只有五條 —— 沒有 `NN-00` 天生技，**這是還原出來的事實，不是漏掉**（全 146 名裡共 3 名，逐一原因見 [`docs/reference/roster.md`](./docs/reference/roster.md)）。
+> ℹ️ 其中 **黑人牙膏**（`godie-ogld`）只有五條 —— 沒有 `NN-00` 天生技，**這是還原出來的事實，不是漏掉**（全 153 名裡共 3 名，逐一原因見 [`docs/reference/roster.md`](./docs/reference/roster.md)）。
 
 **`b2-aladdin` 阿拉丁**（mage · 遠程） — 魔笛MAGI｜魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，…
 
@@ -1955,25 +1955,88 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 - **R** 100-04 百式・哈基米：聖杯的黑泥從體內爆發，對周圍造成大範圍魔法傷害並重減速。
 - **EX** 100-002 此世全部之咖哩・バタンキュー：倒地詐死再猛然起身，黑泥狂化，短時間大幅提升攻擊力。マイ・キョー・…
 
-> 📖 **完整 146 名英雄**（含 23 名未開放）與逐欄資料（開放旗標、技能 id、攻擊類型…）在 [`docs/reference/roster.md`](./docs/reference/roster.md)。
+**`lol-karthus` 卡爾瑟斯**（mage · 遠程） — 在陣地間敲響暮鐘，使用延遲爆破、持續領域與有預警的遠端轟擊。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_65fe17414cf7` 產生。 開放 123 / 全 146 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+- **天生·被動** 未竟尾聲：每場持有一層續命標記；致命傷時消耗標記並恢復部分生命。死亡後不能施…
+- **Q** 暮點：短暫吟唱後，在指定區域引爆小級魔法傷害。
+- **W** 亡途繫縛：以單體咒縛取代牆體，命中敵人後減速 35%，持續 2 秒。
+- **E** 荒蕪迴音：以自身為中心維持 3 秒傷害領域，每秒傷害一次。
+- **R** 暮鐘終曲：經極大級吟唱，在極大級施放距離內引爆指定區域；不是全圖技能。
+- **EX** 靜默幕衣：獲得只吸收魔法傷害的 3 秒護盾，提供一段施法準備時間。
+
+**`lol-leesin` 李星**（fighter · 近戰） — 以聲波探擊、短程進身、護身與踢離敵人的連續節奏作戰。
+
+- **天生·被動** 回響拳：普攻追加極小級物理傷害，內置冷卻 2 秒。
+- **Q** 聽雷探手：以中級距射程攻擊指定敵人；不會自動開啟第二段位移。
+- **W** 定心護體：獲得 3 秒護盾與 20% 攻速加成。
+- **E** 震地迴響：在指定近處引爆小級物理傷害，保留可瞄準的落點。
+- **R** 斷陣踢：短距進身後打擊並向前推開敵人，不附帶無敵或全場追蹤。
+- **EX** 逐響躍步：朝落點跳躍並在著地時打擊附近敵人，作為獨立追擊技能。
+
+**`lol-lux` 拉克絲**（fighter · 遠程） — 結合光束、短效束縛與護盾，以清楚的施法提示協助隊伍創造進攻空間。
+
+- **天生·被動** 餘光：普攻追加極小級魔法傷害，內置冷卻 2 秒。
+- **Q** 稜光束縛：命中指定敵人並鎖足 0.8 秒，不會同時束縛第二個目標。
+- **W** 折光護衣：獲得持續 3 秒的全傷害護盾，同名護盾保留較大值。
+- **E** 流光之域：在落點留下 3 秒光域，每秒造成極小級魔法傷害。
+- **R** 破曉光路：向前依序展開四段光束判定；敵人可受到相交段落的傷害。
+- **EX** 引路星芒：獲得 3 秒極小級移速加成，並恢復自身少量生命。
+
+**`lol-missfortune` 好運姐**（marksman · 遠程） — 以雙重射擊、機動增益與持續彈雨控制交戰區域。
+
+- **天生·被動** 先聲奪人：普攻追加極小級物理傷害，內置冷卻 2 秒。
+- **Q** 回聲雙響：先命中指定敵人，再發出最多兩人的物理連鎖；起點會承受追加一擊。
+- **W** 揚帆快步：獲得 3 秒極小級移速加成與 20% 攻速加成。
+- **E** 緋帆彈雨：在指定區域維持 3 秒彈雨，每秒造成極小級魔法傷害。
+- **R** 扇港齊射：向指定區域連續投下六發物理彈幕，散布及命中區域均有界。
+- **EX** 藏帆備彈：短暫以全傷害護盾掩護換位，持續 3 秒。
+
+**`lol-warwick` 沃維克**（fighter · 近戰） — 循血追擊的近戰獵手，以短程撲擊、持續汲取與壓制連段作戰。
+
+- **天生·被動** 嗅血：普攻生命低於 35% 的目標時追加極小級魔法傷害，內置冷卻 2 秒。
+- **Q** 噬痕：對指定敵人施加持續傷害，3 秒內每秒造成傷害；施放時立即回復自身生…
+- **W** 循血疾行：主動獲得 3 秒極小級移速加成與 20% 攻速加成。
+- **E** 驚獵嚎聲：指定近處敵人，造成傷害並使其恐懼 0.8 秒。
+- **R** 獵衛封喉：鎖足敵人 0.9 秒，連續汲傷後收尾；施法者不獲得無敵。
+- **EX** 血性護甲：獲得持續 3 秒的全傷害護盾；同一護盾保留較大值。
+
+**`lol-xerath` 齊勒斯**（mage · 遠程） — 以蓄能光路、落點爆破與定身咒彈控制距離，施放有限次數的奧術轟擊。
+
+- **天生·被動** 逸散奧能：普攻追加極小級魔法傷害，內置冷卻 2 秒。
+- **Q** 星牢光路：吟唱後向前產生四段奧術打擊，使用大級距施放距離。
+- **W** 星核墜落：在指定區域引爆小級魔法傷害。
+- **E** 奧能拘束：對指定敵人造成傷害並暈眩 0.8 秒，不按飛行距離延長。
+- **R** 星牢轟擊：在極大級距內選定落點，依序降下三發奧術砲擊，無法中途重新瞄準。
+- **EX** 回收奧能：獲得短效魔法護盾並回復自身 15% 最大魔力；受到 EX 冷卻限制。
+
+**`lol-yasuo` 犽宿**（fighter · 近戰） — 以短程穿行與風刃連擊掌握距離，使用防護姿態承受反擊。
+
+- **天生·被動** 風行刃：普攻追加極小級物理傷害，內置冷卻 2 秒。
+- **Q** 斬風：朝前方斬出四段窄風刃，以本遊戲線段判定命中。
+- **W** 迎風架勢：獲得只吸收物理傷害的護盾，持續 3 秒；不會消除投射物。
+- **E** 踏風進擊：朝指定方向短距突進，打擊接觸範圍的敵人；推移量會扣除雙方距離。
+- **R** 天際斷章：鎖足指定敵人後連擊三次，再以收尾斬結束；沒有無敵。
+- **EX** 旋風縛步：將蓄風招式獨立為 EX，對指定敵人造成物理傷害並鎖足 0.8 秒。
+
+> 📖 **完整 153 名英雄**（含 23 名未開放）與逐欄資料（開放旗標、技能 id、攻擊類型…）在 [`docs/reference/roster.md`](./docs/reference/roster.md)。
+
+*由 `pnpm docs:readme` 從 contentVersion `cv_0885ffae3078` 產生。 開放 130 / 全 153 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:roster -->
 
 <!-- BEGIN GENERATED:abilities -->
-#### 技能 abilities（全 865 個；開放英雄的 737 個）
+#### 技能 abilities（全 907 個；開放英雄的 779 個）
 
 > **開放英雄的每一個技能，都已經印在上面的開放名冊裡**（每名英雄六條：天生 ＋ Q/W/E/R/EX，含名稱與一行效果）。這裡不再重印一次，只放全表的統計與連結，讓 README 保持精簡。
 >
-> 每個英雄每個 slot 一份：天生 PASSIVE 143 · Q 145 · W 145 · E 145 · R 145 · EX 142。**`slot` 有六種**，`PASSIVE`（天生技，w3x 的 `NN-00`）跟 Q/W/E/R/EX 一樣是一個 slot，而且**等級 1 就擁有**；共 143 份（109 純被動 ＋ 34 有冷卻的天生主動），由 champion doc 的 `passiveAbility` 指到 `<championId>.passive`。
+> 每個英雄每個 slot 一份：天生 PASSIVE 150 · Q 152 · W 152 · E 152 · R 152 · EX 149。**`slot` 有六種**，`PASSIVE`（天生技，w3x 的 `NN-00`）跟 Q/W/E/R/EX 一樣是一個 slot，而且**等級 1 就擁有**；共 150 份（116 純被動 ＋ 34 有冷卻的天生主動），由 champion doc 的 `passiveAbility` 指到 `<championId>.passive`。
 >
 > ⚠️ 別跟舊的 `champion.passive` 區塊混為一談：那是掛在某個 QWER 技能上的被動型效果（`型態` 欄標「被動」的那些），跟天生技 slot 是兩回事。
 >
 > 數值是 `content/` 的**原始值**，未套用 `combat-env` 全域倍率 —— 遊戲內顯示的一律是乘算後的最終值，所以畫面上的冷卻／傷害跟表格不會相同。那是預期行為。
 
-> 📖 **全 865 個技能的逐欄表**（id、名稱、slot、型態、編號、擁有英雄、開放旗標、完整短效果）在 [`docs/reference/abilities.md`](./docs/reference/abilities.md)；互動版在 <http://localhost:39527/#codex>。
+> 📖 **全 907 個技能的逐欄表**（id、名稱、slot、型態、編號、擁有英雄、開放旗標、完整短效果）在 [`docs/reference/abilities.md`](./docs/reference/abilities.md)；互動版在 <http://localhost:39527/#codex>。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_65fe17414cf7` 產生。 開放英雄技能 737 / 全 865 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_0885ffae3078` 產生。 開放英雄技能 779 / 全 907 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:abilities -->
 
 <!-- BEGIN GENERATED:items -->
@@ -2149,7 +2212,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 > 📖 **全 142 件道具依 craftRole 的完整分類表**（component 16 / token 0 / none 24 …）在 [`docs/reference/items.md`](./docs/reference/items.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_65fe17414cf7` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_0885ffae3078` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:items -->
 
 <!-- BEGIN GENERATED:grail -->
@@ -2238,7 +2301,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 逐張的完整 JSON（每一格參數、每一個 hook、每一條條件）在 [`docs/reference/grail-wishes.md`](docs/reference/grail-wishes.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_65fe17414cf7` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_0885ffae3078` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:grail -->
 
 ### ⭐ 2026-08-17／18 這一批新加的機制（GH#354）
@@ -2293,19 +2356,19 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 | 效果 | 用它的內容 | 效果 | 用它的內容 | 效果 | 用它的內容 |
 |---|--:|---|--:|---|--:|
-| `applyBuff` | 132 | `applyStatus` | 130 | `blink` | 34 |
-| `carry` | 0 | `chainLightning` | 3 | `championForm` | 13 |
+| `applyBuff` | 142 | `applyStatus` | 137 | `blink` | 34 |
+| `carry` | 0 | `chainLightning` | 4 | `championForm` | 13 |
 | `comboStrikes` | 1 | `consumeStatus` | 28 | `convertTeam` | 0 |
-| `cycleBuff` | 1 | `damage` | 281 | `damageArea` | 61 |
-| `damageLine` | 27 | `dash` | 8 | `delayed` | 69 |
-| `devour` | 4 | `dispel` | 22 | `dot` | 37 |
+| `cycleBuff` | 1 | `damage` | 310 | `damageArea` | 61 |
+| `damageLine` | 27 | `dash` | 8 | `delayed` | 75 |
+| `devour` | 4 | `dispel` | 22 | `dot` | 42 |
 | `evasion` | 3 | `eventValueConversion` | 5 | `extendBuff` | 1 |
 | `floatingText` | 9 | `grantAttribute` | 5 | `grantGold` | 2 |
-| `grantXp` | 1 | `heal` | 45 | `invulnerable` | 16 |
-| `knockback` | 40 | `leap` | 57 | `manaBarrier` | 4 |
+| `grantXp` | 1 | `heal` | 47 | `invulnerable` | 17 |
+| `knockback` | 42 | `leap` | 62 | `manaBarrier` | 4 |
 | `modifyCooldown` | 15 | `proxyCast` | 6 | `pull` | 5 |
-| `randomArea` | 7 | `restore` | 51 | `revive` | 1 |
-| `screenFlash` | 6 | `screenShake` | 17 | `shield` | 78 |
+| `randomArea` | 7 | `restore` | 53 | `revive` | 1 |
+| `screenFlash` | 6 | `screenShake` | 17 | `shield` | 85 |
 | `shieldBreak` | 2 | `spawnModelFx` | 55 | `spawnProjectile` | 4 |
 | `spawnVfx` | 56 | `spendHealth` | 4 | `spendMana` | 6 |
 | `summon` | 8 | `swapResource` | 1 | `taunt` | 2 |
@@ -2319,7 +2382,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 | `onAbilityHit` | 技能命中時 | 21 |
 | `onAllyDamaged` | 隊友受傷時 | 6 |
 | `onAllyDeath` | 隊友陣亡時 | 3 |
-| `onBasicAttack` | 普攻時 | 147 |
+| `onBasicAttack` | 普攻時 | 153 |
 | `onBossSpawn` | 殭屍王出現時 | 1 |
 | `onBoundaryTouch` | 碰到場地邊界時（＝踏進火圈） | 0 |
 | `onCrowdControlApplied` | 對別人施加控場時 | 8 |
@@ -2353,7 +2416,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 | 條件 | 用它的內容 |
 |---|--:|
-| `chance` | 31 |
+| `chance` | 36 |
 | `distance` | 5 |
 | `equipment` | 0 |
 | `facing` | 0 |
@@ -2361,7 +2424,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 | `kind` | 1 |
 | `learned` | 6 |
 | `recentCast` | 10 |
-| `stat` | 14 |
+| `stat` | 15 |
 | `status` | 46 |
 
 ### 狀態標籤 —— 121 個（`content/status-effects/*.json` 逐檔數出來）
@@ -2384,7 +2447,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 完整的參數與上下界（每個效果每一格能填什麼）在 [`docs/技能標記機制與效果規則.md`](docs/技能標記機制與效果規則.md)，同樣是產生的。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_65fe17414cf7` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_0885ffae3078` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:mechanics -->
 
 

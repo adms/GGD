@@ -1,7 +1,7 @@
 {
   "id": "lol-leesin.passive",
   "name": "回響拳",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "普攻追加極小級物理傷害，內置冷卻 2 秒。",
   "slot": "PASSIVE",
   "innateKind": "passive",
@@ -13,7 +13,7 @@
   "manaCost": [
     0
   ],
-  "range": 0,
+  "range": 0.0,
   "effects": [],
   "passive": {
     "ranks": [

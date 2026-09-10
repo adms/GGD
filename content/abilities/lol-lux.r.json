@@ -1,31 +1,31 @@
 {
   "id": "lol-lux.r",
   "name": "破曉光路",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "向前依序展開四段光束判定；敵人可受到相交段落的傷害。",
   "slot": "R",
   "castType": "skillshot",
   "maxRank": 3,
   "cooldown": [
-    90,
-    90,
-    90
+    90.0,
+    90.0,
+    90.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
-    576,
-    576,
-    576
+    576.0,
+    576.0,
+    576.0
   ],
   "manaCostTier": "大",
   "range": 8,
   "rangeTier": "大",
-  "cooldownTier": "大",
   "targetsEnemies": true,
   "effects": [
     {
       "kind": "delayed",
       "shape": "circle",
-      "radius": 2.75,
+      "radius": 3.0,
       "side": "enemies",
       "delaySec": 0.05,
       "count": 4,
@@ -45,10 +45,11 @@
         "stepDist": 1.83,
         "dir": "facing"
       },
-      "hitOncePerTarget": true
+      "hitOncePerTarget": true,
+      "radiusTier": "極小"
     }
   ],
-  "castTimeSec": 0.5,
+  "castTimeSec": 0.833,
   "castTimeTier": "大",
   "template": {
     "ref": "hero-template.431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699",
@@ -61,7 +62,7 @@
         "ratios": []
       },
       "damageType": "magic",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.833
     },
     "inheritDefaults": true,
     "contentSha256": "sha256:9999c00222278ac5d4d0292370b6c40e265b572b4767a50bcd8abd951136db23"

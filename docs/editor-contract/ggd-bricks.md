@@ -10,7 +10,7 @@ capability 指紋：`daccedce`
 
 | | |
 |---|---:|
-| total | 177 |
+| total | 178 |
 | effect | 49 |
 | hook | 33 |
 | leaf | 10 |
@@ -18,16 +18,16 @@ capability 指紋：`daccedce`
 | vfx-prim | 13 |
 | vfx-subtype | 4 |
 | vfx-call | 4 |
-| model-preset | 17 |
+| model-preset | 18 |
 | gated | 137 |
 | gaps | 55 |
 | missingAdminForm | 55 |
 | missingEditorForm | 4 |
-| zeroAdoption | 45 |
+| zeroAdoption | 44 |
 
 ## 兩個編輯器的表單怎麼量的
 
-- **adminForm**：apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（73 份）→ 後台自己的 readSchema()（1175 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。
+- **adminForm**：apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（73 份）→ 後台自己的 readSchema()（1184 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。
 - **editorForm**：⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 177 顆有收據；收據裡沒有的才退回代理值。
 - **要 Codex 給的收據**：⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / vfx-call / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。
 
@@ -35,24 +35,24 @@ capability 指紋：`daccedce`
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
-| `applyBuff` | 31 | 0 | 0 | ✅ | ✅ | 124 |
-| `applyStatus` | 24 | 0 | 0 | ✅ | ✅ | 127 |
+| `applyBuff` | 31 | 0 | 0 | ✅ | ✅ | 134 |
+| `applyStatus` | 24 | 0 | 0 | ✅ | ✅ | 134 |
 | `blink` | 12 | 1 | 0 | ✅ | ✅ | 33 |
 | `carry` | 11 | 1 | 0 | ✅ | ✅ | 0 |
-| `chainLightning` | 18 | 1 | 0 | ✅ | ✅ | 3 |
+| `chainLightning` | 18 | 1 | 0 | ✅ | ✅ | 4 |
 | `championForm` | 3 | 0 | 0 | ✅ | ✅ | 13 |
 | `comboStrikes` | 18 | 0 | 0 | ✅ | ✅ | 1 |
 | `consumeStatus` | 12 | 1 | 0 | ✅ | ✅ | 28 |
 | `convertTeam` | 9 | 1 | 0 | ✅ | ✅ | 0 |
 | `cycleBuff` | 4 | 0 | 0 | ✅ | ✅ | 1 |
-| `damage` | 12 | 0 | 0 | ✅ | ✅ | 269 |
+| `damage` | 12 | 0 | 0 | ✅ | ✅ | 298 |
 | `damageArea` | 15 | 1 | 0 | ✅ | ✅ | 59 |
 | `damageLine` | 16 | 0 | 0 | ✅ | ✅ | 27 |
 | `dash` | 8 | 1 | 0 | ✅ | ✅ | 8 |
-| `delayed` | 18 | 1 | 0 | ✅ | ✅ | 66 |
+| `delayed` | 18 | 1 | 0 | ✅ | ✅ | 72 |
 | `devour` | 12 | 1 | 0 | ✅ | ✅ | 3 |
 | `dispel` | 10 | 1 | 0 | ✅ | ✅ | 17 |
-| `dot` | 13 | 0 | 0 | ✅ | ✅ | 37 |
+| `dot` | 13 | 0 | 0 | ✅ | ✅ | 42 |
 | `evasion` | 6 | 0 | 0 | ✅ | ✅ | 3 |
 | `eventValueConversion` | 12 | 1 | 0 | ✅ | ✅ | 1 |
 | `extendBuff` | 13 | 1 | 0 | ✅ | ✅ | 1 |
@@ -60,20 +60,20 @@ capability 指紋：`daccedce`
 | `grantAttribute` | 10 | 0 | 0 | ✅ | ✅ | 4 |
 | `grantGold` | 6 | 0 | 0 | ✅ | ✅ | 2 |
 | `grantXp` | 3 | 0 | 0 | ✅ | ✅ | 1 |
-| `heal` | 3 | 0 | 0 | ✅ | ✅ | 45 |
-| `invulnerable` | 6 | 0 | 0 | ✅ | ✅ | 10 |
-| `knockback` | 13 | 1 | 0 | ✅ | ✅ | 38 |
-| `leap` | 9 | 0 | 0 | ✅ | ✅ | 57 |
+| `heal` | 3 | 0 | 0 | ✅ | ✅ | 47 |
+| `invulnerable` | 6 | 0 | 0 | ✅ | ✅ | 11 |
+| `knockback` | 13 | 1 | 0 | ✅ | ✅ | 40 |
+| `leap` | 9 | 0 | 0 | ✅ | ✅ | 62 |
 | `manaBarrier` | 11 | 1 | 0 | ✅ | ✅ | 4 |
 | `modifyCooldown` | 15 | 1 | 0 | ✅ | ✅ | 4 |
 | `proxyCast` | 16 | 1 | 0 | ✅ | ✅ | 1 |
 | `pull` | 13 | 1 | 0 | ✅ | ✅ | 5 |
 | `randomArea` | 8 | 0 | 0 | ✅ | ✅ | 5 |
-| `restore` | 4 | 0 | 0 | ✅ | ✅ | 43 |
+| `restore` | 4 | 0 | 0 | ✅ | ✅ | 45 |
 | `revive` | 5 | 0 | 0 | ✅ | ✅ | 0 |
 | `screenFlash` | 10 | 0 | 0 | ✅ | ✅ | 6 |
 | `screenShake` | 8 | 0 | 0 | ✅ | ✅ | 17 |
-| `shield` | 6 | 0 | 0 | ✅ | ✅ | 74 |
+| `shield` | 6 | 0 | 0 | ✅ | ✅ | 81 |
 | `shieldBreak` | 8 | 1 | 0 | ✅ | ✅ | 0 |
 | `spawnModelFx` | 32 | 0 | 0 | ✅ | ✅ | 55 |
 | `spawnProjectile` | 3 | 0 | 0 | ✅ | ✅ | 1 |
@@ -93,7 +93,7 @@ capability 指紋：`daccedce`
 | `onAbilityHit` | 22 | 0 | 0 | ✅ | ✅ | 4 |
 | `onAllyDamaged` | 22 | 0 | 0 | ✅ | ✅ | 3 |
 | `onAllyDeath` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onBasicAttack` | 22 | 0 | 0 | ✅ | ✅ | 74 |
+| `onBasicAttack` | 22 | 0 | 0 | ✅ | ✅ | 80 |
 | `onBossSpawn` | 22 | 0 | 0 | ✅ | ✅ | 0 |
 | `onBoundaryTouch` | 22 | 0 | 0 | ✅ | ✅ | 0 |
 | `onCrowdControlApplied` | 22 | 0 | 0 | ✅ | ✅ | 4 |
@@ -127,7 +127,7 @@ capability 指紋：`daccedce`
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
-| `chance` | 1 | 0 | 0 | ✅ | ✅ | 31 |
+| `chance` | 1 | 0 | 0 | ✅ | ✅ | 36 |
 | `distance` | 2 | 0 | 0 | ✅ | ✅ | 5 |
 | `equipment` | 0 | 0 | 0 | ✅ | ✅ | 0 |
 | `facing` | 2 | 0 | 0 | ✅ | ✅ | 0 |
@@ -135,14 +135,15 @@ capability 指紋：`daccedce`
 | `kind` | 2 | 0 | 0 | ✅ | ✅ | 2 |
 | `learned` | 2 | 0 | 0 | ✅ | ✅ | 4 |
 | `recentCast` | 0 | 0 | 0 | ✅ | ✅ | 5 |
-| `stat` | 0 | 0 | 0 | ✅ | ✅ | 13 |
+| `stat` | 0 | 0 | 0 | ✅ | ✅ | 14 |
 | `status` | 0 | 0 | 0 | ✅ | ✅ | 39 |
 
-## `model-preset`（17）
+## `model-preset`（18）
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
 | `hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804` | 1 | 0 | 0 | ⛔ | ✅ | 0 |
+| `hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d` | 1 | 0 | 0 | ⛔ | ⛔ | 0 |
 | `hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806` | 1 | 0 | 0 | ⛔ | ✅ | 0 |
 | `tpl-beam-roll` | 14 | 0 | 2 | ⛔ | ✅ | 13 |
 | `tpl-dragon-quake` | 7 | 0 | 0 | ⛔ | ✅ | 0 |
@@ -170,42 +171,42 @@ capability 指紋：`daccedce`
 | `beam-roll` | 21 | 1 | 2 | ⛔ | ✅ | 9 |
 | `blink` | 1 | 0 | 0 | ⛔ | ✅ | 21 |
 | `blink-strike` | 6 | 0 | 0 | ⛔ | ✅ | 3 |
-| `buff-self` | 6 | 0 | 0 | ⛔ | ✅ | 102 |
-| `charge-push` | 11 | 0 | 0 | ⛔ | ✅ | 14 |
+| `buff-self` | 6 | 0 | 0 | ⛔ | ✅ | 112 |
+| `charge-push` | 11 | 0 | 0 | ⛔ | ✅ | 16 |
 | `charge-resource` | 6 | 0 | 1 | ⛔ | ✅ | 0 |
 | `combo-finisher` | 13 | 0 | 0 | ⛔ | ✅ | 0 |
 | `dragon-quake` | 15 | 0 | 8 | ⛔ | ✅ | 0 |
 | `dragon-serpent` | 17 | 0 | 5 | ⛔ | ✅ | 0 |
-| `drain-leech` | 8 | 1 | 0 | ⛔ | ✅ | 6 |
+| `drain-leech` | 8 | 1 | 0 | ⛔ | ✅ | 7 |
 | `effect-sequence` | 5 | 0 | 0 | ⛔ | ✅ | 113 |
 | `event-passive` | 1 | 0 | 0 | ⛔ | ✅ | 35 |
-| `ground-nova` | 4 | 0 | 0 | ⛔ | ✅ | 5 |
+| `ground-nova` | 4 | 0 | 0 | ⛔ | ✅ | 9 |
 | `growth-charge` | 9 | 0 | 0 | ⛔ | ✅ | 0 |
 | `heal` | 4 | 0 | 0 | ⛔ | ✅ | 12 |
 | `instant-blast` | 4 | 0 | 0 | ⛔ | ✅ | 16 |
-| `leap-strike` | 10 | 0 | 0 | ⛔ | ✅ | 15 |
+| `leap-strike` | 10 | 0 | 0 | ⛔ | ✅ | 16 |
 | `life-manipulate` | 4 | 0 | 0 | ⛔ | ✅ | 0 |
 | `line-blast` | 15 | 3 | 0 | ⛔ | ✅ | 2 |
 | `line-strike` | 6 | 0 | 0 | ⛔ | ✅ | 12 |
-| `line-sweep` | 6 | 0 | 0 | ⛔ | ✅ | 20 |
-| `lock-combo` | 10 | 0 | 0 | ⛔ | ✅ | 12 |
+| `line-sweep` | 6 | 0 | 0 | ⛔ | ✅ | 23 |
+| `lock-combo` | 10 | 0 | 0 | ⛔ | ✅ | 14 |
 | `locust-line` | 11 | 0 | 0 | ⛔ | ✅ | 2 |
 | `locust-orb` | 12 | 0 | 0 | ⛔ | ✅ | 25 |
 | `locust-strike` | 11 | 0 | 0 | ⛔ | ✅ | 12 |
 | `locust-swarm` | 12 | 0 | 0 | ⛔ | ✅ | 2 |
 | `locust-travel` | 11 | 0 | 0 | ⛔ | ✅ | 5 |
-| `mark-stacks` | 20 | 0 | 0 | ⛔ | ✅ | 0 |
-| `on-attack` | 6 | 0 | 0 | ⛔ | ✅ | 0 |
+| `mark-stacks` | 20 | 0 | 0 | ⛔ | ✅ | 1 |
+| `on-attack` | 6 | 0 | 0 | ⛔ | ✅ | 6 |
 | `on-hit-react` | 5 | 0 | 1 | ⛔ | ✅ | 2 |
 | `orbit-array` | 7 | 0 | 1 | ⛔ | ✅ | 2 |
-| `periodic-field` | 9 | 2 | 0 | ⛔ | ✅ | 10 |
+| `periodic-field` | 9 | 2 | 0 | ⛔ | ✅ | 13 |
 | `projectile-strike` | 7 | 0 | 0 | ⛔ | ✅ | 18 |
 | `proxy-cast` | 8 | 0 | 1 | ⛔ | ✅ | 14 |
 | `proxy-fanout` | 5 | 0 | 0 | ⛔ | ✅ | 1 |
 | `pull-throw` | 12 | 1 | 0 | ⛔ | ✅ | 6 |
 | `radial-burst` | 12 | 1 | 0 | ⛔ | ✅ | 2 |
-| `random-barrage` | 9 | 0 | 0 | ⛔ | ✅ | 9 |
-| `single-strike` | 6 | 0 | 0 | ⛔ | ✅ | 85 |
+| `random-barrage` | 9 | 0 | 0 | ⛔ | ✅ | 11 |
+| `single-strike` | 6 | 0 | 0 | ⛔ | ✅ | 92 |
 | `spend-resource` | 6 | 0 | 0 | ⛔ | ✅ | 0 |
 | `summon-agent` | 12 | 0 | 1 | ⛔ | ✅ | 6 |
 | `teleport` | 6 | 0 | 0 | ⛔ | ✅ | 3 |

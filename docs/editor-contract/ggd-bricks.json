@@ -2,11 +2,11 @@
   "schema": "ggd-bricks@1",
   "note": "⭐ 積木清冊 —— 「有哪些積木、每一顆在哪個編輯器有表單、誰在用」的**唯一**一份答案（GH#989）。⛔ 產物：改 `tools/brick-census/bricks.ts` 再 `pnpm bricks:build`，⛔ 不要手改。⛔ 刻意沒有產生時間戳（隨時鐘變的欄位會讓 `--check` 永遠不相等）。",
   "capabilityFingerprint": "daccedce",
-  "adminFormSource": "apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（73 份）→ 後台自己的 readSchema()（1175 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。",
+  "adminFormSource": "apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（73 份）→ 後台自己的 readSchema()（1184 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。",
   "editorFormSource": "⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 177 顆有收據；收據裡沒有的才退回代理值。",
   "editorFormNeededFromCodex": "⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / vfx-call / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。",
   "counts": {
-    "total": 177,
+    "total": 178,
     "effect": 49,
     "hook": 33,
     "leaf": 10,
@@ -14,12 +14,12 @@
     "vfx-prim": 13,
     "vfx-subtype": 4,
     "vfx-call": 4,
-    "model-preset": 17,
+    "model-preset": 18,
     "gated": 137,
     "gaps": 55,
     "missingAdminForm": 55,
     "missingEditorForm": 4,
-    "zeroAdoption": 45
+    "zeroAdoption": 44
   },
   "gaps": [
     {
@@ -602,7 +602,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 124,
+      "usedBy": 134,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -741,7 +741,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 127,
+      "usedBy": 134,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1039,7 +1039,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 3,
+      "usedBy": 4,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1448,7 +1448,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 269,
+      "usedBy": 298,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1840,7 +1840,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 66,
+      "usedBy": 72,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -2110,7 +2110,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 37,
+      "usedBy": 42,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -2632,7 +2632,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 45,
+      "usedBy": 47,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -2681,7 +2681,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 10,
+      "usedBy": 11,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -2781,7 +2781,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 38,
+      "usedBy": 40,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -2841,7 +2841,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 57,
+      "usedBy": 62,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -3355,7 +3355,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 43,
+      "usedBy": 45,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -3577,7 +3577,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 74,
+      "usedBy": 81,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -5459,7 +5459,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 74,
+      "usedBy": 80,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
     },
     {
@@ -11633,7 +11633,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 31,
+      "usedBy": 36,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
     },
     {
@@ -11794,7 +11794,7 @@
       "params": [],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 13,
+      "usedBy": 14,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
     },
     {
@@ -11823,6 +11823,23 @@
       "editorForm": true,
       "usedBy": 0,
       "origin": "PRESET_FIELDS ∩ content/ability-templates/hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804.json.params"
+    },
+    {
+      "id": "hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d",
+      "layer": "model-preset",
+      "params": [
+        {
+          "name": "count",
+          "type": "number",
+          "default": 9,
+          "min": 2,
+          "max": 100
+        }
+      ],
+      "adminForm": false,
+      "editorForm": false,
+      "usedBy": 0,
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d.json.params"
     },
     {
       "id": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
@@ -13320,7 +13337,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 102,
+      "usedBy": 112,
       "origin": "template@1:content/ability-templates/hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692.json content/ability-templates/tpl-buff-self.json"
     },
     {
@@ -13418,7 +13435,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 14,
+      "usedBy": 16,
       "origin": "template@1:content/ability-templates/hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368.json content/ability-templates/tpl-charge-push.json"
     },
     {
@@ -13983,7 +14000,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 6,
+      "usedBy": 7,
       "origin": "template@1:content/ability-templates/hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990.json content/ability-templates/tpl-drain-leech.json"
     },
     {
@@ -14119,8 +14136,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 5,
-      "origin": "template@1:content/ability-templates/tpl-ground-nova.json"
+      "usedBy": 9,
+      "origin": "template@1:content/ability-templates/hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68.json content/ability-templates/tpl-ground-nova.json"
     },
     {
       "id": "growth-charge",
@@ -14404,7 +14421,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 15,
+      "usedBy": 16,
       "origin": "template@1:content/ability-templates/hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52.json content/ability-templates/tpl-leap-strike.json"
     },
     {
@@ -14718,8 +14735,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 20,
-      "origin": "template@1:content/ability-templates/tpl-line-sweep.json"
+      "usedBy": 23,
+      "origin": "template@1:content/ability-templates/hero-template.431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699.json content/ability-templates/tpl-line-sweep.json"
     },
     {
       "id": "lock-combo",
@@ -14816,7 +14833,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 12,
+      "usedBy": 14,
       "origin": "template@1:content/ability-templates/hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c.json content/ability-templates/tpl-lock-combo.json"
     },
     {
@@ -15373,13 +15390,13 @@
           "optional": true,
           "default": [
             {
-              "stat": "ad",
               "op": "pctAdd",
+              "stat": "ad",
               "value": 0.1
             },
             {
-              "stat": "maxHealth",
               "op": "pctAdd",
+              "stat": "maxHealth",
               "value": 0.1
             }
           ]
@@ -15425,8 +15442,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-mark-stacks.json"
+      "usedBy": 1,
+      "origin": "template@1:content/ability-templates/hero-template.c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8.json content/ability-templates/tpl-mark-stacks.json"
     },
     {
       "id": "on-attack",
@@ -15459,17 +15476,17 @@
                 "all": [
                   {
                     "not": {
+                      "is": "champion",
                       "kind": "kind",
-                      "subject": "target",
-                      "is": "champion"
+                      "subject": "target"
                     }
                   },
                   {
                     "kind": "stat",
-                    "subject": "target",
-                    "stat": "hp",
                     "mode": "percent",
                     "op": "<",
+                    "stat": "hp",
+                    "subject": "target",
                     "value": 0.35
                   }
                 ]
@@ -15477,9 +15494,9 @@
               {
                 "all": [
                   {
+                    "is": "champion",
                     "kind": "kind",
-                    "subject": "target",
-                    "is": "champion"
+                    "subject": "target"
                   },
                   {
                     "kind": "chance",
@@ -15520,8 +15537,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-on-attack.json"
+      "usedBy": 6,
+      "origin": "template@1:content/ability-templates/hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71.json content/ability-templates/tpl-on-attack.json"
     },
     {
       "id": "on-hit-react",
@@ -15735,7 +15752,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 10,
+      "usedBy": 13,
       "origin": "template@1:content/ability-templates/hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806.json content/ability-templates/tpl-periodic-field.json"
     },
     {
@@ -16247,8 +16264,8 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 9,
-      "origin": "template@1:content/ability-templates/tpl-random-barrage.json"
+      "usedBy": 11,
+      "origin": "template@1:content/ability-templates/hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d.json content/ability-templates/tpl-random-barrage.json"
     },
     {
       "id": "single-strike",
@@ -16302,7 +16319,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 85,
+      "usedBy": 92,
       "origin": "template@1:content/ability-templates/hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8.json content/ability-templates/tpl-single-strike.json"
     },
     {

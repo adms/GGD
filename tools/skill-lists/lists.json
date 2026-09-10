@@ -2514,6 +2514,50 @@
       "durationText": "10 秒"
     },
     {
+      "kind": "ability",
+      "id": "lol-lux.ex",
+      "name": "引路星芒",
+      "championName": "拉克絲",
+      "context": "施放後增益",
+      "op": "pctAdd",
+      "amountText": "+10%",
+      "tierText": "極小",
+      "durationText": "3 秒"
+    },
+    {
+      "kind": "ability",
+      "id": "lol-missfortune.ex",
+      "name": "藏帆備彈",
+      "championName": "好運姐",
+      "context": "施放後增益",
+      "op": "pctAdd",
+      "amountText": "+10%",
+      "tierText": "極小",
+      "durationText": "3 秒"
+    },
+    {
+      "kind": "ability",
+      "id": "lol-missfortune.w",
+      "name": "揚帆快步",
+      "championName": "好運姐",
+      "context": "施放後增益",
+      "op": "pctAdd",
+      "amountText": "+10%",
+      "tierText": "極小",
+      "durationText": "3 秒"
+    },
+    {
+      "kind": "ability",
+      "id": "lol-warwick.w",
+      "name": "循血疾行",
+      "championName": "沃維克",
+      "context": "施放後增益",
+      "op": "pctAdd",
+      "amountText": "+10%",
+      "tierText": "極小",
+      "durationText": "3 秒"
+    },
+    {
       "kind": "item",
       "id": "collar-of-the-deadly-soul",
       "name": "致命魂之首輪",

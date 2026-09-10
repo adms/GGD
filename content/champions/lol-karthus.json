@@ -35,6 +35,7 @@
     "armor": 0.45735714285714285,
     "ap": 0
   },
+  "msGrowthTier": "極小",
   "attributes": {
     "str": 13,
     "agi": 18,
@@ -49,26 +50,26 @@
     "Q": {
       "id": "lol-karthus.q",
       "name": "暮點",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "短暫吟唱後，在指定區域引爆小級魔法傷害。",
       "slot": "Q",
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        30,
-        30,
-        30,
-        30
+        30.0,
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 5.5,
+      "radius": 6.0,
       "rangeTier": "中",
       "cooldownTier": "極小",
       "targetsEnemies": true,
@@ -82,7 +83,7 @@
           }
         }
       ],
-      "castTimeSec": 0.3,
+      "castTimeSec": 1.133,
       "castTimeTier": "中",
       "template": {
         "ref": "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
@@ -93,31 +94,32 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.3
+          "castTimeSec": 1.133
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:0a7ab816857d7853bd2bea5bf8ce814de44a27ea690ca8aaf1aec1c0c37deef1"
-      }
+      },
+      "radiusTier": "中"
     },
     "W": {
       "id": "lol-karthus.w",
       "name": "亡途繫縛",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "以單體咒縛取代牆體，命中敵人後減速 35%，持續 2 秒。",
       "slot": "W",
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        15,
-        15,
-        15,
-        15
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -141,7 +143,7 @@
           "moveSpeedMult": 0.65
         }
       ],
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.567,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
@@ -151,7 +153,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.1
+          "castTimeSec": 0.567
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
@@ -160,26 +162,25 @@
     "E": {
       "id": "lol-karthus.e",
       "name": "荒蕪迴音",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "以自身為中心維持 3 秒傷害領域，每秒傷害一次。",
       "slot": "E",
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        144,
-        144,
-        144,
-        144
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "manaCostTier": "小",
-      "range": 6,
-      "rangeTier": "中",
+      "range": 0.0,
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
@@ -206,7 +207,7 @@
           "anchor": "caster"
         }
       ],
-      "castTimeSec": 0.1,
+      "castTimeSec": 0.267,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
@@ -218,7 +219,7 @@
           "applyTo": "enemies",
           "damageTier": "極小",
           "damageType": "magic",
-          "castTimeSec": 0.3,
+          "castTimeSec": 0.267,
           "radius": 4.5
         },
         "inheritDefaults": true,
@@ -228,24 +229,24 @@
     "R": {
       "id": "lol-karthus.r",
       "name": "暮鐘終曲",
-      "provenance": "editor-json",
+      "provenance": "w3x-import",
       "description": "經極大級吟唱，在極大級施放距離內引爆指定區域；不是全圖技能。",
       "slot": "R",
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        120,
-        120,
-        120
+        120.0,
+        120.0,
+        120.0
       ],
       "manaCost": [
-        576,
-        576,
-        576
+        576.0,
+        576.0,
+        576.0
       ],
       "manaCostTier": "大",
       "range": 12,
-      "radius": 5.5,
+      "radius": 6.0,
       "rangeTier": "極大",
       "cooldownTier": "極大",
       "targetsEnemies": true,
@@ -259,7 +260,7 @@
           }
         }
       ],
-      "castTimeSec": 1,
+      "castTimeSec": 3.2,
       "castTimeTier": "極大",
       "template": {
         "ref": "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
@@ -270,11 +271,12 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.3
+          "castTimeSec": 3.2
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:0a7ab816857d7853bd2bea5bf8ce814de44a27ea690ca8aaf1aec1c0c37deef1"
-      }
+      },
+      "radiusTier": "中"
     }
   },
   "exAbility": "lol-karthus.ex",

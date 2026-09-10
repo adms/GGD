@@ -26,12 +26,12 @@ owner 技能模板群組 **⑨** 逐字：
 
 | | |
 |---|---:|
-| 掃到的技能 | **865** |
+| 掃到的技能 | **907** |
 | 不同的形狀（群） | **46** |
-| 已經接上模板的技能 | **584**（67%） |
+| 已經接上模板的技能 | **626**（69%） |
 | ⛔ 還沒接模板的技能 | **281** |
 | 模板文件總數 | **58** |
-| ⛔ 一支技能都沒引用的模板 | **14** |
+| ⛔ 一支技能都沒引用的模板 | **9** |
 
 ## 1. 形狀群 → 支數 → 有沒有模板 → 建議
 
@@ -40,9 +40,9 @@ owner 技能模板群組 **⑨** 逐字：
 | # | 形狀（軸的組合） | 支數 | 已接模板 | 實測產出這個形狀的模板 | 建議 |
 |---:|---|---:|---:|---|---|
 | 1 | 持續＋續效特效 | **181** | 141 | hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8・hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b・hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692・hero-template.c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f55010・tpl-apply-status・tpl-buff-self・tpl-instant-blast・tpl-proxy-cast・tpl-single-strike・tpl-transform | 沿用（40 支還沒接） |
-| 2 | 持續 | **135** | 86 | hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77・tpl-buff-self・tpl-proxy-cast・tpl-single-strike・tpl-transform | 沿用（49 支還沒接） |
-| 3 | 續效特效 | **119** | 67 | hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8・hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6・hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・tpl-apply-status・tpl-area-strike・tpl-ground-nova・tpl-proxy-fanout・tpl-single-strike | 沿用（52 支還沒接） |
-| 4 | （無時序形狀） | **115** | 70 | hero-template.a0174c3324e732c421ab641d1e36cd2f49f758475f851ee4・hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77・tpl-area-strike・tpl-blink・tpl-blink-strike・tpl-heal・tpl-instant-blast・tpl-single-strike | ⛔ 逐支確認是**真的沒有**還是**沒實作**（見第 2 節差集） |
+| 2 | 持續 | **150** | 101 | hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8・hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692・hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77・tpl-buff-self・tpl-proxy-cast・tpl-single-strike・tpl-transform | 沿用（49 支還沒接） |
+| 3 | （無時序形狀） | **126** | 81 | hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8・hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71・hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68・hero-template.a0174c3324e732c421ab641d1e36cd2f49f758475f851ee4・hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77・tpl-area-strike・tpl-blink・tpl-blink-strike・tpl-heal・tpl-instant-blast・tpl-single-strike | ⛔ 逐支確認是**真的沒有**還是**沒實作**（見第 2 節差集） |
+| 4 | 續效特效 | **119** | 67 | hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8・hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6・hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・tpl-apply-status・tpl-area-strike・tpl-ground-nova・tpl-proxy-fanout・tpl-single-strike | 沿用（52 支還沒接） |
 | 5 | 持續＋續效特效＋路徑 | **37** | 29 | hero-template.231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd6・hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52・tpl-buff-self・tpl-leap-strike・tpl-line-strike・tpl-pull-throw・tpl-single-strike | 沿用（8 支還沒接） |
 | 6 | 續效特效＋路徑 | **37** | 35 | hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16・hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71・hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4・tpl-line-strike・tpl-projectile-strike・tpl-single-strike | 沿用（2 支還沒接） |
 | 7 | 等待＋迴圈＋續效特效＋多段＋路徑 | **30** | 27 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・tpl-line-sweep・tpl-traveling-wave | 沿用（3 支還沒接） |
@@ -52,39 +52,39 @@ owner 技能模板群組 **⑨** 逐字：
 | 11 | 路徑 | **12** | 7 | tpl-projectile-strike | 沿用（5 支還沒接） |
 | 12 | 迴圈＋持續＋續效特效＋多段 | **12** | 12 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990・tpl-area-strike・tpl-random-barrage | ✅ 全部接上了 |
 | 13 | 迴圈＋持續＋續效特效＋多段＋路徑 | **12** | 12 | hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c・tpl-lock-combo | ✅ 全部接上了 |
-| 14 | 持續＋多段 | **9** | 6 | tpl-area-strike・tpl-summon-agent | 沿用（3 支還沒接） |
-| 15 | 迴圈＋續效特效＋多段 | **8** | 3 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550 | 沿用（5 支還沒接） |
-| 16 | 迴圈＋持續 | **7** | 5 | tpl-periodic-field・tpl-single-strike | 沿用（2 支還沒接） |
-| 17 | 迴圈＋持續＋多段 | **7** | 6 | tpl-area-strike・tpl-drain-leech | 沿用（1 支還沒接） |
+| 14 | 迴圈＋持續＋多段 | **10** | 9 | hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d・hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990・tpl-area-strike・tpl-drain-leech | 沿用（1 支還沒接） |
+| 15 | 持續＋多段 | **9** | 6 | tpl-area-strike・tpl-summon-agent | 沿用（3 支還沒接） |
+| 16 | 迴圈＋續效特效＋多段 | **8** | 3 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550 | 沿用（5 支還沒接） |
+| 17 | 迴圈＋持續 | **7** | 5 | tpl-periodic-field・tpl-single-strike | 沿用（2 支還沒接） |
 | 18 | 持續＋續效特效＋多段 | **6** | 6 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・tpl-summon-agent | ✅ 全部接上了 |
-| 19 | 等待＋路徑 | **6** | 1 | tpl-single-strike | 沿用（5 支還沒接） |
-| 20 | 等待＋迴圈＋持續＋續效特效＋多段 | **6** | 4 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806・tpl-periodic-field | 沿用（2 支還沒接） |
-| 21 | 迴圈＋持續＋續效特效 | **6** | 4 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・tpl-single-strike | 沿用（2 支還沒接） |
-| 22 | 持續＋續效特效＋多段＋路徑 | **5** | 4 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・tpl-projectile-strike・tpl-proxy-cast | 沿用（1 支還沒接） |
-| 23 | 等待＋迴圈＋持續＋多段＋路徑 | **5** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-growth-charge・tpl-mark-stacks（另有 2 份較不貼合） |
-| 24 | 持續＋路徑 | **4** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-mark-stacks（另有 2 份較不貼合） |
-| 25 | 等待＋迴圈＋持續＋多段 | **4** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-growth-charge（另有 2 份較不貼合） |
-| 26 | 等待＋迴圈＋持續＋續效特效 | **4** | 2 | tpl-periodic-field | 沿用（2 支還沒接） |
-| 27 | 等待＋迴圈＋持續＋續效特效＋多段＋路徑 | **4** | 2 | hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806 | 沿用（2 支還沒接） |
-| 28 | 迴圈＋持續＋續效特效＋路徑 | **4** | 2 | tpl-projectile-strike | 沿用（2 支還沒接） |
-| 29 | 多段＋路徑 | **3** | 3 | tpl-line-sweep・tpl-orbit-array | ✅ 全部接上了 |
-| 30 | 等待＋持續＋續效特效 | **3** | 2 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550 | 沿用（1 支還沒接） |
-| 31 | 等待＋續效特效 | **3** | 2 | tpl-area-strike・tpl-single-strike | 沿用（1 支還沒接） |
-| 32 | 等待＋迴圈＋多段＋路徑 | **3** | 0 | — | 併進既有模板的參數 |
-| 33 | 迴圈 | **3** | 1 | hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77 | 沿用（2 支還沒接） |
-| 34 | 迴圈＋持續＋多段＋路徑 | **3** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-growth-charge・tpl-mark-stacks（另有 2 份較不貼合） |
-| 35 | 等待＋多段＋路徑 | **2** | 1 | tpl-area-strike | 沿用（1 支還沒接） |
-| 36 | 等待＋持續＋路徑 | **2** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-mark-stacks（另有 2 份較不貼合） |
+| 19 | 持續＋路徑 | **6** | 2 | hero-template.c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8・hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52 | 沿用（4 支還沒接） |
+| 20 | 等待＋路徑 | **6** | 1 | tpl-single-strike | 沿用（5 支還沒接） |
+| 21 | 等待＋迴圈＋多段＋路徑 | **6** | 3 | hero-template.431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699 | 沿用（3 支還沒接） |
+| 22 | 等待＋迴圈＋持續＋多段 | **6** | 2 | hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806 | 沿用（4 支還沒接） |
+| 23 | 等待＋迴圈＋持續＋多段＋路徑 | **6** | 1 | hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806 | 沿用（5 支還沒接） |
+| 24 | 等待＋迴圈＋持續＋續效特效＋多段 | **6** | 4 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806・tpl-periodic-field | 沿用（2 支還沒接） |
+| 25 | 迴圈＋持續＋續效特效 | **6** | 4 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・tpl-single-strike | 沿用（2 支還沒接） |
+| 26 | 持續＋續效特效＋多段＋路徑 | **5** | 4 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・tpl-projectile-strike・tpl-proxy-cast | 沿用（1 支還沒接） |
+| 27 | 迴圈＋持續＋多段＋路徑 | **5** | 2 | hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c | 沿用（3 支還沒接） |
+| 28 | 等待＋持續＋路徑 | **4** | 2 | hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368 | 沿用（2 支還沒接） |
+| 29 | 等待＋迴圈＋持續＋續效特效 | **4** | 2 | tpl-periodic-field | 沿用（2 支還沒接） |
+| 30 | 等待＋迴圈＋持續＋續效特效＋多段＋路徑 | **4** | 2 | hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806 | 沿用（2 支還沒接） |
+| 31 | 迴圈＋持續＋續效特效＋路徑 | **4** | 2 | tpl-projectile-strike | 沿用（2 支還沒接） |
+| 32 | 多段＋路徑 | **3** | 3 | tpl-line-sweep・tpl-orbit-array | ✅ 全部接上了 |
+| 33 | 等待＋持續＋續效特效 | **3** | 2 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550 | 沿用（1 支還沒接） |
+| 34 | 等待＋續效特效 | **3** | 2 | tpl-area-strike・tpl-single-strike | 沿用（1 支還沒接） |
+| 35 | 迴圈 | **3** | 1 | hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77 | 沿用（2 支還沒接） |
+| 36 | 等待＋多段＋路徑 | **2** | 1 | tpl-area-strike | 沿用（1 支還沒接） |
 | 37 | 等待＋迴圈 | **2** | 0 | — | 併進既有模板的參數 |
 | 38 | 等待＋迴圈＋續效特效 | **2** | 0 | — | 併進既有模板的參數 |
 | 39 | 等待＋迴圈＋續效特效＋多段 | **2** | 2 | hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550 | ✅ 全部接上了 |
 | 40 | 續效特效＋多段＋路徑 | **2** | 1 | tpl-heal | 沿用（1 支還沒接） |
 | 41 | 迴圈＋多段 | **2** | 0 | — | 併進既有模板的參數 |
-| 42 | 迴圈＋續效特效＋多段＋路徑 | **2** | 2 | tpl-single-strike・tpl-traveling-wave | ✅ 全部接上了 |
-| 43 | 等待＋持續＋多段＋路徑 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-mark-stacks（另有 2 份較不貼合） |
-| 44 | 等待＋續效特效＋多段＋路徑 | **1** | 1 | tpl-area-strike | ✅ 全部接上了 |
-| 45 | 等待＋迴圈＋多段 | **1** | 0 | — | 併進既有模板的參數 |
-| 46 | 迴圈＋多段＋路徑 | **1** | 0 | — | 併進既有模板的參數 |
+| 42 | 迴圈＋多段＋路徑 | **2** | 1 | hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8 | 沿用（1 支還沒接） |
+| 43 | 迴圈＋續效特效＋多段＋路徑 | **2** | 2 | tpl-single-strike・tpl-traveling-wave | ✅ 全部接上了 |
+| 44 | 等待＋持續＋多段＋路徑 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-mark-stacks（另有 2 份較不貼合） |
+| 45 | 等待＋續效特效＋多段＋路徑 | **1** | 1 | tpl-area-strike | ✅ 全部接上了 |
+| 46 | 等待＋迴圈＋多段 | **1** | 0 | — | 併進既有模板的參數 |
 
 ## 2. ⭐ 宣稱 vs 實作 —— 有幾支技能在等一個不存在的模板
 
@@ -93,20 +93,20 @@ owner 技能模板群組 **⑨** 逐字：
 
 | 軸 | 說明宣稱 | JSON 實作 | ⛔ 宣稱了但沒實作 | 這一格擋住的是什麼 |
 |---|---:|---:|---:|---|
-| 等待 | 39 | 133 | **22** | 延遲結算／吟唱／飛行時間 —— 躲不躲得掉 |
-| 迴圈 | 106 | 130 | **50** | 每隔 T 秒重複 —— 排程與終止條件 |
-| 持續 | 164 | 495 | **26** | 有期間的狀態，到期自己收掉 |
-| 續效特效 | 20 | 538 | **0** | 特效自己的壽命／掛載／分層（⚠️ 宣稱側很弱，差集不計） |
-| 多段 | 17 | 144 | **8** | 一次施放拆成多下（連段／連鎖） |
-| 路徑 | 122 | 228 | **33** | 效果沿著空間移動 |
+| 等待 | 42 | 141 | **24** | 延遲結算／吟唱／飛行時間 —— 躲不躲得掉 |
+| 迴圈 | 110 | 142 | **50** | 每隔 T 秒重複 —— 排程與終止條件 |
+| 持續 | 169 | 522 | **26** | 有期間的狀態，到期自己收掉 |
+| 續效特效 | 22 | 538 | **0** | 特效自己的壽命／掛載／分層（⚠️ 宣稱側很弱，差集不計） |
+| 多段 | 18 | 156 | **8** | 一次施放拆成多下（連段／連鎖） |
+| 路徑 | 126 | 239 | **35** | 效果沿著空間移動 |
 
 ⇒ ⭐ **最擋人的一條軸是「迴圈」，50 支技能的說明宣稱它而 JSON 裡沒有。**
 
-⚠️ **前搖（`castTimeSec`）不在上表**：706/865 支有它，40 個相異值連續分布在 0.067–3.367 秒，中位數 0.667 秒。
+⚠️ **前搖（`castTimeSec`）不在上表**：741/907 支有它，41 個相異值連續分布在 0.067–3.367 秒，中位數 0.667 秒。
 它是**每一支技能都有的施法動作長度**（多半是 w3x 匯進來的），⛔ 不是作者寫下的機制 ——
-算進「等待」軸的話這條軸會命中 865 支裡的 715 支，於是它分不出任何一群。
+算進「等待」軸的話這條軸會命中 907 支裡的 750 支，於是它分不出任何一群。
 
-<details><summary>「等待」缺口逐支（22 支）</summary>
+<details><summary>「等待」缺口逐支（24 支）</summary>
 
 | 技能 | 名稱 | 已接模板 | 目前形狀 |
 |---|---|---|---|
@@ -132,6 +132,8 @@ owner 技能模板群組 **⑨** 逐字：
 | `godie-osam.ex` | 34-002 冥道殘月破 | tpl-instant-blast | 持續＋續效特效 |
 | `godie-u034.ex` | 06-002 殺意 | — | （無時序形狀） |
 | `godie-ucrl.ex` | 06-002 殺意 | — | （無時序形狀） |
+| `lol-karthus.q` | 暮點 | hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68 | （無時序形狀） |
+| `lol-karthus.r` | 暮鐘終曲 | hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68 | （無時序形狀） |
 
 </details>
 
@@ -240,7 +242,7 @@ owner 技能模板群組 **⑨** 逐字：
 
 </details>
 
-<details><summary>「路徑」缺口逐支（33 支）</summary>
+<details><summary>「路徑」缺口逐支（35 支）</summary>
 
 | 技能 | 名稱 | 已接模板 | 目前形狀 |
 |---|---|---|---|
@@ -277,6 +279,8 @@ owner 技能模板群組 **⑨** 逐字：
 | `godie-u00o.w` | 76-02 伸縮自如的橡膠火箭砲 | tpl-single-strike | 續效特效 |
 | `godie-u010.q` | 38-01 邪王炎殺劍 | tpl-single-strike | 持續 |
 | `godie-uvng.q` | 38-01 邪王炎殺劍 | tpl-single-strike | 持續 |
+| `lol-leesin.q` | 聽雷探手 | hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8 | （無時序形狀） |
+| `lol-xerath.e` | 奧能拘束 | hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8 | 持續 |
 
 </details>
 
@@ -354,9 +358,9 @@ CLAUDE.md 第〇·五守則：「⛔ **不要逐支實作。** 按**擋住的支
 | 軸 | 擋住幾支 | 現成的模板 | 狀態 | 該做什麼 |
 |---|---:|---|---|---|
 | 迴圈 | **50** | `tpl-drain-leech`・`tpl-lock-combo` | draft・enabled | ⭐ **模板已在、而且真的跑出這條軸** ⇒ 把這 50 支接上去（改內容，⛔ 不必動引擎） |
-| 路徑 | **33** | `tpl-charge-push`・`tpl-leap-strike` | draft・enabled | ⭐ **模板已在、而且真的跑出這條軸** ⇒ 把這 33 支接上去（改內容，⛔ 不必動引擎） |
+| 路徑 | **35** | `tpl-charge-push`・`tpl-leap-strike` | draft・enabled | ⭐ **模板已在、而且真的跑出這條軸** ⇒ 把這 35 支接上去（改內容，⛔ 不必動引擎） |
 | 持續 | **26** | `tpl-area-strike`・`tpl-buff-self` | enabled | ⭐ **模板已在、而且真的跑出這條軸** ⇒ 把這 26 支接上去（改內容，⛔ 不必動引擎） |
-| 等待 | **22** | `tpl-charge-push`・`tpl-teleport` | draft・enabled | ⭐ **模板已在、而且真的跑出這條軸** ⇒ 把這 22 支接上去（改內容，⛔ 不必動引擎） |
+| 等待 | **24** | `tpl-charge-push`・`tpl-teleport` | draft・enabled | ⭐ **模板已在、而且真的跑出這條軸** ⇒ 把這 24 支接上去（改內容，⛔ 不必動引擎） |
 | 多段 | **8** | `tpl-area-strike`・`tpl-drain-leech` | enabled | ⭐ **模板已在、而且真的跑出這條軸** ⇒ 把這 8 支接上去（改內容，⛔ 不必動引擎） |
 
 ⚠️ **另一個方向的浪費**：有 **20** 份模板參數面已經做好（≥5 格參數）卻**一支技能都沒引用** ——
@@ -370,11 +374,11 @@ CLAUDE.md 第〇·五守則：「⛔ **不要逐支實作。** 按**擋住的支
 
 | 欄位 | 出現次數 |
 |---|---:|
-| `shield.onExisting` | 67 |
-| `chance.p` | 31 |
+| `shield.onExisting` | 74 |
+| `chance.p` | 36 |
 | `consumeStatus.onConsumed` | 28 |
-| `knockback.launchHeight` | 16 |
-| `dot.tickOnApply` | 11 |
+| `knockback.launchHeight` | 18 |
+| `dot.tickOnApply` | 13 |
 | `dispel.order` | 10 |
 | `knockback.subtractGap` | 7 |
 | `knockback.uncontrollable` | 7 |
@@ -398,6 +402,8 @@ CLAUDE.md 第〇·五守則：「⛔ **不要逐支實作。** 按**擋住的支
 | `(hook).on=onHeal` | 2 |
 | `applyStatus.healingTakenMult` | 2 |
 | `(hook).on=onCrowdControlReceived` | 2 |
+| `chainLightning.revisit` | 2 |
+| `chainLightning.maxTotalJumps` | 2 |
 | `applyStatus.sourceScope` | 1 |
 | `status.appliedBy` | 1 |
 | `(hook).on=onUltimateHit` | 1 |
@@ -405,6 +411,4 @@ CLAUDE.md 第〇·五守則：「⛔ **不要逐支實作。** 按**擋住的支
 | `applyStatus.lifestealMult` | 1 |
 | `applyStatus.regenMult` | 1 |
 | `(hook).on=onShieldGained` | 1 |
-| `chainLightning.revisit` | 1 |
-| `chainLightning.maxTotalJumps` | 1 |
 

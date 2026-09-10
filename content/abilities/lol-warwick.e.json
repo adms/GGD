@@ -1,27 +1,27 @@
 {
   "id": "lol-warwick.e",
   "name": "驚獵嚎聲",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "指定近處敵人，造成傷害並使其恐懼 0.8 秒。",
   "slot": "E",
   "castType": "targeted",
   "maxRank": 4,
   "cooldown": [
-    15,
-    15,
-    15,
-    15
+    15.0,
+    15.0,
+    15.0,
+    15.0
   ],
+  "cooldownTier": "小",
   "manaCost": [
-    144,
-    144,
-    144,
-    144
+    144.0,
+    144.0,
+    144.0,
+    144.0
   ],
   "manaCostTier": "小",
   "range": 3,
   "rangeTier": "極小",
-  "cooldownTier": "小",
   "targetsEnemies": true,
   "effects": [
     {
@@ -40,7 +40,7 @@
       "feared": true
     }
   ],
-  "castTimeSec": 0.1,
+  "castTimeSec": 0.567,
   "castTimeTier": "小",
   "template": {
     "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
@@ -50,7 +50,7 @@
         "ratios": []
       },
       "damageType": "magic",
-      "castTimeSec": 0.1
+      "castTimeSec": 0.567
     },
     "inheritDefaults": true,
     "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"

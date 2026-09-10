@@ -2,10 +2,10 @@
   "schema": "ggd-declared-shape-census@1",
   "note": "⭐ 「宣告的欄位」對「實際的結構／卡面」（GH#948）—— ⛔ 產物，改 `tools/declared-shape/gen.ts`，⛔ 不要手改。⚠️ 卡面比對前**剝掉 `「…」`**（第〇·六守則細則②：那是角色對白，⛔ 不是效果）。",
   "counts": {
-    "abilities": 865,
+    "abilities": 907,
     "passiveWithCastTime": 34,
     "cardSaysWideButTierIsNot": 7,
-    "cooldownArrayAlongsideTier": 704,
+    "cooldownArrayAlongsideTier": 739,
     "basicAttackHookNotOnCard": 34
   },
   "passiveWithCastTime": [
@@ -184,7 +184,7 @@
     }
   ],
   "cooldownArrayAlongsideTier": {
-    "count": 704,
+    "count": 739,
     "sample": [
       "b2-aladdin.e",
       "b2-aladdin.ex",

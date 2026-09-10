@@ -1,26 +1,26 @@
 {
   "id": "lol-leesin.r",
   "name": "斷陣踢",
-  "provenance": "editor-json",
+  "provenance": "w3x-import",
   "description": "短距進身後打擊並向前推開敵人，不附帶無敵或全場追蹤。",
   "slot": "R",
   "castType": "ground",
   "maxRank": 3,
   "cooldown": [
-    90,
-    90,
-    90
+    90.0,
+    90.0,
+    90.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
-    576,
-    576,
-    576
+    576.0,
+    576.0,
+    576.0
   ],
   "manaCostTier": "大",
   "range": 4.5,
   "radius": 2.75,
   "rangeTier": "小",
-  "cooldownTier": "大",
   "targetsEnemies": true,
   "effects": [
     {
@@ -50,7 +50,7 @@
       ]
     }
   ],
-  "castTimeSec": 0.1,
+  "castTimeSec": 1.833,
   "castTimeTier": "小",
   "template": {
     "ref": "hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368",
@@ -68,7 +68,7 @@
       "pushSpeed": 872,
       "pushFrom": "facing",
       "pushLaunchHeight": 100,
-      "castTimeSec": 0.3
+      "castTimeSec": 1.833
     },
     "inheritDefaults": true,
     "contentSha256": "sha256:3f80978b955a7744a0e86651ddce738ec5f483e55ecfaa7213a23d6d735803e2"

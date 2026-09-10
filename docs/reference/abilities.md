@@ -2,14 +2,14 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_65fe17414cf7`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
-> 資料列：**865**　·　開放名單來源：快照 `docs/reference/_curation-snapshot.json`（whitelist updatedAt `2026-09-09T20:42:53.697491Z`；英雄 123 · 道具 116 · 技能 615）；即時名單 `GET /api/v1/curation/whitelist`
+> 產生自 contentVersion **`cv_0885ffae3078`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 資料列：**907**　·　開放名單來源：快照 `docs/reference/_curation-snapshot.json`（whitelist updatedAt `2026-09-10T06:39:58.329461Z`；英雄 130 · 道具 116 · 技能 650）；即時名單 `GET /api/v1/curation/whitelist`
 
-`content/abilities/*.json` 共 **865** 份，每個英雄每個 slot 一份：天生 PASSIVE 143　·　Q 145　·　W 145　·　E 145　·　R 145　·　EX 142。
+`content/abilities/*.json` 共 **907** 份，每個英雄每個 slot 一份：天生 PASSIVE 150　·　Q 152　·　W 152　·　E 152　·　R 152　·　EX 149。
 
 > 本檔的數值是 `content/` 的**原始值**，未套用 `combat-env` 全域倍率（`content/config/combat-env.json`）。遊戲內顯示的一律是乘算後的最終值，所以畫面上的冷卻／傷害／生命與這裡不會相同 —— 那是預期行為，不是資料錯誤。
 >
-> **`slot` 有六種：`PASSIVE`（天生技）＋ Q／W／E／R／EX。** 天生技是 w3x 的 `NN-00`，**等級 1 就擁有**，doc id 是 `<championId>.passive`，由 champion doc 的 `passiveAbility` 指過來；共 **143** 份（109 份 `innateKind:passive` 純被動、34 份 `innateKind:active` 有冷卻的天生主動）。原本的匯入把這個 slot 整個漏掉了，這批是從原始地圖還原回來的。
+> **`slot` 有六種：`PASSIVE`（天生技）＋ Q／W／E／R／EX。** 天生技是 w3x 的 `NN-00`，**等級 1 就擁有**，doc id 是 `<championId>.passive`，由 champion doc 的 `passiveAbility` 指過來；共 **150** 份（116 份 `innateKind:passive` 純被動、34 份 `innateKind:active` 有冷卻的天生主動）。原本的匯入把這個 slot 整個漏掉了，這批是從原始地圖還原回來的。
 >
 > **不要跟 champion doc 上那個舊的 `passive` 區塊搞混**：那是掛在 QWER 技能上的被動型效果（`型態` 欄標「被動」的那些），跟天生技 slot 是兩回事。
 >
@@ -878,6 +878,48 @@
 | `godie-zombiex.e` | 100-03 咕咕嘎嘎 | E | 主動攻擊 | — | `godie-zombiex` 喪標麥可 | ✅ | 在地面攤開一片黑泥沼，踩進去的敵人受傷並被黏住定身。 |
 | `godie-zombiex.r` | 100-04 百式・哈基米 | R | 主動攻擊 | — | `godie-zombiex` 喪標麥可 | ✅ | 聖杯的黑泥從體內爆發，對周圍造成大範圍魔法傷害並重減速。 |
 | `godie-zombiex.ex` | 100-002 此世全部之咖哩・バタンキュー | EX | 強化 | — | `godie-zombiex` 喪標麥可 | ✅ | 倒地詐死再猛然起身，黑泥狂化，短時間大幅提升攻擊力。マイ・キョー・グァ・エ・ミャー、キョー・グァ・カン・リンニャー。 |
+| `lol-karthus.passive` | 未竟尾聲 | PASSIVE | 天生·被動 | — | `lol-karthus` 卡爾瑟斯 | — | 每場持有一層續命標記；致命傷時消耗標記並恢復部分生命。死亡後不能施法。 |
+| `lol-karthus.q` | 暮點 | Q | 主動 | — | `lol-karthus` 卡爾瑟斯 | ✅ | 短暫吟唱後，在指定區域引爆小級魔法傷害。 |
+| `lol-karthus.w` | 亡途繫縛 | W | 主動 | — | `lol-karthus` 卡爾瑟斯 | ✅ | 以單體咒縛取代牆體，命中敵人後減速 35%，持續 2 秒。 |
+| `lol-karthus.e` | 荒蕪迴音 | E | 主動 | — | `lol-karthus` 卡爾瑟斯 | ✅ | 以自身為中心維持 3 秒傷害領域，每秒傷害一次。 |
+| `lol-karthus.r` | 暮鐘終曲 | R | 主動 | — | `lol-karthus` 卡爾瑟斯 | ✅ | 經極大級吟唱，在極大級施放距離內引爆指定區域；不是全圖技能。 |
+| `lol-karthus.ex` | 靜默幕衣 | EX | 主動 | — | `lol-karthus` 卡爾瑟斯 | ✅ | 獲得只吸收魔法傷害的 3 秒護盾，提供一段施法準備時間。 |
+| `lol-leesin.passive` | 回響拳 | PASSIVE | 天生·被動 | — | `lol-leesin` 李星 | — | 普攻追加極小級物理傷害，內置冷卻 2 秒。 |
+| `lol-leesin.q` | 聽雷探手 | Q | 主動 | — | `lol-leesin` 李星 | ✅ | 以中級距射程攻擊指定敵人；不會自動開啟第二段位移。 |
+| `lol-leesin.w` | 定心護體 | W | 主動 | — | `lol-leesin` 李星 | ✅ | 獲得 3 秒護盾與 20% 攻速加成。 |
+| `lol-leesin.e` | 震地迴響 | E | 主動 | — | `lol-leesin` 李星 | ✅ | 在指定近處引爆小級物理傷害，保留可瞄準的落點。 |
+| `lol-leesin.r` | 斷陣踢 | R | 主動 | — | `lol-leesin` 李星 | ✅ | 短距進身後打擊並向前推開敵人，不附帶無敵或全場追蹤。 |
+| `lol-leesin.ex` | 逐響躍步 | EX | 主動 | — | `lol-leesin` 李星 | ✅ | 朝落點跳躍並在著地時打擊附近敵人，作為獨立追擊技能。 |
+| `lol-lux.passive` | 餘光 | PASSIVE | 天生·被動 | — | `lol-lux` 拉克絲 | — | 普攻追加極小級魔法傷害，內置冷卻 2 秒。 |
+| `lol-lux.q` | 稜光束縛 | Q | 主動 | — | `lol-lux` 拉克絲 | ✅ | 命中指定敵人並鎖足 0.8 秒，不會同時束縛第二個目標。 |
+| `lol-lux.w` | 折光護衣 | W | 主動 | — | `lol-lux` 拉克絲 | ✅ | 獲得持續 3 秒的全傷害護盾，同名護盾保留較大值。 |
+| `lol-lux.e` | 流光之域 | E | 主動 | — | `lol-lux` 拉克絲 | ✅ | 在落點留下 3 秒光域，每秒造成極小級魔法傷害。 |
+| `lol-lux.r` | 破曉光路 | R | 主動 | — | `lol-lux` 拉克絲 | ✅ | 向前依序展開四段光束判定；敵人可受到相交段落的傷害。 |
+| `lol-lux.ex` | 引路星芒 | EX | 主動 | — | `lol-lux` 拉克絲 | ✅ | 獲得 3 秒極小級移速加成，並恢復自身少量生命。 |
+| `lol-missfortune.passive` | 先聲奪人 | PASSIVE | 天生·被動 | — | `lol-missfortune` 好運姐 | — | 普攻追加極小級物理傷害，內置冷卻 2 秒。 |
+| `lol-missfortune.q` | 回聲雙響 | Q | 主動 | — | `lol-missfortune` 好運姐 | ✅ | 先命中指定敵人，再發出最多兩人的物理連鎖；起點會承受追加一擊。 |
+| `lol-missfortune.w` | 揚帆快步 | W | 主動 | — | `lol-missfortune` 好運姐 | ✅ | 獲得 3 秒極小級移速加成與 20% 攻速加成。 |
+| `lol-missfortune.e` | 緋帆彈雨 | E | 主動 | — | `lol-missfortune` 好運姐 | ✅ | 在指定區域維持 3 秒彈雨，每秒造成極小級魔法傷害。 |
+| `lol-missfortune.r` | 扇港齊射 | R | 主動 | — | `lol-missfortune` 好運姐 | ✅ | 向指定區域連續投下六發物理彈幕，散布及命中區域均有界。 |
+| `lol-missfortune.ex` | 藏帆備彈 | EX | 主動 | — | `lol-missfortune` 好運姐 | ✅ | 短暫以全傷害護盾掩護換位，持續 3 秒。 |
+| `lol-warwick.passive` | 嗅血 | PASSIVE | 天生·被動 | — | `lol-warwick` 沃維克 | — | 普攻生命低於 35% 的目標時追加極小級魔法傷害，內置冷卻 2 秒。 |
+| `lol-warwick.q` | 噬痕 | Q | 主動 | — | `lol-warwick` 沃維克 | ✅ | 對指定敵人施加持續傷害，3 秒內每秒造成傷害；施放時立即回復自身生命。 |
+| `lol-warwick.w` | 循血疾行 | W | 主動 | — | `lol-warwick` 沃維克 | ✅ | 主動獲得 3 秒極小級移速加成與 20% 攻速加成。 |
+| `lol-warwick.e` | 驚獵嚎聲 | E | 主動 | — | `lol-warwick` 沃維克 | ✅ | 指定近處敵人，造成傷害並使其恐懼 0.8 秒。 |
+| `lol-warwick.r` | 獵衛封喉 | R | 主動 | — | `lol-warwick` 沃維克 | ✅ | 鎖足敵人 0.9 秒，連續汲傷後收尾；施法者不獲得無敵。 |
+| `lol-warwick.ex` | 血性護甲 | EX | 主動 | — | `lol-warwick` 沃維克 | ✅ | 獲得持續 3 秒的全傷害護盾；同一護盾保留較大值。 |
+| `lol-xerath.passive` | 逸散奧能 | PASSIVE | 天生·被動 | — | `lol-xerath` 齊勒斯 | — | 普攻追加極小級魔法傷害，內置冷卻 2 秒。 |
+| `lol-xerath.q` | 星牢光路 | Q | 主動 | — | `lol-xerath` 齊勒斯 | ✅ | 吟唱後向前產生四段奧術打擊，使用大級距施放距離。 |
+| `lol-xerath.w` | 星核墜落 | W | 主動 | — | `lol-xerath` 齊勒斯 | ✅ | 在指定區域引爆小級魔法傷害。 |
+| `lol-xerath.e` | 奧能拘束 | E | 主動 | — | `lol-xerath` 齊勒斯 | ✅ | 對指定敵人造成傷害並暈眩 0.8 秒，不按飛行距離延長。 |
+| `lol-xerath.r` | 星牢轟擊 | R | 主動 | — | `lol-xerath` 齊勒斯 | ✅ | 在極大級距內選定落點，依序降下三發奧術砲擊，無法中途重新瞄準。 |
+| `lol-xerath.ex` | 回收奧能 | EX | 主動 | — | `lol-xerath` 齊勒斯 | ✅ | 獲得短效魔法護盾並回復自身 15% 最大魔力；受到 EX 冷卻限制。 |
+| `lol-yasuo.passive` | 風行刃 | PASSIVE | 天生·被動 | — | `lol-yasuo` 犽宿 | — | 普攻追加極小級物理傷害，內置冷卻 2 秒。 |
+| `lol-yasuo.q` | 斬風 | Q | 主動 | — | `lol-yasuo` 犽宿 | ✅ | 朝前方斬出四段窄風刃，以本遊戲線段判定命中。 |
+| `lol-yasuo.w` | 迎風架勢 | W | 主動 | — | `lol-yasuo` 犽宿 | ✅ | 獲得只吸收物理傷害的護盾，持續 3 秒；不會消除投射物。 |
+| `lol-yasuo.e` | 踏風進擊 | E | 主動 | — | `lol-yasuo` 犽宿 | ✅ | 朝指定方向短距突進，打擊接觸範圍的敵人；推移量會扣除雙方距離。 |
+| `lol-yasuo.r` | 天際斷章 | R | 主動 | — | `lol-yasuo` 犽宿 | ✅ | 鎖足指定敵人後連擊三次，再以收尾斬結束；沒有無敵。 |
+| `lol-yasuo.ex` | 旋風縛步 | EX | 主動 | — | `lol-yasuo` 犽宿 | ✅ | 將蓄風招式獨立為 EX，對指定敵人造成物理傷害並鎖足 0.8 秒。 |
 | `sela.q` | Ember Bolt | Q | 主動 | — | `sela` Sela, the Ember Sage | — | — |
 | `sela.w` | Cinder Ward | W | 主動 | — | `sela` Sela, the Ember Sage | — | effects: shield, applyBuff |
 | `sela.e` | Scorch Ring | E | 主動 | — | `sela` Sela, the Ember Sage | — | — |
