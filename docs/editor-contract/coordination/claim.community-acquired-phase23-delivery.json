@@ -1,0 +1,107 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.community-acquired-phase23-delivery",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "755a2389d2bd8497f10e8beb298387f86e86d564",
+  "contractFingerprint": "34e36ee3486cf36a",
+  "title": "34 名已取得模型英雄與 Phase 2／3 Editor 交付，請 Main 審查並接正式發布",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "34 名角色由同一 Editor factory 建立獨立專案，204 槽全部編譯，所有模型、動作、VFX、SFX 與文件相依可解析；34 份完整 ZIP 均通過來源逐位元組讀回與既有 inspection，沒有失敗、阻擋或重複六槽結構警告。這是目前 Main 內容目錄的本機建包證據，不冒充正式平台投稿或發布。",
+      "commit": "dd8f37bc1ae3e55424db15c4b11c6c258089d92b",
+      "repro": {
+        "command": "pnpm exec tsx tools/editor-acceptance/acquired-heroes-check.ts --mode strict",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "docs/_reports/community-acquired-heroes/acceptance-summary.json",
+        "packages/shared/src/content/heroForge/communityAcquired.ts",
+        "tools/editor-acceptance/acquired-heroes-check.ts"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "8 名來源模型缺少可用六動作時使用 Owner 已核准且明示的替代預設；26 名使用已取得本尊或轉換模型。每名選項與 modelKey 獨立，舊角沿用 canonical ID，切換一名不會覆寫另一名或刪除歷史版本。",
+      "commit": "7bc2fa3f8415063e195ebe2ecd6f806c6ce9ca2f",
+      "repro": {
+        "command": "pnpm --filter @ggd/editor exec vitest run src/hero/AcquiredHeroExamples.test.tsx",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "apps/editor/src/hero/AcquiredHeroExamples.tsx",
+        "packages/shared/src/content/heroForge/communityAcquired.ts",
+        "docs/_reports/community-acquired-heroes/model-delivery-summary.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "Phase 3 本機 AI 桌面路徑已接入固定模型 manifest、續傳下載、磁碟與 SHA-256 驗證、IPC、硬體政策、無洩漏 llama runner、216 案例品質 gate 與封裝 gate。runtime 與模型權重未塞入 Git；E8 未通過時推論保持關閉，AI-off 的英雄建立與建包仍可使用。",
+      "commit": "b1725e6dbba681045736c7280abde32058f055c6",
+      "repro": {
+        "command": "pnpm --filter @ggd/editor-desktop exec vitest run src/ai src/desktopContract.test.ts src/packagingGate.test.ts",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "apps/editor-desktop/src/ai",
+        "apps/editor-desktop/resources/ai/release-gate-manifest.json",
+        "apps/editor-desktop/src/packagingGate.test.ts"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "Hero Forge 冷啟動時 Babylon BRDF LUT 沒有被 render loop 推進，會停在 PBR 尚未就緒；現在等待迴圈推進既有 Scene render，保留原逾時與像素檢查。Editor 型別及 shader registration 回歸通過；實際 loopback Hero Forge 畫面不再顯示該阻擋。",
+      "commit": "7bc2fa3f8415063e195ebe2ecd6f806c6ce9ca2f",
+      "repro": {
+        "command": "pnpm --filter @ggd/editor exec vitest run src/vfx-forge/stageShaderRegistration.test.ts",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "apps/editor/src/vfx-forge/VfxForgeStage.ts",
+        "apps/editor/src/vfx-forge/stageShaderRegistration.test.ts"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "Phase 2 桌面程式具備 macOS universal 與 Windows 安裝包、草稿保存後更新、摘要及平台發布者驗證；目前 stable feed 仍關閉且未配置 URL，正式簽章、Team ID 與 Windows publisher 不能由本分支偽造。",
+      "commit": "dd8f37bc1ae3e55424db15c4b11c6c258089d92b",
+      "repro": {
+        "command": "pnpm --filter @ggd/editor-desktop exec vitest run src/updates.test.ts src/desktopContract.test.ts",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "apps/editor-desktop/resources/updates/stable.json",
+        "apps/editor-desktop/src/updates.ts",
+        "docs/editor-contract/社群創造後台審查英雄自動鑄造計畫 Phase2.md"
+      ]
+    },
+    {
+      "kind": "inferred",
+      "text": "全部 126 名要在同一正式服務完成，仍依賴本 PR、LoL 第二批 Draft PR #1193 及 Main 當下 target 合併。P3-05 若要從可選且關閉提升為可發布推論，還需要 macOS Metal 與 Windows CUDA 的核准 E8 收據及 runtime artifact；目前 manifest 明確維持 LOCAL_AI_E8_GATE_PENDING。",
+      "commit": "dd8f37bc1ae3e55424db15c4b11c6c258089d92b",
+      "repro": {
+        "command": "pnpm ai:release:metadata",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "apps/editor-desktop/resources/ai/release-gate-manifest.json",
+        "apps/editor-desktop/resources/ai/runtime-manifest.json",
+        "docs/全自動鑄造編輯器進度temp202609091000.md"
+      ]
+    }
+  ],
+  "asks": [
+    "請 Main 審查並合併本 PR；34 名請在合併後依當下 content target 由既有 Editor／平台流程重建必要 ZIP、投稿、核准與發布，不要直接搬生成 JSON 進正式覆蓋層。",
+    "請與 Draft PR #1193 的 LoL 第二批 11 名一併安排合併；兩張 PR 合併後，以同一正式服務名單確認 126 名的目前發布版本及單英雄 rollback。",
+    "P2-05 若要正式發行，請由持有者配置簽章、Team ID、Windows publisher 與 stable feed。P3-05 若要啟用推論，請提供兩個核准硬體 target 的 E8 收據與 runtime artifact；在此之前保留 released=false。",
+    "#1206 與 #1212 已在本分支完成；PR 推送後 Codex 會附 commit、測試與畫面證據並關票。#1205 要等 34 名正式發布後才可關閉。"
+  ],
+  "ownerQuotes": [
+    {
+      "date": "2026-09-11",
+      "text": "請你幫忙"
+    }
+  ]
+}
